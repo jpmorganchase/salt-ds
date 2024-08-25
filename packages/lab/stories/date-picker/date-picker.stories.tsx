@@ -2,6 +2,7 @@ import {
   CalendarDate,
   DateFormatter,
   type DateValue,
+  type ZonedDateTime,
   getLocalTimeZone,
   now,
   today,
@@ -998,7 +999,6 @@ const DatePickerTimeInput: React.FC = () => {
   const handleStartTimeChange: React.ChangeEventHandler<HTMLInputElement> = (
     event,
   ) => {
-    console.log(event.target.value);
     const parsedTime = parseTime(event.target.value);
     if (!parsedTime) {
       return;
@@ -1016,7 +1016,6 @@ const DatePickerTimeInput: React.FC = () => {
   const handleEndTimeChange: React.ChangeEventHandler<HTMLInputElement> = (
     event,
   ) => {
-    console.log(event.target.value);
     const parsedTime = parseTime(event.target.value);
     if (!parsedTime) {
       return;
@@ -1032,17 +1031,27 @@ const DatePickerTimeInput: React.FC = () => {
     setSelectedDate(newDateTime);
   };
 
+  const zonedStartTime = selectedDate?.startDate as ZonedDateTime;
+  const zonedEndTime = selectedDate?.endDate as ZonedDateTime;
   return (
     <>
       <DatePickerRangeInput bordered />
       <input
         aria-label="start date time"
         type={"time"}
+        value={
+          zonedStartTime
+            ? `${zonedStartTime.hour}:${zonedStartTime.minute}`
+            : ""
+        }
         onChange={handleStartTimeChange}
       />
       <input
         aria-label="end date time"
         type={"time"}
+        value={
+          zonedEndTime ? `${zonedEndTime.hour}:${zonedEndTime.minute}` : ""
+        }
         onChange={handleEndTimeChange}
       />
     </>
@@ -1053,6 +1062,10 @@ export const WithExperimentalTime: StoryFn<DatePickerRangeProps> = (args) => {
     <DatePicker
       {...args}
       selectionVariant="range"
+      defaultSelectedDate={{
+        startDate: now(getLocalTimeZone()),
+        endDate: now(getLocalTimeZone()),
+      }}
       onSelectedDateChange={(newSelectedDate) => {
         console.log(
           `Selected date range: ${formatDateRange(

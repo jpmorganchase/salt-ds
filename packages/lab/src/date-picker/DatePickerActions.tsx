@@ -1,10 +1,4 @@
 import { Button, type ButtonProps, makePrefixer } from "@salt-ds/core";
-import {
-  type DatePickerState,
-  type DateRangeSelection,
-  type SingleDateSelection,
-  useDatePickerContext,
-} from "@salt-ds/lab";
 import { clsx } from "clsx";
 import React, {
   type ComponentPropsWithoutRef,
@@ -13,6 +7,8 @@ import React, {
   type SyntheticEvent,
   type MouseEventHandler,
 } from "react";
+import type { DateRangeSelection, SingleDateSelection } from "../calendar";
+import { type DatePickerState, useDatePickerContext } from "./index";
 import "./DatePickerActions.css";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";

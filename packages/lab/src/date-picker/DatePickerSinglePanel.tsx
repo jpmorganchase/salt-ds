@@ -14,13 +14,6 @@ import {
   makePrefixer,
   useControlled,
 } from "@salt-ds/core";
-import {
-  CalendarNavigation,
-  type CalendarNavigationProps,
-  type CalendarSingleProps,
-  getCurrentLocale,
-  useDatePickerContext,
-} from "@salt-ds/lab";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import clsx from "clsx";
@@ -32,11 +25,18 @@ import {
   useState,
 } from "react";
 import {
+  CalendarNavigation,
+  type CalendarNavigationProps,
+  type CalendarSingleProps,
+  getCurrentLocale,
+} from "../calendar";
+import {
   Calendar,
   type CalendarProps,
   type SingleDateSelection,
 } from "../calendar";
 import datePickerPanelCss from "./DatePickerPanel.css";
+import { useDatePickerContext } from "./index";
 
 export interface DatePickerSinglePanelProps<T>
   extends ComponentPropsWithoutRef<"div"> {
@@ -88,10 +88,10 @@ export const DatePickerSinglePanel = forwardRef<
   const {
     state: {
       selectedDate,
-      minDate = startOfMonth(today(getLocalTimeZone())),
+      timeZone = getLocalTimeZone(),
+      minDate = startOfMonth(today(timeZone)),
       maxDate = minDate.add({ months: 1 }),
       locale = getCurrentLocale(),
-      timeZone = getLocalTimeZone(),
     },
     helpers: { setSelectedDate },
   } = useDatePickerContext({ selectionVariant: "single" });
@@ -101,8 +101,7 @@ export const DatePickerSinglePanel = forwardRef<
   const [visibleMonth, setVisibleMonth] = useControlled({
     controlled: visibleMonthProp,
     default:
-      defaultVisibleMonth ||
-      startOfMonth(selectedDate || today(getLocalTimeZone())),
+      defaultVisibleMonth || startOfMonth(selectedDate || today(timeZone)),
     name: "DatePickerSinglePanel",
     state: "visibleMonth",
   });

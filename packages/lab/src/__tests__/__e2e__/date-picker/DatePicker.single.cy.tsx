@@ -2,7 +2,6 @@ import {
   CalendarDate,
   type DateValue,
   ZonedDateTime,
-  getLocalTimeZone,
   parseDate,
   today,
 } from "@internationalized/date";
@@ -18,7 +17,7 @@ import {
 } from "@stories/date-picker/date-picker.stories";
 import { composeStories } from "@storybook/react";
 import React from "react";
-import { formatDate, getCurrentLocale } from "../../../calendar";
+import { formatDate } from "../../../calendar";
 import { parseZonedDateTime } from "../../../date-input";
 import {
   DatePicker,
@@ -31,15 +30,17 @@ const composedStories = composeStories(datePickerStories);
 const { Single } = composedStories;
 
 describe("GIVEN a DatePicker where selectionVariant is single", () => {
+  const testLocale = "en-GB";
+  const testTimeZone = "Europe/London";
+
   const initialDateValue = "05 Jan 2025";
   const initialDate = new CalendarDate(2025, 1, 5);
 
-  const updatedDateValue = "6 Jan 2025";
   const updatedFormattedDateValue = "06 Jan 2025";
   const updatedDate = new CalendarDate(2025, 1, 6);
 
   const formatDay = (date: DateValue) => {
-    return formatDate(date, getCurrentLocale(), {
+    return formatDate(date, testLocale, {
       day: "2-digit",
       month: "long",
       year: "numeric",
@@ -48,7 +49,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
 
   it("SHOULD only be able to select a date between min/max", () => {
     cy.mount(
-      <SingleWithMinMaxDate selectionVariant={"single"} locale={"en-GB"} />,
+      <SingleWithMinMaxDate selectionVariant={"single"} locale={testLocale} />,
     );
     // Simulate opening the calendar
     cy.findByRole("button", { name: "Open Calendar" }).realClick();
@@ -83,7 +84,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
     cy.findByRole("application").should("not.exist");
     cy.findByRole("textbox").should(
       "have.value",
-      formatDate(parseDate("2031-01-15")),
+      formatDate(parseDate("2031-01-15"), testLocale),
     );
   });
 
@@ -93,23 +94,30 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
       <SingleWithFormField
         selectionVariant={"single"}
         onSelectedDateChange={selectedDateChangeSpy}
-        locale={"en-GB"}
+        locale={testLocale}
       />,
     );
     // Simulate entering a valid date
     cy.findByRole("textbox").click().clear().type(initialDateValue);
     cy.realPress("Tab");
     cy.findByRole("textbox").should("have.value", initialDateValue);
+    cy.get("@selectedDateChangeSpy").should("have.been.calledOnce");
     cy.get("@selectedDateChangeSpy").should(
       "have.been.calledWith",
       initialDate,
     );
     // Simulate entering an invalid date
     cy.findByRole("textbox").click().clear().type("bad date");
-    cy.get("@selectedDateChangeSpy").should("have.been.calledOnce");
     cy.realPress("Tab");
     cy.get("@selectedDateChangeSpy").should("have.been.calledTwice");
     cy.get("@selectedDateChangeSpy").should("have.been.calledWith", null);
+    cy.findByRole("textbox").click().clear().type(updatedFormattedDateValue);
+    cy.realPress("Tab");
+    cy.get("@selectedDateChangeSpy").should("have.been.calledThrice");
+    cy.get("@selectedDateChangeSpy").should(
+      "have.been.calledWith",
+      updatedDate,
+    );
   });
 
   it("SHOULD support custom panel with tenors", () => {
@@ -118,7 +126,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
       <SingleWithCustomPanel
         selectionVariant={"single"}
         onSelectedDateChange={selectedDateChangeSpy}
-        locale={"en-GB"}
+        locale={testLocale}
       />,
     );
     // Simulate opening the calendar
@@ -133,12 +141,15 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
     // Verify that the calendar is closed and the selected date is displayed
     cy.findByRole("application").should("not.exist");
     cy.realPress("Tab");
-    const newDate = today(getLocalTimeZone()).add({ years: 15 });
+    const newDate = today(testTimeZone).add({ years: 15 });
     cy.get("@selectedDateChangeSpy").should(
       "always.have.been.calledWithMatch",
       newDate,
     );
-    cy.findByRole("textbox").should("have.value", formatDate(newDate));
+    cy.findByRole("textbox").should(
+      "have.value",
+      formatDate(newDate, testLocale),
+    );
   });
 
   it("SHOULD support custom panel with Today button", () => {
@@ -147,7 +158,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
       <SingleWithToday
         selectionVariant={"single"}
         onSelectedDateChange={selectedDateChangeSpy}
-        locale={"en-GB"}
+        locale={testLocale}
       />,
     );
     // Simulate opening the calendar
@@ -158,12 +169,15 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
     // Verify that the calendar is closed and today's date is displayed
     cy.findByRole("application").should("not.exist");
     cy.realPress("Tab");
-    const newDate = today(getLocalTimeZone());
+    const newDate = today(testTimeZone);
     cy.get("@selectedDateChangeSpy").should(
       "always.have.been.calledWithMatch",
       newDate,
     );
-    cy.findByRole("textbox").should("have.value", formatDate(newDate));
+    cy.findByRole("textbox").should(
+      "have.value",
+      formatDate(newDate, testLocale),
+    );
   });
 
   describe("SHOULD support confirmation", () => {
@@ -174,14 +188,14 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
           selectionVariant={"single"}
           defaultSelectedDate={initialDate}
           onSelectedDateChange={selectedDateChangeSpy}
-          locale={"en-GB"}
+          locale={testLocale}
         />,
       );
       // Verify that the initial selected date is displayed
       cy.document()
         .find("input")
         .first()
-        .should("have.value", formatDate(initialDate));
+        .should("have.value", formatDate(initialDate, testLocale));
       // Simulate opening the calendar
       cy.findByRole("button", { name: "Open Calendar" }).realClick();
       cy.findByRole("application").should("exist");
@@ -191,13 +205,15 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
       cy.findByRole("application").should("exist");
       cy.document()
         .find("input")
-        .should("have.value", formatDate(unconfirmedDate));
+        .should("have.value", formatDate(unconfirmedDate, testLocale));
       // Simulate clicking the "Cancel" button
       cy.findByRole("button", { name: "Cancel" }).realClick();
       // Verify that the calendar is closed and the initial selected date is restored
       cy.findByRole("application").should("not.exist");
       cy.get("@selectedDateChangeSpy").should("not.have.been.called");
-      cy.document().find("input").should("have.value", formatDate(initialDate));
+      cy.document()
+        .find("input")
+        .should("have.value", formatDate(initialDate, testLocale));
     });
 
     it("SHOULD apply confirmed selections", () => {
@@ -207,14 +223,14 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
           selectionVariant={"single"}
           defaultSelectedDate={initialDate}
           onSelectedDateChange={selectedDateChangeSpy}
-          locale={"en-GB"}
+          locale={testLocale}
         />,
       );
       // Verify that the initial selected date is displayed
       cy.document()
         .find("input")
         .first()
-        .should("have.value", formatDate(initialDate));
+        .should("have.value", formatDate(initialDate, testLocale));
       // Simulate opening the calendar
       cy.findByRole("button", { name: "Open Calendar" }).realClick();
       cy.findByRole("application").should("exist");
@@ -224,7 +240,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
       cy.findByRole("application").should("exist");
       cy.document()
         .find("input")
-        .should("have.value", formatDate(unconfirmedDate));
+        .should("have.value", formatDate(unconfirmedDate, testLocale));
       // Simulate clicking the "Apply" button
       cy.findByRole("button", { name: "Apply" }).realClick();
       // Verify that the calendar is closed and the new date is applied
@@ -235,7 +251,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
       );
       cy.document()
         .find("input")
-        .should("have.value", formatDate(unconfirmedDate));
+        .should("have.value", formatDate(unconfirmedDate, testLocale));
     });
   });
 
@@ -245,7 +261,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
       <SingleWithCustomParser
         selectionVariant={"single"}
         onSelectedDateChange={selectedDateChangeSpy}
-        locale={"en-GB"}
+        locale={testLocale}
       />,
     );
     // Simulate entering a valid date
@@ -262,12 +278,16 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
     cy.get("@selectedDateChangeSpy").should("have.been.calledTwice");
     const newDate = initialDate.add({ days: 7 });
     cy.get("@selectedDateChangeSpy").should("have.been.calledWith", newDate);
-    cy.document().find("input").should("have.value", formatDate(newDate));
+    cy.document()
+      .find("input")
+      .should("have.value", formatDate(newDate, testLocale));
   });
 
   describe("uncontrolled component", () => {
     it("SHOULD render the default date", () => {
-      cy.mount(<Single defaultSelectedDate={initialDate} locale={"en-GB"} />);
+      cy.mount(
+        <Single defaultSelectedDate={initialDate} locale={testLocale} />,
+      );
       // Verify that the default selected date is displayed
       cy.findByRole("textbox").should("have.value", initialDateValue);
       // Simulate opening the calendar
@@ -282,7 +302,9 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
     });
 
     it("SHOULD be able to select a date", () => {
-      cy.mount(<Single defaultSelectedDate={initialDate} locale={"en-GB"} />);
+      cy.mount(
+        <Single defaultSelectedDate={initialDate} locale={testLocale} />,
+      );
       // Simulate opening the calendar
       cy.findByRole("button", { name: "Open Calendar" }).realClick();
       // Simulate selecting a new date
@@ -305,7 +327,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
         <SingleControlled
           selectionVariant={"single"}
           selectedDate={initialDate}
-          locale={"en-GB"}
+          locale={testLocale}
         />,
       );
       // Verify that the selected date is displayed
@@ -326,7 +348,8 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
         <SingleControlled
           selectionVariant={"single"}
           selectedDate={initialDate}
-          locale={"en-GB"}
+          locale={testLocale}
+          timeZone={testTimeZone}
         />,
       );
       // Simulate opening the calendar
@@ -350,21 +373,24 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
         2024,
         12,
         11,
-        getLocalTimeZone(),
+        testTimeZone,
         0,
         9,
         30,
         31,
         32,
       );
+      const parse: typeof parseZonedDateTime = (dateTime) =>
+        parseZonedDateTime(dateTime, testTimeZone);
       cy.mount(
         <DatePicker
           defaultSelectedDate={defaultSelectedDate}
           selectionVariant="single"
           onSelectedDateChange={selectedDateChangeSpy}
-          locale={"en-GB"}
+          locale={testLocale}
+          timeZone={testTimeZone}
         >
-          <DatePickerSingleInput parse={parseZonedDateTime} />
+          <DatePickerSingleInput parse={parse} />
           <DatePickerOverlay>
             <DatePickerSinglePanel />
           </DatePickerOverlay>
@@ -386,19 +412,6 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
         defaultSelectedDate.millisecond,
       );
 
-      console.log(
-        "defaultSelectedDate timeZone:",
-        defaultSelectedDate.timeZone,
-      );
-      console.log("defaultSelectedDate offset:", defaultSelectedDate.offset);
-      console.log(
-        "expectedInitialDateWithOriginalTime timeZone:",
-        expectedInitialDateWithOriginalTime.timeZone,
-      );
-      console.log(
-        "expectedInitialDateWithOriginalTime offset:",
-        expectedInitialDateWithOriginalTime.offset,
-      );
       cy.get("@selectedDateChangeSpy").should("have.been.calledWithMatch", {
         year: initialDate.year,
         month: initialDate.month,

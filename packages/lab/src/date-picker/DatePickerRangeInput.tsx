@@ -2,7 +2,6 @@ import { Button, makePrefixer, useControlled, useForkRef } from "@salt-ds/core";
 import { CalendarIcon } from "@salt-ds/icons";
 import { clsx } from "clsx";
 import {
-  type FocusEventHandler,
   type KeyboardEvent,
   type KeyboardEventHandler,
   type SyntheticEvent,
@@ -72,13 +71,13 @@ export const DatePickerRangeInput = forwardRef<
     [setSelectedDate],
   );
 
-  const handleDateValueChange = useCallback(
-    (newDateValue: DateInputRangeValue, isFormatted: boolean) => {
-      setValue(newDateValue);
-      onDateValueChange?.(newDateValue, isFormatted);
-    },
-    [onDateValueChange],
-  );
+  const handleDateValueChange = (
+    newDateValue: DateInputRangeValue,
+    isFormatted: boolean,
+  ) => {
+    setValue(newDateValue);
+    onDateValueChange?.(newDateValue, isFormatted);
+  };
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: should run when open changes and not selected date or value
   useEffect(() => {

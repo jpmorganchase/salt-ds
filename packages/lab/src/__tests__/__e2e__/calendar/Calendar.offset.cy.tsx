@@ -5,17 +5,6 @@ import { composeStories } from "@storybook/react";
 
 const { Offset } = composeStories(calendarStories);
 
-const testDate = parseDate("2022-02-03");
-const currentLocale = navigator.languages[0];
-
-const formatDay = (date: DateValue) => {
-  return formatDate(date, currentLocale, {
-    day: "2-digit",
-    month: "long",
-    year: "numeric",
-  });
-};
-
 function getAllDatesInRange(startDate: DateValue, endDate: DateValue) {
   const dates = [];
 
@@ -28,8 +17,19 @@ function getAllDatesInRange(startDate: DateValue, endDate: DateValue) {
 }
 
 describe("GIVEN a Calendar with offset selection", () => {
+  const testDate = parseDate("2022-02-03");
+  const testLocale = "en-GB";
+
+  const formatDay = (date: DateValue) => {
+    return formatDate(date, testLocale, {
+      day: "2-digit",
+      month: "long",
+      year: "numeric",
+    });
+  };
+
   it("SHOULD allow a defined range to be selected", () => {
-    cy.mount(<Offset defaultVisibleMonth={testDate} locale={"en-GB"} />);
+    cy.mount(<Offset defaultVisibleMonth={testDate} locale={testLocale} />);
     const baseDate = testDate.add({ days: 3 });
     const datesInRange = getAllDatesInRange(
       // @ts-ignore

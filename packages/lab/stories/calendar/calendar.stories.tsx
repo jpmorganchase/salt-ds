@@ -44,10 +44,11 @@ const Template: StoryFn<typeof Calendar> = (args) => {
   );
 };
 
-export const Single = Template.bind({
+export const Single = Template.bind({});
+Single.args = {
   selectionVariant: "single",
   defaultSelectedDate: today(getLocalTimeZone()),
-});
+};
 
 export const Range = Template.bind({});
 Range.args = {
@@ -203,6 +204,7 @@ FadeMonthAnimation.args = {
 
 export const MinMaxDate = Template.bind({});
 MinMaxDate.args = {
+  defaultSelectedDate: today(getLocalTimeZone()),
   minDate: startOfMonth(today(getLocalTimeZone())),
   maxDate: endOfMonth(today(getLocalTimeZone())),
 };

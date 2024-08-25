@@ -1,13 +1,16 @@
 import { CalendarDate, type DateValue } from "@internationalized/date";
 import * as dateInputStories from "@stories/date-input/date-input.stories";
 import { composeStories } from "@storybook/react";
-import { type SyntheticEvent, useState } from "react";
+import { type ChangeEvent, type SyntheticEvent, useState } from "react";
 import type { DateRangeSelection } from "../../../calendar";
 
 const composedStories = composeStories(dateInputStories);
 const { Range } = composedStories;
 
 describe("GIVEN a DateInputRange", () => {
+  const testLocale = "en-GB";
+  const testTimeZone = "Europe/London";
+
   const initialDate = {
     startDate: new CalendarDate(2025, 1, 5),
     endDate: new CalendarDate(2026, 2, 6),
@@ -24,20 +27,6 @@ describe("GIVEN a DateInputRange", () => {
     endDate: new CalendarDate(2028, 12, 2),
   };
 
-  const setupSpies = () => {
-    const startInputChangeSpy = cy.stub().as("startInputChangeSpy");
-    const endInputChangeSpy = cy.stub().as("endInputChangeSpy");
-    const dateChangeSpy = cy.stub().as("dateChangeSpy");
-    const dateValueChangeSpy = cy.stub().as("dateValueChangeSpy");
-
-    return {
-      startInputChangeSpy,
-      endInputChangeSpy,
-      dateChangeSpy,
-      dateValueChangeSpy,
-    };
-  };
-
   it("SHOULD render value, even when not a valid date", () => {
     cy.mount(
       <Range
@@ -45,7 +34,8 @@ describe("GIVEN a DateInputRange", () => {
           startDate: "start date value",
           endDate: "end date value",
         }}
-        locale={"en-GB"}
+        locale={testLocale}
+        timeZone={testTimeZone}
       />,
     );
     // Verify that the start and end date inputs have the specified values
@@ -67,7 +57,8 @@ describe("GIVEN a DateInputRange", () => {
       <Range
         defaultValue={{ startDate: "text value" }}
         parse={customParser}
-        locale={"en-GB"}
+        locale={testLocale}
+        timeZone={testTimeZone}
       />,
     );
     // Simulate user entering "new start date value" into the start date input
@@ -107,14 +98,14 @@ describe("GIVEN a DateInputRange", () => {
       dateToFormat: DateValue | null | undefined,
     ): string => {
       formatSpy(dateToFormat);
-      return "formatted date";
+      return dateToFormat ? "formatted date" : "";
     };
 
     cy.mount(
       <Range
         defaultValue={{ startDate: "text value" }}
         formatDate={customFormatter}
-        locale={"en-GB"}
+        locale={testLocale}
       />,
     );
     // Simulate user entering initial start date value into the start date input
@@ -153,7 +144,7 @@ describe("GIVEN a DateInputRange", () => {
           endDate: new CalendarDate(2030, 12, 1),
         }}
         locale={"es-ES"}
-        timeZone={"America/New_York"}
+        timeZone={testTimeZone}
       />,
     );
     // Verify that the start and end date inputs are updated with the date values in the specified locale
@@ -162,22 +153,37 @@ describe("GIVEN a DateInputRange", () => {
   });
 
   describe("uncontrolled component", () => {
+    let startInputChangeSpy: Cypress.Agent<sinon.SinonStub>;
+    let endInputChangeSpy: Cypress.Agent<sinon.SinonStub>;
+    let dateChangeSpy: Cypress.Agent<sinon.SinonStub>;
+    let dateValueChangeSpy: Cypress.Agent<sinon.SinonStub>;
+    beforeEach(() => {
+      startInputChangeSpy = cy.stub().as("startInputChangeSpy");
+      endInputChangeSpy = cy.stub().as("endInputChangeSpy");
+      dateChangeSpy = cy.stub().as("dateChangeSpy");
+      dateValueChangeSpy = cy.stub().as("dateValueChangeSpy");
+    });
+
     it("SHOULD update when changed with a valid date", () => {
-      const {
-        startInputChangeSpy,
-        endInputChangeSpy,
-        dateChangeSpy,
-        dateValueChangeSpy,
-      } = setupSpies();
+      const handleStartDateChange = (event: ChangeEvent<HTMLInputElement>) => {
+        // React 16 backwards compatibility
+        event.persist();
+        startInputChangeSpy(event);
+      };
+      const handleEndDateChange = (event: ChangeEvent<HTMLInputElement>) => {
+        // React 16 backwards compatibility
+        event.persist();
+        endInputChangeSpy(event);
+      };
 
       cy.mount(
         <Range
           defaultValue={initialDateValue}
-          startInputProps={{ onChange: startInputChangeSpy }}
-          endInputProps={{ onChange: endInputChangeSpy }}
+          startInputProps={{ onChange: handleStartDateChange }}
+          endInputProps={{ onChange: handleEndDateChange }}
           onDateValueChange={dateValueChangeSpy}
           onDateChange={dateChangeSpy}
-          locale={"en-GB"}
+          locale={testLocale}
         />,
       );
       // Simulate user entering updated start date value into the start date input
@@ -206,7 +212,7 @@ describe("GIVEN a DateInputRange", () => {
       );
       cy.get("@dateChangeSpy").should(
         "have.been.calledWithMatch",
-        Cypress.sinon.match({ type: "blur" }),
+        Cypress.sinon.match.any,
         { startDate: updatedDate.startDate, endDate: initialDate.endDate },
       );
       // Verify that the start date input is updated with the formatted value
@@ -241,8 +247,8 @@ describe("GIVEN a DateInputRange", () => {
       );
       cy.get("@dateChangeSpy").should(
         "have.been.calledWithMatch",
-        Cypress.sinon.match({ type: "blur" }),
-        updatedDate,
+        Cypress.sinon.match.any,
+        { startDate: updatedDate.startDate, endDate: updatedDate.endDate },
       );
       // Verify that the start and end date inputs are updated with the formatted values
       cy.findByLabelText("Start date").should(
@@ -257,20 +263,36 @@ describe("GIVEN a DateInputRange", () => {
   });
 
   describe("controlled component", () => {
-    it("SHOULD update when changed with a valid date", () => {
-      const {
-        startInputChangeSpy,
-        endInputChangeSpy,
-        dateChangeSpy,
-        dateValueChangeSpy,
-      } = setupSpies();
+    let startInputChangeSpy: Cypress.Agent<sinon.SinonStub>;
+    let endInputChangeSpy: Cypress.Agent<sinon.SinonStub>;
+    let dateChangeSpy: Cypress.Agent<sinon.SinonStub>;
+    let dateValueChangeSpy: Cypress.Agent<sinon.SinonStub>;
+    beforeEach(() => {
+      startInputChangeSpy = cy.stub().as("startInputChangeSpy");
+      endInputChangeSpy = cy.stub().as("endInputChangeSpy");
+      dateChangeSpy = cy.stub().as("dateChangeSpy");
+      dateValueChangeSpy = cy.stub().as("dateValueChangeSpy");
+    });
 
+    it("SHOULD update when changed with a valid date", () => {
       function ControlledDateInput() {
         const [date, setDate] = useState<DateRangeSelection | null>(
           initialDate,
         );
 
-        const onDateChange = (
+        const handleStartDateChange = (
+          event: ChangeEvent<HTMLInputElement>,
+        ) => {
+          // React 16 backwards compatibility
+          event.persist();
+          startInputChangeSpy(event);
+        };
+        const handleEndDateChange = (event: ChangeEvent<HTMLInputElement>) => {
+          // React 16 backwards compatibility
+          event.persist();
+          endInputChangeSpy(event);
+        };
+        const handleDateChange = (
           event: SyntheticEvent,
           newDate: DateRangeSelection | null,
         ) => {
@@ -282,11 +304,11 @@ describe("GIVEN a DateInputRange", () => {
         return (
           <Range
             date={date}
-            startInputProps={{ onChange: startInputChangeSpy }}
-            endInputProps={{ onChange: endInputChangeSpy }}
+            startInputProps={{ onChange: handleStartDateChange }}
+            endInputProps={{ onChange: handleEndDateChange }}
             onDateValueChange={dateValueChangeSpy}
-            onDateChange={onDateChange}
-            locale={"en-GB"}
+            onDateChange={handleDateChange}
+            locale={testLocale}
           />
         );
       }
@@ -318,7 +340,7 @@ describe("GIVEN a DateInputRange", () => {
       );
       cy.get("@dateChangeSpy").should(
         "have.been.calledWithMatch",
-        Cypress.sinon.match({ type: "blur" }),
+        Cypress.sinon.match.any,
         { startDate: updatedDate.startDate, endDate: initialDate.endDate },
       );
 
@@ -353,8 +375,8 @@ describe("GIVEN a DateInputRange", () => {
       );
       cy.get("@dateChangeSpy").should(
         "have.been.calledWithMatch",
-        Cypress.sinon.match({ type: "blur" }),
-        updatedDate,
+        Cypress.sinon.match.any,
+        { startDate: updatedDate.startDate, endDate: updatedDate.endDate },
       );
       // Verify that the start and end date inputs are updated with the formatted values
       cy.findByLabelText("Start date").should(

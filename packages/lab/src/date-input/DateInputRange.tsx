@@ -23,7 +23,6 @@ import {
   type Ref,
   type SyntheticEvent,
   forwardRef,
-  useCallback,
   useEffect,
   useRef,
   useState,
@@ -140,7 +139,7 @@ export interface DateInputRangeProps<T = DateRangeSelection>
 }
 
 export const DateInputRange = forwardRef<HTMLDivElement, DateInputRangeProps>(
-  function DateInput(props, ref) {
+  function DateInputRange(props, ref) {
     const {
       bordered = false,
       className,
@@ -204,37 +203,33 @@ export const DateInputRange = forwardRef<HTMLDivElement, DateInputRangeProps>(
     const preservedTime = useRef<RangeTimeFields>({});
     preservedTime.current = extractTimeFieldsFromDateRange(date);
 
-    // biome-ignore lint/correctness/useExhaustiveDependencies: do not memo when dateValue changes
-    const setDateValueFromDate = useCallback(
-      (newDate: DateInputRangeProps["date"]) => {
-        let newDateValue = { ...dateValue };
-        const formattedStartDate = formatDate(newDate?.startDate, locale, {
-          timeZone,
-        });
-        if (formattedStartDate) {
-          newDateValue = { ...newDateValue, startDate: formattedStartDate };
-        }
-        const formattedEndDate = formatDate(newDate?.endDate, locale, {
-          timeZone,
-        });
-        if (formattedEndDate) {
-          newDateValue = { ...newDateValue, endDate: formattedEndDate };
-        }
-        if (
-          newDateValue?.startDate !== dateValue?.startDate ||
-          newDateValue?.endDate !== dateValue?.endDate
-        ) {
-          onDateValueChange?.(newDateValue, true);
-        }
-        setDateValue(newDateValue);
-      },
-      [formatDate, locale, onDateValueChange, timeZone],
-    );
+    const setDateValueFromDate = (newDate: DateInputRangeProps["date"]) => {
+      let newDateValue = { ...dateValue };
+      const formattedStartDate = formatDate(newDate?.startDate, locale, {
+        timeZone,
+      });
+      if (formattedStartDate) {
+        newDateValue = { ...newDateValue, startDate: formattedStartDate };
+      }
+      const formattedEndDate = formatDate(newDate?.endDate, locale, {
+        timeZone,
+      });
+      if (formattedEndDate) {
+        newDateValue = { ...newDateValue, endDate: formattedEndDate };
+      }
+      if (
+        newDateValue?.startDate !== dateValue?.startDate ||
+        newDateValue?.endDate !== dateValue?.endDate
+      ) {
+        onDateValueChange?.(newDateValue, true);
+      }
+      setDateValue(newDateValue);
+    };
 
     // Update date string value when selected date changes
     useEffect(() => {
       setDateValueFromDate(date);
-    }, [date, date?.startDate, date?.endDate, setDateValueFromDate]);
+    }, [date, date?.startDate, date?.endDate]);
 
     const [focused, setFocused] = useState(false);
 

@@ -1,6 +1,5 @@
 import {
   type DateValue,
-  getLocalTimeZone,
   parseDate,
   startOfMonth,
   today,
@@ -11,19 +10,19 @@ import { composeStories } from "@storybook/react";
 
 const { Multiselect } = composeStories(calendarStories);
 
-const testDate = parseDate("2022-02-03");
-const localTimeZone = getLocalTimeZone();
-const currentLocale = navigator.languages[0];
-
-const formatDay = (date: DateValue) => {
-  return formatDate(date, currentLocale, {
-    day: "2-digit",
-    month: "long",
-    year: "numeric",
-  });
-};
-
 describe("GIVEN a Calendar with multiselect", () => {
+  const testDate = parseDate("2022-02-03");
+  const testTimeZone = "Europe/London";
+  const testLocale = "en-GB";
+
+  const formatDay = (date: DateValue) => {
+    return formatDate(date, testLocale, {
+      day: "2-digit",
+      month: "long",
+      year: "numeric",
+    });
+  };
+
   it("SHOULD move to first selected date of the visible month", () => {
     cy.mount(
       <Multiselect
@@ -33,7 +32,7 @@ describe("GIVEN a Calendar with multiselect", () => {
           testDate,
         ]}
         defaultVisibleMonth={testDate}
-        locale={"en-GB"}
+        locale={testLocale}
       />,
     );
     // Simulate focusing on the "Next Month" button
@@ -49,12 +48,12 @@ describe("GIVEN a Calendar with multiselect", () => {
   });
 
   it("SHOULD move to today's date if selected date is not within the visible month", () => {
-    const todayTestDate = today(localTimeZone);
+    const todayTestDate = today(testTimeZone);
     cy.mount(
       <Multiselect
         selectedDate={[todayTestDate.subtract({ months: 2 })]}
         defaultVisibleMonth={todayTestDate}
-        locale={"en-GB"}
+        locale={testLocale}
       />,
     );
     // Simulate focusing on the "Next Month" button
@@ -70,8 +69,10 @@ describe("GIVEN a Calendar with multiselect", () => {
   });
 
   it("SHOULD move to today's date if there is not selected date", () => {
-    const todayTestDate = today(localTimeZone);
-    cy.mount(<Multiselect defaultVisibleMonth={todayTestDate} />);
+    const todayTestDate = today(testTimeZone);
+    cy.mount(
+      <Multiselect defaultVisibleMonth={todayTestDate} locale={testLocale} />,
+    );
     // Simulate focusing on the "Next Month" button
     cy.findByRole("button", {
       name: "Next Month",
@@ -85,11 +86,11 @@ describe("GIVEN a Calendar with multiselect", () => {
   });
 
   it("SHOULD move to start of the month if there is no selected date and today is not within visible month", () => {
-    const todayTestDate = today(localTimeZone);
+    const todayTestDate = today(testTimeZone);
     cy.mount(
       <Multiselect
         defaultVisibleMonth={todayTestDate.add({ months: 1 })}
-        locale={"en-GB"}
+        locale={testLocale}
       />,
     );
     // Simulate focusing on the "Next Month" button
@@ -109,7 +110,9 @@ describe("GIVEN a Calendar with multiselect", () => {
   });
 
   it("SHOULD allow multiple dates to be selected and unselected", () => {
-    cy.mount(<Multiselect defaultVisibleMonth={testDate} locale={"en-GB"} />);
+    cy.mount(
+      <Multiselect defaultVisibleMonth={testDate} locale={testLocale} />,
+    );
     // Simulate clicking on the current date button to select it
     cy.findByRole("button", { name: formatDay(testDate) }).realClick();
     // Verify that the current date button is selected

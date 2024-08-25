@@ -1,37 +1,37 @@
 import {
   type DateValue,
   endOfWeek,
-  getLocalTimeZone,
+  getDayOfWeek,
   parseDate,
   startOfMonth,
   today,
 } from "@internationalized/date";
-import { formatDate, getCurrentLocale } from "@salt-ds/lab";
+import { type CalendarProps, formatDate, getCurrentLocale } from "@salt-ds/lab";
 import * as calendarStories from "@stories/calendar/calendar.stories";
 import { composeStories } from "@storybook/react";
 
 const { DisabledDates, Single, UnselectableDates } =
   composeStories(calendarStories);
 
-const testDate = parseDate("2022-02-03");
-const localTimeZone = getLocalTimeZone();
-const currentLocale = navigator.languages[0];
-
-const formatDay = (date: DateValue) => {
-  return formatDate(date, currentLocale, {
-    day: "2-digit",
-    month: "long",
-    year: "numeric",
-  });
-};
-
 describe("GIVEN a Calendar with single selection", () => {
+  const testDate = parseDate("2022-02-03");
+  const testTimeZone = "Europe/London";
+  const testLocale = "en-GB";
+
+  const formatDay = (date: DateValue) => {
+    return formatDate(date, testLocale, {
+      day: "2-digit",
+      month: "long",
+      year: "numeric",
+    });
+  };
+
   it("SHOULD move to selected date if it is within the visible month", () => {
     cy.mount(
       <Single
         selectedDate={testDate}
         defaultVisibleMonth={testDate}
-        locale={"en-GB"}
+        locale={testLocale}
       />,
     );
     // Simulate focusing on the "Next Month" button
@@ -51,7 +51,7 @@ describe("GIVEN a Calendar with single selection", () => {
       <Single
         selectedDate={testDate}
         defaultVisibleMonth={testDate}
-        locale={"en-GB"}
+        locale={testLocale}
       />,
     );
     // Simulate clicking the "Next Month" button
@@ -75,12 +75,12 @@ describe("GIVEN a Calendar with single selection", () => {
   });
 
   it("SHOULD move to today's date if selected date is not within the visible month", () => {
-    const todayTestDate = today(localTimeZone);
+    const todayTestDate = today(testTimeZone);
     cy.mount(
       <Single
         selectedDate={todayTestDate.subtract({ months: 2 })}
         defaultVisibleMonth={todayTestDate}
-        locale={"en-GB"}
+        locale={testLocale}
       />,
     );
     // Simulate focusing on the "Next Month" button
@@ -96,8 +96,10 @@ describe("GIVEN a Calendar with single selection", () => {
   });
 
   it("SHOULD move to today's date if there is not selected date", () => {
-    const todayTestDate = today(localTimeZone);
-    cy.mount(<Single defaultVisibleMonth={todayTestDate} locale={"en-GB"} />);
+    const todayTestDate = today(testTimeZone);
+    cy.mount(
+      <Single defaultVisibleMonth={todayTestDate} locale={testLocale} />,
+    );
     // Simulate focusing on the "Next Month" button
     cy.findByRole("button", {
       name: "Next Month",
@@ -111,8 +113,10 @@ describe("GIVEN a Calendar with single selection", () => {
   });
 
   it("SHOULD move to today's date if there is not selected date", () => {
-    const todayTestDate = today(localTimeZone);
-    cy.mount(<Single defaultVisibleMonth={todayTestDate} locale={"en-GB"} />);
+    const todayTestDate = today(testTimeZone);
+    cy.mount(
+      <Single defaultVisibleMonth={todayTestDate} locale={testLocale} />,
+    );
     // Simulate clicking the "Next Month" button
     cy.findByRole("button", {
       name: "Next Month",
@@ -134,11 +138,11 @@ describe("GIVEN a Calendar with single selection", () => {
   });
 
   it("SHOULD move to start of the month if there is no selected date and today is not within visible month", () => {
-    const todayTestDate = today(localTimeZone);
+    const todayTestDate = today(testTimeZone);
     cy.mount(
       <Single
         defaultVisibleMonth={todayTestDate.add({ months: 1 })}
-        locale={"en-GB"}
+        locale={testLocale}
       />,
     );
     // Simulate focusing on the "Next Month" button
@@ -158,7 +162,7 @@ describe("GIVEN a Calendar with single selection", () => {
   });
 
   it("SHOULD hover one day when a day is hovered", () => {
-    cy.mount(<Single defaultVisibleMonth={testDate} />);
+    cy.mount(<Single defaultVisibleMonth={testDate} locale={testLocale} />);
     // Simulate hovering over a date button
     cy.findByRole("button", {
       name: formatDay(testDate),
@@ -175,7 +179,7 @@ describe("GIVEN a Calendar with single selection", () => {
   });
 
   it("SHOULD only allow one date to be selected at a time", () => {
-    cy.mount(<Single defaultVisibleMonth={testDate} locale={"en-GB"} />);
+    cy.mount(<Single defaultVisibleMonth={testDate} locale={testLocale} />);
     // Simulate clicking on the current date button to select it
     cy.findByRole("button", { name: formatDay(testDate) }).realClick();
     // Verify that the current date button is selected
@@ -210,7 +214,7 @@ describe("GIVEN a Calendar with single selection", () => {
   });
 
   it("SHOULD not allow deselection", () => {
-    cy.mount(<Single defaultVisibleMonth={testDate} locale={"en-GB"} />);
+    cy.mount(<Single defaultVisibleMonth={testDate} locale={testLocale} />);
     // Simulate clicking on the current date button to select it
     cy.findByRole("button", { name: formatDay(testDate) }).realClick();
     // Simulate clicking on the current date button again to deselect it
@@ -224,7 +228,16 @@ describe("GIVEN a Calendar with single selection", () => {
   });
 
   it("SHOULD not allow selection of disabled dates", () => {
-    cy.mount(<DisabledDates defaultVisibleMonth={testDate} locale={"en-GB"} />);
+    const isDayDisabled: CalendarProps["isDayDisabled"] = (date) =>
+      getDayOfWeek(date, testLocale) >= 5 ? "Weekends are disabled" : false;
+
+    cy.mount(
+      <DisabledDates
+        defaultVisibleMonth={testDate}
+        locale={testLocale}
+        isDayDisabled={isDayDisabled}
+      />,
+    );
     // Verify that a disabled date button is not selectable
     cy.findByRole("button", {
       name: formatDay(parseDate("2022-02-05")),
@@ -241,10 +254,19 @@ describe("GIVEN a Calendar with single selection", () => {
   });
 
   it("SHOULD not allow selection of unselectable dates", () => {
+    const isDayUnselectable: CalendarProps["isDayUnselectable"] = (date) =>
+      getDayOfWeek(date, testLocale) >= 5
+        ? "Weekends are un-selectable"
+        : false;
+
     cy.mount(
-      <UnselectableDates defaultVisibleMonth={testDate} locale={"en-GB"} />,
+      <UnselectableDates
+        defaultVisibleMonth={testDate}
+        locale={testLocale}
+        isDayUnselectable={isDayUnselectable}
+      />,
     );
-    const followingSunday = endOfWeek(testDate, getCurrentLocale());
+    const followingSunday = endOfWeek(testDate, testLocale);
     // Verify that an unselectable date button is not selectable
     cy.findByRole("button", { name: formatDay(followingSunday) }).should(
       "be.disabled",

@@ -78,7 +78,10 @@ export interface DatePickerRangePanelProps<T>
   EndNavigationProps?: CalendarNavigationProps;
 }
 
-function getFallbackVisibleMonths(selectedDate?: DateRangeSelection | null) {
+function getFallbackVisibleMonths(
+  selectedDate: DateRangeSelection | null,
+  timeZone: string,
+) {
   const createConsecutiveRange = (date: DateValue) => [
     startOfMonth(date),
     startOfMonth(date).add({ months: 1 }),
@@ -94,7 +97,7 @@ function getFallbackVisibleMonths(selectedDate?: DateRangeSelection | null) {
     return createConsecutiveRange(startDate);
   }
 
-  const currentMonth = startOfMonth(today(getLocalTimeZone()));
+  const currentMonth = startOfMonth(today(timeZone));
   return [currentMonth, currentMonth.add({ months: 1 })];
 }
 
@@ -130,10 +133,10 @@ export const DatePickerRangePanel = forwardRef<
   const {
     state: {
       selectedDate,
-      minDate = startOfMonth(today(getLocalTimeZone())),
+      timeZone = getLocalTimeZone(),
+      minDate = startOfMonth(today(timeZone)),
       maxDate = minDate.add({ months: 1 }),
       locale = getCurrentLocale(),
-      timeZone = getLocalTimeZone(),
     },
     helpers: { setSelectedDate },
   } = useDatePickerContext({ selectionVariant: "range" });
@@ -141,7 +144,7 @@ export const DatePickerRangePanel = forwardRef<
   const [hoveredDate, setHoveredDate] = useState<DateValue | null>(null);
 
   const [[fallbackStartVisibleMonth, fallbackEndVisibleMonth]] = useState(() =>
-    getFallbackVisibleMonths(selectedDate),
+    getFallbackVisibleMonths(selectedDate, timeZone),
   );
 
   const [startVisibleMonth, setStartVisibleMonth] = useControlled({

@@ -13,7 +13,7 @@ import { getCurrentLocale } from "../formatDate";
 
 export function formatDate(
   date: DateValue,
-  locale?: string,
+  locale: string,
   options?: Intl.DateTimeFormatOptions,
 ) {
   const timeLocale = locale || getCurrentLocale();

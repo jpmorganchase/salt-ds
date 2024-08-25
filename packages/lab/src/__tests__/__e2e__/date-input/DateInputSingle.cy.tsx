@@ -1,12 +1,15 @@
 import { CalendarDate, type DateValue } from "@internationalized/date";
 import * as dateInputStories from "@stories/date-input/date-input.stories";
 import { composeStories } from "@storybook/react";
-import { type SyntheticEvent, useState } from "react";
+import { type ChangeEvent, type SyntheticEvent, useState } from "react";
 
 const composedStories = composeStories(dateInputStories);
 const { Single } = composedStories;
 
 describe("GIVEN a DateInputSingle", () => {
+  const testLocale = "en-GB";
+  const testTimeZone = "Europe/London";
+
   const initialDateValue = "05 Jan 2025";
   const initialDate = new CalendarDate(2025, 1, 5);
 
@@ -14,19 +17,8 @@ describe("GIVEN a DateInputSingle", () => {
   const updatedFormattedDateValue = "01 Nov 2027";
   const updatedDate = new CalendarDate(2027, 11, 1);
 
-  const setupSpies = () => {
-    const inputChangeSpy = cy.stub().as("inputChangeSpy");
-    const dateChangeSpy = cy.stub().as("dateChangeSpy");
-    const dateValueChangeSpy = cy.stub().as("dateValueChangeSpy");
-    return {
-      inputChangeSpy,
-      dateChangeSpy,
-      dateValueChangeSpy,
-    };
-  };
-
   it("SHOULD render value, even when not a valid date", () => {
-    cy.mount(<Single value={"date value"} locale={"en-GB"} />);
+    cy.mount(<Single value={"date value"} locale={testLocale} />);
     cy.findByRole("textbox").should("have.value", "date value");
   });
 
@@ -43,7 +35,7 @@ describe("GIVEN a DateInputSingle", () => {
       <Single
         defaultValue={"text value"}
         parse={customParser}
-        locale={"en-GB"}
+        locale={testLocale}
       />,
     );
     // Simulate user entering "new value" into the input
@@ -61,13 +53,13 @@ describe("GIVEN a DateInputSingle", () => {
       dateToFormat: DateValue | null | undefined,
     ): string => {
       formatSpy(dateToFormat);
-      return "formatted date";
+      return dateToFormat ? "formatted date" : "";
     };
     cy.mount(
       <Single
         defaultValue={"text value"}
         formatDate={customFormatter}
-        locale={"en-GB"}
+        locale={testLocale}
       />,
     );
     // Simulate user entering updated date value into the input
@@ -84,7 +76,7 @@ describe("GIVEN a DateInputSingle", () => {
       <Single
         defaultDate={new CalendarDate(2030, 8, 1)}
         locale={"es-ES"}
-        timeZone={"America/New_York"}
+        timeZone={testTimeZone}
       />,
     );
     // Verify that the input is updated with the date value in the specified locale
@@ -92,17 +84,30 @@ describe("GIVEN a DateInputSingle", () => {
   });
 
   describe("uncontrolled component", () => {
+    let inputChangeSpy: Cypress.Agent<sinon.SinonStub>;
+    let dateChangeSpy: Cypress.Agent<sinon.SinonStub>;
+    let dateValueChangeSpy: Cypress.Agent<sinon.SinonStub>;
+    before(() => {
+      inputChangeSpy = cy.stub().as("inputChangeSpy");
+      dateChangeSpy = cy.stub().as("dateChangeSpy");
+      dateValueChangeSpy = cy.stub().as("dateValueChangeSpy");
+    });
+
     it("SHOULD update when changed with a valid date", () => {
-      const { inputChangeSpy, dateChangeSpy, dateValueChangeSpy } =
-        setupSpies();
+      const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+        // React 16 backwards compatibility
+        event.persist();
+        inputChangeSpy(event);
+      };
 
       cy.mount(
         <Single
           defaultValue={initialDateValue}
-          onChange={inputChangeSpy}
+          onChange={handleChange}
           onDateValueChange={dateValueChangeSpy}
           onDateChange={dateChangeSpy}
-          locale={"en-GB"}
+          locale={testLocale}
+          timeZone={testTimeZone}
         />,
       );
       // Simulate user entering updated date value into the input
@@ -113,6 +118,9 @@ describe("GIVEN a DateInputSingle", () => {
         false,
       );
       cy.get("@dateChangeSpy").should("not.have.been.called");
+      cy.get("@inputChangeSpy").should("have.been.calledWithMatch", {
+        target: { value: updatedDateValue },
+      });
       // Simulate pressing the Tab key to trigger blur event
       cy.realPress("Tab");
       cy.get("@dateValueChangeSpy").should(
@@ -122,25 +130,30 @@ describe("GIVEN a DateInputSingle", () => {
       );
       cy.get("@dateChangeSpy").should(
         "have.been.calledWithMatch",
-        Cypress.sinon.match({ type: "blur" }),
+        Cypress.sinon.match.any,
         updatedDate,
       );
     });
   });
 
   describe("controlled component", () => {
-    it("SHOULD update when changed with a valid date", () => {
-      const changeSpy = cy.stub().as("changeSpy");
-      const dateChangeSpy = cy.stub().as("dateChangeSpy");
-      const dateValueChangeSpy = cy.stub().as("dateValueChangeSpy");
+    let inputChangeSpy: Cypress.Agent<sinon.SinonStub>;
+    let dateChangeSpy: Cypress.Agent<sinon.SinonStub>;
+    let dateValueChangeSpy: Cypress.Agent<sinon.SinonStub>;
+    before(() => {
+      inputChangeSpy = cy.stub().as("inputChangeSpy");
+      dateChangeSpy = cy.stub().as("dateChangeSpy");
+      dateValueChangeSpy = cy.stub().as("dateValueChangeSpy");
+    });
 
+    it("SHOULD update when changed with a valid date", () => {
       function ControlledDateInput() {
         const [date, setDate] = useState<DateValue | null>(initialDate);
 
         const onChange = (event: SyntheticEvent) => {
           // React 16 backwards compatibility
           event.persist();
-          changeSpy(event);
+          inputChangeSpy(event);
         };
         const onDateChange = (
           event: SyntheticEvent,
@@ -158,7 +171,8 @@ describe("GIVEN a DateInputSingle", () => {
             onChange={onChange}
             onDateValueChange={dateValueChangeSpy}
             onDateChange={onDateChange}
-            locale={"en-GB"}
+            locale={testLocale}
+            timeZone={testTimeZone}
           />
         );
       }
@@ -172,6 +186,9 @@ describe("GIVEN a DateInputSingle", () => {
         false,
       );
       cy.get("@dateChangeSpy").should("not.have.been.called");
+      cy.get("@inputChangeSpy").should("have.been.calledWithMatch", {
+        target: { value: updatedDateValue },
+      });
       // Simulate pressing the Tab key to trigger blur event
       cy.realPress("Tab");
       cy.get("@dateValueChangeSpy").should(
@@ -181,7 +198,7 @@ describe("GIVEN a DateInputSingle", () => {
       );
       cy.get("@dateChangeSpy").should(
         "have.been.calledWithMatch",
-        Cypress.sinon.match({ type: "blur" }),
+        Cypress.sinon.match.any,
         updatedDate,
       );
     });

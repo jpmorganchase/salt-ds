@@ -3,9 +3,12 @@ import { DateInputRange, DateInputSingle } from "@salt-ds/lab";
 import type { StoryFn } from "@storybook/react";
 import { QAContainer, type QAContainerProps } from "docs/components";
 
+const testLocale = "en-GB";
+
 export default {
   title: "Lab/Date Input/QA",
   component: DateInputSingle,
+  locale: testLocale,
 };
 
 export const AllExamples: StoryFn<QAContainerProps> = () => (
@@ -18,19 +21,28 @@ export const AllExamples: StoryFn<QAContainerProps> = () => (
     transposeDensity
     vertical
   >
-    <DateInputSingle defaultDate={new CalendarDate(2025, 1, 2)} />
-    <DateInputSingle defaultDate={new CalendarDate(2025, 1, 2)} bordered />
-    <DateInputRange
-      defaultDate={{
-        startDate: new CalendarDate(2025, 1, 2),
-        endDate: new CalendarDate(2025, 2, 3),
-      }}
+    <DateInputSingle
+      defaultDate={new CalendarDate(2025, 1, 2)}
+      locale={testLocale}
+    />
+    <DateInputSingle
+      defaultDate={new CalendarDate(2025, 1, 2)}
+      bordered
+      locale={testLocale}
     />
     <DateInputRange
       defaultDate={{
         startDate: new CalendarDate(2025, 1, 2),
         endDate: new CalendarDate(2025, 2, 3),
       }}
+      locale={testLocale}
+    />
+    <DateInputRange
+      defaultDate={{
+        startDate: new CalendarDate(2025, 1, 2),
+        endDate: new CalendarDate(2025, 2, 3),
+      }}
+      locale={testLocale}
       bordered
     />
   </QAContainer>

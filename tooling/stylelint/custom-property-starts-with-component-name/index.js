@@ -88,7 +88,7 @@ const isComponentCustomProperty = (property) =>
  * Starts with `--saltComponentName-`
  */
 const isCssApi = (property) =>
-  combinedAllowedNames.some((component) => property.startsWith(`--salt${component}-`));
+  allowedNames.some((component) => property.startsWith(`--salt${component}-`));
 
 module.exports = stylelint.createPlugin(
   ruleName,

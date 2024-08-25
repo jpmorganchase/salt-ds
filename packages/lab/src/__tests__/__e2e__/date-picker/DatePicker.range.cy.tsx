@@ -2,7 +2,6 @@ import {
   CalendarDate,
   type DateValue,
   ZonedDateTime,
-  getLocalTimeZone,
   parseDate,
   today,
 } from "@internationalized/date";
@@ -16,7 +15,7 @@ import {
 } from "@stories/date-picker/date-picker.stories";
 import { composeStories } from "@storybook/react";
 import React from "react";
-import { formatDate, getCurrentLocale } from "../../../calendar";
+import { formatDate } from "../../../calendar";
 import { parseZonedDateTime } from "../../../date-input";
 import {
   DatePicker,
@@ -31,6 +30,9 @@ const composedStories = composeStories(datePickerStories);
 const { Range } = composedStories;
 
 describe("GIVEN a DatePicker where selectionVariant is range", () => {
+  const testLocale = "en-GB";
+  const testTimeZone = "Europe/London";
+
   const initialSingleDateValue = { startDate: "05 Jan 2025" };
   const initialSingleDate = { startDate: new CalendarDate(2025, 1, 5) };
 
@@ -53,7 +55,7 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
   };
 
   const formatDay = (date: DateValue) => {
-    return formatDate(date, getCurrentLocale(), {
+    return formatDate(date, testLocale, {
       day: "2-digit",
       month: "long",
       year: "numeric",
@@ -62,7 +64,7 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
 
   it("SHOULD only be able to select a date between min/max", () => {
     cy.mount(
-      <RangeWithMinMaxDate selectionVariant={"range"} locale={"en-GB"} />,
+      <RangeWithMinMaxDate selectionVariant={"range"} locale={testLocale} />,
     );
     // Simulate opening the calendar
     cy.findByRole("button", { name: "Open Calendar" }).realClick();
@@ -90,11 +92,11 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
     cy.findByRole("application").should("not.exist");
     cy.findByLabelText("Start date").should(
       "have.value",
-      formatDate(parseDate("2030-01-15")),
+      formatDate(parseDate("2030-01-15"), testLocale),
     );
     cy.findByLabelText("End date").should(
       "have.value",
-      formatDate(parseDate("2031-01-15")),
+      formatDate(parseDate("2031-01-15"), testLocale),
     );
   });
 
@@ -104,7 +106,7 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
       <RangeWithFormField
         selectionVariant={"range"}
         onSelectedDateChange={selectedDateChangeSpy}
-        locale={"en-GB"}
+        locale={testLocale}
       />,
     );
     // Simulate entering a valid start date
@@ -115,18 +117,29 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
     cy.realPress("Tab");
     cy.findByLabelText("Start date").should(
       "have.value",
-      initialSingleDateValue.startDate,
+      initialRangeDateValue.startDate,
     );
+    cy.get("@selectedDateChangeSpy").should("have.been.calledOnce");
     cy.get("@selectedDateChangeSpy").should("have.been.calledWith", {
-      startDate: initialSingleDate.startDate,
+      startDate: initialRangeDate.startDate,
       endDate: undefined,
     });
-    // Simulate entering an invalid start date
-    cy.findByLabelText("Start date").clear().type("bad date");
-    cy.get("@selectedDateChangeSpy").should("have.been.calledOnce");
+    // Simulate entering an valid end date
+    cy.findByLabelText("End date").clear().type(initialRangeDateValue.endDate);
     cy.realPress("Tab");
     cy.get("@selectedDateChangeSpy").should("have.been.calledTwice");
-    cy.get("@selectedDateChangeSpy").should("have.been.calledWith", null);
+    cy.get("@selectedDateChangeSpy").should("have.been.calledWith", {
+      startDate: initialRangeDate.startDate,
+      endDate: initialRangeDate.endDate,
+    });
+    // Simulate entering an invalid end date
+    cy.findByLabelText("End date").clear().type("bad date");
+    cy.realPress("Tab");
+    cy.get("@selectedDateChangeSpy").should("have.been.calledThrice");
+    cy.get("@selectedDateChangeSpy").should("have.been.calledWith", {
+      startDate: initialRangeDate.startDate,
+      endDate: undefined,
+    });
   });
 
   it("SHOULD support custom panel with tenors", () => {
@@ -135,7 +148,7 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
       <RangeWithCustomPanel
         selectionVariant={"range"}
         onSelectedDateChange={selectedDateChangeSpy}
-        locale={"en-GB"}
+        locale={testLocale}
       />,
     );
     // Simulate opening the calendar
@@ -151,7 +164,7 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
     // Verify that the calendar is closed and the selected dates are displayed
     cy.findByRole("application").should("not.exist");
     cy.realPress("Tab");
-    const startDate = today(getLocalTimeZone());
+    const startDate = today(testTimeZone);
     const endDate = startDate.add({ years: 15 });
     cy.get("@selectedDateChangeSpy").should(
       "always.have.been.calledWithMatch",
@@ -159,9 +172,12 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
     );
     cy.findByLabelText("Start date").should(
       "have.value",
-      formatDate(startDate),
+      formatDate(startDate, testLocale),
     );
-    cy.findByLabelText("End date").should("have.value", formatDate(endDate));
+    cy.findByLabelText("End date").should(
+      "have.value",
+      formatDate(endDate, testLocale),
+    );
   });
 
   describe("SHOULD support confirmation", () => {
@@ -172,17 +188,17 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
           selectionVariant={"range"}
           defaultSelectedDate={initialRangeDate}
           onSelectedDateChange={selectedDateChangeSpy}
-          locale={"en-GB"}
+          locale={testLocale}
         />,
       );
       // Verify that the initial selected dates are displayed
       cy.findByLabelText("Start date").should(
         "have.value",
-        formatDate(initialRangeDate.startDate),
+        formatDate(initialRangeDate.startDate, testLocale),
       );
       cy.findByLabelText("End date").should(
         "have.value",
-        formatDate(initialRangeDate.endDate),
+        formatDate(initialRangeDate.endDate, testLocale),
       );
       // Simulate opening the calendar
       cy.findByRole("button", { name: "Open Calendar" }).realClick();
@@ -193,7 +209,7 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
       cy.findAllByRole("application").should("have.length", 2);
       cy.findByLabelText("Start date").should(
         "have.value",
-        formatDate(unconfirmedDate),
+        formatDate(unconfirmedDate, testLocale),
       );
       // Simulate clicking the "Cancel" button
       cy.findByRole("button", { name: "Cancel" }).realClick();
@@ -202,11 +218,11 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
       cy.get("@selectedDateChangeSpy").should("not.have.been.called");
       cy.findByLabelText("Start date").should(
         "have.value",
-        formatDate(initialRangeDate.startDate),
+        formatDate(initialRangeDate.startDate, testLocale),
       );
       cy.findByLabelText("End date").should(
         "have.value",
-        formatDate(initialRangeDate.endDate),
+        formatDate(initialRangeDate.endDate, testLocale),
       );
     });
 
@@ -217,17 +233,17 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
           selectionVariant={"range"}
           defaultSelectedDate={initialRangeDate}
           onSelectedDateChange={selectedDateChangeSpy}
-          locale={"en-GB"}
+          locale={testLocale}
         />,
       );
       // Verify that the initial selected dates are displayed
       cy.findByLabelText("Start date").should(
         "have.value",
-        formatDate(initialRangeDate.startDate),
+        formatDate(initialRangeDate.startDate, testLocale),
       );
       cy.findByLabelText("End date").should(
         "have.value",
-        formatDate(initialRangeDate.endDate),
+        formatDate(initialRangeDate.endDate, testLocale),
       );
       // Simulate opening the calendar
       cy.findByRole("button", { name: "Open Calendar" }).realClick();
@@ -247,11 +263,11 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
       // Verify that the new date range is displayed
       cy.findByLabelText("Start date").should(
         "have.value",
-        formatDate(unconfirmedDate.startDate),
+        formatDate(unconfirmedDate.startDate, testLocale),
       );
       cy.findByLabelText("End date").should(
         "have.value",
-        formatDate(unconfirmedDate.endDate),
+        formatDate(unconfirmedDate.endDate, testLocale),
       );
       // Simulate clicking the "Apply" button
       cy.findByRole("button", { name: "Apply" }).realClick();
@@ -263,11 +279,11 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
       );
       cy.findByLabelText("Start date").should(
         "have.value",
-        formatDate(unconfirmedDate.startDate),
+        formatDate(unconfirmedDate.startDate, testLocale),
       );
       cy.findByLabelText("End date").should(
         "have.value",
-        formatDate(unconfirmedDate.endDate),
+        formatDate(unconfirmedDate.endDate, testLocale),
       );
     });
   });
@@ -275,16 +291,16 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
   describe("uncontrolled component", () => {
     it("SHOULD render the default date", () => {
       cy.mount(
-        <Range defaultSelectedDate={initialRangeDate} locale={"en-GB"} />,
+        <Range defaultSelectedDate={initialRangeDate} locale={testLocale} />,
       );
       // Verify that the default selected dates are displayed
       cy.findByLabelText("Start date").should(
         "have.value",
-        formatDate(initialRangeDate.startDate),
+        formatDate(initialRangeDate.startDate, testLocale),
       );
       cy.findByLabelText("End date").should(
         "have.value",
-        formatDate(initialRangeDate.endDate),
+        formatDate(initialRangeDate.endDate, testLocale),
       );
       // Simulate opening the calendar
       cy.findByRole("button", { name: "Open Calendar" }).realClick();
@@ -300,7 +316,7 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
 
     it("SHOULD be able to select a date", () => {
       cy.mount(
-        <Range defaultSelectedDate={initialRangeDate} locale={"en-GB"} />,
+        <Range defaultSelectedDate={initialRangeDate} locale={testLocale} />,
       );
       // Simulate opening the calendar
       cy.findByRole("button", { name: "Open Calendar" }).realClick();
@@ -324,11 +340,11 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
       cy.findByRole("button", { name: "Open Calendar" }).should("have.focus");
       cy.findByLabelText("Start date").should(
         "have.value",
-        formatDate(updatedRangeDate.startDate),
+        formatDate(updatedRangeDate.startDate, testLocale),
       );
       cy.findByLabelText("End date").should(
         "have.value",
-        formatDate(updatedRangeDate.endDate),
+        formatDate(updatedRangeDate.endDate, testLocale),
       );
     });
   });
@@ -339,17 +355,17 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
         <RangeControlled
           selectionVariant={"range"}
           selectedDate={initialRangeDate}
-          locale={"en-GB"}
+          locale={testLocale}
         />,
       );
       // Verify that the selected dates are displayed
       cy.findByLabelText("Start date").should(
         "have.value",
-        formatDate(initialRangeDate.startDate),
+        formatDate(initialRangeDate.startDate, testLocale),
       );
       cy.findByLabelText("End date").should(
         "have.value",
-        formatDate(initialRangeDate.endDate),
+        formatDate(initialRangeDate.endDate, testLocale),
       );
       // Simulate opening the calendar
       cy.findByRole("button", { name: "Open Calendar" }).realClick();
@@ -368,7 +384,7 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
         <RangeControlled
           selectionVariant={"range"}
           selectedDate={initialRangeDate}
-          locale={"en-GB"}
+          locale={testLocale}
         />,
       );
       // Simulate opening the calendar
@@ -393,11 +409,11 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
       cy.findByRole("button", { name: "Open Calendar" }).should("have.focus");
       cy.findByLabelText("Start date").should(
         "have.value",
-        formatDate(updatedRangeDate.startDate),
+        formatDate(updatedRangeDate.startDate, testLocale),
       );
       cy.findByLabelText("End date").should(
         "have.value",
-        formatDate(updatedRangeDate.endDate),
+        formatDate(updatedRangeDate.endDate, testLocale),
       );
     });
   });
@@ -408,7 +424,7 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
       2024,
       12,
       11,
-      getLocalTimeZone(),
+      testTimeZone,
       0,
       9,
       30,
@@ -420,13 +436,15 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
       2025,
       13,
       12,
-      getLocalTimeZone(),
+      testTimeZone,
       0,
       10,
       33,
       34,
       35,
     );
+    const parse: typeof parseZonedDateTime = (dateTime) =>
+      parseZonedDateTime(dateTime, testTimeZone);
     cy.mount(
       <DatePicker
         defaultSelectedDate={{
@@ -435,9 +453,10 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
         }}
         selectionVariant="range"
         onSelectedDateChange={selectedDateChangeSpy}
-        locale={"en-GB"}
+        locale={testLocale}
+        timeZone={testTimeZone}
       >
-        <DatePickerRangeInput parse={parseZonedDateTime} />
+        <DatePickerRangeInput parse={parse} />
         <DatePickerOverlay>
           <DatePickerRangePanel />
         </DatePickerOverlay>

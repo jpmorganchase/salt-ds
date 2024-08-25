@@ -31,7 +31,7 @@ SingleBordered.args = {
   bordered: true,
 };
 
-export const RangeBordered = DateInputSingleTemplate.bind({});
+export const RangeBordered = DateInputRangeTemplate.bind({});
 RangeBordered.args = {
   bordered: true,
 };

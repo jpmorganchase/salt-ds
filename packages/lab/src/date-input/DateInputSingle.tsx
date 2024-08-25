@@ -185,7 +185,7 @@ export const DateInputSingle = forwardRef<HTMLDivElement, DateInputSingleProps>(
         setDateValue(formattedDate);
         onDateValueChange?.(formattedDate, true);
       }
-    }, [date, formatDate, locale, onDateValueChange, timeZone]);
+    }, [date, formatDate, locale, timeZone]);
 
     const [focused, setFocused] = useState(false);
 

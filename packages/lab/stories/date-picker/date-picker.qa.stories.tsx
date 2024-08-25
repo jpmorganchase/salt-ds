@@ -12,15 +12,19 @@ import type { StoryFn } from "@storybook/react";
 import { QAContainer, type QAContainerProps } from "docs/components";
 import React from "react";
 
+const testLocale = "en-GB";
+
 export default {
   title: "Lab/Date Picker/QA",
   component: DatePicker,
+  locale: testLocale,
 };
 
 export const SingleExamples: StoryFn<QAContainerProps> = () => (
   <QAContainer itemPadding={10} width={1000}>
     <div style={{ height: 500 }}>
       <DatePicker
+        locale={testLocale}
         defaultSelectedDate={today(getLocalTimeZone())}
         selectionVariant="single"
         open
@@ -56,10 +60,10 @@ export const SingleWithLocaleExamples: StoryFn<QAContainerProps> = () => (
   <QAContainer itemPadding={10} width={1000}>
     <div style={{ height: 500 }}>
       <DatePicker
-        defaultSelectedDate={today(getLocalTimeZone())}
-        selectionVariant="single"
         locale={"es-ES"}
         timeZone={"Europe/Madrid"}
+        defaultSelectedDate={today(getLocalTimeZone())}
+        selectionVariant="single"
         open
       >
         <DatePickerSingleInput />
@@ -93,6 +97,7 @@ export const RangeExamples: StoryFn<QAContainerProps> = () => (
   <QAContainer itemPadding={10} width={1500}>
     <div style={{ height: "500px" }}>
       <DatePicker
+        locale={testLocale}
         defaultSelectedDate={{
           startDate: today(getLocalTimeZone()),
           endDate: today(getLocalTimeZone()).add({ months: 1, weeks: 1 }),

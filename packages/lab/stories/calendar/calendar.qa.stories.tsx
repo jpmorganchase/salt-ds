@@ -3,9 +3,12 @@ import { Calendar, CalendarNavigation } from "@salt-ds/lab";
 import type { StoryFn } from "@storybook/react";
 import { QAContainer, type QAContainerProps } from "docs/components";
 
+const testLocale = "en-GB";
+
 export default {
   title: "Lab/Calendar/QA",
   component: Calendar,
+  locale: testLocale,
 };
 
 export const AllExamples: StoryFn<QAContainerProps> = () => (
@@ -18,10 +21,15 @@ export const AllExamples: StoryFn<QAContainerProps> = () => (
     transposeDensity
     vertical
   >
-    <Calendar selectionVariant="single" selectedDate={parseDate("2024-04-02")}>
+    <Calendar
+      locale={testLocale}
+      selectionVariant="single"
+      selectedDate={parseDate("2024-04-02")}
+    >
       <CalendarNavigation />
     </Calendar>
     <Calendar
+      locale={testLocale}
       selectionVariant="range"
       selectedDate={{
         startDate: parseDate("2024-04-02"),
@@ -31,6 +39,7 @@ export const AllExamples: StoryFn<QAContainerProps> = () => (
       <CalendarNavigation />
     </Calendar>
     <Calendar
+      locale={testLocale}
       selectionVariant="offset"
       selectedDate={{
         startDate: parseDate("2024-04-02"),
@@ -40,18 +49,21 @@ export const AllExamples: StoryFn<QAContainerProps> = () => (
       <CalendarNavigation />
     </Calendar>
     <Calendar
+      locale={testLocale}
       selectionVariant="multiselect"
       selectedDate={[parseDate("2024-04-02"), parseDate("2024-04-04")]}
     >
       <CalendarNavigation />
     </Calendar>
     <Calendar
+      locale={testLocale}
       selectionVariant="multiselect"
       selectedDate={[parseDate("2024-04-02"), parseDate("2024-04-04")]}
     >
       <CalendarNavigation hideYearDropdown />
     </Calendar>
     <Calendar
+      locale={testLocale}
       selectionVariant="multiselect"
       selectedDate={[parseDate("2024-04-02"), parseDate("2024-04-04")]}
     >

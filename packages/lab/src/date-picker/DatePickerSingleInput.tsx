@@ -65,13 +65,13 @@ export const DatePickerSingleInput = forwardRef<
     [setSelectedDate],
   );
 
-  const handleDateValueChange = useCallback(
-    (newDateValue: string, isFormatted: boolean) => {
-      setValue(newDateValue);
-      onDateValueChange?.(newDateValue, isFormatted);
-    },
-    [onDateValueChange],
-  );
+  const handleDateValueChange = (
+    newDateValue: string,
+    isFormatted: boolean,
+  ) => {
+    setValue(newDateValue);
+    onDateValueChange?.(newDateValue, isFormatted);
+  };
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: should run when open changes and not selected date or value
   useEffect(() => {

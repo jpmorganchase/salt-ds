@@ -4,7 +4,8 @@ import {
   type DateValue,
   type TimeFields,
   ZonedDateTime,
-  parseAbsoluteToLocal,
+  getLocalTimeZone,
+  toZoned,
 } from "@internationalized/date";
 import type { DateRangeSelection, SingleDateSelection } from "../calendar";
 
@@ -15,7 +16,7 @@ export type RangeTimeFields = {
 
 export function parseCalendarDate(
   inputDate: string | undefined,
-): DateValue | undefined {
+): CalendarDate | undefined {
   if (!inputDate) {
     return undefined;
   }
@@ -23,46 +24,28 @@ export function parseCalendarDate(
   if (Number.isNaN(date.getTime())) {
     return undefined;
   }
-  let isoDate: DateValue;
+
+  const year = date.getFullYear();
+  const month = date.getMonth() + 1;
+  const day = date.getDate();
+
   try {
-    isoDate = parseAbsoluteToLocal(date?.toISOString());
+    const isoDate = new CalendarDate(year, month, day);
+    return isoDate;
   } catch (err) {
     return undefined;
   }
-  return isoDate
-    ? new CalendarDate(isoDate.year, isoDate.month, isoDate.day)
-    : undefined;
 }
 
 export function parseZonedDateTime(
   inputDate: string | undefined,
+  timeZone: string = getLocalTimeZone(),
 ): DateValue | undefined {
-  if (!inputDate) {
-    return undefined;
+  const date = parseCalendarDate(inputDate);
+  if (!date) {
+    return date;
   }
-  const date = new Date(inputDate);
-  if (Number.isNaN(date.getTime())) {
-    return undefined;
-  }
-  let isoDate: DateValue;
-  try {
-    isoDate = parseAbsoluteToLocal(date?.toISOString());
-  } catch (err) {
-    return undefined;
-  }
-  return isoDate
-    ? new ZonedDateTime(
-        isoDate.year,
-        isoDate.month,
-        isoDate.day,
-        isoDate.timeZone,
-        isoDate.offset,
-        isoDate.hour,
-        isoDate.minute,
-        isoDate.second,
-        isoDate.millisecond,
-      )
-    : undefined;
+  return toZoned(date, timeZone, "compatible");
 }
 
 export const dateSupportsTime = (
