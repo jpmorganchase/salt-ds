@@ -88,7 +88,7 @@
     "@types/tinycolor2": "^1.4.3",
     "@vitejs/plugin-react": "^4.1.0",
     "ag-grid-community": "^31.3.0",
-    "ag-grid-enterprise": "^31.3.0",
+    "ag-grid-enterprise": "^31.3.4",
     "ag-grid-react": "^31.3.0",
     "axe-core": "^4.9.0",
     "chromatic": "^11.3.2",
