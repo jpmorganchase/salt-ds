@@ -26,6 +26,9 @@ export const AllExamples: StoryFn<QAContainerProps> = () => (
         <NavigationItem parent expanded>
           Horizontal Parent expanded
         </NavigationItem>
+        <NavigationItem parent href="#">
+          Horizontal Parent Link
+        </NavigationItem>
         <NavigationItem orientation="vertical">Vertical</NavigationItem>
         <NavigationItem orientation="vertical" parent>
           Vertical Parent

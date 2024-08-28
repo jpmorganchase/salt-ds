@@ -7,11 +7,11 @@
     "README.md"
   ],
   "dependencies": {
-    "@storybook/addon-docs": "^8.2.4",
-    "@storybook/blocks": "^8.2.4",
-    "@storybook/components": "^8.2.4",
-    "@storybook/docs-tools": "^8.2.4",
-    "@storybook/theming": "^8.2.4",
+    "@storybook/addon-docs": "^8.2.9",
+    "@storybook/blocks": "^8.2.9",
+    "@storybook/components": "^8.2.9",
+    "@storybook/docs-tools": "^8.2.9",
+    "@storybook/theming": "^8.2.9",
     "polished": "^4.0.5"
   }
 }

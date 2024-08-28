@@ -101,7 +101,10 @@ export const Accordion = forwardRef<HTMLDivElement, AccordionProps>(
           ref={ref}
           className={clsx(
             withBaseName(),
-            { [withBaseName(status ?? "")]: status },
+            {
+              [withBaseName(status ?? "")]: status,
+              [withBaseName("disabled")]: disabled,
+            },
             className,
           )}
           {...rest}

@@ -2,20 +2,35 @@ import { NavigationItem, StackLayout } from "@salt-ds/core";
 import { NotificationIcon } from "@salt-ds/icons";
 import { type ReactElement, useState } from "react";
 
-const multipleLevelNesting = [
+type Item = {
+  name: string;
+  subNav?: Item[];
+  href?: string;
+};
+
+const multipleLevelNesting: Item[] = [
   {
     name: "Label 1 - level 0",
+    href: "#",
   },
   {
     name: "Label 2 - level 0",
     subNav: [
       {
         name: "Label 1 - level 1",
-        subNav: ["Label 1 - level 2", "Label 2 - level 2", "Label 3 - level 2"],
+        subNav: [
+          {
+            name: "Label 1 - level 2",
+            href: "#",
+          },
+          { name: "Label 2 - level 2", href: "#" },
+          { name: "Label 3 - level 2", href: "#" },
+        ],
       },
     ],
   },
 ];
+
 export const VerticalNestedGroup = (): ReactElement => {
   const [active, setActive] = useState(multipleLevelNesting[0].name);
 
@@ -32,7 +47,7 @@ export const VerticalNestedGroup = (): ReactElement => {
           paddingLeft: 0,
         }}
       >
-        {multipleLevelNesting.map(({ name, subNav }) => (
+        {multipleLevelNesting.map(({ name, subNav, href }) => (
           <li key={name}>
             <NavigationItem
               active={
@@ -45,13 +60,13 @@ export const VerticalNestedGroup = (): ReactElement => {
                 subNav?.some(
                   (item) =>
                     active === `${name} - ${item.name}` ||
-                    item.subNav.some(
+                    item.subNav?.some(
                       (nestedItem) =>
                         active === `${name} - ${item.name} - ${nestedItem}`,
                     ),
                 )
               }
-              href="#"
+              href={href}
               orientation="vertical"
               onClick={() => {
                 setActive(name);
@@ -100,7 +115,7 @@ export const VerticalNestedGroup = (): ReactElement => {
                               `${name} - ${item.name} - ${nestedItem}`,
                           )
                         }
-                        href="#"
+                        href={item.href}
                         orientation="vertical"
                         level={1}
                         onExpand={() => {
@@ -130,21 +145,21 @@ export const VerticalNestedGroup = (): ReactElement => {
                             paddingLeft: 0,
                           }}
                         >
-                          {item.subNav.map((nestedItem) => {
-                            const itemValue = `${name} - ${item.name} - ${nestedItem}`;
+                          {item.subNav?.map((nestedItem) => {
+                            const itemValue = `${name} - ${item.name} - ${nestedItem.name}`;
 
                             return (
                               <li key={itemValue}>
                                 <NavigationItem
                                   active={active === itemValue}
-                                  href="#"
+                                  href={nestedItem.href}
                                   orientation="vertical"
                                   onClick={() => {
                                     setActive(itemValue);
                                   }}
                                   level={2}
                                 >
-                                  {nestedItem}
+                                  {nestedItem.name}
                                 </NavigationItem>
                               </li>
                             );

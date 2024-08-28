@@ -158,7 +158,7 @@ export const WithBadge: StoryFn<NavigationItemProps> = () => {
   );
 };
 
-export const WithNestedItems: StoryFn<NavigationItemProps> = () => {
+export const Parent: StoryFn<NavigationItemProps> = () => {
   const [horizontalActive, setHorizontalActive] = useState(false);
 
   const [verticalActive, setVerticalActive] = useState(false);
@@ -176,7 +176,6 @@ export const WithNestedItems: StoryFn<NavigationItemProps> = () => {
       <NavigationItem
         active={horizontalActive}
         onExpand={handleHorizontalActiveToggle}
-        href="#"
         parent
       >
         Label
@@ -185,7 +184,6 @@ export const WithNestedItems: StoryFn<NavigationItemProps> = () => {
       <NavigationItem
         active={verticalActive}
         onExpand={handleVerticalActiveToggle}
-        href="#"
         orientation="vertical"
         parent
       >
@@ -197,27 +195,12 @@ export const WithNestedItems: StoryFn<NavigationItemProps> = () => {
 
 const items = ["Label 1", "Label 2", "Label 3", "Label 4", "Label 5"];
 
-const multipleLevelNesting = [
-  {
-    name: "Label 1 - level 0",
-  },
-  {
-    name: "Label 2 - level 0",
-    subNav: [
-      {
-        name: "Label 1 - level 1",
-        subNav: ["Label 1 - level 2", "Label 2 - level 2", "Label 3 - level 2"],
-      },
-    ],
-  },
-];
-
 export const HorizontalGroup = () => {
   const [active, setActive] = useState(items[0]);
 
   return (
     <nav>
-      <ul className="horizontal">
+      <StackLayout as="ul" direction="row" gap={1}>
         {items.map((item) => (
           <li key={item}>
             <NavigationItem
@@ -233,7 +216,7 @@ export const HorizontalGroup = () => {
             </NavigationItem>
           </li>
         ))}
-      </ul>
+      </StackLayout>
     </nav>
   );
 };
@@ -243,7 +226,7 @@ export const HorizontalGroupWithIconAndBadge = () => {
 
   return (
     <nav>
-      <ul className="horizontal">
+      <StackLayout as="ul" direction="row" gap={1}>
         {items.map((item, index) => (
           <li key={item}>
             <NavigationItem
@@ -261,7 +244,7 @@ export const HorizontalGroupWithIconAndBadge = () => {
             </NavigationItem>
           </li>
         ))}
-      </ul>
+      </StackLayout>
     </nav>
   );
 };
@@ -270,7 +253,7 @@ export const VerticalGroup = () => {
   const [active, setActive] = useState(items[0]);
   return (
     <nav>
-      <ul className="vertical">
+      <StackLayout className="vertical" as="ul" gap="var(--salt-size-border)">
         {items.map((item) => (
           <li key={item}>
             <NavigationItem
@@ -287,7 +270,7 @@ export const VerticalGroup = () => {
             </NavigationItem>
           </li>
         ))}
-      </ul>
+      </StackLayout>
     </nav>
   );
 };
@@ -299,33 +282,60 @@ export const VerticalGroupWithIconAndBadge = () => {
 
   return (
     <nav>
-      <ul className="vertical">
-        {items.map((item, index) => {
-          return (
-            <li key={item}>
-              <NavigationItem
-                active={active === item}
-                href="#"
-                orientation="vertical"
-                onClick={(event) => {
-                  // Prevent default to avoid navigation
-                  event.preventDefault();
-                  setActive(item);
-                }}
-              >
-                <NotificationIcon />
-                {index === 0
-                  ? "This is a very long label across two lines"
-                  : item}
-                {badgeValues[index] && <Badge value={badgeValues[index]} />}
-              </NavigationItem>
-            </li>
-          );
-        })}
-      </ul>
+      <StackLayout className="vertical" as="ul" gap="var(--salt-size-border)">
+        {items.map((item, index) => (
+          <li key={item}>
+            <NavigationItem
+              active={active === item}
+              href="#"
+              orientation="vertical"
+              onClick={(event) => {
+                // Prevent default to avoid navigation
+                event.preventDefault();
+                setActive(item);
+              }}
+            >
+              <NotificationIcon />
+              {index === 0
+                ? "This is a very long label across two lines"
+                : item}
+              {badgeValues[index] && <Badge value={badgeValues[index]} />}
+            </NavigationItem>
+          </li>
+        ))}
+      </StackLayout>
     </nav>
   );
 };
+
+type Item = {
+  name: string;
+  subNav?: Item[];
+  href?: string;
+};
+
+const multipleLevelNesting: Item[] = [
+  {
+    name: "Label 1 - level 0",
+    href: "#",
+  },
+  {
+    name: "Label 2 - level 0",
+    subNav: [
+      {
+        name: "Label 1 - level 1",
+        subNav: [
+          {
+            name: "Label 1 - level 2",
+            href: "#",
+          },
+          { name: "Label 2 - level 2", href: "#" },
+          { name: "Label 3 - level 2", href: "#" },
+        ],
+      },
+    ],
+  },
+];
 
 export const VerticalNestedGroup = () => {
   const [active, setActive] = useState(multipleLevelNesting[0].name);
@@ -334,8 +344,8 @@ export const VerticalNestedGroup = () => {
 
   return (
     <nav>
-      <ul className="vertical">
-        {multipleLevelNesting.map(({ name, subNav }) => (
+      <StackLayout as="ul" gap="var(--salt-size-border)" className="vertical">
+        {multipleLevelNesting.map(({ name, subNav, href }) => (
           <li key={name}>
             <NavigationItem
               active={
@@ -348,20 +358,17 @@ export const VerticalNestedGroup = () => {
                 subNav?.some(
                   (item) =>
                     active === `${name} - ${item.name}` ||
-                    item.subNav.some(
+                    item.subNav?.some(
                       (nestedItem) =>
                         active === `${name} - ${item.name} - ${nestedItem}`,
                     ),
                 )
               }
-              href="#"
+              href={href}
               orientation="vertical"
               onClick={(event) => {
-                // Prevent default to avoid navigation
                 event.preventDefault();
                 setActive(name);
-              }}
-              onExpand={() => {
                 if (expanded.includes(name)) {
                   setExpanded(expanded.filter((item) => item !== name));
                 } else {
@@ -375,7 +382,11 @@ export const VerticalNestedGroup = () => {
               {name}
             </NavigationItem>
             {expanded.includes(name) && (
-              <ul className="vertical">
+              <StackLayout
+                as="ul"
+                gap="var(--salt-size-border)"
+                className="vertical"
+              >
                 {subNav?.map((item) => {
                   const itemValue = `${name} - ${item.name}`;
 
@@ -397,7 +408,7 @@ export const VerticalNestedGroup = () => {
                               `${name} - ${item.name} - ${nestedItem}`,
                           )
                         }
-                        href="#"
+                        href={item.href}
                         orientation="vertical"
                         onClick={(event) => {
                           // Prevent default to avoid navigation
@@ -422,15 +433,19 @@ export const VerticalNestedGroup = () => {
                       </NavigationItem>
 
                       {expanded.includes(item.name) && (
-                        <ul className="vertical">
-                          {item.subNav.map((nestedItem) => {
-                            const itemValue = `${name} - ${item.name} - ${nestedItem}`;
+                        <StackLayout
+                          as="ul"
+                          gap="var(--salt-size-border)"
+                          className="vertical"
+                        >
+                          {item.subNav?.map((nestedItem) => {
+                            const itemValue = `${name} - ${item.name} - ${nestedItem.name}`;
 
                             return (
                               <li key={itemValue}>
                                 <NavigationItem
                                   active={active === itemValue}
-                                  href="#"
+                                  href={nestedItem.href}
                                   orientation="vertical"
                                   onClick={(event) => {
                                     // Prevent default to avoid navigation
@@ -439,21 +454,21 @@ export const VerticalNestedGroup = () => {
                                   }}
                                   level={2}
                                 >
-                                  {nestedItem}
+                                  {nestedItem.name}
                                 </NavigationItem>
                               </li>
                             );
                           })}
-                        </ul>
+                        </StackLayout>
                       )}
                     </li>
                   );
                 })}
-              </ul>
+              </StackLayout>
             )}
           </li>
         ))}
-      </ul>
+      </StackLayout>
     </nav>
   );
 };
@@ -465,8 +480,8 @@ export const VerticalNestedGroupNoIcon = () => {
 
   return (
     <nav>
-      <ul className="vertical">
-        {multipleLevelNesting.map(({ name, subNav }) => (
+      <StackLayout as="ul" gap="var(--salt-size-border)" className="vertical">
+        {multipleLevelNesting.map(({ name, subNav, href }) => (
           <li key={name}>
             <NavigationItem
               active={
@@ -479,13 +494,13 @@ export const VerticalNestedGroupNoIcon = () => {
                 subNav?.some(
                   (item) =>
                     active === `${name} - ${item.name}` ||
-                    item.subNav.some(
+                    item.subNav?.some(
                       (nestedItem) =>
                         active === `${name} - ${item.name} - ${nestedItem}`,
                     ),
                 )
               }
-              href="#"
+              href={href}
               orientation="vertical"
               onClick={(event) => {
                 // Prevent default to avoid navigation
@@ -505,7 +520,11 @@ export const VerticalNestedGroupNoIcon = () => {
               {name}
             </NavigationItem>
             {expanded.includes(name) && (
-              <ul className="vertical">
+              <StackLayout
+                as="ul"
+                gap="var(--salt-size-border)"
+                className="vertical"
+              >
                 {subNav?.map((item) => {
                   const itemValue = `${name} - ${item.name}`;
 
@@ -527,7 +546,7 @@ export const VerticalNestedGroupNoIcon = () => {
                               `${name} - ${item.name} - ${nestedItem}`,
                           )
                         }
-                        href="#"
+                        href={item.href}
                         orientation="vertical"
                         onClick={(event) => {
                           // Prevent default to avoid navigation
@@ -552,15 +571,19 @@ export const VerticalNestedGroupNoIcon = () => {
                       </NavigationItem>
 
                       {expanded.includes(item.name) && (
-                        <ul className="vertical">
-                          {item.subNav.map((nestedItem) => {
-                            const itemValue = `${name} - ${item.name} - ${nestedItem}`;
+                        <StackLayout
+                          as="ul"
+                          gap="var(--salt-size-border)"
+                          className="vertical"
+                        >
+                          {item.subNav?.map((nestedItem) => {
+                            const itemValue = `${name} - ${item.name} - ${nestedItem.name}`;
 
                             return (
                               <li key={itemValue}>
                                 <NavigationItem
                                   active={active === itemValue}
-                                  href="#"
+                                  href={nestedItem.href}
                                   orientation="vertical"
                                   onClick={(event) => {
                                     // Prevent default to avoid navigation
@@ -569,21 +592,21 @@ export const VerticalNestedGroupNoIcon = () => {
                                   }}
                                   level={2}
                                 >
-                                  {nestedItem}
+                                  {nestedItem.name}
                                 </NavigationItem>
                               </li>
                             );
                           })}
-                        </ul>
+                        </StackLayout>
                       )}
                     </li>
                   );
                 })}
-              </ul>
+              </StackLayout>
             )}
           </li>
         ))}
-      </ul>
+      </StackLayout>
     </nav>
   );
 };
@@ -598,15 +621,7 @@ export const WithRenderElement = () => {
   const [expanded, setExpanded] = useState<boolean>(false);
   return (
     <nav>
-      <StackLayout
-        as="ul"
-        gap="var(--salt-size-border)"
-        style={{
-          width: 250,
-          listStyle: "none",
-          paddingLeft: 0,
-        }}
-      >
+      <StackLayout as="ul" gap="var(--salt-size-border)" className="vertical">
         <li>
           <NavigationItem
             expanded={expanded}
@@ -648,15 +663,7 @@ export const WithRenderProp = () => {
 
   return (
     <nav>
-      <StackLayout
-        as="ul"
-        gap="var(--salt-size-border)"
-        style={{
-          width: 250,
-          listStyle: "none",
-          paddingLeft: 0,
-        }}
-      >
+      <StackLayout as="ul" gap="var(--salt-size-border)" className="vertical">
         <li>
           <NavigationItem
             expanded={expanded}

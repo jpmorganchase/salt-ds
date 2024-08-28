@@ -11,30 +11,3 @@ ul {
 .vertical {
   width: 250px;
 }
-
-.horizontal,
-.vertical {
-  display: flex;
-}
-
-.horizontal {
-  flex-wrap: wrap;
-}
-
-.vertical {
-  flex-direction: column;
-  gap: var(--salt-size-border);
-}
-
-.container {
-  min-height: 200px;
-}
-
-.container nav {
-  z-index: var(--salt-zIndex-appHeader);
-}
-
-.list {
-  height: auto;
-  margin-left: var(--salt-spacing-100);
-}

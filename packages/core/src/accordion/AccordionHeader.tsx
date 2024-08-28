@@ -66,7 +66,7 @@ export const AccordionHeader = forwardRef<
     if (id) {
       setHeaderId(id);
     }
-  }, [id]);
+  }, [id, setHeaderId]);
 
   return (
     <button
@@ -87,7 +87,7 @@ export const AccordionHeader = forwardRef<
     >
       {indicatorSide === "left" && <ExpansionIcon expanded={expanded} />}
       <span className={withBaseName("content")}>{children}</span>
-      {status && (
+      {status && !disabled && (
         <StatusIndicator
           className={withBaseName("statusIndicator")}
           status={status}

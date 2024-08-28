@@ -224,6 +224,21 @@ export const ClosedExamples: StoryFn<QAContainerProps> = () => (
       </ComboBox>
       <FormFieldHelperText>This is some help text</FormFieldHelperText>
     </FormField>
+    <FormField>
+      <FormFieldLabel>Success Multiselect example</FormFieldLabel>
+      <ComboBox
+        validationStatus="success"
+        multiselect
+        defaultSelected={first5States}
+      >
+        {first5States.map((state) => (
+          <Option value={state} key={state}>
+            {state}
+          </Option>
+        ))}
+      </ComboBox>
+      <FormFieldHelperText>This is some help text</FormFieldHelperText>
+    </FormField>
   </QAContainer>
 );
 

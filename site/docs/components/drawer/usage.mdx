@@ -10,7 +10,7 @@ data:
 
 ## Using the component
 
-Drawers are always modal. When open, the drawer displays a visual overlay, a [scrim](/salt/components/scrim) component, over the underlying content.
+Drawers cover the entire height of the viewport and are always modal. This means that the content behind them is inert and can't be interacted with. A [`Scrim`](../scrim) is used to visually obscure the content behind the drawer.
 
 Always set a logical width suitable for the content inside the drawer. Refer to Salt's [Forms](/salt/patterns/forms) pattern for information on logical forms width, and the [typography foundation](/salt/foundations/typography) for guidance on paragraph text width.
 
@@ -42,3 +42,7 @@ import { Drawer, DrawerCloseButton } from "@salt-ds/core";
 ### `DrawerCloseButton`
 
 <PropsTable packageName="core" componentName="DrawerCloseButton" />
+
+## References
+
+- [Dialog (Modal) Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/)
