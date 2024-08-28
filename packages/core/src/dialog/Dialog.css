@@ -13,7 +13,7 @@
   background: var(--salt-container-primary-background);
   box-shadow: var(--salt-overlayable-shadow-modal);
   overflow-y: auto;
-  z-index: var(--salt-zIndex-drawer);
+  z-index: var(--salt-zIndex-modal);
   height: min-content;
   border: var(--salt-size-border) var(--salt-container-borderStyle) var(--salt-separable-tertiary-borderColor);
   box-sizing: border-box;
