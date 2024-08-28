@@ -20,6 +20,7 @@ import {
 import { useFormFieldProps } from "../form-field-context";
 import { Pill } from "../pill";
 import { StatusAdornment } from "../status-adornment";
+import type { DataAttributes } from "../types";
 import { makePrefixer, useControlled, useForkRef, useId } from "../utils";
 import { useTruncatePills } from "./useTruncatePills";
 
@@ -45,7 +46,7 @@ export interface PillInputProps
   /**
    * [Attributes](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#Attributes) applied to the `input` element.
    */
-  inputProps?: InputHTMLAttributes<HTMLInputElement>;
+  inputProps?: Partial<InputHTMLAttributes<HTMLInputElement>> & DataAttributes;
   /**
    * Optional ref for the input component
    */

@@ -7,6 +7,13 @@ describe("GIVEN an Input", () => {
     cy.checkAxeComponent();
   });
 
+  it("SHOULD support data attribute on inputProps", () => {
+    cy.mount(
+      <Input inputProps={{ "data-testId": "customInput" }} value="value" />,
+    );
+    cy.findByTestId("customInput").should("have.value", "value");
+  });
+
   describe("WHEN cy.mounted as an uncontrolled component", () => {
     it("THEN it should cy.mount with the specified defaultValue", () => {
       cy.mount(<Input defaultValue="The default value" />);
