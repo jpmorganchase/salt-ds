@@ -310,7 +310,6 @@ const cssOutputPath = path.join(__dirname, "../saltIcons.css");
 const fileArg = process.argv.splice(2).join("|");
 const templatePath = path.join(__dirname, "./templateIcon.mustache");
 const allPath = path.join(basePath, "../stories/icon.all.ts");
-const allCorePath = path.join(basePath, "../../core/stories/badge/icon.all.ts");
 const siteAllPath = path.join(
   basePath,
   "../../../site/src/components/icon-preview/allIconsList.ts",
@@ -326,5 +325,4 @@ const icons = await generateIconComponents({
 await generateCssAsBg({ basePath, cssOutputPath, fileArg });
 await generateIndex({ icons, componentsPath });
 await generateIconAll({ icons, allPath });
-await generateIconAll({ icons, allPath: allCorePath });
 await generateIconAllSite({ icons, siteAllPath });

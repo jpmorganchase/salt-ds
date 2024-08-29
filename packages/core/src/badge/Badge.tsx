@@ -8,7 +8,8 @@ import badgeCss from "./Badge.css";
 
 export interface BadgeProps extends HTMLAttributes<HTMLSpanElement> {
   /**
-   * The number to display on the badge
+   * The number to display on the badge. If `value` is not provided,
+   * the badge will render as a dot badge.
    */
   value?: number | string;
   /**
