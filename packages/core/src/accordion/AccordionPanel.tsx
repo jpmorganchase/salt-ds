@@ -38,7 +38,7 @@ export const AccordionPanel = forwardRef<HTMLDivElement, AccordionPanelProps>(
       if (id) {
         setPanelId(id);
       }
-    }, [id]);
+    }, [id, setPanelId]);
 
     return (
       <div
