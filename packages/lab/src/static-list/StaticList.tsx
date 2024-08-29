@@ -15,7 +15,7 @@ const withBaseName = makePrefixer("saltStaticList");
 
 export interface StaticListProps extends ComponentPropsWithoutRef<"ul"> {
   /**
-   * Should be one or more components
+   * The list items to be rendered within the StaticList.
    */
   children: ReactNode;
 }

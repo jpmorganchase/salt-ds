@@ -8,16 +8,11 @@ import staticListItemCss from "./StaticListItem.css";
 
 const withBaseName = makePrefixer("saltStaticListItem");
 
-export interface StaticListItemProps extends ComponentPropsWithoutRef<"li"> {
-  /**
-   *  To pass a divider to separate the List items. Defaults to false.
-   */
-  divider?: boolean;
-}
+export interface StaticListItemProps extends ComponentPropsWithoutRef<"li"> {}
 
 export const StaticListItem = forwardRef<HTMLLIElement, StaticListItemProps>(
   function TrackerStep(props, ref) {
-    const { className, children, divider = false, ...restProps } = props;
+    const { className, children, ...restProps } = props;
 
     const targetWindow = useWindow();
     useComponentCssInjection({
@@ -27,17 +22,7 @@ export const StaticListItem = forwardRef<HTMLLIElement, StaticListItemProps>(
     });
 
     return (
-      <li
-        className={clsx(
-          withBaseName(),
-          {
-            [withBaseName("divided")]: divider,
-          },
-          className,
-        )}
-        ref={ref}
-        {...restProps}
-      >
+      <li className={clsx(withBaseName(), className)} ref={ref} {...restProps}>
         {children}
       </li>
     );

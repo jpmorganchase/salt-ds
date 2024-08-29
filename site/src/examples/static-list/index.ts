@@ -1,6 +1,5 @@
 export * from "./WithDividers";
 export * from "./WithIcons";
-export * from "./DefaultMultiple";
+export * from "./Multiple";
 export * from "./WithButtons";
-export * from "./DefaultSingle";
 export * from "./AdditionalLabel";

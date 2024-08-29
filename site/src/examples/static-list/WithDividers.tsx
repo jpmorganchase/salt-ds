@@ -14,25 +14,14 @@ const ListItem = () => (
   </StaticListItem>
 );
 
-const ListItemWithDivider = () => (
-  <StaticListItem divider>
-    <StackLayout
-      gap={0.5}
-      style={{ padding: "var(--salt-spacing-75) 0", width: "100%" }}
-    >
-      <Text color="inherit">Item label</Text>
-      <Label color="secondary">Secondary label</Label>
-    </StackLayout>
-  </StaticListItem>
-);
-
 export const WithDividers = (): ReactElement => (
   <div style={{ width: "80%" }}>
     <StaticList style={{ width: "320px" }}>
-      <ListItem />
-      <ListItemWithDivider />
-      <ListItemWithDivider />
-      <ListItemWithDivider />
+      <StackLayout gap={0} separators>
+        {Array.from({ length: 4 }, (_, index) => (
+          <ListItem key={index} />
+        ))}
+      </StackLayout>
     </StaticList>
   </div>
 );

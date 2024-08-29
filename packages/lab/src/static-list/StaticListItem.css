@@ -14,14 +14,3 @@
   position: relative;
   width: var(--saltStaticList-item-width, 100%);
 }
-
-.saltStaticListItem-divided::before {
-  display: block;
-  content: "";
-  height: var(--salt-size-border);
-  background: var(--salt-separable-tertiary-borderColor);
-  width: 100%;
-  position: absolute;
-  top: calc(var(--salt-size-border) * -1);
-  left: 0;
-}
