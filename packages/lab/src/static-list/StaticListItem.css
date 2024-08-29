@@ -9,8 +9,12 @@
   align-items: baseline;
   height: var(--saltStaticList-item-height, auto);
   box-sizing: border-box;
-  padding: var(--salt-spacing-50) var(--salt-spacing-100);
+  padding: calc(var(--salt-spacing-100) + var(--salt-spacing-25)) var(--salt-spacing-100);
   text-align: left;
   position: relative;
   width: var(--saltStaticList-item-width, 100%);
+  font-size: var(--salt-text-fontSize);
+  font-weight: var(--salt-text-fontWeight);
+  font-family: var(--salt-text-fontFamily);
+  line-height: var(--salt-text-lineHeight);
 }

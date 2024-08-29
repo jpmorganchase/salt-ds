@@ -4,7 +4,6 @@
   all: unset;
   display: flex;
   flex-direction: column;
-  gap: var(--salt-size-border);
   height: var(--saltStaticList-height, var(--staticList-height));
   width: var(--saltStaticList-width, auto);
   overflow-y: auto;
