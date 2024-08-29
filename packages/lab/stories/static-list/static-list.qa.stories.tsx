@@ -44,17 +44,6 @@ const AdditionalLabelListItem = () => (
     </StackLayout>
   </StaticListItem>
 );
-const ListItemWithDivider = () => (
-  <StaticListItem divider>
-    <StackLayout
-      gap={0.5}
-      style={{ padding: "var(--salt-spacing-75) 0", width: "100%" }}
-    >
-      <Text color="inherit">Item label</Text>
-      <Label color="secondary">Secondary label</Label>
-    </StackLayout>
-  </StaticListItem>
-);
 
 const ListItemWithButtons = () => (
   <StaticListItem>
@@ -95,10 +84,12 @@ export const AllExamples: StoryFn<QAContainerProps> = ({ imgSrc }) => (
       <ListItemWithButtons />
     </StaticList>
     <StaticList style={{ width: "320px" }}>
-      <AdditionalLabelListItem />
-      <ListItemWithDivider />
-      <ListItemWithDivider />
-      <ListItemWithDivider />
+      <StackLayout gap={0} separators>
+        <AdditionalLabelListItem />
+        <AdditionalLabelListItem />
+        <AdditionalLabelListItem />
+        <AdditionalLabelListItem />
+      </StackLayout>
     </StaticList>
     <StaticList style={{ width: "320px" }}>
       <AdditionalLabelListItem />
