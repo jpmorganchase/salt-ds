@@ -1,4 +1,4 @@
-import { Button, Label, StackLayout, Text } from "@salt-ds/core";
+import { Button, Divider, Label, StackLayout, Text } from "@salt-ds/core";
 import { NoteIcon, NotificationIcon } from "@salt-ds/icons";
 import { StaticList, StaticListItem } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react";
@@ -10,7 +10,9 @@ export default {
 } as Meta<typeof StaticList>;
 
 const ListItemWithIcons = () => (
-  <StaticListItem>
+  <StaticListItem
+    style={{ padding: "var(--salt-spacing-50) var(--salt-spacing-100)" }}
+  >
     <NotificationIcon />
     <StackLayout
       gap={0.5}
@@ -22,23 +24,11 @@ const ListItemWithIcons = () => (
   </StaticListItem>
 );
 
-const ListItem = () => (
-  <StaticListItem>
-    <StackLayout
-      gap={0.5}
-      style={{ padding: "var(--salt-spacing-75) 0", width: "100%" }}
-    >
-      <Text color="inherit">Item label</Text>
-    </StackLayout>
-  </StaticListItem>
-);
+const ListItem = () => <StaticListItem>Item label</StaticListItem>;
 
 const AdditionalLabelListItem = () => (
   <StaticListItem>
-    <StackLayout
-      gap={0.5}
-      style={{ padding: "var(--salt-spacing-75) 0", width: "100%" }}
-    >
+    <StackLayout gap={0.5}>
       <Text color="inherit">Item label</Text>
       <Label color="secondary">Secondary label</Label>
     </StackLayout>
@@ -46,7 +36,12 @@ const AdditionalLabelListItem = () => (
 );
 
 const ListItemWithButtons = () => (
-  <StaticListItem>
+  <StaticListItem
+    style={{
+      padding: "var(--salt-spacing-50) var(--salt-spacing-100)",
+      alignItems: "flex-start",
+    }}
+  >
     <StackLayout
       gap={0.5}
       style={{ padding: "var(--salt-spacing-75) 0", width: "100%" }}
@@ -93,8 +88,11 @@ export const AllExamples: StoryFn<QAContainerProps> = ({ imgSrc }) => (
     </StaticList>
     <StaticList style={{ width: "320px" }}>
       <AdditionalLabelListItem />
+      <Divider variant="tertiary" />
       <AdditionalLabelListItem />
+      <Divider variant="tertiary" />
       <AdditionalLabelListItem />
+      <Divider variant="tertiary" />
       <AdditionalLabelListItem />
     </StaticList>
   </QAContainer>

@@ -4,7 +4,12 @@ import { StaticList, StaticListItem } from "@salt-ds/lab";
 import type { ReactElement } from "react";
 
 const ListItem = () => (
-  <StaticListItem>
+  <StaticListItem
+    style={{
+      padding: "var(--salt-spacing-50) var(--salt-spacing-100)",
+      alignItems: "flex-start",
+    }}
+  >
     <StackLayout
       gap={0.5}
       style={{ padding: "var(--salt-spacing-75) 0", width: "100%" }}

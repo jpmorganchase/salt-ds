@@ -4,7 +4,9 @@ import { StaticList, StaticListItem } from "@salt-ds/lab";
 import type { ReactElement } from "react";
 
 const ListItem = () => (
-  <StaticListItem>
+  <StaticListItem
+    style={{ padding: "var(--salt-spacing-50) var(--salt-spacing-100)" }}
+  >
     <NotificationIcon />
     <StackLayout
       gap={0.5}
