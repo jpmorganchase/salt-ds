@@ -3,6 +3,7 @@ import {
   type Corner,
   type Density,
   FlexItem,
+  FlexLayout,
   FlowLayout,
   type Mode,
   SaltProvider,
@@ -12,8 +13,9 @@ import {
   Text,
   ToggleButton,
   ToggleButtonGroup,
+  Tooltip,
 } from "@salt-ds/core";
-import { DarkIcon, LightIcon } from "@salt-ds/icons";
+import { DarkIcon, HelpIcon, LightIcon } from "@salt-ds/icons";
 import {
   type FC,
   type ReactElement,
@@ -65,12 +67,47 @@ export const LivePreviewControls: FC<LivePreviewControlsProps> = ({
     setMode(event.currentTarget.value as Mode);
   };
 
+  const themeNextSwitch = (
+    <FlexItem align="end" className={styles.switchAlignment}>
+      <Tooltip content="Theme next enables more styling options. Refer to Theming page for more information">
+        <Switch
+          label={
+            <StackLayout gap={0.5} direction="row" align="center">
+              <span>Theme next</span>
+              <HelpIcon />
+            </StackLayout>
+          }
+          checked={themeNext}
+          onChange={() => setThemeNext((prev) => !prev)}
+        />
+      </Tooltip>
+    </FlexItem>
+  );
+
   return (
     <>
       <SaltProvider density="medium">
         <StackLayout align="stretch" className={styles.controls} gap={1}>
-          <FlexItem className={styles.controlsRow}>
-            <div className={styles.toggleButtonGroups}>
+          <FlowLayout
+            justify="space-between"
+            gap={{
+              xs: 1,
+              sm: 1,
+              md: 1,
+              lg: 2,
+              xl: 2,
+            }}
+          >
+            <FlowLayout
+              align="center"
+              gap={{
+                xs: 1,
+                sm: 1,
+                md: 1,
+                lg: 2,
+                xl: 2,
+              }}
+            >
               <StackLayout
                 gap={0.75}
                 align="baseline"
@@ -115,31 +152,45 @@ export const LivePreviewControls: FC<LivePreviewControlsProps> = ({
                 }}
               >
                 <Text styleAs="label">Mode</Text>
-                <ToggleButtonGroup
-                  aria-label="Select mode"
-                  onChange={handleModeChange}
-                  value={mode}
-                >
-                  <ToggleButton aria-label="light mode" value="light">
-                    <LightIcon /> {!isMobileView && " Light"}
-                  </ToggleButton>
-                  <ToggleButton aria-label="dark mode" value="dark">
-                    <DarkIcon /> {!isMobileView && " Dark"}
-                  </ToggleButton>
-                </ToggleButtonGroup>
+                <FlexItem>
+                  <ToggleButtonGroup
+                    aria-label="Select mode"
+                    onChange={handleModeChange}
+                    value={mode}
+                  >
+                    <ToggleButton aria-label="light mode" value="light">
+                      {!isMobileView && " Light"} <LightIcon />
+                    </ToggleButton>
+                    <ToggleButton aria-label="dark mode" value="dark">
+                      {!isMobileView && " Dark"} <DarkIcon />
+                    </ToggleButton>
+                  </ToggleButtonGroup>
+                </FlexItem>
               </StackLayout>
-            </div>
-            <FlexItem>
-              <Switch
-                label="Theme next"
-                checked={themeNext}
-                onChange={() => setThemeNext((prev) => !prev)}
-              />
-            </FlexItem>
-          </FlexItem>
+            </FlowLayout>
+            {!themeNext ? themeNextSwitch : null}
+          </FlowLayout>
           {themeNext ? (
-            <FlexItem>
-              <FlowLayout align="center">
+            <FlowLayout
+              justify="space-between"
+              gap={{
+                xs: 1,
+                sm: 1,
+                md: 1,
+                lg: 2,
+                xl: 2,
+              }}
+            >
+              <FlowLayout
+                align="center"
+                gap={{
+                  xs: 1,
+                  sm: 1,
+                  md: 1,
+                  lg: 2,
+                  xl: 2,
+                }}
+              >
                 <StackLayout
                   gap={0.75}
                   align="baseline"
@@ -191,7 +242,9 @@ export const LivePreviewControls: FC<LivePreviewControlsProps> = ({
                   </ToggleButtonGroup>
                 </StackLayout>
               </FlowLayout>
-            </FlexItem>
+
+              {themeNextSwitch}
+            </FlowLayout>
           ) : null}
         </StackLayout>
       </SaltProvider>

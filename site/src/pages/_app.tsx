@@ -70,12 +70,13 @@ const ptMono = PT_Mono({
   weight: "400",
   subsets: ["latin"],
   display: "swap",
-  variable: "--salt-typography-fontFamily-ptMono",
+  // Below are not set to salt variable directly so that local serve will resolve correct CSS specificity
+  variable: "--site-font-family-ptMono",
 });
 const openSans = Open_Sans({
   subsets: ["latin"],
   display: "swap",
-  variable: "--salt-typography-fontFamily-openSans",
+  variable: "--site-font-family-openSans",
 });
 
 export default function MyApp({

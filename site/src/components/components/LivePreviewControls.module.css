@@ -7,19 +7,6 @@
   z-index: var(--salt-zIndex-default);
 }
 
-.controlsRow {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  gap: calc(var(--salt-size-unit) * 3);
-}
-
-.toggleButtonGroups {
-  display: flex;
-  flex-wrap: wrap;
-  gap: calc(var(--salt-size-unit) * 3);
-}
-
 .density,
 .mode {
   display: flex;
@@ -31,4 +18,8 @@
   flex-direction: column;
   align-items: flex-start;
   flex: 1;
+}
+
+.switchAlignment {
+  margin-bottom: var(--salt-spacing-75);
 }
