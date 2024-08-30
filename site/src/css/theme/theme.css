@@ -16,3 +16,9 @@
   --site-tertiary-accent-orange: var(--salt-color-orange-30);
   --color-dark-neutral-background-regular: var(--salt-palette-interact-primary-foreground-active);
 }
+
+.salt-theme[data-mode="light"],
+.salt-theme[data-mode="dark"] {
+  --salt-typography-fontFamily-ptMono: var(--site-font-family-ptMono);
+  --salt-typography-fontFamily-openSans: var(--site-font-family-openSans);
+}
