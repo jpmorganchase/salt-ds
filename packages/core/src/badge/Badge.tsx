@@ -8,9 +8,10 @@ import badgeCss from "./Badge.css";
 
 export interface BadgeProps extends HTMLAttributes<HTMLSpanElement> {
   /**
-   * The number to display on the badge
+   * The number to display on the badge. If `value` is not provided,
+   * the badge will render as a dot badge.
    */
-  value: number | string;
+  value?: number | string;
   /**
    * If a child is provided the Badge will render top right. By defualt renders inline.
    */
@@ -36,12 +37,15 @@ export const Badge = forwardRef<HTMLSpanElement, BadgeProps>(function Badge(
   const valueText =
     typeof value === "number" && value > max ? `${max}+` : value;
 
+  const dotBadge = typeof value === "undefined";
+
   return (
     <span className={clsx(withBaseName(), className)} ref={ref} {...rest}>
       {children}
       <span
         className={clsx(withBaseName("badge"), {
           [withBaseName("topRight")]: children,
+          [withBaseName("dotBadge")]: dotBadge,
         })}
       >
         {valueText}
