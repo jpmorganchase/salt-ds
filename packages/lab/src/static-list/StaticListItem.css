@@ -1,9 +1,7 @@
 .saltStaticListItem {
-  --static-list-item-text-color: var(--salt-content-primary-foreground);
-
   list-style: none;
   all: unset;
-  color: var(--static-list-item-text-color);
+  color: var(--salt-content-primary-foreground);
   display: flex;
   gap: var(--salt-spacing-100);
   align-items: baseline;
