@@ -2,6 +2,7 @@ import type { DateValue } from "@internationalized/date";
 import { createContext } from "@salt-ds/core";
 import { useContext } from "react";
 import type { DateRangeSelection, SingleDateSelection } from "../calendar";
+import type { DateInputRangeError, DateInputSingleError } from "../date-input";
 
 interface DatePickerBaseState {
   state: {
@@ -21,25 +22,51 @@ interface DatePickerBaseState {
   };
 }
 
-export interface DatePickerState<T = SingleDateSelection | DateRangeSelection>
-  extends DatePickerBaseState {
+export type SingleDatePickerError = DateInputSingleError;
+export type RangeDatePickerError = DateInputRangeError;
+
+export interface SingleDatePickerState extends DatePickerBaseState {
   state: DatePickerBaseState["state"] & {
-    selectedDate: T | null;
-    defaultSelectedDate?: T;
-    onSelectedDateChange?: (newDate: T | null) => void;
+    selectedDate: SingleDateSelection | null;
+    defaultSelectedDate?: SingleDateSelection;
   };
   helpers: DatePickerBaseState["helpers"] & {
-    apply: (newDate: T | null) => void;
-    setSelectedDate: (newDate: T | null) => void;
+    apply: (
+      newDate: SingleDateSelection | null,
+      error: SingleDatePickerError,
+    ) => void;
+    setSelectedDate: (
+      newDate: SingleDateSelection | null,
+      error: string | false,
+    ) => void;
   };
 }
 
+export interface RangeDatePickerState extends DatePickerBaseState {
+  state: DatePickerBaseState["state"] & {
+    selectedDate: DateRangeSelection | null;
+    defaultSelectedDate?: DateRangeSelection;
+  };
+  helpers: DatePickerBaseState["helpers"] & {
+    apply: (
+      newDate: DateRangeSelection | null,
+      error: RangeDatePickerError,
+    ) => void;
+    setSelectedDate: (
+      newDate: DateRangeSelection | null,
+      error: { startDate: string | false; endDate: string | false },
+    ) => void;
+  };
+}
+
+export type DatePickerState = SingleDatePickerState | RangeDatePickerState;
+
 export const SingleDateSelectionContext = createContext<
-  DatePickerState<SingleDateSelection> | undefined
+  SingleDatePickerState | undefined
 >("SingleDateSelectionContext", undefined);
 
 export const DateRangeSelectionContext = createContext<
-  DatePickerState<DateRangeSelection> | undefined
+  RangeDatePickerState | undefined
 >("DateRangeSelectionContext", undefined);
 
 export interface UseDatePickerContextProps {
@@ -49,13 +76,13 @@ export interface UseDatePickerContextProps {
 // Overloads
 export function useDatePickerContext(props: {
   selectionVariant: "single";
-}): DatePickerState<SingleDateSelection>;
+}): SingleDatePickerState;
 export function useDatePickerContext(props: {
   selectionVariant: "range";
-}): DatePickerState<DateRangeSelection>;
+}): RangeDatePickerState;
 export function useDatePickerContext({
   selectionVariant,
-}: UseDatePickerContextProps) {
+}: UseDatePickerContextProps): DatePickerState {
   if (selectionVariant === "range") {
     const context = useContext(DateRangeSelectionContext);
     if (!context) {

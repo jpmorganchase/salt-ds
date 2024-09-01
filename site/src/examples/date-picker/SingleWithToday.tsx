@@ -1,4 +1,8 @@
-import { getLocalTimeZone, today } from "@internationalized/date";
+import {
+  type DateValue,
+  getLocalTimeZone,
+  today,
+} from "@internationalized/date";
 import {
   Button,
   FlexItem,
@@ -12,9 +16,9 @@ import {
   DatePickerOverlay,
   DatePickerSingleInput,
   DatePickerSinglePanel,
-  type DatePickerState,
-  type SingleDateSelection,
+  type SingleDatePickerState,
   formatDate,
+  getCurrentLocale,
   useDatePickerContext,
 } from "@salt-ds/lab";
 import React, { type ReactElement } from "react";
@@ -24,17 +28,28 @@ const TodayButton = () => {
     helpers: { setSelectedDate },
   } = useDatePickerContext({
     selectionVariant: "single",
-  }) as DatePickerState<SingleDateSelection>;
+  }) as SingleDatePickerState;
 
   return (
     <Button
       style={{ width: "100%" }}
-      onClick={() => setSelectedDate(today(getLocalTimeZone()))}
+      onClick={() => setSelectedDate(today(getLocalTimeZone()), false)}
     >
       Today
     </Button>
   );
 };
+
+function formatSingleDate(
+  date: DateValue | null,
+  locale = getCurrentLocale(),
+  options?: Intl.DateTimeFormatOptions,
+) {
+  if (date) {
+    return formatDate(date, locale, options);
+  }
+  return date;
+}
 
 export const SingleWithToday = (): ReactElement => {
   const helperText = "Date format DD MMM YYYY (e.g. 09 Jun 2024)";
@@ -43,8 +58,8 @@ export const SingleWithToday = (): ReactElement => {
       <FormLabel>Select a date</FormLabel>
       <DatePicker
         selectionVariant="single"
-        onSelectedDateChange={(newSelectedDate) => {
-          console.log(`Selected date range: ${formatDate(newSelectedDate)}`);
+        onSelectedDateChange={(newSelectedDate, _error) => {
+          console.log(`Selected date: ${formatSingleDate(newSelectedDate)}`);
         }}
       >
         <DatePickerSingleInput />

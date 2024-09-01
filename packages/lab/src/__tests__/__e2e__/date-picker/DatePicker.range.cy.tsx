@@ -22,8 +22,6 @@ import {
   DatePickerOverlay,
   DatePickerRangeInput,
   DatePickerRangePanel,
-  DatePickerSingleInput,
-  DatePickerSinglePanel,
 } from "../../../date-picker";
 
 const composedStories = composeStories(datePickerStories);
@@ -120,26 +118,38 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
       initialRangeDateValue.startDate,
     );
     cy.get("@selectedDateChangeSpy").should("have.been.calledOnce");
-    cy.get("@selectedDateChangeSpy").should("have.been.calledWith", {
-      startDate: initialRangeDate.startDate,
-      endDate: undefined,
-    });
+    cy.get("@selectedDateChangeSpy").should(
+      "have.been.calledWith",
+      {
+        startDate: initialRangeDate.startDate,
+        endDate: null,
+      },
+      { startDate: false, endDate: false },
+    );
     // Simulate entering an valid end date
     cy.findByLabelText("End date").clear().type(initialRangeDateValue.endDate);
     cy.realPress("Tab");
     cy.get("@selectedDateChangeSpy").should("have.been.calledTwice");
-    cy.get("@selectedDateChangeSpy").should("have.been.calledWith", {
-      startDate: initialRangeDate.startDate,
-      endDate: initialRangeDate.endDate,
-    });
+    cy.get("@selectedDateChangeSpy").should(
+      "have.been.calledWith",
+      {
+        startDate: initialRangeDate.startDate,
+        endDate: initialRangeDate.endDate,
+      },
+      { startDate: false, endDate: false },
+    );
     // Simulate entering an invalid end date
     cy.findByLabelText("End date").clear().type("bad date");
     cy.realPress("Tab");
     cy.get("@selectedDateChangeSpy").should("have.been.calledThrice");
-    cy.get("@selectedDateChangeSpy").should("have.been.calledWith", {
-      startDate: initialRangeDate.startDate,
-      endDate: undefined,
-    });
+    cy.get("@selectedDateChangeSpy").should(
+      "have.been.calledWith",
+      {
+        startDate: initialRangeDate.startDate,
+        endDate: null,
+      },
+      { startDate: false, endDate: false },
+    );
   });
 
   it("SHOULD support custom panel with tenors", () => {
@@ -169,6 +179,7 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
     cy.get("@selectedDateChangeSpy").should(
       "always.have.been.calledWithMatch",
       { startDate: startDate, endDate: endDate },
+      { startDate: false, endDate: false },
     );
     cy.findByLabelText("Start date").should(
       "have.value",
@@ -276,6 +287,7 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
       cy.get("@selectedDateChangeSpy").should(
         "have.been.calledWith",
         unconfirmedDate,
+        { startDate: false, endDate: false },
       );
       cy.findByLabelText("Start date").should(
         "have.value",
@@ -477,27 +489,31 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
       .clear()
       .type(initialRangeDateValue.endDate);
     cy.realPress("Tab");
-    cy.get("@selectedDateChangeSpy").should("have.been.calledWithMatch", {
-      startDate: {
-        year: initialRangeDate.startDate.year,
-        month: initialRangeDate.startDate.month,
-        day: initialRangeDate.startDate.day,
-        timeZone: defaultStartDate.timeZone,
-        hour: defaultStartDate.hour,
-        minute: defaultStartDate.minute,
-        second: defaultStartDate.second,
-        millisecond: defaultStartDate.millisecond,
+    cy.get("@selectedDateChangeSpy").should(
+      "have.been.calledWithMatch",
+      {
+        startDate: {
+          year: initialRangeDate.startDate.year,
+          month: initialRangeDate.startDate.month,
+          day: initialRangeDate.startDate.day,
+          timeZone: defaultStartDate.timeZone,
+          hour: defaultStartDate.hour,
+          minute: defaultStartDate.minute,
+          second: defaultStartDate.second,
+          millisecond: defaultStartDate.millisecond,
+        },
+        endDate: {
+          year: initialRangeDate.endDate.year,
+          month: initialRangeDate.endDate.month,
+          day: initialRangeDate.endDate.day,
+          timeZone: defaultEndDate.timeZone,
+          hour: defaultEndDate.hour,
+          minute: defaultEndDate.minute,
+          second: defaultEndDate.second,
+          millisecond: defaultEndDate.millisecond,
+        },
       },
-      endDate: {
-        year: initialRangeDate.endDate.year,
-        month: initialRangeDate.endDate.month,
-        day: initialRangeDate.endDate.day,
-        timeZone: defaultEndDate.timeZone,
-        hour: defaultEndDate.hour,
-        minute: defaultEndDate.minute,
-        second: defaultEndDate.second,
-        millisecond: defaultEndDate.millisecond,
-      },
-    });
+      { startDate: false, endDate: false },
+    );
   });
 });

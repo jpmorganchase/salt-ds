@@ -1,4 +1,4 @@
-import { CalendarDate } from "@internationalized/date";
+import { CalendarDate, type DateValue } from "@internationalized/date";
 import {
   FormField,
   FormFieldHelperText,
@@ -11,8 +11,20 @@ import {
   DatePickerSinglePanel,
   type SingleDateSelection,
   formatDate,
+  getCurrentLocale,
 } from "@salt-ds/lab";
 import { type ReactElement, useState } from "react";
+
+function formatSingleDate(
+  date: DateValue | null,
+  locale = getCurrentLocale(),
+  options?: Intl.DateTimeFormatOptions,
+) {
+  if (date) {
+    return formatDate(date, locale, options);
+  }
+  return date;
+}
 
 export const SingleWithMinMaxDate = (): ReactElement => {
   const [selectedDate, setSelectedDate] = useState<SingleDateSelection | null>(
@@ -25,8 +37,8 @@ export const SingleWithMinMaxDate = (): ReactElement => {
       <DatePicker
         selectionVariant={"single"}
         selectedDate={selectedDate}
-        onSelectedDateChange={(newSelectedDate: SingleDateSelection | null) => {
-          console.log(`Selected date: ${formatDate(newSelectedDate)}`);
+        onSelectedDateChange={(newSelectedDate, _error) => {
+          console.log(`Selected date: ${formatSingleDate(newSelectedDate)}`);
           setSelectedDate(newSelectedDate);
         }}
         minDate={new CalendarDate(2030, 1, 15)}

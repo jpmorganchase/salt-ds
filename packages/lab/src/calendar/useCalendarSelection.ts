@@ -18,8 +18,8 @@ import { useCalendarContext } from "./internal/CalendarContext";
 export type SingleDateSelection = DateValue;
 export type MultipleDateSelection = DateValue[];
 export type DateRangeSelection = {
-  startDate?: DateValue;
-  endDate?: DateValue;
+  startDate?: DateValue | null;
+  endDate?: DateValue | null;
 };
 export type AllSelectionValueType =
   | SingleDateSelection

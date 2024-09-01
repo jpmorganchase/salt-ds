@@ -14,7 +14,7 @@ const defaultFormatOptions: Intl.DateTimeFormatOptions = {
   year: "numeric",
 };
 export function formatDate(
-  date: DateValue | null | undefined,
+  date: DateValue | null,
   locale?: string,
   options?: Intl.DateTimeFormatOptions,
 ) {

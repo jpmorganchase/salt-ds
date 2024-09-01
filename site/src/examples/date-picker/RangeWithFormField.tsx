@@ -4,7 +4,6 @@ import {
   FormFieldLabel as FormLabel,
 } from "@salt-ds/core";
 import {
-  type DateInputRangeValue,
   DatePicker,
   DatePickerOverlay,
   DatePickerRangeInput,
@@ -18,71 +17,27 @@ import { type ReactElement, useState } from "react";
 function formatDateRange(
   dateRange: DateRangeSelection | null,
   locale = getCurrentLocale(),
+  options?: Intl.DateTimeFormatOptions,
 ): string {
   const { startDate, endDate } = dateRange || {};
-  const formattedStartDate = startDate ? formatDate(startDate, locale) : "N/A";
-  const formattedEndDate = endDate ? formatDate(endDate, locale) : "N/A";
+  const formattedStartDate = startDate
+    ? formatDate(startDate, locale, options)
+    : startDate;
+  const formattedEndDate = endDate
+    ? formatDate(endDate, locale, options)
+    : endDate;
   return `Start date: ${formattedStartDate}, End date: ${formattedEndDate}`;
 }
 
-function validateShortDate(
-  dateString: string,
-  locale: string = getCurrentLocale(),
-) {
-  // Regular expression to match the expected date format (e.g., "01 May 1970")
-  const datePattern = /^(\d{2}) (\w{3}) (\d{4})$/;
-  const match = dateString.match(datePattern);
-
-  // Check if the date string matches the expected format
-  if (!match) {
-    return false;
-  }
-
-  const [, dayStr, monthStr, yearStr] = match;
-  const day = Number.parseInt(dayStr, 10);
-  const monthInput = monthStr.toLowerCase();
-  const year = Number.parseInt(yearStr, 10);
-
-  // Function to get month names in the specified locale
-  function getMonthNames() {
-    const formatter = new Intl.DateTimeFormat(locale, { month: "short" });
-    const months = [];
-    for (let month = 0; month < 12; month++) {
-      const date = new Date(2021, month, 1);
-      months.push(formatter.format(date).toLowerCase());
-    }
-    return months;
-  }
-
-  const months = getMonthNames();
-  const monthIndex = months.indexOf(monthInput);
-
-  if (monthIndex === -1) {
-    return false;
-  }
-
-  const date = new Date(year, monthIndex, day);
-  return (
-    date.getFullYear() === year &&
-    date.getMonth() === monthIndex &&
-    date.getDate() === day
-  );
-}
-
-const isValidShortDate = (
-  dateValue: string | undefined,
-  locale = getCurrentLocale(),
-) => !dateValue?.length || validateShortDate(dateValue, locale);
-
 function isValidDateRange(date: DateRangeSelection | null) {
-  if (
+  if (date?.startDate === null || date?.endDate === null) {
+    return false;
+  }
+  return !(
     date?.startDate &&
     date?.endDate &&
     date.startDate.compare(date.endDate) > 0
-  ) {
-    return false;
-  }
-  return true;
+  );
 }
 
 export const RangeWithFormField = (): ReactElement => {
@@ -100,27 +55,21 @@ export const RangeWithFormField = (): ReactElement => {
       <DatePicker
         selectionVariant="range"
         selectedDate={selectedDate}
-        onSelectedDateChange={(newSelectedDate: DateRangeSelection | null) => {
+        onSelectedDateChange={(newSelectedDate, error) => {
           console.log(
             `Selected date range: ${formatDateRange(newSelectedDate)}`,
           );
           setSelectedDate(newSelectedDate);
-          const validationStatus = isValidDateRange(newSelectedDate)
-            ? undefined
-            : "error";
+          const validationStatus =
+            !error.startDate &&
+            !error.endDate &&
+            isValidDateRange(newSelectedDate)
+              ? undefined
+              : "error";
           setValidationStatus(validationStatus);
         }}
       >
-        <DatePickerRangeInput
-          onDateValueChange={(newDateValue?: DateInputRangeValue) => {
-            const validationStatus =
-              isValidShortDate(newDateValue?.startDate) &&
-              isValidShortDate(newDateValue?.endDate)
-                ? undefined
-                : "error";
-            setValidationStatus(validationStatus);
-          }}
-        />
+        <DatePickerRangeInput />
         <DatePickerOverlay>
           <DatePickerRangePanel helperText={helperText} />
         </DatePickerOverlay>

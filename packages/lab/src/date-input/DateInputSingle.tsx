@@ -39,6 +39,14 @@ import { extractTimeFieldsFromDate, parseCalendarDate } from "./utils";
 
 const withBaseName = makePrefixer("saltDateInput");
 
+export type DateInputSingleParserError = string | false;
+export interface DateInputSingleParserResult<T = DateValue | null> {
+  date: T;
+  error: DateInputSingleParserError;
+}
+
+export type DateInputSingleError = DateInputSingleParserError;
+
 export interface DateInputSingleProps<T = SingleDateSelection>
   extends Omit<ComponentPropsWithoutRef<"div">, "defaultValue">,
     Pick<
@@ -103,11 +111,15 @@ export interface DateInputSingleProps<T = SingleDateSelection>
   /**
    * Callback fired when the selected date change.
    */
-  onDateChange?: (event: SyntheticEvent, date: T | null) => void;
+  onDateChange?: (
+    event: SyntheticEvent,
+    date: T | null,
+    error: DateInputSingleError,
+  ) => void;
   /**
-   * @param inputDate - parse date string to valid `DateValue` or undefined, if invalid
+   * @param inputDate - parse date string to valid `DateValue` or null, if invalid or empty
    */
-  parse?: (inputDate: string | undefined) => DateValue | undefined;
+  parse?: (inputDate: string) => DateInputSingleParserResult;
   /**
    * Called when input value changes, either due to user-interaction or programmatic formatting of valid dates
    */
@@ -146,6 +158,7 @@ export const DateInputSingle = forwardRef<HTMLDivElement, DateInputSingleProps>(
       ...rest
     } = props;
     const wrapperRef = useRef(null);
+    const lastError = useRef<string | false>(false);
     const handleWrapperRef = useForkRef<HTMLDivElement>(ref, wrapperRef);
     const innerInputRef = useRef<HTMLInputElement>(null);
     const handleInputRef = useForkRef<HTMLInputElement>(
@@ -175,12 +188,12 @@ export const DateInputSingle = forwardRef<HTMLDivElement, DateInputSingleProps>(
       state: "dateValue",
     });
     const preservedTime = useRef<TimeFields | undefined>(
-      extractTimeFieldsFromDate(date),
+      extractTimeFieldsFromDate(date || null),
     );
 
     // Update date string value when selected date changes
     useEffect(() => {
-      const formattedDate = formatDate(date, locale, { timeZone });
+      const formattedDate = formatDate(date ?? null, locale, { timeZone });
       if (formattedDate) {
         setDateValue(formattedDate);
         onDateValueChange?.(formattedDate, true);
@@ -221,7 +234,8 @@ export const DateInputSingle = forwardRef<HTMLDivElement, DateInputSingleProps>(
       : dateInputPropsRequired;
 
     const apply = (event: SyntheticEvent) => {
-      let newDate = parse(dateValue) || null;
+      const { date: parsedDate, error } = parse(dateValue ?? "");
+      let newDate = parsedDate;
       if (newDate) {
         const formattedDate = formatDate(newDate, locale, { timeZone });
         if (formattedDate) {
@@ -236,8 +250,11 @@ export const DateInputSingle = forwardRef<HTMLDivElement, DateInputSingleProps>(
         if (newDate && preservedTime.current) {
           newDate = newDate.set(preservedTime.current);
         }
-        onDateChange?.(event, newDate);
       }
+      if (hasDateChanged || lastError.current !== error) {
+        onDateChange?.(event, newDate, error);
+      }
+      lastError.current = error;
     };
 
     const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {

@@ -17,32 +17,66 @@ import {
   formatDate,
   getCurrentLocale,
 } from "@salt-ds/lab";
-import React, { type ReactElement } from "react";
+import React, { type ReactElement, useState } from "react";
 
 function formatDateRange(
   dateRange: DateRangeSelection | null,
   locale = getCurrentLocale(),
+  options?: Intl.DateTimeFormatOptions,
 ): string {
   const { startDate, endDate } = dateRange || {};
-  const formattedStartDate = startDate ? formatDate(startDate, locale) : "N/A";
-  const formattedEndDate = endDate ? formatDate(endDate, locale) : "N/A";
+  const formattedStartDate = startDate
+    ? formatDate(startDate, locale, options)
+    : startDate;
+  const formattedEndDate = endDate
+    ? formatDate(endDate, locale, options)
+    : endDate;
   return `Start date: ${formattedStartDate}, End date: ${formattedEndDate}`;
 }
 
+function isValidDateRange(date: DateRangeSelection | null) {
+  if (date?.startDate === null || date?.endDate === null) {
+    return false;
+  }
+  return !(
+    date?.startDate &&
+    date?.endDate &&
+    date.startDate.compare(date.endDate) > 0
+  );
+}
+
 export const RangeWithConfirmation = (): ReactElement => {
-  const helperText = "Date format DD MMM YYYY (e.g. 09 Jun 2024)";
+  const helperText = "Select range (DD MMM YYYY - DD MMM YYYY)";
   const minDate = today(getLocalTimeZone());
+  const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
+    undefined,
+  );
+  const [selectedDate, setSelectedDate] = useState<DateRangeSelection | null>(
+    null,
+  );
+
   return (
-    <FormField style={{ width: "256px" }}>
+    <FormField validationStatus={validationStatus}>
       <FormLabel>Select a date range</FormLabel>
       <DatePicker
         selectionVariant="range"
         minDate={minDate}
         maxDate={minDate.add({ years: 50 })}
-        onSelectedDateChange={(newSelectedDate) => {
+        selectedDate={selectedDate}
+        onApply={(newSelectedDate, error) => {
           console.log(
             `Selected date range: ${formatDateRange(newSelectedDate)}`,
           );
+          const validationStatus =
+            !error.startDate &&
+            !error.endDate &&
+            isValidDateRange(newSelectedDate)
+              ? undefined
+              : "error";
+          setValidationStatus(validationStatus);
+        }}
+        onSelectedDateChange={(newSelectedDate, error) => {
+          setSelectedDate(newSelectedDate);
         }}
       >
         <DatePickerRangeInput />

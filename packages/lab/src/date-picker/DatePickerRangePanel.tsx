@@ -163,7 +163,7 @@ export const DatePickerRangePanel = forwardRef<
 
   const handleSelectedDateChange = useCallback(
     (event: SyntheticEvent, newDate: DateRangeSelection | null) => {
-      setSelectedDate(newDate);
+      setSelectedDate(newDate, { startDate: false, endDate: false });
       onSelect?.(event, newDate);
     },
     [onSelect, setSelectedDate],

@@ -10,6 +10,7 @@ import {
   FormFieldLabel as FormLabel,
 } from "@salt-ds/core";
 import {
+  type DateInputSingleParserResult,
   DatePicker,
   DatePickerOverlay,
   DatePickerSingleInput,
@@ -19,63 +20,25 @@ import {
 } from "@salt-ds/lab";
 import React, { type ReactElement, useState } from "react";
 
-function validateNumericDate(dateString: string, format: string): boolean {
-  let regex: RegExp;
-  let day: number;
-  let month: number;
-  let year: number;
-
-  if (format === "MM/DD/YYYY") {
-    regex = /^(0?[1-9]|1[0-2])\/(0?[1-9]|[12][0-9]|3[01])\/\d{4}$/;
-    if (!regex.test(dateString)) {
-      return false;
-    }
-    const parts = dateString.split("/");
-    month = Number.parseInt(parts[0], 10);
-    day = Number.parseInt(parts[1], 10);
-    year = Number.parseInt(parts[2], 10);
-  } else if (format === "DD/MM/YYYY") {
-    regex = /^(0?[1-9]|[12][0-9]|3[01])\/(0?[1-9]|1[0-2])\/\d{4}$/;
-    if (!regex.test(dateString)) {
-      return false;
-    }
-    const parts = dateString.split("/");
-    day = Number.parseInt(parts[0], 10);
-    month = Number.parseInt(parts[1], 10);
-    year = Number.parseInt(parts[2], 10);
-  } else {
-    // Unsupported format
-    return false;
-  }
-
-  if (month < 1 || month > 12 || year < 1000 || year > 9999) {
-    return false;
-  }
-  const daysInMonth = new Date(year, month, 0).getDate();
-  return !(day < 1 || day > daysInMonth);
-}
-
-const isValidNumericDate = (
-  dateValue: string | undefined,
-  format = "DD/MM/YYYY",
-) => !dateValue?.length || validateNumericDate(dateValue, format);
-
 const parseDateStringEnUS = (
-  dateString: string | undefined,
-): DateValue | undefined => {
-  if (!dateString) {
-    return undefined;
+  dateString: string,
+): DateInputSingleParserResult => {
+  if (!dateString?.length) {
+    return { date: null, error: false };
   }
   const dateParts = dateString.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
   if (!dateParts) {
-    return undefined;
+    return { date: null, error: "invalid date" };
   }
   const [, month, day, year] = dateParts;
-  return new CalendarDate(
-    Number.parseInt(year, 10),
-    Number.parseInt(month, 10),
-    Number.parseInt(day, 10),
-  );
+  return {
+    date: new CalendarDate(
+      Number.parseInt(year, 10),
+      Number.parseInt(month, 10),
+      Number.parseInt(day, 10),
+    ),
+    error: false,
+  };
 };
 
 const formatDateStringEnUS = (
@@ -113,23 +76,15 @@ export const SingleWithLocale = (): ReactElement => {
         selectedDate={selectedDate}
         locale={"en-US"}
         timeZone={"America/New_York"}
-        onSelectedDateChange={(newSelectedDate: SingleDateSelection | null) => {
+        onSelectedDateChange={(newSelectedDate, error) => {
           console.log(
             `Selected date: ${formatDateStringEnUS(newSelectedDate, "en-US", { timeZone: "America/New_York" })}`,
           );
+          setValidationStatus(error ? "error" : undefined);
           setSelectedDate(newSelectedDate);
         }}
       >
         <DatePickerSingleInput
-          onDateValueChange={(newDateValue: string) => {
-            const validationStatus = isValidNumericDate(
-              newDateValue,
-              "MM/DD/YYYY",
-            )
-              ? undefined
-              : "error";
-            setValidationStatus(validationStatus);
-          }}
           formatDate={formatDateStringEnUS}
           parse={parseDateStringEnUS}
           placeholder={"MM/DD/YYYY"}

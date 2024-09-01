@@ -10,7 +10,7 @@ import {
   FormFieldLabel as FormLabel,
 } from "@salt-ds/core";
 import {
-  type DateInputRangeValue,
+  type DateInputRangeParserResult,
   DatePicker,
   DatePickerOverlay,
   DatePickerRangeInput,
@@ -24,81 +24,48 @@ import React, { type ReactElement, useState } from "react";
 function formatDateRange(
   dateRange: DateRangeSelection | null,
   locale = getCurrentLocale(),
+  options?: Intl.DateTimeFormatOptions,
 ): string {
   const { startDate, endDate } = dateRange || {};
-  const formattedStartDate = startDate ? formatDate(startDate, locale) : "N/A";
-  const formattedEndDate = endDate ? formatDate(endDate, locale) : "N/A";
+  const formattedStartDate = startDate
+    ? formatDate(startDate, locale, options)
+    : startDate;
+  const formattedEndDate = endDate
+    ? formatDate(endDate, locale, options)
+    : endDate;
   return `Start date: ${formattedStartDate}, End date: ${formattedEndDate}`;
 }
 
-function validateNumericDate(dateString: string, format: string): boolean {
-  let regex: RegExp;
-  let day: number;
-  let month: number;
-  let year: number;
-
-  if (format === "MM/DD/YYYY") {
-    regex = /^(0?[1-9]|1[0-2])\/(0?[1-9]|[12][0-9]|3[01])\/\d{4}$/;
-    if (!regex.test(dateString)) {
-      return false;
-    }
-    const parts = dateString.split("/");
-    month = Number.parseInt(parts[0], 10);
-    day = Number.parseInt(parts[1], 10);
-    year = Number.parseInt(parts[2], 10);
-  } else if (format === "DD/MM/YYYY") {
-    regex = /^(0?[1-9]|[12][0-9]|3[01])\/(0?[1-9]|1[0-2])\/\d{4}$/;
-    if (!regex.test(dateString)) {
-      return false;
-    }
-    const parts = dateString.split("/");
-    day = Number.parseInt(parts[0], 10);
-    month = Number.parseInt(parts[1], 10);
-    year = Number.parseInt(parts[2], 10);
-  } else {
-    // Unsupported format
-    return false;
-  }
-
-  if (month < 1 || month > 12 || year < 1000 || year > 9999) {
-    return false;
-  }
-  const daysInMonth = new Date(year, month, 0).getDate();
-  return !(day < 1 || day > daysInMonth);
-}
-
-const isValidNumericDate = (
-  dateValue: string | undefined,
-  format = "DD/MM/YYYY",
-) => !dateValue?.length || validateNumericDate(dateValue, format);
-
 function isValidDateRange(date: DateRangeSelection | null) {
-  if (
+  if (date?.startDate === null || date?.endDate === null) {
+    return false;
+  }
+  return !(
     date?.startDate &&
     date?.endDate &&
     date.startDate.compare(date.endDate) > 0
-  ) {
-    return false;
-  }
-  return true;
+  );
 }
 
 const parseDateStringEsES = (
   dateString: string | undefined,
-): DateValue | undefined => {
+): DateInputRangeParserResult => {
   if (!dateString) {
-    return undefined;
+    return { date: null, error: false };
   }
   const dateParts = dateString.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
   if (!dateParts) {
-    return undefined;
+    return { date: null, error: "invalid date" };
   }
   const [, day, month, year] = dateParts;
-  return new CalendarDate(
-    Number.parseInt(year, 10),
-    Number.parseInt(month, 10),
-    Number.parseInt(day, 10),
-  );
+  return {
+    date: new CalendarDate(
+      Number.parseInt(year, 10),
+      Number.parseInt(month, 10),
+      Number.parseInt(day, 10),
+    ),
+    error: false,
+  };
 };
 
 const formatDateStringEsES = (
@@ -136,26 +103,21 @@ export const RangeWithLocale = (): ReactElement => {
         selectedDate={selectedDate}
         locale={"es-ES"}
         timeZone={"Europe/Madrid"}
-        onSelectedDateChange={(newSelectedDate: DateRangeSelection | null) => {
+        onSelectedDateChange={(newSelectedDate, error) => {
           console.log(
             `Selected date range: ${formatDateRange(newSelectedDate)}`,
           );
           setSelectedDate(newSelectedDate);
-          const validationStatus = isValidDateRange(newSelectedDate)
-            ? undefined
-            : "error";
+          const validationStatus =
+            !error.startDate &&
+            !error.endDate &&
+            isValidDateRange(newSelectedDate)
+              ? undefined
+              : "error";
           setValidationStatus(validationStatus);
         }}
       >
         <DatePickerRangeInput
-          onDateValueChange={(newDateValue?: DateInputRangeValue) => {
-            const validationStatus =
-              isValidNumericDate(newDateValue?.startDate, "DD/MM/YYYY") &&
-              isValidNumericDate(newDateValue?.endDate, "DD/MM/YYYY")
-                ? undefined
-                : "error";
-            setValidationStatus(validationStatus);
-          }}
           formatDate={formatDateStringEsES}
           parse={parseDateStringEsES}
           placeholder={"DD/MM/YYYY"}

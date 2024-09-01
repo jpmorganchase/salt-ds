@@ -2,7 +2,6 @@ import { Button, makePrefixer, useControlled, useForkRef } from "@salt-ds/core";
 import { CalendarIcon } from "@salt-ds/icons";
 import { clsx } from "clsx";
 import {
-  type FocusEventHandler,
   type KeyboardEvent,
   type SyntheticEvent,
   forwardRef,
@@ -11,7 +10,11 @@ import {
   useRef,
 } from "react";
 import type { SingleDateSelection } from "../calendar";
-import { DateInputSingle, type DateInputSingleProps } from "../date-input";
+import {
+  DateInputSingle,
+  type DateInputSingleError,
+  type DateInputSingleProps,
+} from "../date-input";
 import { useDatePickerContext } from "./DatePickerContext";
 import { useDatePickerOverlay } from "./DatePickerOverlayProvider";
 
@@ -59,8 +62,12 @@ export const DatePickerSingleInput = forwardRef<
   }, [open, setOpen]);
 
   const handleDateChange = useCallback(
-    (_event: SyntheticEvent, newDate: SingleDateSelection | null) => {
-      setSelectedDate(newDate);
+    (
+      _event: SyntheticEvent,
+      newDate: SingleDateSelection | null,
+      error: DateInputSingleError,
+    ) => {
+      setSelectedDate(newDate, error);
     },
     [setSelectedDate],
   );
@@ -83,7 +90,7 @@ export const DatePickerSingleInput = forwardRef<
   useEffect(() => {
     if (cancelled) {
       setValue(prevState?.current?.value);
-      setSelectedDate(prevState?.current?.date || null);
+      setSelectedDate(prevState?.current?.date || null, false);
     }
   }, [cancelled, setSelectedDate]);
 

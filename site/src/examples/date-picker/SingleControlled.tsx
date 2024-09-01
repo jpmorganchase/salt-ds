@@ -1,3 +1,4 @@
+import type { DateValue } from "@internationalized/date";
 import {
   DatePicker,
   DatePickerOverlay,
@@ -5,8 +6,20 @@ import {
   DatePickerSinglePanel,
   type SingleDateSelection,
   formatDate,
+  getCurrentLocale,
 } from "@salt-ds/lab";
 import { type ReactElement, useState } from "react";
+
+function formatSingleDate(
+  date: DateValue | null,
+  locale = getCurrentLocale(),
+  options?: Intl.DateTimeFormatOptions,
+) {
+  if (date) {
+    return formatDate(date, locale, options);
+  }
+  return date;
+}
 
 export const SingleControlled = (): ReactElement => {
   const [selectedDate, setSelectedDate] = useState<SingleDateSelection | null>(
@@ -16,8 +29,8 @@ export const SingleControlled = (): ReactElement => {
     <DatePicker
       selectionVariant={"single"}
       selectedDate={selectedDate}
-      onSelectedDateChange={(newSelectedDate: SingleDateSelection | null) => {
-        console.log(`Selected date: ${formatDate(newSelectedDate)}`);
+      onSelectedDateChange={(newSelectedDate, _error) => {
+        console.log(`Selected date: ${formatSingleDate(newSelectedDate)}`);
         setSelectedDate(newSelectedDate);
       }}
     >

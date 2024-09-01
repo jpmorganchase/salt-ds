@@ -3,6 +3,10 @@ import * as dateInputStories from "@stories/date-input/date-input.stories";
 import { composeStories } from "@storybook/react";
 import { type ChangeEvent, type SyntheticEvent, useState } from "react";
 import type { DateRangeSelection } from "../../../calendar";
+import type {
+  DateInputRangeParserError,
+  DateInputRangeParserResult,
+} from "../../../date-input";
 
 const composedStories = composeStories(dateInputStories);
 const { Range } = composedStories;
@@ -45,12 +49,10 @@ describe("GIVEN a DateInputRange", () => {
 
   it("SHOULD support custom parser", () => {
     const parseSpy = cy.stub().as("parseSpy");
-    const customParser = (
-      inputDate: string | undefined,
-    ): DateValue | undefined => {
+    const customParser = (inputDate: string): DateInputRangeParserResult => {
       const parsedAsDate = updatedDate.startDate;
       parseSpy(inputDate);
-      return parsedAsDate;
+      return { date: parsedAsDate, error: false };
     };
 
     cy.mount(
@@ -94,9 +96,7 @@ describe("GIVEN a DateInputRange", () => {
 
   it("SHOULD support custom formatter", () => {
     const formatSpy = cy.stub().as("formatSpy");
-    const customFormatter = (
-      dateToFormat: DateValue | null | undefined,
-    ): string => {
+    const customFormatter = (dateToFormat: DateValue | null): string => {
       formatSpy(dateToFormat);
       return dateToFormat ? "formatted date" : "";
     };
@@ -214,6 +214,7 @@ describe("GIVEN a DateInputRange", () => {
         "have.been.calledWithMatch",
         Cypress.sinon.match.any,
         { startDate: updatedDate.startDate, endDate: initialDate.endDate },
+        { startDate: false, endDate: false },
       );
       // Verify that the start date input is updated with the formatted value
       cy.findByLabelText("Start date").should(
@@ -249,6 +250,7 @@ describe("GIVEN a DateInputRange", () => {
         "have.been.calledWithMatch",
         Cypress.sinon.match.any,
         { startDate: updatedDate.startDate, endDate: updatedDate.endDate },
+        { startDate: false, endDate: false },
       );
       // Verify that the start and end date inputs are updated with the formatted values
       cy.findByLabelText("Start date").should(
@@ -295,10 +297,14 @@ describe("GIVEN a DateInputRange", () => {
         const handleDateChange = (
           event: SyntheticEvent,
           newDate: DateRangeSelection | null,
+          error: {
+            startDate: DateInputRangeParserError;
+            endDate: DateInputRangeParserError;
+          },
         ) => {
           event.persist();
           setDate(newDate);
-          dateChangeSpy(event, newDate);
+          dateChangeSpy(event, newDate, error);
         };
 
         return (
@@ -342,6 +348,7 @@ describe("GIVEN a DateInputRange", () => {
         "have.been.calledWithMatch",
         Cypress.sinon.match.any,
         { startDate: updatedDate.startDate, endDate: initialDate.endDate },
+        { startDate: false, endDate: false },
       );
 
       // Verify that the start date input is updated with the formatted value
@@ -377,6 +384,7 @@ describe("GIVEN a DateInputRange", () => {
         "have.been.calledWithMatch",
         Cypress.sinon.match.any,
         { startDate: updatedDate.startDate, endDate: updatedDate.endDate },
+        { startDate: false, endDate: false },
       );
       // Verify that the start and end date inputs are updated with the formatted values
       cy.findByLabelText("Start date").should(

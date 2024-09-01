@@ -15,21 +15,17 @@ export const SingleControlled = (): ReactElement => {
     today(getLocalTimeZone()),
   );
 
-  const handleDateChange =
-    () => (_event: SyntheticEvent, newSelectedDate: DateValue | null) => {
-      console.log(`Selected date: ${formatDate(newSelectedDate)}`);
-      setSelectedDate(newSelectedDate);
-    };
-  const handleDateValueChange = () => (newDateValue: string) => {
-    console.log(`Date value: ${newDateValue}`);
+  const handleDateChange = (
+    _event: SyntheticEvent,
+    newSelectedDate: DateValue | null,
+    _error: string | boolean,
+  ) => {
+    console.log(`Selected date: ${formatDate(newSelectedDate)}`);
+    setSelectedDate(newSelectedDate);
   };
   return (
     <div style={{ width: "250px" }}>
-      <DateInputSingle
-        date={selectedDate}
-        onDateChange={handleDateChange}
-        onDateValueChange={handleDateValueChange}
-      />
+      <DateInputSingle date={selectedDate} onDateChange={handleDateChange} />
     </div>
   );
 };

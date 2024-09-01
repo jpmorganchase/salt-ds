@@ -10,9 +10,8 @@ import {
 import {
   DatePickerRangePanel,
   DatePickerSinglePanel,
-  type DatePickerState,
-  type DateRangeSelection,
-  type SingleDateSelection,
+  type RangeDatePickerState,
+  type SingleDatePickerState,
   useDatePickerContext,
 } from "@salt-ds/lab";
 import React, { forwardRef } from "react";
@@ -38,11 +37,11 @@ export const CustomDatePickerPanel = forwardRef<
   if (selectionVariant === "range") {
     stateAndHelpers = useDatePickerContext({
       selectionVariant: "range",
-    }) as DatePickerState<DateRangeSelection>;
+    }) as RangeDatePickerState;
   } else {
     stateAndHelpers = useDatePickerContext({
       selectionVariant: "single",
-    }) as DatePickerState<SingleDateSelection>;
+    }) as SingleDatePickerState;
   }
 
   const {
@@ -81,6 +80,10 @@ export const CustomDatePickerPanel = forwardRef<
                       years: tenor,
                     }),
                   };
+              setSelectedDate(newSelectedDate, {
+                startDate: false,
+                endDate: false,
+              });
             } else {
               newSelectedDate = selectedDate
                 ? selectedDate.add({
@@ -89,8 +92,8 @@ export const CustomDatePickerPanel = forwardRef<
                 : today(getLocalTimeZone()).add({
                     years: tenor,
                   });
+              setSelectedDate(newSelectedDate, false);
             }
-            setSelectedDate(newSelectedDate);
           }}
         >
           {tenorOptions.map(({ tenor, label }) => (

@@ -13,6 +13,7 @@ import {
 import type { DateRangeSelection } from "../calendar";
 import {
   DateInputRange,
+  type DateInputRangeError,
   type DateInputRangeProps,
   type DateInputRangeValue,
 } from "../date-input";
@@ -65,8 +66,12 @@ export const DatePickerRangeInput = forwardRef<
   }, [open, setOpen]);
 
   const handleDateChange = useCallback(
-    (_event: SyntheticEvent, newDate: DateRangeSelection | null) => {
-      setSelectedDate(newDate);
+    (
+      _event: SyntheticEvent,
+      newDate: DateRangeSelection | null,
+      error: DateInputRangeError,
+    ) => {
+      setSelectedDate(newDate, error);
     },
     [setSelectedDate],
   );
@@ -89,7 +94,10 @@ export const DatePickerRangeInput = forwardRef<
   useEffect(() => {
     if (cancelled) {
       setValue(prevState?.current?.value);
-      setSelectedDate(prevState?.current?.date || null);
+      setSelectedDate(prevState?.current?.date || null, {
+        startDate: false,
+        endDate: false,
+      });
     }
   }, [cancelled, setSelectedDate]);
 

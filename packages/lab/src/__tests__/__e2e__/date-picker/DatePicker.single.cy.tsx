@@ -400,28 +400,20 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
       cy.findByRole("textbox").click().clear().type(initialDateValue);
       cy.realPress("Tab");
       cy.findByRole("textbox").should("have.value", initialDateValue);
-      const expectedInitialDateWithOriginalTime = new ZonedDateTime(
-        initialDate.year,
-        initialDate.month,
-        initialDate.day,
-        defaultSelectedDate.timeZone,
-        0,
-        defaultSelectedDate.hour,
-        defaultSelectedDate.minute,
-        defaultSelectedDate.second,
-        defaultSelectedDate.millisecond,
+      cy.get("@selectedDateChangeSpy").should(
+        "have.been.calledWithMatch",
+        {
+          year: initialDate.year,
+          month: initialDate.month,
+          day: initialDate.day,
+          timeZone: defaultSelectedDate.timeZone,
+          hour: defaultSelectedDate.hour,
+          minute: defaultSelectedDate.minute,
+          second: defaultSelectedDate.second,
+          millisecond: defaultSelectedDate.millisecond,
+        },
+        false,
       );
-
-      cy.get("@selectedDateChangeSpy").should("have.been.calledWithMatch", {
-        year: initialDate.year,
-        month: initialDate.month,
-        day: initialDate.day,
-        timeZone: defaultSelectedDate.timeZone,
-        hour: defaultSelectedDate.hour,
-        minute: defaultSelectedDate.minute,
-        second: defaultSelectedDate.second,
-        millisecond: defaultSelectedDate.millisecond,
-      });
     });
   });
 });

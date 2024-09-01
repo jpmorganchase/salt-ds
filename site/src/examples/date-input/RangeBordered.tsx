@@ -1,6 +1,7 @@
 import { getLocalTimeZone, today } from "@internationalized/date";
 import {
   DateInputRange,
+  type DateInputRangeError,
   type DateRangeSelection,
   formatDate,
   getCurrentLocale,
@@ -12,19 +13,20 @@ function formatDateRange(
   locale = getCurrentLocale(),
 ): string {
   const { startDate, endDate } = dateRange || {};
-  const formattedStartDate = startDate ? formatDate(startDate, locale) : "N/A";
-  const formattedEndDate = endDate ? formatDate(endDate, locale) : "N/A";
+  const formattedStartDate = startDate
+    ? formatDate(startDate, locale)
+    : startDate;
+  const formattedEndDate = endDate ? formatDate(endDate, locale) : endDate;
   return `Start date: ${formattedStartDate}, End date: ${formattedEndDate}`;
 }
 
 export const RangeBordered = (): ReactElement => {
-  const handleDateChange =
-    () =>
-    (_event: SyntheticEvent, newSelectedDate: DateRangeSelection | null) => {
-      console.log(`Selected date range: ${formatDateRange(newSelectedDate)}`);
-    };
-  const handleDateValueChange = () => (newDateValue: string) => {
-    console.log(`Date value: ${newDateValue}`);
+  const handleDateChange = (
+    _event: SyntheticEvent,
+    newSelectedDate: DateRangeSelection | null,
+    _error: DateInputRangeError,
+  ) => {
+    console.log(`Selected date range: ${formatDateRange(newSelectedDate)}`);
   };
   return (
     <div style={{ width: "250px" }}>
@@ -34,7 +36,6 @@ export const RangeBordered = (): ReactElement => {
           endDate: today(getLocalTimeZone()).add({ days: 7 }),
         }}
         onDateChange={handleDateChange}
-        onDateValueChange={handleDateValueChange}
         bordered
       />
     </div>

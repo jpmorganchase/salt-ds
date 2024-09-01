@@ -2,6 +2,7 @@ import { CalendarDate, type DateValue } from "@internationalized/date";
 import * as dateInputStories from "@stories/date-input/date-input.stories";
 import { composeStories } from "@storybook/react";
 import { type ChangeEvent, type SyntheticEvent, useState } from "react";
+import type { DateInputSingleParserResult } from "../../../date-input";
 
 const composedStories = composeStories(dateInputStories);
 const { Single } = composedStories;
@@ -24,12 +25,10 @@ describe("GIVEN a DateInputSingle", () => {
 
   it("SHOULD support custom parser", () => {
     const parseSpy = cy.stub().as("parseSpy");
-    const customParser = (
-      inputDate: string | undefined,
-    ): DateValue | undefined => {
+    const customParser = (inputDate: string): DateInputSingleParserResult => {
       const parsedAsDate = updatedDate;
       parseSpy(inputDate);
-      return parsedAsDate;
+      return { date: parsedAsDate, error: false };
     };
     cy.mount(
       <Single
@@ -49,9 +48,7 @@ describe("GIVEN a DateInputSingle", () => {
 
   it("SHOULD support custom formatter", () => {
     const formatSpy = cy.stub().as("formatSpy");
-    const customFormatter = (
-      dateToFormat: DateValue | null | undefined,
-    ): string => {
+    const customFormatter = (dateToFormat: DateValue | null): string => {
       formatSpy(dateToFormat);
       return dateToFormat ? "formatted date" : "";
     };

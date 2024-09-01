@@ -1,8 +1,8 @@
 import { type ReactNode, forwardRef } from "react";
-import type { DateRangeSelection, SingleDateSelection } from "../calendar";
 import {
-  type DatePickerState,
   DateRangeSelectionContext,
+  type RangeDatePickerState,
+  type SingleDatePickerState,
   SingleDateSelectionContext,
 } from "./DatePickerContext";
 import { DatePickerOverlayProvider } from "./DatePickerOverlayProvider";
@@ -15,6 +15,12 @@ import {
 export interface DatePickerBaseProps {
   className?: string;
   children?: ReactNode;
+  /** the open/close state of the overlay. The open/close state will be controlled when this prop is provided. */
+  open?: boolean;
+  /**
+   * the initial open/close state of the overlay, when the open/close state is un-controlled.
+   */
+  defaultOpen?: DatePickerBaseProps["open"];
 }
 
 export interface DatePickerSingleProps
@@ -35,10 +41,7 @@ export const DatePickerMain = forwardRef<HTMLDivElement, DatePickerProps>(
   function DatePickerMain(props, ref) {
     const { className, children, ...rest } = props;
     if (props.selectionVariant === "range") {
-      const stateAndHelpers = useDatePicker(
-        rest,
-        ref,
-      ) as DatePickerState<DateRangeSelection>;
+      const stateAndHelpers = useDatePicker(rest, ref) as RangeDatePickerState;
       return (
         <DateRangeSelectionContext.Provider value={stateAndHelpers}>
           <div className={className} ref={stateAndHelpers?.state?.containerRef}>
@@ -47,10 +50,7 @@ export const DatePickerMain = forwardRef<HTMLDivElement, DatePickerProps>(
         </DateRangeSelectionContext.Provider>
       );
     }
-    const stateAndHelpers = useDatePicker(
-      rest,
-      ref,
-    ) as DatePickerState<SingleDateSelection>;
+    const stateAndHelpers = useDatePicker(rest, ref) as SingleDatePickerState;
     return (
       <SingleDateSelectionContext.Provider value={stateAndHelpers}>
         <div className={className} ref={stateAndHelpers?.state?.containerRef}>

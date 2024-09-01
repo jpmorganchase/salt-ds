@@ -8,7 +8,11 @@ import React, {
   type MouseEventHandler,
 } from "react";
 import type { DateRangeSelection, SingleDateSelection } from "../calendar";
-import { type DatePickerState, useDatePickerContext } from "./index";
+import {
+  type RangeDatePickerState,
+  type SingleDatePickerState,
+  useDatePickerContext,
+} from "./index";
 import "./DatePickerActions.css";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
@@ -30,14 +34,14 @@ export type DatePickerActionsProps<
       selectionVariant: "single";
       onApply?: (
         _event: SyntheticEvent,
-        date: SingleDateSelection | null | undefined,
+        date: SingleDateSelection | null,
       ) => void;
     }
   : DatePickerActionsBaseProps & {
       selectionVariant: "range";
       onApply?: (
         _event: SyntheticEvent,
-        date: DateRangeSelection | null | undefined,
+        date: DateRangeSelection | null,
       ) => void;
     };
 
@@ -66,11 +70,11 @@ export const DatePickerActions = forwardRef<
   if (selectionVariant === "range") {
     stateAndHelpers = useDatePickerContext({
       selectionVariant: "range",
-    }) as DatePickerState<DateRangeSelection>;
+    }) as RangeDatePickerState;
   } else {
     stateAndHelpers = useDatePickerContext({
       selectionVariant: "single",
-    }) as DatePickerState<SingleDateSelection>;
+    }) as SingleDatePickerState;
   }
 
   const {
@@ -90,10 +94,10 @@ export const DatePickerActions = forwardRef<
 
   const handleApply: MouseEventHandler<HTMLButtonElement> = (event) => {
     if (selectionVariant === "single") {
-      apply(selectedDate || null);
+      apply(selectedDate, false);
       onApply?.(event, selectedDate);
     } else {
-      apply(selectedDate || null);
+      apply(selectedDate, { startDate: false, endDate: false });
       onApply?.(event, selectedDate);
     }
     ApplyButtonProps?.onClick?.(event);

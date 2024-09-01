@@ -14,15 +14,16 @@ export type RangeTimeFields = {
   endTime?: TimeFields;
 };
 
-export function parseCalendarDate(
-  inputDate: string | undefined,
-): CalendarDate | undefined {
-  if (!inputDate) {
-    return undefined;
+export function parseCalendarDate(inputDate: string): {
+  date: DateValue | null;
+  error: string | false;
+} {
+  if (!inputDate?.length) {
+    return { date: null, error: false };
   }
   const date = new Date(inputDate);
   if (Number.isNaN(date.getTime())) {
-    return undefined;
+    return { date: null, error: "not a valid date" };
   }
 
   const year = date.getFullYear();
@@ -31,30 +32,38 @@ export function parseCalendarDate(
 
   try {
     const isoDate = new CalendarDate(year, month, day);
-    return isoDate;
+    return { date: isoDate, error: false };
   } catch (err) {
-    return undefined;
+    return { date: null, error: (err as Error).message };
   }
 }
 
 export function parseZonedDateTime(
-  inputDate: string | undefined,
+  inputDate: string,
   timeZone: string = getLocalTimeZone(),
-): DateValue | undefined {
-  const date = parseCalendarDate(inputDate);
-  if (!date) {
-    return date;
+): {
+  date: DateValue | null;
+  error: string | false;
+} {
+  const parsedDate = parseCalendarDate(inputDate);
+  if (!parsedDate.date || parsedDate.error) {
+    return { ...parsedDate, date: null };
   }
-  return toZoned(date, timeZone, "compatible");
+  try {
+    const zonedDate = toZoned(parsedDate.date, timeZone, "compatible");
+    return { date: zonedDate, error: false };
+  } catch (err) {
+    return { date: null, error: (err as Error).message };
+  }
 }
 
 export const dateSupportsTime = (
-  date: DateValue | undefined,
+  date: DateValue,
 ): date is CalendarDateTime | ZonedDateTime =>
   date instanceof CalendarDateTime || date instanceof ZonedDateTime;
 
 export function extractTimeFieldsFromDateRange(
-  selectedDate: DateRangeSelection | null | undefined,
+  selectedDate: DateRangeSelection | null,
 ): RangeTimeFields {
   let startTime: TimeFields | undefined;
   let endTime: TimeFields | undefined;
@@ -72,7 +81,7 @@ export function extractTimeFieldsFromDateRange(
 }
 
 export function extractTimeFieldsFromDate(
-  selectedDate: SingleDateSelection | null | undefined,
+  selectedDate: SingleDateSelection | null,
 ): TimeFields | undefined {
   if (selectedDate && dateSupportsTime(selectedDate)) {
     const { hour, minute, second, millisecond } = selectedDate;

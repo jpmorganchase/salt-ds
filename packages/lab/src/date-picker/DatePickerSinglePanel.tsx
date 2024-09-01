@@ -30,11 +30,7 @@ import {
   type CalendarSingleProps,
   getCurrentLocale,
 } from "../calendar";
-import {
-  Calendar,
-  type CalendarProps,
-  type SingleDateSelection,
-} from "../calendar";
+import { Calendar, type SingleDateSelection } from "../calendar";
 import datePickerPanelCss from "./DatePickerPanel.css";
 import { useDatePickerContext } from "./index";
 
@@ -108,7 +104,7 @@ export const DatePickerSinglePanel = forwardRef<
 
   const handleSelectedDateChange = useCallback(
     (event: SyntheticEvent, newDate: SingleDateSelection | null) => {
-      setSelectedDate(newDate);
+      setSelectedDate(newDate, false);
       onSelect?.(event, newDate);
     },
     [setSelectedDate, onSelect],
