@@ -14,6 +14,11 @@ export type RangeTimeFields = {
   endTime?: TimeFields;
 };
 
+/**
+ * Parses a string into a CalendarDate.
+ * @param inputDate - The input date string.
+ * @returns An object containing the parsed date and any error encountered.
+ */
 export function parseCalendarDate(inputDate: string): {
   date: DateValue | null;
   error: string | false;
@@ -38,6 +43,12 @@ export function parseCalendarDate(inputDate: string): {
   }
 }
 
+/**
+ * Parses a string into a ZonedDateTime.
+ * @param inputDate - The input date string.
+ * @param timeZone - The time zone to use for parsing. Defaults to the local time zone.
+ * @returns An object containing the parsed date and any error encountered.
+ */
 export function parseZonedDateTime(
   inputDate: string,
   timeZone: string = getLocalTimeZone(),
@@ -57,11 +68,21 @@ export function parseZonedDateTime(
   }
 }
 
+/**
+ * Checks if a date supports time fields.
+ * @param date - The date to check.
+ * @returns `true` if the date supports time fields, otherwise `false`.
+ */
 export const dateSupportsTime = (
   date: DateValue,
 ): date is CalendarDateTime | ZonedDateTime =>
   date instanceof CalendarDateTime || date instanceof ZonedDateTime;
 
+/**
+ * Extracts time fields from a date range selection.
+ * @param selectedDate - The selected date range.
+ * @returns An object containing the start and end time fields.
+ */
 export function extractTimeFieldsFromDateRange(
   selectedDate: DateRangeSelection | null,
 ): RangeTimeFields {
@@ -80,6 +101,11 @@ export function extractTimeFieldsFromDateRange(
   return { startTime, endTime };
 }
 
+/**
+ * Extracts time fields from a single date selection.
+ * @param selectedDate - The selected date.
+ * @returns The time fields of the selected date, if available.
+ */
 export function extractTimeFieldsFromDate(
   selectedDate: SingleDateSelection | null,
 ): TimeFields | undefined {

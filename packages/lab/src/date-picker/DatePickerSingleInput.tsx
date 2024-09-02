@@ -20,6 +20,9 @@ import { useDatePickerOverlay } from "./DatePickerOverlayProvider";
 
 const withBaseName = makePrefixer("saltDatePickerSingleInput");
 
+/**
+ * Props for the DatePickerSingleInput component.
+ */
 export interface DatePickerSingleInputProps extends DateInputSingleProps {}
 
 export const DatePickerSingleInput = forwardRef<

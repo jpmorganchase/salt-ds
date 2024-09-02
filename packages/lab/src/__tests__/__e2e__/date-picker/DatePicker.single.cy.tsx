@@ -183,11 +183,15 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
   describe("SHOULD support confirmation", () => {
     it("SHOULD cancel un-confirmed selections", () => {
       const selectedDateChangeSpy = cy.stub().as("selectedDateChangeSpy");
+      const appliedDateSpy = cy.stub().as("appliedDateSpy");
+      const cancelSpy = cy.stub().as("cancelSpy");
       cy.mount(
         <SingleWithConfirmation
           selectionVariant={"single"}
-          defaultSelectedDate={initialDate}
+          selectedDate={initialDate}
           onSelectedDateChange={selectedDateChangeSpy}
+          onApply={appliedDateSpy}
+          onCancel={cancelSpy}
           locale={testLocale}
         />,
       );
@@ -199,30 +203,39 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
       // Simulate opening the calendar
       cy.findByRole("button", { name: "Open Calendar" }).realClick();
       cy.findByRole("application").should("exist");
-      const unconfirmedDate = initialDate.add({ days: 1 });
       // Simulate selecting an unconfirmed date
-      cy.findByRole("button", { name: formatDay(unconfirmedDate) }).realClick();
+      cy.findByRole("button", { name: formatDay(updatedDate) }).realClick();
       cy.findByRole("application").should("exist");
       cy.document()
         .find("input")
-        .should("have.value", formatDate(unconfirmedDate, testLocale));
+        .should("have.value", formatDate(updatedDate, testLocale));
+      cy.get("@selectedDateChangeSpy").should(
+        "have.been.calledWith",
+        updatedDate,
+        false,
+      );
       // Simulate clicking the "Cancel" button
       cy.findByRole("button", { name: "Cancel" }).realClick();
       // Verify that the calendar is closed and the initial selected date is restored
       cy.findByRole("application").should("not.exist");
-      cy.get("@selectedDateChangeSpy").should("not.have.been.called");
+      cy.get("@appliedDateSpy").should("not.have.been.called");
       cy.document()
         .find("input")
         .should("have.value", formatDate(initialDate, testLocale));
+      cy.get("@cancelSpy").should("have.been.called");
     });
 
     it("SHOULD apply confirmed selections", () => {
       const selectedDateChangeSpy = cy.stub().as("selectedDateChangeSpy");
+      const appliedDateSpy = cy.stub().as("appliedDateSpy");
+      const cancelSpy = cy.stub().as("cancelSpy");
       cy.mount(
         <SingleWithConfirmation
           selectionVariant={"single"}
-          defaultSelectedDate={initialDate}
+          selectedDate={initialDate}
           onSelectedDateChange={selectedDateChangeSpy}
+          onApply={appliedDateSpy}
+          onCancel={cancelSpy}
           locale={testLocale}
         />,
       );
@@ -234,24 +247,24 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
       // Simulate opening the calendar
       cy.findByRole("button", { name: "Open Calendar" }).realClick();
       cy.findByRole("application").should("exist");
-      const unconfirmedDate = initialDate.add({ days: 1 });
       // Simulate selecting a new date
-      cy.findByRole("button", { name: formatDay(unconfirmedDate) }).realClick();
+      cy.findByRole("button", { name: formatDay(updatedDate) }).realClick();
       cy.findByRole("application").should("exist");
       cy.document()
         .find("input")
-        .should("have.value", formatDate(unconfirmedDate, testLocale));
+        .should("have.value", formatDate(updatedDate, testLocale));
+      cy.get("@selectedDateChangeSpy").should(
+        "have.been.calledWith",
+        updatedDate,
+      );
       // Simulate clicking the "Apply" button
       cy.findByRole("button", { name: "Apply" }).realClick();
       // Verify that the calendar is closed and the new date is applied
       cy.findByRole("application").should("not.exist");
-      cy.get("@selectedDateChangeSpy").should(
-        "have.been.calledWith",
-        unconfirmedDate,
-      );
+      cy.get("@appliedDateSpy").should("have.been.calledWith", updatedDate);
       cy.document()
         .find("input")
-        .should("have.value", formatDate(unconfirmedDate, testLocale));
+        .should("have.value", formatDate(updatedDate, testLocale));
     });
   });
 

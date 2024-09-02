@@ -28,52 +28,140 @@ import {
   useCalendarSelection,
 } from "./useCalendarSelection";
 
+/**
+ * Interface representing the base properties UseCalendar hook.
+ */
 interface UseCalendarBaseProps {
+  /**
+   * The default visible month.
+   */
   defaultVisibleMonth?: DateValue;
+  /**
+   * Callback fired when the visible month changes.
+   * @param event - The synthetic event.
+   * @param visibleMonth - The new visible month.
+   */
   onVisibleMonthChange?: (
     event: SyntheticEvent,
     visibleMonth: DateValue,
   ) => void;
+  /**
+   * Function to determine if a day is unselectable.
+   * @param date - The date to check.
+   * @returns A string reason if the day is unselectable, otherwise `false` or `undefined`.
+   */
   isDayUnselectable?: (date: DateValue) => string | false | undefined;
+  /**
+   * Function to determine if a day is highlighted.
+   * @param date - The date to check.
+   * @returns A string reason if the day is highlighted, otherwise `false` or `undefined`.
+   */
   isDayHighlighted?: (date: DateValue) => string | false | undefined;
+  /**
+   * Function to determine if a day is disabled.
+   * @param date - The date to check.
+   * @returns A string reason if the day is disabled, otherwise `false` or `undefined`.
+   */
   isDayDisabled?: (date: DateValue) => string | false | undefined;
+  /**
+   * The currently visible month.
+   */
   visibleMonth?: DateValue;
+  /**
+   * If `true`, hides dates that are out of the selectable range.
+   */
   hideOutOfRangeDates?: boolean;
+  /**
+   * The minimum selectable date.
+   */
   minDate?: DateValue;
+  /**
+   * The maximum selectable date.
+   */
   maxDate?: DateValue;
+  /**
+   * The time zone used for date calculations.
+   */
   timeZone?: string;
+  /**
+   * The locale used for date formatting.
+   */
   locale?: string;
 }
 
+/**
+ * UseCalendar hook props for a single date selection Calendar.
+ */
 export interface UseCalendarSingleProps
   extends UseCalendarSelectionSingleProps,
     UseCalendarBaseProps {
+  /**
+   * The selection variant, set to "single".
+   */
   selectionVariant: "single";
 }
+
+/**
+ * UseCalendar hook props for a date range selection Calendar.
+ */
 export interface UseCalendarRangeProps
   extends UseCalendarSelectionRangeProps,
     UseCalendarBaseProps {
+  /**
+   * The selection variant, set to "range".
+   */
   selectionVariant: "range";
 }
+
+/**
+ * UseCalendar hook props for a multi-select Calendar.
+ */
 export interface UseCalendarMultiSelectProps
   extends UseCalendarSelectionMultiSelectProps,
     UseCalendarBaseProps {
+  /**
+   * The selection variant, set to "multiselect".
+   */
   selectionVariant: "multiselect";
 }
+
+/**
+ * UseCalendar hook props for an offset date selection Calendar.
+ */
 export interface UseCalendarOffsetProps
   extends UseCalendarSelectionOffsetProps,
     UseCalendarBaseProps {
+  /**
+   * The selection variant, set to "offset".
+   */
   selectionVariant: "offset";
 }
 
+/**
+ * UseCalendar hook props, wth the selection variant determining the return type of the date selection
+ */
 export type UseCalendarProps =
   | UseCalendarSingleProps
   | UseCalendarRangeProps
   | UseCalendarMultiSelectProps
   | UseCalendarOffsetProps;
 
+/**
+ * Default function to determine if a day is unselectable.
+ * @returns `false` indicating the day is selectable.
+ */
 const defaultIsDayUnselectable = (): string | false => false;
+
+/**
+ * Default function to determine if a day is highlighted.
+ * @returns `false` indicating the day is not highlighted.
+ */
 const defaultIsDayHighlighted = (): string | false => false;
+
+/**
+ * Default function to determine if a day is disabled.
+ * @returns `false` indicating the day is not disabled.
+ */
 const defaultIsDayDisabled = (): false => false;
 
 export function useCalendar(props: UseCalendarProps) {

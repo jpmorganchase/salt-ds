@@ -12,6 +12,9 @@ import {
   useDatePicker,
 } from "./useDatePicker";
 
+/**
+ * Base props for DatePicker.
+ */
 export interface DatePickerBaseProps {
   className?: string;
   children?: ReactNode;

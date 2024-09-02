@@ -17,8 +17,14 @@ import { useDatePickerOverlay } from "./DatePickerOverlayProvider";
 
 const withBaseName = makePrefixer("saltDatePickerOverlay");
 
+/**
+ * Props for the DatePickerOverlay component.
+ */
 export interface DatePickerOverlayProps
   extends ComponentPropsWithoutRef<"div"> {
+  /**
+   * The content to be rendered inside the overlay.
+   */
   children: ReactNode;
 }
 

@@ -16,19 +16,55 @@ import { useCalendarContext } from "./internal/CalendarContext";
 import { useFocusManagement } from "./internal/useFocusManagement";
 import { useCalendarSelectionDay } from "./useCalendarSelection";
 
+/**
+ * Interface representing the status of a day in the Calendar.
+ */
 export interface DayStatus {
+  /**
+   * If `true`, the day is out of the selectable range.
+   */
   outOfRange?: boolean;
+  /**
+   * If `true`, the day is selected.
+   */
   selected?: boolean;
+  /**
+   * If `true`, the day is today.
+   */
   today?: boolean;
+  /**
+   * If set, the day is unselectable with a reason.
+   */
   unselectable?: string | false;
+  /**
+   * If set, the day is highlighted with a reason.
+   */
   highlighted?: string | false;
+  /**
+   * If `true`, the day is focused.
+   */
   focused?: boolean;
+  /**
+   * If `true`, the day is disabled.
+   */
   disabled?: boolean;
+  /**
+   * If `true`, the day is hidden.
+   */
   hidden?: boolean;
 }
 
+/**
+ * UseCalendar hook props to return a calendar day's status
+ */
 export interface useCalendarDayProps {
+  /**
+   * The date of the calendar day.
+   */
   date: DateValue;
+  /**
+   * The month of the calendar day.
+   */
   month: DateValue;
 }
 

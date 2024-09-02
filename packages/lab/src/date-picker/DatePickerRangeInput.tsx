@@ -22,6 +22,9 @@ import { useDatePickerOverlay } from "./DatePickerOverlayProvider";
 
 const withBaseName = makePrefixer("saltDatePickerRangeInput");
 
+/**
+ * Props for the DatePickerRangeInput component.
+ */
 export interface DatePickerRangeInputProps extends DateInputRangeProps {}
 
 export const DatePickerRangeInput = forwardRef<

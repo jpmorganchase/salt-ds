@@ -20,25 +20,58 @@ import datePickerActions from "./DatePickerActions.css";
 
 const withBaseName = makePrefixer("saltDatePickerActions");
 
+/**
+ * Base props for DatePicker actions.
+ */
 export interface DatePickerActionsBaseProps
   extends ComponentPropsWithoutRef<"div"> {
+  /**
+   * Callback fired when the cancel action is triggered.
+   * @param _event - The synthetic event.
+   */
   onCancel?: (_event: SyntheticEvent) => void;
+  /**
+   * Props for the apply button.
+   */
   ApplyButtonProps?: ButtonProps;
+  /**
+   * Props for the cancel button.
+   */
   CancelButtonProps?: ButtonProps;
 }
 
+/**
+ * Props for the DatePicker actions component.
+ * @template SelectionVariant - The selection variant, either "single" or "range".
+ */
 export type DatePickerActionsProps<
   SelectionVariant extends "single" | "range",
 > = SelectionVariant extends "single"
   ? DatePickerActionsBaseProps & {
+      /**
+       * The selection variant, set to "single".
+       */
       selectionVariant: "single";
+      /**
+       * Callback fired when the apply action is triggered.
+       * @param _event - The synthetic event.
+       * @param date - The selected single date or null.
+       */
       onApply?: (
         _event: SyntheticEvent,
         date: SingleDateSelection | null,
       ) => void;
     }
   : DatePickerActionsBaseProps & {
+      /**
+       * The selection variant, set to "range".
+       */
       selectionVariant: "range";
+      /**
+       * Callback fired when the apply action is triggered.
+       * @param _event - The synthetic event.
+       * @param date - The selected date range or null.
+       */
       onApply?: (
         _event: SyntheticEvent,
         date: DateRangeSelection | null,
@@ -79,12 +112,12 @@ export const DatePickerActions = forwardRef<
 
   const {
     state: { selectedDate },
-    helpers: { cancel, apply, setAutoApplyDisabled },
+    helpers: { cancel, apply, setEnableApply },
   } = stateAndHelpers;
 
   useEffect(() => {
-    setAutoApplyDisabled(true);
-  }, [setAutoApplyDisabled]);
+    setEnableApply(true);
+  }, [setEnableApply]);
 
   const handleCancel: MouseEventHandler<HTMLButtonElement> = (event) => {
     cancel();

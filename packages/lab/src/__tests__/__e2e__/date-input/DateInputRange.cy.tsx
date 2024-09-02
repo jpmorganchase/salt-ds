@@ -34,6 +34,7 @@ describe("GIVEN a DateInputRange", () => {
   it("SHOULD render value, even when not a valid date", () => {
     cy.mount(
       <Range
+        defaultDate={undefined}
         defaultValue={{
           startDate: "start date value",
           endDate: "end date value",
@@ -178,7 +179,7 @@ describe("GIVEN a DateInputRange", () => {
 
       cy.mount(
         <Range
-          defaultValue={initialDateValue}
+          defaultDate={initialDate}
           startInputProps={{ onChange: handleStartDateChange }}
           endInputProps={{ onChange: handleEndDateChange }}
           onDateValueChange={dateValueChangeSpy}

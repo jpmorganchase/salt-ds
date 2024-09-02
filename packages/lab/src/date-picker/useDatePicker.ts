@@ -23,91 +23,114 @@ import type {
 import { useDatePickerOverlay } from "./DatePickerOverlayProvider";
 
 interface UseDatePickerBaseProps<T> {
-  /** if `true`, the component is disabled. */
+  /** If `true`, the component is disabled. */
   disabled?: boolean;
-  /** if `true`, the component is read only. */
+  /** If `true`, the component is read-only. */
   readOnly?: boolean;
   /**
-   * the selected date, `true` to open. The selected date will be controlled when this prop is provided.
+   * The selected date. The selected date will be controlled when this prop is provided.
    */
   selectedDate?: T | null;
   /**
-   * the initial selected date, when the selected date is un-controlled.
+   * The initial selected date, when the selected date is uncontrolled.
    */
   defaultSelectedDate?: UseDatePickerBaseProps<T>["selectedDate"];
   /**
-   * the minimum date for the range, default is 1900
+   * The minimum date for the range, default is 1900.
    */
   minDate?: DateValue;
   /**
-   * the maximum date for the range, default is 2100
+   * The maximum date for the range, default is 2100.
    */
   maxDate?: DateValue;
   /**
-   * handler for when the date selection is cancelled
+   * Handler for when the date selection is cancelled.
    */
   onCancel?: () => void;
   /**
-   * timeZone of the date selection, default to current time zone of user
+   * Time zone of the date selection, defaults to the current time zone of the user.
    */
   timeZone?: string;
   /**
-   * locale of the date selection, default to current locale of user
+   * Locale of the date selection, defaults to the current locale of the user.
    */
   locale?: string;
 }
 
+/**
+ * Props for single date selection.
+ *
+ * @typedef {UseDatePickerBaseProps<SingleDateSelection>} UseDatePickerSingleProps
+ * @property {"single"} selectionVariant - Single date selection.
+ * @property {(selectedSingleDate: SingleDateSelection | null, singleError: string | false) => void} [onSelectedDateChange] - Handler called when the selected date changes.
+ * @property {(appliedSingleDate: SingleDateSelection | null, singleError: string | false) => void} [onApply] - Handler called when the selected date is confirmed/applied.
+ */
 export interface UseDatePickerSingleProps
   extends UseDatePickerBaseProps<SingleDateSelection> {
   /**
-   * single date selection
+   * Single date selection.
    */
   selectionVariant: "single";
   /**
-   * handler called when selected date changes
-   * @param selectedDate selected date
-   * @param error error returned by parser or `false`
+   * Handler called when the selected date changes.
+   * @param {SingleDateSelection | null} selectedSingleDate - The selected date.
+   * @param {string | false} singleError - Error returned by the parser or `false`.
    */
   onSelectedDateChange?: (
-    selectedDate: SingleDateSelection | null,
-    error: string | false,
+    selectedSingleDate: SingleDateSelection | null,
+    singleError: string | false,
   ) => void;
   /**
-   * handler called when selected date is confirmed/applied
-   * @param appliedDate selected date
-   * @param error error returned by parser or `false`
+   * Handler called when the selected date is confirmed/applied.
+   * @param {SingleDateSelection | null} appliedSingleDate - The selected date.
+   * @param {string | false} singleError - Error returned by the parser or `false`.
    */
   onApply?: (
-    appliedDate: SingleDateSelection | null,
-    error: string | false,
+    appliedSingleDate: SingleDateSelection | null,
+    singleError: string | false,
   ) => void;
 }
 
+/**
+ * Props for date range selection.
+ *
+ * @typedef {UseDatePickerBaseProps<DateRangeSelection>} UseDatePickerRangeProps
+ * @property {"range"} selectionVariant - Date range selection.
+ * @property {(selectedRangeDate: DateRangeSelection | null, rangeError: { startDate: string | false; endDate: string | false }) => void} [onSelectedDateChange] - Handler called when the selected date changes.
+ * @property {(appliedRangeDate: DateRangeSelection | null, rangeError: { startDate: string | false; endDate: string | false }) => void} [onApply] - Handler called when the selected date is confirmed/applied.
+ */
 export interface UseDatePickerRangeProps
   extends UseDatePickerBaseProps<DateRangeSelection> {
   /**
-   * date range selection
+   * Date range selection.
    */
   selectionVariant: "range";
   /**
-   * handler called when selected date changes
-   * @param selectedDate selected date
-   * @param error error returned by parser or `false`  */
+   * Handler called when the selected date changes.
+   * @param {DateRangeSelection | null} selectedRangeDate - The selected date.
+   * @param {{ startDate: string | false; endDate: string | false }} rangeError - Error returned by the parser or `false`.
+   */
   onSelectedDateChange?: (
-    selectedDate: DateRangeSelection | null,
-    error: { startDate: string | false; endDate: string | false },
+    selectedRangeDate: DateRangeSelection | null,
+    rangeError: { startDate: string | false; endDate: string | false },
   ) => void;
   /**
-   * handler called when selected date is confirmed/applied
-   * @param appliedDate selected date
-   * @param error error returned by parser or `false`
-   **/
+   * Handler called when the selected date is confirmed/applied.
+   * @param {DateRangeSelection | null} appliedRangeDate - The selected date.
+   * @param {{ startDate: string | false; endDate: string | false }} rangeError - Error returned by the parser or `false`.
+   */
   onApply?: (
-    appliedDate: DateRangeSelection | null,
-    error: { startDate: string | false; endDate: string | false },
+    appliedRangeDate: DateRangeSelection | null,
+    rangeError: { startDate: string | false; endDate: string | false },
   ) => void;
 }
 
+/**
+ * Props for the useDatePicker hook.
+ *
+ * @template SelectionVariant
+ * @typedef {SelectionVariant extends "single" ? UseDatePickerSingleProps : SelectionVariant extends "range" ? UseDatePickerRangeProps : never} UseDatePickerProps
+ */
 export type UseDatePickerProps<SelectionVariant> =
   SelectionVariant extends "single"
     ? UseDatePickerSingleProps
@@ -115,6 +138,14 @@ export type UseDatePickerProps<SelectionVariant> =
       ? UseDatePickerRangeProps
       : never;
 
+/**
+ * Custom hook for managing date picker state.
+ *
+ * @template SelectionVariant
+ * @param {UseDatePickerProps<SelectionVariant>} props - The props for the date picker.
+ * @param {React.ForwardedRef<HTMLDivElement>} ref - The ref for the date picker container.
+ * @returns {DatePickerState<SelectionVariant extends "single" ? SingleDateSelection : DateRangeSelection>} The date picker state and helpers.
+ */
 export function useDatePicker<SelectionVariant extends "single" | "range">(
   props: UseDatePickerProps<SelectionVariant>,
   ref: React.ForwardedRef<HTMLDivElement>,
@@ -155,7 +186,7 @@ export function useDatePicker<SelectionVariant extends "single" | "range">(
     state: "selectedDate",
   });
 
-  const [autoApplyDisabled, setAutoApplyDisabled] = useState<boolean>(false);
+  const [enableApply, setEnableApply] = useState<boolean>(false);
   const [cancelled, setCancelled] = useState<boolean>(false);
 
   useEffect(() => {
@@ -205,8 +236,9 @@ export function useDatePicker<SelectionVariant extends "single" | "range">(
     if (selectionVariant === "single") {
       onSelectedDateChange?.(nextDate, error);
     }
-    if (!autoApplyDisabled || !open) {
-      applySingle(nextDate, nextError);
+
+    if (!enableApply) {
+      setOpen(false);
     }
   };
 
@@ -231,7 +263,7 @@ export function useDatePicker<SelectionVariant extends "single" | "range">(
     let nextError = { ...error };
     let startDateInRange = true;
     let endDateInRange = true;
-    if (error || !selection) {
+    if (error?.startDate || error?.endDate || !selection) {
       nextDate = selection;
     } else {
       if (maxDate && selection?.startDate) {
@@ -249,14 +281,14 @@ export function useDatePicker<SelectionVariant extends "single" | "range">(
         };
       } else {
         nextDate = {
-          startDate: startDateInRange ? selection.startDate : null,
-          endDate: endDateInRange ? selection.endDate : null,
+          startDate: selection.startDate || null,
+          endDate: selection.endDate || null,
         };
         nextError = {
-          startDate: startDateInRange
-            ? nextError.startDate
-            : "is before min date",
-          endDate: startDateInRange ? nextError.endDate : "is after max date",
+          startDate: !startDateInRange
+            ? "is before min date"
+            : nextError.startDate,
+          endDate: !endDateInRange ? "is after max date" : nextError.endDate,
         };
       }
     }
@@ -264,8 +296,8 @@ export function useDatePicker<SelectionVariant extends "single" | "range">(
     if (selectionVariant === "range") {
       onSelectedDateChange?.(nextDate, nextError);
     }
-    if (!autoApplyDisabled || !open) {
-      applyRange(nextDate, nextError);
+    if (!enableApply && nextDate?.startDate && nextDate?.endDate) {
+      setOpen(false);
     }
   };
 
@@ -280,7 +312,7 @@ export function useDatePicker<SelectionVariant extends "single" | "range">(
       selectionVariant,
       selectedDate,
       cancelled,
-      autoApplyDisabled,
+      enableApply,
       disabled: isDisabled,
       readOnly: isReadOnly,
       containerRef,
@@ -292,7 +324,7 @@ export function useDatePicker<SelectionVariant extends "single" | "range">(
     },
     helpers: {
       cancel,
-      setAutoApplyDisabled,
+      setEnableApply,
     },
   };
   if (props.selectionVariant === "range") {

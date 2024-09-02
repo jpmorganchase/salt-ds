@@ -42,48 +42,84 @@ import {
 
 const withBaseName = makePrefixer("saltDateInput");
 
+/**
+ * Date error produced by DateInputRange parser.
+ */
+export type DateInputRangeParserError = string | false;
+
+/**
+ * DateInputRange raw value or null if no date is defined.
+ */
 export type DateInputRangeValue = {
   startDate?: string | null;
   endDate?: string | null;
 };
 
-export type DateInputRangeParserError = string | false;
+/**
+ * Return value of DateInputRange parser.
+ * @template T
+ */
 export interface DateInputRangeParserResult<T = DateValue | null> {
+  /**
+   * The parsed date value.
+   */
   date: T;
+  /**
+   * The error encountered during parsing, if any.
+   */
   error: DateInputRangeParserError;
 }
+
+/**
+ * Date Range error returned with selected date to indicate invalid dates.
+ */
 export type DateInputRangeError = {
+  /**
+   * The error for the start date.
+   */
   startDate: DateInputSingleParserError;
+  /**
+   * The error for the end date.
+   */
   endDate: DateInputSingleParserError;
 };
 
+/**
+ * Props for the DateInputRange component.
+ * @template T
+ */
 export interface DateInputRangeProps<T = DateRangeSelection>
   extends Omit<ComponentPropsWithoutRef<"div">, "defaultValue" | "onChange">,
     Omit<InputProps, "defaultValue" | "inputRef" | "value" | "onChange"> {
+  /**
+   * The aria-label for accessibility.
+   */
   ariaLabel?: string;
   /**
-   * Styling variant with full border. Defaults to false
+   * Styling variant with full border. Defaults to false.
    */
   bordered?: boolean;
   /**
-   * The marker to use in an empty read only DateInput.
+   * The marker to use in an empty read-only DateInput.
    * Use `''` to disable this feature. Defaults to '—'.
    */
   emptyReadOnlyMarker?: string;
   /**
-   * End adornment component
+   * End adornment component.
    */
   endAdornment?: ReactNode;
   /**
-   * [Attributes](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dateInput#Attributes) applied to the start `input` element.
+   * Attributes applied to the start `input` element.
+   * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dateInput#Attributes
    */
   startInputProps?: InputHTMLAttributes<HTMLInputElement>;
   /**
-   * [Attributes](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dateInput#Attributes) applied to the end `input` element.
+   * Attributes applied to the end `input` element.
+   * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dateInput#Attributes
    */
   endInputProps?: InputHTMLAttributes<HTMLInputElement>;
   /**
-   * If `true`, the component is read only.
+   * If `true`, the component is read-only.
    */
   readOnly?: boolean;
   /**
@@ -99,57 +135,71 @@ export interface DateInputRangeProps<T = DateRangeSelection>
    */
   formatDate?: typeof defaultFormatDate;
   /**
-   * Optional ref for the start input component
+   * Optional ref for the start input component.
    */
   startInputRef?: Ref<HTMLInputElement>;
   /**
-   * Optional ref for the end input component
+   * Optional ref for the end input component.
    */
   endInputRef?: Ref<HTMLInputElement>;
   /**
-   * Input value.
-   * Use when the input value is controlled.
+   * Input value. Use when the input value is controlled.
    */
   value?: DateInputRangeValue;
   /**
-   * The initial input value. Use when the component is un-controlled.
+   * The initial input value. Use when the component is uncontrolled.
    */
   defaultValue?: DateInputRangeValue;
   /**
-   * The  date value. Use when the component is controlled.
+   * The date value. Use when the component is controlled.
    */
   date?: T | null;
   /**
-   * The initial selected date value. Use when the component is un-controlled.
+   * The initial selected date value. Use when the component is uncontrolled.
    */
   defaultDate?: T | null;
   /**
-   * Callback fired when the selected date change.
-   */
-  /**
-   * Callback fired when the input value change.
+   * Callback fired when the input value changes.
+   * @param event - The change event.
+   * @param date - The new date input range value.
    */
   onChange?: (
     event: ChangeEvent<HTMLInputElement>,
     date: DateInputRangeValue,
   ) => void;
+  /**
+   * Callback fired when the selected date changes.
+   * @param event - The synthetic event.
+   * @param date - The new date value.
+   * @param error - The date input range error.
+   */
   onDateChange?: (
     event: SyntheticEvent,
     date: T | null,
     error: DateInputRangeError,
   ) => void;
   /**
-   * Called when input values changes, either due to user-interaction or programmatic formatting of valid dates
+   * Called when input values change, either due to user interaction or programmatic formatting of valid dates.
+   * @param newValue - The new date input range value.
+   * @param isFormatted - Whether the value is formatted.
    */
   onDateValueChange?: (
     newValue: DateInputRangeValue,
     isFormatted: boolean,
   ) => void;
   /**
-   * @param inputDate - parse date string to valid `DateValue` or null, if invalid
+   * Function to parse date string to valid `DateValue` or null, if invalid.
+   * @param inputDate - The input date string.
+   * @returns The result of the date input range parser.
    */
   parse?: (inputDate: string) => DateInputRangeParserResult;
+  /**
+   * Locale of the entered date.
+   */
   locale?: string;
+  /**
+   * Timezone of the entered date.
+   */
   timeZone?: string;
 }
 

@@ -40,23 +40,72 @@ import {
 import { useDatePickerContext } from "./DatePickerContext";
 import datePickerPanelCss from "./DatePickerPanel.css";
 
+/**
+ * Props for the DatePickerRangePanel component.
+ * @template T - The type of the selected date range.
+ */
 export interface DatePickerRangePanelProps<T>
   extends ComponentPropsWithoutRef<"div"> {
+  /**
+   * Callback fired when a date range is selected.
+   * @param event - The synthetic event.
+   * @param selectedDate - The selected date range or null.
+   */
   onSelect?: (event: SyntheticEvent, selectedDate?: T | null) => void;
+
+  /**
+   * Helper text to be displayed below the date picker.
+   */
   helperText?: string;
+
+  /**
+   * The currently visible month for the start date.
+   */
   startVisibleMonth?: DateValue;
+
+  /**
+   * The default visible month for the start date.
+   */
   defaultStartVisibleMonth?: DateValue;
+
+  /**
+   * Callback fired when the visible month for the start date changes.
+   * @param event - The synthetic event.
+   * @param visibleMonth - The new visible month for the start date.
+   */
   onStartVisibleMonthChange?: (
     event: SyntheticEvent,
     visibleMonth: DateValue,
   ) => void;
+
+  /**
+   * The currently visible month for the end date.
+   */
   endVisibleMonth?: DateValue;
+
+  /**
+   * The default visible month for the end date.
+   */
   defaultEndVisibleMonth?: DateValue;
+
+  /**
+   * Callback fired when the visible month for the end date changes.
+   * @param event - The synthetic event.
+   * @param visibleMonth - The new visible month for the end date.
+   */
   onEndVisibleMonthChange?: (
     event: SyntheticEvent,
     visibleMonth: DateValue,
   ) => void;
+
+  /**
+   * Props to be passed to the start date calendar navigation component.
+   */
   StartNavigationProps?: CalendarNavigationProps;
+
+  /**
+   * Props to be passed to the start date calendar component.
+   */
   StartCalendarProps?: Partial<
     Omit<
       CalendarRangeProps | CalendarOffsetProps,
@@ -66,6 +115,10 @@ export interface DatePickerRangePanelProps<T>
       | "onVisibleMonthChange"
     >
   >;
+
+  /**
+   * Props to be passed to the end date calendar component.
+   */
   EndCalendarProps?: Partial<
     Omit<
       CalendarRangeProps,
@@ -75,6 +128,10 @@ export interface DatePickerRangePanelProps<T>
       | "onVisibleMonthChange"
     >
   >;
+
+  /**
+   * Props to be passed to the end date calendar navigation component.
+   */
   EndNavigationProps?: CalendarNavigationProps;
 }
 

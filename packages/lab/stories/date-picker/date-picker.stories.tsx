@@ -510,7 +510,7 @@ export const SingleWithConfirmation: StoryFn<DatePickerSingleProps> = (
     undefined,
   );
   const [selectedDate, setSelectedDate] = useState<SingleDateSelection | null>(
-    null,
+    args.selectedDate || null,
   );
   return (
     <FormField validationStatus={validationStatus}>
@@ -554,7 +554,7 @@ export const RangeWithConfirmation: StoryFn<DatePickerRangeProps> = (args) => {
     undefined,
   );
   const [selectedDate, setSelectedDate] = useState<DateRangeSelection | null>(
-    null,
+    args.selectedDate || null,
   );
 
   return (

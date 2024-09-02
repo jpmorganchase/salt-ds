@@ -37,13 +37,14 @@ function formatDateRange(
 
 const DateInputSingleTemplate: StoryFn<DateInputSingleProps> = (args) => {
   const handleDateChange = (
-    _event: SyntheticEvent,
+    event: SyntheticEvent,
     newSelectedDate: DateValue | null,
-    _error: DateInputSingleError,
+    error: DateInputSingleError,
   ) => {
     console.log(
       `Selected date: ${newSelectedDate ? formatDate(newSelectedDate) : newSelectedDate}`,
     );
+    args?.onDateChange?.(event, newSelectedDate, error);
   };
   return (
     <div style={{ width: "250px" }}>
@@ -54,11 +55,12 @@ const DateInputSingleTemplate: StoryFn<DateInputSingleProps> = (args) => {
 
 const DateInputRangeTemplate: StoryFn<DateInputRangeProps> = (args) => {
   const handleDateChange = (
-    _event: SyntheticEvent,
+    event: SyntheticEvent,
     newSelectedDate: DateRangeSelection | null,
-    _error: DateInputRangeError,
+    error: DateInputRangeError,
   ) => {
     console.log(`Selected date range: ${formatDateRange(newSelectedDate)}`);
+    args?.onDateChange?.(event, newSelectedDate, error);
   };
   return (
     <div style={{ width: "250px" }}>

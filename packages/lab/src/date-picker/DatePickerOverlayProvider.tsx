@@ -9,31 +9,78 @@ import {
   useRef,
 } from "react";
 
+/**
+ * Interface representing the state for a DatePicker overlay.
+ */
 interface DatePickerOverlayState {
+  /**
+   * If `true`, the overlay is open.
+   */
   open: boolean;
+  /**
+   * The result of the floating UI calculations.
+   */
   floatingUIResult: ReturnType<typeof useFloatingUI>;
 }
 
+/**
+ * Interface representing the helper functions for a DatePicker overlay.
+ */
 interface DatePickerOverlayHelpers {
+  /**
+   * Function to get the props for the floating element.
+   */
   getFloatingProps: ReturnType<typeof useInteractions>["getFloatingProps"];
+  /**
+   * Function to get the props for the reference element.
+   */
   getReferenceProps: ReturnType<typeof useInteractions>["getReferenceProps"];
+  /**
+   * Sets the open state of the overlay.
+   * @param newOpen - The new value for the open state.
+   */
   setOpen: (newOpen: boolean) => void;
 }
 
+/**
+ * Interface representing the context type for a DatePicker overlay.
+ */
 interface DatePickerOverlayContextType {
+  /**
+   * The state of the DatePicker overlay.
+   */
   state: DatePickerOverlayState;
+  /**
+   * The helper functions for the DatePicker overlay.
+   */
   helpers: DatePickerOverlayHelpers;
 }
 
+/**
+ * Context for the DatePicker overlay.
+ */
 const DatePickerOverlayContext = createContext<
   DatePickerOverlayContextType | undefined
 >("DatePickerOverlayContext", undefined);
 
+/**
+ * Props for the DatePickerOverlayProvider component.
+ */
 interface DatePickerOverlayProviderProps {
+  /**
+   * If `true`, the overlay is open.
+   */
   open?: boolean;
+  /**
+   * The default open state of the overlay.
+   */
   defaultOpen?: boolean;
+  /**
+   * The content to be rendered inside the overlay provider.
+   */
   children: ReactNode;
 }
+
 export const DatePickerOverlayProvider: React.FC<
   DatePickerOverlayProviderProps
 > = ({ open: openProp, defaultOpen, children }) => {

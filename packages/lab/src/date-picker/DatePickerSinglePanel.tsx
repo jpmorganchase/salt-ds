@@ -34,16 +34,47 @@ import { Calendar, type SingleDateSelection } from "../calendar";
 import datePickerPanelCss from "./DatePickerPanel.css";
 import { useDatePickerContext } from "./index";
 
+/**
+ * Props for the DatePickerSinglePanel component.
+ * @template T - The type of the selected date.
+ */
 export interface DatePickerSinglePanelProps<T>
   extends ComponentPropsWithoutRef<"div"> {
+  /**
+   * Callback fired when a date is selected.
+   * @param event - The synthetic event.
+   * @param selectedDate - The selected date or null.
+   */
   onSelect?: (event: SyntheticEvent, selectedDate?: T | null) => void;
+
+  /**
+   * Helper text to be displayed below the date picker.
+   */
   helperText?: string;
+
+  /**
+   * The currently visible month.
+   */
   visibleMonth?: DateValue;
+
+  /**
+   * The default visible month.
+   */
   defaultVisibleMonth?: DateValue;
+
+  /**
+   * Callback fired when the visible month changes.
+   * @param event - The synthetic event.
+   * @param visibleMonth - The new visible month.
+   */
   onVisibleMonthChange?: (
     event: SyntheticEvent,
     visibleMonth: DateValue,
   ) => void;
+
+  /**
+   * Props to be passed to the Calendar component.
+   */
   CalendarProps?: Partial<
     Omit<
       CalendarSingleProps,
@@ -54,6 +85,10 @@ export interface DatePickerSinglePanelProps<T>
       | "onVisibleMonthChange"
     >
   >;
+
+  /**
+   * Props to be passed to the Calendar navigation component.
+   */
   NavigationProps?: CalendarNavigationProps;
 }
 
@@ -94,10 +129,12 @@ export const DatePickerSinglePanel = forwardRef<
 
   const [hoveredDate, setHoveredDate] = useState<DateValue | null>(null);
 
+  const [uncontrolledDefaultVisibleMonth] = useState(
+    () => defaultVisibleMonth || startOfMonth(selectedDate || today(timeZone)),
+  );
   const [visibleMonth, setVisibleMonth] = useControlled({
     controlled: visibleMonthProp,
-    default:
-      defaultVisibleMonth || startOfMonth(selectedDate || today(timeZone)),
+    default: uncontrolledDefaultVisibleMonth,
     name: "DatePickerSinglePanel",
     state: "visibleMonth",
   });

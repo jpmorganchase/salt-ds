@@ -194,11 +194,15 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
   describe("SHOULD support confirmation", () => {
     it("SHOULD cancel un-confirmed selections", () => {
       const selectedDateChangeSpy = cy.stub().as("selectedDateChangeSpy");
+      const appliedDateSpy = cy.stub().as("appliedDateSpy");
+      const cancelSpy = cy.stub().as("cancelSpy");
       cy.mount(
         <RangeWithConfirmation
           selectionVariant={"range"}
-          defaultSelectedDate={initialRangeDate}
+          selectedDate={initialRangeDate}
           onSelectedDateChange={selectedDateChangeSpy}
+          onApply={appliedDateSpy}
+          onCancel={cancelSpy}
           locale={testLocale}
         />,
       );
@@ -214,19 +218,35 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
       // Simulate opening the calendar
       cy.findByRole("button", { name: "Open Calendar" }).realClick();
       cy.findAllByRole("application").should("have.length", 2);
-      const unconfirmedDate = initialRangeDate.startDate.add({ days: 1 });
       // Simulate selecting an unconfirmed date
-      cy.findByRole("button", { name: formatDay(unconfirmedDate) }).realClick();
+      cy.findByRole("button", {
+        name: formatDay(updatedRangeDate.startDate),
+      }).realClick();
+      cy.findByRole("button", {
+        name: formatDay(updatedRangeDate.endDate),
+      }).realClick();
       cy.findAllByRole("application").should("have.length", 2);
       cy.findByLabelText("Start date").should(
         "have.value",
-        formatDate(unconfirmedDate, testLocale),
+        formatDate(updatedRangeDate.startDate, testLocale),
+      );
+      cy.findByLabelText("End date").should(
+        "have.value",
+        formatDate(updatedRangeDate.endDate, testLocale),
+      );
+      cy.get("@selectedDateChangeSpy").should(
+        "have.been.calledWith",
+        {
+          startDate: updatedRangeDate.startDate,
+          endDate: updatedRangeDate.endDate,
+        },
+        { startDate: false, endDate: false },
       );
       // Simulate clicking the "Cancel" button
       cy.findByRole("button", { name: "Cancel" }).realClick();
       // Verify that the calendar is closed and the initial selected dates are restored
       cy.findByRole("application").should("not.exist");
-      cy.get("@selectedDateChangeSpy").should("not.have.been.called");
+      cy.get("@appliedDateSpy").should("not.have.been.called");
       cy.findByLabelText("Start date").should(
         "have.value",
         formatDate(initialRangeDate.startDate, testLocale),
@@ -235,15 +255,20 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
         "have.value",
         formatDate(initialRangeDate.endDate, testLocale),
       );
+      cy.get("@cancelSpy").should("have.been.called");
     });
 
     it("SHOULD apply confirmed selections", () => {
       const selectedDateChangeSpy = cy.stub().as("selectedDateChangeSpy");
+      const appliedDateSpy = cy.stub().as("appliedDateSpy");
+      const cancelSpy = cy.stub().as("cancelSpy");
       cy.mount(
         <RangeWithConfirmation
           selectionVariant={"range"}
-          defaultSelectedDate={initialRangeDate}
+          selectedDate={initialRangeDate}
           onSelectedDateChange={selectedDateChangeSpy}
+          onApply={appliedDateSpy}
+          onCancel={cancelSpy}
           locale={testLocale}
         />,
       );
@@ -259,44 +284,47 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
       // Simulate opening the calendar
       cy.findByRole("button", { name: "Open Calendar" }).realClick();
       cy.findAllByRole("application").should("have.length", 2);
-      const unconfirmedDate = {
-        startDate: initialRangeDate.startDate.add({ days: 1 }),
-        endDate: initialRangeDate.startDate.add({ days: 2 }),
-      };
       // Simulate selecting a new date range
       cy.findByRole("button", {
-        name: formatDay(unconfirmedDate.startDate),
+        name: formatDay(updatedRangeDate.startDate),
       }).realClick();
       cy.findAllByRole("application").should("have.length", 2);
       cy.findByRole("button", {
-        name: formatDay(unconfirmedDate.endDate),
+        name: formatDay(updatedRangeDate.endDate),
       }).realClick();
       // Verify that the new date range is displayed
       cy.findByLabelText("Start date").should(
         "have.value",
-        formatDate(unconfirmedDate.startDate, testLocale),
+        formatDate(updatedRangeDate.startDate, testLocale),
       );
       cy.findByLabelText("End date").should(
         "have.value",
-        formatDate(unconfirmedDate.endDate, testLocale),
+        formatDate(updatedRangeDate.endDate, testLocale),
       );
+      cy.get("@selectedDateChangeSpy").should(
+        "have.been.calledWith",
+        updatedRangeDate,
+        { startDate: false, endDate: false },
+      );
+      cy.findAllByRole("application").should("have.length", 2);
       // Simulate clicking the "Apply" button
       cy.findByRole("button", { name: "Apply" }).realClick();
       // Verify that the calendar is closed and the new date range is applied
       cy.findByRole("application").should("not.exist");
-      cy.get("@selectedDateChangeSpy").should(
+      cy.get("@appliedDateSpy").should(
         "have.been.calledWith",
-        unconfirmedDate,
+        updatedRangeDate,
         { startDate: false, endDate: false },
       );
       cy.findByLabelText("Start date").should(
         "have.value",
-        formatDate(unconfirmedDate.startDate, testLocale),
+        formatDate(updatedRangeDate.startDate, testLocale),
       );
       cy.findByLabelText("End date").should(
         "have.value",
-        formatDate(unconfirmedDate.endDate, testLocale),
+        formatDate(updatedRangeDate.endDate, testLocale),
       );
+      cy.get("@cancelSpy").should("not.have.been.called");
     });
   });
 

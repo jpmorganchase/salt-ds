@@ -15,21 +15,54 @@ import type {
 import { useCallback, useMemo } from "react";
 import { useCalendarContext } from "./internal/CalendarContext";
 
+/**
+ * Type representing a single date selection.
+ */
 export type SingleDateSelection = DateValue;
+
+/**
+ * Type representing multiple date selections.
+ */
 export type MultipleDateSelection = DateValue[];
+
+/**
+ * Type representing a date range selection.
+ */
 export type DateRangeSelection = {
+  /**
+   * The start date of the range.
+   */
   startDate?: DateValue | null;
+  /**
+   * The end date of the range.
+   */
   endDate?: DateValue | null;
 };
+
+/**
+ * Type representing all possible selection value types.
+ */
 export type AllSelectionValueType =
   | SingleDateSelection
   | MultipleDateSelection
   | DateRangeSelection
   | null;
 
+/**
+ * The default minimum year used by the calendar.
+ */
 export const CALENDAR_MIN_YEAR = 1900;
+
+/**
+ * The default maximum year used by the calendar.
+ */
 export const CALENDAR_MAX_YEAR = 2100;
 
+/**
+ * Checks if a value is a single date selection.
+ * @param value - The value to check.
+ * @returns `true` if the value is a single date selection, otherwise `false`.
+ */
 // biome-ignore lint/suspicious/noExplicitAny: type guard
 export function isSingleSelectionValueType(value: any): value is DateValue {
   return (
@@ -39,6 +72,11 @@ export function isSingleSelectionValueType(value: any): value is DateValue {
   );
 }
 
+/**
+ * Checks if a value is a date range selection.
+ * @param value - The value to check.
+ * @returns `true` if the value is a date range selection, otherwise `false`.
+ */
 // biome-ignore lint/suspicious/noExplicitAny: type guard
 export function isDateRangeSelection(value: any): value is DateRangeSelection {
   return (
@@ -48,6 +86,11 @@ export function isDateRangeSelection(value: any): value is DateRangeSelection {
   );
 }
 
+/**
+ * Checks if a value is a multiple date selection.
+ * @param value - The value to check.
+ * @returns `true` if the value is a multiple date selection, otherwise `false`.
+ */
 export function isMultipleDateSelection(
   // biome-ignore lint/suspicious/noExplicitAny: type guard
   value: any,
@@ -58,50 +101,121 @@ export function isMultipleDateSelection(
   );
 }
 
+/**
+ * Base properties for calendar UseCalendarSelection hook.
+ * @template SelectionVariantType - The type of the selection variant.
+ */
 interface UseCalendarSelectionBaseProps<SelectionVariantType> {
+  /**
+   * The currently hovered date.
+   */
   hoveredDate?: DateValue | null;
+  /**
+   * The currently selected date.
+   */
   selectedDate?: SelectionVariantType | null;
+  /**
+   * The default selected date.
+   */
   defaultSelectedDate?: SelectionVariantType;
+  /**
+   * Callback fired when the selected date changes.
+   * @param event - The synthetic event.
+   * @param selectedDate - The new selected date.
+   */
   onSelectedDateChange?: (
     event: SyntheticEvent,
     selectedDate: SelectionVariantType | null,
   ) => void;
+  /**
+   * Function to determine if a day is selectable.
+   * @param date - The date to check.
+   * @returns `true` if the day is selectable, otherwise `false`.
+   */
   isDaySelectable?: (date: DateValue) => boolean;
+  /**
+   * Callback fired when the hovered date changes.
+   * @param event - The synthetic event.
+   * @param hoveredDate - The new hovered date.
+   */
   onHoveredDateChange?: (
     event: SyntheticEvent,
     hoveredDate: DateValue | null,
   ) => void;
+  /**
+   * Function to select a new date.
+   * @param currentSelectedDate - The current selected date.
+   * @param newSelectedDate - The new date to select.
+   * @returns The updated selection variant type.
+   */
   select?: (
     currentSelectedDate: SelectionVariantType,
     newSelectedDate: DateValue,
   ) => SelectionVariantType;
 }
 
+/**
+ * UseCalendar hook props to return a calendar day's status
+ */
 export interface UseCalendarSelectionOffsetProps
   extends Omit<
     UseCalendarSelectionBaseProps<DateRangeSelection>,
     "startDateOffset" | "endDateOffset"
   > {
+  /**
+   * The selection variant, set to "offset".
+   */
   selectionVariant: "offset";
+  /**
+   * Function to calculate the start date offset.
+   * @param date - The date to offset.
+   * @returns The offset start date.
+   */
   startDateOffset?: (date: DateValue) => DateValue;
+  /**
+   * Function to calculate the end date offset.
+   * @param date - The date to offset.
+   * @returns The offset end date.
+   */
   endDateOffset?: (date: DateValue) => DateValue;
 }
 
+/**
+ * Properties for the range date selection hook.
+ */
 export interface UseCalendarSelectionRangeProps
   extends UseCalendarSelectionBaseProps<DateRangeSelection> {
+  /**
+   * The selection variant, set to "range".
+   */
   selectionVariant: "range";
 }
 
+/**
+ * Properties for the multi-select date selection hook.
+ */
 export interface UseCalendarSelectionMultiSelectProps
   extends UseCalendarSelectionBaseProps<MultipleDateSelection> {
+  /**
+   * The selection variant, set to "multiselect".
+   */
   selectionVariant: "multiselect";
 }
 
+/**
+ * Properties for the single date selection hook.
+ */
 export interface UseCalendarSelectionSingleProps
   extends UseCalendarSelectionBaseProps<SingleDateSelection> {
+  /**
+   * The selection variant, set to "single".
+   */
   selectionVariant: "single";
 }
 
+/**
+ * UseCalendarSelection hook props, wth the selection variant determining the return type of the date selection
+ */
 export type UseCalendarSelectionProps =
   | UseCalendarSelectionSingleProps
   | UseCalendarSelectionMultiSelectProps

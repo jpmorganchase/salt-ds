@@ -35,16 +35,54 @@ import calendarNavigationCss from "./CalendarNavigation.css";
 import { formatDate } from "./formatDate";
 import { monthDiff, monthsForLocale } from "./internal/utils";
 
-type dateDropdownProps = DropdownProps<DateValue>;
+type DateDropdownProps = DropdownProps<DateValue>;
 
+/**
+ * Props for the CalendarNavigation component.
+ */
 export interface CalendarNavigationProps extends ComponentPropsWithRef<"div"> {
-  MonthDropdownProps?: dateDropdownProps;
-  YearDropdownProps?: dateDropdownProps;
-  onMonthSelect?: dateDropdownProps["onChange"];
-  onYearSelect?: dateDropdownProps["onChange"];
+  /**
+   * Props for the month dropdown component.
+   */
+  MonthDropdownProps?: DateDropdownProps;
+
+  /**
+   * Props for the year dropdown component.
+   */
+  YearDropdownProps?: DateDropdownProps;
+
+  /**
+   * Callback fired when a month is selected.
+   * @param event - The change event.
+   */
+  onMonthSelect?: DateDropdownProps["onChange"];
+
+  /**
+   * Callback fired when a year is selected.
+   * @param event - The change event.
+   */
+  onYearSelect?: DateDropdownProps["onChange"];
+
+  /**
+   * Callback fired when navigating to the next month.
+   * @param event - The click event.
+   */
   onNavigateNext?: ButtonProps["onClick"];
+
+  /**
+   * Callback fired when navigating to the previous month.
+   * @param event - The click event.
+   */
   onNavigatePrevious?: ButtonProps["onClick"];
+
+  /**
+   * If `true`, hides the year dropdown.
+   */
   hideYearDropdown?: boolean;
+
+  /**
+   * The step value for navigation. Defaults to 1.
+   */
   step?: number;
 }
 

@@ -99,7 +99,7 @@ describe("GIVEN a DateInputSingle", () => {
 
       cy.mount(
         <Single
-          defaultValue={initialDateValue}
+          defaultDate={initialDate}
           onChange={handleChange}
           onDateValueChange={dateValueChangeSpy}
           onDateChange={dateChangeSpy}

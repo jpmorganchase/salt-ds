@@ -39,40 +39,65 @@ import { extractTimeFieldsFromDate, parseCalendarDate } from "./utils";
 
 const withBaseName = makePrefixer("saltDateInput");
 
+/**
+ * Date error produced by DateInputSingle parser.
+ */
 export type DateInputSingleParserError = string | false;
+
+/**
+ * Date error produced by DateInputSingle parser.
+ */
+export type DateInputSingleError = DateInputSingleParserError;
+
+/**
+ * Return value of DateInputSingle parser.
+ * @template T
+ */
 export interface DateInputSingleParserResult<T = DateValue | null> {
+  /**
+   * The parsed date value.
+   */
   date: T;
+  /**
+   * The error encountered during parsing, if any.
+   */
   error: DateInputSingleParserError;
 }
 
-export type DateInputSingleError = DateInputSingleParserError;
-
+/**
+ * Props for the DateInputSingle component.
+ * @template T
+ */
 export interface DateInputSingleProps<T = SingleDateSelection>
   extends Omit<ComponentPropsWithoutRef<"div">, "defaultValue">,
     Pick<
       ComponentPropsWithoutRef<"input">,
       "disabled" | "value" | "defaultValue" | "placeholder"
     > {
+  /**
+   * The aria-label for accessibility.
+   */
   ariaLabel?: string;
   /**
-   * Styling variant with full border. Defaults to false
+   * Styling variant with full border. Defaults to false.
    */
   bordered?: boolean;
   /**
-   * The marker to use in an empty read only DateInput.
+   * The marker to use in an empty read-only DateInput.
    * Use `''` to disable this feature. Defaults to '—'.
    */
   emptyReadOnlyMarker?: string;
   /**
-   * End adornment component
+   * End adornment component.
    */
   endAdornment?: ReactNode;
   /**
-   * [Attributes](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dateInput#Attributes) applied to the `input` element.
+   * Attributes applied to the `input` element.
+   * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dateInput#Attributes
    */
   inputProps?: InputHTMLAttributes<HTMLInputElement>;
   /**
-   * If `true`, the component is read only.
+   * If `true`, the component is read-only.
    */
   readOnly?: boolean;
   /**
@@ -88,28 +113,30 @@ export interface DateInputSingleProps<T = SingleDateSelection>
    */
   formatDate?: typeof defaultFormatDate;
   /**
-   * Reference for the input;
+   * Reference for the input.
    */
   inputRef?: RefObject<HTMLInputElement>;
   /**
-   * Input value.
-   * Use when the input value is controlled.
+   * Input value. Use when the input value is controlled.
    */
   value?: string;
   /**
-   * The initial input value. Use when the component is un-controlled.
+   * The initial input value. Use when the component is uncontrolled.
    */
   defaultValue?: string;
   /**
-   * The  date value. Use when the component is controlled.
+   * The date value. Use when the component is controlled.
    */
   date?: T | null;
   /**
-   * The initial selected date value. Use when the component is un-controlled.
+   * The initial selected date value. Use when the component is uncontrolled.
    */
   defaultDate?: T | null;
   /**
-   * Callback fired when the selected date change.
+   * Callback fired when the selected date changes.
+   * @param event - The synthetic event.
+   * @param date - The new date value.
+   * @param error - The date input single error.
    */
   onDateChange?: (
     event: SyntheticEvent,
@@ -117,17 +144,26 @@ export interface DateInputSingleProps<T = SingleDateSelection>
     error: DateInputSingleError,
   ) => void;
   /**
-   * @param inputDate - parse date string to valid `DateValue` or null, if invalid or empty
+   * Function to parse date string to valid `DateValue` or null, if invalid or empty.
+   * @param inputDate - The input date string.
+   * @returns The result of the date input single parser.
    */
   parse?: (inputDate: string) => DateInputSingleParserResult;
   /**
-   * Called when input value changes, either due to user-interaction or programmatic formatting of valid dates
+   * Called when input value changes, either due to user interaction or programmatic formatting of valid dates.
+   * @param newValue - The new date input value.
+   * @param isFormatted - Whether the value is formatted.
    */
   onDateValueChange?: (newValue: string, isFormatted: boolean) => void;
+  /**
+   * Locale of the entered date.
+   */
   locale?: string;
+  /**
+   * Timezone of the entered date.
+   */
   timeZone?: string;
 }
-
 export const DateInputSingle = forwardRef<HTMLDivElement, DateInputSingleProps>(
   function DateInput(props, ref) {
     const {
