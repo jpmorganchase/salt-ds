@@ -1,6 +1,7 @@
-.root .link,
-.root .link:hover,
-.root .link:visited {
+/* Bump up `.link` so color set by mosaic-theme will have lower priority */
+.root .link.link,
+.root .link.link:hover,
+.root .link.link:visited {
   color: inherit;
 }
 
