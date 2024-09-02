@@ -68,7 +68,7 @@ const SecondarySidebar: FC<SecondarySidebarProps> = ({
 
   return (
     <div className={styles.sidebar}>
-      {!examplesTabRoute.test(route) && tableOfContents && (
+      {tableOfContents && (
         <div className={styles.tableOfContents}>{tableOfContents}</div>
       )}
       <div className={styles.wrapper}>
