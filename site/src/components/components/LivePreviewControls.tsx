@@ -69,11 +69,11 @@ export const LivePreviewControls: FC<LivePreviewControlsProps> = ({
 
   const themeNextSwitch = (
     <FlexItem align="end" className={styles.switchAlignment}>
-      <Tooltip content="Theme next enables more styling options. Refer to Theming page for more information">
+      <Tooltip content="Salt Next theme enables more styling options. Refer to Theming page for more information.">
         <Switch
           label={
             <StackLayout gap={0.5} direction="row" align="center">
-              <span>Theme next</span>
+              <span>Salt Next</span>
               <HelpIcon />
             </StackLayout>
           }
