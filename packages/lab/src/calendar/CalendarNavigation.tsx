@@ -84,6 +84,16 @@ export interface CalendarNavigationProps extends ComponentPropsWithRef<"div"> {
    * The step value for navigation. Defaults to 1.
    */
   step?: number;
+  /**
+   * Format the month dropdown values
+   * @param date
+   */
+  formatMonth?: (date: DateValue) => string;
+  /**
+   * Format the year dropdown values
+   * @param date
+   */
+  formatYear?: (date: DateValue) => string;
 }
 
 interface OptionWithTooltipProps extends OptionProps {
@@ -257,6 +267,8 @@ export const CalendarNavigation = forwardRef<
 >(function CalendarNavigation(props, ref) {
   const {
     className,
+    formatMonth: formatMonthProp,
+    formatYear: formatYearProp,
     MonthDropdownProps,
     YearDropdownProps,
     hideYearDropdown,
@@ -314,19 +326,31 @@ export const CalendarNavigation = forwardRef<
     [moveToMonth],
   );
 
-  const formatMonth = (date?: DateValue) => {
-    return !date
-      ? ""
-      : formatDate(date, locale, {
-          month: hideYearDropdown ? "long" : "short",
-          day: undefined,
-          year: undefined,
-        });
-  };
+  const formatMonth = useCallback(
+    (date?: DateValue) => {
+      if (date && formatMonthProp) {
+        return formatMonthProp(date);
+      }
+      return !date
+        ? ""
+        : formatDate(date, locale, {
+            month: hideYearDropdown ? "long" : "short",
+            day: undefined,
+            year: undefined,
+          });
+    },
+    [formatMonthProp],
+  );
 
-  const formatYear = (date?: DateValue) => {
-    return !date ? "" : `${date.year}`;
-  };
+  const formatYear = useCallback(
+    (date?: DateValue) => {
+      if (date && formatYearProp) {
+        return formatYearProp(date);
+      }
+      return !date ? "" : `${date.year}`;
+    },
+    [formatYearProp],
+  );
 
   return (
     <div

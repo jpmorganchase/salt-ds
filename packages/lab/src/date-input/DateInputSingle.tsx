@@ -25,6 +25,7 @@ import {
   type RefObject,
   type SyntheticEvent,
   forwardRef,
+  useCallback,
   useEffect,
   useRef,
   useState,
@@ -111,7 +112,7 @@ export interface DateInputSingleProps<T = SingleDateSelection>
   /**
    * Function to format the input value.
    */
-  formatDate?: typeof defaultFormatDate;
+  format?: (date: DateValue | null) => string;
   /**
    * Reference for the input.
    */
@@ -180,7 +181,7 @@ export const DateInputSingle = forwardRef<HTMLDivElement, DateInputSingleProps>(
       onClick,
       emptyReadOnlyMarker = "—",
       endAdornment,
-      formatDate = defaultFormatDate,
+      format: formatProp,
       inputProps = {},
       inputRef: inputRefProp = null,
       parse = parseCalendarDate,
@@ -206,7 +207,7 @@ export const DateInputSingle = forwardRef<HTMLDivElement, DateInputSingleProps>(
 
     const targetWindow = useWindow();
     useComponentCssInjection({
-      testId: "salt-date-input",
+      testId: "salt-date-input-single",
       css: dateInputCss,
       window: targetWindow,
     });
@@ -227,14 +228,23 @@ export const DateInputSingle = forwardRef<HTMLDivElement, DateInputSingleProps>(
       extractTimeFieldsFromDate(date || null),
     );
 
+    const format = useCallback(
+      (date: DateValue | null) => {
+        return formatProp
+          ? formatProp(date)
+          : defaultFormatDate(date, locale, { timeZone });
+      },
+      [formatProp, locale, timeZone],
+    );
+
     // Update date string value when selected date changes
     useEffect(() => {
-      const formattedDate = formatDate(date ?? null, locale, { timeZone });
+      const formattedDate = format(date || null);
       if (formattedDate) {
         setDateValue(formattedDate);
         onDateValueChange?.(formattedDate, true);
       }
-    }, [date, formatDate, locale, timeZone]);
+    }, [date, format, locale, timeZone]);
 
     const [focused, setFocused] = useState(false);
 
@@ -273,7 +283,7 @@ export const DateInputSingle = forwardRef<HTMLDivElement, DateInputSingleProps>(
       const { date: parsedDate, error } = parse(dateValue ?? "");
       let newDate = parsedDate;
       if (newDate) {
-        const formattedDate = formatDate(newDate, locale, { timeZone });
+        const formattedDate = format(newDate);
         if (formattedDate) {
           setDateValue(formattedDate);
           onDateValueChange?.(formattedDate, true);

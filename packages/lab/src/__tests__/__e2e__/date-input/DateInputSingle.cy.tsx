@@ -55,7 +55,7 @@ describe("GIVEN a DateInputSingle", () => {
     cy.mount(
       <Single
         defaultValue={"text value"}
-        formatDate={customFormatter}
+        format={customFormatter}
         locale={testLocale}
       />,
     );

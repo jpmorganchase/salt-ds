@@ -87,9 +87,9 @@ export interface DatePickerSinglePanelProps<T>
   >;
 
   /**
-   * Props to be passed to the Calendar navigation component.
+   * Props to be passed to the CalendarNavigation component.
    */
-  NavigationProps?: CalendarNavigationProps;
+  CalendarNavigationProps?: CalendarNavigationProps;
 }
 
 const withBaseName = makePrefixer("saltDatePickerPanel");
@@ -100,7 +100,7 @@ export const DatePickerSinglePanel = forwardRef<
 >(function DatePickerSinglePanel(props, ref) {
   const {
     CalendarProps,
-    NavigationProps,
+    CalendarNavigationProps,
     className,
     defaultVisibleMonth,
     visibleMonth: visibleMonthProp,
@@ -199,7 +199,7 @@ export const DatePickerSinglePanel = forwardRef<
         {/* Avoid Dropdowns in Calendar inheriting the FormField's state */}
         <FormFieldContext.Provider value={{} as FormFieldContextValue}>
           <Calendar selectionVariant="single" {...baseCalendarProps}>
-            <CalendarNavigation {...NavigationProps} />
+            <CalendarNavigation {...CalendarNavigationProps} />
           </Calendar>
         </FormFieldContext.Provider>
       </FlexLayout>

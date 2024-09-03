@@ -30,7 +30,7 @@ export const SingleBordered = (): ReactElement => (
     <DatePickerSingleInput bordered />
     <DatePickerOverlay>
       <DatePickerSinglePanel
-        NavigationProps={{
+        CalendarNavigationProps={{
           MonthDropdownProps: { bordered: true },
           YearDropdownProps: { bordered: true },
         }}

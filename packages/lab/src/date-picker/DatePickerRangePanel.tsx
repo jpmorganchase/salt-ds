@@ -99,9 +99,9 @@ export interface DatePickerRangePanelProps<T>
   ) => void;
 
   /**
-   * Props to be passed to the start date calendar navigation component.
+   * Props to be passed to the start date CalendarNavigation component.
    */
-  StartNavigationProps?: CalendarNavigationProps;
+  StartCalendarNavigationProps?: CalendarNavigationProps;
 
   /**
    * Props to be passed to the start date calendar component.
@@ -117,7 +117,7 @@ export interface DatePickerRangePanelProps<T>
   >;
 
   /**
-   * Props to be passed to the end date calendar component.
+   * Props to be passed to the end date CalendarNavigation component.
    */
   EndCalendarProps?: Partial<
     Omit<
@@ -130,9 +130,9 @@ export interface DatePickerRangePanelProps<T>
   >;
 
   /**
-   * Props to be passed to the end date calendar navigation component.
+   * Props to be passed to the end date CalendarNavigation component.
    */
-  EndNavigationProps?: CalendarNavigationProps;
+  EndCalendarNavigationProps?: CalendarNavigationProps;
 }
 
 function getFallbackVisibleMonths(
@@ -175,9 +175,9 @@ export const DatePickerRangePanel = forwardRef<
     helperText,
     onSelect,
     StartCalendarProps: StartCalendarPropsProp,
-    StartNavigationProps,
+    StartCalendarNavigationProps,
     EndCalendarProps: EndCalendarPropsProp,
-    EndNavigationProps,
+    EndCalendarNavigationProps,
   } = props;
 
   const targetWindow = useWindow();
@@ -324,10 +324,10 @@ export const DatePickerRangePanel = forwardRef<
         {/* Avoid Dropdowns in Calendar inheriting the FormField's state */}
         <FormFieldContext.Provider value={{} as FormFieldContextValue}>
           <Calendar selectionVariant={"range"} {...StartCalendarProps}>
-            <CalendarNavigation {...StartNavigationProps} />
+            <CalendarNavigation {...StartCalendarNavigationProps} />
           </Calendar>
           <Calendar selectionVariant={"range"} {...EndCalendarProps}>
-            <CalendarNavigation {...EndNavigationProps} />
+            <CalendarNavigation {...EndCalendarNavigationProps} />
           </Calendar>
         </FormFieldContext.Provider>
       </FlexLayout>

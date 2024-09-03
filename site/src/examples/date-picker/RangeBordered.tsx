@@ -34,11 +34,11 @@ export const RangeBordered = (): ReactElement => (
     <DatePickerRangeInput bordered />
     <DatePickerOverlay>
       <DatePickerRangePanel
-        StartNavigationProps={{
+        StartCalendarNavigationProps={{
           MonthDropdownProps: { bordered: true },
           YearDropdownProps: { bordered: true },
         }}
-        EndNavigationProps={{
+        EndCalendarNavigationProps={{
           MonthDropdownProps: { bordered: true },
           YearDropdownProps: { bordered: true },
         }}

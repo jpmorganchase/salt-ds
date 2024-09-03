@@ -25,7 +25,7 @@ import {
   forwardRef,
   useEffect,
   useRef,
-  useState,
+  useState, useCallback,
 } from "react";
 import {
   type DateRangeSelection,
@@ -133,7 +133,7 @@ export interface DateInputRangeProps<T = DateRangeSelection>
   /**
    * Function to format the input value.
    */
-  formatDate?: typeof defaultFormatDate;
+  format?: (date: DateValue | null) => string;
   /**
    * Optional ref for the start input component.
    */
@@ -220,7 +220,7 @@ export const DateInputRange = forwardRef<HTMLDivElement, DateInputRangeProps>(
       onDateValueChange,
       emptyReadOnlyMarker = "—",
       endAdornment,
-      formatDate = defaultFormatDate,
+      format: formatProp,
       startInputProps = {},
       endInputProps = {},
       startInputRef: startInputRefProp,
@@ -275,21 +275,24 @@ export const DateInputRange = forwardRef<HTMLDivElement, DateInputRangeProps>(
     const preservedTime = useRef<RangeTimeFields>({});
     preservedTime.current = extractTimeFieldsFromDateRange(date);
 
+    const format = useCallback(
+      (date: DateValue | null) => {
+        return formatProp
+          ? formatProp(date)
+          : defaultFormatDate(date, locale, { timeZone });
+      },
+      [formatProp, locale, timeZone],
+    );
+
     const setDateValueFromDate = (newDate: DateInputRangeProps["date"]) => {
       let newDateValue = { ...dateValue };
-      const formattedStartDate = formatDate(
-        newDate?.startDate ?? null,
-        locale,
-        {
-          timeZone,
-        },
+      const formattedStartDate = format(
+        newDate?.startDate ?? null
       );
       if (formattedStartDate) {
         newDateValue = { ...newDateValue, startDate: formattedStartDate };
       }
-      const formattedEndDate = formatDate(newDate?.endDate ?? null, locale, {
-        timeZone,
-      });
+      const formattedEndDate = format(newDate?.endDate ?? null);
       if (formattedEndDate) {
         newDateValue = { ...newDateValue, endDate: formattedEndDate };
       }
@@ -552,7 +555,7 @@ export const DateInputRange = forwardRef<HTMLDivElement, DateInputRangeProps>(
           value={
             isReadOnly && !dateValue?.startDate
               ? emptyReadOnlyMarker
-              : dateValue.startDate ?? ""
+              : (dateValue.startDate ?? "")
           }
           {...restStartInputProps}
           onBlur={handleStartInputBlur}
@@ -585,7 +588,7 @@ export const DateInputRange = forwardRef<HTMLDivElement, DateInputRangeProps>(
           value={
             isReadOnly && !dateValue?.endDate
               ? emptyReadOnlyMarker
-              : dateValue.endDate ?? ""
+              : (dateValue.endDate ?? "")
           }
           {...restEndInputProps}
           onBlur={handleEndInputBlur}

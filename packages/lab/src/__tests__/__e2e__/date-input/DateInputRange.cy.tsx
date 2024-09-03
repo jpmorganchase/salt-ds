@@ -105,7 +105,7 @@ describe("GIVEN a DateInputRange", () => {
     cy.mount(
       <Range
         defaultValue={{ startDate: "text value" }}
-        formatDate={customFormatter}
+        format={customFormatter}
         locale={testLocale}
       />,
     );
