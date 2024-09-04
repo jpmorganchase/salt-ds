@@ -73,7 +73,7 @@ export const LivePreviewControls: FC<LivePreviewControlsProps> = ({
         <Switch
           label={
             <StackLayout gap={0.5} direction="row" align="center">
-              <span>Salt Next</span>
+              <span>Salt Next theme</span>
               <HelpIcon />
             </StackLayout>
           }
