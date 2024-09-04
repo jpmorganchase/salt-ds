@@ -23,9 +23,10 @@ import {
   type Ref,
   type SyntheticEvent,
   forwardRef,
+  useCallback,
   useEffect,
   useRef,
-  useState, useCallback,
+  useState,
 } from "react";
 import {
   type DateRangeSelection,
@@ -286,9 +287,7 @@ export const DateInputRange = forwardRef<HTMLDivElement, DateInputRangeProps>(
 
     const setDateValueFromDate = (newDate: DateInputRangeProps["date"]) => {
       let newDateValue = { ...dateValue };
-      const formattedStartDate = format(
-        newDate?.startDate ?? null
-      );
+      const formattedStartDate = format(newDate?.startDate ?? null);
       if (formattedStartDate) {
         newDateValue = { ...newDateValue, startDate: formattedStartDate };
       }
@@ -555,7 +554,7 @@ export const DateInputRange = forwardRef<HTMLDivElement, DateInputRangeProps>(
           value={
             isReadOnly && !dateValue?.startDate
               ? emptyReadOnlyMarker
-              : (dateValue.startDate ?? "")
+              : dateValue.startDate ?? ""
           }
           {...restStartInputProps}
           onBlur={handleStartInputBlur}
@@ -588,7 +587,7 @@ export const DateInputRange = forwardRef<HTMLDivElement, DateInputRangeProps>(
           value={
             isReadOnly && !dateValue?.endDate
               ? emptyReadOnlyMarker
-              : (dateValue.endDate ?? "")
+              : dateValue.endDate ?? ""
           }
           {...restEndInputProps}
           onBlur={handleEndInputBlur}

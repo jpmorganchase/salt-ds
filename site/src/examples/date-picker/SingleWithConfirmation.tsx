@@ -39,7 +39,7 @@ export const SingleWithConfirmation = (): ReactElement => {
     null,
   );
   return (
-    <FormField validationStatus={validationStatus}>
+    <FormField style={{ width: "256px" }} validationStatus={validationStatus}>
       <FormLabel>Select a date</FormLabel>
       <DatePicker
         selectionVariant="single"

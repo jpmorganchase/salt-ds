@@ -31,13 +31,13 @@ import {
   type DatePickerSingleProps,
   type DateRangeSelection,
   type RangeDatePickerState,
+  type SingleDatePickerError,
   type SingleDatePickerState,
   type SingleDateSelection,
   formatDate,
   getCurrentLocale,
   parseCalendarDate,
   useDatePickerContext,
-  SingleDatePickerError,
 } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react";
 import type React from "react";
@@ -665,12 +665,11 @@ export const SingleWithCustomParser: StoryFn<DatePickerSingleProps> = (
 
 export const SingleWithLocaleEnUS: StoryFn<DatePickerSingleProps> = (args) => {
   const locale = "en-US";
-  const timeZone = "America/New_York";
 
   const [selectedDate, setSelectedDate] = useState<SingleDateSelection | null>(
     null,
   );
-  const helperText = `Locale ${locale} - Time Zone ${timeZone}`;
+  const helperText = `Locale ${locale}`;
   const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
     undefined,
   );
@@ -700,8 +699,7 @@ export const SingleWithLocaleEnUS: StoryFn<DatePickerSingleProps> = (args) => {
           day: "2-digit",
           month: "2-digit",
           year: "numeric",
-          timeZone,
-        }).format(date.toDate(timeZone))
+        }).format(date.toDate(getLocalTimeZone()))
       : "";
   };
 
@@ -713,7 +711,6 @@ export const SingleWithLocaleEnUS: StoryFn<DatePickerSingleProps> = (args) => {
         selectionVariant={"single"}
         selectedDate={selectedDate}
         locale={locale}
-        timeZone={timeZone}
         onSelectedDateChange={(newSelectedDate, error) => {
           console.log(`Selected date: ${formatDateEnUS(newSelectedDate)}`);
           setValidationStatus(error ? "error" : undefined);
@@ -737,14 +734,13 @@ export const SingleWithLocaleEnUS: StoryFn<DatePickerSingleProps> = (args) => {
 
 export const SingleWithLocaleZhCN: StoryFn<DatePickerSingleProps> = (args) => {
   const locale = "zh-CN";
-  const timeZone = "Asia/Shanghai";
   const formatDateZhCN = (date: DateValue | null) => {
     return date
       ? new DateFormatter(locale, {
           day: "2-digit",
           month: "2-digit",
           year: "numeric",
-        }).format(date.toDate(timeZone))
+        }).format(date.toDate(getLocalTimeZone()))
       : "";
   };
 
@@ -752,11 +748,11 @@ export const SingleWithLocaleZhCN: StoryFn<DatePickerSingleProps> = (args) => {
     if (!dateString?.length) {
       return { date: null, error: false };
     }
-    const dateParts = dateString.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+    const dateParts = dateString.match(/^(\d{4})\/(\d{1,2})\/(\d{1,2})$/);
     if (!dateParts) {
       return { date: null, error: "invalid date" };
     }
-    const [, month, day, year] = dateParts;
+    const [_, year, month, day] = dateParts;
     return {
       date: new CalendarDate(
         Number.parseInt(year, 10),
@@ -770,7 +766,7 @@ export const SingleWithLocaleZhCN: StoryFn<DatePickerSingleProps> = (args) => {
   const [selectedDate, setSelectedDate] = useState<SingleDateSelection | null>(
     args.selectedDate || null,
   );
-  const helperText = `Locale ${locale} - Time Zone ${timeZone}`;
+  const helperText = `Locale ${locale}`;
   const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
     undefined,
   );
@@ -783,7 +779,7 @@ export const SingleWithLocaleZhCN: StoryFn<DatePickerSingleProps> = (args) => {
 
   function renderDayContents(day: DateValue) {
     const formatter = new DateFormatter("en-US", { day: "numeric" });
-    return <>{formatter.format(day.toDate(timeZone))}</>;
+    return <>{formatter.format(day.toDate(getLocalTimeZone()))}</>;
   }
 
   return (
@@ -794,7 +790,6 @@ export const SingleWithLocaleZhCN: StoryFn<DatePickerSingleProps> = (args) => {
         selectionVariant={"single"}
         selectedDate={selectedDate}
         locale={locale}
-        timeZone={timeZone}
         onSelectedDateChange={(
           newSelectedDate: SingleDateSelection | null,
           error: SingleDatePickerError,
@@ -826,12 +821,11 @@ export const SingleWithLocaleZhCN: StoryFn<DatePickerSingleProps> = (args) => {
 
 export const RangeWithLocaleEsES: StoryFn<DatePickerRangeProps> = (args) => {
   const locale = "es-ES";
-  const timeZone = "Europe/Madrid";
 
   const [selectedDate, setSelectedDate] = useState<DateRangeSelection | null>(
     null,
   );
-  const helperText = `Locale ${locale} - Time Zone ${timeZone}`;
+  const helperText = `Locale ${locale}`;
   const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
     undefined,
   );
@@ -863,8 +857,7 @@ export const RangeWithLocaleEsES: StoryFn<DatePickerRangeProps> = (args) => {
           day: "2-digit",
           month: "2-digit",
           year: "numeric",
-          timeZone,
-        }).format(date.toDate(timeZone))
+        }).format(date.toDate(getLocalTimeZone()))
       : "";
   };
 
@@ -876,19 +869,13 @@ export const RangeWithLocaleEsES: StoryFn<DatePickerRangeProps> = (args) => {
         selectionVariant={"range"}
         selectedDate={selectedDate}
         locale={locale}
-        timeZone={timeZone}
         onSelectedDateChange={(newSelectedDate, error) => {
           console.log(
-            `Selected date range: ${
-              formatDateRange(newSelectedDate,
-              locale,
-              {
-                day: "2-digit",
-                month: "2-digit",
-                year: "numeric",
-                timeZone,
-              })
-            }`,
+            `Selected date range: ${formatDateRange(newSelectedDate, locale, {
+              day: "2-digit",
+              month: "2-digit",
+              year: "numeric",
+            })}`,
           );
           setSelectedDate(newSelectedDate);
           const validationStatus =
@@ -973,6 +960,7 @@ const DatePickerTimeInput: React.FC = () => {
     selectionVariant: "range",
   }) as RangeDatePickerState;
 
+  const locale = "en-US";
   function parseTime(timeValue: string): {
     hour: number;
     minute: number;

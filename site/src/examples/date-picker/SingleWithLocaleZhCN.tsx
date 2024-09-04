@@ -2,6 +2,7 @@ import {
   CalendarDate,
   DateFormatter,
   type DateValue,
+  getLocalTimeZone,
 } from "@internationalized/date";
 import {
   FormField,
@@ -13,47 +14,49 @@ import {
   DatePicker,
   DatePickerOverlay,
   DatePickerSingleInput,
-  DatePickerSinglePanel, formatDate, SingleDatePickerError,
+  DatePickerSinglePanel,
+  type SingleDatePickerError,
   type SingleDateSelection,
+  formatDate,
 } from "@salt-ds/lab";
 import React, { type ReactElement, useState } from "react";
 
-export const SingleWithLocaleZhCN = (): ReactElement => {
-  const locale = "zh-CN";
-  const timeZone = "Asia/Shanghai";
-  const formatDateZhCN = (date: DateValue | null) => {
-    return date
-      ? new DateFormatter(locale, {
+const formatDateZhCN = (date: DateValue | null) => {
+  return date
+    ? new DateFormatter("zh-CN", {
         day: "2-digit",
         month: "2-digit",
         year: "numeric",
-      }).format(date.toDate(timeZone))
-      : "";
-  };
+      }).format(date.toDate(getLocalTimeZone()))
+    : "";
+};
 
-  const parseDateZhCN = (dateString: string): DateInputSingleParserResult => {
-    if (!dateString?.length) {
-      return { date: null, error: false };
-    }
-    const dateParts = dateString.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
-    if (!dateParts) {
-      return { date: null, error: "invalid date" };
-    }
-    const [, month, day, year] = dateParts;
-    return {
-      date: new CalendarDate(
-        Number.parseInt(year, 10),
-        Number.parseInt(month, 10),
-        Number.parseInt(day, 10),
-      ),
-      error: false,
-    };
+const parseDateZhCN = (dateString: string): DateInputSingleParserResult => {
+  if (!dateString?.length) {
+    return { date: null, error: false };
+  }
+  const dateParts = dateString.match(/^(\d{4})\/(\d{1,2})\/(\d{1,2})$/);
+  if (!dateParts) {
+    return { date: null, error: "invalid date" };
+  }
+  const [_, year, month, day] = dateParts;
+  return {
+    date: new CalendarDate(
+      Number.parseInt(year, 10),
+      Number.parseInt(month, 10),
+      Number.parseInt(day, 10),
+    ),
+    error: false,
   };
+};
+
+export const SingleWithLocaleZhCN = (): ReactElement => {
+  const locale = "zh-CN";
 
   const [selectedDate, setSelectedDate] = useState<SingleDateSelection | null>(
     null,
   );
-  const helperText = `Locale ${locale} - Time Zone ${timeZone}`;
+  const helperText = `Locale ${locale}`;
   const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
     undefined,
   );
@@ -66,17 +69,16 @@ export const SingleWithLocaleZhCN = (): ReactElement => {
 
   function renderDayContents(day: DateValue) {
     const formatter = new DateFormatter("en-US", { day: "numeric" });
-    return <>{formatter.format(day.toDate(timeZone))}</>;
+    return <>{formatter.format(day.toDate(getLocalTimeZone()))}</>;
   }
 
   return (
-    <FormField validationStatus={validationStatus}>
+    <FormField style={{ width: "256px" }} validationStatus={validationStatus}>
       <FormLabel>Select a date</FormLabel>
       <DatePicker
         selectionVariant={"single"}
         selectedDate={selectedDate}
         locale={locale}
-        timeZone={timeZone}
         onSelectedDateChange={(
           newSelectedDate: SingleDateSelection | null,
           error: SingleDatePickerError,

@@ -56,7 +56,7 @@ export const RangeWithConfirmation = (): ReactElement => {
   );
 
   return (
-    <FormField validationStatus={validationStatus}>
+    <FormField style={{ width: "256px" }} validationStatus={validationStatus}>
       <FormLabel>Select a date range</FormLabel>
       <DatePicker
         selectionVariant="range"

@@ -2,6 +2,7 @@ import {
   CalendarDate,
   DateFormatter,
   type DateValue,
+  getLocalTimeZone,
 } from "@internationalized/date";
 import {
   FormField,
@@ -46,65 +47,61 @@ function isValidDateRange(date: DateRangeSelection | null) {
   );
 }
 
+const parseDateEsES = (
+  dateString: string | undefined,
+): DateInputRangeParserResult => {
+  if (!dateString) {
+    return { date: null, error: false };
+  }
+  const dateParts = dateString.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+  if (!dateParts) {
+    return { date: null, error: "invalid date" };
+  }
+  const [, day, month, year] = dateParts;
+  return {
+    date: new CalendarDate(
+      Number.parseInt(year, 10),
+      Number.parseInt(month, 10),
+      Number.parseInt(day, 10),
+    ),
+    error: false,
+  };
+};
+
+const formatDateEsES = (date: DateValue | null) => {
+  return date
+    ? new DateFormatter("es-ES", {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+      }).format(date.toDate(getLocalTimeZone()))
+    : "";
+};
+
 export const RangeWithLocaleEsES = (): ReactElement => {
   const locale = "es-ES";
-  const timeZone = "Europe/Madrid";
 
   const [selectedDate, setSelectedDate] = useState<DateRangeSelection | null>(
     null,
   );
-  const helperText = `Locale ${locale} - Time Zone ${timeZone}`;
+  const helperText = `Locale ${locale}`;
   const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
     undefined,
   );
 
-  const parseDateEsES = (
-    dateString: string | undefined,
-  ): DateInputRangeParserResult => {
-    if (!dateString) {
-      return { date: null, error: false };
-    }
-    const dateParts = dateString.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
-    if (!dateParts) {
-      return { date: null, error: "invalid date" };
-    }
-    const [, day, month, year] = dateParts;
-    return {
-      date: new CalendarDate(
-        Number.parseInt(year, 10),
-        Number.parseInt(month, 10),
-        Number.parseInt(day, 10),
-      ),
-      error: false,
-    };
-  };
-
-  const formatDateEsES = (date: DateValue | null) => {
-    return date
-      ? new DateFormatter(locale, {
-          day: "2-digit",
-          month: "2-digit",
-          year: "numeric",
-          timeZone,
-        }).format(date.toDate(timeZone))
-      : "";
-  };
-
   return (
-    <FormField validationStatus={validationStatus}>
+    <FormField style={{ width: "256px" }} validationStatus={validationStatus}>
       <FormLabel>Select a date</FormLabel>
       <DatePicker
         selectionVariant={"range"}
         selectedDate={selectedDate}
         locale={locale}
-        timeZone={timeZone}
         onSelectedDateChange={(newSelectedDate, error) => {
           console.log(
             `Selected date range: ${formatDateRange(newSelectedDate, locale, {
               day: "2-digit",
               month: "2-digit",
               year: "numeric",
-              timeZone,
             })}`,
           );
           setSelectedDate(newSelectedDate);
