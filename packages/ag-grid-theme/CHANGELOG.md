@@ -1,5 +1,11 @@
 # @salt-ds/ag-grid-theme
 
+## 2.0.2
+
+### Patch Changes
+
+- ab0215d: Fixed header text and icon color when column menu is open
+
 ## 2.0.1
 
 ### Patch Changes
