@@ -20,7 +20,7 @@ jobs:
           fetch-depth: 0
           repository: ${{ github.event.workflow_run.head_repository.full_name }}
           ref: ${{ github.event.workflow_run.head_branch }}
-      - name: "Download chromatic branch name artifact"
+      - name: "Download run metadata"
         uses: actions/download-artifact@v4
         with:
           name: metadata
@@ -29,7 +29,7 @@ jobs:
           run-id: ${{ github.event.workflow_run.id }}
       - name: Get branch for Chromatic
         uses: actions/github-script@v7
-        id: chromatic_branch
+        id: run_metadata
         with:
           script: |
             const fs = require("fs");
@@ -55,7 +55,7 @@ jobs:
         run: |
           git remote add upstream ${{ github.event.repository.clone_url }}
           git fetch upstream
-          git checkout -B ${{ steps.chromatic_branch.outputs.base }} upstream/${{ steps.chromatic_branch.outputs.base }}
+          git checkout -B ${{ steps.run_metadata.outputs.base }} upstream/${{ steps.run_metadata.outputs.base }}
           git checkout ${{ github.event.workflow_run.head_branch }}
           git clean -ffdx && git reset --hard HEAD
       - name: Use Node.js
@@ -73,7 +73,7 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           run-id: ${{ github.event.workflow_run.id }}
       - name: Publish to Chromatic
-        if: ${{ steps.chromatic_branch.outputs.branchName == 'main' || (steps.chromatic_branch.outputs.draft != 'true' && steps.chromatic_branch.outputs.runChromatic == 'true') }}
+        if: ${{ steps.run_metadata.outputs.branchName == 'main' || (steps.run_metadata.outputs.draft != 'true' && steps.run_metadata.outputs.runChromatic == 'true') }}
         uses: chromaui/action@v11.7.1
         # Chromatic GitHub Action options
         with:
@@ -81,25 +81,25 @@ jobs:
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
           exitOnceUploaded: true
           # Turbosnap if this is not the main branch
-          onlyChanged: ${{ steps.chromatic_branch.outputs.branchName != 'main' && steps.chromatic_branch.outputs.noTurbosnap != 'true' }}
-          externals: ${{ steps.chromatic_branch.outputs.branchName != 'main' && steps.chromatic_branch.outputs.noTurbosnap != 'true' && 'packages/(theme)/**' || '' }}
+          onlyChanged: ${{ steps.run_metadata.outputs.branchName != 'main' && steps.run_metadata.outputs.noTurbosnap != 'true' }}
+          externals: ${{ steps.run_metadata.outputs.branchName != 'main' && steps.run_metadata.outputs.noTurbosnap != 'true' && 'packages/(theme)/**' || '' }}
           skip: "changeset-release/*"
-          autoAcceptChanges: ${{ steps.chromatic_branch.outputs.branchName == 'main' && steps.chromatic_branch.outputs.noTurbosnap != 'true' }}
+          autoAcceptChanges: ${{ steps.run_metadata.outputs.branchName == 'main' && steps.run_metadata.outputs.noTurbosnap != 'true' }}
           ignoreLastBuildOnBranch: "**"
-          traceChanged: ${{ (steps.chromatic_branch.outputs.branchName != 'main' && steps.chromatic_branch.outputs.noTurbosnap != 'true') && 'expanded' || '' }}
+          traceChanged: ${{ (steps.run_metadata.outputs.branchName != 'main' && steps.run_metadata.outputs.noTurbosnap != 'true') && 'expanded' || '' }}
           storybookBuildDir: "./storybook-static"
-          branchName: ${{ steps.chromatic_branch.outputs.branchName }}
+          branchName: ${{ steps.run_metadata.outputs.branchName }}
           debug: true
         env:
           LOG_LEVEL: "debug"
       - name: Remove Chromatic label
-        if: ${{ steps.chromatic_branch.outputs.branchName != 'main' }}
+        if: ${{ steps.run_metadata.outputs.branchName != 'main' }}
         uses: actions/github-script@v7
         with:
           script: |
             try {
               await github.rest.issues.removeLabel({
-                issue_number: ${{ steps.chromatic_branch.outputs.issueNumber }},
+                issue_number: ${{ steps.run_metadata.outputs.issueNumber }},
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 name: ["chromatic"]
