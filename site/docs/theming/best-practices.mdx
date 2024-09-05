@@ -2,14 +2,16 @@
 title: Best practices for theming
 layout: DetailTechnical
 ---
-Salt offers a comprehensive suite of [components](/salt/components) and [patterns](/salt/patterns) designed to streamline both the design and development process. Whilst these resources cover a wide range of use cases, there will inevitably be times when you need to create custom components to meet specific product requirements.   
 
-This guide will explore best practices for theming within the Salt design language, highlighting key considerations and best practices.  
-  
+Salt offers a comprehensive suite of [components](/salt/components) and [patterns](/salt/patterns) designed to streamline both the design and development process. Whilst these resources cover a wide range of use cases, there will inevitably be times when you need to create custom components to meet specific product requirements.
+
+This guide will explore best practices for theming within the Salt design language, highlighting key considerations and best practices.
+
 By adhering to these guidelines
+
 - you will make consuming future Salt updates easier
 - make your components more reusable and composable with other Salt components
-- make your design easier to maintain and understood by others. 
+- make your design easier to maintain and understood by others.
 - provide your end user with a cohesive user experience.
 
 ## Theming options
@@ -19,11 +21,13 @@ Design tokens in the Salt Design language take the form of CSS/Figma variables t
 At its core, theming involves changing preset values that have been carefully chosen to meet design standards and accessibility requirements. Altering one value may necessitate changes to other related values. Therefore, making an uninformed change can lead to unexpected side effects that may not always be immediately visible.
 
 To help you manage the cost of change and choose the model that best suits your product and resources, we offer various entry points with increasing levels of flexibility. The trade-off is that increased flexibility can increase your responsibilities and the depth of knowledge required to maintain it.
+
 ### Option 1: Adopt the standard, pre-built, theme
 
 Get your core styles for free.
 
 #### Dos
+
 - Do use the Salt theme "out of the box" and avoid owning any custom styles.
 - Do recognize that adopting Salt aligns your current UX with a maintained standard that conforms to both design and accessibility guidelines. Whilst there is an opportunity cost, deviating from Salt can increase your costs and result in a disparate UI, ultimately affecting the end user's experience.
 
@@ -38,10 +42,12 @@ Each Salt theme consists of 3 layers ([Foundation](/salt/about/glossary#foundati
 Whilst this creates the highest level of flexibility it comes with an increased level of responsibility to maintain. If this is what you need , then here are our recommendations:
 
 #### Don'ts
+
 - Don't change the foundation layer unless you fully understand the impact it will have on all components.
 - Don't reference the foundation layer directly but through either the palette or characteristics layer.
 
 #### Dos
+
 - Do create your own theme that references the Salt characteristics and palette layers to provide a holistic theming solution.
 - Do document your design language so others understand the design intent and how to use it. This avoids future duplication and eases updates.
 - Do change the palette layer but federate the solution to a central theme, ensuring that deviations from the Salt standard are known and can be easily updated if required.
@@ -50,33 +56,55 @@ Whilst this creates the highest level of flexibility it comes with an increased 
 
 We've documented all our [design tokens](/salt/theming/index#design-tokens), but let's start with some basic tokens that have the biggest effect:
 
-| Token                                   | Pro tip                        | 
-| --------------------------------------- | ------------------------------ |
-| `--salt-container-primary-background`       | **Salt's primary background color**<br/><br/>Ideal for most background changes, this token adapts seamlessly between light and dark modes with the appropriate color. It is commonly used by container components like [Panel](/salt/components/panel) and [Card](/salt/components/card). |  
-| `--salt-content-primary-foreground`         | **Salt's default foreground color**<br/><br/>This token serves as the [default foreground color](https://github.com/jpmorganchase/salt-ds/blob/e76e5b92dcb6cfae02813137098393b91f54e501/packages/theme/css/global.css#L6) for text and icons, ensuring consistency across your UI. |  
-| `--salt-status-info-foreground-informative` | **Salt info status foreground**<br/><br/>The `informative` suffix ensures this token meets the minimal contrast ratio when used against Salt container background colors, making it suitable for informative text (as opposed to `decorative`). |  
-| `--salt-accent-borderColor`                 | **Salt's accent styling option**<br/><br/>Use this token for border colors to reflect the accent styling option choice – `teal` or `blue`. The `borderColor` naming convention helps maintain clarity and consistency. |  
+| Token                                       | Pro tip                                                                                                                                                                                                                                                                                   |
+| ------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `--salt-container-primary-background`       | **Salt's primary background color**<br/><br/>Ideal for most background changes, this token adapts seamlessly between light and dark modes with the appropriate color. It is commonly used by container components like [Panel](/salt/components/panel) and [Card](/salt/components/card). |
+| `--salt-content-primary-foreground`         | **Salt's default foreground color**<br/><br/>This token serves as the [default foreground color](https://github.com/jpmorganchase/salt-ds/blob/e76e5b92dcb6cfae02813137098393b91f54e501/packages/theme/css/global.css#L6) for text and icons, ensuring consistency across your UI.        |
+| `--salt-status-info-foreground-informative` | **Salt info status foreground**<br/><br/>The `informative` suffix ensures this token meets the minimal contrast ratio when used against Salt container background colors, making it suitable for informative text (as opposed to `decorative`).                                           |
+| `--salt-accent-borderColor`                 | **Salt's accent styling option**<br/><br/>Use this token for border colors to reflect the accent styling option choice – `teal` or `blue`. The `borderColor` naming convention helps maintain clarity and consistency.                                                                    |
 
-<br/>
-These four variables represent key aspects of theming controls: background, foreground, typography, and border color. Exploring these variables will demonstrate the power of theming and guide you to discover the rest of our documentation.
+<br />
+These four variables represent key aspects of theming controls: background,
+foreground, typography, and border color. Exploring these variables will
+demonstrate the power of theming and guide you to discover the rest of our
+documentation.
 
 #### Dos
+
 - Do consider how much change can be achieved with the smallest number of theme adjustments. With just these four variables, you can create significant visual impact.
 
 Be mindful that unless you are using the 'styling options', any overrides may be subject to breaking changes. Creators of Salt themes should pay careful attention to updates in the @salt-ds/theme package and manage any dependencies within their own themes.
+
 ## Best practices for making changes from default values
-<br/>
-- **Don't** replace token values with hex, rgb, or other hard-coded values, as this can lead to unmaintainable changes. Hard-coded values break theming and decouple you from future updates.
-- **Do** use Salt's foundational palette and design tokens for colors. Using these tokens instead of hex values ensures that changes map to Salt's foundations or characteristics layers. If the characteristics or foundations change in the future, your component will update accordingly.
-<br/>
-- **Don't** see your UI as a collection of individual components and override specific use-cases based on personal preferences.
-- **Do** understand the value of consistent, accessible styling for your end-users. Whilst changes can be made, consider the cost of not only making a change but also maintaining it. Theming is a holistic solution to styling your product. Corner cases often indicate either a new feature you need to design/build/maintain yourself or an opportunity cost.
-<br/>
-- **Don't** define colors on individual components.
-- **Do** use Salt components that define their color settings through palette tokens with semantic meanings. This allows your application to adapt to [accent or mode](/salt/theming/index#accent--mode) settings. Refer to [characteristics tokens](/salt/theming/accordionview) for a full list of tokens.
-<br/>
-- **Don't** hardcode sizes of components, such as pixel-based sizing.
-- **Do** ensure that Salt components are responsive and uniformly sized. Use the size and spacing tokens to maintain density support and responsiveness. Salt's [size](/salt/foundations/size) and [spacing](/salt/foundations/spacing) foundation tokens will adapt to the [density](/salt/foundations/density) settings.
+
+<br />
+- **Don't** replace token values with hex, rgb, or other hard-coded values, as
+this can lead to unmaintainable changes. Hard-coded values break theming and
+decouple you from future updates. - **Do** use Salt's foundational palette and
+design tokens for colors. Using these tokens instead of hex values ensures that
+changes map to Salt's foundations or characteristics layers. If the
+characteristics or foundations change in the future, your component will update
+accordingly.
+<br />
+- **Don't** see your UI as a collection of individual components and override
+specific use-cases based on personal preferences. - **Do** understand the value
+of consistent, accessible styling for your end-users. Whilst changes can be
+made, consider the cost of not only making a change but also maintaining it.
+Theming is a holistic solution to styling your product. Corner cases often
+indicate either a new feature you need to design/build/maintain yourself or an
+opportunity cost.
+<br />
+- **Don't** define colors on individual components. - **Do** use Salt components
+that define their color settings through palette tokens with semantic meanings.
+This allows your application to adapt to [accent or
+mode](/salt/theming/index#accent--mode) settings. Refer to [characteristics
+tokens](/salt/theming/accordionview) for a full list of tokens.
+<br />- **Don't** hardcode sizes of components, such as pixel-based sizing. -
+**Do** ensure that Salt components are responsive and uniformly sized. Use the
+size and spacing tokens to maintain density support and responsiveness. Salt's
+[size](/salt/foundations/size) and [spacing](/salt/foundations/spacing)
+foundation tokens will adapt to the [density](/salt/foundations/density)
+settings.
 
 ## What does good look like ?
 
@@ -91,6 +119,7 @@ The good practices outlined on this page are being used across Salt components a
 In addition to using design tokens, you can leverage Salt components to help build your own patterns without the need for additional styling.
 
 ### Layout components
+
 Layout components provide a declarative way to layout content without additional styling. They also adjust their spacing according to the current `density`.
 
 - [Stack Layout](/salt/components/stack-layout)
@@ -98,11 +127,14 @@ Layout components provide a declarative way to layout content without additional
 - [Grid Layout](/salt/components/grid-layout)
 
 ### Typography components
+
 Typography components offer declarative typographic styles that do not require additional styles.
 
 - [Text](/salt/components/text) components encapsulate [typography](/salt/foundations/typography)
 
 ### Icon components
+
 Icon components provide visual cues without additional styling.
+
 - [Icon](/salt/components/icon)
-- [Status Indicator](/salt/components/status-indicator) 
+- [Status Indicator](/salt/components/status-indicator)
