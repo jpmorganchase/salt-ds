@@ -13,6 +13,12 @@ A Salt characteristic refers to a [design token](#design-token) that aligns with
 
 For a full list of characteristics, refer to the [characteristic documentation](/salt/theming/accordionview).
 
+## Characteristics Layer
+
+The characteristics layer is the top layer of the Salt theme, using values from the palette layer to define theming attributes for specific aspects of the design.
+
+For an overview of theming, refer to our [theming documentation](/salt/theming/index).
+
 ## Component
 
 Salt components serve as foundational building blocks as well as representing design primitives. Users of Salt can design and implement their own [patterns](#pattern) within their own scope.
@@ -22,6 +28,18 @@ For a full list of foundational components, refer to the [component documentatio
 ## Design Token
 
 A design token is a visual attribute that represents a specific aspect of a design system. It is an abstract representation of a design property, such as colors, typography, spacing, or breakpoints, that can be used consistently across a product or design system. Design tokens provide a centralized and reusable way to define and manage design-related values, making it easier to maintain consistency and make global design changes. They act as a bridge between designers and developers, enabling a shared language and ensuring design consistency throughout the product or system. In Salt design tokens are represented as Figma variables and in code, they take the form of CSS variables.
+
+## Foundation Layer
+
+The foundation layer is the lowest layer of the Salt theme, consisting of primitive values that should remain stable between releases. Ideally, it should not be referenced directly but through the palette and characteristics layers.
+
+For an overview of theming, refer to our [theming documentation](/salt/theming/index).
+
+## Palette Layer 
+
+The palette layer of the Salt theme, defines semantic groupings derived from the foundation layer. These groupings can be referenced by multiple characteristics.
+
+For an overview of theming, refer to our [theming documentation](/salt/theming/index).
 
 ## Pattern
 
@@ -35,6 +53,6 @@ Salt is the J.P. Morgan design system, an open-source solution for building exce
 
 ## Theming
 
-Salt is under active development. At this stage, we don't recommend theming unless absolutely necessary.
+Refers to the process of customizing the visual appearance of a user interface (UI) by altering predefined design elements such as colors, typography, spacing, and other stylistic attributes. Theming allows for the creation of a cohesive and consistent look and feel across an application, ensuring that it aligns with brand guidelines and user experience (UX) standards.
 
 For an overview of theming, refer to our [theming documentation](/salt/theming/index).
