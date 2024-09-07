@@ -1,11 +1,6 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": [
-    "config:base",
-    ":preserveSemverRanges",
-    "group:monorepos",
-    "group:recommended"
-  ],
+  "extends": ["config:recommended", ":preserveSemverRanges"],
   "postUpdateOptions": ["yarnDedupeHighest"],
   "packageRules": [
     {
