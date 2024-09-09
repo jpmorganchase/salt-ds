@@ -63,8 +63,8 @@ Default.args = {
   children: "Activate",
 };
 
-export const Accent = AppearanceGridTemplate.bind({});
-Accent.args = {
+export const Accented = AppearanceGridTemplate.bind({});
+Accented.args = {
   sentiment: "accented",
 };
 

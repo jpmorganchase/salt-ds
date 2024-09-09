@@ -55,14 +55,16 @@ export interface ButtonProps extends ComponentPropsWithoutRef<"button"> {
   sentiment?: ButtonSentiment;
 }
 
-function variantToAppearanceAndColor(variant: ButtonVariant) {
+function variantToAppearanceAndColor(
+  variant: ButtonVariant,
+): Pick<ButtonProps, "appearance" | "sentiment"> {
   switch (variant) {
     case "primary":
-      return { appearance: "solid", color: "neutral" };
+      return { appearance: "solid", sentiment: "neutral" };
     case "secondary":
-      return { appearance: "transparent", color: "neutral" };
+      return { appearance: "transparent", sentiment: "neutral" };
     case "cta":
-      return { appearance: "solid", color: "accent" };
+      return { appearance: "solid", sentiment: "accented" };
   }
 }
 
@@ -102,8 +104,10 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     });
 
     const mapped = variantToAppearanceAndColor(variant);
-    const appearance = appearanceProp ?? mapped.appearance;
-    const color = sentimentProp ?? mapped.color;
+    const appearance: ButtonAppearance =
+      appearanceProp ?? mapped.appearance ?? "solid";
+    const sentiment: ButtonSentiment =
+      sentimentProp ?? mapped.sentiment ?? "neutral";
 
     // we do not want to spread tab index in this case because the button element
     // does not require tabindex="0" attribute
@@ -118,7 +122,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
             [withBaseName("disabled")]: disabled,
             [withBaseName("active")]: active,
             [withBaseName(appearance)]: appearance,
-            [withBaseName(color)]: color,
+            [withBaseName(sentiment)]: sentiment,
           },
           className,
         )}
