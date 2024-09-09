@@ -1,17 +1,17 @@
-import { Button } from "@salt-ds/core";
+import { Button, FlowLayout, StackLayout } from "@salt-ds/core";
 import { SendIcon } from "@salt-ds/icons";
 import type { ReactElement } from "react";
 
 export const Disabled = (): ReactElement => (
-  <>
-    <Button variant="primary" disabled>
+  <FlowLayout>
+    <Button appearance="solid" disabled>
       Disabled
     </Button>
-    <Button variant="primary" disabled>
+    <Button appearance="bordered" disabled>
       Disabled <SendIcon />
     </Button>
-    <Button variant="primary" disabled focusableWhenDisabled>
+    <Button appearance="transparent" disabled>
       Focusable when disabled
     </Button>
-  </>
+  </FlowLayout>
 );
