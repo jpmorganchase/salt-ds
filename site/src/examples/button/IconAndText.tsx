@@ -1,33 +1,36 @@
 import { Button, FlowLayout, StackLayout } from "@salt-ds/core";
 import {
-  DoubleChevronRightIcon,
-  DownloadIcon,
-  SearchIcon,
+  ChevronRightIcon,
+  ExpandAllIcon,
+  ExportIcon,
+  PrintIcon,
+  ShareIcon,
+  UploadIcon,
 } from "@salt-ds/icons";
 import type { ReactElement } from "react";
 
 export const IconAndText = (): ReactElement => (
   <StackLayout gap={3}>
     <FlowLayout>
-      <Button appearance="solid" color="accent">
-        <SearchIcon /> Search
+      <Button appearance="solid" sentiment="accented">
+        <UploadIcon /> Upload
       </Button>
-      <Button appearance="outline" color="accent">
-        <DownloadIcon /> Download
+      <Button appearance="bordered" sentiment="accented">
+        <PrintIcon /> Print
       </Button>
-      <Button appearance="transparent" color="accent">
-        Expand <DoubleChevronRightIcon />
+      <Button appearance="transparent" sentiment="accented">
+        <ShareIcon /> Share
       </Button>
     </FlowLayout>
     <FlowLayout>
-      <Button appearance="solid" color="neutral">
-        <SearchIcon /> Search
+      <Button appearance="solid" sentiment="accented">
+        Open <ChevronRightIcon />
       </Button>
-      <Button appearance="outline" color="neutral">
-        <DownloadIcon /> Download
+      <Button appearance="bordered" sentiment="accented">
+        Expand All <ExpandAllIcon />
       </Button>
-      <Button appearance="transparent" color="neutral">
-        Expand <DoubleChevronRightIcon />
+      <Button appearance="transparent" sentiment="accented">
+        Export <ExportIcon />
       </Button>
     </FlowLayout>
   </StackLayout>

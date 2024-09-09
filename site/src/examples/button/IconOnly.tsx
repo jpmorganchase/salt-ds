@@ -1,40 +1,23 @@
 import { Button, FlowLayout, StackLayout, Tooltip } from "@salt-ds/core";
-import { SearchIcon, SendIcon, SettingsIcon } from "@salt-ds/icons";
+import { PrintIcon, SearchIcon, ShareIcon } from "@salt-ds/icons";
 import type { ReactElement } from "react";
 
 export const IconOnly = (): ReactElement => (
   <StackLayout gap={3}>
     <FlowLayout>
-      <Tooltip placement="top" content="Send comment">
-        <Button appearance="solid" color="accent">
-          <SendIcon />
-        </Button>
-      </Tooltip>
       <Tooltip placement="top" content="Search document">
-        <Button appearance="outline" color="accent">
+        <Button appearance="solid" sentiment="accented">
           <SearchIcon />
         </Button>
       </Tooltip>
-      <Tooltip placement="top" content="Open settings">
-        <Button appearance="transparent" color="accent">
-          <SettingsIcon />
+      <Tooltip placement="top" content="Print document">
+        <Button appearance="bordered" sentiment="accented">
+          <PrintIcon />
         </Button>
       </Tooltip>
-    </FlowLayout>
-    <FlowLayout>
-      <Tooltip placement="top" content="Send comment">
-        <Button appearance="solid" color="neutral">
-          <SendIcon />
-        </Button>
-      </Tooltip>
-      <Tooltip placement="top" content="Search document">
-        <Button appearance="outline" color="neutral">
-          <SearchIcon />
-        </Button>
-      </Tooltip>
-      <Tooltip placement="top" content="Open settings">
-        <Button appearance="transparent" color="neutral">
-          <SettingsIcon />
+      <Tooltip placement="top" content="Share">
+        <Button appearance="transparent" sentiment="accented">
+          <ShareIcon />
         </Button>
       </Tooltip>
     </FlowLayout>

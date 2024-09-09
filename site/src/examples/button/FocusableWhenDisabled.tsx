@@ -4,41 +4,25 @@ import type { ReactElement } from "react";
 export const FocusableWhenDisabled = (): ReactElement => (
   <StackLayout gap={3}>
     <FlowLayout>
-      <Button appearance="solid" color="accent" disabled focusableWhenDisabled>
+      <Button
+        appearance="solid"
+        sentiment="accented"
+        disabled
+        focusableWhenDisabled
+      >
         Solid
       </Button>
       <Button
-        appearance="outline"
-        color="accent"
+        appearance="bordered"
+        sentiment="accented"
         disabled
         focusableWhenDisabled
       >
-        Outline
+        Bordered
       </Button>
       <Button
         appearance="transparent"
-        color="accent"
-        disabled
-        focusableWhenDisabled
-      >
-        Transparent
-      </Button>
-    </FlowLayout>
-    <FlowLayout>
-      <Button appearance="solid" color="neutral" disabled focusableWhenDisabled>
-        Solid
-      </Button>
-      <Button
-        appearance="outline"
-        color="neutral"
-        disabled
-        focusableWhenDisabled
-      >
-        Outline
-      </Button>
-      <Button
-        appearance="transparent"
-        color="neutral"
+        sentiment="accented"
         disabled
         focusableWhenDisabled
       >
@@ -48,23 +32,23 @@ export const FocusableWhenDisabled = (): ReactElement => (
     <FlowLayout>
       <Button
         appearance="solid"
-        color="positive"
+        sentiment="neutral"
         disabled
         focusableWhenDisabled
       >
         Solid
       </Button>
       <Button
-        appearance="outline"
-        color="positive"
+        appearance="bordered"
+        sentiment="neutral"
         disabled
         focusableWhenDisabled
       >
-        Outline
+        Bordered
       </Button>
       <Button
         appearance="transparent"
-        color="positive"
+        sentiment="neutral"
         disabled
         focusableWhenDisabled
       >
@@ -74,23 +58,23 @@ export const FocusableWhenDisabled = (): ReactElement => (
     <FlowLayout>
       <Button
         appearance="solid"
-        color="negative"
+        sentiment="positive"
         disabled
         focusableWhenDisabled
       >
         Solid
       </Button>
       <Button
-        appearance="outline"
-        color="negative"
+        appearance="bordered"
+        sentiment="positive"
         disabled
         focusableWhenDisabled
       >
-        Outline
+        Bordered
       </Button>
       <Button
         appearance="transparent"
-        color="negative"
+        sentiment="positive"
         disabled
         focusableWhenDisabled
       >
@@ -98,20 +82,51 @@ export const FocusableWhenDisabled = (): ReactElement => (
       </Button>
     </FlowLayout>
     <FlowLayout>
-      <Button appearance="solid" color="warning" disabled focusableWhenDisabled>
-        Solid
-      </Button>
       <Button
-        appearance="outline"
-        color="warning"
+        appearance="solid"
+        sentiment="negative"
         disabled
         focusableWhenDisabled
       >
-        Outline
+        Solid
+      </Button>
+      <Button
+        appearance="bordered"
+        sentiment="negative"
+        disabled
+        focusableWhenDisabled
+      >
+        Bordered
       </Button>
       <Button
         appearance="transparent"
-        color="warning"
+        sentiment="negative"
+        disabled
+        focusableWhenDisabled
+      >
+        Transparent
+      </Button>
+    </FlowLayout>
+    <FlowLayout>
+      <Button
+        appearance="solid"
+        sentiment="caution"
+        disabled
+        focusableWhenDisabled
+      >
+        Solid
+      </Button>
+      <Button
+        appearance="bordered"
+        sentiment="caution"
+        disabled
+        focusableWhenDisabled
+      >
+        Bordered
+      </Button>
+      <Button
+        appearance="transparent"
+        sentiment="caution"
         disabled
         focusableWhenDisabled
       >
