@@ -14,17 +14,21 @@ import { useButton } from "./useButton";
 const withBaseName = makePrefixer("saltButton");
 
 export const ButtonVariantValues = ["primary", "secondary", "cta"] as const;
-export const AppearanceValues = ["solid", "outline", "transparent"] as const;
-export const ButtonColorValues = [
-  "accent",
+export const ButtonAppearanceValues = [
+  "solid",
+  "bordered",
+  "transparent",
+] as const;
+export const ButtonSentimentValues = [
+  "accented",
   "neutral",
   "positive",
   "negative",
-  "warning",
+  "caution",
 ] as const;
 export type ButtonVariant = (typeof ButtonVariantValues)[number];
-export type Appearance = (typeof AppearanceValues)[number];
-export type ButtonColor = (typeof ButtonColorValues)[number];
+export type ButtonAppearance = (typeof ButtonAppearanceValues)[number];
+export type ButtonSentiment = (typeof ButtonSentimentValues)[number];
 
 export interface ButtonProps extends ComponentPropsWithoutRef<"button"> {
   /**
@@ -42,13 +46,13 @@ export interface ButtonProps extends ComponentPropsWithoutRef<"button"> {
    */
   variant?: ButtonVariant;
   /**
-   * The type of the button. Options are 'solid', 'outline', and 'transparent'.
+   * The type of the button. Options are 'solid', 'bordered', and 'transparent'.
    */
-  appearance?: Appearance;
+  appearance?: ButtonAppearance;
   /**
-   * The color of the button. Options are 'accent' and 'neutral'.
+   * The color of the button. Options are "accented", "neutral", "positive", "negative" and "caution".
    */
-  color?: ButtonColor;
+  sentiment?: ButtonSentiment;
 }
 
 function variantToAppearanceAndColor(variant: ButtonVariant) {
@@ -74,7 +78,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       onBlur,
       onClick,
       appearance: appearanceProp,
-      color: colorProp,
+      sentiment: sentimentProp,
       type = "button",
       variant = "primary",
       ...restProps
@@ -99,7 +103,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 
     const mapped = variantToAppearanceAndColor(variant);
     const appearance = appearanceProp ?? mapped.appearance;
-    const color = colorProp ?? mapped.color;
+    const color = sentimentProp ?? mapped.color;
 
     // we do not want to spread tab index in this case because the button element
     // does not require tabindex="0" attribute

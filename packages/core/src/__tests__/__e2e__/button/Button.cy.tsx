@@ -3,19 +3,19 @@ import { composeStories } from "@storybook/react";
 import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
 
 const composedStories = composeStories(buttonStories);
-const { FeatureButton, FocusableWhenDisabled } = composedStories;
+const { Default, FocusableWhenDisabled } = composedStories;
 
 describe("Given a Button", () => {
   checkAccessibility(composedStories);
 
   it("should render text as children", () => {
-    cy.mount(<FeatureButton />);
-    cy.findByText(FeatureButton.args?.children as string).should("be.visible");
+    cy.mount(<Default />);
+    cy.findByText(Default.args?.children as string).should("be.visible");
   });
 
   it("should call onClick when interacted with", () => {
     const clickSpy = cy.stub().as("clickSpy");
-    cy.mount(<FeatureButton onClick={clickSpy} />);
+    cy.mount(<Default onClick={clickSpy} />);
     cy.realPress("Tab");
     cy.findByRole("button").should("be.focused");
     cy.realPress("Enter");
@@ -28,8 +28,8 @@ describe("Given a Button", () => {
 
   it("should call onBlur when blurred", () => {
     const blurSpy = cy.stub().as("blurSpy");
-    cy.mount(<FeatureButton onBlur={blurSpy} />);
-    cy.findByText(FeatureButton.args?.children as string).should("be.visible");
+    cy.mount(<Default onBlur={blurSpy} />);
+    cy.findByText(Default.args?.children as string).should("be.visible");
     cy.realPress("Tab");
     cy.findByRole("button").should("be.focused");
     cy.realPress("Tab");
@@ -52,12 +52,12 @@ describe("Given a Button", () => {
   });
 
   it("should apply type prop to button element", () => {
-    cy.mount(<FeatureButton type="submit" />);
+    cy.mount(<Default type="submit" />);
     cy.findByRole("button").should("have.attr", "type", "submit");
   });
 
   it("should apply default type prop to button element", () => {
-    cy.mount(<FeatureButton />);
+    cy.mount(<Default />);
     cy.findByRole("button").should("have.attr", "type", "button");
   });
 });

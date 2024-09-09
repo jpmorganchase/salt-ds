@@ -47,8 +47,8 @@ const AppearanceGridTemplate: StoryFn<typeof Button> = (props) => {
         <Button appearance="solid" {...props}>
           Solid
         </Button>
-        <Button appearance="outline" {...props}>
-          Outline
+        <Button appearance="bordered" {...props}>
+          Bordered
         </Button>
         <Button appearance="transparent" {...props}>
           Transparent
@@ -58,91 +58,91 @@ const AppearanceGridTemplate: StoryFn<typeof Button> = (props) => {
   );
 };
 
+export const Default = SingleButtonTemplate.bind({});
+Default.args = {
+  children: "Activate",
+};
+
 export const Accent = AppearanceGridTemplate.bind({});
 Accent.args = {
-  color: "accent",
+  sentiment: "accented",
 };
 
 export const Neutral = AppearanceGridTemplate.bind({});
 Neutral.args = {
-  color: "neutral",
+  sentiment: "neutral",
 };
 
 export const Positive = AppearanceGridTemplate.bind({});
 Positive.args = {
-  color: "positive",
+  sentiment: "positive",
 };
 
 export const Negative = AppearanceGridTemplate.bind({});
 Negative.args = {
-  color: "negative",
+  sentiment: "negative",
 };
 
-export const Warning = AppearanceGridTemplate.bind({});
-Warning.args = {
-  color: "warning",
-};
-
-export const FeatureButton = SingleButtonTemplate.bind({});
-FeatureButton.args = {
-  children: "Activate",
+export const Caution = AppearanceGridTemplate.bind({});
+Caution.args = {
+  sentiment: "caution",
 };
 
 export const Disabled: StoryFn = () => {
   return (
     <StackLayout gap={3}>
       <FlowLayout>
-        <Button appearance="solid" color="accent" disabled>
+        <Button appearance="solid" sentiment="accented" disabled>
           Solid
         </Button>
-        <Button appearance="outline" color="accent" disabled>
-          Outline
+        <Button appearance="bordered" sentiment="accented" disabled>
+          Bordered
         </Button>
-        <Button appearance="transparent" color="accent" disabled>
+        <Button appearance="transparent" sentiment="accented" disabled>
           Transparent
         </Button>
       </FlowLayout>
       <FlowLayout>
-        <Button appearance="solid" color="neutral" disabled>
+        <Button appearance="solid" sentiment="neutral" disabled>
           Solid
         </Button>
-        <Button appearance="outline" color="neutral" disabled>
-          Outline
+        <Button appearance="bordered" sentiment="neutral" disabled>
+          Bordered
         </Button>
-        <Button appearance="transparent" color="neutral" disabled>
+        <Button appearance="transparent" sentiment="neutral" disabled>
           Transparent
         </Button>
       </FlowLayout>
       <FlowLayout>
-        <Button appearance="solid" color="positive" disabled>
+        <Button appearance="solid" sentiment="positive" disabled>
           Solid
         </Button>
-        <Button appearance="outline" color="positive" disabled>
-          Outline
+        <Button appearance="bordered" sentiment="positive" disabled>
+          Bordered
         </Button>
-        <Button appearance="transparent" color="positive" disabled>
+        <Button appearance="transparent" sentiment="positive" disabled>
           Transparent
         </Button>
       </FlowLayout>
       <FlowLayout>
-        <Button appearance="solid" color="negative" disabled>
+        <Button appearance="solid" sentiment="negative" disabled>
           Solid
         </Button>
-        <Button appearance="outline" color="negative" disabled>
-          Outline
+        <Button appearance="bordered" sentiment="negative" disabled>
+          Bordered
         </Button>
-        <Button appearance="transparent" color="negative" disabled>
+        <Button appearance="transparent" sentiment="negative" disabled>
           Transparent
         </Button>
       </FlowLayout>
       <FlowLayout>
-        <Button appearance="solid" color="warning" disabled>
+        <Button appearance="solid" sentiment="caution" disabled>
           Solid
         </Button>
-        <Button appearance="outline" color="warning" disabled>
-          Outline
+        <Button appearance="bordered" sentiment="caution" disabled>
+          Bordered
         </Button>
-        <Button appearance="transparent" color="warning" disabled>
+        <Button appearance="transparent" sentiment="caution" disabled>
           Transparent
         </Button>
       </FlowLayout>
@@ -160,13 +160,13 @@ FocusableWhenDisabled.args = {
 export const WithIcon: StoryFn<typeof Button> = () => {
   return (
     <div style={{ display: "flex", gap: "8px" }}>
-      <Button variant="cta">
+      <Button sentiment="accented">
         Send <SendIcon aria-hidden />
       </Button>
-      <Button variant="primary">
+      <Button>
         <SearchIcon aria-hidden /> Search
       </Button>
-      <Button variant="secondary">
+      <Button appearance="transparent">
         Setting <SettingsSolidIcon aria-hidden />
       </Button>
       <Button aria-label="download">

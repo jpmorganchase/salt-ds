@@ -40,139 +40,139 @@ export const AllVariantsGrid: StoryFn<QAContainerProps> = (props) => (
     <Button variant="cta">
       <SearchIcon /> Button
     </Button>
-    <Button color="accent" appearance="solid">
+    <Button sentiment="accented" appearance="solid">
       Button
     </Button>
-    <Button color="accent" appearance="solid">
+    <Button sentiment="accented" appearance="solid">
       <SearchIcon />
     </Button>
-    <Button color="accent" appearance="solid">
+    <Button sentiment="accented" appearance="solid">
       <SearchIcon /> Button
     </Button>
-    <Button color="accent" appearance="outline">
+    <Button sentiment="accented" appearance="bordered">
       Button
     </Button>
-    <Button color="accent" appearance="outline">
+    <Button sentiment="accented" appearance="bordered">
       <SearchIcon />
     </Button>
-    <Button color="accent" appearance="outline">
+    <Button sentiment="accented" appearance="bordered">
       <SearchIcon /> Button
     </Button>
-    <Button color="accent" appearance="transparent">
+    <Button sentiment="accented" appearance="transparent">
       Button
     </Button>
-    <Button color="accent" appearance="transparent">
+    <Button sentiment="accented" appearance="transparent">
       <SearchIcon />
     </Button>
-    <Button color="accent" appearance="transparent">
+    <Button sentiment="accented" appearance="transparent">
       <SearchIcon /> Button
     </Button>
-    <Button color="neutral" appearance="solid">
+    <Button sentiment="neutral" appearance="solid">
       Button
     </Button>
-    <Button color="neutral" appearance="solid">
+    <Button sentiment="neutral" appearance="solid">
       <SearchIcon />
     </Button>
-    <Button color="neutral" appearance="solid">
+    <Button sentiment="neutral" appearance="solid">
       <SearchIcon /> Button
     </Button>
-    <Button color="neutral" appearance="outline">
+    <Button sentiment="neutral" appearance="bordered">
       Button
     </Button>
-    <Button color="neutral" appearance="outline">
+    <Button sentiment="neutral" appearance="bordered">
       <SearchIcon />
     </Button>
-    <Button color="neutral" appearance="outline">
+    <Button sentiment="neutral" appearance="bordered">
       <SearchIcon /> Button
     </Button>
-    <Button color="neutral" appearance="transparent">
+    <Button sentiment="neutral" appearance="transparent">
       Button
     </Button>
-    <Button color="neutral" appearance="transparent">
+    <Button sentiment="neutral" appearance="transparent">
       <SearchIcon />
     </Button>
-    <Button color="neutral" appearance="transparent">
+    <Button sentiment="neutral" appearance="transparent">
       <SearchIcon /> Button
     </Button>
-    <Button color="positive" appearance="solid">
+    <Button sentiment="positive" appearance="solid">
       Button
     </Button>
-    <Button color="positive" appearance="solid">
+    <Button sentiment="positive" appearance="solid">
       <SearchIcon />
     </Button>
-    <Button color="positive" appearance="solid">
+    <Button sentiment="positive" appearance="solid">
       <SearchIcon /> Button
     </Button>
-    <Button color="positive" appearance="outline">
+    <Button sentiment="positive" appearance="bordered">
       Button
     </Button>
-    <Button color="positive" appearance="outline">
+    <Button sentiment="positive" appearance="bordered">
       <SearchIcon />
     </Button>
-    <Button color="positive" appearance="outline">
+    <Button sentiment="positive" appearance="bordered">
       <SearchIcon /> Button
     </Button>
-    <Button color="positive" appearance="transparent">
+    <Button sentiment="positive" appearance="transparent">
       Button
     </Button>
-    <Button color="positive" appearance="transparent">
+    <Button sentiment="positive" appearance="transparent">
       <SearchIcon />
     </Button>
-    <Button color="positive" appearance="transparent">
+    <Button sentiment="positive" appearance="transparent">
       <SearchIcon /> Button
     </Button>
-    <Button color="negative" appearance="solid">
+    <Button sentiment="negative" appearance="solid">
       Button
     </Button>
-    <Button color="negative" appearance="solid">
+    <Button sentiment="negative" appearance="solid">
       <SearchIcon />
     </Button>
-    <Button color="negative" appearance="solid">
+    <Button sentiment="negative" appearance="solid">
       <SearchIcon /> Button
     </Button>
-    <Button color="negative" appearance="outline">
+    <Button sentiment="negative" appearance="bordered">
       Button
     </Button>
-    <Button color="negative" appearance="outline">
+    <Button sentiment="negative" appearance="bordered">
       <SearchIcon />
     </Button>
-    <Button color="negative" appearance="outline">
+    <Button sentiment="negative" appearance="bordered">
       <SearchIcon /> Button
     </Button>
-    <Button color="negative" appearance="transparent">
+    <Button sentiment="negative" appearance="transparent">
       Button
     </Button>
-    <Button color="negative" appearance="transparent">
+    <Button sentiment="negative" appearance="transparent">
       <SearchIcon />
     </Button>
-    <Button color="negative" appearance="transparent">
+    <Button sentiment="negative" appearance="transparent">
       <SearchIcon /> Button
     </Button>
-    <Button color="warning" appearance="solid">
+    <Button sentiment="caution" appearance="solid">
       Button
     </Button>
-    <Button color="warning" appearance="solid">
+    <Button sentiment="caution" appearance="solid">
       <SearchIcon />
     </Button>
-    <Button color="warning" appearance="solid">
+    <Button sentiment="caution" appearance="solid">
       <SearchIcon /> Button
     </Button>
-    <Button color="warning" appearance="outline">
+    <Button sentiment="caution" appearance="bordered">
       Button
     </Button>
-    <Button color="warning" appearance="outline">
+    <Button sentiment="caution" appearance="bordered">
       <SearchIcon />
     </Button>
-    <Button color="warning" appearance="outline">
+    <Button sentiment="caution" appearance="bordered">
       <SearchIcon /> Button
     </Button>
-    <Button color="warning" appearance="transparent">
+    <Button sentiment="caution" appearance="transparent">
       Button
     </Button>
-    <Button color="warning" appearance="transparent">
+    <Button sentiment="caution" appearance="transparent">
       <SearchIcon />
     </Button>
-    <Button color="warning" appearance="transparent">
+    <Button sentiment="caution" appearance="transparent">
       <SearchIcon /> Button
     </Button>
   </QAContainer>
@@ -220,139 +220,139 @@ export const NoStyleInjectionGrid: StoryFn<QAContainerNoStyleInjectionProps> = (
     <Button variant="cta">
       <SearchIcon /> Button
     </Button>
-    <Button color="accent" appearance="solid">
+    <Button sentiment="accented" appearance="solid">
       Button
     </Button>
-    <Button color="accent" appearance="solid">
+    <Button sentiment="accented" appearance="solid">
       <SearchIcon />
     </Button>
-    <Button color="accent" appearance="solid">
+    <Button sentiment="accented" appearance="solid">
       <SearchIcon /> Button
     </Button>
-    <Button color="accent" appearance="outline">
+    <Button sentiment="accented" appearance="bordered">
       Button
     </Button>
-    <Button color="accent" appearance="outline">
+    <Button sentiment="accented" appearance="bordered">
       <SearchIcon />
     </Button>
-    <Button color="accent" appearance="outline">
+    <Button sentiment="accented" appearance="bordered">
       <SearchIcon /> Button
     </Button>
-    <Button color="accent" appearance="transparent">
+    <Button sentiment="accented" appearance="transparent">
       Button
     </Button>
-    <Button color="accent" appearance="transparent">
+    <Button sentiment="accented" appearance="transparent">
       <SearchIcon />
     </Button>
-    <Button color="accent" appearance="transparent">
+    <Button sentiment="accented" appearance="transparent">
       <SearchIcon /> Button
     </Button>
-    <Button color="neutral" appearance="solid">
+    <Button sentiment="neutral" appearance="solid">
       Button
     </Button>
-    <Button color="neutral" appearance="solid">
+    <Button sentiment="neutral" appearance="solid">
       <SearchIcon />
     </Button>
-    <Button color="neutral" appearance="solid">
+    <Button sentiment="neutral" appearance="solid">
       <SearchIcon /> Button
     </Button>
-    <Button color="neutral" appearance="outline">
+    <Button sentiment="neutral" appearance="bordered">
       Button
     </Button>
-    <Button color="neutral" appearance="outline">
+    <Button sentiment="neutral" appearance="bordered">
       <SearchIcon />
     </Button>
-    <Button color="neutral" appearance="outline">
+    <Button sentiment="neutral" appearance="bordered">
       <SearchIcon /> Button
     </Button>
-    <Button color="neutral" appearance="transparent">
+    <Button sentiment="neutral" appearance="transparent">
       Button
     </Button>
-    <Button color="neutral" appearance="transparent">
+    <Button sentiment="neutral" appearance="transparent">
       <SearchIcon />
     </Button>
-    <Button color="neutral" appearance="transparent">
+    <Button sentiment="neutral" appearance="transparent">
       <SearchIcon /> Button
     </Button>
-    <Button color="positive" appearance="solid">
+    <Button sentiment="positive" appearance="solid">
       Button
     </Button>
-    <Button color="positive" appearance="solid">
+    <Button sentiment="positive" appearance="solid">
       <SearchIcon />
     </Button>
-    <Button color="positive" appearance="solid">
+    <Button sentiment="positive" appearance="solid">
       <SearchIcon /> Button
     </Button>
-    <Button color="positive" appearance="outline">
+    <Button sentiment="positive" appearance="bordered">
       Button
     </Button>
-    <Button color="positive" appearance="outline">
+    <Button sentiment="positive" appearance="bordered">
       <SearchIcon />
     </Button>
-    <Button color="positive" appearance="outline">
+    <Button sentiment="positive" appearance="bordered">
       <SearchIcon /> Button
     </Button>
-    <Button color="positive" appearance="transparent">
+    <Button sentiment="positive" appearance="transparent">
       Button
     </Button>
-    <Button color="positive" appearance="transparent">
+    <Button sentiment="positive" appearance="transparent">
       <SearchIcon />
     </Button>
-    <Button color="positive" appearance="transparent">
+    <Button sentiment="positive" appearance="transparent">
       <SearchIcon /> Button
     </Button>
-    <Button color="negative" appearance="solid">
+    <Button sentiment="negative" appearance="solid">
       Button
     </Button>
-    <Button color="negative" appearance="solid">
+    <Button sentiment="negative" appearance="solid">
       <SearchIcon />
     </Button>
-    <Button color="negative" appearance="solid">
+    <Button sentiment="negative" appearance="solid">
       <SearchIcon /> Button
     </Button>
-    <Button color="negative" appearance="outline">
+    <Button sentiment="negative" appearance="bordered">
       Button
     </Button>
-    <Button color="negative" appearance="outline">
+    <Button sentiment="negative" appearance="bordered">
       <SearchIcon />
     </Button>
-    <Button color="negative" appearance="outline">
+    <Button sentiment="negative" appearance="bordered">
       <SearchIcon /> Button
     </Button>
-    <Button color="negative" appearance="transparent">
+    <Button sentiment="negative" appearance="transparent">
       Button
     </Button>
-    <Button color="negative" appearance="transparent">
+    <Button sentiment="negative" appearance="transparent">
       <SearchIcon />
     </Button>
-    <Button color="negative" appearance="transparent">
+    <Button sentiment="negative" appearance="transparent">
       <SearchIcon /> Button
     </Button>
-    <Button color="warning" appearance="solid">
+    <Button sentiment="caution" appearance="solid">
       Button
     </Button>
-    <Button color="warning" appearance="solid">
+    <Button sentiment="caution" appearance="solid">
       <SearchIcon />
     </Button>
-    <Button color="warning" appearance="solid">
+    <Button sentiment="caution" appearance="solid">
       <SearchIcon /> Button
     </Button>
-    <Button color="warning" appearance="outline">
+    <Button sentiment="caution" appearance="bordered">
       Button
     </Button>
-    <Button color="warning" appearance="outline">
+    <Button sentiment="caution" appearance="bordered">
       <SearchIcon />
     </Button>
-    <Button color="warning" appearance="outline">
+    <Button sentiment="caution" appearance="bordered">
       <SearchIcon /> Button
     </Button>
-    <Button color="warning" appearance="transparent">
+    <Button sentiment="caution" appearance="transparent">
       Button
     </Button>
-    <Button color="warning" appearance="transparent">
+    <Button sentiment="caution" appearance="transparent">
       <SearchIcon />
     </Button>
-    <Button color="warning" appearance="transparent">
+    <Button sentiment="caution" appearance="transparent">
       <SearchIcon /> Button
     </Button>
   </QAContainerNoStyleInjection>
