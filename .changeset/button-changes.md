@@ -6,8 +6,8 @@ Added `sentiment` (accented, neutral, positive, negative, caution) and `appearan
 
 _Note:_ Button's `variant` prop is now deprecated and will be removed in the next major version.
 
-| variant   | appearance  | sentiment |
-| --------- | ----------- | --------- |
-| cta       | solid       | accented  |
-| primary   | solid       | neutral   |
-| secondary | transparent | neutral   |
+| `variant`   | `appearance`  | `sentiment` |
+| ----------- | ------------- | ----------- |
+| `cta`       | `solid`       | `accented`  |
+| `primary`   | `solid`       | `neutral`   |
+| `secondary` | `transparent` | `neutral`   |
