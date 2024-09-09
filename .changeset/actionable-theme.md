@@ -58,7 +58,7 @@ Deprecated actionable cta/primary/secondary tokens in favor of new tokens. Repla
 | `--salt-actionable-secondary-foreground-hover`     | `--salt-actionable-subtle-foreground-hover`            |
 | `--salt-actionable-secondary-foreground`           | `--salt-actionable-subtle-foreground`                  |
 
-Added various tokens for new Button variants.
+Added various tokens for new actionable family tokens.
 
 ## Salt theme - `theme.css`
 
@@ -117,3 +117,9 @@ Added various tokens for new Button variants.
 - `--salt-palette-warning-disabled`
 - `--salt-palette-warning-action-hover`
 - `--salt-palette-warning-action-active`
+
+#### Foundation
+
+- `--salt-color-green-500-40a`
+- `--salt-color-orange-500-40a`
+- `--salt-color-red-500-40a`
