@@ -1,5 +1,6 @@
 .salt-theme[data-mode="light"] {
-  --salt-palette-negative-foreground: var(--salt-color-red-700);
+  --salt-palette-negative-foreground: var(--salt-color-red-600);
+  --salt-palette-negative-foreground-disabled: var(--salt-color-red-600-fade-foreground);
   --salt-palette-negative-background: var(--salt-color-red-600);
   --salt-palette-negative-background-hover: var(--salt-color-red-500);
   --salt-palette-negative-background-active: var(--salt-color-red-700);
@@ -9,7 +10,8 @@
 }
 
 .salt-theme[data-mode="dark"] {
-  --salt-palette-negative-foreground: var(--salt-color-red-300);
+  --salt-palette-negative-foreground: var(--salt-color-red-200);
+  --salt-palette-negative-foreground-disabled: var(--salt-color-red-200-fade-foreground);
   --salt-palette-negative-background: var(--salt-color-red-600);
   --salt-palette-negative-background-hover: var(--salt-color-red-500);
   --salt-palette-negative-background-active: var(--salt-color-red-700);
