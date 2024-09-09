@@ -2,14 +2,10 @@ import { clsx } from "clsx";
 import { type SVGAttributes, forwardRef } from "react";
 
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { makePrefixer } from "@salt-ds/utils";
 import { useWindow } from "@salt-ds/window";
 
 import iconCss from "./Icon.css";
-// Duplicate from core/util to avoid circular dependency
-export const makePrefixer =
-  (prefix: string): ((...names: string[]) => string) =>
-  (...names: string[]): string =>
-    [prefix, ...names].join("-");
 
 const withBaseName = makePrefixer("saltIcon");
 

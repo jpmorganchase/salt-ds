@@ -5846,6 +5846,18 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@salt-ds/utils@workspace:packages/utils":
+  version: 0.0.0-use.local
+  resolution: "@salt-ds/utils@workspace:packages/utils"
+  peerDependencies:
+    "@types/react": ">=16.14.0"
+    react: ">=16.14.0"
+  peerDependenciesMeta:
+    "@types/react":
+      optional: true
+  languageName: unknown
+  linkType: soft
+
 "@salt-ds/window@workspace:packages/window":
   version: 0.0.0-use.local
   resolution: "@salt-ds/window@workspace:packages/window"
