@@ -42,15 +42,17 @@ export interface ButtonProps extends ComponentPropsWithoutRef<"button"> {
   /**
    * The variant to use. Options are 'primary', 'secondary' and 'cta'.
    * 'primary' is the default value.
-   * @deprecated Use `appearance` and `color` instead.
+   * @deprecated Use `appearance` and `sentiment` instead.
    */
   variant?: ButtonVariant;
   /**
    * The appearance of the button. Options are 'solid', 'bordered', and 'transparent'.
+   * 'solid' is the default value.
    */
   appearance?: ButtonAppearance;
   /**
    * The sentiment of the button. Options are 'accented', 'neutral', 'positive', 'negative' and 'caution'.
+   * 'neutral' is the default value.
    */
   sentiment?: ButtonSentiment;
 }
