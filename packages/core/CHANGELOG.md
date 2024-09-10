@@ -1,5 +1,35 @@
 # @salt-ds/core
 
+## 1.35.0
+
+### Minor Changes
+
+- b51bdb5: Added dot badge. A dot badge notifies users of changes in state e.g. new messages, notifications, or updates. Also the position of the badge will be at top right center of the Button/Icon.
+
+  ```tsx
+  <Badge>
+    <Button aria-label="Notifications">
+      <NotificationIcon aria-hidden />
+    </Button>
+  </Badge>
+  ```
+
+### Patch Changes
+
+- 222c47a: Fixed the icon inside Navigation Item having the incorrect color when a parent item is also a link.
+- 4a1bd04: Fixed the status adornment position in ComboBox where it would always be vertically centered when the field grows.
+- 7acd0ed: Fixed multiselect combobox having incorrect pill styles in theme next.
+- 16717fc: Fixed focusable when disabled button's having incorrect styling when in a disabled active state.
+- c2972a1: - Fixed Checkbox and RadioButton shifting when selected outside of a flex layout.
+  - Fixed Checkbox and RadioButton, sometimes having a gap between the border and the selected icon.
+- 065d0ca: Fixed Dialog to have correct `z-index` variable assigned (1300).
+- 3ff4448: - Fixed ComboBox calling onBlur when an option in the list is clicked.
+  - Fixed Dropdown calling onBlur when an option in the list is clicked.
+- 77dc32e: Fixed Accordion having status styling when disabled and status is set.
+- 3045c38: - Fixed ComboBox breaking when `inputRef` is used.
+  - Fixed ComboBox having an incorrect focus ring color when validation is applied.
+  - Fixed ComboBox having incorrect active styling.
+
 ## 1.34.0
 
 ### Minor Changes

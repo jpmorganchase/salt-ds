@@ -1,15 +1,11 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["config:base", ":preserveSemverRanges"],
+  "extends": ["config:recommended", ":preserveSemverRanges"],
   "postUpdateOptions": ["yarnDedupeHighest"],
   "packageRules": [
     {
       "groupName": "Mosaic",
-      "matchPackagePrefixes": ["@jpmorganchase/mosaic"]
-    },
-    {
-      "groupName": "AG Grid",
-      "matchPackagePrefixes": ["@ag-grid"]
+      "matchPackageNames": ["@jpmorganchase/mosaic**"]
     }
   ]
 }
