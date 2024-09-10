@@ -1,10 +1,8 @@
 .saltStaticListItem {
-  list-style: none;
   all: unset;
   color: var(--salt-content-primary-foreground);
   display: flex;
   gap: var(--salt-spacing-100);
-  align-items: baseline;
   height: var(--saltStaticList-item-height, auto);
   box-sizing: border-box;
   padding: calc(var(--salt-spacing-100) + var(--salt-spacing-25)) var(--salt-spacing-100);

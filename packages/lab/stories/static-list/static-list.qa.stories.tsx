@@ -11,7 +11,10 @@ export default {
 
 const ListItemWithIcons = () => (
   <StaticListItem
-    style={{ padding: "var(--salt-spacing-50) var(--salt-spacing-100)" }}
+    style={{
+      padding: "var(--salt-spacing-50) var(--salt-spacing-100)",
+      alignItems: "baseline",
+    }}
   >
     <NotificationIcon />
     <StackLayout
@@ -39,7 +42,6 @@ const ListItemWithButtons = () => (
   <StaticListItem
     style={{
       padding: "var(--salt-spacing-50) var(--salt-spacing-100)",
-      alignItems: "flex-start",
     }}
   >
     <StackLayout
