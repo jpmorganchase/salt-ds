@@ -1,4 +1,4 @@
-import { Button, Divider, Label, StackLayout, Text } from "@salt-ds/core";
+import { Button, Divider, StackLayout, Text } from "@salt-ds/core";
 import { NoteIcon, NotificationIcon } from "@salt-ds/icons";
 import { StaticList, StaticListItem } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react";
@@ -22,7 +22,7 @@ const ListItemWithIcons = () => (
       style={{ padding: "var(--salt-spacing-75) 0", width: "100%" }}
     >
       <Text color="inherit">Item label</Text>
-      <Label color="secondary">Secondary label</Label>
+      <Text styleAs="label" color="secondary">Secondary label</Text>
     </StackLayout>
   </StaticListItem>
 );
@@ -33,7 +33,7 @@ const AdditionalLabelListItem = () => (
   <StaticListItem>
     <StackLayout gap={0.5}>
       <Text color="inherit">Item label</Text>
-      <Label color="secondary">Secondary label</Label>
+      <Text styleAs="label" color="secondary">Secondary label</Text>
     </StackLayout>
   </StaticListItem>
 );
@@ -49,7 +49,7 @@ const ListItemWithButtons = () => (
       style={{ padding: "var(--salt-spacing-75) 0", width: "100%" }}
     >
       <Text color="inherit">Item label</Text>
-      <Label color="secondary">Secondary label</Label>
+      <Text styleAs="label" color="secondary">Secondary label</Text>
     </StackLayout>
     <Button variant="secondary" aria-label={"icon"}>
       <NoteIcon aria-hidden />
