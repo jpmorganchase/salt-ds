@@ -48,11 +48,15 @@ export interface ButtonProps extends ComponentPropsWithoutRef<"button"> {
   /**
    * The appearance of the button. Options are 'solid', 'bordered', and 'transparent'.
    * 'solid' is the default value.
+   *
+   * Added in v1.36.0.
    */
   appearance?: ButtonAppearance;
   /**
    * The sentiment of the button. Options are 'accented', 'neutral', 'positive', 'negative' and 'caution'.
    * 'neutral' is the default value.
+   *
+   * Added in v1.36.0.
    */
   sentiment?: ButtonSentiment;
 }
