@@ -89,6 +89,11 @@ module.exports = {
         destination: "/salt/index",
         permanent: true,
       },
+      {
+        source: "/salt/theming/:slug*",
+        destination: "/salt/theme/:slug*",
+        permanent: true,
+      },
     ];
   },
 };
