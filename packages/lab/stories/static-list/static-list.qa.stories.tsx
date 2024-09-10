@@ -22,7 +22,9 @@ const ListItemWithIcons = () => (
       style={{ padding: "var(--salt-spacing-75) 0", width: "100%" }}
     >
       <Text color="inherit">Item label</Text>
-      <Text styleAs="label" color="secondary">Secondary label</Text>
+      <Text styleAs="label" color="secondary">
+        Secondary label
+      </Text>
     </StackLayout>
   </StaticListItem>
 );
@@ -33,7 +35,9 @@ const AdditionalLabelListItem = () => (
   <StaticListItem>
     <StackLayout gap={0.5}>
       <Text color="inherit">Item label</Text>
-      <Text styleAs="label" color="secondary">Secondary label</Text>
+      <Text styleAs="label" color="secondary">
+        Secondary label
+      </Text>
     </StackLayout>
   </StaticListItem>
 );
@@ -49,7 +53,9 @@ const ListItemWithButtons = () => (
       style={{ padding: "var(--salt-spacing-75) 0", width: "100%" }}
     >
       <Text color="inherit">Item label</Text>
-      <Text styleAs="label" color="secondary">Secondary label</Text>
+      <Text styleAs="label" color="secondary">
+        Secondary label
+      </Text>
     </StackLayout>
     <Button variant="secondary" aria-label={"icon"}>
       <NoteIcon aria-hidden />
