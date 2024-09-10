@@ -1,4 +1,4 @@
-import { Button, StackLayout, Text } from "@salt-ds/core";
+import { Button, StackLayout } from "@salt-ds/core";
 import { StaticList, StaticListItem } from "@salt-ds/lab";
 import React, { type ReactElement, useState } from "react";
 

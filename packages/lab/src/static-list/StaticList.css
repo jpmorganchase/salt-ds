@@ -1,10 +1,8 @@
 .saltStaticList {
-  --staticList-height: auto;
-
   all: unset;
   display: flex;
   flex-direction: column;
-  height: var(--saltStaticList-height, var(--staticList-height));
+  height: var(--saltStaticList-height, auto);
   width: var(--saltStaticList-width, auto);
   overflow-y: auto;
   padding-top: var(--salt-size-border);

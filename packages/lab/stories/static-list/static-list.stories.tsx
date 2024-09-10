@@ -1,14 +1,8 @@
-import { Button, Divider, Label, StackLayout, Text } from "@salt-ds/core";
+import { Button, Divider, StackLayout, Text } from "@salt-ds/core";
 import { NoteIcon, NotificationIcon } from "@salt-ds/icons";
 import { StaticList, StaticListItem, type StaticListProps } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react";
 import { useState } from "react";
-
-const containerStyle = {
-  display: "flex",
-  justifyContent: "center",
-  width: "calc(100vw - 2em)",
-};
 
 export default {
   title: "Lab/Static List",
@@ -17,7 +11,10 @@ export default {
 
 const ListItemWithIcons = () => (
   <StaticListItem
-    style={{ padding: "var(--salt-spacing-50) var(--salt-spacing-100)" }}
+    style={{
+      padding: "var(--salt-spacing-50) var(--salt-spacing-100)",
+      alignItems: "baseline",
+    }}
   >
     <NotificationIcon />
     <StackLayout
@@ -25,7 +22,9 @@ const ListItemWithIcons = () => (
       style={{ padding: "var(--salt-spacing-75) 0", width: "100%" }}
     >
       <Text color="inherit">Item label</Text>
-      <Label color="secondary">Secondary label</Label>
+      <Text styleAs="label" color="secondary">
+        Secondary label
+      </Text>
     </StackLayout>
   </StaticListItem>
 );
@@ -36,7 +35,9 @@ const AdditionalLabelListItem = () => (
   <StaticListItem>
     <StackLayout gap={0.5}>
       <Text color="inherit">Item label</Text>
-      <Label color="secondary">Secondary label</Label>
+      <Text styleAs="label" color="secondary">
+        Secondary label
+      </Text>
     </StackLayout>
   </StaticListItem>
 );
@@ -45,7 +46,6 @@ const ListItemWithButtons = () => (
   <StaticListItem
     style={{
       padding: "var(--salt-spacing-50) var(--salt-spacing-100)",
-      alignItems: "flex-start",
     }}
   >
     <StackLayout
@@ -53,7 +53,9 @@ const ListItemWithButtons = () => (
       style={{ padding: "var(--salt-spacing-75) 0", width: "100%" }}
     >
       <Text color="inherit">Item label</Text>
-      <Label color="secondary">Secondary label</Label>
+      <Text styleAs="label" color="secondary">
+        Secondary label
+      </Text>
     </StackLayout>
     <Button variant="secondary" aria-label={"icon"}>
       <NoteIcon aria-hidden />

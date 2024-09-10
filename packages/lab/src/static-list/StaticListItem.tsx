@@ -11,7 +11,7 @@ const withBaseName = makePrefixer("saltStaticListItem");
 export interface StaticListItemProps extends ComponentPropsWithoutRef<"li"> {}
 
 export const StaticListItem = forwardRef<HTMLLIElement, StaticListItemProps>(
-  function TrackerStep(props, ref) {
+  function StaticListItem(props, ref) {
     const { className, children, ...restProps } = props;
 
     const targetWindow = useWindow();

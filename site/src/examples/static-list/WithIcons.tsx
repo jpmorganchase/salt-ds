@@ -1,11 +1,14 @@
-import { Button, Label, StackLayout, Text } from "@salt-ds/core";
-import { NoteIcon, NotificationIcon } from "@salt-ds/icons";
+import { StackLayout, Text } from "@salt-ds/core";
+import { NotificationIcon } from "@salt-ds/icons";
 import { StaticList, StaticListItem } from "@salt-ds/lab";
 import type { ReactElement } from "react";
 
 const ListItem = () => (
   <StaticListItem
-    style={{ padding: "var(--salt-spacing-50) var(--salt-spacing-100)" }}
+    style={{
+      padding: "var(--salt-spacing-50) var(--salt-spacing-100)",
+      alignItems: "baseline",
+    }}
   >
     <NotificationIcon />
     <StackLayout
@@ -13,7 +16,9 @@ const ListItem = () => (
       style={{ padding: "var(--salt-spacing-75) 0", width: "100%" }}
     >
       <Text color="inherit">Item label</Text>
-      <Label color="secondary">Secondary label</Label>
+      <Text styleAs="label" color="secondary">
+        Secondary label
+      </Text>
     </StackLayout>
   </StaticListItem>
 );
