@@ -2,9 +2,11 @@
   padding: calc(var(--salt-size-unit) * 2) 0;
   border-bottom: var(--salt-size-border) var(--salt-separable-borderStyle) var(--salt-separable-tertiary-borderColor);
   background-color: var(--salt-container-primary-background);
+  z-index: var(--salt-zIndex-default);
+}
+.stickyControls {
   position: sticky;
   top: var(--navbar-height);
-  z-index: var(--salt-zIndex-default);
 }
 
 .density,

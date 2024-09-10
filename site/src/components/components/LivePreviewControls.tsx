@@ -25,6 +25,7 @@ import {
 } from "react";
 import useIsMobileView from "../../utils/useIsMobileView";
 
+import clsx from "clsx";
 import styles from "./LivePreviewControls.module.css";
 
 type LivePreviewControlsProps = {
@@ -87,7 +88,13 @@ export const LivePreviewControls: FC<LivePreviewControlsProps> = ({
   return (
     <>
       <SaltProvider density="medium">
-        <StackLayout align="stretch" className={styles.controls} gap={1}>
+        <StackLayout
+          align="stretch"
+          className={clsx(styles.controls, {
+            [styles.stickyControls]: !isMobileView,
+          })}
+          gap={1}
+        >
           <FlowLayout
             justify="space-between"
             gap={{
