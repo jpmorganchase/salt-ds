@@ -10,7 +10,7 @@ Added `StaticList`, `StaticListItem` component to lab.
     <Text>New static list feature updates are available in lab</Text>
   </StaticListItem>
   <StaticListItem>
-    <Text>New static list item feature updates are available</Text>
+    <Text>New static list feature updates are available in lab</Text>
   </StaticListItem>
 </StaticList>
 ```
