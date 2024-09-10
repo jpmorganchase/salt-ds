@@ -17,7 +17,7 @@ import {
   formatDate,
   getCurrentLocale,
 } from "@salt-ds/lab";
-import React, { type ReactElement, useState } from "react";
+import React, { type ReactElement, useRef, useState } from "react";
 
 function formatSingleDate(
   date: DateValue | null,
@@ -32,6 +32,7 @@ function formatSingleDate(
 
 export const SingleWithConfirmation = (): ReactElement => {
   const helperText = "Select range (DD MMM YYYY - DD MMM YYYY)";
+  const applyButtonRef = useRef<HTMLButtonElement>(null);
   const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
     undefined,
   );
@@ -45,11 +46,12 @@ export const SingleWithConfirmation = (): ReactElement => {
         selectionVariant="single"
         selectedDate={selectedDate}
         onApply={(newSelectedDate, error) => {
-          console.log(`Applied date: ${formatSingleDate(newSelectedDate)}`);
+          console.log(`Selected date: ${formatSingleDate(newSelectedDate)}`);
           setValidationStatus(error ? "error" : undefined);
         }}
         onSelectedDateChange={(newSelectedDate, error) => {
           setSelectedDate(newSelectedDate);
+          applyButtonRef?.current?.focus();
         }}
       >
         <DatePickerSingleInput />
@@ -60,7 +62,10 @@ export const SingleWithConfirmation = (): ReactElement => {
               <Divider variant="tertiary" />
             </FlexItem>
             <FlexItem>
-              <DatePickerActions selectionVariant="single" />
+              <DatePickerActions
+                selectionVariant="single"
+                applyButtonRef={applyButtonRef}
+              />
             </FlexItem>
           </FlexLayout>
         </DatePickerOverlay>

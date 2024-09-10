@@ -1,12 +1,15 @@
 import {
+  type CalendarDate,
   DateFormatter,
   type DateValue,
   createCalendar,
+  endOfMonth,
   getLocalTimeZone,
   isSameMonth,
   startOfMonth,
   startOfWeek,
   startOfYear,
+  toCalendarDate,
   today,
 } from "@internationalized/date";
 import { getCurrentLocale } from "../formatDate";
@@ -69,4 +72,19 @@ export function generateVisibleDays(currentMonth: DateValue, locale: string) {
 
 export function monthDiff(a: DateValue, b: DateValue) {
   return b.month - a.month + 12 * (b.year - a.year);
+}
+
+export function generateDatesForMonth(date: DateValue): CalendarDate[] {
+  const calendarDate = toCalendarDate(date);
+  const startDate = startOfMonth(calendarDate);
+  const endDate = endOfMonth(calendarDate);
+  const dates = [];
+  for (
+    let currentDate = startDate;
+    currentDate.compare(endDate) <= 0;
+    currentDate = currentDate.add({ days: 1 })
+  ) {
+    dates.push(currentDate);
+  }
+  return dates;
 }

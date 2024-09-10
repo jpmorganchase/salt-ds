@@ -1,8 +1,11 @@
 import { getLocalTimeZone, today } from "@internationalized/date";
 import {
+  Divider,
   FlexItem,
   FlexLayout,
+  FormField,
   FormFieldHelperText,
+  FormFieldLabel,
   ListBox,
   Option,
   StackLayout,
@@ -57,51 +60,58 @@ export const CustomDatePickerPanel = forwardRef<
         </FlexItem>
       )}
       <FlexLayout gap={0}>
-        <ListBox
-          bordered
-          style={{ width: "10em" }}
-          onSelectionChange={(_event, item) => {
-            if (!item) {
-              return;
-            }
-            const tenor = Number.parseInt(item[0], 10);
-            let newSelectedDate;
-            if (selectionVariant === "range") {
-              newSelectedDate = selectedDate?.startDate
-                ? {
-                    startDate: selectedDate.startDate,
-                    endDate: selectedDate.startDate.add({
-                      years: tenor,
-                    }),
-                  }
-                : {
-                    startDate: today(getLocalTimeZone()),
-                    endDate: today(getLocalTimeZone()).add({
-                      years: tenor,
-                    }),
-                  };
-              setSelectedDate(newSelectedDate, {
-                startDate: false,
-                endDate: false,
-              });
-            } else {
-              newSelectedDate = selectedDate
-                ? selectedDate.add({
-                    years: tenor,
-                  })
-                : today(getLocalTimeZone()).add({
-                    years: tenor,
+        <StackLayout>
+          <FormField style={{ marginTop: "var(--salt-spacing-200)" }}>
+            <FormFieldLabel style={{ marginLeft: "var(--salt-spacing-100)" }}>
+              List header
+            </FormFieldLabel>
+            <ListBox
+              style={{ width: "10em" }}
+              onSelectionChange={(_event, item) => {
+                if (!item) {
+                  return;
+                }
+                const tenor = Number.parseInt(item[0], 10);
+                let newSelectedDate;
+                if (selectionVariant === "range") {
+                  newSelectedDate = selectedDate?.startDate
+                    ? {
+                        startDate: selectedDate.startDate,
+                        endDate: selectedDate.startDate.add({
+                          years: tenor,
+                        }),
+                      }
+                    : {
+                        startDate: today(getLocalTimeZone()),
+                        endDate: today(getLocalTimeZone()).add({
+                          years: tenor,
+                        }),
+                      };
+                  setSelectedDate(newSelectedDate, {
+                    startDate: false,
+                    endDate: false,
                   });
-              setSelectedDate(newSelectedDate, false);
-            }
-          }}
-        >
-          {tenorOptions.map(({ tenor, label }) => (
-            <Option value={tenor} key={tenor} tabIndex={0}>
-              {label}
-            </Option>
-          ))}
-        </ListBox>
+                } else {
+                  newSelectedDate = selectedDate
+                    ? selectedDate.add({
+                        years: tenor,
+                      })
+                    : today(getLocalTimeZone()).add({
+                        years: tenor,
+                      });
+                  setSelectedDate(newSelectedDate, false);
+                }
+              }}
+            >
+              {tenorOptions.map(({ tenor, label }) => (
+                <Option value={tenor} key={tenor} tabIndex={0}>
+                  {label}
+                </Option>
+              ))}
+            </ListBox>
+          </FormField>
+        </StackLayout>
+        <Divider orientation="vertical" />
         {selectionVariant === "range" ? (
           <DatePickerRangePanel />
         ) : (

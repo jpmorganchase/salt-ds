@@ -51,8 +51,8 @@ export const SingleWithMinMaxDate = (): ReactElement => {
             helperText={helperText}
           />
         </DatePickerOverlay>
-        <FormFieldHelperText>{helperText}</FormFieldHelperText>
       </DatePicker>
+      <FormFieldHelperText>{helperText}</FormFieldHelperText>
     </FormField>
   );
 };

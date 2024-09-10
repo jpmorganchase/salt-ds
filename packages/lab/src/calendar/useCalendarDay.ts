@@ -118,8 +118,12 @@ export function useCalendarDay(
 
   const outOfRange = !isSameMonth(date, month);
   const focused =
-    isSameDay(date, focusedDate) && calendarFocused && !outOfRange;
-  const tabIndex = isSameDay(date, focusedDate) && !outOfRange ? 0 : -1;
+    focusedDate &&
+    isSameDay(date, focusedDate) &&
+    calendarFocused &&
+    !outOfRange;
+  const tabIndex =
+    focusedDate && isSameDay(date, focusedDate) && !outOfRange ? 0 : -1;
   const today = isToday(date, timeZone);
 
   const unselectableReason = isDayUnselectable(date) || isDayDisabled(date);

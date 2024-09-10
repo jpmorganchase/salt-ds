@@ -38,10 +38,42 @@ export function formatDate(
   }
   const timeLocale = locale || getCurrentLocale();
   const timeZone = options?.timeZone || getLocalTimeZone();
-  return date
-    ? new DateFormatter(timeLocale, {
-        ...defaultFormatOptions,
-        ...options,
-      }).format(date.toDate(timeZone))
-    : "";
+
+  const formatter = new DateFormatter(timeLocale, {
+    ...defaultFormatOptions,
+    ...options,
+  });
+
+  const formattedDate = formatter.formatToParts(date.toDate(timeZone));
+
+  // Determine the separator based on the provided options
+  const isNumericFormat =
+    options?.month === "numeric" || defaultFormatOptions.month === "numeric";
+  const separator = isNumericFormat ? "/" : " ";
+
+  // Some locales (USA) added commas, so construct the final date ourselves from formatter parts
+  const parts = [];
+  if (options?.day !== undefined || defaultFormatOptions.day !== undefined) {
+    const day = formattedDate.find(
+      (part: Intl.DateTimeFormatPart) => part.type === "day",
+    )?.value;
+    if (day) parts.push(day);
+  }
+  if (
+    options?.month !== undefined ||
+    defaultFormatOptions.month !== undefined
+  ) {
+    const month = formattedDate.find(
+      (part: Intl.DateTimeFormatPart) => part.type === "month",
+    )?.value;
+    if (month) parts.push(month);
+  }
+  if (options?.year !== undefined || defaultFormatOptions.year !== undefined) {
+    const year = formattedDate.find(
+      (part: Intl.DateTimeFormatPart) => part.type === "year",
+    )?.value;
+    if (year) parts.push(year);
+  }
+
+  return parts.join(separator);
 }

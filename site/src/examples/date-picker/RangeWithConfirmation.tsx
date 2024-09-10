@@ -17,7 +17,7 @@ import {
   formatDate,
   getCurrentLocale,
 } from "@salt-ds/lab";
-import React, { type ReactElement, useState } from "react";
+import React, { type ReactElement, useRef, useState } from "react";
 
 function formatDateRange(
   dateRange: DateRangeSelection | null,
@@ -47,6 +47,7 @@ function isValidDateRange(date: DateRangeSelection | null) {
 
 export const RangeWithConfirmation = (): ReactElement => {
   const helperText = "Select range (DD MMM YYYY - DD MMM YYYY)";
+  const applyButtonRef = useRef<HTMLButtonElement>(null);
   const minDate = today(getLocalTimeZone());
   const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
     undefined,
@@ -77,6 +78,9 @@ export const RangeWithConfirmation = (): ReactElement => {
         }}
         onSelectedDateChange={(newSelectedDate, error) => {
           setSelectedDate(newSelectedDate);
+          if (newSelectedDate?.startDate && newSelectedDate?.endDate) {
+            applyButtonRef?.current?.focus();
+          }
         }}
       >
         <DatePickerRangeInput />
@@ -87,7 +91,10 @@ export const RangeWithConfirmation = (): ReactElement => {
               <Divider variant="tertiary" />
             </FlexItem>
             <FlexItem>
-              <DatePickerActions selectionVariant="range" />
+              <DatePickerActions
+                selectionVariant="range"
+                applyButtonRef={applyButtonRef}
+              />
             </FlexItem>
           </FlexLayout>
         </DatePickerOverlay>

@@ -18,6 +18,7 @@ import {
   useState,
 } from "react";
 import { getCurrentLocale } from "./formatDate";
+import { generateDatesForMonth } from "./internal/utils";
 import {
   type UseCalendarSelectionMultiSelectProps,
   type UseCalendarSelectionOffsetProps,
@@ -270,14 +271,6 @@ export function useCalendar(props: UseCalendarProps) {
       if (isInVisibleMonth(selectedDate?.endDate)) {
         return selectedDate.endDate;
       }
-      if (
-        selectedDate?.startDate &&
-        selectedDate?.endDate &&
-        visibleMonth.compare(selectedDate.startDate) < 0 &&
-        visibleMonth.compare(selectedDate.endDate) > 0
-      ) {
-        return startOfMonth(visibleMonth);
-      }
     } else if (
       selectionVariant === "multiselect" &&
       Array.isArray(selectedDate)
@@ -296,12 +289,19 @@ export function useCalendar(props: UseCalendarProps) {
       isInVisibleMonth(selectedDate)
     ) {
       return selectedDate;
-    }
-    // default
-    if (isInVisibleMonth(today(timeZone))) {
+    } else if (
+      isDaySelectable(today(timeZone)) &&
+      isInVisibleMonth(today(timeZone))
+    ) {
       return today(timeZone);
     }
-    return startOfMonth(visibleMonth);
+    const firstSelectableDate = generateDatesForMonth(visibleMonth).find(
+      (visibleDay) => isDaySelectable(visibleDay),
+    );
+    if (firstSelectableDate) {
+      return firstSelectableDate;
+    }
+    return null;
   }, [
     isInVisibleMonth,
     selectionVariant,
@@ -310,7 +310,7 @@ export function useCalendar(props: UseCalendarProps) {
     visibleMonth,
   ]);
 
-  const [focusedDate, setFocusedDateState] = useState<DateValue>(
+  const [focusedDate, setFocusedDateState] = useState<DateValue | null>(
     getInitialFocusedDate,
   );
 
@@ -337,7 +337,12 @@ export function useCalendar(props: UseCalendarProps) {
 
   const setFocusedDate = useCallback(
     (event: SyntheticEvent, date: DateValue) => {
-      if (isSameDay(date, focusedDate) || isOutsideAllowedDates(date)) return;
+      if (
+        !focusedDate ||
+        isSameDay(date, focusedDate) ||
+        isOutsideAllowedDates(date)
+      )
+        return;
 
       setFocusedDateState(date);
 
@@ -359,8 +364,11 @@ export function useCalendar(props: UseCalendarProps) {
   );
 
   useEffect(() => {
-    if (visibleMonth && !isDayVisible(focusedDate)) {
-      setFocusedDateState(getInitialFocusedDate());
+    if (visibleMonth && focusedDate && !isDayVisible(focusedDate)) {
+      const focusableDate = getInitialFocusedDate();
+      if (focusableDate) {
+        setFocusedDateState(focusableDate);
+      }
     }
   }, [isDayVisible, focusedDate, getInitialFocusedDate, visibleMonth]);
 

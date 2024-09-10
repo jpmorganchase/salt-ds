@@ -6,6 +6,7 @@ import React, {
   useEffect,
   type SyntheticEvent,
   type MouseEventHandler,
+  type Ref,
 } from "react";
 import type { DateRangeSelection, SingleDateSelection } from "../calendar";
 import {
@@ -31,6 +32,10 @@ export interface DatePickerActionsBaseProps
    */
   onCancel?: (_event: SyntheticEvent) => void;
   /**
+   * Ref to apply button
+   */
+  applyButtonRef?: Ref<HTMLButtonElement>;
+  /**
    * Props for the apply button.
    */
   ApplyButtonProps?: ButtonProps;
@@ -38,6 +43,10 @@ export interface DatePickerActionsBaseProps
    * Props for the cancel button.
    */
   CancelButtonProps?: ButtonProps;
+  /**
+   * Ref to cancel button
+   */
+  cancelButtonRef?: Ref<HTMLButtonElement>;
 }
 
 /**
@@ -83,7 +92,9 @@ export const DatePickerActions = forwardRef<
   DatePickerActionsProps<"single" | "range">
 >(function DatePickerActions(props, ref) {
   const {
+    applyButtonRef,
     ApplyButtonProps,
+    cancelButtonRef,
     children,
     className,
     CancelButtonProps,
@@ -141,6 +152,7 @@ export const DatePickerActions = forwardRef<
       <div className={withBaseName("body")}>{children}</div>
       <Button
         variant={"secondary"}
+        ref={cancelButtonRef}
         {...CancelButtonProps}
         onClick={handleCancel}
         className={clsx(withBaseName("action"), CancelButtonProps?.className)}
@@ -149,6 +161,7 @@ export const DatePickerActions = forwardRef<
       </Button>
       <Button
         variant={"cta"}
+        ref={applyButtonRef}
         {...ApplyButtonProps}
         onClick={handleApply}
         className={clsx(withBaseName("action"), ApplyButtonProps?.className)}

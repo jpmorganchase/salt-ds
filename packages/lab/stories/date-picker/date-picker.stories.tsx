@@ -41,7 +41,7 @@ import {
 } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react";
 import type React from "react";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { CustomDatePickerPanel } from "./CustomDatePickerPanel";
 
 export default {
@@ -202,8 +202,8 @@ export const SingleWithMinMaxDate: StoryFn<DatePickerSingleProps> = (args) => {
             helperText={helperText}
           />
         </DatePickerOverlay>
-        <FormFieldHelperText>{helperText}</FormFieldHelperText>
       </DatePicker>
+      <FormFieldHelperText>{helperText}</FormFieldHelperText>
     </FormField>
   );
 };
@@ -507,6 +507,7 @@ export const SingleWithConfirmation: StoryFn<DatePickerSingleProps> = (
   args,
 ) => {
   const helperText = "Select range (DD MMM YYYY - DD MMM YYYY)";
+  const applyButtonRef = useRef<HTMLButtonElement>(null);
   const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
     undefined,
   );
@@ -527,6 +528,7 @@ export const SingleWithConfirmation: StoryFn<DatePickerSingleProps> = (
         }}
         onSelectedDateChange={(newSelectedDate, error) => {
           setSelectedDate(newSelectedDate);
+          applyButtonRef?.current?.focus();
           args?.onSelectedDateChange?.(newSelectedDate, error);
         }}
       >
@@ -538,7 +540,10 @@ export const SingleWithConfirmation: StoryFn<DatePickerSingleProps> = (
               <Divider variant="tertiary" />
             </FlexItem>
             <FlexItem>
-              <DatePickerActions selectionVariant="single" />
+              <DatePickerActions
+                selectionVariant="single"
+                applyButtonRef={applyButtonRef}
+              />
             </FlexItem>
           </FlexLayout>
         </DatePickerOverlay>
@@ -550,6 +555,7 @@ export const SingleWithConfirmation: StoryFn<DatePickerSingleProps> = (
 
 export const RangeWithConfirmation: StoryFn<DatePickerRangeProps> = (args) => {
   const helperText = "Select range (DD MMM YYYY - DD MMM YYYY)";
+  const applyButtonRef = useRef<HTMLButtonElement>(null);
   const minDate = today(getLocalTimeZone());
   const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
     undefined,
@@ -582,6 +588,9 @@ export const RangeWithConfirmation: StoryFn<DatePickerRangeProps> = (args) => {
         }}
         onSelectedDateChange={(newSelectedDate, error) => {
           setSelectedDate(newSelectedDate);
+          if (newSelectedDate?.startDate && newSelectedDate?.endDate) {
+            applyButtonRef?.current?.focus();
+          }
           args?.onSelectedDateChange?.(newSelectedDate, error);
         }}
       >
@@ -593,7 +602,10 @@ export const RangeWithConfirmation: StoryFn<DatePickerRangeProps> = (args) => {
               <Divider variant="tertiary" />
             </FlexItem>
             <FlexItem>
-              <DatePickerActions selectionVariant="range" />
+              <DatePickerActions
+                selectionVariant="range"
+                applyButtonRef={applyButtonRef}
+              />
             </FlexItem>
           </FlexLayout>
         </DatePickerOverlay>
