@@ -91,7 +91,7 @@ module.exports = {
       },
       {
         source: "/salt/theming/:slug*",
-        destination: "/salt/theme/:slug*",
+        destination: "/salt/themes/:slug*",
         permanent: true,
       },
     ];
