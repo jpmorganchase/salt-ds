@@ -289,10 +289,9 @@ export function useCalendar(props: UseCalendarProps) {
       isInVisibleMonth(selectedDate)
     ) {
       return selectedDate;
-    } else if (
-      isDaySelectable(today(timeZone)) &&
-      isInVisibleMonth(today(timeZone))
-    ) {
+    }
+    // Defaults
+    if (isDaySelectable(today(timeZone)) && isInVisibleMonth(today(timeZone))) {
       return today(timeZone);
     }
     const firstSelectableDate = generateDatesForMonth(visibleMonth).find(
