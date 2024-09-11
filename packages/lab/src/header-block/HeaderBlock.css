@@ -18,10 +18,6 @@
   gap: var(--salt-spacing-50);
 }
 
-.saltHeaderBlock .saltStatusIndicator.saltIcon {
-  --icon-size: var(--salt-text-h2-lineHeight);
-}
-
 .saltHeaderBlock-withAccent {
   position: relative;
 }

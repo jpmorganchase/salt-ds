@@ -4,6 +4,7 @@ import clsx from "clsx";
 import { type ComponentPropsWithoutRef, forwardRef } from "react";
 import {
   H2,
+  H3,
   makePrefixer,
   Text,
   useDialogContext,
@@ -13,6 +14,8 @@ import {
 import headerBlockCss from "./HeaderBlock.css";
 
 import { HeaderBlockCloseButton } from "./HeaderBlockCloseButton";
+
+export type HeaderBlockPadding = "100" | "200" | "300";
 
 const withBaseName = makePrefixer("saltHeaderBlock");
 
@@ -37,9 +40,9 @@ export interface HeaderBlockProps extends ComponentPropsWithoutRef<"div"> {
    **/
   description?: string;
   /**
-   * Padding of the header block. Default
+   * Padding of the header block. Default is "300"
    **/
-  padding?: "100" | "200" | "300";
+  padding?: HeaderBlockPadding;
   /**
    * Callback when the close button
    * is clicked
@@ -77,13 +80,17 @@ export const HeaderBlock = forwardRef<HTMLDivElement, HeaderBlockProps>(
 
     const status = statusProp ?? statusContext;
 
+    const Heading = padding === "300" ? H2 : H3;
+    const iconSize = padding === "300" ? 1.5 : 1;
+
     return (
       <div
         id={id}
         className={clsx(
           withBaseName(),
           {
-            [withBaseName("withAccent")]: accent && !status,
+            [withBaseName("withAccent")]:
+              accent && !status && padding !== "100",
             [withBaseName(status ?? "")]: !!status,
           },
           className,
@@ -92,8 +99,14 @@ export const HeaderBlock = forwardRef<HTMLDivElement, HeaderBlockProps>(
         ref={ref}
         {...rest}
       >
-        {status && <StatusIndicator status={status} />}
-        <H2 className={withBaseName("body")}>
+        {status && (
+          <StatusIndicator
+            className={withBaseName("status")}
+            status={status}
+            size={iconSize}
+          />
+        )}
+        <Heading className={withBaseName("body")}>
           {preheader && !status && (
             <Text className={withBaseName("preheader")}>{preheader}</Text>
           )}
@@ -103,7 +116,7 @@ export const HeaderBlock = forwardRef<HTMLDivElement, HeaderBlockProps>(
               {description}
             </Text>
           )}
-        </H2>
+        </Heading>
         {onClose && <HeaderBlockCloseButton onClick={onClose} />}
       </div>
     );
