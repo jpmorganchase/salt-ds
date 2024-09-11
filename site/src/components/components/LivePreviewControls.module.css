@@ -23,5 +23,8 @@
 }
 
 .switchAlignment {
-  margin-bottom: var(--salt-spacing-75);
+  margin-top: var(--salt-spacing-50);
+}
+.mobileSwitchAlignment {
+  margin-top: var(--salt-spacing-300);
 }
