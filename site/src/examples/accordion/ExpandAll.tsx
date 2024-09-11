@@ -4,22 +4,25 @@ import {
   AccordionHeader,
   AccordionPanel,
   Button,
-  FlexLayout,
   FlowLayout,
   FormField,
   FormFieldLabel,
   Input,
+  StackLayout,
 } from "@salt-ds/core";
 import { CollapseAllIcon, ExpandAllIcon } from "@salt-ds/icons";
 import { type ReactElement, useState } from "react";
 
-export const Controlled = (): ReactElement => {
-  const accordions = Array.from({ length: 3 }, (_, i) => i + 1);
+const accordions = Array.from({ length: 3 }, (_, i) => i + 1);
+
+export const ExpandAll = (): ReactElement => {
   const [expanded, setExpanded] = useState<number[]>([]);
 
   const handleAccordionToggle = (value: number) => {
     setExpanded((prev) =>
-      prev.includes(value) ? prev.filter((v) => v !== value) : [...prev, value],
+      prev.includes(value)
+        ? prev.filter((v) => v !== value)
+        : prev.concat(value),
     );
   };
 
@@ -32,17 +35,18 @@ export const Controlled = (): ReactElement => {
   };
 
   return (
-    <FlexLayout
-      style={{ width: "80%", height: "100%", flexDirection: "column" }}
+    <StackLayout
+      gap={3}
+      style={{ height: "100%", paddingInline: "var(--salt-spacing-300)" }}
     >
-      <FlexLayout>
+      <FlowLayout gap={1}>
         <Button onClick={handleExpandAll}>
-          <ExpandAllIcon /> Expand All
+          <ExpandAllIcon aria-hidden /> Expand All
         </Button>
         <Button onClick={handleCollapseAll}>
-          <CollapseAllIcon /> Collapse All
+          <CollapseAllIcon aria-hidden /> Collapse All
         </Button>
-      </FlexLayout>
+      </FlowLayout>
 
       <AccordionGroup>
         {accordions.map((i) => (
@@ -51,6 +55,7 @@ export const Controlled = (): ReactElement => {
             value={`accordion-${i}`}
             expanded={expanded.includes(i)}
             onToggle={() => handleAccordionToggle(i)}
+            indicatorSide="right"
           >
             <AccordionHeader>Internal form</AccordionHeader>
             <AccordionPanel>
@@ -73,6 +78,6 @@ export const Controlled = (): ReactElement => {
           </Accordion>
         ))}
       </AccordionGroup>
-    </FlexLayout>
+    </StackLayout>
   );
 };

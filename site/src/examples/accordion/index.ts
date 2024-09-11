@@ -6,4 +6,4 @@ export * from "./Disabled";
 export * from "./AdditionalLabels";
 export * from "./Status";
 export * from "./InlineBadge";
-export * from "./Controlled";
+export * from "./ExpandAll";
