@@ -72,10 +72,8 @@ export const LivePreviewControls: FC<LivePreviewControlsProps> = ({
   };
 
   const themeNextSwitch = (
-    <FlexItem
-      align="start"
-      shrink={0}
-      className={clsx(styles.switchAlignment, {
+    <div
+      className={clsx(styles.themeNextSwitch, {
         [styles.mobileSwitchAlignment]: isMobileView,
       })}
     >
@@ -91,7 +89,7 @@ export const LivePreviewControls: FC<LivePreviewControlsProps> = ({
           onChange={() => setThemeNext((prev) => !prev)}
         />
       </Tooltip>
-    </FlexItem>
+    </div>
   );
 
   const responstiveToggleGroupDirection = {
@@ -107,6 +105,7 @@ export const LivePreviewControls: FC<LivePreviewControlsProps> = ({
       gap={0.75}
       align="baseline"
       direction={responstiveToggleGroupDirection}
+      // style={{ flexBasis: 300 }}
     >
       <Text styleAs="label">Density</Text>
       <ToggleButtonGroup
@@ -135,6 +134,7 @@ export const LivePreviewControls: FC<LivePreviewControlsProps> = ({
       gap={0.75}
       align="baseline"
       direction={responstiveToggleGroupDirection}
+      // style={{ flexBasis: 200 }}
     >
       <Text styleAs="label">Mode</Text>
       <FlexItem>
@@ -198,24 +198,12 @@ export const LivePreviewControls: FC<LivePreviewControlsProps> = ({
   return (
     <>
       <SaltProvider density="medium">
-        <FlexLayout
-          justify="space-between"
+        <div
           className={clsx(styles.controls, {
             [styles.stickyControls]: !isMobileView,
           })}
-          gap={1}
         >
-          <FlowLayout
-            align="center"
-            gap={{
-              xs: 1,
-              sm: 1,
-              md: 1,
-              lg: 2,
-              xl: 2,
-            }}
-            style={{ flexShrink: 1 }}
-          >
+          <div className={styles.toggleGroupsContainer}>
             {densityToggleGroup}
             {modeToggleGroup}
             {themeNext ? (
@@ -224,9 +212,9 @@ export const LivePreviewControls: FC<LivePreviewControlsProps> = ({
                 {accentToggleGroup}
               </>
             ) : null}
-          </FlowLayout>
+          </div>
           {themeNextSwitch}
-        </FlexLayout>
+        </div>
       </SaltProvider>
       <LivePreviewContext.Provider
         value={{
