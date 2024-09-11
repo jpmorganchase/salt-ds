@@ -1,11 +1,7 @@
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import clsx from "clsx";
-import {
-  type ComponentPropsWithoutRef,
-  type ReactNode,
-  forwardRef,
-} from "react";
+import { type ComponentPropsWithoutRef, forwardRef } from "react";
 import {
   H2,
   makePrefixer,
@@ -37,9 +33,13 @@ export interface HeaderBlockProps extends ComponentPropsWithoutRef<"div"> {
    **/
   preheader?: string;
   /**
-   * Description text is displayed  just below the header
+   * Description text is displayed just below the header
    **/
   description?: string;
+  /**
+   * Padding of the header block. Default
+   **/
+  padding?: "100" | "200" | "300";
   /**
    * Callback when the close button
    * is clicked
@@ -55,7 +55,9 @@ export const HeaderBlock = forwardRef<HTMLDivElement, HeaderBlockProps>(
       preheader,
       description,
       accent,
+      style,
       status: statusProp,
+      padding = "300",
       onClose,
       ...rest
     } = props;
@@ -67,6 +69,11 @@ export const HeaderBlock = forwardRef<HTMLDivElement, HeaderBlockProps>(
       css: headerBlockCss,
       window: targetWindow,
     });
+
+    const headerBlockStyles = {
+      ...style,
+      "--headerBlock-padding": `var(--salt-spacing-${padding})`,
+    };
 
     const status = statusProp ?? statusContext;
 
@@ -81,16 +88,17 @@ export const HeaderBlock = forwardRef<HTMLDivElement, HeaderBlockProps>(
           },
           className,
         )}
+        style={headerBlockStyles}
         ref={ref}
         {...rest}
       >
         {status && <StatusIndicator status={status} />}
         <H2 className={withBaseName("body")}>
-          {preheader && (
+          {preheader && !status && (
             <Text className={withBaseName("preheader")}>{preheader}</Text>
           )}
           <div>{header}</div>
-          {description && (
+          {description && !status && (
             <Text color="secondary" className={withBaseName("description")}>
               {description}
             </Text>

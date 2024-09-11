@@ -1,5 +1,6 @@
 .saltHeaderBlock {
-  padding: var(--salt-spacing-300);
+  --headerBlock-padding: var(--salt-spacing-300);
+  padding: var(--headerBlock-padding);
   width: 100%;
   align-items: center;
   display: flex;
@@ -28,9 +29,9 @@
 .saltHeaderBlock-withAccent::before {
   content: "";
   position: absolute;
-  top: var(--salt-spacing-300);
+  top: var(--headerBlock-padding);
   left: 0;
-  bottom: var(--salt-spacing-300);
+  bottom: var(--headerBlock-padding);
   width: var(--salt-size-bar);
   background: var(--salt-accent-background);
 }
@@ -49,4 +50,20 @@
 
 .saltHeaderBlock-warning::before {
   background: var(--salt-status-warning-borderColor);
+}
+
+/* Overrides */
+
+.saltDialog .saltHeaderBlock {
+  margin-top: calc(0px - var(--salt-spacing-300));
+}
+.saltDrawer .saltHeaderBlock {
+  margin-top: calc(0px - var(--salt-spacing-300));
+  margin-left: calc(0px - var(--salt-spacing-300));
+  margin-right: calc(0px - var(--salt-spacing-300));
+  width: 200px;
+}
+
+.saltOverlay .saltHeaderBlock + .saltOverlayPanelContent {
+  padding-top: 0;
 }
