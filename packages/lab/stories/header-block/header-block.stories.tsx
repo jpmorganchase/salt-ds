@@ -6,6 +6,7 @@ import {
   DialogActions,
   DialogContent,
   FormField,
+  FormFieldHelperText,
   FormFieldLabel,
   Overlay,
   OverlayPanel,
@@ -14,12 +15,10 @@ import {
   OverlayTrigger,
   StackLayout,
   Tooltip,
-  Drawer,
   RadioButton,
   RadioButtonGroup,
-  type DrawerProps,
 } from "@salt-ds/core";
-import { HeaderBlock } from "@salt-ds/lab";
+import { type HeaderBlockPadding, HeaderBlock } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react";
 import { useState } from "react";
 
@@ -28,9 +27,62 @@ export default {
   component: Dialog,
 } as Meta<typeof Dialog>;
 
+type HeaderBlockSettingsProps = {
+  accent: boolean;
+  padding: HeaderBlockPadding;
+  handlePadding: (padding: HeaderBlockPadding) => void;
+  handleAccent: () => void;
+};
+
+const HeaderBlockSettings = ({
+  accent,
+  padding,
+  handlePadding,
+  handleAccent,
+}: HeaderBlockSettingsProps) => (
+  <StackLayout style={{ maxWidth: 200 }}>
+    <FormField>
+      <FormFieldLabel>Padding</FormFieldLabel>
+      <RadioButtonGroup>
+        <RadioButton
+          label="100"
+          value="100"
+          checked={padding === "100"}
+          onChange={() => handlePadding("100")}
+        />
+        <RadioButton
+          label="200"
+          value="200"
+          checked={padding === "200"}
+          onChange={() => handlePadding("200")}
+        />
+        <RadioButton
+          label="300"
+          value="300"
+          checked={padding === "300"}
+          onChange={() => handlePadding("300")}
+        />
+      </RadioButtonGroup>
+    </FormField>
+    <FormField>
+      <Checkbox
+        label="Accent"
+        value="1"
+        checked={accent}
+        onChange={handleAccent}
+      />
+      <FormFieldHelperText>
+        <strong>Note:</strong> accent is always hidden when <code>status</code>{" "}
+        is applied and hidden when <code>padding</code> is set to{" "}
+        <code>100</code>
+      </FormFieldHelperText>
+    </FormField>
+  </StackLayout>
+);
+
 export const Default: StoryFn<typeof Dialog> = () => {
-  const [padding, setPadding] = useState("300");
-  const handlePadding = (padding: "100" | "200" | "300") => {
+  const [padding, setPadding] = useState<HeaderBlockPadding>("300");
+  const handlePadding = (padding: HeaderBlockPadding) => {
     setPadding(padding);
   };
   const [accent, setAccent] = useState(true);
@@ -39,59 +91,31 @@ export const Default: StoryFn<typeof Dialog> = () => {
   };
   return (
     <StackLayout direction="row" align="center">
-      <StackLayout>
-        <FormField>
-          <FormFieldLabel>Padding</FormFieldLabel>
-          <RadioButtonGroup>
-            <RadioButton
-              label="100"
-              value="100"
-              checked={padding === "100"}
-              onChange={() => handlePadding("100")}
-            />
-            <RadioButton
-              label="200"
-              value="200"
-              checked={padding === "200"}
-              onChange={() => handlePadding("200")}
-            />
-            <RadioButton
-              label="300"
-              value="300"
-              checked={padding === "300"}
-              onChange={() => handlePadding("300")}
-            />
-          </RadioButtonGroup>
-        </FormField>
-        <Checkbox
-          label="Accent"
-          value="1"
-          checked={accent}
-          onChange={handleAccent}
-        />
-      </StackLayout>
-      <StackLayout>
-        <Card style={{ position: "relative", width: "512px", padding: 0 }}>
+      <HeaderBlockSettings
+        {...{ accent, padding, handlePadding, handleAccent }}
+      />
+      <StackLayout style={{ width: "512px" }}>
+        <Card style={{ padding: 0 }}>
           <HeaderBlock
             header="Header Block"
             onClose={() => {}}
             accent={accent}
-            padding={padding as "200" | "300"}
+            padding={padding}
           />
         </Card>
-        <Card style={{ position: "relative", width: "512px", padding: 0 }}>
+        <Card style={{ padding: 0 }}>
           <HeaderBlock
             accent={accent}
-            padding={padding as "200" | "300"}
+            padding={padding}
             header="A Header Block with a preheader and a description."
             preheader="This is a preheader."
             description="This is a description."
             onClose={() => {}}
           />
         </Card>
-        <Card style={{ position: "relative", width: "512px", padding: 0 }}>
+        <Card style={{ padding: 0 }}>
           <HeaderBlock
-            padding={padding as "200" | "300"}
+            padding={padding}
             accent={accent}
             status="success"
             header="Status: success"
@@ -103,96 +127,114 @@ export const Default: StoryFn<typeof Dialog> = () => {
   );
 };
 
-export const Accent: StoryFn<typeof Dialog> = () => {
+export const PreheaderAndDescription: StoryFn<typeof Dialog> = () => {
+  const [padding, setPadding] = useState<HeaderBlockPadding>("300");
+  const handlePadding = (padding: HeaderBlockPadding) => {
+    setPadding(padding);
+  };
+  const [accent, setAccent] = useState(true);
+  const handleAccent = () => {
+    setAccent(!accent);
+  };
   return (
-    <StackLayout>
-      <Card style={{ position: "relative", width: "512px", padding: 0 }}>
-        <HeaderBlock
-          accent={true}
-          header="A Header Block with a preheader and a description."
-          preheader="This is a preheader."
-          description="This is a description."
-          onClose={() => {}}
-        />
-      </Card>
-      <Card style={{ position: "relative", width: "512px", padding: 0 }}>
-        <HeaderBlock
-          accent={true}
-          header="A Header Block with a preheader and a description."
-          preheader="This is a preheader."
-          onClose={() => {}}
-        />
-      </Card>
-      <Card style={{ position: "relative", width: "512px", padding: 0 }}>
-        <HeaderBlock
-          accent={true}
-          header="A Header Block with a preheader and a description."
-          description="This is a description."
-          onClose={() => {}}
-        />
-      </Card>
-      <Card style={{ position: "relative", width: "512px", padding: 0 }}>
-        <HeaderBlock header="Header Block" onClose={() => {}} accent={true} />
-      </Card>
-    </StackLayout>
-  );
-};
-
-export const NoAccent: StoryFn<typeof Dialog> = () => {
-  return (
-    <StackLayout>
-      <Card style={{ position: "relative", width: "512px", padding: 0 }}>
-        <HeaderBlock
-          header="A Header Block with a preheader and a description."
-          preheader="This is a preheader."
-          description="This is a description."
-          onClose={() => {}}
-        />
-      </Card>
-      <Card style={{ position: "relative", width: "512px", padding: 0 }}>
-        <HeaderBlock
-          header="A Header Block with a preheader and a description."
-          preheader="This is a preheader."
-          onClose={() => {}}
-        />
-      </Card>
-      <Card style={{ position: "relative", width: "512px", padding: 0 }}>
-        <HeaderBlock
-          header="A Header Block with a preheader and a description."
-          description="This is a description."
-          onClose={() => {}}
-        />
-      </Card>
-      <Card style={{ position: "relative", width: "512px", padding: 0 }}>
-        <HeaderBlock header="Header Block" onClose={() => {}} />
-      </Card>
+    <StackLayout direction="row" align="center">
+      <HeaderBlockSettings
+        {...{ accent, padding, handlePadding, handleAccent }}
+      />
+      <StackLayout style={{ width: "512px" }}>
+        <Card style={{ padding: 0 }}>
+          <HeaderBlock
+            accent={accent}
+            padding={padding}
+            header="A Header Block with a preheader and a description."
+            preheader="This is a preheader."
+            description="This is a description."
+            onClose={() => {}}
+          />
+        </Card>
+        <Card style={{ padding: 0 }}>
+          <HeaderBlock
+            accent={accent}
+            padding={padding}
+            header="A Header Block with a preheader and a description."
+            preheader="This is a preheader."
+            onClose={() => {}}
+          />
+        </Card>
+        <Card style={{ padding: 0 }}>
+          <HeaderBlock
+            accent={accent}
+            padding={padding}
+            header="A Header Block with a preheader and a description."
+            description="This is a description."
+            onClose={() => {}}
+          />
+        </Card>
+        <Card style={{ padding: 0 }}>
+          <HeaderBlock
+            header="Header Block"
+            onClose={() => {}}
+            accent={accent}
+            padding={padding}
+          />
+        </Card>
+      </StackLayout>
     </StackLayout>
   );
 };
 
 export const Status: StoryFn<typeof Dialog> = () => {
+  const [padding, setPadding] = useState<HeaderBlockPadding>("300");
+  const handlePadding = (padding: HeaderBlockPadding) => {
+    setPadding(padding);
+  };
+  const [accent, setAccent] = useState(true);
+  const handleAccent = () => {
+    setAccent(!accent);
+  };
   return (
-    <StackLayout>
-      <Card style={{ position: "relative", width: "512px", padding: 0 }}>
-        <HeaderBlock status="info" header="Status: info" onClose={() => {}} />
-      </Card>
-      <Card style={{ position: "relative", width: "512px", padding: 0 }}>
-        <HeaderBlock
-          status="success"
-          header="Status: success"
-          onClose={() => {}}
-        />
-      </Card>
-      <Card style={{ position: "relative", width: "512px", padding: 0 }}>
-        <HeaderBlock
-          status="warning"
-          header="Status: warning"
-          onClose={() => {}}
-        />
-      </Card>
-      <Card style={{ position: "relative", width: "512px", padding: 0 }}>
-        <HeaderBlock status="error" header="Status: error" onClose={() => {}} />
-      </Card>
+    <StackLayout direction="row" align="center">
+      <HeaderBlockSettings
+        {...{ accent, padding, handlePadding, handleAccent }}
+      />
+      <StackLayout style={{ width: "512px" }}>
+        <Card style={{ padding: 0 }}>
+          <HeaderBlock
+            status="info"
+            header="Status: info"
+            onClose={() => {}}
+            padding={padding}
+            accent={accent}
+          />
+        </Card>
+        <Card style={{ padding: 0 }}>
+          <HeaderBlock
+            status="success"
+            header="Status: success"
+            onClose={() => {}}
+            padding={padding}
+            accent={accent}
+          />
+        </Card>
+        <Card style={{ padding: 0 }}>
+          <HeaderBlock
+            status="warning"
+            header="Status: warning"
+            onClose={() => {}}
+            padding={padding}
+            accent={accent}
+          />
+        </Card>
+        <Card style={{ padding: 0 }}>
+          <HeaderBlock
+            status="error"
+            header="Status: error"
+            onClose={() => {}}
+            padding={padding}
+            accent={accent}
+          />
+        </Card>
+      </StackLayout>
     </StackLayout>
   );
 };
