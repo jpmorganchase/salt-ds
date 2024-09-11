@@ -1,5 +1,4 @@
 import {
-  type OverlayProps,
   Button,
   Card,
   Checkbox,
@@ -19,14 +18,15 @@ import {
   Overlay,
   OverlayPanel,
   OverlayPanelContent,
+  type OverlayProps,
   OverlayTrigger,
+  RadioButton,
+  RadioButtonGroup,
   StackLayout,
   Text,
   Tooltip,
-  RadioButton,
-  RadioButtonGroup,
 } from "@salt-ds/core";
-import { type HeaderBlockPadding, HeaderBlock } from "@salt-ds/lab";
+import { HeaderBlock, type HeaderBlockPadding } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react";
 import { useState } from "react";
 

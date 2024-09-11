@@ -1,16 +1,16 @@
+import {
+  H2,
+  H3,
+  StatusIndicator,
+  Text,
+  type ValidationStatus,
+  makePrefixer,
+  useDialogContext,
+} from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import clsx from "clsx";
 import { type ComponentPropsWithoutRef, forwardRef } from "react";
-import {
-  H2,
-  H3,
-  makePrefixer,
-  Text,
-  useDialogContext,
-  StatusIndicator,
-  type ValidationStatus,
-} from "@salt-ds/core";
 import headerBlockCss from "./HeaderBlock.css";
 
 import { HeaderBlockCloseButton } from "./HeaderBlockCloseButton";
