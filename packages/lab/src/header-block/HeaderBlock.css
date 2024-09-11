@@ -53,11 +53,8 @@
 .saltDialog .saltHeaderBlock {
   margin-top: calc(0px - var(--salt-spacing-300));
 }
-.saltDrawer .saltHeaderBlock {
-  margin-top: calc(0px - var(--salt-spacing-300));
-  margin-left: calc(0px - var(--salt-spacing-300));
-  margin-right: calc(0px - var(--salt-spacing-300));
-  width: 200px;
+.saltDialog .saltHeaderBlock + .saltDialogContent:first-child {
+  margin-top: 0;
 }
 
 .saltOverlay .saltHeaderBlock + .saltOverlayPanelContent {

@@ -1,6 +1,7 @@
 .saltDialogContent {
   color: var(--salt-content-primary-foreground);
   min-height: var(--salt-text-lineHeight);
+  overflow-x: visible;
   overflow-y: auto;
   background: var(--salt-container-primary-background);
 

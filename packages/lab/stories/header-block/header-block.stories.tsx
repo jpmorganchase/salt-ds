@@ -1,19 +1,27 @@
 import {
+  type OverlayProps,
   Button,
   Card,
   Checkbox,
   Dialog,
   DialogActions,
   DialogContent,
+  Dropdown,
+  FlexLayout,
+  FlowLayout,
   FormField,
   FormFieldHelperText,
   FormFieldLabel,
+  GridItem,
+  GridLayout,
+  H3,
+  Option,
   Overlay,
   OverlayPanel,
   OverlayPanelContent,
-  type OverlayProps,
   OverlayTrigger,
   StackLayout,
+  Text,
   Tooltip,
   RadioButton,
   RadioButtonGroup,
@@ -262,14 +270,40 @@ export const InDialog: StoryFn<typeof Dialog> = () => {
       <Dialog open={open} onOpenChange={onOpenChange} id="header-block-dialog">
         <HeaderBlock
           accent={true}
-          header="Congratulations! You have created a Dialog."
+          preheader="Account conversation"
+          header="Edit details"
           onClose={() => onOpenChange(false)}
         />
         <DialogContent>
-          Lorem Ipsum is simply dummy text of the printing and typesetting
-          industry. Lorem Ipsum has been the industry's standard dummy text ever
-          since the 1500s, when an unknown printer took a galley of type and
-          scrambled it to make a type specimen book.
+          <StackLayout gap={1}>
+            <H3>Product details</H3>
+            <p>
+              Collateral Agreement Unified Doc ID is required when counterparty
+              type is 04 or 07.
+            </p>
+            <FlowLayout>
+              <FormField>
+                <FormFieldLabel>Product type</FormFieldLabel>
+                <RadioButtonGroup>
+                  <RadioButton
+                    label="Checking"
+                    value="checking"
+                    checked={true}
+                  />
+                  <RadioButton label="Saving" value="saving" />
+                </RadioButtonGroup>
+              </FormField>
+              <FormField>
+                <FormFieldLabel>Product name</FormFieldLabel>
+                <Dropdown selected={["028 - Commercial checking"]}>
+                  <Option
+                    value="028 - Commercial checking"
+                    key={"028 - Commercial checking"}
+                  />
+                </Dropdown>
+              </FormField>
+            </FlowLayout>
+          </StackLayout>
         </DialogContent>
         <DialogActions>
           <Button variant="secondary" onClick={handleClose}>
@@ -279,6 +313,95 @@ export const InDialog: StoryFn<typeof Dialog> = () => {
           <Button variant="cta" onClick={handleClose}>
             Next
           </Button>
+        </DialogActions>
+      </Dialog>
+    </>
+  );
+};
+
+export const InDialogWithLongContent: StoryFn<typeof Dialog> = () => {
+  const [open, setOpen] = useState(true);
+
+  const handleRequestOpen = () => {
+    setOpen(true);
+  };
+
+  const onOpenChange = (value: boolean) => {
+    setOpen(value);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  return (
+    <>
+      <Button data-testid="dialog-button" onClick={handleRequestOpen}>
+        Open dialog
+      </Button>
+      <Dialog
+        open={open}
+        onOpenChange={onOpenChange}
+        id="header-block-dialog"
+        style={{ maxWidth: "500px" }}
+      >
+        <HeaderBlock
+          accent={true}
+          preheader="Settlements"
+          header="Terms and conditions"
+          description="Effective date: August 29, 2024"
+          onClose={() => onOpenChange(false)}
+        />
+        <DialogContent>
+          <StackLayout gap={1}>
+            <Text>
+              A global leader, we deliver strategic advice and solutions,
+              including capital raising, risk management, and trade finance to
+              corporations, institutions and governments. A global leader, we
+              deliver strategic advice and solutions, including capitai raising,
+              risk management, and trade finance to corporations, institutions
+              and governments. A global leader, we deliver strategic advice and
+              solutions, including capital raising, risk management, and trade
+              finance to corporations, institutions and governments.
+            </Text>
+            <Text>
+              A global leader, we deliver strategic advice and solutions,
+              including capital raising, risk management, and trade finance to
+              corporations, institutions and governments. A global leader, we
+              deliver strategic advice and solutions, including capital raising,
+              risk management, and trade finance to corporations, institutions
+              and governments. A global leader, we deliver strategic advice and
+              solutions, including capital raising, risk management, and trade
+              finance to corporations, institutions and governments. A global
+              leader, we deliver strategic advice and solutions, including
+              capital raising, risk management, and trade finance to
+              corporations, institutions and governments.
+            </Text>
+            <Text>Markets</Text>
+            <Text>
+              Serving the world's largest corporate clients and institutional
+              investors, we support the investment cycle with market-leading
+              research, analytics and trade execution across multiple asset
+              classes.
+            </Text>
+          </StackLayout>
+        </DialogContent>
+        <DialogActions>
+          <GridLayout columns={2} style={{ width: "100%" }}>
+            <GridItem>
+              <Button variant="secondary" onClick={handleClose}>
+                My privacy settings
+              </Button>
+            </GridItem>
+            <GridItem>
+              <FlexLayout justify="end" gap={1}>
+                <Button onClick={handleClose}>More info</Button>
+                <Button variant="cta" onClick={handleClose}>
+                  Save updates
+                </Button>
+              </FlexLayout>
+            </GridItem>
+          </GridLayout>
         </DialogActions>
       </Dialog>
     </>
