@@ -1,0 +1,69 @@
+name: Documentation 📚
+description: Have an issue or suggestion for the documentation?
+labels:
+  - "type: documentation"
+  - "status: awaiting triage"
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ### ⚠️ Warning
+        This is a public repository, so **please do not include any internal company code or sensitive data** in your bug report. If you are an internal JPM user, please also look at your [internal options](go/salt-ds-support).
+  - type: markdown
+    attributes:
+      value: Thanks for taking the time to report a bug! Before you start, please check that your issue isn’t already reported by searching the [existing issues](https://github.com/jpmorganchase/salt-ds/issues?q=sort%3Aupdated-desc+is%3Aissue).
+  - type: input
+    attributes:
+      label: Related page(s)
+      description: Which page or section of the Salt Design System documentation is this about?
+      placeholder: https://saltdesignsystem.com/
+    validations:
+      required: true
+  - type: dropdown
+    attributes:
+      label: Kind of issue
+      description: What kind of issue are you experiencing?
+      options:
+        - Unclear explanation
+        - Missing information
+        - Broken example
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Description
+      description: Tell us what's going wrong. Make sure that you copy and paste _as text_ any code, errors or log messages. Where relevant, you can also include supporting screenshots.
+    validations:
+      required: true
+  - type: markdown
+    attributes:
+      value: "## Your Environment"
+  - type: checkboxes
+    attributes:
+      label: Browser
+      description: In which browser(s), if any, have you observed the bug?
+      options:
+        - label: Chrome
+        - label: Safari
+        - label: Firefox
+        - label: Microsoft Edge
+  - type: checkboxes
+    attributes:
+      label: Operating system
+      description: On which operating system(s) have you observed the bug?
+      options:
+        - label: macOS
+        - label: Windows
+        - label: Linux
+        - label: iOS
+        - label: Android
+  - type: markdown
+    attributes:
+      value: "## Other"
+  - type: checkboxes
+    attributes:
+      label: Are you a JPMorgan Chase & Co. employee?
+      description: We ask this in case we need to contact you directly via internal company systems. Leave the box unticked if this doesn’t apply to you.
+      options:
+        - label: I am an employee of JPMorgan Chase & Co.
