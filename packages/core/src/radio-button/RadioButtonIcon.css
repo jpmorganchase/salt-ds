@@ -12,6 +12,9 @@
   background: var(--salt-container-primary-background);
   --saltIcon-size: 100%;
   display: flex;
+  /* Using overflow:hidden here causes a thin white line */
+  clip-path: border-box;
+  box-sizing: border-box;
 }
 
 .saltRadioButton:hover .saltRadioButtonIcon {
