@@ -88,7 +88,7 @@ export function useMouseHandlers(
       const { relatedTarget } = event;
       const subMenuElement =
         typeof highlightedItemIndex === "number"
-          ? refsManager.get(data.childMenus[highlightedItemIndex]) ?? null
+          ? (refsManager.get(data.childMenus[highlightedItemIndex]) ?? null)
           : null;
 
       const mouseMovedToSameMenu = isOrContainsNode(

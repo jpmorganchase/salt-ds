@@ -126,9 +126,9 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
     const disabled = radioGroup?.disabled || formFieldDisabled || disabledProp;
     const readOnly = radioGroup?.readOnly || formFieldReadOnly || readOnlyProp;
     const validationStatus = !disabled
-      ? radioGroup?.validationStatus ??
+      ? (radioGroup?.validationStatus ??
         formFieldValidationStatus ??
-        validationStatusProp
+        validationStatusProp)
       : undefined;
 
     const radioGroupChecked =

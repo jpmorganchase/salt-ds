@@ -56,7 +56,7 @@
    * https://github.com/jpmorganchase/salt-ds/issues/2671
    */
   font-weight: 400;
-  font-family: Roboto;
+  font-family: Roboto, serif;
   font-size: 14px;
   line-height: 1.85714286em;
 }

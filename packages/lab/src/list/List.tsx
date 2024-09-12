@@ -220,7 +220,7 @@ export const List = forwardRef(function List<
       }),
       disabled: disabled || listDisabled,
       id: itemId,
-      item: isChildItem ? undefined : item?.value ?? undefined,
+      item: isChildItem ? undefined : (item?.value ?? undefined),
       itemHeight: getItemHeight(idx.value),
       itemTextHighlightPattern,
       key: itemId,

@@ -556,7 +556,7 @@ export const WithItemRenderer: StoryFn<ListProps<State>> = (props) => {
     function MemoizedItem({ label, ...restProps }) {
       return (
         <ListItem {...restProps}>
-          <label>{label}</label>
+          <span>{label}</span>
         </ListItem>
       );
     },

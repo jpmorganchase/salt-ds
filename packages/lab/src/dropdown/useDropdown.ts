@@ -84,7 +84,7 @@ export const useDropdown = <
   const listHook = useList<Item, Selection>({
     collectionHook,
     defaultHighlightedIndex:
-      defaultHighlightedIndexProp ?? highlightedIndexProp === undefined
+      (defaultHighlightedIndexProp ?? highlightedIndexProp === undefined)
         ? 0
         : undefined,
     defaultSelected,

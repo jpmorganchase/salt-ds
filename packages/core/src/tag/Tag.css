@@ -13,7 +13,7 @@
   border-radius: var(--saltTag-borderRadius, var(--salt-palette-corner-strongest, 9999px));
   width: fit-content;
   min-width: max-content;
-  border-box: box-sizing;
+  box-sizing: border-box;
 }
 .saltTag-primary {
   background: var(--tag-primary-background, var(--salt-category-1-subtle-background));
