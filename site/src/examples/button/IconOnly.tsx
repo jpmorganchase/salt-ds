@@ -6,17 +6,17 @@ export const IconOnly = (): ReactElement => (
   <StackLayout gap={3}>
     <FlowLayout>
       <Tooltip placement="top" content="Search document">
-        <Button appearance="solid" sentiment="accented">
+        <Button appearance="solid" sentiment="accented" aria-label="Search document">
           <SearchIcon />
         </Button>
       </Tooltip>
       <Tooltip placement="top" content="Print document">
-        <Button appearance="bordered" sentiment="accented">
+        <Button appearance="bordered" sentiment="accented" aria-label="Print document">
           <PrintIcon />
         </Button>
       </Tooltip>
-      <Tooltip placement="top" content="Share">
-        <Button appearance="transparent" sentiment="accented">
+      <Tooltip placement="top" content="Share document">
+        <Button appearance="transparent" sentiment="accented" aria-label="Share document">
           <ShareIcon />
         </Button>
       </Tooltip>

@@ -13,24 +13,24 @@ export const IconAndText = (): ReactElement => (
   <StackLayout gap={3}>
     <FlowLayout>
       <Button appearance="solid" sentiment="accented">
-        <UploadIcon /> Upload
+        <UploadIcon aria-hidden /> Upload
       </Button>
       <Button appearance="bordered" sentiment="accented">
-        <PrintIcon /> Print
+        <PrintIcon aria-hidden /> Print
       </Button>
       <Button appearance="transparent" sentiment="accented">
-        <ShareIcon /> Share
+        <ShareIcon aria-hidden /> Share
       </Button>
     </FlowLayout>
     <FlowLayout>
       <Button appearance="solid" sentiment="accented">
-        Open <ChevronRightIcon />
+        Open <ChevronRightIcon aria-hidden />
       </Button>
       <Button appearance="bordered" sentiment="accented">
-        Expand All <ExpandAllIcon />
+        Expand All <ExpandAllIcon aria-hidden />
       </Button>
       <Button appearance="transparent" sentiment="accented">
-        Export <ExportIcon />
+        Export <ExportIcon aria-hidden />
       </Button>
     </FlowLayout>
   </StackLayout>
