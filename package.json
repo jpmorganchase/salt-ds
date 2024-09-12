@@ -45,7 +45,7 @@
     "lint:style:lab": "yarn stylelint -f verbose \"packages/lab/src/**/*.css\"",
     "lint:style:ag-theme": "yarn stylelint -f verbose \"packages/ag-grid-theme/css/**/*.css\"",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "yarn build:ag-grid-theme && yarn bundle:css && storybook build",
+    "build-storybook": "yarn build:ag-grid-theme && yarn bundle:css && storybook build --stats-json",
     "typecheck": "tsc --noEmit",
     "chromatic": "chromatic"
   },

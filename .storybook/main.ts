@@ -37,6 +37,12 @@ const config: StorybookConfig = {
     };
 
     if (configType === "PRODUCTION" && config.root) {
+      config.plugins = config.plugins?.filter(
+        (p) =>
+          !p ||
+          !("name" in p) ||
+          p?.name !== "storybook:rollup-plugin-webpack-stats",
+      );
       customConfig.plugins?.push(typescriptTurbosnap({ rootDir: config.root }));
     }
 
