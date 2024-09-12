@@ -19,6 +19,18 @@ export const Sentiment = (): ReactElement => (
       <Label>Transparent</Label>
     </GridItem>
 
+    <Label>Positive</Label>
+
+    <Button appearance="solid" sentiment="positive">
+      Button
+    </Button>
+    <Button appearance="bordered" sentiment="positive">
+      Button
+    </Button>
+    <Button appearance="transparent" sentiment="positive">
+      Button
+    </Button>
+
     <Label>Accented</Label>
 
     <Button appearance="solid" sentiment="accented">
@@ -43,15 +55,15 @@ export const Sentiment = (): ReactElement => (
       Button
     </Button>
 
-    <Label>Positive</Label>
+    <Label>Caution</Label>
 
-    <Button appearance="solid" sentiment="positive">
+    <Button appearance="solid" sentiment="caution">
       Button
     </Button>
-    <Button appearance="bordered" sentiment="positive">
+    <Button appearance="bordered" sentiment="caution">
       Button
     </Button>
-    <Button appearance="transparent" sentiment="positive">
+    <Button appearance="transparent" sentiment="caution">
       Button
     </Button>
 
@@ -64,18 +76,6 @@ export const Sentiment = (): ReactElement => (
       Button
     </Button>
     <Button appearance="transparent" sentiment="negative">
-      Button
-    </Button>
-
-    <Label>Caution</Label>
-
-    <Button appearance="solid" sentiment="caution">
-      Button
-    </Button>
-    <Button appearance="bordered" sentiment="caution">
-      Button
-    </Button>
-    <Button appearance="transparent" sentiment="caution">
       Button
     </Button>
   </GridLayout>

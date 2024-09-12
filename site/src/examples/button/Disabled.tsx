@@ -5,6 +5,17 @@ import type { ReactElement } from "react";
 export const Disabled = (): ReactElement => (
   <StackLayout gap={3}>
     <FlowLayout>
+      <Button appearance="solid" sentiment="positive" disabled>
+        Solid
+      </Button>
+      <Button appearance="bordered" sentiment="positive" disabled>
+        Bordered
+      </Button>
+      <Button appearance="transparent" sentiment="positive" disabled>
+        Transparent
+      </Button>
+    </FlowLayout>
+    <FlowLayout>
       <Button appearance="solid" sentiment="accented" disabled>
         Solid
       </Button>
@@ -27,13 +38,13 @@ export const Disabled = (): ReactElement => (
       </Button>
     </FlowLayout>
     <FlowLayout>
-      <Button appearance="solid" sentiment="positive" disabled>
+      <Button appearance="solid" sentiment="caution" disabled>
         Solid
       </Button>
-      <Button appearance="bordered" sentiment="positive" disabled>
+      <Button appearance="bordered" sentiment="caution" disabled>
         Bordered
       </Button>
-      <Button appearance="transparent" sentiment="positive" disabled>
+      <Button appearance="transparent" sentiment="caution" disabled>
         Transparent
       </Button>
     </FlowLayout>
@@ -45,17 +56,6 @@ export const Disabled = (): ReactElement => (
         Bordered
       </Button>
       <Button appearance="transparent" sentiment="negative" disabled>
-        Transparent
-      </Button>
-    </FlowLayout>
-    <FlowLayout>
-      <Button appearance="solid" sentiment="caution" disabled>
-        Solid
-      </Button>
-      <Button appearance="bordered" sentiment="caution" disabled>
-        Bordered
-      </Button>
-      <Button appearance="transparent" sentiment="caution" disabled>
         Transparent
       </Button>
     </FlowLayout>
