@@ -1,0 +1,5 @@
+.saltStaticListItemContent {
+  flex: 1 0;
+  margin: var(--salt-spacing-75) 0;
+  width: 100%;
+}

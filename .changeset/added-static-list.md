@@ -2,15 +2,19 @@
 "@salt-ds/lab": minor
 ---
 
-Added `StaticList`, `StaticListItem` component to lab.
+Added `StaticList`, `StaticListItem`, `StaticListItemContent` component to lab.
 
 ```tsx
 <StaticList>
   <StaticListItem>
-    <Text>New static list feature updates are available in lab</Text>
+    <StaticListItemContent>
+      <Text>New static list feature updates are available in lab</Text>
+    </StaticListItemContent>
   </StaticListItem>
   <StaticListItem>
-    <Text>New static list feature updates are available in lab</Text>
+    <StaticListItemContent>
+      <Text>New static list feature updates are available in lab</Text>
+    </StaticListItemContent>
   </StaticListItem>
 </StaticList>
 ```
