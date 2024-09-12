@@ -12,7 +12,7 @@ Salt theme is a collection of defined visual styles that shape the overall look-
 
 A theme in Salt enables delivery teams to streamline the process of creating a consistent design language across their business domain, platforms or products.
 
-### Design tokens
+### Design Tokens
 
 Salt themes are defined by design tokens that are organized into 3 groups. Each group of tokens has a specific purpose:
 
@@ -32,9 +32,9 @@ To keep tokens manageable, Salt doesn't create tokens for every style attribute 
 
 ## Supported themes
 
-As of Q3 2024, Salt offers two themes: the current theme, that reflects the UI Toolkit (UITK) design language, and the new J.P. Morgan (JPM) brand-endorsed 'next' theme.
+As of Q3 2024, Salt offers two themes: the current theme, that reflects the UI Toolkit (UITK) design language, and the new J.P. Morgan (JPM) brand-endorsed Salt Next theme.
 
-In Salt's architecture, theme styles (known as 'design tokens') are kept separate from components. Regardless of the chosen theme (the look-and-feel), the underlying components remain the same. This separation makes it easy to switch between themes, without breaking or altering the underlying application build.
+In Salt's architecture, theme styles (known as design tokens) are kept separate from components. Regardless of the chosen theme (the look-and-feel), the underlying components remain the same. This separation makes it easy to switch between themes, without breaking or altering the underlying application build.
 
 <Image
   src="/img/theming/salt-technology-stack.png"
@@ -45,7 +45,7 @@ In Salt's architecture, theme styles (known as 'design tokens') are kept separat
 
 Salt Next is a new theme for Salt which is built on new design foundations endorsed by the J.P. Morgan Corporate Brand team. It is a non-breaking update to the Salt library which officially brings 'styling options' and 'theming' capability to Salt components.
 
-Salt design system does not recommend customizing the look-and-feel with the 'legacy' Salt theme.
+Salt design system does not recommend customizing the look-and-feel of the current Salt theme.
 
 ## Customizing with Salt Next
 
@@ -69,14 +69,14 @@ Relates to the amount of content that can fit on a screen based on the size and 
 
 #### Accent / Mode
 
-Determines the dominant color – blue (aligned to the legacy design language) or teal (aligned to the JP Morgan MasterBrand Styleguide) for light or dark mode.
+Determines the dominant color – blue (aligned to the current theme) or teal (aligned to the Salt Next theme inline with the JP Morgan MasterBrand Styleguide) for light or dark mode.
 
 <Image
   src="/img/theming/styling-options-button-accent-mode-example.png"
   alt="Styling options button accent mode example"
 />
 
-#### Corner radius
+#### Corner Radius
 
 Sets predefined corners in certain components to sharp or round.
 
@@ -219,7 +219,7 @@ Salt Next introduces the Amplitude typeface, taken directly from the CIB Brand G
   alt="New Amplitude typeface"
 />
 
-### Corner ramps
+### Corner Ramps
 
 Salt Next includes the ability to apply predefined corner radiuses to specified components. This rounded corner feature, from the CIB Brand Guidelines, allows designers to create a softer, more consumer-friendly look-and-feel in their products. Each density includes four different radiuses, which help achieve a sense of visual nesting when used together.
 
@@ -231,13 +231,13 @@ Before using the Salt Next theme in design or development you should align with 
 
 Due to the benefits of improved accessibility and brand alignment, and the ability to easily tailor look-and-feel to use cases, Salt recommends that delivery teams plan to switch to the Salt Next theme.
 
-## What about the current 'legacy' theme
+## Guidance on using the current Salt theme
 
-We understand the importance of 'legacy' theme for products while migrating from UI Toolkit. Whilst the Design System team is still providing support for the UI Toolkit, we will continue to ensure that a 'legacy' theme is available for Salt components.
+We understand the importance of the current theme for products migrating from UI Toolkit. We will continue to ensure the availability of the current theme for Salt components.
 
-'Legacy' theme does not provide any styling options other than density and mode. We do not recommend customizing the look-and-feel of the 'Legacy' theme. Please be aware that you are responsible for maintaining any customizations you make to this theme.
+The current theme offers limited styling options except for density and mode. Customizing the look-and-feel of the current theme is not recommended. Please note that any customizations made to this theme are your responsibility to maintain.
 
-**If you are a designer**, be aware that if your product team is continuing to use the 'legacy' theme you need to continue using the Salt Light and Dark Component Figma libraries, and associated Figma libraries. In H2 2024 we will include legacy support in the new Salt Next [variable-driven Figma library](#new-variable-driven-libraries).
+**If you are a designer**, be aware that if your product team is continuing to use the current theme you need to continue using the Salt Light and Dark Component Figma libraries, and associated Figma libraries. In H2 2024 we will include current theme support in the new Salt Next [variable-driven Figma library](#new-variable-driven-libraries).
 
 ## How to use the Salt Next theme
 
@@ -247,7 +247,7 @@ The Salt Next theme is now stable and available in both Figma and code to use in
 
 To provide 'styling options' and theming capability the new Salt Next Figma libraries implement Salt design tokens as Figma [variables](https://help.figma.com/hc/en-us/sections/14506605769879-Variables) to define all the visual attributes of components.
 
-#### New variable-driven libraries
+#### New Variable-Driven Libraries
 
 Using Figma variables enables us to reduce the number of Figma libraries we need to provide. Salt Next has the following libraries:
 
@@ -301,7 +301,7 @@ The new variable-driven Component & Pattern library functions similarly to the c
 - No need to set density at the component level.
 - Access to new 'styling options' like round corners, accent color, and Amplitude as a heading and/or action font.
 
-#### Using component 'styling options' in Figma
+#### Using Component 'styling options' in Figma
 
 1.  Add components: Drag from the Assets panel.
 2.  Access 'styling options': In the right sidebar, click 'Change variable mode' (double hexagon) icon in the Layer panel to see all available options.
@@ -342,7 +342,7 @@ To use it, replace the existing `SaltProvider` with `SaltProviderNext` and impor
 
 The new provider adds `.salt-theme-next` to the root or provider element, along with any needed data attributes (e.g., `data-corner`). All values in `theme-next.css` are scoped to `.salt-theme-next` to override any existing values.
 
-#### Apply styling options
+#### Apply Styling Options
 
 You can apply styling options as corresponding props to `SaltProviderNext` –
 
@@ -355,7 +355,7 @@ You can apply styling options as corresponding props to `SaltProviderNext` –
 >
 ```
 
-#### Amplitude font
+#### Amplitude Font
 
 When Amplitude is used, default heading font weight is set to medium (instead of semi bold for Open Sans), via `--salt-palette-text-heading-fontWeight` and `--salt-palette-text-display-fontWeight` variables.
 
@@ -399,7 +399,7 @@ To ensure that every user sees the Amplitude font correctly, you'll need to add 
 }
 ```
 
-#### Display text sizes
+#### Display Text Sizes
 
 Display text styles are updated to distinguish them from heading text (h1/h2/h3/h4).
 They are now larger than h1 across densities.
