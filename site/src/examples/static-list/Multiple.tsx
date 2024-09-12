@@ -1,8 +1,16 @@
 import { Button, StackLayout } from "@salt-ds/core";
-import { StaticList, StaticListItem } from "@salt-ds/lab";
+import {
+  StaticList,
+  StaticListItem,
+  StaticListItemContent,
+} from "@salt-ds/lab";
 import React, { type ReactElement, useState } from "react";
 
-const ListItem = () => <StaticListItem>Item label</StaticListItem>;
+const ListItem = () => (
+  <StaticListItem>
+    <StaticListItemContent>Item label</StaticListItemContent>
+  </StaticListItem>
+);
 
 export const Multiple = (): ReactElement => {
   const [listArray, setListArray] = useState([ListItem, ListItem]);

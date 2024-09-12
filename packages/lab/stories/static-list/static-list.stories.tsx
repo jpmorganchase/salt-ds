@@ -1,6 +1,11 @@
 import { Button, Divider, StackLayout, Text } from "@salt-ds/core";
 import { NoteIcon, NotificationIcon } from "@salt-ds/icons";
-import { StaticList, StaticListItem, type StaticListProps } from "@salt-ds/lab";
+import {
+  StaticList,
+  StaticListItem,
+  StaticListItemContent,
+  type StaticListProps,
+} from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react";
 import { useState } from "react";
 
@@ -10,53 +15,48 @@ export default {
 } as Meta<typeof StaticList>;
 
 const ListItemWithIcons = () => (
-  <StaticListItem
-    style={{
-      padding: "var(--salt-spacing-50) var(--salt-spacing-100)",
-      alignItems: "baseline",
-    }}
-  >
+  <StaticListItem>
     <NotificationIcon />
-    <StackLayout
-      gap={0.5}
-      style={{ padding: "var(--salt-spacing-75) 0", width: "100%" }}
-    >
-      <Text color="inherit">Item label</Text>
-      <Text styleAs="label" color="secondary">
-        Secondary label
-      </Text>
-    </StackLayout>
+    <StaticListItemContent>
+      <StackLayout gap={0.5}>
+        <Text color="inherit">Item label</Text>
+        <Text styleAs="label" color="secondary">
+          Secondary label
+        </Text>
+      </StackLayout>
+    </StaticListItemContent>
   </StaticListItem>
 );
 
-const ListItem = () => <StaticListItem>Item label</StaticListItem>;
+const ListItem = () => (
+  <StaticListItem>
+    <StaticListItemContent>Item label</StaticListItemContent>
+  </StaticListItem>
+);
 
 const AdditionalLabelListItem = () => (
   <StaticListItem>
-    <StackLayout gap={0.5}>
-      <Text color="inherit">Item label</Text>
-      <Text styleAs="label" color="secondary">
-        Secondary label
-      </Text>
-    </StackLayout>
+    <StaticListItemContent>
+      <StackLayout gap={0.5}>
+        <Text color="inherit">Item label</Text>
+        <Text styleAs="label" color="secondary">
+          Secondary label
+        </Text>
+      </StackLayout>
+    </StaticListItemContent>
   </StaticListItem>
 );
 
 const ListItemWithButtons = () => (
-  <StaticListItem
-    style={{
-      padding: "var(--salt-spacing-50) var(--salt-spacing-100)",
-    }}
-  >
-    <StackLayout
-      gap={0.5}
-      style={{ padding: "var(--salt-spacing-75) 0", width: "100%" }}
-    >
-      <Text color="inherit">Item label</Text>
-      <Text styleAs="label" color="secondary">
-        Secondary label
-      </Text>
-    </StackLayout>
+  <StaticListItem>
+    <StaticListItemContent>
+      <StackLayout gap={0.5}>
+        <Text color="inherit">Item label</Text>
+        <Text styleAs="label" color="secondary">
+          Secondary label
+        </Text>
+      </StackLayout>
+    </StaticListItemContent>
     <Button variant="secondary" aria-label={"icon"}>
       <NoteIcon aria-hidden />
     </Button>
