@@ -7,7 +7,7 @@
     "README.md"
   ],
   "dependencies": {
-    "css-tree": "^2.0.4",
+    "css-tree": "^3.0.0",
     "glob": "^8.0.0",
     "glob-promise": "^6.0.0"
   },
