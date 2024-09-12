@@ -19,8 +19,6 @@
 
 .salt-theme[data-mode="light"],
 .salt-theme[data-mode="dark"] {
-  --salt-palette-text-fontFamily: var(--site-font-family);
-  --salt-palette-text-fontFamily-heading: var(--site-font-family);
-  --salt-palette-text-fontFamily-action: var(--site-font-family);
-  --salt-palette-text-fontFamily-code: var(--site-font-family-code);
+  --salt-typography-fontFamily-ptMono: var(--site-font-family-ptMono);
+  --salt-typography-fontFamily-openSans: var(--site-font-family-openSans);
 }

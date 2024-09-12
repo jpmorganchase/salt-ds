@@ -1,6 +1,7 @@
 :root {
   --max-container-width: 1920px;
   --max-content-width: min(var(--max-container-width), 120ch);
+  /* Refer to `--site-navigation-height`, can't directly define here given density reference is different */
   --navbar-height: 60px;
 
   /* "Special" colors used mainly on homepage */
@@ -15,4 +16,10 @@
 
 ::selection {
   background: var(--salt-content-foreground-highlight);
+}
+
+@media screen and (max-width: 959px) {
+  :root {
+    --navbar-height: 80px;
+  }
 }

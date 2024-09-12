@@ -1,6 +1,7 @@
 .base > header {
   --site-navigation-padding-vertical: 0;
   --site-navigation-padding-horizontal: var(--salt-spacing-300);
+  --site-navigation-height: calc(var(--salt-spacing-200) + var(--salt-size-base));
   --mosaic-border-width-thin: 0;
   --mosaic-shadow-dark-elevation2: var(--salt-shadow-100-color);
   --mosaic-color-dark-neutral-background-regular: var(--salt-color-gray-900);
@@ -38,7 +39,7 @@
 
 .base > header {
   padding: var(--site-navigation-padding-vertical) var(--site-navigation-padding-horizontal);
-  height: calc(var(--salt-spacing-200) + var(--salt-size-base));
+  height: var(--site-navigation-height);
 }
 
 .base > main {
@@ -56,6 +57,7 @@
     line-height: var(--salt-text-h1-lineHeight);
     margin-right: calc(var(--salt-size-unit) * 2);
     margin-left: calc(var(--salt-size-unit) * 2);
+    margin-top: var(--salt-spacing-100);
   }
 }
 
@@ -63,11 +65,11 @@
   .base > header {
     --site-navigation-padding-horizontal: var(--salt-size-unit);
     --site-navigation-padding-vertical: var(--salt-size-unit);
+    --site-navigation-height: calc(var(--salt-size-unit) * 5);
   }
 
   .base > header {
     padding: var(--site-navigation-padding-vertical) var(--site-navigation-padding-horizontal);
-    height: calc(var(--salt-size-unit) * 5);
     gap: var(--salt-size-unit);
     align-items: stretch;
     display: flex;
