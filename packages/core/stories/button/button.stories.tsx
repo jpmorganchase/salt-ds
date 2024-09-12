@@ -1,4 +1,10 @@
-import { Button, type ButtonProps, StackLayout } from "@salt-ds/core";
+import {
+  Button,
+  type ButtonProps,
+  FlexLayout,
+  FlowLayout,
+  StackLayout,
+} from "@salt-ds/core";
 import {
   DownloadIcon,
   SearchIcon,
@@ -20,117 +26,127 @@ const SingleButtonTemplate: StoryFn<typeof Button> = (props) => {
   return <Button {...props} />;
 };
 
-const ButtonGrid = ({
-  className = "",
-  label1,
-  label2,
-  label3,
-  variant,
-}: {
-  className?: string;
-  label1: string;
-  label2: string;
-  label3: string;
-  variant: ButtonProps["variant"];
-}) => {
-  const handleClick = () => {
-    console.log("clicked");
-  };
-
+const ButtonGridTemplate: StoryFn<typeof Button> = (props) => {
   return (
-    <>
-      <div
-        className={className}
-        style={{
-          display: "grid",
-          gridTemplateColumns: "auto auto auto",
-          gridTemplateRows: "auto",
-          gridGap: 10,
-        }}
-      >
-        <Button variant={variant} onClick={handleClick}>
-          {label1}
-        </Button>
-        <Button variant={variant} onClick={handleClick} aria-label="search">
-          <SearchIcon aria-hidden />
-        </Button>
-        <Button variant={variant} onClick={handleClick}>
-          <SearchIcon aria-hidden />
-          {label2}
-        </Button>
-      </div>
-      <br />
-      <div>
-        <Button variant={variant} onClick={handleClick} disabled>
-          {label3}
-        </Button>
-      </div>
-    </>
-  );
-};
-
-export const All: StoryFn<typeof Button> = () => {
-  const handleClick = () => {
-    console.log("clicked");
-  };
-
-  return (
-    <div style={{ display: "flex", gap: "8px" }}>
-      <Button variant={"cta"} onClick={handleClick}>
-        Submit
+    <FlowLayout>
+      <Button {...props}>Submit</Button>
+      <Button aria-label="Search" {...props}>
+        <SearchIcon aria-hidden />
       </Button>
-      <Button variant={"primary"} onClick={handleClick}>
+      <Button {...props}>
+        <SearchIcon aria-hidden />
         Search
       </Button>
-      <Button variant={"secondary"} onClick={handleClick}>
-        Cancel
+    </FlowLayout>
+  );
+};
+
+const AppearanceGridTemplate: StoryFn<typeof Button> = (props) => {
+  return (
+    <FlowLayout>
+      <Button appearance="solid" {...props}>
+        Solid
       </Button>
-    </div>
+      <Button appearance="bordered" {...props}>
+        Bordered
+      </Button>
+      <Button appearance="transparent" {...props}>
+        Transparent
+      </Button>
+    </FlowLayout>
   );
 };
 
-export const CTA: StoryFn<typeof Button> = () => {
-  return (
-    <ButtonGrid
-      variant="cta"
-      label1="Submit"
-      label2="Search"
-      label3="Continue"
-    />
-  );
-};
-
-export const Primary: StoryFn<typeof Button> = () => {
-  return (
-    <ButtonGrid
-      variant="primary"
-      label1="Submit"
-      label2="Search"
-      label3="Continue"
-    />
-  );
-};
-
-export const Secondary: StoryFn<typeof Button> = () => {
-  return (
-    <ButtonGrid
-      variant="secondary"
-      label1="Cancel"
-      label2="Find address"
-      label3="Save as draft"
-    />
-  );
-};
-
-export const FeatureButton = SingleButtonTemplate.bind({});
-FeatureButton.args = {
+export const Default = SingleButtonTemplate.bind({});
+Default.args = {
   children: "Activate",
 };
 
-export const Disabled = SingleButtonTemplate.bind({});
-Disabled.args = {
-  disabled: true,
-  children: "Submit",
+export const Accented = AppearanceGridTemplate.bind({});
+Accented.args = {
+  sentiment: "accented",
+};
+
+export const Neutral = AppearanceGridTemplate.bind({});
+Neutral.args = {
+  sentiment: "neutral",
+};
+
+export const Positive = AppearanceGridTemplate.bind({});
+Positive.args = {
+  sentiment: "positive",
+};
+
+export const Negative = AppearanceGridTemplate.bind({});
+Negative.args = {
+  sentiment: "negative",
+};
+
+export const Caution = AppearanceGridTemplate.bind({});
+Caution.args = {
+  sentiment: "caution",
+};
+
+export const Disabled: StoryFn = () => {
+  return (
+    <StackLayout gap={3}>
+      <FlowLayout>
+        <Button appearance="solid" sentiment="accented" disabled>
+          Solid
+        </Button>
+        <Button appearance="bordered" sentiment="accented" disabled>
+          Bordered
+        </Button>
+        <Button appearance="transparent" sentiment="accented" disabled>
+          Transparent
+        </Button>
+      </FlowLayout>
+      <FlowLayout>
+        <Button appearance="solid" sentiment="neutral" disabled>
+          Solid
+        </Button>
+        <Button appearance="bordered" sentiment="neutral" disabled>
+          Bordered
+        </Button>
+        <Button appearance="transparent" sentiment="neutral" disabled>
+          Transparent
+        </Button>
+      </FlowLayout>
+      <FlowLayout>
+        <Button appearance="solid" sentiment="positive" disabled>
+          Solid
+        </Button>
+        <Button appearance="bordered" sentiment="positive" disabled>
+          Bordered
+        </Button>
+        <Button appearance="transparent" sentiment="positive" disabled>
+          Transparent
+        </Button>
+      </FlowLayout>
+      <FlowLayout>
+        <Button appearance="solid" sentiment="negative" disabled>
+          Solid
+        </Button>
+        <Button appearance="bordered" sentiment="negative" disabled>
+          Bordered
+        </Button>
+        <Button appearance="transparent" sentiment="negative" disabled>
+          Transparent
+        </Button>
+      </FlowLayout>
+      <FlowLayout>
+        <Button appearance="solid" sentiment="caution" disabled>
+          Solid
+        </Button>
+        <Button appearance="bordered" sentiment="caution" disabled>
+          Bordered
+        </Button>
+        <Button appearance="transparent" sentiment="caution" disabled>
+          Transparent
+        </Button>
+      </FlowLayout>
+    </StackLayout>
+  );
 };
 
 export const FocusableWhenDisabled = SingleButtonTemplate.bind({});
@@ -142,29 +158,44 @@ FocusableWhenDisabled.args = {
 
 export const WithIcon: StoryFn<typeof Button> = () => {
   return (
-    <div style={{ display: "flex", gap: "8px" }}>
-      <Button variant="cta">
+    <FlexLayout>
+      <Button sentiment="accented">
         Send <SendIcon aria-hidden />
       </Button>
-      <Button variant="primary">
+      <Button>
         <SearchIcon aria-hidden /> Search
       </Button>
-      <Button variant="secondary">
+      <Button appearance="transparent">
         Setting <SettingsSolidIcon aria-hidden />
       </Button>
       <Button aria-label="download">
         <DownloadIcon aria-hidden />
       </Button>
-    </div>
+    </FlexLayout>
   );
 };
 
 export const FullWidth: StoryFn<typeof Button> = () => {
   return (
-    <StackLayout style={{ width: "98vw" }}>
+    <StackLayout style={{ width: "98%" }}>
       <Button variant="primary">Primary full width Button</Button>
       <Button variant="secondary">Secondary full width Button</Button>
       <Button variant="cta">Cta full width Button</Button>
     </StackLayout>
   );
+};
+
+export const CTA = ButtonGridTemplate.bind({});
+CTA.args = {
+  variant: "cta",
+};
+
+export const Primary = ButtonGridTemplate.bind({});
+Primary.args = {
+  variant: "primary",
+};
+
+export const Secondary = ButtonGridTemplate.bind({});
+Secondary.args = {
+  variant: "secondary",
 };

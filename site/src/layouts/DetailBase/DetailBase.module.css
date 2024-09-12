@@ -72,8 +72,8 @@
   text-align: left;
 }
 
-.docsWrapper .docPaginator *:not([data-selected="true"]):not(:hover),
-.docsWrapper .docPaginator *:not([data-selected="true"]):hover {
+.docsWrapper .docPaginator.docPaginator *:not([data-selected="true"]):not(:hover),
+.docsWrapper .docPaginator.docPaginator *:not([data-selected="true"]):hover {
   border: none;
   box-shadow: none;
 }

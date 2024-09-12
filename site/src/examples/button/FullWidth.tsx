@@ -3,8 +3,14 @@ import type { ReactElement } from "react";
 
 export const FullWidth = (): ReactElement => (
   <StackLayout style={{ width: "400px" }}>
-    <Button variant="primary">Primary full width Button</Button>
-    <Button variant="secondary">Secondary full width Button</Button>
-    <Button variant="cta">Cta full width Button</Button>
+    <Button sentiment="accented" appearance="solid">
+      Solid
+    </Button>
+    <Button sentiment="accented" appearance="bordered">
+      Bordered
+    </Button>
+    <Button sentiment="accented" appearance="transparent">
+      Transparent
+    </Button>
   </StackLayout>
 );

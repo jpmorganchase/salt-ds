@@ -1,20 +1,25 @@
 .controls {
   display: flex;
-  flex-wrap: wrap;
+  gap: var(--salt-spacing-100);
   justify-content: space-between;
+  flex-wrap: wrap;
   padding: calc(var(--salt-size-unit) * 2) 0;
   border-bottom: var(--salt-size-border) var(--salt-separable-borderStyle) var(--salt-separable-tertiary-borderColor);
   background-color: var(--salt-container-primary-background);
+  z-index: var(--salt-zIndex-default);
+}
+.stickyControls {
   position: sticky;
   top: var(--navbar-height);
-  z-index: var(--salt-zIndex-default);
-  gap: calc(var(--salt-size-unit) * 3);
 }
 
-.toggleButtonGroups {
+.toggleGroupsContainer {
   display: flex;
   flex-wrap: wrap;
-  gap: calc(var(--salt-size-unit) * 3);
+  gap: var(--salt-spacing-100);
+  flex-grow: 1;
+  /* This is the width of density toggle group. Without this, next switch will wrap first before this container */
+  flex-basis: 289px;
 }
 
 .density,
@@ -28,4 +33,14 @@
   flex-direction: column;
   align-items: flex-start;
   flex: 1;
+}
+
+.themeNextSwitch {
+  flex-shrink: 0;
+  margin-top: var(--salt-spacing-50);
+  flex-basis: 150px;
+}
+.mobileSwitchAlignment {
+  /* This will be applied regardless of wrapping or not.  */
+  margin-top: var(--salt-spacing-300);
 }

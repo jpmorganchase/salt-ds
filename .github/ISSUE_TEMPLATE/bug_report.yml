@@ -1,5 +1,5 @@
 name: Bug report 🪲
-description: Report bugs in our code.
+description: Something is broken and you have a reproduction? Let us know so we can fix it!
 labels:
   - "type: bug 🪲"
   - "status: awaiting triage"
@@ -8,32 +8,17 @@ body:
     attributes:
       value: |
         ### ⚠️ Warning
-        This is a public repository, so **please do not include any internal company code or sensitive data** in your bug report.
-  - type: dropdown
+        This is a public repository, so **please do not include any internal company code or sensitive data** in your bug report. If you are an internal JPM user, please also look at your [internal options](go/salt-ds-support).
+  - type: markdown
     attributes:
-      label: Package name(s)
-      description: |
-        Which package(s) did you observe this bug in? 
-
-        We only accept bug reports for packages shown in the menu below. If a package isn’t listed, then it’s not one that we support.
-      multiple: true
+      value: Thanks for taking the time to report a bug! Before you start, please check that your issue isn’t already reported by searching the [existing issues](https://github.com/jpmorganchase/salt-ds/issues?q=sort%3Aupdated-desc+is%3Aissue).
+  - type: checkboxes
+    attributes:
+      label: Latest version
+      description: Have you tested the latest version of the package(s) you’re reporting the bug for?
       options:
-        - "Core (@salt-ds/core)"
-        - "Icons (@salt-ds/icons)"
-        - "Theme (@salt-ds/theme)"
-        - "Lab (@salt-ds/lab)"
-        - "Data Grid (@salt-ds/data-grid)"
-        - "AG Grid Theme (@salt-ds/ag-grid-theme)"
-        - "Website / Documentation"
-    validations:
-      required: true
-  - type: textarea
-    attributes:
-      label: Package version(s)
-      description: |
-        Which version(s) did you observe the bug in? 
-
-        Please provide the exact version(s) instead of a [range](https://github.com/npm/node-semver#advanced-range-syntax) (`^`, `~`, `>`, `*`, `X`). If you’re not sure which version your project is using, run `npm ls [package name]` or `yarn why [package name]` to find out.
+        - label: I have tested the latest version
+          required: true
   - type: textarea
     attributes:
       label: Description
@@ -44,10 +29,48 @@ body:
     attributes:
       label: Steps to reproduce
       description: Describe the steps or code needed to reproduce this bug. Make sure that you copy and paste _as text_ any code, errors or log messages. Where relevant, you can also include supporting screenshots.
+    validations:
+      required: true
   - type: textarea
     attributes:
       label: Expected behavior
       description: What did you expect to happen?
+  - type: markdown
+    attributes:
+      value: "## Your Environment"
+  - type: dropdown
+    attributes:
+      label: Package name(s)
+      description: |
+        Which package(s) did you observe this bug in? If you’re not sure which version your project is using, run `npm ls [package name]` or `yarn why [package name]` to find out.
+
+        We only accept bug reports for packages shown in the menu below. If a package isn’t listed, then it’s not one that we support.
+      multiple: true
+      options:
+        - "Core (@salt-ds/core)"
+        - "Icons (@salt-ds/icons)"
+        - "Theme (@salt-ds/theme)"
+        - "Lab (@salt-ds/lab)"
+        - "Data Grid (@salt-ds/data-grid)"
+        - "AG Grid Theme (@salt-ds/ag-grid-theme)"
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Package version(s)
+      description: |
+        Which version(s) did you observe the bug in?
+
+        Please provide the exact version(s) instead of a [range](https://github.com/npm/node-semver#advanced-range-syntax) (`^`, `~`, `>`, `*`, `X`). If you’re not sure which version your project is using, run `npm ls [package name]` or `yarn why [package name]` to find out.
+  - type: checkboxes
+    attributes:
+      label: Browser
+      description: In which browser(s), if any, have you observed the bug?
+      options:
+        - label: Chrome
+        - label: Safari
+        - label: Firefox
+        - label: Microsoft Edge
   - type: checkboxes
     attributes:
       label: Operating system
@@ -58,15 +81,9 @@ body:
         - label: Linux
         - label: iOS
         - label: Android
-  - type: checkboxes
+  - type: markdown
     attributes:
-      label: Browser
-      description: In which browser(s), if any, have you observed the bug?
-      options:
-        - label: Chrome
-        - label: Safari
-        - label: Firefox
-        - label: Edge
+      value: "## Other"
   - type: checkboxes
     attributes:
       label: Are you a JPMorgan Chase & Co. employee?

@@ -9,44 +9,39 @@ data:
 ---
 
 <LivePreviewControls>
-<LivePreview componentName="button" exampleName="CTA" >
+  
+<LivePreview componentName="button" exampleName="Appearance">
 
-## CTA
+## Appearance
 
-Use the CTA button for high-priority actions. For example, a CTA button may prompt a user to register, sign up, submit or buy.
-
-### Best practices
-
-Use CTA buttons sparingly. They represent the default or expected action on the page.
+Buttons come in three distinct appearances: solid, bordered, and transparent. These styles provide greater choice and flexibility for establishing hierarchy and affordance within a UI.
 
 </LivePreview>
 
-<LivePreview componentName="button" exampleName="Primary" >
+<LivePreview componentName="button" exampleName="Sentiment">
 
-## Primary
+## Sentiment
 
-This is the default variant. Use the primary button for routine, nonurgent actions, for example, to move to the next page or complete a task.
+The buttons convey five sentiments through color—positive, accented, neutral, caution and negative. Use them in your application designs as follows:
 
-</LivePreview>
-
-<LivePreview componentName="button" exampleName="Secondary" >
-
-## Secondary
-
-Use the secondary button for noncritical actions that support the user but don't impact a flow. They're typically the alternative option available alongside a primary action. For example, a secondary “back” button may support a primary “next” button.
+- **Positive**: Indicate actions that result in positive outcomes.
+- **Accented**: Perfect for priority actions that need to stand out from the UI.
+- **Neutral**: Ideal for routine, non-urgent actions, or where the actions should blend in with the UI.
+- **Caution**: Alert users to potential consequences that may arise from taking an action.
+- **Negative**: Indicate actions that result in negative outcomes.
 
 </LivePreview>
-
+  
 <LivePreview componentName="button" exampleName="IconAndText">
 
 ## Icon and text
 
-Add an icon before the text to reinforce the button text. Add an icon after the button text to suggest movement or a direction.
+Add an icon before the text to reinforce the button's purpose. Add an icon after the text to suggest movement or direction.
 
 ### Best practices
 
-- Place an icon to the left of the text to further describe the action, such as “upload”, “submit”, “play” or “done”. Additional description can make it easier for users to locate actions.
-- Place an icon to the right of the text to suggest direction or movement, such as opening a menu overlay, expanding a panel or opening a document. When the user activates the button, there's typically an immediate visual change.
+- **Left of the Text**: Place an icon to the left of the text to further describe the action, such as “upload”, “print”, or “share”. This additional description can make it easier for users to identify actions.
+- **Right of the Text**: Place an icon to the right of the text to suggest direction or movement, such as opening a menu overlay, expanding a panel, or exporting a document. When the user activates the button, there's typically an immediate visual change.
 
 </LivePreview>
 
@@ -54,12 +49,12 @@ Add an icon before the text to reinforce the button text. Add an icon after the 
 
 ## Icon only
 
-Display an icon-only button with no text when you have limited on-screen space, and users can easily understand the icon.
+Use an icon-only button without text when screen space is limited, and the icon is easily understood by users.
 
 ### Best practices
 
-- An icon-only button should be self-explanatory, ideally using well-known symbols. If the button's purpose isn’t clear from the icon alone, add a text description.
-- Use [`Tooltip`](../tooltip) on an icon-only button to describe the action, such as “Edit this form”, “Print this document”, or “Lock document state”.
+- **Self-Explanatory Icons**: An icon-only button should use well-known symbols that are self-explanatory. If the icon's purpose isn't clear on its own, include a text description.
+- **Tooltips**: Add a [`Tooltip`](../tooltip) to an icon-only button to describe the action, such as “Edit this form”, “Print this document”, or “Lock document state”.
 
 </LivePreview>
 
@@ -69,7 +64,17 @@ Display an icon-only button with no text when you have limited on-screen space, 
 
 Use the disabled state for a button that the user can’t press.
 
-A button with the prop `disabled={true}` will suppress all functionality. If you need to allow the user to place focus on a disabled button, you also need to pass `focusableWhenDisabled={true}`.
+A button with the prop `disabled={true}` will suppress all functionality.
+
+</LivePreview>
+
+<LivePreview componentName="button" exampleName="FocusableWhenDisabled" >
+
+## Focusable when disabled
+
+If a disabled element can be enabled (either by the user or by the system), it should be focusable. To allow this, you can pass `focusableWhenDisabled={true}`.
+
+This is useful when you want to show a tooltip or a popover when the user interacts with the button.
 
 </LivePreview>
 
@@ -80,4 +85,17 @@ A button with the prop `disabled={true}` will suppress all functionality. If you
 Use full width buttons on mobile devices or smaller viewports, the button will take up the full width of its container.
 
 </LivePreview>
+  
+<LivePreview componentName="button" exampleName="Deprecated" displayName="Deprecated variants">
+
+## Deprecated variants
+
+The previous CTA, Primary, and Secondary buttons have been seamlessly mapped to their corresponding buttons in the new set. This means you can continue designing without missing a beat, while also taking advantage of the new options available.
+
+- CTA: `appearance="solid" sentiment="accented"`
+- Primary: `appearance="solid" sentiment="neutral"`
+- Secondary: `appearance="transparent" sentiment="neutral"  `
+
+</LivePreview>
+
 </LivePreviewControls>

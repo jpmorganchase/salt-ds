@@ -4,7 +4,6 @@ import React, { type FC, type ReactNode } from "react";
 import { LinkList } from "../../components/link-list/LinkList";
 import { Heading4 } from "../../components/mdx/h4";
 import { getHrefFromComponent } from "../../utils/getHrefFromComponent";
-import { useAllExamplesView } from "../../utils/useAllExamplesView";
 
 import { Text } from "@salt-ds/core";
 import { RelatedPatterns } from "../DetailPattern/RelatedPatterns";
@@ -61,7 +60,6 @@ const SecondarySidebar: FC<SecondarySidebarProps> = ({
   } = additionalData || {};
 
   const { route = "" } = useRoute();
-  const { allExamplesView } = useAllExamplesView();
   const similarToLinks = getRelatedComponentLinks(
     relatedComponents,
     "similarTo",
@@ -70,10 +68,9 @@ const SecondarySidebar: FC<SecondarySidebarProps> = ({
 
   return (
     <div className={styles.sidebar}>
-      {(!examplesTabRoute.test(route) || allExamplesView) &&
-        tableOfContents && (
-          <div className={styles.tableOfContents}>{tableOfContents}</div>
-        )}
+      {tableOfContents && (
+        <div className={styles.tableOfContents}>{tableOfContents}</div>
+      )}
       <div className={styles.wrapper}>
         {alsoKnownAs.length > 0 && (
           <>

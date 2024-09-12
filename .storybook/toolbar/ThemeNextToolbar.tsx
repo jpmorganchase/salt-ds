@@ -100,6 +100,8 @@ export const ThemeNextToolbar = ({ active }: { active?: boolean }) => {
     },
   );
 
+  const isThemeNext = globals.themeNext === "enable";
+
   return (
     <>
       <Separator />
@@ -108,8 +110,8 @@ export const ThemeNextToolbar = ({ active }: { active?: boolean }) => {
         trigger="click"
         closeOnOutsideClick
       >
-        <IconButton title={description} active={active}>
-          <BeakerIcon /> Theme Next
+        <IconButton title={description} active={active || isThemeNext}>
+          {isThemeNext ? <CheckIcon /> : <BeakerIcon />} Theme Next
         </IconButton>
       </WithTooltip>
     </>
