@@ -1,6 +1,7 @@
 import {
   Button,
   type ButtonProps,
+  FlexLayout,
   FlowLayout,
   StackLayout,
 } from "@salt-ds/core";
@@ -42,19 +43,17 @@ const ButtonGridTemplate: StoryFn<typeof Button> = (props) => {
 
 const AppearanceGridTemplate: StoryFn<typeof Button> = (props) => {
   return (
-    <StackLayout>
-      <FlowLayout>
-        <Button appearance="solid" {...props}>
-          Solid
-        </Button>
-        <Button appearance="bordered" {...props}>
-          Bordered
-        </Button>
-        <Button appearance="transparent" {...props}>
-          Transparent
-        </Button>
-      </FlowLayout>
-    </StackLayout>
+    <FlowLayout>
+      <Button appearance="solid" {...props}>
+        Solid
+      </Button>
+      <Button appearance="bordered" {...props}>
+        Bordered
+      </Button>
+      <Button appearance="transparent" {...props}>
+        Transparent
+      </Button>
+    </FlowLayout>
   );
 };
 
@@ -159,7 +158,7 @@ FocusableWhenDisabled.args = {
 
 export const WithIcon: StoryFn<typeof Button> = () => {
   return (
-    <div style={{ display: "flex", gap: "8px" }}>
+    <FlexLayout>
       <Button sentiment="accented">
         Send <SendIcon aria-hidden />
       </Button>
@@ -172,7 +171,7 @@ export const WithIcon: StoryFn<typeof Button> = () => {
       <Button aria-label="download">
         <DownloadIcon aria-hidden />
       </Button>
-    </div>
+    </FlexLayout>
   );
 };
 
