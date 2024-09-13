@@ -1,4 +1,5 @@
-export * from "./Appearance";
+export * from "./Accented";
+export * from "./Neutral";
 export * from "./Deprecated";
 export * from "./Disabled";
 export * from "./FocusableWhenDisabled";

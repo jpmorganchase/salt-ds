@@ -10,25 +10,33 @@ data:
 
 <LivePreviewControls>
   
-<LivePreview componentName="button" exampleName="Appearance">
+<LivePreview componentName="button" exampleName="Accented">
 
-## Appearance
+## Accented
 
-Buttons come in three distinct appearances: solid, bordered, and transparent. These styles provide greater choice and flexibility for establishing hierarchy and affordance within a UI.
+The accented button is the main button set for your UI. It is typically used for the core actions in your user's workflow. There are three different appearances available, which you can choose based on the prominence required for the actions.
+
+In [Salt Next theme](../../themes/index), accented button adopts blue or teal styling option.
+
+</LivePreview>
+  
+<LivePreview componentName="button" exampleName="Neutral">
+
+## Neutral
+
+The neutral button is ideal for routine, non-urgent actions or tasks that require less visual prominence on the page. The neutral solid button can also be used as an alternative to the accented bordered button for secondary actions that need to stand out more.
 
 </LivePreview>
 
 <LivePreview componentName="button" exampleName="Sentiment">
 
-## Sentiment
+## Other sentiments
 
-The buttons convey five sentiments through color—positive, accented, neutral, caution and negative. Use them in your application designs as follows:
+Button has three other sentiments available—positive, caution and negative. Use them in your application designs as follows:
 
-- **Positive**: Indicate actions that result in positive outcomes.
-- **Accented**: Perfect for priority actions that need to stand out from the UI.
-- **Neutral**: Ideal for routine, non-urgent actions, or where the actions should blend in with the UI.
-- **Caution**: Alert users to potential consequences that may arise from taking an action.
-- **Negative**: Indicate actions that result in negative outcomes.
+- **Positive**: Indicates actions that result in positive outcomes.
+- **Caution**: Alerts users to potential consequences that may arise from taking an action.
+- **Negative**: Indicates actions that lead to negative outcomes.
 
 </LivePreview>
   
@@ -36,7 +44,7 @@ The buttons convey five sentiments through color—positive, accented, neutral, 
 
 ## Icon and text
 
-Add an icon before the text to reinforce the button's purpose. Add an icon after the text to suggest movement or direction.
+Button can display both an icon and text to visually reinforce the meaning of the action. Position the icon on either the left or right of the text depending on its purpose.
 
 ### Best practices
 
@@ -90,11 +98,11 @@ Use full width buttons on mobile devices or smaller viewports, the button will t
 
 ## Deprecated variants
 
-The previous CTA, Primary, and Secondary buttons have been seamlessly mapped to their corresponding buttons in the new set. This means you can continue designing without missing a beat, while also taking advantage of the new options available.
+The previous call-to-action (CTA), Primary, and Secondary buttons have been seamlessly transitioned to their corresponding buttons in the new set. This ensures that you can continue your design work without interruption, while also benefiting from the new options available.
 
-- CTA: `appearance="solid" sentiment="accented"`
-- Primary: `appearance="solid" sentiment="neutral"`
-- Secondary: `appearance="transparent" sentiment="neutral"  `
+- CTA: `sentiment="accented" appearance="solid"`
+- Primary: `sentiment="neutral" appearance="solid"`
+- Secondary: `sentiment="neutral" appearance="transparent"`
 
 </LivePreview>
 
