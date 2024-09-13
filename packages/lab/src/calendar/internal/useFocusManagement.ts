@@ -8,10 +8,16 @@ import type {
   KeyboardEventHandler,
   MouseEventHandler,
 } from "react";
+import { getCurrentLocale } from "../formatDate";
 import { useCalendarContext } from "./CalendarContext";
-import { getCurrentLocale } from "./utils";
 
-export function useFocusManagement({ date }: { date: DateValue }) {
+export function useFocusManagement({
+  date,
+  locale = getCurrentLocale(),
+}: {
+  date: DateValue;
+  locale: string;
+}) {
   const {
     helpers: { setFocusedDate },
   } = useCalendarContext();
@@ -35,11 +41,11 @@ export function useFocusManagement({ date }: { date: DateValue }) {
         newDate = date.add({ days: 1 });
         break;
       case "Home":
-        newDate = startOfWeek(date, getCurrentLocale());
+        newDate = startOfWeek(date, locale);
         break;
       case "End":
         // @ts-ignore TODO bug in @internationalized/date
-        newDate = endOfWeek(date, getCurrentLocale());
+        newDate = endOfWeek(date, locale);
         break;
       case "PageUp":
         if (event.shiftKey) {

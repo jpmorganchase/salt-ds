@@ -1,4 +1,6 @@
 export * from "./Calendar";
+export * from "./CalendarNavigation";
 export * from "./useCalendarDay";
 export * from "./useCalendar";
-export * from "./useSelection";
+export * from "./useCalendarSelection";
+export * from "./formatDate";

@@ -1,11 +1,14 @@
 import { parseDate } from "@internationalized/date";
-import { Calendar } from "@salt-ds/lab";
+import { Calendar, CalendarNavigation } from "@salt-ds/lab";
 import type { StoryFn } from "@storybook/react";
 import { QAContainer, type QAContainerProps } from "docs/components";
 
+const testLocale = "en-GB";
+
 export default {
-  title: "Lab/Calendar/Calendar QA",
+  title: "Lab/Calendar/QA",
   component: Calendar,
+  locale: testLocale,
 };
 
 export const AllExamples: StoryFn<QAContainerProps> = () => (
@@ -19,27 +22,56 @@ export const AllExamples: StoryFn<QAContainerProps> = () => (
     vertical
   >
     <Calendar
-      selectionVariant="default"
+      locale={testLocale}
+      selectionVariant="single"
       selectedDate={parseDate("2024-04-02")}
-    />
+    >
+      <CalendarNavigation />
+    </Calendar>
     <Calendar
+      locale={testLocale}
       selectionVariant="range"
       selectedDate={{
         startDate: parseDate("2024-04-02"),
         endDate: parseDate("2024-04-04"),
       }}
-    />
+    >
+      <CalendarNavigation />
+    </Calendar>
     <Calendar
+      locale={testLocale}
       selectionVariant="offset"
       selectedDate={{
         startDate: parseDate("2024-04-02"),
         endDate: parseDate("2024-04-04"),
       }}
-    />
+    >
+      <CalendarNavigation />
+    </Calendar>
     <Calendar
+      locale={testLocale}
       selectionVariant="multiselect"
       selectedDate={[parseDate("2024-04-02"), parseDate("2024-04-04")]}
-    />
+    >
+      <CalendarNavigation />
+    </Calendar>
+    <Calendar
+      locale={testLocale}
+      selectionVariant="multiselect"
+      selectedDate={[parseDate("2024-04-02"), parseDate("2024-04-04")]}
+    >
+      <CalendarNavigation hideYearDropdown />
+    </Calendar>
+    <Calendar
+      locale={testLocale}
+      selectionVariant="multiselect"
+      selectedDate={[parseDate("2024-04-02"), parseDate("2024-04-04")]}
+    >
+      <CalendarNavigation
+        MonthDropdownProps={{ bordered: true }}
+        YearDropdownProps={{ bordered: true }}
+      />
+    </Calendar>
   </QAContainer>
 );
 
