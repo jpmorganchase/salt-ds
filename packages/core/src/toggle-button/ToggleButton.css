@@ -5,7 +5,7 @@
   border-color: var(--toggleButton-borderColor, transparent);
   border-style: solid;
   border-width: var(--salt-size-border, 0);
-  border-radius: var(--salt-palette-corner-weaker, 0);
+  border-radius: var(--salt-palette-corner-weak, 0);
   color: var(--toggleButton-text-color);
   cursor: pointer;
   display: inline-flex;
