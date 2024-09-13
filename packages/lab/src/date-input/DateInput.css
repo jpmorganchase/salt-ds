@@ -45,13 +45,13 @@
 .saltDateInput-bordered.saltDateInput-readOnly,
 .saltDateInput-bordered.saltDateInput-readOnly:hover {
   border-style: var(--salt-editable-borderStyle-readonly);
-  border-color: var(--input-borderColor-readonly);
+  border-color: var(--salt-editable-borderColor-readonly);
 }
 
 .saltDateInput-bordered.saltDateInput-disabled,
 .saltDateInput-bordered.saltDateInput-disabled:hover {
   border-style: var(--salt-editable-borderStyle-disabled);
-  border-color: var(--input-borderColor-disabled);
+  border-color: var(--salt-editable-borderColor-disabled);
 }
 
 .saltDateInput-activationIndicator {
@@ -75,13 +75,13 @@
 .saltDateInput-readOnly .saltDateInput-activationIndicator,
 .saltDateInput-readOnly:hover .saltDateInput-activationIndicator {
   border-bottom-style: var(--salt-editable-borderStyle-readonly);
-  border-bottom-color: var(--input-borderColor-readonly);
+  border-bottom-color: var(--salt-editable-borderColor-readonly);
 }
 
 .saltDateInput-disabled .saltDateInput-activationIndicator,
 .saltDateInput-disabled:hover .saltDateInput-activationIndicator {
   border-bottom-style: var(--salt-editable-borderStyle-disabled);
-  border-bottom-color: var(--input-borderColor-disabled);
+  border-bottom-color: var(--salt-editable-borderColor-disabled);
 }
 
 .saltDateInput-bordered .saltDateInput-activationIndicator,
@@ -104,8 +104,6 @@
   --input-borderColor: var(--salt-editable-borderColor);
   --input-borderColor-active: var(--salt-editable-borderColor-active);
   --input-borderColor-hover: var(--salt-editable-borderColor-hover);
-  --input-borderColor-disabled: var(--salt-editable-borderColor-disabled);
-  --input-borderColor-readonly: var(--salt-editable-borderColor-readonly);
   --input-outlineColor: var(--salt-focused-outlineColor);
 }
 
@@ -119,8 +117,6 @@
   --input-borderColor: var(--salt-editable-borderColor);
   --input-borderColor-active: var(--salt-editable-borderColor-active);
   --input-borderColor-hover: var(--salt-editable-borderColor-hover);
-  --input-borderColor-disabled: var(--salt-editable-borderColor-disabled);
-  --input-borderColor-readonly: var(--salt-editable-borderColor-readonly);
   --input-outlineColor: var(--salt-focused-outlineColor);
 }
 
@@ -133,8 +129,6 @@
   --input-borderColor: var(--salt-status-error-borderColor);
   --input-borderColor-active: var(--salt-status-error-borderColor);
   --input-borderColor-hover: var(--salt-status-error-borderColor);
-  --input-borderColor-disabled: var(--salt-status-error-borderColor);
-  --input-borderColor-readonly: var(--salt-status-error-borderColor);
   --input-outlineColor: var(--salt-status-error-borderColor);
 }
 
@@ -147,8 +141,6 @@
   --input-borderColor: var(--salt-status-warning-borderColor);
   --input-borderColor-active: var(--salt-status-warning-borderColor);
   --input-borderColor-hover: var(--salt-status-warning-borderColor);
-  --input-borderColor-disabled: var(--salt-status-warning-borderColor);
-  --input-borderColor-readonly: var(--salt-status-warning-borderColor);
   --input-outlineColor: var(--salt-status-warning-borderColor);
 }
 
@@ -161,8 +153,6 @@
   --input-borderColor: var(--salt-status-success-borderColor);
   --input-borderColor-active: var(--salt-status-success-borderColor);
   --input-borderColor-hover: var(--salt-status-success-borderColor);
-  --input-borderColor-disabled: var(--salt-status-success-borderColor);
-  --input-borderColor-readonly: var(--salt-status-success-borderColor);
   --input-outlineColor: var(--salt-status-success-borderColor);
 }
 

@@ -47,13 +47,13 @@
 .saltMultilineInput-bordered.saltMultilineInput-readOnly,
 .saltMultilineInput-bordered.saltMultilineInput-readOnly:hover {
   border-style: var(--salt-editable-borderStyle-readonly);
-  border-color: var(--multilineInput-borderColor-readonly);
+  border-color: var(--salt-editable-borderColor-readonly);
 }
 
 .saltMultilineInput-bordered.saltMultilineInput-disabled,
 .saltMultilineInput-bordered.saltMultilineInput-disabled:hover {
   border-style: var(--salt-editable-borderStyle-disabled);
-  border-color: var(--multilineInput-borderColor-disabled);
+  border-color: var(--salt-editable-borderColor-disabled);
 }
 
 /* Style for activation indicator */
@@ -78,13 +78,13 @@
 .saltMultilineInput-readOnly .saltMultilineInput-activationIndicator,
 .saltMultilineInput-readOnly:hover .saltMultilineInput-activationIndicator {
   border-bottom-style: var(--salt-editable-borderStyle-readonly);
-  border-bottom-color: var(--multilineInput-borderColor-readonly);
+  border-bottom-color: var(--salt-editable-borderColor-readonly);
 }
 
 .saltMultilineInput-disabled .saltMultilineInput-activationIndicator,
 .saltMultilineInput-disabled:hover .saltMultilineInput-activationIndicator {
   border-bottom-style: var(--salt-editable-borderStyle-disabled);
-  border-bottom-color: var(--multilineInput-borderColor-disabled);
+  border-bottom-color: var(--salt-editable-borderColor-disabled);
 }
 
 .saltMultilineInput-bordered .saltMultilineInput-activationIndicator,
@@ -107,8 +107,6 @@
   --multilineInput-borderColor: var(--salt-editable-borderColor);
   --multilineInput-borderColor-active: var(--salt-editable-borderColor-active);
   --multilineInput-borderColor-hover: var(--salt-editable-borderColor-hover);
-  --multilineInput-borderColor-disabled: var(--salt-editable-borderColor-disabled);
-  --multilineInput-borderColor-readonly: var(--salt-editable-borderColor-readonly);
   --multilineInput-outlineColor: var(--salt-focused-outlineColor);
 }
 
@@ -122,8 +120,6 @@
   --multilineInput-borderColor: var(--salt-editable-borderColor);
   --multilineInput-borderColor-active: var(--salt-editable-borderColor-active);
   --multilineInput-borderColor-hover: var(--salt-editable-borderColor-hover);
-  --multilineInput-borderColor-disabled: var(--salt-editable-borderColor-disabled);
-  --multilineInput-borderColor-readonly: var(--salt-editable-borderColor-readonly);
   --multilineInput-outlineColor: var(--salt-focused-outlineColor);
 }
 
@@ -136,8 +132,6 @@
   --multilineInput-borderColor: var(--salt-status-error-borderColor);
   --multilineInput-borderColor-active: var(--salt-status-error-borderColor);
   --multilineInput-borderColor-hover: var(--salt-status-error-borderColor);
-  --multilineInput-borderColor-disabled: var(--salt-status-error-borderColor);
-  --multilineInput-borderColor-readonly: var(--salt-status-error-borderColor);
   --multilineInput-outlineColor: var(--salt-status-error-borderColor);
 }
 
@@ -150,8 +144,6 @@
   --multilineInput-borderColor: var(--salt-status-warning-borderColor);
   --multilineInput-borderColor-active: var(--salt-status-warning-borderColor);
   --multilineInput-borderColor-hover: var(--salt-status-warning-borderColor);
-  --multilineInput-borderColor-disabled: var(--salt-status-warning-borderColor);
-  --multilineInput-borderColor-readonly: var(--salt-status-warning-borderColor);
   --multilineInput-outlineColor: var(--salt-status-warning-borderColor);
 }
 
@@ -164,8 +156,6 @@
   --multilineInput-borderColor: var(--salt-status-success-borderColor);
   --multilineInput-borderColor-active: var(--salt-status-success-borderColor);
   --multilineInput-borderColor-hover: var(--salt-status-success-borderColor);
-  --multilineInput-borderColor-disabled: var(--salt-status-success-borderColor);
-  --multilineInput-borderColor-readonly: var(--salt-status-success-borderColor);
   --multilineInput-outlineColor: var(--salt-status-success-borderColor);
 }
 

@@ -57,13 +57,13 @@
 .saltPillInput-bordered.saltPillInput-readOnly,
 .saltPillInput-bordered.saltPillInput-readOnly:hover {
   border-style: var(--salt-editable-borderStyle-readonly);
-  border-color: var(--pillInput-borderColor-readonly);
+  border-color: var(--salt-editable-borderColor-readonly);
 }
 
 .saltPillInput-bordered.saltPillInput-disabled,
 .saltPillInput-bordered.saltPillInput-disabled:hover {
   border-style: var(--salt-editable-borderStyle-disabled);
-  border-color: var(--pillInput-borderColor-disabled);
+  border-color: var(--salt-editable-borderColor-disabled);
 }
 
 .saltPillInput-activationIndicator {
@@ -87,13 +87,13 @@
 .saltPillInput-readOnly .saltPillInput-activationIndicator,
 .saltPillInput-readOnly:hover .saltPillInput-activationIndicator {
   border-bottom-style: var(--salt-editable-borderStyle-readonly);
-  border-bottom-color: var(--pillInput-borderColor-readonly);
+  border-bottom-color: var(--salt-editable-borderColor-readonly);
 }
 
 .saltPillInput-disabled .saltPillInput-activationIndicator,
 .saltPillInput-disabled:hover .saltPillInput-activationIndicator {
   border-bottom-style: var(--salt-editable-borderStyle-disabled);
-  border-bottom-color: var(--pillInput-borderColor-disabled);
+  border-bottom-color: var(--salt-editable-borderColor-disabled);
 }
 
 .saltPillInput-bordered .saltPillInput-activationIndicator,
@@ -116,8 +116,6 @@
   --pillInput-borderColor: var(--salt-editable-borderColor);
   --pillInput-borderColor-active: var(--salt-editable-borderColor-active);
   --pillInput-borderColor-hover: var(--salt-editable-borderColor-hover);
-  --pillInput-borderColor-disabled: var(--salt-editable-borderColor-disabled);
-  --pillInput-borderColor-readonly: var(--salt-editable-borderColor-readonly);
   --pillInput-outlineColor: var(--salt-focused-outlineColor);
 }
 
@@ -131,8 +129,6 @@
   --pillInput-borderColor: var(--salt-editable-borderColor);
   --pillInput-borderColor-active: var(--salt-editable-borderColor-active);
   --pillInput-borderColor-hover: var(--salt-editable-borderColor-hover);
-  --pillInput-borderColor-disabled: var(--salt-editable-borderColor-disabled);
-  --pillInput-borderColor-readonly: var(--salt-editable-borderColor-readonly);
   --pillInput-outlineColor: var(--salt-focused-outlineColor);
 }
 
@@ -145,8 +141,7 @@
   --pillInput-borderColor: var(--salt-status-error-borderColor);
   --pillInput-borderColor-active: var(--salt-status-error-borderColor);
   --pillInput-borderColor-hover: var(--salt-status-error-borderColor);
-  --pillInput-borderColor-disabled: var(--salt-status-error-borderColor);
-  --pillInput-borderColor-readonly: var(--salt-status-error-borderColor);
+  --pillInput-borderColor-disabled: var(--salt-editable-borderColor-disabled);
   --pillInput-outlineColor: var(--salt-status-error-borderColor);
 }
 
@@ -159,8 +154,7 @@
   --pillInput-borderColor: var(--salt-status-warning-borderColor);
   --pillInput-borderColor-active: var(--salt-status-warning-borderColor);
   --pillInput-borderColor-hover: var(--salt-status-warning-borderColor);
-  --pillInput-borderColor-disabled: var(--salt-status-warning-borderColor);
-  --pillInput-borderColor-readonly: var(--salt-status-warning-borderColor);
+  --pillInput-borderColor-disabled: var(--salt-editable-borderColor-disabled);
   --pillInput-outlineColor: var(--salt-status-warning-borderColor);
 }
 
@@ -173,8 +167,6 @@
   --pillInput-borderColor: var(--salt-status-success-borderColor);
   --pillInput-borderColor-active: var(--salt-status-success-borderColor);
   --pillInput-borderColor-hover: var(--salt-status-success-borderColor);
-  --pillInput-borderColor-disabled: var(--salt-status-success-borderColor);
-  --pillInput-borderColor-readonly: var(--salt-status-success-borderColor);
   --pillInput-outlineColor: var(--salt-status-success-borderColor);
 }
 
