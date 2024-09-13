@@ -2,11 +2,16 @@
 .saltCard {
   border-width: var(--saltCard-borderWidth, var(--salt-size-border));
   border-style: var(--salt-container-borderStyle);
-  padding: var(--saltCard-padding, var(--salt-spacing-200));
+  padding: var(--saltCard-padding, var(--card-padding));
   position: relative;
   transition: box-shadow var(--salt-duration-instant) ease-in-out;
   box-sizing: border-box;
   border-radius: var(--saltCard-borderRadius, var(--salt-palette-corner, 0));
+}
+
+.saltCard:not(:has(.saltCardContent)),
+.saltCard-padding {
+  --card-padding: var(--salt-spacing-200);
 }
 
 .saltCard-primary {

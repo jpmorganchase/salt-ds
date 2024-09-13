@@ -1,4 +1,11 @@
-import { Card, H1, InteractableCard, Text } from "@salt-ds/core";
+import {
+  Card,
+  CardContent,
+  H1,
+  InteractableCard,
+  Panel,
+  Text,
+} from "@salt-ds/core";
 import type { Meta, StoryFn } from "@storybook/react";
 import {
   QAContainer,
@@ -44,6 +51,19 @@ export const AllExamplesUsingText: StoryFn<
       <Card accent="left">
         <H1>Accent left</H1>
         <Text>Content</Text>
+      </Card>
+      <Card>
+        <CardContent>
+          <H1>Accent left</H1>
+          <Text>Content</Text>
+        </CardContent>
+      </Card>
+      <Card>
+        <Panel variant="secondary" style={{ height: 20 }} />
+        <CardContent>
+          <H1>Accent left</H1>
+          <Text>Content</Text>
+        </CardContent>
       </Card>
     </QAContainer>
   );
