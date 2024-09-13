@@ -1,0 +1,3 @@
+.saltCardContent {
+  padding: var(--saltCardContent-padding, var(--salt-spacing-200));
+}

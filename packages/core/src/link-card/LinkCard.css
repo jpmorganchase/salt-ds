@@ -6,11 +6,28 @@
   box-shadow: var(--salt-overlayable-shadow);
   display: block;
   overflow: hidden;
-  padding: var(--saltLinkCard-padding, var(--salt-spacing-200));
+  padding: var(--saltLinkCard-padding, var(--card-padding));
   position: relative;
   text-decoration: none;
   transition: box-shadow var(--salt-duration-instant) ease-in-out;
   --linkCard-accent-color: var(--salt-sentiment-accent-background);
+  --card-padding: var(--salt-spacing-200);
+}
+
+/*
+ * Suppress the link card's default inner padding when a `CardContent` child is
+ * present. Modern browsers handle this purely in CSS via `:has()`. The
+ * `saltLinkCard-noPadding` class is the JS fallback (toggled by `CardContent`
+ * through `CardContext`) for browsers that do not yet support `:has()`.
+ */
+.saltLinkCard-noPadding {
+  --card-padding: 0;
+}
+
+@supports selector(:has(*)) {
+  .saltLinkCard:has(> .saltCardContent) {
+    --card-padding: 0;
+  }
 }
 
 /* Styles applied to LinkCard when variant="primary" */
