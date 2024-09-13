@@ -1,8 +1,9 @@
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
-import { type ComponentPropsWithoutRef, forwardRef } from "react";
+import { type ComponentPropsWithoutRef, forwardRef, useState } from "react";
 
+import { CardContext } from "../card/CardContext";
 import { capitalize, makePrefixer } from "../utils";
 
 import linkCardCss from "./LinkCard.css";
@@ -38,23 +39,28 @@ export const LinkCard = forwardRef<HTMLAnchorElement, LinkCardProps>(
       window: targetWindow,
     });
 
+    const [noPadding, setNoPadding] = useState(false);
+
     return (
-      <a
-        className={clsx(
-          withBaseName(),
-          withBaseName(variant),
-          {
-            [withBaseName("accent")]: accent,
-            [withBaseName(`accent${capitalize(accent ?? "")}`)]: accent,
-          },
-          className,
-        )}
-        href={href}
-        {...rest}
-        ref={ref}
-      >
-        {children}
-      </a>
+      <CardContext.Provider value={{ setNoPadding }}>
+        <a
+          className={clsx(
+            withBaseName(),
+            withBaseName(variant),
+            {
+              [withBaseName("accent")]: accent,
+              [withBaseName(`accent${capitalize(accent ?? "")}`)]: accent,
+              [withBaseName("noPadding")]: noPadding,
+            },
+            className,
+          )}
+          href={href}
+          {...rest}
+          ref={ref}
+        >
+          {children}
+        </a>
+      </CardContext.Provider>
     );
   },
 );

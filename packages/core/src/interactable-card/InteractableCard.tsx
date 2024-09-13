@@ -7,7 +7,9 @@ import {
   type MouseEvent,
   type SyntheticEvent,
   useRef,
+  useState,
 } from "react";
+import { CardContext } from "../card/CardContext";
 import { capitalize, makePrefixer, useControlled, useForkRef } from "../utils";
 import interactableCardCss from "./InteractableCard.css";
 import {
@@ -140,32 +142,38 @@ export const InteractableCard = forwardRef<
     onClick,
   });
 
+  const [noPadding, setNoPadding] = useState(false);
+
   return (
-    // biome-ignore lint/a11y/useAriaPropsSupportedByRole: Biome can't detect the role provided by the role variable. aria-checked is only used when the role is appropriate.
-    <div
-      {...cardProps}
-      role={role}
-      aria-checked={ariaChecked}
-      aria-disabled={disabled}
-      data-value={value}
-      className={clsx(
-        withBaseName(),
-        withBaseName(variant),
-        {
-          [withBaseName("accent")]: accentValue,
-          [withBaseName(`accent${capitalize(accentValue ?? "")}`)]: accentValue,
-          [withBaseName("active")]: role === "button" && active,
-          [withBaseName("disabled")]: disabled,
-          [withBaseName("selected")]: selected,
-        },
-        className,
-      )}
-      {...rest}
-      onClick={handleClick}
-      ref={handleRef}
-      tabIndex={tabIndex}
-    >
-      {children}
-    </div>
+    <CardContext.Provider value={{ setNoPadding }}>
+      {/* biome-ignore lint/a11y/useAriaPropsSupportedByRole: Biome can't detect the role provided by the role variable. aria-checked is only used when the role is appropriate. */}
+      <div
+        {...cardProps}
+        role={role}
+        aria-checked={ariaChecked}
+        aria-disabled={disabled}
+        data-value={value}
+        className={clsx(
+          withBaseName(),
+          withBaseName(variant),
+          {
+            [withBaseName("accent")]: accentValue,
+            [withBaseName(`accent${capitalize(accentValue ?? "")}`)]:
+              accentValue,
+            [withBaseName("active")]: role === "button" && active,
+            [withBaseName("disabled")]: disabled,
+            [withBaseName("selected")]: selected,
+            [withBaseName("noPadding")]: noPadding,
+          },
+          className,
+        )}
+        {...rest}
+        onClick={handleClick}
+        ref={handleRef}
+        tabIndex={tabIndex}
+      >
+        {children}
+      </div>
+    </CardContext.Provider>
   );
 });

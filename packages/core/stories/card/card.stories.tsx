@@ -1,6 +1,7 @@
 import {
   Button,
   Card,
+  CardContent,
   type CardProps,
   H3,
   Label,
@@ -36,8 +37,12 @@ export const Default: StoryFn<typeof Card> = (args) => (
 
 export const DefaultWithImage: StoryFn<typeof Card> = (args) => (
   <Card {...args} style={{ width: "260px" }}>
-    <StackLayout gap={3}>
-      <img alt="example" src={exampleImage} style={{ width: "100%" }} />
+    <img
+      alt="example"
+      src={exampleImage}
+      style={{ display: "block", width: "100%" }}
+    />
+    <CardContent>
       <StackLayout gap={1}>
         <H3>Sustainable investing products</H3>
         <Text>
@@ -45,7 +50,7 @@ export const DefaultWithImage: StoryFn<typeof Card> = (args) => (
           to enable you to align your financial goals to your values.
         </Text>
       </StackLayout>
-    </StackLayout>
+    </CardContent>
   </Card>
 );
 
