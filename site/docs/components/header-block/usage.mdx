@@ -1,0 +1,34 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+## Using the components
+
+### When to use
+
+- When a heading is required for an [`Overlay`](../overlay) or [`Dialog`](../dialog).
+- When a top-right-aligned close button is required for an [`Overlay`](../overlay) or [`Dialog`](../dialog).
+
+## Content
+
+HeaderBlock `header`, `preheader`, and `description` never truncate, only wrap. Therefore, ensure they're short and self-explanatory.
+
+## Import
+
+To import `HeaderBlock` from the lab Salt package, use:
+
+```
+import { HeaderBlock } from "@salt-ds/lab";
+```
+
+## Props
+
+### `HeaderBlock`
+
+<PropsTable packageName="lab" componentName="HeaderBlock" />

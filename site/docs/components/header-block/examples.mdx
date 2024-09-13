@@ -1,0 +1,83 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+<LivePreviewControls>
+
+  <LivePreview componentName="header-block" exampleName="Basic" >
+
+## Basic
+
+`HeaderBlock` can show any combination of `header`, `preheader`, and `description`. It can also show `status` (info, success, warning, and error).
+
+  </LivePreview>
+
+  <LivePreview componentName="header-block" exampleName="CloseButton" >
+
+## Accent
+
+`HeaderBlock` can be used with or without an accent bar.
+
+The accent bar is shown by passing `true` to the `accent` prop (the default value for `accent` is `false`).
+
+  </LivePreview>
+  <LivePreview componentName="header-block" exampleName="CloseButton" >
+
+## Close button
+
+`HeaderBlock` can be used to include a close button in the top right corner of a dialog or overlay.
+
+The close button is shown by passing a function to the `onClose` prop.
+
+  </LivePreview>
+  
+  <LivePreview componentName="header-block" exampleName="Padding" >
+
+## Padding
+
+`HeaderBlock` can be used to include a close button in the top right corner of a dialog or overlay.
+
+The close button is shown by passing a function to the `onClose` prop.
+
+  </LivePreview>
+
+  <LivePreview componentName="header-block" exampleName="Status" >
+
+## Status
+
+`HeaderBlock` can be used to display a status indicator and message.
+
+Status can be provided using the `status` prop. When `HeaderBlock` is used with a [`Dialog`](../dialog), it will inherit the `status` value of the `Dialog` component (**Note:** when there is a status value for the parent `Dialog` this value will override any `status` value applied directly to the `HeaderBlock`).
+
+When a `status` value is provided, `preheader` and `description` will not be shown and the accent bar will be hidden (this overrides any values provided to `preheader`, `description`, and `status` props).
+
+  </LivePreview>
+
+  <LivePreview componentName="header-block" exampleName="InDialog" >
+
+## In Dialog
+
+`HeaderBlock` can be used within a [`Dialog`](../dialog) component.
+
+The close button is shown by passing a function to the `onClose` prop.
+
+### Best practices
+
+- Avoid using the `padding` prop when the `HeaderBlock` is used within a `Dialog` component. The default `padding` value matches the padding of the `Dialog` component.
+- Avoid using the `status` prop when the `HeaderBlock` is used within a `Dialog` component. The `HeaderBlock` will inherit the `status` value of the `Dialog` component, so when there is a status value for the parent `Dialog` this value will override any `status` value applied directly to the `HeaderBlock`.
+
+  </LivePreview>
+
+  <LivePreview componentName="header-block" exampleName="InDialogWithLongContent" >
+
+## In Dialog with long content
+
+  </LivePreview>
+
+</LivePreviewControls>
