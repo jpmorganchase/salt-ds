@@ -69,6 +69,9 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           run-id: ${{ github.event.workflow_run.id }}
 
+      - name: "Delete stats.json if it exists"
+        run: rm -f ./storybook-static/preview-stats.json
+
       - name: Publish
         uses: cloudflare/pages-action@v1
         id: publish
