@@ -1,20 +1,14 @@
 /* Style applied to the root element */
 .saltPillInput {
-  --pillInput-border: none;
-  --pillInput-borderColor: var(--salt-editable-borderColor);
-  --pillInput-borderStyle: var(--salt-editable-borderStyle);
-  --pillInput-outlineColor: var(--salt-focused-outlineColor);
-  --pillInput-borderWidth: var(--salt-size-border);
-
   align-items: center;
   background: var(--saltPillInput-background, var(--pillInput-background));
   border-radius: var(--salt-palette-corner-weak, 0);
-  border: var(--pillInput-border);
   color: var(--saltPillInput-color, var(--salt-content-primary-foreground));
   display: inline-flex;
   font-family: var(--salt-text-fontFamily);
   font-size: var(--saltPillInput-fontSize, var(--salt-text-fontSize));
   line-height: var(--saltPillInput-lineHeight, var(--salt-text-lineHeight));
+  letter-spacing: var(--salt-text-letterSpacing);
   min-height: var(--saltPillInput-minHeight, var(--salt-size-base));
   min-width: var(--saltPillInput-minWidth, 4em);
   padding-left: var(--saltPillInput-paddingLeft, var(--salt-spacing-100));
@@ -34,20 +28,82 @@
 }
 
 .saltPillInput:hover {
-  --pillInput-borderStyle: var(--salt-editable-borderStyle-hover);
-  --pillInput-borderColor: var(--salt-editable-borderColor-hover);
-
   background: var(--saltPillInput-background-hover, var(--pillInput-background-hover));
   cursor: var(--salt-editable-cursor-hover);
 }
 
-.saltPillInput:active {
-  --pillInput-borderColor: var(--salt-editable-borderColor-active);
-  --pillInput-borderStyle: var(--salt-editable-borderStyle-active);
-  --pillInput-borderWidth: var(--salt-editable-borderWidth-active);
+/* Style applied if `bordered={true}` */
+.saltPillInput-bordered.saltPillInput {
+  border: var(--salt-size-border) var(--salt-editable-borderStyle) var(--pillInput-borderColor);
+}
 
-  background: var(--saltPillInput-background-active, var(--pillInput-background-active));
-  cursor: var(--salt-editable-cursor-active);
+.saltPillInput-bordered.saltPillInput:hover {
+  border-style: var(--salt-editable-borderStyle-hover);
+  border-color: var(--pillInput-borderColor-hover);
+}
+
+/* Style applied if focused or active when `bordered={true}` */
+.saltPillInput-bordered.saltPillInput-focused,
+.saltPillInput-bordered:active {
+  --pillInput-borderWidth: calc(var(--salt-editable-borderWidth-active) - var(--salt-size-border));
+}
+
+.saltPillInput-bordered.saltPillInput-focused,
+.saltPillInput-bordered.saltPillInput-focused:hover {
+  border-style: var(--salt-editable-borderStyle-active);
+  border-color: var(--pillInput-borderColor-active);
+}
+
+.saltPillInput-bordered.saltPillInput-readOnly,
+.saltPillInput-bordered.saltPillInput-readOnly:hover {
+  border-style: var(--salt-editable-borderStyle-readonly);
+  border-color: var(--pillInput-borderColor-readonly);
+}
+
+.saltPillInput-bordered.saltPillInput-disabled,
+.saltPillInput-bordered.saltPillInput-disabled:hover {
+  border-style: var(--salt-editable-borderStyle-disabled);
+  border-color: var(--pillInput-borderColor-disabled);
+}
+
+.saltPillInput-activationIndicator {
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  position: absolute;
+  border-bottom: var(--salt-size-border) var(--salt-editable-borderStyle) var(--pillInput-borderColor);
+}
+
+.saltPillInput:hover .saltPillInput-activationIndicator {
+  border-bottom-style: var(--salt-editable-borderStyle-hover);
+  border-bottom-color: var(--pillInput-borderColor-hover);
+}
+
+.saltPillInput-focused .saltPillInput-activationIndicator,
+.saltPillInput-focused:hover .saltPillInput-activationIndicator {
+  border-bottom: var(--salt-size-border-strong) var(--salt-editable-borderStyle-active) var(--pillInput-borderColor-active);
+}
+
+.saltPillInput-readOnly .saltPillInput-activationIndicator,
+.saltPillInput-readOnly:hover .saltPillInput-activationIndicator {
+  border-bottom-style: var(--salt-editable-borderStyle-readonly);
+  border-bottom-color: var(--pillInput-borderColor-readonly);
+}
+
+.saltPillInput-disabled .saltPillInput-activationIndicator,
+.saltPillInput-disabled:hover .saltPillInput-activationIndicator {
+  border-bottom-style: var(--salt-editable-borderStyle-disabled);
+  border-bottom-color: var(--pillInput-borderColor-disabled);
+}
+
+.saltPillInput-bordered .saltPillInput-activationIndicator,
+.saltPillInput-bordered.saltPillInput-readOnly .saltPillInput-activationIndicator,
+.saltPillInput-bordered.saltPillInput-disabled:hover .saltPillInput-activationIndicator {
+  border-bottom-width: 0;
+}
+
+.saltPillInput-bordered.saltPillInput-focused .saltPillInput-activationIndicator {
+  border-bottom-width: calc(var(--salt-size-border-strong) - var(--salt-size-border));
 }
 
 /* Class applied if `variant="primary"` */
@@ -57,6 +113,12 @@
   --pillInput-background-hover: var(--salt-editable-primary-background-hover);
   --pillInput-background-disabled: var(--salt-editable-primary-background-disabled);
   --pillInput-background-readonly: var(--salt-editable-primary-background-readonly);
+  --pillInput-borderColor: var(--salt-editable-borderColor);
+  --pillInput-borderColor-active: var(--salt-editable-borderColor-active);
+  --pillInput-borderColor-hover: var(--salt-editable-borderColor-hover);
+  --pillInput-borderColor-disabled: var(--salt-editable-borderColor-disabled);
+  --pillInput-borderColor-readonly: var(--salt-editable-borderColor-readonly);
+  --pillInput-outlineColor: var(--salt-focused-outlineColor);
 }
 
 /* Class applied if `variant="secondary"` */
@@ -66,150 +128,76 @@
   --pillInput-background-hover: var(--salt-editable-secondary-background-active);
   --pillInput-background-disabled: var(--salt-editable-secondary-background-disabled);
   --pillInput-background-readonly: var(--salt-editable-secondary-background-readonly);
+  --pillInput-borderColor: var(--salt-editable-borderColor);
+  --pillInput-borderColor-active: var(--salt-editable-borderColor-active);
+  --pillInput-borderColor-hover: var(--salt-editable-borderColor-hover);
+  --pillInput-borderColor-disabled: var(--salt-editable-borderColor-disabled);
+  --pillInput-borderColor-readonly: var(--salt-editable-borderColor-readonly);
+  --pillInput-outlineColor: var(--salt-focused-outlineColor);
 }
 
 /* Style applied to input if `validationState="error"` */
-.saltPillInput-error,
-.saltPillInput-error:hover {
+.saltPillInput-error {
   --pillInput-background: var(--salt-status-error-background);
   --pillInput-background-active: var(--salt-status-error-background);
   --pillInput-background-hover: var(--salt-status-error-background);
-  --pillInput-borderColor: var(--salt-status-error-borderColor);
-  --pillInput-outlineColor: var(--salt-status-error-borderColor);
   --pillInput-background-readonly: var(--salt-status-error-background);
+  --pillInput-borderColor: var(--salt-status-error-borderColor);
+  --pillInput-borderColor-active: var(--salt-status-error-borderColor);
+  --pillInput-borderColor-hover: var(--salt-status-error-borderColor);
+  --pillInput-borderColor-disabled: var(--salt-status-error-borderColor);
+  --pillInput-borderColor-readonly: var(--salt-status-error-borderColor);
+  --pillInput-outlineColor: var(--salt-status-error-borderColor);
 }
 
 /* Style applied to input if `validationState="warning"` */
-.saltPillInput-warning,
-.saltPillInput-warning:hover {
+.saltPillInput-warning {
   --pillInput-background: var(--salt-status-warning-background);
   --pillInput-background-active: var(--salt-status-warning-background);
   --pillInput-background-hover: var(--salt-status-warning-background);
-  --pillInput-borderColor: var(--salt-status-warning-borderColor);
-  --pillInput-outlineColor: var(--salt-status-warning-borderColor);
   --pillInput-background-readonly: var(--salt-status-warning-background);
+  --pillInput-borderColor: var(--salt-status-warning-borderColor);
+  --pillInput-borderColor-active: var(--salt-status-warning-borderColor);
+  --pillInput-borderColor-hover: var(--salt-status-warning-borderColor);
+  --pillInput-borderColor-disabled: var(--salt-status-warning-borderColor);
+  --pillInput-borderColor-readonly: var(--salt-status-warning-borderColor);
+  --pillInput-outlineColor: var(--salt-status-warning-borderColor);
 }
 
 /* Style applied to input if `validationState="success"` */
-.saltPillInput-success,
-.saltPillInput-success:hover {
+.saltPillInput-success {
   --pillInput-background: var(--salt-status-success-background);
   --pillInput-background-active: var(--salt-status-success-background);
   --pillInput-background-hover: var(--salt-status-success-background);
-  --pillInput-borderColor: var(--salt-status-success-borderColor);
-  --pillInput-outlineColor: var(--salt-status-success-borderColor);
   --pillInput-background-readonly: var(--salt-status-success-background);
-}
-
-/* Style applied to inner input component */
-.saltPillInput-input {
-  background: none;
-  border: none;
-  box-sizing: content-box;
-  color: inherit;
-  cursor: inherit;
-  display: block;
-  flex: 1;
-  font: inherit;
-  height: 100%;
-  letter-spacing: var(--saltPillInput-letterSpacing, 0);
-  margin: 0;
-  min-width: 0;
-  overflow: hidden;
-  padding: 0;
-  text-align: var(--pillInput-textAlign);
-  width: 100%;
-}
-
-/* Reset in the  class */
-.saltPillInput-input:focus {
-  outline: none;
-}
-
-/* Style applied to selected input */
-.saltPillInput-input::selection {
-  background: var(--salt-content-foreground-highlight);
-}
-
-/* Style applied to placeholder text */
-.saltPillInput-input::placeholder {
-  color: var(--salt-content-secondary-foreground);
-  font-weight: var(--salt-text-fontWeight-small);
+  --pillInput-borderColor: var(--salt-status-success-borderColor);
+  --pillInput-borderColor-active: var(--salt-status-success-borderColor);
+  --pillInput-borderColor-hover: var(--salt-status-success-borderColor);
+  --pillInput-borderColor-disabled: var(--salt-status-success-borderColor);
+  --pillInput-borderColor-readonly: var(--salt-status-success-borderColor);
+  --pillInput-outlineColor: var(--salt-status-success-borderColor);
 }
 
 /* Styling when focused */
 .saltPillInput-focused,
 .saltPillInput-focused:hover {
-  --pillInput-borderColor: var(--pillInput-outlineColor);
-  --pillInput-borderWidth: var(--salt-editable-borderWidth-active);
-
+  background: var(--saltPillInput-background-active, var(--pillInput-background-active));
+  cursor: var(--salt-editable-cursor-active);
   outline: var(--saltPillInput-outline, var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--pillInput-outlineColor));
 }
 
 /* Style applied if `readOnly={true}` */
 .saltPillInput.saltPillInput-readOnly {
-  --pillInput-borderColor: var(--salt-editable-borderColor-readonly);
-  --pillInput-borderStyle: var(--salt-editable-borderStyle-readonly);
-  --pillInput-borderWidth: var(--salt-size-border);
-
   background: var(--pillInput-background-readonly);
   cursor: var(--salt-editable-cursor-readonly);
 }
 
 /* Styling when focused if `disabled={true}` */
-.saltPillInput-focused.saltPillInput-disabled {
-  --pillInput-borderWidth: var(--salt-size-border);
-  outline: none;
-}
-
-/* Styling when focused if `readOnly={true}` */
-.saltPillInput-focused.saltPillInput-readOnly {
-  --pillInput-borderWidth: var(--salt-size-border);
-}
-
-/* Style applied to selected input if `disabled={true}` */
-.saltPillInput-disabled .saltPillInput-input::selection {
-  background: none;
-}
-
-/* Style applied to input if `disabled={true}` */
-.saltPillInput.saltPillInput-disabled,
-.saltPillInput.saltPillInput-disabled:hover,
-.saltPillInput.saltPillInput-disabled:active {
-  --pillInput-borderColor: var(--salt-editable-borderColor-disabled);
-  --pillInput-borderStyle: var(--salt-editable-borderStyle-disabled);
-  --pillInput-borderWidth: var(--salt-size-border);
-
+.saltPillInput-disabled,
+.saltPillInput-disabled:hover {
   background: var(--pillInput-background-disabled);
   cursor: var(--salt-editable-cursor-disabled);
   color: var(--saltPillInput-color-disabled, var(--salt-content-primary-foreground-disabled));
-}
-
-.saltPillInput-activationIndicator {
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  position: absolute;
-  border-bottom: var(--pillInput-borderWidth) var(--pillInput-borderStyle) var(--pillInput-borderColor);
-}
-
-/* Style applied if `bordered={true}` */
-.saltPillInput.saltPillInput-bordered {
-  --pillInput-border: var(--salt-size-border) var(--salt-container-borderStyle) var(--pillInput-borderColor);
-  --pillInput-borderWidth: 0;
-}
-
-/* Style applied if focused or active when `bordered={true}` */
-.saltPillInput-bordered.saltPillInput-focused,
-.saltPillInput-bordered:active {
-  --pillInput-borderWidth: var(--salt-editable-borderWidth-active);
-}
-
-/* Styling when focused if `disabled={true}` or `readOnly={true}` when `bordered={true}` */
-.saltPillInput-bordered.saltPillInput-readOnly,
-.saltPillInput-bordered.saltPillInput-disabled:hover,
-.saltPillInput-bordered.saltPillInput-disabled.saltPillInput-focused {
-  --pillInput-borderWidth: 0;
 }
 
 /* Style applied to start adornments */
@@ -306,4 +294,45 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+/* Style applied to inner input component */
+.saltPillInput-input {
+  background: none;
+  border: none;
+  box-sizing: content-box;
+  color: inherit;
+  cursor: inherit;
+  display: block;
+  flex: 1;
+  font: inherit;
+  height: 100%;
+  letter-spacing: var(--saltPillInput-letterSpacing, 0);
+  margin: 0;
+  min-width: 0;
+  overflow: hidden;
+  padding: 0;
+  text-align: var(--pillInput-textAlign, left);
+  width: 100%;
+}
+
+/* Reset in the  class */
+.saltPillInput-input:focus {
+  outline: none;
+}
+
+/* Style applied to selected input */
+.saltPillInput-input::selection {
+  background: var(--salt-content-foreground-highlight);
+}
+
+/* Style applied to selected input if `disabled={true}` */
+.saltPillInput-disabled .saltPillInput-input::selection {
+  background: none;
+}
+
+/* Style applied to placeholder text */
+.saltPillInput-input::placeholder {
+  color: var(--salt-content-secondary-foreground);
+  font-weight: var(--salt-text-fontWeight-small);
 }
