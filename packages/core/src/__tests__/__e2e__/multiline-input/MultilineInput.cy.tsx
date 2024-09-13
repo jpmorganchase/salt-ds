@@ -11,6 +11,16 @@ const {
 } = composeStories(multilineInputStories);
 
 describe("GIVEN an MultilineInput", () => {
+  it("SHOULD support data attribute on textAreaProps", () => {
+    cy.mount(
+      <Default
+        textAreaProps={{ "data-testId": "customInput" }}
+        value="value"
+      />,
+    );
+    cy.findByTestId("customInput").should("have.value", "value");
+  });
+
   it("should allow a default value to be set", () => {
     const changeSpy = cy.stub().as("changeSpy");
     const handleChange = (event: ChangeEvent<HTMLInputElement>) => {

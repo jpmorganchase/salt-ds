@@ -1,3 +1,8 @@
+import {
+  type IconProps,
+  SuccessSmallSolidIcon,
+  SuccessSolidIcon,
+} from "@salt-ds/icons";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
@@ -10,13 +15,9 @@ import {
 } from "react";
 import { useFormFieldProps } from "../form-field-context";
 import { useDensity } from "../salt-provider";
+import type { DataAttributes } from "../types";
 import { makePrefixer, useControlled } from "../utils";
 
-import {
-  type IconProps,
-  SuccessSmallSolidIcon,
-  SuccessSolidIcon,
-} from "@salt-ds/icons";
 import switchCss from "./Switch.css";
 
 export interface SwitchProps
@@ -40,7 +41,7 @@ export interface SwitchProps
   /**
    * Properties applied to the input element.
    */
-  inputProps?: Partial<ComponentPropsWithoutRef<"input">>;
+  inputProps?: Partial<ComponentPropsWithoutRef<"input">> & DataAttributes;
   /**
    * The label to be shown next to the checkbox.
    */

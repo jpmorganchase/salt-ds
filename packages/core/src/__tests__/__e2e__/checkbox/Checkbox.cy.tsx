@@ -1,6 +1,13 @@
 import { Checkbox } from "@salt-ds/core";
 
 describe("GIVEN a Checkbox", () => {
+  it("SHOULD support data attribute on inputProps", () => {
+    cy.mount(
+      <Checkbox inputProps={{ "data-testId": "customInput" }} checked />,
+    );
+    cy.findByTestId("customInput").should("be.checked");
+  });
+
   describe("WHEN in an indeterminate state", () => {
     it("THEN should have indeterminate set to true", () => {
       cy.mount(<Checkbox indeterminate />);
