@@ -24,7 +24,7 @@
 
 .saltDropdown:hover {
   background: var(--saltDropdown-background-hover, var(--dropdown-background-hover));
-  cursor: var(--salt-editable-cursor-hover);
+  cursor: var(--salt-selectable-cursor-hover);
 }
 
 .saltDropdown-bordered.saltDropdown {
@@ -166,19 +166,19 @@
 .saltDropdown:focus,
 .saltDropdown:focus:hover {
   background: var(--dropdown-background-active);
-  cursor: var(--salt-editable-cursor-active);
+  cursor: var(--salt-selectable-cursor-hover);
   outline: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--dropdown-outlineColor);
 }
 
 .saltDropdown.saltDropdown[aria-readonly="true"] {
   background: var(--dropdown-background-readonly);
-  cursor: var(--salt-editable-cursor-readonly);
+  cursor: var(--salt-selectable-cursor-readonly);
 }
 
 .saltDropdown.saltDropdown:disabled,
 .saltDropdown.saltDropdown:disabled:hover {
   background: var(--dropdown-background-disabled);
-  cursor: var(--salt-editable-cursor-disabled);
+  cursor: var(--salt-selectable-cursor-disabled);
   color: var(--salt-content-primary-foreground-disabled);
 }
 
