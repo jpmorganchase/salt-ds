@@ -150,20 +150,20 @@ export const parameters: Parameters = {
     }: ComponentProps<typeof DocsContainer>) => {
       const ChosenProvider =
         /* @ts-ignore Waiting for https://github.com/storybookjs/storybook/issues/12982 */
-        context.store.globals.globals?.themeNext === "enable"
+        context.store.userGlobals.globals?.themeNext === "enable"
           ? SaltProviderNext
           : SaltProvider;
       return (
         <DocsContainer context={context} {...rest}>
           <ChosenProvider
             /* @ts-ignore Waiting for https://github.com/storybookjs/storybook/issues/12982 */
-            mode={context.store.globals.globals?.mode}
+            mode={context.store.userGlobals.globals?.mode}
             enableStyleInjection={
               /* @ts-ignore Waiting for https://github.com/storybookjs/storybook/issues/12982 */
-              context.store.globals.globals?.styleInjection === "enable"
+              context.store.userGlobals.globals?.styleInjection === "enable"
             }
             /* @ts-ignore Waiting for https://github.com/storybookjs/storybook/issues/12982 */
-            accent={context.store.globals.globals?.accent}
+            accent={context.store.userGlobals.globals?.accent}
           >
             {children}
           </ChosenProvider>
