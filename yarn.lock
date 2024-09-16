@@ -2512,7 +2512,7 @@ __metadata:
 
 "@changesets/assemble-release-plan@patch:@changesets/assemble-release-plan@npm%3A6.0.3#~/.yarn/patches/@changesets-assemble-release-plan-npm-6.0.3-29726de363.patch":
   version: 6.0.3
-  resolution: "@changesets/assemble-release-plan@patch:@changesets/assemble-release-plan@npm%3A6.0.3#~/.yarn/patches/@changesets-assemble-release-plan-npm-6.0.3-29726de363.patch::version=6.0.3&hash=c73516"
+  resolution: "@changesets/assemble-release-plan@patch:@changesets/assemble-release-plan@npm%3A6.0.3#~/.yarn/patches/@changesets-assemble-release-plan-npm-6.0.3-29726de363.patch::version=6.0.3&hash=1795c9"
   dependencies:
     "@babel/runtime": "npm:^7.20.1"
     "@changesets/errors": "npm:^0.2.0"
@@ -2521,7 +2521,7 @@ __metadata:
     "@changesets/types": "npm:^6.0.0"
     "@manypkg/get-packages": "npm:^1.1.3"
     semver: "npm:^7.5.3"
-  checksum: 10/30d2bbcebf41bf41dde60e745d901da219aed2ee279c7f18f163b372b7225fbb7c32092fc0a41408a8b06b58df72248b3dc27944aa7432f4ee5c7b774341e3a8
+  checksum: 10/5c92265302ccf77b0c30053c7f41853fa389f12cad8685ab1e5774ed5d0c6d0264244559db93327c999ce93f4a20bfe797b7ca05fb88ac037d6551f7cd25e92a
   languageName: node
   linkType: hard
 
