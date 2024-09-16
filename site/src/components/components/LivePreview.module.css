@@ -1,6 +1,6 @@
 .container {
   border: var(--salt-size-border) var(--salt-container-borderStyle) var(--salt-container-primary-borderColor);
-  margin-top: calc(var(--salt-size-unit) * 2);
+  margin-top: var(--salt-spacing-200);
 }
 
 .componentPreview {
@@ -15,9 +15,9 @@
 }
 
 .codePreview {
-  border-top: 1px var(--salt-container-borderStyle) var(--salt-container-primary-borderColor);
+  border-top: var(--salt-size-border) var(--salt-container-borderStyle) var(--salt-container-primary-borderColor);
   margin-top: 0;
-  margin-bottom: calc(-1 * var(--salt-size-unit) * 2);
+  margin-bottom: calc(-1 * var(--salt-spacing-200));
 }
 
 .codePreview pre {
@@ -29,14 +29,14 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: calc(2 * var(--salt-size-unit));
+  gap: var(--salt-spacing-200);
   flex-wrap: wrap;
-  padding-top: calc(2 * var(--salt-size-unit));
+  padding-top: var(--salt-spacing-200);
 }
 
 .switch {
   align-self: flex-end;
-  padding: var(--salt-size-unit);
+  padding: var(--salt-spacing-100);
 }
 
 .exampleWithSwitch {

@@ -8,29 +8,28 @@ data:
   $ref: ./#/data
 ---
 
-<LivePreviewControls>
-  <LivePreview componentName="country-symbol" exampleName="BasicUsage">
-    
 ## Basic usage
 
 Import and use each country symbol individually.
 
-  </LivePreview>
-  <LivePreview componentName="country-symbol" exampleName="SharpVariants">
-    
+{" "}
+
+<LivePreview componentName="country-symbol" exampleName="BasicUsage" />
 ## Sharp variants
 
 Import and use the sharp version of each country symbol individually using the `_Sharp` suffix (e.g. `TT` becomes `TT_Sharp` for the sharp variant).
 
-  </LivePreview>
-  <LivePreview componentName="country-symbol" exampleName="Size">
+{" "}
+
+<LivePreview componentName="country-symbol" exampleName="SharpVariants" />
 
 ## Size
 
 You can change the size of each country symbol using the `size` property which acts as a multiplier for the base size, as described in the [scale foundation](/salt/foundations/scale). The base size of the country symbol is based on the active density as described in the [size foundation](/salt/foundations/size).
 
-  </LivePreview>
-  <LivePreview componentName="country-symbol" exampleName="AllCountrySymbols">
+{" "}
+
+<LivePreview componentName="country-symbol" exampleName="Size" />
 
 ## All country symbols
 
@@ -42,20 +41,22 @@ For example, the country symbol for Belgium has the code BE, which you can impor
     import { BE } from '@salt-ds/countries';
     ```
 
-  </LivePreview>
-  <LivePreview componentName="country-symbol" exampleName="LazyLoading">
+{" "}
+
+<LivePreview componentName="country-symbol" exampleName="AllCountrySymbols" />
 
 ## Lazy loading
 
 When importing many country symbol components at once, such as with a list, you may not want all the components in your initial bundle size. Instead, you can lazily load the country symbol components using [React Suspense](https://react.dev/reference/react/Suspense), alongside the `LazyCountrySymbol` component. `LazyCountrySymbol` takes a `code` prop to load the appropriate country symbol component.
 
-  </LivePreview>
-  <LivePreview componentName="country-symbol" exampleName="CssBackgroundImage">
+{" "}
+
+<LivePreview componentName="country-symbol" exampleName="LazyLoading" />
 
 ## CSS background image
 
 You can also use country symbol as a background image in CSS from `"@salt-ds/countries/saltCountries.css"` or `"@salt-ds/countries/saltSharpCountries.css"`, then specify the country code prefixed with `saltCountry-` or `saltCountrySharp-`, e.g., `saltCountry-AD`, `saltCountrySharp-GB-SCT`.
 
-  </LivePreview>
+{" "}
 
-</LivePreviewControls>
+<LivePreview componentName="country-symbol" exampleName="CssBackgroundImage" />

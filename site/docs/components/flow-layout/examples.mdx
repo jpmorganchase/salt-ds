@@ -8,10 +8,6 @@ data:
   $ref: ./#/data
 ---
 
-<LivePreviewControls>
-
-<LivePreview componentName="flow-layout" exampleName="Default">
-
 ## Default
 
 A flow layout displays items in a row that will responsively wrap onto a new line.
@@ -20,9 +16,7 @@ By default, items will stretch across the layout, with a `gap` between items of 
 
 The height and width of the layout area depend on the items contained within it.
 
-</LivePreview>
-
-<LivePreview componentName="flow-layout" exampleName="LayoutPosition">
+<LivePreview componentName="flow-layout" exampleName="Default" />
 
 ## Layout position
 
@@ -32,9 +26,7 @@ Use `justify` to define how to distribute any remaining space between or at the 
 
 If there's additional space available above or below the row, use the `align` property to define the position of items within that space.
 
-</LivePreview>
-
-<LivePreview componentName="flow-layout" exampleName="FlexItemPosition">
+<LivePreview componentName="flow-layout" exampleName="LayoutPosition" />
 
 ## Flex item position
 
@@ -42,9 +34,7 @@ Use the flex item `align` prop to set an alignment for a specific item in the la
 
 Set the item’s position along the cross axis of the layout (i.e., perpendicular to the row).
 
-</LivePreview>
-
-<LivePreview componentName="flow-layout" exampleName="FlexItemSize">
+<LivePreview componentName="flow-layout" exampleName="FlexItemPosition" />
 
 ## Flex item size
 
@@ -56,6 +46,4 @@ The flex item `grow` prop enables specific items in the layout to grow and fill 
 
 In contrast to `grow`, `shrink` makes a specific item as small as possible within the row. By default, `shrink` is 1. If you set an item to 2, it will attempt to take half as much space.
 
-</LivePreview>
-
-</LivePreviewControls>
+<LivePreview componentName="flow-layout" exampleName="FlexItemSize" />

@@ -10,26 +10,24 @@ data:
 
 ## Using the component
 
-<LivePreviewControls>
-<LivePreview componentName="calendar" exampleName="Single">
 ## Compose a standard DatePicker
+
 To use the `Calendar` component, compose it with children that define the calendar header, such as `CalendarNavigation`.
 
 The `CalendarNavigation` component provides year/month dropdowns and forward/back controls for the visible month.
 
-</LivePreview>
-</LivePreviewControls>
+<LivePreview componentName="calendar" exampleName="Single" />
 
-<LivePreviewControls>
-  <LivePreview
-    componentName="calendar"
-    displayName="Custom header"
-    exampleName="CustomHeader"
-  >
-    ## Customising the DatePicker Alternatively, you can compose it with your
-    own navigation component or add additional controls.
-  </LivePreview>
-</LivePreviewControls>
+{" "}
+
+<LivePreview
+  componentName="calendar"
+  displayName="Custom header"
+  exampleName="CustomHeader"
+>
+  ## Customising the DatePicker Alternatively, you can compose it with your own
+  navigation component or add additional controls.
+</LivePreview>
 
 ### When to use
 

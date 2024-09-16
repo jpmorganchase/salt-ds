@@ -8,9 +8,6 @@ data:
   $ref: ./#/data
 ---
 
-<LivePreviewControls>
-<LivePreview componentName="radio-button" exampleName="Default">
-
 ## Radio button group (vertical)
 
 Radio button groups allow users to select one or more values from a given set of choices. You can align them horizontally or vertically.
@@ -24,33 +21,25 @@ When `direction="vertical"`
 - The radio button icon should always be placed left aligned to the text.
 - We recommend that you always use a text description for a radio button.
 
-</LivePreview>
-
-<LivePreview componentName="radio-button" exampleName="Horizontal" >
+<LivePreview componentName="radio-button" exampleName="Default" />
 
 ## Radio button group (horizontal)
 
 When `direction="horizontal"`
 
-</LivePreview>
-
-<LivePreview componentName="radio-button" exampleName="Wrap" >
+<LivePreview componentName="radio-button" exampleName="Horizontal" />
 
 ## Wrapping radio button group
 
 The default behaviour for Radio Button Group in a horizontal alignment allows radio button options to wrap onto the next line as the viewport size changes if they don’t fit within a container.
 
-</LivePreview>
-
-<LivePreview componentName="radio-button" exampleName="NoWrap" >
+<LivePreview componentName="radio-button" exampleName="Wrap" />
 
 ## Text wrapping
 
 You can configure radio button groups to maintain a horizontal alignment but allow text wrapping by setting the prop `wrap=false`.
 
-</LivePreview>
-
-<LivePreview componentName="radio-button" exampleName="Disabled" >
+<LivePreview componentName="radio-button" exampleName="NoWrap" />
 
 ## Disabled radio button
 
@@ -64,9 +53,7 @@ Use a disabled state for radio buttons that have permissions, dependencies or pr
 
 If a disabled radio button's text description contains information that is valuable to the user, consider using a read-only radio button instead.
 
-</LivePreview>
-
-<LivePreview componentName="radio-button" exampleName="Readonly" >
+<LivePreview componentName="radio-button" exampleName="Disabled" />
 
 ## Read-only radio button
 
@@ -78,17 +65,13 @@ A radio button with the prop `readOnly={true}` will suppress all functionality a
 
 Users can interact with read-only radio buttons using keyboard shortcuts. This means that, unlike disabled radio buttons, users can interact with the text description. Use a read-only radio button instead of a disabled radio button when the text description contains information valuable to the user.
 
-</LivePreview>
-
-<LivePreview componentName="radio-button" exampleName="Error">
+<LivePreview componentName="radio-button" exampleName="Readonly" />
 
 ## Validation states: error
 
 You can indicate an error state stylistically by setting the `validationStatus` prop to `"error"`.
 
-</LivePreview>
-
-<LivePreview componentName="radio-button" exampleName="Warning">
+<LivePreview componentName="radio-button" exampleName="Error" />
 
 ## Validation states: warning
 
@@ -97,17 +80,13 @@ You can indicate a warning state stylistically by setting the `validationStatus`
 - In a group, use `validationStatus` rather than the individual controls. Any status provided to the group will take precedence over the statuses applied directly to the nested controls.
 - Avoid using `validationStatus` with a disabled radio button. If provided, disabled functionality and styling will take precedence over any validation status styling.
 
-</LivePreview>
-
-<LivePreview componentName="radio-button" exampleName="LongText">
+<LivePreview componentName="radio-button" exampleName="Warning" />
 
 ## Long text support
 
 Radio Button supports long text descriptions. If text wraps to multiple lines, align it to the top of the radio button.
 
-</LivePreview>
-
-<LivePreview componentName="radio-button" exampleName="WithFormField" >
+<LivePreview componentName="radio-button" exampleName="LongText" />
 
 ## Form field compatibility
 
@@ -115,13 +94,14 @@ You can wrap `RadioButtonGroup` in a form field when it’s within a form contex
 
 For more information, refer to the [form field](/salt/patterns/forms) guidance.
 
-</LivePreview>
-
-<LivePreview componentName="radio-button" exampleName="WithDescription" displayName="Descriptions" >
+<LivePreview componentName="radio-button" exampleName="WithFormField" />
 
 ## Descriptions
 
 You can add a description to a checkbox using a `StackLayout` in the `label` prop.
 
-</LivePreview>
-</LivePreviewControls>
+<LivePreview
+  componentName="radio-button"
+  exampleName="WithDescription"
+  displayName="Descriptions"
+/>

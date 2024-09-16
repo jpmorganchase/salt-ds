@@ -9,6 +9,7 @@ import { TabPanel, Tabs } from "@salt-ds/lab";
 import { useRouter } from "next/navigation";
 import React, { type FC, useEffect, useState } from "react";
 import ReactMarkdown from "react-markdown";
+import { LivePreviewControls } from "../../components";
 import { a, code, p, ul } from "../../components/mdx";
 import { TableOfContents } from "../../components/toc";
 import useIsMobileView from "../../utils/useIsMobileView";
@@ -136,7 +137,11 @@ export const DetailComponent: FC<LayoutProps> = ({ children }) => {
       >
         {tabs.map(({ id, label }) => (
           <TabPanel key={id} label={label} className={styles.tabPanel}>
-            {children}
+            {id === 0 ? (
+              <LivePreviewControls>{children}</LivePreviewControls>
+            ) : (
+              children
+            )}
           </TabPanel>
         ))}
       </Tabs>

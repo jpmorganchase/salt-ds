@@ -8,45 +8,46 @@ data:
   $ref: ./#/data
 ---
 
-<LivePreviewControls>
-  <LivePreview componentName="overlay" exampleName="Default" displayName="Default Overlay">
-
 ## Default overlay
 
 The basic overlay component allows the user to expose and interact with supplemental information. The overlay remains persistent until the user dismisses it.
 
-  </LivePreview>
+{" "}
 
-  <LivePreview componentName="overlay" exampleName="Placement">
+<LivePreview
+  componentName="overlay"
+  exampleName="Default"
+  displayName="Default Overlay"
+/>
 
 ## Placement
 
 Use the `placement` prop to position overlay content to the `top`, `bottom`, `left` or `right` of the trigger element.
 
-  </LivePreview>
+{" "}
 
-   <LivePreview componentName="overlay" exampleName="CloseButton">
+<LivePreview componentName="overlay" exampleName="Placement" />
 
 ## Close button
 
 `OverlayPanelCloseButton` can be added as a child of the `OverlayPanel` component to render a close button in the top right corner of the OverlayPanel. You can pass the `onClick` prop like with any `Button` component to handle the close button click.
 
-  </LivePreview>
+{" "}
 
-  <LivePreview componentName="overlay" exampleName="LongContent">
+<LivePreview componentName="overlay" exampleName="CloseButton" />
 
 ## Long content
 
 When overlay content extends beyond the set height, the content defaults to scroll. The close button remains sticky and accessible at all times.
 
-  </LivePreview>
+{" "}
 
-  <LivePreview componentName="overlay" exampleName="WithActions">
+<LivePreview componentName="overlay" exampleName="LongContent" />
 
 ## With actions
 
 With actions, users can decide if interacting with content in the overlay should close the overlay. This example shows how activating the **Export** button triggers the export function, closes the overlay, and returns focus to the trigger element.
 
-  </LivePreview>
+{" "}
 
-</LivePreviewControls>
+<LivePreview componentName="overlay" exampleName="WithActions" />

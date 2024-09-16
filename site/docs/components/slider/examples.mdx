@@ -8,10 +8,6 @@ data:
   $ref: ./#/data
 ---
 
-<LivePreviewControls>
-
-<LivePreview componentName="slider" exampleName="Single">
-
 ## Single
 
 By default the minimum and maximum values are shown, and can be displayed either inline or below the track (using the `marks` prop to `"bottom"`).
@@ -20,17 +16,13 @@ Alternately, incremental marks can be shown along the track by setting the `mark
 
 A tooltip displays the value of a slider "thumb" when the thumb is focused or hovered. The tooltip remains persistent on cursor drag or moving the thumb along the track with keyboard interaction.
 
-</LivePreview>
-
-<LivePreview componentName="slider" exampleName="Range">
+<LivePreview componentName="slider" exampleName="Single" />
 
 ## Range
 
 If two values are provided (either to the `value` or `defaultValue` props), then the slider will render as a range slider. Thumbs cannot pass or overlap.
 
-</LivePreview>
-
-<LivePreview componentName="slider" exampleName="CustomStep">
+<LivePreview componentName="slider" exampleName="Range" />
 
 ## Custom step
 
@@ -45,9 +37,7 @@ If a custom step value is provided that is not a multiple of the range, the slid
 - Use a step value that is a multiple of the range to ensure the entire range is selectable.
 - Use a step value that is relative to the granularity of the scale to prevent tedious slider selections.
 
-</LivePreview>
-
-<LivePreview componentName="slider" exampleName="WithFormField">
+<LivePreview componentName="slider" exampleName="CustomStep" />
 
 ## With form field
 
@@ -57,9 +47,7 @@ To display a label alongside a slider, use FormField and FormFieldLabel. For mor
 
 We recommend using labels with slider to provide context and aid the user in understanding the value being selected.
 
-</LivePreview>
-
-<LivePreview componentName="slider" exampleName="WithInput">
+<LivePreview componentName="slider" exampleName="WithFormField" />
 
 ## With input
 
@@ -75,6 +63,4 @@ You can display inputs with either a single or range slider. Inputs are used to 
 - Validate your input value changes and update the `validationStatus` prop on any inputs accordingly.
 - When using the slider alongside an input use the default `marks` setting (do not set `marks` to `"bottom"` or `"all"`).
 
-</LivePreview>
-
-</LivePreviewControls>
+<LivePreview componentName="slider" exampleName="WithInput" />

@@ -3,8 +3,6 @@ import {
   type Corner,
   type Density,
   FlexItem,
-  FlexLayout,
-  FlowLayout,
   type Mode,
   SaltProvider,
   type SaltProviderNextProps,
@@ -15,23 +13,21 @@ import {
   ToggleButtonGroup,
   Tooltip,
   useBreakpoint,
-  useViewport,
 } from "@salt-ds/core";
 import { DarkIcon, HelpIcon, LightIcon } from "@salt-ds/icons";
 import {
   type FC,
-  type ReactElement,
+  type ReactNode,
   type SyntheticEvent,
   createContext,
   useState,
 } from "react";
-import useIsMobileView from "../../utils/useIsMobileView";
 
 import clsx from "clsx";
 import styles from "./LivePreviewControls.module.css";
 
 type LivePreviewControlsProps = {
-  children: ReactElement[];
+  children?: ReactNode;
 };
 
 const densities: Density[] = ["high", "medium", "low", "touch"];
