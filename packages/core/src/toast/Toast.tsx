@@ -5,6 +5,8 @@ import {
   type ComponentPropsWithoutRef,
   type ReactElement,
   forwardRef,
+  useEffect,
+  useState,
 } from "react";
 import { StatusIndicator, type ValidationStatus } from "../status-indicator";
 import { makePrefixer } from "../utils";
@@ -23,17 +25,37 @@ export interface ToastProps extends ComponentPropsWithoutRef<"div"> {
    * (Optional) if provided, this icon component will be used instead of the status icon
    */
   icon?: ReactElement<IconProps>;
+  /**
+   * Time in milliseconds to auto-hide the toast. Default is 5000ms (5 seconds)
+   */
+  autoHideDuration?: number;
 }
 
 export const Toast = forwardRef<HTMLDivElement, ToastProps>(
   function Toast(props, ref) {
-    const { children, className, status, icon, ...rest } = props;
+    const { children, className, status, icon, autoHideDuration, ...rest } = props;
     const targetWindow = useWindow();
+    const [isVisible, setIsVisible] = useState(true);
+
     useComponentCssInjection({
       testId: "salt-toast",
       css: toastCss,
       window: targetWindow,
     });
+
+    useEffect(() => {
+      if (autoHideDuration > 0) {
+        const timer = setTimeout(() => {
+          setIsVisible(false);
+        }, autoHideDuration);
+
+        return () => clearTimeout(timer);
+      }
+    }, [autoHideDuration]);
+
+    if (!isVisible) {
+      return null;
+    }
 
     return (
       <div
