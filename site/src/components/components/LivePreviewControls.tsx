@@ -77,7 +77,7 @@ export const LivePreviewControls: FC<LivePreviewControlsProps> = ({
         [styles.mobileSwitchAlignment]: isMobileView,
       })}
     >
-      <Tooltip content="Salt Next theme enables more styling options. Refer to Theming page for more information.">
+      <Tooltip content="Salt Next theme enables more styling options. Refer to Themes page for more information.">
         <Switch
           label={
             <StackLayout gap={0.5} direction="row" align="center">

@@ -31,30 +31,6 @@ export const Sentiment = (): ReactElement => (
       Button
     </Button>
 
-    <Label>Accented</Label>
-
-    <Button appearance="solid" sentiment="accented">
-      Button
-    </Button>
-    <Button appearance="bordered" sentiment="accented">
-      Button
-    </Button>
-    <Button appearance="transparent" sentiment="accented">
-      Button
-    </Button>
-
-    <Label>Neutral</Label>
-
-    <Button appearance="solid" sentiment="neutral">
-      Button
-    </Button>
-    <Button appearance="bordered" sentiment="neutral">
-      Button
-    </Button>
-    <Button appearance="transparent" sentiment="neutral">
-      Button
-    </Button>
-
     <Label>Caution</Label>
 
     <Button appearance="solid" sentiment="caution">

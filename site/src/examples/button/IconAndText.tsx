@@ -4,6 +4,7 @@ import {
   ExpandAllIcon,
   ExportIcon,
   PrintIcon,
+  SendIcon,
   ShareIcon,
   UploadIcon,
 } from "@salt-ds/icons";
@@ -30,7 +31,7 @@ export const IconAndText = (): ReactElement => (
         Expand All <ExpandAllIcon aria-hidden />
       </Button>
       <Button appearance="transparent" sentiment="accented">
-        Export <ExportIcon aria-hidden />
+        Send <SendIcon aria-hidden />
       </Button>
     </FlowLayout>
   </StackLayout>
