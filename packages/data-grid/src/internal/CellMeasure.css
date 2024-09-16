@@ -4,9 +4,6 @@
   left: 0;
 }
 
-.saltGridCellMeasure table {
-}
-
 .saltGridCellMeasure tr {
   height: var(--grid-row-height);
 }

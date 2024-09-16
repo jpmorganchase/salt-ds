@@ -2,9 +2,6 @@
   overflow-y: scroll;
 }
 
-.saltQueryResultTable table {
-}
-
 .saltQueryResultTable-col {
   width: 150px;
 }

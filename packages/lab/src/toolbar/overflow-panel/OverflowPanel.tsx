@@ -103,7 +103,7 @@ export const OverflowPanel = forwardRef(function DropdownPanel(
   };
 
   const getTriggerButtonIcon = () =>
-    triggerButtonIcon ?? triggerButtonLabel === undefined ? (
+    (triggerButtonIcon ?? triggerButtonLabel === undefined) ? (
       <OverflowMenuIcon />
     ) : undefined;
 

@@ -86,7 +86,6 @@ export function TableRow<T>(props: TableRowProps<T>) {
       onMouseLeave={onMouseLeave}
       data-row-index={row.index}
       data-row-key={row.key}
-      role="row"
     >
       {columns.map((column, i) => {
         const colKey = column.info.props.id;
