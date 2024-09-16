@@ -9,7 +9,8 @@
   padding-left: var(--salt-spacing-100);
   border-bottom: var(--salt-size-border) var(--salt-separable-borderStyle) transparent;
   box-shadow: none;
-  flex: 1;
+  /* auto is needed for support on Safari, due to webkit bugs with flex */
+  flex: 1 1 auto;
 }
 
 .saltDialogContent-scroll {
