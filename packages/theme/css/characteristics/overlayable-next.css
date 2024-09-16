@@ -1,4 +1,5 @@
 .salt-theme.salt-theme-next {
   --salt-overlayable-background: var(--salt-palette-alpha-backdrop);
+  --salt-overlayable-background-highlight: var(--salt-palette-alpha);
   --salt-overlayable-rangeSelection: var(--salt-palette-alpha-weak);
 }

@@ -36,6 +36,7 @@ div[class*="ag-theme-salt"] {
   --ag-popup-shadow: var(--salt-overlayable-shadow-modal);
   --ag-range-selection-background-color: var(--salt-overlayable-rangeSelection);
   --ag-range-selection-border-style: none;
+  --ag-range-selection-highlight-color: var(--salt-overlayable-background-highlight);
   --ag-row-group-indent-size: calc(var(--ag-icon-size) + var(--ag-cell-widget-spacing));
   --ag-row-hover-color: var(--salt-selectable-background-hover);
   --ag-secondary-border-color: var(--salt-separable-tertiary-borderColor);
