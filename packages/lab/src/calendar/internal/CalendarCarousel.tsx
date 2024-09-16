@@ -31,7 +31,7 @@ export const CalendarCarousel = forwardRef<
   });
 
   const {
-    state: { visibleMonth },
+    state: { visibleMonth, locale },
   } = useCalendarContext();
   const containerRef = useRef<HTMLDivElement>(null);
   const diffIndex = (a: DateValue, b: DateValue) => monthDiff(a, b);
@@ -59,7 +59,7 @@ export const CalendarCarousel = forwardRef<
     });
     setMonths(getMonths(visibleMonth));
     return undefined;
-  }, [formatDate(visibleMonth)]);
+  }, [formatDate(visibleMonth, locale)]);
 
   return (
     <div
@@ -74,7 +74,7 @@ export const CalendarCarousel = forwardRef<
       <div className={withBaseName("track")} ref={containerRef}>
         {months.map((date, index) => (
           <div
-            key={formatDate(date)}
+            key={formatDate(date, locale)}
             className={withBaseName("slide")}
             style={{
               transform: `translateX(${diffIndex(date, baseIndex) * -101}%)`,

@@ -1,3 +1,5 @@
+import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
   type ChangeEventHandler,
@@ -7,14 +9,13 @@ import {
   type ReactNode,
   forwardRef,
 } from "react";
+import { useFormFieldProps } from "../form-field-context";
+import type { AdornmentValidationStatus } from "../status-adornment";
+import type { DataAttributes } from "../types";
 import { makePrefixer, useControlled } from "../utils";
 import { RadioButtonIcon } from "./RadioButtonIcon";
 import { useRadioGroup } from "./internal/useRadioGroup";
 
-import { useComponentCssInjection } from "@salt-ds/styles";
-import { useWindow } from "@salt-ds/window";
-import { useFormFieldProps } from "../form-field-context";
-import type { AdornmentValidationStatus } from "../status-adornment";
 import radioButtonCss from "./RadioButton.css";
 
 const withBaseName = makePrefixer("saltRadioButton");
@@ -40,7 +41,7 @@ export interface RadioButtonProps
   /**
    * Props to be passed to the radio input
    */
-  inputProps?: Partial<InputHTMLAttributes<HTMLInputElement>>;
+  inputProps?: Partial<InputHTMLAttributes<HTMLInputElement>> & DataAttributes;
   /**
    * The label to be shown next to the radio icon
    */

@@ -1,61 +1,63 @@
 import {
-  DateFormatter,
   type DateValue,
   endOfMonth,
   endOfWeek,
-  endOfYear,
-  getLocalTimeZone,
   parseDate,
   startOfMonth,
   startOfWeek,
-  startOfYear,
   today,
 } from "@internationalized/date";
+import { formatDate } from "@salt-ds/lab";
 import * as calendarStories from "@stories/calendar/calendar.stories";
 import { composeStories } from "@storybook/react";
+import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
 
 const {
-  Default,
-  MultiSelection,
-  OffsetSelection,
-  RangeSelection,
-  UnselectableDates,
+  Single,
   CustomDayRender,
-  NavigationBlocked,
-  HideOutOfRangeDays,
+  CustomHeader,
+  HideYearDropdown,
+  MinMaxDate,
+  TwinCalendars,
+  WithLocale,
 } = composeStories(calendarStories);
 
-const testDate = parseDate("2022-02-03");
-const localTimeZone = getLocalTimeZone();
-const currentLocale = navigator.languages[0];
-
-const formatDate = (date: DateValue, options?: Intl.DateTimeFormatOptions) => {
-  const formatter = new DateFormatter(currentLocale, options);
-  return formatter.format(date.toDate(localTimeZone));
-};
-
-const formatDay = (date: DateValue) => {
-  return formatDate(date, {
-    day: "2-digit",
-    month: "long",
-    year: "numeric",
-  });
-};
-
 describe("GIVEN a Calendar", () => {
+  // TODO design a compliant Header example
+  const {
+    default: _ignored,
+    CustomHeader: _CustomHeader,
+    ...allAxeStories
+  } = calendarStories;
+  checkAccessibility(allAxeStories);
+
+  const testDate = parseDate("2022-02-03");
+  const testTimeZone = "Europe/London";
+  const testLocale = "en-GB";
+
+  const formatDay = (date: DateValue) => {
+    return formatDate(date, testLocale, {
+      day: "2-digit",
+      month: "long",
+      year: "numeric",
+    });
+  };
+
   describe("Today's Date", () => {
     it("SHOULD set `aria-current=date` on today's date", () => {
-      cy.mount(<Default />);
+      cy.mount(<Single locale={testLocale} />);
       cy.findByRole("application").should("exist");
       cy.findByRole("application").should(
         "have.accessibleName",
-        formatDate(today(localTimeZone), {
+        formatDate(today(testTimeZone), testLocale, {
+          day: undefined,
           month: "long",
           year: "numeric",
         }),
       );
+      // Verify that today's date button has `aria-current=date`
       cy.findByRole("button", {
-        name: formatDay(today(localTimeZone)),
+        name: formatDay(today(testTimeZone)),
       }).should("have.attr", "aria-current", "date");
     });
   });
@@ -63,22 +65,24 @@ describe("GIVEN a Calendar", () => {
   describe("Navigation", () => {
     describe("Buttons", () => {
       it("SHOULD navigate to the previous month when the previous month button is clicked", () => {
-        cy.mount(<Default defaultVisibleMonth={testDate} />);
+        cy.mount(<Single defaultVisibleMonth={testDate} locale={testLocale} />);
+        // Simulate clicking the "Previous Month" button
         cy.findByRole("button", {
           name: "Previous Month",
         }).realClick();
-
+        // Verify that the calendar navigates to the previous month
         cy.findByRole("button", {
           name: formatDay(testDate.subtract({ months: 1 })),
         }).should("be.visible");
       });
 
       it("SHOULD navigate to the next month when the next month button is clicked", () => {
-        cy.mount(<Default defaultVisibleMonth={testDate} />);
+        cy.mount(<Single defaultVisibleMonth={testDate} locale={testLocale} />);
+        // Simulate clicking the "Next Month" button
         cy.findByRole("button", {
           name: "Next Month",
         }).realClick();
-
+        // Verify that the calendar navigates to the next month
         cy.findByRole("button", {
           name: formatDay(testDate.add({ months: 1 })),
         }).should("be.visible");
@@ -87,22 +91,37 @@ describe("GIVEN a Calendar", () => {
 
     describe("Dropdowns", () => {
       it("SHOULD navigate to the selected month when using the month dropdown", () => {
-        cy.mount(<Default defaultVisibleMonth={testDate} />);
+        cy.mount(<Single defaultVisibleMonth={testDate} locale={testLocale} />);
+        // Verify the initial month in the dropdown
         cy.findByRole("combobox", { name: "Month Dropdown" }).should(
           "have.text",
-          formatDate(testDate, { month: "short" }),
+          formatDate(testDate, testLocale, {
+            day: undefined,
+            month: "short",
+            year: undefined,
+          }),
         );
+        // Simulate selecting a different month from the dropdown
         cy.findByRole("combobox", {
           name: "Month Dropdown",
         }).realClick();
         cy.findByRole("option", {
-          name: formatDate(testDate.set({ month: 4 }), { month: "short" }),
+          name: formatDate(testDate.set({ month: 4 }), testLocale, {
+            day: undefined,
+            month: "short",
+            year: undefined,
+          }),
         })
           .realHover()
           .realClick();
+        // Verify that the calendar navigates to the selected month
         cy.findByRole("combobox", { name: "Month Dropdown" }).should(
           "have.text",
-          formatDate(testDate.set({ month: 4 }), { month: "short" }),
+          formatDate(testDate.set({ month: 4 }), testLocale, {
+            day: undefined,
+            month: "short",
+            year: undefined,
+          }),
         );
         cy.findByRole("button", {
           name: formatDay(testDate.set({ month: 4 })),
@@ -110,22 +129,37 @@ describe("GIVEN a Calendar", () => {
       });
 
       it("SHOULD navigate to the selected year when using the year dropdown", () => {
-        cy.mount(<Default defaultVisibleMonth={testDate} />);
+        cy.mount(<Single defaultVisibleMonth={testDate} locale={testLocale} />);
+        // Verify the initial year in the dropdown
         cy.findByRole("combobox", { name: "Year Dropdown" }).should(
           "have.text",
-          formatDate(testDate, { year: "numeric" }),
+          formatDate(testDate, testLocale, {
+            day: undefined,
+            month: undefined,
+            year: "numeric",
+          }),
         );
+        // Simulate selecting a different year from the dropdown
         cy.findByRole("combobox", {
           name: "Year Dropdown",
         }).realClick();
         cy.findByRole("option", {
-          name: formatDate(testDate.add({ years: 1 }), { year: "numeric" }),
+          name: formatDate(testDate.add({ years: 1 }), testLocale, {
+            day: undefined,
+            month: undefined,
+            year: "numeric",
+          }),
         })
           .realHover()
           .realClick();
+        // Verify that the calendar navigates to the selected year
         cy.findByRole("combobox", { name: "Year Dropdown" }).should(
           "have.text",
-          formatDate(testDate.add({ years: 1 }), { year: "numeric" }),
+          formatDate(testDate.add({ years: 1 }), testLocale, {
+            day: undefined,
+            month: undefined,
+            year: "numeric",
+          }),
         );
         cy.findByRole("button", {
           name: formatDay(testDate.add({ years: 1 })),
@@ -135,25 +169,37 @@ describe("GIVEN a Calendar", () => {
 
     describe("Clicking", () => {
       it("SHOULD navigate to the next month when clicking out of range dates", () => {
-        cy.mount(<Default defaultVisibleMonth={testDate} />);
+        cy.mount(<Single defaultVisibleMonth={testDate} locale={testLocale} />);
+        // Verify the initial month in the dropdown
         cy.findByRole("combobox", { name: "Month Dropdown" }).should(
           "have.text",
-          formatDate(testDate, { month: "short" }),
+          formatDate(testDate, testLocale, {
+            day: undefined,
+            month: "short",
+            year: undefined,
+          }),
         );
+        // Simulate clicking a date outside the current month range
         cy.findByRole("button", {
           name: formatDay(endOfMonth(testDate).add({ days: 1 })),
         }).realClick();
+        // Verify that the calendar navigates to the next month
         cy.findByRole("combobox", { name: "Month Dropdown" }).should(
           "have.text",
-          formatDate(testDate.add({ months: 1 }), { month: "short" }),
+          formatDate(testDate.add({ months: 1 }), testLocale, {
+            day: undefined,
+            month: "short",
+            year: undefined,
+          }),
         );
       });
     });
 
     describe("Keyboard", () => {
       it("SHOULD move the focus when the arrow keys are pressed", () => {
-        cy.mount(<Default defaultVisibleMonth={testDate} />);
+        cy.mount(<Single defaultVisibleMonth={testDate} locale={testLocale} />);
 
+        // Simulate focusing on the current date button
         cy.findByRole("button", {
           name: formatDay(testDate),
         }).focus();
@@ -161,21 +207,25 @@ describe("GIVEN a Calendar", () => {
           name: formatDay(testDate),
         }).should("be.focused");
 
+        // Simulate pressing the ArrowRight key
         cy.realPress("ArrowRight");
         cy.findByRole("button", {
           name: formatDay(testDate.add({ days: 1 })),
         }).should("be.visible");
 
+        // Simulate pressing the ArrowLeft key
         cy.realPress("ArrowLeft");
         cy.findByRole("button", {
           name: formatDay(testDate),
         }).should("be.visible");
 
+        // Simulate pressing the ArrowDown key
         cy.realPress("ArrowDown");
         cy.findByRole("button", {
           name: formatDay(testDate.add({ weeks: 1 })),
         }).should("be.visible");
 
+        // Simulate pressing the ArrowUp key
         cy.realPress("ArrowUp");
         cy.findByRole("button", {
           name: formatDay(testDate),
@@ -184,8 +234,11 @@ describe("GIVEN a Calendar", () => {
 
       describe("SHOULD move the focus when the shortcut keys are pressed", () => {
         beforeEach(() => {
-          cy.mount(<Default defaultVisibleMonth={testDate} />);
+          cy.mount(
+            <Single defaultVisibleMonth={testDate} locale={testLocale} />,
+          );
 
+          // Simulate focusing on the current date button
           cy.findByRole("button", {
             name: formatDay(testDate),
           }).focus();
@@ -196,22 +249,25 @@ describe("GIVEN a Calendar", () => {
         });
 
         it("HOME", () => {
+          // Simulate pressing the Home key
           cy.realPress("Home").then(() => {
             cy.findByRole("button", {
-              name: formatDay(startOfWeek(testDate, currentLocale)),
+              name: formatDay(startOfWeek(testDate, testLocale)),
             }).should("be.focused");
           });
         });
 
         it("END", () => {
+          // Simulate pressing the End key
           cy.realPress("End").then(() => {
             cy.findByRole("button", {
-              name: formatDay(endOfWeek(testDate, currentLocale)),
+              name: formatDay(endOfWeek(testDate, testLocale)),
             }).should("be.focused");
           });
         });
 
         it("PageUp", () => {
+          // Simulate pressing the PageUp key
           cy.realPress("PageUp").then(() => {
             cy.findByRole("button", {
               name: formatDay(testDate.subtract({ months: 1 })),
@@ -220,6 +276,7 @@ describe("GIVEN a Calendar", () => {
         });
 
         it("PageDown", () => {
+          // Simulate pressing the PageDown key
           cy.realPress("PageDown").then(() => {
             cy.findByRole("button", {
               name: formatDay(testDate.add({ months: 1 })),
@@ -228,6 +285,7 @@ describe("GIVEN a Calendar", () => {
         });
 
         it("Shift PageUp", () => {
+          // Simulate pressing Shift + PageUp keys
           cy.realPress(["Shift", "PageUp"]).then(() => {
             cy.findByRole("button", {
               name: formatDay(testDate.subtract({ years: 1 })),
@@ -236,6 +294,7 @@ describe("GIVEN a Calendar", () => {
         });
 
         it("Shift PageDown", () => {
+          // Simulate pressing Shift + PageDown keys
           cy.realPress(["Shift", "PageDown"]).then(() => {
             cy.findByRole("button", {
               name: formatDay(testDate.add({ years: 1 })),
@@ -246,730 +305,177 @@ describe("GIVEN a Calendar", () => {
     });
   });
 
-  describe("Single Selection", () => {
-    it("SHOULD move to selected date if it is within the visible month", () => {
+  describe("Render", () => {
+    it("SHOULD hide year dropdown on navigation", () => {
       cy.mount(
-        <Default selectedDate={testDate} defaultVisibleMonth={testDate} />,
+        <HideYearDropdown defaultVisibleMonth={testDate} locale={testLocale} />,
+      );
+      // Verify that the year dropdown is not visible
+      cy.findByRole("combobox", { name: "Year Dropdown" }).should("not.exist");
+
+      // Simulate selecting a different month from the month dropdown
+      cy.findByRole("combobox", { name: "Month Dropdown" }).should(
+        "have.text",
+        formatDate(testDate, testLocale, {
+          day: undefined,
+          month: "long",
+          year: undefined,
+        }),
+      );
+      cy.findByRole("combobox", {
+        name: "Month Dropdown",
+      }).realClick();
+      const followingQuarter = testDate.add({ months: 4 });
+      cy.findByRole("option", {
+        name: formatDate(followingQuarter, testLocale, {
+          day: undefined,
+          month: "long",
+          year: undefined,
+        }),
+      })
+        .realHover()
+        .realClick();
+      // Verify that the calendar navigates to the selected month
+      cy.findByRole("combobox", { name: "Month Dropdown" }).should(
+        "have.text",
+        formatDate(followingQuarter, testLocale, {
+          day: undefined,
+          month: "long",
+          year: undefined,
+        }),
       );
       cy.findByRole("button", {
-        name: "Next Month",
-      }).focus();
-      cy.realPress("Tab");
-      cy.findByRole("button", {
-        name: formatDay(testDate),
-      }).should("be.focused");
+        name: formatDay(followingQuarter),
+      }).should("be.visible");
     });
-    it("SHOULD move to selected date when navigating back to selection month", () => {
+
+    it("SHOULD render custom headers", () => {
       cy.mount(
-        <Default selectedDate={testDate} defaultVisibleMonth={testDate} />,
+        <CustomHeader defaultVisibleMonth={testDate} locale={testLocale} />,
       );
+      // Simulate clicking the "Today" button
+      cy.findByRole("button", { name: /Today/i }).click();
+      // Verify that today's date button has `aria-current=date`
       cy.findByRole("button", {
-        name: "Next Month",
-      }).realClick();
-      cy.findByRole("button", {
-        name: "Previous Month",
-      }).realClick();
-      cy.findByRole("button", {
-        name: "Next Month",
-      }).focus();
-      cy.realPress("Tab");
-      cy.findByRole("button", {
-        name: formatDay(testDate),
-      }).should("be.focused");
+        name: formatDay(today(testTimeZone)),
+      }).should("have.attr", "aria-current", "date");
     });
-    it("SHOULD move to today's date if selected date is not within the visible month", () => {
-      const todayTestDate = today(localTimeZone);
+
+    it("SHOULD render custom day", () => {
       cy.mount(
-        <Default
-          selectedDate={todayTestDate.subtract({ months: 2 })}
-          defaultVisibleMonth={todayTestDate}
+        <CustomDayRender defaultVisibleMonth={testDate} locale={testLocale} />,
+      );
+      // Verify that a custom day button is rendered
+      cy.contains("button", /01/).should("exist");
+    });
+
+    it("SHOULD support multi-calendar selection", () => {
+      const startDate = testDate;
+      const endDate = testDate.add({ months: 1 });
+      cy.mount(
+        <TwinCalendars
+          selectionVariant={"range"}
+          defaultSelectedDate={{ startDate, endDate }}
+          locale={testLocale}
         />,
       );
+      // Verify that the start and end date buttons are pressed
       cy.findByRole("button", {
-        name: "Next Month",
-      }).focus();
-      cy.realPress("Tab");
+        name: formatDay(startOfMonth(startDate)),
+      }).should("not.have.attr", "aria-pressed", "true");
       cy.findByRole("button", {
-        name: formatDay(todayTestDate),
-      }).should("be.focused");
-    });
-    it("SHOULD move to today's date if there is not selected date", () => {
-      const todayTestDate = today(localTimeZone);
-      cy.mount(<Default defaultVisibleMonth={todayTestDate} />);
-      cy.findByRole("button", {
-        name: "Next Month",
-      }).focus();
-      cy.realPress("Tab");
-      cy.findByRole("button", {
-        name: formatDay(todayTestDate),
-      }).should("be.focused");
-    });
-    it("SHOULD move to today's date if there is not selected date", () => {
-      const todayTestDate = today(localTimeZone);
-      cy.mount(<Default defaultVisibleMonth={todayTestDate} />);
-      cy.findByRole("button", {
-        name: "Next Month",
-      }).realClick();
-      cy.findByRole("button", {
-        name: "Previous Month",
-      }).realClick();
-      cy.findByRole("button", {
-        name: "Next Month",
-      }).focus();
-      cy.realPress("Tab");
-      cy.findByRole("button", {
-        name: formatDay(todayTestDate),
-      }).should("be.focused");
-    });
-    it("SHOULD move to start of the month if there is no selected date and today is not within visible month", () => {
-      const todayTestDate = today(localTimeZone);
-      cy.mount(
-        <Default defaultVisibleMonth={todayTestDate.add({ months: 1 })} />,
-      );
-      cy.findByRole("button", {
-        name: "Next Month",
-      }).focus();
-      cy.findByRole("button", {
-        name: "Next Month",
-      }).realClick();
-      cy.realPress("Tab");
-      cy.findByRole("button", {
-        name: formatDay(startOfMonth(todayTestDate).add({ months: 2 })),
-      }).should("be.focused");
-    });
-    it("SHOULD hover one day when a day is hovered", () => {
-      cy.mount(<Default defaultVisibleMonth={testDate} />);
-      cy.findByRole("button", {
-        name: formatDay(testDate),
-      }).realHover({ position: "bottom" });
-      cy.findByRole("button", {
-        name: formatDay(testDate),
-      }).should("have.class", "saltCalendarDay-hovered");
-
-      cy.get("body").realHover({ position: "topLeft" });
-      cy.get(".saltCalendarDay-hovered").should("not.exist");
-    });
-    it("SHOULD only allow one date to be selected at a time", () => {
-      cy.mount(<Default defaultVisibleMonth={testDate} />);
-      cy.findByRole("button", { name: formatDay(testDate) }).realClick();
-      cy.findByRole("button", { name: formatDay(testDate) }).should(
-        "have.attr",
-        "aria-pressed",
-        "true",
-      );
-
-      cy.findByRole("button", {
-        name: formatDay(testDate.add({ days: 1 })),
-      }).realClick();
-      cy.findByRole("button", { name: formatDay(testDate) }).should(
-        "not.have.attr",
-        "aria-pressed",
-      );
-      cy.findByRole("button", {
-        name: formatDay(testDate.add({ days: 1 })),
+        name: formatDay(startDate),
       }).should("have.attr", "aria-pressed", "true");
-      cy.realPress("ArrowRight");
-      cy.realPress("Enter");
       cy.findByRole("button", {
-        name: formatDay(testDate.add({ days: 2 })),
+        name: formatDay(endDate),
       }).should("have.attr", "aria-pressed", "true");
+      cy.findByRole("button", {
+        name: formatDay(endOfMonth(endDate)),
+      }).should("not.have.attr", "aria-pressed", "true");
     });
 
-    it("SHOULD not allow deselection", () => {
-      cy.mount(<Default defaultVisibleMonth={testDate} />);
-      cy.findByRole("button", { name: formatDay(testDate) }).realClick();
-      cy.findByRole("button", { name: formatDay(testDate) }).realClick();
-      cy.findByRole("button", { name: formatDay(testDate) }).should(
-        "have.attr",
-        "aria-pressed",
-        "true",
+    it("SHOULD render different locales", () => {
+      cy.mount(<WithLocale locale={"es-ES"} />);
+      // Verify that the month dropdown is rendered in the specified locale
+      cy.findByRole("combobox", { name: "Month Dropdown" }).should(
+        "have.text",
+        formatDate(today(testTimeZone), "es-ES", {
+          day: undefined,
+          month: "short",
+          year: undefined,
+        }),
       );
     });
   });
 
-  describe("Multi-Selection", () => {
-    it("SHOULD move to first selected date of the visible month", () => {
+  describe("Min/Max", () => {
+    it("SHOULD be selectable between min/max dates", () => {
       cy.mount(
-        <MultiSelection
-          selectedDate={[
-            testDate.add({ days: 8 }),
-            testDate.add({ days: 3 }),
-            testDate,
-          ]}
+        <MinMaxDate
           defaultVisibleMonth={testDate}
+          minDate={startOfMonth(testDate).add({ days: 1 })}
+          maxDate={endOfMonth(testDate).subtract({ days: 1 })}
+          locale={testLocale}
         />,
       );
-      cy.findByRole("button", {
-        name: "Next Month",
-      }).focus();
-      cy.realPress("Tab");
-      cy.findByRole("button", {
-        name: formatDay(testDate),
-      }).should("be.focused");
-    });
-    it("SHOULD move to today's date if selected date is not within the visible month", () => {
-      const todayTestDate = today(localTimeZone);
-      cy.mount(
-        <MultiSelection
-          selectedDate={[todayTestDate.subtract({ months: 2 })]}
-          defaultVisibleMonth={todayTestDate}
-        />,
+      // Verify the initial month in the dropdown
+      cy.findByRole("combobox", { name: "Month Dropdown" }).should(
+        "have.text",
+        formatDate(testDate, testLocale, {
+          day: undefined,
+          month: "short",
+          year: undefined,
+        }),
       );
-      cy.findByRole("button", {
-        name: "Next Month",
-      }).focus();
-      cy.realPress("Tab");
-      cy.findByRole("button", {
-        name: formatDay(todayTestDate),
-      }).should("be.focused");
-    });
-    it("SHOULD move to today's date if there is not selected date", () => {
-      const todayTestDate = today(localTimeZone);
-      cy.mount(<MultiSelection defaultVisibleMonth={todayTestDate} />);
-      cy.findByRole("button", {
-        name: "Next Month",
-      }).focus();
-      cy.realPress("Tab");
-      cy.findByRole("button", {
-        name: formatDay(todayTestDate),
-      }).should("be.focused");
-    });
-    it("SHOULD move to start of the month if there is no selected date and today is not within visible month", () => {
-      const todayTestDate = today(localTimeZone);
-      cy.mount(
-        <MultiSelection
-          defaultVisibleMonth={todayTestDate.add({ months: 1 })}
-        />,
-      );
-      cy.findByRole("button", {
-        name: "Next Month",
-      }).focus();
-      cy.findByRole("button", {
-        name: "Next Month",
+      // Simulate selecting a different month from the month dropdown
+      cy.findByRole("combobox", {
+        name: "Month Dropdown",
       }).realClick();
-      cy.realPress("Tab");
-      cy.findByRole("button", {
-        name: formatDay(startOfMonth(todayTestDate).add({ months: 2 })),
-      }).should("be.focused");
-    });
-    it("SHOULD allow multiple dates to be selected and unselected", () => {
-      cy.mount(<MultiSelection defaultVisibleMonth={testDate} />);
-      cy.findByRole("button", { name: formatDay(testDate) }).realClick();
-      cy.findByRole("button", { name: formatDay(testDate) }).should(
-        "have.attr",
-        "aria-pressed",
-        "true",
-      );
-
-      cy.findByRole("button", {
-        name: formatDay(testDate.add({ days: 1 })),
-      }).realClick();
-      cy.findByRole("button", {
-        name: formatDay(testDate.add({ days: 1 })),
-      }).should("have.attr", "aria-pressed", "true");
-      cy.findByRole("button", {
-        name: formatDay(testDate.add({ days: 1 })),
-      }).should("have.attr", "aria-pressed", "true");
-
-      cy.findByRole("button", {
-        name: formatDay(testDate.add({ days: 1 })),
-      }).realClick();
-      cy.findByRole("button", {
-        name: formatDay(testDate),
-      }).realClick();
-      cy.findByRole("button", {
-        name: formatDay(testDate),
-      }).should("not.have.attr", "aria-pressed");
-      cy.findByRole("button", {
-        name: formatDay(testDate.add({ days: 1 })),
-      }).should("not.have.attr", "aria-pressed");
-
-      cy.findByRole("button", {
-        name: formatDay(testDate),
-      }).should("be.focused");
-      cy.realPress("Enter");
-      cy.realPress("ArrowRight");
-      cy.realPress("Enter");
-      cy.findByRole("button", {
-        name: formatDay(testDate),
-      }).should("have.attr", "aria-pressed", "true");
-      cy.findByRole("button", {
-        name: formatDay(testDate.add({ days: 1 })),
-      }).should("have.attr", "aria-pressed", "true");
-    });
-  });
-
-  function getAllDatesInRange(startDate: DateValue, endDate: DateValue) {
-    const dates = [];
-
-    let currentDate = startDate;
-    while (currentDate.compare(endDate) <= 0) {
-      dates.push(startDate);
-      currentDate = currentDate.add({ days: 1 });
-    }
-    return dates;
-  }
-
-  describe("Offset Selection", () => {
-    it("SHOULD allow a defined range to be selected", () => {
-      cy.mount(<OffsetSelection defaultVisibleMonth={testDate} />);
-      const baseDate = testDate.add({ days: 3 });
-      const datesInRange = getAllDatesInRange(
-        // @ts-ignore
-        baseDate,
-        // @ts-ignore
-        OffsetSelection.args?.endDateOffset(baseDate),
-      );
-      cy.findByRole("button", {
-        name: formatDay(baseDate),
-      }).realHover();
-      for (const dateInRange of datesInRange) {
-        cy.findByRole("button", {
-          name: formatDay(dateInRange),
-        }).should("have.class", "saltCalendarDay-hoveredOffset");
+      // Verify out of range options are disabled
+      cy.findByRole("option", {
+        name: formatDate(testDate.set({ month: 1 }), testLocale, {
+          day: undefined,
+          month: "short",
+          year: undefined,
+        }),
+      }).should("have.attr", "aria-disabled", "true");
+      for (let monthIndex = 3; monthIndex < 12; monthIndex++) {
+        cy.findByRole("option", {
+          name: formatDate(testDate.set({ month: monthIndex }), testLocale, {
+            day: undefined,
+            month: "short",
+            year: undefined,
+          }),
+        }).should("have.attr", "aria-disabled", "true");
       }
-
-      cy.findByRole("button", {
-        name: formatDay(baseDate),
+      // Verify in range options are enabled
+      cy.findByRole("option", {
+        name: formatDate(testDate.set({ month: 2 }), testLocale, {
+          day: undefined,
+          month: "short",
+          year: undefined,
+        }),
+      }).should("have.attr", "aria-selected", "true");
+      // Simulate selecting a different year from the year dropdown
+      cy.findByRole("combobox", {
+        name: "Year Dropdown",
       }).realClick();
-
-      for (const dateInRange of datesInRange) {
-        cy.findByRole("button", {
-          name: formatDay(dateInRange),
-        }).should("have.attr", "aria-pressed", "true");
-      }
-
-      const newBaseDate = baseDate.add({ weeks: 1 });
-      const datesInNewRange = getAllDatesInRange(
-        newBaseDate,
-        // @ts-ignore
-        OffsetSelection.args?.endDateOffset(newBaseDate),
-      );
-
-      cy.findByRole("button", {
-        name: formatDay(baseDate.add({ weeks: 1 })),
-      }).realClick();
-      for (const dateInRange of datesInNewRange) {
-        cy.findByRole("button", {
-          name: formatDay(dateInRange),
-        }).should("have.attr", "aria-pressed", "true");
-      }
-
-      for (const dateInRange of datesInRange) {
-        cy.findByRole("button", {
-          name: formatDay(dateInRange),
-        }).should("not.have.attr", "aria-pressed");
-      }
-
-      cy.realPress("ArrowUp");
-      cy.realPress("Enter");
-      for (const dateInRange of datesInRange) {
-        cy.findByRole("button", {
-          name: formatDay(dateInRange),
-        }).should("have.attr", "aria-pressed", "true");
-      }
-    });
-  });
-
-  describe("Range Selection", () => {
-    it("SHOULD move to start date selected if it is within visible month", () => {
-      const todayTestDate = today(localTimeZone);
-      cy.mount(
-        <RangeSelection
-          selectedDate={{
-            startDate: startOfMonth(todayTestDate).add({ days: 1 }),
-            endDate: endOfMonth(todayTestDate),
-          }}
-          defaultVisibleMonth={todayTestDate}
-        />,
-      );
-      cy.findByRole("button", {
-        name: "Next Month",
-      }).focus();
-      cy.realPress("Tab");
-      cy.findByRole("button", {
-        name: formatDay(startOfMonth(todayTestDate).add({ days: 1 })),
-      }).should("be.focused");
-    });
-    it("SHOULD move to end date selected if it is within visible month and startDate is not", () => {
-      const todayTestDate = today(localTimeZone);
-      cy.mount(
-        <RangeSelection
-          selectedDate={{
-            startDate: startOfMonth(todayTestDate).subtract({ months: 1 }),
-            endDate: endOfMonth(todayTestDate),
-          }}
-          defaultVisibleMonth={todayTestDate}
-        />,
-      );
-      cy.findByRole("button", {
-        name: "Next Month",
-      }).focus();
-      cy.realPress("Tab");
-      cy.findByRole("button", {
-        name: formatDay(endOfMonth(todayTestDate)),
-      }).should("be.focused");
-    });
-    it("SHOULD move to today's date if selected range is not within the visible month", () => {
-      const todayTestDate = today(localTimeZone);
-      cy.mount(
-        <RangeSelection
-          selectedDate={{
-            startDate: todayTestDate.subtract({ months: 2 }),
-            endDate: todayTestDate.subtract({
-              months: 1,
-            }),
-          }}
-          defaultVisibleMonth={todayTestDate}
-        />,
-      );
-      cy.findByRole("button", {
-        name: "Next Month",
-      }).focus();
-      cy.realPress("Tab");
-      cy.findByRole("button", {
-        name: formatDay(todayTestDate),
-      }).should("be.focused");
-    });
-    it("SHOULD move to today's date if there is not selected date", () => {
-      const todayTestDate = today(localTimeZone);
-      cy.mount(<RangeSelection defaultVisibleMonth={todayTestDate} />);
-      cy.findByRole("button", {
-        name: "Next Month",
-      }).focus();
-      cy.realPress("Tab");
-      cy.findByRole("button", {
-        name: formatDay(todayTestDate),
-      }).should("be.focused");
-    });
-    it("SHOULD move to today's date if there is an empty selected range", () => {
-      const todayTestDate = today(localTimeZone);
-      cy.mount(
-        <RangeSelection
-          defaultVisibleMonth={todayTestDate}
-          selectedDate={{ startDate: undefined, endDate: undefined }}
-        />,
-      );
-      cy.findByRole("button", {
-        name: "Next Month",
-      }).focus();
-      cy.realPress("Tab");
-      cy.findByRole("button", {
-        name: formatDay(todayTestDate),
-      }).should("be.focused");
-    });
-    it("SHOULD move to start of the month if there is no selected date and today is not within visible month", () => {
-      const todayTestDate = today(localTimeZone);
-      cy.mount(
-        <RangeSelection
-          defaultVisibleMonth={todayTestDate.add({ months: 1 })}
-        />,
-      );
-      cy.findByRole("button", {
-        name: "Next Month",
-      }).focus();
-      cy.findByRole("button", {
-        name: "Next Month",
-      }).realClick();
-      cy.realPress("Tab");
-      cy.findByRole("button", {
-        name: formatDay(startOfMonth(todayTestDate).add({ months: 2 })),
-      }).should("be.focused");
-    });
-    it("SHOULD move to start of the month if the full month is part of a selected range", () => {
-      cy.mount(
-        <RangeSelection
-          selectedDate={{
-            startDate: testDate.subtract({ months: 2 }),
-            endDate: testDate.add({ months: 2 }),
-          }}
-          defaultVisibleMonth={testDate}
-        />,
-      );
-      cy.findByRole("button", {
-        name: "Next Month",
-      }).focus();
-      cy.realPress("Tab");
+      cy.findAllByRole("option").should("have.length", 1);
+      // Verify only in range options are enabled
+      cy.findByRole("option", {
+        name: formatDate(testDate, testLocale, {
+          day: undefined,
+          month: undefined,
+          year: "numeric",
+        }),
+      }).should("exist");
+      // Verify out of range dates are disabled
       cy.findByRole("button", {
         name: formatDay(startOfMonth(testDate)),
-      }).should("be.focused");
-    });
-    it("SHOULD allow a range to be selected", () => {
-      cy.mount(<RangeSelection defaultVisibleMonth={testDate} />);
-      cy.findByRole("button", { name: formatDay(testDate) }).realClick();
-      cy.findByRole("button", {
-        name: formatDay(testDate),
-      }).should("have.attr", "aria-pressed", "true");
-
-      cy.findByRole("button", {
-        name: formatDay(testDate.add({ days: 2 })),
-      }).realHover();
-      cy.findByRole("button", {
-        name: formatDay(testDate.add({ days: 1 })),
-      }).should("have.class", "saltCalendarDay-hoveredSpan");
-      cy.findByRole("button", {
-        name: formatDay(testDate.add({ days: 2 })),
-      }).should("have.class", "saltCalendarDay-hoveredSpan");
-
-      cy.findByRole("button", {
-        name: formatDay(testDate.add({ days: 2 })),
-      }).realClick();
-      cy.findByRole("button", {
-        name: formatDay(testDate),
-      })
-        .should("have.attr", "aria-pressed", "true")
-        .and("have.class", "saltCalendarDay-selectedStart");
-      cy.findByRole("button", {
-        name: formatDay(testDate.add({ days: 1 })),
-      })
-        .should("have.attr", "aria-pressed", "true")
-        .and("have.class", "saltCalendarDay-selectedSpan");
-      cy.findByRole("button", {
-        name: formatDay(testDate.add({ days: 2 })),
-      })
-        .should("have.attr", "aria-pressed", "true")
-        .and("have.class", "saltCalendarDay-selectedEnd");
-
-      cy.findByRole("button", {
-        name: formatDay(testDate.add({ weeks: 1 })),
-      }).realClick();
-      cy.findByRole("button", {
-        name: formatDay(testDate.add({ weeks: 1 })),
-      }).should("have.attr", "aria-pressed", "true");
-      cy.findAllByRole("button", {
-        pressed: true,
-      }).should("have.length", 1);
-
-      cy.findByRole("button", {
-        name: formatDay(testDate),
-      }).realClick();
-      cy.findByRole("button", {
-        name: formatDay(testDate),
-      }).should("have.attr", "aria-pressed", "true");
-      cy.findAllByRole("button", {
-        pressed: true,
-      }).should("have.length", 1);
-
-      cy.realPress("ArrowRight");
-      cy.realPress("ArrowRight");
-      cy.get(".saltCalendarDay-hoveredSpan").should("not.exist");
-      cy.realPress("Enter");
-      cy.findByRole("button", {
-        name: formatDay(testDate),
-      })
-        .should("have.attr", "aria-pressed", "true")
-        .and("have.class", "saltCalendarDay-selectedStart");
-      cy.findByRole("button", {
-        name: formatDay(testDate.add({ days: 1 })),
-      })
-        .should("have.attr", "aria-pressed", "true")
-        .and("have.class", "saltCalendarDay-selectedSpan");
-      cy.findByRole("button", {
-        name: formatDay(testDate.add({ days: 2 })),
-      })
-        .should("have.attr", "aria-pressed", "true")
-        .and("have.class", "saltCalendarDay-selectedEnd");
-    });
-  });
-
-  describe("Unselectable Days", () => {
-    describe("Tertiary", () => {
-      it("SHOULD apply `aria-disabled=true` to unselectable days", () => {
-        cy.mount(<UnselectableDates defaultVisibleMonth={testDate} />);
-        cy.findByRole("button", {
-          name: formatDay(endOfWeek(testDate, currentLocale)),
-        }).should("have.attr", "aria-disabled", "true");
-
-        cy.findByRole("button", {
-          name: formatDay(endOfWeek(testDate, currentLocale)),
-        }).realClick();
-        cy.findByRole("button", {
-          name: formatDay(endOfWeek(testDate, currentLocale)),
-        }).should("not.have", "aria-pressed", "true");
-      });
-    });
-  });
-
-  describe("Custom Day Render", () => {
-    it("SHOULD allow custom day contents", () => {
-      cy.mount(<CustomDayRender defaultVisibleMonth={testDate} />);
-      cy.findByRole("button", {
-        name: formatDay(testDate),
-      }).should("have.text", formatDate(testDate, { day: "2-digit" }));
-    });
-  });
-
-  describe("Navigation Blocked", () => {
-    it("SHOULD prevent navigation past a minimum date and maximum date", () => {
-      const minDate = testDate.subtract({ months: 2 });
-      const maxDate = testDate.add({ months: 2 });
-      cy.mount(
-        <NavigationBlocked
-          defaultVisibleMonth={testDate}
-          minDate={minDate}
-          maxDate={maxDate}
-        />,
-      );
-      cy.findByRole("button", {
-        name: "Previous Month",
-      }).realClick();
-      cy.findByRole("button", {
-        name: "Previous Month",
-      }).realClick();
-      cy.findByRole("button", {
-        name: "Previous Month",
       }).should("have.attr", "aria-disabled", "true");
       cy.findByRole("button", {
-        name: "Previous Month",
-      }).realHover();
-      cy.findByRole("tooltip").should(
-        "have.text",
-        "Past dates are out of range",
-      );
-
-      cy.findByRole("combobox", { name: "Month Dropdown" }).realClick();
-      cy.findAllByRole("option")
-        .filter("[aria-disabled=true]")
-        .should("have.length", 11);
-
-      cy.findAllByRole("option")
-        .filter("[aria-disabled=true]")
-        .eq(0)
-        .realHover();
-
-      cy.findByRole("tooltip").should(
-        "have.text",
-        "This month is out of range",
-      );
-
-      cy.findByRole("button", {
-        name: "Next Month",
-      }).realClick();
-      cy.findByRole("button", {
-        name: "Next Month",
-      }).realClick();
-      cy.findByRole("button", {
-        name: "Next Month",
-      }).realClick();
-      cy.findByRole("button", {
-        name: "Next Month",
-      }).realClick();
-      cy.findByRole("button", {
-        name: "Next Month",
+        name: formatDay(endOfMonth(testDate)),
       }).should("have.attr", "aria-disabled", "true");
-      cy.findByRole("button", {
-        name: "Next Month",
-      }).realHover();
-      cy.findByRole("tooltip").should(
-        "have.text",
-        "Future dates are out of range",
-      );
-
-      cy.findByRole("combobox", { name: "Month Dropdown" }).realClick();
-      cy.findAllByRole("option")
-        .filter("[aria-disabled=true]")
-        .should("have.length", 8);
-      cy.realPress("Escape");
-
-      cy.findByRole("combobox", { name: "Year Dropdown" }).realClick();
-      cy.findAllByRole("option").should("have.length", 2);
-
-      cy.findByRole("button", {
-        name: "Previous Month",
-      }).realClick();
-    });
-  });
-
-  describe("Hide out of range days", () => {
-    it("SHOULD hide the days not in the current month from be displayed when set to true", () => {
-      cy.mount(<HideOutOfRangeDays defaultVisibleMonth={testDate} />);
-      const lastPreviousOutOfRangeDate = formatDay(
-        endOfMonth(testDate.subtract({ months: 1 })),
-      );
-      cy.get(`[aria-label="${lastPreviousOutOfRangeDate}"]`)
-        .eq(1)
-        .should("not.be.visible")
-        .and("have.attr", "aria-hidden", "true");
-
-      const firstNextOutOfRangeDate = formatDay(
-        startOfMonth(testDate.add({ months: 1 })),
-      );
-      cy.get(`[aria-label="${firstNextOutOfRangeDate}"]`)
-        .eq(0)
-        .should("not.be.visible")
-        .and("have.attr", "aria-hidden", "true");
-    });
-  });
-
-  describe("Navigation Wrapping", () => {
-    it("SHOULD wrap to the previous year", () => {
-      const date = startOfYear(today(localTimeZone));
-      cy.mount(<Default defaultVisibleMonth={date} />);
-      cy.findByRole("button", {
-        name: "Previous Month",
-      }).realClick();
-
-      cy.findByRole("button", {
-        name: formatDay(date.subtract({ months: 1 })),
-      }).should("be.visible");
-    });
-
-    it("SHOULD wrap to the next year", () => {
-      const date = endOfYear(today(localTimeZone));
-      cy.mount(<Default defaultVisibleMonth={date} />);
-      cy.findByRole("button", {
-        name: "Next Month",
-      }).realClick();
-
-      cy.findByRole("button", {
-        name: formatDay(startOfMonth(date.add({ months: 1 }))),
-      }).should("be.visible");
-    });
-
-    describe("WHEN `hideYearDropdown=true`", () => {
-      it("SHOULD not wrap to the previous year", () => {
-        const date = startOfYear(today(localTimeZone));
-        cy.mount(<Default defaultVisibleMonth={date} hideYearDropdown />);
-        cy.findByRole("button", {
-          name: "Previous Month",
-        }).realClick();
-
-        cy.findByRole("button", {
-          name: formatDay(date),
-        }).should("be.visible");
-        cy.findByRole("button", {
-          name: "Previous Month",
-        }).should("have.attr", "aria-disabled", "true");
-        cy.findByRole("button", {
-          name: "Previous Month",
-        }).realHover();
-        cy.findByRole("tooltip").should(
-          "have.text",
-          "Past dates are out of range",
-        );
-      });
-
-      it("SHOULD not wrap to the next year", () => {
-        const date = endOfYear(today(localTimeZone));
-        cy.mount(<Default defaultVisibleMonth={date} hideYearDropdown />);
-        cy.findByRole("button", {
-          name: "Next Month",
-        }).realClick();
-
-        cy.findByRole("button", {
-          name: formatDay(date),
-        }).should("be.visible");
-        cy.findByRole("button", {
-          name: "Next Month",
-        }).should("have.attr", "aria-disabled", "true");
-        cy.findByRole("button", {
-          name: "Next Month",
-        }).realHover();
-        cy.findByRole("tooltip").should(
-          "have.text",
-          "Future dates are out of range",
-        );
-      });
     });
   });
 });

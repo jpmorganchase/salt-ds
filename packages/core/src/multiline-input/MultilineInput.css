@@ -1,21 +1,15 @@
 /* Style applied to the root element */
 .saltMultilineInput {
-  --multilineInput-borderColor: var(--salt-editable-borderColor);
-  --multilineInput-borderStyle: var(--salt-editable-borderStyle);
-  --multilineInput-outlineColor: var(--salt-focused-outlineColor);
-  --multilineInput-border: none;
-  --multilineInput-activationIndicator-borderWidth: var(--salt-size-border);
-
   align-items: center;
   background: var(--multilineInput-background);
-  border: var(--multilineInput-border);
   border-radius: var(--salt-palette-corner-weak, 0);
   color: var(--salt-content-primary-foreground);
   display: inline-flex;
   font-family: var(--salt-text-fontFamily);
   font-size: var(--salt-text-fontSize);
-  height: auto;
   line-height: var(--salt-text-lineHeight);
+  letter-spacing: var(--salt-text-letterSpacing);
+  height: auto;
   min-height: var(--salt-size-base);
   min-width: 4em;
   padding-left: var(--salt-spacing-100);
@@ -28,21 +22,79 @@
 
 /* Style applied on hover */
 .saltMultilineInput:hover {
-  --multilineInput-borderStyle: var(--salt-editable-borderStyle-hover);
-  --multilineInput-borderColor: var(--salt-editable-borderColor-hover);
-
   background: var(--multilineInput-background-hover);
   cursor: var(--salt-editable-cursor-hover);
 }
 
-/* Style applied when active */
-.saltMultilineInput:active {
-  --multilineInput-borderColor: var(--salt-editable-borderColor-active);
-  --multilineInput-borderStyle: var(--salt-editable-borderStyle-active);
-  --multilineInput-activationIndicator-borderWidth: var(--salt-editable-borderWidth-active);
+/* Style applied if `bordered={true}` */
+.saltMultilineInput-bordered.saltMultilineInput {
+  border: var(--salt-size-border) var(--salt-editable-borderStyle) var(--multilineInput-borderColor);
+}
 
-  background: var(--multilineInput-background-active);
-  cursor: var(--salt-editable-cursor-active);
+.saltMultilineInput-bordered.saltMultilineInput:hover {
+  border-style: var(--salt-editable-borderStyle-hover);
+  border-color: var(--multilineInput-borderColor-hover);
+}
+
+/* Style applied if focused or active when `bordered={true}` */
+.saltMultilineInput-bordered.saltMultilineInput-focused,
+.saltMultilineInput-bordered.saltMultilineInput-focused:hover {
+  border-style: var(--salt-editable-borderStyle-active);
+  border-color: var(--multilineInput-borderColor-active);
+}
+
+/* Styling when focused if `disabled={true}` or `readOnly={true}` when `bordered={true}` */
+.saltMultilineInput-bordered.saltMultilineInput-readOnly,
+.saltMultilineInput-bordered.saltMultilineInput-readOnly:hover {
+  border-style: var(--salt-editable-borderStyle-readonly);
+  border-color: var(--salt-editable-borderColor-readonly);
+}
+
+.saltMultilineInput-bordered.saltMultilineInput-disabled,
+.saltMultilineInput-bordered.saltMultilineInput-disabled:hover {
+  border-style: var(--salt-editable-borderStyle-disabled);
+  border-color: var(--salt-editable-borderColor-disabled);
+}
+
+/* Style for activation indicator */
+.saltMultilineInput-activationIndicator {
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  position: absolute;
+  border-bottom: var(--salt-size-border) var(--salt-editable-borderStyle) var(--multilineInput-borderColor);
+}
+
+.saltMultilineInput:hover .saltMultilineInput-activationIndicator {
+  border-bottom-style: var(--salt-editable-borderStyle-hover);
+  border-bottom-color: var(--multilineInput-borderColor-hover);
+}
+
+.saltMultilineInput-focused .saltMultilineInput-activationIndicator,
+.saltMultilineInput-focused:hover .saltMultilineInput-activationIndicator {
+  border-bottom: var(--salt-size-border-strong) var(--salt-editable-borderStyle-active) var(--multilineInput-borderColor-active);
+}
+
+.saltMultilineInput-readOnly .saltMultilineInput-activationIndicator,
+.saltMultilineInput-readOnly:hover .saltMultilineInput-activationIndicator {
+  border-bottom-style: var(--salt-editable-borderStyle-readonly);
+  border-bottom-color: var(--salt-editable-borderColor-readonly);
+}
+
+.saltMultilineInput-disabled .saltMultilineInput-activationIndicator,
+.saltMultilineInput-disabled:hover .saltMultilineInput-activationIndicator {
+  border-bottom-style: var(--salt-editable-borderStyle-disabled);
+  border-bottom-color: var(--salt-editable-borderColor-disabled);
+}
+
+.saltMultilineInput-bordered .saltMultilineInput-activationIndicator,
+.saltMultilineInput-bordered.saltMultilineInput-readOnly .saltMultilineInput-activationIndicator,
+.saltMultilineInput-bordered.saltMultilineInput-disabled:hover .saltMultilineInput-activationIndicator {
+  border-bottom-width: 0;
+}
+
+.saltMultilineInput-bordered.saltMultilineInput-focused .saltMultilineInput-activationIndicator {
+  border-bottom-width: calc(var(--salt-size-border-strong) - var(--salt-size-border));
 }
 
 /* Class applied if `variant="primary"` */
@@ -52,6 +104,10 @@
   --multilineInput-background-hover: var(--salt-editable-primary-background-hover);
   --multilineInput-background-disabled: var(--salt-editable-primary-background-disabled);
   --multilineInput-background-readonly: var(--salt-editable-primary-background-readonly);
+  --multilineInput-borderColor: var(--salt-editable-borderColor);
+  --multilineInput-borderColor-active: var(--salt-editable-borderColor-active);
+  --multilineInput-borderColor-hover: var(--salt-editable-borderColor-hover);
+  --multilineInput-outlineColor: var(--salt-focused-outlineColor);
 }
 
 /* Class applied if `variant="secondary"` */
@@ -61,142 +117,73 @@
   --multilineInput-background-hover: var(--salt-editable-secondary-background-active);
   --multilineInput-background-disabled: var(--salt-editable-secondary-background-disabled);
   --multilineInput-background-readonly: var(--salt-editable-secondary-background-readonly);
+  --multilineInput-borderColor: var(--salt-editable-borderColor);
+  --multilineInput-borderColor-active: var(--salt-editable-borderColor-active);
+  --multilineInput-borderColor-hover: var(--salt-editable-borderColor-hover);
+  --multilineInput-outlineColor: var(--salt-focused-outlineColor);
 }
 
 /* Style applied to input if `validationState="error"` */
-.saltMultilineInput-error,
-.saltMultilineInput-error:hover {
+.saltMultilineInput-error {
   --multilineInput-background: var(--salt-status-error-background);
   --multilineInput-background-active: var(--salt-status-error-background);
   --multilineInput-background-hover: var(--salt-status-error-background);
-  --multilineInput-borderColor: var(--salt-status-error-borderColor);
-  --multilineInput-outlineColor: var(--salt-status-error-borderColor);
   --multilineInput-background-readonly: var(--salt-status-error-background);
+  --multilineInput-borderColor: var(--salt-status-error-borderColor);
+  --multilineInput-borderColor-active: var(--salt-status-error-borderColor);
+  --multilineInput-borderColor-hover: var(--salt-status-error-borderColor);
+  --multilineInput-outlineColor: var(--salt-status-error-borderColor);
 }
 
 /* Style applied to input if `validationState="warning"` */
-.saltMultilineInput-warning,
-.saltMultilineInput-warning:hover {
+.saltMultilineInput-warning {
   --multilineInput-background: var(--salt-status-warning-background);
   --multilineInput-background-active: var(--salt-status-warning-background);
   --multilineInput-background-hover: var(--salt-status-warning-background);
-  --multilineInput-borderColor: var(--salt-status-warning-borderColor);
-  --multilineInput-outlineColor: var(--salt-status-warning-borderColor);
   --multilineInput-background-readonly: var(--salt-status-warning-background);
+  --multilineInput-borderColor: var(--salt-status-warning-borderColor);
+  --multilineInput-borderColor-active: var(--salt-status-warning-borderColor);
+  --multilineInput-borderColor-hover: var(--salt-status-warning-borderColor);
+  --multilineInput-outlineColor: var(--salt-status-warning-borderColor);
 }
 
 /* Style applied to input if `validationState="success"` */
-.saltMultilineInput-success,
-.saltMultilineInput-success:hover {
+.saltMultilineInput-success {
   --multilineInput-background: var(--salt-status-success-background);
   --multilineInput-background-active: var(--salt-status-success-background);
   --multilineInput-background-hover: var(--salt-status-success-background);
-  --multilineInput-borderColor: var(--salt-status-success-borderColor);
-  --multilineInput-outlineColor: var(--salt-status-success-borderColor);
   --multilineInput-background-readonly: var(--salt-status-success-background);
+  --multilineInput-borderColor: var(--salt-status-success-borderColor);
+  --multilineInput-borderColor-active: var(--salt-status-success-borderColor);
+  --multilineInput-borderColor-hover: var(--salt-status-success-borderColor);
+  --multilineInput-outlineColor: var(--salt-status-success-borderColor);
+}
+
+/* Styling when focused */
+.saltMultilineInput-focused,
+.saltMultilineInput-focused:hover {
+  background: var(--multilineInput-background-active);
+  cursor: var(--salt-editable-cursor-active);
+  outline: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--multilineInput-outlineColor);
+}
+
+/* Style applied if `readOnly={true}` */
+.saltMultilineInput.saltMultilineInput-readOnly {
+  background: var(--multilineInput-background-readonly);
+  cursor: var(--salt-editable-cursor-readonly);
+}
+
+/* Style applied to input if `disabled={true}` */
+.saltMultilineInput.saltMultilineInput-disabled,
+.saltMultilineInput.saltMultilineInput-disabled:hover {
+  background: var(--input-background-disabled);
+  cursor: var(--salt-editable-cursor-disabled);
+  color: var(--salt-content-primary-foreground-disabled);
 }
 
 .saltMultilineInput.saltMultilineInput-withAdornmentRow {
   display: flex;
   flex-wrap: wrap;
-}
-
-/* Style applied to inner textarea element */
-.saltMultilineInput-textarea {
-  background: none;
-  border: none;
-  box-sizing: border-box;
-  color: inherit;
-  cursor: inherit;
-  flex-grow: 1;
-  font: inherit;
-  letter-spacing: 0;
-  line-height: var(--salt-text-lineHeight);
-  margin: var(--salt-spacing-75) 0;
-  min-width: 0;
-  min-height: 0;
-  resize: vertical;
-  padding: 0;
-}
-
-/* Style applied to placeholder */
-.saltMultilineInput-textarea::placeholder {
-  font-weight: var(--salt-text-fontWeight-small);
-}
-
-/* Reset in the  class */
-.saltMultilineInput-textarea:focus {
-  outline: none;
-}
-
-/* Style applied to selected input */
-.saltMultilineInput-textarea::selection {
-  background: var(--salt-content-foreground-highlight);
-}
-
-/* Styling when focused */
-.saltMultilineInput-focused {
-  --multilineInput-borderColor: var(--multilineInput-outlineColor);
-  --multilineInput-activationIndicator-borderWidth: var(--salt-editable-borderWidth-active);
-
-  outline: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--multilineInput-outlineColor);
-}
-
-/* Style applied if `readOnly={true}` */
-.saltMultilineInput-readOnly,
-.saltMultilineInput-readOnly:active,
-.saltMultilineInput-readOnly:hover {
-  --multilineInput-borderColor: var(--salt-editable-borderColor-readonly);
-  --multilineInput-borderStyle: var(--salt-editable-borderStyle-readonly);
-  --multilineInput-activationIndicator-borderWidth: var(--salt-size-border);
-
-  background: var(--multilineInput-background-readonly);
-  cursor: var(--salt-editable-cursor-readonly);
-}
-
-/* Style applied to selected text if `disabled={true}` */
-.saltMultilineInput-disabled .saltMultilineInput-textarea::selection {
-  background: none;
-}
-
-/* Style applied when `disabled={true}` */
-.saltMultilineInput-disabled,
-.saltMultilineInput-disabled:hover,
-.saltMultilineInput-disabled:active {
-  --multilineInput-borderColor: var(--salt-editable-borderColor-disabled);
-  --multilineInput-borderStyle: var(--salt-editable-borderStyle-disabled);
-  --multilineInput-activationIndicator-borderWidth: var(--salt-size-border);
-
-  background: var(--multilineInput-background-disabled);
-  cursor: var(--salt-editable-cursor-disabled);
-  color: var(--salt-content-primary-foreground-disabled);
-}
-
-/* Style for activation indicator */
-.saltMultilineInput-activationIndicator {
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  position: absolute;
-  border-bottom: var(--multilineInput-activationIndicator-borderWidth) var(--multilineInput-borderStyle) var(--multilineInput-borderColor);
-}
-
-/* Style applied if `bordered={true}` */
-.saltMultilineInput.saltMultilineInput-bordered {
-  --multilineInput-border: var(--salt-size-border) var(--salt-container-borderStyle) var(--multilineInput-borderColor);
-  --multilineInput-activationIndicator-borderWidth: 0;
-}
-
-/* Style applied if focused or active when `bordered={true}` */
-.saltMultilineInput-bordered.saltMultilineInput-focused,
-.saltMultilineInput-bordered:active {
-  --multilineInput-activationIndicator-borderWidth: var(--salt-editable-borderWidth-active);
-}
-
-/* Styling when focused if `disabled={true}` or `readOnly={true}` when `bordered={true}` */
-.saltMultilineInput-bordered.saltMultilineInput-readOnly,
-.saltMultilineInput-bordered.saltMultilineInput-disabled:hover {
-  --multilineInput-activationIndicator-borderWidth: 0;
 }
 
 /* Style applied to adornment containers */
@@ -259,4 +246,42 @@
   --saltButton-padding: calc(var(--salt-spacing-50) - var(--salt-size-border));
   --saltButton-height: calc(var(--salt-size-base) - var(--salt-spacing-100));
   --saltButton-borderRadius: var(--salt-palette-corner-weaker);
+}
+
+/* Style applied to inner textarea element */
+.saltMultilineInput-textarea {
+  background: none;
+  border: none;
+  box-sizing: border-box;
+  color: inherit;
+  cursor: inherit;
+  flex-grow: 1;
+  font: inherit;
+  letter-spacing: 0;
+  line-height: var(--salt-text-lineHeight);
+  margin: var(--salt-spacing-75) 0;
+  min-width: 0;
+  min-height: 0;
+  resize: vertical;
+  padding: 0;
+}
+
+/* Style applied to placeholder */
+.saltMultilineInput-textarea::placeholder {
+  font-weight: var(--salt-text-fontWeight-small);
+}
+
+/* Reset in the  class */
+.saltMultilineInput-textarea:focus {
+  outline: none;
+}
+
+/* Style applied to selected input */
+.saltMultilineInput-textarea::selection {
+  background: var(--salt-content-foreground-highlight);
+}
+
+/* Style applied to selected text if `disabled={true}` */
+.saltMultilineInput-disabled .saltMultilineInput-textarea::selection {
+  background: none;
 }

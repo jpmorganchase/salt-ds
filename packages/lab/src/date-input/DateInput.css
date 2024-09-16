@@ -1,22 +1,16 @@
 /* Style applied to the root element */
 .saltDateInput {
-  --input-border: none;
-  --input-borderColor: var(--salt-editable-borderColor);
-  --input-borderStyle: var(--salt-editable-borderStyle);
-  --input-outlineColor: var(--salt-focused-outlineColor);
-  --input-borderWidth: var(--salt-size-border);
-
   align-items: center;
   background: var(--saltDateInput-background, var(--input-background));
-  border: var(--input-border);
   border-radius: var(--salt-palette-corner-weak, 0);
   color: var(--saltDateInput-color, var(--salt-content-primary-foreground));
   display: inline-flex;
   gap: var(--salt-spacing-50);
   font-family: var(--salt-text-fontFamily);
   font-size: var(--saltDateInput-fontSize, var(--salt-text-fontSize));
-  height: var(--saltDateInput-height, var(--salt-size-base));
   line-height: var(--saltDateInput-lineHeight, var(--salt-text-lineHeight));
+  letter-spacing: var(--salt-text-letterSpacing);
+  height: var(--saltDateInput-height, var(--salt-size-base));
   min-height: var(--saltDateInput-minHeight, var(--salt-size-base));
   min-width: var(--saltDateInput-minWidth, 4em);
   padding-left: var(--saltDateInput-paddingLeft, var(--salt-spacing-100));
@@ -28,20 +22,76 @@
 }
 
 .saltDateInput:hover {
-  --input-borderStyle: var(--salt-editable-borderStyle-hover);
-  --input-borderColor: var(--salt-editable-borderColor-hover);
-
   background: var(--saltDateInput-background-hover, var(--input-background-hover));
   cursor: var(--salt-editable-cursor-hover);
 }
 
-.saltDateInput:active {
-  --input-borderColor: var(--salt-editable-borderColor-active);
-  --input-borderStyle: var(--salt-editable-borderStyle-active);
-  --input-borderWidth: var(--salt-editable-borderWidth-active);
+/* Style applied if `bordered={true}` */
+.saltDateInput-bordered.saltDateInput {
+  border: var(--salt-size-border) var(--salt-editable-borderStyle) var(--input-borderColor);
+}
 
-  background: var(--saltDateInput-background-active, var(--input-background-active));
-  cursor: var(--salt-editable-cursor-active);
+.saltDateInput-bordered.saltDateInput:hover {
+  border-style: var(--salt-editable-borderStyle-hover);
+  border-color: var(--input-borderColor-hover);
+}
+
+.saltDateInput-bordered.saltDateInput-focused,
+.saltDateInput-bordered.saltDateInput-focused:hover {
+  border-style: var(--salt-editable-borderStyle-active);
+  border-color: var(--input-borderColor-active);
+}
+
+.saltDateInput-bordered.saltDateInput-readOnly,
+.saltDateInput-bordered.saltDateInput-readOnly:hover {
+  border-style: var(--salt-editable-borderStyle-readonly);
+  border-color: var(--salt-editable-borderColor-readonly);
+}
+
+.saltDateInput-bordered.saltDateInput-disabled,
+.saltDateInput-bordered.saltDateInput-disabled:hover {
+  border-style: var(--salt-editable-borderStyle-disabled);
+  border-color: var(--salt-editable-borderColor-disabled);
+}
+
+.saltDateInput-activationIndicator {
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  position: absolute;
+  border-bottom: var(--salt-size-border) var(--salt-editable-borderStyle) var(--input-borderColor);
+}
+
+.saltDateInput:hover .saltDateInput-activationIndicator {
+  border-bottom-style: var(--salt-editable-borderStyle-hover);
+  border-bottom-color: var(--input-borderColor-hover);
+}
+
+.saltDateInput-focused .saltDateInput-activationIndicator,
+.saltDateInput-focused:hover .saltDateInput-activationIndicator {
+  border-bottom: var(--salt-size-border-strong) var(--salt-editable-borderStyle-active) var(--input-borderColor-active);
+}
+
+.saltDateInput-readOnly .saltDateInput-activationIndicator,
+.saltDateInput-readOnly:hover .saltDateInput-activationIndicator {
+  border-bottom-style: var(--salt-editable-borderStyle-readonly);
+  border-bottom-color: var(--salt-editable-borderColor-readonly);
+}
+
+.saltDateInput-disabled .saltDateInput-activationIndicator,
+.saltDateInput-disabled:hover .saltDateInput-activationIndicator {
+  border-bottom-style: var(--salt-editable-borderStyle-disabled);
+  border-bottom-color: var(--salt-editable-borderColor-disabled);
+}
+
+.saltDateInput-bordered .saltDateInput-activationIndicator,
+.saltDateInput-bordered.saltDateInput-readOnly .saltDateInput-activationIndicator,
+.saltDateInput-bordered.saltDateInput-disabled:hover .saltDateInput-activationIndicator {
+  border-bottom-width: 0;
+}
+
+.saltDateInput-bordered.saltDateInput-focused .saltDateInput-activationIndicator {
+  border-bottom-width: calc(var(--salt-size-border-strong) - var(--salt-size-border));
 }
 
 /* Class applied if `variant="primary"` */
@@ -51,6 +101,10 @@
   --input-background-hover: var(--salt-editable-primary-background-hover);
   --input-background-disabled: var(--salt-editable-primary-background-disabled);
   --input-background-readonly: var(--salt-editable-primary-background-readonly);
+  --input-borderColor: var(--salt-editable-borderColor);
+  --input-borderColor-active: var(--salt-editable-borderColor-active);
+  --input-borderColor-hover: var(--salt-editable-borderColor-hover);
+  --input-outlineColor: var(--salt-focused-outlineColor);
 }
 
 /* Class applied if `variant="secondary"` */
@@ -60,36 +114,90 @@
   --input-background-hover: var(--salt-editable-secondary-background-active);
   --input-background-disabled: var(--salt-editable-secondary-background-disabled);
   --input-background-readonly: var(--salt-editable-secondary-background-readonly);
+  --input-borderColor: var(--salt-editable-borderColor);
+  --input-borderColor-active: var(--salt-editable-borderColor-active);
+  --input-borderColor-hover: var(--salt-editable-borderColor-hover);
+  --input-outlineColor: var(--salt-focused-outlineColor);
 }
 
 /* Style applied to input if `validationState="error"` */
-.saltDateInput-error,
-.saltDateInput-error:hover {
+.saltDateInput-error {
   --input-background: var(--salt-status-error-background);
   --input-background-active: var(--salt-status-error-background);
   --input-background-hover: var(--salt-status-error-background);
+  --input-background-readonly: var(--salt-status-error-background);
   --input-borderColor: var(--salt-status-error-borderColor);
+  --input-borderColor-active: var(--salt-status-error-borderColor);
+  --input-borderColor-hover: var(--salt-status-error-borderColor);
   --input-outlineColor: var(--salt-status-error-borderColor);
 }
 
 /* Style applied to input if `validationState="warning"` */
-.saltDateInput-warning,
-.saltDateInput-warning:hover {
+.saltDateInput-warning {
   --input-background: var(--salt-status-warning-background);
   --input-background-active: var(--salt-status-warning-background);
   --input-background-hover: var(--salt-status-warning-background);
+  --input-background-readonly: var(--salt-status-warning-background);
   --input-borderColor: var(--salt-status-warning-borderColor);
+  --input-borderColor-active: var(--salt-status-warning-borderColor);
+  --input-borderColor-hover: var(--salt-status-warning-borderColor);
   --input-outlineColor: var(--salt-status-warning-borderColor);
 }
 
 /* Style applied to input if `validationState="success"` */
-.saltDateInput-success,
-.saltDateInput-success:hover {
+.saltDateInput-success {
   --input-background: var(--salt-status-success-background);
   --input-background-active: var(--salt-status-success-background);
   --input-background-hover: var(--salt-status-success-background);
+  --input-background-readonly: var(--salt-status-success-background);
   --input-borderColor: var(--salt-status-success-borderColor);
+  --input-borderColor-active: var(--salt-status-success-borderColor);
+  --input-borderColor-hover: var(--salt-status-success-borderColor);
   --input-outlineColor: var(--salt-status-success-borderColor);
+}
+
+/* Styling when focused */
+.saltDateInput-focused,
+.saltDateInput-focused:hover {
+  background: var(--saltDateInput-background-active, var(--input-background-active));
+  cursor: var(--salt-editable-cursor-active);
+  outline: var(--saltDateInput-outline, var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--input-outlineColor));
+}
+
+/* Style applied if `readOnly={true}` */
+.saltDateInput.saltDateInput-readOnly {
+  background: var(--input-background-readonly);
+  cursor: var(--salt-editable-cursor-readonly);
+}
+
+/* Styling when focused if `disabled={true}` */
+.saltDateInput-disabled,
+.saltDateInput-disabled:hover {
+  background: var(--input-background-disabled);
+  cursor: var(--salt-editable-cursor-disabled);
+  color: var(--saltDateInput-color-disabled, var(--salt-content-primary-foreground-disabled));
+}
+
+/* Style applied to end adornments */
+.saltDateInput-endAdornmentContainer {
+  display: inline-flex;
+  padding-left: var(--salt-spacing-100);
+  column-gap: var(--salt-spacing-100);
+  margin-left: auto;
+  align-items: end;
+}
+
+.saltDateInput-endAdornmentContainer .saltButton ~ .saltButton {
+  margin-left: calc(-1 * var(--salt-spacing-50));
+}
+
+.saltDateInput-endAdornmentContainer .saltButton:last-child {
+  margin-right: calc(var(--salt-spacing-50) * -1);
+}
+
+.saltDateInput-endAdornmentContainer > .saltButton {
+  --saltButton-padding: var(--salt-spacing-50);
+  --saltButton-height: calc(var(--salt-size-base) - var(--salt-spacing-100));
 }
 
 /* Style applied to inner input component */
@@ -121,103 +229,13 @@
   background: var(--salt-content-foreground-highlight);
 }
 
-/* Style applied to placeholder text */
-.saltDateInput-input::placeholder {
-  color: var(--salt-content-secondary-foreground);
-  font-weight: var(--salt-text-fontWeight-small);
-}
-
-/* Styling when focused */
-.saltDateInput-focused {
-  --input-borderColor: var(--input-outlineColor);
-  --input-borderWidth: var(--salt-editable-borderWidth-active);
-
-  outline: var(--saltDateInput-outline, var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--input-outlineColor));
-}
-
-/* Style applied if `readOnly={true}` */
-.saltDateInput.saltDateInput-readOnly {
-  --input-borderColor: var(--salt-editable-borderColor-readonly);
-  --input-borderStyle: var(--salt-editable-borderStyle-readonly);
-  --input-borderWidth: var(--salt-size-border);
-
-  background: var(--input-background-readonly);
-  cursor: var(--salt-editable-cursor-readonly);
-}
-
-/* Styling when focused if `disabled={true}` */
-.saltDateInput-focused.saltDateInput-disabled {
-  --input-borderWidth: var(--salt-size-border);
-  outline: none;
-}
-
-/* Styling when focused if `readOnly={true}` */
-.saltDateInput-focused.saltDateInput-readOnly {
-  --input-borderWidth: var(--salt-size-border);
-}
-
 /* Style applied to selected input if `disabled={true}` */
 .saltDateInput-disabled .saltDateInput-input::selection {
   background: none;
 }
 
-/* Style applied to input if `disabled={true}` */
-.saltDateInput.saltDateInput-disabled,
-.saltDateInput.saltDateInput-disabled:hover,
-.saltDateInput.saltDateInput-disabled:active {
-  --input-borderColor: var(--salt-editable-borderColor-disabled);
-  --input-borderStyle: var(--salt-editable-borderStyle-disabled);
-  --input-borderWidth: var(--salt-size-border);
-
-  background: var(--input-background-disabled);
-  cursor: var(--salt-editable-cursor-disabled);
-  color: var(--saltDateInput-color-disabled, var(--salt-content-primary-foreground-disabled));
-}
-
-.saltDateInput-activationIndicator {
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  position: absolute;
-  border-bottom: var(--input-borderWidth) var(--input-borderStyle) var(--input-borderColor);
-}
-
-/* Style applied if `bordered={true}` */
-.saltDateInput.saltDateInput-bordered {
-  --input-border: var(--salt-size-border) var(--salt-container-borderStyle) var(--input-borderColor);
-  --input-borderWidth: 0;
-}
-
-/* Style applied if focused or active when `bordered={true}` */
-.saltDateInput-bordered.saltDateInput-focused,
-.saltDateInput-bordered:active {
-  --input-borderWidth: var(--salt-editable-borderWidth-active);
-}
-
-/* Styling when focused if `disabled={true}` or `readOnly={true}` when `bordered={true}` */
-.saltDateInput-bordered.saltDateInput-readOnly,
-.saltDateInput-bordered.saltDateInput-disabled:hover {
-  --input-borderWidth: 0;
-}
-
-/* Style applied to end adornments */
-.saltDateInput-endAdornmentContainer {
-  display: inline-flex;
-  padding-left: var(--salt-spacing-100);
-  column-gap: var(--salt-spacing-100);
-  margin-left: auto;
-  align-items: end;
-}
-
-.saltDateInput-endAdornmentContainer .saltButton ~ .saltButton {
-  margin-left: calc(-1 * var(--salt-spacing-50));
-}
-
-.saltDateInput-endAdornmentContainer .saltButton:last-child {
-  margin-right: calc(var(--salt-spacing-50) * -1);
-}
-
-.saltDateInput-endAdornmentContainer > .saltButton {
-  --saltButton-padding: var(--salt-spacing-50);
-  --saltButton-height: calc(var(--salt-size-base) - var(--salt-spacing-100));
+/* Style applied to placeholder text */
+.saltDateInput-input::placeholder {
+  color: var(--salt-content-secondary-foreground);
+  font-weight: var(--salt-text-fontWeight-small);
 }

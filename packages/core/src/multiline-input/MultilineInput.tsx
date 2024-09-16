@@ -16,6 +16,7 @@ import {
 } from "react";
 import { useFormFieldProps } from "../form-field-context";
 import { StatusAdornment } from "../status-adornment";
+import type { DataAttributes } from "../types";
 import { makePrefixer, useControlled, useForkRef } from "../utils";
 
 import multilineInputCss from "./MultilineInput.css";
@@ -51,7 +52,8 @@ export interface MultilineInputProps
   /**
    * [Attributes](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/textarea#Attributes) applied to the `textarea` element.
    */
-  textAreaProps?: TextareaHTMLAttributes<HTMLTextAreaElement>;
+  textAreaProps?: Partial<TextareaHTMLAttributes<HTMLTextAreaElement>> &
+    DataAttributes;
   /**
    * Optional ref for the textarea component
    */

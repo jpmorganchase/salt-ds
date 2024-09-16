@@ -9,70 +9,166 @@ data:
 ---
 
 <LivePreviewControls>
-<LivePreview componentName="calendar" exampleName="Default">
 
-## Default (single-select)
-
-The default calendar allows the user to navigate months and years and select a single date.
-
+<LivePreview componentName="calendar" exampleName="Single">
+  ## Single date selection When the `selectionVariant` prop is set to "single",
+  the `Calendar` component allows users to select only a single date, providing
+  a straightforward and focused date selection experience.
 </LivePreview>
 
-<LivePreview componentName="calendar" exampleName="MultiSelection">
-
-## Multi selection
-
-When `selectionVariant="multiselect"`, users can select multiple items from the calendar dates.
-
-</LivePreview>
-  
-<LivePreview componentName="calendar" exampleName="RangeSelection">
-
-## Range selection
-
-When `selectionVariant="range"`, users can select a range of items from the calendar dates by selecting two dates to set the range.
-
-</LivePreview>
-  
-<LivePreview componentName="calendar" exampleName="OffsetSelection">
-
-## Offset selection
-
-When `selectionVariant="offset"`, users can select a range of a set number of items by passing `endDateOffset`.
-
-</LivePreview>
-  
-<LivePreview componentName="calendar" exampleName="UnselectableDates">
-
-## Unselectable dates
-
-Unselectable dates are visually distinct from selectable dates. When the user tries to select one, the calendar will show a tooltip with extra information.
-Use the `isDayUnselectable` prop to pass a function that determines if a day is unselectable and returns the tooltip description.
-
-</LivePreview>  
-  
-<LivePreview componentName="calendar" exampleName="DisabledDates">
-
-## Disabled dates
-
-Disabled dates are not selectable.
-Use the `isDayUnselectable` prop to pass a function that determines if a day is unselectable and returns the tooltip description.
-
+<LivePreview componentName="calendar" exampleName="Range">
+  ## Date range selection When the `selectionVariant` prop is set to "range",
+  the `Calendar` component allows users to select a date range, including both a
+  start date and an end date, enabling a comprehensive date selection
+  experience.
 </LivePreview>
 
-<LivePreview componentName="calendar" exampleName="HighlightedDates">
-
-## Highlighted dates
-
-Highlighted dates are characterized by a triangle in the top right corner that attributes an event to that day. When the user hovers on the date, the calendar will show a tooltip with extra information.
-
+<LivePreview
+  componentName="calendar"
+  displayName="Multiselect"
+  exampleName="Multiselect"
+>
+  ## Multi-select When the `selectionVariant` prop is set to "multiselect", the
+  `Calendar` component allows users to select multiple individual dates,
+  providing flexibility for selecting non-consecutive dates.
 </LivePreview>
 
-<LivePreview componentName="calendar" exampleName="HiddenOutOfRangeDates">
+<LivePreview
+  componentName="calendar"
+  displayName="Offset selection"
+  exampleName="Offset"
+>
+  ## Offset selection When the `selectionVariant` prop is set to "offset", the
+  `Calendar` component allows users to select a date range by choosing a single
+  start date, with the end date automatically determined based on a predefined
+  offset.
+</LivePreview>
 
-## Hidden out of range dates
+<LivePreview
+  componentName="calendar"
+  displayName="Unselectable dates"
+  exampleName="UnselectableDates"
+>
+  ## Unselectable dates Unselectable dates are visually distinct from selectable
+  dates. When a user attempts to select an unselectable date, the calendar
+  displays a tooltip with additional information. To implement this, use the
+  `isDayUnselectable` prop to pass a function that determines whether a day is
+  unselectable and provides the tooltip description.
+</LivePreview>
 
-By default, dates outside the visible month are out of range and visually distinct from current month dates. To hide them, you can use `hideOutOfRangeDates`.
+<LivePreview
+  componentName="calendar"
+  displayName="Disabled dates"
+  exampleName="DisabledDates"
+>
+  ## Disabled dates Disabled dates are not selectable. To implement this, use
+  the `isDayUnselectable` prop to pass a function that determines whether a day
+  is unselectable and provides the tooltip description.
+</LivePreview>
 
+<LivePreview
+  componentName="calendar"
+  displayName="Highlighted dates"
+  exampleName="HighlightedDates"
+>
+  ## Highlighted dates Highlighted dates are marked by a triangle in the top
+  right corner, indicating an event associated with that day. When a user hovers
+  over a highlighted date, the calendar displays a tooltip with additional
+  information. To implement this, use the `isDayHighlighted` prop to pass a
+  function that determines whether a day is highlighted and provides the tooltip
+  description.
+</LivePreview>
+
+<LivePreview
+  componentName="calendar"
+  displayName="Custom day render"
+  exampleName="CustomDayRender"
+>
+  ## Custom day rendering To customize the rendering of a day element, use the
+  `renderDayContents` prop with the `Calendar` component. This prop accepts a
+  function that is passed a `DateValue` and returns the custom element for that
+  day. This can be useful for scenarios where you need to display additional
+  information or apply custom styling to specific dates.
+</LivePreview>
+
+<LivePreview
+  componentName="calendar"
+  displayName="Hide out-of-range dates"
+  exampleName="HideOutOfRangeDates"
+>
+  ## Hide out-of-range dates By default, dates outside the visible month are
+  out-of-range and visually distinct from the current month's dates. To hide
+  these out-of-range dates, use the `hideOutOfRangeDates` prop.
+</LivePreview>
+
+<LivePreview
+  componentName="calendar"
+  displayName="Hide year dropdown"
+  exampleName="HideYearDropdown"
+>
+  ## Hide year dropdown To hide the year dropdown, use the `hideYearDropdown`
+  prop with the `CalendarNavigation` component. This can be useful in scenarios
+  such as when the calendar is composed with other calendars or when the date
+  selection does not require a year.
+</LivePreview>
+
+<LivePreview
+  componentName="calendar"
+  displayName="Constrained date selection"
+  exampleName="MinMaxDate"
+>
+  ## Constrained date selection To constrain the selected date within a specific
+  range, use the `minDate` and/or `maxDate` props. If `minDate` is not provided,
+  it defaults to the year 1900. If `maxDate` is undefined, it defaults to the
+  year 2100. This ensures that the selected date remains within the specified
+  range.
+</LivePreview>
+
+<LivePreview
+  componentName="calendar"
+  displayName="Bordered"
+  exampleName="Bordered"
+>
+  ## Bordered calendar A `Calendar` component with a border provides a visually
+  distinct area for selecting dates, enhancing the user interface by clearly
+  delineating the calendar boundaries. This styling can improve usability and
+  accessibility by making the calendar controls more noticeable and easier to
+  interact with.
+</LivePreview>
+
+<LivePreview
+  componentName="calendar"
+  displayName="Twin Calendars"
+  exampleName="TwinCalendars"
+>
+  ## Twin calendars The Twin Calendars example demonstrates how to use the
+  `Calendar` component with the `minDate` and `maxDate` props to create an
+  effective date range picker. By configuring two `Calendar` components side by
+  side, users can easily select a start date and an end date within a specified
+  range.
+</LivePreview>
+
+<LivePreview
+  componentName="calendar"
+  displayName="With locale"
+  exampleName="WithLocale"
+>
+  ## Locale When the `locale` prop is provided, the `Calendar` component uses it
+  to define the calendar's locale, ensuring that date formats, month names, and
+  other locale-specific elements are displayed according to the specified
+  locale.
+</LivePreview>
+
+<LivePreview
+  componentName="calendar"
+  displayName="Custom header"
+  exampleName="CustomHeader"
+>
+  ## Custom header When the `children` prop is used, the `Calendar` component
+  allows consumers to customize the calendar header, typically by composing it
+  with the `CalendarNavigation` component for forward/back month controls and
+  month/year dropdowns, but it can also be used to add additional controls such
+  as a 'Today' button.
 </LivePreview>
 
 </LivePreviewControls>

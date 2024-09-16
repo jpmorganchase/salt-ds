@@ -1,13 +1,12 @@
 /**
- * A modified version of: https://github.com/IanVS/vite-plugin-turbosnap
- * Reason, Module and Stats types; isUserCode, normalize, the plugin shell and generateBundle are copied.
+ * A modified version of: https://github.com/storybookjs/storybook/blob/8b16feb67674d6ccfdf3a1c539ca35e56f3e1968/code/builders/builder-vite/src/virtual-file-names.ts
  */
 
-import { writeFile } from "node:fs/promises";
-import path from "node:path";
+import path, { relative } from "node:path";
+import slash from "slash";
+import type { BuilderStats } from "storybook/internal/types";
 import { Project } from "ts-morph";
 import type { Plugin } from "vite";
-import { normalizePath } from "vite";
 
 /*
  * Reason, Module, and Stats are copied from chromatic types
@@ -31,39 +30,89 @@ type TurbosnapPluginOptions = {
   rootDir: string;
 };
 
+const SB_VIRTUAL_FILES = {
+  VIRTUAL_APP_FILE: "/virtual:/@storybook/builder-vite/vite-app.js",
+  VIRTUAL_STORIES_FILE:
+    "/virtual:/@storybook/builder-vite/storybook-stories.js",
+  VIRTUAL_PREVIEW_FILE: "/virtual:/@storybook/builder-vite/preview-entry.js",
+  VIRTUAL_ADDON_SETUP_FILE: "/virtual:/@storybook/builder-vite/setup-addons.js",
+};
+
+function getResolvedVirtualModuleId(virtualModuleId: string) {
+  return `\0${virtualModuleId}`;
+}
+
+function getOriginalVirtualModuleId(resolvedVirtualModuleId: string) {
+  return resolvedVirtualModuleId.slice(1);
+}
+
+/**
+ * Strips off query params added by rollup/vite to ids, to make paths compatible for comparison with
+ * git.
+ */
+function stripQueryParams(filePath: string): string {
+  return filePath.split("?")[0];
+}
+
 /**
  * We only care about user code, not node_modules, vite files, or (most) virtual files.
  */
 function isUserCode(moduleName: string) {
+  if (!moduleName) {
+    return false;
+  }
+
+  // keep Storybook's virtual files because they import the story files, so they are essential to the module graph
+  if (
+    Object.values(SB_VIRTUAL_FILES).includes(
+      getOriginalVirtualModuleId(moduleName),
+    )
+  ) {
+    return true;
+  }
+
   return Boolean(
-    moduleName &&
-      !moduleName.startsWith("vite/") &&
-      !moduleName.startsWith("\x00") &&
-      !moduleName.startsWith("\u0000") &&
+    !moduleName.startsWith("vite/") &&
+      !moduleName.startsWith("\0") &&
       moduleName !== "react/jsx-runtime" &&
-      !/node_modules\//.exec(moduleName),
+      !moduleName.match(/node_modules\//),
   );
 }
 
 /**
  * Convert an absolute path name to a path relative to the vite root, with a starting `./`
  */
-function normalize(rootDir: string, filename: string) {
+/** Convert an absolute path name to a path relative to the vite root, with a starting `./` */
+function normalize(workingDir: string, filename: string) {
   // Do not try to resolve virtual files
   if (filename.startsWith("/virtual:")) {
     return filename;
   }
+  // ! Maintain backwards compatibility with the old virtual file names
+  // ! to ensure that the stats file doesn't change between the versions
+  // ! Turbosnap is also only compatible with the old virtual file names
+  // ! the old virtual file names did not start with the obligatory \0 character
+  if (
+    Object.values(SB_VIRTUAL_FILES).includes(
+      getOriginalVirtualModuleId(filename),
+    )
+  ) {
+    return getOriginalVirtualModuleId(filename);
+  }
 
-  // We need them in the format `./path/to/file.js`.
-  const relativePath = normalizePath(path.relative(rootDir, filename));
+  // Otherwise, we need them in the format `./path/to/file.js`.
+
+  const relativePath = relative(workingDir, stripQueryParams(filename));
   // This seems hacky, got to be a better way to add a `./` to the start of a path.
-  return `./${relativePath}`;
+  return `./${slash(relativePath)}`;
 }
+
+type StatsPlugin = Plugin & { storybookGetStats: () => BuilderStats };
 
 export function typescriptTurbosnap({
   rootDir,
-}: TurbosnapPluginOptions): Plugin {
-  const moduleMap: Record<string, Module> = {};
+}: TurbosnapPluginOptions): StatsPlugin {
+  const statsMap = new Map<string, Module>();
 
   function addFilesToModuleMap(filePath: string, reasonPaths: string[]) {
     const normalizedFilePath = normalize(rootDir, filePath);
@@ -71,16 +120,19 @@ export function typescriptTurbosnap({
       moduleName: normalize(rootDir, reasonPath),
     }));
 
-    if (!moduleMap[normalizedFilePath]) {
-      moduleMap[normalizedFilePath] = {
+    let m = statsMap.get(normalizedFilePath);
+
+    if (!m) {
+      m = {
         id: normalizedFilePath,
         name: normalizedFilePath,
         reasons: [],
       };
     }
 
-    moduleMap[normalizedFilePath].reasons =
-      moduleMap[normalizedFilePath].reasons?.concat(normalizedReasons);
+    m.reasons = m.reasons?.concat(normalizedReasons);
+
+    statsMap.set(normalizedFilePath, m);
   }
 
   const project = new Project({
@@ -88,73 +140,65 @@ export function typescriptTurbosnap({
   });
 
   return {
-    name: "vite-plugin-typescript-turbosnap",
+    name: "storybook:rollup-plugin-webpack-stats",
     enforce: "post",
     moduleParsed: (mod) => {
-      if (isUserCode(mod.id)) {
-        const file = project.getSourceFile(path.resolve(mod.id));
-
-        if (file) {
-          const filePath = file.getFilePath();
-          const declarations = file.getVariableDeclarations();
-          declarations?.forEach((declaration) => {
-            const x = Array.from(
-              new Set(
-                declaration
-                  .findReferences()
-                  .flatMap((references) =>
-                    references
-                      .getReferences()
-                      .map((reference) =>
-                        reference.getSourceFile().getFilePath(),
-                      ),
-                  )
-                  .filter((path) => path !== filePath),
-              ),
-            );
-
-            addFilesToModuleMap(filePath, x);
-          });
-
-          file
-            .getImportDeclarations()
-            // This gets modules imports for side effects e.g. css files
-            .filter((importDeclaration) => !importDeclaration.getImportClause())
-            .forEach((importDeclaration) => {
-              const cssFile = path.resolve(
-                path.dirname(filePath),
-                importDeclaration.getModuleSpecifierValue(),
-              );
-              addFilesToModuleMap(cssFile, [filePath]);
-            });
-        }
+      if (!isUserCode(mod.id)) {
+        return;
       }
 
-      if (
-        [
-          "/virtual:/@storybook/builder-vite/storybook-stories.js",
-          "/virtual:/@storybook/builder-vite/vite-app.js",
-        ].includes(mod.id)
-      ) {
-        mod.importedIds
-          .concat(mod.dynamicallyImportedIds)
-          .filter((name) => isUserCode(name))
-          .forEach((depId) => {
-            addFilesToModuleMap(depId, [mod.id]);
-          });
+      const file = project.getSourceFile(path.resolve(mod.id));
+
+      if (!file) {
+        const moduleImports = mod.importedIds.concat(
+          mod.dynamicallyImportedIds,
+        );
+
+        for (const moduleImport of moduleImports) {
+          if (isUserCode(moduleImport)) {
+            addFilesToModuleMap(moduleImport, [mod.id]);
+          }
+        }
+
+        return;
+      }
+
+      const filePath = file.getFilePath();
+      const declarations = file.getVariableDeclarations() ?? [];
+      const importDeclarations = file.getImportDeclarations() ?? [];
+
+      for (const declaration of declarations) {
+        const x = Array.from(
+          new Set(
+            declaration
+              .findReferences()
+              .flatMap((references) =>
+                references
+                  .getReferences()
+                  .map((reference) => reference.getSourceFile().getFilePath()),
+              )
+              .filter((path) => path !== filePath),
+          ),
+        );
+
+        addFilesToModuleMap(filePath, x);
+      }
+
+      for (const importDeclaration of importDeclarations) {
+        if (importDeclaration.getImportClause()) {
+          return;
+        }
+
+        const cssFile = path.resolve(
+          path.dirname(filePath),
+          importDeclaration.getModuleSpecifierValue(),
+        );
+        addFilesToModuleMap(cssFile, [filePath]);
       }
     },
-    generateBundle: function (this, outOpts) {
-      const stats: Stats = { modules: Object.values(moduleMap) };
-
-      // If we don't know where the output is going, we can't guarantee we'll put the results in the right spot.
-      if (!outOpts.dir) {
-        throw new Error("Vite option `build.outDir` was not configured.");
-      }
-
-      const filename = path.resolve(outOpts.dir, "preview-stats.json");
-      console.log(`vite-plugin-typescript-turbosnap: writing to ${filename}`);
-      return writeFile(filename, JSON.stringify(stats, null, 2));
+    storybookGetStats() {
+      const stats: Stats = { modules: Array.from(statsMap.values()) };
+      return { ...stats, toJson: () => stats };
     },
   };
 }
