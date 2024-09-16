@@ -23,6 +23,7 @@ import clsx from "clsx";
 import { SessionProvider } from "next-auth/react";
 import type { AppProps } from "next/app";
 import { Open_Sans, PT_Mono } from "next/font/google";
+import localFont from "next/font/local";
 import Head from "next/head";
 import { type ReactNode, useMemo } from "react";
 import * as saltComponents from "../components";
@@ -81,6 +82,32 @@ const openSans = Open_Sans({
   variable: "--site-font-family-openSans",
 });
 
+const amplitude = localFont({
+  src: [
+    {
+      path: "../../public/fonts/amplitude-light.woff2",
+      weight: "300",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/amplitude-regular.woff2",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/amplitude-medium.woff2",
+      weight: "500",
+      style: "normal",
+    },
+    {
+      path: "../../public/fonts/amplitude-bold.woff2",
+      weight: "700",
+      style: "normal",
+    },
+  ],
+  variable: "--site-font-family-amplitude",
+});
+
 export default function MyApp({
   Component,
   pageProps = {},
@@ -110,6 +137,7 @@ export default function MyApp({
             themeClassName,
             ptMono.variable,
             openSans.variable,
+            amplitude.variable,
           )}
         >
           <DensityProvider>
