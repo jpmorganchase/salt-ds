@@ -91,7 +91,7 @@ export const useCollectionItems = <Item>({
 
         const expanded = nonCollapsible
           ? undefined
-          : item.expanded ?? isExpanded(id);
+          : (item.expanded ?? isExpanded(id));
         //TODO dev time check - if id is provided by user, make sure
         // hierarchical pattern is consistent
         const normalisedItem: CollectionItem<Item> = {

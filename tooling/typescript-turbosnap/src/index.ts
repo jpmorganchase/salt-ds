@@ -75,7 +75,8 @@ function isUserCode(moduleName: string) {
     !moduleName.startsWith("vite/") &&
       !moduleName.startsWith("\0") &&
       moduleName !== "react/jsx-runtime" &&
-      !moduleName.match(/node_modules\//),
+      !moduleName.match(/node_modules\//) &&
+      !moduleName.includes("__tests__"),
   );
 }
 
@@ -177,7 +178,7 @@ export function typescriptTurbosnap({
                   .getReferences()
                   .map((reference) => reference.getSourceFile().getFilePath()),
               )
-              .filter((path) => path !== filePath),
+              .filter((path) => path !== filePath && isUserCode(path)),
           ),
         );
 
@@ -185,14 +186,20 @@ export function typescriptTurbosnap({
       }
 
       for (const importDeclaration of importDeclarations) {
-        if (importDeclaration.getImportClause()) {
-          return;
+        if (
+          !(
+            importDeclaration.isModuleSpecifierRelative() &&
+            importDeclaration.getModuleSpecifierValue()?.endsWith(".css")
+          )
+        ) {
+          continue;
         }
 
         const cssFile = path.resolve(
           path.dirname(filePath),
           importDeclaration.getModuleSpecifierValue(),
         );
+
         addFilesToModuleMap(cssFile, [filePath]);
       }
     },

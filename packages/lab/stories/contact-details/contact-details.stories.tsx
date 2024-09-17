@@ -453,7 +453,7 @@ const Tile = (props: { className?: string; children?: ReactNode }) => (
 const WithinTileTemplate: StoryFn = () => {
   return (
     <>
-      {[personaA, personaE, personaF, personaD].map((contact, index) => (
+      {[personaA, personaE, personaF, personaD].map((contact) => (
         <Tile key={contact.name} className="withinTile-tile">
           <ContactDetails embedded={true} variant={"compact"}>
             <ContactPrimaryInfo text={contact.name} />
@@ -534,10 +534,7 @@ interface NameEmail {
   email: string;
 }
 
-const ItemWithContactDetailsTooltip: ListItemType<NameEmail> = ({
-  item,
-  ...props
-}) => {
+const ItemWithContactDetailsTooltip: ListItemType<NameEmail> = ({ item }) => {
   const itemLabel = item ? contactToString(item) : "";
 
   return (
@@ -564,7 +561,7 @@ const ItemWithContactDetailsTooltip: ListItemType<NameEmail> = ({
       className="withinComboboxTooltip"
     >
       <ListItem>
-        <label>{itemLabel}</label>
+        <span>{itemLabel}</span>
       </ListItem>
     </Tooltip>
   );

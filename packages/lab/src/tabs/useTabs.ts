@@ -52,6 +52,6 @@ export const useTabs = ({
     tabPanel:
       activeTabIndex === null
         ? null
-        : itemsWithIds[activeTabIndex]?.element ?? null,
+        : (itemsWithIds[activeTabIndex]?.element ?? null),
   };
 };

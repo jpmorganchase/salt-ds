@@ -14,14 +14,16 @@
   --salt-palette-neutral-secondary-border-disabled: var(--salt-color-gray-50-fade-border);
   --salt-palette-neutral-secondary-foreground: var(--salt-color-gray-200);
   --salt-palette-neutral-secondary-foreground-disabled: var(--salt-color-gray-200-fade-foreground);
-  --salt-palette-neutral-backdrop: var(--salt-color-white-fade-backdrop);
   --salt-palette-neutral-secondary-separator: var(--salt-color-black-fade-separatorOpacity-secondary);
-  --salt-palette-neutral-tertiary-separator: var(--salt-color-black-fade-separatorOpacity-tertiary);
-  --salt-palette-neutral-selection: var(--salt-color-black-fade-background-selection);
   --salt-palette-neutral-tertiary-background: var(--salt-color-gray-30);
   --salt-palette-neutral-tertiary-background-disabled: var(--salt-color-gray-30-fade-background);
   --salt-palette-neutral-tertiary-border: var(--salt-color-gray-50);
   --salt-palette-neutral-tertiary-border-disabled: var(--salt-color-gray-50-fade-background);
+  --salt-palette-neutral-tertiary-separator: var(--salt-color-black-fade-separatorOpacity-tertiary);
+
+  --salt-palette-neutral-backdrop: var(--salt-color-white-fade-backdrop);
+  --salt-palette-neutral-selection: var(--salt-color-black-fade-background-selection);
+  --salt-palette-neutral-highlight: var(--salt-color-black-fade-background-highlight);
 }
 
 .salt-theme[data-mode="dark"] {
@@ -40,12 +42,14 @@
   --salt-palette-neutral-secondary-border-disabled: var(--salt-color-gray-300-fade-border);
   --salt-palette-neutral-secondary-foreground: var(--salt-color-gray-70);
   --salt-palette-neutral-secondary-foreground-disabled: var(--salt-color-gray-70-fade-foreground);
-  --salt-palette-neutral-backdrop: var(--salt-color-black-fade-backdrop);
   --salt-palette-neutral-secondary-separator: var(--salt-color-white-fade-separatorOpacity-secondary);
   --salt-palette-neutral-tertiary-separator: var(--salt-color-white-fade-separatorOpacity-tertiary);
-  --salt-palette-neutral-selection: var(--salt-color-white-fade-background-selection);
   --salt-palette-neutral-tertiary-background: var(--salt-color-gray-500);
   --salt-palette-neutral-tertiary-background-disabled: var(--salt-color-gray-500-fade-background);
   --salt-palette-neutral-tertiary-border: var(--salt-color-gray-300);
   --salt-palette-neutral-tertiary-border-disabled: var(--salt-color-gray-300-fade-background);
+
+  --salt-palette-neutral-backdrop: var(--salt-color-black-fade-backdrop);
+  --salt-palette-neutral-selection: var(--salt-color-white-fade-background-selection);
+  --salt-palette-neutral-highlight: var(--salt-color-white-fade-background-highlight);
 }

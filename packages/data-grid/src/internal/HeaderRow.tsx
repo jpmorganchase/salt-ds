@@ -33,7 +33,7 @@ export function HeaderRow<T>(props: HeaderRowProps<T>) {
   const ariaRowIndex = headerIsFocusable ? 1 : undefined;
 
   return (
-    <tr className={withBaseName()} role="row" aria-rowindex={ariaRowIndex}>
+    <tr className={withBaseName()} aria-rowindex={ariaRowIndex}>
       {columns.map((column) => {
         const Cell = column.info.props.headerComponent || HeaderCell;
         const CellValue =
