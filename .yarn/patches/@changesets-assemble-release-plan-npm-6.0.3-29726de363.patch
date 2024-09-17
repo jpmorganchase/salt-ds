@@ -1,5 +1,5 @@
 diff --git a/dist/changesets-assemble-release-plan.cjs.js b/dist/changesets-assemble-release-plan.cjs.js
-index 60427457c887f2d72168fecec83d79088c68e3a4..e86da36f6695049376899aa268888704d75cf21b 100644
+index 60427457c887f2d72168fecec83d79088c68e3a4..4f3d3d1e7c700cc1bc6f0aa1b7a3bce50ba49f70 100644
 --- a/dist/changesets-assemble-release-plan.cjs.js
 +++ b/dist/changesets-assemble-release-plan.cjs.js
 @@ -111,6 +111,9 @@ function incrementVersion(release, preInfo) {
@@ -12,8 +12,18 @@ index 60427457c887f2d72168fecec83d79088c68e3a4..e86da36f6695049376899aa268888704
  
    if (preInfo !== undefined && preInfo.state.mode !== "exit") {
      let preVersion = preInfo.preVersions.get(release.name);
+@@ -297,7 +300,8 @@ function shouldBumpMajor({
+   onlyUpdatePeerDependentsWhenOutOfRange
+ }) {
+   // we check if it is a peerDependency because if it is, our dependent bump type might need to be major.
+-  return depType === "peerDependencies" && nextRelease.type !== "none" && nextRelease.type !== "patch" && ( // 1. If onlyUpdatePeerDependentsWhenOutOfRange set to true, bump major if the version is leaving the range.
++  // Salt patch: add `minor` to the condition. We don't want major bump when a peerDependency is minor bumped. e.g. `ag-grid-theme` should be bumped minor, when `theme` is minor bumped as well (in both it's own package.json as well as ag-grid-theme's peerDep object)
++  return depType === "peerDependencies" && nextRelease.type !== "none" && nextRelease.type !== "patch" && nextRelease.type !== "minor" && ( // 1. If onlyUpdatePeerDependentsWhenOutOfRange set to true, bump major if the version is leaving the range.
+   // 2. If onlyUpdatePeerDependentsWhenOutOfRange set to false, bump major regardless whether or not the version is leaving the range.
+   !onlyUpdatePeerDependentsWhenOutOfRange || !semverSatisfies__default["default"](incrementVersion(nextRelease, preInfo), versionRange)) && ( // bump major only if the dependent doesn't already has a major release.
+   !releases.has(dependent) || releases.has(dependent) && releases.get(dependent).type !== "major");
 diff --git a/dist/changesets-assemble-release-plan.esm.js b/dist/changesets-assemble-release-plan.esm.js
-index f6583cf3f639e1fe4df764a015689dea74127236..81fc838453089ce45993fc05cc196d4d9abe1e05 100644
+index f6583cf3f639e1fe4df764a015689dea74127236..83a4219d40dcb6785f9c3acefcd8366c50a1e3cf 100644
 --- a/dist/changesets-assemble-release-plan.esm.js
 +++ b/dist/changesets-assemble-release-plan.esm.js
 @@ -100,6 +100,9 @@ function incrementVersion(release, preInfo) {
@@ -26,3 +36,13 @@ index f6583cf3f639e1fe4df764a015689dea74127236..81fc838453089ce45993fc05cc196d4d
  
    if (preInfo !== undefined && preInfo.state.mode !== "exit") {
      let preVersion = preInfo.preVersions.get(release.name);
+@@ -286,7 +289,8 @@ function shouldBumpMajor({
+   onlyUpdatePeerDependentsWhenOutOfRange
+ }) {
+   // we check if it is a peerDependency because if it is, our dependent bump type might need to be major.
+-  return depType === "peerDependencies" && nextRelease.type !== "none" && nextRelease.type !== "patch" && ( // 1. If onlyUpdatePeerDependentsWhenOutOfRange set to true, bump major if the version is leaving the range.
++  // Salt patch: add `minor` to the condition. We don't want major bump when a peerDependency is minor bumped. e.g. `ag-grid-theme` should be bumped minor, when `theme` is minor bumped as well (in both it's own package.json as well as ag-grid-theme's peerDep object)
++  return depType === "peerDependencies" && nextRelease.type !== "none" && nextRelease.type !== "patch" && nextRelease.type !== "minor" && ( // 1. If onlyUpdatePeerDependentsWhenOutOfRange set to true, bump major if the version is leaving the range.
+   // 2. If onlyUpdatePeerDependentsWhenOutOfRange set to false, bump major regardless whether or not the version is leaving the range.
+   !onlyUpdatePeerDependentsWhenOutOfRange || !semverSatisfies(incrementVersion(nextRelease, preInfo), versionRange)) && ( // bump major only if the dependent doesn't already has a major release.
+   !releases.has(dependent) || releases.has(dependent) && releases.get(dependent).type !== "major");
