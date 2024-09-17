@@ -17,10 +17,10 @@ const ListItem = () => (
         </Text>
       </StackLayout>
     </StaticListItemContent>
-    <Button variant="secondary" aria-label={"icon"}>
+    <Button variant="secondary" aria-label={"interactive button"}>
       <NoteIcon aria-hidden />
     </Button>
-    <Button variant="secondary" aria-label={"icon"}>
+    <Button variant="secondary" aria-label={"interactive button"}>
       <NoteIcon aria-hidden />
     </Button>
   </StaticListItem>

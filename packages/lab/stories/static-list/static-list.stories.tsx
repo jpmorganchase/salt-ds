@@ -67,13 +67,14 @@ const ListItemWithButtons = () => (
 );
 
 export const Multiple: StoryFn<StaticListProps> = () => {
-  const [listArray, setListArray] = useState([ListItem, ListItem]);
+  const defaultList = ["item", "item", "item"];
+  const [listArray, setListArray] = useState([...defaultList]);
 
   const handleListItem = () => {
-    setListArray([...listArray, ListItem]);
+    setListArray([...listArray, "item"]);
   };
   const handleReset = () => {
-    setListArray([ListItem, ListItem]);
+    setListArray([...defaultList]);
   };
   return (
     <StackLayout>
