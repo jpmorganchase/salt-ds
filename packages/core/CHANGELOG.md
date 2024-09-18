@@ -1,5 +1,50 @@
 # @salt-ds/core
 
+## 1.36.0
+
+### Minor Changes
+
+- 1098fc1: Added `sentiment` (accented, neutral, positive, negative, caution) and `appearance` (solid, bordered, transparent) props for Button.
+
+  _Note:_ Button's `variant` prop is now deprecated and will be removed in the next major version.
+
+  | `variant`   | `appearance`  | `sentiment` |
+  | ----------- | ------------- | ----------- |
+  | `cta`       | `solid`       | `accented`  |
+  | `primary`   | `solid`       | `neutral`   |
+  | `secondary` | `transparent` | `neutral`   |
+
+### Patch Changes
+
+- 7a5215a: Fixed data-\* attributes not allowed on pass through props. Closes #3797.
+
+  - `Checkbox.inputProps`
+  - `Input.inputProps`
+  - `MultilineInput.textAreaProps`
+  - `PillInput.inputProps`
+  - `RadioButton.inputProps`
+  - `Switch.inputProps`
+
+- dccd349: - Fixed bordered form controls' activation indicator and border combining to 3px instead of 2px in:
+
+  - Dropdown
+  - ComboBox
+  - Input
+  - MultilineInput
+  - Fixed form controls' activation indicator changing color when an active field is hovered in:
+
+    - Input
+    - MultilineInput
+
+  - Updated the token applied to form controls' activation indicator to use `--salt-size-border-strong` instead of `  --salt-editable-borderWidth-active`.
+
+- 7ed6d4d: Fixed Tag's height being incorrect when box-sizing isn't set
+- 3e49154: Updated Checkbox and Radio Button to have more robust styling.
+- cee2b63: Fixed text inside Panel having the incorrect color when color-scheme is not set or doesn't change the default text color e.g. in Safari.
+- f277c02: Updated controlled uncontrolled warning link
+- 92299b6: Fixed the alignment of Checkbox and Radio Button when they don't have a label.
+- 61e8502: Fixed Dialog's content being collapsed on Safari.
+
 ## 1.35.0
 
 ### Minor Changes

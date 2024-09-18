@@ -1,5 +1,18 @@
 # @salt-ds/ag-grid-theme
 
+## 2.1.0
+
+### Minor Changes
+
+- 285a257: Added support for [range selection](https://www.ag-grid.com/react-data-grid/global-style-customisation-selections/#range-selections) highlight color, mapped to `--salt-overlayable-background-highlight`. Closes #3922.
+
+### Patch Changes
+
+- Updated dependencies [1098fc1]
+- Updated dependencies [2263a98]
+- Updated dependencies [285a257]
+  - @salt-ds/theme@1.22.0
+
 ## 2.0.2
 
 ### Patch Changes
