@@ -17,11 +17,12 @@
 }
 
 .docsPageContent {
-  width: calc(100% - var(--toc-width));
+  flex-shrink: 1;
 }
 
 .sidebar {
   display: contents;
+  flex-shrink: 0;
 }
 
 .sidebarHeader {
@@ -32,7 +33,7 @@
   align-self: flex-start;
   position: sticky;
   top: var(--navbar-height);
-  width: var(--toc-width);
+  min-width: var(--toc-width);
   padding-top: var(--salt-spacing-300);
   padding-left: calc(5 * var(--salt-spacing-100));
   margin-top: 0;

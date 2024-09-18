@@ -1,7 +1,6 @@
 import {
   ImageProvider,
   LinkProvider,
-  ThemeProvider,
   getMarkdownComponents,
   withMarkdownSpacing,
 } from "@jpmorganchase/mosaic-components";
@@ -16,16 +15,22 @@ import {
   Metadata,
 } from "@jpmorganchase/mosaic-site-components";
 import { Sitemap } from "@jpmorganchase/mosaic-sitemap-component";
+import { useColorMode } from "@jpmorganchase/mosaic-store";
 import { StoreProvider, useCreateStore } from "@jpmorganchase/mosaic-store";
+import { ssrClassName } from "@jpmorganchase/mosaic-theme";
 import { themeClassName } from "@jpmorganchase/mosaic-theme";
-import { SaltProvider, useCurrentBreakpoint } from "@salt-ds/core";
+import {
+  SaltProvider,
+  UNSTABLE_SaltProviderNext,
+  useCurrentBreakpoint,
+} from "@salt-ds/core";
 import clsx from "clsx";
 import { SessionProvider } from "next-auth/react";
 import type { AppProps } from "next/app";
 import { Open_Sans, PT_Mono } from "next/font/google";
 import localFont from "next/font/local";
 import Head from "next/head";
-import { type ReactNode, useMemo } from "react";
+import { type ReactNode, useEffect, useMemo, useState } from "react";
 import * as saltComponents from "../components";
 import * as saltLayouts from "../layouts";
 import type { MyAppProps } from "../types/mosaic";
@@ -55,17 +60,6 @@ const components = {
 };
 
 const layoutComponents = { ...mosaicLayouts, ...saltLayouts };
-
-const DensityProvider = ({ children }: { children: ReactNode }) => {
-  const viewport = useCurrentBreakpoint();
-
-  const density = useMemo(
-    () => (viewport === "xl" || viewport === "lg" ? "low" : "touch"),
-    [viewport],
-  );
-
-  return <SaltProvider density={density}>{children}</SaltProvider>;
-};
 
 const colorMode: "light" | "dark" = "dark";
 
@@ -107,6 +101,61 @@ const amplitude = localFont({
   ],
   variable: "--site-font-family-amplitude",
 });
+const useHasHydrated = () => {
+  const [hasHydrated, setHasHydrated] = useState(false);
+
+  useEffect(() => {
+    setHasHydrated(true);
+  }, []);
+
+  return hasHydrated;
+};
+
+interface ThemeProviderProps {
+  /** Applies to `SaltProvider` `theme` prop */
+  themeClassName?: string;
+  className?: string;
+  children?: ReactNode;
+  /** Enables Salt theme next */
+  themeNext?: boolean;
+}
+
+// This is a direct copy of Mosaic's ThemeProvider + injecting density, so that we can control top level provider's density,
+// which impacts both children as well as portal
+function ThemeProvider({
+  themeClassName,
+  className,
+  themeNext,
+  children,
+}: ThemeProviderProps) {
+  const hasHydrated = useHasHydrated();
+  const colorMode = useColorMode();
+
+  const ssrClassname = hasHydrated ? undefined : ssrClassName;
+
+  const ChosenSaltProvider = themeNext
+    ? UNSTABLE_SaltProviderNext
+    : SaltProvider;
+  const viewport = useCurrentBreakpoint();
+
+  const density = useMemo(
+    () => (viewport === "xl" || viewport === "lg" ? "low" : "touch"),
+    [viewport],
+  );
+
+  return (
+    <ChosenSaltProvider
+      mode={hasHydrated ? colorMode : "light"}
+      theme={themeClassName}
+      density={density}
+    >
+      <div className={clsx(ssrClassname, className)}>
+        {children}
+        <div data-mosaic-id="portal-root" />
+      </div>
+    </ChosenSaltProvider>
+  );
+}
 
 export default function MyApp({
   Component,
@@ -140,17 +189,15 @@ export default function MyApp({
             amplitude.variable,
           )}
         >
-          <DensityProvider>
-            <BaseUrlProvider>
-              <ImageProvider value={Image}>
-                <LinkProvider value={Link}>
-                  <LayoutProvider layoutComponents={layoutComponents}>
-                    <Component components={components} {...pageProps} />
-                  </LayoutProvider>
-                </LinkProvider>
-              </ImageProvider>
-            </BaseUrlProvider>
-          </DensityProvider>
+          <BaseUrlProvider>
+            <ImageProvider value={Image}>
+              <LinkProvider value={Link}>
+                <LayoutProvider layoutComponents={layoutComponents}>
+                  <Component components={components} {...pageProps} />
+                </LayoutProvider>
+              </LinkProvider>
+            </ImageProvider>
+          </BaseUrlProvider>
         </ThemeProvider>
       </StoreProvider>
     </SessionProvider>
