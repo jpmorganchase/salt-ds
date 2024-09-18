@@ -5795,7 +5795,7 @@ __metadata:
     cross-env: "npm:^7.0.3"
     dotenv-load: "npm:^2.0.1"
     lodash-es: "npm:^4.17.21"
-    next: "npm:^14.2.2"
+    next: "npm:^14.2.10"
     next-auth: "npm:^4.24.7"
     node-fetch: "npm:^3.0.0"
     react: "npm:^18.3.1"
