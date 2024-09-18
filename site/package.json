@@ -38,7 +38,7 @@
     "@philpl/buble": "^0.19.7",
     "@types/react": "^18.3.3",
     "lodash-es": "^4.17.21",
-    "next": "^14.2.2",
+    "next": "^14.2.10",
     "next-auth": "^4.24.7",
     "node-fetch": "^3.0.0"
   },
