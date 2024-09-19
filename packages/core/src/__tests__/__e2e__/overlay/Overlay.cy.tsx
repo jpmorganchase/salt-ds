@@ -36,7 +36,9 @@ describe("GIVEN an Overlay", () => {
       cy.realPress("Enter");
       cy.findByRole("dialog").should("be.visible");
       //focus into overlay
-      cy.findByRole("button", { name: /Close Overlay/i }).should("be.focused");
+      cy.findAllByRole("button", { name: "Close overlay" }).should(
+        "be.focused",
+      );
       cy.realPress("Tab");
     });
 
@@ -45,11 +47,11 @@ describe("GIVEN an Overlay", () => {
 
       cy.findByRole("button", { name: /Show Overlay/i }).realClick();
       cy.findByRole("dialog").should("be.visible");
-      cy.findByRole("button", { name: /Close Overlay/i }).should("be.focused");
+      cy.findByRole("button", { name: /Close overlay/i }).should("be.focused");
       cy.realPress("Tab");
       cy.findByRole("button", { name: /Hover me/i }).should("be.focused");
       cy.realPress("Tab");
-      cy.findByRole("button", { name: /Close Overlay/i }).should("be.focused");
+      cy.findByRole("button", { name: /Close overlay/i }).should("be.focused");
     });
   });
 
@@ -119,7 +121,8 @@ describe("GIVEN an Overlay", () => {
       cy.findByRole("dialog").should("be.visible");
       cy.get("@onOpenChangeSpy").should("have.callCount", 1);
 
-      cy.findByRole("button", { name: /Close Overlay/i }).realClick();
+      cy.findByRole("button", { name: /Close overlay/i }).realClick();
+
       cy.findByRole("dialog").should("not.exist");
 
       cy.findByRole("button", { name: /Show Overlay/i }).realClick();
