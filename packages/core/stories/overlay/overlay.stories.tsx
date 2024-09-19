@@ -61,7 +61,7 @@ Right.args = {
 };
 
 export const Header = ({ onOpenChange }: OverlayProps) => {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   const id = useId();
 
   const onChange = (newOpen: boolean) => {
@@ -103,7 +103,7 @@ export const Header = ({ onOpenChange }: OverlayProps) => {
 };
 
 export const HeaderWithCloseButton = ({ onOpenChange }: OverlayProps) => {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   const id = useId();
 
   const onChange = (newOpen: boolean) => {
@@ -112,6 +112,16 @@ export const HeaderWithCloseButton = ({ onOpenChange }: OverlayProps) => {
   };
 
   const handleClose = () => setOpen(false);
+
+  const CloseButton = () => (
+    <Button
+      aria-label="Close overlay"
+      variant="secondary"
+      onClick={handleClose}
+    >
+      <CloseIcon aria-hidden />
+    </Button>
+  );
 
   return (
     <Overlay open={open} onOpenChange={onChange}>
@@ -127,15 +137,7 @@ export const HeaderWithCloseButton = ({ onOpenChange }: OverlayProps) => {
         <OverlayHeader
           id={id}
           header="Header block"
-          endAdornment={
-            <Button
-              aria-label="Close dialog"
-              variant="secondary"
-              onClick={handleClose}
-            >
-              <CloseIcon aria-hidden />
-            </Button>
-          }
+          endAdornment={<CloseButton />}
         />
         <OverlayPanelContent>
           <StackLayout gap={1}>
