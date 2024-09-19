@@ -23,7 +23,6 @@ export default {
   title: "Core/Dialog",
   component: Dialog,
   args: {
-    open: true,
     preheader: "Settlements",
     header: "Terms and conditions",
     description: "Effective date: August 29, 2024",
