@@ -30,15 +30,25 @@ export interface DialogHeaderProps extends ComponentPropsWithoutRef<"div"> {
    * Displays the preheader just above the header
    **/
   preheader?: ReactNode;
+  /**
+   * Description text is displayed just below the header
+   **/
+  description?: string;
+  /**
+   * End adornment component
+   */
+  endAdornment?: ReactNode;
 }
 
 export const DialogHeader = forwardRef<HTMLDivElement, DialogHeaderProps>(
   function DialogHeader(props, ref) {
     const {
       className,
+      description,
+      disableAccent,
+      endAdornment,
       header,
       preheader,
-      disableAccent,
       status: statusProp,
       ...rest
     } = props;
@@ -68,14 +78,22 @@ export const DialogHeader = forwardRef<HTMLDivElement, DialogHeaderProps>(
         {...rest}
       >
         {status && <StatusIndicator status={status} />}
-        <H2 className={withBaseName("header")}>
+        <div className={withBaseName("body")}>
           {preheader && (
-            <Text variant="secondary" className={withBaseName("preheader")}>
-              {preheader}
+            <Text className={withBaseName("preheader")}>{preheader}</Text>
+          )}
+          <H2 className={withBaseName("header")}>{header}</H2>
+          {description && (
+            <Text color="secondary" className={withBaseName("description")}>
+              {description}
             </Text>
           )}
-          <div>{header}</div>
-        </H2>
+        </div>
+        {endAdornment && (
+          <div className={withBaseName("endAdornmentContainer")}>
+            {endAdornment}
+          </div>
+        )}
       </div>
     );
   },
