@@ -3,7 +3,7 @@ import { composeStories } from "@storybook/react";
 import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
 
 const composedStories = composeStories(overlayStories);
-const { Default, Right, Bottom, Left, CloseButton } = composedStories;
+const { Default, Right, Bottom, Left, HeaderWithCloseButton } = composedStories;
 
 describe("GIVEN an Overlay", () => {
   checkAccessibility(composedStories);
@@ -30,7 +30,7 @@ describe("GIVEN an Overlay", () => {
     });
 
     it("THEN it should focus into the overlay when opened", () => {
-      cy.mount(<CloseButton />);
+      cy.mount(<HeaderWithCloseButton />);
 
       cy.realPress("Tab");
       cy.realPress("Enter");
@@ -41,7 +41,7 @@ describe("GIVEN an Overlay", () => {
     });
 
     it("THEN it should trap focus within Overlay once opened", () => {
-      cy.mount(<CloseButton />);
+      cy.mount(<HeaderWithCloseButton />);
 
       cy.findByRole("button", { name: /Show Overlay/i }).realClick();
       cy.findByRole("dialog").should("be.visible");
@@ -112,7 +112,7 @@ describe("GIVEN an Overlay", () => {
   describe("WHEN a Close Button is used", () => {
     it("THEN it should remain open until outside Overlay click or close button click", () => {
       const onOpenChangeSpy = cy.stub().as("onOpenChangeSpy");
-      cy.mount(<CloseButton onOpenChange={onOpenChangeSpy} />);
+      cy.mount(<HeaderWithCloseButton onOpenChange={onOpenChangeSpy} />);
 
       cy.realPress("Tab");
       cy.realPress("Enter");
