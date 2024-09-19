@@ -2,13 +2,13 @@ import {
   Button,
   Dialog,
   DialogActions,
-  DialogCloseButton,
   DialogContent,
   type DialogContentProps,
   DialogHeader,
   type DialogProps,
   StackLayout,
 } from "@salt-ds/core";
+import { CloseIcon } from "@salt-ds/icons";
 import type { Meta, StoryFn } from "@storybook/react";
 import {
   type ComponentProps,
@@ -23,7 +23,10 @@ export default {
   title: "Core/Dialog",
   component: Dialog,
   args: {
-    header: "Congratulations! You have created a Dialog.",
+    open: true,
+    preheader: "Settlements",
+    header: "Terms and conditions",
+    description: "Effective date: August 29, 2024",
     content:
       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
   },
@@ -40,12 +43,16 @@ const UnmountLogger = () => {
 
 const DialogTemplate: StoryFn<
   Omit<DialogProps, "content"> &
-    Pick<ComponentProps<typeof DialogHeader>, "header" | "preheader"> & {
+    Pick<
+      ComponentProps<typeof DialogHeader>,
+      "header" | "preheader" | "description"
+    > & {
       content: DialogContentProps["children"];
     }
 > = ({
   header,
   preheader,
+  description,
   content,
   id,
   size,
@@ -66,6 +73,12 @@ const DialogTemplate: StoryFn<
     setOpen(false);
   };
 
+  const CloseButton = () => (
+    <Button aria-label="Close dialog" variant="secondary" onClick={handleClose}>
+      <CloseIcon aria-hidden />
+    </Button>
+  );
+
   return (
     <>
       <Button data-testid="dialog-button" onClick={handleRequestOpen}>
@@ -78,7 +91,12 @@ const DialogTemplate: StoryFn<
         id={id}
         size={size}
       >
-        <DialogHeader header={header} preheader={preheader} />
+        <DialogHeader
+          header={header}
+          preheader={preheader}
+          description={description}
+          endAdornment={<CloseButton />}
+        />
         <DialogContent>
           {content}
           <UnmountLogger />
@@ -92,7 +110,6 @@ const DialogTemplate: StoryFn<
             Next
           </Button>
         </DialogActions>
-        <DialogCloseButton onClick={handleClose} />
       </Dialog>
     </>
   );
@@ -349,13 +366,22 @@ export const StickyFooter: StoryFn<typeof Dialog> = ({
     setOpen(false);
   };
 
+  const CloseButton = () => (
+    <Button aria-label="Close dialog" variant="secondary" onClick={handleClose}>
+      <CloseIcon aria-hidden />
+    </Button>
+  );
+
   return (
     <>
       <Button data-testid="dialog-button" onClick={handleRequestOpen}>
         Click to open dialog
       </Button>
       <Dialog open={open} onOpenChange={onOpenChange} className="longDialog">
-        <DialogHeader header="Congratulations! You have created a Dialog." />
+        <DialogHeader
+          header="Congratulations! You have created a Dialog."
+          endAdornment={<CloseButton />}
+        />
         <DialogContent>
           Lorem Ipsum is simply dummy text of the printing and typesetting
           industry. Lorem Ipsum has been the industry's standard dummy text ever
@@ -371,7 +397,6 @@ export const StickyFooter: StoryFn<typeof Dialog> = ({
             Next
           </Button>
         </DialogActions>
-        <DialogCloseButton onClick={handleClose} />
       </Dialog>
     </>
   );
