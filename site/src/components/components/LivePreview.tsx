@@ -1,4 +1,4 @@
-import { SaltProviderNext, Switch } from "@salt-ds/core";
+import { SaltProviderNext, Switch, useId } from "@salt-ds/core";
 import { SaltProvider } from "@salt-ds/core";
 import clsx from "clsx";
 import {
@@ -35,7 +35,6 @@ type LivePreviewProps = {
 export const LivePreview: FC<LivePreviewProps> = ({
   componentName,
   exampleName,
-  list,
   children,
 }) => {
   const [showCode, setShowCode] = useState<boolean>(false);
@@ -80,6 +79,8 @@ export const LivePreview: FC<LivePreviewProps> = ({
 
   const ChosenSaltProvider = themeNext ? SaltProviderNext : SaltProvider;
 
+  const panelId = useId();
+
   return (
     <>
       {children}
@@ -89,7 +90,6 @@ export const LivePreview: FC<LivePreviewProps> = ({
             [styles.smallViewport]: isMobileView,
           })}
         >
-          {list && list}
           <ChosenSaltProvider mode={mode} accent={accent} corner={corner}>
             <div className={styles.exampleWithSwitch}>
               <div className={styles.example}>
@@ -103,17 +103,27 @@ export const LivePreview: FC<LivePreviewProps> = ({
                   onChange={handleShowCodeToggle}
                   className={styles.switch}
                   label="Show code"
+                  aria-controls={panelId}
                 />
               </ChosenSaltProvider>
             </div>
           </ChosenSaltProvider>
         </div>
 
-        {showCode && (
-          <Pre className={styles.codePreview}>
-            <div className="language-tsx">{ComponentExample.sourceCode}</div>
-          </Pre>
-        )}
+        <div
+          className={styles.codePanel}
+          aria-hidden={!showCode}
+          hidden={!showCode}
+          id={panelId}
+        >
+          <div className={styles.codePanelInner}>
+            <Pre className={styles.codePreview}>
+              <div className="language-tsx">
+                {ComponentExample.sourceCode.trimEnd()}
+              </div>
+            </Pre>
+          </div>
+        </div>
       </div>
     </>
   );
