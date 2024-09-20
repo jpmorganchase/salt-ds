@@ -4,10 +4,14 @@
 
 Added new tokens in Salt theme.
 
-```diff
-+ --salt-palette-interact-cta-border-hover: var(--salt-color-blue-500);
-+ --salt-palette-interact-cta-border-active: var(--salt-color-blue-700);
-```
+- `--salt-palette-interact-cta-border-hover`
+- `--salt-palette-interact-cta-border-active`
+- `--salt-accent-background-disabled`
+- `--salt-palette-accent-background-disabled`
+
+Added new tokens in Salt Next theme.
+
+- `--salt-accent-background-disabled`
 
 Updated mapping for below tokens, to help visual alignment between Salt and Salt Next themes.
 
