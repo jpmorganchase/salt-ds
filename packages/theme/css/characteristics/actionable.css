@@ -36,9 +36,9 @@
   --salt-actionable-accented-background-disabled: var(--salt-palette-interact-background);
   --salt-actionable-accented-background-hover: var(--salt-palette-interact-cta-background-hover);
   --salt-actionable-accented-background: var(--salt-palette-interact-background);
-  --salt-actionable-accented-borderColor-active: var(--salt-palette-interact-border-none);
+  --salt-actionable-accented-borderColor-active: var(--salt-palette-interact-cta-border-active);
   --salt-actionable-accented-borderColor-disabled: var(--salt-palette-accent-border-disabled);
-  --salt-actionable-accented-borderColor-hover: var(--salt-palette-interact-border-none);
+  --salt-actionable-accented-borderColor-hover: var(--salt-palette-interact-cta-border-hover);
   --salt-actionable-accented-borderColor: var(--salt-palette-accent-border);
   --salt-actionable-accented-foreground-active: var(--salt-palette-interact-cta-foreground);
   --salt-actionable-accented-foreground-disabled: var(--salt-palette-accent-foreground-informative-disabled);
