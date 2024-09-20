@@ -8,27 +8,25 @@
   position: relative;
   text-decoration: none;
   transition: box-shadow var(--salt-duration-instant) ease-in-out;
+  --linkCard-accent-color: var(--salt-accent-background);
 }
 
 /* Styles applied to LinkCard when variant="primary" */
 .saltLinkCard-primary {
   background: var(--saltLinkCard-background, var(--salt-container-primary-background));
   border-color: var(--salt-container-primary-borderColor);
-  --linkCard-accent-color: var(--salt-container-primary-borderColor);
 }
 
 /* Styles applied to LinkCard when variant="secondary" */
 .saltLinkCard-secondary {
   background: var(--saltLinkCard-background, var(--salt-container-secondary-background));
   border-color: var(--salt-container-secondary-borderColor);
-  --linkCard-accent-color: var(--salt-container-secondary-borderColor);
 }
 
 /* Styles applied to LinkCard when variant="tertiary" */
 .saltLinkCard-tertiary {
   background: var(--saltLinkCard-background, var(--salt-container-tertiary-background));
   border-color: var(--salt-container-tertiary-borderColor);
-  --linkCard-accent-color: var(--salt-container-tertiary-borderColor);
 }
 
 /* Styles applied to create accent */
@@ -81,19 +79,18 @@
   --linkCard-accent-color: var(--salt-selectable-foreground-hover);
 }
 
-/* Styles applied on active state to LinkCard */
-.saltLinkCard:active {
-  cursor: var(--salt-selectable-cursor-active);
-  border-color: var(--salt-selectable-borderColor-selected);
-  box-shadow: var(--salt-overlayable-shadow);
-  --linkCard-accent-color: var(--salt-selectable-foreground-selected);
-}
-
 /* Styles applied on hover state to LinkCard */
 @media (hover: hover) {
   .saltLinkCard:hover {
     cursor: var(--salt-selectable-cursor-hover);
     box-shadow: var(--salt-overlayable-shadow-hover);
-    --linkCard-accent-color: var(--salt-selectable-foreground-hover);
+    border-color: var(--salt-actionable-accented-borderColor-hover);
   }
+}
+
+/* Styles applied on active state to LinkCard */
+.saltLinkCard:active {
+  cursor: var(--salt-selectable-cursor-active);
+  border-color: var(--salt-actionable-accented-borderColor-active);
+  box-shadow: var(--salt-overlayable-shadow);
 }
