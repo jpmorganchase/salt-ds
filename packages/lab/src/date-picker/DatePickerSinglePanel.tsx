@@ -25,9 +25,13 @@ import {
   useState,
 } from "react";
 import {
+  CalendarDateGrid,
+  type CalendarDateGridProps,
   CalendarNavigation,
   type CalendarNavigationProps,
   type CalendarSingleProps,
+  CalendarWeekHeader,
+  type CalendarWeekHeaderProps,
   getCurrentLocale,
 } from "../calendar";
 import { Calendar, type SingleDateSelection } from "../calendar";
@@ -85,11 +89,18 @@ export interface DatePickerSinglePanelProps<T>
       | "onVisibleMonthChange"
     >
   >;
-
   /**
    * Props to be passed to the CalendarNavigation component.
    */
   CalendarNavigationProps?: CalendarNavigationProps;
+  /**
+   * Props to be passed to the CalendarWeekHeader component.
+   */
+  CalendarWeekHeaderProps?: CalendarWeekHeaderProps;
+  /**
+   * Props to be passed to the CalendarDataGrid component.
+   */
+  CalendarDataGridProps?: CalendarDateGridProps;
 }
 
 const withBaseName = makePrefixer("saltDatePickerPanel");
@@ -100,13 +111,16 @@ export const DatePickerSinglePanel = forwardRef<
 >(function DatePickerSinglePanel(props, ref) {
   const {
     CalendarProps,
+    CalendarWeekHeaderProps,
     CalendarNavigationProps,
+    CalendarDataGridProps,
     className,
     defaultVisibleMonth,
     visibleMonth: visibleMonthProp,
     onVisibleMonthChange,
     helperText,
     onSelect,
+    ...rest
   } = props;
 
   const targetWindow = useWindow();
@@ -189,6 +203,7 @@ export const DatePickerSinglePanel = forwardRef<
       gap={0}
       className={clsx(className, withBaseName("container"))}
       ref={ref}
+      {...rest}
     >
       {helperText && (
         <FlexItem className={withBaseName("header")}>
@@ -200,6 +215,8 @@ export const DatePickerSinglePanel = forwardRef<
         <FormFieldContext.Provider value={{} as FormFieldContextValue}>
           <Calendar selectionVariant="single" {...baseCalendarProps}>
             <CalendarNavigation {...CalendarNavigationProps} />
+            <CalendarWeekHeader {...CalendarWeekHeaderProps} />
+            <CalendarDateGrid {...CalendarDataGridProps} />
           </Calendar>
         </FormFieldContext.Provider>
       </FlexLayout>

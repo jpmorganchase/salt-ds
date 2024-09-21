@@ -1,10 +1,4 @@
 import {
-  CalendarDate,
-  DateFormatter,
-  type DateValue,
-  getLocalTimeZone,
-} from "@internationalized/date";
-import {
   FormField,
   FormFieldHelperText as FormHelperText,
   FormFieldLabel as FormLabel,
@@ -19,7 +13,7 @@ import {
   formatDate,
   getCurrentLocale,
 } from "@salt-ds/lab";
-import React, { type ReactElement, useState } from "react";
+import React, { type ReactElement, useCallback, useState } from "react";
 
 function formatDateRange(
   dateRange: DateRangeSelection | null,
@@ -47,46 +41,42 @@ function isValidDateRange(date: DateRangeSelection | null) {
   );
 }
 
-const parseDateEsES = (
-  dateString: string | undefined,
-): DateInputRangeParserResult => {
-  if (!dateString) {
-    return { date: null, error: false };
-  }
-  const dateParts = dateString.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
-  if (!dateParts) {
-    return { date: null, error: "invalid date" };
-  }
-  const [, day, month, year] = dateParts;
-  return {
-    date: new CalendarDate(
-      Number.parseInt(year, 10),
-      Number.parseInt(month, 10),
-      Number.parseInt(day, 10),
-    ),
-    error: false,
-  };
-};
-
-const formatDateEsES = (date: DateValue | null) => {
-  return date
-    ? new DateFormatter("es-ES", {
-        day: "2-digit",
-        month: "2-digit",
-        year: "numeric",
-      }).format(date.toDate(getLocalTimeZone()))
-    : "";
-};
-
 export const RangeWithLocaleEsES = (): ReactElement => {
   const locale = "es-ES";
 
-  const [selectedDate, setSelectedDate] = useState<DateRangeSelection | null>(
-    null,
-  );
-  const helperText = `Locale ${locale}`;
+  const defaultHelperText = `Locale ${locale}`;
+  const errorHelperText = "Please enter a valid date in DD MMM YYYY format";
+  const [helperText, setHelperText] = useState(defaultHelperText);
   const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
     undefined,
+  );
+  const handleSelectedDateChange = useCallback(
+    (
+      newSelectedDate: DateRangeSelection | null,
+      error: {
+        startDate: string | false;
+        endDate: string | false;
+      },
+    ) => {
+      console.log(
+        `Selected date range: ${formatDateRange(newSelectedDate, locale, {
+          day: "2-digit",
+          month: "2-digit",
+          year: "numeric",
+        })}`,
+      );
+      const validationStatus =
+        !error.startDate && !error.endDate && isValidDateRange(newSelectedDate)
+          ? undefined
+          : "error";
+      if (validationStatus === "error") {
+        setHelperText(errorHelperText);
+      } else {
+        setHelperText(defaultHelperText);
+      }
+      setValidationStatus(validationStatus);
+    },
+    [setValidationStatus, setHelperText],
   );
 
   return (
@@ -94,33 +84,12 @@ export const RangeWithLocaleEsES = (): ReactElement => {
       <FormLabel>Select a date</FormLabel>
       <DatePicker
         selectionVariant={"range"}
-        selectedDate={selectedDate}
         locale={locale}
-        onSelectedDateChange={(newSelectedDate, error) => {
-          console.log(
-            `Selected date range: ${formatDateRange(newSelectedDate, locale, {
-              day: "2-digit",
-              month: "2-digit",
-              year: "numeric",
-            })}`,
-          );
-          setSelectedDate(newSelectedDate);
-          const validationStatus =
-            !error.startDate &&
-            !error.endDate &&
-            isValidDateRange(newSelectedDate)
-              ? undefined
-              : "error";
-          setValidationStatus(validationStatus);
-        }}
+        onSelectedDateChange={handleSelectedDateChange}
       >
-        <DatePickerRangeInput
-          format={formatDateEsES}
-          parse={parseDateEsES}
-          placeholder={"DD/MM/YYYY"}
-        />
+        <DatePickerRangeInput />
         <DatePickerOverlay>
-          <DatePickerRangePanel />
+          <DatePickerRangePanel helperText={helperText} />
         </DatePickerOverlay>
       </DatePicker>
       <FormHelperText>{helperText}</FormHelperText>

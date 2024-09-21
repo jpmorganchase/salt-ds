@@ -8,7 +8,7 @@ export * from "./SingleWithLocaleEnUS";
 export * from "./SingleWithLocaleZhCN";
 export * from "./SingleWithMinMaxDate";
 export * from "./SingleWithFormField";
-export * from "./SingleWithToday";
+export * from "./SingleWithTodayButton";
 export * from "./SingleBordered";
 export * from "./Range";
 export * from "./RangeControlled";

@@ -7,7 +7,7 @@ import {
   formatDate,
   getCurrentLocale,
 } from "@salt-ds/lab";
-import type { ReactElement } from "react";
+import { type ReactElement, useCallback } from "react";
 
 function formatDateRange(
   dateRange: DateRangeSelection | null,
@@ -23,16 +23,23 @@ function formatDateRange(
     : endDate;
   return `Start date: ${formattedStartDate}, End date: ${formattedEndDate}`;
 }
-export const Range = (): ReactElement => (
-  <DatePicker
-    selectionVariant="range"
-    onSelectedDateChange={(newSelectedDate, _error) => {
+export const Range = (): ReactElement => {
+  const handleSelectedDateChange = useCallback(
+    (newSelectedDate: DateRangeSelection | null) => {
       console.log(`Selected date range: ${formatDateRange(newSelectedDate)}`);
-    }}
-  >
-    <DatePickerRangeInput />
-    <DatePickerOverlay>
-      <DatePickerRangePanel />
-    </DatePickerOverlay>
-  </DatePicker>
-);
+    },
+    [],
+  );
+
+  return (
+    <DatePicker
+      selectionVariant="range"
+      onSelectedDateChange={handleSelectedDateChange}
+    >
+      <DatePickerRangeInput />
+      <DatePickerOverlay>
+        <DatePickerRangePanel />
+      </DatePickerOverlay>
+    </DatePicker>
+  );
+};

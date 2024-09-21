@@ -3,7 +3,13 @@ import {
   type DateValue,
   getLocalTimeZone,
 } from "@internationalized/date";
-import { Calendar, getCurrentLocale } from "@salt-ds/lab";
+import {
+  Calendar,
+  CalendarDateGrid,
+  CalendarNavigation,
+  CalendarWeekHeader,
+  getCurrentLocale,
+} from "@salt-ds/lab";
 import type { ReactElement } from "react";
 
 function renderDayContents(day: DateValue) {
@@ -12,9 +18,11 @@ function renderDayContents(day: DateValue) {
 }
 
 export const CustomDayRender = (): ReactElement => (
-  <Calendar
-    selectionVariant="single"
-    className="CustomDayRender"
-    renderDayContents={renderDayContents}
-  />
+  <Calendar selectionVariant="single" className="CustomDayRender">
+    <CalendarNavigation />
+    <CalendarWeekHeader />
+    <CalendarDateGrid
+      getCalendarMonthProps={(date) => ({ renderDayContents })}
+    />
+  </Calendar>
 );

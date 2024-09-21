@@ -371,7 +371,8 @@ export const CalendarNavigation = forwardRef<
       >
         <Button
           disabled={!canNavigatePrevious}
-          variant="secondary"
+          appearance="transparent"
+          sentiment="neutral"
           onClick={handleNavigatePrevious}
           focusableWhenDisabled={true}
         >
@@ -422,7 +423,8 @@ export const CalendarNavigation = forwardRef<
       >
         <Button
           disabled={!canNavigateNext}
-          variant="secondary"
+          appearance="transparent"
+          sentiment="neutral"
           onClick={handleNavigateNext}
           focusableWhenDisabled={true}
         >

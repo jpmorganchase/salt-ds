@@ -94,6 +94,7 @@ export const DatePickerRangeInput = forwardRef<
     }
   }, [open]);
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: avoid excessive re-rendering
   useEffect(() => {
     if (cancelled) {
       setValue(prevState?.current?.value);
@@ -102,7 +103,7 @@ export const DatePickerRangeInput = forwardRef<
         endDate: false,
       });
     }
-  }, [cancelled, setSelectedDate]);
+  }, [cancelled]);
 
   const startInputProps: {
     onKeyDown: KeyboardEventHandler<HTMLInputElement>;
@@ -143,7 +144,8 @@ export const DatePickerRangeInput = forwardRef<
       onChange={onChange}
       endAdornment={
         <Button
-          variant="secondary"
+          appearance="transparent"
+          sentiment="neutral"
           onClick={handleCalendarButton}
           disabled={disabled}
           aria-label="Open Calendar"

@@ -28,11 +28,15 @@ import {
 } from "react";
 import {
   Calendar,
+  CalendarDateGrid,
+  type CalendarDateGridProps,
   CalendarNavigation,
   type CalendarNavigationProps,
   type CalendarOffsetProps,
   type CalendarProps,
   type CalendarRangeProps,
+  CalendarWeekHeader,
+  type CalendarWeekHeaderProps,
   type DateRangeSelection,
   type UseCalendarSelectionRangeProps,
   getCurrentLocale,
@@ -115,6 +119,14 @@ export interface DatePickerRangePanelProps<T>
       | "onVisibleMonthChange"
     >
   >;
+  /**
+   * Props to be passed to the start date CalendarWeekHeader component.
+   */
+  StartCalendarWeekHeaderProps?: CalendarWeekHeaderProps;
+  /**
+   * Props to be passed to the start date CalendarDataGrid component.
+   */
+  StartCalendarDataGridProps?: CalendarDateGridProps;
 
   /**
    * Props to be passed to the end date CalendarNavigation component.
@@ -133,6 +145,14 @@ export interface DatePickerRangePanelProps<T>
    * Props to be passed to the end date CalendarNavigation component.
    */
   EndCalendarNavigationProps?: CalendarNavigationProps;
+  /**
+   * Props to be passed to the end date CalendarWeekHeader component.
+   */
+  EndCalendarWeekHeaderProps?: CalendarWeekHeaderProps;
+  /**
+   * Props to be passed to the end date CalendarDataGrid component.
+   */
+  EndCalendarDataGridProps?: CalendarDateGridProps;
 }
 
 function getFallbackVisibleMonths(
@@ -176,8 +196,13 @@ export const DatePickerRangePanel = forwardRef<
     onSelect,
     StartCalendarProps: StartCalendarPropsProp,
     StartCalendarNavigationProps,
+    StartCalendarWeekHeaderProps,
+    StartCalendarDataGridProps,
     EndCalendarProps: EndCalendarPropsProp,
     EndCalendarNavigationProps,
+    EndCalendarWeekHeaderProps,
+    EndCalendarDataGridProps,
+    ...rest
   } = props;
 
   const targetWindow = useWindow();
@@ -314,6 +339,7 @@ export const DatePickerRangePanel = forwardRef<
       gap={0}
       className={clsx(className, withBaseName("container"))}
       ref={ref}
+      {...rest}
     >
       {helperText && (
         <FlexItem className={withBaseName("header")}>
@@ -325,9 +351,13 @@ export const DatePickerRangePanel = forwardRef<
         <FormFieldContext.Provider value={{} as FormFieldContextValue}>
           <Calendar selectionVariant={"range"} {...StartCalendarProps}>
             <CalendarNavigation {...StartCalendarNavigationProps} />
+            <CalendarWeekHeader {...StartCalendarWeekHeaderProps} />
+            <CalendarDateGrid {...StartCalendarDataGridProps} />
           </Calendar>
           <Calendar selectionVariant={"range"} {...EndCalendarProps}>
             <CalendarNavigation {...EndCalendarNavigationProps} />
+            <CalendarWeekHeader {...EndCalendarWeekHeaderProps} />
+            <CalendarDateGrid {...EndCalendarDataGridProps} />
           </Calendar>
         </FormFieldContext.Provider>
       </FlexLayout>

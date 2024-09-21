@@ -1,5 +1,10 @@
 import { getLocalTimeZone, today } from "@internationalized/date";
-import { Calendar, CalendarNavigation } from "@salt-ds/lab";
+import {
+  Calendar,
+  CalendarDateGrid,
+  CalendarNavigation,
+  CalendarWeekHeader,
+} from "@salt-ds/lab";
 import type { ReactElement } from "react";
 export const Range = (): ReactElement => (
   <Calendar
@@ -10,5 +15,7 @@ export const Range = (): ReactElement => (
     }}
   >
     <CalendarNavigation />
+    <CalendarWeekHeader />
+    <CalendarDateGrid />
   </Calendar>
 );

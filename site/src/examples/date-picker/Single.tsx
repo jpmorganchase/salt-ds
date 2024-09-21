@@ -4,10 +4,11 @@ import {
   DatePickerOverlay,
   DatePickerSingleInput,
   DatePickerSinglePanel,
+  type SingleDateSelection,
   formatDate,
   getCurrentLocale,
 } from "@salt-ds/lab";
-import type { ReactElement } from "react";
+import { type ReactElement, useCallback } from "react";
 
 function formatSingleDate(
   date: DateValue | null,
@@ -20,16 +21,23 @@ function formatSingleDate(
   return date;
 }
 
-export const Single = (): ReactElement => (
-  <DatePicker
-    selectionVariant="single"
-    onSelectedDateChange={(newSelectedDate, _error) => {
+export const Single = (): ReactElement => {
+  const handleSelectedDateChange = useCallback(
+    (newSelectedDate: SingleDateSelection | null) => {
       console.log(`Selected date: ${formatSingleDate(newSelectedDate)}`);
-    }}
-  >
-    <DatePickerSingleInput />
-    <DatePickerOverlay>
-      <DatePickerSinglePanel />
-    </DatePickerOverlay>
-  </DatePicker>
-);
+    },
+    [],
+  );
+
+  return (
+    <DatePicker
+      selectionVariant="single"
+      onSelectedDateChange={handleSelectedDateChange}
+    >
+      <DatePickerSingleInput />
+      <DatePickerOverlay>
+        <DatePickerSinglePanel />
+      </DatePickerOverlay>
+    </DatePicker>
+  );
+};

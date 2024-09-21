@@ -17,7 +17,7 @@ import {
   formatDate,
   getCurrentLocale,
 } from "@salt-ds/lab";
-import React, { type ReactElement, useRef, useState } from "react";
+import React, { type ReactElement, useCallback, useRef, useState } from "react";
 
 function formatDateRange(
   dateRange: DateRangeSelection | null,
@@ -46,7 +46,10 @@ function isValidDateRange(date: DateRangeSelection | null) {
 }
 
 export const RangeWithConfirmation = (): ReactElement => {
-  const helperText = "Select range (DD MMM YYYY - DD MMM YYYY)";
+  const defaultHelperText =
+    "Select range (DD MMM YYYY - DD MMM YYYY) e.g. 09 Jun 2024";
+  const errorHelperText = "Please enter a valid date in DD MMM YYYY format";
+  const [helperText, setHelperText] = useState(defaultHelperText);
   const applyButtonRef = useRef<HTMLButtonElement>(null);
   const minDate = today(getLocalTimeZone());
   const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
@@ -54,6 +57,37 @@ export const RangeWithConfirmation = (): ReactElement => {
   );
   const [selectedDate, setSelectedDate] = useState<DateRangeSelection | null>(
     null,
+  );
+  const handleApply = useCallback(
+    (
+      newSelectedDate: DateRangeSelection | null,
+      error: {
+        startDate: string | false;
+        endDate: string | false;
+      },
+    ) => {
+      console.log(`Selected date range: ${formatDateRange(newSelectedDate)}`);
+      const validationStatus =
+        !error.startDate && !error.endDate && isValidDateRange(newSelectedDate)
+          ? undefined
+          : "error";
+      if (validationStatus === "error") {
+        setHelperText(errorHelperText);
+      } else {
+        setHelperText(defaultHelperText);
+      }
+      setValidationStatus(validationStatus);
+    },
+    [setValidationStatus, setHelperText],
+  );
+  const handleSelectedDateChange = useCallback(
+    (newSelectedDate: DateRangeSelection | null) => {
+      setSelectedDate(newSelectedDate);
+      if (newSelectedDate?.startDate && newSelectedDate?.endDate) {
+        applyButtonRef?.current?.focus();
+      }
+    },
+    [applyButtonRef?.current, setSelectedDate],
   );
 
   return (
@@ -63,25 +97,9 @@ export const RangeWithConfirmation = (): ReactElement => {
         selectionVariant="range"
         minDate={minDate}
         maxDate={minDate.add({ years: 50 })}
+        onApply={handleApply}
+        onSelectedDateChange={handleSelectedDateChange}
         selectedDate={selectedDate}
-        onApply={(newSelectedDate, error) => {
-          console.log(
-            `Selected date range: ${formatDateRange(newSelectedDate)}`,
-          );
-          const validationStatus =
-            !error.startDate &&
-            !error.endDate &&
-            isValidDateRange(newSelectedDate)
-              ? undefined
-              : "error";
-          setValidationStatus(validationStatus);
-        }}
-        onSelectedDateChange={(newSelectedDate, error) => {
-          setSelectedDate(newSelectedDate);
-          if (newSelectedDate?.startDate && newSelectedDate?.endDate) {
-            applyButtonRef?.current?.focus();
-          }
-        }}
       >
         <DatePickerRangeInput />
         <DatePickerOverlay>

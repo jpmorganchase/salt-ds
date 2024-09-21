@@ -4,14 +4,8 @@ import {
   type ComponentPropsWithoutRef,
   type ReactNode,
   forwardRef,
-  useCallback,
 } from "react";
-import {
-  CalendarCarousel,
-  type CalendarCarouselProps,
-} from "./internal/CalendarCarousel";
 import { CalendarContext } from "./internal/CalendarContext";
-import { CalendarWeekHeader } from "./internal/CalendarWeekHeader";
 import {
   type UseCalendarMultiSelectProps,
   type UseCalendarOffsetProps,
@@ -33,27 +27,11 @@ export interface CalendarBaseProps extends ComponentPropsWithoutRef<"div"> {
   /**
    * The content to be rendered inside the Calendar.
    */
-  children?: ReactNode;
-
-  /**
-   * Additional class names to apply to the Calendar.
-   */
-  className?: string;
-
-  /**
-   * Function to render the contents of a day.
-   */
-  renderDayContents?: CalendarCarouselProps["renderDayContents"];
-
-  /**
-   * Props for the tooltip component.
-   */
-  TooltipProps?: CalendarCarouselProps["TooltipProps"];
-
+  children: ReactNode;
   /**
    * If `true`, hides dates that are out of the selectable range.
    */
-  hideOutOfRangeDates?: CalendarCarouselProps["hideOutOfRangeDates"];
+  hideOutOfRangeDates?: boolean;
 }
 
 /**
@@ -117,34 +95,71 @@ const withBaseName = makePrefixer("saltCalendar");
 
 export const Calendar = forwardRef<HTMLDivElement, CalendarProps>(
   function Calendar(props, ref) {
-    const { children, className, renderDayContents, TooltipProps, ...rest } =
-      props;
-
     const targetWindow = useWindow();
     useComponentCssInjection({
       testId: "salt-calendar",
       css: calendarCss,
       window: targetWindow,
     });
-
-    const { state, helpers } = useCalendar({
-      ...rest,
-    });
-
-    const { setCalendarFocused } = helpers;
-
-    const handleFocus = useCallback(() => {
-      setCalendarFocused(true);
-    }, [setCalendarFocused]);
-
-    const handleBlur = useCallback(() => {
-      setCalendarFocused(false);
-    }, [setCalendarFocused]);
-
+    const {
+      children,
+      className,
+      selectedDate,
+      defaultSelectedDate,
+      visibleMonth: visibleMonthProp,
+      timeZone,
+      locale,
+      defaultVisibleMonth,
+      onSelectedDateChange,
+      onVisibleMonthChange,
+      hideOutOfRangeDates,
+      isDayUnselectable,
+      isDayHighlighted,
+      isDayDisabled,
+      minDate,
+      maxDate,
+      selectionVariant,
+      onHoveredDateChange,
+      hoveredDate,
+      ...propsRest
+    } = props;
+    let startDateOffset: CalendarOffsetProps["startDateOffset"];
+    let endDateOffset: CalendarOffsetProps["startDateOffset"];
+    let rest: Partial<typeof props>;
+    if (selectionVariant === "offset") {
+      ({ startDateOffset, endDateOffset, ...rest } =
+        propsRest as CalendarOffsetProps);
+    } else {
+      rest = propsRest;
+    }
+    // biome-ignore lint/suspicious/noExplicitAny: type guard
+    const useCalendarProps: any = {
+      selectedDate,
+      defaultSelectedDate,
+      visibleMonth: visibleMonthProp,
+      timeZone,
+      locale,
+      defaultVisibleMonth,
+      onSelectedDateChange,
+      onVisibleMonthChange,
+      isDayUnselectable,
+      isDayHighlighted,
+      isDayDisabled,
+      minDate,
+      maxDate,
+      selectionVariant,
+      onHoveredDateChange,
+      hideOutOfRangeDates,
+      hoveredDate,
+      startDateOffset,
+      endDateOffset,
+    };
+    const { state, helpers } = useCalendar(useCalendarProps);
     const calendarLabel = new DateFormatter(state.locale, {
       month: "long",
       year: "numeric",
     }).format(state.visibleMonth.toDate(state.timeZone));
+
     return (
       <CalendarContext.Provider
         value={{
@@ -157,15 +172,9 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>(
           role="application"
           aria-label={calendarLabel}
           ref={ref}
+          {...rest}
         >
-          {children ?? null}
-          <CalendarWeekHeader locale={state.locale} />
-          <CalendarCarousel
-            onFocus={handleFocus}
-            onBlur={handleBlur}
-            renderDayContents={renderDayContents}
-            TooltipProps={TooltipProps}
-          />
+          {children}
         </div>
       </CalendarContext.Provider>
     );

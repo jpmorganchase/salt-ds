@@ -17,7 +17,7 @@ import {
   formatDate,
   getCurrentLocale,
 } from "@salt-ds/lab";
-import React, { type ReactElement, useRef, useState } from "react";
+import React, { type ReactElement, useCallback, useRef, useState } from "react";
 
 function formatSingleDate(
   date: DateValue | null,
@@ -31,7 +31,9 @@ function formatSingleDate(
 }
 
 export const SingleWithConfirmation = (): ReactElement => {
-  const helperText = "Select range (DD MMM YYYY - DD MMM YYYY)";
+  const defaultHelperText = "Date format DD MMM YYYY (e.g. 09 Jun 2024)";
+  const errorHelperText = "Please enter a valid date in DD MMM YYYY format";
+  const [helperText, setHelperText] = useState(defaultHelperText);
   const applyButtonRef = useRef<HTMLButtonElement>(null);
   const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
     undefined,
@@ -39,26 +41,40 @@ export const SingleWithConfirmation = (): ReactElement => {
   const [selectedDate, setSelectedDate] = useState<SingleDateSelection | null>(
     null,
   );
+  const handleApply = useCallback(
+    (newSelectedDate: SingleDateSelection | null, error: string | false) => {
+      console.log(`Selected date: ${formatSingleDate(newSelectedDate)}`);
+      if (error) {
+        setHelperText(errorHelperText);
+      } else {
+        setHelperText(defaultHelperText);
+      }
+      setValidationStatus(error ? "error" : undefined);
+    },
+    [setSelectedDate, setHelperText],
+  );
+  const handleSelectedDateChange = useCallback(
+    (newSelectedDate: SingleDateSelection | null) => {
+      setSelectedDate(newSelectedDate);
+      applyButtonRef?.current?.focus();
+    },
+    [applyButtonRef?.current, setSelectedDate],
+  );
+
   return (
     <FormField style={{ width: "256px" }} validationStatus={validationStatus}>
       <FormLabel>Select a date</FormLabel>
       <DatePicker
         selectionVariant="single"
+        onApply={handleApply}
+        onSelectedDateChange={handleSelectedDateChange}
         selectedDate={selectedDate}
-        onApply={(newSelectedDate, error) => {
-          console.log(`Selected date: ${formatSingleDate(newSelectedDate)}`);
-          setValidationStatus(error ? "error" : undefined);
-        }}
-        onSelectedDateChange={(newSelectedDate, error) => {
-          setSelectedDate(newSelectedDate);
-          applyButtonRef?.current?.focus();
-        }}
       >
         <DatePickerSingleInput />
         <DatePickerOverlay>
           <FlexLayout gap={0} direction="column">
             <FlexItem>
-              <DatePickerSinglePanel />
+              <DatePickerSinglePanel helperText={helperText} />
               <Divider variant="tertiary" />
             </FlexItem>
             <FlexItem>

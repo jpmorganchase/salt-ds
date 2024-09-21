@@ -13,7 +13,7 @@ import {
   getCurrentLocale,
 } from "@salt-ds/lab";
 import { CustomDatePickerPanel } from "@salt-ds/lab/stories/date-picker/CustomDatePickerPanel";
-import React, { type ReactElement } from "react";
+import React, { type ReactElement, useCallback } from "react";
 
 function formatDateRange(
   dateRange: DateRangeSelection | null,
@@ -33,16 +33,21 @@ function formatDateRange(
 export const RangeWithCustomPanel = (): ReactElement => {
   const helperText = "Date format DD MMM YYYY (e.g. 09 Jun 2024)";
   const minDate = today(getLocalTimeZone());
+  const handleSelectedDateChange = useCallback(
+    (newSelectedDate: DateRangeSelection | null) => {
+      console.log(`Selected date range: ${formatDateRange(newSelectedDate)}`);
+    },
+    [],
+  );
+
   return (
     <FormField style={{ width: "256px" }}>
       <FormLabel>Select a date range</FormLabel>
       <DatePicker
+        selectionVariant="range"
         minDate={minDate}
         maxDate={minDate.add({ years: 50 })}
-        selectionVariant="range"
-        onSelectedDateChange={(newSelectedDate, _error) => {
-          console.log(`Selected date: ${formatDateRange(newSelectedDate)}`);
-        }}
+        onSelectedDateChange={handleSelectedDateChange}
       >
         <DatePickerRangeInput />
         <DatePickerOverlay>

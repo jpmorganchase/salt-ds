@@ -1,13 +1,15 @@
 import { getLocalTimeZone, startOfMonth, today } from "@internationalized/date";
-import { Button, StackLayout } from "@salt-ds/core";
+import { Button, Divider, StackLayout } from "@salt-ds/core";
 import {
   Calendar,
+  CalendarDateGrid,
   CalendarNavigation,
+  CalendarWeekHeader,
   type UseCalendarSelectionSingleProps,
 } from "@salt-ds/lab";
-import { type ReactElement, useState } from "react";
+import React, { type ReactElement, useState } from "react";
 
-export const CustomHeader = (): ReactElement => {
+export const TodayButton = (): ReactElement => {
   const [selectedDate, setSelectedDate] = useState<
     UseCalendarSelectionSingleProps["selectedDate"]
   >(today(getLocalTimeZone()).subtract({ years: 1 }));
@@ -26,7 +28,15 @@ export const CustomHeader = (): ReactElement => {
     >
       <StackLayout gap={0}>
         <CalendarNavigation />
-        <Button onClick={() => setSelectedDate(today(getLocalTimeZone()))}>
+        <CalendarWeekHeader />
+        <CalendarDateGrid />
+        <Divider />
+        <Button
+          style={{ margin: "var(--salt-spacing-50)" }}
+          sentiment="accented"
+          appearance="bordered"
+          onClick={() => setSelectedDate(today(getLocalTimeZone()))}
+        >
           Today
         </Button>
       </StackLayout>

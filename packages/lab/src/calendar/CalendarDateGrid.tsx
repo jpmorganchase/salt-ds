@@ -1,37 +1,59 @@
 import { type DateValue, isSameMonth } from "@internationalized/date";
 import { makePrefixer, useIsomorphicLayoutEffect } from "@salt-ds/core";
-import { forwardRef, useEffect, useRef, useState } from "react";
-import { useCalendarContext } from "./CalendarContext";
-import { CalendarMonth, type CalendarMonthProps } from "./CalendarMonth";
+import {
+  type ComponentPropsWithoutRef,
+  type FocusEventHandler,
+  forwardRef,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
+import { useCalendarContext } from "./internal/CalendarContext";
+import {
+  CalendarMonth,
+  type CalendarMonthProps,
+} from "./internal/CalendarMonth";
 
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
-import calendarCarouselCss from "./CalendarCarousel.css";
-import { formatDate, monthDiff } from "./utils";
+import calendarDateGridCss from "./CalendarDateGrid.css";
+import { formatDate, monthDiff } from "./internal/utils";
 
-export type CalendarCarouselProps = Omit<CalendarMonthProps, "date">;
+export interface CalendarDateGridProps extends ComponentPropsWithoutRef<"div"> {
+  /**
+   * Props getter to pass to each CalendarMonth element
+   */
+  getCalendarMonthProps?: (date: DateValue) => Omit<CalendarMonthProps, "date">;
+}
 
 function getMonths(month: DateValue) {
   return [month.subtract({ months: 1 }), month, month.add({ months: 1 })];
 }
 
-const withBaseName = makePrefixer("saltCalendarCarousel");
+const withBaseName = makePrefixer("saltCalendarDateGrid");
 
-export const CalendarCarousel = forwardRef<
+export const CalendarDateGrid = forwardRef<
   HTMLDivElement,
-  CalendarCarouselProps
->(function CalendarCarousel(props, ref) {
-  const { ...rest } = props;
+  CalendarDateGridProps
+>(function CalendarDateGrid(props, ref) {
+  const {
+    onFocus,
+    onBlur,
+    getCalendarMonthProps = () => undefined,
+    ...rest
+  } = props;
 
   const targetWindow = useWindow();
   useComponentCssInjection({
-    testId: "salt-calendar-carousel",
-    css: calendarCarouselCss,
+    testId: "salt-calendar-date-grid",
+    css: calendarDateGridCss,
     window: targetWindow,
   });
 
   const {
     state: { visibleMonth, locale },
+    helpers: { setCalendarFocused },
   } = useCalendarContext();
   const containerRef = useRef<HTMLDivElement>(null);
   const diffIndex = (a: DateValue, b: DateValue) => monthDiff(a, b);
@@ -61,6 +83,22 @@ export const CalendarCarousel = forwardRef<
     return undefined;
   }, [formatDate(visibleMonth, locale)]);
 
+  const handleFocus: FocusEventHandler<HTMLDivElement> = useCallback(
+    (event) => {
+      setCalendarFocused(true);
+      onFocus?.(event);
+    },
+    [setCalendarFocused, onFocus],
+  );
+
+  const handleBlur: FocusEventHandler<HTMLDivElement> = useCallback(
+    (event) => {
+      setCalendarFocused(false);
+      onBlur?.(event);
+    },
+    [setCalendarFocused, onBlur],
+  );
+
   return (
     <div
       className={withBaseName()}
@@ -71,7 +109,13 @@ export const CalendarCarousel = forwardRef<
       }}
       ref={ref}
     >
-      <div className={withBaseName("track")} ref={containerRef}>
+      <div
+        className={withBaseName("grid")}
+        ref={containerRef}
+        onBlur={handleBlur}
+        onFocus={handleFocus}
+        {...rest}
+      >
         {months.map((date, index) => (
           <div
             key={formatDate(date, locale)}
@@ -81,7 +125,7 @@ export const CalendarCarousel = forwardRef<
             }}
             aria-hidden={index !== 1 ? "true" : undefined}
           >
-            <CalendarMonth {...rest} date={date} />
+            <CalendarMonth {...getCalendarMonthProps(date)} date={date} />
           </div>
         ))}
       </div>

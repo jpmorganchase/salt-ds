@@ -1,62 +1,38 @@
 import {
-  CalendarDate,
-  DateFormatter,
-  type DateValue,
-  getLocalTimeZone,
-} from "@internationalized/date";
-import {
   FormField,
   FormFieldHelperText as FormHelperText,
   FormFieldLabel as FormLabel,
 } from "@salt-ds/core";
 import {
-  type DateInputSingleParserResult,
   DatePicker,
   DatePickerOverlay,
   DatePickerSingleInput,
   DatePickerSinglePanel,
   type SingleDateSelection,
+  formatDate,
 } from "@salt-ds/lab";
-import React, { type ReactElement, useState } from "react";
-
-const parseDateEnUS = (dateString: string): DateInputSingleParserResult => {
-  if (!dateString?.length) {
-    return { date: null, error: false };
-  }
-  const dateParts = dateString.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
-  if (!dateParts) {
-    return { date: null, error: "invalid date" };
-  }
-  const [, month, day, year] = dateParts;
-  return {
-    date: new CalendarDate(
-      Number.parseInt(year, 10),
-      Number.parseInt(month, 10),
-      Number.parseInt(day, 10),
-    ),
-    error: false,
-  };
-};
-
-const formatDateEnUS = (date: DateValue | null) => {
-  return date
-    ? new DateFormatter("en-US", {
-        day: "2-digit",
-        month: "2-digit",
-        year: "numeric",
-      }).format(date.toDate(getLocalTimeZone()))
-    : "";
-};
+import React, { type ReactElement, useCallback, useState } from "react";
 
 export const SingleWithLocaleEnUS = (): ReactElement => {
   const locale = "en-US";
 
-  const [selectedDate, setSelectedDate] = useState<SingleDateSelection | null>(
-    null,
-  );
-  const helperText = `Locale ${locale}`;
+  const defaultHelperText = `Locale ${locale}`;
+  const errorHelperText = "Please enter a valid date in DD MMM YYYY format";
+  const [helperText, setHelperText] = useState(defaultHelperText);
   const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
     undefined,
+  );
+  const handleSelectedDateChange = useCallback(
+    (newSelectedDate: SingleDateSelection | null, error: string | false) => {
+      console.log(`Selected date: ${newSelectedDate}`);
+      if (error) {
+        setHelperText(errorHelperText);
+      } else {
+        setHelperText(defaultHelperText);
+      }
+      setValidationStatus(error ? "error" : undefined);
+    },
+    [setValidationStatus, setHelperText],
   );
 
   return (
@@ -64,21 +40,12 @@ export const SingleWithLocaleEnUS = (): ReactElement => {
       <FormLabel>Select a date</FormLabel>
       <DatePicker
         selectionVariant={"single"}
-        selectedDate={selectedDate}
         locale={locale}
-        onSelectedDateChange={(newSelectedDate, error) => {
-          console.log(`Selected date: ${formatDateEnUS(newSelectedDate)}`);
-          setValidationStatus(error ? "error" : undefined);
-          setSelectedDate(newSelectedDate);
-        }}
+        onSelectedDateChange={handleSelectedDateChange}
       >
-        <DatePickerSingleInput
-          format={formatDateEnUS}
-          parse={parseDateEnUS}
-          placeholder={"MM/DD/YYYY"}
-        />
+        <DatePickerSingleInput />
         <DatePickerOverlay>
-          <DatePickerSinglePanel />
+          <DatePickerSinglePanel helperText={helperText} />
         </DatePickerOverlay>
       </DatePicker>
       <FormHelperText>{helperText}</FormHelperText>

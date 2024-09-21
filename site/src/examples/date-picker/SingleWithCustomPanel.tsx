@@ -12,11 +12,12 @@ import {
   DatePicker,
   DatePickerOverlay,
   DatePickerSingleInput,
+  type SingleDateSelection,
   formatDate,
   getCurrentLocale,
 } from "@salt-ds/lab";
 import { CustomDatePickerPanel } from "@salt-ds/lab/stories/date-picker/CustomDatePickerPanel";
-import React, { type ReactElement } from "react";
+import React, { type ReactElement, useCallback } from "react";
 
 function formatSingleDate(
   date: DateValue | null,
@@ -32,6 +33,13 @@ function formatSingleDate(
 export const SingleWithCustomPanel = (): ReactElement => {
   const helperText = "Date format DD MMM YYYY (e.g. 09 Jun 2024)";
   const minDate = today(getLocalTimeZone());
+  const handleSelectedDateChange = useCallback(
+    (newSelectedDate: SingleDateSelection | null) => {
+      console.log(`Selected date: ${formatSingleDate(newSelectedDate)}`);
+    },
+    [],
+  );
+
   return (
     <FormField style={{ width: "256px" }}>
       <FormLabel>Select a date</FormLabel>
@@ -39,9 +47,7 @@ export const SingleWithCustomPanel = (): ReactElement => {
         minDate={minDate}
         maxDate={minDate.add({ years: 50 })}
         selectionVariant="single"
-        onSelectedDateChange={(newSelectedDate, _error) => {
-          console.log(`Selected date: ${formatSingleDate(newSelectedDate)}`);
-        }}
+        onSelectedDateChange={handleSelectedDateChange}
       >
         <DatePickerSingleInput />
         <DatePickerOverlay>

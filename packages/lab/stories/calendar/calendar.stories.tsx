@@ -10,13 +10,16 @@ import {
   startOfYear,
   today,
 } from "@internationalized/date";
-import { Button, StackLayout } from "@salt-ds/core";
+import { Button, Divider, StackLayout } from "@salt-ds/core";
 import {
   Calendar,
+  CalendarDateGrid,
+  type CalendarMultiSelectProps,
   CalendarNavigation,
   type CalendarProps,
   type CalendarRangeProps,
   type CalendarSingleProps,
+  CalendarWeekHeader,
   type UseCalendarSelectionRangeProps,
   type UseCalendarSelectionSingleProps,
   getCurrentLocale,
@@ -32,7 +35,13 @@ export default {
   component: Calendar,
   args: {
     selectionVariant: "single",
-    children: <CalendarNavigation />,
+    children: (
+      <>
+        <CalendarNavigation />
+        <CalendarWeekHeader />
+        <CalendarDateGrid />
+      </>
+    ),
   },
 } as Meta<typeof Calendar>;
 
@@ -40,6 +49,8 @@ const Template: StoryFn<typeof Calendar> = (args) => {
   return (
     <Calendar {...args}>
       <CalendarNavigation />
+      <CalendarWeekHeader />
+      <CalendarDateGrid />
     </Calendar>
   );
 };
@@ -59,49 +70,59 @@ Range.args = {
   },
 };
 
-export const Multiselect = Template.bind({});
-Multiselect.args = {
-  selectionVariant: "multiselect",
-  hideOutOfRangeDates: true,
-  defaultVisibleMonth: new CalendarDate(2024, 1, 1),
-  defaultSelectedDate: [
-    new CalendarDate(2024, 1, 2),
-    new CalendarDate(2024, 1, 3),
-    new CalendarDate(2024, 1, 4),
-    new CalendarDate(2024, 1, 5),
-    new CalendarDate(2024, 1, 6),
-    new CalendarDate(2024, 1, 11),
-    new CalendarDate(2024, 1, 18),
-    new CalendarDate(2024, 1, 22),
-    new CalendarDate(2024, 1, 25),
-    new CalendarDate(2024, 1, 30),
-    new CalendarDate(2024, 1, 31),
-    new CalendarDate(2024, 2, 1),
-    new CalendarDate(2024, 2, 2),
-    new CalendarDate(2024, 2, 3),
-    new CalendarDate(2024, 2, 4),
-    new CalendarDate(2024, 2, 8),
-    new CalendarDate(2024, 2, 11),
-    new CalendarDate(2024, 2, 15),
-    new CalendarDate(2024, 2, 16),
-    new CalendarDate(2024, 2, 17),
-    new CalendarDate(2024, 2, 18),
-    new CalendarDate(2024, 2, 22),
-    new CalendarDate(2024, 2, 29),
-    new CalendarDate(2024, 3, 6),
-    new CalendarDate(2024, 3, 7),
-    new CalendarDate(2024, 3, 8),
-    new CalendarDate(2024, 3, 9),
-    new CalendarDate(2024, 3, 10),
-    new CalendarDate(2024, 3, 13),
-    new CalendarDate(2024, 3, 15),
-    new CalendarDate(2024, 3, 17),
-    new CalendarDate(2024, 3, 20),
-    new CalendarDate(2024, 3, 22),
-    new CalendarDate(2024, 3, 24),
-    new CalendarDate(2024, 3, 27),
-    new CalendarDate(2024, 3, 31),
-  ],
+export const Multiselect: StoryFn<
+  CalendarMultiSelectProps & React.RefAttributes<HTMLDivElement>
+> = ({ selectionVariant, ...args }) => {
+  return (
+    <Calendar
+      selectionVariant="multiselect"
+      defaultVisibleMonth={new CalendarDate(2024, 1, 1)}
+      defaultSelectedDate={[
+        new CalendarDate(2024, 1, 2),
+        new CalendarDate(2024, 1, 3),
+        new CalendarDate(2024, 1, 4),
+        new CalendarDate(2024, 1, 5),
+        new CalendarDate(2024, 1, 6),
+        new CalendarDate(2024, 1, 11),
+        new CalendarDate(2024, 1, 18),
+        new CalendarDate(2024, 1, 22),
+        new CalendarDate(2024, 1, 25),
+        new CalendarDate(2024, 1, 30),
+        new CalendarDate(2024, 1, 31),
+        new CalendarDate(2024, 2, 1),
+        new CalendarDate(2024, 2, 2),
+        new CalendarDate(2024, 2, 3),
+        new CalendarDate(2024, 2, 4),
+        new CalendarDate(2024, 2, 8),
+        new CalendarDate(2024, 2, 11),
+        new CalendarDate(2024, 2, 15),
+        new CalendarDate(2024, 2, 16),
+        new CalendarDate(2024, 2, 17),
+        new CalendarDate(2024, 2, 18),
+        new CalendarDate(2024, 2, 22),
+        new CalendarDate(2024, 2, 29),
+        new CalendarDate(2024, 3, 6),
+        new CalendarDate(2024, 3, 7),
+        new CalendarDate(2024, 3, 8),
+        new CalendarDate(2024, 3, 9),
+        new CalendarDate(2024, 3, 10),
+        new CalendarDate(2024, 3, 13),
+        new CalendarDate(2024, 3, 15),
+        new CalendarDate(2024, 3, 17),
+        new CalendarDate(2024, 3, 20),
+        new CalendarDate(2024, 3, 22),
+        new CalendarDate(2024, 3, 24),
+        new CalendarDate(2024, 3, 27),
+        new CalendarDate(2024, 3, 31),
+      ]}
+      hideOutOfRangeDates
+      {...args}
+    >
+      <CalendarNavigation />
+      <CalendarWeekHeader />
+      <CalendarDateGrid />
+    </Calendar>
+  );
 };
 
 export const Offset = Template.bind({});
@@ -109,8 +130,8 @@ Offset.args = {
   selectionVariant: "offset",
   endDateOffset: (date) => date.add({ days: 2 }),
   defaultSelectedDate: {
-    startDate: today(getLocalTimeZone()).subtract({ days: 2 }),
-    endDate: today(getLocalTimeZone()),
+    startDate: today(getLocalTimeZone()),
+    endDate: today(getLocalTimeZone()).add({ days: 2 }),
   },
 };
 
@@ -139,29 +160,35 @@ HighlightedDates.args = {
     isEqualDay(startOfMonth(day), day) ? "Start of month reminder" : false,
 };
 
-export const HideOutOfRangeDates = Template.bind({});
-HideOutOfRangeDates.args = {
-  hideOutOfRangeDates: true,
+export const HideOutOfRangeDates: StoryFn<typeof Calendar> = (args) => {
+  return (
+    <Calendar hideOutOfRangeDates {...args}>
+      <CalendarNavigation />
+      <CalendarWeekHeader />
+      <CalendarDateGrid />
+    </Calendar>
+  );
 };
 
 export const HideYearDropdown: StoryFn<typeof Calendar> = (args) => {
   return (
     <Calendar {...args}>
       <CalendarNavigation hideYearDropdown />
+      <CalendarWeekHeader />
+      <CalendarDateGrid />
     </Calendar>
   );
 };
 
-export const CustomHeader: StoryFn<
+export const TodayButton: StoryFn<
   CalendarSingleProps & React.RefAttributes<HTMLDivElement>
-> = (args) => {
+> = ({ selectionVariant, ...args }) => {
   const [selectedDate, setSelectedDate] = useState<
     UseCalendarSelectionSingleProps["selectedDate"]
   >(today(getLocalTimeZone()).subtract({ years: 1 }));
   return (
     <Calendar
-      {...args}
-      selectionVariant="single"
+      selectionVariant={selectionVariant}
       selectedDate={selectedDate}
       visibleMonth={
         selectedDate
@@ -171,10 +198,19 @@ export const CustomHeader: StoryFn<
       onSelectedDateChange={(_event, newSelectedDate) =>
         setSelectedDate(newSelectedDate)
       }
+      {...args}
     >
       <StackLayout gap={0}>
         <CalendarNavigation />
-        <Button onClick={() => setSelectedDate(today(getLocalTimeZone()))}>
+        <CalendarWeekHeader />
+        <CalendarDateGrid />
+        <Divider />
+        <Button
+          style={{ margin: "var(--salt-spacing-50)" }}
+          sentiment="accented"
+          appearance="bordered"
+          onClick={() => setSelectedDate(today(getLocalTimeZone()))}
+        >
           Today
         </Button>
       </StackLayout>
@@ -189,11 +225,13 @@ function renderDayContents(day: DateValue) {
 
 export const CustomDayRender: StoryFn<typeof Calendar> = (args) => {
   return (
-    <Calendar
-      {...args}
-      className="CustomDayRender"
-      renderDayContents={renderDayContents}
-    />
+    <Calendar {...args}>
+      <CalendarNavigation />
+      <CalendarWeekHeader />
+      <CalendarDateGrid
+        getCalendarMonthProps={(date) => ({ renderDayContents })}
+      />
+    </Calendar>
   );
 };
 
@@ -209,64 +247,63 @@ MinMaxDate.args = {
   maxDate: endOfMonth(today(getLocalTimeZone())),
 };
 
-export const ExpandedYears = Template.bind({});
-
-ExpandedYears.args = {
-  minDate: startOfYear(today(getLocalTimeZone()).subtract({ years: 5 })),
-  maxDate: startOfYear(today(getLocalTimeZone()).add({ years: 5 })),
-};
-
 export const TwinCalendars: StoryFn<
   CalendarRangeProps & React.RefAttributes<HTMLDivElement>
-> = (args) => {
+> = ({ selectionVariant, ...args }) => {
   const [hoveredDate, setHoveredDate] = useState<DateValue | null>(null);
   const handleHoveredDateChange: CalendarProps["onHoveredDateChange"] = (
-    _event,
+    event,
     newHoveredDate,
   ) => {
     setHoveredDate(newHoveredDate);
+    args?.onHoveredDateChange?.(event, newHoveredDate);
   };
   const [selectedDate, setSelectedDate] = useState<
     UseCalendarSelectionRangeProps["selectedDate"]
   >(args.defaultSelectedDate || null);
   const handleSelectedDateChange: UseCalendarSelectionRangeProps["onSelectedDateChange"] =
-    (_event, newSelectedDate) => {
+    (event, newSelectedDate) => {
       setSelectedDate(newSelectedDate);
+      args?.onSelectedDateChange?.(event, newSelectedDate);
     };
 
   return (
     <div style={{ display: "flex", gap: 16 }}>
       <Calendar
-        {...args}
         selectionVariant="range"
-        onHoveredDateChange={handleHoveredDateChange}
+        hideOutOfRangeDates
         hoveredDate={hoveredDate}
-        onSelectedDateChange={handleSelectedDateChange}
         defaultVisibleMonth={
           selectedDate?.startDate
             ? startOfMonth(selectedDate.startDate)
             : startOfMonth(today(getLocalTimeZone()))
         }
         selectedDate={selectedDate}
-        hideOutOfRangeDates
+        {...args}
+        onHoveredDateChange={handleHoveredDateChange}
+        onSelectedDateChange={handleSelectedDateChange}
       >
         <CalendarNavigation />
+        <CalendarWeekHeader />
+        <CalendarDateGrid />
       </Calendar>
       <Calendar
-        {...args}
         selectionVariant="range"
-        onHoveredDateChange={handleHoveredDateChange}
+        hideOutOfRangeDates
         hoveredDate={hoveredDate}
-        onSelectedDateChange={handleSelectedDateChange}
         selectedDate={selectedDate}
         defaultVisibleMonth={
           selectedDate?.endDate
             ? startOfMonth(selectedDate.endDate)
             : startOfMonth(today(getLocalTimeZone()).add({ months: 1 }))
         }
-        hideOutOfRangeDates
+        {...args}
+        onHoveredDateChange={handleHoveredDateChange}
+        onSelectedDateChange={handleSelectedDateChange}
       >
         <CalendarNavigation />
+        <CalendarWeekHeader />
+        <CalendarDateGrid />
       </Calendar>
     </div>
   );
@@ -275,6 +312,8 @@ export const TwinCalendars: StoryFn<
 export const WithLocale: StoryFn<typeof Calendar> = (args) => (
   <Calendar {...args} locale="es-ES">
     <CalendarNavigation />
+    <CalendarWeekHeader />
+    <CalendarDateGrid />
   </Calendar>
 );
 
@@ -284,5 +323,7 @@ export const Bordered: StoryFn<typeof Calendar> = (args) => (
       MonthDropdownProps={{ bordered: true }}
       YearDropdownProps={{ bordered: true }}
     />
+    <CalendarWeekHeader />
+    <CalendarDateGrid />
   </Calendar>
 );

@@ -1,5 +1,10 @@
 import { parseDate } from "@internationalized/date";
-import { Calendar, CalendarNavigation } from "@salt-ds/lab";
+import {
+  Calendar,
+  CalendarDateGrid,
+  CalendarNavigation,
+  CalendarWeekHeader,
+} from "@salt-ds/lab";
 import type { StoryFn } from "@storybook/react";
 import { QAContainer, type QAContainerProps } from "docs/components";
 
@@ -27,6 +32,8 @@ export const AllExamples: StoryFn<QAContainerProps> = () => (
       selectedDate={parseDate("2024-04-02")}
     >
       <CalendarNavigation />
+      <CalendarWeekHeader />
+      <CalendarDateGrid />
     </Calendar>
     <Calendar
       locale={testLocale}
@@ -37,6 +44,8 @@ export const AllExamples: StoryFn<QAContainerProps> = () => (
       }}
     >
       <CalendarNavigation />
+      <CalendarWeekHeader />
+      <CalendarDateGrid />
     </Calendar>
     <Calendar
       locale={testLocale}
@@ -54,6 +63,8 @@ export const AllExamples: StoryFn<QAContainerProps> = () => (
       selectedDate={[parseDate("2024-04-02"), parseDate("2024-04-04")]}
     >
       <CalendarNavigation />
+      <CalendarWeekHeader />
+      <CalendarDateGrid />
     </Calendar>
     <Calendar
       locale={testLocale}
@@ -61,6 +72,8 @@ export const AllExamples: StoryFn<QAContainerProps> = () => (
       selectedDate={[parseDate("2024-04-02"), parseDate("2024-04-04")]}
     >
       <CalendarNavigation hideYearDropdown />
+      <CalendarWeekHeader />
+      <CalendarDateGrid />
     </Calendar>
     <Calendar
       locale={testLocale}
@@ -71,6 +84,8 @@ export const AllExamples: StoryFn<QAContainerProps> = () => (
         MonthDropdownProps={{ bordered: true }}
         YearDropdownProps={{ bordered: true }}
       />
+      <CalendarWeekHeader />
+      <CalendarDateGrid />
     </Calendar>
   </QAContainer>
 );
