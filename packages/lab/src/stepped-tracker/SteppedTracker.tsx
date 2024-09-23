@@ -22,7 +22,7 @@ import steppedTrackerCss from "./SteppedTracker.css";
 
 const withBaseName = makePrefixer("saltSteppedTracker");
 
-export interface SteppedTrackerProps extends ComponentPropsWithoutRef<"ul"> {
+export interface SteppedTrackerProps extends ComponentPropsWithoutRef<"ol"> {
   /**
    * The index of the current activeStep
    */
@@ -56,7 +56,7 @@ const useCheckInvalidChildren = (children: ReactNode) => {
   }, [children]);
 };
 
-export const SteppedTracker = forwardRef<HTMLUListElement, SteppedTrackerProps>(
+export const SteppedTracker = forwardRef<HTMLOListElement, SteppedTrackerProps>(
   function SteppedTracker(
     {
       children,
@@ -87,7 +87,7 @@ export const SteppedTracker = forwardRef<HTMLUListElement, SteppedTrackerProps>(
 
     return (
       <SteppedTrackerProvider totalSteps={totalSteps} activeStep={activeStep}>
-        <ul
+        <ol
           className={clsx(
             withBaseName(),
             withBaseName(orientation),
@@ -98,7 +98,7 @@ export const SteppedTracker = forwardRef<HTMLUListElement, SteppedTrackerProps>(
           {...restProps}
         >
           {nestedSteps}
-        </ul>
+        </ol>
       </SteppedTrackerProvider>
     );
   },

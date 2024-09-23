@@ -52,7 +52,7 @@ export const Basic = (): ReactElement => {
           <StepLabel>Step Four</StepLabel>
         </TrackerStep>
       </SteppedTracker>
-      <SteppedTracker activeStep={2}>
+      <SteppedTracker activeStep={1}>
         <TrackerStep stage="completed">
           <StepLabel>Completed</StepLabel>
         </TrackerStep>

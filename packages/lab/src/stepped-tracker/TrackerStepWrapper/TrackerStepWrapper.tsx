@@ -71,7 +71,7 @@ export const TrackerStepWrapper = (props: TrackerStepWrapperProps) => {
         aria-hidden={!expanded ? "true" : undefined}
         hidden={!expanded}
       >
-        <ul className={withBaseName("nested-group-inner")}>{children}</ul>
+        <ol className={withBaseName("nested-group-inner")}>{children}</ol>
       </div>
     </li>
   );
