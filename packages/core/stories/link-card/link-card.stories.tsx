@@ -49,7 +49,7 @@ export const AccentPlacement: StoryFn<typeof LinkCard> = (args) => {
           setPlacement(event.target.value as LinkCardProps["accent"])
         }
       >
-        <RadioButton label="bottom" value="bottom" checked />
+        <RadioButton label="bottom" value="bottom" />
         <RadioButton label="top" value="top" />
         <RadioButton label="left" value="left" />
         <RadioButton label="right" value="right" />

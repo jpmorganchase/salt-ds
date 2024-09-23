@@ -9,6 +9,7 @@
   text-decoration: none;
   transition: box-shadow var(--salt-duration-instant) ease-in-out;
   --linkCard-accent-color: var(--salt-accent-background);
+  overflow: hidden;
 }
 
 /* Styles applied to LinkCard when variant="primary" */
