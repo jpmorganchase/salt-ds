@@ -46,6 +46,7 @@ export const TrackerStepWrapper = (props: TrackerStepWrapperProps) => {
           <Button
             className={withBaseName("collapse-toggle")}
             onClick={handleCollapseToggle}
+            aria-expanded={expanded}
             variant="secondary"
           >
             {expanded ? (
