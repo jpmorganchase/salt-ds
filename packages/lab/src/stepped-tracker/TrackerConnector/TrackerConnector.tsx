@@ -25,5 +25,10 @@ export const TrackerConnector = ({ state }: TrackerConnectorProps) => {
     window: targetWindow,
   });
 
-  return <span className={clsx(withBaseName(), withBaseName(state))} />;
+  return (
+    <span
+      className={clsx(withBaseName(), withBaseName(state))}
+      aria-hidden="true"
+    />
+  );
 };

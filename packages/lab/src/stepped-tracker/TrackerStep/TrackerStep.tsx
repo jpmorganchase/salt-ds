@@ -150,10 +150,11 @@ export const TrackerStep = (props: TrackerStepProps) => {
     className: containerClass,
     style: innerStyle,
     "aria-current": ariaCurrent,
+    "aria-label": `Step ${stepNumber + 1} (${stage}${status ? `, ${status}` : ""})`,
     ...restProps,
     children: (
       <>
-        <div className={withBaseName("indicator")}>
+        <div className={withBaseName("indicator")} aria-hidden="true">
           <Icon size={iconSize} />
         </div>
         {hasConnector && <TrackerConnector state={connectorState} />}
