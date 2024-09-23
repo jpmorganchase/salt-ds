@@ -273,6 +273,7 @@
   background: var(--salt-content-foreground-highlight);
   color: var(--salt-content-primary-foreground);
   --saltIcon-color: var(--salt-content-primary-foreground);
+  border-color: transparent;
   outline: none;
 }
 
