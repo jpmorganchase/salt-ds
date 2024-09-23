@@ -280,10 +280,10 @@ div[class*="ag-theme-salt"] .editable-cell,
 div[class*="ag-theme-salt"] .editable-numeric-cell {
   outline: var(--salt-size-border) var(--salt-container-borderStyle) var(--salt-editable-borderColor);
   outline-offset: -1px;
-  text-align: right;
 }
 
-div[class*="ag-theme-salt"] .ag-cell.numeric-cell {
+div[class*="ag-theme-salt"] .ag-cell.numeric-cell,
+div[class*="ag-theme-salt"] .editable-numeric-cell {
   text-align: right;
 }
 

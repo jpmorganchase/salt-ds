@@ -36,28 +36,23 @@ const dataGridExampleColumns: ColDef[] = [
     field: "population",
     filter: "agNumberColumnFilter",
     editable: true,
-    cellClass: ["editable-cell"],
+    cellClass: ["numeric-cell", "editable-cell"],
   },
   {
-    headerName: "Population",
+    headerName: "Population (editable numeric)",
     type: "numericColumn",
     field: "population",
     filter: "agNumberColumnFilter",
     editable: true,
-    cellClass: ["numeric-cell", "editable-cell"],
-  },
-  {
-    headerName: "Population",
-    type: "numericColumn",
-    field: "population",
-    filter: "agNumberColumnFilter",
-    editable: true,
-    cellClass: ["numeric-cell", "editable-cell"],
+    // This is only here for backwards compatility. Use above 2 classes combination instead.
+    cellClass: ["editable-numeric-cell"],
   },
   {
     headerName: "Date",
     field: "date",
     filter: "agDateColumnFilter",
+    editable: true,
+    cellClass: ["editable-cell"],
   },
 ];
 export default dataGridExampleColumns;
