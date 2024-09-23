@@ -47,7 +47,9 @@ export const TrackerStepWrapper = (props: TrackerStepWrapperProps) => {
             className={withBaseName("collapse-toggle")}
             onClick={handleCollapseToggle}
             aria-expanded={expanded}
-            variant="secondary"
+            aria-label={`Step ${stepNumber} show sub steps`}
+            sentiment="neutral"
+            appearance="transparent"
           >
             {expanded ? (
               <ChevronUpIcon
