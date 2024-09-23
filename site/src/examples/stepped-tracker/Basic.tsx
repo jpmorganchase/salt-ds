@@ -10,7 +10,10 @@ export const Basic = (): ReactElement => {
       gap={10}
       style={{ width: "100%", minWidth: 600, maxWidth: 800, margin: "auto" }}
     >
-      <SteppedTracker activeStep={0}>
+      <SteppedTracker
+        activeStep={0}
+        aria-label="Stepped Tracker example: first step active"
+      >
         <TrackerStep>
           <StepLabel>Step One</StepLabel>
         </TrackerStep>
@@ -24,7 +27,10 @@ export const Basic = (): ReactElement => {
           <StepLabel>Step Four</StepLabel>
         </TrackerStep>
       </SteppedTracker>
-      <SteppedTracker activeStep={2}>
+      <SteppedTracker
+        activeStep={2}
+        aria-label="Stepped Tracker example: third step active"
+      >
         <TrackerStep stage="completed">
           <StepLabel>Step One</StepLabel>
         </TrackerStep>
@@ -38,7 +44,10 @@ export const Basic = (): ReactElement => {
           <StepLabel>Step Four</StepLabel>
         </TrackerStep>
       </SteppedTracker>
-      <SteppedTracker activeStep={3}>
+      <SteppedTracker
+        activeStep={3}
+        aria-label="Stepped Tracker example: all steps complete"
+      >
         <TrackerStep stage="completed">
           <StepLabel>Step One</StepLabel>
         </TrackerStep>
@@ -52,7 +61,10 @@ export const Basic = (): ReactElement => {
           <StepLabel>Step Four</StepLabel>
         </TrackerStep>
       </SteppedTracker>
-      <SteppedTracker activeStep={1}>
+      <SteppedTracker
+        activeStep={1}
+        aria-label="Stepped Tracker example: status display options"
+      >
         <TrackerStep stage="completed">
           <StepLabel>Completed</StepLabel>
         </TrackerStep>

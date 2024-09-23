@@ -7,6 +7,7 @@ export const NestedVertical = (): ReactElement => {
       orientation="vertical"
       activeStep={10}
       style={{ width: "100%", minWidth: 300, maxWidth: 400 }}
+      aria-label="Stepped Tracker example: vertical nesting"
     >
       <TrackerStep stage="completed">
         <StepLabel>Step 1</StepLabel>

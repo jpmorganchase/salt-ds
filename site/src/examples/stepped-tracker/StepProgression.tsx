@@ -62,7 +62,10 @@ export const StepProgression = (): ReactElement => {
       align="stretch"
       style={{ width: "100%", minWidth: 600, maxWidth: 800, margin: "auto" }}
     >
-      <SteppedTracker activeStep={activeStep}>
+      <SteppedTracker
+        activeStep={activeStep}
+        aria-label="Stepped Tracker example: step progression"
+      >
         {steps.map(({ label, stage }, key) => (
           <TrackerStep stage={stage} key={key}>
             <StepLabel>{label}</StepLabel>

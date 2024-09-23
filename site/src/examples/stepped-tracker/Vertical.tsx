@@ -9,7 +9,11 @@ export const Vertical = (): ReactElement => {
       gap={8}
       style={{ height: "100%", maxWidth: 800, margin: "auto" }}
     >
-      <SteppedTracker activeStep={0} orientation="vertical">
+      <SteppedTracker
+        activeStep={0}
+        orientation="vertical"
+        aria-label="Stepped Tracker example: vertical, first step active"
+      >
         <TrackerStep>
           <StepLabel>Step One</StepLabel>
         </TrackerStep>
@@ -23,7 +27,11 @@ export const Vertical = (): ReactElement => {
           <StepLabel>Step Four</StepLabel>
         </TrackerStep>
       </SteppedTracker>
-      <SteppedTracker activeStep={2} orientation="vertical">
+      <SteppedTracker
+        activeStep={2}
+        orientation="vertical"
+        aria-label="Stepped Tracker example: vertical, third step active"
+      >
         <TrackerStep stage="completed">
           <StepLabel>Step One</StepLabel>
         </TrackerStep>
@@ -37,7 +45,11 @@ export const Vertical = (): ReactElement => {
           <StepLabel>Step Four</StepLabel>
         </TrackerStep>
       </SteppedTracker>
-      <SteppedTracker activeStep={3} orientation="vertical">
+      <SteppedTracker
+        activeStep={3}
+        orientation="vertical"
+        aria-label="Stepped Tracker example: vertical, all steps complete"
+      >
         <TrackerStep stage="completed">
           <StepLabel>Step One</StepLabel>
         </TrackerStep>
