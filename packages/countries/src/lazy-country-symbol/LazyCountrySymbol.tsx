@@ -12,10 +12,13 @@ export const LazyCountrySymbol = ({
 }: LazyCountrySymbolProps) => {
   const Component = lazyMap[code];
 
-  if (!Component && process.env.NODE_ENV !== "production") {
-    console.warn(
-      `Setting country code to ${code} which is invalid for <LazyCountrySymbol />`,
-    );
+  if (!Component) {
+    if (process.env.NODE_ENV !== "production") {
+      console.warn(
+        `Setting country code to ${code} which is invalid for <LazyCountrySymbol />`,
+      );
+    }
+    return null;
   }
 
   return <Component {...props} />;
