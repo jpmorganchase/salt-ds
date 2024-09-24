@@ -78,6 +78,6 @@ export const AllLazyCountrySharpSymbols: StoryFn = (props) => {
   );
 };
 
-AllLazyCountrySymbols.parameters = {
+AllLazyCountrySharpSymbols.parameters = {
   chromatic: { disableSnapshot: false },
 };
