@@ -5831,7 +5831,7 @@ __metadata:
     ag-grid-react: "npm:^31.3.0"
     axe-core: "npm:^4.9.0"
     chromatic: "npm:^11.10.1"
-    ci-info: "npm:^3.3.1"
+    ci-info: "npm:^4.0.0"
     clsx: "npm:^2.0.0"
     cypress: "npm:^13.8.0"
     cypress-axe: "npm:^1.5.0"
@@ -10844,10 +10844,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ci-info@npm:^3.2.0, ci-info@npm:^3.3.1, ci-info@npm:^3.7.0":
+"ci-info@npm:^3.2.0, ci-info@npm:^3.7.0":
   version: 3.8.0
   resolution: "ci-info@npm:3.8.0"
   checksum: 10/b00e9313c1f7042ca8b1297c157c920d6d69f0fbad7b867910235676df228c4b4f4df33d06cacae37f9efba7a160b0a167c6be85492b419ef71d85660e60606b
+  languageName: node
+  linkType: hard
+
+"ci-info@npm:^4.0.0":
+  version: 4.0.0
+  resolution: "ci-info@npm:4.0.0"
+  checksum: 10/c983bb7ff1b06648f4a47432201abbd58291147d8ab5043dbb5c03e1a0e3fb2347f40d29b66a3044f28ffeb5dade01ac35aa6bd4e7464a44d9a49a3d7532415a
   languageName: node
   linkType: hard
 
