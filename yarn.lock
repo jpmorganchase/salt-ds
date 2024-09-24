@@ -9172,10 +9172,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ag-grid-community@npm:31.3.2, ag-grid-community@npm:^31.3.0":
+"ag-grid-community@npm:31.3.2":
   version: 31.3.2
   resolution: "ag-grid-community@npm:31.3.2"
   checksum: 10/4d47d8ca08c80988e30643933c8e333b62322909db79a02f9aeb75ced7689827228c616be82085d6111823139796f30ee1086b2f1af555dcb7843cbd68578126
+  languageName: node
+  linkType: hard
+
+"ag-grid-community@npm:^31.3.0":
+  version: 31.3.4
+  resolution: "ag-grid-community@npm:31.3.4"
+  checksum: 10/c4f374eae3bfea38fda0110e2c744f53fd08879bd73062d7c89dbfcefa63f386902611f5fdd976e547b7911bf7a7c08fd04c281c415a5ea072b187de0ac79cb5
   languageName: node
   linkType: hard
 
