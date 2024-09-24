@@ -4,6 +4,7 @@ import type { Decorator } from "@storybook/react";
 import {
   QueryClient,
   QueryClientProvider,
+  keepPreviousData,
   useQuery,
 } from "@tanstack/react-query";
 import { http } from "msw";
@@ -72,7 +73,7 @@ const useInvestors = (sortModel: SortModel) => {
   return useQuery<Investor[]>({
     queryKey: ["investors", sortModel],
     queryFn: () => getInvestors(sortModel),
-    keepPreviousData: true,
+    placeholderData: keepPreviousData,
   });
 };
 
