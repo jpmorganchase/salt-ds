@@ -3613,10 +3613,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@faker-js/faker@npm:^8.0.0":
-  version: 8.0.0
-  resolution: "@faker-js/faker@npm:8.0.0"
-  checksum: 10/641e2a3ac5ef48af325744d36fab7639ca74df18ac78de7263f9645b708bc026d2b9d6fd4d181cb8bf0c413afa8b04d3ac0a7d33d95ea698aca2567617ff6dcb
+"@faker-js/faker@npm:^9.0.0":
+  version: 9.0.2
+  resolution: "@faker-js/faker@npm:9.0.2"
+  checksum: 10/040801deb23538a979110fafbe57c83594c4a7de6a6d032dc04626887e19f3d82d1fedbc7f3019f7dd6a4e45fc823f36f52b6682dd2adcaac7c844fd065e060b
   languageName: node
   linkType: hard
 
@@ -5794,7 +5794,7 @@ __metadata:
     "@biomejs/wasm-nodejs": "npm:^1.9.1"
     "@changesets/cli": "npm:^2.27.7"
     "@cypress/code-coverage": "npm:^3.12.35"
-    "@faker-js/faker": "npm:^8.0.0"
+    "@faker-js/faker": "npm:^9.0.0"
     "@fontsource/open-sans": "npm:^4.5.13"
     "@fontsource/pt-mono": "npm:^5.0.12"
     "@mswjs/data": "npm:^0.16.1"
