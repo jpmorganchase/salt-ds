@@ -1,6 +1,7 @@
 import { LazyCountrySymbol, countryMetaMap } from "@salt-ds/countries";
 import type { CountryCode } from "@salt-ds/countries";
 import type { Meta, StoryFn } from "@storybook/react";
+import { QAContainer } from "docs/components";
 import { Suspense } from "react";
 
 export default {
@@ -36,12 +37,24 @@ export const AllLazyCountrySymbols: StoryFn = () => {
             ))}
         </div>
       ))}
+    </Suspense>
+  );
+};
+
+AllLazyCountrySymbols.parameters = {
+  chromatic: { disableSnapshot: false },
+};
+
+export const AllLazyCountrySharpSymbols: StoryFn = (props) => {
+  return (
+    <Suspense fallback="Loading...">
       {sizes.map((size) => (
         <div
           key={size}
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(15, auto)",
+            // Different cols, to avoid overlap in TD in Chromatic
+            gridTemplateColumns: "repeat(10, auto)",
             gap: 8,
             padding: "12px 0",
           }}
