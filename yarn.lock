@@ -5878,7 +5878,7 @@ __metadata:
     "@jpmorganchase/mosaic-store": "npm:0.1.0-beta.86"
     "@jpmorganchase/mosaic-theme": "npm:0.1.0-beta.86"
     "@philpl/buble": "npm:^0.19.7"
-    "@types/node": "npm:^16.0.0"
+    "@types/node": "npm:^20.0.0"
     "@types/react": "npm:^18.3.3"
     concurrently: "npm:^9.0.0"
     cross-env: "npm:^7.0.3"
@@ -8252,13 +8252,6 @@ __metadata:
   version: 12.20.46
   resolution: "@types/node@npm:12.20.46"
   checksum: 10/c5347aa669ff439e9177a2799d0bc464d8533e4fb07f2ec112be118adf2668bf29b4fef153f9639550f190c84c8e96afcf96a04309af42e49754b42578cf1572
-  languageName: node
-  linkType: hard
-
-"@types/node@npm:^16.0.0":
-  version: 16.18.12
-  resolution: "@types/node@npm:16.18.12"
-  checksum: 10/e21a084c16f07988d01eb71e6bc6fe8591e89ab727778614c43ffc038cd6a390aa714b1058ef9933d4dcd96caf8673a573f05f17d4c0b454a46806d230ce1d17
   languageName: node
   linkType: hard
 
