@@ -3814,10 +3814,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fontsource/open-sans@npm:^4.5.13":
-  version: 4.5.13
-  resolution: "@fontsource/open-sans@npm:4.5.13"
-  checksum: 10/ea251ce4dad7086479356a3a0e7ad794c15b53121a59ded5e4b4eee483e671882bfa6c0f0eaf40cfc13bc732e3fe3b2e52d4a7a16a5ae65486750fbd900d6a15
+"@fontsource/open-sans@npm:^5.0.0":
+  version: 5.1.0
+  resolution: "@fontsource/open-sans@npm:5.1.0"
+  checksum: 10/3f042851689fe73e5f34a722b0020b4b13a56426f1a0d6c84ab0e35b457ed288f1a8f4a04fe66226a2965d1eb0beb97fe5cae742a05776b7404edeabba3aa1e5
   languageName: node
   linkType: hard
 
@@ -5795,7 +5795,7 @@ __metadata:
     "@changesets/cli": "npm:^2.27.7"
     "@cypress/code-coverage": "npm:^3.12.35"
     "@faker-js/faker": "npm:^8.0.0"
-    "@fontsource/open-sans": "npm:^4.5.13"
+    "@fontsource/open-sans": "npm:^5.0.0"
     "@fontsource/pt-mono": "npm:^5.0.12"
     "@mswjs/data": "npm:^0.16.1"
     "@storybook/addon-a11y": "npm:^8.3.0"
