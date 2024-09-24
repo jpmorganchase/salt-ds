@@ -122,7 +122,7 @@
   "resolutions": {
     "@changesets/assemble-release-plan@npm:^6.0.3": "patch:@changesets/assemble-release-plan@npm%3A6.0.3#~/.yarn/patches/@changesets-assemble-release-plan-npm-6.0.3-29726de363.patch",
     "@salt-ds/lab": "workspace:*",
-    "modular-scripts/rollup": "2.79.1",
+    "modular-scripts/rollup": "4.22.4",
     "next": "^14.0.0",
     "webpack-dev-server": "4.9.3",
     "webpack": "5.94.0",
