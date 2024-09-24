@@ -36,6 +36,31 @@ export const AllLazyCountrySymbols: StoryFn = () => {
             ))}
         </div>
       ))}
+      {sizes.map((size) => (
+        <div
+          key={size}
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(15, auto)",
+            gap: 8,
+            padding: "12px 0",
+          }}
+        >
+          {Object.keys(countryMetaMap)
+            .map(
+              (componentCode) => countryMetaMap[componentCode as CountryCode],
+            )
+            .map(({ countryCode }) => (
+              <LazyCountrySymbol
+                key={countryCode}
+                code={countryCode}
+                id={`${size}-${countryCode}-sharp`}
+                size={size}
+                sharp
+              />
+            ))}
+        </div>
+      ))}
     </Suspense>
   );
 };

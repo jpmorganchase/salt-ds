@@ -1,3 +1,4 @@
+import { FlexLayout } from "@salt-ds/core";
 import {
   LazyCountrySymbol as LazyCountrySymbolComponent,
   countryMetaMap,
@@ -28,7 +29,10 @@ export const LazyCountrySymbol: StoryFn<typeof LazyCountrySymbolComponent> = (
 ) => {
   return (
     <Suspense fallback={"Loading..."}>
-      <LazyCountrySymbolComponent {...args} />
+      <FlexLayout>
+        <LazyCountrySymbolComponent {...args} />
+        <LazyCountrySymbolComponent sharp {...args} />
+      </FlexLayout>
     </Suspense>
   );
 };

@@ -8,9 +8,11 @@ export type LazyCountrySymbolProps = {
 
 export const LazyCountrySymbol = ({
   code,
+  sharp,
   ...props
 }: LazyCountrySymbolProps) => {
-  const Component = lazyMap[code];
+  const mapCode = sharp ? (`${code}_Sharp` as const) : code;
+  const Component = lazyMap[mapCode];
 
   if (!Component) {
     if (process.env.NODE_ENV !== "production") {
