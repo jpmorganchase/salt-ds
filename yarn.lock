@@ -5882,7 +5882,7 @@ __metadata:
     "@types/react": "npm:^18.3.3"
     concurrently: "npm:^9.0.0"
     cross-env: "npm:^7.0.3"
-    dotenv-load: "npm:^2.0.1"
+    dotenv-load: "npm:^3.0.0"
     lodash-es: "npm:^4.17.21"
     next: "npm:^14.2.10"
     next-auth: "npm:^4.24.7"
@@ -12943,6 +12943,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"dotenv-expand@npm:^10.0.0":
+  version: 10.0.0
+  resolution: "dotenv-expand@npm:10.0.0"
+  checksum: 10/b41eb278bc96b92cbf3037ca5f3d21e8845bf165dc06b6f9a0a03d278c2bd5a01c0cfbb3528ae3a60301ba1a8a9cace30e748c54b460753bc00d4c014b675597
+  languageName: node
+  linkType: hard
+
 "dotenv-load@npm:^2.0.1":
   version: 2.0.1
   resolution: "dotenv-load@npm:2.0.1"
@@ -12956,6 +12963,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"dotenv-load@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "dotenv-load@npm:3.0.0"
+  dependencies:
+    dotenv: "npm:^16.3.1"
+    dotenv-expand: "npm:^10.0.0"
+    shelljs: "npm:^0.8.5"
+  bin:
+    dotenv-load: cli.js
+  checksum: 10/09d3edc3abfe11af6781d73852c8423d4b4178193046b441faa5d7e465290480bebb4c39b54475b726a8e33835e45f5c2b93fca588a2106093f4a5993e94babc
+  languageName: node
+  linkType: hard
+
 "dotenv@npm:16.0.2":
   version: 16.0.2
   resolution: "dotenv@npm:16.0.2"
@@ -12963,10 +12983,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dotenv@npm:^16.0.0":
-  version: 16.0.3
-  resolution: "dotenv@npm:16.0.3"
-  checksum: 10/d6788c8e40b35ad9a9ca29249dccf37fa6b3ad26700fcbc87f2f41101bf914f5193a04e36a3d23de70b1dcb8e5d5a3b21e151debace2c4cd08d868be500a1b29
+"dotenv@npm:^16.0.0, dotenv@npm:^16.3.1":
+  version: 16.4.5
+  resolution: "dotenv@npm:16.4.5"
+  checksum: 10/55a3134601115194ae0f924e54473459ed0d9fc340ae610b676e248cca45aa7c680d86365318ea964e6da4e2ea80c4514c1adab5adb43d6867fb57ff068f95c8
   languageName: node
   linkType: hard
 
