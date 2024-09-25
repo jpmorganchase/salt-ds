@@ -13,6 +13,7 @@ import {
   BaseUrlProvider,
   Image,
   Link,
+  Metadata,
 } from "@jpmorganchase/mosaic-site-components";
 import { Sitemap } from "@jpmorganchase/mosaic-sitemap-component";
 import { StoreProvider, useCreateStore } from "@jpmorganchase/mosaic-store";
@@ -22,6 +23,7 @@ import clsx from "clsx";
 import { SessionProvider } from "next-auth/react";
 import type { AppProps } from "next/app";
 import { Open_Sans, PT_Mono } from "next/font/google";
+import Head from "next/head";
 import { type ReactNode, useMemo } from "react";
 import * as saltComponents from "../components";
 import * as saltLayouts from "../layouts";
@@ -102,6 +104,7 @@ export default function MyApp({
   return (
     <SessionProvider>
       <StoreProvider value={createStore()}>
+        <Metadata Component={Head} />
         <ThemeProvider
           themeClassName={clsx(
             themeClassName,
