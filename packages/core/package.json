@@ -34,10 +34,13 @@
     "provenance": true
   },
   "scripts": {
-    "build": "yarn node ../../scripts/build.mjs",
+    "build": "rslib build",
     "bundle:css": "yarn node ./scripts/bundleCSS.mjs"
   },
   "files": [
     "css"
-  ]
+  ],
+  "devDependencies": {
+    "@typescript/native-preview": "^7.0.0-dev.20251103.1"
+  }
 }

@@ -18,16 +18,15 @@
     "sourceMap": true,
     "noImplicitAny": true,
     "jsx": "react-jsx",
-    "baseUrl": ".",
     "paths": {
       "@stories/*": [
-        "packages/ag-grid-theme/stories/*",
-        "packages/core/stories/*",
-        "packages/data-grid/stories/*",
-        "packages/icons/stories/*",
-        "packages/lab/stories/*",
-        "packages/embla-carousel/stories/*",
-        "packages/theme/stories/*"
+        "./packages/ag-grid-theme/stories/*",
+        "./packages/core/stories/*",
+        "./packages/data-grid/stories/*",
+        "./packages/icons/stories/*",
+        "./packages/lab/stories/*",
+        "./packages/embla-carousel/stories/*",
+        "./packages/theme/stories/*"
       ],
       "@salt-ds/date-adapters/*": [
         "./packages/date-adapters/src/*-adapter/index.ts"

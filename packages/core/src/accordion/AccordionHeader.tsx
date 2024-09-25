@@ -12,7 +12,7 @@ import { StatusIndicator } from "../status-indicator";
 import { makePrefixer, useIsomorphicLayoutEffect } from "../utils";
 
 import { useAccordion } from "./AccordionContext";
-import accordionHeaderCss from "./AccordionHeader.css";
+import accordionHeaderCss from "./AccordionHeader.css?inline";
 
 export interface AccordionHeaderProps
   extends ComponentPropsWithoutRef<"button"> {

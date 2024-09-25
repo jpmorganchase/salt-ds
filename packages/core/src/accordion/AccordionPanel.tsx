@@ -9,7 +9,7 @@ import {
 
 import { makePrefixer, useIsomorphicLayoutEffect } from "../utils";
 import { useAccordion } from "./AccordionContext";
-import accordionPanelCss from "./AccordionPanel.css";
+import accordionPanelCss from "./AccordionPanel.css?inline";
 
 export interface AccordionPanelProps extends ComponentPropsWithoutRef<"div"> {
   /**

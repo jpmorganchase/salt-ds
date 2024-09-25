@@ -8,7 +8,7 @@ import {
   useState,
 } from "react";
 import { makePrefixer, useControlled, useId } from "../utils";
-import accordionCss from "./Accordion.css";
+import accordionCss from "./Accordion.css?inline";
 import { AccordionContext } from "./AccordionContext";
 export interface AccordionProps
   extends Omit<ComponentPropsWithoutRef<"div">, "onToggle"> {

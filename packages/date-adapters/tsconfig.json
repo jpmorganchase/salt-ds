@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    "baseUrl": "./src",
     "declaration": false,
     "outDir": "./dist",
     "module": "ESNext",

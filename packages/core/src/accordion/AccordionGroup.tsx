@@ -7,7 +7,7 @@ import {
   type ReactNode,
 } from "react";
 import { makePrefixer } from "../utils";
-import accordionGroupCss from "./AccordionGroup.css";
+import accordionGroupCss from "./AccordionGroup.css?inline";
 
 export interface AccordionGroupProps extends ComponentPropsWithoutRef<"div"> {
   /**
