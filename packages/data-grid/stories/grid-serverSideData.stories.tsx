@@ -2,6 +2,7 @@ import type { Decorator, StoryFn } from "@storybook/react";
 import {
   QueryClient,
   QueryClientProvider,
+  keepPreviousData,
   useInfiniteQuery,
 } from "@tanstack/react-query";
 import { http } from "msw";
@@ -40,14 +41,15 @@ export default {
 const useInvestors = () => {
   return useInfiniteQuery<Investor[]>({
     queryKey: ["investors"],
-    queryFn: async ({ pageParam = 0 }) => {
+    initialPageParam: 0,
+    queryFn: async ({ pageParam }) => {
       const url = new URL("/api/investors", window.location.origin);
-      url.searchParams.set("start", pageParam.toString());
+      url.searchParams.set("start", String(pageParam));
       const res = await fetch(url.toString());
       return res.json();
     },
-    keepPreviousData: true,
-    getNextPageParam: (_lastGroup, groups) => groups.flat().length,
+    placeholderData: keepPreviousData,
+    getNextPageParam: (_, pages) => pages.flat().length,
   });
 };
 

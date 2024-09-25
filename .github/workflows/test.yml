@@ -111,7 +111,7 @@ jobs:
       - name: Build packages
         run: yarn run build
       - name: Cypress Components
-        uses: cypress-io/github-action@v5
+        uses: cypress-io/github-action@v6
         with:
           install: false
           command: yarn run test:components
