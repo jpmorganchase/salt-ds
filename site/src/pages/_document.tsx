@@ -10,7 +10,7 @@ export default function Document() {
   return (
     <Html lang="en">
       <Head>
-        <meta name={"description"} content={description} />
+        <meta name="description" content={description} />
       </Head>
       <body>
         <Main />
