@@ -1,5 +1,6 @@
 {
   "extends": "../../tsconfig.json",
   "include": ["src/**/*"],
+  "exclude": ["src/__tests__"],
   "compilerOptions": { "moduleResolution": "bundler" }
 }
