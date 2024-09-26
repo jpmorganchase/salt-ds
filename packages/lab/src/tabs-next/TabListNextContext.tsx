@@ -6,29 +6,23 @@ interface TabValue {
   element: HTMLElement;
 }
 
-export interface TabstripNextContextValue {
+export interface TabListNextContextValue {
   registerItem: (tab: TabValue) => void;
   variant: "main" | "inline";
-  setSelected: (event: SyntheticEvent, id: string) => void;
-  setActive: (id: string) => void;
   handleClose: (event: SyntheticEvent, id: string) => void;
-  selected?: string;
   focusInside: boolean;
 }
 
-export const TabstripNextContext = createContext<TabstripNextContextValue>(
-  "TabstripNextContext",
+export const TabListNextContext = createContext<TabListNextContextValue>(
+  "TabListNextContext",
   {
     registerItem: () => undefined,
     variant: "main",
-    setSelected: () => undefined,
-    setActive: () => undefined,
     handleClose: () => undefined,
-    selected: undefined,
     focusInside: false,
   },
 );
 
-export function useTabstripNext() {
-  return useContext(TabstripNextContext);
+export function useTabListNext() {
+  return useContext(TabListNextContext);
 }

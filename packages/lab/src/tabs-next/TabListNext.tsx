@@ -19,7 +19,7 @@ import {
 import tablistNextCss from "./TabListNext.css";
 import { TabOverflowList } from "./TabOverflowList";
 import { useTabsNext } from "./TabsNextContext";
-import { TabstripNextContext } from "./TabstripNextContext";
+import { TabListNextContext } from "./TabListNextContext";
 import { useCollection } from "./hooks/useCollection";
 import { useOverflow } from "./hooks/useOverflow";
 
@@ -159,7 +159,7 @@ export const TabListNext = forwardRef<HTMLDivElement, TabListNextProps>(
     );
 
     return (
-      <TabstripNextContext.Provider value={contextValue}>
+      <TabListNextContext.Provider value={contextValue}>
         <div
           role="tablist"
           className={clsx(
@@ -198,7 +198,7 @@ export const TabListNext = forwardRef<HTMLDivElement, TabListNextProps>(
             </Button>
           )}
         </div>
-      </TabstripNextContext.Provider>
+      </TabListNextContext.Provider>
     );
   },
 );

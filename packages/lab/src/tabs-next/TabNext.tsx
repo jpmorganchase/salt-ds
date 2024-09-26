@@ -18,7 +18,7 @@ import {
 import { CloseIcon } from "@salt-ds/icons";
 import tabCss from "./TabNext.css";
 import { useTabsNext } from "./TabsNextContext";
-import { useTabstripNext } from "./TabstripNextContext";
+import { useTabListNext } from "./TabListNextContext";
 
 const withBaseName = makePrefixer("saltTabNext");
 
@@ -52,15 +52,11 @@ export const TabNext = forwardRef<HTMLDivElement, TabNextProps>(
       css: tabCss,
       window: targetWindow,
     });
-    const {
-      registerItem,
-      variant,
-      setSelected,
-      setActive,
-      selected,
-      focusInside,
-      handleClose,
-    } = useTabstripNext();
+
+    const { selected, setSelected, setActive } = useTabsNext();
+
+    const { registerItem, variant, focusInside, handleClose } =
+      useTabListNext();
     const { registerTab, getPanelId } = useTabsNext();
 
     const disabled = disabledProp;
