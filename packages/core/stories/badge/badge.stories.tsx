@@ -6,7 +6,7 @@ import {
   ThumbsDownIcon,
   ThumbsUpIcon,
 } from "@salt-ds/icons";
-import { TabNext, TabstripNext } from "@salt-ds/lab";
+import { TabNext, TabListNext } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react";
 
 export default {
@@ -69,7 +69,7 @@ export const String: StoryFn = () => {
 
 export const InlineBadge: StoryFn = () => {
   return (
-    <TabstripNext
+    <TabListNext
       defaultValue="Home"
       style={{
         minWidth: 350,
@@ -81,7 +81,7 @@ export const InlineBadge: StoryFn = () => {
         <Badge value={30} />
       </TabNext>
       <TabNext value="Loans">Loans</TabNext>
-    </TabstripNext>
+    </TabListNext>
   );
 };
 
@@ -119,7 +119,7 @@ export const DotBadge: StoryFn<typeof Badge> = () => {
 
 export const InlineDotBadge: StoryFn<typeof Badge> = () => {
   return (
-    <TabstripNext
+    <TabListNext
       variant="inline"
       defaultValue="Home"
       align="center"
@@ -130,6 +130,6 @@ export const InlineDotBadge: StoryFn<typeof Badge> = () => {
         Transactions <Badge />
       </TabNext>
       <TabNext value="Loans">Loans</TabNext>
-    </TabstripNext>
+    </TabListNext>
   );
 };

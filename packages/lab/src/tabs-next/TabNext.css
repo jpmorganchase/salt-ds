@@ -69,7 +69,7 @@
 }
 
 .saltTabNext-main.saltTabNext-selected {
-  background: var(--saltTabstripNext-activeColor);
+  background: var(--saltTabListNext-activeColor);
   border-left: var(--salt-size-border) var(--salt-separable-borderStyle) var(--salt-separable-secondary-borderColor);
   border-right: var(--salt-size-border) var(--salt-separable-borderStyle) var(--salt-separable-secondary-borderColor);
 }

@@ -10,8 +10,8 @@ import {
   TabNext,
   TabNextPanel,
   TabsNext,
-  TabstripNext,
-  type TabstripNextProps,
+  TabListNext,
+  type TabListNextProps,
 } from "@salt-ds/lab";
 import { type ChangeEvent, type ReactElement, useState } from "react";
 
@@ -19,23 +19,23 @@ const tabs = ["Home", "Transactions", "Loans"];
 
 export const Variants = (): ReactElement => {
   const [variant, setAlignment] =
-    useState<TabstripNextProps["activeColor"]>("primary");
+    useState<TabListNextProps["activeColor"]>("primary");
 
   const handleVariantChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setAlignment(event.target.value as TabstripNextProps["activeColor"]);
+    setAlignment(event.target.value as TabListNextProps["activeColor"]);
   };
 
   return (
     <StackLayout gap={6}>
       <div style={{ alignItems: "center", width: "40vw" }}>
-        <TabsNext>
-          <TabstripNext defaultValue={tabs[0]} activeColor={variant}>
+        <TabsNext defaultValue={tabs[0]}>
+          <TabListNext activeColor={variant}>
             {tabs.map((label) => (
               <TabNext value={label} key={label}>
                 {label}
               </TabNext>
             ))}
-          </TabstripNext>
+          </TabListNext>
           {tabs.map((label) => (
             <TabNextPanel value={label} key={label} style={{ height: 200 }}>
               <Panel variant={variant}>{label}</Panel>

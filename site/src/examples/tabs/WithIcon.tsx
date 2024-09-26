@@ -5,7 +5,7 @@ import {
   LineChartIcon,
   ReceiptIcon,
 } from "@salt-ds/icons";
-import { TabNext, TabstripNext } from "@salt-ds/lab";
+import { TabNext, TabListNext, TabsNext } from "@salt-ds/lab";
 import type { ComponentType, ReactElement } from "react";
 
 const tabs = ["Home", "Transactions", "Loans", "Checks", "Liquidity"];
@@ -20,15 +20,17 @@ const tabToIcon: Record<string, ComponentType> = {
 
 export const WithIcon = (): ReactElement => {
   return (
-    <TabstripNext defaultValue={tabs[0]} align="center">
-      {tabs.map((label) => {
-        const Icon = tabToIcon[label];
-        return (
-          <TabNext value={label} key={label}>
-            <Icon /> {label}
-          </TabNext>
-        );
-      })}
-    </TabstripNext>
+    <TabsNext defaultValue={tabs[0]}>
+      <TabListNext align="center">
+        {tabs.map((label) => {
+          const Icon = tabToIcon[label];
+          return (
+            <TabNext value={label} key={label}>
+              <Icon /> {label}
+            </TabNext>
+          );
+        })}
+      </TabListNext>
+    </TabsNext>
   );
 };

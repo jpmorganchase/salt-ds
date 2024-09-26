@@ -1,10 +1,10 @@
 import { Badge } from "@salt-ds/core";
-import { TabNext, TabstripNext } from "@salt-ds/lab";
+import { TabNext, TabListNext } from "@salt-ds/lab";
 import type { ReactElement } from "react";
 
 export const InlineDotBadge = (): ReactElement => {
   return (
-    <TabstripNext
+    <TabListNext
       variant="inline"
       defaultValue="Home"
       align="center"
@@ -15,6 +15,6 @@ export const InlineDotBadge = (): ReactElement => {
         Transactions <Badge />
       </TabNext>
       <TabNext value="Loans">Loans</TabNext>
-    </TabstripNext>
+    </TabListNext>
   );
 };

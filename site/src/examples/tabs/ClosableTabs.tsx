@@ -1,5 +1,5 @@
 import { Badge } from "@salt-ds/core";
-import { TabNext, TabstripNext } from "@salt-ds/lab";
+import { TabNext, TabListNext, TabsNext } from "@salt-ds/lab";
 import { type ReactElement, useState } from "react";
 
 export const ClosableTabs = (): ReactElement => {
@@ -12,18 +12,18 @@ export const ClosableTabs = (): ReactElement => {
   ]);
 
   return (
-    <TabstripNext
-      defaultValue={tabs[0]}
-      onClose={(_event, closedTab) => {
-        setTabs(tabs.filter((tab) => tab !== closedTab));
-      }}
-    >
-      {tabs.map((label) => (
-        <TabNext value={label} key={label} closable={tabs.length > 1}>
-          {label}
-          {label === "Transactions" && <Badge value={2} />}
-        </TabNext>
-      ))}
-    </TabstripNext>
+    <TabsNext defaultValue={tabs[0]}>
+      <TabListNext
+        onClose={(_event, closedTab) => {
+          setTabs(tabs.filter((tab) => tab !== closedTab));
+        }}
+      >
+        {tabs.map((label) => (
+          <TabNext value={label} key={label} closable={tabs.length > 1}>
+            {label}
+          </TabNext>
+        ))}
+      </TabListNext>
+    </TabsNext>
   );
 };

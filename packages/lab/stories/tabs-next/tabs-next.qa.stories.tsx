@@ -1,16 +1,16 @@
-import { TabNext, TabstripNext, type TabstripNextProps } from "@salt-ds/lab";
+import { TabNext, TabListNext, type TabListNextProps } from "@salt-ds/lab";
 import type { StoryFn } from "@storybook/react";
 import { QAContainer } from "docs/components";
 import { useState } from "react";
-import "./tabstrip-next.stories.css";
+import "./tabs-next.stories.css";
 
 export default {
-  title: "Lab/Tabs Next/Tabstrip Next/Tabstrip Next QA",
-  component: TabstripNext,
+  title: "Lab/Tabs Next/Tabs Next QA",
+  component: TabListNext,
 };
 
 type TabstripStory = StoryFn<
-  TabstripNextProps & {
+  TabListNextProps & {
     width?: number;
   }
 >;
@@ -42,7 +42,7 @@ export const LotsOfTabsTabstrip: TabstripStory = ({
   const [value, setValue] = useState<string | undefined>("Home");
   return (
     <QAContainer itemPadding={10} cols={2}>
-      <TabstripNext
+      <TabListNext
         {...tabstripProps}
         value={value}
         onChange={(_, value) => {
@@ -54,8 +54,8 @@ export const LotsOfTabsTabstrip: TabstripStory = ({
             {label}
           </TabNext>
         ))}
-      </TabstripNext>
-      <TabstripNext
+      </TabListNext>
+      <TabListNext
         {...tabstripProps}
         value={value}
         variant="inline"
@@ -68,7 +68,7 @@ export const LotsOfTabsTabstrip: TabstripStory = ({
             {label}
           </TabNext>
         ))}
-      </TabstripNext>
+      </TabListNext>
     </QAContainer>
   );
 };

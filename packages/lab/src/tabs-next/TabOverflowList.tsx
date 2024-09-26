@@ -51,7 +51,7 @@ export const TabOverflowList = forwardRef<HTMLDivElement, TabOverflowListProps>(
 
     const targetWindow = useWindow();
     useComponentCssInjection({
-      testId: "salt-tabstrip-next-overflow",
+      testId: "salt-tabs-next-overflow-list",
       css: tabOverflowListCss,
       window: targetWindow,
     });

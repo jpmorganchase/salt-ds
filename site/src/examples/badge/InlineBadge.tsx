@@ -1,9 +1,9 @@
 import { Badge } from "@salt-ds/core";
-import { TabNext, TabstripNext } from "@salt-ds/lab";
+import { TabNext, TabListNext } from "@salt-ds/lab";
 import type { ReactElement } from "react";
 
 export const InlineBadge = (): ReactElement => (
-  <TabstripNext
+  <TabListNext
     defaultValue="Home"
     style={{
       minWidth: 350,
@@ -15,5 +15,5 @@ export const InlineBadge = (): ReactElement => (
       <Badge value={30} />
     </TabNext>
     <TabNext value="Loans">Loans</TabNext>
-  </TabstripNext>
+  </TabListNext>
 );

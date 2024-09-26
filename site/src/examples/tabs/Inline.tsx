@@ -5,30 +5,37 @@ import {
   RadioButtonGroup,
   StackLayout,
 } from "@salt-ds/core";
-import { TabNext, TabstripNext, type TabstripNextProps } from "@salt-ds/lab";
+import {
+  TabsNext,
+  TabNext,
+  TabListNext,
+  type TabListNextProps,
+} from "@salt-ds/lab";
 import { type ChangeEvent, type ReactElement, useState } from "react";
 
 const tabs = ["Home", "Transactions", "Loans", "Checks", "Liquidity"];
 
 export const Inline = (): ReactElement => {
   const [alignment, setAlignment] =
-    useState<TabstripNextProps["align"]>("center");
+    useState<TabListNextProps["align"]>("center");
 
   const handleAlignmentChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setAlignment(event.target.value as TabstripNextProps["align"]);
+    setAlignment(event.target.value as TabListNextProps["align"]);
   };
 
   return (
     <StackLayout gap={6} style={{ alignItems: "center", width: "30vw" }}>
-      <TabstripNext variant="inline" defaultValue={tabs[0]} align={alignment}>
-        {tabs.map((label) => (
-          <TabNext value={label} key={label}>
-            {label}
-          </TabNext>
-        ))}
-      </TabstripNext>
+      <TabsNext defaultValue={tabs[0]}>
+        <TabListNext variant="inline" align={alignment}>
+          {tabs.map((label) => (
+            <TabNext value={label} key={label}>
+              {label}
+            </TabNext>
+          ))}
+        </TabListNext>
+      </TabsNext>
       <FormField style={{ width: "auto" }}>
-        <FormFieldLabel>Select tabstrip alignment</FormFieldLabel>
+        <FormFieldLabel>Select alignment</FormFieldLabel>
         <RadioButtonGroup
           direction="horizontal"
           value={alignment}

@@ -1,6 +1,6 @@
 import { StackLayout } from "@salt-ds/core";
-import * as tabstripStories from "@stories/tabstrip-next/tabstrip-next.stories";
-import { DefaultLeftAligned } from "@stories/tabstrip-next/tabstrip-next.stories";
+import * as tabstripStories from "@stories/tabs-next/tabs-next.stories";
+import { DefaultLeftAligned } from "@stories/tabs-next/tabs-next.stories";
 import { composeStories } from "@storybook/react";
 
 const { DefaultLeftAligned: DefaultTabstrip, LotsOfTabsTabstrip } =
@@ -49,7 +49,7 @@ describe("Given a Tabstrip", () => {
     describe("WHEN it initially renders", () => {
       it("THEN all the content items will be visible", () => {
         cy.mount(<DefaultTabstrip />);
-        cy.findByRole("tablist").should("have.class", "saltTabstripNext");
+        cy.findByRole("tablist").should("be.visible");
         cy.findAllByRole("tab").should("be.visible");
       });
       it("THEN no overflow indicator will be present", () => {
@@ -63,7 +63,7 @@ describe("Given a Tabstrip", () => {
     describe("WHEN resized such that space is sufficient for only 4 tabs (first tab selected)", () => {
       it("THEN first 4 tabs will be displayed, with overflow indicator", () => {
         cy.mount(<DefaultTabstrip />);
-        cy.get(".saltTabstripNext").invoke("css", "width", "350px");
+        cy.get(".saltTabListNext").invoke("css", "width", "350px");
         cy.findAllByRole("tab").should("have.length", 5);
         cy.findAllByRole("tab").filter(":visible").should("have.length", 3);
         cy.findByRole("button", { name: /More tabs/ })

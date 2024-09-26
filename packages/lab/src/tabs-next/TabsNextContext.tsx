@@ -1,13 +1,15 @@
 import { createContext } from "@salt-ds/core";
-import { useContext } from "react";
+import { SyntheticEvent, useContext } from "react";
 
 export interface TabsNextContextValue {
   registerTab: (id: string, value: string) => () => void;
   registerPanel: (id: string, value: string) => () => void;
   getPanelId: (value: string) => string | undefined;
   getTabId: (value: string) => string | undefined;
-  selectedTab?: string;
-  setSelectedTab: (value: string | undefined) => void;
+  selected?: string;
+  setSelected: (event: SyntheticEvent, value: string) => void;
+  active?: string;
+  setActive: (value: string) => void;
 }
 
 export const TabsNextContext = createContext<TabsNextContextValue>(
@@ -17,7 +19,8 @@ export const TabsNextContext = createContext<TabsNextContextValue>(
     registerPanel: () => () => undefined,
     getPanelId: () => undefined,
     getTabId: () => undefined,
-    setSelectedTab: () => undefined,
+    setSelected: () => undefined,
+    setActive: () => undefined,
   },
 );
 

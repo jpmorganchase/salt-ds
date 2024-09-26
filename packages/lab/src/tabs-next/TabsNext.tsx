@@ -1,18 +1,61 @@
-import { type ReactNode, useCallback, useMemo, useRef, useState } from "react";
+import {
+  type ReactNode,
+  SyntheticEvent,
+  useCallback,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 
 import { useWindow } from "@salt-ds/window";
 import { TabsNextContext } from "./TabsNextContext";
+import { useControlled } from "@salt-ds/core";
 
 export interface TabsNextProps {
+  /* Value for the controlled version. */
+  value?: string;
+  /* Callback for the controlled version. */
+  onChange?: (event: SyntheticEvent, value: string) => void;
+  /* Initial value for the uncontrolled version. */
+  defaultValue?: string;
+
   children: ReactNode;
 }
 
-export function TabsNext({ children }: TabsNextProps) {
+export function TabsNext({
+  children,
+  value,
+  defaultValue,
+  onChange,
+}: TabsNextProps) {
   const valueToTabIdMap = useRef<Map<string, string>>(new Map());
   const valueToPanelIdMap = useRef<Map<string, string>>(new Map());
   const [_, updateState] = useState({});
   const forceUpdate = useCallback(() => updateState({}), []);
-  const [selectedTab, setSelectedTab] = useState<string | undefined>(undefined);
+
+  const [selected, setSelectedState] = useControlled({
+    controlled: value,
+    default: defaultValue,
+    name: "TabListNext",
+    state: "selected",
+  });
+  const [active, setActive] = useState<string | undefined>(selected);
+
+  const setSelected = useCallback(
+    (event: SyntheticEvent, action: string) => {
+      setSelectedState(action);
+      setActive(action);
+
+      // setTimeout(() => {
+      //   const itemElement = item(action)?.element;
+      //   itemElement?.focus({ preventScroll: true });
+      //   itemElement?.scrollIntoView({ block: "nearest", inline: "nearest" });
+      // }, 0);
+
+      onChange?.(event, action);
+    },
+    [onChange],
+  );
 
   const timeoutRef = useRef<undefined | number>(undefined);
   const targetWindow = useWindow();
@@ -61,20 +104,30 @@ export function TabsNext({ children }: TabsNextProps) {
     [_],
   );
 
-  const value = useMemo(
+  const context = useMemo(
     () => ({
       registerTab,
       registerPanel,
       getPanelId,
       getTabId,
-      selectedTab,
-      setSelectedTab,
+      selected,
+      setSelected,
+      active,
+      setActive,
     }),
-    [registerPanel, registerTab, getPanelId, getTabId, selectedTab],
+    [
+      registerPanel,
+      registerTab,
+      getPanelId,
+      getTabId,
+      selected,
+      active,
+      setActive,
+    ],
   );
 
   return (
-    <TabsNextContext.Provider value={value}>
+    <TabsNextContext.Provider value={context}>
       {children}
     </TabsNextContext.Provider>
   );
