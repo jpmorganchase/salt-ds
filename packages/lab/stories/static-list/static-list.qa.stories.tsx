@@ -7,7 +7,7 @@ import {
 } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react";
 import { QAContainer, type QAContainerProps } from "docs/components";
-import React from "react";
+import React, { Fragment } from "react";
 import { complexEventsData, eventsData } from "../assets/exampleData";
 
 export default {
@@ -80,8 +80,8 @@ export const AllExamples: StoryFn<QAContainerProps> = ({ imgSrc }) => (
     </StaticList>
     <StaticList style={{ width: "320px" }}>
       {complexEventsData.map(({ title, time }, _index) => (
-        <>
-          <StaticListItem key={title}>
+        <Fragment key={title}>
+          <StaticListItem>
             <StaticListItemContent>
               <StackLayout gap={0.5}>
                 <Text color="inherit">{title}</Text>
@@ -94,7 +94,7 @@ export const AllExamples: StoryFn<QAContainerProps> = ({ imgSrc }) => (
           {_index < complexEventsData.length - 1 && (
             <Divider variant="tertiary" />
           )}
-        </>
+        </Fragment>
       ))}
     </StaticList>
   </QAContainer>

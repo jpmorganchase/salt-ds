@@ -4,7 +4,7 @@ import {
   StaticListItem,
   StaticListItemContent,
 } from "@salt-ds/lab";
-import React, { type ReactElement } from "react";
+import React, { Fragment, type ReactElement } from "react";
 import { type ListEvent, complexEventsData } from "./exampleData";
 
 const ListItem = ({ title, time }: ListEvent) => (
@@ -24,12 +24,12 @@ export const WithDividers = (): ReactElement => (
   <div style={{ width: "80%" }}>
     <StaticList style={{ width: "320px" }}>
       {complexEventsData.map((event, _index) => (
-        <>
+        <Fragment key={event.title}>
           <ListItem {...event} />
           {_index < complexEventsData.length - 1 && (
             <Divider variant="tertiary" />
           )}
-        </>
+        </Fragment>
       ))}
     </StaticList>
   </div>

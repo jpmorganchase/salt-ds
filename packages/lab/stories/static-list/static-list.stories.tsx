@@ -7,7 +7,7 @@ import {
   type StaticListProps,
 } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react";
-import React, { useState } from "react";
+import React, { Fragment, useState } from "react";
 import { complexEventsData, eventsData } from "../assets/exampleData";
 
 export default {
@@ -114,8 +114,8 @@ export const WithDividers: StoryFn<StaticListProps> = () => {
   return (
     <StaticList style={{ width: "320px" }}>
       {complexEventsData.map(({ title, time }, _index) => (
-        <>
-          <StaticListItem key={title}>
+        <Fragment key={title}>
+          <StaticListItem>
             <StaticListItemContent>
               <StackLayout gap={0.5}>
                 <Text color="inherit">{title}</Text>
@@ -128,7 +128,7 @@ export const WithDividers: StoryFn<StaticListProps> = () => {
           {_index < complexEventsData.length - 1 && (
             <Divider variant="tertiary" />
           )}
-        </>
+        </Fragment>
       ))}
     </StaticList>
   );

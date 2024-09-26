@@ -24,7 +24,7 @@ export const ComplexLabel = (): ReactElement => (
   <div style={{ width: "80%" }}>
     <StaticList style={{ width: "320px" }}>
       {complexEventsData.map((event) => (
-        <ListItem {...event} />
+        <ListItem {...event} key={event.title} />
       ))}
     </StaticList>
   </div>
