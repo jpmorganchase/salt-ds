@@ -44,7 +44,7 @@ const dataGridExampleColumns: ColDef[] = [
     field: "population",
     filter: "agNumberColumnFilter",
     editable: true,
-    // This is only here for backwards compatility. Use above 2 classes combination instead.
+    // This is only here for backwards compatibility. Use the combination of the above two classes instead.
     cellClass: ["editable-numeric-cell"],
   },
   {
