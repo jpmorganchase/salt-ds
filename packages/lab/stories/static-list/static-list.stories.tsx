@@ -50,7 +50,7 @@ export const ComplexLabel: StoryFn<StaticListProps> = () => {
   return (
     <StaticList style={{ width: "320px" }}>
       {complexEventsData.map(({ title, time }) => (
-        <StaticListItem>
+        <StaticListItem key={title}>
           <StaticListItemContent>
             <StackLayout gap={0.5}>
               <Text color="inherit">{title}</Text>
@@ -69,7 +69,7 @@ export const WithIcons: StoryFn<StaticListProps> = () => {
   return (
     <StaticList style={{ width: "320px" }}>
       {complexEventsData.map(({ title, time }) => (
-        <StaticListItem>
+        <StaticListItem key={title}>
           <CalendarIcon />
           <StaticListItemContent>
             <StackLayout gap={0.5}>
@@ -89,7 +89,7 @@ export const WithButtons: StoryFn<StaticListProps> = () => {
   return (
     <StaticList style={{ width: "320px" }}>
       {complexEventsData.map(({ title, time }) => (
-        <StaticListItem>
+        <StaticListItem key={title}>
           <StaticListItemContent>
             <StackLayout gap={0.5}>
               <Text color="inherit">{title}</Text>
@@ -115,7 +115,7 @@ export const WithDividers: StoryFn<StaticListProps> = () => {
     <StaticList style={{ width: "320px" }}>
       {complexEventsData.map(({ title, time }, _index) => (
         <>
-          <StaticListItem>
+          <StaticListItem key={title}>
             <StaticListItemContent>
               <StackLayout gap={0.5}>
                 <Text color="inherit">{title}</Text>

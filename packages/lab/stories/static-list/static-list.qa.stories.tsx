@@ -65,7 +65,7 @@ export const AllExamples: StoryFn<QAContainerProps> = ({ imgSrc }) => (
     </StaticList>
     <StaticList style={{ width: "320px" }}>
       {complexEventsData.map(({ title, time }) => (
-        <StaticListItem>
+        <StaticListItem key={title}>
           <CalendarIcon />
           <StaticListItemContent>
             <StackLayout gap={0.5}>
@@ -81,7 +81,7 @@ export const AllExamples: StoryFn<QAContainerProps> = ({ imgSrc }) => (
     <StaticList style={{ width: "320px" }}>
       {complexEventsData.map(({ title, time }, _index) => (
         <>
-          <StaticListItem>
+          <StaticListItem key={title}>
             <StaticListItemContent>
               <StackLayout gap={0.5}>
                 <Text color="inherit">{title}</Text>
