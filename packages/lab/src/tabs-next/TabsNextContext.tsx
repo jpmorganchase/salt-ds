@@ -1,5 +1,5 @@
 import { createContext } from "@salt-ds/core";
-import { SyntheticEvent, useContext } from "react";
+import { type SyntheticEvent, useContext } from "react";
 
 export interface TabsNextContextValue {
   registerTab: (id: string, value: string) => () => void;

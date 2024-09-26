@@ -1,5 +1,5 @@
 import { Badge } from "@salt-ds/core";
-import { TabNext, TabListNext, TabsNext } from "@salt-ds/lab";
+import { TabListNext, TabNext, TabsNext } from "@salt-ds/lab";
 import { type ReactElement, useState } from "react";
 
 export const ClosableTabs = (): ReactElement => {

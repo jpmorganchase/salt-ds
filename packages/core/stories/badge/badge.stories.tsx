@@ -6,7 +6,7 @@ import {
   ThumbsDownIcon,
   ThumbsUpIcon,
 } from "@salt-ds/icons";
-import { TabNext, TabListNext } from "@salt-ds/lab";
+import { TabListNext, TabNext } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react";
 
 export default {

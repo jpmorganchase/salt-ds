@@ -7,11 +7,11 @@ import {
   StackLayout,
 } from "@salt-ds/core";
 import {
+  TabListNext,
+  type TabListNextProps,
   TabNext,
   TabNextPanel,
   TabsNext,
-  TabListNext,
-  type TabListNextProps,
 } from "@salt-ds/lab";
 import { type ChangeEvent, type ReactElement, useState } from "react";
 

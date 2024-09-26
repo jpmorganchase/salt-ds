@@ -1,15 +1,15 @@
 import {
   type ReactNode,
-  SyntheticEvent,
+  type SyntheticEvent,
   useCallback,
   useMemo,
   useRef,
   useState,
 } from "react";
 
+import { useControlled } from "@salt-ds/core";
 import { useWindow } from "@salt-ds/window";
 import { TabsNextContext } from "./TabsNextContext";
-import { useControlled } from "@salt-ds/core";
 
 export interface TabsNextProps {
   /* Value for the controlled version. */

@@ -16,9 +16,9 @@ import {
   useState,
 } from "react";
 
+import tablistNextCss from "./TabListNext.css";
 import { TabOverflowList } from "./TabOverflowList";
 import { useTabsNext } from "./TabsNextContext";
-import tablistNextCss from "./TabListNext.css";
 import { TabstripNextContext } from "./TabstripNextContext";
 import { useCollection } from "./hooks/useCollection";
 import { useOverflow } from "./hooks/useOverflow";

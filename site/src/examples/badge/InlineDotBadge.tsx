@@ -1,5 +1,5 @@
 import { Badge } from "@salt-ds/core";
-import { TabNext, TabListNext } from "@salt-ds/lab";
+import { TabListNext, TabNext } from "@salt-ds/lab";
 import type { ReactElement } from "react";
 
 export const InlineDotBadge = (): ReactElement => {

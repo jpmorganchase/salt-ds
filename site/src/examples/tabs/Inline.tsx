@@ -6,10 +6,10 @@ import {
   StackLayout,
 } from "@salt-ds/core";
 import {
-  TabsNext,
-  TabNext,
   TabListNext,
   type TabListNextProps,
+  TabNext,
+  TabsNext,
 } from "@salt-ds/lab";
 import { type ChangeEvent, type ReactElement, useState } from "react";
 

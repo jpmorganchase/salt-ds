@@ -5,7 +5,7 @@ import {
   LineChartIcon,
   ReceiptIcon,
 } from "@salt-ds/icons";
-import { TabNext, TabListNext, TabsNext } from "@salt-ds/lab";
+import { TabListNext, TabNext, TabsNext } from "@salt-ds/lab";
 import type { ComponentType, ReactElement } from "react";
 
 const tabs = ["Home", "Transactions", "Loans", "Checks", "Liquidity"];

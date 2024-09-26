@@ -1,4 +1,9 @@
-import { TabNext, TabListNext, type TabListNextProps } from "@salt-ds/lab";
+import {
+  TabListNext,
+  type TabListNextProps,
+  TabNext,
+  TabsNext,
+} from "@salt-ds/lab";
 import type { StoryFn } from "@storybook/react";
 import { QAContainer } from "docs/components";
 import { useState } from "react";
@@ -35,40 +40,38 @@ const tabs = [
   "Screens",
 ];
 
-export const LotsOfTabsTabstrip: TabstripStory = ({
-  width = 300,
-  ...tabstripProps
-}) => {
+export const LotsOfTabsTabstrip: TabstripStory = () => {
   const [value, setValue] = useState<string | undefined>("Home");
   return (
     <QAContainer itemPadding={10} cols={2}>
-      <TabListNext
-        {...tabstripProps}
+      <TabsNext
         value={value}
         onChange={(_, value) => {
           setValue(value);
         }}
       >
-        {tabs.map((label) => (
-          <TabNext key={label} value={label}>
-            {label}
-          </TabNext>
-        ))}
-      </TabListNext>
-      <TabListNext
-        {...tabstripProps}
+        <TabListNext>
+          {tabs.map((label) => (
+            <TabNext key={label} value={label}>
+              {label}
+            </TabNext>
+          ))}
+        </TabListNext>
+      </TabsNext>
+      <TabsNext
         value={value}
-        variant="inline"
         onChange={(_, value) => {
           setValue(value);
         }}
       >
-        {tabs.map((label) => (
-          <TabNext key={label} value={label}>
-            {label}
-          </TabNext>
-        ))}
-      </TabListNext>
+        <TabListNext variant="inline">
+          {tabs.map((label) => (
+            <TabNext key={label} value={label}>
+              {label}
+            </TabNext>
+          ))}
+        </TabListNext>
+      </TabsNext>
     </QAContainer>
   );
 };

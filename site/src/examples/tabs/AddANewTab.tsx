@@ -1,4 +1,4 @@
-import { TabNext, TabListNext, TabsNext } from "@salt-ds/lab";
+import { TabListNext, TabNext, TabsNext } from "@salt-ds/lab";
 import React, { type ReactElement, useRef, useState } from "react";
 
 export const AddANewTab = (): ReactElement => {

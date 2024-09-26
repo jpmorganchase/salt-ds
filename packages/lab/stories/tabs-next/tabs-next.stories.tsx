@@ -15,11 +15,11 @@ import {
   ReceiptIcon,
 } from "@salt-ds/icons";
 import {
+  TabListNext,
+  type TabListNextProps,
   TabNext,
   TabNextPanel,
   TabsNext,
-  TabListNext,
-  TabListNextProps,
 } from "@salt-ds/lab";
 import type { StoryFn } from "@storybook/react";
 import {
