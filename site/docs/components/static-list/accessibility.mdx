@@ -8,17 +8,16 @@ data:
   $ref: ./#/data
 ---
 
+## Best practices
+
+You'll need to check and test any focusable elements included in the static list content accordingly.
+
 ## Keyboard interactions
 
 <KeyboardControls>
-<KeyboardControl keyOrCombos="Tab">
+<KeyboardControl keyOrCombos="Tab / Tab + Shift">
 
-- If focus is above the Static List, Tab sets focus on the first action button (interactive element) if present in the list.
-
-</KeyboardControl>
-<KeyboardControl keyOrCombos="Shift + Tab">
-
-- If focus is below the List, this action sets focus on the last action button (interactive element) if present in the list.
+This action navigates through the interactive elements within the static list.
 
 </KeyboardControl>
 </KeyboardControls>

@@ -4,15 +4,16 @@ import {
   StaticListItem,
   StaticListItemContent,
 } from "@salt-ds/lab";
-import type { ReactElement } from "react";
+import React, { ReactElement } from "react";
+import { complexEventsData, ListEvent } from "./exampleData";
 
-const ListItem = () => (
+const ListItem = ({ title, time }: ListEvent) => (
   <StaticListItem>
     <StaticListItemContent>
       <StackLayout gap={0.5}>
-        <Text color="inherit">Item label</Text>
+        <Text color="inherit">{title}</Text>
         <Text styleAs="label" color="secondary">
-          Secondary label
+          {time}
         </Text>
       </StackLayout>
     </StaticListItemContent>
@@ -22,13 +23,14 @@ const ListItem = () => (
 export const WithDividers = (): ReactElement => (
   <div style={{ width: "80%" }}>
     <StaticList style={{ width: "320px" }}>
-      <ListItem />
-      <Divider variant="tertiary" />
-      <ListItem />
-      <Divider variant="tertiary" />
-      <ListItem />
-      <Divider variant="tertiary" />
-      <ListItem />
+      {complexEventsData.map((event, _index) => (
+        <>
+          <ListItem {...event} />
+          {_index < complexEventsData.length - 1 && (
+            <Divider variant="tertiary" />
+          )}
+        </>
+      ))}
     </StaticList>
   </div>
 );

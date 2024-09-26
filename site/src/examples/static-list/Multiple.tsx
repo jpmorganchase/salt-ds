@@ -5,32 +5,37 @@ import {
   StaticListItemContent,
 } from "@salt-ds/lab";
 import React, { type ReactElement, useState } from "react";
+import { eventsData } from "./exampleData";
 
-const ListItem = () => (
+const ListItem = ({ event }: { event: string }) => (
   <StaticListItem>
-    <StaticListItemContent>Item label</StaticListItemContent>
+    <StaticListItemContent>{event}</StaticListItemContent>
   </StaticListItem>
 );
 
 export const Multiple = (): ReactElement => {
-  const defaultList = ["item", "item", "item"];
-  const [listArray, setListArray] = useState([...defaultList]);
+  const [listCount, setListCount] = useState(3);
 
   const handleListItem = () => {
-    setListArray([...listArray, "item"]);
+    setListCount((prev) => prev + 1);
   };
   const handleReset = () => {
-    setListArray([...defaultList]);
+    setListCount(3);
   };
   return (
     <StackLayout>
       <StackLayout direction={"row"}>
-        <Button onClick={handleListItem}>Add list item</Button>
-        <Button onClick={handleReset}>Reset list</Button>
+        <Button
+          onClick={handleListItem}
+          disabled={listCount > eventsData.length - 1}
+        >
+          {`Show next ${listCount + 1} events`}
+        </Button>
+        <Button onClick={handleReset}>Reset</Button>
       </StackLayout>
       <StaticList style={{ width: "320px", height: "250px" }}>
-        {listArray.map((item, _index) => (
-          <ListItem key={_index} />
+        {Array.from({ length: listCount }, (_, _index) => (
+          <ListItem key={_index} event={eventsData[_index]} />
         ))}
       </StaticList>
     </StackLayout>

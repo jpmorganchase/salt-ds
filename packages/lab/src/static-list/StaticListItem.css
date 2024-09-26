@@ -1,18 +1,11 @@
 .saltStaticListItem {
-  all: unset;
+  list-style-type: none;
   color: var(--salt-content-primary-foreground);
   display: flex;
   gap: var(--salt-spacing-100);
-  height: var(--saltStaticList-item-height, auto);
   box-sizing: border-box;
   padding: var(--salt-spacing-50) var(--salt-spacing-100);
-  text-align: left;
-  position: relative;
-  width: var(--saltStaticList-item-width, 100%);
-  font-size: var(--salt-text-fontSize);
-  font-weight: var(--salt-text-fontWeight);
-  font-family: var(--salt-text-fontFamily);
-  line-height: var(--salt-text-lineHeight);
+  min-height: calc(var(--salt-size-base) + var(--salt-spacing-100));
 }
 
 .saltStaticListItem .saltIcon {

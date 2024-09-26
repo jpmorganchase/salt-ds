@@ -1,20 +1,21 @@
 import { StackLayout, Text } from "@salt-ds/core";
-import { NotificationIcon } from "@salt-ds/icons";
+import { CalendarIcon, NotificationIcon } from "@salt-ds/icons";
 import {
   StaticList,
   StaticListItem,
   StaticListItemContent,
 } from "@salt-ds/lab";
-import type { ReactElement } from "react";
+import React, { ReactElement } from "react";
+import { complexEventsData, ListEvent } from "./exampleData";
 
-const ListItem = () => (
+const ListItem = ({ title, time }: ListEvent) => (
   <StaticListItem>
-    <NotificationIcon />
+    <CalendarIcon />
     <StaticListItemContent>
       <StackLayout gap={0.5}>
-        <Text color="inherit">Item label</Text>
+        <Text color="inherit">{title}</Text>
         <Text styleAs="label" color="secondary">
-          Secondary label
+          {time}
         </Text>
       </StackLayout>
     </StaticListItemContent>
@@ -24,11 +25,9 @@ const ListItem = () => (
 export const WithIcons = (): ReactElement => (
   <div style={{ width: "80%" }}>
     <StaticList style={{ width: "320px" }}>
-      <ListItem />
-      <ListItem />
-      <ListItem />
-      <ListItem />
-      <ListItem />
+      {complexEventsData.map((event) => (
+        <ListItem {...event} />
+      ))}
     </StaticList>
   </div>
 );
