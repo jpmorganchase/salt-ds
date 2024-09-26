@@ -1,5 +1,5 @@
-import { Button, Divider, StackLayout, Text } from "@salt-ds/core";
-import { NoteIcon, NotificationIcon } from "@salt-ds/icons";
+import { Button, Divider, StackLayout, Text, useId } from "@salt-ds/core";
+import { CalendarIcon, OverflowMenuIcon, VideoIcon } from "@salt-ds/icons";
 import {
   StaticList,
   StaticListItem,
@@ -7,100 +7,109 @@ import {
 } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react";
 import { QAContainer, type QAContainerProps } from "docs/components";
+import React, { Fragment } from "react";
+import { complexEventsData, eventsData } from "../assets/exampleData";
+import { clsx } from "clsx";
 
 export default {
   title: "Lab/Static List/Static List QA",
   component: StaticList,
 } as Meta<typeof StaticList>;
+const id = useId();
 
-const ListItemWithIcons = () => (
-  <StaticListItem>
-    <NotificationIcon />
-    <StaticListItemContent>
-      <StackLayout gap={0.5}>
-        <Text color="inherit">Item label</Text>
-        <Text styleAs="label" color="secondary">
-          Secondary label
-        </Text>
-      </StackLayout>
-    </StaticListItemContent>
-  </StaticListItem>
-);
-
-const ListItem = () => (
-  <StaticListItem>
-    <StaticListItemContent>Item label</StaticListItemContent>
-  </StaticListItem>
-);
-
-const AdditionalLabelListItem = () => (
-  <StaticListItem>
-    <StaticListItemContent>
-      <StackLayout gap={0.5}>
-        <Text color="inherit">Item label</Text>
-        <Text styleAs="label" color="secondary">
-          Secondary label
-        </Text>
-      </StackLayout>
-    </StaticListItemContent>
-  </StaticListItem>
-);
-
-const ListItemWithButtons = () => (
-  <StaticListItem>
-    <StaticListItemContent>
-      <StackLayout gap={0.5}>
-        <Text color="inherit">Item label</Text>
-        <Text styleAs="label" color="secondary">
-          Secondary label
-        </Text>
-      </StackLayout>
-    </StaticListItemContent>
-    <Button variant="secondary" aria-label={"icon"}>
-      <NoteIcon aria-hidden />
-    </Button>
-    <Button variant="secondary" aria-label={"icon"}>
-      <NoteIcon aria-hidden />
-    </Button>
-  </StaticListItem>
-);
-
-export const AllExamples: StoryFn<QAContainerProps> = ({ imgSrc }) => (
-  <QAContainer cols={5} height={950} imgSrc={imgSrc} itemPadding={5}>
+export const AllExamples: StoryFn<QAContainerProps> = () => (
+  <QAContainer cols={4} width={1300} itemPadding={5} vertical transposeDensity>
     <StaticList style={{ width: "320px" }}>
-      <ListItem />
+      <StaticListItem>
+        <StaticListItemContent>Team meeting</StaticListItemContent>
+      </StaticListItem>
     </StaticList>
     <StaticList style={{ width: "320px" }}>
-      <ListItem />
-      <ListItem />
-      <ListItem />
+      {eventsData.slice(0, 3).map((event, _index) => (
+        <StaticListItem key={event}>
+          <StaticListItemContent>
+            <Text>{event}</Text>
+          </StaticListItemContent>
+        </StaticListItem>
+      ))}
     </StaticList>
     <StaticList style={{ width: "320px" }}>
-      <ListItemWithIcons />
-      <ListItemWithIcons />
-      <ListItemWithIcons />
+      {complexEventsData.map(({ title, time }) => (
+        <StaticListItem key={title}>
+          <StaticListItemContent>
+            <StackLayout gap={0.5}>
+              <Text color="inherit">{title}</Text>
+              <Text styleAs="label" color="secondary">
+                {time}
+              </Text>
+            </StackLayout>
+          </StaticListItemContent>
+        </StaticListItem>
+      ))}
     </StaticList>
     <StaticList style={{ width: "320px" }}>
-      <ListItemWithButtons />
-      <ListItemWithButtons />
-      <ListItemWithButtons />
+      {complexEventsData.map(({ title, time }) => (
+        <StaticListItem key={title}>
+          <StaticListItemContent>
+            <StackLayout gap={0.5} id={`label-${id}`}>
+              <Text color="inherit">{title}</Text>
+              <Text styleAs="label" color="secondary">
+                {time}
+              </Text>
+            </StackLayout>
+          </StaticListItemContent>
+          <Button
+            id={`information-button-${id}`}
+            appearance="transparent"
+            aria-label="Zoom information"
+            aria-labelledby={clsx(`label-${id}`, `information-button-${id}`)}
+          >
+            <VideoIcon aria-hidden />
+          </Button>
+          <Button
+            id={`options-button-${id}`}
+            appearance="transparent"
+            aria-label="More options"
+            aria-labelledby={clsx(`label-${id}`, `options-button-${id}`)}
+          >
+            <OverflowMenuIcon aria-hidden />
+          </Button>
+        </StaticListItem>
+      ))}
     </StaticList>
     <StaticList style={{ width: "320px" }}>
-      <StackLayout gap={0} separators>
-        <AdditionalLabelListItem />
-        <AdditionalLabelListItem />
-        <AdditionalLabelListItem />
-        <AdditionalLabelListItem />
-      </StackLayout>
+      {complexEventsData.map(({ title, time }) => (
+        <StaticListItem key={title}>
+          <CalendarIcon />
+          <StaticListItemContent>
+            <StackLayout gap={0.5}>
+              <Text color="inherit">{title}</Text>
+              <Text styleAs="label" color="secondary">
+                {time}
+              </Text>
+            </StackLayout>
+          </StaticListItemContent>
+        </StaticListItem>
+      ))}
     </StaticList>
     <StaticList style={{ width: "320px" }}>
-      <AdditionalLabelListItem />
-      <Divider variant="tertiary" />
-      <AdditionalLabelListItem />
-      <Divider variant="tertiary" />
-      <AdditionalLabelListItem />
-      <Divider variant="tertiary" />
-      <AdditionalLabelListItem />
+      {complexEventsData.map(({ title, time }, _index) => (
+        <Fragment key={title}>
+          <StaticListItem>
+            <StaticListItemContent>
+              <StackLayout gap={0.5}>
+                <Text color="inherit">{title}</Text>
+                <Text styleAs="label" color="secondary">
+                  {time}
+                </Text>
+              </StackLayout>
+            </StaticListItemContent>
+          </StaticListItem>
+          {_index < complexEventsData.length - 1 && (
+            <Divider variant="tertiary" />
+          )}
+        </Fragment>
+      ))}
     </StaticList>
   </QAContainer>
 );

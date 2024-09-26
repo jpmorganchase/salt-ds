@@ -1,5 +1,10 @@
 .saltStaticListItemContent {
   flex: 1 0;
   margin: var(--salt-spacing-75) 0;
-  width: 100%;
+  color: var(--salt-content-primary-foreground);
+  font-size: var(--salt-text-fontSize);
+  font-weight: var(--salt-text-fontWeight);
+  font-family: var(--salt-text-fontFamily);
+  line-height: var(--salt-text-lineHeight);
+  letter-spacing: var(--salt-text-letterSpacing);
 }

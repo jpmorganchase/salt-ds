@@ -20,10 +20,10 @@ export interface StaticListItemContentProps
   children?: ReactNode;
 }
 
-export const StaticListItemContent = forwardRef(function StaticListItemContent(
-  { children, className, ...restProps }: StaticListItemContentProps,
-  ref: ForwardedRef<HTMLDivElement>,
-) {
+export const StaticListItemContent = forwardRef<
+  HTMLDivElement,
+  StaticListItemContentProps
+>(function StaticListItemContent({ children, className, ...restProps }, ref) {
   const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-static-list-item-content",

@@ -10,19 +10,21 @@ data:
 
 <LivePreviewControls>
 
-  <LivePreview componentName="static-list" exampleName="Multiple" >
+  <LivePreview componentName="static-list" exampleName="Default" >
 
-## Multiple
+## Default
 
-`Static list` group showing multiple `StaticListItems` stacked together.
+The default `Static list` allows users to show non-interactive list items.
 
   </LivePreview>
 
-  <LivePreview componentName="static-list" exampleName="AdditionalLabel" >
+  <LivePreview componentName="static-list" exampleName="ComplexLabel" >
 
-## Additional label
+## Complex label
 
-You can add additional labels inside `StaticListItem` to provide extra context using the [`Text`](../text) and [`Stack Layout`](../stack-layout) components.
+For complex labels, you can add additional elements to provide further context or descriptions for each list item.
+
+**Note:** To ensure correct spacing when using buttons or icons, wrap your static content inside `StaticListItemContent`.
 
   </LivePreview>
 
@@ -30,11 +32,11 @@ You can add additional labels inside `StaticListItem` to provide extra context u
 
 ## With icons
 
-Icons can be used to help users quickly identify the related contents inside the `StaticListItem`.
+[`Icons`](/salt/components/icon) can be used to help users quickly identify the related contents inside the `StaticListItem`.
 
 ### Best practices
 
-- Icons should be displayed before a static list item labels.
+- Icons should be displayed before labels.
 - Use icons consistently across all static list items within the same group.
 
 </LivePreview>
@@ -43,15 +45,17 @@ Icons can be used to help users quickly identify the related contents inside the
 
 ## With buttons
 
-You can use [`Button`](/salt/components/button) to allow custom interactivity/ actions within the `StaticListItem`.
+You can use [`Button`](/salt/components/button) to add actions to the `StaticListItem`s.
 
+**Note:** Buttons should be associated to the list item content using `aria-label` or `aria-labelledby`.
+    
   </LivePreview>
 
   <LivePreview componentName="static-list" exampleName="WithDividers" >
 
 ## With dividers
 
-You can separate the list of `StaticListItems` by using using [`Stack Layout`](../stack-layout) component with `separators` prop passed as true.
+You can separate the list of `StaticListItem`s by adding a [`Divider`](../divider) component between items.
 
   </LivePreview>
 

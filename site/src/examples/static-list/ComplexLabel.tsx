@@ -4,28 +4,28 @@ import {
   StaticListItem,
   StaticListItemContent,
 } from "@salt-ds/lab";
-import type { ReactElement } from "react";
+import React, { type ReactElement } from "react";
+import { type ListEvent, complexEventsData } from "./exampleData";
 
-const ListItem = () => (
+const ListItem = ({ title, time }: ListEvent) => (
   <StaticListItem>
     <StaticListItemContent>
       <StackLayout gap={0.5}>
-        <Text color="inherit">Item label</Text>
+        <Text color="inherit">{title}</Text>
         <Text styleAs="label" color="secondary">
-          Secondary label
+          {time}
         </Text>
       </StackLayout>
     </StaticListItemContent>
   </StaticListItem>
 );
 
-export const AdditionalLabel = (): ReactElement => (
+export const ComplexLabel = (): ReactElement => (
   <div style={{ width: "80%" }}>
     <StaticList style={{ width: "320px" }}>
-      <ListItem />
-      <ListItem />
-      <ListItem />
-      <ListItem />
+      {complexEventsData.map((event) => (
+        <ListItem {...event} key={event.title} />
+      ))}
     </StaticList>
   </div>
 );

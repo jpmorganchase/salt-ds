@@ -1,27 +1,47 @@
-import { Button, StackLayout, Text } from "@salt-ds/core";
-import { NoteIcon } from "@salt-ds/icons";
+import { Button, StackLayout, Text, useId } from "@salt-ds/core";
+import {
+  EditIcon,
+  NoteIcon,
+  OverflowMenuIcon,
+  TearOutIcon,
+  VideoIcon,
+} from "@salt-ds/icons";
 import {
   StaticList,
   StaticListItem,
   StaticListItemContent,
 } from "@salt-ds/lab";
-import type { ReactElement } from "react";
+import React, { type ReactElement } from "react";
+import { type ListEvent, complexEventsData } from "./exampleData";
+import { clsx } from "clsx";
 
-const ListItem = () => (
+const id = useId();
+
+const ListItem = ({ title, time }: ListEvent) => (
   <StaticListItem>
     <StaticListItemContent>
-      <StackLayout gap={0.5}>
-        <Text color="inherit">Item label</Text>
+      <StackLayout gap={0.5} id={`label-${id}`}>
+        <Text color="inherit">{title}</Text>
         <Text styleAs="label" color="secondary">
-          Secondary label
+          {time}
         </Text>
       </StackLayout>
     </StaticListItemContent>
-    <Button variant="secondary" aria-label={"interactive button"}>
-      <NoteIcon aria-hidden />
+    <Button
+      id={`information-button-${id}`}
+      appearance="transparent"
+      aria-label="Zoom information"
+      aria-labelledby={clsx(`label-${id}`, `information-button-${id}`)}
+    >
+      <VideoIcon aria-hidden />
     </Button>
-    <Button variant="secondary" aria-label={"interactive button"}>
-      <NoteIcon aria-hidden />
+    <Button
+      id={`options-button-${id}`}
+      appearance="transparent"
+      aria-label="More options"
+      aria-labelledby={clsx(`label-${id}`, `options-button-${id}`)}
+    >
+      <OverflowMenuIcon aria-hidden />
     </Button>
   </StaticListItem>
 );
@@ -29,11 +49,9 @@ const ListItem = () => (
 export const WithButtons = (): ReactElement => (
   <div style={{ width: "80%" }}>
     <StaticList style={{ width: "320px" }}>
-      <ListItem />
-      <ListItem />
-      <ListItem />
-      <ListItem />
-      <ListItem />
+      {complexEventsData.map((event) => (
+        <ListItem {...event} key={event.title} />
+      ))}
     </StaticList>
   </div>
 );

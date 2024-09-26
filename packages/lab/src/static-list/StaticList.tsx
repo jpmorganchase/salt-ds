@@ -4,7 +4,6 @@ import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
   type ComponentPropsWithoutRef,
-  type ReactElement,
   type ReactNode,
   forwardRef,
 } from "react";
@@ -21,10 +20,7 @@ export interface StaticListProps extends ComponentPropsWithoutRef<"ul"> {
 }
 
 export const StaticList = forwardRef<HTMLUListElement, StaticListProps>(
-  function StaticList(
-    { children, className, ...restProps },
-    ref,
-  ): ReactElement<StaticListProps> {
+  function StaticList({ children, className, ...rest }, ref) {
     const targetWindow = useWindow();
     useComponentCssInjection({
       testId: "salt-static-list",
@@ -33,7 +29,7 @@ export const StaticList = forwardRef<HTMLUListElement, StaticListProps>(
     });
 
     return (
-      <ul className={clsx(withBaseName(), className)} ref={ref} {...restProps}>
+      <ul className={clsx(withBaseName(), className)} ref={ref} {...rest}>
         {children}
       </ul>
     );
