@@ -38,7 +38,7 @@ const dataGridExampleColumnsHdCompact: ColDef[] = [
     field: "population",
     filter: "agNumberColumnFilter",
     editable: true,
-    cellClass: ["editable-cell"],
+    cellClass: ["numeric-cell", "editable-cell"],
   },
   {
     headerName: "Date",
