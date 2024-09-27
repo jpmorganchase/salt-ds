@@ -4,12 +4,7 @@ import type { ReactElement } from "react";
 
 export const InlineDotBadge = (): ReactElement => {
   return (
-    <TabListNext
-      variant="inline"
-      defaultValue="Home"
-      align="center"
-      style={{ minWidth: 350 }}
-    >
+    <TabListNext variant="inline" defaultValue="Home" style={{ minWidth: 350 }}>
       <TabNext value="Home">Home</TabNext>
       <TabNext value="Transactions" aria-label="Transactions - New">
         Transactions <Badge />

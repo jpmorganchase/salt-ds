@@ -17,9 +17,9 @@ import {
 } from "react";
 
 import tablistNextCss from "./TabListNext.css";
+import { TabListNextContext } from "./TabListNextContext";
 import { TabOverflowList } from "./TabOverflowList";
 import { useTabsNext } from "./TabsNextContext";
-import { TabListNextContext } from "./TabListNextContext";
 import { useCollection } from "./hooks/useCollection";
 import { useOverflow } from "./hooks/useOverflow";
 
@@ -29,8 +29,6 @@ export interface TabListNextProps
   extends Omit<ComponentPropsWithoutRef<"div">, "onChange"> {
   /* Styling active color variant. Defaults to "primary". */
   activeColor?: "primary" | "secondary" | "tertiary";
-  /* Tabs alignment. Defaults to "left" */
-  align?: "left" | "center" | "right";
   /* The Tabs variant */
   variant?: "main" | "inline";
   onAdd?: () => void;
@@ -41,7 +39,6 @@ export const TabListNext = forwardRef<HTMLDivElement, TabListNextProps>(
   function TabstripNext(props, ref) {
     const {
       activeColor = "primary",
-      align = "left",
       children,
       className,
       onAdd,
@@ -167,7 +164,6 @@ export const TabListNext = forwardRef<HTMLDivElement, TabListNextProps>(
             withBaseName(variant),
             withBaseName("horizontal"),
             withBaseName(`activeColor${capitalize(activeColor)}`),
-            { [withBaseName(align)]: align },
             className,
           )}
           ref={handleRef}

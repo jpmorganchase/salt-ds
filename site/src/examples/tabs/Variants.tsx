@@ -18,11 +18,11 @@ import { type ChangeEvent, type ReactElement, useState } from "react";
 const tabs = ["Home", "Transactions", "Loans"];
 
 export const Variants = (): ReactElement => {
-  const [variant, setAlignment] =
+  const [variant, setVariant] =
     useState<TabListNextProps["activeColor"]>("primary");
 
   const handleVariantChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setAlignment(event.target.value as TabListNextProps["activeColor"]);
+    setVariant(event.target.value as TabListNextProps["activeColor"]);
   };
 
   return (

@@ -29,7 +29,7 @@ export const TabNextPanel = forwardRef<HTMLDivElement, TabNextPanelProps>(
       window: targetWindow,
     });
     const id = useId(idProp);
-    const { registerPanel, getTabId, selectedTab } = useTabsNext();
+    const { registerPanel, getTabId, selected } = useTabsNext();
 
     const panelRef = useRef<HTMLDivElement>(null);
     const handleRef = useForkRef(panelRef, ref);
@@ -60,7 +60,7 @@ export const TabNextPanel = forwardRef<HTMLDivElement, TabNextPanelProps>(
         role="tabpanel"
         aria-labelledby={tabId}
         className={withBaseName()}
-        hidden={selectedTab !== value || undefined}
+        hidden={selected !== value || undefined}
         tabIndex={hasFocusableChildren ? undefined : 0}
         {...rest}
       >

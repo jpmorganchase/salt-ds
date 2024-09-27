@@ -119,12 +119,7 @@ export const DotBadge: StoryFn<typeof Badge> = () => {
 
 export const InlineDotBadge: StoryFn<typeof Badge> = () => {
   return (
-    <TabListNext
-      variant="inline"
-      defaultValue="Home"
-      align="center"
-      style={{ minWidth: 350 }}
-    >
+    <TabListNext variant="inline" defaultValue="Home" style={{ minWidth: 350 }}>
       <TabNext value="Home">Home</TabNext>
       <TabNext value="Transactions" aria-label="Transactions - New">
         Transactions <Badge />

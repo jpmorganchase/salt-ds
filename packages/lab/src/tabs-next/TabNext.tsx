@@ -16,9 +16,9 @@ import {
 } from "react";
 
 import { CloseIcon } from "@salt-ds/icons";
+import { useTabListNext } from "./TabListNextContext";
 import tabCss from "./TabNext.css";
 import { useTabsNext } from "./TabsNextContext";
-import { useTabListNext } from "./TabListNextContext";
 
 const withBaseName = makePrefixer("saltTabNext");
 

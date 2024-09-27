@@ -6,7 +6,7 @@ const tabs = ["Home", "Transactions", "Loans", "Checks", "Liquidity"];
 export const DisabledTabs = (): ReactElement => {
   return (
     <TabsNext defaultValue={tabs[0]}>
-      <TabListNext align="center">
+      <TabListNext>
         {tabs.map((label) => {
           return (
             <TabNext disabled={label === "Loans"} value={label} key={label}>
