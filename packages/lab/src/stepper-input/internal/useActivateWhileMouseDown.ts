@@ -1,3 +1,4 @@
+import { useWindow } from "@salt-ds/window";
 import { type SyntheticEvent, useCallback, useEffect, useState } from "react";
 import { useInterval } from "./useInterval";
 
@@ -21,9 +22,14 @@ export function useActivateWhileMouseDown(
   }, [isAtLimit, cancelInterval]);
 
   useEffect(() => {
-    window.addEventListener("mouseup", cancelInterval);
+    const targetWindow = useWindow();
+    if (targetWindow) {
+      targetWindow.addEventListener("mouseup", cancelInterval);
+    }
     return () => {
-      window.removeEventListener("mouseup", cancelInterval);
+      if (targetWindow) {
+        targetWindow.removeEventListener("mouseup", cancelInterval);
+      }
     };
   }, [cancelInterval]);
 
