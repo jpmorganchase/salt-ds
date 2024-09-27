@@ -20,8 +20,9 @@ import { StoreProvider, useCreateStore } from "@jpmorganchase/mosaic-store";
 import { ssrClassName } from "@jpmorganchase/mosaic-theme";
 import { themeClassName } from "@jpmorganchase/mosaic-theme";
 import {
+  type Density,
   SaltProvider,
-  UNSTABLE_SaltProviderNext,
+  SaltProviderNext,
   useCurrentBreakpoint,
 } from "@salt-ds/core";
 import clsx from "clsx";
@@ -30,7 +31,14 @@ import type { AppProps } from "next/app";
 import { Open_Sans, PT_Mono } from "next/font/google";
 import localFont from "next/font/local";
 import Head from "next/head";
-import { type ReactNode, useEffect, useMemo, useState } from "react";
+import {
+  type Dispatch,
+  type ReactNode,
+  type SetStateAction,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import * as saltComponents from "../components";
 import * as saltLayouts from "../layouts";
 import type { MyAppProps } from "../types/mosaic";
@@ -120,8 +128,26 @@ interface ThemeProviderProps {
   themeNext?: boolean;
 }
 
+/** This has to be within a SaltProvider to get correct breakpoint, not the same level as SaltProvider */
+function DensitySetter({
+  setDensity,
+}: { setDensity: Dispatch<SetStateAction<Density>> }) {
+  const viewport = useCurrentBreakpoint();
+
+  const densityMemo = useMemo(
+    () => (viewport === "xl" || viewport === "lg" ? "low" : "touch"),
+    [viewport],
+  );
+
+  useEffect(() => {
+    setDensity(densityMemo);
+  }, [densityMemo, setDensity]);
+
+  return null;
+}
+
 // This is a direct copy of Mosaic's ThemeProvider + injecting density, so that we can control top level provider's density,
-// which impacts both children as well as portal
+// which impacts both children as well as portal (e.g. mobile menu drawer)
 function ThemeProvider({
   themeClassName,
   className,
@@ -131,17 +157,11 @@ function ThemeProvider({
   const hasHydrated = useHasHydrated();
   const colorMode = useColorMode();
 
+  const [density, setDensity] = useState<Density>("low");
+
   const ssrClassname = hasHydrated ? undefined : ssrClassName;
 
-  const ChosenSaltProvider = themeNext
-    ? UNSTABLE_SaltProviderNext
-    : SaltProvider;
-  const viewport = useCurrentBreakpoint();
-
-  const density = useMemo(
-    () => (viewport === "xl" || viewport === "lg" ? "low" : "touch"),
-    [viewport],
-  );
+  const ChosenSaltProvider = themeNext ? SaltProviderNext : SaltProvider;
 
   return (
     <ChosenSaltProvider
@@ -149,6 +169,7 @@ function ThemeProvider({
       theme={themeClassName}
       density={density}
     >
+      <DensitySetter setDensity={setDensity} />
       <div className={clsx(ssrClassname, className)}>
         {children}
         <div data-mosaic-id="portal-root" />
