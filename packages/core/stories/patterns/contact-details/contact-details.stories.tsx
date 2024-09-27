@@ -388,7 +388,13 @@ export const List = () => {
       valueToString={(contact) => contact.primary}
     >
       {contactList.map((contact) => (
-        <Option key={contact.sid} value={contact}>
+        <Option
+          key={contact.sid}
+          value={contact}
+          style={{
+            padding: "var(--salt-spacing-50) var(--salt-spacing-100)",
+          }}
+        >
           <StackLayout direction={"row"} align="center" gap={1}>
             <Avatar
               src={contact.avatarImage as string}
