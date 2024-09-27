@@ -389,16 +389,7 @@ export const List = () => {
     >
       {contactList.map((contact) => (
         <Option key={contact.sid} value={contact}>
-          <StackLayout
-            direction={"row"}
-            gap={1}
-            style={{
-              paddingLeft: "var(--salt-spacing-100)",
-              paddingRight: "var(--salt-spacing-100)",
-              paddingTop: "var(--salt-spacing-50)",
-              paddingBottom: "var(--salt-spacing-50)",
-            }}
-          >
+          <StackLayout direction={"row"} align="center" gap={1}>
             <Avatar
               src={contact.avatarImage as string}
               aria-label={basicContact.primary}
