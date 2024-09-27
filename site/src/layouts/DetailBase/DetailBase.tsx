@@ -105,9 +105,11 @@ export const DetailBase: FC<LayoutProps> = ({
               >
                 {children}
               </div>
-              <SaltProvider density="medium" applyClassesTo="child">
-                <div className={styles.sidebar}>{sidebar}</div>
-              </SaltProvider>
+              {sidebar ? (
+                <SaltProvider density="medium" applyClassesTo="child">
+                  <div className={styles.sidebar}>{sidebar}</div>
+                </SaltProvider>
+              ) : null}
             </div>
           </SaltProvider>
           <div className={styles.docPaginator}>

@@ -6,7 +6,7 @@
   display: grid;
   align-items: start;
   grid-template-areas: "layout-column-sidebar layout-column-main";
-  grid-template-columns: max-content calc(100vw - var(--site-sidebar-width));
+  grid-template-columns: max-content 1fr;
 }
 
 .main {
@@ -17,7 +17,7 @@
 }
 
 .main.showDrawer {
-  width: 100vw;
+  width: 100%;
 }
 
 .sidebar {
@@ -25,7 +25,7 @@
   position: sticky;
   top: var(--navbar-height);
   max-width: var(--site-sidebar-width);
-  height: 100vh;
+  height: calc(100vh - var(--navbar-height));
   background: var(--salt-container-primary-background);
 }
 
