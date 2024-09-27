@@ -70,7 +70,8 @@ export const LivePreview: FC<LivePreviewProps> = ({
       .catch((e) => console.error(`Failed to load example ${exampleName}`, e));
   }, [exampleName, componentName]);
 
-  const { density, mode, accent, corner, themeNext } = useLivePreviewControls();
+  const { density, mode, accent, corner, themeNext, headingFont, actionFont } =
+    useLivePreviewControls();
 
   const handleShowCodeToggle = (event: ChangeEvent<HTMLInputElement>) => {
     const newShowCode = event.target.checked;
@@ -90,7 +91,13 @@ export const LivePreview: FC<LivePreviewProps> = ({
             [styles.smallViewport]: isMobileView,
           })}
         >
-          <ChosenSaltProvider mode={mode} accent={accent} corner={corner}>
+          <ChosenSaltProvider
+            mode={mode}
+            accent={accent}
+            corner={corner}
+            headingFont={headingFont}
+            actionFont={actionFont}
+          >
             <div className={styles.exampleWithSwitch}>
               <div className={styles.example}>
                 <ChosenSaltProvider density={density}>

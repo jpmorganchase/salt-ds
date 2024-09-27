@@ -1,10 +1,10 @@
 import {
   type Accent,
+  type ActionFont,
   type Corner,
   type Density,
   FlexItem,
-  FlexLayout,
-  FlowLayout,
+  type HeadingFont,
   type Mode,
   SaltProvider,
   type SaltProviderNextProps,
@@ -15,7 +15,6 @@ import {
   ToggleButtonGroup,
   Tooltip,
   useBreakpoint,
-  useViewport,
 } from "@salt-ds/core";
 import { DarkIcon, HelpIcon, LightIcon } from "@salt-ds/icons";
 import {
@@ -25,7 +24,6 @@ import {
   createContext,
   useState,
 } from "react";
-import useIsMobileView from "../../utils/useIsMobileView";
 
 import clsx from "clsx";
 import styles from "./LivePreviewControls.module.css";
@@ -44,7 +42,7 @@ const defaultMode = modes[0];
 
 export type LivePreviewContextType = Pick<
   SaltProviderNextProps,
-  "accent" | "mode" | "density" | "corner"
+  "accent" | "mode" | "density" | "corner" | "headingFont" | "actionFont"
 > & {
   themeNext?: boolean;
 };
@@ -59,6 +57,8 @@ export const LivePreviewControls: FC<LivePreviewControlsProps> = ({
   const [themeNext, setThemeNext] = useState(false);
   const [accent, setAccent] = useState<Accent>("blue");
   const [corner, setCorner] = useState<Corner>("sharp");
+  const [headingFont, setHeadingFont] = useState<HeadingFont>("Open Sans");
+  const [actionFont, setActionFont] = useState<ActionFont>("Open Sans");
 
   const { matchedBreakpoints } = useBreakpoint();
   const isMobileView = !matchedBreakpoints.includes("md");
@@ -195,6 +195,52 @@ export const LivePreviewControls: FC<LivePreviewControlsProps> = ({
     </StackLayout>
   );
 
+  const headingFontToggleGroup = (
+    <StackLayout
+      gap={0.75}
+      align="baseline"
+      direction={responstiveToggleGroupDirection}
+    >
+      <Text styleAs="label">Heading font</Text>
+      <ToggleButtonGroup
+        disabled={!themeNext}
+        aria-label="Select heading font"
+        value={headingFont}
+        onChange={() => {
+          setHeadingFont((prev) =>
+            prev === "Open Sans" ? "Amplitude" : "Open Sans",
+          );
+        }}
+      >
+        <ToggleButton value="Open Sans">Open Sans</ToggleButton>
+        <ToggleButton value="Amplitude">Amplitude</ToggleButton>
+      </ToggleButtonGroup>
+    </StackLayout>
+  );
+
+  const actionFontToggleGroup = (
+    <StackLayout
+      gap={0.75}
+      align="baseline"
+      direction={responstiveToggleGroupDirection}
+    >
+      <Text styleAs="label">Action font</Text>
+      <ToggleButtonGroup
+        disabled={!themeNext}
+        aria-label="Select action font"
+        value={actionFont}
+        onChange={() => {
+          setActionFont((prev) =>
+            prev === "Open Sans" ? "Amplitude" : "Open Sans",
+          );
+        }}
+      >
+        <ToggleButton value="Open Sans">Open Sans</ToggleButton>
+        <ToggleButton value="Amplitude">Amplitude</ToggleButton>
+      </ToggleButtonGroup>
+    </StackLayout>
+  );
+
   return (
     <>
       <SaltProvider density="medium">
@@ -210,6 +256,8 @@ export const LivePreviewControls: FC<LivePreviewControlsProps> = ({
               <>
                 {cornerToggleGroup}
                 {accentToggleGroup}
+                {headingFontToggleGroup}
+                {actionFontToggleGroup}
               </>
             ) : null}
           </div>
@@ -223,6 +271,8 @@ export const LivePreviewControls: FC<LivePreviewControlsProps> = ({
           themeNext,
           accent,
           corner,
+          headingFont,
+          actionFont,
         }}
       >
         {children}
