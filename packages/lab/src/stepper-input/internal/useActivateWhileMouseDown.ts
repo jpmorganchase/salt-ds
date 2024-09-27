@@ -21,8 +21,9 @@ export function useActivateWhileMouseDown(
     if (isAtLimit) cancelInterval();
   }, [isAtLimit, cancelInterval]);
 
+  const targetWindow = useWindow();
+
   useEffect(() => {
-    const targetWindow = useWindow();
     if (targetWindow) {
       targetWindow.addEventListener("mouseup", cancelInterval);
     }
@@ -31,7 +32,7 @@ export function useActivateWhileMouseDown(
         targetWindow.removeEventListener("mouseup", cancelInterval);
       }
     };
-  }, [cancelInterval]);
+  }, [cancelInterval, targetWindow]);
 
   const activate = (event: SyntheticEvent) => {
     activationFn(event);
