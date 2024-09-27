@@ -50,7 +50,7 @@ describe("Given a Tabstrip", () => {
       it("THEN no overflow indicator will be present", () => {
         cy.mount(<Main />);
         cy.findByRole("tablist")
-          .findByRole("button", { name: /More tabs/ })
+          .findByRole("tab", { name: /More tabs/ })
           .should("not.exist");
       });
     });
@@ -61,7 +61,7 @@ describe("Given a Tabstrip", () => {
         cy.get(".saltTabListNext").invoke("css", "width", "350px");
         cy.findAllByRole("tab").should("have.length", 5);
         cy.findAllByRole("tab").filter(":visible").should("have.length", 3);
-        cy.findByRole("button", { name: /More tabs/ })
+        cy.findByRole("tab", { name: /More tabs/ })
           .should("exist")
           .realClick();
         cy.findAllByRole("tab").filter(":visible").should("have.length", 5);
@@ -71,11 +71,11 @@ describe("Given a Tabstrip", () => {
   describe("WHEN size is not the full width of it's parent", () => {
     it("THEN should not overflow if it has enough space", () => {
       cy.mount(<Main />);
-      cy.findByRole("button", { name: /More tabs/ }).should("not.exist");
+      cy.findByRole("tab", { name: /More tabs/ }).should("not.exist");
     });
     it("THEN should overflow if it there is not enough space", () => {
       cy.mount(<Overflow />);
-      cy.findByRole("button", { name: /More tabs/ }).should("exist");
+      cy.findByRole("tab", { name: /More tabs/ }).should("exist");
     });
   });
 });
@@ -90,7 +90,7 @@ describe("Tab selection, Given a Tabstrip", () => {
           "aria-selected",
           "true",
         );
-        cy.findByRole("button", { name: /More tabs/ }).realClick();
+        cy.findByRole("tab", { name: /More tabs/ }).realClick();
         cy.findByRole("tab", { name: "Loans" }).realClick();
         cy.findAllByRole("tab", { name: "Loans" }).should("be.visible");
         cy.findAllByRole("tab", { name: "Loans" }).should(
@@ -211,7 +211,7 @@ describe("Navigation, Given a Tabstrip", () => {
   describe("WHEN overflow is opened", () => {
     it("THEN overflow menu item can be selected with Enter and focus is moved to the active tab", () => {
       cy.mount(<Overflow />);
-      cy.findByRole("button", { name: /More tabs/ }).realClick();
+      cy.findByRole("tab", { name: /More tabs/ }).realClick();
       cy.realPress("ArrowRight").realPress("Enter");
       cy.focused()
         .should("have.attr", "aria-selected", "true")
