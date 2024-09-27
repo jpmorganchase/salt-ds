@@ -1,7 +1,5 @@
 import {
   Button,
-  Input,
-  type InputProps,
   StatusAdornment,
   type ValidationStatus,
   capitalize,
@@ -9,7 +7,6 @@ import {
   useControlled,
   useForkRef,
   useFormFieldProps,
-  useId,
 } from "@salt-ds/core";
 import { TriangleDownIcon, TriangleUpIcon } from "@salt-ds/icons";
 import { useComponentCssInjection } from "@salt-ds/styles";
@@ -29,7 +26,6 @@ import {
   useState,
 } from "react";
 import {
-  ACCEPT_INPUT,
   isAllowedNonNumeric,
   isOutOfRange,
   sanitizedInput,
