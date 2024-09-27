@@ -1,6 +1,6 @@
 .saltMenuGroup-label {
   background: var(--salt-container-primary-background);
-  color: var(--salt-text-secondary-foreground);
+  color: var(--salt-content-secondary-foreground);
   font-size: var(--salt-text-label-fontSize);
   font-weight: var(--salt-text-label-fontWeight-strong);
   font-family: var(--salt-text-label-fontFamily);

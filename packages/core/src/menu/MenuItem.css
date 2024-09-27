@@ -38,7 +38,7 @@
 .saltMenuItem[aria-disabled="true"],
 .saltMenuItem[aria-disabled="true"]:active {
   background: var(--salt-selectable-background-disabled);
-  color: var(--salt-text-primary-foreground-disabled);
+  color: var(--salt-content-primary-foreground-disabled);
   cursor: var(--salt-selectable-cursor-disabled);
   box-shadow: none;
 }

@@ -19,7 +19,7 @@
   color: var(--saltPanel-color, inherit);
   height: var(--saltPanel-height, 100%);
   overflow: auto;
-  padding: var(--saltPanel-padding, var(--salt-size-container-spacing));
+  padding: var(--saltPanel-padding, var(--salt-spacing-300));
   width: var(--saltPanel-width, 100%);
   border-radius: var(--saltPanel-borderRadius, var(--salt-palette-corner, 0));
   box-sizing: border-box;
