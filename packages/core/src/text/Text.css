@@ -9,6 +9,8 @@
   font-size: var(--saltText-fontSize, var(--salt-text-fontSize));
   line-height: var(--saltText-lineHeight, var(--salt-text-lineHeight));
   font-weight: var(--saltText-fontWeight, var(--salt-text-fontWeight));
+  letter-spacing: var(--salt-text-letterSpacing);
+
 }
 
 .saltText::selection {
