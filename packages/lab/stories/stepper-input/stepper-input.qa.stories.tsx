@@ -3,13 +3,13 @@ import type { Meta, StoryFn } from "@storybook/react";
 import { QAContainer, type QAContainerProps } from "docs/components";
 
 export default {
-  title: "Lab/Stepper Input/QA",
+  title: "Lab/Stepper Input/Stepper Input QA",
   component: StepperInput,
 } as Meta<typeof StepperInput>;
 
 export const ExamplesGrid: StoryFn<QAContainerProps> = (props) => {
   return (
-    <QAContainer {...props}>
+    <QAContainer itemPadding={4} {...props}>
       <StepperInput
         decimalPlaces={2}
         defaultValue={0.5}
@@ -35,7 +35,7 @@ export const ExamplesGrid: StoryFn<QAContainerProps> = (props) => {
       />
       <StepperInput
         decimalPlaces={2}
-        defaultValue={0.5}
+        defaultValue="readOnly"
         max={10}
         min={-5}
         readOnly
@@ -43,12 +43,19 @@ export const ExamplesGrid: StoryFn<QAContainerProps> = (props) => {
       />
       <StepperInput
         decimalPlaces={2}
-        defaultValue={0.5}
+        defaultValue="disabled"
         disabled
         max={10}
         min={-5}
         step={0.5}
       />
+      <StepperInput value="bordered" bordered />
+      <StepperInput validationStatus="success" value="success" />
+      <StepperInput validationStatus="error" value="error" />
+      <StepperInput validationStatus="warning" value="warning" />
+      <StepperInput value="success" bordered validationStatus="success" />
+      <StepperInput value="error" bordered validationStatus="error" />
+      <StepperInput value="warning" bordered validationStatus="warning" />
     </QAContainer>
   );
 };
