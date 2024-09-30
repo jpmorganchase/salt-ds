@@ -12,7 +12,9 @@
       "mockServiceWorker.js",
       "*-props.json",
       ".tmp",
-      "package.json"
+      "package.json",
+      "site/src/components/css-display/*.json",
+      "site/public/search-data.json"
     ]
   },
   "organizeImports": {
