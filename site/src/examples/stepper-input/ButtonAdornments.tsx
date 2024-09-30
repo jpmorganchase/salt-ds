@@ -78,6 +78,8 @@ const CustomButtons = () => {
       <FormFieldLabel>Custom buttons</FormFieldLabel>
       <StepperInput
         hideButtons
+        value={value}
+        onChange={(_, newValue) => setValue(newValue)}
         startAdornment={
           <Button onClick={() => updateValue(-1)}>
             <RemoveIcon aria-label="Decrease value by 1" />
