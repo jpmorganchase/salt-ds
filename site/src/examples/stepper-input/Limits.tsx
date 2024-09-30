@@ -1,31 +1,31 @@
-import { ReactElement, useState } from "react";
 import { FormField, FormFieldHelperText, FormFieldLabel } from "@salt-ds/core";
 import { StepperInput } from "@salt-ds/lab";
+import { useState } from "react";
 
-export const Limits = (): ReactElement => {
+export const Limits = () => {
   const [value, setValue] = useState<number | string>(2);
-  const max = 5;
+  const max = 10;
   const min = 0;
 
-  const isOutOfRange = () => {
-    const numericValue = typeof value === "number" ? value : parseFloat(value);
-    return numericValue > max || numericValue < min;
-  };
+  const numericValue =
+    typeof value === "number" ? value : Number.parseFloat(value);
+  const isError =
+    typeof value !== "number" || numericValue > max || numericValue < min;
 
   return (
     <FormField
-      validationStatus={isOutOfRange() ? "error" : undefined}
-      style={{ width: "250px" }}
+      validationStatus={isError ? "error" : undefined}
+      style={{ width: "256px" }}
     >
-      <FormFieldLabel>Stepper Input with limited range</FormFieldLabel>
+      <FormFieldLabel>Stepper input with limited range</FormFieldLabel>
       <StepperInput
         value={value}
-        onChange={(changedValue) => setValue(changedValue)}
+        onChange={(_, changedValue) => setValue(changedValue)}
         max={max}
         min={min}
       />
       <FormFieldHelperText>
-        Please enter a value between {min} and {max}
+        Limit value must be between {min} and {max}
       </FormFieldHelperText>
     </FormField>
   );

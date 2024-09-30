@@ -13,77 +13,121 @@ data:
 
 ## Default
 
-- `Stepper Input` comprises an [`Input`](salt/components/input) component with a default numerical value and stepper buttons. Once it has focus, it accepts numerical characters.
-- The default `Stepper Input` has a `defaultValue` of 0, `step` of 1 and `block` of 10.
-
-### Best practices
-
-- Pick a default value that reflects the desired value for most users.
+Stepper input has a default value of 0, an increment value of 1 and a block value of 10, and you can only use it to accept numeric characters. A single click increases or decreases the value in the input by 1.
 
 </LivePreview>
+<LivePreview componentName="stepper-input" exampleName="Variants" >
 
-<LivePreview componentName="stepper-input" exampleName="Limits" >
+## Variants
 
-## Limits
-
-- By default users can enter a number within the bounds of the maximum and minimum floating-point number.
-- If you need to limit the range of accepted values, you can set the `min` and/or `max` props.
-- The respective up or down buttons will be disabled when at the limit, and users will not be able to exceed them via keyboard controls. When a value above or below the range is entered, the bottom or top arrow buttons (respectively) remain enabled. Clicking this arrow button will return the value to the closest limit.
-
-### Best practices
-
-- Clearly state the accepted value range in the [`Form Field's`](salt/components/form-field) helper text.
-- Use the [`Form Field's`](salt/components/form-field) error state to inform users if they have manually typed in a value outside of the accepted range.
+The component comes in two variants: primary and secondary. By default, the primary variant is selected. To switch to the secondary variant, use `variant="secondary"`. When choosing between the primary and secondary variants, consider the background color on which the component will be placed.
 
 </LivePreview>
-<LivePreview componentName="stepper-input" exampleName="StepAndBlock" >
+<LivePreview componentName="stepper-input" exampleName="Bordered" >
 
-## Step and Block
+## Bordered
 
-- You can customize the amount the value is changed by when pressing the buttons or arrow keys with the `step` prop.
-- Holding down the Shift key when pressing Up Arrow or Down Arrow key changes the value by the amount defined by the `block` prop.
+To style the stepper input with a full border, set `bordered={true}`. This styling is ideal when the input field uses the same fill color as the background, such as a primary fill color on a primary background.
+
+</LivePreview>
+<LivePreview componentName="stepper-input" exampleName="Validation" >
+
+## Validation
+
+The stepper input can show validation states—error, warning, and success—by using the `validationStatus` prop.
 
 ### Best practices
 
-- Select a `step` value that aligns with the precision required by the use case.
-- Set the `block` value to a reasonable size compared to the `step`, allowing users to make larger adjustments.
+- Use the error state to alert the user of a critical issue that’s related to the input. This issue, which may jeopardize completion of the task, usually requires action from the user to resolve the error.
+- Display the warning state when you need to alert the user of a potential issue—that won’t prevent the user from continuing with the task, but may cause errors if it’s not addressed.
 
 </LivePreview>
 <LivePreview componentName="stepper-input" exampleName="Decimals" >
 
 ## Decimals
 
-- `Stepper Input` accepts no decimal places by default. Use the `decimalPlaces` prop to allow the user to enter a value with decimal places.
+By default, the Stepper Input accepts values with zero decimal places. If a user needs to enter a value with decimals, such as a monetary amount, the number of decimal places can be customized.
+
+If the user enters a value that doesn't match the specified decimal places, the component will adjust the value to the correct number of decimal places when it loses focus. For example, if the component is set to accept two decimal places and the user enters "12," the displayed value will be "12.00."
+
+The component will also round the value up or down as necessary to match the specified number of decimal places.
 
 ### Best practices
 
-- Adjust the `step` and `block` values to align with the decimal use case.
+The number of decimal places should be suitable for the specific use case. For instance, avoid accepting three decimal places when a retail user is dealing with currencies like pounds sterling or U.S. dollars, which typically require only two decimal places.
 
 </LivePreview>
-<LivePreview componentName="stepper-input" exampleName="CustomButtons" >
+<LivePreview componentName="stepper-input" exampleName="Limits" >
 
-## Custom buttons
+## Min and max value
 
-- Hide the default stepper buttons with the `hideButtons` prop if you wish to customize the appearance of the controls or if number input is required withput the granular stepper button interaction.
-- When providing custom buttons, set `aria-hidden="true"` and `tabIndex={-1}` to ensure accessibilty. Keyboard users can adjust the value when focus is on the stepper input via Up arrow and Down arrow keys.
+If you need to limit the range of accepted values, you’re able to set a maximum or minimum (or both).
 
 ### Best practices
 
-- Place alternative controls close to the Stepper Input, or place them inside the input field via the `endAdornment` and `startAdornment` props.
-- Ensure that buttons have useful aria-labels.
+- Clearly state the accepted value range in the form field’s helper text.
+- Use the form field error state to inform users who manually type in a value outside the accepted range that the value is invalid.
 
 </LivePreview>
+<LivePreview componentName="stepper-input" exampleName="StepAndBlock" >
 
-<LivePreview componentName="stepper-input" exampleName="Refresh" >
+## Custom steps
 
-## Refresh
-
-- You can add a refresh button inside the input field via the `endAdornment` or `startAdornment` props.
-- Use this when you want users to be able to revert to the default value.
+Customize the default, increment and block values to suit your use case.
 
 ### Best practices
 
-- Ensure the button has a relevant aria-label.
+- Pick a default value that reflects the desired value for most users, such as the most frequently submitted number.
+- Make sure you set an increment value that’s appropriate for the context. For example, if the user needs to enter ”Number of people”, adjustments of 0.5 would be confusing. If you’re undecided, consider using an increment value of 1.
+
+</LivePreview>
+<LivePreview componentName="stepper-input" exampleName="ButtonAdornments" >
+
+## Button adornments
+
+You can use [Button](/salt/components/button) at the end of the input field with the `endAdornment` prop. Buttons can allow for custom interactivity within the input field itself. Examples include:
+
+**Refresh adornment**:
+
+Reset the input to it’s default value, using the refresh button.
+
+**Sync adornment**:
+
+Sync to a live value from a source that is constantly changing, for example, when dealing with live stock prices. The component's value doesn't automatically update when the live value changes, however. In this case, the sync button automatically appears when the displayed value and live value don’t match.
+
+**Custom buttons**:
+
+Customize the positioning and appearance of the stepper buttons to meet specific product requirements or restrictions.
+
+</LivePreview>
+<LivePreview componentName="stepper-input" exampleName="Disabled" >
+
+## Disabled
+
+You can disable a stepper input, resulting in no action when the user interacts with it.
+
+</LivePreview>
+<LivePreview componentName="input" exampleName="Readonly" >
+
+## Read-only
+
+You can set stepper input to a read-only state. The user can't edit the value text in this state, but they can highlight and copy it.
+
+By default, the marker is an em dash. If your application requires a different marker, you can set it via the `emptyReadOnlyMarker` prop.
+
+- Use the read-only state when the user needs the value for their flow or current task but cannot edit it, for example, because of user permissions.
+
+</LivePreview>
+<LivePreview componentName="input" exampleName="TextAlignment" >
+
+## Text alignment
+
+To aid visual flow, the numeric value sits directly beneath the label and other form field elements, which are left aligned by default. If you need to change the stepper input’s alignment to suit your particular use case or layout, you can configure it to be right or center aligned.
+
+Use the `textAlign` prop to change the alignment to “center” or “right.”
+
+- Numeric values often have right alignment to make comparing them easier. However, sometimes number fields don't relate to each other or mix with text fields in a form, so left alignment may promote better visual flow.
+- You may choose to center-align an input field to bring emphasis to a value. However, this should be the exception, and you should use it sparingly.
 
 </LivePreview>
 </LivePreviewControls>

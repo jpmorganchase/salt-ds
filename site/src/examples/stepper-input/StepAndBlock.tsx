@@ -1,11 +1,10 @@
-import { ReactElement } from "react";
 import { FormField, FormFieldHelperText, FormFieldLabel } from "@salt-ds/core";
 import { StepperInput } from "@salt-ds/lab";
 
-export const StepAndBlock = (): ReactElement => (
-  <FormField style={{ width: "250px" }}>
-    <FormFieldLabel>Stepper Input with decimal places</FormFieldLabel>
-    <StepperInput step={10} block={100} />
-    <FormFieldHelperText>Please enter a value</FormFieldHelperText>
+export const StepAndBlock = () => (
+  <FormField style={{ width: "256px" }}>
+    <FormFieldLabel>Custom steps</FormFieldLabel>
+    <StepperInput step={5} stepBlock={50} />
+    <FormFieldHelperText>Custom step 5 and step block 50</FormFieldHelperText>
   </FormField>
 );

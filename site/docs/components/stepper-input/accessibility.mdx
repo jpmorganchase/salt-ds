@@ -22,34 +22,42 @@ The following interactions are specific to Stepper Input.
 <KeyboardControls>
 <KeyboardControl keyOrCombos="Up Arrow">
 
-When the input area has focus:
-
-- Increases the number by the increment value, up to the maximum value if set.
-- If the Up Arrow key is held down, it continues to increase the number by the increment value at a constant rate, after a 300ms delay.
-
-</KeyboardControl>
-<KeyboardControl keyOrCombos="Down Arrow">
-
-When the input area has focus:
-
-- Decresase the number by the increment value, up to the minimum value if set.
-- If the Down Arrow key is held down, it continues to decrease the number by the increment value at a constant rate, after a 300ms delay.
+When the input area has focus, increases the number by the increment value (default to 1), up to the maximum value if set.
 
 </KeyboardControl>
 <KeyboardControl keyOrCombos="Shift + Up Arrow">
  
-When the input area has focus:
+When the input area has focus, increases the number by the step block value (default to 10), up to the maximum value if set.
 
-- Increases the number by the block value, up to the maximum value if set.
-- If the Page Up key is held down, it continues to increase the number by the block value at a constant rate, after a 300ms delay.
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Page Up">
+
+When the input area has focus, increases the number by the step block value (default to 10), up to the maximum value if set.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="End">
+
+When the input area has focus, increases the number to the maximum value.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Down Arrow">
+
+When the input area has focus, decresase the number by the increment value (default to 1), up to the minimum value if set.
 
 </KeyboardControl>
 <KeyboardControl keyOrCombos="Shift + Down Arrow">
  
-When the input area has focus:
+When the input area has focus, decreases the number by the step block value (default to 10), up to the maximum value if set.
 
-- Decreases the number by the block value, up to the maximum value if set.
-- If the Page Down key is held down, it continues to decrease the number by the block value at a constant rate, after a 300ms delay.
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Page Down">
+ 
+When the input area has focus, decreases the number by the step block value (default to 10), up to the maximum value if set.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Home">
+
+When the input area has focus, increases the number to the minimum value.
 
 </KeyboardControl>
 </KeyboardControls>
