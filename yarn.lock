@@ -2495,13 +2495,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@biomejs/js-api@npm:^0.6.2":
-  version: 0.6.2
-  resolution: "@biomejs/js-api@npm:0.6.2"
+"@biomejs/js-api@npm:^0.7.0":
+  version: 0.7.1
+  resolution: "@biomejs/js-api@npm:0.7.1"
   peerDependencies:
-    "@biomejs/wasm-bundler": ^1.8.2
-    "@biomejs/wasm-nodejs": ^1.8.2
-    "@biomejs/wasm-web": ^1.8.2
+    "@biomejs/wasm-bundler": ^1.9.2
+    "@biomejs/wasm-nodejs": ^1.9.2
+    "@biomejs/wasm-web": ^1.9.2
   peerDependenciesMeta:
     "@biomejs/wasm-bundler":
       optional: true
@@ -2509,7 +2509,7 @@ __metadata:
       optional: true
     "@biomejs/wasm-web":
       optional: true
-  checksum: 10/b5cde2821ac3a2473989b86bbc29fc7152cc3c71f98a7eed508b1a7cc648f0f4602ebe349eeda821f6c44bb93c561f2c3d1d571c7d98ac85b85cc77ff8b9b1c2
+  checksum: 10/108d314ba659e79c2733e6aa9f06ba24e6dae330e00a1bbc3d50ea774964614b2920d461a95b7dbabe6b326cbee7356f285061bdda544bfd4b6e7fda1b6dc85c
   languageName: node
   linkType: hard
 
@@ -5788,7 +5788,7 @@ __metadata:
   resolution: "@salt-ds/root@workspace:."
   dependencies:
     "@biomejs/biome": "npm:^1.9.1"
-    "@biomejs/js-api": "npm:^0.6.2"
+    "@biomejs/js-api": "npm:^0.7.0"
     "@biomejs/wasm-nodejs": "npm:^1.9.1"
     "@changesets/cli": "npm:^2.27.7"
     "@cypress/code-coverage": "npm:^3.12.35"
