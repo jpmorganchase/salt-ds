@@ -76,9 +76,21 @@ export const Default: StoryFn<QAContainerProps> = (props) => {
 };
 
 Default.parameters = {
-  chromatic: { disableSnapshot: false },
+  chromatic: {
+    disableSnapshot: false,
+    modes: {
+      theme: {
+        themeNext: "disable",
+      },
+      themeNext: {
+        themeNext: "enable",
+        corner: "rounded",
+        accent: "teal",
+        // Ignore headingFont given font is not loaded
+      },
+    },
+  },
 };
-
 export const LongContent: StoryFn<QAContainerProps> = () => {
   return (
     <QAContainer width={1300} itemPadding={3}>
@@ -147,9 +159,21 @@ export const LongContent: StoryFn<QAContainerProps> = () => {
 };
 
 LongContent.parameters = {
-  chromatic: { disableSnapshot: false },
+  chromatic: {
+    disableSnapshot: false,
+    modes: {
+      theme: {
+        themeNext: "disable",
+      },
+      themeNext: {
+        themeNext: "enable",
+        corner: "rounded",
+        accent: "teal",
+        // Ignore headingFont given font is not loaded
+      },
+    },
+  },
 };
-
 export const Preheader: StoryFn<QAContainerProps> = () => {
   return (
     <QAContainer width={1300} itemPadding={3}>
@@ -177,9 +201,21 @@ export const Preheader: StoryFn<QAContainerProps> = () => {
 };
 
 Preheader.parameters = {
-  chromatic: { disableSnapshot: false },
+  chromatic: {
+    disableSnapshot: false,
+    modes: {
+      theme: {
+        themeNext: "disable",
+      },
+      themeNext: {
+        themeNext: "enable",
+        corner: "rounded",
+        accent: "teal",
+        // Ignore headingFont given font is not loaded
+      },
+    },
+  },
 };
-
 type sizes = "small" | "medium" | "large";
 
 const sizes: sizes[] = ["small", "medium", "large"];
@@ -196,9 +232,21 @@ export const SizeDialog: StoryFn<QAContainerProps> = (props) => {
 };
 
 SizeDialog.parameters = {
-  chromatic: { disableSnapshot: false },
+  chromatic: {
+    disableSnapshot: false,
+    modes: {
+      theme: {
+        themeNext: "disable",
+      },
+      themeNext: {
+        themeNext: "enable",
+        corner: "rounded",
+        accent: "teal",
+        // Ignore headingFont given font is not loaded
+      },
+    },
+  },
 };
-
 export const InfoDialog: StoryFn<QAContainerProps> = (props) => {
   const { ...rest } = props;
   return (
@@ -209,9 +257,21 @@ export const InfoDialog: StoryFn<QAContainerProps> = (props) => {
 };
 
 InfoDialog.parameters = {
-  chromatic: { disableSnapshot: false },
+  chromatic: {
+    disableSnapshot: false,
+    modes: {
+      theme: {
+        themeNext: "disable",
+      },
+      themeNext: {
+        themeNext: "enable",
+        corner: "rounded",
+        accent: "teal",
+        // Ignore headingFont given font is not loaded
+      },
+    },
+  },
 };
-
 export const SuccessDialog: StoryFn<QAContainerProps> = (props) => {
   const { ...rest } = props;
   return (
@@ -222,9 +282,21 @@ export const SuccessDialog: StoryFn<QAContainerProps> = (props) => {
 };
 
 SuccessDialog.parameters = {
-  chromatic: { disableSnapshot: false },
+  chromatic: {
+    disableSnapshot: false,
+    modes: {
+      theme: {
+        themeNext: "disable",
+      },
+      themeNext: {
+        themeNext: "enable",
+        corner: "rounded",
+        accent: "teal",
+        // Ignore headingFont given font is not loaded
+      },
+    },
+  },
 };
-
 export const WarningDialog: StoryFn<QAContainerProps> = (props) => {
   const { ...rest } = props;
   return (
@@ -235,9 +307,21 @@ export const WarningDialog: StoryFn<QAContainerProps> = (props) => {
 };
 
 WarningDialog.parameters = {
-  chromatic: { disableSnapshot: false },
+  chromatic: {
+    disableSnapshot: false,
+    modes: {
+      theme: {
+        themeNext: "disable",
+      },
+      themeNext: {
+        themeNext: "enable",
+        corner: "rounded",
+        accent: "teal",
+        // Ignore headingFont given font is not loaded
+      },
+    },
+  },
 };
-
 export const ErrorDialog: StoryFn<QAContainerProps> = (props) => {
   const { ...rest } = props;
   return (
@@ -248,9 +332,21 @@ export const ErrorDialog: StoryFn<QAContainerProps> = (props) => {
 };
 
 ErrorDialog.parameters = {
-  chromatic: { disableSnapshot: false },
+  chromatic: {
+    disableSnapshot: false,
+    modes: {
+      theme: {
+        themeNext: "disable",
+      },
+      themeNext: {
+        themeNext: "enable",
+        corner: "rounded",
+        accent: "teal",
+        // Ignore headingFont given font is not loaded
+      },
+    },
+  },
 };
-
 export const StickyFooter: StoryFn<QAContainerProps> = () => {
   return (
     <QAContainer width={1300} itemPadding={3}>
@@ -276,5 +372,18 @@ export const StickyFooter: StoryFn<QAContainerProps> = () => {
 };
 
 StickyFooter.parameters = {
-  chromatic: { disableSnapshot: false },
+  chromatic: {
+    disableSnapshot: false,
+    modes: {
+      theme: {
+        themeNext: "disable",
+      },
+      themeNext: {
+        themeNext: "enable",
+        corner: "rounded",
+        accent: "teal",
+        // Ignore headingFont given font is not loaded
+      },
+    },
+  },
 };
