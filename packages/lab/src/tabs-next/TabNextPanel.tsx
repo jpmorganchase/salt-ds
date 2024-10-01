@@ -14,6 +14,9 @@ import tabPanelCss from "./TabNextPanel.css";
 import { useTabsNext } from "./TabsNextContext";
 
 export interface TabNextPanelProps extends ComponentPropsWithoutRef<"div"> {
+  /**
+   * The value of the panel, this should map to the corresponding tab.
+   */
   value: string;
 }
 

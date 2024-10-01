@@ -9,17 +9,17 @@ import {
 
 import { useControlled } from "@salt-ds/core";
 import { useWindow } from "@salt-ds/window";
-import { TabsNextContext } from "./TabsNextContext";
+import { type Item, TabsNextContext } from "./TabsNextContext";
+import { useCollection } from "./hooks/useCollection";
 
 export interface TabsNextProps {
+  children?: ReactNode;
   /* Value for the controlled version. */
   value?: string;
   /* Callback for the controlled version. */
   onChange?: (event: SyntheticEvent, value: string) => void;
   /* Initial value for the uncontrolled version. */
   defaultValue?: string;
-
-  children: ReactNode;
 }
 
 export function TabsNext({
@@ -33,24 +33,24 @@ export function TabsNext({
   const [_, updateState] = useState({});
   const forceUpdate = useCallback(() => updateState({}), []);
 
+  const { registerItem, item, getNext, getPrevious, getFirst, getLast, items } =
+    useCollection({ wrap: true });
+
   const [selected, setSelectedState] = useControlled({
     controlled: value,
     default: defaultValue,
     name: "TabListNext",
     state: "selected",
   });
-  const [active, setActive] = useState<string | undefined>(selected);
 
   const setSelected = useCallback(
     (event: SyntheticEvent, action: string) => {
       setSelectedState(action);
-      setActive(action);
 
-      // setTimeout(() => {
-      //   const itemElement = item(action)?.element;
-      //   itemElement?.focus({ preventScroll: true });
-      //   itemElement?.scrollIntoView({ block: "nearest", inline: "nearest" });
-      // }, 0);
+      setTimeout(() => {
+        const itemElement = item(action)?.element;
+        itemElement?.focus({ preventScroll: true });
+      }, 0);
 
       onChange?.(event, action);
     },
@@ -67,10 +67,12 @@ export function TabsNext({
   }, [targetWindow, forceUpdate]);
 
   const registerTab = useCallback(
-    (id: string, value: string) => {
+    ({ id, value, element }: Item) => {
       valueToTabIdMap.current.set(value, id);
+      const cleanup = registerItem({ id, element, value });
       triggerUpdate();
       return () => {
+        cleanup();
         valueToTabIdMap.current.delete(value);
       };
     },
@@ -112,8 +114,12 @@ export function TabsNext({
       getTabId,
       selected,
       setSelected,
-      active,
-      setActive,
+      item,
+      getNext,
+      getPrevious,
+      getFirst,
+      getLast,
+      items,
     }),
     [
       registerPanel,
@@ -121,8 +127,12 @@ export function TabsNext({
       getPanelId,
       getTabId,
       selected,
-      active,
-      setActive,
+      item,
+      getNext,
+      getPrevious,
+      getFirst,
+      getLast,
+      items,
     ],
   );
 

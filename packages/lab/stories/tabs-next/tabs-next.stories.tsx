@@ -191,17 +191,15 @@ WithBadge.args = {
 
 export const Overflow: StoryFn<typeof TabsNext> = (args) => {
   return (
-    <div style={{ minWidth: 0, maxWidth: "100%" }}>
-      <TabsNext {...args}>
-        <TabListNext>
-          {lotsOfTabs.map((label) => (
-            <TabNext value={label} key={label}>
-              {label}
-            </TabNext>
-          ))}
-        </TabListNext>
-      </TabsNext>
-    </div>
+    <TabsNext {...args}>
+      <TabListNext style={{ maxWidth: 350, margin: "auto" }}>
+        {lotsOfTabs.map((label) => (
+          <TabNext value={label} key={label}>
+            {label}
+          </TabNext>
+        ))}
+      </TabListNext>
+    </TabsNext>
   );
 };
 

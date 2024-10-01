@@ -6,7 +6,7 @@ import {
   ThumbsDownIcon,
   ThumbsUpIcon,
 } from "@salt-ds/icons";
-import { TabListNext, TabNext } from "@salt-ds/lab";
+import { TabListNext, TabNext, TabsNext } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react";
 
 export default {
@@ -69,19 +69,20 @@ export const String: StoryFn = () => {
 
 export const InlineBadge: StoryFn = () => {
   return (
-    <TabListNext
-      defaultValue="Home"
-      style={{
-        minWidth: 350,
-      }}
-    >
-      <TabNext value="Home">Home</TabNext>
-      <TabNext value="Transactions" aria-label="Transations - 30 updates">
-        Transactions
-        <Badge value={30} />
-      </TabNext>
-      <TabNext value="Loans">Loans</TabNext>
-    </TabListNext>
+    <TabsNext defaultValue="Home">
+      <TabListNext
+        style={{
+          minWidth: 350,
+        }}
+      >
+        <TabNext value="Home">Home</TabNext>
+        <TabNext value="Transactions" aria-label="Transations - 30 updates">
+          Transactions
+          <Badge value={30} />
+        </TabNext>
+        <TabNext value="Loans">Loans</TabNext>
+      </TabListNext>
+    </TabsNext>
   );
 };
 
@@ -119,12 +120,14 @@ export const DotBadge: StoryFn<typeof Badge> = () => {
 
 export const InlineDotBadge: StoryFn<typeof Badge> = () => {
   return (
-    <TabListNext variant="inline" defaultValue="Home" style={{ minWidth: 350 }}>
-      <TabNext value="Home">Home</TabNext>
-      <TabNext value="Transactions" aria-label="Transactions - New">
-        Transactions <Badge />
-      </TabNext>
-      <TabNext value="Loans">Loans</TabNext>
-    </TabListNext>
+    <TabsNext defaultValue="Home">
+      <TabListNext variant="inline" style={{ minWidth: 350 }}>
+        <TabNext value="Home">Home</TabNext>
+        <TabNext value="Transactions" aria-label="Transactions - New">
+          Transactions <Badge />
+        </TabNext>
+        <TabNext value="Loans">Loans</TabNext>
+      </TabListNext>
+    </TabsNext>
   );
 };

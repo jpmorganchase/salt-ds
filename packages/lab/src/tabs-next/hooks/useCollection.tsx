@@ -3,6 +3,7 @@ import { useCallback, useRef, useState } from "react";
 export interface Item {
   id: string;
   element?: HTMLElement | null;
+  value: string;
 }
 
 function sortBasedOnDOMPosition(items: Item[]): Item[] {
@@ -69,7 +70,7 @@ export function useCollection({ wrap }: UseCollectionProps) {
 
   return {
     registerItem,
-    item: (id?: string | null) => {
+    item: (id?: string | null): Item | null => {
       if (!id) return null;
       let item = itemMap.current.get(id);
       if (!item) {
@@ -80,29 +81,29 @@ export function useCollection({ wrap }: UseCollectionProps) {
       }
       return item ?? null;
     },
-    getNext: (current: string) => {
+    getNext: (current: string): Item | null => {
       const index = items.findIndex(({ id }) => id === current);
 
       const newIndex = wrap
         ? (index + 1) % items.length
         : Math.min(index + 1, items.length - 1);
 
-      return items[newIndex]?.id;
+      return items[newIndex] ?? null;
     },
-    getPrevious: (current: string) => {
+    getPrevious: (current: string): Item | null => {
       const index = items.findIndex(({ id }) => id === current);
 
       const newIndex = wrap
         ? (index - 1 + items.length) % items.length
         : Math.max(index - 1, 0);
 
-      return items[newIndex]?.id;
+      return items[newIndex] ?? null;
     },
-    getFirst: () => {
-      return items[0]?.id;
+    getFirst: (): Item | null => {
+      return items[0] ?? null;
     },
-    getLast: () => {
-      return items[items.length - 1]?.id;
+    getLast: (): Item | null => {
+      return items[items.length - 1] ?? null;
     },
     items,
   };

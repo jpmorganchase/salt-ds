@@ -87,9 +87,8 @@ export const TabOverflowList = forwardRef<HTMLDivElement, TabOverflowListProps>(
             '[role="tab"]:not([aria-hidden])',
           ) ?? [];
         const numberOfTabsInOverflow =
-          listRef.current?.querySelectorAll<HTMLElement>(
-            '[role="tab"]:not([aria-hidden])',
-          ).length ?? 0;
+          listRef.current?.querySelectorAll<HTMLElement>('[role="tab"]')
+            .length ?? 0;
 
         allTabs[allTabs.length - numberOfTabsInOverflow - 1]?.focus({
           preventScroll: true,
@@ -102,6 +101,11 @@ export const TabOverflowList = forwardRef<HTMLDivElement, TabOverflowListProps>(
 
     const handleClick = () => {
       setOpen((old) => !old);
+      setTimeout(() => {
+        listRef.current
+          ?.querySelectorAll<HTMLElement>('[role="tab"]')[0]
+          ?.focus({ preventScroll: true });
+      });
     };
 
     const handleFocus = () => {
@@ -131,6 +135,7 @@ export const TabOverflowList = forwardRef<HTMLDivElement, TabOverflowListProps>(
     return (
       <div className={withBaseName()} ref={ref}>
         <Button
+          data-overflowbutton
           tabIndex={-1}
           appearance="transparent"
           sentiment="neutral"

@@ -41,7 +41,7 @@
   cursor: var(--salt-selectable-cursor-hover);
   box-sizing: border-box;
   flex-shrink: 0;
-  justify-content: start;
+  justify-content: flex-start;
 }
 
 .saltTabOverflow-list .saltTabNext .saltTabNext-label {

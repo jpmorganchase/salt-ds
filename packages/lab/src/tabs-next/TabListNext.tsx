@@ -5,12 +5,10 @@ import { useWindow } from "@salt-ds/window";
 import clsx from "clsx";
 import {
   type ComponentPropsWithoutRef,
-  type FocusEvent,
   type KeyboardEvent,
   type SyntheticEvent,
   forwardRef,
   useCallback,
-  useEffect,
   useMemo,
   useRef,
   useState,
@@ -20,18 +18,27 @@ import tablistNextCss from "./TabListNext.css";
 import { TabListNextContext } from "./TabListNextContext";
 import { TabOverflowList } from "./TabOverflowList";
 import { useTabsNext } from "./TabsNextContext";
-import { useCollection } from "./hooks/useCollection";
 import { useOverflow } from "./hooks/useOverflow";
 
 const withBaseName = makePrefixer("saltTabListNext");
 
 export interface TabListNextProps
   extends Omit<ComponentPropsWithoutRef<"div">, "onChange"> {
-  /* Styling active color variant. Defaults to "primary". */
+  /**
+   * Styling active color variant. Defaults to "primary".
+   */
   activeColor?: "primary" | "secondary" | "tertiary";
-  /* The Tabs variant */
+  /**
+   * The tab variant, "main" should be shown at the top of the page under the app header. "inline" should be used everywhere else. Defaults to "main".
+   */
   variant?: "main" | "inline";
+  /**
+   * Callback fired when add button is triggered.
+   */
   onAdd?: () => void;
+  /**
+   * Callback fired when a tab is closed.
+   */
   onClose?: (event: SyntheticEvent, value: string) => void;
 }
 
@@ -54,17 +61,15 @@ export const TabListNext = forwardRef<HTMLDivElement, TabListNextProps>(
       window: targetWindow,
     });
 
-    const { selected, active, setSelected, setActive } = useTabsNext();
-
     const {
-      registerItem,
-      item,
+      selected,
+      setSelected,
       getNext,
       getPrevious,
       getFirst,
       getLast,
       items,
-    } = useCollection({ wrap: true });
+    } = useTabsNext();
 
     const tabstripRef = useRef<HTMLDivElement>(null);
     const handleRef = useForkRef(tabstripRef, ref);
@@ -81,10 +86,7 @@ export const TabListNext = forwardRef<HTMLDivElement, TabListNextProps>(
       overflowButton: overflowButtonRef,
     });
 
-    const movedRef = useRef(false);
-
     const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
-      if (!active) return;
       const actionMap = {
         ArrowRight: getNext,
         ArrowLeft: getPrevious,
@@ -98,61 +100,37 @@ export const TabListNext = forwardRef<HTMLDivElement, TabListNextProps>(
 
       if (action) {
         event.preventDefault();
-        const nextId = action(active);
-        if (nextId) {
-          movedRef.current = true;
-          setActive(nextId);
+        const activeTabId = targetWindow?.document.activeElement?.id;
+        if (!activeTabId) return;
+        const nextItem = action(activeTabId);
+        if (nextItem) {
+          nextItem.element?.focus({ preventScroll: true });
         }
       }
     };
 
     const handleClose = useCallback(
       (event: SyntheticEvent, id: string) => {
-        const first = getFirst();
-        const newActive = id === first ? getNext(id) : getPrevious(id);
-        if (id === selected) {
-          setSelected(event, newActive);
-        } else {
-          setActive(newActive);
-        }
+        const firstItem = getFirst();
+        const newActive = id === firstItem?.id ? getNext(id) : getPrevious(id);
         onClose?.(event, id);
+
+        if (!newActive) return;
+        if (id === selected) {
+          setSelected(event, newActive.value);
+        } else {
+          newActive?.element?.focus({ preventScroll: true });
+        }
       },
       [getFirst, getNext, getPrevious, selected, onClose],
     );
 
-    // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
-    useEffect(() => {
-      if (!movedRef.current) return;
-      const itemElement = item(active)?.element;
-      if (itemElement) {
-        itemElement.focus({ preventScroll: true });
-        itemElement.scrollIntoView({ block: "nearest", inline: "nearest" });
-      }
-    }, [active]);
-
-    const [focusInside, setFocusInside] = useState(false);
-
-    const handleFocus = (event: FocusEvent) => {
-      if (event.target !== addButtonRef.current) {
-        setFocusInside(true);
-      }
-    };
-
-    const handleBlur = () => {
-      setFocusInside(false);
-    };
-
     const contextValue = useMemo(
       () => ({
-        registerItem,
         variant,
-        setSelected,
-        selected,
-        setActive,
-        focusInside,
         handleClose,
       }),
-      [variant, setSelected, selected, registerItem, focusInside, handleClose],
+      [variant, handleClose],
     );
 
     return (
@@ -168,8 +146,6 @@ export const TabListNext = forwardRef<HTMLDivElement, TabListNextProps>(
           )}
           ref={handleRef}
           onKeyDown={handleKeyDown}
-          onFocus={handleFocus}
-          onBlur={handleBlur}
           {...rest}
         >
           {visible}

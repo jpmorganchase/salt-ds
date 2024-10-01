@@ -23,9 +23,17 @@ import { useTabsNext } from "./TabsNextContext";
 const withBaseName = makePrefixer("saltTabNext");
 
 export interface TabNextProps extends ComponentPropsWithoutRef<"div"> {
-  /* Value prop is mandatory and must be unique in order for overflow to work. */
+  /**
+   * If `true`, the tab will be disabled.
+   */
   disabled?: boolean;
+  /**
+   * The value of the tab.
+   */
   value: string;
+  /**
+   * If `true`, the tab will be closable.
+   */
   closable?: boolean;
 }
 
@@ -53,10 +61,9 @@ export const TabNext = forwardRef<HTMLDivElement, TabNextProps>(
       window: targetWindow,
     });
 
-    const { selected, setSelected, setActive } = useTabsNext();
+    const { selected, setSelected } = useTabsNext();
 
-    const { registerItem, variant, focusInside, handleClose } =
-      useTabListNext();
+    const { variant, handleClose } = useTabListNext();
     const { registerTab, getPanelId } = useTabsNext();
 
     const disabled = disabledProp;
@@ -78,19 +85,12 @@ export const TabNext = forwardRef<HTMLDivElement, TabNextProps>(
     };
 
     useEffect(() => {
-      if (value && tabRef.current) {
-        return registerItem({ id: value, element: tabRef.current });
-      }
-    }, [value, registerItem]);
-
-    useEffect(() => {
-      if (value && id) {
-        return registerTab(id, value);
+      if (value && id && tabRef.current) {
+        return registerTab({ id, value, element: tabRef.current });
       }
     }, [value, id, registerTab]);
 
     const closeButtonId = useId();
-    const labelId = useId();
 
     const wasMouseDown = useRef(false);
     const [focusVisible, setFocusVisible] = useState(false);
@@ -106,8 +106,6 @@ export const TabNext = forwardRef<HTMLDivElement, TabNextProps>(
       }
 
       wasMouseDown.current = false;
-
-      setActive(value);
     };
 
     const handleBlur = (event: FocusEvent<HTMLDivElement>) => {
@@ -129,8 +127,10 @@ export const TabNext = forwardRef<HTMLDivElement, TabNextProps>(
     const handleCloseButtonKeyDown = (
       event: KeyboardEvent<HTMLButtonElement>,
     ) => {
+      if (!id) return;
+
       if (event.key === "Enter" || event.key === " ") {
-        handleClose(event, value);
+        handleClose(event, id);
         event.stopPropagation();
       }
     };
@@ -152,7 +152,6 @@ export const TabNext = forwardRef<HTMLDivElement, TabNextProps>(
           },
           className,
         )}
-        data-value={value}
         data-overflowitem
         ref={ref}
         onClick={!disabled ? handleClick : undefined}
@@ -166,15 +165,11 @@ export const TabNext = forwardRef<HTMLDivElement, TabNextProps>(
           aria-selected={selected === value}
           aria-disabled={disabled}
           aria-controls={panelId}
-          tabIndex={
-            (focusInside && focused) || (selected === value && !focusInside)
-              ? 0
-              : -1
-          }
+          tabIndex={focused || selected === value ? undefined : -1}
           role="tab"
           type="button"
           className={withBaseName("action")}
-          id={labelId}
+          id={id}
           ref={tabRef}
         >
           {children}
@@ -183,8 +178,8 @@ export const TabNext = forwardRef<HTMLDivElement, TabNextProps>(
           <Button
             aria-label="Dismiss tab"
             id={closeButtonId}
-            aria-labelledby={clsx(closeButtonId, labelId)}
-            tabIndex={focused || (!focusInside && selected === value) ? 0 : -1}
+            aria-labelledby={clsx(closeButtonId, id)}
+            tabIndex={focused || selected === value ? undefined : -1}
             appearance="transparent"
             sentiment="neutral"
             onClick={handleCloseButtonClick}
