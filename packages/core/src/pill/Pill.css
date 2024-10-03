@@ -18,6 +18,7 @@
   font-size: var(--salt-text-fontSize);
   font-weight: var(--salt-text-fontWeight);
   line-height: var(--salt-text-lineHeight);
+  letter-spacing: var(--salt-text-letterSpacing);
   overflow: hidden;
   white-space: nowrap;
 }
@@ -47,6 +48,13 @@
 /* Style applied to Pill on focus */
 .saltPill:focus-visible {
   outline: var(--salt-focused-outline);
+}
+
+/* Styles applied when the pill triggers a menu */
+.saltPill[aria-expanded="true"][aria-haspopup="menu"] {
+  --pill-color: var(--salt-actionable-bold-foreground-active);
+  --pill-background: var(--salt-actionable-bold-background-active);
+  --pill-borderColor: var(--salt-actionable-bold-borderColor-active);
 }
 
 /* Style applied to Pill when disabled */
