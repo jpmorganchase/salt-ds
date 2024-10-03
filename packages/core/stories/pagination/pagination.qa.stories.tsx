@@ -10,7 +10,6 @@ import {
 } from "@salt-ds/core";
 import type { Meta, StoryFn } from "@storybook/react";
 import { QAContainer, type QAContainerProps } from "docs/components";
-import { AllVariantsGrid } from "@stories/button/button.qa.stories";
 
 export default {
   title: "Core/Pagination/Pagination QA",
@@ -76,7 +75,7 @@ export const AllExamplesGrid: StoryFn<QAContainerProps> = (props) => {
   );
 };
 
-AllVariantsGrid.parameters = {
+AllExamplesGrid.parameters = {
   chromatic: {
     disableSnapshot: false,
     modes: {
