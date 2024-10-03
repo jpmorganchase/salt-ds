@@ -36,9 +36,6 @@ jobs:
             const branchName = fs.readFileSync("./METADATA/branch-name", "utf8").trim();
             core.setOutput("branchName", branchName);
 
-            const draft = fs.readFileSync("./METADATA/draft", "utf8").trim();
-            core.setOutput("draft", draft);
-
             const base = fs.readFileSync("./METADATA/base", "utf8").trim();
             core.setOutput("base", base);
 
@@ -73,7 +70,7 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           run-id: ${{ github.event.workflow_run.id }}
       - name: Publish to Chromatic
-        if: ${{ steps.run_metadata.outputs.branchName == 'main' || (steps.run_metadata.outputs.draft != 'true' && steps.run_metadata.outputs.runChromatic == 'true') }}
+        if: ${{ steps.run_metadata.outputs.branchName == 'main' || steps.run_metadata.outputs.runChromatic == 'true' }}
         uses: chromaui/action@v11.10.2
         # Chromatic GitHub Action options
         with:
