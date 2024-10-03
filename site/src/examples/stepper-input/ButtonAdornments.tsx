@@ -85,6 +85,7 @@ const CustomButtons = () => {
       <StepperInput
         hideButtons
         value={value}
+        textAlign="center"
         onChange={(_, newValue) => setValue(newValue)}
         startAdornment={
           <Button onClick={() => updateValue(-1)}>
