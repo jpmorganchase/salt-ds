@@ -8,15 +8,3 @@
   width: 600px;
   max-width: 100%;
 }
-
-.primary-container {
-  background: var(--salt-container-primary-background);
-}
-
-.secondary-container {
-  background: var(--salt-container-secondary-background);
-}
-
-.inner-container {
-  height: 100px;
-}

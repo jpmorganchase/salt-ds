@@ -54,11 +54,11 @@
   height: var(--salt-size-indicator);
 }
 
-.saltTabNext-main::after {
+.saltTabListNext-main .saltTabNext::after {
   top: 0;
 }
 
-.saltTabNext-inline::after {
+.saltTabListNext-inline .saltTabNext::after {
   bottom: 0;
 }
 
@@ -76,7 +76,7 @@
   outline: var(--salt-focused-outline);
 }
 
-.saltTabNext-main.saltTabNext-selected {
+.saltTabListNext-main .saltTabNext.saltTabNext-selected {
   background: var(--saltTabListNext-activeColor);
   border-left: var(--salt-size-border) var(--salt-separable-borderStyle) var(--salt-separable-secondary-borderColor);
   border-right: var(--salt-size-border) var(--salt-separable-borderStyle) var(--salt-separable-secondary-borderColor);

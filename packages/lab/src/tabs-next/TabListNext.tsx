@@ -122,15 +122,14 @@ export const TabListNext = forwardRef<HTMLDivElement, TabListNextProps>(
           newActive?.element?.focus({ preventScroll: true });
         }
       },
-      [getFirst, getNext, getPrevious, selected, onClose],
+      [getFirst, getNext, getPrevious, selected, onClose, setSelected],
     );
 
     const contextValue = useMemo(
       () => ({
-        variant,
         handleClose,
       }),
-      [variant, handleClose],
+      [handleClose],
     );
 
     return (

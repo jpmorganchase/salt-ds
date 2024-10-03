@@ -1,7 +1,13 @@
 import {
   Badge,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogHeader,
   FormField,
   FormFieldLabel,
+  Input,
   Panel,
   RadioButton,
   RadioButtonGroup,
@@ -61,27 +67,6 @@ const lotsOfTabs = [
   "Larger",
   "Screens",
 ];
-
-const TabsTemplate: StoryFn<typeof TabsNext> = ({ ...rest }) => {
-  return (
-    <div className="container">
-      <TabsNext {...rest}>
-        <TabListNext defaultValue={tabs[0]}>
-          {tabs.map((label) => (
-            <TabNext value={label} key={label}>
-              {label}
-            </TabNext>
-          ))}
-        </TabListNext>
-        {tabs.map((label) => (
-          <TabNextPanel value={label} key={label}>
-            {label}
-          </TabNextPanel>
-        ))}
-      </TabsNext>
-    </div>
-  );
-};
 
 export const Main: StoryFn<typeof TabsNext> = (args) => {
   return (
@@ -282,7 +267,6 @@ export const AddTabs: StoryFn<typeof TabsNext> = (args) => {
             newCount.current += 1;
 
             setTabs((old) => old.concat(newTab));
-            setValue(newTab);
           }}
         >
           {tabs.map((label) => (
@@ -308,7 +292,7 @@ export const Backgrounds = (): ReactElement => {
     <StackLayout gap={6}>
       <div style={{ alignItems: "center", width: "40vw" }}>
         <TabsNext defaultValue={tabs[0]}>
-          <TabListNext activeColor={variant}>
+          <TabListNext activeColor={variant} variant="inline">
             {tabs.map((label) => (
               <TabNext value={label} key={label}>
                 {label}
@@ -317,7 +301,7 @@ export const Backgrounds = (): ReactElement => {
           </TabListNext>
           {tabs.map((label) => (
             <TabNextPanel value={label} key={label} style={{ height: 200 }}>
-              <Panel variant={variant}>{label}</Panel>
+              {label}
             </TabNextPanel>
           ))}
         </TabsNext>
@@ -335,5 +319,141 @@ export const Backgrounds = (): ReactElement => {
         </RadioButtonGroup>
       </FormField>
     </StackLayout>
+  );
+};
+
+function AddTabDialog({
+  open,
+  onConfirm,
+  onCancel,
+}: {
+  open?: boolean;
+  onConfirm: (value: string) => void;
+  onCancel: () => void;
+}) {
+  const [value, setValue] = useState("");
+
+  return (
+    <Dialog open={open}>
+      <DialogHeader header="Add new tab" />
+      <DialogContent>
+        <FormField>
+          <FormFieldLabel>New tab name</FormFieldLabel>
+          <Input
+            value={value}
+            onChange={(event: ChangeEvent<HTMLInputElement>) => {
+              setValue(event.target.value);
+            }}
+          />
+        </FormField>
+      </DialogContent>
+      <DialogActions>
+        <Button appearance="solid" sentiment="negative" onClick={onCancel}>
+          Cancel
+        </Button>
+        <Button
+          appearance="solid"
+          sentiment="accented"
+          onClick={() => {
+            onConfirm(value);
+          }}
+        >
+          Confirm
+        </Button>
+      </DialogActions>
+    </Dialog>
+  );
+}
+
+export const AddWithDialog = () => {
+  const [tabs, setTabs] = useState(["Home", "Transactions", "Loans"]);
+  const [confirmationOpen, setConfirmationOpen] = useState(false);
+
+  const handleConfirm = (newTab: string) => {
+    setTabs((old) => old.concat(newTab));
+    setConfirmationOpen(false);
+  };
+
+  const handleCancel = () => {
+    setConfirmationOpen(false);
+  };
+
+  return (
+    <div style={{ minWidth: 0, maxWidth: "100%" }}>
+      <AddTabDialog
+        open={confirmationOpen}
+        onConfirm={handleConfirm}
+        onCancel={handleCancel}
+      />
+      <TabsNext defaultValue="Home">
+        <TabListNext
+          onAdd={() => {
+            setConfirmationOpen(true);
+          }}
+        >
+          {tabs.map((label) => (
+            <TabNext value={label} key={label}>
+              {label}
+            </TabNext>
+          ))}
+        </TabListNext>
+      </TabsNext>
+    </div>
+  );
+};
+
+function CloseConfirmationDialog({ open, onConfirm, onCancel, valueToRemove }) {
+  return (
+    <Dialog open={open}>
+      <DialogHeader header={`Remove ${valueToRemove}?`} />
+      <DialogActions>
+        <Button appearance="bordered" sentiment="accented" onClick={onCancel}>
+          No
+        </Button>
+        <Button appearance="solid" sentiment="accented" onClick={onConfirm}>
+          Yes
+        </Button>
+      </DialogActions>
+    </Dialog>
+  );
+}
+
+export const CloseWithConfirmation = () => {
+  const [tabs, setTabs] = useState(["Home", "Transactions", "Loans"]);
+  const [valueToRemove, setValueToRemove] = useState<string | undefined>(
+    undefined,
+  );
+
+  const handleConfirm = () => {
+    setTabs(tabs.filter((tab) => tab !== valueToRemove));
+    setValueToRemove(undefined);
+  };
+
+  const handleCancel = () => {
+    setValueToRemove(undefined);
+  };
+
+  return (
+    <div style={{ minWidth: 0, maxWidth: "100%" }}>
+      <CloseConfirmationDialog
+        open={!!valueToRemove}
+        valueToRemove={valueToRemove}
+        onConfirm={handleConfirm}
+        onCancel={handleCancel}
+      />
+      <TabsNext defaultValue="Home">
+        <TabListNext
+          onClose={(_event, closedTab) => {
+            setValueToRemove(closedTab);
+          }}
+        >
+          {tabs.map((label) => (
+            <TabNext value={label} key={label} closable={tabs.length > 1}>
+              {label}
+            </TabNext>
+          ))}
+        </TabListNext>
+      </TabsNext>
+    </div>
   );
 };

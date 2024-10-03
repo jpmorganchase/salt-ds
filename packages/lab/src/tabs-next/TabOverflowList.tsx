@@ -76,7 +76,7 @@ export const TabOverflowList = forwardRef<HTMLDivElement, TabOverflowListProps>(
 
     const handleFocusOutside = useCallback(() => {
       setOpen(false);
-    }, []);
+    }, [setOpen]);
 
     useFocusOutside(listRef, handleFocusOutside);
 
@@ -96,7 +96,7 @@ export const TabOverflowList = forwardRef<HTMLDivElement, TabOverflowListProps>(
       }, 0);
 
       setOpen(false);
-    }, []);
+    }, [tabstripRef, setOpen]);
     useDismissWithEscape(handleDismiss, open);
 
     const handleClick = () => {

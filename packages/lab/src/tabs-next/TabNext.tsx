@@ -63,7 +63,7 @@ export const TabNext = forwardRef<HTMLDivElement, TabNextProps>(
 
     const { selected, setSelected } = useTabsNext();
 
-    const { variant, handleClose } = useTabListNext();
+    const { handleClose } = useTabListNext();
     const { registerTab, getPanelId } = useTabsNext();
 
     const disabled = disabledProp;
@@ -144,7 +144,6 @@ export const TabNext = forwardRef<HTMLDivElement, TabNextProps>(
       <div
         className={clsx(
           withBaseName(),
-          withBaseName(variant),
           {
             [withBaseName("selected")]: selected === value,
             [withBaseName("disabled")]: disabled,
@@ -176,7 +175,7 @@ export const TabNext = forwardRef<HTMLDivElement, TabNextProps>(
         </button>
         {closable ? (
           <Button
-            aria-label="Dismiss tab"
+            aria-label="Close tab"
             id={closeButtonId}
             aria-labelledby={clsx(closeButtonId, id)}
             tabIndex={focused || selected === value ? undefined : -1}

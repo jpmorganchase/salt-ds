@@ -1,7 +1,15 @@
 import * as tabsStories from "@stories/tabs-next/tabs-next.stories";
 import { composeStories } from "@storybook/react";
 
-const { Main, DisabledTabs, Overflow } = composeStories(tabsStories);
+const {
+  Main,
+  DisabledTabs,
+  Overflow,
+  AddTabs,
+  Closable,
+  AddWithDialog,
+  CloseWithConfirmation,
+} = composeStories(tabsStories);
 
 describe("Given a Tabstrip", () => {
   it("should render with tablist and tab roles", () => {
@@ -137,5 +145,147 @@ describe("Given a Tabstrip", () => {
     cy.findByRole("tab", { name: "Checks" })
       .should("have.attr", "aria-selected", "true")
       .should("be.focused");
+  });
+
+  it("should support adding tabs", () => {
+    cy.mount(<AddTabs />);
+    cy.findAllByRole("tab").should("have.length", 3);
+    cy.findByRole("tab", { name: "Home" }).should(
+      "have.attr",
+      "aria-selected",
+      "true",
+    );
+    cy.findByRole("button", { name: "Add Tab" }).realClick();
+    cy.findAllByRole("tab").should("have.length", 4);
+    cy.findByRole("tab", { name: "Home" }).should(
+      "have.attr",
+      "aria-selected",
+      "true",
+    );
+    cy.findByRole("tab", { name: "New tab" }).should("be.visible");
+    cy.findByRole("button", { name: "Add Tab" }).should("be.focused");
+  });
+
+  it("should support adding tabs with confirmation", () => {
+    cy.mount(<AddWithDialog />);
+    cy.findAllByRole("tab").should("have.length", 3);
+    cy.findByRole("tab", { name: "Home" }).should(
+      "have.attr",
+      "aria-selected",
+      "true",
+    );
+    cy.findByRole("button", { name: "Add Tab" }).realClick();
+
+    cy.findByRole("dialog").should("be.visible");
+    cy.findByLabelText("New Tab name").realClick();
+    cy.realType("New tab");
+    cy.findByRole("button", { name: "Confirm" }).realClick();
+
+    cy.findAllByRole("tab").should("have.length", 4);
+    cy.findByRole("tab", { name: "New tab" }).should("be.visible");
+    cy.findByRole("tab", { name: "Home" }).should(
+      "have.attr",
+      "aria-selected",
+      "true",
+    );
+    cy.findByRole("button", { name: "Add Tab" }).should("be.focused");
+  });
+
+  it("should support closing tabs with a mouse", () => {
+    cy.mount(<Closable />);
+
+    cy.findByRole("tab", { name: "Home" }).should(
+      "have.attr",
+      "aria-selected",
+      "true",
+    );
+    cy.findAllByRole("tab").should("have.length", 5);
+
+    cy.findByRole("button", { name: "Close tab Liquidity" }).realClick();
+    cy.findAllByRole("tab").should("have.length", 4);
+    cy.findByRole("tab", { name: "Home" }).should(
+      "have.attr",
+      "aria-selected",
+      "true",
+    );
+    cy.findByRole("tab", { name: "Checks" }).should("be.focused");
+
+    cy.findByRole("button", { name: "Close tab Loans" }).realClick();
+    cy.findAllByRole("tab").should("have.length", 3);
+    cy.findByRole("tab", { name: "Home" }).should(
+      "have.attr",
+      "aria-selected",
+      "true",
+    );
+    cy.findByRole("tab", { name: "Checks" }).should("be.focused");
+
+    cy.findByRole("button", { name: "Close tab Home" }).realClick();
+    cy.findAllByRole("tab").should("have.length", 2);
+    cy.findByRole("tab", { name: "Transactions" }).should(
+      "have.attr",
+      "aria-selected",
+      "true",
+    );
+    cy.findByRole("tab", { name: "Transactions" }).should("be.focused");
+  });
+
+  it("should support closing with a keyboard", () => {
+    cy.mount(<Closable />);
+    cy.findAllByRole("tab").should("have.length", 5);
+
+    cy.realPress("Tab");
+    cy.findByRole("tab", { name: "Home" }).should("be.focused");
+
+    cy.realPress("Tab");
+    cy.findByRole("button", { name: "Close tab Home" }).should("be.focused");
+
+    cy.realPress("ArrowRight");
+    cy.findByRole("tab", { name: "Transactions" }).should("be.focused");
+
+    cy.realPress("Tab");
+    cy.findByRole("button", { name: "Close tab Transactions" }).should(
+      "be.focused",
+    );
+
+    cy.realPress(["Shift", "Tab"]);
+    cy.findByRole("tab", { name: "Transactions" }).should("be.focused");
+
+    cy.realPress(["Shift", "Tab"]);
+    cy.findByRole("button", { name: "Close tab Home" }).should("be.focused");
+
+    cy.realPress("Enter");
+
+    cy.findAllByRole("tab").should("have.length", 4);
+    cy.findByRole("tab", { name: "Transactions" }).should(
+      "have.attr",
+      "aria-selected",
+      "true",
+    );
+    cy.findByRole("tab", { name: "Transactions" }).should("be.focused");
+  });
+
+  it("should support close with confirmation", () => {
+    cy.mount(<CloseWithConfirmation />);
+    cy.findAllByRole("tab").should("have.length", 5);
+
+    cy.findAllByRole("button", { name: "Close tab Home" }).realClick();
+    cy.findByRole("dialog").should("be.visible");
+
+    cy.findByRole("button", { name: "Cancel" }).realClick();
+    cy.findByRole("dialog").should("not.be.visible");
+    cy.findByRole("button", { name: "Close tab Home" }).should("be.focused");
+
+    cy.findAllByRole("button", { name: "Close tab Home" }).realClick();
+    cy.findByRole("dialog").should("be.visible");
+
+    cy.findByRole("button", { name: "Confirm" }).realClick();
+    cy.findByRole("dialog").should("not.be.visible");
+    cy.findAllByRole("tab").should("have.length", 4);
+    cy.findByRole("tab", { name: "Transactions" }).should(
+      "have.attr",
+      "aria-selected",
+      "true",
+    );
+    cy.findByRole("tab", { name: "Transactions" }).should("be.focused");
   });
 });
