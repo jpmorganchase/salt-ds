@@ -21,7 +21,10 @@ const RefreshAdornment = () => {
         step={5}
         stepBlock={50}
         endAdornment={
-          <Button onClick={() => setValue(defaultValue)}>
+          <Button
+            onClick={() => setValue(defaultValue)}
+            appearance="transparent"
+          >
             <RefreshIcon aria-label="Reset to default" />
           </Button>
         }
@@ -45,7 +48,7 @@ const SyncAdornment = () => {
 
   return (
     <FormField>
-      <FormFieldLabel>Refresh adornment</FormFieldLabel>
+      <FormFieldLabel>Sync adornment</FormFieldLabel>
       <StepperInput
         value={value}
         onChange={(_, newValue) => setValue(newValue)}
@@ -53,7 +56,10 @@ const SyncAdornment = () => {
         step={0.01}
         stepBlock={0.1}
         endAdornment={
-          <Button onClick={() => setValue(randomLiveValue)}>
+          <Button
+            onClick={() => setValue(randomLiveValue)}
+            appearance="transparent"
+          >
             <SyncIcon aria-label="Sync live value" />
           </Button>
         }

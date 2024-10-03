@@ -10,8 +10,7 @@ data:
 
 ## Best practices
 
-- Wrap `StepperInput` in [`FormField`](/salt/components/form-field) to provide the field with a visible label, help text and a status message for validation feedback. This will ensure it complies with accessibility guidelines. You can find more information [in the W3C form instructions](https://www.w3.org/WAI/tutorials/forms/instructions/).
-- `aria-valuenow`, `aria-valuemax`, and `aria-valuemin` attributes are set to provide users with information about the current value, and the allowable range of values.
+Wrap `StepperInput` in [`FormField`](/salt/components/form-field) to provide the field with a visible label, help text and a status message for validation feedback. This will ensure it complies with accessibility guidelines. You can find more information [in the W3C form instructions](https://www.w3.org/WAI/tutorials/forms/instructions/).
 
 ## Keyboard interactions
 
@@ -20,44 +19,44 @@ Stepper input inherits keyboard interactions from [`Input`](/salt/components/inp
 The following interactions are specific to Stepper Input.
 
 <KeyboardControls>
-<KeyboardControl keyOrCombos="Up Arrow">
+<KeyboardControl keyOrCombos="Up arrow">
 
-When the input area has focus, increases the number by the increment value (default to 1), up to the maximum value if set.
+When the input area has focus, Up arrow increases the number by the increment value (default to 1), up to the maximum value if set.
 
 </KeyboardControl>
-<KeyboardControl keyOrCombos="Shift + Up Arrow">
+<KeyboardControl keyOrCombos="Shift + Up arrow">
  
-When the input area has focus, increases the number by the step block value (default to 10), up to the maximum value if set.
+When the input area has focus, this action increases the number by the step block value (default to 10), up to the maximum value if set.
 
 </KeyboardControl>
-<KeyboardControl keyOrCombos="Page Up">
+<KeyboardControl keyOrCombos="Page up">
 
-When the input area has focus, increases the number by the step block value (default to 10), up to the maximum value if set.
+When the input area has focus, Page up increases the number by the step block value (default to 10), up to the maximum value if set.
 
 </KeyboardControl>
 <KeyboardControl keyOrCombos="End">
 
-When the input area has focus, increases the number to the maximum value.
+When the input area has focus, End increases the number to the maximum value.
 
 </KeyboardControl>
-<KeyboardControl keyOrCombos="Down Arrow">
+<KeyboardControl keyOrCombos="Down arrow">
 
-When the input area has focus, decresase the number by the increment value (default to 1), up to the minimum value if set.
+When the input area has focus, Down arrow decresases the number by the increment value (default to 1), up to the minimum value if set.
 
 </KeyboardControl>
-<KeyboardControl keyOrCombos="Shift + Down Arrow">
+<KeyboardControl keyOrCombos="Shift + Down arrow">
  
-When the input area has focus, decreases the number by the step block value (default to 10), up to the maximum value if set.
+When the input area has focus, this action decreases the number by the step block value (default to 10), up to the maximum value if set.
 
 </KeyboardControl>
-<KeyboardControl keyOrCombos="Page Down">
+<KeyboardControl keyOrCombos="Page down">
  
-When the input area has focus, decreases the number by the step block value (default to 10), up to the maximum value if set.
+When the input area has focus, Page down decreases the number by the step block value (default to 10), up to the maximum value if set.
 
 </KeyboardControl>
 <KeyboardControl keyOrCombos="Home">
 
-When the input area has focus, increases the number to the minimum value.
+When the input area has focus, Home decreases the number to the minimum value.
 
 </KeyboardControl>
 </KeyboardControls>

@@ -13,14 +13,14 @@ data:
 
 ## Default
 
-Stepper input has a default value of 0, an increment value of 1 and a block value of 10, and you can only use it to accept numeric characters. A single click increases or decreases the value in the input by 1.
+Stepper input has an increment step value of 1 and a step block value of 10, and you can only use it to accept numeric characters.
 
 </LivePreview>
 <LivePreview componentName="stepper-input" exampleName="Variants" >
 
 ## Variants
 
-The component comes in two variants: primary and secondary. By default, the primary variant is selected. To switch to the secondary variant, use `variant="secondary"`. When choosing between the primary and secondary variants, consider the background color on which the component will be placed.
+The component comes in two variants: primary and secondary, with default set to primary. To switch to the secondary variant, use `variant="secondary"`. When choosing between the primary and secondary variants, consider the background color on which the component will be placed.
 
 </LivePreview>
 <LivePreview componentName="stepper-input" exampleName="Bordered" >
@@ -115,7 +115,9 @@ You can set stepper input to a read-only state. The user can't edit the value te
 
 By default, the marker is an em dash. If your application requires a different marker, you can set it via the `emptyReadOnlyMarker` prop.
 
-- Use the read-only state when the user needs the value for their flow or current task but cannot edit it, for example, because of user permissions.
+### Best practices
+
+Use the read-only state when the user needs the value for their flow or current task but cannot edit it, for example, because of user permissions.
 
 </LivePreview>
 <LivePreview componentName="stepper-input" exampleName="TextAlignment" >
@@ -125,6 +127,8 @@ By default, the marker is an em dash. If your application requires a different m
 To aid visual flow, the numeric value sits directly beneath the label and other form field elements, which are left aligned by default. If you need to change the stepper input’s alignment to suit your particular use case or layout, you can configure it to be right or center aligned.
 
 Use the `textAlign` prop to change the alignment to “center” or “right.”
+
+### Best practices
 
 - Numeric values often have right alignment to make comparing them easier. However, sometimes number fields don't relate to each other or mix with text fields in a form, so left alignment may promote better visual flow.
 - You may choose to center-align an input field to bring emphasis to a value. However, this should be the exception, and you should use it sparingly.

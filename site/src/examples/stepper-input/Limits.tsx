@@ -10,7 +10,9 @@ export const Limits = () => {
   const numericValue =
     typeof value === "number" ? value : Number.parseFloat(value);
   const isError =
-    typeof value !== "number" || numericValue > max || numericValue < min;
+    typeof numericValue !== "number" ||
+    numericValue > max ||
+    numericValue < min;
 
   return (
     <FormField
