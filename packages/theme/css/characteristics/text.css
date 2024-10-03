@@ -83,7 +83,7 @@
 /* Sizes by density */
 .salt-density-touch {
   --salt-text-h1-fontSize: 42px;
-  --salt-text-h1-lineHeight: 54px;
+  --salt-text-h1-lineHeight: 56px;
 
   --salt-text-h2-fontSize: 32px;
   --salt-text-h2-lineHeight: 42px;
@@ -92,14 +92,14 @@
   --salt-text-h3-lineHeight: 32px;
 
   --salt-text-h4-fontSize: 16px;
-  --salt-text-h4-lineHeight: 20px;
+  --salt-text-h4-lineHeight: 22px;
 
   --salt-text-label-fontSize: 14px;
   --salt-text-label-lineHeight: 18px;
 
   --salt-text-fontSize: 16px;
-  --salt-text-lineHeight: 20px;
-  --salt-text-minHeight: 20px;
+  --salt-text-lineHeight: 22px;
+  --salt-text-minHeight: 22px;
 
   --salt-text-display1-fontSize: 84px;
   --salt-text-display1-lineHeight: 109px;
@@ -108,10 +108,10 @@
   --salt-text-display2-lineHeight: 76px;
 
   --salt-text-display3-fontSize: 42px;
-  --salt-text-display3-lineHeight: 54px;
+  --salt-text-display3-lineHeight: 56px;
 
   --salt-text-display4-fontSize: 42px;
-  --salt-text-display4-lineHeight: 54px;
+  --salt-text-display4-lineHeight: 56px;
 
   --salt-text-notation-fontSize: 14px;
   --salt-text-notation-lineHeight: 18px;
@@ -210,7 +210,7 @@
   --salt-text-minHeight: 14px;
 
   --salt-text-display1-fontSize: 42px;
-  --salt-text-display1-lineHeight: 54px;
+  --salt-text-display1-lineHeight: 56px;
 
   --salt-text-display2-fontSize: 28px;
   --salt-text-display2-lineHeight: 36px;
