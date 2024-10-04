@@ -35,12 +35,14 @@ const RefreshAdornment = () => {
 };
 
 const SyncAdornment = () => {
-  const [randomLiveValue, setRandomLiveValue] = useState(14.75);
+  const [randomLiveValue, setRandomLiveValue] = useState("14.75");
   const [value, setValue] = useState<number | string>(randomLiveValue);
   useEffect(() => {
     const intervalId = setInterval(() => {
-      const randomDelta = Math.floor(Math.random() * (1000 - 100) + 100) / 100;
-      setRandomLiveValue((prev) => prev + randomDelta);
+      const randomDelta = Number.parseFloat((Math.random() * 2 - 1).toFixed(2));
+      setRandomLiveValue((prev) =>
+        (Number.parseFloat(prev) + randomDelta).toFixed(2),
+      );
     }, 500);
 
     return () => clearInterval(intervalId);
@@ -64,7 +66,7 @@ const SyncAdornment = () => {
           </Button>
         }
       />
-      <FormFieldHelperText>Custom step 5 and step block 50</FormFieldHelperText>
+      <FormFieldHelperText>Live value {randomLiveValue}</FormFieldHelperText>
     </FormField>
   );
 };
