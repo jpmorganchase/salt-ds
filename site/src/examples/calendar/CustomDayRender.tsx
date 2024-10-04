@@ -21,8 +21,6 @@ export const CustomDayRender = (): ReactElement => (
   <Calendar selectionVariant="single" className="CustomDayRender">
     <CalendarNavigation />
     <CalendarWeekHeader />
-    <CalendarGrid
-      getCalendarMonthProps={(date) => ({ renderDayContents })}
-    />
+    <CalendarGrid getCalendarMonthProps={(date) => ({ renderDayContents })} />
   </Calendar>
 );

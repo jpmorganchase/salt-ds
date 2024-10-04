@@ -60,10 +60,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
     cy.realPress("Tab");
     cy.findByRole("textbox").should("have.value", initialDateValue);
     cy.get("@selectionChangeSpy").should("have.been.calledOnce");
-    cy.get("@selectionChangeSpy").should(
-      "have.been.calledWith",
-      initialDate,
-    );
+    cy.get("@selectionChangeSpy").should("have.been.calledWith", initialDate);
     // Simulate entering an invalid date
     cy.findByRole("textbox").click().clear().type("bad date");
     cy.realPress("Tab");
@@ -72,10 +69,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
     cy.findByRole("textbox").click().clear().type(updatedFormattedDateValue);
     cy.realPress("Tab");
     cy.get("@selectionChangeSpy").should("have.been.calledThrice");
-    cy.get("@selectionChangeSpy").should(
-      "have.been.calledWith",
-      updatedDate,
-    );
+    cy.get("@selectionChangeSpy").should("have.been.calledWith", updatedDate);
   });
 
   it("SHOULD only be able to select a date between min/max", () => {
@@ -277,10 +271,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
       cy.document()
         .find("input")
         .should("have.value", formatDate(updatedDate, testLocale));
-      cy.get("@selectionChangeSpy").should(
-        "have.been.calledWith",
-        updatedDate,
-      );
+      cy.get("@selectionChangeSpy").should("have.been.calledWith", updatedDate);
       // Simulate clicking the "Apply" button
       cy.findByRole("button", { name: "Apply" }).realClick();
       // Verify that the calendar is closed and the new date is applied
