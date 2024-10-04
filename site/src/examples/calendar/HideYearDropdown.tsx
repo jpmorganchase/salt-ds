@@ -1,6 +1,6 @@
 import {
   Calendar,
-  CalendarDateGrid,
+  CalendarGrid,
   CalendarNavigation,
   CalendarWeekHeader,
 } from "@salt-ds/lab";
@@ -9,6 +9,6 @@ export const HideYearDropdown = (): ReactElement => (
   <Calendar selectionVariant="single">
     <CalendarNavigation hideYearDropdown />
     <CalendarWeekHeader />
-    <CalendarDateGrid />
+    <CalendarGrid />
   </Calendar>
 );

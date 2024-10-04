@@ -1,7 +1,7 @@
 import { CalendarDate } from "@internationalized/date";
 import {
   Calendar,
-  CalendarDateGrid,
+  CalendarGrid,
   CalendarNavigation,
   CalendarWeekHeader,
 } from "@salt-ds/lab";
@@ -53,6 +53,6 @@ export const Multiselect = (): ReactElement => (
   >
     <CalendarNavigation />
     <CalendarWeekHeader />
-    <CalendarDateGrid />
+    <CalendarGrid />
   </Calendar>
 );

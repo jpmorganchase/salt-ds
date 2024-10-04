@@ -12,7 +12,7 @@ import {
 import { Button, Divider, StackLayout } from "@salt-ds/core";
 import {
   Calendar,
-  CalendarDateGrid,
+  CalendarGrid,
   type CalendarMultiSelectProps,
   CalendarNavigation,
   type CalendarProps,
@@ -38,7 +38,7 @@ export default {
       <>
         <CalendarNavigation />
         <CalendarWeekHeader />
-        <CalendarDateGrid />
+        <CalendarGrid />
       </>
     ),
   },
@@ -49,7 +49,7 @@ const Template: StoryFn<typeof Calendar> = (args) => {
     <Calendar {...args}>
       <CalendarNavigation />
       <CalendarWeekHeader />
-      <CalendarDateGrid />
+      <CalendarGrid />
     </Calendar>
   );
 };
@@ -119,7 +119,7 @@ export const Multiselect: StoryFn<
     >
       <CalendarNavigation />
       <CalendarWeekHeader />
-      <CalendarDateGrid />
+      <CalendarGrid />
     </Calendar>
   );
 };
@@ -164,7 +164,7 @@ export const HideOutOfRangeDates: StoryFn<typeof Calendar> = (args) => {
     <Calendar hideOutOfRangeDates {...args}>
       <CalendarNavigation />
       <CalendarWeekHeader />
-      <CalendarDateGrid />
+      <CalendarGrid />
     </Calendar>
   );
 };
@@ -174,7 +174,7 @@ export const HideYearDropdown: StoryFn<typeof Calendar> = (args) => {
     <Calendar {...args}>
       <CalendarNavigation hideYearDropdown />
       <CalendarWeekHeader />
-      <CalendarDateGrid />
+      <CalendarGrid />
     </Calendar>
   );
 };
@@ -202,7 +202,7 @@ export const TodayButton: StoryFn<
       <StackLayout gap={0}>
         <CalendarNavigation />
         <CalendarWeekHeader />
-        <CalendarDateGrid />
+        <CalendarGrid />
         <Divider />
         <Button
           style={{ margin: "var(--salt-spacing-50)" }}
@@ -227,7 +227,7 @@ export const CustomDayRender: StoryFn<typeof Calendar> = (args) => {
     <Calendar {...args}>
       <CalendarNavigation />
       <CalendarWeekHeader />
-      <CalendarDateGrid
+      <CalendarGrid
         getCalendarMonthProps={(date) => ({ renderDayContents })}
       />
     </Calendar>
@@ -284,7 +284,7 @@ export const TwinCalendars: StoryFn<
       >
         <CalendarNavigation />
         <CalendarWeekHeader />
-        <CalendarDateGrid />
+        <CalendarGrid />
       </Calendar>
       <Calendar
         selectionVariant="range"
@@ -302,7 +302,7 @@ export const TwinCalendars: StoryFn<
       >
         <CalendarNavigation />
         <CalendarWeekHeader />
-        <CalendarDateGrid />
+        <CalendarGrid />
       </Calendar>
     </div>
   );
@@ -312,7 +312,7 @@ export const WithLocale: StoryFn<typeof Calendar> = (args) => (
   <Calendar {...args} locale="es-ES">
     <CalendarNavigation />
     <CalendarWeekHeader />
-    <CalendarDateGrid />
+    <CalendarGrid />
   </Calendar>
 );
 
@@ -323,6 +323,6 @@ export const Bordered: StoryFn<typeof Calendar> = (args) => (
       YearDropdownProps={{ bordered: true }}
     />
     <CalendarWeekHeader />
-    <CalendarDateGrid />
+    <CalendarGrid />
   </Calendar>
 );
