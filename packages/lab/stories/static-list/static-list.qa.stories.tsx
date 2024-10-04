@@ -15,7 +15,6 @@ export default {
   title: "Lab/Static List/Static List QA",
   component: StaticList,
 } as Meta<typeof StaticList>;
-const id = useId();
 
 export const AllExamples: StoryFn<QAContainerProps> = () => (
   <QAContainer cols={4} width={1300} itemPadding={5} vertical transposeDensity>
@@ -48,48 +47,51 @@ export const AllExamples: StoryFn<QAContainerProps> = () => (
       ))}
     </StaticList>
     <StaticList style={{ width: "320px" }}>
-      {complexEventsData.map(({ title, time }) => (
-        <StaticListItem key={title}>
-          <StaticListItemContent>
-            <StackLayout gap={0.5}>
-              <Text color="inherit" id={`label-${id}-${title}`}>
-                {title}
-              </Text>
-              <Text
-                styleAs="label"
-                color="secondary"
-                id={`secondary-label-${id}-${title}`}
-              >
-                {time}
-              </Text>
-            </StackLayout>
-          </StaticListItemContent>
-          <Button
-            id={`information-button-${id}-${title}`}
-            appearance="transparent"
-            aria-label="Zoom information"
-            aria-labelledby={clsx(
-              `label-${id}-${title}`,
-              `secondary-label-${id}-${title}`,
-              `information-button-${id}-${title}`,
-            )}
-          >
-            <VideoIcon aria-hidden />
-          </Button>
-          <Button
-            id={`options-button-${id}`}
-            appearance="transparent"
-            aria-label="More options"
-            aria-labelledby={clsx(
-              `label-${id}-${title}`,
-              `secondary-label-${id}-${title}`,
-              `options-button-${id}-${title}`,
-            )}
-          >
-            <OverflowMenuIcon aria-hidden />
-          </Button>
-        </StaticListItem>
-      ))}
+      {complexEventsData.map(({ title, time }) => {
+        const id = useId();
+        return (
+          <StaticListItem key={title}>
+            <StaticListItemContent>
+              <StackLayout gap={0.5}>
+                <Text color="inherit" id={`label-${id}`}>
+                  {title}
+                </Text>
+                <Text
+                  styleAs="label"
+                  color="secondary"
+                  id={`secondary-label-${id}`}
+                >
+                  {time}
+                </Text>
+              </StackLayout>
+            </StaticListItemContent>
+            <Button
+              id={`information-button-${id}`}
+              appearance="transparent"
+              aria-label="Zoom information"
+              aria-labelledby={clsx(
+                `label-${id}`,
+                `secondary-label-${id}`,
+                `information-button-${id}`,
+              )}
+            >
+              <VideoIcon aria-hidden />
+            </Button>
+            <Button
+              id={`options-button-${id}`}
+              appearance="transparent"
+              aria-label="More options"
+              aria-labelledby={clsx(
+                `label-${id}`,
+                `secondary-label-${id}`,
+                `options-button-${id}`,
+              )}
+            >
+              <OverflowMenuIcon aria-hidden />
+            </Button>
+          </StaticListItem>
+        );
+      })}
     </StaticList>
     <StaticList style={{ width: "320px" }}>
       {complexEventsData.map(({ title, time }) => (
