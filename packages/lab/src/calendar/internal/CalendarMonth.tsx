@@ -69,7 +69,7 @@ export const CalendarMonth = forwardRef<HTMLDivElement, CalendarMonthProps>(
         {...rest}
       >
         <div
-          data-testid="CalendarDateGrid"
+          data-testid="CalendarGrid"
           className={withBaseName("dateGrid")}
         >
           {days.map((day) => {
