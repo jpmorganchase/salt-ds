@@ -47,18 +47,18 @@ describe("parseCalendarDate", () => {
     });
   });
 
-  it("should parse numeric date with no 0 prefix", () => {
-    const result = parseCalendarDate("1/2/2023", "en-GB");
-    expect(result).toMatchObject({
-      date: { year: 2023, month: 2, day: 1 },
-      error: false,
-    });
-  });
-
   it("should parse numeric month with hyphen separator", () => {
     const result = parseCalendarDate("12-01-2023", "en-GB");
     expect(result).toMatchObject({
       date: { year: 2023, month: 1, day: 12 },
+      error: false,
+    });
+  });
+
+  it("should parse numeric date with no 0 prefix", () => {
+    const result = parseCalendarDate("1/2/2023", "en-GB");
+    expect(result).toMatchObject({
+      date: { year: 2023, month: 2, day: 1 },
       error: false,
     });
   });
