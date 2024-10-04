@@ -147,9 +147,10 @@ export interface DateInputSingleProps<T = SingleDateSelection>
   /**
    * Function to parse date string to valid `DateValue` or null, if invalid or empty.
    * @param inputDate - The input date string.
+   * @param locale - the locale for the parsed date
    * @returns The result of the date input single parser.
    */
-  parse?: (inputDate: string) => DateInputSingleParserResult;
+  parse?: (inputDate: string, locale: string) => DateInputSingleParserResult;
   /**
    * Called when input value changes, either due to user interaction or programmatic formatting of valid dates.
    * @param newValue - The new date input value.
@@ -280,7 +281,7 @@ export const DateInputSingle = forwardRef<HTMLDivElement, DateInputSingleProps>(
       : dateInputPropsRequired;
 
     const apply = (event: SyntheticEvent) => {
-      const { date: parsedDate, error } = parse(dateValue ?? "");
+      const { date: parsedDate, error } = parse(dateValue ?? "", locale);
       let newDate = parsedDate;
       if (newDate) {
         const formattedDate = format(newDate);

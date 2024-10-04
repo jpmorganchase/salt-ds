@@ -191,9 +191,10 @@ export interface DateInputRangeProps<T = DateRangeSelection>
   /**
    * Function to parse date string to valid `DateValue` or null, if invalid.
    * @param inputDate - The input date string.
+   * @param locale - the locale for the parsed date
    * @returns The result of the date input range parser.
    */
-  parse?: (inputDate: string) => DateInputRangeParserResult;
+  parse?: (inputDate: string, locale: string) => DateInputRangeParserResult;
   /**
    * Locale of the entered date.
    */
@@ -360,9 +361,11 @@ export const DateInputRange = forwardRef<HTMLDivElement, DateInputRangeProps>(
     const apply = (event: SyntheticEvent) => {
       const { date: newStartDate, error: startDateError } = parse(
         dateValue.startDate ?? "",
+        locale,
       );
       const { date: newEndDate, error: endDateError } = parse(
         dateValue.endDate || "",
+        locale,
       );
 
       const hasDateChanged = (
