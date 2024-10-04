@@ -1,4 +1,4 @@
-import { ListBox, Option } from "@salt-ds/core";
+import { ListBox, Option, OptionGroup } from "@salt-ds/core";
 import type { Meta, StoryFn } from "@storybook/react";
 import { QAContainer, type QAContainerProps } from "docs/components";
 import { shortColorData } from "../assets/exampleData";
@@ -27,6 +27,13 @@ export const AllExamples: StoryFn<QAContainerProps> = () => (
       {shortColorData.map((color) => (
         <Option key={color} value={color} />
       ))}
+    </ListBox>
+    <ListBox>
+      <OptionGroup label="B">
+        {shortColorData.slice(0, 4).map((color) => (
+          <Option key={color} value={color} />
+        ))}
+      </OptionGroup>
     </ListBox>
   </QAContainer>
 );

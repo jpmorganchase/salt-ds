@@ -104,7 +104,7 @@ export const Dialog = forwardRef<HTMLDivElement, DialogProps>(
 
     const id = useId(idProp);
 
-    const currentbreakpoint = useCurrentBreakpoint();
+    const currentBreakpoint = useCurrentBreakpoint();
 
     const [showComponent, setShowComponent] = useState(false);
 
@@ -154,7 +154,7 @@ export const Dialog = forwardRef<HTMLDivElement, DialogProps>(
             }}
             className={clsx(
               withBaseName(),
-              withBaseName(size, currentbreakpoint),
+              withBaseName(size, currentBreakpoint),
               {
                 [withBaseName("enterAnimation")]: open,
                 [withBaseName("exitAnimation")]: !open,
