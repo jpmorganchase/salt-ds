@@ -18,11 +18,6 @@ export type RangeTimeFields = {
   endTime?: TimeFields;
 };
 
-/**
- * Parses a string into a CalendarDate.
- * @param inputDate - The input date string.
- * @returns An object containing the parsed date and any error encountered.
- */
 export function getMonthNames(locale: string): { [key: string]: number } {
   const monthNames: { [key: string]: number } = {};
   const date = new Date(2000, 0, 1);
@@ -36,6 +31,11 @@ export function getMonthNames(locale: string): { [key: string]: number } {
   return monthNames;
 }
 
+/**
+ * Parses a string into a CalendarDate.
+ * @param inputDate - The input date string.
+ * @returns An object containing the parsed date and any error encountered.
+ */
 export function parseCalendarDate(
   inputDate: string,
   locale: string = getCurrentLocale(),
