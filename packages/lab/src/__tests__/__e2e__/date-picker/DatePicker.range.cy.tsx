@@ -61,11 +61,11 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
   };
 
   it("SHOULD only be able to select a date between min/max", () => {
-    const selectedDateChangeSpy = cy.stub().as("selectedDateChangeSpy");
+    const selectionChangeSpy = cy.stub().as("selectionChangeSpy");
     cy.mount(
       <RangeWithMinMaxDate
         defaultSelectedDate={initialRangeDate}
-        onSelectedDateChange={selectedDateChangeSpy}
+        onSelectionChange={selectionChangeSpy}
         selectionVariant={"range"}
         locale={testLocale}
       />,
@@ -94,7 +94,7 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
       .realHover()
       .realClick();
     cy.findAllByRole("application").should("have.length", 2);
-    cy.get("@selectedDateChangeSpy").should("not.have.been.called");
+    cy.get("@selectionChangeSpy").should("not.have.been.called");
     // Simulate selecting a date within the min/max range
     cy.findByRole("button", {
       name: formatDay(parseDate("2030-01-15")),
@@ -112,7 +112,7 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
       "have.value",
       formatDate(parseDate("2031-01-15"), testLocale),
     );
-    cy.get("@selectedDateChangeSpy").should(
+    cy.get("@selectionChangeSpy").should(
       "have.been.calledWith",
       {
         startDate: parseDate("2030-01-15"),
@@ -123,11 +123,11 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
   });
 
   it("SHOULD support validation", () => {
-    const selectedDateChangeSpy = cy.stub().as("selectedDateChangeSpy");
+    const selectionChangeSpy = cy.stub().as("selectionChangeSpy");
     cy.mount(
       <RangeWithFormField
         selectionVariant={"range"}
-        onSelectedDateChange={selectedDateChangeSpy}
+        onSelectionChange={selectionChangeSpy}
         locale={testLocale}
       />,
     );
@@ -141,8 +141,8 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
       "have.value",
       initialRangeDateValue.startDate,
     );
-    cy.get("@selectedDateChangeSpy").should("have.been.calledOnce");
-    cy.get("@selectedDateChangeSpy").should(
+    cy.get("@selectionChangeSpy").should("have.been.calledOnce");
+    cy.get("@selectionChangeSpy").should(
       "have.been.calledWith",
       {
         startDate: initialRangeDate.startDate,
@@ -153,8 +153,8 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
     // Simulate entering an valid end date
     cy.findByLabelText("End date").clear().type(initialRangeDateValue.endDate);
     cy.realPress("Tab");
-    cy.get("@selectedDateChangeSpy").should("have.been.calledTwice");
-    cy.get("@selectedDateChangeSpy").should(
+    cy.get("@selectionChangeSpy").should("have.been.calledTwice");
+    cy.get("@selectionChangeSpy").should(
       "have.been.calledWith",
       {
         startDate: initialRangeDate.startDate,
@@ -165,8 +165,8 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
     // Simulate entering an invalid end date
     cy.findByLabelText("End date").clear().type("bad date");
     cy.realPress("Tab");
-    cy.get("@selectedDateChangeSpy").should("have.been.calledThrice");
-    cy.get("@selectedDateChangeSpy").should(
+    cy.get("@selectionChangeSpy").should("have.been.calledThrice");
+    cy.get("@selectionChangeSpy").should(
       "have.been.calledWith",
       {
         startDate: initialRangeDate.startDate,
@@ -177,11 +177,11 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
   });
 
   it("SHOULD support custom panel with tenors", () => {
-    const selectedDateChangeSpy = cy.stub().as("selectedDateChangeSpy");
+    const selectionChangeSpy = cy.stub().as("selectionChangeSpy");
     cy.mount(
       <RangeWithCustomPanel
         selectionVariant={"range"}
-        onSelectedDateChange={selectedDateChangeSpy}
+        onSelectionChange={selectionChangeSpy}
         locale={testLocale}
       />,
     );
@@ -200,7 +200,7 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
     cy.realPress("Tab");
     const startDate = today(testTimeZone);
     const endDate = startDate.add({ years: 15 });
-    cy.get("@selectedDateChangeSpy").should(
+    cy.get("@selectionChangeSpy").should(
       "always.have.been.calledWithMatch",
       { startDate: startDate, endDate: endDate },
       { startDate: false, endDate: false },
@@ -217,14 +217,14 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
 
   describe("SHOULD support confirmation", () => {
     it("SHOULD cancel un-confirmed selections", () => {
-      const selectedDateChangeSpy = cy.stub().as("selectedDateChangeSpy");
+      const selectionChangeSpy = cy.stub().as("selectionChangeSpy");
       const appliedDateSpy = cy.stub().as("appliedDateSpy");
       const cancelSpy = cy.stub().as("cancelSpy");
       cy.mount(
         <RangeWithConfirmation
           selectionVariant={"range"}
           defaultSelectedDate={initialRangeDate}
-          onSelectedDateChange={selectedDateChangeSpy}
+          onSelectionChange={selectionChangeSpy}
           onApply={appliedDateSpy}
           onCancel={cancelSpy}
           locale={testLocale}
@@ -259,7 +259,7 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
         "have.value",
         formatDate(updatedRangeDate.endDate, testLocale),
       );
-      cy.get("@selectedDateChangeSpy").should(
+      cy.get("@selectionChangeSpy").should(
         "have.been.calledWith",
         {
           startDate: updatedRangeDate.startDate,
@@ -284,14 +284,14 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
     });
 
     it("SHOULD apply confirmed selections", () => {
-      const selectedDateChangeSpy = cy.stub().as("selectedDateChangeSpy");
+      const selectionChangeSpy = cy.stub().as("selectionChangeSpy");
       const appliedDateSpy = cy.stub().as("appliedDateSpy");
       const cancelSpy = cy.stub().as("cancelSpy");
       cy.mount(
         <RangeWithConfirmation
           selectionVariant={"range"}
           defaultSelectedDate={initialRangeDate}
-          onSelectedDateChange={selectedDateChangeSpy}
+          onSelectionChange={selectionChangeSpy}
           onApply={appliedDateSpy}
           onCancel={cancelSpy}
           locale={testLocale}
@@ -327,7 +327,7 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
         "have.value",
         formatDate(updatedRangeDate.endDate, testLocale),
       );
-      cy.get("@selectedDateChangeSpy").should(
+      cy.get("@selectionChangeSpy").should(
         "have.been.calledWith",
         updatedRangeDate,
         { startDate: false, endDate: false },
@@ -489,7 +489,7 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
   });
 
   it("SHOULD preserve original time during date selection", () => {
-    const selectedDateChangeSpy = cy.stub().as("selectedDateChangeSpy");
+    const selectionChangeSpy = cy.stub().as("selectionChangeSpy");
     const defaultStartDate = new ZonedDateTime(
       2024,
       12,
@@ -522,7 +522,7 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
           endDate: defaultEndDate,
         }}
         selectionVariant="range"
-        onSelectedDateChange={selectedDateChangeSpy}
+        onSelectionChange={selectionChangeSpy}
         locale={testLocale}
         timeZone={testTimeZone}
       >
@@ -547,7 +547,7 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
       .clear()
       .type(initialRangeDateValue.endDate);
     cy.realPress("Tab");
-    cy.get("@selectedDateChangeSpy").should(
+    cy.get("@selectionChangeSpy").should(
       "have.been.calledWithMatch",
       {
         startDate: {

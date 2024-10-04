@@ -33,7 +33,7 @@ function formatDateRange(
 export const RangeWithCustomPanel = (): ReactElement => {
   const helperText = "Date format DD MMM YYYY (e.g. 09 Jun 2024)";
   const minDate = today(getLocalTimeZone());
-  const handleSelectedDateChange = useCallback(
+  const handleSelectionChange = useCallback(
     (newSelectedDate: DateRangeSelection | null) => {
       console.log(`Selected date range: ${formatDateRange(newSelectedDate)}`);
     },
@@ -47,7 +47,7 @@ export const RangeWithCustomPanel = (): ReactElement => {
         selectionVariant="range"
         minDate={minDate}
         maxDate={minDate.add({ years: 50 })}
-        onSelectedDateChange={handleSelectedDateChange}
+        onSelectionChange={handleSelectionChange}
       >
         <DatePickerRangeInput />
         <DatePickerOverlay>

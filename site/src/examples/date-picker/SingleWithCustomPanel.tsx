@@ -33,7 +33,7 @@ function formatSingleDate(
 export const SingleWithCustomPanel = (): ReactElement => {
   const helperText = "Date format DD MMM YYYY (e.g. 09 Jun 2024)";
   const minDate = today(getLocalTimeZone());
-  const handleSelectedDateChange = useCallback(
+  const handleSelectionChange = useCallback(
     (newSelectedDate: SingleDateSelection | null) => {
       console.log(`Selected date: ${formatSingleDate(newSelectedDate)}`);
     },
@@ -47,7 +47,7 @@ export const SingleWithCustomPanel = (): ReactElement => {
         minDate={minDate}
         maxDate={minDate.add({ years: 50 })}
         selectionVariant="single"
-        onSelectedDateChange={handleSelectedDateChange}
+        onSelectionChange={handleSelectionChange}
       >
         <DatePickerSingleInput />
         <DatePickerOverlay>

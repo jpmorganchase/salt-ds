@@ -62,7 +62,7 @@ interface UseDatePickerBaseProps<T> {
  *
  * @typedef {UseDatePickerBaseProps<SingleDateSelection>} UseDatePickerSingleProps
  * @property {"single"} selectionVariant - Single date selection.
- * @property {(selectedSingleDate: SingleDateSelection | null, singleError: string | false) => void} [onSelectedDateChange] - Handler called when the selected date changes.
+ * @property {(selectedSingleDate: SingleDateSelection | null, singleError: string | false) => void} [onSelectionChange] - Handler called when the selected date changes.
  * @property {(appliedSingleDate: SingleDateSelection | null, singleError: string | false) => void} [onApply] - Handler called when the selected date is confirmed/applied.
  */
 export interface UseDatePickerSingleProps
@@ -76,7 +76,7 @@ export interface UseDatePickerSingleProps
    * @param {SingleDateSelection | null} selectedSingleDate - The selected date.
    * @param {string | false} singleError - Error returned by the parser or `false`.
    */
-  onSelectedDateChange?: (
+  onSelectionChange?: (
     selectedSingleDate: SingleDateSelection | null,
     singleError: string | false,
   ) => void;
@@ -96,7 +96,7 @@ export interface UseDatePickerSingleProps
  *
  * @typedef {UseDatePickerBaseProps<DateRangeSelection>} UseDatePickerRangeProps
  * @property {"range"} selectionVariant - Date range selection.
- * @property {(selectedRangeDate: DateRangeSelection | null, rangeError: { startDate: string | false; endDate: string | false }) => void} [onSelectedDateChange] - Handler called when the selected date changes.
+ * @property {(selectedRangeDate: DateRangeSelection | null, rangeError: { startDate: string | false; endDate: string | false }) => void} [onSelectionChange] - Handler called when the selected date changes.
  * @property {(appliedRangeDate: DateRangeSelection | null, rangeError: { startDate: string | false; endDate: string | false }) => void} [onApply] - Handler called when the selected date is confirmed/applied.
  */
 export interface UseDatePickerRangeProps
@@ -110,7 +110,7 @@ export interface UseDatePickerRangeProps
    * @param {DateRangeSelection | null} selectedRangeDate - The selected date.
    * @param {{ startDate: string | false; endDate: string | false }} rangeError - Error returned by the parser or `false`.
    */
-  onSelectedDateChange?: (
+  onSelectionChange?: (
     selectedRangeDate: DateRangeSelection | null,
     rangeError: { startDate: string | false; endDate: string | false },
   ) => void;
@@ -156,7 +156,7 @@ export function useDatePicker<SelectionVariant extends "single" | "range">(
     selectionVariant,
     defaultSelectedDate = null,
     selectedDate: selectedDateProp,
-    onSelectedDateChange,
+    onSelectionChange,
     onApply,
     minDate: minDateProp,
     maxDate: maxDateProp,
@@ -236,7 +236,7 @@ export function useDatePicker<SelectionVariant extends "single" | "range">(
       }
       setSelectedDate(nextDate);
       if (selectionVariant === "single") {
-        onSelectedDateChange?.(nextDate, error);
+        onSelectionChange?.(nextDate, error);
       }
 
       if (!enableApply) {
@@ -247,7 +247,7 @@ export function useDatePicker<SelectionVariant extends "single" | "range">(
       enableApply,
       minDate,
       maxDate,
-      onSelectedDateChange,
+      onSelectionChange,
       selectionVariant,
       setSelectedDate,
       setOpen,
@@ -304,7 +304,7 @@ export function useDatePicker<SelectionVariant extends "single" | "range">(
       }
       setSelectedDate(nextDate);
       if (selectionVariant === "range") {
-        onSelectedDateChange?.(nextDate, nextError);
+        onSelectionChange?.(nextDate, nextError);
       }
       if (!enableApply && nextDate?.startDate && nextDate?.endDate) {
         setOpen(false);
@@ -314,7 +314,7 @@ export function useDatePicker<SelectionVariant extends "single" | "range">(
       enableApply,
       minDate,
       maxDate,
-      onSelectedDateChange,
+      onSelectionChange,
       selectionVariant,
       setSelectedDate,
       setOpen,

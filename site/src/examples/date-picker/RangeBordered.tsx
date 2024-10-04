@@ -25,7 +25,7 @@ function formatDateRange(
 }
 
 export const RangeBordered = (): ReactElement => {
-  const handleSelectedDateChange = useCallback(
+  const handleSelectionChange = useCallback(
     (newSelectedDate: DateRangeSelection | null) => {
       console.log(`Selected date range: ${formatDateRange(newSelectedDate)}`);
     },
@@ -35,7 +35,7 @@ export const RangeBordered = (): ReactElement => {
   return (
     <DatePicker
       selectionVariant="range"
-      onSelectedDateChange={handleSelectedDateChange}
+      onSelectionChange={handleSelectionChange}
     >
       <DatePickerRangeInput bordered />
       <DatePickerOverlay>

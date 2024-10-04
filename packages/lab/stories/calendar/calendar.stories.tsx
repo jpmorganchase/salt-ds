@@ -195,7 +195,7 @@ export const TodayButton: StoryFn<
           ? startOfMonth(selectedDate)
           : startOfMonth(today(getLocalTimeZone()))
       }
-      onSelectedDateChange={(_event, newSelectedDate) =>
+      onSelectionChange={(_event, newSelectedDate) =>
         setSelectedDate(newSelectedDate)
       }
       {...args}
@@ -261,10 +261,10 @@ export const TwinCalendars: StoryFn<
   const [selectedDate, setSelectedDate] = useState<
     UseCalendarSelectionRangeProps["selectedDate"]
   >(args.defaultSelectedDate || null);
-  const handleSelectedDateChange: UseCalendarSelectionRangeProps["onSelectedDateChange"] =
+  const handleSelectionChange: UseCalendarSelectionRangeProps["onSelectionChange"] =
     (event, newSelectedDate) => {
       setSelectedDate(newSelectedDate);
-      args?.onSelectedDateChange?.(event, newSelectedDate);
+      args?.onSelectionChange?.(event, newSelectedDate);
     };
 
   return (
@@ -281,7 +281,7 @@ export const TwinCalendars: StoryFn<
         selectedDate={selectedDate}
         {...args}
         onHoveredDateChange={handleHoveredDateChange}
-        onSelectedDateChange={handleSelectedDateChange}
+        onSelectionChange={handleSelectionChange}
       >
         <CalendarNavigation />
         <CalendarWeekHeader />
@@ -299,7 +299,7 @@ export const TwinCalendars: StoryFn<
         }
         {...args}
         onHoveredDateChange={handleHoveredDateChange}
-        onSelectedDateChange={handleSelectedDateChange}
+        onSelectionChange={handleSelectionChange}
       >
         <CalendarNavigation />
         <CalendarWeekHeader />

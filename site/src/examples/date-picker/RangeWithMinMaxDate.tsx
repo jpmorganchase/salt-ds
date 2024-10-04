@@ -32,7 +32,7 @@ function formatDateRange(
 
 export const RangeWithMinMaxDate = (): ReactElement => {
   const helperText = "Select date between 15/01/2030 and 15/01/2031";
-  const handleSelectedDateChange = useCallback(
+  const handleSelectionChange = useCallback(
     (newSelectedDate: DateRangeSelection | null) => {
       console.log(`Selected date range: ${formatDateRange(newSelectedDate)}`);
     },
@@ -46,7 +46,7 @@ export const RangeWithMinMaxDate = (): ReactElement => {
         selectionVariant="range"
         minDate={new CalendarDate(2030, 1, 15)}
         maxDate={new CalendarDate(2031, 1, 15)}
-        onSelectedDateChange={handleSelectedDateChange}
+        onSelectionChange={handleSelectionChange}
       >
         <DatePickerRangeInput />
         <DatePickerOverlay>

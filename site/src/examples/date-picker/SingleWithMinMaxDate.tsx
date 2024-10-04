@@ -28,7 +28,7 @@ function formatSingleDate(
 
 export const SingleWithMinMaxDate = (): ReactElement => {
   const helperText = "Select date between 15/01/2030 and 15/01/2031";
-  const handleSelectedDateChange = useCallback(
+  const handleSelectionChange = useCallback(
     (newSelectedDate: SingleDateSelection | null) => {
       console.log(`Selected date: ${formatSingleDate(newSelectedDate)}`);
     },
@@ -42,7 +42,7 @@ export const SingleWithMinMaxDate = (): ReactElement => {
         selectionVariant={"single"}
         minDate={new CalendarDate(2030, 1, 15)}
         maxDate={new CalendarDate(2031, 1, 15)}
-        onSelectedDateChange={handleSelectedDateChange}
+        onSelectionChange={handleSelectionChange}
       >
         <DatePickerSingleInput />
         <DatePickerOverlay>

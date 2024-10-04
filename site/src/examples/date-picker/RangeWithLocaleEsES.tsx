@@ -50,7 +50,7 @@ export const RangeWithLocaleEsES = (): ReactElement => {
   const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
     undefined,
   );
-  const handleSelectedDateChange = useCallback(
+  const handleSelectionChange = useCallback(
     (
       newSelectedDate: DateRangeSelection | null,
       error: {
@@ -85,7 +85,7 @@ export const RangeWithLocaleEsES = (): ReactElement => {
       <DatePicker
         selectionVariant={"range"}
         locale={locale}
-        onSelectedDateChange={handleSelectedDateChange}
+        onSelectionChange={handleSelectionChange}
       >
         <DatePickerRangeInput />
         <DatePickerOverlay>
