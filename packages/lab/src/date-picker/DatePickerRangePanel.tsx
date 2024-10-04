@@ -115,7 +115,7 @@ export interface DatePickerRangePanelProps<T>
       CalendarRangeProps | CalendarOffsetProps,
       | "selectedDate"
       | "defaultSelectedDate"
-      | "onSelectedDateChange"
+      | "onSelectionChange"
       | "onVisibleMonthChange"
     >
   >;
@@ -136,7 +136,7 @@ export interface DatePickerRangePanelProps<T>
       CalendarRangeProps,
       | "selectedDate"
       | "defaultSelectedDate"
-      | "onSelectedDateChange"
+      | "onSelectionChange"
       | "onVisibleMonthChange"
     >
   >;
@@ -243,7 +243,7 @@ export const DatePickerRangePanel = forwardRef<
     state: "endVisibleMonth",
   });
 
-  const handleSelectedDateChange = useCallback(
+  const handleSelectionChange = useCallback(
     (event: SyntheticEvent, newDate: DateRangeSelection | null) => {
       setSelectedDate(newDate, { startDate: false, endDate: false });
       onSelect?.(event, newDate);
@@ -310,7 +310,7 @@ export const DatePickerRangePanel = forwardRef<
     selectedDate: selectedDate as DateRangeSelection,
     onHoveredDateChange: handleHoveredStartDateChange,
     onVisibleMonthChange: handleStartVisibleMonthChange,
-    onSelectedDateChange: handleSelectedDateChange,
+    onSelectionChange: handleSelectionChange,
     hideOutOfRangeDates: true,
     minDate,
     maxDate,
@@ -324,7 +324,7 @@ export const DatePickerRangePanel = forwardRef<
     selectedDate: selectedDate as DateRangeSelection,
     onHoveredDateChange: handleHoveredEndDateChange,
     onVisibleMonthChange: handleEndVisibleMonthChange,
-    onSelectedDateChange: handleSelectedDateChange,
+    onSelectionChange: handleSelectionChange,
     hideOutOfRangeDates: true,
     minDate,
     maxDate,

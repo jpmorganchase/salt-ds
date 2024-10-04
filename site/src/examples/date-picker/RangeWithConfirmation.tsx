@@ -80,7 +80,7 @@ export const RangeWithConfirmation = (): ReactElement => {
     },
     [setValidationStatus, setHelperText],
   );
-  const handleSelectedDateChange = useCallback(
+  const handleSelectionChange = useCallback(
     (newSelectedDate: DateRangeSelection | null) => {
       setSelectedDate(newSelectedDate);
       if (newSelectedDate?.startDate && newSelectedDate?.endDate) {
@@ -98,7 +98,7 @@ export const RangeWithConfirmation = (): ReactElement => {
         minDate={minDate}
         maxDate={minDate.add({ years: 50 })}
         onApply={handleApply}
-        onSelectedDateChange={handleSelectedDateChange}
+        onSelectionChange={handleSelectionChange}
         selectedDate={selectedDate}
       >
         <DatePickerRangeInput />

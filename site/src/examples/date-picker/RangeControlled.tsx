@@ -28,7 +28,7 @@ export const RangeControlled = (): ReactElement => {
   const [selectedDate, setSelectedDate] = useState<DateRangeSelection | null>(
     null,
   );
-  const handleSelectedDateChange = useCallback(
+  const handleSelectionChange = useCallback(
     (
       newSelectedDate: DateRangeSelection | null,
       error: { startDate: string | false; endDate: string | false },
@@ -43,7 +43,7 @@ export const RangeControlled = (): ReactElement => {
     <DatePicker
       selectionVariant="range"
       selectedDate={selectedDate}
-      onSelectedDateChange={handleSelectedDateChange}
+      onSelectionChange={handleSelectionChange}
     >
       <DatePickerRangeInput />
       <DatePickerOverlay>

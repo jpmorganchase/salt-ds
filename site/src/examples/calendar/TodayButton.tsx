@@ -22,7 +22,7 @@ export const TodayButton = (): ReactElement => {
           ? startOfMonth(selectedDate)
           : startOfMonth(today(getLocalTimeZone()))
       }
-      onSelectedDateChange={(_event, newSelectedDate) =>
+      onSelectionChange={(_event, newSelectedDate) =>
         setSelectedDate(newSelectedDate)
       }
     >
