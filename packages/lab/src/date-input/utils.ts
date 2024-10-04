@@ -73,16 +73,16 @@ export function parseCalendarDate(
   const day = Number.parseInt(dayStr, 10);
   const year = Number.parseInt(yearStr, 10);
 
-  if (isNaN(day) || day < 1 || day > 31) {
+  if (Number.isNaN(day) || day < 1 || day > 31) {
     return { date: null, error: "not a valid date" };
   }
 
-  if (isNaN(year)) {
+  if (Number.isNaN(year)) {
     return { date: null, error: "not a valid year" };
   }
 
   let month;
-  if (isNaN(Number.parseInt(monthStr, 10))) {
+  if (Number.isNaN(Number.parseInt(monthStr, 10))) {
     // Month is a word, in MMM or MMMM format
     month = monthNames[monthStr];
     if (!month) {
@@ -91,7 +91,7 @@ export function parseCalendarDate(
   } else {
     // Month is numeric, in MM or M format
     month = Number.parseInt(monthStr, 10);
-    if (isNaN(month) || month < 1 || month > 12) {
+    if (Number.isNaN(month) || month < 1 || month > 12) {
       return { date: null, error: "not a valid month value" };
     }
   }
