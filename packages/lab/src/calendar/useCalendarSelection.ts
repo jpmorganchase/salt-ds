@@ -123,7 +123,7 @@ interface UseCalendarSelectionBaseProps<SelectionVariantType> {
    * @param event - The synthetic event.
    * @param selectedDate - The new selected date.
    */
-  onSelectedDateChange?: (
+  onSelectionChange?: (
     event: SyntheticEvent,
     selectedDate: SelectionVariantType | null,
   ) => void;
@@ -246,7 +246,7 @@ export function useCalendarSelection(props: UseCalendarSelectionProps) {
     hoveredDate: hoveredDateProp,
     selectedDate: selectedDateProp,
     defaultSelectedDate,
-    onSelectedDateChange,
+    onSelectionChange,
     onHoveredDateChange,
     isDaySelectable,
     selectionVariant,
@@ -291,7 +291,7 @@ export function useCalendarSelection(props: UseCalendarSelectionProps) {
         switch (selectionVariant) {
           case "single": {
             setSelectedDateState(newSelectedDate);
-            onSelectedDateChange?.(event, newSelectedDate);
+            onSelectionChange?.(event, newSelectedDate);
             break;
           }
           case "multiselect": {
@@ -300,7 +300,7 @@ export function useCalendarSelection(props: UseCalendarSelectionProps) {
               newSelectedDate,
             );
             setSelectedDateState(newMultiSelectDate);
-            onSelectedDateChange?.(event, newMultiSelectDate);
+            onSelectionChange?.(event, newMultiSelectDate);
             break;
           }
           case "range": {
@@ -309,7 +309,7 @@ export function useCalendarSelection(props: UseCalendarSelectionProps) {
               newSelectedDate,
             );
             setSelectedDateState(newRangeDate);
-            onSelectedDateChange?.(event, newRangeDate);
+            onSelectionChange?.(event, newRangeDate);
             break;
           }
           case "offset": {
@@ -318,13 +318,13 @@ export function useCalendarSelection(props: UseCalendarSelectionProps) {
               endDate: getEndDateOffset(newSelectedDate),
             };
             setSelectedDateState(newOffsetDate);
-            props.onSelectedDateChange?.(event, newOffsetDate);
+            props.onSelectionChange?.(event, newOffsetDate);
             break;
           }
         }
       }
     },
-    [isDaySelectable, selectedDate, selectionVariant, onSelectedDateChange],
+    [isDaySelectable, selectedDate, selectionVariant, onSelectionChange],
   );
 
   const isSelected = useCallback(

@@ -85,7 +85,7 @@ export interface DatePickerSinglePanelProps<T>
       | "selectionVariant"
       | "selectedDate"
       | "defaultSelectedDate"
-      | "onSelectedDateChange"
+      | "onSelectionChange"
       | "onVisibleMonthChange"
     >
   >;
@@ -153,7 +153,7 @@ export const DatePickerSinglePanel = forwardRef<
     state: "visibleMonth",
   });
 
-  const handleSelectedDateChange = useCallback(
+  const handleSelectionChange = useCallback(
     (event: SyntheticEvent, newDate: SingleDateSelection | null) => {
       setSelectedDate(newDate, false);
       onSelect?.(event, newDate);
@@ -187,7 +187,7 @@ export const DatePickerSinglePanel = forwardRef<
     hoveredDate,
     onHoveredDateChange: handleHoveredDateChange,
     onVisibleMonthChange: handleVisibleMonthChange,
-    onSelectedDateChange: handleSelectedDateChange,
+    onSelectionChange: handleSelectionChange,
     hideOutOfRangeDates: true,
     selectedDate,
     minDate,

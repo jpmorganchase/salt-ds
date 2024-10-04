@@ -44,7 +44,7 @@ export const SingleWithCustomParser = (): ReactElement => {
   const [selectedDate, setSelectedDate] = useState<SingleDateSelection | null>(
     null,
   );
-  const handleSelectedDateChange = useCallback(
+  const handleSelectionChange = useCallback(
     (newSelectedDate: SingleDateSelection | null, error: string | false) => {
       console.log(`Selected date: ${formatSingleDate(newSelectedDate)}`);
       setSelectedDate(newSelectedDate);
@@ -89,7 +89,7 @@ export const SingleWithCustomParser = (): ReactElement => {
       <FormLabel>Select a date</FormLabel>
       <DatePicker
         selectionVariant="single"
-        onSelectedDateChange={handleSelectedDateChange}
+        onSelectionChange={handleSelectionChange}
         selectedDate={selectedDate}
       >
         <DatePickerSingleInput parse={handleParse} />

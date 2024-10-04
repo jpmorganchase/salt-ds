@@ -24,7 +24,7 @@ export const TwinCalendars = (): ReactElement => {
   };
   const [selectedDate, setSelectedDate] =
     useState<UseCalendarSelectionRangeProps["selectedDate"]>(null);
-  const handleSelectedDateChange: UseCalendarSelectionRangeProps["onSelectedDateChange"] =
+  const handleSelectionChange: UseCalendarSelectionRangeProps["onSelectionChange"] =
     (_event, newSelectedDate) => {
       setSelectedDate(newSelectedDate);
     };
@@ -35,7 +35,7 @@ export const TwinCalendars = (): ReactElement => {
         selectionVariant="range"
         onHoveredDateChange={handleHoveredDateChange}
         hoveredDate={hoveredDate}
-        onSelectedDateChange={handleSelectedDateChange}
+        onSelectionChange={handleSelectionChange}
         defaultVisibleMonth={
           selectedDate?.startDate
             ? startOfMonth(selectedDate.startDate)
@@ -51,7 +51,7 @@ export const TwinCalendars = (): ReactElement => {
         selectionVariant="range"
         onHoveredDateChange={handleHoveredDateChange}
         hoveredDate={hoveredDate}
-        onSelectedDateChange={handleSelectedDateChange}
+        onSelectionChange={handleSelectionChange}
         selectedDate={selectedDate}
         defaultVisibleMonth={
           selectedDate?.endDate
