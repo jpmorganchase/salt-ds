@@ -57,14 +57,12 @@ export const TabsNext = forwardRef<HTMLDivElement, TabsNextProps>(
 
     const setSelected = useCallback(
       (event: SyntheticEvent, action: string) => {
-        setSelectedState(action);
+        const newItem = item(action);
 
-        setTimeout(() => {
-          const itemElement = item(action)?.element;
-          itemElement?.focus({ preventScroll: true });
-        }, 0);
+        if (!newItem) return;
 
-        onChange?.(event, action);
+        setSelectedState(newItem.value);
+        onChange?.(event, newItem.value);
       },
       [onChange, item],
     );

@@ -1,5 +1,4 @@
-import { Badge } from "@salt-ds/core";
-import { TabListNext, TabNext, TabsNext } from "@salt-ds/lab";
+import { TabBar, TabListNext, TabNext, TabsNext } from "@salt-ds/lab";
 import { type ReactElement, useState } from "react";
 
 export const ClosableTabs = (): ReactElement => {
@@ -13,17 +12,19 @@ export const ClosableTabs = (): ReactElement => {
 
   return (
     <TabsNext defaultValue={tabs[0]}>
-      <TabListNext
-        onClose={(_event, closedTab) => {
-          setTabs(tabs.filter((tab) => tab !== closedTab));
-        }}
-      >
-        {tabs.map((label) => (
-          <TabNext value={label} key={label} closable={tabs.length > 1}>
-            {label}
-          </TabNext>
-        ))}
-      </TabListNext>
+      <TabBar separator padding>
+        <TabListNext
+          onClose={(_event, closedTab) => {
+            setTabs(tabs.filter((tab) => tab !== closedTab));
+          }}
+        >
+          {tabs.map((label) => (
+            <TabNext value={label} key={label} closable={tabs.length > 1}>
+              {label}
+            </TabNext>
+          ))}
+        </TabListNext>
+      </TabBar>
     </TabsNext>
   );
 };

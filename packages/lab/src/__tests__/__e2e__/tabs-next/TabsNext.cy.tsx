@@ -2,7 +2,7 @@ import * as tabsStories from "@stories/tabs-next/tabs-next.stories";
 import { composeStories } from "@storybook/react";
 
 const {
-  Main,
+  Bordered,
   DisabledTabs,
   Overflow,
   AddTabs,
@@ -13,13 +13,13 @@ const {
 
 describe("Given a Tabstrip", () => {
   it("should render with tablist and tab roles", () => {
-    cy.mount(<Main />);
+    cy.mount(<Bordered />);
     cy.findByRole("tablist").should("be.visible");
     cy.findAllByRole("tab").should("have.length", 5);
   });
 
   it("should support keyboard navigation and wrap", () => {
-    cy.mount(<Main />);
+    cy.mount(<Bordered />);
     cy.realPress("Tab");
     cy.findByRole("tab", { name: "Home" }).should("have.focus");
     cy.realPress("ArrowRight");
@@ -36,7 +36,7 @@ describe("Given a Tabstrip", () => {
 
   it("should support selection with a mouse", () => {
     const changeSpy = cy.stub().as("changeSpy");
-    cy.mount(<Main onChange={changeSpy} />);
+    cy.mount(<Bordered onChange={changeSpy} />);
     cy.findByRole("tab", { name: "Home" }).should(
       "have.attr",
       "aria-selected",
@@ -58,7 +58,7 @@ describe("Given a Tabstrip", () => {
 
   it("should support selection with the keyboard", () => {
     const changeSpy = cy.stub().as("changeSpy");
-    cy.mount(<Main onChange={changeSpy} />);
+    cy.mount(<Bordered onChange={changeSpy} />);
     cy.realPress("Tab");
     cy.findByRole("tab", { name: "Home" }).should("have.focus");
     cy.findByRole("tab", { name: "Home" }).should(
@@ -116,17 +116,17 @@ describe("Given a Tabstrip", () => {
   it("should overflow into a menu when there is not enough space to show all tabs", () => {
     cy.mount(<Overflow />);
     cy.findAllByRole("tab").should("have.length", 17);
-    cy.findAllByRole("tab").filter(":visible").should("have.length", 3);
-    cy.findAllByRole("tab").filter(":not(:visible)").should("have.length", 14);
+    cy.findAllByRole("tab").filter(":visible").should("have.length", 4);
+    cy.findAllByRole("tab").filter(":not(:visible)").should("have.length", 13);
     cy.get("[data-overflowbutton]").should("be.visible");
   });
 
   it("should allow keyboard navigation in the menu", () => {
     cy.mount(<Overflow />);
     cy.get("[data-overflowbutton]").realClick();
-    cy.findByRole("tab", { name: "Checks" }).should("be.focused");
-    cy.realPress("ArrowDown");
     cy.findByRole("tab", { name: "Liquidity" }).should("be.focused");
+    cy.realPress("ArrowDown");
+    cy.findByRole("tab", { name: "Reports" }).should("be.focused");
     cy.realPress("End");
     cy.findByRole("tab", { name: "Screens" }).should("be.focused");
     cy.realPress("Escape");
@@ -155,7 +155,7 @@ describe("Given a Tabstrip", () => {
       "aria-selected",
       "true",
     );
-    cy.findByRole("button", { name: "Add Tab" }).realClick();
+    cy.findByRole("button", { name: "Add tab" }).realClick();
     cy.findAllByRole("tab").should("have.length", 4);
     cy.findByRole("tab", { name: "Home" }).should(
       "have.attr",
@@ -163,7 +163,7 @@ describe("Given a Tabstrip", () => {
       "true",
     );
     cy.findByRole("tab", { name: "New tab" }).should("be.visible");
-    cy.findByRole("button", { name: "Add Tab" }).should("be.focused");
+    cy.findByRole("button", { name: "Add tab" }).should("be.focused");
   });
 
   it("should support adding tabs with confirmation", () => {
@@ -174,10 +174,10 @@ describe("Given a Tabstrip", () => {
       "aria-selected",
       "true",
     );
-    cy.findByRole("button", { name: "Add Tab" }).realClick();
+    cy.findByRole("button", { name: "Add tab" }).realClick();
 
     cy.findByRole("dialog").should("be.visible");
-    cy.findByLabelText("New Tab name").realClick();
+    cy.findByLabelText("New tab name").realClick();
     cy.realType("New tab");
     cy.findByRole("button", { name: "Confirm" }).realClick();
 
@@ -188,7 +188,7 @@ describe("Given a Tabstrip", () => {
       "aria-selected",
       "true",
     );
-    cy.findByRole("button", { name: "Add Tab" }).should("be.focused");
+    cy.findByRole("button", { name: "Add tab" }).should("be.focused");
   });
 
   it("should support closing tabs with a mouse", () => {
@@ -217,7 +217,7 @@ describe("Given a Tabstrip", () => {
       "aria-selected",
       "true",
     );
-    cy.findByRole("tab", { name: "Checks" }).should("be.focused");
+    cy.findByRole("tab", { name: "Transactions" }).should("be.focused");
 
     cy.findByRole("button", { name: "Close tab Home" }).realClick();
     cy.findAllByRole("tab").should("have.length", 2);
@@ -264,23 +264,23 @@ describe("Given a Tabstrip", () => {
     cy.findByRole("tab", { name: "Transactions" }).should("be.focused");
   });
 
-  it("should support close with confirmation", () => {
+  it("should support closing with confirmation", () => {
     cy.mount(<CloseWithConfirmation />);
-    cy.findAllByRole("tab").should("have.length", 5);
+    cy.findAllByRole("tab").should("have.length", 3);
 
     cy.findAllByRole("button", { name: "Close tab Home" }).realClick();
     cy.findByRole("dialog").should("be.visible");
 
-    cy.findByRole("button", { name: "Cancel" }).realClick();
-    cy.findByRole("dialog").should("not.be.visible");
+    cy.findByRole("button", { name: "No" }).realClick();
+    cy.findByRole("dialog").should("not.to.exist");
     cy.findByRole("button", { name: "Close tab Home" }).should("be.focused");
 
     cy.findAllByRole("button", { name: "Close tab Home" }).realClick();
     cy.findByRole("dialog").should("be.visible");
 
-    cy.findByRole("button", { name: "Confirm" }).realClick();
-    cy.findByRole("dialog").should("not.be.visible");
-    cy.findAllByRole("tab").should("have.length", 4);
+    cy.findByRole("button", { name: "Yes" }).realClick();
+    cy.findByRole("dialog").should("not.to.exist");
+    cy.findAllByRole("tab").should("have.length", 2);
     cy.findByRole("tab", { name: "Transactions" }).should(
       "have.attr",
       "aria-selected",

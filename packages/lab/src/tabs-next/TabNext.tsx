@@ -46,8 +46,6 @@ export const TabNext = forwardRef<HTMLDivElement, TabNextProps>(
       disabled: disabledProp,
       closable,
       onBlur,
-      onClick,
-      onKeyDown,
       onMouseDown,
       onFocus,
       value,
@@ -71,16 +69,14 @@ export const TabNext = forwardRef<HTMLDivElement, TabNextProps>(
     const tabRef = useRef<HTMLButtonElement>(null);
     const id = useId(idProp);
 
-    const handleClick = (event: MouseEvent<HTMLDivElement>) => {
-      onClick?.(event);
-      setSelected(event, value);
+    const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
+      if (!id) return;
+      setSelected(event, id);
     };
 
-    const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
-      onKeyDown?.(event);
-
-      if (event.key === "Enter" || event.key === " ") {
-        setSelected(event, value);
+    const handleKeyDown = (event: KeyboardEvent<HTMLButtonElement>) => {
+      if (id && (event.key === "Enter" || event.key === " ")) {
+        setSelected(event, id);
       }
     };
 
@@ -120,7 +116,9 @@ export const TabNext = forwardRef<HTMLDivElement, TabNextProps>(
     };
 
     const handleCloseButtonClick = (event: MouseEvent<HTMLButtonElement>) => {
-      handleClose(event, value);
+      if (!id) return;
+
+      handleClose(event, id);
       event.stopPropagation();
     };
 
@@ -141,6 +139,7 @@ export const TabNext = forwardRef<HTMLDivElement, TabNextProps>(
     }, [getPanelId, value]);
 
     return (
+      // biome-ignore lint/a11y/useValidAriaRole: <explanation>
       <div
         className={clsx(
           withBaseName(),
@@ -153,11 +152,10 @@ export const TabNext = forwardRef<HTMLDivElement, TabNextProps>(
         )}
         data-overflowitem
         ref={ref}
-        onClick={!disabled ? handleClick : undefined}
-        onKeyDown={!disabled ? handleKeyDown : undefined}
         onMouseDown={handleMouseDown}
         onFocus={handleFocus}
         onBlur={handleBlur}
+        role="none"
         {...rest}
       >
         <button
@@ -167,6 +165,8 @@ export const TabNext = forwardRef<HTMLDivElement, TabNextProps>(
           tabIndex={focused || selected === value ? undefined : -1}
           role="tab"
           type="button"
+          onClick={!disabled ? handleClick : undefined}
+          onKeyDown={!disabled ? handleKeyDown : undefined}
           className={withBaseName("action")}
           id={id}
           ref={tabRef}

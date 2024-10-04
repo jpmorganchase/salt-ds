@@ -18,37 +18,30 @@ interface UseOverflowProps {
   selected?: string;
   children: ReactNode;
   tabs: Item[];
-  addButton: RefObject<HTMLButtonElement>;
   overflowButton: RefObject<HTMLButtonElement>;
 }
 
 function getAvailableWidth({
   container,
   targetWindow,
-  addButton,
-}: Pick<UseOverflowProps, "container" | "addButton"> & {
+}: {
+  container: UseOverflowProps["container"];
   targetWindow: Window;
 }) {
   if (!container.current || !targetWindow) return 0;
 
   const containerStyles = targetWindow.getComputedStyle(container.current);
-  const gap = Number.parseInt(containerStyles.gap || "0");
 
   const containerPadding =
     Number.parseInt(containerStyles.paddingLeft || "0") +
     Number.parseInt(containerStyles.paddingRight || "0");
 
-  const addButtonWidth = addButton.current
-    ? addButton.current.offsetWidth + gap
-    : 0;
-
-  return container.current.clientWidth - containerPadding - addButtonWidth;
+  return container.current.clientWidth - containerPadding;
 }
 
 export function useOverflow({
   tabs,
   container,
-  addButton,
   overflowButton,
   children,
   selected,
@@ -74,7 +67,6 @@ export function useOverflow({
         let maxWidth = getAvailableWidth({
           container,
           targetWindow,
-          addButton,
         });
 
         const containerStyles = targetWindow.getComputedStyle(
@@ -152,14 +144,7 @@ export function useOverflow({
         };
       }
     });
-  }, [
-    setVisibleItems,
-    targetWindow,
-    container,
-    addButton,
-    overflowButton,
-    tabs.length,
-  ]);
+  }, [setVisibleItems, targetWindow, container, overflowButton, tabs.length]);
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: we want to update when selected changes.
   useIsomorphicLayoutEffect(() => {

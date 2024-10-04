@@ -7,6 +7,7 @@ import {
   StackLayout,
 } from "@salt-ds/core";
 import {
+  TabBar,
   TabListNext,
   type TabListNextProps,
   TabNext,
@@ -17,7 +18,7 @@ import { type ChangeEvent, type ReactElement, useState } from "react";
 
 const tabs = ["Home", "Transactions", "Loans"];
 
-export const Variants = (): ReactElement => {
+export const ActiveColor = (): ReactElement => {
   const [variant, setVariant] =
     useState<TabListNextProps["activeColor"]>("primary");
 
@@ -29,13 +30,15 @@ export const Variants = (): ReactElement => {
     <StackLayout gap={6}>
       <div style={{ alignItems: "center", width: "40vw" }}>
         <TabsNext defaultValue={tabs[0]}>
-          <TabListNext activeColor={variant}>
-            {tabs.map((label) => (
-              <TabNext value={label} key={label}>
-                {label}
-              </TabNext>
-            ))}
-          </TabListNext>
+          <TabBar separator>
+            <TabListNext activeColor={variant}>
+              {tabs.map((label) => (
+                <TabNext value={label} key={label}>
+                  {label}
+                </TabNext>
+              ))}
+            </TabListNext>
+          </TabBar>
           {tabs.map((label) => (
             <TabNextPanel value={label} key={label} style={{ height: 200 }}>
               <Panel variant={variant}>{label}</Panel>

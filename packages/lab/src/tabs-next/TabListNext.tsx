@@ -1,5 +1,4 @@
-import { Button, capitalize, makePrefixer, useForkRef } from "@salt-ds/core";
-import { AddIcon } from "@salt-ds/icons";
+import { capitalize, makePrefixer, useForkRef } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import clsx from "clsx";
@@ -29,13 +28,9 @@ export interface TabListNextProps
    */
   activeColor?: "primary" | "secondary" | "tertiary";
   /**
-   * The tab variant, "main" should be shown at the top of the page under the app header. "inline" should be used everywhere else. Defaults to "main".
+   * The appearance of the tabs. Defaults to "bordered".
    */
-  variant?: "main" | "inline";
-  /**
-   * Callback fired when add button is triggered.
-   */
-  onAdd?: () => void;
+  appearance?: "bordered" | "transparent";
   /**
    * Callback fired when a tab is closed.
    */
@@ -45,13 +40,12 @@ export interface TabListNextProps
 export const TabListNext = forwardRef<HTMLDivElement, TabListNextProps>(
   function TabstripNext(props, ref) {
     const {
+      appearance = "bordered",
       activeColor = "primary",
       children,
       className,
-      onAdd,
       onClose,
       onKeyDown,
-      variant = "main",
       ...rest
     } = props;
     const targetWindow = useWindow();
@@ -68,12 +62,12 @@ export const TabListNext = forwardRef<HTMLDivElement, TabListNextProps>(
       getPrevious,
       getFirst,
       getLast,
+      item,
       items,
     } = useTabsNext();
 
     const tabstripRef = useRef<HTMLDivElement>(null);
     const handleRef = useForkRef(tabstripRef, ref);
-    const addButtonRef = useRef<HTMLButtonElement>(null);
     const overflowButtonRef = useRef<HTMLButtonElement>(null);
     const [menuOpen, setMenuOpen] = useState(false);
 
@@ -82,7 +76,6 @@ export const TabListNext = forwardRef<HTMLDivElement, TabListNextProps>(
       tabs: items,
       children,
       selected,
-      addButton: addButtonRef,
       overflowButton: overflowButtonRef,
     });
 
@@ -111,13 +104,17 @@ export const TabListNext = forwardRef<HTMLDivElement, TabListNextProps>(
 
     const handleClose = useCallback(
       (event: SyntheticEvent, id: string) => {
+        const currentItem = item(id);
         const firstItem = getFirst();
         const newActive = id === firstItem?.id ? getNext(id) : getPrevious(id);
-        onClose?.(event, id);
+
+        if (currentItem == null) return;
+
+        onClose?.(event, currentItem.value);
 
         if (!newActive) return;
         if (id === selected) {
-          setSelected(event, newActive.value);
+          setSelected(event, newActive.id);
         } else {
           newActive?.element?.focus({ preventScroll: true });
         }
@@ -138,7 +135,7 @@ export const TabListNext = forwardRef<HTMLDivElement, TabListNextProps>(
           role="tablist"
           className={clsx(
             withBaseName(),
-            withBaseName(variant),
+            withBaseName(appearance),
             withBaseName("horizontal"),
             withBaseName(`activeColor${capitalize(activeColor)}`),
             className,
@@ -157,17 +154,6 @@ export const TabListNext = forwardRef<HTMLDivElement, TabListNextProps>(
           >
             {hidden}
           </TabOverflowList>
-          {onAdd && (
-            <Button
-              ref={addButtonRef}
-              aria-label="Add Tab"
-              appearance="transparent"
-              sentiment="neutral"
-              onClick={onAdd}
-            >
-              <AddIcon aria-hidden />
-            </Button>
-          )}
         </div>
       </TabListNextContext.Provider>
     );

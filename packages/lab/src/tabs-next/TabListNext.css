@@ -6,7 +6,6 @@
   align-items: center;
   position: relative;
   background: transparent;
-  width: 100%;
   min-height: calc(var(--salt-size-base) + var(--salt-spacing-100));
   gap: var(--salt-spacing-100);
 }
@@ -17,20 +16,6 @@
 
 .saltTabListNext-right {
   justify-content: flex-end;
-}
-
-.saltTabListNext-main {
-  padding-left: var(--salt-spacing-300);
-  padding-right: var(--salt-spacing-300);
-  box-sizing: border-box;
-}
-
-.saltTabListNext-main::before {
-  content: "";
-  position: absolute;
-  inset: auto 0 0 0;
-  height: var(--salt-size-border);
-  border-bottom: var(--salt-size-border) var(--salt-separable-borderStyle) var(--salt-separable-secondary-borderColor);
 }
 
 .saltTabListNext-activeColorPrimary {

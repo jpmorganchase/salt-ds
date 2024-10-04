@@ -1,4 +1,6 @@
-import { TabListNext, TabNext, TabsNext } from "@salt-ds/lab";
+import { Button } from "@salt-ds/core";
+import { AddIcon } from "@salt-ds/icons";
+import { TabBar, TabListNext, TabNext, TabsNext } from "@salt-ds/lab";
 import React, { type ReactElement, useRef, useState } from "react";
 
 export const AddANewTab = (): ReactElement => {
@@ -8,22 +10,27 @@ export const AddANewTab = (): ReactElement => {
 
   return (
     <TabsNext value={value} onChange={(_event, newValue) => setValue(newValue)}>
-      <TabListNext
-        style={{ width: 500 }}
-        onAdd={() => {
-          const newTab = `New Tab${newCount.current > 0 ? ` ${newCount.current}` : ""}`;
-          newCount.current += 1;
+      <TabBar padding separator style={{ width: 500 }}>
+        <TabListNext>
+          {tabs.map((label) => (
+            <TabNext value={label} key={label}>
+              {label}
+            </TabNext>
+          ))}
+        </TabListNext>
+        <Button
+          aria-label="Add tab"
+          appearance="transparent"
+          onClick={() => {
+            const newTab = `New tab${newCount.current > 0 ? ` ${newCount.current}` : ""}`;
+            newCount.current += 1;
 
-          setTabs((old) => old.concat(newTab));
-          setValue(newTab);
-        }}
-      >
-        {tabs.map((label) => (
-          <TabNext value={label} key={label}>
-            {label}
-          </TabNext>
-        ))}
-      </TabListNext>
+            setTabs((old) => old.concat(newTab));
+          }}
+        >
+          <AddIcon aria-hidden />
+        </Button>
+      </TabBar>
     </TabsNext>
   );
 };

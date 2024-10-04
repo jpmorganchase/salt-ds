@@ -1,4 +1,5 @@
 import {
+  TabBar,
   TabListNext,
   type TabListNextProps,
   TabNext,
@@ -50,13 +51,15 @@ export const LotsOfTabsTabstrip: TabstripStory = () => {
           setValue(value);
         }}
       >
-        <TabListNext>
-          {tabs.map((label) => (
-            <TabNext key={label} value={label}>
-              {label}
-            </TabNext>
-          ))}
-        </TabListNext>
+        <TabBar padding separator>
+          <TabListNext>
+            {tabs.map((label) => (
+              <TabNext key={label} value={label}>
+                {label}
+              </TabNext>
+            ))}
+          </TabListNext>
+        </TabBar>
       </TabsNext>
       <TabsNext
         value={value}
@@ -64,13 +67,15 @@ export const LotsOfTabsTabstrip: TabstripStory = () => {
           setValue(value);
         }}
       >
-        <TabListNext variant="inline">
-          {tabs.map((label) => (
-            <TabNext key={label} value={label}>
-              {label}
-            </TabNext>
-          ))}
-        </TabListNext>
+        <TabBar>
+          <TabListNext appearance="transparent">
+            {tabs.map((label) => (
+              <TabNext key={label} value={label}>
+                {label}
+              </TabNext>
+            ))}
+          </TabListNext>
+        </TabBar>
       </TabsNext>
     </QAContainer>
   );

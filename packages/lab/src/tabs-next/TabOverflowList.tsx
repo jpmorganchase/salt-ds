@@ -100,12 +100,11 @@ export const TabOverflowList = forwardRef<HTMLDivElement, TabOverflowListProps>(
     useDismissWithEscape(handleDismiss, open);
 
     const handleClick = () => {
-      setOpen((old) => !old);
-      setTimeout(() => {
+      if (!open) {
         listRef.current
           ?.querySelectorAll<HTMLElement>('[role="tab"]')[0]
           ?.focus({ preventScroll: true });
-      });
+      }
     };
 
     const handleFocus = () => {
@@ -113,6 +112,7 @@ export const TabOverflowList = forwardRef<HTMLDivElement, TabOverflowListProps>(
     };
 
     const handleBlur = (event: FocusEvent<HTMLDivElement>) => {
+      console.log(event.currentTarget, event.relatedTarget);
       if (!event.currentTarget.contains(event.relatedTarget)) {
         setOpen(false);
       }
