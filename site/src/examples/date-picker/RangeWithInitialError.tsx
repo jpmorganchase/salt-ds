@@ -49,7 +49,7 @@ export const RangeWithInitialError = (): ReactElement => {
   const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
     "error",
   );
-  const handleSelectedDateChange = useCallback(
+  const handleSelectionChange = useCallback(
     (
       newSelectedDate: DateRangeSelection | null,
       error: { startDate: string | false; endDate: string | false },
@@ -75,7 +75,7 @@ export const RangeWithInitialError = (): ReactElement => {
       <DatePicker
         selectionVariant="range"
         defaultSelectedDate={{ startDate: new CalendarDate(2024, 6, 9) }}
-        onSelectedDateChange={handleSelectedDateChange}
+        onSelectionChange={handleSelectionChange}
       >
         <DatePickerRangeInput
           defaultValue={{ startDate: "09 Jun 2024", endDate: "bad date" }}

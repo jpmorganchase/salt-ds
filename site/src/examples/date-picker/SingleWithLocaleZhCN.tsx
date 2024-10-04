@@ -27,7 +27,7 @@ export const SingleWithLocaleZhCN = (): ReactElement => {
   const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
     undefined,
   );
-  const handleSelectedDateChange = useCallback(
+  const handleSelectionChange = useCallback(
     (newSelectedDate: SingleDateSelection | null, error: string | false) => {
       console.log(`Selected date: ${newSelectedDate ?? null}`);
       if (error) {
@@ -58,7 +58,7 @@ export const SingleWithLocaleZhCN = (): ReactElement => {
       <DatePicker
         selectionVariant={"single"}
         locale={locale}
-        onSelectedDateChange={handleSelectedDateChange}
+        onSelectionChange={handleSelectionChange}
       >
         <DatePickerSingleInput format={formatDate} />
         <DatePickerOverlay>
