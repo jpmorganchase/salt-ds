@@ -7,20 +7,20 @@ import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import calendarWeekHeaderCss from "./CalendarWeekHeader.css";
 import { getCurrentLocale } from "./formatDate";
+import { useCalendarContext } from "./internal/CalendarContext";
 
-export type CalendarWeekHeaderProps = ComponentPropsWithRef<"div"> & {
-  locale?: string;
-};
+export type CalendarWeekHeaderProps = ComponentPropsWithRef<"div"> & {};
 
 const withBaseName = makePrefixer("saltCalendarWeekHeader");
 
 export const CalendarWeekHeader = forwardRef<
   HTMLDivElement,
   CalendarWeekHeaderProps
->(function CalendarWeekHeader(
-  { className, locale = getCurrentLocale(), ...rest },
-  ref,
-) {
+>(function CalendarWeekHeader({ className, ...rest }, ref) {
+  const {
+    state: { locale },
+  } = useCalendarContext();
+
   const weekdaysShort = daysForLocale("narrow", locale);
   const weekdaysLong = daysForLocale("long", locale);
 
