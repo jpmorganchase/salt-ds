@@ -7,7 +7,11 @@ import {
   getLocalTimeZone,
   toZoned,
 } from "@internationalized/date";
-import type { DateRangeSelection, SingleDateSelection } from "../calendar";
+import {
+  DateRangeSelection,
+  getCurrentLocale,
+  SingleDateSelection,
+} from "../calendar";
 
 export type RangeTimeFields = {
   startTime?: TimeFields;
@@ -19,21 +23,78 @@ export type RangeTimeFields = {
  * @param inputDate - The input date string.
  * @returns An object containing the parsed date and any error encountered.
  */
-export function parseCalendarDate(inputDate: string): {
+export function getMonthNames(locale: string): { [key: string]: number } {
+  const monthNames: { [key: string]: number } = {};
+  const date = new Date(2000, 0, 1);
+  for (let i = 0; i < 12; i++) {
+    date.setMonth(i);
+    const monthName = new Intl.DateTimeFormat(locale, {
+      month: "short",
+    }).format(date);
+    monthNames[monthName] = i + 1;
+  }
+  return monthNames;
+}
+
+export function parseCalendarDate(
+  inputDate: string,
+  locale: string = getCurrentLocale(),
+): {
   date: DateValue | null;
   error: string | false;
 } {
   if (!inputDate?.length) {
     return { date: null, error: false };
   }
-  const date = new Date(inputDate);
-  if (Number.isNaN(date.getTime())) {
+
+  const monthNames = getMonthNames(locale);
+
+  // Combined regular expression to match DD MMM YYYY and DD MM YYYY formats. MM can have an optional 0 prefix
+  const combinedDateRegex = /^(\d{1,2})[ \/-](\w{3,4}|\d{1,2})[ \/-](\d{4})$/;
+
+  const match = inputDate.match(combinedDateRegex);
+
+  if (!match) {
+    return { date: null, error: "not a valid date format" };
+  }
+
+  const dayStr = match[1];
+  const monthStr = match[2];
+  const yearStr = match[3];
+
+  if (!/^\d{1,2}$/.test(dayStr)) {
     return { date: null, error: "not a valid date" };
   }
 
-  const year = date.getFullYear();
-  const month = date.getMonth() + 1;
-  const day = date.getDate();
+  if (!/^\d{4}$/.test(yearStr)) {
+    return { date: null, error: "not a valid year" };
+  }
+
+  const day = parseInt(dayStr, 10);
+  const year = parseInt(yearStr, 10);
+
+  if (isNaN(day) || day < 1 || day > 31) {
+    return { date: null, error: "not a valid date" };
+  }
+
+  if (isNaN(year)) {
+    return { date: null, error: "not a valid year" };
+  }
+
+  let month;
+  if (isNaN(parseInt(monthStr, 10))) {
+    // Month is a word, in MMM or MMMM format
+    month = monthNames[monthStr];
+    if (!month) {
+      return { date: null, error: "not a valid month name for locale" };
+    }
+  } else {
+    // Month is numeric, in MM or M format
+    month = parseInt(monthStr, 10);
+    if (isNaN(month) || month < 1 || month > 12) {
+      return { date: null, error: "not a valid month value" };
+    }
+  }
 
   try {
     const isoDate = new CalendarDate(year, month, day);
@@ -51,12 +112,13 @@ export function parseCalendarDate(inputDate: string): {
  */
 export function parseZonedDateTime(
   inputDate: string,
+  locale: string = getCurrentLocale(),
   timeZone: string = getLocalTimeZone(),
 ): {
   date: DateValue | null;
   error: string | false;
 } {
-  const parsedDate = parseCalendarDate(inputDate);
+  const parsedDate = parseCalendarDate(inputDate, locale);
   if (!parsedDate.date || parsedDate.error) {
     return { ...parsedDate, date: null };
   }
