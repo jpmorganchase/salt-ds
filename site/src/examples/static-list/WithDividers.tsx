@@ -27,7 +27,7 @@ export const WithDividers = (): ReactElement => (
         <Fragment key={event.title}>
           <ListItem {...event} />
           {_index < complexEventsData.length - 1 && (
-            <Divider variant="tertiary" />
+            <Divider variant="tertiary" aria-hidden />
           )}
         </Fragment>
       ))}

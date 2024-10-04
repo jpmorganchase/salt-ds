@@ -154,7 +154,7 @@ export const WithDividers: StoryFn<StaticListProps> = () => {
             </StaticListItemContent>
           </StaticListItem>
           {_index < complexEventsData.length - 1 && (
-            <Divider variant="tertiary" />
+            <Divider variant="tertiary" aria-hidden />
           )}
         </Fragment>
       ))}
