@@ -6,7 +6,7 @@ import {
 } from "@internationalized/date";
 import {
   Calendar,
-  CalendarDateGrid,
+  CalendarGrid,
   CalendarNavigation,
   type CalendarProps,
   CalendarWeekHeader,
@@ -45,7 +45,7 @@ export const TwinCalendars = (): ReactElement => {
       >
         <CalendarNavigation />
         <CalendarWeekHeader />
-        <CalendarDateGrid />
+        <CalendarGrid />
       </Calendar>
       <Calendar
         selectionVariant="range"
@@ -61,7 +61,7 @@ export const TwinCalendars = (): ReactElement => {
       >
         <CalendarNavigation />
         <CalendarWeekHeader />
-        <CalendarDateGrid />
+        <CalendarGrid />
       </Calendar>
     </div>
   );

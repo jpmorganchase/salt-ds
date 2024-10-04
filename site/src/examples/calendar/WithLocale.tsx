@@ -1,6 +1,6 @@
 import {
   Calendar,
-  CalendarDateGrid,
+  CalendarGrid,
   CalendarNavigation,
   CalendarWeekHeader,
 } from "@salt-ds/lab";
@@ -10,6 +10,6 @@ export const WithLocale = (): ReactElement => (
   <Calendar selectionVariant="single" locale="es-ES">
     <CalendarNavigation />
     <CalendarWeekHeader />
-    <CalendarDateGrid />
+    <CalendarGrid />
   </Calendar>
 );
