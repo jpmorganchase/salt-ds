@@ -830,7 +830,10 @@ export const SingleWithCustomParser: StoryFn<DatePickerSingleProps> = ({
     ],
   );
   const customParser = useCallback(
-    (inputDate: string, locale: string = getCurrentLocale()): DateInputSingleParserResult => {
+    (
+      inputDate: string,
+      locale: string = getCurrentLocale(),
+    ): DateInputSingleParserResult => {
       if (!inputDate?.length) {
         return { date: null, error: false };
       }

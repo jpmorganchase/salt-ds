@@ -227,9 +227,7 @@ export const CustomDayRender: StoryFn<typeof Calendar> = (args) => {
     <Calendar {...args}>
       <CalendarNavigation />
       <CalendarWeekHeader />
-      <CalendarGrid
-        getCalendarMonthProps={(date) => ({ renderDayContents })}
-      />
+      <CalendarGrid getCalendarMonthProps={(date) => ({ renderDayContents })} />
     </Calendar>
   );
 };
