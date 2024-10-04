@@ -29,9 +29,9 @@ export const StaticList = forwardRef<HTMLUListElement, StaticListProps>(
     });
 
     return (
-      <ul className={clsx(withBaseName(), className)} ref={ref} {...rest}>
+      <ol className={clsx(withBaseName(), className)} ref={ref} {...rest}>
         {children}
-      </ul>
+      </ol>
     );
   },
 );
