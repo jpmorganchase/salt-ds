@@ -52,24 +52,24 @@ export const StatusVariants: StoryFn<QAContainerProps> = () => {
           <iframe
             title={`dialog ${density} example`}
             src={`/iframe.html?globals=density:${density}&args=open:!true&id=core-dialog--default&viewMode=story`}
-            style={{ all: "unset", width: 1200, height: 320 }}
+            style={{ border: "none", width: 1200, height: 380 }}
           />
           <iframe
             title={`dialog ${density} in dark mode example`}
             src={`/iframe.html?globals=mode:dark;density:${density}&args=open:!true&id=core-dialog--default&viewMode=story`}
-            style={{ all: "unset", width: 1200, height: 320 }}
+            style={{ border: "none", width: 1200, height: 380 }}
           />
           {VALIDATION_NAMED_STATUS.map((status) => (
             <Fragment key={status}>
               <iframe
                 title={`dialog ${density} ${status} example`}
                 src={`/iframe.html?globals=density:${density}&args=open:!true;status:${status}&id=core-dialog--default&viewMode=story`}
-                style={{ all: "unset", width: 1200, height: 320 }}
+                style={{ border: "none", width: 1200, height: 380 }}
               />
               <iframe
                 title={`dialog ${density} ${status} in dark mode example`}
                 src={`/iframe.html?globals=mode:dark;density:${density}&args=open:!true;status:${status}&id=core-dialog--default&viewMode=story`}
-                style={{ all: "unset", width: 1200, height: 320 }}
+                style={{ border: "none", width: 1200, height: 380 }}
               />
             </Fragment>
           ))}
@@ -106,38 +106,38 @@ export const ContentVariants: StoryFn<QAContainerProps> = () => {
             <iframe
               title={`dialog ${density} small example`}
               src={`/iframe.html?globals=density:${density}&args=open:!true;size:small&id=core-dialog--default&viewMode=story`}
-              style={{ all: "unset", width: 350, height: 320 }}
+              style={{ border: "none", width: 400, height: 380 }}
             />
             <iframe
               title={`dialog ${density} medium example`}
               src={`/iframe.html?globals=density:${density}&args=open:!true;size:medium&id=core-dialog--default&viewMode=story`}
-              style={{ all: "unset", width: 700, height: 320 }}
+              style={{ border: "none", width: 800, height: 380 }}
             />
             <iframe
               title={`dialog ${density} large example`}
               src={`/iframe.html?globals=density:${density}&args=open:!true;size:large&id=core-dialog--default&viewMode=story`}
-              style={{ all: "unset", width: 1200, height: 320 }}
+              style={{ border: "none", width: 1200, height: 380 }}
             />
           </FlowLayout>
           <iframe
             title={`dialog ${density} sticky footer example`}
             src={`/iframe.html?globals=density:${density}&args=open:!true&id=core-dialog--sticky-footer&viewMode=story`}
-            style={{ all: "unset", width: 1200, height: 320 }}
+            style={{ border: "none", width: 1200, height: 380 }}
           />
           <iframe
             title={`dialog ${density} sticky footer in dark mode example`}
             src={`/iframe.html?globals=mode:dark;density:${density}&args=open:!true&id=core-dialog--sticky-footer&viewMode=story`}
-            style={{ all: "unset", width: 1200, height: 320 }}
+            style={{ border: "none", width: 1200, height: 380 }}
           />
           <iframe
             title={`dialog ${density} long content example`}
             src={`/iframe.html?globals=density:${density}&args=open:!true&id=core-dialog--long-content&viewMode=story`}
-            style={{ all: "unset", width: 1200, height: 320 }}
+            style={{ border: "none", width: 1200, height: 380 }}
           />
           <iframe
             title={`dialog ${density} long content in dark mode example`}
             src={`/iframe.html?globals=mode:dark;density:${density}&args=open:!true&id=core-dialog--long-content&viewMode=story`}
-            style={{ all: "unset", width: 1200, height: 320 }}
+            style={{ border: "none", width: 1200, height: 380 }}
           />
         </Fragment>
       ))}
