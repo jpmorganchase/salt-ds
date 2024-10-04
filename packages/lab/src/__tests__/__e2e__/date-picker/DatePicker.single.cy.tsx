@@ -428,8 +428,8 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
         31,
         32,
       );
-      const parse: typeof parseZonedDateTime = (dateTime) =>
-        parseZonedDateTime(dateTime, testTimeZone);
+      const parse: typeof parseZonedDateTime = (dateTime, locale) =>
+        parseZonedDateTime(dateTime, locale, testTimeZone);
       cy.mount(
         <DatePicker
           defaultSelectedDate={defaultSelectedDate}

@@ -829,8 +829,8 @@ export const SingleWithCustomParser: StoryFn<DatePickerSingleProps> = ({
       setHelperText,
     ],
   );
-  const handleParse = useCallback(
-    (inputDate: string): DateInputSingleParserResult => {
+  const customParser = useCallback(
+    (inputDate: string, locale: string = getCurrentLocale()): DateInputSingleParserResult => {
       if (!inputDate?.length) {
         return { date: null, error: false };
       }
@@ -865,7 +865,7 @@ export const SingleWithCustomParser: StoryFn<DatePickerSingleProps> = ({
         {...args}
         selectedDate={selectedDate}
       >
-        <DatePickerSingleInput parse={handleParse} />
+        <DatePickerSingleInput parse={customParser} />
         <DatePickerOverlay>
           <DatePickerSinglePanel helperText={helperText} />
         </DatePickerOverlay>
