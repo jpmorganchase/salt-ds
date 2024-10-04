@@ -25,7 +25,10 @@ describe("GIVEN a DateInputSingle", () => {
 
   it("SHOULD support custom parser", () => {
     const parseSpy = cy.stub().as("parseSpy");
-    const customParser = (inputDate: string, locale: string): DateInputSingleParserResult => {
+    const customParser = (
+      inputDate: string,
+      locale: string,
+    ): DateInputSingleParserResult => {
       const parsedAsDate = updatedDate;
       parseSpy(inputDate, locale);
       return { date: parsedAsDate, error: false };
