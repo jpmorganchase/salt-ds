@@ -12,10 +12,14 @@ data:
 
 <LivePreviewControls>
 <LivePreview componentName="calendar" exampleName="Single">
-## Compose a standard DatePicker
-To use the `Calendar` component, compose it with children that define the calendar header, such as `CalendarNavigation`.
 
-The `CalendarNavigation` component provides year/month dropdowns and forward/back controls for the visible month.
+## Compose a standard Calendar
+
+To use the `Calendar` component, compose it with the provided children
+
+`CalendarNavigation` - provides year/month dropdowns and forward/back controls for the visible month.
+`CalendarWeekHeader` - provides a header for `CalendarDateGrid` indicating the day of the week.
+`CalendarDateGrid` - provides a grid of buttons that represent the days from a calendar month.
 
 </LivePreview>
 </LivePreviewControls>
@@ -23,11 +27,11 @@ The `CalendarNavigation` component provides year/month dropdowns and forward/bac
 <LivePreviewControls>
   <LivePreview
     componentName="calendar"
-    displayName="Custom header"
-    exampleName="CustomHeader"
+    displayName="Today button"
+    exampleName="TodayButton"
   >
-    ## Customising the DatePicker Alternatively, you can compose it with your
-    own navigation component or add additional controls.
+    ## Customising the Calendar Alternatively, you can compose it with your own
+    calendar controls or add additional content.
   </LivePreview>
 </LivePreviewControls>
 
@@ -42,8 +46,48 @@ Use the `Calendar` component when you need a versatile date selection tool that 
 
 ## Import
 
+### Calendar
+
 To import `Calendar` from the Salt lab package, use:
 
 ```js
 import { Calendar } from "@salt-ds/lab";
 ```
+
+### CalendarNavigation
+
+To import `CalendarNavigation` from the Salt lab package, use:
+
+```js
+import { CalendarNavigation } from "@salt-ds/lab";
+```
+
+### CalendarWeekHeader
+
+To import `CalendarWeekHeader` from the Salt lab package, use:
+
+```js
+import { CalendarWeekHeader } from "@salt-ds/lab";
+```
+
+### CalendarDateGrid
+
+To import `CalendarDateGrid` from the Salt lab package, use:
+
+```js
+import { CalendarDateGrid } from "@salt-ds/lab";
+```
+
+## Props
+
+### Calendar
+
+<PropsTable packageName="lab" componentName="Calendar" />
+
+### CalendarWeekHeader
+
+<PropsTable packageName="lab" componentName="CalendarWeekHeader" />
+
+### CalendarDateGrid
+
+<PropsTable packageName="lab" componentName="CalendarDateGrid" />

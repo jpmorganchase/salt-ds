@@ -4,7 +4,12 @@ import {
   startOfMonth,
   today,
 } from "@internationalized/date";
-import { Calendar, CalendarNavigation } from "@salt-ds/lab";
+import {
+  Calendar,
+  CalendarDateGrid,
+  CalendarNavigation,
+  CalendarWeekHeader,
+} from "@salt-ds/lab";
 import type { ReactElement } from "react";
 
 export const MinMaxDate = (): ReactElement => (
@@ -15,5 +20,7 @@ export const MinMaxDate = (): ReactElement => (
     maxDate={endOfMonth(today(getLocalTimeZone()))}
   >
     <CalendarNavigation />
+    <CalendarWeekHeader />
+    <CalendarDateGrid />
   </Calendar>
 );

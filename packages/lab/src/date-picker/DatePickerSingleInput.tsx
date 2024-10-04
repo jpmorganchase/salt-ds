@@ -90,12 +90,13 @@ export const DatePickerSingleInput = forwardRef<
     }
   }, [open]);
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: avoid excessive re-rendering
   useEffect(() => {
     if (cancelled) {
       setValue(prevState?.current?.value);
       setSelectedDate(prevState?.current?.date || null, false);
     }
-  }, [cancelled, setSelectedDate]);
+  }, [cancelled]);
 
   return (
     <DateInputSingle
@@ -110,7 +111,8 @@ export const DatePickerSingleInput = forwardRef<
       onDateValueChange={handleDateValueChange}
       endAdornment={
         <Button
-          variant="secondary"
+          appearance="transparent"
+          sentiment="neutral"
           onClick={handleCalendarButton}
           disabled={disabled}
           aria-label="Open Calendar"

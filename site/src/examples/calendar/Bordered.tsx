@@ -1,5 +1,10 @@
 import { getLocalTimeZone, today } from "@internationalized/date";
-import { Calendar, CalendarNavigation } from "@salt-ds/lab";
+import {
+  Calendar,
+  CalendarDateGrid,
+  CalendarNavigation,
+  CalendarWeekHeader,
+} from "@salt-ds/lab";
 import type { ReactElement } from "react";
 
 export const Bordered = (): ReactElement => (
@@ -11,5 +16,7 @@ export const Bordered = (): ReactElement => (
       MonthDropdownProps={{ bordered: true }}
       YearDropdownProps={{ bordered: true }}
     />
+    <CalendarWeekHeader />
+    <CalendarDateGrid />
   </Calendar>
 );

@@ -6,8 +6,10 @@ import {
 } from "@internationalized/date";
 import {
   Calendar,
+  CalendarDateGrid,
   CalendarNavigation,
   type CalendarProps,
+  CalendarWeekHeader,
   type UseCalendarSelectionRangeProps,
 } from "@salt-ds/lab";
 import { type ReactElement, useState } from "react";
@@ -40,9 +42,10 @@ export const TwinCalendars = (): ReactElement => {
             : startOfMonth(today(getLocalTimeZone()))
         }
         selectedDate={selectedDate}
-        hideOutOfRangeDates
       >
         <CalendarNavigation />
+        <CalendarWeekHeader />
+        <CalendarDateGrid />
       </Calendar>
       <Calendar
         selectionVariant="range"
@@ -55,9 +58,10 @@ export const TwinCalendars = (): ReactElement => {
             ? startOfMonth(selectedDate.endDate)
             : startOfMonth(today(getLocalTimeZone()).add({ months: 1 }))
         }
-        hideOutOfRangeDates
       >
         <CalendarNavigation />
+        <CalendarWeekHeader />
+        <CalendarDateGrid />
       </Calendar>
     </div>
   );

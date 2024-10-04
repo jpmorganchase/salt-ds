@@ -8,7 +8,7 @@ import {
   formatDate,
   getCurrentLocale,
 } from "@salt-ds/lab";
-import { type ReactElement, useState } from "react";
+import { type ReactElement, useCallback, useState } from "react";
 
 function formatSingleDate(
   date: DateValue | null,
@@ -25,14 +25,19 @@ export const SingleControlled = (): ReactElement => {
   const [selectedDate, setSelectedDate] = useState<SingleDateSelection | null>(
     null,
   );
+  const handleSelectedDateChange = useCallback(
+    (newSelectedDate: SingleDateSelection | null) => {
+      console.log(`Selected date: ${formatSingleDate(newSelectedDate)}`);
+      setSelectedDate(newSelectedDate);
+    },
+    [setSelectedDate],
+  );
+
   return (
     <DatePicker
       selectionVariant={"single"}
       selectedDate={selectedDate}
-      onSelectedDateChange={(newSelectedDate, _error) => {
-        console.log(`Selected date: ${formatSingleDate(newSelectedDate)}`);
-        setSelectedDate(newSelectedDate);
-      }}
+      onSelectedDateChange={handleSelectedDateChange}
     >
       <DatePickerSingleInput />
       <DatePickerOverlay>

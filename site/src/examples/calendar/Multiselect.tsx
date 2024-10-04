@@ -1,11 +1,16 @@
 import { CalendarDate, getLocalTimeZone, today } from "@internationalized/date";
-import { Calendar, CalendarNavigation } from "@salt-ds/lab";
+import {
+  Calendar,
+  CalendarDateGrid,
+  CalendarNavigation,
+  CalendarWeekHeader,
+} from "@salt-ds/lab";
 import type { ReactElement } from "react";
 
 export const Multiselect = (): ReactElement => (
   <Calendar
-    selectionVariant="multiselect"
     hideOutOfRangeDates
+    selectionVariant="multiselect"
     defaultVisibleMonth={new CalendarDate(2024, 1, 1)}
     defaultSelectedDate={[
       new CalendarDate(2024, 1, 2),
@@ -47,5 +52,7 @@ export const Multiselect = (): ReactElement => (
     ]}
   >
     <CalendarNavigation />
+    <CalendarWeekHeader />
+    <CalendarDateGrid />
   </Calendar>
 );

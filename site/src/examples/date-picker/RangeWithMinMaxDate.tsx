@@ -13,7 +13,7 @@ import {
   formatDate,
   getCurrentLocale,
 } from "@salt-ds/lab";
-import { type ReactElement, useState } from "react";
+import { type ReactElement, useCallback, useState } from "react";
 
 function formatDateRange(
   dateRange: DateRangeSelection | null,
@@ -31,24 +31,22 @@ function formatDateRange(
 }
 
 export const RangeWithMinMaxDate = (): ReactElement => {
-  const [selectedDate, setSelectedDate] = useState<DateRangeSelection | null>(
-    null,
+  const helperText = "Select date between 15/01/2030 and 15/01/2031";
+  const handleSelectedDateChange = useCallback(
+    (newSelectedDate: DateRangeSelection | null) => {
+      console.log(`Selected date range: ${formatDateRange(newSelectedDate)}`);
+    },
+    [],
   );
-  const helperText = "Valid between 15/01/2030 and 15/01/2031";
+
   return (
     <FormField style={{ width: "256px" }}>
       <FormLabel>Select a date range</FormLabel>
       <DatePicker
         selectionVariant="range"
-        selectedDate={selectedDate}
-        onSelectedDateChange={(newSelectedDate, _error) => {
-          console.log(
-            `Selected date range: ${formatDateRange(newSelectedDate)}`,
-          );
-          setSelectedDate(newSelectedDate);
-        }}
         minDate={new CalendarDate(2030, 1, 15)}
         maxDate={new CalendarDate(2031, 1, 15)}
+        onSelectedDateChange={handleSelectedDateChange}
       >
         <DatePickerRangeInput />
         <DatePickerOverlay>

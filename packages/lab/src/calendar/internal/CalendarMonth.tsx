@@ -16,9 +16,17 @@ import { useCalendarContext } from "./CalendarContext";
 import calendarMonthCss from "./CalendarMonth.css";
 
 export interface CalendarMonthProps extends ComponentPropsWithRef<"div"> {
+  /**
+   * Month to render as selectable dates
+   */
   date: DateValue;
-  hideOutOfRangeDates?: boolean;
+  /**
+   * Function to render the contents of a day.
+   */
   renderDayContents?: CalendarDayProps["renderDayContents"];
+  /**
+   * Props for the tooltip component.
+   */
   TooltipProps?: CalendarDayProps["TooltipProps"];
 }
 

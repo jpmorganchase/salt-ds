@@ -6,7 +6,7 @@ import {
   startOfMonth,
 } from "@internationalized/date";
 import { useControlled, useForkRef, useFormFieldProps } from "@salt-ds/core";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   CALENDAR_MAX_YEAR,
   CALENDAR_MIN_YEAR,
@@ -163,13 +163,17 @@ export function useDatePicker<SelectionVariant extends "single" | "range">(
     timeZone = getLocalTimeZone(),
     locale = getCurrentLocale(),
     onCancel,
-    ...rest
   } = props;
 
-  const minDate: DateValue =
-    minDateProp ?? startOfMonth(new CalendarDate(CALENDAR_MIN_YEAR, 1, 1));
-  const maxDate: DateValue =
-    maxDateProp ?? endOfMonth(new CalendarDate(CALENDAR_MAX_YEAR, 1, 1));
+  const minDate: DateValue = useMemo(
+    () =>
+      minDateProp ?? startOfMonth(new CalendarDate(CALENDAR_MIN_YEAR, 1, 1)),
+    [minDateProp],
+  );
+  const maxDate: DateValue = useMemo(
+    () => maxDateProp ?? endOfMonth(new CalendarDate(CALENDAR_MAX_YEAR, 1, 1)),
+    [maxDateProp],
+  );
 
   const datePickerRef = useRef<HTMLDivElement>(null);
   const containerRef = useForkRef(ref, datePickerRef);
@@ -211,36 +215,44 @@ export function useDatePicker<SelectionVariant extends "single" | "range">(
     }
   };
 
-  const setSelectedSingleDate = (
-    selection: SingleDateSelection | null,
-    error: SingleDatePickerError,
-  ) => {
-    let nextDate: typeof selection;
-    let nextError = error;
-    if (error || !selection) {
-      nextDate = selection;
-    } else {
-      let dateAfterMinDate = true;
-      let dateBeforeMaxDate = true;
-      if (minDate && selection) {
-        dateAfterMinDate = selection.compare(minDate) >= 0;
+  const setSelectedSingleDate = useCallback(
+    (selection: SingleDateSelection | null, error: SingleDatePickerError) => {
+      let nextDate: typeof selection;
+      let nextError = error;
+      if (error || !selection) {
+        nextDate = selection;
+      } else {
+        let dateAfterMinDate = true;
+        let dateBeforeMaxDate = true;
+        if (minDate && selection) {
+          dateAfterMinDate = selection.compare(minDate) >= 0;
+        }
+        if (maxDate && selection) {
+          dateBeforeMaxDate = selection.compare(maxDate) <= 0;
+        }
+        nextDate = dateAfterMinDate && dateBeforeMaxDate ? selection : null;
+        nextError = !dateAfterMinDate ? "is before min date" : nextError;
+        nextError = !dateBeforeMaxDate ? "is after max date" : nextError;
       }
-      if (maxDate && selection) {
-        dateBeforeMaxDate = selection.compare(maxDate) <= 0;
+      setSelectedDate(nextDate);
+      if (selectionVariant === "single") {
+        onSelectedDateChange?.(nextDate, error);
       }
-      nextDate = dateAfterMinDate && dateBeforeMaxDate ? selection : null;
-      nextError = !dateAfterMinDate ? "is before min date" : nextError;
-      nextError = !dateBeforeMaxDate ? "is after max date" : nextError;
-    }
-    setSelectedDate(nextDate);
-    if (selectionVariant === "single") {
-      onSelectedDateChange?.(nextDate, error);
-    }
 
-    if (!enableApply) {
-      setOpen(false);
-    }
-  };
+      if (!enableApply) {
+        setOpen(false);
+      }
+    },
+    [
+      enableApply,
+      minDate,
+      maxDate,
+      onSelectedDateChange,
+      selectionVariant,
+      setSelectedDate,
+      setOpen,
+    ],
+  );
 
   const applyRange = (
     appliedDate: DateRangeSelection | null,
@@ -255,51 +267,59 @@ export function useDatePicker<SelectionVariant extends "single" | "range">(
     }
   };
 
-  const setSelectedRangeDate = (
-    selection: DateRangeSelection | null,
-    error: RangeDatePickerError,
-  ) => {
-    let nextDate: typeof selection;
-    let nextError = { ...error };
-    let startDateInRange = true;
-    let endDateInRange = true;
-    if (error?.startDate || error?.endDate || !selection) {
-      nextDate = selection;
-    } else {
-      if (maxDate && selection?.startDate) {
-        startDateInRange = selection.startDate.compare(minDate) >= 0;
-      }
-      if (maxDate && selection?.endDate) {
-        endDateInRange =
-          selection?.endDate && selection.endDate.compare(maxDate) <= 0;
-      }
-      if (!startDateInRange && !endDateInRange) {
-        nextDate = null;
-        nextError = {
-          startDate: "is before min date",
-          endDate: "is after max date",
-        };
+  const setSelectedRangeDate = useCallback(
+    (selection: DateRangeSelection | null, error: RangeDatePickerError) => {
+      let nextDate: typeof selection;
+      let nextError = { ...error };
+      let startDateInRange = true;
+      let endDateInRange = true;
+      if (error?.startDate || error?.endDate || !selection) {
+        nextDate = selection;
       } else {
-        nextDate = {
-          startDate: selection.startDate || null,
-          endDate: selection.endDate || null,
-        };
-        nextError = {
-          startDate: !startDateInRange
-            ? "is before min date"
-            : nextError.startDate,
-          endDate: !endDateInRange ? "is after max date" : nextError.endDate,
-        };
+        if (maxDate && selection?.startDate) {
+          startDateInRange = selection.startDate.compare(minDate) >= 0;
+        }
+        if (maxDate && selection?.endDate) {
+          endDateInRange =
+            selection?.endDate && selection.endDate.compare(maxDate) <= 0;
+        }
+        if (!startDateInRange && !endDateInRange) {
+          nextDate = null;
+          nextError = {
+            startDate: "is before min date",
+            endDate: "is after max date",
+          };
+        } else {
+          nextDate = {
+            startDate: selection.startDate || null,
+            endDate: selection.endDate || null,
+          };
+          nextError = {
+            startDate: !startDateInRange
+              ? "is before min date"
+              : nextError.startDate,
+            endDate: !endDateInRange ? "is after max date" : nextError.endDate,
+          };
+        }
       }
-    }
-    setSelectedDate(nextDate);
-    if (selectionVariant === "range") {
-      onSelectedDateChange?.(nextDate, nextError);
-    }
-    if (!enableApply && nextDate?.startDate && nextDate?.endDate) {
-      setOpen(false);
-    }
-  };
+      setSelectedDate(nextDate);
+      if (selectionVariant === "range") {
+        onSelectedDateChange?.(nextDate, nextError);
+      }
+      if (!enableApply && nextDate?.startDate && nextDate?.endDate) {
+        setOpen(false);
+      }
+    },
+    [
+      enableApply,
+      minDate,
+      maxDate,
+      onSelectedDateChange,
+      selectionVariant,
+      setSelectedDate,
+      setOpen,
+    ],
+  );
 
   const cancel = () => {
     setCancelled(true);
@@ -320,7 +340,6 @@ export function useDatePicker<SelectionVariant extends "single" | "range">(
       maxDate,
       locale,
       timeZone,
-      ...rest,
     },
     helpers: {
       cancel,

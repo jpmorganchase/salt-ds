@@ -12,24 +12,19 @@ import * as calendarStories from "@stories/calendar/calendar.stories";
 import { composeStories } from "@storybook/react";
 import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
 
+const composedStories = composeStories(calendarStories);
 const {
   Single,
   CustomDayRender,
-  CustomHeader,
   HideYearDropdown,
   MinMaxDate,
+  TodayButton,
   TwinCalendars,
   WithLocale,
-} = composeStories(calendarStories);
+} = composedStories;
 
 describe("GIVEN a Calendar", () => {
-  // TODO design a compliant Header example
-  const {
-    default: _ignored,
-    CustomHeader: _CustomHeader,
-    ...allAxeStories
-  } = calendarStories;
-  checkAccessibility(allAxeStories);
+  checkAccessibility(composedStories);
 
   const testDate = parseDate("2022-02-03");
   const testTimeZone = "Europe/London";
@@ -351,7 +346,7 @@ describe("GIVEN a Calendar", () => {
 
     it("SHOULD render custom headers", () => {
       cy.mount(
-        <CustomHeader defaultVisibleMonth={testDate} locale={testLocale} />,
+        <TodayButton defaultVisibleMonth={testDate} locale={testLocale} />,
       );
       // Simulate clicking the "Today" button
       cy.findByRole("button", { name: /Today/i }).click();

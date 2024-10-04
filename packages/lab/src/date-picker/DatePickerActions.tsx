@@ -101,6 +101,7 @@ export const DatePickerActions = forwardRef<
     onApply,
     onCancel,
     selectionVariant,
+    ...rest
   } = props;
   const targetWindow = useWindow();
   useComponentCssInjection({
@@ -148,10 +149,11 @@ export const DatePickerActions = forwardRef<
   };
 
   return (
-    <div className={clsx(className, withBaseName())} ref={ref}>
+    <div className={clsx(className, withBaseName())} ref={ref} {...rest}>
       <div className={withBaseName("body")}>{children}</div>
       <Button
-        variant={"secondary"}
+        appearance="transparent"
+        sentiment="neutral"
         ref={cancelButtonRef}
         {...CancelButtonProps}
         onClick={handleCancel}
@@ -160,7 +162,8 @@ export const DatePickerActions = forwardRef<
         Cancel
       </Button>
       <Button
-        variant={"cta"}
+        appearance="solid"
+        sentiment="accented"
         ref={applyButtonRef}
         {...ApplyButtonProps}
         onClick={handleApply}

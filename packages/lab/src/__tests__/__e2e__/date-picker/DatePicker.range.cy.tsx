@@ -6,13 +6,6 @@ import {
   today,
 } from "@internationalized/date";
 import * as datePickerStories from "@stories/date-picker/date-picker.stories";
-import {
-  RangeControlled,
-  RangeWithConfirmation,
-  RangeWithCustomPanel,
-  RangeWithFormField,
-  RangeWithMinMaxDate,
-} from "@stories/date-picker/date-picker.stories";
 import { composeStories } from "@storybook/react";
 import React from "react";
 import { formatDate } from "../../../calendar";
@@ -25,7 +18,14 @@ import {
 } from "../../../date-picker";
 
 const composedStories = composeStories(datePickerStories);
-const { Range } = composedStories;
+const {
+  Range,
+  RangeControlled,
+  RangeWithConfirmation,
+  RangeWithCustomPanel,
+  RangeWithFormField,
+  RangeWithMinMaxDate,
+} = composedStories;
 
 describe("GIVEN a DatePicker where selectionVariant is range", () => {
   const testLocale = "en-GB";
@@ -61,11 +61,19 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
   };
 
   it("SHOULD only be able to select a date between min/max", () => {
+    const selectedDateChangeSpy = cy.stub().as("selectedDateChangeSpy");
     cy.mount(
-      <RangeWithMinMaxDate selectionVariant={"range"} locale={testLocale} />,
+      <RangeWithMinMaxDate
+        defaultSelectedDate={initialRangeDate}
+        onSelectedDateChange={selectedDateChangeSpy}
+        selectionVariant={"range"}
+        locale={testLocale}
+      />,
     );
     // Simulate opening the calendar
     cy.findByRole("button", { name: "Open Calendar" }).realClick();
+    // Verify that the calendar is displayed
+    cy.findAllByRole("application").should("have.length", 2);
     // Verify that dates outside the min/max range are disabled
     cy.findByRole("button", {
       name: formatDay(parseDate("2030-01-14")),
@@ -79,6 +87,14 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
     cy.findByRole("button", {
       name: formatDay(parseDate("2031-01-16")),
     }).should("have.attr", "aria-disabled", "true");
+    // Simulate selecting a date outside the min/max range
+    cy.findByRole("button", {
+      name: formatDay(parseDate("2030-01-14")),
+    })
+      .realHover()
+      .realClick();
+    cy.findAllByRole("application").should("have.length", 2);
+    cy.get("@selectedDateChangeSpy").should("not.have.been.called");
     // Simulate selecting a date within the min/max range
     cy.findByRole("button", {
       name: formatDay(parseDate("2030-01-15")),
@@ -95,6 +111,14 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
     cy.findByLabelText("End date").should(
       "have.value",
       formatDate(parseDate("2031-01-15"), testLocale),
+    );
+    cy.get("@selectedDateChangeSpy").should(
+      "have.been.calledWith",
+      {
+        startDate: parseDate("2030-01-15"),
+        endDate: parseDate("2031-01-15"),
+      },
+      { startDate: false, endDate: false },
     );
   });
 
@@ -163,7 +187,7 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
     );
     // Simulate opening the calendar
     cy.findByRole("button", { name: "Open Calendar" }).realClick();
-    // Verify that the custom panel is displayed
+    // Verify that the calendar is displayed
     cy.findAllByRole("application").should("have.length", 2);
     // Simulate selecting a tenor option
     cy.findByRole("option", {
@@ -199,7 +223,7 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
       cy.mount(
         <RangeWithConfirmation
           selectionVariant={"range"}
-          selectedDate={initialRangeDate}
+          defaultSelectedDate={initialRangeDate}
           onSelectedDateChange={selectedDateChangeSpy}
           onApply={appliedDateSpy}
           onCancel={cancelSpy}
@@ -217,6 +241,7 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
       );
       // Simulate opening the calendar
       cy.findByRole("button", { name: "Open Calendar" }).realClick();
+      // Verify that the calendar is displayed
       cy.findAllByRole("application").should("have.length", 2);
       // Simulate selecting an unconfirmed date
       cy.findByRole("button", {
@@ -265,7 +290,7 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
       cy.mount(
         <RangeWithConfirmation
           selectionVariant={"range"}
-          selectedDate={initialRangeDate}
+          defaultSelectedDate={initialRangeDate}
           onSelectedDateChange={selectedDateChangeSpy}
           onApply={appliedDateSpy}
           onCancel={cancelSpy}
@@ -283,6 +308,7 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
       );
       // Simulate opening the calendar
       cy.findByRole("button", { name: "Open Calendar" }).realClick();
+      // Verify that the calendar is displayed
       cy.findAllByRole("application").should("have.length", 2);
       // Simulate selecting a new date range
       cy.findByRole("button", {
@@ -344,6 +370,7 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
       );
       // Simulate opening the calendar
       cy.findByRole("button", { name: "Open Calendar" }).realClick();
+      // Verify that the calendar is displayed
       cy.findAllByRole("application").should("have.length", 2);
       // Verify that the default selected dates are highlighted in the calendar
       cy.findByRole("button", {
@@ -360,6 +387,7 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
       );
       // Simulate opening the calendar
       cy.findByRole("button", { name: "Open Calendar" }).realClick();
+      // Verify that the calendar is displayed
       cy.findAllByRole("application").should("have.length", 2);
       // Simulate selecting a new start date
       cy.findByRole("button", {
@@ -394,7 +422,7 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
       cy.mount(
         <RangeControlled
           selectionVariant={"range"}
-          selectedDate={initialRangeDate}
+          defaultSelectedDate={initialRangeDate}
           locale={testLocale}
         />,
       );
@@ -409,6 +437,7 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
       );
       // Simulate opening the calendar
       cy.findByRole("button", { name: "Open Calendar" }).realClick();
+      // Verify that the calendar is displayed
       cy.findAllByRole("application").should("have.length", 2);
       // Verify that the selected dates are highlighted in the calendar
       cy.findByRole("button", {
@@ -423,12 +452,13 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
       cy.mount(
         <RangeControlled
           selectionVariant={"range"}
-          selectedDate={initialRangeDate}
+          defaultSelectedDate={initialRangeDate}
           locale={testLocale}
         />,
       );
       // Simulate opening the calendar
       cy.findByRole("button", { name: "Open Calendar" }).realClick();
+      // Verify that the calendar is displayed
       cy.findAllByRole("application").should("have.length", 2);
       // Simulate selecting a new start date
       cy.findByRole("button", {

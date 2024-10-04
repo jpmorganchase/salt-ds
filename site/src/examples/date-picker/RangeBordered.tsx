@@ -7,7 +7,7 @@ import {
   formatDate,
   getCurrentLocale,
 } from "@salt-ds/lab";
-import React, { type ReactElement } from "react";
+import React, { type ReactElement, useCallback } from "react";
 
 function formatDateRange(
   dateRange: DateRangeSelection | null,
@@ -24,25 +24,32 @@ function formatDateRange(
   return `Start date: ${formattedStartDate}, End date: ${formattedEndDate}`;
 }
 
-export const RangeBordered = (): ReactElement => (
-  <DatePicker
-    selectionVariant="range"
-    onSelectedDateChange={(newSelectedDate, _error) => {
+export const RangeBordered = (): ReactElement => {
+  const handleSelectedDateChange = useCallback(
+    (newSelectedDate: DateRangeSelection | null) => {
       console.log(`Selected date range: ${formatDateRange(newSelectedDate)}`);
-    }}
-  >
-    <DatePickerRangeInput bordered />
-    <DatePickerOverlay>
-      <DatePickerRangePanel
-        StartCalendarNavigationProps={{
-          MonthDropdownProps: { bordered: true },
-          YearDropdownProps: { bordered: true },
-        }}
-        EndCalendarNavigationProps={{
-          MonthDropdownProps: { bordered: true },
-          YearDropdownProps: { bordered: true },
-        }}
-      />
-    </DatePickerOverlay>
-  </DatePicker>
-);
+    },
+    [],
+  );
+
+  return (
+    <DatePicker
+      selectionVariant="range"
+      onSelectedDateChange={handleSelectedDateChange}
+    >
+      <DatePickerRangeInput bordered />
+      <DatePickerOverlay>
+        <DatePickerRangePanel
+          StartCalendarNavigationProps={{
+            MonthDropdownProps: { bordered: true },
+            YearDropdownProps: { bordered: true },
+          }}
+          EndCalendarNavigationProps={{
+            MonthDropdownProps: { bordered: true },
+            YearDropdownProps: { bordered: true },
+          }}
+        />
+      </DatePickerOverlay>
+    </DatePicker>
+  );
+};

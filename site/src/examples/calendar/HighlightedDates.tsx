@@ -3,7 +3,12 @@ import {
   isEqualDay,
   startOfMonth,
 } from "@internationalized/date";
-import { Calendar, CalendarNavigation, getCurrentLocale } from "@salt-ds/lab";
+import {
+  Calendar,
+  CalendarDateGrid,
+  CalendarNavigation,
+  CalendarWeekHeader,
+} from "@salt-ds/lab";
 import type { ReactElement } from "react";
 
 // Start of month
@@ -13,5 +18,7 @@ const isDayHighlighted = (date: DateValue) =>
 export const HighlightedDates = (): ReactElement => (
   <Calendar selectionVariant="single" isDayHighlighted={isDayHighlighted}>
     <CalendarNavigation />
+    <CalendarWeekHeader />
+    <CalendarDateGrid />
   </Calendar>
 );

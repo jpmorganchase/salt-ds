@@ -1,5 +1,4 @@
 import {
-  CalendarDate,
   DateFormatter,
   type DateValue,
   getLocalTimeZone,
@@ -10,7 +9,6 @@ import {
   FormFieldLabel as FormLabel,
 } from "@salt-ds/core";
 import {
-  type DateInputSingleParserResult,
   DatePicker,
   DatePickerOverlay,
   DatePickerSingleInput,
@@ -19,47 +17,30 @@ import {
   type SingleDateSelection,
   formatDate,
 } from "@salt-ds/lab";
-import React, { type ReactElement, useState } from "react";
-
-const formatDateZhCN = (date: DateValue | null) => {
-  return date
-    ? new DateFormatter("zh-CN", {
-        day: "2-digit",
-        month: "2-digit",
-        year: "numeric",
-      }).format(date.toDate(getLocalTimeZone()))
-    : "";
-};
-
-const parseDateZhCN = (dateString: string): DateInputSingleParserResult => {
-  if (!dateString?.length) {
-    return { date: null, error: false };
-  }
-  const dateParts = dateString.match(/^(\d{4})\/(\d{1,2})\/(\d{1,2})$/);
-  if (!dateParts) {
-    return { date: null, error: "invalid date" };
-  }
-  const [_, year, month, day] = dateParts;
-  return {
-    date: new CalendarDate(
-      Number.parseInt(year, 10),
-      Number.parseInt(month, 10),
-      Number.parseInt(day, 10),
-    ),
-    error: false,
-  };
-};
+import React, { type ReactElement, useCallback, useState } from "react";
 
 export const SingleWithLocaleZhCN = (): ReactElement => {
   const locale = "zh-CN";
 
-  const [selectedDate, setSelectedDate] = useState<SingleDateSelection | null>(
-    null,
-  );
-  const helperText = `Locale ${locale}`;
+  const defaultHelperText = `Locale ${locale}`;
+  const errorHelperText = "Please enter a valid date in DD MMM YYYY format";
+  const [helperText, setHelperText] = useState(defaultHelperText);
   const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
     undefined,
   );
+  const handleSelectedDateChange = useCallback(
+    (newSelectedDate: SingleDateSelection | null, error: string | false) => {
+      console.log(`Selected date: ${newSelectedDate ?? null}`);
+      if (error) {
+        setHelperText(errorHelperText);
+      } else {
+        setHelperText(defaultHelperText);
+      }
+      setValidationStatus(error ? "error" : undefined);
+    },
+    [setValidationStatus, setHelperText],
+  );
+
   const formatMonth = (date: DateValue) =>
     formatDate(date, locale, {
       month: "long",
@@ -77,27 +58,16 @@ export const SingleWithLocaleZhCN = (): ReactElement => {
       <FormLabel>Select a date</FormLabel>
       <DatePicker
         selectionVariant={"single"}
-        selectedDate={selectedDate}
         locale={locale}
-        onSelectedDateChange={(
-          newSelectedDate: SingleDateSelection | null,
-          error: SingleDatePickerError,
-        ) => {
-          console.log(
-            `Selected date: ${formatDateZhCN(newSelectedDate ?? null)}`,
-          );
-          setSelectedDate(newSelectedDate);
-          setValidationStatus(error ? "error" : undefined);
-        }}
+        onSelectedDateChange={handleSelectedDateChange}
       >
-        <DatePickerSingleInput
-          format={formatDateZhCN}
-          parse={parseDateZhCN}
-          placeholder={"YYYY/MM/DD"}
-        />
+        <DatePickerSingleInput format={formatDate} />
         <DatePickerOverlay>
           <DatePickerSinglePanel
-            CalendarProps={{ renderDayContents }}
+            helperText={helperText}
+            CalendarDataGridProps={{
+              getCalendarMonthProps: () => ({ renderDayContents }),
+            }}
             CalendarNavigationProps={{ formatMonth }}
           />
         </DatePickerOverlay>

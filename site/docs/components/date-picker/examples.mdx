@@ -11,14 +11,16 @@ data:
 <LivePreviewControls>
 
 <LivePreview componentName="date-picker" exampleName="Single">
- ## Single date selection
+
+## Single date
 
 An uncontrolled `DatePicker`, composed of a `DateInput` and a `Calendar` component, allows users to select a single date when the `selectionVariant` prop is set to "single", without requiring explicit state management in the parent component, making it ideal for simple date selection tasks.
 
 </LivePreview>
 
 <LivePreview componentName="date-picker" exampleName="Range">
-## Date range selection
+
+## Date range
 
 An uncontrolled `DatePicker`, composed of a `DateInput` and a `Calendar` component, allows users to select a date range when the `selectionVariant` prop is set to "range", without requiring explicit state management in the parent component, making it ideal for selecting start and end dates for various applications.
 
@@ -29,7 +31,8 @@ An uncontrolled `DatePicker`, composed of a `DateInput` and a `Calendar` compone
   displayName="Single date selection controlled"
   exampleName="SingleControlled"
 >
-## Controlled single date selection
+
+## Controlled single date
 
 A controlled `DatePicker`, composed of a `DateInput` and a `Calendar` component, allows users to select a single date when the `selectionVariant` prop is set to "single", with the parent component explicitly managing the date state, providing greater control over the date selection process.
 
@@ -40,7 +43,8 @@ A controlled `DatePicker`, composed of a `DateInput` and a `Calendar` component,
   displayName="Date range controlled"
   exampleName="RangeControlled"
 >
-## Controlled date range selection
+
+## Controlled date range
 
 A controlled `DatePicker`, composed of a `DateInput` and a `Calendar` component, allows users to select a date range when the `selectionVariant` prop is set to "range", with the parent component explicitly managing the start and end date states, providing greater control over the date range selection process.
 
@@ -51,7 +55,8 @@ A controlled `DatePicker`, composed of a `DateInput` and a `Calendar` component,
   displayName="Single date selection within FormField"
   exampleName="SingleWithFormField"
 >
-## Single date selection within FormField
+
+## Single date within FormField
 
 A `DatePicker` with `selectionVariant` set to "single", inside a `FormField`, provides the field with a visible label, help text, and a status message for validation feedback.
 
@@ -62,7 +67,8 @@ A `DatePicker` with `selectionVariant` set to "single", inside a `FormField`, pr
   displayName="Date range within FormField"
   exampleName="RangeWithFormField"
 >
- ## Date range selection within FormField
+
+## Date range within FormField
 
 A `DatePicker` with `selectionVariant` set to "range", inside a `FormField`, provides the field with a visible label, help text, and a status message for validation feedback.
 
@@ -73,7 +79,8 @@ A `DatePicker` with `selectionVariant` set to "range", inside a `FormField`, pro
   displayName="Single date selection with error"
   exampleName="SingleWithInitialError"
 >
-## Single date selection with initial error
+
+## Single with initial error
 
 When used with `FormField`, the `validationStatus` prop can be used to recreate an initial error state.
 
@@ -84,7 +91,8 @@ When used with `FormField`, the `validationStatus` prop can be used to recreate 
   displayName="Date range with error"
   exampleName="RangeWithInitialError"
 >
-## Date range selection with initial error
+
+## Range with initial error
 
 When used with `FormField`, the `validationStatus` prop can be used to recreate an initial error state.
 
@@ -95,7 +103,8 @@ When used with `FormField`, the `validationStatus` prop can be used to recreate 
   displayName="Constrained single date selection"
   exampleName="SingleWithMinMaxDate"
 >
-## Single date selection with min/max date
+
+## Single with min/max date
 
 To constrain the selected date within a specific range, use the `minDate` and/or `maxDate` props. If `minDate` is not provided, it defaults to the year 1900. If `maxDate` is undefined, it defaults to the year 2100. This ensures that the selected date remains within the specified range.
 
@@ -106,7 +115,8 @@ To constrain the selected date within a specific range, use the `minDate` and/or
   displayName="Constrained date range selection"
   exampleName="RangeWithMinMaxDate"
 >
-## Date range selection with min/max date
+
+## Range with min/max date
 
 To constrain the selected date within a specific range, use the `minDate` and/or `maxDate` props. If `minDate` is not provided, it defaults to the year 1900. If `maxDate` is undefined, it defaults to the year 2100. This ensures that the selected date remains within the specified range.
 
@@ -117,7 +127,8 @@ To constrain the selected date within a specific range, use the `minDate` and/or
   displayName="Single date selection with custom content"
   exampleName="SingleWithCustomPanel"
 >
-## Single date selection with custom content
+
+## Single with custom content
 
 The composed nature of the `DatePicker` enables you to control the content of the overlay using the `children` prop. Use the recommended panels or compose them with your own.
 
@@ -128,7 +139,8 @@ The composed nature of the `DatePicker` enables you to control the content of th
   displayName="Date range with custom content"
   exampleName="RangeWithCustomPanel"
 >
-## Date range selection with custom content
+
+## Range with custom content
 
 The composed nature of the `DatePicker` enables you to control the content of the overlay using the `children` prop. Use the recommended panels or compose them with your own.
 
@@ -137,11 +149,12 @@ The composed nature of the `DatePicker` enables you to control the content of th
 <LivePreview
   componentName="date-picker"
   displayName="Single date selection with today button"
-  exampleName="SingleWithToday"
+  exampleName="SingleWithTodayButton"
 >
-## Single date selection with today button
 
-When the `children` prop is used, the `DatePicker` component allows consumers to customize the overlay content. In this example, we add a custom panel for quick date selection.
+## Single with today button
+
+The `children` prop enables you to compose additional controls to your Date Picker component, such as a 'Today' button.
 
 </LivePreview>
 
@@ -150,7 +163,8 @@ When the `children` prop is used, the `DatePicker` component allows consumers to
   displayName="Single selection with applied confirmation"
   exampleName="SingleWithConfirmation"
 >
-## Single date selection with confirmation
+
+## Single with confirmation
 
 You can change dates upon selection, or apply the selection with additional controls.
 
@@ -161,7 +175,8 @@ You can change dates upon selection, or apply the selection with additional cont
   displayName="Date range with applied confirmation"
   exampleName="RangeWithConfirmation"
 >
-## Date range selection with confirmation
+
+## Range with confirmation
 
 You can change dates upon selection, or apply the selection with additional controls.
 
@@ -172,7 +187,8 @@ You can change dates upon selection, or apply the selection with additional cont
   displayName="Custom parser"
   exampleName="SingleWithCustomParser"
 >
-## Single date selection with custom parser
+
+## Single with custom parser
 
 A custom parser can be used to handle specific date formats or shorthand date entries.
 
@@ -183,7 +199,8 @@ A custom parser can be used to handle specific date formats or shorthand date en
   displayName="Single selection with locale en-US"
   exampleName="SingleWithLocaleEnUS"
 >
-## Single date selection with locale
+
+## Single with locale
 
 When the `locale` prop is provided, the `DatePicker` component uses it to define the locale, ensuring that date formats, month names, and other locale-specific elements are displayed according to the specified locale.
 
@@ -194,7 +211,8 @@ When the `locale` prop is provided, the `DatePicker` component uses it to define
   displayName="Date range with locale es-ES"
   exampleName="RangeWithLocaleEsES"
 >
-## Date range selection with locale
+
+## Range with locale
 
 When the `locale` prop is provided, the `DatePicker` component uses it to define the locale, ensuring that date formats, month names, and other locale-specific elements are displayed according to the specified locale.
 
@@ -205,7 +223,8 @@ When the `locale` prop is provided, the `DatePicker` component uses it to define
   displayName="Bordered single selection"
   exampleName="SingleBordered"
 >
-## Bordered single date selection
+
+## Bordered single
 
 A `DatePicker` component with a border provides a visually distinct area for selecting dates, enhancing the user interface by clearly delineating the component boundaries. This styling can improve usability and accessibility by making the calendar controls more noticeable and easier to interact with.
 
@@ -216,7 +235,8 @@ A `DatePicker` component with a border provides a visually distinct area for sel
   displayName="Bordered date range"
   exampleName="RangeBordered"
 >
-## Bordered date range selection
+
+## Bordered range
 
 A `DatePicker` component with a border provides a visually distinct area for selecting dates, enhancing the user interface by clearly delineating the component boundaries. This styling can improve usability and accessibility by making the calendar controls more noticeable and easier to interact with.
 

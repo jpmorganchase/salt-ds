@@ -184,7 +184,6 @@ export function useCalendar(props: UseCalendarProps) {
     selectionVariant,
     onHoveredDateChange,
     hoveredDate,
-    select,
     // startDateOffset,
     // endDateOffset,
   } = props;
@@ -248,7 +247,6 @@ export function useCalendar(props: UseCalendarProps) {
     selectionVariant,
     onHoveredDateChange,
     hoveredDate,
-    select,
   } as UseCalendarSelectionProps);
 
   const [calendarFocused, setCalendarFocused] = useState(false);

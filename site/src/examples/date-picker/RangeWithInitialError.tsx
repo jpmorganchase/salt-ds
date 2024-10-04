@@ -13,7 +13,7 @@ import {
   formatDate,
   getCurrentLocale,
 } from "@salt-ds/lab";
-import { type ReactElement, useState } from "react";
+import { type ReactElement, useCallback, useState } from "react";
 
 function formatDateRange(
   dateRange: DateRangeSelection | null,
@@ -42,9 +42,31 @@ function isValidDateRange(date: DateRangeSelection | null) {
 }
 
 export const RangeWithInitialError = (): ReactElement => {
-  const helperText = "Select range (DD MMM YYYY - DD MMM YYYY)";
+  const defaultHelperText =
+    "Select range DD MMM YYYY - DD MMM YYYY (e.g. 09 Jun 2024)";
+  const errorHelperText = "Please enter a valid date in DD MMM YYYY format";
+  const [helperText, setHelperText] = useState(errorHelperText);
   const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
     "error",
+  );
+  const handleSelectedDateChange = useCallback(
+    (
+      newSelectedDate: DateRangeSelection | null,
+      error: { startDate: string | false; endDate: string | false },
+    ) => {
+      console.log(`Selected date range: ${formatDateRange(newSelectedDate)}`);
+      const validationStatus =
+        !error.startDate && !error.endDate && isValidDateRange(newSelectedDate)
+          ? undefined
+          : "error";
+      if (validationStatus === "error") {
+        setHelperText(errorHelperText);
+      } else {
+        setHelperText(defaultHelperText);
+      }
+      setValidationStatus(validationStatus);
+    },
+    [setValidationStatus, setHelperText],
   );
 
   return (
@@ -52,19 +74,8 @@ export const RangeWithInitialError = (): ReactElement => {
       <FormLabel>Select a date range</FormLabel>
       <DatePicker
         selectionVariant="range"
-        onSelectedDateChange={(newSelectedDate, error) => {
-          console.log(
-            `Selected date range: ${formatDateRange(newSelectedDate)}`,
-          );
-          const validationStatus =
-            !error.startDate &&
-            !error.endDate &&
-            isValidDateRange(newSelectedDate)
-              ? undefined
-              : "error";
-          setValidationStatus(validationStatus);
-        }}
         defaultSelectedDate={{ startDate: new CalendarDate(2024, 6, 9) }}
+        onSelectedDateChange={handleSelectedDateChange}
       >
         <DatePickerRangeInput
           defaultValue={{ startDate: "09 Jun 2024", endDate: "bad date" }}

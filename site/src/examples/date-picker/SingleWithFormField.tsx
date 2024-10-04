@@ -13,7 +13,7 @@ import {
   formatDate,
   getCurrentLocale,
 } from "@salt-ds/lab";
-import { type ReactElement, useState } from "react";
+import { type ReactElement, useCallback, useState } from "react";
 
 function formatSingleDate(
   date: DateValue | null,
@@ -27,12 +27,23 @@ function formatSingleDate(
 }
 
 export const SingleWithFormField = (): ReactElement => {
-  const helperText = "Date format DD MMM YYYY (e.g. 09 Jun 2024)";
+  const defaultHelperText = "Date format DD MMM YYYY (e.g. 09 Jun 2024)";
+  const errorHelperText = "Please enter a valid date in DD MMM YYYY format";
+  const [helperText, setHelperText] = useState(defaultHelperText);
   const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
     undefined,
   );
-  const [selectedDate, setSelectedDate] = useState<SingleDateSelection | null>(
-    null,
+  const handleSelectedDateChange = useCallback(
+    (newSelectedDate: SingleDateSelection | null, error: string | false) => {
+      console.log(`Selected date: ${formatSingleDate(newSelectedDate)}`);
+      if (error) {
+        setHelperText(errorHelperText);
+      } else {
+        setHelperText(defaultHelperText);
+      }
+      setValidationStatus(error ? "error" : undefined);
+    },
+    [setValidationStatus, setHelperText],
   );
 
   return (
@@ -40,12 +51,7 @@ export const SingleWithFormField = (): ReactElement => {
       <FormLabel>Select a date</FormLabel>
       <DatePicker
         selectionVariant="single"
-        selectedDate={selectedDate}
-        onSelectedDateChange={(newSelectedDate, error) => {
-          console.log(`Selected date: ${formatSingleDate(newSelectedDate)}`);
-          setSelectedDate(newSelectedDate);
-          setValidationStatus(error ? "error" : undefined);
-        }}
+        onSelectedDateChange={handleSelectedDateChange}
       >
         <DatePickerSingleInput />
         <DatePickerOverlay>

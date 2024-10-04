@@ -6,15 +6,6 @@ import {
   today,
 } from "@internationalized/date";
 import * as datePickerStories from "@stories/date-picker/date-picker.stories";
-import {
-  SingleControlled,
-  SingleWithConfirmation,
-  SingleWithCustomPanel,
-  SingleWithCustomParser,
-  SingleWithFormField,
-  SingleWithMinMaxDate,
-  SingleWithToday,
-} from "@stories/date-picker/date-picker.stories";
 import { composeStories } from "@storybook/react";
 import React from "react";
 import { formatDate } from "../../../calendar";
@@ -27,7 +18,16 @@ import {
 } from "../../../date-picker";
 
 const composedStories = composeStories(datePickerStories);
-const { Single } = composedStories;
+const {
+  Single,
+  SingleControlled,
+  SingleWithConfirmation,
+  SingleWithCustomPanel,
+  SingleWithCustomParser,
+  SingleWithFormField,
+  SingleWithMinMaxDate,
+  SingleWithTodayButton,
+} = composedStories;
 
 describe("GIVEN a DatePicker where selectionVariant is single", () => {
   const testLocale = "en-GB";
@@ -46,47 +46,6 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
       year: "numeric",
     });
   };
-
-  it("SHOULD only be able to select a date between min/max", () => {
-    cy.mount(
-      <SingleWithMinMaxDate selectionVariant={"single"} locale={testLocale} />,
-    );
-    // Simulate opening the calendar
-    cy.findByRole("button", { name: "Open Calendar" }).realClick();
-    // Verify that dates outside the min/max range are disabled
-    cy.findByRole("button", {
-      name: formatDay(parseDate("2030-01-14")),
-    }).should("have.attr", "aria-disabled", "true");
-    cy.findByRole("button", {
-      name: formatDay(parseDate("2030-01-15")),
-    }).should("not.have.attr", "aria-disabled", "true");
-    // Simulate selecting a year from the dropdown
-    cy.findByRole("combobox", {
-      name: "Year Dropdown",
-    }).realClick();
-    cy.findByRole("option", {
-      name: "2031",
-    })
-      .realHover()
-      .realClick();
-    // Verify that dates outside the min/max range are disabled
-    cy.findByRole("button", {
-      name: formatDay(parseDate("2031-01-15")),
-    }).should("not.have.attr", "aria-disabled", "true");
-    cy.findByRole("button", {
-      name: formatDay(parseDate("2031-01-16")),
-    }).should("have.attr", "aria-disabled", "true");
-    // Simulate selecting a date within the min/max range
-    cy.findByRole("button", {
-      name: formatDay(parseDate("2031-01-15")),
-    }).realClick();
-    // Verify that the calendar is closed and the selected date is displayed
-    cy.findByRole("application").should("not.exist");
-    cy.findByRole("textbox").should(
-      "have.value",
-      formatDate(parseDate("2031-01-15"), testLocale),
-    );
-  });
 
   it("SHOULD support validation", () => {
     const selectedDateChangeSpy = cy.stub().as("selectedDateChangeSpy");
@@ -120,6 +79,68 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
     );
   });
 
+  it("SHOULD only be able to select a date between min/max", () => {
+    const selectedDateChangeSpy = cy.stub().as("selectedDateChangeSpy");
+    cy.mount(
+      <SingleWithMinMaxDate
+        defaultSelectedDate={initialDate}
+        selectionVariant={"single"}
+        onSelectedDateChange={selectedDateChangeSpy}
+        locale={testLocale}
+      />,
+    );
+    // Simulate opening the calendar
+    cy.findByRole("button", { name: "Open Calendar" }).realClick();
+    // Verify that the calendar is displayed
+    cy.findByRole("application").should("exist");
+    // Verify that dates outside the min/max range are disabled
+    cy.findByRole("button", {
+      name: formatDay(parseDate("2030-01-14")),
+    }).should("have.attr", "aria-disabled", "true");
+    cy.findByRole("button", {
+      name: formatDay(parseDate("2030-01-15")),
+    }).should("not.have.attr", "aria-disabled", "true");
+    // Simulate selecting a year from the dropdown
+    cy.findByRole("combobox", {
+      name: "Year Dropdown",
+    }).realClick();
+    cy.findByRole("option", {
+      name: "2031",
+    })
+      .realHover()
+      .realClick();
+    // Verify that dates outside the min/max range are disabled
+    cy.findByRole("button", {
+      name: formatDay(parseDate("2031-01-15")),
+    }).should("not.have.attr", "aria-disabled", "true");
+    cy.findByRole("button", {
+      name: formatDay(parseDate("2031-01-16")),
+    }).should("have.attr", "aria-disabled", "true");
+    // Simulate selecting a date outside the min/max range
+    cy.findByRole("button", {
+      name: formatDay(parseDate("2031-01-16")),
+    })
+      .realHover()
+      .realClick();
+    cy.findByRole("application").should("exist");
+    cy.get("@selectedDateChangeSpy").should("not.have.been.called");
+    // Simulate selecting a date within the min/max range
+    cy.findByRole("button", {
+      name: formatDay(parseDate("2031-01-15")),
+    }).realClick();
+    // Verify that the calendar is closed and the selected date is displayed
+    cy.findByRole("application").should("not.exist");
+    cy.findByRole("textbox").should(
+      "have.value",
+      formatDate(parseDate("2031-01-15"), testLocale),
+    );
+    cy.get("@selectedDateChangeSpy").should(
+      "have.been.calledWith",
+      parseDate("2031-01-15"),
+      false,
+    );
+  });
+
   it("SHOULD support custom panel with tenors", () => {
     const selectedDateChangeSpy = cy.stub().as("selectedDateChangeSpy");
     cy.mount(
@@ -131,6 +152,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
     );
     // Simulate opening the calendar
     cy.findByRole("button", { name: "Open Calendar" }).realClick();
+    // Verify that the calendar is displayed
     cy.findByRole("application").should("exist");
     // Simulate selecting a tenor option
     cy.findByRole("option", {
@@ -155,7 +177,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
   it("SHOULD support custom panel with Today button", () => {
     const selectedDateChangeSpy = cy.stub().as("selectedDateChangeSpy");
     cy.mount(
-      <SingleWithToday
+      <SingleWithTodayButton
         selectionVariant={"single"}
         onSelectedDateChange={selectedDateChangeSpy}
         locale={testLocale}
@@ -163,9 +185,10 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
     );
     // Simulate opening the calendar
     cy.findByRole("button", { name: "Open Calendar" }).realClick();
+    // Verify that the calendar is displayed
     cy.findByRole("application").should("exist");
-    // Simulate clicking the "Today" button
-    cy.findByRole("button", { name: "Today" }).realClick();
+    // Simulate clicking the "Select Today" button
+    cy.findByRole("button", { name: "Select Today" }).realClick();
     // Verify that the calendar is closed and today's date is displayed
     cy.findByRole("application").should("not.exist");
     cy.realPress("Tab");
@@ -188,7 +211,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
       cy.mount(
         <SingleWithConfirmation
           selectionVariant={"single"}
-          selectedDate={initialDate}
+          defaultSelectedDate={initialDate}
           onSelectedDateChange={selectedDateChangeSpy}
           onApply={appliedDateSpy}
           onCancel={cancelSpy}
@@ -202,6 +225,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
         .should("have.value", formatDate(initialDate, testLocale));
       // Simulate opening the calendar
       cy.findByRole("button", { name: "Open Calendar" }).realClick();
+      // Verify that the calendar is displayed
       cy.findByRole("application").should("exist");
       // Simulate selecting an unconfirmed date
       cy.findByRole("button", { name: formatDay(updatedDate) }).realClick();
@@ -232,7 +256,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
       cy.mount(
         <SingleWithConfirmation
           selectionVariant={"single"}
-          selectedDate={initialDate}
+          defaultSelectedDate={initialDate}
           onSelectedDateChange={selectedDateChangeSpy}
           onApply={appliedDateSpy}
           onCancel={cancelSpy}
@@ -246,6 +270,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
         .should("have.value", formatDate(initialDate, testLocale));
       // Simulate opening the calendar
       cy.findByRole("button", { name: "Open Calendar" }).realClick();
+      // Verify that the calendar is displayed
       cy.findByRole("application").should("exist");
       // Simulate selecting a new date
       cy.findByRole("button", { name: formatDay(updatedDate) }).realClick();
@@ -284,13 +309,18 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
     cy.get("@selectedDateChangeSpy").should(
       "have.been.calledWith",
       initialDate,
+      false,
     );
     // Simulate entering a custom parsed date
     cy.findByRole("textbox").click().clear().type("+7");
     cy.realPress("Tab");
     cy.get("@selectedDateChangeSpy").should("have.been.calledTwice");
     const newDate = initialDate.add({ days: 7 });
-    cy.get("@selectedDateChangeSpy").should("have.been.calledWith", newDate);
+    cy.get("@selectedDateChangeSpy").should(
+      "have.been.calledWith",
+      newDate,
+      false,
+    );
     cy.document()
       .find("input")
       .should("have.value", formatDate(newDate, testLocale));
@@ -305,6 +335,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
       cy.findByRole("textbox").should("have.value", initialDateValue);
       // Simulate opening the calendar
       cy.findByRole("button", { name: "Open Calendar" }).realClick();
+      // Verify that the calendar is displayed
       cy.findByRole("application").should("exist");
       // Verify that the default selected date is highlighted in the calendar
       cy.findByRole("button", { name: formatDay(initialDate) }).should(
@@ -320,6 +351,8 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
       );
       // Simulate opening the calendar
       cy.findByRole("button", { name: "Open Calendar" }).realClick();
+      // Verify that the calendar is displayed
+      cy.findByRole("application").should("exist");
       // Simulate selecting a new date
       cy.findByRole("button", {
         name: formatDay(updatedDate),
@@ -339,7 +372,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
       cy.mount(
         <SingleControlled
           selectionVariant={"single"}
-          selectedDate={initialDate}
+          defaultSelectedDate={initialDate}
           locale={testLocale}
         />,
       );
@@ -347,6 +380,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
       cy.findByRole("textbox").should("have.value", initialDateValue);
       // Simulate opening the calendar
       cy.findByRole("button", { name: "Open Calendar" }).realClick();
+      // Verify that the calendar is displayed
       cy.findByRole("application").should("exist");
       // Verify that the selected date is highlighted in the calendar
       cy.findByRole("button", { name: formatDay(initialDate) }).should(
@@ -360,13 +394,15 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
       cy.mount(
         <SingleControlled
           selectionVariant={"single"}
-          selectedDate={initialDate}
+          defaultSelectedDate={initialDate}
           locale={testLocale}
           timeZone={testTimeZone}
         />,
       );
       // Simulate opening the calendar
       cy.findByRole("button", { name: "Open Calendar" }).realClick();
+      // Verify that the calendar is displayed
+      cy.findByRole("application").should("exist");
       // Simulate selecting a new date
       cy.findByRole("button", {
         name: formatDay(updatedDate),

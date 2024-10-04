@@ -42,21 +42,57 @@ export type DatePickerProps = DatePickerSingleProps | DatePickerRangeProps;
 
 export const DatePickerMain = forwardRef<HTMLDivElement, DatePickerProps>(
   function DatePickerMain(props, ref) {
-    const { className, children, ...rest } = props;
+    const {
+      children,
+      readOnly,
+      disabled,
+      selectionVariant,
+      defaultSelectedDate,
+      selectedDate,
+      onSelectedDateChange,
+      onApply,
+      minDate,
+      maxDate,
+      timeZone,
+      locale,
+      onCancel,
+      ...rest
+    } = props;
+    // biome-ignore lint/suspicious/noExplicitAny: type guard
+    const useDatePickerProps: any = {
+      readOnly,
+      disabled,
+      selectionVariant,
+      defaultSelectedDate,
+      selectedDate,
+      onSelectedDateChange,
+      onApply,
+      minDate,
+      maxDate,
+      timeZone,
+      locale,
+      onCancel,
+    };
     if (props.selectionVariant === "range") {
-      const stateAndHelpers = useDatePicker(rest, ref) as RangeDatePickerState;
+      const stateAndHelpers = useDatePicker(
+        useDatePickerProps,
+        ref,
+      ) as RangeDatePickerState;
       return (
         <DateRangeSelectionContext.Provider value={stateAndHelpers}>
-          <div className={className} ref={stateAndHelpers?.state?.containerRef}>
+          <div ref={stateAndHelpers?.state?.containerRef} {...rest}>
             {children}
           </div>
         </DateRangeSelectionContext.Provider>
       );
     }
-    const stateAndHelpers = useDatePicker(rest, ref) as SingleDatePickerState;
+    const stateAndHelpers = useDatePicker(
+      useDatePickerProps,
+      ref,
+    ) as SingleDatePickerState;
     return (
       <SingleDateSelectionContext.Provider value={stateAndHelpers}>
-        <div className={className} ref={stateAndHelpers?.state?.containerRef}>
+        <div ref={stateAndHelpers?.state?.containerRef} {...rest}>
           {children}
         </div>
       </SingleDateSelectionContext.Provider>
