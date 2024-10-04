@@ -81,7 +81,7 @@ export function parseCalendarDate(
     return { date: null, error: "not a valid year" };
   }
 
-  let month;
+  let month: number;
   if (Number.isNaN(Number.parseInt(monthStr, 10))) {
     // Month is a word, in MMM or MMMM format
     month = monthNames[monthStr];
