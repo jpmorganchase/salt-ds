@@ -10,7 +10,7 @@ import { type ListEvent, complexEventsData } from "./exampleData";
 
 const ListItem = ({ title, time }: ListEvent) => (
   <StaticListItem>
-    <CalendarIcon />
+    <CalendarIcon aria-hidden />
     <StaticListItemContent>
       <StackLayout gap={0.5}>
         <Text color="inherit">{title}</Text>

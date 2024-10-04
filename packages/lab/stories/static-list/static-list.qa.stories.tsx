@@ -96,7 +96,7 @@ export const AllExamples: StoryFn<QAContainerProps> = () => (
     <StaticList style={{ width: "320px" }}>
       {complexEventsData.map(({ title, time }) => (
         <StaticListItem key={title}>
-          <CalendarIcon />
+          <CalendarIcon aria-hidden />
           <StaticListItemContent>
             <StackLayout gap={0.5}>
               <Text color="inherit">{title}</Text>
