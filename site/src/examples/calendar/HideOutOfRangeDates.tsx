@@ -1,6 +1,6 @@
 import {
   Calendar,
-  CalendarDateGrid,
+  CalendarGrid,
   CalendarNavigation,
   CalendarWeekHeader,
 } from "@salt-ds/lab";
@@ -10,6 +10,6 @@ export const HideOutOfRangeDates = (): ReactElement => (
   <Calendar selectionVariant="single" hideOutOfRangeDates>
     <CalendarNavigation />
     <CalendarWeekHeader />
-    <CalendarDateGrid />
+    <CalendarGrid />
   </Calendar>
 );

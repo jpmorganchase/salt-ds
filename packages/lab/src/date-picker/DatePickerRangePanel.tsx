@@ -28,8 +28,8 @@ import {
 } from "react";
 import {
   Calendar,
-  CalendarDateGrid,
-  type CalendarDateGridProps,
+  CalendarGrid,
+  type CalendarGridProps,
   CalendarNavigation,
   type CalendarNavigationProps,
   type CalendarOffsetProps,
@@ -126,7 +126,7 @@ export interface DatePickerRangePanelProps<T>
   /**
    * Props to be passed to the start date CalendarDataGrid component.
    */
-  StartCalendarDataGridProps?: CalendarDateGridProps;
+  StartCalendarDataGridProps?: CalendarGridProps;
 
   /**
    * Props to be passed to the end date CalendarNavigation component.
@@ -152,7 +152,7 @@ export interface DatePickerRangePanelProps<T>
   /**
    * Props to be passed to the end date CalendarDataGrid component.
    */
-  EndCalendarDataGridProps?: CalendarDateGridProps;
+  EndCalendarDataGridProps?: CalendarGridProps;
 }
 
 function getFallbackVisibleMonths(
@@ -352,12 +352,12 @@ export const DatePickerRangePanel = forwardRef<
           <Calendar selectionVariant={"range"} {...StartCalendarProps}>
             <CalendarNavigation {...StartCalendarNavigationProps} />
             <CalendarWeekHeader {...StartCalendarWeekHeaderProps} />
-            <CalendarDateGrid {...StartCalendarDataGridProps} />
+            <CalendarGrid {...StartCalendarDataGridProps} />
           </Calendar>
           <Calendar selectionVariant={"range"} {...EndCalendarProps}>
             <CalendarNavigation {...EndCalendarNavigationProps} />
             <CalendarWeekHeader {...EndCalendarWeekHeaderProps} />
-            <CalendarDateGrid {...EndCalendarDataGridProps} />
+            <CalendarGrid {...EndCalendarDataGridProps} />
           </Calendar>
         </FormFieldContext.Provider>
       </FlexLayout>

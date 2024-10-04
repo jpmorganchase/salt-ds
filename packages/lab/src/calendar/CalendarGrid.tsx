@@ -17,10 +17,10 @@ import {
 
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
-import calendarDateGridCss from "./CalendarDateGrid.css";
+import calendarGridCss from "./CalendarGrid.css";
 import { formatDate, monthDiff } from "./internal/utils";
 
-export interface CalendarDateGridProps extends ComponentPropsWithoutRef<"div"> {
+export interface CalendarGridProps extends ComponentPropsWithoutRef<"div"> {
   /**
    * Props getter to pass to each CalendarMonth element
    */
@@ -31,12 +31,12 @@ function getMonths(month: DateValue) {
   return [month.subtract({ months: 1 }), month, month.add({ months: 1 })];
 }
 
-const withBaseName = makePrefixer("saltCalendarDateGrid");
+const withBaseName = makePrefixer("saltCalendarGrid");
 
-export const CalendarDateGrid = forwardRef<
+export const CalendarGrid = forwardRef<
   HTMLDivElement,
-  CalendarDateGridProps
->(function CalendarDateGrid(props, ref) {
+  CalendarGridProps
+>(function CalendarGrid(props, ref) {
   const {
     onFocus,
     onBlur,
@@ -46,8 +46,8 @@ export const CalendarDateGrid = forwardRef<
 
   const targetWindow = useWindow();
   useComponentCssInjection({
-    testId: "salt-calendar-date-grid",
-    css: calendarDateGridCss,
+    testId: "salt-calendar-grid",
+    css: calendarGridCss,
     window: targetWindow,
   });
 
