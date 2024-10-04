@@ -11,9 +11,9 @@ import {
   StaticListItem,
   StaticListItemContent,
 } from "@salt-ds/lab";
+import { clsx } from "clsx";
 import React, { type ReactElement } from "react";
 import { type ListEvent, complexEventsData } from "./exampleData";
-import { clsx } from "clsx";
 
 const id = useId();
 
