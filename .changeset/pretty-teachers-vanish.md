@@ -4,11 +4,10 @@
 
 DatePicker and Calendar API improvements
 
-- `CalendarCarousel` has been renamed to `CarouselDateGrid` so it's more obvious of the content
-- `Calendar` previously used `children` to define the `CalendarNavigation`.
-  We have now changed that so the `children` defines `CalendarNavigation`, `CalendarWeekHeader` and `CalendarGrid`
-  This enables more flexibility in both layout and configuration of the `Calendar` elements.
-  A typical Calendar will now look like this,
+- `CalendarCarousel` has been renamed to `CarouselDateGrid`.
+- `Calendar`'s API has been updated so that `CalendarNavigation`, `CalendarWeekHeader` and `CalendarGrid` are provided as `children`. Previously, only `CalendarNavigation` was supported.
+  This enables more flexibility in the layout and configuration of the `Calendar` elements.
+  A typical Calendar will now look like this:
 
 ```
 <Calendar selectionVariant="single" hideOutOfRangeDates>
@@ -20,10 +19,7 @@ DatePicker and Calendar API improvements
 
 `CalendarNavigation` - provides year/month dropdowns and forward/back controls for the visible month.
 `CalendarWeekHeader` - provides a header for `CalendarGrid` indicating the day of the week.
-`CalendarGrid` - provides a grid of buttons that represent the days from a calendar month.
+`CalendarGrid` - provides a grid of buttons representing the days from a calendar month.
 
-- cleaned up selection API, removed `select`, use `setSelectedDate` instead
-- fix issues with `Calendar` offset selection
-- updated examples, more consistent helper text, error text to match spec
-- test improvements to create a known state for tests and avoid failures based on locale differences
-- cleaned up Storybook imports in e2e tests
+- Fixed issues with `Calendar`'s offset selection.
+- Calendar's `onSelectionDateChange` prop was renamed to `onSelectionChange` to make `DatePicker`'s API consistent with other components.
