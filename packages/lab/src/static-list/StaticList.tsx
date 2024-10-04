@@ -19,7 +19,7 @@ export interface StaticListProps extends ComponentPropsWithoutRef<"ul"> {
   children: ReactNode;
 }
 
-export const StaticList = forwardRef<HTMLUListElement, StaticListProps>(
+export const StaticList = forwardRef<HTMLOListElement, StaticListProps>(
   function StaticList({ children, className, ...rest }, ref) {
     const targetWindow = useWindow();
     useComponentCssInjection({
