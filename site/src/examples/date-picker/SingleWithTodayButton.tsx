@@ -23,7 +23,7 @@ import {
   getCurrentLocale,
   useDatePickerContext,
 } from "@salt-ds/lab";
-import { type ReactElement, useCallback } from "react";
+import React, { type ReactElement, useCallback, useState } from "react";
 
 const TodayButton = () => {
   const {
@@ -57,16 +57,28 @@ function formatSingleDate(
 }
 
 export const SingleWithTodayButton = (): ReactElement => {
-  const helperText = "Date format DD MMM YYYY (e.g. 09 Jun 2024)";
+  const defaultHelperText = "Date format DD MMM YYYY (e.g. 09 Jun 2024)";
+  const errorHelperText = "Please enter a valid date in DD MMM YYYY format";
+  const [helperText, setHelperText] = useState(defaultHelperText);
+  const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
+    undefined,
+  );
   const handleSelectionChange = useCallback(
-    (newSelectedDate: SingleDateSelection | null) => {
+    (newSelectedDate: SingleDateSelection | null, error: string | false) => {
       console.log(`Selected date: ${formatSingleDate(newSelectedDate)}`);
+      console.log(`Error: ${error}`);
+      if (error) {
+        setHelperText(errorHelperText);
+      } else {
+        setHelperText(defaultHelperText);
+      }
+      setValidationStatus(error ? "error" : undefined);
     },
-    [],
+    [setValidationStatus, setHelperText],
   );
 
   return (
-    <FormField style={{ width: "256px" }}>
+    <FormField style={{ width: "256px" }} validationStatus={validationStatus}>
       <FormLabel>Select a date</FormLabel>
       <DatePicker
         selectionVariant="single"

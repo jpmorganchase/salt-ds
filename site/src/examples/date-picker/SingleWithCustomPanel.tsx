@@ -17,7 +17,7 @@ import {
   getCurrentLocale,
 } from "@salt-ds/lab";
 import { CustomDatePickerPanel } from "@salt-ds/lab/stories/date-picker/CustomDatePickerPanel";
-import { type ReactElement, useCallback } from "react";
+import React, { type ReactElement, useCallback, useState } from "react";
 
 function formatSingleDate(
   date: DateValue | null,
@@ -31,21 +31,30 @@ function formatSingleDate(
 }
 
 export const SingleWithCustomPanel = (): ReactElement => {
-  const helperText = "Date format DD MMM YYYY (e.g. 09 Jun 2024)";
-  const minDate = today(getLocalTimeZone());
+  const defaultHelperText = "Date format DD MMM YYYY (e.g. 09 Jun 2024)";
+  const errorHelperText = "Please enter a valid date in DD MMM YYYY format";
+  const [helperText, setHelperText] = useState(defaultHelperText);
+  const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
+    undefined,
+  );
   const handleSelectionChange = useCallback(
-    (newSelectedDate: SingleDateSelection | null) => {
+    (newSelectedDate: SingleDateSelection | null, error: string | false) => {
       console.log(`Selected date: ${formatSingleDate(newSelectedDate)}`);
+      console.log(`Error: ${error}`);
+      if (error) {
+        setHelperText(errorHelperText);
+      } else {
+        setHelperText(defaultHelperText);
+      }
+      setValidationStatus(error ? "error" : undefined);
     },
-    [],
+    [setValidationStatus, setHelperText],
   );
 
   return (
-    <FormField style={{ width: "256px" }}>
+    <FormField style={{ width: "256px" }} validationStatus={validationStatus}>
       <FormLabel>Select a date</FormLabel>
       <DatePicker
-        minDate={minDate}
-        maxDate={minDate.add({ years: 50 })}
         selectionVariant="single"
         onSelectionChange={handleSelectionChange}
       >
