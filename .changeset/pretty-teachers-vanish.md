@@ -4,7 +4,7 @@
 
 DatePicker and Calendar API improvements
 
-- `CalendarCarousel` has been renamed to `CarouselDateGrid`.
+- `CalendarCarousel` has been renamed to `CalendarGrid`.
 - `Calendar`'s API has been updated so that `CalendarNavigation`, `CalendarWeekHeader` and `CalendarGrid` are provided as `children`. Previously, only `CalendarNavigation` was supported.
   This enables more flexibility in the layout and configuration of the `Calendar` elements.
   A typical Calendar will now look like this:
