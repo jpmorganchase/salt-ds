@@ -25,8 +25,14 @@ function formatDateRange(
 }
 export const Range = (): ReactElement => {
   const handleSelectionChange = useCallback(
-    (newSelectedDate: DateRangeSelection | null) => {
+    (
+      newSelectedDate: DateRangeSelection | null,
+      error: { startDate: string | false; endDate: string | false },
+    ) => {
       console.log(`Selected date range: ${formatDateRange(newSelectedDate)}`);
+      console.log(
+        `Error: startDate: ${error.startDate} endDate: ${error.endDate}`,
+      );
     },
     [],
   );

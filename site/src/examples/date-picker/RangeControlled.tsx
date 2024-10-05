@@ -34,6 +34,9 @@ export const RangeControlled = (): ReactElement => {
       error: { startDate: string | false; endDate: string | false },
     ) => {
       console.log(`Selected date range: ${formatDateRange(newSelectedDate)}`);
+      console.log(
+        `Error: startDate: ${error.startDate} endDate: ${error.endDate}`,
+      );
       setSelectedDate(newSelectedDate);
     },
     [setSelectedDate],

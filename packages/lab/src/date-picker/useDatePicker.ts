@@ -236,7 +236,7 @@ export function useDatePicker<SelectionVariant extends "single" | "range">(
       }
       setSelectedDate(nextDate);
       if (selectionVariant === "single") {
-        onSelectionChange?.(nextDate, error);
+        onSelectionChange?.(nextDate, nextError);
       }
 
       if (!enableApply) {
@@ -284,16 +284,13 @@ export function useDatePicker<SelectionVariant extends "single" | "range">(
             selection?.endDate && selection.endDate.compare(maxDate) <= 0;
         }
         if (!startDateInRange && !endDateInRange) {
-          nextDate = null;
+          nextDate = { ...selection };
           nextError = {
             startDate: "is before min date",
             endDate: "is after max date",
           };
         } else {
-          nextDate = {
-            startDate: selection.startDate || null,
-            endDate: selection.endDate || null,
-          };
+          nextDate = { ...selection };
           nextError = {
             startDate: !startDateInRange
               ? "is before min date"

@@ -1,7 +1,7 @@
 import { CalendarDate } from "@internationalized/date";
 import {
   FormField,
-  FormFieldHelperText,
+  FormFieldHelperText as FormHelperText,
   FormFieldLabel as FormLabel,
 } from "@salt-ds/core";
 import {
@@ -30,17 +30,49 @@ function formatDateRange(
   return `Start date: ${formattedStartDate}, End date: ${formattedEndDate}`;
 }
 
+function isValidDateRange(date: DateRangeSelection | null) {
+  if (date?.startDate === null || date?.endDate === null) {
+    return true;
+  }
+  return !(
+    date?.startDate &&
+    date?.endDate &&
+    date.startDate.compare(date.endDate) > 0
+  );
+}
+
 export const RangeWithMinMaxDate = (): ReactElement => {
-  const helperText = "Select date between 15/01/2030 and 15/01/2031";
+  const defaultHelperText = "Select date between 15/01/2030 and 15/01/2031";
+  const errorHelperText = "Please enter an in-range date in DD MMM YYYY format";
+  const [helperText, setHelperText] = useState(defaultHelperText);
+  const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
+    undefined,
+  );
   const handleSelectionChange = useCallback(
-    (newSelectedDate: DateRangeSelection | null) => {
+    (
+      newSelectedDate: DateRangeSelection | null,
+      error: { startDate: string | false; endDate: string | false },
+    ) => {
       console.log(`Selected date range: ${formatDateRange(newSelectedDate)}`);
+      console.log(
+        `Error: startDate: ${error.startDate} endDate: ${error.endDate}`,
+      );
+      const validationStatus =
+        !error.startDate && !error.endDate && isValidDateRange(newSelectedDate)
+          ? undefined
+          : "error";
+      setValidationStatus(validationStatus);
+      if (validationStatus === "error") {
+        setHelperText(errorHelperText);
+      } else {
+        setHelperText(defaultHelperText);
+      }
     },
-    [],
+    [setValidationStatus, setHelperText],
   );
 
   return (
-    <FormField style={{ width: "256px" }}>
+    <FormField style={{ width: "256px" }} validationStatus={validationStatus}>
       <FormLabel>Select a date range</FormLabel>
       <DatePicker
         selectionVariant="range"
@@ -57,7 +89,7 @@ export const RangeWithMinMaxDate = (): ReactElement => {
           />
         </DatePickerOverlay>
       </DatePicker>
-      <FormFieldHelperText>{helperText}</FormFieldHelperText>
+      <FormHelperText>{helperText}</FormHelperText>
     </FormField>
   );
 };
