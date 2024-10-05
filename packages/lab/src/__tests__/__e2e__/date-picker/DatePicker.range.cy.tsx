@@ -358,7 +358,7 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
       cy.mount(
         <Range defaultSelectedDate={initialRangeDate} locale={testLocale} />,
       );
-      // Verify that the default selected dates are displayed
+      // Verify that the selected dates are displayed
       cy.findByLabelText("Start date").should(
         "have.value",
         formatDate(initialRangeDate.startDate, testLocale),
@@ -384,6 +384,15 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
       cy.mount(
         <Range defaultSelectedDate={initialRangeDate} locale={testLocale} />,
       );
+      // Verify the initial range date is selected
+      cy.findByLabelText("Start date").should(
+        "have.value",
+        formatDate(initialRangeDate.startDate, testLocale),
+      );
+      cy.findByLabelText("End date").should(
+        "have.value",
+        formatDate(initialRangeDate.endDate, testLocale),
+      );
       // Simulate opening the calendar
       cy.findByRole("button", { name: "Open Calendar" }).realClick();
       // Verify that the calendar is displayed
@@ -395,6 +404,8 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
       cy.findByRole("button", {
         name: formatDay(updatedRangeDate.startDate),
       }).realClick();
+      // Verify that the new date range resets the end date, whilst the calendar is open
+      cy.findByLabelText("End date").should("have.value", "");
       // Simulate selecting a new end date
       cy.findByRole("button", {
         name: formatDay(updatedRangeDate.endDate),
@@ -455,6 +466,15 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
           locale={testLocale}
         />,
       );
+      // Verify the initial range date is selected
+      cy.findByLabelText("Start date").should(
+        "have.value",
+        formatDate(initialRangeDate.startDate, testLocale),
+      );
+      cy.findByLabelText("End date").should(
+        "have.value",
+        formatDate(initialRangeDate.endDate, testLocale),
+      );
       // Simulate opening the calendar
       cy.findByRole("button", { name: "Open Calendar" }).realClick();
       // Verify that the calendar is displayed
@@ -466,6 +486,8 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
       cy.findByRole("button", {
         name: formatDay(updatedRangeDate.startDate),
       }).realClick();
+      // Verify that the new date range resets the end date, whilst the calendar is open
+      cy.findByLabelText("End date").should("have.value", "");
       // Simulate selecting a new end date
       cy.findByRole("button", {
         name: formatDay(updatedRangeDate.endDate),
