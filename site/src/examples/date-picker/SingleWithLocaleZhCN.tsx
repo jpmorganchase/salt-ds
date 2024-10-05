@@ -30,6 +30,7 @@ export const SingleWithLocaleZhCN = (): ReactElement => {
   const handleSelectionChange = useCallback(
     (newSelectedDate: SingleDateSelection | null, error: string | false) => {
       console.log(`Selected date: ${newSelectedDate ?? null}`);
+      console.log(`Error: ${error}`);
       if (error) {
         setHelperText(errorHelperText);
       } else {

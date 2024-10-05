@@ -36,6 +36,7 @@ export const SingleWithInitialError = (): ReactElement => {
   const handleSelectionChange = useCallback(
     (newSelectedDate: SingleDateSelection | null, error: string | false) => {
       console.log(`Selected date: ${formatSingleDate(newSelectedDate)}`);
+      console.log(`Error: ${error}`);
       if (error) {
         setHelperText(errorHelperText);
       } else {
