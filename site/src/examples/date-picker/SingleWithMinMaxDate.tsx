@@ -1,7 +1,7 @@
 import { CalendarDate, type DateValue } from "@internationalized/date";
 import {
   FormField,
-  FormFieldHelperText,
+  FormFieldHelperText as FormHelperText,
   FormFieldLabel as FormLabel,
 } from "@salt-ds/core";
 import {
@@ -27,16 +27,28 @@ function formatSingleDate(
 }
 
 export const SingleWithMinMaxDate = (): ReactElement => {
-  const helperText = "Select date between 15/01/2030 and 15/01/2031";
+  const defaultHelperText = "Select date between 15/01/2030 and 15/01/2031";
+  const errorHelperText = "Please enter an in-range date in DD MMM YYYY format";
+  const [helperText, setHelperText] = useState(defaultHelperText);
+  const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
+    undefined,
+  );
   const handleSelectionChange = useCallback(
-    (newSelectedDate: SingleDateSelection | null) => {
+    (newSelectedDate: SingleDateSelection | null, error: string | false) => {
       console.log(`Selected date: ${formatSingleDate(newSelectedDate)}`);
+      console.log(`Error: ${error}`);
+      if (error) {
+        setHelperText(errorHelperText);
+      } else {
+        setHelperText(defaultHelperText);
+      }
+      setValidationStatus(error ? "error" : undefined);
     },
-    [],
+    [setValidationStatus, setHelperText],
   );
 
   return (
-    <FormField style={{ width: "256px" }}>
+    <FormField style={{ width: "256px" }} validationStatus={validationStatus}>
       <FormLabel>Select a date</FormLabel>
       <DatePicker
         selectionVariant={"single"}
@@ -52,7 +64,7 @@ export const SingleWithMinMaxDate = (): ReactElement => {
           />
         </DatePickerOverlay>
       </DatePicker>
-      <FormFieldHelperText>{helperText}</FormFieldHelperText>
+      <FormHelperText>{helperText}</FormHelperText>
     </FormField>
   );
 };

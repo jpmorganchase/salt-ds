@@ -36,7 +36,7 @@ function formatDateRange(
 
 function isValidDateRange(date: DateRangeSelection | null) {
   if (date?.startDate === null || date?.endDate === null) {
-    return false;
+    return true;
   }
   return !(
     date?.startDate &&
@@ -51,7 +51,6 @@ export const RangeWithConfirmation = (): ReactElement => {
   const errorHelperText = "Please enter a valid date in DD MMM YYYY format";
   const [helperText, setHelperText] = useState(defaultHelperText);
   const applyButtonRef = useRef<HTMLButtonElement>(null);
-  const minDate = today(getLocalTimeZone());
   const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
     undefined,
   );
@@ -61,12 +60,12 @@ export const RangeWithConfirmation = (): ReactElement => {
   const handleApply = useCallback(
     (
       newSelectedDate: DateRangeSelection | null,
-      error: {
-        startDate: string | false;
-        endDate: string | false;
-      },
+      error: { startDate: string | false; endDate: string | false },
     ) => {
       console.log(`Selected date range: ${formatDateRange(newSelectedDate)}`);
+      console.log(
+        `Error: startDate: ${error.startDate} endDate: ${error.endDate}`,
+      );
       const validationStatus =
         !error.startDate && !error.endDate && isValidDateRange(newSelectedDate)
           ? undefined
@@ -95,8 +94,6 @@ export const RangeWithConfirmation = (): ReactElement => {
       <FormLabel>Select a date range</FormLabel>
       <DatePicker
         selectionVariant="range"
-        minDate={minDate}
-        maxDate={minDate.add({ years: 50 })}
         onApply={handleApply}
         onSelectionChange={handleSelectionChange}
         selectedDate={selectedDate}

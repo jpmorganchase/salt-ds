@@ -23,8 +23,9 @@ function formatSingleDate(
 
 export const Single = (): ReactElement => {
   const handleSelectionChange = useCallback(
-    (newSelectedDate: SingleDateSelection | null) => {
+    (newSelectedDate: SingleDateSelection | null, error: string | false) => {
       console.log(`Selected date: ${formatSingleDate(newSelectedDate)}`);
+      console.log(`Error: ${error}`);
     },
     [],
   );

@@ -288,13 +288,23 @@ export const DateInputRange = forwardRef<HTMLDivElement, DateInputRangeProps>(
 
     const setDateValueFromDate = (newDate: DateInputRangeProps["date"]) => {
       let newDateValue = { ...dateValue };
-      const formattedStartDate = format(newDate?.startDate ?? null);
-      if (formattedStartDate) {
-        newDateValue = { ...newDateValue, startDate: formattedStartDate };
+      // If start date value is defined or null (invalid date) use formatted value
+      if (newDate?.startDate !== undefined) {
+        const formattedStartDate = format(newDate.startDate);
+        if (formattedStartDate) {
+          newDateValue = { ...newDateValue, startDate: formattedStartDate };
+        }
+      } else {
+        // If start date value is undefined then a new selection is created so empty string
+        newDateValue = { ...newDateValue, startDate: "" };
       }
-      const formattedEndDate = format(newDate?.endDate ?? null);
-      if (formattedEndDate) {
-        newDateValue = { ...newDateValue, endDate: formattedEndDate };
+      if (newDate?.endDate !== undefined) {
+        const formattedEndDate = format(newDate.endDate);
+        if (formattedEndDate) {
+          newDateValue = { ...newDateValue, endDate: formattedEndDate };
+        }
+      } else {
+        newDateValue = { ...newDateValue, endDate: "" };
       }
       if (
         newDateValue?.startDate !== dateValue?.startDate ||
@@ -382,10 +392,6 @@ export const DateInputRange = forwardRef<HTMLDivElement, DateInputRangeProps>(
         startDate: DateValue | null,
         endDate: DateValue | null,
       ): DateRangeSelection | null => {
-        if (!startDate && !endDate) {
-          return null;
-        }
-
         const dateRange: DateRangeSelection = {};
         dateRange.startDate = startDate;
         dateRange.endDate = endDate;

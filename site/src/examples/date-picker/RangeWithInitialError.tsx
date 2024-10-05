@@ -31,8 +31,8 @@ function formatDateRange(
 }
 
 function isValidDateRange(date: DateRangeSelection | null) {
-  if (date?.startDate === null || date?.endDate === null) {
-    return false;
+  if (!date?.startDate || !date?.endDate) {
+    return true;
   }
   return !(
     date?.startDate &&
@@ -55,6 +55,9 @@ export const RangeWithInitialError = (): ReactElement => {
       error: { startDate: string | false; endDate: string | false },
     ) => {
       console.log(`Selected date range: ${formatDateRange(newSelectedDate)}`);
+      console.log(
+        `Error: startDate: ${error.startDate} endDate: ${error.endDate}`,
+      );
       const validationStatus =
         !error.startDate && !error.endDate && isValidDateRange(newSelectedDate)
           ? undefined
@@ -74,12 +77,14 @@ export const RangeWithInitialError = (): ReactElement => {
       <FormLabel>Select a date range</FormLabel>
       <DatePicker
         selectionVariant="range"
-        defaultSelectedDate={{ startDate: new CalendarDate(2024, 6, 9) }}
+        defaultSelectedDate={{
+          startDate: new CalendarDate(2024, 6, 9),
+          endDate: null,
+        }}
         onSelectionChange={handleSelectionChange}
       >
         <DatePickerRangeInput
           defaultValue={{ startDate: "09 Jun 2024", endDate: "bad date" }}
-          defaultDate={{ startDate: new CalendarDate(2024, 6, 9) }}
         />
         <DatePickerOverlay>
           <DatePickerRangePanel
