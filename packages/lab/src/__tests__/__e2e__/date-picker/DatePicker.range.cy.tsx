@@ -42,10 +42,6 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
     endDate: new CalendarDate(2025, 1, 6),
   };
 
-  const updatedRangeDateValue = {
-    startDate: "5 Jan 2025",
-    endDate: "16 Jan 2025",
-  };
   const updatedRangeDate = {
     startDate: new CalendarDate(2025, 1, 15),
     endDate: new CalendarDate(2025, 1, 16),

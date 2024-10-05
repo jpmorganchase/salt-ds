@@ -34,7 +34,7 @@ describe("GIVEN a DateInputRange", () => {
   it("SHOULD render value, even when not a valid date", () => {
     cy.mount(
       <Range
-        defaultDate={undefined}
+        defaultDate={{ startDate: null, endDate: null }}
         defaultValue={{
           startDate: "start date value",
           endDate: "end date value",
