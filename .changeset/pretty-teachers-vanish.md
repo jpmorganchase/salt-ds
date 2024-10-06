@@ -22,4 +22,4 @@ DatePicker and Calendar API improvements
 `CalendarGrid` - provides a grid of buttons representing the days from a calendar month.
 
 - Fixed issues with `Calendar`'s offset selection.
-- Calendar's `onSelectionDateChange` prop was renamed to `onSelectionChange` to make `DatePicker`'s API consistent with other components.
+- Calendar's `onSelectionDateChange` prop was renamed to `onSelectionChange` to make `DatePicker`'s API consistent with other components, and it will be invoked when triggered by different invalid date inputs.

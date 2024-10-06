@@ -245,7 +245,7 @@ export const DateInputSingle = forwardRef<HTMLDivElement, DateInputSingleProps>(
         setDateValue(formattedDate);
         onDateValueChange?.(formattedDate, true);
       }
-    }, [date, format, locale, timeZone]);
+    }, [date, format]);
 
     const [focused, setFocused] = useState(false);
 
@@ -298,7 +298,8 @@ export const DateInputSingle = forwardRef<HTMLDivElement, DateInputSingleProps>(
           newDate = newDate.set(preservedTime.current);
         }
       }
-      if (hasDateChanged || lastError.current !== error) {
+      // As long as any `error`, invoke event so both "invalid" dates can be handled
+      if (hasDateChanged || error) {
         onDateChange?.(event, newDate, error);
       }
       lastError.current = error;
