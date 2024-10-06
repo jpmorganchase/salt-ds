@@ -6,7 +6,6 @@ import { daysForLocale } from "./internal/utils";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import calendarWeekHeaderCss from "./CalendarWeekHeader.css";
-import { getCurrentLocale } from "./formatDate";
 import { useCalendarContext } from "./internal/CalendarContext";
 
 export type CalendarWeekHeaderProps = ComponentPropsWithRef<"div"> & {};

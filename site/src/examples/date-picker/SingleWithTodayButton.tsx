@@ -20,7 +20,7 @@ import {
   type SingleDatePickerState,
   type SingleDateSelection,
   formatDate,
-  getCurrentLocale,
+  getUsLocale,
   useDatePickerContext,
 } from "@salt-ds/lab";
 import React, { type ReactElement, useCallback, useState } from "react";
@@ -47,7 +47,7 @@ const TodayButton = () => {
 
 function formatSingleDate(
   date: DateValue | null,
-  locale = getCurrentLocale(),
+  locale = getUsLocale(),
   options?: Intl.DateTimeFormatOptions,
 ) {
   if (date) {

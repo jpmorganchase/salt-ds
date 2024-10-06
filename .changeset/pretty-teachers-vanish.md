@@ -21,5 +21,7 @@ DatePicker and Calendar API improvements
 `CalendarWeekHeader` - provides a header for `CalendarGrid` indicating the day of the week.
 `CalendarGrid` - provides a grid of buttons representing the days from a calendar month.
 
+- Default locale changed from "local" to "en-US", to be matched with default `parser`'s "DD MMM YYYY" format.
+- Removed `DateInput`'s default `placeholder`. You can set yourself with `inputProps.placeholder` if needed.
 - Fixed issues with `Calendar`'s offset selection.
 - Calendar's `onSelectionDateChange` prop was renamed to `onSelectionChange` to make `DatePicker`'s API consistent with other components.

@@ -33,7 +33,7 @@ import {
 import {
   type SingleDateSelection,
   formatDate as defaultFormatDate,
-  getCurrentLocale,
+  getUsLocale,
 } from "../calendar";
 import dateInputCss from "./DateInput.css";
 import { extractTimeFieldsFromDate, parseCalendarDate } from "./utils";
@@ -186,12 +186,11 @@ export const DateInputSingle = forwardRef<HTMLDivElement, DateInputSingleProps>(
       inputProps = {},
       inputRef: inputRefProp = null,
       parse = parseCalendarDate,
-      placeholder = "dd mmm yyyy",
       readOnly: readOnlyProp,
       validationStatus: validationStatusProp,
       variant = "primary",
       onDateValueChange,
-      locale = getCurrentLocale(),
+      locale = getUsLocale(),
       timeZone = getLocalTimeZone(),
       ...rest
     } = props;
@@ -369,8 +368,6 @@ export const DateInputSingle = forwardRef<HTMLDivElement, DateInputSingleProps>(
           readOnly={isReadOnly}
           ref={handleInputRef}
           tabIndex={isDisabled ? -1 : 0}
-          placeholder={placeholder}
-          size={placeholder.length}
           value={isReadOnly && !dateValue ? emptyReadOnlyMarker : dateValue}
           {...restDateInputProps}
           onBlur={handleBlur}

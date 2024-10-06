@@ -4,15 +4,13 @@ import {
   CalendarGrid,
   CalendarNavigation,
   CalendarWeekHeader,
-  getCurrentLocale,
+  getUsLocale,
 } from "@salt-ds/lab";
 import type { ReactElement } from "react";
 
 // Saturday & Sunday
 const isDayUnselectable = (date: DateValue) =>
-  getDayOfWeek(date, getCurrentLocale()) >= 5
-    ? "Weekends are un-selectable"
-    : false;
+  getDayOfWeek(date, getUsLocale()) >= 5 ? "Weekends are un-selectable" : false;
 
 export const UnselectableDates = (): ReactElement => (
   <Calendar selectionVariant="single" isDayUnselectable={isDayUnselectable}>

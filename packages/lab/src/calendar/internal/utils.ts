@@ -12,14 +12,14 @@ import {
   toCalendarDate,
   today,
 } from "@internationalized/date";
-import { getCurrentLocale } from "../formatDate";
+import { getUsLocale } from "../formatDate";
 
 export function formatDate(
   date: DateValue,
   locale: string,
   options?: Intl.DateTimeFormatOptions,
 ) {
-  const timeLocale = locale || getCurrentLocale();
+  const timeLocale = locale || getUsLocale();
   const timeZone = options?.timeZone || getLocalTimeZone();
   const formatter = new DateFormatter(timeLocale, options);
   return formatter.format(date.toDate(timeZone));

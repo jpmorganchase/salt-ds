@@ -5,13 +5,13 @@ import {
   DatePickerRangePanel,
   type DateRangeSelection,
   formatDate,
-  getCurrentLocale,
+  getUsLocale,
 } from "@salt-ds/lab";
 import { type ReactElement, useCallback } from "react";
 
 function formatDateRange(
   dateRange: DateRangeSelection | null,
-  locale = getCurrentLocale(),
+  locale = getUsLocale(),
   options?: Intl.DateTimeFormatOptions,
 ): string {
   const { startDate, endDate } = dateRange || {};

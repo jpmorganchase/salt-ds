@@ -4,13 +4,13 @@ import {
   type DateInputRangeError,
   type DateRangeSelection,
   formatDate,
-  getCurrentLocale,
+  getUsLocale,
 } from "@salt-ds/lab";
 import { type ReactElement, type SyntheticEvent, useState } from "react";
 
 function formatDateRange(
   dateRange: DateRangeSelection | null,
-  locale = getCurrentLocale(),
+  locale = getUsLocale(),
 ): string {
   const { startDate, endDate } = dateRange || {};
   const formattedStartDate = startDate

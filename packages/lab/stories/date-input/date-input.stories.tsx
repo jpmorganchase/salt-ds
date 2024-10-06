@@ -12,7 +12,7 @@ import {
   type DateInputSingleProps,
   type DateRangeSelection,
   formatDate,
-  getCurrentLocale,
+  getUsLocale,
 } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react";
 import { fn } from "@storybook/test";
@@ -25,7 +25,7 @@ export default {
 
 function formatDateRange(
   dateRange: DateRangeSelection | null,
-  locale = getCurrentLocale(),
+  locale = getUsLocale(),
 ): string {
   const { startDate, endDate } = dateRange || {};
   const formattedStartDate = startDate

@@ -22,7 +22,7 @@ import {
   CalendarWeekHeader,
   type UseCalendarSelectionRangeProps,
   type UseCalendarSelectionSingleProps,
-  getCurrentLocale,
+  getUsLocale,
 } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react";
 import type React from "react";
@@ -139,7 +139,7 @@ export const UnselectableDates = Template.bind({});
 UnselectableDates.args = {
   // Saturday & Sunday
   isDayUnselectable: (date) =>
-    getDayOfWeek(date, getCurrentLocale()) >= 5
+    getDayOfWeek(date, getUsLocale()) >= 5
       ? "Weekends are un-selectable"
       : false,
 };
@@ -148,9 +148,7 @@ export const DisabledDates = Template.bind({});
 DisabledDates.args = {
   // Saturday & Sunday
   isDayDisabled: (date) =>
-    getDayOfWeek(date, getCurrentLocale()) >= 5
-      ? "Weekends are disabled"
-      : false,
+    getDayOfWeek(date, getUsLocale()) >= 5 ? "Weekends are disabled" : false,
 };
 
 export const HighlightedDates = Template.bind({});
@@ -219,7 +217,7 @@ export const TodayButton: StoryFn<
 };
 
 function renderDayContents(day: DateValue) {
-  const formatter = new DateFormatter(getCurrentLocale(), { day: "2-digit" });
+  const formatter = new DateFormatter(getUsLocale(), { day: "2-digit" });
   return <>{formatter.format(day.toDate(getLocalTimeZone()))}</>;
 }
 

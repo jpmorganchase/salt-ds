@@ -6,6 +6,7 @@ import {
   getLocalTimeZone,
   now,
   today,
+  parseDate,
 } from "@internationalized/date";
 import {
   Button,
@@ -33,7 +34,7 @@ import {
   type SingleDatePickerState,
   type SingleDateSelection,
   formatDate,
-  getCurrentLocale,
+  getUsLocale,
   parseCalendarDate,
   useDatePickerContext,
 } from "@salt-ds/lab";
@@ -60,7 +61,7 @@ function isValidDateRange(date: DateRangeSelection | null) {
 
 function formatDateRange(
   dateRange: DateRangeSelection | null,
-  locale = getCurrentLocale(),
+  locale = getUsLocale(),
   options?: Intl.DateTimeFormatOptions,
 ): string {
   const { startDate, endDate } = dateRange || {};
@@ -74,7 +75,7 @@ function formatDateRange(
 }
 function formatSingleDate(
   date: DateValue | null,
-  locale = getCurrentLocale(),
+  locale = getUsLocale(),
   options?: Intl.DateTimeFormatOptions,
 ) {
   if (date) {
@@ -924,7 +925,7 @@ export const SingleWithCustomParser: StoryFn<DatePickerSingleProps> = ({
   const customParser = useCallback(
     (
       inputDate: string,
-      locale: string = getCurrentLocale(),
+      locale: string = getUsLocale(),
     ): DateInputSingleParserResult => {
       if (!inputDate?.length) {
         return { date: null, error: false };
@@ -961,6 +962,141 @@ export const SingleWithCustomParser: StoryFn<DatePickerSingleProps> = ({
         selectedDate={selectedDate}
       >
         <DatePickerSingleInput parse={customParser} />
+        <DatePickerOverlay>
+          <DatePickerSinglePanel helperText={helperText} />
+        </DatePickerOverlay>
+      </DatePicker>
+      <FormHelperText>{helperText}</FormHelperText>
+    </FormField>
+  );
+};
+
+export const SingleWithLocalLocale: StoryFn<DatePickerSingleProps> = ({
+  selectionVariant,
+  onSelectionChange: onSelectionChangeProp,
+  ...args
+}) => {
+  const locale = navigator.languages[0];
+
+  const defaultHelperText = `Local locale detected: ${locale}`;
+  const errorHelperText = "Please enter a valid date";
+  const [helperText, setHelperText] = useState(defaultHelperText);
+  const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
+    undefined,
+  );
+  const handleSelectionChange = useCallback(
+    (newSelectedDate: SingleDateSelection | null, error: string | false) => {
+      console.log(`Selected date: ${newSelectedDate}`);
+      console.log(`Error: ${error}`);
+      if (error) {
+        setHelperText(errorHelperText);
+      } else {
+        setHelperText(defaultHelperText);
+      }
+      setValidationStatus(error ? "error" : undefined);
+      onSelectionChangeProp?.(newSelectedDate, error);
+    },
+    [onSelectionChangeProp, defaultHelperText],
+  );
+
+  return (
+    <FormField validationStatus={validationStatus}>
+      <FormLabel>Select a date</FormLabel>
+      <DatePicker
+        selectionVariant={"single"}
+        locale={locale}
+        onSelectionChange={handleSelectionChange}
+        {...args}
+      >
+        <DatePickerSingleInput
+          parse={(input: string) => {
+            const date = new Date(input);
+            if (Number.isNaN(date)) {
+              return {
+                date: null,
+                error: "Not a valid date",
+              };
+            }
+            return {
+              date: parseDate(date.toISOString().substring(0, 10)),
+              error: false,
+            };
+          }}
+        />
+        <DatePickerOverlay>
+          <DatePickerSinglePanel helperText={helperText} />
+        </DatePickerOverlay>
+      </DatePicker>
+      <FormHelperText>{helperText}</FormHelperText>
+    </FormField>
+  );
+};
+
+export const SingleWithLocaleEnGB: StoryFn<DatePickerSingleProps> = ({
+  selectionVariant,
+  onSelectionChange: onSelectionChangeProp,
+  ...args
+}) => {
+  const locale = "en-GB";
+  const format = "dd/mm/yyyy";
+
+  const defaultHelperText = `Locale ${locale}`;
+  const errorHelperText = `Please enter a valid date ${format}`;
+  const [helperText, setHelperText] = useState(defaultHelperText);
+  const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
+    undefined,
+  );
+  const handleSelectionChange = useCallback(
+    (newSelectedDate: SingleDateSelection | null, error: string | false) => {
+      console.log(`Selected date: ${newSelectedDate}`);
+      console.log(`Error: ${error}`);
+      if (error) {
+        setHelperText(errorHelperText);
+      } else {
+        setHelperText(defaultHelperText);
+      }
+      setValidationStatus(error ? "error" : undefined);
+      onSelectionChangeProp?.(newSelectedDate, error);
+    },
+    [onSelectionChangeProp, defaultHelperText, errorHelperText],
+  );
+
+  return (
+    <FormField validationStatus={validationStatus}>
+      <FormLabel>Select a date</FormLabel>
+      <DatePicker
+        selectionVariant={"single"}
+        locale={locale}
+        onSelectionChange={handleSelectionChange}
+        {...args}
+      >
+        <DatePickerSingleInput
+          parse={(input: string) => {
+            const match = input.match(/(\d{2})\/(\d{2})\/(\d{4})/);
+            if (match) {
+              return {
+                date: new CalendarDate(
+                  Number.parseInt(match[3]),
+                  Number.parseInt(match[2]),
+                  Number.parseInt(match[1]),
+                ),
+                error: false,
+              };
+            }
+            return {
+              date: null,
+              error: "Not a valid date",
+            };
+          }}
+          inputProps={{
+            placeholder: format,
+          }}
+          format={(date) =>
+            date
+              ? `${String(date.day).padStart(2, "0")}/${String(date.month).padStart(2, "0")}/${String(date.year).padStart(4, "0")}`
+              : ""
+          }
+        />
         <DatePickerOverlay>
           <DatePickerSinglePanel helperText={helperText} />
         </DatePickerOverlay>

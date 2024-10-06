@@ -11,13 +11,13 @@ import {
   DatePickerSinglePanel,
   type SingleDateSelection,
   formatDate,
-  getCurrentLocale,
+  getUsLocale,
 } from "@salt-ds/lab";
 import { type ReactElement, useCallback, useState } from "react";
 
 function formatSingleDate(
   date: DateValue | null,
-  locale = getCurrentLocale(),
+  locale = getUsLocale(),
   options?: Intl.DateTimeFormatOptions,
 ) {
   if (date) {

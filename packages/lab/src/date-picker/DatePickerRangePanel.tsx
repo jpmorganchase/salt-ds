@@ -39,7 +39,7 @@ import {
   type CalendarWeekHeaderProps,
   type DateRangeSelection,
   type UseCalendarSelectionRangeProps,
-  getCurrentLocale,
+  getUsLocale,
 } from "../calendar";
 import { useDatePickerContext } from "./DatePickerContext";
 import datePickerPanelCss from "./DatePickerPanel.css";
@@ -218,7 +218,7 @@ export const DatePickerRangePanel = forwardRef<
       timeZone = getLocalTimeZone(),
       minDate = startOfMonth(today(timeZone)),
       maxDate = minDate.add({ months: 1 }),
-      locale = getCurrentLocale(),
+      locale = getUsLocale(),
     },
     helpers: { setSelectedDate },
   } = useDatePickerContext({ selectionVariant: "range" });

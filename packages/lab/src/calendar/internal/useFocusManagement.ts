@@ -8,12 +8,12 @@ import type {
   KeyboardEventHandler,
   MouseEventHandler,
 } from "react";
-import { getCurrentLocale } from "../formatDate";
+import { getUsLocale } from "../formatDate";
 import { useCalendarContext } from "./CalendarContext";
 
 export function useFocusManagement({
   date,
-  locale = getCurrentLocale(),
+  locale = getUsLocale(),
 }: {
   date: DateValue;
   locale: string;

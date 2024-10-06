@@ -4,14 +4,9 @@ import {
   getLocalTimeZone,
 } from "@internationalized/date";
 
-/**
- * Gets the current locale from the browser.
- * @returns The current locale as a string.
- */
-export function getCurrentLocale() {
-  return navigator.languages[0];
+export function getUsLocale() {
+  return "en-US";
 }
-
 /**
  * Default options for date formatting.
  */
@@ -36,7 +31,7 @@ export function formatDate(
   if (!date) {
     return "";
   }
-  const timeLocale = locale || getCurrentLocale();
+  const timeLocale = locale || getUsLocale();
   const timeZone = options?.timeZone || getLocalTimeZone();
 
   const formatter = new DateFormatter(timeLocale, {

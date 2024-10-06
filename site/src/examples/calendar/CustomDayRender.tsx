@@ -8,12 +8,12 @@ import {
   CalendarGrid,
   CalendarNavigation,
   CalendarWeekHeader,
-  getCurrentLocale,
+  getUsLocale,
 } from "@salt-ds/lab";
 import type { ReactElement } from "react";
 
 function renderDayContents(day: DateValue) {
-  const formatter = new DateFormatter(getCurrentLocale(), { day: "2-digit" });
+  const formatter = new DateFormatter(getUsLocale(), { day: "2-digit" });
   return <>{formatter.format(day.toDate(getLocalTimeZone()))}</>;
 }
 
