@@ -66,9 +66,14 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
     cy.realPress("Tab");
     cy.get("@selectionChangeSpy").should("have.been.calledTwice");
     cy.get("@selectionChangeSpy").should("have.been.calledWith", null);
+    // Different invalid date should call the event
+    cy.findByRole("textbox").click().clear().type("another bad date 2");
+    cy.realPress("Tab");
+    cy.get("@selectionChangeSpy").should("have.callCount", 3);
+    cy.get("@selectionChangeSpy").should("have.been.calledWith", null);
     cy.findByRole("textbox").click().clear().type(updatedFormattedDateValue);
     cy.realPress("Tab");
-    cy.get("@selectionChangeSpy").should("have.been.calledThrice");
+    cy.get("@selectionChangeSpy").should("have.callCount", 4);
     cy.get("@selectionChangeSpy").should("have.been.calledWith", updatedDate);
   });
 
