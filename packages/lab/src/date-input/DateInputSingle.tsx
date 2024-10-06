@@ -22,7 +22,7 @@ import {
   type KeyboardEventHandler,
   type MouseEventHandler,
   type ReactNode,
-  type RefObject,
+  type Ref,
   type SyntheticEvent,
   forwardRef,
   useCallback,
@@ -116,7 +116,7 @@ export interface DateInputSingleProps<T = SingleDateSelection>
   /**
    * Reference for the input.
    */
-  inputRef?: RefObject<HTMLInputElement>;
+  inputRef?: Ref<HTMLInputElement>;
   /**
    * Input value. Use when the input value is controlled.
    */
