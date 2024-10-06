@@ -23,6 +23,29 @@ describe("GIVEN a DateInputSingle", () => {
     cy.findByRole("textbox").should("have.value", "date value");
   });
 
+  it("SHOULD call onDateChange on consecutive invalid dates", () => {
+    const onDateChangeSpy = cy.stub().as("dateChangeSpy");
+    cy.mount(<Single locale={testLocale} onDateChange={onDateChangeSpy} />);
+    cy.findByRole("textbox").click().clear().type("bad date");
+    cy.realPress("Tab");
+    cy.get("@dateChangeSpy").should("have.been.calledOnce");
+    cy.get("@dateChangeSpy").should(
+      "have.been.calledWith",
+      Cypress.sinon.match.any,
+      null,
+      "not a valid date format",
+    );
+    cy.findByRole("textbox").click().clear().type("another bad date 2");
+    cy.realPress("Tab");
+    cy.get("@dateChangeSpy").should("have.been.calledTwice");
+    cy.get("@dateChangeSpy").should(
+      "have.been.calledWith",
+      Cypress.sinon.match.any,
+      null,
+      "not a valid date format",
+    );
+  });
+
   it("SHOULD support custom parser", () => {
     const parseSpy = cy.stub().as("parseSpy");
     const customParser = (
