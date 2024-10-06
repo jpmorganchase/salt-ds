@@ -29,8 +29,6 @@ import {
   useEffect,
   useRef,
   useState,
-  type FocusEvent,
-  type KeyboardEvent,
 } from "react";
 import {
   type SingleDateSelection,
