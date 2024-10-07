@@ -10,7 +10,7 @@ import {
 import {
   type DateRangeSelection,
   type SingleDateSelection,
-  getUsLocale,
+  defaultLocale,
 } from "../calendar";
 
 export type RangeTimeFields = {
@@ -38,7 +38,7 @@ export function getMonthNames(locale: string): { [key: string]: number } {
  */
 export function parseCalendarDate(
   inputDate: string,
-  locale: string = getUsLocale(),
+  locale: string = defaultLocale,
 ): {
   date: DateValue | null;
   error: string | false;
@@ -112,7 +112,7 @@ export function parseCalendarDate(
  */
 export function parseZonedDateTime(
   inputDate: string,
-  locale: string = getUsLocale(),
+  locale: string = defaultLocale,
   timeZone: string = getLocalTimeZone(),
 ): {
   date: DateValue | null;

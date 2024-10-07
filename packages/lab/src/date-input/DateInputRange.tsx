@@ -31,7 +31,7 @@ import {
 import {
   type DateRangeSelection,
   formatDate as defaultFormatDate,
-  getUsLocale,
+  defaultLocale,
 } from "../calendar";
 import dateInputCss from "./DateInput.css";
 import type { DateInputSingleParserError } from "./DateInputSingle";
@@ -232,7 +232,7 @@ export const DateInputRange = forwardRef<HTMLDivElement, DateInputRangeProps>(
       readOnly: readOnlyProp,
       validationStatus: validationStatusProp,
       variant = "primary",
-      locale = getUsLocale(),
+      locale = defaultLocale,
       timeZone = getLocalTimeZone(),
       ...rest
     } = props;

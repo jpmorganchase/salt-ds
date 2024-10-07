@@ -33,7 +33,7 @@ import {
 import {
   type SingleDateSelection,
   formatDate as defaultFormatDate,
-  getUsLocale,
+  defaultLocale,
 } from "../calendar";
 import dateInputCss from "./DateInput.css";
 import { extractTimeFieldsFromDate, parseCalendarDate } from "./utils";
@@ -190,7 +190,7 @@ export const DateInputSingle = forwardRef<HTMLDivElement, DateInputSingleProps>(
       validationStatus: validationStatusProp,
       variant = "primary",
       onDateValueChange,
-      locale = getUsLocale(),
+      locale = defaultLocale,
       timeZone = getLocalTimeZone(),
       ...rest
     } = props;

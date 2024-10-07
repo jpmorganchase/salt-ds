@@ -16,15 +16,15 @@ import {
   DatePickerSingleInput,
   DatePickerSinglePanel,
   type SingleDateSelection,
+  defaultLocale,
   formatDate,
-  getUsLocale,
   parseCalendarDate,
 } from "@salt-ds/lab";
 import { type ReactElement, useCallback, useState } from "react";
 
 function formatSingleDate(
   date: DateValue | null,
-  locale = getUsLocale(),
+  locale = defaultLocale,
   options?: Intl.DateTimeFormatOptions,
 ) {
   if (date) {

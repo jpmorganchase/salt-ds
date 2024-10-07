@@ -12,7 +12,7 @@ import {
   CALENDAR_MIN_YEAR,
   type DateRangeSelection,
   type SingleDateSelection,
-  getUsLocale,
+  defaultLocale,
 } from "../calendar";
 import type {
   RangeDatePickerError,
@@ -161,7 +161,7 @@ export function useDatePicker<SelectionVariant extends "single" | "range">(
     minDate: minDateProp,
     maxDate: maxDateProp,
     timeZone = getLocalTimeZone(),
-    locale = getUsLocale(),
+    locale = defaultLocale,
     onCancel,
   } = props;
 

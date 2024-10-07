@@ -32,7 +32,7 @@ import {
   type CalendarSingleProps,
   CalendarWeekHeader,
   type CalendarWeekHeaderProps,
-  getUsLocale,
+  defaultLocale,
 } from "../calendar";
 import { Calendar, type SingleDateSelection } from "../calendar";
 import datePickerPanelCss from "./DatePickerPanel.css";
@@ -136,7 +136,7 @@ export const DatePickerSinglePanel = forwardRef<
       timeZone = getLocalTimeZone(),
       minDate = startOfMonth(today(timeZone)),
       maxDate = minDate.add({ months: 1 }),
-      locale = getUsLocale(),
+      locale = defaultLocale,
     },
     helpers: { setSelectedDate },
   } = useDatePickerContext({ selectionVariant: "single" });

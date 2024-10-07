@@ -33,8 +33,8 @@ import {
   type RangeDatePickerState,
   type SingleDatePickerState,
   type SingleDateSelection,
+  defaultLocale,
   formatDate,
-  getUsLocale,
   parseCalendarDate,
   useDatePickerContext,
 } from "@salt-ds/lab";
@@ -61,7 +61,7 @@ function isValidDateRange(date: DateRangeSelection | null) {
 
 function formatDateRange(
   dateRange: DateRangeSelection | null,
-  locale = getUsLocale(),
+  locale = defaultLocale,
   options?: Intl.DateTimeFormatOptions,
 ): string {
   const { startDate, endDate } = dateRange || {};
@@ -75,7 +75,7 @@ function formatDateRange(
 }
 function formatSingleDate(
   date: DateValue | null,
-  locale = getUsLocale(),
+  locale = defaultLocale,
   options?: Intl.DateTimeFormatOptions,
 ) {
   if (date) {
@@ -925,7 +925,7 @@ export const SingleWithCustomParser: StoryFn<DatePickerSingleProps> = ({
   const customParser = useCallback(
     (
       inputDate: string,
-      locale: string = getUsLocale(),
+      locale: string = defaultLocale,
     ): DateInputSingleParserResult => {
       if (!inputDate?.length) {
         return { date: null, error: false };

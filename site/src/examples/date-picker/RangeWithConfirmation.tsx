@@ -14,14 +14,14 @@ import {
   DatePickerRangeInput,
   DatePickerRangePanel,
   type DateRangeSelection,
+  defaultLocale,
   formatDate,
-  getUsLocale,
 } from "@salt-ds/lab";
 import React, { type ReactElement, useCallback, useRef, useState } from "react";
 
 function formatDateRange(
   dateRange: DateRangeSelection | null,
-  locale = getUsLocale(),
+  locale = defaultLocale,
   options?: Intl.DateTimeFormatOptions,
 ): string {
   const { startDate, endDate } = dateRange || {};

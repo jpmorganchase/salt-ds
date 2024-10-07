@@ -14,14 +14,14 @@ import {
   DatePickerSingleInput,
   DatePickerSinglePanel,
   type SingleDateSelection,
+  defaultLocale,
   formatDate,
-  getUsLocale,
 } from "@salt-ds/lab";
 import React, { type ReactElement, useCallback, useRef, useState } from "react";
 
 function formatSingleDate(
   date: DateValue | null,
-  locale = getUsLocale(),
+  locale = defaultLocale,
   options?: Intl.DateTimeFormatOptions,
 ) {
   if (date) {

@@ -17,7 +17,7 @@ import {
   useMemo,
   useState,
 } from "react";
-import { getUsLocale } from "./formatDate";
+import { defaultLocale } from "./formatDate";
 import { generateDatesForMonth } from "./internal/utils";
 import {
   type UseCalendarSelectionMultiSelectProps,
@@ -172,7 +172,7 @@ export function useCalendar(props: UseCalendarProps) {
     visibleMonth: visibleMonthProp,
     hideOutOfRangeDates,
     timeZone = getLocalTimeZone(),
-    locale = getUsLocale(),
+    locale = defaultLocale,
     defaultVisibleMonth = today(timeZone),
     onSelectionChange,
     onVisibleMonthChange,

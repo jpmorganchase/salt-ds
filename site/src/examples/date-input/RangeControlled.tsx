@@ -3,14 +3,14 @@ import {
   DateInputRange,
   type DateInputRangeError,
   type DateRangeSelection,
+  defaultLocale,
   formatDate,
-  getUsLocale,
 } from "@salt-ds/lab";
 import { type ReactElement, type SyntheticEvent, useState } from "react";
 
 function formatDateRange(
   dateRange: DateRangeSelection | null,
-  locale = getUsLocale(),
+  locale = defaultLocale,
 ): string {
   const { startDate, endDate } = dateRange || {};
   const formattedStartDate = startDate
