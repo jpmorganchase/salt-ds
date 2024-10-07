@@ -23,3 +23,4 @@ DatePicker and Calendar API improvements
 
 - Fixed issues with `Calendar`'s offset selection.
 - Calendar's `onSelectionDateChange` prop was renamed to `onSelectionChange` to make `DatePicker`'s API consistent with other components.
+- Fixed `inputRef` having the incorrect type. Closes #4237.
