@@ -4,135 +4,184 @@ import {
   DialogActions,
   DialogCloseButton,
   DialogContent,
+  type DialogContentProps,
+  DialogContext,
   DialogHeader,
   type DialogProps,
-  FlowLayout,
   SaltProvider,
-  ownerWindow,
+  StackLayout,
+  VALIDATION_NAMED_STATUS,
 } from "@salt-ds/core";
 import type { Meta, StoryFn } from "@storybook/react";
 import { QAContainer, type QAContainerProps } from "docs/components";
-
 import "./dialog.stories.css";
-import font300iCss from "@fontsource/open-sans/300-italic.css";
-import font300Css from "@fontsource/open-sans/300.css";
-import font400iCss from "@fontsource/open-sans/400-italic.css";
-import font400Css from "@fontsource/open-sans/400.css";
-import font500iCss from "@fontsource/open-sans/500-italic.css";
-import font500Css from "@fontsource/open-sans/500.css";
-import font600iCss from "@fontsource/open-sans/600-italic.css";
-import font600Css from "@fontsource/open-sans/600.css";
-import font700iCss from "@fontsource/open-sans/700-italic.css";
-import font700Css from "@fontsource/open-sans/700.css";
-import font800iCss from "@fontsource/open-sans/800-italic.css";
-import font800Css from "@fontsource/open-sans/800.css";
-import { useComponentCssInjection } from "@salt-ds/styles";
-import themeCss from "@salt-ds/theme/index.css";
-import { WindowProvider, useWindow } from "@salt-ds/window";
-import { Fragment, type ReactNode, useCallback, useState } from "react";
-import { createPortal } from "react-dom";
-
-const StyleInjection = () => {
-  const targetWindow = useWindow();
-
-  useComponentCssInjection({ css: themeCss, window: targetWindow });
-  useComponentCssInjection({ css: font300Css, window: targetWindow });
-  useComponentCssInjection({ css: font300iCss, window: targetWindow });
-  useComponentCssInjection({ css: font400Css, window: targetWindow });
-  useComponentCssInjection({ css: font400iCss, window: targetWindow });
-  useComponentCssInjection({ css: font500Css, window: targetWindow });
-  useComponentCssInjection({ css: font500iCss, window: targetWindow });
-  useComponentCssInjection({ css: font600Css, window: targetWindow });
-  useComponentCssInjection({ css: font600iCss, window: targetWindow });
-  useComponentCssInjection({ css: font700Css, window: targetWindow });
-  useComponentCssInjection({ css: font700iCss, window: targetWindow });
-  useComponentCssInjection({ css: font800Css, window: targetWindow });
-  useComponentCssInjection({ css: font800iCss, window: targetWindow });
-
-  return null;
-};
+import { Fragment } from "react";
 
 export default {
   title: "Core/Dialog/QA",
   component: Dialog,
 } as Meta<typeof Dialog>;
 
-const DialogTemplate: StoryFn<DialogProps & { header: string }> = ({
-  status,
-  header,
-}) => {
+function FakeDialog({ children, status, id }: DialogProps) {
   return (
-    <Dialog status={status} open>
-      <DialogHeader header={header} />
-      <DialogContent>This is dialog content...</DialogContent>
-      <DialogActions>
-        <Button style={{ marginRight: "auto" }} appearance="transparent">
-          Cancel
-        </Button>
-        <Button>Previous</Button>
-        <Button sentiment="accented" appearance="transparent">
-          Next
-        </Button>
-      </DialogActions>
-      <DialogCloseButton />
-    </Dialog>
-  );
-};
-
-function FakeWindow({
-  children,
-  title,
-}: {
-  children?: ReactNode;
-  title: string;
-}) {
-  const [mountNode, setMountNode] = useState<HTMLElement | undefined>(
-    undefined,
-  );
-
-  const handleFrameRef = useCallback((node: HTMLIFrameElement) => {
-    setMountNode(node?.contentWindow?.document?.body);
-  }, []);
-
-  return (
-    <iframe
-      ref={handleFrameRef}
-      title={title}
-      style={{
-        border: "none",
-        width: 1200,
-        height: 380,
-      }}
-    >
-      <WindowProvider window={ownerWindow(mountNode)}>
-        <StyleInjection />
-        <SaltProvider applyClassesTo="root">
-          {mountNode && createPortal(children, mountNode)}
-        </SaltProvider>
-      </WindowProvider>
-    </iframe>
+    <DialogContext.Provider value={{ status, id }}>
+      <div className="fakeDialogWindow">{children}</div>
+    </DialogContext.Provider>
   );
 }
+
+const DialogTemplate: StoryFn<
+  Omit<DialogProps, "content"> & {
+    header?: string;
+    preheader?: string;
+    content?: DialogContentProps["children"];
+    longDialog?: boolean;
+  }
+> = ({ status, header, content, longDialog }) => {
+  const defaultHeader = "Congratulations! You have created a Dialog.";
+  const defaultContent =
+    "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.";
+  return (
+    <div style={{ width: 1200, maxHeight: 380, padding: "200px 0" }}>
+      <FakeDialog status={status} open>
+        <DialogHeader header={header ?? defaultHeader} />
+        <DialogContent className={longDialog ? "longDialog" : ""}>
+          {content ?? defaultContent}
+        </DialogContent>
+        <DialogActions>
+          <Button style={{ marginRight: "auto" }} appearance="transparent">
+            Cancel
+          </Button>
+          <Button>Previous</Button>
+          <Button sentiment="accented" appearance="transparent">
+            Next
+          </Button>
+        </DialogActions>
+        <DialogCloseButton />
+      </FakeDialog>
+    </div>
+  );
+};
 
 export const StatusVariants: StoryFn<QAContainerProps> = () => {
   const DensityValues = ["high", "medium", "low", "touch"] as const;
   return (
-    <FlowLayout gap={0}>
+    <StackLayout>
       {DensityValues.map((density) => {
         return (
           <Fragment key={density}>
-            <FakeWindow title={`dialog ${density} example`}>
-              <Button>Test button</Button>
-              <DialogTemplate header={"hello"} />
-            </FakeWindow>
+            <SaltProvider density={density}>
+              <DialogTemplate />
+            </SaltProvider>
+            <SaltProvider density={density} mode="dark">
+              <DialogTemplate />
+            </SaltProvider>
+            {VALIDATION_NAMED_STATUS.map((status) => (
+              <Fragment key={status}>
+                <SaltProvider density={density}>
+                  <DialogTemplate status={status} />
+                </SaltProvider>
+                <SaltProvider density={density} mode="dark">
+                  <DialogTemplate status={status} />
+                </SaltProvider>
+              </Fragment>
+            ))}
           </Fragment>
         );
       })}
-    </FlowLayout>
+    </StackLayout>
   );
 };
 
 StatusVariants.parameters = {
+  chromatic: {
+    disableSnapshot: false,
+    modes: {
+      theme: {
+        themeNext: "disable",
+      },
+      themeNext: {
+        themeNext: "enable",
+        corner: "rounded",
+        accent: "teal",
+        // Ignore headingFont given font is not loaded
+      },
+    },
+  },
+};
+
+export const ContentVariants: StoryFn<QAContainerProps> = () => {
+  const DensityValues = ["high", "medium", "low", "touch"] as const;
+  const longContent = (
+    <>
+      <div>
+        Lorem Ipsum is simply dummy text of the printing and typesetting
+        industry. Lorem Ipsum has been the industry's standard dummy text ever
+        since the 1500s, when an unknown printer took a galley of type and
+        scrambled it to make a type specimen book.
+      </div>
+      <div>
+        It has survived not only five centuries, but also the leap into
+        electronic typesetting, remaining essentially unchanged. It was
+        popularised in the 1960s with the release of Letraset sheets containing
+        Lorem Ipsum passages, and more recently with desktop publishing software
+        like Aldus PageMaker including versions of Lorem Ipsum.
+      </div>
+      <div>
+        It is a long established fact that a reader will be distracted by the
+        readable content of a page when looking at its layout. The point of
+        using Lorem Ipsum is that it has a more-or-less normal distribution of
+        letters, as opposed to using 'Content here, content here', making it
+        look like readable English.
+      </div>
+      <div>
+        Many desktop publishing packages and web page editors now use Lorem
+        Ipsum as their default model text, and a search for 'lorem ipsum' will
+        uncover many web sites still in their infancy. Various versions have
+        evolved over the years, sometimes by accident, sometimes on purpose
+        (injected humour and the like).
+      </div>
+      <div>
+        Contrary to popular belief, Lorem Ipsum is not simply random text. It
+        has roots in a piece of classical Latin literature from 45 BC, making it
+        over 2000 years old. Richard McClintock, a Latin professor at
+        Hampden-Sydney College in Virginia, looked up one of the more obscure
+        Latin words, consectetur, from a Lorem Ipsum passage, and going through
+        the cites of the word in classical literature, discovered the
+        undoubtable source.
+      </div>
+      <div>
+        Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus
+        Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written
+        in 45 BC. This book is a treatise on the theory of ethics, very popular
+        during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum
+        dolor sit amet..", comes from a line in section 1.10.32.
+      </div>
+    </>
+  );
+  return (
+    <StackLayout style={{ width: 1200, height: 400, padding: "200px 0" }}>
+      {DensityValues.map((density) => (
+        <Fragment key={density}>
+          <SaltProvider density={density}>
+            <DialogTemplate content={longContent} />
+          </SaltProvider>
+          <SaltProvider density={density} mode="dark">
+            <DialogTemplate content={longContent} />
+          </SaltProvider>
+          <SaltProvider density={density}>
+            <DialogTemplate longDialog />
+          </SaltProvider>
+          <SaltProvider density={density} mode="dark">
+            <DialogTemplate longDialog />
+          </SaltProvider>
+        </Fragment>
+      ))}
+    </StackLayout>
+  );
+};
+
+ContentVariants.parameters = {
   chromatic: {
     disableSnapshot: false,
     modes: {
