@@ -53,6 +53,35 @@ export type ListControlProps<Item> = {
   valueToString?: (item: Item) => string;
 };
 
+function findElementPosition(
+  elements: { element: HTMLElement }[],
+  element: HTMLElement,
+) {
+  if (elements.length === 0) {
+    return 0;
+  }
+
+  if (
+    element.compareDocumentPosition(elements[elements.length - 1].element) &
+    Node.DOCUMENT_POSITION_PRECEDING
+  ) {
+    return -1;
+  }
+
+  if (
+    element.compareDocumentPosition(elements[0].element) &
+    Node.DOCUMENT_POSITION_FOLLOWING
+  ) {
+    return 0;
+  }
+
+  return elements.findIndex(
+    (option) =>
+      option.element.compareDocumentPosition(element) &
+      Node.DOCUMENT_POSITION_PRECEDING,
+  );
+}
+
 export function defaultValueToString<Item>(item: Item): string {
   return String(item);
 }
@@ -165,12 +194,7 @@ export function useListControl<Item>(props: ListControlProps<Item>) {
     (optionValue: OptionValue<Item>, element: HTMLElement) => {
       const { id } = optionValue;
       const option = optionsRef.current.find((item) => item.data.id === id);
-      const index = optionsRef.current.findIndex((option) => {
-        return (
-          option.element.compareDocumentPosition(element) &
-          Node.DOCUMENT_POSITION_PRECEDING
-        );
-      });
+      const index = findElementPosition(optionsRef.current, element);
 
       if (!option) {
         if (index === -1) {
