@@ -66,7 +66,7 @@ const DialogTemplate: StoryFn<
 export const StatusVariants: StoryFn<QAContainerProps> = () => {
   const DensityValues = ["high", "medium", "low", "touch"] as const;
   return (
-    <StackLayout>
+    <StackLayout gap={1}>
       {DensityValues.map((density) => {
         return (
           <Fragment key={density}>
@@ -160,7 +160,7 @@ export const ContentVariants: StoryFn<QAContainerProps> = () => {
     </>
   );
   return (
-    <StackLayout style={{ width: 1200, height: 400, padding: "200px 0" }}>
+    <StackLayout style={{ width: 1200, height: 380 }} gap={1}>
       {DensityValues.map((density) => (
         <Fragment key={density}>
           <SaltProvider density={density}>
