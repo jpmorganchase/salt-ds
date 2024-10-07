@@ -497,3 +497,32 @@ export const CloseWithConfirmation = () => {
     </div>
   );
 };
+
+export const WithInteractiveElementInPanel: StoryFn<typeof TabsNext> = (
+  args,
+) => {
+  return (
+    <div className="container">
+      <TabsNext {...args}>
+        <TabListNext appearance="transparent">
+          {tabs.map((label) => (
+            <TabNext value={label} key={label}>
+              {label}
+            </TabNext>
+          ))}
+        </TabListNext>
+
+        {tabs.map((label) => (
+          <TabNextPanel value={label} key={label}>
+            {label}
+            <Button>Click me</Button>
+          </TabNextPanel>
+        ))}
+      </TabsNext>
+    </div>
+  );
+};
+
+WithInteractiveElementInPanel.args = {
+  defaultValue: tabs[0],
+};
