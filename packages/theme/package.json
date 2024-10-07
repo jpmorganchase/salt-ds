@@ -17,7 +17,7 @@
     "build": "yarn node ./scripts/build.mjs"
   },
   "devDependencies": {
-    "del": "^7.0.0"
+    "del": "^8.0.0"
   },
   "publishConfig": {
     "directory": "../../dist/salt-ds-theme",
