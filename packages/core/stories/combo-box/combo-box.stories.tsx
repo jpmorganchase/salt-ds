@@ -911,3 +911,15 @@ export const Bordered = () => {
     </StackLayout>
   );
 };
+
+export const PerformanceTest = () => {
+  return (
+    <ComboBox>
+      {Array.from({ length: 10000 }).map((_, index) => (
+        <Option key={index} value={`option-${index}`}>
+          Option {index + 1}
+        </Option>
+      ))}
+    </ComboBox>
+  );
+};

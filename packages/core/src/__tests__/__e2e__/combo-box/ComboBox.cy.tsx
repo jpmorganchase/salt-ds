@@ -21,6 +21,7 @@ const {
   MultiplePillsTruncated,
   SelectOnTab,
   LongList,
+  PerformanceTest,
 } = composeStories(comboBoxStories);
 
 describe("Given a ComboBox", () => {
@@ -729,5 +730,25 @@ describe("Given a ComboBox", () => {
     cy.findByRole("combobox").realClick();
     cy.findAllByRole("option").eq(0).realClick();
     cy.get("@blurSpy").should("not.have.been.called");
+  });
+
+  it("should support 10000 items without much delay", () => {
+    cy.mount(<PerformanceTest />);
+
+    cy.findByRole("combobox").should("be.visible");
+
+    cy.window().its("performance").invoke("mark", "open_start");
+
+    cy.findByRole("combobox").realClick();
+
+    cy.findByRole("listbox", { timeout: 30000 }).should("be.visible");
+
+    cy.window().its("performance").invoke("mark", "open_end");
+
+    cy.window()
+      .its("performance")
+      .invoke("measure", "open_duration", "open_start", "open_end")
+      .its("duration", { timeout: 0 })
+      .should("be.lessThan", 5000);
   });
 });
