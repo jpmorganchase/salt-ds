@@ -52,9 +52,21 @@ export const TabNextPanel = forwardRef<HTMLDivElement, TabNextPanelProps>(
     useEffect(() => {
       if (!panelRef.current) return;
 
-      const elements = tabbable(panelRef.current, { includeContainer: true });
-      setHasFocusableChildren(elements.length > 0);
+      const observer = new MutationObserver(() => {
+        if (!panelRef.current) return;
+
+        const elements = tabbable(panelRef.current, { includeContainer: true });
+        setHasFocusableChildren(elements.length > 0);
+      });
+
+      observer.observe(panelRef.current, { childList: true, subtree: true });
+
+      return () => {
+        observer.disconnect();
+      };
     }, []);
+
+    const hidden = selected !== value;
 
     return (
       <div
@@ -63,8 +75,8 @@ export const TabNextPanel = forwardRef<HTMLDivElement, TabNextPanelProps>(
         role="tabpanel"
         aria-labelledby={tabId}
         className={withBaseName()}
-        hidden={selected !== value || undefined}
-        tabIndex={hasFocusableChildren ? undefined : 0}
+        hidden={hidden || undefined}
+        tabIndex={hidden || hasFocusableChildren ? undefined : 0}
         {...rest}
       >
         {children}

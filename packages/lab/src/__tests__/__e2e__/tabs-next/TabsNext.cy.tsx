@@ -9,6 +9,7 @@ const {
   Closable,
   AddWithDialog,
   CloseWithConfirmation,
+  WithInteractiveElementInPanel,
 } = composeStories(tabsStories);
 
 describe("Given a Tabstrip", () => {
@@ -126,11 +127,11 @@ describe("Given a Tabstrip", () => {
     cy.get("[data-overflowbutton]").realClick();
     cy.findByRole("tab", { name: "Liquidity" }).should("be.focused");
     cy.realPress("ArrowDown");
-    cy.findByRole("tab", { name: "Reports" }).should("be.focused");
+    cy.findByRole("tab", { name: "With" }).should("be.focused");
     cy.realPress("End");
     cy.findByRole("tab", { name: "Screens" }).should("be.focused");
     cy.realPress("Escape");
-    cy.findByRole("tab", { name: "Loans" }).should("be.focused");
+    cy.findByRole("tab", { name: "Checks" }).should("be.focused");
   });
 
   it("should allow selection in the menu", () => {
@@ -287,5 +288,15 @@ describe("Given a Tabstrip", () => {
       "true",
     );
     cy.findByRole("tab", { name: "Transactions" }).should("be.focused");
+  });
+
+  it("should set tab-index 0 on the panel when it contains non-tabbable elements", () => {
+    cy.mount(<Bordered />);
+    cy.findByRole("tabpanel").should("have.attr", "tabIndex", "0");
+  });
+
+  it("should not set tab-index 0 on the panel when it contains tabbable elements", () => {
+    cy.mount(<WithInteractiveElementInPanel />);
+    cy.findByRole("tabpanel").should("have.attr", "tabIndex", "0");
   });
 });
