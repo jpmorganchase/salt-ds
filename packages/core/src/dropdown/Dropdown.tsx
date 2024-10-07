@@ -20,8 +20,10 @@ import {
   type ReactNode,
   type Ref,
   forwardRef,
+  useCallback,
   useEffect,
   useRef,
+  useState,
 } from "react";
 import { useFormFieldProps } from "../form-field-context";
 import {
@@ -33,7 +35,6 @@ import {
   defaultValueToString,
   useListControl,
 } from "../list-control/ListControlState";
-import { OptionList } from "../option/OptionList";
 import { StatusAdornment } from "../status-adornment";
 import type { ValidationStatus } from "../status-indicator";
 import {
@@ -41,9 +42,10 @@ import {
   makePrefixer,
   useFloatingUI,
   useForkRef,
-  useId,
 } from "../utils";
 import dropdownCss from "./Dropdown.css";
+import { DropdownContext } from "./DropdownContext";
+import { DropdownPopover } from "./DropdownPopover";
 
 export type DropdownProps<Item = string> = {
   /**
@@ -212,24 +214,23 @@ export const Dropdown = forwardRef(function Dropdown<Item>(
     setOpen(newOpen);
   };
 
-  const { x, y, strategy, elements, floating, reference, context } =
-    useFloatingUI({
-      open: openState && !readOnly && Children.count(children) > 0,
-      onOpenChange: handleOpenChange,
-      placement: "bottom-start",
-      middleware: [
-        offset(1),
-        size({
-          apply({ rects, elements, availableHeight }) {
-            Object.assign(elements.floating.style, {
-              minWidth: `${rects.reference.width}px`,
-              maxHeight: `max(calc((var(--salt-size-base) + var(--salt-spacing-100)) * 5), calc(${availableHeight}px - var(--salt-spacing-100)))`,
-            });
-          },
-        }),
-        flip({ fallbackStrategy: "initialPlacement" }),
-      ],
-    });
+  const { x, y, strategy, elements, refs, context } = useFloatingUI({
+    open: openState && !readOnly && Children.count(children) > 0,
+    onOpenChange: handleOpenChange,
+    placement: "bottom-start",
+    middleware: [
+      offset(1),
+      size({
+        apply({ rects, elements, availableHeight }) {
+          Object.assign(elements.floating.style, {
+            minWidth: `${rects.reference.width}px`,
+            maxHeight: `max(calc((var(--salt-size-base) + var(--salt-spacing-100)) * 5), calc(${availableHeight}px - var(--salt-spacing-100)))`,
+          });
+        },
+      }),
+      flip({ fallbackStrategy: "initialPlacement" }),
+    ],
+  });
 
   const { getReferenceProps, getFloatingProps } = useInteractions([
     useDismiss(context),
@@ -238,7 +239,10 @@ export const Dropdown = forwardRef(function Dropdown<Item>(
   ]);
 
   const buttonRef = useRef<HTMLButtonElement>(null);
-  const handleTriggerRef = useForkRef<HTMLButtonElement>(reference, buttonRef);
+  const handleTriggerRef = useForkRef<HTMLButtonElement>(
+    refs.setReference,
+    buttonRef,
+  );
   const handleButtonRef = useForkRef(handleTriggerRef, ref);
 
   const typeaheadString = useRef("");
@@ -361,14 +365,6 @@ export const Dropdown = forwardRef(function Dropdown<Item>(
     }
   };
 
-  const handleListMouseOver = () => {
-    setFocusVisibleState(false);
-  };
-
-  const handleFocusButton = () => {
-    buttonRef.current?.focus();
-  };
-
   // biome-ignore lint/correctness/useExhaustiveDependencies: We only want this to run when the list's openState or the displayed options change.
   useEffect(() => {
     // We check the active index because the active item may have been removed
@@ -410,79 +406,84 @@ export const Dropdown = forwardRef(function Dropdown<Item>(
     setActive(newActive?.data);
   }, [openState, children]);
 
-  const listId = useId();
+  const [listId, setListId] = useState("");
 
-  const handleListRef = useForkRef<HTMLDivElement>(listRef, floating);
+  const getPopoverPosition = useCallback(
+    () => ({
+      top: y ?? 0,
+      left: x ?? 0,
+      position: strategy,
+      width: elements.floating?.offsetWidth,
+      height: elements.floating?.offsetHeight,
+    }),
+    [x, y, strategy, elements],
+  );
 
   return (
-    <ListControlContext.Provider value={listControl}>
-      <button
-        className={clsx(
-          withBaseName(),
-          withBaseName(variant),
-          {
-            [withBaseName("disabled")]: disabled,
-            [withBaseName(validationStatus ?? "")]: validationStatus,
-            [withBaseName("bordered")]: bordered,
-          },
-          className,
-        )}
-        ref={handleButtonRef}
-        role="combobox"
-        type="button"
-        disabled={disabled}
-        aria-readonly={readOnly ? "true" : undefined}
-        aria-required={required ? "true" : undefined}
-        aria-expanded={openState}
-        aria-activedescendant={activeState?.id}
-        aria-labelledby={clsx(formFieldLabelledBy, ariaLabelledBy) || undefined}
-        aria-describedby={
-          clsx(formFieldDescribedBy, ariaDescribedBy) || undefined
-        }
-        aria-multiselectable={multiselect}
-        aria-controls={openState ? listId : undefined}
-        {...getReferenceProps({
-          onKeyDown: handleKeyDown,
-          onFocus: handleFocus,
-          onBlur: handleBlur,
-          ...rest,
-        })}
-      >
-        {startAdornment}
-        <span
-          className={clsx(withBaseName("content"), {
-            [withBaseName("placeholder")]: !valueText,
+    <DropdownContext.Provider
+      value={{
+        setListId,
+        openState,
+        focusedState,
+        readOnly,
+        refs,
+        elements,
+        getFloatingProps,
+        getPopoverPosition,
+        setFocusVisibleState,
+        listRef,
+      }}
+    >
+      <ListControlContext.Provider value={listControl}>
+        <button
+          className={clsx(
+            withBaseName(),
+            withBaseName(variant),
+            {
+              [withBaseName("disabled")]: disabled,
+              [withBaseName(validationStatus ?? "")]: validationStatus,
+              [withBaseName("bordered")]: bordered,
+            },
+            className,
+          )}
+          ref={handleButtonRef}
+          role="combobox"
+          type="button"
+          disabled={disabled}
+          aria-readonly={readOnly ? "true" : undefined}
+          aria-required={required ? "true" : undefined}
+          aria-expanded={openState}
+          aria-activedescendant={activeState?.id}
+          aria-labelledby={
+            clsx(formFieldLabelledBy, ariaLabelledBy) || undefined
+          }
+          aria-describedby={
+            clsx(formFieldDescribedBy, ariaDescribedBy) || undefined
+          }
+          aria-multiselectable={multiselect}
+          aria-controls={openState ? listId : undefined}
+          {...getReferenceProps({
+            onKeyDown: handleKeyDown,
+            onFocus: handleFocus,
+            onBlur: handleBlur,
+            ...rest,
           })}
         >
-          {!valueText ? placeholder : valueText}
-        </span>
-        {validationStatus && <StatusAdornment status={validationStatus} />}
-        {!readOnly && <ExpandIcon open={openState} />}
-        <div className={withBaseName("activationIndicator")} />
-      </button>
-      <OptionList
-        open={
-          (openState || focusedState) &&
-          !readOnly &&
-          Children.count(children) > 0
-        }
-        {...getFloatingProps({
-          onMouseOver: handleListMouseOver,
-          onFocus: handleFocusButton,
-          onClick: handleFocusButton,
-        })}
-        left={x ?? 0}
-        top={y ?? 0}
-        position={strategy}
-        width={elements.floating?.offsetWidth}
-        height={elements.floating?.offsetHeight}
-        ref={handleListRef}
-        id={listId}
-        collapsed={!openState}
-      >
-        {children}
-      </OptionList>
-    </ListControlContext.Provider>
+          {startAdornment}
+          <span
+            className={clsx(withBaseName("content"), {
+              [withBaseName("placeholder")]: !valueText,
+            })}
+          >
+            {!valueText ? placeholder : valueText}
+          </span>
+          {validationStatus && <StatusAdornment status={validationStatus} />}
+          {!readOnly && <ExpandIcon open={openState} />}
+          <div className={withBaseName("activationIndicator")} />
+        </button>
+        <DropdownPopover>{children}</DropdownPopover>
+      </ListControlContext.Provider>
+    </DropdownContext.Provider>
   );
 }) as <Item = string>(
   props: DropdownProps<Item> & { ref?: Ref<HTMLButtonElement> },
