@@ -42,7 +42,7 @@ const DialogTemplate: StoryFn<
   const defaultContent =
     "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.";
   return (
-    <div style={{ width: 1200, maxHeight: 380, padding: "200px 0" }}>
+    <div style={{ width: 1000, maxHeight: 420, padding: "0 200px" }}>
       <FakeDialog status={status} open>
         <DialogHeader header={header ?? defaultHeader} />
         <DialogContent className={longDialog ? "longDialog" : ""}>
