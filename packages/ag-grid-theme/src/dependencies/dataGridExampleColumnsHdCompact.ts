@@ -11,6 +11,7 @@ const dataGridExampleColumnsHdCompact: ColDef[] = [
     headerCheckboxSelection: true,
     pinned: "left",
     suppressHeaderMenuButton: true,
+    suppressHeaderFilterButton: true,
     resizable: false,
     suppressColumnsToolPanel: true,
   },
@@ -59,6 +60,8 @@ const dataGridExampleColumnsHdCompact: ColDef[] = [
     field: "country",
     cellRenderer: FlagRenderer,
     initialWidth: 80,
+    suppressHeaderMenuButton: true,
+    suppressHeaderFilterButton: true,
   },
 ];
 export default dataGridExampleColumnsHdCompact;

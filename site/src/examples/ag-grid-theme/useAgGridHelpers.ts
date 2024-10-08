@@ -1,5 +1,5 @@
 import { useDensity, useTheme } from "@salt-ds/core";
-import type { ColumnApi, GridApi, GridReadyEvent } from "ag-grid-community";
+import type { GridApi, GridReadyEvent } from "ag-grid-community";
 import { LicenseManager } from "ag-grid-enterprise";
 import type { AgGridReactProps } from "ag-grid-react";
 import { type HTMLAttributes, useMemo, useRef, useState } from "react";
@@ -12,13 +12,9 @@ export function useAgGridHelpers(compact = false): {
   agGridProps: AgGridReactProps;
   isGridReady: boolean;
   api?: GridApi;
-  /**
-   * @deprecated — Use methods via the grid api instead.
-   */
-  columnApi?: ColumnApi;
   compact?: boolean;
 } {
-  const apiRef = useRef<{ api: GridApi; columnApi: ColumnApi }>();
+  const apiRef = useRef<{ api: GridApi }>();
   const [isGridReady, setGridReady] = useState(false);
   const density = useDensity();
   const { mode } = useTheme();
@@ -45,8 +41,8 @@ export function useAgGridHelpers(compact = false): {
     compact && density === "high" ? "-compact" : ""
   }-${mode}`;
 
-  const onGridReady = ({ api, columnApi }: GridReadyEvent) => {
-    apiRef.current = { api, columnApi };
+  const onGridReady = ({ api }: GridReadyEvent) => {
+    apiRef.current = { api };
     api.sizeColumnsToFit();
     setGridReady(true);
   };
@@ -72,6 +68,5 @@ export function useAgGridHelpers(compact = false): {
     },
     isGridReady,
     api: apiRef.current?.api,
-    columnApi: apiRef.current?.columnApi,
   };
 }

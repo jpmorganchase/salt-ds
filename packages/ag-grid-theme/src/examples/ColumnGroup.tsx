@@ -28,6 +28,7 @@ const columnsWithGrouping = (groupName: string): (ColGroupDef | ColDef)[] => [
     width: 38,
     pinned: "left",
     suppressHeaderMenuButton: true,
+    suppressHeaderFilterButton: true,
   },
   {
     headerName: groupName,

@@ -52,7 +52,7 @@ const StatusBar = (props: AgGridReactProps) => {
         <AgGridReact
           {...agGridProps}
           {...props}
-          enableRangeSelection
+          cellSelection
           rowSelection="multiple"
           statusBar={statusBar}
           columnDefs={dataGridExampleColumns}

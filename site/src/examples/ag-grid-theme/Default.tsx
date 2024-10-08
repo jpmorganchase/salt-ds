@@ -56,7 +56,7 @@ export const Default = (): ReactElement => {
         columnDefs={columnDefs}
         rowData={defaultData}
         rowSelection="single"
-        enableRangeSelection={true}
+        cellSelection={true}
         onGridReady={onGridReady}
         rowHeight={rowHeight}
       />

@@ -21,6 +21,7 @@ export { default as RowGrouping } from "./RowGrouping";
 export { default as RowGroupPanel } from "./RowGroupPanel";
 export { default as SortAndFilter } from "./SortAndFilter";
 export { default as StatusBar } from "./StatusBar";
+export { SuppressMenuHide } from "./SuppressMenuHide";
 export { default as ToolPanel } from "./ToolPanel";
 export { default as VariantSecondary } from "./VariantSecondary";
 export { default as VariantZebra } from "./VariantZebra";
