@@ -36,7 +36,7 @@ const HDCompact = (props: AgGridReactProps) => {
           rowSelection="multiple"
           {...agGridProps}
           {...props}
-          enableRangeSelection={true}
+          cellSelection={true}
           onFirstDataRendered={(params) => {
             params.api.forEachNode((node, index) => {
               if (node.data && index < 3) {

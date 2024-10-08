@@ -11,6 +11,7 @@ export const groupedColumns = (
     width: 38,
     pinned: "left",
     suppressHeaderMenuButton: true,
+    suppressHeaderFilterButton: true,
   },
   {
     headerName: groupName,

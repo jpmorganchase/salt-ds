@@ -77,7 +77,7 @@ const ToolPanel = (props: AgGridReactProps) => {
         ]}
         rowData={dataGridExampleData}
         rowSelection="single"
-        enableRangeSelection={true}
+        cellSelection={true}
         sideBar={sideBar}
       />
     </div>

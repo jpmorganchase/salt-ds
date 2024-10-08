@@ -9,6 +9,7 @@ export const wrappedColumns: ColDef[] = [
     headerCheckboxSelection: true,
     pinned: "right",
     suppressHeaderMenuButton: true,
+    suppressHeaderFilterButton: true,
   },
   {
     headerName: "Name of State",

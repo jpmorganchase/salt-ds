@@ -44,7 +44,7 @@ export const StatusBar = (props: AgGridReactProps) => {
       <Text>Select rows to enable status bar display</Text>
       <div {...containerProps}>
         <AgGridReact
-          enableRangeSelection
+          cellSelection
           rowSelection="multiple"
           statusBar={statusBar}
           columnDefs={defaultColumns}

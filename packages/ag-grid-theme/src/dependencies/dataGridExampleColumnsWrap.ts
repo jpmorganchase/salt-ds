@@ -9,6 +9,7 @@ const dataGridExampleColumnsWrap: ColDef[] = [
     headerCheckboxSelection: true,
     pinned: "right",
     suppressHeaderMenuButton: true,
+    suppressHeaderFilterButton: true,
   },
   {
     headerName: "Name of State",

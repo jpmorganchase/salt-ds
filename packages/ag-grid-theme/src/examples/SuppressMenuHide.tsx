@@ -2,22 +2,13 @@ import { AgGridReact, type AgGridReactProps } from "ag-grid-react";
 import dataGridExampleData from "../dependencies/dataGridExampleData";
 import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
 
-const Default = ({
+export const SuppressMenuHide = ({
   containerClassName,
   ...agProps
 }: AgGridReactProps & { containerClassName?: string }) => {
   const { agGridProps, containerProps } = useAgGridHelpers({
     containerClassName,
   });
-
-  const statusBar = {
-    statusPanels: [
-      {
-        statusPanel: "agTotalRowCountComponent",
-        align: "right",
-      },
-    ],
-  };
 
   return (
     <div {...containerProps}>
@@ -46,11 +37,10 @@ const Default = ({
         ]}
         rowData={dataGridExampleData}
         rowSelection="single"
-        statusBar={statusBar}
         cellSelection={true}
+        // Default value changed in v32
+        suppressMenuHide={false}
       />
     </div>
   );
 };
-
-export default Default;
