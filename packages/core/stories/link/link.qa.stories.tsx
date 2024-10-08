@@ -1,4 +1,5 @@
 import { Link } from "@salt-ds/core";
+import { UserIcon } from "@salt-ds/icons";
 import type { Meta, StoryFn } from "@storybook/react";
 import {
   QAContainer,
@@ -39,6 +40,16 @@ export const AllVariantsGrid: StoryFn<QAContainerProps> = (props) => (
       style={{ color: "var(--salt-content-foreground-visited)" }}
     >
       Forced visited
+    </Link>
+    <Link
+      href="https://www.google.com"
+      target="_blank"
+      IconComponent={UserIcon}
+    >
+      Custom icon
+    </Link>
+    <Link href="https://www.google.com" target="_blank" IconComponent={null}>
+      No icon
     </Link>
   </QAContainer>
 );
@@ -84,6 +95,16 @@ export const NoStyleInjectionGrid: StoryFn<QAContainerNoStyleInjectionProps> = (
         <strong>Strong</strong> and <small>small</small> truncation example
       </Link>
     </div>
+    <Link
+      href="https://www.google.com"
+      target="_blank"
+      IconComponent={UserIcon}
+    >
+      Custom icon
+    </Link>
+    <Link href="https://www.google.com" target="_blank" IconComponent={null}>
+      No icon
+    </Link>
   </QAContainerNoStyleInjection>
 );
 

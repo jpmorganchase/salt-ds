@@ -1,5 +1,4 @@
-import { Button, type ButtonProps, makePrefixer } from "@salt-ds/core";
-import { ChevronDownIcon } from "@salt-ds/icons";
+import { Button, type ButtonProps, makePrefixer, useIcon } from "@salt-ds/core";
 import { clsx } from "clsx";
 import { type ReactNode, forwardRef } from "react";
 
@@ -30,6 +29,7 @@ export const MenuButtonTrigger = forwardRef<
     css: menuButtonTrigger,
     window: targetWindow,
   });
+  const { ExpandIcon } = useIcon();
 
   return (
     <Button
@@ -42,7 +42,7 @@ export const MenuButtonTrigger = forwardRef<
     >
       {children}
       {!hideCaret && (
-        <ChevronDownIcon
+        <ExpandIcon
           className={withBaseName("caretIcon")}
           data-testid="menu-button-trigger-caret"
         />

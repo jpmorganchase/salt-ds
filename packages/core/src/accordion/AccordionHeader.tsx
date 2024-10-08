@@ -1,4 +1,3 @@
-import { ChevronDownIcon, ChevronUpIcon } from "@salt-ds/icons";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
@@ -8,8 +7,8 @@ import {
   type ReactNode,
   forwardRef,
 } from "react";
+import { useIcon } from "../semantic-icon-provider";
 import { StatusIndicator } from "../status-indicator";
-
 import { makePrefixer, useIsomorphicLayoutEffect } from "../utils";
 
 import { useAccordion } from "./AccordionContext";
@@ -26,11 +25,12 @@ export interface AccordionHeaderProps
 const withBaseName = makePrefixer("saltAccordionHeader");
 
 function ExpansionIcon({ expanded }: { expanded: boolean }) {
+  const { CollapseIcon, ExpandIcon } = useIcon();
   if (expanded) {
-    return <ChevronUpIcon aria-hidden className={withBaseName("icon")} />;
+    return <CollapseIcon aria-hidden className={withBaseName("icon")} />;
   }
 
-  return <ChevronDownIcon aria-hidden className={withBaseName("icon")} />;
+  return <ExpandIcon aria-hidden className={withBaseName("icon")} />;
 }
 
 export const AccordionHeader = forwardRef<

@@ -4,10 +4,10 @@ import {
   makePrefixer,
   useDensity,
   useForkRef,
+  useIcon,
   useId,
   useIsomorphicLayoutEffect,
 } from "@salt-ds/core";
-import { CloseIcon, OverflowMenuIcon } from "@salt-ds/icons";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
@@ -143,7 +143,7 @@ export const TokenizedInputBase = forwardRef(function TokenizedInputBase<Item>(
   });
 
   const density = useDensity();
-
+  const { OverflowIcon, CloseIcon } = useIcon();
   const id = useId(idProp);
   const inputId = `${id}-input`;
   const expandButtonId = `${id}-expand-button`;
@@ -368,7 +368,7 @@ export const TokenizedInputBase = forwardRef(function TokenizedInputBase<Item>(
           variant="secondary"
           {...restExpandButtonProps}
         >
-          <OverflowMenuIcon
+          <OverflowIcon
             aria-label={
               expandButtonAccessibleText === undefined
                 ? "expand edit"

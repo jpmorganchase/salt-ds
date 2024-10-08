@@ -1,5 +1,4 @@
 import { useFloatingTree, useListItem } from "@floating-ui/react";
-import { ChevronRightIcon } from "@salt-ds/icons";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
@@ -12,10 +11,10 @@ import {
 } from "react";
 import { makePrefixer, useForkRef } from "../utils";
 
+import { useIcon } from "../semantic-icon-provider";
 import menuItemCss from "./MenuItem.css";
 import { useMenuPanelContext } from "./MenuPanelContext";
 import { useIsMenuTrigger } from "./MenuTriggerContext";
-
 export interface MenuItemProps extends ComponentPropsWithoutRef<"div"> {
   /**
    * If `true`, the item will be disabled.
@@ -38,6 +37,7 @@ export const MenuItem = forwardRef<HTMLDivElement, MenuItemProps>(
     } = props;
 
     const { triggersSubmenu, blurActive } = useIsMenuTrigger();
+    const { ExpandGroupIcon } = useIcon();
     const { activeIndex, getItemProps, setFocusInside } = useMenuPanelContext();
     const item = useListItem();
     const tree = useFloatingTree();
@@ -96,10 +96,7 @@ export const MenuItem = forwardRef<HTMLDivElement, MenuItemProps>(
       >
         {children}
         {triggersSubmenu && (
-          <ChevronRightIcon
-            className={withBaseName("expandIcon")}
-            aria-hidden
-          />
+          <ExpandGroupIcon className={withBaseName("expandIcon")} aria-hidden />
         )}
       </div>
     );

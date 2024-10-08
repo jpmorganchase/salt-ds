@@ -1,5 +1,4 @@
-import { Button, useForkRef } from "@salt-ds/core";
-import { OverflowMenuIcon } from "@salt-ds/icons";
+import { Button, useForkRef, useIcon } from "@salt-ds/core";
 import { type ReactNode, forwardRef } from "react";
 
 import { useOverflowContext, useOverflowMenu } from "@fluentui/react-overflow";
@@ -19,6 +18,7 @@ export const OverflowMenu = forwardRef<HTMLDivElement, OverflowMenuProps>(
     const { tabs, ...rest } = props;
     const { ref, overflowCount, isOverflowing } =
       useOverflowMenu<HTMLDivElement>();
+    const { OverflowIcon } = useIcon();
     const handleRef = useForkRef(ref, forwardedRef);
     const itemVisibility = useOverflowContext(
       (context) => context.itemVisibility,
@@ -33,7 +33,7 @@ export const OverflowMenu = forwardRef<HTMLDivElement, OverflowMenuProps>(
         aria-label={`${overflowCount} more tabs`}
         triggerComponent={
           <Button aria-label="More tabs" variant="secondary" role="combobox">
-            <OverflowMenuIcon aria-hidden style={{ margin: 0 }} />
+            <OverflowIcon aria-hidden style={{ margin: 0 }} />
           </Button>
         }
         width="auto"

@@ -1,5 +1,4 @@
-import { Button, makePrefixer, useId } from "@salt-ds/core";
-import { ChevronDownIcon, ChevronUpIcon } from "@salt-ds/icons";
+import { Button, makePrefixer, useIcon, useId } from "@salt-ds/core";
 import { clsx } from "clsx";
 import { type HTMLAttributes, forwardRef, useState } from "react";
 import { useContactDetailsContext } from "./internal";
@@ -16,7 +15,7 @@ export const ContactMetadata = forwardRef<HTMLDivElement, ContactMetadataProps>(
     const { collapsible, children, collapseButtonId, className, ...restProps } =
       props;
     const { primaryId, variant, isStacked } = useContactDetailsContext();
-
+    const { CollapseIcon, ExpandIcon } = useIcon();
     const [showMetadata, setShowMetadata] = useState<boolean>(!collapsible);
 
     const toggleShowMetadata = () => {
@@ -43,7 +42,7 @@ export const ContactMetadata = forwardRef<HTMLDivElement, ContactMetadataProps>(
             variant="secondary"
             className={withBaseName("expander")}
           >
-            {showMetadata ? <ChevronUpIcon /> : <ChevronDownIcon />}
+            {showMetadata ? <CollapseIcon /> : <ExpandIcon />}
           </Button>
         ) : null}
         {!collapsible || showMetadata ? (

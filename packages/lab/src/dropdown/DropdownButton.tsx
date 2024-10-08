@@ -1,9 +1,5 @@
-import { Button, type ButtonProps, makePrefixer } from "@salt-ds/core";
-import {
-  ChevronDownIcon,
-  DEFAULT_ICON_SIZE,
-  type IconProps,
-} from "@salt-ds/icons";
+import { Button, type ButtonProps, makePrefixer, useIcon } from "@salt-ds/core";
+import { DEFAULT_ICON_SIZE, type IconProps } from "@salt-ds/icons";
 import { clsx } from "clsx";
 import {
   type AriaAttributes,
@@ -68,7 +64,7 @@ const withBaseName = makePrefixer("saltDropdownButton");
 
 export const DropdownButton = forwardRef(function DropdownButton(
   {
-    IconComponent = ChevronDownIcon,
+    IconComponent,
     ariaHideOptionRole,
     className,
     disabled,
@@ -90,7 +86,8 @@ export const DropdownButton = forwardRef(function DropdownButton(
     css: dropdownButtonCss,
     window: targetWindow,
   });
-
+  const { ExpandIcon } = useIcon();
+  const Icon = IconComponent === undefined ? ExpandIcon : IconComponent;
   const { inFormField } = useFormFieldLegacyProps();
   // FIXME: use polymorphic button
   // We don't want the 'button' tag to be shown in the DOM to trigger some accessibility testing
@@ -123,7 +120,7 @@ export const DropdownButton = forwardRef(function DropdownButton(
         >
           {label}
         </span>
-        <IconComponent
+        <Icon
           className={withBaseName("icon")}
           size={iconSize}
           aria-label={null}

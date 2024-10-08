@@ -7,6 +7,7 @@ import {
   useControlled,
   useForkRef,
   useFormFieldProps,
+  useIcon,
 } from "@salt-ds/core";
 import { TriangleDownIcon, TriangleUpIcon } from "@salt-ds/icons";
 import { useComponentCssInjection } from "@salt-ds/styles";
@@ -175,6 +176,8 @@ export const StepperInput = forwardRef<HTMLDivElement, StepperInputProps>(
       css: stepperInputCss,
       window: targetWindow,
     });
+
+    const { IncreaseIcon, DecreaseIcon } = useIcon();
 
     const {
       a11yProps: {
@@ -395,7 +398,7 @@ export const StepperInput = forwardRef<HTMLDivElement, StepperInputProps>(
               )}
               {...incrementButtonProps}
             >
-              <TriangleUpIcon aria-hidden />
+              <IncreaseIcon aria-hidden />
             </Button>
             <Button
               className={clsx(
@@ -404,7 +407,7 @@ export const StepperInput = forwardRef<HTMLDivElement, StepperInputProps>(
               )}
               {...decrementButtonProps}
             >
-              <TriangleDownIcon aria-hidden />
+              <DecreaseIcon aria-hidden />
             </Button>
           </div>
         )}
