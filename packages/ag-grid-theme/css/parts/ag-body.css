@@ -77,12 +77,6 @@ div[class*="ag-theme-salt"] .ag-cell-wrapper.ag-row-group {
   align-items: center;
 }
 
-div[class*="ag-theme-salt"] .ag-cell.editable-cell.ag-cell-focus:focus,
-div[class*="ag-theme-salt"] .editable-numeric-cell.ag-cell-focus:focus,
-div[class*="ag-theme-salt"] .editable-cell.ag-cell-focus:focus-within {
-  overflow: visible;
-}
-
 div[class*="ag-theme-salt"] .ag-cell.editable-cell.ag-cell-focus:focus:before,
 div[class*="ag-theme-salt"] .ag-cell.editable-numeric-cell.ag-cell-focus:focus:before,
 div[class*="ag-theme-salt"] .ag-cell.editable-cell.ag-cell-focus:focus-within:before,
