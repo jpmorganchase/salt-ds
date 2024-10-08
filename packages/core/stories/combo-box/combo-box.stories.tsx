@@ -912,12 +912,55 @@ export const Bordered = () => {
   );
 };
 
-export const PerformanceTest = () => {
+const hugeArray = Array.from({ length: 10000 }).map(
+  (_, index) => `Option ${index}`,
+);
+
+export const PerformanceTest: StoryFn<ComboBoxProps> = (args) => {
+  const [value, setValue] = useState(getTemplateDefaultValue(args));
+
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    // React 16 backwards compatibility
+    event.persist();
+
+    const value = event.target.value;
+    setValue(value);
+  };
+
+  const handleSelectionChange = (
+    event: SyntheticEvent,
+    newSelected: string[],
+  ) => {
+    // React 16 backwards compatibility
+    event.persist();
+
+    args.onSelectionChange?.(event, newSelected);
+
+    if (args.multiselect) {
+      setValue("");
+      return;
+    }
+
+    if (newSelected.length === 1) {
+      setValue(newSelected[0]);
+    } else {
+      setValue("");
+    }
+  };
+
+  const filteredItems = hugeArray.filter((item) =>
+    item.toLowerCase().includes(value.trim().toLowerCase()),
+  );
+
   return (
-    <ComboBox>
-      {Array.from({ length: 10000 }).map((_, index) => (
-        <Option key={index} value={`option-${index}`}>
-          Option {index + 1}
+    <ComboBox
+      value={value}
+      onChange={handleChange}
+      onSelectionChange={handleSelectionChange}
+    >
+      {filteredItems.map((item) => (
+        <Option key={item} value={item}>
+          {item}
         </Option>
       ))}
     </ComboBox>
