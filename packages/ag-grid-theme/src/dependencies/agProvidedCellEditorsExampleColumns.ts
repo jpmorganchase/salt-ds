@@ -34,6 +34,7 @@ const agProvidedCellEditorsExampleColumns = [
     cellEditor: "agSelectCellEditor",
     cellEditorParams: {
       values: languages,
+      valueListGap: 0,
     },
     editable: true,
     filter: true,
@@ -46,6 +47,7 @@ const agProvidedCellEditorsExampleColumns = [
     cellEditor: "agRichSelectCellEditor",
     cellEditorParams: {
       values: shortColorData,
+      valueListGap: 0,
       allowTyping: true,
       filterList: true,
       highlightMatch: true,

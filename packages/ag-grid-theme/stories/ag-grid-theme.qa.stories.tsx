@@ -317,6 +317,30 @@ EditableCellLongTextEditing.play = async ({ canvasElement }) => {
   }
 };
 
+export const EditableCellSelectEditing: StoryObj<typeof AgGridReact> = () => {
+  return <ProvidedCellEditors />;
+};
+EditableCellSelectEditing.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
+
+  // Wait until the grid fully loaded
+  await sleep(200);
+
+  // Do findAll here so this will also work in `side-by-side` mode
+  const textEditorCells = await canvas.findAllByText("English");
+
+  for (const cell of textEditorCells) {
+    await userEvent.dblClick(cell);
+    // Editor will render a different value in the editor, not the same "cell"
+    await userEvent.click(await within(cell).findByText("English"));
+
+    await expect(cell).toHaveClass("ag-cell-inline-editing", "editable-cell");
+    await expect(await canvas.findByRole("listbox")).toHaveClass(
+      "ag-select-list",
+    );
+  }
+};
+
 export const ContextMenu: StoryObj<typeof AgGridReact> = () => {
   return <ContextMenuGrid />;
 };
