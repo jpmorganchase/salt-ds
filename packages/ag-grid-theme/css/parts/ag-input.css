@@ -1,0 +1,32 @@
+/* INPUT */
+
+div[class*="ag-theme-salt"] .ag-filter input[class^="ag-"][type="text"],
+div[class*="ag-theme-salt"] .ag-filter input[class^="ag-"][type="number"],
+div[class*="ag-theme-salt"] .ag-column-select input[class^="ag-"][type="text"],
+div[class*="ag-theme-salt"] .ag-column-select input[class^="ag-"][type="number"] {
+  border: none;
+  border-bottom: var(--salt-size-border) var(--salt-editable-borderStyle) var(--salt-editable-borderColor);
+  height: calc(var(--salt-size-base) + var(--salt-spacing-100));
+  padding: 0 var(--salt-spacing-100);
+}
+
+div[class*="ag-theme-salt"] .ag-filter input[class^="ag-"][type="text"]::placeholder,
+div[class*="ag-theme-salt"] .ag-filter input[class^="ag-"][type="number"]::placeholder,
+div[class*="ag-theme-salt"] .ag-column-select input[class^="ag-"][type="text"]::placeholder,
+div[class*="ag-theme-salt"] .ag-column-select input[class^="ag-"][type="number"]::placeholder {
+  color: var(--salt-content-secondary-foreground);
+  opacity: 1;
+}
+
+div[class*="ag-theme-salt"] .ag-filter input[class^="ag-"][type="text"]:focus,
+div[class*="ag-theme-salt"] .ag-filter input[class^="ag-"][type="number"]:focus,
+div[class*="ag-theme-salt"] .ag-column-select input[class^="ag-"][type="text"]:focus,
+div[class*="ag-theme-salt"] .ag-column-select input[class^="ag-"][type="number"]:focus {
+  outline: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--salt-focused-outlineColor);
+  outline-offset: -2px;
+}
+
+div[class*="ag-theme-salt"] .ag-floating-filter-input input[class^="ag-"][type="text"],
+div[class*="ag-theme-salt"] .ag-floating-filter-input input[class^="ag-"][type="number"] {
+  border: none;
+}
