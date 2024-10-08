@@ -4,18 +4,23 @@ import {
   DialogActions,
   DialogCloseButton,
   DialogContent,
+  type DialogContentProps,
   DialogContext,
   DialogHeader,
   type DialogProps,
-  FormField,
-  FormFieldLabel,
-  Input,
+  SaltProvider,
   StackLayout,
+  VALIDATION_NAMED_STATUS,
 } from "@salt-ds/core";
 import type { Meta, StoryFn } from "@storybook/react";
 import { QAContainer, type QAContainerProps } from "docs/components";
-
 import "./dialog.stories.css";
+import { Fragment } from "react";
+
+export default {
+  title: "Core/Dialog/Dialog QA",
+  component: Dialog,
+} as Meta<typeof Dialog>;
 
 function FakeDialog({ children, status, id }: DialogProps) {
   return (
@@ -25,256 +30,220 @@ function FakeDialog({ children, status, id }: DialogProps) {
   );
 }
 
-function FakeLongDialog({ children, status, id }: DialogProps) {
+const DialogTemplate: StoryFn<
+  Omit<DialogProps, "content"> & {
+    header?: string;
+    preheader?: string;
+    content?: DialogContentProps["children"];
+    longDialog?: boolean;
+    maxHeight?: number;
+  }
+> = ({ status, header, content, longDialog, maxHeight = 420 }) => {
+  const defaultHeader = "Congratulations! You have created a Dialog.";
+  const defaultContent =
+    "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.";
   return (
-    <DialogContext.Provider value={{ status, id }}>
-      <div
-        className="fakeDialogWindow longDialog"
-        style={{ display: "flex", flexDirection: "column" }}
-      >
-        {children}
-      </div>
-    </DialogContext.Provider>
-  );
-}
-
-export default {
-  title: "Core/Dialog/QA",
-  component: Dialog,
-} as Meta<typeof Dialog>;
-
-const DialogTemplate: StoryFn<DialogProps & { header: string }> = ({
-  open: openProp = true,
-  status,
-  header,
-}) => {
-  return (
-    <StackLayout>
-      <FakeDialog status={status}>
-        <DialogHeader header={header} />
-        <DialogContent>This is dialog content...</DialogContent>
+    <div style={{ width: 1000, maxHeight: maxHeight, padding: "0 200px" }}>
+      <FakeDialog status={status} open>
+        <DialogHeader header={header ?? defaultHeader} />
+        <DialogContent className={longDialog ? "longDialog" : ""}>
+          {content ?? defaultContent}
+        </DialogContent>
         <DialogActions>
-          <Button style={{ marginRight: "auto" }} variant="secondary">
+          <Button style={{ marginRight: "auto" }} appearance="transparent">
             Cancel
           </Button>
           <Button>Previous</Button>
-          <Button variant="cta">Next</Button>
+          <Button sentiment="accented" appearance="solid">
+            Next
+          </Button>
         </DialogActions>
         <DialogCloseButton />
       </FakeDialog>
+    </div>
+  );
+};
+
+export const StatusVariants: StoryFn<QAContainerProps> = () => {
+  const DensityValues = ["high", "medium", "low", "touch"] as const;
+  return (
+    <StackLayout gap={1}>
+      {DensityValues.map((density) => {
+        return (
+          <Fragment key={density}>
+            <SaltProvider density={density}>
+              <DialogTemplate />
+            </SaltProvider>
+            <SaltProvider density={density} mode="dark">
+              <DialogTemplate />
+            </SaltProvider>
+            {VALIDATION_NAMED_STATUS.map((status) => (
+              <Fragment key={status}>
+                <SaltProvider density={density}>
+                  <DialogTemplate status={status} />
+                </SaltProvider>
+                <SaltProvider density={density} mode="dark">
+                  <DialogTemplate status={status} />
+                </SaltProvider>
+              </Fragment>
+            ))}
+          </Fragment>
+        );
+      })}
     </StackLayout>
   );
 };
 
-export const Default: StoryFn<QAContainerProps> = (props) => {
-  const { ...rest } = props;
+StatusVariants.parameters = {
+  chromatic: {
+    disableSnapshot: false,
+    modes: {
+      theme: {
+        themeNext: "disable",
+      },
+      themeNext: {
+        themeNext: "enable",
+        corner: "rounded",
+        accent: "teal",
+        // Ignore headingFont given font is not loaded
+      },
+    },
+  },
+};
+
+export const ContentVariants: StoryFn<QAContainerProps> = () => {
+  const DensityValues = ["high", "medium", "low", "touch"] as const;
+  const longContent = (
+    <StackLayout style={{ maxHeight: 180 }}>
+      <div>
+        Lorem Ipsum is simply dummy text of the printing and typesetting
+        industry. Lorem Ipsum has been the industry's standard dummy text ever
+        since the 1500s, when an unknown printer took a galley of type and
+        scrambled it to make a type specimen book.
+      </div>
+      <div>
+        It has survived not only five centuries, but also the leap into
+        electronic typesetting, remaining essentially unchanged. It was
+        popularised in the 1960s with the release of Letraset sheets containing
+        Lorem Ipsum passages, and more recently with desktop publishing software
+        like Aldus PageMaker including versions of Lorem Ipsum.
+      </div>
+      <div>
+        It is a long established fact that a reader will be distracted by the
+        readable content of a page when looking at its layout. The point of
+        using Lorem Ipsum is that it has a more-or-less normal distribution of
+        letters, as opposed to using 'Content here, content here', making it
+        look like readable English.
+      </div>
+      <div>
+        Many desktop publishing packages and web page editors now use Lorem
+        Ipsum as their default model text, and a search for 'lorem ipsum' will
+        uncover many web sites still in their infancy. Various versions have
+        evolved over the years, sometimes by accident, sometimes on purpose
+        (injected humour and the like).
+      </div>
+      <div>
+        Contrary to popular belief, Lorem Ipsum is not simply random text. It
+        has roots in a piece of classical Latin literature from 45 BC, making it
+        over 2000 years old. Richard McClintock, a Latin professor at
+        Hampden-Sydney College in Virginia, looked up one of the more obscure
+        Latin words, consectetur, from a Lorem Ipsum passage, and going through
+        the cites of the word in classical literature, discovered the
+        undoubtable source.
+      </div>
+      <div>
+        Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus
+        Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written
+        in 45 BC. This book is a treatise on the theory of ethics, very popular
+        during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum
+        dolor sit amet..", comes from a line in section 1.10.32.
+      </div>
+    </StackLayout>
+  );
   return (
-    <QAContainer cols={3} height={300} itemPadding={3} {...rest}>
-      <DialogTemplate header={"Dialog Title"} />
-    </QAContainer>
+    <StackLayout style={{ width: 1200, height: 380 }} gap={1}>
+      {DensityValues.map((density) => (
+        <Fragment key={density}>
+          <SaltProvider density={density}>
+            <DialogTemplate content={longContent} maxHeight={500} />
+          </SaltProvider>
+          <SaltProvider density={density} mode="dark">
+            <DialogTemplate content={longContent} maxHeight={500} />
+          </SaltProvider>
+          <SaltProvider density={density}>
+            <DialogTemplate longDialog maxHeight={500} />
+          </SaltProvider>
+          <SaltProvider density={density} mode="dark">
+            <DialogTemplate longDialog maxHeight={500} />
+          </SaltProvider>
+        </Fragment>
+      ))}
+    </StackLayout>
   );
 };
 
-Default.parameters = {
-  chromatic: { disableSnapshot: false },
+ContentVariants.parameters = {
+  chromatic: {
+    disableSnapshot: false,
+    modes: {
+      theme: {
+        themeNext: "disable",
+      },
+      themeNext: {
+        themeNext: "enable",
+        corner: "rounded",
+        accent: "teal",
+        // Ignore headingFont given font is not loaded
+      },
+    },
+  },
 };
 
-export const LongContent: StoryFn<QAContainerProps> = () => {
-  return (
-    <QAContainer width={1300} itemPadding={3}>
-      <FakeDialog>
-        <DialogHeader
-          header="Congratulations! You have created a Dialog."
-          style={{ width: "500px" }}
-        />
-
-        <DialogContent style={{ height: "500px" }}>
-          <StackLayout>
-            <div>
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's standard dummy text
-              ever since the 1500s, when an unknown printer took a galley of
-              type and scrambled it to make a type specimen book.
-            </div>
-            <div>
-              It has survived not only five centuries, but also the leap into
-              electronic typesetting, remaining essentially unchanged. It was
-              popularised in the 1960s with the release of Letraset sheets
-              containing Lorem Ipsum passages, and more recently with desktop
-              publishing software like Aldus PageMaker including versions of
-              Lorem Ipsum.
-            </div>
-            <div>
-              It is a long established fact that a reader will be distracted by
-              the readable content of a page when looking at its layout. The
-              point of using Lorem Ipsum is that it has a more-or-less normal
-              distribution of letters, as opposed to using 'Content here,
-              content here', making it look like readable English.
-            </div>
-            <div>
-              Many desktop publishing packages and web page editors now use
-              Lorem Ipsum as their default model text, and a search for 'lorem
-              ipsum' will uncover many web sites still in their infancy. Various
-              versions have evolved over the years, sometimes by accident,
-              sometimes on purpose (injected humour and the like).
-            </div>
-            <div>
-              Contrary to popular belief, Lorem Ipsum is not simply random text.
-              It has roots in a piece of classical Latin literature from 45 BC,
-              making it over 2000 years old. Richard McClintock, a Latin
-              professor at Hampden-Sydney College in Virginia, looked up one of
-              the more obscure Latin words, consectetur, from a Lorem Ipsum
-              passage, and going through the cites of the word in classical
-              literature, discovered the undoubtable source.
-            </div>
-            <div>
-              Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus
-              Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero,
-              written in 45 BC. This book is a treatise on the theory of ethics,
-              very popular during the Renaissance. The first line of Lorem
-              Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in
-              section 1.10.32.
-            </div>
-          </StackLayout>
-        </DialogContent>
-        <DialogActions>
-          <Button>Cancel</Button>
-          <Button variant="cta">Subscribe</Button>
-        </DialogActions>
-      </FakeDialog>
-    </QAContainer>
-  );
-};
-
-LongContent.parameters = {
-  chromatic: { disableSnapshot: false },
-};
-
-export const Preheader: StoryFn<QAContainerProps> = () => {
-  return (
-    <QAContainer width={1300} itemPadding={3}>
-      <FakeDialog>
-        <DialogHeader
-          header="Subscribe"
-          preheader="Recieve emails about the latest updates"
-          style={{ width: "500px" }}
-        />
-        <DialogCloseButton />
-
-        <DialogContent>
-          <FormField necessity="asterisk">
-            <FormFieldLabel> Email </FormFieldLabel>
-            <Input defaultValue="Email Address" />
-          </FormField>
-        </DialogContent>
-        <DialogActions>
-          <Button>Cancel</Button>
-          <Button variant="cta">Subscribe</Button>
-        </DialogActions>
-      </FakeDialog>
-    </QAContainer>
-  );
-};
-
-Preheader.parameters = {
-  chromatic: { disableSnapshot: false },
-};
-
-type sizes = "small" | "medium" | "large";
-
-const sizes: sizes[] = ["small", "medium", "large"];
-
-export const SizeDialog: StoryFn<QAContainerProps> = (props) => {
-  const { ...rest } = props;
-  return (
-    <QAContainer cols={3} height={300} itemPadding={3} width={3000} {...rest}>
-      {sizes.map((size) => {
-        return <DialogTemplate key={size} header={"Info Dialog"} size={size} />;
-      })}
-    </QAContainer>
-  );
-};
-
-SizeDialog.parameters = {
-  chromatic: { disableSnapshot: false },
-};
-
-export const InfoDialog: StoryFn<QAContainerProps> = (props) => {
-  const { ...rest } = props;
-  return (
-    <QAContainer cols={3} height={300} itemPadding={3} width={1300} {...rest}>
-      <DialogTemplate status={"info"} header={"Info Dialog"} />
-    </QAContainer>
-  );
-};
-
-InfoDialog.parameters = {
-  chromatic: { disableSnapshot: false },
-};
-
-export const SuccessDialog: StoryFn<QAContainerProps> = (props) => {
-  const { ...rest } = props;
-  return (
-    <QAContainer cols={3} height={300} itemPadding={3} width={1300} {...rest}>
-      <DialogTemplate status={"success"} header={"Success Dialog"} />
-    </QAContainer>
-  );
-};
-
-SuccessDialog.parameters = {
-  chromatic: { disableSnapshot: false },
-};
-
-export const WarningDialog: StoryFn<QAContainerProps> = (props) => {
-  const { ...rest } = props;
-  return (
-    <QAContainer cols={3} height={300} itemPadding={3} width={1300} {...rest}>
-      <DialogTemplate status={"warning"} header={"Warning Dialog"} />
-    </QAContainer>
-  );
-};
-
-WarningDialog.parameters = {
-  chromatic: { disableSnapshot: false },
-};
-
-export const ErrorDialog: StoryFn<QAContainerProps> = (props) => {
-  const { ...rest } = props;
-  return (
-    <QAContainer cols={3} height={300} itemPadding={3} width={1300} {...rest}>
-      <DialogTemplate status={"error"} header={"Error Dialog"} />
-    </QAContainer>
-  );
-};
-
-ErrorDialog.parameters = {
-  chromatic: { disableSnapshot: false },
-};
-
-export const StickyFooter: StoryFn<QAContainerProps> = () => {
-  return (
-    <QAContainer width={1300} itemPadding={3}>
-      <FakeLongDialog>
-        <DialogHeader
-          header="Congratulations! You have created a Dialog."
-          style={{ width: "500px" }}
-        />
-        <DialogCloseButton />
-        <DialogContent>
-          Lorem Ipsum is simply dummy text of the printing and typesetting
-          industry. Lorem Ipsum has been the industry's standard dummy text ever
-          since the 1500s, when an unknown printer took a galley of type and
-          scrambled it to make a type specimen book.
-        </DialogContent>
-        <DialogActions>
-          <Button>Cancel</Button>
-          <Button variant="cta">Subscribe</Button>
-        </DialogActions>
-      </FakeLongDialog>
-    </QAContainer>
-  );
-};
-
-StickyFooter.parameters = {
-  chromatic: { disableSnapshot: false },
+export const DialogHeaders: StoryFn<QAContainerProps> = () => (
+  <QAContainer height={600} cols={1} itemPadding={5} width={1200}>
+    <DialogHeader
+      header="Terms and conditions"
+      style={{
+        width: 600,
+      }}
+    />
+    <DialogHeader
+      style={{
+        width: 600,
+      }}
+      header="Terms and conditions"
+      preheader="Ensure you read and agree to these Terms"
+    />
+    <DialogHeader
+      status="info"
+      header="Terms and conditions"
+      style={{
+        width: 600,
+      }}
+    />
+    <DialogHeader
+      status="info"
+      style={{
+        width: 600,
+      }}
+      header="Terms and conditions"
+      preheader="Ensure you read and agree to these Terms"
+    />
+  </QAContainer>
+);
+DialogHeaders.parameters = {
+  chromatic: {
+    disableSnapshot: false,
+    modes: {
+      theme: {
+        themeNext: "disable",
+      },
+      themeNext: {
+        themeNext: "enable",
+        corner: "rounded",
+        accent: "teal",
+        // Ignore headingFont given font is not loaded
+      },
+    },
+  },
 };
