@@ -22,9 +22,10 @@ function formatSingleDate(
 }
 
 export const Single = (): ReactElement => {
-  const handleSelectedDateChange = useCallback(
-    (newSelectedDate: SingleDateSelection | null) => {
+  const handleSelectionChange = useCallback(
+    (newSelectedDate: SingleDateSelection | null, error: string | false) => {
       console.log(`Selected date: ${formatSingleDate(newSelectedDate)}`);
+      console.log(`Error: ${error}`);
     },
     [],
   );
@@ -32,7 +33,7 @@ export const Single = (): ReactElement => {
   return (
     <DatePicker
       selectionVariant="single"
-      onSelectedDateChange={handleSelectedDateChange}
+      onSelectionChange={handleSelectionChange}
     >
       <DatePickerSingleInput />
       <DatePickerOverlay>

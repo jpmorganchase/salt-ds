@@ -104,7 +104,7 @@ export const CustomDatePickerPanel = forwardRef<
               }}
             >
               {tenorOptions.map(({ tenor, label }) => (
-                <Option value={tenor} key={tenor} tabIndex={0}>
+                <Option value={tenor} key={tenor}>
                   {label}
                 </Option>
               ))}

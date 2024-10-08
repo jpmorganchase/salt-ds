@@ -25,8 +25,8 @@ import {
   useState,
 } from "react";
 import {
-  CalendarDateGrid,
-  type CalendarDateGridProps,
+  CalendarGrid,
+  type CalendarGridProps,
   CalendarNavigation,
   type CalendarNavigationProps,
   type CalendarSingleProps,
@@ -85,7 +85,7 @@ export interface DatePickerSinglePanelProps<T>
       | "selectionVariant"
       | "selectedDate"
       | "defaultSelectedDate"
-      | "onSelectedDateChange"
+      | "onSelectionChange"
       | "onVisibleMonthChange"
     >
   >;
@@ -100,7 +100,7 @@ export interface DatePickerSinglePanelProps<T>
   /**
    * Props to be passed to the CalendarDataGrid component.
    */
-  CalendarDataGridProps?: CalendarDateGridProps;
+  CalendarDataGridProps?: CalendarGridProps;
 }
 
 const withBaseName = makePrefixer("saltDatePickerPanel");
@@ -153,7 +153,7 @@ export const DatePickerSinglePanel = forwardRef<
     state: "visibleMonth",
   });
 
-  const handleSelectedDateChange = useCallback(
+  const handleSelectionChange = useCallback(
     (event: SyntheticEvent, newDate: SingleDateSelection | null) => {
       setSelectedDate(newDate, false);
       onSelect?.(event, newDate);
@@ -187,7 +187,7 @@ export const DatePickerSinglePanel = forwardRef<
     hoveredDate,
     onHoveredDateChange: handleHoveredDateChange,
     onVisibleMonthChange: handleVisibleMonthChange,
-    onSelectedDateChange: handleSelectedDateChange,
+    onSelectionChange: handleSelectionChange,
     hideOutOfRangeDates: true,
     selectedDate,
     minDate,
@@ -216,7 +216,7 @@ export const DatePickerSinglePanel = forwardRef<
           <Calendar selectionVariant="single" {...baseCalendarProps}>
             <CalendarNavigation {...CalendarNavigationProps} />
             <CalendarWeekHeader {...CalendarWeekHeaderProps} />
-            <CalendarDateGrid {...CalendarDataGridProps} />
+            <CalendarGrid {...CalendarDataGridProps} />
           </Calendar>
         </FormFieldContext.Provider>
       </FlexLayout>

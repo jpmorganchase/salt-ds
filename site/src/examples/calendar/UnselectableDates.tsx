@@ -1,7 +1,7 @@
 import { type DateValue, getDayOfWeek } from "@internationalized/date";
 import {
   Calendar,
-  CalendarDateGrid,
+  CalendarGrid,
   CalendarNavigation,
   CalendarWeekHeader,
   getCurrentLocale,
@@ -18,6 +18,6 @@ export const UnselectableDates = (): ReactElement => (
   <Calendar selectionVariant="single" isDayUnselectable={isDayUnselectable}>
     <CalendarNavigation />
     <CalendarWeekHeader />
-    <CalendarDateGrid />
+    <CalendarGrid />
   </Calendar>
 );

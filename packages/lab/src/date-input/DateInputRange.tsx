@@ -191,9 +191,10 @@ export interface DateInputRangeProps<T = DateRangeSelection>
   /**
    * Function to parse date string to valid `DateValue` or null, if invalid.
    * @param inputDate - The input date string.
+   * @param locale - the locale for the parsed date
    * @returns The result of the date input range parser.
    */
-  parse?: (inputDate: string) => DateInputRangeParserResult;
+  parse?: (inputDate: string, locale: string) => DateInputRangeParserResult;
   /**
    * Locale of the entered date.
    */
@@ -287,13 +288,23 @@ export const DateInputRange = forwardRef<HTMLDivElement, DateInputRangeProps>(
 
     const setDateValueFromDate = (newDate: DateInputRangeProps["date"]) => {
       let newDateValue = { ...dateValue };
-      const formattedStartDate = format(newDate?.startDate ?? null);
-      if (formattedStartDate) {
-        newDateValue = { ...newDateValue, startDate: formattedStartDate };
+      // If start date value is defined or null (invalid date) use formatted value
+      if (newDate?.startDate !== undefined) {
+        const formattedStartDate = format(newDate.startDate);
+        if (formattedStartDate) {
+          newDateValue = { ...newDateValue, startDate: formattedStartDate };
+        }
+      } else {
+        // If start date value is undefined then a new selection is created so empty string
+        newDateValue = { ...newDateValue, startDate: "" };
       }
-      const formattedEndDate = format(newDate?.endDate ?? null);
-      if (formattedEndDate) {
-        newDateValue = { ...newDateValue, endDate: formattedEndDate };
+      if (newDate?.endDate !== undefined) {
+        const formattedEndDate = format(newDate.endDate);
+        if (formattedEndDate) {
+          newDateValue = { ...newDateValue, endDate: formattedEndDate };
+        }
+      } else {
+        newDateValue = { ...newDateValue, endDate: "" };
       }
       if (
         newDateValue?.startDate !== dateValue?.startDate ||
@@ -360,9 +371,11 @@ export const DateInputRange = forwardRef<HTMLDivElement, DateInputRangeProps>(
     const apply = (event: SyntheticEvent) => {
       const { date: newStartDate, error: startDateError } = parse(
         dateValue.startDate ?? "",
+        locale,
       );
       const { date: newEndDate, error: endDateError } = parse(
         dateValue.endDate || "",
+        locale,
       );
 
       const hasDateChanged = (
@@ -379,10 +392,6 @@ export const DateInputRange = forwardRef<HTMLDivElement, DateInputRangeProps>(
         startDate: DateValue | null,
         endDate: DateValue | null,
       ): DateRangeSelection | null => {
-        if (!startDate && !endDate) {
-          return null;
-        }
-
         const dateRange: DateRangeSelection = {};
         dateRange.startDate = startDate;
         dateRange.endDate = endDate;

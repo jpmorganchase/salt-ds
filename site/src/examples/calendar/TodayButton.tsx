@@ -2,7 +2,7 @@ import { getLocalTimeZone, startOfMonth, today } from "@internationalized/date";
 import { Button, Divider, StackLayout } from "@salt-ds/core";
 import {
   Calendar,
-  CalendarDateGrid,
+  CalendarGrid,
   CalendarNavigation,
   CalendarWeekHeader,
   type UseCalendarSelectionSingleProps,
@@ -22,14 +22,14 @@ export const TodayButton = (): ReactElement => {
           ? startOfMonth(selectedDate)
           : startOfMonth(today(getLocalTimeZone()))
       }
-      onSelectedDateChange={(_event, newSelectedDate) =>
+      onSelectionChange={(_event, newSelectedDate) =>
         setSelectedDate(newSelectedDate)
       }
     >
       <StackLayout gap={0}>
         <CalendarNavigation />
         <CalendarWeekHeader />
-        <CalendarDateGrid />
+        <CalendarGrid />
         <Divider />
         <Button
           style={{ margin: "var(--salt-spacing-50)" }}

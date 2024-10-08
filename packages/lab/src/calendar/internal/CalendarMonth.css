@@ -1,4 +1,4 @@
-.saltCalendarMonth-dateGrid {
+.saltCalendarMonth-grid {
   display: grid;
   gap: var(--salt-size-border);
   grid-template-columns: repeat(7, var(--salt-size-base));

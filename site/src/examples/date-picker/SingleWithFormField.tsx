@@ -33,9 +33,10 @@ export const SingleWithFormField = (): ReactElement => {
   const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
     undefined,
   );
-  const handleSelectedDateChange = useCallback(
+  const handleSelectionChange = useCallback(
     (newSelectedDate: SingleDateSelection | null, error: string | false) => {
       console.log(`Selected date: ${formatSingleDate(newSelectedDate)}`);
+      console.log(`Error: ${error}`);
       if (error) {
         setHelperText(errorHelperText);
       } else {
@@ -51,7 +52,7 @@ export const SingleWithFormField = (): ReactElement => {
       <FormLabel>Select a date</FormLabel>
       <DatePicker
         selectionVariant="single"
-        onSelectedDateChange={handleSelectedDateChange}
+        onSelectionChange={handleSelectionChange}
       >
         <DatePickerSingleInput />
         <DatePickerOverlay>

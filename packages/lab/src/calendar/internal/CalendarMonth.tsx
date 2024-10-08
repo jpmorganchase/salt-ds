@@ -68,10 +68,7 @@ export const CalendarMonth = forwardRef<HTMLDivElement, CalendarMonthProps>(
         onMouseLeave={handleMouseLeave}
         {...rest}
       >
-        <div
-          data-testid="CalendarDateGrid"
-          className={withBaseName("dateGrid")}
-        >
+        <div data-testid="CalendarGrid" className={withBaseName("grid")}>
           {days.map((day) => {
             return (
               <CalendarDay

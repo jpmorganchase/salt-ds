@@ -31,7 +31,7 @@ function formatDateRange(
 
 function isValidDateRange(date: DateRangeSelection | null) {
   if (date?.startDate === null || date?.endDate === null) {
-    return false;
+    return true;
   }
   return !(
     date?.startDate &&
@@ -48,12 +48,15 @@ export const RangeWithFormField = (): ReactElement => {
   const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
     undefined,
   );
-  const handleSelectedDateChange = useCallback(
+  const handleSelectionChange = useCallback(
     (
       newSelectedDate: DateRangeSelection | null,
       error: { startDate: string | false; endDate: string | false },
     ) => {
       console.log(`Selected date range: ${formatDateRange(newSelectedDate)}`);
+      console.log(
+        `Error: startDate: ${error.startDate} endDate: ${error.endDate}`,
+      );
       const validationStatus =
         !error.startDate && !error.endDate && isValidDateRange(newSelectedDate)
           ? undefined
@@ -73,7 +76,7 @@ export const RangeWithFormField = (): ReactElement => {
       <FormLabel>Select a date range</FormLabel>
       <DatePicker
         selectionVariant="range"
-        onSelectedDateChange={handleSelectedDateChange}
+        onSelectionChange={handleSelectionChange}
       >
         <DatePickerRangeInput />
         <DatePickerOverlay>

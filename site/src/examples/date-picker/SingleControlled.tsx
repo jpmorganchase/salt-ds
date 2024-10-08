@@ -25,9 +25,10 @@ export const SingleControlled = (): ReactElement => {
   const [selectedDate, setSelectedDate] = useState<SingleDateSelection | null>(
     null,
   );
-  const handleSelectedDateChange = useCallback(
-    (newSelectedDate: SingleDateSelection | null) => {
+  const handleSelectionChange = useCallback(
+    (newSelectedDate: SingleDateSelection | null, error: string | false) => {
       console.log(`Selected date: ${formatSingleDate(newSelectedDate)}`);
+      console.log(`Error: ${error}`);
       setSelectedDate(newSelectedDate);
     },
     [setSelectedDate],
@@ -37,7 +38,7 @@ export const SingleControlled = (): ReactElement => {
     <DatePicker
       selectionVariant={"single"}
       selectedDate={selectedDate}
-      onSelectedDateChange={handleSelectedDateChange}
+      onSelectionChange={handleSelectionChange}
     >
       <DatePickerSingleInput />
       <DatePickerOverlay>

@@ -44,9 +44,10 @@ export const SingleWithCustomParser = (): ReactElement => {
   const [selectedDate, setSelectedDate] = useState<SingleDateSelection | null>(
     null,
   );
-  const handleSelectedDateChange = useCallback(
+  const handleSelectionChange = useCallback(
     (newSelectedDate: SingleDateSelection | null, error: string | false) => {
       console.log(`Selected date: ${formatSingleDate(newSelectedDate)}`);
+      console.log(`Error: ${error}`);
       setSelectedDate(newSelectedDate);
       if (error) {
         setHelperText(errorHelperText);
@@ -57,7 +58,7 @@ export const SingleWithCustomParser = (): ReactElement => {
     },
     [setValidationStatus, setSelectedDate, setHelperText],
   );
-  const handleParse = useCallback(
+  const customParser = useCallback(
     (inputDate: string): DateInputSingleParserResult => {
       if (!inputDate?.length) {
         return { date: null, error: false };
@@ -81,7 +82,7 @@ export const SingleWithCustomParser = (): ReactElement => {
       }
       return parseCalendarDate(parsedDate || "");
     },
-    [],
+    [selectedDate],
   );
 
   return (
@@ -89,10 +90,10 @@ export const SingleWithCustomParser = (): ReactElement => {
       <FormLabel>Select a date</FormLabel>
       <DatePicker
         selectionVariant="single"
-        onSelectedDateChange={handleSelectedDateChange}
+        onSelectionChange={handleSelectionChange}
         selectedDate={selectedDate}
       >
-        <DatePickerSingleInput parse={handleParse} />
+        <DatePickerSingleInput parse={customParser} />
         <DatePickerOverlay>
           <DatePickerSinglePanel helperText={helperText} />
         </DatePickerOverlay>

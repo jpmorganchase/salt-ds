@@ -1,7 +1,7 @@
 import { type DateValue, getDayOfWeek } from "@internationalized/date";
 import {
   Calendar,
-  CalendarDateGrid,
+  CalendarGrid,
   CalendarNavigation,
   CalendarWeekHeader,
   getCurrentLocale,
@@ -16,6 +16,6 @@ export const DisabledDates = (): ReactElement => (
   <Calendar selectionVariant="single" isDayDisabled={isDayDisabled}>
     <CalendarNavigation />
     <CalendarWeekHeader />
-    <CalendarDateGrid />
+    <CalendarGrid />
   </Calendar>
 );

@@ -1,14 +1,14 @@
-.saltCalendarDateGrid-grid {
+.saltCalendarGrid-grid {
   display: grid;
   grid-auto-flow: column;
 }
 
-.saltCalendarDateGrid-grid > * {
+.saltCalendarGrid-grid > * {
   position: absolute;
   left: 0;
   width: 100%;
 }
 
-.saltCalendarDateGrid-grid > :nth-child(2) {
+.saltCalendarGrid-grid > :nth-child(2) {
   position: relative;
 }

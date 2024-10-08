@@ -174,7 +174,7 @@ export function useCalendar(props: UseCalendarProps) {
     timeZone = getLocalTimeZone(),
     locale = getCurrentLocale(),
     defaultVisibleMonth = today(timeZone),
-    onSelectedDateChange,
+    onSelectionChange,
     onVisibleMonthChange,
     isDayUnselectable = defaultIsDayUnselectable,
     isDayHighlighted = defaultIsDayHighlighted,
@@ -238,7 +238,7 @@ export function useCalendar(props: UseCalendarProps) {
   const selectionManager = useCalendarSelection({
     defaultSelectedDate: defaultSelectedDate,
     selectedDate,
-    onSelectedDateChange,
+    onSelectionChange,
     startDateOffset:
       props.selectionVariant === "offset" ? props.startDateOffset : undefined,
     endDateOffset:

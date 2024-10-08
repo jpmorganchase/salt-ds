@@ -48,11 +48,11 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
   };
 
   it("SHOULD support validation", () => {
-    const selectedDateChangeSpy = cy.stub().as("selectedDateChangeSpy");
+    const selectionChangeSpy = cy.stub().as("selectionChangeSpy");
     cy.mount(
       <SingleWithFormField
         selectionVariant={"single"}
-        onSelectedDateChange={selectedDateChangeSpy}
+        onSelectionChange={selectionChangeSpy}
         locale={testLocale}
       />,
     );
@@ -60,32 +60,26 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
     cy.findByRole("textbox").click().clear().type(initialDateValue);
     cy.realPress("Tab");
     cy.findByRole("textbox").should("have.value", initialDateValue);
-    cy.get("@selectedDateChangeSpy").should("have.been.calledOnce");
-    cy.get("@selectedDateChangeSpy").should(
-      "have.been.calledWith",
-      initialDate,
-    );
+    cy.get("@selectionChangeSpy").should("have.been.calledOnce");
+    cy.get("@selectionChangeSpy").should("have.been.calledWith", initialDate);
     // Simulate entering an invalid date
     cy.findByRole("textbox").click().clear().type("bad date");
     cy.realPress("Tab");
-    cy.get("@selectedDateChangeSpy").should("have.been.calledTwice");
-    cy.get("@selectedDateChangeSpy").should("have.been.calledWith", null);
+    cy.get("@selectionChangeSpy").should("have.been.calledTwice");
+    cy.get("@selectionChangeSpy").should("have.been.calledWith", null);
     cy.findByRole("textbox").click().clear().type(updatedFormattedDateValue);
     cy.realPress("Tab");
-    cy.get("@selectedDateChangeSpy").should("have.been.calledThrice");
-    cy.get("@selectedDateChangeSpy").should(
-      "have.been.calledWith",
-      updatedDate,
-    );
+    cy.get("@selectionChangeSpy").should("have.been.calledThrice");
+    cy.get("@selectionChangeSpy").should("have.been.calledWith", updatedDate);
   });
 
   it("SHOULD only be able to select a date between min/max", () => {
-    const selectedDateChangeSpy = cy.stub().as("selectedDateChangeSpy");
+    const selectionChangeSpy = cy.stub().as("selectionChangeSpy");
     cy.mount(
       <SingleWithMinMaxDate
         defaultSelectedDate={initialDate}
         selectionVariant={"single"}
-        onSelectedDateChange={selectedDateChangeSpy}
+        onSelectionChange={selectionChangeSpy}
         locale={testLocale}
       />,
     );
@@ -123,7 +117,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
       .realHover()
       .realClick();
     cy.findByRole("application").should("exist");
-    cy.get("@selectedDateChangeSpy").should("not.have.been.called");
+    cy.get("@selectionChangeSpy").should("not.have.been.called");
     // Simulate selecting a date within the min/max range
     cy.findByRole("button", {
       name: formatDay(parseDate("2031-01-15")),
@@ -134,7 +128,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
       "have.value",
       formatDate(parseDate("2031-01-15"), testLocale),
     );
-    cy.get("@selectedDateChangeSpy").should(
+    cy.get("@selectionChangeSpy").should(
       "have.been.calledWith",
       parseDate("2031-01-15"),
       false,
@@ -142,11 +136,11 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
   });
 
   it("SHOULD support custom panel with tenors", () => {
-    const selectedDateChangeSpy = cy.stub().as("selectedDateChangeSpy");
+    const selectionChangeSpy = cy.stub().as("selectionChangeSpy");
     cy.mount(
       <SingleWithCustomPanel
         selectionVariant={"single"}
-        onSelectedDateChange={selectedDateChangeSpy}
+        onSelectionChange={selectionChangeSpy}
         locale={testLocale}
       />,
     );
@@ -164,7 +158,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
     cy.findByRole("application").should("not.exist");
     cy.realPress("Tab");
     const newDate = today(testTimeZone).add({ years: 15 });
-    cy.get("@selectedDateChangeSpy").should(
+    cy.get("@selectionChangeSpy").should(
       "always.have.been.calledWithMatch",
       newDate,
     );
@@ -175,11 +169,11 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
   });
 
   it("SHOULD support custom panel with Today button", () => {
-    const selectedDateChangeSpy = cy.stub().as("selectedDateChangeSpy");
+    const selectionChangeSpy = cy.stub().as("selectionChangeSpy");
     cy.mount(
       <SingleWithTodayButton
         selectionVariant={"single"}
-        onSelectedDateChange={selectedDateChangeSpy}
+        onSelectionChange={selectionChangeSpy}
         locale={testLocale}
       />,
     );
@@ -193,7 +187,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
     cy.findByRole("application").should("not.exist");
     cy.realPress("Tab");
     const newDate = today(testTimeZone);
-    cy.get("@selectedDateChangeSpy").should(
+    cy.get("@selectionChangeSpy").should(
       "always.have.been.calledWithMatch",
       newDate,
     );
@@ -205,14 +199,14 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
 
   describe("SHOULD support confirmation", () => {
     it("SHOULD cancel un-confirmed selections", () => {
-      const selectedDateChangeSpy = cy.stub().as("selectedDateChangeSpy");
+      const selectionChangeSpy = cy.stub().as("selectionChangeSpy");
       const appliedDateSpy = cy.stub().as("appliedDateSpy");
       const cancelSpy = cy.stub().as("cancelSpy");
       cy.mount(
         <SingleWithConfirmation
           selectionVariant={"single"}
           defaultSelectedDate={initialDate}
-          onSelectedDateChange={selectedDateChangeSpy}
+          onSelectionChange={selectionChangeSpy}
           onApply={appliedDateSpy}
           onCancel={cancelSpy}
           locale={testLocale}
@@ -233,7 +227,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
       cy.document()
         .find("input")
         .should("have.value", formatDate(updatedDate, testLocale));
-      cy.get("@selectedDateChangeSpy").should(
+      cy.get("@selectionChangeSpy").should(
         "have.been.calledWith",
         updatedDate,
         false,
@@ -250,14 +244,14 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
     });
 
     it("SHOULD apply confirmed selections", () => {
-      const selectedDateChangeSpy = cy.stub().as("selectedDateChangeSpy");
+      const selectionChangeSpy = cy.stub().as("selectionChangeSpy");
       const appliedDateSpy = cy.stub().as("appliedDateSpy");
       const cancelSpy = cy.stub().as("cancelSpy");
       cy.mount(
         <SingleWithConfirmation
           selectionVariant={"single"}
           defaultSelectedDate={initialDate}
-          onSelectedDateChange={selectedDateChangeSpy}
+          onSelectionChange={selectionChangeSpy}
           onApply={appliedDateSpy}
           onCancel={cancelSpy}
           locale={testLocale}
@@ -278,10 +272,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
       cy.document()
         .find("input")
         .should("have.value", formatDate(updatedDate, testLocale));
-      cy.get("@selectedDateChangeSpy").should(
-        "have.been.calledWith",
-        updatedDate,
-      );
+      cy.get("@selectionChangeSpy").should("have.been.calledWith", updatedDate);
       // Simulate clicking the "Apply" button
       cy.findByRole("button", { name: "Apply" }).realClick();
       // Verify that the calendar is closed and the new date is applied
@@ -294,11 +285,11 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
   });
 
   it("SHOULD support custom parsing", () => {
-    const selectedDateChangeSpy = cy.stub().as("selectedDateChangeSpy");
+    const selectionChangeSpy = cy.stub().as("selectionChangeSpy");
     cy.mount(
       <SingleWithCustomParser
         selectionVariant={"single"}
-        onSelectedDateChange={selectedDateChangeSpy}
+        onSelectionChange={selectionChangeSpy}
         locale={testLocale}
       />,
     );
@@ -306,7 +297,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
     cy.findByRole("textbox").click().clear().type(initialDateValue);
     cy.realPress("Tab");
     cy.findByRole("textbox").should("have.value", initialDateValue);
-    cy.get("@selectedDateChangeSpy").should(
+    cy.get("@selectionChangeSpy").should(
       "have.been.calledWith",
       initialDate,
       false,
@@ -314,9 +305,9 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
     // Simulate entering a custom parsed date
     cy.findByRole("textbox").click().clear().type("+7");
     cy.realPress("Tab");
-    cy.get("@selectedDateChangeSpy").should("have.been.calledTwice");
+    cy.get("@selectionChangeSpy").should("have.been.calledTwice");
     const newDate = initialDate.add({ days: 7 });
-    cy.get("@selectedDateChangeSpy").should(
+    cy.get("@selectionChangeSpy").should(
       "have.been.calledWith",
       newDate,
       false,
@@ -417,7 +408,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
     });
 
     it("SHOULD preserve original time during date selection", () => {
-      const selectedDateChangeSpy = cy.stub().as("selectedDateChangeSpy");
+      const selectionChangeSpy = cy.stub().as("selectionChangeSpy");
       const defaultSelectedDate = new ZonedDateTime(
         2024,
         12,
@@ -429,13 +420,13 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
         31,
         32,
       );
-      const parse: typeof parseZonedDateTime = (dateTime) =>
-        parseZonedDateTime(dateTime, testTimeZone);
+      const parse: typeof parseZonedDateTime = (dateTime, locale) =>
+        parseZonedDateTime(dateTime, locale, testTimeZone);
       cy.mount(
         <DatePicker
           defaultSelectedDate={defaultSelectedDate}
           selectionVariant="single"
-          onSelectedDateChange={selectedDateChangeSpy}
+          onSelectionChange={selectionChangeSpy}
           locale={testLocale}
           timeZone={testTimeZone}
         >
@@ -449,7 +440,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
       cy.findByRole("textbox").click().clear().type(initialDateValue);
       cy.realPress("Tab");
       cy.findByRole("textbox").should("have.value", initialDateValue);
-      cy.get("@selectedDateChangeSpy").should(
+      cy.get("@selectionChangeSpy").should(
         "have.been.calledWithMatch",
         {
           year: initialDate.year,

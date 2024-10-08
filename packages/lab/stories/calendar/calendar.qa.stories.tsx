@@ -1,7 +1,7 @@
 import { parseDate } from "@internationalized/date";
 import {
   Calendar,
-  CalendarDateGrid,
+  CalendarGrid,
   CalendarNavigation,
   CalendarWeekHeader,
 } from "@salt-ds/lab";
@@ -33,7 +33,7 @@ export const AllExamples: StoryFn<QAContainerProps> = () => (
     >
       <CalendarNavigation />
       <CalendarWeekHeader />
-      <CalendarDateGrid />
+      <CalendarGrid />
     </Calendar>
     <Calendar
       locale={testLocale}
@@ -45,7 +45,7 @@ export const AllExamples: StoryFn<QAContainerProps> = () => (
     >
       <CalendarNavigation />
       <CalendarWeekHeader />
-      <CalendarDateGrid />
+      <CalendarGrid />
     </Calendar>
     <Calendar
       locale={testLocale}
@@ -64,7 +64,7 @@ export const AllExamples: StoryFn<QAContainerProps> = () => (
     >
       <CalendarNavigation />
       <CalendarWeekHeader />
-      <CalendarDateGrid />
+      <CalendarGrid />
     </Calendar>
     <Calendar
       locale={testLocale}
@@ -73,7 +73,7 @@ export const AllExamples: StoryFn<QAContainerProps> = () => (
     >
       <CalendarNavigation hideYearDropdown />
       <CalendarWeekHeader />
-      <CalendarDateGrid />
+      <CalendarGrid />
     </Calendar>
     <Calendar
       locale={testLocale}
@@ -85,7 +85,7 @@ export const AllExamples: StoryFn<QAContainerProps> = () => (
         YearDropdownProps={{ bordered: true }}
       />
       <CalendarWeekHeader />
-      <CalendarDateGrid />
+      <CalendarGrid />
     </Calendar>
   </QAContainer>
 );

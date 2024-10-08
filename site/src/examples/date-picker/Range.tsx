@@ -24,9 +24,15 @@ function formatDateRange(
   return `Start date: ${formattedStartDate}, End date: ${formattedEndDate}`;
 }
 export const Range = (): ReactElement => {
-  const handleSelectedDateChange = useCallback(
-    (newSelectedDate: DateRangeSelection | null) => {
+  const handleSelectionChange = useCallback(
+    (
+      newSelectedDate: DateRangeSelection | null,
+      error: { startDate: string | false; endDate: string | false },
+    ) => {
       console.log(`Selected date range: ${formatDateRange(newSelectedDate)}`);
+      console.log(
+        `Error: startDate: ${error.startDate} endDate: ${error.endDate}`,
+      );
     },
     [],
   );
@@ -34,7 +40,7 @@ export const Range = (): ReactElement => {
   return (
     <DatePicker
       selectionVariant="range"
-      onSelectedDateChange={handleSelectedDateChange}
+      onSelectionChange={handleSelectionChange}
     >
       <DatePickerRangeInput />
       <DatePickerOverlay>

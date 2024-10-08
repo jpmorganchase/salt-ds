@@ -5,7 +5,7 @@ import {
 } from "@internationalized/date";
 import {
   Calendar,
-  CalendarDateGrid,
+  CalendarGrid,
   CalendarNavigation,
   CalendarWeekHeader,
   getCurrentLocale,
@@ -21,8 +21,6 @@ export const CustomDayRender = (): ReactElement => (
   <Calendar selectionVariant="single" className="CustomDayRender">
     <CalendarNavigation />
     <CalendarWeekHeader />
-    <CalendarDateGrid
-      getCalendarMonthProps={(date) => ({ renderDayContents })}
-    />
+    <CalendarGrid getCalendarMonthProps={(date) => ({ renderDayContents })} />
   </Calendar>
 );

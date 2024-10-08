@@ -44,6 +44,7 @@ export const SingleWithConfirmation = (): ReactElement => {
   const handleApply = useCallback(
     (newSelectedDate: SingleDateSelection | null, error: string | false) => {
       console.log(`Selected date: ${formatSingleDate(newSelectedDate)}`);
+      console.log(`Error: ${error}`);
       if (error) {
         setHelperText(errorHelperText);
       } else {
@@ -53,7 +54,7 @@ export const SingleWithConfirmation = (): ReactElement => {
     },
     [setSelectedDate, setHelperText],
   );
-  const handleSelectedDateChange = useCallback(
+  const handleSelectionChange = useCallback(
     (newSelectedDate: SingleDateSelection | null) => {
       setSelectedDate(newSelectedDate);
       applyButtonRef?.current?.focus();
@@ -67,7 +68,7 @@ export const SingleWithConfirmation = (): ReactElement => {
       <DatePicker
         selectionVariant="single"
         onApply={handleApply}
-        onSelectedDateChange={handleSelectedDateChange}
+        onSelectionChange={handleSelectionChange}
         selectedDate={selectedDate}
       >
         <DatePickerSingleInput />
