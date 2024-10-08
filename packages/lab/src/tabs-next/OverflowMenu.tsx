@@ -18,7 +18,7 @@ export const OverflowMenu = forwardRef<HTMLDivElement, OverflowMenuProps>(
     const { tabs, ...rest } = props;
     const { ref, overflowCount, isOverflowing } =
       useOverflowMenu<HTMLDivElement>();
-    const { OverflowIcon } = useIcon() || {};
+    const { OverflowIcon } = useIcon();
     const handleRef = useForkRef(ref, forwardedRef);
     const itemVisibility = useOverflowContext(
       (context) => context.itemVisibility,

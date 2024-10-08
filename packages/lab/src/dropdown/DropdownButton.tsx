@@ -87,7 +87,7 @@ export const DropdownButton = forwardRef(function DropdownButton(
     window: targetWindow,
   });
   const { ExpandIcon } = useIcon();
-  const Icon = IconComponent ?? ExpandIcon;
+  const Icon = IconComponent === undefined ? ExpandIcon : IconComponent;
   const { inFormField } = useFormFieldLegacyProps();
   // FIXME: use polymorphic button
   // We don't want the 'button' tag to be shown in the DOM to trigger some accessibility testing

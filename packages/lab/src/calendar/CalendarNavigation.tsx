@@ -8,9 +8,9 @@ import {
   Tooltip,
   type TooltipProps,
   makePrefixer,
+  useIcon,
   useListControlContext,
 } from "@salt-ds/core";
-import { ChevronLeftIcon, ChevronRightIcon } from "@salt-ds/icons";
 import { clsx } from "clsx";
 import {
   type ComponentPropsWithRef,
@@ -283,6 +283,8 @@ export const CalendarNavigation = forwardRef<
     window: targetWindow,
   });
 
+  const { NextIcon, PreviousIcon } = useIcon();
+
   const {
     moveToPreviousMonth,
     moveToNextMonth,
@@ -376,7 +378,7 @@ export const CalendarNavigation = forwardRef<
           onClick={handleNavigatePrevious}
           focusableWhenDisabled={true}
         >
-          <ChevronLeftIcon aria-label="Previous Month" />
+          <PreviousIcon aria-label="Previous Month" />
         </Button>
       </ConditionalTooltip>
       <div className={clsx({ [withBaseName("dropdowns")]: !hideYearDropdown })}>
@@ -428,7 +430,7 @@ export const CalendarNavigation = forwardRef<
           onClick={handleNavigateNext}
           focusableWhenDisabled={true}
         >
-          <ChevronRightIcon aria-label="Next Month" />
+          <NextIcon aria-label="Next Month" />
         </Button>
       </ConditionalTooltip>
     </div>

@@ -60,7 +60,7 @@ export function ValueSelector(props: ValueSelectorProps) {
     setHighlightedCategoryIndex,
     setHighlightedIndex,
   } = props;
-  console.log("Testtttttt");
+
   const selectedCategoryValues = useMemo(() => {
     if (!selectedCategory) {
       return [];

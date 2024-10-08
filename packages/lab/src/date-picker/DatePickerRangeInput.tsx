@@ -1,5 +1,10 @@
-import { Button, makePrefixer, useControlled, useForkRef } from "@salt-ds/core";
-import { CalendarIcon } from "@salt-ds/icons";
+import {
+  Button,
+  makePrefixer,
+  useControlled,
+  useForkRef,
+  useIcon,
+} from "@salt-ds/core";
 import { clsx } from "clsx";
 import {
   type KeyboardEvent,
@@ -42,6 +47,8 @@ export const DatePickerRangeInput = forwardRef<
     onDateValueChange,
     ...rest
   } = props;
+
+  const { CalendarIcon } = useIcon();
 
   const {
     state: { selectedDate, disabled, readOnly, cancelled, locale, timeZone },

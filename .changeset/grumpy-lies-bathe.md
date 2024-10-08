@@ -6,6 +6,6 @@ Added SemanticIconProvider to provide a mechanism to swap out built-in component
 
 ```tsx
 <SemanticIconProvider iconMap={iconMap}>
-  <StoryFn />
+  <App />
 </SemanticIconProvider>
 ```

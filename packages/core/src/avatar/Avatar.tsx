@@ -61,9 +61,12 @@ export const Avatar = forwardRef<HTMLDivElement, AvatarProps>(function Avatar(
   const targetWindow = useWindow();
   const { UserIcon } = useIcon();
 
-  const fallbackIcon = fallbackIconProp || (
-    <UserIcon aria-label="User Avatar" />
-  );
+  const fallbackIcon =
+    fallbackIconProp === undefined ? (
+      <UserIcon aria-label="User Avatar" />
+    ) : (
+      fallbackIconProp
+    );
 
   useComponentCssInjection({
     testId: "salt-avatar",

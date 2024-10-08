@@ -22,7 +22,7 @@ const TestComponent = () => {
   );
 };
 
-describe("SemanticIconProvider Tests", () => {
+describe("SemanticIconProvider", () => {
   it("should use default icons when provider is not wrapped", () => {
     cy.mount(<TestComponent />);
     cy.get('[data-testid="ChevronDownIcon"]').should("exist");
@@ -31,7 +31,7 @@ describe("SemanticIconProvider Tests", () => {
     cy.get('[data-testid="UserSolidIcon"]').should("exist");
   });
 
-  it("should override only specific icons when provider is partially wrapped", () => {
+  it("should support overriding only specific icons", () => {
     cy.mount(
       <SemanticIconProvider
         iconMap={{
@@ -59,7 +59,7 @@ describe("SemanticIconProvider Tests", () => {
     cy.get('[data-testid="UserSolidIcon"]').should("exist");
   });
 
-  it("should override all icons when provider is fully wrapped", () => {
+  it("should support overriding all icons", () => {
     cy.mount(
       <SemanticIconProvider
         iconMap={{

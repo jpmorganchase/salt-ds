@@ -34,7 +34,7 @@ export const BreadcrumbsCollapsed = ({
     return "";
   });
 
-  const { OverflowIcon } = useIcon() || {};
+  const { OverflowIcon } = useIcon();
   const key = keys ? keys.join("") : "";
   const { ref, shouldFocusOnMount } =
     useFocusMenuRemount<HTMLButtonElement>(key);

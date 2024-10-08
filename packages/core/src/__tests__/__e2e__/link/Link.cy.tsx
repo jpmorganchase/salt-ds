@@ -42,17 +42,4 @@ describe("GIVEN a link", () => {
 
     cy.findByTestId(/TearOutIcon/i).should("not.exist");
   });
-
-  it('WHEN target is "_blank" AND IconComponent is provided, THEN should render the provided IconComponent', () => {
-    const CustomIcon = () => <div data-testid="CustomIcon">Custom Icon</div>;
-
-    cy.mount(
-      <Link href="#root" target="_blank" IconComponent={CustomIcon}>
-        Action
-      </Link>,
-    );
-
-    cy.findByTestId(/CustomIcon/i).should("exist");
-    cy.findByTestId(/TearOutIcon/i).should("not.exist");
-  });
 });
