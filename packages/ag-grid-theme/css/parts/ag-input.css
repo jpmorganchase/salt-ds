@@ -25,3 +25,12 @@ div[class*="ag-theme-salt"] .ag-column-select input[class^="ag-"][type="number"]
   outline: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--salt-focused-outlineColor);
   outline-offset: -2px;
 }
+
+/* Large text editor, matching multiline input */
+div[class*="ag-theme-salt"] .ag-popup-editor .ag-large-text textarea[class^="ag-"] {
+  border-radius: var(--salt-palette-corner-weak, 0);
+}
+
+div[class*="ag-theme-salt"] .ag-popup-editor .ag-large-text textarea[class^="ag-"]:focus {
+  outline: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--salt-focused-outlineColor);
+}
