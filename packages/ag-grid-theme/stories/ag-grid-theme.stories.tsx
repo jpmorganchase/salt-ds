@@ -40,6 +40,7 @@ export {
   Pagination,
   ParentChildRows,
   PinnedRows,
+  ProvidedCellEditors,
   RangeSelection,
   RowGroupPanel,
   RowGrouping,

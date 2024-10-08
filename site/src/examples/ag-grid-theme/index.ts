@@ -15,6 +15,7 @@ export * from "./NoDataOverlay";
 export * from "./Pagination";
 export * from "./ParentChildRows";
 export * from "./PinnedRows";
+export * from "./ProvidedCellEditors";
 export * from "./RowGrouping";
 export * from "./RowGroupPanel";
 export * from "./StatusBar";
