@@ -1,0 +1,76 @@
+div[class*="ag-theme-salt"] {
+  --ag-row-height: calc(var(--salt-size-base) + var(--salt-spacing-100));
+  --ag-header-height: calc(var(--salt-size-base) + var(--salt-spacing-100));
+  --ag-background-color: var(--salt-container-primary-background);
+  --ag-border-color: var(--salt-separable-secondary-borderColor);
+  --ag-borders-secondary: var(--salt-size-border) var(--salt-separable-borderStyle);
+  --ag-card-radius: var(--salt-palette-corner);
+  --ag-cell-horizontal-padding: var(--salt-spacing-100);
+  --ag-checkbox-border-radius: 0;
+  --ag-checkbox-checked-color: var(--salt-selectable-foreground-selected);
+  --ag-checkbox-indeterminate-color: var(--salt-selectable-foreground);
+  --ag-checkbox-unchecked-color: var(--salt-selectable-borderColor);
+  --ag-chip-background-color: var(--salt-actionable-primary-background);
+  --ag-data-color: var(--salt-content-primary-foreground);
+  --ag-disabled-foreground-color: var(--salt-content-primary-foreground-disabled);
+  --ag-font-family: var(--salt-text-fontFamily);
+  --ag-font-size: var(--salt-text-fontSize);
+  --ag-foreground-color: var(--salt-content-primary-foreground);
+  --ag-grid-size: var(--salt-spacing-50);
+  --ag-header-background-color: var(--salt-container-primary-background);
+  --ag-header-cell-hover-background-color: var(--salt-container-primary-background);
+  --ag-header-column-separator-color: var(--salt-separable-tertiary-borderColor);
+  --ag-header-column-separator-display: block;
+  --ag-header-column-separator-height: calc(var(--salt-size-base) / 2 - 2 * var(--salt-size-border));
+  --ag-header-column-separator-width: var(--salt-size-border);
+  --ag-header-foreground-color: var(--salt-content-secondary-foreground);
+  --ag-header-height: calc(var(--salt-size-base) + var(--salt-spacing-100));
+  /* Replicating min size 12px from Icon.css */
+  --ag-icon-size: max(var(--salt-size-icon), 12px);
+  --ag-input-focus-border-color: var(--salt-editable-borderColor-hover);
+  --ag-input-focus-box-shadow: none;
+  --ag-invalid-color: var(--salt-status-error-foreground-informative);
+  --ag-list-item-height: calc(var(--salt-size-base) + var(--salt-spacing-100));
+  --ag-material-primary-color: var(--salt-editable-borderColor);
+  --ag-modal-overlay-background-color: var(--salt-overlayable-background);
+  --ag-popup-shadow: var(--salt-overlayable-shadow-modal);
+  --ag-range-selection-background-color: var(--salt-overlayable-rangeSelection);
+  --ag-range-selection-border-style: none;
+  --ag-range-selection-highlight-color: var(--salt-overlayable-background-highlight);
+  --ag-row-group-indent-size: calc(var(--ag-icon-size) + var(--ag-cell-widget-spacing));
+  --ag-row-hover-color: var(--salt-selectable-background-hover);
+  --ag-secondary-border-color: var(--salt-separable-tertiary-borderColor);
+  --ag-secondary-foreground-color: var(--salt-content-primary-foreground);
+  --ag-selected-row-background-color: var(--salt-selectable-background-selected);
+  --ag-selected-tab-underline-color: var(--salt-navigable-indicator-active);
+  --ag-selected-tab-underline-width: var(--salt-size-indicator);
+  --ag-subheader-background-color: var(--salt-container-primary-background);
+  --ag-toggle-button-off-background-color: var(--salt-container-primary-background);
+  --ag-toggle-button-off-border-color: var(--salt-selectable-borderColor);
+  --ag-toggle-button-on-background-color: var(--salt-container-primary-background);
+  --ag-toggle-button-on-border-color: var(--salt-selectable-borderColor-selected);
+  --ag-toggle-button-switch-border-color: var(--salt-container-primary-background); /* Fake a border with bg color */
+  --ag-toggle-button-switch-background-color: var(--salt-selectable-foreground);
+  --ag-tooltip-background-color: var(--salt-container-primary-background);
+  --ag-value-change-delta-down-color: var(--salt-status-negative-foreground);
+  --ag-value-change-delta-up-color: var(--salt-status-positive-foreground);
+  --ag-widget-container-horizontal-padding: var(--salt-spacing-100);
+  /* 
+      Use categorical color for below tokens when available
+      --ag-advanced-filter-join-pill-color,--ag-advanced-filter-column-pill-color,--ag-advanced-filter-option-pill-color,--ag-advanced-filter-value-pill-color
+     */
+}
+
+div[class*="ag-theme-salt-compact"] {
+  /* 
+      Ensures icon / country symbol renders correct height.
+      This also means we don't need to touch `--ag-row-height`, which would impact some internal ag grid height calculation like `--ag-internal-padded-row-height` vs `--ag-internal-calculated-line-height`
+     */
+  --salt-size-base: 16px;
+  /* This is a deprecated token, until Salt Checkbox uses a new token, temparily pin it to HD size. */
+  --salt-size-selectable: 12px;
+}
+
+div[class*="ag-theme-salt"] .ag-root-wrapper {
+  border: none;
+}
