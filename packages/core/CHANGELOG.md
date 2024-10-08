@@ -1,5 +1,28 @@
 # @salt-ds/core
 
+## 1.37.0
+
+### Minor Changes
+
+- 4ccc245: Updated Card, LinkCard and InteractableCard accent bar color, which now stays the same across states.
+- 97215f7: Added SemanticIconProvider to provide a mechanism to swap out built-in component icons to custom icons.
+
+  ```tsx
+  <SemanticIconProvider iconMap={iconMap}>
+    <App />
+  </SemanticIconProvider>
+  ```
+
+- 60a8d6a: Pill will now go into an active state when it's a menu trigger and has the menu is open. This aligns Pill with Button.
+
+### Patch Changes
+
+- dc9e1bd: Updated Pill's styling to align to Button's new styling.
+- 7eac3b2: Fixed text contrast issues in Menu, Dropdown, ComboBox and ListBox.
+- b2af86a: Updated MultilineInput so that it is easier to set a max-height.
+- 9edf6c4: Added letter-spacing to `Text` for consistency.
+- 65bfefb: Improved list based control's performance when lots of items are displayed.
+
 ## 1.36.0
 
 ### Minor Changes

@@ -1,5 +1,11 @@
 # @salt-ds/countries
 
+## 1.4.1
+
+### Patch Changes
+
+- c9e932d: Fixed LazyCountrySymbol crash with invalid code, and `sharp` was not working correctly.
+
 ## 1.4.0
 
 ### Minor Changes
