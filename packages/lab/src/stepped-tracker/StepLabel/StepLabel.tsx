@@ -26,7 +26,7 @@ export const StepLabel = forwardRef<HTMLLabelElement, StepLabelProps>(
 
     return (
       <Label className={clsx(withBaseName(), className)} ref={ref} {...rest}>
-        <strong>{children}</strong>
+        {children}
       </Label>
     );
   },

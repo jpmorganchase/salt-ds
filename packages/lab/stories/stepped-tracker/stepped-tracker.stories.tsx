@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import { Button, FlexLayout, StackLayout, Tooltip } from "@salt-ds/core";
+import { Button, FlexLayout, Label, StackLayout, Tooltip } from "@salt-ds/core";
 import { RefreshIcon } from "@salt-ds/icons";
 import { StepLabel, SteppedTracker, TrackerStep } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react";
@@ -99,18 +99,23 @@ export const Status: StoryFn<typeof SteppedTracker> = () => {
       <SteppedTracker activeStep={1}>
         <TrackerStep stage="completed">
           <StepLabel>Completed</StepLabel>
+          <Label color="secondary">Descriptive text</Label>
         </TrackerStep>
         <TrackerStep>
           <StepLabel>Active</StepLabel>
+          <Label color="secondary">Descriptive text</Label>
         </TrackerStep>
         <TrackerStep status="warning">
           <StepLabel>Warning</StepLabel>
+          <Label color="warning">Descriptive text</Label>
         </TrackerStep>
         <TrackerStep status="error">
           <StepLabel>Error</StepLabel>
+          <Label color="error">Descriptive text</Label>
         </TrackerStep>
         <TrackerStep>
           <StepLabel>Default</StepLabel>
+          <Label color="secondary">Descriptive text</Label>
         </TrackerStep>
       </SteppedTracker>
     </div>
@@ -119,18 +124,153 @@ export const Status: StoryFn<typeof SteppedTracker> = () => {
 
 export const SingleVertical: StoryFn<typeof SteppedTracker> = () => {
   return (
-    <SteppedTracker orientation="vertical" activeStep={1}>
+    <SteppedTracker
+      orientation="vertical"
+      activeStep={2}
+      style={{ width: "100%", maxWidth: 400 }}
+    >
       <TrackerStep stage="completed">
         <StepLabel>Step One</StepLabel>
+        <Label color="secondary">
+          A label that is very long describing the sub-steps and why they are
+          there and stuff like that. Lorem ipsum dolor sit amet, consectetur.
+        </Label>
       </TrackerStep>
       <TrackerStep stage="completed">
         <StepLabel>Step Two</StepLabel>
       </TrackerStep>
       <TrackerStep>
         <StepLabel>Step Three</StepLabel>
+        <Label color="secondary">This one has an extra label</Label>
       </TrackerStep>
       <TrackerStep>
         <StepLabel>Step Four</StepLabel>
+      </TrackerStep>
+    </SteppedTracker>
+  );
+};
+
+export const NestedVertical: StoryFn<typeof SteppedTracker> = () => {
+  return (
+    <SteppedTracker
+      orientation="vertical"
+      activeStep={8}
+      style={{ width: "100%", minWidth: 300, maxWidth: 400 }}
+    >
+      <TrackerStep stage="completed">
+        <StepLabel>Step 1</StepLabel>
+      </TrackerStep>
+      <TrackerStep depth={1} stage="completed">
+        <StepLabel>Step 1.1</StepLabel>
+      </TrackerStep>
+      <TrackerStep depth={1} stage="completed">
+        <StepLabel>Step 1.2</StepLabel>
+      </TrackerStep>
+      <TrackerStep depth={1} stage="completed">
+        <StepLabel>Step 1.3</StepLabel>
+      </TrackerStep>
+      <TrackerStep stage="completed">
+        <StepLabel>Step 2</StepLabel>
+      </TrackerStep>
+      <TrackerStep stage="inprogress">
+        <StepLabel>Step 3</StepLabel>
+      </TrackerStep>
+      <TrackerStep depth={1} stage="completed">
+        <StepLabel>Step 3.1</StepLabel>
+      </TrackerStep>
+      <TrackerStep depth={1} stage="completed">
+        <StepLabel>Step 3.2</StepLabel>
+      </TrackerStep>
+      <TrackerStep depth={1} stage="inprogress">
+        <StepLabel>Step 3.3</StepLabel>
+      </TrackerStep>
+      <TrackerStep depth={1}>
+        <StepLabel>Step 3.4</StepLabel>
+      </TrackerStep>
+      <TrackerStep depth={1}>
+        <StepLabel>Step 3.4</StepLabel>
+      </TrackerStep>
+      <TrackerStep>
+        <StepLabel>Step 4</StepLabel>
+      </TrackerStep>
+      <TrackerStep depth={1}>
+        <StepLabel>Step 4.1</StepLabel>
+      </TrackerStep>
+      <TrackerStep depth={2}>
+        <StepLabel>Step 4.1.1</StepLabel>
+      </TrackerStep>
+    </SteppedTracker>
+  );
+};
+
+export const NestedVerticalComplex: StoryFn<typeof SteppedTracker> = () => {
+  return (
+    <SteppedTracker
+      orientation="vertical"
+      activeStep={8}
+      style={{ width: "100%", maxWidth: 400 }}
+    >
+      <TrackerStep stage="completed">
+        <StepLabel>Step 1</StepLabel>
+        <Label color="secondary">
+          A label that is very long describing the sub-steps and why they are
+          there and stuff like that. Lorem ipsum dolor sit amet, consectetur.
+        </Label>
+      </TrackerStep>
+      <TrackerStep depth={1} stage="completed">
+        <StepLabel>Step 1.1</StepLabel>
+      </TrackerStep>
+      <TrackerStep depth={2} stage="completed">
+        <StepLabel>Step 1.1.1</StepLabel>
+        <Label color="secondary">This one has an extra label</Label>
+      </TrackerStep>
+      <TrackerStep depth={2} stage="completed">
+        <StepLabel>Step 1.1.2</StepLabel>
+        <Label color="secondary">
+          A label that is very long describing the sub-steps and why they are
+          there and stuff like that. Lorem ipsum dolor sit amet, consectetur. A
+          label that is very long describing the sub-steps and why they are
+          there and stuff like that. Lorem ipsum dolor sit amet, consectetur.
+        </Label>
+      </TrackerStep>
+      <TrackerStep stage="completed">
+        <StepLabel>Step 2</StepLabel>
+      </TrackerStep>
+      <TrackerStep stage="completed">
+        <StepLabel>
+          Step 3: a title that is very long and breaks over multiple lines.
+          Lorem ipsum dolor sit amet.
+        </StepLabel>
+      </TrackerStep>
+      <TrackerStep stage="inprogress">
+        <StepLabel>
+          Step 4: a title that is very long and breaks over multiple lines.
+          Lorem ipsum dolor sit amet, consectetur. Step 3: a title that is very
+          long and breaks over multiple lines. Lorem ipsum dolor sit amet,
+          consectetur.
+        </StepLabel>
+      </TrackerStep>
+      <TrackerStep depth={1} stage="inprogress">
+        <StepLabel>Step 4.1</StepLabel>
+      </TrackerStep>
+      <TrackerStep depth={2} stage="completed">
+        <StepLabel>Step 4.1.1</StepLabel>
+      </TrackerStep>
+      <TrackerStep depth={2}>
+        <StepLabel>Step 4.1.2</StepLabel>
+      </TrackerStep>
+      <TrackerStep depth={2}>
+        <StepLabel>Step 4.1.3</StepLabel>
+      </TrackerStep>
+      <TrackerStep depth={1}>
+        <StepLabel>Step 4.2</StepLabel>
+        <Label color="secondary">This one has an extra label</Label>
+      </TrackerStep>
+      <TrackerStep depth={1}>
+        <StepLabel>Step 4.3</StepLabel>
+      </TrackerStep>
+      <TrackerStep>
+        <StepLabel>Step 5</StepLabel>
       </TrackerStep>
     </SteppedTracker>
   );

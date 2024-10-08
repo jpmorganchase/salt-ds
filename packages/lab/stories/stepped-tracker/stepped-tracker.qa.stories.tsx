@@ -159,6 +159,63 @@ export const Vertical: StoryFn<QAContainerProps> = (props) => {
   );
 };
 
+export const NestedVertical: StoryFn<QAContainerProps> = (props) => {
+  return (
+    <QAContainer height={500} width={1000} {...props}>
+      <StackLayout
+        direction="row"
+        align="stretch"
+        gap={2}
+        style={{
+          minWidth: 450,
+          marginBottom: 50,
+        }}
+      >
+        <SteppedTracker orientation="vertical" activeStep={0}>
+          <TrackerStep>
+            <StepLabel>1</StepLabel>
+          </TrackerStep>
+          <TrackerStep depth={1}>
+            <StepLabel>1.1</StepLabel>
+          </TrackerStep>
+          <TrackerStep depth={1}>
+            <StepLabel>1.2</StepLabel>
+          </TrackerStep>
+          <TrackerStep depth={2}>
+            <StepLabel>1.2.1</StepLabel>
+          </TrackerStep>
+          <TrackerStep depth={2}>
+            <StepLabel>1.2.2</StepLabel>
+          </TrackerStep>
+          <TrackerStep depth={2}>
+            <StepLabel>1.2.3</StepLabel>
+          </TrackerStep>
+        </SteppedTracker>
+        <SteppedTracker orientation="vertical" activeStep={4}>
+          <TrackerStep stage="inprogress">
+            <StepLabel>1</StepLabel>
+          </TrackerStep>
+          <TrackerStep depth={1} stage="completed">
+            <StepLabel>1.1</StepLabel>
+          </TrackerStep>
+          <TrackerStep depth={1} stage="inprogress">
+            <StepLabel>1.2</StepLabel>
+          </TrackerStep>
+          <TrackerStep depth={2} stage="completed">
+            <StepLabel>1.2.1</StepLabel>
+          </TrackerStep>
+          <TrackerStep depth={2}>
+            <StepLabel>1.2.2</StepLabel>
+          </TrackerStep>
+          <TrackerStep depth={2}>
+            <StepLabel>1.2.3</StepLabel>
+          </TrackerStep>
+        </SteppedTracker>
+      </StackLayout>
+    </QAContainer>
+  );
+};
+
 Basic.parameters = {
   chromatic: { disableSnapshot: false },
 };

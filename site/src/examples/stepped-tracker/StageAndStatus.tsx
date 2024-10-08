@@ -10,7 +10,10 @@ export const StageAndStatus = (): ReactElement => {
       gap={10}
       style={{ width: "100%", minWidth: 600, maxWidth: 800, margin: "auto" }}
     >
-      <SteppedTracker activeStep={1}>
+      <SteppedTracker
+        activeStep={1}
+        aria-label="Stepped Tracker example: stage and status in action"
+      >
         <TrackerStep stage="completed">
           <StepLabel>Completed</StepLabel>
         </TrackerStep>

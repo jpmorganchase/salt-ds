@@ -14,14 +14,15 @@ import {
 
 import {
   SteppedTrackerProvider,
-  TrackerStepProvider,
+  // TrackerStepProvider,
 } from "./SteppedTrackerContext";
+import { checkNesting, getDepthMap, renderNestedSteps } from "./utils";
 
 import steppedTrackerCss from "./SteppedTracker.css";
 
 const withBaseName = makePrefixer("saltSteppedTracker");
 
-export interface SteppedTrackerProps extends ComponentPropsWithoutRef<"ul"> {
+export interface SteppedTrackerProps extends ComponentPropsWithoutRef<"ol"> {
   /**
    * The index of the current activeStep
    */
@@ -55,7 +56,7 @@ const useCheckInvalidChildren = (children: ReactNode) => {
   }, [children]);
 };
 
-export const SteppedTracker = forwardRef<HTMLUListElement, SteppedTrackerProps>(
+export const SteppedTracker = forwardRef<HTMLOListElement, SteppedTrackerProps>(
   function SteppedTracker(
     {
       children,
@@ -76,17 +77,28 @@ export const SteppedTracker = forwardRef<HTMLUListElement, SteppedTrackerProps>(
 
     const totalSteps = Children.count(children);
 
+    const depthMap = getDepthMap(children);
+
+    const isNested = checkNesting(depthMap);
+
+    const childrenArray = Children.toArray(children);
+
+    const nestedSteps = renderNestedSteps(childrenArray, depthMap);
+
     return (
       <SteppedTrackerProvider totalSteps={totalSteps} activeStep={activeStep}>
-        <ul
-          className={clsx(withBaseName(), className, withBaseName(orientation))}
+        <ol
+          className={clsx(
+            withBaseName(),
+            withBaseName(orientation),
+            { [withBaseName("nested")]: isNested },
+            className,
+          )}
           ref={ref}
           {...restProps}
         >
-          {Children.map(children, (child, i) => (
-            <TrackerStepProvider stepNumber={i}>{child}</TrackerStepProvider>
-          ))}
-        </ul>
+          {nestedSteps}
+        </ol>
       </SteppedTrackerProvider>
     );
   },

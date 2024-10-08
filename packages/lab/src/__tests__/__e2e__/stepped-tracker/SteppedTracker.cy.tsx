@@ -231,4 +231,37 @@ describe("GIVEN a SteppedTracker", () => {
       .findByTestId("ErrorSolidIcon")
       .should("exist");
   });
+
+  it("should show in-progress icon for parent steps with only some completed steps", () => {
+    const TestComponent = (
+      <SteppedTracker
+        orientation="vertical"
+        activeStep={2}
+        style={{ width: "100%", minWidth: 300, maxWidth: 400 }}
+      >
+        <TrackerStep stage="inprogress">
+          <StepLabel>Step 1</StepLabel>
+        </TrackerStep>
+        <TrackerStep depth={1} stage="completed">
+          <StepLabel>Step 1.1</StepLabel>
+        </TrackerStep>
+        <TrackerStep depth={1}>
+          <StepLabel>Step 1.2</StepLabel>
+        </TrackerStep>
+        <TrackerStep depth={1}>
+          <StepLabel>Step 1.3</StepLabel>
+        </TrackerStep>
+        <TrackerStep>
+          <StepLabel>Step 2</StepLabel>
+        </TrackerStep>
+      </SteppedTracker>
+    );
+
+    cy.mount(TestComponent);
+
+    cy.findAllByRole("listitem")
+      .filter(`:nth-child(${1})`)
+      .findByTestId("ProgressInprogressIcon")
+      .should("exist");
+  });
 });

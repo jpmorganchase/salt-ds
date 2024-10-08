@@ -46,6 +46,22 @@ Use a vertical stepped tracker when horizontal space is limited in the context o
 
   </LivePreview>
   
+  <LivePreview componentName="stepped-tracker" exampleName="NestedVertical" >
+
+## Nested Vertical
+
+Vertically orientated stepped trackers can be nested. Nesting is achieved by use of the `depth` prop on the `TrackerStep` component. Up to 2 levels of nesting are supported.
+
+When a step has nested children, the step icon will show an "in progress" icon when some of the children are completed, and a "completed" icon when all children are completed.
+
+Nesting is only supported in vertical orientation.
+
+### Best practices
+
+While sub-steps support the use of descriptive text and long labels, it's recommended to keep the labels short and concise to preserve the visual calarity of nested steps.
+
+  </LivePreview>
+  
   <LivePreview componentName="stepped-tracker" exampleName="StepProgression" >
 
 ## Step progression
