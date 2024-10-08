@@ -6,6 +6,7 @@ import {
   ContextMenu as ContextMenuGrid,
   CustomFilter,
   Default,
+  ProvidedCellEditors,
   ToolPanel,
 } from "../src/examples";
 
@@ -241,6 +242,33 @@ EditableCellFocus.play = async ({ canvasElement }) => {
     await userEvent.click(cell);
 
     await expect(cell).toHaveClass("ag-cell-focus", "editable-cell");
+  }
+};
+
+// Function to emulate pausing between interactions
+function sleep(ms: number) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+export const EditableCellEditing: StoryObj<typeof AgGridReact> = () => {
+  return <ProvidedCellEditors />;
+};
+EditableCellEditing.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
+
+  // Wait until the grid fully loaded
+  await sleep(200);
+
+  // Do findAll here so this will also work in `side-by-side` mode
+  const textEditorCells = await canvas.findAllByText("USD");
+
+  for (const cell of textEditorCells) {
+    await userEvent.dblClick(cell);
+
+    await expect(cell).toHaveClass("ag-cell-inline-editing", "editable-cell");
+    await expect(await within(cell).findByRole("textbox")).toHaveClass(
+      "ag-input-field-input",
+    );
   }
 };
 
