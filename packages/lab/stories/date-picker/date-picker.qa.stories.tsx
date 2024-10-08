@@ -6,7 +6,6 @@ import {
   DatePickerRangePanel,
   DatePickerSingleInput,
   DatePickerSinglePanel,
-  getCurrentLocale,
 } from "@salt-ds/lab";
 import type { StoryFn } from "@storybook/react";
 import { QAContainer, type QAContainerProps } from "docs/components";
