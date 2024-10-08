@@ -36,13 +36,14 @@ const DialogTemplate: StoryFn<
     preheader?: string;
     content?: DialogContentProps["children"];
     longDialog?: boolean;
+    maxHeight?: number;
   }
-> = ({ status, header, content, longDialog }) => {
+> = ({ status, header, content, longDialog, maxHeight = 420 }) => {
   const defaultHeader = "Congratulations! You have created a Dialog.";
   const defaultContent =
     "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.";
   return (
-    <div style={{ width: 1000, maxHeight: 420, padding: "0 200px" }}>
+    <div style={{ width: 1000, maxHeight: maxHeight, padding: "0 200px" }}>
       <FakeDialog status={status} open>
         <DialogHeader header={header ?? defaultHeader} />
         <DialogContent className={longDialog ? "longDialog" : ""}>
@@ -53,7 +54,7 @@ const DialogTemplate: StoryFn<
             Cancel
           </Button>
           <Button>Previous</Button>
-          <Button sentiment="accented" appearance="transparent">
+          <Button sentiment="accented" appearance="solid">
             Next
           </Button>
         </DialogActions>
@@ -113,7 +114,7 @@ StatusVariants.parameters = {
 export const ContentVariants: StoryFn<QAContainerProps> = () => {
   const DensityValues = ["high", "medium", "low", "touch"] as const;
   const longContent = (
-    <>
+    <StackLayout style={{ maxHeight: 180 }}>
       <div>
         Lorem Ipsum is simply dummy text of the printing and typesetting
         industry. Lorem Ipsum has been the industry's standard dummy text ever
@@ -157,23 +158,23 @@ export const ContentVariants: StoryFn<QAContainerProps> = () => {
         during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum
         dolor sit amet..", comes from a line in section 1.10.32.
       </div>
-    </>
+    </StackLayout>
   );
   return (
     <StackLayout style={{ width: 1200, height: 380 }} gap={1}>
       {DensityValues.map((density) => (
         <Fragment key={density}>
           <SaltProvider density={density}>
-            <DialogTemplate content={longContent} />
+            <DialogTemplate content={longContent} maxHeight={500} />
           </SaltProvider>
           <SaltProvider density={density} mode="dark">
-            <DialogTemplate content={longContent} />
+            <DialogTemplate content={longContent} maxHeight={500} />
           </SaltProvider>
           <SaltProvider density={density}>
-            <DialogTemplate longDialog />
+            <DialogTemplate longDialog maxHeight={500} />
           </SaltProvider>
           <SaltProvider density={density} mode="dark">
-            <DialogTemplate longDialog />
+            <DialogTemplate longDialog maxHeight={500} />
           </SaltProvider>
         </Fragment>
       ))}
