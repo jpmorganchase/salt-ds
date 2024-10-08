@@ -18,7 +18,7 @@ import "./dialog.stories.css";
 import { Fragment } from "react";
 
 export default {
-  title: "Core/Dialog/QA",
+  title: "Core/Dialog/Dialog QA",
   component: Dialog,
 } as Meta<typeof Dialog>;
 
