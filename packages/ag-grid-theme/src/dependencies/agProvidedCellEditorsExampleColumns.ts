@@ -14,6 +14,8 @@ const agProvidedCellEditorsExampleColumns = [
     field: "name",
     cellEditor: "agTextCellEditor",
     editable: true,
+    filter: true,
+    floatingFilter: true,
     cellClass: ["editable-cell"],
   },
   {
@@ -22,6 +24,8 @@ const agProvidedCellEditorsExampleColumns = [
     cellEditor: "agLargeTextCellEditor",
     cellEditorPopup: true,
     editable: true,
+    filter: true,
+    floatingFilter: true,
     cellClass: ["editable-cell"],
   },
   {
@@ -32,6 +36,8 @@ const agProvidedCellEditorsExampleColumns = [
       values: languages,
     },
     editable: true,
+    filter: true,
+    floatingFilter: true,
     cellClass: ["editable-cell"],
   },
   {
@@ -40,8 +46,13 @@ const agProvidedCellEditorsExampleColumns = [
     cellEditor: "agRichSelectCellEditor",
     cellEditorParams: {
       values: shortColorData,
+      allowTyping: true,
+      filterList: true,
+      highlightMatch: true,
     },
     editable: true,
+    filter: true,
+    floatingFilter: true,
     cellClass: ["editable-cell"],
   },
   {
@@ -55,6 +66,8 @@ const agProvidedCellEditorsExampleColumns = [
     // Right aligns header
     type: "numericColumn",
     editable: true,
+    filter: true,
+    floatingFilter: true,
     cellClass: ["numeric-cell", "editable-cell"],
   },
   {
@@ -67,6 +80,8 @@ const agProvidedCellEditorsExampleColumns = [
       max: "2019-12-31",
     },
     editable: true,
+    filter: true,
+    floatingFilter: true,
     cellClass: ["editable-cell"],
   },
 ];
