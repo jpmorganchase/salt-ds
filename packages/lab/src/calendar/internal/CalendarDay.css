@@ -67,6 +67,7 @@
 .saltCalendarDay-selectedStart:hover,
 .saltCalendarDay-selectedEnd,
 .saltCalendarDay-selectedEnd:hover {
+  color: var(--salt-content-primary-foreground);
   background: var(--salt-selectable-background-selected);
   box-shadow: 0 0 0 var(--salt-size-border) var(--salt-selectable-borderColor-selected);
 }
@@ -75,6 +76,7 @@
 .saltCalendarDay-hoveredSpan:hover,
 .saltCalendarDay-selectedSpan,
 .saltCalendarDay-selectedSpan:hover {
+  color: var(--salt-content-primary-foreground);
   background: var(--salt-selectable-background-hover);
   box-shadow: calc(var(--salt-size-border) * -2) 0 0 0 var(--salt-selectable-background-hover), calc(var(--salt-size-border) * -1) 0 0 var(--salt-size-border)
     var(--salt-selectable-borderColor-selected), 0 calc(var(--salt-size-border) * -1) 0 var(--salt-selectable-borderColor-selected);
