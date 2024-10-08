@@ -43,6 +43,10 @@ div[class*="ag-theme-salt"] .ag-cell-inline-editing {
   padding: 0;
 }
 
+div[class*="ag-theme-salt"] .ag-cell-inline-editing.editable-cell input[class^="ag-"] {
+  padding: 0 var(--salt-spacing-100);
+}
+
 div[class*="ag-theme-salt"] .editable-cell,
 div[class*="ag-theme-salt"] .editable-numeric-cell {
   outline: var(--salt-size-border) var(--salt-container-borderStyle) var(--salt-editable-borderColor);
