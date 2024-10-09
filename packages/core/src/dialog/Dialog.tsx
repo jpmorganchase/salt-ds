@@ -14,6 +14,7 @@ import {
   forwardRef,
   useEffect,
   useMemo,
+  useRef,
   useState,
 } from "react";
 import { Scrim } from "../scrim";
@@ -122,18 +123,30 @@ export const Dialog = forwardRef<HTMLDivElement, DialogProps>(
 
     const floatingRef = useForkRef<HTMLDivElement>(floating, ref);
 
+    const timeoutId = useRef<NodeJS.Timeout | null>(null);
+
     useEffect(() => {
       if (open && !showComponent) {
         setShowComponent(true);
+        document.documentElement.style.overflow = "hidden";
       }
 
       if (!open && showComponent) {
-        const animate = setTimeout(() => {
+        timeoutId.current = setTimeout(() => {
           setShowComponent(false);
-        }, 300); // var(--salt-duration-perceptible)
-        return () => clearTimeout(animate);
+          document.documentElement.style.removeProperty("overflow");
+        }, 300);
       }
-    }, [open, showComponent, setShowComponent]);
+    }, [open, showComponent]);
+
+    useEffect(() => {
+      return () => {
+        if (timeoutId.current) {
+          clearTimeout(timeoutId.current);
+        }
+        document.documentElement.style.removeProperty("overflow");
+      };
+    }, []);
 
     const contextValue = useMemo(() => ({ status, id }), [status, id]);
 

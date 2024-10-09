@@ -183,5 +183,19 @@ describe("GIVEN a Dialog", () => {
       cy.findByRole("dialog").should("be.visible");
       cy.findByRole("button", { name: "Next" }).should("be.focused");
     });
+
+    it("THEN should set the root overflow to hidden", () => {
+      cy.mount(<Default />);
+      cy.document().its("documentElement.style.overflow").should("equal", "");
+
+      cy.findByRole("button", { name: "Open dialog" }).realClick();
+      cy.findByRole("dialog").should("be.visible");
+      cy.document()
+        .its("documentElement.style.overflow")
+        .should("equal", "hidden");
+
+      cy.findByRole("button", { name: "Cancel" }).realClick();
+      cy.document().its("documentElement.style.overflow").should("equal", "");
+    });
   });
 });
