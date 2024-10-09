@@ -8,7 +8,7 @@
   border-color: var(--salt-actionable-secondary-borderColor, transparent);
   border-style: solid;
   border-width: var(--salt-actionable-borderWidth, 0);
-  border-radius: var(--salt-palette-corner-weaker, 0);
+  border-radius: var(--salt-palette-corner-weak, 0);
   height: var(--salt-size-base);
   color: var(--salt-actionable-secondary-foreground);
   text-transform: var(--salt-text-action-textTransform);
