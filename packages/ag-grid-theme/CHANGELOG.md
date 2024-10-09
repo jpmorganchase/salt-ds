@@ -1,5 +1,13 @@
 # @salt-ds/ag-grid-theme
 
+## 2.1.1
+
+### Patch Changes
+
+- 4f3bec9: Fixed `.editable-cell` incorrectly setting text-align. For numeric columns, use both `.edtiable-cell` and `.numeric-cell` for `cellClass`. Fixes #4141.
+- Updated dependencies [4ccc245]
+  - @salt-ds/theme@1.23.0
+
 ## 2.1.0
 
 ### Minor Changes
