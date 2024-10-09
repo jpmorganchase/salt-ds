@@ -274,7 +274,12 @@ FloatingFilterFocus.play = async ({ canvasElement }) => {
   for (const input of codeFloatingFilterInputs) {
     await userEvent.click(input);
 
-    // Snapshot floating input focus ring
+    await userEvent.type(input, "A");
+    await userEvent.tab();
+    await userEvent.tab();
+    await userEvent.tab();
+
+    // Snapshot floating input focus ring & active button in first column
   }
 };
 
