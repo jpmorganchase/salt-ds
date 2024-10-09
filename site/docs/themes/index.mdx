@@ -12,7 +12,7 @@ Salt theme is a collection of defined visual styles that shape the overall look-
 
 A theme in Salt enables delivery teams to streamline the process of creating a consistent design language across their business domain, platforms or products.
 
-### Design Tokens
+### Design tokens
 
 Salt themes are defined by design tokens that are organized into 3 groups. Each group of tokens has a specific purpose:
 
@@ -76,7 +76,7 @@ Determines the dominant color – blue (aligned to the current theme) or teal (a
   alt="Styling options button accent mode example"
 />
 
-#### Corner Radius
+#### Corner radius
 
 Sets predefined corners in certain components to sharp or round.
 
@@ -94,7 +94,7 @@ Displays heading and/or action fonts as Amplitude or Open Sans.
   alt="Styling options button font example"
 />
 
-### Theme Recipe
+### Theme recipe
 
 Styling options can be combined as a 'theme recipe' to create design languages which are optimized for a specific context, for example:
 
@@ -167,13 +167,13 @@ Optional border support is already being rolled out across Salt's form control c
   alt="Input border styling options"
 />
 
-## JPM Brand endorsed
+## JPM brand endorsed
 
 Salt Next brings the [JPM brand](https://jpmcbrandtoolbox.com/) identity to CIB (Commercial & Investment Bank) digital applications.
 
 Working with Corporate Brand and CIB Marketing, the Salt design system has adopted key styles to ensure visual alignment to the JPM brand with the Salt Next theme. Although not an exact match, these changes have been approved by both parties to address the complexities of desktop and web applications across the CIB.
 
-### Color Palette
+### Color palette
 
 The Salt Next foundational color palette has been refreshed with updated shades of the same general colors found in Salt and UITK (gray, blue, teal, purple, red, orange, and green). These new colors are derived from the hue and saturation values in the JPM MasterBrand Styleguide. The updated palette creates a lighter and brighter look suitable for both institutional and consumer experiences.
 
@@ -210,7 +210,7 @@ In addition to the foundational ramp, a revamped categorical color palette has b
   alt="Revamped categorical color palette"
 />
 
-### Amplitude Font
+### Amplitude font
 
 Salt Next introduces the Amplitude typeface, taken directly from the CIB Brand Guidelines, for use in header and display sizes as well as button labels. Open Sans remains the primary typeface for body copy text sizes and smaller in the Salt Next type ramps.
 
@@ -219,7 +219,7 @@ Salt Next introduces the Amplitude typeface, taken directly from the CIB Brand G
   alt="New Amplitude typeface"
 />
 
-### Corner Ramps
+### Corner ramps
 
 Salt Next includes the ability to apply predefined corner radiuses to specified components. This rounded corner feature, from the CIB Brand Guidelines, allows designers to create a softer, more consumer-friendly look-and-feel in their products. Each density includes four different radiuses, which help achieve a sense of visual nesting when used together.
 
@@ -239,7 +239,7 @@ The current theme offers limited styling options except for density and mode. Cu
 
 **If you are a designer**, be aware that if your product team is continuing to use the current theme you need to continue using the Salt Light and Dark Component Figma libraries, and associated Figma libraries. In H2 2024 we will include current theme support in the new Salt Next [variable-driven Figma library](#new-variable-driven-libraries).
 
-## How to use the Salt Next theme
+## Guidance on using the Salt Next theme
 
 The Salt Next theme is now stable and available in both Figma and code to use in your production delivery.
 
@@ -247,7 +247,7 @@ The Salt Next theme is now stable and available in both Figma and code to use in
 
 To provide 'styling options' and theming capability the new Salt Next Figma libraries implement Salt design tokens as Figma [variables](https://help.figma.com/hc/en-us/sections/14506605769879-Variables) to define all the visual attributes of components.
 
-#### New Variable-Driven Libraries
+#### New variable-driven libraries
 
 Using Figma variables enables us to reduce the number of Figma libraries we need to provide. Salt Next has the following libraries:
 
@@ -276,7 +276,7 @@ To access the libraries:
 
 4. Add the three available libraries (referenced above) to your file.
 
-#### Using the Style Library
+#### Using the style Library
 
 The Style Library includes all the Figma variables needed to design for Salt. It includes the semantic palette, category colors, size and spacing values, corner radiuses, typographic styles and more. Using Style Library variables to style your components automatically adds 'styling options' to your components.
 
@@ -287,13 +287,13 @@ The variables are set up to match our tokens in code. When inspecting a design i
   alt="Figma next library next dev mode"
 />
 
-#### Using the Colors Library
+#### Using the colors library
 
 The Colors Library provides access to all foundational color ramps (e.g., `--blue-100` to `--blue-900`). These colors are linked to the semantic styles in the Salt Next Styles library.
 
 You don't need to add these colors to your project unless you want to use them directly. For consistency across components and to benefit from 'styling options', Salt recommends only applying variables from the [Salt Next Style library](#using-the-style-library) to your project.
 
-#### Using the Component & Pattern Library
+#### Using the component & pattern library
 
 The new variable-driven Component & Pattern library functions similarly to the current Salt component library but with key differences:
 
@@ -301,7 +301,7 @@ The new variable-driven Component & Pattern library functions similarly to the c
 - No need to set density at the component level.
 - Access to new 'styling options' like round corners, accent color, and Amplitude as a heading and/or action font.
 
-#### Using Component 'styling options' in Figma
+#### Using component 'styling options' in Figma
 
 1.  Add components: Drag from the Assets panel.
 2.  Access 'styling options': In the right sidebar, click 'Change variable mode' (double hexagon) icon in the Layer panel to see all available options.
@@ -319,7 +319,7 @@ The new variable-driven Component & Pattern library functions similarly to the c
         1. **Heading Font**: Set display and H1-H4 type styles as Open Sans or Amplitude.
         1. **Action Font**: Set action components (mostly Buttons) type styles as Open Sans or Amplitude.
 
-#### Setting a Theme Recipe in Figma
+#### Setting a theme recipe in Figma
 
 While you can set styling options for individual components, we recommend setting the required options for a product / LOB design language at a Figma Page level. This ensures consistency and avoids setting variables component-by-component. Options can be adjusted further at a nested Frame or Component level where you need to mix styling options.
 
@@ -342,7 +342,7 @@ To use it, replace the existing `SaltProvider` with `SaltProviderNext` and impor
 
 The new provider adds `.salt-theme-next` to the root or provider element, along with any needed data attributes (e.g., `data-corner`). All values in `theme-next.css` are scoped to `.salt-theme-next` to override any existing values.
 
-#### Apply Styling Options
+#### Apply styling options
 
 You can apply styling options as corresponding props to `SaltProviderNext` –
 
@@ -355,7 +355,7 @@ You can apply styling options as corresponding props to `SaltProviderNext` –
 >
 ```
 
-#### Amplitude Font
+#### Amplitude font
 
 When Amplitude is used, default heading font weight is set to medium (instead of semi bold for Open Sans), via `--salt-palette-text-heading-fontWeight` and `--salt-palette-text-display-fontWeight` variables.
 
@@ -399,12 +399,12 @@ To ensure that every user sees the Amplitude font correctly, you'll need to add 
 }
 ```
 
-#### Display Text Sizes
+#### Display text sizes
 
 Display text styles are updated to distinguish them from heading text (h1/h2/h3/h4).
 They are now larger than h1 across densities.
 
-#### Setting a Theme Recipe in code
+#### Setting a theme recipe in code
 
 You can use an npm package to ensure consistency. For example, a team can encapsulate preferred presets, allowing product teams to use them without needing detailed knowledge of the options.
 
