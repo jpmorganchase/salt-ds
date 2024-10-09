@@ -5681,7 +5681,7 @@ __metadata:
   dependencies:
     del: "npm:^7.0.0"
   peerDependencies:
-    "@salt-ds/theme": ^1.22.0
+    "@salt-ds/theme": ^1.23.0
   languageName: unknown
   linkType: soft
 
