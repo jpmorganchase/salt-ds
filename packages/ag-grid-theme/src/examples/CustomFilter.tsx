@@ -13,13 +13,9 @@ const CustomFilter = (props: AgGridReactProps) => {
 
   const handlePopMt100kClick = async () => {
     await api?.setColumnFilterModel("population", {
-      filterModels: [
-        {
-          type: "greaterThan",
-          filter: 100000,
-          filterTo: null,
-        },
-      ],
+      type: "greaterThan",
+      filter: 100000,
+      filterTo: null,
     });
 
     api?.onFilterChanged();
@@ -28,13 +24,9 @@ const CustomFilter = (props: AgGridReactProps) => {
 
   const handlePopLt100kClick = async () => {
     await api?.setColumnFilterModel("population", {
-      filterModels: [
-        {
-          type: "lessThan",
-          filter: 100000,
-          filterTo: null,
-        },
-      ],
+      type: "lessThan",
+      filter: 100000,
+      filterTo: null,
     });
 
     api?.onFilterChanged();
@@ -43,13 +35,9 @@ const CustomFilter = (props: AgGridReactProps) => {
 
   const filterNewYork = async () => {
     await api?.setColumnFilterModel("name", {
-      filterModels: [
-        {
-          type: "equals",
-          filter: "New York",
-          filterTo: null,
-        },
-      ],
+      type: "equals",
+      filter: "New York",
+      filterTo: null,
     });
     api?.onFilterChanged();
     setHasSavedState(false);
