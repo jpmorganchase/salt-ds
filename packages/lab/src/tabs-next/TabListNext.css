@@ -8,6 +8,7 @@
   background: transparent;
   min-height: calc(var(--salt-size-base) + var(--salt-spacing-100));
   gap: var(--salt-spacing-100);
+  max-width: 100%;
 }
 
 .saltTabListNext-center {

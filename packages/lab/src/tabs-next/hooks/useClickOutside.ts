@@ -1,9 +1,9 @@
 import { useWindow } from "@salt-ds/window";
 import { type RefObject, useEffect } from "react";
 
-export function useFocusOutside(
+export function useClickOutside(
   elementRef: RefObject<HTMLElement>,
-  onFocusOutside: () => void,
+  onClickOutside: () => void,
   enabled: boolean,
 ) {
   const targetWindow = useWindow();
@@ -11,20 +11,20 @@ export function useFocusOutside(
   useEffect(() => {
     if (!enabled) return;
 
-    const handleFocus = (event: FocusEvent) => {
+    const handleClick = (event: FocusEvent) => {
       // If focus is outside the tabstrip (including the list) then close the list.
       if (
         event.target instanceof HTMLElement &&
         !elementRef.current?.contains(event.target)
       ) {
-        onFocusOutside();
+        onClickOutside();
       }
     };
 
-    targetWindow?.addEventListener("focusin", handleFocus);
+    targetWindow?.addEventListener("click", handleClick, true);
 
     return () => {
-      targetWindow?.removeEventListener("focusin", handleFocus);
+      targetWindow?.removeEventListener("click", handleClick, true);
     };
-  }, [targetWindow, onFocusOutside, elementRef, enabled]);
+  }, [targetWindow, onClickOutside, elementRef, enabled]);
 }

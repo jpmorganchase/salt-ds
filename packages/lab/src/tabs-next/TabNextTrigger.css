@@ -1,0 +1,16 @@
+.saltTabNextTrigger {
+  all: unset;
+  display: flex;
+  gap: var(--salt-spacing-100);
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+}
+
+/* The action should be triggered by clicking anywhere on the tab. */
+.saltTabNextTrigger::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}

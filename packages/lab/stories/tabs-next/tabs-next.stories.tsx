@@ -15,6 +15,7 @@ import {
 import {
   AddIcon,
   BankCheckIcon,
+  CloseIcon,
   CreditCardIcon,
   HomeIcon,
   LineChartIcon,
@@ -25,7 +26,9 @@ import {
   TabListNext,
   type TabListNextProps,
   TabNext,
+  TabNextAction,
   TabNextPanel,
+  TabNextTrigger,
   TabsNext,
 } from "@salt-ds/lab";
 import type { StoryFn } from "@storybook/react";
@@ -77,7 +80,7 @@ export const Bordered: StoryFn<typeof TabsNext> = (args) => {
           <TabListNext appearance="bordered">
             {tabs.map((label) => (
               <TabNext value={label} key={label}>
-                {label}
+                <TabNextTrigger>{label}</TabNextTrigger>
               </TabNext>
             ))}
           </TabListNext>
@@ -103,7 +106,7 @@ export const Inline: StoryFn<typeof TabsNext> = (args) => {
         <TabListNext appearance="transparent">
           {tabs.map((label) => (
             <TabNext value={label} key={label}>
-              {label}
+              <TabNextTrigger>{label}</TabNextTrigger>
             </TabNext>
           ))}
         </TabListNext>
@@ -144,7 +147,9 @@ export const WithIcon: StoryFn<typeof TabsNext> = (args) => {
                   key={label}
                   disabled={label === "Transactions"}
                 >
-                  <Icon aria-hidden /> {label}
+                  <TabNextTrigger>
+                    <Icon aria-hidden /> {label}
+                  </TabNextTrigger>
                 </TabNext>
               );
             })}
@@ -167,8 +172,10 @@ export const WithBadge: StoryFn<typeof TabsNext> = (args) => {
           <TabListNext>
             {tabs.map((label) => (
               <TabNext value={label} key={label}>
-                {label}
-                {label === "Transactions" && <Badge value={2} />}
+                <TabNextTrigger>
+                  {label}
+                  {label === "Transactions" && <Badge value={2} />}
+                </TabNextTrigger>
               </TabNext>
             ))}
           </TabListNext>
@@ -189,7 +196,7 @@ export const Overflow: StoryFn<typeof TabsNext> = (args) => {
         <TabListNext style={{ maxWidth: 350, margin: "auto" }}>
           {lotsOfTabs.map((label) => (
             <TabNext value={label} key={label}>
-              {label}
+              <TabNextTrigger>{label}</TabNextTrigger>
             </TabNext>
           ))}
         </TabListNext>
@@ -215,14 +222,20 @@ export const Closable: StoryFn<typeof TabsNext> = (args) => {
     <div style={{ minWidth: 0, maxWidth: "100%" }}>
       <TabsNext {...args}>
         <TabBar padding separator>
-          <TabListNext
-            onClose={(_event, closedTab) => {
-              setTabs(tabs.filter((tab) => tab !== closedTab));
-            }}
-          >
+          <TabListNext>
             {tabs.map((label) => (
-              <TabNext value={label} key={label} closable={tabs.length > 1}>
-                {label}
+              <TabNext value={label} key={label}>
+                <TabNextTrigger>{label}</TabNextTrigger>
+                {tabs.length > 1 && (
+                  <TabNextAction
+                    onClick={() => {
+                      setTabs(tabs.filter((tab) => tab !== label));
+                    }}
+                    aria-label="Close tab"
+                  >
+                    <CloseIcon aria-hidden />
+                  </TabNextAction>
+                )}
               </TabNext>
             ))}
           </TabListNext>
@@ -244,7 +257,7 @@ export const DisabledTabs: StoryFn<typeof TabsNext> = (args) => {
           <TabListNext appearance="bordered">
             {tabs.map((label) => (
               <TabNext disabled={label === "Loans"} value={label} key={label}>
-                {label}
+                <TabNextTrigger>{label}</TabNextTrigger>
               </TabNext>
             ))}
           </TabListNext>
@@ -275,11 +288,11 @@ export const AddTabs: StoryFn<typeof TabsNext> = (args) => {
         value={value}
         onChange={(_event, newValue) => setValue(newValue)}
       >
-        <TabBar padding separator>
+        <TabBar padding separator style={{ width: 500 }}>
           <TabListNext>
             {tabs.map((label) => (
               <TabNext value={label} key={label}>
-                {label}
+                <TabNextTrigger>{label}</TabNextTrigger>
               </TabNext>
             ))}
           </TabListNext>
@@ -316,7 +329,7 @@ export const Backgrounds = (): ReactElement => {
           <TabListNext activeColor={variant} appearance="transparent">
             {tabs.map((label) => (
               <TabNext value={label} key={label}>
-                {label}
+                <TabNextTrigger>{label}</TabNextTrigger>
               </TabNext>
             ))}
           </TabListNext>
@@ -411,7 +424,7 @@ export const AddWithDialog = () => {
           <TabListNext>
             {tabs.map((label) => (
               <TabNext value={label} key={label}>
-                {label}
+                <TabNextTrigger>{label}</TabNextTrigger>
               </TabNext>
             ))}
           </TabListNext>
@@ -487,8 +500,13 @@ export const CloseWithConfirmation = () => {
             }}
           >
             {tabs.map((label) => (
-              <TabNext value={label} key={label} closable={tabs.length > 1}>
-                {label}
+              <TabNext value={label} key={label}>
+                <TabNextTrigger>{label}</TabNextTrigger>
+                {tabs.length > 1 && (
+                  <TabNextAction aria-label="Close tab">
+                    <CloseIcon aria-hidden />
+                  </TabNextAction>
+                )}
               </TabNext>
             ))}
           </TabListNext>
@@ -507,7 +525,7 @@ export const WithInteractiveElementInPanel: StoryFn<typeof TabsNext> = (
         <TabListNext appearance="transparent">
           {tabs.map((label) => (
             <TabNext value={label} key={label}>
-              {label}
+              <TabNextTrigger>{label}</TabNextTrigger>
             </TabNext>
           ))}
         </TabListNext>

@@ -5,7 +5,6 @@ import {
   type ComponentPropsWithoutRef,
   forwardRef,
   useEffect,
-  useLayoutEffect,
   useRef,
   useState,
 } from "react";
@@ -43,11 +42,6 @@ export const TabNextPanel = forwardRef<HTMLDivElement, TabNextPanelProps>(
       }
     }, [value, id, registerPanel]);
 
-    const [tabId, setTabId] = useState<string | undefined>(undefined);
-    useLayoutEffect(() => {
-      setTabId(getTabId(value));
-    }, [getTabId, value]);
-
     const [hasFocusableChildren, setHasFocusableChildren] = useState(false);
     useEffect(() => {
       if (!panelRef.current) return;
@@ -67,6 +61,7 @@ export const TabNextPanel = forwardRef<HTMLDivElement, TabNextPanelProps>(
     }, []);
 
     const hidden = selected !== value;
+    const tabId = getTabId(value);
 
     return (
       <div

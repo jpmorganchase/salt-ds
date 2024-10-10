@@ -12,6 +12,7 @@ import {
   type TabListNextProps,
   TabNext,
   TabNextPanel,
+  TabNextTrigger,
   TabsNext,
 } from "@salt-ds/lab";
 import { type ChangeEvent, type ReactElement, useState } from "react";
@@ -34,7 +35,7 @@ export const ActiveColor = (): ReactElement => {
             <TabListNext activeColor={variant}>
               {tabs.map((label) => (
                 <TabNext value={label} key={label}>
-                  {label}
+                  <TabNextTrigger>{label}</TabNextTrigger>
                 </TabNext>
               ))}
             </TabListNext>
