@@ -20,12 +20,14 @@ div[class*="ag-theme-salt"] .ag-ltr .ag-filter-apply-panel-button {
   margin-left: 8px;
 }
 
-div[class*="ag-theme-salt"] .ag-standard-button.ag-filter-apply-panel-button[ref="applyFilterButton"] {
+div[class*="ag-theme-salt"] .ag-standard-button.ag-filter-apply-panel-button[ref="applyFilterButton"],
+div[class*="ag-theme-salt"] .ag-standard-button.ag-filter-apply-panel-button[data-ref="applyFilterButton"] {
   background: var(--salt-actionable-cta-background);
   color: var(--salt-actionable-cta-foreground);
 }
 
-div[class*="ag-theme-salt"] .ag-standard-button.ag-filter-apply-panel-button[ref="applyFilterButton"]:hover {
+div[class*="ag-theme-salt"] .ag-standard-button.ag-filter-apply-panel-button[ref="applyFilterButton"]:hover,
+div[class*="ag-theme-salt"] .ag-standard-button.ag-filter-apply-panel-button[data-ref="applyFilterButton"]:hover {
   background: var(--salt-actionable-cta-background-hover);
   color: var(--salt-actionable-cta-foreground-hover);
 }
