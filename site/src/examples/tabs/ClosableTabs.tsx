@@ -1,4 +1,12 @@
-import { TabBar, TabListNext, TabNext, TabsNext } from "@salt-ds/lab";
+import { CloseIcon } from "@salt-ds/icons";
+import {
+  TabBar,
+  TabListNext,
+  TabNext,
+  TabNextAction,
+  TabNextTrigger,
+  TabsNext,
+} from "@salt-ds/lab";
 import { type ReactElement, useState } from "react";
 
 export const ClosableTabs = (): ReactElement => {
@@ -13,14 +21,20 @@ export const ClosableTabs = (): ReactElement => {
   return (
     <TabsNext defaultValue={tabs[0]}>
       <TabBar separator padding>
-        <TabListNext
-          onClose={(_event, closedTab) => {
-            setTabs(tabs.filter((tab) => tab !== closedTab));
-          }}
-        >
+        <TabListNext>
           {tabs.map((label) => (
-            <TabNext value={label} key={label} closable={tabs.length > 1}>
-              {label}
+            <TabNext value={label} key={label}>
+              <TabNextTrigger>{label}</TabNextTrigger>
+              {tabs.length > 1 && (
+                <TabNextAction
+                  onClick={() => {
+                    setTabs(tabs.filter((tab) => tab !== label));
+                  }}
+                  aria-label="Close tab"
+                >
+                  <CloseIcon aria-hidden />
+                </TabNextAction>
+              )}
             </TabNext>
           ))}
         </TabListNext>

@@ -10,7 +10,6 @@ import {
 } from "react";
 
 import { makePrefixer, useControlled } from "@salt-ds/core";
-import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import { type Item, TabsNextContext } from "./TabsNextContext";
 import { useCollection } from "./hooks/useCollection";
@@ -33,10 +32,12 @@ export const TabsNext = forwardRef<HTMLDivElement, TabsNextProps>(
     const { className, children, value, defaultValue, onChange, ...rest } =
       props;
 
-    const valueToTabIdMap = useRef<Map<string, string>>(new Map());
-    const valueToPanelIdMap = useRef<Map<string, string>>(new Map());
-    const [_, updateState] = useState({});
-    const forceUpdate = useCallback(() => updateState({}), []);
+    const [valueToTabIdMap, setValueToIdMap] = useState({
+      map: new Map<string, string>(),
+    });
+    const [valueToPanelIdMap, setValueToPanelIdMap] = useState({
+      map: new Map<string, string>(),
+    });
 
     const {
       registerItem,
@@ -47,6 +48,8 @@ export const TabsNext = forwardRef<HTMLDivElement, TabsNextProps>(
       getLast,
       items,
     } = useCollection({ wrap: true });
+
+    const activeTab = useRef<Pick<Item, "id" | "value">>();
 
     const [selected, setSelectedState] = useControlled({
       controlled: value,
@@ -67,53 +70,77 @@ export const TabsNext = forwardRef<HTMLDivElement, TabsNextProps>(
       [onChange, item],
     );
 
-    const timeoutRef = useRef<undefined | number>(undefined);
-    const targetWindow = useWindow();
-
-    const triggerUpdate = useCallback(() => {
-      timeoutRef.current = targetWindow?.setTimeout(() => {
-        forceUpdate();
-      }, 100);
-    }, [targetWindow, forceUpdate]);
-
     const registerTab = useCallback(
       ({ id, value, element }: Item) => {
-        valueToTabIdMap.current.set(value, id);
+        setValueToIdMap(({ map }) => {
+          map.set(value, id);
+          return { map };
+        });
+
+        // If tab was previously focused, re-focus.
+        if (activeTab.current?.value === value) {
+          element.focus();
+        }
+
         const cleanup = registerItem({ id, element, value });
-        triggerUpdate();
         return () => {
-          cleanup();
-          valueToTabIdMap.current.delete(value);
+          const items = cleanup();
+          setValueToIdMap(({ map }) => {
+            map.delete(value);
+            return { map };
+          });
+
+          requestAnimationFrame(() => {
+            if (
+              document.activeElement === document.body &&
+              activeTab.current?.value === value
+            ) {
+              const activeIndex = items.current.findIndex(
+                (item) => value === item.value,
+              );
+              const nextActive =
+                items.current[
+                  Math.min(activeIndex + 1, items.current.length - 1)
+                ];
+              setSelectedState((old) => {
+                if (old === value) {
+                  return nextActive.value;
+                }
+                return old;
+              });
+              nextActive?.element?.focus();
+            }
+          });
         };
       },
-      [triggerUpdate, registerItem],
+      [registerItem],
     );
 
-    const registerPanel = useCallback(
-      (id: string, value: string) => {
-        valueToPanelIdMap.current.set(value, id);
-        triggerUpdate();
-        return () => {
-          valueToPanelIdMap.current.delete(value);
-        };
-      },
-      [triggerUpdate],
-    );
+    const registerPanel = useCallback((id: string, value: string) => {
+      setValueToPanelIdMap(({ map }) => {
+        map.set(value, id);
+        return { map };
+      });
+      return () => {
+        setValueToIdMap(({ map }) => {
+          map.delete(value);
+          return { map };
+        });
+      };
+    }, []);
 
-    // biome-ignore lint/correctness/useExhaustiveDependencies: needed to trigger an update
     const getPanelId = useCallback(
       (value: string) => {
-        return valueToPanelIdMap.current.get(value);
+        return valueToPanelIdMap.map.get(value);
       },
-      [_],
+      [valueToPanelIdMap],
     );
 
-    // biome-ignore lint/correctness/useExhaustiveDependencies: needed to trigger an update
     const getTabId = useCallback(
       (value: string) => {
-        return valueToTabIdMap.current.get(value);
+        return valueToTabIdMap.map.get(value);
       },
-      [_],
+      [valueToTabIdMap],
     );
 
     const context = useMemo(
@@ -130,6 +157,7 @@ export const TabsNext = forwardRef<HTMLDivElement, TabsNextProps>(
         getFirst,
         getLast,
         items,
+        activeTab,
       }),
       [
         registerPanel,

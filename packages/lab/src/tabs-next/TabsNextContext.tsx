@@ -1,5 +1,5 @@
 import { createContext } from "@salt-ds/core";
-import { type SyntheticEvent, useContext } from "react";
+import { type MutableRefObject, type SyntheticEvent, useContext } from "react";
 import type { useCollection } from "./hooks/useCollection";
 
 export interface Item {
@@ -16,6 +16,7 @@ export interface TabsNextContextValue
   getTabId: (value: string) => string | undefined;
   selected?: string;
   setSelected: (event: SyntheticEvent, value: string) => void;
+  activeTab: MutableRefObject<Pick<Item, "id" | "value"> | undefined>;
 }
 
 export const TabsNextContext = createContext<TabsNextContextValue>(
@@ -33,6 +34,7 @@ export const TabsNextContext = createContext<TabsNextContextValue>(
     getPanelId: () => undefined,
     getTabId: () => undefined,
     setSelected: () => undefined,
+    activeTab: { current: undefined },
   },
 );
 

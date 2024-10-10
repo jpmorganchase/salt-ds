@@ -1,4 +1,10 @@
-import { TabBar, TabListNext, TabNext, TabsNext } from "@salt-ds/lab";
+import {
+  TabBar,
+  TabListNext,
+  TabNext,
+  TabNextTrigger,
+  TabsNext,
+} from "@salt-ds/lab";
 import type { ReactElement } from "react";
 
 const tabs = ["Home", "Transactions", "Loans", "Checks", "Liquidity"];
@@ -11,7 +17,7 @@ export const DisabledTabs = (): ReactElement => {
           {tabs.map((label) => {
             return (
               <TabNext disabled={label === "Loans"} value={label} key={label}>
-                {label}
+                <TabNextTrigger>{label}</TabNextTrigger>
               </TabNext>
             );
           })}
