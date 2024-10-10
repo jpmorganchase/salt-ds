@@ -10,6 +10,7 @@ import {
   TabListNext,
   TabNext,
   TabNextPanel,
+  TabNextTrigger,
   TabsNext,
 } from "@salt-ds/lab";
 import { useRouter } from "next/navigation";
@@ -143,7 +144,7 @@ export const DetailComponent: FC<LayoutProps> = ({ children }) => {
           <TabListNext appearance="transparent">
             {tabs.map(({ name, label }) => (
               <TabNext key={name} value={name}>
-                {label}
+                <TabNextTrigger>{label}</TabNextTrigger>
               </TabNext>
             ))}
           </TabListNext>

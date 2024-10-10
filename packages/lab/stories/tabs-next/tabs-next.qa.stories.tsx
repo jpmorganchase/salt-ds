@@ -3,6 +3,7 @@ import {
   TabListNext,
   type TabListNextProps,
   TabNext,
+  TabNextTrigger,
   TabsNext,
 } from "@salt-ds/lab";
 import type { StoryFn } from "@storybook/react";
@@ -55,7 +56,7 @@ export const LotsOfTabsTabstrip: TabstripStory = () => {
           <TabListNext>
             {tabs.map((label) => (
               <TabNext key={label} value={label}>
-                {label}
+                <TabNextTrigger>{label}</TabNextTrigger>
               </TabNext>
             ))}
           </TabListNext>
@@ -71,7 +72,7 @@ export const LotsOfTabsTabstrip: TabstripStory = () => {
           <TabListNext appearance="transparent">
             {tabs.map((label) => (
               <TabNext key={label} value={label}>
-                {label}
+                <TabNextTrigger>{label}</TabNextTrigger>
               </TabNext>
             ))}
           </TabListNext>

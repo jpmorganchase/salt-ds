@@ -1,4 +1,9 @@
-import { capitalize, makePrefixer, useForkRef } from "@salt-ds/core";
+import {
+  capitalize,
+  makePrefixer,
+  useForkRef,
+  useIsomorphicLayoutEffect,
+} from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import clsx from "clsx";
@@ -8,13 +13,12 @@ import {
   type SyntheticEvent,
   forwardRef,
   useCallback,
-  useMemo,
+  useEffect,
   useRef,
   useState,
 } from "react";
 
 import tablistNextCss from "./TabListNext.css";
-import { TabListNextContext } from "./TabListNextContext";
 import { TabOverflowList } from "./TabOverflowList";
 import { useTabsNext } from "./TabsNextContext";
 import { useOverflow } from "./hooks/useOverflow";
@@ -55,16 +59,8 @@ export const TabListNext = forwardRef<HTMLDivElement, TabListNextProps>(
       window: targetWindow,
     });
 
-    const {
-      selected,
-      setSelected,
-      getNext,
-      getPrevious,
-      getFirst,
-      getLast,
-      item,
-      items,
-    } = useTabsNext();
+    const { selected, getNext, getPrevious, getFirst, getLast, items, item } =
+      useTabsNext();
 
     const tabstripRef = useRef<HTMLDivElement>(null);
     const handleRef = useForkRef(tabstripRef, ref);
@@ -93,7 +89,11 @@ export const TabListNext = forwardRef<HTMLDivElement, TabListNextProps>(
 
       if (action) {
         event.preventDefault();
-        const activeTabId = targetWindow?.document.activeElement?.id;
+        const activeTabId =
+          targetWindow?.document.activeElement?.closest("[role=tab]")?.id ??
+          targetWindow?.document.activeElement
+            ?.closest("[role=presentation]")
+            ?.querySelector("[role=tab]")?.id;
         if (!activeTabId) return;
         const nextItem = action(activeTabId);
         if (nextItem) {
@@ -102,60 +102,31 @@ export const TabListNext = forwardRef<HTMLDivElement, TabListNextProps>(
       }
     };
 
-    const handleClose = useCallback(
-      (event: SyntheticEvent, id: string) => {
-        const currentItem = item(id);
-        const firstItem = getFirst();
-        const newActive = id === firstItem?.id ? getNext(id) : getPrevious(id);
-
-        if (currentItem == null) return;
-
-        onClose?.(event, currentItem.value);
-
-        if (!newActive) return;
-        if (id === selected) {
-          setSelected(event, newActive.id);
-        } else {
-          newActive?.element?.focus({ preventScroll: true });
-        }
-      },
-      [getFirst, getNext, getPrevious, selected, onClose, setSelected],
-    );
-
-    const contextValue = useMemo(
-      () => ({
-        handleClose,
-      }),
-      [handleClose],
-    );
-
     return (
-      <TabListNextContext.Provider value={contextValue}>
-        <div
-          role="tablist"
-          className={clsx(
-            withBaseName(),
-            withBaseName(appearance),
-            withBaseName("horizontal"),
-            withBaseName(`activeColor${capitalize(activeColor)}`),
-            className,
-          )}
-          ref={handleRef}
-          onKeyDown={handleKeyDown}
-          {...rest}
+      <div
+        role="tablist"
+        className={clsx(
+          withBaseName(),
+          withBaseName(appearance),
+          withBaseName("horizontal"),
+          withBaseName(`activeColor${capitalize(activeColor)}`),
+          className,
+        )}
+        ref={handleRef}
+        onKeyDown={handleKeyDown}
+        {...rest}
+      >
+        {visible}
+        <TabOverflowList
+          isMeasuring={isMeasuring}
+          buttonRef={overflowButtonRef}
+          tabstripRef={tabstripRef}
+          open={menuOpen}
+          setOpen={setMenuOpen}
         >
-          {visible}
-          <TabOverflowList
-            isMeasuring={isMeasuring}
-            buttonRef={overflowButtonRef}
-            tabstripRef={tabstripRef}
-            open={menuOpen}
-            setOpen={setMenuOpen}
-          >
-            {hidden}
-          </TabOverflowList>
-        </div>
-      </TabListNextContext.Provider>
+          {hidden}
+        </TabOverflowList>
+      </div>
     );
   },
 );

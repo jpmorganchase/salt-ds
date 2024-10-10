@@ -13,7 +13,6 @@ import {
   Children,
   type ComponentPropsWithoutRef,
   type Dispatch,
-  type FocusEvent,
   type ReactNode,
   type Ref,
   type RefObject,
@@ -23,6 +22,7 @@ import {
   useRef,
 } from "react";
 import tabOverflowListCss from "./TabOverflowList.css";
+import { useClickOutside } from "./hooks/useClickOutside";
 import { useDismissWithEscape } from "./hooks/useDismissWithEscape";
 import { useFocusOutside } from "./hooks/useFocusOutside";
 
@@ -71,6 +71,8 @@ export const TabOverflowList = forwardRef<HTMLDivElement, TabOverflowListProps>(
       ],
     });
 
+    const rootRef = useRef<HTMLDivElement>(null);
+    const handleRootRef = useForkRef(rootRef, ref);
     const listRef = useRef<HTMLDivElement>(null);
     const handleListRef = useForkRef<HTMLDivElement>(listRef, refs.setFloating);
 
@@ -78,7 +80,8 @@ export const TabOverflowList = forwardRef<HTMLDivElement, TabOverflowListProps>(
       setOpen(false);
     }, [setOpen]);
 
-    useFocusOutside(listRef, handleFocusOutside);
+    useFocusOutside(rootRef, handleFocusOutside, open);
+    useClickOutside(rootRef, handleFocusOutside, open);
 
     const handleDismiss = useCallback(() => {
       setTimeout(() => {
@@ -111,13 +114,6 @@ export const TabOverflowList = forwardRef<HTMLDivElement, TabOverflowListProps>(
       setOpen(true);
     };
 
-    const handleBlur = (event: FocusEvent<HTMLDivElement>) => {
-      console.log(event.currentTarget, event.relatedTarget);
-      if (!event.currentTarget.contains(event.relatedTarget)) {
-        setOpen(false);
-      }
-    };
-
     const handleListClick = () => {
       setOpen(false);
     };
@@ -133,7 +129,7 @@ export const TabOverflowList = forwardRef<HTMLDivElement, TabOverflowListProps>(
     if (childCount === 0 && !isMeasuring) return null;
 
     return (
-      <div className={withBaseName()} ref={ref}>
+      <div className={withBaseName()} ref={handleRootRef}>
         <Button
           data-overflowbutton
           tabIndex={-1}
@@ -156,13 +152,11 @@ export const TabOverflowList = forwardRef<HTMLDivElement, TabOverflowListProps>(
           className={withBaseName("list")}
           data-hidden={!open}
           onFocus={handleFocus}
-          onBlur={handleBlur}
           onClick={handleListClick}
           ref={handleListRef}
           style={
             open ? { left: x ?? 0, top: y ?? 0, position: strategy } : undefined
           }
-          tabIndex={-1}
           id={listId}
         >
           <div className={withBaseName("listContainer")}>{children}</div>

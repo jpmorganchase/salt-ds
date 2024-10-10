@@ -61,6 +61,12 @@ export const TabsNext = forwardRef<HTMLDivElement, TabsNextProps>(
 
         if (!newItem) return;
 
+        setTimeout(() => {
+          const ele = item(action)?.element;
+          console.log(ele, action);
+          ele?.focus();
+        }, 1000);
+
         setSelectedState(newItem.value);
         onChange?.(event, newItem.value);
       },
@@ -78,11 +84,13 @@ export const TabsNext = forwardRef<HTMLDivElement, TabsNextProps>(
 
     const registerTab = useCallback(
       ({ id, value, element }: Item) => {
+        console.log("ADD", { value, id, element });
         valueToTabIdMap.current.set(value, id);
         const cleanup = registerItem({ id, element, value });
         triggerUpdate();
         return () => {
           cleanup();
+          console.log("REMOVE", { value, id, element });
           valueToTabIdMap.current.delete(value);
         };
       },
