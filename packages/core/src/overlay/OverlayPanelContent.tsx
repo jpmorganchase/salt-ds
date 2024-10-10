@@ -40,14 +40,20 @@ export const OverlayPanelContent = forwardRef<
 
   return (
     <>
-      <div className={clsx({ [withBaseName("scroll")]: scrollTop > 0 })} />
       <div
-        className={clsx(withBaseName(), className)}
-        onScroll={handleScroll}
-        {...rest}
-        ref={ref}
-      >
-        {children}
+        className={clsx(withBaseName("separator"), {
+          [withBaseName("scroll")]: scrollTop > 0,
+        })}
+      />
+      <div className={clsx(withBaseName("container"))}>
+        <div
+          className={clsx(withBaseName(), className)}
+          onScroll={handleScroll}
+          {...rest}
+          ref={ref}
+        >
+          {children}
+        </div>
       </div>
     </>
   );

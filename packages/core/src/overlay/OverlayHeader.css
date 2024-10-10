@@ -9,7 +9,7 @@
   box-sizing: border-box;
 }
 
-.saltOverlayHeader-body {
+.saltOverlayHeader-container {
   flex-grow: 1;
   margin: 0;
   display: flex;
@@ -21,7 +21,7 @@
   margin: 0;
 }
 
-.saltOverlayHeader-endAdornmentContainer {
+.saltOverlayHeader-actionsContainer {
   align-self: flex-start;
 }
 
