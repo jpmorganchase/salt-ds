@@ -18,8 +18,6 @@ import { CloseIcon } from "@salt-ds/icons";
 import type { Meta, StoryFn } from "@storybook/react";
 import { type ChangeEvent, useState } from "react";
 
-import "./overlay.stories.css";
-
 export default {
   title: "Core/Overlay",
 } as Meta<typeof Overlay>;
@@ -34,12 +32,8 @@ export const Default: StoryFn<OverlayProps> = ({ ...args }) => {
       </OverlayTrigger>
 
       <OverlayPanel aria-labelledby={id}>
-        <OverlayPanelContent>
-          <h3 id={id} className="content-heading">
-            Title
-          </h3>
-          <div>Content of Overlay</div>
-        </OverlayPanelContent>
+        <OverlayHeader id={id} header="Title" />
+        <OverlayPanelContent>Content of Overlay</OverlayPanelContent>
       </OverlayPanel>
     </Overlay>
   );
@@ -116,7 +110,8 @@ export const HeaderWithCloseButton = ({ onOpenChange }: OverlayProps) => {
   const CloseButton = () => (
     <Button
       aria-label="Close overlay"
-      variant="secondary"
+      appearance="transparent"
+      sentiment="neutral"
       onClick={handleClose}
     >
       <CloseIcon aria-hidden />
@@ -137,7 +132,7 @@ export const HeaderWithCloseButton = ({ onOpenChange }: OverlayProps) => {
         <OverlayHeader
           id={id}
           header="Header block"
-          endAdornment={<CloseButton />}
+          actions={<CloseButton />}
         />
         <OverlayPanelContent>
           <StackLayout gap={1}>
@@ -173,7 +168,8 @@ export const LongContent = () => {
   const CloseButton = () => (
     <Button
       aria-label="Close overlay"
-      variant="secondary"
+      appearance="transparent"
+      sentiment="neutral"
       onClick={handleClose}
     >
       <CloseIcon aria-hidden />
@@ -186,23 +182,14 @@ export const LongContent = () => {
         <Button>Show Overlay</Button>
       </OverlayTrigger>
       <OverlayPanel aria-labelledby={id} style={{ width: 300 }}>
-        <OverlayHeader
-          id={id}
-          header="New feature"
-          endAdornment={<CloseButton />}
-        />
-        <OverlayPanelContent
-          style={{
-            height: 100,
-            overflow: "auto",
-          }}
-        >
+        <OverlayHeader id={id} header="New feature" actions={<CloseButton />} />
+        <OverlayPanelContent style={{ height: 100 }}>
           <StackLayout gap={1}>
             <Text>
               A global leader, we deliver strategic advice and solutions,
               including capital raising, risk management, and trade finance to
               corporations, institutions and governments. A global leader, we
-              deliver strategic advice and solutions, including capitai raising,
+              deliver strategic advice and solutions, including capital raising,
               risk management, and trade finance to corporations, institutions
               and governments. A global leader, we deliver strategic advice and
               solutions, including capital raising, risk management, and trade

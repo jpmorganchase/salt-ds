@@ -1,15 +1,14 @@
 import {
   Button,
   Overlay,
+  OverlayHeader,
   OverlayPanel,
-  OverlayPanelCloseButton,
   OverlayPanelContent,
   OverlayTrigger,
 } from "@salt-ds/core";
 import type { Meta, StoryFn } from "@storybook/react";
 import { QAContainer, type QAContainerProps } from "docs/components";
-
-import "./overlay.stories.css";
+import { CloseIcon } from "@salt-ds/icons";
 
 export default {
   title: "Core/Overlay/Overlay QA",
@@ -31,8 +30,8 @@ export const Default: StoryFn<QAContainerProps> = (props) => {
           <Button>Show Overlay</Button>
         </OverlayTrigger>
         <OverlayPanel>
+          <OverlayHeader header="Title" />
           <OverlayPanelContent>
-            <h3 className="content-heading">Title</h3>
             <div>Content of Overlay</div>
           </OverlayPanelContent>
         </OverlayPanel>
@@ -46,6 +45,15 @@ Default.parameters = {
 };
 
 export const CloseButton: StoryFn<QAContainerProps> = (props) => {
+  const CloseButton = () => (
+    <Button
+      aria-label="Close overlay"
+      appearance="transparent"
+      sentiment="neutral"
+    >
+      <CloseIcon aria-hidden />
+    </Button>
+  );
   return (
     <QAContainer
       height={800}
@@ -60,9 +68,8 @@ export const CloseButton: StoryFn<QAContainerProps> = (props) => {
           <Button>Show Overlay</Button>
         </OverlayTrigger>
         <OverlayPanel>
-          <OverlayPanelCloseButton />
+          <OverlayHeader header="Title" actions={<CloseButton />} />
           <OverlayPanelContent>
-            <h3 className="content-heading">Title</h3>
             <div>Content of Overlay</div>
           </OverlayPanelContent>
         </OverlayPanel>

@@ -4,6 +4,7 @@ import {
   CheckboxGroup,
   Divider,
   Overlay,
+  OverlayHeader,
   OverlayPanel,
   OverlayPanelContent,
   OverlayTrigger,
@@ -71,35 +72,27 @@ const WithActionsContent = ({ id, onClose }: WithActionsContentProps) => {
   };
 
   return (
-    <>
-      <h3 id={id} style={{ marginTop: 0, paddingBottom: 10 }}>
+    <StackLayout gap={1}>
+      <Checkbox
+        indeterminate={indeterminate}
+        checked={!indeterminate}
+        label={`${controlledValues.length} of 2 selected`}
+        onChange={handleChange}
+      />
+      <Divider variant="secondary" />
+      <CheckboxGroup
+        checkedValues={controlledValues}
+        onChange={handleGroupChange}
+      >
+        {checkboxesData.map((data) => (
+          <Checkbox key={data.value} {...data} />
+        ))}
+      </CheckboxGroup>
+      <Divider variant="secondary" />
+      <Button style={{ float: "right", marginRight: 2 }} onClick={handleExport}>
         Export
-      </h3>
-      <StackLayout gap={1}>
-        <Checkbox
-          indeterminate={indeterminate}
-          checked={!indeterminate}
-          label={`${controlledValues.length} of 2 selected`}
-          onChange={handleChange}
-        />
-        <Divider variant="secondary" />
-        <CheckboxGroup
-          checkedValues={controlledValues}
-          onChange={handleGroupChange}
-        >
-          {checkboxesData.map((data) => (
-            <Checkbox key={data.value} {...data} />
-          ))}
-        </CheckboxGroup>
-        <Divider variant="secondary" />
-        <Button
-          style={{ float: "right", marginRight: 2 }}
-          onClick={handleExport}
-        >
-          Export
-        </Button>
-      </StackLayout>
-    </>
+      </Button>
+    </StackLayout>
   );
 };
 
@@ -126,6 +119,7 @@ export const WithActions = () => {
         }}
         aria-labelledby={id}
       >
+        <OverlayHeader id={id} header="Export" />
         <OverlayPanelContent>
           <WithActionsContent
             id={id}

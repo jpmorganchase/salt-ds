@@ -6,7 +6,7 @@ import {
   type ReactNode,
   forwardRef,
 } from "react";
-import { H3, Text } from "../text";
+import { H4, Text } from "../text";
 import { makePrefixer } from "../utils";
 import overlayHeaderCss from "./OverlayHeader.css";
 
@@ -17,15 +17,15 @@ export interface OverlayPanelContentProps
   /**
    * Description text is displayed just below the header
    **/
-  description?: string;
+  description?: ReactNode;
   /**
    * End adornment component
    */
-  endAdornment?: ReactNode;
+  actions?: ReactNode;
   /**
    * Header text
    */
-  header?: string;
+  header?: ReactNode;
   /**
    * The id of the Overlay Header, used for aria-labelledby on OverlayPanel
    **/
@@ -33,7 +33,7 @@ export interface OverlayPanelContentProps
   /**
    * Preheader text is displayed just above the header
    **/
-  preheader?: string;
+  preheader?: ReactNode;
 }
 
 export const OverlayHeader = forwardRef<
@@ -47,26 +47,19 @@ export const OverlayHeader = forwardRef<
     window: targetWindow,
   });
 
-  const {
-    className,
-    description,
-    header,
-    endAdornment,
-    id,
-    preheader,
-    ...rest
-  } = props;
+  const { className, description, header, actions, id, preheader, ...rest } =
+    props;
 
   return (
     <div className={clsx(withBaseName(), className)} {...rest} ref={ref}>
-      <div className={withBaseName("body")}>
+      <div className={withBaseName("container")}>
         {preheader && (
           <Text className={withBaseName("preheader")}>{preheader}</Text>
         )}
         {header && (
-          <H3 id={id} className={withBaseName("header")}>
+          <H4 id={id} className={withBaseName("header")}>
             {header}
-          </H3>
+          </H4>
         )}
         {description && (
           <Text color="secondary" className={withBaseName("description")}>
@@ -74,10 +67,8 @@ export const OverlayHeader = forwardRef<
           </Text>
         )}
       </div>
-      {endAdornment && (
-        <div className={withBaseName("endAdornmentContainer")}>
-          {endAdornment}
-        </div>
+      {actions && (
+        <div className={withBaseName("actionsContainer")}>{actions}</div>
       )}
     </div>
   );

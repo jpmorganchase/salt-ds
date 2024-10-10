@@ -1,6 +1,7 @@
 import {
   Button,
   Overlay,
+  OverlayHeader,
   OverlayPanel,
   OverlayPanelContent,
   OverlayTrigger,
@@ -8,8 +9,6 @@ import {
   useId,
 } from "@salt-ds/core";
 import type { ReactElement } from "react";
-
-import styles from "./index.module.css";
 
 export const Default = (): ReactElement => {
   const id = useId();
@@ -19,10 +18,8 @@ export const Default = (): ReactElement => {
         <Button>Show Overlay</Button>
       </OverlayTrigger>
       <OverlayPanel aria-labelledby={id}>
+        <OverlayHeader id={id} header="Title" />
         <OverlayPanelContent>
-          <h3 className={styles.contentHeading} id={id}>
-            Title
-          </h3>
           <div>
             Content of Overlay
             <br />
