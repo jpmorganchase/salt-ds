@@ -1,13 +1,14 @@
 import {
   Button,
   Overlay,
+  OverlayHeader,
   OverlayPanel,
-  OverlayPanelCloseButton,
   OverlayPanelContent,
   OverlayTrigger,
   StackLayout,
 } from "@salt-ds/core";
 import { type ReactElement, useState } from "react";
+import { CloseIcon } from "@salt-ds/icons";
 
 export const LongContent = (): ReactElement => {
   const [open, setOpen] = useState(false);
@@ -15,7 +16,16 @@ export const LongContent = (): ReactElement => {
   const onOpenChange = (newOpen: boolean) => setOpen(newOpen);
 
   const handleClose = () => setOpen(false);
-
+  const CloseButton = () => (
+    <Button
+      aria-label="Close overlay"
+      appearance="transparent"
+      sentiment="neutral"
+      onClick={handleClose}
+    >
+      <CloseIcon aria-hidden />
+    </Button>
+  );
   return (
     <Overlay placement="right" open={open} onOpenChange={onOpenChange}>
       <OverlayTrigger>
@@ -24,12 +34,11 @@ export const LongContent = (): ReactElement => {
       <OverlayPanel
         style={{
           width: 300,
-          height: 200,
           overflow: "auto",
         }}
       >
-        <OverlayPanelCloseButton onClick={handleClose} />
-        <OverlayPanelContent>
+        <OverlayHeader actions={<CloseButton />} />
+        <OverlayPanelContent style={{ height: 100 }}>
           <StackLayout>
             <div>
               Lorem Ipsum is simply dummy text of the printing and typesetting
