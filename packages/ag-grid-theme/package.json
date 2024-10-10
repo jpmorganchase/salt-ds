@@ -25,6 +25,7 @@
     "del": "^7.0.0"
   },
   "peerDependencies": {
-    "@salt-ds/theme": "^1.23.0"
+    "@salt-ds/theme": "^1.23.0",
+    "ag-grid-community": ">=28.0.0"
   }
 }
