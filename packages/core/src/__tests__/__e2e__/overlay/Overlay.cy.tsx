@@ -3,7 +3,7 @@ import { composeStories } from "@storybook/react";
 import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
 
 const composedStories = composeStories(overlayStories);
-const { Default, Right, Bottom, Left, HeaderWithCloseButton } = composedStories;
+const { Default, Right, Bottom, Left, CloseButton } = composedStories;
 
 describe("GIVEN an Overlay", () => {
   checkAccessibility(composedStories);
@@ -30,28 +30,26 @@ describe("GIVEN an Overlay", () => {
     });
 
     it("THEN it should focus into the overlay when opened", () => {
-      cy.mount(<HeaderWithCloseButton />);
+      cy.mount(<CloseButton />);
 
       cy.realPress("Tab");
       cy.realPress("Enter");
       cy.findByRole("dialog").should("be.visible");
       //focus into overlay
-      cy.findAllByRole("button", { name: "Close overlay" }).should(
-        "be.focused",
-      );
+      cy.findByRole("button", { name: /Close Overlay/i }).should("be.focused");
       cy.realPress("Tab");
     });
 
     it("THEN it should trap focus within Overlay once opened", () => {
-      cy.mount(<HeaderWithCloseButton />);
+      cy.mount(<CloseButton />);
 
       cy.findByRole("button", { name: /Show Overlay/i }).realClick();
       cy.findByRole("dialog").should("be.visible");
-      cy.findByRole("button", { name: /Close overlay/i }).should("be.focused");
+      cy.findByRole("button", { name: /Close Overlay/i }).should("be.focused");
       cy.realPress("Tab");
       cy.findByRole("button", { name: /Hover me/i }).should("be.focused");
       cy.realPress("Tab");
-      cy.findByRole("button", { name: /Close overlay/i }).should("be.focused");
+      cy.findByRole("button", { name: /Close Overlay/i }).should("be.focused");
     });
   });
 
@@ -114,15 +112,14 @@ describe("GIVEN an Overlay", () => {
   describe("WHEN a Close Button is used", () => {
     it("THEN it should remain open until outside Overlay click or close button click", () => {
       const onOpenChangeSpy = cy.stub().as("onOpenChangeSpy");
-      cy.mount(<HeaderWithCloseButton onOpenChange={onOpenChangeSpy} />);
+      cy.mount(<CloseButton onOpenChange={onOpenChangeSpy} />);
 
       cy.realPress("Tab");
       cy.realPress("Enter");
       cy.findByRole("dialog").should("be.visible");
       cy.get("@onOpenChangeSpy").should("have.callCount", 1);
 
-      cy.findByRole("button", { name: /Close overlay/i }).realClick();
-
+      cy.findByRole("button", { name: /Close Overlay/i }).realClick();
       cy.findByRole("dialog").should("not.exist");
 
       cy.findByRole("button", { name: /Show Overlay/i }).realClick();

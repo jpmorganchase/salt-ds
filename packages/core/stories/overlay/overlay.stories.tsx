@@ -4,17 +4,15 @@ import {
   CheckboxGroup,
   Divider,
   Overlay,
-  OverlayHeader,
   OverlayPanel,
+  OverlayPanelCloseButton,
   OverlayPanelContent,
   type OverlayProps,
   OverlayTrigger,
   StackLayout,
-  Text,
   Tooltip,
   useId,
 } from "@salt-ds/core";
-import { CloseIcon } from "@salt-ds/icons";
 import type { Meta, StoryFn } from "@storybook/react";
 import { type ChangeEvent, useState } from "react";
 
@@ -60,49 +58,7 @@ Right.args = {
   placement: "right",
 };
 
-export const Header = ({ onOpenChange }: OverlayProps) => {
-  const [open, setOpen] = useState(false);
-  const id = useId();
-
-  const onChange = (newOpen: boolean) => {
-    setOpen(newOpen);
-    onOpenChange?.(newOpen);
-  };
-
-  return (
-    <Overlay open={open} onOpenChange={onChange}>
-      <OverlayTrigger>
-        <Button>Show Overlay</Button>
-      </OverlayTrigger>
-      <OverlayPanel
-        aria-labelledby={id}
-        style={{
-          width: 500,
-        }}
-      >
-        <OverlayHeader id={id} header="Header block" />
-        <OverlayPanelContent>
-          <StackLayout gap={1}>
-            <Text>
-              Content of Overlay. Lorem Ipsum is simply dummy text of the
-              printing and typesetting industry. Lorem Ipsum has been the
-              industry's standard dummy text ever since the 1500s. When an
-              unknown printer took a galley of type and scrambled it to make a
-              type specimen book.
-            </Text>
-            <div>
-              <Tooltip content={"I'm a tooltip"}>
-                <Button>hover me</Button>
-              </Tooltip>
-            </div>
-          </StackLayout>
-        </OverlayPanelContent>
-      </OverlayPanel>
-    </Overlay>
-  );
-};
-
-export const HeaderWithCloseButton = ({ onOpenChange }: OverlayProps) => {
+export const CloseButton = ({ onOpenChange }: OverlayProps) => {
   const [open, setOpen] = useState(false);
   const id = useId();
 
@@ -113,47 +69,25 @@ export const HeaderWithCloseButton = ({ onOpenChange }: OverlayProps) => {
 
   const handleClose = () => setOpen(false);
 
-  const CloseButton = () => (
-    <Button
-      aria-label="Close overlay"
-      variant="secondary"
-      onClick={handleClose}
-    >
-      <CloseIcon aria-hidden />
-    </Button>
-  );
-
   return (
     <Overlay open={open} onOpenChange={onChange}>
       <OverlayTrigger>
         <Button>Show Overlay</Button>
       </OverlayTrigger>
-      <OverlayPanel
-        aria-labelledby={id}
-        style={{
-          width: 500,
-        }}
-      >
-        <OverlayHeader
-          id={id}
-          header="Header block"
-          endAdornment={<CloseButton />}
-        />
+      <OverlayPanel aria-labelledby={id}>
+        <OverlayPanelCloseButton onClick={handleClose} />
         <OverlayPanelContent>
-          <StackLayout gap={1}>
-            <Text>
-              Content of Overlay. Lorem Ipsum is simply dummy text of the
-              printing and typesetting industry. Lorem Ipsum has been the
-              industry's standard dummy text ever since the 1500s. When an
-              unknown printer took a galley of type and scrambled it to make a
-              type specimen book.
-            </Text>
-            <div>
-              <Tooltip content={"I'm a tooltip"}>
-                <Button>hover me</Button>
-              </Tooltip>
-            </div>
-          </StackLayout>
+          <h3 id={id} className="content-heading">
+            Title
+          </h3>
+          <div>
+            Content of Overlay
+            <br />
+            <br />
+            <Tooltip content={"I'm a tooltip"}>
+              <Button>hover me</Button>
+            </Tooltip>
+          </div>
         </OverlayPanelContent>
       </OverlayPanel>
     </Overlay>
@@ -161,73 +95,42 @@ export const HeaderWithCloseButton = ({ onOpenChange }: OverlayProps) => {
 };
 
 export const LongContent = () => {
-  const [open, setOpen] = useState(true);
-  const id = useId();
+  const [open, setOpen] = useState(false);
 
   const onOpenChange = (newOpen: boolean) => {
     setOpen(newOpen);
   };
 
   const handleClose = () => setOpen(false);
-
-  const CloseButton = () => (
-    <Button
-      aria-label="Close overlay"
-      variant="secondary"
-      onClick={handleClose}
-    >
-      <CloseIcon aria-hidden />
-    </Button>
-  );
-
   return (
-    <Overlay open={open} onOpenChange={onOpenChange}>
+    <Overlay placement="right" open={open} onOpenChange={onOpenChange}>
       <OverlayTrigger>
         <Button>Show Overlay</Button>
       </OverlayTrigger>
-      <OverlayPanel aria-labelledby={id} style={{ width: 300 }}>
-        <OverlayHeader
-          id={id}
-          header="New feature"
-          endAdornment={<CloseButton />}
-        />
-        <OverlayPanelContent
-          style={{
-            height: 100,
-            overflow: "auto",
-          }}
-        >
-          <StackLayout gap={1}>
-            <Text>
-              A global leader, we deliver strategic advice and solutions,
-              including capital raising, risk management, and trade finance to
-              corporations, institutions and governments. A global leader, we
-              deliver strategic advice and solutions, including capitai raising,
-              risk management, and trade finance to corporations, institutions
-              and governments. A global leader, we deliver strategic advice and
-              solutions, including capital raising, risk management, and trade
-              finance to corporations, institutions and governments.
-            </Text>
-            <Text>
-              A global leader, we deliver strategic advice and solutions,
-              including capital raising, risk management, and trade finance to
-              corporations, institutions and governments. A global leader, we
-              deliver strategic advice and solutions, including capital raising,
-              risk management, and trade finance to corporations, institutions
-              and governments. A global leader, we deliver strategic advice and
-              solutions, including capital raising, risk management, and trade
-              finance to corporations, institutions and governments. A global
-              leader, we deliver strategic advice and solutions, including
-              capital raising, risk management, and trade finance to
-              corporations, institutions and governments.
-            </Text>
-            <Text>Markets</Text>
-            <Text>
-              Serving the world's largest corporate clients and institutional
-              investors, we support the investment cycle with market-leading
-              research, analytics and trade execution across multiple asset
-              classes.
-            </Text>
+      <OverlayPanel
+        style={{
+          width: 300,
+          height: 200,
+          overflow: "auto",
+        }}
+      >
+        <OverlayPanelCloseButton onClick={handleClose} />
+        <OverlayPanelContent>
+          <StackLayout>
+            <div>
+              Lorem Ipsum is simply dummy text of the printing and typesetting
+              industry. Lorem Ipsum has been the industry's standard dummy text
+              ever since the 1500s, when an unknown printer took a galley of
+              type and scrambled it to make a type specimen book.
+            </div>
+            <div>
+              It has survived not only five centuries, but also the leap into
+              electronic typesetting, remaining essentially unchanged. It was
+              popularised in the 1960s with the release of Letraset sheets
+              containing Lorem Ipsum passages, and more recently with desktop
+              publishing software like Aldus PageMaker including versions of
+              Lorem Ipsum.
+            </div>
           </StackLayout>
         </OverlayPanelContent>
       </OverlayPanel>

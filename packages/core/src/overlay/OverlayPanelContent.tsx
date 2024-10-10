@@ -4,16 +4,15 @@ import clsx from "clsx";
 import {
   type ComponentPropsWithoutRef,
   type ReactNode,
-  type UIEvent,
   forwardRef,
-  useState,
 } from "react";
 import { makePrefixer } from "../utils";
 import overlayPanelContentCss from "./OverlayPanelContent.css";
 
 const withBaseName = makePrefixer("saltOverlayPanelContent");
 
-export interface OverlayHeaderProps extends ComponentPropsWithoutRef<"div"> {
+export interface OverlayPanelContentProps
+  extends ComponentPropsWithoutRef<"div"> {
   /**
    * The content of Overlay Panel Content
    */
@@ -22,7 +21,7 @@ export interface OverlayHeaderProps extends ComponentPropsWithoutRef<"div"> {
 
 export const OverlayPanelContent = forwardRef<
   HTMLDivElement,
-  OverlayHeaderProps
+  OverlayPanelContentProps
 >(function OverlayPanelContent(props, ref) {
   const targetWindow = useWindow();
   useComponentCssInjection({
@@ -32,23 +31,10 @@ export const OverlayPanelContent = forwardRef<
   });
 
   const { children, className, ...rest } = props;
-  const [scrollTop, setScrollTop] = useState(0);
-
-  const handleScroll = (event: UIEvent<HTMLElement>) => {
-    setScrollTop(event.currentTarget.scrollTop);
-  };
 
   return (
-    <>
-      <div className={clsx({ [withBaseName("scroll")]: scrollTop > 0 })} />
-      <div
-        className={clsx(withBaseName(), className)}
-        onScroll={handleScroll}
-        {...rest}
-        ref={ref}
-      >
-        {children}
-      </div>
-    </>
+    <div className={clsx(withBaseName(), className)} {...rest} ref={ref}>
+      {children}
+    </div>
   );
 });

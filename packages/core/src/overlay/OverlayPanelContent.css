@@ -1,12 +1,6 @@
 .saltOverlayPanelContent {
   animation: var(--salt-animation-fade-in-center);
   position: relative;
-  overflow-y: auto;
+  overflow: auto;
   padding: var(--saltOverlay-content-padding, var(--salt-spacing-100));
-}
-
-.saltOverlayPanelContent-scroll {
-  border-bottom: var(--salt-size-border) var(--salt-separable-borderStyle) var(--salt-separable-tertiary-borderColor);
-  box-shadow: var(--salt-overlayable-shadow-scroll);
-  margin-bottom: calc(0 - var(--salt-size-border));
 }
