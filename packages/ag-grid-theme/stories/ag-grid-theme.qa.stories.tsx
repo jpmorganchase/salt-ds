@@ -86,19 +86,19 @@ ColumnMenuGeneral.play = async ({ canvasElement }) => {
     await userEvent.click(
       cell
         .closest(".ag-header-cell-comp-wrapper")!
-        .querySelector(".ag-icon.ag-icon-menu")!,
+        .querySelector(".ag-icon.ag-icon-menu-alt")!,
     );
 
-    const dialog = within(gridRoot).getByRole("dialog", {
+    const menu = within(gridRoot).getByRole("presentation", {
       name: "Column Menu",
     });
 
     await userEvent.hover(
-      within(dialog).getByRole("treeitem", { name: /Pin Column/i }),
+      within(menu).getByRole("treeitem", { name: /Pin Column/i }),
     );
 
     // snapshot the menu
-    await expect(dialog).toBeInTheDocument();
+    await expect(menu).toBeInTheDocument();
   }
 };
 
@@ -117,16 +117,14 @@ ColumnMenuFilter.play = async ({ canvasElement }) => {
     await userEvent.click(
       cell
         .closest(".ag-header-cell-comp-wrapper")!
-        .querySelector(".ag-icon.ag-icon-menu")!,
+        .querySelector(".ag-icon.ag-icon-filter")!,
     );
 
-    const dialog = within(gridRoot).getByRole("dialog", {
-      name: "Column Menu",
+    const menu = within(gridRoot).getByRole("presentation", {
+      name: "Column Filter",
     });
 
-    await userEvent.click(within(dialog).getByRole("tab", { name: /filter/i }));
-
-    const searchInput = within(dialog).getByRole("textbox", {
+    const searchInput = within(menu).getByRole("textbox", {
       name: "Search filter values",
     });
     await expect(searchInput).toBeInTheDocument();
@@ -134,7 +132,7 @@ ColumnMenuFilter.play = async ({ canvasElement }) => {
     searchInput.style.caretColor = "transparent";
 
     // snapshot the menu
-    await expect(dialog).toBeInTheDocument();
+    await expect(menu).toBeInTheDocument();
   }
 };
 
@@ -153,19 +151,23 @@ ColumnMenuColumns.play = async ({ canvasElement }) => {
     await userEvent.click(
       cell
         .closest(".ag-header-cell-comp-wrapper")!
-        .querySelector(".ag-icon.ag-icon-menu")!,
+        .querySelector(".ag-icon.ag-icon-menu-alt")!,
     );
 
-    const dialog = within(gridRoot).getByRole("dialog", {
+    const menu = within(gridRoot).getByRole("presentation", {
       name: "Column Menu",
     });
 
     await userEvent.click(
-      within(dialog).getByRole("tab", { name: /columns/i }),
+      within(menu).getByRole("treeitem", { name: /Choose Column/i }),
     );
 
-    // snapshot the menu
-    await expect(dialog).toBeInTheDocument();
+    const columnDialog = await within(gridRoot).findByRole("dialog", {
+      name: "Choose Columns",
+    });
+
+    // snapshot the menu dialog
+    await expect(columnDialog).toBeInTheDocument();
   }
 };
 
@@ -184,17 +186,15 @@ ColumnMenuNumberFilter.play = async ({ canvasElement }) => {
     await userEvent.click(
       cell
         .closest(".ag-header-cell-comp-wrapper")!
-        .querySelector(".ag-icon.ag-icon-menu")!,
+        .querySelector(".ag-icon.ag-icon-filter")!,
     );
 
-    const dialog = within(gridRoot).getByRole("dialog", {
-      name: "Column Menu",
+    const menu = within(gridRoot).getByRole("presentation", {
+      name: "Column Filter",
     });
 
-    await userEvent.click(within(dialog).getByRole("tab", { name: /filter/i }));
-
     await userEvent.click(
-      await within(dialog).findByRole("combobox", {
+      await within(menu).findByRole("combobox", {
         name: "Filtering operator",
       }),
     );
@@ -207,8 +207,8 @@ ColumnMenuNumberFilter.play = async ({ canvasElement }) => {
     );
 
     // Snapshot radio buttons, which comes from icon in v31
-    await expect(within(dialog).getByText("AND")).toBeInTheDocument();
-    await expect(within(dialog).getByText("OR")).toBeInTheDocument();
+    await expect(within(menu).getByText("AND")).toBeInTheDocument();
+    await expect(within(menu).getByText("OR")).toBeInTheDocument();
   }
 };
 
@@ -263,6 +263,11 @@ ContextMenu.play = async ({ canvasElement }) => {
   }
 };
 
+// Function to emulate pausing between interactions
+function sleep(ms: number) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
 export const FloatingFilterFocus: StoryObj<typeof AgGridReact> = () => {
   return <CustomFilter />;
 };
@@ -279,6 +284,8 @@ FloatingFilterFocus.play = async ({ canvasElement }) => {
     await userEvent.tab();
     await userEvent.tab();
 
+    // Rows will animate due to filter
+    await sleep(500);
     // Snapshot floating input focus ring & active button in first column
   }
 };
