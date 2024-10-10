@@ -21,22 +21,9 @@ interface UseOverflowProps {
   overflowButton: RefObject<HTMLButtonElement>;
 }
 
-function getAvailableWidth({
-  container,
-  targetWindow,
-}: {
-  container: UseOverflowProps["container"];
-  targetWindow: Window;
-}) {
-  if (!container.current || !targetWindow) return 0;
-
-  const containerStyles = targetWindow.getComputedStyle(container.current);
-
-  const containerPadding =
-    Number.parseInt(containerStyles.paddingLeft || "0") +
-    Number.parseInt(containerStyles.paddingRight || "0");
-
-  return container.current.clientWidth - containerPadding;
+function getTabWidth(element: HTMLElement) {
+  const { width } = element.getBoundingClientRect();
+  return Math.ceil(width);
 }
 
 export function useOverflow({
@@ -64,10 +51,7 @@ export function useOverflow({
           "[role=tab][aria-selected=true]",
         )?.parentElement;
 
-        let maxWidth = getAvailableWidth({
-          container,
-          targetWindow,
-        });
+        let maxWidth = container.current.clientWidth ?? 0;
 
         const containerStyles = targetWindow.getComputedStyle(
           container.current,
@@ -82,10 +66,10 @@ export function useOverflow({
         while (newVisibleCount < items.length) {
           const element = items[newVisibleCount];
           if (element) {
-            if (currentWidth + element.offsetWidth + gap > maxWidth) {
+            if (currentWidth + getTabWidth(element) + gap > maxWidth) {
               break;
             }
-            currentWidth += element.offsetWidth + gap;
+            currentWidth += getTabWidth(element) + gap;
             visible.push(element);
           }
           newVisibleCount++;
@@ -103,15 +87,16 @@ export function useOverflow({
         while (currentWidth > maxWidth) {
           const removed = visible.pop();
           if (!removed) break;
-          currentWidth -= removed.offsetWidth + gap;
+          currentWidth -= getTabWidth(removed) + gap;
           newVisibleCount--;
         }
 
         if (selectedTab && !visible.includes(selectedTab)) {
-          while (currentWidth + selectedTab.offsetWidth + gap > maxWidth) {
+          const selectedTabWidth = getTabWidth(selectedTab) + gap;
+          while (currentWidth + selectedTabWidth > maxWidth) {
             const removed = visible.pop();
             if (!removed) break;
-            currentWidth -= removed.offsetWidth + gap;
+            currentWidth -= getTabWidth(selectedTab) + gap;
             newVisibleCount--;
           }
         }

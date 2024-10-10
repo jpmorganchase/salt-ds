@@ -4,17 +4,15 @@ import { useWindow } from "@salt-ds/window";
 import clsx from "clsx";
 import {
   type ComponentPropsWithoutRef,
+  type FocusEvent,
   type KeyboardEvent,
   type SyntheticEvent,
   forwardRef,
-  useCallback,
-  useMemo,
   useRef,
   useState,
 } from "react";
 
 import tablistNextCss from "./TabListNext.css";
-import { TabListNextContext } from "./TabListNextContext";
 import { TabOverflowList } from "./TabOverflowList";
 import { useTabsNext } from "./TabsNextContext";
 import { useOverflow } from "./hooks/useOverflow";
@@ -46,6 +44,7 @@ export const TabListNext = forwardRef<HTMLDivElement, TabListNextProps>(
       className,
       onClose,
       onKeyDown,
+      onBlur,
       ...rest
     } = props;
     const targetWindow = useWindow();
@@ -57,13 +56,12 @@ export const TabListNext = forwardRef<HTMLDivElement, TabListNextProps>(
 
     const {
       selected,
-      setSelected,
       getNext,
       getPrevious,
       getFirst,
       getLast,
-      item,
       items,
+      activeTab,
     } = useTabsNext();
 
     const tabstripRef = useRef<HTMLDivElement>(null);
@@ -93,69 +91,50 @@ export const TabListNext = forwardRef<HTMLDivElement, TabListNextProps>(
 
       if (action) {
         event.preventDefault();
-        const activeTabId = targetWindow?.document.activeElement?.id;
+        const activeTabId = activeTab.current?.id;
         if (!activeTabId) return;
         const nextItem = action(activeTabId);
         if (nextItem) {
-          nextItem.element?.focus({ preventScroll: true });
+          nextItem.element?.focus();
         }
       }
     };
 
-    const handleClose = useCallback(
-      (event: SyntheticEvent, id: string) => {
-        const currentItem = item(id);
-        const firstItem = getFirst();
-        const newActive = id === firstItem?.id ? getNext(id) : getPrevious(id);
+    const handleBlur = (event: FocusEvent<HTMLDivElement>) => {
+      onBlur?.(event);
 
-        if (currentItem == null) return;
-
-        onClose?.(event, currentItem.value);
-
-        if (!newActive) return;
-        if (id === selected) {
-          setSelected(event, newActive.id);
-        } else {
-          newActive?.element?.focus({ preventScroll: true });
-        }
-      },
-      [getFirst, getNext, getPrevious, selected, onClose, setSelected],
-    );
-
-    const contextValue = useMemo(
-      () => ({
-        handleClose,
-      }),
-      [handleClose],
-    );
+      if (!event.currentTarget.contains(event.relatedTarget)) {
+        activeTab.current = undefined;
+      }
+    };
 
     return (
-      <TabListNextContext.Provider value={contextValue}>
-        <div
-          role="tablist"
-          className={clsx(
-            withBaseName(),
-            withBaseName(appearance),
-            withBaseName("horizontal"),
-            withBaseName(`activeColor${capitalize(activeColor)}`),
-            className,
-          )}
-          ref={handleRef}
-          onKeyDown={handleKeyDown}
-          {...rest}
+      <div
+        role="tablist"
+        className={clsx(
+          withBaseName(),
+          withBaseName(appearance),
+          withBaseName("horizontal"),
+          withBaseName(`activeColor${capitalize(activeColor)}`),
+          className,
+        )}
+        data-ismeasuring={isMeasuring ? true : undefined}
+        ref={handleRef}
+        onKeyDown={handleKeyDown}
+        onBlur={handleBlur}
+        {...rest}
+      >
+        {visible}
+        <TabOverflowList
+          isMeasuring={isMeasuring}
+          buttonRef={overflowButtonRef}
+          tabstripRef={tabstripRef}
+          open={menuOpen}
+          setOpen={setMenuOpen}
         >
-          {visible}
-          <TabOverflowList
-            isMeasuring={isMeasuring}
-            buttonRef={overflowButtonRef}
-            tabstripRef={tabstripRef}
-            open={menuOpen}
-            setOpen={setMenuOpen}
-          >
-            {hidden}
-          </TabOverflowList>
-        </div>
-      </TabListNextContext.Provider>
+          {hidden}
+        </TabOverflowList>
+      </div>
     );
   },
 );

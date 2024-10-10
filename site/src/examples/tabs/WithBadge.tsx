@@ -1,5 +1,11 @@
 import { Badge } from "@salt-ds/core";
-import { TabBar, TabListNext, TabNext, TabsNext } from "@salt-ds/lab";
+import {
+  TabBar,
+  TabListNext,
+  TabNext,
+  TabNextTrigger,
+  TabsNext,
+} from "@salt-ds/lab";
 import type { ReactElement } from "react";
 
 const tabs = ["Home", "Transactions", "Loans", "Checks", "Liquidity"];
@@ -16,10 +22,12 @@ export const WithBadge = (): ReactElement => {
         <TabListNext>
           {tabs.map((label) => (
             <TabNext value={label} key={label}>
-              {label}
-              {notifications[label] > 0 ? (
-                <Badge value={notifications[label]} />
-              ) : undefined}
+              <TabNextTrigger>
+                {label}
+                {notifications[label] > 0 ? (
+                  <Badge value={notifications[label]} />
+                ) : undefined}
+              </TabNextTrigger>
             </TabNext>
           ))}
         </TabListNext>

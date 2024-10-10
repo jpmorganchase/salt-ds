@@ -1,6 +1,12 @@
 import { Button } from "@salt-ds/core";
 import { AddIcon } from "@salt-ds/icons";
-import { TabBar, TabListNext, TabNext, TabsNext } from "@salt-ds/lab";
+import {
+  TabBar,
+  TabListNext,
+  TabNext,
+  TabNextTrigger,
+  TabsNext,
+} from "@salt-ds/lab";
 import React, { type ReactElement, useRef, useState } from "react";
 
 export const AddANewTab = (): ReactElement => {
@@ -14,7 +20,7 @@ export const AddANewTab = (): ReactElement => {
         <TabListNext>
           {tabs.map((label) => (
             <TabNext value={label} key={label}>
-              {label}
+              <TabNextTrigger>{label}</TabNextTrigger>
             </TabNext>
           ))}
         </TabListNext>

@@ -43,6 +43,7 @@ interface UseCollectionProps {
 
 export function useCollection({ wrap }: UseCollectionProps) {
   const [items, setItems] = useState<Item[]>([]);
+  const itemsRef = useRef<Item[]>([]);
   const itemMap = useRef<Map<string, Item>>(new Map());
 
   const registerItem = useCallback((item: Item) => {
@@ -57,7 +58,9 @@ export function useCollection({ wrap }: UseCollectionProps) {
         newItems.push(item);
         itemMap.current.set(item.id, item);
       }
-      return sortBasedOnDOMPosition(newItems);
+      const value = sortBasedOnDOMPosition(newItems);
+      itemsRef.current = value;
+      return value;
     });
 
     return () => {
@@ -65,6 +68,7 @@ export function useCollection({ wrap }: UseCollectionProps) {
         itemMap.current.delete(item.id);
         return old.filter(({ id }) => id !== item.id);
       });
+      return itemsRef;
     };
   }, []);
 
