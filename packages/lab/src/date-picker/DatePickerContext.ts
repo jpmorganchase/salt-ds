@@ -2,7 +2,12 @@ import type { DateValue } from "@internationalized/date";
 import { createContext } from "@salt-ds/core";
 import { useContext } from "react";
 import type { DateRangeSelection, SingleDateSelection } from "../calendar";
-import type { DateInputRangeError, DateInputSingleError } from "../date-input";
+import {
+  DateInputSingleDetails
+} from "../date-input";
+import {
+  DateInputRangeDetails,
+} from "./DatePickerRangeInput";
 
 /**
  * Interface representing the base state for a DatePicker.
@@ -66,16 +71,6 @@ interface DatePickerBaseState {
 }
 
 /**
- * Type representing a single date picker error.
- */
-export type SingleDatePickerError = DateInputSingleError;
-
-/**
- * Type representing a range date picker error.
- */
-export type RangeDatePickerError = DateInputRangeError;
-
-/**
  * Interface representing the state for a single date picker.
  */
 export interface SingleDatePickerState extends DatePickerBaseState {
@@ -97,23 +92,17 @@ export interface SingleDatePickerState extends DatePickerBaseState {
    */
   helpers: DatePickerBaseState["helpers"] & {
     /**
-     * Applies the selected date.
-     * @param newDate - The new selected date.
-     * @param error - The error encountered during selection, if any.
+     * Apply the selected single date.
+     * @param newDate - The new applied date.
      */
     apply: (
-      newDate: SingleDateSelection | null,
-      error: SingleDatePickerError,
+      newDate: SingleDateSelection | null | undefined,
     ) => void;
     /**
-     * Sets the selected date.
-     * @param newDate - The new selected date.
-     * @param error - The error encountered during selection, if any.
+     * Select a single date.
+     * @param selection - The date selection.
      */
-    setSelectedDate: (
-      newDate: SingleDateSelection | null,
-      error: string | false,
-    ) => void;
+    select: (selection: DateInputSingleDetails) => void;
   };
 }
 
@@ -139,22 +128,18 @@ export interface RangeDatePickerState extends DatePickerBaseState {
    */
   helpers: DatePickerBaseState["helpers"] & {
     /**
-     * Applies the selected date range.
-     * @param newDate - The new selected date range.
-     * @param error - The error encountered during selection, if any.
+     * Apply the selected date range.
+     * @param newRange - The new applied date range
      */
     apply: (
-      newDate: DateRangeSelection | null,
-      error: RangeDatePickerError,
+      newRange: DateRangeSelection | null,
     ) => void;
     /**
-     * Sets the selected date range.
-     * @param newDate - The new selected date range.
-     * @param error - The error encountered during selection, if any.
+     * Select a date range.
+     * @param selection - The date selection.
      */
-    setSelectedDate: (
-      newDate: DateRangeSelection | null,
-      error: { startDate: string | false; endDate: string | false },
+    select: (
+      selection: DateInputRangeDetails,
     ) => void;
   };
 }

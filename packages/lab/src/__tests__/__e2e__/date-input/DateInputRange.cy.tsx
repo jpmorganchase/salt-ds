@@ -4,7 +4,7 @@ import { composeStories } from "@storybook/react";
 import { type ChangeEvent, type SyntheticEvent, useState } from "react";
 import type { DateRangeSelection } from "../../../calendar";
 import type {
-  DateInputRangeParserError,
+  DateInputRangeError,
   DateInputRangeParserResult,
 } from "../../../date-input";
 
@@ -46,6 +46,219 @@ describe("GIVEN a DateInputRange", () => {
     // Verify that the start and end date inputs have the specified values
     cy.findByLabelText("Start date").should("have.value", "start date value");
     cy.findByLabelText("End date").should("have.value", "end date value");
+  });
+
+  it("SHOULD call onDateChange only if value changes", () => {
+    const onDateChangeSpy = cy.stub().as("dateChangeSpy");
+    cy.mount(
+      <Range
+        locale={testLocale}
+        onDateChange={onDateChangeSpy}
+        defaultValue={{ startDate: "", endDate: "" }}
+        defaultDate={{
+          startDate: undefined,
+          endDate: undefined,
+        }}
+      />,
+    );
+    // Verify that onDateChange is called with an error, when an invalid start date is entered and no end date is defined
+    cy.findByLabelText("Start date").click().clear().type("bad start date");
+    cy.realPress("Tab");
+    cy.get("@dateChangeSpy").should("have.callCount", 1);
+    cy.get("@dateChangeSpy").should(
+      "have.been.calledWith",
+      Cypress.sinon.match.any,
+      { startDate: null, endDate: undefined },
+      {
+        startDate: {
+          message: "not a valid date format",
+          value: "bad start date",
+        },
+        endDate: false,
+      },
+    );
+    // Verify that onDateChange is called with an error, when an invalid start date is updated with another invalid date
+    cy.findByLabelText("Start date").click().clear().type("bad start date 2");
+    cy.realPress("Tab");
+    cy.get("@dateChangeSpy").should("have.callCount", 2);
+    cy.get("@dateChangeSpy").should(
+      "have.been.calledWith",
+      Cypress.sinon.match.any,
+      { startDate: null, endDate: undefined },
+      {
+        startDate: {
+          message: "not a valid date format",
+          value: "bad start date 2",
+        },
+        endDate: false,
+      },
+    );
+    // Verify that onDateChange is NOT called with an error, when an invalid start date does not change
+    cy.findByLabelText("Start date").click().clear().type("bad start date 2");
+    cy.realPress("Tab");
+    cy.get("@dateChangeSpy").should("have.callCount", 2);
+    // Verify that onDateChange is called with an error, when both start and end dates are invalid
+    cy.findByLabelText("End date").click().clear().type("bad end date");
+    cy.get("@dateChangeSpy").should("have.callCount", 2);
+    cy.realPress("Tab");
+    cy.get("@dateChangeSpy").should("have.callCount", 3);
+    cy.get("@dateChangeSpy").should(
+      "have.been.calledWith",
+      Cypress.sinon.match.any,
+      { startDate: null, endDate: null },
+      {
+        startDate: {
+          message: "not a valid date format",
+          value: "bad start date 2",
+        },
+        endDate: {
+          message: "not a valid date format",
+          value: "bad end date",
+        },
+      },
+    );
+    // Verify that onDateChange is called with an error, when the start date is cleared and the end date remains invalid
+    cy.findByLabelText("Start date").click().clear();
+    cy.get("@dateChangeSpy").should("have.callCount", 3);
+    cy.realPress("Tab");
+    cy.get("@dateChangeSpy").should("have.callCount", 4);
+    cy.get("@dateChangeSpy").should(
+      "have.been.calledWith",
+      Cypress.sinon.match.any,
+      { startDate: undefined, endDate: null },
+      {
+        startDate: false,
+        endDate: {
+          message: "not a valid date format",
+          value: "bad end date",
+        },
+      },
+    );
+    // Verify that onDateChange is called, when both the start and end dates are cleared
+    cy.findByLabelText("End date").click().clear();
+    cy.get("@dateChangeSpy").should("have.callCount", 4);
+    cy.realPress("Tab");
+    cy.get("@dateChangeSpy").should("have.callCount", 5);
+    cy.get("@dateChangeSpy").should(
+      "have.been.calledWith",
+      Cypress.sinon.match.any,
+      { startDate: undefined, endDate: undefined },
+      {
+        startDate: false,
+        endDate: false,
+      },
+    );
+    // Verify that onDateChange is called when a valid start date is entered
+    cy.findByLabelText("Start date")
+      .click()
+      .clear()
+      .type(initialDateValue.startDate);
+    cy.get("@dateChangeSpy").should("have.callCount", 5);
+    cy.realPress("Tab");
+    cy.get("@dateChangeSpy").should("have.callCount", 6);
+    cy.get("@dateChangeSpy").should(
+      "have.been.calledWith",
+      Cypress.sinon.match.any,
+      { startDate: initialDate.startDate, endDate: undefined },
+      {
+        startDate: false,
+        endDate: false,
+      },
+    );
+    // Verify that onDateChange is NOT called when the same startDate is entered
+    cy.findByLabelText("Start date")
+      .click()
+      .clear()
+      .type(initialDateValue.startDate);
+    cy.get("@dateChangeSpy").should("have.callCount", 6);
+    cy.realPress("Tab");
+    cy.get("@dateChangeSpy").should("have.callCount", 6);
+    // Verify that onDateChange is called when both a valid start and end date are entered
+    cy.findByLabelText("End date")
+      .click()
+      .clear()
+      .type(initialDateValue.endDate);
+    cy.get("@dateChangeSpy").should("have.callCount", 6);
+    cy.realPress("Tab");
+    cy.get("@dateChangeSpy").should("have.callCount", 7);
+    cy.get("@dateChangeSpy").should(
+      "have.been.calledWith",
+      Cypress.sinon.match.any,
+      { startDate: initialDate.startDate, endDate: initialDate.endDate },
+      {
+        startDate: false,
+        endDate: false,
+      },
+    );
+    // Verify that onDateChange is NOT called when the same endDate is entered
+    cy.findByLabelText("End date")
+      .click()
+      .clear()
+      .type(initialDateValue.endDate);
+    cy.get("@dateChangeSpy").should("have.callCount", 7);
+    cy.realPress("Tab");
+    cy.get("@dateChangeSpy").should("have.callCount", 7);
+  });
+
+  it("SHOULD call validator and pass any returned error to onDateChange", () => {
+    const validator = (
+      date: DateRangeSelection | null | undefined,
+      error: DateInputRangeError,
+    ): DateInputRangeError => ({
+      startDate: error.startDate
+        ? { value: error.startDate.value, message: "my start date error" }
+        : error.startDate,
+      endDate: error.endDate
+        ? { value: error.endDate.value, message: "my end date error" }
+        : error.endDate,
+    });
+    const onDateChangeSpy = cy.stub().as("dateChangeSpy");
+    cy.mount(
+      <Range
+        locale={testLocale}
+        onDateChange={onDateChangeSpy}
+        defaultValue={{ startDate: "", endDate: "" }}
+        defaultDate={{
+          startDate: undefined,
+          endDate: undefined,
+        }}
+        validate={validator}
+      />,
+    );
+    // Verify that onDateChange is called with an error, when an invalid start date is entered and no end date is defined
+    cy.findByLabelText("Start date").click().clear().type("bad start date");
+    cy.realPress("Tab");
+    cy.get("@dateChangeSpy").should("have.callCount", 1);
+    cy.get("@dateChangeSpy").should(
+      "have.been.calledWith",
+      Cypress.sinon.match.any,
+      { startDate: null, endDate: undefined },
+      {
+        startDate: {
+          message: "my start date error",
+          value: "bad start date",
+        },
+        endDate: false,
+      },
+    );
+    cy.findByLabelText("End date").click().clear().type("bad end date");
+    cy.realPress("Tab");
+    cy.get("@dateChangeSpy").should("have.callCount", 2);
+    cy.get("@dateChangeSpy").should(
+      "have.been.calledWith",
+      Cypress.sinon.match.any,
+      { startDate: null, endDate: null },
+      {
+        startDate: {
+          message: "my start date error",
+          value: "bad start date",
+        },
+        endDate: {
+          message: "my end date error",
+          value: "bad end date",
+        },
+      },
+    );
   });
 
   it("SHOULD support custom parser", () => {
@@ -279,7 +492,7 @@ describe("GIVEN a DateInputRange", () => {
 
     it("SHOULD update when changed with a valid date", () => {
       function ControlledDateInput() {
-        const [date, setDate] = useState<DateRangeSelection | null>(
+        const [date, setDate] = useState<DateRangeSelection | null | undefined>(
           initialDate,
         );
 
@@ -297,11 +510,8 @@ describe("GIVEN a DateInputRange", () => {
         };
         const handleDateChange = (
           event: SyntheticEvent,
-          newDate: DateRangeSelection | null,
-          error: {
-            startDate: DateInputRangeParserError;
-            endDate: DateInputRangeParserError;
-          },
+          newDate: DateRangeSelection | null | undefined,
+          error: DateInputRangeError,
         ) => {
           event.persist();
           setDate(newDate);

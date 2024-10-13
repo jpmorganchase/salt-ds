@@ -11,7 +11,7 @@ import {
   DatePickerRangePanel,
   type DateRangeSelection,
   formatDate,
-  getCurrentLocale,
+  getCurrentLocale, RangeDatePickerError,
 } from "@salt-ds/lab";
 import { type ReactElement, useCallback, useState } from "react";
 
@@ -52,7 +52,7 @@ export const RangeWithInitialError = (): ReactElement => {
   const handleSelectionChange = useCallback(
     (
       newSelectedDate: DateRangeSelection | null,
-      error: { startDate: string | false; endDate: string | false },
+      error: RangeDatePickerError,
     ) => {
       console.log(`Selected date range: ${formatDateRange(newSelectedDate)}`);
       console.log(

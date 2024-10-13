@@ -49,7 +49,7 @@ export const CustomDatePickerPanel = forwardRef<
 
   const {
     state: { selectedDate },
-    helpers: { setSelectedDate },
+    helpers: { select },
   } = stateAndHelpers;
 
   return (
@@ -72,34 +72,43 @@ export const CustomDatePickerPanel = forwardRef<
                   return;
                 }
                 const tenor = Number.parseInt(item[0], 10);
-                let newSelectedDate;
+                let newSelection;
                 if (selectionVariant === "range") {
-                  newSelectedDate = selectedDate?.startDate
+                  newSelection = selectedDate?.startDate
                     ? {
-                        startDate: selectedDate.startDate,
-                        endDate: selectedDate.startDate.add({
+                        startDate: {
+                          date: selectedDate.startDate,
+                        },
+                        endDate: {
+                          date: selectedDate.startDate.add({
+                            years: tenor,
+                          }),
+                        },
+                      }
+                    : {
+                        startDate: {
+                          date: today(getLocalTimeZone()),
+                        },
+                        endDate: {
+                          date: today(getLocalTimeZone()).add({
+                            years: tenor,
+                          }),
+                        },
+                      };
+                  select(newSelection);
+                } else {
+                  newSelection = selectedDate
+                    ? {
+                        date: selectedDate.add({
                           years: tenor,
                         }),
                       }
                     : {
-                        startDate: today(getLocalTimeZone()),
-                        endDate: today(getLocalTimeZone()).add({
+                        date: today(getLocalTimeZone()).add({
                           years: tenor,
                         }),
                       };
-                  setSelectedDate(newSelectedDate, {
-                    startDate: false,
-                    endDate: false,
-                  });
-                } else {
-                  newSelectedDate = selectedDate
-                    ? selectedDate.add({
-                        years: tenor,
-                      })
-                    : today(getLocalTimeZone()).add({
-                        years: tenor,
-                      });
-                  setSelectedDate(newSelectedDate, false);
+                  select(newSelection);
                 }
               }}
             >

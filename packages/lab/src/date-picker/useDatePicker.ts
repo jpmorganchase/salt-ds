@@ -6,7 +6,7 @@ import {
   startOfMonth,
 } from "@internationalized/date";
 import { useControlled, useForkRef, useFormFieldProps } from "@salt-ds/core";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import {
   CALENDAR_MAX_YEAR,
   CALENDAR_MIN_YEAR,
@@ -15,12 +15,12 @@ import {
   getCurrentLocale,
 } from "../calendar";
 import type {
-  RangeDatePickerError,
   RangeDatePickerState,
-  SingleDatePickerError,
   SingleDatePickerState,
 } from "./DatePickerContext";
 import { useDatePickerOverlay } from "./DatePickerOverlayProvider";
+import { DateInputSingleDetails } from "../date-input";
+import { DateInputRangeDetails } from "./DatePickerRangeInput";
 
 interface UseDatePickerBaseProps<T> {
   /** If `true`, the component is disabled. */
@@ -73,22 +73,13 @@ export interface UseDatePickerSingleProps
   selectionVariant: "single";
   /**
    * Handler called when the selected date changes.
-   * @param {SingleDateSelection | null} selectedSingleDate - The selected date.
-   * @param {string | false} singleError - Error returned by the parser or `false`.
+   * @param {DateInputSingleDetails} selectedSingleDate - The selected date selection.
    */
-  onSelectionChange?: (
-    selectedSingleDate: SingleDateSelection | null,
-    singleError: string | false,
-  ) => void;
+  onSelectionChange?: (selection: DateInputSingleDetails) => void;
   /**
    * Handler called when the selected date is confirmed/applied.
-   * @param {SingleDateSelection | null} appliedSingleDate - The selected date.
-   * @param {string | false} singleError - Error returned by the parser or `false`.
-   */
-  onApply?: (
-    appliedSingleDate: SingleDateSelection | null,
-    singleError: string | false,
-  ) => void;
+   * @param {SingleDateSelection | null undefined} selectedSingleDate - The selected date selection.   */
+  onApply?: (appliedDate: SingleDateSelection | null | undefined) => void;
 }
 
 /**
@@ -107,22 +98,12 @@ export interface UseDatePickerRangeProps
   selectionVariant: "range";
   /**
    * Handler called when the selected date changes.
-   * @param {DateRangeSelection | null} selectedRangeDate - The selected date.
-   * @param {{ startDate: string | false; endDate: string | false }} rangeError - Error returned by the parser or `false`.
-   */
-  onSelectionChange?: (
-    selectedRangeDate: DateRangeSelection | null,
-    rangeError: { startDate: string | false; endDate: string | false },
-  ) => void;
+   * @param {DateInputRangeDetails} selection - The selected date selection.   */
+  onSelectionChange?: (selection: DateInputRangeDetails) => void;
   /**
    * Handler called when the selected date is confirmed/applied.
-   * @param {DateRangeSelection | null} appliedRangeDate - The selected date.
-   * @param {{ startDate: string | false; endDate: string | false }} rangeError - Error returned by the parser or `false`.
-   */
-  onApply?: (
-    appliedRangeDate: DateRangeSelection | null,
-    rangeError: { startDate: string | false; endDate: string | false },
-  ) => void;
+   * @param {DateRangeSelection} selection - The selected date selection.   */
+  onApply?: (appliedRange: DateRangeSelection) => void;
 }
 
 /**
@@ -154,33 +135,24 @@ export function useDatePicker<SelectionVariant extends "single" | "range">(
     readOnly = false,
     disabled,
     selectionVariant,
-    defaultSelectedDate = null,
+    defaultSelectedDate,
     selectedDate: selectedDateProp,
     onSelectionChange,
     onApply,
-    minDate: minDateProp,
-    maxDate: maxDateProp,
+    minDate = startOfMonth(new CalendarDate(CALENDAR_MIN_YEAR, 1, 1)),
+    maxDate = endOfMonth(new CalendarDate(CALENDAR_MAX_YEAR, 1, 1)),
     timeZone = getLocalTimeZone(),
     locale = getCurrentLocale(),
     onCancel,
   } = props;
 
-  const minDate: DateValue = useMemo(
-    () =>
-      minDateProp ?? startOfMonth(new CalendarDate(CALENDAR_MIN_YEAR, 1, 1)),
-    [minDateProp],
-  );
-  const maxDate: DateValue = useMemo(
-    () => maxDateProp ?? endOfMonth(new CalendarDate(CALENDAR_MAX_YEAR, 1, 1)),
-    [maxDateProp],
-  );
-
+  const previousSelectedDate = useRef<typeof selectedDateProp>();
   const datePickerRef = useRef<HTMLDivElement>(null);
   const containerRef = useForkRef(ref, datePickerRef);
 
   const {
     state: { open },
-    helpers: { setOpen },
+    helpers: { setOpen, setOnDismiss },
   } = useDatePickerOverlay();
 
   const [selectedDate, setSelectedDate] = useControlled({
@@ -193,128 +165,83 @@ export function useDatePicker<SelectionVariant extends "single" | "range">(
   const [enableApply, setEnableApply] = useState<boolean>(false);
   const [cancelled, setCancelled] = useState<boolean>(false);
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: should run when open changes and not selected date or value
   useEffect(() => {
     if (open) {
+      previousSelectedDate.current = selectedDate;
+      setOnDismiss(cancel);
       setCancelled(false);
     }
-  }, [open]);
+  }, [open, setOnDismiss, setCancelled]);
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: avoid excessive re-rendering
+  useEffect(() => {
+    if (cancelled) {
+      setSelectedDate(previousSelectedDate?.current);
+    }
+  }, [cancelled, setSelectedDate]);
 
   const { disabled: formFieldDisabled, readOnly: formFieldReadOnly } =
     useFormFieldProps();
   const isReadOnly = readOnly || formFieldReadOnly || false;
   const isDisabled = disabled || formFieldDisabled || false;
 
-  const applySingle = (
-    appliedDate: SingleDateSelection | null,
-    error: SingleDatePickerError,
-  ): void => {
+  const applySingle = (appliedDate: SingleDateSelection | null): void => {
     setCancelled(false);
     setOpen(false);
     if (selectionVariant === "single") {
-      onApply?.(appliedDate, error);
+      onApply?.(appliedDate);
     }
   };
 
-  const setSelectedSingleDate = useCallback(
-    (selection: SingleDateSelection | null, error: SingleDatePickerError) => {
-      let nextDate: typeof selection;
-      let nextError = error;
-      if (error || !selection) {
-        nextDate = selection;
-      } else {
-        let dateAfterMinDate = true;
-        let dateBeforeMaxDate = true;
-        if (minDate && selection) {
-          dateAfterMinDate = selection.compare(minDate) >= 0;
-        }
-        if (maxDate && selection) {
-          dateBeforeMaxDate = selection.compare(maxDate) <= 0;
-        }
-        nextDate = dateAfterMinDate && dateBeforeMaxDate ? selection : null;
-        nextError = !dateAfterMinDate ? "is before min date" : nextError;
-        nextError = !dateBeforeMaxDate ? "is after max date" : nextError;
-      }
-      setSelectedDate(nextDate);
+  const selectSingle = useCallback(
+    (selection: DateInputSingleDetails) => {
+      setSelectedDate(selection.date);
       if (selectionVariant === "single") {
-        onSelectionChange?.(nextDate, nextError);
+        onSelectionChange?.(selection);
       }
-
-      if (!enableApply) {
-        setOpen(false);
+      if (!enableApply && selection.date !== undefined) {
+        applySingle(selection.date);
       }
     },
-    [
-      enableApply,
-      minDate,
-      maxDate,
-      onSelectionChange,
-      selectionVariant,
-      setSelectedDate,
-      setOpen,
-    ],
+    [enableApply, onSelectionChange, selectionVariant, setSelectedDate],
   );
 
-  const applyRange = (
-    appliedDate: DateRangeSelection | null,
-    error: RangeDatePickerError,
-  ): void => {
-    setCancelled(false);
-    if (appliedDate?.startDate && appliedDate?.endDate) {
+  const applyRange = useCallback(
+    (appliedDate: DateRangeSelection): void => {
+      setCancelled(false);
       setOpen(false);
-    }
-    if (selectionVariant === "range") {
-      onApply?.(appliedDate, error);
-    }
-  };
-
-  const setSelectedRangeDate = useCallback(
-    (selection: DateRangeSelection | null, error: RangeDatePickerError) => {
-      let nextDate: typeof selection;
-      let nextError = { ...error };
-      let startDateInRange = true;
-      let endDateInRange = true;
-      if (error?.startDate || error?.endDate || !selection) {
-        nextDate = selection;
-      } else {
-        if (maxDate && selection?.startDate) {
-          startDateInRange = selection.startDate.compare(minDate) >= 0;
-        }
-        if (maxDate && selection?.endDate) {
-          endDateInRange =
-            selection?.endDate && selection.endDate.compare(maxDate) <= 0;
-        }
-        if (!startDateInRange && !endDateInRange) {
-          nextDate = { ...selection };
-          nextError = {
-            startDate: "is before min date",
-            endDate: "is after max date",
-          };
-        } else {
-          nextDate = { ...selection };
-          nextError = {
-            startDate: !startDateInRange
-              ? "is before min date"
-              : nextError.startDate,
-            endDate: !endDateInRange ? "is after max date" : nextError.endDate,
-          };
-        }
-      }
-      setSelectedDate(nextDate);
       if (selectionVariant === "range") {
-        onSelectionChange?.(nextDate, nextError);
+        onApply?.(appliedDate);
       }
-      if (!enableApply && nextDate?.startDate && nextDate?.endDate) {
-        setOpen(false);
+    },
+    [onApply, setCancelled, setOpen, selectionVariant],
+  );
+
+  const selectRange = useCallback(
+    (details: DateInputRangeDetails) => {
+      const { startDate: startDateSelection, endDate: endDateSelection } =
+        details;
+      setSelectedDate({
+        startDate: startDateSelection?.date,
+        endDate: endDateSelection?.date,
+      });
+      if (selectionVariant === "range") {
+        onSelectionChange?.(details);
+      }
+      if (!enableApply && details?.startDate?.date && details?.endDate?.date) {
+        applyRange({
+          startDate: startDateSelection?.date,
+          endDate: endDateSelection?.date,
+        });
       }
     },
     [
+      applyRange,
       enableApply,
-      minDate,
-      maxDate,
       onSelectionChange,
       selectionVariant,
       setSelectedDate,
-      setOpen,
     ],
   );
 
@@ -349,7 +276,7 @@ export function useDatePicker<SelectionVariant extends "single" | "range">(
       helpers: {
         ...returnValue.helpers,
         apply: applyRange,
-        setSelectedDate: setSelectedRangeDate,
+        select: selectRange,
       },
     } as RangeDatePickerState;
   }
@@ -358,7 +285,7 @@ export function useDatePicker<SelectionVariant extends "single" | "range">(
     helpers: {
       ...returnValue.helpers,
       apply: applySingle,
-      setSelectedDate: setSelectedSingleDate,
+      select: selectSingle,
     },
   } as SingleDatePickerState;
 }

@@ -9,8 +9,9 @@ import {
   DatePickerSingleInput,
   DatePickerSinglePanel,
   type SingleDateSelection,
+  SingleDatePickerError,
 } from "@salt-ds/lab";
-import { type ReactElement, useCallback, useState } from "react";
+import React, { type ReactElement, useCallback, useState } from "react";
 
 export const SingleWithLocaleEnUS = (): ReactElement => {
   const locale = "en-US";
@@ -22,7 +23,7 @@ export const SingleWithLocaleEnUS = (): ReactElement => {
     undefined,
   );
   const handleSelectionChange = useCallback(
-    (newSelectedDate: SingleDateSelection | null, error: string | false) => {
+    (newSelectedDate: SingleDateSelection | null | undefined, error:SingleDatePickerError) => {
       console.log(`Selected date: ${newSelectedDate}`);
       console.log(`Error: ${error}`);
       if (error) {

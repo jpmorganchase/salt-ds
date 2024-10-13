@@ -2,7 +2,10 @@ import { CalendarDate, type DateValue } from "@internationalized/date";
 import * as dateInputStories from "@stories/date-input/date-input.stories";
 import { composeStories } from "@storybook/react";
 import { type ChangeEvent, type SyntheticEvent, useState } from "react";
-import type { DateInputSingleParserResult } from "../../../date-input";
+import type {
+  DateInputSingleError,
+  DateInputSingleParserResult,
+} from "../../../date-input";
 
 const composedStories = composeStories(dateInputStories);
 const { Single } = composedStories;
@@ -23,27 +26,55 @@ describe("GIVEN a DateInputSingle", () => {
     cy.findByRole("textbox").should("have.value", "date value");
   });
 
-  it("SHOULD call onDateChange on consecutive invalid dates", () => {
+  it("SHOULD call onDateChange only if value changes", () => {
     const onDateChangeSpy = cy.stub().as("dateChangeSpy");
     cy.mount(<Single locale={testLocale} onDateChange={onDateChangeSpy} />);
     cy.findByRole("textbox").click().clear().type("bad date");
     cy.realPress("Tab");
-    cy.get("@dateChangeSpy").should("have.been.calledOnce");
+    // Verify that onDateChange is called with an error, when an invalid date is entered
+    cy.get("@dateChangeSpy").should("have.callCount", 1);
     cy.get("@dateChangeSpy").should(
       "have.been.calledWith",
       Cypress.sinon.match.any,
       null,
-      "not a valid date format",
+      { message: "not a valid date format", value: "bad date" },
     );
+    // Verify that onDateChange is NOT called with an error, if the invalid value does not change
+    cy.findByRole("textbox").click().clear().type("bad date");
+    cy.realPress("Tab");
+    cy.get("@dateChangeSpy").should("have.callCount", 1);
+    // Verify that onDateChange is called with an error, if the value changes and still errors
     cy.findByRole("textbox").click().clear().type("another bad date 2");
     cy.realPress("Tab");
-    cy.get("@dateChangeSpy").should("have.been.calledTwice");
+    cy.get("@dateChangeSpy").should("have.callCount", 2);
     cy.get("@dateChangeSpy").should(
       "have.been.calledWith",
       Cypress.sinon.match.any,
       null,
-      "not a valid date format",
+      { message: "not a valid date format", value: "another bad date 2" },
     );
+    // Verify that onDateChange is called without an error, if the value is reset
+    cy.findByRole("textbox").click().clear();
+    cy.realPress("Tab");
+    cy.get("@dateChangeSpy").should("have.callCount", 3);
+    cy.get("@dateChangeSpy").should(
+      "have.been.calledWith",
+      Cypress.sinon.match.any,
+      undefined,
+    );
+    // Verify that onDateChange is called without an error, if the value changes to a valid value
+    cy.findByRole("textbox").click().clear().type(initialDateValue);
+    cy.realPress("Tab");
+    cy.get("@dateChangeSpy").should("have.callCount", 4);
+    cy.get("@dateChangeSpy").should(
+      "have.been.calledWithMatch",
+      Cypress.sinon.match.any,
+      initialDate,
+    );
+    // Verify that onDateChange is NOT called , if the value does not change
+    cy.findByRole("textbox").click().clear().type(initialDateValue);
+    cy.realPress("Tab");
+    cy.get("@dateChangeSpy").should("have.callCount", 4);
   });
 
   it("SHOULD support custom parser", () => {
@@ -74,7 +105,9 @@ describe("GIVEN a DateInputSingle", () => {
 
   it("SHOULD support custom formatter", () => {
     const formatSpy = cy.stub().as("formatSpy");
-    const customFormatter = (dateToFormat: DateValue | null): string => {
+    const customFormatter = (
+      dateToFormat: DateValue | null | undefined,
+    ): string => {
       formatSpy(dateToFormat);
       return dateToFormat ? "formatted date" : "";
     };
@@ -92,6 +125,31 @@ describe("GIVEN a DateInputSingle", () => {
     // Verify that the input box is updated with the formatted value
     cy.findByRole("textbox").should("have.value", "formatted date");
     cy.get("@formatSpy").should("have.been.calledWithMatch", updatedDate);
+  });
+
+  it("SHOULD call validator and pass any returned error to onDateChange", () => {
+    const onDateChangeSpy = cy.stub().as("dateChangeSpy");
+    const validator = (
+      date: DateValue | null | undefined,
+      error: DateInputSingleError,
+    ): DateInputSingleError => ({ ...error, message: "my own error" });
+    cy.mount(
+      <Single
+        locale={testLocale}
+        onDateChange={onDateChangeSpy}
+        validate={validator}
+      />,
+    );
+    cy.findByRole("textbox").click().clear().type("bad date");
+    cy.realPress("Tab");
+    // Verify that onDateChange is called with an error, when an invalid date is entered
+    cy.get("@dateChangeSpy").should("have.callCount", 1);
+    cy.get("@dateChangeSpy").should(
+      "have.been.calledWith",
+      Cypress.sinon.match.any,
+      null,
+      { message: "my own error", value: "bad date" },
+    );
   });
 
   it("SHOULD support local/timezone", () => {
@@ -171,7 +229,9 @@ describe("GIVEN a DateInputSingle", () => {
 
     it("SHOULD update when changed with a valid date", () => {
       function ControlledDateInput() {
-        const [date, setDate] = useState<DateValue | null>(initialDate);
+        const [date, setDate] = useState<DateValue | null | undefined>(
+          initialDate,
+        );
 
         const onChange = (event: SyntheticEvent) => {
           // React 16 backwards compatibility
@@ -180,7 +240,7 @@ describe("GIVEN a DateInputSingle", () => {
         };
         const onDateChange = (
           event: SyntheticEvent,
-          newDate: DateValue | null,
+          newDate: DateValue | null | undefined,
         ) => {
           // React 16 backwards compatibility
           event.persist();
