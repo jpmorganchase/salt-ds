@@ -7,18 +7,19 @@ import {
   DateInputSingle,
   type SingleDateSelection,
   formatDate,
+  DateInputSingleError,
 } from "@salt-ds/lab";
 import { type ReactElement, type SyntheticEvent, useState } from "react";
 
 export const SingleControlled = (): ReactElement => {
-  const [selectedDate, setSelectedDate] = useState<SingleDateSelection | null>(
-    today(getLocalTimeZone()),
-  );
+  const [selectedDate, setSelectedDate] = useState<
+    SingleDateSelection | null | undefined
+  >(today(getLocalTimeZone()));
 
   const handleDateChange = (
     _event: SyntheticEvent,
-    newSelectedDate: DateValue | null,
-    _error: string | boolean,
+    newSelectedDate: DateValue | null | undefined,
+    _error: DateInputSingleError,
   ) => {
     console.log(`Selected date: ${formatDate(newSelectedDate)}`);
     setSelectedDate(newSelectedDate);
