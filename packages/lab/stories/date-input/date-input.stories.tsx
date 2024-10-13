@@ -5,11 +5,11 @@ import {
 } from "@internationalized/date";
 import {
   DateInputRange,
-  type DateInputRangeError,
   type DateInputRangeProps,
+  DateInputRangeDetails,
   DateInputSingle,
-  type DateInputSingleError,
   type DateInputSingleProps,
+  DateInputSingleDetails,
   type DateRangeSelection,
   formatDate,
   getCurrentLocale,
@@ -38,13 +38,24 @@ function formatDateRange(
 const DateInputSingleTemplate: StoryFn<DateInputSingleProps> = (args) => {
   const handleDateChange = (
     event: SyntheticEvent,
-    newSelectedDate: DateValue | null,
-    error: DateInputSingleError,
+    newSelectedDate: DateValue | null | undefined,
+    result: DateInputSingleDetails,
   ) => {
     console.log(
       `Selected date: ${newSelectedDate ? formatDate(newSelectedDate) : newSelectedDate}`,
     );
-    args?.onDateChange?.(event, newSelectedDate, error);
+    const { value, errors } = result;
+    if (errors?.length && value) {
+      console.log(
+        `Error(s): ${errors
+          .map(({ type, message }) => `type=${type} message=${message}`)
+          .join(",")}`,
+      );
+      if (value) {
+        console.log(`Original Value: ${value}`);
+      }
+    }
+    args?.onDateChange?.(event, newSelectedDate, result);
   };
   return (
     <div style={{ width: "250px" }}>
@@ -56,11 +67,42 @@ const DateInputSingleTemplate: StoryFn<DateInputSingleProps> = (args) => {
 const DateInputRangeTemplate: StoryFn<DateInputRangeProps> = (args) => {
   const handleDateChange = (
     event: SyntheticEvent,
-    newSelectedDate: DateRangeSelection | null,
-    error: DateInputRangeError,
+    newSelectedDate: DateRangeSelection,
+    result: DateInputRangeDetails,
   ) => {
     console.log(`Selected date range: ${formatDateRange(newSelectedDate)}`);
-    args?.onDateChange?.(event, newSelectedDate, error);
+    const {
+      startDate: {
+        date: startDate,
+        value: startDateOriginalValue,
+        errors: startDateErrors,
+      },
+      endDate: {
+        date: endDate,
+        value: endDateOriginalValue,
+        errors: endDateErrors,
+      },
+    } = result;
+    console.log(
+      `Selected date range: ${formatDateRange({ startDate, endDate })}`,
+    );
+    if (startDateErrors?.length) {
+      console.log(
+        `StartDate Error(s): ${startDateErrors.map(({ type, message }) => `type=${type} message=${message}`).join(",")}`,
+      );
+      if (startDateOriginalValue) {
+        console.log(`Original Value: ${startDateOriginalValue}`);
+      }
+    }
+    if (endDateErrors?.length) {
+      console.log(
+        `EndDate Error(s): ${endDateErrors.map(({ type, message }) => `type= ${type} message=${message}`).join(",")}`,
+      );
+      if (endDateOriginalValue) {
+        console.log(`Original Value: ${endDateOriginalValue}`);
+      }
+    }
+    args?.onDateChange?.(event, newSelectedDate, result);
   };
   return (
     <div style={{ width: "250px" }}>

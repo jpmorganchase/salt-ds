@@ -15,12 +15,12 @@ import {
   DatePickerSinglePanel,
   type SingleDateSelection,
   formatDate,
-  getCurrentLocale,
+  getCurrentLocale, SingleDatePickerError,
 } from "@salt-ds/lab";
 import { type ReactElement, useCallback, useRef, useState } from "react";
 
 function formatSingleDate(
-  date: DateValue | null,
+  date: DateValue | null | undefined,
   locale = getCurrentLocale(),
   options?: Intl.DateTimeFormatOptions,
 ) {
@@ -38,11 +38,11 @@ export const SingleWithConfirmation = (): ReactElement => {
   const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
     undefined,
   );
-  const [selectedDate, setSelectedDate] = useState<SingleDateSelection | null>(
+  const [selectedDate, setSelectedDate] = useState<SingleDateSelection | null | undefined>(
     null,
   );
   const handleApply = useCallback(
-    (newSelectedDate: SingleDateSelection | null, error: string | false) => {
+    (newSelectedDate: SingleDateSelection | null | undefined, error:SingleDatePickerError) => {
       console.log(`Selected date: ${formatSingleDate(newSelectedDate)}`);
       console.log(`Error: ${error}`);
       if (error) {
@@ -55,7 +55,7 @@ export const SingleWithConfirmation = (): ReactElement => {
     [setSelectedDate, setHelperText],
   );
   const handleSelectionChange = useCallback(
-    (newSelectedDate: SingleDateSelection | null) => {
+    (newSelectedDate: SingleDateSelection | null | undefined) => {
       setSelectedDate(newSelectedDate);
       applyButtonRef?.current?.focus();
     },

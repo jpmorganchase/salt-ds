@@ -18,34 +18,34 @@ import { useCalendarContext } from "./internal/CalendarContext";
 /**
  * Type representing a single date selection.
  */
-export type SingleDateSelection = DateValue;
+export type SingleDateSelection<T = DateValue> = T;
 
 /**
  * Type representing multiple date selections.
  */
-export type MultipleDateSelection = DateValue[];
+export type MultipleDateSelection<T = DateValue> = T[];
 
 /**
  * Type representing a date range selection.
  */
-export type DateRangeSelection = {
+export type DateRangeSelection<T =DateValue> = {
   /**
    * The start date of the range.
    */
-  startDate?: DateValue | null;
+  startDate?: T | null;
   /**
    * The end date of the range.
    */
-  endDate?: DateValue | null;
+  endDate?: T | null;
 };
 
 /**
  * Type representing all possible selection value types.
  */
-export type AllSelectionValueType =
-  | SingleDateSelection
-  | MultipleDateSelection
-  | DateRangeSelection
+export type AllSelectionValueType<T = DateValue> =
+  | SingleDateSelection<T>
+  | MultipleDateSelection<T>
+  | DateRangeSelection<T>
   | null;
 
 /**

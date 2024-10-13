@@ -14,21 +14,54 @@ import {
   useEffect,
   useRef,
 } from "react";
-import type { SingleDateSelection } from "../calendar";
 import {
   DateInputSingle,
-  type DateInputSingleError,
   type DateInputSingleProps,
+  DateInputSingleDetails,
 } from "../date-input";
 import { useDatePickerContext } from "./DatePickerContext";
 import { useDatePickerOverlay } from "./DatePickerOverlayProvider";
+import type { DateValue } from "@internationalized/date";
+import type { SingleDateSelection } from "../calendar";
 
 const withBaseName = makePrefixer("saltDatePickerSingleInput");
 
 /**
  * Props for the DatePickerSingleInput component.
  */
-export interface DatePickerSingleInputProps extends DateInputSingleProps {}
+export interface DatePickerSingleInputProps<T = DateValue>
+  extends DateInputSingleProps {
+  /**
+   * Function to validate the entered date
+   * @param details - The details of date selection, either a valid date or error
+   * @returns updated DateInputSingleDetails details
+   */
+  validate?: (details: DateInputSingleDetails<T>) => DateInputSingleDetails<T>;
+}
+
+function defaultSingleValidation(
+  selection: DateInputSingleDetails,
+  minDate: DateValue | undefined,
+  maxDate: DateValue | undefined,
+) {
+  const updatedSelection = { isValid: true, errors: [], ...selection };
+  const { date, isValid } = updatedSelection;
+  if (date && isValid) {
+    if (minDate && date && date.compare(minDate) < 0) {
+      selection.errors?.push({
+        type: "min-date",
+        message: "is before min date",
+      });
+    }
+    if (maxDate && date && date.compare(maxDate) > 0) {
+      selection.errors?.push({
+        type: "max-date",
+        message: "is after max date",
+      });
+    }
+  }
+  return selection;
+}
 
 export const DatePickerSingleInput = forwardRef<
   HTMLDivElement,
@@ -39,6 +72,7 @@ export const DatePickerSingleInput = forwardRef<
     onFocus,
     onBlur,
     value: valueProp,
+    validate,
     defaultValue,
     onDateValueChange,
     ...rest
@@ -47,8 +81,17 @@ export const DatePickerSingleInput = forwardRef<
   const { CalendarIcon } = useIcon();
 
   const {
-    state: { selectedDate, disabled, readOnly, cancelled, locale, timeZone },
-    helpers: { setSelectedDate },
+    state: {
+      selectedDate,
+      disabled,
+      readOnly,
+      cancelled,
+      locale,
+      timeZone,
+      minDate,
+      maxDate,
+    },
+    helpers: { select },
   } = useDatePickerContext({ selectionVariant: "single" });
   const {
     state: { open, floatingUIResult },
@@ -56,9 +99,7 @@ export const DatePickerSingleInput = forwardRef<
   } = useDatePickerOverlay();
 
   const inputRef = useForkRef<HTMLDivElement>(ref, floatingUIResult?.reference);
-  const prevState = useRef<
-    { date: typeof selectedDate; value: typeof valueProp } | undefined
-  >();
+  const previousValue = useRef<typeof valueProp>();
 
   const [value, setValue] = useControlled({
     controlled: valueProp,
@@ -74,12 +115,15 @@ export const DatePickerSingleInput = forwardRef<
   const handleDateChange = useCallback(
     (
       _event: SyntheticEvent,
-      newDate: SingleDateSelection | null,
-      error: DateInputSingleError,
+      _date: SingleDateSelection | null | undefined,
+      details: DateInputSingleDetails,
     ) => {
-      setSelectedDate(newDate, error);
+      const validatedSelection = validate
+        ? validate(details)
+        : defaultSingleValidation(details, minDate, maxDate);
+      select(validatedSelection);
     },
-    [setSelectedDate],
+    [select],
   );
 
   const handleDateValueChange = (
@@ -93,15 +137,14 @@ export const DatePickerSingleInput = forwardRef<
   // biome-ignore lint/correctness/useExhaustiveDependencies: should run when open changes and not selected date or value
   useEffect(() => {
     if (open) {
-      prevState.current = { date: selectedDate, value };
+      previousValue.current = value;
     }
   }, [open]);
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: avoid excessive re-rendering
   useEffect(() => {
     if (cancelled) {
-      setValue(prevState?.current?.value);
-      setSelectedDate(prevState?.current?.date || null, false);
+      setValue(previousValue?.current);
     }
   }, [cancelled]);
 
