@@ -138,7 +138,7 @@ export const DatePickerSinglePanel = forwardRef<
       maxDate = minDate.add({ months: 1 }),
       locale = getCurrentLocale(),
     },
-    helpers: { setSelectedDate },
+    helpers: { select },
   } = useDatePickerContext({ selectionVariant: "single" });
 
   const [hoveredDate, setHoveredDate] = useState<DateValue | null>(null);
@@ -155,10 +155,10 @@ export const DatePickerSinglePanel = forwardRef<
 
   const handleSelectionChange = useCallback(
     (event: SyntheticEvent, newDate: SingleDateSelection | null) => {
-      setSelectedDate(newDate, false);
+      select({ date: newDate });
       onSelect?.(event, newDate);
     },
-    [setSelectedDate, onSelect],
+    [select, onSelect],
   );
 
   const handleHoveredDateChange = useCallback(

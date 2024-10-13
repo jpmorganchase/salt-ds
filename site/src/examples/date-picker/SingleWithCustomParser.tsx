@@ -18,12 +18,12 @@ import {
   type SingleDateSelection,
   formatDate,
   getCurrentLocale,
-  parseCalendarDate,
+  parseCalendarDate, SingleDatePickerError,
 } from "@salt-ds/lab";
 import { type ReactElement, useCallback, useState } from "react";
 
 function formatSingleDate(
-  date: DateValue | null,
+  date: DateValue | null | undefined,
   locale = getCurrentLocale(),
   options?: Intl.DateTimeFormatOptions,
 ) {
@@ -41,11 +41,11 @@ export const SingleWithCustomParser = (): ReactElement => {
   const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
     undefined,
   );
-  const [selectedDate, setSelectedDate] = useState<SingleDateSelection | null>(
+  const [selectedDate, setSelectedDate] = useState<SingleDateSelection | null | undefined>(
     null,
   );
   const handleSelectionChange = useCallback(
-    (newSelectedDate: SingleDateSelection | null, error: string | false) => {
+    (newSelectedDate: SingleDateSelection | null | undefined, error: SingleDatePickerError) => {
       console.log(`Selected date: ${formatSingleDate(newSelectedDate)}`);
       console.log(`Error: ${error}`);
       setSelectedDate(newSelectedDate);

@@ -11,7 +11,7 @@ import {
   DatePickerSinglePanel,
   type SingleDateSelection,
   formatDate,
-  getCurrentLocale,
+  getCurrentLocale, RangeDatePickerError, SingleDatePickerError,
 } from "@salt-ds/lab";
 import React, { type ReactElement, useCallback, useState } from "react";
 
@@ -34,7 +34,7 @@ export const SingleBordered = (): ReactElement => {
     undefined,
   );
   const handleSelectionChange = useCallback(
-    (newSelectedDate: SingleDateSelection | null, error: string | false) => {
+    (newSelectedDate: SingleDateSelection | null, error: SingleDatePickerError) => {
       console.log(`Selected date: ${formatSingleDate(newSelectedDate)}`);
       console.log(`Error: ${error}`);
       if (error) {

@@ -138,13 +138,8 @@ export const DatePickerActions = forwardRef<
   };
 
   const handleApply: MouseEventHandler<HTMLButtonElement> = (event) => {
-    if (selectionVariant === "single") {
-      apply(selectedDate, false);
-      onApply?.(event, selectedDate);
-    } else {
-      apply(selectedDate, { startDate: false, endDate: false });
-      onApply?.(event, selectedDate);
-    }
+    apply(selectedDate);
+    onApply?.(event, selectedDate);
     ApplyButtonProps?.onClick?.(event);
   };
 

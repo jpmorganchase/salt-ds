@@ -36,34 +36,18 @@ import {
   getCurrentLocale,
 } from "../calendar";
 import dateInputCss from "./DateInput.css";
-import { extractTimeFieldsFromDate, parseCalendarDate } from "./utils";
+import {
+  type DateInputParserResult,
+  extractTimeFieldsFromDate,
+  parseCalendarDate,
+} from "./utils";
 
 const withBaseName = makePrefixer("saltDateInput");
 
 /**
- * Date error produced by DateInputSingle parser.
+ * Result of parsing the date and applying any validation
  */
-export type DateInputSingleParserError = string | false;
-
-/**
- * Date error produced by DateInputSingle parser.
- */
-export type DateInputSingleError = DateInputSingleParserError;
-
-/**
- * Return value of DateInputSingle parser.
- * @template T
- */
-export interface DateInputSingleParserResult<T = DateValue | null> {
-  /**
-   * The parsed date value.
-   */
-  date: T;
-  /**
-   * The error encountered during parsing, if any.
-   */
-  error: DateInputSingleParserError;
-}
+export type DateInputSingleResult<T = DateValue> = DateInputParserResult<T>;
 
 /**
  * Props for the DateInputSingle component.
@@ -112,7 +96,7 @@ export interface DateInputSingleProps<T = SingleDateSelection>
   /**
    * Function to format the input value.
    */
-  format?: (date: DateValue | null) => string;
+  format?: (date: DateValue | null | undefined) => string;
   /**
    * Reference for the input.
    */
@@ -136,21 +120,23 @@ export interface DateInputSingleProps<T = SingleDateSelection>
   /**
    * Callback fired when the selected date changes.
    * @param event - The synthetic event.
-   * @param date - The new date value.
-   * @param error - The date input single error.
+   * @param result - The result of date selection, either a valid date or error
    */
   onDateChange?: (
     event: SyntheticEvent,
-    date: T | null,
-    error: DateInputSingleError,
+    date: SingleDateSelection | null | undefined,
+    result: DateInputSingleResult<T>
   ) => void;
   /**
    * Function to parse date string to valid `DateValue` or null, if invalid or empty.
    * @param inputDate - The input date string.
    * @param locale - the locale for the parsed date
-   * @returns The result of the date input single parser.
+   * @returns The result of parsing the date.
    */
-  parse?: (inputDate: string, locale: string) => DateInputSingleParserResult;
+  parse?: (
+    inputDate: string,
+    locale: string,
+  ) => DateInputSingleResult<T>;
   /**
    * Called when input value changes, either due to user interaction or programmatic formatting of valid dates.
    * @param newValue - The new date input value.
@@ -196,7 +182,6 @@ export const DateInputSingle = forwardRef<HTMLDivElement, DateInputSingleProps>(
       ...rest
     } = props;
     const wrapperRef = useRef(null);
-    const lastError = useRef<string | false>(false);
     const handleWrapperRef = useForkRef<HTMLDivElement>(ref, wrapperRef);
     const innerInputRef = useRef<HTMLInputElement>(null);
     const handleInputRef = useForkRef<HTMLInputElement>(
@@ -225,12 +210,13 @@ export const DateInputSingle = forwardRef<HTMLDivElement, DateInputSingleProps>(
       name: "DateInputSingle",
       state: "dateValue",
     });
+    const lastAppliedValue = useRef<string>(dateValue);
     const preservedTime = useRef<TimeFields | undefined>(
       extractTimeFieldsFromDate(date || null),
     );
 
     const format = useCallback(
-      (date: DateValue | null) => {
+      (date: DateValue | null | undefined) => {
         return formatProp
           ? formatProp(date)
           : defaultFormatDate(date, locale, { timeZone });
@@ -240,7 +226,7 @@ export const DateInputSingle = forwardRef<HTMLDivElement, DateInputSingleProps>(
 
     // Update date string value when selected date changes
     useEffect(() => {
-      const formattedDate = format(date || null);
+      const formattedDate = format(date);
       if (formattedDate) {
         setDateValue(formattedDate);
         onDateValueChange?.(formattedDate, true);
@@ -281,28 +267,25 @@ export const DateInputSingle = forwardRef<HTMLDivElement, DateInputSingleProps>(
       : dateInputPropsRequired;
 
     const apply = (event: SyntheticEvent) => {
-      const { date: parsedDate, error } = parse(dateValue ?? "", locale);
-      let newDate = parsedDate;
-      if (newDate) {
-        const formattedDate = format(newDate);
-        if (formattedDate) {
-          setDateValue(formattedDate);
-          onDateValueChange?.(formattedDate, true);
-        }
+      const parseResult = parse(dateValue ?? "", locale);
+      const { date: parsedDate } = parseResult;
+      const formattedDate = format(parsedDate);
+      if (formattedDate) {
+        setDateValue(formattedDate);
+        onDateValueChange?.(formattedDate, true);
       }
+      setDate(parsedDate);
       const hasDateChanged =
-        newDate && date ? newDate.compare(date) !== 0 : newDate !== date;
-      if (hasDateChanged) {
-        setDate(newDate);
-        if (newDate && preservedTime.current) {
-          newDate = newDate.set(preservedTime.current);
-        }
+        parsedDate && date ? parsedDate.compare(date) !== 0 : false;
+      let updatedDate = parsedDate;
+      if (parsedDate && hasDateChanged && preservedTime.current) {
+        updatedDate = parsedDate.set(preservedTime.current);
       }
-      // As long as any `error`, invoke event so both "invalid" dates can be handled
-      if (hasDateChanged || error) {
-        onDateChange?.(event, newDate, error);
+      if (lastAppliedValue.current !== dateValue) {
+        const updatedResult = { ...parseResult, date: updatedDate };
+        onDateChange?.(event, updatedDate, updatedResult);
       }
-      lastError.current = error;
+      lastAppliedValue.current = dateValue;
     };
 
     const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {

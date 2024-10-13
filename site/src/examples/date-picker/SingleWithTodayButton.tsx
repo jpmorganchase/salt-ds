@@ -21,7 +21,7 @@ import {
   type SingleDateSelection,
   formatDate,
   getCurrentLocale,
-  useDatePickerContext,
+  useDatePickerContext, SingleDatePickerError,
 } from "@salt-ds/lab";
 import React, { type ReactElement, useCallback, useState } from "react";
 
@@ -46,7 +46,7 @@ const TodayButton = () => {
 };
 
 function formatSingleDate(
-  date: DateValue | null,
+  date: DateValue | null | undefined,
   locale = getCurrentLocale(),
   options?: Intl.DateTimeFormatOptions,
 ) {
@@ -64,7 +64,7 @@ export const SingleWithTodayButton = (): ReactElement => {
     undefined,
   );
   const handleSelectionChange = useCallback(
-    (newSelectedDate: SingleDateSelection | null, error: string | false) => {
+    (newSelectedDate: SingleDateSelection | null | undefined, error: SingleDatePickerError) => {
       console.log(`Selected date: ${formatSingleDate(newSelectedDate)}`);
       console.log(`Error: ${error}`);
       if (error) {

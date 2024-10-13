@@ -3,14 +3,18 @@ import {
   getLocalTimeZone,
   today,
 } from "@internationalized/date";
-import { DateInputSingle, formatDate } from "@salt-ds/lab";
+import {
+  DateInputSingle,
+  DateInputSingleError,
+  formatDate,
+} from "@salt-ds/lab";
 import type { ReactElement, SyntheticEvent } from "react";
 
 export const SingleBordered = (): ReactElement => {
   const handleDateChange = (
     _event: SyntheticEvent,
-    newSelectedDate: DateValue | null,
-    _error: string | boolean,
+    newSelectedDate: DateValue | null | undefined,
+    _error: DateInputSingleError,
   ) => {
     console.log(`Selected date: ${formatDate(newSelectedDate)}`);
   };

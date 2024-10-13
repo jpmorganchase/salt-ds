@@ -6,12 +6,12 @@ import {
   DatePickerSinglePanel,
   type SingleDateSelection,
   formatDate,
-  getCurrentLocale,
+  getCurrentLocale, SingleDatePickerError,
 } from "@salt-ds/lab";
 import { type ReactElement, useCallback } from "react";
 
 function formatSingleDate(
-  date: DateValue | null,
+  date: DateValue | null | undefined,
   locale = getCurrentLocale(),
   options?: Intl.DateTimeFormatOptions,
 ) {
@@ -23,7 +23,7 @@ function formatSingleDate(
 
 export const Single = (): ReactElement => {
   const handleSelectionChange = useCallback(
-    (newSelectedDate: SingleDateSelection | null, error: string | false) => {
+    (newSelectedDate: SingleDateSelection | null | undefined, error: SingleDatePickerError) => {
       console.log(`Selected date: ${formatSingleDate(newSelectedDate)}`);
       console.log(`Error: ${error}`);
     },

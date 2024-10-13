@@ -5,12 +5,12 @@ import {
   DatePickerRangePanel,
   type DateRangeSelection,
   formatDate,
-  getCurrentLocale,
+  getCurrentLocale, RangeDatePickerError,
 } from "@salt-ds/lab";
 import { type ReactElement, useCallback, useState } from "react";
 
 function formatDateRange(
-  dateRange: DateRangeSelection | null,
+  dateRange: DateRangeSelection | null | undefined,
   locale = getCurrentLocale(),
   options?: Intl.DateTimeFormatOptions,
 ): string {
@@ -25,13 +25,13 @@ function formatDateRange(
 }
 
 export const RangeControlled = (): ReactElement => {
-  const [selectedDate, setSelectedDate] = useState<DateRangeSelection | null>(
+  const [selectedDate, setSelectedDate] = useState<DateRangeSelection | null | undefined>(
     null,
   );
   const handleSelectionChange = useCallback(
     (
-      newSelectedDate: DateRangeSelection | null,
-      error: { startDate: string | false; endDate: string | false },
+      newSelectedDate: DateRangeSelection | null | undefined,
+      error: RangeDatePickerError,
     ) => {
       console.log(`Selected date range: ${formatDateRange(newSelectedDate)}`);
       console.log(

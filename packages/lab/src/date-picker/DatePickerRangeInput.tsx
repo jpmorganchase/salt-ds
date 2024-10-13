@@ -10,22 +10,64 @@ import {
   useEffect,
   useRef,
 } from "react";
-import type { DateRangeSelection } from "../calendar";
 import {
+  DateInputParserEnum,
   DateInputRange,
-  type DateInputRangeError,
   type DateInputRangeProps,
+  type DateInputParserResult,
   type DateInputRangeValue,
 } from "../date-input";
 import { useDatePickerContext } from "./DatePickerContext";
 import { useDatePickerOverlay } from "./DatePickerOverlayProvider";
+import type {DateValue} from "@internationalized/date";
+import type {DateRangeSelection} from "../calendar";
 
 const withBaseName = makePrefixer("saltDatePickerRangeInput");
 
 /**
+ * Result of parsing the date range and applying any validation
+ */
+export type DateInputRangeResult<V = DateValue> = {
+  /** Result of parsing the start date and applying any validation */
+  startDate: DateInputParserResult<V>;
+  /** Result of parsing the end date and applying any validation */
+  endDate: DateInputParserResult<V>;
+};
+
+/**
  * Props for the DatePickerRangeInput component.
  */
-export interface DatePickerRangeInputProps extends DateInputRangeProps {}
+export interface DatePickerRangeInputProps<T = DateValue> extends DateInputRangeProps {
+  /**
+   * Function to validate the entered date range and form a selection
+   * @param range - The date range to validate
+   * @returns selection
+   **/
+  validate?: (range: DateInputRangeResult<T>) => DateInputRangeResult<T>;
+}
+
+export function defaultRangeValidator(
+  result: DateInputRangeResult,
+): DateInputRangeResult {
+  const startDate = result.startDate.date;
+  const endDate = result.endDate.date;
+
+  // If endDate but no startDate defined
+  if (startDate === undefined && endDate) {
+    result.startDate.errors?.push({
+      type: DateInputParserEnum.UNSET,
+      message: "no start date defined",
+    });
+  }
+  // If startDate is after endDate
+  if (startDate && endDate && startDate.compare(endDate) > 0) {
+    result.startDate.errors?.push({
+      type: "greater-than-end-date",
+      message: "start date after end date",
+    });
+  }
+  return result;
+}
 
 export const DatePickerRangeInput = forwardRef<
   HTMLDivElement,
@@ -38,6 +80,7 @@ export const DatePickerRangeInput = forwardRef<
     onKeyDown,
     defaultValue,
     value: valueProp,
+    validate = defaultRangeValidator,
     onChange,
     onDateValueChange,
     ...rest
@@ -45,7 +88,7 @@ export const DatePickerRangeInput = forwardRef<
 
   const {
     state: { selectedDate, disabled, readOnly, cancelled, locale, timeZone },
-    helpers: { setSelectedDate },
+    helpers: { select },
   } = useDatePickerContext({ selectionVariant: "range" });
   const {
     state: { open, floatingUIResult },
@@ -53,9 +96,7 @@ export const DatePickerRangeInput = forwardRef<
   } = useDatePickerOverlay();
 
   const inputRef = useForkRef<HTMLDivElement>(ref, floatingUIResult?.reference);
-  const prevState = useRef<
-    { date: typeof selectedDate; value: typeof valueProp } | undefined
-  >();
+  const previousValue = useRef<typeof valueProp>();
 
   const [value, setValue] = useControlled({
     controlled: valueProp,
@@ -69,14 +110,11 @@ export const DatePickerRangeInput = forwardRef<
   }, [open, setOpen]);
 
   const handleDateChange = useCallback(
-    (
-      _event: SyntheticEvent,
-      newDate: DateRangeSelection | null,
-      error: DateInputRangeError,
-    ) => {
-      setSelectedDate(newDate, error);
+    (_event: SyntheticEvent, date: DateRangeSelection, result: DateInputRangeResult) => {
+      const validatedSelection = validate(result)
+      select(validatedSelection);
     },
-    [setSelectedDate],
+    [select],
   );
 
   const handleDateValueChange = (
@@ -90,18 +128,14 @@ export const DatePickerRangeInput = forwardRef<
   // biome-ignore lint/correctness/useExhaustiveDependencies: should run when open changes and not selected date or value
   useEffect(() => {
     if (open) {
-      prevState.current = { date: selectedDate, value };
+      previousValue.current = value;
     }
   }, [open]);
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: avoid excessive re-rendering
   useEffect(() => {
     if (cancelled) {
-      setValue(prevState?.current?.value);
-      setSelectedDate(prevState?.current?.date || null, {
-        startDate: false,
-        endDate: false,
-      });
+      setValue(previousValue.current);
     }
   }, [cancelled]);
 
@@ -135,7 +169,7 @@ export const DatePickerRangeInput = forwardRef<
       timeZone={timeZone}
       className={clsx(withBaseName(), className)}
       ref={inputRef}
-      date={selectedDate}
+      date={selectedDate || null}
       startInputProps={getReferenceProps(startInputProps)}
       endInputProps={getReferenceProps(endInputProps)}
       readOnly={readOnly}

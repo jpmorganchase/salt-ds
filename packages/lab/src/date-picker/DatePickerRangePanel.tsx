@@ -220,7 +220,7 @@ export const DatePickerRangePanel = forwardRef<
       maxDate = minDate.add({ months: 1 }),
       locale = getCurrentLocale(),
     },
-    helpers: { setSelectedDate },
+    helpers: { select },
   } = useDatePickerContext({ selectionVariant: "range" });
 
   const [hoveredDate, setHoveredDate] = useState<DateValue | null>(null);
@@ -245,10 +245,12 @@ export const DatePickerRangePanel = forwardRef<
 
   const handleSelectionChange = useCallback(
     (event: SyntheticEvent, newDate: DateRangeSelection | null) => {
-      setSelectedDate(newDate, { startDate: false, endDate: false });
+      const startDate = { date: newDate?.startDate };
+      const endDate = { date: newDate?.endDate };
+      select({ startDate, endDate });
       onSelect?.(event, newDate);
     },
-    [onSelect, setSelectedDate],
+    [select, onSelect],
   );
 
   const handleHoveredStartDateChange: CalendarProps["onHoveredDateChange"] =
@@ -307,7 +309,7 @@ export const DatePickerRangePanel = forwardRef<
   const StartCalendarProps = {
     visibleMonth: startVisibleMonth,
     hoveredDate: getHoveredDate(selectedDate?.startDate, hoveredDate),
-    selectedDate: selectedDate as DateRangeSelection,
+    selectedDate: selectedDate as DateRangeSelection ?? null,
     onHoveredDateChange: handleHoveredStartDateChange,
     onVisibleMonthChange: handleStartVisibleMonthChange,
     onSelectionChange: handleSelectionChange,
@@ -321,7 +323,7 @@ export const DatePickerRangePanel = forwardRef<
   const EndCalendarProps = {
     visibleMonth: endVisibleMonth,
     hoveredDate,
-    selectedDate: selectedDate as DateRangeSelection,
+    selectedDate: selectedDate as DateRangeSelection ?? null,
     onHoveredDateChange: handleHoveredEndDateChange,
     onVisibleMonthChange: handleEndVisibleMonthChange,
     onSelectionChange: handleSelectionChange,

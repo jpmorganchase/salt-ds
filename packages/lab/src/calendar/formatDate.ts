@@ -29,7 +29,7 @@ const defaultFormatOptions: Intl.DateTimeFormatOptions = {
  * @returns The formatted date as a string.
  */
 export function formatDate(
-  date: DateValue | null,
+  date: DateValue | null | undefined,
   locale?: string,
   options?: Intl.DateTimeFormatOptions,
 ) {

@@ -2,10 +2,11 @@ import {
   CalendarDate,
   DateFormatter,
   type DateValue,
-  type ZonedDateTime,
   getLocalTimeZone,
+  isWeekend,
   now,
   today,
+  type ZonedDateTime,
 } from "@internationalized/date";
 import {
   Button,
@@ -13,12 +14,13 @@ import {
   FlexItem,
   FlexLayout,
   FormField,
-  FormFieldHelperText,
   FormFieldHelperText as FormHelperText,
   FormFieldLabel as FormLabel,
 } from "@salt-ds/core";
 import {
-  type DateInputSingleParserResult,
+  DateInputParserEnum,
+  DateInputRangeResult,
+  DateInputSingleResult,
   DatePicker,
   DatePickerActions,
   DatePickerOverlay,
@@ -29,12 +31,12 @@ import {
   DatePickerSinglePanel,
   type DatePickerSingleProps,
   type DateRangeSelection,
-  type RangeDatePickerState,
-  type SingleDatePickerState,
-  type SingleDateSelection,
   formatDate,
   getCurrentLocale,
   parseCalendarDate,
+  type RangeDatePickerState,
+  type SingleDatePickerState,
+  type SingleDateSelection,
   useDatePickerContext,
 } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react";
@@ -46,17 +48,6 @@ export default {
   title: "Lab/Date Picker",
   component: DatePicker,
 } as Meta<typeof DatePicker>;
-
-function isValidDateRange(date: DateRangeSelection | null) {
-  if (date?.startDate === null || date?.endDate === null) {
-    return true;
-  }
-  return !(
-    date?.startDate &&
-    date?.endDate &&
-    date.startDate.compare(date.endDate) > 0
-  );
-}
 
 function formatDateRange(
   dateRange: DateRangeSelection | null,
@@ -73,7 +64,7 @@ function formatDateRange(
   return `Start date: ${formattedStartDate}, End date: ${formattedEndDate}`;
 }
 function formatSingleDate(
-  date: DateValue | null,
+  date: DateValue | null | undefined,
   locale = getCurrentLocale(),
   options?: Intl.DateTimeFormatOptions,
 ) {
@@ -85,21 +76,43 @@ function formatSingleDate(
 
 const DatePickerSingleTemplate: StoryFn<DatePickerSingleProps> = ({
   selectionVariant,
+  onApply: onApplyProp,
   onSelectionChange: onSelectionChangeProp,
   ...args
 }) => {
   const handleSelectionChange = useCallback(
-    (newSelectedDate: SingleDateSelection | null, error: string | false) => {
+    (newSelection: DateInputSingleResult) => {
+      const {
+        date: newSelectedDate,
+        originalValue,
+        errors,
+      } = newSelection;
       console.log(`Selected date: ${formatSingleDate(newSelectedDate)}`);
-      console.log(`Error: ${error}`);
-      onSelectionChangeProp?.(newSelectedDate, error);
+      if (errors?.length && originalValue) {
+        console.log(
+          `Error(s): ${errors.map(({ type, message }) => `type=${type} message=${message}`).join(",")}`,
+        );
+        if (originalValue) {
+          console.log(`Original Value: ${originalValue}`);
+        }
+      }
+      onSelectionChangeProp?.(newSelection);
     },
     [onSelectionChangeProp],
+  );
+
+  const handleApply = useCallback(
+    (newSelectedDate: SingleDateSelection | null | undefined) => {
+      console.log(`Applied date: ${formatSingleDate(newSelectedDate)}`);
+      onApplyProp?.(newSelectedDate);
+    },
+    [onApplyProp],
   );
 
   return (
     <DatePicker
       selectionVariant="single"
+      onApply={handleApply}
       onSelectionChange={handleSelectionChange}
       {...args}
     >
@@ -113,26 +126,60 @@ const DatePickerSingleTemplate: StoryFn<DatePickerSingleProps> = ({
 
 const DatePickerRangeTemplate: StoryFn<DatePickerRangeProps> = ({
   selectionVariant,
+  onApply: onApplyProp,
   onSelectionChange: onSelectionChangeProp,
   ...args
 }) => {
   const handleSelectionChange = useCallback(
-    (
-      newSelectedDate: DateRangeSelection | null,
-      error: { startDate: string | false; endDate: string | false },
-    ) => {
-      console.log(`Selected date range: ${formatDateRange(newSelectedDate)}`);
+    (newSelection: DateInputRangeResult) => {
+      const { startDate: startDateSelection, endDate: endDateSelection } =
+        newSelection;
+      const {
+        date: startDate,
+        originalValue: startDateOriginalValue,
+        errors: startDateErrors,
+      } = startDateSelection;
+      const {
+        date: endDate,
+        originalValue: endDateOriginalValue,
+        errors: endDateErrors,
+      } = endDateSelection;
       console.log(
-        `Error: startDate: ${error.startDate} endDate: ${error.endDate}`,
+        `Selected date range: ${formatDateRange({ startDate, endDate })}`,
       );
-      onSelectionChangeProp?.(newSelectedDate, error);
+      if (startDateErrors?.length) {
+        console.log(
+          `StartDate Error(s): ${startDateErrors.map(({ type, message }) => `type=${type} message=${message}`).join(",")}`,
+        );
+        if (startDateOriginalValue) {
+          console.log(`Original Value: ${startDateOriginalValue}`);
+        }
+      }
+      if (endDateErrors?.length) {
+        console.log(
+          `EndDate Error(s): ${endDateErrors.map(({ type, message }) => `type= ${type} message=${message}`).join(",")}`,
+        );
+        if (endDateOriginalValue) {
+          console.log(`Original Value: ${endDateOriginalValue}`);
+        }
+      }
+      onSelectionChangeProp?.(newSelection);
     },
     [onSelectionChangeProp],
+  );
+
+  const handleApply = useCallback(
+    (newSelectedDate: DateRangeSelection) => {
+      console.log(`Applied date: ${formatDateRange(newSelectedDate)}`);
+      onApplyProp?.(newSelectedDate);
+    },
+    [onApplyProp],
   );
 
   return (
     <DatePicker
       selectionVariant="range"
+      onApply={handleApply}
       onSelectionChange={handleSelectionChange}
       {...args}
     >
@@ -155,25 +202,47 @@ Range.args = {
 export const SingleControlled: StoryFn<DatePickerSingleProps> = ({
   selectionVariant,
   defaultSelectedDate,
+  onApply: onApplyProp,
   onSelectionChange: onSelectionChangeProp,
   ...args
 }) => {
-  const [selectedDate, setSelectedDate] = useState<SingleDateSelection | null>(
-    defaultSelectedDate ?? null,
-  );
+  const [selectedDate, setSelectedDate] = useState<
+    SingleDateSelection | null | undefined
+  >(defaultSelectedDate ?? null);
   const handleSelectionChange = useCallback(
-    (newSelectedDate: SingleDateSelection | null, error: string | false) => {
+    (newSelection: DateInputSingleResult) => {
+      const {
+        date: newSelectedDate,
+        originalValue,
+        errors,
+      } = newSelection;
       console.log(`Selected date: ${formatSingleDate(newSelectedDate)}`);
-      console.log(`Error: ${error}`);
-      setSelectedDate(newSelectedDate);
-      onSelectionChangeProp?.(newSelectedDate, error);
+      if (errors?.length && originalValue) {
+        console.log(
+          `Error(s): ${errors.map(({ type, message }) => `type=${type} message=${message}`).join(",")}`,
+        );
+        if (originalValue) {
+          console.log(`Original Value: ${originalValue}`);
+        }
+      }
+      onSelectionChangeProp?.(newSelection);
     },
-    [onSelectionChangeProp, setSelectedDate],
+    [onSelectionChangeProp],
+  );
+
+  const handleApply = useCallback(
+    (newSelectedDate: SingleDateSelection | null | undefined) => {
+      console.log(`Applied date: ${formatSingleDate(newSelectedDate)}`);
+      setSelectedDate(newSelectedDate);
+      onApplyProp?.(newSelectedDate);
+    },
+    [onApplyProp, setSelectedDate],
   );
 
   return (
     <DatePicker
       selectionVariant={"single"}
+      onApply={handleApply}
       onSelectionChange={handleSelectionChange}
       {...args}
       selectedDate={selectedDate}
@@ -189,6 +258,7 @@ export const SingleControlled: StoryFn<DatePickerSingleProps> = ({
 export const RangeControlled: StoryFn<DatePickerRangeProps> = ({
   selectionVariant,
   defaultSelectedDate,
+  onApply: onApplyProp,
   onSelectionChange: onSelectionChangeProp,
   ...args
 }) => {
@@ -196,23 +266,57 @@ export const RangeControlled: StoryFn<DatePickerRangeProps> = ({
     defaultSelectedDate ?? null,
   );
   const handleSelectionChange = useCallback(
-    (
-      newSelectedDate: DateRangeSelection | null,
-      error: { startDate: string | false; endDate: string | false },
-    ) => {
-      console.log(`Selected date range: ${formatDateRange(newSelectedDate)}`);
+    (newSelection: DateInputRangeResult) => {
+      const {
+        startDate: {
+          date: startDate,
+          originalValue: startDateOriginalValue,
+          errors: startDateErrors,
+        },
+        endDate: {
+          date: endDate,
+          originalValue: endDateOriginalValue,
+          errors: endDateErrors,
+        },
+      } = newSelection;
       console.log(
-        `Error: startDate: ${error.startDate} endDate: ${error.endDate}`,
+        `Selected date range: ${formatDateRange({ startDate, endDate })}`,
       );
-      setSelectedDate(newSelectedDate);
-      onSelectionChangeProp?.(newSelectedDate, error);
+      if (startDateErrors?.length) {
+        console.log(
+          `StartDate Error(s): ${startDateErrors.map(({ type, message }) => `type=${type} message=${message}`).join(",")}`,
+        );
+        if (startDateOriginalValue) {
+          console.log(`Original Value: ${startDateOriginalValue}`);
+        }
+      }
+      if (endDateErrors?.length) {
+        console.log(
+          `EndDate Error(s): ${endDateErrors.map(({ type, message }) => `type= ${type} message=${message}`).join(",")}`,
+        );
+        if (endDateOriginalValue) {
+          console.log(`Original Value: ${endDateOriginalValue}`);
+        }
+      }
+      setSelectedDate({ startDate, endDate });
+      onSelectionChangeProp?.(newSelection);
     },
     [onSelectionChangeProp, setSelectedDate],
+  );
+
+  const handleApply = useCallback(
+    (newSelectedDate: DateRangeSelection) => {
+      console.log(`Applied date: ${formatDateRange(newSelectedDate)}`);
+      setSelectedDate(newSelectedDate);
+      onApplyProp?.(newSelectedDate);
+    },
+    [onApplyProp, setSelectedDate],
   );
 
   return (
     <DatePicker
       selectionVariant="range"
+      onApply={handleApply}
       onSelectionChange={handleSelectionChange}
       {...args}
       selectedDate={selectedDate}
@@ -227,28 +331,50 @@ export const RangeControlled: StoryFn<DatePickerRangeProps> = ({
 
 export const SingleWithMinMaxDate: StoryFn<DatePickerSingleProps> = ({
   selectionVariant,
+  onApply: onApplyProp,
   onSelectionChange: onSelectionChangeProp,
   ...args
 }) => {
   const defaultHelperText = "Select date between 15/01/2030 and 15/01/2031";
   const errorHelperText = "Please enter an in-range date in DD MMM YYYY format";
+  const [open, setOpen] = useState<boolean>(false);
   const [helperText, setHelperText] = useState(defaultHelperText);
   const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
     undefined,
   );
+
   const handleSelectionChange = useCallback(
-    (newSelectedDate: SingleDateSelection | null, error: string | false) => {
+    (newSelection: DateInputSingleResult) => {
+      const {
+        date: newSelectedDate,
+        originalValue,
+        errors,
+      } = newSelection;
       console.log(`Selected date: ${formatSingleDate(newSelectedDate)}`);
-      console.log(`Error: ${error}`);
-      if (error) {
-        setHelperText(errorHelperText);
+      if (errors?.length && originalValue) {
+        console.log(
+          `Error(s): ${errors.map(({ type, message }) => `type=${type} message=${message}`).join(",")}`,
+        );
+        if (originalValue) {
+          console.log(`Original Value: ${originalValue}`);
+        }
+        setHelperText(`${errorHelperText} - ${errors[0].message}`);
+        setValidationStatus("error");
       } else {
         setHelperText(defaultHelperText);
+        setValidationStatus(undefined);
       }
-      setValidationStatus(error ? "error" : undefined);
-      onSelectionChangeProp?.(newSelectedDate, error);
+      onSelectionChangeProp?.(newSelection);
     },
-    [setValidationStatus, setHelperText, onSelectionChangeProp],
+    [onSelectionChangeProp, setHelperText, setValidationStatus],
+  );
+
+  const handleApply = useCallback(
+    (newSelectedDate: SingleDateSelection | null | undefined) => {
+      console.log(`Applied date: ${formatSingleDate(newSelectedDate)}`);
+      onApplyProp?.(newSelectedDate);
+    },
+    [onApplyProp],
   );
 
   return (
@@ -258,8 +384,10 @@ export const SingleWithMinMaxDate: StoryFn<DatePickerSingleProps> = ({
         selectionVariant={"single"}
         minDate={new CalendarDate(2030, 1, 15)}
         maxDate={new CalendarDate(2031, 1, 15)}
+        onApply={handleApply}
         onSelectionChange={handleSelectionChange}
         {...args}
+        onOpen={setOpen}
       >
         <DatePickerSingleInput />
         <DatePickerOverlay>
@@ -269,44 +397,82 @@ export const SingleWithMinMaxDate: StoryFn<DatePickerSingleProps> = ({
           />
         </DatePickerOverlay>
       </DatePicker>
-      <FormHelperText>{helperText}</FormHelperText>
+      {!open ? <FormHelperText>{helperText}</FormHelperText> : null}
     </FormField>
   );
 };
 
 export const RangeWithMinMaxDate: StoryFn<DatePickerRangeProps> = ({
   selectionVariant,
+  onApply: onApplyProp,
   onSelectionChange: onSelectionChangeProp,
   ...args
 }) => {
   const defaultHelperText = "Select date between 15/01/2030 and 15/01/2031";
   const errorHelperText = "Please enter an in-range date in DD MMM YYYY format";
+  const [open, setOpen] = useState<boolean>(false);
   const [helperText, setHelperText] = useState(defaultHelperText);
   const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
     undefined,
   );
   const handleSelectionChange = useCallback(
-    (
-      newSelectedDate: DateRangeSelection | null,
-      error: { startDate: string | false; endDate: string | false },
-    ) => {
-      console.log(`Selected date range: ${formatDateRange(newSelectedDate)}`);
+    (newSelection: DateInputRangeResult) => {
+      const {
+        startDate: {
+          date: startDate,
+          originalValue: startDateOriginalValue,
+          errors: startDateErrors,
+        },
+        endDate: {
+          date: endDate,
+          originalValue: endDateOriginalValue,
+          errors: endDateErrors,
+        },
+      } = newSelection;
       console.log(
-        `Error: startDate: ${error.startDate} endDate: ${error.endDate}`,
+        `Selected date range: ${formatDateRange({ startDate, endDate })}`,
       );
-      const validationStatus =
-        !error.startDate && !error.endDate && isValidDateRange(newSelectedDate)
-          ? undefined
-          : "error";
-      if (validationStatus === "error") {
-        setHelperText(errorHelperText);
+      if (startDateErrors?.length) {
+        console.log(
+          `StartDate Error(s): ${startDateErrors.map(({ type, message }) => `type=${type} message=${message}`).join(",")}`,
+        );
+        if (startDateOriginalValue) {
+          console.log(`Original Value: ${startDateOriginalValue}`);
+        }
+      }
+      if (endDateErrors?.length) {
+        console.log(
+          `EndDate Error(s): ${endDateErrors.map(({ type, message }) => `type= ${type} message=${message}`).join(",")}`,
+        );
+        if (endDateOriginalValue) {
+          console.log(`Original Value: ${endDateOriginalValue}`);
+        }
+      }
+      if (startDateErrors?.length && startDateOriginalValue) {
+        setValidationStatus("error");
+        setHelperText(
+          `${errorHelperText} - start date ${startDateErrors[0].message}`,
+        );
+      } else if (endDateErrors?.length && endDateOriginalValue) {
+        setValidationStatus("error");
+        setHelperText(
+          `${errorHelperText} - end date ${endDateErrors[0].message}`,
+        );
       } else {
+        setValidationStatus(undefined);
         setHelperText(defaultHelperText);
       }
-      setValidationStatus(validationStatus);
-      onSelectionChangeProp?.(newSelectedDate, error);
+      onSelectionChangeProp?.(newSelection);
     },
-    [setValidationStatus, setHelperText, onSelectionChangeProp],
+    [onSelectionChangeProp, setHelperText, setValidationStatus],
+  );
+
+  const handleApply = useCallback(
+    (newSelectedDate: DateRangeSelection) => {
+      console.log(`Applied date: ${formatDateRange(newSelectedDate)}`);
+      onApplyProp?.(newSelectedDate);
+    },
+    [onApplyProp],
   );
 
   return (
@@ -316,8 +482,10 @@ export const RangeWithMinMaxDate: StoryFn<DatePickerRangeProps> = ({
         selectionVariant="range"
         minDate={new CalendarDate(2030, 1, 15)}
         maxDate={new CalendarDate(2031, 1, 15)}
+        onApply={handleApply}
         onSelectionChange={handleSelectionChange}
         {...args}
+        onOpen={setOpen}
       >
         <DatePickerRangeInput />
         <DatePickerOverlay>
@@ -328,35 +496,56 @@ export const RangeWithMinMaxDate: StoryFn<DatePickerRangeProps> = ({
           />
         </DatePickerOverlay>
       </DatePicker>
-      <FormHelperText>{helperText}</FormHelperText>
+      {!open ? <FormHelperText>{helperText}</FormHelperText> : null}
     </FormField>
   );
 };
 
 export const SingleWithInitialError: StoryFn<DatePickerSingleProps> = ({
   selectionVariant,
+  onApply: onApplyProp,
   onSelectionChange: onSelectionChangeProp,
   ...args
 }) => {
   const defaultHelperText = "Date format DD MMM YYYY (e.g. 09 Jun 2024)";
   const errorHelperText = "Please enter a valid date in DD MMM YYYY format";
+  const [open, setOpen] = useState<boolean>(false);
   const [helperText, setHelperText] = useState(errorHelperText);
   const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
     "error",
   );
   const handleSelectionChange = useCallback(
-    (newSelectedDate: SingleDateSelection | null, error: string | false) => {
+    (newSelection: DateInputSingleResult) => {
+      const {
+        date: newSelectedDate,
+        originalValue,
+        errors,
+      } = newSelection;
       console.log(`Selected date: ${formatSingleDate(newSelectedDate)}`);
-      console.log(`Error: ${error}`);
-      if (error) {
-        setHelperText(errorHelperText);
+      if (errors?.length && originalValue) {
+        console.log(
+          `Error(s): ${errors.map(({ type, message }) => `type=${type} message=${message}`).join(",")}`,
+        );
+        if (originalValue) {
+          console.log(`Original Value: ${originalValue}`);
+        }
+        setHelperText(`${errorHelperText} - ${errors[0].message}`);
+        setValidationStatus("error");
       } else {
         setHelperText(defaultHelperText);
+        setValidationStatus(undefined);
       }
-      setValidationStatus(error ? "error" : undefined);
-      onSelectionChangeProp?.(newSelectedDate, error);
+      onSelectionChangeProp?.(newSelection);
     },
-    [setValidationStatus, setHelperText, onSelectionChangeProp],
+    [onSelectionChangeProp, setHelperText, setValidationStatus],
+  );
+
+  const handleApply = useCallback(
+    (newSelectedDate: SingleDateSelection | null | undefined) => {
+      console.log(`Applied date: ${formatSingleDate(newSelectedDate)}`);
+      onApplyProp?.(newSelectedDate);
+    },
+    [onApplyProp],
   );
 
   return (
@@ -364,53 +553,93 @@ export const SingleWithInitialError: StoryFn<DatePickerSingleProps> = ({
       <FormLabel>Select a date</FormLabel>
       <DatePicker
         selectionVariant="single"
+        onApply={handleApply}
         onSelectionChange={handleSelectionChange}
         {...args}
+        onOpen={setOpen}
       >
         <DatePickerSingleInput defaultValue="bad date" />
         <DatePickerOverlay>
           <DatePickerSinglePanel helperText={helperText} />
         </DatePickerOverlay>
       </DatePicker>
-      <FormHelperText>{helperText}</FormHelperText>
+      {!open ? <FormHelperText>{helperText}</FormHelperText> : null}
     </FormField>
   );
 };
 
 export const RangeWithInitialError: StoryFn<DatePickerRangeProps> = ({
   selectionVariant,
+  onApply: onApplyProp,
   onSelectionChange: onSelectionChangeProp,
   ...args
 }) => {
   const defaultHelperText =
     "Select range DD MMM YYYY - DD MMM YYYY (e.g. 09 Jun 2024)";
   const errorHelperText = "Please enter a valid date in DD MMM YYYY format";
+  const [open, setOpen] = useState<boolean>(false);
   const [helperText, setHelperText] = useState(errorHelperText);
   const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
     "error",
   );
   const handleSelectionChange = useCallback(
-    (
-      newSelectedDate: DateRangeSelection | null,
-      error: { startDate: string | false; endDate: string | false },
-    ) => {
-      console.log(`Selected date range: ${formatDateRange(newSelectedDate)}`);
+    (newSelection: DateInputRangeResult) => {
+      const {
+        startDate: {
+          date: startDate,
+          originalValue: startDateOriginalValue,
+          errors: startDateErrors,
+        },
+        endDate: {
+          date: endDate,
+          originalValue: endDateOriginalValue,
+          errors: endDateErrors,
+        },
+      } = newSelection;
       console.log(
-        `Error: startDate: ${error.startDate} endDate: ${error.endDate}`,
+        `Selected date range: ${formatDateRange({ startDate, endDate })}`,
       );
-      const validationStatus =
-        !error.startDate && !error.endDate && isValidDateRange(newSelectedDate)
-          ? undefined
-          : "error";
-      if (validationStatus === "error") {
-        setHelperText(errorHelperText);
+      if (startDateErrors?.length) {
+        console.log(
+          `StartDate Error(s): ${startDateErrors.map(({ type, message }) => `type=${type} message=${message}`).join(",")}`,
+        );
+        if (startDateOriginalValue) {
+          console.log(`Original Value: ${startDateOriginalValue}`);
+        }
+      }
+      if (endDateErrors?.length) {
+        console.log(
+          `EndDate Error(s): ${endDateErrors.map(({ type, message }) => `type= ${type} message=${message}`).join(",")}`,
+        );
+        if (endDateOriginalValue) {
+          console.log(`Original Value: ${endDateOriginalValue}`);
+        }
+      }
+      if (startDateErrors?.length && startDateOriginalValue) {
+        setValidationStatus("error");
+        setHelperText(
+          `${errorHelperText} - start date ${startDateErrors[0].message}`,
+        );
+      } else if (endDateErrors?.length && endDateOriginalValue) {
+        setValidationStatus("error");
+        setHelperText(
+          `${errorHelperText} - end date ${endDateErrors[0].message}`,
+        );
       } else {
+        setValidationStatus(undefined);
         setHelperText(defaultHelperText);
       }
-      setValidationStatus(validationStatus);
-      onSelectionChangeProp?.(newSelectedDate, error);
+      onSelectionChangeProp?.(newSelection);
     },
-    [onSelectionChangeProp, setValidationStatus, setHelperText],
+    [onSelectionChangeProp, setHelperText, setValidationStatus],
+  );
+
+  const handleApply = useCallback(
+    (newSelectedDate: DateRangeSelection) => {
+      console.log(`Applied date: ${formatDateRange(newSelectedDate)}`);
+      onApplyProp?.(newSelectedDate);
+    },
+    [onApplyProp],
   );
 
   return (
@@ -422,8 +651,10 @@ export const RangeWithInitialError: StoryFn<DatePickerRangeProps> = ({
           startDate: new CalendarDate(2024, 6, 9),
           endDate: null,
         }}
+        onApply={handleApply}
         onSelectionChange={handleSelectionChange}
         {...args}
+        onOpen={setOpen}
       >
         <DatePickerRangeInput
           defaultValue={{ startDate: "09 Jun 2024", endDate: "bad date" }}
@@ -435,35 +666,57 @@ export const RangeWithInitialError: StoryFn<DatePickerRangeProps> = ({
           />
         </DatePickerOverlay>
       </DatePicker>
-      <FormHelperText>{helperText}</FormHelperText>
+      {!open ? <FormHelperText>{helperText}</FormHelperText> : null}
     </FormField>
   );
 };
 
 export const SingleWithFormField: StoryFn<DatePickerSingleProps> = ({
   selectionVariant,
+  onApply: onApplyProp,
   onSelectionChange: onSelectionChangeProp,
   ...args
 }) => {
   const defaultHelperText = "Date format DD MMM YYYY (e.g. 09 Jun 2024)";
   const errorHelperText = "Please enter a valid date in DD MMM YYYY format";
   const [helperText, setHelperText] = useState(defaultHelperText);
+  const [open, setOpen] = useState<boolean>(false);
   const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
     undefined,
   );
+
   const handleSelectionChange = useCallback(
-    (newSelectedDate: SingleDateSelection | null, error: string | false) => {
+    (newSelection: DateInputSingleResult) => {
+      const {
+        date: newSelectedDate,
+        originalValue,
+        errors,
+      } = newSelection;
       console.log(`Selected date: ${formatSingleDate(newSelectedDate)}`);
-      console.log(`Error: ${error}`);
-      if (error) {
-        setHelperText(errorHelperText);
+      if (errors?.length && originalValue) {
+        console.log(
+          `Error(s): ${errors.map(({ type, message }) => `type=${type} message=${message}`).join(",")}`,
+        );
+        if (originalValue) {
+          console.log(`Original Value: ${originalValue}`);
+        }
+        setHelperText(`${errorHelperText} - ${errors[0].message}`);
+        setValidationStatus("error");
       } else {
         setHelperText(defaultHelperText);
+        setValidationStatus(undefined);
       }
-      setValidationStatus(error ? "error" : undefined);
-      onSelectionChangeProp?.(newSelectedDate, error);
+      onSelectionChangeProp?.(newSelection);
     },
-    [onSelectionChangeProp, setValidationStatus, setHelperText],
+    [onSelectionChangeProp, setHelperText, setValidationStatus],
+  );
+
+  const handleApply = useCallback(
+    (newSelectedDate: SingleDateSelection | null | undefined) => {
+      console.log(`Applied date: ${formatSingleDate(newSelectedDate)}`);
+      onApplyProp?.(newSelectedDate);
+    },
+    [onApplyProp],
   );
 
   return (
@@ -471,21 +724,24 @@ export const SingleWithFormField: StoryFn<DatePickerSingleProps> = ({
       <FormLabel>Select a date</FormLabel>
       <DatePicker
         selectionVariant="single"
+        onApply={handleApply}
         onSelectionChange={handleSelectionChange}
         {...args}
+        onOpen={setOpen}
       >
         <DatePickerSingleInput />
         <DatePickerOverlay>
           <DatePickerSinglePanel helperText={helperText} />
         </DatePickerOverlay>
       </DatePicker>
-      <FormHelperText>{helperText}</FormHelperText>
+      {!open ? <FormHelperText>{helperText}</FormHelperText> : null}
     </FormField>
   );
 };
 
 export const RangeWithFormField: StoryFn<DatePickerRangeProps> = ({
   selectionVariant,
+  onApply: onApplyProp,
   onSelectionChange: onSelectionChangeProp,
   ...args
 }) => {
@@ -493,31 +749,69 @@ export const RangeWithFormField: StoryFn<DatePickerRangeProps> = ({
     "Select range DD MMM YYYY - DD MMM YYYY (e.g. 09 Jun 2024)";
   const errorHelperText = "Please enter a valid date in DD MMM YYYY format";
   const [helperText, setHelperText] = useState(defaultHelperText);
+  const [open, setOpen] = useState<boolean>(false);
   const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
     undefined,
   );
+
   const handleSelectionChange = useCallback(
-    (
-      newSelectedDate: DateRangeSelection | null,
-      error: { startDate: string | false; endDate: string | false },
-    ) => {
-      console.log(`Selected date range: ${formatDateRange(newSelectedDate)}`);
+    (newSelection: DateInputRangeResult) => {
+      const {
+        startDate: {
+          date: startDate,
+          originalValue: startDateOriginalValue,
+          errors: startDateErrors,
+        },
+        endDate: {
+          date: endDate,
+          originalValue: endDateOriginalValue,
+          errors: endDateErrors,
+        },
+      } = newSelection;
       console.log(
-        `Error: startDate: ${error.startDate} endDate: ${error.endDate}`,
+        `Selected date range: ${formatDateRange({ startDate, endDate })}`,
       );
-      const validationStatus =
-        !error.startDate && !error.endDate && isValidDateRange(newSelectedDate)
-          ? undefined
-          : "error";
-      setValidationStatus(validationStatus);
-      if (validationStatus === "error") {
-        setHelperText(errorHelperText);
+      if (startDateErrors?.length) {
+        console.log(
+          `StartDate Error(s): ${startDateErrors.map(({ type, message }) => `type=${type} message=${message}`).join(",")}`,
+        );
+        if (startDateOriginalValue) {
+          console.log(`Original Value: ${startDateOriginalValue}`);
+        }
+      }
+      if (endDateErrors?.length) {
+        console.log(
+          `EndDate Error(s): ${endDateErrors.map(({ type, message }) => `type= ${type} message=${message}`).join(",")}`,
+        );
+        if (endDateOriginalValue) {
+          console.log(`Original Value: ${endDateOriginalValue}`);
+        }
+      }
+      if (startDateErrors?.length && startDateOriginalValue) {
+        setValidationStatus("error");
+        setHelperText(
+          `${errorHelperText} - start date ${startDateErrors[0].message}`,
+        );
+      } else if (endDateErrors?.length && endDateOriginalValue) {
+        setValidationStatus("error");
+        setHelperText(
+          `${errorHelperText} - end date ${endDateErrors[0].message}`,
+        );
       } else {
+        setValidationStatus(undefined);
         setHelperText(defaultHelperText);
       }
-      onSelectionChangeProp?.(newSelectedDate, error);
+      onSelectionChangeProp?.(newSelection);
     },
-    [onSelectionChangeProp, setValidationStatus, setHelperText],
+    [onSelectionChangeProp, setHelperText, setValidationStatus],
+  );
+
+  const handleApply = useCallback(
+    (newSelectedDate: DateRangeSelection) => {
+      console.log(`Applied date: ${formatDateRange(newSelectedDate)}`);
+      onApplyProp?.(newSelectedDate);
+    },
+    [onApplyProp],
   );
 
   return (
@@ -525,43 +819,67 @@ export const RangeWithFormField: StoryFn<DatePickerRangeProps> = ({
       <FormLabel>Select a date range</FormLabel>
       <DatePicker
         selectionVariant="range"
+        onApply={handleApply}
         onSelectionChange={handleSelectionChange}
         {...args}
+        onOpen={setOpen}
       >
         <DatePickerRangeInput />
         <DatePickerOverlay>
           <DatePickerRangePanel helperText={helperText} />
         </DatePickerOverlay>
       </DatePicker>
-      <FormHelperText>{helperText}</FormHelperText>
+      {!open ? <FormHelperText>{helperText}</FormHelperText> : null}
     </FormField>
   );
 };
 
 export const SingleWithCustomPanel: StoryFn<DatePickerSingleProps> = ({
   selectionVariant,
+  onApply: onApplyProp,
   onSelectionChange: onSelectionChangeProp,
   ...args
 }) => {
   const defaultHelperText = "Date format DD MMM YYYY (e.g. 09 Jun 2024)";
   const errorHelperText = "Please enter a valid date in DD MMM YYYY format";
   const [helperText, setHelperText] = useState(defaultHelperText);
+  const [open, setOpen] = useState<boolean>(false);
   const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
     undefined,
   );
+
   const handleSelectionChange = useCallback(
-    (newSelectedDate: SingleDateSelection | null, error: string | false) => {
+    (newSelection: DateInputSingleResult) => {
+      const {
+        date: newSelectedDate,
+        originalValue,
+        errors,
+      } = newSelection;
       console.log(`Selected date: ${formatSingleDate(newSelectedDate)}`);
-      console.log(`Error: ${error}`);
-      if (error) {
-        setHelperText(errorHelperText);
+      if (errors?.length && originalValue) {
+        console.log(
+          `Error(s): ${errors.map(({ type, message }) => `type=${type} message=${message}`).join(",")}`,
+        );
+        if (originalValue) {
+          console.log(`Original Value: ${originalValue}`);
+        }
+        setHelperText(`${errorHelperText} - ${errors[0].message}`);
+        setValidationStatus("error");
       } else {
         setHelperText(defaultHelperText);
+        setValidationStatus(undefined);
       }
-      setValidationStatus(error ? "error" : undefined);
-      onSelectionChangeProp?.(newSelectedDate, error);
+      onSelectionChangeProp?.(newSelection);
     },
-    [setValidationStatus, setHelperText, onSelectionChangeProp],
+    [onSelectionChangeProp, setHelperText, setValidationStatus],
+  );
+
+  const handleApply = useCallback(
+    (newSelectedDate: SingleDateSelection | null | undefined) => {
+      console.log(`Applied date: ${formatSingleDate(newSelectedDate)}`);
+      onApplyProp?.(newSelectedDate);
+    },
+    [onApplyProp],
   );
 
   return (
@@ -569,8 +887,10 @@ export const SingleWithCustomPanel: StoryFn<DatePickerSingleProps> = ({
       <FormLabel>Select a date</FormLabel>
       <DatePicker
         selectionVariant="single"
+        onApply={handleApply}
         onSelectionChange={handleSelectionChange}
         {...args}
+        onOpen={setOpen}
       >
         <DatePickerSingleInput />
         <DatePickerOverlay>
@@ -580,7 +900,7 @@ export const SingleWithCustomPanel: StoryFn<DatePickerSingleProps> = ({
           />
         </DatePickerOverlay>
       </DatePicker>
-      <FormHelperText>{helperText}</FormHelperText>
+      {!open ? <FormHelperText>{helperText}</FormHelperText> : null}
     </FormField>
   );
 };
@@ -588,37 +908,76 @@ export const SingleWithCustomPanel: StoryFn<DatePickerSingleProps> = ({
 export const RangeWithCustomPanel: StoryFn<DatePickerRangeProps> = ({
   selectionVariant,
   onSelectionChange: onSelectionChangeProp,
+  onApply: onApplyProp,
   ...args
 }) => {
   const defaultHelperText =
     "Select range DD MMM YYYY - DD MMM YYYY (e.g. 09 Jun 2024)";
   const errorHelperText = "Please enter a valid date in DD MMM YYYY format";
   const [helperText, setHelperText] = useState(defaultHelperText);
+  const [open, setOpen] = useState<boolean>(false);
   const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
     undefined,
   );
+
   const handleSelectionChange = useCallback(
-    (
-      newSelectedDate: DateRangeSelection | null,
-      error: { startDate: string | false; endDate: string | false },
-    ) => {
-      console.log(`Selected date range: ${formatDateRange(newSelectedDate)}`);
+    (newSelection: DateInputRangeResult) => {
+      const {
+        startDate: {
+          date: startDate,
+          originalValue: startDateOriginalValue,
+          errors: startDateErrors,
+        },
+        endDate: {
+          date: endDate,
+          originalValue: endDateOriginalValue,
+          errors: endDateErrors,
+        },
+      } = newSelection;
       console.log(
-        `Error: startDate: ${error.startDate} endDate: ${error.endDate}`,
+        `Selected date range: ${formatDateRange({ startDate, endDate })}`,
       );
-      const validationStatus =
-        !error.startDate && !error.endDate && isValidDateRange(newSelectedDate)
-          ? undefined
-          : "error";
-      if (validationStatus === "error") {
-        setHelperText(errorHelperText);
+      if (startDateErrors?.length) {
+        console.log(
+          `StartDate Error(s): ${startDateErrors.map(({ type, message }) => `type=${type} message=${message}`).join(",")}`,
+        );
+        if (startDateOriginalValue) {
+          console.log(`Original Value: ${startDateOriginalValue}`);
+        }
+      }
+      if (endDateErrors?.length) {
+        console.log(
+          `EndDate Error(s): ${endDateErrors.map(({ type, message }) => `type= ${type} message=${message}`).join(",")}`,
+        );
+        if (endDateOriginalValue) {
+          console.log(`Original Value: ${endDateOriginalValue}`);
+        }
+      }
+      if (startDateErrors?.length && startDateOriginalValue) {
+        setValidationStatus("error");
+        setHelperText(
+          `${errorHelperText} - start date ${startDateErrors[0].message}`,
+        );
+      } else if (endDateErrors?.length && endDateOriginalValue) {
+        setValidationStatus("error");
+        setHelperText(
+          `${errorHelperText} - end date ${endDateErrors[0].message}`,
+        );
       } else {
+        setValidationStatus(undefined);
         setHelperText(defaultHelperText);
       }
-      setValidationStatus(validationStatus);
-      onSelectionChangeProp?.(newSelectedDate, error);
+      onSelectionChangeProp?.(newSelection);
     },
-    [setValidationStatus, setHelperText, onSelectionChangeProp],
+    [onSelectionChangeProp, setHelperText, setValidationStatus],
+  );
+
+  const handleApply = useCallback(
+    (newSelectedDate: DateRangeSelection) => {
+      console.log(`Applied date: ${formatDateRange(newSelectedDate)}`);
+      onApplyProp?.(newSelectedDate);
+    },
+    [onApplyProp],
   );
 
   return (
@@ -626,8 +985,10 @@ export const RangeWithCustomPanel: StoryFn<DatePickerRangeProps> = ({
       <FormLabel>Select a date range</FormLabel>
       <DatePicker
         selectionVariant="range"
+        onApply={handleApply}
         onSelectionChange={handleSelectionChange}
         {...args}
+        onOpen={setOpen}
       >
         <DatePickerRangeInput />
         <DatePickerOverlay>
@@ -637,14 +998,14 @@ export const RangeWithCustomPanel: StoryFn<DatePickerRangeProps> = ({
           />
         </DatePickerOverlay>
       </DatePicker>
-      <FormHelperText>{helperText}</FormHelperText>
+      {!open ? <FormHelperText>{helperText}</FormHelperText> : null}
     </FormField>
   );
 };
 
 const TodayButton = () => {
   const {
-    helpers: { setSelectedDate },
+    helpers: { select },
   } = useDatePickerContext({
     selectionVariant: "single",
   }) as SingleDatePickerState;
@@ -655,7 +1016,11 @@ const TodayButton = () => {
         style={{ margin: "var(--salt-spacing-50)", flexGrow: 1 }}
         sentiment="accented"
         appearance="bordered"
-        onClick={() => setSelectedDate(today(getLocalTimeZone()), false)}
+        onClick={() =>
+          select({
+            date: today(getLocalTimeZone()),
+          })
+        }
       >
         Select Today
       </Button>
@@ -665,28 +1030,50 @@ const TodayButton = () => {
 
 export const SingleWithTodayButton: StoryFn<DatePickerSingleProps> = ({
   selectionVariant,
+  onApply: onApplyProp,
   onSelectionChange: onSelectionChangeProp,
   ...args
 }) => {
   const defaultHelperText = "Date format DD MMM YYYY (e.g. 09 Jun 2024)";
   const errorHelperText = "Please enter a valid date in DD MMM YYYY format";
   const [helperText, setHelperText] = useState(defaultHelperText);
+  const [open, setOpen] = useState<boolean>(false);
   const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
     undefined,
   );
+
   const handleSelectionChange = useCallback(
-    (newSelectedDate: SingleDateSelection | null, error: string | false) => {
+    (newSelection: DateInputSingleResult) => {
+      const {
+        date: newSelectedDate,
+        originalValue,
+        errors,
+      } = newSelection;
       console.log(`Selected date: ${formatSingleDate(newSelectedDate)}`);
-      console.log(`Error: ${error}`);
-      if (error) {
-        setHelperText(errorHelperText);
+      if (errors?.length && originalValue) {
+        console.log(
+          `Error(s): ${errors.map(({ type, message }) => `type=${type} message=${message}`).join(",")}`,
+        );
+        if (originalValue) {
+          console.log(`Original Value: ${originalValue}`);
+        }
+        setHelperText(`${errorHelperText} - ${errors[0].message}`);
+        setValidationStatus("error");
       } else {
         setHelperText(defaultHelperText);
+        setValidationStatus(undefined);
       }
-      setValidationStatus(error ? "error" : undefined);
-      onSelectionChangeProp?.(newSelectedDate, error);
+      onSelectionChangeProp?.(newSelection);
     },
-    [setValidationStatus, setHelperText, onSelectionChangeProp],
+    [onSelectionChangeProp, setHelperText, setValidationStatus],
+  );
+
+  const handleApply = useCallback(
+    (newSelectedDate: SingleDateSelection | null | undefined) => {
+      console.log(`Applied date: ${formatSingleDate(newSelectedDate)}`);
+      onApplyProp?.(newSelectedDate);
+    },
+    [onApplyProp],
   );
 
   return (
@@ -694,8 +1081,10 @@ export const SingleWithTodayButton: StoryFn<DatePickerSingleProps> = ({
       <FormLabel>Select a date</FormLabel>
       <DatePicker
         selectionVariant="single"
+        onApply={handleApply}
         onSelectionChange={handleSelectionChange}
         {...args}
+        onOpen={setOpen}
       >
         <DatePickerSingleInput />
         <DatePickerOverlay>
@@ -720,7 +1109,7 @@ export const SingleWithTodayButton: StoryFn<DatePickerSingleProps> = ({
           </FlexLayout>
         </DatePickerOverlay>
       </DatePicker>
-      <FormHelperText>{helperText}</FormHelperText>
+      {!open ? <FormHelperText>{helperText}</FormHelperText> : null}
     </FormField>
   );
 };
@@ -729,40 +1118,94 @@ export const SingleWithConfirmation: StoryFn<DatePickerSingleProps> = ({
   selectionVariant,
   defaultSelectedDate,
   onApply: onApplyProp,
+  onCancel: onCancelProp,
   onSelectionChange: onSelectionChangeProp,
   ...args
 }) => {
   const defaultHelperText = "Date format DD MMM YYYY (e.g. 09 Jun 2024)";
   const errorHelperText = "Please enter a valid date in DD MMM YYYY format";
-  const [helperText, setHelperText] = useState(defaultHelperText);
   const applyButtonRef = useRef<HTMLButtonElement>(null);
+  const [open, setOpen] = useState<boolean>(false);
+  const [helperText, setHelperText] = useState<string>(defaultHelperText);
   const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
     undefined,
   );
-  const [selectedDate, setSelectedDate] = useState<SingleDateSelection | null>(
-    defaultSelectedDate ?? null,
-  );
-  const handleApply = useCallback(
-    (newSelectedDate: SingleDateSelection | null, error: string | false) => {
+
+  const [selectedDate, setSelectedDate] = useState<
+    SingleDateSelection | null | undefined
+  >(defaultSelectedDate ?? null);
+
+  const savedState = useRef<{
+    validationStatus: typeof validationStatus;
+    helperText: typeof helperText;
+  }>({
+    validationStatus: undefined,
+    helperText: defaultHelperText,
+  });
+
+  const handleSelectionChange = useCallback(
+    (newSelection: DateInputSingleResult) => {
+      const {
+        date: newSelectedDate,
+        originalValue,
+        errors,
+      } = newSelection;
       console.log(`Selected date: ${formatSingleDate(newSelectedDate)}`);
-      console.log(`Error: ${error}`);
-      if (error) {
-        setHelperText(errorHelperText);
+      if (errors?.length && originalValue) {
+        console.log(
+          `Error(s): ${errors.map(({ type, message }) => `type=${type} message=${message}`).join(",")}`,
+        );
+        if (originalValue) {
+          console.log(`Original Value: ${originalValue}`);
+        }
+        setHelperText(`${errorHelperText} - ${errors[0].message}`);
+        setValidationStatus("error");
       } else {
         setHelperText(defaultHelperText);
+        setValidationStatus(undefined);
       }
-      setValidationStatus(error ? "error" : undefined);
-      onApplyProp?.(newSelectedDate, error);
+      if (newSelectedDate) {
+        applyButtonRef?.current?.focus();
+      }
+      onSelectionChangeProp?.(newSelection);
     },
-    [onApplyProp, setSelectedDate, setHelperText],
+    [onSelectionChangeProp, setHelperText, setValidationStatus],
   );
-  const handleSelectionChange = useCallback(
-    (newSelectedDate: SingleDateSelection | null, error: string | false) => {
-      setSelectedDate(newSelectedDate);
-      applyButtonRef?.current?.focus();
-      onSelectionChangeProp?.(newSelectedDate, error);
+
+  const handleOpen = useCallback(
+    (opening: boolean) => {
+      if (opening) {
+        savedState.current = {
+          helperText,
+          validationStatus,
+        };
+      }
+      setOpen(opening);
     },
-    [onSelectionChangeProp, applyButtonRef?.current, setSelectedDate],
+    [validationStatus, setOpen],
+  );
+
+  const handleCancel = useCallback(() => {
+    onCancelProp?.();
+    setValidationStatus(savedState.current?.validationStatus);
+    setHelperText(savedState.current?.helperText);
+  }, [onCancelProp, setHelperText, setValidationStatus]);
+
+  const handleApply = useCallback(
+    (newSelectedDate: SingleDateSelection | null | undefined) => {
+      console.log(`Applied date: ${formatSingleDate(newSelectedDate)}`);
+      setSelectedDate(newSelectedDate);
+      onApplyProp?.(newSelectedDate);
+      setHelperText(defaultHelperText);
+      setValidationStatus(undefined);
+    },
+    [
+      onApplyProp,
+      applyButtonRef?.current,
+      setHelperText,
+      setSelectedDate,
+      setValidationStatus,
+    ],
   );
 
   return (
@@ -771,9 +1214,11 @@ export const SingleWithConfirmation: StoryFn<DatePickerSingleProps> = ({
       <DatePicker
         selectionVariant="single"
         onApply={handleApply}
+        onCancel={handleCancel}
         onSelectionChange={handleSelectionChange}
         {...args}
-        selectedDate={selectedDate}
+        onOpen={handleOpen}
+        defaultSelectedDate={selectedDate}
       >
         <DatePickerSingleInput />
         <DatePickerOverlay>
@@ -786,12 +1231,15 @@ export const SingleWithConfirmation: StoryFn<DatePickerSingleProps> = ({
               <DatePickerActions
                 selectionVariant="single"
                 applyButtonRef={applyButtonRef}
+                ApplyButtonProps={{
+                  disabled: !!validationStatus,
+                }}
               />
             </FlexItem>
           </FlexLayout>
         </DatePickerOverlay>
       </DatePicker>
-      <FormHelperText>{helperText}</FormHelperText>
+      {!open ? <FormHelperText>{helperText}</FormHelperText> : null}
     </FormField>
   );
 };
@@ -800,58 +1248,116 @@ export const RangeWithConfirmation: StoryFn<DatePickerRangeProps> = ({
   selectionVariant,
   defaultSelectedDate,
   onApply: onApplyProp,
+  onCancel: onCancelProp,
+  onOpen: onOpenProp,
   onSelectionChange: onSelectionChangeProp,
   ...args
 }) => {
   const defaultHelperText =
     "Select range (DD MMM YYYY - DD MMM YYYY) e.g. 09 Jun 2024";
   const errorHelperText = "Please enter a valid date in DD MMM YYYY format";
-  const [helperText, setHelperText] = useState(defaultHelperText);
   const applyButtonRef = useRef<HTMLButtonElement>(null);
-  const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
-    undefined,
-  );
+  const [helperText, setHelperText] = useState<string>(defaultHelperText);
+  const [open] = useState<boolean>(false);
+  const [validationStatus, setValidationStatus] = useState<
+    "error" | undefined
+  >();
+  const savedValidationState = useRef<typeof validationStatus>();
+
   const [selectedDate, setSelectedDate] = useState<DateRangeSelection | null>(
     defaultSelectedDate ?? null,
   );
-  const handleApply = useCallback(
-    (
-      newSelectedDate: DateRangeSelection | null,
-      error: { startDate: string | false; endDate: string | false },
-    ) => {
-      console.log(`Selected date range: ${formatDateRange(newSelectedDate)}`);
+
+  const savedState = useRef<{
+    validationStatus: typeof validationStatus;
+    helperText: typeof helperText;
+  }>({
+    validationStatus: undefined,
+    helperText: defaultHelperText,
+  });
+
+  const handleSelectionChange = useCallback(
+    (newSelection: DateInputRangeResult) => {
+      const {
+        startDate: {
+          date: startDate,
+          originalValue: startDateOriginalValue,
+          errors: startDateErrors,
+        },
+        endDate: {
+          date: endDate,
+          originalValue: endDateOriginalValue,
+          errors: endDateErrors,
+        },
+      } = newSelection;
       console.log(
-        `Error: startDate: ${error.startDate} endDate: ${error.endDate}`,
+        `Selected date range: ${formatDateRange({ startDate, endDate })}`,
       );
-      const validationStatus =
-        !error.startDate && !error.endDate && isValidDateRange(newSelectedDate)
-          ? undefined
-          : "error";
-      if (validationStatus === "error") {
-        setHelperText(errorHelperText);
+      if (startDateErrors?.length) {
+        console.log(
+          `StartDate Error(s): ${startDateErrors.map(({ type, message }) => `type=${type} message=${message}`).join(",")}`,
+        );
+        if (startDateOriginalValue) {
+          console.log(`Original Value: ${startDateOriginalValue}`);
+        }
+      }
+      if (endDateErrors?.length) {
+        console.log(
+          `EndDate Error(s): ${endDateErrors.map(({ type, message }) => `type= ${type} message=${message}`).join(",")}`,
+        );
+        if (endDateOriginalValue) {
+          console.log(`Original Value: ${endDateOriginalValue}`);
+        }
+      }
+      if (startDateErrors?.length && startDateOriginalValue) {
+        setValidationStatus("error");
+        setHelperText(
+          `${errorHelperText} - start date ${startDateErrors[0].message}`,
+        );
+      } else if (endDateErrors?.length && endDateOriginalValue) {
+        setValidationStatus("error");
+        setHelperText(
+          `${errorHelperText} - end date ${endDateErrors[0].message}`,
+        );
       } else {
+        setValidationStatus(undefined);
         setHelperText(defaultHelperText);
       }
-      setValidationStatus(validationStatus);
-      onApplyProp?.(newSelectedDate, error);
+      onSelectionChangeProp?.(newSelection);
     },
-    [onApplyProp, setValidationStatus, setHelperText],
+    [onSelectionChangeProp, setHelperText, setValidationStatus],
   );
-  const handleSelectionChange = useCallback(
-    (
-      newSelectedDate: DateRangeSelection | null,
-      error: {
-        startDate: string | false;
-        endDate: string | false;
-      },
-    ) => {
-      setSelectedDate(newSelectedDate);
-      if (newSelectedDate?.startDate && newSelectedDate?.endDate) {
-        applyButtonRef?.current?.focus();
+
+  const handleOpen = useCallback(
+    (opening: boolean) => {
+      if (opening) {
+        savedValidationState.current = validationStatus;
       }
-      onSelectionChangeProp?.(newSelectedDate, error);
     },
-    [applyButtonRef?.current, onSelectionChangeProp, setSelectedDate],
+    [validationStatus],
+  );
+
+  const handleCancel = useCallback(() => {
+    onCancelProp?.();
+    setHelperText(savedState.current?.helperText);
+    setValidationStatus(savedValidationState.current);
+  }, [onCancelProp, setHelperText, setValidationStatus]);
+
+  const handleApply = useCallback(
+    (newSelectedDate: DateRangeSelection) => {
+      console.log(`Applied date: ${formatDateRange(newSelectedDate)}`);
+      setSelectedDate(newSelectedDate);
+      onApplyProp?.(newSelectedDate);
+      setHelperText(defaultHelperText);
+      setValidationStatus(undefined);
+    },
+    [
+      onApplyProp,
+      applyButtonRef?.current,
+      setHelperText,
+      setSelectedDate,
+      setValidationStatus,
+    ],
   );
 
   return (
@@ -860,9 +1366,11 @@ export const RangeWithConfirmation: StoryFn<DatePickerRangeProps> = ({
       <DatePicker
         selectionVariant="range"
         onApply={handleApply}
+        onCancel={handleCancel}
         onSelectionChange={handleSelectionChange}
         {...args}
-        selectedDate={selectedDate}
+        onOpen={handleOpen}
+        defaultSelectedDate={selectedDate}
       >
         <DatePickerRangeInput />
         <DatePickerOverlay>
@@ -875,12 +1383,15 @@ export const RangeWithConfirmation: StoryFn<DatePickerRangeProps> = ({
               <DatePickerActions
                 selectionVariant="range"
                 applyButtonRef={applyButtonRef}
+                ApplyButtonProps={{
+                  disabled: !!validationStatus,
+                }}
               />
             </FlexItem>
           </FlexLayout>
         </DatePickerOverlay>
       </DatePicker>
-      <FormHelperText>{helperText}</FormHelperText>
+      {!open ? <FormHelperText>{helperText}</FormHelperText> : null}
     </FormField>
   );
 };
@@ -888,6 +1399,7 @@ export const RangeWithConfirmation: StoryFn<DatePickerRangeProps> = ({
 export const SingleWithCustomParser: StoryFn<DatePickerSingleProps> = ({
   selectionVariant,
   defaultSelectedDate,
+  onApply: onApplyProp,
   onSelectionChange: onSelectionChangeProp,
   ...args
 }) => {
@@ -895,39 +1407,59 @@ export const SingleWithCustomParser: StoryFn<DatePickerSingleProps> = ({
     "Date format DD MMM YYYY (e.g. 09 Jun 2024) or +/-D (e.g. +7)";
   const errorHelperText = "Please enter a valid date in DD MMM YYYY format";
   const [helperText, setHelperText] = useState(defaultHelperText);
+  const [open, setOpen] = useState<boolean>(false);
   const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
     undefined,
   );
-  const [selectedDate, setSelectedDate] = useState<SingleDateSelection | null>(
+  const [selectedDate] = useState<SingleDateSelection | null>(
     defaultSelectedDate ?? null,
   );
   const handleSelectionChange = useCallback(
-    (newSelectedDate: SingleDateSelection | null, error: string | false) => {
+    (newSelection: DateInputSingleResult) => {
+      const {
+        date: newSelectedDate,
+        originalValue,
+        errors,
+      } = newSelection;
       console.log(`Selected date: ${formatSingleDate(newSelectedDate)}`);
-      console.log(`Error: ${error}`);
-      setSelectedDate(newSelectedDate);
-      if (error) {
-        setHelperText(errorHelperText);
+      if (errors?.length && originalValue) {
+        console.log(
+          `Error(s): ${errors.map(({ type, message }) => `type=${type} message=${message}`).join(",")}`,
+        );
+        if (originalValue) {
+          console.log(`Original Value: ${originalValue}`);
+        }
+        setHelperText(`${errorHelperText} - ${errors[0].message}`);
+        setValidationStatus("error");
       } else {
         setHelperText(defaultHelperText);
+        setValidationStatus(undefined);
       }
-      setValidationStatus(error ? "error" : undefined);
-      onSelectionChangeProp?.(newSelectedDate, error);
+      onSelectionChangeProp?.(newSelection);
     },
-    [
-      onSelectionChangeProp,
-      setValidationStatus,
-      setSelectedDate,
-      setHelperText,
-    ],
+    [onSelectionChangeProp, setHelperText, setValidationStatus],
   );
+
+  const handleApply = useCallback(
+    (newSelectedDate: SingleDateSelection | null | undefined) => {
+      console.log(`Applied date: ${formatSingleDate(newSelectedDate)}`);
+      onApplyProp?.(newSelectedDate);
+    },
+    [onApplyProp],
+  );
+
   const customParser = useCallback(
     (
       inputDate: string,
       locale: string = getCurrentLocale(),
-    ): DateInputSingleParserResult => {
+    ): DateInputSingleResult => {
       if (!inputDate?.length) {
-        return { date: null, error: false };
+        return {
+          date: null,
+          errors: [
+            { type: DateInputParserEnum.UNSET, message: "no date provided" },
+          ],
+        };
       }
       const parsedDate = inputDate;
       const offsetMatch = parsedDate?.match(/^([+-]?\d+)$/);
@@ -943,7 +1475,7 @@ export const SingleWithCustomParser: StoryFn<DatePickerSingleProps> = ({
             offsetDate.month,
             offsetDate.day,
           ),
-          error: false,
+          errors: [],
         };
       }
       return parseCalendarDate(parsedDate || "", locale);
@@ -956,8 +1488,10 @@ export const SingleWithCustomParser: StoryFn<DatePickerSingleProps> = ({
       <FormLabel>Select a date</FormLabel>
       <DatePicker
         selectionVariant="single"
+        onApply={handleApply}
         onSelectionChange={handleSelectionChange}
         {...args}
+        onOpen={setOpen}
         selectedDate={selectedDate}
       >
         <DatePickerSingleInput parse={customParser} />
@@ -965,13 +1499,139 @@ export const SingleWithCustomParser: StoryFn<DatePickerSingleProps> = ({
           <DatePickerSinglePanel helperText={helperText} />
         </DatePickerOverlay>
       </DatePicker>
-      <FormHelperText>{helperText}</FormHelperText>
+      {!open ? <FormHelperText>{helperText}</FormHelperText> : null}
+    </FormField>
+  );
+};
+
+export const SingleWithCustomValidation: StoryFn<DatePickerSingleProps> = ({
+  selectionVariant,
+  defaultSelectedDate,
+  onApply: onApplyProp,
+  onSelectionChange: onSelectionChangeProp,
+  ...args
+}) => {
+  const defaultHelperText =
+    "Date format DD MMM YYYY (e.g. 09 Jun 2024) or +/-D (e.g. +7)";
+  const errorHelperText = "Please enter a valid date in DD MMM YYYY format";
+  const [helperText, setHelperText] = useState(defaultHelperText);
+  const [open, setOpen] = useState<boolean>(false);
+  const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
+    undefined,
+  );
+
+  const validateIsAWeekday = useCallback(
+    (result: DateInputSingleResult): DateInputSingleResult => {
+      if (
+        result?.date &&
+        result?.errors?.length &&
+        isWeekend(result.date, getCurrentLocale())
+      ) {
+        result.errors?.push({
+          type: DateInputParserEnum.INVALID_DAY,
+          message: "date must be a weekday",
+        });
+      }
+      return result;
+    },
+    [],
+  );
+
+  const handleSelectionChange = useCallback(
+    (newSelection: DateInputSingleResult) => {
+      const {
+        date: newSelectedDate,
+        originalValue,
+        errors,
+      } = newSelection;
+      console.log(`Selected date: ${formatSingleDate(newSelectedDate)}`);
+      if (errors?.length && originalValue) {
+        console.log(
+          `Error(s): ${errors.map(({ type, message }) => `type=${type} message=${message}`).join(",")}`,
+        );
+        if (originalValue) {
+          console.log(`Original Value: ${originalValue}`);
+        }
+        setHelperText(`${errorHelperText} - ${errors[0].message}`);
+        setValidationStatus("error");
+      } else {
+        setHelperText(defaultHelperText);
+        setValidationStatus(undefined);
+      }
+      onSelectionChangeProp?.(newSelection);
+    },
+    [onSelectionChangeProp, setHelperText, setValidationStatus],
+  );
+
+  const handleApply = useCallback(
+    (newSelectedDate: SingleDateSelection | null | undefined) => {
+      console.log(`Applied date: ${formatSingleDate(newSelectedDate)}`);
+      onApplyProp?.(newSelectedDate);
+    },
+    [onApplyProp],
+  );
+
+  const customiseNonDateError = useCallback(
+    (result: DateInputSingleResult): DateInputSingleResult => {
+      if (!result.errors) {
+        return result;
+      }
+      result.errors = result.errors.map((error) => {
+        console.log(error);
+        if (error.type === DateInputParserEnum.NOT_A_DATE) {
+          error.message = "valid dates are any weekday";
+        }
+        return error;
+      });
+      return result;
+    },
+    [],
+  );
+
+  const isDayUnselectable = useCallback(
+    (date: DateValue): string | false | undefined => {
+      console.log(date);
+      return isWeekend(date, getCurrentLocale())
+        ? "weekends are un-selectable"
+        : false;
+    },
+    [],
+  );
+
+  const validateAndCustomize = useCallback(
+    (result: DateInputSingleResult): DateInputSingleResult => {
+      const validateWeekdayResult = validateIsAWeekday(result);
+      return customiseNonDateError(validateWeekdayResult);
+    },
+    [customiseNonDateError, validateIsAWeekday],
+  );
+
+  return (
+    <FormField validationStatus={validationStatus}>
+      <FormLabel>Select a date</FormLabel>
+      <DatePicker
+        selectionVariant="single"
+        onApply={handleApply}
+        onSelectionChange={handleSelectionChange}
+        {...args}
+        onOpen={setOpen}
+      >
+        <DatePickerSingleInput validate={validateAndCustomize} />
+        <DatePickerOverlay>
+          <DatePickerSinglePanel
+            helperText={helperText}
+            CalendarProps={{ isDayUnselectable }}
+          />
+        </DatePickerOverlay>
+      </DatePicker>
+      {!open ? <FormHelperText>{helperText}</FormHelperText> : null}
     </FormField>
   );
 };
 
 export const SingleWithLocaleEnUS: StoryFn<DatePickerSingleProps> = ({
   selectionVariant,
+  onApply: onApplyProp,
   onSelectionChange: onSelectionChangeProp,
   ...args
 }) => {
@@ -980,22 +1640,42 @@ export const SingleWithLocaleEnUS: StoryFn<DatePickerSingleProps> = ({
   const defaultHelperText = `Locale ${locale}`;
   const errorHelperText = "Please enter a valid date in DD MMM YYYY format";
   const [helperText, setHelperText] = useState(defaultHelperText);
+  const [open, setOpen] = useState<boolean>(false);
   const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
     undefined,
   );
   const handleSelectionChange = useCallback(
-    (newSelectedDate: SingleDateSelection | null, error: string | false) => {
-      console.log(`Selected date: ${newSelectedDate}`);
-      console.log(`Error: ${error}`);
-      if (error) {
-        setHelperText(errorHelperText);
+    (newSelection: DateInputSingleResult) => {
+      const {
+        date: newSelectedDate,
+        originalValue,
+        errors,
+      } = newSelection;
+      console.log(`Selected date: ${formatSingleDate(newSelectedDate)}`);
+      if (errors?.length && originalValue) {
+        console.log(
+          `Error(s): ${errors.map(({ type, message }) => `type=${type} message=${message}`).join(",")}`,
+        );
+        if (originalValue) {
+          console.log(`Original Value: ${originalValue}`);
+        }
+        setHelperText(`${errorHelperText} - ${errors[0].message}`);
+        setValidationStatus("error");
       } else {
         setHelperText(defaultHelperText);
+        setValidationStatus(undefined);
       }
-      setValidationStatus(error ? "error" : undefined);
-      onSelectionChangeProp?.(newSelectedDate, error);
+      onSelectionChangeProp?.(newSelection);
     },
-    [onSelectionChangeProp, setValidationStatus, setHelperText],
+    [onSelectionChangeProp, setHelperText, setValidationStatus],
+  );
+
+  const handleApply = useCallback(
+    (newSelectedDate: SingleDateSelection | null | undefined) => {
+      console.log(`Applied date: ${formatSingleDate(newSelectedDate)}`);
+      onApplyProp?.(newSelectedDate);
+    },
+    [onApplyProp],
   );
 
   return (
@@ -1004,21 +1684,24 @@ export const SingleWithLocaleEnUS: StoryFn<DatePickerSingleProps> = ({
       <DatePicker
         selectionVariant={"single"}
         locale={locale}
+        onApply={handleApply}
         onSelectionChange={handleSelectionChange}
         {...args}
+        onOpen={setOpen}
       >
         <DatePickerSingleInput />
         <DatePickerOverlay>
           <DatePickerSinglePanel helperText={helperText} />
         </DatePickerOverlay>
       </DatePicker>
-      <FormHelperText>{helperText}</FormHelperText>
+      {!open ? <FormHelperText>{helperText}</FormHelperText> : null}
     </FormField>
   );
 };
 
 export const SingleWithLocaleZhCN: StoryFn<DatePickerSingleProps> = ({
   selectionVariant,
+  onApply: onApplyProp,
   onSelectionChange: onSelectionChangeProp,
   ...args
 }) => {
@@ -1027,22 +1710,42 @@ export const SingleWithLocaleZhCN: StoryFn<DatePickerSingleProps> = ({
   const defaultHelperText = `Locale ${locale}`;
   const errorHelperText = "Please enter a valid date in DD MMM YYYY format";
   const [helperText, setHelperText] = useState(defaultHelperText);
+  const [open, setOpen] = useState<boolean>(false);
   const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
     undefined,
   );
   const handleSelectionChange = useCallback(
-    (newSelectedDate: SingleDateSelection | null, error: string | false) => {
-      console.log(`Selected date: ${newSelectedDate ?? null}`);
-      console.log(`Error: ${error}`);
-      if (error) {
-        setHelperText(errorHelperText);
+    (newSelection: DateInputSingleResult) => {
+      const {
+        date: newSelectedDate,
+        originalValue,
+        errors,
+      } = newSelection;
+      console.log(`Selected date: ${formatSingleDate(newSelectedDate)}`);
+      if (errors?.length && originalValue) {
+        console.log(
+          `Error(s): ${errors.map(({ type, message }) => `type=${type} message=${message}`).join(",")}`,
+        );
+        if (originalValue) {
+          console.log(`Original Value: ${originalValue}`);
+        }
+        setHelperText(`${errorHelperText} - ${errors[0].message}`);
+        setValidationStatus("error");
       } else {
         setHelperText(defaultHelperText);
+        setValidationStatus(undefined);
       }
-      setValidationStatus(error ? "error" : undefined);
-      onSelectionChangeProp?.(newSelectedDate, error);
+      onSelectionChangeProp?.(newSelection);
     },
-    [onSelectionChangeProp, setValidationStatus, setHelperText],
+    [onSelectionChangeProp, setHelperText, setValidationStatus],
+  );
+
+  const handleApply = useCallback(
+    (newSelectedDate: SingleDateSelection | null | undefined) => {
+      console.log(`Applied date: ${formatSingleDate(newSelectedDate)}`);
+      onApplyProp?.(newSelectedDate);
+    },
+    [onApplyProp],
   );
 
   const formatMonth = (date: DateValue) =>
@@ -1063,8 +1766,10 @@ export const SingleWithLocaleZhCN: StoryFn<DatePickerSingleProps> = ({
       <DatePicker
         selectionVariant={"single"}
         locale={locale}
+        onApply={handleApply}
         onSelectionChange={handleSelectionChange}
         {...args}
+        onOpen={setOpen}
       >
         <DatePickerSingleInput format={formatDate} />
         <DatePickerOverlay>
@@ -1077,13 +1782,14 @@ export const SingleWithLocaleZhCN: StoryFn<DatePickerSingleProps> = ({
           />
         </DatePickerOverlay>
       </DatePicker>
-      <FormHelperText>{helperText}</FormHelperText>
+      {!open ? <FormHelperText>{helperText}</FormHelperText> : null}
     </FormField>
   );
 };
 
 export const RangeWithLocaleEsES: StoryFn<DatePickerRangeProps> = ({
   selectionVariant,
+  onApply: onApplyProp,
   onSelectionChange: onSelectionChangeProp,
   ...args
 }) => {
@@ -1092,40 +1798,68 @@ export const RangeWithLocaleEsES: StoryFn<DatePickerRangeProps> = ({
   const defaultHelperText = `Locale ${locale}`;
   const errorHelperText = "Please enter a valid date in DD MMM YYYY format";
   const [helperText, setHelperText] = useState(defaultHelperText);
+  const [open, setOpen] = useState<boolean>(false);
   const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
     undefined,
   );
   const handleSelectionChange = useCallback(
-    (
-      newSelectedDate: DateRangeSelection | null,
-      error: {
-        startDate: string | false;
-        endDate: string | false;
-      },
-    ) => {
+    (newSelection: DateInputRangeResult) => {
+      const {
+        startDate: {
+          date: startDate,
+          originalValue: startDateOriginalValue,
+          errors: startDateErrors,
+        },
+        endDate: {
+          date: endDate,
+          originalValue: endDateOriginalValue,
+          errors: endDateErrors,
+        },
+      } = newSelection;
       console.log(
-        `Selected date range: ${formatDateRange(newSelectedDate, locale, {
-          day: "2-digit",
-          month: "2-digit",
-          year: "numeric",
-        })}`,
+        `Selected date range: ${formatDateRange({ startDate, endDate })}`,
       );
-      console.log(
-        `Error: startDate: ${error.startDate} endDate: ${error.endDate}`,
-      );
-      const validationStatus =
-        !error.startDate && !error.endDate && isValidDateRange(newSelectedDate)
-          ? undefined
-          : "error";
-      if (validationStatus === "error") {
-        setHelperText(errorHelperText);
+      if (startDateErrors?.length) {
+        console.log(
+          `StartDate Error(s): ${startDateErrors.map(({ type, message }) => `type=${type} message=${message}`).join(",")}`,
+        );
+        if (startDateOriginalValue) {
+          console.log(`Original Value: ${startDateOriginalValue}`);
+        }
+      }
+      if (endDateErrors?.length) {
+        console.log(
+          `EndDate Error(s): ${endDateErrors.map(({ type, message }) => `type= ${type} message=${message}`).join(",")}`,
+        );
+        if (endDateOriginalValue) {
+          console.log(`Original Value: ${endDateOriginalValue}`);
+        }
+      }
+      if (startDateErrors?.length && startDateOriginalValue) {
+        setValidationStatus("error");
+        setHelperText(
+          `${errorHelperText} - start date ${startDateErrors[0].message}`,
+        );
+      } else if (endDateErrors?.length && endDateOriginalValue) {
+        setValidationStatus("error");
+        setHelperText(
+          `${errorHelperText} - end date ${endDateErrors[0].message}`,
+        );
       } else {
+        setValidationStatus(undefined);
         setHelperText(defaultHelperText);
       }
-      setValidationStatus(validationStatus);
-      onSelectionChangeProp?.(newSelectedDate, error);
+      onSelectionChangeProp?.(newSelection);
     },
-    [onSelectionChangeProp, setValidationStatus, setHelperText],
+    [onSelectionChangeProp, setHelperText, setValidationStatus],
+  );
+
+  const handleApply = useCallback(
+    (newSelectedDate: DateRangeSelection) => {
+      console.log(`Applied date: ${formatDateRange(newSelectedDate)}`);
+      onApplyProp?.(newSelectedDate);
+    },
+    [onApplyProp],
   );
 
   return (
@@ -1134,43 +1868,67 @@ export const RangeWithLocaleEsES: StoryFn<DatePickerRangeProps> = ({
       <DatePicker
         selectionVariant={"range"}
         locale={locale}
+        onApply={handleApply}
         onSelectionChange={handleSelectionChange}
         {...args}
+        onOpen={setOpen}
       >
         <DatePickerRangeInput />
         <DatePickerOverlay>
           <DatePickerRangePanel helperText={helperText} />
         </DatePickerOverlay>
       </DatePicker>
-      <FormHelperText>{helperText}</FormHelperText>
+      {!open ? <FormHelperText>{helperText}</FormHelperText> : null}
     </FormField>
   );
 };
 
 export const SingleBordered: StoryFn<DatePickerSingleProps> = ({
   selectionVariant,
+  onApply: onApplyProp,
   onSelectionChange: onSelectionChangeProp,
   ...args
 }) => {
   const defaultHelperText = "Date format DD MMM YYYY (e.g. 09 Jun 2024)";
   const errorHelperText = "Please enter a valid date in DD MMM YYYY format";
   const [helperText, setHelperText] = useState(defaultHelperText);
+  const [open, setOpen] = useState<boolean>(false);
   const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
     undefined,
   );
+
   const handleSelectionChange = useCallback(
-    (newSelectedDate: SingleDateSelection | null, error: string | false) => {
+    (newSelection: DateInputSingleResult) => {
+      const {
+        date: newSelectedDate,
+        originalValue,
+        errors,
+      } = newSelection;
       console.log(`Selected date: ${formatSingleDate(newSelectedDate)}`);
-      console.log(`Error: ${error}`);
-      if (error) {
-        setHelperText(errorHelperText);
+      if (errors?.length && originalValue) {
+        console.log(
+          `Error(s): ${errors.map(({ type, message }) => `type=${type} message=${message}`).join(",")}`,
+        );
+        if (originalValue) {
+          console.log(`Original Value: ${originalValue}`);
+        }
+        setHelperText(`${errorHelperText} - ${errors[0].message}`);
+        setValidationStatus("error");
       } else {
         setHelperText(defaultHelperText);
+        setValidationStatus(undefined);
       }
-      setValidationStatus(error ? "error" : undefined);
-      onSelectionChangeProp?.(newSelectedDate, error);
+      onSelectionChangeProp?.(newSelection);
     },
-    [setValidationStatus, setHelperText, onSelectionChangeProp],
+    [onSelectionChangeProp, setHelperText, setValidationStatus],
+  );
+
+  const handleApply = useCallback(
+    (newSelectedDate: SingleDateSelection | null | undefined) => {
+      console.log(`Applied date: ${formatSingleDate(newSelectedDate)}`);
+      onApplyProp?.(newSelectedDate);
+    },
+    [onApplyProp],
   );
 
   return (
@@ -1178,12 +1936,15 @@ export const SingleBordered: StoryFn<DatePickerSingleProps> = ({
       <FormLabel>Select a date</FormLabel>
       <DatePicker
         selectionVariant="single"
+        onApply={handleApply}
         onSelectionChange={handleSelectionChange}
         {...args}
+        onOpen={setOpen}
       >
         <DatePickerSingleInput bordered />
         <DatePickerOverlay>
           <DatePickerSinglePanel
+            helperText={helperText}
             CalendarNavigationProps={{
               MonthDropdownProps: { bordered: true },
               YearDropdownProps: { bordered: true },
@@ -1191,44 +1952,82 @@ export const SingleBordered: StoryFn<DatePickerSingleProps> = ({
           />
         </DatePickerOverlay>
       </DatePicker>
-      <FormHelperText>{helperText}</FormHelperText>
+      {!open ? <FormHelperText>{helperText}</FormHelperText> : null}
     </FormField>
   );
 };
 
 export const RangeBordered: StoryFn<DatePickerRangeProps> = ({
   selectionVariant,
+  onApply: onApplyProp,
   onSelectionChange: onSelectionChangeProp,
   ...args
 }) => {
   const defaultHelperText = "Date format DD MMM YYYY (e.g. 09 Jun 2024)";
   const errorHelperText = "Please enter a valid date in DD MMM YYYY format";
   const [helperText, setHelperText] = useState(defaultHelperText);
+  const [open, setOpen] = useState<boolean>(false);
   const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
     undefined,
   );
   const handleSelectionChange = useCallback(
-    (
-      newSelectedDate: DateRangeSelection | null,
-      error: { startDate: string | false; endDate: string | false },
-    ) => {
-      console.log(`Selected date range: ${formatDateRange(newSelectedDate)}`);
+    (newSelection: DateInputRangeResult) => {
+      const {
+        startDate: {
+          date: startDate,
+          originalValue: startDateOriginalValue,
+          errors: startDateErrors,
+        },
+        endDate: {
+          date: endDate,
+          originalValue: endDateOriginalValue,
+          errors: endDateErrors,
+        },
+      } = newSelection;
       console.log(
-        `Error: startDate: ${error.startDate} endDate: ${error.endDate}`,
+        `Selected date range: ${formatDateRange({ startDate, endDate })}`,
       );
-      const validationStatus =
-        !error.startDate && !error.endDate && isValidDateRange(newSelectedDate)
-          ? undefined
-          : "error";
-      if (validationStatus === "error") {
-        setHelperText(errorHelperText);
+      if (startDateErrors?.length) {
+        console.log(
+          `StartDate Error(s): ${startDateErrors.map(({ type, message }) => `type=${type} message=${message}`).join(",")}`,
+        );
+        if (startDateOriginalValue) {
+          console.log(`Original Value: ${startDateOriginalValue}`);
+        }
+      }
+      if (endDateErrors?.length) {
+        console.log(
+          `EndDate Error(s): ${endDateErrors.map(({ type, message }) => `type= ${type} message=${message}`).join(",")}`,
+        );
+        if (endDateOriginalValue) {
+          console.log(`Original Value: ${endDateOriginalValue}`);
+        }
+      }
+      if (startDateErrors?.length && startDateOriginalValue) {
+        setValidationStatus("error");
+        setHelperText(
+          `${errorHelperText} - start date ${startDateErrors[0].message}`,
+        );
+      } else if (endDateErrors?.length && endDateOriginalValue) {
+        setValidationStatus("error");
+        setHelperText(
+          `${errorHelperText} - end date ${endDateErrors[0].message}`,
+        );
       } else {
+        setValidationStatus(undefined);
         setHelperText(defaultHelperText);
       }
-      setValidationStatus(validationStatus);
-      onSelectionChangeProp?.(newSelectedDate, error);
+      onSelectionChangeProp?.(newSelection);
     },
-    [setValidationStatus, setHelperText, onSelectionChangeProp],
+    [onSelectionChangeProp, setHelperText, setValidationStatus],
+  );
+
+  const handleApply = useCallback(
+    (newSelectedDate: DateRangeSelection) => {
+      console.log(`Applied date: ${formatDateRange(newSelectedDate)}`);
+      onApplyProp?.(newSelectedDate);
+    },
+    [onApplyProp],
   );
 
   return (
@@ -1236,11 +2035,15 @@ export const RangeBordered: StoryFn<DatePickerRangeProps> = ({
       <FormLabel>Select a date range</FormLabel>
       <DatePicker
         selectionVariant="range"
+        onApply={handleApply}
         onSelectionChange={handleSelectionChange}
+        {...args}
+        onOpen={setOpen}
       >
         <DatePickerRangeInput bordered />
         <DatePickerOverlay>
           <DatePickerRangePanel
+            helperText={helperText}
             StartCalendarNavigationProps={{
               MonthDropdownProps: { bordered: true },
               YearDropdownProps: { bordered: true },
@@ -1252,20 +2055,19 @@ export const RangeBordered: StoryFn<DatePickerRangeProps> = ({
           />
         </DatePickerOverlay>
       </DatePicker>
-      <FormHelperText>{helperText}</FormHelperText>
+      {!open ? <FormHelperText>{helperText}</FormHelperText> : null}
     </FormField>
   );
 };
 
 const DatePickerTimeInput: React.FC = () => {
   const {
-    helpers: { setSelectedDate },
+    helpers: { select },
     state: { selectedDate },
   } = useDatePickerContext({
     selectionVariant: "range",
   }) as RangeDatePickerState;
 
-  const locale = "en-US";
   function parseTime(timeValue: string): {
     hour: number;
     minute: number;
@@ -1300,11 +2102,10 @@ const DatePickerTimeInput: React.FC = () => {
     let startDate = selectedDate?.startDate ?? now(getLocalTimeZone());
     startDate = startDate.set({ hour, minute, second, millisecond });
 
-    const newDateTime: DateRangeSelection = {
-      ...selectedDate,
-      startDate,
-    };
-    setSelectedDate(newDateTime, { startDate: false, endDate: false });
+    select({
+      startDate: { date: startDate },
+      endDate: { date: selectedDate?.endDate },
+    });
   };
   const handleEndTimeChange: React.ChangeEventHandler<HTMLInputElement> = (
     event,
@@ -1317,11 +2118,10 @@ const DatePickerTimeInput: React.FC = () => {
     let endDate = selectedDate?.endDate ?? now(getLocalTimeZone());
     endDate = endDate.set({ hour, minute, second, millisecond });
 
-    const newDateTime: DateRangeSelection = {
-      ...selectedDate,
-      endDate,
-    };
-    setSelectedDate(newDateTime, { startDate: false, endDate: false });
+    select({
+      startDate: { date: selectedDate?.startDate },
+      endDate: { date: endDate },
+    });
   };
 
   const zonedStartTime = selectedDate?.startDate as ZonedDateTime;
@@ -1355,18 +2155,51 @@ const DatePickerTimeInput: React.FC = () => {
 };
 export const WithExperimentalTime: StoryFn<DatePickerRangeProps> = ({
   selectionVariant,
+  onApply: onApplyProp,
   onSelectionChange: onSelectionChangeProp,
   ...args
 }) => {
   const handleSelectionChange = useCallback(
-    (
-      newSelectedDate: DateRangeSelection | null,
-      error: {
-        startDate: string | false;
-        endDate: string | false;
-      },
-    ) => {
-      console.log(`Selected date range: ${formatDateRange(newSelectedDate)}`);
+    (newSelection: DateInputRangeResult) => {
+      const {
+        startDate: {
+          date: startDate,
+          originalValue: startDateOriginalValue,
+          errors: startDateErrors,
+        },
+        endDate: {
+          date: endDate,
+          originalValue: endDateOriginalValue,
+          errors: endDateErrors,
+        },
+      } = newSelection;
+      console.log(
+        `Selected date range: ${formatDateRange({ startDate, endDate })}`,
+      );
+      if (startDateErrors?.length) {
+        console.log(
+          `StartDate Error(s): ${startDateErrors.map(({ type, message }) => `type=${type} message=${message}`).join(",")}`,
+        );
+        if (startDateOriginalValue) {
+          console.log(`Original Value: ${startDateOriginalValue}`);
+        }
+      }
+      if (endDateErrors?.length) {
+        console.log(
+          `EndDate Error(s): ${endDateErrors.map(({ type, message }) => `type= ${type} message=${message}`).join(",")}`,
+        );
+        if (endDateOriginalValue) {
+          console.log(`Original Value: ${endDateOriginalValue}`);
+        }
+      }
+      onSelectionChangeProp?.(newSelection);
+    },
+    [onSelectionChangeProp],
+  );
+
+  const handleApply = useCallback(
+    (newSelectedDate: DateRangeSelection) => {
+      console.log(`Applied date: ${formatDateRange(newSelectedDate)}`);
       const timeFormatter = new Intl.DateTimeFormat("en-US", {
         hour: "2-digit",
         minute: "2-digit",
@@ -1374,15 +2207,15 @@ export const WithExperimentalTime: StoryFn<DatePickerRangeProps> = ({
         hour12: false, // Use 24-hour format
       });
       const nativeStartTime =
-        newSelectedDate?.startDate?.toDate(getLocalTimeZone()) ?? null;
+        newSelectedDate.startDate?.toDate(getLocalTimeZone()) ?? null;
       const nativeEndTime =
-        newSelectedDate?.endDate?.toDate(getLocalTimeZone()) ?? null;
+        newSelectedDate.endDate?.toDate(getLocalTimeZone()) ?? null;
       console.log(
-        `Selected time range: ${nativeStartTime ? timeFormatter.format(nativeStartTime) : null} - ${nativeEndTime ? timeFormatter.format(nativeEndTime) : null}`,
+        `Applied time range: ${nativeStartTime ? timeFormatter.format(nativeStartTime) : null} - ${nativeEndTime ? timeFormatter.format(nativeEndTime) : null}`,
       );
-      onSelectionChangeProp?.(newSelectedDate, error);
+      onApplyProp?.(newSelectedDate);
     },
-    [onSelectionChangeProp],
+    [onApplyProp],
   );
 
   return (
@@ -1392,6 +2225,7 @@ export const WithExperimentalTime: StoryFn<DatePickerRangeProps> = ({
         startDate: now(getLocalTimeZone()),
         endDate: now(getLocalTimeZone()),
       }}
+      onApply={handleApply}
       onSelectionChange={handleSelectionChange}
       {...args}
     >
