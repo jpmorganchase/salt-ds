@@ -35,12 +35,12 @@ import {
 } from "../calendar";
 import dateInputCss from "./DateInput.css";
 import {
-  type DateInputParserResult,
+  type DateInputParserDetails,
   extractTimeFieldsFromDateRange,
   parseCalendarDate,
   type RangeTimeFields,
 } from "./utils";
-import { DateInputRangeResult } from "../date-picker";
+import { DateInputRangeDetails } from "../date-picker";
 
 const withBaseName = makePrefixer("saltDateInput");
 
@@ -138,12 +138,13 @@ export interface DateInputRangeProps<T = DateValue>
   /**
    * Callback fired when the selected date changes.
    * @param event - The synthetic event.
-   * @param result - The result of date selection, either a valid date or error
-   **/
+   * @param date - the selected date, null if in not a valid date or undefined if not defined
+   * @param details - The details of date selection, either a valid date or error
+   */
   onDateChange?: (
     event: SyntheticEvent,
     date: DateRangeSelection,
-    result: DateInputRangeResult,
+    details: DateInputRangeDetails,
   ) => void;
   /**
    * Called when input values change, either due to user interaction or programmatic formatting of valid dates.
@@ -158,9 +159,9 @@ export interface DateInputRangeProps<T = DateValue>
    * Function to parse date string to valid `DateValue` or null, if invalid.
    * @param inputDate - The input date string.
    * @param locale - the locale for the parsed date
-   * @returns The result of parsing the date.
+   * @returns The details of parsing the date.
    */
-  parse?: (inputDate: string, locale: string) => DateInputParserResult;
+  parse?: (inputDate: string, locale: string) => DateInputParserDetails;
   /**
    * Locale of the entered date.
    */
@@ -329,21 +330,21 @@ export const DateInputRange = forwardRef<HTMLDivElement, DateInputRangeProps>(
       : endInputPropsRequired;
 
     const apply = (event: SyntheticEvent) => {
-      const startDateParseResult = parse(dateValue.startDate ?? "", locale);
-      const endDateParseResult = parse(dateValue.endDate || "", locale);
+      const startDateParseDetails = parse(dateValue.startDate ?? "", locale);
+      const endDateParseDetails = parse(dateValue.endDate || "", locale);
 
       const hasStartDateChanged =
-        startDateParseResult.date && date?.startDate
-          ? startDateParseResult.date.compare(date.startDate) === 0
+        startDateParseDetails.date && date?.startDate
+          ? startDateParseDetails.date.compare(date.startDate) === 0
           : false;
       const hasEndDateChanged =
-        endDateParseResult.date && date?.endDate
-          ? endDateParseResult.date.compare(date.endDate) === 0
+        endDateParseDetails.date && date?.endDate
+          ? endDateParseDetails.date.compare(date.endDate) === 0
           : false;
 
       let updatedDateRange = {
-        startDate: startDateParseResult.date,
-        endDate: endDateParseResult.date,
+        startDate: startDateParseDetails.date,
+        endDate: endDateParseDetails.date,
       };
       setDateValueFromDate(updatedDateRange);
       setDate(updatedDateRange);
@@ -371,14 +372,14 @@ export const DateInputRange = forwardRef<HTMLDivElement, DateInputRangeProps>(
         lastAppliedValue.current.startDate !== dateValue.startDate ||
         lastAppliedValue.current.endDate !== dateValue.endDate
       ) {
-        let updatedResult = {
+        let updatedDetails = {
           startDate: {
-            ...startDateParseResult,
+            ...startDateParseDetails,
             date: updatedDateRange.startDate,
           },
-          endDate: { ...endDateParseResult, date: updatedDateRange.endDate },
+          endDate: { ...endDateParseDetails, date: updatedDateRange.endDate },
         };
-        onDateChange?.(event, updatedDateRange, updatedResult);
+        onDateChange?.(event, updatedDateRange, updatedDetails);
       }
       lastAppliedValue.current = { ...dateValue };
     };

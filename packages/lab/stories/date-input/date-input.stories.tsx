@@ -6,10 +6,10 @@ import {
 import {
   DateInputRange,
   type DateInputRangeProps,
-  DateInputRangeResult,
+  DateInputRangeDetails,
   DateInputSingle,
   type DateInputSingleProps,
-  DateInputSingleResult,
+  DateInputSingleDetails,
   type DateRangeSelection,
   formatDate,
   getCurrentLocale,
@@ -39,7 +39,7 @@ const DateInputSingleTemplate: StoryFn<DateInputSingleProps> = (args) => {
   const handleDateChange = (
     event: SyntheticEvent,
     newSelectedDate: DateValue | null | undefined,
-    result: DateInputSingleResult,
+    result: DateInputSingleDetails,
   ) => {
     console.log(
       `Selected date: ${newSelectedDate ? formatDate(newSelectedDate) : newSelectedDate}`,
@@ -68,7 +68,7 @@ const DateInputRangeTemplate: StoryFn<DateInputRangeProps> = (args) => {
   const handleDateChange = (
     event: SyntheticEvent,
     newSelectedDate: DateRangeSelection,
-    result: DateInputRangeResult,
+    result: DateInputRangeDetails,
   ) => {
     console.log(`Selected date range: ${formatDateRange(newSelectedDate)}`);
     const {

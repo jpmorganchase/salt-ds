@@ -19,8 +19,8 @@ import type {
   SingleDatePickerState,
 } from "./DatePickerContext";
 import { useDatePickerOverlay } from "./DatePickerOverlayProvider";
-import { DateInputSingleResult } from "../date-input";
-import {DateInputRangeResult} from "./DatePickerRangeInput";
+import { DateInputSingleDetails } from "../date-input";
+import { DateInputRangeDetails } from "./DatePickerRangeInput";
 
 interface UseDatePickerBaseProps<T> {
   /** If `true`, the component is disabled. */
@@ -73,9 +73,9 @@ export interface UseDatePickerSingleProps
   selectionVariant: "single";
   /**
    * Handler called when the selected date changes.
-   * @param {DateInputSingleResult} selectedSingleDate - The selected date selection.
+   * @param {DateInputSingleDetails} selectedSingleDate - The selected date selection.
    */
-  onSelectionChange?: (selection: DateInputSingleResult) => void;
+  onSelectionChange?: (selection: DateInputSingleDetails) => void;
   /**
    * Handler called when the selected date is confirmed/applied.
    * @param {SingleDateSelection | null undefined} selectedSingleDate - The selected date selection.   */
@@ -98,8 +98,8 @@ export interface UseDatePickerRangeProps
   selectionVariant: "range";
   /**
    * Handler called when the selected date changes.
-   * @param {DateInputRangeResult} selection - The selected date selection.   */
-  onSelectionChange?: (selection: DateInputRangeResult) => void;
+   * @param {DateInputRangeDetails} selection - The selected date selection.   */
+  onSelectionChange?: (selection: DateInputRangeDetails) => void;
   /**
    * Handler called when the selected date is confirmed/applied.
    * @param {DateRangeSelection} selection - The selected date selection.   */
@@ -118,74 +118,6 @@ export type UseDatePickerProps<SelectionVariant> =
     : SelectionVariant extends "range"
       ? UseDatePickerRangeProps
       : never;
-
-function defaultSingleValdation(
-  selection: DateInputSingleResult,
-  minDate: DateValue,
-  maxDate: DateValue,
-) {
-  const updatedSelection = { isValid: true, errors: [], ...selection };
-  const { date, isValid } = updatedSelection;
-  if (date && isValid) {
-    if (minDate && date && date.compare(minDate) < 0) {
-      selection.errors?.push({
-        type: "min-date",
-        message: "is before min date",
-      });
-    }
-    if (maxDate && date && date.compare(maxDate) > 0) {
-      selection.errors?.push({
-        type: "max-date",
-        message: "is after max date",
-      });
-    }
-  }
-  return selection;
-}
-
-function defaultRangeValidation(
-  selection: DateInputRangeResult,
-  minDate: DateValue,
-  maxDate: DateValue,
-) {
-  const { startDate: startDateSelection, endDate: endDateSelection } = {
-    startDate: {
-      ...(selection.startDate ?? undefined),
-      errors: selection.startDate?.errors ?? [],
-      isValid: !selection.startDate?.errors?.length ?? true,
-    },
-    endDate: {
-      ...(selection.endDate ?? undefined),
-      errors: selection.endDate?.errors ?? [],
-      isValid: !selection.endDate?.errors?.length ?? true,
-    },
-  };
-  if (startDateSelection) {
-    const { isValid: isStartDateValid, date: startDate } = startDateSelection;
-    if (startDate && isStartDateValid) {
-      if (minDate && startDate && startDate.compare(minDate) < 0) {
-        startDateSelection.errors.push({
-          type: "min-date",
-          message: "is before min date",
-        });
-        startDateSelection.isValid = false;
-      }
-    }
-  }
-  if (endDateSelection) {
-    const { isValid: isEndDateValid, date: endDate } = endDateSelection;
-    if (endDate && isEndDateValid) {
-      if (maxDate && endDate && endDate.compare(maxDate) > 0) {
-        endDateSelection.errors.push({
-          type: "max-date",
-          message: "is after max date",
-        });
-        endDateSelection.isValid = false;
-      }
-    }
-  }
-  return { startDate: startDateSelection, endDate: endDateSelection };
-}
 
 /**
  * Custom hook for managing date picker state.
@@ -263,30 +195,16 @@ export function useDatePicker<SelectionVariant extends "single" | "range">(
   };
 
   const selectSingle = useCallback(
-    (selection: DateInputSingleResult) => {
-      const updatedSelection = defaultSingleValdation(
-        selection,
-        minDate,
-        maxDate,
-      );
+    (selection: DateInputSingleDetails) => {
       setSelectedDate(selection.date);
       if (selectionVariant === "single") {
-        onSelectionChange?.(updatedSelection);
+        onSelectionChange?.(selection);
       }
-
-      if (!enableApply && updatedSelection.date !== undefined) {
-        applySingle(updatedSelection.date);
+      if (!enableApply && selection.date !== undefined) {
+        applySingle(selection.date);
       }
     },
-    [
-      enableApply,
-      minDate,
-      maxDate,
-      onSelectionChange,
-      selectionVariant,
-      setSelectedDate,
-      setOpen,
-    ],
+    [enableApply, onSelectionChange, selectionVariant, setSelectedDate],
   );
 
   const applyRange = useCallback(
@@ -301,26 +219,17 @@ export function useDatePicker<SelectionVariant extends "single" | "range">(
   );
 
   const selectRange = useCallback(
-    (selection: DateInputRangeResult) => {
-      const updatedSelection = defaultRangeValidation(
-        selection,
-        minDate,
-        maxDate,
-      );
+    (details: DateInputRangeDetails) => {
       const { startDate: startDateSelection, endDate: endDateSelection } =
-        updatedSelection;
+        details;
       setSelectedDate({
         startDate: startDateSelection?.date,
         endDate: endDateSelection?.date,
       });
       if (selectionVariant === "range") {
-        onSelectionChange?.(updatedSelection);
+        onSelectionChange?.(details);
       }
-      if (
-        !enableApply &&
-        updatedSelection?.startDate?.date &&
-        updatedSelection?.endDate?.date
-      ) {
+      if (!enableApply && details?.startDate?.date && details?.endDate?.date) {
         applyRange({
           startDate: startDateSelection?.date,
           endDate: endDateSelection?.date,
@@ -330,12 +239,9 @@ export function useDatePicker<SelectionVariant extends "single" | "range">(
     [
       applyRange,
       enableApply,
-      minDate,
-      maxDate,
       onSelectionChange,
       selectionVariant,
       setSelectedDate,
-      setOpen,
     ],
   );
 

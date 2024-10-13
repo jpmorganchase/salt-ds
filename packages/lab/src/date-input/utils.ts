@@ -18,7 +18,7 @@ export type RangeTimeFields = {
   endTime?: TimeFields;
 };
 
-export enum DateInputParserEnum {
+export enum DateInputErrorEnum {
   UNSET = "unset",
   NOT_A_DATE = "not-a-date",
   INVALID_DATE = "date",
@@ -34,7 +34,7 @@ export type DateInputParserError = {
   /**
    * error code
    */
-  type: DateInputParserEnum | string;
+  type: DateInputErrorEnum | string;
   /**
    * error message
    */
@@ -42,9 +42,9 @@ export type DateInputParserError = {
 };
 
 /**
- * DateInput parser result
+ * Detail from parsing the entered value
  */
-export type DateInputParserResult<T=DateValue> = {
+export type DateInputParserDetails<T=DateValue> = {
   /**
    * Parsed date
    */
@@ -74,18 +74,19 @@ export function getMonthNames(locale: string): { [key: string]: number } {
 
 /**
  * Parses a string into a CalendarDate.
- * @param inputDate - The input date string.
+ * @param value - The input date string.
+ * @param locale - Locale of date
  * @returns An object containing the parsed date and any error encountered.
  */
 export function parseCalendarDate(
   value: string,
   locale: string = getCurrentLocale(),
-): DateInputParserResult {
+): DateInputParserDetails {
   if (!value?.length) {
     return {
       date: undefined,
       originalValue: value,
-      errors: [{ type: DateInputParserEnum.UNSET, message: "no date value" }],
+      errors: [{ type: DateInputErrorEnum.UNSET, message: "no date value" }],
     };
   }
 
@@ -102,7 +103,7 @@ export function parseCalendarDate(
       originalValue: value,
       errors: [
         {
-          type: DateInputParserEnum.NOT_A_DATE,
+          type: DateInputErrorEnum.NOT_A_DATE,
           message: "not a valid date format",
         },
       ],
@@ -121,7 +122,7 @@ export function parseCalendarDate(
       date: null,
       originalValue: value,
       errors: [
-        { type: DateInputParserEnum.INVALID_DAY, message: "not a valid day" },
+        { type: DateInputErrorEnum.INVALID_DAY, message: "not a valid day" },
       ],
     };
   }
@@ -131,7 +132,7 @@ export function parseCalendarDate(
       date: null,
       originalValue: value,
       errors: [
-        { type: DateInputParserEnum.INVALID_YEAR, message: "not a valid year" },
+        { type: DateInputErrorEnum.INVALID_YEAR, message: "not a valid year" },
       ],
     };
   }
@@ -146,7 +147,7 @@ export function parseCalendarDate(
         originalValue: value,
         errors: [
           {
-            type: DateInputParserEnum.INVALID_MONTH,
+            type: DateInputErrorEnum.INVALID_MONTH,
             message: "not a valid month name for locale",
           },
         ],
@@ -161,7 +162,7 @@ export function parseCalendarDate(
         originalValue: value,
         errors: [
           {
-            type: DateInputParserEnum.INVALID_MONTH,
+            type: DateInputErrorEnum.INVALID_MONTH,
             message: "not a valid month value",
           },
         ],
@@ -182,7 +183,7 @@ export function parseCalendarDate(
       originalValue: value,
       errors: [
         {
-          type: DateInputParserEnum.INVALID_DATE,
+          type: DateInputErrorEnum.INVALID_DATE,
           message: (err as Error).message,
         },
       ],
@@ -192,7 +193,8 @@ export function parseCalendarDate(
 
 /**
  * Parses a string into a ZonedDateTime.
- * @param inputDate - The input date string.
+ * @param value - The input date string.
+ * @param locale - Locale of date.
  * @param timeZone - The time zone to use for parsing. Defaults to the local time zone.
  * @returns An object containing the parsed date and any error encountered.
  */
@@ -200,7 +202,7 @@ export function parseZonedDateTime(
   value: string,
   locale: string = getCurrentLocale(),
   timeZone: string = getLocalTimeZone(),
-): DateInputParserResult<ZonedDateTime> {
+): DateInputParserDetails<ZonedDateTime> {
   const parsedDate = parseCalendarDate(value, locale);
   if (!parsedDate.date || parsedDate.errors) {
     return { ...parsedDate, date: null };
@@ -218,7 +220,7 @@ export function parseZonedDateTime(
       originalValue: value,
       errors: [
         {
-          type: DateInputParserEnum.INVALID_DATE,
+          type: DateInputErrorEnum.INVALID_DATE,
           message: (err as Error).message,
         },
       ],

@@ -37,7 +37,7 @@ import {
 } from "../calendar";
 import dateInputCss from "./DateInput.css";
 import {
-  type DateInputParserResult,
+  type DateInputParserDetails,
   extractTimeFieldsFromDate,
   parseCalendarDate,
 } from "./utils";
@@ -45,9 +45,9 @@ import {
 const withBaseName = makePrefixer("saltDateInput");
 
 /**
- * Result of parsing the date and applying any validation
+ * Details of parsing the date
  */
-export type DateInputSingleResult<T = DateValue> = DateInputParserResult<T>;
+export type DateInputSingleDetails<T = DateValue> = DateInputParserDetails<T>;
 
 /**
  * Props for the DateInputSingle component.
@@ -120,23 +120,24 @@ export interface DateInputSingleProps<T = SingleDateSelection>
   /**
    * Callback fired when the selected date changes.
    * @param event - The synthetic event.
-   * @param result - The result of date selection, either a valid date or error
+   * @param date - the selected date, null if in not a valid date or undefined if not defined
+   * @param details - The details of date selection, either a valid date or error
    */
   onDateChange?: (
     event: SyntheticEvent,
     date: SingleDateSelection | null | undefined,
-    result: DateInputSingleResult<T>
+    details: DateInputSingleDetails<T>
   ) => void;
   /**
    * Function to parse date string to valid `DateValue` or null, if invalid or empty.
    * @param inputDate - The input date string.
    * @param locale - the locale for the parsed date
-   * @returns The result of parsing the date.
+   * @returns The details of parsing the date.
    */
   parse?: (
     inputDate: string,
     locale: string,
-  ) => DateInputSingleResult<T>;
+  ) => DateInputSingleDetails<T>;
   /**
    * Called when input value changes, either due to user interaction or programmatic formatting of valid dates.
    * @param newValue - The new date input value.
@@ -267,8 +268,8 @@ export const DateInputSingle = forwardRef<HTMLDivElement, DateInputSingleProps>(
       : dateInputPropsRequired;
 
     const apply = (event: SyntheticEvent) => {
-      const parseResult = parse(dateValue ?? "", locale);
-      const { date: parsedDate } = parseResult;
+      const details = parse(dateValue ?? "", locale);
+      const { date: parsedDate } = details;
       const formattedDate = format(parsedDate);
       if (formattedDate) {
         setDateValue(formattedDate);
@@ -282,8 +283,8 @@ export const DateInputSingle = forwardRef<HTMLDivElement, DateInputSingleProps>(
         updatedDate = parsedDate.set(preservedTime.current);
       }
       if (lastAppliedValue.current !== dateValue) {
-        const updatedResult = { ...parseResult, date: updatedDate };
-        onDateChange?.(event, updatedDate, updatedResult);
+        const updatedDetails = { ...details, date: updatedDate };
+        onDateChange?.(event, updatedDate, updatedDetails);
       }
       lastAppliedValue.current = dateValue;
     };

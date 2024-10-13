@@ -49,7 +49,7 @@ export const CustomDatePickerPanel = forwardRef<
 
   const {
     state: { selectedDate },
-    helpers: { setSelection },
+    helpers: { select },
   } = stateAndHelpers;
 
   return (
@@ -78,49 +78,37 @@ export const CustomDatePickerPanel = forwardRef<
                     ? {
                         startDate: {
                           date: selectedDate.startDate,
-                          isValid: true,
-                          errors: [],
                         },
                         endDate: {
                           date: selectedDate.startDate.add({
                             years: tenor,
                           }),
-                          isValid: true,
-                          errors: [],
                         },
                       }
                     : {
                         startDate: {
                           date: today(getLocalTimeZone()),
-                          isValid: true,
-                          errors: [],
                         },
                         endDate: {
                           date: today(getLocalTimeZone()).add({
                             years: tenor,
                           }),
-                          isValid: true,
-                          errors: [],
                         },
                       };
-                  setSelection(newSelection);
+                  select(newSelection);
                 } else {
                   newSelection = selectedDate
                     ? {
                         date: selectedDate.add({
                           years: tenor,
                         }),
-                        isValid: true,
-                        errors: [],
                       }
                     : {
                         date: today(getLocalTimeZone()).add({
                           years: tenor,
                         }),
-                        isValid: true,
-                        errors: [],
                       };
-                  setSelection(newSelection);
+                  select(newSelection);
                 }
               }}
             >

@@ -11,62 +11,79 @@ import {
   useRef,
 } from "react";
 import {
-  DateInputParserEnum,
+  DateInputErrorEnum,
   DateInputRange,
   type DateInputRangeProps,
-  type DateInputParserResult,
+  type DateInputParserDetails,
   type DateInputRangeValue,
 } from "../date-input";
 import { useDatePickerContext } from "./DatePickerContext";
 import { useDatePickerOverlay } from "./DatePickerOverlayProvider";
-import type {DateValue} from "@internationalized/date";
-import type {DateRangeSelection} from "../calendar";
+import type { DateValue } from "@internationalized/date";
+import type { DateRangeSelection } from "../calendar";
 
 const withBaseName = makePrefixer("saltDatePickerRangeInput");
 
 /**
- * Result of parsing the date range and applying any validation
+ * Details of parsing the date range
  */
-export type DateInputRangeResult<V = DateValue> = {
-  /** Result of parsing the start date and applying any validation */
-  startDate: DateInputParserResult<V>;
-  /** Result of parsing the end date and applying any validation */
-  endDate: DateInputParserResult<V>;
+export type DateInputRangeDetails<V = DateValue> = {
+  /** Details of parsing the start date and applying any validation */
+  startDate: DateInputParserDetails<V>;
+  /** Details of parsing the end date and applying any validation */
+  endDate: DateInputParserDetails<V>;
 };
 
 /**
  * Props for the DatePickerRangeInput component.
  */
-export interface DatePickerRangeInputProps<T = DateValue> extends DateInputRangeProps {
+export interface DatePickerRangeInputProps<T = DateValue>
+  extends DateInputRangeProps {
   /**
-   * Function to validate the entered date range and form a selection
-   * @param range - The date range to validate
-   * @returns selection
-   **/
-  validate?: (range: DateInputRangeResult<T>) => DateInputRangeResult<T>;
+   * Function to validate the entered date
+   * @param details - The details of date selection, either a valid date or error
+   * @returns updated DateInputRangeDetails details
+   */
+  validate?: (range: DateInputRangeDetails<T>) => DateInputRangeDetails<T>;
 }
 
 export function defaultRangeValidator(
-  result: DateInputRangeResult,
-): DateInputRangeResult {
-  const startDate = result.startDate.date;
-  const endDate = result.endDate.date;
+  details: DateInputRangeDetails,
+  minDate: DateValue | undefined,
+  maxDate: DateValue | undefined,
+): DateInputRangeDetails {
+  const startDate = details.startDate.date;
+  const endDate = details.endDate.date;
 
   // If endDate but no startDate defined
   if (startDate === undefined && endDate) {
-    result.startDate.errors?.push({
-      type: DateInputParserEnum.UNSET,
+    details.startDate.errors?.push({
+      type: DateInputErrorEnum.UNSET,
       message: "no start date defined",
     });
   }
   // If startDate is after endDate
   if (startDate && endDate && startDate.compare(endDate) > 0) {
-    result.startDate.errors?.push({
+    details.startDate.errors?.push({
       type: "greater-than-end-date",
       message: "start date after end date",
     });
   }
-  return result;
+  // startDate is not before minDate
+  if (minDate && startDate && startDate.compare(minDate) < 0) {
+    details.startDate.errors?.push({
+      type: "min-date",
+      message: "is before min date",
+    });
+  }
+  // endDate is not after maxDate
+  if (maxDate && endDate && endDate.compare(maxDate) > 0) {
+    details.startDate.errors?.push({
+      type: "max-date",
+      message: "is after max date",
+    });
+  }
+  return details;
 }
 
 export const DatePickerRangeInput = forwardRef<
@@ -80,14 +97,14 @@ export const DatePickerRangeInput = forwardRef<
     onKeyDown,
     defaultValue,
     value: valueProp,
-    validate = defaultRangeValidator,
+    validate,
     onChange,
     onDateValueChange,
     ...rest
   } = props;
 
   const {
-    state: { selectedDate, disabled, readOnly, cancelled, locale, timeZone },
+    state: { selectedDate, disabled, readOnly, cancelled, locale, timeZone, minDate, maxDate },
     helpers: { select },
   } = useDatePickerContext({ selectionVariant: "range" });
   const {
@@ -110,11 +127,15 @@ export const DatePickerRangeInput = forwardRef<
   }, [open, setOpen]);
 
   const handleDateChange = useCallback(
-    (_event: SyntheticEvent, date: DateRangeSelection, result: DateInputRangeResult) => {
-      const validatedSelection = validate(result)
+    (
+      _event: SyntheticEvent,
+      _date: DateRangeSelection,
+      details: DateInputRangeDetails,
+    ) => {
+      const validatedSelection = validate ? validate(details) : defaultRangeValidator(details, minDate, maxDate);
       select(validatedSelection);
     },
-    [select],
+    [select, minDate, maxDate],
   );
 
   const handleDateValueChange = (

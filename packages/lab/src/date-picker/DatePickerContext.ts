@@ -3,10 +3,10 @@ import { createContext } from "@salt-ds/core";
 import { useContext } from "react";
 import type { DateRangeSelection, SingleDateSelection } from "../calendar";
 import {
-  DateInputSingleResult
+  DateInputSingleDetails
 } from "../date-input";
 import {
-  DateInputRangeResult,
+  DateInputRangeDetails,
 } from "./DatePickerRangeInput";
 
 /**
@@ -102,7 +102,7 @@ export interface SingleDatePickerState extends DatePickerBaseState {
      * Select a single date.
      * @param selection - The date selection.
      */
-    select: (selection: DateInputSingleResult) => void;
+    select: (selection: DateInputSingleDetails) => void;
   };
 }
 
@@ -139,7 +139,7 @@ export interface RangeDatePickerState extends DatePickerBaseState {
      * @param selection - The date selection.
      */
     select: (
-      selection: DateInputRangeResult,
+      selection: DateInputRangeDetails,
     ) => void;
   };
 }
