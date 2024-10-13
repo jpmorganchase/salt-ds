@@ -44,15 +44,15 @@ const DateInputSingleTemplate: StoryFn<DateInputSingleProps> = (args) => {
     console.log(
       `Selected date: ${newSelectedDate ? formatDate(newSelectedDate) : newSelectedDate}`,
     );
-    const { originalValue, errors } = result;
-    if (errors?.length && originalValue) {
+    const { value, errors } = result;
+    if (errors?.length && value) {
       console.log(
         `Error(s): ${errors
           .map(({ type, message }) => `type=${type} message=${message}`)
           .join(",")}`,
       );
-      if (originalValue) {
-        console.log(`Original Value: ${originalValue}`);
+      if (value) {
+        console.log(`Original Value: ${value}`);
       }
     }
     args?.onDateChange?.(event, newSelectedDate, result);
@@ -74,12 +74,12 @@ const DateInputRangeTemplate: StoryFn<DateInputRangeProps> = (args) => {
     const {
       startDate: {
         date: startDate,
-        originalValue: startDateOriginalValue,
+        value: startDateOriginalValue,
         errors: startDateErrors,
       },
       endDate: {
         date: endDate,
-        originalValue: endDateOriginalValue,
+        value: endDateOriginalValue,
         errors: endDateErrors,
       },
     } = result;

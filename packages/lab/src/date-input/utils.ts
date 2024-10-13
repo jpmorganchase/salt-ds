@@ -52,7 +52,7 @@ export type DateInputParserDetails<T=DateValue> = {
   /**
    * Original entered value, if applicable
    */
-  originalValue?: string;
+  value?: string;
   /**
    * errors found by parser
    */
@@ -85,7 +85,7 @@ export function parseCalendarDate(
   if (!value?.length) {
     return {
       date: undefined,
-      originalValue: value,
+      value: value,
       errors: [{ type: DateInputErrorEnum.UNSET, message: "no date value" }],
     };
   }
@@ -100,7 +100,7 @@ export function parseCalendarDate(
   if (!match) {
     return {
       date: null,
-      originalValue: value,
+      value: value,
       errors: [
         {
           type: DateInputErrorEnum.NOT_A_DATE,
@@ -120,7 +120,7 @@ export function parseCalendarDate(
   if (Number.isNaN(day) || day < 1 || day > 31) {
     return {
       date: null,
-      originalValue: value,
+      value: value,
       errors: [
         { type: DateInputErrorEnum.INVALID_DAY, message: "not a valid day" },
       ],
@@ -130,7 +130,7 @@ export function parseCalendarDate(
   if (Number.isNaN(year)) {
     return {
       date: null,
-      originalValue: value,
+      value: value,
       errors: [
         { type: DateInputErrorEnum.INVALID_YEAR, message: "not a valid year" },
       ],
@@ -144,7 +144,7 @@ export function parseCalendarDate(
     if (!month) {
       return {
         date: null,
-        originalValue: value,
+        value: value,
         errors: [
           {
             type: DateInputErrorEnum.INVALID_MONTH,
@@ -159,7 +159,7 @@ export function parseCalendarDate(
     if (Number.isNaN(month) || month < 1 || month > 12) {
       return {
         date: null,
-        originalValue: value,
+        value: value,
         errors: [
           {
             type: DateInputErrorEnum.INVALID_MONTH,
@@ -174,13 +174,13 @@ export function parseCalendarDate(
     const parsedDate = new CalendarDate(year, month, day);
     return {
       date: parsedDate,
-      originalValue: value,
+      value: value,
       errors: [],
     };
   } catch (err) {
     return {
       date: null,
-      originalValue: value,
+      value: value,
       errors: [
         {
           type: DateInputErrorEnum.INVALID_DATE,
@@ -211,13 +211,13 @@ export function parseZonedDateTime(
     const zonedDate = toZoned(parsedDate.date, timeZone, "compatible");
     return {
       date: zonedDate,
-      originalValue: value,
+      value: value,
       errors: [],
     };
   } catch (err) {
     return {
       date: null,
-      originalValue: value,
+      value: value,
       errors: [
         {
           type: DateInputErrorEnum.INVALID_DATE,

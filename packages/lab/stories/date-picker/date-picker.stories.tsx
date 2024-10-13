@@ -81,14 +81,14 @@ const DatePickerSingleTemplate: StoryFn<DatePickerSingleProps> = ({
 }) => {
   const handleSelectionChange = useCallback(
     (newSelection: DateInputSingleDetails) => {
-      const { date: newSelectedDate, originalValue, errors } = newSelection;
+      const { date: newSelectedDate, value, errors } = newSelection;
       console.log(`Selected date: ${formatSingleDate(newSelectedDate)}`);
-      if (errors?.length && originalValue) {
+      if (errors?.length && value) {
         console.log(
           `Error(s): ${errors.map(({ type, message }) => `type=${type} message=${message}`).join(",")}`,
         );
-        if (originalValue) {
-          console.log(`Original Value: ${originalValue}`);
+        if (value) {
+          console.log(`Current Value: ${value}`);
         }
       }
       onSelectionChangeProp?.(newSelection);
@@ -121,12 +121,12 @@ const DatePickerRangeTemplate: StoryFn<DatePickerRangeProps> = ({
         newSelection;
       const {
         date: startDate,
-        originalValue: startDateOriginalValue,
+        value: startDateValue,
         errors: startDateErrors,
       } = startDateSelection;
       const {
         date: endDate,
-        originalValue: endDateOriginalValue,
+        value: endDateValue,
         errors: endDateErrors,
       } = endDateSelection;
       console.log(
@@ -136,16 +136,16 @@ const DatePickerRangeTemplate: StoryFn<DatePickerRangeProps> = ({
         console.log(
           `StartDate Error(s): ${startDateErrors.map(({ type, message }) => `type=${type} message=${message}`).join(",")}`,
         );
-        if (startDateOriginalValue) {
-          console.log(`Original Value: ${startDateOriginalValue}`);
+        if (startDateValue) {
+          console.log(`Current Value: ${startDateValue}`);
         }
       }
       if (endDateErrors?.length) {
         console.log(
           `EndDate Error(s): ${endDateErrors.map(({ type, message }) => `type= ${type} message=${message}`).join(",")}`,
         );
-        if (endDateOriginalValue) {
-          console.log(`Original Value: ${endDateOriginalValue}`);
+        if (endDateValue) {
+          console.log(`Current Value: ${endDateValue}`);
         }
       }
       onSelectionChangeProp?.(newSelection);
@@ -186,14 +186,14 @@ export const SingleControlled: StoryFn<DatePickerSingleProps> = ({
   >(defaultSelectedDate ?? null);
   const handleSelectionChange = useCallback(
     (newSelection: DateInputSingleDetails) => {
-      const { date: newSelectedDate, originalValue, errors } = newSelection;
+      const { date: newSelectedDate, value, errors } = newSelection;
       console.log(`Selected date: ${formatSingleDate(newSelectedDate)}`);
-      if (errors?.length && originalValue) {
+      if (errors?.length && value) {
         console.log(
           `Error(s): ${errors.map(({ type, message }) => `type=${type} message=${message}`).join(",")}`,
         );
-        if (originalValue) {
-          console.log(`Original Value: ${originalValue}`);
+        if (value) {
+          console.log(`Current Value: ${value}`);
         }
       }
       onSelectionChangeProp?.(newSelection);
@@ -230,12 +230,12 @@ export const RangeControlled: StoryFn<DatePickerRangeProps> = ({
       const {
         startDate: {
           date: startDate,
-          originalValue: startDateOriginalValue,
+          value: startDateValue,
           errors: startDateErrors,
         },
         endDate: {
           date: endDate,
-          originalValue: endDateOriginalValue,
+          value: endDateValue,
           errors: endDateErrors,
         },
       } = newSelection;
@@ -246,16 +246,16 @@ export const RangeControlled: StoryFn<DatePickerRangeProps> = ({
         console.log(
           `StartDate Error(s): ${startDateErrors.map(({ type, message }) => `type=${type} message=${message}`).join(",")}`,
         );
-        if (startDateOriginalValue) {
-          console.log(`Original Value: ${startDateOriginalValue}`);
+        if (startDateValue) {
+          console.log(`Current Value: ${startDateValue}`);
         }
       }
       if (endDateErrors?.length) {
         console.log(
           `EndDate Error(s): ${endDateErrors.map(({ type, message }) => `type= ${type} message=${message}`).join(",")}`,
         );
-        if (endDateOriginalValue) {
-          console.log(`Original Value: ${endDateOriginalValue}`);
+        if (endDateValue) {
+          console.log(`Current Value: ${endDateValue}`);
         }
       }
       setSelectedDate({ startDate, endDate });
@@ -294,14 +294,14 @@ export const SingleWithMinMaxDate: StoryFn<DatePickerSingleProps> = ({
 
   const handleSelectionChange = useCallback(
     (newSelection: DateInputSingleDetails) => {
-      const { date: newSelectedDate, originalValue, errors } = newSelection;
+      const { date: newSelectedDate, value, errors } = newSelection;
       console.log(`Selected date: ${formatSingleDate(newSelectedDate)}`);
-      if (errors?.length && originalValue) {
+      if (errors?.length && value) {
         console.log(
           `Error(s): ${errors.map(({ type, message }) => `type=${type} message=${message}`).join(",")}`,
         );
-        if (originalValue) {
-          console.log(`Original Value: ${originalValue}`);
+        if (value) {
+          console.log(`Current Value: ${value}`);
         }
         setHelperText(`${errorHelperText} - ${errors[0].message}`);
         setValidationStatus("error");
@@ -355,12 +355,12 @@ export const RangeWithMinMaxDate: StoryFn<DatePickerRangeProps> = ({
       const {
         startDate: {
           date: startDate,
-          originalValue: startDateOriginalValue,
+          value: startDateValue,
           errors: startDateErrors,
         },
         endDate: {
           date: endDate,
-          originalValue: endDateOriginalValue,
+          value: endDateValue,
           errors: endDateErrors,
         },
       } = newSelection;
@@ -371,24 +371,24 @@ export const RangeWithMinMaxDate: StoryFn<DatePickerRangeProps> = ({
         console.log(
           `StartDate Error(s): ${startDateErrors.map(({ type, message }) => `type=${type} message=${message}`).join(",")}`,
         );
-        if (startDateOriginalValue) {
-          console.log(`Original Value: ${startDateOriginalValue}`);
+        if (startDateValue) {
+          console.log(`Current Value: ${startDateValue}`);
         }
       }
       if (endDateErrors?.length) {
         console.log(
           `EndDate Error(s): ${endDateErrors.map(({ type, message }) => `type= ${type} message=${message}`).join(",")}`,
         );
-        if (endDateOriginalValue) {
-          console.log(`Original Value: ${endDateOriginalValue}`);
+        if (endDateValue) {
+          console.log(`Current Value: ${endDateValue}`);
         }
       }
-      if (startDateErrors?.length && startDateOriginalValue) {
+      if (startDateErrors?.length && startDateValue) {
         setValidationStatus("error");
         setHelperText(
           `${errorHelperText} - start date ${startDateErrors[0].message}`,
         );
-      } else if (endDateErrors?.length && endDateOriginalValue) {
+      } else if (endDateErrors?.length && endDateValue) {
         setValidationStatus("error");
         setHelperText(
           `${errorHelperText} - end date ${endDateErrors[0].message}`,
@@ -441,14 +441,14 @@ export const SingleWithInitialError: StoryFn<DatePickerSingleProps> = ({
   );
   const handleSelectionChange = useCallback(
     (newSelection: DateInputSingleDetails) => {
-      const { date: newSelectedDate, originalValue, errors } = newSelection;
+      const { date: newSelectedDate, value, errors } = newSelection;
       console.log(`Selected date: ${formatSingleDate(newSelectedDate)}`);
-      if (errors?.length && originalValue) {
+      if (errors?.length && value) {
         console.log(
           `Error(s): ${errors.map(({ type, message }) => `type=${type} message=${message}`).join(",")}`,
         );
-        if (originalValue) {
-          console.log(`Original Value: ${originalValue}`);
+        if (value) {
+          console.log(`Current Value: ${value}`);
         }
         setHelperText(`${errorHelperText} - ${errors[0].message}`);
         setValidationStatus("error");
@@ -498,12 +498,12 @@ export const RangeWithInitialError: StoryFn<DatePickerRangeProps> = ({
       const {
         startDate: {
           date: startDate,
-          originalValue: startDateOriginalValue,
+          value: startDateValue,
           errors: startDateErrors,
         },
         endDate: {
           date: endDate,
-          originalValue: endDateOriginalValue,
+          value: endDateValue,
           errors: endDateErrors,
         },
       } = newSelection;
@@ -514,24 +514,24 @@ export const RangeWithInitialError: StoryFn<DatePickerRangeProps> = ({
         console.log(
           `StartDate Error(s): ${startDateErrors.map(({ type, message }) => `type=${type} message=${message}`).join(",")}`,
         );
-        if (startDateOriginalValue) {
-          console.log(`Original Value: ${startDateOriginalValue}`);
+        if (startDateValue) {
+          console.log(`Current Value: ${startDateValue}`);
         }
       }
       if (endDateErrors?.length) {
         console.log(
           `EndDate Error(s): ${endDateErrors.map(({ type, message }) => `type= ${type} message=${message}`).join(",")}`,
         );
-        if (endDateOriginalValue) {
-          console.log(`Original Value: ${endDateOriginalValue}`);
+        if (endDateValue) {
+          console.log(`Current Value: ${endDateValue}`);
         }
       }
-      if (startDateErrors?.length && startDateOriginalValue) {
+      if (startDateErrors?.length && startDateValue) {
         setValidationStatus("error");
         setHelperText(
           `${errorHelperText} - start date ${startDateErrors[0].message}`,
         );
-      } else if (endDateErrors?.length && endDateOriginalValue) {
+      } else if (endDateErrors?.length && endDateValue) {
         setValidationStatus("error");
         setHelperText(
           `${errorHelperText} - end date ${endDateErrors[0].message}`,
@@ -588,14 +588,14 @@ export const SingleWithFormField: StoryFn<DatePickerSingleProps> = ({
 
   const handleSelectionChange = useCallback(
     (newSelection: DateInputSingleDetails) => {
-      const { date: newSelectedDate, originalValue, errors } = newSelection;
+      const { date: newSelectedDate, value, errors } = newSelection;
       console.log(`Selected date: ${formatSingleDate(newSelectedDate)}`);
-      if (errors?.length && originalValue) {
+      if (errors?.length && value) {
         console.log(
           `Error(s): ${errors.map(({ type, message }) => `type=${type} message=${message}`).join(",")}`,
         );
-        if (originalValue) {
-          console.log(`Original Value: ${originalValue}`);
+        if (value) {
+          console.log(`Current Value: ${value}`);
         }
         setHelperText(`${errorHelperText} - ${errors[0].message}`);
         setValidationStatus("error");
@@ -646,12 +646,12 @@ export const RangeWithFormField: StoryFn<DatePickerRangeProps> = ({
       const {
         startDate: {
           date: startDate,
-          originalValue: startDateOriginalValue,
+          value: startDateValue,
           errors: startDateErrors,
         },
         endDate: {
           date: endDate,
-          originalValue: endDateOriginalValue,
+          value: endDateValue,
           errors: endDateErrors,
         },
       } = newSelection;
@@ -662,24 +662,24 @@ export const RangeWithFormField: StoryFn<DatePickerRangeProps> = ({
         console.log(
           `StartDate Error(s): ${startDateErrors.map(({ type, message }) => `type=${type} message=${message}`).join(",")}`,
         );
-        if (startDateOriginalValue) {
-          console.log(`Original Value: ${startDateOriginalValue}`);
+        if (startDateValue) {
+          console.log(`Current Value: ${startDateValue}`);
         }
       }
       if (endDateErrors?.length) {
         console.log(
           `EndDate Error(s): ${endDateErrors.map(({ type, message }) => `type= ${type} message=${message}`).join(",")}`,
         );
-        if (endDateOriginalValue) {
-          console.log(`Original Value: ${endDateOriginalValue}`);
+        if (endDateValue) {
+          console.log(`Current Value: ${endDateValue}`);
         }
       }
-      if (startDateErrors?.length && startDateOriginalValue) {
+      if (startDateErrors?.length && startDateValue) {
         setValidationStatus("error");
         setHelperText(
           `${errorHelperText} - start date ${startDateErrors[0].message}`,
         );
-      } else if (endDateErrors?.length && endDateOriginalValue) {
+      } else if (endDateErrors?.length && endDateValue) {
         setValidationStatus("error");
         setHelperText(
           `${errorHelperText} - end date ${endDateErrors[0].message}`,
@@ -727,14 +727,14 @@ export const SingleWithCustomPanel: StoryFn<DatePickerSingleProps> = ({
 
   const handleSelectionChange = useCallback(
     (newSelection: DateInputSingleDetails) => {
-      const { date: newSelectedDate, originalValue, errors } = newSelection;
+      const { date: newSelectedDate, value, errors } = newSelection;
       console.log(`Selected date: ${formatSingleDate(newSelectedDate)}`);
-      if (errors?.length && originalValue) {
+      if (errors?.length && value) {
         console.log(
           `Error(s): ${errors.map(({ type, message }) => `type=${type} message=${message}`).join(",")}`,
         );
-        if (originalValue) {
-          console.log(`Original Value: ${originalValue}`);
+        if (value) {
+          console.log(`Current Value: ${value}`);
         }
         setHelperText(`${errorHelperText} - ${errors[0].message}`);
         setValidationStatus("error");
@@ -788,12 +788,12 @@ export const RangeWithCustomPanel: StoryFn<DatePickerRangeProps> = ({
       const {
         startDate: {
           date: startDate,
-          originalValue: startDateOriginalValue,
+          value: startDateValue,
           errors: startDateErrors,
         },
         endDate: {
           date: endDate,
-          originalValue: endDateOriginalValue,
+          value: endDateValue,
           errors: endDateErrors,
         },
       } = newSelection;
@@ -804,24 +804,24 @@ export const RangeWithCustomPanel: StoryFn<DatePickerRangeProps> = ({
         console.log(
           `StartDate Error(s): ${startDateErrors.map(({ type, message }) => `type=${type} message=${message}`).join(",")}`,
         );
-        if (startDateOriginalValue) {
-          console.log(`Original Value: ${startDateOriginalValue}`);
+        if (startDateValue) {
+          console.log(`Current Value: ${startDateValue}`);
         }
       }
       if (endDateErrors?.length) {
         console.log(
           `EndDate Error(s): ${endDateErrors.map(({ type, message }) => `type= ${type} message=${message}`).join(",")}`,
         );
-        if (endDateOriginalValue) {
-          console.log(`Original Value: ${endDateOriginalValue}`);
+        if (endDateValue) {
+          console.log(`Current Value: ${endDateValue}`);
         }
       }
-      if (startDateErrors?.length && startDateOriginalValue) {
+      if (startDateErrors?.length && startDateValue) {
         setValidationStatus("error");
         setHelperText(
           `${errorHelperText} - start date ${startDateErrors[0].message}`,
         );
-      } else if (endDateErrors?.length && endDateOriginalValue) {
+      } else if (endDateErrors?.length && endDateValue) {
         setValidationStatus("error");
         setHelperText(
           `${errorHelperText} - end date ${endDateErrors[0].message}`,
@@ -897,14 +897,14 @@ export const SingleWithTodayButton: StoryFn<DatePickerSingleProps> = ({
 
   const handleSelectionChange = useCallback(
     (newSelection: DateInputSingleDetails) => {
-      const { date: newSelectedDate, originalValue, errors } = newSelection;
+      const { date: newSelectedDate, value, errors } = newSelection;
       console.log(`Selected date: ${formatSingleDate(newSelectedDate)}`);
-      if (errors?.length && originalValue) {
+      if (errors?.length && value) {
         console.log(
           `Error(s): ${errors.map(({ type, message }) => `type=${type} message=${message}`).join(",")}`,
         );
-        if (originalValue) {
-          console.log(`Original Value: ${originalValue}`);
+        if (value) {
+          console.log(`Current Value: ${value}`);
         }
         setHelperText(`${errorHelperText} - ${errors[0].message}`);
         setValidationStatus("error");
@@ -985,14 +985,14 @@ export const SingleWithConfirmation: StoryFn<DatePickerSingleProps> = ({
 
   const handleSelectionChange = useCallback(
     (newSelection: DateInputSingleDetails) => {
-      const { date: newSelectedDate, originalValue, errors } = newSelection;
+      const { date: newSelectedDate, value, errors } = newSelection;
       console.log(`Selected date: ${formatSingleDate(newSelectedDate)}`);
-      if (errors?.length && originalValue) {
+      if (errors?.length && value) {
         console.log(
           `Error(s): ${errors.map(({ type, message }) => `type=${type} message=${message}`).join(",")}`,
         );
-        if (originalValue) {
-          console.log(`Original Value: ${originalValue}`);
+        if (value) {
+          console.log(`Current Value: ${value}`);
         }
         setHelperText(`${errorHelperText} - ${errors[0].message}`);
         setValidationStatus("error");
@@ -1117,12 +1117,12 @@ export const RangeWithConfirmation: StoryFn<DatePickerRangeProps> = ({
       const {
         startDate: {
           date: startDate,
-          originalValue: startDateOriginalValue,
+          value: startDateValue,
           errors: startDateErrors,
         },
         endDate: {
           date: endDate,
-          originalValue: endDateOriginalValue,
+          value: endDateValue,
           errors: endDateErrors,
         },
       } = newSelection;
@@ -1133,24 +1133,24 @@ export const RangeWithConfirmation: StoryFn<DatePickerRangeProps> = ({
         console.log(
           `StartDate Error(s): ${startDateErrors.map(({ type, message }) => `type=${type} message=${message}`).join(",")}`,
         );
-        if (startDateOriginalValue) {
-          console.log(`Original Value: ${startDateOriginalValue}`);
+        if (startDateValue) {
+          console.log(`Current Value: ${startDateValue}`);
         }
       }
       if (endDateErrors?.length) {
         console.log(
           `EndDate Error(s): ${endDateErrors.map(({ type, message }) => `type= ${type} message=${message}`).join(",")}`,
         );
-        if (endDateOriginalValue) {
-          console.log(`Original Value: ${endDateOriginalValue}`);
+        if (endDateValue) {
+          console.log(`Current Value: ${endDateValue}`);
         }
       }
-      if (startDateErrors?.length && startDateOriginalValue) {
+      if (startDateErrors?.length && startDateValue) {
         setValidationStatus("error");
         setHelperText(
           `${errorHelperText} - start date ${startDateErrors[0].message}`,
         );
-      } else if (endDateErrors?.length && endDateOriginalValue) {
+      } else if (endDateErrors?.length && endDateValue) {
         setValidationStatus("error");
         setHelperText(
           `${errorHelperText} - end date ${endDateErrors[0].message}`,
@@ -1251,14 +1251,14 @@ export const SingleWithCustomParser: StoryFn<DatePickerSingleProps> = ({
   );
   const handleSelectionChange = useCallback(
     (details: DateInputSingleDetails) => {
-      const { date: newSelectedDate, originalValue, errors } = details;
+      const { date: newSelectedDate, value, errors } = details;
       console.log(`Selected date: ${formatSingleDate(newSelectedDate)}`);
-      if (errors?.length && originalValue) {
+      if (errors?.length && value) {
         console.log(
           `Error(s): ${errors.map(({ type, message }) => `type=${type} message=${message}`).join(",")}`,
         );
-        if (originalValue) {
-          console.log(`Original Value: ${originalValue}`);
+        if (value) {
+          console.log(`Current Value: ${value}`);
         }
         setHelperText(`${errorHelperText} - ${errors[0].message}`);
         setValidationStatus("error");
@@ -1364,14 +1364,14 @@ export const SingleWithCustomValidation: StoryFn<DatePickerSingleProps> = ({
 
   const handleSelectionChange = useCallback(
     (newSelection: DateInputSingleDetails) => {
-      const { date: newSelectedDate, originalValue, errors } = newSelection;
+      const { date: newSelectedDate, value, errors } = newSelection;
       console.log(`Selected date: ${formatSingleDate(newSelectedDate)}`);
-      if (errors?.length && originalValue) {
+      if (errors?.length && value) {
         console.log(
           `Error(s): ${errors.map(({ type, message }) => `type=${type} message=${message}`).join(",")}`,
         );
-        if (originalValue) {
-          console.log(`Original Value: ${originalValue}`);
+        if (value) {
+          console.log(`Current Value: ${value}`);
         }
         setHelperText(`${errorHelperText} - ${errors[0].message}`);
         setValidationStatus("error");
@@ -1457,14 +1457,14 @@ export const SingleWithLocaleEnUS: StoryFn<DatePickerSingleProps> = ({
   );
   const handleSelectionChange = useCallback(
     (newSelection: DateInputSingleDetails) => {
-      const { date: newSelectedDate, originalValue, errors } = newSelection;
+      const { date: newSelectedDate, value, errors } = newSelection;
       console.log(`Selected date: ${formatSingleDate(newSelectedDate)}`);
-      if (errors?.length && originalValue) {
+      if (errors?.length && value) {
         console.log(
           `Error(s): ${errors.map(({ type, message }) => `type=${type} message=${message}`).join(",")}`,
         );
-        if (originalValue) {
-          console.log(`Original Value: ${originalValue}`);
+        if (value) {
+          console.log(`Current Value: ${value}`);
         }
         setHelperText(`${errorHelperText} - ${errors[0].message}`);
         setValidationStatus("error");
@@ -1513,14 +1513,14 @@ export const SingleWithLocaleZhCN: StoryFn<DatePickerSingleProps> = ({
   );
   const handleSelectionChange = useCallback(
     (newSelection: DateInputSingleDetails) => {
-      const { date: newSelectedDate, originalValue, errors } = newSelection;
+      const { date: newSelectedDate, value, errors } = newSelection;
       console.log(`Selected date: ${formatSingleDate(newSelectedDate)}`);
-      if (errors?.length && originalValue) {
+      if (errors?.length && value) {
         console.log(
           `Error(s): ${errors.map(({ type, message }) => `type=${type} message=${message}`).join(",")}`,
         );
-        if (originalValue) {
-          console.log(`Original Value: ${originalValue}`);
+        if (value) {
+          console.log(`Current Value: ${value}`);
         }
         setHelperText(`${errorHelperText} - ${errors[0].message}`);
         setValidationStatus("error");
@@ -1590,12 +1590,12 @@ export const RangeWithLocaleEsES: StoryFn<DatePickerRangeProps> = ({
       const {
         startDate: {
           date: startDate,
-          originalValue: startDateOriginalValue,
+          value: startDateValue,
           errors: startDateErrors,
         },
         endDate: {
           date: endDate,
-          originalValue: endDateOriginalValue,
+          value: endDateValue,
           errors: endDateErrors,
         },
       } = newSelection;
@@ -1606,24 +1606,24 @@ export const RangeWithLocaleEsES: StoryFn<DatePickerRangeProps> = ({
         console.log(
           `StartDate Error(s): ${startDateErrors.map(({ type, message }) => `type=${type} message=${message}`).join(",")}`,
         );
-        if (startDateOriginalValue) {
-          console.log(`Original Value: ${startDateOriginalValue}`);
+        if (startDateValue) {
+          console.log(`Current Value: ${startDateValue}`);
         }
       }
       if (endDateErrors?.length) {
         console.log(
           `EndDate Error(s): ${endDateErrors.map(({ type, message }) => `type= ${type} message=${message}`).join(",")}`,
         );
-        if (endDateOriginalValue) {
-          console.log(`Original Value: ${endDateOriginalValue}`);
+        if (endDateValue) {
+          console.log(`Current Value: ${endDateValue}`);
         }
       }
-      if (startDateErrors?.length && startDateOriginalValue) {
+      if (startDateErrors?.length && startDateValue) {
         setValidationStatus("error");
         setHelperText(
           `${errorHelperText} - start date ${startDateErrors[0].message}`,
         );
-      } else if (endDateErrors?.length && endDateOriginalValue) {
+      } else if (endDateErrors?.length && endDateValue) {
         setValidationStatus("error");
         setHelperText(
           `${errorHelperText} - end date ${endDateErrors[0].message}`,
@@ -1672,14 +1672,14 @@ export const SingleBordered: StoryFn<DatePickerSingleProps> = ({
 
   const handleSelectionChange = useCallback(
     (newSelection: DateInputSingleDetails) => {
-      const { date: newSelectedDate, originalValue, errors } = newSelection;
+      const { date: newSelectedDate, value, errors } = newSelection;
       console.log(`Selected date: ${formatSingleDate(newSelectedDate)}`);
-      if (errors?.length && originalValue) {
+      if (errors?.length && value) {
         console.log(
           `Error(s): ${errors.map(({ type, message }) => `type=${type} message=${message}`).join(",")}`,
         );
-        if (originalValue) {
-          console.log(`Original Value: ${originalValue}`);
+        if (value) {
+          console.log(`Current Value: ${value}`);
         }
         setHelperText(`${errorHelperText} - ${errors[0].message}`);
         setValidationStatus("error");
@@ -1734,12 +1734,12 @@ export const RangeBordered: StoryFn<DatePickerRangeProps> = ({
       const {
         startDate: {
           date: startDate,
-          originalValue: startDateOriginalValue,
+          value: startDateValue,
           errors: startDateErrors,
         },
         endDate: {
           date: endDate,
-          originalValue: endDateOriginalValue,
+          value: endDateValue,
           errors: endDateErrors,
         },
       } = newSelection;
@@ -1750,24 +1750,24 @@ export const RangeBordered: StoryFn<DatePickerRangeProps> = ({
         console.log(
           `StartDate Error(s): ${startDateErrors.map(({ type, message }) => `type=${type} message=${message}`).join(",")}`,
         );
-        if (startDateOriginalValue) {
-          console.log(`Original Value: ${startDateOriginalValue}`);
+        if (startDateValue) {
+          console.log(`Current Value: ${startDateValue}`);
         }
       }
       if (endDateErrors?.length) {
         console.log(
           `EndDate Error(s): ${endDateErrors.map(({ type, message }) => `type= ${type} message=${message}`).join(",")}`,
         );
-        if (endDateOriginalValue) {
-          console.log(`Original Value: ${endDateOriginalValue}`);
+        if (endDateValue) {
+          console.log(`Current Value: ${endDateValue}`);
         }
       }
-      if (startDateErrors?.length && startDateOriginalValue) {
+      if (startDateErrors?.length && startDateValue) {
         setValidationStatus("error");
         setHelperText(
           `${errorHelperText} - start date ${startDateErrors[0].message}`,
         );
-      } else if (endDateErrors?.length && endDateOriginalValue) {
+      } else if (endDateErrors?.length && endDateValue) {
         setValidationStatus("error");
         setHelperText(
           `${errorHelperText} - end date ${endDateErrors[0].message}`,
@@ -1914,12 +1914,12 @@ export const WithExperimentalTime: StoryFn<DatePickerRangeProps> = ({
       const {
         startDate: {
           date: startDate,
-          originalValue: startDateOriginalValue,
+          value: startDateValue,
           errors: startDateErrors,
         },
         endDate: {
           date: endDate,
-          originalValue: endDateOriginalValue,
+          value: endDateValue,
           errors: endDateErrors,
         },
       } = newSelection;
@@ -1930,16 +1930,16 @@ export const WithExperimentalTime: StoryFn<DatePickerRangeProps> = ({
         console.log(
           `StartDate Error(s): ${startDateErrors.map(({ type, message }) => `type=${type} message=${message}`).join(",")}`,
         );
-        if (startDateOriginalValue) {
-          console.log(`Original Value: ${startDateOriginalValue}`);
+        if (startDateValue) {
+          console.log(`Current Value: ${startDateValue}`);
         }
       }
       if (endDateErrors?.length) {
         console.log(
           `EndDate Error(s): ${endDateErrors.map(({ type, message }) => `type= ${type} message=${message}`).join(",")}`,
         );
-        if (endDateOriginalValue) {
-          console.log(`Original Value: ${endDateOriginalValue}`);
+        if (endDateValue) {
+          console.log(`Current Value: ${endDateValue}`);
         }
       }
       onSelectionChangeProp?.(newSelection);
