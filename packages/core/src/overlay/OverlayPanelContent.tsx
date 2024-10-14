@@ -5,8 +5,17 @@ import {
   type ComponentPropsWithoutRef,
   type ReactNode,
   forwardRef,
+  useCallback,
+  useRef,
+  useState,
 } from "react";
-import { makePrefixer } from "../utils";
+import {
+  debounce,
+  makePrefixer,
+  useForkRef,
+  useIsomorphicLayoutEffect,
+  useResizeObserver,
+} from "../utils";
 import overlayPanelContentCss from "./OverlayPanelContent.css";
 
 const withBaseName = makePrefixer("saltOverlayPanelContent");
@@ -31,10 +40,48 @@ export const OverlayPanelContent = forwardRef<
   });
 
   const { children, className, ...rest } = props;
+  const [scrolled, setScrolled] = useState(false);
+  const [isOverflowing, setIsOverflowing] = useState(false);
+  const divRef = useRef<HTMLDivElement>(null);
+  const containerRef = useForkRef(divRef, ref);
+  const handleScroll = debounce(() => {
+    if (!divRef.current) return;
+    setScrolled(divRef.current.scrollTop > 0);
+  }, 50);
 
+  const checkOverflow = useCallback(() => {
+    if (!divRef.current) return;
+    setIsOverflowing(divRef.current.scrollHeight > divRef.current.offsetHeight);
+  }, []);
+
+  useResizeObserver({ ref: divRef, onResize: checkOverflow });
+
+  useIsomorphicLayoutEffect(() => {
+    checkOverflow();
+  }, [checkOverflow]);
   return (
-    <div className={clsx(withBaseName(), className)} {...rest} ref={ref}>
-      {children}
-    </div>
+    <>
+      <div
+        className={clsx(withBaseName("separator"), {
+          [withBaseName("scroll")]: scrolled,
+        })}
+      />
+      <div className={clsx(withBaseName("container"))}>
+        <div
+          className={clsx(
+            withBaseName(),
+            {
+              [withBaseName("overflow")]: isOverflowing,
+            },
+            className,
+          )}
+          onScrollCapture={handleScroll}
+          {...rest}
+          ref={containerRef}
+        >
+          {children}
+        </div>
+      </div>
+    </>
   );
 });

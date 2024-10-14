@@ -12,6 +12,9 @@
   /* auto is needed for support on Safari, due to webkit bugs with flex */
   flex: 1 1 auto;
 }
+.saltDialogContent-overflow {
+  padding-right: var(--salt-spacing-100);
+}
 
 .saltDialogContent-scroll {
   border-bottom: var(--salt-size-border) var(--salt-separable-borderStyle) var(--salt-separable-tertiary-borderColor);
