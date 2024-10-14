@@ -16,7 +16,7 @@ div[class*="ag-theme-salt"] {
   --ag-font-family: var(--salt-text-fontFamily);
   --ag-font-size: var(--salt-text-fontSize);
   --ag-foreground-color: var(--salt-content-primary-foreground);
-  --ag-grid-size: var(--salt-spacing-50);
+  --ag-grid-size: var(--salt-spacing-100);
   --ag-header-background-color: var(--salt-container-primary-background);
   --ag-header-cell-hover-background-color: var(--salt-container-primary-background);
   --ag-header-column-separator-color: var(--salt-separable-tertiary-borderColor);

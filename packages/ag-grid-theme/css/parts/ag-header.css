@@ -87,8 +87,30 @@ div[class*="ag-theme-salt"] .ag-floating-filter .ag-floating-filter-body:focus-w
   outline-offset: -2px;
 }
 
+div[class*="ag-theme-salt"] .ag-header-cell-menu-button:hover,
+div[class*="ag-theme-salt"] .ag-header-cell-filter-button:hover,
+div[class*="ag-theme-salt"] .ag-panel-title-bar-button:hover,
+div[class*="ag-theme-salt"] .ag-header-expand-icon:hover,
+div[class*="ag-theme-salt"] .ag-column-group-icons:hover,
+div[class*="ag-theme-salt"] .ag-set-filter-group-icons:hover,
+div[class*="ag-theme-salt"] .ag-group-expanded .ag-icon:hover,
+div[class*="ag-theme-salt"] .ag-group-contracted .ag-icon:hover,
+div[class*="ag-theme-salt"] .ag-chart-settings-prev:hover,
+div[class*="ag-theme-salt"] .ag-chart-settings-next:hover,
+div[class*="ag-theme-salt"] .ag-group-title-bar-icon:hover,
+div[class*="ag-theme-salt"] .ag-column-select-header-icon:hover,
+div[class*="ag-theme-salt"] .ag-floating-filter-button-button:hover,
+div[class*="ag-theme-salt"] .ag-filter-toolpanel-expand:hover,
+div[class*="ag-theme-salt"] .ag-panel-title-bar-button-icon:hover,
+div[class*="ag-theme-salt"] .ag-chart-menu-icon:hover {
+  /* Button is the same size of icon, we're copying what ag quartz theme is doing */
+  box-shadow: 0 0 0 4px var(--salt-actionable-subtle-background-hover);
+  background-color: var(--salt-actionable-subtle-background-hover);
+  --ag-icon-font-color-filter: var(--salt-actionable-subtle-foreground-hover);
+}
+
 /* When filter is active, use toggle button active styles */
-div[class*="ag-theme-salt"] .ag-button.ag-filter-active {
+div[class*="ag-theme-salt"] .ag-filter-active {
   /* Button is the same size of icon, we're copying what ag quartz theme is doing */
   box-shadow: 0 0 0 4px var(--salt-actionable-subtle-background-active);
   background-color: var(--salt-actionable-subtle-background-active);
@@ -109,7 +131,7 @@ div[class*="ag-theme-salt"] .ag-ltr .ag-floating-filter-button .ag-button:focus 
   outline-offset: 2px;
 }
 
-div[class*="ag-theme-salt"] .ag-ltr .ag-floating-filter-button .ag-button.ag-filter-active:focus {
+div[class*="ag-theme-salt"] .ag-ltr .ag-floating-filter-button .ag-filter-active:focus {
   /* when active, there is fake 4px box-shadow set above */
   box-shadow: 0 0 0 4px var(--salt-actionable-subtle-background-active);
   outline-offset: 6px;

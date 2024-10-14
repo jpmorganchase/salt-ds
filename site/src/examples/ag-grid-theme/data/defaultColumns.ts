@@ -12,6 +12,8 @@ export const defaultColumns: ColDef[] = [
     suppressHeaderMenuButton: true,
     resizable: false,
     suppressColumnsToolPanel: true,
+    filter: false,
+    sortable: false,
   },
   {
     headerName: "Name",
