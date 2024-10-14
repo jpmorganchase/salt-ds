@@ -135,6 +135,56 @@ ColumnMenuFilter.play = async ({ canvasElement }) => {
     await expect(menu).toBeInTheDocument();
   }
 };
+export const ColumnMenuFilterFiltered: StoryObj<typeof AgGridReact> = () => {
+  return <Default />;
+};
+
+ColumnMenuFilterFiltered.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
+
+  // Do findAll here so this will also work in `side-by-side` mode
+  const nameHeaderCells = await canvas.findAllByText("Name");
+
+  for (const cell of nameHeaderCells) {
+    const gridRoot: HTMLElement = cell.closest(".ag-root-wrapper")!;
+
+    await userEvent.click(
+      cell
+        .closest(".ag-header-cell-comp-wrapper")!
+        .querySelector(".ag-icon.ag-icon-filter")!,
+    );
+
+    const menu = within(gridRoot).getByRole("presentation", {
+      name: "Column Filter",
+    });
+
+    const alaskaOption = await within(menu).findByRole("option", {
+      name: /Alaska/,
+    });
+
+    await userEvent.click(within(alaskaOption).getByText("Alaska"));
+
+    await expect(within(alaskaOption).getByRole("checkbox")).not.toBeChecked();
+
+    await userEvent.click(
+      within(menu).getByRole("button", {
+        name: /Apply/,
+      }),
+    );
+
+    await userEvent.click(within(gridRoot).getByText(/Total Rows/));
+
+    await expect(menu).not.toBeInTheDocument();
+
+    const nameHeader = canvas.getByRole("columnheader", { name: "Name" });
+
+    await userEvent.click(within(nameHeader).getByText("Name"));
+    await expect(nameHeader).toHaveAttribute("aria-sort", "ascending");
+
+    await userEvent.click(within(gridRoot).getByText(/Total Rows/));
+    // Capture active filter, sorted header
+  }
+};
 
 export const ColumnMenuColumns: StoryObj<typeof AgGridReact> = () => {
   return <Default />;
