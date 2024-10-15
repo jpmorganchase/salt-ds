@@ -90,27 +90,59 @@ export const TabsNext = forwardRef<HTMLDivElement, TabsNextProps>(
             return { map };
           });
 
-          requestAnimationFrame(() => {
-            if (
-              document.activeElement === document.body &&
-              activeTab.current?.value === value
-            ) {
-              const activeIndex = items.current.findIndex(
-                (item) => value === item.value,
+          if (activeTab.current?.value !== value) {
+            return;
+          }
+
+          const containFocus = () => {
+            const activeIndex = items.current.findIndex(
+              (item) => value === item.value,
+            );
+
+            const nextIndex =
+              activeIndex === items.current.length - 1
+                ? items.current.length - 2
+                : activeIndex + 1;
+
+            const nextActive = items.current[nextIndex];
+            setSelectedState((old) => {
+              if (old === value) {
+                return nextActive.value;
+              }
+              return old;
+            });
+
+            nextActive?.element?.focus();
+          };
+
+          if (document.activeElement === document.body) {
+            requestAnimationFrame(() => {
+              if (document.activeElement === document.body) {
+                containFocus();
+              }
+            });
+          } else {
+            const handleFocusOut = (event: FocusEvent) => {
+              if (!event.relatedTarget) {
+                requestAnimationFrame(() => {
+                  if (document.activeElement === document.body) {
+                    containFocus();
+                  }
+                });
+              }
+            };
+
+            element.ownerDocument.addEventListener("focusout", handleFocusOut, {
+              once: true,
+            });
+
+            setTimeout(() => {
+              element.ownerDocument.removeEventListener(
+                "focusout",
+                handleFocusOut,
               );
-              const nextActive =
-                items.current[
-                  Math.min(activeIndex + 1, items.current.length - 1)
-                ];
-              setSelectedState((old) => {
-                if (old === value) {
-                  return nextActive.value;
-                }
-                return old;
-              });
-              nextActive?.element?.focus();
-            }
-          });
+            }, 1000);
+          }
         };
       },
       [registerItem],

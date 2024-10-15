@@ -46,11 +46,20 @@ export const TabNextPanel = forwardRef<HTMLDivElement, TabNextPanelProps>(
     useEffect(() => {
       if (!panelRef.current) return;
 
-      const observer = new MutationObserver(() => {
-        if (!panelRef.current) return;
+      const detectFocusableChildren = () => {
+        requestAnimationFrame(() => {
+          if (!panelRef.current) return;
+          const elements = tabbable(panelRef.current);
+          setHasFocusableChildren(elements.length > 0);
+        });
+      };
 
-        const elements = tabbable(panelRef.current, { includeContainer: true });
-        setHasFocusableChildren(elements.length > 0);
+      const observer = new MutationObserver(() => {
+        detectFocusableChildren();
+      });
+
+      requestAnimationFrame(() => {
+        detectFocusableChildren();
       });
 
       observer.observe(panelRef.current, { childList: true, subtree: true });
@@ -61,6 +70,7 @@ export const TabNextPanel = forwardRef<HTMLDivElement, TabNextPanelProps>(
     }, []);
 
     const hidden = selected !== value;
+
     const tabId = getTabId(value);
 
     return (

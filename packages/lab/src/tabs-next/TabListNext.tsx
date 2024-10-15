@@ -44,7 +44,6 @@ export const TabListNext = forwardRef<HTMLDivElement, TabListNextProps>(
       className,
       onClose,
       onKeyDown,
-      onBlur,
       ...rest
     } = props;
     const targetWindow = useWindow();
@@ -100,14 +99,6 @@ export const TabListNext = forwardRef<HTMLDivElement, TabListNextProps>(
       }
     };
 
-    const handleBlur = (event: FocusEvent<HTMLDivElement>) => {
-      onBlur?.(event);
-
-      if (!event.currentTarget.contains(event.relatedTarget)) {
-        activeTab.current = undefined;
-      }
-    };
-
     return (
       <div
         role="tablist"
@@ -121,7 +112,6 @@ export const TabListNext = forwardRef<HTMLDivElement, TabListNextProps>(
         data-ismeasuring={isMeasuring ? true : undefined}
         ref={handleRef}
         onKeyDown={handleKeyDown}
-        onBlur={handleBlur}
         {...rest}
       >
         {visible}
