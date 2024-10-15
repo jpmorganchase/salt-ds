@@ -444,7 +444,6 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
         inputProps={{
           role: "combobox",
           "aria-expanded": openState,
-          "aria-multiselectable": multiselect,
           "aria-controls": openState ? listId : undefined,
           onKeyDown: handleKeyDown,
           ...inputPropsProp,
@@ -471,6 +470,7 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
         }
       />
       <OptionList
+        aria-multiselectable={multiselect}
         open={(openState || focusedState) && !readOnly && hasValidChildren}
         collapsed={!openState}
         ref={handleListRef}
