@@ -17,7 +17,7 @@
   gap: var(--salt-spacing-50);
 }
 
-.saltOverlayHeader-header {
+.saltOverlayHeader-header > .saltText {
   margin: 0;
 }
 

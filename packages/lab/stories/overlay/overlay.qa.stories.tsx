@@ -1,5 +1,6 @@
 import {
   Button,
+  H4,
   Overlay,
   OverlayPanel,
   OverlayPanelContent,
@@ -30,7 +31,7 @@ export const Default: StoryFn<QAContainerProps> = (props) => {
           <Button>Show Overlay</Button>
         </OverlayTrigger>
         <OverlayPanel>
-          <OverlayHeader header="Title" />
+          <OverlayHeader header={<H4>Header block</H4>} />
           <OverlayPanelContent>
             <div>Content of Overlay</div>
           </OverlayPanelContent>
@@ -68,7 +69,12 @@ export const CloseButton: StoryFn<QAContainerProps> = (props) => {
           <Button>Show Overlay</Button>
         </OverlayTrigger>
         <OverlayPanel>
-          <OverlayHeader header="Title" actions={<CloseButton />} />
+          <OverlayHeader
+            preheader="preheader"
+            description="description"
+            header={<H4>Header block</H4>}
+            actions={<CloseButton />}
+          />
           <OverlayPanelContent>
             <div>Content of Overlay</div>
           </OverlayPanelContent>

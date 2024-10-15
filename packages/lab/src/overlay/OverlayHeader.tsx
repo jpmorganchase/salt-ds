@@ -1,4 +1,4 @@
-import { H4, Text, makePrefixer } from "@salt-ds/core";
+import { Text, makePrefixer } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import clsx from "clsx";
@@ -26,10 +26,6 @@ export interface OverlayPanelContentProps
    */
   header?: ReactNode;
   /**
-   * The id of the Overlay Header, used for aria-labelledby on OverlayPanel
-   **/
-  id?: string;
-  /**
    * Preheader text is displayed just above the header
    **/
   preheader?: ReactNode;
@@ -46,20 +42,17 @@ export const OverlayHeader = forwardRef<
     window: targetWindow,
   });
 
-  const { className, description, header, actions, id, preheader, ...rest } =
-    props;
+  const { className, description, header, actions, preheader, ...rest } = props;
 
   return (
     <div className={clsx(withBaseName(), className)} {...rest} ref={ref}>
       <div className={withBaseName("container")}>
-        {preheader && (
-          <Text className={withBaseName("preheader")}>{preheader}</Text>
-        )}
-        {header && (
-          <H4 id={id} className={withBaseName("header")}>
-            {header}
-          </H4>
-        )}
+        <div className={withBaseName("header")}>
+          {preheader && (
+            <Text className={withBaseName("preheader")}>{preheader}</Text>
+          )}
+          {header}
+        </div>
         {description && (
           <Text color="secondary" className={withBaseName("description")}>
             {description}
