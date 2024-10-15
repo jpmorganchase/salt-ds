@@ -39,9 +39,9 @@ export interface DialogHeaderProps extends ComponentPropsWithoutRef<"div"> {
    **/
   description?: ReactNode;
   /**
-   * End adornment component
+   * Actions to be displayed in header
    */
-  endAdornment?: ReactNode;
+  actions?: ReactNode;
 }
 
 export const DialogHeader = forwardRef<HTMLDivElement, DialogHeaderProps>(
@@ -50,7 +50,7 @@ export const DialogHeader = forwardRef<HTMLDivElement, DialogHeaderProps>(
       className,
       description,
       disableAccent,
-      endAdornment,
+      actions,
       header,
       preheader,
       status: statusProp,
@@ -95,10 +95,8 @@ export const DialogHeader = forwardRef<HTMLDivElement, DialogHeaderProps>(
             </Text>
           )}
         </div>
-        {endAdornment && (
-          <div className={withBaseName("endAdornmentContainer")}>
-            {endAdornment}
-          </div>
+        {actions && (
+          <div className={withBaseName("actionsContainer")}>{actions}</div>
         )}
       </div>
     );
