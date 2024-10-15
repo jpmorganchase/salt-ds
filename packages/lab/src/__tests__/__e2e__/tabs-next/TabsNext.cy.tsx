@@ -297,6 +297,6 @@ describe("Given a Tabstrip", () => {
 
   it("should not set tab-index 0 on the panel when it contains tabbable elements", () => {
     cy.mount(<WithInteractiveElementInPanel />);
-    cy.findByRole("tabpanel").should("have.attr", "tabIndex", "0");
+    cy.findByRole("tabpanel").should("not.have.attr", "tabIndex");
   });
 });

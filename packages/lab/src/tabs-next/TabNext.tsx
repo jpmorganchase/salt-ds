@@ -40,6 +40,7 @@ export const TabNext = forwardRef<HTMLDivElement, TabNextProps>(
       onBlur,
       onMouseDown,
       onFocus,
+      onFocusCapture,
       value,
       id: idProp,
       ...rest
@@ -60,6 +61,13 @@ export const TabNext = forwardRef<HTMLDivElement, TabNextProps>(
     const wasMouseDown = useRef(false);
     const [focusVisible, setFocusVisible] = useState(false);
     const [focused, setFocused] = useState(false);
+
+    const handleFocusCapture = (event: FocusEvent<HTMLDivElement>) => {
+      onFocusCapture?.(event);
+      if (value && id) {
+        activeTab.current = { value, id };
+      }
+    };
 
     const handleFocus = (event: FocusEvent<HTMLDivElement>) => {
       onFocus?.(event);
@@ -117,6 +125,7 @@ export const TabNext = forwardRef<HTMLDivElement, TabNextProps>(
           data-overflowitem="true"
           ref={ref}
           onMouseDown={handleMouseDown}
+          onFocusCapture={handleFocusCapture}
           onFocus={handleFocus}
           onBlur={handleBlur}
           role="presentation"
