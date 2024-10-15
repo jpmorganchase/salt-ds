@@ -98,7 +98,7 @@ const DialogTemplate: StoryFn<
           header={header}
           preheader={preheader}
           description={description}
-          endAdornment={<CloseButton />}
+          actions={<CloseButton />}
         />
         <DialogContent>
           {content}
@@ -410,7 +410,7 @@ export const StickyFooter: StoryFn<typeof Dialog> = ({
       <Dialog open={open} onOpenChange={onOpenChange} className="longDialog">
         <DialogHeader
           header="Congratulations! You have created a Dialog."
-          endAdornment={<CloseButton />}
+          actions={<CloseButton />}
         />
         <DialogContent>
           Lorem Ipsum is simply dummy text of the printing and typesetting
