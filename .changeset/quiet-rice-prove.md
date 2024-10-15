@@ -10,7 +10,13 @@ Added `OverlayHeader` component to lab.
       <Button>Show Overlay</Button>
     </OverlayTrigger>
     <OverlayPanel aria-labelledby={id}>
-        <OverlayHeader id={id} header="Title" actions={<CloseButton />}/>
+        <OverlayHeader id={id} header="Title" actions={<Button
+      aria-label="Close overlay"
+      appearance="transparent"
+      sentiment="neutral"
+    >
+      <CloseIcon aria-hidden />
+    </Button>}/>
         <OverlayPanelContent>Content of Overlay</OverlayPanelContent>
     </OverlayPanel>
   </Overlay>
