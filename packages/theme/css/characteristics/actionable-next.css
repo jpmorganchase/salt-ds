@@ -107,7 +107,7 @@
   --salt-actionable-negative-borderColor-hover: var(--salt-palette-negative);
   --salt-actionable-negative-borderColor: var(--salt-palette-negative);
   --salt-actionable-negative-foreground-active: var(--salt-palette-foreground-primary-alt);
-  --salt-actionable-negative-foreground-disabled: var(--salt-palette-negative-strong disabled);
+  --salt-actionable-negative-foreground-disabled: var(--salt-palette-negative-strong-disabled);
   --salt-actionable-negative-foreground-hover: var(--salt-palette-foreground-primary-alt);
   --salt-actionable-negative-foreground: var(--salt-palette-negative-strong);
 
@@ -121,7 +121,7 @@
   --salt-actionable-negative-subtle-borderColor-hover: var(--salt-palette-negative);
   --salt-actionable-negative-subtle-borderColor: var(--salt-palette-alpha-none);
   --salt-actionable-negative-subtle-foreground-active: var(--salt-palette-foreground-primary-alt);
-  --salt-actionable-negative-subtle-foreground-disabled: var(--salt-palette-negative-strong disabled);
+  --salt-actionable-negative-subtle-foreground-disabled: var(--salt-palette-negative-strong-disabled);
   --salt-actionable-negative-subtle-foreground-hover: var(--salt-palette-foreground-primary-alt);
   --salt-actionable-negative-subtle-foreground: var(--salt-palette-negative-strong);
 
@@ -149,7 +149,7 @@
   --salt-actionable-positive-borderColor-hover: var(--salt-palette-positive);
   --salt-actionable-positive-borderColor: var(--salt-palette-positive);
   --salt-actionable-positive-foreground-active: var(--salt-palette-foreground-primary-alt);
-  --salt-actionable-positive-foreground-disabled: var(--salt-palette-positive-strong disabled);
+  --salt-actionable-positive-foreground-disabled: var(--salt-palette-positive-strong-disabled);
   --salt-actionable-positive-foreground-hover: var(--salt-palette-foreground-primary-alt);
   --salt-actionable-positive-foreground: var(--salt-palette-positive-strong);
 
@@ -163,7 +163,7 @@
   --salt-actionable-positive-subtle-borderColor-hover: var(--salt-palette-positive);
   --salt-actionable-positive-subtle-borderColor: var(--salt-palette-alpha-none);
   --salt-actionable-positive-subtle-foreground-active: var(--salt-palette-foreground-primary-alt);
-  --salt-actionable-positive-subtle-foreground-disabled: var(--salt-palette-positive-strong disabled);
+  --salt-actionable-positive-subtle-foreground-disabled: var(--salt-palette-positive-strong-disabled);
   --salt-actionable-positive-subtle-foreground-hover: var(--salt-palette-foreground-primary-alt);
   --salt-actionable-positive-subtle-foreground: var(--salt-palette-positive-strong);
 
@@ -191,7 +191,7 @@
   --salt-actionable-caution-borderColor-hover: var(--salt-palette-warning);
   --salt-actionable-caution-borderColor: var(--salt-palette-warning);
   --salt-actionable-caution-foreground-active: var(--salt-palette-foreground-primary-alt);
-  --salt-actionable-caution-foreground-disabled: var(--salt-palette-warning-strong disabled);
+  --salt-actionable-caution-foreground-disabled: var(--salt-palette-warning-strong-disabled);
   --salt-actionable-caution-foreground-hover: var(--salt-palette-foreground-primary-alt);
   --salt-actionable-caution-foreground: var(--salt-palette-warning-strong);
 
@@ -205,7 +205,7 @@
   --salt-actionable-caution-subtle-borderColor-hover: var(--salt-palette-warning);
   --salt-actionable-caution-subtle-borderColor: var(--salt-palette-alpha-none);
   --salt-actionable-caution-subtle-foreground-active: var(--salt-palette-foreground-primary-alt);
-  --salt-actionable-caution-subtle-foreground-disabled: var(--salt-palette-warning-strong disabled);
+  --salt-actionable-caution-subtle-foreground-disabled: var(--salt-palette-warning-strong-disabled);
   --salt-actionable-caution-subtle-foreground-hover: var(--salt-palette-foreground-primary-alt);
   --salt-actionable-caution-subtle-foreground: var(--salt-palette-warning-strong);
 }
