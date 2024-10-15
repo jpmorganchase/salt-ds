@@ -53,7 +53,7 @@ export const Paginator = forwardRef<HTMLDivElement, PaginatorProps>(
     return (
       <div className={clsx(withBaseName(), className)} {...restProps} ref={ref}>
         <Button
-          variant="secondary"
+          appearance="transparent"
           aria-label="Previous Page"
           onClick={onPreviousPage}
           disabled={isOnFirstPage}
@@ -63,7 +63,7 @@ export const Paginator = forwardRef<HTMLDivElement, PaginatorProps>(
         </Button>
         <PageRanges siblingCount={siblingCount} boundaryCount={boundaryCount} />
         <Button
-          variant="secondary"
+          appearance="transparent"
           aria-label="Next Page"
           onClick={onNextPage}
           disabled={isOnLastPage}

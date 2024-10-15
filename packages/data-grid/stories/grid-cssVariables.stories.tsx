@@ -289,7 +289,7 @@ const CssVariablesTemplate: StoryFn = () => {
           </FlexItem>
           <FlexItem>
             <Button
-              variant="secondary"
+              appearance="transparent"
               onClick={onUndo}
               disabled={changes.length === 0}
             >
@@ -298,7 +298,7 @@ const CssVariablesTemplate: StoryFn = () => {
             </Button>
           </FlexItem>
           <FlexItem>
-            <Button variant="secondary" onClick={onReset}>
+            <Button appearance="transparent" onClick={onReset}>
               <DeleteIcon />
               {" Reset"}
             </Button>

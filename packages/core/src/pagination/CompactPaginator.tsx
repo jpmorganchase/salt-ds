@@ -47,7 +47,7 @@ export const CompactPaginator = forwardRef<
   return (
     <div className={clsx(withBaseName(), className)} {...restProps} ref={ref}>
       <Button
-        variant="secondary"
+        appearance="transparent"
         aria-label="Previous Page"
         onClick={onPreviousPage}
         disabled={isOnFirstPage}
@@ -61,7 +61,7 @@ export const CompactPaginator = forwardRef<
       </Text>
       <PageButton page={count} disabled={isOnLastPage} />
       <Button
-        variant="secondary"
+        appearance="transparent"
         aria-label="Next Page"
         onClick={onNextPage}
         disabled={isOnLastPage}

@@ -26,7 +26,7 @@ export const OverlayPanelCloseButton = forwardRef<
       <Button
         ref={ref}
         aria-label="Close overlay"
-        variant="secondary"
+        appearance="transparent"
         className={withBaseName("button")}
         {...rest}
       >

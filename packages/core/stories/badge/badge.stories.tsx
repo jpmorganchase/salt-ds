@@ -103,7 +103,7 @@ export const MultipleButtons: StoryFn = () => {
 export const DotBadge: StoryFn<typeof Badge> = () => {
   return (
     <FlexLayout>
-      <Button variant="secondary" aria-label="Settings - New available">
+      <Button appearance="transparent" aria-label="Settings - New available">
         <Badge>
           <SettingsSolidIcon aria-hidden />
         </Badge>

@@ -35,7 +35,7 @@ export const PageButton = forwardRef<HTMLButtonElement, PageButtonProps>(
       <Button
         aria-label={`Page ${page} of ${count}`}
         aria-current={selected ? "page" : undefined}
-        variant="secondary"
+        appearance="transparent"
         className={clsx(withBaseName(), {
           [withBaseName("selected")]: selected,
           [withBaseName("fixed")]: page < 100,

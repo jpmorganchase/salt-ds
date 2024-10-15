@@ -98,7 +98,7 @@ export const AppHeader = () => {
           <FlexItem align="center">
             <StackLayout direction="row" gap={1}>
               {utilities?.map((utility) => (
-                <Button key={utility.key} variant="secondary">
+                <Button key={utility.key} appearance="transparent">
                   {utility.icon}
                 </Button>
               ))}
@@ -148,7 +148,7 @@ export const AppHeader = () => {
               <Button
                 onClick={() => setDrawerOpen(true)}
                 style={{ alignSelf: "center" }}
-                variant="secondary"
+                appearance="transparent"
               >
                 <MenuIcon />
               </Button>
@@ -157,7 +157,7 @@ export const AppHeader = () => {
               <Button
                 onClick={() => setDrawerOpen(false)}
                 style={{ alignSelf: "center" }}
-                variant="secondary"
+                appearance="transparent"
               >
                 <CloseIcon />
               </Button>

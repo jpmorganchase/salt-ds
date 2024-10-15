@@ -132,12 +132,8 @@ export const DraggableImg = ({
     >
       <div className={`${classBase}-header`}>
         <div className={`${classBase}-actions`}>
-          <Button variant="primary" onClick={alignImages}>
-            Align Images
-          </Button>
-          <Button variant="primary" onClick={toggleOpacity}>
-            Toggle Opacity
-          </Button>
+          <Button onClick={alignImages}>Align Images</Button>
+          <Button onClick={toggleOpacity}>Toggle Opacity</Button>
         </div>
       </div>
       <div className={`${classBase}-img`} />

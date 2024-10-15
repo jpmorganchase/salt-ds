@@ -64,9 +64,9 @@ export const ToggleTheme = () => {
               gridGap: 10,
             }}
           >
-            <Button variant="cta">Continue</Button>
+            <Button sentiment="accented">Continue</Button>
             <Button>Previous</Button>
-            <Button variant="secondary">Upload File</Button>
+            <Button appearance="transparent">Upload File</Button>
           </div>
         </div>
         <br />

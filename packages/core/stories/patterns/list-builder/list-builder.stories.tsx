@@ -200,7 +200,7 @@ function List({
               {sortable && (
                 <Tooltip content="Sort alphabetically">
                   <Button
-                    variant="secondary"
+                    appearance="transparent"
                     onClick={() =>
                       setSort((old) => {
                         switch (old) {
@@ -224,7 +224,7 @@ function List({
                   <Tooltip content="Move items up">
                     <Button
                       disabled={selected.length === 0}
-                      variant="secondary"
+                      appearance="transparent"
                       onClick={handleMoveUp}
                       aria-label="Move items up"
                     >
@@ -234,7 +234,7 @@ function List({
                   <Tooltip content="Move items down">
                     <Button
                       disabled={selected.length === 0}
-                      variant="secondary"
+                      appearance="transparent"
                       onClick={handleMoveDown}
                       aria-label="Move items down"
                     >
@@ -262,7 +262,7 @@ function List({
           endAdornment={
             filter && (
               <Button
-                variant="secondary"
+                appearance="transparent"
                 aria-label="Clear filter"
                 onClick={() => onFilter?.("")}
               >

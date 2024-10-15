@@ -319,7 +319,11 @@ export const PreferencesDialog: StoryFn<typeof ParentChildLayout> = (args) => {
     <FlexLayout direction="column" className="preferences-layout-child-view">
       <FlexLayout gap={1}>
         {visibleView === "child" && collapsed && (
-          <Button onClick={showParent} variant="secondary" aria-label="Back">
+          <Button
+            onClick={showParent}
+            appearance="transparent"
+            aria-label="Back"
+          >
             <ChevronLeftIcon />
           </Button>
         )}

@@ -81,7 +81,7 @@ export const ControlledWithAdornment: StoryFn<typeof MultilineInput> = (
       endAdornment={
         <Button
           onClick={onClear}
-          variant={"secondary"}
+          appearance="transparent"
           aria-label="Clear input"
         >
           <CloseIcon aria-hidden />
@@ -261,10 +261,10 @@ export const WithAdornments: StoryFn<typeof MultilineInput> = (args) => {
         endAdornment={
           <>
             <Text>GBP</Text>
-            <Button variant="secondary" aria-label="Reset">
+            <Button appearance="transparent" aria-label="Reset">
               <RefreshIcon aria-hidden />
             </Button>
-            <Button variant="cta" aria-label="Submit">
+            <Button sentiment="accented" aria-label="Submit">
               <SendIcon aria-hidden />
             </Button>
           </>
@@ -295,7 +295,7 @@ export const WithAdornments: StoryFn<typeof MultilineInput> = (args) => {
       <MultilineInput
         readOnly
         endAdornment={
-          <Button variant="secondary" disabled aria-label="Clear input">
+          <Button appearance="transparent" disabled aria-label="Clear input">
             <CloseIcon aria-hidden />
           </Button>
         }

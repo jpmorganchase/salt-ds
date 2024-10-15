@@ -201,7 +201,7 @@ export const WithButtonAdornment: StoryFn<typeof Input> = (args) => {
       />
       <Input
         endAdornment={
-          <Button variant="cta">
+          <Button sentiment="accented">
             <RefreshIcon />
           </Button>
         }
@@ -214,7 +214,7 @@ export const WithButtonAdornment: StoryFn<typeof Input> = (args) => {
             <Button>
               <SendIcon />
             </Button>
-            <Button variant="cta">
+            <Button sentiment="accented">
               <FlagIcon />
             </Button>
           </>
@@ -225,10 +225,10 @@ export const WithButtonAdornment: StoryFn<typeof Input> = (args) => {
       <Input
         endAdornment={
           <>
-            <Button variant="secondary">
+            <Button appearance="transparent">
               <CloseIcon />
             </Button>
-            <Button variant="cta">
+            <Button sentiment="accented">
               <FlagIcon />
             </Button>
           </>
@@ -279,13 +279,13 @@ export const WithButtonAdornment: StoryFn<typeof Input> = (args) => {
             <Button disabled>
               <CloseIcon />
             </Button>
-            <Button disabled variant="secondary">
+            <Button disabled appearance="transparent">
               <FlagIcon />
             </Button>
           </>
         }
         endAdornment={
-          <Button variant="cta" disabled>
+          <Button sentiment="accented" disabled>
             <SendIcon />
           </Button>
         }

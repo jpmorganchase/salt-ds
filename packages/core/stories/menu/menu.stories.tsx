@@ -30,7 +30,7 @@ export const SingleLevel: StoryFn<typeof Menu> = (args) => {
   return (
     <Menu {...args}>
       <MenuTrigger>
-        <Button variant="secondary" aria-label="Open Menu">
+        <Button appearance="transparent" aria-label="Open Menu">
           <MicroMenuIcon aria-hidden />
         </Button>
       </MenuTrigger>
@@ -138,7 +138,7 @@ export const MultiLevel: StoryFn<typeof Menu> = (args) => {
   return (
     <Menu {...args}>
       <MenuTrigger>
-        <Button variant="secondary" aria-label="Open Menu">
+        <Button appearance="transparent" aria-label="Open Menu">
           <MicroMenuIcon aria-hidden />
         </Button>
       </MenuTrigger>
@@ -175,7 +175,7 @@ export const GroupedItems: StoryFn<typeof Menu> = (args) => {
   return (
     <Menu {...args}>
       <MenuTrigger>
-        <Button variant="secondary" aria-label="Open Menu">
+        <Button appearance="transparent" aria-label="Open Menu">
           <MicroMenuIcon aria-hidden />
         </Button>
       </MenuTrigger>
@@ -201,7 +201,7 @@ export const SeparatorOnly: StoryFn<typeof Menu> = (args) => {
   return (
     <Menu {...args}>
       <MenuTrigger>
-        <Button variant="secondary" aria-label="Open Menu">
+        <Button appearance="transparent" aria-label="Open Menu">
           <MicroMenuIcon aria-hidden />
         </Button>
       </MenuTrigger>
@@ -227,7 +227,7 @@ export const Icons: StoryFn<typeof Menu> = (args) => {
   return (
     <Menu {...args}>
       <MenuTrigger>
-        <Button variant="secondary" aria-label="Open Menu">
+        <Button appearance="transparent" aria-label="Open Menu">
           <MicroMenuIcon aria-hidden />
         </Button>
       </MenuTrigger>
@@ -253,7 +253,7 @@ export const IconWithGroups: StoryFn<typeof Menu> = (args) => {
   return (
     <Menu {...args}>
       <MenuTrigger>
-        <Button variant="secondary" aria-label="Open Menu">
+        <Button appearance="transparent" aria-label="Open Menu">
           <MicroMenuIcon aria-hidden />
         </Button>
       </MenuTrigger>
@@ -360,7 +360,7 @@ export const Descriptions: StoryFn<typeof Menu> = (args) => {
   return (
     <Menu {...args}>
       <MenuTrigger>
-        <Button variant="secondary" aria-label="Open Menu">
+        <Button appearance="transparent" aria-label="Open Menu">
           <MicroMenuIcon aria-hidden />
         </Button>
       </MenuTrigger>

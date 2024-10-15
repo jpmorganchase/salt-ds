@@ -881,7 +881,7 @@ export const ClearSelection: StoryFn<ComboBoxProps> = (args) => {
           <Button
             onClick={handleClear}
             aria-label="Clear value"
-            variant="secondary"
+            appearance="transparent"
           >
             <CloseIcon aria-hidden />
           </Button>

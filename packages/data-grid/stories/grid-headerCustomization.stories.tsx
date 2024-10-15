@@ -110,7 +110,7 @@ const ItemGroupHeaderValue = (props: ColumnGroupCellValueProps) => {
       </FlexItem>
       <FlexItem>
         <MenuButton
-          variant="secondary"
+          appearance="transparent"
           CascadingMenuProps={{
             initialSource: {
               menuItems: [{ title: "Menu Item 1" }, { title: "Menu Item 2" }],
