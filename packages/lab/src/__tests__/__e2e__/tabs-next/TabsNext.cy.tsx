@@ -218,7 +218,7 @@ describe("Given a Tabstrip", () => {
       "aria-selected",
       "true",
     );
-    cy.findByRole("tab", { name: "Transactions" }).should("be.focused");
+    cy.findByRole("tab", { name: "Checks" }).should("be.focused");
 
     cy.findByRole("button", { name: "Close tab Home" }).realClick();
     cy.findAllByRole("tab").should("have.length", 2);
