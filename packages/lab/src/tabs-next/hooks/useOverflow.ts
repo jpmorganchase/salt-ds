@@ -1,16 +1,11 @@
 import {
+  useEventCallback,
   useIsomorphicLayoutEffect,
   useResizeObserver,
   useValueEffect,
 } from "@salt-ds/core";
 import { useWindow } from "@salt-ds/window";
-import {
-  Children,
-  type ReactNode,
-  type RefObject,
-  useCallback,
-  useMemo,
-} from "react";
+import { Children, type ReactNode, type RefObject, useMemo } from "react";
 import type { Item } from "./useCollection";
 
 interface UseOverflowProps {
@@ -39,7 +34,7 @@ export function useOverflow({
   });
   const targetWindow = useWindow();
 
-  const updateOverflow = useCallback(() => {
+  const updateOverflow = useEventCallback(() => {
     const computeVisible = (visibleCount: number) => {
       if (container.current && targetWindow) {
         const items = Array.from(
@@ -129,12 +124,12 @@ export function useOverflow({
         };
       }
     });
-  }, [setVisibleItems, targetWindow, container, overflowButton, tabs.length]);
+  });
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: we want to update when selected changes.
   useIsomorphicLayoutEffect(() => {
     updateOverflow();
-  }, [updateOverflow, selected]);
+  }, [selected]);
 
   useResizeObserver({
     ref: container,

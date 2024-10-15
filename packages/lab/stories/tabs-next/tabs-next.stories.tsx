@@ -494,16 +494,17 @@ export const CloseWithConfirmation = () => {
       />
       <TabsNext defaultValue="Home">
         <TabBar padding separator>
-          <TabListNext
-            onClose={(_event, closedTab) => {
-              setValueToRemove(closedTab);
-            }}
-          >
+          <TabListNext>
             {tabs.map((label) => (
               <TabNext value={label} key={label}>
                 <TabNextTrigger>{label}</TabNextTrigger>
                 {tabs.length > 1 && (
-                  <TabNextAction aria-label="Close tab">
+                  <TabNextAction
+                    onClick={() => {
+                      setValueToRemove(label);
+                    }}
+                    aria-label="Close tab"
+                  >
                     <CloseIcon aria-hidden />
                   </TabNextAction>
                 )}
