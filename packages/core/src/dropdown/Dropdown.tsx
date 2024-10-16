@@ -440,7 +440,6 @@ export const Dropdown = forwardRef(function Dropdown<Item>(
         aria-describedby={
           clsx(formFieldDescribedBy, ariaDescribedBy) || undefined
         }
-        aria-multiselectable={multiselect}
         aria-controls={openState ? listId : undefined}
         {...getReferenceProps({
           onKeyDown: handleKeyDown,
@@ -462,6 +461,7 @@ export const Dropdown = forwardRef(function Dropdown<Item>(
         <div className={withBaseName("activationIndicator")} />
       </button>
       <OptionList
+        aria-multiselectable={multiselect}
         open={
           (openState || focusedState) &&
           !readOnly &&
