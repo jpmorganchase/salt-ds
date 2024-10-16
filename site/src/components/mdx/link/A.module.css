@@ -2,4 +2,15 @@
   --mosaic-color-dark-navigable-documentLink-regular: var(--salt-content-primary-foreground);
   --mosaic-color-dark-navigable-documentLink-hover: var(--salt-content-foreground-hover);
   --mosaic-color-dark-navigable-documentLink-visited: var(--salt-content-foreground-visited);
+  --mosaic-color-light-navigable-documentLink-regular: var(--salt-content-primary-foreground);
+  --mosaic-color-light-navigable-documentLink-hover: var(--salt-content-foreground-hover);
+  --mosaic-color-light-navigable-documentLink-visited: var(--salt-content-foreground-visited);
+}
+
+.a:focus-visible {
+  outline: var(--salt-focused-outline);
+}
+
+.a:focus-visible * {
+  text-decoration: none;
 }
