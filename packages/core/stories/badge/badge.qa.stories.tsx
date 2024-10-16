@@ -6,7 +6,13 @@ import {
   StackLayout,
 } from "@salt-ds/core";
 import { MessageIcon, NotificationSolidIcon } from "@salt-ds/icons";
-import { TabBar, TabListNext, TabNext, TabNextTrigger } from "@salt-ds/lab";
+import {
+  TabBar,
+  TabListNext,
+  TabNext,
+  TabNextTrigger,
+  TabsNext,
+} from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react";
 import {
   QAContainer,
@@ -44,18 +50,20 @@ export const AllExamples: StoryFn<QAContainerProps> = (props) => (
         </Button>
       </Badge>
       <GridItem colSpan={7}>
-        <TabListNext defaultValue="Checks">
-          <TabBar>
-            <TabNext value="Checks">
-              <TabNextTrigger>
-                <StackLayout direction="row" gap={1}>
-                  Checks
-                  <Badge value={30} />
-                </StackLayout>
-              </TabNextTrigger>
-            </TabNext>
-          </TabBar>
-        </TabListNext>
+        <TabsNext defaultValue="Checks">
+          <TabListNext>
+            <TabBar>
+              <TabNext value="Checks">
+                <TabNextTrigger>
+                  <StackLayout direction="row" gap={1}>
+                    Checks
+                    <Badge value={30} />
+                  </StackLayout>
+                </TabNextTrigger>
+              </TabNext>
+            </TabBar>
+          </TabListNext>
+        </TabsNext>
       </GridItem>
     </GridLayout>
   </QAContainer>

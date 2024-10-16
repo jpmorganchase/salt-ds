@@ -7,7 +7,13 @@ import { clsx } from "clsx";
 import tabBarCss from "./TabBar.css";
 
 export interface TabBarProps extends ComponentPropsWithRef<"div"> {
+  /**
+   * Styling variant with a bottom separator. Defaults to false
+   */
   separator?: boolean;
+  /**
+   * Styling variant with left and right padding. Defaults to false
+   */
   padding?: boolean;
 }
 

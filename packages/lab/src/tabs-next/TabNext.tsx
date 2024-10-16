@@ -1,13 +1,14 @@
 import { makePrefixer, useId } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
-import clsx from "clsx";
+import { clsx } from "clsx";
 import {
   type ComponentPropsWithoutRef,
   type FocusEvent,
   type MouseEvent,
   type ReactElement,
   forwardRef,
+  useCallback,
   useMemo,
   useRef,
   useState,
@@ -72,10 +73,6 @@ export const TabNext = forwardRef<HTMLDivElement, TabNextProps>(
     const handleFocus = (event: FocusEvent<HTMLDivElement>) => {
       onFocus?.(event);
 
-      if (value && id) {
-        activeTab.current = { value, id };
-      }
-
       setFocused(true);
 
       if (
@@ -99,6 +96,16 @@ export const TabNext = forwardRef<HTMLDivElement, TabNextProps>(
       wasMouseDown.current = true;
     };
 
+    const [actions, setActions] = useState<string[]>([]);
+
+    const registerAction = useCallback((id: string) => {
+      setActions((old) => old.concat(id));
+
+      return () => {
+        setActions((old) => old.filter((action) => action !== id));
+      };
+    }, []);
+
     const context = useMemo(
       () => ({
         tabId: id,
@@ -106,8 +113,10 @@ export const TabNext = forwardRef<HTMLDivElement, TabNextProps>(
         focused,
         value,
         disabled,
+        actions,
+        registerAction,
       }),
-      [id, selected, value, focused, disabled],
+      [id, selected, value, focused, disabled, actions, registerAction],
     );
 
     return (

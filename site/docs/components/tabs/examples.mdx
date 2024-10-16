@@ -57,7 +57,7 @@ When there are too many tabs to fit in the tabstrip, an overflow menu appears. T
 
 ## Add a new tab
 
-When `onAdd` is set on the `Tabstrip` component, a button will appear that allows users to add a new tab.
+Buttons can be nested inside `TabBar` to provide related actions e.g. adding a new tab.
 
 ### Best practices
 
@@ -70,9 +70,7 @@ When `onAdd` is set on the `Tabstrip` component, a button will appear that allow
 
 ## Closable tabs
 
-Tabs can be set as closable using the `closable` prop. When a tab is closable, a close button appears on the right side of the tab. A tab can be closed, whether it is active or inactive.
-
-When closing a tab, a warning dialog may be used when closing a tab will result in data loss.
+`TabAction`s can be used to add actions to tabs e.g. closing a tab. When closing a tab, a warning dialog may be used when closing a tab will result in data loss.
 
 ### Best practices
 

@@ -1,11 +1,17 @@
 import {
+  ownerWindow,
   useEventCallback,
   useIsomorphicLayoutEffect,
-  useResizeObserver,
   useValueEffect,
 } from "@salt-ds/core";
 import { useWindow } from "@salt-ds/window";
-import { Children, type ReactNode, type RefObject, useMemo } from "react";
+import {
+  Children,
+  type ReactNode,
+  type RefObject,
+  useEffect,
+  useMemo,
+} from "react";
 import type { Item } from "./useCollection";
 
 interface UseOverflowProps {
@@ -131,10 +137,30 @@ export function useOverflow({
     updateOverflow();
   }, [selected]);
 
-  useResizeObserver({
-    ref: container,
-    onResize: updateOverflow,
-  });
+  useEffect(() => {
+    const element = container?.current;
+    if (!element) return;
+
+    const win = ownerWindow(element);
+
+    const resizeObserver = new win.ResizeObserver((entries) => {
+      requestAnimationFrame(() => {
+        if (entries.length === 0) return;
+
+        updateOverflow();
+      });
+    });
+    resizeObserver.observe(element);
+    if (element.parentElement) {
+      resizeObserver.observe(element.parentElement);
+    }
+
+    return () => {
+      if (element) {
+        resizeObserver.unobserve(element);
+      }
+    };
+  }, [container, updateOverflow]);
 
   const childArray = useMemo(() => Children.toArray(children), [children]);
   const visible = childArray.slice(0, visibleCount || 1);

@@ -7,6 +7,8 @@ interface TabNextContextValue {
   selected: boolean;
   value: string;
   disabled: boolean;
+  actions: string[];
+  registerAction: (id: string) => () => void;
 }
 
 export const TabNextContext = createContext<TabNextContextValue>(
@@ -16,6 +18,8 @@ export const TabNextContext = createContext<TabNextContextValue>(
     selected: false,
     disabled: false,
     value: "",
+    actions: [],
+    registerAction: () => () => undefined,
   },
 );
 

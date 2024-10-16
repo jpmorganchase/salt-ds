@@ -1,7 +1,6 @@
 import {
   TabBar,
   TabListNext,
-  type TabListNextProps,
   TabNext,
   TabNextTrigger,
   TabsNext,
@@ -15,12 +14,6 @@ export default {
   title: "Lab/Tabs Next/Tabs Next QA",
   component: TabListNext,
 };
-
-type TabstripStory = StoryFn<
-  TabListNextProps & {
-    width?: number;
-  }
->;
 
 const tabs = [
   "Home",
@@ -42,7 +35,7 @@ const tabs = [
   "Screens",
 ];
 
-export const LotsOfTabsTabstrip: TabstripStory = () => {
+export const LotsOfTabsTabstrip: StoryFn = () => {
   const [value, setValue] = useState<string | undefined>("Home");
   return (
     <QAContainer itemPadding={10} cols={2}>
@@ -53,7 +46,7 @@ export const LotsOfTabsTabstrip: TabstripStory = () => {
         }}
       >
         <TabBar padding separator>
-          <TabListNext>
+          <TabListNext style={{ maxWidth: 350, margin: "auto" }}>
             {tabs.map((label) => (
               <TabNext key={label} value={label}>
                 <TabNextTrigger>{label}</TabNextTrigger>
@@ -69,7 +62,10 @@ export const LotsOfTabsTabstrip: TabstripStory = () => {
         }}
       >
         <TabBar>
-          <TabListNext appearance="transparent">
+          <TabListNext
+            appearance="transparent"
+            style={{ maxWidth: 350, margin: "auto" }}
+          >
             {tabs.map((label) => (
               <TabNext key={label} value={label}>
                 <TabNextTrigger>{label}</TabNextTrigger>
@@ -83,5 +79,18 @@ export const LotsOfTabsTabstrip: TabstripStory = () => {
 };
 
 LotsOfTabsTabstrip.parameters = {
-  chromatic: { disableSnapshot: false },
+  chromatic: {
+    disableSnapshot: false,
+    modes: {
+      theme: {
+        themeNext: "disable",
+      },
+      themeNext: {
+        themeNext: "enable",
+        corner: "rounded",
+        accent: "teal",
+        // Ignore headingFont given font is not loaded
+      },
+    },
+  },
 };

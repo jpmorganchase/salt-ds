@@ -34,6 +34,11 @@ const config: StorybookConfig = {
 
     const customConfig: UserConfig = {
       plugins: [cssInline(), cssVariableDocgen()],
+      server: {
+        watch: {
+          ignored: ["**/coverage/**"],
+        },
+      },
     };
 
     if (configType === "PRODUCTION" && config.root) {

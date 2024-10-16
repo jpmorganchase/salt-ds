@@ -1,5 +1,11 @@
 import { createContext } from "@salt-ds/core";
-import { type MutableRefObject, type SyntheticEvent, useContext } from "react";
+import {
+  type Dispatch,
+  type MutableRefObject,
+  type SetStateAction,
+  type SyntheticEvent,
+  useContext,
+} from "react";
 import type { useCollection } from "./hooks/useCollection";
 
 export interface Item {
@@ -17,6 +23,9 @@ export interface TabsNextContextValue
   selected?: string;
   setSelected: (event: SyntheticEvent, value: string) => void;
   activeTab: MutableRefObject<Pick<Item, "id" | "value"> | undefined>;
+  returnFocus: MutableRefObject<string | undefined>;
+  menuOpen: boolean;
+  setMenuOpen: Dispatch<SetStateAction<boolean>>;
 }
 
 export const TabsNextContext = createContext<TabsNextContextValue>(
@@ -35,6 +44,9 @@ export const TabsNextContext = createContext<TabsNextContextValue>(
     getTabId: () => undefined,
     setSelected: () => undefined,
     activeTab: { current: undefined },
+    returnFocus: { current: undefined },
+    menuOpen: false,
+    setMenuOpen: () => undefined,
   },
 );
 

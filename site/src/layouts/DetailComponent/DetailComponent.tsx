@@ -25,7 +25,7 @@ import { a, code, p, ul } from "../../components/mdx";
 import { TableOfContents } from "../../components/toc";
 import useIsMobileView from "../../utils/useIsMobileView";
 import { DetailBase } from "../DetailBase";
-import type { LayoutProps } from "../types/index";
+import type { LayoutProps } from "../types";
 import styles from "./DetailComponent.module.css";
 import MobileDrawer from "./MobileDrawer";
 import SecondarySidebar from "./SecondarySidebar";
@@ -96,7 +96,7 @@ export const DetailComponent: FC<LayoutProps> = ({ children }) => {
 
   const isMobileView = useIsMobileView();
 
-  const handleTabChange = (_: SyntheticEvent, value: string) => {
+  const handleTabChange = (_: SyntheticEvent | null, value: string) => {
     push(`${newRoute}${value}`);
   };
 
