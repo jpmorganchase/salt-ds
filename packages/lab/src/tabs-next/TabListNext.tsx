@@ -4,10 +4,10 @@ import { useWindow } from "@salt-ds/window";
 import clsx from "clsx";
 import {
   type ComponentPropsWithoutRef,
-  type FocusEvent,
   type KeyboardEvent,
   type SyntheticEvent,
   forwardRef,
+  useEffect,
   useRef,
   useState,
 } from "react";
@@ -68,6 +68,12 @@ export const TabListNext = forwardRef<HTMLDivElement, TabListNextProps>(
     const overflowButtonRef = useRef<HTMLButtonElement>(null);
     const [menuOpen, setMenuOpen] = useState(false);
 
+    useEffect(() => {
+      if (selected) {
+        setMenuOpen(false);
+      }
+    }, [selected]);
+
     const [visible, hidden, isMeasuring] = useOverflow({
       container: tabstripRef,
       tabs: items,
@@ -77,6 +83,8 @@ export const TabListNext = forwardRef<HTMLDivElement, TabListNextProps>(
     });
 
     const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
+      onKeyDown?.(event);
+
       const actionMap = {
         ArrowRight: getNext,
         ArrowLeft: getPrevious,
@@ -94,7 +102,11 @@ export const TabListNext = forwardRef<HTMLDivElement, TabListNextProps>(
         if (!activeTabId) return;
         const nextItem = action(activeTabId);
         if (nextItem) {
-          nextItem.element?.focus();
+          nextItem.element?.scrollIntoView({
+            block: "nearest",
+            inline: "nearest",
+          });
+          nextItem.element?.focus({ preventScroll: true });
         }
       }
     };

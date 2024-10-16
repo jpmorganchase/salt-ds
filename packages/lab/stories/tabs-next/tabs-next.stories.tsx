@@ -182,7 +182,7 @@ export const WithBadge: StoryFn<typeof TabsNext> = (args) => {
               <TabNext value={label} key={label}>
                 <TabNextTrigger>
                   {label}
-                  {label === "Transactions" && <Badge value={2} />}
+                  {label === "Transactions" ? <Badge value={2} /> : null}
                 </TabNextTrigger>
               </TabNext>
             ))}
@@ -234,7 +234,7 @@ export const Closable: StoryFn<typeof TabsNext> = (args) => {
             {tabs.map((label) => (
               <TabNext value={label} key={label}>
                 <TabNextTrigger>{label}</TabNextTrigger>
-                {tabs.length > 1 && (
+                {tabs.length > 1 ? (
                   <TabNextAction
                     onClick={() => {
                       setTabs((old) => old.filter((tab) => tab !== label));
@@ -243,7 +243,7 @@ export const Closable: StoryFn<typeof TabsNext> = (args) => {
                   >
                     <CloseIcon aria-hidden />
                   </TabNextAction>
-                )}
+                ) : null}
               </TabNext>
             ))}
           </TabListNext>
@@ -506,7 +506,7 @@ export const CloseWithConfirmation = () => {
             {tabs.map((label) => (
               <TabNext value={label} key={label}>
                 <TabNextTrigger>{label}</TabNextTrigger>
-                {tabs.length > 1 && (
+                {tabs.length > 1 ? (
                   <TabNextAction
                     onClick={() => {
                       setValueToRemove(label);
@@ -515,7 +515,7 @@ export const CloseWithConfirmation = () => {
                   >
                     <CloseIcon aria-hidden />
                   </TabNextAction>
-                )}
+                ) : null}
               </TabNext>
             ))}
           </TabListNext>
@@ -588,7 +588,7 @@ export const WithMenu: StoryFn<typeof TabsNext> = (args) => {
                   ) : undefined}
                   {label}
                 </TabNextTrigger>
-                {tabs.length > 1 && (
+                {tabs.length > 1 ? (
                   <Menu>
                     <MenuTrigger>
                       <TabNextAction aria-label="Settings">
@@ -617,7 +617,7 @@ export const WithMenu: StoryFn<typeof TabsNext> = (args) => {
                       </MenuItem>
                     </MenuPanel>
                   </Menu>
-                )}
+                ) : null}
               </TabNext>
             ))}
           </TabListNext>

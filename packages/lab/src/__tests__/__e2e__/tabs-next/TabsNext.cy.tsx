@@ -138,9 +138,13 @@ describe("Given a Tabstrip", () => {
     cy.mount(<Overflow />);
     cy.get("[data-overflowbutton]").realClick();
     cy.findByRole("tab", { name: "Liquidity" }).realClick();
+
+    cy.findAllByRole("tab").filter(":visible").should("have.length", 4);
+
     cy.findByRole("tab", { name: "Liquidity" })
       .should("have.attr", "aria-selected", "true")
       .should("be.focused");
+
     cy.get("[data-overflowbutton]").realClick();
     cy.realPress("Enter");
     cy.findByRole("tab", { name: "Checks" })
@@ -202,7 +206,7 @@ describe("Given a Tabstrip", () => {
     );
     cy.findAllByRole("tab").should("have.length", 5);
 
-    cy.findByRole("button", { name: "Close tab Liquidity" }).realClick();
+    cy.findByRole("button", { name: "Liquidity Close tab" }).realClick();
     cy.findAllByRole("tab").should("have.length", 4);
     cy.findByRole("tab", { name: "Home" }).should(
       "have.attr",
@@ -211,7 +215,7 @@ describe("Given a Tabstrip", () => {
     );
     cy.findByRole("tab", { name: "Checks" }).should("be.focused");
 
-    cy.findByRole("button", { name: "Close tab Loans" }).realClick();
+    cy.findByRole("button", { name: "Loans Close tab" }).realClick();
     cy.findAllByRole("tab").should("have.length", 3);
     cy.findByRole("tab", { name: "Home" }).should(
       "have.attr",
@@ -220,7 +224,7 @@ describe("Given a Tabstrip", () => {
     );
     cy.findByRole("tab", { name: "Checks" }).should("be.focused");
 
-    cy.findByRole("button", { name: "Close tab Home" }).realClick();
+    cy.findByRole("button", { name: "Home Close tab" }).realClick();
     cy.findAllByRole("tab").should("have.length", 2);
     cy.findByRole("tab", { name: "Transactions" }).should(
       "have.attr",
@@ -238,13 +242,13 @@ describe("Given a Tabstrip", () => {
     cy.findByRole("tab", { name: "Home" }).should("be.focused");
 
     cy.realPress("Tab");
-    cy.findByRole("button", { name: "Close tab Home" }).should("be.focused");
+    cy.findByRole("button", { name: "Home Close tab" }).should("be.focused");
 
     cy.realPress("ArrowRight");
     cy.findByRole("tab", { name: "Transactions" }).should("be.focused");
 
     cy.realPress("Tab");
-    cy.findByRole("button", { name: "Close tab Transactions" }).should(
+    cy.findByRole("button", { name: "Transactions Close tab" }).should(
       "be.focused",
     );
 
@@ -252,7 +256,7 @@ describe("Given a Tabstrip", () => {
     cy.findByRole("tab", { name: "Transactions" }).should("be.focused");
 
     cy.realPress(["Shift", "Tab"]);
-    cy.findByRole("button", { name: "Close tab Home" }).should("be.focused");
+    cy.findByRole("button", { name: "Home Close tab" }).should("be.focused");
 
     cy.realPress("Enter");
 
@@ -269,14 +273,14 @@ describe("Given a Tabstrip", () => {
     cy.mount(<CloseWithConfirmation />);
     cy.findAllByRole("tab").should("have.length", 3);
 
-    cy.findAllByRole("button", { name: "Close tab Home" }).realClick();
+    cy.findAllByRole("button", { name: "Home Close tab" }).realClick();
     cy.findByRole("dialog").should("be.visible");
 
     cy.findByRole("button", { name: "No" }).realClick();
     cy.findByRole("dialog").should("not.to.exist");
-    cy.findByRole("button", { name: "Close tab Home" }).should("be.focused");
+    cy.findByRole("button", { name: "Home Close tab" }).should("be.focused");
 
-    cy.findAllByRole("button", { name: "Close tab Home" }).realClick();
+    cy.findAllByRole("button", { name: "Home Close tab" }).realClick();
     cy.findByRole("dialog").should("be.visible");
 
     cy.findByRole("button", { name: "Yes" }).realClick();

@@ -72,10 +72,6 @@ export const TabNext = forwardRef<HTMLDivElement, TabNextProps>(
     const handleFocus = (event: FocusEvent<HTMLDivElement>) => {
       onFocus?.(event);
 
-      if (value && id) {
-        activeTab.current = { value, id };
-      }
-
       setFocused(true);
 
       if (

@@ -15,7 +15,7 @@ export const TabNextAction = forwardRef<HTMLButtonElement, TabNextActionProps>(
     return (
       <Button
         id={id}
-        aria-labelledby={clsx(ariaLabelledBy, id, tabId)}
+        aria-labelledby={clsx(ariaLabelledBy, tabId, id)}
         tabIndex={focused || selected ? undefined : -1}
         appearance="transparent"
         sentiment="neutral"

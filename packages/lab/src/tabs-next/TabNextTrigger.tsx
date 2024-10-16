@@ -22,7 +22,7 @@ export const TabNextTrigger = forwardRef<
   HTMLButtonElement,
   TabNextTriggerProps
 >(function TabNextTrigger(props, ref) {
-  const { children, id: idProp, ...rest } = props;
+  const { children, id: idProp, onClick, onKeyDown, ...rest } = props;
 
   const targetWindow = useWindow();
   useComponentCssInjection({
@@ -50,6 +50,8 @@ export const TabNextTrigger = forwardRef<
   };
 
   const handleKeyDown = (event: KeyboardEvent<HTMLButtonElement>) => {
+    onKeyDown?.(event);
+
     if (id && (event.key === "Enter" || event.key === " ")) {
       setSelected(event, id);
     }
