@@ -2,7 +2,6 @@ import { Dialog } from "@salt-ds/core";
 import { DialogHeader } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react";
 import { QAContainer, type QAContainerProps } from "docs/components";
-import "./dialog.stories.css";
 
 export default {
   title: "Lab /Dialog Header/Dialog Header QA",
