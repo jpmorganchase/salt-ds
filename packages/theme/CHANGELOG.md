@@ -1,5 +1,12 @@
 # @salt-ds/theme
 
+## 1.23.1
+
+### Patch Changes
+
+- 0661efa: - Fixed invalid CSS variables in `theme-next.css`. Closes #4302.
+  - Fixed missing actionable disabled palette tokens in `theme-next.css`.
+
 ## 1.23.0
 
 ### Minor Changes
