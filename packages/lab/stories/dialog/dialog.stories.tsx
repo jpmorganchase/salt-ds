@@ -22,8 +22,8 @@ export default {
   title: "Lab /Dialog Header",
   component: Dialog,
   args: {
-    preheader: "Settlements",
-    header: "Terms and conditions",
+    preheader: <h2>Settlements</h2>,
+    header: <h2>Terms and conditions</h2>,
     description: "Effective date: August 29, 2024",
     content:
       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
@@ -146,7 +146,7 @@ Default.args = {
 };
 
 const AlertDialogTemplate: StoryFn<
-  DialogProps & { header: string; content: ReactNode }
+  DialogProps & { header: ReactNode; content: ReactNode }
 > = ({
   open: openProp = false,
   status,
@@ -200,23 +200,23 @@ const AlertDialogTemplate: StoryFn<
 export const InfoStatus = AlertDialogTemplate.bind({});
 InfoStatus.args = {
   status: "info",
-  header: "Info",
+  header: <h2>Info</h2>,
 };
 
 export const SuccessStatus = AlertDialogTemplate.bind({});
 SuccessStatus.args = {
   status: "success",
-  header: "Success",
+  header: <h2>Success</h2>,
 };
 
 export const WarningStatus = AlertDialogTemplate.bind({});
 WarningStatus.args = {
   status: "warning",
-  header: "Warning",
+  header: <h2>Warning</h2>,
 };
 
 export const ErrorStatus = AlertDialogTemplate.bind({});
 ErrorStatus.args = {
   status: "error",
-  header: "Error",
+  header: <h2>Error</h2>,
 };
