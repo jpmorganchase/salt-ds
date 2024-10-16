@@ -1,6 +1,12 @@
-import { makePrefixer, useForkRef, useId } from "@salt-ds/core";
+import {
+  makePrefixer,
+  useForkRef,
+  useId,
+  useIsomorphicLayoutEffect,
+} from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
+import { clsx } from "clsx";
 import {
   type ComponentPropsWithoutRef,
   forwardRef,
@@ -23,7 +29,7 @@ const withBaseName = makePrefixer("saltTabNextPanel");
 
 export const TabNextPanel = forwardRef<HTMLDivElement, TabNextPanelProps>(
   function TabNextPanel(props, ref) {
-    const { children, id: idProp, value, ...rest } = props;
+    const { className, children, id: idProp, value, ...rest } = props;
     const targetWindow = useWindow();
     useComponentCssInjection({
       testId: "salt-tab-next-panel",
@@ -36,7 +42,7 @@ export const TabNextPanel = forwardRef<HTMLDivElement, TabNextPanelProps>(
     const panelRef = useRef<HTMLDivElement>(null);
     const handleRef = useForkRef(panelRef, ref);
 
-    useEffect(() => {
+    useIsomorphicLayoutEffect(() => {
       if (value && id) {
         return registerPanel(id, value);
       }
@@ -78,7 +84,7 @@ export const TabNextPanel = forwardRef<HTMLDivElement, TabNextPanelProps>(
         ref={handleRef}
         role="tabpanel"
         aria-labelledby={tabId}
-        className={withBaseName()}
+        className={clsx(withBaseName(), className)}
         hidden={hidden || undefined}
         tabIndex={hidden || hasFocusableChildren ? undefined : 0}
         {...rest}

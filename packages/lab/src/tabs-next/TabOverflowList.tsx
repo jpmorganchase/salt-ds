@@ -1,4 +1,10 @@
-import { offset, size } from "@floating-ui/react";
+import {
+  FloatingTree,
+  offset,
+  size,
+  useDismiss,
+  useInteractions,
+} from "@floating-ui/react";
 import {
   Button,
   makePrefixer,
@@ -22,8 +28,6 @@ import {
   useRef,
 } from "react";
 import tabOverflowListCss from "./TabOverflowList.css";
-import { useClickOutside } from "./hooks/useClickOutside";
-import { useDismissWithEscape } from "./hooks/useDismissWithEscape";
 import { useFocusOutside } from "./hooks/useFocusOutside";
 
 interface TabOverflowListProps extends ComponentPropsWithoutRef<"button"> {
@@ -58,8 +62,27 @@ export const TabOverflowList = forwardRef<HTMLDivElement, TabOverflowListProps>(
 
     const { OverflowIcon } = useIcon();
 
-    const { refs, x, y, strategy } = useFloatingUI({
+    const { refs, x, y, strategy, context } = useFloatingUI({
       open: open,
+      onOpenChange(open, event, reason) {
+        if (reason === "escape-key") {
+          setTimeout(() => {
+            const allTabs =
+              tabstripRef.current?.querySelectorAll<HTMLElement>(
+                '[role="tab"]:not([aria-hidden])',
+              ) ?? [];
+            const numberOfTabsInOverflow =
+              listRef.current?.querySelectorAll<HTMLElement>('[role="tab"]')
+                .length ?? 0;
+
+            allTabs[allTabs.length - numberOfTabsInOverflow - 1]?.focus({
+              preventScroll: true,
+            });
+          }, 0);
+        }
+
+        setOpen(open);
+      },
       placement: "bottom-start",
       middleware: [
         offset(1),
@@ -73,6 +96,8 @@ export const TabOverflowList = forwardRef<HTMLDivElement, TabOverflowListProps>(
       ],
     });
 
+    const { getFloatingProps } = useInteractions([useDismiss(context)]);
+
     const rootRef = useRef<HTMLDivElement>(null);
     const handleRootRef = useForkRef(rootRef, ref);
     const listRef = useRef<HTMLDivElement>(null);
@@ -82,27 +107,12 @@ export const TabOverflowList = forwardRef<HTMLDivElement, TabOverflowListProps>(
       setOpen(false);
     }, [setOpen]);
 
-    useFocusOutside(rootRef, handleFocusOutside, open);
-    useClickOutside(rootRef, handleFocusOutside, open);
-
-    const handleDismiss = useCallback(() => {
-      setTimeout(() => {
-        const allTabs =
-          tabstripRef.current?.querySelectorAll<HTMLElement>(
-            '[role="tab"]:not([aria-hidden])',
-          ) ?? [];
-        const numberOfTabsInOverflow =
-          listRef.current?.querySelectorAll<HTMLElement>('[role="tab"]')
-            .length ?? 0;
-
-        allTabs[allTabs.length - numberOfTabsInOverflow - 1]?.focus({
-          preventScroll: true,
-        });
-      }, 0);
-
-      setOpen(false);
-    }, [tabstripRef, setOpen]);
-    useDismissWithEscape(handleDismiss, open);
+    useFocusOutside(
+      rootRef,
+      handleFocusOutside,
+      open,
+      "[data-floating-ui-portal]",
+    );
 
     const handleClick = () => {
       if (!open) {
@@ -116,10 +126,6 @@ export const TabOverflowList = forwardRef<HTMLDivElement, TabOverflowListProps>(
 
     const handleFocus = () => {
       setOpen(true);
-    };
-
-    const handleListClick = () => {
-      setOpen(false);
     };
 
     const handleButtonRef = useForkRef<HTMLButtonElement>(
@@ -151,20 +157,24 @@ export const TabOverflowList = forwardRef<HTMLDivElement, TabOverflowListProps>(
         >
           <OverflowIcon aria-hidden />
         </Button>
-        {/* biome-ignore lint/a11y/useKeyWithClickEvents: <explanation> */}
-        <div
-          className={withBaseName("list")}
-          data-hidden={!open}
-          onFocus={handleFocus}
-          onClick={handleListClick}
-          ref={handleListRef}
-          style={
-            open ? { left: x ?? 0, top: y ?? 0, position: strategy } : undefined
-          }
-          id={listId}
-        >
-          <div className={withBaseName("listContainer")}>{children}</div>
-        </div>
+        <FloatingTree>
+          <div
+            ref={handleListRef}
+            {...getFloatingProps({
+              onFocus: handleFocus,
+            })}
+            className={withBaseName("list")}
+            data-hidden={!open}
+            style={
+              open
+                ? { left: x ?? 0, top: y ?? 0, position: strategy }
+                : undefined
+            }
+            id={listId}
+          >
+            <div className={withBaseName("listContainer")}>{children}</div>
+          </div>
+        </FloatingTree>
       </div>
     );
   },

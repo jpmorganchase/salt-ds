@@ -13,6 +13,7 @@ import {
   MenuItem,
   MenuPanel,
   MenuTrigger,
+  Panel,
   RadioButton,
   RadioButtonGroup,
   StackLayout,
@@ -44,6 +45,7 @@ import {
   type ChangeEvent,
   type ComponentType,
   type ReactElement,
+  type SyntheticEvent,
   useRef,
   useState,
 } from "react";
@@ -182,7 +184,9 @@ export const WithBadge: StoryFn<typeof TabsNext> = (args) => {
               <TabNext value={label} key={label}>
                 <TabNextTrigger>
                   {label}
-                  {label === "Transactions" && <Badge value={2} />}
+                  {label === "Transactions" ? (
+                    <Badge value={2} aria-label="2 updates" />
+                  ) : null}
                 </TabNextTrigger>
               </TabNext>
             ))}
@@ -234,7 +238,7 @@ export const Closable: StoryFn<typeof TabsNext> = (args) => {
             {tabs.map((label) => (
               <TabNext value={label} key={label}>
                 <TabNextTrigger>{label}</TabNextTrigger>
-                {tabs.length > 1 && (
+                {tabs.length > 1 ? (
                   <TabNextAction
                     onClick={() => {
                       setTabs((old) => old.filter((tab) => tab !== label));
@@ -243,7 +247,7 @@ export const Closable: StoryFn<typeof TabsNext> = (args) => {
                   >
                     <CloseIcon aria-hidden />
                   </TabNextAction>
-                )}
+                ) : null}
               </TabNext>
             ))}
           </TabListNext>
@@ -334,16 +338,18 @@ export const Backgrounds = (): ReactElement => {
     <StackLayout gap={6}>
       <div style={{ alignItems: "center", width: "40vw" }}>
         <TabsNext defaultValue={tabs[0]}>
-          <TabListNext activeColor={variant} appearance="transparent">
-            {tabs.map((label) => (
-              <TabNext value={label} key={label}>
-                <TabNextTrigger>{label}</TabNextTrigger>
-              </TabNext>
-            ))}
-          </TabListNext>
+          <TabBar separator>
+            <TabListNext activeColor={variant} appearance="bordered">
+              {tabs.map((label) => (
+                <TabNext value={label} key={label}>
+                  <TabNextTrigger>{label}</TabNextTrigger>
+                </TabNext>
+              ))}
+            </TabListNext>
+          </TabBar>
           {tabs.map((label) => (
             <TabNextPanel value={label} key={label} style={{ height: 200 }}>
-              {label}
+              <Panel variant={variant}>{label}</Panel>
             </TabNextPanel>
           ))}
         </TabsNext>
@@ -506,7 +512,7 @@ export const CloseWithConfirmation = () => {
             {tabs.map((label) => (
               <TabNext value={label} key={label}>
                 <TabNextTrigger>{label}</TabNextTrigger>
-                {tabs.length > 1 && (
+                {tabs.length > 1 ? (
                   <TabNextAction
                     onClick={() => {
                       setValueToRemove(label);
@@ -515,7 +521,7 @@ export const CloseWithConfirmation = () => {
                   >
                     <CloseIcon aria-hidden />
                   </TabNextAction>
-                )}
+                ) : null}
               </TabNext>
             ))}
           </TabListNext>
@@ -531,13 +537,15 @@ export const WithInteractiveElementInPanel: StoryFn<typeof TabsNext> = (
   return (
     <div className="container">
       <TabsNext {...args}>
-        <TabListNext appearance="transparent">
-          {tabs.map((label) => (
-            <TabNext value={label} key={label}>
-              <TabNextTrigger>{label}</TabNextTrigger>
-            </TabNext>
-          ))}
-        </TabListNext>
+        <TabBar>
+          <TabListNext appearance="transparent">
+            {tabs.map((label) => (
+              <TabNext value={label} key={label}>
+                <TabNextTrigger>{label}</TabNextTrigger>
+              </TabNext>
+            ))}
+          </TabListNext>
+        </TabBar>
 
         {tabs.map((label) => (
           <TabNextPanel value={label} key={label}>
@@ -588,7 +596,7 @@ export const WithMenu: StoryFn<typeof TabsNext> = (args) => {
                   ) : undefined}
                   {label}
                 </TabNextTrigger>
-                {tabs.length > 1 && (
+                {tabs.length > 1 ? (
                   <Menu>
                     <MenuTrigger>
                       <TabNextAction aria-label="Settings">
@@ -617,7 +625,7 @@ export const WithMenu: StoryFn<typeof TabsNext> = (args) => {
                       </MenuItem>
                     </MenuPanel>
                   </Menu>
-                )}
+                ) : null}
               </TabNext>
             ))}
           </TabListNext>
@@ -629,4 +637,38 @@ export const WithMenu: StoryFn<typeof TabsNext> = (args) => {
 
 WithMenu.args = {
   defaultValue: tabs[0],
+};
+
+export const Controlled: StoryFn = () => {
+  const [tabs, setTabs] = useState(lotsOfTabs);
+  const [value, setValue] = useState("Home");
+
+  const handleChange = (_: SyntheticEvent | null, value: string) => {
+    console.log(value);
+    setValue(value);
+  };
+
+  return (
+    <TabsNext value={value} onChange={handleChange}>
+      <TabBar padding separator>
+        <TabListNext style={{ maxWidth: 350, margin: "auto" }}>
+          {tabs.map((label) => (
+            <TabNext value={label} key={label}>
+              <TabNextTrigger>{label}</TabNextTrigger>
+              {tabs.length > 1 ? (
+                <TabNextAction
+                  onClick={() => {
+                    setTabs((old) => old.filter((tab) => tab !== label));
+                  }}
+                  aria-label="Close tab"
+                >
+                  <CloseIcon aria-hidden />
+                </TabNextAction>
+              ) : null}
+            </TabNext>
+          ))}
+        </TabListNext>
+      </TabBar>
+    </TabsNext>
+  );
 };

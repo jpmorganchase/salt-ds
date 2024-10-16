@@ -1,15 +1,17 @@
-import { capitalize, makePrefixer, useForkRef } from "@salt-ds/core";
+import {
+  capitalize,
+  makePrefixer,
+  useForkRef,
+  useIsomorphicLayoutEffect,
+} from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
-import clsx from "clsx";
+import { clsx } from "clsx";
 import {
   type ComponentPropsWithoutRef,
-  type FocusEvent,
   type KeyboardEvent,
-  type SyntheticEvent,
   forwardRef,
   useRef,
-  useState,
 } from "react";
 
 import tablistNextCss from "./TabListNext.css";
@@ -29,10 +31,6 @@ export interface TabListNextProps
    * The appearance of the tabs. Defaults to "bordered".
    */
   appearance?: "bordered" | "transparent";
-  /**
-   * Callback fired when a tab is closed.
-   */
-  onClose?: (event: SyntheticEvent, value: string) => void;
 }
 
 export const TabListNext = forwardRef<HTMLDivElement, TabListNextProps>(
@@ -42,7 +40,6 @@ export const TabListNext = forwardRef<HTMLDivElement, TabListNextProps>(
       activeColor = "primary",
       children,
       className,
-      onClose,
       onKeyDown,
       ...rest
     } = props;
@@ -61,12 +58,14 @@ export const TabListNext = forwardRef<HTMLDivElement, TabListNextProps>(
       getLast,
       items,
       activeTab,
+      menuOpen,
+      setMenuOpen,
+      returnFocus,
     } = useTabsNext();
 
     const tabstripRef = useRef<HTMLDivElement>(null);
     const handleRef = useForkRef(tabstripRef, ref);
     const overflowButtonRef = useRef<HTMLButtonElement>(null);
-    const [menuOpen, setMenuOpen] = useState(false);
 
     const [visible, hidden, isMeasuring] = useOverflow({
       container: tabstripRef,
@@ -77,6 +76,8 @@ export const TabListNext = forwardRef<HTMLDivElement, TabListNextProps>(
     });
 
     const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
+      onKeyDown?.(event);
+
       const actionMap = {
         ArrowRight: getNext,
         ArrowLeft: getPrevious,
@@ -94,10 +95,28 @@ export const TabListNext = forwardRef<HTMLDivElement, TabListNextProps>(
         if (!activeTabId) return;
         const nextItem = action(activeTabId);
         if (nextItem) {
-          nextItem.element?.focus();
+          nextItem.element?.scrollIntoView({
+            block: "nearest",
+            inline: "nearest",
+          });
+          nextItem.element?.focus({ preventScroll: true });
         }
       }
     };
+
+    useIsomorphicLayoutEffect(() => {
+      if (!returnFocus.current || visible.length < 1 || selected === undefined)
+        return;
+
+      const itemToFocus = items.find((i) => i.value === returnFocus.current);
+      itemToFocus?.element?.focus({ preventScroll: true });
+
+      requestAnimationFrame(() => {
+        if (targetWindow?.document?.activeElement === itemToFocus?.element) {
+          returnFocus.current = undefined;
+        }
+      });
+    }, [visible, returnFocus, targetWindow, items, selected]);
 
     return (
       <div
