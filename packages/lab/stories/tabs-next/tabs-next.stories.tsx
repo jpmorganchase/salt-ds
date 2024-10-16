@@ -8,17 +8,25 @@ import {
   FormField,
   FormFieldLabel,
   Input,
+  Link,
+  Menu,
+  MenuItem,
+  MenuPanel,
+  MenuTrigger,
   RadioButton,
   RadioButtonGroup,
   StackLayout,
+  Text,
 } from "@salt-ds/core";
 import {
   AddIcon,
   BankCheckIcon,
   CloseIcon,
   CreditCardIcon,
+  FavoriteIcon,
   HomeIcon,
   LineChartIcon,
+  MicroMenuIcon,
   ReceiptIcon,
 } from "@salt-ds/icons";
 import {
@@ -229,7 +237,7 @@ export const Closable: StoryFn<typeof TabsNext> = (args) => {
                 {tabs.length > 1 && (
                   <TabNextAction
                     onClick={() => {
-                      setTabs(tabs.filter((tab) => tab !== label));
+                      setTabs((old) => old.filter((tab) => tab !== label));
                     }}
                     aria-label="Close tab"
                   >
@@ -476,7 +484,7 @@ export const CloseWithConfirmation = () => {
   );
 
   const handleConfirm = () => {
-    setTabs(tabs.filter((tab) => tab !== valueToRemove));
+    setTabs((old) => old.filter((tab) => tab !== valueToRemove));
     setValueToRemove(undefined);
   };
 
@@ -533,8 +541,18 @@ export const WithInteractiveElementInPanel: StoryFn<typeof TabsNext> = (
 
         {tabs.map((label) => (
           <TabNextPanel value={label} key={label}>
-            {label}
-            <Button>Click me</Button>
+            <Text>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas
+              sed elit in sem gravida aliquet id non justo. In hac habitasse
+              platea dictumst. Morbi non dui vehicula risus feugiat egestas eget
+              ac mi. Nullam accumsan aliquam orci, ornare pharetra nulla gravida
+              sed. Sed lobortis ut neque at volutpat. Nunc non suscipit purus,
+              id facilisis dolor. Class aptent taciti sociosqu ad litora
+              torquent per conubia nostra, per inceptos himenaeos. Nullam
+              pretium imperdiet massa, vitae suscipit sem laoreet quis. Maecenas
+              mattis lacus tincidunt odio rhoncus tincidunt.
+            </Text>
+            <Link href="#">Link</Link>
           </TabNextPanel>
         ))}
       </TabsNext>
@@ -543,5 +561,72 @@ export const WithInteractiveElementInPanel: StoryFn<typeof TabsNext> = (
 };
 
 WithInteractiveElementInPanel.args = {
+  defaultValue: tabs[0],
+};
+
+export const WithMenu: StoryFn<typeof TabsNext> = (args) => {
+  const [tabs, setTabs] = useState([
+    "Home",
+    "Transactions",
+    "Loans",
+    "Checks",
+    "Liquidity",
+  ]);
+
+  const [pinned, setPinned] = useState<string[]>([]);
+
+  return (
+    <div style={{ minWidth: 0, maxWidth: "100%" }}>
+      <TabsNext {...args}>
+        <TabBar padding separator>
+          <TabListNext>
+            {tabs.map((label) => (
+              <TabNext value={label} key={label}>
+                <TabNextTrigger>
+                  {pinned.includes(label) ? (
+                    <FavoriteIcon aria-label="Pinned" />
+                  ) : undefined}
+                  {label}
+                </TabNextTrigger>
+                {tabs.length > 1 && (
+                  <Menu>
+                    <MenuTrigger>
+                      <TabNextAction aria-label="Settings">
+                        <MicroMenuIcon aria-hidden />
+                      </TabNextAction>
+                    </MenuTrigger>
+                    <MenuPanel>
+                      <MenuItem
+                        onClick={() => {
+                          setPinned((old) => {
+                            if (old.includes(label)) {
+                              return old.filter((pin) => pin !== label);
+                            }
+                            return old.concat(label);
+                          });
+                        }}
+                      >
+                        {pinned.includes(label) ? "Unpin" : "Pin"}
+                      </MenuItem>
+                      <MenuItem
+                        onClick={() => {
+                          setTabs((old) => old.filter((tab) => tab !== label));
+                        }}
+                      >
+                        Delete
+                      </MenuItem>
+                    </MenuPanel>
+                  </Menu>
+                )}
+              </TabNext>
+            ))}
+          </TabListNext>
+        </TabBar>
+      </TabsNext>
+    </div>
+  );
+};
+
+WithMenu.args = {
   defaultValue: tabs[0],
 };
