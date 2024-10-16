@@ -70,7 +70,6 @@ export const TabNextPanel = forwardRef<HTMLDivElement, TabNextPanelProps>(
     }, []);
 
     const hidden = selected !== value;
-
     const tabId = getTabId(value);
 
     return (
