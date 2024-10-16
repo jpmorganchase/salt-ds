@@ -18,7 +18,7 @@
   gap: var(--salt-spacing-50);
 }
 
-.saltDialogHeader-header {
+.saltDialogHeader-header > .saltText {
   margin: 0;
 }
 
@@ -44,20 +44,4 @@
   bottom: var(--salt-spacing-300);
   width: var(--salt-size-bar);
   background: var(--salt-accent-background);
-}
-
-.saltDialogHeader-error::before {
-  background: var(--salt-status-error-borderColor);
-}
-
-.saltDialogHeader-info::before {
-  background: var(--salt-status-info-borderColor);
-}
-
-.saltDialogHeader-success::before {
-  background: var(--salt-status-success-borderColor);
-}
-
-.saltDialogHeader-warning::before {
-  background: var(--salt-status-warning-borderColor);
 }
