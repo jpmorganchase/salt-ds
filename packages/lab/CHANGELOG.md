@@ -1,5 +1,11 @@
 # @salt-ds/lab
 
+## 1.0.0-alpha.54
+
+### Patch Changes
+
+- bb916f7: Removed the left padding from Static List.
+
 ## 1.0.0-alpha.53
 
 ### Minor Changes

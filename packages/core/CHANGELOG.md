@@ -1,5 +1,11 @@
 # @salt-ds/core
 
+## 1.37.1
+
+### Patch Changes
+
+- 62300f3: Fixed aria-multiselectable being incorrectly applied in the ComboBox and Dropdown.
+
 ## 1.37.0
 
 ### Minor Changes
