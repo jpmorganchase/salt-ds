@@ -22,7 +22,7 @@ export default {
   title: "Lab /Dialog Header",
   component: Dialog,
   args: {
-    preheader: <h2>Settlements</h2>,
+    preheader: "Settlements",
     header: <h2>Terms and conditions</h2>,
     description: "Effective date: August 29, 2024",
     content:
