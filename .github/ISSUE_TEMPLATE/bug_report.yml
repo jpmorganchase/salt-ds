@@ -8,7 +8,7 @@ body:
     attributes:
       value: |
         ### ⚠️ Warning
-        This is a public repository, so **please do not include any internal company code or sensitive data** in your bug report. If you are an internal JPM user, please also look at your [internal options](go/salt-ds-support).
+        This is a public repository, so **please do not include any internal company code or sensitive data** in your bug report. If you are an internal JPM user, please also look at your [internal options](https://go/salt-ds-support).
   - type: markdown
     attributes:
       value: Thanks for taking the time to report a bug! Before you start, please check that your issue isn’t already reported by searching the [existing issues](https://github.com/jpmorganchase/salt-ds/issues?q=sort%3Aupdated-desc+is%3Aissue).
