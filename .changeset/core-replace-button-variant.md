@@ -2,4 +2,12 @@
 "@salt-ds/core": patch
 ---
 
-Replaced Button depreacated `variant` usage with `sentiment` and `appearance`.
+Replaced Button's deprecated `variant` prop with `sentiment` and `appearance` in:
+
+- ComboBox
+- DialogCloseButton
+- DrawerCloseButton
+- OverlayPanelCloseButton
+- CompactPaginator
+- Paginator
+- Pagination
