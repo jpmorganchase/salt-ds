@@ -23,5 +23,8 @@
   "publishConfig": {
     "directory": "../../dist/salt-ds-styles",
     "provenance": true
+  },
+  "scripts": {
+    "build": "yarn node ../../scripts/build.mjs"
   }
 }

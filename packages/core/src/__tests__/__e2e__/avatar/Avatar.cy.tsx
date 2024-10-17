@@ -37,7 +37,7 @@ describe("Given an Avatar", () => {
     it("should show an image with the src", () => {
       cy.mount(
         <Default>
-          <img src={"blah.png"} alt="" />
+          <img src={"blah.png"} alt="Blah" />
         </Default>,
       );
       cy.findAllByRole("img").should("exist");
