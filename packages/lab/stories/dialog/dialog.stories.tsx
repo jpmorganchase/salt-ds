@@ -5,6 +5,7 @@ import {
   DialogContent,
   type DialogContentProps,
   type DialogProps,
+  H2,
   SplitLayout,
   StackLayout,
 } from "@salt-ds/core";
@@ -23,7 +24,7 @@ export default {
   component: Dialog,
   args: {
     preheader: "Settlements",
-    header: <h2>Terms and conditions</h2>,
+    header: <H2>Terms and conditions</H2>,
     description: "Effective date: August 29, 2024",
     content:
       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
