@@ -5,15 +5,14 @@ import customFilterExampleColumns from "../dependencies/customFilterExampleColum
 import dataGridExampleData from "../dependencies/dataGridExampleData";
 import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
 
+let savedFilterModel: any = null;
+
 const CustomFilter = (props: AgGridReactProps) => {
   const [hasSavedState, setHasSavedState] = useState(true);
   const { api, agGridProps, containerProps } = useAgGridHelpers();
 
-  const handlePopMt100kClick = () => {
-    const popMt100kComponent = api?.getFilterInstance("population");
-    api?.setFilterModel(null);
-
-    popMt100kComponent?.setModel({
+  const handlePopMt100kClick = async () => {
+    await api?.setColumnFilterModel("population", {
       type: "greaterThan",
       filter: 100000,
       filterTo: null,
@@ -23,11 +22,8 @@ const CustomFilter = (props: AgGridReactProps) => {
     setHasSavedState(false);
   };
 
-  const handlePopLt100kClick = () => {
-    const popLt100kComponent = api?.getFilterInstance("population");
-    api?.setFilterModel(null);
-
-    popLt100kComponent?.setModel({
+  const handlePopLt100kClick = async () => {
+    await api?.setColumnFilterModel("population", {
       type: "lessThan",
       filter: 100000,
       filterTo: null,
@@ -37,10 +33,8 @@ const CustomFilter = (props: AgGridReactProps) => {
     setHasSavedState(false);
   };
 
-  const filterNewYork = () => {
-    const filterNewYork = api?.getFilterInstance("name");
-    api?.setFilterModel(null);
-    filterNewYork?.setModel({
+  const filterNewYork = async () => {
+    await api?.setColumnFilterModel("name", {
       type: "equals",
       filter: "New York",
       filterTo: null,
@@ -50,12 +44,12 @@ const CustomFilter = (props: AgGridReactProps) => {
   };
 
   const saveState = () => {
-    (window as any).filterState = api?.getFilterModel();
+    savedFilterModel = api?.getFilterModel();
     setHasSavedState(false);
   };
 
   const restoreState = () => {
-    api?.setFilterModel((window as any).filterState);
+    api?.setFilterModel(savedFilterModel);
     setHasSavedState(true);
   };
 

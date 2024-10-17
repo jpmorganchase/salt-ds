@@ -1,0 +1,13 @@
+/* Column Drop List */
+.ag-column-drop-cell-drag-handle {
+  margin-left: 0;
+}
+
+.ag-column-drop-cell {
+  height: calc(var(--salt-size-base) - var(--salt-spacing-100));
+  padding: 0 var(--salt-spacing-50);
+}
+
+.ag-column-drop-cell-button {
+  min-width: unset;
+}
