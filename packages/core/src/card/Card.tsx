@@ -1,11 +1,12 @@
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
-import { type ComponentPropsWithoutRef, forwardRef } from "react";
+import { type ComponentPropsWithoutRef, forwardRef, useState } from "react";
 
-import { capitalize, makePrefixer } from "../utils";
+import { capitalize, makePrefixer, useForkRef } from "../utils";
 
 import cardCss from "./Card.css";
+import { CardContext } from "./CardContext";
 
 const withBaseName = makePrefixer("saltCard");
 export interface CardProps extends ComponentPropsWithoutRef<"div"> {
@@ -56,26 +57,31 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(
       window: targetWindow,
     });
 
+    const [padding, setPadding] = useState(true);
+
     return (
-      <div
-        className={clsx(
-          withBaseName(),
-          withBaseName(variant),
-          {
-            [withBaseName("accent")]: accent,
-            [withBaseName(`accent${capitalize(accent || "")}`)]: accent,
-            [withBaseName("hoverable")]: hoverable,
-            /* **Deprecated:** InteractableCard should be used instead for these features */
-            [withBaseName("disabled")]: disabled,
-            [withBaseName("interactable")]: interactable,
-          },
-          className,
-        )}
-        ref={ref}
-        {...rest}
-      >
-        {children}
-      </div>
+      <CardContext.Provider value={{ setPadding }}>
+        <div
+          className={clsx(
+            withBaseName(),
+            withBaseName(variant),
+            {
+              [withBaseName("accent")]: accent,
+              [withBaseName(`accent${capitalize(accent || "")}`)]: accent,
+              [withBaseName("hoverable")]: hoverable,
+              /* **Deprecated:** InteractableCard should be used instead for these features */
+              [withBaseName("disabled")]: disabled,
+              [withBaseName("interactable")]: interactable,
+              [withBaseName("padding")]: padding,
+            },
+            className,
+          )}
+          ref={ref}
+          {...rest}
+        >
+          {children}
+        </div>
+      </CardContext.Provider>
     );
   },
 );
