@@ -24,7 +24,7 @@ export const DialogCloseButton = forwardRef<HTMLButtonElement, ButtonProps>(
       <Button
         ref={ref}
         aria-label="Close dialog"
-        variant="secondary"
+        appearance="transparent"
         className={clsx(withBaseName(), className)}
         {...rest}
       >

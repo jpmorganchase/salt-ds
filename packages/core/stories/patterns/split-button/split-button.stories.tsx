@@ -61,10 +61,10 @@ export const Primary = () => {
 export const Secondary = () => {
   return (
     <SegmentedButtonGroup>
-      <Button variant="secondary">Action</Button>
+      <Button appearance="transparent">Action</Button>
       <Menu placement="bottom-end">
         <MenuTrigger>
-          <Button variant="secondary" aria-label="Open Menu">
+          <Button appearance="transparent" aria-label="Open Menu">
             <ChevronDownIcon aria-hidden />
           </Button>
         </MenuTrigger>
@@ -82,10 +82,10 @@ export const Secondary = () => {
 export const CTA = () => {
   return (
     <SegmentedButtonGroup>
-      <Button variant="cta">Action</Button>
+      <Button sentiment="accented">Action</Button>
       <Menu placement="bottom-end">
         <MenuTrigger>
-          <Button variant="cta" aria-label="Open Menu">
+          <Button sentiment="accented" aria-label="Open Menu">
             <ChevronDownIcon aria-hidden />
           </Button>
         </MenuTrigger>

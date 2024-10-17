@@ -158,7 +158,7 @@ export const Navigation = () => {
             <FlexItem align="center">
               <StackLayout direction="row" gap={1}>
                 {headerUtilities?.map((utility) => (
-                  <Button key={utility.key} variant="secondary">
+                  <Button key={utility.key} appearance="transparent">
                     {utility.icon}
                   </Button>
                 ))}

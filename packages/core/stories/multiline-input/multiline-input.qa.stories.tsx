@@ -31,10 +31,10 @@ export const AllVariantsGrid: StoryFn<QAContainerProps> = (props) => (
       endAdornment={
         <>
           <Text>GBP</Text>
-          <Button variant="secondary">
+          <Button appearance="transparent">
             <HelpSolidIcon />
           </Button>
-          <Button variant="cta">
+          <Button sentiment="accented">
             <SendIcon />
           </Button>
         </>
@@ -67,10 +67,10 @@ export const AllVariantsGrid: StoryFn<QAContainerProps> = (props) => (
       endAdornment={
         <>
           <Text>GBP</Text>
-          <Button variant="secondary">
+          <Button appearance="transparent">
             <HelpSolidIcon />
           </Button>
-          <Button variant="cta">
+          <Button sentiment="accented">
             <SendIcon />
           </Button>
         </>
@@ -80,7 +80,7 @@ export const AllVariantsGrid: StoryFn<QAContainerProps> = (props) => (
       defaultValue="Secondary with text button adornment"
       variant="secondary"
       startAdornment={<Text>£</Text>}
-      endAdornment={<Button variant="cta">SEND</Button>}
+      endAdornment={<Button sentiment="accented">SEND</Button>}
     />
     <MultilineInput
       defaultValue="Secondary bordered"
@@ -209,10 +209,10 @@ export const NoStyleInjectionGrid: StoryFn<QAContainerNoStyleInjectionProps> = (
       endAdornment={
         <>
           <Text>GBP</Text>
-          <Button variant="secondary">
+          <Button appearance="transparent">
             <HelpSolidIcon />
           </Button>
-          <Button variant="cta">
+          <Button sentiment="accented">
             <SendIcon />
           </Button>
         </>
@@ -245,10 +245,10 @@ export const NoStyleInjectionGrid: StoryFn<QAContainerNoStyleInjectionProps> = (
       endAdornment={
         <>
           <Text>GBP</Text>
-          <Button variant="secondary">
+          <Button appearance="transparent">
             <HelpSolidIcon />
           </Button>
-          <Button variant="cta">
+          <Button sentiment="accented">
             <SendIcon />
           </Button>
         </>
@@ -258,7 +258,7 @@ export const NoStyleInjectionGrid: StoryFn<QAContainerNoStyleInjectionProps> = (
       defaultValue="Secondary with text button adornment"
       variant="secondary"
       startAdornment={<Text>£</Text>}
-      endAdornment={<Button variant="cta">SEND</Button>}
+      endAdornment={<Button sentiment="accented">SEND</Button>}
     />
     <MultilineInput
       defaultValue="Secondary bordered"
