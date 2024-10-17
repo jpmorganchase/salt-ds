@@ -136,14 +136,17 @@ describe("Given a Tabstrip", () => {
 
   it("should allow selection in the menu", () => {
     cy.mount(<Overflow />);
-    cy.get("[data-overflowbutton]").realClick();
-    cy.findByRole("tab", { name: "Liquidity" }).realClick();
 
     cy.findAllByRole("tab").filter(":visible").should("have.length", 4);
+
+    cy.get("[data-overflowbutton]").realClick();
+    cy.findByRole("tab", { name: "Liquidity" }).realClick();
 
     cy.findByRole("tab", { name: "Liquidity" })
       .should("have.attr", "aria-selected", "true")
       .should("be.focused");
+
+    cy.findAllByRole("tab").filter(":visible").should("have.length", 4);
 
     cy.get("[data-overflowbutton]").realClick();
     cy.realPress("Enter");

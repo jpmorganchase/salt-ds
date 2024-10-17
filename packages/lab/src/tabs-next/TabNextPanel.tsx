@@ -1,4 +1,9 @@
-import { makePrefixer, useForkRef, useId } from "@salt-ds/core";
+import {
+  makePrefixer,
+  useForkRef,
+  useId,
+  useIsomorphicLayoutEffect,
+} from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
@@ -37,7 +42,7 @@ export const TabNextPanel = forwardRef<HTMLDivElement, TabNextPanelProps>(
     const panelRef = useRef<HTMLDivElement>(null);
     const handleRef = useForkRef(panelRef, ref);
 
-    useEffect(() => {
+    useIsomorphicLayoutEffect(() => {
       if (value && id) {
         return registerPanel(id, value);
       }

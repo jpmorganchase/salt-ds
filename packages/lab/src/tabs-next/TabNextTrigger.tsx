@@ -1,4 +1,8 @@
-import { makePrefixer, useForkRef } from "@salt-ds/core";
+import {
+  makePrefixer,
+  useForkRef,
+  useIsomorphicLayoutEffect,
+} from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import {
@@ -6,7 +10,6 @@ import {
   type KeyboardEvent,
   type MouseEvent,
   forwardRef,
-  useEffect,
   useRef,
 } from "react";
 import { useTabNext } from "./TabNextContext";
@@ -38,7 +41,7 @@ export const TabNextTrigger = forwardRef<
 
   const id = tabId;
 
-  useEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (value && id && tabRef.current) {
       return registerTab({ id, value, element: tabRef.current });
     }

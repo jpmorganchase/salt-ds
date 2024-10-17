@@ -7,9 +7,7 @@ import {
   type KeyboardEvent,
   type SyntheticEvent,
   forwardRef,
-  useEffect,
   useRef,
-  useState,
 } from "react";
 
 import tablistNextCss from "./TabListNext.css";
@@ -61,18 +59,13 @@ export const TabListNext = forwardRef<HTMLDivElement, TabListNextProps>(
       getLast,
       items,
       activeTab,
+      menuOpen,
+      setMenuOpen,
     } = useTabsNext();
 
     const tabstripRef = useRef<HTMLDivElement>(null);
     const handleRef = useForkRef(tabstripRef, ref);
     const overflowButtonRef = useRef<HTMLButtonElement>(null);
-    const [menuOpen, setMenuOpen] = useState(false);
-
-    useEffect(() => {
-      if (selected) {
-        setMenuOpen(false);
-      }
-    }, [selected]);
 
     const [visible, hidden, isMeasuring] = useOverflow({
       container: tabstripRef,

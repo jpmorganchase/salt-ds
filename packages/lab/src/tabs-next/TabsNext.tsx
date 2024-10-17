@@ -51,6 +51,8 @@ export const TabsNext = forwardRef<HTMLDivElement, TabsNextProps>(
 
     const activeTab = useRef<Pick<Item, "id" | "value">>();
 
+    const [menuOpen, setMenuOpen] = useState(false);
+
     const [selected, setSelectedState] = useControlled({
       controlled: value,
       default: defaultValue,
@@ -64,6 +66,7 @@ export const TabsNext = forwardRef<HTMLDivElement, TabsNextProps>(
 
         if (!newItem) return;
 
+        setMenuOpen(false);
         setSelectedState(newItem.value);
         onChange?.(event, newItem.value);
       },
@@ -72,6 +75,8 @@ export const TabsNext = forwardRef<HTMLDivElement, TabsNextProps>(
 
     const registerTab = useCallback(
       ({ id, value, element }: Item) => {
+        const cleanup = registerItem({ id, element, value });
+
         setValueToIdMap(({ map }) => {
           map.set(value, id);
           return { map };
@@ -82,7 +87,6 @@ export const TabsNext = forwardRef<HTMLDivElement, TabsNextProps>(
           element.focus();
         }
 
-        const cleanup = registerItem({ id, element, value });
         return () => {
           const items = cleanup();
           setValueToIdMap(({ map }) => {
@@ -190,6 +194,8 @@ export const TabsNext = forwardRef<HTMLDivElement, TabsNextProps>(
         getLast,
         items,
         activeTab,
+        menuOpen,
+        setMenuOpen,
       }),
       [
         registerPanel,
@@ -204,6 +210,7 @@ export const TabsNext = forwardRef<HTMLDivElement, TabsNextProps>(
         getFirst,
         getLast,
         items,
+        menuOpen,
       ],
     );
 
