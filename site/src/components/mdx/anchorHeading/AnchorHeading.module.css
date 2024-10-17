@@ -5,6 +5,14 @@
   color: inherit;
 }
 
+.link {
+  display: block;
+}
+
+.link:focus-visible {
+  outline: var(--salt-focused-outline);
+}
+
 .badgeContainer {
   padding-left: 0.5rem;
   text-decoration: underline;
