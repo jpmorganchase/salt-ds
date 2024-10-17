@@ -1,0 +1,8 @@
+{
+  "codeConnect": {
+    "include": ["packages/core/src/**/*.{tsx,jsx}"],
+    "importPaths": {
+      "../src/*": "@salt-ds/core"
+    }
+  }
+}
