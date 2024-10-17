@@ -30,10 +30,13 @@ export const Default: StoryFn<QAContainerProps> = (props) => {
         <OverlayTrigger>
           <Button>Show Overlay</Button>
         </OverlayTrigger>
-        <OverlayPanel>
+        <OverlayPanel style={{ width: 200 }}>
           <OverlayPanelContent>
             <h3 className="content-heading">Title</h3>
-            <div>Content of Overlay</div>
+            <div>
+              Lorem Ipsum is simply dummy text of the printing and typesetting
+              industry.
+            </div>
           </OverlayPanelContent>
         </OverlayPanel>
       </Overlay>
