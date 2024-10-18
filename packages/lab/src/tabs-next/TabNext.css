@@ -1,16 +1,14 @@
 /* Class applied to root Tab element */
 .saltTabNext {
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   appearance: none;
   -webkit-appearance: none;
-  display: inline-flex;
-  background: var(--salt-navigable-primary-background);
   gap: var(--salt-spacing-100);
   border: none;
   border-left: var(--salt-size-border) var(--salt-container-borderStyle) transparent;
   border-right: var(--salt-size-border) var(--salt-container-borderStyle) transparent;
-  border-radius: 0;
   white-space: pre;
   min-height: calc(var(--salt-size-base) + var(--salt-spacing-100));
   min-width: 4em;
@@ -18,6 +16,9 @@
   position: relative;
   flex-shrink: 0;
   box-sizing: border-box;
+  --tabNext-radius: var(--salt-palette-corner-weak, 0);
+  border-radius: var(--tab-radius) var(--tab-radius) 0 0;
+  overflow: hidden;
 
   cursor: var(--salt-navigable-cursor-hover);
   color: var(--salt-content-primary-foreground);
@@ -29,14 +30,6 @@
   font-size: var(--salt-text-fontSize);
 }
 
-.saltTabNext-primary {
-  --tabNext-background-active: var(--salt-container-primary-background);
-}
-
-.saltTabNext-secondary {
-  --tabNext-background-active: var(--salt-container-secondary-background);
-}
-
 .saltTabNext::after {
   content: "";
   position: absolute;
@@ -45,39 +38,39 @@
   height: var(--salt-size-indicator);
 }
 
-.saltTabNext-main::after {
+.saltTabListNext-bordered .saltTabNext::after {
   top: 0;
 }
 
-.saltTabNext-inline::after {
+.saltTabListNext-transparent .saltTabNext::after {
   bottom: 0;
 }
 
 .saltTabNext:hover::after,
-.saltTabNext:focus-visible::after {
+.saltTabNext-focusVisible::after {
   background: var(--salt-navigable-indicator-hover);
 }
 
-.saltTabNext:disabled:hover::after,
-.saltTabNext:disabled:focus-visible::after {
+.saltTabNext-disabled:hover::after,
+.saltTabNext-disabled.saltTabNext-focusVisible::after {
   background: none;
 }
 
-.saltTabNext:focus-visible {
+.saltTabNext-focusVisible {
   outline: var(--salt-focused-outline);
 }
 
-.saltTabNext-main[aria-selected="true"] {
-  background: var(--tabNext-background-active);
+.saltTabListNext-bordered .saltTabNext.saltTabNext-selected {
+  background: var(--saltTabListNext-activeColor);
   border-left: var(--salt-size-border) var(--salt-separable-borderStyle) var(--salt-separable-secondary-borderColor);
   border-right: var(--salt-size-border) var(--salt-separable-borderStyle) var(--salt-separable-secondary-borderColor);
 }
 
-.saltTabNext[aria-selected="true"]::after {
+.saltTabNext.saltTabNext-selected::after {
   background: var(--salt-navigable-indicator-active);
 }
 
-.saltTabNext:disabled {
+.saltTabNext.saltTabNext-disabled {
   cursor: var(--salt-navigable-cursor-disabled);
   color: var(--salt-content-primary-foreground-disabled);
 }

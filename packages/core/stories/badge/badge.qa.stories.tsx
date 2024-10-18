@@ -6,7 +6,7 @@ import {
   StackLayout,
 } from "@salt-ds/core";
 import { MessageIcon, NotificationSolidIcon } from "@salt-ds/icons";
-import { TabNext, TabstripNext } from "@salt-ds/lab";
+import { TabBar, TabListNext, TabNext, TabNextTrigger } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react";
 import {
   QAContainer,
@@ -44,14 +44,18 @@ export const AllExamples: StoryFn<QAContainerProps> = (props) => (
         </Button>
       </Badge>
       <GridItem colSpan={7}>
-        <TabstripNext defaultValue="Checks">
-          <TabNext value="Checks">
-            <StackLayout direction="row" gap={1}>
-              Checks
-              <Badge value={30} />
-            </StackLayout>
-          </TabNext>
-        </TabstripNext>
+        <TabListNext defaultValue="Checks">
+          <TabBar>
+            <TabNext value="Checks">
+              <TabNextTrigger>
+                <StackLayout direction="row" gap={1}>
+                  Checks
+                  <Badge value={30} />
+                </StackLayout>
+              </TabNextTrigger>
+            </TabNext>
+          </TabBar>
+        </TabListNext>
       </GridItem>
     </GridLayout>
   </QAContainer>
@@ -95,14 +99,16 @@ export const NoStyleInjectionGrid: StoryFn<QAContainerNoStyleInjectionProps> = (
         </Button>
       </Badge>
       <GridItem colSpan={9}>
-        <TabstripNext defaultValue="Checks">
+        <TabListNext defaultValue="Checks">
           <TabNext value="Checks">
-            <StackLayout direction="row" gap={1}>
-              Checks
-              <Badge value={30} />
-            </StackLayout>
+            <TabNextTrigger>
+              <StackLayout direction="row" gap={1}>
+                Checks
+                <Badge value={30} />
+              </StackLayout>
+            </TabNextTrigger>
           </TabNext>
-        </TabstripNext>
+        </TabListNext>
       </GridItem>
     </GridLayout>
   </QAContainerNoStyleInjection>
