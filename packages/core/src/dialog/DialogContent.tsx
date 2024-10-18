@@ -39,7 +39,7 @@ export const DialogContent = forwardRef<HTMLDivElement, DialogContentProps>(
     const handleScroll = debounce(() => {
       if (!divRef.current) return;
       setScrolled(divRef.current.scrollTop > 0);
-    }, 50);
+    });
 
     const targetWindow = useWindow();
     useComponentCssInjection({

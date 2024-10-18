@@ -1,11 +1,11 @@
-.saltOverlayPanelContent-container {
+.saltOverlayPanelContent {
   animation: var(--salt-animation-fade-in-center);
   position: relative;
   overflow: hidden;
   padding: var(--saltOverlay-content-padding, var(--salt-spacing-100));
 }
 
-.saltOverlayPanelContent {
+.saltOverlayPanelContent-container {
   overflow-y: auto;
 }
 
@@ -23,6 +23,6 @@
   margin-top: calc(0 - var(--salt-size-border));
 }
 
-.saltOverlayHeader ~ .saltOverlayPanelContent-separator ~ .saltOverlayPanelContent-container {
+.saltOverlayHeader ~ .saltOverlayPanelContent-separator ~ .saltOverlayPanelContent {
   padding-top: 0;
 }
