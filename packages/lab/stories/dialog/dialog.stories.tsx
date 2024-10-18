@@ -117,7 +117,7 @@ const DialogTemplate: StoryFn<
               </Button>
             }
             endItem={
-              <StackLayout direction="row">
+              <StackLayout direction="row" gap={1}>
                 <Button
                   sentiment="accented"
                   appearance="bordered"
