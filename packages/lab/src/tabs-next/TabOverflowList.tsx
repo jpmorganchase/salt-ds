@@ -165,7 +165,6 @@ export const TabOverflowList = forwardRef<HTMLDivElement, TabOverflowListProps>(
             })}
             className={withBaseName("list")}
             data-hidden={!open}
-            tabIndex={undefined}
             style={
               open
                 ? { left: x ?? 0, top: y ?? 0, position: strategy }

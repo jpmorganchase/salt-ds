@@ -25,7 +25,10 @@ export const WithBadge = (): ReactElement => {
               <TabNextTrigger>
                 {label}
                 {notifications[label] > 0 ? (
-                  <Badge value={notifications[label]} />
+                  <Badge
+                    value={notifications[label]}
+                    aria-label={`${notifications[label]} updates`}
+                  />
                 ) : undefined}
               </TabNextTrigger>
             </TabNext>
