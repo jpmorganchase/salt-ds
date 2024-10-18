@@ -27,7 +27,9 @@ async function getViteConfig(config: UserConfig) {
     },
     resolve: {
       alias: {
-        "cypress/react18": reactVersion.startsWith("18")
+        "cypress/react18": !(
+          reactVersion.startsWith("16") || reactVersion.startsWith("17")
+        )
           ? "cypress/react18"
           : "cypress/react",
       },
