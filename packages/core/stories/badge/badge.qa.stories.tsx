@@ -51,8 +51,8 @@ export const AllExamples: StoryFn<QAContainerProps> = (props) => (
       </Badge>
       <GridItem colSpan={7}>
         <TabsNext defaultValue="Checks">
-          <TabListNext>
-            <TabBar>
+          <TabBar separator padding>
+            <TabListNext>
               <TabNext value="Checks">
                 <TabNextTrigger>
                   <StackLayout direction="row" gap={1}>
@@ -61,8 +61,8 @@ export const AllExamples: StoryFn<QAContainerProps> = (props) => (
                   </StackLayout>
                 </TabNextTrigger>
               </TabNext>
-            </TabBar>
-          </TabListNext>
+            </TabListNext>
+          </TabBar>
         </TabsNext>
       </GridItem>
     </GridLayout>
@@ -107,16 +107,20 @@ export const NoStyleInjectionGrid: StoryFn<QAContainerNoStyleInjectionProps> = (
         </Button>
       </Badge>
       <GridItem colSpan={9}>
-        <TabListNext defaultValue="Checks">
-          <TabNext value="Checks">
-            <TabNextTrigger>
-              <StackLayout direction="row" gap={1}>
-                Checks
-                <Badge value={30} />
-              </StackLayout>
-            </TabNextTrigger>
-          </TabNext>
-        </TabListNext>
+        <TabsNext defaultValue="Checks">
+          <TabBar separator padding>
+            <TabListNext>
+              <TabNext value="Checks">
+                <TabNextTrigger>
+                  <StackLayout direction="row" gap={1}>
+                    Checks
+                    <Badge value={30} />
+                  </StackLayout>
+                </TabNextTrigger>
+              </TabNext>
+            </TabListNext>
+          </TabBar>
+        </TabsNext>
       </GridItem>
     </GridLayout>
   </QAContainerNoStyleInjection>
