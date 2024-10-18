@@ -66,7 +66,7 @@ export const OverlayPanelContent = forwardRef<
           [withBaseName("scroll")]: scrolled,
         })}
       />
-      <div className={clsx(withBaseName("container"))}>
+      <div className={withBaseName("container")}>
         <div
           className={clsx(
             withBaseName(),
