@@ -10,7 +10,6 @@ import {
   useState,
 } from "react";
 import {
-  debounce,
   makePrefixer,
   useForkRef,
   useIsomorphicLayoutEffect,
@@ -36,10 +35,13 @@ export const DialogContent = forwardRef<HTMLDivElement, DialogContentProps>(
 
     const divRef = useRef<HTMLDivElement>(null);
     const containerRef = useForkRef(divRef, ref);
-    const handleScroll = debounce(() => {
-      if (!divRef.current) return;
-      setScrolled(divRef.current.scrollTop > 0);
-    });
+
+    const handleScroll = () => {
+      targetWindow?.requestAnimationFrame(() => {
+        if (!divRef.current) return;
+        setScrolled(divRef.current.scrollTop > 0);
+      });
+    };
 
     const targetWindow = useWindow();
     useComponentCssInjection({
