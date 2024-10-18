@@ -9,7 +9,7 @@ import {
   useState,
 } from "react";
 
-import { makePrefixer, useControlled } from "@salt-ds/core";
+import { makePrefixer, useControlled, useEventCallback } from "@salt-ds/core";
 import { clsx } from "clsx";
 import { type Item, TabsNextContext } from "./TabsNextContext";
 import { useCollection } from "./hooks/useCollection";
@@ -17,12 +17,18 @@ import { useCollection } from "./hooks/useCollection";
 export interface TabsNextProps
   extends Omit<ComponentPropsWithoutRef<"div">, "onChange"> {
   children?: ReactNode;
-  /* Value for the controlled version. */
-  value?: string;
-  /* Callback for the controlled version. */
-  onChange?: (event: SyntheticEvent, value: string) => void;
-  /* Initial value for the uncontrolled version. */
+  /**
+   * The default value. Use when the component is not controlled.
+   */
   defaultValue?: string;
+  /**
+   * The value. Use when the component is controlled.
+   */
+  value?: string;
+  /**
+   * Callback fired when the selection changes. The event will be null when selection is moved automatically.
+   */
+  onChange?: (event: SyntheticEvent | null, value: string) => void;
 }
 
 const withBaseName = makePrefixer("saltTabsNext");
@@ -61,7 +67,7 @@ export const TabsNext = forwardRef<HTMLDivElement, TabsNextProps>(
     });
 
     const setSelected = useCallback(
-      (event: SyntheticEvent, action: string) => {
+      (event: SyntheticEvent | null, action: string) => {
         const newItem = item(action);
 
         if (!newItem) return;
@@ -73,84 +79,86 @@ export const TabsNext = forwardRef<HTMLDivElement, TabsNextProps>(
       [onChange, item],
     );
 
-    const registerTab = useCallback(
-      ({ id, value, element }: Item) => {
-        const cleanup = registerItem({ id, element, value });
+    const registerTab = useEventCallback(({ id, value, element }: Item) => {
+      const cleanup = registerItem({ id, element, value });
 
+      setValueToIdMap(({ map }) => {
+        map.set(value, id);
+        return { map };
+      });
+
+      // If tab was previously focused, re-focus.
+      if (activeTab.current?.value === value) {
+        element.focus();
+      }
+
+      return () => {
+        const items = cleanup();
         setValueToIdMap(({ map }) => {
-          map.set(value, id);
+          map.delete(value);
           return { map };
         });
 
-        // If tab was previously focused, re-focus.
-        if (activeTab.current?.value === value) {
-          element.focus();
+        if (activeTab.current?.value !== value) {
+          return;
         }
 
-        return () => {
-          const items = cleanup();
-          setValueToIdMap(({ map }) => {
-            map.delete(value);
-            return { map };
+        const containFocus = () => {
+          const activeIndex = items.current.findIndex(
+            (item) => value === item.value,
+          );
+
+          const nextIndex =
+            activeIndex === items.current.length - 1
+              ? items.current.length - 2
+              : activeIndex + 1;
+
+          const nextActive = items.current[nextIndex];
+
+          if (selected === value) {
+            setSelected(null, nextActive.value);
+          }
+
+          setSelectedState((old) => {
+            if (old === value) {
+              return nextActive.value;
+            }
+            return old;
           });
 
-          if (activeTab.current?.value !== value) {
-            return;
-          }
+          nextActive?.element?.focus();
+        };
 
-          const containFocus = () => {
-            const activeIndex = items.current.findIndex(
-              (item) => value === item.value,
-            );
-
-            const nextIndex =
-              activeIndex === items.current.length - 1
-                ? items.current.length - 2
-                : activeIndex + 1;
-
-            const nextActive = items.current[nextIndex];
-            setSelectedState((old) => {
-              if (old === value) {
-                return nextActive.value;
-              }
-              return old;
-            });
-
-            nextActive?.element?.focus();
+        if (document.activeElement === document.body) {
+          requestAnimationFrame(() => {
+            if (document.activeElement === document.body) {
+              containFocus();
+            }
+          });
+        } else {
+          const handleFocusOut = (event: FocusEvent) => {
+            if (!event.relatedTarget) {
+              requestAnimationFrame(() => {
+                if (document.activeElement === document.body) {
+                  containFocus();
+                }
+              });
+            }
           };
 
-          if (document.activeElement === document.body) {
-            requestAnimationFrame(() => {
-              if (document.activeElement === document.body) {
-                containFocus();
-              }
-            });
-          } else {
-            const handleFocusOut = (event: FocusEvent) => {
-              if (!event.relatedTarget) {
-                requestAnimationFrame(() => {
-                  if (document.activeElement === document.body) {
-                    containFocus();
-                  }
-                });
-              }
-            };
+          element.ownerDocument.addEventListener("focusout", handleFocusOut, {
+            once: true,
+          });
 
-            element.ownerDocument.addEventListener("focusout", handleFocusOut, {
-              once: true,
-            });
-
-            setTimeout(() => {
-              element.ownerDocument.removeEventListener(
-                "focusout",
-                handleFocusOut,
-              );
-            }, 1000);
-          }
-        };
-      },
-      [registerItem],
-    );
+          setTimeout(() => {
+            element.ownerDocument.removeEventListener(
+              "focusout",
+              handleFocusOut,
+            );
+          }, 1000);
+        }
+      };
+    });
 
     const registerPanel = useCallback((id: string, value: string) => {
       setValueToPanelIdMap(({ map }) => {

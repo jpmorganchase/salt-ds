@@ -5,6 +5,7 @@ import {
 } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
+import { clsx } from "clsx";
 import {
   type ComponentPropsWithoutRef,
   type KeyboardEvent,
@@ -21,6 +22,18 @@ export interface TabNextTriggerProps
 
 const withBaseName = makePrefixer("saltTabNextTrigger");
 
+function getAriaDescription(count: number) {
+  if (count < 1) {
+    return undefined;
+  }
+
+  if (count === 1) {
+    return "1 action available";
+  }
+
+  return `${count} actions available`;
+}
+
 export const TabNextTrigger = forwardRef<
   HTMLButtonElement,
   TabNextTriggerProps
@@ -35,7 +48,7 @@ export const TabNextTrigger = forwardRef<
   });
 
   const { setSelected, registerTab, getPanelId } = useTabsNext();
-  const { selected, value, focused, disabled, tabId } = useTabNext();
+  const { selected, value, focused, disabled, tabId, actions } = useTabNext();
 
   const tabRef = useRef<HTMLButtonElement>(null);
 
@@ -64,10 +77,13 @@ export const TabNextTrigger = forwardRef<
   const panelId = getPanelId(value);
 
   return (
+    // biome-ignore lint/a11y/useValidAriaProps: aria-actions is a draft spec https://pr-preview.s3.amazonaws.com/w3c/aria/pull/1805.html#aria-actions
     <button
       aria-selected={selected}
       aria-disabled={disabled}
       aria-controls={panelId}
+      aria-actions={clsx(actions) || undefined}
+      aria-description={getAriaDescription(actions.length)}
       tabIndex={focused || selected ? undefined : -1}
       role="tab"
       type="button"

@@ -8,6 +8,7 @@ import {
   type MouseEvent,
   type ReactElement,
   forwardRef,
+  useCallback,
   useMemo,
   useRef,
   useState,
@@ -95,6 +96,16 @@ export const TabNext = forwardRef<HTMLDivElement, TabNextProps>(
       wasMouseDown.current = true;
     };
 
+    const [actions, setActions] = useState<string[]>([]);
+
+    const registerAction = useCallback((id: string) => {
+      setActions((old) => old.concat(id));
+
+      return () => {
+        setActions((old) => old.filter((action) => action !== id));
+      };
+    }, []);
+
     const context = useMemo(
       () => ({
         tabId: id,
@@ -102,8 +113,10 @@ export const TabNext = forwardRef<HTMLDivElement, TabNextProps>(
         focused,
         value,
         disabled,
+        actions,
+        registerAction,
       }),
-      [id, selected, value, focused, disabled],
+      [id, selected, value, focused, disabled, actions, registerAction],
     );
 
     return (
