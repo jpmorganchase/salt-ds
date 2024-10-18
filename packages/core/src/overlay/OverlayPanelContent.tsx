@@ -47,7 +47,7 @@ export const OverlayPanelContent = forwardRef<
   const handleScroll = debounce(() => {
     if (!divRef.current) return;
     setScrolled(divRef.current.scrollTop > 0);
-  }, 50);
+  });
 
   const checkOverflow = useCallback(() => {
     if (!divRef.current) return;
@@ -66,15 +66,11 @@ export const OverlayPanelContent = forwardRef<
           [withBaseName("scroll")]: scrolled,
         })}
       />
-      <div className={withBaseName("container")}>
+      <div className={clsx(withBaseName(), className)}>
         <div
-          className={clsx(
-            withBaseName(),
-            {
-              [withBaseName("overflow")]: isOverflowing,
-            },
-            className,
-          )}
+          className={clsx(withBaseName("container"), {
+            [withBaseName("overflow")]: isOverflowing,
+          })}
           onScrollCapture={handleScroll}
           {...rest}
           ref={containerRef}
