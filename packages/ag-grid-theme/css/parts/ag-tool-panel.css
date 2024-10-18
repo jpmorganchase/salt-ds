@@ -1,0 +1,21 @@
+/* Tool Panel */
+
+div[class*="ag-theme-salt"] .ag-tool-panel-wrapper > .ag-react-container {
+  width: inherit;
+}
+
+div[class*="ag-theme-salt"] .ag-side-buttons {
+  min-width: calc(var(--salt-size-base) + var(--salt-spacing-100));
+}
+
+div[class*="ag-theme-salt"] button.ag-side-button-button {
+  padding: var(--salt-spacing-100) var(--salt-spacing-50);
+}
+
+div[class*="ag-theme-salt"] .ag-column-drop-vertical-empty-message {
+  padding: var(--salt-spacing-100);
+}
+
+div[class*="ag-theme-salt"] .ag-side-button-icon-wrapper {
+  margin-bottom: var(--salt-spacing-100);
+}

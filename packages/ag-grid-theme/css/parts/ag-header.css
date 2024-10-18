@@ -1,0 +1,104 @@
+/* HEADER */
+
+div[class*="ag-theme-salt"] .ag-header {
+  /* Header icon should be the same as text color, aka secondary color */
+  --ag-icon-font-color: var(--ag-header-foreground-color);
+}
+
+div[class*="ag-theme-salt"] .ag-advanced-filter-header,
+div[class*="ag-theme-salt"] .ag-header {
+  border-bottom: var(--salt-size-border) var(--salt-separable-borderStyle) var(--salt-separable-primary-borderColor);
+}
+
+div[class*="ag-theme-salt"] .ag-header-row {
+  font-size: var(--salt-text-label-fontSize);
+  font-weight: var(--salt-text-label-fontWeight-strong);
+}
+
+div[class*="ag-theme-salt"] .ag-pinned-left-header {
+  border-right-color: var(--salt-separable-secondary-borderColor);
+}
+
+div[class*="ag-theme-salt"] .ag-pinned-right-header {
+  border-left-color: var(--salt-separable-secondary-borderColor);
+}
+
+div[class*="ag-theme-salt"] .ag-header-row:not(:first-child) .ag-header-cell:not(.ag-header-span-height.ag-header-span-total) {
+  border-top-color: var(--salt-container-primary-borderColor);
+}
+
+div[class*="ag-theme-salt"] .ag-header-row:not(:first-child) .ag-header-cell:not(.ag-header-span-height.ag-header-span-total):focus,
+div[class*="ag-theme-salt"] .ag-header-row:not(:first-child) .ag-header-group-cell.ag-header-group-cell-with-group:focus {
+  border: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--salt-focused-outlineColor);
+}
+
+/** Move sort arrow towards menu icon */
+div[class*="ag-theme-salt"] .ag-ltr .ag-header-cell:not(.ag-right-aligned-header) .ag-header-label-icon.ag-hidden + .ag-sort-indicator-container {
+  margin-left: auto;
+}
+
+div[class*="ag-theme-salt"] .ag-ltr .ag-header-cell.ag-right-aligned-header .ag-header-label-icon.ag-hidden + .ag-sort-indicator-container {
+  margin-right: auto;
+}
+
+div[class*="ag-theme-salt"] .ag-sort-indicator-container {
+  align-items: center;
+}
+
+div[class*="ag-theme-salt"] .ag-ltr .ag-header-cell.ag-right-aligned-header .ag-sort-indicator-icon {
+  padding-left: var(--salt-spacing-100);
+}
+
+div[class*="ag-theme-salt"] .ag-ltr .ag-header-cell:not(.ag-right-aligned-header) .ag-sort-indicator-icon {
+  padding-right: var(--salt-spacing-100);
+}
+
+div[class*="ag-theme-salt"] .ag-ltr .ag-header-cell:not(.ag-right-aligned-header) .ag-header-label-icon {
+  margin-left: auto;
+  padding-right: var(--salt-spacing-100);
+}
+
+div[class*="ag-theme-salt"] .ag-ltr .ag-header-cell.ag-right-aligned-header .ag-header-label-icon {
+  margin-right: auto;
+  padding-left: var(--salt-spacing-100);
+}
+
+div[class*="ag-theme-salt"] .ag-header-cell.ag-floating-filter::before {
+  /* Remove half height border in most header cells */
+  background-color: transparent;
+}
+
+div[class*="ag-theme-salt"] .ag-floating-filter input[class^="ag-"][type="number"] {
+  /* Avoid floating filter's input clips focus ring */
+  height: calc(var(--salt-size-base) + var(--salt-spacing-100) - 4px);
+}
+
+div[class*="ag-theme-salt"] .ag-header-cell:not(.ag-column-resizing) + .ag-header-cell.ag-column-menu-visible:not(.ag-column-hover):not(.ag-header-cell-moving):hover,
+div[class*="ag-theme-salt"] .ag-header-cell:not(.ag-column-hover):first-of-type:not(.ag-header-cell-moving).ag-column-menu-visible:hover,
+div[class*="ag-theme-salt"] .ag-header-cell.ag-column-menu-visible {
+  /* When menu is visible, change bg and fg */
+  background: var(--salt-actionable-secondary-background-active);
+  color: var(--salt-actionable-secondary-foreground-active);
+  /* Color for menu / filter icons */
+  --ag-icon-font-color: var(--salt-actionable-secondary-foreground-active);
+}
+
+div[class*="ag-theme-salt"] .ag-header-cell.ag-column-menu-visible .ag-icon {
+  color: var(--salt-actionable-secondary-foreground-active);
+}
+
+div[class*="ag-theme-salt"] .ag-cell-label-container {
+  /* row height is base size + 50 spacing on top/bottom */
+  padding: var(--salt-spacing-50) 0;
+}
+
+div[class*="ag-theme-salt"] .ag-list-item:hover,
+div[class*="ag-theme-salt"] .ag-virtual-list-item:hover {
+  background-color: var(--salt-selectable-background-hover);
+  cursor: pointer;
+}
+
+div[class*="ag-theme-salt"] .ag-label-align-right .ag-label {
+  margin-inline-start: var(--salt-spacing-100);
+  margin-inline-end: 0;
+}

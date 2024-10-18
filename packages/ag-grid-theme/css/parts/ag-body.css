@@ -1,0 +1,146 @@
+/* ROW */
+
+div[class*="ag-theme-salt"] .ag-row {
+  font-size: var(--salt-text-fontSize);
+}
+
+div[class*="ag-theme-salt"] .ag-row-selected {
+  background-color: var(--salt-selectable-background-selected);
+  border-color: var(--salt-selectable-borderColor-selected);
+}
+
+div[class*="ag-theme-salt"] .ag-row-selected:before {
+  background-color: var(--salt-selectable-borderColor-selected);
+  background-image: none;
+  height: var(--salt-size-border);
+  top: -1px;
+}
+
+/* CELL */
+
+div[class*="ag-theme-salt"] .ag-cell.ag-cell-last-left-pinned:not(.ag-cell-range-right):not(.ag-cell-range-single-cell) {
+  border-right-color: var(--salt-separable-secondary-borderColor);
+}
+
+div[class*="ag-theme-salt"] .ag-cell.ag-cell-first-right-pinned:not(.ag-cell-range-left):not(.ag-cell-range-single-cell) {
+  border-left-color: var(--salt-separable-secondary-borderColor);
+}
+
+div[class*="ag-theme-salt"] .ag-cell {
+  border: none;
+  line-height: calc(var(--ag-line-height) - 1px);
+  padding-left: var(--salt-spacing-100);
+  padding-right: var(--salt-spacing-100);
+}
+
+/* This is not restricted to `.editable-cell`, so any custom editor would get the same background treatment */
+div[class*="ag-theme-salt"] .ag-cell-inline-editing:focus-within {
+  background: var(--salt-container-primary-background);
+}
+
+/* This makes sure custom cell editor would start from no padding. Built-in ag grid editor's padding is added below. */
+div[class*="ag-theme-salt"] .ag-cell-inline-editing {
+  padding: 0;
+}
+
+div[class*="ag-theme-salt"] .editable-cell,
+div[class*="ag-theme-salt"] .editable-numeric-cell {
+  outline: var(--salt-size-border) var(--salt-container-borderStyle) var(--salt-editable-borderColor);
+  outline-offset: -1px;
+}
+
+div[class*="ag-theme-salt"] .ag-cell.numeric-cell,
+div[class*="ag-theme-salt"] .editable-numeric-cell {
+  text-align: right;
+}
+
+/* Special case when user finish editing and click out side of the grid. */
+div[class*="ag-theme-salt"] .ag-cell.numeric-cell.ag-cell-inline-editing .ag-cell-editor input:not(:focus) {
+  text-align: right;
+}
+
+div[class*="ag-theme-salt"] .ag-has-focus .ag-cell.ag-cell-focus:not(.ag-cell-range-selected),
+div[class*="ag-theme-salt"] .ag-context-menu-open .ag-cell.ag-cell-focus:not(.ag-cell-range-selected),
+div[class*="ag-theme-salt"] .ag-cell-range-single-cell,
+div[class*="ag-theme-salt"] .ag-cell-range-single-cell.ag-cell-range-handle,
+div[class*="ag-theme-salt"] .ag-cell-focus:not(.ag-cell-range-selected):focus-within {
+  outline: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--salt-focused-outlineColor);
+  outline-offset: -2px;
+  border-width: 0;
+}
+
+div[class*="ag-theme-salt"] .ag-cell-wrapper.ag-row-group {
+  align-items: center;
+}
+
+div[class*="ag-theme-salt"] .ag-cell.editable-cell.ag-cell-focus:focus,
+div[class*="ag-theme-salt"] .editable-numeric-cell.ag-cell-focus:focus,
+div[class*="ag-theme-salt"] .editable-cell.ag-cell-focus:focus-within {
+  overflow: visible;
+}
+
+div[class*="ag-theme-salt"] .ag-cell.editable-cell.ag-cell-focus:focus:before,
+div[class*="ag-theme-salt"] .ag-cell.editable-numeric-cell.ag-cell-focus:focus:before,
+div[class*="ag-theme-salt"] .ag-cell.editable-cell.ag-cell-focus:focus-within:before,
+div[class*="ag-theme-salt"] .editable-cell.ag-cell-inline-editing:before {
+  border-bottom: calc(var(--salt-size-adornment) + 4px) solid transparent;
+  border-left: calc(var(--salt-size-adornment) + 4px) solid var(--salt-editable-borderColor-hover);
+  border-top: 0 solid transparent;
+  content: "";
+  left: 0px;
+  position: absolute;
+  top: 0px;
+  z-index: 2;
+}
+
+div[class*="ag-theme-salt"] .editable-numeric-cell input,
+div[class*="ag-theme-salt"] input[class^="ag-"][type="number"] {
+  padding: 0 var(--salt-spacing-100);
+  height: calc(var(--salt-size-base) + var(--salt-spacing-100));
+}
+
+div[class*="ag-theme-salt"] .editable-cell input,
+div[class*="ag-theme-salt"] .editable-numeric-cell input {
+  border: none;
+  background-color: transparent;
+}
+
+div[class*="ag-theme-salt"] .ag-cell.ag-cell-range-selected:not(.ag-cell-range-single-cell).ag-cell-range-top::after {
+  content: "";
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  border-top: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--salt-focused-outlineColor);
+}
+
+div[class*="ag-theme-salt"] .ag-cell.ag-cell-range-selected:not(.ag-cell-range-single-cell).ag-cell-range-right::after {
+  content: "";
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  border-right: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--salt-focused-outlineColor);
+}
+
+div[class*="ag-theme-salt"] .ag-cell.ag-cell-range-selected:not(.ag-cell-range-single-cell).ag-cell-range-bottom::after {
+  content: "";
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  border-bottom: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--salt-focused-outlineColor);
+}
+
+div[class*="ag-theme-salt"] .ag-cell.ag-cell-range-selected:not(.ag-cell-range-single-cell).ag-cell-range-left::after {
+  content: "";
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  border-left: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--salt-focused-outlineColor);
+}

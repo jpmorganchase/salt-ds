@@ -1,0 +1,13 @@
+/* Toggle Button */
+.ag-toggle-button-input-wrapper::before {
+  top: calc(1px - var(--ag-toggle-button-border-width));
+  left: calc(1px - var(--ag-toggle-button-border-width));
+
+  height: calc(var(--ag-toggle-button-height) - 2 * var(--ag-toggle-button-border-width));
+  width: calc(var(--ag-toggle-button-height) - 2 * var(--ag-toggle-button-border-width));
+}
+.ag-toggle-button-input-wrapper.ag-checked::before {
+  --ag-toggle-button-switch-background-color: var(--salt-selectable-borderColor-selected);
+  border-color: var(--ag-toggle-button-switch-border-color);
+  left: calc(100% - var(--ag-toggle-button-height) + 2 * var(--ag-toggle-button-border-width));
+}
