@@ -61,6 +61,7 @@ export const TabsNext = forwardRef<HTMLDivElement, TabsNextProps>(
     } = useCollection({ wrap: true });
 
     const activeTab = useRef<Pick<Item, "id" | "value">>();
+    const returnFocus = useRef<string | undefined>(undefined);
 
     const [menuOpen, setMenuOpen] = useState(false);
 
@@ -78,15 +79,12 @@ export const TabsNext = forwardRef<HTMLDivElement, TabsNextProps>(
     }, [selected]);
 
     const setSelected = useCallback(
-      (event: SyntheticEvent | null, action: string) => {
-        const newItem = item(action);
-        if (!newItem) return;
-
+      (event: SyntheticEvent | null, value: string) => {
         setMenuOpen(false);
-        setSelectedState(newItem.value);
-        onChange?.(event, newItem.value);
+        setSelectedState(value);
+        onChange?.(event, value);
       },
-      [onChange, item],
+      [onChange],
     );
 
     const registerTab = useEventCallback((item: Item) => {
@@ -95,11 +93,6 @@ export const TabsNext = forwardRef<HTMLDivElement, TabsNextProps>(
         map.set(item.value, item.id);
         return { map };
       });
-
-      // If tab was previously focused, re-focus.
-      if (activeTab.current?.value === item.value) {
-        item.element.focus();
-      }
 
       return () => {
         const items = cleanup();
@@ -111,6 +104,8 @@ export const TabsNext = forwardRef<HTMLDivElement, TabsNextProps>(
         if (activeTab.current?.value !== item.value) {
           return;
         }
+
+        returnFocus.current = item.value;
 
         const containFocus = () => {
           const activeIndex = items.current.findIndex(
@@ -124,8 +119,10 @@ export const TabsNext = forwardRef<HTMLDivElement, TabsNextProps>(
 
           const nextActive = items.current[nextIndex];
 
+          returnFocus.current = nextActive.value;
+
           if (selectedRef.current === item.value) {
-            setSelected(null, nextActive.id);
+            setSelected(null, nextActive.value);
           }
 
           nextActive?.element?.focus();
@@ -210,6 +207,7 @@ export const TabsNext = forwardRef<HTMLDivElement, TabsNextProps>(
         activeTab,
         menuOpen,
         setMenuOpen,
+        returnFocus,
       }),
       [
         registerPanel,

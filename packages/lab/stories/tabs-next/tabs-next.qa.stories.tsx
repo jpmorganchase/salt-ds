@@ -53,7 +53,7 @@ export const LotsOfTabsTabstrip: TabstripStory = () => {
         }}
       >
         <TabBar padding separator>
-          <TabListNext>
+          <TabListNext style={{ maxWidth: 350, margin: "auto" }}>
             {tabs.map((label) => (
               <TabNext key={label} value={label}>
                 <TabNextTrigger>{label}</TabNextTrigger>
@@ -69,7 +69,10 @@ export const LotsOfTabsTabstrip: TabstripStory = () => {
         }}
       >
         <TabBar>
-          <TabListNext appearance="transparent">
+          <TabListNext
+            appearance="transparent"
+            style={{ maxWidth: 350, margin: "auto" }}
+          >
             {tabs.map((label) => (
               <TabNext key={label} value={label}>
                 <TabNextTrigger>{label}</TabNextTrigger>

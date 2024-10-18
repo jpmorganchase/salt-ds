@@ -1,4 +1,9 @@
-import { capitalize, makePrefixer, useForkRef } from "@salt-ds/core";
+import {
+  capitalize,
+  makePrefixer,
+  useForkRef,
+  useIsomorphicLayoutEffect,
+} from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import clsx from "clsx";
@@ -61,6 +66,7 @@ export const TabListNext = forwardRef<HTMLDivElement, TabListNextProps>(
       activeTab,
       menuOpen,
       setMenuOpen,
+      returnFocus,
     } = useTabsNext();
 
     const tabstripRef = useRef<HTMLDivElement>(null);
@@ -103,6 +109,19 @@ export const TabListNext = forwardRef<HTMLDivElement, TabListNextProps>(
         }
       }
     };
+
+    useIsomorphicLayoutEffect(() => {
+      if (!returnFocus.current || visible.length < 1) return;
+
+      const itemToFocus = items.find((i) => i.value === returnFocus.current);
+      itemToFocus?.element?.focus({ preventScroll: true });
+
+      requestAnimationFrame(() => {
+        if (targetWindow?.document?.activeElement === itemToFocus?.element) {
+          returnFocus.current = undefined;
+        }
+      });
+    }, [visible, returnFocus, targetWindow, items, selected]);
 
     return (
       <div

@@ -61,15 +61,14 @@ export const TabNextTrigger = forwardRef<
   }, [value, id, registerTab]);
 
   const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
-    if (!id) return;
-    setSelected(event, id);
+    setSelected(event, value);
   };
 
   const handleKeyDown = (event: KeyboardEvent<HTMLButtonElement>) => {
     onKeyDown?.(event);
 
-    if (id && (event.key === "Enter" || event.key === " ")) {
-      setSelected(event, id);
+    if (event.key === "Enter" || event.key === " ") {
+      setSelected(event, value);
     }
   };
 
