@@ -1,5 +1,11 @@
 # @salt-ds/ag-grid-theme
 
+## 2.1.2
+
+### Patch Changes
+
+- c486b75: Refactor ag grid theme CSS into smaller files
+
 ## 2.1.1
 
 ### Patch Changes
