@@ -14,6 +14,7 @@ export { default as MasterDetail } from "./MasterDetail";
 export { default as NoDataOverlay } from "./NoDataOverlay";
 export { default as InfiniteScroll } from "./InfiniteScroll";
 export { default as PinnedRows } from "./PinnedRows";
+export { ProvidedCellEditors } from "./ProvidedCellEditors";
 export { RangeSelection } from "./RangeSelection";
 export { default as Pagination } from "./Pagination";
 export { default as ParentChildRows } from "./ParentChildRows";

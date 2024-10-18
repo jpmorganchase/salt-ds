@@ -42,15 +42,6 @@ div[class*="ag-theme-salt"] input[class^="ag-"][type="button"]:focus {
   border: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--salt-focused-outlineColor);
 }
 
-div[class*="ag-theme-salt"] .ag-select .ag-picker-field-wrapper {
-  border: var(--salt-size-border) var(--salt-separable-borderStyle) var(--salt-container-primary-borderColor);
-  border-radius: 0;
-}
-
-div[class*="ag-theme-salt"] .ag-select .ag-picker-field-icon {
-  margin-right: var(--salt-spacing-100);
-}
-
 div[class*="ag-theme-salt"] .ag-menu .ag-filter-body-wrapper {
   display: flex;
   flex-direction: column;

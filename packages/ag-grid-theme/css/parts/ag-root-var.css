@@ -45,6 +45,7 @@ div[class*="ag-theme-salt"] {
   --ag-selected-tab-underline-color: var(--salt-navigable-indicator-active);
   --ag-selected-tab-underline-width: var(--salt-size-indicator);
   --ag-subheader-background-color: var(--salt-container-primary-background);
+  --ag-control-panel-background-color: var(--salt-container-primary-background);
   --ag-toggle-button-off-background-color: var(--salt-container-primary-background);
   --ag-toggle-button-off-border-color: var(--salt-selectable-borderColor);
   --ag-toggle-button-on-background-color: var(--salt-container-primary-background);
