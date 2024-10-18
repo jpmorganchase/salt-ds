@@ -4,6 +4,7 @@ export * from "./Error";
 export * from "./Warning";
 export * from "./Success";
 export * from "./WithoutAccent";
+export * from "./WithHeader";
 export * from "./CloseButton";
 export * from "./MandatoryAction";
 export * from "./Sizes";
