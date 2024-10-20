@@ -101,3 +101,22 @@ export const Truncation: StoryFn<typeof Link> = () => {
 //     </div>
 //   );
 // };
+
+const CustomLinkImplementation = (props: any) => (
+  <a href="#root" aria-label={"overridden-label"} {...props}>
+    Your own Link implementation
+  </a>
+);
+
+export const RenderElement: StoryFn<typeof Link> = () => {
+  return <Link href="#root" render={<CustomLinkImplementation />} />;
+};
+
+export const RenderProp: StoryFn<typeof Link> = () => {
+  return (
+    <Link
+      href="#root"
+      render={(props) => <CustomLinkImplementation {...props} />}
+    />
+  );
+};
