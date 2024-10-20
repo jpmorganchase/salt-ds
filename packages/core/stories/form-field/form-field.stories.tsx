@@ -683,7 +683,7 @@ export const WithInputWithAdornments: StoryFn<typeof FormField> = (props) => {
           endAdornment={
             <>
               <Text>%</Text>
-              <Button variant="cta">
+              <Button sentiment="accented">
                 <NoteIcon />
               </Button>
             </>
@@ -696,7 +696,7 @@ export const WithInputWithAdornments: StoryFn<typeof FormField> = (props) => {
         <FormLabel>Form Field label (with error)</FormLabel>
         <Input
           endAdornment={
-            <Button variant="secondary">
+            <Button appearance="transparent">
               <NoteIcon />
             </Button>
           }
@@ -714,7 +714,7 @@ export const WithInputWithAdornments: StoryFn<typeof FormField> = (props) => {
           endAdornment={
             <>
               <Text>%</Text>
-              <Button disabled variant="cta">
+              <Button disabled sentiment="accented">
                 <NoteIcon />
               </Button>
             </>

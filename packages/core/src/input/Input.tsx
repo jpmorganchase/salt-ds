@@ -13,6 +13,7 @@ import {
 } from "react";
 import { useFormFieldProps } from "../form-field-context";
 import { StatusAdornment } from "../status-adornment";
+import type { DataAttributes } from "../types";
 import { makePrefixer, useControlled } from "../utils";
 
 import inputCss from "./Input.css";
@@ -37,7 +38,7 @@ export interface InputProps
   /**
    * [Attributes](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#Attributes) applied to the `input` element.
    */
-  inputProps?: InputHTMLAttributes<HTMLInputElement>;
+  inputProps?: Partial<InputHTMLAttributes<HTMLInputElement>> & DataAttributes;
   /**
    * Optional ref for the input component
    */

@@ -37,7 +37,7 @@ export const DefaultIcon: StoryFn<typeof Input> = (args) => {
           <Button
             onClick={handleClear}
             aria-label="Clear input"
-            variant="secondary"
+            appearance="transparent"
           >
             <CloseIcon aria-hidden />
           </Button>
@@ -74,7 +74,7 @@ export const DefaultValue: StoryFn<typeof Input> = (args) => {
           <Button
             onClick={handleClear}
             aria-label="Clear input"
-            variant="secondary"
+            appearance="transparent"
           >
             <CloseIcon aria-hidden />
           </Button>
@@ -114,7 +114,7 @@ export const WithFormField: StoryFn<typeof Input> = (args) => {
             <Button
               onClick={handleClear}
               aria-label="Clear input"
-              variant="secondary"
+              appearance="transparent"
             >
               <CloseIcon aria-hidden />
             </Button>
@@ -155,7 +155,7 @@ export const LabelLeft: StoryFn<typeof Input> = (args) => {
             <Button
               onClick={handleClear}
               aria-label="Clear input"
-              variant="secondary"
+              appearance="transparent"
             >
               <CloseIcon aria-hidden />
             </Button>
@@ -193,7 +193,7 @@ export const DefaultValueNoIcon: StoryFn<typeof Input> = (args) => {
           <Button
             onClick={handleClear}
             aria-label="Clear input"
-            variant="secondary"
+            appearance="transparent"
           >
             <CloseIcon aria-hidden />
           </Button>
@@ -232,7 +232,7 @@ export const LabelNoIcon: StoryFn<typeof Input> = (args) => {
             <Button
               onClick={handleClear}
               aria-label="Clear input"
-              variant="secondary"
+              appearance="transparent"
             >
               <CloseIcon aria-hidden />
             </Button>
@@ -271,7 +271,7 @@ export const CustomIcon: StoryFn<typeof Input> = (args) => {
           <Button
             onClick={handleClear}
             aria-label="Clear input"
-            variant="secondary"
+            appearance="transparent"
           >
             <CloseIcon aria-hidden />
           </Button>

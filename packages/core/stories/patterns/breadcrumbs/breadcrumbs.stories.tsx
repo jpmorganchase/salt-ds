@@ -116,7 +116,7 @@ export const OverflowMenu = () => {
         </StackLayout>
         <Menu>
           <MenuTrigger>
-            <Button variant="secondary" aria-label="Open Menu">
+            <Button appearance="transparent" aria-label="Open Menu">
               <OverflowMenuIcon aria-hidden />
             </Button>
           </MenuTrigger>
@@ -168,7 +168,7 @@ export const Expansion = () => {
             </StackLayout>
           </>
         ) : (
-          <Button variant="secondary" onClick={() => setIsExpanded(true)}>
+          <Button appearance="transparent" onClick={() => setIsExpanded(true)}>
             <OverflowMenuIcon aria-hidden />
           </Button>
         )}

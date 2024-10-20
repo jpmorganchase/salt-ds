@@ -7,7 +7,6 @@ import {
   useFocus,
   useInteractions,
 } from "@floating-ui/react";
-import { ChevronDownIcon, ChevronUpIcon } from "@salt-ds/icons";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
@@ -34,6 +33,7 @@ import {
 import { defaultValueToString } from "../list-control/ListControlState";
 import { OptionList } from "../option/OptionList";
 import { PillInput, type PillInputProps } from "../pill-input";
+import { useIcon } from "../semantic-icon-provider";
 import {
   type UseFloatingUIProps,
   makePrefixer,
@@ -77,6 +77,7 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
     onOpenChange,
     onChange,
     open,
+    inputRef: inputRefProp,
     inputProps: inputPropsProp,
     variant = "primary",
     onKeyDown,
@@ -96,7 +97,7 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
     css: comboBoxCss,
     window: targetWindow,
   });
-
+  const { CollapseIcon, ExpandIcon } = useIcon();
   const {
     a11yProps: { "aria-labelledby": formFieldLabelledBy } = {},
     disabled: formFieldDisabled,
@@ -106,6 +107,7 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
   const disabled = Boolean(disabledProp) || formFieldDisabled;
   const readOnly = Boolean(readOnlyProp) || formFieldReadOnly;
   const inputRef = useRef<HTMLInputElement>(null);
+  const handleInputRef = useForkRef(inputRef, inputRefProp);
 
   const listControl = useComboBox<Item>({
     open,
@@ -171,9 +173,12 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
     }
   };
 
+  const hasValidChildren =
+    Children.toArray(children).filter(Boolean).length > 0;
+
   const { x, y, strategy, elements, floating, reference, context } =
     useFloatingUI({
-      open: openState && !readOnly && Children.count(children) > 0,
+      open: openState && !readOnly && hasValidChildren,
       onOpenChange: handleOpenChange,
       placement: "bottom-start",
       strategy: "fixed",
@@ -295,7 +300,9 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
 
   const handleBlur = (event: FocusEvent<HTMLInputElement>) => {
     event.persist();
-    onBlur?.(event);
+    if (!listRef.current || !listRef.current.contains(event.relatedTarget)) {
+      onBlur?.(event);
+    }
   };
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -408,7 +415,7 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
         endAdornment={
           <>
             {endAdornment}
-            {!readOnly ? (
+            {!readOnly && hasValidChildren ? (
               <Button
                 aria-labelledby={clsx(buttonId, formFieldLabelledBy)}
                 aria-label="Show options"
@@ -416,15 +423,15 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
                 aria-controls={openState ? listId : undefined}
                 aria-haspopup="listbox"
                 disabled={disabled}
-                variant="secondary"
+                appearance="transparent"
                 onClick={handleButtonClick}
                 onFocus={handleButtonFocus}
                 tabIndex={-1}
               >
                 {openState ? (
-                  <ChevronUpIcon aria-hidden />
+                  <CollapseIcon aria-hidden />
                 ) : (
-                  <ChevronDownIcon aria-hidden />
+                  <ExpandIcon aria-hidden />
                 )}
               </Button>
             ) : undefined}
@@ -437,14 +444,13 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
         inputProps={{
           role: "combobox",
           "aria-expanded": openState,
-          "aria-multiselectable": multiselect,
           "aria-controls": openState ? listId : undefined,
           onKeyDown: handleKeyDown,
           ...inputPropsProp,
         }}
         aria-activedescendant={activeState?.id}
         variant={variant}
-        inputRef={inputRef}
+        inputRef={handleInputRef}
         value={valueState}
         ref={handleRef}
         bordered={bordered}
@@ -464,11 +470,8 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
         }
       />
       <OptionList
-        open={
-          (openState || focusedState) &&
-          !readOnly &&
-          Children.count(children) > 0
-        }
+        aria-multiselectable={multiselect}
+        open={(openState || focusedState) && !readOnly && hasValidChildren}
         collapsed={!openState}
         ref={handleListRef}
         id={listId}

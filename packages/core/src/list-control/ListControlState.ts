@@ -53,6 +53,58 @@ export type ListControlProps<Item> = {
   valueToString?: (item: Item) => string;
 };
 
+function findElementPosition(
+  elements: { element: HTMLElement }[],
+  element: HTMLElement,
+) {
+  if (elements.length === 0) {
+    return [0, false] as const;
+  }
+
+  if (
+    element.compareDocumentPosition(elements[elements.length - 1].element) &
+    Node.DOCUMENT_POSITION_PRECEDING
+  ) {
+    return [-1, false] as const;
+  }
+
+  if (
+    element.compareDocumentPosition(elements[0].element) &
+    Node.DOCUMENT_POSITION_FOLLOWING
+  ) {
+    return [0, false] as const;
+  }
+
+  let left = 0;
+  let right = elements.length;
+  let leftLast = 0;
+  let rightLast = right;
+
+  let exists = false;
+
+  while (left < right) {
+    const inPos = Math.floor((right + left) / 2);
+    const compared = element.compareDocumentPosition(elements[inPos].element);
+    if (compared & Node.DOCUMENT_POSITION_PRECEDING) {
+      left = inPos;
+    } else if (compared & Node.DOCUMENT_POSITION_FOLLOWING) {
+      right = inPos;
+    } else {
+      right = inPos;
+      left = inPos;
+      exists = true;
+    }
+    // nothing has changed, must have found limits. insert between.
+    if (leftLast === left && rightLast === right) {
+      break;
+    }
+    leftLast = left;
+    rightLast = right;
+  }
+
+  return [right, exists] as const;
+}
+
 export function defaultValueToString<Item>(item: Item): string {
   return String(item);
 }
@@ -164,15 +216,9 @@ export function useListControl<Item>(props: ListControlProps<Item>) {
   const register = useCallback(
     (optionValue: OptionValue<Item>, element: HTMLElement) => {
       const { id } = optionValue;
-      const option = optionsRef.current.find((item) => item.data.id === id);
-      const index = optionsRef.current.findIndex((option) => {
-        return (
-          option.element.compareDocumentPosition(element) &
-          Node.DOCUMENT_POSITION_PRECEDING
-        );
-      });
+      const [index, exists] = findElementPosition(optionsRef.current, element);
 
-      if (!option) {
+      if (!exists) {
         if (index === -1) {
           optionsRef.current.push({ data: optionValue, element });
         } else {
@@ -322,19 +368,10 @@ export function useListControl<Item>(props: ListControlProps<Item>) {
         return;
       }
 
-      const { scrollTop } = listRef.current;
-      const { offsetTop, offsetHeight } = activeElement;
-
-      const isVisible =
-        offsetTop >= scrollTop &&
-        offsetTop + offsetHeight <= scrollTop + listRef.current.offsetHeight;
-
-      if (!isVisible) {
-        activeElement.scrollIntoView({
-          block: "end",
-          inline: "nearest",
-        });
-      }
+      activeElement.scrollIntoView({
+        block: "nearest",
+        inline: "nearest",
+      });
     }
   }, [activeState]);
 

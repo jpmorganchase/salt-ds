@@ -2,9 +2,9 @@ import {
   Pill,
   type PillProps,
   makePrefixer,
+  useIcon,
   useIsomorphicLayoutEffect,
 } from "@salt-ds/core";
-import { CloseIcon } from "@salt-ds/icons";
 import { clsx } from "clsx";
 import { type MutableRefObject, memo, useRef } from "react";
 import { getWidth } from "./useWidth";
@@ -59,7 +59,7 @@ export const InputPill = memo(function InputPill(props: InputPillProps) {
 
   const ref = useRef<HTMLButtonElement | null>(null);
   const isRemovable = Boolean(onDelete);
-
+  const { CloseIcon } = useIcon();
   // useLayoutEffect to match the calcFirstHiddenIndex in TokenizedInputBase
   // We need to collect widths before the calculation
   useIsomorphicLayoutEffect(() => {

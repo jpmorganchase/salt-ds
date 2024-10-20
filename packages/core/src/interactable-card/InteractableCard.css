@@ -8,20 +8,26 @@
   position: relative;
   text-align: start;
   transition: box-shadow var(--salt-duration-instant) ease-in-out;
+  overflow: hidden;
+  --card-accent-color: var(--salt-accent-background);
 }
 
 /* Styles applied to InteractableCard when variant="primary" */
 .saltInteractableCard-primary {
   background: var(--saltInteractableCard-background, var(--salt-container-primary-background));
   border-color: var(--salt-container-primary-borderColor);
-  --card-accent-color: var(--salt-container-primary-borderColor);
 }
 
 /* Styles applied to InteractableCard when variant="secondary" */
 .saltInteractableCard-secondary {
   background: var(--saltInteractableCard-background, var(--salt-container-secondary-background));
   border-color: var(--salt-container-secondary-borderColor);
-  --card-accent-color: var(--salt-container-secondary-borderColor);
+}
+
+/* Styles applied to InteractableCard when variant="tertiary" */
+.saltInteractableCard-tertiary {
+  background: var(--saltInteractableCard-background, var(--salt-container-tertiary-background));
+  border-color: var(--salt-container-tertiary-borderColor);
 }
 
 /* Styles applied to create accent */
@@ -72,7 +78,20 @@
   outline-style: var(--salt-focused-outlineStyle);
   outline-width: var(--salt-focused-outlineWidth);
   outline-offset: var(--salt-focused-outlineOffset);
-  --card-accent-color: var(--salt-selectable-foreground-hover);
+}
+
+/* Styles applied on hover state to InteractableCard */
+@media (hover: hover) {
+  .saltInteractableCard:hover {
+    cursor: var(--salt-selectable-cursor-hover);
+    box-shadow: var(--salt-overlayable-shadow-hover);
+    border-color: var(--salt-actionable-accented-borderColor-hover);
+  }
+
+  .saltInteractableCard-disabled:hover {
+    cursor: var(--salt-selectable-cursor-disabled);
+    box-shadow: none;
+  }
 }
 
 /* Styles applied on active state to InteractableCard and if `selected={true}` */
@@ -80,8 +99,8 @@
 .saltInteractableCard:active,
 .saltInteractableCard-active {
   cursor: var(--salt-selectable-cursor-hover);
-  border-color: var(--salt-selectable-borderColor-selected);
-  --card-accent-color: var(--salt-selectable-foreground-selected);
+  box-shadow: var(--salt-overlayable-shadow);
+  border-color: var(--salt-actionable-accented-borderColor-active);
 }
 
 /* Styles applied to InteractableCard if `disabled={true}` */
@@ -92,7 +111,7 @@
   color: var(--salt-content-primary-foreground-disabled);
   cursor: var(--salt-selectable-cursor-disabled);
   outline: none;
-  --card-accent-color: var(--salt-selectable-foreground-disabled);
+  --card-accent-color: var(--salt-accent-background-disabled);
 }
 
 /* Styles applied to InteractableCard primary variant if `disabled={true}` */
@@ -123,19 +142,4 @@
 /* Styles applied to nested divs in InteractableCard if `disabled={true}` */
 .saltInteractableCard-disabled div {
   pointer-events: none;
-}
-
-/* Styles applied on hover state to InteractableCard */
-@media (hover: hover) {
-  .saltInteractableCard:hover {
-    cursor: var(--salt-selectable-cursor-hover);
-    box-shadow: var(--salt-overlayable-shadow-hover);
-    --card-accent-color: var(--salt-selectable-foreground-hover);
-  }
-
-  .saltInteractableCard-disabled:hover {
-    cursor: var(--salt-selectable-cursor-disabled);
-    box-shadow: none;
-    --card-accent-color: var(--salt-selectable-foreground-disabled);
-  }
 }

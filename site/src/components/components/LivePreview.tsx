@@ -1,4 +1,4 @@
-import { Switch } from "@salt-ds/core";
+import { SaltProviderNext, Switch, useId } from "@salt-ds/core";
 import { SaltProvider } from "@salt-ds/core";
 import clsx from "clsx";
 import {
@@ -35,10 +35,9 @@ type LivePreviewProps = {
 export const LivePreview: FC<LivePreviewProps> = ({
   componentName,
   exampleName,
-  list,
   children,
 }) => {
-  const [ownShowCode, setOwnShowCode] = useState<boolean>(false);
+  const [showCode, setShowCode] = useState<boolean>(false);
 
   const isMobileView = useIsMobileView();
 
@@ -71,26 +70,17 @@ export const LivePreview: FC<LivePreviewProps> = ({
       .catch((e) => console.error(`Failed to load example ${exampleName}`, e));
   }, [exampleName, componentName]);
 
-  const {
-    density,
-    mode,
-    showCode: contextShowCode,
-    onShowCodeToggle: contextOnShowCodeToggle,
-  } = useLivePreviewControls();
+  const { density, mode, accent, corner, themeNext, headingFont, actionFont } =
+    useLivePreviewControls();
 
   const handleShowCodeToggle = (event: ChangeEvent<HTMLInputElement>) => {
     const newShowCode = event.target.checked;
-    if (contextOnShowCodeToggle) {
-      // Context is controlling the show code state
-      contextOnShowCodeToggle(newShowCode);
-    } else {
-      setOwnShowCode(newShowCode);
-    }
+    setShowCode(newShowCode);
   };
 
-  // If no context is provided (e.g. <LivePreview> is being used standalone
-  // somewhere), then fallback to using own state
-  const showCode = contextOnShowCodeToggle ? contextShowCode : ownShowCode;
+  const ChosenSaltProvider = themeNext ? SaltProviderNext : SaltProvider;
+
+  const panelId = useId();
 
   return (
     <>
@@ -101,31 +91,46 @@ export const LivePreview: FC<LivePreviewProps> = ({
             [styles.smallViewport]: isMobileView,
           })}
         >
-          {list && list}
-          <SaltProvider mode={mode}>
+          <ChosenSaltProvider
+            mode={mode}
+            accent={accent}
+            corner={corner}
+            headingFont={headingFont}
+            actionFont={actionFont}
+          >
             <div className={styles.exampleWithSwitch}>
               <div className={styles.example}>
-                <SaltProvider density={density}>
+                <ChosenSaltProvider density={density}>
                   {ComponentExample.Example && <ComponentExample.Example />}
-                </SaltProvider>
+                </ChosenSaltProvider>
               </div>
-              <SaltProvider density="medium">
+              <ChosenSaltProvider density="medium">
                 <Switch
                   checked={showCode}
                   onChange={handleShowCodeToggle}
                   className={styles.switch}
                   label="Show code"
+                  aria-controls={panelId}
                 />
-              </SaltProvider>
+              </ChosenSaltProvider>
             </div>
-          </SaltProvider>
+          </ChosenSaltProvider>
         </div>
 
-        {showCode && (
-          <Pre className={styles.codePreview}>
-            <div className="language-tsx">{ComponentExample.sourceCode}</div>
-          </Pre>
-        )}
+        <div
+          className={styles.codePanel}
+          aria-hidden={!showCode}
+          hidden={!showCode}
+          id={panelId}
+        >
+          <div className={styles.codePanelInner}>
+            <Pre className={styles.codePreview}>
+              <div className="language-tsx">
+                {ComponentExample.sourceCode.trimEnd()}
+              </div>
+            </Pre>
+          </div>
+        </div>
       </div>
     </>
   );

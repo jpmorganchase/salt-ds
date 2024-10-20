@@ -138,4 +138,27 @@ describe("GIVEN an Accordion", () => {
       });
     });
   });
+
+  it("SHOULD allow a custom id to be set on the header", () => {
+    cy.mount(
+      <Accordion value="example" expanded>
+        <AccordionHeader id="custom-header-id">Summary Text</AccordionHeader>
+        <AccordionPanel id="custom-panel-id">Panel content</AccordionPanel>
+      </Accordion>,
+    );
+
+    cy.findByRole("button").should("have.attr", "id", "custom-header-id");
+    cy.findByRole("region").should(
+      "have.attr",
+      "aria-labelledby",
+      "custom-header-id",
+    );
+
+    cy.findByRole("region").should("have.attr", "id", "custom-panel-id");
+    cy.findByRole("button").should(
+      "have.attr",
+      "aria-controls",
+      "custom-panel-id",
+    );
+  });
 });

@@ -21,6 +21,7 @@ const {
   MultiplePillsTruncated,
   SelectOnTab,
   LongList,
+  PerformanceTest,
 } = composeStories(comboBoxStories);
 
 describe("Given a ComboBox", () => {
@@ -397,12 +398,12 @@ describe("Given a ComboBox", () => {
   it("should allow multiple options to be selected with a mouse", () => {
     const selectionChangeSpy = cy.stub().as("selectionChange");
     cy.mount(<Multiselect onSelectionChange={selectionChangeSpy} />);
-    cy.findByRole("combobox").should(
+    cy.findByRole("combobox").realClick();
+    cy.findByRole("listbox").should(
       "have.attr",
       "aria-multiselectable",
       "true",
     );
-    cy.findByRole("combobox").realClick();
     cy.findByRole("option", { name: "Alabama" }).realClick();
     cy.get("@selectionChange").should(
       "have.been.calledWith",
@@ -596,9 +597,10 @@ describe("Given a ComboBox", () => {
     cy.findByRole("listbox").should("exist");
   });
 
-  it("should not show a list with no options", () => {
+  it("should not show a list or trigger button with no options", () => {
     cy.mount(<ComboBox open />);
     cy.findByRole("listbox").should("not.exist");
+    cy.findByRole("button").should("not.exist");
   });
 
   it("should clear selected items when the input is cleared and the combo box is single-select", () => {
@@ -680,9 +682,9 @@ describe("Given a ComboBox", () => {
     cy.findByRole("combobox").realClick();
     cy.realType("UNKNOWN");
     cy.realPress("Home");
-    cy.findAllByRole("button").should("have.length", "4");
+    cy.findAllByTestId("pill").should("have.length", "3");
     cy.realPress("Backspace");
-    cy.findAllByRole("button").should("have.length", "3");
+    cy.findAllByTestId("pill").should("have.length", "2");
   });
 
   it("should render the custom floating component", () => {
@@ -721,5 +723,32 @@ describe("Given a ComboBox", () => {
       </ComboBox>,
     );
     cy.findByRole("combobox").should("have.value", "Alaska");
+  });
+  it("should not call onBlur when an option in the list is clicked", () => {
+    const blurSpy = cy.stub().as("blurSpy");
+    cy.mount(<Default onBlur={blurSpy} />);
+    cy.findByRole("combobox").realClick();
+    cy.findAllByRole("option").eq(0).realClick();
+    cy.get("@blurSpy").should("not.have.been.called");
+  });
+
+  it("should support 10000 items without much delay", () => {
+    cy.mount(<PerformanceTest />);
+
+    cy.findByRole("combobox").should("be.visible");
+
+    cy.window().its("performance").invoke("mark", "open_start");
+
+    cy.findByRole("combobox").realClick();
+
+    cy.findByRole("listbox", { timeout: 30000 }).should("be.visible");
+
+    cy.window().its("performance").invoke("mark", "open_end");
+
+    cy.window()
+      .its("performance")
+      .invoke("measure", "open_duration", "open_start", "open_end")
+      .its("duration", { timeout: 0 })
+      .should("be.lessThan", 5000);
   });
 });

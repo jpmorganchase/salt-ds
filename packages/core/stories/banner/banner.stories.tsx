@@ -47,7 +47,7 @@ export const Interactive: StoryFn<typeof Banner> = (props) => (
         upgrading directly to v32.1.0 or later.
       </BannerContent>
       <BannerActions>
-        <Button aria-label="close" variant="secondary">
+        <Button aria-label="close" appearance="transparent">
           <CloseIcon />
         </Button>
       </BannerActions>
@@ -97,7 +97,7 @@ export const Issue: StoryFn<typeof Banner> = () => {
           Error connecting to the server. Please refresh
         </BannerContent>
         <BannerActions>
-          <Button aria-label="refresh" variant="secondary">
+          <Button aria-label="refresh" appearance="transparent">
             <RefreshIcon />
           </Button>
         </BannerActions>
@@ -124,7 +124,7 @@ export const Warning: StoryFn<typeof Banner> = () => {
           System is under increased load
         </BannerContent>
         <BannerActions>
-          <Button aria-label="refresh" variant="secondary">
+          <Button aria-label="refresh" appearance="transparent">
             <RefreshIcon />
           </Button>
         </BannerActions>
@@ -206,7 +206,7 @@ export const Dismissible = () => {
           <BannerActions>
             <Button
               aria-label="close banner"
-              variant="secondary"
+              appearance="transparent"
               onClick={onClose}
             >
               <CloseIcon />
@@ -243,8 +243,8 @@ export const MultipleLines = (props: BannerProps) => {
               accept, you will receive a notification.
             </Text>
             <FlowLayout gap={1}>
-              <Button variant="secondary">Cancel invite</Button>
-              <Button variant="primary">Resend invite</Button>
+              <Button appearance="transparent">Cancel invite</Button>
+              <Button>Resend invite</Button>
             </FlowLayout>
           </StackLayout>
         </BannerContent>

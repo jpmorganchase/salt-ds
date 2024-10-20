@@ -59,7 +59,7 @@ code[class*="language-"] ::selection {
 
 /* Code blocks */
 pre[class*="language-"] {
-  padding: 1rem;
+  padding: var(--salt-spacing-200);
   margin: 0.5em 0;
   overflow: auto;
 }
@@ -71,8 +71,6 @@ pre[class*="language-"] {
   color: var(--pre-color);
   font: var(--code-font-size) / var(--pre-line-height) var(--font-family-monospace);
   box-shadow: var(--pre-shadow);
-  /* TODO: remove !important once we add a custom pre component */
-  margin-bottom: calc(var(--salt-size-unit) * 2) !important;
 }
 
 /* Inline code */

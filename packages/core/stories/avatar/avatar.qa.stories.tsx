@@ -1,4 +1,5 @@
 import { Avatar } from "@salt-ds/core";
+import { SaltShakerIcon } from "@salt-ds/icons";
 import type { Meta, StoryFn } from "@storybook/react";
 import {
   QAContainer,
@@ -18,6 +19,7 @@ export const AllVariantsGrid: StoryFn<QAContainerProps> = (props) => (
     <Avatar size={1} name="Alex Brailescu" src={persona1 as string} />
     <Avatar size={2} src="bad_url" name="Peter Piper" />
     <Avatar size={3} src="bad_url" />
+    <Avatar size={3} fallbackIcon={<SaltShakerIcon />} />
   </QAContainer>
 );
 
@@ -45,6 +47,7 @@ export const NoStyleInjectionGrid: StoryFn<QAContainerNoStyleInjectionProps> = (
     <Avatar size={1} name="Alex Brailescu" src={persona1 as string} />
     <Avatar size={2} src="bad_url" name="Peter Piper" />
     <Avatar size={3} src="bad_url" />
+    <Avatar size={3} fallbackIcon={<SaltShakerIcon />} />
   </QAContainerNoStyleInjection>
 );
 

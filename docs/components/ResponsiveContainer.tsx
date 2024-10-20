@@ -1,11 +1,11 @@
 import { type ReactNode, type SyntheticEvent, useState } from "react";
 import "./ResponsiveContainer.css";
 import { ToggleButton, ToggleButtonGroup, Tooltip } from "@salt-ds/core";
-import { Slider, StepperInput } from "@salt-ds/lab";
+import { Slider, type SliderValue, StepperInput } from "@salt-ds/lab";
 
 export const ResponsiveContainer = ({ children }: { children?: ReactNode }) => {
-  const [containerWidth, setWidth] = useState(90);
-  const [containerHeight, setHeight] = useState(70);
+  const [containerWidth, setWidth] = useState([90]);
+  const [containerHeight, setHeight] = useState([70]);
   const [selected, setSelected] = useState<string>("vw/vh");
   const inPixels = selected === "px";
   const maxUnits = inPixels ? 1000 : 100;
@@ -28,42 +28,40 @@ export const ResponsiveContainer = ({ children }: { children?: ReactNode }) => {
           </Tooltip>
         </ToggleButtonGroup>
         <StepperInput
-          value={containerWidth}
+          value={containerWidth[0]}
           max={maxUnits}
           min={10}
-          onChange={(nextValue) => setWidth(nextValue as number)}
+          onChange={(_event, nextValue) => setWidth([nextValue as number])}
         />
         <Slider
           className="StoryContainer-slider"
           id="width"
-          label="Container Width"
           max={maxUnits}
           min={10}
-          onChange={(nextValue) => setWidth(nextValue as number)}
-          value={containerWidth}
+          onChange={(value: SliderValue) => setWidth(value)}
+          value={containerWidth as SliderValue}
         />
         <StepperInput
-          value={containerHeight}
+          value={containerHeight[0]}
           max={maxUnits}
           min={10}
-          onChange={(nextValue) => setHeight(nextValue as number)}
+          onChange={(_event, nextValue) => setHeight([nextValue as number])}
         />
         <Slider
           className="StoryContainer-slider"
           id="height"
-          label="Container Height"
           max={maxUnits}
           min={10}
-          onChange={(nextValue) => setHeight(nextValue as number)}
-          value={containerHeight}
+          onChange={(value: SliderValue) => setHeight(value)}
+          value={containerHeight as SliderValue}
         />
       </div>
 
       <div
         className="StoryContainer-wrapper"
         style={{
-          width: `${containerWidth}${inPixels ? "px" : "vw"}`,
-          height: `${containerHeight}${inPixels ? "px" : "vh"}`,
+          width: `${containerWidth[0]}${inPixels ? "px" : "vw"}`,
+          height: `${containerHeight[0]}${inPixels ? "px" : "vh"}`,
         }}
       >
         {children}

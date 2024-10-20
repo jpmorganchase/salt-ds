@@ -114,7 +114,7 @@ export const ColorChooser = ({
 
   const alphaForTabs = isTransparent(color?.hex)
     ? defaultAlpha
-    : color?.rgba?.a ?? defaultAlpha;
+    : (color?.rgba?.a ?? defaultAlpha);
 
   const tabsMapping = createTabsMapping({
     swatches: showSwatches,

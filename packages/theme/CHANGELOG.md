@@ -1,5 +1,213 @@
 # @salt-ds/theme
 
+## 1.23.1
+
+### Patch Changes
+
+- 0661efa: - Fixed invalid CSS variables in `theme-next.css`. Closes #4302.
+  - Fixed missing actionable disabled palette tokens in `theme-next.css`.
+
+## 1.23.0
+
+### Minor Changes
+
+- 4ccc245: Added new tokens in Salt theme.
+
+  - `--salt-palette-interact-cta-border-hover`
+  - `--salt-palette-interact-cta-border-active`
+  - `--salt-accent-background-disabled`
+  - `--salt-palette-accent-background-disabled`
+
+  Added new tokens in Salt Next theme.
+
+  - `--salt-accent-background-disabled`
+
+  Updated mapping for below tokens, to help visual alignment between Salt and Salt Next themes.
+
+  ```diff
+  - --salt-actionable-accented-borderColor-hover: var(--salt-palette-interact-border-none);
+  + --salt-actionable-accented-borderColor-hover: var(--salt-palette-interact-cta-border-hover);
+  - --salt-actionable-accented-borderColor-active: var(--salt-palette-interact-border-none);
+  + --salt-actionable-accented-borderColor-active: var(--salt-palette-interact-cta-border-active);
+  ```
+
+## 1.22.0
+
+### Minor Changes
+
+- 1098fc1: Updated tokens values mapping for below tokens
+
+  ```diff
+  /* light */
+  - --salt-palette-negative-foreground: var(--salt-color-red-700);
+  + --salt-palette-negative-foreground: var(--salt-color-red-600);
+  - --salt-palette-positive-foreground: var(--salt-color-green-700);
+  + --salt-palette-positive-foreground: var(--salt-color-green-600);
+  /* dark */
+  - --salt-palette-negative-foreground: var(--salt-color-red-300);
+  + --salt-palette-negative-foreground: var(--salt-color-red-200);
+  - --salt-palette-positive-foreground: var(--salt-color-green-300);
+  + --salt-palette-positive-foreground: var(--salt-color-green-200);
+  ```
+
+  Deprecated actionable cta/primary/secondary tokens in favor of new tokens. Replacement references below
+
+  | Deprecated token                                   | Replacement token                                      |
+  | -------------------------------------------------- | ------------------------------------------------------ |
+  | `--salt-actionable-cta-background-active`          | `--salt-actionable-accented-bold-background-active`    |
+  | `--salt-actionable-cta-background-disabled`        | `--salt-actionable-accented-bold-background-disabled`  |
+  | `--salt-actionable-cta-background-hover`           | `--salt-actionable-accented-bold-background-hover`     |
+  | `--salt-actionable-cta-background`                 | `--salt-actionable-accented-bold-background`           |
+  | `--salt-actionable-cta-borderColor-active`         | `--salt-actionable-accented-bold-borderColor-active`   |
+  | `--salt-actionable-cta-borderColor-disabled`       | `--salt-actionable-accented-bold-borderColor-disabled` |
+  | `--salt-actionable-cta-borderColor-hover`          | `--salt-actionable-accented-bold-borderColor-hover`    |
+  | `--salt-actionable-cta-borderColor`                | `--salt-actionable-accented-bold-borderColor`          |
+  | `--salt-actionable-cta-foreground-active`          | `--salt-actionable-accented-bold-foreground-active`    |
+  | `--salt-actionable-cta-foreground-disabled`        | `--salt-actionable-accented-bold-foreground-disabled`  |
+  | `--salt-actionable-cta-foreground-hover`           | `--salt-actionable-accented-bold-foreground-hover`     |
+  | `--salt-actionable-cta-foreground`                 | `--salt-actionable-accented-bold-foreground`           |
+  | `--salt-actionable-primary-background-active`      | `--salt-actionable-bold-background-active`             |
+  | `--salt-actionable-primary-background-disabled`    | `--salt-actionable-bold-background-disabled`           |
+  | `--salt-actionable-primary-background-hover`       | `--salt-actionable-bold-background-hover`              |
+  | `--salt-actionable-primary-background`             | `--salt-actionable-bold-background`                    |
+  | `--salt-actionable-primary-borderColor-active`     | `--salt-actionable-bold-borderColor-active`            |
+  | `--salt-actionable-primary-borderColor-disabled`   | `--salt-actionable-bold-borderColor-disabled`          |
+  | `--salt-actionable-primary-borderColor-hover`      | `--salt-actionable-bold-borderColor-hover`             |
+  | `--salt-actionable-primary-borderColor`            | `--salt-actionable-bold-borderColor`                   |
+  | `--salt-actionable-primary-foreground-active`      | `--salt-actionable-bold-foreground-active`             |
+  | `--salt-actionable-primary-foreground-disabled`    | `--salt-actionable-bold-foreground-disabled`           |
+  | `--salt-actionable-primary-foreground-hover`       | `--salt-actionable-bold-foreground-hover`              |
+  | `--salt-actionable-primary-foreground`             | `--salt-actionable-bold-foreground`                    |
+  | `--salt-actionable-secondary-background-active`    | `--salt-actionable-subtle-background-active`           |
+  | `--salt-actionable-secondary-background-disabled`  | `--salt-actionable-subtle-background-disabled`         |
+  | `--salt-actionable-secondary-background-hover`     | `--salt-actionable-subtle-background-hover`            |
+  | `--salt-actionable-secondary-background`           | `--salt-actionable-subtle-background`                  |
+  | `--salt-actionable-secondary-borderColor-active`   | `--salt-actionable-subtle-borderColor-active`          |
+  | `--salt-actionable-secondary-borderColor-disabled` | `--salt-actionable-subtle-borderColor-disabled`        |
+  | `--salt-actionable-secondary-borderColor-hover`    | `--salt-actionable-subtle-borderColor-hover`           |
+  | `--salt-actionable-secondary-borderColor`          | `--salt-actionable-subtle-borderColor`                 |
+  | `--salt-actionable-secondary-foreground-active`    | `--salt-actionable-subtle-foreground-active`           |
+  | `--salt-actionable-secondary-foreground-disabled`  | `--salt-actionable-subtle-foreground-disabled`         |
+  | `--salt-actionable-secondary-foreground-hover`     | `--salt-actionable-subtle-foreground-hover`            |
+  | `--salt-actionable-secondary-foreground`           | `--salt-actionable-subtle-foreground`                  |
+
+  Added various tokens for new actionable family tokens.
+
+  ## Salt theme - `theme.css`
+
+  ### Palette
+
+  - `--salt-palette-accent-border-disabled`
+  - `--salt-palette-accent-foreground-informative`
+  - `--salt-palette-accent-foreground-informative-disabled`
+  - `--salt-palette-interact-border-none`
+  - `--salt-palette-negative-foreground-disabled`
+  - `--salt-palette-negative-background`
+  - `--salt-palette-negative-background-hover`
+  - `--salt-palette-negative-background-active`
+  - `--salt-palette-negative-background-disabled`
+  - `--salt-palette-negative-border`
+  - `--salt-palette-negative-border-disabled`
+  - `--salt-palette-positive-foreground-disabled`
+  - `--salt-palette-positive-background`
+  - `--salt-palette-positive-background-hover`
+  - `--salt-palette-positive-background-active`
+  - `--salt-palette-positive-background-disabled`
+  - `--salt-palette-positive-border`
+  - `--salt-palette-positive-border-disabled`
+  - `--salt-palette-warning-border-disabled`
+  - `--salt-palette-warning-foreground-informative-disabled`
+  - `--salt-palette-warning-action`
+  - `--salt-palette-warning-action-hover`
+  - `--salt-palette-warning-action-active`
+  - `--salt-palette-warning-action-disabled`
+  - `--salt-palette-warning-action-foreground`
+  - `--salt-palette-warning-action-foreground-disabled`
+
+  #### Foundation
+
+  - `--salt-color-blue-200-fade-foreground`
+  - `--salt-color-green-200-fade-foreground`
+  - `--salt-color-green-600-fade-foreground`
+  - `--salt-color-red-200-fade-foreground`
+  - `--salt-color-red-600-fade-foreground`
+  - `--salt-color-orange-400-fade-foreground`
+  - `--salt-color-orange-850-fade-foreground`
+  - `--salt-color-green-500-fade-background`
+  - `--salt-color-green-600-fade-background`
+  - `--salt-color-red-600-fade-background`
+
+  ## Salt next theme - `theme-next.css`
+
+  ### Palette
+
+  - `--salt-palette-negative-action-hover`
+  - `--salt-palette-negative-action-active`
+  - `--salt-palette-negative-disabled`
+  - `--salt-palette-positive-action-hover`
+  - `--salt-palette-positive-action-active`
+  - `--salt-palette-positive-disabled`
+  - `--salt-palette-warning-disabled`
+  - `--salt-palette-warning-action-hover`
+  - `--salt-palette-warning-action-active`
+
+  #### Foundation
+
+  - `--salt-color-green-500-40a`
+  - `--salt-color-orange-500-40a`
+  - `--salt-color-red-500-40a`
+
+- 285a257: Added below new tokens
+
+  - `--salt-overlayable-background-highlight`
+  - `--salt-palette-neutral-highlight`
+  - `--salt-color-black-fade-background-highlight`
+  - `--salt-color-white-fade-background-highlight`
+
+### Patch Changes
+
+- 2263a98: Fixed foreground secondary color token not correctly reflecting design in Salt Next theme, corrected to gray 700/300.
+
+## 1.21.0
+
+### Minor Changes
+
+- fc66238: Added tertiary variables in theme next theme
+
+  ```
+  --salt-container-tertiary-borderColor
+  --salt-container-tertiary-borderColor-disabled
+  ```
+
+  Added tertiary variables in existing theme
+
+  ```
+  --salt-container-tertiary-background
+  --salt-container-tertiary-background-disabled
+  --salt-container-tertiary-borderColor
+  --salt-container-tertiary-borderColor-disabled
+  ```
+
+  Added gray 30 and 50 fade background in fade.css
+
+  ```
+  --salt-color-gray-30-fade-background
+  --salt-color-gray-50-fade-background
+  ```
+
+  Un-deprecated tertiary palette variables in characteristics.css and palette.css and added those to neutral.css
+
+  ```
+  --salt-palette-neutral-tertiary-background
+  --salt-palette-neutral-tertiary-background-disabled
+  --salt-palette-neutral-tertiary-border
+  --salt-palette-neutral-tertiary-border-disabled
+  ```
+
+### Patch Changes
+
+- 3c635db: Fixed `--salt-size-selectable` double defined in deprecated token list
+
 ## 1.20.0
 
 ### Minor Changes

@@ -8,9 +8,9 @@ export default {
 
 export const RootEnabled: StoryFn = () => (
   <SaltProvider enableStyleInjection={true}>
-    <Button variant="primary">Root - style injection enabled</Button>
+    <Button>Root - style injection enabled</Button>
     <SaltProvider enableStyleInjection={false}>
-      <Button variant="primary">Nested - style injection disabled</Button>
+      <Button>Nested - style injection disabled</Button>
     </SaltProvider>
   </SaltProvider>
 );

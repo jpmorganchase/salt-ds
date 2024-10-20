@@ -6,9 +6,6 @@
   --heading-color: var(--salt-color-gray-10);
 }
 
-.withoutAvatar {
-}
-
 .withoutAvatar-container {
   display: flex;
 }
@@ -89,9 +86,6 @@
 
 .withinComboboxTooltip-contactDetails {
   width: 280px;
-}
-
-.allVariants {
 }
 
 .allVariants-container {

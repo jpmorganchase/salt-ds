@@ -41,10 +41,6 @@
 
   /* Neutral */
   --salt-palette-neutral-tertiary-background-readonly: transparent;
-  --salt-palette-neutral-tertiary-background: transparent;
-  --salt-palette-neutral-tertiary-background-disabled: transparent;
-  --salt-palette-neutral-tertiary-border: transparent;
-  --salt-palette-neutral-tertiary-border-disabled: transparent;
 
   /* Status */
   --salt-palette-error-foreground-disabled: var(--salt-color-red-500-fade-foreground);
@@ -116,10 +112,6 @@
 
   /* Neutral */
   --salt-palette-neutral-tertiary-background-readonly: transparent;
-  --salt-palette-neutral-tertiary-background: transparent;
-  --salt-palette-neutral-tertiary-background-disabled: transparent;
-  --salt-palette-neutral-tertiary-border: transparent;
-  --salt-palette-neutral-tertiary-border-disabled: transparent;
 
   /* Status */
   --salt-palette-error-foreground-disabled: var(--salt-color-red-500-fade-foreground);

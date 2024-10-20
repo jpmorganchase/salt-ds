@@ -36,12 +36,12 @@ export const AllVariantsGrid: StoryFn<QAContainerProps> = (props) => (
     />
     <Input
       startAdornment={
-        <Button variant="cta">
+        <Button sentiment="accented">
           <FlagIcon />
         </Button>
       }
       endAdornment={
-        <Button variant="secondary">
+        <Button appearance="transparent">
           <CloseIcon />
         </Button>
       }
@@ -66,12 +66,12 @@ export const AllVariantsGrid: StoryFn<QAContainerProps> = (props) => (
     <Input
       variant="secondary"
       startAdornment={
-        <Button variant="cta">
+        <Button sentiment="accented">
           <FlagIcon />
         </Button>
       }
       endAdornment={
-        <Button variant="secondary">
+        <Button appearance="transparent">
           <CloseIcon />
         </Button>
       }
@@ -79,7 +79,7 @@ export const AllVariantsGrid: StoryFn<QAContainerProps> = (props) => (
     />
     <Input
       variant="secondary"
-      endAdornment={<Button variant="cta">SEND</Button>}
+      endAdornment={<Button sentiment="accented">SEND</Button>}
       defaultValue={"Text button adornments"}
     />
 
@@ -183,12 +183,12 @@ export const NoStyleInjectionGrid: StoryFn<QAContainerNoStyleInjectionProps> = (
     />
     <Input
       startAdornment={
-        <Button variant="cta">
+        <Button sentiment="accented">
           <FlagIcon />
         </Button>
       }
       endAdornment={
-        <Button variant="secondary">
+        <Button appearance="transparent">
           <CloseIcon />
         </Button>
       }
@@ -196,7 +196,7 @@ export const NoStyleInjectionGrid: StoryFn<QAContainerNoStyleInjectionProps> = (
     />
     <Input
       variant="secondary"
-      endAdornment={<Button variant="cta">SEND</Button>}
+      endAdornment={<Button sentiment="accented">SEND</Button>}
       defaultValue={"Text button adornments"}
     />
 
@@ -218,12 +218,12 @@ export const NoStyleInjectionGrid: StoryFn<QAContainerNoStyleInjectionProps> = (
     <Input
       variant="secondary"
       startAdornment={
-        <Button variant="cta">
+        <Button sentiment="accented">
           <FlagIcon />
         </Button>
       }
       endAdornment={
-        <Button variant="secondary">
+        <Button appearance="transparent">
           <CloseIcon />
         </Button>
       }

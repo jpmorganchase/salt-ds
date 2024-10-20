@@ -13,22 +13,26 @@ export default {
   component: SegmentedButtonGroup,
 } as Meta<typeof SegmentedButtonGroup>;
 
-type variants = "primary" | "secondary" | "cta" | undefined;
-
-const variants: variants[] = ["primary", "secondary", "cta"];
-
 export const Default: StoryFn<SegmentedButtonGroupProps> = () => {
   return (
     <StackLayout>
-      {variants.map((variant) => {
-        return (
-          <SegmentedButtonGroup key={variant}>
-            <Button variant={variant}>Button</Button>
-            <Button variant={variant}>Button</Button>
-            <Button variant={variant}>Button</Button>
-          </SegmentedButtonGroup>
-        );
-      })}
+      <StackLayout>
+        <SegmentedButtonGroup>
+          <Button sentiment="accented"> Button </Button>
+          <Button sentiment="accented"> Button </Button>
+          <Button sentiment="accented"> Button </Button>
+        </SegmentedButtonGroup>
+        <SegmentedButtonGroup>
+          <Button> Button </Button>
+          <Button> Button </Button>
+          <Button> Button </Button>
+        </SegmentedButtonGroup>
+        <SegmentedButtonGroup>
+          <Button appearance="transparent"> Button </Button>
+          <Button appearance="transparent"> Button </Button>
+          <Button appearance="transparent"> Button </Button>
+        </SegmentedButtonGroup>
+      </StackLayout>
     </StackLayout>
   );
 };
@@ -36,27 +40,57 @@ export const Default: StoryFn<SegmentedButtonGroupProps> = () => {
 export const Icons: StoryFn<SegmentedButtonGroupProps> = () => {
   return (
     <StackLayout>
-      {variants.map((variant) => {
-        return (
-          <SegmentedButtonGroup key={variant}>
-            <Tooltip content="Message">
-              <Button variant={variant} aria-label="Message">
-                <MessageIcon aria-hidden />
-              </Button>
-            </Tooltip>
-            <Tooltip content="Chat">
-              <Button variant={variant} aria-label="Chat">
-                <ChatGroupIcon aria-hidden />
-              </Button>
-            </Tooltip>
-            <Tooltip content="Call">
-              <Button variant={variant} aria-label="Call">
-                <CallIcon aria-hidden />
-              </Button>
-            </Tooltip>
-          </SegmentedButtonGroup>
-        );
-      })}
+      <SegmentedButtonGroup>
+        <Tooltip content="Message">
+          <Button sentiment="accented" aria-label="Message">
+            <MessageIcon aria-hidden />
+          </Button>
+        </Tooltip>
+        <Tooltip content="Chat">
+          <Button sentiment="accented" aria-label="Chat">
+            <ChatGroupIcon aria-hidden />
+          </Button>
+        </Tooltip>
+        <Tooltip content="Call">
+          <Button sentiment="accented" aria-label="Call">
+            <CallIcon aria-hidden />
+          </Button>
+        </Tooltip>
+      </SegmentedButtonGroup>
+      <SegmentedButtonGroup>
+        <Tooltip content="Message">
+          <Button aria-label="Message">
+            <MessageIcon aria-hidden />
+          </Button>
+        </Tooltip>
+        <Tooltip content="Chat">
+          <Button aria-label="Chat">
+            <ChatGroupIcon aria-hidden />
+          </Button>
+        </Tooltip>
+        <Tooltip content="Call">
+          <Button aria-label="Call">
+            <CallIcon aria-hidden />
+          </Button>
+        </Tooltip>
+      </SegmentedButtonGroup>
+      <SegmentedButtonGroup>
+        <Tooltip content="Message">
+          <Button appearance="transparent" aria-label="Message">
+            <MessageIcon aria-hidden />
+          </Button>
+        </Tooltip>
+        <Tooltip content="Chat">
+          <Button appearance="transparent" aria-label="Chat">
+            <ChatGroupIcon aria-hidden />
+          </Button>
+        </Tooltip>
+        <Tooltip content="Call">
+          <Button appearance="transparent" aria-label="Call">
+            <CallIcon aria-hidden />
+          </Button>
+        </Tooltip>
+      </SegmentedButtonGroup>
     </StackLayout>
   );
 };

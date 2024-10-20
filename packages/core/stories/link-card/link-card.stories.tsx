@@ -12,7 +12,7 @@ import type { Meta, StoryFn } from "@storybook/react";
 import { useState } from "react";
 
 export default {
-  title: "Core/Card/Link Card",
+  title: "Core/Link Card",
   component: LinkCard,
 } as Meta<typeof LinkCard>;
 
@@ -49,7 +49,7 @@ export const AccentPlacement: StoryFn<typeof LinkCard> = (args) => {
           setPlacement(event.target.value as LinkCardProps["accent"])
         }
       >
-        <RadioButton label="bottom" value="bottom" checked />
+        <RadioButton label="bottom" value="bottom" />
         <RadioButton label="top" value="top" />
         <RadioButton label="left" value="left" />
         <RadioButton label="right" value="right" />
@@ -59,7 +59,7 @@ export const AccentPlacement: StoryFn<typeof LinkCard> = (args) => {
 };
 
 export const Variant: StoryFn<typeof LinkCard> = (args) => {
-  const variants = ["primary", "secondary"] as const;
+  const variants = ["primary", "secondary", "tertiary"] as const;
   return (
     <StackLayout style={{ width: "266px" }}>
       {variants.map((variant) => {

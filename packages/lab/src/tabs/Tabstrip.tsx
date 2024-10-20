@@ -2,10 +2,11 @@ import {
   Button,
   Tooltip,
   makePrefixer,
+  useIcon,
   useIdMemo,
   useIsomorphicLayoutEffect,
 } from "@salt-ds/core";
-import { AddIcon, OverflowMenuIcon } from "@salt-ds/icons";
+import { AddIcon } from "@salt-ds/icons";
 import { clsx } from "clsx";
 import {
   Children,
@@ -113,7 +114,7 @@ export const Tabstrip = forwardRef(function Tabstrip(
   const activeRef = useRef<number | null>(
     activeTabIndexProp || defaultActiveTabIndex || 0,
   );
-
+  const { OverflowIcon } = useIcon();
   const overflowItemsRef = useRef<OverflowItem[]>([]);
   const [showOverflowMenu, _setShowOverflowMenu] = useState(false);
 
@@ -437,7 +438,7 @@ export const Tabstrip = forwardRef(function Tabstrip(
                 variant="secondary"
                 tabIndex={-1}
               >
-                <OverflowMenuIcon />
+                <OverflowIcon />
               </Button>
             }
             width="auto"

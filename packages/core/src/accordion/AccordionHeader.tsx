@@ -1,4 +1,3 @@
-import { ChevronDownIcon, ChevronUpIcon } from "@salt-ds/icons";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
@@ -8,9 +7,9 @@ import {
   type ReactNode,
   forwardRef,
 } from "react";
+import { useIcon } from "../semantic-icon-provider";
 import { StatusIndicator } from "../status-indicator";
-
-import { makePrefixer } from "../utils";
+import { makePrefixer, useIsomorphicLayoutEffect } from "../utils";
 
 import { useAccordion } from "./AccordionContext";
 import accordionHeaderCss from "./AccordionHeader.css";
@@ -26,20 +25,30 @@ export interface AccordionHeaderProps
 const withBaseName = makePrefixer("saltAccordionHeader");
 
 function ExpansionIcon({ expanded }: { expanded: boolean }) {
+  const { CollapseIcon, ExpandIcon } = useIcon();
   if (expanded) {
-    return <ChevronUpIcon aria-hidden className={withBaseName("icon")} />;
+    return <CollapseIcon aria-hidden className={withBaseName("icon")} />;
   }
 
-  return <ChevronDownIcon aria-hidden className={withBaseName("icon")} />;
+  return <ExpandIcon aria-hidden className={withBaseName("icon")} />;
 }
 
 export const AccordionHeader = forwardRef<
   HTMLButtonElement,
   AccordionHeaderProps
 >(function AccordionHeader(props, ref) {
-  const { children, className, onClick, ...rest } = props;
-  const { value, expanded, toggle, indicatorSide, disabled, id, status } =
-    useAccordion();
+  const { children, className, onClick, id, ...rest } = props;
+  const {
+    value,
+    expanded,
+    toggle,
+    indicatorSide,
+    disabled,
+    headerId,
+    panelId,
+    setHeaderId,
+    status,
+  } = useAccordion();
 
   const targetWindow = useWindow();
   useComponentCssInjection({
@@ -53,6 +62,12 @@ export const AccordionHeader = forwardRef<
     onClick?.(event);
   };
 
+  useIsomorphicLayoutEffect(() => {
+    if (id) {
+      setHeaderId(id);
+    }
+  }, [id, setHeaderId]);
+
   return (
     <button
       ref={ref}
@@ -64,15 +79,15 @@ export const AccordionHeader = forwardRef<
       disabled={disabled}
       onClick={handleClick}
       aria-expanded={expanded}
-      id={`${id}-header`}
-      aria-controls={`${id}-panel`}
+      id={headerId}
+      aria-controls={panelId}
       value={value}
       type="button"
       {...rest}
     >
       {indicatorSide === "left" && <ExpansionIcon expanded={expanded} />}
       <span className={withBaseName("content")}>{children}</span>
-      {status && (
+      {status && !disabled && (
         <StatusIndicator
           className={withBaseName("statusIndicator")}
           status={status}

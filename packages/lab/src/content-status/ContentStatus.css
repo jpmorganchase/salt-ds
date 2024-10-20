@@ -27,10 +27,6 @@
   /* TODO: Use correct token */
 }
 
-/* Styles applied to status message */
-.saltContentStatus-message {
-}
-
 /* Styles applied to status actions */
 .saltContentStatus-actions {
   margin-top: var(--saltContentStatus-actions-marginTop, var(--salt-size-unit));

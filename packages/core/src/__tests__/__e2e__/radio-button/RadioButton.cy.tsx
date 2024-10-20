@@ -1,6 +1,16 @@
 import { RadioButton } from "@salt-ds/core";
 
 describe("GIVEN a RadioButton component", () => {
+  it("SHOULD support data attribute on inputProps", () => {
+    cy.mount(
+      <RadioButton
+        inputProps={{ "data-testId": "customInput" }}
+        value="value"
+      />,
+    );
+    cy.findByTestId("customInput").should("have.value", "value");
+  });
+
   describe("WHEN RadioButton is given a value", () => {
     it("SHOULD render with the specified value", () => {
       cy.mount(<RadioButton value="some value" />);

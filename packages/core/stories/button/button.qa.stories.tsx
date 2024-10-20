@@ -40,6 +40,276 @@ export const AllVariantsGrid: StoryFn<QAContainerProps> = (props) => (
     <Button variant="cta">
       <SearchIcon /> Button
     </Button>
+    <Button sentiment="accented" appearance="solid">
+      Button
+    </Button>
+    <Button sentiment="accented" appearance="solid">
+      <SearchIcon />
+    </Button>
+    <Button sentiment="accented" appearance="solid">
+      <SearchIcon /> Button
+    </Button>
+    <Button sentiment="accented" appearance="bordered">
+      Button
+    </Button>
+    <Button sentiment="accented" appearance="bordered">
+      <SearchIcon />
+    </Button>
+    <Button sentiment="accented" appearance="bordered">
+      <SearchIcon /> Button
+    </Button>
+    <Button sentiment="accented" appearance="transparent">
+      Button
+    </Button>
+    <Button sentiment="accented" appearance="transparent">
+      <SearchIcon />
+    </Button>
+    <Button sentiment="accented" appearance="transparent">
+      <SearchIcon /> Button
+    </Button>
+    <Button sentiment="neutral" appearance="solid">
+      Button
+    </Button>
+    <Button sentiment="neutral" appearance="solid">
+      <SearchIcon />
+    </Button>
+    <Button sentiment="neutral" appearance="solid">
+      <SearchIcon /> Button
+    </Button>
+    <Button sentiment="neutral" appearance="bordered">
+      Button
+    </Button>
+    <Button sentiment="neutral" appearance="bordered">
+      <SearchIcon />
+    </Button>
+    <Button sentiment="neutral" appearance="bordered">
+      <SearchIcon /> Button
+    </Button>
+    <Button sentiment="neutral" appearance="transparent">
+      Button
+    </Button>
+    <Button sentiment="neutral" appearance="transparent">
+      <SearchIcon />
+    </Button>
+    <Button sentiment="neutral" appearance="transparent">
+      <SearchIcon /> Button
+    </Button>
+    <Button sentiment="positive" appearance="solid">
+      Button
+    </Button>
+    <Button sentiment="positive" appearance="solid">
+      <SearchIcon />
+    </Button>
+    <Button sentiment="positive" appearance="solid">
+      <SearchIcon /> Button
+    </Button>
+    <Button sentiment="positive" appearance="bordered">
+      Button
+    </Button>
+    <Button sentiment="positive" appearance="bordered">
+      <SearchIcon />
+    </Button>
+    <Button sentiment="positive" appearance="bordered">
+      <SearchIcon /> Button
+    </Button>
+    <Button sentiment="positive" appearance="transparent">
+      Button
+    </Button>
+    <Button sentiment="positive" appearance="transparent">
+      <SearchIcon />
+    </Button>
+    <Button sentiment="positive" appearance="transparent">
+      <SearchIcon /> Button
+    </Button>
+    <Button sentiment="negative" appearance="solid">
+      Button
+    </Button>
+    <Button sentiment="negative" appearance="solid">
+      <SearchIcon />
+    </Button>
+    <Button sentiment="negative" appearance="solid">
+      <SearchIcon /> Button
+    </Button>
+    <Button sentiment="negative" appearance="bordered">
+      Button
+    </Button>
+    <Button sentiment="negative" appearance="bordered">
+      <SearchIcon />
+    </Button>
+    <Button sentiment="negative" appearance="bordered">
+      <SearchIcon /> Button
+    </Button>
+    <Button sentiment="negative" appearance="transparent">
+      Button
+    </Button>
+    <Button sentiment="negative" appearance="transparent">
+      <SearchIcon />
+    </Button>
+    <Button sentiment="negative" appearance="transparent">
+      <SearchIcon /> Button
+    </Button>
+    <Button sentiment="caution" appearance="solid">
+      Button
+    </Button>
+    <Button sentiment="caution" appearance="solid">
+      <SearchIcon />
+    </Button>
+    <Button sentiment="caution" appearance="solid">
+      <SearchIcon /> Button
+    </Button>
+    <Button sentiment="caution" appearance="bordered">
+      Button
+    </Button>
+    <Button sentiment="caution" appearance="bordered">
+      <SearchIcon />
+    </Button>
+    <Button sentiment="caution" appearance="bordered">
+      <SearchIcon /> Button
+    </Button>
+    <Button sentiment="caution" appearance="transparent">
+      Button
+    </Button>
+    <Button sentiment="caution" appearance="transparent">
+      <SearchIcon />
+    </Button>
+    <Button sentiment="caution" appearance="transparent">
+      <SearchIcon /> Button
+    </Button>
+    <Button disabled sentiment="accented" appearance="solid">
+      Button
+    </Button>
+    <Button disabled sentiment="accented" appearance="solid">
+      <SearchIcon />
+    </Button>
+    <Button disabled sentiment="accented" appearance="solid">
+      <SearchIcon /> Button
+    </Button>
+    <Button disabled sentiment="accented" appearance="bordered">
+      Button
+    </Button>
+    <Button disabled sentiment="accented" appearance="bordered">
+      <SearchIcon />
+    </Button>
+    <Button disabled sentiment="accented" appearance="bordered">
+      <SearchIcon /> Button
+    </Button>
+    <Button disabled sentiment="accented" appearance="transparent">
+      Button
+    </Button>
+    <Button disabled sentiment="accented" appearance="transparent">
+      <SearchIcon />
+    </Button>
+    <Button disabled sentiment="accented" appearance="transparent">
+      <SearchIcon /> Button
+    </Button>
+    <Button disabled sentiment="neutral" appearance="solid">
+      Button
+    </Button>
+    <Button disabled sentiment="neutral" appearance="solid">
+      <SearchIcon />
+    </Button>
+    <Button disabled sentiment="neutral" appearance="solid">
+      <SearchIcon /> Button
+    </Button>
+    <Button disabled sentiment="neutral" appearance="bordered">
+      Button
+    </Button>
+    <Button disabled sentiment="neutral" appearance="bordered">
+      <SearchIcon />
+    </Button>
+    <Button disabled sentiment="neutral" appearance="bordered">
+      <SearchIcon /> Button
+    </Button>
+    <Button disabled sentiment="neutral" appearance="transparent">
+      Button
+    </Button>
+    <Button disabled sentiment="neutral" appearance="transparent">
+      <SearchIcon />
+    </Button>
+    <Button disabled sentiment="neutral" appearance="transparent">
+      <SearchIcon /> Button
+    </Button>
+    <Button disabled sentiment="positive" appearance="solid">
+      Button
+    </Button>
+    <Button disabled sentiment="positive" appearance="solid">
+      <SearchIcon />
+    </Button>
+    <Button disabled sentiment="positive" appearance="solid">
+      <SearchIcon /> Button
+    </Button>
+    <Button disabled sentiment="positive" appearance="bordered">
+      Button
+    </Button>
+    <Button disabled sentiment="positive" appearance="bordered">
+      <SearchIcon />
+    </Button>
+    <Button disabled sentiment="positive" appearance="bordered">
+      <SearchIcon /> Button
+    </Button>
+    <Button disabled sentiment="positive" appearance="transparent">
+      Button
+    </Button>
+    <Button disabled sentiment="positive" appearance="transparent">
+      <SearchIcon />
+    </Button>
+    <Button disabled sentiment="positive" appearance="transparent">
+      <SearchIcon /> Button
+    </Button>
+    <Button disabled sentiment="negative" appearance="solid">
+      Button
+    </Button>
+    <Button disabled sentiment="negative" appearance="solid">
+      <SearchIcon />
+    </Button>
+    <Button disabled sentiment="negative" appearance="solid">
+      <SearchIcon /> Button
+    </Button>
+    <Button disabled sentiment="negative" appearance="bordered">
+      Button
+    </Button>
+    <Button disabled sentiment="negative" appearance="bordered">
+      <SearchIcon />
+    </Button>
+    <Button disabled sentiment="negative" appearance="bordered">
+      <SearchIcon /> Button
+    </Button>
+    <Button disabled sentiment="negative" appearance="transparent">
+      Button
+    </Button>
+    <Button disabled sentiment="negative" appearance="transparent">
+      <SearchIcon />
+    </Button>
+    <Button disabled sentiment="negative" appearance="transparent">
+      <SearchIcon /> Button
+    </Button>
+    <Button disabled sentiment="caution" appearance="solid">
+      Button
+    </Button>
+    <Button disabled sentiment="caution" appearance="solid">
+      <SearchIcon />
+    </Button>
+    <Button disabled sentiment="caution" appearance="solid">
+      <SearchIcon /> Button
+    </Button>
+    <Button disabled sentiment="caution" appearance="bordered">
+      Button
+    </Button>
+    <Button disabled sentiment="caution" appearance="bordered">
+      <SearchIcon />
+    </Button>
+    <Button disabled sentiment="caution" appearance="bordered">
+      <SearchIcon /> Button
+    </Button>
+    <Button disabled sentiment="caution" appearance="transparent">
+      Button
+    </Button>
+    <Button disabled sentiment="caution" appearance="transparent">
+      <SearchIcon />
+    </Button>
+    <Button disabled sentiment="caution" appearance="transparent">
+      <SearchIcon /> Button
+    </Button>
   </QAContainer>
 );
 
@@ -83,6 +353,276 @@ export const NoStyleInjectionGrid: StoryFn<QAContainerNoStyleInjectionProps> = (
       <SearchIcon />
     </Button>
     <Button variant="cta">
+      <SearchIcon /> Button
+    </Button>
+    <Button sentiment="accented" appearance="solid">
+      Button
+    </Button>
+    <Button sentiment="accented" appearance="solid">
+      <SearchIcon />
+    </Button>
+    <Button sentiment="accented" appearance="solid">
+      <SearchIcon /> Button
+    </Button>
+    <Button sentiment="accented" appearance="bordered">
+      Button
+    </Button>
+    <Button sentiment="accented" appearance="bordered">
+      <SearchIcon />
+    </Button>
+    <Button sentiment="accented" appearance="bordered">
+      <SearchIcon /> Button
+    </Button>
+    <Button sentiment="accented" appearance="transparent">
+      Button
+    </Button>
+    <Button sentiment="accented" appearance="transparent">
+      <SearchIcon />
+    </Button>
+    <Button sentiment="accented" appearance="transparent">
+      <SearchIcon /> Button
+    </Button>
+    <Button sentiment="neutral" appearance="solid">
+      Button
+    </Button>
+    <Button sentiment="neutral" appearance="solid">
+      <SearchIcon />
+    </Button>
+    <Button sentiment="neutral" appearance="solid">
+      <SearchIcon /> Button
+    </Button>
+    <Button sentiment="neutral" appearance="bordered">
+      Button
+    </Button>
+    <Button sentiment="neutral" appearance="bordered">
+      <SearchIcon />
+    </Button>
+    <Button sentiment="neutral" appearance="bordered">
+      <SearchIcon /> Button
+    </Button>
+    <Button sentiment="neutral" appearance="transparent">
+      Button
+    </Button>
+    <Button sentiment="neutral" appearance="transparent">
+      <SearchIcon />
+    </Button>
+    <Button sentiment="neutral" appearance="transparent">
+      <SearchIcon /> Button
+    </Button>
+    <Button sentiment="positive" appearance="solid">
+      Button
+    </Button>
+    <Button sentiment="positive" appearance="solid">
+      <SearchIcon />
+    </Button>
+    <Button sentiment="positive" appearance="solid">
+      <SearchIcon /> Button
+    </Button>
+    <Button sentiment="positive" appearance="bordered">
+      Button
+    </Button>
+    <Button sentiment="positive" appearance="bordered">
+      <SearchIcon />
+    </Button>
+    <Button sentiment="positive" appearance="bordered">
+      <SearchIcon /> Button
+    </Button>
+    <Button sentiment="positive" appearance="transparent">
+      Button
+    </Button>
+    <Button sentiment="positive" appearance="transparent">
+      <SearchIcon />
+    </Button>
+    <Button sentiment="positive" appearance="transparent">
+      <SearchIcon /> Button
+    </Button>
+    <Button sentiment="negative" appearance="solid">
+      Button
+    </Button>
+    <Button sentiment="negative" appearance="solid">
+      <SearchIcon />
+    </Button>
+    <Button sentiment="negative" appearance="solid">
+      <SearchIcon /> Button
+    </Button>
+    <Button sentiment="negative" appearance="bordered">
+      Button
+    </Button>
+    <Button sentiment="negative" appearance="bordered">
+      <SearchIcon />
+    </Button>
+    <Button sentiment="negative" appearance="bordered">
+      <SearchIcon /> Button
+    </Button>
+    <Button sentiment="negative" appearance="transparent">
+      Button
+    </Button>
+    <Button sentiment="negative" appearance="transparent">
+      <SearchIcon />
+    </Button>
+    <Button sentiment="negative" appearance="transparent">
+      <SearchIcon /> Button
+    </Button>
+    <Button sentiment="caution" appearance="solid">
+      Button
+    </Button>
+    <Button sentiment="caution" appearance="solid">
+      <SearchIcon />
+    </Button>
+    <Button sentiment="caution" appearance="solid">
+      <SearchIcon /> Button
+    </Button>
+    <Button sentiment="caution" appearance="bordered">
+      Button
+    </Button>
+    <Button sentiment="caution" appearance="bordered">
+      <SearchIcon />
+    </Button>
+    <Button sentiment="caution" appearance="bordered">
+      <SearchIcon /> Button
+    </Button>
+    <Button sentiment="caution" appearance="transparent">
+      Button
+    </Button>
+    <Button sentiment="caution" appearance="transparent">
+      <SearchIcon />
+    </Button>
+    <Button sentiment="caution" appearance="transparent">
+      <SearchIcon /> Button
+    </Button>
+    <Button disabled sentiment="accented" appearance="solid">
+      Button
+    </Button>
+    <Button disabled sentiment="accented" appearance="solid">
+      <SearchIcon />
+    </Button>
+    <Button disabled sentiment="accented" appearance="solid">
+      <SearchIcon /> Button
+    </Button>
+    <Button disabled sentiment="accented" appearance="bordered">
+      Button
+    </Button>
+    <Button disabled sentiment="accented" appearance="bordered">
+      <SearchIcon />
+    </Button>
+    <Button disabled sentiment="accented" appearance="bordered">
+      <SearchIcon /> Button
+    </Button>
+    <Button disabled sentiment="accented" appearance="transparent">
+      Button
+    </Button>
+    <Button disabled sentiment="accented" appearance="transparent">
+      <SearchIcon />
+    </Button>
+    <Button disabled sentiment="accented" appearance="transparent">
+      <SearchIcon /> Button
+    </Button>
+    <Button disabled sentiment="neutral" appearance="solid">
+      Button
+    </Button>
+    <Button disabled sentiment="neutral" appearance="solid">
+      <SearchIcon />
+    </Button>
+    <Button disabled sentiment="neutral" appearance="solid">
+      <SearchIcon /> Button
+    </Button>
+    <Button disabled sentiment="neutral" appearance="bordered">
+      Button
+    </Button>
+    <Button disabled sentiment="neutral" appearance="bordered">
+      <SearchIcon />
+    </Button>
+    <Button disabled sentiment="neutral" appearance="bordered">
+      <SearchIcon /> Button
+    </Button>
+    <Button disabled sentiment="neutral" appearance="transparent">
+      Button
+    </Button>
+    <Button disabled sentiment="neutral" appearance="transparent">
+      <SearchIcon />
+    </Button>
+    <Button disabled sentiment="neutral" appearance="transparent">
+      <SearchIcon /> Button
+    </Button>
+    <Button disabled sentiment="positive" appearance="solid">
+      Button
+    </Button>
+    <Button disabled sentiment="positive" appearance="solid">
+      <SearchIcon />
+    </Button>
+    <Button disabled sentiment="positive" appearance="solid">
+      <SearchIcon /> Button
+    </Button>
+    <Button disabled sentiment="positive" appearance="bordered">
+      Button
+    </Button>
+    <Button disabled sentiment="positive" appearance="bordered">
+      <SearchIcon />
+    </Button>
+    <Button disabled sentiment="positive" appearance="bordered">
+      <SearchIcon /> Button
+    </Button>
+    <Button disabled sentiment="positive" appearance="transparent">
+      Button
+    </Button>
+    <Button disabled sentiment="positive" appearance="transparent">
+      <SearchIcon />
+    </Button>
+    <Button disabled sentiment="positive" appearance="transparent">
+      <SearchIcon /> Button
+    </Button>
+    <Button disabled sentiment="negative" appearance="solid">
+      Button
+    </Button>
+    <Button disabled sentiment="negative" appearance="solid">
+      <SearchIcon />
+    </Button>
+    <Button disabled sentiment="negative" appearance="solid">
+      <SearchIcon /> Button
+    </Button>
+    <Button disabled sentiment="negative" appearance="bordered">
+      Button
+    </Button>
+    <Button disabled sentiment="negative" appearance="bordered">
+      <SearchIcon />
+    </Button>
+    <Button disabled sentiment="negative" appearance="bordered">
+      <SearchIcon /> Button
+    </Button>
+    <Button disabled sentiment="negative" appearance="transparent">
+      Button
+    </Button>
+    <Button disabled sentiment="negative" appearance="transparent">
+      <SearchIcon />
+    </Button>
+    <Button disabled sentiment="negative" appearance="transparent">
+      <SearchIcon /> Button
+    </Button>
+    <Button disabled sentiment="caution" appearance="solid">
+      Button
+    </Button>
+    <Button disabled sentiment="caution" appearance="solid">
+      <SearchIcon />
+    </Button>
+    <Button disabled sentiment="caution" appearance="solid">
+      <SearchIcon /> Button
+    </Button>
+    <Button disabled sentiment="caution" appearance="bordered">
+      Button
+    </Button>
+    <Button disabled sentiment="caution" appearance="bordered">
+      <SearchIcon />
+    </Button>
+    <Button disabled sentiment="caution" appearance="bordered">
+      <SearchIcon /> Button
+    </Button>
+    <Button disabled sentiment="caution" appearance="transparent">
+      Button
+    </Button>
+    <Button disabled sentiment="caution" appearance="transparent">
+      <SearchIcon />
+    </Button>
+    <Button disabled sentiment="caution" appearance="transparent">
       <SearchIcon /> Button
     </Button>
   </QAContainerNoStyleInjection>

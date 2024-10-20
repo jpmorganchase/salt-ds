@@ -96,9 +96,6 @@
   --grid-right-header-zIndex: 3;
 }
 
-.saltGrid-columnSeparators {
-}
-
 .saltGrid table {
   border-collapse: separate;
   border-spacing: 0;

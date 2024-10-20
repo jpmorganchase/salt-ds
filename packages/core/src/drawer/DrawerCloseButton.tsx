@@ -1,9 +1,9 @@
-import { CloseIcon } from "@salt-ds/icons";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import clsx from "clsx";
 import { forwardRef } from "react";
 import { Button, type ButtonProps } from "../button";
+import { useIcon } from "../semantic-icon-provider";
 import { makePrefixer } from "../utils";
 
 import drawerCloseButtonCss from "./DrawerCloseButton.css";
@@ -18,13 +18,14 @@ export const DrawerCloseButton = forwardRef<HTMLButtonElement, ButtonProps>(
       css: drawerCloseButtonCss,
       window: targetWindow,
     });
+    const { CloseIcon } = useIcon();
 
     return (
       <div className={withBaseName("container")}>
         <Button
           ref={ref}
           aria-label="Close Drawer"
-          variant="secondary"
+          appearance="transparent"
           className={clsx(withBaseName(), className)}
           {...rest}
         >

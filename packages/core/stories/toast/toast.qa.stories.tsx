@@ -17,55 +17,55 @@ const UI = () => (
   <StackLayout>
     <Toast>
       <ToastContent>This is a toast</ToastContent>
-      <Button variant="secondary">
+      <Button appearance="transparent">
         <CloseIcon />
       </Button>
     </Toast>
     <Toast status="info">
       <ToastContent>This is a toast</ToastContent>
-      <Button variant="secondary">
+      <Button appearance="transparent">
         <CloseIcon />
       </Button>
     </Toast>
     <Toast status="error">
       <ToastContent>This is a toast</ToastContent>
-      <Button variant="secondary">
+      <Button appearance="transparent">
         <CloseIcon />
       </Button>
     </Toast>
     <Toast status="warning">
       <ToastContent>This is a toast</ToastContent>
-      <Button variant="secondary">
+      <Button appearance="transparent">
         <CloseIcon />
       </Button>
     </Toast>
     <Toast status="success">
       <ToastContent>This is a toast</ToastContent>
-      <Button variant="secondary">
+      <Button appearance="transparent">
         <CloseIcon />
       </Button>
     </Toast>
     <Toast icon={<GlobeIcon aria-label="info" />} status={"info"}>
       <ToastContent>Custom icon toast</ToastContent>
-      <Button variant="secondary">
+      <Button appearance="transparent">
         <CloseIcon />
       </Button>
     </Toast>
     <Toast icon={<GlobeIcon aria-label="error" />} status="error">
       <ToastContent>Custom icon toast</ToastContent>
-      <Button variant="secondary">
+      <Button appearance="transparent">
         <CloseIcon />
       </Button>
     </Toast>
     <Toast icon={<GlobeIcon aria-label="warning" />} status="warning">
       <ToastContent>Custom icon toast</ToastContent>
-      <Button variant="secondary">
+      <Button appearance="transparent">
         <CloseIcon />
       </Button>
     </Toast>
     <Toast icon={<GlobeIcon aria-label="success" />} status="success">
       <ToastContent>Custom icon toast</ToastContent>
-      <Button variant="secondary">
+      <Button appearance="transparent">
         <CloseIcon />
       </Button>
     </Toast>

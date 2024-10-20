@@ -95,7 +95,7 @@ Refrain from using icon descriptors when you have multiple values for similar ch
 
 ## Using links
 
-You can define contact details as links, making them interactive. This enables immediate communication to a contact from within your application.
+We recommend emails to be interactive links by default, you can also define other details (e.g. phone number) as links, making them interactive—to enable immediate communication to a contact from within your application.
 
  <Diagram
     src="/img/patterns/contact-details/contact-details-using-links.png"
@@ -159,7 +159,9 @@ Consider making supplementary details collapsible when they contain secondary in
 
 The list version allows you to display a snapshot of key details. It’s ideal when you have restricted real estate, such as in a client picker dropdown menu or a contact directory list.
 
-To show as many options as possible, we recommend you keep data points to no more than one line. Prioritize the most important values.
+To show as many options as possible, we recommend you keep data points to no more than one line. Prioritize the most important values. 
+
+The link function won't be able to be applied to the text content (e.g. email or phone number) as it is an list item that users select as a whole option from the dropdown.
 
  <Diagram
     src="/img/patterns/contact-details/contact-details-list.png"
@@ -181,5 +183,11 @@ Use `StackLayout` to display the text elements underneath the header in a row.
     alt="Contact Details in list using stack layout."
     border
   />
+
+## Changelog
+
+| Date | Summary |
+| --- | --- |
+| 2024-09-27 | Updated email with Link. | 
 
 :fragment{src="./fragments/feedback.mdx"}

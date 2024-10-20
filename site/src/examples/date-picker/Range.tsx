@@ -1,17 +1,45 @@
 import {
-  FormField,
-  FormFieldHelperText as FormHelperText,
-  FormFieldLabel as FormLabel,
-} from "@salt-ds/core";
-import { DatePicker } from "@salt-ds/lab";
-import type { ReactElement } from "react";
+  DatePicker,
+  DatePickerOverlay,
+  DatePickerRangeInput,
+  DatePickerRangePanel,
+  type DateRangeSelection,
+  formatDate,
+  getCurrentLocale,
+} from "@salt-ds/lab";
+import { type ReactElement, useCallback } from "react";
 
-export const Range = (): ReactElement => (
-  <FormField style={{ width: "250px" }}>
-    <FormLabel>Pick a range</FormLabel>
-    <DatePicker selectionVariant="range" />
-    <FormHelperText>
-      Select a start and end date, format DD MMM YYYY (e.g. 09 Jun 2021)
-    </FormHelperText>
-  </FormField>
-);
+function formatDateRange(
+  dateRange: DateRangeSelection | null,
+  locale = getCurrentLocale(),
+  options?: Intl.DateTimeFormatOptions,
+): string {
+  const { startDate, endDate } = dateRange || {};
+  const formattedStartDate = startDate
+    ? formatDate(startDate, locale, options)
+    : startDate;
+  const formattedEndDate = endDate
+    ? formatDate(endDate, locale, options)
+    : endDate;
+  return `Start date: ${formattedStartDate}, End date: ${formattedEndDate}`;
+}
+export const Range = (): ReactElement => {
+  const handleSelectedDateChange = useCallback(
+    (newSelectedDate: DateRangeSelection | null) => {
+      console.log(`Selected date range: ${formatDateRange(newSelectedDate)}`);
+    },
+    [],
+  );
+
+  return (
+    <DatePicker
+      selectionVariant="range"
+      onSelectedDateChange={handleSelectedDateChange}
+    >
+      <DatePickerRangeInput />
+      <DatePickerOverlay>
+        <DatePickerRangePanel />
+      </DatePickerOverlay>
+    </DatePicker>
+  );
+};

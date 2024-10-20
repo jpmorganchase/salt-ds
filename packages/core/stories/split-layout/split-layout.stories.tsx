@@ -65,38 +65,38 @@ const endItem = (
 
 const startButtonsItem = (
   <FlowLayout gap={1}>
-    <Button variant="cta">Button 1</Button>
-    <Button variant="primary">Button 2</Button>
-    <Button variant="secondary">Button 3</Button>
+    <Button sentiment="accented">Button 1</Button>
+    <Button>Button 2</Button>
+    <Button appearance="transparent">Button 3</Button>
   </FlowLayout>
 );
 
 const endButtonsItem = (
   <FlowLayout gap={1}>
-    <Button variant="cta">Button 4</Button>
-    <Button variant="primary">Button 5</Button>
+    <Button sentiment="accented">Button 4</Button>
+    <Button>Button 5</Button>
   </FlowLayout>
 );
 
 const topItem = (
   <StackLayout>
-    <Button variant="secondary" aria-label="info">
+    <Button appearance="transparent" aria-label="info">
       <InfoIcon aria-hidden />
     </Button>
-    <Button variant="secondary" aria-label="chat">
+    <Button appearance="transparent" aria-label="chat">
       <ChatIcon aria-hidden />
     </Button>
-    <Button variant="secondary" aria-label="visible">
+    <Button appearance="transparent" aria-label="visible">
       <VisibleIcon aria-hidden />
     </Button>
   </StackLayout>
 );
 const bottomItem = (
   <StackLayout>
-    <Button variant="secondary" aria-label="settings">
+    <Button appearance="transparent" aria-label="settings">
       <SettingsIcon aria-hidden />
     </Button>
-    <Button variant="secondary" aria-label="open in another tab">
+    <Button appearance="transparent" aria-label="open in another tab">
       <TearOutIcon aria-hidden />
     </Button>
   </StackLayout>

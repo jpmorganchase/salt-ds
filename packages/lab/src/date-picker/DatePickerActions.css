@@ -1,0 +1,23 @@
+.saltDatePickerActions {
+  box-sizing: border-box;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  width: 100%;
+  padding-top: var(--salt-spacing-100);
+  padding-bottom: var(--salt-spacing-100);
+  padding-left: var(--salt-spacing-100);
+  padding-right: var(--salt-spacing-100);
+}
+
+.saltDatePickerActions-body {
+  flex-grow: 1;
+}
+
+.saltDatePickerActions-action {
+  /* No margin needed here */
+}
+
+.saltDatePickerActions-action + .saltDatePickerActions-action {
+  margin-left: var(--salt-spacing-100);
+}

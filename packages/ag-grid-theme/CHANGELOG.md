@@ -1,5 +1,32 @@
 # @salt-ds/ag-grid-theme
 
+## 2.1.1
+
+### Patch Changes
+
+- 4f3bec9: Fixed `.editable-cell` incorrectly setting text-align. For numeric columns, use both `.edtiable-cell` and `.numeric-cell` for `cellClass`. Fixes #4141.
+- Updated dependencies [4ccc245]
+  - @salt-ds/theme@1.23.0
+
+## 2.1.0
+
+### Minor Changes
+
+- 285a257: Added support for [range selection](https://www.ag-grid.com/react-data-grid/global-style-customisation-selections/#range-selections) highlight color, mapped to `--salt-overlayable-background-highlight`. Closes #3922.
+
+### Patch Changes
+
+- Updated dependencies [1098fc1]
+- Updated dependencies [2263a98]
+- Updated dependencies [285a257]
+  - @salt-ds/theme@1.22.0
+
+## 2.0.2
+
+### Patch Changes
+
+- ab0215d: Fixed header text and icon color when column menu is open
+
 ## 2.0.1
 
 ### Patch Changes

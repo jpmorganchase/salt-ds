@@ -27,7 +27,7 @@ const BasicBannerExample: FC<BannerProps> = ({ status }) => {
         Example custom renderer <Link href={"#"}>link</Link>
       </BannerContent>
       <BannerActions>
-        <Button aria-label="refresh" variant="secondary">
+        <Button aria-label="refresh" appearance="transparent">
           <CloseIcon />
         </Button>
       </BannerActions>

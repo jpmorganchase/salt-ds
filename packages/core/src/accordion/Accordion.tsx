@@ -5,6 +5,7 @@ import {
   type ComponentPropsWithoutRef,
   type SyntheticEvent,
   forwardRef,
+  useState,
 } from "react";
 import { makePrefixer, useControlled, useId } from "../utils";
 import accordionCss from "./Accordion.css";
@@ -59,6 +60,9 @@ export const Accordion = forwardRef<HTMLDivElement, AccordionProps>(
     } = props;
 
     const id = useId(idProp);
+    const [headerId, setHeaderId] = useState(`${id}-header`);
+    const [panelId, setPanelId] = useState(`${id}-panel`);
+
     const targetWindow = useWindow();
     useComponentCssInjection({
       testId: "salt-accordion",
@@ -86,7 +90,10 @@ export const Accordion = forwardRef<HTMLDivElement, AccordionProps>(
           expanded,
           indicatorSide,
           disabled: Boolean(disabled),
-          id: id ?? "",
+          headerId,
+          setHeaderId,
+          panelId,
+          setPanelId,
           status,
         }}
       >
@@ -94,7 +101,10 @@ export const Accordion = forwardRef<HTMLDivElement, AccordionProps>(
           ref={ref}
           className={clsx(
             withBaseName(),
-            { [withBaseName(status ?? "")]: status },
+            {
+              [withBaseName(status ?? "")]: status,
+              [withBaseName("disabled")]: disabled,
+            },
             className,
           )}
           {...rest}

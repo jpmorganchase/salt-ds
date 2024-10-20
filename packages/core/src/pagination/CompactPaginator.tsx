@@ -1,4 +1,3 @@
-import { ChevronLeftIcon, ChevronRightIcon } from "@salt-ds/icons";
 import { clsx } from "clsx";
 import {
   type ComponentPropsWithoutRef,
@@ -6,6 +5,7 @@ import {
   forwardRef,
 } from "react";
 import { Button } from "../button";
+import { useIcon } from "../semantic-icon-provider";
 import { Text } from "../text";
 import { makePrefixer } from "../utils";
 import { PageButton } from "./PageButton";
@@ -29,6 +29,8 @@ export const CompactPaginator = forwardRef<
     window: targetWindow,
   });
 
+  const { NextIcon, PreviousIcon } = useIcon();
+
   const { count, page, onPageChange } = usePaginationContext();
 
   const onPreviousPage: MouseEventHandler<HTMLButtonElement> = (event) => {
@@ -45,13 +47,13 @@ export const CompactPaginator = forwardRef<
   return (
     <div className={clsx(withBaseName(), className)} {...restProps} ref={ref}>
       <Button
-        variant="secondary"
+        appearance="transparent"
         aria-label="Previous Page"
         onClick={onPreviousPage}
         disabled={isOnFirstPage}
         className={withBaseName("arrowButton")}
       >
-        <ChevronLeftIcon aria-hidden />
+        <PreviousIcon aria-hidden />
       </Button>
       {children ? children : <PageButton page={page} disabled />}
       <Text as="span" variant="secondary">
@@ -59,13 +61,13 @@ export const CompactPaginator = forwardRef<
       </Text>
       <PageButton page={count} disabled={isOnLastPage} />
       <Button
-        variant="secondary"
+        appearance="transparent"
         aria-label="Next Page"
         onClick={onNextPage}
         disabled={isOnLastPage}
         className={withBaseName("arrowButton")}
       >
-        <ChevronRightIcon aria-hidden />
+        <NextIcon aria-hidden />
       </Button>
     </div>
   );

@@ -6,6 +6,7 @@ import {
   type DropdownProps,
   FlexLayout,
   FlowLayout,
+  Link,
   Option,
   SplitLayout,
   StackLayout,
@@ -53,7 +54,9 @@ const basicContact = {
     },
     {
       label: "Email",
-      value: "jane.doe@example.com",
+      value: (
+        <Link href="mailto:jane.doe@example.com">jane.doe@example.com</Link>
+      ),
       icon: <MessageIcon aria-hidden />,
     },
   ],
@@ -86,7 +89,7 @@ export const ContactDetails = ({ avatarSrc = persona }) => {
           <StackLayout gap={0.5} direction={"column"}>
             {basicContact.metadata.map((metadata) => {
               return (
-                <Text variant="secondary" key={metadata.label}>
+                <Text color="secondary" key={metadata.label}>
                   {metadata.label}
                 </Text>
               );
@@ -182,7 +185,7 @@ export const QuickAction = () => {
             hideIcon
           >
             <Button
-              variant="secondary"
+              appearance="transparent"
               aria-label={`Email ${basicContact.primary}`}
             >
               <MessageIcon aria-hidden />
@@ -194,7 +197,7 @@ export const QuickAction = () => {
             hideIcon
           >
             <Button
-              variant="secondary"
+              appearance="transparent"
               aria-label={`Call ${basicContact.primary}`}
             >
               <CallIcon aria-hidden />
@@ -206,7 +209,7 @@ export const QuickAction = () => {
             hideIcon
           >
             <Button
-              variant="secondary"
+              appearance="transparent"
               aria-label={`Text ${basicContact.primary}`}
             >
               <ChatIcon aria-hidden />
@@ -249,7 +252,7 @@ export const CollapsibleDetails = () => {
                 hideIcon
               >
                 <Button
-                  variant="secondary"
+                  appearance="transparent"
                   aria-label={`Email ${basicContact.primary}`}
                 >
                   <MessageIcon aria-hidden />
@@ -261,7 +264,7 @@ export const CollapsibleDetails = () => {
                 hideIcon
               >
                 <Button
-                  variant="secondary"
+                  appearance="transparent"
                   aria-label={`Call ${basicContact.primary}`}
                 >
                   <CallIcon aria-hidden />
@@ -273,7 +276,7 @@ export const CollapsibleDetails = () => {
                 hideIcon
               >
                 <Button
-                  variant="secondary"
+                  appearance="transparent"
                   aria-label={`Text ${basicContact.primary}`}
                 >
                   <ChatIcon aria-hidden />
@@ -284,7 +287,7 @@ export const CollapsibleDetails = () => {
           endItem={
             <Button
               onClick={handleClick}
-              variant="secondary"
+              appearance="transparent"
               aria-expanded={expandedDetails}
               aria-label={"expand contact details"}
             >
@@ -310,7 +313,7 @@ export const CollapsibleDetails = () => {
             <StackLayout direction={"column"} gap={0.5}>
               {basicContact.metadata.map((metadata) => {
                 return (
-                  <Text variant="secondary" key={metadata.label}>
+                  <Text color="secondary" key={metadata.label}>
                     {metadata.label}
                   </Text>
                 );
@@ -385,17 +388,14 @@ export const List = () => {
       valueToString={(contact) => contact.primary}
     >
       {contactList.map((contact) => (
-        <Option key={contact.sid} value={contact}>
-          <StackLayout
-            direction={"row"}
-            gap={1}
-            style={{
-              paddingLeft: "var(--salt-spacing-100)",
-              paddingRight: "var(--salt-spacing-100)",
-              paddingTop: "var(--salt-spacing-50)",
-              paddingBottom: "var(--salt-spacing-50)",
-            }}
-          >
+        <Option
+          key={contact.sid}
+          value={contact}
+          style={{
+            padding: "var(--salt-spacing-50) var(--salt-spacing-100)",
+          }}
+        >
+          <StackLayout direction={"row"} align="center" gap={1}>
             <Avatar
               src={contact.avatarImage as string}
               aria-label={basicContact.primary}

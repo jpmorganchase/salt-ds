@@ -1,4 +1,4 @@
-.saltDatePickerPanel {
+.saltDatePickerOverlay {
   background: var(--salt-container-primary-background);
   border: var(--salt-size-border) var(--salt-selectable-borderStyle-selected) var(--salt-selectable-borderColor-selected);
   overflow: hidden;
@@ -8,8 +8,8 @@
   box-shadow: var(--salt-overlayable-shadow-popout);
   box-sizing: border-box;
   display: flex;
-  border-radius: var(--salt-palette-corner, 0);
 }
+
 .saltDatePickerPanel-container {
   width: min-content;
   gap: 1px;

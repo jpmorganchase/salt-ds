@@ -1,11 +1,11 @@
-import { type IconProps, TearOutIcon } from "@salt-ds/icons";
-import { clsx } from "clsx";
-import { type ComponentType, type ReactElement, forwardRef } from "react";
-import { Text, type TextProps } from "../text";
-import { makePrefixer } from "../utils";
-
+import type { IconProps } from "@salt-ds/icons";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
+import { clsx } from "clsx";
+import { type ComponentType, type ReactElement, forwardRef } from "react";
+import { useIcon } from "../semantic-icon-provider";
+import { Text, type TextProps } from "../text";
+import { makePrefixer } from "../utils";
 import linkCss from "./Link.css";
 
 const withBaseName = makePrefixer("saltLink");
@@ -22,7 +22,7 @@ export interface LinkProps extends Omit<TextProps<"a">, "as" | "disabled"> {
 
 export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
   {
-    IconComponent = TearOutIcon,
+    IconComponent,
     href,
     className,
     children,
@@ -39,6 +39,10 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
     css: linkCss,
     window: targetWindow,
   });
+  const { ExternalIcon } = useIcon();
+
+  const LinkIconComponent =
+    IconComponent === undefined ? ExternalIcon : IconComponent;
 
   return (
     <Text
@@ -54,8 +58,8 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
       {children}
       {target === "_blank" && (
         <>
-          {IconComponent && (
-            <IconComponent className={withBaseName("icon")} aria-hidden />
+          {LinkIconComponent && (
+            <LinkIconComponent className={withBaseName("icon")} aria-hidden />
           )}
           <span className={withBaseName("externalLinkADA")}>External</span>
         </>

@@ -1,10 +1,10 @@
-import { CloseIcon, OverflowMenuIcon } from "@salt-ds/icons";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
   type ChangeEvent,
   type ComponentPropsWithoutRef,
+  type FocusEvent,
   type ForwardedRef,
   type InputHTMLAttributes,
   type KeyboardEvent,
@@ -18,7 +18,9 @@ import {
 } from "react";
 import { useFormFieldProps } from "../form-field-context";
 import { Pill } from "../pill";
+import { useIcon } from "../semantic-icon-provider";
 import { StatusAdornment } from "../status-adornment";
+import type { DataAttributes } from "../types";
 import { makePrefixer, useControlled, useForkRef, useId } from "../utils";
 import { useTruncatePills } from "./useTruncatePills";
 
@@ -44,7 +46,7 @@ export interface PillInputProps
   /**
    * [Attributes](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#Attributes) applied to the `input` element.
    */
-  inputProps?: InputHTMLAttributes<HTMLInputElement>;
+  inputProps?: Partial<InputHTMLAttributes<HTMLInputElement>> & DataAttributes;
   /**
    * Optional ref for the input component
    */
@@ -113,6 +115,7 @@ export const PillInput = forwardRef(function PillInput(
   ref: ForwardedRef<HTMLDivElement>,
 ) {
   const targetWindow = useWindow();
+  const { OverflowIcon, CloseIcon } = useIcon();
   useComponentCssInjection({
     testId: "salt-pill-input",
     css: pillInputCss,
@@ -140,6 +143,7 @@ export const PillInput = forwardRef(function PillInput(
   const isReadOnly = readOnlyProp || formFieldReadOnly;
   const validationStatus = formFieldValidationStatus ?? validationStatusProp;
 
+  const [focused, setFocused] = useState(false);
   const [focusedPillIndex, setFocusedPillIndex] = useState(-1);
 
   const isEmptyReadOnly = isReadOnly && !defaultValueProp && !valueProp;
@@ -148,6 +152,8 @@ export const PillInput = forwardRef(function PillInput(
   const {
     "aria-describedby": inputDescribedBy,
     "aria-labelledby": inputLabelledBy,
+    onBlur,
+    onFocus,
     onChange,
     required: inputPropsRequired,
     onKeyDown: inputOnKeyDown,
@@ -238,6 +244,16 @@ export const PillInput = forwardRef(function PillInput(
     inputRef.current?.focus();
   };
 
+  const handleBlur = (event: FocusEvent<HTMLInputElement>) => {
+    onBlur?.(event);
+    setFocused(false);
+  };
+
+  const handleFocus = (event: FocusEvent<HTMLInputElement>) => {
+    onFocus?.(event);
+    setFocused(true);
+  };
+
   const inputStyle = {
     "--input-textAlign": textAlign,
     ...style,
@@ -249,6 +265,7 @@ export const PillInput = forwardRef(function PillInput(
         withBaseName(),
         withBaseName(variant),
         {
+          [withBaseName("focused")]: !isDisabled && focused,
           [withBaseName("disabled")]: isDisabled,
           [withBaseName("readOnly")]: isReadOnly,
           [withBaseName("truncate")]: truncate,
@@ -306,7 +323,7 @@ export const PillInput = forwardRef(function PillInput(
                 data-overflowindicator
                 className={withBaseName("overflowIndicator")}
               >
-                <OverflowMenuIcon aria-hidden />
+                <OverflowIcon aria-hidden />
               </div>
             </div>
           )}
@@ -321,7 +338,9 @@ export const PillInput = forwardRef(function PillInput(
           ref={handleInputRef}
           role={role}
           tabIndex={isDisabled ? -1 : 0}
+          onBlur={handleBlur}
           onChange={handleChange}
+          onFocus={!isDisabled ? handleFocus : undefined}
           onKeyDown={handleKeyDown}
           placeholder={placeholder}
           value={value}
@@ -331,7 +350,9 @@ export const PillInput = forwardRef(function PillInput(
         />
       </div>
       {!isDisabled && validationStatus && (
-        <StatusAdornment status={validationStatus} />
+        <div className={withBaseName("statusAdornmentContainer")}>
+          <StatusAdornment status={validationStatus} />
+        </div>
       )}
       {endAdornment && (
         <div className={withBaseName("endAdornmentContainer")}>

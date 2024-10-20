@@ -6,12 +6,15 @@
   min-width: var(--radioButton-size);
   min-height: var(--radioButton-size);
   border-radius: 50%;
-
+  position: relative;
   border: var(--salt-size-border) var(--salt-selectable-borderStyle) var(--salt-selectable-borderColor);
   color: var(--salt-selectable-foreground);
   background: var(--salt-container-primary-background);
   --saltIcon-size: 100%;
   display: flex;
+  /* Using overflow:hidden here causes a thin white line */
+  clip-path: border-box;
+  box-sizing: border-box;
 }
 
 .saltRadioButton:hover .saltRadioButtonIcon {
@@ -56,4 +59,10 @@
 .saltRadioButton:hover .saltRadioButtonIcon-readOnly {
   border-color: var(--salt-selectable-borderColor-readonly);
   color: var(--salt-content-primary-foreground);
+}
+
+.saltRadioButtonIcon > svg {
+  position: absolute;
+  /* Ensure a gap doesn't appear when device scaling is used */
+  transform: scale(1.01);
 }

@@ -1,4 +1,4 @@
-import { FlexLayout, NavigationItem } from "@salt-ds/core";
+import { FlowLayout, NavigationItem, StackLayout } from "@salt-ds/core";
 import { NotificationIcon } from "@salt-ds/icons";
 import type { Meta, StoryFn } from "@storybook/react";
 import { QAContainer, type QAContainerProps } from "docs/components";
@@ -8,108 +8,69 @@ export default {
   component: NavigationItem,
 } as Meta;
 
-const multipleLevelNesting = [
-  {
-    active: true,
-    icon: true,
-    name: "Label 1 - level 0",
-  },
-  {
-    name: "Label 2 - level 0",
-    expanded: true,
-    subNav: [
-      {
-        name: "Label 1 - level 1",
-        expanded: true,
-        subNav: [
-          {
-            name: "Label 1 - level 2",
-          },
-          {
-            name: "Label 2 - level 2",
-            icon: true,
-          },
-          {
-            name: "Label 3 - level 2",
-          },
-        ],
-      },
-    ],
-  },
-];
-
 export const AllExamples: StoryFn<QAContainerProps> = () => (
   <>
-    <QAContainer height={1710} width={800} itemPadding={4} itemWidthAuto>
-      <FlexLayout direction={"column"}>
-        <nav>
-          <ul style={{ listStyle: "none", padding: 0, display: "flex" }}>
-            {multipleLevelNesting.map((item) => (
-              <li key={item.name}>
-                <NavigationItem active={item.active} href="#">
-                  {item.icon && <NotificationIcon />}
-                  {item.name}
-                </NavigationItem>
-              </li>
-            ))}
-          </ul>
-        </nav>
-        <nav>
-          <ul style={{ listStyle: "none", padding: 0 }}>
-            {multipleLevelNesting.map(
-              ({ active, expanded, icon, name, subNav }) => (
-                <li key={name}>
-                  <NavigationItem
-                    href="#"
-                    orientation="vertical"
-                    parent={subNav && subNav.length > 0}
-                    expanded={expanded}
-                    active={active}
-                  >
-                    {icon && <NotificationIcon />}
-                    {name}
-                  </NavigationItem>
-
-                  {expanded && (
-                    <ul style={{ listStyle: "none", padding: 0 }}>
-                      {subNav?.map((item) => (
-                        <li key={item.name}>
-                          <NavigationItem
-                            href="#"
-                            orientation="vertical"
-                            level={1}
-                            parent={item.subNav && item.subNav.length > 0}
-                            expanded={expanded}
-                          >
-                            {item.name}
-                          </NavigationItem>
-
-                          {item.expanded && (
-                            <ul style={{ listStyle: "none", padding: 0 }}>
-                              {item.subNav.map((nestedItem) => (
-                                <li key={nestedItem.name}>
-                                  <NavigationItem
-                                    href="#"
-                                    orientation="vertical"
-                                    level={2}
-                                  >
-                                    {nestedItem.icon && <NotificationIcon />}
-                                    {nestedItem.name}
-                                  </NavigationItem>
-                                </li>
-                              ))}
-                            </ul>
-                          )}
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                </li>
-              ),
-            )}
-          </ul>
-        </nav>
-      </FlexLayout>
+    <QAContainer
+      height={1210}
+      width={1630}
+      itemWidthAuto
+      vertical
+      transposeDensity
+    >
+      <FlowLayout gap={1} style={{ alignItems: "flex-start", maxWidth: 800 }}>
+        <NavigationItem>Button</NavigationItem>
+        <NavigationItem href="#">Link</NavigationItem>
+        <NavigationItem active>Active</NavigationItem>
+        <NavigationItem blurActive>Blur active</NavigationItem>
+        <NavigationItem parent>Horizontal Parent</NavigationItem>
+        <NavigationItem parent expanded>
+          Horizontal Parent expanded
+        </NavigationItem>
+        <NavigationItem parent href="#">
+          Horizontal Parent Link
+        </NavigationItem>
+        <NavigationItem orientation="vertical">Vertical</NavigationItem>
+        <NavigationItem orientation="vertical" parent>
+          Vertical Parent
+        </NavigationItem>
+        <NavigationItem orientation="vertical" parent expanded>
+          Vertical Parent expanded
+        </NavigationItem>
+      </FlowLayout>
+      <FlowLayout>
+        <StackLayout gap="var(--salt-size-border">
+          <NavigationItem orientation="vertical" level={0}>
+            Level 0
+          </NavigationItem>
+          <NavigationItem orientation="vertical" level={1}>
+            Level 1
+          </NavigationItem>
+          <NavigationItem orientation="vertical" level={2}>
+            Level 2
+          </NavigationItem>
+          <NavigationItem orientation="vertical" level={3}>
+            Level 3
+          </NavigationItem>
+        </StackLayout>
+        <StackLayout gap="var(--salt-size-border">
+          <NavigationItem orientation="vertical" level={0}>
+            <NotificationIcon />
+            Level 0
+          </NavigationItem>
+          <NavigationItem orientation="vertical" level={1}>
+            <NotificationIcon />
+            Level 1
+          </NavigationItem>
+          <NavigationItem orientation="vertical" level={2}>
+            <NotificationIcon />
+            Level 2
+          </NavigationItem>
+          <NavigationItem orientation="vertical" level={3}>
+            <NotificationIcon />
+            Level 3
+          </NavigationItem>
+        </StackLayout>
+      </FlowLayout>
     </QAContainer>
   </>
 );

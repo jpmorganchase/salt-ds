@@ -1,249 +1,138 @@
-import { type InputProps, useControlled, useId } from "@salt-ds/core";
-import type {
-  ChangeEvent,
-  KeyboardEvent,
-  MouseEvent,
-  MutableRefObject,
+import {
+  type Dispatch,
+  type MouseEvent,
+  type MutableRefObject,
+  type SetStateAction,
+  type SyntheticEvent,
+  useCallback,
 } from "react";
 import type { StepperInputProps } from "./StepperInput";
-import { useSpinner } from "./internal/useSpinner";
+import { useActivateWhileMouseDown } from "./internal/useActivateWhileMouseDown";
+import {
+  isAtMax,
+  isAtMin,
+  toFixedDecimalPlaces,
+  toFloat,
+} from "./internal/utils";
 
-// The input should only accept numbers, decimal points, and plus/minus symbols
-const ACCEPT_INPUT = /^[-+]?[0-9]*\.?([0-9]+)?/g;
+/**
+ * Manages increment / decrement logic
+ */
+export const useStepperInput = ({
+  decimalPlaces = 0,
+  disabled,
+  inputRef,
+  max = Number.MAX_SAFE_INTEGER,
+  min = Number.MIN_SAFE_INTEGER,
+  onChange,
+  readOnly,
+  setValue,
+  step = 1,
+  stepBlock = 10,
+  value,
+}: Pick<
+  StepperInputProps,
+  | "decimalPlaces"
+  | "disabled"
+  | "inputRef"
+  | "max"
+  | "min"
+  | "onChange"
+  | "readOnly"
+  | "step"
+  | "stepBlock"
+  | "value"
+> & {
+  setValue: Dispatch<SetStateAction<string | number | undefined>>;
+  inputRef: MutableRefObject<HTMLInputElement | null>;
+}) => {
+  const setValueInRange = useCallback(
+    (event: SyntheticEvent | undefined, modifiedValue: number) => {
+      if (readOnly) return;
+      let nextValue = modifiedValue;
+      if (nextValue < min) nextValue = min;
+      if (nextValue > max) nextValue = max;
 
-const callAll =
-  (...fns: any[]) =>
-  (...args: any[]) =>
-    fns.forEach((fn) => fn?.(...args));
+      const roundedValue = toFixedDecimalPlaces(nextValue, decimalPlaces);
+      if (Number.isNaN(toFloat(roundedValue))) return;
 
-const toFixedDecimalPlaces = (inputNumber: number, decimalPlaces: number) =>
-  inputNumber.toFixed(decimalPlaces);
+      setValue(roundedValue);
 
-const isAllowedNonNumeric = (inputCharacter: number | string) => {
-  if (typeof inputCharacter === "number") return;
-  return (
-    ("-+".includes(inputCharacter) && inputCharacter.length === 1) ||
-    inputCharacter === ""
+      onChange?.(event, roundedValue);
+    },
+    [decimalPlaces, min, max, onChange, readOnly, setValue],
   );
-};
 
-const toFloat = (inputValue: number | string) => {
-  // Plus, minus, and empty characters are treated as 0
-  if (isAllowedNonNumeric(inputValue)) return 0;
-  return Number.parseFloat(inputValue.toString());
-};
+  const decrementValue = useCallback(
+    (event?: SyntheticEvent, block?: boolean) => {
+      if (value === undefined || isAtMin(value, min)) return;
+      const decrementStep = block ? stepBlock : step;
+      const nextValue =
+        value === "" ? -decrementStep : toFloat(value) - decrementStep;
+      setValueInRange(event, nextValue);
+    },
+    [value, min, step, stepBlock, setValueInRange],
+  );
 
-const sanitizedInput = (numberString: string) =>
-  (numberString.match(ACCEPT_INPUT) || []).join("");
+  const incrementValue = useCallback(
+    (event?: SyntheticEvent, block?: boolean) => {
+      if (value === undefined || isAtMax(value, max)) return;
+      const incrementStep = block ? stepBlock : step;
+      const nextValue =
+        value === "" ? incrementStep : toFloat(value) + incrementStep;
+      setValueInRange(event, nextValue);
+    },
+    [value, max, step, stepBlock, setValueInRange],
+  );
 
-export const useStepperInput = (
-  props: StepperInputProps,
-  inputRef: MutableRefObject<HTMLInputElement | null>,
-) => {
-  const {
-    block = 10,
-    decimalPlaces = 0,
-    defaultValue = 0,
-    id: idProp,
-    max = Number.MAX_SAFE_INTEGER,
-    min = Number.MIN_SAFE_INTEGER,
-    onChange,
-    step = 1,
-    value,
-  } = props;
+  const { activate: decrementSpinner } = useActivateWhileMouseDown(
+    (event?: SyntheticEvent) => decrementValue(event),
+    isAtMin(value, min),
+  );
 
-  const [currentValue, setCurrentValue, isControlled] = useControlled({
-    controlled: value,
-    default: toFixedDecimalPlaces(defaultValue, decimalPlaces),
-    name: "stepper-input",
-  });
-  const inputId = useId(idProp);
-
-  const isOutOfRange = () => {
-    if (currentValue === undefined) return true;
-    return toFloat(currentValue) > max || toFloat(currentValue) < min;
-  };
-
-  const isAtMax = () => {
-    if (currentValue === undefined) return true;
-    return toFloat(currentValue) >= max || (max === 0 && currentValue === "");
-  };
-
-  const isAtMin = () => {
-    if (currentValue === undefined) return true;
-    return toFloat(currentValue) <= min || (min === 0 && currentValue === "");
-  };
-
-  const decrement = () => {
-    if (currentValue === undefined || isAtMin()) return;
-    let nextValue = currentValue === "" ? -step : toFloat(currentValue) - step;
-
-    // Set value to `max` if it's currently out of range
-    if (max !== undefined && isOutOfRange()) nextValue = max;
-
-    setNextValue(nextValue);
-  };
-
-  const decrementBlock = () => {
-    if (currentValue === undefined || isAtMin()) return;
-    let nextValue =
-      currentValue === ""
-        ? block * -step
-        : toFloat(currentValue) - step * block;
-
-    // Set value to `max` if it's currently out of range
-    if (max !== undefined && isOutOfRange()) nextValue = max;
-
-    setNextValue(nextValue);
-  };
-
-  const increment = () => {
-    if (currentValue === undefined || isAtMax()) return;
-    let nextValue = currentValue === "" ? step : toFloat(currentValue) + step;
-
-    // Set value to `min` if it's currently out of range
-    if (min !== undefined && isOutOfRange()) nextValue = min;
-
-    setNextValue(nextValue);
-  };
-
-  const incrementBlock = () => {
-    if (currentValue === undefined || isAtMax()) return;
-    let nextValue =
-      currentValue === "" ? block * step : toFloat(currentValue) + step * block;
-
-    // Set value to `min` if it's currently out of range
-    if (min !== undefined && isOutOfRange()) nextValue = min;
-
-    setNextValue(nextValue);
-  };
-
-  const setNextValue = (modifiedValue: number) => {
-    if (props.readOnly) return;
-    let nextValue = modifiedValue;
-    if (nextValue < min) nextValue = min;
-    if (nextValue > max) nextValue = max;
-
-    const roundedValue = toFixedDecimalPlaces(nextValue, decimalPlaces);
-    if (Number.isNaN(toFloat(roundedValue))) return;
-
-    if (!isControlled) {
-      setCurrentValue(roundedValue);
-    }
-
-    if (onChange) {
-      onChange(roundedValue);
-    }
-  };
-
-  const { activate: decrementSpinnerBlock, buttonDown: pgDnButtonDown } =
-    useSpinner(decrementBlock, isAtMin());
-
-  const { activate: decrementSpinner, buttonDown: arrowDownButtonDown } =
-    useSpinner(decrement, isAtMin());
-
-  const { activate: incrementSpinnerBlock, buttonDown: pgUpButtonDown } =
-    useSpinner(incrementBlock, isAtMax());
-
-  const { activate: incrementSpinner, buttonDown: arrowUpButtonDown } =
-    useSpinner(increment, isAtMax());
-
-  const handleInputBlur = () => {
-    if (currentValue === undefined) return;
-
-    const roundedValue = toFixedDecimalPlaces(
-      toFloat(currentValue),
-      decimalPlaces,
-    );
-
-    if (
-      currentValue !== "" &&
-      !isAllowedNonNumeric(currentValue) &&
-      !isControlled
-    ) {
-      setCurrentValue(roundedValue);
-    }
-
-    if (onChange) {
-      onChange(roundedValue);
-    }
-  };
-
-  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const changedValue = event.target.value;
-
-    if (!isControlled) {
-      setCurrentValue(sanitizedInput(changedValue));
-    }
-
-    if (onChange) {
-      onChange(sanitizedInput(changedValue));
-    }
-  };
-
-  const handleInputKeyDown = (event: KeyboardEvent) => {
-    if (["ArrowUp", "ArrowDown"].includes(event.key)) {
-      event.preventDefault();
-      event.key === "ArrowUp" ? incrementSpinner() : decrementSpinner();
-    }
-    if (["PageUp", "PageDown"].includes(event.key)) {
-      event.preventDefault();
-      event.key === "PageUp"
-        ? incrementSpinnerBlock()
-        : decrementSpinnerBlock();
-    }
-  };
-
-  const handleButtonMouseDown = (
-    event: MouseEvent<HTMLButtonElement>,
-    direction: string,
-  ) => {
-    if (event.nativeEvent.button !== 0) return;
-    direction === "increment" ? incrementSpinner() : decrementSpinner();
-  };
+  const { activate: incrementSpinner } = useActivateWhileMouseDown(
+    (event?: SyntheticEvent) => incrementValue(event),
+    isAtMax(value, max),
+  );
 
   const handleButtonMouseUp = () => inputRef.current?.focus();
 
-  const getButtonProps = (direction: string) => ({
+  const commonButtonProps = {
     "aria-hidden": true,
-    disabled:
-      props.disabled || (direction === "increment" ? isAtMax() : isAtMin()),
     tabIndex: -1,
-    onMouseDown: (event: MouseEvent<HTMLButtonElement>) =>
-      handleButtonMouseDown(event, direction),
     onMouseUp: handleButtonMouseUp,
-  });
+  };
 
-  const getInputProps = (
-    inputProps: InputProps = {},
-  ): InputProps | undefined => {
-    if (currentValue === undefined) return undefined;
-    return {
-      ...inputProps,
-      inputProps: {
-        role: "spinbutton",
-        "aria-invalid": isOutOfRange(),
-        "aria-valuemax": toFloat(toFixedDecimalPlaces(max, decimalPlaces)),
-        "aria-valuemin": toFloat(toFixedDecimalPlaces(min, decimalPlaces)),
-        "aria-valuenow": toFloat(
-          toFixedDecimalPlaces(toFloat(currentValue), decimalPlaces),
-        ),
-        id: inputId,
-        ...inputProps.inputProps,
-      },
-      onBlur: callAll(inputProps.onBlur, handleInputBlur),
-      onChange: callAll(inputProps.onChange, handleInputChange),
-      onFocus: inputProps.onFocus,
-      onKeyDown: callAll(inputProps.onKeyDown, handleInputKeyDown),
-      textAlign: inputProps.textAlign,
-      value: String(currentValue),
-    };
+  const incrementButtonProps = {
+    ...commonButtonProps,
+    "aria-label": "increment value",
+    disabled: disabled || isAtMax(value, max),
+    onMouseDown: (event: MouseEvent<HTMLButtonElement>) => {
+      if (event.nativeEvent.button !== 0) {
+        // To match closely with <input type='input'>
+        return;
+      }
+      incrementSpinner(event);
+    },
+  };
+
+  const decrementButtonProps = {
+    ...commonButtonProps,
+    "aria-label": "decrement value",
+    disabled: disabled || isAtMin(value, min),
+    onMouseDown: (event: MouseEvent<HTMLButtonElement>) => {
+      if (event.nativeEvent.button !== 0) {
+        // To match closely with <input type='input'>
+        return;
+      }
+      decrementSpinner(event);
+    },
   };
 
   return {
-    decrementButtonDown: arrowDownButtonDown || pgDnButtonDown,
-    getButtonProps,
-    getInputProps,
-    incrementButtonDown: arrowUpButtonDown || pgUpButtonDown,
+    incrementButtonProps,
+    decrementButtonProps,
+    incrementValue,
+    decrementValue,
   };
 };

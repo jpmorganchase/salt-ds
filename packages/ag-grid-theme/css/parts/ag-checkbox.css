@@ -1,0 +1,9 @@
+/* CHECKBOX */
+
+div[class*="ag-theme-salt"] .ag-checkbox-input-wrapper {
+  /* border-radius doesn't work given border is part of the font glyph */
+  height: var(--salt-size-selectable);
+  width: var(--salt-size-selectable);
+  font-size: var(--salt-size-selectable);
+  line-height: var(--salt-size-selectable);
+}

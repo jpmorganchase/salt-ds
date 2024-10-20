@@ -144,7 +144,7 @@ export const OverflowMenu = () => {
   return (
     <Menu>
       <MenuTrigger>
-        <Button variant="secondary" aria-label="Open Menu">
+        <Button appearance="transparent" aria-label="Open Menu">
           <MicroMenuIcon aria-hidden />
         </Button>
       </MenuTrigger>
@@ -181,7 +181,7 @@ export const Heading = () => {
       <Display2>Attribution</Display2>
       <Menu>
         <MenuTrigger>
-          <Button aria-label="Open Menu" variant="secondary">
+          <Button aria-label="Open Menu" appearance="transparent">
             <ChevronDownIcon aria-hidden />
           </Button>
         </MenuTrigger>

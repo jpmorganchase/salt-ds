@@ -11,6 +11,7 @@ import {
 } from "react";
 import { useFormFieldProps } from "../form-field-context";
 import type { AdornmentValidationStatus } from "../status-adornment";
+import type { DataAttributes } from "../types";
 import {
   makePrefixer,
   useControlled,
@@ -52,7 +53,7 @@ export interface CheckboxProps
   /**
    * Properties applied to the input element.
    */
-  inputProps?: Partial<InputHTMLAttributes<HTMLInputElement>>;
+  inputProps?: Partial<InputHTMLAttributes<HTMLInputElement>> & DataAttributes;
   /**
    * The label to be shown next to the checkbox.
    */
@@ -149,9 +150,9 @@ export const Checkbox = forwardRef<HTMLLabelElement, CheckboxProps>(
     const readOnly =
       checkboxGroup?.readOnly || formFieldReadOnly || readOnlyProp;
     const validationStatus = !disabled
-      ? checkboxGroup?.validationStatus ??
+      ? (checkboxGroup?.validationStatus ??
         formFieldValidationStatus ??
-        validationStatusProp
+        validationStatusProp)
       : undefined;
 
     const inputRef = useRef<HTMLInputElement>(null);

@@ -151,7 +151,7 @@ const ListItemWithTooltip: ListItemType<string> = ({ item, ...props }) => {
   return (
     <Tooltip content={`I am a tooltip for ${item}`} {...props}>
       <ListItem>
-        <label style={{ width: "100%" }}>{item}</label>
+        <span style={{ width: "100%" }}>{item}</span>
       </ListItem>
     </Tooltip>
   );

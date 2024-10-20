@@ -7,9 +7,9 @@ import {
   type ValidationStatus,
   makePrefixer,
   useForkRef,
+  useIcon,
   useId,
 } from "@salt-ds/core";
-import { CloseIcon, OverflowMenuIcon } from "@salt-ds/icons";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
@@ -167,7 +167,7 @@ export const TokenizedInputNext = forwardRef(function TokenizedInputNext<Item>(
     "aria-describedby": ariaDescribedBy,
     ...restProps
   } = inputProps;
-
+  const { OverflowIcon, CloseIcon } = useIcon();
   const id = useId(idProp);
   const inputId = `${id}-input`;
   const expandButtonId = `${id}-expand-button`;
@@ -364,7 +364,7 @@ export const TokenizedInputNext = forwardRef(function TokenizedInputNext<Item>(
               data-testid="expand-button"
               {...restExpandButtonProps}
             >
-              <OverflowMenuIcon />
+              <OverflowIcon />
             </Button>
           )}
         </div>

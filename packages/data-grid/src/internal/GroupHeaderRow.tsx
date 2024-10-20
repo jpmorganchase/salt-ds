@@ -31,7 +31,7 @@ export function GroupHeaderRow<T>(props: GroupHeaderRowProps<T>) {
     return null;
   }
   return (
-    <tr className={withBaseName()} role="row">
+    <tr className={withBaseName()}>
       {groups.map((group) => {
         const Cell = group.data.headerComponent || GroupHeaderCell;
         const CellValue =

@@ -14,6 +14,11 @@ function ControlledSwitch({ onChange, disabled }: SwitchProps) {
 }
 
 describe("GIVEN a Switch", () => {
+  it("SHOULD support data attribute on inputProps", () => {
+    cy.mount(<Switch inputProps={{ "data-testId": "customInput" }} checked />);
+    cy.findByTestId("customInput").should("be.checked");
+  });
+
   describe("WHEN using Tab to navigate", () => {
     it("THEN should be focusable", () => {
       cy.mount(<Switch />);

@@ -9,44 +9,47 @@ data:
 ---
 
 <LivePreviewControls>
-<LivePreview componentName="button" exampleName="CTA" >
+  
+<LivePreview componentName="button" exampleName="Accented">
 
-## CTA
+## Accented
 
-Use the CTA button for high-priority actions. For example, a CTA button may prompt a user to register, sign up, submit or buy.
+The accented button is the main button set for your UI. It is typically used for the core actions in your workflow. Three different appearances are available based on the prominence required for the actions.
 
-### Best practices
+In the [Salt Next theme](../../themes/index), the accented button adopts a blue or teal styling option.
 
-Use CTA buttons sparingly. They represent the default or expected action on the page.
+</LivePreview>
+  
+<LivePreview componentName="button" exampleName="Neutral">
+
+## Neutral
+
+The neutral button is ideal for routine, non-urgent actions or tasks that require less visual prominence on the page. The neutral solid button can also be used as an alternative to the accented bordered button for secondary actions that need to stand out more.
 
 </LivePreview>
 
-<LivePreview componentName="button" exampleName="Primary" >
+<LivePreview componentName="button" exampleName="Sentiment">
 
-## Primary
+## Other sentiments
 
-This is the default variant. Use the primary button for routine, nonurgent actions, for example, to move to the next page or complete a task.
+Button has three other sentiments available—positive, caution and negative. Use them in your application designs as follows:
 
-</LivePreview>
-
-<LivePreview componentName="button" exampleName="Secondary" >
-
-## Secondary
-
-Use the secondary button for noncritical actions that support the user but don't impact a flow. They're typically the alternative option available alongside a primary action. For example, a secondary “back” button may support a primary “next” button.
+- **Positive**: Indicates actions that result in positive outcomes.
+- **Caution**: Alerts users to potential consequences that may arise from taking an action.
+- **Negative**: Indicates actions that lead to negative outcomes.
 
 </LivePreview>
-
+  
 <LivePreview componentName="button" exampleName="IconAndText">
 
 ## Icon and text
 
-Add an icon before the text to reinforce the button text. Add an icon after the button text to suggest movement or a direction.
+Button can display both an icon and text to visually reinforce the meaning of the action. Position the icon on either the left or right of the text depending on its purpose.
 
 ### Best practices
 
-- Place an icon to the left of the text to further describe the action, such as “upload”, “submit”, “play” or “done”. Additional description can make it easier for users to locate actions.
-- Place an icon to the right of the text to suggest direction or movement, such as opening a menu overlay, expanding a panel or opening a document. When the user activates the button, there's typically an immediate visual change.
+- **Left of the Text**: Place an icon to the left of the text to further describe the action, such as “upload”, “print”, or “share”. This additional description can make it easier for users to identify actions.
+- **Right of the Text**: Place an icon to the right of the text to suggest direction or movement, such as opening a menu overlay, expanding a panel, or exporting a document. When the user activates the button, there's typically an immediate visual change.
 
 </LivePreview>
 
@@ -54,12 +57,12 @@ Add an icon before the text to reinforce the button text. Add an icon after the 
 
 ## Icon only
 
-Display an icon-only button with no text when you have limited on-screen space, and users can easily understand the icon.
+Use an icon-only button without text when screen space is limited, and the icon is easily understood by users.
 
 ### Best practices
 
-- An icon-only button should be self-explanatory, ideally using well-known symbols. If the button's purpose isn’t clear from the icon alone, add a text description.
-- Use [`Tooltip`](../tooltip) on an icon-only button to describe the action, such as “Edit this form”, “Print this document”, or “Lock document state”.
+- **Self-Explanatory Icons**: An icon-only button should use well-known symbols that are self-explanatory. If the icon's purpose isn't clear on its own, include a text description.
+- **Tooltips**: Add a [`Tooltip`](../tooltip) to an icon-only button to describe the action, such as “Edit this form”, “Print this document”, or “Lock document state”.
 
 </LivePreview>
 
@@ -69,7 +72,17 @@ Display an icon-only button with no text when you have limited on-screen space, 
 
 Use the disabled state for a button that the user can’t press.
 
-A button with the prop `disabled={true}` will suppress all functionality. If you need to allow the user to place focus on a disabled button, you also need to pass `focusableWhenDisabled={true}`.
+A button with the prop `disabled={true}` will suppress all functionality.
+
+</LivePreview>
+
+<LivePreview componentName="button" exampleName="FocusableWhenDisabled" >
+
+## Focusable when disabled
+
+If a disabled element can be enabled (either by the user or by the system), it should be focusable. To allow this, you can pass `focusableWhenDisabled={true}`.
+
+This is useful when you want to show a tooltip or a popover when the user interacts with the button.
 
 </LivePreview>
 
@@ -80,4 +93,17 @@ A button with the prop `disabled={true}` will suppress all functionality. If you
 Use full width buttons on mobile devices or smaller viewports, the button will take up the full width of its container.
 
 </LivePreview>
+  
+<LivePreview componentName="button" exampleName="Deprecated" displayName="Deprecated variants">
+
+## Deprecated variants
+
+The previous call-to-action (CTA), Primary, and Secondary buttons have been seamlessly transitioned to their corresponding buttons in the new set. This ensures that you can continue your design work without interruption, while also benefiting from the new options available.
+
+- CTA: `sentiment="accented" appearance="solid"`
+- Primary: `sentiment="neutral" appearance="solid"`
+- Secondary: `sentiment="neutral" appearance="transparent"`
+
+</LivePreview>
+
 </LivePreviewControls>

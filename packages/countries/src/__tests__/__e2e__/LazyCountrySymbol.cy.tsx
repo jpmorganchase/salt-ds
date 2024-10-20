@@ -6,4 +6,12 @@ const composedStories = composeStories(countrySymbolStory);
 
 describe("Given an LazyCountrySymbol", () => {
   checkAccessibility(composedStories);
+
+  it("should not crash if passed in invalid code", () => {
+    const { LazyCountrySymbol } = composedStories;
+    cy.mount(
+      // @ts-ignore
+      <LazyCountrySymbol code="invalid" />,
+    );
+  });
 });

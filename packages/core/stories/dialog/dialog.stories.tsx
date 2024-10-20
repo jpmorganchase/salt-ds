@@ -84,11 +84,11 @@ const DialogTemplate: StoryFn<
           <UnmountLogger />
         </DialogContent>
         <DialogActions>
-          <Button variant="secondary" onClick={handleClose}>
+          <Button appearance="transparent" onClick={handleClose}>
             Cancel
           </Button>
           <Button onClick={handleClose}>Previous</Button>
-          <Button variant="cta" onClick={handleClose}>
+          <Button sentiment="accented" onClick={handleClose}>
             Next
           </Button>
         </DialogActions>
@@ -209,7 +209,7 @@ const AlertDialogTemplate: StoryFn<
         <DialogContent>{content}</DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button variant="cta" onClick={handleClose}>
+          <Button sentiment="accented" onClick={handleClose}>
             Ok
           </Button>
         </DialogActions>
@@ -281,7 +281,7 @@ export const MandatoryAction: StoryFn<typeof Dialog> = ({
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button variant="cta" onClick={handleClose}>
+          <Button sentiment="accented" onClick={handleClose}>
             Delete
           </Button>
         </DialogActions>
@@ -307,7 +307,7 @@ export const DesktopDialog = () => {
         <DialogContent>Hello world!</DialogContent>
         <DialogActions>
           <Button>Cancel</Button>
-          <Button variant="cta">Save</Button>
+          <Button sentiment="accented">Save</Button>
         </DialogActions>
       </FakeWindow>
 
@@ -316,7 +316,7 @@ export const DesktopDialog = () => {
         <DialogContent>Accent world!</DialogContent>
         <DialogActions>
           <Button>Cancel</Button>
-          <Button variant="cta">Save</Button>
+          <Button sentiment="accented">Save</Button>
         </DialogActions>
       </FakeWindow>
 
@@ -325,7 +325,7 @@ export const DesktopDialog = () => {
         <DialogContent>Potential issues abound!</DialogContent>
         <DialogActions>
           <Button>Cancel</Button>
-          <Button variant="cta">Ok</Button>
+          <Button sentiment="accented">Ok</Button>
         </DialogActions>
       </FakeWindow>
     </StackLayout>
@@ -363,11 +363,11 @@ export const StickyFooter: StoryFn<typeof Dialog> = ({
           scrambled it to make a type specimen book.
         </DialogContent>
         <DialogActions>
-          <Button variant="secondary" onClick={handleClose}>
+          <Button appearance="transparent" onClick={handleClose}>
             Cancel
           </Button>
           <Button onClick={handleClose}>Previous</Button>
-          <Button variant="cta" onClick={handleClose}>
+          <Button sentiment="accented" onClick={handleClose}>
             Next
           </Button>
         </DialogActions>

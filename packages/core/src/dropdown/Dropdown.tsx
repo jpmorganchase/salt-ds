@@ -7,7 +7,6 @@ import {
   useFocus,
   useInteractions,
 } from "@floating-ui/react";
-import { ChevronDownIcon, ChevronUpIcon } from "@salt-ds/icons";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
@@ -34,6 +33,7 @@ import {
   useListControl,
 } from "../list-control/ListControlState";
 import { OptionList } from "../option/OptionList";
+import { useIcon } from "../semantic-icon-provider";
 import { StatusAdornment } from "../status-adornment";
 import type { ValidationStatus } from "../status-indicator";
 import {
@@ -98,7 +98,8 @@ export type DropdownProps<Item = string> = {
   ListControlProps<Item>;
 
 function ExpandIcon({ open }: { open: boolean }) {
-  return open ? <ChevronUpIcon aria-hidden /> : <ChevronDownIcon aria-hidden />;
+  const { CollapseIcon, ExpandIcon } = useIcon();
+  return open ? <CollapseIcon aria-hidden /> : <ExpandIcon aria-hidden />;
 }
 
 const withBaseName = makePrefixer("saltDropdown");
@@ -159,7 +160,7 @@ export const Dropdown = forwardRef(function Dropdown<Item>(
   const validationStatus = validationStatusProp ?? formFieldValidationStatus;
   const required = formFieldRequired
     ? ["required", "asterisk"].includes(formFieldRequired)
-    : undefined ?? requiredProp;
+    : (undefined ?? requiredProp);
   const listControl = useListControl<Item>({
     open,
     defaultOpen,
@@ -200,7 +201,7 @@ export const Dropdown = forwardRef(function Dropdown<Item>(
   const isEmptyReadOnly = readOnly && selectedValue === "";
   const valueText = isEmptyReadOnly
     ? emptyReadOnlyMarker
-    : value ?? selectedValue;
+    : (value ?? selectedValue);
 
   const handleOpenChange: UseFloatingUIProps["onOpenChange"] = (
     newOpen,
@@ -356,7 +357,9 @@ export const Dropdown = forwardRef(function Dropdown<Item>(
 
   const handleBlur = (event: FocusEvent<HTMLButtonElement>) => {
     setFocusedState(false);
-    onBlur?.(event);
+    if (!listRef.current || !listRef.current.contains(event.relatedTarget)) {
+      onBlur?.(event);
+    }
   };
 
   const handleListMouseOver = () => {
@@ -437,7 +440,6 @@ export const Dropdown = forwardRef(function Dropdown<Item>(
         aria-describedby={
           clsx(formFieldDescribedBy, ariaDescribedBy) || undefined
         }
-        aria-multiselectable={multiselect}
         aria-controls={openState ? listId : undefined}
         {...getReferenceProps({
           onKeyDown: handleKeyDown,
@@ -459,6 +461,7 @@ export const Dropdown = forwardRef(function Dropdown<Item>(
         <div className={withBaseName("activationIndicator")} />
       </button>
       <OptionList
+        aria-multiselectable={multiselect}
         open={
           (openState || focusedState) &&
           !readOnly &&

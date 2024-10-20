@@ -1,5 +1,11 @@
 const exampleNameRegex = /[A-Z]?[a-z]+|[0-9]+|[A-Z]+(?![a-z])/g;
 
+function format(value: string): string {
+  return value.length > 0
+    ? value[0].toUpperCase() + value.slice(1).toLowerCase()
+    : value;
+}
+
 export const formatComponentExampleName = (
   exampleName: string,
   displayName?: string,
@@ -8,5 +14,5 @@ export const formatComponentExampleName = (
     return displayName;
   }
   const formattedName = exampleName.match(exampleNameRegex);
-  return formattedName ? formattedName.join(" ") : exampleName;
+  return formattedName ? format(formattedName.join(" ")) : exampleName;
 };

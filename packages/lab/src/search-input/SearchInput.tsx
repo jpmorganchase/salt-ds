@@ -1,5 +1,5 @@
-import { Button, useControlled, useForkRef } from "@salt-ds/core";
-import { CloseIcon, SearchIcon } from "@salt-ds/icons";
+import { Button, useControlled, useForkRef, useIcon } from "@salt-ds/core";
+import { SearchIcon } from "@salt-ds/icons";
 import { clsx } from "clsx";
 import {
   type ChangeEvent,
@@ -66,7 +66,7 @@ export const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
       css: searchInputCss,
       window: targetWindow,
     });
-
+    const { CloseIcon } = useIcon();
     const inputRef = useRef<HTMLInputElement>(null);
     const handleRef = useForkRef(inputRef, ref);
 

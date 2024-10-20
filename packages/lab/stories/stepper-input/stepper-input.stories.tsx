@@ -4,10 +4,9 @@ import {
   FormFieldHelperText,
   FormFieldLabel,
   StackLayout,
-  Text,
 } from "@salt-ds/core";
 import { AddIcon, RefreshIcon, RemoveIcon } from "@salt-ds/icons";
-import { StepperInput } from "@salt-ds/lab";
+import { StepperInput, type StepperInputProps } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react";
 import { useState } from "react";
 export default {
@@ -15,36 +14,133 @@ export default {
   component: StepperInput,
 } as Meta<typeof StepperInput>;
 
-export const Default: StoryFn = (args) => {
+export const Default: StoryFn<StepperInputProps> = (args) => {
   return (
     <FormField>
-      <FormFieldLabel>Default Stepper Input</FormFieldLabel>
+      <FormFieldLabel>Stepper Input</FormFieldLabel>
       <StepperInput {...args} />
       <FormFieldHelperText>Please enter a number</FormFieldHelperText>
     </FormField>
   );
 };
+Default.args = {
+  defaultValue: 0,
+};
 
-export const Secondary: StoryFn = (args) => {
+export const Secondary: StoryFn<StepperInputProps> = (args) => {
   return (
     <FormField>
-      <FormFieldLabel>Default Stepper Input</FormFieldLabel>
+      <FormFieldLabel>Stepper Input</FormFieldLabel>
       <StepperInput {...args} variant="secondary" />
       <FormFieldHelperText>Please enter a number</FormFieldHelperText>
     </FormField>
   );
 };
-export const DecimalPlaces: StoryFn = (args) => {
+Secondary.args = {
+  defaultValue: 0,
+};
+
+export const Bordered: StoryFn<StepperInputProps> = (args) => {
   return (
     <FormField>
-      <FormFieldLabel>Default Stepper Input</FormFieldLabel>
+      <FormFieldLabel>Stepper Input</FormFieldLabel>
+      <StepperInput {...args} />
+    </FormField>
+  );
+};
+Bordered.args = {
+  bordered: true,
+};
+
+export const ReadOnly: StoryFn<StepperInputProps> = (args) => {
+  return (
+    <FormField>
+      <FormFieldLabel>Stepper Input</FormFieldLabel>
+      <StepperInput {...args} />
+    </FormField>
+  );
+};
+ReadOnly.args = {
+  readOnly: true,
+  defaultValue: 5,
+};
+
+export const Disabled: StoryFn<StepperInputProps> = (args) => {
+  return (
+    <FormField>
+      <FormFieldLabel>Stepper Input</FormFieldLabel>
+      <StepperInput {...args} />
+    </FormField>
+  );
+};
+Disabled.args = {
+  disabled: true,
+  defaultValue: 5,
+};
+
+export const Validation: StoryFn<typeof StepperInput> = (args) => {
+  return (
+    <StackLayout>
+      <FormField validationStatus="error">
+        <FormFieldLabel>Error Stepper Input</FormFieldLabel>
+        <StepperInput defaultValue={"Error value"} {...args} />
+      </FormField>
+      <FormField validationStatus="warning">
+        <FormFieldLabel>Warning Stepper Input</FormFieldLabel>
+        <StepperInput defaultValue={"Warning value"} {...args} />
+      </FormField>
+      <FormField validationStatus="success">
+        <FormFieldLabel>Success Stepper Input</FormFieldLabel>
+        <StepperInput defaultValue={"Success value"} {...args} />
+      </FormField>
+    </StackLayout>
+  );
+};
+
+export const DecimalPlaces: StoryFn<StepperInputProps> = (args) => {
+  return (
+    <FormField>
+      <FormFieldLabel>Stepper Input</FormFieldLabel>
       <StepperInput decimalPlaces={2} step={0.01} {...args} />
       <FormFieldHelperText>Please enter a number</FormFieldHelperText>
     </FormField>
   );
 };
+DecimalPlaces.args = {
+  defaultValue: 0,
+};
 
-export const MinAndMaxValue: StoryFn = (args) => {
+export const Controlled: StoryFn<StepperInputProps> = (args) => {
+  const [value, setValue] = useState<number | string>(1.11);
+
+  return (
+    <FormField>
+      <FormFieldLabel>Stepper Input</FormFieldLabel>
+      <StepperInput
+        {...args}
+        decimalPlaces={2}
+        value={value}
+        onChange={(_event, value) => {
+          setValue(value);
+        }}
+        endAdornment={
+          <Button
+            variant="secondary"
+            aria-label="refresh"
+            onClick={() => setValue(1.11)}
+          >
+            <RefreshIcon aria-hidden />
+          </Button>
+        }
+      />
+      <FormFieldHelperText>
+        The stepper input value is: {value}
+      </FormFieldHelperText>
+    </FormField>
+  );
+};
+
+export const MinAndMaxValue: StoryFn<StepperInputProps> = (args) => {
   const [value, setValue] = useState<number | string>(2);
   const max = 5;
   const min = 0;
@@ -69,7 +165,9 @@ export const MinAndMaxValue: StoryFn = (args) => {
       <StepperInput
         {...args}
         value={value}
-        onChange={(changedValue) => setValue(changedValue)}
+        onChange={(_event, value) => {
+          setValue(value);
+        }}
         max={max}
         min={min}
         style={{ width: "250px" }}
@@ -81,7 +179,22 @@ export const MinAndMaxValue: StoryFn = (args) => {
   );
 };
 
-export const Alignment: StoryFn = (args) => (
+export const CustomStep: StoryFn<StepperInputProps> = (args) => {
+  return (
+    <FormField>
+      <FormFieldLabel>Stepper Input</FormFieldLabel>
+      <StepperInput {...args} />
+      <FormFieldHelperText>Custom step 5 and step block 50</FormFieldHelperText>
+    </FormField>
+  );
+};
+CustomStep.args = {
+  defaultValue: 1,
+  step: 5,
+  stepBlock: 50,
+};
+
+export const TextAlignment: StoryFn<StepperInputProps> = (args) => (
   <StackLayout>
     <FormField>
       <FormFieldLabel>Left aligned</FormFieldLabel>
@@ -100,8 +213,11 @@ export const Alignment: StoryFn = (args) => (
     </FormField>
   </StackLayout>
 );
+TextAlignment.args = {
+  defaultValue: 0,
+};
 
-export const RefreshAdornment: StoryFn = (args) => {
+export const RefreshAdornment: StoryFn<StepperInputProps> = (args) => {
   const [value, setValue] = useState<number | string>(10);
 
   return (
@@ -110,7 +226,9 @@ export const RefreshAdornment: StoryFn = (args) => {
       <StepperInput
         {...args}
         value={value}
-        onChange={(changedValue) => setValue(changedValue)}
+        onChange={(_event, value) => {
+          setValue(value);
+        }}
         endAdornment={
           <Button
             variant="secondary"
@@ -126,7 +244,7 @@ export const RefreshAdornment: StoryFn = (args) => {
   );
 };
 
-export const HideButtons: StoryFn = (args) => {
+export const CustomButtons: StoryFn<StepperInputProps> = (args) => {
   const [value, setValue] = useState<number | string>(10);
 
   return (
@@ -136,11 +254,13 @@ export const HideButtons: StoryFn = (args) => {
         {...args}
         hideButtons
         textAlign="center"
+        onChange={(_event, value) => {
+          setValue(value);
+        }}
         value={value}
-        onChange={(changedValue) => setValue(changedValue)}
         startAdornment={
           <Button
-            aria-label="decerement value"
+            aria-label="decrement value"
             onClick={() =>
               setValue(
                 typeof value === "string"
@@ -168,15 +288,6 @@ export const HideButtons: StoryFn = (args) => {
         }
       />
       <FormFieldHelperText>Please enter a value</FormFieldHelperText>
-    </FormField>
-  );
-};
-
-export const ReadOnly: StoryFn = (args) => {
-  return (
-    <FormField>
-      <FormFieldLabel>Stepper Input</FormFieldLabel>
-      <StepperInput {...args} readOnly />
     </FormField>
   );
 };

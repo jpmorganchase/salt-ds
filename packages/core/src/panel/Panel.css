@@ -8,13 +8,18 @@
   --panel-background: var(--salt-container-secondary-background);
 }
 
+/* Styles applied to the root element when variant="tertiary" */
+.saltPanel-tertiary.saltPanel {
+  --panel-background: var(--salt-container-tertiary-background);
+}
+
 /* Styles applied to the root element */
 .saltPanel {
   background: var(--saltPanel-background, var(--panel-background));
-  color: var(--saltPanel-color, initial);
+  color: var(--saltPanel-color, inherit);
   height: var(--saltPanel-height, 100%);
   overflow: auto;
-  padding: var(--saltPanel-padding, var(--salt-size-container-spacing));
+  padding: var(--saltPanel-padding, var(--salt-spacing-300));
   width: var(--saltPanel-width, 100%);
   border-radius: var(--saltPanel-borderRadius, var(--salt-palette-corner, 0));
   box-sizing: border-box;

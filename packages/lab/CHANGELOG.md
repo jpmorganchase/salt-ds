@@ -1,5 +1,165 @@
 # @salt-ds/lab
 
+## 1.0.0-alpha.54
+
+### Patch Changes
+
+- bb916f7: Removed the left padding from Static List.
+
+## 1.0.0-alpha.53
+
+### Minor Changes
+
+- 5db28b8: Added `StaticList`, `StaticListItem`, `StaticListItemContent` component to lab.
+
+  ```tsx
+  <StaticList>
+    <StaticListItem>
+      <StaticListItemContent>
+        <Text>New static list feature updates are available in lab</Text>
+      </StaticListItemContent>
+    </StaticListItem>
+    <StaticListItem>
+      <StaticListItemContent>
+        <Text>New static list feature updates are available in lab</Text>
+      </StaticListItemContent>
+    </StaticListItem>
+  </StaticList>
+  ```
+
+- 91639ec: ## StepperInput updates
+
+  - Added `bordered` prop for a full border style
+  - Changed `StepperInputProps` to extend `div` props instead of `Input`, to align with other input components
+  - Added an optional event to `onChange`, when triggered by synthetic event
+  - Added more keyboard interactions, e.g. Shift + Up / Down, Home, End.
+  - Replaced `block` with `stepBlock` prop, which now explicitly defines the value that is increment or decrement, not a multiplier of `step`.
+
+  ```tsx
+  <StepperInput
+    stepBlock={100}
+    value={value}
+    onChange={(_event, value) => {
+      setValue(value);
+    }
+  />
+  ```
+
+### Patch Changes
+
+- 3a9d518: DatePicker and Calendar API improvements
+
+  - `CalendarCarousel` has been renamed to `CarouselDateGrid` so it's more obvious of the content
+  - `Calendar` previously used `children` to define the `CalendarNavigation`.
+    We have now changed that so the `children` defines `CalendarNavigation`, `CalendarWeekHeader` and `CalendarDateGrid`
+    This enables more flexibility in both layout and configuration of the `Calendar` elements.
+    A typical Calendar will now look like this,
+
+  ```
+  <Calendar selectionVariant="single" hideOutOfRangeDates>
+     <CalendarNavigation />
+     <CalendarWeekHeader />
+     <CalendarDateGrid />
+  </Calendar>
+  ```
+
+  `CalendarNavigation` - provides year/month dropdowns and forward/back controls for the visible month.
+  `CalendarWeekHeader` - provides a header for `CalendarDateGrid` indicating the day of the week.
+  `CalendarDateGrid` - provides a grid of buttons that represent the days from a calendar month.
+
+  - cleaned up selection API, removed `select`, use `setSelectedDate` instead
+  - fix issues with `Calendar` offset selection
+  - updated examples, more consistent helper text, error text to match spec
+  - test improvements to create a known state for tests and avoid failures based on locale differences
+  - cleaned up Storybook imports in e2e tests
+
+- 5eb77be: Fixed days in the calendar having the incorrect text color when part of a selection or hover range.
+
+## 1.0.0-alpha.52
+
+### Minor Changes
+
+- 2999d0d: Remove `Slider` props, `pageStep`, `pushable`, `pushDistance`, `disabled`, `hideMarks`
+  Updated `Marks` prop to recieve inline, bottom or all
+
+### Patch Changes
+
+- dccd349: Updated DatePicker to show validation status when set to read-only.
+- 6013bf3: # Refactoring the `DatePicker` Component
+
+  The `DatePicker` component has been refactored to provide a more flexible and composable API. The updated approach allows developers to compose their own calendar patterns by combining provided components with their own or replacing the provided components entirely. This refactor also introduces new features such as locale and time zone support, custom parsers, and conditional types.
+
+  ## Before
+
+  ```tsx
+  // Original DatePicker component
+  <DatePicker style={{ width: "200px" }} />
+  ```
+
+  ## After
+
+  ```tsx
+  // New DatePicker component
+  <DatePicker
+    selectionVariant="single"
+    onSelectedDateChange={(newSelectedDate) =>
+      console.log(`Selected date: ${formatDate(newSelectedDate)}`)
+    }
+  >
+    <DatePickerSingleInput />
+    <DatePickerOverlay>
+      <DatePickerSinglePanel />
+    </DatePickerOverlay>
+  </DatePicker>
+  ```
+
+  ## Reasons for Change
+
+  - **Flexibility**: The new composable API allows developers to swap out the input component and compose their own panels, providing greater flexibility.
+  - **Simplified API**: The new design reduces the complexity of the API, making it easier to use and customize.
+  - **Customization**: Developers can now combine provided components with their own or replace the provided components entirely.
+  - **Future-Proofing**: The new design is more adaptable to future changes and customizations.
+
+  ## Additional New Features
+
+  - **Locale and Time Zone Support**: Experimental support for locale and time zones, demonstrated in a time-based Storybook example.
+  - **Custom Parsers**: Ability to provide custom parsers to parse custom date formats from the `DateInput`.
+  - **Conditional Types**: Simplified use of the `selectionVariant` prop through conditional types.
+  - **New Components**: Introduction of `DateInput`, `DateInputRange`, `DatePickerSingleInput`, `DatePickerRangeInput`, `DatePickerSinglePanel`, and `DatePickerRangePanel`.
+  - **DatePickerOverlay**: A wrapper for the `DatePicker`'s calendar, enabling custom panel composition with the calendar component.
+
+  ## Experimental Time Support (Not For Production Use)
+
+  - To ensure the DatePicker can support DateTime, locales and timezones, we have created an experimental Storybook example that supports time entry.
+
+## 1.0.0-alpha.51
+
+### Minor Changes
+
+- 888406d: Added bordered prop for `DateInput` component.
+
+  Added examples for bordered style variant for DateInput and DatePicker.
+
+  Added corner radius support for `DateInput` component in theme next.
+
+  Added 1px gap between Date Input and the menu.
+
+  Added borderedDropdown prop for `CalendarNavigation` component to display bordered months and year dropdown.
+
+  ```
+   <DatePicker bordered />
+   <DateInput bordered />
+  ```
+
+  _Note: this Labs API will be refactored and re-aligned to the updated DatePicker approach via_ [PR 3716](https://github.com/jpmorganchase/salt-ds/pull/3716)
+
+- ffc0dd4: Replaced TrackerStep's `state` prop with new `stage` and `status` props. Valid `stage` values are `"pending"` and `"completed"`. Valid `status` values are `"error"` and `"warning"`.
+- 8f17df3: Update Dropdown classname to saltDropdownBase to fix them clashing with the dropdown in core
+
+### Patch Changes
+
+- e8d923c: Fix disabled out of bound dates still having a hover style
+
 ## 1.0.0-alpha.50
 
 ### Minor Changes
@@ -819,7 +979,7 @@ import "@salt-ds/lab/css/salt-lab.css";
     event: SyntheticEvent,
     data: {
       value: string;
-    }
+    },
   ) => {
     console.log("input value changed", data);
   };

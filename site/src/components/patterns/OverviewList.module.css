@@ -14,3 +14,9 @@
   padding-inline: var(--salt-spacing-100);
   border-bottom: var(--salt-size-border) var(--salt-separable-borderStyle) var(--salt-separable-tertiary-borderColor);
 }
+
+.link {
+  --mosaic-color-dark-navigable-documentLink-regular: var(--salt-content-primary-foreground);
+  --mosaic-color-dark-navigable-documentLink-hover: var(--salt-content-foreground-hover);
+  --mosaic-color-dark-navigable-documentLink-visited: var(--salt-content-foreground-visited);
+}

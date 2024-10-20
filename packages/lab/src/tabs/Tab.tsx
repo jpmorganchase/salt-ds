@@ -4,8 +4,8 @@ import {
   type ButtonProps,
   makePrefixer,
   useForkRef,
+  useIcon,
 } from "@salt-ds/core";
-import { CloseIcon } from "@salt-ds/icons";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
@@ -29,22 +29,25 @@ const noop = () => undefined;
 
 const withBaseName = makePrefixer("saltTab");
 
-const CloseTabButton = (props: ButtonProps) => (
-  // FIXME: use polymorphic button
-  <Button
-    {...props}
-    aria-label="Close Tab (Delete or Backspace)"
-    className={withBaseName("closeButton")}
-    tabIndex={undefined}
-    title="Close Tab (Delete or Backspace)"
-    variant="secondary"
-  >
-    <CloseIcon
+const CloseTabButton = (props: ButtonProps) => {
+  const { CloseIcon } = useIcon();
+  return (
+    // FIXME: use polymorphic button
+    <Button
+      {...props}
       aria-label="Close Tab (Delete or Backspace)"
-      className={withBaseName("close-icon")}
-    />
-  </Button>
-);
+      className={withBaseName("closeButton")}
+      tabIndex={undefined}
+      title="Close Tab (Delete or Backspace)"
+      variant="secondary"
+    >
+      <CloseIcon
+        aria-label="Close Tab (Delete or Backspace)"
+        className={withBaseName("close-icon")}
+      />
+    </Button>
+  );
+};
 
 export const Tab = forwardRef(function Tab(
   {

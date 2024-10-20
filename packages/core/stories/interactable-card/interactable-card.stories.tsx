@@ -21,7 +21,7 @@ import { BankIcon, CreditCardIcon, DiamondIcon } from "@salt-ds/icons";
 import "./interactable-card.stories.css";
 
 export default {
-  title: "Core/Card/Interactable Card",
+  title: "Core/Interactable Card",
   component: InteractableCard,
 } as Meta<typeof InteractableCard>;
 
@@ -98,7 +98,7 @@ export const AccentPlacement: StoryFn<typeof InteractableCard> = (args) => {
 };
 
 export const Variant: StoryFn<typeof InteractableCard> = (args) => {
-  const variants = ["primary", "secondary"] as const;
+  const variants = ["primary", "secondary", "tertiary"] as const;
   return (
     <StackLayout style={{ width: "266px" }}>
       {variants.map((variant) => {

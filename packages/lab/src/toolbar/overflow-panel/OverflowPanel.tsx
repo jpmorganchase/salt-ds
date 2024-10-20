@@ -2,9 +2,9 @@ import {
   Button,
   makePrefixer,
   useControlled,
+  useIcon,
   useIdMemo as useId,
 } from "@salt-ds/core";
-import { OverflowMenuIcon } from "@salt-ds/icons";
 import { clsx } from "clsx";
 import {
   type ForwardedRef,
@@ -61,7 +61,7 @@ export const OverflowPanel = forwardRef(function DropdownPanel(
     css: overflowPanelCss,
     window: targetWindow,
   });
-
+  const { OverflowIcon } = useIcon();
   const id = useId();
   const collectionHook = useCollectionItems<ReactElement>({
     id,
@@ -103,8 +103,8 @@ export const OverflowPanel = forwardRef(function DropdownPanel(
   };
 
   const getTriggerButtonIcon = () =>
-    triggerButtonIcon ?? triggerButtonLabel === undefined ? (
-      <OverflowMenuIcon />
+    (triggerButtonIcon ?? triggerButtonLabel === undefined) ? (
+      <OverflowIcon />
     ) : undefined;
 
   return (

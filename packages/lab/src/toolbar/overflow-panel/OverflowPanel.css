@@ -1,4 +1,4 @@
-.saltOverflowPanel.saltDropdown-popup {
+.saltOverflowPanel.saltDropdownBase-popup {
   background: var(--salt-container-primary-background);
   border: solid 1px var(--salt-selectable-borderColor-hover);
   box-shadow: var(--salt-overlayable-shadow-popout);
@@ -6,7 +6,6 @@
 
 .saltOverflowPanel-content {
   --saltButton-justifyContent: flex-start;
-  --saltDropdown-popup-maxHeight: auto;
   align-items: stretch;
   color: var(--salt-content-primary-foreground);
   border: var(--salt-size-border) var(--salt-container-borderStyle) var(--salt-container-primary-borderColor);
@@ -22,10 +21,10 @@
   --saltIcon-color: var(--salt-actionable-secondary-foreground-active);
 }
 
-.saltOverflowPanel.saltDropdown {
+.saltOverflowPanel.saltDropdownBase {
   --saltIcon-margin: 2px 0 0 0px;
 }
 
-.saltOverflowPanel.saltDropdown-popup .saltFormFieldLegacy:not(.saltFormFieldLegacy-toolbarButton) {
+.saltOverflowPanel.saltDropdownBase-popup .saltFormFieldLegacy:not(.saltFormFieldLegacy-toolbarButton) {
   --saltFormFieldLegacy-margin: 0 12px 8px 12px;
 }

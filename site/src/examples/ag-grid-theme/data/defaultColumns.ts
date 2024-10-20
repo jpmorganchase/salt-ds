@@ -39,24 +39,10 @@ export const defaultColumns: ColDef[] = [
     cellClass: ["numeric-cell", "editable-cell"],
   },
   {
-    headerName: "Population",
-    type: "numericColumn",
-    field: "population",
-    filter: "agNumberColumnFilter",
-    editable: true,
-    cellClass: ["numeric-cell", "editable-cell"],
-  },
-  {
-    headerName: "Population",
-    type: "numericColumn",
-    field: "population",
-    filter: "agNumberColumnFilter",
-    editable: true,
-    cellClass: ["numeric-cell", "editable-cell"],
-  },
-  {
     headerName: "Date",
     field: "date",
     filter: "agDateColumnFilter",
+    editable: true,
+    cellClass: ["editable-cell"],
   },
 ];

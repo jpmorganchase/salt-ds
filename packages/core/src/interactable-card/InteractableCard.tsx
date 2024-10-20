@@ -39,7 +39,7 @@ export interface InteractableCardProps extends ComponentPropsWithoutRef<"div"> {
   /**
    * Styling variant; defaults to "primary".
    */
-  variant?: "primary" | "secondary";
+  variant?: "primary" | "secondary" | "tertiary";
   /**
    * Value of card (for selectable use case).
    */

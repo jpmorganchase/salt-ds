@@ -1,9 +1,4 @@
-import { makePrefixer } from "@salt-ds/core";
-import {
-  StepActiveIcon,
-  StepDefaultIcon,
-  StepSuccessIcon,
-} from "@salt-ds/icons";
+import { type ValidationStatus, makePrefixer, useIcon } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
@@ -19,47 +14,21 @@ import trackerStepCss from "./TrackerStep.css";
 
 const withBaseName = makePrefixer("saltTrackerStep");
 
-type State = "default" | "completed";
-
-type StateWithActive = State | "active";
+type StageOptions = "pending" | "completed";
+type StatusOptions = Extract<ValidationStatus, "warning" | "error">;
 
 export interface TrackerStepProps extends ComponentPropsWithoutRef<"li"> {
   /**
-   * The state of the TrackerStep
+   * The stage of the step: "pending" or "completed" (note, "active" is derived from "activeStep" in parent SteppedTracker component)
    */
-  state?: State;
+  stage?: StageOptions;
+  /**
+   * The status of the step: warning or error
+   *
+   * If the stage is completed or active, the status prop will be ignored
+   */
+  status?: StatusOptions;
 }
-
-const iconMap = {
-  default: StepDefaultIcon,
-  completed: StepSuccessIcon,
-};
-
-const getStateIcon = ({
-  isActive,
-  state,
-}: {
-  isActive: boolean;
-  state: State;
-}) => {
-  if (state === "default" && isActive) {
-    return StepActiveIcon;
-  }
-  return iconMap[state];
-};
-
-const getState = ({
-  isActive,
-  state,
-}: {
-  isActive: boolean;
-  state: State;
-}): StateWithActive => {
-  if (state === "default" && isActive) {
-    return "active";
-  }
-  return state;
-};
 
 const useCheckWithinSteppedTracker = (isWithinSteppedTracker: boolean) => {
   useEffect(() => {
@@ -73,10 +42,26 @@ const useCheckWithinSteppedTracker = (isWithinSteppedTracker: boolean) => {
   }, [isWithinSteppedTracker]);
 };
 
+const parseIconName = ({
+  stage,
+  status,
+  active,
+}: {
+  stage: StageOptions;
+  status?: StatusOptions;
+  active: boolean;
+}) => {
+  if (stage === "completed") return "completed";
+  if (active) return "active";
+  if (status) return status;
+  return stage;
+};
+
 export const TrackerStep = forwardRef<HTMLLIElement, TrackerStepProps>(
   function TrackerStep(props, ref) {
     const {
-      state = "default",
+      stage = "pending",
+      status,
       style,
       className,
       children,
@@ -89,7 +74,8 @@ export const TrackerStep = forwardRef<HTMLLIElement, TrackerStepProps>(
       css: trackerStepCss,
       window: targetWindow,
     });
-
+    const { ErrorIcon, WarningIcon, CompletedIcon, ActiveIcon, PendingIcon } =
+      useIcon();
     const { activeStep, totalSteps, isWithinSteppedTracker } =
       useSteppedTrackerContext();
     const stepNumber = useTrackerStepContext();
@@ -97,8 +83,16 @@ export const TrackerStep = forwardRef<HTMLLIElement, TrackerStepProps>(
     useCheckWithinSteppedTracker(isWithinSteppedTracker);
 
     const isActive = activeStep === stepNumber;
-    const Icon = getStateIcon({ isActive, state });
-    const resolvedState = getState({ isActive, state });
+    const iconName = parseIconName({ stage, status, active: isActive });
+    const iconMap = {
+      pending: PendingIcon,
+      active: ActiveIcon,
+      completed: CompletedIcon,
+      warning: WarningIcon,
+      error: ErrorIcon,
+    };
+
+    const Icon = iconMap[iconName];
     const connectorState = activeStep > stepNumber ? "active" : "default";
     const hasConnector = stepNumber < totalSteps - 1;
 
@@ -109,10 +103,15 @@ export const TrackerStep = forwardRef<HTMLLIElement, TrackerStepProps>(
 
     return (
       <li
-        className={clsx(withBaseName(), withBaseName(resolvedState), className)}
+        className={clsx(
+          withBaseName(),
+          withBaseName(`stage-${stage}`),
+          withBaseName(`status-${status}`),
+          { [withBaseName("active")]: isActive },
+          className,
+        )}
         style={innerStyle}
         aria-current={isActive ? "step" : undefined}
-        data-state={state}
         ref={ref}
         {...restProps}
       >

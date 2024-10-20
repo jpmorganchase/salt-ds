@@ -34,7 +34,7 @@ export const ButtonBar = () => {
         gap={1}
       >
         <FlexItem>
-          <Button variant="cta" style={{ width: "100%" }}>
+          <Button sentiment="accented" style={{ width: "100%" }}>
             Save
           </Button>
         </FlexItem>
@@ -50,7 +50,7 @@ export const WithSecondary = () => {
   const startItem = (
     <StackLayout direction={{ xs: "column", sm: "row" }} gap={1}>
       <FlexItem>
-        <Button variant="cta" style={{ width: "100%" }}>
+        <Button sentiment="accented" style={{ width: "100%" }}>
           Save
         </Button>
       </FlexItem>
@@ -63,13 +63,13 @@ export const WithSecondary = () => {
   const endItem = (
     <StackLayout direction={{ xs: "column", sm: "row" }} gap={1}>
       <FlexItem>
-        <Button variant="secondary" style={{ width: "100%" }}>
+        <Button appearance="transparent" style={{ width: "100%" }}>
           <ExportIcon />
           Export
         </Button>
       </FlexItem>
       <FlexItem>
-        <Button variant="secondary" style={{ width: "100%" }}>
+        <Button appearance="transparent" style={{ width: "100%" }}>
           <ImportIcon />
           Import
         </Button>
@@ -94,7 +94,7 @@ export const DestructiveActions = () => {
   const startItem = (
     <StackLayout direction={{ xs: "column", sm: "row" }} gap={1}>
       <FlexItem>
-        <Button variant="cta" style={{ width: "100%" }}>
+        <Button sentiment="accented" style={{ width: "100%" }}>
           Save
         </Button>
       </FlexItem>
@@ -107,7 +107,7 @@ export const DestructiveActions = () => {
   const endItem = (
     <StackLayout direction={{ xs: "column", sm: "row" }} gap={1}>
       <FlexItem>
-        <Button variant="secondary" style={{ width: "100%" }}>
+        <Button appearance="transparent" style={{ width: "100%" }}>
           Delete
         </Button>
       </FlexItem>
@@ -131,7 +131,7 @@ export const Responsive = () => {
   const startItem = (
     <StackLayout gap={1} direction={{ xs: "column", sm: "row" }}>
       <FlexItem>
-        <Button variant="cta" style={{ width: "100%" }}>
+        <Button sentiment="accented" style={{ width: "100%" }}>
           CTA
         </Button>
       </FlexItem>
@@ -144,7 +144,7 @@ export const Responsive = () => {
   const endItem = (
     <StackLayout gap={1} direction={{ xs: "column", sm: "row" }}>
       <FlexItem>
-        <Button variant="secondary" style={{ width: "100%" }}>
+        <Button appearance="transparent" style={{ width: "100%" }}>
           Secondary
         </Button>
       </FlexItem>
@@ -173,7 +173,7 @@ export const ResponsiveReverse = () => {
 
   const secondary = (
     <FlexItem>
-      <Button variant="secondary" style={{ width: "100%" }}>
+      <Button appearance="transparent" style={{ width: "100%" }}>
         Secondary
       </Button>
     </FlexItem>
@@ -181,7 +181,7 @@ export const ResponsiveReverse = () => {
 
   const cta = (
     <FlexItem>
-      <Button variant="cta" style={{ width: "100%" }}>
+      <Button sentiment="accented" style={{ width: "100%" }}>
         CTA
       </Button>
     </FlexItem>
@@ -255,7 +255,7 @@ export const SingleStepForm = () => {
         gap={1}
       >
         <FlexItem>
-          <Button variant="cta" style={{ width: "100%" }}>
+          <Button sentiment="accented" style={{ width: "100%" }}>
             Submit
           </Button>
         </FlexItem>
@@ -276,7 +276,7 @@ export const MultiStepForm = () => {
 
   const cancel = (
     <FlexItem>
-      <Button variant="secondary" style={{ width: "100%" }}>
+      <Button appearance="transparent" style={{ width: "100%" }}>
         Cancel
       </Button>
     </FlexItem>
@@ -284,7 +284,7 @@ export const MultiStepForm = () => {
 
   const next = (
     <FlexItem>
-      <Button variant="cta" style={{ width: "100%" }}>
+      <Button sentiment="accented" style={{ width: "100%" }}>
         Next
       </Button>
     </FlexItem>
@@ -354,7 +354,11 @@ export const DialogForm = () => {
 
   const submit = (
     <FlexItem>
-      <Button variant="cta" onClick={handleClose} style={{ width: "100%" }}>
+      <Button
+        sentiment="accented"
+        onClick={handleClose}
+        style={{ width: "100%" }}
+      >
         Submit
       </Button>
     </FlexItem>

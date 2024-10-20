@@ -1,7 +1,7 @@
-import { ChevronLeftIcon, ChevronRightIcon } from "@salt-ds/icons";
 import { clsx } from "clsx";
 import { type HTMLAttributes, type MouseEventHandler, forwardRef } from "react";
 import { Button } from "../button";
+import { useIcon } from "../semantic-icon-provider";
 import { makePrefixer } from "../utils";
 import { PageRanges } from "./PageRanges";
 import { usePaginationContext } from "./usePaginationContext";
@@ -37,6 +37,7 @@ export const Paginator = forwardRef<HTMLDivElement, PaginatorProps>(
     });
 
     const { count, page, onPageChange } = usePaginationContext();
+    const { NextIcon, PreviousIcon } = useIcon();
 
     const onPreviousPage: MouseEventHandler<HTMLButtonElement> = (event) => {
       onPageChange(event, Math.max(1, page - 1));
@@ -52,23 +53,23 @@ export const Paginator = forwardRef<HTMLDivElement, PaginatorProps>(
     return (
       <div className={clsx(withBaseName(), className)} {...restProps} ref={ref}>
         <Button
-          variant="secondary"
+          appearance="transparent"
           aria-label="Previous Page"
           onClick={onPreviousPage}
           disabled={isOnFirstPage}
           className={withBaseName("arrowButton-previous")}
         >
-          <ChevronLeftIcon aria-hidden />
+          <PreviousIcon aria-hidden />
         </Button>
         <PageRanges siblingCount={siblingCount} boundaryCount={boundaryCount} />
         <Button
-          variant="secondary"
+          appearance="transparent"
           aria-label="Next Page"
           onClick={onNextPage}
           disabled={isOnLastPage}
           className={withBaseName("arrowButton-next")}
         >
-          <ChevronRightIcon aria-hidden />
+          <NextIcon aria-hidden />
         </Button>
       </div>
     );

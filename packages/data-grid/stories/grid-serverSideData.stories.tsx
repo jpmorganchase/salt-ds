@@ -2,9 +2,10 @@ import type { Decorator, StoryFn } from "@storybook/react";
 import {
   QueryClient,
   QueryClientProvider,
+  keepPreviousData,
   useInfiniteQuery,
 } from "@tanstack/react-query";
-import { rest } from "msw";
+import { http } from "msw";
 import { useCallback } from "react";
 import { Grid, GridColumn, RowSelectionCheckboxColumn } from "../src";
 import { type Investor, db, investorKeyGetter } from "./dummyData";
@@ -16,9 +17,10 @@ export default {
   parameters: {
     msw: {
       handlers: [
-        rest.get("/api/investors", (req, res, ctx) => {
-          const startParam = req.url.searchParams.get("start");
-          const limitParam = req.url.searchParams.get("limit");
+        http.get("/api/investors", ({ request }) => {
+          const url = new URL(request.url);
+          const startParam = url.searchParams.get("start");
+          const limitParam = url.searchParams.get("limit");
           const start = startParam ? Number(startParam) : 0;
           const limit = limitParam ? Number(limitParam) : 50;
 
@@ -27,7 +29,9 @@ export default {
             take: limit,
           });
 
-          return res(ctx.json(response));
+          return new Response(JSON.stringify(response), {
+            headers: { "Content-Type": "application/json" },
+          });
         }),
       ],
     },
@@ -37,14 +41,15 @@ export default {
 const useInvestors = () => {
   return useInfiniteQuery<Investor[]>({
     queryKey: ["investors"],
-    queryFn: async ({ pageParam = 0 }) => {
+    initialPageParam: 0,
+    queryFn: async ({ pageParam }) => {
       const url = new URL("/api/investors", window.location.origin);
-      url.searchParams.set("start", pageParam.toString());
+      url.searchParams.set("start", String(pageParam));
       const res = await fetch(url.toString());
       return res.json();
     },
-    keepPreviousData: true,
-    getNextPageParam: (_lastGroup, groups) => groups.flat().length,
+    placeholderData: keepPreviousData,
+    getNextPageParam: (_, pages) => pages.flat().length,
   });
 };
 

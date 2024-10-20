@@ -24,6 +24,15 @@ describe("GIVEN a NavItem", () => {
     });
   });
 
+  it("should call `onClick` when it is clicked", () => {
+    const clickSpy = cy.stub().as("clickSpy");
+    cy.mount(
+      <NavigationItem onClick={clickSpy}>Navigation Item</NavigationItem>,
+    );
+    cy.findByRole("button").realClick();
+    cy.get("@clickSpy").should("have.been.calledOnce");
+  });
+
   describe("AND it is active", () => {
     it('sets `aria-current="page"` when `active` is true', () => {
       cy.mount(
@@ -103,7 +112,6 @@ describe("GIVEN a NavItem", () => {
         <NavigationItem
           active={true}
           expanded={true}
-          href="https://www.saltdesignsystem.com"
           level={2}
           parent={true}
           orientation="vertical"

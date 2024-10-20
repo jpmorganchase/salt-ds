@@ -33,7 +33,7 @@ export interface CardProps extends ComponentPropsWithoutRef<"div"> {
   /**
    * Styling variant. Defaults to "primary".
    */
-  variant?: "primary" | "secondary";
+  variant?: "primary" | "secondary" | "tertiary";
 }
 
 export const Card = forwardRef<HTMLDivElement, CardProps>(

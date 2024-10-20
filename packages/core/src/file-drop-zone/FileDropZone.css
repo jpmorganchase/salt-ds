@@ -1,5 +1,5 @@
 .saltFileDropZone {
-  color: var(--saltFileDropZone-text-color, var(--salt-text-primary-foreground));
+  color: var(--saltFileDropZone-text-color, var(--salt-content-primary-foreground));
   display: inline-flex;
   background: var(--saltFileDropZone-background, var(--salt-container-primary-background));
   text-align: center;

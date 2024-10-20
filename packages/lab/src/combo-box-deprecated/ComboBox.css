@@ -2,12 +2,6 @@
   width: 100%;
 }
 
-.saltComboBox-field {
-}
-
-.saltComboBox-disabled {
-}
-
 .saltComboBox-listWindowRoot {
   z-index: calc(var(--salt-zIndex-flyover) - 1);
 }

@@ -18,7 +18,7 @@ export default {
 const Template: StoryFn<typeof Toast> = ({ children, ...args }) => (
   <Toast {...args} style={{ width: 260 }}>
     <ToastContent>{children}</ToastContent>
-    <Button variant="secondary" aria-label="Dismiss">
+    <Button appearance="transparent" aria-label="Dismiss">
       <CloseIcon aria-hidden />
     </Button>
   </Toast>
@@ -35,7 +35,7 @@ export const Default: StoryFn<typeof Toast> = (args) => (
         .
       </Text>
     </ToastContent>
-    <Button variant="secondary" aria-label="Dismiss">
+    <Button appearance="transparent" aria-label="Dismiss">
       <CloseIcon aria-hidden />
     </Button>
   </Toast>
@@ -65,7 +65,7 @@ export const Error: StoryFn<typeof Toast> = () => (
           <div>Connection timed out. Failed to retrieve data. </div>
         </div>
       </ToastContent>
-      <Button variant="secondary" aria-label="Dismiss">
+      <Button appearance="transparent" aria-label="Dismiss">
         <CloseIcon aria-hidden />
       </Button>
     </Toast>
@@ -83,7 +83,7 @@ export const Error: StoryFn<typeof Toast> = () => (
           style={{ marginTop: "var(--salt-spacing-100)" }}
         >
           <Button>Dismiss</Button>
-          <Button variant="cta">Try again</Button>
+          <Button sentiment="accented">Try again</Button>
         </FlowLayout>
       </ToastContent>
     </Toast>
@@ -101,7 +101,7 @@ export const Warning: StoryFn<typeof Toast> = () => (
           <div>Viewers of this file can see comments and suggestions. </div>
         </div>
       </ToastContent>
-      <Button variant="secondary" aria-label="Dismiss">
+      <Button appearance="transparent" aria-label="Dismiss">
         <CloseIcon aria-hidden />
       </Button>
     </Toast>
@@ -114,7 +114,7 @@ export const Warning: StoryFn<typeof Toast> = () => (
           <div>Viewers of this file can see comments and suggestions. </div>
         </div>
         <FlowLayout gap={1} style={{ marginTop: "var(--salt-spacing-100)" }}>
-          <Button variant="cta" style={{ width: "100%" }}>
+          <Button sentiment="accented" style={{ width: "100%" }}>
             Edit permissions
           </Button>
           <Button style={{ width: "100%" }}>Dismiss</Button>
@@ -143,7 +143,7 @@ export const SingleLine = (args: ToastProps) => (
       <ToastContent>
         <div>This is a toast message.</div>
       </ToastContent>
-      <Button variant="secondary" aria-label="Dismiss">
+      <Button appearance="transparent" aria-label="Dismiss">
         <CloseIcon aria-hidden />
       </Button>
     </Toast>

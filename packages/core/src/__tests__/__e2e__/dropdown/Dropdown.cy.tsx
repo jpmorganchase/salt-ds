@@ -294,12 +294,12 @@ describe("Given a Dropdown", () => {
   it("should allow multiple options to be selected with a mouse", () => {
     const selectionChangeSpy = cy.stub().as("selectionChange");
     cy.mount(<Multiselect onSelectionChange={selectionChangeSpy} />);
-    cy.findByRole("combobox").should(
+    cy.findByRole("combobox").realClick();
+    cy.findByRole("listbox").should(
       "have.attr",
       "aria-multiselectable",
       "true",
     );
-    cy.findByRole("combobox").realClick();
     cy.findByRole("option", { name: "Alabama" }).realClick();
     cy.get("@selectionChange").should(
       "have.been.calledWith",
@@ -464,5 +464,13 @@ describe("Given a Dropdown", () => {
     );
 
     cy.findByTestId(FLOATING_TEST_ID).should("exist");
+  });
+
+  it("should not call onBlur when an option in the list is clicked", () => {
+    const blurSpy = cy.stub().as("blurSpy");
+    cy.mount(<Default onBlur={blurSpy} />);
+    cy.findByRole("combobox").realClick();
+    cy.findAllByRole("option").eq(0).realClick();
+    cy.get("@blurSpy").should("not.have.been.called");
   });
 });

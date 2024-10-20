@@ -166,11 +166,47 @@
   --salt-taggable-foreground-active: var(--salt-palette-interact-primary-foreground-active);
   --salt-taggable-foreground-disabled: var(--salt-palette-interact-primary-foreground-disabled);
 
-  /* Container */
-  --salt-container-tertiary-background: transparent;
-  --salt-container-tertiary-background-disabled: transparent;
-  --salt-container-tertiary-borderColor: transparent;
-  --salt-container-tertiary-borderColor-disabled: transparent;
+  /* actionable CTA variant */
+  --salt-actionable-cta-background-active: var(--salt-actionable-accented-bold-background-active);
+  --salt-actionable-cta-background-disabled: var(--salt-actionable-accented-bold-background-disabled);
+  --salt-actionable-cta-background-hover: var(--salt-actionable-accented-bold-background-hover);
+  --salt-actionable-cta-background: var(--salt-actionable-accented-bold-background);
+  --salt-actionable-cta-borderColor-active: var(--salt-actionable-accented-bold-borderColor-active);
+  --salt-actionable-cta-borderColor-disabled: var(--salt-actionable-accented-bold-borderColor-disabled);
+  --salt-actionable-cta-borderColor-hover: var(--salt-actionable-accented-bold-borderColor-hover);
+  --salt-actionable-cta-borderColor: var(--salt-actionable-accented-bold-borderColor);
+  --salt-actionable-cta-foreground-active: var(--salt-actionable-accented-bold-foreground-active);
+  --salt-actionable-cta-foreground-disabled: var(--salt-actionable-accented-bold-foreground-disabled);
+  --salt-actionable-cta-foreground-hover: var(--salt-actionable-accented-bold-foreground-hover);
+  --salt-actionable-cta-foreground: var(--salt-actionable-accented-bold-foreground);
+
+  /* actionable Primary variant */
+  --salt-actionable-primary-background-active: var(--salt-actionable-bold-background-active);
+  --salt-actionable-primary-background-disabled: var(--salt-actionable-bold-background-disabled);
+  --salt-actionable-primary-background-hover: var(--salt-actionable-bold-background-hover);
+  --salt-actionable-primary-background: var(--salt-actionable-bold-background);
+  --salt-actionable-primary-borderColor-active: var(--salt-actionable-bold-borderColor-active);
+  --salt-actionable-primary-borderColor-disabled: var(--salt-actionable-bold-borderColor-disabled);
+  --salt-actionable-primary-borderColor-hover: var(--salt-actionable-bold-borderColor-hover);
+  --salt-actionable-primary-borderColor: var(--salt-actionable-bold-borderColor);
+  --salt-actionable-primary-foreground-active: var(--salt-actionable-bold-foreground-active);
+  --salt-actionable-primary-foreground-disabled: var(--salt-actionable-bold-foreground-disabled);
+  --salt-actionable-primary-foreground-hover: var(--salt-actionable-bold-foreground-hover);
+  --salt-actionable-primary-foreground: var(--salt-actionable-bold-foreground);
+
+  /* actionable Secondary variant */
+  --salt-actionable-secondary-background-active: var(--salt-actionable-subtle-background-active);
+  --salt-actionable-secondary-background-disabled: var(--salt-actionable-subtle-background-disabled);
+  --salt-actionable-secondary-background-hover: var(--salt-actionable-subtle-background-hover);
+  --salt-actionable-secondary-background: var(--salt-actionable-subtle-background);
+  --salt-actionable-secondary-borderColor-active: var(--salt-actionable-subtle-borderColor-active);
+  --salt-actionable-secondary-borderColor-disabled: var(--salt-actionable-subtle-borderColor-disabled);
+  --salt-actionable-secondary-borderColor-hover: var(--salt-actionable-subtle-borderColor-hover);
+  --salt-actionable-secondary-borderColor: var(--salt-actionable-subtle-borderColor);
+  --salt-actionable-secondary-foreground-active: var(--salt-actionable-subtle-foreground-active);
+  --salt-actionable-secondary-foreground-disabled: var(--salt-actionable-subtle-foreground-disabled);
+  --salt-actionable-secondary-foreground-hover: var(--salt-actionable-subtle-foreground-hover);
+  --salt-actionable-secondary-foreground: var(--salt-actionable-subtle-foreground);
 }
 
 /* Accent */

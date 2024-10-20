@@ -9,4 +9,5 @@ export * from "./Readonly";
 export * from "./Secondary";
 export * from "./StaticAdornments";
 export * from "./ValidationStatus";
+export * from "./MaxHeight";
 export * from "./Controlled";

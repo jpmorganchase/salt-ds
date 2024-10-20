@@ -4,14 +4,3 @@
 .salt-theme[data-mode="dark"] main img:not(.no-filter) {
   filter: none;
 }
-
-/* 
- * Prevent css from Dropdown in lab impacting date picker's date picker.
- * Doing low impacted selector for now.
- */
-.salt-theme div[data-floating-ui-portal] .saltDropdown {
-  --saltIcon-margin: unset;
-  display: flex;
-  line-height: inherit;
-  position: relative;
-}

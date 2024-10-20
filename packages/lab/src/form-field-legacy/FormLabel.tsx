@@ -74,6 +74,7 @@ export const FormLabel = ({
   });
 
   return (
+    // biome-ignore lint/a11y/noLabelWithoutControl: this is a label for a form field and will wrap a form control
     <label
       className={clsx(withBaseName(), className, {
         [withBaseName("disabled")]: disabled,

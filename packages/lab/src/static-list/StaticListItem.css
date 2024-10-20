@@ -1,0 +1,13 @@
+.saltStaticListItem {
+  list-style-type: none;
+  display: flex;
+  gap: var(--salt-spacing-100);
+  box-sizing: border-box;
+  padding: var(--salt-spacing-50) var(--salt-spacing-100);
+  min-height: calc(var(--salt-size-base) + var(--salt-spacing-100));
+}
+
+.saltStaticListItem > .saltIcon {
+  /* Workaround to ensure the icon and button are aligned.*/
+  min-height: var(--salt-size-base);
+}

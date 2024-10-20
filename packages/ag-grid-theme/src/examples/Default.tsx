@@ -10,6 +10,15 @@ const Default = ({
     containerClassName,
   });
 
+  const statusBar = {
+    statusPanels: [
+      {
+        statusPanel: "agTotalRowCountComponent",
+        align: "right",
+      },
+    ],
+  };
+
   return (
     <div {...containerProps}>
       <AgGridReact
@@ -37,6 +46,7 @@ const Default = ({
         ]}
         rowData={dataGridExampleData}
         rowSelection="single"
+        statusBar={statusBar}
         enableRangeSelection={true}
       />
     </div>

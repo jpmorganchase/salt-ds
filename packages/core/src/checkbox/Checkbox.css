@@ -25,14 +25,10 @@
 
 .saltCheckbox-input,
 .saltCheckboxIcon {
-  margin-top: calc((var(--salt-text-lineHeight) - var(--salt-size-selectable)) / 2);
+  margin: calc((var(--salt-text-lineHeight) - var(--salt-size-selectable)) / 2) 0;
   box-sizing: border-box;
 }
 
-.saltCheckboxIcon > svg {
-  /* ensures svg is centered in all browsers */
-  transform: translate(0px, 0px);
-}
 /* Styles applied to the icon component if focused */
 .saltCheckbox-input:focus-visible + .saltCheckboxIcon {
   outline-offset: var(--salt-focused-outlineOffset);
@@ -61,7 +57,6 @@
 /* Styles applied to input element */
 .saltCheckbox-input {
   cursor: inherit;
-  margin: 0;
   opacity: 0;
   padding: 0;
   position: absolute;

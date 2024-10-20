@@ -1,5 +1,136 @@
 # @salt-ds/core
 
+## 1.37.1
+
+### Patch Changes
+
+- 62300f3: Fixed aria-multiselectable being incorrectly applied in the ComboBox and Dropdown.
+
+## 1.37.0
+
+### Minor Changes
+
+- 4ccc245: Updated Card, LinkCard and InteractableCard accent bar color, which now stays the same across states.
+- 97215f7: Added SemanticIconProvider to provide a mechanism to swap out built-in component icons to custom icons.
+
+  ```tsx
+  <SemanticIconProvider iconMap={iconMap}>
+    <App />
+  </SemanticIconProvider>
+  ```
+
+- 60a8d6a: Pill will now go into an active state when it's a menu trigger and has the menu is open. This aligns Pill with Button.
+
+### Patch Changes
+
+- dc9e1bd: Updated Pill's styling to align to Button's new styling.
+- 7eac3b2: Fixed text contrast issues in Menu, Dropdown, ComboBox and ListBox.
+- b2af86a: Updated MultilineInput so that it is easier to set a max-height.
+- 9edf6c4: Added letter-spacing to `Text` for consistency.
+- 65bfefb: Improved list based control's performance when lots of items are displayed.
+
+## 1.36.0
+
+### Minor Changes
+
+- 1098fc1: Added `sentiment` (accented, neutral, positive, negative, caution) and `appearance` (solid, bordered, transparent) props for Button.
+
+  _Note:_ Button's `variant` prop is now deprecated and will be removed in the next major version.
+
+  | `variant`   | `appearance`  | `sentiment` |
+  | ----------- | ------------- | ----------- |
+  | `cta`       | `solid`       | `accented`  |
+  | `primary`   | `solid`       | `neutral`   |
+  | `secondary` | `transparent` | `neutral`   |
+
+### Patch Changes
+
+- 7a5215a: Fixed data-\* attributes not allowed on pass through props. Closes #3797.
+
+  - `Checkbox.inputProps`
+  - `Input.inputProps`
+  - `MultilineInput.textAreaProps`
+  - `PillInput.inputProps`
+  - `RadioButton.inputProps`
+  - `Switch.inputProps`
+
+- dccd349: - Fixed bordered form controls' activation indicator and border combining to 3px instead of 2px in:
+
+  - Dropdown
+  - ComboBox
+  - Input
+  - MultilineInput
+  - Fixed form controls' activation indicator changing color when an active field is hovered in:
+
+    - Input
+    - MultilineInput
+
+  - Updated the token applied to form controls' activation indicator to use `--salt-size-border-strong` instead of `  --salt-editable-borderWidth-active`.
+
+- 7ed6d4d: Fixed Tag's height being incorrect when box-sizing isn't set
+- 3e49154: Updated Checkbox and Radio Button to have more robust styling.
+- cee2b63: Fixed text inside Panel having the incorrect color when color-scheme is not set or doesn't change the default text color e.g. in Safari.
+- f277c02: Updated controlled uncontrolled warning link
+- 92299b6: Fixed the alignment of Checkbox and Radio Button when they don't have a label.
+- 61e8502: Fixed Dialog's content being collapsed on Safari.
+
+## 1.35.0
+
+### Minor Changes
+
+- b51bdb5: Added dot badge. A dot badge notifies users of changes in state e.g. new messages, notifications, or updates. Also the position of the badge will be at top right center of the Button/Icon.
+
+  ```tsx
+  <Badge>
+    <Button aria-label="Notifications">
+      <NotificationIcon aria-hidden />
+    </Button>
+  </Badge>
+  ```
+
+### Patch Changes
+
+- 222c47a: Fixed the icon inside Navigation Item having the incorrect color when a parent item is also a link.
+- 4a1bd04: Fixed the status adornment position in ComboBox where it would always be vertically centered when the field grows.
+- 7acd0ed: Fixed multiselect combobox having incorrect pill styles in theme next.
+- 16717fc: Fixed focusable when disabled button's having incorrect styling when in a disabled active state.
+- c2972a1: - Fixed Checkbox and RadioButton shifting when selected outside of a flex layout.
+  - Fixed Checkbox and RadioButton, sometimes having a gap between the border and the selected icon.
+- 065d0ca: Fixed Dialog to have correct `z-index` variable assigned (1300).
+- 3ff4448: - Fixed ComboBox calling onBlur when an option in the list is clicked.
+  - Fixed Dropdown calling onBlur when an option in the list is clicked.
+- 77dc32e: Fixed Accordion having status styling when disabled and status is set.
+- 3045c38: - Fixed ComboBox breaking when `inputRef` is used.
+  - Fixed ComboBox having an incorrect focus ring color when validation is applied.
+  - Fixed ComboBox having incorrect active styling.
+
+## 1.34.0
+
+### Minor Changes
+
+- 64be665: Update FormFieldHelperText to have status colors applied when `validationStatus` is applied to FormField.
+- fc66238: Added `tertiary` variant to the `variant` prop for Card, LinkCard, InteractableCard and Panel.
+
+  ```tsx
+  <Card variant="tertiary">Example of a Tertiary Card</Card>
+  <LinkCard variant="tertiary">Example of a Link Card</LinkCard>
+  <InteractableCard variant="tertiary">Example of a Interactable Card</InteractableCard>
+  <Panel variant="tertiary">Example of a Tertiary Panel</Panel>
+  ```
+
+### Patch Changes
+
+- 4823df6: - Fixed the default NavigationItem being considered a parent.
+  - Fixed NavigationItem not calling `onClick`.
+- 1a0ca7f: Fixed read-only checked radio buttons having the incorrect icon color.
+- 9837998: Fixed Pagination button having an incorrect color on hover when theme next is enabled.
+- 3913dbb: Fixed list scroll when there is only one item in `ComboBox` and `Dropdown`.
+- 5b735d9: Fixed ComboBox having a button when it has nothing to show.
+- 31c3702: Fixed ListBox not scrolling to the active item in some circumstances
+- 85997dc: Updated AccordionPanel to have less padding.
+- e9c1287: Update gap to `--salt-spacing-75` for top aligned labels in `FormField`.
+- 0eb21ae: Fixed `Accordion` becoming inaccessible when an id is passed to `AccordionPanel` or `AccordionHeader`.
+
 ## 1.33.0
 
 ### Minor Changes

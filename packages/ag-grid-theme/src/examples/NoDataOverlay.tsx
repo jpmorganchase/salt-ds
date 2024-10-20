@@ -24,7 +24,9 @@ const CustomDialog = () => {
       </DialogContent>
       <DialogActions>
         <Button>Help Desk</Button>
-        <Button variant="cta">Reload</Button>
+        <Button appearance="solid" sentiment="accented">
+          Reload
+        </Button>
       </DialogActions>
     </div>
   );

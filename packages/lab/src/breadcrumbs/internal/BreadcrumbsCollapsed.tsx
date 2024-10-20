@@ -1,4 +1,4 @@
-import { OverflowMenuIcon } from "@salt-ds/icons";
+import { useIcon } from "@salt-ds/core";
 import {
   Children,
   type Component,
@@ -34,6 +34,7 @@ export const BreadcrumbsCollapsed = ({
     return "";
   });
 
+  const { OverflowIcon } = useIcon();
   const key = keys ? keys.join("") : "";
   const { ref, shouldFocusOnMount } =
     useFocusMenuRemount<HTMLButtonElement>(key);
@@ -77,7 +78,7 @@ export const BreadcrumbsCollapsed = ({
       {...rest}
       ref={ref}
     >
-      <OverflowMenuIcon />
+      <OverflowIcon />
     </MenuButton>
   );
 };

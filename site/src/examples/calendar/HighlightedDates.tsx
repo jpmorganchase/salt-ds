@@ -1,10 +1,24 @@
-import { Calendar } from "@salt-ds/lab";
+import {
+  type DateValue,
+  isEqualDay,
+  startOfMonth,
+} from "@internationalized/date";
+import {
+  Calendar,
+  CalendarDateGrid,
+  CalendarNavigation,
+  CalendarWeekHeader,
+} from "@salt-ds/lab";
 import type { ReactElement } from "react";
 
-const isDayHighlighted = (day: { day: number }) => {
-  if (day.day === 1) return "Cut off day";
-};
+// Start of month
+const isDayHighlighted = (date: DateValue) =>
+  isEqualDay(startOfMonth(date), date) ? "Start of month reminder" : false;
 
 export const HighlightedDates = (): ReactElement => (
-  <Calendar selectionVariant="default" isDayHighlighted={isDayHighlighted} />
+  <Calendar selectionVariant="single" isDayHighlighted={isDayHighlighted}>
+    <CalendarNavigation />
+    <CalendarWeekHeader />
+    <CalendarDateGrid />
+  </Calendar>
 );

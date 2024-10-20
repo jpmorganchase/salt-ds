@@ -1,9 +1,9 @@
-import { CloseIcon } from "@salt-ds/icons";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import clsx from "clsx";
 import { forwardRef } from "react";
 import { Button, type ButtonProps } from "../button";
+import { useIcon } from "../semantic-icon-provider";
 import { makePrefixer } from "../utils";
 import overlayPanelCloseButtonCss from "./OverlayPanelCloseButton.css";
 
@@ -19,13 +19,14 @@ export const OverlayPanelCloseButton = forwardRef<
     css: overlayPanelCloseButtonCss,
     window: targetWindow,
   });
+  const { CloseIcon } = useIcon();
 
   return (
     <div className={clsx(withBaseName(), className)}>
       <Button
         ref={ref}
         aria-label="Close overlay"
-        variant="secondary"
+        appearance="transparent"
         className={withBaseName("button")}
         {...rest}
       >

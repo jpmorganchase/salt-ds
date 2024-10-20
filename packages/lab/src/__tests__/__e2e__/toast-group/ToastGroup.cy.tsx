@@ -16,7 +16,7 @@ describe("Given a ToastGroup", () => {
         <ToastGroup placement="top-right">
           <Toast>
             <ToastContent>This is a toast</ToastContent>
-            <Button variant="secondary">
+            <Button appearance="transparent">
               <CloseIcon />
             </Button>
           </Toast>
@@ -34,7 +34,7 @@ describe("Given a ToastGroup", () => {
         <ToastGroup placement="bottom-right">
           <Toast>
             <ToastContent>This is a toast</ToastContent>
-            <Button variant="secondary">
+            <Button appearance="transparent">
               <CloseIcon />
             </Button>
           </Toast>

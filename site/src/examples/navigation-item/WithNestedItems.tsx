@@ -19,7 +19,6 @@ export const WithNestedItems = (): ReactElement => {
       <NavigationItem
         active={horizontalActive}
         onExpand={handleHorizontalActiveToggle}
-        href="#"
         parent
       >
         Label
@@ -28,7 +27,6 @@ export const WithNestedItems = (): ReactElement => {
       <NavigationItem
         active={verticalActive}
         onExpand={handleVerticalActiveToggle}
-        href="#"
         orientation="vertical"
         parent
       >

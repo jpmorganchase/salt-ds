@@ -28,7 +28,7 @@ export const SingleLevelExamples: StoryFn<QAContainerProps> = (props) => {
       <div style={{ width: 190, height: 300 }}>
         <Menu open>
           <MenuTrigger>
-            <Button variant="secondary" aria-label="Open Menu">
+            <Button appearance="transparent" aria-label="Open Menu">
               <MicroMenuIcon aria-hidden />
             </Button>
           </MenuTrigger>
@@ -74,7 +74,7 @@ export const MultilevelExamples: StoryFn<QAContainerProps> = (props) => {
       <div style={{ width: 290, height: 300 }}>
         <Menu open>
           <MenuTrigger>
-            <Button variant="secondary" aria-label="Open Menu">
+            <Button appearance="transparent" aria-label="Open Menu">
               <MicroMenuIcon aria-hidden />
             </Button>
           </MenuTrigger>
@@ -129,7 +129,7 @@ export const GroupedExamples: StoryFn<QAContainerProps> = (props) => {
       <div style={{ width: 190, height: 300 }}>
         <Menu open>
           <MenuTrigger>
-            <Button variant="secondary" aria-label="Open Menu">
+            <Button appearance="transparent" aria-label="Open Menu">
               <MicroMenuIcon aria-hidden />
             </Button>
           </MenuTrigger>

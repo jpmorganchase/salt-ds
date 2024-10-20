@@ -1,6 +1,6 @@
 {
   "name": "@salt-ds/lab",
-  "version": "1.0.0-alpha.50",
+  "version": "1.0.0-alpha.54",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
@@ -13,7 +13,7 @@
   "dependencies": {
     "@floating-ui/react": "^0.26.5",
     "@fluentui/react-overflow": "^9.0.19",
-    "@internationalized/date": "^3.0.0",
+    "@internationalized/date": "^3.5.5",
     "@types/react-window": "^1.8.2",
     "aria-hidden": "^1.1.1",
     "attr-accept": "^2.0.0",

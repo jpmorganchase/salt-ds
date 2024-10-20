@@ -7,18 +7,23 @@
   transition: box-shadow var(--salt-duration-instant) ease-in-out;
   box-sizing: border-box;
   border-radius: var(--saltCard-borderRadius, var(--salt-palette-corner, 0));
+  overflow: hidden;
+  --card-accent-color: var(--salt-accent-background);
 }
 
 .saltCard-primary {
   background: var(--saltCard-background, var(--salt-container-primary-background));
   border-color: var(--salt-container-primary-borderColor);
-  --card-accent-color: var(--salt-container-primary-borderColor);
 }
 
 .saltCard-secondary {
   background: var(--saltCard-background, var(--salt-container-secondary-background));
   border-color: var(--salt-container-secondary-borderColor);
-  --card-accent-color: var(--salt-container-secondary-borderColor);
+}
+
+.saltCard-tertiary {
+  background: var(--saltCard-background, var(--salt-container-tertiary-background));
+  border-color: var(--salt-container-tertiary-borderColor);
 }
 
 /* Styles applied to create accent */
@@ -77,11 +82,21 @@ a:focus .saltCard-interactable,
 .saltCard-interactable:hover {
   box-shadow: var(--saltCard-boxShadow-hover, var(--salt-overlayable-shadow-hover));
   cursor: var(--saltCard-cursor-hover, var(--salt-selectable-cursor-hover));
+  border-color: var(--salt-actionable-accented-borderColor-hover);
   position: relative;
+}
+
+/* Styles applied if `hoverable` is set */
+@media (hover: hover) {
+  .saltCard-hoverable:hover {
+    box-shadow: var(--saltCard-boxShadow-hover, var(--salt-overlayable-shadow-hover));
+    border-color: var(--salt-actionable-accented-borderColor-hover);
+  }
 }
 
 /* **Deprecated:** Styles applied on active state if `interactable={true}` */
 .saltCard-interactable:active {
+  border-color: var(--salt-actionable-accented-borderColor-active);
   box-shadow: var(--saltCard-boxShadow-active, var(--salt-overlayable-shadow-hover));
   outline: var(--salt-focused-outline);
   outline-offset: var(--salt-focused-outlineOffset);
@@ -107,12 +122,4 @@ a:focus .saltCard-interactable.saltCard-disabled {
 /* **Deprecated:** Styles applied to nested divs if `disabled={true}` */
 .saltCard-disabled div {
   pointer-events: none;
-}
-
-/* Styles applied if `hoverable` is set */
-@media (hover: hover) {
-  .saltCard-hoverable:hover {
-    box-shadow: var(--saltCard-boxShadow-hover, var(--salt-overlayable-shadow-hover));
-    --card-accent-color: var(--salt-selectable-foreground-hover);
-  }
 }

@@ -1,0 +1,95 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+## Using the component
+
+To avoid misleading users, set the width of the input to correlate with the length of the expected answer. For example, an input for a three-digit value shouldn't be wide enough to accommodate a sentence worth of characters. See [forms pattern](/salt/patterns/forms) for more information on layout.
+
+### When to use
+
+- Use the `DateInputSingle` component when you need to allow users to select a single date.
+- Use the `DateInputRange` component when you need to allow users to select a date range, between a start and end date.
+
+### Parsing
+
+By default, both `DateInputSingle` and `DateInputRange` accept a date string that can be passed to `new Date()`.
+
+If the date string is valid, it is converted to an ISO string and then parsed to a local date using `parseAbsoluteToLocal(date.toISOString())`. The resulting date is then returned as a `CalendarDate` object with the year, month, and day. This default behavior ensures consistent and reliable date parsing, but it can be overridden by providing a custom parse function through the `parse` prop.
+
+**Examples of valid date formats:**
+
+1. **ISO 8601 string:**
+   - YYYY-MM-DD
+   - YYYY-MM-DDTHH:MM:SSZ
+   - YYYY-MM-DDTHH:MM:SS+HH:MM
+   - Example: "2023-01-15", "2023-01-15T15:45:00Z"
+2. **RFC 2822 string:**
+   - DD MMM YYYY HH:MM:SS GMT
+   - Example: "15 Jan 2023 15:45:00 GMT"
+3. **Date and Time String:**
+   - Month DD, YYYY HH:MM:SS
+   - Example: "January 15, 2023 15:45:00"
+4. **Date only string:**
+   - Month DD, YYYY
+   - Example: "January 15, 2023"
+5. **Milliseconds since epoch:**
+   - Number of milliseconds since January 1, 1970, 00:00:00 UTC.
+   - Example: 1673793900000
+
+**Default parsing behavior:**
+
+- If the input date string is valid, it is converted to an ISO string using `date.toISOString()`.
+- The ISO string is then parsed to a local date using `parseAbsoluteToLocal(date.toISOString())`.
+- The resulting date is returned as a `CalendarDate` object with the year, month, and day.
+- If the date string is invalid, the function returns `undefined`.
+
+This default behavior ensures consistent and reliable date parsing, but it can be customized by providing a custom parse function through the `parse` prop.
+
+Additionally, you can provide your own `parse` function to convert shorthand dates to valid date objects.
+
+### Formatting
+
+By default, both `DateInputSingle` and `DateInputRange` format dates to `DD MMM YYYY`.
+
+Formatting of entered dates occurs once the value is applied, either by the input losing it's focus or if the 'ENTER' is pressed.
+
+Additionally, you can provide your own `formatDate` function to format `DateValue` to a `string`.
+
+#### When not to use
+
+Avoid using the `DateInputSingle` component if your application requires users to select a range of dates, in which case the `DateInputRange` component would be more appropriate.
+
+## Import
+
+### DateInputSingle
+
+To import `DateInputSingle` from the Salt lab package, use:
+
+```js
+import { DateInputSingle } from "@salt-ds/lab";
+```
+
+### DateInputRange
+
+To import `DateInputRange` from the Salt lab package, use:
+
+```js
+import { DateInputRange } from "@salt-ds/lab";
+```
+
+## Props
+
+### DateInputSingle
+
+<PropsTable packageName="lab" componentName="DateInputSingle" />
+
+### DateInputRange
+
+<PropsTable packageName="lab" componentName="DateInputRange" />
