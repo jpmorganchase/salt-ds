@@ -26,8 +26,8 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
     href,
     className,
     children,
-    variant = "primary",
     color = "primary",
+    variant = color,
     target = "_self",
     ...rest
   },
