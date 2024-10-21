@@ -3,7 +3,8 @@ import { composeStories } from "@storybook/react";
 import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
 
 const composedStories = composeStories(overlayStories);
-const { Default, Right, Bottom, Left, CloseButton } = composedStories;
+const { Default, Right, Bottom, Left, CloseButton, LongContent } =
+  composedStories;
 
 describe("GIVEN an Overlay", () => {
   checkAccessibility(composedStories);
@@ -125,6 +126,15 @@ describe("GIVEN an Overlay", () => {
       cy.findByRole("button", { name: /Show Overlay/i }).realClick();
       cy.get("body").realClick();
       cy.get("@onOpenChangeSpy").should("have.callCount", 3);
+    });
+  });
+  describe("WHEN overflowing content is detected", () => {
+    it("THEN it should add padding to the right of the scroll bar", () => {
+      cy.mount(<LongContent />);
+      cy.findByRole("button", { name: /Show Overlay/i }).realClick();
+      cy.findByRole("dialog")
+        .find("div.saltOverlayPanelContent-overflow")
+        .should("exist");
     });
   });
 });
