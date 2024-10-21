@@ -1,5 +1,4 @@
 import type { ColDef } from "ag-grid-community";
-import { DropdownEditor } from "./cell-editors/DropdownEditor";
 import { FlagRenderer } from "./cell-renderers/FlagRenderer";
 
 const dataGridExampleColumnsHdCompact: ColDef[] = [

@@ -1,5 +1,5 @@
 import { makePrefixer } from "@salt-ds/core";
-import React, { useRef } from "react";
+import { useRef } from "react";
 
 import { useActivationIndicator } from "./useActivationIndicator";
 

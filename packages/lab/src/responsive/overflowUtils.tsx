@@ -1,8 +1,7 @@
-import {
-  type ElementRef,
-  type OverflowItem,
-  collapsibleType,
-  type orientationType,
+import type {
+  ElementRef,
+  OverflowItem,
+  orientationType,
 } from "./overflowTypes";
 
 export const DropdownPlaceholder = () => null;

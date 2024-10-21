@@ -1,4 +1,4 @@
-import { Button, FlowLayout, GridItem, GridLayout, Label } from "@salt-ds/core";
+import { Button, GridItem, GridLayout, Label } from "@salt-ds/core";
 import type { ReactElement } from "react";
 
 export const Sentiment = (): ReactElement => (

@@ -50,6 +50,7 @@
         "useSemanticElements": "off"
       },
       "correctness": {
+        "noUnusedImports": "error",
         "useExhaustiveDependencies": {
           "level": "warn",
           "options": {

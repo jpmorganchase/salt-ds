@@ -1,4 +1,3 @@
-import type { ReactNode } from "react";
 import { ReplacementToken } from "./ReplacementToken";
 
 import "./LineBlock.css";

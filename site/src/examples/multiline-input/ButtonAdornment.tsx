@@ -1,4 +1,4 @@
-import { Button, FlowLayout, MultilineInput, Text } from "@salt-ds/core";
+import { Button, FlowLayout, MultilineInput } from "@salt-ds/core";
 import {
   BankCheckSolidIcon,
   BookmarkSolidIcon,

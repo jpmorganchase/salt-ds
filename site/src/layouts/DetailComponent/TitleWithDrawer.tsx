@@ -1,5 +1,5 @@
 import { Button, useIcon } from "@salt-ds/core";
-import React, { type FC, type Dispatch, type SetStateAction } from "react";
+import type { Dispatch, FC, SetStateAction } from "react";
 
 import layoutStyles from "../index.module.css";
 import styles from "./TitleWithDrawer.module.css";

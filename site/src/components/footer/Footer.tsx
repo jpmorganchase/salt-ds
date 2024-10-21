@@ -3,7 +3,7 @@ import {
   type FooterProps as MosaicFooterProps,
 } from "@jpmorganchase/mosaic-site-components";
 import clsx from "clsx";
-import React, { type FC } from "react";
+import type { FC } from "react";
 import styles from "./Footer.module.css";
 
 type FooterLinkItem = {
