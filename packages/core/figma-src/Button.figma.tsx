@@ -17,12 +17,21 @@ figma.connect(
         Bordered: "bordered",
         Transparent: "transparent",
       }),
-      label: figma.boolean("Label"),
-      labelTextValue: figma.string("Label text value"),
-      rightIcon: figma.boolean("Right icon"),
-      rightIconType: figma.instance("Right icon type"),
-      leftIcon: figma.boolean("Left icon"),
-      leftIconType: figma.instance("Left icon type"),
+      label: figma.boolean("Label", {
+        true: figma.string("Label text value"),
+        false: undefined,
+      }),
+      // labelTextValue: figma.string("Label text value"),,
+      rightIcon: figma.boolean("Right icon", {
+        true: figma.instance("Right icon type"),
+        false: undefined,
+      }),
+      // rightIconType: figma.instance("Right icon type"),
+      leftIcon: figma.boolean("Left icon", {
+        true: figma.instance("Left icon type"),
+        false: undefined,
+      }),
+      // leftIconType: figma.instance("Left icon type"),
       // No matching props could be found for these Figma properties:
     },
     example: (props) => (
@@ -31,9 +40,9 @@ figma.connect(
         sentiment="neutral"
         appearance={props.appearance}
       >
-        {props.leftIcon && props.leftIconType}
-        {props.label && props.labelTextValue}
-        {props.rightIcon && props.rightIconType}
+        {props.leftIcon}
+        {props.label}
+        {props.rightIcon}
       </Button>
     ),
   },
@@ -53,12 +62,21 @@ figma.connect(
         Bordered: "bordered",
         Transparent: "transparent",
       }),
-      label: figma.boolean("Label"),
-      labelTextValue: figma.string("Label text value"),
-      rightIcon: figma.boolean("Right icon"),
-      rightIconType: figma.instance("Right icon type"),
-      leftIcon: figma.boolean("Left icon"),
-      leftIconType: figma.instance("Left icon type"),
+      label: figma.boolean("Label", {
+        true: figma.string("Label text value"),
+        false: undefined,
+      }),
+      // labelTextValue: figma.string("Label text value"),,
+      rightIcon: figma.boolean("Right icon", {
+        true: figma.instance("Right icon type"),
+        false: undefined,
+      }),
+      // rightIconType: figma.instance("Right icon type"),
+      leftIcon: figma.boolean("Left icon", {
+        true: figma.instance("Left icon type"),
+        false: undefined,
+      }),
+      // leftIconType: figma.instance("Left icon type"),
       // No matching props could be found for these Figma properties:
     },
     example: (props) => (
@@ -67,9 +85,9 @@ figma.connect(
         sentiment="accented"
         appearance={props.appearance}
       >
-        {props.leftIcon && props.leftIconType}
-        {props.label && props.labelTextValue}
-        {props.rightIcon && props.rightIconType}
+        {props.leftIcon}
+        {props.label}
+        {props.rightIcon}
       </Button>
     ),
   },
@@ -90,12 +108,21 @@ figma.connect(
         Bordered: "bordered",
         Transparent: "transparent",
       }),
-      label: figma.boolean("Label"),
-      labelTextValue: figma.string("Label text value"),
-      rightIcon: figma.boolean("Right icon"),
-      rightIconType: figma.instance("Right icon type"),
-      leftIcon: figma.boolean("Left icon"),
-      leftIconType: figma.instance("Left icon type"),
+      label: figma.boolean("Label", {
+        true: figma.string("Label text value"),
+        false: undefined,
+      }),
+      // labelTextValue: figma.string("Label text value"),,
+      rightIcon: figma.boolean("Right icon", {
+        true: figma.instance("Right icon type"),
+        false: undefined,
+      }),
+      // rightIconType: figma.instance("Right icon type"),
+      leftIcon: figma.boolean("Left icon", {
+        true: figma.instance("Left icon type"),
+        false: undefined,
+      }),
+      // leftIconType: figma.instance("Left icon type"),
       // No matching props could be found for these Figma properties:
     },
     example: (props) => (
@@ -104,9 +131,9 @@ figma.connect(
         sentiment="caution"
         appearance={props.appearance}
       >
-        {props.leftIcon && props.leftIconType}
-        {props.label && props.labelTextValue}
-        {props.rightIcon && props.rightIconType}
+        {props.leftIcon}
+        {props.label}
+        {props.rightIcon}
       </Button>
     ),
   },
@@ -126,12 +153,21 @@ figma.connect(
         Bordered: "bordered",
         Transparent: "transparent",
       }),
-      label: figma.boolean("Label"),
-      labelTextValue: figma.string("Label text value"),
-      rightIcon: figma.boolean("Right icon"),
-      rightIconType: figma.instance("Right icon type"),
-      leftIcon: figma.boolean("Left icon"),
-      leftIconType: figma.instance("Left icon type"),
+      label: figma.boolean("Label", {
+        true: figma.string("Label text value"),
+        false: undefined,
+      }),
+      // labelTextValue: figma.string("Label text value"),,
+      rightIcon: figma.boolean("Right icon", {
+        true: figma.instance("Right icon type"),
+        false: undefined,
+      }),
+      // rightIconType: figma.instance("Right icon type"),
+      leftIcon: figma.boolean("Left icon", {
+        true: figma.instance("Left icon type"),
+        false: undefined,
+      }),
+      // leftIconType: figma.instance("Left icon type"),
       // No matching props could be found for these Figma properties:
     },
     example: (props) => (
@@ -140,9 +176,9 @@ figma.connect(
         sentiment="positive"
         appearance={props.appearance}
       >
-        {props.leftIcon && props.leftIconType}
-        {props.label && props.labelTextValue}
-        {props.rightIcon && props.rightIconType}
+        {props.leftIcon}
+        {props.label}
+        {props.rightIcon}
       </Button>
     ),
   },
@@ -162,12 +198,21 @@ figma.connect(
         Bordered: "bordered",
         Transparent: "transparent",
       }),
-      label: figma.boolean("Label"),
-      labelTextValue: figma.string("Label text value"),
-      rightIcon: figma.boolean("Right icon"),
-      rightIconType: figma.instance("Right icon type"),
-      leftIcon: figma.boolean("Left icon"),
-      leftIconType: figma.instance("Left icon type"),
+      label: figma.boolean("Label", {
+        true: figma.string("Label text value"),
+        false: undefined,
+      }),
+      // labelTextValue: figma.string("Label text value"),,
+      rightIcon: figma.boolean("Right icon", {
+        true: figma.instance("Right icon type"),
+        false: undefined,
+      }),
+      // rightIconType: figma.instance("Right icon type"),
+      leftIcon: figma.boolean("Left icon", {
+        true: figma.instance("Left icon type"),
+        false: undefined,
+      }),
+      // leftIconType: figma.instance("Left icon type"),
       // No matching props could be found for these Figma properties:
     },
     example: (props) => (
@@ -176,9 +221,9 @@ figma.connect(
         sentiment="negative"
         appearance={props.appearance}
       >
-        {props.leftIcon && props.leftIconType}
-        {props.label && props.labelTextValue}
-        {props.rightIcon && props.rightIconType}
+        {props.leftIcon}
+        {props.label}
+        {props.rightIcon}
       </Button>
     ),
   },

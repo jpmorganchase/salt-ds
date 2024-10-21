@@ -1,8 +1,13 @@
 {
   "codeConnect": {
-    "include": ["packages/core/src/**/*.{tsx,jsx}"],
+    "include": [
+      "packages/core/src/**/*.{tsx,jsx}",
+      "packages/core/figma-src/**/*.{tsx,jsx}",
+      "packages/icons/src/**/*.{tsx,jsx}"
+    ],
     "importPaths": {
-      "../src/*": "@salt-ds/core"
+      "packages/core/src/*": "@salt-ds/core",
+      "packages/icons/*": "@salt-ds/icons"
     }
   }
 }
