@@ -9,7 +9,7 @@
   overflow-y: auto;
 }
 
-.saltOverlayPanelContent-separator {
+.saltOverlayHeader ~ .saltOverlayPanelContent-separator {
   border-top: var(--salt-size-border) var(--salt-separable-borderStyle) transparent;
 }
 
