@@ -1,5 +1,21 @@
 # @salt-ds/core
 
+## 1.37.2
+
+### Patch Changes
+
+- aced985: Replaced Button's deprecated `variant` prop with `sentiment` and `appearance` in:
+
+  - ComboBox
+  - DialogCloseButton
+  - DrawerCloseButton
+  - OverlayPanelCloseButton
+  - CompactPaginator
+  - Paginator
+  - Pagination
+
+- 6b1f109: Added padding between the content and scrollbar when `OverlayPanelContent` is scrollable.
+
 ## 1.37.1
 
 ### Patch Changes
