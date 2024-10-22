@@ -5884,7 +5884,6 @@ __metadata:
     lodash-es: "npm:^4.17.21"
     next: "npm:^14.2.10"
     next-auth: "npm:^4.24.7"
-    node-fetch: "npm:^3.0.0"
     react: "npm:^18.3.1"
     react-dom: "npm:^18.3.1"
     react-markdown: "npm:^8.0.7"
@@ -20841,7 +20840,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"node-fetch@npm:*, node-fetch@npm:^3.0.0":
+"node-fetch@npm:*":
   version: 3.3.2
   resolution: "node-fetch@npm:3.3.2"
   dependencies:
