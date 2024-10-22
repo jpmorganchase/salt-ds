@@ -4,9 +4,11 @@ import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import { type ComponentType, type ReactElement, forwardRef } from "react";
 import { useIcon } from "../semantic-icon-provider";
-import { Text, type TextProps } from "../text";
+import type { TextProps } from "../text";
 import { makePrefixer } from "../utils";
+import type { RenderPropsType } from "../utils";
 import linkCss from "./Link.css";
+import { LinkAction } from "./LinkAction";
 
 const withBaseName = makePrefixer("saltLink");
 
@@ -18,6 +20,10 @@ const withBaseName = makePrefixer("saltLink");
  */
 export interface LinkProps extends Omit<TextProps<"a">, "as" | "disabled"> {
   IconComponent?: ComponentType<IconProps> | null;
+  /**
+   * Render prop to enable customisation of link element.
+   */
+  render?: RenderPropsType["render"];
 }
 
 export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
@@ -26,9 +32,10 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
     href,
     className,
     children,
-    variant = "primary",
     color = "primary",
+    variant = color,
     target = "_self",
+    render,
     ...rest
   },
   ref,
@@ -45,7 +52,7 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
     IconComponent === undefined ? ExternalIcon : IconComponent;
 
   return (
-    <Text
+    <LinkAction
       as="a"
       className={clsx(withBaseName(), className)}
       href={href}
@@ -53,6 +60,7 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
       target={target}
       variant={variant}
       color={color}
+      render={render}
       {...rest}
     >
       {children}
@@ -64,6 +72,6 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
           <span className={withBaseName("externalLinkADA")}>External</span>
         </>
       )}
-    </Text>
+    </LinkAction>
   );
 });
