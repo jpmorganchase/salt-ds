@@ -50,9 +50,9 @@
     "chromatic": "chromatic"
   },
   "dependencies": {
-    "@biomejs/biome": "^1.9.1",
-    "@biomejs/js-api": "^0.6.2",
-    "@biomejs/wasm-nodejs": "^1.9.1",
+    "@biomejs/biome": "1.9.4",
+    "@biomejs/js-api": "0.7.1",
+    "@biomejs/wasm-nodejs": "1.9.4",
     "@changesets/cli": "^2.27.7",
     "@cypress/code-coverage": "^3.12.35",
     "@faker-js/faker": "^8.0.0",
@@ -127,7 +127,6 @@
     "webpack-dev-server": "4.9.3",
     "webpack": "5.94.0",
     "recursive-readdir": "2.2.3",
-    "@storybook/test@npm:8.2.4": "patch:@storybook/test@npm%3A8.2.4#~/.yarn/patches/@storybook-test-npm-8.2.4-0a53c854b7.patch",
     "@joshwooding/vite-plugin-react-docgen-typescript": "0.4.0"
   },
   "browserslist": {

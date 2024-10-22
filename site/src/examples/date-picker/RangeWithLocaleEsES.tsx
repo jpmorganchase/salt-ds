@@ -4,7 +4,6 @@ import {
   FormFieldLabel as FormLabel,
 } from "@salt-ds/core";
 import {
-  type DateInputRangeParserResult,
   DatePicker,
   DatePickerOverlay,
   DatePickerRangeInput,
@@ -13,7 +12,7 @@ import {
   formatDate,
   getCurrentLocale,
 } from "@salt-ds/lab";
-import React, { type ReactElement, useCallback, useState } from "react";
+import { type ReactElement, useCallback, useState } from "react";
 
 function formatDateRange(
   dateRange: DateRangeSelection | null,

@@ -6,7 +6,7 @@ import {
   startOfMonth,
   today,
 } from "@internationalized/date";
-import { type CalendarProps, formatDate, getCurrentLocale } from "@salt-ds/lab";
+import { type CalendarProps, formatDate } from "@salt-ds/lab";
 import * as calendarStories from "@stories/calendar/calendar.stories";
 import { composeStories } from "@storybook/react";
 

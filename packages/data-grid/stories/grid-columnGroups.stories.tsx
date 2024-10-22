@@ -1,5 +1,5 @@
-import { ColumnGroup, Grid, GridColumn, GridProps } from "../src";
-import { DummyRow, dummyRowKeyGetter, rowData } from "./dummyData";
+import { ColumnGroup, Grid, GridColumn } from "../src";
+import { dummyRowKeyGetter, rowData } from "./dummyData";
 import "./grid.stories.css";
 import type { StoryFn } from "@storybook/react";
 

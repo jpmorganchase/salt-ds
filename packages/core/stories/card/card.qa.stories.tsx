@@ -1,4 +1,4 @@
-import { Card, H1, InteractableCard, Text } from "@salt-ds/core";
+import { Card, H1, Text } from "@salt-ds/core";
 import type { Meta, StoryFn } from "@storybook/react";
 import {
   QAContainer,
