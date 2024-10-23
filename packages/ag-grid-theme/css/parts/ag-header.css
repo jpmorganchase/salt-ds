@@ -109,12 +109,9 @@ div[class*="ag-theme-salt"] .ag-chart-menu-icon:hover {
   --ag-icon-font-color-filter: var(--salt-actionable-subtle-foreground-hover);
 }
 
-/* When filter is active, use toggle button active styles */
+/* When filter is active, swap out filter icon with filled version */
 div[class*="ag-theme-salt"] .ag-filter-active {
-  /* Button is the same size of icon, we're copying what ag quartz theme is doing */
-  box-shadow: 0 0 0 4px var(--salt-actionable-subtle-background-active);
-  background-color: var(--salt-actionable-subtle-background-active);
-  --ag-icon-font-color-filter: var(--salt-actionable-subtle-foreground-active);
+  --ag-icon-font-code-filter: var(--ag-icon-font-code-filter-filled);
 }
 
 div[class*="ag-theme-salt"] .ag-floating-filter:after {
@@ -129,12 +126,6 @@ div[class*="ag-theme-salt"] .ag-ltr .ag-floating-filter-button .ag-button:focus 
   border: none;
   outline: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--salt-focused-outlineColor);
   outline-offset: 2px;
-}
-
-div[class*="ag-theme-salt"] .ag-ltr .ag-floating-filter-button .ag-filter-active:focus {
-  /* when active, there is fake 4px box-shadow set above */
-  box-shadow: 0 0 0 4px var(--salt-actionable-subtle-background-active);
-  outline-offset: 6px;
 }
 
 div[class*="ag-theme-salt"] .ag-floating-filter input[class^="ag-"][type="number"],
