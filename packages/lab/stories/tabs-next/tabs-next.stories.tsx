@@ -86,7 +86,7 @@ export const Bordered: StoryFn<typeof TabsNext> = (args) => {
   return (
     <div className="container">
       <TabsNext {...args}>
-        <TabBar padding separator>
+        <TabBar inset divider>
           <TabListNext appearance="bordered">
             {tabs.map((label) => (
               <TabNext value={label} key={label}>
@@ -147,7 +147,7 @@ export const WithIcon: StoryFn<typeof TabsNext> = (args) => {
   return (
     <div className="container">
       <TabsNext {...args}>
-        <TabBar padding separator>
+        <TabBar inset divider>
           <TabListNext>
             {tabs.map((label) => {
               const Icon = tabToIcon[label];
@@ -178,7 +178,7 @@ export const WithBadge: StoryFn<typeof TabsNext> = (args) => {
   return (
     <div style={{ minWidth: 0, maxWidth: "100%" }}>
       <TabsNext {...args}>
-        <TabBar padding separator>
+        <TabBar inset divider>
           <TabListNext>
             {tabs.map((label) => (
               <TabNext value={label} key={label}>
@@ -204,7 +204,7 @@ WithBadge.args = {
 export const Overflow: StoryFn<typeof TabsNext> = (args) => {
   return (
     <TabsNext {...args}>
-      <TabBar padding separator>
+      <TabBar inset divider>
         <TabListNext style={{ maxWidth: 350, margin: "auto" }}>
           {lotsOfTabs.map((label) => (
             <TabNext value={label} key={label}>
@@ -233,7 +233,7 @@ export const Closable: StoryFn<typeof TabsNext> = (args) => {
   return (
     <div style={{ minWidth: 0, maxWidth: "100%" }}>
       <TabsNext {...args}>
-        <TabBar padding separator>
+        <TabBar inset divider>
           <TabListNext>
             {tabs.map((label) => (
               <TabNext value={label} key={label}>
@@ -265,7 +265,7 @@ export const DisabledTabs: StoryFn<typeof TabsNext> = (args) => {
   return (
     <div className="container">
       <TabsNext {...args}>
-        <TabBar padding separator>
+        <TabBar inset divider>
           <TabListNext appearance="bordered">
             {tabs.map((label) => (
               <TabNext disabled={label === "Loans"} value={label} key={label}>
@@ -300,7 +300,7 @@ export const AddTabs: StoryFn<typeof TabsNext> = (args) => {
         value={value}
         onChange={(_event, newValue) => setValue(newValue)}
       >
-        <TabBar padding separator style={{ width: 500 }}>
+        <TabBar inset divider style={{ width: 500 }}>
           <TabListNext>
             {tabs.map((label) => (
               <TabNext value={label} key={label}>
@@ -338,7 +338,7 @@ export const Backgrounds = (): ReactElement => {
     <StackLayout gap={6}>
       <div style={{ alignItems: "center", width: "40vw" }}>
         <TabsNext defaultValue={tabs[0]}>
-          <TabBar separator>
+          <TabBar divider>
             <TabListNext activeColor={variant} appearance="bordered">
               {tabs.map((label) => (
                 <TabNext value={label} key={label}>
@@ -400,6 +400,7 @@ function AddTabDialog({
           Cancel
         </Button>
         <Button
+          disabled={value.trim() === ""}
           appearance="solid"
           sentiment="accented"
           onClick={() => {
@@ -434,7 +435,7 @@ export const AddWithDialog = () => {
         onCancel={handleCancel}
       />
       <TabsNext defaultValue="Home">
-        <TabBar padding separator>
+        <TabBar inset divider>
           <TabListNext>
             {tabs.map((label) => (
               <TabNext value={label} key={label}>
@@ -507,7 +508,7 @@ export const CloseWithConfirmation = () => {
         onCancel={handleCancel}
       />
       <TabsNext defaultValue="Home">
-        <TabBar padding separator>
+        <TabBar inset divider>
           <TabListNext>
             {tabs.map((label) => (
               <TabNext value={label} key={label}>
@@ -586,7 +587,7 @@ export const WithMenu: StoryFn<typeof TabsNext> = (args) => {
   return (
     <div style={{ minWidth: 0, maxWidth: "100%" }}>
       <TabsNext {...args}>
-        <TabBar padding separator>
+        <TabBar inset divider>
           <TabListNext>
             {tabs.map((label) => (
               <TabNext value={label} key={label}>
@@ -650,7 +651,7 @@ export const Controlled: StoryFn = () => {
 
   return (
     <TabsNext value={value} onChange={handleChange}>
-      <TabBar padding separator>
+      <TabBar inset divider>
         <TabListNext style={{ maxWidth: 350, margin: "auto" }}>
           {tabs.map((label) => (
             <TabNext value={label} key={label}>

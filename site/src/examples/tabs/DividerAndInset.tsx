@@ -10,14 +10,14 @@ import { type ReactElement, useState } from "react";
 
 const tabs = ["Home", "Transactions", "Loans", "Checks", "Liquidity"];
 
-export const SeparatorAndPadding = (): ReactElement => {
-  const [separator, setSeparator] = useState(true);
-  const [padding, setPadding] = useState(true);
+export const DividerAndInset = (): ReactElement => {
+  const [divider, setDivider] = useState(true);
+  const [inset, setInset] = useState(true);
 
   return (
     <StackLayout>
       <TabsNext defaultValue={tabs[0]}>
-        <TabBar separator={separator} padding={padding}>
+        <TabBar divider={divider} inset={inset}>
           <TabListNext appearance="bordered">
             {tabs.map((label) => (
               <TabNext value={label} key={label}>
@@ -28,7 +28,7 @@ export const SeparatorAndPadding = (): ReactElement => {
         </TabBar>
       </TabsNext>
       <TabsNext defaultValue={tabs[0]}>
-        <TabBar separator={separator} padding={padding}>
+        <TabBar divider={divider} inset={inset}>
           <TabListNext appearance="transparent">
             {tabs.map((label) => (
               <TabNext value={label} key={label}>
@@ -40,14 +40,14 @@ export const SeparatorAndPadding = (): ReactElement => {
       </TabsNext>
       <StackLayout direction="row">
         <Switch
-          label="Separator"
-          checked={separator}
-          onChange={(event) => setSeparator(event.target.checked)}
+          label="Divider"
+          checked={divider}
+          onChange={(event) => setDivider(event.target.checked)}
         />
         <Switch
-          label="Padding"
-          checked={padding}
-          onChange={(event) => setPadding(event.target.checked)}
+          label="Inset"
+          checked={inset}
+          onChange={(event) => setInset(event.target.checked)}
         />
       </StackLayout>
     </StackLayout>

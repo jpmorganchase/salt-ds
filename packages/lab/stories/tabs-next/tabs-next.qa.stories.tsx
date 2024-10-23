@@ -45,7 +45,7 @@ export const LotsOfTabsTabstrip: StoryFn = () => {
           setValue(value);
         }}
       >
-        <TabBar padding separator>
+        <TabBar inset divider>
           <TabListNext style={{ maxWidth: 350, margin: "auto" }}>
             {tabs.map((label) => (
               <TabNext key={label} value={label}>

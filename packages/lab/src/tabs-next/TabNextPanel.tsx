@@ -68,7 +68,11 @@ export const TabNextPanel = forwardRef<HTMLDivElement, TabNextPanelProps>(
         detectFocusableChildren();
       });
 
-      observer.observe(panelRef.current, { childList: true, subtree: true });
+      observer.observe(panelRef.current, {
+        childList: true,
+        subtree: true,
+        attributes: true,
+      });
 
       return () => {
         observer.disconnect();

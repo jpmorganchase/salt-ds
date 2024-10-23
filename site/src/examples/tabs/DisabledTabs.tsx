@@ -12,7 +12,7 @@ const tabs = ["Home", "Transactions", "Loans", "Checks", "Liquidity"];
 export const DisabledTabs = (): ReactElement => {
   return (
     <TabsNext defaultValue={tabs[0]}>
-      <TabBar padding separator>
+      <TabBar inset divider>
         <TabListNext>
           {tabs.map((label) => {
             return (

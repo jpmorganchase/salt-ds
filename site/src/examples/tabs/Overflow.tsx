@@ -30,7 +30,7 @@ const tabs = [
 export const Overflow = (): ReactElement => {
   return (
     <TabsNext defaultValue={tabs[0]}>
-      <TabBar separator padding>
+      <TabBar inset divider>
         <TabListNext style={{ maxWidth: 350, margin: "auto" }}>
           {tabs.map((label) => (
             <TabNext value={label} key={label}>

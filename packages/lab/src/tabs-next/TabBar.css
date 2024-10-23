@@ -7,7 +7,7 @@
   box-sizing: border-box;
 }
 
-.saltTabBar-separator::before {
+.saltTabBar-divider::before {
   content: "";
   position: absolute;
   inset: auto 0 0 0;
@@ -15,7 +15,7 @@
   border-bottom: var(--salt-size-border) var(--salt-separable-borderStyle) var(--salt-separable-secondary-borderColor);
 }
 
-.saltTabBar-padding {
+.saltTabBar-inset {
   padding-left: var(--salt-spacing-300);
   padding-right: var(--salt-spacing-300);
 }

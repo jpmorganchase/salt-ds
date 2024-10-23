@@ -10,7 +10,7 @@ import type { ReactElement } from "react";
 
 export const InlineBadge = (): ReactElement => (
   <TabsNext defaultValue="Home">
-    <TabBar padding separator>
+    <TabBar inset divider>
       <TabListNext
         style={{
           minWidth: 350,
