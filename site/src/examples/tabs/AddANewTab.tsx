@@ -7,7 +7,7 @@ import {
   TabNextTrigger,
   TabsNext,
 } from "@salt-ds/lab";
-import React, { type ReactElement, useRef, useState } from "react";
+import { type ReactElement, useRef, useState } from "react";
 
 export const AddANewTab = (): ReactElement => {
   const [tabs, setTabs] = useState(["Home", "Transactions", "Loans"]);
@@ -16,7 +16,7 @@ export const AddANewTab = (): ReactElement => {
 
   return (
     <TabsNext value={value} onChange={(_event, newValue) => setValue(newValue)}>
-      <TabBar padding separator style={{ width: 500 }}>
+      <TabBar inset divider style={{ width: 500 }}>
         <TabListNext>
           {tabs.map((label) => (
             <TabNext value={label} key={label}>

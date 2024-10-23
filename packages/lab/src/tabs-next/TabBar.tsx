@@ -10,18 +10,18 @@ export interface TabBarProps extends ComponentPropsWithRef<"div"> {
   /**
    * Styling variant with a bottom separator. Defaults to false
    */
-  separator?: boolean;
+  divider?: boolean;
   /**
    * Styling variant with left and right padding. Defaults to false
    */
-  padding?: boolean;
+  inset?: boolean;
 }
 
 const withBaseName = makePrefixer("saltTabBar");
 
 export const TabBar = forwardRef<HTMLDivElement, TabBarProps>(
   function TabBar(props, ref) {
-    const { className, children, separator, padding, ...rest } = props;
+    const { className, children, divider, inset, ...rest } = props;
 
     const targetWindow = useWindow();
     useComponentCssInjection({
@@ -35,8 +35,8 @@ export const TabBar = forwardRef<HTMLDivElement, TabBarProps>(
         className={clsx(
           withBaseName(),
           {
-            [withBaseName("separator")]: separator,
-            [withBaseName("padding")]: padding,
+            [withBaseName("divider")]: divider,
+            [withBaseName("inset")]: inset,
           },
           className,
         )}

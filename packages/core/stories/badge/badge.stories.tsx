@@ -76,7 +76,7 @@ export const String: StoryFn = () => {
 export const InlineBadge: StoryFn = () => {
   return (
     <TabsNext defaultValue="Home">
-      <TabBar padding separator>
+      <TabBar inset divider>
         <TabListNext
           style={{
             minWidth: 350,

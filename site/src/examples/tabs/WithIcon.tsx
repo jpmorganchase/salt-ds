@@ -27,7 +27,7 @@ const tabToIcon: Record<string, ComponentType> = {
 export const WithIcon = (): ReactElement => {
   return (
     <TabsNext defaultValue={tabs[0]}>
-      <TabBar separator padding>
+      <TabBar divider inset>
         <TabListNext>
           {tabs.map((label) => {
             const Icon = tabToIcon[label];

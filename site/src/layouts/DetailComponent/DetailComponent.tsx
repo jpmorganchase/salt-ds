@@ -14,12 +14,7 @@ import {
   TabsNext,
 } from "@salt-ds/lab";
 import { useRouter } from "next/navigation";
-import {
-  type FC,
-  type SyntheticEvent,
-  useEffect,
-  useState,
-} from "react";
+import { type FC, type SyntheticEvent, useEffect, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import { a, code, p, ul } from "../../components/mdx";
 import { TableOfContents } from "../../components/toc";
@@ -140,7 +135,7 @@ export const DetailComponent: FC<LayoutProps> = ({ children }) => {
         value={currentTab?.name ?? tabs[0].name}
         onChange={handleTabChange}
       >
-        <TabBar className={styles.tabBar} separator>
+        <TabBar className={styles.tabBar} divider>
           <TabListNext appearance="transparent">
             {tabs.map(({ name, label }) => (
               <TabNext key={name} value={name}>

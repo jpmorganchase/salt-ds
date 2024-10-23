@@ -18,7 +18,7 @@ const notifications: Record<(typeof tabs)[number], number> = {
 export const WithBadge = (): ReactElement => {
   return (
     <TabsNext defaultValue={tabs[0]}>
-      <TabBar separator padding>
+      <TabBar divider inset>
         <TabListNext>
           {tabs.map((label) => (
             <TabNext value={label} key={label}>

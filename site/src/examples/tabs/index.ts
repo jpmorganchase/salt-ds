@@ -6,4 +6,4 @@ export * from "./ClosableTabs";
 export * from "./DisabledTabs";
 export * from "./Overflow";
 export * from "./ActiveColor";
-export * from "./SeparatorAndPadding";
+export * from "./DividerAndInset";

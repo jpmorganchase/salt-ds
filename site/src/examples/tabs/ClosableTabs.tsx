@@ -20,7 +20,7 @@ export const ClosableTabs = (): ReactElement => {
 
   return (
     <TabsNext defaultValue={tabs[0]}>
-      <TabBar separator padding>
+      <TabBar inset divider>
         <TabListNext>
           {tabs.map((label) => (
             <TabNext value={label} key={label}>
