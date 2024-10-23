@@ -1,0 +1,160 @@
+---
+title: File upload
+layout: DetailPattern
+tags:
+  - pattern
+aliases:
+  - /salt/patterns/file-upload
+data:
+  resources: []
+  components: ["File Drop Zone", "Static List"]
+---
+
+A file upload allows users to transfer one or multiple files from an external source to the web application. This pattern is commonly embedded in forms or as a standalone element.
+
+<Diagram
+  src="/img/patterns/file-upload/file-upload.png"
+  alt="File upload"
+  border
+/>
+
+## When to use
+
+Use this pattern to:
+
+- Upload files by dragging and dropping, or by using a button to select a file in a new window or file browser.
+- Upload single or multiple files within modals or full-page experiences.
+- Display file upload progress, file listings, and management options.
+
+<ExampleContainer type="positive" customPillText="Best practices">
+  - Consider using a full-page layout or a drawer if additional actions need to be performed on the files. 
+  - When used in dialogs, ensure that submit actions are disabled until the file upload is complete. 
+  - When used in drawers, the upload status (e.g., completed) should remain  visible regardless of the drawer's open or close actions.
+</ExampleContainer>
+
+## How to build
+
+### Anatomy
+
+A file upload pattern typically consists of two main functional areas:
+
+1. **Upload area:** This provides a target area for users to drag and drop files. It is implemented using the [`FileDropZone`](/salt/components/file-drop-zone) component.
+2. **File upload list:** This area can display a single item or multiple items stacked vertically. Items in this list are constructed using the [`StaticList`](/salt/components/static-list) component.
+
+These functional areas can be enhanced with text elements, such as headers and descriptions, to assist users in making informed decisions.
+
+<Diagram
+  src="/img/patterns/file-upload/file-upload-anatomy.png"
+  alt="File upload anatomy"
+  border
+/>
+
+### Layout
+
+- Use the [`StackLayout`](/salt/components/stack-layout) to display the File drop zone, file upload items and text elements that make up file upload in a column.
+- Use the [`StackLayout`](/salt/components/flex-layout) with a gap of 1 to position the text elements.
+
+<Diagram
+  src="/img/patterns/file-upload/file-upload-layout.png"
+  alt="File upload with layout annotations."
+  border
+/>
+
+## Unrestricted space areas
+
+The file drop zone component enables users to upload files by providing a designated drag-and-drop target area. It supports both single and multiple file uploads in unrestricted space areas.
+
+<Diagram
+  src="/img/patterns/file-upload/file-upload-unrestricted-space-areas.png"
+  alt="File upload in an unrestricted space area."
+  border
+/>
+
+<ExampleContainer type="positive" customPillText="Best practices">
+  - The file drop zone component should support both single and multiple file uploads.
+  - Restrict file selection to allowed file types.
+  - Include text elements to assist users in making informed decisions.
+</ExampleContainer>
+
+## Space-restricted areas
+
+In space-restricted scenarios, single file uploads can be facilitated using a button. This button opens a file browser, allowing the user to select a file.
+
+<Diagram
+  src="/img/patterns/file-upload/file-upload-restricted-space-areas.png"
+  alt="File upload in a restricted space area."
+  border
+/>
+
+<ExampleContainer type="positive" customPillText="Best practices">
+  - Use a button for single file uploads only
+  - Restrict file selection to allowed file types
+  - Include text elements to help users make informed decisions
+</ExampleContainer>
+
+## Uploading files
+
+Ensure users are aware of the upload progress for each file. Use the progress component and a secondary label to display relevant information, helping users manage their expectations. Use action buttons to assist users in managing files. For example, a pause button can be used to put a file upload on hold.
+
+<Diagram
+  src="/img/patterns/file-upload/file-upload-pause-action.png"
+  alt="File upload with a pause action."
+  border
+/>
+
+Following a pause action, play and delete buttons can be used to resume or remove the upload, respectively, as shown in the example below.
+
+<Diagram
+  src="/img/patterns/file-upload/file-upload-resume-action.png"
+  alt="File upload with a resume action."
+  border
+/>
+
+## Success validation
+
+Inform users when a file upload has been successfully completed. Once  the process is finished, provide users with the ability to remove the  file or perform other related actions.
+
+<Diagram
+  src="/img/patterns/file-upload/file-upload-success-validation.png"
+  alt="File upload with success validation."
+  border
+/>
+
+## Error validation
+
+### File error
+
+Error validation can occur independently at the file item level without impacting other files in the group. In such case scenarios, the secondary label should clearly explain the issue and offer a solution. A refresh button can be used to retry the upload after error validation.
+
+Inform users when a file upload has been successfully completed. Once  the process is finished, provide users with the ability to remove the  file or perform other related actions.
+
+<Diagram
+  src="/img/patterns/file-upload/file-upload-file-error.png"
+  alt="File upload with a file error."
+  border
+/>
+
+### Group error
+
+Errors can occur at the group level. In such scenarios, error messages should be displayed within the file drop zone component. For instance, if only 2 files can be uploaded, the error message should clearly communicate this limit and guide the user, as demonstrated  below. For more details, see file drop zone validation.
+
+<Diagram
+  src="/img/patterns/file-upload/file-upload-group-error.png"
+  alt="File upload with a group error mesage."
+  border
+/>
+
+Alternatively, group error messages can be displayed using a banner component positioned below the file drop zone. In such scenarios, ensure that error messages are displayed exclusively in the banner and not  within the file drop zone itself.
+
+<Diagram
+  src="/img/patterns/file-upload/file-upload-group-error-banner.png"
+  alt="File upload with a group error mesage banner."
+  border
+/>
+
+<ExampleContainer type="positive" customPillText="Best practices">
+  - Clearly communicate the issue and offer a solution
+  - Ensure error messages are simple and concise
+</ExampleContainer>
+
+:fragment{src="./fragments/feedback.mdx"}
