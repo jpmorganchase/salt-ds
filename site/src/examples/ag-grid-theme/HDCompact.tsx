@@ -42,7 +42,7 @@ const HDCompactGrid = () => {
           rowData={defaultData}
           statusBar={statusBar}
           rowSelection="multiple"
-          enableRangeSelection={true}
+          cellSelection={true}
           {...agGridProps}
         />
       </div>

@@ -14,6 +14,7 @@ export const FloatingFilter = () => {
         defaultColDef={{ floatingFilter: true }}
         columnDefs={customFilterColumns}
         rowData={defaultData}
+        suppressMenuHide={false}
         {...agGridProps}
       />
     </div>

@@ -14,6 +14,7 @@ const FloatingFilter = (props: AgGridReactProps) => {
         defaultColDef={{ floatingFilter: true }}
         columnDefs={customFilterExampleColumns}
         rowData={dataGridExampleData}
+        suppressMenuHide={false}
       />
     </div>
   );

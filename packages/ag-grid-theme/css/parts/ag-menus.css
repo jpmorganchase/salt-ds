@@ -1,7 +1,7 @@
 /* MENU */
 
 div[class*="ag-theme-salt"] .ag-menu {
-  padding: 0;
+  padding: 0 var(--salt-spacing-100);
   border: var(--salt-size-border) var(--salt-container-borderStyle) var(--salt-selectable-borderColor-selected);
 }
 

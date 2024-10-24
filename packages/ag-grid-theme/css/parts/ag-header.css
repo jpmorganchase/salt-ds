@@ -63,14 +63,99 @@ div[class*="ag-theme-salt"] .ag-ltr .ag-header-cell.ag-right-aligned-header .ag-
   padding-left: var(--salt-spacing-100);
 }
 
+/* Floating filter */
+
 div[class*="ag-theme-salt"] .ag-header-cell.ag-floating-filter::before {
   /* Remove half height border in most header cells */
   background-color: transparent;
 }
 
-div[class*="ag-theme-salt"] .ag-floating-filter input[class^="ag-"][type="number"] {
+div[class*="ag-theme-salt"] .ag-floating-filter {
+  border: var(--salt-size-border) var(--salt-editable-borderStyle) var(--salt-separable-tertiary-borderColor);
+}
+
+div[class*="ag-theme-salt"] .ag-header-cell.ag-floating-filter {
+  padding-left: 0;
+}
+
+/**
+  From v31, there's a "active" state of floating filter button next to the input. So we want to put the focus ring
+  not around the whole header cell, but around the input container.
+*/
+div[class*="ag-theme-salt"] .ag-floating-filter .ag-floating-filter-body:focus-within {
+  outline: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--salt-focused-outlineColor);
+  outline-offset: -2px;
+}
+
+div[class*="ag-theme-salt"] .ag-header-cell-menu-button:hover,
+div[class*="ag-theme-salt"] .ag-header-cell-filter-button:hover,
+div[class*="ag-theme-salt"] .ag-panel-title-bar-button:hover,
+div[class*="ag-theme-salt"] .ag-header-expand-icon:hover,
+div[class*="ag-theme-salt"] .ag-column-group-icons:hover,
+div[class*="ag-theme-salt"] .ag-set-filter-group-icons:hover,
+div[class*="ag-theme-salt"] .ag-group-expanded .ag-icon:hover,
+div[class*="ag-theme-salt"] .ag-group-contracted .ag-icon:hover,
+div[class*="ag-theme-salt"] .ag-chart-settings-prev:hover,
+div[class*="ag-theme-salt"] .ag-chart-settings-next:hover,
+div[class*="ag-theme-salt"] .ag-group-title-bar-icon:hover,
+div[class*="ag-theme-salt"] .ag-column-select-header-icon:hover,
+div[class*="ag-theme-salt"] .ag-floating-filter-button-button:hover,
+div[class*="ag-theme-salt"] .ag-filter-toolpanel-expand:hover,
+div[class*="ag-theme-salt"] .ag-panel-title-bar-button-icon:hover,
+div[class*="ag-theme-salt"] .ag-chart-menu-icon:hover {
+  /* Button is the same size of icon, we're copying what ag quartz theme is doing */
+  box-shadow: 0 0 0 4px var(--salt-actionable-subtle-background-hover);
+  background-color: var(--salt-actionable-subtle-background-hover);
+  --ag-icon-font-color-filter: var(--salt-actionable-subtle-foreground-hover);
+}
+
+/* Make filter and menu icon apart, to accomodate hover effects above */
+.ag-ltr .ag-header-cell:not(.ag-right-aligned-header) .ag-header-label-icon,
+.ag-ltr .ag-header-cell:not(.ag-right-aligned-header) .ag-header-menu-icon {
+  margin-left: var(--salt-spacing-100);
+}
+
+/* When filter is active, use toggle button active styles */
+div[class*="ag-theme-salt"] .ag-filter-active {
+  /* Button is the same size of icon, we're copying what ag quartz theme is doing */
+  box-shadow: 0 0 0 4px var(--salt-actionable-subtle-background-active);
+  background-color: var(--salt-actionable-subtle-background-active);
+  --ag-icon-font-color-filter: var(--salt-actionable-subtle-foreground-active);
+}
+
+div[class*="ag-theme-salt"] .ag-floating-filter:after {
+  width: 0;
+}
+
+div[class*="ag-theme-salt"] .ag-ltr .ag-floating-filter-button {
+  margin-left: var(--salt-spacing-100);
+}
+
+div[class*="ag-theme-salt"] .ag-ltr .ag-floating-filter-button .ag-button:focus {
+  border: none;
+  outline: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--salt-focused-outlineColor);
+  outline-offset: 2px;
+}
+
+div[class*="ag-theme-salt"] .ag-ltr .ag-floating-filter-button .ag-filter-active:focus {
+  /* when active, there is fake 4px box-shadow set above */
+  box-shadow: 0 0 0 4px var(--salt-actionable-subtle-background-active);
+  outline-offset: 6px;
+}
+
+div[class*="ag-theme-salt"] .ag-floating-filter input[class^="ag-"][type="number"],
+div[class*="ag-theme-salt"] .ag-floating-filter input[class^="ag-"][type="text"] {
   /* Avoid floating filter's input clips focus ring */
-  height: calc(var(--salt-size-base) + var(--salt-spacing-100) - 4px);
+  height: calc(var(--salt-size-base) + var(--salt-spacing-100) - 6px);
+  /* Give internal <input> space for the outline */
+  margin-inline: var(--salt-spacing-50);
+  /* Together with margin, matching Salt Input padding */
+  padding: 0 var(--salt-spacing-50);
+}
+
+div[class*="ag-theme-salt"] .ag-floating-filter-input input[class^="ag-"][type="text"],
+div[class*="ag-theme-salt"] .ag-floating-filter-input input[class^="ag-"][type="number"] {
+  border: none;
 }
 
 div[class*="ag-theme-salt"] .ag-header-cell:not(.ag-column-resizing) + .ag-header-cell.ag-column-menu-visible:not(.ag-column-hover):not(.ag-header-cell-moving):hover,
