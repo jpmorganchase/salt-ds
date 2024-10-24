@@ -12,6 +12,25 @@ data:
 
 Any focusable elements included in the tab content will need to be checked and tested accordingly.
 
+## Axe false positives
+
+Axe flags a few false positives that do not impact the accessibility of Tabs:
+
+### Certain ARIA roles must contain particular children ([aria-required-children](https://dequeuniversity.com/rules/axe/4.9/aria-required-children))
+
+This is flagged in two scenarios:
+
+- When an overflow menu is present. `tabIndex={-1}` is applied to the overflow menu to prevent it being tabbable.
+- When `TabNextAction` is present. `TabNextAction` follows the experimental example of [Tabs with Action Buttons](https://www.w3.org/WAI/ARIA/apg/patterns/tabs/examples/tabs-actions/) which causes the action to be a descendant of the tab list.
+
+### Scrollable region must have keyboard access ([scrollable-region-focusable](https://dequeuniversity.com/rules/axe/4.9/scrollable-region-focusable))
+
+- When an overflow menu is present. `tabIndex={-1}` is applied to the overflow menu to prevent it being tabbable.
+
+### ARIA attributes must conform to valid names ([aria-valid-attr](https://dequeuniversity.com/rules/axe/4.9/aria-valid-attr))
+
+- When `TabNextAction` is present. `TabNextAction` uses [`aria-actions`](https://pr-preview.s3.amazonaws.com/w3c/aria/pull/1805.html#aria-actions) which is still in a draft state and is not recognised by Axe.
+
 ## Keyboard interactions
 
 <KeyboardControls>
