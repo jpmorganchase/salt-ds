@@ -17,7 +17,7 @@ Salt components serve as foundational building blocks as well as representing de
 
 For a full list of foundational components, refer to the [component documentation](/salt/components/index).
 
-## Design Token
+## Design token
 
 A design token is a visual attribute that represents a specific aspect of a design system. It is an abstract representation of a design property, such as colors, typography, spacing, or breakpoints, that can be used consistently across a product or design system. Design tokens provide a centralized and reusable way to define and manage design-related values, making it easier to maintain consistency and make global design changes. They act as a bridge between designers and developers, enabling a shared language and ensuring design consistency throughout the product or system. In Salt design tokens are represented as Figma variables and in code, they take the form of CSS variables.
 
@@ -36,3 +36,10 @@ Salt is the J.P. Morgan design system, an open-source solution for building exce
 Salt is under active development. At this stage, we don't recommend theming unless absolutely necessary.
 
 For an overview of theming, refer to our [theming documentation](/salt/themes/index).
+
+
+## Status icon visibility
+
+For disabled components, status icons are not displayed. This approach is based on accessibility principles, as disabled elements don't require visibility in the UI.
+
+In contrast, read-only components display status icons. These elements contain relevant information applicable to the workflow. Displaying status icons ensures accessibility and communicates necessary information.
