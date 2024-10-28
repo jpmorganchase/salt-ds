@@ -18,6 +18,7 @@ import {
   RadioButtonGroup,
   StackLayout,
   Text,
+  useAriaAnnouncer,
 } from "@salt-ds/core";
 import {
   AddIcon,
@@ -230,6 +231,8 @@ export const Closable: StoryFn<typeof TabsNext> = (args) => {
     "Liquidity",
   ]);
 
+  const { announce } = useAriaAnnouncer();
+
   return (
     <div style={{ minWidth: 0, maxWidth: "100%" }}>
       <TabsNext {...args}>
@@ -242,6 +245,7 @@ export const Closable: StoryFn<typeof TabsNext> = (args) => {
                   <TabNextAction
                     onClick={() => {
                       setTabs((old) => old.filter((tab) => tab !== label));
+                      announce(`${label} tab has been closed`);
                     }}
                     aria-label="Close tab"
                   >
@@ -293,6 +297,8 @@ export const AddTabs: StoryFn<typeof TabsNext> = (args) => {
   const [value, setValue] = useState("Home");
   const newCount = useRef(0);
 
+  const { announce } = useAriaAnnouncer();
+
   return (
     <div style={{ minWidth: 0, maxWidth: "100%" }}>
       <TabsNext
@@ -316,6 +322,7 @@ export const AddTabs: StoryFn<typeof TabsNext> = (args) => {
               newCount.current += 1;
 
               setTabs((old) => old.concat(newTab));
+              announce(`${newTab} tab added`);
             }}
           >
             <AddIcon aria-hidden />
@@ -418,9 +425,12 @@ export const AddWithDialog = () => {
   const [tabs, setTabs] = useState(["Home", "Transactions", "Loans"]);
   const [confirmationOpen, setConfirmationOpen] = useState(false);
 
+  const { announce } = useAriaAnnouncer();
+
   const handleConfirm = (newTab: string) => {
     setTabs((old) => old.concat(newTab));
     setConfirmationOpen(false);
+    announce(`${newTab} tab added`);
   };
 
   const handleCancel = () => {
@@ -462,15 +472,17 @@ function CloseConfirmationDialog({
   open,
   onConfirm,
   onCancel,
+  onTransitionEnd,
   valueToRemove,
 }: {
   open?: boolean;
   onConfirm: () => void;
   onCancel: () => void;
+  onTransitionEnd: () => void;
   valueToRemove?: string;
 }) {
   return (
-    <Dialog open={open}>
+    <Dialog open={open} onTransitionEnd={onTransitionEnd}>
       <DialogHeader header={`Remove ${valueToRemove}?`} />
       <DialogActions>
         <Button appearance="bordered" sentiment="accented" onClick={onCancel}>
@@ -489,23 +501,32 @@ export const CloseWithConfirmation = () => {
   const [valueToRemove, setValueToRemove] = useState<string | undefined>(
     undefined,
   );
+  const [open, setOpen] = useState(false);
+
+  const { announce } = useAriaAnnouncer();
 
   const handleConfirm = () => {
     setTabs((old) => old.filter((tab) => tab !== valueToRemove));
-    setValueToRemove(undefined);
+    setOpen(false);
+    announce(`${valueToRemove} tab has been removed`);
   };
 
   const handleCancel = () => {
+    setOpen(false);
+  };
+
+  const clearValue = () => {
     setValueToRemove(undefined);
   };
 
   return (
     <div className="container">
       <CloseConfirmationDialog
-        open={!!valueToRemove}
+        open={open}
+        onCancel={handleCancel}
         valueToRemove={valueToRemove}
         onConfirm={handleConfirm}
-        onCancel={handleCancel}
+        onTransitionEnd={clearValue}
       />
       <TabsNext defaultValue="Home">
         <TabBar inset divider>
@@ -516,6 +537,7 @@ export const CloseWithConfirmation = () => {
                 {tabs.length > 1 ? (
                   <TabNextAction
                     onClick={() => {
+                      setOpen(true);
                       setValueToRemove(label);
                     }}
                     aria-label="Close tab"

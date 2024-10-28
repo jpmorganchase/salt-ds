@@ -64,9 +64,9 @@ export const TabOverflowList = forwardRef<HTMLDivElement, TabOverflowListProps>(
 
     const { refs, x, y, strategy, context } = useFloatingUI({
       open: open,
-      onOpenChange(open, event, reason) {
+      onOpenChange(open, _, reason) {
         if (reason === "escape-key") {
-          setTimeout(() => {
+          queueMicrotask(() => {
             const allTabs =
               tabstripRef.current?.querySelectorAll<HTMLElement>(
                 '[role="tab"]:not([aria-hidden])',
@@ -78,7 +78,7 @@ export const TabOverflowList = forwardRef<HTMLDivElement, TabOverflowListProps>(
             allTabs[allTabs.length - numberOfTabsInOverflow - 1]?.focus({
               preventScroll: true,
             });
-          }, 0);
+          });
         }
 
         setOpen(open);
@@ -162,6 +162,7 @@ export const TabOverflowList = forwardRef<HTMLDivElement, TabOverflowListProps>(
             ref={handleListRef}
             {...getFloatingProps({
               onFocus: handleFocus,
+              role: "presentation",
             })}
             className={withBaseName("list")}
             data-hidden={!open}
