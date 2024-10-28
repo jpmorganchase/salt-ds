@@ -29,7 +29,7 @@ import {
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 
-import floatingCss from "./floating-platform.css";
+import floatingCss from "./floating-platform.css?inline";
 
 import { FloatingComponentWindow, NewWindow } from "./NewWindow";
 
