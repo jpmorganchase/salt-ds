@@ -109,7 +109,8 @@
     "@salt-ds/lab": "workspace:*",
     "next": "^14.0.0",
     "whatwg-url": "^14.0.0",
-    "@joshwooding/vite-plugin-react-docgen-typescript": "0.4.0"
+    "@joshwooding/vite-plugin-react-docgen-typescript": "0.4.0",
+    "cookie": "^0.7.0"
   },
   "browserslist": {
     "production": [
