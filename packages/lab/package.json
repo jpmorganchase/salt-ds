@@ -12,7 +12,6 @@
   "sideEffects": false,
   "dependencies": {
     "@floating-ui/react": "^0.26.5",
-    "@fluentui/react-overflow": "^9.0.19",
     "@internationalized/date": "^3.5.5",
     "@salt-ds/core": "workspace:^",
     "@salt-ds/icons": "workspace:^",
@@ -29,6 +28,7 @@
     "react-color": "^2.19.3",
     "react-window": "^1.8.6",
     "rifm": "^0.12.0",
+    "tabbable": "^6.0.0",
     "tinycolor2": "^1.4.2"
   },
   "peerDependencies": {

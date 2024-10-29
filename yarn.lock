@@ -943,7 +943,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime@npm:^7.0.0, @babel/runtime@npm:^7.1.2, @babel/runtime@npm:^7.12.1, @babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.14.6, @babel/runtime@npm:^7.15.4, @babel/runtime@npm:^7.17.8, @babel/runtime@npm:^7.20.1, @babel/runtime@npm:^7.20.13, @babel/runtime@npm:^7.3.1, @babel/runtime@npm:^7.5.5, @babel/runtime@npm:^7.8.7, @babel/runtime@npm:^7.9.2":
+"@babel/runtime@npm:^7.0.0, @babel/runtime@npm:^7.12.1, @babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.14.6, @babel/runtime@npm:^7.15.4, @babel/runtime@npm:^7.17.8, @babel/runtime@npm:^7.20.1, @babel/runtime@npm:^7.20.13, @babel/runtime@npm:^7.3.1, @babel/runtime@npm:^7.5.5, @babel/runtime@npm:^7.8.7, @babel/runtime@npm:^7.9.2":
   version: 7.24.6
   resolution: "@babel/runtime@npm:7.24.6"
   dependencies:
@@ -1981,92 +1981,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fluentui/keyboard-keys@npm:^9.0.3":
-  version: 9.0.3
-  resolution: "@fluentui/keyboard-keys@npm:9.0.3"
-  dependencies:
-    "@swc/helpers": "npm:^0.4.14"
-  checksum: 10/2aa9a572923ce95abaea18c83eabfdb9f2e205b1022748228ba534413186b7bbc41e5eb4bc3f0bb6c2ec36b2641d6ef11e605a261bc96a6550db4b0af5fa3661
-  languageName: node
-  linkType: hard
-
-"@fluentui/priority-overflow@npm:^9.1.0":
-  version: 9.1.0
-  resolution: "@fluentui/priority-overflow@npm:9.1.0"
-  dependencies:
-    "@swc/helpers": "npm:^0.4.14"
-  checksum: 10/362ae2ce93d20f63cf1b8a4e84d54f1e6f3c78e3dc076b85d9bdcbc00c86edd2953bd7fee32d864caec71dd04c4a6531473e08d5424a360084725778cb22a60c
-  languageName: node
-  linkType: hard
-
-"@fluentui/react-context-selector@npm:^9.1.23":
-  version: 9.1.23
-  resolution: "@fluentui/react-context-selector@npm:9.1.23"
-  dependencies:
-    "@fluentui/react-utilities": "npm:^9.9.3"
-    "@swc/helpers": "npm:^0.4.14"
-  peerDependencies:
-    "@types/react": ">=16.8.0 <19.0.0"
-    "@types/react-dom": ">=16.8.0 <19.0.0"
-    react: ">=16.8.0 <19.0.0"
-    react-dom: ">=16.8.0 <19.0.0"
-    scheduler: ^0.19.0 || ^0.20.0
-  checksum: 10/ea425743bff2b55c63662d02a1c5ef73e61d44dec7fc9fb5795afdbb880100289f626d9b460ed293fc0ecb22e81bba35350ee9be612846af71003e9b4f494717
-  languageName: node
-  linkType: hard
-
-"@fluentui/react-overflow@npm:^9.0.19":
-  version: 9.0.20
-  resolution: "@fluentui/react-overflow@npm:9.0.20"
-  dependencies:
-    "@fluentui/priority-overflow": "npm:^9.1.0"
-    "@fluentui/react-context-selector": "npm:^9.1.23"
-    "@fluentui/react-theme": "npm:^9.1.9"
-    "@fluentui/react-utilities": "npm:^9.9.3"
-    "@griffel/react": "npm:^1.5.7"
-    "@swc/helpers": "npm:^0.4.14"
-  peerDependencies:
-    "@types/react": ">=16.8.0 <19.0.0"
-    "@types/react-dom": ">=16.8.0 <19.0.0"
-    react: ">=16.8.0 <19.0.0"
-    react-dom: ">=16.8.0 <19.0.0"
-    scheduler: ^0.19.0 || ^0.20.0
-  checksum: 10/4df6c011352652d17f4157d3e502e1a05cca82180cf1677d825e4834d91d3311651b9c6fab4844ebb1a9e908326eb25682dc73543e949b5cc3b8b66996b03c0e
-  languageName: node
-  linkType: hard
-
-"@fluentui/react-theme@npm:^9.1.9":
-  version: 9.1.9
-  resolution: "@fluentui/react-theme@npm:9.1.9"
-  dependencies:
-    "@fluentui/tokens": "npm:1.0.0-alpha.6"
-    "@swc/helpers": "npm:^0.4.14"
-  checksum: 10/9cfef8488fb62efbf69123666d0f2f76be0b6a290df25912dde3e59006553dd1dda9542e666b04be5a3499a9fc09e93eb25e81d72b353d7d5a57b33fe1dc99f2
-  languageName: node
-  linkType: hard
-
-"@fluentui/react-utilities@npm:^9.9.3":
-  version: 9.9.3
-  resolution: "@fluentui/react-utilities@npm:9.9.3"
-  dependencies:
-    "@fluentui/keyboard-keys": "npm:^9.0.3"
-    "@swc/helpers": "npm:^0.4.14"
-  peerDependencies:
-    "@types/react": ">=16.8.0 <19.0.0"
-    react: ">=16.8.0 <19.0.0"
-  checksum: 10/48b312c4cdc4680a3188473b0388c3c92eb3c881924a7d52ce9e2f3bcaa06c44825203ad6cff93f504d997f866b3de9f132ff7fa6504d71c348900fc60d39619
-  languageName: node
-  linkType: hard
-
-"@fluentui/tokens@npm:1.0.0-alpha.6":
-  version: 1.0.0-alpha.6
-  resolution: "@fluentui/tokens@npm:1.0.0-alpha.6"
-  dependencies:
-    "@swc/helpers": "npm:^0.4.14"
-  checksum: 10/b4c852066f83c7c857157f049241791a233d8343ee755e214e04f5576809267df4a66fb5133f563ad17538f09b8581dd953a9b132a64aed685bc3483e5f731f4
-  languageName: node
-  linkType: hard
-
 "@fontsource/open-sans@npm:^4.5.13":
   version: 4.5.13
   resolution: "@fontsource/open-sans@npm:4.5.13"
@@ -2085,31 +1999,6 @@ __metadata:
   version: 1.1.3
   resolution: "@gar/promisify@npm:1.1.3"
   checksum: 10/052dd232140fa60e81588000cbe729a40146579b361f1070bce63e2a761388a22a16d00beeffc504bd3601cb8e055c57b21a185448b3ed550cf50716f4fd442e
-  languageName: node
-  linkType: hard
-
-"@griffel/core@npm:^1.11.0":
-  version: 1.11.0
-  resolution: "@griffel/core@npm:1.11.0"
-  dependencies:
-    "@emotion/hash": "npm:^0.9.0"
-    csstype: "npm:^3.1.2"
-    rtl-css-js: "npm:^1.16.1"
-    stylis: "npm:^4.0.13"
-    tslib: "npm:^2.1.0"
-  checksum: 10/73b9e74ecf8d1029ad225f0075ae205b46d00859b12f1553111ce0989dc6b20f2aff2f9b2deb45a8c8c6851c45f2eb60f46f8fccc8511efd39b269f53330614b
-  languageName: node
-  linkType: hard
-
-"@griffel/react@npm:^1.5.7":
-  version: 1.5.7
-  resolution: "@griffel/react@npm:1.5.7"
-  dependencies:
-    "@griffel/core": "npm:^1.11.0"
-    tslib: "npm:^2.1.0"
-  peerDependencies:
-    react: ">=16.8.0 <19.0.0"
-  checksum: 10/2627a78d16133d2972048f2d3c586e44cd74f724884f17ddeb7d0f77b112fdf882a4f55af8da0a657af9aefbe6271a95c2b92eb31f770ec23ffe497af2bf1223
   languageName: node
   linkType: hard
 
@@ -3534,7 +3423,6 @@ __metadata:
   resolution: "@salt-ds/lab@workspace:packages/lab"
   dependencies:
     "@floating-ui/react": "npm:^0.26.5"
-    "@fluentui/react-overflow": "npm:^9.0.19"
     "@internationalized/date": "npm:^3.5.5"
     "@salt-ds/core": "workspace:^"
     "@salt-ds/icons": "workspace:^"
@@ -3551,6 +3439,7 @@ __metadata:
     react-color: "npm:^2.19.3"
     react-window: "npm:^1.8.6"
     rifm: "npm:^0.12.0"
+    tabbable: "npm:^6.0.0"
     tinycolor2: "npm:^1.4.2"
   peerDependencies:
     "@types/react": ">=16.14.0"
@@ -5205,15 +5094,6 @@ __metadata:
     "@swc/counter": "npm:^0.1.3"
     tslib: "npm:^2.4.0"
   checksum: 10/1c5ef04f642542212df28c669438f3e0f459dcde7b448a5b1fcafb2e9e4f13e76d8428535a270e91ed123dd2a21189dbed34086b88a8cf68baf84984d6d0e39b
-  languageName: node
-  linkType: hard
-
-"@swc/helpers@npm:^0.4.14":
-  version: 0.4.14
-  resolution: "@swc/helpers@npm:0.4.14"
-  dependencies:
-    tslib: "npm:^2.4.0"
-  checksum: 10/236afd445fb22e3df7aa84336d5c45d29e021ad01917aa7c24267330df8b39ed89c3d8d9836ac2ac7569b46923591d0e49174f72df7fb997aea841d08f374dbd
   languageName: node
   linkType: hard
 
@@ -7870,7 +7750,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"csstype@npm:^3.0.2, csstype@npm:^3.0.7, csstype@npm:^3.1.2":
+"csstype@npm:^3.0.2, csstype@npm:^3.0.7":
   version: 3.1.2
   resolution: "csstype@npm:3.1.2"
   checksum: 10/1f39c541e9acd9562996d88bc9fb62d1cb234786ef11ed275567d4b2bd82e1ceacde25debc8de3d3b4871ae02c2933fa02614004c97190711caebad6347debc2
@@ -16457,15 +16337,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rtl-css-js@npm:^1.16.1":
-  version: 1.16.1
-  resolution: "rtl-css-js@npm:1.16.1"
-  dependencies:
-    "@babel/runtime": "npm:^7.1.2"
-  checksum: 10/fa6a3e1f73e65bf5763b8a051942477a0852ee072d29ebad0999f02556a73715e72374d9a31ddec3fe023b09702b56f8be3a5a0404816e795ab86ea879183e02
-  languageName: node
-  linkType: hard
-
 "run-parallel@npm:^1.1.9":
   version: 1.2.0
   resolution: "run-parallel@npm:1.2.0"
@@ -17326,7 +17197,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"stylis@npm:^4.0.13, stylis@npm:^4.1.2":
+"stylis@npm:^4.1.2":
   version: 4.2.0
   resolution: "stylis@npm:4.2.0"
   checksum: 10/58359185275ef1f39c339ae94e598168aa6bb789f6cf0d52e726c1e7087a94e9c17f0385a28d34483dec1ffc2c75670ec714dc5603d99c3124ec83bc2b0a0f42
@@ -17523,10 +17394,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tabbable@npm:^6.0.1":
-  version: 6.0.1
-  resolution: "tabbable@npm:6.0.1"
-  checksum: 10/ffd86beca8d3c18d4e3c389d231a53b6e1b297c68a151d6609888569856ef5b1ffe3fddc74e8d85b7d47b608d1bc69f2d9f126561553a4f993926358d4a858f1
+"tabbable@npm:^6.0.0, tabbable@npm:^6.0.1":
+  version: 6.2.0
+  resolution: "tabbable@npm:6.2.0"
+  checksum: 10/980fa73476026e99dcacfc0d6e000d41d42c8e670faf4682496d30c625495e412c4369694f2a15cf1e5252d22de3c396f2b62edbe8d60b5dadc40d09e3f2dde3
   languageName: node
   linkType: hard
 

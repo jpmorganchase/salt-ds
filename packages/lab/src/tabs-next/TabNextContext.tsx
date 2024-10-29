@@ -1,35 +1,28 @@
 import { createContext } from "@salt-ds/core";
-import { type ReactNode, type SyntheticEvent, useContext } from "react";
+import { useContext } from "react";
 
-interface TabValue {
+interface TabNextContextValue {
+  tabId?: string;
+  focused: boolean;
+  selected: boolean;
   value: string;
-  label: ReactNode;
+  disabled: boolean;
+  actions: string[];
+  registerAction: (id: string) => () => void;
 }
 
-export interface TabsContextValue {
-  activeColor: "primary" | "secondary";
-  disabled?: boolean;
-  activate: (event: SyntheticEvent<HTMLButtonElement>) => void;
-  isActive: (id: string) => boolean;
-  setFocusable: (id: string) => void;
-  isFocusable: (id: string) => boolean;
-  registerTab: (tab: TabValue) => void;
-  unregisterTab: (id: string) => void;
-  variant: "main" | "inline";
-}
+export const TabNextContext = createContext<TabNextContextValue>(
+  "TabNextContext",
+  {
+    focused: false,
+    selected: false,
+    disabled: false,
+    value: "",
+    actions: [],
+    registerAction: () => () => undefined,
+  },
+);
 
-export const TabsContext = createContext<TabsContextValue>("TabsContext", {
-  activeColor: "primary",
-  disabled: false,
-  activate: () => undefined,
-  isActive: () => false,
-  setFocusable: () => undefined,
-  isFocusable: () => false,
-  registerTab: () => undefined,
-  unregisterTab: () => undefined,
-  variant: "main",
-});
-
-export function useTabs() {
-  return useContext(TabsContext);
+export function useTabNext() {
+  return useContext(TabNextContext);
 }
