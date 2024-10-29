@@ -19,6 +19,7 @@ import "./styles.css";
 import { SaltProvider, SaltProviderNext } from "@salt-ds/core";
 import { DocsContainer } from "@storybook/addon-docs";
 import { withDateMock } from "docs/decorators/withDateMock";
+import { withLocalization } from "docs/decorators/withLocalization";
 import { withResponsiveWrapper } from "docs/decorators/withResponsiveWrapper";
 import { withScaffold } from "docs/decorators/withScaffold";
 import { WithTextSpacingWrapper } from "docs/decorators/withTextSpacingWrapper";
@@ -109,6 +110,20 @@ export const globalTypes: GlobalTypes = {
       title: "Component Style Injection",
     },
   },
+  dateAdapter: {
+    name: "Date Adapter",
+    description: "Date adapter type",
+    defaultValue: "dayjs",
+    toolbar: {
+      items: [
+        { value: "date-fns", title: "date-fns" },
+        { value: "dayjs", title: "dayjs" },
+        { value: "luxon", title: "luxon" },
+        { value: "moment", title: "moment (legacy)" },
+      ],
+      title: "Date Adapter",
+    },
+  },
   ...themeNextGlobals,
 };
 
@@ -118,6 +133,7 @@ export const argTypes: ArgTypes = {
 
 export const parameters: Parameters = {
   actions: { argTypesRegex: "^on[A-Z].*" },
+  mockDate: "2024-05-06",
   layout: "centered",
   // Show props description in Controls panel
   controls: { expanded: true, sort: "requiredFirst" },
@@ -181,6 +197,7 @@ export const decorators = [
   withScaffold,
   withResponsiveWrapper,
   withTheme,
+  withLocalization,
   WithTextSpacingWrapper,
   withDateMock,
 ];

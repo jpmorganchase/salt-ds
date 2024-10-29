@@ -1,13 +1,11 @@
-import { type DateValue, isSameMonth } from "@internationalized/date";
 import { makePrefixer, useIsomorphicLayoutEffect } from "@salt-ds/core";
 import {
   type ComponentPropsWithoutRef,
   type FocusEventHandler,
   forwardRef,
   useCallback,
-  useEffect,
+  useMemo,
   useRef,
-  useState,
 } from "react";
 import { useCalendarContext } from "./internal/CalendarContext";
 import {
@@ -17,30 +15,38 @@ import {
 
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
+import { type DateFrameworkType, useLocalization } from "../date-adapters";
 import calendarGridCss from "./CalendarGrid.css";
-import { formatDate, monthDiff } from "./internal/utils";
+import { monthDiff } from "./internal/utils";
 
-export interface CalendarGridProps extends ComponentPropsWithoutRef<"div"> {
+/**
+ * Props for the CalendarGrid component.
+ */
+export interface CalendarGridProps<TDate extends DateFrameworkType>
+  extends ComponentPropsWithoutRef<"div"> {
   /**
    * Props getter to pass to each CalendarMonth element
    */
-  getCalendarMonthProps?: (date: DateValue) => Omit<CalendarMonthProps, "date">;
-}
-
-function getMonths(month: DateValue) {
-  return [month.subtract({ months: 1 }), month, month.add({ months: 1 })];
+  getCalendarMonthProps?: (
+    date: TDate,
+  ) => Omit<CalendarMonthProps<TDate>, "date">;
 }
 
 const withBaseName = makePrefixer("saltCalendarGrid");
 
-export const CalendarGrid = forwardRef<HTMLDivElement, CalendarGridProps>(
-  function CalendarGrid(props, ref) {
+export const CalendarGrid = forwardRef<HTMLDivElement, CalendarGridProps<any>>(
+  <TDate extends DateFrameworkType>(
+    props: CalendarGridProps<TDate>,
+    ref: React.Ref<HTMLDivElement>,
+  ) => {
     const {
       onFocus,
       onBlur,
       getCalendarMonthProps = () => undefined,
       ...rest
     } = props;
+
+    const { dateAdapter } = useLocalization<TDate>();
 
     const targetWindow = useWindow();
     useComponentCssInjection({
@@ -52,9 +58,10 @@ export const CalendarGrid = forwardRef<HTMLDivElement, CalendarGridProps>(
     const {
       state: { visibleMonth, locale },
       helpers: { setCalendarFocused },
-    } = useCalendarContext();
+    } = useCalendarContext<TDate>();
     const containerRef = useRef<HTMLDivElement>(null);
-    const diffIndex = (a: DateValue, b: DateValue) => monthDiff(a, b);
+    const diffIndex = (a: TDate, b: TDate) =>
+      monthDiff<TDate>(dateAdapter, a, b);
 
     const { current: baseIndex } = useRef(visibleMonth);
 
@@ -66,20 +73,16 @@ export const CalendarGrid = forwardRef<HTMLDivElement, CalendarGridProps>(
       }
     });
 
-    const [months, setMonths] = useState(() => getMonths(visibleMonth));
-
-    // biome-ignore lint/correctness/useExhaustiveDependencies: uses formatData to change visibleMonth into string
-    useEffect(() => {
-      setMonths((oldMonths) => {
-        const newMonths = getMonths(visibleMonth).filter((month) => {
-          return !oldMonths.find((oldMonth) => isSameMonth(oldMonth, month));
-        });
-
-        return oldMonths.concat(newMonths);
-      });
-      setMonths(getMonths(visibleMonth));
-      return undefined;
-    }, [formatDate(visibleMonth, locale)]);
+    const getMonths = useCallback(
+      (month: TDate) => {
+        return [
+          dateAdapter.subtract(month, { months: 1 }),
+          month,
+          dateAdapter.add(month, { months: 1 }),
+        ];
+      },
+      [dateAdapter.subtract],
+    );
 
     const handleFocus: FocusEventHandler<HTMLDivElement> = useCallback(
       (event) => {
@@ -96,6 +99,10 @@ export const CalendarGrid = forwardRef<HTMLDivElement, CalendarGridProps>(
       },
       [setCalendarFocused, onBlur],
     );
+
+    const months = useMemo(() => {
+      return getMonths(visibleMonth);
+    }, [dateAdapter.format(visibleMonth)]);
 
     return (
       <div
@@ -116,7 +123,7 @@ export const CalendarGrid = forwardRef<HTMLDivElement, CalendarGridProps>(
         >
           {months.map((date, index) => (
             <div
-              key={formatDate(date, locale)}
+              key={dateAdapter.format(date, locale)}
               className={withBaseName("slide")}
               style={{
                 transform: `translateX(${diffIndex(date, baseIndex) * -101}%)`,

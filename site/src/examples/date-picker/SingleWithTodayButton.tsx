@@ -17,13 +17,14 @@ import {
   DatePickerOverlay,
   DatePickerSingleInput,
   DatePickerSinglePanel,
+  type SingleDatePickerError,
   type SingleDatePickerState,
   type SingleDateSelection,
   formatDate,
   getCurrentLocale,
-  useDatePickerContext, SingleDatePickerError,
+  useDatePickerContext,
 } from "@salt-ds/lab";
-import React, { type ReactElement, useCallback, useState } from "react";
+import { type ReactElement, useCallback, useState } from "react";
 
 const TodayButton = () => {
   const {
@@ -64,7 +65,10 @@ export const SingleWithTodayButton = (): ReactElement => {
     undefined,
   );
   const handleSelectionChange = useCallback(
-    (newSelectedDate: SingleDateSelection | null | undefined, error: SingleDatePickerError) => {
+    (
+      newSelectedDate: SingleDateSelection | null | undefined,
+      error: SingleDatePickerError,
+    ) => {
       console.log(`Selected date: ${formatSingleDate(newSelectedDate)}`);
       console.log(`Error: ${error}`);
       if (error) {

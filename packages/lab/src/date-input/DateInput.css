@@ -178,6 +178,14 @@
   color: var(--saltDateInput-color-disabled, var(--salt-content-primary-foreground-disabled));
 }
 
+/* Style applied to start adornments */
+.saltInput-startAdornmentContainer {
+  align-items: center;
+  display: inline-flex;
+  padding-right: var(--salt-spacing-100);
+  column-gap: var(--salt-spacing-100);
+}
+
 /* Style applied to end adornments */
 .saltDateInput-endAdornmentContainer {
   display: inline-flex;

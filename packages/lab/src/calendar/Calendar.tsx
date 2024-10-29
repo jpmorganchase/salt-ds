@@ -17,7 +17,7 @@ import {
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 
-import { DateFormatter } from "@internationalized/date";
+import { type DateFrameworkType, useLocalization } from "../date-adapters";
 import calendarCss from "./Calendar.css";
 
 /**
@@ -32,14 +32,18 @@ export interface CalendarBaseProps extends ComponentPropsWithoutRef<"div"> {
    * If `true`, hides dates that are out of the selectable range.
    */
   hideOutOfRangeDates?: boolean;
+  /**
+   * Locale for date formatting
+   */
+  locale?: any;
 }
 
 /**
  * Props for the Calendar component with single date selection.
  */
-export interface CalendarSingleProps
+export interface CalendarSingleProps<TDate extends DateFrameworkType>
   extends CalendarBaseProps,
-    UseCalendarSingleProps {
+    UseCalendarSingleProps<TDate> {
   /**
    * The selection variant, set to "single".
    */
@@ -49,9 +53,9 @@ export interface CalendarSingleProps
 /**
  * Props for the Calendar component with date range selection.
  */
-export interface CalendarRangeProps
+export interface CalendarRangeProps<TDate extends DateFrameworkType>
   extends CalendarBaseProps,
-    UseCalendarRangeProps {
+    UseCalendarRangeProps<TDate> {
   /**
    * The selection variant, set to "range".
    */
@@ -61,9 +65,9 @@ export interface CalendarRangeProps
 /**
  * Props for the Calendar component with multi-select date selection.
  */
-export interface CalendarMultiSelectProps
+export interface CalendarMultiSelectProps<TDate extends DateFrameworkType>
   extends CalendarBaseProps,
-    UseCalendarMultiSelectProps {
+    UseCalendarMultiSelectProps<TDate> {
   /**
    * The selection variant, set to "multiselect".
    */
@@ -73,9 +77,9 @@ export interface CalendarMultiSelectProps
 /**
  * Props for the Calendar component with offset date selection.
  */
-export interface CalendarOffsetProps
+export interface CalendarOffsetProps<TDate extends DateFrameworkType>
   extends CalendarBaseProps,
-    UseCalendarOffsetProps {
+    UseCalendarOffsetProps<TDate> {
   /**
    * The selection variant, set to "offset".
    */
@@ -85,17 +89,21 @@ export interface CalendarOffsetProps
 /**
  * Type representing the props for the Calendar component with various selection variants.
  */
-export type CalendarProps =
-  | CalendarSingleProps
-  | CalendarRangeProps
-  | CalendarMultiSelectProps
-  | CalendarOffsetProps;
+export type CalendarProps<TDate extends DateFrameworkType> =
+  | CalendarSingleProps<TDate>
+  | CalendarRangeProps<TDate>
+  | CalendarMultiSelectProps<TDate>
+  | CalendarOffsetProps<TDate>;
 
 const withBaseName = makePrefixer("saltCalendar");
 
-export const Calendar = forwardRef<HTMLDivElement, CalendarProps>(
-  function Calendar(props, ref) {
+export const Calendar = forwardRef<HTMLDivElement, CalendarProps<any>>(
+  <TDate extends DateFrameworkType>(
+    props: CalendarProps<TDate>,
+    ref: React.Ref<HTMLDivElement>,
+  ) => {
     const targetWindow = useWindow();
+    const { dateAdapter } = useLocalization<TDate>();
     useComponentCssInjection({
       testId: "salt-calendar",
       css: calendarCss,
@@ -107,8 +115,6 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>(
       selectedDate,
       defaultSelectedDate,
       visibleMonth: visibleMonthProp,
-      timeZone,
-      locale,
       defaultVisibleMonth,
       onSelectionChange,
       onVisibleMonthChange,
@@ -116,6 +122,7 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>(
       isDayUnselectable,
       isDayHighlighted,
       isDayDisabled,
+      locale,
       minDate,
       maxDate,
       selectionVariant,
@@ -123,12 +130,12 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>(
       hoveredDate,
       ...propsRest
     } = props;
-    let startDateOffset: CalendarOffsetProps["startDateOffset"];
-    let endDateOffset: CalendarOffsetProps["startDateOffset"];
+    let startDateOffset: CalendarOffsetProps<TDate>["startDateOffset"];
+    let endDateOffset: CalendarOffsetProps<TDate>["startDateOffset"];
     let rest: Partial<typeof props>;
     if (selectionVariant === "offset") {
       ({ startDateOffset, endDateOffset, ...rest } =
-        propsRest as CalendarOffsetProps);
+        propsRest as CalendarOffsetProps<TDate>);
     } else {
       rest = propsRest;
     }
@@ -137,14 +144,13 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>(
       selectedDate,
       defaultSelectedDate,
       visibleMonth: visibleMonthProp,
-      timeZone,
-      locale,
       defaultVisibleMonth,
       onSelectionChange,
       onVisibleMonthChange,
       isDayUnselectable,
       isDayHighlighted,
       isDayDisabled,
+      locale,
       minDate,
       maxDate,
       selectionVariant,
@@ -154,11 +160,12 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps>(
       startDateOffset,
       endDateOffset,
     };
-    const { state, helpers } = useCalendar(useCalendarProps);
-    const calendarLabel = new DateFormatter(state.locale, {
-      month: "long",
-      year: "numeric",
-    }).format(state.visibleMonth.toDate(state.timeZone));
+    const { state, helpers } = useCalendar<TDate>(useCalendarProps);
+    const calendarLabel = dateAdapter.format(
+      state.visibleMonth,
+      "MMMM YYYY",
+      locale,
+    );
 
     return (
       <CalendarContext.Provider

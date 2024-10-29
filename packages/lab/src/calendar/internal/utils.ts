@@ -1,88 +1,70 @@
-import {
-  type CalendarDate,
-  DateFormatter,
-  type DateValue,
-  createCalendar,
-  endOfMonth,
-  getLocalTimeZone,
-  isSameMonth,
-  startOfMonth,
-  startOfWeek,
-  startOfYear,
-  toCalendarDate,
-  today,
-} from "@internationalized/date";
-import { getCurrentLocale } from "../formatDate";
+import type { DateFrameworkType, SaltDateAdapter } from "../../date-adapters";
 
-export function formatDate(
-  date: DateValue,
-  locale: string,
-  options?: Intl.DateTimeFormatOptions,
+export function daysOfWeek<TDate extends DateFrameworkType>(
+  dateAdapter: SaltDateAdapter<TDate>,
+  format: "long" | "short" | "narrow",
+  locale?: any,
 ) {
-  const timeLocale = locale || getCurrentLocale();
-  const timeZone = options?.timeZone || getLocalTimeZone();
-  const formatter = new DateFormatter(timeLocale, options);
-  return formatter.format(date.toDate(timeZone));
-}
-
-export function getCalendar(locale: string) {
-  const calendarIdentifier = new DateFormatter(locale).resolvedOptions()
-    .calendar;
-  return createCalendar(calendarIdentifier);
-}
-
-type WeekdayFormat = Intl.DateTimeFormatOptions["weekday"];
-
-export function daysForLocale(weekday: WeekdayFormat, locale: string) {
-  return [...Array(7).keys()].map((day) =>
-    formatDate(
-      startOfWeek(today(getLocalTimeZone()), locale).add({
-        days: day,
-      }),
-      locale,
-      { weekday: weekday || "long" },
-    ),
+  return Array.from({ length: 7 }, (_, day) =>
+    dateAdapter.getDayOfWeekName(day, format, locale),
   );
 }
 
-export function monthsForLocale(currentYear: DateValue, locale: string) {
-  const calendar = getCalendar(locale);
-  return [...Array(calendar.getMonthsInYear(currentYear)).keys()].map((month) =>
-    startOfYear(currentYear).add({ months: month }),
+export function generateMonthsForYear<TDate extends DateFrameworkType>(
+  dateAdapter: SaltDateAdapter<TDate>,
+  currentYear: TDate,
+) {
+  const startOfYear = dateAdapter.startOf(currentYear, "year");
+  return Array.from({ length: 12 }, (_, month) =>
+    dateAdapter.add(startOfYear, { months: month }),
   );
 }
 
-function mapDate(currentDate: DateValue, currentMonth: DateValue) {
-  return {
-    date: currentDate,
-    dateOfMonth: currentDate.month,
-    isCurrentMonth: isSameMonth(currentDate, currentMonth),
-  };
-}
-
-export function generateVisibleDays(currentMonth: DateValue, locale: string) {
+export function generateVisibleDays<TDate extends DateFrameworkType>(
+  dateAdapter: SaltDateAdapter<TDate>,
+  currentMonth: TDate,
+  locale?: any,
+) {
   const totalDays = 6 * 7;
-  const startDate = startOfWeek(startOfMonth(currentMonth), locale);
-
+  const startDate = dateAdapter.startOf(
+    dateAdapter.startOf(currentMonth, "month", locale),
+    "week",
+    locale,
+  );
   return [...Array(totalDays).keys()].map((dayDelta) => {
-    const day = startDate.add({ days: dayDelta });
-    return mapDate(day, currentMonth);
+    const day = dateAdapter.add(startDate, { days: dayDelta });
+    return {
+      date: day,
+      dateOfMonth: dateAdapter.getMonth(day),
+      isCurrentMonth: dateAdapter.isSame(day, currentMonth, "month"),
+    };
   });
 }
 
-export function monthDiff(a: DateValue, b: DateValue) {
-  return b.month - a.month + 12 * (b.year - a.year);
+export function monthDiff<TDate extends DateFrameworkType>(
+  dateAdapter: SaltDateAdapter<TDate>,
+  a: TDate,
+  b: TDate,
+) {
+  const aMonth = dateAdapter.getMonth(a);
+  const aYear = dateAdapter.getYear(a);
+  const bMonth = dateAdapter.getMonth(b);
+  const bYear = dateAdapter.getYear(b);
+
+  return bMonth - aMonth + 12 * (bYear - aYear);
 }
 
-export function generateDatesForMonth(date: DateValue): CalendarDate[] {
-  const calendarDate = toCalendarDate(date);
-  const startDate = startOfMonth(calendarDate);
-  const endDate = endOfMonth(calendarDate);
-  const dates = [];
+export function generateDatesForMonth<TDate extends DateFrameworkType>(
+  dateAdapter: SaltDateAdapter<TDate>,
+  date: TDate,
+): TDate[] {
+  const startDate = dateAdapter.startOf(date, "month");
+  const endDate = dateAdapter.endOf(date, "month");
+  const dates: TDate[] = [];
   for (
     let currentDate = startDate;
-    currentDate.compare(endDate) <= 0;
-    currentDate = currentDate.add({ days: 1 })
+    dateAdapter.compare(currentDate, endDate) <= 0;
+    currentDate = dateAdapter.add(currentDate, { days: 1 })
   ) {
     dates.push(currentDate);
   }

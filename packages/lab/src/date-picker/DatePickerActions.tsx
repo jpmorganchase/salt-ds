@@ -17,12 +17,13 @@ import {
 import "./DatePickerActions.css";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
+import type { DateFrameworkType } from "../date-adapters";
 import datePickerActions from "./DatePickerActions.css";
 
 const withBaseName = makePrefixer("saltDatePickerActions");
 
 /**
- * Base props for DatePicker actions.
+ * Base props for DatePicker actions component.
  */
 export interface DatePickerActionsBaseProps
   extends ComponentPropsWithoutRef<"div"> {
@@ -54,6 +55,7 @@ export interface DatePickerActionsBaseProps
  * @template SelectionVariant - The selection variant, either "single" or "range".
  */
 export type DatePickerActionsProps<
+  TDate extends DateFrameworkType,
   SelectionVariant extends "single" | "range",
 > = SelectionVariant extends "single"
   ? DatePickerActionsBaseProps & {
@@ -68,7 +70,7 @@ export type DatePickerActionsProps<
        */
       onApply?: (
         _event: SyntheticEvent,
-        date: SingleDateSelection | null,
+        date: SingleDateSelection<TDate> | null,
       ) => void;
     }
   : DatePickerActionsBaseProps & {
@@ -83,14 +85,16 @@ export type DatePickerActionsProps<
        */
       onApply?: (
         _event: SyntheticEvent,
-        date: DateRangeSelection | null,
+        date: DateRangeSelection<TDate> | null,
       ) => void;
     };
 
-export const DatePickerActions = forwardRef<
-  HTMLDivElement,
-  DatePickerActionsProps<"single" | "range">
->(function DatePickerActions(props, ref) {
+export const DatePickerActions = forwardRef(function DatePickerRangeInput<
+  TDate extends DateFrameworkType,
+>(
+  props: DatePickerActionsProps<TDate, "single" | "range">,
+  ref: React.Ref<HTMLDivElement>,
+) {
   const {
     applyButtonRef,
     ApplyButtonProps,
@@ -115,11 +119,11 @@ export const DatePickerActions = forwardRef<
   if (selectionVariant === "range") {
     stateAndHelpers = useDatePickerContext({
       selectionVariant: "range",
-    }) as RangeDatePickerState;
+    }) as RangeDatePickerState<TDate>;
   } else {
     stateAndHelpers = useDatePickerContext({
       selectionVariant: "single",
-    }) as SingleDatePickerState;
+    }) as SingleDatePickerState<TDate>;
   }
 
   const {

@@ -1,4 +1,3 @@
-import { getLocalTimeZone, today } from "@internationalized/date";
 import {
   Divider,
   FlexItem,
@@ -11,11 +10,13 @@ import {
   StackLayout,
 } from "@salt-ds/core";
 import {
+  type DateFrameworkType,
   DatePickerRangePanel,
   DatePickerSinglePanel,
   type RangeDatePickerState,
   type SingleDatePickerState,
   useDatePickerContext,
+  useLocalization,
 } from "@salt-ds/lab";
 import { forwardRef } from "react";
 
@@ -35,16 +36,17 @@ export const CustomDatePickerPanel = forwardRef<
   HTMLDivElement,
   CustomDatePickerPanelProps
 >(function CustomDatePickerPanel({ selectionVariant, helperText }, ref) {
+  const { dateAdapter } = useLocalization();
   // biome-ignore lint/suspicious/noExplicitAny: state and helpers is coerced based on selectionVariant
   let stateAndHelpers: any;
   if (selectionVariant === "range") {
     stateAndHelpers = useDatePickerContext({
       selectionVariant: "range",
-    }) as RangeDatePickerState;
+    }) as RangeDatePickerState<DateFrameworkType>;
   } else {
     stateAndHelpers = useDatePickerContext({
       selectionVariant: "single",
-    }) as SingleDatePickerState;
+    }) as SingleDatePickerState<DateFrameworkType>;
   }
 
   const {
@@ -80,17 +82,17 @@ export const CustomDatePickerPanel = forwardRef<
                           date: selectedDate.startDate,
                         },
                         endDate: {
-                          date: selectedDate.startDate.add({
+                          date: dateAdapter.add(selectedDate.startDate, {
                             years: tenor,
                           }),
                         },
                       }
                     : {
                         startDate: {
-                          date: today(getLocalTimeZone()),
+                          date: dateAdapter.today(),
                         },
                         endDate: {
-                          date: today(getLocalTimeZone()).add({
+                          date: dateAdapter.add(dateAdapter.today(), {
                             years: tenor,
                           }),
                         },
@@ -99,12 +101,12 @@ export const CustomDatePickerPanel = forwardRef<
                 } else {
                   newSelection = selectedDate
                     ? {
-                        date: selectedDate.add({
+                        date: dateAdapter.add(selectedDate, {
                           years: tenor,
                         }),
                       }
                     : {
-                        date: today(getLocalTimeZone()).add({
+                        date: dateAdapter.add(dateAdapter.today(), {
                           years: tenor,
                         }),
                       };

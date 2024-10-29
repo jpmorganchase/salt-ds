@@ -5,9 +5,9 @@ import {
 } from "@internationalized/date";
 import {
   DateInputSingle,
+  type DateInputSingleError,
   type SingleDateSelection,
   formatDate,
-  DateInputSingleError,
 } from "@salt-ds/lab";
 import { type ReactElement, type SyntheticEvent, useState } from "react";
 

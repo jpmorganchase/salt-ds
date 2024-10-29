@@ -4,8 +4,9 @@ import {
   DatePickerRangeInput,
   DatePickerRangePanel,
   type DateRangeSelection,
+  type RangeDatePickerError,
   formatDate,
-  getCurrentLocale, RangeDatePickerError,
+  getCurrentLocale,
 } from "@salt-ds/lab";
 import { type ReactElement, useCallback, useState } from "react";
 
@@ -25,9 +26,9 @@ function formatDateRange(
 }
 
 export const RangeControlled = (): ReactElement => {
-  const [selectedDate, setSelectedDate] = useState<DateRangeSelection | null | undefined>(
-    null,
-  );
+  const [selectedDate, setSelectedDate] = useState<
+    DateRangeSelection | null | undefined
+  >(null);
   const handleSelectionChange = useCallback(
     (
       newSelectedDate: DateRangeSelection | null | undefined,

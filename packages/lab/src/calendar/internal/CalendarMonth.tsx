@@ -1,4 +1,3 @@
-import type { DateValue } from "@internationalized/date";
 import { makePrefixer } from "@salt-ds/core";
 import { clsx } from "clsx";
 import {
@@ -8,80 +7,85 @@ import {
   forwardRef,
 } from "react";
 import { CalendarDay, type CalendarDayProps } from "./CalendarDay";
-import { formatDate, generateVisibleDays } from "./utils";
+import { generateVisibleDays } from "./utils";
 
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
+import { type DateFrameworkType, useLocalization } from "../../date-adapters";
 import { useCalendarContext } from "./CalendarContext";
 import calendarMonthCss from "./CalendarMonth.css";
 
-export interface CalendarMonthProps extends ComponentPropsWithRef<"div"> {
+export interface CalendarMonthProps<TDate>
+  extends ComponentPropsWithRef<"div"> {
   /**
    * Month to render as selectable dates
    */
-  date: DateValue;
+  date: TDate;
   /**
    * Function to render the contents of a day.
    */
-  renderDayContents?: CalendarDayProps["renderDayContents"];
+  renderDayContents?: CalendarDayProps<TDate>["renderDayContents"];
   /**
    * Props for the tooltip component.
    */
-  TooltipProps?: CalendarDayProps["TooltipProps"];
+  TooltipProps?: CalendarDayProps<TDate>["TooltipProps"];
 }
 
 const withBaseName = makePrefixer("saltCalendarMonth");
 
-export const CalendarMonth = forwardRef<HTMLDivElement, CalendarMonthProps>(
-  function CalendarMonth(props, ref) {
-    const {
-      className,
-      date,
-      renderDayContents,
-      onMouseLeave,
-      TooltipProps,
-      ...rest
-    } = props;
+export const CalendarMonth = forwardRef<
+  HTMLDivElement,
+  CalendarMonthProps<any>
+>(function CalendarMonth<TDate extends DateFrameworkType>(
+  props: CalendarMonthProps<TDate>,
+  ref: React.Ref<HTMLDivElement>,
+) {
+  const {
+    className,
+    date,
+    renderDayContents,
+    onMouseLeave,
+    TooltipProps,
+    ...rest
+  } = props;
+  const { dateAdapter } = useLocalization<TDate>();
+  const targetWindow = useWindow();
+  useComponentCssInjection({
+    testId: "salt-calendar-month",
+    css: calendarMonthCss,
+    window: targetWindow,
+  });
 
-    const targetWindow = useWindow();
-    useComponentCssInjection({
-      testId: "salt-calendar-month",
-      css: calendarMonthCss,
-      window: targetWindow,
-    });
+  const {
+    state: { locale },
+    helpers: { setHoveredDate },
+  } = useCalendarContext<TDate>();
+  const days = generateVisibleDays<TDate>(dateAdapter, date, locale);
+  const handleMouseLeave = (event: SyntheticEvent) => {
+    setHoveredDate(event, null);
+    onMouseLeave?.(event as MouseEvent<HTMLDivElement>);
+  };
 
-    const {
-      state: { locale },
-      helpers: { setHoveredDate },
-    } = useCalendarContext();
-    const days = generateVisibleDays(date, locale);
-
-    const handleMouseLeave = (event: SyntheticEvent) => {
-      setHoveredDate(event, null);
-      onMouseLeave?.(event as MouseEvent<HTMLDivElement>);
-    };
-
-    return (
-      <div
-        className={clsx(withBaseName(), className)}
-        ref={ref}
-        onMouseLeave={handleMouseLeave}
-        {...rest}
-      >
-        <div data-testid="CalendarGrid" className={withBaseName("grid")}>
-          {days.map((day) => {
-            return (
-              <CalendarDay
-                key={formatDate(day.date, locale)}
-                day={day.date}
-                renderDayContents={renderDayContents}
-                month={date}
-                TooltipProps={TooltipProps}
-              />
-            );
-          })}
-        </div>
+  return (
+    <div
+      className={clsx(withBaseName(), className)}
+      ref={ref}
+      onMouseLeave={handleMouseLeave}
+      {...rest}
+    >
+      <div data-testid="CalendarGrid" className={withBaseName("grid")}>
+        {days.map((day) => {
+          return (
+            <CalendarDay
+              key={dateAdapter.format(day.date, "DD MMM YYYY", locale)}
+              day={day.date}
+              renderDayContents={renderDayContents}
+              month={date}
+              TooltipProps={TooltipProps}
+            />
+          );
+        })}
       </div>
-    );
-  },
-);
+    </div>
+  );
+});

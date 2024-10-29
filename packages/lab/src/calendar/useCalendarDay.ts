@@ -1,10 +1,4 @@
 import {
-  type DateValue,
-  isSameDay,
-  isSameMonth,
-  isToday,
-} from "@internationalized/date";
-import {
   type ComponentPropsWithoutRef,
   type FocusEventHandler,
   type KeyboardEventHandler,
@@ -12,6 +6,7 @@ import {
   type RefObject,
   useEffect,
 } from "react";
+import { type DateFrameworkType, useLocalization } from "../date-adapters";
 import { useCalendarContext } from "./internal/CalendarContext";
 import { useFocusManagement } from "./internal/useFocusManagement";
 import { useCalendarSelectionDay } from "./useCalendarSelection";
@@ -57,29 +52,25 @@ export interface DayStatus {
 /**
  * UseCalendar hook props to return a calendar day's status
  */
-export interface useCalendarDayProps {
+export interface useCalendarDayProps<TDate> {
   /**
    * The date of the calendar day.
    */
-  date: DateValue;
+  date: TDate;
   /**
    * The month of the calendar day.
    */
-  month: DateValue;
+  month: TDate;
 }
 
-export function useCalendarDay(
-  { date, month }: useCalendarDayProps,
+export function useCalendarDay<TDate extends DateFrameworkType>(
+  props: useCalendarDayProps<TDate>,
   ref: RefObject<HTMLElement>,
 ) {
+  const { date, month } = props;
+  const { dateAdapter } = useLocalization<TDate>();
   const {
-    state: {
-      focusedDate,
-      hideOutOfRangeDates,
-      calendarFocused,
-      locale,
-      timeZone,
-    },
+    state: { focusedDate, hideOutOfRangeDates, locale, calendarFocused },
     helpers: {
       isDayUnselectable,
       isDaySelectable,
@@ -87,9 +78,9 @@ export function useCalendarDay(
       isDayDisabled,
       isOutsideAllowedMonths,
     },
-  } = useCalendarContext();
-  const selectionManager = useCalendarSelectionDay({ date });
-  const focusManager = useFocusManagement({ date, locale });
+  } = useCalendarContext<TDate>();
+  const selectionManager = useCalendarSelectionDay<TDate>({ date });
+  const focusManager = useFocusManagement<TDate>({ date });
 
   const handleClick: MouseEventHandler<HTMLButtonElement> = (event) => {
     selectionManager?.handleClick(event);
@@ -116,15 +107,17 @@ export function useCalendarDay(
     onMouseOver: handleMouseOver,
   };
 
-  const outOfRange = !isSameMonth(date, month);
+  const outOfRange = !dateAdapter.isSame(date, month, "month");
   const focused =
     focusedDate &&
-    isSameDay(date, focusedDate) &&
+    dateAdapter.isSame(date, focusedDate, "day") &&
     calendarFocused &&
     !outOfRange;
   const tabIndex =
-    focusedDate && isSameDay(date, focusedDate) && !outOfRange ? 0 : -1;
-  const today = isToday(date, timeZone);
+    focusedDate && dateAdapter.isSame(date, focusedDate, "day") && !outOfRange
+      ? 0
+      : -1;
+  const today = dateAdapter.isSame(dateAdapter.today(locale), date, "day");
 
   const unselectableReason = isDayUnselectable(date) || isDayDisabled(date);
   const highlightedReason = isDayHighlighted(date);
@@ -163,7 +156,5 @@ export function useCalendarDay(
     } as ComponentPropsWithoutRef<"button">,
     unselectableReason,
     highlightedReason,
-    locale,
-    timeZone,
   };
 }

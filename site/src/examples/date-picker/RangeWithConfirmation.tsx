@@ -1,4 +1,3 @@
-import { getLocalTimeZone, today } from "@internationalized/date";
 import {
   Divider,
   FlexItem,
@@ -14,8 +13,9 @@ import {
   DatePickerRangeInput,
   DatePickerRangePanel,
   type DateRangeSelection,
+  type RangeDatePickerError,
   formatDate,
-  getCurrentLocale, RangeDatePickerError,
+  getCurrentLocale,
 } from "@salt-ds/lab";
 import { type ReactElement, useCallback, useRef, useState } from "react";
 

@@ -1,4 +1,3 @@
-import { getLocalTimeZone, today } from "@internationalized/date";
 import {
   DatePicker,
   DatePickerOverlay,
@@ -6,41 +5,40 @@ import {
   DatePickerRangePanel,
   DatePickerSingleInput,
   DatePickerSinglePanel,
+  useLocalization,
 } from "@salt-ds/lab";
 import type { StoryFn } from "@storybook/react";
 import { QAContainer, type QAContainerProps } from "docs/components";
 
-const testLocale = "en-GB";
-
 export default {
   title: "Lab/Date Picker/QA",
   component: DatePicker,
-  locale: testLocale,
 };
 
-export const SingleExamples: StoryFn<QAContainerProps> = () => (
-  <QAContainer itemPadding={10} width={1000}>
-    <div style={{ height: 500 }}>
-      <DatePicker
-        locale={testLocale}
-        defaultSelectedDate={today(getLocalTimeZone())}
-        selectionVariant="single"
-        open
-      >
-        <DatePickerSingleInput />
-        <DatePickerOverlay>
-          <DatePickerSinglePanel />
-        </DatePickerOverlay>
-      </DatePicker>
-    </div>
-  </QAContainer>
-);
+export const SingleExamples: StoryFn<QAContainerProps> = () => {
+  const { dateAdapter } = useLocalization();
+  return (
+    <QAContainer itemPadding={10} width={1000}>
+      <div style={{ height: 500 }}>
+        <DatePicker
+          defaultSelectedDate={dateAdapter.today()}
+          selectionVariant="single"
+          open
+        >
+          <DatePickerSingleInput />
+          <DatePickerOverlay>
+            <DatePickerSinglePanel />
+          </DatePickerOverlay>
+        </DatePicker>
+      </div>
+    </QAContainer>
+  );
+};
 
 SingleExamples.parameters = {
   chromatic: {
     disableSnapshot: false,
   },
-  mockDate: "2024-04-01T00:00:00Z",
   modes: {
     theme: {
       themeNext: "disable",
@@ -54,30 +52,31 @@ SingleExamples.parameters = {
   },
 };
 
-export const SingleWithLocaleExamples: StoryFn<QAContainerProps> = () => (
-  <QAContainer itemPadding={10} width={1000}>
-    <div style={{ height: 500 }}>
-      <DatePicker
-        locale={"es-ES"}
-        timeZone={"Europe/Madrid"}
-        defaultSelectedDate={today(getLocalTimeZone())}
-        selectionVariant="single"
-        open
-      >
-        <DatePickerSingleInput />
-        <DatePickerOverlay>
-          <DatePickerSinglePanel />
-        </DatePickerOverlay>
-      </DatePicker>
-    </div>
-  </QAContainer>
-);
+export const SingleWithLocaleExamples: StoryFn<QAContainerProps> = () => {
+  const { dateAdapter } = useLocalization();
+  dateAdapter.locale = "es";
+  return (
+    <QAContainer itemPadding={10} width={1000}>
+      <div style={{ height: 500 }}>
+        <DatePicker
+          defaultSelectedDate={dateAdapter.today()}
+          selectionVariant="single"
+          open
+        >
+          <DatePickerSingleInput />
+          <DatePickerOverlay>
+            <DatePickerSinglePanel />
+          </DatePickerOverlay>
+        </DatePicker>
+      </div>
+    </QAContainer>
+  );
+};
 
 SingleWithLocaleExamples.parameters = {
   chromatic: {
     disableSnapshot: false,
   },
-  mockDate: "2024-04-01T00:00:00Z",
   modes: {
     theme: {
       themeNext: "disable",
@@ -91,32 +90,32 @@ SingleWithLocaleExamples.parameters = {
   },
 };
 
-export const RangeExamples: StoryFn<QAContainerProps> = () => (
-  <QAContainer itemPadding={10} width={1500}>
-    <div style={{ height: "500px" }}>
-      <DatePicker
-        locale={testLocale}
-        defaultSelectedDate={{
-          startDate: today(getLocalTimeZone()),
-          endDate: today(getLocalTimeZone()).add({ months: 1, weeks: 1 }),
-        }}
-        selectionVariant="range"
-        open
-      >
-        <DatePickerRangeInput />
-        <DatePickerOverlay>
-          <DatePickerRangePanel />
-        </DatePickerOverlay>
-      </DatePicker>
-    </div>
-  </QAContainer>
-);
+export const RangeExamples: StoryFn<QAContainerProps> = () => {
+  const { dateAdapter } = useLocalization();
+  const startDate = dateAdapter.today();
+  const endDate = dateAdapter.add(startDate, { months: 1, weeks: 1 });
+  return (
+    <QAContainer itemPadding={10} width={1500}>
+      <div style={{ height: "500px" }}>
+        <DatePicker
+          defaultSelectedDate={{ startDate, endDate }}
+          selectionVariant="range"
+          open
+        >
+          <DatePickerRangeInput />
+          <DatePickerOverlay>
+            <DatePickerRangePanel />
+          </DatePickerOverlay>
+        </DatePicker>
+      </div>
+    </QAContainer>
+  );
+};
 
 RangeExamples.parameters = {
   chromatic: {
     disableSnapshot: false,
   },
-  mockDate: "2024-04-01T00:00:00Z",
   modes: {
     theme: {
       themeNext: "disable",
@@ -130,33 +129,36 @@ RangeExamples.parameters = {
   },
 };
 
-export const RangeWithLocaleExamples: StoryFn<QAContainerProps> = () => (
-  <QAContainer itemPadding={10} width={1500}>
-    <div style={{ height: "500px" }}>
-      <DatePicker
-        defaultSelectedDate={{
-          startDate: today(getLocalTimeZone()),
-          endDate: today(getLocalTimeZone()).add({ months: 4, weeks: 1 }),
-        }}
-        selectionVariant="range"
-        locale={"es-ES"}
-        timeZone={"Europe/Madrid"}
-        open
-      >
-        <DatePickerRangeInput />
-        <DatePickerOverlay>
-          <DatePickerRangePanel />
-        </DatePickerOverlay>
-      </DatePicker>
-    </div>
-  </QAContainer>
-);
+export const RangeWithLocaleExamples: StoryFn<QAContainerProps> = () => {
+  const { dateAdapter } = useLocalization();
+  dateAdapter.locale = "es";
+  const startDate = dateAdapter.today();
+  const endDate = dateAdapter.add(startDate, { months: 4, weeks: 1 });
+  return (
+    <QAContainer itemPadding={10} width={1500}>
+      <div style={{ height: "500px" }}>
+        <DatePicker
+          defaultSelectedDate={{
+            startDate,
+            endDate,
+          }}
+          selectionVariant="range"
+          open
+        >
+          <DatePickerRangeInput />
+          <DatePickerOverlay>
+            <DatePickerRangePanel />
+          </DatePickerOverlay>
+        </DatePicker>
+      </div>
+    </QAContainer>
+  );
+};
 
 RangeWithLocaleExamples.parameters = {
   chromatic: {
     disableSnapshot: false,
   },
-  mockDate: "2024-04-01T00:00:00Z",
   modes: {
     theme: {
       themeNext: "disable",

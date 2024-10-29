@@ -1,31 +1,25 @@
-import {
-  CalendarDate,
-  DateFormatter,
-  type DateValue,
-  endOfMonth,
-  getDayOfWeek,
-  getLocalTimeZone,
-  isEqualDay,
-  startOfMonth,
-  today,
-} from "@internationalized/date";
 import { Button, Divider, StackLayout } from "@salt-ds/core";
 import {
   Calendar,
   CalendarGrid,
-  type CalendarMultiSelectProps,
   CalendarNavigation,
   type CalendarProps,
   type CalendarRangeProps,
   type CalendarSingleProps,
   CalendarWeekHeader,
+  type DateFrameworkType,
   type UseCalendarSelectionRangeProps,
   type UseCalendarSelectionSingleProps,
-  getCurrentLocale,
+  useLocalization,
 } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react";
 import type React from "react";
+import { type SyntheticEvent, useCallback } from "react";
 import { useState } from "react";
+
+import "dayjs/locale/es"; // Import the Spanish locale
+import { es as dateFnsEs } from "date-fns/locale";
+import "moment/dist/locale/es";
 
 import "./calendar.stories.css";
 
@@ -45,77 +39,12 @@ export default {
 } as Meta<typeof Calendar>;
 
 const Template: StoryFn<typeof Calendar> = (args) => {
-  return (
-    <Calendar {...args}>
-      <CalendarNavigation />
-      <CalendarWeekHeader />
-      <CalendarGrid />
-    </Calendar>
-  );
-};
-
-export const Single = Template.bind({});
-Single.args = {
-  selectionVariant: "single",
-  defaultSelectedDate: today(getLocalTimeZone()),
-};
-
-export const Range = Template.bind({});
-Range.args = {
-  selectionVariant: "range",
-  defaultSelectedDate: {
-    startDate: today(getLocalTimeZone()).subtract({ days: 10 }),
-    endDate: today(getLocalTimeZone()),
-  },
-};
-
-export const Multiselect: StoryFn<
-  CalendarMultiSelectProps & React.RefAttributes<HTMLDivElement>
-> = ({ selectionVariant, ...args }) => {
+  const { dateAdapter } = useLocalization<DateFrameworkType>();
   return (
     <Calendar
-      selectionVariant="multiselect"
-      defaultVisibleMonth={new CalendarDate(2024, 1, 1)}
-      defaultSelectedDate={[
-        new CalendarDate(2024, 1, 2),
-        new CalendarDate(2024, 1, 3),
-        new CalendarDate(2024, 1, 4),
-        new CalendarDate(2024, 1, 5),
-        new CalendarDate(2024, 1, 6),
-        new CalendarDate(2024, 1, 11),
-        new CalendarDate(2024, 1, 18),
-        new CalendarDate(2024, 1, 22),
-        new CalendarDate(2024, 1, 25),
-        new CalendarDate(2024, 1, 30),
-        new CalendarDate(2024, 1, 31),
-        new CalendarDate(2024, 2, 1),
-        new CalendarDate(2024, 2, 2),
-        new CalendarDate(2024, 2, 3),
-        new CalendarDate(2024, 2, 4),
-        new CalendarDate(2024, 2, 8),
-        new CalendarDate(2024, 2, 11),
-        new CalendarDate(2024, 2, 15),
-        new CalendarDate(2024, 2, 16),
-        new CalendarDate(2024, 2, 17),
-        new CalendarDate(2024, 2, 18),
-        new CalendarDate(2024, 2, 22),
-        new CalendarDate(2024, 2, 29),
-        new CalendarDate(2024, 3, 6),
-        new CalendarDate(2024, 3, 7),
-        new CalendarDate(2024, 3, 8),
-        new CalendarDate(2024, 3, 9),
-        new CalendarDate(2024, 3, 10),
-        new CalendarDate(2024, 3, 13),
-        new CalendarDate(2024, 3, 15),
-        new CalendarDate(2024, 3, 17),
-        new CalendarDate(2024, 3, 20),
-        new CalendarDate(2024, 3, 22),
-        new CalendarDate(2024, 3, 24),
-        new CalendarDate(2024, 3, 27),
-        new CalendarDate(2024, 3, 31),
-      ]}
-      hideOutOfRangeDates
       {...args}
+      selectionVariant={"single"}
+      defaultSelectedDate={dateAdapter.today()}
     >
       <CalendarNavigation />
       <CalendarWeekHeader />
@@ -124,44 +53,183 @@ export const Multiselect: StoryFn<
   );
 };
 
-export const Offset = Template.bind({});
-Offset.args = {
-  selectionVariant: "offset",
-  endDateOffset: (date) => date.add({ days: 2 }),
-  defaultSelectedDate: {
-    startDate: today(getLocalTimeZone()),
-    endDate: today(getLocalTimeZone()).add({ days: 2 }),
-  },
+export const Single: StoryFn<typeof Calendar> = (args) => {
+  const { dateAdapter } = useLocalization<DateFrameworkType>();
+  const selectedDate = dateAdapter.today();
+  return (
+    <Calendar
+      {...(args as any)}
+      defaultSelectedDate={selectedDate}
+      selectionVariant="single"
+    >
+      <CalendarNavigation />
+      <CalendarWeekHeader />
+      <CalendarGrid />
+    </Calendar>
+  );
 };
 
-export const UnselectableDates = Template.bind({});
-UnselectableDates.args = {
-  // Saturday & Sunday
-  isDayUnselectable: (date) =>
-    getDayOfWeek(date, getCurrentLocale()) >= 5
+export const Range: StoryFn<typeof Calendar> = (args) => {
+  const { dateAdapter } = useLocalization<DateFrameworkType>();
+  const startDate = dateAdapter.today();
+  const endDate = dateAdapter.add(startDate, { days: 4 });
+  return (
+    <Calendar
+      {...(args as any)}
+      defaultSelectedDate={{ startDate, endDate }}
+      selectionVariant="range"
+    >
+      <CalendarNavigation />
+      <CalendarWeekHeader />
+      <CalendarGrid />
+    </Calendar>
+  );
+};
+
+export const Multiselect: StoryFn<typeof Calendar> = ({
+  selectionVariant,
+  ...args
+}) => {
+  const { dateAdapter } = useLocalization<DateFrameworkType>();
+  dateAdapter.locale = "en-GB";
+  const defaultSelectedDate = [
+    "02/01/2024",
+    "03/01/2024",
+    "04/01/2024",
+    "05/01/2024",
+    "06/01/2024",
+    "11/01/2024",
+    "18/01/2024",
+    "22/01/2024",
+    "25/01/2024",
+    "30/01/2024",
+    "31/01/2024",
+    "01/02/2024",
+    "02/02/2024",
+    "03/02/2024",
+    "08/02/2024",
+    "10/02/2024",
+    "15/02/2024",
+    "16/02/2024",
+    "17/02/2024",
+    "22/02/2024",
+    "29/02/2024",
+    "04/03/2024",
+    "05/03/2024",
+    "06/03/2024",
+    "07/03/2024",
+    "08/03/2024",
+    "11/03/2024",
+    "13/03/2024",
+    "15/03/2024",
+    "18/03/2024",
+    "20/03/2024",
+    "22/03/2024",
+    "25/03/2024",
+    "29/03/2024",
+  ].map((date) => dateAdapter.parse(date, "DD/MM/YYYY").date);
+  const defaultVisibleMonth = dateAdapter.parse(
+    "01/01/2024",
+    "DD/MM/YYYY",
+  ).date;
+  console.log(defaultSelectedDate);
+  return (
+    <Calendar
+      {...(args as any)}
+      selectionVariant="multiselect"
+      defaultVisibleMonth={defaultVisibleMonth}
+      defaultSelectedDate={defaultSelectedDate}
+      hideOutOfRangeDates
+    >
+      <CalendarNavigation />
+      <CalendarWeekHeader />
+      <CalendarGrid />
+    </Calendar>
+  );
+};
+
+export const Offset: StoryFn<typeof Calendar> = (args) => {
+  const { dateAdapter } = useLocalization<DateFrameworkType>();
+  const endDateOffset = (date: ReturnType<typeof dateAdapter.date>) =>
+    dateAdapter.add(date, { days: 4 });
+  const startDate = dateAdapter.today();
+  const endDate = dateAdapter.add(startDate, { days: 4 });
+  return (
+    <Calendar
+      {...(args as any)}
+      defaultSelectedDate={{ startDate, endDate }}
+      endDateOffset={endDateOffset}
+      selectionVariant="offset"
+    >
+      <CalendarNavigation />
+      <CalendarWeekHeader />
+      <CalendarGrid />
+    </Calendar>
+  );
+};
+
+export const UnselectableDates: StoryFn<typeof Calendar> = (args) => {
+  const { dateAdapter } = useLocalization<DateFrameworkType>();
+  const isDayUnselectable = (day: ReturnType<typeof dateAdapter.date>) => {
+    return dateAdapter.getDayOfWeek(day) >= 5
       ? "Weekends are un-selectable"
-      : false,
+      : false;
+  };
+  return (
+    <Calendar
+      {...(args as any)}
+      selectionVariant="single"
+      isDayUnselectable={isDayUnselectable}
+    >
+      <CalendarNavigation />
+      <CalendarWeekHeader />
+      <CalendarGrid />
+    </Calendar>
+  );
 };
 
-export const DisabledDates = Template.bind({});
-DisabledDates.args = {
-  // Saturday & Sunday
-  isDayDisabled: (date) =>
-    getDayOfWeek(date, getCurrentLocale()) >= 5
-      ? "Weekends are disabled"
-      : false,
+export const DisabledDates: StoryFn<typeof Calendar> = (args) => {
+  const { dateAdapter } = useLocalization<DateFrameworkType>();
+  const isDayDisabled = (day: ReturnType<typeof dateAdapter.date>) => {
+    return dateAdapter.getDayOfWeek(day) >= 5 ? "Weekends are disabled" : false;
+  };
+  return (
+    <Calendar
+      {...(args as any)}
+      selectionVariant="single"
+      isDayDisabled={isDayDisabled}
+    >
+      <CalendarNavigation />
+      <CalendarWeekHeader />
+      <CalendarGrid />
+    </Calendar>
+  );
 };
 
-export const HighlightedDates = Template.bind({});
-HighlightedDates.args = {
-  // Start of month
-  isDayHighlighted: (day) =>
-    isEqualDay(startOfMonth(day), day) ? "Start of month reminder" : false,
+export const HighlightedDates: StoryFn<typeof Calendar> = (args) => {
+  const { dateAdapter } = useLocalization<DateFrameworkType>();
+  const isDayHighlighted = (day: ReturnType<typeof dateAdapter.date>) => {
+    const startOfMonth = dateAdapter.startOf(day, "month");
+    return dateAdapter.isSame(startOfMonth, day, "day")
+      ? "Start of month reminder"
+      : false;
+  };
+  return (
+    <Calendar
+      {...(args as any)}
+      selectionVariant="single"
+      isDayHighlighted={isDayHighlighted}
+    >
+      <CalendarNavigation />
+      <CalendarWeekHeader />
+      <CalendarGrid />
+    </Calendar>
+  );
 };
 
 export const HideOutOfRangeDates: StoryFn<typeof Calendar> = (args) => {
   return (
-    <Calendar hideOutOfRangeDates {...args}>
+    <Calendar {...(args as any)} selectionVariant="single" hideOutOfRangeDates>
       <CalendarNavigation />
       <CalendarWeekHeader />
       <CalendarGrid />
@@ -180,22 +248,21 @@ export const HideYearDropdown: StoryFn<typeof Calendar> = (args) => {
 };
 
 export const TodayButton: StoryFn<
-  CalendarSingleProps & React.RefAttributes<HTMLDivElement>
+  CalendarSingleProps<DateFrameworkType> & React.RefAttributes<HTMLDivElement>
 > = ({ selectionVariant, ...args }) => {
-  const [selectedDate, setSelectedDate] = useState<
-    UseCalendarSelectionSingleProps["selectedDate"]
-  >(today(getLocalTimeZone()).subtract({ years: 1 }));
+  const { dateAdapter } = useLocalization<DateFrameworkType>();
+  const today = dateAdapter.today();
+  const [selectedDate, setSelectedDate] =
+    useState<
+      UseCalendarSelectionSingleProps<DateFrameworkType>["selectedDate"]
+    >(undefined);
   return (
     <Calendar
       selectionVariant={selectionVariant}
       selectedDate={selectedDate}
-      visibleMonth={
-        selectedDate
-          ? startOfMonth(selectedDate)
-          : startOfMonth(today(getLocalTimeZone()))
-      }
+      defaultVisibleMonth={dateAdapter.startOf(today, "month")}
       onSelectionChange={(_event, newSelectedDate) =>
-        setSelectedDate(newSelectedDate)
+        setSelectedDate(newSelectedDate.date)
       }
       {...args}
     >
@@ -208,7 +275,7 @@ export const TodayButton: StoryFn<
           style={{ margin: "var(--salt-spacing-50)" }}
           sentiment="accented"
           appearance="bordered"
-          onClick={() => setSelectedDate(today(getLocalTimeZone()))}
+          onClick={() => setSelectedDate(today)}
         >
           Today
         </Button>
@@ -217,9 +284,9 @@ export const TodayButton: StoryFn<
   );
 };
 
-function renderDayContents(day: DateValue) {
-  const formatter = new DateFormatter(getCurrentLocale(), { day: "2-digit" });
-  return <>{formatter.format(day.toDate(getLocalTimeZone()))}</>;
+function renderDayContents(day: DateFrameworkType) {
+  const { dateAdapter } = useLocalization<DateFrameworkType>();
+  return <>{dateAdapter.format(day, "DD")}</>;
 }
 
 export const CustomDayRender: StoryFn<typeof Calendar> = (args) => {
@@ -227,38 +294,103 @@ export const CustomDayRender: StoryFn<typeof Calendar> = (args) => {
     <Calendar {...args}>
       <CalendarNavigation />
       <CalendarWeekHeader />
-      <CalendarGrid getCalendarMonthProps={(date) => ({ renderDayContents })} />
+      <CalendarGrid getCalendarMonthProps={() => ({ renderDayContents })} />
     </Calendar>
   );
 };
 
-export const FadeMonthAnimation = Template.bind({});
-FadeMonthAnimation.args = {
-  className: "FadeMonthAnimation",
+export const FadeMonthAnimation: StoryFn<typeof Calendar> = (args) => {
+  return (
+    <Calendar {...args} className={"FadeMonthAnimation"}>
+      <CalendarNavigation />
+      <CalendarWeekHeader />
+      <CalendarGrid getCalendarMonthProps={() => ({ renderDayContents })} />
+    </Calendar>
+  );
 };
 
-export const MinMaxDate = Template.bind({});
-MinMaxDate.args = {
-  defaultSelectedDate: today(getLocalTimeZone()),
-  minDate: startOfMonth(today(getLocalTimeZone())),
-  maxDate: endOfMonth(today(getLocalTimeZone())),
+export const MinMaxDate: StoryFn<typeof Calendar> = (args) => {
+  const { dateAdapter } = useLocalization<DateFrameworkType>();
+  const defaultSelectedDate = dateAdapter.today();
+  const minDate = dateAdapter.startOf(defaultSelectedDate, "month");
+  const maxDate = dateAdapter.endOf(defaultSelectedDate, "month");
+
+  return (
+    <Calendar
+      {...args}
+      selectionVariant={"single"}
+      defaultSelectedDate={defaultSelectedDate}
+      minDate={minDate}
+      maxDate={maxDate}
+    >
+      <CalendarNavigation />
+      <CalendarWeekHeader />
+      <CalendarGrid getCalendarMonthProps={() => ({ renderDayContents })} />
+    </Calendar>
+  );
 };
 
 export const TwinCalendars: StoryFn<
-  CalendarRangeProps & React.RefAttributes<HTMLDivElement>
+  CalendarRangeProps<DateFrameworkType> & React.RefAttributes<HTMLDivElement>
 > = ({ selectionVariant, ...args }) => {
-  const [hoveredDate, setHoveredDate] = useState<DateValue | null>(null);
-  const handleHoveredDateChange: CalendarProps["onHoveredDateChange"] = (
-    event,
-    newHoveredDate,
-  ) => {
-    setHoveredDate(newHoveredDate);
-    args?.onHoveredDateChange?.(event, newHoveredDate);
-  };
+  const { dateAdapter } = useLocalization<DateFrameworkType>();
+  const today = dateAdapter.today();
+  const [hoveredDate, setHoveredDate] = useState<any | null>(null);
+  const handleHoveredDateChange: CalendarProps<DateFrameworkType>["onHoveredDateChange"] =
+    (event, newHoveredDate) => {
+      setHoveredDate(newHoveredDate);
+      args?.onHoveredDateChange?.(event, newHoveredDate);
+    };
+  const [startVisibleMonth, setStartVisibleMonth] = useState<
+    CalendarProps<DateFrameworkType>["defaultVisibleMonth"]
+  >(dateAdapter.startOf(today, "month"));
+  const [endVisibleMonth, setEndVisibleMonth] = useState<
+    CalendarProps<DateFrameworkType>["defaultVisibleMonth"]
+  >(dateAdapter.startOf(dateAdapter.add(today, { months: 1 }), "month"));
+
+  const handleStartVisibleMonthChange = useCallback(
+    (
+      _event: SyntheticEvent,
+      newVisibleMonth: CalendarProps<DateFrameworkType>["defaultVisibleMonth"],
+    ) => {
+      setStartVisibleMonth(newVisibleMonth);
+      if (
+        newVisibleMonth &&
+        endVisibleMonth &&
+        dateAdapter.compare(newVisibleMonth, endVisibleMonth) >= 0
+      ) {
+        setEndVisibleMonth(dateAdapter.add(newVisibleMonth, { months: 1 }));
+      }
+    },
+    [endVisibleMonth],
+  );
+
+  const handleEndVisibleMonthChange = useCallback(
+    (
+      _event: SyntheticEvent,
+      newVisibleMonth: CalendarProps<DateFrameworkType>["defaultVisibleMonth"],
+    ) => {
+      setEndVisibleMonth(newVisibleMonth);
+      if (
+        newVisibleMonth &&
+        startVisibleMonth &&
+        dateAdapter.compare(newVisibleMonth, startVisibleMonth) <= 0
+      ) {
+        setStartVisibleMonth(
+          dateAdapter.startOf(
+            dateAdapter.subtract(newVisibleMonth, { months: 1 }),
+            "month",
+          ),
+        );
+      }
+    },
+    [startVisibleMonth],
+  );
+
   const [selectedDate, setSelectedDate] = useState<
-    UseCalendarSelectionRangeProps["selectedDate"]
-  >(args.defaultSelectedDate || null);
-  const handleSelectionChange: UseCalendarSelectionRangeProps["onSelectionChange"] =
+    UseCalendarSelectionRangeProps<DateFrameworkType>["selectedDate"]
+  >(args.defaultSelectedDate);
+  const handleSelectionChange: UseCalendarSelectionRangeProps<DateFrameworkType>["onSelectionChange"] =
     (event, newSelectedDate) => {
       setSelectedDate(newSelectedDate);
       args?.onSelectionChange?.(event, newSelectedDate);
@@ -270,14 +402,11 @@ export const TwinCalendars: StoryFn<
         selectionVariant="range"
         hideOutOfRangeDates
         hoveredDate={hoveredDate}
-        defaultVisibleMonth={
-          selectedDate?.startDate
-            ? startOfMonth(selectedDate.startDate)
-            : startOfMonth(today(getLocalTimeZone()))
-        }
+        visibleMonth={startVisibleMonth}
         selectedDate={selectedDate}
         {...args}
         onHoveredDateChange={handleHoveredDateChange}
+        onVisibleMonthChange={handleStartVisibleMonthChange}
         onSelectionChange={handleSelectionChange}
       >
         <CalendarNavigation />
@@ -289,13 +418,10 @@ export const TwinCalendars: StoryFn<
         hideOutOfRangeDates
         hoveredDate={hoveredDate}
         selectedDate={selectedDate}
-        defaultVisibleMonth={
-          selectedDate?.endDate
-            ? startOfMonth(selectedDate.endDate)
-            : startOfMonth(today(getLocalTimeZone()).add({ months: 1 }))
-        }
+        visibleMonth={endVisibleMonth}
         {...args}
         onHoveredDateChange={handleHoveredDateChange}
+        onVisibleMonthChange={handleEndVisibleMonthChange}
         onSelectionChange={handleSelectionChange}
       >
         <CalendarNavigation />
@@ -306,13 +432,21 @@ export const TwinCalendars: StoryFn<
   );
 };
 
-export const WithLocale: StoryFn<typeof Calendar> = (args) => (
-  <Calendar {...args} locale="es-ES">
-    <CalendarNavigation />
-    <CalendarWeekHeader />
-    <CalendarGrid />
-  </Calendar>
-);
+export const WithLocale: StoryFn<typeof Calendar> = (args) => {
+  // Include any locales, required by your DateAdapter of choice.
+  // Wrap in your own LocalizationProvider to specify the locale or modify the current context
+  // <LocalizationProvider DateAdapter={DateAdapter} locale="es-ES"></LocalizationProvider>
+  const { dateAdapter } = useLocalization<DateFrameworkType>();
+  const isDateFns = dateAdapter.lib === "date-fns";
+  dateAdapter.locale = isDateFns ? dateFnsEs : "es-ES";
+  return (
+    <Calendar {...args}>
+      <CalendarNavigation />
+      <CalendarWeekHeader />
+      <CalendarGrid />
+    </Calendar>
+  );
+};
 
 export const Bordered: StoryFn<typeof Calendar> = (args) => (
   <Calendar {...args}>

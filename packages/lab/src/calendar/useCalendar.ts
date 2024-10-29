@@ -1,14 +1,3 @@
-import {
-  type DateValue,
-  endOfMonth,
-  endOfYear,
-  getLocalTimeZone,
-  isSameDay,
-  isSameMonth,
-  startOfMonth,
-  startOfYear,
-  today,
-} from "@internationalized/date";
 import { useControlled } from "@salt-ds/core";
 import {
   type SyntheticEvent,
@@ -17,7 +6,7 @@ import {
   useMemo,
   useState,
 } from "react";
-import { getCurrentLocale } from "./formatDate";
+import { type DateFrameworkType, useLocalization } from "../date-adapters";
 import { generateDatesForMonth } from "./internal/utils";
 import {
   type UseCalendarSelectionMultiSelectProps,
@@ -32,70 +21,63 @@ import {
 /**
  * Interface representing the base properties UseCalendar hook.
  */
-interface UseCalendarBaseProps {
+interface UseCalendarBaseProps<TDate> {
   /**
    * The default visible month.
    */
-  defaultVisibleMonth?: DateValue;
+  defaultVisibleMonth?: TDate;
   /**
    * Callback fired when the visible month changes.
    * @param event - The synthetic event.
    * @param visibleMonth - The new visible month.
    */
-  onVisibleMonthChange?: (
-    event: SyntheticEvent,
-    visibleMonth: DateValue,
-  ) => void;
+  onVisibleMonthChange?: (event: SyntheticEvent, visibleMonth: TDate) => void;
   /**
    * Function to determine if a day is unselectable.
    * @param date - The date to check.
    * @returns A string reason if the day is unselectable, otherwise `false` or `undefined`.
    */
-  isDayUnselectable?: (date: DateValue) => string | false | undefined;
+  isDayUnselectable?: (date: TDate) => string | false | undefined;
   /**
    * Function to determine if a day is highlighted.
    * @param date - The date to check.
    * @returns A string reason if the day is highlighted, otherwise `false` or `undefined`.
    */
-  isDayHighlighted?: (date: DateValue) => string | false | undefined;
+  isDayHighlighted?: (date: TDate) => string | false | undefined;
   /**
    * Function to determine if a day is disabled.
    * @param date - The date to check.
    * @returns A string reason if the day is disabled, otherwise `false` or `undefined`.
    */
-  isDayDisabled?: (date: DateValue) => string | false | undefined;
+  isDayDisabled?: (date: TDate) => string | false | undefined;
   /**
    * The currently visible month.
    */
-  visibleMonth?: DateValue;
+  visibleMonth?: TDate;
   /**
    * If `true`, hides dates that are out of the selectable range.
    */
   hideOutOfRangeDates?: boolean;
   /**
+   * Locale for date formatting
+   */
+  locale?: any;
+  /**
    * The minimum selectable date.
    */
-  minDate?: DateValue;
+  minDate?: TDate;
   /**
    * The maximum selectable date.
    */
-  maxDate?: DateValue;
-  /**
-   * The time zone used for date calculations.
-   */
-  timeZone?: string;
-  /**
-   * The locale used for date formatting.
-   */
-  locale?: string;
+  maxDate?: TDate;
 }
 
 /**
  * UseCalendar hook props for a single date selection Calendar.
  */
-export interface UseCalendarSingleProps
-  extends UseCalendarSelectionSingleProps,
-    UseCalendarBaseProps {
+export interface UseCalendarSingleProps<TDate extends DateFrameworkType>
+  extends UseCalendarSelectionSingleProps<TDate>,
+    UseCalendarBaseProps<TDate> {
   /**
    * The selection variant, set to "single".
    */
@@ -105,9 +87,9 @@ export interface UseCalendarSingleProps
 /**
  * UseCalendar hook props for a date range selection Calendar.
  */
-export interface UseCalendarRangeProps
-  extends UseCalendarSelectionRangeProps,
-    UseCalendarBaseProps {
+export interface UseCalendarRangeProps<TDate extends DateFrameworkType>
+  extends UseCalendarSelectionRangeProps<TDate>,
+    UseCalendarBaseProps<TDate> {
   /**
    * The selection variant, set to "range".
    */
@@ -117,9 +99,9 @@ export interface UseCalendarRangeProps
 /**
  * UseCalendar hook props for a multi-select Calendar.
  */
-export interface UseCalendarMultiSelectProps
-  extends UseCalendarSelectionMultiSelectProps,
-    UseCalendarBaseProps {
+export interface UseCalendarMultiSelectProps<TDate extends DateFrameworkType>
+  extends UseCalendarSelectionMultiSelectProps<TDate>,
+    UseCalendarBaseProps<TDate> {
   /**
    * The selection variant, set to "multiselect".
    */
@@ -129,9 +111,9 @@ export interface UseCalendarMultiSelectProps
 /**
  * UseCalendar hook props for an offset date selection Calendar.
  */
-export interface UseCalendarOffsetProps
-  extends UseCalendarSelectionOffsetProps,
-    UseCalendarBaseProps {
+export interface UseCalendarOffsetProps<TDate extends DateFrameworkType>
+  extends UseCalendarSelectionOffsetProps<TDate>,
+    UseCalendarBaseProps<TDate> {
   /**
    * The selection variant, set to "offset".
    */
@@ -141,11 +123,11 @@ export interface UseCalendarOffsetProps
 /**
  * UseCalendar hook props, wth the selection variant determining the return type of the date selection
  */
-export type UseCalendarProps =
-  | UseCalendarSingleProps
-  | UseCalendarRangeProps
-  | UseCalendarMultiSelectProps
-  | UseCalendarOffsetProps;
+export type UseCalendarProps<TDate extends DateFrameworkType> =
+  | UseCalendarSingleProps<TDate>
+  | UseCalendarRangeProps<TDate>
+  | UseCalendarMultiSelectProps<TDate>
+  | UseCalendarOffsetProps<TDate>;
 
 /**
  * Default function to determine if a day is unselectable.
@@ -165,22 +147,256 @@ const defaultIsDayHighlighted = (): string | false => false;
  */
 const defaultIsDayDisabled = (): false => false;
 
-export function useCalendar(props: UseCalendarProps) {
+/**
+ * Represents the return type of the useCalendar hook.
+ *
+ * @template TDate - The type of the date object used in the calendar.
+ */
+export interface UseCalendarReturn<TDate extends DateFrameworkType> {
+  /**
+   * The state of the calendar.
+   */
+  state: {
+    /**
+     * The currently visible month in the calendar.
+     */
+    visibleMonth: TDate;
+
+    /**
+     * The currently focused date in the calendar, or null if no date is focused.
+     */
+    focusedDate: TDate | null;
+
+    /**
+     * The locale used for date formatting.
+     */
+    locale: any;
+
+    /**
+     * The minimum selectable date in the calendar.
+     */
+    minDate: TDate;
+
+    /**
+     * The maximum selectable date in the calendar.
+     */
+    maxDate: TDate;
+
+    /**
+     * The selection variant of the calendar, indicating the type of selection allowed.
+     */
+    selectionVariant: "single" | "range" | "multiselect" | "offset";
+
+    /**
+     * Whether to hide dates that are out of the selectable range.
+     */
+    hideOutOfRangeDates?: boolean;
+
+    /**
+     * Whether the calendar is currently focused.
+     */
+    calendarFocused: boolean;
+
+    /**
+     * Additional state properties from selectionManager.state.
+     */
+    [key: string]: any; // Use a more specific type if possible
+  };
+
+  /**
+   * Helper functions for interacting with the calendar.
+   */
+  helpers: {
+    /**
+     * Sets the visible month in the calendar.
+     *
+     * @param event - The synthetic event triggering the change.
+     * @param newVisibleMonth - The new visible month to set.
+     */
+    setVisibleMonth: (event: SyntheticEvent, newVisibleMonth: TDate) => void;
+
+    /**
+     * Sets the focused date in the calendar.
+     *
+     * @param event - The synthetic event triggering the change.
+     * @param date - The new date to focus.
+     */
+    setFocusedDate: (event: SyntheticEvent, date: TDate) => void;
+
+    /**
+     * Sets whether the calendar is focused.
+     *
+     * @param focused - Whether the calendar should be focused.
+     */
+    setCalendarFocused: (focused: boolean) => void;
+
+    /**
+     * Determines if a day is unselectable.
+     *
+     * @param date - The date to check.
+     * @returns A string reason if the day is unselectable, otherwise `false` or `undefined`.
+     */
+    isDayUnselectable: (date: TDate) => string | false | undefined;
+
+    /**
+     * Determines if a day is highlighted.
+     *
+     * @param date - The date to check.
+     * @returns A string reason if the day is highlighted, otherwise `false` or `undefined`.
+     */
+    isDayHighlighted: (date: TDate) => string | false | undefined;
+
+    /**
+     * Determines if a day is disabled.
+     *
+     * @param date - The date to check.
+     * @returns A string reason if the day is disabled, otherwise `false` or `undefined`.
+     */
+    isDayDisabled: (date: TDate) => string | false | undefined;
+
+    /**
+     * Determines if a day is visible in the calendar.
+     *
+     * @param date - The date to check.
+     * @returns `true` if the day is visible, otherwise `false`.
+     */
+    isDayVisible: (date: TDate) => boolean;
+
+    /**
+     * Determines if a date is outside the allowed date range.
+     *
+     * @param date - The date to check.
+     * @returns `true` if the date is outside the allowed range, otherwise `false`.
+     */
+    isOutsideAllowedDates: (date: TDate) => boolean;
+
+    /**
+     * Determines if a month is outside the allowed range.
+     *
+     * @param date - The date to check.
+     * @returns `true` if the month is outside the allowed range, otherwise `false`.
+     */
+    isOutsideAllowedMonths: (date: TDate) => boolean;
+
+    /**
+     * Determines if a year is outside the allowed range.
+     *
+     * @param date - The date to check.
+     * @returns `true` if the year is outside the allowed range, otherwise `false`.
+     */
+    isOutsideAllowedYears: (date: TDate) => boolean;
+
+    /**
+     * Sets the selected date in the calendar.
+     *
+     * @param event - The event triggering the change.
+     * @param newSelectedDate - The new date to select.
+     */
+    setSelectedDate: (
+      event:
+        | React.KeyboardEvent<HTMLButtonElement>
+        | React.MouseEvent<HTMLButtonElement, MouseEvent>,
+      newSelectedDate: TDate,
+    ) => void;
+
+    /**
+     * Determines if a date is selected.
+     *
+     * @param date - The date to check.
+     * @returns `true` if the date is selected, otherwise `false`.
+     */
+    isSelected: (date: TDate) => boolean;
+
+    /**
+     * Sets the hovered date in the calendar.
+     *
+     * @param event - The event triggering the change.
+     * @param newHoveredDate - The new date to hover.
+     */
+    setHoveredDate: (
+      event: SyntheticEvent,
+      newHoveredDate: TDate | null,
+    ) => void;
+
+    /**
+     * Determines if a date is part of a selected span.
+     *
+     * @param date - The date to check.
+     * @returns `true` if the date is part of a selected span, otherwise `false`.
+     */
+    isSelectedSpan: (date: TDate) => boolean;
+
+    /**
+     * Determines if a date is part of a hovered span.
+     *
+     * @param date - The date to check.
+     * @returns `true` if the date is part of a hovered span, otherwise `false`.
+     */
+    isHoveredSpan: (date: TDate) => boolean;
+
+    /**
+     * Determines if a date is the start of a selected range.
+     *
+     * @param date - The date to check.
+     * @returns `true` if the date is the start of a selected range, otherwise `false`.
+     */
+    isSelectedStart: (date: TDate) => boolean;
+
+    /**
+     * Determines if a date is the end of a selected range.
+     *
+     * @param date - The date to check.
+     * @returns `true` if the date is the end of a selected range, otherwise `false`.
+     */
+    isSelectedEnd: (date: TDate) => boolean;
+
+    /**
+     * Determines if a date is hovered.
+     *
+     * @param date - The date to check.
+     * @returns `true` if the date is hovered, otherwise `false`.
+     */
+    isHovered: (date: TDate) => boolean;
+
+    /**
+     * Determines if a date is part of a hovered offset.
+     *
+     * @param date - The date to check.
+     * @returns `true` if the date is part of a hovered offset, otherwise `false`.
+     */
+    isHoveredOffset: (date: TDate) => boolean;
+
+    /**
+     * Determines if a day is selectable.
+     *
+     * @param date - The date to check.
+     * @returns `true` if the day is selectable, otherwise `false`.
+     */
+    isDaySelectable: (date: TDate) => boolean;
+  };
+}
+
+export function useCalendar<TDate extends DateFrameworkType>(
+  props: UseCalendarProps<TDate>,
+): UseCalendarReturn<TDate> {
+  const {
+    dateAdapter,
+    defaultDates: { minDate: defaultMinDate, maxDate: defaultMaxDate },
+  } = useLocalization<TDate>();
   const {
     selectedDate,
     defaultSelectedDate,
     visibleMonth: visibleMonthProp,
     hideOutOfRangeDates,
-    timeZone = getLocalTimeZone(),
-    locale = getCurrentLocale(),
-    defaultVisibleMonth = today(timeZone),
+    locale,
+    defaultVisibleMonth = dateAdapter.today(locale),
     onSelectionChange,
     onVisibleMonthChange,
     isDayUnselectable = defaultIsDayUnselectable,
     isDayHighlighted = defaultIsDayHighlighted,
     isDayDisabled = defaultIsDayDisabled,
-    minDate,
-    maxDate,
+    minDate = defaultMinDate,
+    maxDate = defaultMaxDate,
     selectionVariant,
     onHoveredDateChange,
     hoveredDate,
@@ -188,44 +404,50 @@ export function useCalendar(props: UseCalendarProps) {
     // endDateOffset,
   } = props;
   const [visibleMonth, setVisibleMonthState] = useControlled({
-    controlled: visibleMonthProp ? startOfMonth(visibleMonthProp) : undefined,
-    default: startOfMonth(defaultVisibleMonth),
+    controlled: visibleMonthProp
+      ? dateAdapter.startOf(visibleMonthProp, "month", locale)
+      : undefined,
+    default: dateAdapter.startOf(defaultVisibleMonth, "month", locale),
     name: "Calendar",
     state: "visibleMonth",
   });
 
   const isOutsideAllowedDates = useCallback(
-    (date: DateValue) => {
+    (date: TDate) => {
       return (
-        (minDate && date.compare(minDate) < 0) ||
-        (maxDate && date.compare(maxDate) > 0)
+        dateAdapter.compare(date, minDate) < 0 ||
+        dateAdapter.compare(date, maxDate) > 0
       );
     },
     [maxDate, minDate],
   );
 
   const isOutsideAllowedMonths = useCallback(
-    (date: DateValue) => {
+    (date: TDate) => {
+      const startOfMonth = dateAdapter.startOf(date, "month", locale);
+      const endOfMonth = dateAdapter.endOf(date, "month", locale);
       return (
-        (minDate && endOfMonth(date).compare(minDate) < 0) ||
-        (maxDate && startOfMonth(date).compare(maxDate) > 0)
+        dateAdapter.compare(endOfMonth, minDate) < 0 ||
+        dateAdapter.compare(startOfMonth, maxDate) > 0
       );
     },
     [minDate, maxDate],
   );
 
   const isOutsideAllowedYears = useCallback(
-    (date: DateValue) => {
+    (date: TDate) => {
+      const startOfYear = dateAdapter.startOf(date, "year", locale);
+      const endOfYear = dateAdapter.endOf(date, "year", locale);
       return (
-        (minDate && endOfYear(date).compare(minDate) < 0) ||
-        (maxDate && startOfYear(date).compare(maxDate) > 0)
+        dateAdapter.compare(endOfYear, minDate) < 0 ||
+        dateAdapter.compare(startOfYear, maxDate) > 0
       );
     },
     [minDate, maxDate],
   );
 
   const isDaySelectable = useCallback(
-    (date?: DateValue) =>
+    (date?: TDate) =>
       !(
         date &&
         (isDayUnselectable(date) ||
@@ -235,7 +457,7 @@ export function useCalendar(props: UseCalendarProps) {
     [isDayUnselectable, isDayDisabled, isOutsideAllowedDates],
   );
 
-  const selectionManager = useCalendarSelection({
+  const selectionManager = useCalendarSelection<TDate>({
     defaultSelectedDate: defaultSelectedDate,
     selectedDate,
     onSelectionChange,
@@ -247,13 +469,13 @@ export function useCalendar(props: UseCalendarProps) {
     selectionVariant,
     onHoveredDateChange,
     hoveredDate,
-  } as UseCalendarSelectionProps);
+  } as UseCalendarSelectionProps<TDate>);
 
   const [calendarFocused, setCalendarFocused] = useState(false);
 
   const isInVisibleMonth = useCallback(
-    (date: DateValue | undefined | null): date is DateValue =>
-      date != null && isSameMonth(date, visibleMonth),
+    (date: TDate | undefined | null): date is TDate =>
+      date != null && dateAdapter.isSame(date, visibleMonth, "month"),
     [visibleMonth],
   );
 
@@ -261,7 +483,7 @@ export function useCalendar(props: UseCalendarProps) {
     const selectedDate = selectionManager.state.selectedDate;
     if (
       (selectionVariant === "range" || selectionVariant === "offset") &&
-      isDateRangeSelection(selectedDate)
+      isDateRangeSelection<TDate>(selectedDate)
     ) {
       if (isInVisibleMonth(selectedDate?.startDate)) {
         return selectedDate.startDate;
@@ -276,7 +498,7 @@ export function useCalendar(props: UseCalendarProps) {
       // return first selected day in visible month
       const selectionInMonth = selectedDate
         .filter((day) => isInVisibleMonth(day))
-        .sort((a, b) => a.compare(b));
+        .sort((a, b) => dateAdapter.compare(a, b));
       if (selectionInMonth.length > 0) {
         return selectionInMonth[0];
       }
@@ -289,12 +511,16 @@ export function useCalendar(props: UseCalendarProps) {
       return selectedDate;
     }
     // Defaults
-    if (isDaySelectable(today(timeZone)) && isInVisibleMonth(today(timeZone))) {
-      return today(timeZone);
+    if (
+      isDaySelectable(dateAdapter.today(locale)) &&
+      isInVisibleMonth(dateAdapter.today(locale))
+    ) {
+      return dateAdapter.today(locale);
     }
-    const firstSelectableDate = generateDatesForMonth(visibleMonth).find(
-      (visibleDay) => isDaySelectable(visibleDay),
-    );
+    const firstSelectableDate = generateDatesForMonth(
+      dateAdapter,
+      visibleMonth,
+    ).find((visibleDay) => isDaySelectable(visibleDay));
     if (firstSelectableDate) {
       return firstSelectableDate;
     }
@@ -303,29 +529,32 @@ export function useCalendar(props: UseCalendarProps) {
     isInVisibleMonth,
     selectionVariant,
     selectionManager.state.selectedDate,
-    timeZone,
     visibleMonth,
   ]);
 
-  const [focusedDate, setFocusedDateState] = useState<DateValue | null>(
+  const [focusedDate, setFocusedDateState] = useState<TDate | null>(
     getInitialFocusedDate,
   );
 
   const isDayVisible = useCallback(
-    (date: DateValue) => {
-      const startInsideDays = startOfMonth(visibleMonth);
+    (date: TDate) => {
+      const startInsideDays = dateAdapter.startOf(
+        visibleMonth,
+        "month",
+        locale,
+      );
 
-      if (date.compare(startInsideDays) < 0) return false;
+      if (dateAdapter.compare(date, startInsideDays) < 0) return false;
 
-      const endInsideDays = endOfMonth(visibleMonth);
+      const endInsideDays = dateAdapter.endOf(visibleMonth, "month", locale);
 
-      return !(date.compare(endInsideDays) > 0);
+      return !(dateAdapter.compare(date, endInsideDays) > 0);
     },
     [visibleMonth],
   );
 
   const setVisibleMonth = useCallback(
-    (event: SyntheticEvent, newVisibleMonth: DateValue) => {
+    (event: SyntheticEvent, newVisibleMonth: TDate) => {
       setVisibleMonthState(newVisibleMonth);
       onVisibleMonthChange?.(event, newVisibleMonth);
     },
@@ -333,10 +562,10 @@ export function useCalendar(props: UseCalendarProps) {
   );
 
   const setFocusedDate = useCallback(
-    (event: SyntheticEvent, date: DateValue) => {
+    (event: SyntheticEvent, date: TDate) => {
       if (
         !focusedDate ||
-        isSameDay(date, focusedDate) ||
+        dateAdapter.isSame(date, focusedDate, "day") ||
         isOutsideAllowedDates(date)
       )
         return;
@@ -348,7 +577,7 @@ export function useCalendar(props: UseCalendarProps) {
         isDaySelectable(date) &&
         !isOutsideAllowedDates(date);
       if (shouldTransition) {
-        setVisibleMonth(event, startOfMonth(date));
+        setVisibleMonth(event, dateAdapter.startOf(date, "month", locale));
       }
     },
     [
@@ -370,43 +599,42 @@ export function useCalendar(props: UseCalendarProps) {
   }, [isDayVisible, focusedDate, getInitialFocusedDate, visibleMonth]);
 
   return useMemo(
-    () => ({
-      state: {
-        visibleMonth,
-        focusedDate,
-        minDate,
-        maxDate,
-        selectionVariant,
-        hideOutOfRangeDates,
-        calendarFocused,
-        timeZone,
-        locale,
-        ...selectionManager.state,
-      },
-      helpers: {
-        setVisibleMonth,
-        setFocusedDate,
-        setCalendarFocused,
-        isDayUnselectable,
-        isDayHighlighted,
-        isDayDisabled,
-        isDayVisible,
-        isOutsideAllowedDates,
-        isOutsideAllowedMonths,
-        isOutsideAllowedYears,
-        ...selectionManager.helpers,
-      },
-    }),
+    () =>
+      ({
+        state: {
+          visibleMonth,
+          focusedDate,
+          locale,
+          minDate,
+          maxDate,
+          selectionVariant,
+          hideOutOfRangeDates,
+          calendarFocused,
+          ...selectionManager.state,
+        },
+        helpers: {
+          setVisibleMonth,
+          setFocusedDate,
+          setCalendarFocused,
+          isDayUnselectable,
+          isDayHighlighted,
+          isDayDisabled,
+          isDayVisible,
+          isOutsideAllowedDates,
+          isOutsideAllowedMonths,
+          isOutsideAllowedYears,
+          ...selectionManager.helpers,
+        },
+      }) as UseCalendarReturn<TDate>,
     [
       visibleMonth,
       focusedDate,
+      locale,
       minDate,
       maxDate,
       selectionVariant,
       hideOutOfRangeDates,
       calendarFocused,
-      timeZone,
-      locale,
       setVisibleMonth,
       setFocusedDate,
       isDayUnselectable,
