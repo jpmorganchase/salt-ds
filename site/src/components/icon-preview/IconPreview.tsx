@@ -1,11 +1,15 @@
 import {
   Button,
+  FlexItem,
+  FlexLayout,
   FlowLayout,
+  FormField,
+  FormFieldLabel,
   Input,
   SaltProvider,
-  SplitLayout,
   StackLayout,
   StatusIndicator,
+  Switch,
   Text,
 } from "@salt-ds/core";
 import { CloseIcon, SearchIcon } from "@salt-ds/icons";
@@ -15,8 +19,9 @@ import { allIcons } from "./allIconsList";
 
 export function IconPreview() {
   const [search, setSearch] = useState("");
-  const deferredSearch = useDeferredValue(search);
-  const [actualSize, setActualSize] = useState(false);
+  const deferredSearch = useDeferredValue(search.toLowerCase());
+  const [showOutlineGroup, setShowOutlineGroup] = useState(true);
+  const [showSolidGroup, setShowSolidGroup] = useState(true);
 
   const handleSearch = (event: ChangeEvent<HTMLInputElement>) => {
     setSearch(event.target.value);
@@ -26,23 +31,74 @@ export function IconPreview() {
     setSearch("");
   };
 
-  const handleActualSizeToggle = (event: ChangeEvent<HTMLInputElement>) => {
-    setActualSize(event.target.checked);
+  const handleShowSolidGroupChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setShowSolidGroup(event.target.checked);
   };
 
-  const filteredIcons = useMemo(
-    () =>
-      Object.entries(allIcons).filter(([name]) =>
-        new RegExp(deferredSearch, "i").test(name),
-      ),
-    [deferredSearch],
-  );
+  const handleShowOutlineGroupChange = (
+    event: ChangeEvent<HTMLInputElement>,
+  ) => {
+    setShowOutlineGroup(event.target.checked);
+  };
+
+  const filteredIcons = useMemo(() => {
+    return Object.entries(allIcons).filter(([name]) => {
+      const matchesSearch = name.toLowerCase().includes(deferredSearch);
+      const isOutlineIcon = !name.endsWith("SolidIcon");
+      const isSolidIcon = name.endsWith("SolidIcon");
+      return (
+        matchesSearch &&
+        ((showOutlineGroup && isOutlineIcon) || (showSolidGroup && isSolidIcon))
+      );
+    });
+  }, [deferredSearch, showOutlineGroup, showSolidGroup]);
+
+  const renderIcons = useMemo(() => {
+    if (filteredIcons.length > 0) {
+      return (
+        <FlowLayout justify="start" gap={1}>
+          {filteredIcons.map(([name, Icon]) => (
+            <StackLayout
+              align="center"
+              key={name}
+              gap={1}
+              className={styles.iconCard}
+            >
+              <div className={styles.iconContainer}>
+                <Icon size={1} />
+              </div>
+              <Text
+                className={styles.iconName}
+                color="secondary"
+                styleAs="label"
+              >
+                {name.replace(/([A-Z])/g, " $1")}
+              </Text>
+            </StackLayout>
+          ))}
+        </FlowLayout>
+      );
+    }
+    return (
+      <StackLayout className={styles.notFound} gap={3} align="center">
+        <StatusIndicator status="info" size={2} />
+        <StackLayout gap={1} align="center">
+          <Text styleAs="h4">
+            <strong>No icons found</strong>
+          </Text>
+          <Text>
+            No icons found for the search term: "
+            <strong>{deferredSearch}</strong>"
+          </Text>
+        </StackLayout>
+      </StackLayout>
+    );
+  }, [filteredIcons, deferredSearch]);
 
   return (
     <StackLayout className={styles.root} gap={1}>
-      <SplitLayout
-        className={styles.toolbar}
-        startItem={
+      <FlexLayout>
+        <FlexItem>
           <Input
             placeholder="Search icons"
             aria-label="Search icons"
@@ -51,61 +107,44 @@ export function IconPreview() {
             className={styles.search}
             startAdornment={<SearchIcon />}
             endAdornment={
-              search.length > 0 && (
+              search ? (
                 <Button
                   onClick={handleClear}
-                  variant="secondary"
+                  appearance="transparent"
+                  sentiment="neutral"
                   aria-label="Clear search"
                 >
                   <CloseIcon aria-hidden />
                 </Button>
-              )
+              ) : null
             }
           />
-        }
-        align="center"
-      />
-      <SaltProvider density="medium">
-        {filteredIcons.length > 0 && (
-          <FlowLayout gap={1}>
-            {filteredIcons.map(([name, Icon]) => {
-              return (
-                <StackLayout
-                  align="center"
-                  key={name}
-                  gap={1}
-                  className={styles.iconCard}
-                >
-                  <div className={styles.iconContainer}>
-                    <Icon size={actualSize ? 1 : 2} />
-                  </div>
-                  <Text
-                    className={styles.iconName}
-                    color="secondary"
-                    styleAs="label"
-                  >
-                    {name.replaceAll(/([A-Z])/g, " $1")}
-                  </Text>
-                </StackLayout>
-              );
-            })}
-          </FlowLayout>
-        )}
-        {filteredIcons.length === 0 && (
-          <StackLayout className={styles.notFound} gap={3} align="center">
-            <StatusIndicator status="info" size={2} />
-            <StackLayout gap={1} align="center">
-              <Text styleAs="h4">
-                <strong>No icons found</strong>
-              </Text>
-              <Text>
-                No icons found for the search term: "
-                <strong>{deferredSearch}</strong>"
-              </Text>
-            </StackLayout>
-          </StackLayout>
-        )}
-      </SaltProvider>
+        </FlexItem>
+        <FlexItem>
+          <FormField labelPlacement="left" className={styles.formfield}>
+            <FormFieldLabel>Show Solid</FormFieldLabel>
+            <Switch
+              onChange={handleShowSolidGroupChange}
+              checked={showSolidGroup}
+            />
+          </FormField>
+        </FlexItem>
+        <FlexItem>
+          <FormField labelPlacement="left" className={styles.formfield}>
+            <FormFieldLabel>Show Outline</FormFieldLabel>
+            <Switch
+              onChange={handleShowOutlineGroupChange}
+              checked={showOutlineGroup}
+            />
+          </FormField>
+        </FlexItem>
+        <FlexItem className={styles.formfield}>
+          <Text className={styles.iconCount}>
+            Icon Count: {filteredIcons.length}
+          </Text>
+        </FlexItem>
+      </FlexLayout>
+      <SaltProvider density="medium">{renderIcons}</SaltProvider>
     </StackLayout>
   );
 }

@@ -2,17 +2,12 @@
   min-height: 400px;
 }
 
-.toolbar {
-  min-height: calc(var(--salt-size-base) + var(--salt-spacing-200));
-}
-
-/* Overrides flex-grow: 1. */
-.toolbar.toolbar {
-  flex-grow: 0;
+.formfield {
+  display: flex;
 }
 
 .iconName {
-  text-wrap: balance;
+  text-wrap: none;
   text-align: center;
 }
 
@@ -38,4 +33,9 @@
 .notFound {
   flex: 1;
   justify-content: center;
+}
+
+.iconCount {
+  display: flex;
+  align-items: center;
 }
