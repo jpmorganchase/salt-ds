@@ -1,56 +1,50 @@
-import { CalendarDate } from "@internationalized/date";
-import { DateInputRange, DateInputSingle } from "@salt-ds/lab";
+import { DateInputRange, DateInputSingle, useLocalization } from "@salt-ds/lab";
 import type { StoryFn } from "@storybook/react";
 import { QAContainer, type QAContainerProps } from "docs/components";
-
-const testLocale = "en-GB";
+import moment from "moment";
 
 export default {
   title: "Lab/Date Input/QA",
   component: DateInputSingle,
-  locale: testLocale,
 };
 
-export const AllExamples: StoryFn<QAContainerProps> = () => (
-  <QAContainer
-    cols={4}
-    itemPadding={1}
-    height={3410}
-    width={1050}
-    itemWidthAuto
-    transposeDensity
-    vertical
-  >
-    <DateInputSingle
-      defaultDate={new CalendarDate(2025, 1, 2)}
-      locale={testLocale}
-    />
-    <DateInputSingle
-      defaultDate={new CalendarDate(2025, 1, 2)}
-      bordered
-      locale={testLocale}
-    />
-    <DateInputRange
-      defaultDate={{
-        startDate: new CalendarDate(2025, 1, 2),
-        endDate: new CalendarDate(2025, 2, 3),
-      }}
-      locale={testLocale}
-    />
-    <DateInputRange
-      defaultDate={{
-        startDate: new CalendarDate(2025, 1, 2),
-        endDate: new CalendarDate(2025, 2, 3),
-      }}
-      locale={testLocale}
-      bordered
-    />
-  </QAContainer>
-);
+const today = moment().startOf("day");
+
+export const AllExamples: StoryFn<QAContainerProps> = () => {
+  const { dateAdapter } = useLocalization();
+  const startDate = dateAdapter.today();
+  const endDate = dateAdapter.add(startDate, { months: 1, days: 1 });
+  return (
+    <QAContainer
+      cols={4}
+      itemPadding={1}
+      height={3410}
+      width={1050}
+      itemWidthAuto
+      transposeDensity
+      vertical
+    >
+      <DateInputSingle defaultDate={startDate} />
+      <DateInputSingle defaultDate={startDate} bordered />
+      <DateInputRange
+        defaultDate={{
+          startDate,
+          endDate,
+        }}
+      />
+      <DateInputRange
+        defaultDate={{
+          startDate,
+          endDate,
+        }}
+        bordered
+      />
+    </QAContainer>
+  );
+};
 
 AllExamples.parameters = {
   chromatic: { disableSnapshot: false },
-  mockDate: "2024-04-01T00:00:00Z",
   modes: {
     theme: {
       themeNext: "disable",

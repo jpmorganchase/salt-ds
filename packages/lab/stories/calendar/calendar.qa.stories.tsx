@@ -1,5 +1,5 @@
-import { parseDate } from "@internationalized/date";
 import {
+  AdapterMoment,
   Calendar,
   CalendarGrid,
   CalendarNavigation,
@@ -16,6 +16,8 @@ export default {
   locale: testLocale,
 };
 
+const dateAdapter = new AdapterMoment();
+
 export const AllExamples: StoryFn<QAContainerProps> = () => (
   <QAContainer
     cols={4}
@@ -27,20 +29,18 @@ export const AllExamples: StoryFn<QAContainerProps> = () => (
     vertical
   >
     <Calendar
-      locale={testLocale}
       selectionVariant="single"
-      selectedDate={parseDate("2024-04-02")}
+      selectedDate={dateAdapter.parse("2024-04-02", "YYYY-MM-DD").date}
     >
       <CalendarNavigation />
       <CalendarWeekHeader />
       <CalendarGrid />
     </Calendar>
     <Calendar
-      locale={testLocale}
       selectionVariant="range"
       selectedDate={{
-        startDate: parseDate("2024-04-02"),
-        endDate: parseDate("2024-04-04"),
+        startDate: dateAdapter.parse("2024-04-02", "YYYY-MM-DD").date,
+        endDate: dateAdapter.parse("2024-04-04", "YYYY-MM-DD").date,
       }}
     >
       <CalendarNavigation />
@@ -48,37 +48,42 @@ export const AllExamples: StoryFn<QAContainerProps> = () => (
       <CalendarGrid />
     </Calendar>
     <Calendar
-      locale={testLocale}
       selectionVariant="offset"
       selectedDate={{
-        startDate: parseDate("2024-04-02"),
-        endDate: parseDate("2024-04-04"),
+        startDate: dateAdapter.parse("2024-04-02", "YYYY-MM-DD").date,
+        endDate: dateAdapter.parse("2024-04-04", "YYYY-MM-DD").date,
       }}
     >
       <CalendarNavigation />
     </Calendar>
     <Calendar
-      locale={testLocale}
       selectionVariant="multiselect"
-      selectedDate={[parseDate("2024-04-02"), parseDate("2024-04-04")]}
+      selectedDate={[
+        dateAdapter.parse("2024-04-02", "YYYY-MM-DD").date,
+        dateAdapter.parse("2024-04-04", "YYYY-MM-DD").date,
+      ]}
     >
       <CalendarNavigation />
       <CalendarWeekHeader />
       <CalendarGrid />
     </Calendar>
     <Calendar
-      locale={testLocale}
       selectionVariant="multiselect"
-      selectedDate={[parseDate("2024-04-02"), parseDate("2024-04-04")]}
+      selectedDate={[
+        dateAdapter.parse("2024-04-02", "YYYY-MM-DD").date,
+        dateAdapter.parse("2024-04-04", "YYYY-MM-DD").date,
+      ]}
     >
       <CalendarNavigation hideYearDropdown />
       <CalendarWeekHeader />
       <CalendarGrid />
     </Calendar>
     <Calendar
-      locale={testLocale}
       selectionVariant="multiselect"
-      selectedDate={[parseDate("2024-04-02"), parseDate("2024-04-04")]}
+      selectedDate={[
+        dateAdapter.parse("2024-04-02", "YYYY-MM-DD").date,
+        dateAdapter.parse("2024-04-04", "YYYY-MM-DD").date,
+      ]}
     >
       <CalendarNavigation
         MonthDropdownProps={{ bordered: true }}
@@ -92,7 +97,6 @@ export const AllExamples: StoryFn<QAContainerProps> = () => (
 
 AllExamples.parameters = {
   chromatic: { disableSnapshot: false },
-  mockDate: "2024-04-01T00:00:00Z",
   modes: {
     theme: {
       themeNext: "disable",

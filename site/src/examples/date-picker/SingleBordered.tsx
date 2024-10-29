@@ -9,11 +9,12 @@ import {
   DatePickerOverlay,
   DatePickerSingleInput,
   DatePickerSinglePanel,
+  type SingleDatePickerError,
   type SingleDateSelection,
   formatDate,
-  getCurrentLocale, RangeDatePickerError, SingleDatePickerError,
+  getCurrentLocale,
 } from "@salt-ds/lab";
-import React, { type ReactElement, useCallback, useState } from "react";
+import { type ReactElement, useCallback, useState } from "react";
 
 function formatSingleDate(
   date: DateValue | null,
@@ -34,7 +35,10 @@ export const SingleBordered = (): ReactElement => {
     undefined,
   );
   const handleSelectionChange = useCallback(
-    (newSelectedDate: SingleDateSelection | null, error: SingleDatePickerError) => {
+    (
+      newSelectedDate: SingleDateSelection | null,
+      error: SingleDatePickerError,
+    ) => {
       console.log(`Selected date: ${formatSingleDate(newSelectedDate)}`);
       console.log(`Error: ${error}`);
       if (error) {

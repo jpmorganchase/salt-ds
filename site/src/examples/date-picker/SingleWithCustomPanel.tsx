@@ -1,8 +1,4 @@
-import {
-  type DateValue,
-  getLocalTimeZone,
-  today,
-} from "@internationalized/date";
+import type { DateValue } from "@internationalized/date";
 import {
   FormField,
   FormFieldHelperText as FormHelperText,
@@ -12,12 +8,13 @@ import {
   DatePicker,
   DatePickerOverlay,
   DatePickerSingleInput,
+  type SingleDatePickerError,
   type SingleDateSelection,
   formatDate,
-  getCurrentLocale, SingleDatePickerError,
+  getCurrentLocale,
 } from "@salt-ds/lab";
 import { CustomDatePickerPanel } from "@salt-ds/lab/stories/date-picker/CustomDatePickerPanel";
-import React, { type ReactElement, useCallback, useState } from "react";
+import { type ReactElement, useCallback, useState } from "react";
 
 function formatSingleDate(
   date: DateValue | null | undefined,
@@ -38,7 +35,10 @@ export const SingleWithCustomPanel = (): ReactElement => {
     undefined,
   );
   const handleSelectionChange = useCallback(
-    (newSelectedDate: SingleDateSelection | null | undefined, error: SingleDatePickerError) => {
+    (
+      newSelectedDate: SingleDateSelection | null | undefined,
+      error: SingleDatePickerError,
+    ) => {
       console.log(`Selected date: ${formatSingleDate(newSelectedDate)}`);
       console.log(`Error: ${error}`);
       if (error) {

@@ -9,10 +9,11 @@ import {
   DatePickerRangeInput,
   DatePickerRangePanel,
   type DateRangeSelection,
+  type RangeDatePickerError,
   formatDate,
-  getCurrentLocale, RangeDatePickerError,
+  getCurrentLocale,
 } from "@salt-ds/lab";
-import React, { type ReactElement, useCallback, useState } from "react";
+import { type ReactElement, useCallback, useState } from "react";
 
 function formatDateRange(
   dateRange: DateRangeSelection | null,

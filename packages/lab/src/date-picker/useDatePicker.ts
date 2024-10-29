@@ -1,60 +1,34 @@
-import {
-  CalendarDate,
-  type DateValue,
-  endOfMonth,
-  getLocalTimeZone,
-  startOfMonth,
-} from "@internationalized/date";
 import { useControlled, useForkRef, useFormFieldProps } from "@salt-ds/core";
 import { useCallback, useEffect, useRef, useState } from "react";
-import {
-  CALENDAR_MAX_YEAR,
-  CALENDAR_MIN_YEAR,
-  type DateRangeSelection,
-  type SingleDateSelection,
-  getCurrentLocale,
-} from "../calendar";
+import type { DateRangeSelection, SingleDateSelection } from "../calendar";
+import { type DateFrameworkType, useLocalization } from "../date-adapters";
+import type {
+  DateInputRangeDetails,
+  DateInputSingleDetails,
+} from "../date-input";
 import type {
   RangeDatePickerState,
   SingleDatePickerState,
 } from "./DatePickerContext";
 import { useDatePickerOverlay } from "./DatePickerOverlayProvider";
-import { DateInputSingleDetails } from "../date-input";
-import { DateInputRangeDetails } from "./DatePickerRangeInput";
 
-interface UseDatePickerBaseProps<T> {
+interface UseDatePickerBaseProps<TDate> {
   /** If `true`, the component is disabled. */
   disabled?: boolean;
   /** If `true`, the component is read-only. */
   readOnly?: boolean;
   /**
-   * The selected date. The selected date will be controlled when this prop is provided.
-   */
-  selectedDate?: T | null;
-  /**
-   * The initial selected date, when the selected date is uncontrolled.
-   */
-  defaultSelectedDate?: UseDatePickerBaseProps<T>["selectedDate"];
-  /**
    * The minimum date for the range, default is 1900.
    */
-  minDate?: DateValue;
+  minDate?: TDate;
   /**
    * The maximum date for the range, default is 2100.
    */
-  maxDate?: DateValue;
+  maxDate?: TDate;
   /**
    * Handler for when the date selection is cancelled.
    */
   onCancel?: () => void;
-  /**
-   * Time zone of the date selection, defaults to the current time zone of the user.
-   */
-  timeZone?: string;
-  /**
-   * Locale of the date selection, defaults to the current locale of the user.
-   */
-  locale?: string;
 }
 
 /**
@@ -65,21 +39,31 @@ interface UseDatePickerBaseProps<T> {
  * @property {(selectedSingleDate: SingleDateSelection | null, singleError: string | false) => void} [onSelectionChange] - Handler called when the selected date changes.
  * @property {(appliedSingleDate: SingleDateSelection | null, singleError: string | false) => void} [onApply] - Handler called when the selected date is confirmed/applied.
  */
-export interface UseDatePickerSingleProps
-  extends UseDatePickerBaseProps<SingleDateSelection> {
+export interface UseDatePickerSingleProps<TDate extends DateFrameworkType>
+  extends UseDatePickerBaseProps<TDate> {
   /**
    * Single date selection.
    */
   selectionVariant: "single";
   /**
+   * The selected date. The selected date will be controlled when this prop is provided.
+   */
+  selectedDate?: SingleDateSelection<TDate> | null;
+  /**
+   * The initial selected date, when the selected date is uncontrolled.
+   */
+  defaultSelectedDate?: SingleDateSelection<TDate> | null;
+  /**
    * Handler called when the selected date changes.
    * @param {DateInputSingleDetails} selectedSingleDate - The selected date selection.
    */
-  onSelectionChange?: (selection: DateInputSingleDetails) => void;
+  onSelectionChange?: (selection: DateInputSingleDetails<TDate>) => void;
   /**
    * Handler called when the selected date is confirmed/applied.
    * @param {SingleDateSelection | null undefined} selectedSingleDate - The selected date selection.   */
-  onApply?: (appliedDate: SingleDateSelection | null | undefined) => void;
+  onApply?: (
+    appliedDate: SingleDateSelection<TDate> | null | undefined,
+  ) => void;
 }
 
 /**
@@ -90,20 +74,28 @@ export interface UseDatePickerSingleProps
  * @property {(selectedRangeDate: DateRangeSelection | null, rangeError: { startDate: string | false; endDate: string | false }) => void} [onSelectionChange] - Handler called when the selected date changes.
  * @property {(appliedRangeDate: DateRangeSelection | null, rangeError: { startDate: string | false; endDate: string | false }) => void} [onApply] - Handler called when the selected date is confirmed/applied.
  */
-export interface UseDatePickerRangeProps
-  extends UseDatePickerBaseProps<DateRangeSelection> {
+export interface UseDatePickerRangeProps<TDate extends DateFrameworkType>
+  extends UseDatePickerBaseProps<TDate> {
   /**
    * Date range selection.
    */
   selectionVariant: "range";
   /**
+   * The selected date. The selected date will be controlled when this prop is provided.
+   */
+  selectedDate?: DateRangeSelection<TDate> | null;
+  /**
+   * The initial selected date, when the selected date is uncontrolled.
+   */
+  defaultSelectedDate?: DateRangeSelection<TDate> | null;
+  /**
    * Handler called when the selected date changes.
    * @param {DateInputRangeDetails} selection - The selected date selection.   */
-  onSelectionChange?: (selection: DateInputRangeDetails) => void;
+  onSelectionChange?: (selection: DateInputRangeDetails<TDate>) => void;
   /**
    * Handler called when the selected date is confirmed/applied.
    * @param {DateRangeSelection} selection - The selected date selection.   */
-  onApply?: (appliedRange: DateRangeSelection) => void;
+  onApply?: (appliedRange: DateRangeSelection<TDate>) => void;
 }
 
 /**
@@ -112,12 +104,14 @@ export interface UseDatePickerRangeProps
  * @template SelectionVariant
  * @typedef {SelectionVariant extends "single" ? UseDatePickerSingleProps : SelectionVariant extends "range" ? UseDatePickerRangeProps : never} UseDatePickerProps
  */
-export type UseDatePickerProps<SelectionVariant> =
-  SelectionVariant extends "single"
-    ? UseDatePickerSingleProps
-    : SelectionVariant extends "range"
-      ? UseDatePickerRangeProps
-      : never;
+export type UseDatePickerProps<
+  TDate extends DateFrameworkType,
+  SelectionVariant,
+> = SelectionVariant extends "single"
+  ? UseDatePickerSingleProps<TDate>
+  : SelectionVariant extends "range"
+    ? UseDatePickerRangeProps<TDate>
+    : never;
 
 /**
  * Custom hook for managing date picker state.
@@ -127,10 +121,16 @@ export type UseDatePickerProps<SelectionVariant> =
  * @param {React.ForwardedRef<HTMLDivElement>} ref - The ref for the date picker container.
  * @returns {DatePickerState<SelectionVariant extends "single" ? SingleDateSelection : DateRangeSelection>} The date picker state and helpers.
  */
-export function useDatePicker<SelectionVariant extends "single" | "range">(
-  props: UseDatePickerProps<SelectionVariant>,
+export function useDatePicker<
+  TDate extends DateFrameworkType,
+  SelectionVariant extends "single" | "range",
+>(
+  props: UseDatePickerProps<TDate, SelectionVariant>,
   ref: React.ForwardedRef<HTMLDivElement>,
-): SingleDatePickerState | RangeDatePickerState {
+): SingleDatePickerState<TDate> | RangeDatePickerState<TDate> {
+  const {
+    defaultDates: { minDate: defaultMinDate, maxDate: defaultMaxDate },
+  } = useLocalization<TDate>();
   const {
     readOnly = false,
     disabled,
@@ -139,10 +139,8 @@ export function useDatePicker<SelectionVariant extends "single" | "range">(
     selectedDate: selectedDateProp,
     onSelectionChange,
     onApply,
-    minDate = startOfMonth(new CalendarDate(CALENDAR_MIN_YEAR, 1, 1)),
-    maxDate = endOfMonth(new CalendarDate(CALENDAR_MAX_YEAR, 1, 1)),
-    timeZone = getLocalTimeZone(),
-    locale = getCurrentLocale(),
+    minDate = defaultMinDate,
+    maxDate = defaultMaxDate,
     onCancel,
   } = props;
 
@@ -169,10 +167,12 @@ export function useDatePicker<SelectionVariant extends "single" | "range">(
   useEffect(() => {
     if (open) {
       previousSelectedDate.current = selectedDate;
-      setOnDismiss(cancel);
+      if (enableApply) {
+        setOnDismiss(cancel);
+      }
       setCancelled(false);
     }
-  }, [open, setOnDismiss, setCancelled]);
+  }, [enableApply, open, setOnDismiss, setCancelled]);
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: avoid excessive re-rendering
   useEffect(() => {
@@ -186,7 +186,9 @@ export function useDatePicker<SelectionVariant extends "single" | "range">(
   const isReadOnly = readOnly || formFieldReadOnly || false;
   const isDisabled = disabled || formFieldDisabled || false;
 
-  const applySingle = (appliedDate: SingleDateSelection | null): void => {
+  const applySingle = (
+    appliedDate: SingleDateSelection<TDate> | null,
+  ): void => {
     setCancelled(false);
     setOpen(false);
     if (selectionVariant === "single") {
@@ -195,7 +197,7 @@ export function useDatePicker<SelectionVariant extends "single" | "range">(
   };
 
   const selectSingle = useCallback(
-    (selection: DateInputSingleDetails) => {
+    (selection: DateInputSingleDetails<TDate>) => {
       setSelectedDate(selection.date);
       if (selectionVariant === "single") {
         onSelectionChange?.(selection);
@@ -208,7 +210,7 @@ export function useDatePicker<SelectionVariant extends "single" | "range">(
   );
 
   const applyRange = useCallback(
-    (appliedDate: DateRangeSelection): void => {
+    (appliedDate: DateRangeSelection<TDate>): void => {
       setCancelled(false);
       setOpen(false);
       if (selectionVariant === "range") {
@@ -219,7 +221,7 @@ export function useDatePicker<SelectionVariant extends "single" | "range">(
   );
 
   const selectRange = useCallback(
-    (details: DateInputRangeDetails) => {
+    (details: DateInputRangeDetails<TDate>) => {
       const { startDate: startDateSelection, endDate: endDateSelection } =
         details;
       setSelectedDate({
@@ -262,8 +264,6 @@ export function useDatePicker<SelectionVariant extends "single" | "range">(
       containerRef,
       minDate,
       maxDate,
-      locale,
-      timeZone,
     },
     helpers: {
       cancel,
@@ -278,7 +278,7 @@ export function useDatePicker<SelectionVariant extends "single" | "range">(
         apply: applyRange,
         select: selectRange,
       },
-    } as RangeDatePickerState;
+    } as RangeDatePickerState<TDate>;
   }
   return {
     ...returnValue,
@@ -287,5 +287,5 @@ export function useDatePicker<SelectionVariant extends "single" | "range">(
       apply: applySingle,
       select: selectSingle,
     },
-  } as SingleDatePickerState;
+  } as SingleDatePickerState<TDate>;
 }

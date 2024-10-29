@@ -31,13 +31,37 @@
     "tabbable": "^6.0.0",
     "tinycolor2": "^1.4.2"
   },
+  "devDependencies": {
+    "@types/luxon": "^3.4.2",
+    "date-fns": "^2.30.0",
+    "dayjs": "^1.11.13",
+    "luxon": "^3.0.2",
+    "moment": "^2.29.4"
+  },
   "peerDependencies": {
+    "@types/luxon": "^3.4.2",
     "@types/react": ">=16.14.0",
+    "date-fns": "^2.30.0",
+    "dayjs": "^1.11.13",
+    "luxon": "^3.0.2",
+    "moment": "^2.29.4",
     "react": ">=16.14.0",
     "react-dom": ">=16.14.0"
   },
   "peerDependenciesMeta": {
     "@types/react": {
+      "optional": true
+    },
+    "date-fns": {
+      "optional": true
+    },
+    "dayjs": {
+      "optional": true
+    },
+    "luxon": {
+      "optional": true
+    },
+    "moment": {
       "optional": true
     }
   },
