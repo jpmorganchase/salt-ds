@@ -3383,7 +3383,7 @@ __metadata:
   dependencies:
     "@salt-ds/core": "workspace:^"
     "@salt-ds/icons": "workspace:^"
-    "@salt-ds/lab": "workspace:"
+    "@salt-ds/lab": "workspace:*"
     "@salt-ds/styles": "workspace:*"
     "@salt-ds/window": "workspace:*"
     clsx: "npm:^2.0.0"
