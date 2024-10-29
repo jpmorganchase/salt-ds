@@ -3599,7 +3599,7 @@ __metadata:
     "@testing-library/cypress": "npm:^10.0.0"
     "@testing-library/dom": "npm:^10.0.0"
     "@types/no-scroll": "npm:^2.1.0"
-    "@types/node": "npm:^20.0.0"
+    "@types/node": "npm:^22.0.0"
     "@types/react": "npm:^18.3.3"
     "@types/react-color": "npm:^3.0.6"
     "@types/react-dom": "npm:^18.0.0"
@@ -3660,7 +3660,7 @@ __metadata:
     "@jpmorganchase/mosaic-store": "npm:0.1.0-beta.88"
     "@jpmorganchase/mosaic-theme": "npm:0.1.0-beta.88"
     "@philpl/buble": "npm:^0.19.7"
-    "@types/node": "npm:^20.0.0"
+    "@types/node": "npm:^22.0.0"
     "@types/react": "npm:^18.3.3"
     concurrently: "npm:^9.0.0"
     cross-env: "npm:^7.0.3"
@@ -5671,13 +5671,6 @@ __metadata:
   version: 12.20.46
   resolution: "@types/node@npm:12.20.46"
   checksum: 10/c5347aa669ff439e9177a2799d0bc464d8533e4fb07f2ec112be118adf2668bf29b4fef153f9639550f190c84c8e96afcf96a04309af42e49754b42578cf1572
-  languageName: node
-  linkType: hard
-
-"@types/node@npm:^20.0.0":
-  version: 20.7.1
-  resolution: "@types/node@npm:20.7.1"
-  checksum: 10/00c816086fe4c771dbac9f5540d38c2dc741728dd47a819066b907c8b6d66bf9f4db048ef31a08ed2bca21ae31fcaef34d00847f746f301cfdcca2c946b3de3c
   languageName: node
   linkType: hard
 
