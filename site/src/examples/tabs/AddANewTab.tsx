@@ -1,4 +1,4 @@
-import { Button } from "@salt-ds/core";
+import { Button, useAriaAnnouncer } from "@salt-ds/core";
 import { AddIcon } from "@salt-ds/icons";
 import {
   TabBar,
@@ -13,6 +13,7 @@ export const AddANewTab = (): ReactElement => {
   const [tabs, setTabs] = useState(["Home", "Transactions", "Loans"]);
   const [value, setValue] = useState(tabs[0]);
   const newCount = useRef(0);
+  const { announce } = useAriaAnnouncer();
 
   return (
     <TabsNext value={value} onChange={(_event, newValue) => setValue(newValue)}>
@@ -32,6 +33,7 @@ export const AddANewTab = (): ReactElement => {
             newCount.current += 1;
 
             setTabs((old) => old.concat(newTab));
+            announce(`${newTab} tab added`);
           }}
         >
           <AddIcon aria-hidden />

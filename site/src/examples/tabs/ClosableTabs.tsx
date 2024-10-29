@@ -1,3 +1,4 @@
+import { useAriaAnnouncer } from "@salt-ds/core";
 import { CloseIcon } from "@salt-ds/icons";
 import {
   TabBar,
@@ -18,6 +19,8 @@ export const ClosableTabs = (): ReactElement => {
     "Liquidity",
   ]);
 
+  const { announce } = useAriaAnnouncer();
+
   return (
     <TabsNext defaultValue={tabs[0]}>
       <TabBar inset divider>
@@ -29,6 +32,7 @@ export const ClosableTabs = (): ReactElement => {
                 <TabNextAction
                   onClick={() => {
                     setTabs(tabs.filter((tab) => tab !== label));
+                    announce(`${label} tab has been removed`);
                   }}
                   aria-label="Close tab"
                 >
