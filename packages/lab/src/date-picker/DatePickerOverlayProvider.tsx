@@ -1,8 +1,8 @@
 import {
+  type OpenChangeReason,
   flip,
-  OpenChangeReason,
   useDismiss,
-  useInteractions
+  useInteractions,
 } from "@floating-ui/react";
 import { createContext, useControlled, useFloatingUI } from "@salt-ds/core";
 import {
@@ -49,7 +49,7 @@ interface DatePickerOverlayHelpers {
    * Register a callback for when onDismiss is called
    * @param onDismissCallback
    */
-  setOnDismiss: (onDismissCallback:() => void) => void;
+  setOnDismiss: (onDismissCallback: () => void) => void;
 }
 
 /**
@@ -85,7 +85,7 @@ interface DatePickerOverlayProviderProps {
    * Handler for when open state changes
    * @param newOpen - true when opened
    */
-  onOpen?: (newOpen:boolean) => void
+  onOpen?: (newOpen: boolean) => void;
   /**
    * The default open state of the overlay.
    */
@@ -123,19 +123,26 @@ export const DatePickerOverlayProvider: React.FC<
     }
   }, [open]);
 
-  const setOpen = useCallback((newOpen: boolean, _event?: Event | undefined, reason?: OpenChangeReason | undefined) => {
-    if (newOpen) {
-      triggeringElement.current = document.activeElement as HTMLElement;
-    }
-    setOpenState(newOpen);
-    onOpen?.(newOpen);
-    if (
-      reason === "escape-key" ||
-      (reason === "outside-press" && onDismissCallback.current)
-    ) {
-      onDismissCallback?.current?.();
-    }
-  }, [onOpen]);
+  const setOpen = useCallback(
+    (
+      newOpen: boolean,
+      _event?: Event | undefined,
+      reason?: OpenChangeReason | undefined,
+    ) => {
+      if (newOpen) {
+        triggeringElement.current = document.activeElement as HTMLElement;
+      }
+      setOpenState(newOpen);
+      onOpen?.(newOpen);
+      if (
+        reason === "escape-key" ||
+        (reason === "outside-press" && onDismissCallback.current)
+      ) {
+        onDismissCallback?.current?.();
+      }
+    },
+    [onOpen],
+  );
 
   const floatingUIResult = useFloatingUI({
     open,
@@ -171,7 +178,7 @@ export const DatePickerOverlayProvider: React.FC<
     },
     [getFloatingPropsCallback, floatingUIResult],
   );
-  const setOnDismiss = useCallback((dismissCallback:() => void) => {
+  const setOnDismiss = useCallback((dismissCallback: () => void) => {
     onDismissCallback.current = dismissCallback;
   }, []);
 
@@ -188,7 +195,7 @@ export const DatePickerOverlayProvider: React.FC<
       getFloatingProps,
       getReferenceProps,
       setOpen,
-      setOnDismiss
+      setOnDismiss,
     }),
     [getFloatingProps, getReferenceProps, setOpen],
   );

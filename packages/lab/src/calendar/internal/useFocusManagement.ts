@@ -1,26 +1,21 @@
-import {
-  type DateValue,
-  endOfWeek,
-  startOfWeek,
-} from "@internationalized/date";
 import type {
   FocusEventHandler,
   KeyboardEventHandler,
   MouseEventHandler,
 } from "react";
-import { getCurrentLocale } from "../formatDate";
+import { type DateFrameworkType, useLocalization } from "../../date-adapters";
 import { useCalendarContext } from "./CalendarContext";
 
-export function useFocusManagement({
+export function useFocusManagement<TDate extends DateFrameworkType>({
   date,
-  locale = getCurrentLocale(),
 }: {
-  date: DateValue;
-  locale: string;
+  date: TDate;
 }) {
+  const { dateAdapter } = useLocalization<TDate>();
   const {
+    state: { locale },
     helpers: { setFocusedDate },
-  } = useCalendarContext();
+  } = useCalendarContext<TDate>();
   const handleClick: MouseEventHandler<HTMLButtonElement> = (event) => {
     setFocusedDate(event, date);
   };
@@ -29,41 +24,40 @@ export function useFocusManagement({
     let newDate = date;
     switch (event.key) {
       case "ArrowUp":
-        newDate = date.subtract({ weeks: 1 });
+        newDate = dateAdapter.subtract(date, { weeks: 1 });
         break;
       case "ArrowDown":
-        newDate = date.add({ weeks: 1 });
+        newDate = dateAdapter.add(date, { weeks: 1 });
         break;
       case "ArrowLeft":
-        newDate = date.subtract({ days: 1 });
+        newDate = dateAdapter.subtract(date, { days: 1 });
         break;
       case "ArrowRight":
-        newDate = date.add({ days: 1 });
+        newDate = dateAdapter.add(date, { days: 1 });
         break;
       case "Home":
-        newDate = startOfWeek(date, locale);
+        newDate = dateAdapter.startOf(date, "week", locale);
         break;
       case "End":
-        // @ts-ignore TODO bug in @internationalized/date
-        newDate = endOfWeek(date, locale);
+        newDate = dateAdapter.endOf(date, "week", locale);
         break;
       case "PageUp":
         if (event.shiftKey) {
-          newDate = date.subtract({ years: 1 });
+          newDate = dateAdapter.subtract(date, { years: 1 });
         } else {
-          newDate = date.subtract({ months: 1 });
+          newDate = dateAdapter.subtract(date, { months: 1 });
         }
         break;
       case "PageDown":
         if (event.shiftKey) {
-          newDate = date.add({ years: 1 });
+          newDate = dateAdapter.add(date, { years: 1 });
         } else {
-          newDate = date.add({ months: 1 });
+          newDate = dateAdapter.add(date, { months: 1 });
         }
         break;
       default:
     }
-    if (newDate.compare(date) !== 0) {
+    if (dateAdapter.compare(newDate, date) !== 0) {
       event.preventDefault();
     }
     setFocusedDate(event, newDate);

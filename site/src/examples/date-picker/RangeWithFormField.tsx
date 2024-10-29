@@ -9,8 +9,9 @@ import {
   DatePickerRangeInput,
   DatePickerRangePanel,
   type DateRangeSelection,
+  type RangeDatePickerError,
   formatDate,
-  getCurrentLocale, RangeDatePickerError,
+  getCurrentLocale,
 } from "@salt-ds/lab";
 import { type ReactElement, useCallback, useState } from "react";
 

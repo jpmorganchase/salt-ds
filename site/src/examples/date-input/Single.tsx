@@ -3,7 +3,11 @@ import {
   getLocalTimeZone,
   today,
 } from "@internationalized/date";
-import {DateInputSingle, DateInputSingleError, formatDate} from "@salt-ds/lab";
+import {
+  DateInputSingle,
+  type DateInputSingleError,
+  formatDate,
+} from "@salt-ds/lab";
 import type { ReactElement, SyntheticEvent } from "react";
 
 export const Single = (): ReactElement => {
