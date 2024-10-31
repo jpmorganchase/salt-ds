@@ -12,24 +12,43 @@ data:
 
 Any focusable elements included in the tab content will need to be checked and tested accordingly.
 
-## Axe false positives
-
-Axe flags a few false positives that do not impact the accessibility of Tabs:
-
-### Certain ARIA roles must contain particular children ([aria-required-children](https://dequeuniversity.com/rules/axe/4.9/aria-required-children))
-
-This is flagged in two scenarios:
-
-- When an overflow menu is present. `tabIndex={-1}` is applied to the overflow menu to prevent it being tabbable.
-- When `TabNextAction` is present. `TabNextAction` follows the experimental example of [Tabs with Action Buttons](https://www.w3.org/WAI/ARIA/apg/patterns/tabs/examples/tabs-actions/) which causes the action to be a descendant of the tab list.
+## Known Accessibility Issues
 
 ### Scrollable region must have keyboard access ([scrollable-region-focusable](https://dequeuniversity.com/rules/axe/4.9/scrollable-region-focusable))
 
-- When an overflow menu is present. `tabIndex={-1}` is applied to the overflow menu to prevent it being tabbable.
+#### Issue Context
+
+This aXe issue is flagged when tabindex="-1" is applied to the overflow menu, which is technically a scrollable region. This implementation was added to prevent an additional, unnecessary tab stop in the navigation flow due to new browser enhancements that automatically apply focus to scrollable regions. While the menu itself is not focusable, its contents remain accessible via arrow key navigation when revealed.
+
+### Certain ARIA roles must contain particular children ([aria-required-children](https://dequeuniversity.com/rules/axe/4.9/aria-required-children))
+
+#### Issue Context
+
+This aXe issue is flagged in two scenarios:
+
+1. When an overflow menu is present within the tab list, where tabindex="-1" is applied to prevent focus, due to new browser enhancements, ensuring users don't encounter an additional tab stop when navigating away from the tab list
+
+2. When using nested action buttons within tabs. This example follows the W3C's experimental "Tabs with Action Buttons" example and maintains expected keyboard and screen reader interaction patterns
 
 ### ARIA attributes must conform to valid names ([aria-valid-attr](https://dequeuniversity.com/rules/axe/4.9/aria-valid-attr))
 
-- When `TabNextAction` is present. `TabNextAction` uses [`aria-actions`](https://pr-preview.s3.amazonaws.com/w3c/aria/pull/1805.html#aria-actions) which is still in a draft state and is not recognised by Axe.
+#### Issue Context
+
+This aXe issue is flagged due to the use of aria-actions, which is currently in draft status for the upcoming WAI-ARIA 1.3 release. However:
+
+- The implementation follows the W3C's experimental "Tabs with Action Buttons" example and maintains expected keyboard and screen reader interaction patterns
+- Screen readers properly announce and interact with the actions
+
+We anticipate when the release is published and aria actions is officially supported that this will no longer be a defect. We will confirm and update this guidance after the release.
+
+###  Note for overflow example
+
+- VoiceOver users receive inaccurate tab position information when navigating the overflow menu as it's treated as a separate tab list
+- In addition, when selecting a tab in the overflow menu, that tab is visually repositioned before the tab list to ensure visibility. Due to these position issues, the following announcement is provided to screen reader users: "Note: This tab list includes overflow; tab positions may be inaccurate or change when a tab is selected"
+
+Digital accessibility guidance continues to evolve as new design patterns and component challenges emerge. While we have worked to align with existing guidelines, some complex interactions and modern UI patterns present unique accessibility challenges that current guidelines may not fully address. We have implemented solutions that we believe create the most understandable and accessible experience possible, even when they conflict with current automated testing tools.
+
+We welcome feedback and alternative approaches to addressing any of these accessibility considerations. If you have suggestions for improving these components, please reach out to us as we are committed to continuous accessibility improvement of our user experiences.
 
 ## Keyboard interactions
 
