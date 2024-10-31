@@ -19,7 +19,7 @@ import {
 import { DarkIcon, HelpIcon, LightIcon } from "@salt-ds/icons";
 import {
   type FC,
-  type ReactElement,
+  type ReactNode,
   type SyntheticEvent,
   createContext,
   useState,
@@ -29,7 +29,7 @@ import clsx from "clsx";
 import styles from "./LivePreviewControls.module.css";
 
 type LivePreviewControlsProps = {
-  children: ReactElement[];
+  children: ReactNode;
 };
 
 const densities: Density[] = ["high", "medium", "low", "touch"];

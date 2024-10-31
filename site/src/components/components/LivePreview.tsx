@@ -5,8 +5,6 @@ import {
   type ChangeEvent,
   type ElementType,
   type FC,
-  type ReactElement,
-  type ReactNode,
   useEffect,
   useState,
 } from "react";
@@ -19,23 +17,11 @@ import styles from "./LivePreview.module.css";
 type LivePreviewProps = {
   componentName: string;
   exampleName: string;
-
-  /**
-   * Text label that will be used for this example in the list view in place
-   * of an auto-generated one based on the `exampleName`.
-   *
-   * Should ideally match the H3 text in the description content that
-   * accompanies this example (provided via the `children` prop).
-   */
-  displayName?: string;
-  list?: ReactElement;
-  children?: ReactNode;
 };
 
 export const LivePreview: FC<LivePreviewProps> = ({
   componentName,
   exampleName,
-  children,
 }) => {
   const [showCode, setShowCode] = useState<boolean>(false);
 
@@ -84,7 +70,6 @@ export const LivePreview: FC<LivePreviewProps> = ({
 
   return (
     <>
-      {children}
       <div className={styles.container}>
         <div
           className={clsx(styles.componentPreview, {

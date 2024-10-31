@@ -1,4 +1,3 @@
-import { useRoute } from "@jpmorganchase/mosaic-store";
 import type { FC, ReactNode } from "react";
 
 import { LinkList } from "../../components/link-list/LinkList";
@@ -14,8 +13,6 @@ type SecondarySidebarProps = {
   additionalData?: Data;
   tableOfContents?: ReactNode;
 };
-
-const examplesTabRoute = /\/examples$/;
 
 function getRelatedComponentLinks(
   relatedComponents: Data["relatedComponents"],
@@ -59,7 +56,6 @@ const SecondarySidebar: FC<SecondarySidebarProps> = ({
     package: packageInfo,
   } = additionalData || {};
 
-  const { route = "" } = useRoute();
   const similarToLinks = getRelatedComponentLinks(
     relatedComponents,
     "similarTo",

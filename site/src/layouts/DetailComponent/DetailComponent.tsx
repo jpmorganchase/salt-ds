@@ -16,6 +16,7 @@ import {
 import { useRouter } from "next/navigation";
 import { type FC, type SyntheticEvent, useEffect, useState } from "react";
 import ReactMarkdown from "react-markdown";
+import { LivePreviewControls } from "../../components";
 import { a, code, p, ul } from "../../components/mdx";
 import { TableOfContents } from "../../components/toc";
 import useIsMobileView from "../../utils/useIsMobileView";
@@ -146,7 +147,11 @@ export const DetailComponent: FC<LayoutProps> = ({ children }) => {
         </TabBar>
         {tabs.map(({ name }) => (
           <TabNextPanel key={name} value={name}>
-            {children}
+            {name === "examples" ? (
+              <LivePreviewControls>{children}</LivePreviewControls>
+            ) : (
+              children
+            )}
           </TabNextPanel>
         ))}
       </TabsNext>
