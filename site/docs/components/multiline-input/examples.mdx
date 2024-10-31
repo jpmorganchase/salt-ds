@@ -8,8 +8,6 @@ data:
   $ref: ./#/data
 ---
 
-<LivePreview componentName="multiline-input" exampleName="Primary" >
-
 ## Primary
 
 Values entered into the multiline input wrap based on the width of the component. Initially, the component is empty. Once it has focus, it accepts text across multiple lines. By default, the component presents three rows of text at a time.
@@ -18,9 +16,7 @@ If entering more than three rows of text, the height of the input will grow with
 
 `MultilineInput` has two variants: primary and secondary. The primary variant is the default. Consider the choice between primary and secondary variants alongside the background color it sits upon. For recommendations on variant choice, see the [forms pattern](/salt/patterns/forms).
 
-</LivePreview>
-
-<LivePreview componentName="multiline-input" exampleName="Secondary">
+<LivePreview componentName="multiline-input" exampleName="Primary" />
 
 ## Secondary
 
@@ -30,15 +26,13 @@ Consider the choice between primary and secondary variants in the context of the
 
 For recommendations on variant choice, see the [forms pattern](/salt/patterns/forms).
 
-</LivePreview>
-<LivePreview componentName="multiline-input" exampleName="Disabled">
+<LivePreview componentName="multiline-input" exampleName="Secondary" />
 
 ## Disabled
 
 You can set `MultilineInput` to a disabled state, with no resultant action when the user interacts with it. Showing it in a disabled state means the user is aware of its presence or an entered value but is unable to edit it.
 
-</LivePreview>
-<LivePreview componentName="multiline-input" exampleName="Readonly">
+<LivePreview componentName="multiline-input" exampleName="Disabled" />
 
 ## Read-only
 
@@ -48,8 +42,7 @@ Use the read-only state when the value is necessary for the user’s flow or cur
 
 When setting `MultilineInput` to a read-only state, ensure to also disable any nested interactive adornments, such as buttons.
 
-</LivePreview>
-<LivePreview componentName="multiline-input" exampleName="Bordered">
+<LivePreview componentName="multiline-input" exampleName="Readonly" />
 
 ## Bordered
 
@@ -57,8 +50,7 @@ To style `MultilineInput` with a full border, set `bordered={true}`.
 
 We recommend this styling when the field uses the same fill color as the background (i.e., a primary fill color on a primary background).
 
-</LivePreview>
-<LivePreview componentName="multiline-input" exampleName="NumberOfRows">
+<LivePreview componentName="multiline-input" exampleName="Bordered" />
 
 ## Number of rows
 
@@ -66,8 +58,7 @@ The multiline input shows three rows of text by default. You can adjust this usi
 
 Set the number of rows to best reflect the context of your multiline input and how much user input you expect in that context.
 
-</LivePreview>
-<LivePreview componentName="multiline-input" exampleName="CharacterCount">
+<LivePreview componentName="multiline-input" exampleName="NumberOfRows" />
 
 ## Character count
 
@@ -75,8 +66,7 @@ You can add a character count as a label using `endAdornment` props. The example
 
 If the user goes over the character count limit, display an error state and change the Label to `primary` variant with a weight of `"strong"`.
 
-</LivePreview>
-<LivePreview componentName="multiline-input" exampleName="ValidationStatus">
+<LivePreview componentName="multiline-input" exampleName="CharacterCount" />
 
 ## Validation status
 
@@ -85,8 +75,7 @@ Indicate a validation state by setting the `validationStatus` prop.
 - Use the error state when you want to alert the user to a critical issue related to the input. This issue, which will jeopardize completion of the task, usually requires action from the user to resolve the error.
 - Use the warning state when you need to alert the user of a noncritical issue that won’t prevent them from continuing with the task but may cause errors if they don't address it.
 
-</LivePreview>
-<LivePreview componentName="multiline-input" exampleName="Placeholder">
+<LivePreview componentName="multiline-input" exampleName="ValidationStatus" />
 
 ## Placeholder
 
@@ -100,8 +89,7 @@ Instead, use helper text beneath the input to provide instructions and reserve t
 
 You can find more information [in this W3 tutorial](https://www.w3.org/WAI/tutorials/forms/instructions/).
 
-</LivePreview>
-<LivePreview componentName="multiline-input" exampleName="StaticAdornments" >
+<LivePreview componentName="multiline-input" exampleName="Placeholder" />
 
 ## Static adornments
 
@@ -111,8 +99,7 @@ Start adornments typically describe the purpose of the field (e.g., a phone numb
 
 You can use Salt [text](../text) and [icons](/salt/foundations/iconography) to add Salt styled alphanumeric text or symbols as adornments. You sould wrap multiple start or end adornments in a parent container and pass them to the respective prop as a single fragment. Adornments can be dynamic, with their value depending on the current state.
 
-</LivePreview>
-<LivePreview componentName="multiline-input" exampleName="ButtonAdornment" >
+<LivePreview componentName="multiline-input" exampleName="StaticAdornments" />
 
 ## Button adornments
 
@@ -120,11 +107,10 @@ You can use a [button](../button) at the beginning or end of the multiline input
 
 If you've disabled the containing multiline input or set it to a read-only state, ensure your interactive buttons match that state.
 
-</LivePreview>
-<LivePreview componentName="multiline-input" exampleName="MaxHeight" >
+<LivePreview componentName="multiline-input" exampleName="ButtonAdornment" />
 
 ## Max rows
 
 To control the number of maximum rows visible, you can set a max height for the multiline input.
 
-</LivePreview>
+<LivePreview componentName="multiline-input" exampleName="MaxHeight" />

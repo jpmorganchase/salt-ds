@@ -11,7 +11,6 @@ data:
 ## Using the component
 
 <LivePreviewControls>
-<LivePreview componentName="calendar" exampleName="Single">
 
 ## Compose a standard Calendar
 
@@ -21,14 +20,16 @@ To use the `Calendar` component, compose it with the provided children
 `CalendarWeekHeader` - provides a header for `CalendarDateGrid` indicating the day of the week.
 `CalendarDateGrid` - provides a grid of buttons that represent the days from a calendar month.
 
-</LivePreview>
+<LivePreview componentName="calendar" exampleName="Single" />
+
 </LivePreviewControls>
 
 <LivePreviewControls>
-  <LivePreview componentName="calendar" exampleName="TodayButton">
-    ## Customising the Calendar Alternatively, you can compose it with your own
-    calendar controls or add additional content.
-  </LivePreview>
+  ## Customising the Calendar
+  
+  Alternatively, you can compose it with your own calendar controls or add additional content.
+
+  <LivePreview componentName="calendar" exampleName="TodayButton" /> 
 </LivePreviewControls>
 
 ### When to use

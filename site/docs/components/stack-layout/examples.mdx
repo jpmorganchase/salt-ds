@@ -8,25 +8,19 @@ data:
   $ref: ./#/data
 ---
 
-<LivePreview componentName="stack-layout" exampleName="Default" >
-
 ## Default
 
 By default, `StackLayout` displays items in a single column.
 
 Its items align to the start of the layout, with a `gap` between items of 3, which is a multiple of the [Salt base unit](/salt/foundations/spacing). The items contained within the layout determine its height and width.
 
-</LivePreview>
-
-<LivePreview componentName="stack-layout" exampleName="RowDirection" >
+<LivePreview componentName="stack-layout" exampleName="Default" />
 
 ## Row direction
 
 The `direction` prop defines the main axis to display items along. Set `direction` to `row` to display items in a horizontal direction along a single line.
 
-</LivePreview>
-
-<LivePreview componentName="stack-layout" exampleName="LayoutSeparators" >
+<LivePreview componentName="stack-layout" exampleName="RowDirection" />
 
 ## Layout separators
 
@@ -34,9 +28,7 @@ The component allows for `separators` between items. By default, the separators 
 
 The separator will span across the layout component if the `direction` is `column` or span the height if the `direction` is `row`. The Stack Layout `gap` applies to both sides of the separator.
 
-</LivePreview>
-
-<LivePreview componentName="stack-layout" exampleName="ResponsiveLayout" >
+<LivePreview componentName="stack-layout" exampleName="LayoutSeparators" />
 
 ## Responsive layout
 
@@ -50,9 +42,7 @@ A responsive prop takes either multiple values (one value per breakpoint) or a s
 direction={{ xs: "column", sm: "column", lg: "row", md: "row ", xl: "row" }}
 ```
 
-</LivePreview>
-
-<LivePreview componentName="stack-layout" exampleName="LayoutAlignment" >
+<LivePreview componentName="stack-layout" exampleName="ResponsiveLayout" />
 
 ## Layout alignment
 
@@ -60,17 +50,13 @@ Control the position of `StackLayout` and its items using the `align` prop.
 
 If there's additional space available around the layout (i.e., above or below the row or beside the column), use the `align` prop to define the position of items within that space.
 
-</LivePreview>
-
-<LivePreview componentName="stack-layout" exampleName="FlexItemPosition" >
+<LivePreview componentName="stack-layout" exampleName="LayoutAlignment" />
 
 ## `FlexItem` position
 
 Use the `FlexItem` `align` prop to set an alignment for a specific item in the layout. Use the `align` prop to change the item’s position along the cross axis of the layout (i.e., perpendicular to the `direction`–`row` or `column`).
 
-</LivePreview>
-
-<LivePreview componentName="stack-layout" exampleName="FlexItemSize" >
+<LivePreview componentName="stack-layout" exampleName="FlexItemPosition" />
 
 ## `FlexItem` size
 
@@ -82,4 +68,4 @@ The `FlexItem` `grow` prop enables specific items in the layout to grow and fill
 
 In contrast to the `grow` prop, the `shrink` prop makes a specific item as small as possible within the layout. By default, `shrink` is `1`. If you set an item to `2`, that item would attempt to take half as much space.
 
-</LivePreview>
+<LivePreview componentName="stack-layout" exampleName="FlexItemSize" />
