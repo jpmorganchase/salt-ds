@@ -13,10 +13,10 @@ describe("GIVEN a Banner", () => {
   it("THEN should render status", () => {
     cy.mount(<StatusesPrimary />);
 
-    cy.findByTestId("InfoSolidIcon").should("exist");
-    cy.findByTestId("SuccessTickIcon").should("exist");
-    cy.findByTestId("WarningSolidIcon").should("exist");
-    cy.findByTestId("ErrorSolidIcon").should("exist");
+    cy.findByRole("img", { name: "info" }).should("exist");
+    cy.findByRole("img", { name: "success" }).should("exist");
+    cy.findByRole("img", { name: "warning" }).should("exist");
+    cy.findByRole("img", { name: "error" }).should("exist");
   });
 
   xit("THEN should announce the contents of the Banner", () => {
