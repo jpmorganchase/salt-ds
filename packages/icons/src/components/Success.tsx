@@ -6,6 +6,7 @@ import { Icon, type IconProps } from "../icon";
 
 export type SuccessIconProps = IconProps;
 
+/** @deprecated - Use `CheckmarkIcon` instead. */
 export const SuccessIcon = forwardRef<SVGSVGElement, SuccessIconProps>(
   function SuccessIcon(props: SuccessIconProps, ref) {
     return (
