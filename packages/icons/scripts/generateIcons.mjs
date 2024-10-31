@@ -37,6 +37,38 @@ function pascalCase(str) {
 
   return capital.join("");
 }
+
+/**
+ * Turn `AppleBanana` into `Apple Banana`
+ * @param {string} str
+ **/
+function breakParcalCasingWithSpace(str) {
+  if (str) {
+    return str.charAt(0) + str.slice(1).replaceAll(/([A-Z])/g, " $1");
+  }
+  return str;
+}
+
+/**
+ * Trying to sort like Biome organize imports rules.
+ * e.g. `BuildReportIcon` should come before `BuildingIcon`.
+ *
+ * Intl.Collator numeric option works for `Forward5Icon` before `Forward10Icon`, like Biome do...
+ *
+ * https://github.com/biomejs/biome/blob/main/crates/biome_js_analyze/src/assists/source/organize_imports/util.rs
+ *
+ * @param {string} a
+ * @param {string} b
+ * */
+
+const collator = new Intl.Collator([], { numeric: true });
+function importSortPredicate(a, b) {
+  return collator.compare(
+    breakParcalCasingWithSpace(a),
+    breakParcalCasingWithSpace(b),
+  );
+}
+
 /** Generate all icon SVG as background image, in a single CSS */
 const generateCssAsBg = ({ basePath, cssOutputPath, fileArg }) => {
   // options is optional
@@ -219,11 +251,9 @@ const generateIconComponents = async ({
 const generateIndex = async ({ icons, componentsPath }) => {
   console.log("Generating index file");
 
-  const content = icons
-    .sort((a, b) => a.localeCompare(b))
-    .map((componentName) => {
-      return `export * from './${componentName}';`;
-    });
+  const content = icons.sort(importSortPredicate).map((componentName) => {
+    return `export * from './${componentName}';`;
+  });
 
   const joinedText = [GENERATED_WARNING_COMMENT, ...content].join("\n");
 
@@ -247,8 +277,8 @@ const generateIconAll = async ({ icons, allPath }) => {
   console.log(`Generating ${allPath}`);
 
   const sortedIcons = icons
-    .sort((a, b) => a.localeCompare(b))
     .map((componentName) => `${componentName}Icon,`)
+    .sort(importSortPredicate)
     .join("\n");
 
   const importsStatements = `import {\n${sortedIcons}\n} from "@salt-ds/icons";\n`;
@@ -278,8 +308,8 @@ const generateIconAllSite = async ({ icons, siteAllPath }) => {
   console.log(`Generating ${siteAllPath}`);
 
   const sortedIcons = icons
-    .sort((a, b) => a.localeCompare(b))
     .map((componentName) => `${componentName}Icon,`)
+    .sort(importSortPredicate)
     .join("\n");
 
   const importsStatements = `import {\n${sortedIcons}\n} from "@salt-ds/icons";\n`;
