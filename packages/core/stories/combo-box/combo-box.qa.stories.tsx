@@ -15,6 +15,8 @@ import { usStateExampleData } from "../assets/exampleData";
 export default {
   title: "Core/Combo Box/Combo Box QA",
   component: ComboBox,
+  // A test to see whether this can solve unstable snapshot around overflow
+  chromatic: { delay: 1000 },
 } as Meta<typeof ComboBox>;
 
 const groupedOptions = usStateExampleData.slice(0, 5).reduce(
