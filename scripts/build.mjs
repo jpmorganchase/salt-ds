@@ -8,6 +8,7 @@ import { rollup } from "rollup";
 import esbuild from "rollup-plugin-esbuild";
 import postcss from "rollup-plugin-postcss";
 import { makeTypings } from "./makeTypings.mjs";
+import { transformWorkspaceDeps } from "./transformWorkspaceDeps.mjs";
 import { distinct } from "./utils.mjs";
 
 const cwd = process.cwd();
@@ -99,43 +100,11 @@ await bundle.write({
 
 await bundle.close();
 
-const workspacePackages = Object.entries(packageJson.dependencies ?? {}).filter(
-  ([, version]) => version.match(/^workspace:/),
-);
-
-const workspaceDependencies = {};
-
-for (const [name, version] of workspacePackages) {
-  // strip workspace:
-  const strippedVersion = version.slice(10);
-
-  if (
-    strippedVersion !== "~" &&
-    strippedVersion !== "*" &&
-    strippedVersion !== "^"
-  ) {
-    workspaceDependencies[name] = strippedVersion;
-    continue;
-  }
-
-  const packageJson = (
-    await import(`${name}/package.json`, {
-      with: { type: "json" },
-    })
-  ).default;
-
-  workspaceDependencies[name] =
-    `${strippedVersion !== "*" ? strippedVersion : ""}${packageJson.version}`;
-}
-
 await fs.writeJSON(
   path.join(outputDir, "package.json"),
   {
     ...packageJson,
-    dependencies: {
-      ...packageJson.dependencies,
-      ...workspaceDependencies,
-    },
+    dependencies: await transformWorkspaceDeps(packageJson.dependencies),
     main: "dist-cjs/index.js",
     module: "dist-es/index.js",
     typings: "dist-types/index.d.ts",

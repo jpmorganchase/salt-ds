@@ -3,8 +3,9 @@ import { argv } from "node:process";
 import { deleteSync } from "del";
 import esbuild from "esbuild";
 import fs from "fs-extra";
+import { transformWorkspaceDeps } from "../../../scripts/transformWorkspaceDeps.mjs";
 
-const FILES_TO_COPY = ["README.md", "LICENSE", "CHANGELOG.md", "package.json"];
+const FILES_TO_COPY = ["README.md", "LICENSE", "CHANGELOG.md"];
 
 const cwd = process.cwd();
 const packageJson = (
@@ -38,6 +39,17 @@ if (argv.includes("--watch")) {
   await context.rebuild();
   await context.dispose();
 }
+
+await fs.writeJSON(
+  path.join(buildFolder, "package.json"),
+  {
+    ...packageJson,
+    peerDependencies: await transformWorkspaceDeps(
+      packageJson.peerDependencies,
+    ),
+  },
+  { spaces: 2 },
+);
 
 for (const file of FILES_TO_COPY) {
   const from = path.join(cwd, file);
