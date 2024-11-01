@@ -46,7 +46,7 @@ function pascalCase(str) {
  * Turn `AppleBanana` into `Apple Banana`
  * @param {string} str
  **/
-function breakParcalCasingWithSpace(str) {
+function breakPascalCasingWithSpace(str) {
   if (str) {
     return str.charAt(0) + str.slice(1).replaceAll(/([A-Z])/g, " $1");
   }
@@ -68,8 +68,8 @@ function breakParcalCasingWithSpace(str) {
 const collator = new Intl.Collator([], { numeric: true });
 function importSortPredicate(a, b) {
   return collator.compare(
-    breakParcalCasingWithSpace(a),
-    breakParcalCasingWithSpace(b),
+    breakPascalCasingWithSpace(a),
+    breakPascalCasingWithSpace(b),
   );
 }
 
