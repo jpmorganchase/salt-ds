@@ -16,14 +16,14 @@ figma.connect(
         Left: "left",
         Right: "right",
       }),
-      showIcon: figma.boolean("Show icon"),
+      hideIcon: figma.boolean("Show icon", { true: false, false: true }),
     },
     example: (props) => (
       <Tooltip
         placement={props.placement}
         content={props.content}
         status="info"
-        hideIcon={!props.showIcon}
+        hideIcon={props.hideIcon}
       >
         Your Trigger Component
       </Tooltip>
@@ -44,14 +44,14 @@ figma.connect(
         Left: "left",
         Right: "right",
       }),
-      showIcon: figma.boolean("Show icon"),
+      hideIcon: figma.boolean("Show icon", { true: false, false: true }),
     },
     example: (props) => (
       <Tooltip
         placement={props.placement}
         content={props.content}
         status="success"
-        hideIcon={!props.showIcon}
+        hideIcon={props.hideIcon}
       >
         Your Trigger Component
       </Tooltip>
@@ -73,14 +73,14 @@ figma.connect(
         Left: "left",
         Right: "right",
       }),
-      showIcon: figma.boolean("Show icon"),
+      hideIcon: figma.boolean("Show icon", { true: false, false: true }),
     },
     example: (props) => (
       <Tooltip
         placement={props.placement}
         content={props.content}
         status="warning"
-        hideIcon={!props.showIcon}
+        hideIcon={props.hideIcon}
       >
         Your Trigger Component
       </Tooltip>
@@ -102,14 +102,14 @@ figma.connect(
         Left: "left",
         Right: "right",
       }),
-      showIcon: figma.boolean("Show icon"),
+      hideIcon: figma.boolean("Show icon", { true: false, false: true }),
     },
     example: (props) => (
       <Tooltip
         placement={props.placement}
         content={props.content}
         status="error"
-        hideIcon={!props.showIcon}
+        hideIcon={props.hideIcon}
       >
         Your Trigger Component
       </Tooltip>
@@ -131,14 +131,9 @@ figma.connect(
         Left: "left",
         Right: "right",
       }),
-      showIcon: figma.boolean("Show icon"),
     },
     example: (props) => (
-      <Tooltip
-        placement={props.placement}
-        content={props.content}
-        hideIcon={!props.showIcon}
-      >
+      <Tooltip placement={props.placement} content={props.content}>
         Your Trigger Component
       </Tooltip>
     ),
