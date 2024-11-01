@@ -5,6 +5,7 @@
       "packages/core/figma-src/**/*.{tsx,jsx}",
       "packages/icons/src/**/*.{tsx,jsx}"
     ],
+    "exclude": ["**/__tests__/*.{tsx,jsx}"],
     "importPaths": {
       "packages/core/src/*": "@salt-ds/core",
       "packages/icons/*": "@salt-ds/icons"

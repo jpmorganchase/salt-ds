@@ -1,6 +1,5 @@
-import React from "react";
-import { Button } from "../src/button/Button";
 import figma from "@figma/code-connect";
+import { Button } from "../src/button/Button";
 
 // Neutral - 5594:10494
 figma.connect(
