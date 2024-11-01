@@ -37,11 +37,10 @@ Salt is under active development. At this stage, we don't recommend theming unle
 
 For an overview of theming, refer to our [theming documentation](/salt/themes/index).
 
-
-## Disabled state 
+## Disabled state
 
 A component in a disabled state isn't considered relevant to the user’s workflow, as the user doesn’t need to know the component is there. It doesn't need to meet minimum contrast requirements, and a progressive reveal might be a better UI pattern. While buttons can use the `focusableWhenDisabled` prop, the system doesn't support status messages for disabled components. If a component is relevant, consider using a read-only state instead.
 
-## Read-only state 
+## Read-only state
 
 A component in a read-only state is considered relevant to the user’s workflow, as users need to know it’s there. It must meet accessibility requirements, including minimum contrast. The system supports status messages for read-only components, as RAG states may require visibility for recognition and further action. If not relevant, a disabled state may be more appropriate.
