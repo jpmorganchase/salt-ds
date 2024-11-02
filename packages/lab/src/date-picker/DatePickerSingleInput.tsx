@@ -1,4 +1,4 @@
-import { Button, makePrefixer, useControlled, useForkRef } from "@salt-ds/core";
+import { Button, makePrefixer, useControlled } from "@salt-ds/core";
 import { CalendarIcon } from "@salt-ds/icons";
 import { clsx } from "clsx";
 import {
@@ -83,6 +83,7 @@ export const DatePickerSingleInput = forwardRef<
       validate,
       defaultValue,
       onDateValueChange,
+      onKeyDown,
       ...rest
     } = props;
 
@@ -91,14 +92,10 @@ export const DatePickerSingleInput = forwardRef<
       helpers: { select },
     } = useDatePickerContext<TDate>({ selectionVariant: "single" });
     const {
-      state: { open, floatingUIResult },
-      helpers: { getReferenceProps, setOpen },
+      state: { open },
+      helpers: { setOpen },
     } = useDatePickerOverlay();
 
-    const inputRef = useForkRef<HTMLDivElement>(
-      ref,
-      floatingUIResult?.reference,
-    );
     const previousValue = useRef<typeof valueProp>();
 
     const [value, setValue] = useControlled({
@@ -128,13 +125,26 @@ export const DatePickerSingleInput = forwardRef<
             );
         select(validatedSelection);
       },
-      [select],
+      [select, validate],
     );
 
-    const handleDateValueChange = (newDateValue: string) => {
-      setValue(newDateValue);
-      onDateValueChange?.(newDateValue);
-    };
+    const handleDateValueChange = useCallback(
+      (newDateValue: string) => {
+        setValue(newDateValue);
+        onDateValueChange?.(newDateValue);
+      },
+      [onDateValueChange],
+    );
+
+    const handleOnKeyDown = useCallback(
+      (event: KeyboardEvent<HTMLInputElement>) => {
+        if (event.key === "ArrowDown") {
+          setOpen(true);
+          onKeyDown?.(event);
+        }
+      },
+      [onKeyDown],
+    );
 
     // biome-ignore lint/correctness/useExhaustiveDependencies: should run when open changes and not selected date or value
     useEffect(() => {
@@ -154,9 +164,9 @@ export const DatePickerSingleInput = forwardRef<
       <DateInputSingle
         value={value || ""}
         className={clsx(withBaseName(), className)}
-        ref={inputRef}
         date={selectedDate || null}
         readOnly={readOnly}
+        ref={ref}
         onDateChange={handleDateChange}
         onDateValueChange={handleDateValueChange}
         endAdornment={
@@ -170,14 +180,8 @@ export const DatePickerSingleInput = forwardRef<
             <CalendarIcon />
           </Button>
         }
-        {...getReferenceProps({
-          ...rest,
-          onKeyDown: (event: KeyboardEvent<HTMLInputElement>) => {
-            if (event.key === "ArrowDown") {
-              setOpen(true);
-            }
-          },
-        })}
+        onKeyDown={handleOnKeyDown}
+        {...rest}
       />
     );
   },
