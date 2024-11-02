@@ -1,10 +1,4 @@
-import {
-  Button,
-  makePrefixer,
-  useControlled,
-  useForkRef,
-  useIcon,
-} from "@salt-ds/core";
+import { Button, makePrefixer, useControlled, useIcon } from "@salt-ds/core";
 import { clsx } from "clsx";
 import {
   type KeyboardEvent,
@@ -119,11 +113,10 @@ export const DatePickerRangeInput = forwardRef(function DatePickerRangeInput<
     helpers: { select },
   } = useDatePickerContext<TDate>({ selectionVariant: "range" });
   const {
-    state: { open, floatingUIResult },
-    helpers: { getReferenceProps, setOpen },
+    state: { open },
+    helpers: { setOpen },
   } = useDatePickerOverlay();
 
-  const inputRef = useForkRef<HTMLDivElement>(ref, floatingUIResult?.reference);
   const previousValue = useRef<typeof valueProp>();
 
   const [value, setValue] = useControlled({
@@ -151,10 +144,13 @@ export const DatePickerRangeInput = forwardRef(function DatePickerRangeInput<
     [select, minDate, maxDate],
   );
 
-  const handleDateValueChange = (newDateValue: DateInputRangeValue) => {
-    setValue(newDateValue);
-    onDateValueChange?.(newDateValue);
-  };
+  const handleDateValueChange = useCallback(
+    (newDateValue: DateInputRangeValue) => {
+      setValue(newDateValue);
+      onDateValueChange?.(newDateValue);
+    },
+    [onDateValueChange],
+  );
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: should run when open changes and not selected date or value
   useEffect(() => {
@@ -197,11 +193,11 @@ export const DatePickerRangeInput = forwardRef(function DatePickerRangeInput<
     <DateInputRange
       value={value || { startDate: "", endDate: "" }}
       className={clsx(withBaseName(), className)}
-      ref={inputRef}
       date={selectedDate || null}
-      startInputProps={getReferenceProps(startInputProps)}
-      endInputProps={getReferenceProps(endInputProps)}
+      startInputProps={startInputProps}
+      endInputProps={endInputProps}
       readOnly={readOnly}
+      ref={ref}
       onDateChange={handleDateChange}
       onDateValueChange={handleDateValueChange}
       onChange={onChange}

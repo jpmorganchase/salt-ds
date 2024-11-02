@@ -27,6 +27,7 @@ import {
   type DatePickerSinglePanelProps,
   type DatePickerSingleProps,
   type DateRangeSelection,
+  DatePickerTrigger,
   LocalizationProvider,
   type LocalizationProviderProps,
   type SingleDatePickerState,
@@ -84,7 +85,9 @@ const DatePickerSingleTemplate: StoryFn<
       {...args}
       onSelectionChange={handleSelectionChange}
     >
-      <DatePickerSingleInput />
+      <DatePickerTrigger>
+        <DatePickerSingleInput />
+      </DatePickerTrigger>
       <DatePickerOverlay>
         <DatePickerSinglePanel />
       </DatePickerOverlay>
@@ -140,7 +143,9 @@ const DatePickerRangeTemplate: StoryFn<
       {...args}
       onSelectionChange={handleSelectionChange}
     >
-      <DatePickerRangeInput />
+      <DatePickerTrigger>
+        <DatePickerRangeInput />
+      </DatePickerTrigger>
       <DatePickerOverlay>
         <DatePickerRangePanel />
       </DatePickerOverlay>
@@ -192,7 +197,9 @@ export const SingleControlled: StoryFn<
       onSelectionChange={handleSelectionChange}
       selectedDate={selectedDate}
     >
+      <DatePickerTrigger>
       <DatePickerSingleInput />
+      </DatePickerTrigger>
       <DatePickerOverlay>
         <DatePickerSinglePanel />
       </DatePickerOverlay>
@@ -257,7 +264,9 @@ export const RangeControlled: StoryFn<
       onSelectionChange={handleSelectionChange}
       selectedDate={selectedDate}
     >
-      <DatePickerRangeInput />
+      <DatePickerTrigger>
+        <DatePickerRangeInput />
+      </DatePickerTrigger>
       <DatePickerOverlay>
         <DatePickerRangePanel />
       </DatePickerOverlay>
@@ -319,7 +328,9 @@ export const SingleWithMinMaxDate: StoryFn<
         onSelectionChange={handleSelectionChange}
         onOpen={setOpen}
       >
+        <DatePickerTrigger>
         <DatePickerSingleInput />
+        </DatePickerTrigger>
         <DatePickerOverlay>
           <DatePickerSinglePanel
             defaultVisibleMonth={defaultVisibleMonth}
@@ -414,7 +425,9 @@ export const RangeWithMinMaxDate: StoryFn<
         onSelectionChange={handleSelectionChange}
         onOpen={setOpen}
       >
-        <DatePickerRangeInput />
+        <DatePickerTrigger>
+          <DatePickerRangeInput />
+        </DatePickerTrigger>
         <DatePickerOverlay>
           <DatePickerRangePanel
             defaultStartVisibleMonth={defaultStartVisibleMonth}
@@ -474,7 +487,9 @@ export const SingleWithInitialError: StoryFn<
         onSelectionChange={handleSelectionChange}
         onOpen={setOpen}
       >
-        <DatePickerSingleInput defaultValue="bad date" />
+        <DatePickerTrigger>
+          <DatePickerSingleInput defaultValue="bad date" />
+        </DatePickerTrigger>
         <DatePickerOverlay>
           <DatePickerSinglePanel helperText={helperText} />
         </DatePickerOverlay>
@@ -563,9 +578,11 @@ export const RangeWithInitialError: StoryFn<
         onSelectionChange={handleSelectionChange}
         onOpen={setOpen}
       >
-        <DatePickerRangeInput
-          defaultValue={{ startDate: "09 Jun 2024", endDate: "bad date" }}
-        />
+        <DatePickerTrigger>
+          <DatePickerRangeInput
+            defaultValue={{ startDate: "09 Jun 2024", endDate: "bad date" }}
+          />
+        </DatePickerTrigger>
         <DatePickerOverlay>
           <DatePickerRangePanel
             helperText={helperText}
@@ -624,7 +641,9 @@ export const SingleWithFormField: StoryFn<
         onSelectionChange={handleSelectionChange}
         onOpen={setOpen}
       >
-        <DatePickerSingleInput />
+        <DatePickerTrigger>
+          <DatePickerSingleInput />
+        </DatePickerTrigger>
         <DatePickerOverlay>
           <DatePickerSinglePanel helperText={helperText} />
         </DatePickerOverlay>
@@ -707,7 +726,9 @@ export const RangeWithFormField: StoryFn<
         onSelectionChange={handleSelectionChange}
         onOpen={setOpen}
       >
-        <DatePickerRangeInput />
+        <DatePickerTrigger>
+          <DatePickerRangeInput />
+        </DatePickerTrigger>
         <DatePickerOverlay>
           <DatePickerRangePanel helperText={helperText} />
         </DatePickerOverlay>
@@ -763,7 +784,9 @@ export const SingleWithCustomPanel: StoryFn<
         onSelectionChange={handleSelectionChange}
         onOpen={setOpen}
       >
-        <DatePickerSingleInput />
+        <DatePickerTrigger>
+          <DatePickerSingleInput  />
+        </DatePickerTrigger>
         <DatePickerOverlay>
           <CustomDatePickerPanel
             selectionVariant="single"
@@ -849,7 +872,9 @@ export const RangeWithCustomPanel: StoryFn<
         onSelectionChange={handleSelectionChange}
         onOpen={setOpen}
       >
-        <DatePickerRangeInput />
+        <DatePickerTrigger>
+          <DatePickerRangeInput />
+        </DatePickerTrigger>
         <DatePickerOverlay>
           <CustomDatePickerPanel
             selectionVariant="range"
@@ -933,7 +958,9 @@ export const SingleWithTodayButton: StoryFn<
         onSelectionChange={handleSelectionChange}
         onOpen={setOpen}
       >
-        <DatePickerSingleInput />
+        <DatePickerTrigger>
+          <DatePickerSingleInput />
+        </DatePickerTrigger>
         <DatePickerOverlay>
           <FlexLayout gap={0} direction="column">
             <FlexItem>
@@ -1069,7 +1096,9 @@ export const SingleWithConfirmation: StoryFn<
         onOpen={handleOpen}
         selectedDate={selectedDate}
       >
-        <DatePickerSingleInput />
+        <DatePickerTrigger>
+          <DatePickerSingleInput />
+        </DatePickerTrigger>
         <DatePickerOverlay>
           <FlexLayout gap={0} direction="column">
             <FlexItem>
@@ -1223,7 +1252,9 @@ export const RangeWithConfirmation: StoryFn<
         onOpen={handleOpen}
         selectedDate={selectedDate}
       >
-        <DatePickerRangeInput />
+        <DatePickerTrigger>
+          <DatePickerRangeInput />
+        </DatePickerTrigger>
         <DatePickerOverlay>
           <FlexLayout gap={0} direction="column">
             <FlexItem>
@@ -1399,7 +1430,9 @@ export const SingleWithCustomParser: StoryFn<
           onSelectionChange={handleSelectionChange}
           onOpen={setOpen}
         >
-          <DatePickerSingleInput />
+          <DatePickerTrigger>
+            <DatePickerSingleInput />
+          </DatePickerTrigger>
           <DatePickerOverlay>
             <DatePickerSinglePanel helperText={helperText} />
           </DatePickerOverlay>
@@ -1513,7 +1546,9 @@ export const SingleWithCustomValidation: StoryFn<
         onSelectionChange={handleSelectionChange}
         onOpen={setOpen}
       >
-        <DatePickerSingleInput validate={validateAndCustomizeError} />
+        <DatePickerTrigger>
+          <DatePickerSingleInput validate={validateAndCustomizeError} />
+        </DatePickerTrigger>
         <DatePickerOverlay>
           <DatePickerSinglePanel
             helperText={helperText}
@@ -1577,7 +1612,9 @@ export const SingleWithLocaleEsES: StoryFn<
         onSelectionChange={handleSelectionChange}
         onOpen={setOpen}
       >
+        <DatePickerTrigger>
         <DatePickerSingleInput />
+        </DatePickerTrigger>
         <DatePickerOverlay>
           <DatePickerSinglePanel helperText={helperText} />
         </DatePickerOverlay>
@@ -1664,7 +1701,9 @@ export const RangeWithLocaleEsES: StoryFn<
         onSelectionChange={handleSelectionChange}
         onOpen={setOpen}
       >
-        <DatePickerRangeInput />
+        <DatePickerTrigger>
+          <DatePickerRangeInput />
+        </DatePickerTrigger>
         <DatePickerOverlay>
           <DatePickerRangePanel helperText={helperText} />
         </DatePickerOverlay>
@@ -1734,10 +1773,11 @@ export const SingleWithLocaleZhCN: StoryFn<
         onSelectionChange={handleSelectionChange}
         onOpen={setOpen}
       >
-        <DatePickerSingleInput
-          format={"DD MMM YYYY"}
-          locale={isDateFns ? dateFnsEnUs : "en"}
-        />
+        <DatePickerTrigger>
+          <DatePickerSingleInput           format={"DD MMM YYYY"}
+                                           locale={isDateFns ? dateFnsEnUs : "en"}
+          />
+        </DatePickerTrigger>
         <DatePickerOverlay>
           <DatePickerSinglePanel
             helperText={helperText}
@@ -1797,7 +1837,9 @@ export const SingleBordered: StoryFn<
         onSelectionChange={handleSelectionChange}
         onOpen={setOpen}
       >
+        <DatePickerTrigger>
         <DatePickerSingleInput bordered />
+        </DatePickerTrigger>
         <DatePickerOverlay>
           <DatePickerSinglePanel
             helperText={helperText}
@@ -1885,7 +1927,9 @@ export const RangeBordered: StoryFn<
         onSelectionChange={handleSelectionChange}
         onOpen={setOpen}
       >
-        <DatePickerRangeInput bordered />
+        <DatePickerTrigger>
+          <DatePickerRangeInput bordered />
+        </DatePickerTrigger>
         <DatePickerOverlay>
           <DatePickerRangePanel
             helperText={helperText}
@@ -1957,6 +2001,7 @@ const DatePickerTimeInput: React.FC<DatePickerTimeInputProps> = ({
 
   return (
     <>
+      <DatePickerRangeInput bordered />
       <input
         aria-label="start date time"
         type="time"
@@ -1977,7 +2022,6 @@ const DatePickerTimeInput: React.FC<DatePickerTimeInputProps> = ({
         }
         onChange={handleEndTimeChange}
       />
-      <DatePickerRangeInput bordered />
     </>
   );
 };
@@ -2019,7 +2063,7 @@ export const WithExperimentalTime: StoryFn<
         startDate,
         endDate,
       };
-      newSelectedDate = addTimeToDate(newSelectedDate);
+      newSelectedDate = addTimeToDate(selectedTime, newSelectedDate);
       console.log(
         `StartDate: ${newSelectedDate?.startDate ? dateAdapter.format(newSelectedDate.startDate, "DD MMM YYYY HH:mm:ss") : newSelectedDate?.startDate}, EndDate: ${newSelectedDate?.endDate ? dateAdapter.format(newSelectedDate.endDate, "DD MMM YYYY HH:mm:ss") : newSelectedDate?.endDate}`,
       );
@@ -2055,7 +2099,7 @@ export const WithExperimentalTime: StoryFn<
     (newSelectedTime: typeof selectedTime) => {
       setSelectedTime(newSelectedTime);
       if (selectedDate) {
-        const newSelectedDate = addTimeToDate(selectedDate);
+        const newSelectedDate = addTimeToDate(newSelectedTime, selectedDate);
         setSelectedDate(newSelectedDate);
         console.log(
           `StartDate: ${newSelectedDate?.startDate ? dateAdapter.format(newSelectedDate.startDate, "DD MMM YYYY HH:mm:ss") : newSelectedDate?.startDate}, EndDate: ${newSelectedDate?.endDate ? dateAdapter.format(newSelectedDate.endDate, "DD MMM YYYY HH:mm:ss") : newSelectedDate?.endDate}`,
@@ -2065,8 +2109,11 @@ export const WithExperimentalTime: StoryFn<
     [selectedDate],
   );
 
-  function addTimeToDate(date: DateRangeSelection<DateFrameworkType>) {
-    const { startTime, endTime } = selectedTime;
+  function addTimeToDate(
+    time: typeof selectedTime,
+    date: DateRangeSelection<DateFrameworkType>,
+  ) {
+    const { startTime, endTime } = time;
     if (date?.startDate && startTime) {
       date.startDate = dateAdapter.set(date.startDate, {
         hour: startTime.hour,
@@ -2112,10 +2159,12 @@ export const WithExperimentalTime: StoryFn<
       onCancel={handleCancel}
       onSelectionChange={handleDateChange}
     >
-      <DatePickerTimeInput
-        time={selectedTime}
-        onTimeChange={handleTimeChange}
-      />
+      <DatePickerTrigger>
+        <DatePickerTimeInput
+          time={selectedTime}
+          onTimeChange={handleTimeChange}
+        />
+      </DatePickerTrigger>
       <DatePickerOverlay>
         <FlexLayout gap={0} direction="column">
           <FlexItem>
