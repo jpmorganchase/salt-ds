@@ -8,6 +8,48 @@ data:
   $ref: ./#/data
 ---
 
+## Known accessibility issue
+
+**Browser/Assistive Technology Combination Issue**: We have identified an accessibility issue when using Safari and VoiceOver that affects the usability of combo boxes. This issue is not related to our design system but is a known limitation in the interaction between these specific technologies and can be confirmed using the APG example on the w3c (Who created WCAG) which is the industry standard on accessibility.
+
+**Issue Details**:
+
+- Affected Components: Combobox (role=listbox)
+- OS: MacOS 14.4.1+
+- Browser: Safari v15+
+- Assistive Technology: VoiceOver
+- Issue Confirmed on: 10/8/24
+- Problem: Focus is not managed correctly when using VoiceOver to select options from the combo box drop-down in Safari
+
+**User Impact**:
+VoiceOver users using Safari may experience difficulties when interacting with combo boxes across various websites and applications, not limited to those using our design system.
+
+**Steps To Reproduce Using APG**:
+
+1. Go to [APG Select-Only Combobox Example](https://www.w3.org/WAI/ARIA/apg/patterns/combobox/examples/combobox-select-only/) using Safari
+1. Turn on VoiceOver
+1. Navigate to the example
+1. Open the combo box using space/enter
+1. Try to navigate and select an option.
+
+Recommendations:
+
+- Use Chrome or Firefox when possible
+- Otherwise here is a workaround:
+  1. Navigate to the example
+  1. Open the combo box using space/enter
+  1. VO key and right arrow to put VO focus on the dropdown
+  1. VO key+shift and down arrow to go into the dropdown
+  1. You should be able to navigate using right and left arrows with feedback
+  1. VO key+space to make a selection.
+
+Resources:
+https://bugs.webkit.org/show_bug.cgi?id=231724
+https://discussions.apple.com/thread/255614236?sortBy=rank
+https://github.com/w3c/aria-practices/issues/2060
+
+We will continue to monitor this situation and update this note when the issue has been resolved.
+
 ## Keyboard interactions
 
 <KeyboardControls>
