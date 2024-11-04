@@ -15,7 +15,11 @@ export const InfoToast = () => {
         </Text>
         <div>A new version of this file is available with 37 updates.</div>
       </ToastContent>
-      <Button aria-label="Dismiss" appearance="transparent" onClick={closeToast}>
+      <Button
+        aria-label="Dismiss"
+        appearance="transparent"
+        onClick={closeToast}
+      >
         <CloseIcon aria-hidden />
       </Button>
     </Toast>
@@ -97,7 +101,11 @@ export const SuccessToast = () => {
           The project file has been successfully uploaded to the shared drive.
         </div>
       </ToastContent>
-      <Button aria-label="Dismiss" appearance="transparent" onClick={closeToast}>
+      <Button
+        aria-label="Dismiss"
+        appearance="transparent"
+        onClick={closeToast}
+      >
         <CloseIcon aria-hidden />
       </Button>
     </Toast>

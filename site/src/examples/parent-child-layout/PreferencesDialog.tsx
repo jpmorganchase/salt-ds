@@ -198,7 +198,11 @@ export const PreferencesDialog = () => {
     <FlexLayout direction="column" className={styles.childView}>
       <FlexLayout gap={1}>
         {visibleView === "child" && collapsed && (
-          <Button onClick={showParent} appearance="transparent" aria-label="Back">
+          <Button
+            onClick={showParent}
+            appearance="transparent"
+            aria-label="Back"
+          >
             <ChevronLeftIcon />
           </Button>
         )}
