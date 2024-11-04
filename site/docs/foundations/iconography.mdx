@@ -26,8 +26,54 @@ Outline icons have a lower emphasis on non-imperative items and are more recogni
 
 <IconPreview />
 
+## Scaling icons with size icon
+
+Icon size will vary based on use case and system requirements. Standard sizing ensures components maintain a consistent spatial relationship with surrounding elements.
+
+<ImageSwitcher
+  images={[
+    { src: "/img/foundations/scale-icon.svg", alt: "" },
+    { src: "/img/foundations/scale-icon-annotated.svg", alt: "" },
+  ]}
+  label="Show multipliers"
+/>
+
+| Size token         | Multiplier | High density (px) | Medium | Low | Touch |
+| ------------------ | ---------- | ----------------- | ------ | --- | ----- |
+| `--salt-size-icon` | x1         | 12\*              | 12     | 14  | 16    |
+|                    | x2         | 20                | 24     | 28  | 32    |
+|                    | x3         | 30                | 36     | 42  | 48    |
+|                    | x4         | 40                | 48     | 56  | 64    |
+
+\* Icons have a minimum size set at 12px and should not be displayed any smaller. For high density this means the default size of an icon is 12px, but the rest of the scale grows based on small base dimension.
+
 ## Country symbols
 
 Country symbols can be considered icons that are visually representative of a country or inter-governmental organisation. All flags are available in both circle and rectangle shapes.
+
+## All country symbols 
+
+```jsx
+import { BE } from '@salt-ds/countries';
+```
+
+## Scaling country symbols with size base
+
+Country symbols have a default size across all four densities, changed in multiples of the base size. 
+
+<ImageSwitcher
+  images={[
+    { src: "/img/foundations/scale-country.svg", alt: "" },
+    { src: "/img/foundations/scale-country-annotated.svg", alt: "" },
+  ]}
+  label="Show multipliers"
+/>
+
+| Size token         | Multiplier | High density (px) | Medium | Low | Touch |
+| ------------------ | ---------- | ----------------- | ------ | --- | ----- |
+| `--salt-size-base` | x1         | 20                | 28     | 36  | 44    |
+|                    | x2         | 40                | 56     | 72  | 88    |
+|                    | x3         | 60                | 84     | 108 | 132   |
+|                    | x4         | 80                | 112    | 144 | 176   |
 
 :fragment{src="./fragments/feedback.mdx"}
