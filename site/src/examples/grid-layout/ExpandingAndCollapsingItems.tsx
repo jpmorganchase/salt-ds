@@ -31,7 +31,7 @@ export const ExpandingAndCollapsingItems = (): ReactElement => {
             shouldAnimate && !expanded,
         })}
       >
-        <Button variant="cta" onClick={onExpand}>
+        <Button sentiment="accented" onClick={onExpand}>
           {expanded ? <MinimizeIcon /> : <ExpandIcon />}
         </Button>
       </GridItem>

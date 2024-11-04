@@ -39,7 +39,7 @@ export const Placement = (): ReactElement => {
             fraud.
           </BannerContent>
           <BannerActions>
-            <Button aria-label="refresh" variant="secondary">
+            <Button aria-label="refresh" appearance="transparent">
               <CloseIcon />
             </Button>
           </BannerActions>

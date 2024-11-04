@@ -40,7 +40,7 @@ export const Info = (): ReactElement => {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Close</Button>
-          <Button variant="cta" onClick={handleClose}>
+          <Button sentiment="accented" onClick={handleClose}>
             See updates
           </Button>
         </DialogActions>

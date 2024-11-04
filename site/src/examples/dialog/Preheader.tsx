@@ -46,7 +46,7 @@ export const Preheader = (): ReactElement => {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button variant="cta" onClick={handleClose}>
+          <Button sentiment="accented" onClick={handleClose}>
             Subscribe
           </Button>
         </DialogActions>

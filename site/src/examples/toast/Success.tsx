@@ -12,7 +12,7 @@ export const Success = (): ReactElement => (
         The project file has been successfully uploaded to the shared drive.
       </div>
     </ToastContent>
-    <Button variant="secondary" aria-label="Dismiss">
+    <Button appearance="transparent" aria-label="Dismiss">
       <CloseIcon aria-hidden />
     </Button>
   </Toast>

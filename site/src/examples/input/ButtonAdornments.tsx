@@ -20,7 +20,7 @@ export const ButtonAdornments = (): ReactElement => (
     />
     <Input
       endAdornment={
-        <Button variant="cta">
+        <Button sentiment="accented">
           <RefreshIcon />
         </Button>
       }
@@ -32,7 +32,7 @@ export const ButtonAdornments = (): ReactElement => (
           <Button>
             <SendIcon />
           </Button>
-          <Button variant="cta">
+          <Button sentiment="accented">
             <FlagIcon />
           </Button>
         </>
@@ -42,10 +42,10 @@ export const ButtonAdornments = (): ReactElement => (
     <Input
       endAdornment={
         <>
-          <Button variant="secondary">
+          <Button appearance="transparent">
             <CloseIcon />
           </Button>
-          <Button variant="cta">
+          <Button sentiment="accented">
             <FlagIcon />
           </Button>
         </>
@@ -59,10 +59,10 @@ export const ButtonAdornments = (): ReactElement => (
           <Button disabled>
             <SendIcon />
           </Button>
-          <Button disabled variant="secondary">
+          <Button disabled appearance="transparent">
             <CloseIcon />
           </Button>
-          <Button disabled variant="cta">
+          <Button disabled sentiment="accented">
             <FlagIcon />
           </Button>
         </>
@@ -76,10 +76,10 @@ export const ButtonAdornments = (): ReactElement => (
           <Button disabled>
             <SendIcon />
           </Button>
-          <Button disabled variant="secondary">
+          <Button disabled appearance="transparent">
             <CloseIcon />
           </Button>
-          <Button disabled variant="cta">
+          <Button disabled sentiment="accented">
             <FlagIcon />
           </Button>
         </>
@@ -93,13 +93,13 @@ export const ButtonAdornments = (): ReactElement => (
           <Button disabled>
             <CloseIcon />
           </Button>
-          <Button disabled variant="secondary">
+          <Button disabled appearance="transparent">
             <FlagIcon />
           </Button>
         </>
       }
       endAdornment={
-        <Button variant="cta" disabled>
+        <Button sentiment="accented" disabled>
           <SendIcon />
         </Button>
       }

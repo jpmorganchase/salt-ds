@@ -100,7 +100,7 @@ export const WithChild = (): ReactElement => {
       <Button
         style={{ width: "fit-content", alignSelf: "center" }}
         onClick={handleClick}
-        variant="cta"
+        sentiment="accented"
       >
         {open ? "Hide scrim" : "Show scrim"}
       </Button>

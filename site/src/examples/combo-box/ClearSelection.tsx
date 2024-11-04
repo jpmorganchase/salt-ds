@@ -47,7 +47,7 @@ export const ClearSelection = (): ReactElement => {
           <Button
             onClick={handleClear}
             aria-label="Clear value"
-            variant="secondary"
+            appearance="transparent"
           >
             <CloseIcon aria-hidden />
           </Button>

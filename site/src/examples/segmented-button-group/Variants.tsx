@@ -17,24 +17,24 @@ export const Variants = (): ReactElement => (
       </Button>
     </SegmentedButtonGroup>
     <SegmentedButtonGroup>
-      <Button variant="secondary">
+      <Button appearance="transparent">
         <MessageIcon /> Message
       </Button>
-      <Button variant="secondary">
+      <Button appearance="transparent">
         <ChatGroupIcon /> Chat
       </Button>
-      <Button variant="secondary">
+      <Button appearance="transparent">
         <CallIcon /> Call
       </Button>
     </SegmentedButtonGroup>
     <SegmentedButtonGroup>
-      <Button variant="cta">
+      <Button sentiment="accented">
         <MessageIcon /> Message
       </Button>
-      <Button variant="cta">
+      <Button sentiment="accented">
         <ChatGroupIcon /> Chat
       </Button>
-      <Button variant="cta">
+      <Button sentiment="accented">
         <CallIcon /> Call
       </Button>
     </SegmentedButtonGroup>
