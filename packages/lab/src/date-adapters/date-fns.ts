@@ -1,6 +1,7 @@
 import {
   type Locale,
   add as addDateFns,
+  addDays as addDaysFns,
   addMilliseconds as addMillisecondsDateFns,
   differenceInMilliseconds,
   endOfDay,
@@ -462,21 +463,15 @@ export class AdapterDateFns implements SaltDateAdapter<Date, Locale> {
   public getDayOfWeekName(
     dow: number,
     format: "long" | "short" | "narrow",
-    locale: Locale = enUS,
+    locale: Locale,
   ): string {
-    // Create a date representing the first day of the current week
-    const today = new Date();
-    const currentDay = today.getDay();
-    const diff = dow - currentDay;
-    const targetDate = new Date(today);
-    targetDate.setDate(today.getDate() + diff);
-
-    // Use Intl.DateTimeFormat to get the day name
-    const options: Intl.DateTimeFormatOptions = {
+    const startOfWeekDate = startOfWeek(new Date(), { locale: locale ?? this.locale });
+    const targetDate = addDaysFns(startOfWeekDate, dow);
+    return new Intl.DateTimeFormat( locale?.code ?? this.locale?.code, {
       weekday: format,
-    };
-    return targetDate.toLocaleDateString(locale.code, options);
+    }).format(targetDate);
   }
+
 
   /**
    * Gets the day of the month for a Date object.
