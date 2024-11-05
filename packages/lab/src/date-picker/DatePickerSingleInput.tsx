@@ -88,7 +88,7 @@ export const DatePickerSingleInput = forwardRef<
     } = props;
 
     const {
-      state: { selectedDate, disabled, readOnly, cancelled, minDate, maxDate },
+      state: { selectedDate, disabled, readOnly, cancelled, minDate, maxDate, resetRequired },
       helpers: { select },
     } = useDatePickerContext<TDate>({ selectionVariant: "single" });
     const {
@@ -159,6 +159,12 @@ export const DatePickerSingleInput = forwardRef<
         setValue(previousValue?.current);
       }
     }, [cancelled]);
+
+    useEffect(() => {
+      if (resetRequired) {
+        setValue("");
+      }
+    }, [resetRequired]);
 
     return (
       <DateInputSingle

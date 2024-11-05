@@ -162,6 +162,7 @@ export function useDatePicker<
 
   const [enableApply, setEnableApply] = useState<boolean>(false);
   const [cancelled, setCancelled] = useState<boolean>(false);
+  const [resetRequired, setResetRequired] = useState<boolean>(false);
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: should run when open changes and not selected date or value
   useEffect(() => {
@@ -189,6 +190,7 @@ export function useDatePicker<
   const applySingle = (
     appliedDate: SingleDateSelection<TDate> | null,
   ): void => {
+    setResetRequired(false);
     setCancelled(false);
     setOpen(false);
     if (selectionVariant === "single") {
@@ -198,6 +200,7 @@ export function useDatePicker<
 
   const selectSingle = useCallback(
     (selection: DateInputSingleDetails<TDate>) => {
+      setResetRequired(false);
       setSelectedDate(selection.date);
       if (selectionVariant === "single") {
         onSelectionChange?.(selection);
@@ -211,6 +214,7 @@ export function useDatePicker<
 
   const applyRange = useCallback(
     (appliedDate: DateRangeSelection<TDate>): void => {
+      setResetRequired(false);
       setCancelled(false);
       setOpen(false);
       if (selectionVariant === "range") {
@@ -222,6 +226,7 @@ export function useDatePicker<
 
   const selectRange = useCallback(
     (details: DateInputRangeDetails<TDate>) => {
+      setResetRequired(false);
       const { startDate: startDateSelection, endDate: endDateSelection } =
         details;
       setSelectedDate({
@@ -247,11 +252,15 @@ export function useDatePicker<
     ],
   );
 
-  const cancel = () => {
+  const cancel = useCallback(() => {
     setCancelled(true);
     setOpen(false);
     onCancel?.();
-  };
+  }, [setCancelled, setOpen, onCancel]);
+
+  const reset = useCallback(() => {
+    setResetRequired(true);
+  }, [setResetRequired]);
 
   const returnValue = {
     state: {
@@ -261,12 +270,14 @@ export function useDatePicker<
       enableApply,
       disabled: isDisabled,
       readOnly: isReadOnly,
+      resetRequired,
       containerRef,
       minDate,
       maxDate,
     },
     helpers: {
       cancel,
+      reset,
       setEnableApply,
     },
   };
