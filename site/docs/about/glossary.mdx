@@ -39,8 +39,8 @@ For an overview of theming, refer to our [theming documentation](/salt/themes/in
 
 ## Disabled state
 
-A component in a disabled state isn't considered relevant to the user’s workflow, as the user doesn’t need to know the component is there. It doesn't need to meet minimum contrast requirements, and a progressive reveal might be a better UI pattern. While buttons can use the `focusableWhenDisabled` prop, the system doesn't support status messages for disabled components. If a component is relevant, consider using a read-only state instead.
+A component in a disabled state isn't considered relevant to the user’s workflow at that time. As the function isn't available to the user, the component doesn't need to meet minimum contrast requirements. Consider if a disabled state is the right UI pattern, or if a progressive reveal might be more appropriate. Salt doesn't offer error, warning, or success states for disabled components, as these imply required user action; consider using a read-only state or progressive reveal instead. Some components have exceptions, such as Button, so it can be discovered where context is important.
 
 ## Read-only state
 
-A component in a read-only state is considered relevant to the user’s workflow, as users need to know it’s there. It must meet accessibility requirements, including minimum contrast. The system supports status messages for read-only components, as RAG states may require visibility for recognition and further action. If not relevant, a disabled state may be more appropriate.
+A component in a read-only state is considered relevant to the user’s workflow, allowing users to view and interact with the content without modifying it. It must meet accessibility requirements, including minimum contrast. The system supports status messages for read-only components, as RAG states may require visibility for recognition and further action. Consider if a read-only state is the right UI pattern, or if a disabled state might be more appropriate when modification is not needed.
