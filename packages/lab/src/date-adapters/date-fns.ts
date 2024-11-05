@@ -465,13 +465,14 @@ export class AdapterDateFns implements SaltDateAdapter<Date, Locale> {
     format: "long" | "short" | "narrow",
     locale: Locale,
   ): string {
-    const startOfWeekDate = startOfWeek(new Date(), { locale: locale ?? this.locale });
+    const startOfWeekDate = startOfWeek(new Date(), {
+      locale: locale ?? this.locale,
+    });
     const targetDate = addDaysFns(startOfWeekDate, dow);
-    return new Intl.DateTimeFormat( locale?.code ?? this.locale?.code, {
+    return new Intl.DateTimeFormat(locale?.code ?? this.locale?.code, {
       weekday: format,
     }).format(targetDate);
   }
-
 
   /**
    * Gets the day of the month for a Date object.
