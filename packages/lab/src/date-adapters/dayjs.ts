@@ -3,6 +3,7 @@ import customParseFormat from "dayjs/plugin/customParseFormat";
 import timezone from "dayjs/plugin/timezone";
 import utc from "dayjs/plugin/utc";
 import weekday from "dayjs/plugin/weekday";
+import localeData from 'dayjs/plugin/localeData';
 import type {
   AdapterOptions,
   RecommendedFormats,
@@ -31,6 +32,7 @@ declare module "./types" {
 defaultDayjs.extend(utc);
 defaultDayjs.extend(timezone);
 defaultDayjs.extend(weekday);
+defaultDayjs.extend(localeData);
 
 // Dayjs expects Title-case months, so treats "jun" as invalid
 function capitalizeMonthInDate(value: string, format: string) {
@@ -500,14 +502,21 @@ export class AdapterDayjs implements SaltDateAdapter<Dayjs, string> {
    * Gets the name of the day of the week.
    * @param dow - The day of the week as a number (0-6).
    * @param format - The format for the day name ("long", "short", "narrow").
+   * @param locale - The locale to use
    * @returns The name of the day of the week.
    */
   public getDayOfWeekName(
     dow: number,
     format: "long" | "short" | "narrow",
+    locale?: string
   ): string {
-    const day = this.dayjs().weekday(dow);
-    return format === "narrow" ? day.format("dd")[0] : day.format("dddd");
+    const dayjsInstance = this.dayjs().locale(locale || this.locale);
+    if (format === "narrow") {
+      return dayjsInstance.localeData().weekdaysMin()[dow];
+    } else if (format === "short") {
+      return dayjsInstance.localeData().weekdaysShort()[dow];
+    }
+      return dayjsInstance.localeData().weekdays()[dow];
   }
 
   /**
