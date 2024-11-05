@@ -1,9 +1,9 @@
 import defaultDayjs, { type Dayjs } from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
+import localeData from "dayjs/plugin/localeData";
 import timezone from "dayjs/plugin/timezone";
 import utc from "dayjs/plugin/utc";
 import weekday from "dayjs/plugin/weekday";
-import localeData from 'dayjs/plugin/localeData';
 import type {
   AdapterOptions,
   RecommendedFormats,
@@ -508,7 +508,7 @@ export class AdapterDayjs implements SaltDateAdapter<Dayjs, string> {
   public getDayOfWeekName(
     dow: number,
     format: "long" | "short" | "narrow",
-    locale?: string
+    locale?: string,
   ): string {
     const dayjsInstance = this.dayjs().locale(locale || this.locale);
     if (format === "narrow") {
@@ -516,7 +516,7 @@ export class AdapterDayjs implements SaltDateAdapter<Dayjs, string> {
     } else if (format === "short") {
       return dayjsInstance.localeData().weekdaysShort()[dow];
     }
-      return dayjsInstance.localeData().weekdays()[dow];
+    return dayjsInstance.localeData().weekdays()[dow];
   }
 
   /**

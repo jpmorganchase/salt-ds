@@ -1,7 +1,6 @@
 import { makePrefixer, useForkRef } from "@salt-ds/core";
 import { clsx } from "clsx";
-import { forwardRef, type ReactNode } from "react";
-import { type DateFrameworkType } from "../date-adapters";
+import { type ReactNode, forwardRef } from "react";
 import { useDatePickerOverlay } from "./DatePickerOverlayProvider";
 
 const withBaseName = makePrefixer("saltDatePickerTrigger");
