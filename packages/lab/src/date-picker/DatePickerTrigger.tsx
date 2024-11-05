@@ -21,16 +21,19 @@ export const DatePickerTrigger = forwardRef<
   const { children, className, ...rest } = props;
 
   const {
-    state: { open, floatingUIResult },
-    helpers: { getReferenceProps, setOpen },
+    state: { floatingUIResult },
+    helpers: { getReferenceProps },
   } = useDatePickerOverlay();
 
-  const inputRef = useForkRef<HTMLDivElement>(ref, floatingUIResult?.reference);
+  const triggerRef = useForkRef<HTMLDivElement>(
+    ref,
+    floatingUIResult?.reference,
+  );
 
   return (
     <div
       className={clsx(withBaseName(), className)}
-      ref={inputRef}
+      ref={triggerRef}
       {...getReferenceProps(rest)}
     >
       {children}
