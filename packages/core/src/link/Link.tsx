@@ -41,7 +41,7 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
   });
   const { ExternalIcon } = useIcon();
 
-  const color = variant ?? color ?? "primary";
+  const color = variant ?? colorProp ?? "primary";
   const LinkIconComponent =
     IconComponent === undefined ? ExternalIcon : IconComponent;
 
