@@ -40,6 +40,10 @@ interface DatePickerBaseState<TDate extends DateFrameworkType> {
      * Reference to the container element.
      */
     containerRef: Ref<HTMLDivElement>;
+    /**
+     * Reset datepicker required, when true
+     */
+    resetRequired: boolean;
   };
   /**
    * Helper functions for managing the DatePicker state.
@@ -54,6 +58,10 @@ interface DatePickerBaseState<TDate extends DateFrameworkType> {
      * @param newEnableApply - The new value for enableApply.
      */
     setEnableApply: (newEnableApply: boolean) => void;
+    /**
+     * Reset the date picker state
+     */
+    reset: () => void;
   };
 }
 
