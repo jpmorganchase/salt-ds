@@ -1,16 +1,12 @@
 import defaultMoment, { type Moment } from "moment";
-import type {
+import {
   AdapterOptions,
+  ParserResult,
   RecommendedFormats,
   SaltDateAdapter,
   Timezone,
 } from "./saltDateAdapter";
-import {
-  type DateBuilderReturnType,
-  type DateDetail,
-  DateDetailErrorEnum,
-  type TimeFields,
-} from "./types";
+import { DateDetailErrorEnum, type TimeFields } from "./types";
 
 declare module "./types" {
   export interface DateFrameworkTypeMap {
@@ -123,34 +119,29 @@ export class AdapterMoment implements SaltDateAdapter<Moment, string> {
   };
 
   /**
-   * Creates a Moment.js date object from a string or returns the current date.
+   * Creates a Moment.js date object from a string or returns an invalid date.
    * @param value - The date string to parse.
    * @param timezone - The timezone to use (default is "default").
    * @param locale - The locale to use for parsing.
-   * @returns The parsed Moment.js date object or null.
+   * @returns The parsed Moment.js date object or an invalid date object.
    */
-  public date = <T extends string | null | undefined>(
+  public date = <T extends string | undefined>(
     value?: T,
     timezone: Timezone = "default",
     locale?: string,
-  ): DateBuilderReturnType<T, Moment> => {
-    type R = DateBuilderReturnType<T, Moment>;
-    if (value === null) {
-      return <R>null;
-    }
-
+  ): Moment => {
     if (timezone === "UTC") {
-      return <R>this.createUTCDate(value, locale);
+      return this.createUTCDate(value, locale);
     }
 
     if (
       timezone === "system" ||
       (timezone === "default" && !this.hasTimezonePlugin())
     ) {
-      return <R>this.createSystemDate(value, locale);
+      return this.createSystemDate(value, locale);
     }
 
-    return <R>this.createTZDate(value, timezone, locale);
+    return this.createTZDate(value, timezone, locale);
   };
 
   /**
@@ -198,32 +189,19 @@ export class AdapterMoment implements SaltDateAdapter<Moment, string> {
     value: string,
     format: string,
     locale?: string,
-  ): DateDetail<Moment> {
-    if (value === "") {
-      return {
-        date: null,
-        value,
-        errors: [
-          {
-            message: "not a valid date",
-            type: DateDetailErrorEnum.INVALID_DATE,
-          },
-        ],
-      };
-    }
-
-    const newDate =
+  ): ParserResult<Moment> {
+    const parsedDate =
       this.locale || locale
         ? this.moment(value, format, locale ?? this.locale, true)
         : this.moment(value, format, true);
-    if (newDate.isValid()) {
+    if (parsedDate.isValid()) {
       return {
-        date: newDate,
+        date: parsedDate,
         value,
       };
     }
     return {
-      date: null,
+      date: parsedDate,
       value,
       errors: [
         {
@@ -237,10 +215,10 @@ export class AdapterMoment implements SaltDateAdapter<Moment, string> {
   /**
    * Checks if a Moment.js date object is valid.
    * @param date - The Moment.js date object to check.
-   * @returns True if the date is valid, false otherwise.
+   * @returns True if the date is valid date object, false otherwise.
    */
-  public isValid(date: Moment | null | undefined): boolean {
-    return date ? date.isValid() : false;
+  public isValid(date: any): date is Moment {
+    return this.moment.isMoment(date) ? date.isValid() : false;
   }
 
   /**
@@ -532,7 +510,7 @@ export class AdapterMoment implements SaltDateAdapter<Moment, string> {
    * @param date - The Moment.js date object.
    * @returns An object containing the hour, minute, second, and millisecond.
    */
-  public getTime(date: Moment): TimeFields | null {
+  public getTime(date: Moment): TimeFields {
     return {
       hour: date.hour(),
       minute: date.minute(),

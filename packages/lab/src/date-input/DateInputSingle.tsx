@@ -38,8 +38,7 @@ const withBaseName = makePrefixer("saltDateInput");
 /**
  * Details of parsing the date
  */
-export type DateInputSingleDetails<TDate extends DateFrameworkType> =
-  DateDetail<TDate>;
+export type DateInputSingleDetails = DateDetail;
 
 /**
  * Props for the DateInputSingle component.
@@ -120,13 +119,13 @@ export interface DateInputSingleProps<TDate extends DateFrameworkType>
   /**
    * Callback fired when the selected date changes.
    * @param event - The synthetic event.
-   * @param date - the selected date, null if in not a valid date or undefined if not defined
+   * @param date - the selected date, invalid date if not a valid date or undefined (uncontrolled) or null (controlled) if not defined
    * @param details - The details of date selection, either a valid date or error
    */
   onDateChange?: (
     event: SyntheticEvent,
-    date: SingleDateSelection<TDate> | null | undefined,
-    details: DateInputSingleDetails<TDate>,
+    date: SingleDateSelection<TDate> | null,
+    details: DateInputSingleDetails,
   ) => void;
   /**
    * Called when input value changes, either due to user interaction or programmatic formatting of valid dates.
@@ -202,11 +201,16 @@ export const DateInputSingle = forwardRef<
     });
     const lastAppliedValue = useRef<string>(dateValue);
     const preservedTime = useRef<TimeFields | null>(null);
-    preservedTime.current = date ? dateAdapter.getTime(date) : null;
+    preservedTime.current = dateAdapter.isValid(date)
+      ? dateAdapter.getTime(date)
+      : null;
 
     // Update date string value when selected date changes
     useEffect(() => {
-      if (date && dateAdapter.isValid(date)) {
+      if (!date) {
+        setDateValue("");
+        onDateValueChange?.("");
+      } else if (date && dateAdapter.isValid(date)) {
         const formattedValue = dateAdapter.format(date, format, locale);
         const hasValueChanged = formattedValue !== dateValue;
         if (hasValueChanged) {
@@ -251,9 +255,9 @@ export const DateInputSingle = forwardRef<
 
     const apply = (event: SyntheticEvent) => {
       const details = dateAdapter.parse(dateValue ?? "", format, locale);
-      let { date: parsedDate } = details;
+      let { date: parsedDate, ...parseDetails } = details;
       let formattedValue = "";
-      if (parsedDate && dateAdapter.isValid(parsedDate)) {
+      if (dateAdapter.isValid(parsedDate)) {
         formattedValue = dateAdapter.format(parsedDate, format, locale);
         const hasValueChanged = formattedValue !== dateValue;
         if (hasValueChanged) {
@@ -264,15 +268,10 @@ export const DateInputSingle = forwardRef<
 
       setDate(parsedDate);
       if (lastAppliedValue.current !== dateValue) {
-        if (parsedDate && preservedTime.current) {
+        if (dateAdapter.isValid(parsedDate) && preservedTime.current) {
           parsedDate = dateAdapter.set(parsedDate, preservedTime.current);
         }
-        const updatedDetails = {
-          ...details,
-          date: parsedDate,
-          value: dateValue,
-        };
-        onDateChange?.(event, parsedDate, updatedDetails);
+        onDateChange?.(event, parsedDate, parseDetails);
       }
       lastAppliedValue.current = dateValue;
     };

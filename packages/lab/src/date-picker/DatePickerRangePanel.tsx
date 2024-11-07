@@ -51,7 +51,7 @@ export interface DatePickerRangePanelProps<TDate extends DateFrameworkType>
    * @param event - The synthetic event.
    * @param selectedDate - The selected date range or null.
    */
-  onSelect?: (
+  onSelectionChange?: (
     event: SyntheticEvent,
     selectedDate?: DateRangeSelection<TDate> | null,
   ) => void;
@@ -164,9 +164,9 @@ function getFallbackVisibleMonths<TDate extends DateFrameworkType>(
     return [startDate, endDate];
   }
 
-  if (selectedDate?.startDate) {
+  if (selectedDate && dateAdapter.isValid(selectedDate?.startDate)) {
     const { startDate, endDate } = selectedDate;
-    if (endDate) {
+    if (dateAdapter.isValid(endDate)) {
       return dateAdapter.isSame(startDate, endDate, "month")
         ? createConsecutiveRange(startDate)
         : [
@@ -197,7 +197,7 @@ export const DatePickerRangePanel = forwardRef(function DatePickerRangePanel<
     endVisibleMonth: endVisibleMonthProp,
     onEndVisibleMonthChange,
     helperText,
-    onSelect,
+    onSelectionChange,
     StartCalendarProps: StartCalendarPropsProp,
     StartCalendarNavigationProps,
     StartCalendarWeekHeaderProps,
@@ -247,12 +247,10 @@ export const DatePickerRangePanel = forwardRef(function DatePickerRangePanel<
 
   const handleSelectionChange = useCallback(
     (event: SyntheticEvent, newDate: DateRangeSelection<TDate> | null) => {
-      const startDate = { date: newDate?.startDate };
-      const endDate = { date: newDate?.endDate };
-      select({ startDate, endDate });
-      onSelect?.(event, newDate);
+      select(event, newDate);
+      onSelectionChange?.(event, newDate);
     },
-    [select, onSelect],
+    [select, onSelectionChange],
   );
 
   const handleHoveredStartDateChange: CalendarProps<TDate>["onHoveredDateChange"] =
@@ -310,10 +308,21 @@ export const DatePickerRangePanel = forwardRef(function DatePickerRangePanel<
       : hoveredDate;
   }
 
+  const calendarSelectedDate = {
+    startDate:
+      selectedDate && dateAdapter.isValid(selectedDate.startDate)
+        ? selectedDate.startDate
+        : null,
+    endDate:
+      selectedDate && dateAdapter.isValid(selectedDate.endDate)
+        ? selectedDate.endDate
+        : null,
+  };
+
   const StartCalendarProps = {
     visibleMonth: startVisibleMonth,
     hoveredDate: getHoveredDate(selectedDate?.startDate, hoveredDate),
-    selectedDate: (selectedDate as DateRangeSelection<TDate>) ?? null,
+    selectedDate: calendarSelectedDate,
     onHoveredDateChange: handleHoveredStartDateChange,
     onVisibleMonthChange: handleStartVisibleMonthChange,
     onSelectionChange: handleSelectionChange,
@@ -325,7 +334,7 @@ export const DatePickerRangePanel = forwardRef(function DatePickerRangePanel<
   const EndCalendarProps = {
     visibleMonth: endVisibleMonth,
     hoveredDate,
-    selectedDate: (selectedDate as DateRangeSelection<TDate>) ?? null,
+    selectedDate: calendarSelectedDate,
     onHoveredDateChange: handleHoveredEndDateChange,
     onVisibleMonthChange: handleEndVisibleMonthChange,
     onSelectionChange: handleSelectionChange,

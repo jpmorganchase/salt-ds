@@ -6,6 +6,7 @@ import {
   FormField,
   FormFieldHelperText as FormHelperText,
   FormFieldLabel as FormLabel,
+  GridLayout,
 } from "@salt-ds/core";
 import {
   AdapterDateFns,
@@ -18,7 +19,6 @@ import {
   type DateInputSingleDetails,
   DatePicker,
   DatePickerActions,
-  type DatePickerHandles,
   DatePickerOverlay,
   DatePickerRangeInput,
   DatePickerRangePanel,
@@ -31,6 +31,7 @@ import {
   type DateRangeSelection,
   LocalizationProvider,
   type LocalizationProviderProps,
+  ParserResult,
   type SingleDatePickerState,
   type SingleDateSelection,
   type TimeFields,
@@ -38,7 +39,7 @@ import {
   useLocalization,
 } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react";
-import type React from "react";
+import React, { type SyntheticEvent } from "react";
 import { useCallback, useMemo, useRef, useState } from "react";
 import { CustomDatePickerPanel } from "./CustomDatePickerPanel"; // CustomDatePickerPanel is an example, replace with your own composition of date controls
 // As required by locale specific examples
@@ -60,10 +61,14 @@ const DatePickerSingleTemplate: StoryFn<
 > = ({ selectionVariant, ...args }) => {
   const { dateAdapter } = useLocalization();
   const handleSelectionChange = useCallback(
-    (newSelection: DateInputSingleDetails<DateFrameworkType>) => {
-      const { date: newSelectedDate, value, errors } = newSelection;
+    (
+      event: SyntheticEvent,
+      date: DateFrameworkType,
+      details: DateInputSingleDetails | undefined = {},
+    ) => {
+      const { value, errors } = details;
       console.log(
-        `Selected date: ${newSelectedDate ? dateAdapter.format(newSelectedDate, "DD MMM YYYY") : newSelectedDate}`,
+        `Selected date: ${dateAdapter.isValid(date) ? dateAdapter.format(date, "DD MMM YYYY") : date}`,
       );
       if (errors?.length && value) {
         console.log(
@@ -75,7 +80,7 @@ const DatePickerSingleTemplate: StoryFn<
           console.log(`Original Value: ${value}`);
         }
       }
-      args?.onSelectionChange?.(newSelection);
+      args?.onSelectionChange?.(event, date, details);
     },
     [args?.onSelectionChange, dateAdapter],
   );
@@ -101,21 +106,21 @@ const DatePickerRangeTemplate: StoryFn<
 > = ({ selectionVariant, ...args }) => {
   const { dateAdapter } = useLocalization();
   const handleSelectionChange = useCallback(
-    (newSelection: DateInputRangeDetails<DateFrameworkType>) => {
+    (
+      event: SyntheticEvent,
+      date: DateRangeSelection<DateFrameworkType>,
+      details: DateInputRangeDetails | undefined = {},
+    ) => {
+      const { startDate, endDate } = date;
       const {
         startDate: {
-          date: startDate,
           value: startDateOriginalValue,
           errors: startDateErrors,
-        },
-        endDate: {
-          date: endDate,
-          value: endDateOriginalValue,
-          errors: endDateErrors,
-        },
-      } = newSelection;
+        } = {},
+        endDate: { value: endDateOriginalValue, errors: endDateErrors } = {},
+      } = details;
       console.log(
-        `StartDate: ${startDate ? dateAdapter.format(startDate, "DD MMM YYYY") : startDate}, EndDate: ${endDate ? dateAdapter.format(endDate, "DD MMM YYYY") : endDate}`,
+        `StartDate: ${dateAdapter.isValid(startDate) ? dateAdapter.format(startDate, "DD MMM YYYY") : startDate}, EndDate: ${dateAdapter.isValid(endDate) ? dateAdapter.format(endDate, "DD MMM YYYY") : endDate}`,
       );
       if (startDateErrors?.length) {
         console.log(
@@ -133,7 +138,7 @@ const DatePickerRangeTemplate: StoryFn<
           console.log(`EndDate Original Value: ${endDateOriginalValue}`);
         }
       }
-      args?.onSelectionChange?.(newSelection);
+      args?.onSelectionChange?.(event, date, details);
     },
     [args?.onSelectionChange, dateAdapter],
   );
@@ -170,12 +175,16 @@ export const SingleControlled: StoryFn<
   >(defaultSelectedDate ?? null);
   const { dateAdapter } = useLocalization();
   const handleSelectionChange = useCallback(
-    (newSelection: DateInputSingleDetails<DateFrameworkType>) => {
-      const { date: newSelectedDate, value, errors } = newSelection;
+    (
+      event: SyntheticEvent,
+      date: DateFrameworkType,
+      details: DateInputSingleDetails | undefined = {},
+    ) => {
+      const { value, errors } = details;
       console.log(
-        `Selected date: ${newSelectedDate ? dateAdapter.format(newSelectedDate, "DD MMM YYYY") : newSelectedDate}`,
+        `Selected date: ${dateAdapter.isValid(date) ? dateAdapter.format(date, "DD MMM YYYY") : date}`,
       );
-      setSelectedDate(newSelection.date);
+      setSelectedDate(value?.trim().length === 0 ? null : date);
       if (errors?.length && value) {
         console.log(
           `Error(s): ${errors
@@ -186,7 +195,7 @@ export const SingleControlled: StoryFn<
           console.log(`Original Value: ${value}`);
         }
       }
-      args.onSelectionChange?.(newSelection);
+      args?.onSelectionChange?.(event, date, details);
     },
     [args.onSelectionChange, dateAdapter, setSelectedDate],
   );
@@ -217,25 +226,26 @@ export const RangeControlled: StoryFn<
       defaultSelectedDate ?? null,
     );
   const handleSelectionChange = useCallback(
-    (newSelection: DateInputRangeDetails<DateFrameworkType>) => {
+    (
+      event: SyntheticEvent,
+      date: DateRangeSelection<DateFrameworkType>,
+      details: DateInputRangeDetails | undefined = {},
+    ) => {
+      const { startDate, endDate } = date;
       const {
         startDate: {
-          date: startDate,
           value: startDateOriginalValue,
           errors: startDateErrors,
-        },
-        endDate: {
-          date: endDate,
-          value: endDateOriginalValue,
-          errors: endDateErrors,
-        },
-      } = newSelection;
+        } = {},
+        endDate: { value: endDateOriginalValue, errors: endDateErrors } = {},
+      } = details;
       console.log(
-        `StartDate: ${startDate ? dateAdapter.format(startDate, "DD MMM YYYY") : startDate}, EndDate: ${endDate ? dateAdapter.format(endDate, "DD MMM YYYY") : endDate}`,
+        `StartDate: ${dateAdapter.isValid(startDate) ? dateAdapter.format(startDate, "DD MMM YYYY") : startDate}, EndDate: ${dateAdapter.isValid(endDate) ? dateAdapter.format(endDate, "DD MMM YYYY") : endDate}`,
       );
       setSelectedDate({
-        startDate,
-        endDate,
+        startDate:
+          startDateOriginalValue?.trim().length === 0 ? null : startDate,
+        endDate: endDateOriginalValue?.trim().length === 0 ? null : endDate,
       });
       if (startDateErrors?.length) {
         console.log(
@@ -253,7 +263,7 @@ export const RangeControlled: StoryFn<
           console.log(`EndDate Original Value: ${endDateOriginalValue}`);
         }
       }
-      args.onSelectionChange?.(newSelection);
+      args?.onSelectionChange?.(event, date, details);
     },
     [args.onSelectionChange, dateAdapter, setSelectedDate],
   );
@@ -274,6 +284,14 @@ export const RangeControlled: StoryFn<
     </DatePicker>
   );
 };
+// Passing a date object to a Story, containing an invalid date, will cause Storybook to throw from toISOString()
+RangeControlled.parameters = {
+  docs: {
+    source: {
+      code: "Disabled for this story, see https://github.com/storybookjs/storybook/issues/11554",
+    },
+  },
+};
 
 export const SingleWithMinMaxDate: StoryFn<
   DatePickerSingleProps<DateFrameworkType>
@@ -287,10 +305,14 @@ export const SingleWithMinMaxDate: StoryFn<
     undefined,
   );
   const handleSelectionChange = useCallback(
-    (newSelection: DateInputSingleDetails<DateFrameworkType>) => {
-      const { date: newSelectedDate, value, errors } = newSelection;
+    (
+      event: SyntheticEvent,
+      date: DateFrameworkType,
+      details: DateInputSingleDetails | undefined = {},
+    ) => {
+      const { value, errors } = details;
       console.log(
-        `Selected date: ${newSelectedDate ? dateAdapter.format(newSelectedDate, "DD MMM YYYY") : newSelectedDate}`,
+        `Selected date: ${dateAdapter.isValid(date) ? dateAdapter.format(date, "DD MMM YYYY") : date}`,
       );
       if (errors?.length && value) {
         setHelperText(`${errorHelperText} - ${errors[0].message}`);
@@ -307,7 +329,7 @@ export const SingleWithMinMaxDate: StoryFn<
         setHelperText(defaultHelperText);
         setValidationStatus(undefined);
       }
-      args.onSelectionChange?.(newSelection);
+      args?.onSelectionChange?.(event, date, details);
     },
     [dateAdapter, setHelperText, setValidationStatus],
   );
@@ -356,21 +378,21 @@ export const RangeWithMinMaxDate: StoryFn<
     undefined,
   );
   const handleSelectionChange = useCallback(
-    (newSelection: DateInputRangeDetails<DateFrameworkType>) => {
+    (
+      event: SyntheticEvent,
+      date: DateRangeSelection<DateFrameworkType>,
+      details: DateInputRangeDetails | undefined = {},
+    ) => {
+      const { startDate, endDate } = date;
       const {
         startDate: {
-          date: startDate,
           value: startDateOriginalValue,
           errors: startDateErrors,
-        },
-        endDate: {
-          date: endDate,
-          value: endDateOriginalValue,
-          errors: endDateErrors,
-        },
-      } = newSelection;
+        } = {},
+        endDate: { value: endDateOriginalValue, errors: endDateErrors } = {},
+      } = details;
       console.log(
-        `StartDate: ${startDate ? dateAdapter.format(startDate, "DD MMM YYYY") : startDate}, EndDate: ${endDate ? dateAdapter.format(endDate, "DD MMM YYYY") : endDate}`,
+        `StartDate: ${dateAdapter.isValid(startDate) ? dateAdapter.format(startDate, "DD MMM YYYY") : startDate}, EndDate: ${dateAdapter.isValid(endDate) ? dateAdapter.format(endDate, "DD MMM YYYY") : endDate}`,
       );
       if (startDateErrors?.length) {
         console.log(
@@ -402,7 +424,7 @@ export const RangeWithMinMaxDate: StoryFn<
         setValidationStatus(undefined);
         setHelperText(defaultHelperText);
       }
-      args.onSelectionChange?.(newSelection);
+      args?.onSelectionChange?.(event, date, details);
     },
     [args.onSelectionChange, dateAdapter, setValidationStatus, setHelperText],
   );
@@ -454,10 +476,14 @@ export const SingleWithInitialError: StoryFn<
     "error",
   );
   const handleSelectionChange = useCallback(
-    (newSelection: DateInputSingleDetails<DateFrameworkType>) => {
-      const { date: newSelectedDate, value, errors } = newSelection;
+    (
+      event: SyntheticEvent,
+      date: DateFrameworkType,
+      details: DateInputSingleDetails | undefined = {},
+    ) => {
+      const { value, errors } = details;
       console.log(
-        `Selected date: ${newSelectedDate ? dateAdapter.format(newSelectedDate, "DD MMM YYYY") : newSelectedDate}`,
+        `Selected date: ${dateAdapter.isValid(date) ? dateAdapter.format(date, "DD MMM YYYY") : date}`,
       );
       if (errors?.length && value) {
         setHelperText(`${errorHelperText} - ${errors[0].message}`);
@@ -474,7 +500,7 @@ export const SingleWithInitialError: StoryFn<
         setHelperText(defaultHelperText);
         setValidationStatus(undefined);
       }
-      args.onSelectionChange?.(newSelection);
+      args?.onSelectionChange?.(event, date, details);
     },
     [dateAdapter, setHelperText, setValidationStatus],
   );
@@ -513,21 +539,21 @@ export const RangeWithInitialError: StoryFn<
     "error",
   );
   const handleSelectionChange = useCallback(
-    (newSelection: DateInputRangeDetails<DateFrameworkType>) => {
+    (
+      event: SyntheticEvent,
+      date: DateRangeSelection<DateFrameworkType>,
+      details: DateInputRangeDetails | undefined = {},
+    ) => {
+      const { startDate, endDate } = date;
       const {
         startDate: {
-          date: startDate,
           value: startDateOriginalValue,
           errors: startDateErrors,
-        },
-        endDate: {
-          date: endDate,
-          value: endDateOriginalValue,
-          errors: endDateErrors,
-        },
-      } = newSelection;
+        } = {},
+        endDate: { value: endDateOriginalValue, errors: endDateErrors } = {},
+      } = details;
       console.log(
-        `StartDate: ${startDate ? dateAdapter.format(startDate, "DD MMM YYYY") : startDate}, EndDate: ${endDate ? dateAdapter.format(endDate, "DD MMM YYYY") : endDate}`,
+        `StartDate: ${dateAdapter.isValid(startDate) ? dateAdapter.format(startDate, "DD MMM YYYY") : startDate}, EndDate: ${dateAdapter.isValid(endDate) ? dateAdapter.format(endDate, "DD MMM YYYY") : endDate}`,
       );
       if (startDateErrors?.length) {
         console.log(
@@ -559,7 +585,7 @@ export const RangeWithInitialError: StoryFn<
         setValidationStatus(undefined);
         setHelperText(defaultHelperText);
       }
-      args.onSelectionChange?.(newSelection);
+      args?.onSelectionChange?.(event, date, details);
     },
     [args.onSelectionChange, dateAdapter, setValidationStatus, setHelperText],
   );
@@ -608,10 +634,14 @@ export const SingleWithFormField: StoryFn<
     undefined,
   );
   const handleSelectionChange = useCallback(
-    (newSelection: DateInputSingleDetails<DateFrameworkType>) => {
-      const { date: newSelectedDate, value, errors } = newSelection;
+    (
+      event: SyntheticEvent,
+      date: DateFrameworkType,
+      details: DateInputSingleDetails | undefined = {},
+    ) => {
+      const { value, errors } = details;
       console.log(
-        `Selected date: ${newSelectedDate ? dateAdapter.format(newSelectedDate, "DD MMM YYYY") : newSelectedDate}`,
+        `Selected date: ${dateAdapter.isValid(date) ? dateAdapter.format(date, "DD MMM YYYY") : date}`,
       );
       if (errors?.length && value) {
         setHelperText(`${errorHelperText} - ${errors[0].message}`);
@@ -628,7 +658,7 @@ export const SingleWithFormField: StoryFn<
         setHelperText(defaultHelperText);
         setValidationStatus(undefined);
       }
-      args.onSelectionChange?.(newSelection);
+      args?.onSelectionChange?.(event, date, details);
     },
     [dateAdapter, setHelperText, setValidationStatus],
   );
@@ -667,21 +697,21 @@ export const RangeWithFormField: StoryFn<
     undefined,
   );
   const handleSelectionChange = useCallback(
-    (newSelection: DateInputRangeDetails<DateFrameworkType>) => {
+    (
+      event: SyntheticEvent,
+      date: DateRangeSelection<DateFrameworkType>,
+      details: DateInputRangeDetails | undefined = {},
+    ) => {
+      const { startDate, endDate } = date;
       const {
         startDate: {
-          date: startDate,
           value: startDateOriginalValue,
           errors: startDateErrors,
-        },
-        endDate: {
-          date: endDate,
-          value: endDateOriginalValue,
-          errors: endDateErrors,
-        },
-      } = newSelection;
+        } = {},
+        endDate: { value: endDateOriginalValue, errors: endDateErrors } = {},
+      } = details;
       console.log(
-        `StartDate: ${startDate ? dateAdapter.format(startDate, "DD MMM YYYY") : startDate}, EndDate: ${endDate ? dateAdapter.format(endDate, "DD MMM YYYY") : endDate}`,
+        `StartDate: ${dateAdapter.isValid(startDate) ? dateAdapter.format(startDate, "DD MMM YYYY") : startDate}, EndDate: ${dateAdapter.isValid(endDate) ? dateAdapter.format(endDate, "DD MMM YYYY") : endDate}`,
       );
       if (startDateErrors?.length) {
         console.log(
@@ -713,7 +743,7 @@ export const RangeWithFormField: StoryFn<
         setValidationStatus(undefined);
         setHelperText(defaultHelperText);
       }
-      args.onSelectionChange?.(newSelection);
+      args?.onSelectionChange?.(event, date, details);
     },
     [args.onSelectionChange, dateAdapter, setValidationStatus, setHelperText],
   );
@@ -751,10 +781,14 @@ export const SingleWithCustomPanel: StoryFn<
     undefined,
   );
   const handleSelectionChange = useCallback(
-    (newSelection: DateInputSingleDetails<DateFrameworkType>) => {
-      const { date: newSelectedDate, value, errors } = newSelection;
+    (
+      event: SyntheticEvent,
+      date: DateFrameworkType,
+      details: DateInputSingleDetails | undefined = {},
+    ) => {
+      const { value, errors } = details;
       console.log(
-        `Selected date: ${newSelectedDate ? dateAdapter.format(newSelectedDate, "DD MMM YYYY") : newSelectedDate}`,
+        `Selected date: ${dateAdapter.isValid(date) ? dateAdapter.format(date, "DD MMM YYYY") : date}`,
       );
       if (errors?.length && value) {
         setHelperText(`${errorHelperText} - ${errors[0].message}`);
@@ -771,7 +805,7 @@ export const SingleWithCustomPanel: StoryFn<
         setHelperText(defaultHelperText);
         setValidationStatus(undefined);
       }
-      args.onSelectionChange?.(newSelection);
+      args?.onSelectionChange?.(event, date, details);
     },
     [dateAdapter, setHelperText, setValidationStatus],
   );
@@ -813,21 +847,21 @@ export const RangeWithCustomPanel: StoryFn<
     undefined,
   );
   const handleSelectionChange = useCallback(
-    (newSelection: DateInputRangeDetails<DateFrameworkType>) => {
+    (
+      event: SyntheticEvent,
+      date: DateRangeSelection<DateFrameworkType>,
+      details: DateInputRangeDetails | undefined = {},
+    ) => {
+      const { startDate, endDate } = date;
       const {
         startDate: {
-          date: startDate,
           value: startDateOriginalValue,
           errors: startDateErrors,
-        },
-        endDate: {
-          date: endDate,
-          value: endDateOriginalValue,
-          errors: endDateErrors,
-        },
-      } = newSelection;
+        } = {},
+        endDate: { value: endDateOriginalValue, errors: endDateErrors } = {},
+      } = details;
       console.log(
-        `StartDate: ${startDate ? dateAdapter.format(startDate, "DD MMM YYYY") : startDate}, EndDate: ${endDate ? dateAdapter.format(endDate, "DD MMM YYYY") : endDate}`,
+        `StartDate: ${dateAdapter.isValid(startDate) ? dateAdapter.format(startDate, "DD MMM YYYY") : startDate}, EndDate: ${dateAdapter.isValid(endDate) ? dateAdapter.format(endDate, "DD MMM YYYY") : endDate}`,
       );
       if (startDateErrors?.length) {
         console.log(
@@ -859,7 +893,7 @@ export const RangeWithCustomPanel: StoryFn<
         setValidationStatus(undefined);
         setHelperText(defaultHelperText);
       }
-      args.onSelectionChange?.(newSelection);
+      args?.onSelectionChange?.(event, date, details);
     },
     [args.onSelectionChange, dateAdapter, setValidationStatus, setHelperText],
   );
@@ -901,11 +935,7 @@ const TodayButton = () => {
         style={{ margin: "var(--salt-spacing-50)", flexGrow: 1 }}
         sentiment="accented"
         appearance="bordered"
-        onClick={() =>
-          select({
-            date: dateAdapter.today(),
-          })
-        }
+        onClick={(event: SyntheticEvent) => select(event, dateAdapter.today())}
       >
         Select Today
       </Button>
@@ -925,10 +955,14 @@ export const SingleWithTodayButton: StoryFn<
     undefined,
   );
   const handleSelectionChange = useCallback(
-    (newSelection: DateInputSingleDetails<DateFrameworkType>) => {
-      const { date: newSelectedDate, value, errors } = newSelection;
+    (
+      event: SyntheticEvent,
+      date: DateFrameworkType,
+      details: DateInputSingleDetails | undefined = {},
+    ) => {
+      const { value, errors } = details;
       console.log(
-        `Selected date: ${newSelectedDate ? dateAdapter.format(newSelectedDate, "DD MMM YYYY") : newSelectedDate}`,
+        `Selected date: ${dateAdapter.isValid(date) ? dateAdapter.format(date, "DD MMM YYYY") : date}`,
       );
       if (errors?.length && value) {
         setHelperText(`${errorHelperText} - ${errors[0].message}`);
@@ -945,7 +979,7 @@ export const SingleWithTodayButton: StoryFn<
         setHelperText(defaultHelperText);
         setValidationStatus(undefined);
       }
-      args.onSelectionChange?.(newSelection);
+      args?.onSelectionChange?.(event, date, details);
     },
     [dateAdapter, setHelperText, setValidationStatus],
   );
@@ -1010,10 +1044,14 @@ export const SingleWithConfirmation: StoryFn<
     helperText: defaultHelperText,
   });
   const handleSelectionChange = useCallback(
-    (newSelection: DateInputSingleDetails<DateFrameworkType>) => {
-      const { date: newSelectedDate, value, errors } = newSelection;
+    (
+      event: SyntheticEvent,
+      date: DateFrameworkType,
+      details: DateInputSingleDetails | undefined = {},
+    ) => {
+      const { value, errors } = details;
       console.log(
-        `Selected date: ${newSelectedDate ? dateAdapter.format(newSelectedDate, "DD MMM YYYY") : newSelectedDate}`,
+        `Selected date: ${dateAdapter.isValid(date) ? dateAdapter.format(date, "DD MMM YYYY") : date}`,
       );
       if (errors?.length && value) {
         setHelperText(`${errorHelperText} - ${errors[0].message}`);
@@ -1030,11 +1068,11 @@ export const SingleWithConfirmation: StoryFn<
         setHelperText(defaultHelperText);
         setValidationStatus(undefined);
       }
-      setSelectedDate(newSelectedDate);
-      if (newSelectedDate) {
+      setSelectedDate(value?.trim().length === 0 ? null : date);
+      if (date) {
         applyButtonRef?.current?.focus();
       }
-      args.onSelectionChange?.(newSelection);
+      args?.onSelectionChange?.(event, date, details);
     },
     [dateAdapter, setHelperText, setValidationStatus],
   );
@@ -1061,19 +1099,17 @@ export const SingleWithConfirmation: StoryFn<
 
   const handleApply = useCallback(
     (
-      newSelectedDate:
-        | SingleDateSelection<DateFrameworkType>
-        | null
-        | undefined,
+      event: SyntheticEvent,
+      date: SingleDateSelection<DateFrameworkType> | null | undefined,
     ) => {
       console.log(
-        `Applied date: ${newSelectedDate ? dateAdapter.format(newSelectedDate, "DD MMM YYYY") : newSelectedDate}`,
+        `Applied date: ${date ? dateAdapter.format(date, "DD MMM YYYY") : date}`,
       );
-      setSelectedDate(newSelectedDate);
+      setSelectedDate(date);
       setHelperText(defaultHelperText);
       setValidationStatus(undefined);
-      previousSelectedDate.current = newSelectedDate;
-      args?.onApply?.(newSelectedDate);
+      previousSelectedDate.current = date;
+      args?.onApply?.(event, date);
     },
     [
       args,
@@ -1151,21 +1187,21 @@ export const RangeWithConfirmation: StoryFn<
     helperText: defaultHelperText,
   });
   const handleSelectionChange = useCallback(
-    (newSelection: DateInputRangeDetails<DateFrameworkType>) => {
+    (
+      event: SyntheticEvent,
+      date: DateRangeSelection<DateFrameworkType>,
+      details: DateInputRangeDetails | undefined = {},
+    ) => {
+      const { startDate, endDate } = date;
       const {
         startDate: {
-          date: startDate,
           value: startDateOriginalValue,
           errors: startDateErrors,
-        },
-        endDate: {
-          date: endDate,
-          value: endDateOriginalValue,
-          errors: endDateErrors,
-        },
-      } = newSelection;
+        } = {},
+        endDate: { value: endDateOriginalValue, errors: endDateErrors } = {},
+      } = details;
       console.log(
-        `StartDate: ${startDate ? dateAdapter.format(startDate, "DD MMM YYYY") : startDate}, EndDate: ${endDate ? dateAdapter.format(endDate, "DD MMM YYYY") : endDate}`,
+        `StartDate: ${dateAdapter.isValid(startDate) ? dateAdapter.format(startDate, "DD MMM YYYY") : startDate}, EndDate: ${dateAdapter.isValid(endDate) ? dateAdapter.format(endDate, "DD MMM YYYY") : endDate}`,
       );
       if (startDateErrors?.length) {
         console.log(
@@ -1197,8 +1233,12 @@ export const RangeWithConfirmation: StoryFn<
         setValidationStatus(undefined);
         setHelperText(defaultHelperText);
       }
-      setSelectedDate({ startDate, endDate });
-      args.onSelectionChange?.(newSelection);
+      setSelectedDate({
+        startDate:
+          startDateOriginalValue?.trim().length === 0 ? null : startDate,
+        endDate: endDateOriginalValue?.trim().length === 0 ? null : endDate,
+      });
+      args?.onSelectionChange?.(event, date, details);
     },
     [args.onSelectionChange, dateAdapter, setValidationStatus, setHelperText],
   );
@@ -1220,16 +1260,16 @@ export const RangeWithConfirmation: StoryFn<
   }, [args, setHelperText, setValidationStatus]);
 
   const handleApply = useCallback(
-    (newSelectedDate: DateRangeSelection<DateFrameworkType>) => {
-      const { startDate, endDate } = newSelectedDate;
+    (event: SyntheticEvent, date: DateRangeSelection<DateFrameworkType>) => {
+      const { startDate, endDate } = date;
       console.log(
         `Applied StartDate: ${startDate ? dateAdapter.format(startDate, "DD MMM YYYY") : startDate}, EndDate: ${endDate ? dateAdapter.format(endDate, "DD MMM YYYY") : endDate}`,
       );
-      setSelectedDate(newSelectedDate);
+      setSelectedDate(date);
       setHelperText(defaultHelperText);
       setValidationStatus(undefined);
-      previousSelectedDate.current = newSelectedDate;
-      args?.onApply?.(newSelectedDate);
+      previousSelectedDate.current = date;
+      args?.onApply?.(event, date);
     },
     [
       args,
@@ -1278,6 +1318,14 @@ export const RangeWithConfirmation: StoryFn<
     </FormField>
   );
 };
+// Passing a date object to a Story, containing an invalid date, will cause Storybook to throw from toISOString()
+RangeWithConfirmation.parameters = {
+  docs: {
+    source: {
+      code: "Disabled for this story, see https://github.com/storybookjs/storybook/issues/11554",
+    },
+  },
+};
 
 export const SingleWithCustomParser: StoryFn<
   DatePickerSingleProps<DateFrameworkType>
@@ -1295,10 +1343,14 @@ export const SingleWithCustomParser: StoryFn<
     SingleDateSelection<DateFrameworkType> | null | undefined
   >(defaultSelectedDate ?? null);
   const handleSelectionChange = useCallback(
-    (newSelection: DateInputSingleDetails<DateFrameworkType>) => {
-      const { date: newSelectedDate, value, errors } = newSelection;
+    (
+      event: SyntheticEvent,
+      date: DateFrameworkType,
+      details: DateInputSingleDetails | undefined = {},
+    ) => {
+      const { value, errors } = details;
       console.log(
-        `Selected date: ${newSelectedDate ? dateAdapter.format(newSelectedDate, "DD MMM YYYY") : newSelectedDate}`,
+        `Selected date: ${dateAdapter.isValid(date) ? dateAdapter.format(date, "DD MMM YYYY") : date}`,
       );
       if (errors?.length && value) {
         setHelperText(`${errorHelperText} - ${errors[0].message}`);
@@ -1315,8 +1367,8 @@ export const SingleWithCustomParser: StoryFn<
         setHelperText(defaultHelperText);
         setValidationStatus(undefined);
       }
-      setSelectedDate(newSelectedDate);
-      args.onSelectionChange?.(newSelection);
+      setSelectedDate(value?.trim().length === 0 ? null : date);
+      args?.onSelectionChange?.(event, date, details);
     },
     [dateAdapter, setHelperText, setValidationStatus],
   );
@@ -1326,10 +1378,12 @@ export const SingleWithCustomParser: StoryFn<
       inputDate: string,
       format: string,
       locale: any,
-    ): DateInputSingleDetails<DateFrameworkType> => {
+    ): ParserResult<DateFrameworkType> => {
       if (!inputDate?.length) {
+        const parsedDate = dateAdapter.parse("invalid date", "DD/MMM/YYYY");
         return {
-          date: null,
+          date: parsedDate.date,
+          value: inputDate,
           errors: [
             { type: DateDetailErrorEnum.UNSET, message: "no date provided" },
           ],
@@ -1343,6 +1397,7 @@ export const SingleWithCustomParser: StoryFn<
         offsetDate = dateAdapter.add(offsetDate, { days: offsetDays });
         return {
           date: offsetDate,
+          value: inputDate,
         };
       }
       return dateAdapter.parse(parsedDate || "", format, locale);
@@ -1463,25 +1518,30 @@ export const SingleWithCustomValidation: StoryFn<
   };
   const validateIsAWeekday = useCallback(
     (
-      result: DateInputSingleDetails<DateFrameworkType>,
-    ): DateInputSingleDetails<DateFrameworkType> => {
-      if (result?.date && isWeekend(result.date)) {
-        result.errors = result.errors ?? [];
-        result.errors?.push({
+      date: SingleDateSelection<DateFrameworkType>,
+      details: DateInputSingleDetails | undefined = {},
+    ): DateInputSingleDetails => {
+      if (date && isWeekend(date)) {
+        details.errors = details.errors ?? [];
+        details.errors?.push({
           type: DateDetailErrorEnum.INVALID_DAY,
           message: "date must be a weekday",
         });
       }
-      return result;
+      return details;
     },
     [],
   );
 
   const handleSelectionChange = useCallback(
-    (newSelection: DateInputSingleDetails<DateFrameworkType>) => {
-      const { date: newSelectedDate, value, errors } = newSelection;
+    (
+      event: SyntheticEvent,
+      date: DateFrameworkType,
+      details: DateInputSingleDetails | undefined = {},
+    ) => {
+      const { value, errors } = details;
       console.log(
-        `Selected date: ${newSelectedDate ? dateAdapter.format(newSelectedDate, "DD MMM YYYY") : newSelectedDate}`,
+        `Selected date: ${dateAdapter.isValid(date) ? dateAdapter.format(date, "DD MMM YYYY") : date}`,
       );
       if (errors?.length && value) {
         setHelperText(`${errorHelperText} - ${errors[0].message}`);
@@ -1498,25 +1558,23 @@ export const SingleWithCustomValidation: StoryFn<
         setHelperText(defaultHelperText);
         setValidationStatus(undefined);
       }
-      args.onSelectionChange?.(newSelection);
+      args?.onSelectionChange?.(event, date, details);
     },
     [dateAdapter, setHelperText, setValidationStatus],
   );
 
   const customiseNonDateError = useCallback(
-    (
-      result: DateInputSingleDetails<DateFrameworkType>,
-    ): DateInputSingleDetails<DateFrameworkType> => {
-      if (!result.errors) {
-        return result;
+    (details: DateInputSingleDetails): DateInputSingleDetails => {
+      if (!details.errors) {
+        return details;
       }
-      result.errors = result.errors.map((error) => {
+      details.errors = details.errors.map((error) => {
         if (error.type === DateDetailErrorEnum.NOT_A_DATE) {
           error.message = "valid dates are any weekday";
         }
         return error;
       });
-      return result;
+      return details;
     },
     [],
   );
@@ -1530,9 +1588,10 @@ export const SingleWithCustomValidation: StoryFn<
 
   const validateAndCustomizeError = useCallback(
     (
-      result: DateInputSingleDetails<DateFrameworkType>,
-    ): DateInputSingleDetails<DateFrameworkType> => {
-      const validateWeekdayResult = validateIsAWeekday(result);
+      date: SingleDateSelection<DateFrameworkType>,
+      details: DateInputSingleDetails | undefined = {},
+    ): DateInputSingleDetails => {
+      const validateWeekdayResult = validateIsAWeekday(date, details);
       return customiseNonDateError(validateWeekdayResult);
     },
     [customiseNonDateError, validateIsAWeekday],
@@ -1570,7 +1629,14 @@ export const SingleWithLocaleEsES: StoryFn<
   // <LocalizationProvider DateAdapter={DateAdapter} locale="es-ES"></LocalizationProvider>
   const { dateAdapter } = useLocalization();
   const isDateFns = dateAdapter.lib === "date-fns";
-  dateAdapter.locale = isDateFns ? dateFnsEs : "es-ES";
+  const isDayjs = dateAdapter.lib === "dayjs";
+  if (isDateFns) {
+    dateAdapter.locale = dateFnsEs;
+  } else if (isDayjs) {
+    dateAdapter.locale = "es";
+  } else {
+    dateAdapter.locale = "es-ES";
+  }
   const defaultHelperText = `Locale ${isDateFns ? dateAdapter.locale.code : dateAdapter.locale}`;
   const errorHelperText = "Please enter a valid date in DD MMM YYYY format";
   const [helperText, setHelperText] = useState(defaultHelperText);
@@ -1579,10 +1645,14 @@ export const SingleWithLocaleEsES: StoryFn<
     undefined,
   );
   const handleSelectionChange = useCallback(
-    (newSelection: DateInputSingleDetails<DateFrameworkType>) => {
-      const { date: newSelectedDate, value, errors } = newSelection;
+    (
+      event: SyntheticEvent,
+      date: DateFrameworkType,
+      details: DateInputSingleDetails | undefined = {},
+    ) => {
+      const { value, errors } = details;
       console.log(
-        `Selected date: ${newSelectedDate ? dateAdapter.format(newSelectedDate, "DD MMM YYYY") : newSelectedDate}`,
+        `Selected date: ${dateAdapter.isValid(date) ? dateAdapter.format(date, "DD MMM YYYY") : date}`,
       );
       if (errors?.length && value) {
         setHelperText(`${errorHelperText} - ${errors[0].message}`);
@@ -1599,7 +1669,7 @@ export const SingleWithLocaleEsES: StoryFn<
         setHelperText(defaultHelperText);
         setValidationStatus(undefined);
       }
-      args.onSelectionChange?.(newSelection);
+      args?.onSelectionChange?.(event, date, details);
     },
     [dateAdapter, setHelperText, setValidationStatus],
   );
@@ -1633,7 +1703,14 @@ export const RangeWithLocaleEsES: StoryFn<
   // <LocalizationProvider DateAdapter={DateAdapter} locale="es-ES"></LocalizationProvider>
   const { dateAdapter } = useLocalization();
   const isDateFns = dateAdapter.lib === "date-fns";
-  dateAdapter.locale = isDateFns ? dateFnsEs : "es-ES";
+  const isDayjs = dateAdapter.lib === "dayjs";
+  if (isDateFns) {
+    dateAdapter.locale = dateFnsEs;
+  } else if (isDayjs) {
+    dateAdapter.locale = "es";
+  } else {
+    dateAdapter.locale = "es-ES";
+  }
   const defaultHelperText = `Locale ${isDateFns ? dateAdapter.locale.code : dateAdapter.locale}`;
   const errorHelperText = "Please enter a valid date in DD MMM YYYY format";
   const [helperText, setHelperText] = useState(defaultHelperText);
@@ -1642,21 +1719,21 @@ export const RangeWithLocaleEsES: StoryFn<
     undefined,
   );
   const handleSelectionChange = useCallback(
-    (newSelection: DateInputRangeDetails<DateFrameworkType>) => {
+    (
+      event: SyntheticEvent,
+      date: DateRangeSelection<DateFrameworkType>,
+      details: DateInputRangeDetails | undefined = {},
+    ) => {
+      const { startDate, endDate } = date;
       const {
         startDate: {
-          date: startDate,
           value: startDateOriginalValue,
           errors: startDateErrors,
-        },
-        endDate: {
-          date: endDate,
-          value: endDateOriginalValue,
-          errors: endDateErrors,
-        },
-      } = newSelection;
+        } = {},
+        endDate: { value: endDateOriginalValue, errors: endDateErrors } = {},
+      } = details;
       console.log(
-        `StartDate: ${startDate ? dateAdapter.format(startDate, "DD MMM YYYY") : startDate}, EndDate: ${endDate ? dateAdapter.format(endDate, "DD MMM YYYY") : endDate}`,
+        `StartDate: ${dateAdapter.isValid(startDate) ? dateAdapter.format(startDate, "DD MMM YYYY") : startDate}, EndDate: ${dateAdapter.isValid(endDate) ? dateAdapter.format(endDate, "DD MMM YYYY") : endDate}`,
       );
       if (startDateErrors?.length) {
         console.log(
@@ -1688,7 +1765,7 @@ export const RangeWithLocaleEsES: StoryFn<
         setValidationStatus(undefined);
         setHelperText(defaultHelperText);
       }
-      args.onSelectionChange?.(newSelection);
+      args?.onSelectionChange?.(event, date, details);
     },
     [args.onSelectionChange, dateAdapter, setValidationStatus, setHelperText],
   );
@@ -1722,7 +1799,14 @@ export const SingleWithLocaleZhCN: StoryFn<
   // <LocalizationProvider DateAdapter={DateAdapter} locale="zh-CN"></LocalizationProvider>
   const { dateAdapter } = useLocalization();
   const isDateFns = dateAdapter.lib === "date-fns";
-  dateAdapter.locale = isDateFns ? dateFnsZhCn : "zh-CN";
+  const isDayjs = dateAdapter.lib === "dayjs";
+  if (isDateFns) {
+    dateAdapter.locale = dateFnsZhCn;
+  } else if (isDayjs) {
+    dateAdapter.locale = "zh-cn";
+  } else {
+    dateAdapter.locale = "zh-CN";
+  }
   const defaultHelperText = `Locale ${isDateFns ? dateAdapter.locale.code : dateAdapter.locale}`;
   const errorHelperText = "Please enter a valid date in DD MMM YYYY format";
   const [helperText, setHelperText] = useState(defaultHelperText);
@@ -1731,10 +1815,14 @@ export const SingleWithLocaleZhCN: StoryFn<
     undefined,
   );
   const handleSelectionChange = useCallback(
-    (newSelection: DateInputSingleDetails<DateFrameworkType>) => {
-      const { date: newSelectedDate, value, errors } = newSelection;
+    (
+      event: SyntheticEvent,
+      date: DateFrameworkType,
+      details: DateInputSingleDetails | undefined = {},
+    ) => {
+      const { value, errors } = details;
       console.log(
-        `Selected date: ${newSelectedDate ? dateAdapter.format(newSelectedDate, "DD MMM YYYY", isDateFns ? dateFnsEnUs : "en") : newSelectedDate}`,
+        `Selected date: ${dateAdapter.isValid(date) ? dateAdapter.format(date, "DD MMM YYYY", isDateFns ? dateFnsEnUs : "en") : date}`,
       );
       if (errors?.length && value) {
         setHelperText(`${errorHelperText} - ${errors[0].message}`);
@@ -1751,7 +1839,7 @@ export const SingleWithLocaleZhCN: StoryFn<
         setHelperText(defaultHelperText);
         setValidationStatus(undefined);
       }
-      args.onSelectionChange?.(newSelection);
+      args?.onSelectionChange?.(event, date, details);
     },
     [dateAdapter, setHelperText, setValidationStatus],
   );
@@ -1805,10 +1893,14 @@ export const SingleBordered: StoryFn<
     undefined,
   );
   const handleSelectionChange = useCallback(
-    (newSelection: DateInputSingleDetails<DateFrameworkType>) => {
-      const { date: newSelectedDate, value, errors } = newSelection;
+    (
+      event: SyntheticEvent,
+      date: DateFrameworkType,
+      details: DateInputSingleDetails | undefined = {},
+    ) => {
+      const { value, errors } = details;
       console.log(
-        `Selected date: ${newSelectedDate ? dateAdapter.format(newSelectedDate, "DD MMM YYYY") : newSelectedDate}`,
+        `Selected date: ${dateAdapter.isValid(date) ? dateAdapter.format(date, "DD MMM YYYY") : date}`,
       );
       if (errors?.length && value) {
         setHelperText(`${errorHelperText} - ${errors[0].message}`);
@@ -1825,7 +1917,7 @@ export const SingleBordered: StoryFn<
         setHelperText(defaultHelperText);
         setValidationStatus(undefined);
       }
-      args.onSelectionChange?.(newSelection);
+      args?.onSelectionChange?.(event, date, details);
     },
     [dateAdapter, setHelperText, setValidationStatus],
   );
@@ -1869,21 +1961,21 @@ export const RangeBordered: StoryFn<
     undefined,
   );
   const handleSelectionChange = useCallback(
-    (newSelection: DateInputRangeDetails<DateFrameworkType>) => {
+    (
+      event: SyntheticEvent,
+      date: DateRangeSelection<DateFrameworkType>,
+      details: DateInputRangeDetails | undefined = {},
+    ) => {
+      const { startDate, endDate } = date;
       const {
         startDate: {
-          date: startDate,
           value: startDateOriginalValue,
           errors: startDateErrors,
-        },
-        endDate: {
-          date: endDate,
-          value: endDateOriginalValue,
-          errors: endDateErrors,
-        },
-      } = newSelection;
+        } = {},
+        endDate: { value: endDateOriginalValue, errors: endDateErrors } = {},
+      } = details;
       console.log(
-        `StartDate: ${startDate ? dateAdapter.format(startDate, "DD MMM YYYY") : startDate}, EndDate: ${endDate ? dateAdapter.format(endDate, "DD MMM YYYY") : endDate}`,
+        `StartDate: ${dateAdapter.isValid(startDate) ? dateAdapter.format(startDate, "DD MMM YYYY") : startDate}, EndDate: ${dateAdapter.isValid(endDate) ? dateAdapter.format(endDate, "DD MMM YYYY") : endDate}`,
       );
       if (startDateErrors?.length) {
         console.log(
@@ -1915,7 +2007,7 @@ export const RangeBordered: StoryFn<
         setValidationStatus(undefined);
         setHelperText(defaultHelperText);
       }
-      args.onSelectionChange?.(newSelection);
+      args?.onSelectionChange?.(event, date, details);
     },
     [args.onSelectionChange, dateAdapter, setValidationStatus, setHelperText],
   );
@@ -2047,27 +2139,22 @@ export const WithExperimentalTime: StoryFn<
     );
   const previousSelectedDate = useRef<typeof selectedDate>(selectedDate);
 
-  const handleDateChange = useCallback(
-    (newSelection: DateInputRangeDetails<DateFrameworkType>) => {
+  const handleSelectionChange = useCallback(
+    (
+      event: SyntheticEvent,
+      date: DateRangeSelection<DateFrameworkType>,
+      details: DateInputRangeDetails | undefined = {},
+    ) => {
+      let updatedDate = addTimeToDate(selectedTime, date);
       const {
         startDate: {
-          date: startDate,
           value: startDateOriginalValue,
           errors: startDateErrors,
-        },
-        endDate: {
-          date: endDate,
-          value: endDateOriginalValue,
-          errors: endDateErrors,
-        },
-      } = newSelection;
-      let newSelectedDate: DateRangeSelection<DateFrameworkType> = {
-        startDate,
-        endDate,
-      };
-      newSelectedDate = addTimeToDate(selectedTime, newSelectedDate);
+        } = {},
+        endDate: { value: endDateOriginalValue, errors: endDateErrors } = {},
+      } = details;
       console.log(
-        `StartDate: ${newSelectedDate?.startDate ? dateAdapter.format(newSelectedDate.startDate, "DD MMM YYYY HH:mm:ss") : newSelectedDate?.startDate}, EndDate: ${newSelectedDate?.endDate ? dateAdapter.format(newSelectedDate.endDate, "DD MMM YYYY HH:mm:ss") : newSelectedDate?.endDate}`,
+        `StartDate: ${dateAdapter.isValid(updatedDate?.startDate) ? dateAdapter.format(updatedDate.startDate, "DD MMM YYYY HH:mm:ss") : updatedDate?.startDate}, EndDate: ${dateAdapter.isValid(updatedDate?.endDate) ? dateAdapter.format(updatedDate.endDate, "DD MMM YYYY HH:mm:ss") : updatedDate?.endDate}`,
       );
       if (startDateErrors?.length) {
         console.log(
@@ -2085,26 +2172,34 @@ export const WithExperimentalTime: StoryFn<
           console.log(`EndDate Original Value: ${endDateOriginalValue}`);
         }
       }
-      setSelectedDate(newSelectedDate);
-      args.onSelectionChange?.({
-        startDate: {
-          ...newSelection.startDate,
-          date: newSelectedDate.startDate,
-        },
-        endDate: { ...newSelection.endDate, date: newSelectedDate.endDate },
+      setSelectedDate({
+        startDate:
+          startDateOriginalValue?.trim().length === 0
+            ? null
+            : updatedDate.startDate,
+        endDate:
+          endDateOriginalValue?.trim().length === 0
+            ? null
+            : updatedDate.endDate,
       });
+      args?.onSelectionChange?.(event, updatedDate, details);
     },
-    [args.onSelectionChange, dateAdapter, selectedTime],
+    [
+      args.onSelectionChange,
+      dateAdapter,
+      selectedTime?.startTime,
+      selectedTime?.endTime,
+    ],
   );
 
   const handleTimeChange = useCallback(
-    (newSelectedTime: typeof selectedTime) => {
-      setSelectedTime(newSelectedTime);
+    (time: typeof selectedTime) => {
+      setSelectedTime(time);
       if (selectedDate) {
-        const newSelectedDate = addTimeToDate(newSelectedTime, selectedDate);
-        setSelectedDate(newSelectedDate);
+        const date = addTimeToDate(time, selectedDate);
+        setSelectedDate(date);
         console.log(
-          `StartDate: ${newSelectedDate?.startDate ? dateAdapter.format(newSelectedDate.startDate, "DD MMM YYYY HH:mm:ss") : newSelectedDate?.startDate}, EndDate: ${newSelectedDate?.endDate ? dateAdapter.format(newSelectedDate.endDate, "DD MMM YYYY HH:mm:ss") : newSelectedDate?.endDate}`,
+          `StartDate: ${dateAdapter.isValid(date?.startDate) ? dateAdapter.format(date.startDate, "DD MMM YYYY HH:mm:ss") : date?.startDate}, EndDate: ${dateAdapter.isValid(date?.endDate) ? dateAdapter.format(date.endDate, "DD MMM YYYY HH:mm:ss") : date?.endDate}`,
         );
       }
     },
@@ -2116,7 +2211,7 @@ export const WithExperimentalTime: StoryFn<
     date: DateRangeSelection<DateFrameworkType>,
   ) {
     const { startTime, endTime } = time;
-    if (date?.startDate && startTime) {
+    if (dateAdapter.isValid(date?.startDate) && startTime) {
       date.startDate = dateAdapter.set(date.startDate, {
         hour: startTime.hour,
         minute: startTime.minute,
@@ -2124,7 +2219,7 @@ export const WithExperimentalTime: StoryFn<
         millisecond: startTime.millisecond,
       });
     }
-    if (date?.endDate && endTime) {
+    if (dateAdapter.isValid(date?.endDate) && endTime) {
       date.endDate = dateAdapter.set(date.endDate, {
         hour: endTime.hour,
         minute: endTime.minute,
@@ -2136,13 +2231,16 @@ export const WithExperimentalTime: StoryFn<
   }
 
   const handleApply = useCallback(
-    (appliedDate: DateRangeSelection<DateFrameworkType>) => {
+    (
+      event: SyntheticEvent,
+      appliedDate: DateRangeSelection<DateFrameworkType>,
+    ) => {
       const { startDate, endDate } = appliedDate;
       console.log(
         `Applied StartDate: ${startDate ? dateAdapter.format(startDate, "DD MMM YYYY HH:mm:ss") : startDate}, EndDate: ${endDate ? dateAdapter.format(endDate, "DD MMM YYYY  HH:mm:ss") : endDate}`,
       );
       previousSelectedDate.current = selectedDate;
-      onApplyProp?.(appliedDate);
+      onApplyProp?.(event, appliedDate);
     },
     [onApplyProp],
   );
@@ -2159,7 +2257,7 @@ export const WithExperimentalTime: StoryFn<
       selectedDate={selectedDate}
       onApply={handleApply}
       onCancel={handleCancel}
-      onSelectionChange={handleDateChange}
+      onSelectionChange={handleSelectionChange}
     >
       <DatePickerTrigger>
         <DatePickerTimeInput
@@ -2190,6 +2288,14 @@ export const WithExperimentalTime: StoryFn<
     </DatePicker>
   );
 };
+// Passing a date object to a Story, containing an invalid date, will cause Storybook to throw from toISOString()
+WithExperimentalTime.parameters = {
+  docs: {
+    source: {
+      code: "Disabled for this story, see https://github.com/storybookjs/storybook/issues/11554",
+    },
+  },
+};
 
 export const ResetSingleState: StoryFn<
   DatePickerSingleProps<DateFrameworkType>
@@ -2198,14 +2304,17 @@ export const ResetSingleState: StoryFn<
     SingleDateSelection<DateFrameworkType> | null | undefined
   >(defaultSelectedDate ?? null);
   const { dateAdapter } = useLocalization();
-  const datePickerRef = useRef<DatePickerHandles>(null);
   const handleSelectionChange = useCallback(
-    (newSelection: DateInputSingleDetails<DateFrameworkType>) => {
-      const { date: newSelectedDate, value, errors } = newSelection;
+    (
+      event: SyntheticEvent,
+      date: DateFrameworkType,
+      details: DateInputSingleDetails | undefined = {},
+    ) => {
+      const { value, errors } = details;
       console.log(
-        `Selected date: ${newSelectedDate ? dateAdapter.format(newSelectedDate, "DD MMM YYYY") : newSelectedDate}`,
+        `Selected date: ${dateAdapter.isValid(date) ? dateAdapter.format(date, "DD MMM YYYY") : date}`,
       );
-      setSelectedDate(newSelection.date);
+      setSelectedDate(value?.trim().length === 0 ? null : date);
       if (errors?.length && value) {
         console.log(
           `Error(s): ${errors
@@ -2216,7 +2325,7 @@ export const ResetSingleState: StoryFn<
           console.log(`Original Value: ${value}`);
         }
       }
-      args.onSelectionChange?.(newSelection);
+      args?.onSelectionChange?.(event, date, details);
     },
     [args.onSelectionChange, dateAdapter, setSelectedDate],
   );
@@ -2227,22 +2336,22 @@ export const ResetSingleState: StoryFn<
       {...args}
       onSelectionChange={handleSelectionChange}
       selectedDate={selectedDate}
-      ref={datePickerRef}
     >
       <DatePickerTrigger>
         <DatePickerSingleInput />
+        <GridLayout columns={1} style={{ margin: "var(--salt-spacing-50)" }}>
+          <Button
+            onClick={() => {
+              setSelectedDate(null);
+            }}
+          >
+            Reset Selection
+          </Button>
+        </GridLayout>
       </DatePickerTrigger>
       <DatePickerOverlay>
         <DatePickerSinglePanel />
       </DatePickerOverlay>
-      <Button
-        onClick={() => {
-          datePickerRef?.current?.reset();
-          setSelectedDate(null);
-        }}
-      >
-        Reset all selections
-      </Button>
     </DatePicker>
   );
 };
@@ -2255,27 +2364,27 @@ export const ResetRangeState: StoryFn<
     useState<DateRangeSelection<DateFrameworkType> | null>(
       defaultSelectedDate ?? null,
     );
-  const datePickerRef = useRef<DatePickerHandles>(null);
   const handleSelectionChange = useCallback(
-    (newSelection: DateInputRangeDetails<DateFrameworkType>) => {
+    (
+      event: SyntheticEvent,
+      date: DateRangeSelection<DateFrameworkType>,
+      details: DateInputRangeDetails | undefined = {},
+    ) => {
+      const { startDate, endDate } = date;
       const {
         startDate: {
-          date: startDate,
           value: startDateOriginalValue,
           errors: startDateErrors,
-        },
-        endDate: {
-          date: endDate,
-          value: endDateOriginalValue,
-          errors: endDateErrors,
-        },
-      } = newSelection;
+        } = {},
+        endDate: { value: endDateOriginalValue, errors: endDateErrors } = {},
+      } = details;
       console.log(
-        `StartDate: ${startDate ? dateAdapter.format(startDate, "DD MMM YYYY") : startDate}, EndDate: ${endDate ? dateAdapter.format(endDate, "DD MMM YYYY") : endDate}`,
+        `StartDate: ${dateAdapter.isValid(startDate) ? dateAdapter.format(startDate, "DD MMM YYYY") : startDate}, EndDate: ${dateAdapter.isValid(endDate) ? dateAdapter.format(endDate, "DD MMM YYYY") : endDate}`,
       );
       setSelectedDate({
-        startDate,
-        endDate,
+        startDate:
+          startDateOriginalValue?.trim().length === 0 ? null : startDate,
+        endDate: endDateOriginalValue?.trim().length === 0 ? null : endDate,
       });
       if (startDateErrors?.length) {
         console.log(
@@ -2293,7 +2402,7 @@ export const ResetRangeState: StoryFn<
           console.log(`EndDate Original Value: ${endDateOriginalValue}`);
         }
       }
-      args.onSelectionChange?.(newSelection);
+      args?.onSelectionChange?.(event, date, details);
     },
     [args.onSelectionChange, dateAdapter, setSelectedDate],
   );
@@ -2304,22 +2413,44 @@ export const ResetRangeState: StoryFn<
       {...args}
       onSelectionChange={handleSelectionChange}
       selectedDate={selectedDate}
-      ref={datePickerRef}
     >
       <DatePickerTrigger>
         <DatePickerRangeInput />
-        <Button
-          onClick={() => {
-            datePickerRef?.current?.reset();
-            setSelectedDate(null);
-          }}
-        >
-          Reset All Selections
-        </Button>
+        <GridLayout columns={3} style={{ margin: "var(--salt-spacing-50)" }}>
+          <Button
+            onClick={() => {
+              setSelectedDate({ ...selectedDate, startDate: null });
+            }}
+          >
+            Reset Start Date
+          </Button>
+          <Button
+            onClick={() => {
+              setSelectedDate({ ...selectedDate, endDate: null });
+            }}
+          >
+            Reset End Date
+          </Button>
+          <Button
+            onClick={() => {
+              setSelectedDate(null);
+            }}
+          >
+            Reset Both
+          </Button>
+        </GridLayout>
       </DatePickerTrigger>
       <DatePickerOverlay>
         <DatePickerRangePanel />
       </DatePickerOverlay>
     </DatePicker>
   );
+};
+// Passing a date object to a Story, containing an invalid date, will cause Storybook to throw from toISOString()
+ResetRangeState.parameters = {
+  docs: {
+    source: {
+      code: "Disabled for this story, see https://github.com/storybookjs/storybook/issues/11554",
+    },
+  },
 };

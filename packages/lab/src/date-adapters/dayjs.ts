@@ -4,18 +4,14 @@ import localeData from "dayjs/plugin/localeData";
 import timezone from "dayjs/plugin/timezone";
 import utc from "dayjs/plugin/utc";
 import weekday from "dayjs/plugin/weekday";
-import type {
+import {
   AdapterOptions,
+  ParserResult,
   RecommendedFormats,
   SaltDateAdapter,
   Timezone,
 } from "./saltDateAdapter";
-import {
-  type DateBuilderReturnType,
-  type DateDetail,
-  DateDetailErrorEnum,
-  type TimeFields,
-} from "./types";
+import { DateDetailErrorEnum, type TimeFields } from "./types";
 
 type Constructor = {
   (...args: Parameters<typeof defaultDayjs>): Dayjs;
@@ -33,25 +29,6 @@ defaultDayjs.extend(utc);
 defaultDayjs.extend(timezone);
 defaultDayjs.extend(weekday);
 defaultDayjs.extend(localeData);
-
-// Dayjs expects Title-case months, so treats "jun" as invalid
-function capitalizeMonthInDate(value: string, format: string) {
-  const separatorMatch = format.match(/[^A-Za-z0-9]/);
-  const separator = separatorMatch ? separatorMatch[0] : " ";
-
-  const formatParts = format.split(separator);
-  const valueParts = value.split(separator);
-
-  return formatParts
-    .map((part, index) => {
-      const word = valueParts[index];
-      if (part.includes("MMM") && word) {
-        return `${word.charAt(0).toUpperCase()}${word.slice(1).toLowerCase()}`;
-      }
-      return word || "";
-    })
-    .join(separator);
-}
 
 /**
  * Adapter for Day.js library, implementing the SaltDateAdapter interface.
@@ -89,6 +66,15 @@ export class AdapterDayjs implements SaltDateAdapter<Dayjs, string> {
     if (!instance) {
       defaultDayjs.extend(customParseFormat);
     }
+  }
+
+  /**
+   * Type guard for Dayjs object
+   * @param date
+   * @private
+   */
+  private isDayjs(date: any): date is Dayjs {
+    return date instanceof this.dayjs().constructor;
   }
 
   /**
@@ -143,31 +129,27 @@ export class AdapterDayjs implements SaltDateAdapter<Dayjs, string> {
   };
 
   /**
-   * Creates a Day.js date object from a string or returns the current date.
+   * Creates a Day.js date object from a string or returns an invalid date.
    * @param value - The date string to parse.
    * @param timezone - The timezone to use (default is "default").
    * @param locale - The locale to use for parsing.
-   * @returns The parsed Day.js date object or null.
+   * @returns The parsed Day.js date object or an invalid date object.
    */
-  public date = <T extends string | null | undefined>(
+  public date = <T extends string | undefined>(
     value?: T,
     timezone: Timezone = "default",
     locale?: string,
-  ): DateBuilderReturnType<T, Dayjs> => {
-    type R = DateBuilderReturnType<T, Dayjs>;
-    if (value === null) {
-      return <R>null;
-    }
-
+  ): Dayjs => {
+    let date: Dayjs;
     if (timezone === "UTC") {
-      return <R>this.createUTCDate(value, locale);
+      date = this.createUTCDate(value, locale);
+    } else if (timezone === "system" || timezone === "default") {
+      date = this.createSystemDate(value, locale);
+    } else {
+      date = this.createTZDate(value, timezone, locale);
     }
 
-    if (timezone === "system" || timezone === "default") {
-      return <R>this.createSystemDate(value, locale);
-    }
-
-    return <R>this.createTZDate(value, timezone, locale);
+    return date.isValid() ? date : this.dayjs("Invalid Date");
   };
 
   /**
@@ -212,35 +194,22 @@ export class AdapterDayjs implements SaltDateAdapter<Dayjs, string> {
     value: string,
     format: string,
     locale?: string,
-  ): DateDetail<Dayjs> {
-    if (value === "") {
+  ): ParserResult<Dayjs> {
+    const parsedDate = this.dayjs(
+      value?.trim(),
+      format,
+      locale ?? this.locale,
+      false,
+    );
+    if (parsedDate.isValid()) {
       return {
-        date: null,
+        date: parsedDate,
         value,
-        errors: [
-          {
-            message: "not a valid date",
-            type: DateDetailErrorEnum.INVALID_DATE,
-          },
-        ],
       };
     }
 
-    const normalisedValue = capitalizeMonthInDate(value, format);
-    const newDate = this.dayjs(
-      normalisedValue,
-      format,
-      locale ?? this.locale,
-      true,
-    );
-    if (newDate.isValid()) {
-      return {
-        date: newDate,
-        value,
-      };
-    }
     return {
-      date: null,
+      date: this.dayjs("Invalid Date"),
       value,
       errors: [
         {
@@ -254,10 +223,10 @@ export class AdapterDayjs implements SaltDateAdapter<Dayjs, string> {
   /**
    * Checks if a Day.js date object is valid.
    * @param date - The Day.js date object to check.
-   * @returns True if the date is valid, false otherwise.
+   * @returns True if the date is valid date object, false otherwise.
    */
-  public isValid(date: Dayjs | null | undefined): boolean {
-    return date ? date.isValid() : false;
+  public isValid(date: any): date is Dayjs {
+    return this.isDayjs(date) ? date.isValid() : false;
   }
 
   /**
@@ -551,7 +520,7 @@ export class AdapterDayjs implements SaltDateAdapter<Dayjs, string> {
    * @param date - The Day.js date object.
    * @returns An object containing the hour, minute, second, and millisecond.
    */
-  public getTime(date: Dayjs): TimeFields | null {
+  public getTime(date: Dayjs): TimeFields {
     return {
       hour: date.get("hour"),
       minute: date.get("minute"),

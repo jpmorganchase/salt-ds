@@ -1,17 +1,4 @@
 /**
- * Determines the return type for a date builder function.
- *
- * @template T - The type of the input value, which can be a string, null, or undefined.
- * @template TDate - The type of the date object to return.
- *
- * If the input type T is null, the return type is null; otherwise, it is TDate.
- */
-export type DateBuilderReturnType<
-  T extends string | null | undefined,
-  TDate,
-> = [T] extends [null] ? null : TDate;
-
-/**
  * Represents the type of a date framework.
  *
  * If the DateFrameworkTypeMap is empty, it defaults to any; otherwise, it is a union of all types in the map.
@@ -19,20 +6,6 @@ export type DateBuilderReturnType<
 export type DateFrameworkType = keyof DateFrameworkTypeMap extends never
   ? any
   : DateFrameworkTypeMap[keyof DateFrameworkTypeMap];
-
-/**
- * Determines the return type for a function that creates a date.
- *
- * @template T - The type of the input value, which can be a string, null, or undefined.
- * @template TDate - The type of the date object to return.
- *
- * If the input type T is null, the return type is null; otherwise, it is TDate.
- */
-export type CreateDateReturnType<T extends string | null | undefined, TDate> = [
-  T,
-] extends [null]
-  ? null
-  : TDate;
 
 /**
  * Enum representing possible date detail error types.
@@ -64,12 +37,8 @@ export type DateDetailError = {
 
 /**
  * Provides a way to return date errors in a uniform way.
- *
- * @template TDate - The type of the date object.
  */
-export type DateDetail<TDate extends DateFrameworkType> = {
-  /** The parsed date */
-  date: TDate | null | undefined;
+export type DateDetail= {
   /** The original entered value, if applicable */
   value?: string;
   /** The errors found by the parser */
