@@ -30,18 +30,14 @@ import {
   subMilliseconds as subMillisecondsDateFns,
 } from "date-fns";
 import { enUS } from "date-fns/locale";
-import type {
+import {
   AdapterOptions,
+  ParserResult,
   RecommendedFormats,
   SaltDateAdapter,
   Timezone,
 } from "./saltDateAdapter";
-import {
-  type DateBuilderReturnType,
-  type DateDetail,
-  DateDetailErrorEnum,
-  type TimeFields,
-} from "./types";
+import { DateDetailErrorEnum, type TimeFields } from "./types";
 
 declare module "./types" {
   interface DateFrameworkTypeMap {
@@ -134,24 +130,19 @@ export class AdapterDateFns implements SaltDateAdapter<Date, Locale> {
   }
 
   /**
-   * Creates a Date object from a string or returns the current date.
+   * Creates a Date object from a string or returns an invalid date.
    * @param value - The date string to parse.
    * @param timezone - The timezone to use (default is "default").
    * @param locale - The locale to use for parsing.
-   * @returns The parsed Date object or null.
+   * @returns The parsed Date object or an invalid date object.
    */
-  public date = <T extends string | null | undefined>(
+  public date = <T extends string | undefined>(
     value?: T,
     timezone: Timezone = "default",
     locale?: Locale,
-  ): DateBuilderReturnType<T, Date> => {
-    type R = DateBuilderReturnType<T, Date>;
-    if (value === null) {
-      return <R>null;
-    }
-
+  ): Date => {
     const date = value ? new Date(value) : new Date();
-    return <R>date;
+    return isValidDateFns(date) ? date : new Date(Number.NaN);
   };
 
   /**
@@ -194,7 +185,7 @@ export class AdapterDateFns implements SaltDateAdapter<Date, Locale> {
     value: string,
     format: string,
     locale?: Locale,
-  ): DateDetail<Date> {
+  ): ParserResult<Date> {
     const dateFnsFormat = this.mapToDateFnsFormat(format);
     const parsedDate = parseDateFns(value, dateFnsFormat, new Date(), {
       locale: locale ?? this.locale,
@@ -206,7 +197,7 @@ export class AdapterDateFns implements SaltDateAdapter<Date, Locale> {
       };
     }
     return {
-      date: null,
+      date: parsedDate,
       value,
       errors: [
         {
@@ -220,10 +211,10 @@ export class AdapterDateFns implements SaltDateAdapter<Date, Locale> {
   /**
    * Checks if a Date object is valid.
    * @param date - The Date object to check.
-   * @returns True if the date is valid, false otherwise.
+   * @returns True if the date is valid date object, false otherwise.
    */
-  public isValid(date: Date | null | undefined): boolean {
-    return date ? isValidDateFns(date) : false;
+  public isValid(date: any): date is Date {
+    return date instanceof Date && isValidDateFns(date);
   }
 
   /**
@@ -506,7 +497,7 @@ export class AdapterDateFns implements SaltDateAdapter<Date, Locale> {
    * @param date - The Date object.
    * @returns An object containing the hour, minute, second, and millisecond.
    */
-  public getTime(date: Date): TimeFields | null {
+  public getTime(date: Date): TimeFields {
     return {
       hour: getHours(date),
       minute: getMinutes(date),

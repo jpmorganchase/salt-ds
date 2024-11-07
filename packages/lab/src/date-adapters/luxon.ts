@@ -1,16 +1,12 @@
 import { DateTime, Duration, Settings } from "luxon";
-import type {
+import {
   AdapterOptions,
+  ParserResult,
   RecommendedFormats,
   SaltDateAdapter,
   Timezone,
 } from "./saltDateAdapter";
-import {
-  type DateBuilderReturnType,
-  type DateDetail,
-  DateDetailErrorEnum,
-  type TimeFields,
-} from "./types";
+import { DateDetailErrorEnum, type TimeFields } from "./types";
 
 declare module "./types" {
   interface DateFrameworkTypeMap {
@@ -158,31 +154,26 @@ export class AdapterLuxon implements SaltDateAdapter<DateTime, string> {
   };
 
   /**
-   * Creates a Luxon DateTime object from a string or returns the current date.
+   * Creates a Luxon DateTime object from a string or returns an invalid date.
    * @param value - The date string to parse.
    * @param timezone - The timezone to use (default is "default").
    * @param locale - The locale to use for parsing.
-   * @returns The parsed Luxon DateTime object or null.
+   * @returns The parsed Luxon DateTime object or an invalid date object.
    */
-  public date = <T extends string | null | undefined>(
+  public date = <T extends string | undefined>(
     value?: T,
     timezone: Timezone = "default",
     locale?: string,
-  ): DateBuilderReturnType<T, DateTime> => {
-    type R = DateBuilderReturnType<T, DateTime>;
-    if (value === null) {
-      return <R>null;
-    }
-
+  ): DateTime => {
     if (timezone === "UTC") {
-      return <R>this.createUTCDate(value, locale);
+      return this.createUTCDate(value, locale);
     }
 
     if (timezone === "system" || timezone === "default") {
-      return <R>this.createSystemDate(value, locale);
+      return this.createSystemDate(value, locale);
     }
 
-    return <R>this.createTZDate(value, timezone, locale);
+    return this.createTZDate(value, timezone, locale);
   };
 
   /**
@@ -225,32 +216,19 @@ export class AdapterLuxon implements SaltDateAdapter<DateTime, string> {
     value: string,
     format: string,
     locale?: string,
-  ): DateDetail<DateTime> {
-    if (value === "") {
-      return {
-        date: null,
-        value,
-        errors: [
-          {
-            message: "not a valid date",
-            type: DateDetailErrorEnum.INVALID_DATE,
-          },
-        ],
-      };
-    }
-
+  ): ParserResult<DateTime> {
     const luxonFormat = this.mapToLuxonFormat(format);
-    const newDate = DateTime.fromFormat(value, luxonFormat, {
+    const parsedDate = DateTime.fromFormat(value, luxonFormat, {
       locale: locale ?? this.locale,
     });
-    if (newDate.isValid) {
+    if (parsedDate.isValid) {
       return {
-        date: newDate,
+        date: parsedDate,
         value,
       };
     }
     return {
-      date: null,
+      date: parsedDate,
       value,
       errors: [
         {
@@ -264,10 +242,10 @@ export class AdapterLuxon implements SaltDateAdapter<DateTime, string> {
   /**
    * Checks if a Luxon DateTime object is valid.
    * @param date - The Luxon DateTime object to check.
-   * @returns True if the date is valid, false otherwise.
+   * @returns True if the date is valid date object, false otherwise.
    */
-  public isValid(date: DateTime | null | undefined): boolean {
-    return date ? date.isValid : false;
+  public isValid(date: any): date is DateTime {
+    return date instanceof DateTime ? date.isValid : false;
   }
 
   /**
@@ -506,7 +484,7 @@ export class AdapterLuxon implements SaltDateAdapter<DateTime, string> {
    * @param date - The Luxon DateTime object.
    * @returns An object containing the hour, minute, second, and millisecond.
    */
-  public getTime(date: DateTime): TimeFields | null {
+  public getTime(date: DateTime): TimeFields {
     return {
       hour: date.hour,
       minute: date.minute,

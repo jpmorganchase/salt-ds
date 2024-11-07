@@ -32,6 +32,7 @@ interface CustomDatePickerPanelProps {
   selectionVariant: "single" | "range";
 }
 
+// This is a sample component, representing a composition you could create yourselves
 export const CustomDatePickerPanel = forwardRef<
   HTMLDivElement,
   CustomDatePickerPanelProps
@@ -69,7 +70,7 @@ export const CustomDatePickerPanel = forwardRef<
             </FormFieldLabel>
             <ListBox
               style={{ width: "10em" }}
-              onSelectionChange={(_event, item) => {
+              onSelectionChange={(event, item) => {
                 if (!item) {
                   return;
                 }
@@ -78,39 +79,27 @@ export const CustomDatePickerPanel = forwardRef<
                 if (selectionVariant === "range") {
                   newSelection = selectedDate?.startDate
                     ? {
-                        startDate: {
-                          date: selectedDate.startDate,
-                        },
-                        endDate: {
-                          date: dateAdapter.add(selectedDate.startDate, {
-                            years: tenor,
-                          }),
-                        },
+                        startDate: selectedDate.startDate,
+                        endDate: dateAdapter.add(selectedDate.startDate, {
+                          years: tenor,
+                        }),
                       }
                     : {
-                        startDate: {
-                          date: dateAdapter.today(),
-                        },
-                        endDate: {
-                          date: dateAdapter.add(dateAdapter.today(), {
-                            years: tenor,
-                          }),
-                        },
+                        startDate: dateAdapter.today(),
+                        endDate: dateAdapter.add(dateAdapter.today(), {
+                          years: tenor,
+                        }),
                       };
-                  select(newSelection);
+                  select(event, newSelection);
                 } else {
                   newSelection = selectedDate
-                    ? {
-                        date: dateAdapter.add(selectedDate, {
-                          years: tenor,
-                        }),
-                      }
-                    : {
-                        date: dateAdapter.add(dateAdapter.today(), {
-                          years: tenor,
-                        }),
-                      };
-                  select(newSelection);
+                    ? dateAdapter.add(selectedDate, {
+                        years: tenor,
+                      })
+                    : dateAdapter.add(dateAdapter.today(), {
+                        years: tenor,
+                      });
+                  select(event, newSelection);
                 }
               }}
             >

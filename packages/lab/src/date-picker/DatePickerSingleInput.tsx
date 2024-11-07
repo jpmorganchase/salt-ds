@@ -32,37 +32,47 @@ export interface DatePickerSingleInputProps<TDate extends DateFrameworkType>
   extends DateInputSingleProps<TDate> {
   /**
    * Function to validate the entered date
+   * @param date - The selected date
    * @param details - The details of date selection, either a valid date or error
    * @returns updated DateInputSingleDetails details
    */
   validate?: (
-    details: DateInputSingleDetails<TDate>,
-  ) => DateInputSingleDetails<TDate>;
+    date: SingleDateSelection<TDate>,
+    details: DateInputSingleDetails,
+  ) => DateInputSingleDetails;
 }
 
 function defaultSingleValidation<TDate extends DateFrameworkType>(
   dateAdapter: SaltDateAdapter<TDate>,
-  selection: DateInputSingleDetails<TDate>,
+  date: TDate,
+  details: DateInputSingleDetails,
   minDate: TDate | undefined,
   maxDate: TDate | undefined,
-) {
-  const { date } = selection;
+): DateInputSingleDetails {
   if (date) {
-    if (minDate && date && dateAdapter.compare(date, minDate) < 0) {
-      selection.errors = selection.errors ?? [];
-      selection.errors?.push({
+    if (
+      minDate &&
+      dateAdapter.isValid(date) &&
+      dateAdapter.compare(date, minDate) < 0
+    ) {
+      details.errors = details.errors ?? [];
+      details.errors?.push({
         type: "min-date",
         message: "is before min date",
       });
-    } else if (maxDate && date && dateAdapter.compare(date, maxDate) > 0) {
-      selection.errors = selection.errors ?? [];
-      selection.errors?.push({
+    } else if (
+      maxDate &&
+      dateAdapter.isValid(date) &&
+      dateAdapter.compare(date, maxDate) > 0
+    ) {
+      details.errors = details.errors ?? [];
+      details.errors?.push({
         type: "max-date",
         message: "is after max date",
       });
     }
   }
-  return selection;
+  return details;
 }
 
 export const DatePickerSingleInput = forwardRef<
@@ -95,7 +105,6 @@ export const DatePickerSingleInput = forwardRef<
         cancelled,
         minDate,
         maxDate,
-        resetRequired,
       },
       helpers: { select },
     } = useDatePickerContext<TDate>({ selectionVariant: "single" });
@@ -119,19 +128,20 @@ export const DatePickerSingleInput = forwardRef<
 
     const handleDateChange = useCallback(
       (
-        _event: SyntheticEvent,
-        _date: SingleDateSelection<TDate> | null | undefined,
-        details: DateInputSingleDetails<TDate>,
+        event: SyntheticEvent,
+        date: SingleDateSelection<TDate>,
+        details: DateInputSingleDetails,
       ) => {
-        const validatedSelection = validate
-          ? validate(details)
+        const validatedDetails = validate
+          ? validate(date, details)
           : defaultSingleValidation<TDate>(
               dateAdapter,
+              date,
               details,
               minDate,
               maxDate,
             );
-        select(validatedSelection);
+        select(event, date, validatedDetails);
       },
       [select, validate],
     );
@@ -167,12 +177,6 @@ export const DatePickerSingleInput = forwardRef<
         setValue(previousValue?.current);
       }
     }, [cancelled]);
-
-    useEffect(() => {
-      if (resetRequired) {
-        setValue("");
-      }
-    }, [resetRequired]);
 
     return (
       <DateInputSingle

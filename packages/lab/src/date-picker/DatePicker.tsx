@@ -1,10 +1,4 @@
-import {
-  type ReactNode,
-  type Ref,
-  forwardRef,
-  useImperativeHandle,
-  useRef,
-} from "react";
+import { type ReactNode, forwardRef } from "react";
 import type { DateFrameworkType } from "../date-adapters";
 import {
   DateRangeSelectionContext,
@@ -66,18 +60,10 @@ export type DatePickerProps<TDate extends DateFrameworkType> =
   | DatePickerSingleProps<TDate>
   | DatePickerRangeProps<TDate>;
 
-export interface DatePickerHandles {
-  reset: () => void;
-  getElement: Ref<HTMLDivElement>;
-}
-
-export const DatePickerMain = forwardRef<
-  DatePickerHandles,
-  DatePickerProps<any>
->(
+export const DatePickerMain = forwardRef<HTMLDivElement, DatePickerProps<any>>(
   <TDate extends DateFrameworkType>(
     props: DatePickerProps<TDate>,
-    ref: React.Ref<DatePickerHandles>,
+    ref: React.Ref<HTMLDivElement>,
   ) => {
     const {
       children,
@@ -107,36 +93,26 @@ export const DatePickerMain = forwardRef<
       onCancel,
     };
 
-    const mainRef = useRef<HTMLDivElement>(null);
-
-    const stateAndHelpers = useDatePicker(useDatePickerProps, mainRef) as
-      | SingleDatePickerState<TDate>
-      | RangeDatePickerState<TDate>;
-
-    useImperativeHandle(
-      ref,
-      () => ({
-        reset: stateAndHelpers.helpers.reset,
-        getElement: () => stateAndHelpers?.state?.containerRef,
-      }),
-      [stateAndHelpers],
-    );
-
     if (props.selectionVariant === "range") {
+      const stateAndHelpers = useDatePicker<TDate, "range">(
+        useDatePickerProps,
+        ref,
+      ) as RangeDatePickerState<TDate>;
       return (
-        <DateRangeSelectionContext.Provider
-          value={stateAndHelpers as RangeDatePickerState<TDate>}
-        >
+        <DateRangeSelectionContext.Provider value={stateAndHelpers}>
           <div ref={stateAndHelpers?.state?.containerRef} {...rest}>
             {children}
           </div>
         </DateRangeSelectionContext.Provider>
       );
     }
+    const stateAndHelpers = useDatePicker(
+      useDatePickerProps,
+      ref,
+    ) as SingleDatePickerState<TDate>;
+
     return (
-      <SingleDateSelectionContext.Provider
-        value={stateAndHelpers as SingleDatePickerState<TDate>}
-      >
+      <SingleDateSelectionContext.Provider value={stateAndHelpers}>
         <div ref={stateAndHelpers?.state?.containerRef} {...rest}>
           {children}
         </div>
@@ -147,7 +123,7 @@ export const DatePickerMain = forwardRef<
 
 export const DatePicker = forwardRef(function DatePicker<
   TDate extends DateFrameworkType,
->(props: DatePickerProps<TDate>, ref: React.Ref<DatePickerHandles>) {
+>(props: DatePickerProps<TDate>, ref: React.Ref<HTMLDivElement>) {
   const { open, defaultOpen, onOpen, ...rest } = props;
 
   return (

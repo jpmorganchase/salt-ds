@@ -1,8 +1,11 @@
 import { createContext } from "@salt-ds/core";
-import { type Context, type Ref, useContext } from "react";
+import { type Context, type Ref, SyntheticEvent, useContext } from "react";
 import type { DateRangeSelection, SingleDateSelection } from "../calendar";
 import type { DateDetail, DateFrameworkType } from "../date-adapters";
-import type { DateInputRangeDetails } from "../date-input";
+import type {
+  DateInputRangeDetails,
+  DateInputSingleDetails,
+} from "../date-input";
 
 /**
  * Interface representing the base state for a DatePicker.
@@ -40,10 +43,6 @@ interface DatePickerBaseState<TDate extends DateFrameworkType> {
      * Reference to the container element.
      */
     containerRef: Ref<HTMLDivElement>;
-    /**
-     * Reset datepicker required, when true
-     */
-    resetRequired: boolean;
   };
   /**
    * Helper functions for managing the DatePicker state.
@@ -58,10 +57,6 @@ interface DatePickerBaseState<TDate extends DateFrameworkType> {
      * @param newEnableApply - The new value for enableApply.
      */
     setEnableApply: (newEnableApply: boolean) => void;
-    /**
-     * Reset the date picker state
-     */
-    reset: () => void;
   };
 }
 
@@ -89,14 +84,24 @@ export interface SingleDatePickerState<TDate extends DateFrameworkType>
   helpers: DatePickerBaseState<TDate>["helpers"] & {
     /**
      * Apply the selected single date.
+     * @param event - The synthetic event.
      * @param newDate - The new applied date.
      */
-    apply: (newDate: SingleDateSelection<TDate> | null | undefined) => void;
+    apply: (
+      event: SyntheticEvent,
+      newDate: SingleDateSelection<TDate> | null,
+    ) => void;
     /**
      * Select a single date.
-     * @param selection - The date selection.
+     * @param event - The synthetic event.
+     * @param date - The selected date or null.
+     * @param details - Details of selection, such as errors and original value.
      */
-    select: (selection: DateDetail<TDate>) => void;
+    select: (
+      event: SyntheticEvent,
+      date: SingleDateSelection<TDate> | null,
+      details?: DateInputSingleDetails,
+    ) => void;
   };
 }
 
@@ -124,14 +129,23 @@ export interface RangeDatePickerState<TDate extends DateFrameworkType>
   helpers: DatePickerBaseState<TDate>["helpers"] & {
     /**
      * Apply the selected date range.
+     * @param event - The synthetic event.
      * @param newRange - The new applied date range
      */
-    apply: (newRange: DateRangeSelection<TDate> | null) => void;
+    apply: (
+      event: SyntheticEvent,
+      newRange: DateRangeSelection<TDate> | null,
+    ) => void;
     /**
      * Select a date range.
-     * @param selection - The date selection.
-     */
-    select: (selection: DateInputRangeDetails<TDate>) => void;
+     * @param event - The synthetic event.
+     * @param date - The selected date.
+     * @param details - Details of selection, such as errors and original value.     */
+    select: (
+      event: SyntheticEvent,
+      date: DateRangeSelection<TDate> | null,
+      details?: DateInputRangeDetails,
+    ) => void;
   };
 }
 

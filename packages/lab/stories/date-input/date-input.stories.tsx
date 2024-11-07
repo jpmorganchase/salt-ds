@@ -24,11 +24,11 @@ const DateInputSingleTemplate: StoryFn<
   const { dateAdapter } = useLocalization();
   function handleDateChange<TDate extends DateFrameworkType>(
     event: SyntheticEvent,
-    newSelectedDate: TDate | null | undefined,
-    detail: DateInputSingleDetails<TDate>,
+    date: TDate | null | undefined,
+    detail: DateInputSingleDetails,
   ) {
     console.log(
-      `Selected date: ${newSelectedDate ? dateAdapter.format(newSelectedDate, "DD MMM YYYY") : newSelectedDate}`,
+      `Selected date: ${date ? dateAdapter.format(date, "DD MMM YYYY") : date}`,
     );
     const { value, errors } = detail;
     if (errors?.length && value) {
@@ -41,7 +41,7 @@ const DateInputSingleTemplate: StoryFn<
         console.log(`Original Value: ${value}`);
       }
     }
-    args?.onDateChange?.(event, newSelectedDate, detail);
+    args?.onDateChange?.(event, date, detail);
   }
 
   return (
@@ -57,16 +57,16 @@ const DateInputRangeTemplate: StoryFn<
   const { dateAdapter } = useLocalization();
   function handleDateChange<TDate extends DateFrameworkType>(
     _event: SyntheticEvent,
-    newSelectedDate: DateRangeSelection<TDate> | null,
-    result: DateInputRangeDetails<TDate>,
+    date: DateRangeSelection<TDate> | null,
+    details: DateInputRangeDetails,
   ) {
-    const { startDate, endDate } = newSelectedDate || {};
+    const { startDate, endDate } = date || {};
     const {
       startDate: { value: startDateOriginalValue, errors: startDateErrors },
       endDate: { value: endDateOriginalValue, errors: endDateErrors },
-    } = result;
+    } = details;
     console.log(
-      `StartDate: ${startDate ? dateAdapter.format(startDate, "DD MMM YYYY") : startDate}, EndDate: ${endDate ? dateAdapter.format(endDate, "DD MMM YYYY") : endDate}`,
+      `StartDate: ${dateAdapter.isValid(startDate) ? dateAdapter.format(startDate, "DD MMM YYYY") : startDate}, EndDate: ${endDate ? dateAdapter.format(endDate, "DD MMM YYYY") : endDate}`,
     );
     if (startDateErrors?.length) {
       console.log(
