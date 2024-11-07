@@ -74,7 +74,7 @@ const DefaultFloatingComponent = forwardRef<
   if (focusManagerProps && open) {
     return (
       <FloatingPortal>
-        <ChosenSaltProvider>
+        <ChosenSaltProvider applyClassesTo="scope">
           <FloatingFocusManager {...focusManagerProps}>
             <div style={style} {...rest} ref={ref} />
           </FloatingFocusManager>
@@ -85,7 +85,7 @@ const DefaultFloatingComponent = forwardRef<
 
   return open ? (
     <FloatingPortal>
-      <ChosenSaltProvider>
+      <ChosenSaltProvider applyClassesTo="scope">
         <div style={style} {...rest} ref={ref} />
       </ChosenSaltProvider>
     </FloatingPortal>
