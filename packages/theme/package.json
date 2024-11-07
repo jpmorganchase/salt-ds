@@ -15,7 +15,8 @@
   ],
   "scripts": {
     "build": "yarn node ./scripts/build.mjs",
-    "build:watch": "yarn node ./scripts/build.mjs --watch"
+    "build:watch": "yarn node ./scripts/build.mjs --watch",
+    "build:json": "yarn node ./scripts/build-json.mjs"
   },
   "devDependencies": {
     "del": "^7.0.0"

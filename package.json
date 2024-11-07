@@ -96,6 +96,8 @@
     "react-dom": "^18.3.1",
     "rifm": "^0.12.0",
     "storybook": "^8.4.4",
+    "style-dictionary": "^4.1.4",
+    "style-dictionary-utils": "^4.0.0",
     "stylelint": "^16.0.0",
     "typescript": "4.6.4",
     "vite": "^5.0.0",
