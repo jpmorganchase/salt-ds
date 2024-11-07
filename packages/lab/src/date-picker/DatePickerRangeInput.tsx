@@ -34,22 +34,26 @@ export interface DatePickerRangeInputProps<TDate extends DateFrameworkType>
   extends DateInputRangeProps<TDate> {
   /**
    * Function to validate the entered date
+   * @param date - The selected date
    * @param details - The details of date selection, either a valid date or error
    * @returns updated DateInputRangeDetails details
    */
   validate?: (
-    range: DateInputRangeDetails<TDate>,
-  ) => DateInputRangeDetails<TDate>;
+    date: DateRangeSelection<TDate>,
+    details: DateInputRangeDetails,
+  ) => DateInputRangeDetails;
 }
 
 export function defaultRangeValidator<TDate extends DateFrameworkType>(
   dateAdapter: SaltDateAdapter<TDate>,
-  details: DateInputRangeDetails<TDate>,
+  date: DateRangeSelection<TDate>,
+  details: DateInputRangeDetails,
   minDate: TDate | undefined,
   maxDate: TDate | undefined,
-): DateInputRangeDetails<TDate> {
-  const startDate = details.startDate.date;
-  const endDate = details.endDate.date;
+): DateInputRangeDetails {
+  const { startDate, endDate } = date;
+  details.startDate = details.startDate || { errors: [] };
+  details.endDate = details.endDate || { errors: [] };
 
   // If endDate but no startDate defined
   if (startDate === undefined && endDate) {
@@ -60,7 +64,11 @@ export function defaultRangeValidator<TDate extends DateFrameworkType>(
     });
   }
   // If startDate is after endDate
-  if (startDate && endDate && dateAdapter.compare(startDate, endDate) > 0) {
+  if (
+    dateAdapter.isValid(startDate) &&
+    dateAdapter.isValid(endDate) &&
+    dateAdapter.compare(startDate, endDate) > 0
+  ) {
     details.startDate.errors = details.startDate.errors ?? [];
     details.startDate.errors?.push({
       type: "greater-than-end-date",
@@ -68,7 +76,11 @@ export function defaultRangeValidator<TDate extends DateFrameworkType>(
     });
   }
   // If startDate is before minDate
-  if (minDate && startDate && dateAdapter.compare(startDate, minDate) < 0) {
+  if (
+    minDate &&
+    dateAdapter.isValid(startDate) &&
+    dateAdapter.compare(startDate, minDate) < 0
+  ) {
     details.startDate.errors = details.startDate.errors ?? [];
     details.startDate.errors?.push({
       type: "min-date",
@@ -76,7 +88,11 @@ export function defaultRangeValidator<TDate extends DateFrameworkType>(
     });
   }
   // If endDate is after maxDate
-  if (maxDate && endDate && dateAdapter.compare(endDate, maxDate) > 0) {
+  if (
+    maxDate &&
+    dateAdapter.isValid(endDate) &&
+    dateAdapter.compare(endDate, maxDate) > 0
+  ) {
     details.endDate.errors = details.endDate.errors ?? [];
     details.endDate.errors?.push({
       type: "max-date",
@@ -109,15 +125,7 @@ export const DatePickerRangeInput = forwardRef(function DatePickerRangeInput<
   const { CalendarIcon } = useIcon();
 
   const {
-    state: {
-      selectedDate,
-      disabled,
-      readOnly,
-      cancelled,
-      minDate,
-      maxDate,
-      resetRequired,
-    },
+    state: { selectedDate, disabled, readOnly, cancelled, minDate, maxDate },
     helpers: { select },
   } = useDatePickerContext<TDate>({ selectionVariant: "range" });
   const {
@@ -140,14 +148,14 @@ export const DatePickerRangeInput = forwardRef(function DatePickerRangeInput<
 
   const handleDateChange = useCallback(
     (
-      _event: SyntheticEvent,
-      _date: DateRangeSelection<TDate>,
-      details: DateInputRangeDetails<TDate>,
+      event: SyntheticEvent,
+      date: DateRangeSelection<TDate>,
+      details: DateInputRangeDetails,
     ) => {
-      const validatedSelection = validate
-        ? validate(details)
-        : defaultRangeValidator(dateAdapter, details, minDate, maxDate);
-      select(validatedSelection);
+      const validatedDetails = validate
+        ? validate(date, details)
+        : defaultRangeValidator(dateAdapter, date, details, minDate, maxDate);
+      select(event, date, validatedDetails);
     },
     [select, minDate, maxDate],
   );
@@ -173,12 +181,6 @@ export const DatePickerRangeInput = forwardRef(function DatePickerRangeInput<
       setValue(previousValue.current);
     }
   }, [cancelled]);
-
-  useEffect(() => {
-    if (resetRequired) {
-      setValue({ startDate: "", endDate: "" });
-    }
-  }, [resetRequired]);
 
   const startInputProps: {
     onKeyDown: KeyboardEventHandler<HTMLInputElement>;

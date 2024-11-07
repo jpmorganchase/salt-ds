@@ -43,7 +43,7 @@ export interface DatePickerSinglePanelProps<TDate extends DateFrameworkType>
    * @param event - The synthetic event.
    * @param selectedDate - The selected date or null.
    */
-  onSelect?: (event: SyntheticEvent, selectedDate?: TDate | null) => void;
+  onSelectionChange?: (event: SyntheticEvent, selectedDate?: TDate | null) => void;
 
   /**
    * Helper text to be displayed below the date picker.
@@ -114,7 +114,7 @@ export const DatePickerSinglePanel = forwardRef(function DatePickerSinglePanel<
     visibleMonth: visibleMonthProp,
     onVisibleMonthChange,
     helperText,
-    onSelect,
+    onSelectionChange,
     ...rest
   } = props;
 
@@ -137,9 +137,10 @@ export const DatePickerSinglePanel = forwardRef(function DatePickerSinglePanel<
   const [hoveredDate, setHoveredDate] = useState<TDate | null>(null);
 
   const [uncontrolledDefaultVisibleMonth] = useState(
-    () =>
-      defaultVisibleMonth ||
-      dateAdapter.startOf(selectedDate || dateAdapter.today(), "month"),
+    () => {
+      const validDate = dateAdapter.isValid(selectedDate) ? selectedDate : dateAdapter.today();
+      return defaultVisibleMonth || dateAdapter.startOf(validDate, "month")
+    }
   );
   const [visibleMonth, setVisibleMonth] = useControlled({
     controlled: visibleMonthProp,
@@ -150,10 +151,10 @@ export const DatePickerSinglePanel = forwardRef(function DatePickerSinglePanel<
 
   const handleSelectionChange = useCallback(
     (event: SyntheticEvent, newDate: SingleDateSelection<TDate> | null) => {
-      select({ date: newDate });
-      onSelect?.(event, newDate);
+      select(event, newDate);
+      onSelectionChange?.(event, newDate);
     },
-    [select, onSelect],
+    [select, onSelectionChange],
   );
 
   const handleHoveredDateChange = useCallback(

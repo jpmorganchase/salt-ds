@@ -48,11 +48,11 @@ export type DateInputRangeValue = {
 /**
  * Details of parsing the date range
  */
-export type DateInputRangeDetails<TDate extends DateFrameworkType> = {
+export type DateInputRangeDetails = {
   /** Details of parsing the start date and applying any validation */
-  startDate: DateDetail<TDate>;
+  startDate?: DateDetail;
   /** Details of parsing the end date and applying any validation */
-  endDate: DateDetail<TDate>;
+  endDate?: DateDetail;
 };
 
 /**
@@ -145,13 +145,13 @@ export interface DateInputRangeProps<TDate extends DateFrameworkType>
   /**
    * Callback fired when the selected date changes.
    * @param event - The synthetic event.
-   * @param date - the selected date, null if in not a valid date or undefined if not defined
+   * @param date - the selected date, invalid date if not a valid date or undefined (uncontrolled) or null (controlled) if not defined
    * @param details - The details of date selection, either a valid date or error
    */
   onDateChange?: (
     event: SyntheticEvent,
     date: DateRangeSelection<TDate>,
-    details: DateInputRangeDetails<TDate>,
+    details: DateInputRangeDetails,
   ) => void;
   /**
    * Called when input values change, either due to user interaction or programmatic formatting of valid dates.
@@ -234,20 +234,26 @@ export const DateInputRange = forwardRef<
       endTime: TimeFields | null;
     }>({ startTime: null, endTime: null });
     preservedTime.current = {
-      startTime: date?.startDate ? dateAdapter.getTime(date.startDate) : null,
-      endTime: date?.endDate ? dateAdapter.getTime(date.endDate) : null,
+      startTime:
+        date?.startDate && dateAdapter.isValid(date?.startDate)
+          ? dateAdapter.getTime(date.startDate)
+          : null,
+      endTime:
+        date?.endDate && dateAdapter.isValid(date?.endDate)
+          ? dateAdapter.getTime(date.endDate)
+          : null,
     };
-
     const setDateValueFromDate = (newDate: typeof date) => {
       let newDateValue = { ...dateValue };
-
-      if (newDate?.startDate && dateAdapter.isValid(newDate.startDate)) {
+      if (newDate?.startDate && dateAdapter.isValid(newDate?.startDate)) {
         const formattedStartDateValue = dateAdapter.format(
           newDate?.startDate,
           format,
           locale,
         );
         newDateValue = { ...dateValue, startDate: formattedStartDateValue };
+      } else if (!newDate?.startDate) {
+        newDateValue = { ...dateValue, startDate: "" };
       }
       if (newDate?.endDate && dateAdapter.isValid(newDate.endDate)) {
         const formattedEndDateValue = dateAdapter.format(
@@ -256,6 +262,8 @@ export const DateInputRange = forwardRef<
           locale,
         );
         newDateValue = { ...newDateValue, endDate: formattedEndDateValue };
+      } else if (!newDate?.endDate) {
+        newDateValue = { ...newDateValue, endDate: "" };
       }
 
       if (
@@ -321,43 +329,41 @@ export const DateInputRange = forwardRef<
       : endInputPropsRequired;
 
     const apply = (event: SyntheticEvent) => {
-      const startDateParseDetails = dateValue?.startDate?.length
+      const { date: startDate = undefined, ...startDateParseDetails } = dateValue?.startDate?.length
         ? dateAdapter.parse(dateValue.startDate, format, locale)
-        : undefined;
-      const endDateParseDetails = dateValue?.endDate?.length
+        : {};
+      const { date: endDate = undefined, ...endDateParseDetails } = dateValue?.endDate?.length
         ? dateAdapter.parse(dateValue.endDate, format, locale)
-        : undefined;
+        : {};
       const updatedDateRange = {
-        startDate: startDateParseDetails?.date,
-        endDate: endDateParseDetails?.date,
+        startDate,
+        endDate,
       };
       setDateValueFromDate(updatedDateRange);
       setDate(updatedDateRange);
-
       if (
         lastAppliedValue.current.startDate !== dateValue.startDate ||
         lastAppliedValue.current.endDate !== dateValue.endDate
       ) {
-        if (updatedDateRange.startDate && preservedTime.current.startTime) {
+        if (
+          dateAdapter.isValid(updatedDateRange?.startDate) &&
+          preservedTime.current.startTime
+        ) {
           updatedDateRange.startDate = dateAdapter.set(
             updatedDateRange.startDate,
             preservedTime.current.startTime,
           );
         }
-        if (updatedDateRange?.endDate && preservedTime.current.endTime) {
+        if (
+          dateAdapter.isValid(updatedDateRange?.endDate) &&
+          preservedTime.current.endTime
+        ) {
           updatedDateRange.endDate = dateAdapter.set(
             updatedDateRange.endDate,
             preservedTime.current.endTime,
           );
         }
-        const updatedDetails = {
-          startDate: {
-            ...startDateParseDetails,
-            date: updatedDateRange.startDate,
-          },
-          endDate: { ...endDateParseDetails, date: updatedDateRange.endDate },
-        };
-        onDateChange?.(event, updatedDateRange, updatedDetails);
+        onDateChange?.(event, updatedDateRange, { startDate: startDateParseDetails, endDate: endDateParseDetails});
       }
       lastAppliedValue.current = { ...dateValue };
     };

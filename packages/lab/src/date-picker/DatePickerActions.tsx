@@ -142,7 +142,7 @@ export const DatePickerActions = forwardRef(function DatePickerRangeInput<
   };
 
   const handleApply: MouseEventHandler<HTMLButtonElement> = (event) => {
-    apply(selectedDate);
+    apply(event, selectedDate);
     onApply?.(event, selectedDate);
     ApplyButtonProps?.onClick?.(event);
   };
