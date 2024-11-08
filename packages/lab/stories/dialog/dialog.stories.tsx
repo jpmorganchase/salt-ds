@@ -201,23 +201,23 @@ const AlertDialogTemplate: StoryFn<
 export const InfoStatus = AlertDialogTemplate.bind({});
 InfoStatus.args = {
   status: "info",
-  header: <h2>Info</h2>,
+  header: <H2>Info</H2>,
 };
 
 export const SuccessStatus = AlertDialogTemplate.bind({});
 SuccessStatus.args = {
   status: "success",
-  header: <h2>Success</h2>,
+  header: <H2>Success</H2>,
 };
 
 export const WarningStatus = AlertDialogTemplate.bind({});
 WarningStatus.args = {
   status: "warning",
-  header: <h2>Warning</h2>,
+  header: <H2>Warning</H2>,
 };
 
 export const ErrorStatus = AlertDialogTemplate.bind({});
 ErrorStatus.args = {
   status: "error",
-  header: <h2>Error</h2>,
+  header: <H2>Error</H2>,
 };
