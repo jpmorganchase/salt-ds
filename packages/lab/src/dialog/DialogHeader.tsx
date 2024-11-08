@@ -1,5 +1,4 @@
 import {
-  H2,
   StatusIndicator,
   Text,
   type ValidationStatus,
