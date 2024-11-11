@@ -1,4 +1,4 @@
-import React, { cloneElement, type ReactNode } from "react";
+import { type ReactNode, cloneElement } from "react";
 import type {
   OverflowCollectionHookResult,
   OverflowItem,

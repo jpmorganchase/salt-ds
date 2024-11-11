@@ -4,7 +4,6 @@ import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
   type ComponentPropsWithoutRef,
-  type ForwardedRef,
   type ReactNode,
   forwardRef,
 } from "react";

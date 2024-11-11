@@ -1,59 +1,77 @@
 .saltToggleButton {
   align-items: center;
-  justify-content: center;
   appearance: none;
-  -webkit-appearance: none;
-  display: inline-flex;
-  background: var(--salt-actionable-secondary-background);
-  border-color: var(--salt-actionable-secondary-borderColor, transparent);
+  background: var(--toggleButton-background);
+  border-color: var(--toggleButton-borderColor, transparent);
   border-style: solid;
-  border-width: var(--salt-actionable-borderWidth, 0);
+  border-width: var(--salt-size-border, 0);
   border-radius: var(--salt-palette-corner-weaker, 0);
-  height: var(--salt-size-base);
-  color: var(--salt-actionable-secondary-foreground);
-  text-transform: var(--salt-text-action-textTransform);
+  color: var(--toggleButton-text-color);
+  cursor: pointer;
+  display: inline-flex;
+  gap: var(--salt-spacing-50);
+  justify-content: center;
+  font-size: var(--salt-text-fontSize);
   font-weight: var(--salt-text-action-fontWeight);
   font-family: var(--salt-text-action-fontFamily);
-  text-align: var(--salt-text-action-textAlign);
-  letter-spacing: var(--salt-text-action-letterSpacing);
   line-height: var(--salt-text-lineHeight);
-  font-size: var(--salt-text-fontSize);
-  padding-left: var(--salt-spacing-100);
-  padding-right: var(--salt-spacing-100);
-  gap: var(--salt-spacing-50);
-}
-
-.saltToggleButton:hover {
-  background: var(--salt-actionable-secondary-background-hover);
-  color: var(--salt-actionable-secondary-foreground-hover);
-  cursor: var(--salt-actionable-cursor-hover);
+  letter-spacing: var(--salt-text-action-letterSpacing);
+  text-transform: var(--salt-text-action-textTransform);
+  padding: 0 calc(var(--salt-spacing-100) - var(--salt-size-border, 0));
+  margin: 0;
+  height: var(--salt-size-base);
+  min-width: unset;
+  position: relative;
+  text-align: var(--salt-text-action-textAlign);
+  text-decoration: none;
+  transition: none;
+  width: auto;
+  -webkit-appearance: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .saltToggleButton:focus-visible {
-  outline: var(--salt-focused-outline);
-  background: var(--salt-actionable-secondary-background-hover);
-  color: var(--salt-actionable-secondary-foreground-hover);
-  cursor: var(--salt-actionable-cursor-hover);
+  outline-style: var(--salt-focused-outlineStyle);
+  outline-width: var(--salt-focused-outlineWidth);
+  outline-color: var(--salt-focused-outlineColor);
+  outline-offset: var(--salt-focused-outlineOffset);
+  background: var(--toggleButton-background-hover);
+  color: var(--toggleButton-text-color-hover);
+  border-color: var(--toggleButton-borderColor-hover);
 }
 
-.saltToggleButton[aria-checked="true"]:focus-visible,
-.saltToggleButton[aria-pressed="true"]:focus-visible {
-  background: var(--salt-actionable-secondary-background-active);
-  color: var(--salt-actionable-secondary-foreground-active);
-  cursor: var(--salt-actionable-cursor-active);
-  border-color: var(--salt-actionable-secondary-borderColor-active, transparent);
+.saltToggleButton:hover {
+  background: var(--toggleButton-background-hover);
+  color: var(--toggleButton-text-color-hover);
+  border-color: var(--toggleButton-borderColor-hover);
 }
 
 .saltToggleButton[aria-checked="true"],
 .saltToggleButton[aria-pressed="true"] {
-  background: var(--salt-actionable-secondary-background-active);
-  color: var(--salt-actionable-secondary-foreground-active);
+  background: var(--toggleButton-background-active);
+  color: var(--toggleButton-text-color-active);
   cursor: var(--salt-actionable-cursor-active);
-  border-color: var(--salt-actionable-secondary-borderColor-active, transparent);
+  border-color: var(--toggleButton-borderColor-active);
 }
 
 .saltToggleButton:disabled {
-  background: var(--salt-actionable-secondary-background-disabled);
+  background: var(--toggleButton-background-disabled);
+  color: var(--toggleButton-text-color-disabled);
   cursor: var(--salt-actionable-cursor-disabled);
-  color: var(--salt-actionable-secondary-foreground-disabled);
+  border-color: var(--toggleButton-borderColor-disabled);
+}
+
+.saltToggleButton {
+  --toggleButton-text-color: var(--salt-actionable-subtle-foreground);
+  --toggleButton-text-color-hover: var(--salt-actionable-subtle-foreground-hover);
+  --toggleButton-text-color-active: var(--salt-actionable-subtle-foreground-active);
+  --toggleButton-text-color-disabled: var(--salt-actionable-subtle-foreground-disabled);
+  --toggleButton-background: var(--salt-actionable-subtle-background);
+  --toggleButton-background-hover: var(--salt-actionable-subtle-background-hover);
+  --toggleButton-background-active: var(--salt-actionable-subtle-background-active);
+  --toggleButton-background-disabled: var(--salt-actionable-subtle-background-disabled);
+  --toggleButton-borderColor: var(--salt-actionable-subtle-borderColor);
+  --toggleButton-borderColor-hover: var(--salt-actionable-subtle-borderColor-hover);
+  --toggleButton-borderColor-active: var(--salt-actionable-subtle-borderColor-active);
+  --toggleButton-borderColor-disabled: var(--salt-actionable-subtle-borderColor-disabled);
 }

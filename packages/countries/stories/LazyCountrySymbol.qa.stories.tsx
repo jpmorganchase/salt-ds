@@ -1,7 +1,6 @@
 import { LazyCountrySymbol, countryMetaMap } from "@salt-ds/countries";
 import type { CountryCode } from "@salt-ds/countries";
 import type { Meta, StoryFn } from "@storybook/react";
-import { QAContainer } from "docs/components";
 import { Suspense } from "react";
 
 export default {

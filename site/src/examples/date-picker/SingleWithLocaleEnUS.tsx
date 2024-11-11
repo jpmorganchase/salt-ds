@@ -9,9 +9,8 @@ import {
   DatePickerSingleInput,
   DatePickerSinglePanel,
   type SingleDateSelection,
-  formatDate,
 } from "@salt-ds/lab";
-import React, { type ReactElement, useCallback, useState } from "react";
+import { type ReactElement, useCallback, useState } from "react";
 
 export const SingleWithLocaleEnUS = (): ReactElement => {
   const locale = "en-US";

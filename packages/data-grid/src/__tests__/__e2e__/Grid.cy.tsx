@@ -1,5 +1,3 @@
-import { ColumnGroup, Grid, GridColumn, SortOrder } from "@salt-ds/data-grid";
-import { Investor, db } from "@stories/dummyData";
 import * as cellCustomizationStories from "@stories/grid-cellCustomization.stories";
 import * as cellValidationStories from "@stories/grid-cellValidation.stories";
 import * as columnGroupsStories from "@stories/grid-columnGroups.stories";

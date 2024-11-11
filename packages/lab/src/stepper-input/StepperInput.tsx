@@ -9,7 +9,6 @@ import {
   useFormFieldProps,
   useIcon,
 } from "@salt-ds/core";
-import { TriangleDownIcon, TriangleUpIcon } from "@salt-ds/icons";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";

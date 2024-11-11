@@ -7,7 +7,7 @@ import {
   CalendarWeekHeader,
   type UseCalendarSelectionSingleProps,
 } from "@salt-ds/lab";
-import React, { type ReactElement, useState } from "react";
+import { type ReactElement, useState } from "react";
 
 export const TodayButton = (): ReactElement => {
   const [selectedDate, setSelectedDate] = useState<

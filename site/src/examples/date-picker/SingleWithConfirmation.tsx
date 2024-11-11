@@ -17,7 +17,7 @@ import {
   formatDate,
   getCurrentLocale,
 } from "@salt-ds/lab";
-import React, { type ReactElement, useCallback, useRef, useState } from "react";
+import { type ReactElement, useCallback, useRef, useState } from "react";
 
 function formatSingleDate(
   date: DateValue | null,

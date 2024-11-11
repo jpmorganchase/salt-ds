@@ -1,18 +1,12 @@
 import { Button, StackLayout, Text, useId } from "@salt-ds/core";
-import {
-  EditIcon,
-  NoteIcon,
-  OverflowMenuIcon,
-  TearOutIcon,
-  VideoIcon,
-} from "@salt-ds/icons";
+import { OverflowMenuIcon, VideoIcon } from "@salt-ds/icons";
 import {
   StaticList,
   StaticListItem,
   StaticListItemContent,
 } from "@salt-ds/lab";
 import { clsx } from "clsx";
-import React, { type ReactElement } from "react";
+import type { ReactElement } from "react";
 import { type ListEvent, complexEventsData } from "./exampleData";
 
 const ListItem = ({ title, time }: ListEvent) => {

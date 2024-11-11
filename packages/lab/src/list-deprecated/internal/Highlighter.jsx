@@ -1,4 +1,3 @@
-import React from "react";
 import { escapeRegExp } from "../../utils";
 
 import { useComponentCssInjection } from "@salt-ds/styles";

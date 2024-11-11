@@ -17,7 +17,7 @@ import {
   type SingleDatePickerState,
   useDatePickerContext,
 } from "@salt-ds/lab";
-import React, { forwardRef } from "react";
+import { forwardRef } from "react";
 
 const tenorOptions = [
   { tenor: "5", label: "5 years" },

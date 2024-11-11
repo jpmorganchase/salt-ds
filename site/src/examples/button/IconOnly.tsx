@@ -1,4 +1,4 @@
-import { Button, FlowLayout, StackLayout, Tooltip } from "@salt-ds/core";
+import { Button, FlowLayout, Tooltip } from "@salt-ds/core";
 import { PrintIcon, SearchIcon, ShareIcon } from "@salt-ds/icons";
 import type { ReactElement } from "react";
 

@@ -35,6 +35,7 @@
   outline: var(--saltCheckbox-outline, var(--salt-focused-outline));
   border-color: var(--salt-selectable-borderColor-hover);
   color: var(--salt-selectable-foreground-hover);
+  clip-path: unset;
 }
 
 .saltCheckbox-input:focus-visible + .saltCheckboxIcon-checked {

@@ -1,4 +1,4 @@
-import React, { type FC } from "react";
+import type { FC } from "react";
 import { AppHeader, Footer } from "../../components";
 
 import { LayoutBase } from "@jpmorganchase/mosaic-layouts";

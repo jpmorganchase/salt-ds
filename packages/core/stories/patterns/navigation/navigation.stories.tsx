@@ -7,17 +7,7 @@ import {
   NavigationItem,
   StackLayout,
 } from "@salt-ds/core";
-import {
-  GithubIcon,
-  LineChartIcon,
-  NotificationIcon,
-  PinIcon,
-  ReceiptIcon,
-  SearchIcon,
-  StackoverflowIcon,
-  SymphonyIcon,
-  UserIcon,
-} from "@salt-ds/icons";
+import { GithubIcon, StackoverflowIcon, SymphonyIcon } from "@salt-ds/icons";
 import type { Meta } from "@storybook/react";
 import { useEffect, useState } from "react";
 import logo from "../../assets/logo.svg";

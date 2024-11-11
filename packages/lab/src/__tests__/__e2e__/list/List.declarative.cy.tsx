@@ -1,4 +1,4 @@
-import { List, ListItem, ListItemProps } from "@salt-ds/lab";
+import { List, ListItem } from "@salt-ds/lab";
 import { version } from "react";
 
 describe("A declarative list", () => {

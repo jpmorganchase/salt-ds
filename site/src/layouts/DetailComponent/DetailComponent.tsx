@@ -5,15 +5,22 @@ import {
   useRoute,
   useStore,
 } from "@jpmorganchase/mosaic-store";
-import { TabPanel, Tabs } from "@salt-ds/lab";
+import {
+  TabBar,
+  TabListNext,
+  TabNext,
+  TabNextPanel,
+  TabNextTrigger,
+  TabsNext,
+} from "@salt-ds/lab";
 import { useRouter } from "next/navigation";
-import React, { type FC, useEffect, useState } from "react";
+import { type FC, type SyntheticEvent, useEffect, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import { a, code, p, ul } from "../../components/mdx";
 import { TableOfContents } from "../../components/toc";
 import useIsMobileView from "../../utils/useIsMobileView";
 import { DetailBase } from "../DetailBase";
-import type { LayoutProps } from "../types/index";
+import type { LayoutProps } from "../types";
 import styles from "./DetailComponent.module.css";
 import MobileDrawer from "./MobileDrawer";
 import SecondarySidebar from "./SecondarySidebar";
@@ -22,9 +29,9 @@ import TitleWithDrawer from "./TitleWithDrawer";
 const components = { code, ul, p, a } as any;
 
 const tabs = [
-  { id: 0, name: "examples", label: "Examples" },
-  { id: 1, name: "usage", label: "How to use" },
-  { id: 2, name: "accessibility", label: "Accessibility" },
+  { name: "examples", label: "Examples" },
+  { name: "usage", label: "How to use" },
+  { name: "accessibility", label: "Accessibility" },
 ];
 
 export type Relationship = "similarTo" | "contains";
@@ -84,15 +91,9 @@ export const DetailComponent: FC<LayoutProps> = ({ children }) => {
 
   const isMobileView = useIsMobileView();
 
-  const updateRouteWhenTabChanges = (index: number) => {
-    const currentTab = tabs.find(({ id }) => index === id);
-
-    currentTab
-      ? push(`${newRoute}${currentTab.name}`)
-      : push(`${newRoute}${tabs[0].name}`);
+  const handleTabChange = (_: SyntheticEvent | null, value: string) => {
+    push(`${newRoute}${value}`);
   };
-
-  const currentTabIndex = currentTab?.id ?? 0;
 
   const {
     meta: { title },
@@ -130,16 +131,25 @@ export const DetailComponent: FC<LayoutProps> = ({ children }) => {
         />
       )}
       <ReactMarkdown components={components}>{description ?? ""}</ReactMarkdown>
-      <Tabs
-        activeTabIndex={currentTabIndex}
-        onActiveChange={updateRouteWhenTabChanges}
+      <TabsNext
+        value={currentTab?.name ?? tabs[0].name}
+        onChange={handleTabChange}
       >
-        {tabs.map(({ id, label }) => (
-          <TabPanel key={id} label={label} className={styles.tabPanel}>
+        <TabBar className={styles.tabBar} divider>
+          <TabListNext appearance="transparent">
+            {tabs.map(({ name, label }) => (
+              <TabNext key={name} value={name}>
+                <TabNextTrigger>{label}</TabNextTrigger>
+              </TabNext>
+            ))}
+          </TabListNext>
+        </TabBar>
+        {tabs.map(({ name }) => (
+          <TabNextPanel key={name} value={name}>
             {children}
-          </TabPanel>
+          </TabNextPanel>
         ))}
-      </Tabs>
+      </TabsNext>
     </DetailBase>
   );
 };

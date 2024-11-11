@@ -1,4 +1,4 @@
-import { FlowLayout, Input } from "@salt-ds/core";
+import { Input } from "@salt-ds/core";
 import type { ReactElement } from "react";
 
 export const Secondary = (): ReactElement => (

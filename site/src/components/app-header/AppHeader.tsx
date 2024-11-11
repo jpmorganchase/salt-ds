@@ -12,7 +12,7 @@ import {
 import { GithubIcon, HelpIcon } from "@salt-ds/icons";
 import { Logo, LogoImage } from "@salt-ds/lab";
 import { useRouter } from "next/navigation";
-import React, { type FC } from "react";
+import type { FC } from "react";
 import styles from "./AppHeader.module.css";
 import { Search } from "./Search";
 

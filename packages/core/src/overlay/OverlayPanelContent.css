@@ -1,6 +1,28 @@
 .saltOverlayPanelContent {
   animation: var(--salt-animation-fade-in-center);
   position: relative;
-  overflow: auto;
+  overflow: hidden;
   padding: var(--saltOverlay-content-padding, var(--salt-spacing-100));
+}
+
+.saltOverlayPanelContent-container {
+  overflow-y: auto;
+}
+
+.saltOverlayHeader ~ .saltOverlayPanelContent-separator {
+  border-top: var(--salt-size-border) var(--salt-separable-borderStyle) transparent;
+}
+
+.saltOverlayPanelContent-overflow {
+  padding-right: var(--salt-spacing-100);
+}
+
+.saltOverlayHeader ~ .saltOverlayPanelContent-scroll {
+  border-top: var(--salt-size-border) var(--salt-separable-borderStyle) var(--salt-separable-tertiary-borderColor);
+  box-shadow: var(--salt-overlayable-shadow-scroll);
+  margin-top: calc(0 - var(--salt-size-border));
+}
+
+.saltOverlayHeader ~ .saltOverlayPanelContent-separator ~ .saltOverlayPanelContent {
+  padding-top: 0;
 }

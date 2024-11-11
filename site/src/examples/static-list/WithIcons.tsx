@@ -1,11 +1,11 @@
 import { StackLayout, Text } from "@salt-ds/core";
-import { CalendarIcon, NotificationIcon } from "@salt-ds/icons";
+import { CalendarIcon } from "@salt-ds/icons";
 import {
   StaticList,
   StaticListItem,
   StaticListItemContent,
 } from "@salt-ds/lab";
-import React, { type ReactElement } from "react";
+import type { ReactElement } from "react";
 import { type ListEvent, complexEventsData } from "./exampleData";
 
 const ListItem = ({ title, time }: ListEvent) => (

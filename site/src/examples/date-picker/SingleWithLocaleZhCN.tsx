@@ -13,11 +13,10 @@ import {
   DatePickerOverlay,
   DatePickerSingleInput,
   DatePickerSinglePanel,
-  type SingleDatePickerError,
   type SingleDateSelection,
   formatDate,
 } from "@salt-ds/lab";
-import React, { type ReactElement, useCallback, useState } from "react";
+import { type ReactElement, useCallback, useState } from "react";
 
 export const SingleWithLocaleZhCN = (): ReactElement => {
   const locale = "zh-CN";

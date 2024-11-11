@@ -1,45 +1,72 @@
-import fs from "node:fs";
 import path from "node:path";
 import { argv } from "node:process";
-import { fileURLToPath } from "node:url";
 import { deleteSync } from "del";
 import esbuild from "esbuild";
+import fs from "fs-extra";
+import { transformWorkspaceDeps } from "../../../scripts/transformWorkspaceDeps.mjs";
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const buildFolder = path.join(__dirname, "../../../dist/salt-ds-ag-grid-theme");
+const FILES_TO_COPY = ["README.md", "LICENSE", "CHANGELOG.md"];
+
+const cwd = process.cwd();
+const packageJson = (
+  await import(path.join("file://", cwd, "package.json"), {
+    with: { type: "json" },
+  })
+).default;
+const buildFolder = packageJson.publishConfig.directory;
+const packageName = packageJson.name;
+
+console.log(`Building ${packageName}`);
 
 deleteSync([buildFolder], { force: true });
 
-esbuild
-  .build({
-    absWorkingDir: path.resolve(__dirname, ".."),
-    entryPoints: ["salt-ag-theme.css"],
-    assetNames: "[dir]/[name]",
-    outdir: buildFolder,
-    loader: {
-      ".woff": "file",
-    },
-    write: true,
-    bundle: true,
-    logLevel: "info",
-    watch: argv.includes("--watch"),
-  })
-  .then(() => {
-    // File destination.txt will be created or overwritten by default.
-    fs.copyFile(
-      path.resolve(__dirname, "../package.json"),
-      path.join(buildFolder, "package.json"),
-      (err) => {
-        if (err) throw err;
-        console.log(
-          `${path.relative(
-            process.cwd(),
-            path.resolve(__dirname, "../package.json"),
-          )} copied to ${path.relative(
-            process.cwd(),
-            path.join(buildFolder, "package.json"),
-          )}`,
-        );
-      },
+const context = await esbuild.context({
+  absWorkingDir: cwd,
+  entryPoints: ["salt-ag-theme.css"],
+  assetNames: "[dir]/[name]",
+  outdir: buildFolder,
+  loader: {
+    ".woff": "file",
+  },
+  write: true,
+  bundle: true,
+  logLevel: "info",
+});
+
+if (argv.includes("--watch")) {
+  await context.watch();
+} else {
+  await context.rebuild();
+  await context.dispose();
+}
+
+await fs.writeJSON(
+  path.join(buildFolder, "package.json"),
+  {
+    ...packageJson,
+    peerDependencies: await transformWorkspaceDeps(
+      packageJson.peerDependencies,
+    ),
+  },
+  { spaces: 2 },
+);
+
+for (const file of FILES_TO_COPY) {
+  const from = path.join(cwd, file);
+  const to = path.join(buildFolder, file);
+  try {
+    await fs.copyFile(from, to);
+    console.log(
+      `${path.relative(process.cwd(), from)} copied to ${path.relative(
+        process.cwd(),
+        to,
+      )}`,
     );
-  });
+  } catch (error) {
+    if (error.code !== "ENOENT") {
+      throw error;
+    }
+  }
+}
+
+console.log(`Built ${packageName} into ${buildFolder}`);

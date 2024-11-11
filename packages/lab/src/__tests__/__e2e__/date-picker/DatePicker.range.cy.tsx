@@ -7,7 +7,6 @@ import {
 } from "@internationalized/date";
 import * as datePickerStories from "@stories/date-picker/date-picker.stories";
 import { composeStories } from "@storybook/react";
-import React from "react";
 import { formatDate } from "../../../calendar";
 import { parseZonedDateTime } from "../../../date-input";
 import {

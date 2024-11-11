@@ -1,5 +1,5 @@
 import { useRoute } from "@jpmorganchase/mosaic-store";
-import React, { type FC, type ReactNode } from "react";
+import type { FC, ReactNode } from "react";
 
 import { LinkList } from "../../components/link-list/LinkList";
 import { Heading4 } from "../../components/mdx/h4";

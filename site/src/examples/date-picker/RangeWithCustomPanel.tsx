@@ -13,7 +13,7 @@ import {
   getCurrentLocale,
 } from "@salt-ds/lab";
 import { CustomDatePickerPanel } from "@salt-ds/lab/stories/date-picker/CustomDatePickerPanel";
-import React, { type ReactElement, useCallback } from "react";
+import { type ReactElement, useCallback } from "react";
 
 function formatDateRange(
   dateRange: DateRangeSelection | null,

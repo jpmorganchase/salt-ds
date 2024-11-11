@@ -1,12 +1,12 @@
 import { Button, type ButtonProps, makePrefixer } from "@salt-ds/core";
 import { clsx } from "clsx";
-import React, {
+import {
   type ComponentPropsWithoutRef,
-  forwardRef,
-  useEffect,
-  type SyntheticEvent,
   type MouseEventHandler,
   type Ref,
+  type SyntheticEvent,
+  forwardRef,
+  useEffect,
 } from "react";
 import type { DateRangeSelection, SingleDateSelection } from "../calendar";
 import {

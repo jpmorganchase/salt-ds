@@ -7,7 +7,6 @@ import {
   CheckboxGroup,
   FormField,
   FormFieldLabel,
-  Label,
   SplitLayout,
   StackLayout,
   Text,

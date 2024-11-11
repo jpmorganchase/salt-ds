@@ -2,7 +2,6 @@ import { Button, FlowLayout, StackLayout } from "@salt-ds/core";
 import {
   ChevronRightIcon,
   ExpandAllIcon,
-  ExportIcon,
   PrintIcon,
   SendIcon,
   ShareIcon,

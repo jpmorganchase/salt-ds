@@ -1,11 +1,11 @@
 import { useControlled, useIsomorphicLayoutEffect } from "@salt-ds/core";
 import { clsx } from "clsx";
-import React, {
+import {
   type ChangeEvent,
   type ForwardedRef,
-  forwardRef,
   type KeyboardEvent,
   type ReactElement,
+  forwardRef,
   useCallback,
   useRef,
 } from "react";

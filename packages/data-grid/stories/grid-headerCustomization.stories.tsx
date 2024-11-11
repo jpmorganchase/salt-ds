@@ -4,7 +4,7 @@ import {
   ToggleButton,
   ToggleButtonGroup,
 } from "@salt-ds/core";
-import { ArrowDownIcon, ArrowUpIcon, HomeIcon, MenuIcon } from "@salt-ds/icons";
+import { ArrowDownIcon, ArrowUpIcon, MenuIcon } from "@salt-ds/icons";
 import { MenuButton } from "@salt-ds/lab";
 import {
   type SyntheticEvent,

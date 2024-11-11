@@ -48,6 +48,7 @@
   outline-offset: var(--salt-focused-outlineOffset);
   border-color: var(--salt-selectable-borderColor-hover);
   color: var(--salt-selectable-foreground-hover);
+  clip-path: unset;
 }
 
 .saltRadioButton-input:focus-visible + .saltRadioButtonIcon-checked {

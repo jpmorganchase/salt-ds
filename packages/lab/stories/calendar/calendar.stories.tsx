@@ -7,7 +7,6 @@ import {
   getLocalTimeZone,
   isEqualDay,
   startOfMonth,
-  startOfYear,
   today,
 } from "@internationalized/date";
 import { Button, Divider, StackLayout } from "@salt-ds/core";

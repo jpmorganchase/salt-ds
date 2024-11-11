@@ -1,4 +1,4 @@
-import React, { forwardRef } from "react";
+import { forwardRef } from "react";
 
 const filledPath =
   "M6,0,4.21,4.05,0,4.58l3.11,3L2.29,12,6,9.5,9.71,12,8.89,7.62l3.11-3L7.79,4.05,6,0Z";

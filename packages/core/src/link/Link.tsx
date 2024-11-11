@@ -32,8 +32,8 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
     href,
     className,
     children,
-    color = "primary",
-    variant = color,
+    color: colorProp,
+    variant,
     target = "_self",
     render,
     ...rest
@@ -48,6 +48,7 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
   });
   const { ExternalIcon } = useIcon();
 
+  const color = variant ?? colorProp ?? "primary";
   const LinkIconComponent =
     IconComponent === undefined ? ExternalIcon : IconComponent;
 
@@ -58,7 +59,6 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
       href={href}
       ref={ref}
       target={target}
-      variant={variant}
       color={color}
       render={render}
       {...rest}

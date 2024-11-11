@@ -1,6 +1,6 @@
 import { CloseIcon, type IconProps, SuccessTickIcon } from "@salt-ds/icons";
 import clsx from "clsx";
-import { ElementType, type FC, type ReactNode } from "react";
+import type { FC, ReactNode } from "react";
 import styles from "./ExampleContainer.module.css";
 
 export interface ExampleContainerProps {

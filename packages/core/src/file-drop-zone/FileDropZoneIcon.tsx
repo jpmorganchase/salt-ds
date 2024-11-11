@@ -1,4 +1,4 @@
-import { type IconProps, UploadIcon } from "@salt-ds/icons";
+import type { IconProps } from "@salt-ds/icons";
 import { forwardRef } from "react";
 import { useIcon } from "../semantic-icon-provider";
 import { StatusIndicator, type ValidationStatus } from "../status-indicator";
