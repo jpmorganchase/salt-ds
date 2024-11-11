@@ -1,5 +1,6 @@
 import { type ReactNode, useContext, useState } from "react";
-import { createContext, useIsomorphicLayoutEffect } from "../utils";
+import { createContext } from "../utils/createContext";
+import { useIsomorphicLayoutEffect } from "../utils/useIsomorphicLayoutEffect";
 import type { Breakpoints } from "./Breakpoints";
 
 type Breakpoint = keyof Breakpoints;
