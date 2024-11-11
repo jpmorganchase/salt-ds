@@ -257,4 +257,28 @@ describe("GIVEN a Tooltip", () => {
       cy.findByTestId(FLOATING_TEST_ID).should("exist");
     });
   });
+
+  describe("WHEN used in a FormField", () => {
+    it("AND status is undefined, THEN should inherit status", () => {
+      cy.mount(
+        <FormField validationStatus="error">
+          <Tooltip open content="tooltip">
+            <InfoIcon />
+          </Tooltip>
+        </FormField>,
+      );
+      cy.findByRole("tooltip").should("have.class", "saltTooltip-error");
+    });
+
+    it("AND status is defined, THEN should not inherit status", () => {
+      cy.mount(
+        <FormField validationStatus="error">
+          <Tooltip open content="tooltip" status="info">
+            <InfoIcon />
+          </Tooltip>
+        </FormField>,
+      );
+      cy.findByRole("tooltip").should("have.class", "saltTooltip-info");
+    });
+  });
 });

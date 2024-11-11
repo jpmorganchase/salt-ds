@@ -1,10 +1,4 @@
-import {
-  Button,
-  type ButtonProps,
-  FlexLayout,
-  FlowLayout,
-  StackLayout,
-} from "@salt-ds/core";
+import { Button, FlexLayout, FlowLayout, StackLayout } from "@salt-ds/core";
 import {
   DownloadIcon,
   SearchIcon,

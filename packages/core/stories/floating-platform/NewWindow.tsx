@@ -4,9 +4,7 @@ import { WindowProvider, useWindow } from "@salt-ds/window";
 import {
   type ComponentPropsWithoutRef,
   type ForwardedRef,
-  createContext,
   forwardRef,
-  useContext,
   useMemo,
   useState,
 } from "react";

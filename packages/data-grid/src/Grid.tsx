@@ -2,7 +2,6 @@ import { makePrefixer } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
-import type React from "react";
 import {
   type CSSProperties,
   type KeyboardEvent,

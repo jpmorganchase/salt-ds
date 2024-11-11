@@ -4,7 +4,7 @@ import {
   StaticListItem,
   StaticListItemContent,
 } from "@salt-ds/lab";
-import React, { type ReactElement } from "react";
+import type { ReactElement } from "react";
 import { type ListEvent, complexEventsData } from "./exampleData";
 
 const ListItem = ({ title, time }: ListEvent) => (

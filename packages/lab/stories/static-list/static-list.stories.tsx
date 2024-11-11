@@ -8,7 +8,7 @@ import {
 } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react";
 import { clsx } from "clsx";
-import React, { Fragment, useState } from "react";
+import { Fragment, useState } from "react";
 import { complexEventsData, eventsData } from "../assets/exampleData";
 
 export default {

@@ -1,9 +1,4 @@
-import {
-  FormField,
-  FormFieldHelperText,
-  FormFieldLabel,
-  Input,
-} from "@salt-ds/core";
+import { FormField, FormFieldHelperText, FormFieldLabel } from "@salt-ds/core";
 import type { Meta, StoryFn } from "@storybook/react";
 import {
   QAContainer,

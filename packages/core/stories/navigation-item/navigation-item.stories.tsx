@@ -8,7 +8,7 @@ import {
 } from "@salt-ds/core";
 import { NotificationIcon } from "@salt-ds/icons";
 import type { Meta, StoryFn } from "@storybook/react";
-import React, { useState } from "react";
+import { useState } from "react";
 
 import "./navigation-item.stories.css";
 

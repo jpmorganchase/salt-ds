@@ -13,7 +13,7 @@ import {
   formatDate,
   getCurrentLocale,
 } from "@salt-ds/lab";
-import { type ReactElement, useCallback, useState } from "react";
+import { type ReactElement, useCallback } from "react";
 
 function formatSingleDate(
   date: DateValue | null,

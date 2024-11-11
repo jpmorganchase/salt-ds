@@ -1,7 +1,7 @@
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
-import { ForwardedRef, type HTMLAttributes, forwardRef } from "react";
+import { type HTMLAttributes, forwardRef } from "react";
 import { type A11yValueProps, FormFieldContext } from "../form-field-context";
 import { capitalize, makePrefixer, useId } from "../utils";
 

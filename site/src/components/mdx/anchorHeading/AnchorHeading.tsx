@@ -1,6 +1,5 @@
 import { Link, type LinkProps } from "@jpmorganchase/mosaic-components";
 import clsx from "clsx";
-import type React from "react";
 import {
   type ElementType,
   type FC,

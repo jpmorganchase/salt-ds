@@ -1,0 +1,21 @@
+.saltTabBar {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  gap: var(--salt-spacing-100);
+  position: relative;
+  box-sizing: border-box;
+}
+
+.saltTabBar-divider::before {
+  content: "";
+  position: absolute;
+  inset: auto 0 0 0;
+  height: var(--salt-size-border);
+  border-bottom: var(--salt-size-border) var(--salt-separable-borderStyle) var(--salt-separable-secondary-borderColor);
+}
+
+.saltTabBar-inset {
+  padding-left: var(--salt-spacing-300);
+  padding-right: var(--salt-spacing-300);
+}

@@ -1,12 +1,7 @@
 import { FlexLayout } from "@salt-ds/core";
 import { useState } from "react";
-import {
-  Grid,
-  GridColumn,
-  GridProps,
-  RowSelectionCheckboxColumn,
-} from "../src";
-import { DummyRow, dummyRowKeyGetter, rowData } from "./dummyData";
+import { Grid, GridColumn, RowSelectionCheckboxColumn } from "../src";
+import { dummyRowKeyGetter, rowData } from "./dummyData";
 import "./grid.stories.css";
 import type { StoryFn } from "@storybook/react";
 

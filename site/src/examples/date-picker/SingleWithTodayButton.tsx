@@ -23,7 +23,7 @@ import {
   getCurrentLocale,
   useDatePickerContext,
 } from "@salt-ds/lab";
-import React, { type ReactElement, useCallback } from "react";
+import { type ReactElement, useCallback } from "react";
 
 const TodayButton = () => {
   const {

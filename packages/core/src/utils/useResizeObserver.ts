@@ -14,9 +14,11 @@ export function useResizeObserver({ ref, onResize }: UseResizeObserverProps) {
     const win = ownerWindow(element);
 
     const resizeObserver = new win.ResizeObserver((entries) => {
-      if (entries.length === 0) return;
+      requestAnimationFrame(() => {
+        if (entries.length === 0) return;
 
-      onResize();
+        onResize();
+      });
     });
     resizeObserver.observe(element);
 

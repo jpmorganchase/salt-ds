@@ -34,19 +34,19 @@ Dialog sizes are typically used for different scenarios:
 
 ### Size table (width)
 
-| **Breakpoint**                              | **Small (% width)** | **Medium (% width)** | **Large (% width)** |
-| ------------------------------------------- | ------------------- | -------------------- | ------------------- |
-| Extra large (>1920px) / Large (1280-1919px) | 24%                 | 48%                  | 72%                 |
-| Medium (960-1279px)                         | 36%                 | 68%                  | 84%                 |
-| Small (600-959px)                           | 56%                 | 84%                  | 96%                 |
-| Extra small (0-599px)                       | 100%                | 100%                 | 100%                |
+| **Viewport size** | **Breakpoint (px)** | **Small (%)** | **Medium (%)** | **Large (%)** |
+| ----------------- | ------------------- | ------------- | -------------- | ------------- |
+| Extra small       | 0-599               | 100%          | 100%           | 100%          |
+| Small             | 600-959             | 56%           | 84%            | 96%           |
+| Medium            | 960-1279            | 36%           | 68%            | 84%           |
+| Large             | 1280-1919           | 24%           | 48%            | 72%           |
+| Extra large       | >1920               | 24%           | 48%            | 72%           |
 
 ### Size table (height)
 
-| **Breakpoint**                | **Small (% width)** | **Medium (% width)** | **Large (% width)** |
-| ----------------------------- | ------------------- | -------------------- | ------------------- |
-| Extra large (>1920px) - Small | 48%                 | 72%                  | 84%                 |
-| Extra small (0-599px)         | 48%                 | 100%                 | 100%                |
+| **Viewport size** | **Breakpoint (px)** | **Small (%)** | **Medium (%)** | **Large (%)** |
+| ----------------- | ------------------- | ------------- | -------------- | ------------- |
+| All sizes         | All breakpoints     | 48%           | 72%            | 84%           |
 
 </LivePreview>
 
@@ -133,6 +133,14 @@ This forces a user to action something within the dialog.
 ## Disable scrim
 
 Use the `disableScrim` prop to prevent the scrim from rendering.
+
+</LivePreview>
+<LivePreview componentName="dialog" exampleName="WithHeader" >
+  ##  🚧 Header updates
+
+`DialogHeader`'s update follows our standardized header for container components and app regions, and it can be added to provide a structured header for dialog. The header includes a title and actions that follows our Header Block pattern.
+
+**Note:** This change is currently in Lab.
 
 </LivePreview>
 </LivePreviewControls>

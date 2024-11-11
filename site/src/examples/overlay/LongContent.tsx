@@ -24,12 +24,10 @@ export const LongContent = (): ReactElement => {
       <OverlayPanel
         style={{
           width: 300,
-          height: 200,
-          overflow: "auto",
         }}
       >
         <OverlayPanelCloseButton onClick={handleClose} />
-        <OverlayPanelContent>
+        <OverlayPanelContent style={{ height: 200 }}>
           <StackLayout>
             <div>
               Lorem Ipsum is simply dummy text of the printing and typesetting

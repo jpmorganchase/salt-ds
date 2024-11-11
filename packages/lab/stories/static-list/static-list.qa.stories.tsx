@@ -8,7 +8,7 @@ import {
 import type { Meta, StoryFn } from "@storybook/react";
 import { clsx } from "clsx";
 import { QAContainer, type QAContainerProps } from "docs/components";
-import React, { Fragment } from "react";
+import { Fragment } from "react";
 import { complexEventsData, eventsData } from "../assets/exampleData";
 
 export default {
