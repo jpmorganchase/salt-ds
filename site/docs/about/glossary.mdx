@@ -17,7 +17,7 @@ Salt components serve as foundational building blocks as well as representing de
 
 For a full list of foundational components, refer to the [component documentation](/salt/components/index).
 
-## Design Token
+## Design token
 
 A design token is a visual attribute that represents a specific aspect of a design system. It is an abstract representation of a design property, such as colors, typography, spacing, or breakpoints, that can be used consistently across a product or design system. Design tokens provide a centralized and reusable way to define and manage design-related values, making it easier to maintain consistency and make global design changes. They act as a bridge between designers and developers, enabling a shared language and ensuring design consistency throughout the product or system. In Salt design tokens are represented as Figma variables and in code, they take the form of CSS variables.
 
@@ -36,3 +36,11 @@ Salt is the J.P. Morgan design system, an open-source solution for building exce
 Salt is under active development. At this stage, we don't recommend theming unless absolutely necessary.
 
 For an overview of theming, refer to our [theming documentation](/salt/themes/index).
+
+## Disabled state
+
+A component in a disabled state is completely non-interactive as it isn’t considered relevant to the user’s workflow at that time. As the function isn’t available to the user, the component doesn’t need to meet minimum contrast requirements and is often displayed as visually muted. Consider if a disabled state is the correct UI pattern or if a progressive reveal might be more appropriate. Salt doesn’t offer validation states (error, warning, or success) for disabled components, as these imply required user action.
+
+## Read-only state
+
+A component in a read-only state is considered relevant to the user’s workflow, allowing users to view and interact with the content without modifying it. It must meet accessibility requirements, including minimum contrast. The system supports validation states (error, warning or success) for read-only components. While disabled states are usually not detected by screen readers, read-only elements are accessible by screen readers.
