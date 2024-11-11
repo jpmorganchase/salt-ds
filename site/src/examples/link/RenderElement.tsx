@@ -1,5 +1,5 @@
 import { Link, Text } from "@salt-ds/core";
-import React, { type ReactElement } from "react";
+import type { ReactElement } from "react";
 import styles from "./index.module.css";
 
 const CustomLinkImplementation = (props: any) => (
