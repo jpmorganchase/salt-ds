@@ -13,7 +13,7 @@ import {
 } from "@salt-ds/core";
 import { CloseIcon } from "@salt-ds/icons";
 import { OverlayHeader } from "@salt-ds/lab";
-import type { Meta, StoryFn } from "@storybook/react";
+import type { Meta } from "@storybook/react";
 import { useState } from "react";
 
 export default {
