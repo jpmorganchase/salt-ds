@@ -1,8 +1,8 @@
+import installCoverageTask from "@cypress/code-coverage/task";
 // @ts-ignore
 import { defineConfig } from "cypress";
 import { devServer } from "cypress-rspack-dev-server";
 import { merge } from "webpack-merge";
-// import installCoverageTask from "@cypress/code-coverage/task";
 
 export default defineConfig({
   viewportWidth: 1280,
@@ -10,7 +10,7 @@ export default defineConfig({
   video: false,
   component: {
     setupNodeEvents(on, config) {
-      // installCoverageTask(on, config);
+      installCoverageTask(on, config);
       //Setting up a log task to allow logging to the console during an axe test because console.log() does not work directly in a test
       on("task", {
         log(message: string) {
@@ -34,5 +34,8 @@ export default defineConfig({
       });
     },
     specPattern: "packages/**/src/**/*.cy.{js,ts,jsx,tsx}",
+    env: {
+      coverage: Boolean(process.env.coverage),
+    },
   },
 });

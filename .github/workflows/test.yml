@@ -118,3 +118,8 @@ jobs:
         with:
           name: cypress-screenshots
           path: cypress/screenshots
+      - uses: actions/upload-artifact@v4
+        if: success() && ${{ matrix.react == '18' }}
+        with:
+          name: coverage
+          path: coverage

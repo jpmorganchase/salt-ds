@@ -17,15 +17,14 @@ export default defineConfig({
         use: ["style-loader", "css-loader", "postcss-loader"],
       },
       {
-        test: /packages\/.*\/src\/.*\.[tj]sx?$/,
-        use: ["babel-loader"],
-      },
-      {
         test: /\.(j|t)s$/,
         exclude: [/[\\/]node_modules[\\/]/],
         loader: "builtin:swc-loader",
         options: {
           jsc: {
+            experimental: {
+              plugins: [["swc-plugin-coverage-instrument", {}]],
+            },
             parser: {
               syntax: "typescript",
             },
@@ -46,6 +45,9 @@ export default defineConfig({
         exclude: [/[\\/]node_modules[\\/]/],
         options: {
           jsc: {
+            experimental: {
+              plugins: [["swc-plugin-coverage-instrument", {}]],
+            },
             parser: {
               syntax: "typescript",
               tsx: true,
@@ -81,5 +83,8 @@ export default defineConfig({
           : "@storybook/react-dom-shim",
     },
     extensions: ["...", ".ts", ".tsx", ".js", ".jsx", ".css"],
+  },
+  watchOptions: {
+    ignored: "**/*",
   },
 });

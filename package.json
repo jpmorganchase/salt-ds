@@ -21,7 +21,7 @@
     "copy:icon:css": "yarn workspace @salt-ds/icons copy:css",
     "copy:countries:css": "yarn workspace @salt-ds/countries copy:css",
     "test": "vitest",
-    "test:components": "CYPRESS_NO_COMMAND_LOG=1 cypress run --component --browser chrome",
+    "test:components": "cypress run --component --browser chrome",
     "test:components:local": "cypress open --component --browser electron",
     "prettier": "prettier --write .",
     "prettier:ci": "prettier --check .",
@@ -81,7 +81,6 @@
     "ag-grid-enterprise": "^31.3.4",
     "ag-grid-react": "^31.3.4",
     "axe-core": "^4.9.0",
-    "babel-loader": "^9.1.3",
     "chromatic": "^11.10.1",
     "ci-info": "^4.0.0",
     "clsx": "^2.0.0",
@@ -104,9 +103,9 @@
     "storybook": "^8.3.0",
     "style-loader": "^4.0.0",
     "stylelint": "^16.0.0",
+    "swc-plugin-coverage-instrument": "^0.0.25",
     "typescript": "4.6.4",
     "vite": "^5.0.0",
-    "vite-plugin-istanbul": "^6.0.0",
     "vite-tsconfig-paths": "^4.2.0",
     "vitest": "^2.0.0",
     "yup": "^1.0.2"
@@ -117,7 +116,8 @@
     "next": "^14.0.0",
     "whatwg-url": "^14.0.0",
     "@joshwooding/vite-plugin-react-docgen-typescript": "0.4.0",
-    "cookie": "^0.7.0"
+    "cookie": "^0.7.0",
+    "nyc": "^17.0.0"
   },
   "browserslist": {
     "production": [
@@ -147,5 +147,15 @@
     "rollup": "^4.24.2",
     "rollup-plugin-esbuild": "^6.1.1",
     "rollup-plugin-postcss": "^4.0.2"
+  },
+  "nyc": {
+    "all": false,
+    "include": [
+      "**/packages/**"
+    ],
+    "exclude": [
+      "**/__tests_/**"
+    ],
+    "excludeAfterRemap": false
   }
 }
