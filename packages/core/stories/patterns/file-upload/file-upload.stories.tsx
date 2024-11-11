@@ -99,7 +99,7 @@ const FileItem = ({
 
   const validFile = useCallback((file: File) => {
     if (file.type !== "application/pdf") {
-      setErrorMessage("Wrong format. Files must be in .PDF format");
+      setErrorMessage("Invalid format. Files must be in .PDF format");
       return false;
     }
 
@@ -133,7 +133,7 @@ const FileItem = ({
 
             if (badConnection && Math.random() > 0.7) {
               setStatus("failedConnection");
-              setErrorMessage("Connection failed");
+              setErrorMessage("Connection failed. Please try again.");
               return old;
             }
 
