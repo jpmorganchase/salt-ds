@@ -5,16 +5,13 @@
   padding: var(--saltOverlay-content-padding, var(--salt-spacing-100));
 }
 
-.saltOverlayPanelContent-container {
-  overflow-y: auto;
-}
-
 .saltOverlayHeader ~ .saltOverlayPanelContent-separator {
   border-top: var(--salt-size-border) var(--salt-separable-borderStyle) transparent;
 }
 
 .saltOverlayPanelContent-overflow {
   padding-right: var(--salt-spacing-100);
+  overflow-y: auto;
 }
 
 .saltOverlayHeader ~ .saltOverlayPanelContent-scroll {
