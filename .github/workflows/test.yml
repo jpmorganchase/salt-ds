@@ -113,8 +113,6 @@ jobs:
         with:
           install: false
           command: yarn run test:components
-        env:
-          DEBUG: "cypress:*"
       - uses: actions/upload-artifact@v4
         if: failure()
         with:
