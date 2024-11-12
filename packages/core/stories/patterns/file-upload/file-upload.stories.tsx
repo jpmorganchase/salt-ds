@@ -5,6 +5,7 @@ import {
   FileDropZone,
   FileDropZoneIcon,
   FileDropZoneTrigger,
+  FlexLayout,
   Spinner,
   StackLayout,
   StatusIndicator,
@@ -281,8 +282,8 @@ export const FileUploadExample = () => {
   };
 
   return (
-    <StackLayout align="center" style={{ height: "80vh" }}>
-      <StackLayout direction="row">
+    <StackLayout style={{ height: "80vh" }}>
+      <FlexLayout direction="row" wrap>
         <Button
           onClick={() => {
             const file = new File(
@@ -339,7 +340,7 @@ export const FileUploadExample = () => {
         >
           Add image
         </Button>
-      </StackLayout>
+      </FlexLayout>
       <StackLayout gap={1}>
         <Text styleAs="h2">Upload files</Text>
         <Text>
