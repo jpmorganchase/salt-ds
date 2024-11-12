@@ -1,0 +1,157 @@
+.saltStep {
+  flex: 1;
+  position: relative;  
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: repeat(4, min-content);
+  grid-template-areas: 
+    "icon"
+    "label"
+    "description"
+    "track"
+  ;
+  justify-items: center;
+  align-items: center;
+  gap: 0 8px;
+}
+
+.saltStepper-horizontal .saltStep {
+  text-align: center;
+}
+
+.saltStepper-vertical .saltStep {
+  display: grid;
+  grid-template-columns: 18px 1fr 28px;
+  grid-template-rows: 
+    var(--salt-size-base) /* 28px */
+    minmax(24px, max-content)
+    0fr
+  ;
+  grid-template-areas:
+    "icon  label       expand"
+    "track description ."
+    "substeps substeps substeps"
+  ;
+  justify-items: start;
+
+  transition-duration: .3s;
+  transition-timing-function: ease-in-out;
+  transition-property: grid-templare-rows opacity;
+}
+
+.saltStepper-vertical .saltStep-expanded {
+  grid-template-rows: 
+    var(--salt-size-base) /* 28px */
+    minmax(24px, max-content)
+    1fr
+  ;
+}
+
+.saltStep > ol {
+  grid-area: substeps;
+  
+  height: 100%;
+  padding-left: 0;
+
+  overflow: hidden;
+}
+
+.saltStepper > .saltStep {}
+
+.saltStep-stage-pending {
+  --saltIcon-color: var(--status-static-foreground);
+}
+
+.saltStep-stage-inprogress {
+  --saltIcon-color: var(--salt-status-info-foreground-decorative);
+}
+ 
+.saltStep-stage-active {
+  --saltIcon-color: var(--salt-status-info-foreground-decorative);
+}
+
+.saltStep-stage-completed { 
+  --saltIcon-color: var(--salt-status-success-foreground-decorative);
+}
+
+.saltStep-status-warning {
+  --saltIcon-color: var(--salt-status-warning-foreground-decorative);
+}
+
+.saltStep-status-error {
+  --saltIcon-color: var(--salt-status-error-foreground-decorative);
+}
+
+.saltStep-nested-list {
+  display: flex;
+  flex-direction: inherit;
+  padding: 0;
+
+  list-style-type: none;
+}
+
+.saltStepper-horizontal > .saltStep > .saltStep-tail {
+  grid-area: track;
+
+  position: absolute;
+  top: calc(var(--saltIcon-size) / 2 - 2px);
+  left: calc(50% + calc(var(--saltIcon-size) / 2));
+  right: calc(-50% + calc(var(--saltIcon-size) / 2));
+  margin: 0 10px;
+
+  border-top-width: 2px;
+  border-top-color: #ced2d9;
+}
+
+.saltStepper-vertical > .saltStep > .saltStep-tail {
+  grid-area: tail;
+
+  width: 1px;
+  height: 100%;
+  border-left-width: 2px;
+  border-left-color: #ced2d9; 
+  margin: 0 auto;
+}
+
+.saltStep-tail-solid {
+  border-left-style: solid;
+  border-top-style: solid;
+}
+
+.saltStep-tail-dashed {
+  border-left-style: dotted;
+  border-top-style: dotted;
+}
+
+.saltStep-label {
+  grid-area: label;
+
+  font-size: var(--salt-text-fontSize);
+  line-height: var(--salt-text-lineHeight);
+
+  margin-left: calc((var(--depth) + 1) * var(--salt-spacing-100))
+}
+
+.saltStep-description {
+  grid-area: description;
+}
+
+.saltStepper 
+
+.saltStepper-horizontal .saltStep-description {
+  margin-left: 8px;
+  margin-right: 8px;
+}
+
+.saltStepper-vertical .saltStep-description {
+  padding-bottom: var(--salt-spacing-300);
+  margin-left: calc((var(--depth) + 1) * var(--salt-spacing-100))
+}
+
+.saltStep-status-error > .saltStep-description {
+  color: var(--salt-status-error-foreground-informative);
+}
+
+.saltStep-status-warning > .saltStep-description {
+  color: var(--salt-status-warning-foreground-informative);
+}
