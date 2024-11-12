@@ -37,5 +37,6 @@ export default defineConfig({
     env: {
       coverage: Boolean(process.env.coverage),
     },
+    experimentalSingleTabRunMode: true,
   },
 });
