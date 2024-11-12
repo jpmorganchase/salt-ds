@@ -1,0 +1,22 @@
+.saltStepTrack {
+  grid-area: track;
+}
+
+.saltStepper-horizontal .saltStepTrack {
+  --saltStepOffset: calc(var(--salt-size-icon) * )
+
+  position: absolute;
+  top: calc(var(--icon-size) / 2 - 2px);
+  left: calc(50% + calc(var(--icon-size) / 2));
+  right: calc(-50% + calc(var(--icon-size) / 2));
+ 
+  margin: 0 10px;
+
+  border-top: 2px solid var(--salt-track-borderColor);
+}
+
+.saltStepper-vertical .saltStepTrack {
+  justify-self: center;
+  height: 100%;
+  border-left: 2px solid var(--salt-track-borderColor);
+}
