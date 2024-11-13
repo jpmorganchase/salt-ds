@@ -3,20 +3,28 @@
 }
 
 .saltStepper-horizontal .saltStepTrack {
-  --saltStepOffset: calc(var(--salt-size-icon) * )
+  /* Copy of size calculations of <Icon /> */
+  --icon-base-size: var(--salt-size-icon, 12px);
+  --icon-size-multiplier: var(--saltIcon-size-multiplier, 1.5);
+  --icon-size: calc(var(--icon-base-size) * var(--icon-size-multiplier));
+
+  /* Distance between Icon and Track */
+  --horizontal-offset: var(--salt-spacing-100);
 
   position: absolute;
   top: calc(var(--icon-size) / 2 - 2px);
-  left: calc(50% + calc(var(--icon-size) / 2));
-  right: calc(-50% + calc(var(--icon-size) / 2));
- 
-  margin: 0 10px;
+  left: calc(50% + calc(var(--icon-size) / 2 + var(--horizontal-offset)));
+  right: calc(-50% + calc(var(--icon-size) / 2 + var(--horizontal-offset)));
 
   border-top: 2px solid var(--salt-track-borderColor);
 }
 
 .saltStepper-vertical .saltStepTrack {
-  justify-self: center;
   height: 100%;
+  justify-self: center;
   border-left: 2px solid var(--salt-track-borderColor);
+}
+
+.saltStepper > .saltStep:last-child > .saltStepTrack {
+  display: none;
 }
