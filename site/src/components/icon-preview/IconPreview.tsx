@@ -56,27 +56,29 @@ export function IconPreview() {
   const renderIcons = useMemo(() => {
     if (filteredIcons.length > 0) {
       return (
-        <FlowLayout justify="start" gap={1}>
-          {filteredIcons.map(([name, Icon]) => (
-            <StackLayout
-              align="center"
-              key={name}
-              gap={1}
-              className={styles.iconCard}
-            >
-              <div className={styles.iconContainer}>
-                <Icon size={1} />
-              </div>
-              <Text
-                className={styles.iconName}
-                color="secondary"
-                styleAs="label"
+        <div className={styles.gridContainer}>
+          <FlowLayout justify="start" gap={1}>
+            {filteredIcons.map(([name, Icon]) => (
+              <StackLayout
+                align="center"
+                key={name}
+                gap={1}
+                className={styles.iconCard}
               >
-                {name.replace(/([A-Z])/g, " $1")}
-              </Text>
-            </StackLayout>
-          ))}
-        </FlowLayout>
+                <div className={styles.iconContainer}>
+                  <Icon size={2} />
+                </div>
+                <Text
+                  className={styles.iconName}
+                  color="secondary"
+                  styleAs="label"
+                >
+                  {name.replace(/([A-Z])/g, " $1")}
+                </Text>
+              </StackLayout>
+            ))}
+          </FlowLayout>
+        </div>
       );
     }
     return (

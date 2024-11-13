@@ -51,8 +51,10 @@ export const CountrySymbolPreview = () => {
               key={countryCode}
             >
               <LazyCountrySymbol code={countryCode} size={1} />
-              <Text>{countryCode}</Text>
-              <Text style={{ textAlign: "center" }}>{countryName}</Text>
+              <StackLayout gap={0} align="center">
+                <Text>{countryCode}</Text>
+                <Text style={{ textAlign: "center" }}>{countryName}</Text>
+              </StackLayout>
             </StackLayout>
           ))}
         </FlowLayout>

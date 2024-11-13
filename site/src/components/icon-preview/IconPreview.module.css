@@ -16,6 +16,11 @@
   flex: 1;
 }
 
+.gridContainer {
+  max-height: 800px;
+  overflow: auto;
+}
+
 .iconCard {
   padding-top: var(--salt-spacing-300);
   padding-inline: var(--salt-spacing-25);
