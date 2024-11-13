@@ -13,22 +13,22 @@ describe("GIVEN a System status", () => {
   it('should render an info status when `status="info"`', () => {
     cy.mount(<Info />);
 
-    cy.findByRole("img", { name: "info" }).should("exist");
+    cy.findByTestId("InfoSolidIcon").should("exist");
   });
   it('should render a success status when `status="success"`', () => {
     cy.mount(<Success />);
 
-    cy.findByRole("img", { name: "success" }).should("exist");
+    cy.findByTestId("SuccessTickIcon").should("exist");
   });
   it('should render a warning status when `status="warning"`', () => {
     cy.mount(<Warning />);
 
-    cy.findByRole("img", { name: "warning" }).should("exist");
+    cy.findByTestId("WarningSolidIcon").should("exist");
   });
   it('should render an error status when `status="error"`', () => {
     cy.mount(<Error />);
 
-    cy.findByRole("img", { name: "error" }).should("exist");
+    cy.findByTestId("ErrorSolidIcon").should("exist");
   });
 
   it('should have a default role of "status"', () => {
