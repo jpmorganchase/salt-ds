@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { CSSProperties } from 'react';
 import clsx from 'clsx';
-import { makePrefixer } from '@salt-ds/core';
+import { makePrefixer,  } from '@salt-ds/core';
 import { useComponentCssInjection } from '@salt-ds/styles';
 import { useWindow } from '@salt-ds/window';
 
@@ -14,7 +14,9 @@ export namespace StepTrack {
 
 const withBaseName = makePrefixer('saltStepTrack')
 
-export function StepTrack() {
+export function StepTrack({
+  className,
+}: StepTrack.Props) {
   const targetWindow = useWindow();
 
   useComponentCssInjection({
@@ -27,6 +29,7 @@ export function StepTrack() {
     <div
       className={clsx(
         withBaseName(),
+        className,
       )}
     />
   )
