@@ -5,7 +5,11 @@ import {
 } from "@salt-ds/core";
 import { forwardRef, useCallback, useEffect, useRef, useState } from "react";
 import ReactDOM from "react-dom";
-import { Window as SaltWindow, type WindowProps, isDesktop } from "../window";
+import {
+  Window as SaltWindow,
+  type WindowProps,
+  isDesktop,
+} from "./WindowContext";
 
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";

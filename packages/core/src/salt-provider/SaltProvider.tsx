@@ -30,7 +30,7 @@ import type {
   Mode,
   ThemeName,
 } from "../theme";
-import { useIsomorphicLayoutEffect } from "../utils";
+import { useIsomorphicLayoutEffect } from "../utils/useIsomorphicLayoutEffect";
 import { ViewportProvider } from "../viewport";
 import saltProviderCss from "./SaltProvider.css";
 

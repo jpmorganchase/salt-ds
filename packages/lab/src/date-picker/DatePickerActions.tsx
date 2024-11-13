@@ -13,7 +13,7 @@ import {
   type RangeDatePickerState,
   type SingleDatePickerState,
   useDatePickerContext,
-} from "./index";
+} from "./DatePickerContext";
 import "./DatePickerActions.css";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
