@@ -70,8 +70,8 @@ export const CloseButton: StoryFn<QAContainerProps> = (props) => {
         </OverlayTrigger>
         <OverlayPanel>
           <OverlayHeader
-            preheader="preheader"
-            description="description"
+            preheader="Preheader"
+            description="Description"
             header={<H4>Header block</H4>}
             actions={<CloseButton />}
           />

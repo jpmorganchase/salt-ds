@@ -96,8 +96,8 @@ export const HeaderWithCloseButton = ({ onOpenChange }: OverlayProps) => {
         }}
       >
         <OverlayHeader
-          preheader="preheader"
-          description="description"
+          preheader="Preheader"
+          description="Description"
           header={<H4 id={id}>Header block</H4>}
           actions={<CloseButton />}
         />
