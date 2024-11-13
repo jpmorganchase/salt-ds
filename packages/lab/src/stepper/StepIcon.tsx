@@ -22,6 +22,7 @@ export namespace StepIcon {
   export interface Props extends IconProps {
     stage: Step.Props['stage']
     status: Step.Props['status']
+    multiplier?: IconProps['size']
   }
 }
 
@@ -31,6 +32,8 @@ export function StepIcon({
   status,
   stage,
   className,
+  multiplier = 1.5,
+  size,
   ...props
 }: StepIcon.Props) {
   const depth = useContext(StepDepthContext);
@@ -47,11 +50,11 @@ export function StepIcon({
 
   return (
     <Component
-      size={depth === 0 ? 1.5 : 1}
       className={clsx(
         withBaseName(),
         className,
       )}
+      size={multiplier}
       {...props}
     />
   )

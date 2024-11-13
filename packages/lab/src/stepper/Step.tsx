@@ -6,16 +6,6 @@ import React, {
   type ReactNode, 
 } from 'react';
 import clsx from 'clsx';
-import {
-
-  ErrorSolidIcon,
-  ProgressInprogressIcon,
-  StepActiveIcon,
-  StepDefaultIcon,
-  StepSuccessIcon,
-  WarningSolidIcon,
-  type IconProps,
-} from "@salt-ds/icons";
 import { useWindow } from '@salt-ds/window';
 import { Text, Button, makePrefixer } from '@salt-ds/core';
 import { useComponentCssInjection } from "@salt-ds/styles"
@@ -31,7 +21,7 @@ import { StepIcon } from './StepIcon';
 import { StepExpandTrigger } from './StepExpandTrigger';
 
 export namespace Step {
-  export interface Props {
+  export interface Props extends ComponentProps<'li'> {
     label?: ReactNode
     description?: ReactNode
     stage?: Stage
@@ -81,7 +71,7 @@ export function Step({
     window: targetWindow
   })
 
-  const iconSizeMultiplier = depth === 0 ? 1.5 : 1;
+  const iconMultiplier = depth === 0 ? 1.5 : 1;
 
   return (
     <StepDepthProvider value={depth + 1}>
@@ -99,12 +89,12 @@ export function Step({
         } as CSSProperties}
         {...props}
       >
+        <StepTrack />
         <StepIcon
           stage={stage}
           status={status}
-          size={iconSizeMultiplier}
+          multiplier={iconMultiplier}
         />
-        <StepTrack size={iconSizeMultiplier} />
         {label && (
           <Text className={withBaseName('label')}>
             <strong>{label}</strong>
