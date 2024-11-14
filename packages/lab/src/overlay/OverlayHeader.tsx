@@ -1,7 +1,7 @@
 import { Text, makePrefixer } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
-import clsx from "clsx";
+import { clsx } from "clsx";
 import {
   type ComponentPropsWithoutRef,
   type ReactNode,
@@ -11,7 +11,7 @@ import overlayHeaderCss from "./OverlayHeader.css";
 
 const withBaseName = makePrefixer("saltOverlayHeader");
 
-export interface OverlayPanelContentProps
+export interface OverlayHeaderContentProps
   extends ComponentPropsWithoutRef<"div"> {
   /**
    * Description text is displayed just below the header
@@ -33,11 +33,11 @@ export interface OverlayPanelContentProps
 
 export const OverlayHeader = forwardRef<
   HTMLDivElement,
-  OverlayPanelContentProps
->(function OverlayPanelContent(props, ref) {
+  OverlayHeaderContentProps
+>(function OverlayHeaderContent(props, ref) {
   const targetWindow = useWindow();
   useComponentCssInjection({
-    testId: "salt-overlay-panel-content",
+    testId: "salt-overlay-header-content",
     css: overlayHeaderCss,
     window: targetWindow,
   });
