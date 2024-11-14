@@ -166,6 +166,9 @@ describe("Given a Menu", () => {
   });
 
   it("should support disabled items", () => {
+    const alertStub = cy.stub().as("alertStub");
+    cy.on("window:alert", alertStub);
+
     cy.mount(<IconWithGroups />);
     cy.findByRole("button", { name: "Open Menu" }).realClick();
     cy.findByRole("menuitem", { name: "Paste" }).should(
@@ -175,6 +178,7 @@ describe("Given a Menu", () => {
     cy.findByRole("menuitem", { name: "Paste" }).realClick();
     cy.findByRole("menu").should("exist");
     cy.findByRole("menuitem", { name: "Paste" }).should("not.be.focused");
+    cy.get("@alertStub").should("not.have.been.called");
   });
 
   it("should focus items on hover", () => {

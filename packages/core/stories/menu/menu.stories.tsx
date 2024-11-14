@@ -263,7 +263,12 @@ export const IconWithGroups: StoryFn<typeof Menu> = (args) => {
             <CopyIcon aria-hidden />
             Copy
           </MenuItem>
-          <MenuItem disabled>
+          <MenuItem
+            disabled
+            onClick={() => {
+              alert("Paste");
+            }}
+          >
             <PasteIcon aria-hidden />
             Paste
           </MenuItem>
