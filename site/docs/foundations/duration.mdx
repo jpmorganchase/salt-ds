@@ -24,7 +24,7 @@ There are four durations available to choose from: instant, perceptible, notable
 
 It's important to use the correct duration to ensure the user feels in control of the interface. The duration should reflect the importance of the element or information being animated. Responses that occur too quickly can distract or obstruct a workflow (e.g., tooltips should never appear instantly as a user moves the mouse pointer over the user interface (UI)). If responses occur too slowly, the application may appear unresponsive, resulting in unnecessary clicks or potential user error (e.g., a system action occurs, but a progress component isn't displayed quickly enough to communicate its state).
 
-## Instant (0﻿–100ms)
+## Instant (0ms)
 
 An instant duration is an immediate response by the system to a user’s interaction within 0–100ms. The response should take no more than 100ms to complete. Interactions that can trigger an instant response include hovering over a button, clicking a radio button, typing into an editable field, or dragging an object. No feedback is required as the system response itself is the feedback.
 
@@ -35,7 +35,7 @@ An instant duration is an immediate response by the system to a user’s interac
 
 ## Perceptible (300ms)
 
-A perceptible duration is a short, but detectable delay between a user's action and the system's response. The user should be aware of the gap but retain the feeling of control. This implies a shared control between the user and the interface—the user expects the system to process the interaction they've enabled the system to do. However, the delay should feel acceptable and maintain the user’s attention and productivity. This aligns with the [Doherty Threshold](https://lawsofux.com/doherty-threshold/) principle, which dictates that user experience turns from painful to addictive after the system feedback time drops below 400ms. Tooltips and overlays are examples of perceptible delays.
+A perceptible duration is a short, but detectable delay between a user's action and the system's response. 
 
 <Image
   src="/img/foundations/duration-perceptible.png"
@@ -43,7 +43,7 @@ A perceptible duration is a short, but detectable delay between a user's action 
   className="saltSite-util-space-below-1x"
 />
 
-Perceptible duration is recommended for revealing secondary guidance or information to a user, but it doesn't warrant a permanent place within the interface. Content typically has a relatively high level of urgency, so users can quickly find solutions to their problems and avoid getting frustrated with the system.
+Perceptible duration is recommended for revealing secondary guidance or information to a user.
 
 ## Notable (1s)
 
@@ -59,10 +59,6 @@ A 1s delay is usually the maximum limit for experiencing an interaction as one c
 
 With a delay of 1s (`salt-duration-notable`) there's no need to provide visual feedback to the user; however, it can be used as a breakpoint. Once a delay has exceeded the 'notable' duration, it's useful to indicate to the user that the system is working on the problem, for example by displaying a progress indicator or loading state.
 
-### The time between notable and cut-off
-
-The time between `salt-duration-notable` and `salt-duration-cutoff` indicates that the system requires a longer time to process an action past a ‘notable’ duration, but with the reassurance that the action will be completed until the cut-off point. Like with notable duration, the user relies on the system to “work” on providing an outcome but may momentarily feel a loss of control as their workflow has been interrupted. Appropriate visual feedback should be displayed at this point to provide reassurance that the interface will continue processing an action as intended. It would remain present until cut-off.
-
 #### Recommended visual feedback:
 
 [Spinner](../components/spinner) is a visual representation of a process that is taking an indeterminate amount of time to complete. A spinner can be displayed at any point between `salt-duration-notable` and `salt-duration-cutoff`, but should not be displayed any sooner, as the assumption should be that the user's actions will have completed before it's necessary to show a loading state.
@@ -74,7 +70,7 @@ The time between `salt-duration-notable` and `salt-duration-cutoff` indicates th
 
 ## Cut-off (10s)
 
-The average person’s attention span has a limit of 10s. Beyond this time, users are likely to start mentally context-switching. `salt-duration-cutoff` is the point at which any attempt for a system to respond should finish, and a status message should be displayed.
+Cut-off, `salt-duration-cutoff`, is the point at which any attempt for a system to respond should finish, and a status message should be displayed.
 
 <Image
   src="/img/foundations/duration-cutoff.svg"
@@ -88,16 +84,8 @@ To prevent a frustrating or unproductive user experience, the time until a cut-o
 - Displaying general hints and tips for using the application.
 - If possible, allowing the user to continue using other parts of the UI while the content loads.
 
-#### By-passing the 10 second cut-off point:
+#### Exceeding the 10 second cut-off point:
 
-There may be a requirement for a system to continue loading an interaction for an indeterminate amount of time, past the cut-off point, due to a workflow dependency. A system may need to support a highly performant UI that concurrently updates a significant number of data points.
-
-If a duration exceeds the cut-off point, it's recommended to implement appropriate visual feedback that prevents the system from slowing down and provides enough visual affordance for the user to successfully navigate a busy UI environment.
-
-It is therefore acceptable to implement a duration of longer than 10 seconds, provided:
-
-- The outcome doesn’t require user input or response.
-- The user can switch their attention to alternative tasks in the duration time.
-- The interaction that has a longer duration time is independent of, and doesn’t affect time sensitivity of, parallel interactions.
+There may be a requirement for a system to continue loading an interaction for an indeterminate amount of time, past the cut-off point, due to a workflow dependency. A system may need to support a highly performant UI that concurrently updates a significant number of data points such as a trading platform.
 
 :fragment{src="./fragments/feedback.mdx"}

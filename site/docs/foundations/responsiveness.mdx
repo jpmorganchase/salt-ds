@@ -23,17 +23,17 @@ A responsive layout is made up of a set of consistently proportioned columns, se
   label="Show columns"
 />
 
+- Gutters - The gutter is the space between columns.
+- Margins - Left and right spacing on the screen are margins.
+- Columns - Columns divide the content of the page into various numbers of columns depending on the breakpoint.
+
 Basic layout grids are included in the design system to provide a starting point for designing any user interface.
 
 The gutters and margins are set using `--salt-spacing-300` across all densities. The number of columns and their widths vary depending on the density and breakpoint set. Find all you need to know about densities on the [Density foundation](./density)
 
-| Token                | High density (px) | Medium | Low | Touch |
-| -------------------- | ----------------- | ------ | --- | ----- |
-| `--salt-spacing-300` | 12                | 24     | 36  | 48    |
-
-- Gutters - The gutter is the space between columns.
-- Margins - Left and right spacing on the screen are margins.
-- Columns - Columns divide the content of the page into various numbers of columns depending on the breakpoint.
+| Token                | High Density (HD) | Medium Density (MD)| Low Density (LD)| Touch Density (TD)|
+| -------------------- | ----------------- | ------------------ | --------------- | ----------------- |
+| `--salt-spacing-300` | 12                | 24                 | 36              | 48                |
 
 ## Breakpoints
 
@@ -48,7 +48,7 @@ The number of columns in a layout varies dependent on the breakpoint and the den
 
 ### High density
 
-| Breakpoint  | Width (pixels) | Columns | Margin size          | Gutter size          |
+| Breakpoint  | Width (px) | Columns | Margin size          | Gutter size          |
 | ----------- | -------------- | ------- | -------------------- | -------------------- |
 | Extra Small | 0 - 599        | 2       | `--salt-spacing-300` | `--salt-spacing-300` |
 | Small       | 600 - 959      | 4       | `--salt-spacing-300` | `--salt-spacing-300` |
@@ -58,7 +58,7 @@ The number of columns in a layout varies dependent on the breakpoint and the den
 
 ### Medium density
 
-| Breakpoint  | Width (pixels) | Columns | Margin size          | Gutter size          |
+| Breakpoint  | Width (px) | Columns | Margin size          | Gutter size          |
 | ----------- | -------------- | ------- | -------------------- | -------------------- |
 | Extra Small | 0 - 599        | 2       | `--salt-spacing-300` | `--salt-spacing-300` |
 | Small       | 600 - 959      | 4       | `--salt-spacing-300` | `--salt-spacing-300` |
@@ -68,7 +68,7 @@ The number of columns in a layout varies dependent on the breakpoint and the den
 
 ### Low density
 
-| Breakpoint  | Width (pixels) | Columns | Margin size          | Gutter size          |
+| Breakpoint  | Width (px) | Columns | Margin size          | Gutter size          |
 | ----------- | -------------- | ------- | -------------------- | -------------------- |
 | Extra Small | 0 - 599        | 1       | `--salt-spacing-300` | `--salt-spacing-300` |
 | Small       | 600 - 959      | 2       | `--salt-spacing-300` | `--salt-spacing-300` |
@@ -78,7 +78,7 @@ The number of columns in a layout varies dependent on the breakpoint and the den
 
 ### Touch density
 
-| Breakpoint  | Width (pixels) | Columns | Margin size          | Gutter size          |
+| Breakpoint  | Width (px) | Columns | Margin size          | Gutter size          |
 | ----------- | -------------- | ------- | -------------------- | -------------------- |
 | Extra Small | 0 - 599        | 1       | `--salt-spacing-300` | `--salt-spacing-300` |
 | Small       | 600 - 959      | 2       | `--salt-spacing-300` | `--salt-spacing-300` |
