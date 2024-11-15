@@ -39,7 +39,10 @@ div[class*="ag-theme-salt"] .ag-keyboard-focus .ag-header-cell:focus:after {
 div[class*="ag-theme-salt"] button[class^="ag-"]:focus,
 div[class*="ag-theme-salt"] input[class^="ag-"][type="button"]:focus {
   box-shadow: none;
-  border: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--salt-focused-outlineColor);
+  outline-style: var(--salt-focused-outlineStyle);
+  outline-width: var(--salt-focused-outlineWidth);
+  outline-color: var(--salt-focused-outlineColor);
+  outline-offset: var(--salt-focused-outlineOffset);
 }
 
 div[class*="ag-theme-salt"] .ag-select .ag-picker-field-wrapper {
