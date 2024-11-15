@@ -1,5 +1,30 @@
 # @salt-ds/core
 
+## 1.37.2
+
+### Patch Changes
+
+- ae6e5c9: Updated ToggleButton's styling to align to Button's new styling.
+- b395246: Fixed `color="secondary"` not working for the Link component.
+- aced985: Replaced Button's deprecated `variant` prop with `sentiment` and `appearance` in:
+
+  - ComboBox
+  - DialogCloseButton
+  - DrawerCloseButton
+  - OverlayPanelCloseButton
+  - CompactPaginator
+  - Paginator
+  - Pagination
+
+- 7432f62: Fixed useResponsiveProp not being inclusive when calculating breakpoints e.g. not recognising `600px` as `sm`.
+- 0730eb0: Fixed focus rings not appearing on Checkbox or Radio Button.
+- 1a29b4e: Fixed disabled MenuItems triggering onClick.
+- 6b1f109: Added padding between the content and scrollbar when `OverlayPanelContent` is scrollable.
+- 26bf747: Fixed Tooltip to prioritize its `status` prop over the status inherited from a parent FormField.
+- 6a08b82: Fixed circular dependencies in code.
+- Updated dependencies [dc5b3b3]
+  - @salt-ds/icons@1.13.0
+
 ## 1.37.1
 
 ### Patch Changes
