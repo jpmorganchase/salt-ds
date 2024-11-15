@@ -92,7 +92,7 @@ jobs:
             state: "success",
             description: "Successfully deployed",
             context: "Storybook",
-            target_url: "${{ steps.publish.outputs.alias }}"
+            target_url: "${{ steps.publish.outputs.pages-deployment-alias-url }}"
             });
 
       - name: Update deploy status (failure)
