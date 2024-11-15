@@ -1,27 +1,21 @@
-import React from 'react';
-import clsx from 'clsx';
-import {
-  Button,
-  type ButtonProps
-} from '@salt-ds/core';
-import {
-  ChevronDownIcon,
-  ChevronUpIcon
-} from '@salt-ds/icons';
+import React from "react";
+import clsx from "clsx";
+import { Button, type ButtonProps } from "@salt-ds/core";
+import { ChevronDownIcon, ChevronUpIcon } from "@salt-ds/icons";
 import { makePrefixer } from "@salt-ds/core";
-import { useWindow } from '@salt-ds/window';
+import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 
-import stepExpandTriggerCSS from './StepExpandTrigger.css';
+import stepExpandTriggerCSS from "./StepExpandTrigger.css";
 
 export namespace StepExpandTrigger {
   export interface Props extends ButtonProps {
-    label: string
-    expanded: boolean
+    label: string;
+    expanded: boolean;
   }
 }
 
-const withBaseName = makePrefixer('saltStepExpandTrigger')
+const withBaseName = makePrefixer("saltStepExpandTrigger");
 
 export function StepExpandTrigger({
   label,
@@ -29,16 +23,16 @@ export function StepExpandTrigger({
   className,
   ...props
 }: StepExpandTrigger.Props) {
-  const targetWindow = useWindow()
+  const targetWindow = useWindow();
 
   // TODO: Figure out what's correct
-  const ariaLabel = `Step ${label} show sub steps`
+  const ariaLabel = `Step ${label} show sub steps`;
 
   useComponentCssInjection({
-    testId: 'salt-step-expand-trigger',
+    testId: "salt-step-expand-trigger",
     css: stepExpandTriggerCSS,
-    window: targetWindow
-  })
+    window: targetWindow,
+  });
 
   return (
     <Button
@@ -46,15 +40,10 @@ export function StepExpandTrigger({
       sentiment="neutral"
       aria-expanded={expanded}
       aria-label={ariaLabel}
-      className={clsx(
-        withBaseName(),
-        className,
-      )}
+      className={clsx(withBaseName(), className)}
       {...props}
     >
-      {expanded 
-        ? <ChevronUpIcon /> 
-        : <ChevronDownIcon />}
+      {expanded ? <ChevronUpIcon /> : <ChevronDownIcon />}
     </Button>
-  )
+  );
 }
