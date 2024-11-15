@@ -1,5 +1,51 @@
 # @salt-ds/lab
 
+## 1.0.0-alpha.55
+
+### Minor Changes
+
+- 91973ac: Added `DialogHeader` component to lab. `DialogHeader`'s update follows our standardized header for container components and app regions, and it can be added to provide a structured header for dialog. The header includes a title and actions that follows our Header Block pattern.
+
+  ```typescript
+  <Dialog open={open} onOpenChange={onOpenChange} id={id}>
+    <DialogHeader
+      header={<H2>Terms and conditions</H2>}
+      actions={
+        <Button
+          aria-label="Close overlay"
+          appearance="transparent"
+          sentiment="neutral"
+        >
+          <CloseIcon aria-hidden />
+        </Button>
+      }
+    />
+    <DialogContent>
+      <div>
+        Only Chase Cards that we determine are eligible can be added to the
+      Wallet.
+      </div>
+    </DialogContent>
+  </Dialog>;
+  ```
+
+### Patch Changes
+
+- 3cf8d99: Updated TabstripNext and TabNext to follow the new design guidelines and added dismissing and adding tabs.
+- 6a08b82: Fixed circular dependencies in code.
+- Updated dependencies [ae6e5c9]
+- Updated dependencies [b395246]
+- Updated dependencies [aced985]
+- Updated dependencies [7432f62]
+- Updated dependencies [0730eb0]
+- Updated dependencies [1a29b4e]
+- Updated dependencies [6b1f109]
+- Updated dependencies [26bf747]
+- Updated dependencies [6a08b82]
+- Updated dependencies [dc5b3b3]
+  - @salt-ds/core@1.37.2
+  - @salt-ds/icons@1.13.0
+
 ## 1.0.0-alpha.54
 
 ### Patch Changes

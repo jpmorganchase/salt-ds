@@ -1,5 +1,11 @@
 # @salt-ds/theme
 
+## 1.23.2
+
+### Patch Changes
+
+- 2f027e9: Fixed target characteristic tokens being incorrect in Salt Next.
+
 ## 1.23.1
 
 ### Patch Changes
