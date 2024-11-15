@@ -1,5 +1,9 @@
 .saltStepTrack {
   grid-area: track;
+  transition-duration: .3s;
+  transition-timing-function: ease-in-out;
+  transition-property: opacity, min-height;
+  min-height: 24px;
 }
 
 .saltStepper-horizontal .saltStepTrack {
@@ -9,22 +13,59 @@
   --icon-size: calc(var(--icon-base-size) * var(--icon-size-multiplier));
 
   /* Distance between Icon and Track */
-  --horizontal-offset: var(--salt-spacing-100);
+  --saltStep-horizontal-offset: var(--salt-spacing-100);
 
   position: absolute;
   top: calc(var(--icon-size) / 2 - 2px);
-  left: calc(50% + calc(var(--icon-size) / 2 + var(--horizontal-offset)));
-  right: calc(-50% + calc(var(--icon-size) / 2 + var(--horizontal-offset)));
+  left: calc(50% + calc(var(--icon-size) / 2 + var(--saltStep-horizontal-offset)));
+  right: calc(-50% + calc(var(--icon-size) / 2 + var(--saltStep-horizontal-offset)));
 
-  border-top: 2px solid var(--salt-track-borderColor);
+  border-top-width: var(--salt-track-borderWidth-complete);
+  border-top-style: var(--salt-track-borderStyle-incomplete);
+  border-top-color: var(--salt-track-borderColor);
+}
+
+.saltStepper-horizontal .saltStep-stage-completed > .saltStepTrack {
+  border-top-style: var(--salt-track-borderStyle-complete);
 }
 
 .saltStepper-vertical .saltStepTrack {
   height: 100%;
   justify-self: center;
-  border-left: 2px solid var(--salt-track-borderColor);
+
+  border-left-width: var(--salt-track-borderWidth-complete);
+  border-left-style: var(--salt-track-borderStyle-incomplete);
+  border-left-color: var(--salt-track-borderColor);
 }
 
-.saltStepper > .saltStep:last-child > .saltStepTrack {
+.saltStepper-vertical .saltStep-stage-completed > .saltStepTrack {
+  border-left-style: var(--salt-track-borderStyle-complete);
+}
+
+.saltStep-depth-0.saltStep:not(.saltStep-expanded):last-child > .saltStepTrack {
+  opacity: 0;
+  min-height: 0;
+}
+
+.saltStep-depth-0.saltStep-expanded:last-child .saltStep:not(.saltStep-expanded):last-child .saltStepTrack {
+  opacity: 0;
+  min-height: 0;
+}
+
+
+
+/* .saltStepper-vertical >.saltStep-depth-0.saltStep-collapsed:last-child > .saltStepTrack {
   display: none;
 }
+
+.saltStepper-vertical > .saltStep-depth-0.saltStep-expanded:last-child .saltStep-depth-1.saltStep-collapsed:last-child > .saltStepTrack {
+  display: none;
+}
+
+.saltStepper-vertical > .saltStep-depth-0.saltStep-expanded:last-child .saltStep-depth-1.saltStep-expanded:last-child .saltStep-depth-2:last-child > .saltStepTrack {
+  display: none;
+} */
+
+/* .saltStep:not(:has(.saltStep)):last-child > .saltStepTrack {
+  display: none;
+} */
