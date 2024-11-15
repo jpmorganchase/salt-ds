@@ -1,122 +1,129 @@
-import React, { 
-  ComponentProps,
+import {
   useContext,
   useState,
+  useEffect,
+  type ComponentProps,
   type CSSProperties,
-  type ReactNode, 
-} from 'react';
-import clsx from 'clsx';
-import { useWindow } from '@salt-ds/window';
-import { Text, Button, makePrefixer } from '@salt-ds/core';
-import { useComponentCssInjection } from "@salt-ds/styles"
+  type ReactNode,
+} from "react";
+import clsx from "clsx";
+import { useWindow } from "@salt-ds/window";
+import { Text, makePrefixer, type ButtonProps } from "@salt-ds/core";
+import { useComponentCssInjection } from "@salt-ds/styles";
 
-import {
-  StepDepthContext,
-  StepDepthProvider
-} from './StepDepthContext';
-import stepCSS from './Step.css';
+import stepCSS from "./Step.css";
 
-import { StepTrack } from './StepTrack';
-import { StepIcon } from './StepIcon';
-import { StepExpandTrigger } from './StepExpandTrigger';
+import { Stepper } from "./Stepper";
+import { StepTrack } from "./StepTrack";
+import { StepIcon } from "./StepIcon";
+import { StepExpandTrigger } from "./StepExpandTrigger";
+import { DepthContext } from "./StepperProvider";
 
 export namespace Step {
-  export interface Props extends ComponentProps<'li'> {
-    label?: ReactNode
-    description?: ReactNode
-    stage?: Stage
-    status?: Status
-    disabled?: boolean
-    className?: string
-    style?: CSSProperties
-    children?: ReactNode
+  export interface Props extends ComponentProps<"li"> {
+    label?: ReactNode;
+    description?: ReactNode;
+    stage?: Stage;
+    status?: Status;
+    defaultExpanded?: boolean;
+    onToggle?: ButtonProps["onClick"];
+    disabled?: boolean;
+    className?: string;
+    style?: CSSProperties;
+    children?: ReactNode;
   }
 
   export type Stage = 
     | "pending"
     | "completed"
     | "inprogress"
-    | "active"
+    | "active";
 
-  export type Status = 
-    | "warning"
-    | "error"
+  export type Status = "warning" | "error";
 
   export type Depth = number;
 }
 
-const withBaseName = makePrefixer('saltStep')
+const withBaseName = makePrefixer("saltStep");
 
-// TODO: Add clickability
-// TODO: Add locked state
 export function Step({
   label,
   description,
-  stage = "pending",
   status,
+  stage = "pending",
+  defaultExpanded = false,
+  onToggle,
   className,
   style,
   children,
   ...props
 }: Step.Props) {
-  const depth = useContext(StepDepthContext);
-  const [expanded, setExpanded] = useState(true);
+  const depth = useContext(DepthContext);
+  const [expanded, setExpanded] = useState(defaultExpanded);
   const targetWindow = useWindow();
 
-  const hasNestedSteps = !!children;
-
   useComponentCssInjection({
-    testId: 'salt-step',
+    testId: "salt-step",
     css: stepCSS,
-    window: targetWindow
-  })
+    window: targetWindow,
+  });
+
+  useEffect(() => {
+    if (depth === -1) {
+      console.warn("<Step /> should be used within a <Stepper /> component");
+    }
+  }, [depth]);
 
   const iconMultiplier = depth === 0 ? 1.5 : 1;
+  const hasNestedSteps = !!children;
 
   return (
-    <StepDepthProvider value={depth + 1}>
-      <li
-        className={clsx(
-          withBaseName(),
-          status && withBaseName(`status-${status}`),
-          stage && withBaseName(`stage-${stage}`),
-          expanded && withBaseName('expanded'),
-          className
-        )}
-        style={{
-          '--depth': depth,
-          ...style
-        } as CSSProperties}
-        {...props}
-      >
-        <StepTrack />
-        <StepIcon
-          stage={stage}
-          status={status}
-          multiplier={iconMultiplier}
+    <li
+      className={clsx(
+        withBaseName(),
+        withBaseName(`stage-${stage}`),
+        withBaseName(`depth-${depth}`),
+        status && withBaseName(`status-${status}`),
+        hasNestedSteps && withBaseName("with-nested-steps"),
+        hasNestedSteps && expanded && withBaseName("expanded"),
+        hasNestedSteps && !expanded && withBaseName("collapsed"),
+        className,
+      )}
+      style={
+        {
+          "--saltStep-depth": depth,
+          ...style,
+        } as CSSProperties
+      }
+      {...props}
+    >
+      <StepTrack />
+      <StepIcon stage={stage} status={status} multiplier={iconMultiplier} />
+      {label && (
+        <Text className={withBaseName("label")}>
+          <strong>{label}</strong>
+        </Text>
+      )}
+      {description && (
+        <Text styleAs="label" className={withBaseName("description")}>
+          {description}
+        </Text>
+      )}
+      {hasNestedSteps && (
+        <StepExpandTrigger
+          label={"Show Substeps"}
+          expanded={expanded}
+          onClick={(event) => {
+            onToggle?.(event);
+            setExpanded(!expanded);
+          }}
         />
-        {label && (
-          <Text className={withBaseName('label')}>
-            <strong>{label}</strong>
-          </Text>
-        )}
-        {description && (
-          <Text styleAs="label" className={withBaseName('description')}>
-            {description}
-          </Text>
-        )}
-        {children && (
-          <StepExpandTrigger
-            label={"Show Substeps"}
-            expanded={expanded}
-            onClick={() => setExpanded(!expanded)}
-          />
-        )}
-        {children && (
-          <ol>{children}</ol>
-        )}
-      </li>
-    </StepDepthProvider>
-  )
+      )}
+      {hasNestedSteps && (
+        <Stepper>
+          {children}
+        </Stepper>
+      )}
+    </li>
+  );
 }
-

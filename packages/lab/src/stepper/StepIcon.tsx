@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext } from "react";
 import clsx from "clsx";
 import {
   ErrorSolidIcon,
@@ -9,24 +9,24 @@ import {
   WarningSolidIcon,
   type IconProps,
 } from "@salt-ds/icons";
-import { makePrefixer } from '@salt-ds/core';
-import { useComponentCssInjection } from '@salt-ds/styles';
-import { useWindow } from '@salt-ds/window';
+import { makePrefixer } from "@salt-ds/core";
+import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 
-import stepIconCSS from './StepIcon.css'
+import stepIconCSS from "./StepIcon.css";
 
-import { type Step } from './Step';
-import { StepDepthContext } from './StepDepthContext';
+import type { Step } from "./Step";
+import { DepthContext } from "./StepperProvider";
 
 export namespace StepIcon {
   export interface Props extends IconProps {
-    stage: Step.Props['stage']
-    status: Step.Props['status']
-    multiplier?: IconProps['size']
+    stage: Step.Props["stage"];
+    status: Step.Props["status"];
+    multiplier?: IconProps["size"];
   }
 }
 
-const withBaseName = makePrefixer('saltStepIcon')
+const withBaseName = makePrefixer("saltStepIcon");
 
 export function StepIcon({
   status,
@@ -36,51 +36,47 @@ export function StepIcon({
   size,
   ...props
 }: StepIcon.Props) {
-  const depth = useContext(StepDepthContext);
+  const depth = useContext(DepthContext);
 
   const targetWindow = useWindow();
 
   useComponentCssInjection({
-    testId: 'salt-step-icon',
+    testId: "salt-step-icon",
     css: stepIconCSS,
-    window: targetWindow
-  })
+    window: targetWindow,
+  });
 
-  const Component = stateToComponent({ status, stage })
+  const Component = stateToComponent({ status, stage });
 
   return (
     <Component
-      className={clsx(
-        withBaseName(),
-        className,
-      )}
+      className={clsx(withBaseName(), className)}
       size={multiplier}
       {...props}
     />
-  )
-  
+  );
 }
 
 function stateToComponent(props: Partial<StepIcon.Props>) {
   const { stage, status } = props;
-  
-  if(stage === 'completed') {
+
+  if (stage === "completed") {
     return StepSuccessIcon;
   }
 
-  if(stage === 'active') {
+  if (stage === "active") {
     return StepActiveIcon;
   }
- 
-  if(status === 'error') {
+
+  if (status === "error") {
     return ErrorSolidIcon;
   }
 
-  if(status === 'warning') {
+  if (status === "warning") {
     return WarningSolidIcon;
   }
 
-  if(stage === 'inprogress') {
+  if (stage === "inprogress") {
     return ProgressInprogressIcon;
   }
 

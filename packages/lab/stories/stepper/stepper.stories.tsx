@@ -94,9 +94,8 @@ export const Vertical: StoryFn<typeof Stepper> = () => {
           label="Step"
           description="Description text"
           stage="pending"
-          asChild
         >
-          </Step>
+        </Step>
         <Step
           label="Step"
           description="Description text"
@@ -145,7 +144,11 @@ export const VerticalNestedOnce: StoryFn<typeof Stepper> = () => {
         <Step label="Step 3">
           <Step label="Step 3.1" />
           <Step label="Step 3.2" description="Description text" />
-          <Step label="Step 3.3" />
+          <Step label="Step 3.3" description="This is just a description text">
+            <Step label="Step 3.3.1" />
+            <Step label="Step 3.3.2" />
+            <Step label="Step 3.3.3" description="This is just a description text" />
+          </Step>
         </Step>
       </Stepper>
     </StackLayout>
