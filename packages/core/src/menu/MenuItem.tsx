@@ -81,9 +81,11 @@ export const MenuItem = forwardRef<HTMLDivElement, MenuItemProps>(
             }
           },
           onClick(event: MouseEvent<HTMLDivElement>) {
-            onClick?.(event);
-            if (!triggersSubmenu && !disabled) {
-              tree?.events.emit("click");
+            if (!disabled) {
+              onClick?.(event);
+              if (!triggersSubmenu) {
+                tree?.events.emit("click");
+              }
             }
           },
           onFocus(event: FocusEvent<HTMLDivElement>) {
