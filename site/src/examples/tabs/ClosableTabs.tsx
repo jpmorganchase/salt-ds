@@ -32,7 +32,7 @@ export const ClosableTabs = (): ReactElement => {
                 <TabNextAction
                   onClick={() => {
                     setTabs(tabs.filter((tab) => tab !== label));
-                    announce(`${label} tab has been removed`);
+                    announce(`${label} tab has been removed`, 150);
                   }}
                   aria-label="Close tab"
                 >

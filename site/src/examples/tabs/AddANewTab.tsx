@@ -33,7 +33,7 @@ export const AddANewTab = (): ReactElement => {
             newCount.current += 1;
 
             setTabs((old) => old.concat(newTab));
-            announce(`${newTab} tab added`);
+            announce(`${newTab} tab added`, 150);
           }}
         >
           <AddIcon aria-hidden />

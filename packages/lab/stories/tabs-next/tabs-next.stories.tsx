@@ -245,7 +245,7 @@ export const Closable: StoryFn<typeof TabsNext> = (args) => {
                   <TabNextAction
                     onClick={() => {
                       setTabs((old) => old.filter((tab) => tab !== label));
-                      announce(`${label} tab has been closed`);
+                      announce(`${label} tab has been closed`, 150);
                     }}
                     aria-label="Close tab"
                   >
@@ -322,7 +322,7 @@ export const AddTabs: StoryFn<typeof TabsNext> = (args) => {
               newCount.current += 1;
 
               setTabs((old) => old.concat(newTab));
-              announce(`${newTab} tab added`);
+              announce(`${newTab} tab added`, 150);
             }}
           >
             <AddIcon aria-hidden />
@@ -430,7 +430,7 @@ export const AddWithDialog = () => {
   const handleConfirm = (newTab: string) => {
     setTabs((old) => old.concat(newTab));
     setConfirmationOpen(false);
-    announce(`${newTab} tab added`);
+    announce(`${newTab} tab added`, 150);
   };
 
   const handleCancel = () => {
@@ -508,7 +508,7 @@ export const CloseWithConfirmation = () => {
   const handleConfirm = () => {
     setTabs((old) => old.filter((tab) => tab !== valueToRemove));
     setOpen(false);
-    announce(`${valueToRemove} tab has been removed`);
+    announce(`${valueToRemove} tab has been removed`, 150);
   };
 
   const handleCancel = () => {
