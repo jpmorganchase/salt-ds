@@ -115,7 +115,7 @@ describe("GIVEN a Dialog", () => {
 
         cy.findByRole("button", { name: "Open dialog" }).realClick();
 
-        cy.findByRole("dialog").should("have.class", "saltDialog-small-xs");
+        cy.findByRole("dialog").should("have.class", "saltDialog-small-sm");
       },
     );
   });

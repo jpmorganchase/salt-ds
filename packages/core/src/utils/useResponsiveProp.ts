@@ -21,7 +21,7 @@ export const getCurrentBreakpoint = (
     (acc, val) => {
       const [, accWidth] = acc;
       const [breakpoint, breakpointWidth] = val;
-      if (breakpointWidth < width && breakpointWidth > accWidth) {
+      if (breakpointWidth <= width && breakpointWidth > accWidth) {
         return [breakpoint, breakpointWidth];
       }
       return acc;
