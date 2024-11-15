@@ -4,21 +4,21 @@ import { forwardRef } from "react";
 
 import { Icon, type IconProps } from "../icon";
 
-export type ErrorSolidIconProps = IconProps;
+export type CheckmarkIconProps = IconProps;
 
-export const ErrorSolidIcon = forwardRef<SVGSVGElement, ErrorSolidIconProps>(
-  function ErrorSolidIcon(props: ErrorSolidIconProps, ref) {
+export const CheckmarkIcon = forwardRef<SVGSVGElement, CheckmarkIconProps>(
+  function CheckmarkIcon(props: CheckmarkIconProps, ref) {
     return (
       <Icon
-        data-testid="ErrorSolidIcon"
-        aria-label="error solid"
+        data-testid="CheckmarkIcon"
+        aria-label="checkmark"
         viewBox="0 0 12 12"
         ref={ref}
         {...props}
       >
         <path
           fillRule="evenodd"
-          d="M9 0H3L0 3v6l3 3h6l3-3V3L9 0ZM7 2H5v5h2V2Zm-1 8a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z"
+          d="M4.952 9.294 10 3.73 8.9 2.706 4.875 7.163 3.027 5.446 2 6.546l2.952 2.748Z"
           clipRule="evenodd"
         />
       </Icon>
