@@ -1,71 +1,72 @@
+.saltStep {
+  /* Copy of size calculations of <Icon /> */
+  --icon-base-size: var(--salt-size-icon, 12px);
+  --icon-size-multiplier: var(--saltIcon-size-multiplier, 1.5);
+  --icon-size: calc(var(--icon-base-size) * var(--icon-size-multiplier));
+}
+
 .saltStepper-horizontal .saltStep {
   flex: 1;
-  position: relative;  
+  position: relative;
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: repeat(3, min-content);
-  grid-template-areas: 
+  grid-template-areas:
     "icon"
     "label"
-    "description"
-  ;
+    "description";
   justify-items: center;
   align-items: center;
   text-align: center;
+  padding: 0 var(--salt-spacing-25);
 }
 
 .saltStepper-vertical .saltStep {
   display: grid;
-  grid-template-columns: fit-content 1fr 28px;
-  grid-template-rows: 
-    fit-content
-    minmax(24px, max-content)
+  grid-template-columns: var(--icon-size) 1fr min-content;
+  grid-template-rows:
+    var(--salt-size-base)
     0fr
-  ;
+    0fr;
   grid-template-areas:
-    "icon     label       expand"
-    "track    description ."
-    "substeps substeps    substeps"
-  ;
+    "icon      label       expand"
+    "track     description ."
+    "stepper   stepper     stepper";
   justify-items: start;
+  align-items: center;
+  flex: 1;
+  gap: 0 var(--salt-spacing-100);
 
-  transition-duration: .3s;
+  transition-duration: 0.3s;
   transition-timing-function: ease-in-out;
-  transition-property: grid-template-rows opacity;
-  gap: 0 8px;
-  width: 100%;
+  transition-property: grid-template-rows, opacity;
 }
 
-.saltStepper-vertical .saltStep-expanded {
-  grid-template-rows: 
-    var(--salt-size-base) /* 28px */
-    minmax(24px, max-content)
-    1fr
-  ;
+.saltStep-collapsed > .saltStepper > .saltStep {
+  opacity: 0;
 }
 
-.saltStep > ol {
-  grid-area: substeps;
-  
-  height: 100%;
-  padding-left: 0;
-
-  overflow: hidden;
+.saltStepper-vertical .saltStep.saltStep-expanded {
+  opacity: 1;
+  grid-template-rows:
+    var(--salt-size-base)
+    minmax(24px, min-content)
+    1fr;
 }
 
 .saltStep-stage-pending {
-  --saltIcon-color: var(--status-static-foreground);
+  --saltIcon-color: var(--salt-status-static-foreground);
 }
 
 .saltStep-stage-inprogress {
   --saltIcon-color: var(--salt-status-info-foreground-decorative);
 }
- 
+
 .saltStep-stage-active {
   --saltIcon-color: var(--salt-status-info-foreground-decorative);
 }
 
-.saltStep-stage-completed { 
+.saltStep-stage-completed {
   --saltIcon-color: var(--salt-status-success-foreground-decorative);
 }
 
@@ -77,20 +78,14 @@
   --saltIcon-color: var(--salt-status-error-foreground-decorative);
 }
 
-.saltStep-nested-list {
-  display: flex;
-  flex-direction: inherit;
-  padding: 0;
-
-  list-style-type: none;
-}
-
 .saltStep-label {
   grid-area: label;
 }
 
 .saltStepper-vertical .saltStep-label {
-  padding-left: calc((var(--depth) + 1) * var(--salt-spacing-100));
+  line-height: var(--salt-size-base);
+  width: 100%;
+  padding-left: calc((var(--saltStep-depth) + 1) * var(--salt-spacing-100));
 }
 
 .saltStep-description {
@@ -99,7 +94,7 @@
 
 .saltStepper-vertical .saltStep-description {
   padding-bottom: var(--salt-spacing-300);
-  padding-left: calc((var(--depth) + 1) * var(--salt-spacing-100))
+  padding-left: calc((var(--saltStep-depth) + 1) * var(--salt-spacing-100));
 }
 
 .saltStep-status-error > .saltStep-description {
