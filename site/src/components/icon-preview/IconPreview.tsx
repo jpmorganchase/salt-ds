@@ -1,5 +1,7 @@
 import {
   Button,
+  Checkbox,
+  CheckboxGroup,
   FlexItem,
   FlexLayout,
   FlowLayout,
@@ -9,7 +11,6 @@ import {
   SaltProvider,
   StackLayout,
   StatusIndicator,
-  Switch,
   Text,
 } from "@salt-ds/core";
 import { CloseIcon, SearchIcon } from "@salt-ds/icons";
@@ -20,8 +21,10 @@ import { allIcons } from "./allIconsList";
 export function IconPreview() {
   const [search, setSearch] = useState("");
   const deferredSearch = useDeferredValue(search.toLowerCase());
-  const [showOutlineGroup, setShowOutlineGroup] = useState(true);
-  const [showSolidGroup, setShowSolidGroup] = useState(true);
+  const [variants, setVariants] = useState<("solid" | "outline")[]>([
+    "solid",
+    "outline",
+  ]);
 
   const handleSearch = (event: ChangeEvent<HTMLInputElement>) => {
     setSearch(event.target.value);
@@ -31,14 +34,14 @@ export function IconPreview() {
     setSearch("");
   };
 
-  const handleShowSolidGroupChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setShowSolidGroup(event.target.checked);
-  };
-
-  const handleShowOutlineGroupChange = (
-    event: ChangeEvent<HTMLInputElement>,
-  ) => {
-    setShowOutlineGroup(event.target.checked);
+  const handleVariantChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setVariants((prevVariants) => {
+      const { value, checked } = event.target;
+      if (checked) {
+        return [...prevVariants, value as "solid" | "outline"];
+      }
+      return prevVariants.filter((variant) => variant !== value);
+    });
   };
 
   const filteredIcons = useMemo(() => {
@@ -48,10 +51,11 @@ export function IconPreview() {
       const isSolidIcon = name.endsWith("SolidIcon");
       return (
         matchesSearch &&
-        ((showOutlineGroup && isOutlineIcon) || (showSolidGroup && isSolidIcon))
+        ((variants.includes("outline") && isOutlineIcon) ||
+          (variants.includes("solid") && isSolidIcon))
       );
     });
-  }, [deferredSearch, showOutlineGroup, showSolidGroup]);
+  }, [deferredSearch, variants]);
 
   const renderIcons = useMemo(() => {
     if (filteredIcons.length > 0) {
@@ -124,20 +128,15 @@ export function IconPreview() {
         </FlexItem>
         <FlexItem>
           <FormField labelPlacement="left" className={styles.formfield}>
-            <FormFieldLabel>Show Solid</FormFieldLabel>
-            <Switch
-              onChange={handleShowSolidGroupChange}
-              checked={showSolidGroup}
-            />
-          </FormField>
-        </FlexItem>
-        <FlexItem>
-          <FormField labelPlacement="left" className={styles.formfield}>
-            <FormFieldLabel>Show Outline</FormFieldLabel>
-            <Switch
-              onChange={handleShowOutlineGroupChange}
-              checked={showOutlineGroup}
-            />
+            <FormFieldLabel>Show variant</FormFieldLabel>
+            <CheckboxGroup
+              checkedValues={variants}
+              onChange={handleVariantChange}
+              direction="horizontal"
+            >
+              <Checkbox value="solid" label="Solid" />
+              <Checkbox value="outline" label="Outline" />
+            </CheckboxGroup>
           </FormField>
         </FlexItem>
         <FlexItem className={styles.formfield}>
