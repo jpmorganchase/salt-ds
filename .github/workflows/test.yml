@@ -108,15 +108,20 @@ jobs:
         run: yarn
       - name: Setup react
         run: yarn up react@${{ matrix.react }} react-dom@${{ matrix.react }}
-      - name: Build packages
-        run: yarn run build
       - name: Cypress Components
         uses: cypress-io/github-action@v6
         with:
           install: false
           command: yarn run test:components
+        env:
+          CYPRESS_NO_COMMAND_LOG: 1
       - uses: actions/upload-artifact@v4
         if: failure()
         with:
           name: cypress-screenshots
           path: cypress/screenshots
+      - uses: actions/upload-artifact@v4
+        if: success() && ${{ matrix.react == '18' }}
+        with:
+          name: coverage
+          path: coverage

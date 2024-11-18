@@ -17,6 +17,7 @@ node_modules
 
 # testing
 /cypress/screenshots
+/cypress/downloads
 /coverage
 .nyc_output
 
@@ -32,6 +33,7 @@ storybook-static
 # misc
 .DS_Store
 .eslintcache
+.swc
 
 npm-debug.log*
 yarn-debug.log*
