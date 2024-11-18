@@ -137,7 +137,6 @@
   /* Accent */
   --salt-accent-fontWeight: var(--salt-typography-fontWeight-semiBold); /* Use --salt-text-notation-fontWeight */
   --salt-accent-foreground-disabled: var(--salt-palette-accent-foreground-disabled);
-  --salt-accent-background-disabled: var(--salt-palette-accent-background-disabled);
   --salt-accent-borderColor-disabled: var(--salt-palette-accent-border-disabled); /* Use --salt-container-primary-borderColor-disabled */
 
   /* Track */
