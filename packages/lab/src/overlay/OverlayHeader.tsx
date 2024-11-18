@@ -11,8 +11,7 @@ import overlayHeaderCss from "./OverlayHeader.css";
 
 const withBaseName = makePrefixer("saltOverlayHeader");
 
-export interface OverlayHeaderContentProps
-  extends ComponentPropsWithoutRef<"div"> {
+export interface OverlayHeaderProps extends ComponentPropsWithoutRef<"div"> {
   /**
    * Description text is displayed just below the header
    **/
@@ -31,37 +30,37 @@ export interface OverlayHeaderContentProps
   preheader?: ReactNode;
 }
 
-export const OverlayHeader = forwardRef<
-  HTMLDivElement,
-  OverlayHeaderContentProps
->(function OverlayHeaderContent(props, ref) {
-  const targetWindow = useWindow();
-  useComponentCssInjection({
-    testId: "salt-overlay-header-content",
-    css: overlayHeaderCss,
-    window: targetWindow,
-  });
+export const OverlayHeader = forwardRef<HTMLDivElement, OverlayHeaderProps>(
+  function OverlayHeader(props, ref) {
+    const targetWindow = useWindow();
+    useComponentCssInjection({
+      testId: "salt-overlay-header",
+      css: overlayHeaderCss,
+      window: targetWindow,
+    });
 
-  const { className, description, header, actions, preheader, ...rest } = props;
+    const { className, description, header, actions, preheader, ...rest } =
+      props;
 
-  return (
-    <div className={clsx(withBaseName(), className)} {...rest} ref={ref}>
-      <div className={withBaseName("container")}>
-        <div className={withBaseName("header")}>
-          {preheader && (
-            <Text className={withBaseName("preheader")}>{preheader}</Text>
+    return (
+      <div className={clsx(withBaseName(), className)} {...rest} ref={ref}>
+        <div className={withBaseName("container")}>
+          <div className={withBaseName("header")}>
+            {preheader && (
+              <Text className={withBaseName("preheader")}>{preheader}</Text>
+            )}
+            {header}
+          </div>
+          {description && (
+            <Text color="secondary" className={withBaseName("description")}>
+              {description}
+            </Text>
           )}
-          {header}
         </div>
-        {description && (
-          <Text color="secondary" className={withBaseName("description")}>
-            {description}
-          </Text>
+        {actions && (
+          <div className={withBaseName("actionsContainer")}>{actions}</div>
         )}
       </div>
-      {actions && (
-        <div className={withBaseName("actionsContainer")}>{actions}</div>
-      )}
-    </div>
-  );
-});
+    );
+  },
+);
