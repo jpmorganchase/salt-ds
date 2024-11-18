@@ -166,24 +166,6 @@ Swapping an icon in Figma
 
 </DesignCard>
 
-#### Understanding our icon sizes
-
-We provide two types of icon: default and solid.
-
-Our base size for HD/default is 10px. However, for accessibility and visual design reasons, we don’t recommend icon sizes that are smaller than 12px. Therefore, our default HD icons start at 12px but they increase size in multiples of 10px—so that 2X size is 20px, 4X is 40px, etc.
-
-The default icon set is 12px for both high and medium density, 14px for low density and 16px for touch density. If necessary, you can adjust your icon size according to your UI designs in multiples of 2X, 3X, 4X, etc.
-
-<IconsTable caption="Example of an icon (print) in different densities and sizes">
-
-| Size                                                                            | High Density (HD)                                           | Medium Density (MD)                                           | Low Density (LD)                                           | Touch Density (TD)                                           |
-| ------------------------------------------------------------------------------- | ----------------------------------------------------------- | ------------------------------------------------------------- | ---------------------------------------------------------- | ------------------------------------------------------------ |
-| 1X <span style={{color: "var(--site-tertiary-accent-purple)"}}>(default)</span> | <DensityIcon density="high">12px</DensityIcon>              | <DensityIcon density="medium">12px</DensityIcon>              | <DensityIcon density="low" >14px</DensityIcon>             | <DensityIcon density="touch" >16px</DensityIcon>             |
-| 2X                                                                              | <DensityIcon density="high" iconSize={2}>20px</DensityIcon> | <DensityIcon density="medium" iconSize={2}>24px</DensityIcon> | <DensityIcon density="low" iconSize={2}>28px</DensityIcon> | <DensityIcon density="touch" iconSize={2}>32px</DensityIcon> |
-| 3X                                                                              | <DensityIcon density="high" iconSize={3}>30px</DensityIcon> | <DensityIcon density="medium" iconSize={3}>36px</DensityIcon> | <DensityIcon density="low" iconSize={3}>42px</DensityIcon> | <DensityIcon density="touch" iconSize={3}>48px</DensityIcon> |
-
-</IconsTable>
-
 <Callout title="Need support?">
 
 For help when manually installing Figma, visit the [Figma support page](https://help.figma.com/hc/en-us/articles/360041057214-Get-help-from-the-Figma-Support-team).
