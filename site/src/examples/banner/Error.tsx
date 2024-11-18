@@ -17,10 +17,10 @@ export const Error = (): ReactElement => (
         again.
       </BannerContent>
       <BannerActions>
-        <Button aria-label="refresh" variant="secondary">
+        <Button aria-label="refresh" appearance="transparent">
           <RefreshIcon />
         </Button>
-        <Button aria-label="close" variant="secondary">
+        <Button aria-label="close" appearance="transparent">
           <CloseIcon />
         </Button>
       </BannerActions>

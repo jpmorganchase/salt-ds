@@ -16,7 +16,7 @@ export const Warning = (): ReactElement => (
         Your connection is unstable. Please proceed with caution.
       </BannerContent>
       <BannerActions>
-        <Button aria-label="close" variant="secondary">
+        <Button aria-label="close" appearance="transparent">
           <CloseIcon />
         </Button>
       </BannerActions>

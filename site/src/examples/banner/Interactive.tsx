@@ -18,7 +18,7 @@ export const Interactive = (): ReactElement => (
         or later.
       </BannerContent>
       <BannerActions>
-        <Button aria-label="close" variant="secondary">
+        <Button aria-label="close" appearance="transparent">
           <CloseIcon />
         </Button>
       </BannerActions>

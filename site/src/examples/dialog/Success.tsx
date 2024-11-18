@@ -40,7 +40,7 @@ export const Success = (): ReactElement => {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Close</Button>
-          <Button variant="cta" onClick={handleClose}>
+          <Button sentiment="accented" onClick={handleClose}>
             Go to file
           </Button>
         </DialogActions>

@@ -13,16 +13,16 @@ export const ButtonAdornment = (): ReactElement => (
   <FlowLayout style={{ width: "256px" }}>
     <MultilineInput
       startAdornment={
-        <Button variant="cta">
+        <Button sentiment="accented">
           <EditSolidIcon />
         </Button>
       }
       endAdornment={
         <>
-          <Button variant="secondary">
+          <Button appearance="transparent">
             <HelpSolidIcon />
           </Button>
-          <Button variant="cta">
+          <Button sentiment="accented">
             <SendIcon />
           </Button>
         </>
@@ -49,7 +49,7 @@ export const ButtonAdornment = (): ReactElement => (
     <MultilineInput
       readOnly
       endAdornment={
-        <Button variant="secondary" disabled>
+        <Button appearance="transparent" disabled>
           <BankCheckSolidIcon />
         </Button>
       }

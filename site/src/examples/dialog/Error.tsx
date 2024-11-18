@@ -40,7 +40,7 @@ export const Error = (): ReactElement => {
           You don’t have permission to move or delete this file.
         </DialogContent>
         <DialogActions>
-          <Button variant="cta" onClick={handleClose}>
+          <Button sentiment="accented" onClick={handleClose}>
             Close
           </Button>
         </DialogActions>

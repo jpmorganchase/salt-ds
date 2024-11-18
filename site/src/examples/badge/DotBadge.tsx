@@ -4,7 +4,7 @@ import type { ReactElement } from "react";
 
 export const DotBadge = (): ReactElement => (
   <FlexLayout>
-    <Button variant="secondary" aria-label="Settings - New available">
+    <Button appearance="transparent" aria-label="Settings - New available">
       <Badge>
         <SettingsSolidIcon aria-hidden />
       </Badge>

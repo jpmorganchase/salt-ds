@@ -7,19 +7,19 @@ export const Deprecated = (): ReactElement => (
       <Code>variant="cta"</Code>
     </GridItem>
     <GridItem>
-      <Button variant="cta">Solid Accented</Button>
+      <Button sentiment="accented">Solid Accented</Button>
     </GridItem>
     <GridItem verticalAlignment="center">
       <Code>variant="primary"</Code>
     </GridItem>
     <GridItem>
-      <Button variant="primary">Solid Neutral</Button>
+      <Button sentiment="neutral">Solid Neutral</Button>
     </GridItem>
     <GridItem verticalAlignment="center">
       <Code>variant="secondary"</Code>
     </GridItem>
     <GridItem>
-      <Button variant="secondary">Transparent Neutral</Button>
+      <Button appearance="transparent">Transparent Neutral</Button>
     </GridItem>
   </GridLayout>
 );

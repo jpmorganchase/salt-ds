@@ -21,7 +21,7 @@ export const Loading = (): ReactElement => {
     <StackLayout align="center">
       <Text>Action Complete</Text>
       <Button
-        variant="cta"
+        sentiment="accented"
         onClick={() => {
           setIsLoading(true);
           setTimeout(() => {

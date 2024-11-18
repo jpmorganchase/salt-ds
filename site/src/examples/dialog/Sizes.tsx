@@ -47,7 +47,7 @@ const SmallDialog = (): ReactElement => {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button variant="cta" onClick={handleClose}>
+          <Button sentiment="accented" onClick={handleClose}>
             Accept
           </Button>
         </DialogActions>
@@ -158,7 +158,7 @@ const MediumDialog = (): ReactElement => {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button variant="cta" onClick={handleClose}>
+          <Button sentiment="accented" onClick={handleClose}>
             Save
           </Button>
         </DialogActions>
@@ -231,7 +231,7 @@ const LargeDialog = (): ReactElement => {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button variant="cta" onClick={handleClose}>
+          <Button sentiment="accented" onClick={handleClose}>
             Next
           </Button>
         </DialogActions>

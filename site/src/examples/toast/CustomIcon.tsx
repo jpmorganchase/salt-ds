@@ -21,7 +21,7 @@ export const CustomIcon = (): ReactElement => (
         </Text>
         <div>Filters have been cleared</div>
       </ToastContent>
-      <Button variant="secondary">
+      <Button appearance="transparent">
         <CloseIcon />
       </Button>
     </Toast>
@@ -36,7 +36,7 @@ export const CustomIcon = (): ReactElement => (
         </Text>
         <div>The world is connected</div>
       </ToastContent>
-      <Button variant="secondary">
+      <Button appearance="transparent">
         <CloseIcon />
       </Button>
     </Toast>
@@ -51,7 +51,7 @@ export const CustomIcon = (): ReactElement => (
         </Text>
         <div>There is not enough seasoning</div>
       </ToastContent>
-      <Button variant="secondary">
+      <Button appearance="transparent">
         <CloseIcon />
       </Button>
     </Toast>
@@ -66,7 +66,7 @@ export const CustomIcon = (): ReactElement => (
         </Text>
         <div>There is a wild animal here</div>
       </ToastContent>
-      <Button variant="secondary">
+      <Button appearance="transparent">
         <CloseIcon />
       </Button>
     </Toast>

@@ -36,7 +36,7 @@ export const Multilevel = (): ReactElement => {
   return (
     <Menu>
       <MenuTrigger>
-        <Button variant="secondary" aria-label="Open Menu">
+        <Button appearance="transparent" aria-label="Open Menu">
           <MicroMenuIcon aria-hidden />
         </Button>
       </MenuTrigger>

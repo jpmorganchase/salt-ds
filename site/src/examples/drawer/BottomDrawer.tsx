@@ -220,10 +220,10 @@ export const BottomDrawer = (): ReactElement => {
           </StackLayout>
         </FlowLayout>
         <FlowLayout justify="end">
-          <Button variant="secondary" onClick={handleClose}>
+          <Button appearance="transparent" onClick={handleClose}>
             Cancel
           </Button>
-          <Button variant="cta" onClick={handleClose}>
+          <Button sentiment="accented" onClick={handleClose}>
             Update Tier
           </Button>
         </FlowLayout>

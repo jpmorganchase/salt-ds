@@ -70,7 +70,7 @@ export const CloseButton = (): ReactElement => {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button variant="cta" onClick={handleClose}>
+          <Button sentiment="accented" onClick={handleClose}>
             Accept
           </Button>
         </DialogActions>

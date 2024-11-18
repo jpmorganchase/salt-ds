@@ -84,7 +84,7 @@ export const CustomPadding = (): ReactElement => {
 
             <StackLayout direction="row" gap={1}>
               <Button>Cancel</Button>
-              <Button variant="cta">Update tier</Button>
+              <Button sentiment="accented">Update tier</Button>
             </StackLayout>
           </StackLayout>
         </Card>
