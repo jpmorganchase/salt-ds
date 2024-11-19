@@ -20,45 +20,33 @@ div[class*="ag-theme-salt"] .ag-ltr .ag-filter-apply-panel-button {
   margin-left: 8px;
 }
 
-div[class*="ag-theme-salt"] .ag-standard-button.ag-filter-apply-panel-button[ref="applyFilterButton"] {
+div[class*="ag-theme-salt"] .ag-standard-button.ag-filter-apply-panel-button[ref="applyFilterButton"],
+div[class*="ag-theme-salt"] .ag-standard-button.ag-filter-apply-panel-button[data-ref="applyFilterButton"] {
   background: var(--salt-actionable-cta-background);
   color: var(--salt-actionable-cta-foreground);
 }
 
-div[class*="ag-theme-salt"] .ag-standard-button.ag-filter-apply-panel-button[ref="applyFilterButton"]:hover {
+div[class*="ag-theme-salt"] .ag-standard-button.ag-filter-apply-panel-button[ref="applyFilterButton"]:hover,
+div[class*="ag-theme-salt"] .ag-standard-button.ag-filter-apply-panel-button[data-ref="applyFilterButton"]:hover {
   background: var(--salt-actionable-cta-background-hover);
   color: var(--salt-actionable-cta-foreground-hover);
-}
-
-div[class*="ag-theme-salt"] .ag-floating-filter {
-  border: var(--salt-size-border) var(--salt-editable-borderStyle) var(--salt-separable-tertiary-borderColor);
-}
-
-div[class*="ag-theme-salt"] .ag-floating-filter:focus-within {
-  outline: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--salt-focused-outlineColor);
-  outline-offset: -2px;
-}
-
-div[class*="ag-theme-salt"] .ag-floating-filter:after {
-  width: 0;
 }
 
 div[class*="ag-theme-salt"] .ag-keyboard-focus .ag-header-cell:focus:after {
   border: 0;
 }
 
-div[class*="ag-theme-salt"] .ag-ltr .ag-floating-filter-button {
-  margin-left: var(--salt-spacing-100);
-}
-
 div[class*="ag-theme-salt"] button[class^="ag-"]:focus,
 div[class*="ag-theme-salt"] input[class^="ag-"][type="button"]:focus {
   box-shadow: none;
-  border: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--salt-focused-outlineColor);
+  outline-style: var(--salt-focused-outlineStyle);
+  outline-width: var(--salt-focused-outlineWidth);
+  outline-color: var(--salt-focused-outlineColor);
+  outline-offset: var(--salt-focused-outlineOffset);
 }
 
 div[class*="ag-theme-salt"] .ag-select .ag-picker-field-wrapper {
-  border: var(--salt-size-border) var(--salt-separable-borderStyle) var(--salt-container-primary-borderColor);
+  border: var(--salt-size-border) var(--salt-separable-borderStyle) var(--salt-editable-borderColor);
   border-radius: 0;
 }
 

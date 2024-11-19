@@ -63,11 +63,11 @@ div[class*="ag-theme-salt"] {
 
 div[class*="ag-theme-salt-compact"] {
   /* 
-      Ensures icon / country symbol renders correct height.
-      This also means we don't need to touch `--ag-row-height`, which would impact some internal ag grid height calculation like `--ag-internal-padded-row-height` vs `--ag-internal-calculated-line-height`
-     */
+    Ensures icon / country symbol renders correct height.
+    This also means we don't need to touch `--ag-row-height`, which would impact some internal ag grid height calculation like `--ag-internal-padded-row-height` vs `--ag-internal-calculated-line-height`
+  */
   --salt-size-base: 16px;
-  /* This is a deprecated token, until Salt Checkbox uses a new token, temparily pin it to HD size. */
+  /** Checkbox size */
   --salt-size-selectable: 12px;
 }
 
