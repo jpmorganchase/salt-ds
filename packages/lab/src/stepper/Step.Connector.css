@@ -1,12 +1,12 @@
-.saltStepTrack {
+.saltStepConnector {
   grid-area: track;
-  transition-duration: .3s;
+  transition-duration: var(--salt-duration-perceptible);
   transition-timing-function: ease-in-out;
   transition-property: opacity, min-height;
-  min-height: 24px;
+  min-height: var(--salt-spacing-300);
 }
 
-.saltStepper-horizontal .saltStepTrack {
+.saltStepper-horizontal .saltStepConnector {
   /* Copy of size calculations of <Icon /> */
   --icon-base-size: var(--salt-size-icon, 12px);
   --icon-size-multiplier: var(--saltIcon-size-multiplier, 1.5);
@@ -16,7 +16,7 @@
   --saltStep-horizontal-offset: var(--salt-spacing-100);
 
   position: absolute;
-  top: calc(var(--icon-size) / 2 - 2px);
+  top: calc(var(--icon-size) / 2 - var(--salt-track-borderWidth-complete));
   left: calc(50% + calc(var(--icon-size) / 2 + var(--saltStep-horizontal-offset)));
   right: calc(-50% + calc(var(--icon-size) / 2 + var(--saltStep-horizontal-offset)));
 
@@ -25,11 +25,11 @@
   border-top-color: var(--salt-track-borderColor);
 }
 
-.saltStepper-horizontal .saltStep-stage-completed > .saltStepTrack {
+.saltStepper-horizontal .saltStep-stage-completed > .saltStepConnector {
   border-top-style: var(--salt-track-borderStyle-complete);
 }
 
-.saltStepper-vertical .saltStepTrack {
+.saltStepper-vertical .saltStepConnector {
   height: 100%;
   justify-self: center;
 
@@ -38,34 +38,16 @@
   border-left-color: var(--salt-track-borderColor);
 }
 
-.saltStepper-vertical .saltStep-stage-completed > .saltStepTrack {
+.saltStepper-vertical .saltStep-stage-completed > .saltStepConnector {
   border-left-style: var(--salt-track-borderStyle-complete);
 }
 
-.saltStep-depth-0.saltStep:not(.saltStep-expanded):last-child > .saltStepTrack {
+.saltStep-depth-0.saltStep:not(.saltStep-expanded):last-child > .saltStepConnector {
   opacity: 0;
   min-height: 0;
 }
 
-.saltStep-depth-0.saltStep-expanded:last-child .saltStep:not(.saltStep-expanded):last-child .saltStepTrack {
+.saltStep-depth-0.saltStep-expanded:last-child .saltStep:not(.saltStep-expanded):last-child .saltStepConnector {
   opacity: 0;
   min-height: 0;
 }
-
-
-
-/* .saltStepper-vertical >.saltStep-depth-0.saltStep-collapsed:last-child > .saltStepTrack {
-  display: none;
-}
-
-.saltStepper-vertical > .saltStep-depth-0.saltStep-expanded:last-child .saltStep-depth-1.saltStep-collapsed:last-child > .saltStepTrack {
-  display: none;
-}
-
-.saltStepper-vertical > .saltStep-depth-0.saltStep-expanded:last-child .saltStep-depth-1.saltStep-expanded:last-child .saltStep-depth-2:last-child > .saltStepTrack {
-  display: none;
-} */
-
-/* .saltStep:not(:has(.saltStep)):last-child > .saltStepTrack {
-  display: none;
-} */

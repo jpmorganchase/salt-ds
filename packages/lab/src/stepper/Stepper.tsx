@@ -11,7 +11,7 @@ import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 
 import stepperCSS from "./Stepper.css";
-import { OrientationContext, StepperProvider } from "./StepperProvider";
+import { OrientationContext, StepperProvider } from "./Stepper.Provider";
 
 export namespace Stepper {
   export interface Props extends ComponentProps<"ol"> {

@@ -25,7 +25,7 @@
   display: grid;
   grid-template-columns: var(--icon-size) 1fr min-content;
   grid-template-rows:
-    var(--salt-size-base)
+    min-content
     0fr
     0fr;
   grid-template-areas:
@@ -50,36 +50,16 @@
   opacity: 1;
   grid-template-rows:
     var(--salt-size-base)
-    minmax(24px, min-content)
+    minmax(var(--salt-spacing-300), min-content)
     1fr;
-}
-
-.saltStep-stage-pending {
-  --saltIcon-color: var(--salt-status-static-foreground);
-}
-
-.saltStep-stage-inprogress {
-  --saltIcon-color: var(--salt-status-info-foreground-decorative);
-}
-
-.saltStep-stage-active {
-  --saltIcon-color: var(--salt-status-info-foreground-decorative);
-}
-
-.saltStep-stage-completed {
-  --saltIcon-color: var(--salt-status-success-foreground-decorative);
-}
-
-.saltStep-status-warning {
-  --saltIcon-color: var(--salt-status-warning-foreground-decorative);
-}
-
-.saltStep-status-error {
-  --saltIcon-color: var(--salt-status-error-foreground-decorative);
 }
 
 .saltStep-label {
   grid-area: label;
+}
+
+.saltStepper-horizontal .saltStep-label {
+  margin-top: var(--salt-spacing-50);
 }
 
 .saltStepper-vertical .saltStep-label {
