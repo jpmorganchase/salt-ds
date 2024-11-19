@@ -7,7 +7,7 @@
       },
       "stronger-disabled": {
         "$type": "color",
-        "$value": "{color.alpha.blue.700.40A}"
+        "$value": "{color.alpha.blue.700.40-a}"
       },
       "strong": {
         "$type": "color",
@@ -15,7 +15,7 @@
       },
       "strong-disabled": {
         "$type": "color",
-        "$value": "{color.alpha.blue.600.40A}"
+        "$value": "{color.alpha.blue.600.40-a}"
       },
       "default": {
         "$type": "color",
@@ -23,11 +23,11 @@
       },
       "none": {
         "$type": "color",
-        "$value": "{color.alpha.blue.500.0A}"
+        "$value": "{color.alpha.blue.500.0-a}"
       },
       "disabled": {
         "$type": "color",
-        "$value": "{color.alpha.blue.500.40A}"
+        "$value": "{color.alpha.blue.500.40-a}"
       },
       "weak": {
         "$type": "color",
@@ -39,7 +39,7 @@
       },
       "weaker-disabled": {
         "$type": "color",
-        "$value": "{color.alpha.blue.200.40A}"
+        "$value": "{color.alpha.blue.200.40-a}"
       },
       "weakest": {
         "$type": "color",
@@ -57,27 +57,27 @@
     "alpha": {
       "strong": {
         "$type": "color",
-        "$value": "{color.alpha.black.45A}"
+        "$value": "{color.alpha.black.45-a}"
       },
       "default": {
         "$type": "color",
-        "$value": "{color.alpha.black.30A}"
+        "$value": "{color.alpha.black.30-a}"
       },
       "weak": {
         "$type": "color",
-        "$value": "{color.alpha.black.15A}"
+        "$value": "{color.alpha.black.15-a}"
       },
       "weaker": {
         "$type": "color",
-        "$value": "{color.alpha.black.10A}"
+        "$value": "{color.alpha.black.10-a}"
       },
       "none": {
         "$type": "color",
-        "$value": "{color.alpha.black.0A}"
+        "$value": "{color.alpha.black.0-a}"
       },
       "backdrop": {
         "$type": "color",
-        "$value": "{color.alpha.white.70A}"
+        "$value": "{color.alpha.white.70-a}"
       }
     },
     "background": {
@@ -87,7 +87,7 @@
       },
       "primary-disabled": {
         "$type": "color",
-        "$value": "{color.alpha.snow.40A}"
+        "$value": "{color.alpha.snow.40-a}"
       },
       "secondary": {
         "$type": "color",
@@ -95,7 +95,7 @@
       },
       "secondary-disabled": {
         "$type": "color",
-        "$value": "{color.alpha.marble.40A}"
+        "$value": "{color.alpha.marble.40-a}"
       },
       "tertiary": {
         "$type": "color",
@@ -103,7 +103,7 @@
       },
       "tertiary-disabled": {
         "$type": "color",
-        "$value": "{color.alpha.limestone.40A}"
+        "$value": "{color.alpha.limestone.40-a}"
       }
     },
     "categorical": {
@@ -395,7 +395,7 @@
       },
       "primary-disabled": {
         "$type": "color",
-        "$value": "{color.alpha.black.40A}"
+        "$value": "{color.alpha.black.40-a}"
       },
       "secondary": {
         "$type": "color",
@@ -403,7 +403,7 @@
       },
       "secondary-disabled": {
         "$type": "color",
-        "$value": "{color.alpha.gray.700.40A}"
+        "$value": "{color.alpha.gray.700.40-a}"
       },
       "primary-alt": {
         "$type": "color",
@@ -411,7 +411,7 @@
       },
       "primary-alt-disabled": {
         "$type": "color",
-        "$value": "{color.alpha.white.40A}"
+        "$value": "{color.alpha.white.40-a}"
       },
       "hover": {
         "$type": "color",
@@ -445,9 +445,9 @@
         "$type": "color",
         "$value": "{color.red.600}"
       },
-      "strong disabled": {
+      "strong-disabled": {
         "$type": "color",
-        "$value": "{color.alpha.red.600.40A}"
+        "$value": "{color.alpha.red.600.40-a}"
       },
       "default": {
         "$type": "color",
@@ -455,7 +455,7 @@
       },
       "disabled": {
         "$type": "color",
-        "$value": "{color.alpha.red.500.40A}"
+        "$value": "{color.alpha.red.500.40-a}"
       },
       "weakest": {
         "$type": "color",
@@ -477,7 +477,7 @@
       },
       "strong-disabled": {
         "$type": "color",
-        "$value": "{color.alpha.gray.600.40A}"
+        "$value": "{color.alpha.gray.600.40-a}"
       },
       "default": {
         "$type": "color",
@@ -485,11 +485,11 @@
       },
       "disabled": {
         "$type": "color",
-        "$value": "{color.alpha.gray.500.40A}"
+        "$value": "{color.alpha.gray.500.40-a}"
       },
       "readonly": {
         "$type": "color",
-        "$value": "{color.alpha.gray.500.10A}"
+        "$value": "{color.alpha.gray.500.10-a}"
       },
       "weak": {
         "$type": "color",
@@ -497,11 +497,11 @@
       },
       "weak-disabled": {
         "$type": "color",
-        "$value": "{color.alpha.gray.400.40A}"
+        "$value": "{color.alpha.gray.400.40-a}"
       },
       "weak-readonly": {
         "$type": "color",
-        "$value": "{color.alpha.gray.400.10A}"
+        "$value": "{color.alpha.gray.400.10-a}"
       },
       "weaker": {
         "$type": "color",
@@ -509,7 +509,7 @@
       },
       "weaker-disabled": {
         "$type": "color",
-        "$value": "{color.alpha.gray.300.40A}"
+        "$value": "{color.alpha.gray.300.40-a}"
       },
       "weakest": {
         "$type": "color",
@@ -529,9 +529,9 @@
         "$type": "color",
         "$value": "{color.green.600}"
       },
-      "strong disabled": {
+      "strong-disabled": {
         "$type": "color",
-        "$value": "{color.alpha.green.600.40A}"
+        "$value": "{color.alpha.green.600.40-a}"
       },
       "default": {
         "$type": "color",
@@ -539,7 +539,7 @@
       },
       "disabled": {
         "$type": "color",
-        "$value": "{color.alpha.green.500.40A}"
+        "$value": "{color.alpha.green.500.40-a}"
       },
       "weakest": {
         "$type": "color",
@@ -557,23 +557,23 @@
     "shadow": {
       "100": {
         "$type": "color",
-        "$value": "{color.alpha.black.10A}"
+        "$value": "{color.alpha.black.10-a}"
       },
       "200": {
         "$type": "color",
-        "$value": "{color.alpha.black.10A}"
+        "$value": "{color.alpha.black.10-a}"
       },
       "300": {
         "$type": "color",
-        "$value": "{color.alpha.black.20A}"
+        "$value": "{color.alpha.black.20-a}"
       },
       "400": {
         "$type": "color",
-        "$value": "{color.alpha.black.20A}"
+        "$value": "{color.alpha.black.20-a}"
       },
       "500": {
         "$type": "color",
-        "$value": "{color.alpha.black.30A}"
+        "$value": "{color.alpha.black.30-a}"
       }
     },
     "warning": {
@@ -581,9 +581,9 @@
         "$type": "color",
         "$value": "{color.orange.600}"
       },
-      "strong disabled": {
+      "strong-disabled": {
         "$type": "color",
-        "$value": "{color.alpha.orange.600.40A}"
+        "$value": "{color.alpha.orange.600.40-a}"
       },
       "default": {
         "$type": "color",
@@ -591,7 +591,7 @@
       },
       "disabled": {
         "$type": "color",
-        "$value": "{color.alpha.orange.500.40A}"
+        "$value": "{color.alpha.orange.500.40-a}"
       },
       "weakest": {
         "$type": "color",
@@ -606,23 +606,23 @@
         "$value": "{color.orange.800}"
       }
     },
-    "FIGMA ONLY": {
+    "figma-only": {
       "jpmorgan": {
         "$type": "color",
-        "$value": "{color.FIGMA ONLY.JPMorgan.Brown}"
+        "$value": "{color.figma-only.jp-morgan.brown}"
       },
       "chase": {
         "$type": "color",
-        "$value": "{color.FIGMA ONLY.Chase.Black}"
+        "$value": "{color.figma-only.chase.black}"
       },
       "chase-symbol": {
         "$type": "color",
-        "$value": "{color.FIGMA ONLY.Chase.Blue}"
+        "$value": "{color.figma-only.chase.blue}"
       }
     },
     "transparent": {
       "$type": "color",
-      "$value": "{color.alpha.white.0A}"
+      "$value": "{color.alpha.white.0-a}"
     }
   }
 }
