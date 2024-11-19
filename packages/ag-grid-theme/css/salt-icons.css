@@ -29,8 +29,9 @@
   --ag-icon-font-code-expanded: "\e912";
   --ag-icon-font-code-eye-slash: "\e913";
   --ag-icon-font-code-eye: "\e914";
-  --ag-icon-font-code-filter-clear: "\e915";
-  --ag-icon-font-code-filter: "\e916";
+  --ag-icon-font-code-filter-clear: "\e915"; /* Backwards compactibility, not longer in latest ag grid icon set */
+  --ag-icon-font-code-filter: "\e915";
+  --ag-icon-font-code-filter-filled: "\e916"; /* Salt specific icon */
   --ag-icon-font-code-first: "\e917";
   --ag-icon-font-code-grip: "\e918";
   --ag-icon-font-code-group: "\e919";

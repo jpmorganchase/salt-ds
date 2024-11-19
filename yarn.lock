@@ -3165,6 +3165,7 @@ __metadata:
     del: "npm:^7.0.0"
   peerDependencies:
     "@salt-ds/theme": "workspace:^"
+    ag-grid-community: ">=28.0.0"
   languageName: unknown
   linkType: soft
 
@@ -3326,9 +3327,9 @@ __metadata:
     "@types/react-dom": "npm:^18.0.0"
     "@types/tinycolor2": "npm:^1.4.3"
     "@vitejs/plugin-react": "npm:^4.1.0"
-    ag-grid-community: "npm:^31.3.4"
-    ag-grid-enterprise: "npm:^31.3.4"
-    ag-grid-react: "npm:^31.3.4"
+    ag-grid-community: "npm:^32.2.2"
+    ag-grid-enterprise: "npm:^32.2.2"
+    ag-grid-react: "npm:^32.2.2"
     axe-core: "npm:^4.9.0"
     browserslist-to-esbuild: "npm:^2.1.1"
     chromatic: "npm:^11.10.1"
@@ -5768,40 +5769,59 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ag-charts-community@npm:9.3.2":
-  version: 9.3.2
-  resolution: "ag-charts-community@npm:9.3.2"
-  checksum: 10/28a1ca1e03b0e4cb4c5590f8404d1edc9d575c060581145f58f1357b12dd8fe1e5a5db6e434a27dfbd3f778aa73bafb13d60c350b727dad526ce948df920315e
-  languageName: node
-  linkType: hard
-
-"ag-grid-community@npm:31.3.4, ag-grid-community@npm:^31.3.4":
-  version: 31.3.4
-  resolution: "ag-grid-community@npm:31.3.4"
-  checksum: 10/c4f374eae3bfea38fda0110e2c744f53fd08879bd73062d7c89dbfcefa63f386902611f5fdd976e547b7911bf7a7c08fd04c281c415a5ea072b187de0ac79cb5
-  languageName: node
-  linkType: hard
-
-"ag-grid-enterprise@npm:^31.3.4":
-  version: 31.3.4
-  resolution: "ag-grid-enterprise@npm:31.3.4"
+"ag-charts-community@npm:10.2.0":
+  version: 10.2.0
+  resolution: "ag-charts-community@npm:10.2.0"
   dependencies:
-    ag-charts-community: "npm:9.3.2"
-    ag-grid-community: "npm:31.3.4"
-  checksum: 10/4900ab22140c19f985d2e33b9d76b0b37efdd1e7a634b22432dc717b91b8ba93a74451f4bd07cea9896c403b69383ae1dbb4f9257f8d78f4e53dd88bd2c64a7a
+    ag-charts-locale: "npm:10.2.0"
+    ag-charts-types: "npm:10.2.0"
+  checksum: 10/02b9a67d9f32b0574c0c9b11c53be2c8359fdc11114a9a718166b8925c6dfdbf0eb52f8aef43447f9f6c518e594c0ef1804acccbc3e5f4409e88f7c3bd364ffb
   languageName: node
   linkType: hard
 
-"ag-grid-react@npm:^31.3.4":
-  version: 31.3.4
-  resolution: "ag-grid-react@npm:31.3.4"
+"ag-charts-locale@npm:10.2.0":
+  version: 10.2.0
+  resolution: "ag-charts-locale@npm:10.2.0"
+  checksum: 10/814c99d4d25834d01b871a640407b44f12d98cda07b740d17dcffec8d049a4fb9edd03e57dfe32e72f982c82594423ce4c0d93eadb1fb758a5e1529d4209a087
+  languageName: node
+  linkType: hard
+
+"ag-charts-types@npm:10.2.0":
+  version: 10.2.0
+  resolution: "ag-charts-types@npm:10.2.0"
+  checksum: 10/f6aee22c0d99606535131e3ffcafb30c4f60ee219fd014993ad5d1898aaa0db49a1d608fa725601acfd92eb9a0880e6a7a236113552498f0e51a97554687561f
+  languageName: node
+  linkType: hard
+
+"ag-grid-community@npm:32.2.2, ag-grid-community@npm:^32.2.2":
+  version: 32.2.2
+  resolution: "ag-grid-community@npm:32.2.2"
   dependencies:
-    ag-grid-community: "npm:31.3.4"
+    ag-charts-types: "npm:10.2.0"
+  checksum: 10/bd066b2be7c0c27900b8539257e549f92eea098c60ae9b978a207bed4ac720e3f3680763ad8465a86b14b750e79a97bd48dde354a1c343dc9abc80aa7edb12cb
+  languageName: node
+  linkType: hard
+
+"ag-grid-enterprise@npm:^32.2.2":
+  version: 32.2.2
+  resolution: "ag-grid-enterprise@npm:32.2.2"
+  dependencies:
+    ag-charts-community: "npm:10.2.0"
+    ag-grid-community: "npm:32.2.2"
+  checksum: 10/39f6cdb0d933891d8daad88a527debb3376f42e34b808890e0e7ff3fb72e84c12b12ed05f30521755f858e7a4eab9cf43113e208f57b4aca3afd270de1d449c7
+  languageName: node
+  linkType: hard
+
+"ag-grid-react@npm:^32.2.2":
+  version: 32.2.2
+  resolution: "ag-grid-react@npm:32.2.2"
+  dependencies:
+    ag-grid-community: "npm:32.2.2"
     prop-types: "npm:^15.8.1"
   peerDependencies:
     react: ^16.3.0 || ^17.0.0 || ^18.0.0
     react-dom: ^16.3.0 || ^17.0.0 || ^18.0.0
-  checksum: 10/f84dfb19e77c96d569cdf15067bf69e0911363e4ce425a1ced1e209bd6623ea138ee3401980c82e0797f55c6d5c2975659beb45e1927bfb5f26a21785bbea7c6
+  checksum: 10/1a75c2b13b1d85ff0e69da82bf8bd160522b19ba5b03cb0d99d9ec2f42ab48d4c55e16f679d4f652b9e42a6da825cbd75bed133ef5075b4a96dff627cd9cae87
   languageName: node
   linkType: hard
 
@@ -10121,13 +10141,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ip-address@npm:^9.0.5":
-  version: 9.0.5
-  resolution: "ip-address@npm:9.0.5"
-  dependencies:
-    jsbn: "npm:1.1.0"
-    sprintf-js: "npm:^1.1.3"
-  checksum: 10/1ed81e06721af012306329b31f532b5e24e00cb537be18ddc905a84f19fe8f83a09a1699862bf3a1ec4b9dea93c55a3fa5faf8b5ea380431469df540f38b092c
+"ip@npm:^2.0.0":
+  version: 2.0.1
+  resolution: "ip@npm:2.0.1"
+  checksum: 10/d6dd154e1bc5e8725adfdd6fb92218635b9cbe6d873d051bd63b178f009777f751a5eea4c67021723a7056325fc3052f8b6599af0a2d56f042c93e684b4a0349
   languageName: node
   linkType: hard
 
@@ -10763,13 +10780,6 @@ __metadata:
   bin:
     js-yaml: bin/js-yaml.js
   checksum: 10/9e22d80b4d0105b9899135365f746d47466ed53ef4223c529b3c0f7a39907743fdbd3c4379f94f1106f02755b5e90b2faaf84801a891135544e1ea475d1a1379
-  languageName: node
-  linkType: hard
-
-"jsbn@npm:1.1.0":
-  version: 1.1.0
-  resolution: "jsbn@npm:1.1.0"
-  checksum: 10/bebe7ae829bbd586ce8cbe83501dd8cb8c282c8902a8aeeed0a073a89dc37e8103b1244f3c6acd60278bcbfe12d93a3f83c9ac396868a3b3bbc3c5e5e3b648ef
   languageName: node
   linkType: hard
 
@@ -15881,12 +15891,12 @@ __metadata:
   linkType: hard
 
 "socks@npm:^2.6.1":
-  version: 2.8.3
-  resolution: "socks@npm:2.8.3"
+  version: 2.7.1
+  resolution: "socks@npm:2.7.1"
   dependencies:
-    ip-address: "npm:^9.0.5"
+    ip: "npm:^2.0.0"
     smart-buffer: "npm:^4.2.0"
-  checksum: 10/ffcb622c22481dfcd7589aae71fbfd71ca34334064d181df64bf8b7feaeee19706aba4cffd1de35cc7bbaeeaa0af96be2d7f40fcbc7bc0ab69533a7ae9ffc4fb
+  checksum: 10/5074f7d6a13b3155fa655191df1c7e7a48ce3234b8ccf99afa2ccb56591c195e75e8bb78486f8e9ea8168e95a29573cbaad55b2b5e195160ae4d2ea6811ba833
   languageName: node
   linkType: hard
 
@@ -15976,13 +15986,6 @@ __metadata:
   version: 4.2.0
   resolution: "split2@npm:4.2.0"
   checksum: 10/09bbefc11bcf03f044584c9764cd31a252d8e52cea29130950b26161287c11f519807c5e54bd9e5804c713b79c02cefe6a98f4688630993386be353e03f534ab
-  languageName: node
-  linkType: hard
-
-"sprintf-js@npm:^1.1.3":
-  version: 1.1.3
-  resolution: "sprintf-js@npm:1.1.3"
-  checksum: 10/e7587128c423f7e43cc625fe2f87e6affdf5ca51c1cc468e910d8aaca46bb44a7fbcfa552f787b1d3987f7043aeb4527d1b99559e6621e01b42b3f45e5a24cbb
   languageName: node
   linkType: hard
 
@@ -17936,8 +17939,8 @@ __metadata:
   linkType: hard
 
 "ws@npm:^8.0.0, ws@npm:^8.2.3":
-  version: 8.18.0
-  resolution: "ws@npm:8.18.0"
+  version: 8.14.2
+  resolution: "ws@npm:8.14.2"
   peerDependencies:
     bufferutil: ^4.0.1
     utf-8-validate: ">=5.0.2"
@@ -17946,7 +17949,7 @@ __metadata:
       optional: true
     utf-8-validate:
       optional: true
-  checksum: 10/70dfe53f23ff4368d46e4c0b1d4ca734db2c4149c6f68bc62cb16fc21f753c47b35fcc6e582f3bdfba0eaeb1c488cddab3c2255755a5c3eecb251431e42b3ff6
+  checksum: 10/815ff01d9bc20a249b2228825d9739268a03a4408c2e0b14d49b0e2ae89d7f10847e813b587ba26992bdc33e9d03bed131e4cae73ff996baf789d53e99c31186
   languageName: node
   linkType: hard
 

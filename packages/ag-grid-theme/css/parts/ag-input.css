@@ -25,8 +25,3 @@ div[class*="ag-theme-salt"] .ag-column-select input[class^="ag-"][type="number"]
   outline: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--salt-focused-outlineColor);
   outline-offset: -2px;
 }
-
-div[class*="ag-theme-salt"] .ag-floating-filter-input input[class^="ag-"][type="text"],
-div[class*="ag-theme-salt"] .ag-floating-filter-input input[class^="ag-"][type="number"] {
-  border: none;
-}

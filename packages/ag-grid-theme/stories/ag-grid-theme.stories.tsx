@@ -45,6 +45,7 @@ export {
   RowGrouping,
   SortAndFilter,
   StatusBar,
+  SuppressMenuHide,
   ToolPanel,
   VariantSecondary,
   VariantZebra,

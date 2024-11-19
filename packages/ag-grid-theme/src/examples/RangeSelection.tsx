@@ -26,7 +26,7 @@ export const RangeSelection = (props: AgGridReactProps) => {
         rowData={dataGridExampleData}
         columnDefs={dataGridExampleColumns}
         rowSelection="multiple"
-        enableRangeSelection
+        cellSelection
         onFirstDataRendered={(params) => {
           params.api.forEachNode((node, index) => {
             if (node.data && index < 7 && index > 2) {
