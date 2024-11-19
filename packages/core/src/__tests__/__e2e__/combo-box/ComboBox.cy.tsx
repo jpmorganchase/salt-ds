@@ -751,4 +751,21 @@ describe("Given a ComboBox", () => {
       .its("duration", { timeout: 0 })
       .should("be.lessThan", 5000);
   });
+
+  it("should remove aria-activedescendant when closed", () => {
+    cy.mount(<Default />);
+    cy.findByRole("combobox").realClick();
+    cy.findByRole("option", { name: "Alabama" }).should("be.activeDescendant");
+    cy.findByRole("option", { name: "Alaska" }).realClick();
+    cy.findByRole("combobox").should("not.have.attr", "aria-activedescendant");
+    cy.findByRole("combobox").realClick();
+    cy.findByRole("option", { name: "Alaska" }).should("be.activeDescendant");
+    cy.findByRole("combobox").clear();
+    cy.findByRole("option", { name: "Alabama" }).realClick();
+    cy.findByRole("combobox").should("not.have.attr", "aria-activedescendant");
+    cy.findByRole("combobox").realClick();
+    cy.findByRole("option", { name: "Alabama" }).should("be.activeDescendant");
+    cy.realPress("Escape");
+    cy.findByRole("combobox").should("not.have.attr", "aria-activedescendant");
+  });
 });

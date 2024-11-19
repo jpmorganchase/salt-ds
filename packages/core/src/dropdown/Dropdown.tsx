@@ -372,18 +372,18 @@ export const Dropdown = forwardRef(function Dropdown<Item>(
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: We only want this to run when the list's openState or the displayed options change.
   useEffect(() => {
+    // If the list is closed we should clear the active item
+    if (!openState) {
+      setActive(undefined);
+      return;
+    }
+
     // We check the active index because the active item may have been removed
     const activeIndex = activeState ? getIndexOfOption(activeState) : -1;
     let newActive = undefined;
 
     // If the active item is still in the list, we don't need to do anything
     if (activeIndex > 0) {
-      return;
-    }
-
-    // If the list is closed we should clear the active item
-    if (!openState) {
-      setActive(undefined);
       return;
     }
 
