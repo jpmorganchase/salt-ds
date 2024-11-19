@@ -1,10 +1,12 @@
 import {
+  useId,
   useContext,
   useState,
   useEffect,
   type ComponentProps,
   type CSSProperties,
   type ReactNode,
+  type ReactElement,
 } from "react";
 import clsx from "clsx";
 import { useWindow } from "@salt-ds/window";
@@ -14,24 +16,32 @@ import { useComponentCssInjection } from "@salt-ds/styles";
 import stepCSS from "./Step.css";
 
 import { Stepper } from "./Stepper";
-import { StepTrack } from "./StepTrack";
-import { StepIcon } from "./StepIcon";
-import { StepExpandTrigger } from "./StepExpandTrigger";
-import { DepthContext } from "./StepperProvider";
+import { StepConnector } from "./Step.Connector";
+import { StepIcon } from "./Step.Icon";
+import { StepExpandTrigger } from "./Step.ExpandTrigger";
+import { DepthContext, OrientationContext } from "./Stepper.Provider";
+
+type ReactListItem = ComponentProps<"li">;
 
 export namespace Step {
-  export interface Props extends ComponentProps<"li"> {
+  export interface Props extends ReactListItem {
     label?: ReactNode;
     description?: ReactNode;
-    stage?: Stage;
+    icon?: ReactElement;
     status?: Status;
+    stage?: Stage;
     defaultExpanded?: boolean;
     onToggle?: ButtonProps["onClick"];
     disabled?: boolean;
     className?: string;
     style?: CSSProperties;
     children?: ReactNode;
+    stepRef?: ReactListItem["ref"];
   }
+
+  export type Status =
+    | "warning"
+    | "error";
 
   export type Stage = 
     | "pending"
@@ -39,9 +49,7 @@ export namespace Step {
     | "inprogress"
     | "active";
 
-  export type Status = "warning" | "error";
-
-  export type Depth = number;
+  export type Depth = number; 
 }
 
 const withBaseName = makePrefixer("saltStep");
@@ -58,9 +66,12 @@ export function Step({
   children,
   ...props
 }: Step.Props) {
+  const generatedId = useId();
+  const targetWindow = useWindow();
   const depth = useContext(DepthContext);
   const [expanded, setExpanded] = useState(defaultExpanded);
-  const targetWindow = useWindow();
+
+  const id = props.id || generatedId;
 
   useComponentCssInjection({
     testId: "salt-step",
@@ -69,61 +80,83 @@ export function Step({
   });
 
   useEffect(() => {
-    if (depth === -1) {
-      console.warn("<Step /> should be used within a <Stepper /> component");
+    if(depth === -1) {
+      console.warn(
+        "<Step /> should be used within a <Stepper /> component!"
+      );
+    }
+
+    if(depth > 2) {
+      console.warn(
+        "<Step /> should not be nested more than 2 levels deep!"
+      );
     }
   }, [depth]);
 
   const iconMultiplier = depth === 0 ? 1.5 : 1;
   const hasNestedSteps = !!children;
 
+  const labelId = `step-${id}-label`;
+  const nestedStepperId = `step-${id}-nested-stepper`;
+
   return (
     <li
+      id={id}
       className={clsx(
         withBaseName(),
         withBaseName(`stage-${stage}`),
         withBaseName(`depth-${depth}`),
         status && withBaseName(`status-${status}`),
-        hasNestedSteps && withBaseName("with-nested-steps"),
+        !hasNestedSteps && withBaseName("terminal"),
         hasNestedSteps && expanded && withBaseName("expanded"),
         hasNestedSteps && !expanded && withBaseName("collapsed"),
         className,
       )}
-      style={
-        {
-          "--saltStep-depth": depth,
-          ...style,
-        } as CSSProperties
-      }
+      style={{
+        "--saltStep-depth": depth,
+        ...style,
+      } as CSSProperties}
       {...props}
     >
-      <StepTrack />
-      <StepIcon stage={stage} status={status} multiplier={iconMultiplier} />
-      {label && (
-        <Text className={withBaseName("label")}>
-          <strong>{label}</strong>
-        </Text>
-      )}
-      {description && (
-        <Text styleAs="label" className={withBaseName("description")}>
-          {description}
-        </Text>
-      )}
-      {hasNestedSteps && (
-        <StepExpandTrigger
-          label={"Show Substeps"}
-          expanded={expanded}
-          onClick={(event) => {
-            onToggle?.(event);
-            setExpanded(!expanded);
-          }}
+        <StepIcon
+          stage={stage}
+          status={status}
+          multiplier={iconMultiplier}
         />
-      )}
-      {hasNestedSteps && (
-        <Stepper>
-          {children}
-        </Stepper>
-      )}
+        {hasNestedSteps && (
+          <StepExpandTrigger
+            aria-expanded={expanded}
+            aria-labelledby={labelId}
+            aria-controls={`step-${id}-nested-stepper`}
+            expanded={expanded}
+            onClick={(event) => {
+              onToggle?.(event);
+              setExpanded(!expanded);
+            }}
+          />
+        )}
+        <StepConnector />
+        {label && (
+          <Text
+            id={labelId}
+            className={withBaseName("label")}
+          >
+            <strong>{label}</strong>
+          </Text>
+        )}
+        {description && (
+          <Text
+            styleAs="label"
+            className={withBaseName("description")}
+          >
+            {description}
+          </Text>
+        )}
+        {hasNestedSteps && (
+          <Stepper id={nestedStepperId}>
+            {children}
+          </Stepper>
+        )}
     </li>
   );
 }
