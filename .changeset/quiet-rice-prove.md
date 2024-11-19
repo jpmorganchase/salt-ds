@@ -4,7 +4,7 @@
 
 Added `OverlayHeader` component to lab.
 
-```typescript
+```tsx
 <Overlay {...args}>
   <OverlayTrigger>
     <Button>Show Overlay</Button>
@@ -19,7 +19,7 @@ Added `OverlayHeader` component to lab.
           appearance="transparent"
           sentiment="neutral"
         >
-          <CloseIcon aria-hidden/>
+          <CloseIcon aria-hidden />
         </Button>
       }
     />

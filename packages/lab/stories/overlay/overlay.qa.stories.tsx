@@ -17,35 +17,6 @@ export default {
 } as Meta<typeof Overlay>;
 
 export const Default: StoryFn<QAContainerProps> = (props) => {
-  return (
-    <QAContainer
-      height={800}
-      cols={5}
-      itemPadding={50}
-      itemWidthAuto
-      width={1200}
-      {...props}
-    >
-      <Overlay open>
-        <OverlayTrigger>
-          <Button>Show Overlay</Button>
-        </OverlayTrigger>
-        <OverlayPanel>
-          <OverlayHeader header={<H4>Header block</H4>} />
-          <OverlayPanelContent>
-            <div>Content of Overlay</div>
-          </OverlayPanelContent>
-        </OverlayPanel>
-      </Overlay>
-    </QAContainer>
-  );
-};
-
-Default.parameters = {
-  chromatic: { disableSnapshot: false },
-};
-
-export const CloseButton: StoryFn<QAContainerProps> = (props) => {
   const CloseButton = () => (
     <Button
       aria-label="Close overlay"
@@ -84,6 +55,19 @@ export const CloseButton: StoryFn<QAContainerProps> = (props) => {
   );
 };
 
-CloseButton.parameters = {
-  chromatic: { disableSnapshot: false },
+Default.parameters = {
+  chromatic: {
+    disableSnapshot: false,
+    modes: {
+      theme: {
+        themeNext: "disable",
+      },
+      themeNext: {
+        themeNext: "enable",
+        corner: "rounded",
+        accent: "teal",
+        // Ignore headingFont given font is not loaded
+      },
+    },
+  },
 };
