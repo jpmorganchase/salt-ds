@@ -46,7 +46,9 @@ const SmallDialog = (): ReactElement => {
           will not be saved
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
+          <Button appearance="bordered" onClick={handleClose}>
+            Cancel
+          </Button>
           <Button sentiment="accented" onClick={handleClose}>
             Accept
           </Button>
@@ -157,7 +159,9 @@ const MediumDialog = (): ReactElement => {
           </StackLayout>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
+          <Button appearance="bordered" onClick={handleClose}>
+            Cancel
+          </Button>
           <Button sentiment="accented" onClick={handleClose}>
             Save
           </Button>
@@ -230,7 +234,13 @@ const LargeDialog = (): ReactElement => {
           Wizard Content Area
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
+          <Button
+            appearance="bordered"
+            onClick={handleClose}
+            style={{ marginRight: "auto" }}
+          >
+            Cancel
+          </Button>
           <Button sentiment="accented" onClick={handleClose}>
             Next
           </Button>

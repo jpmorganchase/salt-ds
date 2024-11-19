@@ -65,16 +65,18 @@ const endItem = (
 
 const startButtonsItem = (
   <FlowLayout gap={1}>
-    <Button sentiment="accented">Button 1</Button>
-    <Button>Button 2</Button>
-    <Button appearance="transparent">Button 3</Button>
+    <Button appearance="bordered" style={{ marginRight: "auto" }}>
+      My privacy settings
+    </Button>
   </FlowLayout>
 );
 
 const endButtonsItem = (
   <FlowLayout gap={1}>
-    <Button sentiment="accented">Button 4</Button>
-    <Button>Button 5</Button>
+    <Button sentiment="accented" appearance="bordered">
+      Cancel
+    </Button>
+    <Button sentiment="accented">Accept</Button>
   </FlowLayout>
 );
 

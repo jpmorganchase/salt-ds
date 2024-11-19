@@ -39,7 +39,9 @@ export const Success = (): ReactElement => {
           File has been successfully uploaded to the shared drive.
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Close</Button>
+          <Button appearance="bordered" onClick={handleClose}>
+            Close
+          </Button>
           <Button sentiment="accented" onClick={handleClose}>
             Go to file
           </Button>

@@ -4,15 +4,17 @@ import styles from "./index.module.css";
 
 const startItem = (
   <FlowLayout gap={1}>
-    <Button sentiment="accented">Button 1</Button>
-    <Button sentiment="neutral">Button 2</Button>
-    <Button appearance="transparent">Button 3</Button>
+    <Button appearance="bordered" style={{ marginRight: "auto" }}>
+      My privacy settings
+    </Button>
   </FlowLayout>
 );
 const endItem = (
   <FlowLayout gap={1}>
-    <Button sentiment="accented">Button 4</Button>
-    <Button sentiment="neutral">Button 5</Button>
+    <Button sentiment="accented" appearance="bordered">
+      Cancel
+    </Button>
+    <Button sentiment="accented">Accept</Button>
   </FlowLayout>
 );
 
