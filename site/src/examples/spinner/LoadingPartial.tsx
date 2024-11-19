@@ -78,7 +78,7 @@ export const LoadingPartial = (): ReactElement => {
         </LoadingItem>
       </GridLayout>
       <Button
-        variant="cta"
+        sentiment="accented"
         onClick={() => {
           if (!isLoading) {
             setIsLoading(true);

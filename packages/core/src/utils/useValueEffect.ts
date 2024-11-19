@@ -11,8 +11,8 @@
  */
 
 import { type Dispatch, type MutableRefObject, useRef, useState } from "react";
-import { useIsomorphicLayoutEffect } from "../index";
 import { useEventCallback } from "./useEventCallback";
+import { useIsomorphicLayoutEffect } from "./useIsomorphicLayoutEffect";
 
 type SetValueAction<S> = (prev: S) => Generator<any, void, unknown>;
 

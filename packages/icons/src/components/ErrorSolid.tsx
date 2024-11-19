@@ -18,7 +18,7 @@ export const ErrorSolidIcon = forwardRef<SVGSVGElement, ErrorSolidIconProps>(
       >
         <path
           fillRule="evenodd"
-          d="M3 0h6l3 3v6l-3 3H3L0 9V3l3-3Zm2 2h2v5H5V2Zm2 6.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"
+          d="M9 0H3L0 3v6l3 3h6l3-3V3L9 0ZM7 2H5v5h2V2Zm-1 8a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z"
           clipRule="evenodd"
         />
       </Icon>

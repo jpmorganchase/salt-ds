@@ -73,15 +73,12 @@ jobs:
         run: rm -f ./storybook-static/preview-stats.json
 
       - name: Publish
-        uses: cloudflare/pages-action@v1
+        uses: cloudflare/wrangler-action@v3
         id: publish
         with:
           apiToken: ${{ secrets.CLOUDFLARE_SALT_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_SALT_ACCOUNT_ID }}
-          projectName: "saltdesignsystem-storybook"
-          directory: ./storybook-static
-          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
-          branch: ${{ steps.run_metadata.outputs.branchName }}
+          command: pages deploy ./storybook-static --project-name=saltdesignsystem-storybook --branch=${{ steps.run_metadata.outputs.branchName }}
 
       - name: Update deploy status (success)
         uses: actions/github-script@v7
@@ -95,7 +92,7 @@ jobs:
             state: "success",
             description: "Successfully deployed",
             context: "Storybook",
-            target_url: "${{ steps.publish.outputs.url }}"
+            target_url: "${{ steps.publish.outputs.pages-deployment-alias-url }}"
             });
 
       - name: Update deploy status (failure)

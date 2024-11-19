@@ -18,7 +18,7 @@ export const Info = (): ReactElement => (
         <Link href="#">Terms and Conditions</Link>.
       </BannerContent>
       <BannerActions>
-        <Button aria-label="close" variant="secondary">
+        <Button aria-label="close" appearance="transparent">
           <CloseIcon />
         </Button>
       </BannerActions>

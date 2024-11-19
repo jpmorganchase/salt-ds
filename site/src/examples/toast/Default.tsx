@@ -13,7 +13,7 @@ export const Default = (): ReactElement => (
         .
       </Text>
     </ToastContent>
-    <Button variant="secondary" aria-label="Dismiss">
+    <Button appearance="transparent" aria-label="Dismiss">
       <CloseIcon aria-hidden />
     </Button>
   </Toast>

@@ -33,8 +33,8 @@ export const MultilineBanners = (): ReactElement => (
             accept, you will receive a notification.
           </Text>
           <FlowLayout gap={1}>
-            <Button variant="secondary">Cancel invite</Button>
-            <Button variant="primary">Resend invite</Button>
+            <Button appearance="transparent">Cancel invite</Button>
+            <Button sentiment="neutral">Resend invite</Button>
           </FlowLayout>
         </StackLayout>
       </BannerContent>

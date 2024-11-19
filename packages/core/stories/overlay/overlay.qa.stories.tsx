@@ -7,7 +7,12 @@ import {
   OverlayTrigger,
 } from "@salt-ds/core";
 import type { Meta, StoryFn } from "@storybook/react";
-import { QAContainer, type QAContainerProps } from "docs/components";
+import {
+  QAContainer,
+  QAContainerNoStyleInjection,
+  type QAContainerNoStyleInjectionProps,
+  type QAContainerProps,
+} from "docs/components";
 
 import "./overlay.stories.css";
 
@@ -42,6 +47,48 @@ export const Default: StoryFn<QAContainerProps> = (props) => {
 };
 
 Default.parameters = {
+  chromatic: {
+    disableSnapshot: false,
+    modes: {
+      theme: {
+        themeNext: "disable",
+      },
+      themeNext: {
+        themeNext: "enable",
+        corner: "rounded",
+        accent: "teal",
+        // Ignore headingFont given font is not loaded
+      },
+    },
+  },
+};
+
+export const NoStyleInjectionGrid: StoryFn<QAContainerNoStyleInjectionProps> = (
+  props,
+) => (
+  <QAContainerNoStyleInjection
+    height={800}
+    cols={5}
+    itemPadding={50}
+    itemWidthAuto
+    width={1200}
+    {...props}
+  >
+    <Overlay open>
+      <OverlayTrigger>
+        <Button>Show Overlay</Button>
+      </OverlayTrigger>
+      <OverlayPanel>
+        <OverlayPanelContent>
+          <h3 className="content-heading">Title</h3>
+          <div>Content of Overlay</div>
+        </OverlayPanelContent>
+      </OverlayPanel>
+    </Overlay>
+  </QAContainerNoStyleInjection>
+);
+
+NoStyleInjectionGrid.parameters = {
   chromatic: { disableSnapshot: false },
 };
 
@@ -72,5 +119,50 @@ export const CloseButton: StoryFn<QAContainerProps> = (props) => {
 };
 
 CloseButton.parameters = {
+  chromatic: {
+    disableSnapshot: false,
+    modes: {
+      theme: {
+        themeNext: "disable",
+      },
+      themeNext: {
+        themeNext: "enable",
+        corner: "rounded",
+        accent: "teal",
+        // Ignore headingFont given font is not loaded
+      },
+    },
+  },
+};
+
+export const NoStyleInjectionCloseButton: StoryFn<
+  QAContainerNoStyleInjectionProps
+> = (props) => {
+  return (
+    <QAContainerNoStyleInjection
+      height={800}
+      cols={5}
+      itemPadding={50}
+      itemWidthAuto
+      width={1200}
+      {...props}
+    >
+      <Overlay open>
+        <OverlayTrigger>
+          <Button>Show Overlay</Button>
+        </OverlayTrigger>
+        <OverlayPanel>
+          <OverlayPanelCloseButton />
+          <OverlayPanelContent>
+            <h3 className="content-heading">Title</h3>
+            <div>Content of Overlay</div>
+          </OverlayPanelContent>
+        </OverlayPanel>
+      </Overlay>
+    </QAContainerNoStyleInjection>
+  );
+};
+
+NoStyleInjectionCloseButton.parameters = {
   chromatic: { disableSnapshot: false },
 };

@@ -1,0 +1,36 @@
+---
+title: Country symbols
+layout: DetailTechnical
+---
+
+Country symbols represent a specific country and are used in contexts where geographical identification is necessary. They can be considered icons that are visually representative of a country or inter-governmental organisation. All country symbols are available in both circle and rectangle shapes.
+
+<Image
+  src="/img/foundations/iconography-countrysymbols-variant.png"
+  alt="Example of circular country symbols next to rectangular country symbols"
+/>
+
+## All country symbols
+
+<CountrySymbolPreview />
+
+## Scaling country symbols
+
+Country symbols have a standard size that changes in multiples across all four density levels.
+
+<ImageSwitcher
+  images={[
+    { src: "/img/foundations/scale-country.svg", alt: "" },
+    { src: "/img/foundations/scale-country-annotated.svg", alt: "" },
+  ]}
+  label="Show multipliers"
+/>
+
+| Size token         | Multiplier | High Density (HD) | Medium Density (MD) | Low Density (LD) | Touch Density (TD) |
+| ------------------ | ---------- | ----------------- | ------------------- | ---------------- | ------------------ |
+| `--salt-size-base` | x1         | 20                | 28                  | 36               | 44                 |
+|                    | x2         | 40                | 56                  | 72               | 88                 |
+|                    | x3         | 60                | 84                  | 108              | 132                |
+|                    | x4         | 80                | 112                 | 144              | 176                |
+
+:fragment{src="./../fragments/feedback.mdx"}

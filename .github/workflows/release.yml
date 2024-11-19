@@ -47,11 +47,8 @@ jobs:
         env:
           NODE_OPTIONS: "--max_old_space_size=6144"
       - name: Publish Storybook
-        uses: cloudflare/pages-action@v1
+        uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_SALT_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_SALT_ACCOUNT_ID }}
-          projectName: "saltdesignsystem-storybook"
-          directory: ./storybook-static
-          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
-          branch: ${{ github.head_ref || github.ref_name }}
+          command: pages deploy ./storybook-static --project-name saltdesignsystem-storybook --branch ${{ github.head_ref || github.ref_name }}

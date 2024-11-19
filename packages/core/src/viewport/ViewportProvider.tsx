@@ -1,5 +1,5 @@
 import { type ReactNode, createContext, useContext, useState } from "react";
-import { useIsomorphicLayoutEffect } from "../utils";
+import { useIsomorphicLayoutEffect } from "../utils/useIsomorphicLayoutEffect";
 
 const ViewportContext = createContext<number | null>(null);
 

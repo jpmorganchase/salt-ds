@@ -1,5 +1,38 @@
 # @salt-ds/icons
 
+## 1.13.0
+
+### Minor Changes
+
+- dc5b3b3: Added new icons
+
+  - Checkmark
+  - CheckmarkSolid
+  - SuccessCircle
+  - SuccessCircleSolid
+
+  Updated below icons to align with other icons
+
+  - Error
+  - ErrorSolid
+  - Info
+  - InfoSolid
+  - Warning
+  - WarningSolid
+
+  Deprecated below icons
+
+  | Deprecated            | Replacement        |
+  | --------------------- | ------------------ |
+  | SuccessSmallIcon      | CheckmarkIcon      |
+  | SuccessSmallSolidIcon | CheckmarkSolidIcon |
+  | SuccessIcon           | CheckmarkIcon      |
+  | SuccessSolidIcon      | CheckmarkSolidIcon |
+  | StepSuccessIcon       | SuccessCircleIcon  |
+  | SuccessTickIcon       | CheckmarkIcon      |
+
+  Closes #4347
+
 ## 1.12.1
 
 ### Patch Changes

@@ -1,13 +1,13 @@
 ---
 title: Modes
 layout: DetailTechnical
-data:
-  status: In progress
+sidebar:
+  priority: 8
 ---
 
 Modes enable the color palette to change from light to dark, providing the flexibility to choose an option that best fits a preference or need. Choosing a suitable mode can improve accessibility, reduce eye strain in low-light conditions and increase reading speed.
 
-The following example demonstrates the two available modes. Each mode shares the same components and design tokens, with just colors changing depending on the chosen mood.
+The following example demonstrates the two available modes. Each mode shares the same components and design tokens, with just colors changing depending on the chosen mode.
 
 <Image
   src="/img/foundations/modes-light-dark.svg"
@@ -21,40 +21,5 @@ Light mode works well when users are likely to visit your application content se
 ## Dark mode
 
 Consider applying a dark mode if you're designing an interface that will be used continuously for long periods. It may be easier on the eyes in certain environments, but it could increase eye strain when reading long text passages.
-
-## Backgrounds
-
-Each mode includes two background options: primary and secondary. The two backgrounds allow for color layering, which you can use to separate regions or blocks of content and help establish a visual hierarchy.
-
-<Image
-  src="/img/foundations/modes-background-options.svg"
-  alt="Example of primary and secondary backgrounds for each mode"
-/>
-
-| Token                                   | Figma                          | Light mode      | Dark mode        |
-| --------------------------------------- | ------------------------------ | --------------- | ---------------- |
-| `--salt-container-primary-background`   | Container/Primary/Background   | `color-white`   | `color-gray-800` |
-| `--salt-container-secondary-background` | Container/Secondary/Background | `color-gray-20` | `color-gray-600` |
-
-## 60-30-10 rule
-
-Aim to balance the use of color by following the 60-30-10 ration. This simple rule helps create a well-balanced design by adhering to the following guidelines:
-
-- **60% primary (or dominant) color**—the neutral primary background color, forming the base color of a design
-- **30% secondary color**—defines areas of focus, for instance, a summary panel, a set of high-level metrics, a toolbar or the navigation
-- **10% accent color**—draws the eyes to specific and important elements, such as a call-to-action, a prominent heading, image or data visualization.
-
-### Example
-
-<Image
-  src="/img/foundations/modes-60-30-10.svg"
-  alt="Example of primary and secondary backgrounds for each mode"
-/>
-
-| Annotation | Percentage | Usage                                    |
-| ---------- | ---------- | ---------------------------------------- |
-| 1          | 60%        | Primary background color                 |
-| 2          | 30%        | Highlighted region                       |
-| 3          | 10%        | Navigation accent bar and call-to-action |
 
 :fragment{src="./fragments/feedback.mdx"}

@@ -16,7 +16,7 @@ export const Success = (): ReactElement => (
         Your details have been updated successfully.
       </BannerContent>
       <BannerActions>
-        <Button aria-label="close" variant="secondary">
+        <Button aria-label="close" appearance="transparent">
           <CloseIcon />
         </Button>
       </BannerActions>

@@ -6,7 +6,10 @@ import type {
   OverflowLayoutHookProps,
 } from "./overflowTypes";
 
-import { type ResizeHandler, useResizeObserver } from "../responsive";
+import {
+  type ResizeHandler,
+  useResizeObserver,
+} from "../responsive/useResizeObserver";
 import { getIsOverflowed, measureContainerOverflow } from "./overflowUtils";
 import { useDynamicCollapse } from "./useDynamicCollapse";
 import { useInstantCollapse } from "./useInstantCollapse";

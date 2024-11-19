@@ -20,7 +20,7 @@ export const LinearIndeterminate = (): ReactElement => {
           <LinearProgress aria-label="Download" />
         </div>
       </ToastContent>
-      <Button variant="secondary" aria-label="Dismiss">
+      <Button appearance="transparent" aria-label="Dismiss">
         <CloseIcon aria-hidden />
       </Button>
     </Toast>

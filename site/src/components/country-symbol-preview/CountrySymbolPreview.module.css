@@ -1,0 +1,28 @@
+.root {
+  min-height: 400px;
+}
+
+.formfield {
+  display: flex;
+}
+
+.search {
+  max-width: 40ch;
+  flex: 1;
+}
+
+.symbolsContainer {
+  overflow: auto;
+  max-height: 800px;
+  margin-top: var(--salt-spacing-300);
+}
+
+.notFound {
+  flex: 1;
+  justify-content: center;
+}
+
+.symbolCount {
+  display: flex;
+  align-items: center;
+}

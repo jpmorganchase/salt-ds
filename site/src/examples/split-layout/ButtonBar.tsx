@@ -4,15 +4,15 @@ import styles from "./index.module.css";
 
 const startItem = (
   <FlowLayout gap={1}>
-    <Button variant="cta">Button 1</Button>
-    <Button variant="primary">Button 2</Button>
-    <Button variant="secondary">Button 3</Button>
+    <Button sentiment="accented">Button 1</Button>
+    <Button sentiment="neutral">Button 2</Button>
+    <Button appearance="transparent">Button 3</Button>
   </FlowLayout>
 );
 const endItem = (
   <FlowLayout gap={1}>
-    <Button variant="cta">Button 4</Button>
-    <Button variant="primary">Button 5</Button>
+    <Button sentiment="accented">Button 4</Button>
+    <Button sentiment="neutral">Button 5</Button>
   </FlowLayout>
 );
 

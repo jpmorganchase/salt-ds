@@ -35,8 +35,8 @@ import {
   getCurrentLocale,
 } from "../calendar";
 import { Calendar, type SingleDateSelection } from "../calendar";
+import { useDatePickerContext } from "./DatePickerContext";
 import datePickerPanelCss from "./DatePickerPanel.css";
-import { useDatePickerContext } from "./index";
 
 /**
  * Props for the DatePickerSinglePanel component.
