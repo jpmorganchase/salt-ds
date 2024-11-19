@@ -1,0 +1,31 @@
+.saltStepIcon {
+  grid-area: icon;
+
+  justify-self: center;
+}
+
+.saltStepper-horizontal .saltStepIcon {}
+
+.saltStep-stage-pending > .saltStepIcon {
+  --saltIcon-color: var(--salt-status-static-foreground);
+}
+
+.saltStep-stage-inprogress > .saltStepIcon {
+  --saltIcon-color: var(--salt-status-info-foreground-decorative);
+}
+
+.saltStep-stage-active > .saltStepIcon {
+  --saltIcon-color: var(--salt-status-info-foreground-decorative);
+}
+
+.saltStep-stage-completed > .saltStepIcon {
+  --saltIcon-color: var(--salt-status-success-foreground-decorative);
+}
+
+.saltStep-status-warning > .saltStepIcon {
+  --saltIcon-color: var(--salt-status-warning-foreground-decorative);
+}
+
+.saltStep-status-error > .saltStepIcon {
+  --saltIcon-color: var(--salt-status-error-foreground-decorative);
+}

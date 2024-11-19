@@ -1,6 +1,7 @@
 import type { Meta, StoryFn } from "@storybook/react";
+import { Stepper, Step, type StepProps } from '@salt-ds/lab'
+import { LockedIcon } from '@salt-ds/icons';
 
-import { Stepper, Step } from '@salt-ds/lab'
 import { StackLayout } from '@salt-ds/core';
 
 export default {
@@ -9,23 +10,32 @@ export default {
   subcomponents: { Step },
 } as Meta<typeof Stepper>;
 
-export const Basic: StoryFn<typeof Stepper> = () => {
+export const Horizontal: StoryFn<typeof Stepper> = () => {
   return (
-    <StackLayout style={{ minWidth: '800px', width: '100%' }}>
+    <StackLayout
+      gap={10}
+      style={{
+        minWidth: '640px',
+        width: '100%',
+      }}
+    >
       <Stepper>
-        <Step label="Step" stage="completed" />
-        <Step label="Step" stage="active" />
-        <Step label="Step" />
-        <Step label="Step" />
-        <Step label="Step" />
+        <Step label="Step 1" stage="completed" />
+        <Step label="Step 2" stage="active" />
+        <Step label="Step 3" />
       </Stepper>
     </StackLayout>
   )
 }
 
-export const Variations: StoryFn<typeof Stepper> = () => {
+export const HorizontalVariations: StoryFn<typeof Stepper> = () => {
   return (
-    <StackLayout style={{ maxWidth: '800px', width: '100%' }}>
+    <StackLayout
+      style={{
+        minWidth: '640px',
+        width: '100%',
+      }}
+     >
       <Stepper>
         <Step
           label="Step"
@@ -35,12 +45,12 @@ export const Variations: StoryFn<typeof Stepper> = () => {
         <Step
           label="Step"
           description="Description text"
-          stage="active"
+          stage="inprogress"
         />
         <Step
           label="Step"
           description="Description text"
-          stage="inprogress"
+          stage="active"
         />
         <Step
           label="Step"
@@ -62,9 +72,14 @@ export const Variations: StoryFn<typeof Stepper> = () => {
   )
 }
 
-export const LongText: StoryFn<typeof Stepper> = () => {
+export const HorizontalLongText: StoryFn<typeof Stepper> = () => {
   return (
-    <StackLayout style={{ maxWidth: '320px', width: '100%' }}>
+    <StackLayout
+      style={{
+        maxWidth: '320px',
+        width: '100%'
+      }}
+    >
       <Stepper>
         <Step
           label="This is a ridiculous long line of text showcasing a step label"
@@ -88,23 +103,40 @@ export const LongText: StoryFn<typeof Stepper> = () => {
 
 export const Vertical: StoryFn<typeof Stepper> = () => {
   return (
+    <StackLayout
+      gap={10}
+      style={{
+        minWidth: '240px',
+        width: '100%',
+      }}
+    >
+      <Stepper orientation="vertical">
+        <Step label="Step 1" stage="completed" />
+        <Step label="Step 2" stage="active" />
+        <Step label="Step 3" />
+      </Stepper>
+    </StackLayout>
+  )
+}
+
+export const VerticalVariations: StoryFn<typeof Stepper> = () => {
+  return (
     <StackLayout style={{ maxWidth: '240px', width: '100%' }}>
       <Stepper orientation="vertical">
         <Step
           label="Step"
           description="Description text"
           stage="pending"
-        >
-        </Step>
-        <Step
-          label="Step"
-          description="Description text"
-          stage="active"
         />
         <Step
           label="Step"
           description="Description text"
           stage="inprogress"
+        />
+        <Step
+          label="Step"
+          description="Description text"
+          stage="active"
         />
         <Step
           label="Step"
@@ -126,7 +158,60 @@ export const Vertical: StoryFn<typeof Stepper> = () => {
   )
 }
 
-export const VerticalNestedOnce: StoryFn<typeof Stepper> = () => {
+export const VerticalLongText: StoryFn<typeof Stepper> = () => {
+  return (
+    <StackLayout
+      gap={10}
+      style={{
+        maxWidth: '240px',
+        width: '100%',
+      }}
+    >
+      <Stepper orientation="vertical">
+        <Step
+          label="This is a ridiculous long line of text showcasing a step label"
+          description="lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate magni dignissimos inventore incidunt facere harum expedita beatae reiciendis numquam iste excepturi dolorum omnis optio ullam quam illum, eligendi perspiciatis quia."
+          stage="completed"
+        />
+        <Step
+          label="Oh no!"
+          description="lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate magni dignissimos inventore incidunt facere harum expedita beatae reiciendis numquam iste excepturi dolorum omnis optio ullam quam illum, eligendi perspiciatis quia."
+
+          status="error"
+        />
+        <Step
+          label="Last step"
+          description="lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate magni dignissimos inventore incidunt facere harum expedita beatae reiciendis numquam iste excepturi dolorum omnis optio ullam quam illum, eligendi perspiciatis quia."
+
+          status="warning"
+        />
+      </Stepper>
+    </StackLayout>
+  )
+}
+
+export const VerticalDepth1: StoryFn<typeof Stepper> = () => {
+  return (
+    <StackLayout style={{ maxWidth: '240px', width: '100%' }}>
+      <Stepper orientation="vertical">
+        <Step label="Step 1" description="Description text">
+          <Step label="Step 1.1" />
+        </Step>
+        <Step label="Step 2">
+          <Step label="Step 2.1" description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate magni dignissimos inventore incidunt facere harum expedita beatae reiciendis numquam iste excepturi dolorum omnis optio ullam quam illum, eligendi perspiciatis quia." />
+          <Step label="Step 2.2" description="Description text" />
+        </Step>
+        <Step label="Step 3">
+          <Step label="Step 3.1" />
+          <Step label="Step 3.2" description="Description text" />
+          <Step label="Step 3.3" description="This is just a description text" />
+        </Step>
+      </Stepper>
+    </StackLayout>
+  )
+}
+
+export const VerticalDepth2: StoryFn<typeof Stepper> = () => {
   return (
     <StackLayout style={{ maxWidth: '240px', width: '100%' }}>
       <Stepper orientation="vertical">

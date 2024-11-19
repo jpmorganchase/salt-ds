@@ -1,9 +1,0 @@
-.saltStepIcon {
-  grid-area: icon;
-  justify-self: center;
-  align-self: center;
-}
-
-.saltStepper-horizontal .saltStepIcon {
-  margin-bottom: var(--salt-spacing-50);
-}

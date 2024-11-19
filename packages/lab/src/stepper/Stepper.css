@@ -3,10 +3,10 @@
   display: flex;
   width: 100%;
   height: 100%;
-  padding: 0;
   margin: 0;
   overflow: hidden;
   list-style-type: none;
+  padding: 0;
 }
 
 .saltStepper-horizontal {
