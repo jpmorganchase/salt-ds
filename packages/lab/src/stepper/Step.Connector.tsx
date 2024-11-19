@@ -3,17 +3,17 @@ import { makePrefixer } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 
-import stepTrackCSS from "./StepTrack.css";
+import stepTrackCSS from "./Step.Connector.css";
 
-export namespace StepTrack {
+export namespace StepConnector {
   export interface Props {
     className?: string;
   }
 }
 
-const withBaseName = makePrefixer("saltStepTrack");
+const withBaseName = makePrefixer("saltStepConnector");
 
-export function StepTrack({ className }: StepTrack.Props) {
+export function StepConnector({ className }: StepConnector.Props) {
   const targetWindow = useWindow();
 
   useComponentCssInjection({
