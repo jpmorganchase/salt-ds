@@ -1,4 +1,7 @@
-import { cloneElement, isValidElement, type ReactElement, type ReactNode } from "react";
+import {
+  cloneElement,
+  type ReactElement
+} from "react";
 import clsx from "clsx";
 import {
   ErrorSolidIcon,
@@ -13,8 +16,8 @@ import { makePrefixer } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 
-import stepIconCSS from "./Step.Icon.css";
 import type { Step } from "./Step";
+import stepIconCSS from "./Step.Icon.css";
 
 export namespace StepIcon {
   export interface Props extends IconProps {
