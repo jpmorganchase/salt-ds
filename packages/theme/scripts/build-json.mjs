@@ -21,8 +21,7 @@ function getStyleDictionaryConfig({ modes, density, accent }) {
       "./tokens/foundation/**/*.tokens.json",
       // // Individual palette file output
 
-      "./tokens/palette/blue-dark-next.tokens.json", // TODO: revert to accent-mode aware
-      // `./tokens/palette/${accent}-${mode}-next.tokens.json`,
+      "./tokens/palette/palette-next.tokens.json",
       // // combined palette tokens into single file, handled by custom formatter
       // "./tokens/palette/**/*.tokens.json",
       //   `./tokens/characteristics/*.tokens.json`,
@@ -113,7 +112,7 @@ function getStyleDictionaryConfig({ modes, density, accent }) {
                 // matcher: (token) =>
                 //   token.filePath.includes(mode) &&
                 //   token.filePath.includes(accent),
-                modeIdentifier: mode,
+                modeIdentifier: `${accent}-${mode}`,
               })),
             },
             // // Use filter to add different `selector` for mode/density/etc.
