@@ -39,7 +39,9 @@ export const ButtonBar = () => {
           </Button>
         </FlexItem>
         <FlexItem>
-          <Button style={{ width: "100%" }}>Cancel</Button>
+          <Button appearance="bordered" style={{ width: "100%" }}>
+            Cancel
+          </Button>
         </FlexItem>
       </StackLayout>
     </div>
@@ -55,7 +57,9 @@ export const WithSecondary = () => {
         </Button>
       </FlexItem>
       <FlexItem>
-        <Button style={{ width: "100%" }}>Cancel</Button>
+        <Button appearance="bordered" style={{ width: "100%" }}>
+          Cancel
+        </Button>
       </FlexItem>
     </StackLayout>
   );
@@ -99,7 +103,9 @@ export const DestructiveActions = () => {
         </Button>
       </FlexItem>
       <FlexItem>
-        <Button style={{ width: "100%" }}>Cancel</Button>
+        <Button appearance="bordered" style={{ width: "100%" }}>
+          Cancel
+        </Button>
       </FlexItem>
     </StackLayout>
   );
@@ -132,11 +138,13 @@ export const Responsive = () => {
     <StackLayout gap={1} direction={{ xs: "column", sm: "row" }}>
       <FlexItem>
         <Button sentiment="accented" style={{ width: "100%" }}>
-          CTA
+          Save
         </Button>
       </FlexItem>
       <FlexItem>
-        <Button style={{ width: "100%" }}>Primary</Button>
+        <Button appearance="bordered" style={{ width: "100%" }}>
+          Cancel
+        </Button>
       </FlexItem>
     </StackLayout>
   );
@@ -145,7 +153,14 @@ export const Responsive = () => {
     <StackLayout gap={1} direction={{ xs: "column", sm: "row" }}>
       <FlexItem>
         <Button appearance="transparent" style={{ width: "100%" }}>
-          Secondary
+          <ExportIcon />
+          Export
+        </Button>
+      </FlexItem>
+      <FlexItem>
+        <Button appearance="transparent" style={{ width: "100%" }}>
+          <ImportIcon />
+          Import
         </Button>
       </FlexItem>
     </StackLayout>
@@ -165,24 +180,26 @@ export const Responsive = () => {
 };
 
 export const ResponsiveReverse = () => {
-  const primary = (
+  const bordered = (
     <FlexItem>
-      <Button style={{ width: "100%" }}>Primary</Button>
-    </FlexItem>
-  );
-
-  const secondary = (
-    <FlexItem>
-      <Button appearance="transparent" style={{ width: "100%" }}>
-        Secondary
+      <Button appearance="bordered" style={{ width: "100%" }}>
+        Cancel
       </Button>
     </FlexItem>
   );
 
-  const cta = (
+  const transparent = (
+    <FlexItem>
+      <Button appearance="transparent" style={{ width: "100%" }}>
+        Delete
+      </Button>
+    </FlexItem>
+  );
+
+  const accented = (
     <FlexItem>
       <Button sentiment="accented" style={{ width: "100%" }}>
-        CTA
+        Save
       </Button>
     </FlexItem>
   );
@@ -190,20 +207,20 @@ export const ResponsiveReverse = () => {
   const direction: StackLayoutProps<ElementType>["direction"] =
     useResponsiveProp({ xs: "column", sm: "row" }, "row");
 
-  const startItem = <StackLayout gap={1}>{secondary}</StackLayout>;
+  const startItem = <StackLayout gap={1}>{transparent}</StackLayout>;
 
   const endItem = (
     <StackLayout direction={"row"} gap={1}>
-      {primary}
-      {cta}
+      {bordered}
+      {accented}
     </StackLayout>
   );
 
   const columnStack = (
     <StackLayout direction="column" gap={1} style={{ width: "100%" }}>
-      {cta}
-      {primary}
-      {secondary}
+      {accented}
+      {bordered}
+      {transparent}
     </StackLayout>
   );
 
@@ -260,7 +277,9 @@ export const SingleStepForm = () => {
           </Button>
         </FlexItem>
         <FlexItem>
-          <Button style={{ width: "100%" }}>Cancel</Button>
+          <Button appearance="bordered" style={{ width: "100%" }}>
+            Cancel
+          </Button>
         </FlexItem>
       </StackLayout>
     </StackLayout>
@@ -270,7 +289,9 @@ export const SingleStepForm = () => {
 export const MultiStepForm = () => {
   const previous = (
     <FlexItem>
-      <Button style={{ width: "100%" }}>Previous</Button>
+      <Button appearance="bordered" style={{ width: "100%" }}>
+        Previous
+      </Button>
     </FlexItem>
   );
 
@@ -340,13 +361,17 @@ export const DialogForm = () => {
         onClick={handleClose}
         style={{ width: "100%" }}
       >
-        Save
+        Save as draft
       </Button>
     </FlexItem>
   );
   const cancel = (
     <FlexItem>
-      <Button onClick={handleClose} style={{ width: "100%" }}>
+      <Button
+        appearance="bordered"
+        onClick={handleClose}
+        style={{ width: "100%" }}
+      >
         Cancel
       </Button>
     </FlexItem>
