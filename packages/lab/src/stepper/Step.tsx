@@ -1,5 +1,4 @@
 import {
-  useId,
   useContext,
   useState,
   useEffect,
@@ -9,34 +8,35 @@ import {
   type ReactElement,
 } from "react";
 import clsx from "clsx";
+import {
+  Text,
+  useId,
+  useControlled,
+  makePrefixer,
+  type ButtonProps
+} from "@salt-ds/core";
 import { useWindow } from "@salt-ds/window";
-import { Text, makePrefixer, type ButtonProps } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 
 import stepCSS from "./Step.css";
-
 import { Stepper } from "./Stepper";
+import { DepthContext } from "./Stepper.Provider";
+import { StepExpandTrigger } from "./Step.ExpandTrigger";
 import { StepConnector } from "./Step.Connector";
 import { StepIcon } from "./Step.Icon";
-import { StepExpandTrigger } from "./Step.ExpandTrigger";
-import { DepthContext, OrientationContext } from "./Stepper.Provider";
-
-type ReactListItem = ComponentProps<"li">;
 
 export namespace Step {
-  export interface Props extends ReactListItem {
+  export interface Props extends ComponentProps<"li"> {
     label?: ReactNode;
     description?: ReactNode;
     icon?: ReactElement;
     status?: Status;
     stage?: Stage;
+    disabled?: boolean;
+    expanded?: boolean;
     defaultExpanded?: boolean;
     onToggle?: ButtonProps["onClick"];
-    disabled?: boolean;
-    className?: string;
-    style?: CSSProperties;
     children?: ReactNode;
-    stepRef?: ReactListItem["ref"];
   }
 
   export type Status =
@@ -47,31 +47,45 @@ export namespace Step {
     | "pending"
     | "completed"
     | "inprogress"
-    | "active";
+    | "active"
+    | "locked"  
+  ;
 
-  export type Depth = number; 
+  export type Depth = number;
 }
 
 const withBaseName = makePrefixer("saltStep");
 
+// Remove disabled Step variant
+// Add locked stage Step variant
+// Status comes before stage
+// Icon align to top when vertical and more than one line of text
 export function Step({
+  id: idProp,
   label,
+  icon,
   description,
   status,
   stage = "pending",
+  expanded: expandedProp,
   defaultExpanded = false,
   onToggle,
   className,
   style,
   children,
+  disabled = false,
   ...props
 }: Step.Props) {
-  const generatedId = useId();
+  const id = useId(idProp);
   const targetWindow = useWindow();
   const depth = useContext(DepthContext);
-  const [expanded, setExpanded] = useState(defaultExpanded);
 
-  const id = props.id || generatedId;
+  const [expanded, setExpanded] = useControlled({
+    controlled: expandedProp,
+    default: Boolean(defaultExpanded),
+    name: "Step",
+    state: "expanded"
+  })
 
   useComponentCssInjection({
     testId: "salt-step",
@@ -102,6 +116,9 @@ export function Step({
   return (
     <li
       id={id}
+      data-stage={stage}
+      data-status={status}
+      data-depth={depth}
       className={clsx(
         withBaseName(),
         withBaseName(`stage-${stage}`),
@@ -110,6 +127,7 @@ export function Step({
         !hasNestedSteps && withBaseName("terminal"),
         hasNestedSteps && expanded && withBaseName("expanded"),
         hasNestedSteps && !expanded && withBaseName("collapsed"),
+        disabled && withBaseName("disabled"),
         className,
       )}
       style={{
@@ -118,11 +136,30 @@ export function Step({
       } as CSSProperties}
       {...props}
     >
+      <div className={withBaseName('content')}>
+        <StepConnector />
         <StepIcon
           stage={stage}
           status={status}
           multiplier={iconMultiplier}
+          element={icon}
         />
+        {label && (
+          <Text
+            id={labelId}
+            className={withBaseName("label")}
+          >
+            {label}
+          </Text>
+        )}
+        {description && (
+          <Text
+            styleAs="label"
+            className={withBaseName("description")}
+          >
+            {description}
+          </Text>
+        )}
         {hasNestedSteps && (
           <StepExpandTrigger
             aria-expanded={expanded}
@@ -135,28 +172,12 @@ export function Step({
             }}
           />
         )}
-        <StepConnector />
-        {label && (
-          <Text
-            id={labelId}
-            className={withBaseName("label")}
-          >
-            <strong>{label}</strong>
-          </Text>
-        )}
-        {description && (
-          <Text
-            styleAs="label"
-            className={withBaseName("description")}
-          >
-            {description}
-          </Text>
-        )}
         {hasNestedSteps && (
           <Stepper id={nestedStepperId}>
             {children}
           </Stepper>
         )}
+      </div>
     </li>
   );
 }
