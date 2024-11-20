@@ -29,13 +29,7 @@ export const ClearSelection = (): ReactElement => {
     data.toLowerCase().includes(value.trim().toLowerCase()),
   );
 
-  const handleBlur = () => {
-    console.log("blur was called");
-  };
-  const handleClear = (event: any) => {
-    if (!event.currentTarget?.contains(event.relatedTarget)) {
-      event.stopPropagation();
-    }
+  const handleClear = () => {
     setValue("");
     setSelected([]);
   };
@@ -43,7 +37,6 @@ export const ClearSelection = (): ReactElement => {
   return (
     <ComboBox
       multiselect
-      onBlur={handleBlur}
       selected={selected}
       onChange={handleChange}
       onSelectionChange={handleSelectionChange}

@@ -867,13 +867,7 @@ export const ClearSelection: StoryFn<ComboBoxProps> = (args) => {
     state.toLowerCase().includes(value.trim().toLowerCase()),
   );
 
-  const handleBlur = () => {
-    console.log("blur was called");
-  };
-  const handleClear = (event: any) => {
-    if (!event.currentTarget?.contains(event.relatedTarget)) {
-      event.stopPropagation();
-    }
+  const handleClear = () => {
     setValue("");
     setSelected([]);
   };
@@ -882,7 +876,6 @@ export const ClearSelection: StoryFn<ComboBoxProps> = (args) => {
     <ComboBox
       {...args}
       multiselect
-      onBlur={handleBlur}
       endAdornment={
         (value || selected.length > 0) && (
           <Button

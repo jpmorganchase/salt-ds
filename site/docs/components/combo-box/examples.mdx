@@ -192,8 +192,18 @@ Use the `selectOnTab` prop to select the active option from the list on Tab key 
 
 In order to clear all the selections, you can pass a [`Button`](../button) to the `endAdornment` prop of the `ComboBox`.
 
-**Note:** To prevent the clear selection action from triggering a blur event, you can add `event.stopPropagation()` to your event handler.
 </LivePreview>
+
+**Note:** To prevent the clear selection action from triggering a blur event, you can add `event.stopPropagation()` to your event handler. e.g.
+
+  ```tsx
+  const handleClear = (event: any) => {
+    if (!event.currentTarget?.contains(event.relatedTarget)) {
+    event.stopPropagation();
+  }
+    ...
+  };
+  ```
 <LivePreview componentName="combo-box" exampleName="Bordered">
 
 ## Bordered
