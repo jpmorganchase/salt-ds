@@ -1,18 +1,18 @@
 import defaultDayjs, { type Dayjs } from "dayjs";
-import {
-  AdapterOptions,
-  DateDetailErrorEnum,
-  ParserResult,
-  RecommendedFormats,
-  SaltDateAdapter,
-  TimeFields,
-  Timezone,
-} from "./types";
+import customParseFormat from "dayjs/plugin/customParseFormat";
 import localeData from "dayjs/plugin/localeData";
 import timezone from "dayjs/plugin/timezone";
 import utc from "dayjs/plugin/utc";
 import weekday from "dayjs/plugin/weekday";
-import customParseFormat from 'dayjs/plugin/customParseFormat';
+import {
+  type AdapterOptions,
+  DateDetailErrorEnum,
+  type ParserResult,
+  type RecommendedFormats,
+  type SaltDateAdapter,
+  type TimeFields,
+  type Timezone,
+} from "./types";
 
 type Constructor = {
   (...args: Parameters<typeof defaultDayjs>): Dayjs;
@@ -486,7 +486,8 @@ export class AdapterDayjs implements SaltDateAdapter<Dayjs, string> {
     const dayjsInstance = this.dayjs().locale(locale || this.locale);
     if (format === "narrow") {
       return dayjsInstance.localeData().weekdaysMin()[dow];
-    } else if (format === "short") {
+    } 
+    if (format === "short") {
       return dayjsInstance.localeData().weekdaysShort()[dow];
     }
     return dayjsInstance.localeData().weekdays()[dow];
@@ -539,7 +540,7 @@ export class AdapterDayjs implements SaltDateAdapter<Dayjs, string> {
    */
   public isValidDateString(value: string): boolean {
     // Attempt to parse the string as an ISO 8601 date
-    const date = this.dayjs(value, { format: 'YYYY-MM-DDTHH:mm:ssZ' });
+    const date = this.dayjs(value, { format: "YYYY-MM-DDTHH:mm:ssZ" });
     return date.isValid();
   }
 

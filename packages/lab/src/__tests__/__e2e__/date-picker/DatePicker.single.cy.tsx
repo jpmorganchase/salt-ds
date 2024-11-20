@@ -1,16 +1,16 @@
-import * as datePickerStories from "@stories/date-picker/date-picker.stories";
 import {
   AdapterDateFns,
   AdapterDayjs,
   AdapterLuxon,
   AdapterMoment,
-  DateFrameworkType,
+  type DateFrameworkType,
   DatePicker,
   DatePickerOverlay,
   DatePickerSingleInput,
   DatePickerSinglePanel,
-  SaltDateAdapter,
+  type SaltDateAdapter,
 } from "@salt-ds/lab";
+import * as datePickerStories from "@stories/date-picker/date-picker.stories";
 
 // Initialize adapters
 const adapterDateFns = new AdapterDateFns();

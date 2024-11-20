@@ -1,6 +1,6 @@
 import { useControlled, useForkRef, useFormFieldProps } from "@salt-ds/core";
 import {
-  SyntheticEvent,
+  type SyntheticEvent,
   useCallback,
   useEffect,
   useRef,

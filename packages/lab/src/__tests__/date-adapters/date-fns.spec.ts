@@ -1,7 +1,7 @@
-import { describe, it, expect } from "vitest";
-import { isValid } from 'date-fns';
-import { AdapterDateFns, DateDetailErrorEnum } from "../../date-adapters";
+import { isValid } from "date-fns";
 import { enUS } from "date-fns/locale";
+import { describe, expect, it } from "vitest";
+import { AdapterDateFns, DateDetailErrorEnum } from "../../date-adapters";
 
 describe("GIVEN a AdapterDateFns", () => {
   const adapter = new AdapterDateFns({ locale: enUS });
@@ -39,8 +39,8 @@ describe("GIVEN a AdapterDateFns", () => {
     ]);
   });
 
-  it('should handle empty date strings', () => {
-    const date = adapter.date('', 'system');
+  it("should handle empty date strings", () => {
+    const date = adapter.date("", "system");
     expect(isValid(date)).toBe(false);
   });
 

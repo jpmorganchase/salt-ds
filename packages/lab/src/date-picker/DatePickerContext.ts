@@ -1,7 +1,7 @@
 import { createContext } from "@salt-ds/core";
-import { type Context, type Ref, SyntheticEvent, useContext } from "react";
+import { type Context, type Ref, type SyntheticEvent, useContext } from "react";
 import type { DateRangeSelection, SingleDateSelection } from "../calendar";
-import type { DateDetail, DateFrameworkType } from "../date-adapters";
+import type { DateFrameworkType } from "../date-adapters";
 import type {
   DateInputRangeDetails,
   DateInputSingleDetails,

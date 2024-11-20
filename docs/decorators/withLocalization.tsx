@@ -10,6 +10,7 @@ import {
   LocalizationProvider,
 } from "@salt-ds/lab";
 
+// biome-ignore lint/suspicious/noExplicitAny: Date framework adapter
 const dateAdapterMap: Record<string, any> = {
   moment: AdapterMoment,
   dayjs: AdapterDayjs,
@@ -18,11 +19,10 @@ const dateAdapterMap: Record<string, any> = {
 };
 
 const getDefaultLocale = (dateAdapter: string) => {
-  const isDateFns = dateAdapter === "date-fns";
-  const isDayjs = dateAdapter === "dayjs";
-  if (isDateFns) {
+  if (dateAdapter === "date-fns") {
     return dateFnsEnUs;
-  } else if (isDayjs) {
+  }
+  if (dateAdapter === "dayjs") {
     return "en-US";
   }
   return "en";
