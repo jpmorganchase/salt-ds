@@ -2,6 +2,7 @@ import {
   capitalize,
   makePrefixer,
   useForkRef,
+  useId,
   useIsomorphicLayoutEffect,
 } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
@@ -38,6 +39,7 @@ export const TabListNext = forwardRef<HTMLDivElement, TabListNextProps>(
     const {
       appearance = "bordered",
       activeColor = "primary",
+      "aria-describedby": ariaDescribedBy,
       children,
       className,
       onKeyDown,
@@ -118,6 +120,8 @@ export const TabListNext = forwardRef<HTMLDivElement, TabListNextProps>(
       });
     }, [visible, returnFocus, targetWindow, items, selected]);
 
+    const warningId = useId();
+
     return (
       <div
         role="tablist"
@@ -131,8 +135,15 @@ export const TabListNext = forwardRef<HTMLDivElement, TabListNextProps>(
         data-ismeasuring={isMeasuring ? true : undefined}
         ref={handleRef}
         onKeyDown={handleKeyDown}
+        aria-describedby={clsx(ariaDescribedBy, warningId)}
         {...rest}
       >
+        {hidden.length > 0 && (
+          <span id={warningId} className={withBaseName("overflowWarning")}>
+            Note: This tab list includes overflow; tab positions may be
+            inaccurate or change when a tab is selected
+          </span>
+        )}
         {visible}
         <TabOverflowList
           isMeasuring={isMeasuring}
