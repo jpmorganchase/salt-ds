@@ -3,7 +3,11 @@
     "accent": {
       "stronger": {
         "$type": "color",
-        "$value": "{color.blue.300}"
+        "$value": "{color.blue.300}",
+        "$modes": {
+          "light": "{color.blue.700}",
+          "dark": "{color.blue.300}"
+        }
       },
       "stronger-disabled": {
         "$type": "color",
