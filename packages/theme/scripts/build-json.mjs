@@ -95,12 +95,13 @@ function getStyleDictionaryConfig({ modes, density, accents }) {
               );
             },
           },
-          // TODO: different mode-accent will override each other right now.
           // Inpire from `atRule` option, to work out multiple modes in a single file?
           // https://github.com/lukasoppermann/style-dictionary-utils/blob/main/src/format/css-advanced.ts
           // Not really, SD will warn Collision detected, and only use one value at a time, we need to come up with custom syntax to make this work
           ...paletteNextList.map((paletteNextType) => {
             const modeAccentRules = modes.reduce((prev, mode) => {
+              // TODO: restructure `./palette/` files to per palette family, so that only those needing 4 combination (accents * modes) will generate 4 block of CSS code?
+              // Or - should it be smarter when combining modes?
               for (const accent of accents) {
                 prev.push({
                   selector: `.salt-theme.salt-theme-next[data-mode="${mode}"][data-accent="${accent}"]`,
