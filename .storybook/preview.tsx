@@ -113,7 +113,7 @@ export const globalTypes: GlobalTypes = {
   dateAdapter: {
     name: "Date Adapter",
     description: "Date adapter type",
-    defaultValue: "dayjs",
+    defaultValue: "date-fns",
     toolbar: {
       items: [
         { value: "date-fns", title: "date-fns" },

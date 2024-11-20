@@ -157,22 +157,20 @@ function useCalendarNavigation<TDate extends DateFrameworkType>() {
     (event: SyntheticEvent, month: TDate) => {
       let newMonth = month;
 
-      if (!isOutsideAllowedYears(newMonth)) {
-        if (isOutsideAllowedMonths(newMonth)) {
-          // If month is navigable we should move to the closest navigable month
-          const navigableMonths = generateMonthsForYear(
-            dateAdapter,
-            visibleMonth,
-          ).filter((n) => !isOutsideAllowedMonths(n));
-          newMonth = navigableMonths.reduce((closestMonth, currentMonth) =>
-            Math.abs(monthDiff(dateAdapter, currentMonth, newMonth)) <
-            Math.abs(monthDiff(dateAdapter, closestMonth, newMonth))
-              ? currentMonth
-              : closestMonth,
-          );
-        }
-        setVisibleMonth(event, newMonth);
+      if (isOutsideAllowedMonths(newMonth)) {
+        // If month is navigable we should move to the closest navigable month
+        const navigableMonths = generateMonthsForYear(
+          dateAdapter,
+          visibleMonth,
+        ).filter((n) => !isOutsideAllowedMonths(n));
+        newMonth = navigableMonths.reduce((closestMonth, currentMonth) =>
+          Math.abs(monthDiff(dateAdapter, currentMonth, newMonth)) <
+          Math.abs(monthDiff(dateAdapter, closestMonth, newMonth))
+            ? currentMonth
+            : closestMonth,
+        );
       }
+      setVisibleMonth(event, newMonth);
     },
     [
       dateAdapter,
@@ -312,6 +310,7 @@ export const CalendarNavigation = forwardRef<
       selectedMonth,
       selectedYear,
       isOutsideAllowedMonths,
+      visibleMonth
     } = useCalendarNavigation<TDate>();
 
     const handleNavigatePrevious: MouseEventHandler<HTMLButtonElement> =
@@ -339,9 +338,11 @@ export const CalendarNavigation = forwardRef<
 
     const handleYearSelect = useCallback(
       (event: SyntheticEvent, year: TDate[]) => {
-        moveToMonth(event, year[0]);
+        let newVisibleMonth = dateAdapter.clone(visibleMonth);
+        newVisibleMonth = dateAdapter.set(newVisibleMonth, { year: dateAdapter.getYear(year[0]) });
+        moveToMonth(event, newVisibleMonth);
       },
-      [moveToMonth],
+      [moveToMonth, visibleMonth],
     );
 
     const formatMonth = useCallback(

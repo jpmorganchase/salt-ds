@@ -24,13 +24,13 @@ const DateInputSingleTemplate: StoryFn<
   const { dateAdapter } = useLocalization();
   function handleDateChange<TDate extends DateFrameworkType>(
     event: SyntheticEvent,
-    date: TDate | null | undefined,
-    detail: DateInputSingleDetails,
+    date: TDate | null,
+    details: DateInputSingleDetails,
   ) {
     console.log(
-      `Selected date: ${date ? dateAdapter.format(date, "DD MMM YYYY") : date}`,
+      `Selected date: ${dateAdapter.isValid(date)  ? dateAdapter.format(date, "DD MMM YYYY") : date}`,
     );
-    const { value, errors } = detail;
+    const { value, errors } = details;
     if (errors?.length && value) {
       console.log(
         `Error(s): ${errors
@@ -41,7 +41,7 @@ const DateInputSingleTemplate: StoryFn<
         console.log(`Original Value: ${value}`);
       }
     }
-    args?.onDateChange?.(event, date, detail);
+    args?.onDateChange?.(event, date, details);
   }
 
   return (
@@ -56,17 +56,17 @@ const DateInputRangeTemplate: StoryFn<
 > = (args) => {
   const { dateAdapter } = useLocalization();
   function handleDateChange<TDate extends DateFrameworkType>(
-    _event: SyntheticEvent,
-    date: DateRangeSelection<TDate> | null,
+    event: SyntheticEvent,
+    date: DateRangeSelection<Date> | null,
     details: DateInputRangeDetails,
   ) {
     const { startDate, endDate } = date || {};
     const {
-      startDate: { value: startDateOriginalValue, errors: startDateErrors },
-      endDate: { value: endDateOriginalValue, errors: endDateErrors },
+      startDate: { value: startDateOriginalValue, errors: startDateErrors } = {},
+      endDate: { value: endDateOriginalValue, errors: endDateErrors } = {},
     } = details;
     console.log(
-      `StartDate: ${dateAdapter.isValid(startDate) ? dateAdapter.format(startDate, "DD MMM YYYY") : startDate}, EndDate: ${endDate ? dateAdapter.format(endDate, "DD MMM YYYY") : endDate}`,
+      `StartDate: ${dateAdapter.isValid(startDate) ? dateAdapter.format(startDate, "DD MMM YYYY") : startDate}, EndDate: ${dateAdapter.isValid(endDate) ? dateAdapter.format(endDate, "DD MMM YYYY") : endDate}`,
     );
     if (startDateErrors?.length) {
       console.log(
@@ -84,6 +84,7 @@ const DateInputRangeTemplate: StoryFn<
         console.log(`EndDate Original Value: ${endDateOriginalValue}`);
       }
     }
+    args?.onDateChange?.(event, date, details);
   }
   return (
     <div style={{ width: "250px" }}>

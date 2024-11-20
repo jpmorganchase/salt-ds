@@ -1,17 +1,18 @@
 import defaultDayjs, { type Dayjs } from "dayjs";
-import customParseFormat from "dayjs/plugin/customParseFormat";
+import {
+  AdapterOptions,
+  DateDetailErrorEnum,
+  ParserResult,
+  RecommendedFormats,
+  SaltDateAdapter,
+  TimeFields,
+  Timezone,
+} from "./types";
 import localeData from "dayjs/plugin/localeData";
 import timezone from "dayjs/plugin/timezone";
 import utc from "dayjs/plugin/utc";
 import weekday from "dayjs/plugin/weekday";
-import {
-  AdapterOptions,
-  ParserResult,
-  RecommendedFormats,
-  SaltDateAdapter,
-  Timezone,
-} from "./saltDateAdapter";
-import { DateDetailErrorEnum, type TimeFields } from "./types";
+import customParseFormat from 'dayjs/plugin/customParseFormat';
 
 type Constructor = {
   (...args: Parameters<typeof defaultDayjs>): Dayjs;
@@ -57,7 +58,7 @@ export class AdapterDayjs implements SaltDateAdapter<Dayjs, string> {
    */
   constructor(
     { locale }: AdapterOptions<string, typeof defaultDayjs> = {},
-    instance: Constructor,
+    instance?: Constructor,
   ) {
     this.locale = locale || "en";
     this.dayjs = instance || defaultDayjs;
@@ -140,6 +141,9 @@ export class AdapterDayjs implements SaltDateAdapter<Dayjs, string> {
     timezone: Timezone = "default",
     locale?: string,
   ): Dayjs => {
+    if (!value || !this.isValidDateString(value)) {
+      return this.dayjs("Invalid Date");
+    }
     let date: Dayjs;
     if (timezone === "UTC") {
       date = this.createUTCDate(value, locale);
@@ -149,7 +153,7 @@ export class AdapterDayjs implements SaltDateAdapter<Dayjs, string> {
       date = this.createTZDate(value, timezone, locale);
     }
 
-    return date.isValid() ? date : this.dayjs("Invalid Date");
+    return date;
   };
 
   /**
@@ -344,7 +348,7 @@ export class AdapterDayjs implements SaltDateAdapter<Dayjs, string> {
   /**
    * Sets specific components of a Day.js date object.
    * @param date - The Day.js date object to modify.
-   * @param components - The components to set.
+   * @param components - The components to set, the month is a number (1-12).
    * @returns The resulting Day.js date object.
    */
   public set(
@@ -372,7 +376,7 @@ export class AdapterDayjs implements SaltDateAdapter<Dayjs, string> {
       newDate = newDate.date(day);
     }
     if (month) {
-      newDate = newDate.month(month);
+      newDate = newDate.month(month - 1);
     }
     if (year) {
       newDate = newDate.year(year);
@@ -503,7 +507,7 @@ export class AdapterDayjs implements SaltDateAdapter<Dayjs, string> {
    * @returns The month as a number (0-11).
    */
   public getMonth(date: Dayjs): number {
-    return date.month();
+    return date.month() + 1;
   }
 
   /**
@@ -527,5 +531,23 @@ export class AdapterDayjs implements SaltDateAdapter<Dayjs, string> {
       second: date.get("second"),
       millisecond: date.get("millisecond"),
     };
+  }
+
+  /**
+   * Validate date string so it can be parsed
+   * @param value
+   */
+  public isValidDateString(value: string): boolean {
+    // Attempt to parse the string as an ISO 8601 date
+    const date = this.dayjs(value, { format: 'YYYY-MM-DDTHH:mm:ssZ' });
+    return date.isValid();
+  }
+
+  /**
+   * Clone the date object
+   * @param date
+   */
+  public clone(date: Dayjs): Dayjs {
+    return date.clone();
   }
 }

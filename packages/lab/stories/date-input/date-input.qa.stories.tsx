@@ -1,19 +1,36 @@
-import { DateInputRange, DateInputSingle, useLocalization } from "@salt-ds/lab";
+import {
+  DateInputRange,
+  DateInputSingle,
+  useLocalization
+} from "@salt-ds/lab";
 import type { StoryFn } from "@storybook/react";
 import { QAContainer, type QAContainerProps } from "docs/components";
-import moment from "moment";
+import { enUS as dateFnsEnUs } from "date-fns/locale";
 
 export default {
   title: "Lab/Date Input/QA",
   component: DateInputSingle,
 };
 
-const today = moment().startOf("day");
+const QAContainerParameters = {
+  chromatic: { disableSnapshot: false },
+  modes: {
+    theme: {
+      themeNext: "disable",
+    },
+    themeNext: {
+      themeNext: "enable",
+      corner: "rounded",
+      accent: "teal",
+    },
+  },
+};
 
-export const AllExamples: StoryFn<QAContainerProps> = () => {
+const renderQAContainer = () => {
   const { dateAdapter } = useLocalization();
   const startDate = dateAdapter.today();
   const endDate = dateAdapter.add(startDate, { months: 1, days: 1 });
+
   return (
     <QAContainer
       cols={4}
@@ -43,17 +60,31 @@ export const AllExamples: StoryFn<QAContainerProps> = () => {
   );
 };
 
-AllExamples.parameters = {
-  chromatic: { disableSnapshot: false },
-  modes: {
-    theme: {
-      themeNext: "disable",
-    },
-    themeNext: {
-      themeNext: "enable",
-      corner: "rounded",
-      accent: "teal",
-      // Ignore headingFont given font is not loaded
-    },
-  },
-};
+export const AllExamplesWithMoment: StoryFn<QAContainerProps> = () => renderQAContainer();
+AllExamplesWithMoment.parameters = {
+  ...QAContainerParameters,
+  dateLocale: "en-US",
+  dateAdapter: "moment",
+}
+
+export const AllExamplesWithDateFns: StoryFn<QAContainerProps> = () => renderQAContainer();
+AllExamplesWithDateFns.parameters = {
+  ...QAContainerParameters,
+  dateLocale: dateFnsEnUs,
+  dateAdapter: "date-fns",
+}
+
+export const AllExamplesWithDayjs: StoryFn<QAContainerProps> = () => renderQAContainer();
+AllExamplesWithDayjs.parameters = {
+  ...QAContainerParameters,
+  dateLocale: "en",
+  dateAdapter: "dayjs",
+}
+
+export const AllExamplesWithLuxon: StoryFn<QAContainerProps> = () => renderQAContainer();
+AllExamplesWithLuxon.parameters = {
+  ...QAContainerParameters,
+  dateLocale: "en-US",
+  dateAdapter: "luxon",
+}
+

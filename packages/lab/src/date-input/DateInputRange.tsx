@@ -24,6 +24,7 @@ import {
   forwardRef,
   useEffect,
   useRef,
+  useMemo,
   useState,
 } from "react";
 import type { DateRangeSelection } from "../calendar";
@@ -140,7 +141,6 @@ export interface DateInputRangeProps<TDate extends DateFrameworkType>
    */
   onChange?: (
     event: ChangeEvent<HTMLInputElement>,
-    value: DateInputRangeValue,
   ) => void;
   /**
    * Callback fired when the selected date changes.
@@ -150,14 +150,18 @@ export interface DateInputRangeProps<TDate extends DateFrameworkType>
    */
   onDateChange?: (
     event: SyntheticEvent,
-    date: DateRangeSelection<TDate>,
+    date: DateRangeSelection<TDate> | null,
     details: DateInputRangeDetails,
   ) => void;
   /**
    * Called when input values change, either due to user interaction or programmatic formatting of valid dates.
+   * @param event - The synthetic event or null if a programmatic change.
    * @param newValue - The new date input range value.
    */
-  onDateValueChange?: (newValue: DateInputRangeValue) => void;
+  onDateValueChange?: (
+    event: SyntheticEvent | null,
+    newValue: DateInputRangeValue,
+  ) => void;
 }
 
 export const DateInputRange = forwardRef<
@@ -174,7 +178,7 @@ export const DateInputRange = forwardRef<
       disabled,
       "aria-label": ariaLabel,
       date: dateProp,
-      defaultDate = {},
+      defaultDate,
       onDateChange,
       value: valueProp,
       defaultValue = { startDate: "", endDate: "" },
@@ -215,17 +219,32 @@ export const DateInputRange = forwardRef<
       window: targetWindow,
     });
 
-    const [date, setDate] = useControlled({
-      controlled: dateProp,
-      default: defaultDate,
-      name: "DateInputRange",
-      state: "date",
-    });
     const [dateValue, setDateValue] = useControlled({
       controlled: valueProp,
       default: defaultValue,
       name: "DateInputRange",
       state: "dateValue",
+    });
+    const fallbackDate = useMemo(
+      () =>
+        defaultValue
+          ? {
+              startDate: defaultValue.startDate
+                ? dateAdapter.parse(defaultValue.startDate, format).date
+                : undefined,
+              endDate: defaultValue.endDate
+                ? dateAdapter.parse(defaultValue.endDate, format).date
+                : undefined,
+            }
+          : undefined,
+      [defaultValue, dateAdapter],
+    );
+    const [date, setDate] = useControlled({
+      controlled: dateProp,
+      default:
+        defaultDate ?? fallbackDate,
+      name: "DateInputRange",
+      state: "date",
     });
 
     const lastAppliedValue = useRef<DateInputRangeValue>(dateValue);
@@ -252,7 +271,7 @@ export const DateInputRange = forwardRef<
           locale,
         );
         newDateValue = { ...dateValue, startDate: formattedStartDateValue };
-      } else if (!newDate?.startDate) {
+      } else if (newDate?.startDate === undefined) {
         newDateValue = { ...dateValue, startDate: "" };
       }
       if (newDate?.endDate && dateAdapter.isValid(newDate.endDate)) {
@@ -262,7 +281,7 @@ export const DateInputRange = forwardRef<
           locale,
         );
         newDateValue = { ...newDateValue, endDate: formattedEndDateValue };
-      } else if (!newDate?.endDate) {
+      } else if (newDate?.endDate === undefined) {
         newDateValue = { ...newDateValue, endDate: "" };
       }
 
@@ -270,7 +289,7 @@ export const DateInputRange = forwardRef<
         newDateValue?.startDate !== dateValue?.startDate ||
         newDateValue?.endDate !== dateValue?.endDate
       ) {
-        onDateValueChange?.(newDateValue);
+        onDateValueChange?.(null, newDateValue);
         setDateValue(newDateValue);
       }
     };
@@ -329,10 +348,12 @@ export const DateInputRange = forwardRef<
       : endInputPropsRequired;
 
     const apply = (event: SyntheticEvent) => {
-      const { date: startDate = undefined, ...startDateParseDetails } = dateValue?.startDate?.length
-        ? dateAdapter.parse(dateValue.startDate, format, locale)
-        : {};
-      const { date: endDate = undefined, ...endDateParseDetails } = dateValue?.endDate?.length
+      const { date: startDate = undefined, ...startDateParseDetails } =
+        dateValue?.startDate?.length
+          ? dateAdapter.parse(dateValue.startDate, format, locale)
+          : {};
+      const { date: endDate = undefined, ...endDateParseDetails } = dateValue
+        ?.endDate?.length
         ? dateAdapter.parse(dateValue.endDate, format, locale)
         : {};
       const updatedDateRange = {
@@ -363,19 +384,29 @@ export const DateInputRange = forwardRef<
             preservedTime.current.endTime,
           );
         }
-        onDateChange?.(event, updatedDateRange, { startDate: startDateParseDetails, endDate: endDateParseDetails});
+
+        onDateChange?.(event, updatedDateRange, {
+          startDate:
+            Object.keys(startDateParseDetails).length === 0
+              ? undefined
+              : startDateParseDetails,
+          endDate:
+            Object.keys(endDateParseDetails).length === 0
+              ? undefined
+              : endDateParseDetails,
+        });
       }
       lastAppliedValue.current = { ...dateValue };
     };
 
     const handleStartInputChange: ChangeEventHandler<HTMLInputElement> = (
-      event,
+      event
     ) => {
       const newDateValue = { ...dateValue, startDate: event.target.value };
       setDateValue(newDateValue);
       startInputPropsOnChange?.(event);
-      onChange?.(event, newDateValue);
-      onDateValueChange?.(newDateValue);
+      onChange?.(event);
+      onDateValueChange?.(event, newDateValue);
     };
 
     const handleEndInputChange: ChangeEventHandler<HTMLInputElement> = (
@@ -384,8 +415,8 @@ export const DateInputRange = forwardRef<
       const newDateValue = { ...dateValue, endDate: event.target.value };
       setDateValue(newDateValue);
       endInputPropsOnChange?.(event);
-      onChange?.(event, newDateValue);
-      onDateValueChange?.(newDateValue);
+      onChange?.(event);
+      onDateValueChange?.(event, newDateValue);
     };
 
     const handleStartInputFocus: FocusEventHandler<HTMLInputElement> = (

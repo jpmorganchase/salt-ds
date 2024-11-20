@@ -17,11 +17,21 @@ const dateAdapterMap: Record<string, any> = {
   luxon: AdapterLuxon,
 };
 
+const getDefaultLocale = (dateAdapter: string) => {
+  const isDateFns = dateAdapter === "date-fns";
+  const isDayjs = dateAdapter === "dayjs";
+  if (isDateFns) {
+    return dateFnsEnUs;
+  } else if (isDayjs) {
+    return "en-US";
+  }
+  return "en";
+};
+
 /** A storybook decorator that provides the Localization context (date support etc.) */
 export const withLocalization: Decorator = (Story, context) => {
-  const { dateAdapter } = context.globals;
-  const isDateFns = dateAdapter === "date-fns";
-  const locale = isDateFns ? dateFnsEnUs : "en";
+  const { dateAdapter, dateLocale } = context.parameters;
+  const locale = dateLocale ?? getDefaultLocale(dateAdapter);
   return (
     <LocalizationProvider
       DateAdapter={dateAdapterMap[dateAdapter]}
