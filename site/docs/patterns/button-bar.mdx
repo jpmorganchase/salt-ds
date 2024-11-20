@@ -24,7 +24,11 @@ A button bar displays possible actions for users to take when they reach the end
 
 ## When to use
 
-Use the pattern when the user needs to perform actions after reaching the end of a task in a page or a dialog. Some examples include going to previous or next steps, submitting a form and canceling changes.
+Use the pattern when the user needs to perform actions after reaching the end of a task in a page or a dialog. Some examples include:
+
+- Navigating to previous or next steps
+- Submitting a form
+- Acknowledging or canceling changes
 
 ## How to build
 
@@ -32,7 +36,7 @@ Use the pattern when the user needs to perform actions after reaching the end of
 
 A button bar typically contains:
 
-1. **Buttons**: use to provide possible actions for users to take.
+1. **Buttons**: possible actions for users to take.
 2. **Groups**: used to visually communicate which buttons are related to each other.
 
   <Diagram
@@ -64,25 +68,24 @@ A button bar typically contains:
 
 ## Button options
 
-There are three button appearances to choose from. Choosing the correct button depends on the context and is ultimately the choice of the application team. For guidance on button choices, please see the [`Button`](/salt/components/button) docs.  We recommend using the accented button set for a majority of use cases, alongside the following guidelines for consistent design:
+There are three button appearances to choose from. Choosing the correct button depends on the context and is ultimately the choice of the application team. For guidance on button choices, please see the Button docs.  We recommend using the accented button set for a majority of use cases, alongside the following guidelines for consistent design:
 
 **Solid**
-- Use for the most desired path you intend the user to take.
-- In almost all cases, your scenario should have one solid button so the desired path is clear.
+- Use for the primary path you intend the user to take.
+- In almost all cases, your scenario should have one solid button within the button bar so the desired path is clear.
 - This is commonly an affirmative action allowing users to proceed or complete the task, such as **Next**, **Save** or **Submit**.
 
 **Bordered**
-- Use for the alternate path you're offering the user.
-- There can be multiple equally weighted paths, resulting in more than one primary action in a scenario.
+- Use for the secondary functions you're offering the user.
+- There can be multiple equally weighted secondary functions within a button bar.
 - You can use it as a dismissive action alongside the affirmative (solid) action, such as **Cancel** or **Dismiss**.
 
 **Transparent**
-- Use for the tertiary path you're offering the user.
-- There can be multiple equally weighted tertiary paths resulting in more than one secondary action in a scenario.
-- This is commonly a related task or function that’s lower priority for the task, such as **Import** or **Export**.
-- You can also use it to signify a destructive action that may result in a permanent loss of data. This is commonly followed by user confirmation, e.g., a dialog. Examples include **Delete** or **Reset**.
+- Use for the tertiary functions you're offering the user.
+- There can be multiple equally weighted tertiary functions within a button bar.
+- This is commonly a related task or function that’s lower priority than the secondary functions, such as **Import** or **Export**.
 
-Remember to use a hierarchy when making your button choices, much like following a type ramp. In Example 1 below, Cancel is the alternate path and uses a solid button because there are only two options. However, in Example 2, Cancel uses the transparent button because three actions are available to the user, with this one being tertiary and the least desired option.
+Remember to use a hierarchy when making your button choices, much like following a type ramp. In Example 1 below, Cancel is the alternate function and uses a solid button because there are only two options. However, in Example 2, Cancel uses the transparent button because three actions are available to the user, with this one being tertiary and the least desired option.
 
 ### Example 1
 
@@ -108,6 +111,22 @@ Remember to use a hierarchy when making your button choices, much like following
 <ExampleContainer type="positive" customPillText="Best practices">
   Provide only one solid button for a given task—the action that allows the user to complete the task.
 </ExampleContainer>
+
+## Combining button sentiments
+
+Negative sentiment button in use.
+
+“Combining colored buttons” aka sentiments
+
+wireframe that illustrates a “cancel” or negative sentiment button. Explain depending on the sentiment of the action, you might choose to use a negative, caution or success etc buttons.
+
+you can pick the appearance that best represents the importance of the action.
+
+You can have solid, bordered or transparent, e.g. deleting something that is really important - choose solid negative to emphasise the impact.
+
+They don’t necessarily all need to be part of the same set - potentially not all actions may reflect that sentiment. Only one might have a negative impact.
+
+Optionally, use sentiment buttons depending on the sentiment of the action - positive, caution and negative. You can pick the appearance that best represents the importance of the action.
 
 ## Button order
 
