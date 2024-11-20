@@ -2,11 +2,12 @@ import {
   Calendar,
   CalendarGrid,
   CalendarNavigation,
-  CalendarWeekHeader, useLocalization,
+  CalendarWeekHeader,
+  useLocalization,
 } from "@salt-ds/lab";
 import type { StoryFn } from "@storybook/react";
+import { enUS as dateFnsEnUs } from "date-fns/locale";
 import { QAContainer, type QAContainerProps } from "docs/components";
-import {enUS as dateFnsEnUs} from "date-fns/locale";
 
 export default {
   title: "Lab/Calendar/QA",
@@ -25,7 +26,7 @@ const QAContainerParameters = {
       accent: "teal",
     },
   },
-}
+};
 
 const renderQAContainer = () => {
   const { dateAdapter } = useLocalization();
@@ -43,9 +44,9 @@ const renderQAContainer = () => {
         selectionVariant="single"
         selectedDate={dateAdapter.parse("2024-04-02", "YYYY-MM-DD").date}
       >
-        <CalendarNavigation/>
-        <CalendarWeekHeader/>
-        <CalendarGrid/>
+        <CalendarNavigation />
+        <CalendarWeekHeader />
+        <CalendarGrid />
       </Calendar>
       <Calendar
         selectionVariant="range"
@@ -54,9 +55,9 @@ const renderQAContainer = () => {
           endDate: dateAdapter.parse("2024-04-04", "YYYY-MM-DD").date,
         }}
       >
-        <CalendarNavigation/>
-        <CalendarWeekHeader/>
-        <CalendarGrid/>
+        <CalendarNavigation />
+        <CalendarWeekHeader />
+        <CalendarGrid />
       </Calendar>
       <Calendar
         selectionVariant="offset"
@@ -65,7 +66,7 @@ const renderQAContainer = () => {
           endDate: dateAdapter.parse("2024-04-04", "YYYY-MM-DD").date,
         }}
       >
-        <CalendarNavigation/>
+        <CalendarNavigation />
       </Calendar>
       <Calendar
         selectionVariant="multiselect"
@@ -74,9 +75,9 @@ const renderQAContainer = () => {
           dateAdapter.parse("2024-04-04", "YYYY-MM-DD").date,
         ]}
       >
-        <CalendarNavigation/>
-        <CalendarWeekHeader/>
-        <CalendarGrid/>
+        <CalendarNavigation />
+        <CalendarWeekHeader />
+        <CalendarGrid />
       </Calendar>
       <Calendar
         selectionVariant="multiselect"
@@ -85,9 +86,9 @@ const renderQAContainer = () => {
           dateAdapter.parse("2024-04-04", "YYYY-MM-DD").date,
         ]}
       >
-        <CalendarNavigation hideYearDropdown/>
-        <CalendarWeekHeader/>
-        <CalendarGrid/>
+        <CalendarNavigation hideYearDropdown />
+        <CalendarWeekHeader />
+        <CalendarGrid />
       </Calendar>
       <Calendar
         selectionVariant="multiselect"
@@ -97,40 +98,44 @@ const renderQAContainer = () => {
         ]}
       >
         <CalendarNavigation
-          MonthDropdownProps={{bordered: true}}
-          YearDropdownProps={{bordered: true}}
+          MonthDropdownProps={{ bordered: true }}
+          YearDropdownProps={{ bordered: true }}
         />
-        <CalendarWeekHeader/>
-        <CalendarGrid/>
+        <CalendarWeekHeader />
+        <CalendarGrid />
       </Calendar>
     </QAContainer>
   );
-}
+};
 
-export const AllExamplesWithMoment: StoryFn<QAContainerProps> = () => renderQAContainer();
+export const AllExamplesWithMoment: StoryFn<QAContainerProps> = () =>
+  renderQAContainer();
 AllExamplesWithMoment.parameters = {
   ...QAContainerParameters,
   dateLocale: "en-US",
   dateAdapter: "moment",
-}
+};
 
-export const AllExamplesWithDateFns: StoryFn<QAContainerProps> = () => renderQAContainer();
+export const AllExamplesWithDateFns: StoryFn<QAContainerProps> = () =>
+  renderQAContainer();
 AllExamplesWithDateFns.parameters = {
   ...QAContainerParameters,
   dateLocale: dateFnsEnUs,
   dateAdapter: "date-fns",
-}
+};
 
-export const AllExamplesWithDayjs: StoryFn<QAContainerProps> = () => renderQAContainer();
+export const AllExamplesWithDayjs: StoryFn<QAContainerProps> = () =>
+  renderQAContainer();
 AllExamplesWithDayjs.parameters = {
   ...QAContainerParameters,
   dateLocale: "en",
   dateAdapter: "dayjs",
-}
+};
 
-export const AllExamplesWithLuxon: StoryFn<QAContainerProps> = () => renderQAContainer();
+export const AllExamplesWithLuxon: StoryFn<QAContainerProps> = () =>
+  renderQAContainer();
 AllExamplesWithLuxon.parameters = {
   ...QAContainerParameters,
   dateLocale: "en-US",
   dateAdapter: "luxon",
-}
+};

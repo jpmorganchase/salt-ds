@@ -30,16 +30,16 @@ import {
   sub as subDateFns,
   subMilliseconds as subMillisecondsDateFns,
 } from "date-fns";
-import {
-  AdapterOptions,
-  DateDetailErrorEnum,
-  ParserResult,
-  RecommendedFormats,
-  SaltDateAdapter,
-  TimeFields,
-  Timezone,
-} from "./types";
 import { enUS } from "date-fns/locale";
+import {
+  type AdapterOptions,
+  DateDetailErrorEnum,
+  type ParserResult,
+  type RecommendedFormats,
+  type SaltDateAdapter,
+  type TimeFields,
+  type Timezone,
+} from "./types";
 
 declare module "./types" {
   interface DateFrameworkTypeMap {
@@ -144,7 +144,7 @@ export class AdapterDateFns implements SaltDateAdapter<Date, Locale> {
     _locale?: Locale,
   ): Date => {
     if (!value || !this.isValidDateString(value)) {
-      return new Date(NaN);
+      return new Date(Number.NaN);
     }
     const date = new Date(value);
     return date;

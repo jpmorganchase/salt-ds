@@ -28,7 +28,7 @@ const DateInputSingleTemplate: StoryFn<
     details: DateInputSingleDetails,
   ) {
     console.log(
-      `Selected date: ${dateAdapter.isValid(date)  ? dateAdapter.format(date, "DD MMM YYYY") : date}`,
+      `Selected date: ${dateAdapter.isValid(date) ? dateAdapter.format(date, "DD MMM YYYY") : date}`,
     );
     const { value, errors } = details;
     if (errors?.length && value) {
@@ -62,7 +62,10 @@ const DateInputRangeTemplate: StoryFn<
   ) {
     const { startDate, endDate } = date || {};
     const {
-      startDate: { value: startDateOriginalValue, errors: startDateErrors } = {},
+      startDate: {
+        value: startDateOriginalValue,
+        errors: startDateErrors,
+      } = {},
       endDate: { value: endDateOriginalValue, errors: endDateErrors } = {},
     } = details;
     console.log(

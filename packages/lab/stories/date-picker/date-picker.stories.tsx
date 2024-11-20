@@ -31,7 +31,7 @@ import {
   type DateRangeSelection,
   LocalizationProvider,
   type LocalizationProviderProps,
-  ParserResult,
+  type ParserResult,
   type SingleDatePickerState,
   type SingleDateSelection,
   type TimeFields,
@@ -39,7 +39,8 @@ import {
   useLocalization,
 } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react";
-import React, { type SyntheticEvent } from "react";
+import type React from "react";
+import type { SyntheticEvent } from "react";
 import { useCallback, useMemo, useRef, useState } from "react";
 import { CustomDatePickerPanel } from "./CustomDatePickerPanel"; // CustomDatePickerPanel is an example, replace with your own composition of date controls
 // As required by locale specific examples
@@ -389,7 +390,7 @@ export const RangeWithMinMaxDate: StoryFn<
       date: DateRangeSelection<DateFrameworkType> | null,
       details: DateInputRangeDetails | undefined,
     ) => {
-      console.log('>>>> original details', details);
+      console.log(">>>> original details", details);
       const { startDate, endDate } = date ?? {};
       const {
         startDate: {
@@ -434,7 +435,7 @@ export const RangeWithMinMaxDate: StoryFn<
         setValidationStatus(undefined);
         setHelperText(defaultHelperText);
       }
-      console.log('>>>> detailts', details);
+      console.log(">>>> detailts", details);
       args?.onSelectionChange?.(event, date, details);
     },
     [args.onSelectionChange, dateAdapter, setValidationStatus, setHelperText],
@@ -2178,7 +2179,7 @@ export const WithExperimentalTime: StoryFn<
       date: DateRangeSelection<DateFrameworkType> | null,
       details: DateInputRangeDetails | undefined,
     ) => {
-      let updatedDate = date ? addTimeToDate(selectedTime, date) : date;
+      const updatedDate = date ? addTimeToDate(selectedTime, date) : date;
       const {
         startDate: {
           value: startDateOriginalValue = undefined,

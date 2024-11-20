@@ -23,8 +23,8 @@ import {
   type SyntheticEvent,
   forwardRef,
   useEffect,
-  useRef,
   useMemo,
+  useRef,
   useState,
 } from "react";
 import type { DateRangeSelection } from "../calendar";
@@ -139,9 +139,7 @@ export interface DateInputRangeProps<TDate extends DateFrameworkType>
    * @param event - The change event.
    * @param date - The new date input range value.
    */
-  onChange?: (
-    event: ChangeEvent<HTMLInputElement>,
-  ) => void;
+  onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
   /**
    * Callback fired when the selected date changes.
    * @param event - The synthetic event.
@@ -241,8 +239,7 @@ export const DateInputRange = forwardRef<
     );
     const [date, setDate] = useControlled({
       controlled: dateProp,
-      default:
-        defaultDate ?? fallbackDate,
+      default: defaultDate ?? fallbackDate,
       name: "DateInputRange",
       state: "date",
     });
@@ -400,7 +397,7 @@ export const DateInputRange = forwardRef<
     };
 
     const handleStartInputChange: ChangeEventHandler<HTMLInputElement> = (
-      event
+      event,
     ) => {
       const newDateValue = { ...dateValue, startDate: event.target.value };
       setDateValue(newDateValue);

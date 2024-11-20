@@ -1,12 +1,12 @@
 import { DateTime, Duration, Settings } from "luxon";
 import {
-  AdapterOptions,
+  type AdapterOptions,
   DateDetailErrorEnum,
-  ParserResult,
-  RecommendedFormats,
-  SaltDateAdapter,
-  TimeFields,
-  Timezone,
+  type ParserResult,
+  type RecommendedFormats,
+  type SaltDateAdapter,
+  type TimeFields,
+  type Timezone,
 } from "./types";
 
 declare module "./types" {
@@ -112,10 +112,7 @@ export class AdapterLuxon implements SaltDateAdapter<DateTime, string> {
    * @param locale - The locale to use for parsing.
    * @returns The parsed Luxon DateTime object.
    */
-  private createSystemDate = (
-    value: string,
-    locale?: string,
-  ): DateTime => {
+  private createSystemDate = (value: string, locale?: string): DateTime => {
     const parsedValue = DateTime.fromISO(value);
     return parsedValue.setLocale(locale ?? this.locale);
   };
@@ -126,11 +123,8 @@ export class AdapterLuxon implements SaltDateAdapter<DateTime, string> {
    * @param locale - The locale to use for parsing.
    * @returns The parsed Luxon DateTime object.
    */
-  private createUTCDate = (
-    value: string,
-    locale?: string,
-  ): DateTime => {
-    const parsedValue = DateTime.fromISO(value, { zone: "utc" })
+  private createUTCDate = (value: string, locale?: string): DateTime => {
+    const parsedValue = DateTime.fromISO(value, { zone: "utc" });
     return parsedValue.setLocale(locale ?? this.locale);
   };
 
@@ -163,7 +157,7 @@ export class AdapterLuxon implements SaltDateAdapter<DateTime, string> {
     locale?: string,
   ): DateTime => {
     if (!value || !this.isValidDateString(value)) {
-      return DateTime.invalid('Invalid date string');
+      return DateTime.invalid("Invalid date string");
     }
 
     if (timezone === "UTC") {
@@ -359,7 +353,15 @@ export class AdapterLuxon implements SaltDateAdapter<DateTime, string> {
       millisecond?: number;
     },
   ): DateTime {
-    return date.set({ day, month: month, year, hour, minute, second, millisecond });
+    return date.set({
+      day,
+      month: month,
+      year,
+      hour,
+      minute,
+      second,
+      millisecond,
+    });
   }
 
   /**

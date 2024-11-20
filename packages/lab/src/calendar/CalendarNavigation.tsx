@@ -310,7 +310,7 @@ export const CalendarNavigation = forwardRef<
       selectedMonth,
       selectedYear,
       isOutsideAllowedMonths,
-      visibleMonth
+      visibleMonth,
     } = useCalendarNavigation<TDate>();
 
     const handleNavigatePrevious: MouseEventHandler<HTMLButtonElement> =
@@ -339,7 +339,9 @@ export const CalendarNavigation = forwardRef<
     const handleYearSelect = useCallback(
       (event: SyntheticEvent, year: TDate[]) => {
         let newVisibleMonth = dateAdapter.clone(visibleMonth);
-        newVisibleMonth = dateAdapter.set(newVisibleMonth, { year: dateAdapter.getYear(year[0]) });
+        newVisibleMonth = dateAdapter.set(newVisibleMonth, {
+          year: dateAdapter.getYear(year[0]),
+        });
         moveToMonth(event, newVisibleMonth);
       },
       [moveToMonth, visibleMonth],
