@@ -1,15 +1,15 @@
-import { type SyntheticEvent, useState } from "react";
 import {
   AdapterDateFns,
   AdapterDayjs,
   AdapterLuxon,
   AdapterMoment,
   DateDetailErrorEnum,
-  DateFrameworkType,
+  type DateFrameworkType,
   DateInputSingle,
-  SaltDateAdapter,
+  type SaltDateAdapter,
 } from "@salt-ds/lab";
 import { es as dateFnsEs } from "date-fns/locale";
+import { type SyntheticEvent, useState } from "react";
 import "moment/dist/locale/es";
 import "dayjs/locale/es";
 
@@ -91,7 +91,10 @@ describe("GIVEN a DateInputSingle", () => {
       const updatedDateValue =
         adapter.lib !== "dayjs" ? "01 nov 2027" : "01 Nov 2027";
       const updatedFormattedDateValue = "01 Nov 2027";
-      const updatedDate = adapter.parse(updatedFormattedDateValue, "DD MMM YYYY").date;
+      const updatedDate = adapter.parse(
+        updatedFormattedDateValue,
+        "DD MMM YYYY",
+      ).date;
 
       it("SHOULD render value, even when not a valid date", () => {
         cy.mount(<DateInputSingle defaultValue={"date value"} />);
@@ -254,7 +257,10 @@ describe("GIVEN a DateInputSingle", () => {
           cy.get("@dateChangeSpy").then((spy) =>
             assertDateChange(spy, updatedDateValue, updatedDate, adapter),
           );
-          cy.findByRole("textbox").should("have.value", updatedFormattedDateValue);
+          cy.findByRole("textbox").should(
+            "have.value",
+            updatedFormattedDateValue,
+          );
         });
       });
 
@@ -313,7 +319,10 @@ describe("GIVEN a DateInputSingle", () => {
           cy.get("@dateChangeSpy").then((spy) =>
             assertDateChange(spy, updatedDateValue, updatedDate, adapter),
           );
-          cy.findByRole("textbox").should("have.value", updatedFormattedDateValue);
+          cy.findByRole("textbox").should(
+            "have.value",
+            updatedFormattedDateValue,
+          );
         });
       });
     });

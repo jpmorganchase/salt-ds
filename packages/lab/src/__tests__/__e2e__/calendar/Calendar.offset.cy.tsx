@@ -7,8 +7,8 @@ import {
   CalendarGrid,
   CalendarNavigation,
   CalendarWeekHeader,
-  DateFrameworkType,
-  SaltDateAdapter,
+  type DateFrameworkType,
+  type SaltDateAdapter,
 } from "@salt-ds/lab";
 
 // Initialize adapters

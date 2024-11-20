@@ -1,4 +1,3 @@
-import * as calendarStories from "@stories/calendar/calendar.stories";
 import {
   AdapterDateFns,
   AdapterDayjs,
@@ -8,9 +7,10 @@ import {
   CalendarGrid,
   CalendarNavigation,
   CalendarWeekHeader,
-  DateFrameworkType,
-  SaltDateAdapter,
+  type DateFrameworkType,
+  type SaltDateAdapter,
 } from "@salt-ds/lab";
+import * as calendarStories from "@stories/calendar/calendar.stories";
 import { es as dateFnsEs } from "date-fns/locale";
 import "moment/dist/locale/es";
 

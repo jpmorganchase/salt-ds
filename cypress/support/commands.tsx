@@ -1,12 +1,13 @@
-import type { ReactNode} from "react";
+import type { ReactNode } from "react";
 import "@testing-library/cypress/add-commands";
 import type { MountOptions, MountReturn } from "cypress/react";
 import { mount as cypressMount } from "cypress/react18";
 import "cypress-axe";
 import { SaltProvider } from "@salt-ds/core";
 import {
+  type DateFrameworkType,
   LocalizationProvider,
-  type DateFrameworkType,SaltDateAdapter,
+  type SaltDateAdapter,
 } from "@salt-ds/lab";
 import type { Options } from "cypress-axe";
 import { AnnouncementListener } from "./AnnouncementListener";
@@ -41,20 +42,29 @@ declare global {
        * @example
        * cy.checkAxeComponent()
        */
-      checkAxeComponent(options?: Options, enableFailures?: boolean): Chainable<void>;
+      checkAxeComponent(
+        options?: Options,
+        enableFailures?: boolean,
+      ): Chainable<void>;
 
       /**
        * Set the date adapter to be used by mounted tests
        * @param adapter
        */
-      setDateAdapter(adapter:SaltDateAdapter<DateFrameworkType, any>): Chainable<void>;
+      setDateAdapter(
+        adapter: SaltDateAdapter<DateFrameworkType>,
+      ): Chainable<void>;
 
       /**
        * Set the date locale used by the date adapter
        * @param any
        */
+      // biome-ignore lint/suspicious/noExplicitAny: locale type varies between Date frameworks
       setDateLocale(locale: any): Chainable<void>;
-      mountPerformance(jsx: ReactNode, options?: MountOptions): Chainable<MountReturn>;
+      mountPerformance(
+        jsx: ReactNode,
+        options?: MountOptions,
+      ): Chainable<MountReturn>;
       mount(jsx: ReactNode, options?: MountOptions): Chainable<MountReturn>;
       getRenderCount(): Chainable<number>;
       getRenderTime(): Chainable<number>;
@@ -63,27 +73,32 @@ declare global {
   }
 }
 
-Cypress.Commands.add("setMode", function(mode: SupportedThemeMode) {
+Cypress.Commands.add("setMode", (mode: SupportedThemeMode) => {
   if (SupportedThemeModeValues.includes(mode)) {
-    Cypress.env('mode', mode);
+    Cypress.env("mode", mode);
   } else {
     cy.log("Unsupported mode", mode);
   }
 });
 
-Cypress.Commands.add("setDensity", function (density: SupportedDensity) {
+Cypress.Commands.add("setDensity", (density: SupportedDensity) => {
   if (SupportedDensityValues.includes(density)) {
-    Cypress.env('density', density);
+    Cypress.env("density", density);
   } else {
     cy.log("Unsupported density", density);
   }
 });
 
-Cypress.Commands.add("setDateAdapter", (adapter: SaltDateAdapter<DateFrameworkType, any>) => {
-  Cypress.env('dateAdapter', adapter);
-});
+Cypress.Commands.add(
+  "setDateAdapter",
+  // biome-ignore lint/suspicious/noExplicitAny: locale type varies between Date frameworks
+  (adapter: SaltDateAdapter<DateFrameworkType, any>) => {
+    Cypress.env("dateAdapter", adapter);
+  },
+);
+// biome-ignore lint/suspicious/noExplicitAny: locale type varies between Date frameworks
 Cypress.Commands.add("setDateLocale", (locale: any) => {
-  Cypress.env('dateLocale', locale);
+  Cypress.env("dateLocale", locale);
 });
 
 Cypress.Commands.add(
@@ -108,49 +123,57 @@ Cypress.Commands.add(
 );
 
 Cypress.Commands.add(
-  'mount',
-  function <TDate extends DateFrameworkType, TLocale = any>(
+  "mount",
+  // biome-ignore lint/suspicious/noExplicitAny: locale type varies between Date frameworks
+  <TDate extends DateFrameworkType, TLocale = any>(
     children: ReactNode,
-    options?: MountOptions
-  ): Cypress.Chainable<MountReturn> {
+    options?: MountOptions,
+  ): Cypress.Chainable<MountReturn> => {
     const handleAnnouncement = (announcement: string) => {
       // @ts-ignore
-      cy.state('announcement', announcement);
+      cy.state("announcement", announcement);
     };
 
-    const density: "touch" | "low" | "medium" | "high" | undefined = Cypress.env('density');
-    const mode: "light" | "dark" | undefined = Cypress.env('mode');
-    const dateAdapter:  SaltDateAdapter<DateFrameworkType, any> = Cypress.env('dateAdapter');
-    const dateLocale: any = Cypress.env('dateLocale');
+    const density: "touch" | "low" | "medium" | "high" | undefined =
+      Cypress.env("density");
+    const mode: "light" | "dark" | undefined = Cypress.env("mode");
+    const dateAdapter: SaltDateAdapter<DateFrameworkType> =
+      Cypress.env("dateAdapter");
+    // biome-ignore lint/suspicious/noExplicitAny: locale type varies between Date frameworks
+    const dateLocale: any = Cypress.env("dateLocale");
 
     if (!dateAdapter) {
-      throw new Error(`Date adapter not defined`);
+      throw new Error("Date adapter not defined");
     }
     if (!SupportedDensityValues.includes(density as SupportedDensity)) {
-        throw new Error(`Invalid density value: ${density}`);
-      }
-      if (!SupportedThemeModeValues.includes(mode as SupportedThemeMode)) {
-        throw new Error(`Invalid mode value: ${mode}`);
-      }
+      throw new Error(`Invalid density value: ${density}`);
+    }
+    if (!SupportedThemeModeValues.includes(mode as SupportedThemeMode)) {
+      throw new Error(`Invalid mode value: ${mode}`);
+    }
 
-      const content = (
-        <SaltProvider density={density} mode={mode}>
-          {dateAdapter ? (
-            <LocalizationProvider DateAdapter={dateAdapter.constructor as any} locale={dateLocale}>
-              {children}
-              <AnnouncementListener onAnnouncement={handleAnnouncement} />
-            </LocalizationProvider>
-          ) : (
-            <>
-              {children}
-              <AnnouncementListener onAnnouncement={handleAnnouncement} />
-            </>
-          )}
-        </SaltProvider>
-      );
+    const content = (
+      <SaltProvider density={density} mode={mode}>
+        {dateAdapter ? (
+          <LocalizationProvider
+            // biome-ignore lint/suspicious/noExplicitAny: ignore type
+            DateAdapter={dateAdapter.constructor as any}
+            locale={dateLocale}
+          >
+            {children}
+            <AnnouncementListener onAnnouncement={handleAnnouncement} />
+          </LocalizationProvider>
+        ) : (
+          <>
+            {children}
+            <AnnouncementListener onAnnouncement={handleAnnouncement} />
+          </>
+        )}
+      </SaltProvider>
+    );
 
-      return cypressMount(content, options);
-  }
+    return cypressMount(content, options);
+  },
 );
 
 Cypress.Commands.add("mountPerformance", (children, options) => {
@@ -205,11 +228,10 @@ Cypress.on("uncaught:exception", (err) => {
 });
 
 // Set default values for density and mode
-const defaultDensity: SupportedDensity = 'medium';
-const defaultMode: SupportedThemeMode = 'light';
+const defaultDensity: SupportedDensity = "medium";
+const defaultMode: SupportedThemeMode = "light";
 before(() => {
-  Cypress.env('density', defaultDensity);
-  Cypress.env('mode', defaultMode);
-  Cypress.env('dateLocale', undefined);
+  Cypress.env("density", defaultDensity);
+  Cypress.env("mode", defaultMode);
+  Cypress.env("dateLocale", undefined);
 });
-

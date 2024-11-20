@@ -1,45 +1,45 @@
-import { describe, it, expect } from "vitest";
 import { DateTime } from "luxon";
+import { describe, expect, it } from "vitest";
 import { AdapterLuxon, DateDetailErrorEnum } from "../../date-adapters";
 
 describe("GIVEN a AdapterLuxon", () => {
   const adapter = new AdapterLuxon({ locale: "en-US" });
 
-  it('should create a Luxon DateTime in the system timezone', () => {
-    const date = adapter.date('2023-11-01', 'system');
+  it("should create a Luxon DateTime in the system timezone", () => {
+    const date = adapter.date("2023-11-01", "system");
     expect(date.isValid).toBe(true);
-    expect(date.toISODate()).toBe('2023-11-01');
+    expect(date.toISODate()).toBe("2023-11-01");
   });
 
-  it('should create a Luxon DateTime in UTC', () => {
-    const date = adapter.date('2023-11-01', 'UTC');
+  it("should create a Luxon DateTime in UTC", () => {
+    const date = adapter.date("2023-11-01", "UTC");
     expect(date.isValid).toBe(true);
-    expect(date.toISODate()).toBe('2023-11-01');
-    expect(date.zoneName).toBe('UTC'); // Check if the timezone is UTC
+    expect(date.toISODate()).toBe("2023-11-01");
+    expect(date.zoneName).toBe("UTC"); // Check if the timezone is UTC
   });
 
-  it('should create a Luxon DateTime in a specific timezone', () => {
-    const timezone = 'America/New_York';
-    const date = adapter.date('2023-11-01', timezone);
+  it("should create a Luxon DateTime in a specific timezone", () => {
+    const timezone = "America/New_York";
+    const date = adapter.date("2023-11-01", timezone);
     expect(date.isValid).toBe(true);
-    expect(date.toISODate()).toBe('2023-11-01');
+    expect(date.toISODate()).toBe("2023-11-01");
     expect(date.zoneName).toBe(timezone); // Check if the timezone is applied
   });
 
-  it('should handle invalid date strings', () => {
-    const date = adapter.date('invalid-date', 'system');
+  it("should handle invalid date strings", () => {
+    const date = adapter.date("invalid-date", "system");
     expect(date.isValid).toBe(false);
   });
 
-  it('should handle empty date strings', () => {
-    const date = adapter.date('', 'system');
+  it("should handle empty date strings", () => {
+    const date = adapter.date("", "system");
     expect(date.isValid).toBe(false);
   });
 
-  it('should handle default timezone when no timezone is specified', () => {
-    const date = adapter.date('2023-11-01');
+  it("should handle default timezone when no timezone is specified", () => {
+    const date = adapter.date("2023-11-01");
     expect(date.isValid).toBe(true);
-    expect(date.toISODate()).toBe('2023-11-01');
+    expect(date.toISODate()).toBe("2023-11-01");
   });
 
   it("SHOULD format a Luxon DateTime correctly", () => {

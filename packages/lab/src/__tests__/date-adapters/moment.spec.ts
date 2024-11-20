@@ -1,46 +1,46 @@
-import { describe, it, expect } from "vitest";
-import moment, { Moment } from "moment";
-import 'moment-timezone';
+import moment from "moment";
+import { describe, expect, it } from "vitest";
+import "moment-timezone";
 import { AdapterMoment, DateDetailErrorEnum } from "../../date-adapters";
 
 describe("GIVEN a AdapterMoment", () => {
   const adapter = new AdapterMoment({ locale: "en" });
 
-  it('should create a Moment date in the system timezone', () => {
-    const date = adapter.date('2023-11-01', 'system');
+  it("should create a Moment date in the system timezone", () => {
+    const date = adapter.date("2023-11-01", "system");
     expect(date.isValid()).toBe(true);
-    expect(date.format('YYYY-MM-DD')).toBe('2023-11-01');
+    expect(date.format("YYYY-MM-DD")).toBe("2023-11-01");
   });
 
-  it('should create a Moment date in UTC', () => {
-    const date = adapter.date('2023-11-01', 'UTC');
+  it("should create a Moment date in UTC", () => {
+    const date = adapter.date("2023-11-01", "UTC");
     expect(date.isValid()).toBe(true);
-    expect(date.format('YYYY-MM-DD')).toBe('2023-11-01');
+    expect(date.format("YYYY-MM-DD")).toBe("2023-11-01");
     expect(date.utcOffset()).toBe(0); // UTC offset should be 0
   });
 
-  it('should create a Moment date in a specific timezone', () => {
-    const timezone = 'America/New_York';
-    const date = adapter.date('2023-11-01', timezone);
+  it("should create a Moment date in a specific timezone", () => {
+    const timezone = "America/New_York";
+    const date = adapter.date("2023-11-01", timezone);
     expect(date.isValid()).toBe(true);
-    expect(date.format('YYYY-MM-DD')).toBe('2023-11-01');
-    expect(date.tz(timezone).format('Z')).toBe(date.format('Z')); // Check if the timezone is applied
+    expect(date.format("YYYY-MM-DD")).toBe("2023-11-01");
+    expect(date.tz(timezone).format("Z")).toBe(date.format("Z")); // Check if the timezone is applied
   });
 
-  it('should handle invalid date strings', () => {
-    const date = adapter.date('invalid-date', 'system');
+  it("should handle invalid date strings", () => {
+    const date = adapter.date("invalid-date", "system");
     expect(date.isValid()).toBe(false);
   });
 
-  it('should handle empty date strings', () => {
-    const date = adapter.date('', 'system');
+  it("should handle empty date strings", () => {
+    const date = adapter.date("", "system");
     expect(date.isValid()).toBe(false);
   });
 
-  it('should handle default timezone when no timezone is specified', () => {
-    const date = adapter.date('2023-11-01');
+  it("should handle default timezone when no timezone is specified", () => {
+    const date = adapter.date("2023-11-01");
     expect(date.isValid()).toBe(true);
-    expect(date.format('YYYY-MM-DD')).toBe('2023-11-01');
+    expect(date.format("YYYY-MM-DD")).toBe("2023-11-01");
   });
 
   it("SHOULD format a Moment date correctly", () => {

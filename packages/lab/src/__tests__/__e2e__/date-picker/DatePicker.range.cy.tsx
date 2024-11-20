@@ -1,17 +1,17 @@
-import * as datePickerStories from "@stories/date-picker/date-picker.stories";
 import {
   AdapterDateFns,
   AdapterDayjs,
   AdapterLuxon,
   AdapterMoment,
   DateDetailErrorEnum,
-  DateFrameworkType,
+  type DateFrameworkType,
   DatePicker,
   DatePickerOverlay,
   DatePickerRangeInput,
   DatePickerRangePanel,
-  SaltDateAdapter,
+  type SaltDateAdapter,
 } from "@salt-ds/lab";
+import * as datePickerStories from "@stories/date-picker/date-picker.stories";
 
 // Initialize adapters
 const adapterDateFns = new AdapterDateFns();
@@ -149,7 +149,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
           expect(date.endDate).to.be.undefined;
           expect(details).to.deep.equal({
             startDate: { value: "05 Jan 2025" },
-            endDate: undefined
+            endDate: undefined,
           });
         });
 
@@ -171,7 +171,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
           );
           expect(details).to.deep.equal({
             startDate: { value: "05 Jan 2025" },
-            endDate: { value: "06 Jan 2025" }
+            endDate: { value: "06 Jan 2025" },
           });
         });
         // Simulate entering an invalid end date
@@ -187,7 +187,15 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
           expect(adapter.isValid(date.endDate)).to.be.false;
           expect(details).to.deep.equal({
             startDate: { value: "05 Jan 2025" },
-            endDate: { value: "bad date", errors: [{ type: DateDetailErrorEnum.INVALID_DATE, message: "not a valid date" }] }
+            endDate: {
+              value: "bad date",
+              errors: [
+                {
+                  type: DateDetailErrorEnum.INVALID_DATE,
+                  message: "not a valid date",
+                },
+              ],
+            },
           });
         });
       });
@@ -219,20 +227,20 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
           const [_event, date, details] = spy.lastCall.args;
           expect(adapter.isValid(date.startDate)).to.be.true;
           expect(adapter.format(date.startDate, "DD MMM YYYY")).to.equal(
-            adapter.format(startDate, "DD MMM YYYY")
+            adapter.format(startDate, "DD MMM YYYY"),
           );
           expect(adapter.isValid(date.endDate)).to.be.true;
           expect(adapter.format(date.endDate, "DD MMM YYYY")).to.equal(
-            adapter.format(endDate, "DD MMM YYYY")
+            adapter.format(endDate, "DD MMM YYYY"),
           );
         });
         cy.findByLabelText("Start date").should(
           "have.value",
-          adapter.format(startDate, "DD MMM YYYY")
+          adapter.format(startDate, "DD MMM YYYY"),
         );
         cy.findByLabelText("End date").should(
           "have.value",
-          adapter.format(endDate, "DD MMM YYYY")
+          adapter.format(endDate, "DD MMM YYYY"),
         );
       });
 
@@ -251,14 +259,8 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
             />,
           );
           // Verify that the initial selected dates are displayed
-          cy.findByLabelText("Start date").should(
-            "have.value",
-            "05 Jan 2025",
-          );
-          cy.findByLabelText("End date").should(
-            "have.value",
-            "06 Jan 2025",
-          );
+          cy.findByLabelText("Start date").should("have.value", "05 Jan 2025");
+          cy.findByLabelText("End date").should("have.value", "06 Jan 2025");
           // Simulate opening the calendar
           cy.findByRole("button", { name: "Open Calendar" }).realClick();
           // Verify that the calendar is displayed
@@ -268,26 +270,20 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
             name: "15 January 2025",
           }).realClick();
           cy.findByRole("button", {
-            name: "16 January 2025"
+            name: "16 January 2025",
           }).realClick();
           cy.findAllByRole("application").should("have.length", 2);
-          cy.findByLabelText("Start date").should(
-            "have.value",
-            "15 Jan 2025"
-          );
-          cy.findByLabelText("End date").should(
-            "have.value",
-            "16 Jan 2025"
-          );
+          cy.findByLabelText("Start date").should("have.value", "15 Jan 2025");
+          cy.findByLabelText("End date").should("have.value", "16 Jan 2025");
           cy.get("@selectionChangeSpy").should((spy: any) => {
             const [_event, date, details] = spy.lastCall.args;
             expect(adapter.isValid(date.startDate)).to.be.true;
             expect(adapter.format(date.startDate, "DD MMM YYYY")).to.equal(
-              adapter.format(updatedRangeDate.startDate, "DD MMM YYYY")
+              adapter.format(updatedRangeDate.startDate, "DD MMM YYYY"),
             );
             expect(adapter.isValid(date.endDate)).to.be.true;
             expect(adapter.format(date.endDate, "DD MMM YYYY")).to.equal(
-              adapter.format( updatedRangeDate.endDate, "DD MMM YYYY")
+              adapter.format(updatedRangeDate.endDate, "DD MMM YYYY"),
             );
           });
           // Simulate clicking the "Cancel" button
@@ -295,14 +291,8 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
           // Verify that the calendar is closed and the initial selected dates are restored
           cy.findByRole("application").should("not.exist");
           cy.get("@appliedDateSpy").should("not.have.been.called");
-          cy.findByLabelText("Start date").should(
-            "have.value",
-            "05 Jan 2025",
-          );
-          cy.findByLabelText("End date").should(
-            "have.value",
-            "06 Jan 2025",
-          );
+          cy.findByLabelText("Start date").should("have.value", "05 Jan 2025");
+          cy.findByLabelText("End date").should("have.value", "06 Jan 2025");
           cy.get("@cancelSpy").should("have.been.called");
         });
 
@@ -320,14 +310,8 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
             />,
           );
           // Verify that the initial selected dates are displayed
-          cy.findByLabelText("Start date").should(
-            "have.value",
-            "05 Jan 2025",
-          );
-          cy.findByLabelText("End date").should(
-            "have.value",
-            "06 Jan 2025",
-          );
+          cy.findByLabelText("Start date").should("have.value", "05 Jan 2025");
+          cy.findByLabelText("End date").should("have.value", "06 Jan 2025");
           // Simulate opening the calendar
           cy.findByRole("button", { name: "Open Calendar" }).realClick();
           // Verify that the calendar is displayed
@@ -341,23 +325,17 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
             name: "16 January 2025",
           }).realClick();
           // Verify that the new date range is displayed
-          cy.findByLabelText("Start date").should(
-            "have.value",
-            "15 Jan 2025"
-        );
-          cy.findByLabelText("End date").should(
-            "have.value",
-            "16 Jan 2025"
-          );
+          cy.findByLabelText("Start date").should("have.value", "15 Jan 2025");
+          cy.findByLabelText("End date").should("have.value", "16 Jan 2025");
           cy.get("@selectionChangeSpy").should((spy: any) => {
             const [_event, date, details] = spy.lastCall.args;
             expect(adapter.isValid(date.startDate)).to.be.true;
             expect(adapter.format(date.startDate, "DD MMM YYYY")).to.equal(
-              adapter.format(updatedRangeDate.startDate, "DD MMM YYYY")
+              adapter.format(updatedRangeDate.startDate, "DD MMM YYYY"),
             );
             expect(adapter.isValid(date.endDate)).to.be.true;
             expect(adapter.format(date.endDate, "DD MMM YYYY")).to.equal(
-              adapter.format( updatedRangeDate.endDate, "DD MMM YYYY")
+              adapter.format(updatedRangeDate.endDate, "DD MMM YYYY"),
             );
           });
           cy.findAllByRole("application").should("have.length", 2);
@@ -369,41 +347,25 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
             const [_event, date] = spy.lastCall.args;
             expect(adapter.isValid(date.startDate)).to.be.true;
             expect(adapter.format(date.startDate, "DD MMM YYYY")).to.equal(
-              adapter.format(updatedRangeDate.startDate, "DD MMM YYYY")
+              adapter.format(updatedRangeDate.startDate, "DD MMM YYYY"),
             );
             expect(adapter.isValid(date.endDate)).to.be.true;
             expect(adapter.format(date.endDate, "DD MMM YYYY")).to.equal(
-              adapter.format( updatedRangeDate.endDate, "DD MMM YYYY")
+              adapter.format(updatedRangeDate.endDate, "DD MMM YYYY"),
             );
           });
-          cy.findByLabelText("Start date").should(
-            "have.value",
-            "15 Jan 2025"
-          );
-          cy.findByLabelText("End date").should(
-            "have.value",
-            "16 Jan 2025"
-          );
+          cy.findByLabelText("Start date").should("have.value", "15 Jan 2025");
+          cy.findByLabelText("End date").should("have.value", "16 Jan 2025");
           cy.get("@cancelSpy").should("not.have.been.called");
         });
       });
 
       describe("uncontrolled component", () => {
         it("SHOULD render the default date", () => {
-          cy.mount(
-            <Range
-              defaultSelectedDate={initialRangeDate}
-            />,
-          );
+          cy.mount(<Range defaultSelectedDate={initialRangeDate} />);
           // Verify that the selected dates are displayed
-          cy.findByLabelText("Start date").should(
-            "have.value",
-            "05 Jan 2025",
-          );
-          cy.findByLabelText("End date").should(
-            "have.value",
-            "06 Jan 2025",
-          );
+          cy.findByLabelText("Start date").should("have.value", "05 Jan 2025");
+          cy.findByLabelText("End date").should("have.value", "06 Jan 2025");
           // Simulate opening the calendar
           cy.findByRole("button", { name: "Open Calendar" }).realClick();
           // Verify that the calendar is displayed
@@ -418,20 +380,10 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
         });
 
         it("SHOULD be able to select a date", () => {
-          cy.mount(
-            <Range
-              defaultSelectedDate={initialRangeDate}
-            />,
-          );
+          cy.mount(<Range defaultSelectedDate={initialRangeDate} />);
           // Verify the initial range date is selected
-          cy.findByLabelText("Start date").should(
-            "have.value",
-            "05 Jan 2025",
-          );
-          cy.findByLabelText("End date").should(
-            "have.value",
-            "06 Jan 2025",
-          );
+          cy.findByLabelText("Start date").should("have.value", "05 Jan 2025");
+          cy.findByLabelText("End date").should("have.value", "06 Jan 2025");
           // Simulate opening the calendar
           cy.findByRole("button", { name: "Open Calendar" }).realClick();
           // Verify that the calendar is displayed
@@ -457,14 +409,8 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
           cy.findByRole("button", { name: "Open Calendar" }).should(
             "have.focus",
           );
-          cy.findByLabelText("Start date").should(
-            "have.value",
-            "15 Jan 2025"
-          );
-          cy.findByLabelText("End date").should(
-            "have.value",
-            "16 Jan 2025"
-          );
+          cy.findByLabelText("Start date").should("have.value", "15 Jan 2025");
+          cy.findByLabelText("End date").should("have.value", "16 Jan 2025");
         });
       });
 
@@ -477,14 +423,8 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
             />,
           );
           // Verify that the selected dates are displayed
-          cy.findByLabelText("Start date").should(
-            "have.value",
-            "05 Jan 2025"
-          );
-          cy.findByLabelText("End date").should(
-            "have.value",
-            "06 Jan 2025"
-          );
+          cy.findByLabelText("Start date").should("have.value", "05 Jan 2025");
+          cy.findByLabelText("End date").should("have.value", "06 Jan 2025");
           // Simulate opening the calendar
           cy.findByRole("button", { name: "Open Calendar" }).realClick();
           // Verify that the calendar is displayed
@@ -506,14 +446,8 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
             />,
           );
           // Verify the initial range date is selected
-          cy.findByLabelText("Start date").should(
-            "have.value",
-            "05 Jan 2025"
-          );
-          cy.findByLabelText("End date").should(
-            "have.value",
-            "06 Jan 2025"
-          );
+          cy.findByLabelText("Start date").should("have.value", "05 Jan 2025");
+          cy.findByLabelText("End date").should("have.value", "06 Jan 2025");
           // Simulate opening the calendar
           cy.findByRole("button", { name: "Open Calendar" }).realClick();
           // Verify that the calendar is displayed
@@ -539,27 +473,15 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
           cy.findByRole("button", { name: "Open Calendar" }).should(
             "have.focus",
           );
-          cy.findByLabelText("Start date").should(
-            "have.value",
-            "15 Jan 2025",
-          );
-          cy.findByLabelText("End date").should(
-            "have.value",
-            "16 Jan 2025",
-          );
+          cy.findByLabelText("Start date").should("have.value", "15 Jan 2025");
+          cy.findByLabelText("End date").should("have.value", "16 Jan 2025");
         });
       });
 
       it("SHOULD preserve original time during date selection", () => {
         const selectionChangeSpy = cy.stub().as("selectionChangeSpy");
-        const defaultStartDate = adapter.date(
-          "2024-12-11T00:09:30Z",
-          "UTC",
-        );
-        const defaultEndDate = adapter.date(
-          "2024-12-11T00:10:33Z",
-          "UTC",
-        );
+        const defaultStartDate = adapter.date("2024-12-11T00:09:30Z", "UTC");
+        const defaultEndDate = adapter.date("2024-12-11T00:10:33Z", "UTC");
         cy.mount(
           <DatePicker
             defaultSelectedDate={{
@@ -569,7 +491,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
             selectionVariant="range"
             onSelectionChange={selectionChangeSpy}
           >
-            <DatePickerRangeInput/>
+            <DatePickerRangeInput />
             <DatePickerOverlay>
               <DatePickerRangePanel />
             </DatePickerOverlay>
@@ -593,9 +515,9 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
         cy.get("@selectionChangeSpy").should((spy: any) => {
           const [_event, date, details] = spy.lastCall.args;
           expect(adapter.isValid(date.startDate)).to.be.true;
-          expect(adapter.format(date.startDate, "DD MMM YYYY HH:mm:ss")).to.equal(
-            "05 Jan 2025 00:09:30",
-          );
+          expect(
+            adapter.format(date.startDate, "DD MMM YYYY HH:mm:ss"),
+          ).to.equal("05 Jan 2025 00:09:30");
           expect(adapter.isValid(date.endDate)).to.be.true;
           expect(adapter.format(date.endDate, "DD MMM YYYY HH:mm:ss")).to.equal(
             "06 Jan 2025 00:10:33",

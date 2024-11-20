@@ -1,12 +1,12 @@
 import defaultMoment, { type Moment } from "moment";
 import {
-  AdapterOptions,
+  type AdapterOptions,
   DateDetailErrorEnum,
-  ParserResult,
-  RecommendedFormats,
-  SaltDateAdapter,
-  TimeFields,
-  Timezone,
+  type ParserResult,
+  type RecommendedFormats,
+  type SaltDateAdapter,
+  type TimeFields,
+  type Timezone,
 } from "./types";
 
 declare module "./types" {
@@ -81,10 +81,7 @@ export class AdapterMoment implements SaltDateAdapter<Moment, string> {
    * @param locale - The locale to use for parsing.
    * @returns The parsed Moment.js date object.
    */
-  private createUTCDate = (
-    value: string,
-    locale?: string,
-  ): Moment => {
+  private createUTCDate = (value: string, locale?: string): Moment => {
     const parsedValue = this.moment.utc(value);
     if (this.locale === undefined && locale === undefined) {
       return parsedValue;
@@ -539,6 +536,6 @@ export class AdapterMoment implements SaltDateAdapter<Moment, string> {
    * @param date
    */
   public clone(date: Moment): Moment {
-    return date.clone()
+    return date.clone();
   }
 }

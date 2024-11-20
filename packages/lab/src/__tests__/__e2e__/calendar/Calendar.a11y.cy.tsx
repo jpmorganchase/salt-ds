@@ -1,12 +1,12 @@
-import * as calendarStories from "@stories/calendar/calendar.stories";
-import { composeStories } from "@storybook/react";
-import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
 import {
   AdapterDateFns,
   AdapterDayjs,
   AdapterLuxon,
   AdapterMoment,
 } from "@salt-ds/lab";
+import * as calendarStories from "@stories/calendar/calendar.stories";
+import { composeStories } from "@storybook/react";
+import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
 
 const composedStories = composeStories(calendarStories);
 

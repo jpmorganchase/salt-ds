@@ -1,16 +1,16 @@
-import { type SyntheticEvent, useState } from "react";
 import {
   AdapterDateFns,
   AdapterDayjs,
   AdapterLuxon,
   AdapterMoment,
   DateDetailErrorEnum,
+  type DateFrameworkType,
   DateInputRange,
-  DateFrameworkType,
-  SaltDateAdapter,
   type DateRangeSelection,
+  type SaltDateAdapter,
 } from "@salt-ds/lab";
 import { es as dateFnsEs } from "date-fns/locale";
+import { type SyntheticEvent, useState } from "react";
 import "moment/dist/locale/es";
 import "dayjs/locale/es";
 

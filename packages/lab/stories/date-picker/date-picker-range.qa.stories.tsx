@@ -88,17 +88,15 @@ RangeWithLuxon.parameters = {
   dateAdapter: "luxon",
 };
 
-export const RangeWithLocaleAndMoment: StoryFn<
-  QAContainerProps
-> = () => renderQAContainer();
+export const RangeWithLocaleAndMoment: StoryFn<QAContainerProps> = () =>
+  renderQAContainer();
 RangeWithLocaleAndMoment.parameters = {
   ...QAContainerParameters,
   dateLocale: "es-ES",
   dateAdapter: "moment",
 };
-export const RangeWithLocaleAndDateFns: StoryFn<
-  QAContainerProps
-> = () => renderQAContainer();
+export const RangeWithLocaleAndDateFns: StoryFn<QAContainerProps> = () =>
+  renderQAContainer();
 RangeWithLocaleAndDateFns.parameters = {
   ...QAContainerParameters,
   dateLocale: dateFnsEs,

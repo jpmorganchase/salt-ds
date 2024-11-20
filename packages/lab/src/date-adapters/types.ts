@@ -38,7 +38,7 @@ export type DateDetailError = {
 /**
  * Provides a way to return date errors in a uniform way.
  */
-export type DateDetail= {
+export type DateDetail = {
   /** The original entered value, if applicable */
   value?: string;
   /** The errors found by the parser */
@@ -96,7 +96,9 @@ export type RecommendedFormats =
  */
 export type Timezone = "default" | "system" | "UTC" | string;
 
-export type ParserResult<TDate extends DateFrameworkType> = { date: TDate } & DateDetail;
+export type ParserResult<TDate extends DateFrameworkType> = {
+  date: TDate;
+} & DateDetail;
 
 /**
  * Interface for a date adapter, providing methods for date manipulation and formatting.
@@ -377,4 +379,3 @@ export interface SaltDateAdapter<
    */
   clone(date: TDate): TDate;
 }
-
