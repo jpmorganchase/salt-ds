@@ -1,12 +1,13 @@
 import defaultMoment, { type Moment } from "moment";
 import {
   AdapterOptions,
+  DateDetailErrorEnum,
   ParserResult,
   RecommendedFormats,
   SaltDateAdapter,
+  TimeFields,
   Timezone,
-} from "./saltDateAdapter";
-import { DateDetailErrorEnum, type TimeFields } from "./types";
+} from "./types";
 
 declare module "./types" {
   export interface DateFrameworkTypeMap {
@@ -17,6 +18,7 @@ declare module "./types" {
 /**
  * Adapter for Moment.js library, implementing the SaltDateAdapter interface.
  * Provides methods for date manipulation and formatting using Moment.js.
+ * Salt provides a Moment adapter to aid migration to a maintained library.
  *
  * @deprecated Moment date library has been deprecated by its maintainers since September 2020, consider migration to a maintained OSS library.
  */
@@ -80,7 +82,7 @@ export class AdapterMoment implements SaltDateAdapter<Moment, string> {
    * @returns The parsed Moment.js date object.
    */
   private createUTCDate = (
-    value: string | undefined,
+    value: string,
     locale?: string,
   ): Moment => {
     const parsedValue = this.moment.utc(value);
@@ -100,7 +102,7 @@ export class AdapterMoment implements SaltDateAdapter<Moment, string> {
    * @throws Error if the timezone plugin is missing.
    */
   private createTZDate = (
-    value: string | undefined,
+    value: string,
     timezone: Timezone,
     locale?: string,
   ): Moment => {
@@ -130,6 +132,10 @@ export class AdapterMoment implements SaltDateAdapter<Moment, string> {
     timezone: Timezone = "default",
     locale?: string,
   ): Moment => {
+    if (!value || !this.isValidDateString(value)) {
+      return this.moment.invalid();
+    }
+
     if (timezone === "UTC") {
       return this.createUTCDate(value, locale);
     }
@@ -249,30 +255,30 @@ export class AdapterMoment implements SaltDateAdapter<Moment, string> {
       milliseconds?: number;
     },
   ): Moment {
-    const newDate = date.clone();
+    let newDate = date.clone();
     if (days) {
-      newDate.subtract(days, "days");
+      newDate = newDate.subtract(days, "days");
     }
     if (weeks) {
-      newDate.subtract(weeks, "weeks");
+      newDate = newDate.subtract(weeks, "weeks");
     }
     if (months) {
-      newDate.subtract(months, "months");
+      newDate = newDate.subtract(months, "months");
     }
     if (years) {
-      newDate.subtract(years, "years");
+      newDate = newDate.subtract(years, "years");
     }
     if (hours) {
-      newDate.subtract(hours, "hours");
+      newDate = newDate.subtract(hours, "hours");
     }
     if (minutes) {
-      newDate.subtract(minutes, "minutes");
+      newDate = newDate.subtract(minutes, "minutes");
     }
     if (seconds) {
-      newDate.subtract(seconds, "seconds");
+      newDate = newDate.subtract(seconds, "seconds");
     }
     if (milliseconds) {
-      newDate.subtract(milliseconds, "milliseconds");
+      newDate = newDate.subtract(milliseconds, "milliseconds");
     }
     return newDate;
   }
@@ -305,30 +311,30 @@ export class AdapterMoment implements SaltDateAdapter<Moment, string> {
       milliseconds?: number;
     },
   ): Moment {
-    const newDate = date.clone();
+    let newDate = date.clone();
     if (days) {
-      newDate.add(days, "days");
+      newDate = newDate.add(days, "days");
     }
     if (weeks) {
-      newDate.add(weeks, "weeks");
+      newDate = newDate.add(weeks, "weeks");
     }
     if (months) {
-      newDate.add(months, "months");
+      newDate = newDate.add(months, "months");
     }
     if (years) {
-      newDate.add(years, "years");
+      newDate = newDate.add(years, "years");
     }
     if (hours) {
-      newDate.add(hours, "hour");
+      newDate = newDate.add(hours, "hour");
     }
     if (minutes) {
-      newDate.add(minutes, "minute");
+      newDate = newDate.add(minutes, "minute");
     }
     if (seconds) {
-      newDate.add(seconds, "second");
+      newDate = newDate.add(seconds, "second");
     }
     if (milliseconds) {
-      newDate.add(milliseconds, "millisecond");
+      newDate = newDate.add(milliseconds, "millisecond");
     }
     return newDate;
   }
@@ -336,7 +342,7 @@ export class AdapterMoment implements SaltDateAdapter<Moment, string> {
   /**
    * Sets specific components of a Moment.js date object.
    * @param date - The Moment.js date object to modify.
-   * @param components - The components to set.
+   * @param components - The components to set, the month is a number (1-12).
    * @returns The resulting Moment.js date object.
    */
   public set(
@@ -359,27 +365,27 @@ export class AdapterMoment implements SaltDateAdapter<Moment, string> {
       millisecond?: number;
     },
   ): Moment {
-    const newDate = date.clone();
+    let newDate = date.clone();
     if (day) {
-      newDate.date(day);
+      newDate = newDate.date(day);
     }
     if (month) {
-      newDate.month(month);
+      newDate = newDate.month(month - 1);
     }
     if (year) {
-      newDate.year(year);
+      newDate = newDate.year(year);
     }
     if (hour) {
-      newDate.hour(hour);
+      newDate = newDate.hour(hour);
     }
     if (minute) {
-      newDate.minute(minute);
+      newDate = newDate.minute(minute);
     }
     if (second) {
-      newDate.second(second);
+      newDate = newDate.second(second);
     }
     if (millisecond) {
-      newDate.millisecond(millisecond);
+      newDate = newDate.millisecond(millisecond);
     }
     return newDate;
   }
@@ -490,10 +496,10 @@ export class AdapterMoment implements SaltDateAdapter<Moment, string> {
   /**
    * Gets the month for a Moment.js date object.
    * @param date - The Moment.js date object.
-   * @returns The month as a number (0-11).
+   * @returns The month as a number (1-12).
    */
   public getMonth(date: Moment): number {
-    return date.month();
+    return date.month() + 1;
   }
 
   /**
@@ -517,5 +523,22 @@ export class AdapterMoment implements SaltDateAdapter<Moment, string> {
       second: date.second(),
       millisecond: date.millisecond(),
     };
+  }
+
+  /**
+   * Validate date string so it can be parsed
+   * @param value
+   */
+  public isValidDateString(value: string): boolean {
+    /** Ensure ISO 8601 format of date string is passed to Moment to avoid warning **/
+    return this.moment(value, this.moment.ISO_8601, true).isValid();
+  }
+
+  /**
+   * Clone the date object
+   * @param date
+   */
+  public clone(date: Moment): Moment {
+    return date.clone()
   }
 }

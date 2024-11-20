@@ -1,4 +1,4 @@
-import * as datePickerStories from "@stories/date-picker/date-picker.stories";
+import * as calendarStories from "@stories/calendar/calendar.stories";
 import { composeStories } from "@storybook/react";
 import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
 import {
@@ -8,7 +8,7 @@ import {
   AdapterMoment,
 } from "@salt-ds/lab";
 
-const composedStories = composeStories(datePickerStories);
+const composedStories = composeStories(calendarStories);
 
 const adapters: [AdapterDateFns, AdapterDayjs, AdapterLuxon, AdapterMoment] = [
   new AdapterDateFns(),
@@ -17,7 +17,7 @@ const adapters: [AdapterDateFns, AdapterDayjs, AdapterLuxon, AdapterMoment] = [
   new AdapterMoment(),
 ];
 
-describe("GIVEN a DatePicker", () => {
+describe("GIVEN a DateInput", () => {
   adapters.forEach((adapter) => {
     describe(`Tests with ${adapter.lib}`, () => {
       beforeEach(() => {

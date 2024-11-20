@@ -85,11 +85,11 @@ export interface SingleDatePickerState<TDate extends DateFrameworkType>
     /**
      * Apply the selected single date.
      * @param event - The synthetic event.
-     * @param newDate - The new applied date.
+     * @param date - The new applied date.
      */
     apply: (
       event: SyntheticEvent,
-      newDate: SingleDateSelection<TDate> | null,
+      date: SingleDateSelection<TDate> | null,
     ) => void;
     /**
      * Select a single date.
@@ -130,11 +130,11 @@ export interface RangeDatePickerState<TDate extends DateFrameworkType>
     /**
      * Apply the selected date range.
      * @param event - The synthetic event.
-     * @param newRange - The new applied date range
+     * @param date - The new applied date range
      */
     apply: (
       event: SyntheticEvent,
-      newRange: DateRangeSelection<TDate> | null,
+      date: DateRangeSelection<TDate> | null,
     ) => void;
     /**
      * Select a date range.

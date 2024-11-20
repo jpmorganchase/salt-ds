@@ -124,14 +124,15 @@ export interface DateInputSingleProps<TDate extends DateFrameworkType>
    */
   onDateChange?: (
     event: SyntheticEvent,
-    date: SingleDateSelection<TDate> | null,
+    date: SingleDateSelection<TDate> | null | undefined,
     details: DateInputSingleDetails,
   ) => void;
   /**
    * Called when input value changes, either due to user interaction or programmatic formatting of valid dates.
+   * @param event - The synthetic event or null if a programmatic change.
    * @param newValue - The new date input value.
    */
-  onDateValueChange?: (newValue: string) => void;
+  onDateValueChange?: (event: SyntheticEvent | null, newValue: string) => void;
 }
 
 export const DateInputSingle = forwardRef<
@@ -207,15 +208,12 @@ export const DateInputSingle = forwardRef<
 
     // Update date string value when selected date changes
     useEffect(() => {
-      if (!date) {
-        setDateValue("");
-        onDateValueChange?.("");
-      } else if (date && dateAdapter.isValid(date)) {
+      if (date && dateAdapter.isValid(date)) {
         const formattedValue = dateAdapter.format(date, format, locale);
         const hasValueChanged = formattedValue !== dateValue;
         if (hasValueChanged) {
           setDateValue(formattedValue);
-          onDateValueChange?.(formattedValue);
+          onDateValueChange?.(null, formattedValue);
         }
       }
     }, [date, dateAdapter.format, format, locale]);
@@ -254,15 +252,17 @@ export const DateInputSingle = forwardRef<
       : dateInputPropsRequired;
 
     const apply = (event: SyntheticEvent) => {
-      const details = dateAdapter.parse(dateValue ?? "", format, locale);
-      let { date: parsedDate, ...parseDetails } = details;
+      const parserResult = dateValue?.length
+        ? dateAdapter.parse(dateValue, format, locale)
+        : { date: undefined };
+      let { date: parsedDate, ...parseDetails } = parserResult;
       let formattedValue = "";
       if (dateAdapter.isValid(parsedDate)) {
         formattedValue = dateAdapter.format(parsedDate, format, locale);
         const hasValueChanged = formattedValue !== dateValue;
         if (hasValueChanged) {
           setDateValue(formattedValue);
-          onDateValueChange?.(formattedValue);
+          onDateValueChange?.(event, formattedValue);
         }
       }
 
@@ -281,7 +281,7 @@ export const DateInputSingle = forwardRef<
       setDateValue(newDateValue);
       inputPropsOnChange?.(event);
       onChange?.(event);
-      onDateValueChange?.(newDateValue);
+      onDateValueChange?.(event, newDateValue);
     };
 
     const handleFocus: FocusEventHandler<HTMLInputElement> = (event) => {

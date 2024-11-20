@@ -10,7 +10,6 @@
 export type DateFrameworkTypeMap = {};
 
 export * from "./types";
-export * from "./saltDateAdapter";
 export * from "./LocalizationProvider";
 
 // Supported date libraries but you can create your own by implementating `SaltDateAdapter`

@@ -21,6 +21,7 @@ import {
   isSameYear,
   isValid as isValidDateFns,
   parse as parseDateFns,
+  parseISO,
   set as setDateFns,
   startOfDay,
   startOfMonth,
@@ -29,15 +30,16 @@ import {
   sub as subDateFns,
   subMilliseconds as subMillisecondsDateFns,
 } from "date-fns";
-import { enUS } from "date-fns/locale";
 import {
   AdapterOptions,
+  DateDetailErrorEnum,
   ParserResult,
   RecommendedFormats,
   SaltDateAdapter,
+  TimeFields,
   Timezone,
-} from "./saltDateAdapter";
-import { DateDetailErrorEnum, type TimeFields } from "./types";
+} from "./types";
+import { enUS } from "date-fns/locale";
 
 declare module "./types" {
   interface DateFrameworkTypeMap {
@@ -138,11 +140,14 @@ export class AdapterDateFns implements SaltDateAdapter<Date, Locale> {
    */
   public date = <T extends string | undefined>(
     value?: T,
-    timezone: Timezone = "default",
-    locale?: Locale,
+    _timezone: Timezone = "default",
+    _locale?: Locale,
   ): Date => {
-    const date = value ? new Date(value) : new Date();
-    return isValidDateFns(date) ? date : new Date(Number.NaN);
+    if (!value || !this.isValidDateString(value)) {
+      return new Date(NaN);
+    }
+    const date = new Date(value);
+    return date;
   };
 
   /**
@@ -306,7 +311,7 @@ export class AdapterDateFns implements SaltDateAdapter<Date, Locale> {
   /**
    * Sets specific components of a Date object.
    * @param date - The Date object to modify.
-   * @param components - The components to set.
+   * @param components - The components to set, the month is a number (1-12).
    * @returns The resulting Date object.
    */
   public set(
@@ -331,7 +336,7 @@ export class AdapterDateFns implements SaltDateAdapter<Date, Locale> {
   ): Date {
     return setDateFns(date, {
       date: day,
-      month,
+      month: month !== undefined ? month - 1 : month,
       year,
       hours: hour,
       minutes: minute,
@@ -477,10 +482,10 @@ export class AdapterDateFns implements SaltDateAdapter<Date, Locale> {
   /**
    * Gets the month for a Date object.
    * @param date - The Date object.
-   * @returns The month as a number (0-11).
+   * @returns The month as a number (1-12).
    */
   public getMonth(date: Date): number {
-    return getMonth(date);
+    return getMonth(date) + 1;
   }
 
   /**
@@ -504,5 +509,26 @@ export class AdapterDateFns implements SaltDateAdapter<Date, Locale> {
       second: getSeconds(date),
       millisecond: getMilliseconds(date),
     };
+  }
+
+  /**
+   * Validate date string so it can be parsed
+   * @param value
+   */
+  public isValidDateString(value: string): boolean {
+    try {
+      const date = parseISO(value);
+      return isValidDateFns(date);
+    } catch (error) {
+      return false;
+    }
+  }
+
+  /**
+   * Clone the date object
+   * @param date
+   */
+  public clone(date: Date): Date {
+    return new Date(date.getTime());
   }
 }
