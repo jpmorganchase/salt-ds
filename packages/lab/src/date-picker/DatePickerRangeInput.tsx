@@ -39,26 +39,25 @@ export interface DatePickerRangeInputProps<TDate extends DateFrameworkType>
    * @returns updated DateInputRangeDetails details
    */
   validate?: (
-    date: DateRangeSelection<TDate>,
+    date: DateRangeSelection<TDate> | null,
     details: DateInputRangeDetails,
   ) => DateInputRangeDetails;
 }
 
 export function defaultRangeValidator<TDate extends DateFrameworkType>(
   dateAdapter: SaltDateAdapter<TDate>,
-  date: DateRangeSelection<TDate>,
+  date: DateRangeSelection<TDate> | null,
   details: DateInputRangeDetails,
   minDate: TDate | undefined,
   maxDate: TDate | undefined,
 ): DateInputRangeDetails {
-  const { startDate, endDate } = date;
-  details.startDate = details.startDate || { errors: [] };
-  details.endDate = details.endDate || { errors: [] };
+  const { startDate, endDate } = date || {};
 
   // If endDate but no startDate defined
   if (startDate === undefined && endDate) {
-    details.startDate.errors = details.startDate.errors ?? [];
-    details.startDate.errors?.push({
+    details.startDate = details.startDate || {};
+    details.startDate.errors = details.startDate.errors || [];
+    details.startDate.errors.push({
       type: DateDetailErrorEnum.UNSET,
       message: "no start date defined",
     });
@@ -69,8 +68,9 @@ export function defaultRangeValidator<TDate extends DateFrameworkType>(
     dateAdapter.isValid(endDate) &&
     dateAdapter.compare(startDate, endDate) > 0
   ) {
-    details.startDate.errors = details.startDate.errors ?? [];
-    details.startDate.errors?.push({
+    details.startDate = details.startDate || {};
+    details.startDate.errors = details.startDate.errors || [];
+    details.startDate.errors.push({
       type: "greater-than-end-date",
       message: "start date after end date",
     });
@@ -81,8 +81,9 @@ export function defaultRangeValidator<TDate extends DateFrameworkType>(
     dateAdapter.isValid(startDate) &&
     dateAdapter.compare(startDate, minDate) < 0
   ) {
-    details.startDate.errors = details.startDate.errors ?? [];
-    details.startDate.errors?.push({
+    details.startDate = details.startDate || {};
+    details.startDate.errors = details.startDate.errors || [];
+    details.startDate.errors.push({
       type: "min-date",
       message: "is before min date",
     });
@@ -93,8 +94,9 @@ export function defaultRangeValidator<TDate extends DateFrameworkType>(
     dateAdapter.isValid(endDate) &&
     dateAdapter.compare(endDate, maxDate) > 0
   ) {
-    details.endDate.errors = details.endDate.errors ?? [];
-    details.endDate.errors?.push({
+    details.endDate = details.endDate || {};
+    details.endDate.errors = details.endDate.errors || [];
+    details.endDate.errors.push({
       type: "max-date",
       message: "is after max date",
     });
@@ -149,7 +151,7 @@ export const DatePickerRangeInput = forwardRef(function DatePickerRangeInput<
   const handleDateChange = useCallback(
     (
       event: SyntheticEvent,
-      date: DateRangeSelection<TDate>,
+      date: DateRangeSelection<TDate> | null,
       details: DateInputRangeDetails,
     ) => {
       const validatedDetails = validate
@@ -161,9 +163,9 @@ export const DatePickerRangeInput = forwardRef(function DatePickerRangeInput<
   );
 
   const handleDateValueChange = useCallback(
-    (newDateValue: DateInputRangeValue) => {
+    (event: SyntheticEvent | null, newDateValue: DateInputRangeValue) => {
       setValue(newDateValue);
-      onDateValueChange?.(newDateValue);
+      onDateValueChange?.(event, newDateValue);
     },
     [onDateValueChange],
   );

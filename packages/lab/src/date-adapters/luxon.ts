@@ -1,12 +1,13 @@
 import { DateTime, Duration, Settings } from "luxon";
 import {
   AdapterOptions,
+  DateDetailErrorEnum,
   ParserResult,
   RecommendedFormats,
   SaltDateAdapter,
+  TimeFields,
   Timezone,
-} from "./saltDateAdapter";
-import { DateDetailErrorEnum, type TimeFields } from "./types";
+} from "./types";
 
 declare module "./types" {
   interface DateFrameworkTypeMap {
@@ -112,10 +113,10 @@ export class AdapterLuxon implements SaltDateAdapter<DateTime, string> {
    * @returns The parsed Luxon DateTime object.
    */
   private createSystemDate = (
-    value: string | undefined,
+    value: string,
     locale?: string,
   ): DateTime => {
-    const parsedValue = value ? DateTime.fromISO(value) : DateTime.local();
+    const parsedValue = DateTime.fromISO(value);
     return parsedValue.setLocale(locale ?? this.locale);
   };
 
@@ -126,12 +127,10 @@ export class AdapterLuxon implements SaltDateAdapter<DateTime, string> {
    * @returns The parsed Luxon DateTime object.
    */
   private createUTCDate = (
-    value: string | undefined,
+    value: string,
     locale?: string,
   ): DateTime => {
-    const parsedValue = value
-      ? DateTime.fromISO(value, { zone: "utc" })
-      : DateTime.utc();
+    const parsedValue = DateTime.fromISO(value, { zone: "utc" })
     return parsedValue.setLocale(locale ?? this.locale);
   };
 
@@ -143,13 +142,11 @@ export class AdapterLuxon implements SaltDateAdapter<DateTime, string> {
    * @returns The parsed Luxon DateTime object.
    */
   private createTZDate = (
-    value: string | undefined,
+    value: string,
     timezone: Timezone,
     locale?: string,
   ): DateTime => {
-    const parsedValue = value
-      ? DateTime.fromISO(value, { zone: timezone })
-      : DateTime.now().setZone(timezone);
+    const parsedValue = DateTime.fromISO(value, { zone: timezone });
     return parsedValue.setLocale(locale ?? this.locale);
   };
 
@@ -165,6 +162,10 @@ export class AdapterLuxon implements SaltDateAdapter<DateTime, string> {
     timezone: Timezone = "default",
     locale?: string,
   ): DateTime => {
+    if (!value || !this.isValidDateString(value)) {
+      return DateTime.invalid('Invalid date string');
+    }
+
     if (timezone === "UTC") {
       return this.createUTCDate(value, locale);
     }
@@ -334,8 +335,8 @@ export class AdapterLuxon implements SaltDateAdapter<DateTime, string> {
 
   /**
    * Sets specific components of a Luxon DateTime object.
-   * @param date - The Luxon DateTime object to modify.
-   * @param components - The components to set.
+   * @param date - The  Luxon DateTime object to modify.
+   * @param components - The components to set, the month is a number (1-12).
    * @returns The resulting Luxon DateTime object.
    */
   public set(
@@ -358,7 +359,7 @@ export class AdapterLuxon implements SaltDateAdapter<DateTime, string> {
       millisecond?: number;
     },
   ): DateTime {
-    return date.set({ day, month, year, hour, minute, second, millisecond });
+    return date.set({ day, month: month, year, hour, minute, second, millisecond });
   }
 
   /**
@@ -491,5 +492,22 @@ export class AdapterLuxon implements SaltDateAdapter<DateTime, string> {
       second: date.second,
       millisecond: date.millisecond,
     };
+  }
+
+  /**
+   * Validate date string so it can be parsed
+   * @param value
+   */
+  public isValidDateString(value: string): boolean {
+    const dateTime = DateTime.fromISO(value);
+    return dateTime.isValid;
+  }
+
+  /**
+   * Clone the date object
+   * @param date
+   */
+  public clone(date: DateTime): DateTime {
+    return DateTime.fromMillis(date.toMillis());
   }
 }

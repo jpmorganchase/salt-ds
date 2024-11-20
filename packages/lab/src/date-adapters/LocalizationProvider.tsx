@@ -1,6 +1,5 @@
 import { createContext, useContext, useMemo } from "react";
-import type { SaltDateAdapter } from "./saltDateAdapter";
-import type { DateFrameworkType } from "./types";
+import type { DateFrameworkType, SaltDateAdapter } from "./types";
 
 const MIN_DATE = "1900-01-01T00:00:00.000";
 const MAX_DATE = "2099-12-31T00:00:00.000";

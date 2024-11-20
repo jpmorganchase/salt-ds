@@ -13,7 +13,6 @@ import {
   useLocalization,
 } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react";
-import type React from "react";
 import { type SyntheticEvent, useCallback } from "react";
 import { useState } from "react";
 
@@ -58,7 +57,7 @@ export const Single: StoryFn<typeof Calendar> = (args) => {
   const selectedDate = dateAdapter.today();
   return (
     <Calendar
-      {...(args as any)}
+      {...args}
       defaultSelectedDate={selectedDate}
       selectionVariant="single"
     >
@@ -91,7 +90,6 @@ export const Multiselect: StoryFn<typeof Calendar> = ({
   ...args
 }) => {
   const { dateAdapter } = useLocalization<DateFrameworkType>();
-  dateAdapter.locale = "en-GB";
   const defaultSelectedDate = [
     "02/01/2024",
     "03/01/2024",
@@ -132,7 +130,6 @@ export const Multiselect: StoryFn<typeof Calendar> = ({
     "01/01/2024",
     "DD/MM/YYYY",
   ).date;
-  console.log(defaultSelectedDate);
   return (
     <Calendar
       {...(args as any)}
@@ -171,9 +168,12 @@ export const Offset: StoryFn<typeof Calendar> = (args) => {
 export const UnselectableDates: StoryFn<typeof Calendar> = (args) => {
   const { dateAdapter } = useLocalization<DateFrameworkType>();
   const isDayUnselectable = (day: ReturnType<typeof dateAdapter.date>) => {
-    return dateAdapter.getDayOfWeek(day) >= 5
-      ? "Weekends are un-selectable"
-      : false;
+    const dayOfWeek = dateAdapter.getDayOfWeek(day);
+    const isWeekend =
+      (dateAdapter.lib === "luxon" && (dayOfWeek === 7 || dayOfWeek === 6)) ||
+      (dateAdapter.lib !== "luxon" && (dayOfWeek === 0 || dayOfWeek === 6));
+
+    return isWeekend ? "Weekends are un-selectable" : false;
   };
   return (
     <Calendar
@@ -191,7 +191,12 @@ export const UnselectableDates: StoryFn<typeof Calendar> = (args) => {
 export const DisabledDates: StoryFn<typeof Calendar> = (args) => {
   const { dateAdapter } = useLocalization<DateFrameworkType>();
   const isDayDisabled = (day: ReturnType<typeof dateAdapter.date>) => {
-    return dateAdapter.getDayOfWeek(day) >= 5 ? "Weekends are disabled" : false;
+    const dayOfWeek = dateAdapter.getDayOfWeek(day);
+    const isWeekend =
+      (dateAdapter.lib === "luxon" && (dayOfWeek === 7 || dayOfWeek === 6)) ||
+      (dateAdapter.lib !== "luxon" && (dayOfWeek === 0 || dayOfWeek === 6));
+
+    return isWeekend ? "Weekends are disabled" : false;
   };
   return (
     <Calendar
@@ -255,16 +260,16 @@ export const TodayButton: StoryFn<
   const [selectedDate, setSelectedDate] =
     useState<
       UseCalendarSelectionSingleProps<DateFrameworkType>["selectedDate"]
-    >(undefined);
+    >(null);
   return (
     <Calendar
+      {...args}
       selectionVariant={selectionVariant}
       selectedDate={selectedDate}
       defaultVisibleMonth={dateAdapter.startOf(today, "month")}
       onSelectionChange={(_event, newSelectedDate) =>
         setSelectedDate(newSelectedDate.date)
       }
-      {...args}
     >
       <StackLayout gap={0}>
         <CalendarNavigation />
@@ -325,14 +330,19 @@ export const MinMaxDate: StoryFn<typeof Calendar> = (args) => {
     >
       <CalendarNavigation />
       <CalendarWeekHeader />
-      <CalendarGrid getCalendarMonthProps={() => ({ renderDayContents })} />
+      <CalendarGrid />
     </Calendar>
   );
 };
 
 export const TwinCalendars: StoryFn<
   CalendarRangeProps<DateFrameworkType> & React.RefAttributes<HTMLDivElement>
-> = ({ selectionVariant, ...args }) => {
+> = ({
+  defaultSelectedDate,
+  defaultVisibleMonth,
+  selectionVariant,
+  ...args
+}) => {
   const { dateAdapter } = useLocalization<DateFrameworkType>();
   const today = dateAdapter.today();
   const [hoveredDate, setHoveredDate] = useState<any | null>(null);
@@ -343,10 +353,10 @@ export const TwinCalendars: StoryFn<
     };
   const [startVisibleMonth, setStartVisibleMonth] = useState<
     CalendarProps<DateFrameworkType>["defaultVisibleMonth"]
-  >(dateAdapter.startOf(today, "month"));
+  >(defaultVisibleMonth ?? dateAdapter.startOf(today, "month"));
   const [endVisibleMonth, setEndVisibleMonth] = useState<
     CalendarProps<DateFrameworkType>["defaultVisibleMonth"]
-  >(dateAdapter.startOf(dateAdapter.add(today, { months: 1 }), "month"));
+  >(dateAdapter.add(startVisibleMonth ?? today, { months: 1 }));
 
   const handleStartVisibleMonthChange = useCallback(
     (
@@ -387,9 +397,10 @@ export const TwinCalendars: StoryFn<
     [startVisibleMonth],
   );
 
-  const [selectedDate, setSelectedDate] = useState<
-    UseCalendarSelectionRangeProps<DateFrameworkType>["selectedDate"]
-  >(args.defaultSelectedDate);
+  const [selectedDate, setSelectedDate] =
+    useState<UseCalendarSelectionRangeProps<DateFrameworkType>["selectedDate"]>(
+      defaultSelectedDate,
+    );
   const handleSelectionChange: UseCalendarSelectionRangeProps<DateFrameworkType>["onSelectionChange"] =
     (event, newSelectedDate) => {
       setSelectedDate(newSelectedDate);

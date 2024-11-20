@@ -65,16 +65,16 @@ export interface UseDatePickerSingleProps<TDate extends DateFrameworkType>
   onSelectionChange?: (
     event: SyntheticEvent,
     date: SingleDateSelection<TDate> | null,
-    details: DateInputSingleDetails,
+    details?: DateInputSingleDetails,
   ) => void;
   /**
    * Handler called when the selected date is confirmed/applied.
    * @param event - The synthetic event.
-   * @param appliedDate - The selected date or null.
+   * @param date - The selected date or null.
    */
   onApply?: (
     event: SyntheticEvent,
-    appliedDate: SingleDateSelection<TDate> | null,
+    date: SingleDateSelection<TDate> | null,
   ) => void;
 }
 
@@ -106,16 +106,16 @@ export interface UseDatePickerRangeProps<TDate extends DateFrameworkType>
   onSelectionChange?: (
     event: SyntheticEvent,
     date: DateRangeSelection<TDate> | null,
-    details: DateInputRangeDetails,
+    details?: DateInputRangeDetails,
   ) => void;
   /**
    * Handler called when the selected date range is confirmed/applied.
    * @param event - The synthetic event.
-   * @param appliedRange - The selected date range.
+   * @param date - The selected date range.
    */
   onApply?: (
     event: SyntheticEvent,
-    appliedRange: DateRangeSelection<TDate>,
+    date: DateRangeSelection<TDate> | null,
   ) => void;
 }
 
@@ -208,19 +208,23 @@ export function useDatePicker<
   const isReadOnly = readOnly || formFieldReadOnly || false;
   const isDisabled = disabled || formFieldDisabled || false;
 
-  const applySingle = (
-    event: SyntheticEvent,
-    appliedDate: SingleDateSelection<TDate> | null,
-  ): void => {
-    setCancelled(false);
-    setOpen(false);
-    if (selectionVariant === "single") {
-      onApply?.(event, appliedDate);
-    }
-  };
+  const applySingle = useCallback(
+    (event: SyntheticEvent, date: SingleDateSelection<TDate> | null): void => {
+      setCancelled(false);
+      setOpen(false);
+      if (selectionVariant === "single") {
+        onApply?.(event, date);
+      }
+    },
+    [setCancelled, setOpen, onApply],
+  );
 
   const selectSingle = useCallback(
-    (event: SyntheticEvent, date: SingleDateSelection<TDate>, details: DateInputSingleDetails) => {
+    (
+      event: SyntheticEvent,
+      date: SingleDateSelection<TDate> | null,
+      details: DateInputSingleDetails,
+    ) => {
       setSelectedDate(date);
       if (selectionVariant === "single") {
         onSelectionChange?.(event, date, details);
@@ -229,22 +233,32 @@ export function useDatePicker<
         applySingle(event, date);
       }
     },
-    [enableApply, onSelectionChange, selectionVariant, setSelectedDate],
+    [
+      applySingle,
+      enableApply,
+      onSelectionChange,
+      selectionVariant,
+      setSelectedDate,
+    ],
   );
 
   const applyRange = useCallback(
-    (event: SyntheticEvent, appliedDate: DateRangeSelection<TDate>): void => {
+    (event: SyntheticEvent, date: DateRangeSelection<TDate> | null): void => {
       setCancelled(false);
       setOpen(false);
       if (selectionVariant === "range") {
-        onApply?.(event, appliedDate);
+        onApply?.(event, date);
       }
     },
     [onApply, setCancelled, setOpen, selectionVariant],
   );
 
   const selectRange = useCallback(
-    (event: SyntheticEvent, date: DateRangeSelection<TDate>, details: DateInputRangeDetails) => {
+    (
+      event: SyntheticEvent,
+      date: DateRangeSelection<TDate> | null,
+      details: DateInputRangeDetails,
+    ) => {
       setSelectedDate(date);
       if (selectionVariant === "range") {
         onSelectionChange?.(event, date, details);

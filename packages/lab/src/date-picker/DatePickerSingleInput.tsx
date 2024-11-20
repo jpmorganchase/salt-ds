@@ -147,9 +147,9 @@ export const DatePickerSingleInput = forwardRef<
     );
 
     const handleDateValueChange = useCallback(
-      (newDateValue: string) => {
+      (event: SyntheticEvent | null, newDateValue: string) => {
         setValue(newDateValue);
-        onDateValueChange?.(newDateValue);
+        onDateValueChange?.(event, newDateValue);
       },
       [onDateValueChange],
     );
