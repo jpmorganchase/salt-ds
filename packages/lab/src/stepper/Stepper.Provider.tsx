@@ -4,11 +4,11 @@ import type { Stepper } from "./Stepper";
 import type { Step } from "./Step";
 
 export const DepthContext = createContext<Step.Depth>(-1);
-export const OrientationContext = createContext<Stepper.Orientation | undefined>(undefined);
+export const OrientationContext = createContext<Stepper.Orientation>('horizontal');
 
 export namespace StepperProvider {
   export interface Props {
-    orientation?: Stepper.Orientation;
+    orientation: Stepper.Orientation;
     children: ReactNode;
   }
 }

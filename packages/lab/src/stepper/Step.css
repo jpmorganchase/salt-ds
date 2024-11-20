@@ -1,11 +1,16 @@
 .saltStep {
+  display: flex;
+  flex: 1;
+}
+
+.saltStep-content {
   /* Copy of size calculations of <Icon /> */
   --icon-base-size: var(--salt-size-icon, 12px);
   --icon-size-multiplier: var(--saltIcon-size-multiplier, 1.5);
   --icon-size: calc(var(--icon-base-size) * var(--icon-size-multiplier));
 }
 
-.saltStepper-horizontal .saltStep {
+.saltStepper-horizontal .saltStep-content {
   flex: 1;
   position: relative;
   display: grid;
@@ -21,11 +26,11 @@
   padding: 0 var(--salt-spacing-25);
 }
 
-.saltStepper-vertical .saltStep {
+.saltStepper-vertical .saltStep-content {
   display: grid;
   grid-template-columns: var(--icon-size) 1fr min-content;
   grid-template-rows:
-    min-content
+    minmax(var(--salt-size-base), min-content)
     0fr
     0fr;
   grid-template-areas:
@@ -34,23 +39,30 @@
     "stepper   stepper     stepper";
   justify-items: start;
   align-items: center;
-  flex: 1;
   gap: 0 var(--salt-spacing-100);
-
-  transition-duration: 0.3s;
+  width: 100%;
+  transition-duration: var(--salt-duration-perceptible);
   transition-timing-function: ease-in-out;
   transition-property: grid-template-rows, opacity;
 }
 
-.saltStep-collapsed > .saltStepper > .saltStep {
+.saltStepper-vertical .saltStep-terminal > .saltStep-content {
+  grid-template-areas:
+    "icon      label       label"
+    "track     description description"
+    "stepper   stepper     stepper";
+}
+
+.saltStepper-vertical .saltStep.saltStep-collapsed > .saltStep-content .saltStep-content {
   opacity: 0;
 }
 
-.saltStepper-vertical .saltStep.saltStep-expanded {
+.saltStepper-vertical .saltStep.saltStep-expanded > .saltStep-content {
   opacity: 1;
+  
   grid-template-rows:
     var(--salt-size-base)
-    minmax(var(--salt-spacing-300), min-content)
+    min-content
     1fr;
 }
 
@@ -63,9 +75,13 @@
 }
 
 .saltStepper-vertical .saltStep-label {
-  line-height: var(--salt-size-base);
-  width: 100%;
   padding-left: calc((var(--saltStep-depth) + 1) * var(--salt-spacing-100));
+  padding-top: var(--salt-spacing-75);
+  padding-bottom: var(--salt-spacing-75);
+}
+
+.saltStep-depth-0 > .saltStep-content > .saltStep-label {
+  font-weight: var(--salt-text-fontWeight-strong);
 }
 
 .saltStep-description {
@@ -74,13 +90,42 @@
 
 .saltStepper-vertical .saltStep-description {
   padding-bottom: var(--salt-spacing-300);
-  padding-left: calc((var(--saltStep-depth) + 1) * var(--salt-spacing-100));
+  padding-left: calc(
+    (var(--saltStep-depth) + 1) * var(--salt-spacing-100)
+  );
 }
 
-.saltStep-status-error > .saltStep-description {
-  color: var(--salt-status-error-foreground-informative);
+.saltStep:not(.saltStep-disabled) .saltStep-label {
+  --saltText-color: initial;
 }
 
-.saltStep-status-warning > .saltStep-description {
-  color: var(--salt-status-warning-foreground-informative);
+.saltStep-stage-pending {
+  --saltIcon-color: var(--salt-status-static-foreground);
+}
+
+.saltStep-stage-inprogress {
+  --saltIcon-color: var(--salt-status-info-foreground-decorative);
+}
+
+.saltStep-stage-active {
+  --saltIcon-color: var(--salt-status-info-foreground-decorative);
+}
+
+.saltStep-stage-completed {
+  --saltIcon-color: var(--salt-status-success-foreground-decorative);
+}
+
+.saltStep-status-warning {
+  --saltIcon-color: var(--salt-status-warning-foreground-decorative);
+  --saltText-color: var(--salt-status-warning-foreground-informative);
+}
+
+.saltStep-status-error {
+  --saltIcon-color: var(--salt-status-error-foreground-decorative);
+  --saltText-color: var(--salt-status-error-foreground-informative);
+}
+
+.saltStep-disabled {
+  --saltIcon-color: var(--salt-content-primary-foreground-disabled);
+  --saltText-color: var(--salt-content-primary-foreground-disabled);
 }

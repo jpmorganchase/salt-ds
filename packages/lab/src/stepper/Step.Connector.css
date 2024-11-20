@@ -1,53 +1,51 @@
 .saltStepConnector {
+  --saltStep-connector-borderWidth: 2px;
+
   grid-area: track;
-  transition-duration: var(--salt-duration-perceptible);
   transition-timing-function: ease-in-out;
   transition-property: opacity, min-height;
+  transition-duration: var(--salt-duration-perceptible);
   min-height: var(--salt-spacing-300);
 }
 
 .saltStepper-horizontal .saltStepConnector {
-  /* Copy of size calculations of <Icon /> */
-  --icon-base-size: var(--salt-size-icon, 12px);
-  --icon-size-multiplier: var(--saltIcon-size-multiplier, 1.5);
-  --icon-size: calc(var(--icon-base-size) * var(--icon-size-multiplier));
-
   /* Distance between Icon and Track */
-  --saltStep-horizontal-offset: var(--salt-spacing-100);
+  --saltStep-connector-horizontal-gap: var(--salt-spacing-100);
 
   position: absolute;
-  top: calc(var(--icon-size) / 2 - var(--salt-track-borderWidth-complete));
-  left: calc(50% + calc(var(--icon-size) / 2 + var(--saltStep-horizontal-offset)));
-  right: calc(-50% + calc(var(--icon-size) / 2 + var(--saltStep-horizontal-offset)));
+  top: calc(var(--icon-size) / 2 - var(--saltStep-connector-borderWidth));
+  left: calc(50% + calc(var(--icon-size) / 2 + var(--saltStep-connector-horizontal-gap)));
+  right: calc(-50% + calc(var(--icon-size) / 2 + var(--saltStep-connector-horizontal-gap)));
 
-  border-top-width: var(--salt-track-borderWidth-complete);
+  border-top-width: var(--saltStep-connector-borderWidth);
   border-top-style: var(--salt-track-borderStyle-incomplete);
   border-top-color: var(--salt-track-borderColor);
 }
 
-.saltStepper-horizontal .saltStep-stage-completed > .saltStepConnector {
+.saltStepper-horizontal .saltStep-stage-completed .saltStepConnector {
   border-top-style: var(--salt-track-borderStyle-complete);
 }
 
 .saltStepper-vertical .saltStepConnector {
   height: 100%;
+  min-height: 24px;
   justify-self: center;
 
-  border-left-width: var(--salt-track-borderWidth-complete);
+  border-left-width: var(--saltStep-connector-borderWidth);
   border-left-style: var(--salt-track-borderStyle-incomplete);
   border-left-color: var(--salt-track-borderColor);
 }
 
-.saltStepper-vertical .saltStep-stage-completed > .saltStepConnector {
+.saltStepper-vertical .saltStep-stage-completed .saltStepConnector {
   border-left-style: var(--salt-track-borderStyle-complete);
 }
 
-.saltStep-depth-0.saltStep:not(.saltStep-expanded):last-child > .saltStepConnector {
+.saltStep-depth-0.saltStep:not(.saltStep-expanded):last-child > .saltStep-content > .saltStepConnector {
   opacity: 0;
   min-height: 0;
 }
 
-.saltStep-depth-0.saltStep-expanded:last-child .saltStep:not(.saltStep-expanded):last-child .saltStepConnector {
+.saltStep-depth-0.saltStep-expanded:last-child .saltStep:not(.saltStep-expanded):last-child .saltStep-content > .saltStepConnector {
   opacity: 0;
   min-height: 0;
 }

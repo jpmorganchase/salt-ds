@@ -67,6 +67,11 @@ export const HorizontalVariations: StoryFn<typeof Stepper> = () => {
           description="Description text"
           status="warning"
         />
+        <Step
+          label="Step"
+          description="Description text"
+          disabled
+        />
       </Stepper>
     </StackLayout>
   )
@@ -153,6 +158,11 @@ export const VerticalVariations: StoryFn<typeof Stepper> = () => {
           description="Description text"
           status="warning"
         />
+        <Step
+          label="Step"
+          description="Description text"
+          disabled
+        />
       </Stepper>
     </StackLayout>
   )
@@ -182,7 +192,6 @@ export const VerticalLongText: StoryFn<typeof Stepper> = () => {
         <Step
           label="Last step"
           description="lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate magni dignissimos inventore incidunt facere harum expedita beatae reiciendis numquam iste excepturi dolorum omnis optio ullam quam illum, eligendi perspiciatis quia."
-
           status="warning"
         />
       </Stepper>
@@ -194,13 +203,20 @@ export const VerticalDepth1: StoryFn<typeof Stepper> = () => {
   return (
     <StackLayout style={{ maxWidth: '240px', width: '100%' }}>
       <Stepper orientation="vertical">
-        <Step label="Step 1" description="Description text">
-          <Step label="Step 1.1" />
+        <Step label="Step 1" description="Description text" stage="completed">
+          <Step label="Step 1.1" stage="completed" />
         </Step>
-        <Step label="Step 2">
-          <Step label="Step 2.1" description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate magni dignissimos inventore incidunt facere harum expedita beatae reiciendis numquam iste excepturi dolorum omnis optio ullam quam illum, eligendi perspiciatis quia." />
-          <Step label="Step 2.2" description="Description text" />
+
+        <Step label="Step 2" stage="inprogress">
+          <Step 
+            label="Step 2.1" 
+            description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate magni dignissimos inventore incidunt facere harum expedita beatae reiciendis numquam iste excepturi dolorum omnis optio ullam quam illum, eligendi perspiciatis quia."
+            stage="completed"
+          />
+          <Step label="Step 2.2" description="Description text" stage="active" />
+          <Step label="Step 2.3" stage="pending" />
         </Step>
+
         <Step label="Step 3">
           <Step label="Step 3.1" />
           <Step label="Step 3.2" description="Description text" />
@@ -235,6 +251,40 @@ export const VerticalDepth2: StoryFn<typeof Stepper> = () => {
             <Step label="Step 3.3.3" description="This is just a description text" />
           </Step>
         </Step>
+      </Stepper>
+    </StackLayout>
+  )
+}
+
+
+export const Barebones: StoryFn<typeof Stepper> = () => {
+  return (
+    <StackLayout style={{ minWidth: '240px', width: '100%' }}>
+      <Stepper>
+        <Step stage="completed" />
+        <Step stage="active" />
+        <Step />
+      </Stepper>
+    </StackLayout>
+  )
+}
+
+export const CustomSteps: StoryFn<typeof Stepper> = () => {
+  function LockedStep(props: StepProps) {
+    return (
+      <Step
+        {...props}
+        icon={<LockedIcon />}
+      />
+    )
+  }
+
+  return (
+    <StackLayout style={{ minWidth: '320px', width: '100%' }}>
+      <Stepper>
+        <Step label="Step 1" stage="completed" />
+        <Step label="Step 2" stage="active" />
+        <LockedStep label="Step 3" />
       </Stepper>
     </StackLayout>
   )

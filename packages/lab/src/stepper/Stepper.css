@@ -1,18 +1,21 @@
 .saltStepper {
   grid-area: stepper;
-  display: flex;
+  list-style-type: none;
   width: 100%;
   height: 100%;
-  margin: 0;
-  overflow: hidden;
-  list-style-type: none;
-  padding: 0;
+
+  /** Trick to make the expand trigger focus style visible */
+  padding: 2px;
+  margin: -2px;
 }
 
 .saltStepper-horizontal {
+  display: flex;
   flex-direction: row;
 }
 
 .saltStepper-vertical {
+  display: flex;
   flex-direction: column;
+  overflow: hidden;
 }
