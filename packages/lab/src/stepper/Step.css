@@ -1,4 +1,4 @@
-.saltStep {
+.saltStepper-horizontal .saltStep {
   display: flex;
   flex: 1;
 }
@@ -44,6 +44,12 @@
   transition-duration: var(--salt-duration-perceptible);
   transition-timing-function: ease-in-out;
   transition-property: grid-template-rows, opacity;
+}
+
+@media (prefers-reduced-motion) {
+  .saltStepper-vertical .saltStep-content {
+    transition-duration: var(--salt-duration-instant);
+  }
 }
 
 .saltStepper-vertical .saltStep-terminal > .saltStep-content {
