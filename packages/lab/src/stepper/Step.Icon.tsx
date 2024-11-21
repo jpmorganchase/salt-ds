@@ -10,6 +10,7 @@ import {
   StepDefaultIcon,
   StepSuccessIcon,
   WarningSolidIcon,
+  LockedIcon,
   type IconProps,
 } from "@salt-ds/icons";
 import { makePrefixer } from "@salt-ds/core";
@@ -68,4 +69,5 @@ const stateToIconMap = {
   error: <ErrorSolidIcon />,
   warning: <WarningSolidIcon />,
   pending: <StepDefaultIcon />,
+  locked: <LockedIcon />,
 } satisfies Record<Step.Stage | Step.Status, ReactElement>

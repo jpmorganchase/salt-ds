@@ -32,7 +32,6 @@ export namespace Step {
     icon?: ReactElement;
     status?: Status;
     stage?: Stage;
-    disabled?: boolean;
     expanded?: boolean;
     defaultExpanded?: boolean;
     onToggle?: ButtonProps["onClick"];
@@ -45,10 +44,10 @@ export namespace Step {
 
   export type Stage = 
     | "pending"
+    | "locked"  
     | "completed"
     | "inprogress"
     | "active"
-    | "locked"  
   ;
 
   export type Depth = number;
@@ -73,7 +72,6 @@ export function Step({
   className,
   style,
   children,
-  disabled = false,
   ...props
 }: Step.Props) {
   const id = useId(idProp);
@@ -127,7 +125,6 @@ export function Step({
         !hasNestedSteps && withBaseName("terminal"),
         hasNestedSteps && expanded && withBaseName("expanded"),
         hasNestedSteps && !expanded && withBaseName("collapsed"),
-        disabled && withBaseName("disabled"),
         className,
       )}
       style={{
