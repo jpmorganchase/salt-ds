@@ -30,7 +30,10 @@ const getDefaultLocale = (dateAdapter: string) => {
 
 /** A storybook decorator that provides the Localization context (date support etc.) */
 export const withLocalization: Decorator = (Story, context) => {
-  const { dateAdapter, dateLocale } = context.parameters;
+  const dateAdapter =
+    context.parameters?.dateAdapter ?? context.globals?.dateAdapter;
+  const dateLocale =
+    context.parameters?.dateLocale ?? context.globals?.dateLocale;
   const locale = dateLocale ?? getDefaultLocale(dateAdapter);
   return (
     <LocalizationProvider
