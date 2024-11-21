@@ -67,6 +67,7 @@
 }
 
 .saltStep-label {
+  --saltText-color: initial;
   grid-area: label;
 }
 
@@ -95,11 +96,11 @@
   );
 }
 
-.saltStep:not(.saltStep-disabled) .saltStep-label {
-  --saltText-color: initial;
+.saltStep-stage-pending {
+  --saltIcon-color: var(--salt-status-static-foreground);
 }
 
-.saltStep-stage-pending {
+.saltStep-stage-locked {
   --saltIcon-color: var(--salt-status-static-foreground);
 }
 
@@ -123,9 +124,4 @@
 .saltStep-status-error {
   --saltIcon-color: var(--salt-status-error-foreground-decorative);
   --saltText-color: var(--salt-status-error-foreground-informative);
-}
-
-.saltStep-disabled {
-  --saltIcon-color: var(--salt-content-primary-foreground-disabled);
-  --saltText-color: var(--salt-content-primary-foreground-disabled);
 }

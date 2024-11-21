@@ -70,7 +70,7 @@ export const HorizontalVariations: StoryFn<typeof Stepper> = () => {
         <Step
           label="Step"
           description="Description text"
-          disabled
+          stage="locked"
         />
       </Stepper>
     </StackLayout>
@@ -161,7 +161,7 @@ export const VerticalVariations: StoryFn<typeof Stepper> = () => {
         <Step
           label="Step"
           description="Description text"
-          disabled
+          stage="locked"
         />
       </Stepper>
     </StackLayout>
@@ -186,7 +186,6 @@ export const VerticalLongText: StoryFn<typeof Stepper> = () => {
         <Step
           label="Oh no!"
           description="lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate magni dignissimos inventore incidunt facere harum expedita beatae reiciendis numquam iste excepturi dolorum omnis optio ullam quam illum, eligendi perspiciatis quia."
-
           status="error"
         />
         <Step
@@ -264,27 +263,6 @@ export const Barebones: StoryFn<typeof Stepper> = () => {
         <Step stage="completed" />
         <Step stage="active" />
         <Step />
-      </Stepper>
-    </StackLayout>
-  )
-}
-
-export const CustomSteps: StoryFn<typeof Stepper> = () => {
-  function LockedStep(props: StepProps) {
-    return (
-      <Step
-        {...props}
-        icon={<LockedIcon />}
-      />
-    )
-  }
-
-  return (
-    <StackLayout style={{ minWidth: '320px', width: '100%' }}>
-      <Stepper>
-        <Step label="Step 1" stage="completed" />
-        <Step label="Step 2" stage="active" />
-        <LockedStep label="Step 3" />
       </Stepper>
     </StackLayout>
   )
