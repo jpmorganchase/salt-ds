@@ -31,6 +31,7 @@ import type { DateRangeSelection } from "../calendar";
 import {
   type DateDetail,
   type DateFrameworkType,
+  type ParserResult,
   type TimeFields,
   useLocalization,
 } from "../date-adapters";
@@ -55,6 +56,14 @@ export type DateInputRangeDetails = {
   /** Details of parsing the end date and applying any validation */
   endDate?: DateDetail;
 };
+
+/**
+ * Enum to identify the field being parsed
+ */
+export enum DateParserField {
+  START = "start",
+  END = "end",
+}
 
 /**
  * Props for the DateInputRange component.
@@ -115,9 +124,22 @@ export interface DateInputRangeProps<TDate extends DateFrameworkType>
    */
   endInputRef?: Ref<HTMLInputElement>;
   /**
-   * Locale for date formatting
+   * Locale for date formatting and parsing
    */
   locale?: any;
+  /**
+   * Parser callback, if not using the adapter's parser
+   * @param value - date string to parse
+   * @param field: DateParserField to identify value,
+   * @param format - format required
+   * @param locale - locale required
+   */
+  parse?: (
+    value: string,
+    field: DateParserField,
+    format: string,
+    locale?: any,
+  ) => ParserResult<TDate>;
   /**
    * Input value. Use when the input value is controlled.
    */
@@ -191,7 +213,8 @@ export const DateInputRange = forwardRef<
       startInputRef: startInputRefProp,
       endInputRef: endInputRefProp,
       locale,
-      placeholder = "dd mmm yyyy",
+      parse: parseProp,
+      placeholder = "DD MMM YYYY",
       readOnly: readOnlyProp,
       validationStatus: validationStatusProp,
       variant = "primary",
@@ -217,26 +240,41 @@ export const DateInputRange = forwardRef<
       window: targetWindow,
     });
 
+    const parseDateValue = (
+      dateValue: string | null | undefined,
+      field: DateParserField,
+    ): ParserResult<TDate> | undefined => {
+      if (!dateValue || !dateValue.length) {
+        return;
+      }
+      const parseResult = parseProp
+        ? parseProp(dateValue, field, format, locale)
+        : dateAdapter.parse.bind(dateAdapter)(dateValue, format, locale);
+
+      const { date, ...parseDetails } = parseResult;
+      return { date, ...parseDetails };
+    };
+
     const [dateValue, setDateValue] = useControlled({
       controlled: valueProp,
       default: defaultValue,
       name: "DateInputRange",
       state: "dateValue",
     });
-    const fallbackDate = useMemo(
-      () =>
-        defaultValue
-          ? {
-              startDate: defaultValue.startDate
-                ? dateAdapter.parse(defaultValue.startDate, format).date
-                : undefined,
-              endDate: defaultValue.endDate
-                ? dateAdapter.parse(defaultValue.endDate, format).date
-                : undefined,
-            }
-          : undefined,
-      [defaultValue, dateAdapter],
-    );
+    const fallbackDate = useMemo(() => {
+      if (!defaultValue) {
+        return undefined;
+      }
+      const { date: startDate = undefined } =
+        parseDateValue(defaultValue?.startDate, DateParserField.START) ?? {};
+      const { date: endDate = undefined } =
+        parseDateValue(defaultValue?.endDate, DateParserField.END) ?? {};
+      return {
+        startDate,
+        endDate,
+      };
+    }, [defaultValue, dateAdapter, parseProp, format]);
+
     const [date, setDate] = useControlled({
       controlled: dateProp,
       default: defaultDate ?? fallbackDate,
@@ -346,13 +384,9 @@ export const DateInputRange = forwardRef<
 
     const apply = (event: SyntheticEvent) => {
       const { date: startDate = undefined, ...startDateParseDetails } =
-        dateValue?.startDate?.length
-          ? dateAdapter.parse(dateValue.startDate, format, locale)
-          : {};
-      const { date: endDate = undefined, ...endDateParseDetails } = dateValue
-        ?.endDate?.length
-        ? dateAdapter.parse(dateValue.endDate, format, locale)
-        : {};
+        parseDateValue(dateValue?.startDate, DateParserField.START) ?? {};
+      const { date: endDate = undefined, ...endDateParseDetails } =
+        parseDateValue(dateValue?.endDate, DateParserField.END) ?? {};
       const updatedDateRange = {
         startDate,
         endDate,

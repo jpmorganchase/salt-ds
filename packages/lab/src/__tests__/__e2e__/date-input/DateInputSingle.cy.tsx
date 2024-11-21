@@ -6,6 +6,7 @@ import {
   DateDetailErrorEnum,
   type DateFrameworkType,
   DateInputSingle,
+  type ParserResult,
   type SaltDateAdapter,
 } from "@salt-ds/lab";
 import { es as dateFnsEs } from "date-fns/locale";
@@ -198,6 +199,34 @@ describe("GIVEN a DateInputSingle", () => {
           ),
         );
         cy.findByRole("textbox").should("have.value", "01/02/2024");
+      });
+
+      it("SHOULD support custom parser", () => {
+        const onDateChangeSpy = cy.stub().as("dateChangeSpy");
+        const customParserSpy = cy
+          .stub()
+          .as("customParserSpy")
+          .callsFake((inputDate: string): ParserResult<DateFrameworkType> => {
+            expect(inputDate).to.equal("custom value");
+            return {
+              date: initialDate,
+              value: initialDateValue,
+            };
+          });
+        cy.mount(
+          <DateInputSingle
+            format="DD MMM YYYY"
+            onDateChange={onDateChangeSpy}
+            parse={customParserSpy}
+          />,
+        );
+        cy.findByRole("textbox").click().clear().type("custom value");
+        cy.realPress("Tab");
+        cy.get("@customParserSpy").should("have.been.calledOnce");
+        cy.get("@dateChangeSpy").then((spy) =>
+          assertDateChange(spy, initialDateValue, initialDate, adapter),
+        );
+        cy.findByRole("textbox").should("have.value", initialDateValue);
       });
 
       describe("locale", () => {

@@ -55,10 +55,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
       it("SHOULD support validation", () => {
         const selectionChangeSpy = cy.stub().as("selectionChangeSpy");
         cy.mount(
-          <SingleWithFormField
-            selectionVariant={"single"}
-            onSelectionChange={selectionChangeSpy}
-          />,
+          <SingleWithFormField onSelectionChange={selectionChangeSpy} />,
         );
         // Simulate entering a valid date
         cy.findByRole("textbox").click().clear().type(initialDateValue);
@@ -122,7 +119,6 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
         cy.mount(
           <SingleWithMinMaxDate
             defaultSelectedDate={initialDate}
-            selectionVariant={"single"}
             onSelectionChange={selectionChangeSpy}
           />,
         );
@@ -179,10 +175,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
       it("SHOULD support custom panel with tenors", () => {
         const selectionChangeSpy = cy.stub().as("selectionChangeSpy");
         cy.mount(
-          <SingleWithCustomPanel
-            selectionVariant={"single"}
-            onSelectionChange={selectionChangeSpy}
-          />,
+          <SingleWithCustomPanel onSelectionChange={selectionChangeSpy} />,
         );
         // Simulate opening the calendar
         cy.findByRole("button", { name: "Open Calendar" }).realClick();
@@ -215,10 +208,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
       it("SHOULD support custom panel with Today button", () => {
         const selectionChangeSpy = cy.stub().as("selectionChangeSpy");
         cy.mount(
-          <SingleWithTodayButton
-            selectionVariant={"single"}
-            onSelectionChange={selectionChangeSpy}
-          />,
+          <SingleWithTodayButton onSelectionChange={selectionChangeSpy} />,
         );
         // Simulate opening the calendar
         cy.findByRole("button", { name: "Open Calendar" }).realClick();
@@ -251,7 +241,6 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
           const cancelSpy = cy.stub().as("cancelSpy");
           cy.mount(
             <SingleWithConfirmation
-              selectionVariant={"single"}
               defaultSelectedDate={initialDate}
               onSelectionChange={selectionChangeSpy}
               onApply={appliedDateSpy}
@@ -298,7 +287,6 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
           const cancelSpy = cy.stub().as("cancelSpy");
           cy.mount(
             <SingleWithConfirmation
-              selectionVariant={"single"}
               defaultSelectedDate={initialDate}
               onSelectionChange={selectionChangeSpy}
               onApply={appliedDateSpy}
@@ -355,10 +343,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
       it("SHOULD support custom parsing", () => {
         const selectionChangeSpy = cy.stub().as("selectionChangeSpy");
         cy.mount(
-          <SingleWithCustomParser
-            selectionVariant={"single"}
-            onSelectionChange={selectionChangeSpy}
-          />,
+          <SingleWithCustomParser onSelectionChange={selectionChangeSpy} />,
         );
         // Simulate entering a valid date
         cy.findByRole("textbox").click().clear().type(initialDateValue);
@@ -436,12 +421,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
 
       describe("controlled component", () => {
         it("SHOULD render the selected date", () => {
-          cy.mount(
-            <SingleControlled
-              selectionVariant={"single"}
-              defaultSelectedDate={initialDate}
-            />,
-          );
+          cy.mount(<SingleControlled defaultSelectedDate={initialDate} />);
           // Verify that the selected date is displayed
           cy.findByRole("textbox").should("have.value", initialDateValue);
           // Simulate opening the calendar
@@ -455,12 +435,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
         });
 
         it("SHOULD be able to select a date", () => {
-          cy.mount(
-            <SingleControlled
-              selectionVariant={"single"}
-              defaultSelectedDate={initialDate}
-            />,
-          );
+          cy.mount(<SingleControlled defaultSelectedDate={initialDate} />);
           // Simulate opening the calendar
           cy.findByRole("button", { name: "Open Calendar" }).realClick();
           // Verify that the calendar is displayed
