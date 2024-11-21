@@ -6,7 +6,9 @@ import {
   DateDetailErrorEnum,
   type DateFrameworkType,
   DateInputRange,
+  DateParserField,
   type DateRangeSelection,
+  type ParserResult,
   type SaltDateAdapter,
 } from "@salt-ds/lab";
 import { es as dateFnsEs } from "date-fns/locale";
@@ -342,6 +344,88 @@ describe("GIVEN a DateInputRange", () => {
             },
             adapter,
           ),
+        );
+      });
+
+      it("SHOULD support custom parser", () => {
+        const onDateChangeSpy = cy.stub().as("dateChangeSpy");
+
+        const customParserSpy = cy
+          .stub()
+          .as("customParserSpy")
+          .callsFake(
+            (
+              inputDate: string,
+              field: DateParserField,
+            ): ParserResult<DateFrameworkType> => {
+              if (field === DateParserField.START) {
+                return {
+                  date: initialDate.startDate,
+                  value: inputDate,
+                };
+              }
+              expect(field).to.equal(DateParserField.END);
+              return {
+                date: initialDate.endDate,
+                value: inputDate,
+              };
+            },
+          );
+
+        cy.mount(
+          <DateInputRange
+            format="DD MMM YYYY"
+            onDateChange={onDateChangeSpy}
+            parse={customParserSpy}
+          />,
+        );
+
+        // Test update start date with custom value
+        cy.findByLabelText("Start date")
+          .click()
+          .clear()
+          .type("custom start date");
+        cy.realPress("Tab");
+        cy.get("@dateChangeSpy").then((spy) =>
+          assertDateChange(
+            spy,
+            {
+              startDate: "custom start date",
+              endDate: undefined,
+            },
+            {
+              startDate: initialDate.startDate,
+              endDate: undefined,
+            },
+            adapter,
+          ),
+        );
+
+        // Test update end date with custom value
+        cy.findByLabelText("End date").click().clear().type("custom end date");
+        cy.realPress("Tab");
+        cy.get("@dateChangeSpy").then((spy) =>
+          assertDateChange(
+            spy,
+            {
+              startDate: "custom start date",
+              endDate: "custom end date",
+            },
+            {
+              startDate: initialDate.startDate,
+              endDate: initialDate.endDate,
+            },
+            adapter,
+          ),
+        );
+
+        cy.findByLabelText("Start date").should(
+          "have.value",
+          initialDateValue.startDate,
+        );
+        cy.findByLabelText("End date").should(
+          "have.value",
+          initialDateValue.endDate,
         );
       });
 

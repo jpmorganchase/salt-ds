@@ -28,6 +28,7 @@ const {
   RangeControlled,
   RangeWithConfirmation,
   RangeWithCustomPanel,
+  RangeWithCustomParser,
   RangeWithFormField,
   RangeWithMinMaxDate,
 } = datePickerStories as any;
@@ -44,9 +45,6 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
       afterEach(() => {
         cy.clock().then((clock) => clock.restore());
       });
-
-      const initialSingleDateValue = "05 Jan 2025";
-      const initialSingleDate = adapter.parse("05/01/2025", "DD/MM/YYYY").date;
 
       const initialRangeDateValue = {
         startDate: "05 Jan 2025",
@@ -358,6 +356,66 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
           cy.findByLabelText("End date").should("have.value", "16 Jan 2025");
           cy.get("@cancelSpy").should("not.have.been.called");
         });
+      });
+
+      it("SHOULD support custom parsing", () => {
+        const selectionChangeSpy = cy.stub().as("selectionChangeSpy");
+        cy.mount(
+          <RangeWithCustomParser
+            onSelectionChange={selectionChangeSpy}
+            defaultSelectedDate={initialRangeDate}
+          />,
+        );
+        // Simulate entering a custom parsed start date
+        cy.findByLabelText("Start date").clear().type("+7");
+        cy.realPress("Tab");
+        const offsetStartDate = adapter.add(initialRangeDate.startDate, {
+          days: 7,
+        });
+        const offsetStartDateValue = adapter.format(
+          offsetStartDate,
+          "DD MMM YYYY",
+        );
+        cy.findByLabelText("Start date").should(
+          "have.value",
+          offsetStartDateValue,
+        );
+        cy.get("@selectionChangeSpy").should((spy: any) => {
+          const [_event, date, details] = spy.lastCall.args;
+          expect(adapter.isValid(date.startDate)).to.be.true;
+          expect(adapter.format(date.startDate, "DD MMM YYYY")).to.equal(
+            offsetStartDateValue,
+          );
+          expect(adapter.isValid(date.endDate)).to.be.true;
+          expect(adapter.format(date.endDate, "DD MMM YYYY")).to.equal(
+            initialRangeDateValue.endDate,
+          );
+        });
+        // Simulate entering a custom parsed end date
+        cy.findByLabelText("End date").clear().type("+7");
+        cy.realPress("Tab");
+        const offsetEndDate = adapter.add(initialRangeDate.endDate, {
+          days: 7,
+        });
+        const offsetEndDateValue = adapter.format(offsetEndDate, "DD MMM YYYY");
+        cy.findByLabelText("End date").should("have.value", offsetEndDateValue);
+        cy.get("@selectionChangeSpy").should("have.been.calledTwice");
+        cy.get("@selectionChangeSpy").should((spy: any) => {
+          const [_event, date, details] = spy.lastCall.args;
+          expect(adapter.isValid(date.startDate)).to.be.true;
+          expect(adapter.format(date.startDate, "DD MMM YYYY")).to.equal(
+            offsetStartDateValue,
+          );
+          expect(adapter.isValid(date.endDate)).to.be.true;
+          expect(adapter.format(date.endDate, "DD MMM YYYY")).to.equal(
+            offsetEndDateValue,
+          );
+        });
+        cy.findByLabelText("Start date").should(
+          "have.value",
+          offsetStartDateValue,
+        );
+        cy.findByLabelText("End date").should("have.value", offsetEndDateValue);
       });
 
       describe("uncontrolled component", () => {

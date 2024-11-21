@@ -25,7 +25,7 @@ import {
   useState,
 } from "react";
 import type { SingleDateSelection } from "../calendar";
-import type { DateDetail } from "../date-adapters";
+import type { DateDetail, ParserResult } from "../date-adapters";
 import {
   type DateFrameworkType,
   type TimeFields,
@@ -97,9 +97,16 @@ export interface DateInputSingleProps<TDate extends DateFrameworkType>
    */
   inputRef?: RefObject<HTMLInputElement>;
   /**
-   * Locale for date formatting
+   * Locale for date formatting and parsing
    */
   locale?: any;
+  /**
+   * Parser callback, if not using the adapter's parser
+   * @param value - date string to parse
+   * @param format - format required
+   * @param locale - locale required
+   */
+  parse?: (value: string, format: string, locale?: any) => ParserResult<TDate>;
   /**
    * Input value. Use when the input value is controlled.
    */
@@ -161,7 +168,8 @@ export const DateInputSingle = forwardRef<
       inputProps = {},
       inputRef: inputRefProp = null,
       locale,
-      placeholder = "dd mmm yyyy",
+      parse: parseProp,
+      placeholder = "DD MMM YYYY",
       readOnly: readOnlyProp,
       startAdornment,
       validationStatus: validationStatusProp,
@@ -252,10 +260,11 @@ export const DateInputSingle = forwardRef<
       : dateInputPropsRequired;
 
     const apply = (event: SyntheticEvent) => {
-      const parserResult = dateValue?.length
-        ? dateAdapter.parse(dateValue, format, locale)
+      const parse = parseProp ?? dateAdapter.parse.bind(dateAdapter);
+      const parseResult = dateValue?.length
+        ? parse(dateValue, format, locale)
         : { date: undefined };
-      let { date: parsedDate, ...parseDetails } = parserResult;
+      let { date: parsedDate, ...parseDetails } = parseResult;
       let formattedValue = "";
       if (dateAdapter.isValid(parsedDate)) {
         formattedValue = dateAdapter.format(parsedDate, format, locale);

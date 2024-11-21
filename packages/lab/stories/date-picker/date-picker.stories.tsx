@@ -9,14 +9,11 @@ import {
   GridLayout,
 } from "@salt-ds/core";
 import {
-  AdapterDateFns,
-  AdapterDayjs,
-  AdapterLuxon,
-  AdapterMoment,
   DateDetailErrorEnum,
   type DateFrameworkType,
   type DateInputRangeDetails,
   type DateInputSingleDetails,
+  DateParserField,
   DatePicker,
   DatePickerActions,
   DatePickerOverlay,
@@ -29,8 +26,6 @@ import {
   type DatePickerSingleProps,
   DatePickerTrigger,
   type DateRangeSelection,
-  LocalizationProvider,
-  type LocalizationProviderProps,
   type ParserResult,
   type SingleDatePickerState,
   type SingleDateSelection,
@@ -41,7 +36,7 @@ import {
 import type { Meta, StoryFn } from "@storybook/react";
 import type React from "react";
 import type { SyntheticEvent } from "react";
-import { useCallback, useMemo, useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { CustomDatePickerPanel } from "./CustomDatePickerPanel"; // CustomDatePickerPanel is an example, replace with your own composition of date controls
 // As required by locale specific examples
 import "moment/dist/locale/zh-cn";
@@ -1432,98 +1427,176 @@ export const SingleWithCustomParser: StoryFn<
     [dateAdapter, selectedDate],
   );
 
-  // ProTip: you don't need this map, it supports dynamically switching the Adapter at runtime, just extend a known Adapter instead
-  const dateAdapterMap: Record<
-    string,
-    LocalizationProviderProps<any, any>["DateAdapter"]
-  > = useMemo(
-    () => ({
-      dayjs: class CustomDayjsAdapter extends AdapterDayjs {
-        parse(
-          value: string,
-          format: string,
-          locale?: string,
-        ): ReturnType<AdapterDayjs["parse"]> {
-          const result = customParser(value, format, locale) as ReturnType<
-            AdapterDayjs["parse"]
-          >;
-          if (result.date !== undefined) {
-            return result;
-          }
-          return super.parse(value, format, locale);
+  return (
+    <FormField validationStatus={validationStatus}>
+      <FormLabel>Select a date</FormLabel>
+      <DatePicker
+        selectionVariant="single"
+        {...args}
+        onSelectionChange={handleSelectionChange}
+        onOpen={setOpen}
+      >
+        <DatePickerTrigger>
+          <DatePickerSingleInput parse={customParser} />
+        </DatePickerTrigger>
+        <DatePickerOverlay>
+          <DatePickerSinglePanel helperText={helperText} />
+        </DatePickerOverlay>
+      </DatePicker>
+      {!open ? <FormHelperText>{helperText}</FormHelperText> : null}
+    </FormField>
+  );
+};
+SingleWithCustomParser.parameters = {
+  docs: {
+    source: {
+      code: "Disabled for this story, see https://github.com/storybookjs/storybook/issues/11554",
+    },
+  },
+};
+
+export const RangeWithCustomParser: StoryFn<
+  DatePickerRangeProps<DateFrameworkType>
+> = ({ selectionVariant, defaultSelectedDate, ...args }) => {
+  const { dateAdapter } = useLocalization();
+  const defaultHelperText =
+    "Date format DD MMM YYYY (e.g. 09 Jun 2024) or +/-D (e.g. +7)";
+  const errorHelperText = "Please enter a valid date in DD MMM YYYY format";
+  const [helperText, setHelperText] = useState(defaultHelperText);
+  const [open, setOpen] = useState<boolean>(false);
+  const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
+    undefined,
+  );
+  const [selectedDate, setSelectedDate] =
+    useState<DateRangeSelection<DateFrameworkType> | null>(
+      defaultSelectedDate ?? null,
+    );
+  const handleSelectionChange = useCallback(
+    (
+      event: SyntheticEvent,
+      date: DateRangeSelection<DateFrameworkType> | null,
+      details: DateInputRangeDetails | undefined,
+    ) => {
+      const { startDate, endDate } = date ?? {};
+      const {
+        startDate: {
+          value: startDateOriginalValue = undefined,
+          errors: startDateErrors = undefined,
+        } = {},
+        endDate: {
+          value: endDateOriginalValue = undefined,
+          errors: endDateErrors = undefined,
+        } = {},
+      } = details || {};
+      console.log(
+        `StartDate: ${dateAdapter.isValid(startDate) ? dateAdapter.format(startDate, "DD MMM YYYY") : startDate}, EndDate: ${dateAdapter.isValid(endDate) ? dateAdapter.format(endDate, "DD MMM YYYY") : endDate}`,
+      );
+      if (startDateErrors?.length) {
+        console.log(
+          `StartDate Error(s): ${startDateErrors.map(({ type, message }) => `type: ${type} message: ${message}`).join(",")}`,
+        );
+        if (startDateOriginalValue) {
+          console.log(`StartDate Original Value: ${startDateOriginalValue}`);
         }
-      },
-      "date-fns": class CustomDateFnsAdapter extends AdapterDateFns {
-        parse(
-          value: string,
-          format: string,
-          locale?: any,
-        ): ReturnType<AdapterDateFns["parse"]> {
-          const result = customParser(value, format, locale) as ReturnType<
-            AdapterDateFns["parse"]
-          >;
-          if (result.date !== undefined) {
-            return result;
-          }
-          return super.parse(value, format, locale);
+      }
+      if (endDateErrors?.length) {
+        console.log(
+          `EndDate Error(s): ${endDateErrors.map(({ type, message }) => `type: ${type} message: ${message}`).join(",")}`,
+        );
+        if (endDateOriginalValue) {
+          console.log(`EndDate Original Value: ${endDateOriginalValue}`);
         }
-      },
-      luxon: class CustomLuxonAdapter extends AdapterLuxon {
-        parse(
-          value: string,
-          format: string,
-          locale?: string,
-        ): ReturnType<AdapterLuxon["parse"]> {
-          const result = customParser(value, format, locale) as ReturnType<
-            AdapterLuxon["parse"]
-          >;
-          if (result.date !== undefined) {
-            return result;
-          }
-          return super.parse(value, format, locale);
-        }
-      },
-      moment: class CustomMomentAdapter extends AdapterMoment {
-        parse(
-          value: string,
-          format: string,
-          locale?: string,
-        ): ReturnType<AdapterMoment["parse"]> {
-          const result = customParser(value, format, locale) as ReturnType<
-            AdapterMoment["parse"]
-          >;
-          if (result.date !== undefined) {
-            return result;
-          }
-          return super.parse(value, format, locale);
-        }
-      },
-    }),
-    [customParser],
+      }
+      if (startDateErrors?.length && startDateOriginalValue) {
+        setValidationStatus("error");
+        setHelperText(
+          `${errorHelperText} - start date ${startDateErrors[0].message}`,
+        );
+      } else if (endDateErrors?.length && endDateOriginalValue) {
+        setValidationStatus("error");
+        setHelperText(
+          `${errorHelperText} - end date ${endDateErrors[0].message}`,
+        );
+      } else {
+        setValidationStatus(undefined);
+        setHelperText(defaultHelperText);
+      }
+      setSelectedDate({
+        startDate:
+          startDateOriginalValue?.trim().length === 0 ? null : startDate,
+        endDate: endDateOriginalValue?.trim().length === 0 ? null : endDate,
+      });
+      args?.onSelectionChange?.(event, date, details);
+    },
+    [args.onSelectionChange, dateAdapter, setValidationStatus, setHelperText],
   );
 
-  const CustomDateAdapter = dateAdapterMap[dateAdapter.lib];
-  return (
-    <LocalizationProvider DateAdapter={CustomDateAdapter}>
-      <FormField validationStatus={validationStatus}>
-        <FormLabel>Select a date</FormLabel>
-        <DatePicker
-          selectionVariant="single"
-          {...args}
-          onSelectionChange={handleSelectionChange}
-          onOpen={setOpen}
-        >
-          <DatePickerTrigger>
-            <DatePickerSingleInput />
-          </DatePickerTrigger>
-          <DatePickerOverlay>
-            <DatePickerSinglePanel helperText={helperText} />
-          </DatePickerOverlay>
-        </DatePicker>
-        {!open ? <FormHelperText>{helperText}</FormHelperText> : null}
-      </FormField>
-    </LocalizationProvider>
+  const customParser = useCallback(
+    (
+      inputDate: string,
+      field: DateParserField,
+      format: string,
+      locale: any,
+    ): ParserResult<DateFrameworkType> => {
+      if (!inputDate?.length) {
+        const parsedDate = dateAdapter.parse("invalid date", "DD/MMM/YYYY");
+        return {
+          date: parsedDate.date,
+          value: inputDate,
+          errors: [
+            { type: DateDetailErrorEnum.UNSET, message: "no date provided" },
+          ],
+        };
+      }
+      const parsedDate = inputDate;
+      const offsetMatch = parsedDate?.match(/^([+-]?\d+)$/);
+      if (offsetMatch) {
+        const offsetDays = Number.parseInt(offsetMatch[1], 10);
+        let offsetDate;
+        if (selectedDate?.startDate && field === DateParserField.START) {
+          offsetDate = selectedDate.startDate;
+        } else if (selectedDate?.endDate && field === DateParserField.END) {
+          offsetDate = selectedDate.endDate;
+        } else {
+          offsetDate = dateAdapter.today();
+        }
+        offsetDate = dateAdapter.add(offsetDate, { days: offsetDays });
+        return {
+          date: offsetDate,
+          value: inputDate,
+        };
+      }
+      return dateAdapter.parse(parsedDate || "", format, locale);
+    },
+    [dateAdapter, selectedDate],
   );
+
+  return (
+    <FormField validationStatus={validationStatus}>
+      <FormLabel>Select a date</FormLabel>
+      <DatePicker
+        selectionVariant="range"
+        {...args}
+        onSelectionChange={handleSelectionChange}
+        selectedDate={selectedDate}
+      >
+        <DatePickerTrigger>
+          <DatePickerRangeInput parse={customParser} />
+        </DatePickerTrigger>
+        <DatePickerOverlay>
+          <DatePickerRangePanel />
+        </DatePickerOverlay>
+      </DatePicker>
+      {!open ? <FormHelperText>{helperText}</FormHelperText> : null}
+    </FormField>
+  );
+};
+RangeWithCustomParser.parameters = {
+  docs: {
+    source: {
+      code: "Disabled for this story, see https://github.com/storybookjs/storybook/issues/11554",
+    },
+  },
 };
 
 export const SingleWithCustomValidation: StoryFn<
