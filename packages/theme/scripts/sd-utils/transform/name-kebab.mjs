@@ -67,7 +67,7 @@ function removeDefaultSuffix(name) {
   return name.replace(/-default$/, "");
 }
 
-export const saltKebab = (token, config) => {
+const saltKebab = (token, config) => {
   // attributes: { category: 'color', type: 'alpha',
   if (
     token.path.includes("alpha") &&
@@ -91,4 +91,10 @@ export const saltKebab = (token, config) => {
   );
   console.log("salt-ds/name/kebab name", name, token);
   return name;
+};
+export const saltNameKebab = {
+  name: "salt-ds/name/kebab",
+  type: "name",
+  transitive: true,
+  transform: saltKebab,
 };

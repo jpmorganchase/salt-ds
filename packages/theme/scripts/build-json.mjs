@@ -1,6 +1,7 @@
 import { StyleDictionary } from "style-dictionary-utils";
 import { cssMultiModes } from "./sd-utils/format/css-multi-modes.mjs";
-import { saltKebab } from "./sd-utils/transform/kebab.mjs";
+import { saltNameKebab } from "./sd-utils/transform/name-kebab.mjs";
+import { saltValueModes } from "./sd-utils/transform/value-modes.mjs";
 
 // TODO: add more styling options here, and theme vs theme next
 function getStyleDictionaryConfig({ modes, density, accents }) {
@@ -95,7 +96,7 @@ function getStyleDictionaryConfig({ modes, density, accents }) {
               );
             },
           },
-          // Inpire from `atRule` option, to work out multiple modes in a single file?
+          // Inspire from `atRule` option, to work out multiple modes in a single file?
           // https://github.com/lukasoppermann/style-dictionary-utils/blob/main/src/format/css-advanced.ts
           // Not really, SD will warn Collision detected, and only use one value at a time, we need to come up with custom syntax to make this work
           ...paletteNextList.map((paletteNextType) => {
@@ -162,42 +163,10 @@ for await (const density of ["hd"]) {
 
   // TODO: find out why when `value` transform is provided, name is broken
   // This is currently not used, but would be good to understand regardless
-  saltStyleDictionary.registerTransform({
-    type: "value",
-    // if `transitive` is not here, `transform` is not being called...
-    transitive: true,
-    name: "salt-ds/value/modes",
-    filter: (token, options) => {
-      return token.$modes !== undefined;
-      // const filterCondition =
-      //   token.filePath.includes("-next.tokens") &&
-      //   token.path[0] === "palette";
-      // console.log("salt-ds/value/modes filter", filterCondition, token);
-      // return filterCondition;
-    },
-    transform: (token, _, options) => {
-      console.log("salt-ds/value/modes transform", token);
-      // debugger;
-      if (
-        // token.path.includes("palette")
-        token.attributes.category === "palette" &&
-        token.attributes.type === "accent" &&
-        token.attributes.item === "stronger"
-      ) {
-        console.log("palette accent stronger", token);
-      }
-
-      return token.$modes; // how to work out `.light` here?
-    },
-  });
+  saltStyleDictionary.registerTransform(saltValueModes);
 
   // Custom transform - https://styledictionary.com/reference/hooks/transforms/
-  saltStyleDictionary.registerTransform({
-    name: "salt-ds/name/kebab",
-    type: "name",
-    transitive: true,
-    transform: saltKebab,
-  });
+  saltStyleDictionary.registerTransform(saltNameKebab);
   const sd = await saltStyleDictionary.extend(config);
   sd.cleanAllPlatforms();
   sd.buildAllPlatforms();
