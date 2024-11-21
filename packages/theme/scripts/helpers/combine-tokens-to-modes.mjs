@@ -38,10 +38,43 @@ function addModesValue(mainToken, modeName, modeSpecificToken) {
   mainToken.$modes[modeName] = modeSpecificToken.$value;
 }
 
+function dedupeModesValue(token) {
+  console.log("dedupeModesValue", token);
+  // super specific to Salt accent/mode for now, split by "-", e.g. "blue-light" & "teal-light" can be potentially combined
+  const {
+    "blue-light": blueLightValue,
+    "teal-light": tealLightValue,
+    ...rest1
+  } = token.$modes;
+
+  if (blueLightValue && blueLightValue === tealLightValue) {
+    token.$modes = {
+      light: blueLightValue,
+      ...rest1,
+    };
+  }
+  console.log("rest1", token);
+
+  const {
+    "blue-dark": blueDarkValue,
+    "teal-dark": tealDarkValue,
+    ...rest2
+  } = token.$modes;
+
+  if (blueDarkValue && blueDarkValue === tealDarkValue) {
+    token.$modes = {
+      ...rest2,
+      dark: blueDarkValue,
+    };
+  }
+  console.log("rest2", token);
+}
+
 function iterateToAddModes(tokenObj, modeName, modeTokenObj) {
   // There shouldn't be any token with $value as well as nested token definations
   if ("$value" in tokenObj) {
     addModesValue(tokenObj, modeName, modeTokenObj);
+    dedupeModesValue(tokenObj);
   } else {
     for (const [key, nestedToken] of Object.entries(tokenObj)) {
       // NOTE: This assumes all tokens having the same structure

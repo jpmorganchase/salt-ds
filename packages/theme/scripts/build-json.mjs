@@ -96,11 +96,9 @@ function getStyleDictionaryConfig({ modes, density, accents }) {
               );
             },
           },
-          // Inspire from `atRule` option, to work out multiple modes in a single file?
-          // https://github.com/lukasoppermann/style-dictionary-utils/blob/main/src/format/css-advanced.ts
-          // Not really, SD will warn Collision detected, and only use one value at a time, we need to come up with custom syntax to make this work
+          // 2 sets of palette files set, one with 4 $modes ('blue/teal-light/dark'), one with 2 $modes ('light/dark')
           ...paletteNextList.map((paletteNextType) => {
-            const modeAccentRules = modes.reduce((prev, mode) => {
+            const accentModeRules = modes.reduce((prev, mode) => {
               // TODO: restructure `./palette/` files to per palette family, so that only those needing 4 combination (accents * modes) will generate 4 block of CSS code?
               // Or - should it be smarter when combining modes?
               for (const accent of accents) {
@@ -111,16 +109,14 @@ function getStyleDictionaryConfig({ modes, density, accents }) {
               }
               return prev;
             }, []);
-            console.log({ modeAccentRules });
+
             return {
               format: "salt-ds/css/multi-modes",
-              // format: "css/advanced",
               destination: `palette/${paletteNextType}-next.css`,
               options: {
-                // selector: `.salt-theme.salt-theme-next[data-mode="${mode}"][data-accent="${accent}"]`, // defaults to :root
                 outputReferences: true,
                 usesDtcg: true,
-                rules: modeAccentRules,
+                rules: accentModeRules,
               },
               // // Use filter to add different `selector` for mode/density/etc.
               filter: async (token, options) => {
@@ -132,7 +128,40 @@ function getStyleDictionaryConfig({ modes, density, accents }) {
                   // platte
                   token.path[0] === "palette" && // or token.filePath.includes("/palette/") &&
                   //
-                  token.path[1] === paletteNextType
+                  token.path[1] === paletteNextType &&
+                  // dirty way to match 'blue/teal-light/dark'
+                  Object.keys(token.$modes).every((x) => x.includes("-"))
+                );
+              },
+            };
+          }),
+          ...paletteNextList.map((paletteNextType) => {
+            const modeOnlyRules = modes.map((mode) => ({
+              selector: `.salt-theme.salt-theme-next[data-mode="${mode}"]`,
+              modeIdentifier: mode,
+            }));
+
+            return {
+              format: "salt-ds/css/multi-modes",
+              destination: `palette/${paletteNextType}-next.css`,
+              options: {
+                outputReferences: true,
+                usesDtcg: true,
+                rules: modeOnlyRules,
+              },
+              // // Use filter to add different `selector` for mode/density/etc.
+              filter: async (token, options) => {
+                console.log("css/advanced filter", token); //palette-accent
+                //  For some reason, attributes "attribute/cti" is not attached to tokens in palette
+                return (
+                  // next
+                  token.filePath.includes("-next.tokens") &&
+                  // platte
+                  token.path[0] === "palette" && // or token.filePath.includes("/palette/") &&
+                  //
+                  token.path[1] === paletteNextType &&
+                  // dirty way to NOT match 'blue/teal-light/dark'
+                  !Object.keys(token.$modes).every((x) => x.includes("-"))
                 );
               },
             };
