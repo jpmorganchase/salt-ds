@@ -2,10 +2,11 @@
   --saltStep-connector-borderWidth: 2px;
 
   grid-area: track;
-  transition-timing-function: ease-in-out;
-  transition-property: opacity, min-height;
-  transition-duration: var(--salt-duration-perceptible);
   min-height: var(--salt-spacing-300);
+  
+  transition-duration: inherit;
+  transition-timing-function: inherit;
+  transition-property: opacity, min-height;
 }
 
 .saltStepper-horizontal .saltStepConnector {
