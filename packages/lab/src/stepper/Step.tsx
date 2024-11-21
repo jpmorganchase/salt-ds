@@ -29,7 +29,6 @@ export namespace Step {
   export interface Props extends ComponentProps<"li"> {
     label?: ReactNode;
     description?: ReactNode;
-    icon?: ReactElement;
     status?: Status;
     stage?: Stage;
     expanded?: boolean;
@@ -62,7 +61,6 @@ const withBaseName = makePrefixer("saltStep");
 export function Step({
   id: idProp,
   label,
-  icon,
   description,
   status,
   stage = "pending",
@@ -105,8 +103,8 @@ export function Step({
     }
   }, [depth]);
 
-  const iconMultiplier = depth === 0 ? 1.5 : 1;
   const hasNestedSteps = !!children;
+  const iconMultiplier = depth === 0 ? 1.5 : 1;
 
   const labelId = `step-${id}-label`;
   const nestedStepperId = `step-${id}-nested-stepper`;
@@ -139,7 +137,6 @@ export function Step({
           stage={stage}
           status={status}
           multiplier={iconMultiplier}
-          element={icon}
         />
         {label && (
           <Text
