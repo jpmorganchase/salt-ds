@@ -57,6 +57,7 @@ export const DatePickerOverlay = forwardRef<
     <FloatingComponent
       className={clsx(withBaseName(), className)}
       open={open || false}
+      role="modal"
       aria-modal="true"
       ref={floatingRef}
       focusManagerProps={
