@@ -1,5 +1,5 @@
+import type { DateFrameworkType } from "@salt-ds/date-adapters";
 import { createContext, useContext } from "react";
-import type { DateFrameworkType } from "../../date-adapters";
 import type { UseCalendarReturn } from "../useCalendar";
 
 interface CalendarState<TDate extends DateFrameworkType>

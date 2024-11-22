@@ -1,7 +1,7 @@
 import { isValid } from "date-fns";
 import { enUS } from "date-fns/locale";
 import { describe, expect, it } from "vitest";
-import { AdapterDateFns, DateDetailErrorEnum } from "../../date-adapters";
+import { AdapterDateFns, DateDetailErrorEnum } from "../index";
 
 describe("GIVEN a AdapterDateFns", () => {
   const adapter = new AdapterDateFns({ locale: enUS });

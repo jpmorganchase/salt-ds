@@ -1,4 +1,8 @@
 import { makePrefixer, useControlled } from "@salt-ds/core";
+import type {
+  DateFrameworkType,
+  SaltDateAdapter,
+} from "@salt-ds/date-adapters";
 import { clsx } from "clsx";
 import type {
   KeyboardEventHandler,
@@ -6,11 +10,7 @@ import type {
   SyntheticEvent,
 } from "react";
 import { useCallback, useMemo } from "react";
-import {
-  type DateFrameworkType,
-  type SaltDateAdapter,
-  useLocalization,
-} from "../date-adapters";
+import { useLocalization } from "../localization-provider";
 import { useCalendarContext } from "./internal/CalendarContext";
 
 /**

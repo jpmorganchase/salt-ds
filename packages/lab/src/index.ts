@@ -25,7 +25,6 @@ export * from "./combo-box";
 export * from "./combo-box-deprecated";
 export * from "./contact-details";
 export * from "./content-status";
-export * from "./date-adapters";
 export * from "./date-input";
 export * from "./date-picker";
 export * from "./deck-item";
@@ -49,6 +48,7 @@ export {
 export * from "./layer-layout";
 export * from "./list";
 export * from "./list-next";
+export * from "./localization-provider";
 export * from "./logo";
 export * from "./menu-button";
 export * from "./metric";

@@ -1,16 +1,19 @@
 import {
-  AdapterDateFns,
-  AdapterDayjs,
-  AdapterLuxon,
-  AdapterMoment,
   DateDetailErrorEnum,
   type DateFrameworkType,
+  type SaltDateAdapter,
+} from "@salt-ds/date-adapters";
+import { AdapterDateFns } from "@salt-ds/date-adapters";
+import { AdapterDayjs } from "@salt-ds/date-adapters";
+import { AdapterLuxon } from "@salt-ds/date-adapters";
+import { AdapterMoment } from "@salt-ds/date-adapters";
+import {
   DatePicker,
   DatePickerOverlay,
   DatePickerRangeInput,
   DatePickerRangePanel,
-  type SaltDateAdapter,
 } from "@salt-ds/lab";
+
 import * as datePickerStories from "@stories/date-picker/date-picker.stories";
 
 // Initialize adapters
@@ -222,7 +225,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
         const startDate = adapter.today();
         const endDate = adapter.add(startDate, { years: 15 });
         cy.get("@selectionChangeSpy").should((spy: any) => {
-          const [_event, date, details] = spy.lastCall.args;
+          const [_event, date] = spy.lastCall.args;
           expect(adapter.isValid(date.startDate)).to.be.true;
           expect(adapter.format(date.startDate, "DD MMM YYYY")).to.equal(
             adapter.format(startDate, "DD MMM YYYY"),
@@ -274,7 +277,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
           cy.findByLabelText("Start date").should("have.value", "15 Jan 2025");
           cy.findByLabelText("End date").should("have.value", "16 Jan 2025");
           cy.get("@selectionChangeSpy").should((spy: any) => {
-            const [_event, date, details] = spy.lastCall.args;
+            const [_event, date] = spy.lastCall.args;
             expect(adapter.isValid(date.startDate)).to.be.true;
             expect(adapter.format(date.startDate, "DD MMM YYYY")).to.equal(
               adapter.format(updatedRangeDate.startDate, "DD MMM YYYY"),
@@ -326,7 +329,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
           cy.findByLabelText("Start date").should("have.value", "15 Jan 2025");
           cy.findByLabelText("End date").should("have.value", "16 Jan 2025");
           cy.get("@selectionChangeSpy").should((spy: any) => {
-            const [_event, date, details] = spy.lastCall.args;
+            const [_event, date] = spy.lastCall.args;
             expect(adapter.isValid(date.startDate)).to.be.true;
             expect(adapter.format(date.startDate, "DD MMM YYYY")).to.equal(
               adapter.format(updatedRangeDate.startDate, "DD MMM YYYY"),
@@ -381,7 +384,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
           offsetStartDateValue,
         );
         cy.get("@selectionChangeSpy").should((spy: any) => {
-          const [_event, date, details] = spy.lastCall.args;
+          const [_event, date] = spy.lastCall.args;
           expect(adapter.isValid(date.startDate)).to.be.true;
           expect(adapter.format(date.startDate, "DD MMM YYYY")).to.equal(
             offsetStartDateValue,
@@ -401,7 +404,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
         cy.findByLabelText("End date").should("have.value", offsetEndDateValue);
         cy.get("@selectionChangeSpy").should("have.been.calledTwice");
         cy.get("@selectionChangeSpy").should((spy: any) => {
-          const [_event, date, details] = spy.lastCall.args;
+          const [_event, date] = spy.lastCall.args;
           expect(adapter.isValid(date.startDate)).to.be.true;
           expect(adapter.format(date.startDate, "DD MMM YYYY")).to.equal(
             offsetStartDateValue,

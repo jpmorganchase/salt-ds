@@ -11,6 +11,10 @@ import {
 import {
   DateDetailErrorEnum,
   type DateFrameworkType,
+  type ParserResult,
+  type TimeFields,
+} from "@salt-ds/date-adapters";
+import {
   type DateInputRangeDetails,
   type DateInputSingleDetails,
   DateParserField,
@@ -26,10 +30,8 @@ import {
   type DatePickerSingleProps,
   DatePickerTrigger,
   type DateRangeSelection,
-  type ParserResult,
   type SingleDatePickerState,
   type SingleDateSelection,
-  type TimeFields,
   useDatePickerContext,
   useLocalization,
 } from "@salt-ds/lab";
@@ -385,7 +387,6 @@ export const RangeWithMinMaxDate: StoryFn<
       date: DateRangeSelection<DateFrameworkType> | null,
       details: DateInputRangeDetails | undefined,
     ) => {
-      console.log(">>>> original details", details);
       const { startDate, endDate } = date ?? {};
       const {
         startDate: {
@@ -430,7 +431,6 @@ export const RangeWithMinMaxDate: StoryFn<
         setValidationStatus(undefined);
         setHelperText(defaultHelperText);
       }
-      console.log(">>>> detailts", details);
       args?.onSelectionChange?.(event, date, details);
     },
     [args.onSelectionChange, dateAdapter, setValidationStatus, setHelperText],

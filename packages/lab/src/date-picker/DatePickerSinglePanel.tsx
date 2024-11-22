@@ -8,6 +8,7 @@ import {
   makePrefixer,
   useControlled,
 } from "@salt-ds/core";
+import type { DateFrameworkType } from "@salt-ds/date-adapters";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import clsx from "clsx";
@@ -28,7 +29,7 @@ import {
   type CalendarWeekHeaderProps,
 } from "../calendar";
 import { Calendar, type SingleDateSelection } from "../calendar";
-import { type DateFrameworkType, useLocalization } from "../date-adapters";
+import { useLocalization } from "../localization-provider";
 import { useDatePickerContext } from "./DatePickerContext";
 import datePickerPanelCss from "./DatePickerPanel.css";
 

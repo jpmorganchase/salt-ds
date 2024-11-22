@@ -13,9 +13,10 @@ import {
   type CalendarMonthProps,
 } from "./internal/CalendarMonth";
 
+import type { DateFrameworkType } from "@salt-ds/date-adapters";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
-import { type DateFrameworkType, useLocalization } from "../date-adapters";
+import { useLocalization } from "../localization-provider";
 import calendarGridCss from "./CalendarGrid.css";
 import { monthDiff } from "./internal/utils";
 

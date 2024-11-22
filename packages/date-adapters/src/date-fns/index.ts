@@ -39,9 +39,9 @@ import {
   type SaltDateAdapter,
   type TimeFields,
   type Timezone,
-} from "./types";
+} from "../types";
 
-declare module "./types" {
+declare module "../types" {
   interface DateFrameworkTypeMap {
     "date-fns": Date;
   }

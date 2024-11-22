@@ -3,6 +3,7 @@
  *
  * If the DateFrameworkTypeMap is empty, it defaults to any; otherwise, it is a union of all types in the map.
  */
+
 export type DateFrameworkType = keyof DateFrameworkTypeMap extends never
   ? any
   : DateFrameworkTypeMap[keyof DateFrameworkTypeMap];

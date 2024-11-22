@@ -1,12 +1,10 @@
+import { AdapterDateFns } from "@salt-ds/date-adapters";
+import { AdapterDayjs } from "@salt-ds/date-adapters";
+import { AdapterLuxon } from "@salt-ds/date-adapters";
+import { AdapterMoment } from "@salt-ds/date-adapters";
 import * as dateInputStories from "@stories/date-input/date-input.stories";
 import { composeStories } from "@storybook/react";
 import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
-import {
-  AdapterDateFns,
-  AdapterDayjs,
-  AdapterLuxon,
-  AdapterMoment,
-} from "../../../date-adapters";
 
 const composedStories = composeStories(dateInputStories);
 

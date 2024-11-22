@@ -1,0 +1,43 @@
+{
+  "name": "@salt-ds/date-adapters",
+  "version": "0.1.0-alpha.0",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jpmorganchase/salt-ds.git",
+    "directory": "packages/date-adapters"
+  },
+  "bugs": "https://github.com/jpmorganchase/salt-ds/issues",
+  "main": "src/index.ts",
+  "sideEffects": false,
+  "peerDependencies": {
+    "@types/luxon": "^3.4.2",
+    "@types/react": ">=16.14.0",
+    "date-fns": "^3.6.0",
+    "dayjs": "^1.11.13",
+    "luxon": "^3.5.0",
+    "moment": "^2.30.1",
+    "moment-timezone": "^0.5.46"
+  },
+  "peerDependenciesMeta": {
+    "date-fns": {
+      "optional": true
+    },
+    "dayjs": {
+      "optional": true
+    },
+    "luxon": {
+      "optional": true
+    },
+    "moment": {
+      "optional": true
+    }
+  },
+  "publishConfig": {
+    "directory": "../../dist/salt-ds-date-adapters",
+    "provenance": true
+  },
+  "scripts": {
+    "build": "yarn node ../../scripts/build.mjs"
+  }
+}

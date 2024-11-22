@@ -1,3 +1,4 @@
+import type { DateFrameworkType } from "@salt-ds/date-adapters";
 import {
   type ComponentPropsWithoutRef,
   type FocusEventHandler,
@@ -6,7 +7,7 @@ import {
   type RefObject,
   useEffect,
 } from "react";
-import { type DateFrameworkType, useLocalization } from "../date-adapters";
+import { useLocalization } from "../localization-provider";
 import { useCalendarContext } from "./internal/CalendarContext";
 import { useFocusManagement } from "./internal/useFocusManagement";
 import { useCalendarSelectionDay } from "./useCalendarSelection";

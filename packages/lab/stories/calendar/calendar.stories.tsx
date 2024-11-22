@@ -1,4 +1,5 @@
 import { Button, Divider, StackLayout } from "@salt-ds/core";
+import type { DateFrameworkType } from "@salt-ds/date-adapters";
 import {
   Calendar,
   CalendarGrid,
@@ -7,7 +8,6 @@ import {
   type CalendarRangeProps,
   type CalendarSingleProps,
   CalendarWeekHeader,
-  type DateFrameworkType,
   type UseCalendarSelectionRangeProps,
   type UseCalendarSelectionSingleProps,
   useLocalization,

@@ -6,6 +6,12 @@ import {
   useFormFieldProps,
   useId,
 } from "@salt-ds/core";
+import type {
+  DateDetail,
+  DateFrameworkType,
+  ParserResult,
+  TimeFields,
+} from "@salt-ds/date-adapters";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
@@ -25,12 +31,7 @@ import {
   useState,
 } from "react";
 import type { SingleDateSelection } from "../calendar";
-import type { DateDetail, ParserResult } from "../date-adapters";
-import {
-  type DateFrameworkType,
-  type TimeFields,
-  useLocalization,
-} from "../date-adapters";
+import { useLocalization } from "../localization-provider";
 import dateInputCss from "./DateInput.css";
 
 const withBaseName = makePrefixer("saltDateInput");
@@ -169,7 +170,7 @@ export const DateInputSingle = forwardRef<
       inputRef: inputRefProp = null,
       locale,
       parse: parseProp,
-      placeholder = "DD MMM YYYY",
+      placeholder = "dd mmm yyyy",
       readOnly: readOnlyProp,
       startAdornment,
       validationStatus: validationStatusProp,

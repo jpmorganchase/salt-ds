@@ -17,7 +17,8 @@ import {
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 
-import { type DateFrameworkType, useLocalization } from "../date-adapters";
+import type { DateFrameworkType } from "@salt-ds/date-adapters";
+import { useLocalization } from "../localization-provider";
 import calendarCss from "./Calendar.css";
 
 /**

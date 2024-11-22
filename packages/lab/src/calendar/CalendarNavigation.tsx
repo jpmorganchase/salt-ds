@@ -11,6 +11,10 @@ import {
   useIcon,
   useListControlContext,
 } from "@salt-ds/core";
+import type {
+  DateFrameworkType,
+  SaltDateAdapter,
+} from "@salt-ds/date-adapters";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
@@ -22,11 +26,7 @@ import {
   useCallback,
   useMemo,
 } from "react";
-import {
-  type DateFrameworkType,
-  type SaltDateAdapter,
-  useLocalization,
-} from "../date-adapters";
+import { useLocalization } from "../localization-provider";
 import calendarNavigationCss from "./CalendarNavigation.css";
 import { useCalendarContext } from "./internal/CalendarContext";
 import { generateMonthsForYear, monthDiff } from "./internal/utils";
