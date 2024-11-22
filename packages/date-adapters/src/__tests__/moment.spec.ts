@@ -1,7 +1,7 @@
 import moment from "moment";
 import { describe, expect, it } from "vitest";
 import "moment-timezone";
-import { AdapterMoment, DateDetailErrorEnum } from "../../date-adapters";
+import { AdapterMoment, DateDetailErrorEnum } from "../index";
 
 describe("GIVEN a AdapterMoment", () => {
   const adapter = new AdapterMoment({ locale: "en" });

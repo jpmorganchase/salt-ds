@@ -1,4 +1,8 @@
 import { Button, makePrefixer, useControlled } from "@salt-ds/core";
+import type {
+  DateFrameworkType,
+  SaltDateAdapter,
+} from "@salt-ds/date-adapters";
 import { CalendarIcon } from "@salt-ds/icons";
 import { clsx } from "clsx";
 import {
@@ -11,15 +15,11 @@ import {
 } from "react";
 import type { SingleDateSelection } from "../calendar";
 import {
-  type DateFrameworkType,
-  type SaltDateAdapter,
-  useLocalization,
-} from "../date-adapters";
-import {
   DateInputSingle,
   type DateInputSingleDetails,
   type DateInputSingleProps,
 } from "../date-input";
+import { useLocalization } from "../localization-provider";
 import { useDatePickerContext } from "./DatePickerContext";
 import { useDatePickerOverlay } from "./DatePickerOverlayProvider";
 

@@ -14,6 +14,7 @@
     "@floating-ui/react": "^0.26.5",
     "@internationalized/date": "^3.5.5",
     "@salt-ds/core": "workspace:^",
+    "@salt-ds/date-adapters": "workspace:*",
     "@salt-ds/icons": "workspace:^",
     "@salt-ds/styles": "workspace:*",
     "@salt-ds/window": "workspace:*",
@@ -33,37 +34,18 @@
   },
   "devDependencies": {
     "@types/luxon": "^3.4.2",
-    "date-fns": "^2.30.0",
+    "date-fns": "^3.6.0",
     "dayjs": "^1.11.13",
-    "luxon": "^3.0.2",
-    "moment": "^2.29.4",
+    "luxon": "^3.5.0",
+    "moment": "^2.30.1",
     "moment-timezone": "^0.5.46"
   },
   "peerDependencies": {
-    "@types/luxon": "^3.4.2",
-    "@types/react": ">=16.14.0",
-    "date-fns": "^2.30.0",
-    "dayjs": "^1.11.13",
-    "luxon": "^3.0.2",
-    "moment": "^2.29.4",
-    "moment-timezone": "^0.5.46",
     "react": ">=16.14.0",
     "react-dom": ">=16.14.0"
   },
   "peerDependenciesMeta": {
     "@types/react": {
-      "optional": true
-    },
-    "date-fns": {
-      "optional": true
-    },
-    "dayjs": {
-      "optional": true
-    },
-    "luxon": {
-      "optional": true
-    },
-    "moment": {
       "optional": true
     }
   },

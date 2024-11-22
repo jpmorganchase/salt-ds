@@ -1,5 +1,5 @@
+import type { DateFrameworkType } from "@salt-ds/date-adapters";
 import { type ReactNode, forwardRef } from "react";
-import type { DateFrameworkType } from "../date-adapters";
 import {
   DateRangeSelectionContext,
   type RangeDatePickerState,

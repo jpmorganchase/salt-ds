@@ -1,14 +1,11 @@
 import type { Decorator } from "@storybook/react";
 import "dayjs/locale/en";
+import { AdapterDateFns } from "@salt-ds/date-adapters";
+import { AdapterDayjs } from "@salt-ds/date-adapters";
+import { AdapterLuxon } from "@salt-ds/date-adapters";
+import { AdapterMoment } from "@salt-ds/date-adapters";
+import { LocalizationProvider } from "@salt-ds/lab";
 import { enUS as dateFnsEnUs } from "date-fns/locale";
-
-import {
-  AdapterDateFns,
-  AdapterDayjs,
-  AdapterLuxon,
-  AdapterMoment,
-  LocalizationProvider,
-} from "@salt-ds/lab";
 
 // biome-ignore lint/suspicious/noExplicitAny: Date framework adapter
 const dateAdapterMap: Record<string, any> = {

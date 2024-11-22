@@ -1,15 +1,17 @@
+import { AdapterDateFns } from "@salt-ds/date-adapters";
+import { AdapterDayjs } from "@salt-ds/date-adapters";
+import { AdapterLuxon } from "@salt-ds/date-adapters";
+import { AdapterMoment } from "@salt-ds/date-adapters";
 import {
-  AdapterDateFns,
-  AdapterDayjs,
-  AdapterLuxon,
-  AdapterMoment,
   DateDetailErrorEnum,
   type DateFrameworkType,
+  type ParserResult,
+  type SaltDateAdapter,
+} from "@salt-ds/date-adapters";
+import {
   DateInputRange,
   DateParserField,
   type DateRangeSelection,
-  type ParserResult,
-  type SaltDateAdapter,
 } from "@salt-ds/lab";
 import { es as dateFnsEs } from "date-fns/locale";
 import { type SyntheticEvent, useState } from "react";

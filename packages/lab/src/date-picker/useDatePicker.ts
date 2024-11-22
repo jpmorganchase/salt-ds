@@ -1,4 +1,5 @@
 import { useControlled, useForkRef, useFormFieldProps } from "@salt-ds/core";
+import type { DateFrameworkType } from "@salt-ds/date-adapters";
 import {
   type SyntheticEvent,
   useCallback,
@@ -7,11 +8,11 @@ import {
   useState,
 } from "react";
 import type { DateRangeSelection, SingleDateSelection } from "../calendar";
-import { type DateFrameworkType, useLocalization } from "../date-adapters";
 import type {
   DateInputRangeDetails,
   DateInputSingleDetails,
 } from "../date-input";
+import { useLocalization } from "../localization-provider";
 import type {
   RangeDatePickerState,
   SingleDatePickerState,

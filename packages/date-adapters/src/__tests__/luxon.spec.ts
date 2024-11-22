@@ -1,6 +1,6 @@
 import { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
-import { AdapterLuxon, DateDetailErrorEnum } from "../../date-adapters";
+import { AdapterLuxon, DateDetailErrorEnum } from "../index";
 
 describe("GIVEN a AdapterLuxon", () => {
   const adapter = new AdapterLuxon({ locale: "en-US" });

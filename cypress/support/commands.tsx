@@ -4,11 +4,11 @@ import type { MountOptions, MountReturn } from "cypress/react";
 import { mount as cypressMount } from "cypress/react18";
 import "cypress-axe";
 import { SaltProvider } from "@salt-ds/core";
-import {
-  type DateFrameworkType,
-  LocalizationProvider,
-  type SaltDateAdapter,
-} from "@salt-ds/lab";
+import type {
+  DateFrameworkType,
+  SaltDateAdapter,
+} from "@salt-ds/date-adapters";
+import { LocalizationProvider } from "@salt-ds/lab";
 import type { Options } from "cypress-axe";
 import { AnnouncementListener } from "./AnnouncementListener";
 import { type PerformanceResult, PerformanceTester } from "./PerformanceTester";

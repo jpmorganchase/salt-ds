@@ -15,9 +15,9 @@ import {
   useDatePickerContext,
 } from "./DatePickerContext";
 import "./DatePickerActions.css";
+import type { DateFrameworkType } from "@salt-ds/date-adapters";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
-import type { DateFrameworkType } from "../date-adapters";
 import datePickerActions from "./DatePickerActions.css";
 
 const withBaseName = makePrefixer("saltDatePickerActions");

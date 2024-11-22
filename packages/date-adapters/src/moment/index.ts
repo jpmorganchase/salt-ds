@@ -7,9 +7,9 @@ import {
   type SaltDateAdapter,
   type TimeFields,
   type Timezone,
-} from "./types";
+} from "../types";
 
-declare module "./types" {
+declare module "../types" {
   export interface DateFrameworkTypeMap {
     moment: Moment;
   }

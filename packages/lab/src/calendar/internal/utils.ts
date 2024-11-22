@@ -1,4 +1,7 @@
-import type { DateFrameworkType, SaltDateAdapter } from "../../date-adapters";
+import type {
+  DateFrameworkType,
+  SaltDateAdapter,
+} from "@salt-ds/date-adapters";
 
 export function daysOfWeek<TDate extends DateFrameworkType>(
   dateAdapter: SaltDateAdapter<TDate>,

@@ -3,12 +3,14 @@ import {
   AdapterDayjs,
   AdapterLuxon,
   AdapterMoment,
+  type DateFrameworkType,
+  type SaltDateAdapter,
+} from "@salt-ds/date-adapters";
+import {
   Calendar,
   CalendarGrid,
   CalendarNavigation,
   CalendarWeekHeader,
-  type DateFrameworkType,
-  type SaltDateAdapter,
 } from "@salt-ds/lab";
 
 // Initialize adapters
@@ -31,8 +33,6 @@ describe("GIVEN a Calendar with range selection", () => {
       afterEach(() => {
         cy.clock().then((clock) => clock.restore());
       });
-
-      const testDate = adapter.parse("03/02/2024", "DD/MM/YYYY").date;
 
       it("SHOULD move to start date selected if it is within visible month", () => {
         const todayTestDate = adapter.today();

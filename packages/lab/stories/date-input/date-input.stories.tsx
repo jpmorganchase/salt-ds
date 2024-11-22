@@ -1,5 +1,5 @@
+import type { DateFrameworkType } from "@salt-ds/date-adapters";
 import {
-  type DateFrameworkType,
   DateInputRange,
   type DateInputRangeDetails,
   type DateInputRangeProps,

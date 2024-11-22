@@ -12,7 +12,7 @@ import {
   type SaltDateAdapter,
   type TimeFields,
   type Timezone,
-} from "./types";
+} from "../types";
 
 type Constructor = {
   (...args: Parameters<typeof defaultDayjs>): Dayjs;
@@ -20,7 +20,7 @@ type Constructor = {
   utc?: (value?: Parameters<typeof defaultDayjs>[0]) => Dayjs;
 };
 
-declare module "./types" {
+declare module "../types" {
   interface DateFrameworkTypeMap {
     dayjs: Dayjs;
   }

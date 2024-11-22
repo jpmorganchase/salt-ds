@@ -1,14 +1,16 @@
+import type {
+  DateFrameworkType,
+  SaltDateAdapter,
+} from "@salt-ds/date-adapters";
+import { AdapterDateFns } from "@salt-ds/date-adapters";
+import { AdapterDayjs } from "@salt-ds/date-adapters";
+import { AdapterLuxon } from "@salt-ds/date-adapters";
+import { AdapterMoment } from "@salt-ds/date-adapters";
 import {
-  AdapterDateFns,
-  AdapterDayjs,
-  AdapterLuxon,
-  AdapterMoment,
   Calendar,
   CalendarGrid,
   CalendarNavigation,
   CalendarWeekHeader,
-  type DateFrameworkType,
-  type SaltDateAdapter,
 } from "@salt-ds/lab";
 
 // Initialize adapters
@@ -92,7 +94,6 @@ describe("GIVEN a Calendar with single selection", () => {
 
       it("SHOULD move to today's date if selected date is not within the visible month", () => {
         const todayTestDate = adapter.today();
-        const selectedDate = adapter.subtract(todayTestDate, { months: 2 });
         cy.mount(
           <Calendar
             selectionVariant="single"

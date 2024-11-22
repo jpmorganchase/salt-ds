@@ -3,9 +3,10 @@ import { clsx } from "clsx";
 import { type ComponentPropsWithRef, forwardRef } from "react";
 import { daysOfWeek } from "./internal/utils";
 
+import type { DateFrameworkType } from "@salt-ds/date-adapters";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
-import { type DateFrameworkType, useLocalization } from "../date-adapters";
+import { useLocalization } from "../localization-provider";
 import calendarWeekHeaderCss from "./CalendarWeekHeader.css";
 import { useCalendarContext } from "./internal/CalendarContext";
 

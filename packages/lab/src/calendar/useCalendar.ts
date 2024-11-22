@@ -1,4 +1,5 @@
 import { useControlled } from "@salt-ds/core";
+import type { DateFrameworkType } from "@salt-ds/date-adapters";
 import {
   type SyntheticEvent,
   useCallback,
@@ -6,7 +7,7 @@ import {
   useMemo,
   useState,
 } from "react";
-import { type DateFrameworkType, useLocalization } from "../date-adapters";
+import { useLocalization } from "../localization-provider";
 import { generateDatesForMonth } from "./internal/utils";
 import {
   type UseCalendarSelectionMultiSelectProps,

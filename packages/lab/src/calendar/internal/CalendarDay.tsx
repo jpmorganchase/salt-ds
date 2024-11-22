@@ -4,6 +4,7 @@ import {
   makePrefixer,
   useForkRef,
 } from "@salt-ds/core";
+import type { DateFrameworkType } from "@salt-ds/date-adapters";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
@@ -13,7 +14,7 @@ import {
   forwardRef,
   useRef,
 } from "react";
-import { type DateFrameworkType, useLocalization } from "../../date-adapters";
+import { useLocalization } from "../../localization-provider";
 import { type DayStatus, useCalendarDay } from "../useCalendarDay";
 import calendarDayCss from "./CalendarDay.css";
 

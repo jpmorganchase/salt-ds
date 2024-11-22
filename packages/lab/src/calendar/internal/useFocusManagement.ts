@@ -1,9 +1,10 @@
+import type { DateFrameworkType } from "@salt-ds/date-adapters";
 import type {
   FocusEventHandler,
   KeyboardEventHandler,
   MouseEventHandler,
 } from "react";
-import { type DateFrameworkType, useLocalization } from "../../date-adapters";
+import { useLocalization } from "../../localization-provider";
 import { useCalendarContext } from "./CalendarContext";
 
 export function useFocusManagement<TDate extends DateFrameworkType>({

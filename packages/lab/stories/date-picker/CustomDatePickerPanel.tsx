@@ -9,8 +9,8 @@ import {
   Option,
   StackLayout,
 } from "@salt-ds/core";
+import type { DateFrameworkType } from "@salt-ds/date-adapters";
 import {
-  type DateFrameworkType,
   DatePickerRangePanel,
   DatePickerSinglePanel,
   type RangeDatePickerState,
