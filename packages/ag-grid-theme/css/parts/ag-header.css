@@ -119,7 +119,9 @@ div[class*="ag-theme-salt"] .ag-chart-menu-icon:hover {
   /* Button is the same size of icon, we're copying what ag quartz theme is doing */
   box-shadow: 0 0 0 var(--salt-spacing-50) var(--salt-actionable-subtle-background-hover);
   background-color: var(--salt-actionable-subtle-background-hover);
+  --ag-icon-font-color: var(--salt-actionable-subtle-foreground-hover);
   --ag-icon-font-color-filter: var(--salt-actionable-subtle-foreground-hover);
+  --ag-icon-font-color-menu-alt: var(--salt-actionable-subtle-foreground-hover);
 }
 
 /* Make filter and menu icon apart, to accomodate hover effects above */
