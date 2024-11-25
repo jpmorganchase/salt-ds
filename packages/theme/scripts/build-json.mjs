@@ -55,8 +55,9 @@ function getStyleDictionaryConfig({ modes, density, accents }) {
             filter: async (token, options) => {
               //   console.log(token, options)
               return (
-                token.filePath.includes("colors-categorical.tokens") ||
-                token.filePath.includes("colors.tokens")
+                (token.filePath.includes("colors-categorical.tokens") ||
+                  token.filePath.includes("colors.tokens")) &&
+                token.attributes.type !== "figma-only"
               );
             },
           },
@@ -74,7 +75,7 @@ function getStyleDictionaryConfig({ modes, density, accents }) {
               return (
                 token.filePath.includes("colors-next.tokens") &&
                 token.attributes.category === "color" &&
-                !token.attributes.type === "alpha"
+                token.attributes.type !== "figma-only"
               );
             },
           },
@@ -92,7 +93,8 @@ function getStyleDictionaryConfig({ modes, density, accents }) {
               return (
                 token.filePath.includes("colors-next.tokens") &&
                 token.attributes.category === "color" &&
-                token.attributes.type === "alpha"
+                token.attributes.type === "alpha" &&
+                token.attributes.type !== "figma-only"
               );
             },
           },
@@ -130,7 +132,8 @@ function getStyleDictionaryConfig({ modes, density, accents }) {
                   //
                   token.path[1] === paletteNextType &&
                   // dirty way to match 'blue/teal-light/dark'
-                  Object.keys(token.$modes).every((x) => x.includes("-"))
+                  Object.keys(token.$modes).every((x) => x.includes("-")) &&
+                  token.attributes.type !== "figma-only"
                 );
               },
             };
@@ -161,7 +164,8 @@ function getStyleDictionaryConfig({ modes, density, accents }) {
                   //
                   token.path[1] === paletteNextType &&
                   // dirty way to NOT match 'blue/teal-light/dark'
-                  !Object.keys(token.$modes).every((x) => x.includes("-"))
+                  !Object.keys(token.$modes).every((x) => x.includes("-")) &&
+                  token.attributes.type !== "figma-only"
                 );
               },
             };
