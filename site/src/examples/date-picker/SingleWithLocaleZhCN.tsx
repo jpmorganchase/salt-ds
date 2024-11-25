@@ -3,19 +3,19 @@ import {
   FormFieldHelperText as FormHelperText,
   FormFieldLabel as FormLabel,
 } from "@salt-ds/core";
+import type { DateFrameworkType } from "@salt-ds/date-adapters";
 import {
-  DateInputSingleDetails,
+  type DateInputSingleDetails,
   DatePicker,
   DatePickerOverlay,
   DatePickerSingleInput,
   DatePickerSinglePanel,
-  DatePickerTrigger,
   type DatePickerSinglePanelProps,
+  DatePickerTrigger,
   type SingleDateSelection,
   useLocalization,
 } from "@salt-ds/lab";
-import { type DateFrameworkType } from "@salt-ds/date-adapters";
-import React, {
+import {
   type ReactElement,
   type SyntheticEvent,
   useCallback,

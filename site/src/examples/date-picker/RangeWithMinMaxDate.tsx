@@ -3,23 +3,23 @@ import {
   FormFieldHelperText as FormHelperText,
   FormFieldLabel as FormLabel,
 } from "@salt-ds/core";
+import type { DateFrameworkType } from "@salt-ds/date-adapters";
 import {
+  type DateInputRangeDetails,
   DatePicker,
   DatePickerOverlay,
   DatePickerRangeInput,
   DatePickerRangePanel,
+  DatePickerTrigger,
   type DateRangeSelection,
   useLocalization,
-  type DateInputRangeDetails,
-  DatePickerTrigger,
 } from "@salt-ds/lab";
-import React, {
+import {
   type ReactElement,
   type SyntheticEvent,
   useCallback,
   useState,
 } from "react";
-import type { DateFrameworkType } from "@salt-ds/date-adapters";
 
 export const RangeWithMinMaxDate = (): ReactElement => {
   const { dateAdapter } = useLocalization();

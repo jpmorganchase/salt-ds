@@ -1,5 +1,6 @@
+import type { DateFrameworkType } from "@salt-ds/date-adapters";
 import {
-  DateInputSingleDetails,
+  type DateInputSingleDetails,
   DatePicker,
   DatePickerOverlay,
   DatePickerSingleInput,
@@ -8,7 +9,6 @@ import {
   type SingleDateSelection,
   useLocalization,
 } from "@salt-ds/lab";
-import { type DateFrameworkType } from "@salt-ds/date-adapters";
 import { type ReactElement, type SyntheticEvent, useCallback } from "react";
 
 export const Single = (): ReactElement => {

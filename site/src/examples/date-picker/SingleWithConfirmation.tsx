@@ -1,13 +1,14 @@
 import {
   Divider,
-  FlexLayout,
   FlexItem,
+  FlexLayout,
   FormField,
   FormFieldHelperText as FormHelperText,
   FormFieldLabel as FormLabel,
 } from "@salt-ds/core";
+import type { DateFrameworkType } from "@salt-ds/date-adapters";
 import {
-  DateInputSingleDetails,
+  type DateInputSingleDetails,
   DatePicker,
   DatePickerActions,
   DatePickerOverlay,
@@ -17,8 +18,7 @@ import {
   type SingleDateSelection,
   useLocalization,
 } from "@salt-ds/lab";
-import { type DateFrameworkType } from "@salt-ds/date-adapters";
-import React, {
+import {
   type ReactElement,
   type SyntheticEvent,
   useCallback,
