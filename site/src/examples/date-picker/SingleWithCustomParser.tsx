@@ -1,92 +1,103 @@
 import {
-  CalendarDate,
-  type DateValue,
-  getLocalTimeZone,
-  today,
-} from "@internationalized/date";
-import {
   FormField,
   FormFieldHelperText as FormHelperText,
   FormFieldLabel as FormLabel,
 } from "@salt-ds/core";
 import {
-  type DateInputSingleParserResult,
+  DateInputSingleDetails,
   DatePicker,
   DatePickerOverlay,
   DatePickerSingleInput,
   DatePickerSinglePanel,
-  type SingleDatePickerError,
+  DatePickerTrigger,
   type SingleDateSelection,
-  formatDate,
-  getCurrentLocale,
-  parseCalendarDate,
+  useLocalization,
 } from "@salt-ds/lab";
-import { type ReactElement, useCallback, useState } from "react";
-
-function formatSingleDate(
-  date: DateValue | null | undefined,
-  locale = getCurrentLocale(),
-  options?: Intl.DateTimeFormatOptions,
-) {
-  if (date) {
-    return formatDate(date, locale, options);
-  }
-  return date;
-}
+import {
+  DateDetailErrorEnum,
+  type DateFrameworkType,
+  type ParserResult,
+} from "@salt-ds/date-adapters";
+import React, {
+  type ReactElement,
+  type SyntheticEvent,
+  useCallback,
+  useState,
+} from "react";
 
 export const SingleWithCustomParser = (): ReactElement => {
+  const { dateAdapter } = useLocalization();
   const defaultHelperText =
     "Date format DD MMM YYYY (e.g. 09 Jun 2024) or +/-D (e.g. +7)";
   const errorHelperText = "Please enter a valid date in DD MMM YYYY format";
   const [helperText, setHelperText] = useState(defaultHelperText);
+  const [open, setOpen] = useState<boolean>(false);
   const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
     undefined,
   );
   const [selectedDate, setSelectedDate] = useState<
-    SingleDateSelection | null | undefined
+    SingleDateSelection<DateFrameworkType> | null | undefined
   >(null);
   const handleSelectionChange = useCallback(
     (
-      newSelectedDate: SingleDateSelection | null | undefined,
-      error: SingleDatePickerError,
+      event: SyntheticEvent,
+      date: SingleDateSelection<DateFrameworkType> | null,
+      details: DateInputSingleDetails | undefined,
     ) => {
-      console.log(`Selected date: ${formatSingleDate(newSelectedDate)}`);
-      console.log(`Error: ${error}`);
-      setSelectedDate(newSelectedDate);
-      if (error) {
-        setHelperText(errorHelperText);
+      const { value, errors } = details || {};
+      console.log(
+        `Selected date: ${dateAdapter.isValid(date) ? dateAdapter.format(date, "DD MMM YYYY") : date}`,
+      );
+      if (errors?.length && value) {
+        setHelperText(`${errorHelperText} - ${errors[0].message}`);
+        setValidationStatus("error");
+        console.log(
+          `Error(s): ${errors
+            .map(({ type, message }) => `type=${type} message=${message}`)
+            .join(",")}`,
+        );
+        if (value) {
+          console.log(`Original Value: ${value}`);
+        }
       } else {
         setHelperText(defaultHelperText);
+        setValidationStatus(undefined);
       }
-      setValidationStatus(error ? "error" : undefined);
+      setSelectedDate(value?.trim().length === 0 ? null : date);
     },
-    [setValidationStatus, setSelectedDate, setHelperText],
+    [dateAdapter, setHelperText, setValidationStatus],
   );
+
   const customParser = useCallback(
-    (inputDate: string): DateInputSingleParserResult => {
+    (
+      inputDate: string,
+      format: string,
+      locale: any,
+    ): ParserResult<DateFrameworkType> => {
       if (!inputDate?.length) {
-        return { date: null, error: false };
+        const parsedDate = dateAdapter.parse("invalid date", "DD/MMM/YYYY");
+        return {
+          date: parsedDate.date,
+          value: inputDate,
+          errors: [
+            { type: DateDetailErrorEnum.UNSET, message: "no date provided" },
+          ],
+        };
       }
       const parsedDate = inputDate;
       const offsetMatch = parsedDate?.match(/^([+-]?\d+)$/);
       if (offsetMatch) {
         const offsetDays = Number.parseInt(offsetMatch[1], 10);
-        let offsetDate = selectedDate
-          ? selectedDate
-          : today(getLocalTimeZone());
-        offsetDate = offsetDate.add({ days: offsetDays });
+        let offsetDate = selectedDate ? selectedDate : dateAdapter.today();
+        offsetDate = dateAdapter.add(offsetDate, { days: offsetDays });
         return {
-          date: new CalendarDate(
-            offsetDate.year,
-            offsetDate.month,
-            offsetDate.day,
-          ),
-          error: false,
+          date: offsetDate,
+          value: inputDate,
         };
       }
-      return parseCalendarDate(parsedDate || "");
+      return dateAdapter.parse(parsedDate || "", format, locale);
     },
-    [selectedDate],
+    [dateAdapter, selectedDate],
   );
 
   return (
@@ -95,14 +106,16 @@ export const SingleWithCustomParser = (): ReactElement => {
       <DatePicker
         selectionVariant="single"
         onSelectionChange={handleSelectionChange}
-        selectedDate={selectedDate}
+        onOpen={setOpen}
       >
-        <DatePickerSingleInput parse={customParser} />
+        <DatePickerTrigger>
+          <DatePickerSingleInput parse={customParser} />
+        </DatePickerTrigger>
         <DatePickerOverlay>
           <DatePickerSinglePanel helperText={helperText} />
         </DatePickerOverlay>
       </DatePicker>
-      <FormHelperText>{helperText}</FormHelperText>
+      {!open ? <FormHelperText>{helperText}</FormHelperText> : null}
     </FormField>
   );
 };

@@ -1,41 +1,56 @@
 import {
+  type DateInputRangeDetails,
   DatePicker,
   DatePickerOverlay,
   DatePickerRangeInput,
   DatePickerRangePanel,
+  DatePickerTrigger,
   type DateRangeSelection,
-  type RangeDatePickerError,
-  formatDate,
-  getCurrentLocale,
+  useLocalization,
 } from "@salt-ds/lab";
-import { type ReactElement, useCallback } from "react";
+import { type DateFrameworkType } from "@salt-ds/date-adapters";
+import { type ReactElement, type SyntheticEvent, useCallback } from "react";
 
-function formatDateRange(
-  dateRange: DateRangeSelection | null,
-  locale = getCurrentLocale(),
-  options?: Intl.DateTimeFormatOptions,
-): string {
-  const { startDate, endDate } = dateRange || {};
-  const formattedStartDate = startDate
-    ? formatDate(startDate, locale, options)
-    : startDate;
-  const formattedEndDate = endDate
-    ? formatDate(endDate, locale, options)
-    : endDate;
-  return `Start date: ${formattedStartDate}, End date: ${formattedEndDate}`;
-}
 export const Range = (): ReactElement => {
+  const { dateAdapter } = useLocalization();
   const handleSelectionChange = useCallback(
     (
-      newSelectedDate: DateRangeSelection | null,
-      error: RangeDatePickerError,
+      _event: SyntheticEvent,
+      date: DateRangeSelection<DateFrameworkType> | null,
+      details: DateInputRangeDetails | undefined,
     ) => {
-      console.log(`Selected date range: ${formatDateRange(newSelectedDate)}`);
+      const { startDate, endDate } = date ?? {};
+      const {
+        startDate: {
+          value: startDateOriginalValue = undefined,
+          errors: startDateErrors = undefined,
+        } = {},
+        endDate: {
+          value: endDateOriginalValue = undefined,
+          errors: endDateErrors = undefined,
+        } = {},
+      } = details || {};
       console.log(
-        `Error: startDate: ${error.startDate} endDate: ${error.endDate}`,
+        `StartDate: ${dateAdapter.isValid(startDate) ? dateAdapter.format(startDate, "DD MMM YYYY") : startDate}, EndDate: ${dateAdapter.isValid(endDate) ? dateAdapter.format(endDate, "DD MMM YYYY") : endDate}`,
       );
+      if (startDateErrors?.length) {
+        console.log(
+          `StartDate Error(s): ${startDateErrors.map(({ type, message }) => `type: ${type} message: ${message}`).join(",")}`,
+        );
+        if (startDateOriginalValue) {
+          console.log(`StartDate Original Value: ${startDateOriginalValue}`);
+        }
+      }
+      if (endDateErrors?.length) {
+        console.log(
+          `EndDate Error(s): ${endDateErrors.map(({ type, message }) => `type: ${type} message: ${message}`).join(",")}`,
+        );
+        if (endDateOriginalValue) {
+          console.log(`EndDate Original Value: ${endDateOriginalValue}`);
+        }
+      }
     },
-    [],
+    [dateAdapter],
   );
 
   return (
@@ -43,7 +58,9 @@ export const Range = (): ReactElement => {
       selectionVariant="range"
       onSelectionChange={handleSelectionChange}
     >
-      <DatePickerRangeInput />
+      <DatePickerTrigger>
+        <DatePickerRangeInput />
+      </DatePickerTrigger>
       <DatePickerOverlay>
         <DatePickerRangePanel />
       </DatePickerOverlay>
