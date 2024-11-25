@@ -13,6 +13,7 @@
 
 .saltFormField-labelTop {
   gap: var(--salt-spacing-75);
+  grid-auto-rows: min-content;
   grid-template-areas:
     "label"
     "controls";
