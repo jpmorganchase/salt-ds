@@ -12,3 +12,7 @@ This is a regular package
 1. Copy output to corresponding `*.tokens.json` file
 1. Modify color tokens
    1. remove `categorical.` from , e.g. replace `"{color.categorical` to `"{color`
+
+TODOs
+
+- [ ] Custom value tranformer for `foundation/alpha-next.css` tokens, to achieve `rgba` syntax from `packages/theme/css/foundations/alpha-next.css`
