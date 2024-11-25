@@ -2294,12 +2294,7 @@ export const WithExperimentalTime: StoryFn<
       });
       args?.onSelectionChange?.(event, updatedDate, details);
     },
-    [
-      args,
-      dateAdapter,
-      selectedTime?.startTime,
-      selectedTime?.endTime,
-    ],
+    [args, dateAdapter, selectedTime?.startTime, selectedTime?.endTime],
   );
 
   const handleTimeChange = useCallback(

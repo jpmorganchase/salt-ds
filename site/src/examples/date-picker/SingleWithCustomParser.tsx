@@ -4,7 +4,12 @@ import {
   FormFieldLabel as FormLabel,
 } from "@salt-ds/core";
 import {
-  DateInputSingleDetails,
+  DateDetailErrorEnum,
+  type DateFrameworkType,
+  type ParserResult,
+} from "@salt-ds/date-adapters";
+import {
+  type DateInputSingleDetails,
   DatePicker,
   DatePickerOverlay,
   DatePickerSingleInput,
@@ -14,11 +19,6 @@ import {
   useLocalization,
 } from "@salt-ds/lab";
 import {
-  DateDetailErrorEnum,
-  type DateFrameworkType,
-  type ParserResult,
-} from "@salt-ds/date-adapters";
-import React, {
   type ReactElement,
   type SyntheticEvent,
   useCallback,

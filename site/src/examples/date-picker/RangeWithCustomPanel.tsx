@@ -3,23 +3,23 @@ import {
   FormFieldHelperText as FormHelperText,
   FormFieldLabel as FormLabel,
 } from "@salt-ds/core";
+import type { DateFrameworkType } from "@salt-ds/date-adapters";
 import {
+  type DateInputRangeDetails,
   DatePicker,
   DatePickerOverlay,
   DatePickerRangeInput,
+  DatePickerTrigger,
   type DateRangeSelection,
   useLocalization,
-  type DateInputRangeDetails,
-  DatePickerTrigger,
 } from "@salt-ds/lab";
-import React, {
+import { CustomDatePickerPanel } from "@salt-ds/lab/stories/date-picker/CustomDatePickerPanel"; // CustomDatePickerPanel is an example, replace with your own composition of date controls
+import {
   type ReactElement,
   type SyntheticEvent,
   useCallback,
   useState,
 } from "react";
-import { CustomDatePickerPanel } from "@salt-ds/lab/stories/date-picker/CustomDatePickerPanel"; // CustomDatePickerPanel is an example, replace with your own composition of date controls
-import type { DateFrameworkType } from "@salt-ds/date-adapters";
 
 export const RangeWithCustomPanel = (): ReactElement => {
   const { dateAdapter } = useLocalization();

@@ -1,26 +1,26 @@
 import {
-  DateInputSingleDetails,
+  Button,
+  Divider,
+  FlexItem,
+  FlexLayout,
+  FormField,
+  FormFieldHelperText as FormHelperText,
+  FormFieldLabel as FormLabel,
+} from "@salt-ds/core";
+import type { DateFrameworkType } from "@salt-ds/date-adapters";
+import {
+  type DateInputSingleDetails,
   DatePicker,
   DatePickerOverlay,
   DatePickerSingleInput,
   DatePickerSinglePanel,
   DatePickerTrigger,
-  type SingleDateSelection,
   type SingleDatePickerState,
+  type SingleDateSelection,
   useDatePickerContext,
   useLocalization,
 } from "@salt-ds/lab";
 import {
-  Button,
-  Divider,
-  FlexLayout,
-  FlexItem,
-  FormField,
-  FormFieldHelperText as FormHelperText,
-  FormFieldLabel as FormLabel,
-} from "@salt-ds/core";
-import { type DateFrameworkType } from "@salt-ds/date-adapters";
-import React, {
   type ReactElement,
   type SyntheticEvent,
   useCallback,

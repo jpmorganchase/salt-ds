@@ -14,9 +14,9 @@ import useIsMobileView from "../../utils/useIsMobileView";
 import { Pre } from "../mdx/pre";
 import { useLivePreviewControls } from "./useLivePreviewControls";
 
-import styles from "./LivePreview.module.css";
 import { AdapterDateFns } from "@salt-ds/date-adapters";
 import { LocalizationProvider } from "@salt-ds/lab";
+import styles from "./LivePreview.module.css";
 
 type LivePreviewProps = {
   componentName: string;
