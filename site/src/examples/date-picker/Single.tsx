@@ -1,37 +1,40 @@
-import type { DateValue } from "@internationalized/date";
 import {
+  DateInputSingleDetails,
   DatePicker,
   DatePickerOverlay,
   DatePickerSingleInput,
   DatePickerSinglePanel,
-  type SingleDatePickerError,
+  DatePickerTrigger,
   type SingleDateSelection,
-  formatDate,
-  getCurrentLocale,
+  useLocalization,
 } from "@salt-ds/lab";
-import { type ReactElement, useCallback } from "react";
-
-function formatSingleDate(
-  date: DateValue | null | undefined,
-  locale = getCurrentLocale(),
-  options?: Intl.DateTimeFormatOptions,
-) {
-  if (date) {
-    return formatDate(date, locale, options);
-  }
-  return date;
-}
+import { type DateFrameworkType } from "@salt-ds/date-adapters";
+import { type ReactElement, type SyntheticEvent, useCallback } from "react";
 
 export const Single = (): ReactElement => {
+  const { dateAdapter } = useLocalization();
   const handleSelectionChange = useCallback(
     (
-      newSelectedDate: SingleDateSelection | null | undefined,
-      error: SingleDatePickerError,
+      _event: SyntheticEvent,
+      date: SingleDateSelection<DateFrameworkType> | null,
+      details: DateInputSingleDetails | undefined,
     ) => {
-      console.log(`Selected date: ${formatSingleDate(newSelectedDate)}`);
-      console.log(`Error: ${error}`);
+      const { value, errors } = details || {};
+      console.log(
+        `Selected date: ${dateAdapter.isValid(date) ? dateAdapter.format(date, "DD MMM YYYY") : date}`,
+      );
+      if (errors?.length && value) {
+        console.log(
+          `Error(s): ${errors
+            .map(({ type, message }) => `type=${type} message=${message}`)
+            .join(",")}`,
+        );
+        if (value) {
+          console.log(`Original Value: ${value}`);
+        }
+      }
     },
-    [],
+    [dateAdapter],
   );
 
   return (
@@ -39,7 +42,9 @@ export const Single = (): ReactElement => {
       selectionVariant="single"
       onSelectionChange={handleSelectionChange}
     >
-      <DatePickerSingleInput />
+      <DatePickerTrigger>
+        <DatePickerSingleInput />
+      </DatePickerTrigger>
       <DatePickerOverlay>
         <DatePickerSinglePanel />
       </DatePickerOverlay>

@@ -1,4 +1,3 @@
-import type { DateValue } from "@internationalized/date";
 import {
   FormField,
   FormFieldHelperText as FormHelperText,
@@ -8,47 +7,56 @@ import {
   DatePicker,
   DatePickerOverlay,
   DatePickerSingleInput,
-  type SingleDatePickerError,
   type SingleDateSelection,
-  formatDate,
-  getCurrentLocale,
+  useLocalization,
+  type DateInputSingleDetails,
+  DatePickerTrigger,
 } from "@salt-ds/lab";
-import { CustomDatePickerPanel } from "@salt-ds/lab/stories/date-picker/CustomDatePickerPanel";
-import { type ReactElement, useCallback, useState } from "react";
-
-function formatSingleDate(
-  date: DateValue | null | undefined,
-  locale = getCurrentLocale(),
-  options?: Intl.DateTimeFormatOptions,
-) {
-  if (date) {
-    return formatDate(date, locale, options);
-  }
-  return date;
-}
+import React, {
+  type ReactElement,
+  type SyntheticEvent,
+  useCallback,
+  useState,
+} from "react";
+import { CustomDatePickerPanel } from "@salt-ds/lab/stories/date-picker/CustomDatePickerPanel"; // CustomDatePickerPanel is an example, replace with your own composition of date controls
+import type { DateFrameworkType } from "@salt-ds/date-adapters";
 
 export const SingleWithCustomPanel = (): ReactElement => {
+  const { dateAdapter } = useLocalization();
   const defaultHelperText = "Date format DD MMM YYYY (e.g. 09 Jun 2024)";
   const errorHelperText = "Please enter a valid date in DD MMM YYYY format";
   const [helperText, setHelperText] = useState(defaultHelperText);
+  const [open, setOpen] = useState<boolean>(false);
   const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
     undefined,
   );
   const handleSelectionChange = useCallback(
     (
-      newSelectedDate: SingleDateSelection | null | undefined,
-      error: SingleDatePickerError,
+      event: SyntheticEvent,
+      date: SingleDateSelection<DateFrameworkType> | null,
+      details: DateInputSingleDetails | undefined,
     ) => {
-      console.log(`Selected date: ${formatSingleDate(newSelectedDate)}`);
-      console.log(`Error: ${error}`);
-      if (error) {
-        setHelperText(errorHelperText);
+      const { value, errors } = details || {};
+      console.log(
+        `Selected date: ${dateAdapter.isValid(date) ? dateAdapter.format(date, "DD MMM YYYY") : date}`,
+      );
+      if (errors?.length && value) {
+        setHelperText(`${errorHelperText} - ${errors[0].message}`);
+        setValidationStatus("error");
+        console.log(
+          `Error(s): ${errors
+            .map(({ type, message }) => `type=${type} message=${message}`)
+            .join(",")}`,
+        );
+        if (value) {
+          console.log(`Original Value: ${value}`);
+        }
       } else {
         setHelperText(defaultHelperText);
+        setValidationStatus(undefined);
       }
-      setValidationStatus(error ? "error" : undefined);
     },
-    [setValidationStatus, setHelperText],
+    [dateAdapter, setHelperText, setValidationStatus],
   );
 
   return (
@@ -57,8 +65,11 @@ export const SingleWithCustomPanel = (): ReactElement => {
       <DatePicker
         selectionVariant="single"
         onSelectionChange={handleSelectionChange}
+        onOpen={setOpen}
       >
-        <DatePickerSingleInput />
+        <DatePickerTrigger>
+          <DatePickerSingleInput />
+        </DatePickerTrigger>
         <DatePickerOverlay>
           <CustomDatePickerPanel
             selectionVariant="single"
@@ -66,7 +77,7 @@ export const SingleWithCustomPanel = (): ReactElement => {
           />
         </DatePickerOverlay>
       </DatePicker>
-      <FormHelperText>{helperText}</FormHelperText>
+      {!open ? <FormHelperText>{helperText}</FormHelperText> : null}
     </FormField>
   );
 };

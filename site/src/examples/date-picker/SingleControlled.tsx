@@ -1,41 +1,49 @@
-import type { DateValue } from "@internationalized/date";
 import {
+  DateInputSingleDetails,
   DatePicker,
   DatePickerOverlay,
   DatePickerSingleInput,
   DatePickerSinglePanel,
-  type SingleDatePickerError,
+  DatePickerTrigger,
   type SingleDateSelection,
-  formatDate,
-  getCurrentLocale,
+  useLocalization,
 } from "@salt-ds/lab";
-import { type ReactElement, useCallback, useState } from "react";
-
-function formatSingleDate(
-  date: DateValue | null | undefined,
-  locale = getCurrentLocale(),
-  options?: Intl.DateTimeFormatOptions,
-) {
-  if (date) {
-    return formatDate(date, locale, options);
-  }
-  return date;
-}
+import { type DateFrameworkType } from "@salt-ds/date-adapters";
+import React, {
+  type ReactElement,
+  type SyntheticEvent,
+  useCallback,
+  useState,
+} from "react";
 
 export const SingleControlled = (): ReactElement => {
+  const { dateAdapter } = useLocalization();
   const [selectedDate, setSelectedDate] = useState<
-    SingleDateSelection | null | undefined
+    SingleDateSelection<DateFrameworkType> | null | undefined
   >(null);
   const handleSelectionChange = useCallback(
     (
-      newSelectedDate: SingleDateSelection | null | undefined,
-      error: SingleDatePickerError,
+      event: SyntheticEvent,
+      date: SingleDateSelection<DateFrameworkType> | null,
+      details: DateInputSingleDetails | undefined,
     ) => {
-      console.log(`Selected date: ${formatSingleDate(newSelectedDate)}`);
-      console.log(`Error: ${error}`);
-      setSelectedDate(newSelectedDate);
+      const { value, errors } = details || {};
+      console.log(
+        `Selected date: ${dateAdapter.isValid(date) ? dateAdapter.format(date, "DD MMM YYYY") : date}`,
+      );
+      setSelectedDate(value?.trim().length === 0 ? null : date);
+      if (errors?.length && value) {
+        console.log(
+          `Error(s): ${errors
+            .map(({ type, message }) => `type=${type} message=${message}`)
+            .join(",")}`,
+        );
+        if (value) {
+          console.log(`Original Value: ${value}`);
+        }
+      }
     },
-    [setSelectedDate],
+    [dateAdapter, setSelectedDate],
   );
 
   return (
@@ -44,7 +52,9 @@ export const SingleControlled = (): ReactElement => {
       selectedDate={selectedDate}
       onSelectionChange={handleSelectionChange}
     >
-      <DatePickerSingleInput />
+      <DatePickerTrigger>
+        <DatePickerSingleInput />
+      </DatePickerTrigger>
       <DatePickerOverlay>
         <DatePickerSinglePanel />
       </DatePickerOverlay>
