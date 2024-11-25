@@ -1,58 +1,65 @@
-import { CalendarDate } from "@internationalized/date";
+import type { DateFrameworkType } from "@salt-ds/date-adapters";
 import {
   Calendar,
   CalendarGrid,
   CalendarNavigation,
   CalendarWeekHeader,
+  useLocalization,
 } from "@salt-ds/lab";
 import type { ReactElement } from "react";
 
-export const Multiselect = (): ReactElement => (
-  <Calendar
-    hideOutOfRangeDates
-    selectionVariant="multiselect"
-    defaultVisibleMonth={new CalendarDate(2024, 1, 1)}
-    defaultSelectedDate={[
-      new CalendarDate(2024, 1, 2),
-      new CalendarDate(2024, 1, 3),
-      new CalendarDate(2024, 1, 4),
-      new CalendarDate(2024, 1, 5),
-      new CalendarDate(2024, 1, 6),
-      new CalendarDate(2024, 1, 11),
-      new CalendarDate(2024, 1, 18),
-      new CalendarDate(2024, 1, 22),
-      new CalendarDate(2024, 1, 25),
-      new CalendarDate(2024, 1, 30),
-      new CalendarDate(2024, 1, 31),
-      new CalendarDate(2024, 2, 1),
-      new CalendarDate(2024, 2, 2),
-      new CalendarDate(2024, 2, 3),
-      new CalendarDate(2024, 2, 4),
-      new CalendarDate(2024, 2, 8),
-      new CalendarDate(2024, 2, 11),
-      new CalendarDate(2024, 2, 15),
-      new CalendarDate(2024, 2, 16),
-      new CalendarDate(2024, 2, 17),
-      new CalendarDate(2024, 2, 18),
-      new CalendarDate(2024, 2, 22),
-      new CalendarDate(2024, 2, 29),
-      new CalendarDate(2024, 3, 6),
-      new CalendarDate(2024, 3, 7),
-      new CalendarDate(2024, 3, 8),
-      new CalendarDate(2024, 3, 9),
-      new CalendarDate(2024, 3, 10),
-      new CalendarDate(2024, 3, 13),
-      new CalendarDate(2024, 3, 15),
-      new CalendarDate(2024, 3, 17),
-      new CalendarDate(2024, 3, 20),
-      new CalendarDate(2024, 3, 22),
-      new CalendarDate(2024, 3, 24),
-      new CalendarDate(2024, 3, 27),
-      new CalendarDate(2024, 3, 31),
-    ]}
-  >
-    <CalendarNavigation />
-    <CalendarWeekHeader />
-    <CalendarGrid />
-  </Calendar>
-);
+export const Multiselect = (): ReactElement => {
+  const { dateAdapter } = useLocalization<DateFrameworkType>();
+  const defaultSelectedDate = [
+    "02/01/2024",
+    "03/01/2024",
+    "04/01/2024",
+    "05/01/2024",
+    "06/01/2024",
+    "11/01/2024",
+    "18/01/2024",
+    "22/01/2024",
+    "25/01/2024",
+    "30/01/2024",
+    "31/01/2024",
+    "01/02/2024",
+    "02/02/2024",
+    "03/02/2024",
+    "08/02/2024",
+    "10/02/2024",
+    "15/02/2024",
+    "16/02/2024",
+    "17/02/2024",
+    "22/02/2024",
+    "29/02/2024",
+    "04/03/2024",
+    "05/03/2024",
+    "06/03/2024",
+    "07/03/2024",
+    "08/03/2024",
+    "11/03/2024",
+    "13/03/2024",
+    "15/03/2024",
+    "18/03/2024",
+    "20/03/2024",
+    "22/03/2024",
+    "25/03/2024",
+    "29/03/2024",
+  ].map((date) => dateAdapter.parse(date, "DD/MM/YYYY").date);
+  const defaultVisibleMonth = dateAdapter.parse(
+    "01/01/2024",
+    "DD/MM/YYYY",
+  ).date;
+  return (
+    <Calendar
+      selectionVariant="multiselect"
+      defaultVisibleMonth={defaultVisibleMonth}
+      defaultSelectedDate={defaultSelectedDate}
+      hideOutOfRangeDates
+    >
+      <CalendarNavigation />
+      <CalendarWeekHeader />
+      <CalendarGrid />
+    </Calendar>
+  );
+};

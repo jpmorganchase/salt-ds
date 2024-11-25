@@ -268,7 +268,7 @@ export const TodayButton: StoryFn<
       selectedDate={selectedDate}
       defaultVisibleMonth={dateAdapter.startOf(today, "month")}
       onSelectionChange={(_event, newSelectedDate) =>
-        setSelectedDate(newSelectedDate.date)
+        setSelectedDate(newSelectedDate)
       }
     >
       <StackLayout gap={0}>

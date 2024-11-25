@@ -1,21 +1,28 @@
-import { type DateValue, getDayOfWeek } from "@internationalized/date";
+import type { DateFrameworkType } from "@salt-ds/date-adapters";
 import {
   Calendar,
   CalendarGrid,
   CalendarNavigation,
   CalendarWeekHeader,
-  getCurrentLocale,
+  useLocalization,
 } from "@salt-ds/lab";
 import type { ReactElement } from "react";
 
-// Saturday & Sunday
-const isDayDisabled = (date: DateValue) =>
-  getDayOfWeek(date, getCurrentLocale()) >= 5 ? "Weekends are disabled" : false;
+export const DisabledDates = (): ReactElement => {
+  const { dateAdapter } = useLocalization<DateFrameworkType>();
+  const isDayDisabled = (day: ReturnType<typeof dateAdapter.date>) => {
+    const dayOfWeek = dateAdapter.getDayOfWeek(day);
+    const isWeekend =
+      (dateAdapter.lib === "luxon" && (dayOfWeek === 7 || dayOfWeek === 6)) ||
+      (dateAdapter.lib !== "luxon" && (dayOfWeek === 0 || dayOfWeek === 6));
 
-export const DisabledDates = (): ReactElement => (
-  <Calendar selectionVariant="single" isDayDisabled={isDayDisabled}>
-    <CalendarNavigation />
-    <CalendarWeekHeader />
-    <CalendarGrid />
-  </Calendar>
-);
+    return isWeekend ? "Weekends are disabled" : false;
+  };
+  return (
+    <Calendar selectionVariant="single" isDayDisabled={isDayDisabled}>
+      <CalendarNavigation />
+      <CalendarWeekHeader />
+      <CalendarGrid />
+    </Calendar>
+  );
+};

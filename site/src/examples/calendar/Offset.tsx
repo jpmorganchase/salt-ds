@@ -1,23 +1,28 @@
-import { getLocalTimeZone, today } from "@internationalized/date";
+import type { DateFrameworkType } from "@salt-ds/date-adapters";
 import {
   Calendar,
   CalendarGrid,
   CalendarNavigation,
   CalendarWeekHeader,
+  useLocalization,
 } from "@salt-ds/lab";
 import type { ReactElement } from "react";
 
-export const Offset = (): ReactElement => (
-  <Calendar
-    selectionVariant="offset"
-    endDateOffset={(date) => date.add({ days: 2 })}
-    defaultSelectedDate={{
-      startDate: today(getLocalTimeZone()),
-      endDate: today(getLocalTimeZone()).add({ days: 2 }),
-    }}
-  >
-    <CalendarNavigation />
-    <CalendarWeekHeader />
-    <CalendarGrid />
-  </Calendar>
-);
+export const Offset = (): ReactElement => {
+  const { dateAdapter } = useLocalization<DateFrameworkType>();
+  const endDateOffset = (date: ReturnType<typeof dateAdapter.date>) =>
+    dateAdapter.add(date, { days: 4 });
+  const startDate = dateAdapter.today();
+  const endDate = dateAdapter.add(startDate, { days: 4 });
+  return (
+    <Calendar
+      defaultSelectedDate={{ startDate, endDate }}
+      endDateOffset={endDateOffset}
+      selectionVariant="offset"
+    >
+      <CalendarNavigation />
+      <CalendarWeekHeader />
+      <CalendarGrid />
+    </Calendar>
+  );
+};

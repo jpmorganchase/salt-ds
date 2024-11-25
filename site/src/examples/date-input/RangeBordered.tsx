@@ -1,43 +1,57 @@
-import { getLocalTimeZone, today } from "@internationalized/date";
+import type { DateFrameworkType } from "@salt-ds/date-adapters";
 import {
   DateInputRange,
-  type DateInputRangeError,
+  type DateInputRangeDetails,
   type DateRangeSelection,
-  formatDate,
-  getCurrentLocale,
+  useLocalization,
 } from "@salt-ds/lab";
-import type { ReactElement, SyntheticEvent } from "react";
-
-function formatDateRange(
-  dateRange: DateRangeSelection | null,
-  locale = getCurrentLocale(),
-): string {
-  const { startDate, endDate } = dateRange || {};
-  const formattedStartDate = startDate
-    ? formatDate(startDate, locale)
-    : startDate;
-  const formattedEndDate = endDate ? formatDate(endDate, locale) : endDate;
-  return `Start date: ${formattedStartDate}, End date: ${formattedEndDate}`;
-}
+import { type ReactElement, type SyntheticEvent, useCallback } from "react";
 
 export const RangeBordered = (): ReactElement => {
-  const handleDateChange = (
-    _event: SyntheticEvent,
-    newSelectedDate: DateRangeSelection | null,
-    _error: DateInputRangeError,
-  ) => {
-    console.log(`Selected date range: ${formatDateRange(newSelectedDate)}`);
-  };
+  const { dateAdapter } = useLocalization();
+  const handleDateChange = useCallback(
+    (
+      event: SyntheticEvent,
+      date: DateRangeSelection<DateFrameworkType> | null,
+      details: DateInputRangeDetails | undefined,
+    ) => {
+      const { startDate, endDate } = date ?? {};
+      const {
+        startDate: {
+          value: startDateOriginalValue = undefined,
+          errors: startDateErrors = undefined,
+        } = {},
+        endDate: {
+          value: endDateOriginalValue = undefined,
+          errors: endDateErrors = undefined,
+        } = {},
+      } = details || {};
+      console.log(
+        `StartDate: ${dateAdapter.isValid(startDate) ? dateAdapter.format(startDate, "DD MMM YYYY") : startDate}, EndDate: ${dateAdapter.isValid(endDate) ? dateAdapter.format(endDate, "DD MMM YYYY") : endDate}`,
+      );
+      if (startDateErrors?.length) {
+        console.log(
+          `StartDate Error(s): ${startDateErrors.map(({ type, message }) => `type: ${type} message: ${message}`).join(",")}`,
+        );
+        if (startDateOriginalValue) {
+          console.log(`StartDate Original Value: ${startDateOriginalValue}`);
+        }
+      }
+      if (endDateErrors?.length) {
+        console.log(
+          `EndDate Error(s): ${endDateErrors.map(({ type, message }) => `type: ${type} message: ${message}`).join(",")}`,
+        );
+        if (endDateOriginalValue) {
+          console.log(`EndDate Original Value: ${endDateOriginalValue}`);
+        }
+      }
+    },
+    [dateAdapter],
+  );
+
   return (
     <div style={{ width: "250px" }}>
-      <DateInputRange
-        defaultDate={{
-          startDate: today(getLocalTimeZone()),
-          endDate: today(getLocalTimeZone()).add({ days: 7 }),
-        }}
-        onDateChange={handleDateChange}
-        bordered
-      />
+      <DateInputRange bordered onDateChange={handleDateChange} />
     </div>
   );
 };

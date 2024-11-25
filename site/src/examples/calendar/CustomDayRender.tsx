@@ -1,20 +1,16 @@
-import {
-  DateFormatter,
-  type DateValue,
-  getLocalTimeZone,
-} from "@internationalized/date";
+import type { DateFrameworkType } from "@salt-ds/date-adapters";
 import {
   Calendar,
   CalendarGrid,
   CalendarNavigation,
   CalendarWeekHeader,
-  getCurrentLocale,
+  useLocalization,
 } from "@salt-ds/lab";
 import type { ReactElement } from "react";
 
-function renderDayContents(day: DateValue) {
-  const formatter = new DateFormatter(getCurrentLocale(), { day: "2-digit" });
-  return <>{formatter.format(day.toDate(getLocalTimeZone()))}</>;
+function renderDayContents(day: DateFrameworkType) {
+  const { dateAdapter } = useLocalization<DateFrameworkType>();
+  return <>{dateAdapter.format(day, "DD")}</>;
 }
 
 export const CustomDayRender = (): ReactElement => (
