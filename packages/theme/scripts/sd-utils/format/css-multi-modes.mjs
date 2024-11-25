@@ -19,7 +19,7 @@ function replaceModeSpecificValue(token, modeIdentifier) {
   }
 
   if (token.$modes?.[modeIdentifier]) {
-    console.log("replaceModeSpecificValue token.$modes", token);
+    // console.log("replaceModeSpecificValue token.$modes", token);
     token.$value = token.$modes?.[modeIdentifier];
   }
   return token;

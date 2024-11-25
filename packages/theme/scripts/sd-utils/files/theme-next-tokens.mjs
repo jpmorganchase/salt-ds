@@ -37,8 +37,19 @@ export const foundationAlphaNextFile = {
   },
 };
 
+const paletteNextList = [
+  "accent",
+  "corner",
+  "negative",
+  "text",
+  "alpha",
+  "foreground",
+  "neutral",
+  "warning",
+];
+
 // 2 sets of palette files set, one with 4 $modes ('blue/teal-light/dark'), one with 2 $modes ('light/dark')
-export const paletteNextFiles = [
+export const getPaletteNextFiles = ({ modes, density, accents }) => [
   ...paletteNextList.map((paletteNextType) => {
     const accentModeRules = modes.reduce((prev, mode) => {
       // TODO: restructure `./palette/` files to per palette family, so that only those needing 4 combination (accents * modes) will generate 4 block of CSS code?

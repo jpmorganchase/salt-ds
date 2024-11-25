@@ -2,7 +2,7 @@ import { StyleDictionary } from "style-dictionary-utils";
 import {
   foundationAlphaNextFile,
   foundationColorsNextFile,
-  paletteNextFiles,
+  getPaletteNextFiles,
 } from "./sd-utils/files/theme-next-tokens.mjs";
 import { foundationCategoricalFile } from "./sd-utils/files/theme-tokens.mjs";
 import { cssMultiModes } from "./sd-utils/format/css-multi-modes.mjs";
@@ -11,17 +11,6 @@ import { saltValueModes } from "./sd-utils/transform/value-modes.mjs";
 
 // TODO: add more styling options here, and theme vs theme next
 function getStyleDictionaryConfig({ modes, density, accents }) {
-  const paletteNextList = [
-    "accent",
-    "corner",
-    "negative",
-    "text",
-    "alpha",
-    "foreground",
-    "neutral",
-    "warning",
-  ];
-
   return {
     source: [
       //   "./tokens/foundation/test.tokens.json",
@@ -52,7 +41,7 @@ function getStyleDictionaryConfig({ modes, density, accents }) {
           foundationCategoricalFile,
           foundationColorsNextFile,
           foundationAlphaNextFile,
-          ...paletteNextFiles,
+          ...getPaletteNextFiles({ modes, density, accents }),
         ],
       },
     },
