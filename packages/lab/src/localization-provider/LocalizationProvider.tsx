@@ -85,7 +85,7 @@ export const LocalizationProvider = function LocalizationProvider<
       locale,
       instance,
     });
-  }, [DateAdapter, locale]);
+  }, [DateAdapter, locale, instance]);
 
   const defaultDates: LocalizationProviderValue<TDate>["defaultDates"] =
     useMemo(

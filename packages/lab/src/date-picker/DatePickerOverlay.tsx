@@ -54,6 +54,7 @@ export const DatePickerOverlay = forwardRef<
   );
 
   return (
+    // biome-ignore lint/a11y/useValidAriaRole: role="modal" + aria-modal="true" needed, otherwise Axe error
     <FloatingComponent
       className={clsx(withBaseName(), className)}
       open={open || false}

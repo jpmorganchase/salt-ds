@@ -13,13 +13,15 @@ import {
   type DateRangeSelection,
   useLocalization,
 } from "@salt-ds/lab";
-import { CustomDatePickerPanel } from "@salt-ds/lab/stories/date-picker/CustomDatePickerPanel"; // CustomDatePickerPanel is an example, replace with your own composition of date controls
 import {
   type ReactElement,
   type SyntheticEvent,
   useCallback,
   useState,
 } from "react";
+// CustomDatePickerPanel is an example, replace with your own composition of date controls
+// refer code at https://github.com/jpmorganchase/salt-ds/tree/main/site/src/examples/date-picker/dependencies/
+import { CustomDatePickerPanel } from "./dependencies/CustomDatePickerPanel";
 
 export const RangeWithCustomPanel = (): ReactElement => {
   const { dateAdapter } = useLocalization();
