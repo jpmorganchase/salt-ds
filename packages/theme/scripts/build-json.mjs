@@ -2,6 +2,7 @@ import { StyleDictionary } from "style-dictionary-utils";
 import {
   foundationAlphaNextFile,
   foundationColorsNextFile,
+  getCharacteristicsNextFiles,
   getPaletteNextFiles,
 } from "./sd-utils/files/theme-next-tokens.mjs";
 import { foundationCategoricalFile } from "./sd-utils/files/theme-tokens.mjs";
@@ -17,10 +18,11 @@ function getStyleDictionaryConfig({ modes, density, accents }) {
       "./tokens/foundation/**/*.tokens.json",
       // // Individual palette file output
 
+      "./tokens/palette/text.tokens.json",
       "./tokens/palette/palette-next.tokens.json",
       // // combined palette tokens into single file, handled by custom formatter
       // "./tokens/palette/**/*.tokens.json",
-      //   `./tokens/characteristics/*.tokens.json`,
+      "./tokens/characteristics/*.tokens.json",
       //   "tokens/globals/**/*.tokens.json",
     ],
     // usesDtcg: true,
@@ -42,6 +44,7 @@ function getStyleDictionaryConfig({ modes, density, accents }) {
           foundationColorsNextFile,
           foundationAlphaNextFile,
           ...getPaletteNextFiles({ modes, density, accents }),
+          ...getCharacteristicsNextFiles(),
         ],
       },
     },

@@ -1,6 +1,6 @@
 export const foundationColorsNextFile = {
   format: "css/advanced",
-  destination: "foundation/color-next.css",
+  destination: "foundations/color-next.css",
   options: {
     selector: ".salt-theme.salt-theme-next", // defaults to :root; set to false to disable
     outputReferences: true,
@@ -12,6 +12,8 @@ export const foundationColorsNextFile = {
     return (
       token.filePath.includes("colors-next.tokens") &&
       token.attributes.category === "color" &&
+      // alpha is covered in `foundationAlphaNextFile`
+      token.attributes.type !== "alpha" &&
       token.attributes.type !== "figma-only"
     );
   },
@@ -19,7 +21,7 @@ export const foundationColorsNextFile = {
 
 export const foundationAlphaNextFile = {
   format: "css/advanced",
-  destination: "foundation/alpha-next.css",
+  destination: "foundations/alpha-next.css",
   options: {
     selector: ".salt-theme.salt-theme-next", // defaults to :root; set to false to disable
     outputReferences: true,
@@ -73,7 +75,7 @@ export const getPaletteNextFiles = ({ modes, density, accents }) => [
       },
       // // Use filter to add different `selector` for mode/density/etc.
       filter: async (token, options) => {
-        console.log("css/advanced filter", token); //palette-accent
+        // console.log("css/advanced filter", token); //palette-accent
         //  For some reason, attributes "attribute/cti" is not attached to tokens in palette
         return (
           // next
@@ -105,7 +107,7 @@ export const getPaletteNextFiles = ({ modes, density, accents }) => [
       },
       // // Use filter to add different `selector` for mode/density/etc.
       filter: async (token, options) => {
-        console.log("css/advanced filter", token); //palette-accent
+        // console.log("css/advanced filter", token); //palette-accent
         //  For some reason, attributes "attribute/cti" is not attached to tokens in palette
         return (
           // next
@@ -122,3 +124,51 @@ export const getPaletteNextFiles = ({ modes, density, accents }) => [
     };
   }),
 ];
+
+const characteristicsNextList = [
+  "accent",
+  "editable",
+  "separable",
+  "actionable",
+  "focused",
+  "status",
+  "category",
+  "navigable",
+  "target",
+  "container",
+  "overlayable",
+  "text",
+  "content",
+  "selectable",
+  "track",
+];
+
+export const getCharacteristicsNextFiles = () =>
+  characteristicsNextList.map((charType) => {
+    return {
+      format: "css/advanced",
+      destination: `characteristics/${charType}-next.css`,
+      options: {
+        outputReferences: true,
+        usesDtcg: true,
+      },
+      filter: async (token, options) => {
+        console.log(
+          "getCharacteristicsNextFiles filter",
+          token.filePath,
+          token.path,
+          token.attributes,
+        );
+        return (
+          // next
+          token.filePath.includes("characteristics/theme-next.tokens") &&
+          //
+          token.attributes.category === charType
+
+          // Only deal with color for now
+          // token.$type === "color"
+          // token.attributes.type !== "figma-only"
+        );
+      },
+    };
+  });

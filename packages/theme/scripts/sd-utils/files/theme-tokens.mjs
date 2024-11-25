@@ -1,6 +1,6 @@
 export const foundationCategoricalFile = {
   format: "css/advanced",
-  destination: "foundation/color.css",
+  destination: "foundations/color.css",
   options: {
     selector: ".salt-theme", // defaults to :root; set to false to disable
     outputReferences: true,
