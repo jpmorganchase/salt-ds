@@ -1,32 +1,67 @@
 import {
-  type DateValue,
-  getLocalTimeZone,
-  today,
-} from "@internationalized/date";
+  FormField,
+  FormFieldHelperText as FormHelperText,
+  FormFieldLabel as FormLabel,
+} from "@salt-ds/core";
+import type { DateFrameworkType } from "@salt-ds/date-adapters";
 import {
   DateInputSingle,
-  type DateInputSingleError,
+  type DateInputSingleDetails,
   type SingleDateSelection,
-  formatDate,
+  useLocalization,
 } from "@salt-ds/lab";
-import { type ReactElement, type SyntheticEvent, useState } from "react";
+import {
+  type ReactElement,
+  type SyntheticEvent,
+  useCallback,
+  useState,
+} from "react";
 
 export const SingleControlled = (): ReactElement => {
-  const [selectedDate, setSelectedDate] = useState<
-    SingleDateSelection | null | undefined
-  >(today(getLocalTimeZone()));
+  const { dateAdapter } = useLocalization();
+  const [selectedDate, setSelectedDate] =
+    useState<SingleDateSelection<DateFrameworkType> | null>(null);
+  const defaultHelperText = "Date format DD MMM YYYY (e.g. 09 Jun 2024)";
+  const errorHelperText = "Please enter a valid date in DD MMM YYYY format";
+  const [helperText, setHelperText] = useState(defaultHelperText);
+  const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
+    undefined,
+  );
+  const handleDateChange = useCallback(
+    (
+      event: SyntheticEvent,
+      date: SingleDateSelection<DateFrameworkType> | null,
+      details: DateInputSingleDetails | undefined,
+    ) => {
+      const { value, errors } = details || {};
+      console.log(
+        `Selected date: ${dateAdapter.isValid(date) ? dateAdapter.format(date, "DD MMM YYYY") : date}`,
+      );
+      setSelectedDate(value?.trim().length === 0 ? null : date);
+      if (errors?.length && value) {
+        setHelperText(`${errorHelperText} - ${errors[0].message}`);
+        setValidationStatus("error");
+        console.log(
+          `Error(s): ${errors
+            .map(({ type, message }) => `type=${type} message=${message}`)
+            .join(",")}`,
+        );
+        if (value) {
+          console.log(`Original Value: ${value}`);
+        }
+      } else {
+        setHelperText(defaultHelperText);
+        setValidationStatus(undefined);
+      }
+    },
+    [dateAdapter, setHelperText, setValidationStatus],
+  );
 
-  const handleDateChange = (
-    _event: SyntheticEvent,
-    newSelectedDate: DateValue | null | undefined,
-    _error: DateInputSingleError,
-  ) => {
-    console.log(`Selected date: ${formatDate(newSelectedDate)}`);
-    setSelectedDate(newSelectedDate);
-  };
   return (
-    <div style={{ width: "250px" }}>
+    <FormField style={{ width: "250px" }} validationStatus={validationStatus}>
+      <FormLabel>Enter a date</FormLabel>
       <DateInputSingle date={selectedDate} onDateChange={handleDateChange} />
-    </div>
+      <FormHelperText>{helperText}</FormHelperText>
+    </FormField>
   );
 };
