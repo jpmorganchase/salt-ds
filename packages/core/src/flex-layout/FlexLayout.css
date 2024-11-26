@@ -11,6 +11,8 @@
 /* Style applied to the root element */
 .saltFlexLayout {
   gap: var(--flexLayout-gap);
+  margin: var(--flexLayout-margin);
+  padding: var(--flexLayout-padding);
   display: var(--flexLayout-layout-display);
   flex-direction: var(--flexLayout-direction);
   flex-wrap: var(--flexLayout-wrap);
