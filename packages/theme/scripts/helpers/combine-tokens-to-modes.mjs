@@ -36,9 +36,14 @@ function readToken(filePath) {
 function writeToken(token, filePath) {
   const __dirname = import.meta.dirname;
 
-  writeFileSync(join(__dirname, filePath), JSON.stringify(token, null, "  "), {
-    encoding: "utf-8",
-  });
+  writeFileSync(
+    join(__dirname, filePath),
+    // biome-ignore lint/style/useTemplate: <explanation>
+    JSON.stringify(token, null, "  ") + "\n",
+    {
+      encoding: "utf-8",
+    },
+  );
 }
 
 function addModesValue(mainToken, modeName, modeSpecificToken) {
