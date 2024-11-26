@@ -1,0 +1,26 @@
+.spacingExampleGap:not(:last-child):after {
+  content: "";
+  background: var(--salt-category-5-subtle-background);
+  height: 100%;
+  width: var(--flexLayout-gap);
+  position: absolute;
+  top: 0;
+  right: calc(var(--flexLayout-gap) * -1);
+  box-sizing: border-box;
+  border: dotted 1px var(--salt-category-3-subtle-borderColor);
+}
+.container {
+  width: 100%;
+}
+.item {
+  border: var(--salt-container-primary-border);
+  background: var(--salt-container-primary-background);
+}
+.spacingExamplePadding {
+  border: dotted 1px var(--salt-category-3-subtle-borderColor);
+  background: var(--salt-category-3-subtle-background);
+}
+.spacingExampleMargin {
+  border: dotted 1px var(--salt-category-4-subtle-borderColor);
+  background: var(--salt-category-4-subtle-background);
+}

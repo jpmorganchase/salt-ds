@@ -60,6 +60,14 @@ export type FlexLayoutProps<T extends ElementType> =
        * Allow the items to wrap as needed, default is false.
        */
       wrap?: ResponsiveProp<boolean>;
+      /**
+       * Defines the margin around the component. It can be specified as a number (which acts as a multiplier) or a string representing the margin value. Default is `0`.
+       */
+      margin?: ResponsiveProp<number | string>;
+      /**
+       * Defines the padding within the component. It can be specified as a number (which acts as a multiplier) or a string representing the padding value. Default is `0`.
+       */
+      padding?: ResponsiveProp<number | string>;
     }
   >;
 
@@ -71,7 +79,7 @@ function parseAlignment(style: string | undefined) {
   return style === "start" || style === "end" ? `flex-${style}` : style;
 }
 
-function parseSpacing(value: number | string | undefined) {
+export function parseSpacing(value: number | string | undefined) {
   if (value === undefined || typeof value === "string") {
     return value;
   }
@@ -88,6 +96,8 @@ export const FlexLayout: FlexLayoutComponent = forwardRef(
       className,
       direction = "row",
       gap = 3,
+      margin = 0,
+      padding = 0,
       justify,
       separators,
       style,
@@ -108,6 +118,8 @@ export const FlexLayout: FlexLayoutComponent = forwardRef(
 
     const { matchedBreakpoints } = useBreakpoint();
     const flexGap = resolveResponsiveValue(gap, matchedBreakpoints);
+    const flexMargin = resolveResponsiveValue(margin, matchedBreakpoints);
+    const flexPadding = resolveResponsiveValue(padding, matchedBreakpoints);
     const flexDirection = resolveResponsiveValue(direction, matchedBreakpoints);
     const flexWrap = resolveResponsiveValue(wrap, matchedBreakpoints);
     const flexLayoutStyles = {
@@ -115,6 +127,8 @@ export const FlexLayout: FlexLayoutComponent = forwardRef(
       "--flexLayout-align": parseAlignment(align),
       "--flexLayout-direction": flexDirection,
       "--flexLayout-gap": parseSpacing(flexGap),
+      "--flexLayout-margin": parseSpacing(flexMargin),
+      "--flexLayout-padding": parseSpacing(flexPadding),
       "--flexLayout-justify": parseAlignment(justify),
       "--flexLayout-wrap": flexWrap ? "wrap" : "nowrap",
     };

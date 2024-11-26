@@ -5,3 +5,4 @@ export * from "./LayoutAlignment";
 export * from "./ResponsiveLayout";
 export * from "./LayoutSeparators";
 export * from "./RowDirection";
+export * from "./Spacing";

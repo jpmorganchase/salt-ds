@@ -131,6 +131,30 @@
   animation: fade-out-back 1s ease-out both;
 }
 
+.spacing-example-gap.saltFlexItem:not(:last-child):after {
+  content: "";
+  background: var(--salt-category-5-subtle-background);
+  height: 100%;
+  width: var(--flexLayout-gap);
+  position: absolute;
+  top: 0;
+  right: calc(var(--flexLayout-gap) * -1);
+  box-sizing: border-box;
+  border: dotted min(1px, var(--flexLayout-gap)) var(--salt-category-3-subtle-borderColor);
+}
+.spacing-example-gap {
+  border: var(--salt-container-primary-border);
+  background: var(--salt-container-primary-background);
+}
+.spacing-example-padding {
+  border: dotted min(1px, var(--flexLayout-padding)) var(--salt-category-3-subtle-borderColor);
+  background: var(--salt-category-3-subtle-background);
+}
+.spacing-example-margin {
+  border: dotted 1px var(--salt-category-4-subtle-borderColor);
+  background: var(--salt-category-4-subtle-background);
+}
+
 @media (prefers-reduced-motion) {
   .reduced-motion .saltParentChildItem-slide-left {
     animation: none;
