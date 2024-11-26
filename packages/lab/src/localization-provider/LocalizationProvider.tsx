@@ -101,7 +101,7 @@ export const LocalizationProvider = function LocalizationProvider<
       dateAdapter,
       defaultDates,
     };
-  }, [defaultDates, dateAdapter]);
+  }, [dateAdapter, defaultDates]);
 
   return (
     <LocalizationProviderContext.Provider value={contextValue}>

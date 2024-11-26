@@ -391,7 +391,9 @@ export class AdapterLuxon implements SaltDateAdapter<DateTime, string> {
     offset: "day" | "week" | "month" | "year",
     locale?: string,
   ): DateTime {
-    return date.setLocale(locale ?? this.locale).startOf(offset);
+    return date
+      .setLocale(locale ?? this.locale)
+      .startOf(offset, { useLocaleWeeks: true });
   }
 
   /**
@@ -406,7 +408,9 @@ export class AdapterLuxon implements SaltDateAdapter<DateTime, string> {
     offset: "day" | "week" | "month" | "year",
     locale?: string,
   ): DateTime {
-    return date.setLocale(locale ?? this.locale).endOf(offset);
+    return date
+      .setLocale(locale ?? this.locale)
+      .endOf(offset, { useLocaleWeeks: true });
   }
 
   /**
@@ -441,9 +445,10 @@ export class AdapterLuxon implements SaltDateAdapter<DateTime, string> {
     format: "long" | "short" | "narrow",
     locale?: string,
   ): string {
-    const today = DateTime.local().setLocale(locale ?? this.locale);
-    const targetDate = today.plus({ days: (dow - today.weekday + 7) % 7 });
-    return targetDate.toLocaleString(dowFormatOptions[format]);
+    const referenceDate = DateTime.local().setLocale(locale ?? this.locale);
+    const startOfWeek = referenceDate.startOf("week", { useLocaleWeeks: true });
+    const targetDate = startOfWeek.plus({ days: dow });
+    return targetDate.toLocaleString({ weekday: format });
   }
 
   /**

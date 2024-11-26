@@ -483,14 +483,12 @@ export class AdapterDayjs implements SaltDateAdapter<Dayjs, string> {
     format: "long" | "short" | "narrow",
     locale?: string,
   ): string {
-    const dayjsInstance = this.dayjs().locale(locale || this.locale);
-    if (format === "narrow") {
-      return dayjsInstance.localeData().weekdaysMin()[dow];
-    }
-    if (format === "short") {
-      return dayjsInstance.localeData().weekdaysShort()[dow];
-    }
-    return dayjsInstance.localeData().weekdays()[dow];
+    const date = this.dayjs()
+      .locale(locale ?? this.locale)
+      .weekday(dow);
+    const formatString =
+      format === "long" ? "dddd" : format === "short" ? "ddd" : "dd";
+    return date.format(formatString);
   }
 
   /**
