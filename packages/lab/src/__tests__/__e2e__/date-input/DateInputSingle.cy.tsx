@@ -11,7 +11,7 @@ import { AdapterMoment } from "@salt-ds/date-adapters";
 import { DateInputSingle } from "@salt-ds/lab";
 
 import { es as dateFnsEs } from "date-fns/locale";
-import { type SyntheticEvent, useState } from "react";
+import { type ChangeEvent, type SyntheticEvent, useState } from "react";
 import "moment/dist/locale/es";
 import "dayjs/locale/es";
 
@@ -260,10 +260,15 @@ describe("GIVEN a DateInputSingle", () => {
         });
 
         it("SHOULD update when changed with a valid date", () => {
+          const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+            // React 16 backwards compatibility
+            event.persist();
+            inputChangeSpy(event);
+          };
           cy.mount(
             <DateInputSingle
               defaultDate={initialDate}
-              onChange={inputChangeSpy}
+              onChange={handleChange}
               onDateValueChange={dateValueChangeSpy}
               onDateChange={dateChangeSpy}
             />,
@@ -311,10 +316,18 @@ describe("GIVEN a DateInputSingle", () => {
               initialDate,
             );
 
-            const onDateChange = (
+            const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+              // React 16 backwards compatibility
+              event.persist();
+              inputChangeSpy(event);
+            };
+
+            const handleDateChange = (
               event: SyntheticEvent,
               newDate: DateFrameworkType | null,
             ) => {
+              // React 16 backwards compatibility
+              event.persist();
               setDate(newDate);
               dateChangeSpy(event, newDate);
             };
@@ -322,9 +335,9 @@ describe("GIVEN a DateInputSingle", () => {
             return (
               <DateInputSingle
                 date={date}
-                onChange={inputChangeSpy}
+                onChange={handleChange}
                 onDateValueChange={dateValueChangeSpy}
-                onDateChange={onDateChange}
+                onDateChange={handleDateChange}
               />
             );
           }

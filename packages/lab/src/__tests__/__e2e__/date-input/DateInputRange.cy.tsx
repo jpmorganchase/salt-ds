@@ -14,7 +14,7 @@ import {
   type DateRangeSelection,
 } from "@salt-ds/lab";
 import { es as dateFnsEs } from "date-fns/locale";
-import { type SyntheticEvent, useState } from "react";
+import { type ChangeEvent, type SyntheticEvent, useState } from "react";
 import "moment/dist/locale/es";
 import "dayjs/locale/es";
 
@@ -149,8 +149,8 @@ describe("GIVEN a DateInputRange", () => {
 
       // dayjs expects lowercase months - capitilisation of months is a consumer concern
       const updatedDateValue = {
-        startDate: adapter.lib !== "dayjs" ? "01 nov 2027" : "01 Nov 2027",
-        endDate: adapter.lib !== "dayjs" ? "02 dec 2028" : "02 Dec 2028",
+        startDate: "01 Nov 2027",
+        endDate: "02 Dec 2028",
       };
       const updatedFormattedDateValue = {
         startDate: "01 Nov 2027",
@@ -467,11 +467,25 @@ describe("GIVEN a DateInputRange", () => {
         });
 
         it("SHOULD update when changed with a valid date", () => {
+          const handleStartInputChange = (
+            event: ChangeEvent<HTMLInputElement>,
+          ) => {
+            // React 16 backwards compatibility
+            event.persist();
+            startInputChangeSpy(event);
+          };
+          const handleEndInputChange = (
+            event: ChangeEvent<HTMLInputElement>,
+          ) => {
+            // React 16 backwards compatibility
+            event.persist();
+            endInputChangeSpy(event);
+          };
           cy.mount(
             <DateInputRange
               defaultDate={initialDate}
-              startInputProps={{ onChange: startInputChangeSpy }}
-              endInputProps={{ onChange: endInputChangeSpy }}
+              startInputProps={{ onChange: handleStartInputChange }}
+              endInputProps={{ onChange: handleEndInputChange }}
               onDateValueChange={dateValueChangeSpy}
               onDateChange={dateChangeSpy}
             />,
@@ -592,15 +606,31 @@ describe("GIVEN a DateInputRange", () => {
               event: SyntheticEvent,
               newDate: DateRangeSelection<DateFrameworkType> | null | undefined,
             ) => {
+              // React 16 backwards compatibility
+              event.persist();
               setDate(newDate);
               dateChangeSpy(event, newDate);
+            };
+            const handleStartInputChange = (
+              event: ChangeEvent<HTMLInputElement>,
+            ) => {
+              // React 16 backwards compatibility
+              event.persist();
+              startInputChangeSpy(event);
+            };
+            const handleEndInputChange = (
+              event: ChangeEvent<HTMLInputElement>,
+            ) => {
+              // React 16 backwards compatibility
+              event.persist();
+              endInputChangeSpy(event);
             };
 
             return (
               <DateInputRange
                 date={date}
-                startInputProps={{ onChange: startInputChangeSpy }}
-                endInputProps={{ onChange: endInputChangeSpy }}
+                startInputProps={{ onChange: handleStartInputChange }}
+                endInputProps={{ onChange: handleEndInputChange }}
                 onDateValueChange={dateValueChangeSpy}
                 onDateChange={handleDateChange}
               />
