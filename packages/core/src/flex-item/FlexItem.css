@@ -9,6 +9,8 @@
 /* Style applied to the root element */
 .saltFlexItem {
   position: relative;
+  margin: var(--flexItem-margin);
+  padding: var(--flexItem-padding);
   align-self: var(--saltFlexItem-alignment);
   flex-grow: var(--saltFlexItem-grow);
   flex-shrink: var(--saltFlexItem-shrink);

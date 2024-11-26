@@ -8,6 +8,7 @@ import {
   forwardRef,
 } from "react";
 import { useBreakpoint } from "../breakpoints";
+import { parseSpacing } from "../flex-layout";
 import {
   type PolymorphicComponentPropWithRef,
   type PolymorphicRef,
@@ -36,17 +37,25 @@ export type FlexItemProps<T extends ElementType> =
        */
       align?: flexItemAlignment;
       /**
-       * Defines the ability for an item to shrink x times more compared to it's siblings, default is 1.
+       * Defines the ability for an item to shrink x times more compared to its siblings, default is 1.
        */
       shrink?: ResponsiveProp<number>;
       /**
-       * Defines the ability for an item to grow x times more compared to it's siblings, default is 0.
+       * Defines the ability for an item to grow x times more compared to its siblings, default is 0.
        */
       grow?: ResponsiveProp<number>;
       /**
        * Sets the initial main size of a flex item, default is "auto".
        */
       basis?: ResponsiveProp<CSSProperties["flexBasis"]>;
+      /**
+       * Defines the margin around the component. It can be specified as a number (which acts as a multiplier) or a string representing the margin value. Default is `0`.
+       */
+      margin?: ResponsiveProp<number | string>;
+      /**
+       * Defines the padding within the component. It can be specified as a number (which acts as a multiplier) or a string representing the padding value. Default is `0`.
+       */
+      padding?: ResponsiveProp<number | string>;
     }
   >;
 
@@ -61,6 +70,8 @@ export const FlexItem: FlexItemComponent = forwardRef(
       align,
       children,
       className,
+      margin = 0,
+      padding = 0,
       shrink,
       grow,
       basis,
@@ -81,8 +92,12 @@ export const FlexItem: FlexItemComponent = forwardRef(
     const flexItemShrink = resolveResponsiveValue(shrink, matchedBreakpoints);
     const flexItemGrow = resolveResponsiveValue(grow, matchedBreakpoints);
     const flexItemBasis = resolveResponsiveValue(basis, matchedBreakpoints);
+    const flexItemMargin = resolveResponsiveValue(margin, matchedBreakpoints);
+    const flexItemPadding = resolveResponsiveValue(padding, matchedBreakpoints);
 
     const itemStyle = {
+      "--flexItem-margin": parseSpacing(flexItemMargin),
+      "--flexItem-padding": parseSpacing(flexItemPadding),
       "--saltFlexItem-alignment": align,
       "--saltFlexItem-shrink": flexItemShrink,
       "--saltFlexItem-grow": flexItemGrow,
