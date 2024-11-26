@@ -21,6 +21,9 @@ h2 {
 main {
   font-size: var(--salt-text-fontSize);
   line-height: var(--salt-text-lineHeight);
+  /* This needs to be here so scroll-margin can be defined for headers */
+  --site-navigation-height: calc(var(--salt-spacing-200) + var(--salt-size-base));
+  --site-navigation-scroll-margin-top: calc(var(--salt-spacing-100) + var(--site-navigation-height));
 }
 
 p {
@@ -33,5 +36,11 @@ p {
     --heading-font-size: var(--salt-text-h3-fontSize);
     --heading-font-weight: var(--salt-text-h3-fontWeight);
     --heading-line-height: var(--salt-text-h3-lineHeight);
+  }
+}
+
+@media screen and (max-width: 959px) {
+  main {
+    --site-navigation-height: calc(var(--salt-size-unit) * 5);
   }
 }

@@ -8,6 +8,7 @@
   font-size: var(--salt-text-h3-fontSize);
   font-weight: var(--salt-text-h3-fontWeight-strong);
   line-height: var(--salt-text-h3-lineHeight);
+  scroll-margin-top: var(--site-navigation-scroll-margin-top, 0);
 }
 
 .heading3 + h4 {
