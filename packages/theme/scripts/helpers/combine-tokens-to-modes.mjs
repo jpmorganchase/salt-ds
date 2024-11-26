@@ -1,15 +1,25 @@
 import { readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 
-const files = {
+const paletteModesFiles = {
   // first one would be the default $value
   "blue-light": "../../tokens/palette/src/blue-light-next.tokens.json",
   "blue-dark": "../../tokens/palette/src/blue-dark-next.tokens.json",
   "teal-light": "../../tokens/palette/src/teal-light-next.tokens.json",
   "teal-dark": "../../tokens/palette/src/teal-dark-next.tokens.json",
 };
+const outputPaletteFile = "../../tokens/palette/palette-next.tokens.json";
 
-const outputFile = "../../tokens/palette/palette-next.tokens.json";
+const foundationDensitiesFiles = {
+  // first one would be the default $value
+  md: "../../tokens/foundation/src/medium-next.tokens.json",
+  hd: "../../tokens/foundation/src/high-next.tokens.json",
+  ld: "../../tokens/foundation/src/low-next.tokens.json",
+  td: "../../tokens/foundation/src/touch-next.tokens.json",
+};
+
+const outputFoundationFile =
+  "../../tokens/foundation/foundations-next.tokens.json";
 
 /**
  *
@@ -83,14 +93,19 @@ function iterateToAddModes(tokenObj, modeName, modeTokenObj) {
   }
 }
 
-let finalToken = undefined;
-for (const [modeName, filePath] of Object.entries(files)) {
-  if (!finalToken) {
-    finalToken = readToken(filePath);
+function combineTokens(inputFiles, outputFile) {
+  let finalPaletteToken = undefined;
+  for (const [modeName, filePath] of Object.entries(inputFiles)) {
+    if (!finalPaletteToken) {
+      finalPaletteToken = readToken(filePath);
+    }
+    const modeObj = readToken(filePath);
+    iterateToAddModes(finalPaletteToken, modeName, modeObj);
   }
-  const modeObj = readToken(filePath);
-  iterateToAddModes(finalToken, modeName, modeObj);
-}
-// console.log(finalToken);
+  // console.log(finalToken);
 
-writeToken(finalToken, outputFile);
+  writeToken(finalPaletteToken, outputFile);
+}
+
+combineTokens(paletteModesFiles, outputPaletteFile);
+combineTokens(foundationDensitiesFiles, outputFoundationFile);

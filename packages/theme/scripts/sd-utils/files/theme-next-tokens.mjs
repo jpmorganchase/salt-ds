@@ -39,6 +39,38 @@ export const foundationAlphaNextFile = {
   },
 };
 
+const densityMap = {
+  high: "hd",
+  medium: "md",
+  low: "ld",
+  touch: "td",
+};
+
+export const getFoundationCurveNextFile = ({ densities }) => {
+  const densitiesRules = densities.map((density) => ({
+    selector: `.salt-density-${density}`,
+    modeIdentifier: densityMap[density],
+  }));
+
+  return {
+    format: "salt-ds/css/multi-modes",
+    destination: "foundations/curve-next.css",
+    options: {
+      outputReferences: true,
+      usesDtcg: true,
+      rules: densitiesRules,
+    },
+    // // Use filter to add different `selector` for mode/density/etc.
+    filter: async (token, options) => {
+      // console.log(token, options);
+      return (
+        token.filePath.includes("foundations-next.tokens") &&
+        token.attributes.category === "curve"
+      );
+    },
+  };
+};
+
 const paletteNextList = [
   "accent",
   "corner",
@@ -51,7 +83,7 @@ const paletteNextList = [
 ];
 
 // 2 sets of palette files set, one with 4 $modes ('blue/teal-light/dark'), one with 2 $modes ('light/dark')
-export const getPaletteNextFiles = ({ modes, density, accents }) => [
+export const getPaletteNextFiles = ({ modes, densities, accents }) => [
   ...paletteNextList.map((paletteNextType) => {
     const accentModeRules = modes.reduce((prev, mode) => {
       // TODO: restructure `./palette/` files to per palette family, so that only those needing 4 combination (accents * modes) will generate 4 block of CSS code?
@@ -144,30 +176,28 @@ const characteristicsNextList = [
 ];
 
 export const getCharacteristicsNextFiles = () =>
-  characteristicsNextList.map((charType) => {
+  characteristicsNextList.map((characteristicFamily) => {
     return {
       format: "css/advanced",
-      destination: `characteristics/${charType}-next.css`,
+      destination: `characteristics/${characteristicFamily}-next.css`,
       options: {
+        selector: ".salt-theme.salt-theme-next",
         outputReferences: true,
         usesDtcg: true,
       },
       filter: async (token, options) => {
-        console.log(
-          "getCharacteristicsNextFiles filter",
-          token.filePath,
-          token.path,
-          token.attributes,
-        );
+        // console.log(
+        //   "getCharacteristicsNextFiles filter",
+        //   token.filePath,
+        //   token.path,
+        //   token.attributes,
+        // );
         return (
           // next
           token.filePath.includes("characteristics/theme-next.tokens") &&
           //
-          token.attributes.category === charType
-
-          // Only deal with color for now
-          // token.$type === "color"
-          // token.attributes.type !== "figma-only"
+          token.attributes.category === characteristicFamily &&
+          !token.path.includes("figma-only")
         );
       },
     };

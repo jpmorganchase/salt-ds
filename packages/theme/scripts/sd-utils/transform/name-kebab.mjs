@@ -83,13 +83,13 @@ const saltKebab = (token, config) => {
     const name = removeDefaultSuffix(
       specialKebab([config.prefix].concat(alphaRemovedPath).join(" ")),
     );
-    console.log("salt-ds/name/kebab specialKebab name", name, token);
+    // console.log("salt-ds/name/kebab specialKebab name", name, token);
     return name;
   }
   const name = removeDefaultSuffix(
     specialKebab([config.prefix].concat(token.path).join(" ")),
   );
-  console.log("salt-ds/name/kebab name", name, token);
+  // console.log("salt-ds/name/kebab name", name, token);
   return name;
 };
 export const saltNameKebab = {

@@ -50,8 +50,6 @@ export const cssMultiModes = async ({
   // get options
   const { outputReferences, formatting, usesDtcg } = options;
   // selector
-  const defaultSelector =
-    file?.options?.selector !== undefined ? file?.options?.selector : ":root";
   // get queries from file options
   const rules = file?.options?.rules || [
     {
@@ -113,7 +111,7 @@ export const cssMultiModes = async ({
     output.push(cssWithSelector);
   }
   // return prettified
-  return format(output.join("\n"), { parser: "css", printWidth: 500 });
+  return format(output.join("\n\n"), { parser: "css", printWidth: 500 });
 };
 
 /**
