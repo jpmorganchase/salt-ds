@@ -22,9 +22,10 @@ Header block is a standardized header for container components and application r
 Use this pattern to:
 
 * Display a combination of headings, pre-headers and descriptions within container components such as [Dialog](/salt/components/dialog), [Drawer](/salt/components/drawer) and [Overlay](/salt/components/overlay). This can help provide clear context and purpose of a component or interaction within a UI.  
-* **Note:** some Salt components, such as Dialog and Overlay, have header block embedded in by default, across both code and figma.
 * Maintain a visually consistent layout and presentation for headers, and establish visual hierarchy of headings with supplementary text across different components and content layouts.
 * Display headings with status icons to communicate different statuses, depending on the context of the component the header block sits within.
+
+**Note:** some Salt components, such as Dialog and Overlay, have header block embedded in by default, across both code and figma.
 
 ## How to build
 
@@ -55,7 +56,6 @@ As a rough guide:
 - A small container uses `--salt-spacing-100`.
 
 For example, a Dialog component might be considered a large container. In this case it uses `--salt-spacing-300` for its inner padding, therefore embedding a header block also using `--salt-spacing-300` maintains a consistent layout.
-
 <Diagram
   src="/img/patterns/header-block/header-block-layout-spacing.png"
   alt="A header block layout."
@@ -134,7 +134,7 @@ Display header block with status icons to communicate different statuses, depend
 ## Overflow behaviour
 If content within a container exceeds the available viewport height, header block should be displayed with the secondary [Divider](/salt/components/divider) component spanning horizontally between the left and right edges of the container and an `--salt-overlayable-shadow-scroll` shadow directly below it to visually signal content contained within a scrollable area.
 
-A scrollbar can be displayed beneath the header block and should be used to allow users to access all the content without resizing a container.
+A scrollbar can be displayed beneath the Header block and should be used to allow users to access all the content without resizing a container.
 
 <Diagram
   src="/img/patterns/header-block/overflow-behaviour-dialog.png"
