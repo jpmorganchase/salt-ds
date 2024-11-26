@@ -3,10 +3,10 @@ import { join } from "node:path";
 
 const files = {
   // first one would be the default $value
-  "blue-light": "../../tokens/palette/blue-light-next.tokens.json",
-  "blue-dark": "../../tokens/palette/blue-dark-next.tokens.json",
-  "teal-light": "../../tokens/palette/teal-light-next.tokens.json",
-  "teal-dark": "../../tokens/palette/teal-dark-next.tokens.json",
+  "blue-light": "../../tokens/palette/src/blue-light-next.tokens.json",
+  "blue-dark": "../../tokens/palette/src/blue-dark-next.tokens.json",
+  "teal-light": "../../tokens/palette/src/teal-light-next.tokens.json",
+  "teal-dark": "../../tokens/palette/src/teal-dark-next.tokens.json",
 };
 
 const outputFile = "../../tokens/palette/palette-next.tokens.json";
