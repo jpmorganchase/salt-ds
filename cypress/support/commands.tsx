@@ -137,14 +137,11 @@ Cypress.Commands.add(
     const density: "touch" | "low" | "medium" | "high" | undefined =
       Cypress.env("density");
     const mode: "light" | "dark" | undefined = Cypress.env("mode");
-    const dateAdapter: SaltDateAdapter<DateFrameworkType> =
+    const dateAdapter: SaltDateAdapter<DateFrameworkType> | undefined =
       Cypress.env("dateAdapter");
     // biome-ignore lint/suspicious/noExplicitAny: locale type varies between Date frameworks
     const dateLocale: any = Cypress.env("dateLocale");
 
-    if (!dateAdapter) {
-      throw new Error("Date adapter not defined");
-    }
     if (!SupportedDensityValues.includes(density as SupportedDensity)) {
       throw new Error(`Invalid density value: ${density}`);
     }
