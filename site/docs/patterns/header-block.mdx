@@ -49,7 +49,12 @@ The header block pattern comprises the following visual and text elements:
 
 Header block can be configured to be displayed using three different sizes, each differentiated by the size of the padding and the heading type. We recommend using an appropriately sized header block, relative to the container element it is embedded within.
 
-As a rule of thumb, a large container in Salt uses padding size of `--salt-spacing-300`, a medium container uses `--salt-spacing-200`, and a small container uses `--salt-spacing-100`. For example, the Dialog component uses `--salt-spacing-300` padding between elements, therefore embedding a header block also using `--salt-spacing-300` maintains a consistent layout and ensures all elements align as expected.
+As a rough guide:
+- A large container in Salt uses padding size of `--salt-spacing-300`.
+- A medium container uses `--salt-spacing-200`.
+- A small container uses `--salt-spacing-100`.
+
+For example, a Dialog component might be considered a large container. In this case it uses `--salt-spacing-300` for its inner padding, therefore embedding a header block also using `--salt-spacing-300` maintains a consistent layout.
 
 <Diagram
   src="/img/patterns/header-block/header-block-layout-spacing.png"
@@ -58,46 +63,43 @@ As a rule of thumb, a large container in Salt uses padding size of `--salt-spaci
 />
 
 <ExampleContainer type="positive" customPillText="Best practices">
-Header block with `--salt-spacing-100` padding does not contain an accent bar. We recommend using this header block size within components where visual emphasis is not important. Consider the available space for an accent bar, relative to the size of the component.
+  We recommend a header block using `--spacing-100` doesn’t have an Accent bar due to restricted space and reduced need for visual emphasis in contexts where its commonly used.
 </ExampleContainer>
 
-## Layout variations
+## Accent bar
 
-A header block has a number of possible layout variations depending on the amount of information you want to communicate, the user workflow and the container it will sit in.
-
-### With accent bar and all text elements
-
-Display headings with an accent bar which draws attention to the heading, reinforces brand identity, and remains consistent with Salt Design System’s theming options.
-
+Display header block with an accent bar to draw attention to the heading. In Salt themes the accent bar will display the core brand color. 
 
 <Diagram
   src="/img/patterns/header-block/with-accent-bar-and-text.png"
-  alt="Dialog with a header block using padding --salt-spacing-300"
-  content="Dialog with a header block using padding --salt-spacing-300"
+  alt="Dialog with an Accent bar, all text elements and header block using padding --salt-spacing-300."
+  content="Dialog with an Accent bar, all text elements and header block using padding `--salt-spacing-300`."
   border
 />
 
-### With accent bar, heading and pre-header only
+## Heading with Pre-header
 
-The dialog example demonstrates a step in a process as introduced by the pre-header and heading. A description is not necessary as the content of the dialog is sufficiently self-explanatory for the user to navigate and complete the form field instructions.
+This dialog example demonstrates a step in a process as introduced by the pre-header and heading. A description is not necessary as the content of the dialog is sufficiently self-explanatory for the user to navigate and complete the form field instructions.
 
 <Diagram
   src="/img/patterns/header-block/accent-bar-heading-preheader.png"
-  alt="Dialog with a header block using heading and pre header only."
-  content="Dialog with a header block using heading and pre header only."
+  alt="Dialog with pre-header and header text elements."
+  content="Dialog with pre-header and header text elements."
   border
 />
 
-### With accent bar, heading and description only
+## Heading and description
 
-The drawer example uses a heading accompanied by a description that provides additional information on the status of the content. A contextual overview of the content is not required in the form of a pre-header, as the content itself indicates a summary of information.
+This drawer example uses a heading accompanied by a description that provides additional information on the status of the content. A contextual overview of the content is not required in the form of a pre-header, as the content itself indicates a summary of information.
 <Diagram
   src="/img/patterns/header-block/header-block-in-drawer.png"
-  alt="Drawer with a header block using accent bar, heading and description."
+  alt="Dialog with header and description text elements."
+  content="Dialog with header and description text elements."
   border
 />
 
-### Small container
+## Small container
+This overlay example shows a header block using `--spacing-100` padding with a title and close button.
 <ImageSwitcher
   images={[
     { src: "/img/patterns/header-block/small-container.png", alt: "" },
@@ -107,7 +109,7 @@ The drawer example uses a heading accompanied by a description that provides add
   caption="Overlay with a header block using padding --salt-spacing-100"
 />
 
-### Close button only
+## Close button
 Display a close button if a container element needs to be dismissed via a close button.
 <ImageSwitcher
   images={[
@@ -118,20 +120,21 @@ Display a close button if a container element needs to be dismissed via a close 
   caption="Overlay with a header block using padding --salt-spacing-100, and close button on display only"
 />
 
-### With status
-Display headings with status icons to communicate different statuses, depending on the context of the component the header block sits within.
+## Status feedback
+Display header block with status icons to communicate different statuses, depending on the context of the component the header block sits within.
 
 
 <Diagram
   src="/img/patterns/header-block/with-status.png"
-  alt="A header block with status."
+  alt="Dialog with a header block using padding --salt-spacing-300"
+  content="Dialog with a header block using padding --salt-spacing-300"
   border
 />
 
 ## Overflow behaviour
-If content within a container exceeds the available viewport height, a scrollbar should be used to allow users to access all the content without resizing a container.
+If content within a container exceeds the available viewport height, header block should be displayed with the secondary [Divider](/salt/components/divider) component spanning horizontally between the left and right edges of the container and an `--salt-overlayable-shadow-scroll` shadow directly below it to visually signal content contained within a scrollable area.
 
-Header block should be displayed with the secondary [Divider](/salt/components/divider) component spanning horizontally between the left and right edges of the container and shadow directly below it to visually signal content contained within a scrollable area.
+A scrollbar can be displayed beneath the header block and should be used to allow users to access all the content without resizing a container.
 
 <Diagram
   src="/img/patterns/header-block/overflow-behaviour-dialog.png"
