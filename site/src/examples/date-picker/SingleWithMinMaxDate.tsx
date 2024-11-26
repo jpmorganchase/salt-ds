@@ -56,7 +56,7 @@ export const SingleWithMinMaxDate = (): ReactElement => {
         setValidationStatus(undefined);
       }
     },
-    [dateAdapter, setHelperText, setValidationStatus],
+    [dateAdapter],
   );
 
   const minDate =

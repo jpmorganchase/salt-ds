@@ -18,7 +18,9 @@ import {
 export const TwinCalendars = (): ReactElement => {
   const { dateAdapter } = useLocalization<DateFrameworkType>();
   const today = dateAdapter.today();
-  const [hoveredDate, setHoveredDate] = useState<any | null>(null);
+  const [hoveredDate, setHoveredDate] = useState<DateFrameworkType | null>(
+    null,
+  );
   const handleHoveredDateChange: CalendarProps<DateFrameworkType>["onHoveredDateChange"] =
     (event, newHoveredDate) => {
       setHoveredDate(newHoveredDate);
@@ -44,7 +46,7 @@ export const TwinCalendars = (): ReactElement => {
         setEndVisibleMonth(dateAdapter.add(newVisibleMonth, { months: 1 }));
       }
     },
-    [endVisibleMonth],
+    [dateAdapter, endVisibleMonth],
   );
 
   const handleEndVisibleMonthChange = useCallback(
@@ -66,7 +68,7 @@ export const TwinCalendars = (): ReactElement => {
         );
       }
     },
-    [startVisibleMonth],
+    [dateAdapter, startVisibleMonth],
   );
 
   const [selectedDate, setSelectedDate] = useState<

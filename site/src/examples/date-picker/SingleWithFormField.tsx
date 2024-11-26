@@ -56,7 +56,7 @@ export const SingleWithFormField = (): ReactElement => {
         setValidationStatus(undefined);
       }
     },
-    [dateAdapter, setHelperText, setValidationStatus],
+    [dateAdapter],
   );
 
   return (

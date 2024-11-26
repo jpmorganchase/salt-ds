@@ -74,7 +74,7 @@ export const SingleWithLocaleZhCN = (): ReactElement => {
         setValidationStatus(undefined);
       }
     },
-    [dateAdapter, setHelperText, setValidationStatus],
+    [dateAdapter, defaultHelperText, isDateFns],
   );
 
   function renderDayContents(day: DateFrameworkType) {

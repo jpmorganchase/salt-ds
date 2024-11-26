@@ -81,7 +81,7 @@ export const RangeWithMinMaxDate = (): ReactElement => {
         setHelperText(defaultHelperText);
       }
     },
-    [dateAdapter, setValidationStatus, setHelperText],
+    [dateAdapter],
   );
 
   const minDate =

@@ -54,7 +54,7 @@ export const SingleControlled = (): ReactElement => {
         setValidationStatus(undefined);
       }
     },
-    [dateAdapter, setHelperText, setValidationStatus],
+    [dateAdapter],
   );
 
   return (

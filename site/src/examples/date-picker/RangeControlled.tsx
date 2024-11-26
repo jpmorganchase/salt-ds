@@ -66,7 +66,7 @@ export const RangeControlled = (): ReactElement => {
         }
       }
     },
-    [dateAdapter, setSelectedDate],
+    [dateAdapter],
   );
 
   return (

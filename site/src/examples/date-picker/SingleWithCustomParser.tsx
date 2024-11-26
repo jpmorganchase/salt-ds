@@ -65,13 +65,14 @@ export const SingleWithCustomParser = (): ReactElement => {
       }
       setSelectedDate(value?.trim().length === 0 ? null : date);
     },
-    [dateAdapter, setHelperText, setValidationStatus],
+    [dateAdapter],
   );
 
   const customParser = useCallback(
     (
       inputDate: string,
       format: string,
+      // biome-ignore lint/suspicious/noExplicitAny: any is more flexible for adding new date frameworks
       locale: any,
     ): ParserResult<DateFrameworkType> => {
       if (!inputDate?.length) {

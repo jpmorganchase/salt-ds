@@ -43,7 +43,7 @@ export const SingleControlled = (): ReactElement => {
         }
       }
     },
-    [dateAdapter, setSelectedDate],
+    [dateAdapter],
   );
 
   return (

@@ -97,7 +97,7 @@ export const RangeWithLocaleEsES = (): ReactElement => {
         setHelperText(defaultHelperText);
       }
     },
-    [dateAdapter, setValidationStatus, setHelperText],
+    [dateAdapter, defaultHelperText],
   );
 
   return (

@@ -84,7 +84,7 @@ export const RangeControlled = (): ReactElement => {
         setHelperText(defaultHelperText);
       }
     },
-    [dateAdapter, setValidationStatus, setHelperText],
+    [dateAdapter],
   );
 
   return (

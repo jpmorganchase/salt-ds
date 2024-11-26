@@ -82,7 +82,7 @@ export const RangeWithCustomPanel = (): ReactElement => {
         setHelperText(defaultHelperText);
       }
     },
-    [setValidationStatus, setHelperText],
+    [dateAdapter],
   );
 
   return (

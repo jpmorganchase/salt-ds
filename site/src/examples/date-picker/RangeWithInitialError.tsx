@@ -82,7 +82,7 @@ export const RangeWithInitialError = (): ReactElement => {
         setHelperText(defaultHelperText);
       }
     },
-    [dateAdapter, setValidationStatus, setHelperText],
+    [dateAdapter],
   );
 
   const defaultStartVisibleMonth =

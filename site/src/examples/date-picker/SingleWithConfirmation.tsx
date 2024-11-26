@@ -79,7 +79,7 @@ export const SingleWithConfirmation = (): ReactElement => {
         applyButtonRef?.current?.focus();
       }
     },
-    [dateAdapter, setHelperText, setValidationStatus],
+    [dateAdapter],
   );
 
   const handleOpen = useCallback(
@@ -92,14 +92,14 @@ export const SingleWithConfirmation = (): ReactElement => {
       }
       setOpen(opening);
     },
-    [validationStatus, setOpen],
+    [helperText, validationStatus],
   );
 
   const handleCancel = useCallback(() => {
     setValidationStatus(savedState.current?.validationStatus);
     setHelperText(savedState.current?.helperText);
     setSelectedDate(previousSelectedDate.current);
-  }, [setValidationStatus]);
+  }, []);
 
   const handleApply = useCallback(
     (
@@ -114,13 +114,7 @@ export const SingleWithConfirmation = (): ReactElement => {
       setValidationStatus(undefined);
       previousSelectedDate.current = date;
     },
-    [
-      applyButtonRef?.current,
-      dateAdapter,
-      setHelperText,
-      setSelectedDate,
-      setValidationStatus,
-    ],
+    [dateAdapter],
   );
 
   return (

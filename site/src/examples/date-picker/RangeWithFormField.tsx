@@ -82,7 +82,7 @@ export const RangeWithFormField = (): ReactElement => {
         setHelperText(defaultHelperText);
       }
     },
-    [dateAdapter, setValidationStatus, setHelperText],
+    [dateAdapter],
   );
 
   return (

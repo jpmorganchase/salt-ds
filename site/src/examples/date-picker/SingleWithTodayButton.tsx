@@ -83,7 +83,7 @@ export const SingleWithTodayButton = (): ReactElement => {
         setValidationStatus(undefined);
       }
     },
-    [dateAdapter, setHelperText, setValidationStatus],
+    [dateAdapter],
   );
 
   return (

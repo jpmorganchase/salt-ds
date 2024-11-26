@@ -80,7 +80,7 @@ const DatePickerSingleTemplate: StoryFn<
       }
       args?.onSelectionChange?.(event, date, details);
     },
-    [args, dateAdapter],
+    [args?.onSelectionChange, dateAdapter],
   );
 
   return (
@@ -141,7 +141,7 @@ const DatePickerRangeTemplate: StoryFn<
       }
       args?.onSelectionChange?.(event, date, details);
     },
-    [args, dateAdapter],
+    [args?.onSelectionChange, dateAdapter],
   );
 
   return (
@@ -198,7 +198,7 @@ export const SingleControlled: StoryFn<
       }
       args?.onSelectionChange?.(event, date, details);
     },
-    [args, dateAdapter, setSelectedDate],
+    [args?.onSelectionChange, dateAdapter],
   );
 
   return (
@@ -269,7 +269,7 @@ export const RangeControlled: StoryFn<
       }
       args?.onSelectionChange?.(event, date, details);
     },
-    [args, dateAdapter, setSelectedDate],
+    [args?.onSelectionChange, dateAdapter],
   );
 
   return (
@@ -335,7 +335,7 @@ export const SingleWithMinMaxDate: StoryFn<
       }
       args?.onSelectionChange?.(event, date, details);
     },
-    [args, dateAdapter, setHelperText, setValidationStatus],
+    [args?.onSelectionChange, dateAdapter],
   );
 
   const minDate =
@@ -433,7 +433,7 @@ export const RangeWithMinMaxDate: StoryFn<
       }
       args?.onSelectionChange?.(event, date, details);
     },
-    [args.onSelectionChange, dateAdapter, setValidationStatus, setHelperText],
+    [args.onSelectionChange, dateAdapter],
   );
 
   const minDate =
@@ -509,7 +509,7 @@ export const SingleWithInitialError: StoryFn<
       }
       args?.onSelectionChange?.(event, date, details);
     },
-    [args, dateAdapter, setHelperText, setValidationStatus],
+    [args?.onSelectionChange, dateAdapter],
   );
 
   return (
@@ -597,7 +597,7 @@ export const RangeWithInitialError: StoryFn<
       }
       args?.onSelectionChange?.(event, date, details);
     },
-    [args, dateAdapter, setValidationStatus, setHelperText],
+    [args?.onSelectionChange, dateAdapter],
   );
 
   const defaultStartVisibleMonth =
@@ -670,7 +670,7 @@ export const SingleWithFormField: StoryFn<
       }
       args?.onSelectionChange?.(event, date, details);
     },
-    [args, dateAdapter, setHelperText, setValidationStatus],
+    [args?.onSelectionChange, dateAdapter],
   );
 
   return (
@@ -758,7 +758,7 @@ export const RangeWithFormField: StoryFn<
       }
       args?.onSelectionChange?.(event, date, details);
     },
-    [args, dateAdapter, setValidationStatus, setHelperText],
+    [args?.onSelectionChange, dateAdapter],
   );
 
   return (
@@ -820,7 +820,7 @@ export const SingleWithCustomPanel: StoryFn<
       }
       args?.onSelectionChange?.(event, date, details);
     },
-    [args, dateAdapter, setHelperText, setValidationStatus],
+    [args?.onSelectionChange, dateAdapter],
   );
 
   return (
@@ -911,7 +911,7 @@ export const RangeWithCustomPanel: StoryFn<
       }
       args?.onSelectionChange?.(event, date, details);
     },
-    [args, dateAdapter, setValidationStatus, setHelperText],
+    [args?.onSelectionChange, dateAdapter],
   );
 
   return (
@@ -997,7 +997,7 @@ export const SingleWithTodayButton: StoryFn<
       }
       args?.onSelectionChange?.(event, date, details);
     },
-    [args, dateAdapter, setHelperText, setValidationStatus],
+    [args?.onSelectionChange, dateAdapter],
   );
 
   return (
@@ -1090,7 +1090,7 @@ export const SingleWithConfirmation: StoryFn<
       }
       args?.onSelectionChange?.(event, date, details);
     },
-    [args, dateAdapter, setHelperText, setValidationStatus],
+    [args?.onSelectionChange, dateAdapter],
   );
 
   const handleOpen = useCallback(
@@ -1103,7 +1103,7 @@ export const SingleWithConfirmation: StoryFn<
       }
       setOpen(opening);
     },
-    [validationStatus, setOpen],
+    [helperText, validationStatus],
   );
 
   const handleCancel = useCallback(() => {
@@ -1111,7 +1111,7 @@ export const SingleWithConfirmation: StoryFn<
     setHelperText(savedState.current?.helperText);
     setSelectedDate(previousSelectedDate.current);
     args?.onCancel?.();
-  }, [args, setHelperText, setValidationStatus]);
+  }, [args?.onCancel]);
 
   const handleApply = useCallback(
     (
@@ -1127,14 +1127,7 @@ export const SingleWithConfirmation: StoryFn<
       previousSelectedDate.current = date;
       args?.onApply?.(event, date);
     },
-    [
-      args,
-      applyButtonRef?.current,
-      dateAdapter,
-      setHelperText,
-      setSelectedDate,
-      setValidationStatus,
-    ],
+    [args?.onApply, dateAdapter],
   );
 
   return (
@@ -1259,7 +1252,7 @@ export const RangeWithConfirmation: StoryFn<
       });
       args?.onSelectionChange?.(event, date, details);
     },
-    [args, dateAdapter, setValidationStatus, setHelperText],
+    [args?.onSelectionChange, dateAdapter],
   );
 
   const handleOpen = useCallback(
@@ -1276,7 +1269,7 @@ export const RangeWithConfirmation: StoryFn<
     setValidationStatus(savedValidationState.current);
     setSelectedDate(previousSelectedDate.current);
     args?.onCancel?.();
-  }, [args, setHelperText, setValidationStatus]);
+  }, [args?.onCancel]);
 
   const handleApply = useCallback(
     (
@@ -1293,14 +1286,7 @@ export const RangeWithConfirmation: StoryFn<
       previousSelectedDate.current = date;
       args?.onApply?.(event, date);
     },
-    [
-      args,
-      applyButtonRef?.current,
-      dateAdapter,
-      setHelperText,
-      setSelectedDate,
-      setValidationStatus,
-    ],
+    [args?.onApply, dateAdapter],
   );
 
   return (
@@ -1392,7 +1378,7 @@ export const SingleWithCustomParser: StoryFn<
       setSelectedDate(value?.trim().length === 0 ? null : date);
       args?.onSelectionChange?.(event, date, details);
     },
-    [args, dateAdapter, setHelperText, setValidationStatus],
+    [args?.onSelectionChange, dateAdapter],
   );
 
   const customParser = useCallback(
@@ -1528,7 +1514,7 @@ export const RangeWithCustomParser: StoryFn<
       });
       args?.onSelectionChange?.(event, date, details);
     },
-    [args, dateAdapter, setValidationStatus, setHelperText],
+    [args?.onSelectionChange, dateAdapter],
   );
 
   const customParser = useCallback(
@@ -1661,7 +1647,7 @@ export const SingleWithCustomValidation: StoryFn<
       }
       args?.onSelectionChange?.(event, date, details);
     },
-    [args, dateAdapter, setHelperText, setValidationStatus],
+    [args?.onSelectionChange, dateAdapter],
   );
 
   const customiseNonDateError = useCallback(
@@ -1684,7 +1670,7 @@ export const SingleWithCustomValidation: StoryFn<
     (date: DateFrameworkType): string | false => {
       return isWeekend(date) ? "weekends are un-selectable" : false;
     },
-    [],
+    [isWeekend],
   );
 
   const validateAndCustomizeError = useCallback(
@@ -1772,7 +1758,7 @@ export const SingleWithLocaleEsES: StoryFn<
       }
       args?.onSelectionChange?.(event, date, details);
     },
-    [args, dateAdapter, setHelperText, setValidationStatus],
+    [args?.onSelectionChange, dateAdapter],
   );
 
   return (
@@ -1871,7 +1857,7 @@ export const RangeWithLocaleEsES: StoryFn<
       }
       args?.onSelectionChange?.(event, date, details);
     },
-    [args, dateAdapter, setValidationStatus, setHelperText],
+    [args?.onSelectionChange, dateAdapter, defaultHelperText],
   );
 
   return (
@@ -1945,7 +1931,7 @@ export const SingleWithLocaleZhCN: StoryFn<
       }
       args?.onSelectionChange?.(event, date, details);
     },
-    [args, dateAdapter, setHelperText, setValidationStatus],
+    [args?.onSelectionChange, dateAdapter, defaultHelperText],
   );
 
   function renderDayContents(day: DateFrameworkType) {
@@ -2023,7 +2009,7 @@ export const SingleBordered: StoryFn<
       }
       args?.onSelectionChange?.(event, date, details);
     },
-    [args, dateAdapter, setHelperText, setValidationStatus],
+    [args?.onSelectionChange, dateAdapter],
   );
 
   return (
@@ -2116,7 +2102,7 @@ export const RangeBordered: StoryFn<
       }
       args?.onSelectionChange?.(event, date, details);
     },
-    [args, dateAdapter, setValidationStatus, setHelperText],
+    [args?.onSelectionChange, dateAdapter],
   );
 
   return (
@@ -2294,7 +2280,12 @@ export const WithExperimentalTime: StoryFn<
       });
       args?.onSelectionChange?.(event, updatedDate, details);
     },
-    [args, dateAdapter, selectedTime?.startTime, selectedTime?.endTime],
+    [
+      args?.onSelectionChange,
+      dateAdapter,
+      selectedTime?.startTime,
+      selectedTime?.endTime,
+    ],
   );
 
   const handleTimeChange = useCallback(
@@ -2353,7 +2344,7 @@ export const WithExperimentalTime: StoryFn<
   const handleCancel = useCallback(() => {
     setSelectedDate(previousSelectedDate.current);
     args?.onCancel?.();
-  }, [args]);
+  }, [args?.onCancel]);
 
   return (
     <DatePicker
@@ -2432,7 +2423,7 @@ export const ResetSingleState: StoryFn<
       }
       args?.onSelectionChange?.(event, date, details);
     },
-    [args, dateAdapter, setSelectedDate],
+    [args?.onSelectionChange, dateAdapter],
   );
 
   return (
@@ -2512,7 +2503,7 @@ export const ResetRangeState: StoryFn<
       }
       args?.onSelectionChange?.(event, date, details);
     },
-    [args, dateAdapter, setSelectedDate],
+    [args?.onSelectionChange, dateAdapter],
   );
 
   return (

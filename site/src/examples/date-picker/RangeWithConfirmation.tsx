@@ -105,7 +105,7 @@ export const RangeWithConfirmation = (): ReactElement => {
         endDate: endDateOriginalValue?.trim().length === 0 ? null : endDate,
       });
     },
-    [setValidationStatus, setHelperText],
+    [dateAdapter],
   );
 
   const handleOpen = useCallback(
@@ -121,7 +121,7 @@ export const RangeWithConfirmation = (): ReactElement => {
     setHelperText(savedState.current?.helperText);
     setValidationStatus(savedValidationState.current);
     setSelectedDate(previousSelectedDate.current);
-  }, [setHelperText, setValidationStatus]);
+  }, []);
 
   const handleApply = useCallback(
     (
@@ -137,13 +137,7 @@ export const RangeWithConfirmation = (): ReactElement => {
       setValidationStatus(undefined);
       previousSelectedDate.current = date;
     },
-    [
-      applyButtonRef?.current,
-      dateAdapter,
-      setHelperText,
-      setSelectedDate,
-      setValidationStatus,
-    ],
+    [dateAdapter],
   );
 
   return (

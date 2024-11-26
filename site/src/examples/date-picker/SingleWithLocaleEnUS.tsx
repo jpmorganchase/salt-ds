@@ -69,7 +69,7 @@ export const SingleWithLocaleEnUS = (): ReactElement => {
         setValidationStatus(undefined);
       }
     },
-    [dateAdapter, setHelperText, setValidationStatus],
+    [dateAdapter, defaultHelperText],
   );
 
   return (
