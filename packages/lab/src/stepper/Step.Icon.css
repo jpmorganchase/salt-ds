@@ -1,4 +1,10 @@
 .saltStepIcon {
   grid-area: icon;
   justify-self: center;
+  align-self: start;
+  box-sizing: content-box;
+}
+
+.saltStepper-vertical .saltStepIcon {
+  padding-top: calc((var(--salt-size-base) - var(--icon-size)) / 2);
 }
