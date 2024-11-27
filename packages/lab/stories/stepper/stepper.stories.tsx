@@ -1,8 +1,6 @@
 import type { Meta, StoryFn } from "@storybook/react";
-import { Stepper, Step, type StepProps } from '@salt-ds/lab'
-import { LockedIcon } from '@salt-ds/icons';
-
-import { StackLayout } from '@salt-ds/core';
+import { Stepper, Step, useStepReducer } from '@salt-ds/lab'
+import { Button, StackLayout } from '@salt-ds/core';
 
 export default {
   title: "Lab/Stepper",
@@ -234,7 +232,7 @@ export const VerticalDepth2: StoryFn<typeof Stepper> = () => {
           <Step label="Step 1.1" />
         </Step>
         <Step label="Step 2">
-          <Step label="Step 2.1" description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate magni dignissimos inventore incidunt facere harum expedita beatae reiciendis numquam iste excepturi dolorum omnis optio ullam quam illum, eligendi perspiciatis quia." />
+          <Step label="Step 2.1" description="This is a bit longer of a description." />
           <Step label="Step 2.2" description="Description text">
             <Step label="Step 2.2.1" />
             <Step label="Step 2.2.2" />
@@ -247,7 +245,7 @@ export const VerticalDepth2: StoryFn<typeof Stepper> = () => {
           <Step label="Step 3.3" description="This is just a description text">
             <Step label="Step 3.3.1" />
             <Step label="Step 3.3.2" />
-            <Step label="Step 3.3.3" description="This is just a description text" />
+            <Step label="Step 3.3.3" />
           </Step>
         </Step>
       </Stepper>
@@ -255,6 +253,59 @@ export const VerticalDepth2: StoryFn<typeof Stepper> = () => {
   )
 }
 
+export const Interactive: StoryFn<typeof Stepper> = () => {
+  const [state, dispatch] = useStepReducer([
+    {
+      id: 'step-1',
+      label: 'Step 1',
+      description: 'Description text',
+      substeps: [
+        { id: 'step-1-1', label: 'Step 1.1', description: 'Description text' },
+        { id: 'step-1-2', label: 'Step 1.2', description: 'Description text' },
+        {
+          id: 'step-1-3',
+          label: 'Step 1.3',
+          description: 'Description text',
+          substeps: [
+            { id: 'step-1-3-1', label: 'Step 1.3.1', description: 'Description text' },
+            { id: 'step-1-3-2', label: 'Step 1.3.2', description: 'Description text' },
+            { id: 'step-1-3-3', label: 'Step 1.3.3', description: 'Description text' }
+          ]
+        }
+      ]
+    },
+    { id: 'step-2', label: 'Step 2', description: 'Description text' },
+    { id: 'step-3', label: 'Step 3', description: 'Description text' }
+  ])
+
+  return (
+    <StackLayout>
+      <Stepper orientation="vertical">
+        {state.steps.map((step) => (
+          <Step
+            key={step.id}
+            {...step}
+          />
+        ))}
+      </Stepper>
+      {!state.completed && (
+        <Button onClick={() => dispatch({ type: 'next' })}>
+          Next
+        </Button>
+      )}
+      {state.started && (
+        <Button onClick={() => dispatch({ type: 'previous' })}>
+          Previous
+        </Button>
+      )}
+      {state.started && !state.completed && (
+        <Button onClick={() => dispatch({ type: 'error' })}>
+          Error
+        </Button>
+      )}
+    </StackLayout>
+  )
+}
 
 export const Barebones: StoryFn<typeof Stepper> = () => {
   return (
