@@ -1,31 +1,17 @@
-import {
-  cloneElement,
-  type ReactElement
-} from "react";
 import clsx from "clsx";
-import {
-  ErrorSolidIcon,
-  ProgressInprogressIcon,
-  StepActiveIcon,
-  StepDefaultIcon,
-  StepSuccessIcon,
-  WarningSolidIcon,
-  LockedIcon,
-  type IconProps,
-} from "@salt-ds/icons";
-import { makePrefixer } from "@salt-ds/core";
+import { makePrefixer, useIcon } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
+import type { IconProps } from "@salt-ds/icons";
 
-import type { Step } from "./Step";
 import stepIconCSS from "./Step.Icon.css";
+import type { Step } from "./Step";
 
 export namespace StepIcon {
   export interface Props extends IconProps {
     stage: Step.Stage;
     status?: Step.Status;
     multiplier?: IconProps["size"];
-    element?: ReactElement;
   }
 }
 
@@ -36,11 +22,11 @@ export function StepIcon({
   stage,
   size,
   multiplier = size || 1.5,
-  element = stateToIconMap[status || stage],
   className,
   ...props
 }: StepIcon.Props) {
   const targetWindow = useWindow();
+  const IconComponent = useStepIcon({ stage, status })
 
   useComponentCssInjection({
     testId: "salt-step-icon",
@@ -50,24 +36,41 @@ export function StepIcon({
 
   const ariaLabel = `${status || stage}: `;
 
-  return cloneElement(element, {
-    size: multiplier,
-    className: clsx(
-      withBaseName(),
-      className
-    ),
-    'aria-label': ariaLabel,
-    ...props,
-    ...element.props,
-  })
+  return (
+    <IconComponent
+      aria-label={ariaLabel}
+      size={multiplier}
+      className={clsx(
+        withBaseName(),
+        className
+      )}
+      {...props}
+    />
+  );
 }
 
-const stateToIconMap = {
-  completed: <StepSuccessIcon />,
-  inprogress: <ProgressInprogressIcon />,
-  active: <StepActiveIcon />,
-  error: <ErrorSolidIcon />,
-  warning: <WarningSolidIcon />,
-  pending: <StepDefaultIcon />,
-  locked: <LockedIcon />,
-} satisfies Record<Step.Stage | Step.Status, ReactElement>
+export function useStepIcon({ 
+  stage, status
+}: Pick<StepIcon.Props, "stage" | "status">) {
+  const {
+    ErrorIcon,
+    WarningIcon,
+    ActiveIcon,
+    CompletedIcon,
+    PendingIcon,
+    InProgressIcon,
+    LockedIcon,
+  } = useIcon();
+
+  const stepIconMap = {
+    error: ErrorIcon,
+    warning: WarningIcon ,
+    active: ActiveIcon,
+    completed: CompletedIcon,
+    pending: PendingIcon,
+    inprogress: InProgressIcon,
+    locked: LockedIcon,
+  }
+
+  return stepIconMap[status || stage];
+}
