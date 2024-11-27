@@ -5,7 +5,6 @@ import {
   type ComponentProps,
   type CSSProperties,
   type ReactNode,
-  type ReactElement,
 } from "react";
 import clsx from "clsx";
 import {
@@ -13,7 +12,7 @@ import {
   useId,
   useControlled,
   makePrefixer,
-  type ButtonProps
+  type ButtonProps,
 } from "@salt-ds/core";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
@@ -26,7 +25,8 @@ import { StepConnector } from "./Step.Connector";
 import { StepIcon } from "./Step.Icon";
 
 export namespace Step {
-  export interface Props extends ComponentProps<"li"> {
+  export interface Step extends ComponentProps<'li'>{
+    id?: string;
     label?: ReactNode;
     description?: ReactNode;
     status?: Status;
@@ -34,6 +34,10 @@ export namespace Step {
     expanded?: boolean;
     defaultExpanded?: boolean;
     onToggle?: ButtonProps["onClick"];
+    substeps?: Step[];
+  }
+
+  export interface Props extends Step {
     children?: ReactNode;
   }
 
@@ -54,9 +58,6 @@ export namespace Step {
 
 const withBaseName = makePrefixer("saltStep");
 
-// Remove disabled Step variant
-// Add locked stage Step variant
-// Status comes before stage
 // Icon align to top when vertical and more than one line of text
 export function Step({
   id: idProp,
@@ -65,10 +66,11 @@ export function Step({
   status,
   stage = "pending",
   expanded: expandedProp,
-  defaultExpanded = false,
+  defaultExpanded,
   onToggle,
   className,
   style,
+  substeps,
   children,
   ...props
 }: Step.Props) {
@@ -79,6 +81,7 @@ export function Step({
   const [expanded, setExpanded] = useControlled({
     controlled: expandedProp,
     default: Boolean(defaultExpanded),
+    
     name: "Step",
     state: "expanded"
   })
@@ -103,7 +106,7 @@ export function Step({
     }
   }, [depth]);
 
-  const hasNestedSteps = !!children;
+  const hasNestedSteps = !!children || !!substeps;
   const iconMultiplier = depth === 0 ? 1.5 : 1;
 
   const labelId = `step-${id}-label`;
@@ -141,6 +144,7 @@ export function Step({
         {label && (
           <Text
             id={labelId}
+            styleAs="label"
             className={withBaseName("label")}
           >
             {label}
@@ -168,7 +172,14 @@ export function Step({
         )}
         {hasNestedSteps && (
           <Stepper id={nestedStepperId}>
-            {children}
+            {children || substeps?.map(
+              (step) => (
+                <Step
+                  key={step.id}
+                  {...step}
+                />
+              )
+            )}
           </Stepper>
         )}
       </div>
