@@ -187,7 +187,7 @@ export const SingleControlled: StoryFn<
       console.log(
         `Selected date: ${dateAdapter.isValid(date) ? dateAdapter.format(date, "DD MMM YYYY") : date}`,
       );
-      setSelectedDate(value?.trim().length === 0 ? null : date);
+      setSelectedDate(date ?? null);
       if (errors?.length && value) {
         console.log(
           `Error(s): ${errors
@@ -1086,7 +1086,7 @@ export const SingleWithConfirmation: StoryFn<
         setHelperText(defaultHelperText);
         setValidationStatus(undefined);
       }
-      setSelectedDate(value?.trim().length === 0 ? null : date);
+      setSelectedDate(date ?? null);
       if (date) {
         applyButtonRef?.current?.focus();
       }
@@ -1377,7 +1377,7 @@ export const SingleWithCustomParser: StoryFn<
         setHelperText(defaultHelperText);
         setValidationStatus(undefined);
       }
-      setSelectedDate(value?.trim().length === 0 ? null : date);
+      setSelectedDate(date ?? null);
       args?.onSelectionChange?.(event, date, details);
     },
     [args?.onSelectionChange, dateAdapter],
@@ -2412,7 +2412,7 @@ export const ResetSingleState: StoryFn<
       console.log(
         `Selected date: ${dateAdapter.isValid(date) ? dateAdapter.format(date, "DD MMM YYYY") : date}`,
       );
-      setSelectedDate(value?.trim().length === 0 ? null : date);
+      setSelectedDate(date ?? null);
       if (errors?.length && value) {
         console.log(
           `Error(s): ${errors

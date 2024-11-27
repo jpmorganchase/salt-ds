@@ -221,6 +221,7 @@ export const DateInputSingle = forwardRef<
         const formattedValue = dateAdapter.format(date, format, locale);
         const hasValueChanged = formattedValue !== dateValue;
         if (hasValueChanged) {
+          lastAppliedValue.current = formattedValue;
           setDateValue(formattedValue);
           onDateValueChange?.(null, formattedValue);
         }

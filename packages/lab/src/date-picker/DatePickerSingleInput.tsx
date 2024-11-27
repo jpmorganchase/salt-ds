@@ -1,7 +1,8 @@
 import { Button, makePrefixer, useControlled } from "@salt-ds/core";
-import type {
-  DateFrameworkType,
-  SaltDateAdapter,
+import {
+  DateDetailErrorEnum,
+  type DateFrameworkType,
+  type SaltDateAdapter,
 } from "@salt-ds/date-adapters";
 import { CalendarIcon } from "@salt-ds/icons";
 import { clsx } from "clsx";
@@ -49,7 +50,13 @@ function defaultSingleValidation<TDate extends DateFrameworkType>(
   minDate: TDate | undefined,
   maxDate: TDate | undefined,
 ): DateInputSingleDetails {
-  if (date) {
+  if (!date) {
+    details.errors = details.errors ?? [];
+    details.errors?.push({
+      type: DateDetailErrorEnum.UNSET,
+      message: "no date defined",
+    });
+  } else {
     if (
       minDate &&
       dateAdapter.isValid(date) &&
