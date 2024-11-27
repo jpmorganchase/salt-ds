@@ -1,0 +1,41 @@
+---
+  title:
+    $ref: ./#/title
+  layout: DetailComponent
+  sidebar:
+    exclude: true
+  data:
+    $ref: ./#/data
+---
+
+<LivePreviewControls>
+  <LivePreview componentName="stepper" exampleName="Basic">
+  ## Basic
+
+    The `Stepper` component accepts `Step` components as children.
+    You can change 
+  </LivePreview>
+
+  ## Orientation
+
+    ### Horizontal (default)
+    <LivePreview componentName="stepper" exampleName="OrientationHorizontal" />
+
+    ### Vertical
+    <LivePreview componentName="stepper" exampleName="OrientationVertical" />
+
+  ## Stage + Status
+
+  The `Step` component changes based on the `stage` and `status` props.
+  In case they are both set, `status` will take precedence over `stage`.
+  These 2 props control various aspects of the component, such as:
+  icon selection, description text color and track (connector) style.
+  
+  <LivePreview componentName="stepper" exampleName="StageStatus" />
+
+  ## Interactive Example
+
+  ## Nesting
+
+  <LivePreview componentName="stepper" exampleName="Nesting" />
+</LivePreviewControls>
