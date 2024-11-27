@@ -32,7 +32,8 @@ interface CustomDatePickerPanelProps {
   selectionVariant: "single" | "range";
 }
 
-// This is a sample component, representing a composition you could create yourselves
+// CustomDatePickerPanel is a sample component, representing a composition you could create yourselves, not intended for importing into your own projects
+// refer to https://github.com/jpmorganchase/salt-ds/blob/main/packages/lab/src/date-picker/useDatePicker.ts to create your own
 export const CustomDatePickerPanel = forwardRef<
   HTMLDivElement,
   CustomDatePickerPanelProps

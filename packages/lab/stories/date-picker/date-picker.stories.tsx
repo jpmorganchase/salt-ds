@@ -39,7 +39,9 @@ import type { Meta, StoryFn } from "@storybook/react";
 import type React from "react";
 import type { SyntheticEvent } from "react";
 import { useCallback, useRef, useState } from "react";
-import { CustomDatePickerPanel } from "./CustomDatePickerPanel"; // CustomDatePickerPanel is an example, replace with your own composition of date controls
+// CustomDatePickerPanel is a sample component, representing a composition you could create yourselves, not intended for importing into your own projects
+// refer to https://github.com/jpmorganchase/salt-ds/blob/main/packages/lab/src/date-picker/useDatePicker.ts to create your own
+import { CustomDatePickerPanel } from "./CustomDatePickerPanel";
 // As required by locale specific examples
 import "moment/dist/locale/zh-cn";
 import "moment/dist/locale/es";

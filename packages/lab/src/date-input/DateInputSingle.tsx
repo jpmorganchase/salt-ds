@@ -23,7 +23,7 @@ import {
   type KeyboardEventHandler,
   type MouseEventHandler,
   type ReactNode,
-  type RefObject,
+  type Ref,
   type SyntheticEvent,
   forwardRef,
   useEffect,
@@ -96,7 +96,7 @@ export interface DateInputSingleProps<TDate extends DateFrameworkType>
   /**
    * Reference for the input.
    */
-  inputRef?: RefObject<HTMLInputElement>;
+  inputRef?: Ref<HTMLInputElement>;
   /**
    * Locale for date formatting and parsing
    */
