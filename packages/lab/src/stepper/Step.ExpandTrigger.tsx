@@ -1,9 +1,9 @@
-import clsx from "clsx";
 import { Button, type ButtonProps } from "@salt-ds/core";
-import { ChevronDownIcon, ChevronUpIcon } from "@salt-ds/icons";
 import { makePrefixer } from "@salt-ds/core";
-import { useWindow } from "@salt-ds/window";
+import { ChevronDownIcon, ChevronUpIcon } from "@salt-ds/icons";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
+import clsx from "clsx";
 
 import stepExpandTriggerCSS from "./Step.ExpandTrigger.css";
 

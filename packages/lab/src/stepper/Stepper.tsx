@@ -1,16 +1,16 @@
+import { makePrefixer } from "@salt-ds/core";
+import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
+import { clsx } from "clsx";
 import {
+  type ComponentProps,
+  type ReactNode,
   forwardRef,
   useContext,
-  type ReactNode,
-  type ComponentProps,
 } from "react";
-import { clsx } from "clsx";
-import { makePrefixer } from "@salt-ds/core";
-import { useWindow } from "@salt-ds/window";
-import { useComponentCssInjection } from "@salt-ds/styles";
 
+import { OrientationContext, StepperProvider } from "./Stepper.Provider";
 import stepperCSS from "./Stepper.css";
-import { StepperProvider, OrientationContext } from "./Stepper.Provider";
 
 export namespace Stepper {
   export interface Props extends ComponentProps<"ol"> {
