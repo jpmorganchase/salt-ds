@@ -9,12 +9,12 @@
 ---
 
 <LivePreviewControls>
-  <LivePreview componentName="stepper" exampleName="Basic">
   ## Basic
 
-    The `Stepper` component accepts `Step` components as children.
-    You can change 
-  </LivePreview>
+  The `Stepper` component accepts `Step` components as children.
+  You can change 
+  
+  <LivePreview componentName="stepper" exampleName="Basic" />
 
   ## Orientation
 
@@ -33,9 +33,30 @@
   
   <LivePreview componentName="stepper" exampleName="StageStatus" />
 
-  ## Interactive Example
-
   ## Nesting
 
+  When using the `Stepper` component in vertical orientation, you can nest `Step` components inside each other.
+  When done so, the parent `Step` renders another `Stepper` and places the nested `Steps` (children) inside it.
+  Additionally an expand button is added to expand and collapse the substeps.
+  Steps which contain active step children are to have a stage of `inprogress`.
+
   <LivePreview componentName="stepper" exampleName="Nesting" />
+
+  ## Hook
+
+  The `Stepper` and `Step` component are purely presentational components.
+  If you want to control the state of the `Stepper` you can utilize the `useStepReducer` hook.
+  The hook is quite smart
+
+  <LivePreview componentName="stepper" exampleName="Hook" />
+
+  ## Hook Advanced
+  
+  The `useStepReducer` hook is smart! If you add `stage: 'active'` to a step, it will automatically
+  determine the stages of all other steps, both before and after the active one.
+  I call it `autoStage`. Inside the state object, you can find useful properties: 
+  `steps`, `flatSteps`, `activeStep`, `previousStep`, `nextStep`, `started` and `ended`.
+
+  <LivePreview componentName="stepper" exampleName="HookAdvanced" />
+
 </LivePreviewControls>

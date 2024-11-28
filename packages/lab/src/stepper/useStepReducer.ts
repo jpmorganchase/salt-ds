@@ -7,28 +7,29 @@ import {
 } from "./utils";
 import type { Step } from './Step';
 
-export interface StepReducerState {
-  steps: Step.Step[]
-  flatSteps: Step.Step[]
-  activeStep: Step.Props | null
-  previousStep: Step.Props | null
-  nextStep: Step.Props | null
-  activeStepIndex: number
-  completed: boolean
-  started: boolean
+export namespace StepReducer {
+  export interface State {
+    steps: Step.Step[];
+    flatSteps: Step.Step[];
+    activeStep: Step.Step | null;
+    previousStep: Step.Step | null;
+    nextStep: Step.Step | null;
+    activeStepIndex: number;
+    started: boolean;
+    ended: boolean;
+  }
+
+  export type Action =
+    | { type: 'next' }
+    | { type: 'previous' }
+    | { type: 'error' }
+    | { type: 'warning' }
+    | { type: 'clear' }
 }
 
-export type StepReducerAction = 
-  | { type: 'next' }
-  | { type: 'previous' }
-  | { type: 'error' }
-  | { type: 'warning' }
-  | { type: 'clear'}
-
-
 function stepReducer(
-  state: StepReducerState,
-  action: StepReducerAction
+  state: StepReducer.State,
+  action: StepReducer.Action
 ) {
   if(action.type === 'next') {
     const steps = assignStage(state.steps);
@@ -51,8 +52,8 @@ function stepReducer(
         activeStep,
         previousStep,
         nextStep,
-        completed: false,
-        started: true
+        started: true,
+        ended: false,
       }
     }
 
@@ -68,9 +69,9 @@ function stepReducer(
       activeStep,
       previousStep,
       nextStep,
-      completed: true,
-      started: true
-    } as StepReducerState;
+      started: true,
+      ended: true,
+    } as StepReducer.State;
   }
 
   if(action.type === 'previous') {
@@ -94,15 +95,15 @@ function stepReducer(
         activeStep,
         previousStep,
         nextStep,
-        completed: false,
-        started: true
-      } as StepReducerState
+        started: true,
+        ended: false,
+      } as StepReducer.State
     }
 
     const activeStepIndex = -1;
     const activeStep = null;
     const previousStep = null;
-    const nextStep = flatSteps[0];
+    const nextStep = flatSteps.at(0);
 
     return {
       steps: assignStage(steps, 'pending'),
@@ -111,9 +112,9 @@ function stepReducer(
       activeStep,
       previousStep,
       nextStep,
-      completed: false,
+      ended: false,
       started: false
-    } as StepReducerState;
+    } as StepReducer.State;
   }
 
   if(action.type === 'error') {
@@ -134,7 +135,7 @@ function stepReducer(
     }
   }
 
-  return state;
+  return {...state};
 }
 
 export function useStepReducer(initialSteps: Step.Step[]) {
@@ -144,17 +145,17 @@ export function useStepReducer(initialSteps: Step.Step[]) {
   const activeStep = flatSteps[activeStepIndex];
   const previousStep = flatSteps[activeStepIndex - 1] || null;
   const nextStep = flatSteps[activeStepIndex + 1] || null;
-  const completed = flatSteps.every(step => step.stage === 'completed');
   const started = !flatSteps.every(step => step.stage === 'pending');
+  const ended = flatSteps.every(step => step.stage === 'completed');
 
-  const state: StepReducerState = {
+  const state: StepReducer.State = {
     steps,
     flatSteps,
     activeStep,
     previousStep,
     nextStep,
     activeStepIndex,
-    completed,
+    ended,
     started
   };
 
