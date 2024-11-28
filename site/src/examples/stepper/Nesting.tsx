@@ -1,10 +1,9 @@
 import { StackLayout } from "@salt-ds/core";
-import { Stepper, Step } from "@salt-ds/lab";
-
+import { Step, Stepper } from "@salt-ds/lab";
 
 export const Nesting = () => {
   return (
-    <StackLayout style={{ minWidth: '240px' }}>
+    <StackLayout style={{ minWidth: "240px" }}>
       <Stepper orientation="vertical">
         <Step label="Step 1">
           <Step label="Step 1.1" />
@@ -28,5 +27,5 @@ export const Nesting = () => {
         </Step>
       </Stepper>
     </StackLayout>
-  )
-}
+  );
+};

@@ -1,7 +1,7 @@
 import { useReducer } from "react";
 
-import { autoStage, assignStage, flatten } from "./utils";
 import type { Step } from "./Step";
+import { assignStage, autoStage, flatten } from "./utils";
 
 export namespace StepReducer {
   export interface State {

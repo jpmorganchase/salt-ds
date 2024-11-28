@@ -1,5 +1,5 @@
 import { StackLayout } from "@salt-ds/core";
-import { Stepper, Step } from "@salt-ds/lab";
+import { Step, Stepper } from "@salt-ds/lab";
 import { QAContainer, type QAContainerProps } from "docs/components";
 
 import type { Meta, StoryFn } from "@storybook/react";
@@ -55,11 +55,11 @@ export const Horizontal: StoryFn<QAContainerProps> = (props) => {
       </StackLayout>
     </QAContainer>
   );
-}
+};
 
 Horizontal.parameters = {
   chromatic: { disableSnapshot: false },
-}
+};
 
 export const HorizontalVariations: StoryFn<QAContainerProps> = (props) => {
   return (
@@ -74,50 +74,26 @@ export const HorizontalVariations: StoryFn<QAContainerProps> = (props) => {
         }}
       >
         <Stepper>
-          <Step
-            label="Step"
-            description="Description text"
-            stage="pending"
-          />
+          <Step label="Step" description="Description text" stage="pending" />
           <Step
             label="Step"
             description="Description text"
             stage="inprogress"
           />
-          <Step
-            label="Step"
-            description="Description text"
-            stage="active"
-          />
-          <Step
-            label="Step"
-            description="Description text"
-            stage="completed"
-          />
-          <Step
-            label="Step"
-            description="Description text"
-            status="error"
-          />
-          <Step
-            label="Step"
-            description="Description text"
-            status="warning"
-          />
-          <Step
-            label="Step"
-            description="Description text"
-            stage="locked"
-          />
+          <Step label="Step" description="Description text" stage="active" />
+          <Step label="Step" description="Description text" stage="completed" />
+          <Step label="Step" description="Description text" status="error" />
+          <Step label="Step" description="Description text" status="warning" />
+          <Step label="Step" description="Description text" stage="locked" />
         </Stepper>
       </StackLayout>
     </QAContainer>
-  )
-}
+  );
+};
 
 HorizontalVariations.parameters = {
   chromatic: { disableSnapshot: false },
-}
+};
 
 export const Vertical: StoryFn<QAContainerProps> = (props) => {
   return (
@@ -163,11 +139,11 @@ export const Vertical: StoryFn<QAContainerProps> = (props) => {
       </StackLayout>
     </QAContainer>
   );
-}
+};
 
 Vertical.parameters = {
   chromatic: { disableSnapshot: false },
-}
+};
 
 export const VerticalVariations: StoryFn<QAContainerProps> = (props) => {
   return (
@@ -181,50 +157,26 @@ export const VerticalVariations: StoryFn<QAContainerProps> = (props) => {
         }}
       >
         <Stepper orientation="vertical">
-          <Step
-            label="Step"
-            description="Description text"
-            stage="pending"
-          />
+          <Step label="Step" description="Description text" stage="pending" />
           <Step
             label="Step"
             description="Description text"
             stage="inprogress"
           />
-          <Step
-            label="Step"
-            description="Description text"
-            stage="active"
-          />
-          <Step
-            label="Step"
-            description="Description text"
-            stage="completed"
-          />
-          <Step
-            label="Step"
-            description="Description text"
-            status="error"
-          />
-          <Step
-            label="Step"
-            description="Description text"
-            status="warning"
-          />
-          <Step
-            label="Step"
-            description="Description text"
-            stage="locked"
-          />
+          <Step label="Step" description="Description text" stage="active" />
+          <Step label="Step" description="Description text" stage="completed" />
+          <Step label="Step" description="Description text" status="error" />
+          <Step label="Step" description="Description text" status="warning" />
+          <Step label="Step" description="Description text" stage="locked" />
         </Stepper>
       </StackLayout>
     </QAContainer>
-  )
-}
+  );
+};
 
 VerticalVariations.parameters = {
   chromatic: { disableSnapshot: false },
-}
+};
 
 export const VerticalNesting: StoryFn<QAContainerProps> = (props) => {
   return (
@@ -234,7 +186,7 @@ export const VerticalNesting: StoryFn<QAContainerProps> = (props) => {
         gap={2}
         style={{
           minWidth: 620,
-          marginBottom: 40
+          marginBottom: 40,
         }}
       >
         <Stepper orientation="vertical">
@@ -266,5 +218,5 @@ export const VerticalNesting: StoryFn<QAContainerProps> = (props) => {
         </Stepper>
       </StackLayout>
     </QAContainer>
-  )
-}
+  );
+};
