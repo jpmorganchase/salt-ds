@@ -1,3 +1,5 @@
+Snapshot release
+
 # Salt
 
 [![@salt-ds/core](https://img.shields.io/npm/v/@salt-ds/core.svg?label=@salt-ds/core)](https://www.npmjs.com/package/@salt-ds/core)
