@@ -108,7 +108,7 @@ export const HorizontalLongText: StoryFn<typeof Stepper> = () => {
 export const HorizontalInteractiveUsingStepReducer: StoryFn<typeof Stepper> = () => {
   const [state, dispatch] = useStepReducer([
     { id: 'step-1', label: 'Step 1' },
-    { id: 'step-2', label: 'Step 2' },
+    { id: 'step-2', label: 'Step 2', stage: 'active' },
     { id: 'step-3', label: 'Step 3' }
   ]);
 
@@ -267,10 +267,10 @@ export const VerticalDepth2: StoryFn<typeof Stepper> = () => {
         <Step label="Step 1" description="Description text">
           <Step label="Step 1.1" />
         </Step>
-        <Step label="Step 2">
+        <Step label="Step 2" stage="inprogress">
           <Step label="Step 2.1" description="This is a bit longer of a description." />
-          <Step label="Step 2.2" description="Description text">
-            <Step label="Step 2.2.1" />
+          <Step label="Step 2.2" description="Description text" stage="inprogress">
+            <Step label="Step 2.2.1" stage="active" />
             <Step label="Step 2.2.2" />
             <Step label="Step 2.2.3" />
           </Step>
