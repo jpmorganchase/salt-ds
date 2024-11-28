@@ -1,7 +1,7 @@
-import { useContext, createContext, type ReactNode } from "react";
+import { type ReactNode, createContext, useContext } from "react";
 
-import type { Stepper } from "./Stepper";
 import type { Step } from "./Step";
+import type { Stepper } from "./Stepper";
 
 export const DepthContext = createContext<Step.Depth>(-1);
 export const OrientationContext =

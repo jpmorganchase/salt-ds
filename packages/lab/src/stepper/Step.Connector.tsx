@@ -1,7 +1,7 @@
-import clsx from "clsx";
 import { makePrefixer } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
+import clsx from "clsx";
 
 import stepTrackCSS from "./Step.Connector.css";
 

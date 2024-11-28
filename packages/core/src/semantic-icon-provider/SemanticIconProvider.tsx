@@ -9,6 +9,7 @@ import {
   InfoSolidIcon,
   LockedIcon,
   OverflowMenuIcon,
+  ProgressInprogressIcon,
   StepActiveIcon,
   StepDefaultIcon,
   StepSuccessIcon,
@@ -19,7 +20,6 @@ import {
   UploadIcon,
   UserSolidIcon,
   WarningSolidIcon,
-  ProgressInprogressIcon,
 } from "@salt-ds/icons";
 import {
   type ElementType,

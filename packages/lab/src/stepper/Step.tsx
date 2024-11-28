@@ -1,27 +1,27 @@
 import {
-  useContext,
-  useEffect,
-  type ComponentProps,
-  type CSSProperties,
-  type ReactNode,
-} from "react";
+  type ButtonProps,
+  Text,
+  makePrefixer,
+  useControlled,
+  useId,
+} from "@salt-ds/core";
+import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 import clsx from "clsx";
 import {
-  Text,
-  useId,
-  useControlled,
-  makePrefixer,
-  type ButtonProps,
-} from "@salt-ds/core";
-import { useWindow } from "@salt-ds/window";
-import { useComponentCssInjection } from "@salt-ds/styles";
+  type CSSProperties,
+  type ComponentProps,
+  type ReactNode,
+  useContext,
+  useEffect,
+} from "react";
 
+import { StepConnector } from "./Step.Connector";
+import { StepExpandTrigger } from "./Step.ExpandTrigger";
+import { StepIcon } from "./Step.Icon";
 import stepCSS from "./Step.css";
 import { Stepper } from "./Stepper";
 import { DepthContext } from "./Stepper.Provider";
-import { StepExpandTrigger } from "./Step.ExpandTrigger";
-import { StepConnector } from "./Step.Connector";
-import { StepIcon } from "./Step.Icon";
 
 export namespace Step {
   export interface Step extends ComponentProps<"li"> {
