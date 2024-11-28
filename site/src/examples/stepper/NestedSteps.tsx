@@ -1,7 +1,7 @@
 import { StackLayout } from "@salt-ds/core";
 import { Step, Stepper } from "@salt-ds/lab";
 
-export const Nesting = () => {
+export const NestedSteps = () => {
   return (
     <StackLayout style={{ minWidth: "240px" }}>
       <Stepper orientation="vertical">
