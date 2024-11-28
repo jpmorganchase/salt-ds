@@ -9,55 +9,61 @@
 ---
 
 <LivePreviewControls>
+
+<LivePreview componentName="stepper" exampleName="Basic">
   ## Basic
 
-  The `Stepper` component accepts `Step` components as children.
-  You can change 
-  
-  <LivePreview componentName="stepper" exampleName="Basic" />
+The `Stepper` component accepts `Step` components as children.
+You can change
 
-  ## Orientation
+</LivePreview>
 
-    ### Horizontal (default)
-    <LivePreview componentName="stepper" exampleName="OrientationHorizontal" />
+## Orientation
 
-    ### Vertical
-    <LivePreview componentName="stepper" exampleName="OrientationVertical" />
+<LivePreview componentName="stepper" exampleName="OrientationHorizontal">
+  ### Horizontal (default)
+</LivePreview>
 
+<LivePreview componentName="stepper" exampleName="OrientationVertical">
+  ### Vertical
+</LivePreview>
+
+<LivePreview componentName="stepper" exampleName="StageStatus">
   ## Stage + Status
 
-  The `Step` component changes based on the `stage` and `status` props.
-  In case they are both set, `status` will take precedence over `stage`.
-  These 2 props control various aspects of the component, such as:
-  icon selection, description text color and track (connector) style.
-  
-  <LivePreview componentName="stepper" exampleName="StageStatus" />
+The `Step` component changes based on the `stage` and `status` props.
+In case they are both set, `status` will take precedence over `stage`.
+These 2 props control various aspects of the component, such as:
+icon selection, description text color and track (connector) style.
 
+</LivePreview>
+
+<LivePreview componentName="stepper" exampleName="NestedSteps">
   ## Nested Steps
 
-  When using the `Stepper` component in vertical orientation, you can nest `Step` components other `Step` components.
-  When done so, the parent `Step` renders another `Stepper` and places the nested `Steps` (children) inside of it.
-  Additionally an expand button is added on the parent `Step` to expand or collapse the substeps.
-  The parent Step containing the active Step child children are to have a stage of `inprogress`.
+When using the `Stepper` component in vertical orientation, you can nest `Step` components other `Step` components.
+When done so, the parent `Step` renders another `Stepper` and places the nested `Steps` (children) inside of it.
+Additionally an expand button is added on the parent `Step` to expand or collapse the substeps.
+The parent Step containing the active Step child children are to have a stage of `inprogress`.
 
-  <LivePreview componentName="stepper" exampleName="Nesting" />
+</LivePreview>
 
+<LivePreview componentName="stepper" exampleName="Hook">
   ## Hook
 
-  The `Stepper` and `Step` component are purely presentational components.
-  If you want to control the state of the `Stepper` you can utilize the `useStepReducer` hook.
+The `Stepper` and `Step` component are purely presentational components.
+If you want to control the state of the `Stepper` you can utilize the `useStepReducer` hook.
 
-  <LivePreview componentName="stepper" exampleName="Hook" />
-  
-  The `useStepReducer` hook is smart! If you add `stage: 'active'` to any step, it will automatically
-  determine the stages of all other steps (autoStage), both before and after the active one.
-  Inside the state object, you can find useful properties such as `steps`, `flatSteps`,
-  `activeStep`, `previousStep`, `nextStep`, `started` and `ended`. The dispatch method
-  as in the native useReducer hook accepts an action object with a type.
-  Acceptable action types are: 'next', 'previous', 'warning', 'error' and 'clear'.
-  The warning and error types will set the status of the active step to 'warning' or 'error'.
-  The clear type will reset the status of the active step to undefined.
+</LivePreview>
 
-  <LivePreview componentName="stepper" exampleName="HookAdvanced" />
-
+<LivePreview componentName="stepper" exampleName="HookAdvanced" />
+  The `useStepReducer` hook is smart! If you add `stage: 'active'` to any step, it
+  will automatically determine the stages of all other steps (autoStage), both
+  before and after the active one. Inside the state object, you can find useful
+  properties such as `steps`, `flatSteps`, `activeStep`, `previousStep`,
+  `nextStep`, `started` and `ended`. The dispatch method as in the native
+  useReducer hook accepts an action object with a type. Acceptable action types
+  are: 'next', 'previous', 'warning', 'error' and 'clear'. The warning and error
+  types will set the status of the active step to 'warning' or 'error'. The clear
+  type will reset the status of the active step to undefined.
 </LivePreviewControls>
