@@ -25,7 +25,7 @@ import { StepConnector } from "./Step.Connector";
 import { StepIcon } from "./Step.Icon";
 
 export namespace Step {
-  export interface Step extends ComponentProps<'li'>{
+  export interface Step extends ComponentProps<'li'> {
     id?: string;
     label?: ReactNode;
     description?: ReactNode;
