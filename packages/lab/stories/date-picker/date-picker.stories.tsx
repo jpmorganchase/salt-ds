@@ -204,19 +204,30 @@ export const SingleControlled: StoryFn<
   );
 
   return (
-    <DatePicker
-      selectionVariant={"single"}
-      {...args}
-      onSelectionChange={handleSelectionChange}
-      selectedDate={selectedDate}
-    >
-      <DatePickerTrigger>
-        <DatePickerSingleInput />
-      </DatePickerTrigger>
-      <DatePickerOverlay>
-        <DatePickerSinglePanel />
-      </DatePickerOverlay>
-    </DatePicker>
+    <>
+      <DatePicker
+        selectionVariant={"single"}
+        {...args}
+        onSelectionChange={handleSelectionChange}
+        selectedDate={selectedDate}
+      >
+        <DatePickerTrigger>
+          <DatePickerSingleInput />
+        </DatePickerTrigger>
+        <DatePickerOverlay>
+          <DatePickerSinglePanel />
+        </DatePickerOverlay>
+      </DatePicker>
+      <button onClick={() => setSelectedDate(null)}>Set null</button>
+      <button onClick={() => setSelectedDate(new Date())}>Set today</button>
+      <button
+        onClick={() =>
+          setSelectedDate(dateAdapter.add(new Date(), { days: 1 }))
+        }
+      >
+        Set tomorrow
+      </button>
+    </>
   );
 };
 

@@ -458,6 +458,9 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
             "have.value",
             updatedFormattedDateValue,
           );
+
+          cy.findByRole("button", { name: "Set null" }).realClick();
+          cy.findByRole("textbox").should("have.value", "");
         });
 
         it("SHOULD preserve original time during date selection", () => {

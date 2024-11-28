@@ -214,7 +214,7 @@ export const DateInputRange = forwardRef<
       endInputRef: endInputRefProp,
       locale,
       parse: parseProp,
-      placeholder = "dd mmm yyyy",
+      placeholder = format,
       readOnly: readOnlyProp,
       validationStatus: validationStatusProp,
       variant = "primary",
@@ -542,7 +542,6 @@ export const DateInputRange = forwardRef<
           ref={handleStartInputRef}
           tabIndex={isDisabled ? -1 : 0}
           placeholder={placeholder}
-          size={placeholder.length}
           value={
             isReadOnly && !dateValue?.startDate
               ? emptyReadOnlyMarker
@@ -575,7 +574,6 @@ export const DateInputRange = forwardRef<
           ref={handleEndInputRef}
           tabIndex={isDisabled ? -1 : 0}
           placeholder={placeholder}
-          size={placeholder.length}
           value={
             isReadOnly && !dateValue?.endDate
               ? emptyReadOnlyMarker

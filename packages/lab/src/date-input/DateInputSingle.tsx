@@ -170,7 +170,7 @@ export const DateInputSingle = forwardRef<
       inputRef: inputRefProp = null,
       locale,
       parse: parseProp,
-      placeholder = "dd mmm yyyy",
+      placeholder = format,
       readOnly: readOnlyProp,
       startAdornment,
       validationStatus: validationStatusProp,
@@ -215,16 +215,18 @@ export const DateInputSingle = forwardRef<
       ? dateAdapter.getTime(date)
       : null;
 
-    // Update date string value when selected date changes
+    // biome-ignore lint/correctness/useExhaustiveDependencies: Update date string value ONLY when selected date changes, not when date string itself change
     useEffect(() => {
-      if (date && dateAdapter.isValid(date)) {
-        const formattedValue = dateAdapter.format(date, format, locale);
-        const hasValueChanged = formattedValue !== dateValue;
-        if (hasValueChanged) {
-          lastAppliedValue.current = formattedValue;
-          setDateValue(formattedValue);
-          onDateValueChange?.(null, formattedValue);
-        }
+      const formattedValue = dateAdapter.format(date, format, locale);
+      const hasValueChanged = formattedValue !== dateValue;
+      if (
+        // don't want to reset "error" input values
+        (dateAdapter.isValid(date) || date === null) &&
+        hasValueChanged
+      ) {
+        lastAppliedValue.current = formattedValue;
+        setDateValue(formattedValue);
+        onDateValueChange?.(null, formattedValue);
       }
     }, [date, dateAdapter.format, format, locale]);
 
@@ -358,7 +360,6 @@ export const DateInputSingle = forwardRef<
           ref={handleInputRef}
           tabIndex={isDisabled ? -1 : 0}
           placeholder={placeholder}
-          size={placeholder.length}
           value={isReadOnly && !dateValue ? emptyReadOnlyMarker : dateValue}
           {...restDateInputProps}
           onBlur={handleBlur}
