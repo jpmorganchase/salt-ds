@@ -1,11 +1,11 @@
-import { Step } from './Step';
-import { Stepper } from './Stepper';
+import type { Step } from "./Step";
+import type { Stepper } from "./Stepper";
 
-export * from './Stepper';
-export * from './Step';
-export * from './useStepReducer';
+export * from "./Stepper";
+export * from "./Step";
+export * from "./useStepReducer";
 
-export interface StepperProps extends Stepper.Props {};
+export interface StepperProps extends Stepper.Props {}
 export interface StepProps extends Step.Props {}
 
 export type StepperOrientation = Stepper.Orientation;

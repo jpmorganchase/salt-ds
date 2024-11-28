@@ -26,7 +26,7 @@ export function StepIcon({
   ...props
 }: StepIcon.Props) {
   const targetWindow = useWindow();
-  const IconComponent = useStepIcon({ stage, status })
+  const IconComponent = useStepIcon({ stage, status });
 
   useComponentCssInjection({
     testId: "salt-step-icon",
@@ -40,17 +40,15 @@ export function StepIcon({
     <IconComponent
       aria-label={ariaLabel}
       size={multiplier}
-      className={clsx(
-        withBaseName(),
-        className
-      )}
+      className={clsx(withBaseName(), className)}
       {...props}
     />
   );
 }
 
-export function useStepIcon({ 
-  stage, status
+export function useStepIcon({
+  stage,
+  status,
 }: Pick<StepIcon.Props, "stage" | "status">) {
   const {
     ErrorIcon,
@@ -64,13 +62,13 @@ export function useStepIcon({
 
   const stepIconMap = {
     error: ErrorIcon,
-    warning: WarningIcon ,
+    warning: WarningIcon,
     active: ActiveIcon,
     completed: CompletedIcon,
     pending: PendingIcon,
     inprogress: InProgressIcon,
     locked: LockedIcon,
-  }
+  };
 
   return stepIconMap[status || stage];
 }

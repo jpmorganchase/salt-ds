@@ -3,7 +3,7 @@
 
   grid-area: track;
   min-height: var(--salt-spacing-300);
-  
+
   transition-duration: inherit;
   transition-timing-function: inherit;
   transition-property: opacity, min-height;
