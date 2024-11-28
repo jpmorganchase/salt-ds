@@ -1,6 +1,7 @@
 import type { Meta, StoryFn } from "@storybook/react";
+
 import { Stepper, Step, useStepReducer } from '@salt-ds/lab'
-import { Button, StackLayout } from '@salt-ds/core';
+import { StackLayout, SegmentedButtonGroup, Button, FlexLayout } from '@salt-ds/core';
 
 export default {
   title: "Lab/Stepper",
@@ -100,6 +101,41 @@ export const HorizontalLongText: StoryFn<typeof Stepper> = () => {
           status="warning"
         />
       </Stepper>
+    </StackLayout>
+  )
+}
+
+export const HorizontalInteractiveUsingStepReducer: StoryFn<typeof Stepper> = () => {
+  const [state, dispatch] = useStepReducer([
+    { id: 'step-1', label: 'Step 1' },
+    { id: 'step-2', label: 'Step 2' },
+    { id: 'step-3', label: 'Step 3' }
+  ]);
+
+  return (
+    <StackLayout style={{ width: 320, alignItems: 'center' }}>
+      <Stepper>
+        {state.steps.map(
+          (step) => (
+            <Step
+              key={step.id}
+              {...step}
+            />
+          )
+        )}
+      </Stepper>
+      <FlexLayout justify="space-between">
+        {state.started && (
+          <Button onClick={() => { dispatch({ type: 'previous' }) }}>
+            Previous
+          </Button>
+          )}
+        {!state.ended && (
+          <Button onClick={() => { dispatch({ type: 'next' }) }}>
+            Next
+          </Button>
+        )}
+      </FlexLayout>
     </StackLayout>
   )
 }
@@ -253,33 +289,39 @@ export const VerticalDepth2: StoryFn<typeof Stepper> = () => {
   )
 }
 
-export const Interactive: StoryFn<typeof Stepper> = () => {
+
+export const VerticalInteractiveUsingStepReducer: StoryFn<typeof Stepper> = () => {
   const [state, dispatch] = useStepReducer([
     {
       id: 'step-1',
       label: 'Step 1',
-      description: 'Description text',
+      defaultExpanded: true,
       substeps: [
-        { id: 'step-1-1', label: 'Step 1.1', description: 'Description text' },
-        { id: 'step-1-2', label: 'Step 1.2', description: 'Description text' },
+        { id: 'step-1-1', label: 'Step 1.1' },
+        { id: 'step-1-2', label: 'Step 1.2' },
         {
           id: 'step-1-3',
           label: 'Step 1.3',
-          description: 'Description text',
+          defaultExpanded: true,
           substeps: [
-            { id: 'step-1-3-1', label: 'Step 1.3.1', description: 'Description text' },
-            { id: 'step-1-3-2', label: 'Step 1.3.2', description: 'Description text' },
-            { id: 'step-1-3-3', label: 'Step 1.3.3', description: 'Description text' }
+            { id: 'step-1-3-1', label: 'Step 1.3.1' },
+            { id: 'step-1-3-2', label: 'Step 1.3.2' },
+            {
+              id: 'step-1-3-3',
+              label: 'Step 1.3.3',
+              description: 'This is just a description text'
+            }
           ]
-        }
+        },
+        { id: 'step-1-4', label: 'Step 1.4' }
       ]
     },
-    { id: 'step-2', label: 'Step 2', description: 'Description text' },
-    { id: 'step-3', label: 'Step 3', description: 'Description text' }
+    { id: 'step-2', label: 'Step 2',  },
+    { id: 'step-3', label: 'Step 3',  }
   ])
 
   return (
-    <StackLayout>
+    <StackLayout style={{ width: 240, alignItems: 'center' }}>
       <Stepper orientation="vertical">
         {state.steps.map((step) => (
           <Step
@@ -288,26 +330,38 @@ export const Interactive: StoryFn<typeof Stepper> = () => {
           />
         ))}
       </Stepper>
-      {!state.completed && (
-        <Button onClick={() => dispatch({ type: 'next' })}>
-          Next
-        </Button>
-      )}
-      {state.started && (
-        <Button onClick={() => dispatch({ type: 'previous' })}>
-          Previous
-        </Button>
-      )}
-      {state.started && !state.completed && (
-        <Button onClick={() => dispatch({ type: 'error' })}>
-          Error
-        </Button>
-      )}
+      <SegmentedButtonGroup>
+        {state.started && (
+          <Button onClick={() => { dispatch({ type: 'previous' }) }}>
+            Previous
+          </Button>
+        )}
+        {!state.ended && (
+          <Button onClick={() => { dispatch({ type: 'next' }) }}>
+            Next
+          </Button>
+        )}
+      </SegmentedButtonGroup>
+      <SegmentedButtonGroup>
+        {state.started && !state.ended && (
+          <>
+            <Button onClick={() => dispatch({ type: 'error' })}>
+              Error
+            </Button>
+            <Button onClick={() => dispatch({ type: 'warning' })}>
+              Warning
+            </Button>
+            <Button onClick={() => dispatch({ type: 'clear' })}>
+              Clear
+            </Button>
+          </>
+        )}
+      </SegmentedButtonGroup>  
     </StackLayout>
   )
 }
 
-export const Barebones: StoryFn<typeof Stepper> = () => {
+export const BareBones: StoryFn<typeof Stepper> = () => {
   return (
     <StackLayout style={{ minWidth: '240px', width: '100%' }}>
       <Stepper>
