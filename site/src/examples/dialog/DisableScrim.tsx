@@ -31,7 +31,7 @@ export const DisableScrim = (): ReactElement => {
       <Button onClick={handleRequestOpen}>Open dialog without Scrim</Button>
       <Dialog open={open} onOpenChange={onOpenChange} disableScrim id={id}>
         <DialogHeader header="Terms and conditions" disableAccent />
-        <DialogContent>
+        <DialogContent style={{ maxHeight: 250 }}>
           <StackLayout>
             <div>
               When you add a Chase Card to a Wallet, you agree to these Terms:
@@ -68,7 +68,20 @@ export const DisableScrim = (): ReactElement => {
           </StackLayout>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
+          <Button
+            appearance="bordered"
+            onClick={handleClose}
+            style={{ marginRight: "auto" }}
+          >
+            My privacy settings
+          </Button>
+          <Button
+            sentiment="accented"
+            appearance="bordered"
+            onClick={handleClose}
+          >
+            Cancel
+          </Button>
           <Button sentiment="accented" onClick={handleClose}>
             Accept
           </Button>

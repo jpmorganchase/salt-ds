@@ -41,7 +41,9 @@ export const Warning = (): ReactElement => {
           access anyway?
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
+          <Button appearance="bordered" onClick={handleClose}>
+            Cancel
+          </Button>
           <Button sentiment="accented" onClick={handleClose}>
             Give access
           </Button>

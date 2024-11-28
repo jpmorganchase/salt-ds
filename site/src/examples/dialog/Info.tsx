@@ -39,7 +39,9 @@ export const Info = (): ReactElement => {
           A new version of this file is available with 26 updates.
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Close</Button>
+          <Button appearance="bordered" onClick={handleClose}>
+            Close
+          </Button>
           <Button sentiment="accented" onClick={handleClose}>
             See updates
           </Button>
