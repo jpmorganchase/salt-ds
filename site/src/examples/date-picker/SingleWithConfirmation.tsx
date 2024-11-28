@@ -1,4 +1,3 @@
-import type { DateValue } from "@internationalized/date";
 import {
   Divider,
   FlexItem,
@@ -7,58 +6,115 @@ import {
   FormFieldHelperText as FormHelperText,
   FormFieldLabel as FormLabel,
 } from "@salt-ds/core";
+import type { DateFrameworkType } from "@salt-ds/date-adapters";
 import {
+  type DateInputSingleDetails,
   DatePicker,
   DatePickerActions,
   DatePickerOverlay,
   DatePickerSingleInput,
   DatePickerSinglePanel,
+  DatePickerTrigger,
   type SingleDateSelection,
-  formatDate,
-  getCurrentLocale,
+  useLocalization,
 } from "@salt-ds/lab";
-import { type ReactElement, useCallback, useRef, useState } from "react";
-
-function formatSingleDate(
-  date: DateValue | null,
-  locale = getCurrentLocale(),
-  options?: Intl.DateTimeFormatOptions,
-) {
-  if (date) {
-    return formatDate(date, locale, options);
-  }
-  return date;
-}
+import {
+  type ReactElement,
+  type SyntheticEvent,
+  useCallback,
+  useRef,
+  useState,
+} from "react";
 
 export const SingleWithConfirmation = (): ReactElement => {
+  const { dateAdapter } = useLocalization();
   const defaultHelperText = "Date format DD MMM YYYY (e.g. 09 Jun 2024)";
   const errorHelperText = "Please enter a valid date in DD MMM YYYY format";
-  const [helperText, setHelperText] = useState(defaultHelperText);
   const applyButtonRef = useRef<HTMLButtonElement>(null);
+  const [open, setOpen] = useState<boolean>(false);
+  const [helperText, setHelperText] = useState<string>(defaultHelperText);
   const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
     undefined,
   );
-  const [selectedDate, setSelectedDate] = useState<SingleDateSelection | null>(
-    null,
-  );
-  const handleApply = useCallback(
-    (newSelectedDate: SingleDateSelection | null, error: string | false) => {
-      console.log(`Selected date: ${formatSingleDate(newSelectedDate)}`);
-      if (error) {
-        setHelperText(errorHelperText);
+
+  const [selectedDate, setSelectedDate] = useState<
+    SingleDateSelection<DateFrameworkType> | null | undefined
+  >(null);
+  const previousSelectedDate = useRef<typeof selectedDate>(selectedDate);
+
+  const savedState = useRef<{
+    validationStatus: typeof validationStatus;
+    helperText: typeof helperText;
+  }>({
+    validationStatus: undefined,
+    helperText: defaultHelperText,
+  });
+  const handleSelectionChange = useCallback(
+    (
+      event: SyntheticEvent,
+      date: SingleDateSelection<DateFrameworkType> | null,
+      details: DateInputSingleDetails | undefined,
+    ) => {
+      const { value, errors } = details || {};
+      console.log(
+        `Selected date: ${dateAdapter.isValid(date) ? dateAdapter.format(date, "DD MMM YYYY") : date}`,
+      );
+      if (errors?.length && value) {
+        setHelperText(`${errorHelperText} - ${errors[0].message}`);
+        setValidationStatus("error");
+        console.log(
+          `Error(s): ${errors
+            .map(({ type, message }) => `type=${type} message=${message}`)
+            .join(",")}`,
+        );
+        if (value) {
+          console.log(`Original Value: ${value}`);
+        }
       } else {
         setHelperText(defaultHelperText);
+        setValidationStatus(undefined);
       }
-      setValidationStatus(error ? "error" : undefined);
+      setSelectedDate(value?.trim().length === 0 ? null : date);
+      if (date) {
+        applyButtonRef?.current?.focus();
+      }
     },
-    [setSelectedDate, setHelperText],
+    [dateAdapter],
   );
-  const handleSelectedDateChange = useCallback(
-    (newSelectedDate: SingleDateSelection | null) => {
-      setSelectedDate(newSelectedDate);
-      applyButtonRef?.current?.focus();
+
+  const handleOpen = useCallback(
+    (opening: boolean) => {
+      if (opening) {
+        savedState.current = {
+          helperText,
+          validationStatus,
+        };
+      }
+      setOpen(opening);
     },
-    [applyButtonRef?.current, setSelectedDate],
+    [helperText, validationStatus],
+  );
+
+  const handleCancel = useCallback(() => {
+    setValidationStatus(savedState.current?.validationStatus);
+    setHelperText(savedState.current?.helperText);
+    setSelectedDate(previousSelectedDate.current);
+  }, []);
+
+  const handleApply = useCallback(
+    (
+      event: SyntheticEvent,
+      date: SingleDateSelection<DateFrameworkType> | null,
+    ) => {
+      console.log(
+        `Applied date: ${date ? dateAdapter.format(date, "DD MMM YYYY") : date}`,
+      );
+      setSelectedDate(date);
+      setHelperText(defaultHelperText);
+      setValidationStatus(undefined);
+      previousSelectedDate.current = date;
+    },
+    [dateAdapter],
   );
 
   return (
@@ -67,10 +123,14 @@ export const SingleWithConfirmation = (): ReactElement => {
       <DatePicker
         selectionVariant="single"
         onApply={handleApply}
-        onSelectedDateChange={handleSelectedDateChange}
+        onCancel={handleCancel}
+        onSelectionChange={handleSelectionChange}
+        onOpen={handleOpen}
         selectedDate={selectedDate}
       >
-        <DatePickerSingleInput />
+        <DatePickerTrigger>
+          <DatePickerSingleInput />
+        </DatePickerTrigger>
         <DatePickerOverlay>
           <FlexLayout gap={0} direction="column">
             <FlexItem>
@@ -81,12 +141,15 @@ export const SingleWithConfirmation = (): ReactElement => {
               <DatePickerActions
                 selectionVariant="single"
                 applyButtonRef={applyButtonRef}
+                ApplyButtonProps={{
+                  disabled: !!validationStatus,
+                }}
               />
             </FlexItem>
           </FlexLayout>
         </DatePickerOverlay>
       </DatePicker>
-      <FormHelperText>{helperText}</FormHelperText>
+      {!open ? <FormHelperText>{helperText}</FormHelperText> : null}
     </FormField>
   );
 };

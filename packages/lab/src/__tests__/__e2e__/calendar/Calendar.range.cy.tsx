@@ -1,284 +1,359 @@
 import {
-  type DateValue,
-  endOfMonth,
-  parseDate,
-  startOfMonth,
-  today,
-} from "@internationalized/date";
-import { formatDate } from "@salt-ds/lab";
-import * as calendarStories from "@stories/calendar/calendar.stories";
-import { composeStories } from "@storybook/react";
+  AdapterDateFns,
+  AdapterDayjs,
+  AdapterLuxon,
+  AdapterMoment,
+  type DateFrameworkType,
+  type SaltDateAdapter,
+} from "@salt-ds/date-adapters";
+import {
+  Calendar,
+  CalendarGrid,
+  CalendarNavigation,
+  CalendarWeekHeader,
+} from "@salt-ds/lab";
 
-const { Range } = composeStories(calendarStories);
+// Initialize adapters
+const adapterDateFns = new AdapterDateFns();
+const adapterDayjs = new AdapterDayjs();
+const adapterLuxon = new AdapterLuxon();
+const adapterMoment = new AdapterMoment();
+
+const adapters = [adapterDateFns, adapterDayjs, adapterLuxon, adapterMoment];
 
 describe("GIVEN a Calendar with range selection", () => {
-  const testDate = parseDate("2022-02-03");
-  const testTimeZone = "Europe/London";
-  const testLocale = "en-GB";
+  adapters.forEach((adapter: SaltDateAdapter<DateFrameworkType>) => {
+    describe(`Tests with ${adapter.lib}`, () => {
+      beforeEach(() => {
+        const today = new Date(2024, 4, 6);
+        cy.clock(today, ["Date"]);
+        cy.setDateAdapter(adapter);
+      });
 
-  const formatDay = (date: DateValue) => {
-    return formatDate(date, testLocale, {
-      day: "2-digit",
-      month: "long",
-      year: "numeric",
+      afterEach(() => {
+        cy.clock().then((clock) => clock.restore());
+      });
+
+      it("SHOULD move to start date selected if it is within visible month", () => {
+        const todayTestDate = adapter.today();
+        const startOfMonth = adapter.startOf(todayTestDate, "month");
+        const startDate = adapter.add(startOfMonth, { days: 1 });
+        const endDate = adapter.endOf(todayTestDate, "month");
+        cy.mount(
+          <Calendar
+            selectionVariant="range"
+            selectedDate={{
+              startDate,
+              endDate,
+            }}
+            defaultVisibleMonth={todayTestDate}
+          >
+            <CalendarNavigation />
+            <CalendarWeekHeader />
+            <CalendarGrid />
+          </Calendar>,
+        );
+        // Simulate focusing on the "Next Month" button
+        cy.findByRole("button", {
+          name: "Next Month",
+        }).focus();
+        // Simulate pressing the Tab key
+        cy.realPress("Tab");
+        // Verify that the focus moves to the start date within the visible month
+        cy.findByRole("button", {
+          name: adapter.format(startDate, "DD MMMM YYYY"),
+        }).should("be.focused");
+      });
+
+      it("SHOULD move to end date selected if it is within visible month and startDate is not", () => {
+        const todayTestDate = adapter.today();
+        const startOfMonth = adapter.startOf(todayTestDate, "month");
+        const startDate = adapter.subtract(startOfMonth, { months: 1 });
+        const endDate = adapter.endOf(todayTestDate, "month");
+        cy.mount(
+          <Calendar
+            selectionVariant="range"
+            selectedDate={{
+              startDate,
+              endDate,
+            }}
+            defaultVisibleMonth={todayTestDate}
+          >
+            <CalendarNavigation />
+            <CalendarWeekHeader />
+            <CalendarGrid />
+          </Calendar>,
+        );
+        // Simulate focusing on the "Next Month" button
+        cy.findByRole("button", {
+          name: "Next Month",
+        }).focus();
+        // Simulate pressing the Tab key
+        cy.realPress("Tab");
+        // Verify that the focus moves to the end date within the visible month
+        cy.findByRole("button", {
+          name: adapter.format(endDate, "DD MMMM YYYY"),
+        }).should("be.focused");
+      });
+
+      it("SHOULD move to today's date if selected range is not within the visible month", () => {
+        const todayTestDate = adapter.today();
+        const startOfMonth = adapter.startOf(todayTestDate, "month");
+        const startDate = adapter.subtract(startOfMonth, { months: 2 });
+        const endDate = adapter.subtract(todayTestDate, { months: 1 });
+        cy.mount(
+          <Calendar
+            selectionVariant="range"
+            selectedDate={{
+              startDate,
+              endDate,
+            }}
+            defaultVisibleMonth={todayTestDate}
+          >
+            <CalendarNavigation />
+            <CalendarWeekHeader />
+            <CalendarGrid />
+          </Calendar>,
+        );
+        // Simulate focusing on the "Next Month" button
+        cy.findByRole("button", {
+          name: "Next Month",
+        }).focus();
+        // Simulate pressing the Tab key
+        cy.realPress("Tab");
+        // Verify that the focus moves to today's date
+        cy.findByRole("button", {
+          name: adapter.format(todayTestDate, "DD MMMM YYYY"),
+        }).should("be.focused");
+      });
+
+      it("SHOULD move to today's date if there is not selected date", () => {
+        const todayTestDate = adapter.today();
+        cy.mount(
+          <Calendar
+            selectionVariant="range"
+            defaultVisibleMonth={todayTestDate}
+          >
+            <CalendarNavigation />
+            <CalendarWeekHeader />
+            <CalendarGrid />
+          </Calendar>,
+        );
+        // Simulate focusing on the "Next Month" button
+        cy.findByRole("button", {
+          name: "Next Month",
+        }).focus();
+        // Simulate pressing the Tab key
+        cy.realPress("Tab");
+        // Verify that the focus moves to today's date
+        cy.findByRole("button", {
+          name: adapter.format(todayTestDate, "DD MMMM YYYY"),
+        }).should("be.focused");
+      });
+
+      it("SHOULD move to today's date if there is an empty selected range", () => {
+        const todayTestDate = adapter.today();
+        cy.mount(
+          <Calendar
+            selectionVariant="range"
+            defaultVisibleMonth={todayTestDate}
+            selectedDate={{ startDate: undefined, endDate: undefined }}
+          >
+            <CalendarNavigation />
+            <CalendarWeekHeader />
+            <CalendarGrid />
+          </Calendar>,
+        );
+        // Simulate focusing on the "Next Month" button
+        cy.findByRole("button", {
+          name: "Next Month",
+        }).focus();
+        // Simulate pressing the Tab key
+        cy.realPress("Tab");
+        // Verify that the focus moves to today's date
+        cy.findByRole("button", {
+          name: adapter.format(todayTestDate, "DD MMMM YYYY"),
+        }).should("be.focused");
+      });
+
+      it("SHOULD move to start of the month if there is no selected date and today is not within visible month", () => {
+        const todayTestDate = adapter.today();
+        const startOfMonth = adapter.startOf(todayTestDate, "month");
+        const defaultVisibleMonth = adapter.add(startOfMonth, { months: 1 });
+        cy.mount(
+          <Calendar
+            selectionVariant="range"
+            defaultVisibleMonth={defaultVisibleMonth}
+          >
+            <CalendarNavigation />
+            <CalendarWeekHeader />
+            <CalendarGrid />
+          </Calendar>,
+        );
+        // Simulate focusing on the "Next Month" button
+        cy.findByRole("button", {
+          name: "Next Month",
+        }).focus();
+        // Simulate clicking the "Next Month" button
+        cy.findByRole("button", {
+          name: "Next Month",
+        }).realClick();
+        // Simulate pressing the Tab key
+        cy.realPress("Tab");
+        // Verify that the focus moves to the start of the month
+        cy.findByRole("button", {
+          name: adapter.format(
+            adapter.add(startOfMonth, { months: 2 }),
+            "DD MMMM YYYY",
+          ),
+        }).should("be.focused");
+      });
+
+      it("SHOULD move to start of the month if the full month is part of a selected range", () => {
+        const todayTestDate = adapter.today();
+        const startOfMonth = adapter.startOf(todayTestDate, "month");
+        const startDate = adapter.subtract(startOfMonth, { months: 2 });
+        const endDate = adapter.add(todayTestDate, { months: 2 });
+        cy.mount(
+          <Calendar
+            selectionVariant="range"
+            defaultSelectedDate={{ startDate, endDate }}
+            defaultVisibleMonth={startDate}
+          >
+            <CalendarNavigation />
+            <CalendarWeekHeader />
+            <CalendarGrid />
+          </Calendar>,
+        );
+        // Simulate focusing on the "Next Month" button
+        cy.findByRole("button", {
+          name: "Next Month",
+        }).focus();
+        // Simulate pressing the Tab key
+        cy.realPress("Tab");
+        // Verify that the focus moves to the start of the month
+        cy.findByRole("button", {
+          name: adapter.format(startDate, "DD MMMM YYYY"),
+        }).should("be.focused");
+      });
+
+      it("SHOULD allow a range to be selected", () => {
+        const todayTestDate = adapter.today();
+        const startOfMonth = adapter.startOf(todayTestDate, "month");
+        const startDate = adapter.subtract(startOfMonth, { months: 2 });
+        const endDate = adapter.add(startDate, { days: 2 });
+
+        cy.mount(
+          <Calendar selectionVariant="range" defaultVisibleMonth={startDate}>
+            <CalendarNavigation />
+            <CalendarWeekHeader />
+            <CalendarGrid />
+          </Calendar>,
+        );
+        // Simulate clicking on the start date button to select it
+        cy.findByRole("button", {
+          name: adapter.format(startDate, "DD MMMM YYYY"),
+        }).realClick();
+        // Verify that the start date button is selected
+        cy.findByRole("button", {
+          name: adapter.format(startDate, "DD MMMM YYYY"),
+        }).should("have.attr", "aria-pressed", "true");
+
+        // Simulate hovering over the end date button to select the range
+        cy.findByRole("button", {
+          name: adapter.format(endDate, "DD MMMM YYYY"),
+        }).realHover();
+        // Verify that the dates in the range are highlighted
+        cy.findByRole("button", {
+          name: adapter.format(
+            adapter.add(startDate, { days: 1 }),
+            "DD MMMM YYYY",
+          ),
+        }).should("have.class", "saltCalendarDay-hoveredSpan");
+        cy.findByRole("button", {
+          name: adapter.format(endDate, "DD MMMM YYYY"),
+        }).should("have.class", "saltCalendarDay-hoveredSpan");
+
+        // Simulate clicking on the end date button to select the range
+        cy.findByRole("button", {
+          name: adapter.format(endDate, "DD MMMM YYYY"),
+        }).realClick();
+        // Verify that the start date button is selected and has the correct class
+        cy.findByRole("button", {
+          name: adapter.format(startDate, "DD MMMM YYYY"),
+        })
+          .should("have.attr", "aria-pressed", "true")
+          .and("have.class", "saltCalendarDay-selectedStart");
+        // Verify that the dates in the range are selected and have the correct class
+        cy.findByRole("button", {
+          name: adapter.format(
+            adapter.add(startDate, { days: 1 }),
+            "DD MMMM YYYY",
+          ),
+        })
+          .should("have.attr", "aria-pressed", "true")
+          .and("have.class", "saltCalendarDay-selectedSpan");
+        cy.findByRole("button", {
+          name: adapter.format(endDate, "DD MMMM YYYY"),
+        })
+          .should("have.attr", "aria-pressed", "true")
+          .and("have.class", "saltCalendarDay-selectedEnd");
+
+        // Simulate clicking on a date outside the range to select a new range
+        const newStartDate = adapter.add(startDate, { weeks: 1 });
+        cy.findByRole("button", {
+          name: adapter.format(newStartDate, "DD MMMM YYYY"),
+        }).realClick();
+        // Verify that the new date is selected
+        cy.findByRole("button", {
+          name: adapter.format(newStartDate, "DD MMMM YYYY"),
+        }).should("have.attr", "aria-pressed", "true");
+        // Verify that only one date is selected
+        cy.findAllByRole("button", {
+          pressed: true,
+        }).should("have.length", 1);
+
+        // Simulate clicking on the start date button to select it again
+        cy.findByRole("button", {
+          name: adapter.format(startDate, "DD MMMM YYYY"),
+        }).realClick();
+        // Verify that the start date button is selected
+        cy.findByRole("button", {
+          name: adapter.format(startDate, "DD MMMM YYYY"),
+        }).should("have.attr", "aria-pressed", "true");
+        // Verify that only one date is selected
+        cy.findAllByRole("button", {
+          pressed: true,
+        }).should("have.length", 1);
+
+        // Simulate pressing the ArrowRight key to move the focus
+        cy.realPress("ArrowRight");
+        cy.realPress("ArrowRight");
+        // Verify that the hovered span class is removed
+        cy.get(".saltCalendarDay-hoveredSpan").should("not.exist");
+        // Simulate pressing the Enter key to select the range
+        cy.realPress("Enter");
+        // Verify that the start date button is selected and has the correct class
+        cy.findByRole("button", {
+          name: adapter.format(startDate, "DD MMMM YYYY"),
+        })
+          .should("have.attr", "aria-pressed", "true")
+          .and("have.class", "saltCalendarDay-selectedStart");
+        // Verify that the dates in the range are selected and have the correct class
+        cy.findByRole("button", {
+          name: adapter.format(
+            adapter.add(startDate, { days: 1 }),
+            "DD MMMM YYYY",
+          ),
+        })
+          .should("have.attr", "aria-pressed", "true")
+          .and("have.class", "saltCalendarDay-selectedSpan");
+        cy.findByRole("button", {
+          name: adapter.format(endDate, "DD MMMM YYYY"),
+        })
+          .should("have.attr", "aria-pressed", "true")
+          .and("have.class", "saltCalendarDay-selectedEnd");
+      });
     });
-  };
-
-  it("SHOULD move to start date selected if it is within visible month", () => {
-    const todayTestDate = today(testTimeZone);
-    cy.mount(
-      <Range
-        selectedDate={{
-          startDate: startOfMonth(todayTestDate).add({ days: 1 }),
-          endDate: endOfMonth(todayTestDate),
-        }}
-        defaultVisibleMonth={todayTestDate}
-        locale={testLocale}
-      />,
-    );
-    // Simulate focusing on the "Next Month" button
-    cy.findByRole("button", {
-      name: "Next Month",
-    }).focus();
-    // Simulate pressing the Tab key
-    cy.realPress("Tab");
-    // Verify that the focus moves to the start date within the visible month
-    cy.findByRole("button", {
-      name: formatDay(startOfMonth(todayTestDate).add({ days: 1 })),
-    }).should("be.focused");
-  });
-
-  it("SHOULD move to end date selected if it is within visible month and startDate is not", () => {
-    const todayTestDate = today(testTimeZone);
-    cy.mount(
-      <Range
-        selectedDate={{
-          startDate: startOfMonth(todayTestDate).subtract({ months: 1 }),
-          endDate: endOfMonth(todayTestDate),
-        }}
-        defaultVisibleMonth={todayTestDate}
-        locale={testLocale}
-      />,
-    );
-    // Simulate focusing on the "Next Month" button
-    cy.findByRole("button", {
-      name: "Next Month",
-    }).focus();
-    // Simulate pressing the Tab key
-    cy.realPress("Tab");
-    // Verify that the focus moves to the end date within the visible month
-    cy.findByRole("button", {
-      name: formatDay(endOfMonth(todayTestDate)),
-    }).should("be.focused");
-  });
-
-  it("SHOULD move to today's date if selected range is not within the visible month", () => {
-    const todayTestDate = today(testTimeZone);
-    cy.mount(
-      <Range
-        selectedDate={{
-          startDate: todayTestDate.subtract({ months: 2 }),
-          endDate: todayTestDate.subtract({
-            months: 1,
-          }),
-        }}
-        defaultVisibleMonth={todayTestDate}
-        locale={testLocale}
-      />,
-    );
-    // Simulate focusing on the "Next Month" button
-    cy.findByRole("button", {
-      name: "Next Month",
-    }).focus();
-    // Simulate pressing the Tab key
-    cy.realPress("Tab");
-    // Verify that the focus moves to today's date
-    cy.findByRole("button", {
-      name: formatDay(todayTestDate),
-    }).should("be.focused");
-  });
-
-  it("SHOULD move to today's date if there is not selected date", () => {
-    const todayTestDate = today(testTimeZone);
-    cy.mount(
-      <Range
-        defaultVisibleMonth={todayTestDate}
-        defaultSelectedDate={undefined}
-        locale={testLocale}
-      />,
-    );
-    // Simulate focusing on the "Next Month" button
-    cy.findByRole("button", {
-      name: "Next Month",
-    }).focus();
-    // Simulate pressing the Tab key
-    cy.realPress("Tab");
-    // Verify that the focus moves to today's date
-    cy.findByRole("button", {
-      name: formatDay(todayTestDate),
-    }).should("be.focused");
-  });
-
-  it("SHOULD move to today's date if there is an empty selected range", () => {
-    const todayTestDate = today(testTimeZone);
-    cy.mount(
-      <Range
-        defaultVisibleMonth={todayTestDate}
-        selectedDate={{ startDate: undefined, endDate: undefined }}
-        locale={testLocale}
-      />,
-    );
-    // Simulate focusing on the "Next Month" button
-    cy.findByRole("button", {
-      name: "Next Month",
-    }).focus();
-    // Simulate pressing the Tab key
-    cy.realPress("Tab");
-    // Verify that the focus moves to today's date
-    cy.findByRole("button", {
-      name: formatDay(todayTestDate),
-    }).should("be.focused");
-  });
-
-  it("SHOULD move to start of the month if there is no selected date and today is not within visible month", () => {
-    const todayTestDate = today(testTimeZone);
-    cy.mount(
-      <Range
-        defaultVisibleMonth={todayTestDate.add({ months: 1 })}
-        locale={testLocale}
-      />,
-    );
-    // Simulate focusing on the "Next Month" button
-    cy.findByRole("button", {
-      name: "Next Month",
-    }).focus();
-    // Simulate clicking the "Next Month" button
-    cy.findByRole("button", {
-      name: "Next Month",
-    }).realClick();
-    // Simulate pressing the Tab key
-    cy.realPress("Tab");
-    // Verify that the focus moves to the start of the month
-    cy.findByRole("button", {
-      name: formatDay(startOfMonth(todayTestDate).add({ months: 2 })),
-    }).should("be.focused");
-  });
-
-  it("SHOULD move to start of the month if the full month is part of a selected range", () => {
-    cy.mount(
-      <Range
-        selectedDate={{
-          startDate: testDate.subtract({ months: 2 }),
-          endDate: testDate.add({ months: 2 }),
-        }}
-        defaultVisibleMonth={testDate}
-        locale={testLocale}
-      />,
-    );
-    // Simulate focusing on the "Next Month" button
-    cy.findByRole("button", {
-      name: "Next Month",
-    }).focus();
-    // Simulate pressing the Tab key
-    cy.realPress("Tab");
-    // Verify that the focus moves to the start of the month
-    cy.findByRole("button", {
-      name: formatDay(startOfMonth(testDate)),
-    }).should("be.focused");
-  });
-
-  it("SHOULD allow a range to be selected", () => {
-    cy.mount(<Range defaultVisibleMonth={testDate} locale={testLocale} />);
-    // Simulate clicking on the start date button to select it
-    cy.findByRole("button", { name: formatDay(testDate) }).realClick();
-    // Verify that the start date button is selected
-    cy.findByRole("button", {
-      name: formatDay(testDate),
-    }).should("have.attr", "aria-pressed", "true");
-
-    // Simulate hovering over the end date button to select the range
-    cy.findByRole("button", {
-      name: formatDay(testDate.add({ days: 2 })),
-    }).realHover();
-    // Verify that the dates in the range are highlighted
-    cy.findByRole("button", {
-      name: formatDay(testDate.add({ days: 1 })),
-    }).should("have.class", "saltCalendarDay-hoveredSpan");
-    cy.findByRole("button", {
-      name: formatDay(testDate.add({ days: 2 })),
-    }).should("have.class", "saltCalendarDay-hoveredSpan");
-
-    // Simulate clicking on the end date button to select the range
-    cy.findByRole("button", {
-      name: formatDay(testDate.add({ days: 2 })),
-    }).realClick();
-    // Verify that the start date button is selected and has the correct class
-    cy.findByRole("button", {
-      name: formatDay(testDate),
-    })
-      .should("have.attr", "aria-pressed", "true")
-      .and("have.class", "saltCalendarDay-selectedStart");
-    // Verify that the dates in the range are selected and have the correct class
-    cy.findByRole("button", {
-      name: formatDay(testDate.add({ days: 1 })),
-    })
-      .should("have.attr", "aria-pressed", "true")
-      .and("have.class", "saltCalendarDay-selectedSpan");
-    cy.findByRole("button", {
-      name: formatDay(testDate.add({ days: 2 })),
-    })
-      .should("have.attr", "aria-pressed", "true")
-      .and("have.class", "saltCalendarDay-selectedEnd");
-
-    // Simulate clicking on a date outside the range to select a new range
-    cy.findByRole("button", {
-      name: formatDay(testDate.add({ weeks: 1 })),
-    }).realClick();
-    // Verify that the new date is selected
-    cy.findByRole("button", {
-      name: formatDay(testDate.add({ weeks: 1 })),
-    }).should("have.attr", "aria-pressed", "true");
-    // Verify that only one date is selected
-    cy.findAllByRole("button", {
-      pressed: true,
-    }).should("have.length", 1);
-
-    // Simulate clicking on the start date button to select it again
-    cy.findByRole("button", {
-      name: formatDay(testDate),
-    }).realClick();
-    // Verify that the start date button is selected
-    cy.findByRole("button", {
-      name: formatDay(testDate),
-    }).should("have.attr", "aria-pressed", "true");
-    // Verify that only one date is selected
-    cy.findAllByRole("button", {
-      pressed: true,
-    }).should("have.length", 1);
-
-    // Simulate pressing the ArrowRight key to move the focus
-    cy.realPress("ArrowRight");
-    cy.realPress("ArrowRight");
-    // Verify that the hovered span class is removed
-    cy.get(".saltCalendarDay-hoveredSpan").should("not.exist");
-    // Simulate pressing the Enter key to select the range
-    cy.realPress("Enter");
-    // Verify that the start date button is selected and has the correct class
-    cy.findByRole("button", {
-      name: formatDay(testDate),
-    })
-      .should("have.attr", "aria-pressed", "true")
-      .and("have.class", "saltCalendarDay-selectedStart");
-    // Verify that the dates in the range are selected and have the correct class
-    cy.findByRole("button", {
-      name: formatDay(testDate.add({ days: 1 })),
-    })
-      .should("have.attr", "aria-pressed", "true")
-      .and("have.class", "saltCalendarDay-selectedSpan");
-    cy.findByRole("button", {
-      name: formatDay(testDate.add({ days: 2 })),
-    })
-      .should("have.attr", "aria-pressed", "true")
-      .and("have.class", "saltCalendarDay-selectedEnd");
   });
 });

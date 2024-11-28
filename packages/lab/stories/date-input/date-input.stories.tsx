@@ -1,18 +1,13 @@
-import {
-  type DateValue,
-  getLocalTimeZone,
-  today,
-} from "@internationalized/date";
+import type { DateFrameworkType } from "@salt-ds/date-adapters";
 import {
   DateInputRange,
-  type DateInputRangeError,
+  type DateInputRangeDetails,
   type DateInputRangeProps,
   DateInputSingle,
-  type DateInputSingleError,
+  type DateInputSingleDetails,
   type DateInputSingleProps,
   type DateRangeSelection,
-  formatDate,
-  getCurrentLocale,
+  useLocalization,
 } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react";
 import { fn } from "@storybook/test";
@@ -23,29 +18,32 @@ export default {
   component: DateInputSingle,
 } as Meta<typeof DateInputSingle>;
 
-function formatDateRange(
-  dateRange: DateRangeSelection | null,
-  locale = getCurrentLocale(),
-): string {
-  const { startDate, endDate } = dateRange || {};
-  const formattedStartDate = startDate
-    ? formatDate(startDate, locale)
-    : startDate;
-  const formattedEndDate = endDate ? formatDate(endDate, locale) : endDate;
-  return `Start date: ${formattedStartDate}, End date: ${formattedEndDate}`;
-}
-
-const DateInputSingleTemplate: StoryFn<DateInputSingleProps> = (args) => {
-  const handleDateChange = (
+const DateInputSingleTemplate: StoryFn<
+  DateInputSingleProps<DateFrameworkType>
+> = (args) => {
+  const { dateAdapter } = useLocalization();
+  function handleDateChange<TDate extends DateFrameworkType>(
     event: SyntheticEvent,
-    newSelectedDate: DateValue | null,
-    error: DateInputSingleError,
-  ) => {
+    date: TDate | null,
+    details: DateInputSingleDetails,
+  ) {
     console.log(
-      `Selected date: ${newSelectedDate ? formatDate(newSelectedDate) : newSelectedDate}`,
+      `Selected date: ${dateAdapter.isValid(date) ? dateAdapter.format(date, "DD MMM YYYY") : date}`,
     );
-    args?.onDateChange?.(event, newSelectedDate, error);
-  };
+    const { value, errors } = details;
+    if (errors?.length && value) {
+      console.log(
+        `Error(s): ${errors
+          .map(({ type, message }) => `type=${type} message=${message}`)
+          .join(",")}`,
+      );
+      if (value) {
+        console.log(`Original Value: ${value}`);
+      }
+    }
+    args?.onDateChange?.(event, date, details);
+  }
+
   return (
     <div style={{ width: "250px" }}>
       <DateInputSingle {...args} onDateChange={handleDateChange} />
@@ -53,15 +51,44 @@ const DateInputSingleTemplate: StoryFn<DateInputSingleProps> = (args) => {
   );
 };
 
-const DateInputRangeTemplate: StoryFn<DateInputRangeProps> = (args) => {
-  const handleDateChange = (
+const DateInputRangeTemplate: StoryFn<
+  DateInputRangeProps<DateFrameworkType>
+> = (args) => {
+  const { dateAdapter } = useLocalization();
+  function handleDateChange<TDate extends DateFrameworkType>(
     event: SyntheticEvent,
-    newSelectedDate: DateRangeSelection | null,
-    error: DateInputRangeError,
-  ) => {
-    console.log(`Selected date range: ${formatDateRange(newSelectedDate)}`);
-    args?.onDateChange?.(event, newSelectedDate, error);
-  };
+    date: DateRangeSelection<Date> | null,
+    details: DateInputRangeDetails,
+  ) {
+    const { startDate, endDate } = date || {};
+    const {
+      startDate: {
+        value: startDateOriginalValue,
+        errors: startDateErrors,
+      } = {},
+      endDate: { value: endDateOriginalValue, errors: endDateErrors } = {},
+    } = details;
+    console.log(
+      `StartDate: ${dateAdapter.isValid(startDate) ? dateAdapter.format(startDate, "DD MMM YYYY") : startDate}, EndDate: ${dateAdapter.isValid(endDate) ? dateAdapter.format(endDate, "DD MMM YYYY") : endDate}`,
+    );
+    if (startDateErrors?.length) {
+      console.log(
+        `StartDate Error(s): ${startDateErrors.map(({ type, message }) => `type: ${type} message: ${message}`).join(",")}`,
+      );
+      if (startDateOriginalValue) {
+        console.log(`StartDate Original Value: ${startDateOriginalValue}`);
+      }
+    }
+    if (endDateErrors?.length) {
+      console.log(
+        `EndDate Error(s): ${endDateErrors.map(({ type, message }) => `type: ${type} message: ${message}`).join(",")}`,
+      );
+      if (endDateOriginalValue) {
+        console.log(`EndDate Original Value: ${endDateOriginalValue}`);
+      }
+    }
+    args?.onDateChange?.(event, date, details);
+  }
   return (
     <div style={{ width: "250px" }}>
       <DateInputRange {...args} onDateChange={handleDateChange} />
@@ -71,33 +98,23 @@ const DateInputRangeTemplate: StoryFn<DateInputRangeProps> = (args) => {
 
 export const Single = DateInputSingleTemplate.bind({});
 Single.args = {
-  defaultDate: today(getLocalTimeZone()),
   onDateValueChange: fn(),
 };
 
 export const Range = DateInputRangeTemplate.bind({});
 Range.args = {
-  defaultDate: {
-    startDate: today(getLocalTimeZone()),
-    endDate: today(getLocalTimeZone()).add({ days: 7 }),
-  },
   onDateValueChange: fn(),
 };
 
 export const SingleBordered = DateInputSingleTemplate.bind({});
 SingleBordered.args = {
   bordered: true,
-  defaultDate: today(getLocalTimeZone()),
   onDateValueChange: fn(),
 };
 
 export const RangeBordered = DateInputRangeTemplate.bind({});
 RangeBordered.args = {
   bordered: true,
-  defaultDate: {
-    startDate: today(getLocalTimeZone()),
-    endDate: today(getLocalTimeZone()).add({ days: 7 }),
-  },
   onDateValueChange: fn(),
 };
 

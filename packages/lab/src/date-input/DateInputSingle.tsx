@@ -1,9 +1,4 @@
 import {
-  type DateValue,
-  type TimeFields,
-  getLocalTimeZone,
-} from "@internationalized/date";
-import {
   StatusAdornment,
   makePrefixer,
   useControlled,
@@ -11,6 +6,12 @@ import {
   useFormFieldProps,
   useId,
 } from "@salt-ds/core";
+import type {
+  DateDetail,
+  DateFrameworkType,
+  ParserResult,
+  TimeFields,
+} from "@salt-ds/date-adapters";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
@@ -22,54 +23,29 @@ import {
   type KeyboardEventHandler,
   type MouseEventHandler,
   type ReactNode,
-  type RefObject,
+  type Ref,
   type SyntheticEvent,
   forwardRef,
-  useCallback,
   useEffect,
   useRef,
   useState,
 } from "react";
-import {
-  type SingleDateSelection,
-  formatDate as defaultFormatDate,
-  getCurrentLocale,
-} from "../calendar";
+import type { SingleDateSelection } from "../calendar";
+import { useLocalization } from "../localization-provider";
 import dateInputCss from "./DateInput.css";
-import { extractTimeFieldsFromDate, parseCalendarDate } from "./utils";
 
 const withBaseName = makePrefixer("saltDateInput");
 
 /**
- * Date error produced by DateInputSingle parser.
+ * Details of parsing the date
  */
-export type DateInputSingleParserError = string | false;
-
-/**
- * Date error produced by DateInputSingle parser.
- */
-export type DateInputSingleError = DateInputSingleParserError;
-
-/**
- * Return value of DateInputSingle parser.
- * @template T
- */
-export interface DateInputSingleParserResult<T = DateValue | null> {
-  /**
-   * The parsed date value.
-   */
-  date: T;
-  /**
-   * The error encountered during parsing, if any.
-   */
-  error: DateInputSingleParserError;
-}
+export type DateInputSingleDetails = DateDetail;
 
 /**
  * Props for the DateInputSingle component.
  * @template T
  */
-export interface DateInputSingleProps<T = SingleDateSelection>
+export interface DateInputSingleProps<TDate extends DateFrameworkType>
   extends Omit<ComponentPropsWithoutRef<"div">, "defaultValue">,
     Pick<
       ComponentPropsWithoutRef<"input">,
@@ -102,6 +78,10 @@ export interface DateInputSingleProps<T = SingleDateSelection>
    */
   readOnly?: boolean;
   /**
+   * Start adornment component
+   */
+  startAdornment?: ReactNode;
+  /**
    * Validation status.
    */
   validationStatus?: "error" | "warning" | "success";
@@ -110,13 +90,24 @@ export interface DateInputSingleProps<T = SingleDateSelection>
    */
   variant?: "primary" | "secondary";
   /**
-   * Function to format the input value.
+   * Format string for date.
    */
-  format?: (date: DateValue | null) => string;
+  format?: string;
   /**
    * Reference for the input.
    */
-  inputRef?: RefObject<HTMLInputElement>;
+  inputRef?: Ref<HTMLInputElement>;
+  /**
+   * Locale for date formatting and parsing
+   */
+  locale?: any;
+  /**
+   * Parser callback, if not using the adapter's parser
+   * @param value - date string to parse
+   * @param format - format required
+   * @param locale - locale required
+   */
+  parse?: (value: string, format: string, locale?: any) => ParserResult<TDate>;
   /**
    * Input value. Use when the input value is controlled.
    */
@@ -128,45 +119,38 @@ export interface DateInputSingleProps<T = SingleDateSelection>
   /**
    * The date value. Use when the component is controlled.
    */
-  date?: T | null;
+  date?: TDate | null;
   /**
    * The initial selected date value. Use when the component is uncontrolled.
    */
-  defaultDate?: T | null;
+  defaultDate?: TDate | null;
   /**
    * Callback fired when the selected date changes.
    * @param event - The synthetic event.
-   * @param date - The new date value.
-   * @param error - The date input single error.
+   * @param date - the selected date, invalid date if not a valid date or undefined (uncontrolled) or null (controlled) if not defined
+   * @param details - The details of date selection, either a valid date or error
    */
   onDateChange?: (
     event: SyntheticEvent,
-    date: T | null,
-    error: DateInputSingleError,
+    date: SingleDateSelection<TDate> | null | undefined,
+    details: DateInputSingleDetails,
   ) => void;
   /**
-   * Function to parse date string to valid `DateValue` or null, if invalid or empty.
-   * @param inputDate - The input date string.
-   * @returns The result of the date input single parser.
-   */
-  parse?: (inputDate: string) => DateInputSingleParserResult;
-  /**
    * Called when input value changes, either due to user interaction or programmatic formatting of valid dates.
+   * @param event - The synthetic event or null if a programmatic change.
    * @param newValue - The new date input value.
-   * @param isFormatted - Whether the value is formatted.
    */
-  onDateValueChange?: (newValue: string, isFormatted: boolean) => void;
-  /**
-   * Locale of the entered date.
-   */
-  locale?: string;
-  /**
-   * Timezone of the entered date.
-   */
-  timeZone?: string;
+  onDateValueChange?: (event: SyntheticEvent | null, newValue: string) => void;
 }
-export const DateInputSingle = forwardRef<HTMLDivElement, DateInputSingleProps>(
-  function DateInput(props, ref) {
+
+export const DateInputSingle = forwardRef<
+  HTMLDivElement,
+  DateInputSingleProps<any>
+>(
+  <TDate extends DateFrameworkType>(
+    props: DateInputSingleProps<TDate>,
+    ref: React.Ref<HTMLDivElement>,
+  ) => {
     const {
       bordered = false,
       className,
@@ -181,21 +165,20 @@ export const DateInputSingle = forwardRef<HTMLDivElement, DateInputSingleProps>(
       onClick,
       emptyReadOnlyMarker = "—",
       endAdornment,
-      format: formatProp,
+      format = "DD MMM YYYY",
       inputProps = {},
       inputRef: inputRefProp = null,
-      parse = parseCalendarDate,
+      locale,
+      parse: parseProp,
       placeholder = "dd mmm yyyy",
       readOnly: readOnlyProp,
+      startAdornment,
       validationStatus: validationStatusProp,
       variant = "primary",
       onDateValueChange,
-      locale = getCurrentLocale(),
-      timeZone = getLocalTimeZone(),
       ...rest
     } = props;
     const wrapperRef = useRef(null);
-    const lastError = useRef<string | false>(false);
     const handleWrapperRef = useForkRef<HTMLDivElement>(ref, wrapperRef);
     const innerInputRef = useRef<HTMLInputElement>(null);
     const handleInputRef = useForkRef<HTMLInputElement>(
@@ -204,6 +187,8 @@ export const DateInputSingle = forwardRef<HTMLDivElement, DateInputSingleProps>(
     );
 
     const inputId = useId();
+
+    const { dateAdapter } = useLocalization<TDate>();
 
     const targetWindow = useWindow();
     useComponentCssInjection({
@@ -224,27 +209,24 @@ export const DateInputSingle = forwardRef<HTMLDivElement, DateInputSingleProps>(
       name: "DateInputSingle",
       state: "dateValue",
     });
-    const preservedTime = useRef<TimeFields | undefined>(
-      extractTimeFieldsFromDate(date || null),
-    );
-
-    const format = useCallback(
-      (date: DateValue | null) => {
-        return formatProp
-          ? formatProp(date)
-          : defaultFormatDate(date, locale, { timeZone });
-      },
-      [formatProp, locale, timeZone],
-    );
+    const lastAppliedValue = useRef<string>(dateValue);
+    const preservedTime = useRef<TimeFields | null>(null);
+    preservedTime.current = dateAdapter.isValid(date)
+      ? dateAdapter.getTime(date)
+      : null;
 
     // Update date string value when selected date changes
     useEffect(() => {
-      const formattedDate = format(date || null);
-      if (formattedDate) {
-        setDateValue(formattedDate);
-        onDateValueChange?.(formattedDate, true);
+      if (date && dateAdapter.isValid(date)) {
+        const formattedValue = dateAdapter.format(date, format, locale);
+        const hasValueChanged = formattedValue !== dateValue;
+        if (hasValueChanged) {
+          lastAppliedValue.current = formattedValue;
+          setDateValue(formattedValue);
+          onDateValueChange?.(null, formattedValue);
+        }
       }
-    }, [date, format, locale, timeZone]);
+    }, [date, dateAdapter.format, format, locale]);
 
     const [focused, setFocused] = useState(false);
 
@@ -280,27 +262,29 @@ export const DateInputSingle = forwardRef<HTMLDivElement, DateInputSingleProps>(
       : dateInputPropsRequired;
 
     const apply = (event: SyntheticEvent) => {
-      const { date: parsedDate, error } = parse(dateValue ?? "");
-      let newDate = parsedDate;
-      if (newDate) {
-        const formattedDate = format(newDate);
-        if (formattedDate) {
-          setDateValue(formattedDate);
-          onDateValueChange?.(formattedDate, true);
+      const parse = parseProp ?? dateAdapter.parse.bind(dateAdapter);
+      const parseResult = dateValue?.length
+        ? parse(dateValue, format, locale)
+        : { date: undefined };
+      let { date: parsedDate, ...parseDetails } = parseResult;
+      let formattedValue = "";
+      if (dateAdapter.isValid(parsedDate)) {
+        formattedValue = dateAdapter.format(parsedDate, format, locale);
+        const hasValueChanged = formattedValue !== dateValue;
+        if (hasValueChanged) {
+          setDateValue(formattedValue);
+          onDateValueChange?.(event, formattedValue);
         }
       }
-      const hasDateChanged =
-        newDate && date ? newDate.compare(date) !== 0 : newDate !== date;
-      if (hasDateChanged) {
-        setDate(newDate);
-        if (newDate && preservedTime.current) {
-          newDate = newDate.set(preservedTime.current);
+
+      setDate(parsedDate);
+      if (lastAppliedValue.current !== dateValue) {
+        if (dateAdapter.isValid(parsedDate) && preservedTime.current) {
+          parsedDate = dateAdapter.set(parsedDate, preservedTime.current);
         }
+        onDateChange?.(event, parsedDate, parseDetails);
       }
-      if (hasDateChanged || lastError.current !== error) {
-        onDateChange?.(event, newDate, error);
-      }
-      lastError.current = error;
+      lastAppliedValue.current = dateValue;
     };
 
     const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
@@ -308,7 +292,7 @@ export const DateInputSingle = forwardRef<HTMLDivElement, DateInputSingleProps>(
       setDateValue(newDateValue);
       inputPropsOnChange?.(event);
       onChange?.(event);
-      onDateValueChange?.(newDateValue, false);
+      onDateValueChange?.(event, newDateValue);
     };
 
     const handleFocus: FocusEventHandler<HTMLInputElement> = (event) => {
@@ -353,6 +337,11 @@ export const DateInputSingle = forwardRef<HTMLDivElement, DateInputSingleProps>(
         onClick={handleClick}
         {...rest}
       >
+        {startAdornment && (
+          <div className={withBaseName("startAdornmentContainer")}>
+            {startAdornment}
+          </div>
+        )}
         <input
           autoComplete="off"
           aria-describedby={clsx(formFieldDescribedBy, dateInputDescribedBy)}

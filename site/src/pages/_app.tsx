@@ -25,6 +25,8 @@ import {
   SaltProviderNext,
   useCurrentBreakpoint,
 } from "@salt-ds/core";
+import { AdapterDateFns } from "@salt-ds/date-adapters";
+import { LocalizationProvider } from "@salt-ds/lab";
 import clsx from "clsx";
 import { SessionProvider } from "next-auth/react";
 import type { AppProps } from "next/app";
@@ -131,7 +133,9 @@ interface ThemeProviderProps {
 /** This has to be within a SaltProvider to get correct breakpoint, not the same level as SaltProvider */
 function DensitySetter({
   setDensity,
-}: { setDensity: Dispatch<SetStateAction<Density>> }) {
+}: {
+  setDensity: Dispatch<SetStateAction<Density>>;
+}) {
   const viewport = useCurrentBreakpoint();
 
   const densityMemo = useMemo(
@@ -202,24 +206,26 @@ export default function MyApp({
     <SessionProvider>
       <StoreProvider value={createStore()}>
         <Metadata Component={Head} />
-        <ThemeProvider
-          themeClassName={clsx(
-            themeClassName,
-            ptMono.variable,
-            openSans.variable,
-            amplitude.variable,
-          )}
-        >
-          <BaseUrlProvider>
-            <ImageProvider value={Image}>
-              <LinkProvider value={Link}>
-                <LayoutProvider layoutComponents={layoutComponents}>
-                  <Component components={components} {...pageProps} />
-                </LayoutProvider>
-              </LinkProvider>
-            </ImageProvider>
-          </BaseUrlProvider>
-        </ThemeProvider>
+        <LocalizationProvider DateAdapter={AdapterDateFns}>
+          <ThemeProvider
+            themeClassName={clsx(
+              themeClassName,
+              ptMono.variable,
+              openSans.variable,
+              amplitude.variable,
+            )}
+          >
+            <BaseUrlProvider>
+              <ImageProvider value={Image}>
+                <LinkProvider value={Link}>
+                  <LayoutProvider layoutComponents={layoutComponents}>
+                    <Component components={components} {...pageProps} />
+                  </LayoutProvider>
+                </LinkProvider>
+              </ImageProvider>
+            </BaseUrlProvider>
+          </ThemeProvider>
+        </LocalizationProvider>
       </StoreProvider>
     </SessionProvider>
   );

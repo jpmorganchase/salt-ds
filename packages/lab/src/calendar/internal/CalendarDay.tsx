@@ -1,10 +1,10 @@
-import type { DateValue } from "@internationalized/date";
 import {
   Tooltip,
   type TooltipProps,
   makePrefixer,
   useForkRef,
 } from "@salt-ds/core";
+import type { DateFrameworkType } from "@salt-ds/date-adapters";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
@@ -14,35 +14,39 @@ import {
   forwardRef,
   useRef,
 } from "react";
+import { useLocalization } from "../../localization-provider";
 import { type DayStatus, useCalendarDay } from "../useCalendarDay";
 import calendarDayCss from "./CalendarDay.css";
-import { formatDate as defaultFormatDate } from "./utils";
 
 export type DateFormatter = (day: Date) => string | undefined;
 
-export interface CalendarDayProps
+export interface CalendarDayProps<TDate>
   extends Omit<ComponentPropsWithRef<"button">, "children"> {
-  day: DateValue;
-  formatDate?: typeof defaultFormatDate;
-  renderDayContents?: (date: DateValue, status: DayStatus) => ReactElement;
+  day: TDate;
+  format?: string;
+  renderDayContents?: (date: TDate, status: DayStatus) => ReactElement;
   status?: DayStatus;
-  month: DateValue;
+  month: TDate;
   TooltipProps?: Partial<TooltipProps>;
 }
 
 const withBaseName = makePrefixer("saltCalendarDay");
 
-export const CalendarDay = forwardRef<HTMLButtonElement, CalendarDayProps>(
-  function CalendarDay(props, ref) {
+export const CalendarDay = forwardRef<HTMLButtonElement, CalendarDayProps<any>>(
+  function CalendarDay<TDate extends DateFrameworkType>(
+    props: CalendarDayProps<TDate>,
+    ref: React.Ref<HTMLButtonElement>,
+  ) {
     const {
       className,
       day,
       renderDayContents,
       month,
       TooltipProps,
-      formatDate: formatDateProp = defaultFormatDate,
+      format = "DD",
       ...rest
     } = props;
+    const { dateAdapter } = useLocalization<TDate>();
     const targetWindow = useWindow();
     useComponentCssInjection({
       testId: "salt-calendar-day",
@@ -52,7 +56,7 @@ export const CalendarDay = forwardRef<HTMLButtonElement, CalendarDayProps>(
 
     const dayRef = useRef<HTMLButtonElement>(null);
     const buttonRef = useForkRef(ref, dayRef);
-    const { status, dayProps, unselectableReason, highlightedReason, locale } =
+    const { status, dayProps, unselectableReason, highlightedReason } =
       useCalendarDay(
         {
           date: day,
@@ -65,11 +69,7 @@ export const CalendarDay = forwardRef<HTMLButtonElement, CalendarDayProps>(
 
     const buttonElement = (
       <button
-        aria-label={formatDateProp(day, locale, {
-          day: "2-digit",
-          month: "long",
-          year: "numeric",
-        })}
+        aria-label={dateAdapter.format(day, "DD MMMM YYYY")}
         disabled={disabled}
         type="button"
         {...dayProps}
@@ -95,7 +95,7 @@ export const CalendarDay = forwardRef<HTMLButtonElement, CalendarDayProps>(
         >
           {renderDayContents
             ? renderDayContents(day, status)
-            : formatDateProp(day, locale, { day: "numeric" })}
+            : dateAdapter.format(day, format)}
         </span>
       </button>
     );

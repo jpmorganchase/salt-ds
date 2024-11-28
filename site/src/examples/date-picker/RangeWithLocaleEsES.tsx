@@ -3,79 +3,101 @@ import {
   FormFieldHelperText as FormHelperText,
   FormFieldLabel as FormLabel,
 } from "@salt-ds/core";
+import type { DateFrameworkType } from "@salt-ds/date-adapters";
 import {
+  type DateInputRangeDetails,
   DatePicker,
   DatePickerOverlay,
   DatePickerRangeInput,
   DatePickerRangePanel,
+  DatePickerTrigger,
   type DateRangeSelection,
-  formatDate,
-  getCurrentLocale,
+  useLocalization,
 } from "@salt-ds/lab";
-import { type ReactElement, useCallback, useState } from "react";
-
-function formatDateRange(
-  dateRange: DateRangeSelection | null,
-  locale = getCurrentLocale(),
-  options?: Intl.DateTimeFormatOptions,
-): string {
-  const { startDate, endDate } = dateRange || {};
-  const formattedStartDate = startDate
-    ? formatDate(startDate, locale, options)
-    : startDate;
-  const formattedEndDate = endDate
-    ? formatDate(endDate, locale, options)
-    : endDate;
-  return `Start date: ${formattedStartDate}, End date: ${formattedEndDate}`;
-}
-
-function isValidDateRange(date: DateRangeSelection | null) {
-  if (date?.startDate === null || date?.endDate === null) {
-    return false;
-  }
-  return !(
-    date?.startDate &&
-    date?.endDate &&
-    date.startDate.compare(date.endDate) > 0
-  );
-}
+import {
+  type ReactElement,
+  type SyntheticEvent,
+  useCallback,
+  useState,
+} from "react";
+// As required by locale specific examples
+import "moment/dist/locale/es";
+import "dayjs/locale/es";
+import { es as dateFnsEs } from "date-fns/locale";
 
 export const RangeWithLocaleEsES = (): ReactElement => {
-  const locale = "es-ES";
-
-  const defaultHelperText = `Locale ${locale}`;
+  // Include any locales, required by your DateAdapter of choice.
+  // Wrap in your own LocalizationProvider to specify the locale or modify the current context
+  // <LocalizationProvider DateAdapter={DateAdapter} locale="es-ES"></LocalizationProvider>
+  const { dateAdapter } = useLocalization();
+  const isDateFns = dateAdapter.lib === "date-fns";
+  const isDayjs = dateAdapter.lib === "dayjs";
+  if (isDateFns) {
+    dateAdapter.locale = dateFnsEs;
+  } else if (isDayjs) {
+    dateAdapter.locale = "es";
+  } else {
+    dateAdapter.locale = "es-ES";
+  }
+  const defaultHelperText = `Locale ${isDateFns ? dateAdapter.locale.code : dateAdapter.locale}`;
   const errorHelperText = "Please enter a valid date in DD MMM YYYY format";
   const [helperText, setHelperText] = useState(defaultHelperText);
+  const [open, setOpen] = useState<boolean>(false);
   const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
     undefined,
   );
-  const handleSelectedDateChange = useCallback(
+  const handleSelectionChange = useCallback(
     (
-      newSelectedDate: DateRangeSelection | null,
-      error: {
-        startDate: string | false;
-        endDate: string | false;
-      },
+      event: SyntheticEvent,
+      date: DateRangeSelection<DateFrameworkType> | null,
+      details: DateInputRangeDetails | undefined,
     ) => {
+      const { startDate, endDate } = date ?? {};
+      const {
+        startDate: {
+          value: startDateOriginalValue = undefined,
+          errors: startDateErrors = undefined,
+        } = {},
+        endDate: {
+          value: endDateOriginalValue = undefined,
+          errors: endDateErrors = undefined,
+        } = {},
+      } = details || {};
       console.log(
-        `Selected date range: ${formatDateRange(newSelectedDate, locale, {
-          day: "2-digit",
-          month: "2-digit",
-          year: "numeric",
-        })}`,
+        `StartDate: ${dateAdapter.isValid(startDate) ? dateAdapter.format(startDate, "DD MMM YYYY") : startDate}, EndDate: ${dateAdapter.isValid(endDate) ? dateAdapter.format(endDate, "DD MMM YYYY") : endDate}`,
       );
-      const validationStatus =
-        !error.startDate && !error.endDate && isValidDateRange(newSelectedDate)
-          ? undefined
-          : "error";
-      if (validationStatus === "error") {
-        setHelperText(errorHelperText);
+      if (startDateErrors?.length) {
+        console.log(
+          `StartDate Error(s): ${startDateErrors.map(({ type, message }) => `type: ${type} message: ${message}`).join(",")}`,
+        );
+        if (startDateOriginalValue) {
+          console.log(`StartDate Original Value: ${startDateOriginalValue}`);
+        }
+      }
+      if (endDateErrors?.length) {
+        console.log(
+          `EndDate Error(s): ${endDateErrors.map(({ type, message }) => `type: ${type} message: ${message}`).join(",")}`,
+        );
+        if (endDateOriginalValue) {
+          console.log(`EndDate Original Value: ${endDateOriginalValue}`);
+        }
+      }
+      if (startDateErrors?.length && startDateOriginalValue) {
+        setValidationStatus("error");
+        setHelperText(
+          `${errorHelperText} - start date ${startDateErrors[0].message}`,
+        );
+      } else if (endDateErrors?.length && endDateOriginalValue) {
+        setValidationStatus("error");
+        setHelperText(
+          `${errorHelperText} - end date ${endDateErrors[0].message}`,
+        );
       } else {
+        setValidationStatus(undefined);
         setHelperText(defaultHelperText);
       }
-      setValidationStatus(validationStatus);
     },
-    [setValidationStatus, setHelperText],
+    [dateAdapter, defaultHelperText],
   );
 
   return (
@@ -83,15 +105,17 @@ export const RangeWithLocaleEsES = (): ReactElement => {
       <FormLabel>Select a date</FormLabel>
       <DatePicker
         selectionVariant={"range"}
-        locale={locale}
-        onSelectedDateChange={handleSelectedDateChange}
+        onSelectionChange={handleSelectionChange}
+        onOpen={setOpen}
       >
-        <DatePickerRangeInput />
+        <DatePickerTrigger>
+          <DatePickerRangeInput />
+        </DatePickerTrigger>
         <DatePickerOverlay>
           <DatePickerRangePanel helperText={helperText} />
         </DatePickerOverlay>
       </DatePicker>
-      <FormHelperText>{helperText}</FormHelperText>
+      {!open ? <FormHelperText>{helperText}</FormHelperText> : null}
     </FormField>
   );
 };

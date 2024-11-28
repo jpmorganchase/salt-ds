@@ -14,6 +14,8 @@ import useIsMobileView from "../../utils/useIsMobileView";
 import { Pre } from "../mdx/pre";
 import { useLivePreviewControls } from "./useLivePreviewControls";
 
+import { AdapterDateFns } from "@salt-ds/date-adapters";
+import { LocalizationProvider } from "@salt-ds/lab";
 import styles from "./LivePreview.module.css";
 
 type LivePreviewProps = {
@@ -91,30 +93,32 @@ export const LivePreview: FC<LivePreviewProps> = ({
             [styles.smallViewport]: isMobileView,
           })}
         >
-          <ChosenSaltProvider
-            mode={mode}
-            accent={accent}
-            corner={corner}
-            headingFont={headingFont}
-            actionFont={actionFont}
-          >
-            <div className={styles.exampleWithSwitch}>
-              <div className={styles.example}>
-                <ChosenSaltProvider density={density}>
-                  {ComponentExample.Example && <ComponentExample.Example />}
+          <LocalizationProvider DateAdapter={AdapterDateFns}>
+            <ChosenSaltProvider
+              mode={mode}
+              accent={accent}
+              corner={corner}
+              headingFont={headingFont}
+              actionFont={actionFont}
+            >
+              <div className={styles.exampleWithSwitch}>
+                <div className={styles.example}>
+                  <ChosenSaltProvider density={density}>
+                    {ComponentExample.Example && <ComponentExample.Example />}
+                  </ChosenSaltProvider>
+                </div>
+                <ChosenSaltProvider density="medium">
+                  <Switch
+                    checked={showCode}
+                    onChange={handleShowCodeToggle}
+                    className={styles.switch}
+                    label="Show code"
+                    aria-controls={panelId}
+                  />
                 </ChosenSaltProvider>
               </div>
-              <ChosenSaltProvider density="medium">
-                <Switch
-                  checked={showCode}
-                  onChange={handleShowCodeToggle}
-                  className={styles.switch}
-                  label="Show code"
-                  aria-controls={panelId}
-                />
-              </ChosenSaltProvider>
-            </div>
-          </ChosenSaltProvider>
+            </ChosenSaltProvider>
+          </LocalizationProvider>
         </div>
 
         <div

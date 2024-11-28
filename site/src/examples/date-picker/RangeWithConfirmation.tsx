@@ -1,4 +1,3 @@
-import { getLocalTimeZone, today } from "@internationalized/date";
 import {
   Divider,
   FlexItem,
@@ -7,87 +6,138 @@ import {
   FormFieldHelperText as FormHelperText,
   FormFieldLabel as FormLabel,
 } from "@salt-ds/core";
+import type { DateFrameworkType } from "@salt-ds/date-adapters";
 import {
+  type DateInputRangeDetails,
   DatePicker,
   DatePickerActions,
   DatePickerOverlay,
   DatePickerRangeInput,
   DatePickerRangePanel,
+  DatePickerTrigger,
   type DateRangeSelection,
-  formatDate,
-  getCurrentLocale,
+  useLocalization,
 } from "@salt-ds/lab";
-import { type ReactElement, useCallback, useRef, useState } from "react";
-
-function formatDateRange(
-  dateRange: DateRangeSelection | null,
-  locale = getCurrentLocale(),
-  options?: Intl.DateTimeFormatOptions,
-): string {
-  const { startDate, endDate } = dateRange || {};
-  const formattedStartDate = startDate
-    ? formatDate(startDate, locale, options)
-    : startDate;
-  const formattedEndDate = endDate
-    ? formatDate(endDate, locale, options)
-    : endDate;
-  return `Start date: ${formattedStartDate}, End date: ${formattedEndDate}`;
-}
-
-function isValidDateRange(date: DateRangeSelection | null) {
-  if (date?.startDate === null || date?.endDate === null) {
-    return false;
-  }
-  return !(
-    date?.startDate &&
-    date?.endDate &&
-    date.startDate.compare(date.endDate) > 0
-  );
-}
+import {
+  type ReactElement,
+  type SyntheticEvent,
+  useCallback,
+  useRef,
+  useState,
+} from "react";
 
 export const RangeWithConfirmation = (): ReactElement => {
+  const { dateAdapter } = useLocalization();
   const defaultHelperText =
     "Select range (DD MMM YYYY - DD MMM YYYY) e.g. 09 Jun 2024";
   const errorHelperText = "Please enter a valid date in DD MMM YYYY format";
-  const [helperText, setHelperText] = useState(defaultHelperText);
   const applyButtonRef = useRef<HTMLButtonElement>(null);
-  const minDate = today(getLocalTimeZone());
-  const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
-    undefined,
-  );
-  const [selectedDate, setSelectedDate] = useState<DateRangeSelection | null>(
-    null,
-  );
-  const handleApply = useCallback(
+  const [helperText, setHelperText] = useState<string>(defaultHelperText);
+  const [open] = useState<boolean>(false);
+  const [validationStatus, setValidationStatus] = useState<
+    "error" | undefined
+  >();
+  const savedValidationState = useRef<typeof validationStatus>();
+  const [selectedDate, setSelectedDate] =
+    useState<DateRangeSelection<DateFrameworkType> | null>(null);
+  const previousSelectedDate = useRef<typeof selectedDate>(selectedDate);
+
+  const savedState = useRef<{
+    validationStatus: typeof validationStatus;
+    helperText: typeof helperText;
+  }>({
+    validationStatus: undefined,
+    helperText: defaultHelperText,
+  });
+  const handleSelectionChange = useCallback(
     (
-      newSelectedDate: DateRangeSelection | null,
-      error: {
-        startDate: string | false;
-        endDate: string | false;
-      },
+      event: SyntheticEvent,
+      date: DateRangeSelection<DateFrameworkType> | null,
+      details: DateInputRangeDetails | undefined,
     ) => {
-      console.log(`Selected date range: ${formatDateRange(newSelectedDate)}`);
-      const validationStatus =
-        !error.startDate && !error.endDate && isValidDateRange(newSelectedDate)
-          ? undefined
-          : "error";
-      if (validationStatus === "error") {
-        setHelperText(errorHelperText);
+      const { startDate, endDate } = date ?? {};
+      const {
+        startDate: {
+          value: startDateOriginalValue = undefined,
+          errors: startDateErrors = undefined,
+        } = {},
+        endDate: {
+          value: endDateOriginalValue = undefined,
+          errors: endDateErrors = undefined,
+        } = {},
+      } = details || {};
+      console.log(
+        `StartDate: ${dateAdapter.isValid(startDate) ? dateAdapter.format(startDate, "DD MMM YYYY") : startDate}, EndDate: ${dateAdapter.isValid(endDate) ? dateAdapter.format(endDate, "DD MMM YYYY") : endDate}`,
+      );
+      if (startDateErrors?.length) {
+        console.log(
+          `StartDate Error(s): ${startDateErrors.map(({ type, message }) => `type: ${type} message: ${message}`).join(",")}`,
+        );
+        if (startDateOriginalValue) {
+          console.log(`StartDate Original Value: ${startDateOriginalValue}`);
+        }
+      }
+      if (endDateErrors?.length) {
+        console.log(
+          `EndDate Error(s): ${endDateErrors.map(({ type, message }) => `type: ${type} message: ${message}`).join(",")}`,
+        );
+        if (endDateOriginalValue) {
+          console.log(`EndDate Original Value: ${endDateOriginalValue}`);
+        }
+      }
+      if (startDateErrors?.length && startDateOriginalValue) {
+        setValidationStatus("error");
+        setHelperText(
+          `${errorHelperText} - start date ${startDateErrors[0].message}`,
+        );
+      } else if (endDateErrors?.length && endDateOriginalValue) {
+        setValidationStatus("error");
+        setHelperText(
+          `${errorHelperText} - end date ${endDateErrors[0].message}`,
+        );
       } else {
+        setValidationStatus(undefined);
         setHelperText(defaultHelperText);
       }
-      setValidationStatus(validationStatus);
+      setSelectedDate({
+        startDate:
+          startDateOriginalValue?.trim().length === 0 ? null : startDate,
+        endDate: endDateOriginalValue?.trim().length === 0 ? null : endDate,
+      });
     },
-    [setValidationStatus, setHelperText],
+    [dateAdapter],
   );
-  const handleSelectedDateChange = useCallback(
-    (newSelectedDate: DateRangeSelection | null) => {
-      setSelectedDate(newSelectedDate);
-      if (newSelectedDate?.startDate && newSelectedDate?.endDate) {
-        applyButtonRef?.current?.focus();
+
+  const handleOpen = useCallback(
+    (opening: boolean) => {
+      if (opening) {
+        savedValidationState.current = validationStatus;
       }
     },
-    [applyButtonRef?.current, setSelectedDate],
+    [validationStatus],
+  );
+
+  const handleCancel = useCallback(() => {
+    setHelperText(savedState.current?.helperText);
+    setValidationStatus(savedValidationState.current);
+    setSelectedDate(previousSelectedDate.current);
+  }, []);
+
+  const handleApply = useCallback(
+    (
+      event: SyntheticEvent,
+      date: DateRangeSelection<DateFrameworkType> | null,
+    ) => {
+      const { startDate, endDate } = date ?? {};
+      console.log(
+        `Applied StartDate: ${startDate ? dateAdapter.format(startDate, "DD MMM YYYY") : startDate}, EndDate: ${endDate ? dateAdapter.format(endDate, "DD MMM YYYY") : endDate}`,
+      );
+      setSelectedDate(date);
+      setHelperText(defaultHelperText);
+      setValidationStatus(undefined);
+      previousSelectedDate.current = date;
+    },
+    [dateAdapter],
   );
 
   return (
@@ -95,13 +145,15 @@ export const RangeWithConfirmation = (): ReactElement => {
       <FormLabel>Select a date range</FormLabel>
       <DatePicker
         selectionVariant="range"
-        minDate={minDate}
-        maxDate={minDate.add({ years: 50 })}
         onApply={handleApply}
-        onSelectedDateChange={handleSelectedDateChange}
+        onCancel={handleCancel}
+        onSelectionChange={handleSelectionChange}
+        onOpen={handleOpen}
         selectedDate={selectedDate}
       >
-        <DatePickerRangeInput />
+        <DatePickerTrigger>
+          <DatePickerRangeInput />
+        </DatePickerTrigger>
         <DatePickerOverlay>
           <FlexLayout gap={0} direction="column">
             <FlexItem>
@@ -112,12 +164,15 @@ export const RangeWithConfirmation = (): ReactElement => {
               <DatePickerActions
                 selectionVariant="range"
                 applyButtonRef={applyButtonRef}
+                ApplyButtonProps={{
+                  disabled: !!validationStatus,
+                }}
               />
             </FlexItem>
           </FlexLayout>
         </DatePickerOverlay>
       </DatePicker>
-      <FormHelperText>{helperText}</FormHelperText>
+      {!open ? <FormHelperText>{helperText}</FormHelperText> : null}
     </FormField>
   );
 };

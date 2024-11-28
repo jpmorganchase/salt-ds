@@ -115,7 +115,7 @@ export const DropdownButton = forwardRef(function DropdownButton(
           {...labelAriaAttributes}
           className={withBaseName("buttonLabel")}
           id={labelId}
-          // 'option' role here is to suppress accessibility testing tool warning about 'listbox' missing children role.
+          // biome-ignore lint/a11y/useAriaPropsForRole: 'option' role here is to suppress accessibility testing tool warning about 'listbox' missing children role
           role="option"
         >
           {label}

@@ -1890,15 +1890,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@internationalized/date@npm:^3.5.5":
-  version: 3.5.5
-  resolution: "@internationalized/date@npm:3.5.5"
-  dependencies:
-    "@swc/helpers": "npm:^0.5.0"
-  checksum: 10/5f045faf7af0d217874e537507ad9a68753eabc5fa8905524801acaafd6c5e2b4df050c467b423b738ab40a327e1889e620bab41b47c4032aa17f7ca731dc06b
-  languageName: node
-  linkType: hard
-
 "@isaacs/cliui@npm:^8.0.2":
   version: 8.0.2
   resolution: "@isaacs/cliui@npm:8.0.2"
@@ -3230,6 +3221,29 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@salt-ds/date-adapters@workspace:*, @salt-ds/date-adapters@workspace:packages/date-adapters":
+  version: 0.0.0-use.local
+  resolution: "@salt-ds/date-adapters@workspace:packages/date-adapters"
+  peerDependencies:
+    "@types/luxon": ^3.4.2
+    "@types/react": ">=16.14.0"
+    date-fns: ^3.6.0
+    dayjs: ^1.11.13
+    luxon: ^3.5.0
+    moment: ^2.30.1
+    moment-timezone: ^0.5.46
+  peerDependenciesMeta:
+    date-fns:
+      optional: true
+    dayjs:
+      optional: true
+    luxon:
+      optional: true
+    moment:
+      optional: true
+  languageName: unknown
+  linkType: soft
+
 "@salt-ds/icons@npm:^1.12.1, @salt-ds/icons@workspace:^, @salt-ds/icons@workspace:packages/icons":
   version: 0.0.0-use.local
   resolution: "@salt-ds/icons@workspace:packages/icons"
@@ -3256,18 +3270,24 @@ __metadata:
   resolution: "@salt-ds/lab@workspace:packages/lab"
   dependencies:
     "@floating-ui/react": "npm:^0.26.5"
-    "@internationalized/date": "npm:^3.5.5"
     "@salt-ds/core": "workspace:^"
+    "@salt-ds/date-adapters": "workspace:*"
     "@salt-ds/icons": "workspace:^"
     "@salt-ds/styles": "workspace:*"
     "@salt-ds/window": "workspace:*"
+    "@types/luxon": "npm:^3.4.2"
     "@types/react-window": "npm:^1.8.2"
     aria-hidden: "npm:^1.1.1"
     attr-accept: "npm:^2.0.0"
     clipboard-copy: "npm:^4.0.1"
     clsx: "npm:^2.0.0"
     compute-scroll-into-view: "npm:^3.0.0"
+    date-fns: "npm:^3.6.0"
+    dayjs: "npm:^1.11.13"
     deepmerge: "npm:^4.2.2"
+    luxon: "npm:^3.5.0"
+    moment: "npm:^2.30.1"
+    moment-timezone: "npm:^0.5.46"
     no-scroll: "npm:^2.1.1"
     react-color: "npm:^2.19.3"
     react-window: "npm:^1.8.6"
@@ -3382,12 +3402,18 @@ __metadata:
     "@jpmorganchase/mosaic-store": "npm:0.1.0-beta.88"
     "@jpmorganchase/mosaic-theme": "npm:0.1.0-beta.88"
     "@philpl/buble": "npm:^0.19.7"
+    "@types/luxon": "npm:^3.4.2"
     "@types/node": "npm:^20.0.0"
     "@types/react": "npm:^18.3.3"
     concurrently: "npm:^9.0.0"
     cross-env: "npm:^7.0.3"
+    date-fns: "npm:^3.6.0"
+    dayjs: "npm:^1.11.13"
     dotenv-load: "npm:^2.0.1"
     lodash-es: "npm:^4.17.21"
+    luxon: "npm:^3.5.0"
+    moment: "npm:^2.30.1"
+    moment-timezone: "npm:^0.5.46"
     next: "npm:^14.2.10"
     next-auth: "npm:^4.24.10"
     react: "npm:^18.3.1"
@@ -4884,15 +4910,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@swc/helpers@npm:^0.5.0":
-  version: 0.5.13
-  resolution: "@swc/helpers@npm:0.5.13"
-  dependencies:
-    tslib: "npm:^2.4.0"
-  checksum: 10/6ba2f7e215d32d71fce139e2cfc426b3ed7eaa709febdeb07b97260a4c9eea4784cf047cc1271be273990b08220b576b94a42b5780947c0b3be84973a847a24d
-  languageName: node
-  linkType: hard
-
 "@szmarczak/http-timer@npm:^5.0.1":
   version: 5.0.1
   resolution: "@szmarczak/http-timer@npm:5.0.1"
@@ -5189,6 +5206,13 @@ __metadata:
   version: 4.14.196
   resolution: "@types/lodash@npm:4.14.196"
   checksum: 10/9df134cdd01749f3cd81a46ed06b627a6d68823ecb2445fb835eaa88a0145c5c6437f96108ea6c1c529ba993b764966fef4725efedb32616251c32bbcf6428db
+  languageName: node
+  linkType: hard
+
+"@types/luxon@npm:^3.4.2":
+  version: 3.4.2
+  resolution: "@types/luxon@npm:3.4.2"
+  checksum: 10/fd89566e3026559f2bc4ddcc1e70a2c16161905ed50be9473ec0cfbbbe919165041408c4f6e06c4bcf095445535052e2c099087c76b1b38e368127e618fc968d
   languageName: node
   linkType: hard
 
@@ -7811,7 +7835,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dayjs@npm:1.11.13, dayjs@npm:^1.10.4":
+"date-fns@npm:^3.6.0":
+  version: 3.6.0
+  resolution: "date-fns@npm:3.6.0"
+  checksum: 10/cac35c58926a3b5d577082ff2b253612ec1c79eb6754fddef46b6a8e826501ea2cb346ecbd211205f1ba382ddd1f9d8c3f00bf433ad63cc3063454d294e3a6b8
+  languageName: node
+  linkType: hard
+
+"dayjs@npm:1.11.13, dayjs@npm:^1.10.4, dayjs@npm:^1.11.13":
   version: 1.11.13
   resolution: "dayjs@npm:1.11.13"
   checksum: 10/7374d63ab179b8d909a95e74790def25c8986e329ae989840bacb8b1888be116d20e1c4eee75a69ea0dfbae13172efc50ef85619d304ee7ca3c01d5878b704f5
@@ -11222,6 +11253,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"luxon@npm:^3.5.0":
+  version: 3.5.0
+  resolution: "luxon@npm:3.5.0"
+  checksum: 10/48f86e6c1c96815139f8559456a3354a276ba79bcef0ae0d4f2172f7652f3ba2be2237b0e103b8ea0b79b47715354ac9fac04eb1db3485dcc72d5110491dd47f
+  languageName: node
+  linkType: hard
+
 "lz-string@npm:^1.5.0":
   version: 1.5.0
   resolution: "lz-string@npm:1.5.0"
@@ -12667,6 +12705,22 @@ __metadata:
   version: 2.29.4
   resolution: "moment-mini@npm:2.29.4"
   checksum: 10/d28698c202a27d39f59c34581893d0dc180b2a4249c1f084db0c40678e20195553253fb2b0223706ad706f67bcec184f58898f6aae91219593b6b34e25e48fb4
+  languageName: node
+  linkType: hard
+
+"moment-timezone@npm:^0.5.46":
+  version: 0.5.46
+  resolution: "moment-timezone@npm:0.5.46"
+  dependencies:
+    moment: "npm:^2.29.4"
+  checksum: 10/7613ba388fa6004af62675fb9945cb0d37758b559d07470a5e188419ffe1ac03eb2ed16fe80aa34d1e7dd39fc5bd67dc02cd59e8dcdab95504cface2c78e4b3d
+  languageName: node
+  linkType: hard
+
+"moment@npm:^2.29.4, moment@npm:^2.30.1":
+  version: 2.30.1
+  resolution: "moment@npm:2.30.1"
+  checksum: 10/ae42d876d4ec831ef66110bdc302c0657c664991e45cf2afffc4b0f6cd6d251dde11375c982a5c0564ccc0fa593fc564576ddceb8c8845e87c15f58aa6baca69
   languageName: node
   linkType: hard
 

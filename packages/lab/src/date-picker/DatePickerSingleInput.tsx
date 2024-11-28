@@ -1,10 +1,10 @@
+import { Button, makePrefixer, useControlled } from "@salt-ds/core";
 import {
-  Button,
-  makePrefixer,
-  useControlled,
-  useForkRef,
-  useIcon,
-} from "@salt-ds/core";
+  DateDetailErrorEnum,
+  type DateFrameworkType,
+  type SaltDateAdapter,
+} from "@salt-ds/date-adapters";
+import { CalendarIcon } from "@salt-ds/icons";
 import { clsx } from "clsx";
 import {
   type KeyboardEvent,
@@ -17,9 +17,10 @@ import {
 import type { SingleDateSelection } from "../calendar";
 import {
   DateInputSingle,
-  type DateInputSingleError,
+  type DateInputSingleDetails,
   type DateInputSingleProps,
 } from "../date-input";
+import { useLocalization } from "../localization-provider";
 import { useDatePickerContext } from "./DatePickerContext";
 import { useDatePickerOverlay } from "./DatePickerOverlayProvider";
 
@@ -28,113 +29,178 @@ const withBaseName = makePrefixer("saltDatePickerSingleInput");
 /**
  * Props for the DatePickerSingleInput component.
  */
-export interface DatePickerSingleInputProps extends DateInputSingleProps {}
+export interface DatePickerSingleInputProps<TDate extends DateFrameworkType>
+  extends DateInputSingleProps<TDate> {
+  /**
+   * Function to validate the entered date
+   * @param date - The selected date
+   * @param details - The details of date selection, either a valid date or error
+   * @returns updated DateInputSingleDetails details
+   */
+  validate?: (
+    date: SingleDateSelection<TDate>,
+    details: DateInputSingleDetails,
+  ) => DateInputSingleDetails;
+}
+
+function defaultSingleValidation<TDate extends DateFrameworkType>(
+  dateAdapter: SaltDateAdapter<TDate>,
+  date: TDate,
+  details: DateInputSingleDetails,
+  minDate: TDate | undefined,
+  maxDate: TDate | undefined,
+): DateInputSingleDetails {
+  if (!date) {
+    details.errors = details.errors ?? [];
+    details.errors?.push({
+      type: DateDetailErrorEnum.UNSET,
+      message: "no date defined",
+    });
+  } else {
+    if (
+      minDate &&
+      dateAdapter.isValid(date) &&
+      dateAdapter.compare(date, minDate) < 0
+    ) {
+      details.errors = details.errors ?? [];
+      details.errors?.push({
+        type: "min-date",
+        message: "is before min date",
+      });
+    } else if (
+      maxDate &&
+      dateAdapter.isValid(date) &&
+      dateAdapter.compare(date, maxDate) > 0
+    ) {
+      details.errors = details.errors ?? [];
+      details.errors?.push({
+        type: "max-date",
+        message: "is after max date",
+      });
+    }
+  }
+  return details;
+}
 
 export const DatePickerSingleInput = forwardRef<
   HTMLDivElement,
-  DatePickerSingleInputProps
->(function DatePickerSingleInput(props, ref) {
-  const {
-    className,
-    onFocus,
-    onBlur,
-    value: valueProp,
-    defaultValue,
-    onDateValueChange,
-    ...rest
-  } = props;
-
-  const { CalendarIcon } = useIcon();
-
-  const {
-    state: { selectedDate, disabled, readOnly, cancelled, locale, timeZone },
-    helpers: { setSelectedDate },
-  } = useDatePickerContext({ selectionVariant: "single" });
-  const {
-    state: { open, floatingUIResult },
-    helpers: { getReferenceProps, setOpen },
-  } = useDatePickerOverlay();
-
-  const inputRef = useForkRef<HTMLDivElement>(ref, floatingUIResult?.reference);
-  const prevState = useRef<
-    { date: typeof selectedDate; value: typeof valueProp } | undefined
-  >();
-
-  const [value, setValue] = useControlled({
-    controlled: valueProp,
-    default: defaultValue,
-    name: "DatePickerSingleInput",
-    state: "value",
-  });
-
-  const handleCalendarButton = useCallback(() => {
-    setOpen(!open);
-  }, [open, setOpen]);
-
-  const handleDateChange = useCallback(
-    (
-      _event: SyntheticEvent,
-      newDate: SingleDateSelection | null,
-      error: DateInputSingleError,
-    ) => {
-      setSelectedDate(newDate, error);
-    },
-    [setSelectedDate],
-  );
-
-  const handleDateValueChange = (
-    newDateValue: string,
-    isFormatted: boolean,
+  DatePickerSingleInputProps<any>
+>(
+  <TDate extends DateFrameworkType>(
+    props: DatePickerSingleInputProps<TDate>,
+    ref: React.Ref<HTMLDivElement>,
   ) => {
-    setValue(newDateValue);
-    onDateValueChange?.(newDateValue, isFormatted);
-  };
+    const { dateAdapter } = useLocalization<TDate>();
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: should run when open changes and not selected date or value
-  useEffect(() => {
-    if (open) {
-      prevState.current = { date: selectedDate, value };
-    }
-  }, [open]);
+    const {
+      className,
+      onFocus,
+      onBlur,
+      value: valueProp,
+      validate,
+      defaultValue,
+      onDateValueChange,
+      onKeyDown,
+      ...rest
+    } = props;
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: avoid excessive re-rendering
-  useEffect(() => {
-    if (cancelled) {
-      setValue(prevState?.current?.value);
-      setSelectedDate(prevState?.current?.date || null, false);
-    }
-  }, [cancelled]);
+    const {
+      state: { selectedDate, disabled, readOnly, cancelled, minDate, maxDate },
+      helpers: { select },
+    } = useDatePickerContext<TDate>({ selectionVariant: "single" });
+    const {
+      state: { open },
+      helpers: { setOpen },
+    } = useDatePickerOverlay();
 
-  return (
-    <DateInputSingle
-      value={value || ""}
-      locale={locale}
-      timeZone={timeZone}
-      className={clsx(withBaseName(), className)}
-      ref={inputRef}
-      date={selectedDate || null}
-      readOnly={readOnly}
-      onDateChange={handleDateChange}
-      onDateValueChange={handleDateValueChange}
-      endAdornment={
-        <Button
-          appearance="transparent"
-          sentiment="neutral"
-          onClick={handleCalendarButton}
-          disabled={disabled}
-          aria-label="Open Calendar"
-        >
-          <CalendarIcon />
-        </Button>
+    const previousValue = useRef<typeof valueProp>();
+
+    const [value, setValue] = useControlled({
+      controlled: valueProp,
+      default: defaultValue,
+      name: "DatePickerSingleInput",
+      state: "value",
+    });
+
+    const handleCalendarButton = useCallback(() => {
+      setOpen(!open);
+    }, [open, setOpen]);
+
+    const handleDateChange = useCallback(
+      (
+        event: SyntheticEvent,
+        date: SingleDateSelection<TDate>,
+        details: DateInputSingleDetails,
+      ) => {
+        const validatedDetails = validate
+          ? validate(date, details)
+          : defaultSingleValidation<TDate>(
+              dateAdapter,
+              date,
+              details,
+              minDate,
+              maxDate,
+            );
+        select(event, date, validatedDetails);
+      },
+      [select, validate],
+    );
+
+    const handleDateValueChange = useCallback(
+      (event: SyntheticEvent | null, newDateValue: string) => {
+        setValue(newDateValue);
+        onDateValueChange?.(event, newDateValue);
+      },
+      [onDateValueChange],
+    );
+
+    const handleOnKeyDown = useCallback(
+      (event: KeyboardEvent<HTMLInputElement>) => {
+        if (event.key === "ArrowDown") {
+          setOpen(true);
+          onKeyDown?.(event);
+        }
+      },
+      [onKeyDown],
+    );
+
+    // biome-ignore lint/correctness/useExhaustiveDependencies: should run when open changes and not selected date or value
+    useEffect(() => {
+      if (open) {
+        previousValue.current = value;
       }
-      {...getReferenceProps({
-        ...rest,
-        onKeyDown: (event: KeyboardEvent<HTMLInputElement>) => {
-          if (event.key === "ArrowDown") {
-            setOpen(true);
-          }
-        },
-      })}
-    />
-  );
-});
+    }, [open]);
+
+    // biome-ignore lint/correctness/useExhaustiveDependencies: avoid excessive re-rendering
+    useEffect(() => {
+      if (cancelled) {
+        setValue(previousValue?.current);
+      }
+    }, [cancelled]);
+
+    return (
+      <DateInputSingle
+        value={value || ""}
+        className={clsx(withBaseName(), className)}
+        date={selectedDate || null}
+        readOnly={readOnly}
+        ref={ref}
+        onDateChange={handleDateChange}
+        onDateValueChange={handleDateValueChange}
+        endAdornment={
+          <Button
+            appearance="transparent"
+            sentiment="neutral"
+            onClick={handleCalendarButton}
+            disabled={disabled}
+            aria-label="Open Calendar"
+          >
+            <CalendarIcon />
+          </Button>
+        }
+        onKeyDown={handleOnKeyDown}
+        {...rest}
+      />
+    );
+  },
+);

@@ -1,186 +1,179 @@
-import {
-  CalendarDate,
-  type DateValue,
-  endOfMonth,
-  getLocalTimeZone,
-  startOfMonth,
-} from "@internationalized/date";
 import { useControlled, useForkRef, useFormFieldProps } from "@salt-ds/core";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import type { DateFrameworkType } from "@salt-ds/date-adapters";
 import {
-  CALENDAR_MAX_YEAR,
-  CALENDAR_MIN_YEAR,
-  type DateRangeSelection,
-  type SingleDateSelection,
-  getCurrentLocale,
-} from "../calendar";
+  type SyntheticEvent,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
+import type { DateRangeSelection, SingleDateSelection } from "../calendar";
 import type {
-  RangeDatePickerError,
+  DateInputRangeDetails,
+  DateInputSingleDetails,
+} from "../date-input";
+import { useLocalization } from "../localization-provider";
+import type {
   RangeDatePickerState,
-  SingleDatePickerError,
   SingleDatePickerState,
 } from "./DatePickerContext";
 import { useDatePickerOverlay } from "./DatePickerOverlayProvider";
 
-interface UseDatePickerBaseProps<T> {
+interface UseDatePickerBaseProps<TDate> {
   /** If `true`, the component is disabled. */
   disabled?: boolean;
   /** If `true`, the component is read-only. */
   readOnly?: boolean;
   /**
-   * The selected date. The selected date will be controlled when this prop is provided.
-   */
-  selectedDate?: T | null;
-  /**
-   * The initial selected date, when the selected date is uncontrolled.
-   */
-  defaultSelectedDate?: UseDatePickerBaseProps<T>["selectedDate"];
-  /**
    * The minimum date for the range, default is 1900.
    */
-  minDate?: DateValue;
+  minDate?: TDate;
   /**
    * The maximum date for the range, default is 2100.
    */
-  maxDate?: DateValue;
+  maxDate?: TDate;
   /**
    * Handler for when the date selection is cancelled.
    */
   onCancel?: () => void;
-  /**
-   * Time zone of the date selection, defaults to the current time zone of the user.
-   */
-  timeZone?: string;
-  /**
-   * Locale of the date selection, defaults to the current locale of the user.
-   */
-  locale?: string;
 }
 
 /**
  * Props for single date selection.
  *
- * @typedef {UseDatePickerBaseProps<SingleDateSelection>} UseDatePickerSingleProps
- * @property {"single"} selectionVariant - Single date selection.
- * @property {(selectedSingleDate: SingleDateSelection | null, singleError: string | false) => void} [onSelectedDateChange] - Handler called when the selected date changes.
- * @property {(appliedSingleDate: SingleDateSelection | null, singleError: string | false) => void} [onApply] - Handler called when the selected date is confirmed/applied.
+ * @template TDate - The type of the date framework.
  */
-export interface UseDatePickerSingleProps
-  extends UseDatePickerBaseProps<SingleDateSelection> {
+export interface UseDatePickerSingleProps<TDate extends DateFrameworkType>
+  extends UseDatePickerBaseProps<TDate> {
   /**
    * Single date selection.
    */
   selectionVariant: "single";
   /**
-   * Handler called when the selected date changes.
-   * @param {SingleDateSelection | null} selectedSingleDate - The selected date.
-   * @param {string | false} singleError - Error returned by the parser or `false`.
+   * The selected date. The selected date will be controlled when this prop is provided.
    */
-  onSelectedDateChange?: (
-    selectedSingleDate: SingleDateSelection | null,
-    singleError: string | false,
+  selectedDate?: SingleDateSelection<TDate> | null;
+  /**
+   * The initial selected date, when the selected date is uncontrolled.
+   */
+  defaultSelectedDate?: SingleDateSelection<TDate> | null;
+  /**
+   * Handler called when the selected date changes.
+   * @param event - The synthetic event.
+   * @param date - The selected date or null.
+   * @param details - The selected date details.
+   */
+  onSelectionChange?: (
+    event: SyntheticEvent,
+    date: SingleDateSelection<TDate> | null,
+    details?: DateInputSingleDetails,
   ) => void;
   /**
    * Handler called when the selected date is confirmed/applied.
-   * @param {SingleDateSelection | null} appliedSingleDate - The selected date.
-   * @param {string | false} singleError - Error returned by the parser or `false`.
+   * @param event - The synthetic event.
+   * @param date - The selected date or null.
    */
   onApply?: (
-    appliedSingleDate: SingleDateSelection | null,
-    singleError: string | false,
+    event: SyntheticEvent,
+    date: SingleDateSelection<TDate> | null,
   ) => void;
 }
 
 /**
  * Props for date range selection.
  *
- * @typedef {UseDatePickerBaseProps<DateRangeSelection>} UseDatePickerRangeProps
- * @property {"range"} selectionVariant - Date range selection.
- * @property {(selectedRangeDate: DateRangeSelection | null, rangeError: { startDate: string | false; endDate: string | false }) => void} [onSelectedDateChange] - Handler called when the selected date changes.
- * @property {(appliedRangeDate: DateRangeSelection | null, rangeError: { startDate: string | false; endDate: string | false }) => void} [onApply] - Handler called when the selected date is confirmed/applied.
+ * @template TDate - The type of the date framework.
  */
-export interface UseDatePickerRangeProps
-  extends UseDatePickerBaseProps<DateRangeSelection> {
+export interface UseDatePickerRangeProps<TDate extends DateFrameworkType>
+  extends UseDatePickerBaseProps<TDate> {
   /**
    * Date range selection.
    */
   selectionVariant: "range";
   /**
-   * Handler called when the selected date changes.
-   * @param {DateRangeSelection | null} selectedRangeDate - The selected date.
-   * @param {{ startDate: string | false; endDate: string | false }} rangeError - Error returned by the parser or `false`.
+   * The selected date range. The selected date will be controlled when this prop is provided.
    */
-  onSelectedDateChange?: (
-    selectedRangeDate: DateRangeSelection | null,
-    rangeError: { startDate: string | false; endDate: string | false },
+  selectedDate?: DateRangeSelection<TDate> | null;
+  /**
+   * The initial selected date range, when the selected date is uncontrolled.
+   */
+  defaultSelectedDate?: DateRangeSelection<TDate> | null;
+  /**
+   * Handler called when the selected date range changes.
+   * @param event - The synthetic event.
+   * @param date - The selected date range or null.
+   * @param details - The selected date range details.
+   */
+  onSelectionChange?: (
+    event: SyntheticEvent,
+    date: DateRangeSelection<TDate> | null,
+    details?: DateInputRangeDetails,
   ) => void;
   /**
-   * Handler called when the selected date is confirmed/applied.
-   * @param {DateRangeSelection | null} appliedRangeDate - The selected date.
-   * @param {{ startDate: string | false; endDate: string | false }} rangeError - Error returned by the parser or `false`.
+   * Handler called when the selected date range is confirmed/applied.
+   * @param event - The synthetic event.
+   * @param date - The selected date range.
    */
   onApply?: (
-    appliedRangeDate: DateRangeSelection | null,
-    rangeError: { startDate: string | false; endDate: string | false },
+    event: SyntheticEvent,
+    date: DateRangeSelection<TDate> | null,
   ) => void;
 }
 
 /**
  * Props for the useDatePicker hook.
  *
- * @template SelectionVariant
- * @typedef {SelectionVariant extends "single" ? UseDatePickerSingleProps : SelectionVariant extends "range" ? UseDatePickerRangeProps : never} UseDatePickerProps
+ * @template TDate - The type of the date framework.
+ * @template SelectionVariant - The selection variant, either "single" or "range".
  */
-export type UseDatePickerProps<SelectionVariant> =
-  SelectionVariant extends "single"
-    ? UseDatePickerSingleProps
-    : SelectionVariant extends "range"
-      ? UseDatePickerRangeProps
-      : never;
+export type UseDatePickerProps<
+  TDate extends DateFrameworkType,
+  SelectionVariant,
+> = SelectionVariant extends "single"
+  ? UseDatePickerSingleProps<TDate>
+  : SelectionVariant extends "range"
+    ? UseDatePickerRangeProps<TDate>
+    : never;
 
 /**
  * Custom hook for managing date picker state.
  *
- * @template SelectionVariant
- * @param {UseDatePickerProps<SelectionVariant>} props - The props for the date picker.
- * @param {React.ForwardedRef<HTMLDivElement>} ref - The ref for the date picker container.
- * @returns {DatePickerState<SelectionVariant extends "single" ? SingleDateSelection : DateRangeSelection>} The date picker state and helpers.
+ * @template TDate - The type of the date framework.
+ * @template SelectionVariant - The selection variant, either "single" or "range".
+ * @param props - The props for the date picker.
+ * @param ref - The ref for the date picker container.
+ * @returns The date picker state and helpers.
  */
-export function useDatePicker<SelectionVariant extends "single" | "range">(
-  props: UseDatePickerProps<SelectionVariant>,
+export function useDatePicker<
+  TDate extends DateFrameworkType,
+  SelectionVariant extends "single" | "range",
+>(
+  props: UseDatePickerProps<TDate, SelectionVariant>,
   ref: React.ForwardedRef<HTMLDivElement>,
-): SingleDatePickerState | RangeDatePickerState {
+): SingleDatePickerState<TDate> | RangeDatePickerState<TDate> {
+  const {
+    defaultDates: { minDate: defaultMinDate, maxDate: defaultMaxDate },
+  } = useLocalization<TDate>();
   const {
     readOnly = false,
     disabled,
     selectionVariant,
-    defaultSelectedDate = null,
+    defaultSelectedDate,
     selectedDate: selectedDateProp,
-    onSelectedDateChange,
+    onSelectionChange,
     onApply,
-    minDate: minDateProp,
-    maxDate: maxDateProp,
-    timeZone = getLocalTimeZone(),
-    locale = getCurrentLocale(),
+    minDate = defaultMinDate,
+    maxDate = defaultMaxDate,
     onCancel,
   } = props;
 
-  const minDate: DateValue = useMemo(
-    () =>
-      minDateProp ?? startOfMonth(new CalendarDate(CALENDAR_MIN_YEAR, 1, 1)),
-    [minDateProp],
-  );
-  const maxDate: DateValue = useMemo(
-    () => maxDateProp ?? endOfMonth(new CalendarDate(CALENDAR_MAX_YEAR, 1, 1)),
-    [maxDateProp],
-  );
-
+  const previousSelectedDate = useRef<typeof selectedDateProp>();
   const datePickerRef = useRef<HTMLDivElement>(null);
   const containerRef = useForkRef(ref, datePickerRef);
 
   const {
     state: { open },
-    helpers: { setOpen },
+    helpers: { setOpen, setOnDismiss },
   } = useDatePickerOverlay();
 
   const [selectedDate, setSelectedDate] = useControlled({
@@ -193,139 +186,102 @@ export function useDatePicker<SelectionVariant extends "single" | "range">(
   const [enableApply, setEnableApply] = useState<boolean>(false);
   const [cancelled, setCancelled] = useState<boolean>(false);
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: should run when open changes and not selected date or value
   useEffect(() => {
     if (open) {
+      previousSelectedDate.current = selectedDate;
+      if (enableApply) {
+        setOnDismiss(cancel);
+      }
       setCancelled(false);
     }
-  }, [open]);
+  }, [enableApply, open, setOnDismiss, setCancelled]);
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: avoid excessive re-rendering
+  useEffect(() => {
+    if (cancelled) {
+      setSelectedDate(previousSelectedDate?.current);
+    }
+  }, [cancelled, setSelectedDate]);
 
   const { disabled: formFieldDisabled, readOnly: formFieldReadOnly } =
     useFormFieldProps();
   const isReadOnly = readOnly || formFieldReadOnly || false;
   const isDisabled = disabled || formFieldDisabled || false;
 
-  const applySingle = (
-    appliedDate: SingleDateSelection | null,
-    error: SingleDatePickerError,
-  ): void => {
-    setCancelled(false);
-    setOpen(false);
-    if (selectionVariant === "single") {
-      onApply?.(appliedDate, error);
-    }
-  };
-
-  const setSelectedSingleDate = useCallback(
-    (selection: SingleDateSelection | null, error: SingleDatePickerError) => {
-      let nextDate: typeof selection;
-      let nextError = error;
-      if (error || !selection) {
-        nextDate = selection;
-      } else {
-        let dateAfterMinDate = true;
-        let dateBeforeMaxDate = true;
-        if (minDate && selection) {
-          dateAfterMinDate = selection.compare(minDate) >= 0;
-        }
-        if (maxDate && selection) {
-          dateBeforeMaxDate = selection.compare(maxDate) <= 0;
-        }
-        nextDate = dateAfterMinDate && dateBeforeMaxDate ? selection : null;
-        nextError = !dateAfterMinDate ? "is before min date" : nextError;
-        nextError = !dateBeforeMaxDate ? "is after max date" : nextError;
-      }
-      setSelectedDate(nextDate);
-      if (selectionVariant === "single") {
-        onSelectedDateChange?.(nextDate, error);
-      }
-
-      if (!enableApply) {
-        setOpen(false);
-      }
-    },
-    [
-      enableApply,
-      minDate,
-      maxDate,
-      onSelectedDateChange,
-      selectionVariant,
-      setSelectedDate,
-      setOpen,
-    ],
-  );
-
-  const applyRange = (
-    appliedDate: DateRangeSelection | null,
-    error: RangeDatePickerError,
-  ): void => {
-    setCancelled(false);
-    if (appliedDate?.startDate && appliedDate?.endDate) {
+  const applySingle = useCallback(
+    (event: SyntheticEvent, date: SingleDateSelection<TDate> | null): void => {
+      setCancelled(false);
       setOpen(false);
-    }
-    if (selectionVariant === "range") {
-      onApply?.(appliedDate, error);
-    }
-  };
+      if (selectionVariant === "single") {
+        onApply?.(event, date);
+      }
+    },
+    [setCancelled, setOpen, onApply],
+  );
 
-  const setSelectedRangeDate = useCallback(
-    (selection: DateRangeSelection | null, error: RangeDatePickerError) => {
-      let nextDate: typeof selection;
-      let nextError = { ...error };
-      let startDateInRange = true;
-      let endDateInRange = true;
-      if (error?.startDate || error?.endDate || !selection) {
-        nextDate = selection;
-      } else {
-        if (maxDate && selection?.startDate) {
-          startDateInRange = selection.startDate.compare(minDate) >= 0;
-        }
-        if (maxDate && selection?.endDate) {
-          endDateInRange =
-            selection?.endDate && selection.endDate.compare(maxDate) <= 0;
-        }
-        if (!startDateInRange && !endDateInRange) {
-          nextDate = null;
-          nextError = {
-            startDate: "is before min date",
-            endDate: "is after max date",
-          };
-        } else {
-          nextDate = {
-            startDate: selection.startDate || null,
-            endDate: selection.endDate || null,
-          };
-          nextError = {
-            startDate: !startDateInRange
-              ? "is before min date"
-              : nextError.startDate,
-            endDate: !endDateInRange ? "is after max date" : nextError.endDate,
-          };
-        }
+  const selectSingle = useCallback(
+    (
+      event: SyntheticEvent,
+      date: SingleDateSelection<TDate> | null,
+      details: DateInputSingleDetails,
+    ) => {
+      setSelectedDate(date);
+      if (selectionVariant === "single") {
+        onSelectionChange?.(event, date, details);
       }
-      setSelectedDate(nextDate);
-      if (selectionVariant === "range") {
-        onSelectedDateChange?.(nextDate, nextError);
-      }
-      if (!enableApply && nextDate?.startDate && nextDate?.endDate) {
-        setOpen(false);
+      if (!enableApply && date) {
+        applySingle(event, date);
       }
     },
     [
+      applySingle,
       enableApply,
-      minDate,
-      maxDate,
-      onSelectedDateChange,
+      onSelectionChange,
       selectionVariant,
       setSelectedDate,
-      setOpen,
     ],
   );
 
-  const cancel = () => {
+  const applyRange = useCallback(
+    (event: SyntheticEvent, date: DateRangeSelection<TDate> | null): void => {
+      setCancelled(false);
+      setOpen(false);
+      if (selectionVariant === "range") {
+        onApply?.(event, date);
+      }
+    },
+    [onApply, setCancelled, setOpen, selectionVariant],
+  );
+
+  const selectRange = useCallback(
+    (
+      event: SyntheticEvent,
+      date: DateRangeSelection<TDate> | null,
+      details: DateInputRangeDetails,
+    ) => {
+      setSelectedDate(date);
+      if (selectionVariant === "range") {
+        onSelectionChange?.(event, date, details);
+      }
+      if (!enableApply && date?.startDate && date?.endDate) {
+        applyRange(event, date);
+      }
+    },
+    [
+      applyRange,
+      enableApply,
+      onSelectionChange,
+      selectionVariant,
+      setSelectedDate,
+    ],
+  );
+
+  const cancel = useCallback(() => {
     setCancelled(true);
     setOpen(false);
     onCancel?.();
-  };
+  }, [setCancelled, setOpen, onCancel]);
 
   const returnValue = {
     state: {
@@ -338,8 +294,6 @@ export function useDatePicker<SelectionVariant extends "single" | "range">(
       containerRef,
       minDate,
       maxDate,
-      locale,
-      timeZone,
     },
     helpers: {
       cancel,
@@ -352,16 +306,16 @@ export function useDatePicker<SelectionVariant extends "single" | "range">(
       helpers: {
         ...returnValue.helpers,
         apply: applyRange,
-        setSelectedDate: setSelectedRangeDate,
+        select: selectRange,
       },
-    } as RangeDatePickerState;
+    } as RangeDatePickerState<TDate>;
   }
   return {
     ...returnValue,
     helpers: {
       ...returnValue.helpers,
       apply: applySingle,
-      setSelectedDate: setSelectedSingleDate,
+      select: selectSingle,
     },
-  } as SingleDatePickerState;
+  } as SingleDatePickerState<TDate>;
 }

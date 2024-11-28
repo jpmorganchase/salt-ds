@@ -1,41 +1,97 @@
-import { getLocalTimeZone, today } from "@internationalized/date";
+import {
+  FormField,
+  FormFieldHelperText as FormHelperText,
+  FormFieldLabel as FormLabel,
+} from "@salt-ds/core";
+import type { DateFrameworkType } from "@salt-ds/date-adapters";
 import {
   DateInputRange,
-  type DateInputRangeError,
+  type DateInputRangeDetails,
   type DateRangeSelection,
-  formatDate,
-  getCurrentLocale,
+  useLocalization,
 } from "@salt-ds/lab";
-import { type ReactElement, type SyntheticEvent, useState } from "react";
-
-function formatDateRange(
-  dateRange: DateRangeSelection | null,
-  locale = getCurrentLocale(),
-): string {
-  const { startDate, endDate } = dateRange || {};
-  const formattedStartDate = startDate
-    ? formatDate(startDate, locale)
-    : startDate;
-  const formattedEndDate = endDate ? formatDate(endDate, locale) : endDate;
-  return `Start date: ${formattedStartDate}, End date: ${formattedEndDate}`;
-}
+import {
+  type ReactElement,
+  type SyntheticEvent,
+  useCallback,
+  useState,
+} from "react";
 
 export const RangeControlled = (): ReactElement => {
-  const [selectedDate, setSelectedDate] = useState<DateRangeSelection | null>({
-    startDate: today(getLocalTimeZone()),
-    endDate: today(getLocalTimeZone()).add({ days: 7 }),
-  });
+  const { dateAdapter } = useLocalization();
+  const defaultHelperText = "Please enter date in DD MMM YYYY format";
+  const errorHelperText = "Please enter a valid date in DD MMM YYYY format";
+  const [open, setOpen] = useState<boolean>(false);
+  const [helperText, setHelperText] = useState(defaultHelperText);
+  const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
+    undefined,
+  );
+  const [selectedDate, setSelectedDate] =
+    useState<DateRangeSelection<DateFrameworkType> | null>(null);
+  const handleDateChange = useCallback(
+    (
+      event: SyntheticEvent,
+      date: DateRangeSelection<DateFrameworkType> | null,
+      details: DateInputRangeDetails | undefined,
+    ) => {
+      const { startDate, endDate } = date ?? {};
+      const {
+        startDate: {
+          value: startDateOriginalValue = undefined,
+          errors: startDateErrors = undefined,
+        } = {},
+        endDate: {
+          value: endDateOriginalValue = undefined,
+          errors: endDateErrors = undefined,
+        } = {},
+      } = details || {};
+      console.log(
+        `StartDate: ${dateAdapter.isValid(startDate) ? dateAdapter.format(startDate, "DD MMM YYYY") : startDate}, EndDate: ${dateAdapter.isValid(endDate) ? dateAdapter.format(endDate, "DD MMM YYYY") : endDate}`,
+      );
+      if (startDateErrors?.length) {
+        console.log(
+          `StartDate Error(s): ${startDateErrors.map(({ type, message }) => `type: ${type} message: ${message}`).join(",")}`,
+        );
+        if (startDateOriginalValue) {
+          console.log(`StartDate Original Value: ${startDateOriginalValue}`);
+        }
+      }
+      if (endDateErrors?.length) {
+        console.log(
+          `EndDate Error(s): ${endDateErrors.map(({ type, message }) => `type: ${type} message: ${message}`).join(",")}`,
+        );
+        if (endDateOriginalValue) {
+          console.log(`EndDate Original Value: ${endDateOriginalValue}`);
+        }
+      }
+      setSelectedDate({
+        startDate:
+          startDateOriginalValue?.trim().length === 0 ? null : startDate,
+        endDate: endDateOriginalValue?.trim().length === 0 ? null : endDate,
+      });
+      if (startDateErrors?.length && startDateOriginalValue) {
+        setValidationStatus("error");
+        setHelperText(
+          `${errorHelperText} - start date ${startDateErrors[0].message}`,
+        );
+      } else if (endDateErrors?.length && endDateOriginalValue) {
+        setValidationStatus("error");
+        setHelperText(
+          `${errorHelperText} - end date ${endDateErrors[0].message}`,
+        );
+      } else {
+        setValidationStatus(undefined);
+        setHelperText(defaultHelperText);
+      }
+    },
+    [dateAdapter],
+  );
 
-  const handleDateChange = (
-    _event: SyntheticEvent,
-    newSelectedDate: DateRangeSelection | null,
-    _error: DateInputRangeError,
-  ) => {
-    console.log(`Selected date range: ${formatDateRange(newSelectedDate)}`);
-  };
   return (
-    <div style={{ width: "250px" }}>
+    <FormField style={{ width: "250px" }} validationStatus={validationStatus}>
+      <FormLabel>Enter a date range</FormLabel>
       <DateInputRange date={selectedDate} onDateChange={handleDateChange} />
-    </div>
+      <FormHelperText>{helperText}</FormHelperText>
+    </FormField>
   );
 };

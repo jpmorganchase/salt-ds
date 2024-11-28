@@ -12,8 +12,8 @@
   "sideEffects": false,
   "dependencies": {
     "@floating-ui/react": "^0.26.5",
-    "@internationalized/date": "^3.5.5",
     "@salt-ds/core": "workspace:^",
+    "@salt-ds/date-adapters": "workspace:*",
     "@salt-ds/icons": "workspace:^",
     "@salt-ds/styles": "workspace:*",
     "@salt-ds/window": "workspace:*",
@@ -30,6 +30,14 @@
     "rifm": "^0.12.0",
     "tabbable": "^6.0.0",
     "tinycolor2": "^1.4.2"
+  },
+  "devDependencies": {
+    "@types/luxon": "^3.4.2",
+    "date-fns": "^3.6.0",
+    "dayjs": "^1.11.13",
+    "luxon": "^3.5.0",
+    "moment": "^2.30.1",
+    "moment-timezone": "^0.5.46"
   },
   "peerDependencies": {
     "@types/react": ">=16.14.0",

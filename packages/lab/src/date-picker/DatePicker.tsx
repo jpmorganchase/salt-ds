@@ -1,3 +1,4 @@
+import type { DateFrameworkType } from "@salt-ds/date-adapters";
 import { type ReactNode, forwardRef } from "react";
 import {
   DateRangeSelectionContext,
@@ -21,27 +22,49 @@ export interface DatePickerBaseProps {
   /** the open/close state of the overlay. The open/close state will be controlled when this prop is provided. */
   open?: boolean;
   /**
+   * Handler for when open state changes
+   * @param newOpen - true when opened
+   */
+  onOpen?: (newOpen: boolean) => void;
+  /**
    * the initial open/close state of the overlay, when the open/close state is un-controlled.
    */
   defaultOpen?: DatePickerBaseProps["open"];
 }
 
-export interface DatePickerSingleProps
+/**
+ * Props for the DatePicker component, when `selectionVariant` is `single`.
+ * @template T
+ */
+export interface DatePickerSingleProps<TDate extends DateFrameworkType>
   extends DatePickerBaseProps,
-    UseDatePickerSingleProps {
+    UseDatePickerSingleProps<TDate> {
   selectionVariant: "single";
 }
 
-export interface DatePickerRangeProps
+/**
+ * Props for the DatePicker component, when `selectionVariant` is `range`.
+ * @template T
+ */
+export interface DatePickerRangeProps<TDate extends DateFrameworkType>
   extends DatePickerBaseProps,
-    UseDatePickerRangeProps {
+    UseDatePickerRangeProps<TDate> {
   selectionVariant: "range";
 }
 
-export type DatePickerProps = DatePickerSingleProps | DatePickerRangeProps;
+/**
+ * Props for the DatePicker component.
+ * @template T
+ */
+export type DatePickerProps<TDate extends DateFrameworkType> =
+  | DatePickerSingleProps<TDate>
+  | DatePickerRangeProps<TDate>;
 
-export const DatePickerMain = forwardRef<HTMLDivElement, DatePickerProps>(
-  function DatePickerMain(props, ref) {
+export const DatePickerMain = forwardRef<HTMLDivElement, DatePickerProps<any>>(
+  <TDate extends DateFrameworkType>(
+    props: DatePickerProps<TDate>,
+    ref: React.Ref<HTMLDivElement>,
+  ) => {
     const {
       children,
       readOnly,
@@ -49,12 +72,10 @@ export const DatePickerMain = forwardRef<HTMLDivElement, DatePickerProps>(
       selectionVariant,
       defaultSelectedDate,
       selectedDate,
-      onSelectedDateChange,
+      onSelectionChange,
       onApply,
       minDate,
       maxDate,
-      timeZone,
-      locale,
       onCancel,
       ...rest
     } = props;
@@ -65,19 +86,18 @@ export const DatePickerMain = forwardRef<HTMLDivElement, DatePickerProps>(
       selectionVariant,
       defaultSelectedDate,
       selectedDate,
-      onSelectedDateChange,
+      onSelectionChange,
       onApply,
       minDate,
       maxDate,
-      timeZone,
-      locale,
       onCancel,
     };
+
     if (props.selectionVariant === "range") {
-      const stateAndHelpers = useDatePicker(
+      const stateAndHelpers = useDatePicker<TDate, "range">(
         useDatePickerProps,
         ref,
-      ) as RangeDatePickerState;
+      ) as RangeDatePickerState<TDate>;
       return (
         <DateRangeSelectionContext.Provider value={stateAndHelpers}>
           <div ref={stateAndHelpers?.state?.containerRef} {...rest}>
@@ -89,7 +109,8 @@ export const DatePickerMain = forwardRef<HTMLDivElement, DatePickerProps>(
     const stateAndHelpers = useDatePicker(
       useDatePickerProps,
       ref,
-    ) as SingleDatePickerState;
+    ) as SingleDatePickerState<TDate>;
+
     return (
       <SingleDateSelectionContext.Provider value={stateAndHelpers}>
         <div ref={stateAndHelpers?.state?.containerRef} {...rest}>
@@ -100,14 +121,18 @@ export const DatePickerMain = forwardRef<HTMLDivElement, DatePickerProps>(
   },
 );
 
-export const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>(
-  function DatePicker(props, ref) {
-    const { open, defaultOpen, ...rest } = props;
+export const DatePicker = forwardRef(function DatePicker<
+  TDate extends DateFrameworkType,
+>(props: DatePickerProps<TDate>, ref: React.Ref<HTMLDivElement>) {
+  const { open, defaultOpen, onOpen, ...rest } = props;
 
-    return (
-      <DatePickerOverlayProvider open={open} defaultOpen={defaultOpen}>
-        <DatePickerMain {...rest} ref={ref} />
-      </DatePickerOverlayProvider>
-    );
-  },
-);
+  return (
+    <DatePickerOverlayProvider
+      open={open}
+      defaultOpen={defaultOpen}
+      onOpen={onOpen}
+    >
+      <DatePickerMain {...rest} ref={ref} />
+    </DatePickerOverlayProvider>
+  );
+});

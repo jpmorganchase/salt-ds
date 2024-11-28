@@ -1,4 +1,3 @@
-import { getLocalTimeZone, today } from "@internationalized/date";
 import {
   Divider,
   FlexItem,
@@ -10,12 +9,14 @@ import {
   Option,
   StackLayout,
 } from "@salt-ds/core";
+import type { DateFrameworkType } from "@salt-ds/date-adapters";
 import {
   DatePickerRangePanel,
   DatePickerSinglePanel,
   type RangeDatePickerState,
   type SingleDatePickerState,
   useDatePickerContext,
+  useLocalization,
 } from "@salt-ds/lab";
 import { forwardRef } from "react";
 
@@ -31,25 +32,28 @@ interface CustomDatePickerPanelProps {
   selectionVariant: "single" | "range";
 }
 
+// CustomDatePickerPanel is a sample component, representing a composition you could create yourselves, not intended for importing into your own projects
+// refer to https://github.com/jpmorganchase/salt-ds/blob/main/packages/lab/src/date-picker/useDatePicker.ts to create your own
 export const CustomDatePickerPanel = forwardRef<
   HTMLDivElement,
   CustomDatePickerPanelProps
 >(function CustomDatePickerPanel({ selectionVariant, helperText }, ref) {
+  const { dateAdapter } = useLocalization();
   // biome-ignore lint/suspicious/noExplicitAny: state and helpers is coerced based on selectionVariant
   let stateAndHelpers: any;
   if (selectionVariant === "range") {
     stateAndHelpers = useDatePickerContext({
       selectionVariant: "range",
-    }) as RangeDatePickerState;
+    }) as RangeDatePickerState<DateFrameworkType>;
   } else {
     stateAndHelpers = useDatePickerContext({
       selectionVariant: "single",
-    }) as SingleDatePickerState;
+    }) as SingleDatePickerState<DateFrameworkType>;
   }
 
   const {
     state: { selectedDate },
-    helpers: { setSelectedDate },
+    helpers: { select },
   } = stateAndHelpers;
 
   return (
@@ -67,44 +71,41 @@ export const CustomDatePickerPanel = forwardRef<
             </FormFieldLabel>
             <ListBox
               style={{ width: "10em" }}
-              onSelectionChange={(_event, item) => {
+              onSelectionChange={(event, item) => {
                 if (!item) {
                   return;
                 }
                 const tenor = Number.parseInt(item[0], 10);
-                let newSelectedDate;
+                let newSelection;
                 if (selectionVariant === "range") {
-                  newSelectedDate = selectedDate?.startDate
+                  newSelection = selectedDate?.startDate
                     ? {
                         startDate: selectedDate.startDate,
-                        endDate: selectedDate.startDate.add({
+                        endDate: dateAdapter.add(selectedDate.startDate, {
                           years: tenor,
                         }),
                       }
                     : {
-                        startDate: today(getLocalTimeZone()),
-                        endDate: today(getLocalTimeZone()).add({
+                        startDate: dateAdapter.today(),
+                        endDate: dateAdapter.add(dateAdapter.today(), {
                           years: tenor,
                         }),
                       };
-                  setSelectedDate(newSelectedDate, {
-                    startDate: false,
-                    endDate: false,
-                  });
+                  select(event, newSelection);
                 } else {
-                  newSelectedDate = selectedDate
-                    ? selectedDate.add({
+                  newSelection = selectedDate
+                    ? dateAdapter.add(selectedDate, {
                         years: tenor,
                       })
-                    : today(getLocalTimeZone()).add({
+                    : dateAdapter.add(dateAdapter.today(), {
                         years: tenor,
                       });
-                  setSelectedDate(newSelectedDate, false);
+                  select(event, newSelection);
                 }
               }}
             >
               {tenorOptions.map(({ tenor, label }) => (
-                <Option value={tenor} key={tenor} tabIndex={0}>
+                <Option value={tenor} key={tenor}>
                   {label}
                 </Option>
               ))}

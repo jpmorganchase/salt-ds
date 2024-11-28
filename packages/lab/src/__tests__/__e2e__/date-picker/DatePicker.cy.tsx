@@ -1,9 +1,28 @@
+import { AdapterDateFns } from "@salt-ds/date-adapters";
+import { AdapterDayjs } from "@salt-ds/date-adapters";
+import { AdapterLuxon } from "@salt-ds/date-adapters";
+import { AdapterMoment } from "@salt-ds/date-adapters";
 import * as datePickerStories from "@stories/date-picker/date-picker.stories";
 import { composeStories } from "@storybook/react";
 import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
 
 const composedStories = composeStories(datePickerStories);
 
-describe("GIVEN a DatePicker where selectionVariant is single", () => {
-  checkAccessibility(composedStories);
+const adapters: [AdapterDateFns, AdapterDayjs, AdapterLuxon, AdapterMoment] = [
+  new AdapterDateFns(),
+  new AdapterDayjs(),
+  new AdapterLuxon(),
+  new AdapterMoment(),
+];
+
+describe("GIVEN a DatePicker", () => {
+  adapters.forEach((adapter) => {
+    describe(`Tests with ${adapter.lib}`, () => {
+      beforeEach(() => {
+        cy.setDateAdapter(adapter);
+      });
+
+      checkAccessibility(composedStories);
+    });
+  });
 });

@@ -1,9 +1,4 @@
 import {
-  type DateValue,
-  getLocalTimeZone,
-  today,
-} from "@internationalized/date";
-import {
   Button,
   Divider,
   FlexItem,
@@ -12,32 +7,40 @@ import {
   FormFieldHelperText as FormHelperText,
   FormFieldLabel as FormLabel,
 } from "@salt-ds/core";
+import type { DateFrameworkType } from "@salt-ds/date-adapters";
 import {
+  type DateInputSingleDetails,
   DatePicker,
   DatePickerOverlay,
   DatePickerSingleInput,
   DatePickerSinglePanel,
+  DatePickerTrigger,
   type SingleDatePickerState,
   type SingleDateSelection,
-  formatDate,
-  getCurrentLocale,
   useDatePickerContext,
+  useLocalization,
 } from "@salt-ds/lab";
-import { type ReactElement, useCallback } from "react";
+import {
+  type ReactElement,
+  type SyntheticEvent,
+  useCallback,
+  useState,
+} from "react";
 
 const TodayButton = () => {
   const {
-    helpers: { setSelectedDate },
+    helpers: { select },
   } = useDatePickerContext({
     selectionVariant: "single",
-  }) as SingleDatePickerState;
+  }) as SingleDatePickerState<DateFrameworkType>;
+  const { dateAdapter } = useLocalization();
   return (
     <div style={{ display: "flex" }}>
       <Button
         style={{ margin: "var(--salt-spacing-50)", flexGrow: 1 }}
         sentiment="accented"
         appearance="bordered"
-        onClick={() => setSelectedDate(today(getLocalTimeZone()), false)}
+        onClick={(event: SyntheticEvent) => select(event, dateAdapter.today())}
       >
         Select Today
       </Button>
@@ -45,46 +48,62 @@ const TodayButton = () => {
   );
 };
 
-function formatSingleDate(
-  date: DateValue | null,
-  locale = getCurrentLocale(),
-  options?: Intl.DateTimeFormatOptions,
-) {
-  if (date) {
-    return formatDate(date, locale, options);
-  }
-  return date;
-}
-
 export const SingleWithTodayButton = (): ReactElement => {
-  const helperText = "Date format DD MMM YYYY (e.g. 09 Jun 2024)";
-  const handleSelectedDateChange = useCallback(
-    (newSelectedDate: SingleDateSelection | null) => {
-      console.log(`Selected date: ${formatSingleDate(newSelectedDate)}`);
+  const { dateAdapter } = useLocalization();
+  const defaultHelperText = "Date format DD MMM YYYY (e.g. 09 Jun 2024)";
+  const errorHelperText = "Please enter a valid date in DD MMM YYYY format";
+  const [helperText, setHelperText] = useState(defaultHelperText);
+  const [open, setOpen] = useState<boolean>(false);
+  const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
+    undefined,
+  );
+  const handleSelectionChange = useCallback(
+    (
+      event: SyntheticEvent,
+      date: SingleDateSelection<DateFrameworkType> | null,
+      details: DateInputSingleDetails | undefined,
+    ) => {
+      const { value, errors } = details || {};
+      console.log(
+        `Selected date: ${dateAdapter.isValid(date) ? dateAdapter.format(date, "DD MMM YYYY") : date}`,
+      );
+      if (errors?.length && value) {
+        setHelperText(`${errorHelperText} - ${errors[0].message}`);
+        setValidationStatus("error");
+        console.log(
+          `Error(s): ${errors
+            .map(({ type, message }) => `type=${type} message=${message}`)
+            .join(",")}`,
+        );
+        if (value) {
+          console.log(`Original Value: ${value}`);
+        }
+      } else {
+        setHelperText(defaultHelperText);
+        setValidationStatus(undefined);
+      }
     },
-    [],
+    [dateAdapter],
   );
 
   return (
-    <FormField style={{ width: "256px" }}>
+    <FormField style={{ width: "256px" }} validationStatus={validationStatus}>
       <FormLabel>Select a date</FormLabel>
       <DatePicker
         selectionVariant="single"
-        onSelectedDateChange={handleSelectedDateChange}
+        onSelectionChange={handleSelectionChange}
+        onOpen={setOpen}
       >
-        <DatePickerSingleInput />
+        <DatePickerTrigger>
+          <DatePickerSingleInput />
+        </DatePickerTrigger>
         <DatePickerOverlay>
           <FlexLayout gap={0} direction="column">
-            <FlexItem>
-              <FormHelperText style={{ margin: "var(--salt-spacing-75)" }}>
-                {helperText}
-              </FormHelperText>
-            </FlexItem>
             <FlexItem>
               <Divider />
             </FlexItem>
             <FlexItem>
-              <DatePickerSinglePanel />
+              <DatePickerSinglePanel helperText={helperText} />
             </FlexItem>
             <FlexItem>
               <Divider />
@@ -95,7 +114,7 @@ export const SingleWithTodayButton = (): ReactElement => {
           </FlexLayout>
         </DatePickerOverlay>
       </DatePicker>
-      <FormHelperText>{helperText}</FormHelperText>
+      {!open ? <FormHelperText>{helperText}</FormHelperText> : null}
     </FormField>
   );
 };

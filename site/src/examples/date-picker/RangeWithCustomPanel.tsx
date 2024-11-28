@@ -1,55 +1,103 @@
-import { getLocalTimeZone, today } from "@internationalized/date";
 import {
   FormField,
   FormFieldHelperText as FormHelperText,
   FormFieldLabel as FormLabel,
 } from "@salt-ds/core";
+import type { DateFrameworkType } from "@salt-ds/date-adapters";
 import {
+  type DateInputRangeDetails,
   DatePicker,
   DatePickerOverlay,
   DatePickerRangeInput,
+  DatePickerTrigger,
   type DateRangeSelection,
-  formatDate,
-  getCurrentLocale,
+  useLocalization,
 } from "@salt-ds/lab";
+// CustomDatePickerPanel is a sample component, representing a composition you could create yourselves, not intended for importing into your own projects
+// refer to https://github.com/jpmorganchase/salt-ds/blob/main/packages/lab/src/date-picker/useDatePicker.ts to create your own
 import { CustomDatePickerPanel } from "@salt-ds/lab/stories/date-picker/CustomDatePickerPanel";
-import { type ReactElement, useCallback } from "react";
-
-function formatDateRange(
-  dateRange: DateRangeSelection | null,
-  locale = getCurrentLocale(),
-  options?: Intl.DateTimeFormatOptions,
-): string {
-  const { startDate, endDate } = dateRange || {};
-  const formattedStartDate = startDate
-    ? formatDate(startDate, locale, options)
-    : startDate;
-  const formattedEndDate = endDate
-    ? formatDate(endDate, locale, options)
-    : endDate;
-  return `Start date: ${formattedStartDate}, End date: ${formattedEndDate}`;
-}
+import {
+  type ReactElement,
+  type SyntheticEvent,
+  useCallback,
+  useState,
+} from "react";
 
 export const RangeWithCustomPanel = (): ReactElement => {
-  const helperText = "Date format DD MMM YYYY (e.g. 09 Jun 2024)";
-  const minDate = today(getLocalTimeZone());
-  const handleSelectedDateChange = useCallback(
-    (newSelectedDate: DateRangeSelection | null) => {
-      console.log(`Selected date range: ${formatDateRange(newSelectedDate)}`);
+  const { dateAdapter } = useLocalization();
+  const defaultHelperText =
+    "Select range DD MMM YYYY - DD MMM YYYY (e.g. 09 Jun 2024)";
+  const errorHelperText = "Please enter a valid date in DD MMM YYYY format";
+  const [helperText, setHelperText] = useState(defaultHelperText);
+  const [open, setOpen] = useState<boolean>(false);
+  const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
+    undefined,
+  );
+  const handleSelectionChange = useCallback(
+    (
+      event: SyntheticEvent,
+      date: DateRangeSelection<DateFrameworkType> | null,
+      details: DateInputRangeDetails | undefined,
+    ) => {
+      const { startDate, endDate } = date ?? {};
+      const {
+        startDate: {
+          value: startDateOriginalValue = undefined,
+          errors: startDateErrors = undefined,
+        } = {},
+        endDate: {
+          value: endDateOriginalValue = undefined,
+          errors: endDateErrors = undefined,
+        } = {},
+      } = details || {};
+      console.log(
+        `StartDate: ${dateAdapter.isValid(startDate) ? dateAdapter.format(startDate, "DD MMM YYYY") : startDate}, EndDate: ${dateAdapter.isValid(endDate) ? dateAdapter.format(endDate, "DD MMM YYYY") : endDate}`,
+      );
+      if (startDateErrors?.length) {
+        console.log(
+          `StartDate Error(s): ${startDateErrors.map(({ type, message }) => `type: ${type} message: ${message}`).join(",")}`,
+        );
+        if (startDateOriginalValue) {
+          console.log(`StartDate Original Value: ${startDateOriginalValue}`);
+        }
+      }
+      if (endDateErrors?.length) {
+        console.log(
+          `EndDate Error(s): ${endDateErrors.map(({ type, message }) => `type: ${type} message: ${message}`).join(",")}`,
+        );
+        if (endDateOriginalValue) {
+          console.log(`EndDate Original Value: ${endDateOriginalValue}`);
+        }
+      }
+      if (startDateErrors?.length && startDateOriginalValue) {
+        setValidationStatus("error");
+        setHelperText(
+          `${errorHelperText} - start date ${startDateErrors[0].message}`,
+        );
+      } else if (endDateErrors?.length && endDateOriginalValue) {
+        setValidationStatus("error");
+        setHelperText(
+          `${errorHelperText} - end date ${endDateErrors[0].message}`,
+        );
+      } else {
+        setValidationStatus(undefined);
+        setHelperText(defaultHelperText);
+      }
     },
-    [],
+    [dateAdapter],
   );
 
   return (
-    <FormField style={{ width: "256px" }}>
+    <FormField style={{ width: "256px" }} validationStatus={validationStatus}>
       <FormLabel>Select a date range</FormLabel>
       <DatePicker
         selectionVariant="range"
-        minDate={minDate}
-        maxDate={minDate.add({ years: 50 })}
-        onSelectedDateChange={handleSelectedDateChange}
+        onSelectionChange={handleSelectionChange}
+        onOpen={setOpen}
       >
-        <DatePickerRangeInput />
+        <DatePickerTrigger>
+          <DatePickerRangeInput />
+        </DatePickerTrigger>
         <DatePickerOverlay>
           <CustomDatePickerPanel
             selectionVariant="range"
@@ -57,7 +105,7 @@ export const RangeWithCustomPanel = (): ReactElement => {
           />
         </DatePickerOverlay>
       </DatePicker>
-      <FormHelperText>{helperText}</FormHelperText>
+      {!open ? <FormHelperText>{helperText}</FormHelperText> : null}
     </FormField>
   );
 };

@@ -1,10 +1,4 @@
 import {
-  type DateValue,
-  getLocalTimeZone,
-  startOfMonth,
-  today,
-} from "@internationalized/date";
-import {
   FlexItem,
   FlexLayout,
   FormFieldContext,
@@ -14,6 +8,7 @@ import {
   makePrefixer,
   useControlled,
 } from "@salt-ds/core";
+import type { DateFrameworkType } from "@salt-ds/date-adapters";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import clsx from "clsx";
@@ -25,16 +20,16 @@ import {
   useState,
 } from "react";
 import {
-  CalendarDateGrid,
-  type CalendarDateGridProps,
+  CalendarGrid,
+  type CalendarGridProps,
   CalendarNavigation,
   type CalendarNavigationProps,
   type CalendarSingleProps,
   CalendarWeekHeader,
   type CalendarWeekHeaderProps,
-  getCurrentLocale,
 } from "../calendar";
 import { Calendar, type SingleDateSelection } from "../calendar";
+import { useLocalization } from "../localization-provider";
 import { useDatePickerContext } from "./DatePickerContext";
 import datePickerPanelCss from "./DatePickerPanel.css";
 
@@ -42,14 +37,17 @@ import datePickerPanelCss from "./DatePickerPanel.css";
  * Props for the DatePickerSinglePanel component.
  * @template T - The type of the selected date.
  */
-export interface DatePickerSinglePanelProps<T>
+export interface DatePickerSinglePanelProps<TDate extends DateFrameworkType>
   extends ComponentPropsWithoutRef<"div"> {
   /**
    * Callback fired when a date is selected.
    * @param event - The synthetic event.
    * @param selectedDate - The selected date or null.
    */
-  onSelect?: (event: SyntheticEvent, selectedDate?: T | null) => void;
+  onSelectionChange?: (
+    event: SyntheticEvent,
+    selectedDate?: TDate | null,
+  ) => void;
 
   /**
    * Helper text to be displayed below the date picker.
@@ -59,40 +57,37 @@ export interface DatePickerSinglePanelProps<T>
   /**
    * The currently visible month.
    */
-  visibleMonth?: DateValue;
+  visibleMonth?: TDate;
 
   /**
    * The default visible month.
    */
-  defaultVisibleMonth?: DateValue;
+  defaultVisibleMonth?: TDate;
 
   /**
    * Callback fired when the visible month changes.
    * @param event - The synthetic event.
    * @param visibleMonth - The new visible month.
    */
-  onVisibleMonthChange?: (
-    event: SyntheticEvent,
-    visibleMonth: DateValue,
-  ) => void;
+  onVisibleMonthChange?: (event: SyntheticEvent, visibleMonth: TDate) => void;
 
   /**
    * Props to be passed to the Calendar component.
    */
   CalendarProps?: Partial<
     Omit<
-      CalendarSingleProps,
+      CalendarSingleProps<TDate>,
       | "selectionVariant"
       | "selectedDate"
       | "defaultSelectedDate"
-      | "onSelectedDateChange"
+      | "onSelectionChange"
       | "onVisibleMonthChange"
     >
   >;
   /**
    * Props to be passed to the CalendarNavigation component.
    */
-  CalendarNavigationProps?: CalendarNavigationProps;
+  CalendarNavigationProps?: CalendarNavigationProps<TDate>;
   /**
    * Props to be passed to the CalendarWeekHeader component.
    */
@@ -100,15 +95,19 @@ export interface DatePickerSinglePanelProps<T>
   /**
    * Props to be passed to the CalendarDataGrid component.
    */
-  CalendarDataGridProps?: CalendarDateGridProps;
+  CalendarDataGridProps?: CalendarGridProps<TDate>;
 }
 
 const withBaseName = makePrefixer("saltDatePickerPanel");
 
-export const DatePickerSinglePanel = forwardRef<
-  HTMLDivElement,
-  DatePickerSinglePanelProps<SingleDateSelection>
->(function DatePickerSinglePanel(props, ref) {
+export const DatePickerSinglePanel = forwardRef(function DatePickerSinglePanel<
+  TDate extends DateFrameworkType,
+>(
+  props: DatePickerSinglePanelProps<SingleDateSelection<TDate>>,
+  ref: React.Ref<HTMLDivElement>,
+) {
+  const { dateAdapter } = useLocalization<TDate>();
+
   const {
     CalendarProps,
     CalendarWeekHeaderProps,
@@ -119,7 +118,7 @@ export const DatePickerSinglePanel = forwardRef<
     visibleMonth: visibleMonthProp,
     onVisibleMonthChange,
     helperText,
-    onSelect,
+    onSelectionChange,
     ...rest
   } = props;
 
@@ -133,19 +132,20 @@ export const DatePickerSinglePanel = forwardRef<
   const {
     state: {
       selectedDate,
-      timeZone = getLocalTimeZone(),
-      minDate = startOfMonth(today(timeZone)),
-      maxDate = minDate.add({ months: 1 }),
-      locale = getCurrentLocale(),
+      minDate = dateAdapter.startOf(dateAdapter.today(), "month"),
+      maxDate = dateAdapter.add(minDate, { months: 1 }),
     },
-    helpers: { setSelectedDate },
-  } = useDatePickerContext({ selectionVariant: "single" });
+    helpers: { select },
+  } = useDatePickerContext<TDate>({ selectionVariant: "single" });
 
-  const [hoveredDate, setHoveredDate] = useState<DateValue | null>(null);
+  const [hoveredDate, setHoveredDate] = useState<TDate | null>(null);
 
-  const [uncontrolledDefaultVisibleMonth] = useState(
-    () => defaultVisibleMonth || startOfMonth(selectedDate || today(timeZone)),
-  );
+  const [uncontrolledDefaultVisibleMonth] = useState(() => {
+    const validDate = dateAdapter.isValid(selectedDate)
+      ? selectedDate
+      : dateAdapter.today();
+    return defaultVisibleMonth || dateAdapter.startOf(validDate, "month");
+  });
   const [visibleMonth, setVisibleMonth] = useControlled({
     controlled: visibleMonthProp,
     default: uncontrolledDefaultVisibleMonth,
@@ -153,16 +153,19 @@ export const DatePickerSinglePanel = forwardRef<
     state: "visibleMonth",
   });
 
-  const handleSelectedDateChange = useCallback(
-    (event: SyntheticEvent, newDate: SingleDateSelection | null) => {
-      setSelectedDate(newDate, false);
-      onSelect?.(event, newDate);
+  const handleSelectionChange = useCallback(
+    (event: SyntheticEvent, newDate: SingleDateSelection<TDate> | null) => {
+      select(event, newDate);
+      onSelectionChange?.(event, newDate);
     },
-    [setSelectedDate, onSelect],
+    [select, onSelectionChange],
   );
 
   const handleHoveredDateChange = useCallback(
-    (event: SyntheticEvent, newHoveredDate: SingleDateSelection | null) => {
+    (
+      event: SyntheticEvent,
+      newHoveredDate: SingleDateSelection<TDate> | null,
+    ) => {
       setHoveredDate(newHoveredDate);
       if (newHoveredDate && CalendarProps?.onHoveredDateChange) {
         CalendarProps.onHoveredDateChange(event, newHoveredDate);
@@ -172,7 +175,7 @@ export const DatePickerSinglePanel = forwardRef<
   );
 
   const handleVisibleMonthChange = useCallback(
-    (event: SyntheticEvent, newVisibleMonth: DateValue) => {
+    (event: SyntheticEvent, newVisibleMonth: TDate) => {
       setVisibleMonth(newVisibleMonth);
       if (onVisibleMonthChange) {
         onVisibleMonthChange(event, newVisibleMonth);
@@ -181,19 +184,17 @@ export const DatePickerSinglePanel = forwardRef<
     [onVisibleMonthChange],
   );
 
-  const baseCalendarProps: Partial<CalendarSingleProps> = {
+  const baseCalendarProps: Partial<CalendarSingleProps<TDate>> = {
     selectionVariant: "single",
     visibleMonth,
     hoveredDate,
     onHoveredDateChange: handleHoveredDateChange,
     onVisibleMonthChange: handleVisibleMonthChange,
-    onSelectedDateChange: handleSelectedDateChange,
+    onSelectionChange: handleSelectionChange,
     hideOutOfRangeDates: true,
     selectedDate,
     minDate,
     maxDate,
-    locale,
-    timeZone,
     ...CalendarProps,
   };
 
@@ -216,7 +217,7 @@ export const DatePickerSinglePanel = forwardRef<
           <Calendar selectionVariant="single" {...baseCalendarProps}>
             <CalendarNavigation {...CalendarNavigationProps} />
             <CalendarWeekHeader {...CalendarWeekHeaderProps} />
-            <CalendarDateGrid {...CalendarDataGridProps} />
+            <CalendarGrid {...CalendarDataGridProps} />
           </Calendar>
         </FormFieldContext.Provider>
       </FlexLayout>

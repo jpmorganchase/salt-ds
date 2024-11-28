@@ -1,94 +1,117 @@
-import { CalendarDate } from "@internationalized/date";
 import {
   FormField,
   FormFieldHelperText as FormHelperText,
   FormFieldLabel as FormLabel,
 } from "@salt-ds/core";
+import type { DateFrameworkType } from "@salt-ds/date-adapters";
 import {
+  type DateInputRangeDetails,
   DatePicker,
   DatePickerOverlay,
   DatePickerRangeInput,
   DatePickerRangePanel,
+  DatePickerTrigger,
   type DateRangeSelection,
-  formatDate,
-  getCurrentLocale,
+  useLocalization,
 } from "@salt-ds/lab";
-import { type ReactElement, useCallback, useState } from "react";
-
-function formatDateRange(
-  dateRange: DateRangeSelection | null,
-  locale = getCurrentLocale(),
-  options?: Intl.DateTimeFormatOptions,
-): string {
-  const { startDate, endDate } = dateRange || {};
-  const formattedStartDate = startDate
-    ? formatDate(startDate, locale, options)
-    : startDate;
-  const formattedEndDate = endDate
-    ? formatDate(endDate, locale, options)
-    : endDate;
-  return `Start date: ${formattedStartDate}, End date: ${formattedEndDate}`;
-}
-
-function isValidDateRange(date: DateRangeSelection | null) {
-  if (date?.startDate === null || date?.endDate === null) {
-    return false;
-  }
-  return !(
-    date?.startDate &&
-    date?.endDate &&
-    date.startDate.compare(date.endDate) > 0
-  );
-}
+import {
+  type ReactElement,
+  type SyntheticEvent,
+  useCallback,
+  useState,
+} from "react";
 
 export const RangeWithInitialError = (): ReactElement => {
+  const { dateAdapter } = useLocalization();
   const defaultHelperText =
     "Select range DD MMM YYYY - DD MMM YYYY (e.g. 09 Jun 2024)";
   const errorHelperText = "Please enter a valid date in DD MMM YYYY format";
+  const [open, setOpen] = useState<boolean>(false);
   const [helperText, setHelperText] = useState(errorHelperText);
   const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
     "error",
   );
-  const handleSelectedDateChange = useCallback(
+  const handleSelectionChange = useCallback(
     (
-      newSelectedDate: DateRangeSelection | null,
-      error: { startDate: string | false; endDate: string | false },
+      event: SyntheticEvent,
+      date: DateRangeSelection<DateFrameworkType> | null,
+      details: DateInputRangeDetails | undefined,
     ) => {
-      console.log(`Selected date range: ${formatDateRange(newSelectedDate)}`);
-      const validationStatus =
-        !error.startDate && !error.endDate && isValidDateRange(newSelectedDate)
-          ? undefined
-          : "error";
-      if (validationStatus === "error") {
-        setHelperText(errorHelperText);
+      const { startDate, endDate } = date ?? {};
+      const {
+        startDate: {
+          value: startDateOriginalValue = undefined,
+          errors: startDateErrors = undefined,
+        } = {},
+        endDate: {
+          value: endDateOriginalValue = undefined,
+          errors: endDateErrors = undefined,
+        } = {},
+      } = details || {};
+      console.log(
+        `StartDate: ${dateAdapter.isValid(startDate) ? dateAdapter.format(startDate, "DD MMM YYYY") : startDate}, EndDate: ${dateAdapter.isValid(endDate) ? dateAdapter.format(endDate, "DD MMM YYYY") : endDate}`,
+      );
+      if (startDateErrors?.length) {
+        console.log(
+          `StartDate Error(s): ${startDateErrors.map(({ type, message }) => `type: ${type} message: ${message}`).join(",")}`,
+        );
+        if (startDateOriginalValue) {
+          console.log(`StartDate Original Value: ${startDateOriginalValue}`);
+        }
+      }
+      if (endDateErrors?.length) {
+        console.log(
+          `EndDate Error(s): ${endDateErrors.map(({ type, message }) => `type: ${type} message: ${message}`).join(",")}`,
+        );
+        if (endDateOriginalValue) {
+          console.log(`EndDate Original Value: ${endDateOriginalValue}`);
+        }
+      }
+      if (startDateErrors?.length && startDateOriginalValue) {
+        setValidationStatus("error");
+        setHelperText(
+          `${errorHelperText} - start date ${startDateErrors[0].message}`,
+        );
+      } else if (endDateErrors?.length && endDateOriginalValue) {
+        setValidationStatus("error");
+        setHelperText(
+          `${errorHelperText} - end date ${endDateErrors[0].message}`,
+        );
       } else {
+        setValidationStatus(undefined);
         setHelperText(defaultHelperText);
       }
-      setValidationStatus(validationStatus);
     },
-    [setValidationStatus, setHelperText],
+    [dateAdapter],
   );
 
+  const defaultStartVisibleMonth =
+    dateAdapter.parse("01/06/2024", "DD/MM/YYYY").date ?? dateAdapter.today();
   return (
     <FormField style={{ width: "256px" }} validationStatus={validationStatus}>
       <FormLabel>Select a date range</FormLabel>
       <DatePicker
         selectionVariant="range"
-        defaultSelectedDate={{ startDate: new CalendarDate(2024, 6, 9) }}
-        onSelectedDateChange={handleSelectedDateChange}
+        defaultSelectedDate={{
+          startDate: dateAdapter.parse("09/06/2024", "DD/MM/YYYY").date,
+          endDate: null,
+        }}
+        onSelectionChange={handleSelectionChange}
+        onOpen={setOpen}
       >
-        <DatePickerRangeInput
-          defaultValue={{ startDate: "09 Jun 2024", endDate: "bad date" }}
-          defaultDate={{ startDate: new CalendarDate(2024, 6, 9) }}
-        />
+        <DatePickerTrigger>
+          <DatePickerRangeInput
+            defaultValue={{ startDate: "09 Jun 2024", endDate: "bad date" }}
+          />
+        </DatePickerTrigger>
         <DatePickerOverlay>
           <DatePickerRangePanel
             helperText={helperText}
-            defaultStartVisibleMonth={new CalendarDate(2024, 6, 1)}
+            defaultStartVisibleMonth={defaultStartVisibleMonth}
           />
         </DatePickerOverlay>
       </DatePicker>
-      <FormHelperText>{helperText}</FormHelperText>
+      {!open ? <FormHelperText>{helperText}</FormHelperText> : null}
     </FormField>
   );
 };

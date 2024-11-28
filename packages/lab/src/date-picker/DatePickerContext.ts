@@ -1,13 +1,16 @@
-import type { DateValue } from "@internationalized/date";
 import { createContext } from "@salt-ds/core";
-import { useContext } from "react";
+import type { DateFrameworkType } from "@salt-ds/date-adapters";
+import { type Context, type Ref, type SyntheticEvent, useContext } from "react";
 import type { DateRangeSelection, SingleDateSelection } from "../calendar";
-import type { DateInputRangeError, DateInputSingleError } from "../date-input";
+import type {
+  DateInputRangeDetails,
+  DateInputSingleDetails,
+} from "../date-input";
 
 /**
  * Interface representing the base state for a DatePicker.
  */
-interface DatePickerBaseState {
+interface DatePickerBaseState<TDate extends DateFrameworkType> {
   /**
    * The state properties of the DatePicker.
    */
@@ -31,23 +34,15 @@ interface DatePickerBaseState {
     /**
      * The minimum selectable date.
      */
-    minDate?: DateValue;
+    minDate?: TDate;
     /**
      * The maximum selectable date.
      */
-    maxDate?: DateValue;
+    maxDate?: TDate;
     /**
      * Reference to the container element.
      */
-    containerRef: React.Ref<HTMLDivElement>;
-    /**
-     * The locale used for date formatting.
-     */
-    locale?: string;
-    /**
-     * The time zone used for date formatting.
-     */
-    timeZone?: string;
+    containerRef: Ref<HTMLDivElement>;
   };
   /**
    * Helper functions for managing the DatePicker state.
@@ -66,53 +61,46 @@ interface DatePickerBaseState {
 }
 
 /**
- * Type representing a single date picker error.
- */
-export type SingleDatePickerError = DateInputSingleError;
-
-/**
- * Type representing a range date picker error.
- */
-export type RangeDatePickerError = DateInputRangeError;
-
-/**
  * Interface representing the state for a single date picker.
  */
-export interface SingleDatePickerState extends DatePickerBaseState {
+export interface SingleDatePickerState<TDate extends DateFrameworkType>
+  extends DatePickerBaseState<TDate> {
   /**
    * The state properties of the single date picker.
    */
-  state: DatePickerBaseState["state"] & {
+  state: DatePickerBaseState<TDate>["state"] & {
     /**
      * The selected date.
      */
-    selectedDate: SingleDateSelection | null;
+    selectedDate: SingleDateSelection<TDate> | null;
     /**
      * The default selected date.
      */
-    defaultSelectedDate?: SingleDateSelection;
+    defaultSelectedDate?: SingleDateSelection<TDate>;
   };
   /**
    * Helper functions for managing the single date picker state.
    */
-  helpers: DatePickerBaseState["helpers"] & {
+  helpers: DatePickerBaseState<TDate>["helpers"] & {
     /**
-     * Applies the selected date.
-     * @param newDate - The new selected date.
-     * @param error - The error encountered during selection, if any.
+     * Apply the selected single date.
+     * @param event - The synthetic event.
+     * @param date - The new applied date.
      */
     apply: (
-      newDate: SingleDateSelection | null,
-      error: SingleDatePickerError,
+      event: SyntheticEvent,
+      date: SingleDateSelection<TDate> | null,
     ) => void;
     /**
-     * Sets the selected date.
-     * @param newDate - The new selected date.
-     * @param error - The error encountered during selection, if any.
+     * Select a single date.
+     * @param event - The synthetic event.
+     * @param date - The selected date or null.
+     * @param details - Details of selection, such as errors and original value.
      */
-    setSelectedDate: (
-      newDate: SingleDateSelection | null,
-      error: string | false,
+    select: (
+      event: SyntheticEvent,
+      date: SingleDateSelection<TDate> | null,
+      details?: DateInputSingleDetails,
     ) => void;
   };
 }
@@ -120,41 +108,43 @@ export interface SingleDatePickerState extends DatePickerBaseState {
 /**
  * Interface representing the state for a range date picker.
  */
-export interface RangeDatePickerState extends DatePickerBaseState {
+export interface RangeDatePickerState<TDate extends DateFrameworkType>
+  extends DatePickerBaseState<TDate> {
   /**
    * The state properties of the range date picker.
    */
-  state: DatePickerBaseState["state"] & {
+  state: DatePickerBaseState<TDate>["state"] & {
     /**
      * The selected date range.
      */
-    selectedDate: DateRangeSelection | null;
+    selectedDate: DateRangeSelection<TDate> | null;
     /**
      * The default selected date range.
      */
-    defaultSelectedDate?: DateRangeSelection;
+    defaultSelectedDate?: DateRangeSelection<TDate>;
   };
   /**
    * Helper functions for managing the range date picker state.
    */
-  helpers: DatePickerBaseState["helpers"] & {
+  helpers: DatePickerBaseState<TDate>["helpers"] & {
     /**
-     * Applies the selected date range.
-     * @param newDate - The new selected date range.
-     * @param error - The error encountered during selection, if any.
+     * Apply the selected date range.
+     * @param event - The synthetic event.
+     * @param date - The new applied date range
      */
     apply: (
-      newDate: DateRangeSelection | null,
-      error: RangeDatePickerError,
+      event: SyntheticEvent,
+      date: DateRangeSelection<TDate> | null,
     ) => void;
     /**
-     * Sets the selected date range.
-     * @param newDate - The new selected date range.
-     * @param error - The error encountered during selection, if any.
-     */
-    setSelectedDate: (
-      newDate: DateRangeSelection | null,
-      error: { startDate: string | false; endDate: string | false },
+     * Select a date range.
+     * @param event - The synthetic event.
+     * @param date - The selected date.
+     * @param details - Details of selection, such as errors and original value.     */
+    select: (
+      event: SyntheticEvent,
+      date: DateRangeSelection<TDate> | null,
+      details?: DateInputRangeDetails,
     ) => void;
   };
 }
@@ -162,20 +152,22 @@ export interface RangeDatePickerState extends DatePickerBaseState {
 /**
  * Type representing the state of a date picker, either single or range.
  */
-export type DatePickerState = SingleDatePickerState | RangeDatePickerState;
+export type DatePickerState<TDate extends DateFrameworkType> =
+  | SingleDatePickerState<TDate>
+  | RangeDatePickerState<TDate>;
 
 /**
  * Context for single date selection.
  */
 export const SingleDateSelectionContext = createContext<
-  SingleDatePickerState | undefined
+  SingleDatePickerState<any> | undefined
 >("SingleDateSelectionContext", undefined);
 
 /**
  * Context for date range selection.
  */
 export const DateRangeSelectionContext = createContext<
-  RangeDatePickerState | undefined
+  RangeDatePickerState<any> | undefined
 >("DateRangeSelectionContext", undefined);
 
 /**
@@ -195,23 +187,28 @@ export interface UseDatePickerContextProps {
  * @param props - The props for the hook.
  * @returns The state of the single date picker.
  */
-export function useDatePickerContext(props: {
+export function useDatePickerContext<TDate extends DateFrameworkType>(props: {
   selectionVariant: "single";
-}): SingleDatePickerState;
+}): SingleDatePickerState<TDate>;
 
 /**
  * Hook to use the date picker context for range date selection.
  * @param props - The props for the hook.
  * @returns The state of the range date picker.
  */
-export function useDatePickerContext(props: {
+export function useDatePickerContext<TDate extends DateFrameworkType>(props: {
   selectionVariant: "range";
-}): RangeDatePickerState;
-export function useDatePickerContext({
+}): RangeDatePickerState<TDate>;
+
+export function useDatePickerContext<TDate extends DateFrameworkType>({
   selectionVariant,
-}: UseDatePickerContextProps): DatePickerState {
+}: UseDatePickerContextProps): DatePickerState<TDate> {
   if (selectionVariant === "range") {
-    const context = useContext(DateRangeSelectionContext);
+    const context = useContext(
+      DateRangeSelectionContext as Context<
+        RangeDatePickerState<TDate> | undefined
+      >,
+    );
     if (!context) {
       throw new Error(
         'useDatePickerSelection should be called with props { selectionVariant : "range" } inside DateRangeSelectionContext.Provider',
@@ -219,7 +216,11 @@ export function useDatePickerContext({
     }
     return context;
   }
-  const context = useContext(SingleDateSelectionContext);
+  const context = useContext(
+    SingleDateSelectionContext as Context<
+      SingleDatePickerState<TDate> | undefined
+    >,
+  );
   if (!context) {
     throw new Error(
       'useDatePickerSelection should be called with props { selectionVariant : "single" } inside SingleDateSelectionContext.Provider',

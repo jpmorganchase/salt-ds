@@ -1,28 +1,33 @@
 import { makePrefixer } from "@salt-ds/core";
 import { clsx } from "clsx";
 import { type ComponentPropsWithRef, forwardRef } from "react";
-import { daysForLocale } from "./internal/utils";
+import { daysOfWeek } from "./internal/utils";
 
+import type { DateFrameworkType } from "@salt-ds/date-adapters";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
+import { useLocalization } from "../localization-provider";
 import calendarWeekHeaderCss from "./CalendarWeekHeader.css";
-import { getCurrentLocale } from "./formatDate";
+import { useCalendarContext } from "./internal/CalendarContext";
 
-export type CalendarWeekHeaderProps = ComponentPropsWithRef<"div"> & {
-  locale?: string;
-};
+/**
+ * Props for the CalendarWeekHeader component.
+ */
+export type CalendarWeekHeaderProps = ComponentPropsWithRef<"div"> & {};
 
 const withBaseName = makePrefixer("saltCalendarWeekHeader");
 
-export const CalendarWeekHeader = forwardRef<
-  HTMLDivElement,
-  CalendarWeekHeaderProps
->(function CalendarWeekHeader(
-  { className, locale = getCurrentLocale(), ...rest },
-  ref,
-) {
-  const weekdaysShort = daysForLocale("narrow", locale);
-  const weekdaysLong = daysForLocale("long", locale);
+export const CalendarWeekHeader = forwardRef(function CalendarWeekHeader<
+  TDate extends DateFrameworkType,
+>(props: CalendarWeekHeaderProps, ref: React.Ref<HTMLDivElement>) {
+  const { className, ...rest } = props;
+  const { dateAdapter } = useLocalization<TDate>();
+  const {
+    state: { locale },
+  } = useCalendarContext<TDate>();
+
+  const weekdaysShort = daysOfWeek(dateAdapter, "narrow", locale);
+  const weekdaysLong = daysOfWeek(dateAdapter, "long", locale);
 
   const targetWindow = useWindow();
   useComponentCssInjection({

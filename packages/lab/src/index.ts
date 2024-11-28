@@ -48,6 +48,7 @@ export {
 export * from "./layer-layout";
 export * from "./list";
 export * from "./list-next";
+export * from "./localization-provider";
 export * from "./logo";
 export * from "./menu-button";
 export * from "./metric";

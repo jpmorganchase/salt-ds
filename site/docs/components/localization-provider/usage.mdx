@@ -1,0 +1,384 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+## Using the component
+
+- Wrap your application with typically one `LocalizationProvider` to define the date adapter for date based controls.
+- `LocalizationProvider` can be nested with different adapters or locales.
+
+### When to use
+
+- When you use `DatePicker`, `DateInput` or `Calendar` components.
+- When you want to configure your own date adapter.
+- When you want to change the locale to non-US.
+- When you want to use a legacy data adapter, such as Moment as part of a migration journey to a maintained adapter.
+
+### When not to use
+
+- Inside an application that has no date controls.
+
+## Import
+
+To import `LocalizationProvider` from the core Salt package, use:
+
+```
+import { LocalizationProvider } from "@salt-ds/lab";
+```
+
+To import your chosen adapter adapter use one of the following :
+
+### date-fns
+
+```
+import { AdapterDateFns } from "@salt-ds/date-adapters";
+```
+
+### dayjs
+
+```
+import { AdapterDayJs } from "@salt-ds/date-adapters";
+```
+
+### luxon
+
+```
+import { AdapterLuxon } from "@salt-ds/date-adapters";
+```
+
+### moment (legacy)
+
+```
+import { AdapterMoment } from "@salt-ds/date-adapters";
+```
+
+## Usage
+
+```
+const dateAdapter = new AdapterDateFns(locale);
+```
+
+Each adapter imports the date library defined by your peer dependency but for dayjs and luxon, you may need to provide a preconfigured instance.
+
+Passing `dayjs` to `AdapterDayJs` enables you to preconfigure defaults.
+
+```
+import dayjs from "dayjs";
+dayjs.tz.setDefault('America/New_York');
+
+const dayjsAdapter = new AdapterDayJs(locale, dayjs);
+```
+
+Passing `moment-timezone` to `AdapterMoment` adapter enables timezone support.
+
+```
+import moment from "moment-timezone";
+
+const momentAdapter = new AdapterMoment(locale, moment);
+```
+
+## Props
+
+<PropsTable packageName="core" componentName="LocalizationProvider" />
+
+## Interfaces
+
+The `SaltDateAdapter` interface is implemented by all adapters, it provides a standardized way to interact with various date libraries, offering methods for date manipulation, formatting, and comparison. It normalizes their
+APIs so we can use the underlying date API within components.
+
+### Type Parameters
+
+- `TDate`: Represents the type of the date object used by the adapter.
+- `TLocale`: Represents the type of the locale, defaulting to `any`.
+
+### Properties
+
+| Property | Type                 | Description                                                     |
+| -------- | -------------------- | --------------------------------------------------------------- |
+| `locale` | `TLocale` (optional) | The locale used by the date adapter for formatting and parsing. |
+| `lib`    | `string`             | The name of the date library being used.                        |
+
+### Methods
+
+#### date
+
+Creates a date object from a string or returns an invalid date.
+
+| Parameter  | Type                  | Description                    |
+| ---------- | --------------------- | ------------------------------ |
+| `value`    | `string \| undefined` | The date string to parse.      |
+| `timezone` | `string` (optional)   | The timezone to use.           |
+| `locale`   | `TLocale` (optional)  | The locale to use for parsing. |
+
+**Returns**: `TDate` - The parsed date object or an invalid date object.
+
+#### format
+
+Formats a date object using the specified format string.
+
+| Parameter | Type                            | Description                       |
+| --------- | ------------------------------- | --------------------------------- |
+| `date`    | `TDate`                         | The date object to format.        |
+| `format`  | `RecommendedFormats` (optional) | The format string to use.         |
+| `locale`  | `TLocale` (optional)            | The locale to use for formatting. |
+
+**Returns**: `string` - The formatted date string.
+
+#### compare
+
+Compares two date objects.
+
+| Parameter | Type    | Description             |
+| --------- | ------- | ----------------------- |
+| `dateA`   | `TDate` | The first date object.  |
+| `dateB`   | `TDate` | The second date object. |
+
+**Returns**: `number` - `0` if equal, `1` if `dateA` is after `dateB`, `-1` if `dateA` is before `dateB`.
+
+#### parse
+
+Parses a date string using the specified format.
+
+| Parameter | Type                 | Description                    |
+| --------- | -------------------- | ------------------------------ |
+| `value`   | `string`             | The date string to parse.      |
+| `format`  | `string`             | The format string to use.      |
+| `locale`  | `TLocale` (optional) | The locale to use for parsing. |
+
+**Returns**: `ParserResult<TDate>` - An object containing the parsed date and any errors.
+
+#### isValid
+
+Checks if a date object is valid.
+
+| Parameter | Type  | Description               |
+| --------- | ----- | ------------------------- |
+| `date`    | `any` | The date object to check. |
+
+**Returns**: `boolean` - `true` if the date is valid, `false` otherwise.
+
+#### add
+
+Adds time to a date object.
+
+| Parameter  | Type    | Description                                                       |
+| ---------- | ------- | ----------------------------------------------------------------- |
+| `date`     | `TDate` | The date object to add to.                                        |
+| `duration` | Object  | An object specifying the time to add (days, weeks, months, etc.). |
+
+**Returns**: `TDate` - The resulting date object.
+
+#### subtract
+
+Subtracts time from a date object.
+
+| Parameter  | Type    | Description                                                            |
+| ---------- | ------- | ---------------------------------------------------------------------- |
+| `date`     | `TDate` | The date object to subtract from.                                      |
+| `duration` | Object  | An object specifying the time to subtract (days, weeks, months, etc.). |
+
+**Returns**: `TDate` - The resulting date object.
+
+#### set
+
+Sets specific components of a date object.
+
+| Parameter    | Type    | Description                                                          |
+| ------------ | ------- | -------------------------------------------------------------------- |
+| `date`       | `TDate` | The date object to modify.                                           |
+| `components` | Object  | An object specifying the components to set (day, month, year, etc.). |
+
+**Returns**: `TDate` - The resulting date object.
+
+#### isSame
+
+Checks if two date objects are the same based on the specified granularity.
+
+| Parameter     | Type                         | Description                    |
+| ------------- | ---------------------------- | ------------------------------ |
+| `dateA`       | `TDate`                      | The first date object.         |
+| `dateB`       | `TDate`                      | The second date object.        |
+| `granularity` | `"day" \| "month" \| "year"` | The granularity to compare by. |
+
+**Returns**: `boolean` - `true` if the dates are the same, `false` otherwise.
+
+#### startOf
+
+Gets the start of a specified time period for a date object.
+
+| Parameter     | Type                                   | Description        |
+| ------------- | -------------------------------------- | ------------------ |
+| `date`        | `TDate`                                | The date object.   |
+| `granularity` | `"day" \| "week" \| "month" \| "year"` | The time period.   |
+| `locale`      | `TLocale` (optional)                   | The locale to use. |
+
+**Returns**: `TDate` - The date object representing the start of the period.
+
+#### endOf
+
+Gets the end of a specified time period for a date object.
+
+| Parameter     | Type                                   | Description        |
+| ------------- | -------------------------------------- | ------------------ |
+| `date`        | `TDate`                                | The date object.   |
+| `granularity` | `"day" \| "week" \| "month" \| "year"` | The time period.   |
+| `locale`      | `TLocale` (optional)                   | The locale to use. |
+
+**Returns**: `TDate` - The date object representing the end of the period.
+
+#### today
+
+Gets the current date with the time set to the start of the day.
+
+| Parameter | Type                 | Description        |
+| --------- | -------------------- | ------------------ |
+| `locale`  | `TLocale` (optional) | The locale to use. |
+
+**Returns**: `TDate` - The current date at the start of the day.
+
+#### now
+
+Gets the current date and time.
+
+| Parameter | Type                 | Description        |
+| --------- | -------------------- | ------------------ |
+| `locale`  | `TLocale` (optional) | The locale to use. |
+
+**Returns**: `TDate` - The current date and time.
+
+#### getDayOfWeek
+
+Gets the day of the week for a date object.
+
+| Parameter | Type                 | Description        |
+| --------- | -------------------- | ------------------ |
+| `date`    | `TDate`              | The date object.   |
+| `locale`  | `TLocale` (optional) | The locale to use. |
+
+**Returns**: `number` - The day of the week as a number (0-6).
+
+#### getDay
+
+Gets the day of the month for a date object.
+
+| Parameter | Type    | Description      |
+| --------- | ------- | ---------------- |
+| `date`    | `TDate` | The date object. |
+
+**Returns**: `number` - The day of the month as a number (1-31).
+
+#### getMonth
+
+Gets the month for a date object.
+
+| Parameter | Type    | Description      |
+| --------- | ------- | ---------------- |
+| `date`    | `TDate` | The date object. |
+
+**Returns**: `number` - The month as a number (0-11).
+
+#### getYear
+
+Gets the year for a date object.
+
+| Parameter | Type    | Description      |
+| --------- | ------- | ---------------- |
+| `date`    | `TDate` | The date object. |
+
+**Returns**: `number` - The year as a number.
+
+#### getTime
+
+Gets the time components for a date object.
+
+| Parameter | Type    | Description      |
+| --------- | ------- | ---------------- |
+| `date`    | `TDate` | The date object. |
+
+**Returns**: `TimeFields` - An object containing the hour, minute, second, and millisecond.
+
+#### getDayOfWeekName
+
+Gets the name of the day of the week.
+
+| Parameter | Type                            | Description                            |
+| --------- | ------------------------------- | -------------------------------------- |
+| `dow`     | `number`                        | The day of the week as a number (0-6). |
+| `format`  | `"long" \| "short" \| "narrow"` | The format for the day name.           |
+| `locale`  | `any` (optional)                | The locale to use.                     |
+
+**Returns**: `string` - The name of the day of the week.
+
+#### clone
+
+Clones the date object.
+
+| Parameter | Type    | Description               |
+| --------- | ------- | ------------------------- |
+| `date`    | `TDate` | The date object to clone. |
+
+**Returns**: `TDate` - The cloned date object.
+
+## Supported formats
+
+The following table lists the supported format types for date and time formatting.
+
+| Format Type | Description                        |
+| ----------- | ---------------------------------- |
+| `YYYY`      | Full year (e.g., 2023)             |
+| `YY`        | Two-digit year (e.g., 23)          |
+| `MMMM`      | Full month name (e.g., July)       |
+| `MMM`       | Abbreviated month name (e.g., Jul) |
+| `MM`        | Two-digit month (e.g., 07)         |
+| `M`         | Month (e.g., 7)                    |
+| `DD`        | Two-digit day of month (e.g., 09)  |
+| `D`         | Day of month (e.g., 9)             |
+| `dddd`      | Full day name (e.g., Monday)       |
+| `ddd`       | Abbreviated day name (e.g., Mon)   |
+| `dd`        | Two-letter day name (e.g., Mo)     |
+| `d`         | Day of week number (1-7)           |
+| `HH`        | Two-digit hour (24-hour)           |
+| `H`         | Hour (24-hour)                     |
+| `hh`        | Two-digit hour (12-hour)           |
+| `h`         | Hour (12-hour)                     |
+| `mm`        | Two-digit minute                   |
+| `m`         | Minute                             |
+| `ss`        | Two-digit second                   |
+| `s`         | Second                             |
+| `A`         | AM/PM                              |
+| `a`         | am/pm                              |
+| `Z`         | Timezone offset                    |
+| `ZZ`        | Timezone offset                    |
+
+For example to parse a date you need specify a format string
+
+```
+adapter.parse("25 Dec 2025", "DD MMM YYYY")
+```
+
+To format a date object you need a format string
+
+```
+adapter.format(date, "DD MMM YYYY") // 25 Dec 2025
+```
+
+## Providing your own adapter
+
+Not normally necessary, but in order to add a new adapter that is a valid `TDate`, you will need to augment `DateFrameworkTypeMap`.
+
+```
+/**
+ * To add a new adapter, then, add the adapter's date object to `DateFrameworkTypeMap` interface
+ */
+ declare module "./types" {
+   interface DateFrameworkTypeMap {
+     luxon: DateTime;
+   }
+ }
+```

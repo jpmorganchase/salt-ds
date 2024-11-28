@@ -1,12 +1,4 @@
 import {
-  type DateValue,
-  endOfMonth,
-  getLocalTimeZone,
-  isSameMonth,
-  startOfMonth,
-  today,
-} from "@internationalized/date";
-import {
   FlexItem,
   FlexLayout,
   FormFieldContext,
@@ -16,6 +8,10 @@ import {
   makePrefixer,
   useControlled,
 } from "@salt-ds/core";
+import type {
+  DateFrameworkType,
+  SaltDateAdapter,
+} from "@salt-ds/date-adapters";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import clsx from "clsx";
@@ -28,8 +24,8 @@ import {
 } from "react";
 import {
   Calendar,
-  CalendarDateGrid,
-  type CalendarDateGridProps,
+  CalendarGrid,
+  type CalendarGridProps,
   CalendarNavigation,
   type CalendarNavigationProps,
   type CalendarOffsetProps,
@@ -39,8 +35,8 @@ import {
   type CalendarWeekHeaderProps,
   type DateRangeSelection,
   type UseCalendarSelectionRangeProps,
-  getCurrentLocale,
 } from "../calendar";
+import { useLocalization } from "../localization-provider";
 import { useDatePickerContext } from "./DatePickerContext";
 import datePickerPanelCss from "./DatePickerPanel.css";
 
@@ -48,14 +44,17 @@ import datePickerPanelCss from "./DatePickerPanel.css";
  * Props for the DatePickerRangePanel component.
  * @template T - The type of the selected date range.
  */
-export interface DatePickerRangePanelProps<T>
+export interface DatePickerRangePanelProps<TDate extends DateFrameworkType>
   extends ComponentPropsWithoutRef<"div"> {
   /**
    * Callback fired when a date range is selected.
    * @param event - The synthetic event.
    * @param selectedDate - The selected date range or null.
    */
-  onSelect?: (event: SyntheticEvent, selectedDate?: T | null) => void;
+  onSelectionChange?: (
+    event: SyntheticEvent,
+    selectedDate?: DateRangeSelection<TDate> | null,
+  ) => void;
 
   /**
    * Helper text to be displayed below the date picker.
@@ -65,12 +64,12 @@ export interface DatePickerRangePanelProps<T>
   /**
    * The currently visible month for the start date.
    */
-  startVisibleMonth?: DateValue;
+  startVisibleMonth?: TDate;
 
   /**
    * The default visible month for the start date.
    */
-  defaultStartVisibleMonth?: DateValue;
+  defaultStartVisibleMonth?: TDate;
 
   /**
    * Callback fired when the visible month for the start date changes.
@@ -79,18 +78,18 @@ export interface DatePickerRangePanelProps<T>
    */
   onStartVisibleMonthChange?: (
     event: SyntheticEvent,
-    visibleMonth: DateValue,
+    visibleMonth: TDate,
   ) => void;
 
   /**
    * The currently visible month for the end date.
    */
-  endVisibleMonth?: DateValue;
+  endVisibleMonth?: TDate;
 
   /**
    * The default visible month for the end date.
    */
-  defaultEndVisibleMonth?: DateValue;
+  defaultEndVisibleMonth?: TDate;
 
   /**
    * Callback fired when the visible month for the end date changes.
@@ -99,23 +98,23 @@ export interface DatePickerRangePanelProps<T>
    */
   onEndVisibleMonthChange?: (
     event: SyntheticEvent,
-    visibleMonth: DateValue,
+    visibleMonth: TDate,
   ) => void;
 
   /**
    * Props to be passed to the start date CalendarNavigation component.
    */
-  StartCalendarNavigationProps?: CalendarNavigationProps;
+  StartCalendarNavigationProps?: CalendarNavigationProps<TDate>;
 
   /**
    * Props to be passed to the start date calendar component.
    */
   StartCalendarProps?: Partial<
     Omit<
-      CalendarRangeProps | CalendarOffsetProps,
+      CalendarRangeProps<TDate> | CalendarOffsetProps<TDate>,
       | "selectedDate"
       | "defaultSelectedDate"
-      | "onSelectedDateChange"
+      | "onSelectionChange"
       | "onVisibleMonthChange"
     >
   >;
@@ -126,17 +125,17 @@ export interface DatePickerRangePanelProps<T>
   /**
    * Props to be passed to the start date CalendarDataGrid component.
    */
-  StartCalendarDataGridProps?: CalendarDateGridProps;
+  StartCalendarDataGridProps?: CalendarGridProps<TDate>;
 
   /**
    * Props to be passed to the end date CalendarNavigation component.
    */
   EndCalendarProps?: Partial<
     Omit<
-      CalendarRangeProps,
+      CalendarRangeProps<TDate>,
       | "selectedDate"
       | "defaultSelectedDate"
-      | "onSelectedDateChange"
+      | "onSelectionChange"
       | "onVisibleMonthChange"
     >
   >;
@@ -144,7 +143,7 @@ export interface DatePickerRangePanelProps<T>
   /**
    * Props to be passed to the end date CalendarNavigation component.
    */
-  EndCalendarNavigationProps?: CalendarNavigationProps;
+  EndCalendarNavigationProps?: CalendarNavigationProps<TDate>;
   /**
    * Props to be passed to the end date CalendarWeekHeader component.
    */
@@ -152,38 +151,43 @@ export interface DatePickerRangePanelProps<T>
   /**
    * Props to be passed to the end date CalendarDataGrid component.
    */
-  EndCalendarDataGridProps?: CalendarDateGridProps;
+  EndCalendarDataGridProps?: CalendarGridProps<TDate>;
 }
 
-function getFallbackVisibleMonths(
-  selectedDate: DateRangeSelection | null,
-  timeZone: string,
+function getFallbackVisibleMonths<TDate extends DateFrameworkType>(
+  dateAdapter: SaltDateAdapter<TDate>,
+  selectedDate: DateRangeSelection<TDate> | null,
 ) {
-  const createConsecutiveRange = (date: DateValue) => [
-    startOfMonth(date),
-    startOfMonth(date).add({ months: 1 }),
-  ];
+  function createConsecutiveRange(date: TDate) {
+    const startDate = dateAdapter.startOf(date, "month");
+    const endDate = dateAdapter.add(startDate, { months: 1 });
+    return [startDate, endDate];
+  }
 
-  if (selectedDate?.startDate) {
+  if (selectedDate && dateAdapter.isValid(selectedDate?.startDate)) {
     const { startDate, endDate } = selectedDate;
-    if (endDate) {
-      return isSameMonth(startDate, endDate)
+    if (dateAdapter.isValid(endDate)) {
+      return dateAdapter.isSame(startDate, endDate, "month")
         ? createConsecutiveRange(startDate)
-        : [startOfMonth(startDate), startOfMonth(endDate)];
+        : [
+            dateAdapter.startOf(startDate, "month"),
+            dateAdapter.startOf(endDate, "month"),
+          ];
     }
     return createConsecutiveRange(startDate);
   }
 
-  const currentMonth = startOfMonth(today(timeZone));
-  return [currentMonth, currentMonth.add({ months: 1 })];
+  const currentMonth = dateAdapter.startOf(dateAdapter.today(), "month");
+  return [currentMonth, dateAdapter.add(currentMonth, { months: 1 })];
 }
 
 const withBaseName = makePrefixer("saltDatePickerPanel");
 
-export const DatePickerRangePanel = forwardRef<
-  HTMLDivElement,
-  DatePickerRangePanelProps<DateRangeSelection>
->(function DatePickerRangePanel(props, ref) {
+export const DatePickerRangePanel = forwardRef(function DatePickerRangePanel<
+  TDate extends DateFrameworkType,
+>(props: DatePickerRangePanelProps<TDate>, ref: React.Ref<HTMLDivElement>) {
+  const { dateAdapter } = useLocalization<TDate>();
+
   const {
     className,
     defaultStartVisibleMonth: defaultStartVisibleMonthProp,
@@ -193,7 +197,7 @@ export const DatePickerRangePanel = forwardRef<
     endVisibleMonth: endVisibleMonthProp,
     onEndVisibleMonthChange,
     helperText,
-    onSelect,
+    onSelectionChange,
     StartCalendarProps: StartCalendarPropsProp,
     StartCalendarNavigationProps,
     StartCalendarWeekHeaderProps,
@@ -215,18 +219,16 @@ export const DatePickerRangePanel = forwardRef<
   const {
     state: {
       selectedDate,
-      timeZone = getLocalTimeZone(),
-      minDate = startOfMonth(today(timeZone)),
-      maxDate = minDate.add({ months: 1 }),
-      locale = getCurrentLocale(),
+      minDate = dateAdapter.startOf(dateAdapter.today(), "month"),
+      maxDate = dateAdapter.add(minDate, { months: 1 }),
     },
-    helpers: { setSelectedDate },
-  } = useDatePickerContext({ selectionVariant: "range" });
+    helpers: { select },
+  } = useDatePickerContext<TDate>({ selectionVariant: "range" });
 
-  const [hoveredDate, setHoveredDate] = useState<DateValue | null>(null);
+  const [hoveredDate, setHoveredDate] = useState<TDate | null>(null);
 
   const [[fallbackStartVisibleMonth, fallbackEndVisibleMonth]] = useState(() =>
-    getFallbackVisibleMonths(selectedDate, timeZone),
+    getFallbackVisibleMonths<TDate>(dateAdapter, selectedDate),
   );
 
   const [startVisibleMonth, setStartVisibleMonth] = useControlled({
@@ -243,17 +245,17 @@ export const DatePickerRangePanel = forwardRef<
     state: "endVisibleMonth",
   });
 
-  const handleSelectedDateChange = useCallback(
-    (event: SyntheticEvent, newDate: DateRangeSelection | null) => {
-      setSelectedDate(newDate, { startDate: false, endDate: false });
-      onSelect?.(event, newDate);
+  const handleSelectionChange = useCallback(
+    (event: SyntheticEvent, newDate: DateRangeSelection<TDate> | null) => {
+      select(event, newDate);
+      onSelectionChange?.(event, newDate);
     },
-    [onSelect, setSelectedDate],
+    [select, onSelectionChange],
   );
 
-  const handleHoveredStartDateChange: CalendarProps["onHoveredDateChange"] =
+  const handleHoveredStartDateChange: CalendarProps<TDate>["onHoveredDateChange"] =
     useCallback(
-      (event: SyntheticEvent, newHoveredDate: DateValue | null) => {
+      (event: SyntheticEvent, newHoveredDate: TDate | null) => {
         setHoveredDate(newHoveredDate);
         if (newHoveredDate && StartCalendarPropsProp?.onHoveredDateChange) {
           StartCalendarPropsProp.onHoveredDateChange?.(event, newHoveredDate);
@@ -262,7 +264,7 @@ export const DatePickerRangePanel = forwardRef<
       [StartCalendarPropsProp?.onHoveredDateChange],
     );
   const handleHoveredEndDateChange = useCallback(
-    (event: SyntheticEvent, newHoveredDate: DateValue | null) => {
+    (event: SyntheticEvent, newHoveredDate: TDate | null) => {
       setHoveredDate(newHoveredDate);
       if (newHoveredDate && EndCalendarPropsProp?.onHoveredDateChange) {
         EndCalendarPropsProp.onHoveredDateChange(event, newHoveredDate);
@@ -272,10 +274,10 @@ export const DatePickerRangePanel = forwardRef<
   );
 
   const handleStartVisibleMonthChange = useCallback(
-    (event: SyntheticEvent, newVisibleMonth: DateValue) => {
+    (event: SyntheticEvent, newVisibleMonth: TDate) => {
       setStartVisibleMonth(newVisibleMonth);
-      if (newVisibleMonth.compare(endVisibleMonth) >= 0) {
-        setEndVisibleMonth(newVisibleMonth.add({ months: 1 }));
+      if (dateAdapter.compare(newVisibleMonth, endVisibleMonth) >= 0) {
+        setEndVisibleMonth(dateAdapter.add(newVisibleMonth, { months: 1 }));
       }
       onStartVisibleMonthChange?.(event, newVisibleMonth);
     },
@@ -283,11 +285,14 @@ export const DatePickerRangePanel = forwardRef<
   );
 
   const handleEndVisibleMonthChange = useCallback(
-    (event: SyntheticEvent, newVisibleMonth: DateValue) => {
+    (event: SyntheticEvent, newVisibleMonth: TDate) => {
       setEndVisibleMonth(newVisibleMonth);
-      if (newVisibleMonth.compare(startVisibleMonth) <= 0) {
+      if (dateAdapter.compare(newVisibleMonth, startVisibleMonth) <= 0) {
         setStartVisibleMonth(
-          startOfMonth(newVisibleMonth.subtract({ months: 1 })),
+          dateAdapter.startOf(
+            dateAdapter.subtract(newVisibleMonth, { months: 1 }),
+            "month",
+          ),
         );
       }
       onEndVisibleMonthChange?.(event, newVisibleMonth);
@@ -295,43 +300,49 @@ export const DatePickerRangePanel = forwardRef<
     [startVisibleMonth, onEndVisibleMonthChange],
   );
 
-  function getHoveredDate(
-    date?: DateValue | null,
-    hoveredDate?: DateValue | null,
-  ) {
-    return date && hoveredDate && hoveredDate?.compare(endOfMonth(date)) > 0
-      ? endOfMonth(date)
+  function getHoveredDate(date?: TDate | null, hoveredDate?: TDate | null) {
+    return date &&
+      hoveredDate &&
+      dateAdapter.compare(hoveredDate, dateAdapter.endOf(date, "month")) > 0
+      ? dateAdapter.endOf(date, "month")
       : hoveredDate;
   }
+
+  const calendarSelectedDate = {
+    startDate:
+      selectedDate && dateAdapter.isValid(selectedDate.startDate)
+        ? selectedDate.startDate
+        : null,
+    endDate:
+      selectedDate && dateAdapter.isValid(selectedDate.endDate)
+        ? selectedDate.endDate
+        : null,
+  };
 
   const StartCalendarProps = {
     visibleMonth: startVisibleMonth,
     hoveredDate: getHoveredDate(selectedDate?.startDate, hoveredDate),
-    selectedDate: selectedDate as DateRangeSelection,
+    selectedDate: calendarSelectedDate,
     onHoveredDateChange: handleHoveredStartDateChange,
     onVisibleMonthChange: handleStartVisibleMonthChange,
-    onSelectedDateChange: handleSelectedDateChange,
+    onSelectionChange: handleSelectionChange,
     hideOutOfRangeDates: true,
     minDate,
     maxDate,
-    locale,
-    timeZone,
     ...StartCalendarPropsProp,
-  } as Partial<UseCalendarSelectionRangeProps>;
+  } as Partial<UseCalendarSelectionRangeProps<TDate>>;
   const EndCalendarProps = {
     visibleMonth: endVisibleMonth,
     hoveredDate,
-    selectedDate: selectedDate as DateRangeSelection,
+    selectedDate: calendarSelectedDate,
     onHoveredDateChange: handleHoveredEndDateChange,
     onVisibleMonthChange: handleEndVisibleMonthChange,
-    onSelectedDateChange: handleSelectedDateChange,
+    onSelectionChange: handleSelectionChange,
     hideOutOfRangeDates: true,
     minDate,
     maxDate,
-    locale,
-    timeZone,
     ...EndCalendarPropsProp,
-  } as Partial<UseCalendarSelectionRangeProps>;
+  } as Partial<UseCalendarSelectionRangeProps<TDate>>;
 
   return (
     <StackLayout
@@ -352,12 +363,12 @@ export const DatePickerRangePanel = forwardRef<
           <Calendar selectionVariant={"range"} {...StartCalendarProps}>
             <CalendarNavigation {...StartCalendarNavigationProps} />
             <CalendarWeekHeader {...StartCalendarWeekHeaderProps} />
-            <CalendarDateGrid {...StartCalendarDataGridProps} />
+            <CalendarGrid {...StartCalendarDataGridProps} />
           </Calendar>
           <Calendar selectionVariant={"range"} {...EndCalendarProps}>
             <CalendarNavigation {...EndCalendarNavigationProps} />
             <CalendarWeekHeader {...EndCalendarWeekHeaderProps} />
-            <CalendarDateGrid {...EndCalendarDataGridProps} />
+            <CalendarGrid {...EndCalendarDataGridProps} />
           </Calendar>
         </FormFieldContext.Provider>
       </FlexLayout>

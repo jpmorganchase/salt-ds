@@ -1,97 +1,130 @@
-import { type DateValue, parseDate } from "@internationalized/date";
-import { formatDate } from "@salt-ds/lab";
-import * as calendarStories from "@stories/calendar/calendar.stories";
-import { composeStories } from "@storybook/react";
+import type {
+  DateFrameworkType,
+  SaltDateAdapter,
+} from "@salt-ds/date-adapters";
+import { AdapterDateFns } from "@salt-ds/date-adapters";
+import { AdapterDayjs } from "@salt-ds/date-adapters";
+import { AdapterLuxon } from "@salt-ds/date-adapters";
+import { AdapterMoment } from "@salt-ds/date-adapters";
+import {
+  Calendar,
+  CalendarGrid,
+  CalendarNavigation,
+  CalendarWeekHeader,
+} from "@salt-ds/lab";
 
-const { Offset } = composeStories(calendarStories);
+// Initialize adapters
+const adapterDateFns = new AdapterDateFns();
+const adapterDayjs = new AdapterDayjs();
+const adapterLuxon = new AdapterLuxon();
+const adapterMoment = new AdapterMoment();
 
-function getAllDatesInRange(startDate: DateValue, endDate: DateValue) {
+const adapters = [adapterDateFns, adapterDayjs, adapterLuxon, adapterMoment];
+
+function getAllDatesInRange(
+  adapter: SaltDateAdapter<DateFrameworkType>,
+  startDate: DateFrameworkType,
+  endDate: DateFrameworkType,
+) {
   const dates = [];
-
   let currentDate = startDate;
-  while (currentDate.compare(endDate) <= 0) {
+  while (adapter.compare(currentDate, endDate) <= 0) {
     dates.push(startDate);
-    currentDate = currentDate.add({ days: 1 });
+    currentDate = adapter.add(currentDate, { days: 1 });
   }
   return dates;
 }
 
 describe("GIVEN a Calendar with offset selection", () => {
-  const testDate = parseDate("2022-02-03");
-  const testLocale = "en-GB";
+  adapters.forEach((adapter: SaltDateAdapter<DateFrameworkType>) => {
+    describe(`Tests with ${adapter.lib}`, () => {
+      beforeEach(() => {
+        const today = new Date(2024, 4, 6);
+        cy.clock(today, ["Date"]);
+        cy.setDateAdapter(adapter);
+      });
 
-  const formatDay = (date: DateValue) => {
-    return formatDate(date, testLocale, {
-      day: "2-digit",
-      month: "long",
-      year: "numeric",
+      afterEach(() => {
+        cy.clock().then((clock) => clock.restore());
+      });
+
+      const testDate = adapter.parse("03/02/2024", "DD/MM/YYYY").date;
+
+      it("SHOULD allow a defined range to be selected", () => {
+        cy.mount(
+          <Calendar selectionVariant="offset" defaultVisibleMonth={testDate}>
+            <CalendarNavigation />
+            <CalendarWeekHeader />
+            <CalendarGrid />
+          </Calendar>,
+        );
+
+        const offsetDate = adapter.add(testDate, { days: 4 });
+        const datesInRange = getAllDatesInRange(adapter, testDate, offsetDate);
+
+        // Simulate hovering over the base date button
+        cy.findByRole("button", {
+          name: adapter.format(testDate, "DD MMMM YYYY"),
+        }).realHover();
+
+        // Verify that all dates in the range are highlighted
+        datesInRange.forEach((dateInRange) => {
+          cy.findByRole("button", {
+            name: adapter.format(dateInRange, "DD MMMM YYYY"),
+          }).should("have.class", "saltCalendarDay-hoveredOffset");
+        });
+
+        // Simulate clicking the base date button to select the range
+        cy.findByRole("button", {
+          name: adapter.format(testDate, "DD MMMM YYYY"),
+        }).realClick();
+
+        // Verify that all dates in the range are selected
+        datesInRange.forEach((dateInRange) => {
+          cy.findByRole("button", {
+            name: adapter.format(dateInRange, "DD MMMM YYYY"),
+          }).should("have.attr", "aria-pressed", "true");
+        });
+
+        const newBaseDate = adapter.add(testDate, { weeks: 1 });
+        const newOffsetDate = adapter.add(newBaseDate, { days: 4 });
+        const datesInNewRange = getAllDatesInRange(
+          adapter,
+          newBaseDate,
+          newOffsetDate,
+        );
+
+        // Simulate clicking a new base date button to select a new range
+        cy.findByRole("button", {
+          name: adapter.format(newBaseDate, "DD MMMM YYYY"),
+        }).realClick();
+
+        // Verify that all dates in the new range are selected
+        datesInNewRange.forEach((dateInRange) => {
+          cy.findByRole("button", {
+            name: adapter.format(dateInRange, "DD MMMM YYYY"),
+          }).should("have.attr", "aria-pressed", "true");
+        });
+
+        // Verify that the previous range is unselected
+        datesInRange.forEach((dateInRange) => {
+          cy.findByRole("button", {
+            name: adapter.format(dateInRange, "DD MMMM YYYY"),
+          }).should("not.have.attr", "aria-pressed");
+        });
+
+        // Simulate pressing the ArrowUp key to move the focus
+        cy.realPress("ArrowUp");
+        // Simulate pressing the Enter key to select the range
+        cy.realPress("Enter");
+
+        // Verify that the original range is selected again
+        datesInRange.forEach((dateInRange) => {
+          cy.findByRole("button", {
+            name: adapter.format(dateInRange, "DD MMMM YYYY"),
+          }).should("have.attr", "aria-pressed", "true");
+        });
+      });
     });
-  };
-
-  it("SHOULD allow a defined range to be selected", () => {
-    cy.mount(<Offset defaultVisibleMonth={testDate} locale={testLocale} />);
-    const baseDate = testDate.add({ days: 3 });
-    const datesInRange = getAllDatesInRange(
-      // @ts-ignore
-      baseDate,
-      // @ts-ignore
-      Offset.args?.endDateOffset(baseDate),
-    );
-    // Simulate hovering over the base date button
-    cy.findByRole("button", {
-      name: formatDay(baseDate),
-    }).realHover();
-    // Verify that all dates in the range are highlighted
-    for (const dateInRange of datesInRange) {
-      cy.findByRole("button", {
-        name: formatDay(dateInRange),
-      }).should("have.class", "saltCalendarDay-hoveredOffset");
-    }
-
-    // Simulate clicking the base date button to select the range
-    cy.findByRole("button", {
-      name: formatDay(baseDate),
-    }).realClick();
-    // Verify that all dates in the range are selected
-    for (const dateInRange of datesInRange) {
-      cy.findByRole("button", {
-        name: formatDay(dateInRange),
-      }).should("have.attr", "aria-pressed", "true");
-    }
-
-    const newBaseDate = baseDate.add({ weeks: 1 });
-    const datesInNewRange = getAllDatesInRange(
-      newBaseDate,
-      // @ts-ignore
-      Offset.args?.endDateOffset(newBaseDate),
-    );
-
-    // Simulate clicking a new base date button to select a new range
-    cy.findByRole("button", {
-      name: formatDay(baseDate.add({ weeks: 1 })),
-    }).realClick();
-    // Verify that all dates in the new range are selected
-    for (const dateInRange of datesInNewRange) {
-      cy.findByRole("button", {
-        name: formatDay(dateInRange),
-      }).should("have.attr", "aria-pressed", "true");
-    }
-    // Verify that the previous range is unselected
-    for (const dateInRange of datesInRange) {
-      cy.findByRole("button", {
-        name: formatDay(dateInRange),
-      }).should("not.have.attr", "aria-pressed");
-    }
-
-    // Simulate pressing the ArrowUp key to move the focus
-    cy.realPress("ArrowUp");
-    // Simulate pressing the Enter key to select the range
-    cy.realPress("Enter");
-    // Verify that the original range is selected again
-    for (const dateInRange of datesInRange) {
-      cy.findByRole("button", {
-        name: formatDay(dateInRange),
-      }).should("have.attr", "aria-pressed", "true");
-    }
   });
 });
