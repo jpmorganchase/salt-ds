@@ -45,7 +45,7 @@ const adapters = [adapterDateFns, adapterDayjs, adapterLuxon, adapterMoment];
 function assertDateChange(
   spy: any,
   expectedValue: string,
-  expectedDate: DateFrameworkType | undefined,
+  expectedDate: DateFrameworkType | null,
   adapter: SaltDateAdapter<DateFrameworkType>,
 ) {
   const lastCallArgs = spy.args[spy.callCount - 1];
@@ -159,7 +159,7 @@ describe("GIVEN a DateInputSingle", () => {
         cy.realPress("Tab");
         cy.get("@dateChangeSpy").should("have.callCount", 3);
         cy.get("@dateChangeSpy").then((spy) =>
-          assertDateChange(spy, "", undefined, adapter),
+          assertDateChange(spy, "", null, adapter),
         );
         cy.get("@dateValueChangeSpy").should(
           "have.been.calledWith",

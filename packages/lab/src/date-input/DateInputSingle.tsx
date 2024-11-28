@@ -267,7 +267,7 @@ export const DateInputSingle = forwardRef<
       const parse = parseProp ?? dateAdapter.parse.bind(dateAdapter);
       const parseResult = dateValue?.length
         ? parse(dateValue, format, locale)
-        : { date: undefined };
+        : { date: null };
       let { date: parsedDate, ...parseDetails } = parseResult;
       let formattedValue = "";
       if (dateAdapter.isValid(parsedDate)) {

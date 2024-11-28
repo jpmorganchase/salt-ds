@@ -530,6 +530,7 @@ export const SingleWithInitialError: StoryFn<
       <FormLabel>Select a date</FormLabel>
       <DatePicker
         selectionVariant="single"
+        defaultSelectedDate={dateAdapter.parse("bad date", "DD MMM YYYY").date}
         {...args}
         onSelectionChange={handleSelectionChange}
         onOpen={setOpen}
