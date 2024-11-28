@@ -18,21 +18,16 @@ export namespace Stepper {
     children: ReactNode;
   }
 
-  export type Orientation = 
-    | "horizontal"
-    | "vertical"
-  ;
+  export type Orientation = "horizontal" | "vertical";
 }
 
 const withBaseName = makePrefixer("saltStepper");
 
 export const Stepper = forwardRef<HTMLOListElement, Stepper.Props>(
-  function Stepper({
-    orientation: orientationProp,
-    children,
-    className,
-    ...props
-  }, ref) {
+  function Stepper(
+    { orientation: orientationProp, children, className, ...props },
+    ref,
+  ) {
     const targetWindow = useWindow();
     const orientationContext = useContext(OrientationContext);
     const orientation = orientationProp || orientationContext;
@@ -46,11 +41,7 @@ export const Stepper = forwardRef<HTMLOListElement, Stepper.Props>(
     return (
       <StepperProvider orientation={orientation}>
         <ol
-          className={clsx(
-            withBaseName(),
-            withBaseName(orientation),
-            className,
-          )}
+          className={clsx(withBaseName(), withBaseName(orientation), className)}
           ref={ref}
           {...props}
         >

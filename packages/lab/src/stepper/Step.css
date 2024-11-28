@@ -65,7 +65,7 @@
 
 .saltStepper-vertical .saltStep.saltStep-expanded > .saltStep-content {
   opacity: 1;
-  
+
   grid-template-rows:
     var(--salt-size-base)
     min-content
@@ -97,9 +97,7 @@
 
 .saltStepper-vertical .saltStep-description {
   padding-bottom: var(--salt-spacing-300);
-  padding-left: calc(
-    (var(--saltStep-depth) + 1) * var(--salt-spacing-100)
-  );
+  padding-left: calc((var(--saltStep-depth) + 1) * var(--salt-spacing-100));
 }
 
 .saltStep-stage-pending {

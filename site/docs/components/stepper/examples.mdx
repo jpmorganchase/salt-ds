@@ -33,12 +33,12 @@
   
   <LivePreview componentName="stepper" exampleName="StageStatus" />
 
-  ## Nesting
+  ## Nested Steps
 
-  When using the `Stepper` component in vertical orientation, you can nest `Step` components inside each other.
-  When done so, the parent `Step` renders another `Stepper` and places the nested `Steps` (children) inside it.
-  Additionally an expand button is added to expand and collapse the substeps.
-  Steps which contain active step children are to have a stage of `inprogress`.
+  When using the `Stepper` component in vertical orientation, you can nest `Step` components other `Step` components.
+  When done so, the parent `Step` renders another `Stepper` and places the nested `Steps` (children) inside of it.
+  Additionally an expand button is added on the parent `Step` to expand or collapse the substeps.
+  The parent Step containing the active Step child children are to have a stage of `inprogress`.
 
   <LivePreview componentName="stepper" exampleName="Nesting" />
 
@@ -46,16 +46,17 @@
 
   The `Stepper` and `Step` component are purely presentational components.
   If you want to control the state of the `Stepper` you can utilize the `useStepReducer` hook.
-  The hook is quite smart
 
   <LivePreview componentName="stepper" exampleName="Hook" />
-
-  ## Hook Advanced
   
-  The `useStepReducer` hook is smart! If you add `stage: 'active'` to a step, it will automatically
-  determine the stages of all other steps, both before and after the active one.
-  I call it `autoStage`. Inside the state object, you can find useful properties: 
-  `steps`, `flatSteps`, `activeStep`, `previousStep`, `nextStep`, `started` and `ended`.
+  The `useStepReducer` hook is smart! If you add `stage: 'active'` to any step, it will automatically
+  determine the stages of all other steps (autoStage), both before and after the active one.
+  Inside the state object, you can find useful properties such as `steps`, `flatSteps`,
+  `activeStep`, `previousStep`, `nextStep`, `started` and `ended`. The dispatch method
+  as in the native useReducer hook accepts an action object with a type.
+  Acceptable action types are: 'next', 'previous', 'warning', 'error' and 'clear'.
+  The warning and error types will set the status of the active step to 'warning' or 'error'.
+  The clear type will reset the status of the active step to undefined.
 
   <LivePreview componentName="stepper" exampleName="HookAdvanced" />
 
