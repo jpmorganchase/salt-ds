@@ -149,20 +149,25 @@ export class AdapterMoment implements SaltDateAdapter<Moment, string> {
 
   /**
    * Formats a Moment.js date object using the specified format string.
+   * Returns empty string when null or undefined date is given.
+   *
    * @param date - The Moment.js date object to format.
    * @param format - The format string to use.
    * @param locale - The locale to use for formatting.
    * @returns The formatted date string.
    */
   public format(
-    date: Moment,
+    date: Moment | null | undefined,
     format: RecommendedFormats = "DD MMM YYYY",
     locale?: string,
   ): string {
-    return date
-      .clone()
-      .locale(locale ?? this.locale)
-      .format(format);
+    if (this.isValid(date)) {
+      return date
+        .clone()
+        .locale(locale ?? this.locale)
+        .format(format);
+    }
+    return "";
   }
 
   /**

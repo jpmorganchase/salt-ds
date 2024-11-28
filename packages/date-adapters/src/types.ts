@@ -143,7 +143,11 @@ export interface SaltDateAdapter<
    * @param locale - The locale to use for formatting.
    * @returns The formatted date string.
    */
-  format(date: TDate, format?: RecommendedFormats, locale?: TLocale): string;
+  format(
+    date: TDate | null | undefined,
+    format?: RecommendedFormats,
+    locale?: TLocale,
+  ): string;
 
   /**
    * Compares two date objects.

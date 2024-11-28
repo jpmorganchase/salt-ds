@@ -173,18 +173,23 @@ export class AdapterLuxon implements SaltDateAdapter<DateTime, string> {
 
   /**
    * Formats a Luxon DateTime object using the specified format string.
+   * Returns empty string when null or undefined date is given.
+   *
    * @param date - The Luxon DateTime object to format.
    * @param format - The format string to use.
    * @param locale - The locale to use for formatting.
    * @returns The formatted date string.
    */
   public format(
-    date: DateTime,
+    date: DateTime | null | undefined,
     format: RecommendedFormats = "dd MMM yyyy",
     locale?: string,
   ): string {
-    const luxonFormat = this.mapToLuxonFormat(format);
-    return date.setLocale(locale ?? this.locale).toFormat(luxonFormat);
+    if (this.isValid(date)) {
+      const luxonFormat = this.mapToLuxonFormat(format);
+      return date.setLocale(locale ?? this.locale).toFormat(luxonFormat);
+    }
+    return "";
   }
 
   /**
