@@ -39,6 +39,7 @@ function getStyleDictionaryConfig({ modes, densities, accents }) {
           "attribute/cti",
           "salt-ds/name/kebab", // Custom transform, see below
           "salt-ds/value/px",
+          "color/rgb",
           // "name/kebab", // https://github.com/amzn/style-dictionary/blob/0fcf229f78e334a5c6bec55725fe92a8de97590c/lib/common/transforms.js#L320-L325
           // "dimension/pixelToRem",
           //   "color/hexAlpha", // style-dictionary-utils transform // doesn't work with $value for some reason
@@ -61,8 +62,13 @@ function getStyleDictionaryConfig({ modes, densities, accents }) {
           "attribute/cti",
           "salt-ds/name/kebab", // Custom transform, see below
           "salt-ds/value/px",
+          "color/rgb",
         ],
-        files: [...getPaletteNextFiles({ modes, densities, accents })],
+        files: [
+          foundationColorsNextFile,
+          foundationAlphaNextFile,
+          ...getPaletteNextFiles({ modes, densities, accents }),
+        ],
       },
     },
   };

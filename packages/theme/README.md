@@ -12,7 +12,9 @@ This is a regular package
 1. Copy output to corresponding `*.tokens.json` file
 1. Modify color tokens
    1. remove `categorical.` from , e.g. replace `"{color.categorical` to `"{color`
+   1. added `background.` to a few background color raw tokens
 
 TODOs
 
-- [ ] Custom value tranformer for `foundation/alpha-next.css` tokens, to achieve `rgba` syntax from `packages/theme/css/foundations/alpha-next.css`
+- [ ] Custom value tranformer for `foundation/alpha-next.css` tokens, to achieve `rgba` syntax from `packages/theme/css/foundations/alpha-next.css`? Or this may not be needed given we generate these values
+- [ ] Better `alpha` foundation color generation, maybe use custom opacity modifier instead
