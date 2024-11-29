@@ -31,7 +31,8 @@ function getStyleDictionaryConfig({ modes, densities, accents }) {
     ],
     // usesDtcg: true,
     platforms: {
-      css: {
+      // Use this to build into local /dist folder to test things, another block below should build to actual /css folder
+      cssTest: {
         buildPath: "dist/css/",
         prefix: "salt",
         transforms: [
@@ -52,6 +53,16 @@ function getStyleDictionaryConfig({ modes, densities, accents }) {
           ...getPaletteNextFiles({ modes, densities, accents }),
           ...getCharacteristicsNextFiles(),
         ],
+      },
+      cssProd: {
+        buildPath: "css/",
+        prefix: "salt",
+        transforms: [
+          "attribute/cti",
+          "salt-ds/name/kebab", // Custom transform, see below
+          "salt-ds/value/px",
+        ],
+        files: [...getPaletteNextFiles({ modes, densities, accents })],
       },
     },
   };
@@ -82,5 +93,5 @@ saltStyleDictionary.registerTransform(saltValuePx);
 // Custom transform - https://styledictionary.com/reference/hooks/transforms/
 saltStyleDictionary.registerTransform(saltNameKebab);
 const sd = await saltStyleDictionary.extend(config);
-sd.cleanAllPlatforms();
+// sd.cleanAllPlatforms();
 sd.buildAllPlatforms();

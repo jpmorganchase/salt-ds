@@ -71,12 +71,6 @@ export const cssMultiModes = async ({
   console.log("salt-ds/css/multi-modes rules", rules);
   // add single theme css
   for (const { selector, matcher, modeIdentifier } of rules) {
-    let preludes = [selector];
-
-    // remove invalid preludes
-    preludes = preludes.filter(Boolean);
-
-    //
     // hack the system a bit:
     // replace filteredDictionary.tokens, token.original.$value with token.original.$mode
     // This approach has the consequence of needing all mode values existed given `$value` would be overridden
@@ -101,12 +95,16 @@ export const cssMultiModes = async ({
       outputReferences,
       formatting: mergedFormatting,
       usesDtcg,
-    });
-    // additional modes
-    let cssWithSelector = css;
-    for (const prelude of preludes.reverse()) {
-      cssWithSelector = `${prelude} { ${cssWithSelector} }`;
-    }
+    })
+      .split("\n")
+      .sort((a, b) => {
+        // Sort by names before ":"
+        return a.split(":")[0].localeCompare(b.split(":")[0]);
+      })
+      .join("\n");
+
+    const cssWithSelector = `${selector} { ${css} }`;
+
     // add css with or without query
     output.push(cssWithSelector);
   }

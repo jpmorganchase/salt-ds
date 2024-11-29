@@ -71,6 +71,7 @@ export const getFoundationCurveNextFile = ({ densities }) => {
   };
 };
 
+// TODO: this is not the complete list yet
 const paletteNextList = [
   "accent",
   "corner",
@@ -85,10 +86,10 @@ const paletteNextList = [
 // 2 sets of palette files set, one with 4 $modes ('blue/teal-light/dark'), one with 2 $modes ('light/dark')
 export const getPaletteNextFiles = ({ modes, densities, accents }) => [
   ...paletteNextList.map((paletteNextType) => {
-    const accentModeRules = modes.reduce((prev, mode) => {
+    const accentModeRules = accents.reduce((prev, accent) => {
       // TODO: restructure `./palette/` files to per palette family, so that only those needing 4 combination (accents * modes) will generate 4 block of CSS code?
       // Or - should it be smarter when combining modes?
-      for (const accent of accents) {
+      for (const mode of modes) {
         prev.push({
           selector: `.salt-theme.salt-theme-next[data-mode="${mode}"][data-accent="${accent}"]`,
           modeIdentifier: `${accent}-${mode}`,
