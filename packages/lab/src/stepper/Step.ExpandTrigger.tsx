@@ -35,7 +35,11 @@ export function StepExpandTrigger({
       className={clsx(withBaseName(), className)}
       {...props}
     >
-      {expanded ? <ChevronUpIcon /> : <ChevronDownIcon />}
+      {expanded ? (
+        <ChevronUpIcon aria-hidden />
+      ) : (
+        <ChevronDownIcon aria-hidden />
+      )}
     </Button>
   );
 }

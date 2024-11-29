@@ -1,7 +1,7 @@
 .saltStepConnector {
   --saltStep-connector-borderWidth: 2px;
 
-  grid-area: track;
+  grid-area: connector;
   min-height: var(--salt-spacing-300);
 
   transition-duration: inherit;
@@ -10,7 +10,7 @@
 }
 
 .saltStepper-horizontal .saltStepConnector {
-  /* Distance between Icon and Track */
+  /* Distance between Icon and Connector */
   --saltStep-connector-horizontal-gap: var(--salt-spacing-100);
 
   position: absolute;
@@ -41,12 +41,12 @@
   border-left-style: var(--salt-track-borderStyle-complete);
 }
 
-.saltStep-depth-0.saltStep:not(.saltStep-expanded):last-child > .saltStep-content > .saltStepConnector {
+.saltStep-depth-0.saltStep:not(.saltStep-expanded):last-child > .saltStepConnector {
   opacity: 0;
   min-height: 0;
 }
 
-.saltStep-depth-0.saltStep-expanded:last-child .saltStep:not(.saltStep-expanded):last-child .saltStep-content > .saltStepConnector {
+.saltStep-depth-0.saltStep-expanded:last-child .saltStep:not(.saltStep-expanded):last-child .saltStepConnector {
   opacity: 0;
   min-height: 0;
 }
