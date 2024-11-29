@@ -185,50 +185,50 @@
     "background": {
       "primary": {
         "$type": "color",
-        "$value": "{color.snow}",
+        "$value": "{color.background.snow}",
         "$modes": {
-          "light": "{color.snow}",
-          "dark": "{color.jet}"
+          "light": "{color.background.snow}",
+          "dark": "{color.background.jet}"
         }
       },
       "primary-disabled": {
         "$type": "color",
-        "$value": "{color.alpha.snow.40a}",
+        "$value": "{color.alpha.background.snow.40a}",
         "$modes": {
-          "light": "{color.alpha.snow.40a}",
-          "dark": "{color.alpha.jet.40a}"
+          "light": "{color.alpha.background.snow.40a}",
+          "dark": "{color.alpha.background.jet.40a}"
         }
       },
       "secondary": {
         "$type": "color",
-        "$value": "{color.marble}",
+        "$value": "{color.background.marble}",
         "$modes": {
-          "light": "{color.marble}",
-          "dark": "{color.granite}"
+          "light": "{color.background.marble}",
+          "dark": "{color.background.granite}"
         }
       },
       "secondary-disabled": {
         "$type": "color",
-        "$value": "{color.alpha.marble.40a}",
+        "$value": "{color.alpha.background.marble.40a}",
         "$modes": {
-          "light": "{color.alpha.marble.40a}",
-          "dark": "{color.alpha.charcoal.40a}"
+          "light": "{color.alpha.background.marble.40a}",
+          "dark": "{color.alpha.background.charcoal.40a}"
         }
       },
       "tertiary": {
         "$type": "color",
-        "$value": "{color.limestone}",
+        "$value": "{color.background.limestone}",
         "$modes": {
-          "light": "{color.limestone}",
-          "dark": "{color.leather}"
+          "light": "{color.background.limestone}",
+          "dark": "{color.background.leather}"
         }
       },
       "tertiary-disabled": {
         "$type": "color",
-        "$value": "{color.alpha.limestone.40a}",
+        "$value": "{color.alpha.background.limestone.40a}",
         "$modes": {
-          "light": "{color.alpha.limestone.40a}",
-          "dark": "{color.alpha.leather.40a}"
+          "light": "{color.alpha.background.limestone.40a}",
+          "dark": "{color.alpha.background.leather.40a}"
         }
       }
     },

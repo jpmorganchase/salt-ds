@@ -345,42 +345,6 @@
           "$value": "#ffffffcc"
         }
       },
-      "snow": {
-        "40a": {
-          "$type": "color",
-          "$value": "#ffffff66"
-        }
-      },
-      "marble": {
-        "40a": {
-          "$type": "color",
-          "$value": "#f2f4f666"
-        }
-      },
-      "limestone": {
-        "40a": {
-          "$type": "color",
-          "$value": "#faf8f266"
-        }
-      },
-      "charcoal": {
-        "40a": {
-          "$type": "color",
-          "$value": "#474c5066"
-        }
-      },
-      "leather": {
-        "40a": {
-          "$type": "color",
-          "$value": "#26292b66"
-        }
-      },
-      "jet": {
-        "40a": {
-          "$type": "color",
-          "$value": "#10182066"
-        }
-      },
       "black": {
         "0a": {
           "$type": "color",
@@ -652,6 +616,44 @@
           "40a": {
             "$type": "color",
             "$value": "#ba172966"
+          }
+        }
+      },
+      "background": {
+        "snow": {
+          "40a": {
+            "$type": "color",
+            "$value": "#ffffff66"
+          }
+        },
+        "marble": {
+          "40a": {
+            "$type": "color",
+            "$value": "#f2f4f666"
+          }
+        },
+        "limestone": {
+          "40a": {
+            "$type": "color",
+            "$value": "#faf8f266"
+          }
+        },
+        "charcoal": {
+          "40a": {
+            "$type": "color",
+            "$value": "#474c5066"
+          }
+        },
+        "leather": {
+          "40a": {
+            "$type": "color",
+            "$value": "#26292b66"
+          }
+        },
+        "jet": {
+          "40a": {
+            "$type": "color",
+            "$value": "#10182066"
           }
         }
       }

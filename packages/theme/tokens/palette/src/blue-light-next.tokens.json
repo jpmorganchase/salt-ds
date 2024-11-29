@@ -83,27 +83,27 @@
     "background": {
       "primary": {
         "$type": "color",
-        "$value": "{color.snow}"
+        "$value": "{color.background.snow}"
       },
       "primary-disabled": {
         "$type": "color",
-        "$value": "{color.alpha.snow.40a}"
+        "$value": "{color.alpha.background.snow.40a}"
       },
       "secondary": {
         "$type": "color",
-        "$value": "{color.marble}"
+        "$value": "{color.background.marble}"
       },
       "secondary-disabled": {
         "$type": "color",
-        "$value": "{color.alpha.marble.40a}"
+        "$value": "{color.alpha.background.marble.40a}"
       },
       "tertiary": {
         "$type": "color",
-        "$value": "{color.limestone}"
+        "$value": "{color.background.limestone}"
       },
       "tertiary-disabled": {
         "$type": "color",
-        "$value": "{color.alpha.limestone.40a}"
+        "$value": "{color.alpha.background.limestone.40a}"
       }
     },
     "categorical": {
