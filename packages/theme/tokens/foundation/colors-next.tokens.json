@@ -4,42 +4,6 @@
       "$type": "color",
       "$value": "#ffffff"
     },
-    "snow": {
-      "$type": "color",
-      "$value": "#ffffff"
-    },
-    "marble": {
-      "$type": "color",
-      "$value": "#f5f7f8"
-    },
-    "limestone": {
-      "$type": "color",
-      "$value": "#faf8f2"
-    },
-    "titanium": {
-      "$type": "color",
-      "$value": "#e2e4e5"
-    },
-    "charcoal": {
-      "$type": "color",
-      "$value": "#474c50"
-    },
-    "leather": {
-      "$type": "color",
-      "$value": "#26292b"
-    },
-    "granite": {
-      "$type": "color",
-      "$value": "#1a2229"
-    },
-    "jet": {
-      "$type": "color",
-      "$value": "#101820"
-    },
-    "black": {
-      "$type": "color",
-      "$value": "#000000"
-    },
     "gray": {
       "100": {
         "$type": "color",
@@ -77,6 +41,10 @@
         "$type": "color",
         "$value": "#292e33"
       }
+    },
+    "black": {
+      "$type": "color",
+      "$value": "#000000"
     },
     "blue": {
       "100": {
@@ -116,44 +84,6 @@
         "$value": "#001736"
       }
     },
-    "teal": {
-      "100": {
-        "$type": "color",
-        "$value": "#dbf5f7"
-      },
-      "200": {
-        "$type": "color",
-        "$value": "#afe0ed"
-      },
-      "300": {
-        "$type": "color",
-        "$value": "#83c0d6"
-      },
-      "400": {
-        "$type": "color",
-        "$value": "#4ca1c2"
-      },
-      "500": {
-        "$type": "color",
-        "$value": "#1b7f9e"
-      },
-      "600": {
-        "$type": "color",
-        "$value": "#12647e"
-      },
-      "700": {
-        "$type": "color",
-        "$value": "#094a60"
-      },
-      "800": {
-        "$type": "color",
-        "$value": "#033142"
-      },
-      "900": {
-        "$type": "color",
-        "$value": "#001b29"
-      }
-    },
     "green": {
       "100": {
         "$type": "color",
@@ -190,6 +120,44 @@
       "900": {
         "$type": "color",
         "$value": "#002915"
+      }
+    },
+    "teal": {
+      "100": {
+        "$type": "color",
+        "$value": "#dbf5f7"
+      },
+      "200": {
+        "$type": "color",
+        "$value": "#afe0ed"
+      },
+      "300": {
+        "$type": "color",
+        "$value": "#83c0d6"
+      },
+      "400": {
+        "$type": "color",
+        "$value": "#4ca1c2"
+      },
+      "500": {
+        "$type": "color",
+        "$value": "#1b7f9e"
+      },
+      "600": {
+        "$type": "color",
+        "$value": "#12647e"
+      },
+      "700": {
+        "$type": "color",
+        "$value": "#094a60"
+      },
+      "800": {
+        "$type": "color",
+        "$value": "#033142"
+      },
+      "900": {
+        "$type": "color",
+        "$value": "#001b29"
       }
     },
     "orange": {
@@ -686,6 +654,40 @@
             "$value": "#ba172966"
           }
         }
+      }
+    },
+    "background": {
+      "snow": {
+        "$type": "color",
+        "$value": "#ffffff"
+      },
+      "marble": {
+        "$type": "color",
+        "$value": "#f5f7f8"
+      },
+      "limestone": {
+        "$type": "color",
+        "$value": "#faf8f2"
+      },
+      "titanium": {
+        "$type": "color",
+        "$value": "#e2e4e5"
+      },
+      "charcoal": {
+        "$type": "color",
+        "$value": "#474c50"
+      },
+      "jet": {
+        "$type": "color",
+        "$value": "#101820"
+      },
+      "granite": {
+        "$type": "color",
+        "$value": "#1a2229"
+      },
+      "leather": {
+        "$type": "color",
+        "$value": "#26292b"
       }
     },
     "figma-only": {
