@@ -1,5 +1,12 @@
 # @salt-ds/core
 
+## 1.37.3
+
+### Patch Changes
+
+- 5cf214c: Fixed input alignment issue in form field when more than one item is in a row and some do not have helper text.
+- bae6882: Fixed aria-activedescendant not being removed when Dropdown or ComboBox is closed.
+
 ## 1.37.2
 
 ### Patch Changes

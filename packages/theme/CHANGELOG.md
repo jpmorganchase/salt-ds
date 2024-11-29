@@ -1,5 +1,32 @@
 # @salt-ds/theme
 
+## 1.23.3
+
+### Patch Changes
+
+- 131dd9a: Undeprecate `--salt-accent-background-disabled`
+- f6848dd: Fixed below tokens pointing to incorrect palette token, with underlying value not changing (`transparent`), from `var(--salt-palette-interact-border-none)` to `var(--salt-palette-interact-background)`.
+
+  - `--salt-actionable-negative-background-disabled`
+  - `--salt-actionable-negative-background`
+  - `--salt-actionable-negative-subtle-background-disabled`
+  - `--salt-actionable-negative-subtle-background`
+  - `--salt-actionable-positive-background-disabled`
+  - `--salt-actionable-positive-background`
+  - `--salt-actionable-positive-subtle-background-disabled`
+  - `--salt-actionable-positive-subtle-background`
+  - `--salt-actionable-caution-background-disabled`
+  - `--salt-actionable-caution-background`
+  - `--salt-actionable-caution-subtle-background-disabled`
+  - `--salt-actionable-caution-subtle-background`
+
+- 5af2978: Fixed titanium background color token was incorrected named
+
+  ```diff
+  - --salt-color-background-gradientlight
+  + --salt-color-background-titanium
+  ```
+
 ## 1.23.2
 
 ### Patch Changes
