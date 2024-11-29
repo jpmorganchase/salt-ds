@@ -1,7 +1,5 @@
 /* Styles applied to root component */
 .saltSystemStatus {
-  --saltIcon-color: var(--salt-content-bold-foreground);
-
   background: var(--saltSystemStatus-background, var(--systemStatus-background));
   border-color: var(--saltSystemStatus-borderColor, var(--systemStatus-borderColor));
   border-width: var(--saltSystemStatus-borderWidth, var(--salt-size-border));
@@ -21,6 +19,7 @@
 /* Styles applied to icon */
 .saltSystemStatus-icon.saltIcon {
   min-height: var(--salt-size-base);
+  --saltIcon-color: var(--salt-content-bold-foreground);
 }
 
 /* Styles applied when state = "info" */
