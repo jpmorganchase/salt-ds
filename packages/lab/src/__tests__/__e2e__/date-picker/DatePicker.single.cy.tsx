@@ -1,6 +1,7 @@
-import type {
-  DateFrameworkType,
-  SaltDateAdapter,
+import {
+  DateDetailErrorEnum,
+  type DateFrameworkType,
+  type SaltDateAdapter,
 } from "@salt-ds/date-adapters";
 import { AdapterDateFns } from "@salt-ds/date-adapters";
 import { AdapterDayjs } from "@salt-ds/date-adapters";
@@ -83,7 +84,12 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
           expect(adapter.isValid(date)).to.be.false;
           expect(details).to.deep.equal({
             value: "bad date",
-            errors: [{ type: "date", message: "not a valid date" }],
+            errors: [
+              {
+                type: DateDetailErrorEnum.INVALID_DATE,
+                message: "not a valid date",
+              },
+            ],
           });
         });
         // Different invalid date should call the event
@@ -95,7 +101,12 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
           expect(adapter.isValid(date)).to.be.false;
           expect(details).to.deep.equal({
             value: "another bad date 2",
-            errors: [{ type: "date", message: "not a valid date" }],
+            errors: [
+              {
+                type: DateDetailErrorEnum.INVALID_DATE,
+                message: "not a valid date",
+              },
+            ],
           });
         });
         cy.findByRole("textbox")
@@ -458,6 +469,15 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
             "have.value",
             updatedFormattedDateValue,
           );
+
+          // Reset/set programatically
+          cy.findByLabelText("today").realClick();
+          cy.findByRole("textbox").should(
+            "have.value",
+            adapter.format(adapter.today(), "DD MMMM YYYY"),
+          );
+          cy.findByLabelText("reset").realClick();
+          cy.findByRole("textbox").should("have.value", "");
         });
 
         it("SHOULD preserve original time during date selection", () => {

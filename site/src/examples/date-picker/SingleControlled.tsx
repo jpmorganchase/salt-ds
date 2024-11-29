@@ -31,8 +31,8 @@ export const SingleControlled = (): ReactElement => {
       console.log(
         `Selected date: ${dateAdapter.isValid(date) ? dateAdapter.format(date, "DD MMM YYYY") : date}`,
       );
-      setSelectedDate(value?.trim().length === 0 ? null : date);
-      if (errors?.length && value) {
+      setSelectedDate(date ?? null);
+      if (errors?.length) {
         console.log(
           `Error(s): ${errors
             .map(({ type, message }) => `type=${type} message=${message}`)

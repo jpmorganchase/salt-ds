@@ -67,9 +67,7 @@ export const SingleWithTodayButton = (): ReactElement => {
       console.log(
         `Selected date: ${dateAdapter.isValid(date) ? dateAdapter.format(date, "DD MMM YYYY") : date}`,
       );
-      if (errors?.length && value) {
-        setHelperText(`${errorHelperText} - ${errors[0].message}`);
-        setValidationStatus("error");
+      if (errors?.length) {
         console.log(
           `Error(s): ${errors
             .map(({ type, message }) => `type=${type} message=${message}`)
@@ -78,6 +76,10 @@ export const SingleWithTodayButton = (): ReactElement => {
         if (value) {
           console.log(`Original Value: ${value}`);
         }
+      }
+      if (errors?.length && details?.value?.length) {
+        setHelperText(`${errorHelperText} - ${errors[0].message}`);
+        setValidationStatus("error");
       } else {
         setHelperText(defaultHelperText);
         setValidationStatus(undefined);

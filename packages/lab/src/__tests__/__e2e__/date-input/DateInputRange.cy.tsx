@@ -10,7 +10,7 @@ import {
 } from "@salt-ds/date-adapters";
 import {
   DateInputRange,
-  DateParserField,
+  type DateParserField,
   type DateRangeSelection,
 } from "@salt-ds/lab";
 import { es as dateFnsEs } from "date-fns/locale";
@@ -45,11 +45,20 @@ adapterMoment.moment.updateLocale("es", {
 // Create an array of adapters
 const adapters = [adapterDateFns, adapterDayjs, adapterLuxon, adapterMoment];
 
-// Helper function to assert date change
+/**
+ * Validate change helper
+ * @param spy
+ * @param expectedValue expected value returned by change
+ * @param expectedDate expected date range, undefined="", null=invalid date or expected date
+ * @param adapter
+ */
 function assertDateChange(
   spy: any,
   expectedValue: { startDate?: string; endDate?: string },
-  expectedDate: { startDate?: DateFrameworkType; endDate?: DateFrameworkType },
+  expectedDate: {
+    startDate: DateFrameworkType | null | undefined;
+    endDate: DateFrameworkType | null | undefined;
+  },
   adapter: SaltDateAdapter<DateFrameworkType>,
 ) {
   const lastCallArgs = spy.args[spy.callCount - 1];
@@ -58,70 +67,54 @@ function assertDateChange(
   const expectedValidStartDate = adapter.isValid(expectedDate.startDate);
   const expectedValidEndDate = adapter.isValid(expectedDate.endDate);
 
-  // assert undefined when expecting no start date is defined
-  if (expectedDate.startDate === undefined) {
-    expect(date.startDate).to.be.undefined;
-  } else if (expectedValidStartDate) {
-    // assert valid start date matches expected date
+  if (expectedValidStartDate) {
+    // assert valid start date
     expect(date.startDate).not.to.be.undefined;
     expect(adapter.format(date.startDate, "DD MMM YYYY")).to.equal(
       adapter.format(expectedDate.startDate, "DD MMM YYYY"),
     );
+  } else if (expectedDate?.startDate === undefined) {
+    // assert empty start date
+    expect(adapter.isValid(date.startDate)).to.equal(false);
+    expect(details.startDate.errors).to.deep.equal([
+      { type: DateDetailErrorEnum.UNSET, message: "no date defined" },
+    ]);
+    expect(details.startDate).to.have.property(
+      "value",
+      expectedValue.startDate,
+    );
+  } else if (expectedDate?.startDate === null) {
+    // assert invalid start date
+    expect(adapter.isValid(date.startDate)).to.equal(false);
+    expect(details.startDate.errors).to.deep.equal([
+      { type: DateDetailErrorEnum.INVALID_DATE, message: "not a valid date" },
+    ]);
+    expect(details.startDate).to.have.property(
+      "value",
+      expectedValue.startDate,
+    );
   }
-  // assert undefined when expecting no end date is defined
-  if (expectedDate.endDate === undefined) {
-    expect(date.endDate).to.be.undefined;
-  } else if (expectedValidEndDate) {
-    // assert valid end date matches expected date
+
+  if (expectedValidEndDate) {
+    // assert valid end date
     expect(date.endDate).not.to.be.undefined;
     expect(adapter.format(date.endDate, "DD MMM YYYY")).to.equal(
       adapter.format(expectedDate.endDate, "DD MMM YYYY"),
     );
-  }
-
-  // assert start and end date errors when expecting that both dates are invalid
-  if (
-    date.startDate &&
-    date.endDate &&
-    !expectedValidStartDate &&
-    !expectedValidEndDate
-  ) {
-    expect(details).to.deep.equal({
-      startDate: {
-        errors: [
-          {
-            type: DateDetailErrorEnum.INVALID_DATE,
-            message: "not a valid date",
-          },
-        ],
-        value: expectedValue.startDate,
-      },
-      endDate: {
-        errors: [
-          {
-            type: DateDetailErrorEnum.INVALID_DATE,
-            message: "not a valid date",
-          },
-        ],
-        value: expectedValue.endDate,
-      },
-    });
-  } else if (date.startDate && !expectedValidStartDate) {
-    // assert start date errors when expecting invalid date
-    expect(details.startDate).to.deep.equal({
-      errors: [
-        { type: DateDetailErrorEnum.INVALID_DATE, message: "not a valid date" },
-      ],
-      value: expectedValue.startDate,
-    });
-  } else if (date.endDate && !expectedValidEndDate) {
-    // assert end date errors when expecting invalid date
-    expect(details.endDate).to.deep.equal({
-      errors: [
-        { type: DateDetailErrorEnum.INVALID_DATE, message: "not a valid date" },
-      ],
-      value: expectedValue.endDate,
-    });
+  } else if (expectedDate?.endDate === undefined) {
+    // assert empty end date
+    expect(adapter.isValid(date.endDate)).to.equal(false);
+    expect(details.endDate.errors).to.deep.equal([
+      { type: DateDetailErrorEnum.UNSET, message: "no date defined" },
+    ]);
+    expect(details.endDate).to.have.property("value", expectedValue.endDate);
+  } else if (expectedDate?.endDate === null) {
+    // assert invalid end date
+    expect(adapter.isValid(date.endDate)).to.equal(false);
+    expect(details.endDate.errors).to.deep.equal([
+      { type: DateDetailErrorEnum.INVALID_DATE, message: "not a valid date" },
+    ]);
+    expect(details.endDate).to.have.property("value", expectedValue.endDate);
   }
 }
 
@@ -192,9 +185,9 @@ describe("GIVEN a DateInputRange", () => {
         cy.get("@dateChangeSpy").then((spy) =>
           assertDateChange(
             spy,
-            { startDate: "bad start date", endDate: undefined },
+            { startDate: "bad start date", endDate: "" },
             {
-              startDate: adapter.parse("bad start date", "DD MMM YYYY").date,
+              startDate: null,
               endDate: undefined,
             },
             adapter,
@@ -211,10 +204,9 @@ describe("GIVEN a DateInputRange", () => {
         cy.get("@dateChangeSpy").then((spy) =>
           assertDateChange(
             spy,
-            { startDate: "another bad start date", endDate: undefined },
+            { startDate: "another bad start date", endDate: "" },
             {
-              startDate: adapter.parse("another bad start date", "DD MMM YYYY")
-                .date,
+              startDate: null,
               endDate: undefined,
             },
             adapter,
@@ -236,10 +228,8 @@ describe("GIVEN a DateInputRange", () => {
               endDate: "another bad end date",
             },
             {
-              startDate: adapter.parse("another bad end date", "DD MMM YYYY")
-                .date,
-              endDate: adapter.parse("another bad end date", "DD MMM YYYY")
-                .date,
+              startDate: null,
+              endDate: null,
             },
             adapter,
           ),
@@ -254,8 +244,7 @@ describe("GIVEN a DateInputRange", () => {
             { startDate: "", endDate: "another bad end date" },
             {
               startDate: undefined,
-              endDate: adapter.parse("another bad end date", "DD MMM YYYY")
-                .date,
+              endDate: null,
             },
             adapter,
           ),
@@ -284,7 +273,7 @@ describe("GIVEN a DateInputRange", () => {
         cy.get("@dateChangeSpy").then((spy) =>
           assertDateChange(
             spy,
-            { startDate: initialDateValue.startDate, endDate: undefined },
+            { startDate: initialDateValue.startDate, endDate: "" },
             {
               startDate: initialDate.startDate,
               endDate: undefined,
@@ -360,15 +349,32 @@ describe("GIVEN a DateInputRange", () => {
               inputDate: string,
               field: DateParserField,
             ): ParserResult<DateFrameworkType> => {
-              if (field === DateParserField.START) {
+              if (inputDate === "custom start date") {
                 return {
                   date: initialDate.startDate,
                   value: inputDate,
                 };
               }
-              expect(field).to.equal(DateParserField.END);
+              if (inputDate === "custom end date") {
+                return {
+                  date: initialDate.endDate,
+                  value: inputDate,
+                };
+              }
+              if (inputDate === "") {
+                return {
+                  date: adapter.parse("invalid date", "DD MMM YYYY").date,
+                  value: "",
+                  errors: [
+                    {
+                      type: DateDetailErrorEnum.UNSET,
+                      message: "no date defined",
+                    },
+                  ],
+                };
+              }
               return {
-                date: initialDate.endDate,
+                date: adapter.parse(inputDate, "DD MMM YYYY").date,
                 value: inputDate,
               };
             },
@@ -393,7 +399,7 @@ describe("GIVEN a DateInputRange", () => {
             spy,
             {
               startDate: "custom start date",
-              endDate: undefined,
+              endDate: "",
             },
             {
               startDate: initialDate.startDate,

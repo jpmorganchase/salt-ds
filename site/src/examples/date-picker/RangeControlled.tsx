@@ -41,9 +41,8 @@ export const RangeControlled = (): ReactElement => {
         `StartDate: ${dateAdapter.isValid(startDate) ? dateAdapter.format(startDate, "DD MMM YYYY") : startDate}, EndDate: ${dateAdapter.isValid(endDate) ? dateAdapter.format(endDate, "DD MMM YYYY") : endDate}`,
       );
       setSelectedDate({
-        startDate:
-          startDateOriginalValue?.trim().length === 0 ? null : startDate,
-        endDate: endDateOriginalValue?.trim().length === 0 ? null : endDate,
+        startDate: startDate ?? null,
+        endDate: endDate ?? null,
       });
       if (startDateErrors?.length) {
         console.log(

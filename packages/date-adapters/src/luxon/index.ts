@@ -173,18 +173,22 @@ export class AdapterLuxon implements SaltDateAdapter<DateTime, string> {
 
   /**
    * Formats a Luxon DateTime object using the specified format string.
+   * Returns an empty string when null or undefined date is given.
    * @param date - The Luxon DateTime object to format.
    * @param format - The format string to use.
    * @param locale - The locale to use for formatting.
    * @returns The formatted date string.
    */
   public format(
-    date: DateTime,
+    date: DateTime | null | undefined,
     format: RecommendedFormats = "dd MMM yyyy",
     locale?: string,
   ): string {
-    const luxonFormat = this.mapToLuxonFormat(format);
-    return date.setLocale(locale ?? this.locale).toFormat(luxonFormat);
+    if (this.isValid(date)) {
+      const luxonFormat = this.mapToLuxonFormat(format);
+      return date.setLocale(locale ?? this.locale).toFormat(luxonFormat);
+    }
+    return "";
   }
 
   /**
@@ -222,13 +226,16 @@ export class AdapterLuxon implements SaltDateAdapter<DateTime, string> {
         value,
       };
     }
+    const isDateDefined = !!value?.trim().length;
     return {
       date: parsedDate,
       value,
       errors: [
         {
-          message: "not a valid date",
-          type: DateDetailErrorEnum.INVALID_DATE,
+          message: isDateDefined ? "not a valid date" : "no date defined",
+          type: isDateDefined
+            ? DateDetailErrorEnum.INVALID_DATE
+            : DateDetailErrorEnum.UNSET,
         },
       ],
     };

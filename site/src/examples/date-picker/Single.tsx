@@ -23,7 +23,7 @@ export const Single = (): ReactElement => {
       console.log(
         `Selected date: ${dateAdapter.isValid(date) ? dateAdapter.format(date, "DD MMM YYYY") : date}`,
       );
-      if (errors?.length && value) {
+      if (errors?.length) {
         console.log(
           `Error(s): ${errors
             .map(({ type, message }) => `type=${type} message=${message}`)

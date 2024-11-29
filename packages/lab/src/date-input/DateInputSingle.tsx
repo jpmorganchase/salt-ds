@@ -151,6 +151,7 @@ export const DateInputSingle = forwardRef<
     props: DateInputSingleProps<TDate>,
     ref: React.Ref<HTMLDivElement>,
   ) => {
+    const { dateAdapter } = useLocalization<TDate>();
     const {
       bordered = false,
       className,
@@ -160,17 +161,17 @@ export const DateInputSingle = forwardRef<
       defaultDate,
       onDateChange,
       value: valueProp,
-      defaultValue = "",
+      locale,
+      format = "DD MMM YYYY",
+      defaultValue = dateAdapter.format(undefined, format, locale),
       onChange,
       onClick,
       emptyReadOnlyMarker = "—",
       endAdornment,
-      format = "DD MMM YYYY",
       inputProps = {},
       inputRef: inputRefProp = null,
-      locale,
       parse: parseProp,
-      placeholder = "dd mmm yyyy",
+      placeholder = format.toLowerCase(),
       readOnly: readOnlyProp,
       startAdornment,
       validationStatus: validationStatusProp,
@@ -187,8 +188,6 @@ export const DateInputSingle = forwardRef<
     );
 
     const inputId = useId();
-
-    const { dateAdapter } = useLocalization<TDate>();
 
     const targetWindow = useWindow();
     useComponentCssInjection({
@@ -215,16 +214,18 @@ export const DateInputSingle = forwardRef<
       ? dateAdapter.getTime(date)
       : null;
 
-    // Update date string value when selected date changes
+    // biome-ignore lint/correctness/useExhaustiveDependencies: Update date string value ONLY when selected date changes, not when date string itself change
     useEffect(() => {
-      if (date && dateAdapter.isValid(date)) {
-        const formattedValue = dateAdapter.format(date, format, locale);
-        const hasValueChanged = formattedValue !== dateValue;
-        if (hasValueChanged) {
-          lastAppliedValue.current = formattedValue;
-          setDateValue(formattedValue);
-          onDateValueChange?.(null, formattedValue);
-        }
+      const formattedValue = dateAdapter.format(date, format, locale);
+      const hasValueChanged = formattedValue !== dateValue;
+      if (
+        // don't want to reset "error" input values
+        (dateAdapter.isValid(date) || date === null) &&
+        hasValueChanged
+      ) {
+        lastAppliedValue.current = formattedValue;
+        setDateValue(formattedValue);
+        onDateValueChange?.(null, formattedValue);
       }
     }, [date, dateAdapter.format, format, locale]);
 
@@ -263,28 +264,26 @@ export const DateInputSingle = forwardRef<
 
     const apply = (event: SyntheticEvent) => {
       const parse = parseProp ?? dateAdapter.parse.bind(dateAdapter);
-      const parseResult = dateValue?.length
-        ? parse(dateValue, format, locale)
-        : { date: undefined };
+      const parseResult = parse(dateValue ?? "", format, locale);
       let { date: parsedDate, ...parseDetails } = parseResult;
-      let formattedValue = "";
-      if (dateAdapter.isValid(parsedDate)) {
-        formattedValue = dateAdapter.format(parsedDate, format, locale);
-        const hasValueChanged = formattedValue !== dateValue;
-        if (hasValueChanged) {
-          setDateValue(formattedValue);
-          onDateValueChange?.(event, formattedValue);
-        }
+      const formattedValue = dateAdapter.format(parsedDate, format, locale);
+      const hasValueChanged = formattedValue !== dateValue;
+      if (dateAdapter.isValid(parsedDate) && hasValueChanged) {
+        setDateValue(formattedValue);
+        onDateValueChange?.(event, formattedValue);
       }
 
       setDate(parsedDate);
+
       if (lastAppliedValue.current !== dateValue) {
         if (dateAdapter.isValid(parsedDate) && preservedTime.current) {
           parsedDate = dateAdapter.set(parsedDate, preservedTime.current);
         }
         onDateChange?.(event, parsedDate, parseDetails);
       }
-      lastAppliedValue.current = dateValue;
+      lastAppliedValue.current = dateAdapter.isValid(parsedDate)
+        ? formattedValue
+        : dateValue;
     };
 
     const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
@@ -358,7 +357,6 @@ export const DateInputSingle = forwardRef<
           ref={handleInputRef}
           tabIndex={isDisabled ? -1 : 0}
           placeholder={placeholder}
-          size={placeholder.length}
           value={isReadOnly && !dateValue ? emptyReadOnlyMarker : dateValue}
           {...restDateInputProps}
           onBlur={handleBlur}

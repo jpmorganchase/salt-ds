@@ -53,8 +53,7 @@ export function defaultRangeValidator<TDate extends DateFrameworkType>(
 ): DateInputRangeDetails {
   const { startDate, endDate } = date || {};
 
-  // If endDate but no startDate defined
-  if (startDate === undefined && endDate) {
+  if (!startDate) {
     details.startDate = details.startDate || {};
     details.startDate.errors = details.startDate.errors || [];
     details.startDate.errors.push({
@@ -62,6 +61,15 @@ export function defaultRangeValidator<TDate extends DateFrameworkType>(
       message: "no start date defined",
     });
   }
+  if (!endDate) {
+    details.endDate = details.endDate || {};
+    details.endDate.errors = details.endDate.errors || [];
+    details.endDate.errors.push({
+      type: DateDetailErrorEnum.UNSET,
+      message: "no end date defined",
+    });
+  }
+
   // If startDate is after endDate
   if (
     dateAdapter.isValid(startDate) &&
@@ -117,6 +125,7 @@ export const DatePickerRangeInput = forwardRef(function DatePickerRangeInput<
     startInputProps: startInputPropsProp,
     onKeyDown,
     defaultValue,
+    format,
     value: valueProp,
     validate,
     onChange,
@@ -209,9 +218,14 @@ export const DatePickerRangeInput = forwardRef(function DatePickerRangeInput<
 
   return (
     <DateInputRange
-      value={value || { startDate: "", endDate: "" }}
+      value={
+        value ?? {
+          startDate: dateAdapter.format(value, format),
+          endDate: dateAdapter.format(value, format),
+        }
+      }
       className={clsx(withBaseName(), className)}
-      date={selectedDate || null}
+      date={selectedDate ?? null}
       startInputProps={startInputProps}
       endInputProps={endInputProps}
       readOnly={readOnly}
