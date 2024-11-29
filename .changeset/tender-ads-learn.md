@@ -68,7 +68,6 @@ The `Stepper` component is a purely presentational component, meaning that you n
 The `useSteppedReducer()` is used like so:
 
 ```tsx
-
 import { StackLayout, SegmentedButtonGroup, Button } from "@salt-ds/core";
 import { Step, Stepper, useSteppedReducer } from "@salt-ds/lab";
 
@@ -165,5 +164,4 @@ export const Example = () => {
     </StackLayout>
   );
 };
-
 ```
