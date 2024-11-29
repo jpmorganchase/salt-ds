@@ -216,7 +216,7 @@ export const getCharacteristicsNextFiles = () =>
         // );
         return (
           // next
-          token.filePath.includes("characteristics/theme-next.tokens") &&
+          token.filePath.includes("characteristics/") &&
           //
           token.attributes.category === characteristicFamily &&
           !token.path.includes("figma-only")

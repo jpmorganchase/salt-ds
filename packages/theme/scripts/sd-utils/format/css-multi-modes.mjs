@@ -100,8 +100,11 @@ export const cssMultiModes = async ({
     })
       .split("\n")
       .sort((a, b) => {
-        // Sort by names before ":"
-        return a.split(":")[0].localeCompare(b.split(":")[0]);
+        // Sort by names before ":", use Collator to sort by number values
+        return new Intl.Collator("en", { numeric: true }).compare(
+          a.split(":")[0],
+          b.split(":")[0],
+        );
       })
       .join("\n");
 

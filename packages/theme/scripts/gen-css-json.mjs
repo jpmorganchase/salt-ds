@@ -38,7 +38,7 @@ function getStyleDictionaryConfig({ modes, densities, accents }) {
         transforms: [
           "attribute/cti",
           "salt-ds/name/kebab", // Custom transform, see below
-          "salt-ds/value/px",
+          "salt-ds/value/px", // add px for $modes, not working for some reason
           "color/rgb",
           // "name/kebab", // https://github.com/amzn/style-dictionary/blob/0fcf229f78e334a5c6bec55725fe92a8de97590c/lib/common/transforms.js#L320-L325
           // "dimension/pixelToRem",
@@ -67,6 +67,7 @@ function getStyleDictionaryConfig({ modes, densities, accents }) {
         files: [
           foundationColorsNextFile,
           foundationAlphaNextFile,
+          getFoundationCurveNextFile({ densities }),
           ...getPaletteNextFiles({ modes, densities, accents }),
         ],
       },

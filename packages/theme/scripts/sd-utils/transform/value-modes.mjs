@@ -40,10 +40,12 @@ export const saltValuePx = {
   transform: (token, _, options) => {
     // this is a "hack"..? for those getting value from "salt-ds/css/multi-modes"
     // value should be transformed on $modes as well
+    // console.log("salt-ds/value/px transform", JSON.stringify(token));
+
     if (token.$modes) {
       for (const mode of Object.keys(token.$modes)) {
         const modeValue = token.$modes[mode];
-        if (isNumber(modeValue, options)) {
+        if (typeof modeValue === "number") {
           token.$modes[mode] = `${modeValue}px`;
         }
       }
