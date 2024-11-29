@@ -4,7 +4,7 @@ import {
   SegmentedButtonGroup,
   StackLayout,
 } from "@salt-ds/core";
-import { Step, Stepper, useStepReducer } from "@salt-ds/lab";
+import { Step, Stepper, useSteppedReducer } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react";
 
 export default {
@@ -81,10 +81,10 @@ export const HorizontalLongText: StoryFn<typeof Stepper> = () => {
   );
 };
 
-export const HorizontalInteractiveUsingStepReducer: StoryFn<
+export const HorizontalInteractiveUsingSteppedReducer: StoryFn<
   typeof Stepper
 > = () => {
-  const [state, dispatch] = useStepReducer([
+  const [state, dispatch] = useSteppedReducer([
     { id: "step-1", label: "Step 1" },
     { id: "step-2", label: "Step 2", stage: "active" },
     { id: "step-3", label: "Step 3" },
@@ -227,17 +227,13 @@ export const VerticalDepth2: StoryFn<typeof Stepper> = () => {
         <Step label="Step 1" description="Description text">
           <Step label="Step 1.1" />
         </Step>
-        <Step label="Step 2" stage="inprogress">
+        <Step label="Step 2">
           <Step
             label="Step 2.1"
             description="This is a bit longer of a description."
           />
-          <Step
-            label="Step 2.2"
-            description="Description text"
-            stage="inprogress"
-          >
-            <Step label="Step 2.2.1" stage="active" />
+          <Step label="Step 2.2" description="Description text">
+            <Step label="Step 2.2.1" />
             <Step label="Step 2.2.2" />
             <Step label="Step 2.2.3" />
           </Step>
@@ -256,10 +252,10 @@ export const VerticalDepth2: StoryFn<typeof Stepper> = () => {
   );
 };
 
-export const VerticalInteractiveUsingStepReducer: StoryFn<
+export const VerticalInteractiveUsingSteppedReducer: StoryFn<
   typeof Stepper
 > = () => {
-  const [state, dispatch] = useStepReducer([
+  const [state, dispatch] = useSteppedReducer([
     {
       id: "step-1",
       label: "Step 1",

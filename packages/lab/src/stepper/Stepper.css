@@ -4,8 +4,13 @@
   width: 100%;
   height: 100%;
 
-  padding: 0;
-  margin: 0;
+  padding: 2px;
+  margin: -2px;
+  box-sizing: content-box;
+
+  transition-duration: var(--salt-duration-perceptible);
+  transition-timing-function: ease-in-out;
+  transition-property: opacity, visibility;
 }
 
 .saltStepper-horizontal {
@@ -17,4 +22,14 @@
   display: flex;
   flex-direction: column;
   overflow: hidden;
+}
+
+.saltStepper-vertical > .saltStep.saltStep-expanded > .saltStepper {
+  opacity: 1;
+  visibility: visible;
+}
+
+.saltStepper-vertical > .saltStep.saltStep-collapsed > .saltStepper {
+  opacity: 0;
+  visibility: hidden;
 }

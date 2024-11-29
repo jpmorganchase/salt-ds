@@ -3,13 +3,13 @@ import { useReducer } from "react";
 import type { Step } from "./Step";
 import { assignStage, autoStage, flatten } from "./utils";
 
-export namespace StepReducer {
+export namespace SteppedReducer {
   export interface State {
-    steps: Step.Step[];
-    flatSteps: Step.Step[];
-    activeStep: Step.Step | null;
-    previousStep: Step.Step | null;
-    nextStep: Step.Step | null;
+    steps: Step.Props[];
+    flatSteps: Step.Props[];
+    activeStep: Step.Props | null;
+    previousStep: Step.Props | null;
+    nextStep: Step.Props | null;
     activeStepIndex: number;
     started: boolean;
     ended: boolean;
@@ -23,7 +23,10 @@ export namespace StepReducer {
     | { type: "clear" };
 }
 
-function stepReducer(state: StepReducer.State, action: StepReducer.Action) {
+function steppedReducer(
+  state: SteppedReducer.State,
+  action: SteppedReducer.Action,
+) {
   if (action.type === "next") {
     const steps = assignStage(state.steps);
     const flatSteps = flatten(steps);
@@ -64,7 +67,7 @@ function stepReducer(state: StepReducer.State, action: StepReducer.Action) {
       nextStep,
       started: true,
       ended: true,
-    } as StepReducer.State;
+    } as SteppedReducer.State;
   }
 
   if (action.type === "previous") {
@@ -90,7 +93,7 @@ function stepReducer(state: StepReducer.State, action: StepReducer.Action) {
         nextStep,
         started: true,
         ended: false,
-      } as StepReducer.State;
+      } as SteppedReducer.State;
     }
 
     const activeStepIndex = -1;
@@ -107,7 +110,7 @@ function stepReducer(state: StepReducer.State, action: StepReducer.Action) {
       nextStep,
       ended: false,
       started: false,
-    } as StepReducer.State;
+    } as SteppedReducer.State;
   }
 
   if (action.type === "error") {
@@ -131,7 +134,7 @@ function stepReducer(state: StepReducer.State, action: StepReducer.Action) {
   return { ...state };
 }
 
-export function useStepReducer(initialSteps: Step.Step[]) {
+export function useSteppedReducer(initialSteps: Step.Props[]) {
   const steps = autoStage(initialSteps);
   const flatSteps = flatten(steps);
   const activeStepIndex = flatSteps.findIndex(
@@ -143,7 +146,7 @@ export function useStepReducer(initialSteps: Step.Step[]) {
   const started = !flatSteps.every((step) => step.stage === "pending");
   const ended = flatSteps.every((step) => step.stage === "completed");
 
-  const state: StepReducer.State = {
+  const state: SteppedReducer.State = {
     steps,
     flatSteps,
     activeStep,
@@ -154,5 +157,5 @@ export function useStepReducer(initialSteps: Step.Step[]) {
     started,
   };
 
-  return useReducer(stepReducer, state);
+  return useReducer(steppedReducer, state);
 }
