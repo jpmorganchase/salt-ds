@@ -52,12 +52,12 @@ The parent Step containing the active Step child children are to have a stage of
   ## Hook
 
 The `Stepper` and `Step` component are purely presentational components.
-If you want to control the state of the `Stepper` you can utilize the `useStepReducer` hook.
+If you want to control the state of the `Stepper` you can utilize the `useSteppedReducer` hook.
 
 </LivePreview>
 
-<LivePreview componentName="stepper" exampleName="HookAdvanced" />
-  The `useStepReducer` hook is smart! If you add `stage: 'active'` to any step, it
+<LivePreview componentName="stepper" exampleName="HookAdvanced">
+  The `useSteppedReducer` hook is smart! If you add `stage: 'active'` to any step, it
   will automatically determine the stages of all other steps (autoStage), both
   before and after the active one. Inside the state object, you can find useful
   properties such as `steps`, `flatSteps`, `activeStep`, `previousStep`,
@@ -66,4 +66,6 @@ If you want to control the state of the `Stepper` you can utilize the `useStepRe
   are: 'next', 'previous', 'warning', 'error' and 'clear'. The warning and error
   types will set the status of the active step to 'warning' or 'error'. The clear
   type will reset the status of the active step to undefined.
+
+</LivePreview>
 </LivePreviewControls>

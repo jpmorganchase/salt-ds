@@ -1,6 +1,5 @@
 import {
   type ButtonProps,
-  Text,
   makePrefixer,
   useControlled,
   useId,
@@ -17,26 +16,25 @@ import {
 } from "react";
 
 import { StepConnector } from "./Step.Connector";
+import { StepDescription } from "./Step.Description";
 import { StepExpandTrigger } from "./Step.ExpandTrigger";
 import { StepIcon } from "./Step.Icon";
+import { StepLabel } from "./Step.Label";
 import stepCSS from "./Step.css";
 import { Stepper } from "./Stepper";
 import { DepthContext } from "./Stepper.Provider";
 
 export namespace Step {
-  export interface Step extends ComponentProps<"li"> {
+  export interface Props extends ComponentProps<"li"> {
     id?: string;
     label?: ReactNode;
     description?: ReactNode;
-    status?: Status;
-    stage?: Stage;
+    status?: Step.Status;
+    stage?: Step.Stage;
     expanded?: boolean;
     defaultExpanded?: boolean;
     onToggle?: ButtonProps["onClick"];
-    substeps?: Step[];
-  }
-
-  export interface Props extends Step {
+    substeps?: Step.Props[];
     children?: ReactNode;
   }
 
@@ -54,7 +52,6 @@ export namespace Step {
 
 const withBaseName = makePrefixer("saltStep");
 
-// Icon align to top when vertical and more than one line of text
 export function Step({
   id: idProp,
   label,
@@ -98,10 +95,10 @@ export function Step({
     }
   }, [depth]);
 
-  const hasNestedSteps = !!children || !!substeps;
   const iconMultiplier = depth === 0 ? 1.5 : 1;
-
+  const hasNestedSteps = !!children || !!substeps;
   const labelId = `step-${id}-label`;
+  const descriptionId = `step-${id}-description`;
   const nestedStepperId = `step-${id}-nested-stepper`;
 
   return (
@@ -128,38 +125,32 @@ export function Step({
       }
       {...props}
     >
-      <div className={withBaseName("content")}>
-        <StepConnector />
-        <StepIcon stage={stage} status={status} multiplier={iconMultiplier} />
-        {label && (
-          <Text id={labelId} styleAs="label" className={withBaseName("label")}>
-            {label}
-          </Text>
-        )}
-        {description && (
-          <Text styleAs="label" className={withBaseName("description")}>
-            {description}
-          </Text>
-        )}
-        {hasNestedSteps && (
-          <StepExpandTrigger
-            aria-expanded={expanded}
-            aria-labelledby={labelId}
-            aria-controls={`step-${id}-nested-stepper`}
-            expanded={expanded}
-            onClick={(event) => {
-              onToggle?.(event);
-              setExpanded(!expanded);
-            }}
-          />
-        )}
-        {hasNestedSteps && (
-          <Stepper id={nestedStepperId}>
-            {children ||
-              substeps?.map((step) => <Step key={step.id} {...step} />)}
-          </Stepper>
-        )}
-      </div>
+      <StepConnector />
+      <StepIcon stage={stage} status={status} multiplier={iconMultiplier} />
+      {label && <StepLabel id={labelId}>{label}</StepLabel>}
+      {description && <StepDescription>{description}</StepDescription>}
+      {hasNestedSteps && (
+        <StepExpandTrigger
+          aria-expanded={expanded}
+          aria-labelledby={labelId}
+          aria-controls={nestedStepperId}
+          expanded={expanded}
+          onClick={(event) => {
+            onToggle?.(event);
+            setExpanded(!expanded);
+          }}
+        />
+      )}
+      {hasNestedSteps && (
+        <Stepper
+          id={nestedStepperId}
+          aria-hidden={!expanded}
+          hidden={!expanded}
+        >
+          {children ||
+            substeps?.map((step) => <Step key={step.id} {...step} />)}
+        </Stepper>
+      )}
     </li>
   );
 }
