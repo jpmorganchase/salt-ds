@@ -1,4 +1,7 @@
 .saltStep {
+  display: flex;
+  flex: 1;
+
   /* Copy of size calculations of <Icon /> */
   --icon-base-size: var(--salt-size-icon, 12px);
   --icon-size-multiplier: var(--saltIcon-size-multiplier, 1.5);
@@ -6,12 +9,6 @@
 }
 
 .saltStepper-horizontal .saltStep {
-  display: flex;
-  flex: 1;
-}
-
-.saltStepper-horizontal .saltStep {
-  flex: 1;
   position: relative;
   display: grid;
   grid-template-columns: 1fr;
