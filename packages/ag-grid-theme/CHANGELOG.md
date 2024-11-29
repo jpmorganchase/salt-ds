@@ -1,5 +1,22 @@
 # @salt-ds/ag-grid-theme
 
+## 2.2.0
+
+### Minor Changes
+
+- b4a7888: Extended support to ag grid v32
+
+  - Added support for new active button in floating filter, with adjusted floating filter focus style. Updated `--ag-icon-font-code-filter` to use outline version of filter icon to accommodate active state using filled version.
+  - Fixed apply / reset panel buttons due to attribute change
+  - Added "ag-grid-community" as `peerDependencies` to enforce minimum v28 support
+
+### Patch Changes
+
+- Updated dependencies [131dd9a]
+- Updated dependencies [f6848dd]
+- Updated dependencies [5af2978]
+  - @salt-ds/theme@1.23.3
+
 ## 2.1.2
 
 ### Patch Changes
