@@ -1,0 +1,144 @@
+/* TODO: sort and rename*/
+
+.salt-theme.salt-theme-next[data-mode="light"] {
+  --salt-palette-alpha-weaky: var(--salt-color-black-20a);
+
+  --salt-palette-alpha-hover-alt: var(--salt-color-black-10a);
+  --salt-palette-alpha-active-alt: var(--salt-color-black-20a);
+}
+.salt-theme.salt-theme-next[data-mode="dark"] {
+  --salt-palette-alpha-weaky: var(--salt-color-white-20a);
+
+  --salt-palette-alpha-hover-alt: var(--salt-color-black-10a);
+  --salt-palette-alpha-active-alt: var(--salt-color-black-20a);
+}
+
+.salt-theme[data-mode="light"] {
+  --salt-palette-alpha-weaky: var(--salt-color-black-fade-background-selection);
+  --salt-palette-alpha-weaker: var(--salt-color-black-fade-background-hover);
+  --salt-palette-alpha-hover-alt: var(--salt-color-black-fade-background-hover);
+  --salt-palette-alpha-active-alt: var(--salt-color-black-fade-background-selection);
+}
+
+.salt-theme[data-mode="dark"] {
+  --salt-palette-alpha-weaky: var(--salt-color-white-fade-background-selection);
+  --salt-palette-alpha-weaker: var(--salt-color-white-fade-background-hover);
+  --salt-palette-alpha-hover-alt: var(--salt-color-black-fade-background-hover);
+  --salt-palette-alpha-active-alt: var(--salt-color-black-fade-background-selection);
+}
+.salt-theme {
+  --salt-color-white-fade-background-hover: rgba(255, 255, 255, var(--salt-opacity-8));
+  --salt-color-white-fade-background-selection: rgba(255, 255, 255, var(--salt-opacity-15));
+}
+.salt-theme,
+.salt-theme-next {
+  --salt-actionable-alpha-background-hover-alt: var(--salt-palette-alpha-hover-alt);
+  --salt-actionable-alpha-background-active-alt: var(--salt-palette-alpha-active-alt);
+  --salt-actionable-alpha-background-hover: var(--salt-palette-alpha-weaker);
+  --salt-actionable-alpha-background-active: var(--salt-palette-alpha-weaky);
+}
+
+/* ------------------------------- */
+
+.saltGhostButton {
+  align-items: var(--saltGhostButton-alignItems, center);
+  appearance: none;
+  background: var(--saltGhostButton-background, var(--ghostButton-background));
+  border-color: var(--saltGhostButton-borderColor, var(--ghostButton-borderColor, transparent));
+  border-style: var(--saltGhostButton-borderStyle, solid);
+  border-width: var(--saltGhostButton-borderWidth, var(--salt-size-border, 0));
+  border-radius: var(--saltGhostButton-borderRadius, var(--salt-palette-corner-weak, 0));
+  color: var(--saltGhostButton-text-color, var(--ghostButton-text-color));
+  cursor: var(--saltGhostButton-cursor, pointer);
+  display: inline-flex;
+  gap: var(--salt-spacing-50);
+  justify-content: var(--saltGhostButton-justifyContent, center);
+  font-size: var(--saltGhostButton-fontSize, var(--salt-text-fontSize));
+  font-family: var(--saltGhostButton-fontFamily, var(--salt-text-action-fontFamily));
+  line-height: var(--saltGhostButton-lineHeight, var(--salt-text-lineHeight));
+  letter-spacing: var(--saltGhostButton-letterSpacing, var(--salt-text-action-letterSpacing));
+  text-transform: var(--saltGhostButton-textTransform, var(--salt-text-action-textTransform));
+  padding: 0 var(--saltGhostButton-padding, calc(var(--salt-spacing-100) - var(--saltGhostButton-borderWidth, var(--salt-size-border, 0))));
+  margin: var(--saltGhostButton-margin, 0);
+  height: var(--saltGhostButton-height, var(--salt-size-base));
+  min-width: var(--saltGhostButton-minWidth, unset);
+  position: relative;
+  text-align: var(--saltGhostButton-textAlign, var(--salt-text-action-textAlign));
+  text-decoration: none;
+  transition: none;
+  width: var(--saltGhostButton-width, auto);
+  -webkit-appearance: none;
+  -webkit-tap-highlight-color: transparent;
+  font-weight: var(--saltGhostButton-fontWeight, var(--salt-text-action-fontWeight));
+}
+
+/* Pseudo-class applied to the root element on focus */
+.saltGhostButton:focus-visible {
+  outline-style: var(--salt-focused-outlineStyle);
+  outline-width: var(--salt-focused-outlineWidth);
+  outline-color: var(--salt-focused-outlineColor);
+  outline-offset: var(--salt-focused-outlineOffset);
+  background: var(--saltGhostButton-background-hover, var(--ghostButton-background-hover));
+  color: var(--saltGhostButton-text-color-hover, var(--ghostButton-text-color-hover));
+}
+
+/* Pseudo-class applied to the root element on focus when Button is active */
+.saltGhostButton.saltGhostButton-active:focus-visible,
+.saltGhostButton:focus-visible:active {
+  background: var(--saltGhostButton-background-active-hover, var(--ghostButton-background));
+  color: var(--saltGhostButton-text-color-active-hover, var(--ghostButton-text-color));
+}
+
+/* Pseudo-class applied to the root element on hover when Button is not active or disabled */
+.saltGhostButton:hover {
+  background: var(--saltGhostButton-background-hover, var(--ghostButton-background-hover));
+  color: var(--saltGhostButton-text-color-hover, var(--ghostButton-text-color-hover));
+}
+
+/* Pseudo-class applied to the root element when Button is active and not disabled */
+.saltGhostButton:active,
+.saltGhostButton.saltGhostButton-active {
+  background: var(--saltGhostButton-background-active, var(--ghostButton-background-active));
+  color: var(--saltGhostButton-text-color-active, var(--ghostButton-text-color-active));
+}
+
+/* Styles applied when the button triggers a dialog or menu */
+.saltGhostButton[aria-expanded="true"][aria-haspopup="menu"],
+.saltGhostButton[aria-expanded="true"][aria-haspopup="dialog"] {
+  background: var(--saltGhostButton-background-active, var(--ghostButton-background-active));
+  color: var(--saltGhostButton-text-color-active, var(--ghostButton-text-color-active));
+  border-color: var(--saltGhostButton-borderColor-active, var(--ghostButton-borderColor-active));
+}
+
+/* Pseudo-class applied to the root element if disabled={true} */
+.saltGhostButton:disabled,
+.saltGhostButton-disabled,
+.saltGhostButton-disabled:active,
+.saltGhostButton-disabled:focus-visible,
+.saltGhostButton-disabled:focus-visible:active,
+.saltGhostButton-disabled:hover {
+  background: var(--saltGhostButton-background-disabled, var(--ghostButton-background-disabled));
+  color: var(--saltGhostButton-text-color-disabled, var(--ghostButton-text-color-disabled));
+  cursor: var(--saltGhostButton-cursor-disabled, var(--salt-actionable-cursor-disabled));
+}
+
+/* TODO: update tokens*/
+.saltGhostButton {
+  --ghostButton-text-color: var(--salt-content-primary-foreground);
+  --ghostButton-text-color-hover: var(--salt-content-primary-foreground);
+  --ghostButton-text-color-active: var(--salt-content-primary-foreground);
+  --ghostButton-text-color-disabled: var(--salt-content-primary-foreground-disabled);
+
+  --ghostButton-background-active: var(--salt-actionable-alpha-background-active);
+  --ghostButton-background-hover: var(--salt-actionable-alpha-background-hover);
+}
+
+.saltGhostButton.saltGhostButton-solid {
+  --ghostButton-text-color: var(--salt-content-bold-foreground);
+  --ghostButton-text-color-hover: var(--salt-content-bold-foreground);
+  --ghostButton-text-color-active: var(--salt-content-bold-foreground);
+  --ghostButton-text-color-disabled: var(--salt-content-bold-foreground-disabled);
+
+  --ghostButton-background-active: var(--salt-actionable-alpha-background-active-alt);
+  --ghostButton-background-hover: var(--salt-actionable-alpha-background-hover-alt);
+}

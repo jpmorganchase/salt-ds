@@ -40,6 +40,7 @@ export {
 export * from "./form-field-context-legacy";
 export * from "./form-group";
 export * from "./formatted-input";
+export * from "./ghost-button";
 export {
   InputLegacy as Input,
   type InputLegacyProps as InputProps,
