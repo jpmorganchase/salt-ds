@@ -1,11 +1,11 @@
 .saltStepper {
   grid-area: stepper;
-  list-style-type: none;
   width: 100%;
   height: 100%;
 
   padding: 2px;
   margin: -2px;
+  list-style-type: none;
   box-sizing: content-box;
 
   transition-duration: var(--salt-duration-perceptible);

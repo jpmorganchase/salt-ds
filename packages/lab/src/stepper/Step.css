@@ -1,7 +1,4 @@
 .saltStep {
-  display: flex;
-  flex: 1;
-
   /* Copy of size calculations of <Icon /> */
   --icon-base-size: var(--salt-size-icon, 12px);
   --icon-size-multiplier: var(--saltIcon-size-multiplier, 1.5);
