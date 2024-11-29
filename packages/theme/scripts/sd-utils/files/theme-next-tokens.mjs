@@ -83,6 +83,9 @@ export const getFoundationCurveNextFile = ({ densities }) => {
 // TODO: this is not the complete list yet
 const paletteNextList = [
   "accent",
+  "background",
+  "info",
+  "positive",
   "corner",
   "negative",
   "text",
