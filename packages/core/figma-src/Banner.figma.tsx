@@ -12,30 +12,25 @@ import {
 // Warning https://www.figma.com/design/ChsbbO7pLomT4F5H6tQyLP/Salt-(Next)-Components-%26-Patterns?m=auto&node-id=7997-78021
 
 // Success Banner
+// Need to split to 2 blocks - see issue https://github.com/figma/code-connect/issues/200#issuecomment-2457330375
 figma.connect(
   Banner,
   "https://www.figma.com/design/ChsbbO7pLomT4F5H6tQyLP/Salt-(Next)-Components-%26-Patterns?node-id=7997%3A78070",
   {
+    variant: { "Show title": true },
     props: {
       // inlineContent: figma.instance("🔁 Inline content"), // Icon next to the close button
-      title: figma.boolean("👁️ Title", {
-        true: (
-          <Text>
-            <strong>{figma.string("✏️ Title")}</strong>
-          </Text>
-        ),
-        false: undefined,
-      }),
+      title: figma.string("Title text"),
       // inlineSwap: figma.boolean("👁️ Inline swap"),
-      contentArea: figma.boolean("👁️ Content area", {
-        true: figma.instance("🔁 Banner content"),
+      contentArea: figma.boolean("Content area", {
+        true: figma.instance("Banner content"),
         false: undefined,
       }),
-      description: figma.string("✏️ Description"),
-      closeButton: figma.boolean("👁️ Close button", {
+      description: figma.string("Description text"),
+      closeButton: figma.boolean("Close button", {
         true: (
           <BannerActions>
-            <Button aria-label="close" variant="secondary">
+            <Button aria-label="close" appearance="transparent">
               <CloseIcon />
             </Button>
           </BannerActions>
@@ -51,7 +46,49 @@ figma.connect(
       <Banner status="success" variant={props.variant}>
         <BannerContent>
           <StackLayout gap={1}>
-            {props.title}
+            <Text><strong>{props.title}</strong></Text>
+            {props.description}
+            {props.contentArea}
+          </StackLayout>
+        </BannerContent>
+        {props.closeButton}
+      </Banner>
+    ),
+  },
+);
+figma.connect(
+  Banner,
+  "https://www.figma.com/design/ChsbbO7pLomT4F5H6tQyLP/Salt-(Next)-Components-%26-Patterns?node-id=7997%3A78070",
+  {
+    variant: { "Show title": false },
+    props: {
+      // inlineContent: figma.instance("🔁 Inline content"), // Icon next to the close button
+      // title: figma.string("Title text"),
+      // inlineSwap: figma.boolean("👁️ Inline swap"),
+      contentArea: figma.boolean("Content area", {
+        true: figma.instance("Banner content"),
+        false: undefined,
+      }),
+      description: figma.string("Description text"),
+      closeButton: figma.boolean("Close button", {
+        true: (
+          <BannerActions>
+            <Button aria-label="close" appearance="transparent">
+              <CloseIcon />
+            </Button>
+          </BannerActions>
+        ),
+        false: undefined,
+      }),
+      variant: figma.enum("Variant", {
+        Primary: "primary",
+        Secondary: "secondary",
+      }),
+    },
+    example: (props) => (
+      <Banner status="success" variant={props.variant}>
+        <BannerContent>
+          <StackLayout gap={1}>
             {props.description}
             {props.contentArea}
           </StackLayout>
