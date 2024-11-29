@@ -17983,6 +17983,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "vite-plugin-typescript-turbosnap@workspace:tooling/typescript-turbosnap"
   dependencies:
+    slash: "npm:^4.0.0"
     ts-morph: "npm:^15.1.0"
   peerDependencies:
     vite: ^3.0.0
