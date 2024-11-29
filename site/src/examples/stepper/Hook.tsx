@@ -1,15 +1,15 @@
 import { Button, FlexLayout } from "@salt-ds/core";
 import { StackLayout } from "@salt-ds/core";
-import { Step, Stepper, useStepReducer } from "@salt-ds/lab";
+import { Step, Stepper, useSteppedReducer } from "@salt-ds/lab";
 
 const initialSteps = [
   { id: "step-1", label: "Step 1" },
   { id: "step-2", label: "Step 2" },
   { id: "step-3", label: "Step 3" },
-] as Step.Step[];
+] as Step.Props[];
 
 export function Hook() {
-  const [state, dispatch] = useStepReducer(initialSteps);
+  const [state, dispatch] = useSteppedReducer(initialSteps);
 
   return (
     <StackLayout style={{ minWidth: "240px" }}>

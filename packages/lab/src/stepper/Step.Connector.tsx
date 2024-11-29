@@ -3,7 +3,7 @@ import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import clsx from "clsx";
 
-import stepTrackCSS from "./Step.Connector.css";
+import stepConnectorCSS from "./Step.Connector.css";
 
 export namespace StepConnector {
   export interface Props {
@@ -17,8 +17,8 @@ export function StepConnector({ className }: StepConnector.Props) {
   const targetWindow = useWindow();
 
   useComponentCssInjection({
-    testId: "salt-step-track",
-    css: stepTrackCSS,
+    testId: "salt-step-connector",
+    css: stepConnectorCSS,
     window: targetWindow,
   });
 

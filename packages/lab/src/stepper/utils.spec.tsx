@@ -7,7 +7,7 @@ import type { Step } from "./Step";
 describe("Stepper > utils.ts", () => {
   describe("assignStage", () => {
     it("should assign an array of steps to a stage (completed)", () => {
-      const steps: Step.Step[] = [{ id: "1" }, { id: "2" }, { id: "3" }];
+      const steps: Step[] = [{ id: "1" }, { id: "2" }, { id: "3" }];
 
       const result = assignStage(steps, "completed");
 
@@ -18,7 +18,7 @@ describe("Stepper > utils.ts", () => {
       ]);
     });
     it("should assign an array of steps to a stage (pending)", () => {
-      const steps: Step.Step[] = [{ id: "1" }, { id: "2" }, { id: "3" }];
+      const steps: Step[] = [{ id: "1" }, { id: "2" }, { id: "3" }];
 
       const result = assignStage(steps, "pending");
 
@@ -29,7 +29,7 @@ describe("Stepper > utils.ts", () => {
       ]);
     });
     it("should assign an array of nested steps to a stage", () => {
-      const steps: Step.Step[] = [
+      const steps: Step[] = [
         { id: "1" },
         {
           id: "2",
@@ -74,7 +74,7 @@ describe("Stepper > utils.ts", () => {
   });
   describe("autoStage", () => {
     it("should return a fresh instance of the object config", () => {
-      const config: Step.Step[] = [{ id: "1" }, { id: "2" }, { id: "3" }];
+      const config: Step[] = [{ id: "1" }, { id: "2" }, { id: "3" }];
 
       expect(autoStage(config)).not.toBe(config);
       expect(autoStage(config)).toEqual([
@@ -84,7 +84,7 @@ describe("Stepper > utils.ts", () => {
       ]);
     });
     it("should set steps before active step to completed", () => {
-      const config: Step.Step[] = [
+      const config: Step[] = [
         { id: "1" },
         { id: "2" },
         { id: "3", stage: "active" },
@@ -97,7 +97,7 @@ describe("Stepper > utils.ts", () => {
       expect(result[2]).toHaveProperty("stage", "active");
     });
     it("should set steps after active step to pending", () => {
-      const config: Step.Step[] = [
+      const config: Step[] = [
         { id: "1", stage: "active" },
         { id: "2" },
         { id: "3" },
@@ -110,7 +110,7 @@ describe("Stepper > utils.ts", () => {
       expect(result[2]).toHaveProperty("stage", "pending");
     });
     it("should set steps with active substeps to inprogress on top step", () => {
-      const config: Step.Step[] = [
+      const config: Step[] = [
         {
           id: "1",
           substeps: [
@@ -125,7 +125,7 @@ describe("Stepper > utils.ts", () => {
 
       const result = autoStage(config);
 
-      const expected: Step.Step[] = [
+      const expected: Step[] = [
         {
           id: "1",
           stage: "inprogress",
@@ -142,7 +142,7 @@ describe("Stepper > utils.ts", () => {
       expect(result).toEqual(expected);
     });
     it("should set steps with active substeps to inprogress on middle step", () => {
-      const config: Step.Step[] = [
+      const config: Step[] = [
         { id: "1" },
         {
           id: "2",
@@ -157,7 +157,7 @@ describe("Stepper > utils.ts", () => {
 
       const result = autoStage(config);
 
-      const expected: Step.Step[] = [
+      const expected: Step[] = [
         { id: "1", stage: "completed" },
         {
           id: "2",
@@ -174,7 +174,7 @@ describe("Stepper > utils.ts", () => {
       expect(result).toEqual(expected);
     });
     it("should set steps with active substeps to inprogress on middle step with substeps above", () => {
-      const config: Step.Step[] = [
+      const config: Step[] = [
         {
           id: "1",
           substeps: [{ id: "1.1" }, { id: "1.2" }, { id: "1.3" }],
@@ -190,7 +190,7 @@ describe("Stepper > utils.ts", () => {
         { id: "3" },
       ];
 
-      const expected: Step.Step[] = [
+      const expected: Step[] = [
         {
           id: "1",
           stage: "completed",
@@ -215,7 +215,7 @@ describe("Stepper > utils.ts", () => {
       expect(autoStage(config)).toEqual(expected);
     });
     it("should set steps with active substeps to inprogress on middle step with substeps above", () => {
-      const config: Step.Step[] = [
+      const config: Step[] = [
         {
           id: "1",
           substeps: [{ id: "1.1" }, { id: "1.2" }, { id: "1.3" }],
@@ -238,7 +238,7 @@ describe("Stepper > utils.ts", () => {
         { id: "3" },
       ];
 
-      const expected: Step.Step[] = [
+      const expected: Step[] = [
         {
           id: "1",
           stage: "completed",
@@ -274,12 +274,12 @@ describe("Stepper > utils.ts", () => {
 
   describe("flatten", () => {
     it("should return a the same array if no substeps", () => {
-      const steps: Step.Step[] = [{ id: "1" }, { id: "2" }, { id: "3" }];
+      const steps: Step[] = [{ id: "1" }, { id: "2" }, { id: "3" }];
 
       expect(flatten(steps)).toEqual(steps);
     });
     it("should return flatten array of steps (depth 1)", () => {
-      const steps: Step.Step[] = [
+      const steps: Step[] = [
         { id: "1" },
         {
           id: "2",
@@ -296,7 +296,7 @@ describe("Stepper > utils.ts", () => {
       ]);
     });
     it("should return flatten array of steps (depth 2)", () => {
-      const steps: Step.Step[] = [
+      const steps: Step[] = [
         { id: "1" },
         {
           id: "2",

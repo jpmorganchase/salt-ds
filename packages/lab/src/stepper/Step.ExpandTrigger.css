@@ -1,5 +1,3 @@
 .saltStepExpandTrigger {
-  --saltIcon-color: initial;
-
   grid-area: expand;
 }
