@@ -141,9 +141,13 @@ export interface SaltDateAdapter<
    * @param date - The date object to format.
    * @param format - The format string to use.
    * @param locale - The locale to use for formatting.
-   * @returns The formatted date string.
+   * Returns an empty string when null or undefined date is given.
    */
-  format(date: TDate, format?: RecommendedFormats, locale?: TLocale): string;
+  format(
+    date: TDate | null | undefined,
+    format?: RecommendedFormats,
+    locale?: TLocale,
+  ): string;
 
   /**
    * Compares two date objects.

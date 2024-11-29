@@ -180,9 +180,9 @@ export const DatePickerSingleInput = forwardRef<
 
     return (
       <DateInputSingle
-        value={value || ""}
+        value={value ?? ""}
         className={clsx(withBaseName(), className)}
-        date={selectedDate || null}
+        date={selectedDate ?? null}
         readOnly={readOnly}
         ref={ref}
         onDateChange={handleDateChange}

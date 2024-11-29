@@ -40,9 +40,7 @@ export const SingleWithInitialError = (): ReactElement => {
       console.log(
         `Selected date: ${dateAdapter.isValid(date) ? dateAdapter.format(date, "DD MMM YYYY") : date}`,
       );
-      if (errors?.length && value) {
-        setHelperText(`${errorHelperText} - ${errors[0].message}`);
-        setValidationStatus("error");
+      if (errors?.length) {
         console.log(
           `Error(s): ${errors
             .map(({ type, message }) => `type=${type} message=${message}`)
@@ -51,6 +49,10 @@ export const SingleWithInitialError = (): ReactElement => {
         if (value) {
           console.log(`Original Value: ${value}`);
         }
+      }
+      if (errors?.length && details?.value?.length) {
+        setHelperText(`${errorHelperText} - ${errors[0].message}`);
+        setValidationStatus("error");
       } else {
         setHelperText(defaultHelperText);
         setValidationStatus(undefined);
@@ -64,6 +66,7 @@ export const SingleWithInitialError = (): ReactElement => {
       <FormLabel>Select a date</FormLabel>
       <DatePicker
         selectionVariant="single"
+        defaultSelectedDate={dateAdapter.parse("bad date", "DD MMM YYYY").date}
         onSelectionChange={handleSelectionChange}
         onOpen={setOpen}
       >

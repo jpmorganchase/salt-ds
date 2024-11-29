@@ -17,7 +17,7 @@ export const SingleBordered = (): ReactElement => {
       `Selected date: ${dateAdapter.isValid(date) ? dateAdapter.format(date, "DD MMM YYYY") : date}`,
     );
     const { value, errors } = details;
-    if (errors?.length && value) {
+    if (errors?.length) {
       console.log(
         `Error(s): ${errors
           .map(({ type, message }) => `type=${type} message=${message}`)

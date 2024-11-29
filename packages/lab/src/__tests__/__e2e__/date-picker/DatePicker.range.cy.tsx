@@ -147,10 +147,18 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
           expect(adapter.format(date.startDate, "DD MMM YYYY")).to.equal(
             "05 Jan 2025",
           );
-          expect(date.endDate).to.be.undefined;
+          expect(adapter.isValid(date.endDate)).to.be.false;
           expect(details).to.deep.equal({
             startDate: { value: "05 Jan 2025" },
-            endDate: undefined,
+            endDate: {
+              value: "",
+              errors: [
+                {
+                  type: DateDetailErrorEnum.UNSET,
+                  message: "no date defined",
+                },
+              ],
+            },
           });
         });
 
@@ -497,6 +505,29 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
           cy.findByRole("button", {
             name: "06 January 2025",
           }).should("have.attr", "aria-pressed", "true");
+          cy.findByRole("button", {
+            name: "01 January 2025",
+          }).realClick();
+          cy.findByRole("button", {
+            name: "02 January 2025",
+          }).realClick();
+
+          // Reset/set programatically
+          cy.findByLabelText("set start date to today").realClick();
+          cy.findByLabelText("Start date").should(
+            "have.value",
+            adapter.format(adapter.today(), "DD MMMM YYYY"),
+          );
+          cy.findByLabelText("set end date to today").realClick();
+          const tomorrow = adapter.add(adapter.today(), { days: 1 });
+          cy.findByLabelText("End date").should(
+            "have.value",
+            adapter.format(tomorrow, "DD MMMM YYYY"),
+          );
+          cy.findByLabelText("reset start date").realClick();
+          cy.findByLabelText("Start date").should("have.value", "");
+          cy.findByLabelText("reset end date").realClick();
+          cy.findByLabelText("End date").should("have.value", "");
         });
 
         it("SHOULD be able to select a date", () => {

@@ -192,6 +192,7 @@ export const DateInputRange = forwardRef<
     props: DateInputRangeProps<TDate>,
     ref: React.Ref<HTMLDivElement>,
   ) => {
+    const { dateAdapter } = useLocalization<TDate>();
     const {
       bordered = false,
       className,
@@ -201,20 +202,23 @@ export const DateInputRange = forwardRef<
       defaultDate,
       onDateChange,
       value: valueProp,
-      defaultValue = { startDate: "", endDate: "" },
+      locale,
+      format = "DD MMM YYYY",
+      defaultValue = {
+        startDate: dateAdapter.format(undefined, format, locale),
+        endDate: dateAdapter.format(undefined, format, locale),
+      },
       onChange,
       onClick,
       onDateValueChange,
       emptyReadOnlyMarker = "—",
       endAdornment,
-      format = "DD MMM YYYY",
       startInputProps = {},
       endInputProps = {},
       startInputRef: startInputRefProp,
       endInputRef: endInputRefProp,
-      locale,
       parse: parseProp,
-      placeholder = "dd mmm yyyy",
+      placeholder = format.toLowerCase(),
       readOnly: readOnlyProp,
       validationStatus: validationStatusProp,
       variant = "primary",
@@ -231,8 +235,6 @@ export const DateInputRange = forwardRef<
     const startInputID = useId();
     const endInputID = useId();
 
-    const { dateAdapter } = useLocalization<TDate>();
-
     const targetWindow = useWindow();
     useComponentCssInjection({
       testId: "salt-date-input-range",
@@ -244,12 +246,9 @@ export const DateInputRange = forwardRef<
       dateValue: string | null | undefined,
       field: DateParserField,
     ): ParserResult<TDate> | undefined => {
-      if (!dateValue || !dateValue.length) {
-        return;
-      }
       const parseResult = parseProp
-        ? parseProp(dateValue, field, format, locale)
-        : dateAdapter.parse.bind(dateAdapter)(dateValue, format, locale);
+        ? parseProp(dateValue ?? "", field, format, locale)
+        : dateAdapter.parse.bind(dateAdapter)(dateValue ?? "", format, locale);
 
       const { date, ...parseDetails } = parseResult;
       return { date, ...parseDetails };
@@ -306,8 +305,11 @@ export const DateInputRange = forwardRef<
           locale,
         );
         newDateValue = { ...dateValue, startDate: formattedStartDateValue };
-      } else if (newDate?.startDate === undefined) {
-        newDateValue = { ...dateValue, startDate: "" };
+      } else if (!newDate?.startDate) {
+        newDateValue = {
+          ...dateValue,
+          startDate: dateAdapter.format(undefined, format, locale),
+        };
       }
       if (newDate?.endDate && dateAdapter.isValid(newDate.endDate)) {
         const formattedEndDateValue = dateAdapter.format(
@@ -316,8 +318,11 @@ export const DateInputRange = forwardRef<
           locale,
         );
         newDateValue = { ...newDateValue, endDate: formattedEndDateValue };
-      } else if (newDate?.endDate === undefined) {
-        newDateValue = { ...newDateValue, endDate: "" };
+      } else if (!newDate?.endDate) {
+        newDateValue = {
+          ...newDateValue,
+          endDate: dateAdapter.format(undefined, format, locale),
+        };
       }
 
       if (
@@ -327,6 +332,7 @@ export const DateInputRange = forwardRef<
         onDateValueChange?.(null, newDateValue);
         setDateValue(newDateValue);
       }
+      return newDateValue;
     };
 
     // Update date string value when selected date changes
@@ -391,7 +397,7 @@ export const DateInputRange = forwardRef<
         startDate,
         endDate,
       };
-      setDateValueFromDate(updatedDateRange);
+      const newDateValue = setDateValueFromDate(updatedDateRange);
       setDate(updatedDateRange);
       if (
         lastAppliedValue.current.startDate !== dateValue.startDate ||
@@ -415,19 +421,12 @@ export const DateInputRange = forwardRef<
             preservedTime.current.endTime,
           );
         }
-
         onDateChange?.(event, updatedDateRange, {
-          startDate:
-            Object.keys(startDateParseDetails).length === 0
-              ? undefined
-              : startDateParseDetails,
-          endDate:
-            Object.keys(endDateParseDetails).length === 0
-              ? undefined
-              : endDateParseDetails,
+          startDate: startDateParseDetails,
+          endDate: endDateParseDetails,
         });
       }
-      lastAppliedValue.current = { ...dateValue };
+      lastAppliedValue.current = { ...newDateValue };
     };
 
     const handleStartInputChange: ChangeEventHandler<HTMLInputElement> = (
@@ -542,11 +541,11 @@ export const DateInputRange = forwardRef<
           ref={handleStartInputRef}
           tabIndex={isDisabled ? -1 : 0}
           placeholder={placeholder}
-          size={placeholder.length}
           value={
             isReadOnly && !dateValue?.startDate
               ? emptyReadOnlyMarker
-              : (dateValue.startDate ?? "")
+              : (dateValue.startDate ??
+                dateAdapter.format(undefined, format, locale))
           }
           {...restStartInputProps}
           onBlur={handleStartInputBlur}
@@ -575,11 +574,11 @@ export const DateInputRange = forwardRef<
           ref={handleEndInputRef}
           tabIndex={isDisabled ? -1 : 0}
           placeholder={placeholder}
-          size={placeholder.length}
           value={
             isReadOnly && !dateValue?.endDate
               ? emptyReadOnlyMarker
-              : (dateValue.endDate ?? "")
+              : (dateValue.endDate ??
+                dateAdapter.format(undefined, format, locale))
           }
           {...restEndInputProps}
           onBlur={handleEndInputBlur}

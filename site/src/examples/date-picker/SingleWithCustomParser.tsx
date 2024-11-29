@@ -48,9 +48,7 @@ export const SingleWithCustomParser = (): ReactElement => {
       console.log(
         `Selected date: ${dateAdapter.isValid(date) ? dateAdapter.format(date, "DD MMM YYYY") : date}`,
       );
-      if (errors?.length && value) {
-        setHelperText(`${errorHelperText} - ${errors[0].message}`);
-        setValidationStatus("error");
+      if (errors?.length) {
         console.log(
           `Error(s): ${errors
             .map(({ type, message }) => `type=${type} message=${message}`)
@@ -59,11 +57,15 @@ export const SingleWithCustomParser = (): ReactElement => {
         if (value) {
           console.log(`Original Value: ${value}`);
         }
+      }
+      if (errors?.length && details?.value?.length) {
+        setHelperText(`${errorHelperText} - ${errors[0].message}`);
+        setValidationStatus("error");
       } else {
         setHelperText(defaultHelperText);
         setValidationStatus(undefined);
       }
-      setSelectedDate(value?.trim().length === 0 ? null : date);
+      setSelectedDate(date ?? null);
     },
     [dateAdapter],
   );
@@ -89,7 +91,9 @@ export const SingleWithCustomParser = (): ReactElement => {
       const offsetMatch = parsedDate?.match(/^([+-]?\d+)$/);
       if (offsetMatch) {
         const offsetDays = Number.parseInt(offsetMatch[1], 10);
-        let offsetDate = selectedDate ? selectedDate : dateAdapter.today();
+        let offsetDate = dateAdapter.isValid(selectedDate)
+          ? selectedDate
+          : dateAdapter.today();
         offsetDate = dateAdapter.add(offsetDate, { days: offsetDays });
         return {
           date: offsetDate,

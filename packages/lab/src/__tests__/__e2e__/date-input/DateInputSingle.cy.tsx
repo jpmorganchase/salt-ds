@@ -42,10 +42,17 @@ adapterMoment.moment.updateLocale("es", {
 // Create an array of adapters
 const adapters = [adapterDateFns, adapterDayjs, adapterLuxon, adapterMoment];
 
+/**
+ * Validate change helper
+ * @param spy
+ * @param expectedValue expected value returned by change
+ * @param expectedDate expected date, undefined="", null=invalid date or expected date
+ * @param adapter
+ */
 function assertDateChange(
   spy: any,
   expectedValue: string,
-  expectedDate: DateFrameworkType | undefined,
+  expectedDate: DateFrameworkType | null | undefined,
   adapter: SaltDateAdapter<DateFrameworkType>,
 ) {
   const lastCallArgs = spy.args[spy.callCount - 1];
@@ -53,20 +60,25 @@ function assertDateChange(
   const details = lastCallArgs[2];
   const expectedValidDate = adapter.isValid(expectedDate);
 
-  // assert undefined when expecting no date is defined
-  if (expectedDate === undefined) {
-    expect(date).to.be.undefined;
-  } else if (expectedValidDate) {
+  // assert valida date
+  if (expectedValidDate) {
     // assert valid date matches expected date
     expect(adapter.format(date, "DD MMM YYYY")).to.equal(
       adapter.format(expectedDate, "DD MMM YYYY"),
     );
-  }
-  if (date && !expectedValidDate) {
-    // assert error details when expecting an invalid date
+  } else if (expectedValidDate === undefined) {
+    // assert empty date
+    expect(adapter.isValid(date)).to.equal(false);
+    expect(details).to.deep.equal({
+      errors: [{ type: DateDetailErrorEnum.UNSET, message: "no date defined" }],
+      value: expectedValue,
+    });
+  } else if (expectedValidDate === null) {
+    // assert invalid date
+    expect(adapter.isValid(date)).to.equal(false);
     expect(details).to.deep.equal({
       errors: [
-        { type: DateDetailErrorEnum.INVALID_DATE, message: "not a valid date" },
+        { type: DateDetailErrorEnum.UNSET, message: "not a valid date" },
       ],
       value: expectedValue,
     });
@@ -123,12 +135,7 @@ describe("GIVEN a DateInputSingle", () => {
           "bad date",
         );
         cy.get("@dateChangeSpy").then((spy) =>
-          assertDateChange(
-            spy,
-            "bad date",
-            adapter.parse("bad date", "DD MMM YYYY").date,
-            adapter,
-          ),
+          assertDateChange(spy, "bad date", null, adapter),
         );
 
         // Test re-entering the same invalid date
@@ -141,12 +148,7 @@ describe("GIVEN a DateInputSingle", () => {
         cy.realPress("Tab");
         cy.get("@dateChangeSpy").should("have.callCount", 2);
         cy.get("@dateChangeSpy").then((spy) =>
-          assertDateChange(
-            spy,
-            "another bad date",
-            adapter.parse("another bad date", "DD MMM YYYY").date,
-            adapter,
-          ),
+          assertDateChange(spy, "another bad date", null, adapter),
         );
         cy.get("@dateValueChangeSpy").should(
           "have.been.calledWith",

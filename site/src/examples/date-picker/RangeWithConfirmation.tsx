@@ -100,9 +100,8 @@ export const RangeWithConfirmation = (): ReactElement => {
         setHelperText(defaultHelperText);
       }
       setSelectedDate({
-        startDate:
-          startDateOriginalValue?.trim().length === 0 ? null : startDate,
-        endDate: endDateOriginalValue?.trim().length === 0 ? null : endDate,
+        startDate: startDate ?? null,
+        endDate: endDate ?? null,
       });
     },
     [dateAdapter],
