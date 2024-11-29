@@ -1,4 +1,4 @@
-import { StackLayout, SegmentedButtonGroup, Button } from "@salt-ds/core";
+import { Button, SegmentedButtonGroup, StackLayout } from "@salt-ds/core";
 import { Step, Stepper, useSteppedReducer } from "@salt-ds/lab";
 
 const initialSteps = [
