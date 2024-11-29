@@ -1,4 +1,5 @@
-import { StackLayout, Text } from "@salt-ds/core";
+import { Button, SplitLayout, StackLayout, Text } from "@salt-ds/core";
+import { CloseIcon } from "@salt-ds/icons";
 import {
   SystemStatus,
   SystemStatusContent,
@@ -36,13 +37,37 @@ const WarningSystemStatus = () => (
 const SuccessSystemStatus = () => (
   <BasicSystemStatusExample status={"success"} />
 );
+const WithButtonSystemStatusExample: FC<SystemStatusProps> = ({ status }) => {
+  return (
+    <SystemStatus status={status}>
+      <SystemStatusContent>
+        <StackLayout gap={0.5}>
+          <SplitLayout
+            startItem={
+              <Text color="inherit">
+                <strong>Title</strong>
+              </Text>
+            }
+            endItem={
+              <Button appearance="transparent" aria-label="close">
+                <CloseIcon aria-hidden />
+              </Button>
+            }
+          />
 
+          <Text color="inherit">Example custom renderer</Text>
+        </StackLayout>
+      </SystemStatusContent>
+    </SystemStatus>
+  );
+};
 export const ExamplesGrid: StoryFn = (props) => (
   <QAContainer cols={1} itemPadding={10} height={600} width={1000} {...props}>
     <InfoSystemStatus />
     <ErrorSystemStatus />
     <WarningSystemStatus />
     <SuccessSystemStatus />
+    <WithButtonSystemStatusExample />
   </QAContainer>
 );
 
