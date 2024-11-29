@@ -187,7 +187,7 @@ export const VerticalLongText: StoryFn<typeof Stepper> = () => {
 
 export const VerticalDepth1: StoryFn<typeof Stepper> = () => {
   return (
-    <StackLayout style={{ maxWidth: "240px", width: "100%" }}>
+    <StackLayout style={{ width: 240 }}>
       <Stepper orientation="vertical">
         <Step label="Step 1" description="Description text" stage="completed">
           <Step label="Step 1.1" stage="completed" />
@@ -222,7 +222,7 @@ export const VerticalDepth1: StoryFn<typeof Stepper> = () => {
 
 export const VerticalDepth2: StoryFn<typeof Stepper> = () => {
   return (
-    <StackLayout style={{ maxWidth: "240px", width: "100%" }}>
+    <StackLayout style={{ width: 240 }}>
       <Stepper orientation="vertical">
         <Step label="Step 1" description="Description text">
           <Step label="Step 1.1" />
