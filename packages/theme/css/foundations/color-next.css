@@ -67,7 +67,7 @@
   --salt-color-background-snow-rgb: 255, 255, 255;
   --salt-color-background-marble-rgb: 245, 247, 248;
   --salt-color-background-limestone-rgb: 250, 248, 242;
-  --salt-color-background-gradientlight-rgb: 226, 228, 229;
+  --salt-color-background-titanium-rgb: 226, 228, 229;
   --salt-color-background-jet-rgb: 16, 24, 32;
   --salt-color-background-granite-rgb: 26, 34, 41;
   --salt-color-background-leather-rgb: 38, 41, 43;
@@ -140,7 +140,7 @@
   --salt-color-background-snow: rgb(var(--salt-color-background-snow-rgb));
   --salt-color-background-marble: rgb(var(--salt-color-background-marble-rgb));
   --salt-color-background-limestone: rgb(var(--salt-color-background-limestone-rgb));
-  --salt-color-background-gradientlight: rgb(var(--salt-color-background-gradientlight-rgb));
+  --salt-color-background-titanium: rgb(var(--salt-color-background-titanium-rgb));
   --salt-color-background-jet: rgb(var(--salt-color-background-jet-rgb));
   --salt-color-background-granite: rgb(var(--salt-color-background-granite-rgb));
   --salt-color-background-leather: rgb(var(--salt-color-background-leather-rgb));

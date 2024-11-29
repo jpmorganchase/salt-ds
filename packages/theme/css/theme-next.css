@@ -29,3 +29,6 @@
 @import url(characteristics/target-next.css);
 @import url(characteristics/text-next.css);
 @import url(characteristics/track-next.css);
+
+/* Deprecated */
+@import url(deprecated/foundations-next.css);
