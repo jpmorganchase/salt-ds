@@ -66,7 +66,9 @@ export const cssMultiModes = async ({
   const dictionary = { ...originalDictionary };
 
   // add file header
-  const output = [await fileHeader({ file })];
+  const output = [
+    await fileHeader({ file, formatting: mergedFormatting, options }),
+  ];
 
   console.log("salt-ds/css/multi-modes rules", rules);
   // add single theme css
