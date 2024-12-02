@@ -38,6 +38,13 @@
     "provenance": true
   },
   "scripts": {
-    "build": "yarn node ../../scripts/build.mjs"
-  }
+    "build": "yarn node ../../scripts/build.mjs && yarn build:entries",
+    "build:entries": "yarn node ./scripts/build.mjs"
+  },
+  "files": [
+    "/date-fns",
+    "/dayjs",
+    "/luxon",
+    "/moment"
+  ]
 }
