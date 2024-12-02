@@ -31,19 +31,21 @@ export namespace StepReducer {
 /**
  * Extracts all step ids from a array of
  * steps, including top and lower levels.
+ * I can't use this type because our codebase
+ * is not using TypeScript 5 yet, darn it!
  * */
-export type AllowedActiveStepIds<
-  S extends Step.Props[],
-  Acc extends string = never,
-> = S extends [{ id: infer ID; substeps?: infer SS }, ...infer R]
-  ? ID extends string
-    ? R extends Step.Props[]
-      ? SS extends Step.Props[]
-        ? AllowedActiveStepIds<R, Acc | AllowedActiveStepIds<SS>>
-        : AllowedActiveStepIds<R, Acc | ID>
-      : Acc
-    : Acc
-  : Acc;
+// export type AllowedActiveStepIds<
+//   S extends Step.Props[],
+//   Acc extends string = never,
+// > = S extends [{ id: infer ID; substeps?: infer SS }, ...infer R]
+//   ? ID extends string
+//     ? R extends Step.Props[]
+//       ? SS extends Step.Props[]
+//         ? AllowedActiveStepIds<R, Acc | AllowedActiveStepIds<SS>>
+//         : AllowedActiveStepIds<R, Acc | ID>
+//       : Acc
+//     : Acc
+//   : Acc;
 
 function stepReducer(state: StepReducer.State, action: StepReducer.Action) {
   if (action.type === "next") {
@@ -164,10 +166,10 @@ function stepReducer(state: StepReducer.State, action: StepReducer.Action) {
   return state;
 }
 
-export function useStepReducer<const T extends Step.Props[]>(
-  initialSteps: T,
+export function useStepReducer(
+  initialSteps: Step.Props[],
   options?: {
-    activeStepId?: AllowedActiveStepIds<T>;
+    activeStepId?: string;
   },
 ) {
   const steps = autoStageSteps(initialSteps, options);
