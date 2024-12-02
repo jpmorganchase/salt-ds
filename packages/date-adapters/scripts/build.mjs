@@ -108,8 +108,9 @@ for (const entry of ENTRY_FOLDERS) {
   await fs.writeJSON(
     path.join(outputDir, "package.json"),
     {
+      sideEffects: false,
       main: `dist-cjs/${entry}/index.js`,
-      module: `dist-es/${entry}/ndex.js`,
+      module: `dist-es/${entry}/index.js`,
       typings: `dist-types/${entry}/index.d.ts`,
     },
     { spaces: 2 },
