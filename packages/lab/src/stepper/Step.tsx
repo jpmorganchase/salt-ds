@@ -97,9 +97,12 @@ export function Step({
 
   const iconMultiplier = depth === 0 ? 1.5 : 1;
   const hasNestedSteps = !!children || !!substeps;
+  const iconId = `step-${id}-icon`;
   const labelId = `step-${id}-label`;
   const descriptionId = `step-${id}-description`;
   const nestedStepperId = `step-${id}-nested-stepper`;
+
+  const ariaCurrent = stage === "active" ? "step" : undefined;
 
   return (
     <li
@@ -107,6 +110,7 @@ export function Step({
       data-stage={stage}
       data-status={status}
       data-depth={depth}
+      aria-current={ariaCurrent}
       className={clsx(
         withBaseName(),
         withBaseName(`stage-${stage}`),
@@ -126,13 +130,20 @@ export function Step({
       {...props}
     >
       <StepConnector />
-      <StepIcon stage={stage} status={status} multiplier={iconMultiplier} />
+      <StepIcon
+        id={iconId}
+        stage={stage}
+        status={status}
+        multiplier={iconMultiplier}
+      />
       {label && <StepLabel id={labelId}>{label}</StepLabel>}
-      {description && <StepDescription>{description}</StepDescription>}
+      {description && (
+        <StepDescription id={descriptionId}>{description}</StepDescription>
+      )}
       {hasNestedSteps && (
         <StepExpandTrigger
           aria-expanded={expanded}
-          aria-labelledby={labelId}
+          aria-labelledby={`${labelId} ${iconId}`}
           aria-controls={nestedStepperId}
           expanded={expanded}
           onClick={(event) => {
@@ -144,6 +155,7 @@ export function Step({
       {hasNestedSteps && (
         <Stepper
           id={nestedStepperId}
+          aria-labelledby={labelId}
           aria-hidden={!expanded}
           hidden={!expanded}
         >

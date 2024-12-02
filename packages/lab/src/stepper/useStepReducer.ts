@@ -1,9 +1,14 @@
 import { useReducer } from "react";
 
 import type { Step } from "./Step";
-import { assignStage, autoStage, flatten } from "./utils";
+import {
+  autoStageSteps,
+  assignSteps,
+  flattenSteps,
+  resetSteps,
+} from "./useStepReducer.utils";
 
-export namespace SteppedReducer {
+export namespace StepReducer {
   export interface State {
     steps: Step.Props[];
     flatSteps: Step.Props[];
@@ -23,13 +28,31 @@ export namespace SteppedReducer {
     | { type: "clear" };
 }
 
-function steppedReducer(
-  state: SteppedReducer.State,
-  action: SteppedReducer.Action,
-) {
+/**
+ * Extracts all step ids from a array of
+ * steps, including top and lower levels.
+ * */
+export type AllowedActiveStepIds<
+  S extends Step.Props[],
+  Acc extends string = never,
+> = S extends [{ id: infer ID; substeps?: infer SS }, ...infer R]
+  ? ID extends string
+    ? R extends Step.Props[]
+      ? SS extends Step.Props[]
+        ? AllowedActiveStepIds<R, Acc | AllowedActiveStepIds<SS>>
+        : AllowedActiveStepIds<R, Acc | ID>
+      : Acc
+    : Acc
+  : Acc;
+
+function stepReducer(state: StepReducer.State, action: StepReducer.Action) {
   if (action.type === "next") {
-    const steps = assignStage(state.steps);
-    const flatSteps = flatten(steps);
+    if (state.activeStep?.status === "error") {
+      return state;
+    }
+
+    const steps = resetSteps(state.steps);
+    const flatSteps = flattenSteps(steps);
 
     if (state.nextStep) {
       const activeStepIndex = state.activeStepIndex + 1;
@@ -42,7 +65,7 @@ function steppedReducer(
       }
 
       return {
-        steps: autoStage(steps),
+        steps: autoStageSteps(steps),
         flatSteps,
         activeStepIndex,
         activeStep,
@@ -59,7 +82,7 @@ function steppedReducer(
     const nextStep = null;
 
     return {
-      steps: assignStage(steps, "completed"),
+      steps: assignSteps(steps, "completed"),
       flatSteps,
       activeStepIndex,
       activeStep,
@@ -67,12 +90,16 @@ function steppedReducer(
       nextStep,
       started: true,
       ended: true,
-    } as SteppedReducer.State;
+    } as StepReducer.State;
   }
 
   if (action.type === "previous") {
-    const steps = assignStage(state.steps);
-    const flatSteps = flatten(steps);
+    if (state.activeStep?.status === "error") {
+      return state;
+    }
+
+    const steps = resetSteps(state.steps);
+    const flatSteps = flattenSteps(steps);
 
     if (state.previousStep) {
       const activeStepIndex = state.activeStepIndex - 1;
@@ -85,7 +112,7 @@ function steppedReducer(
       }
 
       return {
-        steps: autoStage(steps),
+        steps: autoStageSteps(steps),
         flatSteps,
         activeStepIndex,
         activeStep,
@@ -93,7 +120,7 @@ function steppedReducer(
         nextStep,
         started: true,
         ended: false,
-      } as SteppedReducer.State;
+      } as StepReducer.State;
     }
 
     const activeStepIndex = -1;
@@ -102,7 +129,7 @@ function steppedReducer(
     const nextStep = flatSteps.at(0);
 
     return {
-      steps: assignStage(steps, "pending"),
+      steps: assignSteps(steps, "pending"),
       flatSteps,
       activeStepIndex,
       activeStep,
@@ -110,33 +137,41 @@ function steppedReducer(
       nextStep,
       ended: false,
       started: false,
-    } as SteppedReducer.State;
+    } as StepReducer.State;
   }
 
   if (action.type === "error") {
     if (state.activeStep) {
       state.activeStep.status = "error";
+      return { ...state };
     }
   }
 
   if (action.type === "warning") {
     if (state.activeStep) {
       state.activeStep.status = "warning";
+      return { ...state };
     }
   }
 
   if (action.type === "clear") {
     if (state.activeStep) {
       state.activeStep.status = undefined;
+      return { ...state };
     }
   }
 
-  return { ...state };
+  return state;
 }
 
-export function useSteppedReducer(initialSteps: Step.Props[]) {
-  const steps = autoStage(initialSteps);
-  const flatSteps = flatten(steps);
+export function useStepReducer<const T extends Step.Props[]>(
+  initialSteps: T,
+  options?: {
+    activeStepId?: AllowedActiveStepIds<T>;
+  },
+) {
+  const steps = autoStageSteps(initialSteps, options);
+  const flatSteps = flattenSteps(steps);
   const activeStepIndex = flatSteps.findIndex(
     (step) => step.stage === "active",
   );
@@ -146,7 +181,7 @@ export function useSteppedReducer(initialSteps: Step.Props[]) {
   const started = !flatSteps.every((step) => step.stage === "pending");
   const ended = flatSteps.every((step) => step.stage === "completed");
 
-  const state: SteppedReducer.State = {
+  const state: StepReducer.State = {
     steps,
     flatSteps,
     activeStep,
@@ -157,5 +192,5 @@ export function useSteppedReducer(initialSteps: Step.Props[]) {
     started,
   };
 
-  return useReducer(steppedReducer, state);
+  return useReducer(stepReducer, state);
 }

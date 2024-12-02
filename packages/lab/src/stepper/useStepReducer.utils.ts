@@ -1,32 +1,49 @@
 import type { Step } from "./Step";
 
-export function assignStage(
+export function assignSteps(
   steps: Step.Props[],
   stage?: Step.Stage,
 ): Step.Props[] {
   return steps.map((step) => {
     step.stage = stage;
     if (step.substeps) {
-      step.substeps = assignStage(step.substeps, stage);
+      step.substeps = assignSteps(step.substeps, stage);
     }
 
     return step;
   });
 }
 
-export function autoStage(steps: Step.Props[]): Step.Props[] {
+export function resetSteps(steps: Step.Props[]): Step.Props[] {
+  return assignSteps(steps, undefined);
+}
+
+export function autoStageSteps(
+  steps: Step.Props[],
+  options?: {
+    activeStepId?: string;
+  },
+): Step.Props[] {
   function autoStageHelper(steps: Step.Props[]): Step.Props[] | null {
     const pivotIndex = steps.findIndex(
-      (step) => step.stage === "active" || step.stage === "inprogress",
+      (step) =>
+        step.id === options?.activeStepId ||
+        step.stage === "active" ||
+        step.stage === "inprogress",
     );
 
     if (pivotIndex !== -1) {
-      const activeStep = steps[pivotIndex] as Step.Props;
-      const previousSteps = assignStage(
+      const activeStep = steps[pivotIndex];
+
+      if (!activeStep.stage) {
+        activeStep.stage = "active";
+      }
+
+      const previousSteps = assignSteps(
         steps.slice(0, pivotIndex),
         "completed",
       );
-      const nextSteps = assignStage(steps.slice(pivotIndex + 1), "pending");
+      const nextSteps = assignSteps(steps.slice(pivotIndex + 1), "pending");
 
       return [...previousSteps, activeStep, ...nextSteps] as Step.Props[];
     }
@@ -50,13 +67,13 @@ export function autoStage(steps: Step.Props[]): Step.Props[] {
     );
   }
 
-  return autoStageHelper(steps) || assignStage(steps, "pending");
+  return autoStageHelper(steps) || [...steps];
 }
 
-export function flatten(steps: Step.Props[]): Step.Props[] {
+export function flattenSteps(steps: Step.Props[]): Step.Props[] {
   return steps.reduce((acc, step) => {
     if (step.substeps) {
-      acc.push(...flatten(step.substeps));
+      acc.push(...flattenSteps(step.substeps));
 
       return acc;
     }

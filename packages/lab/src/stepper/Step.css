@@ -17,6 +17,7 @@
   justify-items: center;
   align-items: center;
   text-align: center;
+  flex: 1;
   padding: 0 var(--salt-spacing-25);
 }
 
@@ -34,12 +35,6 @@
   transition-duration: inherit;
   transition-timing-function: inherit;
   transition-property: grid-template-rows;
-}
-
-@media (prefers-reduced-motion) {
-  .saltStepper-vertical .saltStep {
-    transition-duration: var(--salt-duration-instant);
-  }
 }
 
 .saltStepper-vertical .saltStep-terminal {

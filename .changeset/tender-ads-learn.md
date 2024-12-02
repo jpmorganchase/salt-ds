@@ -3,13 +3,13 @@
 "@salt-ds/lab": patch
 ---
 
-Stepper, Step and useSteppedReducer
+Stepper, Step and useStepReducer
 
 We are exited to introduce a new (sort of) salt component, the `Stepper`, currently in lab for you to test out and give feedback. It serves as a replacement to the current `SteppedTracker`.
 
 The `Stepper` is a component that helps you manage a series of steps in a process. It provides a way to navigate between steps, and to track the progress of the process.
 
-The `<Stepper />` is meant to be used in conjunction with it's buddies, the `<Step />` component and the `useSteppedReducer()` hook.
+The `<Stepper />` is meant to be used in conjunction with it's buddies, the `<Step />` component and the `useStepReducer()` hook.
 
 In it's simples form the `Stepper` can be used like so:
 
@@ -63,13 +63,13 @@ export const NestedSteps = () => {
 };
 ```
 
-The `Stepper` component is a purely presentational component, meaning that you need to manage the state of the steps yourself. That however becomes tricky when dealing with nested steps. This is where the `useSteppedReducer()` hook comes in. It is a custom hook that helps you manage the state of a stepper component with nested steps with ease. It has a built-in algorithm that determine the stage of all steps above and below the active step. All you need to do is add `stage: 'active'` to the desired step (see `step-1-3-1`), the hook will figure out the rest. This is what we call `autoStage`.
+The `Stepper` component is a purely presentational component, meaning that you need to manage the state of the steps yourself. That however becomes tricky when dealing with nested steps. This is where the `useStepReducer()` hook comes in. It is a custom hook that helps you manage the state of a stepper component with nested steps with ease. It has a built-in algorithm that determine the stage of all steps above and below the active step. All you need to do is add `stage: 'active'` to the desired step (see `step-1-3-1`), the hook will figure out the rest. This is what we call `autoStage`.
 
-The `useSteppedReducer()` is used like so:
+The `useStepReducer()` is used like so:
 
 ```tsx
 import { StackLayout, SegmentedButtonGroup, Button } from "@salt-ds/core";
-import { Step, Stepper, useSteppedReducer } from "@salt-ds/lab";
+import { Step, Stepper, useStepReducer } from "@salt-ds/lab";
 
 const initialSteps = [
   {
@@ -105,7 +105,7 @@ const initialSteps = [
 ] satisfies Step.Props[];
 
 export const Example = () => {
-  const [state, dispatch] = useSteppedReducer(initialSteps);
+  const [state, dispatch] = useStepReducer(initialSteps);
 
   return (
     <StackLayout style={{ width: 240 }}>

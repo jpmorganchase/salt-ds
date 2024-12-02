@@ -1,5 +1,5 @@
 import { Button, SegmentedButtonGroup, StackLayout } from "@salt-ds/core";
-import { Step, Stepper, useSteppedReducer } from "@salt-ds/lab";
+import { Step, Stepper, useStepReducer } from "@salt-ds/lab";
 
 const initialSteps = [
   {
@@ -35,7 +35,7 @@ const initialSteps = [
 ] satisfies Step.Props[];
 
 export const HookAdvanced = () => {
-  const [state, dispatch] = useSteppedReducer(initialSteps);
+  const [state, dispatch] = useStepReducer(initialSteps);
 
   return (
     <StackLayout style={{ width: 240 }}>
