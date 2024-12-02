@@ -25,7 +25,7 @@ import { Stepper } from "./Stepper";
 import { DepthContext } from "./Stepper.Provider";
 
 export namespace Step {
-  export interface Props extends ComponentProps<"li"> {
+  export interface Props extends Omit<ComponentProps<"li">, "onToggle"> {
     id?: string;
     label?: ReactNode;
     description?: ReactNode;
