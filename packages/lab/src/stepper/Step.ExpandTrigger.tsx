@@ -36,9 +36,9 @@ export function StepExpandTrigger({
       {...props}
     >
       {expanded ? (
-        <ChevronUpIcon aria-hidden />
+        <ChevronUpIcon role="presentation" aria-hidden />
       ) : (
-        <ChevronDownIcon aria-hidden />
+        <ChevronDownIcon role="presentation" aria-hidden />
       )}
     </Button>
   );
