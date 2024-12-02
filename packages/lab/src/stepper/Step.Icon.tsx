@@ -1,12 +1,12 @@
-import clsx from "clsx";
-import { useMemo } from "react";
 import { makePrefixer, useIcon } from "@salt-ds/core";
+import type { IconProps } from "@salt-ds/icons";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
-import type { IconProps } from "@salt-ds/icons";
+import clsx from "clsx";
+import { useMemo } from "react";
 
-import stepIconCSS from "./Step.Icon.css";
 import type { Step } from "./Step";
+import stepIconCSS from "./Step.Icon.css";
 
 export namespace StepIcon {
   export interface Props extends IconProps {

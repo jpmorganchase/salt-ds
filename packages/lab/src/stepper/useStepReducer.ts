@@ -2,8 +2,8 @@ import { useReducer } from "react";
 
 import type { Step } from "./Step";
 import {
-  autoStageSteps,
   assignSteps,
+  autoStageSteps,
   flattenSteps,
   resetSteps,
 } from "./useStepReducer.utils";

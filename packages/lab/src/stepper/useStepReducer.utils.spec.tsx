@@ -1,10 +1,10 @@
 import { describe, expect, it } from "vitest";
 
 import {
-  autoStageSteps,
   assignSteps,
-  resetSteps,
+  autoStageSteps,
   flattenSteps,
+  resetSteps,
 } from "./useStepReducer.utils";
 
 import type { Step } from "./Step";
