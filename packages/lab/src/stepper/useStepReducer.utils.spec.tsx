@@ -1,15 +1,84 @@
 import { describe, expect, it } from "vitest";
 
-import { assignStage, autoStage, flatten } from "./utils";
+import {
+  autoStageSteps,
+  assignSteps,
+  resetSteps,
+  flattenSteps,
+} from "./useStepReducer.utils";
 
 import type { Step } from "./Step";
 
 describe("Stepper > utils.ts", () => {
-  describe("assignStage", () => {
+  describe("resetSteps", () => {
+    it("should set the stage of all steps to undefined", () => {
+      const steps: Step.Props[] = [
+        { id: "1", stage: "completed" },
+        { id: "2", stage: "active" },
+        { id: "3", stage: "pending" },
+      ];
+
+      const result = resetSteps(steps);
+
+      expect(result).toEqual([{ id: "1" }, { id: "2" }, { id: "3" }]);
+    });
+    it("should set the stage of nested steps to undefined", () => {
+      const steps: Step.Props[] = [
+        {
+          id: "1",
+          stage: "completed",
+          substeps: [
+            {
+              id: "1.1",
+              stage: "completed",
+              substeps: [
+                { id: "1.1.1", stage: "completed" },
+                { id: "1.1.2", stage: "completed" },
+              ],
+            },
+            {
+              id: "1.2",
+              stage: "inprogress",
+              substeps: [
+                { id: "1.2.1", stage: "completed" },
+                { id: "1.2.2", stage: "active" },
+                { id: "1.2.3", stage: "pending" },
+              ],
+            },
+            { id: "1.3", stage: "pending" },
+          ],
+        },
+        { id: "2", stage: "pending" },
+        { id: "3", stage: "pending" },
+      ];
+
+      const result = resetSteps(steps);
+
+      expect(result).toEqual([
+        {
+          id: "1",
+          substeps: [
+            {
+              id: "1.1",
+              substeps: [{ id: "1.1.1" }, { id: "1.1.2" }],
+            },
+            {
+              id: "1.2",
+              substeps: [{ id: "1.2.1" }, { id: "1.2.2" }, { id: "1.2.3" }],
+            },
+            { id: "1.3" },
+          ],
+        },
+        { id: "2" },
+        { id: "3" },
+      ]);
+    });
+  });
+  describe("assignSteps", () => {
     it("should assign an array of steps to a stage (completed)", () => {
       const steps: Step.Props[] = [{ id: "1" }, { id: "2" }, { id: "3" }];
 
-      const result = assignStage(steps, "completed");
+      const result = assignSteps(steps, "completed");
 
       expect(result).toEqual([
         { id: "1", stage: "completed" },
@@ -20,7 +89,7 @@ describe("Stepper > utils.ts", () => {
     it("should assign an array of steps to a stage (pending)", () => {
       const steps: Step.Props[] = [{ id: "1" }, { id: "2" }, { id: "3" }];
 
-      const result = assignStage(steps, "pending");
+      const result = assignSteps(steps, "pending");
 
       expect(result).toEqual([
         { id: "1", stage: "pending" },
@@ -46,7 +115,7 @@ describe("Stepper > utils.ts", () => {
         },
       ];
 
-      const result = assignStage(steps, "completed");
+      const result = assignSteps(steps, "completed");
 
       expect(result).toEqual([
         { id: "1", stage: "completed" },
@@ -72,15 +141,15 @@ describe("Stepper > utils.ts", () => {
       ]);
     });
   });
-  describe("autoStage", () => {
+  describe("autoStageSteps", () => {
     it("should return a fresh instance of the object config", () => {
       const config: Step.Props[] = [{ id: "1" }, { id: "2" }, { id: "3" }];
 
-      expect(autoStage(config)).not.toBe(config);
-      expect(autoStage(config)).toEqual([
-        { id: "1", stage: "pending" },
-        { id: "2", stage: "pending" },
-        { id: "3", stage: "pending" },
+      expect(autoStageSteps(config)).not.toBe(config);
+      expect(autoStageSteps(config)).toEqual([
+        { id: "1" },
+        { id: "2" },
+        { id: "3" },
       ]);
     });
     it("should set steps before active step to completed", () => {
@@ -90,7 +159,7 @@ describe("Stepper > utils.ts", () => {
         { id: "3", stage: "active" },
       ];
 
-      const result = autoStage(config);
+      const result = autoStageSteps(config);
 
       expect(result[0]).toHaveProperty("stage", "completed");
       expect(result[1]).toHaveProperty("stage", "completed");
@@ -103,7 +172,7 @@ describe("Stepper > utils.ts", () => {
         { id: "3" },
       ];
 
-      const result = autoStage(config);
+      const result = autoStageSteps(config);
 
       expect(result[0]).toHaveProperty("stage", "active");
       expect(result[1]).toHaveProperty("stage", "pending");
@@ -123,7 +192,7 @@ describe("Stepper > utils.ts", () => {
         { id: "3" },
       ];
 
-      const result = autoStage(config);
+      const result = autoStageSteps(config);
 
       const expected: Step.Props[] = [
         {
@@ -155,7 +224,7 @@ describe("Stepper > utils.ts", () => {
         { id: "3" },
       ];
 
-      const result = autoStage(config);
+      const result = autoStageSteps(config);
 
       const expected: Step.Props[] = [
         { id: "1", stage: "completed" },
@@ -212,7 +281,7 @@ describe("Stepper > utils.ts", () => {
         { id: "3", stage: "pending" },
       ];
 
-      expect(autoStage(config)).toEqual(expected);
+      expect(autoStageSteps(config)).toEqual(expected);
     });
     it("should set steps with active substeps to inprogress on middle step with substeps above", () => {
       const config: Step.Props[] = [
@@ -268,17 +337,16 @@ describe("Stepper > utils.ts", () => {
         { id: "3", stage: "pending" },
       ];
 
-      expect(autoStage(config)).toEqual(expected);
+      expect(autoStageSteps(config)).toEqual(expected);
     });
   });
-
-  describe("flatten", () => {
+  describe("flattenSteps", () => {
     it("should return a the same array if no substeps", () => {
       const steps: Step.Props[] = [{ id: "1" }, { id: "2" }, { id: "3" }];
 
-      expect(flatten(steps)).toEqual(steps);
+      expect(flattenSteps(steps)).toEqual(steps);
     });
-    it("should return flatten array of steps (depth 1)", () => {
+    it("should return flattenSteps array of steps (depth 1)", () => {
       const steps: Step.Props[] = [
         { id: "1" },
         {
@@ -288,14 +356,14 @@ describe("Stepper > utils.ts", () => {
         { id: "3" },
       ];
 
-      expect(flatten(steps)).toEqual([
+      expect(flattenSteps(steps)).toEqual([
         { id: "1" },
         { id: "2.1" },
         { id: "2.2", stage: "active" },
         { id: "3" },
       ]);
     });
-    it("should return flatten array of steps (depth 2)", () => {
+    it("should return flattenSteps array of steps (depth 2)", () => {
       const steps: Step.Props[] = [
         { id: "1" },
         {
@@ -311,7 +379,7 @@ describe("Stepper > utils.ts", () => {
         { id: "3" },
       ];
 
-      expect(flatten(steps)).toEqual([
+      expect(flattenSteps(steps)).toEqual([
         { id: "1" },
         { id: "2.1" },
         { id: "2.2.1" },

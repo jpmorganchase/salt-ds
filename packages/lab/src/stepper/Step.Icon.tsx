@@ -1,11 +1,12 @@
+import clsx from "clsx";
+import { useMemo } from "react";
 import { makePrefixer, useIcon } from "@salt-ds/core";
-import type { IconProps } from "@salt-ds/icons";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
-import clsx from "clsx";
+import type { IconProps } from "@salt-ds/icons";
 
-import type { Step } from "./Step";
 import stepIconCSS from "./Step.Icon.css";
+import type { Step } from "./Step";
 
 export namespace StepIcon {
   export interface Props extends IconProps {
@@ -34,12 +35,15 @@ export function StepIcon({
     window: targetWindow,
   });
 
-  const ariaLabel = `${status || stage}: `;
+  const ariaLabel = `${status || stage}`;
 
   return (
-    <div aria-label={ariaLabel} className={clsx(withBaseName(), className)}>
-      <IconComponent size={multiplier} {...props} />
-    </div>
+    <IconComponent
+      size={multiplier}
+      aria-label={ariaLabel}
+      className={clsx(withBaseName(), className)}
+      {...props}
+    />
   );
 }
 
@@ -47,25 +51,20 @@ export function useStepIcon({
   stage,
   status,
 }: Pick<StepIcon.Props, "stage" | "status">) {
-  const {
-    ErrorIcon,
-    WarningIcon,
-    ActiveIcon,
-    CompletedIcon,
-    PendingIcon,
-    InProgressIcon,
-    LockedIcon,
-  } = useIcon();
+  const icons = useIcon();
 
-  const stepIconMap = {
-    error: ErrorIcon,
-    warning: WarningIcon,
-    active: ActiveIcon,
-    completed: CompletedIcon,
-    pending: PendingIcon,
-    inprogress: InProgressIcon,
-    locked: LockedIcon,
-  };
+  const stepIconMap = useMemo(
+    () => ({
+      error: icons.ErrorIcon,
+      warning: icons.WarningIcon,
+      active: icons.ActiveIcon,
+      completed: icons.CompletedIcon,
+      pending: icons.PendingIcon,
+      inprogress: icons.InProgressIcon,
+      locked: icons.LockedIcon,
+    }),
+    [icons],
+  );
 
   return stepIconMap[status || stage];
 }
