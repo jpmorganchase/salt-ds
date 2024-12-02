@@ -1,12 +1,14 @@
 /* TODO: sort and rename*/
 
 .salt-theme.salt-theme-next[data-mode="light"] {
+  /* added the below token, needs renaming*/
   --salt-palette-alpha-weaky: var(--salt-color-black-20a);
 
   --salt-palette-alpha-hover-alt: var(--salt-color-black-10a);
   --salt-palette-alpha-active-alt: var(--salt-color-black-20a);
 }
 .salt-theme.salt-theme-next[data-mode="dark"] {
+  /* added the below token, needs renaming*/
   --salt-palette-alpha-weaky: var(--salt-color-white-20a);
 
   --salt-palette-alpha-hover-alt: var(--salt-color-black-10a);
@@ -14,19 +16,24 @@
 }
 
 .salt-theme[data-mode="light"] {
+  /* added the below token, needs renaming*/
   --salt-palette-alpha-weaky: var(--salt-color-black-fade-background-selection);
   --salt-palette-alpha-weaker: var(--salt-color-black-fade-background-hover);
+  /* added alpha tokens, need renaming */
   --salt-palette-alpha-hover-alt: var(--salt-color-black-fade-background-hover);
   --salt-palette-alpha-active-alt: var(--salt-color-black-fade-background-selection);
 }
 
 .salt-theme[data-mode="dark"] {
+  /* added the below token, needs renaming*/
   --salt-palette-alpha-weaky: var(--salt-color-white-fade-background-selection);
   --salt-palette-alpha-weaker: var(--salt-color-white-fade-background-hover);
+  /* added alpha tokens, need renaming */
   --salt-palette-alpha-hover-alt: var(--salt-color-black-fade-background-hover);
   --salt-palette-alpha-active-alt: var(--salt-color-black-fade-background-selection);
 }
 .salt-theme {
+  /*added 2 colors to current theme, not the same opacity but same would need another 2 tokens in opacity*/
   --salt-color-white-fade-background-hover: rgba(255, 255, 255, var(--salt-opacity-8));
   --salt-color-white-fade-background-selection: rgba(255, 255, 255, var(--salt-opacity-15));
 }

@@ -1,4 +1,4 @@
-import { Banner, FlowLayout, StackLayout } from "@salt-ds/core";
+import { Banner, Button, FlowLayout, StackLayout } from "@salt-ds/core";
 import { CloseIcon, SearchIcon } from "@salt-ds/icons";
 import { GhostButton, SystemStatus } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react";
@@ -16,6 +16,9 @@ export const TestingEverything: StoryFn<typeof GhostButton> = (props) => {
         <GhostButton aria-label="Search" {...props}>
           <CloseIcon aria-hidden /> Button
         </GhostButton>
+        <Button appearance="transparent">
+          <CloseIcon aria-hidden /> Button
+        </Button>
       </div>
       <Banner status="success" style={{ width: 500 }}>
         <GhostButton aria-label="Search" {...props}>
@@ -58,28 +61,33 @@ export const TestingEverything: StoryFn<typeof GhostButton> = (props) => {
         </GhostButton>
       </Banner>
       <div style={{ width: 500 }}>
-        <GhostButton disabled aria-label="Search" {...props}>
+        <GhostButton
+          adaptiveAppearance="solid"
+          disabled
+          aria-label="Search"
+          {...props}
+        >
           <CloseIcon aria-hidden /> Button
         </GhostButton>
       </div>
       <SystemStatus status="success" style={{ width: 500 }}>
-        <GhostButton adaptiveAppearance="solid" aria-label="Search" {...props}>
-          <CloseIcon aria-hidden /> Button
+        <GhostButton adaptiveAppearance="solid">
+          <SearchIcon aria-hidden /> Search
         </GhostButton>
       </SystemStatus>
       <SystemStatus status="error" style={{ width: 500 }}>
-        <GhostButton adaptiveAppearance="solid" aria-label="Search" {...props}>
-          <CloseIcon aria-hidden /> Button
+        <GhostButton adaptiveAppearance="solid">
+          <SearchIcon aria-hidden /> Search
         </GhostButton>
       </SystemStatus>
       <SystemStatus status="info" style={{ width: 500 }}>
-        <GhostButton adaptiveAppearance="solid" aria-label="Search" {...props}>
-          <CloseIcon aria-hidden /> Button
+        <GhostButton adaptiveAppearance="solid">
+          <SearchIcon aria-hidden /> Search
         </GhostButton>
       </SystemStatus>
       <SystemStatus status="warning" style={{ width: 500 }}>
-        <GhostButton adaptiveAppearance="solid" aria-label="Search" {...props}>
-          <CloseIcon aria-hidden /> Button
+        <GhostButton adaptiveAppearance="solid">
+          <SearchIcon aria-hidden /> Search
         </GhostButton>
       </SystemStatus>
     </StackLayout>
