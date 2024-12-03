@@ -1,4 +1,4 @@
-import { Stepper, Step } from "@salt-ds/lab";
+import { Step, Stepper } from "@salt-ds/lab";
 
 describe("<Stepper />", () => {
   it("shows NO expand buttons when NO nested steps present", () => {
