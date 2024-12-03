@@ -22,9 +22,7 @@ export function StepConnector({ className }: StepConnector.Props) {
     window: targetWindow,
   });
 
-  return (
-    <div role="presentation" className={clsx(withBaseName(), className)} />
-  );
+  return <div aria-hidden className={clsx(withBaseName(), className)} />;
 }
 
 StepConnector.displayName = "Step.Connector";

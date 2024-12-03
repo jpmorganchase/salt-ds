@@ -35,12 +35,11 @@ export function StepIcon({
     window: targetWindow,
   });
 
-  const ariaLabel = `${status || stage}`;
-
   return (
     <IconComponent
       size={multiplier}
-      aria-label={ariaLabel}
+      aria-hidden
+      aria-label={undefined}
       className={clsx(withBaseName(), className)}
       {...props}
     />

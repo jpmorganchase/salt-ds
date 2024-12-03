@@ -36,9 +36,9 @@ export function StepExpandTrigger({
       {...props}
     >
       {expanded ? (
-        <ChevronUpIcon role="presentation" aria-hidden />
+        <ChevronUpIcon aria-label="collapse substeps" />
       ) : (
-        <ChevronDownIcon role="presentation" aria-hidden />
+        <ChevronDownIcon aria-label="expand substeps" />
       )}
     </Button>
   );

@@ -35,9 +35,7 @@ export function autoStageSteps(
     if (pivotIndex !== -1) {
       const activeStep = steps[pivotIndex];
 
-      if (!activeStep.stage) {
-        activeStep.stage = "active";
-      }
+      activeStep.stage ||= "active";
 
       const previousSteps = assignSteps(
         steps.slice(0, pivotIndex),

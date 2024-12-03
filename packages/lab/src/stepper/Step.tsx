@@ -47,6 +47,7 @@ export namespace Step {
     | "inprogress"
     | "active";
 
+  export type Elucidation = Status | Exclude<Stage, "active"> | null;
   export type Depth = number;
 }
 
@@ -97,11 +98,9 @@ export function Step({
 
   const iconMultiplier = depth === 0 ? 1.5 : 1;
   const hasNestedSteps = !!children || !!substeps;
-  const iconId = `step-${id}-icon`;
   const labelId = `step-${id}-label`;
   const descriptionId = `step-${id}-description`;
   const nestedStepperId = `step-${id}-nested-stepper`;
-
   const ariaCurrent = stage === "active" ? "step" : undefined;
 
   return (
@@ -130,20 +129,19 @@ export function Step({
       {...props}
     >
       <StepConnector />
-      <StepIcon
-        id={iconId}
-        stage={stage}
-        status={status}
-        multiplier={iconMultiplier}
-      />
-      {label && <StepLabel id={labelId}>{label}</StepLabel>}
+      <StepIcon stage={stage} status={status} multiplier={iconMultiplier} />
+      {label && (
+        <StepLabel id={labelId} stage={stage} status={status}>
+          {label}
+        </StepLabel>
+      )}
       {description && (
         <StepDescription id={descriptionId}>{description}</StepDescription>
       )}
       {hasNestedSteps && (
         <StepExpandTrigger
           aria-expanded={expanded}
-          aria-labelledby={`${labelId} ${iconId}`}
+          aria-labelledby={labelId}
           aria-controls={nestedStepperId}
           expanded={expanded}
           onClick={(event) => {
@@ -155,12 +153,14 @@ export function Step({
       {hasNestedSteps && (
         <Stepper
           id={nestedStepperId}
-          aria-labelledby={labelId}
+          aria-label={`${label} substeps`}
           aria-hidden={!expanded}
           hidden={!expanded}
         >
-          {children ||
-            substeps?.map((step) => <Step key={step.id} {...step} />)}
+          {children}
+          {substeps?.map((step) => (
+            <Step key={step.id} {...step} />
+          ))}
         </Stepper>
       )}
     </li>
