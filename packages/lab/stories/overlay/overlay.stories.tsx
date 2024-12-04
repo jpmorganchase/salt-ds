@@ -13,14 +13,14 @@ import {
 } from "@salt-ds/core";
 import { CloseIcon } from "@salt-ds/icons";
 import { OverlayHeader } from "@salt-ds/lab";
-import type { Meta } from "@storybook/react";
+import type { Meta, StoryFn } from "@storybook/react";
 import { useState } from "react";
 
 export default {
   title: "Lab/Overlay Header",
 } as Meta<typeof Overlay>;
 
-export const Header = ({ onOpenChange }: OverlayProps) => {
+const HeaderTemplate: StoryFn = ({ onOpenChange, ...props }: OverlayProps) => {
   const [open, setOpen] = useState(false);
   const id = useId();
 
@@ -40,7 +40,7 @@ export const Header = ({ onOpenChange }: OverlayProps) => {
           width: 500,
         }}
       >
-        <OverlayHeader header={<H4 id={id}>Header block</H4>} />
+        <OverlayHeader header={<H4 id={id}>Header block</H4>} {...props} />
         <OverlayPanelContent>
           <StackLayout gap={1}>
             <Text>
@@ -60,6 +60,29 @@ export const Header = ({ onOpenChange }: OverlayProps) => {
       </OverlayPanel>
     </Overlay>
   );
+};
+
+export const Header = HeaderTemplate.bind({});
+Header.args = {};
+
+export const LongHeader = HeaderTemplate.bind({});
+LongHeader.args = {
+  header: (
+    <H4>
+      Comprehensive guidelines and detailed instructions for the optimal use and
+      application of our services to ensure maximum efficiency and user
+      satisfaction
+    </H4>
+  ),
+  actions: (
+    <Button
+      aria-label="Close overlay"
+      appearance="transparent"
+      sentiment="neutral"
+    >
+      <CloseIcon aria-hidden />
+    </Button>
+  ),
 };
 
 export const HeaderWithCloseButton = ({ onOpenChange }: OverlayProps) => {
