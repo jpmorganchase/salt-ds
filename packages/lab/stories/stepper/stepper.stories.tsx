@@ -189,28 +189,36 @@ export const VerticalDepth1: StoryFn<typeof Stepper> = () => {
   return (
     <StackLayout style={{ width: 240 }}>
       <Stepper orientation="vertical">
-        <Step label="Step 1" description="Description text" stage="completed">
-          <Step label="Step 1.1" stage="completed" />
+        <Step
+          id="step-1"
+          label="Step 1"
+          description="Description text"
+          stage="completed"
+        >
+          <Step id="step-1-1" label="Step 1.1" stage="completed" />
         </Step>
 
-        <Step label="Step 2" stage="inprogress">
+        <Step id="step-2" label="Step 2" stage="inprogress">
           <Step
+            id="step-2-1"
             label="Step 2.1"
             description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate magni dignissimos inventore incidunt facere harum expedita beatae reiciendis numquam iste excepturi dolorum omnis optio ullam quam illum, eligendi perspiciatis quia."
             stage="completed"
           />
           <Step
+            id="step-2-2"
             label="Step 2.2"
             description="Description text"
             stage="active"
           />
-          <Step label="Step 2.3" stage="pending" />
+          <Step id="step-2-3" label="Step 2.3" stage="pending" />
         </Step>
 
-        <Step label="Step 3">
-          <Step label="Step 3.1" />
-          <Step label="Step 3.2" description="Description text" />
+        <Step id="step-3" label="Step 3">
+          <Step id="step-3-1" label="Step 3.1" />
+          <Step id="step-3-2" label="Step 3.2" description="Description text" />
           <Step
+            id="step-3-3"
             label="Step 3.3"
             description="This is just a description text"
           />
@@ -220,31 +228,36 @@ export const VerticalDepth1: StoryFn<typeof Stepper> = () => {
   );
 };
 
-export const VerticalDepth2: StoryFn<typeof Stepper> = () => {
+export const VerticalDepth2 = () => {
   return (
     <StackLayout style={{ width: 240 }}>
       <Stepper orientation="vertical">
-        <Step label="Step 1" description="Description text">
-          <Step label="Step 1.1" />
+        <Step id="step-1" label="Step 1" description="Description text">
+          <Step id="step-1-1" label="Step 1.1" />
         </Step>
-        <Step label="Step 2">
+        <Step id="step-2" label="Step 2">
           <Step
+            id="step-2-1"
             label="Step 2.1"
             description="This is a bit longer of a description."
           />
-          <Step label="Step 2.2" description="Description text">
-            <Step label="Step 2.2.1" />
-            <Step label="Step 2.2.2" />
-            <Step label="Step 2.2.3" />
+          <Step id="step-2-2" label="Step 2.2" description="Description text">
+            <Step id="step-2-2-1" label="Step 2.2.1" />
+            <Step id="step-2-2-2" label="Step 2.2.2" />
+            <Step id="step-2-2-3" label="Step 2.2.3" />
           </Step>
         </Step>
-        <Step label="Step 3">
-          <Step label="Step 3.1" />
-          <Step label="Step 3.2" description="Description text" />
-          <Step label="Step 3.3" description="This is just a description text">
-            <Step label="Step 3.3.1" />
-            <Step label="Step 3.3.2" />
-            <Step label="Step 3.3.3" />
+        <Step id="step-3" label="Step 3">
+          <Step id="step-3-1" label="Step 3.1" />
+          <Step id="step-3-2" label="Step 3.2" description="Description text" />
+          <Step
+            id="step-3-3"
+            label="Step 3.3"
+            description="This is just a description text"
+          >
+            <Step id="step-3-3-1" label="Step 3.3.1" />
+            <Step id="step-3-3-2" label="Step 3.3.2" />
+            <Step id="step-3-3-3" label="Step 3.3.3" />
           </Step>
         </Step>
       </Stepper>
