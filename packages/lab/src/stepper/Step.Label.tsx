@@ -33,12 +33,8 @@ export function StepLabel({
     window: targetWindow,
   });
 
-  /**
-   * noun: elucidation; pl. noun: elucidations
-   * explanation that makes something clear; 😜
-   */
-  const elucidation: Step.Elucidation =
-    status ?? (stage !== "active" ? stage : null);
+  const elucidation: Step.Elucidation = status || stage;
+  const elucidationId = `${id}-elucidation`;
 
   return (
     <Text
@@ -48,8 +44,10 @@ export function StepLabel({
       {...props}
     >
       {children}
-      {elucidation && (
-        <span className={withBaseName("elucidation")}>{elucidation}</span>
+      {elucidation && elucidation !== "active" && (
+        <span id={elucidationId} className={withBaseName("elucidation")}>
+          {elucidation}
+        </span>
       )}
     </Text>
   );
