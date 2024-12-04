@@ -234,15 +234,17 @@ export const DatePickerRangeInput = forwardRef(function DatePickerRangeInput<
       onDateValueChange={handleDateValueChange}
       onChange={onChange}
       endAdornment={
-        <Button
-          appearance="transparent"
-          sentiment="neutral"
-          onClick={handleCalendarButton}
-          disabled={disabled}
-          aria-label="Open Calendar"
-        >
-          <CalendarIcon />
-        </Button>
+        !readOnly && (
+          <Button
+            appearance="transparent"
+            sentiment="neutral"
+            onClick={handleCalendarButton}
+            disabled={disabled}
+            aria-label="Open Calendar"
+          >
+            <CalendarIcon />
+          </Button>
+        )
       }
       format={format}
       {...rest}

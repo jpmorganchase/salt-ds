@@ -38,6 +38,61 @@ const {
 } = datePickerStories as any;
 
 describe("GIVEN a DatePicker where selectionVariant is single", () => {
+  describe("WHEN default state", () => {
+    beforeEach(() => {
+      const today = new Date(2024, 4, 6);
+      cy.clock(today, ["Date"]);
+      cy.setDateAdapter(adapterDateFns);
+    });
+
+    afterEach(() => {
+      cy.clock().then((clock) => clock.restore());
+    });
+
+    it("SHOULD show calendar overlay when click the calendar icon button", () => {
+      cy.mount(<Range />);
+
+      // Simulate opening the calendar
+      cy.findByRole("button", { name: "Open Calendar" }).realClick();
+      // Verify that the calendar is displayed
+      cy.findAllByRole("application").should("have.length", 2);
+    });
+
+    it("SHOULD open calendar overlay when using down arrow", () => {
+      cy.mount(<Range />);
+
+      cy.findAllByRole("textbox").eq(0).click().type("{downArrow}");
+      // Verify that the calendar is displayed
+      cy.findAllByRole("application").should("have.length", 2);
+    });
+  });
+
+  describe("WHEN readOnly", () => {
+    beforeEach(() => {
+      const today = new Date(2024, 4, 6);
+      cy.clock(today, ["Date"]);
+      cy.setDateAdapter(adapterDateFns);
+    });
+
+    afterEach(() => {
+      cy.clock().then((clock) => clock.restore());
+    });
+
+    it("SHOULD not show calendar icon button", () => {
+      cy.mount(<Range readOnly />);
+      cy.findByRole("button", { name: "Open Calendar" }).should("not.exist");
+    });
+
+    it("SHOULD not open overlay when using down arrow", () => {
+      cy.mount(<Range readOnly />);
+      cy.findAllByRole("textbox")
+        .eq(0)
+        .click()
+        .type("{downArrow}", { force: true });
+      cy.findByRole("application").should("not.exist");
+    });
+  });
+
   adapters.forEach((adapter: SaltDateAdapter<DateFrameworkType>) => {
     describe(`Tests with ${adapter.lib}`, () => {
       beforeEach(() => {
