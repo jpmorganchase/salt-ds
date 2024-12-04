@@ -47,7 +47,12 @@ export namespace Step {
     | "inprogress"
     | "active";
 
-  export type Elucidation = Status | Exclude<Stage, "active"> | null;
+  /**
+   * noun: elucidation; pl. noun: elucidations
+   * explanation that makes something clear; 🤔
+   */
+  export type Elucidation = Status | Stage;
+
   export type Depth = number;
 }
 
@@ -98,10 +103,10 @@ export function Step({
 
   const iconMultiplier = depth === 0 ? 1.5 : 1;
   const hasNestedSteps = !!children || !!substeps;
-  const labelId = `step-${id}-label`;
-  const descriptionId = `step-${id}-description`;
-  const expandTriggerId = `step-${id}-expand-trigger`;
-  const nestedStepperId = `step-${id}-nested-stepper`;
+  const labelId = `${id}-label`;
+  const descriptionId = `${id}-description`;
+  const expandTriggerId = `${id}-expand-trigger`;
+  const nestedStepperId = `${id}-nested-stepper`;
 
   const ariaCurrent = stage === "active" ? "step" : undefined;
 
