@@ -1,4 +1,5 @@
-import { Dialog, H2 } from "@salt-ds/core";
+import { Button, Dialog } from "@salt-ds/core";
+import { CloseIcon } from "@salt-ds/icons";
 import { DialogHeader } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react";
 import { QAContainer, type QAContainerProps } from "docs/components";
@@ -11,7 +12,7 @@ export default {
 export const DialogHeaders: StoryFn<QAContainerProps> = () => (
   <QAContainer height={600} cols={1} itemPadding={5} width={1200}>
     <DialogHeader
-      header={<H2>Terms and conditions</H2>}
+      header="Terms and conditions"
       style={{
         width: 600,
       }}
@@ -20,40 +21,47 @@ export const DialogHeaders: StoryFn<QAContainerProps> = () => (
       style={{
         width: 600,
       }}
-      header={<H2>Terms and conditions</H2>}
+      header="Terms and conditions"
       preheader="Ensure you read and agree to these Terms"
     />
     <DialogHeader
       style={{
         width: 600,
       }}
-      header={<H2>Terms and conditions</H2>}
-      preheader="Ensure you read and agree to these Terms"
-      description="Effective date: August 29, 2024"
-    />
-    <DialogHeader
-      status="info"
-      header={<H2>Terms and conditions</H2>}
-      style={{
-        width: 600,
-      }}
-    />
-    <DialogHeader
-      status="info"
-      style={{
-        width: 600,
-      }}
-      header={<H2>Terms and conditions</H2>}
-      preheader="Ensure you read and agree to these Terms"
-    />
-    <DialogHeader
-      status="info"
-      style={{
-        width: 600,
-      }}
-      header={<H2>Terms and conditions</H2>}
+      header="Terms and conditions"
       preheader="Ensure you read and agree to these Terms"
       description="Effective date: August 29, 2024"
+    />
+    <DialogHeader
+      status="info"
+      header="Terms and conditions"
+      style={{
+        width: 600,
+      }}
+    />
+    <DialogHeader
+      actions={
+        <Button aria-label="Close dialog" appearance="transparent">
+          <CloseIcon aria-hidden />
+        </Button>
+      }
+      status="info"
+      style={{
+        width: 600,
+      }}
+      header="Terms and conditions"
+    />
+    <DialogHeader
+      actions={
+        <Button aria-label="Close dialog" appearance="transparent">
+          <CloseIcon aria-hidden />
+        </Button>
+      }
+      status="info"
+      style={{
+        width: 600,
+      }}
+      header="Complete terms and conditions for using the services provided by our company"
     />
   </QAContainer>
 );
