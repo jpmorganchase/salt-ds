@@ -29,8 +29,8 @@ export const Default: StoryFn<QAContainerProps> = (props) => {
   return (
     <QAContainer
       height={800}
-      cols={5}
-      itemPadding={50}
+      cols={1}
+      itemPadding={80}
       itemWidthAuto
       width={1200}
       {...props}
@@ -39,11 +39,15 @@ export const Default: StoryFn<QAContainerProps> = (props) => {
         <OverlayTrigger>
           <Button>Show Overlay</Button>
         </OverlayTrigger>
-        <OverlayPanel>
+        <OverlayPanel
+          style={{
+            width: "30ch",
+          }}
+        >
           <OverlayHeader
             preheader="Preheader"
             description="Description"
-            header={<H4>Header block</H4>}
+            header={<H4>Guidelines for optimal use of our application</H4>}
             actions={<CloseButton />}
           />
           <OverlayPanelContent>

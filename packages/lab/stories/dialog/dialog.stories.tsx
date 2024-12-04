@@ -145,6 +145,12 @@ export const Default = DialogTemplate.bind({});
 Default.args = {
   id: "Default",
 };
+export const LongTitle = DialogTemplate.bind({});
+Default.args = {
+  id: "LongTitle",
+  header:
+    "Complete terms and conditions for using the services provided by our company",
+};
 
 const AlertDialogTemplate: StoryFn<
   DialogProps & { header: ReactNode; content: ReactNode }
