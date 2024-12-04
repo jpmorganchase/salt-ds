@@ -124,15 +124,16 @@ export const DatePickerMain = forwardRef<HTMLDivElement, DatePickerProps<any>>(
 export const DatePicker = forwardRef(function DatePicker<
   TDate extends DateFrameworkType,
 >(props: DatePickerProps<TDate>, ref: React.Ref<HTMLDivElement>) {
-  const { open, defaultOpen, onOpen, ...rest } = props;
+  const { open, defaultOpen, onOpen, readOnly, ...rest } = props;
 
   return (
     <DatePickerOverlayProvider
       open={open}
       defaultOpen={defaultOpen}
       onOpen={onOpen}
+      readOnly={readOnly}
     >
-      <DatePickerMain {...rest} ref={ref} />
+      <DatePickerMain {...rest} readOnly={readOnly} ref={ref} />
     </DatePickerOverlayProvider>
   );
 });
