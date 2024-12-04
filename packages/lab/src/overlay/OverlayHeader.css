@@ -1,7 +1,6 @@
 .saltOverlayHeader {
   padding: var(--salt-spacing-100);
   width: 100%;
-  align-items: center;
   display: flex;
   flex-direction: row;
   justify-content: stretch;
