@@ -4,7 +4,7 @@ import { Step, SteppedTracker } from "@salt-ds/lab";
 export const StageStatus = () => {
   return (
     <StackLayout style={{ height: "40px", width: "100%" }}>
-      <Stepper>
+      <SteppedTracker>
         <Step label="Step" description="Description text" stage="pending" />
         <Step label="Step" description="Description text" stage="inprogress" />
         <Step label="Step" description="Description text" stage="active" />
@@ -12,7 +12,7 @@ export const StageStatus = () => {
         <Step label="Step" description="Description text" stage="locked" />
         <Step label="Step" description="Description text" status="warning" />
         <Step label="Step" description="Description text" status="error" />
-      </Stepper>
+      </SteppedTracker>
     </StackLayout>
   );
 };

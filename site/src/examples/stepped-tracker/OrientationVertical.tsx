@@ -8,7 +8,7 @@ export const OrientationVertical = () => {
         <Step label="Step 1" stage="completed" />
         <Step label="Step 2" stage="active" />
         <Step label="Step 3" stage="pending" />
-      </Stepper>
+      </SteppedTracker>
     </StackLayout>
   );
 };

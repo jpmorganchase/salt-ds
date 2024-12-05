@@ -1,6 +1,6 @@
 import { Button, FlexLayout } from "@salt-ds/core";
 import { StackLayout } from "@salt-ds/core";
-import { Step, Stepper, useStepReducer } from "@salt-ds/lab";
+import { Step, SteppedTracker, useStepReducer } from "@salt-ds/lab";
 
 const initialSteps = [
   { id: "step-1", label: "Step 1" },
@@ -13,11 +13,11 @@ export function Hook() {
 
   return (
     <StackLayout style={{ minWidth: "240px" }}>
-      <Stepper>
+      <SteppedTracker>
         {state.steps.map((step) => (
           <Step key={step.id} {...step} />
         ))}
-      </Stepper>
+      </SteppedTracker>
       <FlexLayout justify="space-between">
         <Button onClick={() => dispatch({ type: "previous" })}>Previous</Button>
         <Button onClick={() => dispatch({ type: "next" })}>Next</Button>
