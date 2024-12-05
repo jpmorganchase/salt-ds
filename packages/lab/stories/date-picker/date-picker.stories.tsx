@@ -23,9 +23,11 @@ import {
   DatePickerActions,
   DatePickerOverlay,
   DatePickerRangeInput,
+  type DatePickerRangeInputProps,
   DatePickerRangePanel,
   type DatePickerRangeProps,
   DatePickerSingleInput,
+  type DatePickerSingleInputProps,
   DatePickerSinglePanel,
   type DatePickerSinglePanelProps,
   type DatePickerSingleProps,
@@ -2312,6 +2314,114 @@ export const RangeBordered: StoryFn<
       </DatePicker>
       {!open ? <FormHelperText>{helperText}</FormHelperText> : null}
     </FormField>
+  );
+};
+
+export const SingleCustomFormat: StoryFn<
+  DatePickerSingleProps<DateFrameworkType> &
+    Pick<DatePickerSingleInputProps<DateFrameworkType>, "format">
+> = ({ selectionVariant, format = "YYYY-MM-DD", ...args }) => {
+  const { dateAdapter } = useLocalization();
+  const handleSelectionChange = useCallback(
+    (
+      event: SyntheticEvent,
+      date: SingleDateSelection<DateFrameworkType> | null,
+      details: DateInputSingleDetails | undefined,
+    ) => {
+      const { value, errors } = details || {};
+      console.log(
+        `Selected date: ${dateAdapter.isValid(date) ? dateAdapter.format(date, "DD MMM YYYY") : date}`,
+      );
+      if (errors?.length) {
+        console.log(
+          `Error(s): ${errors
+            .map(({ type, message }) => `type=${type} message=${message}`)
+            .join(",")}`,
+        );
+        if (value) {
+          console.log(`Original Value: ${value}`);
+        }
+      }
+      args?.onSelectionChange?.(event, date, details);
+    },
+    [args?.onSelectionChange, dateAdapter],
+  );
+
+  return (
+    <DatePicker
+      {...args}
+      selectionVariant="single"
+      onSelectionChange={handleSelectionChange}
+    >
+      <DatePickerTrigger>
+        <DatePickerSingleInput format={format} />
+      </DatePickerTrigger>
+      <DatePickerOverlay>
+        <DatePickerSinglePanel />
+      </DatePickerOverlay>
+    </DatePicker>
+  );
+};
+
+export const RangeCustomFormat: StoryFn<
+  DatePickerRangeProps<DateFrameworkType> &
+    Pick<DatePickerRangeInputProps<DateFrameworkType>, "format">
+> = ({ selectionVariant, format = "YYYY-MM-DD", ...args }) => {
+  const { dateAdapter } = useLocalization();
+  const handleSelectionChange = useCallback(
+    (
+      event: SyntheticEvent,
+      date: DateRangeSelection<DateFrameworkType> | null,
+      details: DateInputRangeDetails | undefined,
+    ) => {
+      const { startDate, endDate } = date ?? {};
+      const {
+        startDate: {
+          value: startDateOriginalValue = undefined,
+          errors: startDateErrors = undefined,
+        } = {},
+        endDate: {
+          value: endDateOriginalValue = undefined,
+          errors: endDateErrors = undefined,
+        } = {},
+      } = details || {};
+      console.log(
+        `StartDate: ${dateAdapter.isValid(startDate) ? dateAdapter.format(startDate, "DD MMM YYYY") : startDate}, EndDate: ${dateAdapter.isValid(endDate) ? dateAdapter.format(endDate, "DD MMM YYYY") : endDate}`,
+      );
+      if (startDateErrors?.length) {
+        console.log(
+          `StartDate Error(s): ${startDateErrors.map(({ type, message }) => `type: ${type} message: ${message}`).join(",")}`,
+        );
+        if (startDateOriginalValue) {
+          console.log(`StartDate Original Value: ${startDateOriginalValue}`);
+        }
+      }
+      if (endDateErrors?.length) {
+        console.log(
+          `EndDate Error(s): ${endDateErrors.map(({ type, message }) => `type: ${type} message: ${message}`).join(",")}`,
+        );
+        if (endDateOriginalValue) {
+          console.log(`EndDate Original Value: ${endDateOriginalValue}`);
+        }
+      }
+      args?.onSelectionChange?.(event, date, details);
+    },
+    [args?.onSelectionChange, dateAdapter],
+  );
+
+  return (
+    <DatePicker
+      selectionVariant="range"
+      {...args}
+      onSelectionChange={handleSelectionChange}
+    >
+      <DatePickerTrigger>
+        <DatePickerRangeInput format={format} />
+      </DatePickerTrigger>
+      <DatePickerOverlay>
+        <DatePickerRangePanel />
+      </DatePickerOverlay>
+    </DatePicker>
   );
 };
 

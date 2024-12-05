@@ -34,6 +34,7 @@ const {
   RangeWithCustomParser,
   RangeWithFormField,
   RangeWithMinMaxDate,
+  RangeCustomFormat,
 } = datePickerStories as any;
 
 describe("GIVEN a DatePicker where selectionVariant is single", () => {
@@ -619,6 +620,20 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
             endDate: { value: "06 Jan 2025" },
           });
         });
+      });
+
+      it("SHOULD support format prop on the input", () => {
+        const format = "YYYY-MM-DD";
+
+        cy.mount(
+          <RangeCustomFormat
+            format={format}
+            defaultSelectedDate={initialRangeDate}
+          />,
+        );
+        // Verify that the selected dates are displayed
+        cy.findByLabelText("Start date").should("have.value", "2025-01-05");
+        cy.findByLabelText("End date").should("have.value", "2025-01-06");
       });
     });
   });
