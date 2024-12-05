@@ -1,6 +1,12 @@
 import { describe, expect, it } from "vitest";
 
-import { assignSteps, autoStageSteps, flattenSteps, resetSteps } from "./utils";
+import {
+  assignSteps,
+  autoStageSteps,
+  flattenSteps,
+  initStepReducerState,
+  resetSteps,
+} from "./utils";
 
 import type { Step } from "./Step";
 
@@ -137,10 +143,10 @@ describe("Stepper > utils.ts", () => {
     });
   });
   describe("autoStageSteps", () => {
-    it("should return a fresh instance of the object config", () => {
+    it("should return config if no active stage, and no options.started or options.ended", () => {
       const config: Step.Props[] = [{ id: "1" }, { id: "2" }, { id: "3" }];
 
-      expect(autoStageSteps(config)).not.toBe(config);
+      expect(autoStageSteps(config)).toBe(config);
       expect(autoStageSteps(config)).toEqual([
         { id: "1" },
         { id: "2" },
@@ -334,6 +340,28 @@ describe("Stepper > utils.ts", () => {
 
       expect(autoStageSteps(config)).toEqual(expected);
     });
+
+    it("should return ");
+
+    it('should set the stage of all steps to "completed", when {ended: true} option is set', () => {
+      const steps: Step.Props[] = [{ id: "1" }, { id: "2" }, { id: "3" }];
+
+      expect(autoStageSteps(steps, { ended: true })).toEqual([
+        { id: "1", stage: "completed" },
+        { id: "2", stage: "completed" },
+        { id: "3", stage: "completed" },
+      ]);
+    });
+
+    it('should set the stage of all steps to "pending", when {started: false} option is set', () => {
+      const steps: Step.Props[] = [{ id: "1" }, { id: "2" }, { id: "3" }];
+
+      expect(autoStageSteps(steps, { started: false })).toEqual([
+        { id: "1", stage: "pending" },
+        { id: "2", stage: "pending" },
+        { id: "3", stage: "pending" },
+      ]);
+    });
   });
   describe("flattenSteps", () => {
     it("should return a the same array if no substeps", () => {
@@ -381,6 +409,117 @@ describe("Stepper > utils.ts", () => {
         { id: "2.2.2", stage: "active" },
         { id: "3" },
       ]);
+    });
+  });
+  describe("initStepReducerState", () => {
+    it("should work when active stage is in the beginning of initialSteps ", () => {
+      const initialSteps: Step.Props[] = [
+        { id: "1", stage: "active" },
+        { id: "2" },
+        { id: "3" },
+      ];
+
+      const state = initStepReducerState(initialSteps);
+
+      expect(state.activeStepIndex).toEqual(0);
+      expect(state.activeStep).toEqual(state.steps[0]);
+      expect(state.nextStep).toEqual(state.steps[1]);
+      expect(state.previousStep).toEqual(null);
+
+      expect(state.steps[0]).toHaveProperty("stage", "active");
+      expect(state.steps[1]).toHaveProperty("stage", "pending");
+      expect(state.steps[2]).toHaveProperty("stage", "pending");
+
+      expect(state.started).toEqual(true);
+      expect(state.ended).toEqual(false);
+    });
+
+    it("should work when active stage is in the middle of initialSteps ", () => {
+      const initialSteps: Step.Props[] = [
+        { id: "1" },
+        { id: "2", stage: "active" },
+        { id: "3" },
+      ];
+
+      const state = initStepReducerState(initialSteps);
+
+      expect(state.activeStepIndex).toEqual(1);
+      expect(state.activeStep).toEqual(state.steps[1]);
+      expect(state.nextStep).toEqual(state.steps[2]);
+      expect(state.previousStep).toEqual(state.steps[0]);
+
+      expect(state.steps[0]).toHaveProperty("stage", "completed");
+      expect(state.steps[1]).toHaveProperty("stage", "active");
+      expect(state.steps[2]).toHaveProperty("stage", "pending");
+
+      expect(state.started).toEqual(true);
+      expect(state.ended).toEqual(false);
+    });
+
+    it("should work when active stage is in the middle of initialSteps ", () => {
+      const initialSteps: Step.Props[] = [
+        { id: "1" },
+        { id: "2" },
+        { id: "3", stage: "active" },
+      ];
+
+      const state = initStepReducerState(initialSteps);
+
+      expect(state.activeStepIndex).toEqual(2);
+      expect(state.activeStep).toEqual(state.steps[2]);
+      expect(state.nextStep).toEqual(null);
+      expect(state.previousStep).toEqual(state.steps[1]);
+
+      expect(state.steps[0]).toHaveProperty("stage", "completed");
+      expect(state.steps[1]).toHaveProperty("stage", "completed");
+      expect(state.steps[2]).toHaveProperty("stage", "active");
+
+      expect(state.started).toEqual(true);
+      expect(state.ended).toEqual(false);
+    });
+
+    it("should work when no active stage set, but { options.started: false } ", () => {
+      const initialSteps: Step.Props[] = [
+        { id: "1" },
+        { id: "2" },
+        { id: "3" },
+      ];
+
+      const state = initStepReducerState(initialSteps, { started: false });
+
+      expect(state.activeStepIndex).toEqual(-1);
+      expect(state.activeStep).toEqual(null);
+      expect(state.nextStep).toEqual(state.steps[0]);
+      expect(state.previousStep).toEqual(null);
+
+      expect(state.steps[0]).toHaveProperty("stage", "pending");
+      expect(state.steps[1]).toHaveProperty("stage", "pending");
+      expect(state.steps[2]).toHaveProperty("stage", "pending");
+
+      expect(state.started).toEqual(false);
+      expect(state.ended).toEqual(false);
+    });
+
+    it("should work when no active stage set, but { options.ended: true } ", () => {
+      const initialSteps: Step.Props[] = [
+        { id: "1" },
+        { id: "2" },
+        { id: "3" },
+      ];
+
+      const state = initStepReducerState(initialSteps, { ended: true });
+
+      expect(state.activeStepIndex).toEqual(state.flatSteps.length);
+      expect(state.activeStep).toEqual(null);
+      expect(state.nextStep).toEqual(null);
+      expect(state.previousStep).toEqual(state.steps[2]);
+
+      expect(state.steps[0]).toHaveProperty("stage", "completed");
+      expect(state.steps[1]).toHaveProperty("stage", "completed");
+      expect(state.steps[2]).toHaveProperty("stage", "completed");
+
+      expect(state.started).toEqual(true);
+      expect(state.ended).toEqual(true);
     });
   });
 });
