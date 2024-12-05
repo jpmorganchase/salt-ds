@@ -1,5 +1,5 @@
-.saltStepper {
-  grid-area: stepper;
+.saltSteppedTracker {
+  grid-area: SteppedTracker;
   width: 100%;
   height: 100%;
 
@@ -14,28 +14,28 @@
 }
 
 @media (prefers-reduced-motion) {
-  .saltStepper {
+  .saltSteppedTracker {
     transition-duration: var(--salt-duration-instant);
   }
 }
 
-.saltStepper-horizontal {
+.saltSteppedTracker-horizontal {
   display: flex;
   flex-direction: row;
 }
 
-.saltStepper-vertical {
+.saltSteppedTracker-vertical {
   display: flex;
   flex-direction: column;
   overflow: hidden;
 }
 
-.saltStepper-vertical > .saltStep.saltStep-expanded > .saltStepper {
+.saltSteppedTracker-vertical > .saltStep.saltStep-expanded > .saltSteppedTracker {
   opacity: 1;
   visibility: visible;
 }
 
-.saltStepper-vertical > .saltStep.saltStep-collapsed > .saltStepper {
+.saltSteppedTracker-vertical > .saltStep.saltStep-collapsed > .saltSteppedTracker {
   opacity: 0;
   visibility: hidden;
 }

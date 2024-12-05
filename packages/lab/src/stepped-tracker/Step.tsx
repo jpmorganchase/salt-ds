@@ -21,8 +21,8 @@ import { StepExpandTrigger } from "./Step.ExpandTrigger";
 import { StepIcon } from "./Step.Icon";
 import { StepLabel } from "./Step.Label";
 import stepCSS from "./Step.css";
-import { Stepper } from "./Stepper";
-import { DepthContext } from "./Stepper.Provider";
+import { SteppedTracker } from "./SteppedTracker";
+import { DepthContext } from "./SteppedTracker.Provider";
 
 export namespace Step {
   export interface Props extends Omit<ComponentProps<"li">, "onToggle"> {
@@ -93,7 +93,9 @@ export function Step({
 
   useEffect(() => {
     if (depth === -1) {
-      console.warn("<Step /> should be used within a <Stepper /> component!");
+      console.warn(
+        "<Step /> should be used within a <SteppedTracker /> component!",
+      );
     }
 
     if (depth > 2) {
@@ -106,7 +108,7 @@ export function Step({
   const labelId = `${id}-label`;
   const descriptionId = `${id}-description`;
   const expandTriggerId = `${id}-expand-trigger`;
-  const nestedStepperId = `${id}-nested-stepper`;
+  const nestedSteppedTrackerId = `${id}-nested-SteppedTracker`;
 
   const ariaCurrent = stage === "active" ? "step" : undefined;
 
@@ -150,7 +152,7 @@ export function Step({
           id={expandTriggerId}
           aria-expanded={expanded}
           aria-labelledby={labelId}
-          aria-controls={nestedStepperId}
+          aria-controls={nestedSteppedTrackerId}
           expanded={expanded}
           onClick={(event) => {
             onToggle?.(event);
@@ -159,8 +161,8 @@ export function Step({
         />
       )}
       {hasNestedSteps && (
-        <Stepper
-          id={nestedStepperId}
+        <SteppedTracker
+          id={nestedSteppedTrackerId}
           aria-label={`${label} substeps`}
           aria-hidden={!expanded}
           hidden={!expanded}
@@ -169,7 +171,7 @@ export function Step({
           {substeps?.map((step) => (
             <Step key={step.id} {...step} />
           ))}
-        </Stepper>
+        </SteppedTracker>
       )}
     </li>
   );

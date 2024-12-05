@@ -8,7 +8,7 @@
   width: 100%;
 }
 
-.saltStepper-vertical .saltStepIcon {
+.saltSteppedTracker-vertical .saltStepIcon {
   height: var(--salt-size-base);
 }
 

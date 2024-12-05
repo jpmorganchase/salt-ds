@@ -6,7 +6,7 @@
   transition-property: opacity, min-height;
 }
 
-.saltStepper-horizontal .saltStepConnector {
+.saltSteppedTracker-horizontal .saltStepConnector {
   position: absolute;
   transform: translateY(-100%);
   top: calc(var(--icon-size) / 2);
@@ -18,11 +18,11 @@
   border-top-color: var(--salt-track-borderColor);
 }
 
-.saltStepper-horizontal .saltStep-stage-completed .saltStepConnector {
+.saltSteppedTracker-horizontal .saltStep-stage-completed .saltStepConnector {
   border-top-style: var(--salt-track-borderStyle-complete);
 }
 
-.saltStepper-vertical .saltStepConnector {
+.saltSteppedTracker-vertical .saltStepConnector {
   min-height: var(--salt-size-base);
   align-self: stretch;
   justify-self: center;
@@ -32,7 +32,7 @@
   border-left-color: var(--salt-track-borderColor);
 }
 
-.saltStepper-vertical .saltStep-stage-completed .saltStepConnector {
+.saltSteppedTracker-vertical .saltStep-stage-completed .saltStepConnector {
   border-left-style: var(--salt-track-borderStyle-complete);
 }
 
