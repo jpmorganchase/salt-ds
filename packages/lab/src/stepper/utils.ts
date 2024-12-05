@@ -1,4 +1,5 @@
 import type { Step } from "./Step";
+import type { StepReducer } from "./stepReducer";
 
 export function assignSteps(
   steps: Step.Props[],
@@ -20,10 +21,16 @@ export function resetSteps(steps: Step.Props[]): Step.Props[] {
 
 export function autoStageSteps(
   steps: Step.Props[],
-  options?: {
-    activeStepId?: string;
-  },
+  options?: StepReducer.Options,
 ): Step.Props[] {
+  if (options?.started === false) {
+    return assignSteps(steps, "pending");
+  }
+
+  if (options?.ended === true) {
+    return assignSteps(steps, "completed");
+  }
+
   function autoStageHelper(steps: Step.Props[]): Step.Props[] | null {
     const pivotIndex = steps.findIndex(
       (step) =>
@@ -65,7 +72,7 @@ export function autoStageSteps(
     );
   }
 
-  return autoStageHelper(steps) || [...steps];
+  return autoStageHelper(steps) || steps;
 }
 
 export function flattenSteps(steps: Step.Props[]): Step.Props[] {
@@ -80,4 +87,39 @@ export function flattenSteps(steps: Step.Props[]): Step.Props[] {
 
     return acc;
   }, [] as Step.Props[]);
+}
+
+export function initStepReducerState(
+  initialSteps: Step.Props[],
+  options?: StepReducer.Options,
+) {
+  const steps = autoStageSteps(initialSteps, options);
+  const flatSteps = flattenSteps(steps);
+
+  let activeStepIndex = flatSteps.findIndex((step) => step.stage === "active");
+
+  if (options?.started === false) {
+    activeStepIndex = -1;
+  }
+
+  if (options?.ended === true) {
+    activeStepIndex = flatSteps.length;
+  }
+
+  const activeStep = flatSteps[activeStepIndex] || null;
+  const previousStep = flatSteps[activeStepIndex - 1] || null;
+  const nextStep = flatSteps[activeStepIndex + 1] || null;
+  const started = !flatSteps.every((step) => step.stage === "pending");
+  const ended = flatSteps.every((step) => step.stage === "completed");
+
+  return {
+    steps,
+    flatSteps,
+    activeStep,
+    previousStep,
+    nextStep,
+    activeStepIndex,
+    ended,
+    started,
+  } as StepReducer.State;
 }
