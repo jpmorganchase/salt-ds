@@ -1,5 +1,5 @@
-import { autoStageSteps, assignSteps, resetSteps, flattenSteps } from "./utils";
 import type { Step } from "./Step";
+import { assignSteps, autoStageSteps, flattenSteps, resetSteps } from "./utils";
 
 export namespace StepReducer {
   export interface State {
