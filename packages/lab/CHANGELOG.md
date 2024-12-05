@@ -1,5 +1,11 @@
 # @salt-ds/lab
 
+## 1.0.0-alpha.57
+
+### Patch Changes
+
+- f3ae565: Fixed `format` not working on `DatePickerRangeInput`. Closes #4474.
+
 ## 1.0.0-alpha.56
 
 ### Minor Changes
