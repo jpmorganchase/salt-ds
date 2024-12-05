@@ -61,7 +61,6 @@ export * from "./skip-link";
 export * from "./slider";
 export * from "./static-list";
 export * from "./stepped-tracker";
-export * from "./stepper";
 export * from "./stepper-input";
 export * from "./system-status";
 export * from "./tabs";

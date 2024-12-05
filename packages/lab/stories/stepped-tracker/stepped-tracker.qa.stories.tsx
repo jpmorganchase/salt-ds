@@ -1,164 +1,222 @@
 import { StackLayout } from "@salt-ds/core";
-import { StepLabel, SteppedTracker, TrackerStep } from "@salt-ds/lab";
-import type { Meta, StoryFn } from "@storybook/react";
+import { Step, SteppedTracker } from "@salt-ds/lab";
 import { QAContainer, type QAContainerProps } from "docs/components";
 
+import type { Meta, StoryFn } from "@storybook/react";
+
 export default {
-  title: "Lab/Stepped Tracker/Stepped Tracker QA",
+  title: "Lab/SteppedTracker/SteppedTracker QA",
   component: SteppedTracker,
-  subcomponents: { TrackerStep, StepLabel },
+  subcomponents: { Step },
 } as Meta<typeof SteppedTracker>;
 
-export const Basic: StoryFn<QAContainerProps> = (props) => {
+export const Horizontal: StoryFn<QAContainerProps> = (props) => {
   return (
-    <QAContainer height={500} width={1000} {...props}>
+    <QAContainer width={1200} {...props}>
       <StackLayout
         direction="column"
         align="stretch"
         gap={2}
         style={{
-          minWidth: 450,
+          minWidth: 580,
           marginBottom: 50,
         }}
       >
-        <SteppedTracker orientation="horizontal" activeStep={0}>
-          <TrackerStep>
-            <StepLabel>Step One</StepLabel>
-          </TrackerStep>
-          <TrackerStep>
-            <StepLabel>Step Two</StepLabel>
-          </TrackerStep>
-          <TrackerStep>
-            <StepLabel>Step Three</StepLabel>
-          </TrackerStep>
-          <TrackerStep>
-            <StepLabel>Step Four</StepLabel>
-          </TrackerStep>
+        <SteppedTracker orientation="horizontal">
+          <Step label="Step 1" />
+          <Step label="Step 2" />
+          <Step label="Step 3" />
         </SteppedTracker>
-        <SteppedTracker orientation="horizontal" activeStep={2}>
-          <TrackerStep stage="completed">
-            <StepLabel>Step One</StepLabel>
-          </TrackerStep>
-          <TrackerStep stage="completed">
-            <StepLabel>Step Two</StepLabel>
-          </TrackerStep>
-          <TrackerStep stage="pending">
-            <StepLabel>Step Three</StepLabel>
-          </TrackerStep>
-          <TrackerStep stage="pending">
-            <StepLabel>Step Four</StepLabel>
-          </TrackerStep>
+        <SteppedTracker orientation="horizontal">
+          <Step label="Step 1" stage="completed" />
+          <Step label="Step 2" stage="active" />
+          <Step label="Step 3" />
         </SteppedTracker>
-        <SteppedTracker activeStep={1}>
-          <TrackerStep stage="completed" status="warning">
-            <StepLabel>Completed with warning</StepLabel>
-          </TrackerStep>
-          <TrackerStep status="warning">
-            <StepLabel>Active with warning</StepLabel>
-          </TrackerStep>
-          <TrackerStep stage="completed" status="error">
-            <StepLabel>Completed with error</StepLabel>
-          </TrackerStep>
-          <TrackerStep stage="completed">
-            <StepLabel>Completed</StepLabel>
-          </TrackerStep>
+        <SteppedTracker orientation="horizontal">
+          <Step label="Step 1" stage="completed" />
+          <Step label="Step 2" stage="active" status="warning" />
+          <Step label="Step 3" />
         </SteppedTracker>
-        <SteppedTracker activeStep={0}>
-          <TrackerStep stage="completed">
-            <StepLabel>Completed and active</StepLabel>
-          </TrackerStep>
-          <TrackerStep status="warning">
-            <StepLabel>Warning</StepLabel>
-          </TrackerStep>
-          <TrackerStep status="error">
-            <StepLabel>Error</StepLabel>
-          </TrackerStep>
-          <TrackerStep>
-            <StepLabel>Default</StepLabel>
-          </TrackerStep>
+        <SteppedTracker orientation="horizontal">
+          <Step label="Step 1" stage="completed" />
+          <Step label="Step 2" stage="active" status="error" />
+          <Step label="Step 3" />
+        </SteppedTracker>
+        <SteppedTracker orientation="horizontal">
+          <Step label="Step 1" stage="completed" />
+          <Step label="Step 2" stage="completed" />
+          <Step label="Step 3" stage="active" />
+        </SteppedTracker>
+        <SteppedTracker orientation="horizontal">
+          <Step label="Step 1" stage="completed" />
+          <Step label="Step 2" stage="completed" />
+          <Step label="Step 3" stage="completed" />
         </SteppedTracker>
       </StackLayout>
     </QAContainer>
   );
 };
 
-Basic.parameters = {
+Horizontal.parameters = {
+  chromatic: { disableSnapshot: false },
+};
+
+export const HorizontalVariations: StoryFn<QAContainerProps> = (props) => {
+  return (
+    <QAContainer height={480} width={1200} {...props}>
+      <StackLayout
+        direction="column"
+        align="stretch"
+        gap={2}
+        style={{
+          minWidth: 580,
+          marginBottom: 24,
+        }}
+      >
+        <SteppedTracker>
+          <Step label="Step" description="Description text" stage="pending" />
+          <Step
+            label="Step"
+            description="Description text"
+            stage="inprogress"
+          />
+          <Step label="Step" description="Description text" stage="active" />
+          <Step label="Step" description="Description text" stage="completed" />
+          <Step label="Step" description="Description text" status="error" />
+          <Step label="Step" description="Description text" status="warning" />
+          <Step label="Step" description="Description text" stage="locked" />
+        </SteppedTracker>
+      </StackLayout>
+    </QAContainer>
+  );
+};
+
+HorizontalVariations.parameters = {
   chromatic: { disableSnapshot: false },
 };
 
 export const Vertical: StoryFn<QAContainerProps> = (props) => {
   return (
-    <QAContainer height={500} width={1000} {...props}>
+    <QAContainer vertical height={480} width={1240} {...props}>
       <StackLayout
         direction="row"
         align="stretch"
         gap={2}
         style={{
-          minWidth: 450,
-          marginBottom: 50,
+          minWidth: 1240,
         }}
       >
-        <SteppedTracker orientation="vertical" activeStep={0}>
-          <TrackerStep>
-            <StepLabel>Step One</StepLabel>
-          </TrackerStep>
-          <TrackerStep>
-            <StepLabel>Step Two</StepLabel>
-          </TrackerStep>
-          <TrackerStep>
-            <StepLabel>Step Three</StepLabel>
-          </TrackerStep>
-          <TrackerStep>
-            <StepLabel>Step Four</StepLabel>
-          </TrackerStep>
+        <SteppedTracker orientation="vertical">
+          <Step label="Step 1" />
+          <Step label="Step 2" />
+          <Step label="Step 3" />
         </SteppedTracker>
-        <SteppedTracker orientation="vertical" activeStep={2}>
-          <TrackerStep stage="completed">
-            <StepLabel>Step One</StepLabel>
-          </TrackerStep>
-          <TrackerStep stage="completed">
-            <StepLabel>Step Two</StepLabel>
-          </TrackerStep>
-          <TrackerStep stage="pending">
-            <StepLabel>Step Three</StepLabel>
-          </TrackerStep>
-          <TrackerStep stage="pending">
-            <StepLabel>Step Four</StepLabel>
-          </TrackerStep>
+        <SteppedTracker orientation="vertical">
+          <Step label="Step 1" stage="completed" />
+          <Step label="Step 2" stage="active" />
+          <Step label="Step 3" />
         </SteppedTracker>
-        <SteppedTracker orientation="vertical" activeStep={3}>
-          <TrackerStep stage="completed">
-            <StepLabel>Step One</StepLabel>
-          </TrackerStep>
-          <TrackerStep stage="completed">
-            <StepLabel>Step Two</StepLabel>
-          </TrackerStep>
-          <TrackerStep stage="completed">
-            <StepLabel>Step Three</StepLabel>
-          </TrackerStep>
-          <TrackerStep stage="completed">
-            <StepLabel>Step Four</StepLabel>
-          </TrackerStep>
+        <SteppedTracker orientation="vertical">
+          <Step label="Step 1" stage="completed" />
+          <Step label="Step 2" stage="active" status="warning" />
+          <Step label="Step 3" />
         </SteppedTracker>
-        <SteppedTracker orientation="vertical" activeStep={0}>
-          <TrackerStep stage="completed">
-            <StepLabel>Completed</StepLabel>
-          </TrackerStep>
-          <TrackerStep status="warning">
-            <StepLabel>Warning</StepLabel>
-          </TrackerStep>
-          <TrackerStep status="error">
-            <StepLabel>Error</StepLabel>
-          </TrackerStep>
-          <TrackerStep>
-            <StepLabel>Default</StepLabel>
-          </TrackerStep>
+        <SteppedTracker orientation="vertical">
+          <Step label="Step 1" stage="completed" />
+          <Step label="Step 2" stage="active" status="error" />
+          <Step label="Step 3" />
+        </SteppedTracker>
+        <SteppedTracker orientation="vertical">
+          <Step label="Step 1" stage="completed" />
+          <Step label="Step 2" stage="completed" />
+          <Step label="Step 3" stage="active" />
+        </SteppedTracker>
+        <SteppedTracker orientation="vertical">
+          <Step label="Step 1" stage="completed" />
+          <Step label="Step 2" stage="completed" />
+          <Step label="Step 3" stage="completed" />
         </SteppedTracker>
       </StackLayout>
     </QAContainer>
   );
 };
 
-Basic.parameters = {
+Vertical.parameters = {
   chromatic: { disableSnapshot: false },
+};
+
+export const VerticalVariations: StoryFn<QAContainerProps> = (props) => {
+  return (
+    <QAContainer height={560} width={1240} {...props}>
+      <StackLayout
+        direction="column"
+        align="stretch"
+        gap={2}
+        style={{
+          minWidth: 1240,
+        }}
+      >
+        <SteppedTracker orientation="vertical">
+          <Step label="Step" description="Description text" stage="pending" />
+          <Step
+            label="Step"
+            description="Description text"
+            stage="inprogress"
+          />
+          <Step label="Step" description="Description text" stage="active" />
+          <Step label="Step" description="Description text" stage="completed" />
+          <Step label="Step" description="Description text" status="error" />
+          <Step label="Step" description="Description text" status="warning" />
+          <Step label="Step" description="Description text" stage="locked" />
+        </SteppedTracker>
+      </StackLayout>
+    </QAContainer>
+  );
+};
+
+VerticalVariations.parameters = {
+  chromatic: { disableSnapshot: false },
+};
+
+export const VerticalNesting: StoryFn<QAContainerProps> = (props) => {
+  return (
+    <QAContainer height={480} width={1296} {...props}>
+      <StackLayout
+        direction="row"
+        gap={2}
+        style={{
+          minWidth: 620,
+          marginBottom: 40,
+        }}
+      >
+        <SteppedTracker orientation="vertical">
+          <Step label="Step 1" stage="inprogress">
+            <Step label="Step 1.1" stage="completed" />
+            <Step label="Step 1.2" stage="inprogress">
+              <Step label="Step 1.2.1" stage="active" />
+              <Step label="Step 1.2.2" stage="pending" />
+            </Step>
+          </Step>
+        </SteppedTracker>
+        <SteppedTracker orientation="vertical">
+          <Step label="Step 1" stage="inprogress" defaultExpanded>
+            <Step label="Step 1.1" stage="completed" />
+            <Step label="Step 1.2" stage="inprogress">
+              <Step label="Step 1.2.1" stage="active" />
+              <Step label="Step 1.2.2" stage="pending" />
+            </Step>
+          </Step>
+        </SteppedTracker>
+        <SteppedTracker orientation="vertical">
+          <Step label="Step 1" stage="inprogress" defaultExpanded>
+            <Step label="Step 1.1" stage="completed" />
+            <Step label="Step 1.2" stage="inprogress" defaultExpanded>
+              <Step label="Step 1.2.1" stage="active" />
+              <Step label="Step 1.2.2" stage="pending" />
+            </Step>
+          </Step>
+        </SteppedTracker>
+      </StackLayout>
+    </QAContainer>
+  );
 };

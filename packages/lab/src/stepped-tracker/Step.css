@@ -5,7 +5,7 @@
   --icon-size: calc(var(--icon-base-size) * var(--icon-size-multiplier));
 }
 
-.saltStepper-horizontal .saltStep {
+.saltSteppedTracker-horizontal .saltStep {
   position: relative;
   display: grid;
   grid-template-columns: 1fr;
@@ -21,13 +21,13 @@
   padding: 0 var(--salt-spacing-25);
 }
 
-.saltStepper-vertical .saltStep {
+.saltSteppedTracker-vertical .saltStep {
   display: grid;
   grid-template-columns: var(--icon-size) 1fr min-content;
   grid-template-areas:
     "icon      label       expand"
     "connector description ."
-    "stepper   stepper     stepper";
+    "SteppedTracker   SteppedTracker     SteppedTracker";
   justify-items: start;
   align-items: start;
   gap: 0 var(--salt-spacing-100);
@@ -37,21 +37,21 @@
   transition-property: grid-template-rows;
 }
 
-.saltStepper-vertical .saltStep-terminal {
+.saltSteppedTracker-vertical .saltStep-terminal {
   grid-template-areas:
     "icon      label       label"
     "connector description description"
-    "stepper   stepper     stepper";
+    "SteppedTracker   SteppedTracker     SteppedTracker";
 }
 
-.saltStepper-vertical > .saltStep.saltStep-expanded {
+.saltSteppedTracker-vertical > .saltStep.saltStep-expanded {
   grid-template-rows:
     var(--salt-size-base)
     min-content
     1fr;
 }
 
-.saltStepper-vertical > .saltStep.saltStep-collapsed {
+.saltSteppedTracker-vertical > .saltStep.saltStep-collapsed {
   grid-template-rows:
     var(--salt-size-base)
     min-content

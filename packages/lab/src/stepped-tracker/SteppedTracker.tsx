@@ -3,91 +3,55 @@ import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
-  Children,
-  type ComponentPropsWithoutRef,
-  type ReactElement,
+  type ComponentProps,
   type ReactNode,
   forwardRef,
-  isValidElement,
-  useEffect,
+  useContext,
 } from "react";
 
 import {
+  OrientationContext,
   SteppedTrackerProvider,
-  TrackerStepProvider,
-} from "./SteppedTrackerContext";
+} from "./SteppedTracker.Provider";
+import SteppedTrackerCSS from "./SteppedTracker.css";
 
-import steppedTrackerCss from "./SteppedTracker.css";
+export namespace SteppedTracker {
+  export interface Props extends ComponentProps<"ol"> {
+    orientation?: Orientation;
+    children: ReactNode;
+  }
+
+  export type Orientation = "horizontal" | "vertical";
+}
 
 const withBaseName = makePrefixer("saltSteppedTracker");
 
-export interface SteppedTrackerProps extends ComponentPropsWithoutRef<"ul"> {
-  /**
-   * The index of the current activeStep
-   */
-  activeStep: number;
-  /**
-   * Should be one or more TrackerStep components
-   */
-  children: ReactNode;
-  /**
-   * The orientation of the SteppedTracker. Defaults to `horizontal`
-   */
-  orientation?: "horizontal" | "vertical";
-}
+export const SteppedTracker = forwardRef<
+  HTMLOListElement,
+  SteppedTracker.Props
+>(function SteppedTracker(
+  { orientation: orientationProp, children, className, ...props },
+  ref,
+) {
+  const targetWindow = useWindow();
+  const orientationContext = useContext(OrientationContext);
+  const orientation = orientationProp || orientationContext;
 
-const useCheckInvalidChildren = (children: ReactNode) => {
-  useEffect(() => {
-    if (process.env.NODE_ENV !== "production") {
-      let hasInvalidChild = false;
-      Children.forEach(children, (child) => {
-        if (!isValidElement(child)) {
-          hasInvalidChild = true;
-        }
-      });
+  useComponentCssInjection({
+    testId: "salt-SteppedTracker",
+    css: SteppedTrackerCSS,
+    window: targetWindow,
+  });
 
-      if (hasInvalidChild) {
-        console.error(
-          "Invalid child: children of SteppedTracker must be a TrackerStep component",
-        );
-      }
-    }
-  }, [children]);
-};
-
-export const SteppedTracker = forwardRef<HTMLUListElement, SteppedTrackerProps>(
-  function SteppedTracker(
-    {
-      children,
-      className,
-      activeStep,
-      orientation = "horizontal",
-      ...restProps
-    },
-    ref,
-  ): ReactElement<SteppedTrackerProps> {
-    const targetWindow = useWindow();
-    useComponentCssInjection({
-      testId: "salt-stepped-tracker",
-      css: steppedTrackerCss,
-      window: targetWindow,
-    });
-    useCheckInvalidChildren(children);
-
-    const totalSteps = Children.count(children);
-
-    return (
-      <SteppedTrackerProvider totalSteps={totalSteps} activeStep={activeStep}>
-        <ul
-          className={clsx(withBaseName(), className, withBaseName(orientation))}
-          ref={ref}
-          {...restProps}
-        >
-          {Children.map(children, (child, i) => (
-            <TrackerStepProvider stepNumber={i}>{child}</TrackerStepProvider>
-          ))}
-        </ul>
-      </SteppedTrackerProvider>
-    );
-  },
-);
+  return (
+    <SteppedTrackerProvider orientation={orientation}>
+      <ol
+        className={clsx(withBaseName(), withBaseName(orientation), className)}
+        ref={ref}
+        {...props}
+      >
+        {children}
+      </ol>
+    </SteppedTrackerProvider>
+  );
+});
