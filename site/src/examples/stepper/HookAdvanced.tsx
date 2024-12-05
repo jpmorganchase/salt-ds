@@ -39,7 +39,7 @@ export const HookAdvanced = () => {
 
   return (
     <StackLayout style={{ width: 240 }}>
-      <Stepper orientation="vertical">
+      <SteppedTracker orientation="vertical">
         {state.steps.map((step) => (
           <Step key={step.id} {...step} />
         ))}

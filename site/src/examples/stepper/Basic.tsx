@@ -1,5 +1,5 @@
 import { StackLayout } from "@salt-ds/core";
-import { Step, Stepper } from "@salt-ds/lab";
+import { Step, SteppedTracker } from "@salt-ds/lab";
 
 export const Basic = () => {
   return (

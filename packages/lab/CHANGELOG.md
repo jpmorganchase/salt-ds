@@ -1137,7 +1137,7 @@ import "@salt-ds/lab/css/salt-lab.css";
   - Fixed Contact Metadata Item's font color.
   - Fixed Metric Header subtitle's font color.
   - Fixed Pill's style issues caused by CSS specificity.
-  - Fixed the margin of Stepper Input's decrement button.
+  - Fixed the margin of SteppedTracker Input's decrement button.
   - Fixed the size of Tokenized Input's expand button.
 - 9dd3160b: Removes small close icon in closeable Tab
 - 4aa50dd1: Adjust spacing in `NavigationItem`

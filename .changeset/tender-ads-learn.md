@@ -8,7 +8,7 @@ We are exited to introduce a new (sort of) salt component, the `Stepper`, curren
 
 The `Stepper` is a component that helps you manage a series of steps in a process. It provides a way to navigate between steps, and to track the progress of the process.
 
-The `<Stepper />` is meant to be used in conjunction with it's buddies, the `<Step />` component and the `useStepReducer()` hook.
+The `<SteppedTracker />` is meant to be used in conjunction with it's buddies, the `<Step />` component and the `useStepReducer()` hook.
 
 In it's simples form the `Stepper` can be used like so:
 
@@ -26,16 +26,16 @@ function Example() {
 }
 ```
 
-The Stepper component supports nested steps, which can be used to represent sub-steps within a step. This can be done by nesting `<Step />` components within another `<Step />` component. We advise you not to go above 2 levels deep, as it becomes hard to follow for the user.
+The SteppedTracker component supports nested steps, which can be used to represent sub-steps within a step. This can be done by nesting `<Step />` components within another `<Step />` component. We advise you not to go above 2 levels deep, as it becomes hard to follow for the user.
 
 ```tsx
 import { StackLayout } from "@salt-ds/core";
-import { Step, Stepper } from "@salt-ds/lab";
+import { Step, SteppedTracker } from "@salt-ds/lab";
 
 export const NestedSteps = () => {
   return (
     <StackLayout style={{ minWidth: "240px" }}>
-      <Stepper orientation="vertical">
+      <SteppedTracker orientation="vertical">
         <Step label="Step 1" stage="completed">
           <Step label="Step 1.1" stage="completed" />
         </Step>
@@ -62,7 +62,7 @@ export const NestedSteps = () => {
 };
 ```
 
-The `Stepper` component is a purely presentational component, meaning that you need to manage the state of the steps yourself. That however becomes tricky when dealing with nested steps. This is where the `useStepReducer()` hook comes in. It is a custom hook that helps you manage the state of a stepper component with nested steps with ease. It has a built-in algorithm that determine the stage of all steps above and below the active step. All you need to do is add `stage: 'active'` to the desired step (see `step-1-3-1`), the hook will figure out the rest. This is what we call `autoStage`.
+The `Stepper` component is a purely presentational component, meaning that you need to manage the state of the steps yourself. That however becomes tricky when dealing with nested steps. This is where the `useStepReducer()` hook comes in. It is a custom hook that helps you manage the state of a SteppedTracker component with nested steps with ease. It has a built-in algorithm that determine the stage of all steps above and below the active step. All you need to do is add `stage: 'active'` to the desired step (see `step-1-3-1`), the hook will figure out the rest. This is what we call `autoStage`.
 
 The `useStepReducer()` is used like so:
 
@@ -108,7 +108,7 @@ export const Example = () => {
 
   return (
     <StackLayout style={{ width: 240 }}>
-      <Stepper orientation="vertical">
+      <SteppedTracker orientation="vertical">
         {state.steps.map((step) => (
           <Step key={step.id} {...step} />
         ))}
