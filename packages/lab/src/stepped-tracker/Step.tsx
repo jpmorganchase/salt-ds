@@ -108,7 +108,7 @@ export function Step({
   const labelId = `${id}-label`;
   const descriptionId = `${id}-description`;
   const expandTriggerId = `${id}-expand-trigger`;
-  const nestedSteppedTrackerId = `${id}-nested-SteppedTracker`;
+  const nestedSteppedTrackerId = `${id}-nested-stepped-tracker`;
 
   const ariaCurrent = stage === "active" ? "step" : undefined;
 

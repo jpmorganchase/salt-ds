@@ -25,7 +25,7 @@ export const NestedSteps = () => {
             <Step label="Step 3.3.3" stage="pending" />
           </Step>
         </Step>
-      </Stepper>
+      </SteppedTracker>
     </StackLayout>
   );
 };
