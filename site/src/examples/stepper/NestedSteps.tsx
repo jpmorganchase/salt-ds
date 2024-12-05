@@ -1,10 +1,10 @@
 import { StackLayout } from "@salt-ds/core";
-import { Step, Stepper } from "@salt-ds/lab";
+import { Step, SteppedTracker } from "@salt-ds/lab";
 
 export const NestedSteps = () => {
   return (
     <StackLayout style={{ minWidth: "240px" }}>
-      <Stepper orientation="vertical">
+      <SteppedTracker orientation="vertical">
         <Step label="Step 1" stage="completed">
           <Step label="Step 1.1" stage="completed" />
         </Step>
