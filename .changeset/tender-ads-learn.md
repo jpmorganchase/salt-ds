@@ -2,26 +2,24 @@
 "@salt-ds/lab": patch
 ---
 
-Stepper, Step and useStepReducer
+SteppedTracker, Step and useStepReducer
 
-We are exited to introduce a new (sort of) salt component, the `Stepper`, currently in lab for you to test out and give feedback. It serves as a replacement to the current `SteppedTracker`.
-
-The `Stepper` is a component that helps you manage a series of steps in a process. It provides a way to navigate between steps, and to track the progress of the process.
+The `SteppedTracker` is a component that helps you manage a series of steps in a process. It provides a way to navigate between steps, and to track the progress of the process.
 
 The `<SteppedTracker />` is meant to be used in conjunction with it's buddies, the `<Step />` component and the `useStepReducer()` hook.
 
-In it's simples form the `Stepper` can be used like so:
+In it's simples form the `SteppedTracker` can be used like so:
 
 ```tsx
-import { Stepper, Step } from "@salt-ds/lab";
+import { SteppedTracker, Step } from "@salt-ds/lab";
 
 function Example() {
   return (
-    <Stepper>
+    <SteppedTracker>
       <Step title="Step 1" stage="completed" />
       <Step title="Step 2" stage="active" />
       <Step title="Step 3" stage="pending" />
-    </Stepper>
+    </SteppedTracker>
   );
 }
 ```
@@ -56,19 +54,19 @@ export const NestedSteps = () => {
             <Step label="Step 3.3.3" stage="pending" />
           </Step>
         </Step>
-      </Stepper>
+      </SteppedTracker>
     </StackLayout>
   );
 };
 ```
 
-The `Stepper` component is a purely presentational component, meaning that you need to manage the state of the steps yourself. That however becomes tricky when dealing with nested steps. This is where the `useStepReducer()` hook comes in. It is a custom hook that helps you manage the state of a SteppedTracker component with nested steps with ease. It has a built-in algorithm that determine the stage of all steps above and below the active step. All you need to do is add `stage: 'active'` to the desired step (see `step-1-3-1`), the hook will figure out the rest. This is what we call `autoStage`.
+The `SteppedTracker` component is a purely presentational component, meaning that you need to manage the state of the steps yourself. That however becomes tricky when dealing with nested steps. This is where the `useStepReducer()` hook comes in. It is a custom hook that helps you manage the state of a SteppedTracker component with nested steps with ease. It has a built-in algorithm that determine the stage of all steps above and below the active step. All you need to do is add `stage: 'active'` to the desired step (see `step-1-3-1`), the hook will figure out the rest. This is what we call `autoStage`.
 
 The `useStepReducer()` is used like so:
 
 ```tsx
 import { StackLayout, SegmentedButtonGroup, Button } from "@salt-ds/core";
-import { Step, Stepper, useStepReducer } from "@salt-ds/lab";
+import { Step, SteppedTracker, useStepReducer } from "@salt-ds/lab";
 
 const initialSteps = [
   {
@@ -112,7 +110,7 @@ export const Example = () => {
         {state.steps.map((step) => (
           <Step key={step.id} {...step} />
         ))}
-      </Stepper>
+      </SteppedTracker>
       <SegmentedButtonGroup>
         {state.started && (
           <Button
