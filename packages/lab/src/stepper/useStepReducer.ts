@@ -1,10 +1,10 @@
 import { useReducer } from "react";
 
-import { initStepReducerState } from "./utils";
 import stepReducer from "./stepReducer";
+import { initStepReducerState } from "./utils";
 
-import type { StepReducer } from "./stepReducer";
 import type { Step } from "./Step";
+import type { StepReducer } from "./stepReducer";
 
 export function useStepReducer(
   initialSteps: Step.Props[],
