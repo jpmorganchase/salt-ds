@@ -1,5 +1,5 @@
 import { Button, SegmentedButtonGroup, StackLayout } from "@salt-ds/core";
-import { Step, Stepper, useStepReducer } from "@salt-ds/lab";
+import { Step, SteppedTracker, useStepReducer } from "@salt-ds/lab";
 
 const initialSteps: Step.Props[] = [
   {
@@ -43,7 +43,7 @@ export const HookAdvanced = () => {
         {state.steps.map((step) => (
           <Step key={step.id} {...step} />
         ))}
-      </Stepper>
+      </SteppedTracker>
       <SegmentedButtonGroup>
         {state.started && (
           <Button

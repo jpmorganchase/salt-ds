@@ -10,25 +10,25 @@
 
 <LivePreviewControls>
 
-<LivePreview componentName="stepper" exampleName="Basic">
+<LivePreview componentName="stepped-tracker" exampleName="Basic">
   ## Basic
 
-The `Stepper` component accepts `Step` components as children.
+The `SteppedTracker` component accepts `Step` components as children.
 You can change
 
 </LivePreview>
 
 ## Orientation
 
-<LivePreview componentName="stepper" exampleName="OrientationHorizontal">
+<LivePreview componentName="stepped-tracker" exampleName="OrientationHorizontal">
   ### Horizontal (default)
 </LivePreview>
 
-<LivePreview componentName="stepper" exampleName="OrientationVertical">
+<LivePreview componentName="stepped-tracker" exampleName="OrientationVertical">
   ### Vertical
 </LivePreview>
 
-<LivePreview componentName="stepper" exampleName="StageStatus">
+<LivePreview componentName="stepped-tracker" exampleName="StageStatus">
   ## Stage + Status
 
 The `Step` component changes based on the `stage` and `status` props.
@@ -38,25 +38,25 @@ icon selection, description text color and track (connector) style.
 
 </LivePreview>
 
-<LivePreview componentName="stepper" exampleName="NestedSteps">
+<LivePreview componentName="stepped-tracker" exampleName="NestedSteps">
   ## Nested Steps
 
-When using the `Stepper` component in vertical orientation, you can nest `Step` components other `Step` components.
-When done so, the parent `Step` renders another `Stepper` and places the nested `Steps` (children) inside of it.
+When using the `SteppedTracker` component in vertical orientation, you can nest `Step` components other `Step` components.
+When done so, the parent `Step` renders another `SteppedTracker` and places the nested `Steps` (children) inside of it.
 Additionally an expand button is added on the parent `Step` to expand or collapse the substeps.
 The parent Step containing the active Step child children are to have a stage of `inprogress`.
 
 </LivePreview>
 
-<LivePreview componentName="stepper" exampleName="Hook">
+<LivePreview componentName="stepped-tracker" exampleName="Hook">
   ## Hook
 
-The `Stepper` and `Step` component are purely presentational components.
-If you want to control the state of the `Stepper` you can utilize the `useStepReducer` hook.
+The `SteppedTracker` and `Step` component are purely presentational components.
+If you want to control the state of the `SteppedTracker` you can utilize the `useStepReducer` hook.
 
 </LivePreview>
 
-<LivePreview componentName="stepper" exampleName="HookAdvanced">
+<LivePreview componentName="stepped-tracker" exampleName="HookAdvanced">
   The `useStepReducer` hook is smart! If you add `stage: 'active'` to any step, it
   will automatically determine the stages of all other steps (autoStage), both
   before and after the active one. Inside the state object, you can find useful
