@@ -244,6 +244,7 @@ export const DatePickerRangeInput = forwardRef(function DatePickerRangeInput<
           <CalendarIcon />
         </Button>
       }
+      format={format}
       {...rest}
     />
   );

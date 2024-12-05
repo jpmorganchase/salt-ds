@@ -34,6 +34,7 @@ const {
   SingleWithFormField,
   SingleWithMinMaxDate,
   SingleWithTodayButton,
+  SingleCustomFormat,
 } = datePickerStories as any;
 
 describe("GIVEN a DatePicker where selectionVariant is single", () => {
@@ -512,6 +513,18 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
               value: initialDateValue,
             });
           });
+        });
+
+        it("SHOULD support format prop on the input", () => {
+          const format = "YYYY-MM-DD";
+
+          cy.mount(
+            <SingleCustomFormat
+              format={format}
+              defaultSelectedDate={initialDate}
+            />,
+          );
+          cy.findByRole("textbox").should("have.value", "2025-01-05");
         });
       });
     });
