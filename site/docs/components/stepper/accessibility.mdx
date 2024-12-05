@@ -1,0 +1,36 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+## Keyboard interactions
+
+Keyboard interactions apply to only Steppers with steps with nested substeps.
+In those cases the parent step renders automatically a button that allows
+for expanding or collapsing the substeps.
+
+<KeyboardControls>
+<KeyboardControl keyOrCombos="Tab">
+
+- Moves the focus down to the next expand button.
+- By default all steps with substeps are collapsed, meaning only top level
+  expand buttons will be focusable. Initially the top most step will be focused.
+- If the substeps contain more substeps, the focus will move to the inside steps only if the parent is expanded.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Shift + Tab">
+
+- Moves the focus up to the previous expand button.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Enter / Space">
+
+- Steps are in the collapsed state by default. This action expands, or collapses, accordions.
+
+</KeyboardControl>
+</KeyboardControls>
