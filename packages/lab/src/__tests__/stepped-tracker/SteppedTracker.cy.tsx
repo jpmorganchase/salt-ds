@@ -1,11 +1,13 @@
-import { Step, Stepper } from "@salt-ds/lab";
+import { Step, SteppedTracker } from "@salt-ds/lab";
 import { composeStories } from "@storybook/react";
 
-import * as stepperStories from "@stories/stepper/stepper.stories";
+import * as steppedTrackerStories from "@stories/stepped-tracker/stepped-tracker.stories";
 
-const { VerticalDepth1, VerticalDepth2 } = composeStories(stepperStories);
+const { VerticalDepth1, VerticalDepth2 } = composeStories(
+  steppedTrackerStories,
+);
 
-describe("<Stepper />", () => {
+describe("<SteppedTracker />", () => {
   it("should expand/collapse when trigger is clicked (depth 1)", () => {
     cy.mount(<VerticalDepth1 />);
 
@@ -72,7 +74,7 @@ describe("<Stepper />", () => {
 
   it("a11y/aria properties (depth 0)", () => {
     cy.mount(
-      <Stepper id="stepper-1" orientation="vertical">
+      <SteppedTracker id="stepped-tracker-1" orientation="vertical">
         <Step
           id="step-1"
           label="Step 1"
@@ -86,13 +88,13 @@ describe("<Stepper />", () => {
           stage="active"
         />
         <Step id="step-3" label="Step 3" stage="pending" />
-      </Stepper>,
+      </SteppedTracker>,
     );
 
     cy.findAllByRole("list").should("have.length", 1);
     cy.findAllByRole("listitem").should("have.length", 3);
 
-    cy.get("#stepper-1").should("exist");
+    cy.get("#stepped-tracker-1").should("exist");
 
     cy.get("#step-1").should("not.have.attr", "aria-current");
     cy.get("#step-2").should("have.attr", "aria-current", "step");
@@ -118,14 +120,14 @@ describe("<Stepper />", () => {
     cy.get("#step-2-expand-trigger").should("not.exist");
     cy.get("#step-3-expand-trigger").should("not.exist");
 
-    cy.get("#step-1-nested-stepper").should("not.exist");
-    cy.get("#step-2-nested-stepper").should("not.exist");
-    cy.get("#step-3-nested-stepper").should("not.exist");
+    cy.get("#step-1-nested-stepped-tracker").should("not.exist");
+    cy.get("#step-2-nested-stepped-tracker").should("not.exist");
+    cy.get("#step-3-nested-stepped-tracker").should("not.exist");
   });
 
   it("a11y/aria properties (depth 1)", () => {
     cy.mount(
-      <Stepper id="stepper-1" orientation="vertical">
+      <SteppedTracker id="stepped-tracker-1" orientation="vertical">
         <Step
           id="step-1"
           label="Step 1"
@@ -144,13 +146,13 @@ describe("<Stepper />", () => {
           <Step id="step-2-3" label="Step 2.3" stage="pending" />
         </Step>
         <Step id="step-3" label="Step 3" stage="pending" />
-      </Stepper>,
+      </SteppedTracker>,
     );
 
     cy.findAllByRole("list").should("have.length", 2);
     cy.findAllByRole("listitem").should("have.length", 6);
 
-    cy.get("#stepper-1").should("exist");
+    cy.get("#stepped-tracker-1").should("exist");
 
     cy.get("#step-1").should("not.have.attr", "aria-current");
     cy.get("#step-2").should("not.have.attr", "aria-current");
@@ -194,13 +196,13 @@ describe("<Stepper />", () => {
     cy.get("#step-2-expand-trigger")
       .should("have.attr", "aria-expanded", "true")
       .should("have.attr", "aria-labelledby", "step-2-label")
-      .should("have.attr", "aria-controls", "step-2-nested-stepper");
+      .should("have.attr", "aria-controls", "step-2-nested-stepped-tracker");
     cy.get("#step-3-expand-trigger").should("not.exist");
 
-    cy.get("#step-1-nested-stepper").should("not.exist");
-    cy.get("#step-2-nested-stepper")
+    cy.get("#step-1-nested-stepped-tracker").should("not.exist");
+    cy.get("#step-2-nested-stepped-tracker")
       .should("have.attr", "aria-hidden", "false")
       .should("have.attr", "aria-label", "Step 2 substeps");
-    cy.get("#step-3-nested-stepper").should("not.exist");
+    cy.get("#step-3-nested-stepped-tracker").should("not.exist");
   });
 });

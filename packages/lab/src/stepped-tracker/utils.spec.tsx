@@ -10,7 +10,7 @@ import {
 
 import type { Step } from "./Step";
 
-describe("Stepper > utils.ts", () => {
+describe("SteppedTracker > utils.ts", () => {
   describe("resetSteps", () => {
     it("should set the stage of all steps to undefined", () => {
       const steps: Step.Props[] = [
