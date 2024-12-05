@@ -38,7 +38,7 @@
     "@philpl/buble": "^0.19.7",
     "@types/luxon": "^3.4.2",
     "@types/react": "^18.3.3",
-    "date-fns": "^3.6.0",
+    "date-fns": "^4.0.0",
     "dayjs": "^1.11.13",
     "lodash-es": "^4.17.21",
     "luxon": "^3.5.0",
