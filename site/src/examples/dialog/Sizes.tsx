@@ -11,7 +11,7 @@ import {
   StackLayout,
   useId,
 } from "@salt-ds/core";
-import { StepLabel, SteppedTracker, TrackerStep } from "@salt-ds/lab";
+import { Step, SteppedTracker } from "@salt-ds/lab";
 import { type ReactElement, useState } from "react";
 
 const SmallDialog = (): ReactElement => {
@@ -206,19 +206,11 @@ const LargeDialog = (): ReactElement => {
             />
           }
           endItem={
-            <SteppedTracker activeStep={0} style={{ width: "400px" }}>
-              <TrackerStep>
-                <StepLabel>Beneficiary</StepLabel>
-              </TrackerStep>
-              <TrackerStep>
-                <StepLabel>Amount</StepLabel>
-              </TrackerStep>
-              <TrackerStep>
-                <StepLabel>Account</StepLabel>
-              </TrackerStep>
-              <TrackerStep>
-                <StepLabel>Delivery</StepLabel>
-              </TrackerStep>
+            <SteppedTracker style={{ width: "400px" }}>
+              <Step label="Beneficiary" stage="active" />
+              <Step label="Amount" />
+              <Step label="Account" />
+              <Step label="Delivery" />
             </SteppedTracker>
           }
         />

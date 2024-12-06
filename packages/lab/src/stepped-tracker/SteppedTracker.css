@@ -1,17 +1,41 @@
 .saltSteppedTracker {
-  margin: 0;
-  padding: 0;
-  text-indent: 0;
-  list-style-type: none;
-  display: flex;
+  grid-area: SteppedTracker;
   width: 100%;
-  position: relative;
+  height: 100%;
+
+  padding: var(--salt-focused-outlineWidth);
+  margin: calc(-1 * var(--salt-focused-outlineWidth));
+  list-style-type: none;
+  box-sizing: content-box;
+
+  transition-duration: var(--salt-duration-perceptible);
+  transition-timing-function: ease-in-out;
+  transition-property: opacity, visibility;
 }
 
-.saltSteppedTracker.saltSteppedTracker-horizontal {
+@media (prefers-reduced-motion) {
+  .saltSteppedTracker {
+    transition-duration: var(--salt-duration-instant);
+  }
+}
+
+.saltSteppedTracker-horizontal {
+  display: flex;
   flex-direction: row;
 }
 
-.saltSteppedTracker.saltSteppedTracker-vertical {
+.saltSteppedTracker-vertical {
+  display: flex;
   flex-direction: column;
+  overflow: hidden;
+}
+
+.saltSteppedTracker-vertical > .saltStep.saltStep-expanded > .saltSteppedTracker {
+  opacity: 1;
+  visibility: visible;
+}
+
+.saltSteppedTracker-vertical > .saltStep.saltStep-collapsed > .saltSteppedTracker {
+  opacity: 0;
+  visibility: hidden;
 }
