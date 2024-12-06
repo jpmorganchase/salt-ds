@@ -4,6 +4,7 @@
   "main": "./src/index.ts",
   "version": "1.0.0",
   "dependencies": {
+    "slash": "^4.0.0",
     "ts-morph": "^15.1.0"
   },
   "peerDependencies": {

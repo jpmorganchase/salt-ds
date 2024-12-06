@@ -1,0 +1,26 @@
+{
+  "palette": {
+    "font-weight": {
+      "light": {
+        "$type": "number",
+        "$value": 300
+      },
+      "regular": {
+        "$type": "number",
+        "$value": 400
+      },
+      "medium": {
+        "$type": "number",
+        "$value": 500
+      },
+      "semi-bold": {
+        "$type": "number",
+        "$value": 600
+      },
+      "bold": {
+        "$type": "number",
+        "$value": 700
+      }
+    }
+  }
+}
