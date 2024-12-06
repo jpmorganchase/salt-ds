@@ -1,9 +1,9 @@
 import type { Decorator } from "@storybook/react";
 import "dayjs/locale/en";
-import { AdapterDateFns } from "@salt-ds/date-adapters";
-import { AdapterDayjs } from "@salt-ds/date-adapters";
-import { AdapterLuxon } from "@salt-ds/date-adapters";
-import { AdapterMoment } from "@salt-ds/date-adapters";
+import { AdapterDateFns } from "@salt-ds/date-adapters/date-fns";
+import { AdapterDayjs } from "@salt-ds/date-adapters/dayjs";
+import { AdapterLuxon } from "@salt-ds/date-adapters/luxon";
+import { AdapterMoment } from "@salt-ds/date-adapters/moment";
 import { LocalizationProvider } from "@salt-ds/lab";
 import { enUS as dateFnsEnUs } from "date-fns/locale";
 
