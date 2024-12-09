@@ -1,28 +1,29 @@
-import { Link, type LinkProps, makePrefixer } from "@salt-ds/core";
+import { makePrefixer } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
-import { type RefObject, forwardRef } from "react";
+import {
+  type ComponentPropsWithoutRef,
+  forwardRef,
+  useEffect,
+  useRef,
+} from "react";
 import { useManageFocusOnTarget } from "./internal/useManageFocusOnTarget";
 
 import skipLinkCss from "./SkipLink.css";
 
-interface SkipLinkProps extends LinkProps {
+interface SkipLinkProps extends ComponentPropsWithoutRef<"a"> {
   /**
-   * This is a ref that has access to the target element.
-   *
-   * This will be used to apply focus to that element
-   *
-   * Refs are referentially stable so if this changes it won't be picked up
-   * will need to find a better way of passing in the target element to apply the attributes
+   * The ID of the target element to apply focus when the link is clicked.
+   * If the element with this ID is not found, the SkipLink will not be rendered.
    */
-  targetRef?: RefObject<HTMLElement>;
+  target: string;
 }
 
 const withBaseName = makePrefixer("saltSkipLink");
 
 export const SkipLink = forwardRef<HTMLAnchorElement, SkipLinkProps>(
-  function SkipLink({ className, targetRef, ...rest }, ref) {
+  function SkipLink({ className, target, children, ...rest }, ref) {
     const targetWindow = useWindow();
     useComponentCssInjection({
       testId: "salt-skip-link",
@@ -30,19 +31,30 @@ export const SkipLink = forwardRef<HTMLAnchorElement, SkipLinkProps>(
       window: targetWindow,
     });
 
-    const targetClass = clsx(withBaseName("target"), className);
+    const targetRef = useRef<HTMLElement | null>(null);
 
-    const eventHandlers = useManageFocusOnTarget({ targetRef, targetClass });
+    useEffect(() => {
+      targetRef.current = document.getElementById(target);
+    }, [target]);
+
+    const eventHandlers = useManageFocusOnTarget({
+      targetRef,
+      targetClass: withBaseName("target"),
+    });
 
     return (
-      <li>
-        <Link
+      targetRef.current && (
+        <a
+          className={clsx(withBaseName(), className)}
+          href={`#${target}`}
+          ref={ref}
+          target="_self"
           {...eventHandlers}
           {...rest}
-          className={clsx(withBaseName(), className)}
-          ref={ref}
-        />
-      </li>
+        >
+          {children}
+        </a>
+      )
     );
   },
 );
