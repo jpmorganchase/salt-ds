@@ -9,9 +9,9 @@
 .saltSteppedTracker-horizontal .saltStepConnector {
   position: absolute;
   transform: translateY(-100%);
-  top: calc(var(--icon-size) / 2);
-  left: calc(50% + calc(var(--icon-size) / 2 + var(--salt-spacing-100)));
-  right: calc(-50% + calc(var(--icon-size) / 2 + var(--salt-spacing-100)));
+  top: calc(var(--step-icon-size) / 2);
+  left: calc(50% + calc(var(--step-icon-size) / 2 + var(--salt-spacing-100)));
+  right: calc(-50% + calc(var(--step-icon-size) / 2 + var(--salt-spacing-100)));
 
   border-top-width: var(--salt-size-border-strong);
   border-top-style: var(--salt-track-borderStyle-incomplete);

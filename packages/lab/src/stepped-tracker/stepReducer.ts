@@ -3,11 +3,11 @@ import { assignSteps, autoStageSteps, flattenSteps, resetSteps } from "./utils";
 
 export namespace StepReducer {
   export interface State {
-    steps: Step.Props[];
-    flatSteps: Step.Props[];
-    activeStep: Step.Props | null;
-    previousStep: Step.Props | null;
-    nextStep: Step.Props | null;
+    steps: Step.Record[];
+    flatSteps: Step.Record[];
+    activeStep: Step.Record | null;
+    previousStep: Step.Record | null;
+    nextStep: Step.Record | null;
     activeStepIndex: number;
     started: boolean;
     ended: boolean;
@@ -22,26 +22,24 @@ export namespace StepReducer {
 
   export type Options = {
     activeStepId?: string;
-    started?: boolean;
-    ended?: boolean;
   };
 }
 
 /**
- * Extracts all step ids from a array of
- * steps, including top and lower levels.
+ * Extracts all step ids from a array of steps,
+ * including top and lower levels.
  *
  * I can't use this type because our codebase
- * because const in the type definition is not
- * supported by the current version of TypeScript.
+ * is running below TypeScript 5, where "const"
+ * in function generics was firstly introduced.
  * */
 export type AllowedActiveStepIds<
-  S extends Step.Props[],
+  S extends Step.Record[],
   Acc extends string = never,
 > = S extends [{ id: infer ID; substeps?: infer SS }, ...infer R]
   ? ID extends string
-    ? R extends Step.Props[]
-      ? SS extends Step.Props[]
+    ? R extends Step.Record[]
+      ? SS extends Step.Record[]
         ? AllowedActiveStepIds<R, Acc | AllowedActiveStepIds<SS>>
         : AllowedActiveStepIds<R, Acc | ID>
       : Acc

@@ -12,6 +12,12 @@ export namespace StepLabel {
     stage: Step.Stage;
     status?: Step.Status;
   }
+
+  /**
+   * noun: elucidation; pl. noun: elucidations
+   * explanation that makes something clear; 🤔
+   */
+  export type Elucidation = Step.Status | Step.Stage;
 }
 
 const withBaseName = makePrefixer("saltStepLabel");
@@ -33,7 +39,7 @@ export function StepLabel({
     window: targetWindow,
   });
 
-  const elucidation: Step.Elucidation = status || stage;
+  const elucidation: StepLabel.Elucidation = status || stage;
   const elucidationId = `${id}-elucidation`;
 
   return (

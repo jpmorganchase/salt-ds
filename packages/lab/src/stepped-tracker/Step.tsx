@@ -9,7 +9,7 @@ import { useWindow } from "@salt-ds/window";
 import clsx from "clsx";
 import {
   type CSSProperties,
-  type ComponentProps,
+  type ComponentPropsWithoutRef,
   type ReactNode,
   useContext,
   useEffect,
@@ -25,8 +25,8 @@ import { SteppedTracker } from "./SteppedTracker";
 import { DepthContext } from "./SteppedTracker.Provider";
 
 export namespace Step {
-  export interface Props extends Omit<ComponentProps<"li">, "onToggle"> {
-    id?: string;
+  export interface Props
+    extends Omit<ComponentPropsWithoutRef<"li">, "onToggle"> {
     label?: ReactNode;
     description?: ReactNode;
     status?: Step.Status;
@@ -34,24 +34,21 @@ export namespace Step {
     expanded?: boolean;
     defaultExpanded?: boolean;
     onToggle?: ButtonProps["onClick"];
-    substeps?: Step.Props[];
+    substeps?: Step.Record[];
     children?: ReactNode;
   }
 
-  export type Status = "warning" | "error";
+  export type Record =
+    | (Omit<Step.Props, "children"> & { id: string })
+    | (Omit<Step.Props, "children"> & { key: string });
 
+  export type Status = "warning" | "error";
   export type Stage =
     | "pending"
     | "locked"
     | "completed"
     | "inprogress"
     | "active";
-
-  /**
-   * noun: elucidation; pl. noun: elucidations
-   * explanation that makes something clear; 🤔
-   */
-  export type Elucidation = Status | Stage;
 
   export type Depth = number;
 }
@@ -78,11 +75,10 @@ export function Step({
   const depth = useContext(DepthContext);
 
   const [expanded, setExpanded] = useControlled({
-    controlled: expandedProp,
-    default: Boolean(defaultExpanded),
-
     name: "Step",
     state: "expanded",
+    controlled: expandedProp,
+    default: Boolean(defaultExpanded),
   });
 
   useComponentCssInjection({
@@ -92,25 +88,27 @@ export function Step({
   });
 
   useEffect(() => {
-    if (depth === -1) {
-      console.warn(
-        "<Step /> should be used within a <SteppedTracker /> component!",
-      );
-    }
+    if (process.env.NODE_ENV !== "production") {
+      if (depth === -1) {
+        console.warn(
+          "<Step /> should be used within a <SteppedTracker /> component!",
+        );
+      }
 
-    if (depth > 2) {
-      console.warn("<Step /> should not be nested more than 2 levels deep!");
+      if (depth > 2) {
+        console.warn("<Step /> should not be nested more than 2 levels deep!");
+      }
     }
   }, [depth]);
 
-  const iconMultiplier = depth === 0 ? 1.5 : 1;
+  const ariaCurrent = stage === "active" ? "step" : undefined;
+  const iconSizeMultiplier = depth === 0 ? 1.5 : 1;
   const hasNestedSteps = !!children || !!substeps;
+
   const labelId = `${id}-label`;
   const descriptionId = `${id}-description`;
   const expandTriggerId = `${id}-expand-trigger`;
   const nestedSteppedTrackerId = `${id}-nested-stepped-tracker`;
-
-  const ariaCurrent = stage === "active" ? "step" : undefined;
 
   return (
     <li
@@ -138,7 +136,11 @@ export function Step({
       {...props}
     >
       <StepConnector />
-      <StepIcon stage={stage} status={status} multiplier={iconMultiplier} />
+      <StepIcon
+        stage={stage}
+        status={status}
+        sizeMultiplier={iconSizeMultiplier}
+      />
       {label && (
         <StepLabel id={labelId} stage={stage} status={status}>
           {label}

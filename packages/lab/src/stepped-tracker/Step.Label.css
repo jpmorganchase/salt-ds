@@ -12,8 +12,8 @@
   padding-left: calc((var(--saltStep-depth)) * var(--salt-spacing-100));
 }
 
-.saltStep-depth-0 > .saltStepLabel {
-  font-weight: var(--salt-text-fontWeight-strong) !important;
+.saltStep-depth-0 > .saltStepLabel.saltText {
+  font-weight: var(--salt-text-fontWeight-strong);
 }
 
 .saltStepLabel-elucidation {

@@ -85,16 +85,16 @@ export const HorizontalInteractiveUsingSteppedReducer: StoryFn<
   typeof SteppedTracker
 > = () => {
   const [state, dispatch] = useStepReducer([
-    { id: "step-1", label: "Step 1" },
-    { id: "step-2", label: "Step 2", stage: "active" },
-    { id: "step-3", label: "Step 3" },
+    { key: "step-1", label: "Step 1" },
+    { key: "step-2", label: "Step 2", stage: "active" },
+    { key: "step-3", label: "Step 3" },
   ]);
 
   return (
     <StackLayout style={{ width: 320, alignItems: "center" }}>
       <SteppedTracker>
         {state.steps.map((step) => (
-          <Step key={step.id} {...step} />
+          <Step key={step.key || step.id} {...step} />
         ))}
       </SteppedTracker>
       <FlexLayout justify="space-between">
@@ -130,7 +130,7 @@ export const Vertical: StoryFn<typeof SteppedTracker> = () => {
         width: "100%",
       }}
     >
-      <SteppedTracker orientation="vertical">
+      <SteppedTracker>
         <Step label="Step 1" stage="completed" />
         <Step label="Step 2" stage="active" />
         <Step label="Step 3" />
@@ -304,7 +304,7 @@ export const VerticalInteractiveUsingSteppedReducer: StoryFn<
     <StackLayout style={{ width: 240, alignItems: "center" }}>
       <SteppedTracker orientation="vertical">
         {state.steps.map((step) => (
-          <Step key={step.id} {...step} />
+          <Step key={step.key || step.id} {...step} />
         ))}
       </SteppedTracker>
       <SegmentedButtonGroup>

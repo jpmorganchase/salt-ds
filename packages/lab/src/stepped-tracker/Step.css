@@ -1,8 +1,8 @@
 .saltStep {
   /* Copy of size calculations of <Icon /> */
-  --icon-base-size: var(--salt-size-icon, 12px);
-  --icon-size-multiplier: var(--saltIcon-size-multiplier, 1.5);
-  --icon-size: calc(var(--icon-base-size) * var(--icon-size-multiplier));
+  --step-icon-base-size: var(--salt-size-icon, 12px);
+  --step-icon-size-multiplier: var(--saltIcon-size-multiplier, 1.5);
+  --step-icon-size: calc(var(--step-icon-base-size) * var(--step-icon-size-multiplier));
 }
 
 .saltSteppedTracker-horizontal .saltStep {
@@ -23,11 +23,11 @@
 
 .saltSteppedTracker-vertical .saltStep {
   display: grid;
-  grid-template-columns: var(--icon-size) 1fr min-content;
+  grid-template-columns: var(--step-icon-size) 1fr min-content;
   grid-template-areas:
-    "icon      label       expand"
-    "connector description ."
-    "SteppedTracker   SteppedTracker     SteppedTracker";
+    "icon            label           expand"
+    "connector       description     ."
+    "stepped-tracker stepped-tracker stepped-tracker";
   justify-items: start;
   align-items: start;
   gap: 0 var(--salt-spacing-100);
@@ -39,9 +39,9 @@
 
 .saltSteppedTracker-vertical .saltStep-terminal {
   grid-template-areas:
-    "icon      label       label"
-    "connector description description"
-    "SteppedTracker   SteppedTracker     SteppedTracker";
+    "icon            label           label"
+    "connector       description     description"
+    "stepped-tracker stepped-tracker stepped-tracker";
 }
 
 .saltSteppedTracker-vertical > .saltStep.saltStep-expanded {

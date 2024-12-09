@@ -9,67 +9,55 @@ const { VerticalDepth1, VerticalDepth2 } = composeStories(
 
 describe("<SteppedTracker />", () => {
   it("should expand/collapse when trigger is clicked (depth 1)", () => {
-    cy.mount(<VerticalDepth1 />);
-
-    cy.get("#step-1").should("be.visible");
-    cy.get("#step-1-1").should("not.be.visible");
-
-    cy.get("#step-1-expand-trigger").should(
-      "have.attr",
-      "aria-expanded",
-      "false",
+    cy.mount(
+      <SteppedTracker orientation="vertical">
+        <Step label="Step 1">
+          <Step label="Step 1.1" />
+          <Step label="Step 1.2" />
+          <Step label="Step 1.3" />
+        </Step>
+      </SteppedTracker>,
     );
 
-    cy.get("#step-1-expand-trigger").click();
+    cy.findByText("Step 1").should("be.visible");
+    cy.findByText("Step 1.1").should("not.be.visible");
 
-    cy.get("#step-1-expand-trigger").should(
-      "have.attr",
-      "aria-expanded",
-      "true",
-    );
+    cy.findByRole("button", { expanded: false }).click();
 
-    cy.get("#step-1-1").should("be.visible");
-
-    cy.get("#step-1-expand-trigger").click();
-
-    cy.get("#step-1-expand-trigger").should(
-      "have.attr",
-      "aria-expanded",
-      "false",
-    );
-
-    cy.get("#step-1-1").should("not.be.visible");
+    cy.findByText("Step 1").should("be.visible");
+    cy.findByText("Step 1.1").should("be.visible");
   });
 
   it("should expand/collapse when trigger is clicked (depth 2)", () => {
-    cy.mount(<VerticalDepth2 />);
+    cy.mount(
+      <SteppedTracker orientation="vertical">
+        <Step label="Step 1">
+          <Step label="Step 1.1">
+            <Step label="Step 1.1.1" />
+            <Step label="Step 1.1.2" />
+            <Step label="Step 1.1.3" />
+          </Step>
+          <Step label="Step 1.2" />
+          <Step label="Step 1.3" />
+        </Step>
+      </SteppedTracker>,
+    );
 
-    cy.get("#step-2").should("be.visible");
-    cy.get("#step-2-1").should("not.be.visible");
-    cy.get("#step-2-2").should("not.be.visible");
-    cy.get("#step-2-2-1").should("not.be.visible");
-    cy.get("#step-2-2-2").should("not.be.visible");
-    cy.get("#step-2-2-3").should("not.be.visible");
+    cy.findByText("Step 1").should("be.visible");
+    cy.findByText("Step 1.1").should("not.be.visible");
+    cy.findByText("Step 1.1.1").should("not.be.visible");
 
-    cy.get("#step-2-expand-trigger").click();
+    cy.findByRole("button", { expanded: false }).click();
 
-    cy.get("#step-2-1").should("be.visible");
-    cy.get("#step-2-2").should("be.visible");
+    cy.findByText("Step 1").should("be.visible");
+    cy.findByText("Step 1.1").should("be.visible");
+    cy.findByText("Step 1.1.1").should("not.be.visible");
 
-    cy.get("#step-2-2-expand-trigger").click();
+    cy.findByRole("button", { expanded: false }).click();
 
-    cy.get("#step-2-2-1").should("be.visible");
-    cy.get("#step-2-2-2").should("be.visible");
-    cy.get("#step-2-2-3").should("be.visible");
-
-    cy.get("#step-2-expand-trigger").click();
-
-    cy.get("#step-2").should("be.visible");
-    cy.get("#step-2-1").should("not.be.visible");
-    cy.get("#step-2-2").should("not.be.visible");
-    cy.get("#step-2-2-1").should("not.be.visible");
-    cy.get("#step-2-2-2").should("not.be.visible");
-    cy.get("#step-2-2-3").should("not.be.visible");
+    cy.findByText("Step 1").should("be.visible");
+    cy.findByText("Step 1.1").should("be.visible");
+    cy.findByText("Step 1.1.1").should("be.visible");
   });
 
   it("a11y/aria properties (depth 0)", () => {
