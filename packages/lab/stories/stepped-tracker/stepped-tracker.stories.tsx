@@ -1,324 +1,355 @@
-import { useState } from "react";
-
-import { Button, FlexLayout, StackLayout, Tooltip } from "@salt-ds/core";
-import { RefreshIcon } from "@salt-ds/icons";
-import { StepLabel, SteppedTracker, TrackerStep } from "@salt-ds/lab";
+import {
+  Button,
+  FlexLayout,
+  SegmentedButtonGroup,
+  StackLayout,
+} from "@salt-ds/core";
+import { Step, SteppedTracker, useStepReducer } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react";
 
 export default {
-  title: "Lab/Stepped Tracker",
+  title: "Lab/SteppedTracker",
   component: SteppedTracker,
-  subcomponents: { TrackerStep, StepLabel },
+  subcomponents: { Step },
 } as Meta<typeof SteppedTracker>;
 
-interface Step {
-  label: string;
-  state: "pending" | "completed";
-}
-
-type Steps = Step[];
-
-const sampleSteps: Steps = [
-  {
-    label: "Step One",
-    state: "pending",
-  },
-  {
-    label: "Step Two",
-    state: "pending",
-  },
-  {
-    label: "Step Three",
-    state: "pending",
-  },
-  {
-    label: "Step Four",
-    state: "pending",
-  },
-];
-
-export const Basic: StoryFn<typeof SteppedTracker> = () => {
+export const Horizontal: StoryFn<typeof SteppedTracker> = () => {
   return (
     <StackLayout
-      direction="column"
-      align="stretch"
       gap={10}
-      style={{ width: "100%", minWidth: 600, maxWidth: 800, margin: "auto" }}
+      style={{
+        minWidth: "640px",
+        width: "100%",
+      }}
     >
-      <SteppedTracker activeStep={0}>
-        <TrackerStep>
-          <StepLabel>Step One</StepLabel>
-        </TrackerStep>
-        <TrackerStep>
-          <StepLabel>Step Two</StepLabel>
-        </TrackerStep>
-        <TrackerStep>
-          <StepLabel>Step Three</StepLabel>
-        </TrackerStep>
-        <TrackerStep>
-          <StepLabel>Step Four</StepLabel>
-        </TrackerStep>
-      </SteppedTracker>
-      <SteppedTracker activeStep={2}>
-        <TrackerStep stage="completed">
-          <StepLabel>Step One</StepLabel>
-        </TrackerStep>
-        <TrackerStep stage="completed">
-          <StepLabel>Step Two</StepLabel>
-        </TrackerStep>
-        <TrackerStep>
-          <StepLabel>Step Three</StepLabel>
-        </TrackerStep>
-        <TrackerStep>
-          <StepLabel>Step Four</StepLabel>
-        </TrackerStep>
-      </SteppedTracker>
-      <SteppedTracker activeStep={3}>
-        <TrackerStep stage="completed">
-          <StepLabel>Step One</StepLabel>
-        </TrackerStep>
-        <TrackerStep stage="completed">
-          <StepLabel>Step Two</StepLabel>
-        </TrackerStep>
-        <TrackerStep stage="completed">
-          <StepLabel>Step Three</StepLabel>
-        </TrackerStep>
-        <TrackerStep stage="completed">
-          <StepLabel>Step Four</StepLabel>
-        </TrackerStep>
+      <SteppedTracker>
+        <Step label="Step 1" stage="completed" />
+        <Step label="Step 2" stage="active" />
+        <Step label="Step 3" />
       </SteppedTracker>
     </StackLayout>
   );
 };
 
-export const Status: StoryFn<typeof SteppedTracker> = () => {
-  return (
-    <div
-      style={{ width: "100%", minWidth: 600, maxWidth: 800, margin: "auto" }}
-    >
-      <SteppedTracker activeStep={1}>
-        <TrackerStep stage="completed">
-          <StepLabel>Completed</StepLabel>
-        </TrackerStep>
-        <TrackerStep>
-          <StepLabel>Active</StepLabel>
-        </TrackerStep>
-        <TrackerStep status="warning">
-          <StepLabel>Warning</StepLabel>
-        </TrackerStep>
-        <TrackerStep status="error">
-          <StepLabel>Error</StepLabel>
-        </TrackerStep>
-        <TrackerStep>
-          <StepLabel>Default</StepLabel>
-        </TrackerStep>
-      </SteppedTracker>
-    </div>
-  );
-};
-
-export const SingleVertical: StoryFn<typeof SteppedTracker> = () => {
-  return (
-    <SteppedTracker orientation="vertical" activeStep={1}>
-      <TrackerStep stage="completed">
-        <StepLabel>Step One</StepLabel>
-      </TrackerStep>
-      <TrackerStep stage="completed">
-        <StepLabel>Step Two</StepLabel>
-      </TrackerStep>
-      <TrackerStep>
-        <StepLabel>Step Three</StepLabel>
-      </TrackerStep>
-      <TrackerStep>
-        <StepLabel>Step Four</StepLabel>
-      </TrackerStep>
-    </SteppedTracker>
-  );
-};
-
-export const BasicVertical: StoryFn<typeof SteppedTracker> = () => {
+export const HorizontalVariations: StoryFn<typeof SteppedTracker> = () => {
   return (
     <StackLayout
-      direction="row"
-      align="stretch"
-      gap={1}
-      style={{ width: "100%", minWidth: 600, maxWidth: 800, margin: "auto" }}
+      style={{
+        minWidth: "640px",
+        width: "100%",
+      }}
     >
-      <SteppedTracker orientation="vertical" activeStep={0}>
-        <TrackerStep>
-          <StepLabel>Step One</StepLabel>
-        </TrackerStep>
-        <TrackerStep>
-          <StepLabel>Step Two</StepLabel>
-        </TrackerStep>
-        <TrackerStep>
-          <StepLabel>Step Three</StepLabel>
-        </TrackerStep>
-        <TrackerStep>
-          <StepLabel>Step Four</StepLabel>
-        </TrackerStep>
-      </SteppedTracker>
-      <SteppedTracker orientation="vertical" activeStep={2}>
-        <TrackerStep stage="completed">
-          <StepLabel>Step One</StepLabel>
-        </TrackerStep>
-        <TrackerStep stage="completed">
-          <StepLabel>Step Two</StepLabel>
-        </TrackerStep>
-        <TrackerStep>
-          <StepLabel>Step Three</StepLabel>
-        </TrackerStep>
-        <TrackerStep>
-          <StepLabel>Step Four</StepLabel>
-        </TrackerStep>
-      </SteppedTracker>
-      <SteppedTracker orientation="vertical" activeStep={3}>
-        <TrackerStep stage="completed">
-          <StepLabel>Step One</StepLabel>
-        </TrackerStep>
-        <TrackerStep stage="completed">
-          <StepLabel>Step Two</StepLabel>
-        </TrackerStep>
-        <TrackerStep stage="completed">
-          <StepLabel>Step Three</StepLabel>
-        </TrackerStep>
-        <TrackerStep stage="completed">
-          <StepLabel>Step Four</StepLabel>
-        </TrackerStep>
+      <SteppedTracker>
+        <Step label="Step" description="Description text" stage="pending" />
+        <Step label="Step" description="Description text" stage="inprogress" />
+        <Step label="Step" description="Description text" stage="active" />
+        <Step label="Step" description="Description text" stage="completed" />
+        <Step label="Step" description="Description text" status="error" />
+        <Step label="Step" description="Description text" status="warning" />
+        <Step label="Step" description="Description text" stage="locked" />
       </SteppedTracker>
     </StackLayout>
   );
 };
 
-export const AutoProgress: StoryFn<typeof SteppedTracker> = () => {
-  const [activeStep, setActiveStep] = useState(0);
-  const [steps, setSteps] = useState(sampleSteps);
-  const totalSteps = steps.length;
-
-  const onComplete = () => {
-    if (activeStep < totalSteps - 1) {
-      setActiveStep((old) => old + 1);
-    }
-
-    setSteps((old) =>
-      old.map((step, i) =>
-        i === activeStep
-          ? {
-              ...step,
-              state: "completed",
-            }
-          : step,
-      ),
-    );
-  };
-
-  const onRefresh = () => {
-    setActiveStep(0);
-    setSteps(sampleSteps);
-  };
-
+export const HorizontalLongText: StoryFn<typeof SteppedTracker> = () => {
   return (
     <StackLayout
-      direction="column"
-      align="stretch"
-      style={{ width: "100%", minWidth: 600, maxWidth: 800, margin: "auto" }}
+      style={{
+        maxWidth: "320px",
+        width: "100%",
+      }}
     >
-      <SteppedTracker activeStep={activeStep}>
-        {steps.map(({ label, state }) => (
-          <TrackerStep stage={state} key={label}>
-            <StepLabel>{label}</StepLabel>
-          </TrackerStep>
+      <SteppedTracker>
+        <Step
+          label="This is a ridiculous long line of text showcasing a step label"
+          description="This is just a description text"
+          stage="completed"
+        />
+        <Step
+          label="Oh no!"
+          description="This is another ridiculous long line of text showcasing an error message"
+          status="error"
+        />
+        <Step
+          label="Last step"
+          description="This is another ridiculous long line of text to test a warning message"
+          status="warning"
+        />
+      </SteppedTracker>
+    </StackLayout>
+  );
+};
+
+export const HorizontalInteractiveUsingSteppedReducer: StoryFn<
+  typeof SteppedTracker
+> = () => {
+  const [state, dispatch] = useStepReducer([
+    { key: "step-1", label: "Step 1" },
+    { key: "step-2", label: "Step 2", stage: "active" },
+    { key: "step-3", label: "Step 3" },
+  ]);
+
+  return (
+    <StackLayout style={{ width: 320, alignItems: "center" }}>
+      <SteppedTracker>
+        {state.steps.map((step) => (
+          <Step key={step.key || step.id} {...step} />
         ))}
       </SteppedTracker>
-      <FlexLayout justify="center" gap={1}>
-        <Button onClick={onComplete}>Complete Step</Button>
-        <Tooltip content="Reset">
-          <Button onClick={onRefresh}>
-            <RefreshIcon />
+      <FlexLayout justify="space-between">
+        {state.started && (
+          <Button
+            onClick={() => {
+              dispatch({ type: "previous" });
+            }}
+          >
+            Previous
           </Button>
-        </Tooltip>
+        )}
+        {!state.ended && (
+          <Button
+            onClick={() => {
+              dispatch({ type: "next" });
+            }}
+          >
+            Next
+          </Button>
+        )}
       </FlexLayout>
     </StackLayout>
   );
 };
 
-export const WrappingLabel: StoryFn<typeof SteppedTracker> = () => {
+export const Vertical: StoryFn<typeof SteppedTracker> = () => {
   return (
     <StackLayout
-      direction="column"
-      align="stretch"
-      style={{ width: "100%", minWidth: 600, maxWidth: 800, margin: "auto" }}
+      gap={10}
+      style={{
+        minWidth: "240px",
+        width: "100%",
+      }}
     >
-      <SteppedTracker activeStep={0}>
-        <TrackerStep>
-          <StepLabel>Step One</StepLabel>
-        </TrackerStep>
-        <TrackerStep>
-          <StepLabel>
-            Step Two: I am a label that wraps on smaller screen sizes
-          </StepLabel>
-        </TrackerStep>
-        <TrackerStep>
-          <StepLabel>
-            Step Three: I am a label that wraps on smaller screen sizes
-          </StepLabel>
-        </TrackerStep>
-        <TrackerStep>
-          <StepLabel>Step Four</StepLabel>
-        </TrackerStep>
+      <SteppedTracker>
+        <Step label="Step 1" stage="completed" />
+        <Step label="Step 2" stage="active" />
+        <Step label="Step 3" />
       </SteppedTracker>
     </StackLayout>
   );
 };
 
-export const NonSequentialProgress: StoryFn<typeof SteppedTracker> = () => {
-  const [activeStep, setActiveStep] = useState(0);
-  const [steps, setSteps] = useState(sampleSteps);
-  const totalSteps = steps.length;
+export const VerticalVariations: StoryFn<typeof SteppedTracker> = () => {
+  return (
+    <StackLayout style={{ maxWidth: "240px", width: "100%" }}>
+      <SteppedTracker orientation="vertical">
+        <Step label="Step" description="Description text" stage="pending" />
+        <Step label="Step" description="Description text" stage="inprogress" />
+        <Step label="Step" description="Description text" stage="active" />
+        <Step label="Step" description="Description text" stage="completed" />
+        <Step label="Step" description="Description text" status="error" />
+        <Step label="Step" description="Description text" status="warning" />
+        <Step label="Step" description="Description text" stage="locked" />
+      </SteppedTracker>
+    </StackLayout>
+  );
+};
 
-  const onNext = () => {
-    setActiveStep((old) => (old < steps.length - 1 ? old + 1 : old));
-  };
-
-  const onPrevious = () => {
-    setActiveStep((old) => (old > 0 ? old - 1 : old));
-  };
-
-  const onToggleStep = () => {
-    setSteps((old) =>
-      old.map((step, i) =>
-        i === activeStep
-          ? {
-              ...step,
-              state: step.state === "pending" ? "completed" : "pending",
-            }
-          : step,
-      ),
-    );
-  };
-
+export const VerticalLongText: StoryFn<typeof SteppedTracker> = () => {
   return (
     <StackLayout
-      direction="column"
-      align="stretch"
-      style={{ width: "100%", minWidth: 600, maxWidth: 800, margin: "auto" }}
+      gap={10}
+      style={{
+        maxWidth: "240px",
+        width: "100%",
+      }}
     >
-      <SteppedTracker activeStep={activeStep}>
-        {steps.map(({ label, state }) => (
-          <TrackerStep stage={state} key={label}>
-            <StepLabel>{label}</StepLabel>
-          </TrackerStep>
+      <SteppedTracker orientation="vertical">
+        <Step
+          label="This is a ridiculous long line of text showcasing a step label"
+          description="lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate magni dignissimos inventore incidunt facere harum expedita beatae reiciendis numquam iste excepturi dolorum omnis optio ullam quam illum, eligendi perspiciatis quia."
+          stage="completed"
+        />
+        <Step
+          label="Oh no!"
+          description="lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate magni dignissimos inventore incidunt facere harum expedita beatae reiciendis numquam iste excepturi dolorum omnis optio ullam quam illum, eligendi perspiciatis quia."
+          status="error"
+        />
+        <Step
+          label="Last step"
+          description="lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate magni dignissimos inventore incidunt facere harum expedita beatae reiciendis numquam iste excepturi dolorum omnis optio ullam quam illum, eligendi perspiciatis quia."
+          status="warning"
+        />
+      </SteppedTracker>
+    </StackLayout>
+  );
+};
+
+export const VerticalDepth1: StoryFn<typeof SteppedTracker> = () => {
+  return (
+    <StackLayout style={{ width: 240 }}>
+      <SteppedTracker orientation="vertical">
+        <Step
+          id="step-1"
+          label="Step 1"
+          description="Description text"
+          stage="completed"
+        >
+          <Step id="step-1-1" label="Step 1.1" stage="completed" />
+        </Step>
+
+        <Step id="step-2" label="Step 2" stage="inprogress">
+          <Step
+            id="step-2-1"
+            label="Step 2.1"
+            description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate magni dignissimos inventore incidunt facere harum expedita beatae reiciendis numquam iste excepturi dolorum omnis optio ullam quam illum, eligendi perspiciatis quia."
+            stage="completed"
+          />
+          <Step
+            id="step-2-2"
+            label="Step 2.2"
+            description="Description text"
+            stage="active"
+          />
+          <Step id="step-2-3" label="Step 2.3" stage="pending" />
+        </Step>
+
+        <Step id="step-3" label="Step 3">
+          <Step id="step-3-1" label="Step 3.1" />
+          <Step id="step-3-2" label="Step 3.2" description="Description text" />
+          <Step
+            id="step-3-3"
+            label="Step 3.3"
+            description="This is just a description text"
+          />
+        </Step>
+      </SteppedTracker>
+    </StackLayout>
+  );
+};
+
+export const VerticalDepth2 = () => {
+  return (
+    <StackLayout style={{ width: 240 }}>
+      <SteppedTracker orientation="vertical">
+        <Step id="step-1" label="Step 1" description="Description text">
+          <Step id="step-1-1" label="Step 1.1" />
+        </Step>
+        <Step id="step-2" label="Step 2">
+          <Step
+            id="step-2-1"
+            label="Step 2.1"
+            description="This is a bit longer of a description."
+          />
+          <Step id="step-2-2" label="Step 2.2" description="Description text">
+            <Step id="step-2-2-1" label="Step 2.2.1" />
+            <Step id="step-2-2-2" label="Step 2.2.2" />
+            <Step id="step-2-2-3" label="Step 2.2.3" />
+          </Step>
+        </Step>
+        <Step id="step-3" label="Step 3">
+          <Step id="step-3-1" label="Step 3.1" />
+          <Step id="step-3-2" label="Step 3.2" description="Description text" />
+          <Step
+            id="step-3-3"
+            label="Step 3.3"
+            description="This is just a description text"
+          >
+            <Step id="step-3-3-1" label="Step 3.3.1" />
+            <Step id="step-3-3-2" label="Step 3.3.2" />
+            <Step id="step-3-3-3" label="Step 3.3.3" />
+          </Step>
+        </Step>
+      </SteppedTracker>
+    </StackLayout>
+  );
+};
+
+export const VerticalInteractiveUsingSteppedReducer: StoryFn<
+  typeof SteppedTracker
+> = () => {
+  const [state, dispatch] = useStepReducer(
+    [
+      {
+        id: "step-1",
+        label: "Step 1",
+        defaultExpanded: true,
+        substeps: [
+          { id: "step-1-1", label: "Step 1.1" },
+          { id: "step-1-2", label: "Step 1.2" },
+          {
+            id: "step-1-3",
+            label: "Step 1.3",
+            defaultExpanded: true,
+            substeps: [
+              { id: "step-1-3-1", label: "Step 1.3.1" },
+              { id: "step-1-3-2", label: "Step 1.3.2" },
+              {
+                id: "step-1-3-3",
+                label: "Step 1.3.3",
+                description: "This is just a description text",
+              },
+            ],
+          },
+          { id: "step-1-4", label: "Step 1.4" },
+        ],
+      },
+      { id: "step-2", label: "Step 2" },
+      { id: "step-3", label: "Step 3" },
+    ],
+    { activeStepId: "step-1-3-2" },
+  );
+
+  return (
+    <StackLayout style={{ width: 240, alignItems: "center" }}>
+      <SteppedTracker orientation="vertical">
+        {state.steps.map((step) => (
+          <Step key={step.key || step.id} {...step} />
         ))}
       </SteppedTracker>
-      <FlexLayout justify="center" gap={1}>
-        <Button onClick={onPrevious} disabled={activeStep <= 0}>
-          Previous
-        </Button>
-        <Button onClick={onNext} disabled={activeStep >= totalSteps - 1}>
-          Next
-        </Button>
-        <Button onClick={onToggleStep}>Toggle Step</Button>
-      </FlexLayout>
+      <SegmentedButtonGroup>
+        {state.started && (
+          <Button
+            onClick={() => {
+              dispatch({ type: "previous" });
+            }}
+          >
+            Previous
+          </Button>
+        )}
+        {!state.ended && (
+          <Button
+            onClick={() => {
+              dispatch({ type: "next" });
+            }}
+          >
+            Next
+          </Button>
+        )}
+      </SegmentedButtonGroup>
+      <SegmentedButtonGroup>
+        {state.started && !state.ended && (
+          <>
+            <Button onClick={() => dispatch({ type: "error" })}>Error</Button>
+            <Button onClick={() => dispatch({ type: "warning" })}>
+              Warning
+            </Button>
+            <Button onClick={() => dispatch({ type: "clear" })}>Clear</Button>
+          </>
+        )}
+      </SegmentedButtonGroup>
+    </StackLayout>
+  );
+};
+
+export const BareBones: StoryFn<typeof SteppedTracker> = () => {
+  return (
+    <StackLayout style={{ minWidth: "240px", width: "100%" }}>
+      <SteppedTracker>
+        <Step stage="completed" />
+        <Step stage="active" />
+        <Step />
+      </SteppedTracker>
     </StackLayout>
   );
 };
