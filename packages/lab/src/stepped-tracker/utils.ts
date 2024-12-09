@@ -2,9 +2,9 @@ import type { Step } from "./Step";
 import type { StepReducer } from "./stepReducer";
 
 export function assignSteps(
-  steps: Step.Props[],
+  steps: Step.Record[],
   stage?: Step.Stage,
-): Step.Props[] {
+): Step.Record[] {
   return steps.map((step) => {
     step.stage = stage;
     if (step.substeps) {
@@ -15,26 +15,20 @@ export function assignSteps(
   });
 }
 
-export function resetSteps(steps: Step.Props[]): Step.Props[] {
+export function resetSteps(steps: Step.Record[]): Step.Record[] {
   return assignSteps(steps, undefined);
 }
 
 export function autoStageSteps(
-  steps: Step.Props[],
+  steps: Step.Record[],
   options?: StepReducer.Options,
-): Step.Props[] {
-  if (options?.started === false) {
-    return assignSteps(steps, "pending");
-  }
-
-  if (options?.ended === true) {
-    return assignSteps(steps, "completed");
-  }
-
-  function autoStageHelper(steps: Step.Props[]): Step.Props[] | null {
+): Step.Record[] {
+  function autoStageHelper(steps: Step.Record[]): Step.Record[] | null {
     const pivotIndex = steps.findIndex(
       (step) =>
-        step.id === options?.activeStepId ||
+        (step?.id &&
+          options?.activeStepId &&
+          step.id === options.activeStepId) ||
         step.stage === "active" ||
         step.stage === "inprogress",
     );
@@ -50,7 +44,7 @@ export function autoStageSteps(
       );
       const nextSteps = assignSteps(steps.slice(pivotIndex + 1), "pending");
 
-      return [...previousSteps, activeStep, ...nextSteps] as Step.Props[];
+      return [...previousSteps, activeStep, ...nextSteps] as Step.Record[];
     }
 
     return steps.reduce(
@@ -68,14 +62,16 @@ export function autoStageSteps(
 
         return acc;
       },
-      null as Step.Props[] | null,
+      null as Step.Record[] | null,
     );
   }
 
-  return autoStageHelper(steps) || steps;
+  return (
+    autoStageHelper(steps) || assignSteps(steps, steps[0].stage || "pending")
+  );
 }
 
-export function flattenSteps(steps: Step.Props[]): Step.Props[] {
+export function flattenSteps(steps: Step.Record[]): Step.Record[] {
   return steps.reduce((acc, step) => {
     if (step.substeps) {
       acc.push(...flattenSteps(step.substeps));
@@ -86,31 +82,27 @@ export function flattenSteps(steps: Step.Props[]): Step.Props[] {
     acc.push(step);
 
     return acc;
-  }, [] as Step.Props[]);
+  }, [] as Step.Record[]);
 }
 
 export function initStepReducerState(
-  initialSteps: Step.Props[],
+  initialSteps: Step.Record[],
   options?: StepReducer.Options,
 ) {
   const steps = autoStageSteps(initialSteps, options);
   const flatSteps = flattenSteps(steps);
+  const started = !flatSteps.every((step) => step.stage === "pending");
+  const ended = flatSteps.every((step) => step.stage === "completed");
 
   let activeStepIndex = flatSteps.findIndex((step) => step.stage === "active");
 
-  if (options?.started === false) {
-    activeStepIndex = -1;
-  }
-
-  if (options?.ended === true) {
+  if (activeStepIndex === -1 && ended) {
     activeStepIndex = flatSteps.length;
   }
 
   const activeStep = flatSteps[activeStepIndex] || null;
   const previousStep = flatSteps[activeStepIndex - 1] || null;
   const nextStep = flatSteps[activeStepIndex + 1] || null;
-  const started = !flatSteps.every((step) => step.stage === "pending");
-  const ended = flatSteps.every((step) => step.stage === "completed");
 
   return {
     steps,

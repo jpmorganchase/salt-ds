@@ -1,7 +1,7 @@
 import { Button, SegmentedButtonGroup, StackLayout } from "@salt-ds/core";
 import { Step, SteppedTracker, useStepReducer } from "@salt-ds/lab";
 
-const initialSteps: Step.Props[] = [
+const initialSteps: Step.Record[] = [
   {
     id: "step-1",
     label: "Step 1",
@@ -41,7 +41,7 @@ export const HookAdvanced = () => {
     <StackLayout style={{ width: 240 }}>
       <SteppedTracker orientation="vertical">
         {state.steps.map((step) => (
-          <Step key={step.id} {...step} />
+          <Step key={step.key || step.id} {...step} />
         ))}
       </SteppedTracker>
       <SegmentedButtonGroup>

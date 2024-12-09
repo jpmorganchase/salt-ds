@@ -12,7 +12,7 @@ export namespace StepIcon {
   export interface Props extends IconProps {
     stage: Step.Stage;
     status?: Step.Status;
-    multiplier?: IconProps["size"];
+    sizeMultiplier?: IconProps["size"];
   }
 }
 
@@ -22,7 +22,7 @@ export function StepIcon({
   status,
   stage,
   size,
-  multiplier = size || 1.5,
+  sizeMultiplier = size || 1.5,
   className,
   ...props
 }: StepIcon.Props) {
@@ -37,7 +37,7 @@ export function StepIcon({
 
   return (
     <IconComponent
-      size={multiplier}
+      size={sizeMultiplier}
       aria-hidden
       aria-label={undefined}
       className={clsx(withBaseName(), className)}

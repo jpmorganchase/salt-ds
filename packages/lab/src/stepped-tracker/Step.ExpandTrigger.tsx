@@ -1,6 +1,6 @@
 import { Button, type ButtonProps } from "@salt-ds/core";
 import { makePrefixer } from "@salt-ds/core";
-import { ChevronDownIcon, ChevronUpIcon } from "@salt-ds/icons";
+import { useIcon } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import clsx from "clsx";
@@ -20,6 +20,7 @@ export function StepExpandTrigger({
   className,
   ...props
 }: StepExpandTrigger.Props) {
+  const { CollapseIcon, ExpandIcon } = useIcon();
   const targetWindow = useWindow();
 
   useComponentCssInjection({
@@ -36,9 +37,9 @@ export function StepExpandTrigger({
       {...props}
     >
       {expanded ? (
-        <ChevronUpIcon aria-label="collapse substeps" />
+        <CollapseIcon aria-label="collapse substeps" />
       ) : (
-        <ChevronDownIcon aria-label="expand substeps" />
+        <ExpandIcon aria-label="expand substeps" />
       )}
     </Button>
   );

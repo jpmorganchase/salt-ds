@@ -6,16 +6,18 @@ const initialSteps = [
   { id: "step-1", label: "Step 1" },
   { id: "step-2", label: "Step 2" },
   { id: "step-3", label: "Step 3" },
-] as Step.Props[];
+] as Step.Record[];
 
 export function Hook() {
   const [state, dispatch] = useStepReducer(initialSteps);
+
+  console.log(state);
 
   return (
     <StackLayout style={{ minWidth: "240px" }}>
       <SteppedTracker>
         {state.steps.map((step) => (
-          <Step key={step.id} {...step} />
+          <Step key={step.key || step.id} {...step} />
         ))}
       </SteppedTracker>
       <FlexLayout justify="space-between">

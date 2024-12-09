@@ -1,7 +1,7 @@
 ---
-title: SteppedTracker
+title: Stepped Tracker
 data:
-  description: "`SteppedTracker` visually communicates a user’s progress through a linear process. It gives the user context about where they are in the process, indicating the remaining steps and the state of all steps. It can communicate new information, errors, warnings or successful completion of a process or task."
+  description: "`Stepped Tracker` visually communicates a user’s progress through a linear process. It gives the user context about where they are, which steps have they completed, if any errors or warnings have occurred, and how many steps are left."
   sourceCodeUrl: "https://github.com/jpmorganchase/salt-ds/tree/main/packages/lab/src/stepped-tracker"
   package:
     name: "@salt-ds/lab"
@@ -9,7 +9,7 @@ data:
     [
       "Discrete progress indicator",
       "Progress indicator",
-      "Progress SteppedTracker",
+      "Progress stepper",
       "Progress steps",
       "Screen flow",
       "Status tracker",
@@ -17,8 +17,9 @@ data:
     ]
   relatedComponents:
     [
-      { name: "Accordion", relationship: "contains" },
       { name: "Icon", relationship: "contains" },
+      { name: "SemanticIconProvider", relationship: "contains" },
+      { name: "Accordion", relationship: "similarTo" },
     ]
 
 # Leave this as is

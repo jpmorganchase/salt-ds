@@ -1,19 +1,12 @@
 import { makePrefixer } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
-import clsx from "clsx";
 
 import stepConnectorCSS from "./Step.Connector.css";
 
-export namespace StepConnector {
-  export interface Props {
-    className?: string;
-  }
-}
-
 const withBaseName = makePrefixer("saltStepConnector");
 
-export function StepConnector({ className }: StepConnector.Props) {
+export function StepConnector() {
   const targetWindow = useWindow();
 
   useComponentCssInjection({
@@ -22,7 +15,5 @@ export function StepConnector({ className }: StepConnector.Props) {
     window: targetWindow,
   });
 
-  return <div aria-hidden className={clsx(withBaseName(), className)} />;
+  return <div aria-hidden className={withBaseName()} />;
 }
-
-StepConnector.displayName = "Step.Connector";

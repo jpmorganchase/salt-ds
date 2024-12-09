@@ -13,7 +13,7 @@ import type { Step } from "./Step";
 describe("SteppedTracker > utils.ts", () => {
   describe("resetSteps", () => {
     it("should set the stage of all steps to undefined", () => {
-      const steps: Step.Props[] = [
+      const steps: Step.Record[] = [
         { id: "1", stage: "completed" },
         { id: "2", stage: "active" },
         { id: "3", stage: "pending" },
@@ -24,7 +24,7 @@ describe("SteppedTracker > utils.ts", () => {
       expect(result).toEqual([{ id: "1" }, { id: "2" }, { id: "3" }]);
     });
     it("should set the stage of nested steps to undefined", () => {
-      const steps: Step.Props[] = [
+      const steps: Step.Record[] = [
         {
           id: "1",
           stage: "completed",
@@ -77,7 +77,7 @@ describe("SteppedTracker > utils.ts", () => {
   });
   describe("assignSteps", () => {
     it("should assign an array of steps to a stage (completed)", () => {
-      const steps: Step.Props[] = [{ id: "1" }, { id: "2" }, { id: "3" }];
+      const steps: Step.Record[] = [{ id: "1" }, { id: "2" }, { id: "3" }];
 
       const result = assignSteps(steps, "completed");
 
@@ -88,7 +88,7 @@ describe("SteppedTracker > utils.ts", () => {
       ]);
     });
     it("should assign an array of steps to a stage (pending)", () => {
-      const steps: Step.Props[] = [{ id: "1" }, { id: "2" }, { id: "3" }];
+      const steps: Step.Record[] = [{ id: "1" }, { id: "2" }, { id: "3" }];
 
       const result = assignSteps(steps, "pending");
 
@@ -99,7 +99,7 @@ describe("SteppedTracker > utils.ts", () => {
       ]);
     });
     it("should assign an array of nested steps to a stage", () => {
-      const steps: Step.Props[] = [
+      const steps: Step.Record[] = [
         { id: "1" },
         {
           id: "2",
@@ -143,18 +143,17 @@ describe("SteppedTracker > utils.ts", () => {
     });
   });
   describe("autoStageSteps", () => {
-    it("should return config if no active stage, and no options.started or options.ended", () => {
-      const config: Step.Props[] = [{ id: "1" }, { id: "2" }, { id: "3" }];
+    it("should return pending if no active, nor completed step", () => {
+      const config: Step.Record[] = [{ id: "1" }, { id: "2" }, { id: "3" }];
 
-      expect(autoStageSteps(config)).toBe(config);
       expect(autoStageSteps(config)).toEqual([
-        { id: "1" },
-        { id: "2" },
-        { id: "3" },
+        { id: "1", stage: "pending" },
+        { id: "2", stage: "pending" },
+        { id: "3", stage: "pending" },
       ]);
     });
     it("should set steps before active step to completed", () => {
-      const config: Step.Props[] = [
+      const config: Step.Record[] = [
         { id: "1" },
         { id: "2" },
         { id: "3", stage: "active" },
@@ -167,7 +166,7 @@ describe("SteppedTracker > utils.ts", () => {
       expect(result[2]).toHaveProperty("stage", "active");
     });
     it("should set steps after active step to pending", () => {
-      const config: Step.Props[] = [
+      const config: Step.Record[] = [
         { id: "1", stage: "active" },
         { id: "2" },
         { id: "3" },
@@ -180,7 +179,7 @@ describe("SteppedTracker > utils.ts", () => {
       expect(result[2]).toHaveProperty("stage", "pending");
     });
     it("should set steps with active substeps to inprogress on top step", () => {
-      const config: Step.Props[] = [
+      const config: Step.Record[] = [
         {
           id: "1",
           substeps: [
@@ -195,7 +194,7 @@ describe("SteppedTracker > utils.ts", () => {
 
       const result = autoStageSteps(config);
 
-      const expected: Step.Props[] = [
+      const expected: Step.Record[] = [
         {
           id: "1",
           stage: "inprogress",
@@ -212,7 +211,7 @@ describe("SteppedTracker > utils.ts", () => {
       expect(result).toEqual(expected);
     });
     it("should set steps with active substeps to inprogress on middle step", () => {
-      const config: Step.Props[] = [
+      const config: Step.Record[] = [
         { id: "1" },
         {
           id: "2",
@@ -227,7 +226,7 @@ describe("SteppedTracker > utils.ts", () => {
 
       const result = autoStageSteps(config);
 
-      const expected: Step.Props[] = [
+      const expected: Step.Record[] = [
         { id: "1", stage: "completed" },
         {
           id: "2",
@@ -244,7 +243,7 @@ describe("SteppedTracker > utils.ts", () => {
       expect(result).toEqual(expected);
     });
     it("should set steps with active substeps to inprogress on middle step with substeps above", () => {
-      const config: Step.Props[] = [
+      const config: Step.Record[] = [
         {
           id: "1",
           substeps: [{ id: "1.1" }, { id: "1.2" }, { id: "1.3" }],
@@ -260,7 +259,7 @@ describe("SteppedTracker > utils.ts", () => {
         { id: "3" },
       ];
 
-      const expected: Step.Props[] = [
+      const expected: Step.Record[] = [
         {
           id: "1",
           stage: "completed",
@@ -285,7 +284,7 @@ describe("SteppedTracker > utils.ts", () => {
       expect(autoStageSteps(config)).toEqual(expected);
     });
     it("should set steps with active substeps to inprogress on middle step with substeps above", () => {
-      const config: Step.Props[] = [
+      const config: Step.Record[] = [
         {
           id: "1",
           substeps: [{ id: "1.1" }, { id: "1.2" }, { id: "1.3" }],
@@ -308,7 +307,7 @@ describe("SteppedTracker > utils.ts", () => {
         { id: "3" },
       ];
 
-      const expected: Step.Props[] = [
+      const expected: Step.Record[] = [
         {
           id: "1",
           stage: "completed",
@@ -340,37 +339,15 @@ describe("SteppedTracker > utils.ts", () => {
 
       expect(autoStageSteps(config)).toEqual(expected);
     });
-
-    it("should return ");
-
-    it('should set the stage of all steps to "completed", when {ended: true} option is set', () => {
-      const steps: Step.Props[] = [{ id: "1" }, { id: "2" }, { id: "3" }];
-
-      expect(autoStageSteps(steps, { ended: true })).toEqual([
-        { id: "1", stage: "completed" },
-        { id: "2", stage: "completed" },
-        { id: "3", stage: "completed" },
-      ]);
-    });
-
-    it('should set the stage of all steps to "pending", when {started: false} option is set', () => {
-      const steps: Step.Props[] = [{ id: "1" }, { id: "2" }, { id: "3" }];
-
-      expect(autoStageSteps(steps, { started: false })).toEqual([
-        { id: "1", stage: "pending" },
-        { id: "2", stage: "pending" },
-        { id: "3", stage: "pending" },
-      ]);
-    });
   });
   describe("flattenSteps", () => {
     it("should return a the same array if no substeps", () => {
-      const steps: Step.Props[] = [{ id: "1" }, { id: "2" }, { id: "3" }];
+      const steps: Step.Record[] = [{ id: "1" }, { id: "2" }, { id: "3" }];
 
       expect(flattenSteps(steps)).toEqual(steps);
     });
     it("should return flattenSteps array of steps (depth 1)", () => {
-      const steps: Step.Props[] = [
+      const steps: Step.Record[] = [
         { id: "1" },
         {
           id: "2",
@@ -387,7 +364,7 @@ describe("SteppedTracker > utils.ts", () => {
       ]);
     });
     it("should return flattenSteps array of steps (depth 2)", () => {
-      const steps: Step.Props[] = [
+      const steps: Step.Record[] = [
         { id: "1" },
         {
           id: "2",
@@ -413,7 +390,7 @@ describe("SteppedTracker > utils.ts", () => {
   });
   describe("initStepReducerState", () => {
     it("should work when active stage is in the beginning of initialSteps ", () => {
-      const initialSteps: Step.Props[] = [
+      const initialSteps: Step.Record[] = [
         { id: "1", stage: "active" },
         { id: "2" },
         { id: "3" },
@@ -435,7 +412,7 @@ describe("SteppedTracker > utils.ts", () => {
     });
 
     it("should work when active stage is in the middle of initialSteps ", () => {
-      const initialSteps: Step.Props[] = [
+      const initialSteps: Step.Record[] = [
         { id: "1" },
         { id: "2", stage: "active" },
         { id: "3" },
@@ -457,7 +434,7 @@ describe("SteppedTracker > utils.ts", () => {
     });
 
     it("should work when active stage is in the middle of initialSteps ", () => {
-      const initialSteps: Step.Props[] = [
+      const initialSteps: Step.Record[] = [
         { id: "1" },
         { id: "2" },
         { id: "3", stage: "active" },
@@ -478,14 +455,14 @@ describe("SteppedTracker > utils.ts", () => {
       expect(state.ended).toEqual(false);
     });
 
-    it("should work when no active stage set, but { options.started: false } ", () => {
-      const initialSteps: Step.Props[] = [
+    it("should work when no active stage set", () => {
+      const initialSteps: Step.Record[] = [
         { id: "1" },
         { id: "2" },
         { id: "3" },
       ];
 
-      const state = initStepReducerState(initialSteps, { started: false });
+      const state = initStepReducerState(initialSteps);
 
       expect(state.activeStepIndex).toEqual(-1);
       expect(state.activeStep).toEqual(null);
@@ -500,14 +477,14 @@ describe("SteppedTracker > utils.ts", () => {
       expect(state.ended).toEqual(false);
     });
 
-    it("should work when no active stage set, but { options.ended: true } ", () => {
-      const initialSteps: Step.Props[] = [
-        { id: "1" },
-        { id: "2" },
-        { id: "3" },
+    it("should work when no active stage set, but first is completed ", () => {
+      const initialSteps: Step.Record[] = [
+        { id: "1", stage: "completed" },
+        { id: "2", stage: "completed" },
+        { id: "3", stage: "completed" },
       ];
 
-      const state = initStepReducerState(initialSteps, { ended: true });
+      const state = initStepReducerState(initialSteps);
 
       expect(state.activeStepIndex).toEqual(state.flatSteps.length);
       expect(state.activeStep).toEqual(null);
