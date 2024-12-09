@@ -1,8 +1,15 @@
-import { Button } from "@salt-ds/core";
+import {
+  Button,
+  Divider,
+  H2,
+  H3,
+  SplitLayout,
+  StackLayout,
+  Text,
+} from "@salt-ds/core";
 import { SkipLink, SkipLinks } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react";
 import { useRef } from "react";
-import "./skip-link.stories.css";
 
 export default {
   title: "Lab/Skip Link",
@@ -13,30 +20,22 @@ export const Default: StoryFn<typeof SkipLink> = () => {
   const articleRef = useRef<HTMLElement>(null);
 
   return (
-    <>
-      <span style={{ height: 50, lineHeight: "50px" }} tabIndex={-1}>
+    <StackLayout style={{ maxWidth: 500 }}>
+      <Text tabIndex={-1}>
         Click here and press the Tab key to see the Skip Link
-      </span>
-      <div style={{ position: "relative", maxWidth: 500 }}>
+      </Text>
+      <div>
         <SkipLinks>
           <SkipLink data-testid="skipLink" href="#main" targetRef={articleRef}>
             Skip to main content
           </SkipLink>
         </SkipLinks>
-
-        <div
-          style={{
-            borderTop: "2px solid grey",
-            fontSize: 24,
-            lineHeight: 3.5,
-          }}
-        >
-          What we do
-        </div>
+        <Divider />
+        <H2>What we do</H2>
 
         <article id="main" ref={articleRef}>
           <section>
-            <h1>Salt</h1>
+            <H3>Salt</H3>
             <p>
               Salt provides you with a suite of UI components and a flexible
               theming system. With no customisation, the default theme offers an
@@ -47,7 +46,7 @@ export const Default: StoryFn<typeof SkipLink> = () => {
             </p>
           </section>
           <section>
-            <h1>Goals</h1>
+            <H3>Goals</H3>
             <p>Salt has been developed with the following design goals:</p>
             <ul className="goalsList">
               <li>
@@ -60,11 +59,9 @@ export const Default: StoryFn<typeof SkipLink> = () => {
             </ul>
           </section>
         </article>
-        <div style={{ overflow: "auto" }}>
-          <Button style={{ marginTop: 30, float: "right" }}>Next</Button>
-        </div>
+        <SplitLayout endItem={<Button style={{}}>Next</Button>} />
       </div>
-    </>
+    </StackLayout>
   );
 };
 
@@ -73,11 +70,11 @@ export const MultipleLinks: StoryFn<typeof SkipLink> = () => {
   const sectionRef2 = useRef<HTMLElement>(null);
 
   return (
-    <>
-      <span style={{ height: 50, lineHeight: "50px" }} tabIndex={-1}>
+    <StackLayout style={{ maxWidth: 500 }}>
+      <Text tabIndex={-1}>
         Click here and press the Tab key to see the Skip Link
-      </span>
-      <div style={{ position: "relative", maxWidth: 500 }}>
+      </Text>
+      <div>
         <SkipLinks>
           <SkipLink href="#introduction" targetRef={sectionRef1}>
             Skip to Introduction
@@ -86,20 +83,12 @@ export const MultipleLinks: StoryFn<typeof SkipLink> = () => {
             Skip to Goals
           </SkipLink>
         </SkipLinks>
-
-        <div
-          style={{
-            borderTop: "2px solid grey",
-            fontSize: 24,
-            lineHeight: 3.5,
-          }}
-        >
-          What we do
-        </div>
+        <Divider />
+        <H2>What we do</H2>
 
         <article>
-          <section id="introduction" ref={sectionRef1}>
-            <h1>Salt</h1>
+          <section id="intro" ref={sectionRef1}>
+            <H3>Salt</H3>
             <p>
               Salt provides you with a suite of UI components and a flexible
               theming system. With no customisation, the default theme offers an
@@ -110,7 +99,7 @@ export const MultipleLinks: StoryFn<typeof SkipLink> = () => {
             </p>
           </section>
           <section id="goals" ref={sectionRef2}>
-            <h1>Goals</h1>
+            <H3>Goals</H3>
             <p>Salt has been developed with the following design goals:</p>
             <ul className="goalsList">
               <li>
@@ -123,10 +112,8 @@ export const MultipleLinks: StoryFn<typeof SkipLink> = () => {
             </ul>
           </section>
         </article>
-        <div style={{ overflow: "auto" }}>
-          <Button style={{ marginTop: 30, float: "right" }}>Next</Button>
-        </div>
+        <SplitLayout endItem={<Button style={{}}>Next</Button>} />
       </div>
-    </>
+    </StackLayout>
   );
 };

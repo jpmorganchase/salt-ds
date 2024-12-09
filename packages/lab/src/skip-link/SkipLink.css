@@ -1,20 +1,3 @@
-/* CSS Variables for the Skip Link */
-.saltSkipLink {
-  --skipLink-padding: var(--saltSkipLink-padding, var(--salt-size-unit));
-  --skipLink-margin: var(--saltSkipLink-margin, var(--salt-size-unit));
-  --skipLink-background: var(--saltSkipLink-background, var(--salt-actionable-primary-background));
-  --skipLink-color: var(--saltSkipLink-color, var(--salt-content-primary-foreground));
-}
-
-/* Overrides */
-.saltSkipLink {
-  --saltLink-color-focus: var(--skipLink-color);
-}
-
-.saltSkipLink-target {
-  --skipLink-target-focus: var(--salt-focused-outline);
-}
-
 /*Styles applied when the link is focused to hide the Skip Link when not in focus*/
 .saltSkipLink {
   top: 0;
@@ -31,22 +14,11 @@
 .saltSkipLink:focus {
   opacity: 1;
   width: auto;
-  height: auto;
+  text-decoration: var(--salt-navigable-textDecoration);
+  height: max(var(--salt-size-base), auto);
   white-space: nowrap;
-  margin: var(--skipLink-margin);
-  padding: calc(var(--skipLink-padding) - 1px) var(--skipLink-padding) var(--skipLink-padding);
-  background: var(--skipLink-background);
-  color: var(--skipLink-color);
-  box-shadow: var(--salt-overlayable-shadow-popout);
-}
-
-.saltSkipLink {
-  font-size: var(--salt-text-fontSize);
-  font-family: var(--saltSkipLink-fontFamily, var(--salt-text-fontFamily));
-  line-height: var(--saltSkipLink-lineHeight, var(--salt-text-lineHeight));
-}
-
-/*Styles applied to the skip link focus target*/
-.saltSkipLink-target {
-  outline: var(--skipLink-target-focus);
+  background: var(--saltSkipLink-background, var(--salt-container-primary-background));
+  padding: var(--salt-spacing-100) var(--salt-spacing-300);
+  box-shadow: var(--salt-overlayable-shadow);
+  outline-offset: calc(-1 * var(--salt-focused-outlineWidth));
 }
