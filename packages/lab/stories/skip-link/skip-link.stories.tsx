@@ -1,132 +1,149 @@
-import { Button } from "@salt-ds/core";
-import { SkipLink, SkipLinks } from "@salt-ds/lab";
+import {
+  BorderItem,
+  BorderLayout,
+  Button,
+  FlexItem,
+  FlexLayout,
+  NavigationItem,
+  SplitLayout,
+  StackLayout,
+} from "@salt-ds/core";
+import { GithubIcon, StackoverflowIcon, SymphonyIcon } from "@salt-ds/icons";
+import { SkipLink } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react";
-import { useRef } from "react";
-import "./skip-link.stories.css";
+import { useEffect, useState } from "react";
 
 export default {
   title: "Lab/Skip Link",
   component: SkipLink,
 } as Meta<typeof SkipLink>;
 
-export const Default: StoryFn<typeof SkipLink> = () => {
-  const articleRef = useRef<HTMLElement>(null);
-
+const Item = () => {
   return (
-    <>
-      <span style={{ height: 50, lineHeight: "50px" }} tabIndex={-1}>
-        Click here and press the Tab key to see the Skip Link
-      </span>
-      <div style={{ position: "relative", maxWidth: 500 }}>
-        <SkipLinks>
-          <SkipLink data-testid="skipLink" href="#main" targetRef={articleRef}>
-            Skip to main content
-          </SkipLink>
-        </SkipLinks>
-
-        <div
-          style={{
-            borderTop: "2px solid grey",
-            fontSize: 24,
-            lineHeight: 3.5,
-          }}
-        >
-          What we do
-        </div>
-
-        <article id="main" ref={articleRef}>
-          <section>
-            <h1>Salt</h1>
-            <p>
-              Salt provides you with a suite of UI components and a flexible
-              theming system. With no customisation, the default theme offers an
-              attractive and modern look-and-feel, with both light and dark
-              variants and support for a range of UI densities. We have included
-              a theming system which allows you to easily create theme
-              variations, or in fact substitute alternate themes.
-            </p>
-          </section>
-          <section>
-            <h1>Goals</h1>
-            <p>Salt has been developed with the following design goals:</p>
-            <ul className="goalsList">
-              <li>
-                Providing a comprehensive set of commonly-used UI controls
-              </li>
-              <li>Complying with WCAG 2.1 accessibility guidelines</li>
-              <li> To be lightweight and performant</li>
-              <li> Offering flexible styling and theming support</li>
-              <li> Minimizing dependencies on third-party libraries</li>
-            </ul>
-          </section>
-        </article>
-        <div style={{ overflow: "auto" }}>
-          <Button style={{ marginTop: 30, float: "right" }}>Next</Button>
-        </div>
-      </div>
-    </>
+    <div
+      style={{
+        padding: "calc(var(--salt-spacing-400)*4)",
+        margin: "var(--salt-spacing-400)",
+        backgroundColor: "var(--salt-color-gray-10)",
+      }}
+    />
   );
 };
 
-export const MultipleLinks: StoryFn<typeof SkipLink> = () => {
-  const sectionRef1 = useRef<HTMLElement>(null);
-  const sectionRef2 = useRef<HTMLElement>(null);
+const DefaultStory: StoryFn<typeof SkipLink> = (args) => {
+  const headerItems = ["Home", "Transactions", "FX", "Credit Manager"];
+
+  const headerUtilities = [
+    {
+      icon: <SymphonyIcon />,
+      key: "Symphony",
+    },
+    {
+      icon: <StackoverflowIcon />,
+      key: "Stack Overflow",
+    },
+    {
+      icon: <GithubIcon />,
+      key: "GitHub",
+    },
+  ];
+
+  const [activeHeaderNav, setActiveHeaderNav] = useState(headerItems[0]);
+  const [offset, setOffset] = useState(0);
+
+  const setScroll = () => {
+    setOffset(window.scrollY);
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", setScroll);
+    return () => {
+      window.removeEventListener("scroll", setScroll);
+    };
+  }, []);
 
   return (
-    <>
-      <span style={{ height: 50, lineHeight: "50px" }} tabIndex={-1}>
-        Click here and press the Tab key to see the Skip Link
-      </span>
-      <div style={{ position: "relative", maxWidth: 500 }}>
-        <SkipLinks>
-          <SkipLink href="#introduction" targetRef={sectionRef1}>
-            Skip to Introduction
-          </SkipLink>
-          <SkipLink href="#goals" targetRef={sectionRef2}>
-            Skip to Goals
-          </SkipLink>
-        </SkipLinks>
-
-        <div
-          style={{
-            borderTop: "2px solid grey",
-            fontSize: 24,
-            lineHeight: 3.5,
-          }}
-        >
-          What we do
-        </div>
-
-        <article>
-          <section id="introduction" ref={sectionRef1}>
-            <h1>Salt</h1>
-            <p>
-              Salt provides you with a suite of UI components and a flexible
-              theming system. With no customisation, the default theme offers an
-              attractive and modern look-and-feel, with both light and dark
-              variants and support for a range of UI densities. We have included
-              a theming system which allows you to easily create theme
-              variations, or in fact substitute alternate themes.
-            </p>
-          </section>
-          <section id="goals" ref={sectionRef2}>
-            <h1>Goals</h1>
-            <p>Salt has been developed with the following design goals:</p>
-            <ul className="goalsList">
-              <li>
-                Providing a comprehensive set of commonly-used UI controls
-              </li>
-              <li>Complying with WCAG 2.1 accessibility guidelines</li>
-              <li> To be lightweight and performant</li>
-              <li> Offering flexible styling and theming support</li>
-              <li> Minimizing dependencies on third-party libraries</li>
-            </ul>
-          </section>
+    <BorderLayout>
+      <BorderItem position="north">
+        <header>
+          <FlexLayout
+            style={{
+              paddingLeft: "var(--salt-spacing-300)",
+              paddingRight: "var(--salt-spacing-300)",
+              backgroundColor: "var(--salt-container-primary-background)",
+              position: "fixed",
+              width: "100%",
+              boxShadow:
+                offset > 0 ? "var(--salt-overlayable-shadow-scroll)" : "none",
+              borderBottom:
+                "var(--salt-size-border) var(--salt-container-borderStyle) var(--salt-separable-primary-borderColor)",
+            }}
+            justify="space-between"
+            gap={3}
+          >
+            <FlexItem align="center">
+              Click here and press the Tab key to see the Skip Link
+            </FlexItem>
+            <nav>
+              <SkipLink {...args}>Skip to main content</SkipLink>
+              <ul
+                style={{
+                  display: "flex",
+                  listStyle: "none",
+                  padding: "0",
+                  margin: "0",
+                }}
+              >
+                {headerItems?.map((item) => (
+                  <li key={item}>
+                    <NavigationItem
+                      active={activeHeaderNav === item}
+                      href="#"
+                      onClick={(event) => {
+                        // prevent default to avoid navigation in storybook example
+                        event.preventDefault();
+                        setActiveHeaderNav(item);
+                      }}
+                    >
+                      {item}
+                    </NavigationItem>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+            <FlexItem align="center">
+              <StackLayout direction="row" gap={1}>
+                {headerUtilities?.map((utility) => (
+                  <Button key={utility.key} appearance="transparent">
+                    {utility.icon}
+                  </Button>
+                ))}
+              </StackLayout>
+            </FlexItem>
+          </FlexLayout>
+        </header>
+      </BorderItem>
+      <BorderItem
+        position="center"
+        style={{
+          margin: "calc(var(--salt-spacing-300) * 2)",
+        }}
+      >
+        <article id="main">
+          <Item />
+          <Item />
+          <Item />
         </article>
-        <div style={{ overflow: "auto" }}>
-          <Button style={{ marginTop: 30, float: "right" }}>Next</Button>
-        </div>
-      </div>
-    </>
+        <SplitLayout endItem={<Button>Next</Button>} />
+      </BorderItem>
+    </BorderLayout>
   );
+};
+
+export const Default = DefaultStory.bind({});
+Default.args = {
+  target: "main",
+};
+Default.parameters = {
+  layout: "fullscreen",
 };
