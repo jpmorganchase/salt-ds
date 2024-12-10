@@ -3,11 +3,9 @@
   width: 100%;
   height: 100%;
 
-  padding: var(--salt-focused-outlineWidth);
-  margin: calc(-1 * var(--salt-focused-outlineWidth));
+  margin: 0;
+  padding: 0;
   list-style-type: none;
-  box-sizing: content-box;
-
   transition-duration: var(--salt-duration-perceptible);
   transition-timing-function: ease-in-out;
   transition-property: opacity, visibility;

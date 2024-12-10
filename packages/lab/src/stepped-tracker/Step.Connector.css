@@ -18,7 +18,8 @@
   border-top-color: var(--salt-track-borderColor);
 }
 
-.saltSteppedTracker-horizontal .saltStep-stage-completed .saltStepConnector {
+.saltSteppedTracker-horizontal .saltStep-stage-completed > .saltStepConnector,
+.saltSteppedTracker-horizontal .saltStep-stage-inprogress > .saltStepConnector {
   border-top-style: var(--salt-track-borderStyle-complete);
 }
 
@@ -32,7 +33,8 @@
   border-left-color: var(--salt-track-borderColor);
 }
 
-.saltSteppedTracker-vertical .saltStep-stage-completed .saltStepConnector {
+.saltSteppedTracker-vertical .saltStep-stage-completed > .saltStepConnector,
+.saltSteppedTracker-vertical .saltStep-stage-inprogress > .saltStepConnector {
   border-left-style: var(--salt-track-borderStyle-complete);
 }
 
