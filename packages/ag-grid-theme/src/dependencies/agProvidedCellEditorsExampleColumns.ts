@@ -2,14 +2,6 @@ import { languages, shortColorData } from "./dataGridExampleDataCellEditors";
 
 const agProvidedCellEditorsExampleColumns = [
   {
-    headerName: "Boolean",
-    field: "checked",
-    cellDataType: "boolean",
-    cellRenderer: "agCheckboxCellRenderer",
-    cellEditor: "agCheckboxCellEditor",
-    editable: true,
-  },
-  {
     headerName: "Text",
     field: "name",
     cellEditor: "agTextCellEditor",
@@ -27,6 +19,14 @@ const agProvidedCellEditorsExampleColumns = [
     filter: true,
     floatingFilter: true,
     cellClass: ["editable-cell"],
+  },
+  {
+    headerName: "Boolean",
+    field: "checked",
+    cellDataType: "boolean",
+    cellRenderer: "agCheckboxCellRenderer",
+    cellEditor: "agCheckboxCellEditor",
+    editable: true,
   },
   {
     headerName: "Select",
