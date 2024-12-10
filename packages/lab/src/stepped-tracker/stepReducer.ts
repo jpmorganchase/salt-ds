@@ -32,8 +32,9 @@ export namespace StepReducer {
  * I can't use this type because our codebase
  * is running below TypeScript 5, where "const"
  * in function generics was firstly introduced.
+ * Leaving this here for future reference.
  * */
-export type AllowedActiveStepIds<
+type AllowedActiveStepIds<
   S extends Step.Record[],
   Acc extends string = never,
 > = S extends [{ id: infer ID; substeps?: infer SS }, ...infer R]

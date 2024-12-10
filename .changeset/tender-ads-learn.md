@@ -60,7 +60,7 @@ export function NestedSteps() {
 }
 ```
 
-The `SteppedTracker` component is a purely presentational component, meaning that you need to manage the state of the steps yourself. That however becomes tricky when dealing with nested steps. This is where the `useStepReducer()` hook comes in. It is a custom hook that helps you manage the state of a SteppedTracker component with nested steps with ease. It has a built-in algorithm that determines the stage of all steps above and below the active step. All you need to do is add `stage: 'active'` to the desired step (see `step-1-3-1`), the hook will figure out the rest. This is what we call `autoStage`.
+The `SteppedTracker` component is a purely presentational component, meaning that you need to manage the state of the steps yourself. That however becomes tricky when dealing with nested steps. This is where the `useStepReducer()` hook comes in. It is a custom hook that helps you manage the state of a `SteppedTracker` component with nested steps with ease. It has a built-in algorithm that determines the stage of all steps above and below the active step. All you need to do is add `stage: 'active'` to the desired step (see `step-3-3` in the hook example below), the hook will figure out the rest. This is what we call `autoStage`.
 
 Migrating from the previous SteppedTracker API
 
