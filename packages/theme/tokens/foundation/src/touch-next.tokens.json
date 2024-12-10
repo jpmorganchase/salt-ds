@@ -1,0 +1,472 @@
+{
+  "curve": {
+    "0": {
+      "$type": "number",
+      "$value": 0
+    },
+    "50": {
+      "$type": "number",
+      "$value": 4
+    },
+    "100": {
+      "$type": "number",
+      "$value": 8
+    },
+    "150": {
+      "$type": "number",
+      "$value": 12
+    },
+    "999": {
+      "$type": "number",
+      "$value": 999
+    }
+  },
+  "text": {
+    "display1": {
+      "font-size": {
+        "$type": "number",
+        "$value": 102
+      },
+      "line-height": {
+        "$type": "number",
+        "$value": 133
+      }
+    },
+    "display2": {
+      "font-size": {
+        "$type": "number",
+        "$value": 84
+      },
+      "line-height": {
+        "$type": "number",
+        "$value": 109
+      }
+    },
+    "display3": {
+      "font-size": {
+        "$type": "number",
+        "$value": 68
+      },
+      "line-height": {
+        "$type": "number",
+        "$value": 88
+      }
+    },
+    "display4": {
+      "font-size": {
+        "$type": "number",
+        "$value": 54
+      },
+      "line-height": {
+        "$type": "number",
+        "$value": 70
+      }
+    },
+    "h1": {
+      "font-size": {
+        "$type": "number",
+        "$value": 42
+      },
+      "line-height": {
+        "$type": "number",
+        "$value": 55
+      }
+    },
+    "h2": {
+      "font-size": {
+        "$type": "number",
+        "$value": 32
+      },
+      "line-height": {
+        "$type": "number",
+        "$value": 42
+      }
+    },
+    "h3": {
+      "font-size": {
+        "$type": "number",
+        "$value": 24
+      },
+      "line-height": {
+        "$type": "number",
+        "$value": 32
+      }
+    },
+    "h4": {
+      "font-size": {
+        "$type": "number",
+        "$value": 16
+      },
+      "line-height": {
+        "$type": "number",
+        "$value": 20
+      }
+    },
+    "body": {
+      "font-size": {
+        "$type": "number",
+        "$value": 16
+      },
+      "line-height": {
+        "$type": "number",
+        "$value": 20
+      }
+    },
+    "label": {
+      "font-size": {
+        "$type": "number",
+        "$value": 14
+      },
+      "line-height": {
+        "$type": "number",
+        "$value": 18
+      }
+    },
+    "notation": {
+      "font-size": {
+        "$type": "number",
+        "$value": 14
+      },
+      "line-height": {
+        "$type": "number",
+        "$value": 18
+      }
+    },
+    "action": {
+      "font-size": {
+        "$type": "number",
+        "$value": 16
+      },
+      "line-height": {
+        "$type": "number",
+        "$value": 20
+      }
+    },
+    "code": {
+      "font-size": {
+        "$type": "number",
+        "$value": 16
+      },
+      "line-height": {
+        "$type": "number",
+        "$value": 20
+      }
+    }
+  },
+  "shadow": {
+    "100": {
+      "x-axis": {
+        "$type": "number",
+        "$value": 0
+      },
+      "y-axis": {
+        "$type": "number",
+        "$value": 1
+      },
+      "blur": {
+        "$type": "number",
+        "$value": 3
+      }
+    },
+    "200": {
+      "x-axis": {
+        "$type": "number",
+        "$value": 0
+      },
+      "y-axis": {
+        "$type": "number",
+        "$value": 2
+      },
+      "blur": {
+        "$type": "number",
+        "$value": 4
+      }
+    },
+    "300": {
+      "x-axis": {
+        "$type": "number",
+        "$value": 0
+      },
+      "y-axis": {
+        "$type": "number",
+        "$value": 4
+      },
+      "blur": {
+        "$type": "number",
+        "$value": 8
+      }
+    },
+    "400": {
+      "x-axis": {
+        "$type": "number",
+        "$value": 0
+      },
+      "y-axis": {
+        "$type": "number",
+        "$value": 6
+      },
+      "blur": {
+        "$type": "number",
+        "$value": 10
+      }
+    },
+    "500": {
+      "x-axis": {
+        "$type": "number",
+        "$value": 0
+      },
+      "y-axis": {
+        "$type": "number",
+        "$value": 12
+      },
+      "blur": {
+        "$type": "number",
+        "$value": 40
+      }
+    }
+  },
+  "size": {
+    "adornment": {
+      "$type": "number",
+      "$value": 12
+    },
+    "bar": {
+      "$type": "number",
+      "$value": 8
+    },
+    "bar-small": {
+      "$type": "number",
+      "$value": 2
+    },
+    "bar-strong": {
+      "$type": "number",
+      "$value": 16
+    },
+    "base": {
+      "$type": "number",
+      "$value": 44
+    },
+    "border": {
+      "$type": "number",
+      "$value": 1
+    },
+    "border-strong": {
+      "$type": "number",
+      "$value": 2
+    },
+    "border-stronger": {
+      "$type": "number",
+      "$value": 4
+    },
+    "grid-status-indicator-size": {
+      "$type": "number",
+      "$value": 9
+    },
+    "icon": {
+      "$type": "number",
+      "$value": 16
+    },
+    "indicator": {
+      "$type": "number",
+      "$value": 5
+    },
+    "modifier": {
+      "$type": "number",
+      "$value": 14
+    },
+    "selectable": {
+      "$type": "number",
+      "$value": 18
+    }
+  },
+  "spacing": {
+    "25": {
+      "$type": "number",
+      "$value": 4
+    },
+    "50": {
+      "$type": "number",
+      "$value": 8
+    },
+    "75": {
+      "$type": "number",
+      "$value": 12
+    },
+    "100": {
+      "$type": "number",
+      "$value": 16
+    },
+    "150": {
+      "$type": "number",
+      "$value": 24
+    },
+    "200": {
+      "$type": "number",
+      "$value": 32
+    },
+    "250": {
+      "$type": "number",
+      "$value": 40
+    },
+    "300": {
+      "$type": "number",
+      "$value": 48
+    },
+    "350": {
+      "$type": "number",
+      "$value": 56
+    },
+    "400": {
+      "$type": "number",
+      "$value": 54
+    }
+  },
+  "breakpoint-columns": {
+    "extra-small": {
+      "$type": "number",
+      "$value": 1
+    },
+    "small": {
+      "$type": "number",
+      "$value": 2
+    },
+    "medium": {
+      "$type": "number",
+      "$value": 4
+    },
+    "large": {
+      "$type": "number",
+      "$value": 6
+    },
+    "extra-large": {
+      "$type": "number",
+      "$value": 8
+    }
+  },
+  "figma-only": {
+    "curve": {
+      "default-minus-size-border": {
+        "$type": "number",
+        "$value": 11
+      }
+    },
+    "size": {
+      "adornment-width": {
+        "$type": "number",
+        "$value": 24
+      },
+      "base-minus-spacing-100": {
+        "$type": "number",
+        "$value": 28
+      },
+      "base-plus-spacing-100": {
+        "$type": "number",
+        "$value": 60
+      },
+      "base-plus-spacing-100-plus-border": {
+        "$type": "number",
+        "$value": 61
+      },
+      "base-x150percent": {
+        "$type": "number",
+        "$value": 66
+      },
+      "base-x200percent": {
+        "$type": "number",
+        "$value": 88
+      },
+      "base-x350percent": {
+        "$type": "number",
+        "$value": 154
+      },
+      "base-x400percent": {
+        "$type": "number",
+        "$value": 176
+      },
+      "base-x250percent": {
+        "$type": "number",
+        "$value": 110
+      },
+      "base-x300percent": {
+        "$type": "number",
+        "$value": 132
+      },
+      "compact-base": {
+        "$type": "number",
+        "$value": 44
+      },
+      "compact-base-plus-spacing-100-plus-border": {
+        "$type": "number",
+        "$value": 61
+      },
+      "icon-x150percent": {
+        "$type": "number",
+        "$value": 24
+      },
+      "icon-x200percent": {
+        "$type": "number",
+        "$value": 32
+      },
+      "icon-x250percent": {
+        "$type": "number",
+        "$value": 40
+      },
+      "icon-x300percent": {
+        "$type": "number",
+        "$value": 48
+      },
+      "icon-x350percent": {
+        "$type": "number",
+        "$value": 56
+      },
+      "icon-x400percent": {
+        "$type": "number",
+        "$value": 64
+      },
+      "flag-width-x100percent": {
+        "$type": "number",
+        "$value": 64
+      },
+      "flag-width-x150percent": {
+        "$type": "number",
+        "$value": 96
+      },
+      "flag-width-x200percent": {
+        "$type": "number",
+        "$value": 128
+      },
+      "flag-width-x250percent": {
+        "$type": "number",
+        "$value": 160
+      },
+      "flag-width-x300percent": {
+        "$type": "number",
+        "$value": 191
+      },
+      "flag-width-x350percent": {
+        "$type": "number",
+        "$value": 223
+      },
+      "flag-width-x400percent": {
+        "$type": "number",
+        "$value": 255
+      }
+    },
+    "text": {
+      "notation": {
+        "font-size-x200percent": {
+          "$type": "number",
+          "$value": 28
+        },
+        "font-size-x300percent": {
+          "$type": "number",
+          "$value": 42
+        },
+        "font-size-x400percent": {
+          "$type": "number",
+          "$value": 56
+        }
+      }
+    }
+  }
+}
