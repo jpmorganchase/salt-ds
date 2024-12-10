@@ -16,7 +16,7 @@
     "*.css"
   ],
   "dependencies": {
-    "@floating-ui/react": "^0.26.5",
+    "@floating-ui/react": "^0.26.28",
     "@salt-ds/core": "workspace:^",
     "@salt-ds/date-adapters": "workspace:*",
     "@salt-ds/icons": "workspace:^",
