@@ -42,7 +42,7 @@ yarn add @salt-ds/core @salt-ds/theme @salt-ds/lab @salt-ds/icons
 
 You will then need to import the .css files into your application, along with any components that you plan to use.
 
-Here’s a quick example of a Call-to-Action (CTA) button for your reference:
+Here’s a quick example of button for your reference:
 
 ```JSX
 import { Button, SaltProvider } from "@salt-ds/core";
@@ -52,7 +52,7 @@ import "@salt-ds/theme/index.css";
 function App() {
   return (
     <SaltProvider>
-      <Button variant="cta">CTA Button</Button>
+      <Button sentiment="accented" appearance="solid">Button</Button>
     </SaltProvider>
   );
 }
