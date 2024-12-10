@@ -37,7 +37,7 @@
     "@jpmorganchase/mosaic-theme": "0.1.0-beta.88",
     "@philpl/buble": "^0.19.7",
     "@types/luxon": "^3.4.2",
-    "@types/react": "^18.3.3",
+    "@types/react": "^19.0.0",
     "date-fns": "^3.6.0",
     "dayjs": "^1.11.13",
     "lodash-es": "^4.17.21",
@@ -52,8 +52,8 @@
     "concurrently": "^9.0.0",
     "cross-env": "^7.0.3",
     "dotenv-load": "^2.0.1",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
     "react-markdown": "^8.0.7"
   }
 }
