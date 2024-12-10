@@ -2,14 +2,6 @@ import { languages, shortColorData } from "./cellEditorsData";
 
 export const cellEditorsColumn = [
   {
-    headerName: "Boolean",
-    field: "checked",
-    cellDataType: "boolean",
-    cellRenderer: "agCheckboxCellRenderer",
-    cellEditor: "agCheckboxCellEditor",
-    editable: true,
-  },
-  {
     headerName: "Text",
     field: "name",
     cellEditor: "agTextCellEditor",
@@ -27,6 +19,14 @@ export const cellEditorsColumn = [
     filter: true,
     floatingFilter: true,
     cellClass: ["editable-cell"],
+  },
+  {
+    headerName: "Boolean",
+    field: "checked",
+    cellDataType: "boolean",
+    cellRenderer: "agCheckboxCellRenderer",
+    cellEditor: "agCheckboxCellEditor",
+    editable: true,
   },
   {
     headerName: "Select",

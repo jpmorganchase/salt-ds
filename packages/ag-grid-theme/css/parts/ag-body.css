@@ -105,12 +105,22 @@ div[class*="ag-theme-salt"] .editable-numeric-cell input {
   background-color: transparent;
 }
 
+/* Ag Large Text Cell Editor  */
+div[class*="ag-theme-salt"] .ag-large-text-input {
+  padding: 0;
+}
+
 /* Ag Select Cell Editor - all should be scoped with `.editable-cell` so it's not impacting users not using our class */
 
 div[class*="ag-theme-salt"] .editable-cell .ag-picker-field-wrapper {
   /* Allow cell focus ring to come through */
   background-color: transparent;
   border: none;
+}
+
+div[class*="ag-theme-salt"] .ag-select .ag-picker-field-wrapper {
+  border: var(--salt-size-border) var(--salt-separable-borderStyle) var(--salt-editable-borderColor);
+  border-radius: 0;
 }
 
 div[class*="ag-theme-salt"] .ag-ltr .editable-cell .ag-select .ag-picker-field-wrapper,
@@ -130,6 +140,19 @@ div[class*="ag-theme-salt"] .ag-ltr .ag-select-list-item,
 div[class*="ag-theme-salt"] .ag-ltr .ag-rich-select-row {
   /* This can't be scoped to editable-cell given it's sitting within .ag-popup */
   padding: 0 var(--salt-spacing-100);
+}
+
+div[class*="ag-theme-salt"] .ag-select-list,
+div[class*="ag-theme-salt"] .ag-rich-select-list {
+  /* Match border to OptionList */
+  border: var(--salt-size-border) var(--salt-selectable-borderStyle-selected) var(--salt-selectable-borderColor-selected);
+}
+
+div[class*="ag-theme-salt"] .ag-select-list-item[aria-selected="true"],
+div[class*="ag-theme-salt"] .ag-rich-select-row-selected {
+  /* Match selected row to Option */
+  box-shadow: calc(var(--salt-size-border) * -2) 0 0 0 var(--salt-selectable-background-hover), calc(var(--salt-size-border) * -1) 0 0 var(--salt-size-border)
+    var(--salt-selectable-borderColor-selected), 0 calc(var(--salt-size-border) * -1) 0 var(--salt-selectable-borderColor-selected);
 }
 
 /* Range selection cross cells "fake" outlines */
