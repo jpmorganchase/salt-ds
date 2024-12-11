@@ -2,7 +2,10 @@
   "extends": "../tsconfig.json",
   "compilerOptions": {
     "jsx": "react-jsx",
-    "types": ["cypress"]
+    "types": ["cypress"],
+    "paths": {
+      "@salt-ds/date-adapters/*": ["../packages/date-adapters/src/*"]
+    }
   },
   "include": ["**/*.ts", "**/*.tsx"]
 }
