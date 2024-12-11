@@ -9,16 +9,9 @@
 .saltSteppedTracker-vertical .saltStepLabel {
   padding-top: calc((var(--salt-size-base) - var(--salt-text-label-lineHeight)) / 2);
   padding-bottom: calc((var(--salt-size-base) - var(--salt-text-label-lineHeight)) / 2);
-  padding-left: calc((var(--saltStep-depth)) * var(--salt-spacing-100));
+  padding-left: calc((var(--step-depth)) * var(--salt-spacing-100));
 }
 
-.saltStep-depth-0 > .saltStepLabel.saltText {
+.saltStep-depth-0 > .saltText.saltStepLabel {
   font-weight: var(--salt-text-fontWeight-strong);
-}
-
-.saltStepLabel-elucidation {
-  position: fixed;
-  top: 0;
-  left: 0;
-  transform: translate(-100%, -100%);
 }

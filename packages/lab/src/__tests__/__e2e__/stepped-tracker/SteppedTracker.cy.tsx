@@ -96,10 +96,6 @@ describe("<SteppedTracker />", () => {
       .should("contain.text", "Step 3")
       .should("contain.text", "pending");
 
-    cy.get("#step-1-label-elucidation").should("have.text", "completed");
-    cy.get("#step-2-label-elucidation").should("not.exist");
-    cy.get("#step-3-label-elucidation").should("have.text", "pending");
-
     cy.get("#step-1-description").should("exist");
     cy.get("#step-2-description").should("exist");
     cy.get("#step-3-description").should("not.exist");
@@ -165,13 +161,6 @@ describe("<SteppedTracker />", () => {
     cy.get("#step-3-label")
       .should("contain.text", "Step 3")
       .should("contain.text", "pending");
-
-    cy.get("#step-1-label-elucidation").should("have.text", "completed");
-    cy.get("#step-2-label-elucidation").should("have.text", "inprogress");
-    cy.get("#step-2-1-label-elucidation").should("have.text", "completed");
-    cy.get("#step-2-2-label-elucidation").should("not.exist");
-    cy.get("#step-2-3-label-elucidation").should("have.text", "pending");
-    cy.get("#step-3-label-elucidation").should("have.text", "pending");
 
     cy.get("#step-1-description").should("exist");
     cy.get("#step-2-description").should("exist");
