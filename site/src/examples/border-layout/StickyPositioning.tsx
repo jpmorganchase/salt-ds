@@ -5,16 +5,17 @@ import stickyPositioningStyles from "./StickyPositioning.module.css";
 import styles from "./index.module.css";
 
 export const StickyPositioning = (): ReactElement => (
-  <BorderLayout className={stickyPositioningStyles.borderLayout}>
+  <BorderLayout
+    className={stickyPositioningStyles.borderLayout}
+    style={{ height: "200px" }}
+  >
     <BorderItem position="north" sticky className={styles.borderItem}>
       North
-    </BorderItem>
-    <BorderItem position="west" className={styles.borderItem}>
-      West
     </BorderItem>
     <BorderItem
       position="center"
       className={clsx(styles.borderItem, stickyPositioningStyles.center)}
+      style={{ overflow: "auto" }}
     >
       <p>Center</p>
       <p>
