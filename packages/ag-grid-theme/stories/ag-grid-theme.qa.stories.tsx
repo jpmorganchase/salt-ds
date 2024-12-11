@@ -360,10 +360,9 @@ EditableCellLongTextEditing.play = async ({ canvasElement }) => {
   for (const cell of textEditorCells) {
     await userEvent.dblClick(cell);
 
-    await expect(await canvas.findByRole("textbox")).toHaveClass(
-      "ag-input-field-input",
-      "ag-text-area-input",
-    );
+    await expect(
+      await canvas.findByRole("textbox", { name: "Input Editor" }),
+    ).toHaveClass("ag-input-field-input", "ag-text-area-input");
   }
 };
 
