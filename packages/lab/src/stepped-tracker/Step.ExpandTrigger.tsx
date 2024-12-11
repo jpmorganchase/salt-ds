@@ -36,11 +36,7 @@ export function StepExpandTrigger({
       className={clsx(withBaseName(), className)}
       {...props}
     >
-      {expanded ? (
-        <CollapseIcon aria-label="collapse substeps" />
-      ) : (
-        <ExpandIcon aria-label="expand substeps" />
-      )}
+      {expanded ? <CollapseIcon aria-hidden /> : <ExpandIcon aria-hidden />}
     </Button>
   );
 }

@@ -46,7 +46,7 @@ export function StepIcon({
   );
 }
 
-export function useStepIcon({
+function useStepIcon({
   stage,
   status,
 }: Pick<StepIcon.Props, "stage" | "status">) {

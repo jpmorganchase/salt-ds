@@ -15,14 +15,15 @@ import {
   useEffect,
 } from "react";
 
+import { DepthContext } from "./SteppedTracker.Provider";
 import { StepConnector } from "./Step.Connector";
 import { StepDescription } from "./Step.Description";
 import { StepExpandTrigger } from "./Step.ExpandTrigger";
 import { StepIcon } from "./Step.Icon";
 import { StepLabel } from "./Step.Label";
-import stepCSS from "./Step.css";
 import { SteppedTracker } from "./SteppedTracker";
-import { DepthContext } from "./SteppedTracker.Provider";
+import { StepSROnly } from "./Step.SROnly";
+import stepCSS from "./Step.css";
 
 export namespace Step {
   export interface Props
@@ -142,8 +143,11 @@ export function Step({
         sizeMultiplier={iconSizeMultiplier}
       />
       {label && (
-        <StepLabel id={labelId} stage={stage} status={status}>
+        <StepLabel id={labelId}>
           {label}
+          {(status || stage) !== "active" && (
+            <StepSROnly>{status || stage}</StepSROnly>
+          )}
         </StepLabel>
       )}
       {description && (
@@ -154,6 +158,7 @@ export function Step({
           id={expandTriggerId}
           aria-expanded={expanded}
           aria-labelledby={labelId}
+          aria-description="expand substeps"
           aria-controls={nestedSteppedTrackerId}
           expanded={expanded}
           onClick={(event) => {
