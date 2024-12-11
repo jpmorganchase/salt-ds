@@ -1,234 +1,185 @@
-import * as steppedTrackerStories from "@stories/stepped-tracker/stepped-tracker.stories";
+import { Step, SteppedTracker } from "@salt-ds/lab";
 import { composeStories } from "@storybook/react";
-import {
-  StepLabel,
-  SteppedTracker,
-  TrackerStep,
-} from "../../../stepped-tracker";
 
-import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
+import * as steppedTrackerStories from "@stories/stepped-tracker/stepped-tracker.stories";
 
-const composedStories = composeStories(steppedTrackerStories);
+const { VerticalDepth1, VerticalDepth2 } = composeStories(
+  steppedTrackerStories,
+);
 
-describe("GIVEN a SteppedTracker", () => {
-  checkAccessibility(composedStories);
-
-  it("should render TrackerStep components as children", () => {
-    const labels = ["Step 1", "Step 2", "Step 3"];
-    const activeStep = 1;
-
-    const TestComponent = (
-      <SteppedTracker activeStep={activeStep} style={{ width: 300 }}>
-        {labels.map((label, key) => (
-          <TrackerStep key={key}>
-            <StepLabel>{label}</StepLabel>
-          </TrackerStep>
-        ))}
-      </SteppedTracker>
+describe("<SteppedTracker />", () => {
+  it("should expand/collapse when trigger is clicked (depth 1)", () => {
+    cy.mount(
+      <SteppedTracker orientation="vertical">
+        <Step label="Step 1">
+          <Step label="Step 1.1" />
+          <Step label="Step 1.2" />
+          <Step label="Step 1.3" />
+        </Step>
+      </SteppedTracker>,
     );
 
-    cy.mount(TestComponent);
-    labels.forEach((label) => {
-      cy.findByText(label).should("be.visible");
-    });
+    cy.findByText("Step 1").should("be.visible");
+    cy.findByText("Step 1.1").should("not.be.visible");
+
+    cy.findByRole("button", { expanded: false }).click();
+
+    cy.findByText("Step 1").should("be.visible");
+    cy.findByText("Step 1.1").should("be.visible");
   });
 
-  it("should indicate the active step with aria-current", () => {
-    const labels = ["Step 1", "Step 2", "Step 3"];
-    const activeStep = 1;
-
-    const TestComponent = (
-      <SteppedTracker activeStep={activeStep} style={{ width: 300 }}>
-        {labels.map((label, key) => (
-          <TrackerStep key={key}>
-            <StepLabel>{label}</StepLabel>
-          </TrackerStep>
-        ))}
-      </SteppedTracker>
+  it("should expand/collapse when trigger is clicked (depth 2)", () => {
+    cy.mount(
+      <SteppedTracker orientation="vertical">
+        <Step label="Step 1">
+          <Step label="Step 1.1">
+            <Step label="Step 1.1.1" />
+            <Step label="Step 1.1.2" />
+            <Step label="Step 1.1.3" />
+          </Step>
+          <Step label="Step 1.2" />
+          <Step label="Step 1.3" />
+        </Step>
+      </SteppedTracker>,
     );
 
-    cy.mount(TestComponent);
+    cy.findByText("Step 1").should("be.visible");
+    cy.findByText("Step 1.1").should("not.be.visible");
+    cy.findByText("Step 1.1.1").should("not.be.visible");
 
-    cy.findAllByRole("listitem")
-      .filter(`:nth-child(${activeStep + 1})`)
-      .should("have.attr", "aria-current", "step");
+    cy.findByRole("button", { expanded: false }).click();
 
-    cy.findAllByRole("listitem")
-      .not(`:nth-child(${activeStep + 1})`)
-      .should("not.have.attr", "aria-current");
+    cy.findByText("Step 1").should("be.visible");
+    cy.findByText("Step 1.1").should("be.visible");
+    cy.findByText("Step 1.1.1").should("not.be.visible");
+
+    cy.findByRole("button", { expanded: false }).click();
+
+    cy.findByText("Step 1").should("be.visible");
+    cy.findByText("Step 1.1").should("be.visible");
+    cy.findByText("Step 1.1.1").should("be.visible");
   });
 
-  it("should indicate the active step with an active icon", () => {
-    const labels = ["Step 1", "Step 2", "Step 3"];
-    const activeStep = 1;
-
-    const TestComponent = (
-      <SteppedTracker activeStep={activeStep} style={{ width: 300 }}>
-        {labels.map((label, key) => (
-          <TrackerStep key={key}>
-            <StepLabel>{label}</StepLabel>
-          </TrackerStep>
-        ))}
-      </SteppedTracker>
+  it("a11y/aria properties (depth 0)", () => {
+    cy.mount(
+      <SteppedTracker id="stepped-tracker-1" orientation="vertical">
+        <Step
+          id="step-1"
+          label="Step 1"
+          description="Description Text 1"
+          stage="completed"
+        />
+        <Step
+          id="step-2"
+          label="Step 2"
+          description="Description Text 2"
+          stage="active"
+        />
+        <Step id="step-3" label="Step 3" stage="pending" />
+      </SteppedTracker>,
     );
 
-    cy.mount(TestComponent);
+    cy.findAllByRole("list").should("have.length", 1);
+    cy.findAllByRole("listitem").should("have.length", 3);
 
-    cy.findAllByRole("listitem")
-      .filter(`:nth-child(${activeStep + 1})`)
-      .findByTestId("StepActiveIcon")
-      .should("exist");
-    cy.findAllByRole("listitem")
-      .not(`:nth-child(${activeStep + 1})`)
-      .findByTestId("StepActiveIcon")
-      .should("not.exist");
+    cy.get("#stepped-tracker-1").should("exist");
+
+    cy.get("#step-1").should("not.have.attr", "aria-current");
+    cy.get("#step-2").should("have.attr", "aria-current", "step");
+    cy.get("#step-3").should("not.have.attr", "aria-current");
+
+    cy.get("#step-1-label")
+      .should("contain.text", "Step 1")
+      .should("contain.text", "completed");
+    cy.get("#step-2-label").should("have.text", "Step 2");
+    cy.get("#step-3-label")
+      .should("contain.text", "Step 3")
+      .should("contain.text", "pending");
+
+    cy.get("#step-1-description").should("exist");
+    cy.get("#step-2-description").should("exist");
+    cy.get("#step-3-description").should("not.exist");
+
+    cy.get("#step-1-expand-trigger").should("not.exist");
+    cy.get("#step-2-expand-trigger").should("not.exist");
+    cy.get("#step-3-expand-trigger").should("not.exist");
+
+    cy.get("#step-1-nested-stepped-tracker").should("not.exist");
+    cy.get("#step-2-nested-stepped-tracker").should("not.exist");
+    cy.get("#step-3-nested-stepped-tracker").should("not.exist");
   });
 
-  it("should indicate the completed step with a completed icon", () => {
-    const labels = ["Step 1", "Step 2", "Step 3"];
-    const activeStep = 1;
-    const completedStep = 2;
-
-    const TestComponent = (
-      <SteppedTracker activeStep={activeStep} style={{ width: 300 }}>
-        {labels.map((label, key) => (
-          <TrackerStep
-            key={key}
-            stage={key === completedStep ? "completed" : undefined}
-          >
-            <StepLabel>{label}</StepLabel>
-          </TrackerStep>
-        ))}
-      </SteppedTracker>
+  it("a11y/aria properties (depth 1)", () => {
+    cy.mount(
+      <SteppedTracker id="stepped-tracker-1" orientation="vertical">
+        <Step
+          id="step-1"
+          label="Step 1"
+          description="Description Text 1"
+          stage="completed"
+        />
+        <Step
+          id="step-2"
+          label="Step 2"
+          description="Description Text 2"
+          stage="inprogress"
+          expanded
+        >
+          <Step id="step-2-1" label="Step 2.1" stage="completed" />
+          <Step id="step-2-2" label="Step 2.2" stage="active" />
+          <Step id="step-2-3" label="Step 2.3" stage="pending" />
+        </Step>
+        <Step id="step-3" label="Step 3" stage="pending" />
+      </SteppedTracker>,
     );
 
-    cy.mount(TestComponent);
+    cy.findAllByRole("list").should("have.length", 2);
+    cy.findAllByRole("listitem").should("have.length", 6);
 
-    cy.findAllByRole("listitem")
-      .filter(`:nth-child(${completedStep + 1})`)
-      .findByTestId("StepSuccessIcon")
-      .should("exist");
-    cy.findAllByRole("listitem")
-      .not(`:nth-child(${completedStep + 1})`)
-      .findByTestId("StepSuccessIcon")
-      .should("not.exist");
-  });
+    cy.get("#stepped-tracker-1").should("exist");
 
-  it("should show completed icon if stage prop is completed and step is active", () => {
-    const labels = ["Step 1", "Step 2", "Step 3"];
+    cy.get("#step-1").should("not.have.attr", "aria-current");
+    cy.get("#step-2").should("not.have.attr", "aria-current");
+    cy.get("#step-3").should("not.have.attr", "aria-current");
+    cy.get("#step-2-1").should("not.have.attr", "aria-current");
+    cy.get("#step-2-2").should("have.attr", "aria-current", "step");
+    cy.get("#step-2-3").should("not.have.attr", "aria-current");
 
-    const stepNum = 1;
+    cy.get("#step-1-label")
+      .should("contain.text", "Step 1")
+      .should("contain.text", "completed");
+    cy.get("#step-2-label")
+      .should("contain.text", "Step 2")
+      .should("contain.text", "inprogress");
+    cy.get("#step-2-1-label")
+      .should("contain.text", "Step 2.1")
+      .should("contain.text", "completed");
+    cy.get("#step-2-2-label").should("have.text", "Step 2.2");
+    cy.get("#step-2-3-label")
+      .should("contain.text", "Step 2.3")
+      .should("contain.text", "pending");
+    cy.get("#step-3-label")
+      .should("contain.text", "Step 3")
+      .should("contain.text", "pending");
 
-    const TestComponent = (
-      <SteppedTracker activeStep={stepNum} style={{ width: 300 }}>
-        {labels.map((label, key) => (
-          <TrackerStep
-            key={key}
-            stage={key === stepNum ? "completed" : undefined}
-          >
-            <StepLabel>{label}</StepLabel>
-          </TrackerStep>
-        ))}
-      </SteppedTracker>
-    );
+    cy.get("#step-1-description").should("exist");
+    cy.get("#step-2-description").should("exist");
+    cy.get("#step-2-1-description").should("not.exist");
+    cy.get("#step-2-2-description").should("not.exist");
+    cy.get("#step-2-3-description").should("not.exist");
+    cy.get("#step-3-description").should("not.exist");
 
-    cy.mount(TestComponent);
+    cy.get("#step-1-expand-trigger").should("not.exist");
+    cy.get("#step-2-expand-trigger")
+      .should("have.attr", "aria-expanded", "true")
+      .should("have.attr", "aria-labelledby", "step-2-label")
+      .should("have.attr", "aria-controls", "step-2-nested-stepped-tracker");
+    cy.get("#step-3-expand-trigger").should("not.exist");
 
-    cy.findAllByRole("listitem")
-      .filter(`:nth-child(${stepNum + 1})`)
-      .findByTestId("StepSuccessIcon")
-      .should("exist");
-    cy.findAllByRole("listitem")
-      .not(`:nth-child(${stepNum + 1})`)
-      .findByTestId("StepActiveIcon")
-      .should("not.exist");
-  });
-
-  it("should show warning icon if status prop is warning", () => {
-    const labels = ["Step 1", "Step 2", "Step 3"];
-
-    const TestComponent = (
-      <SteppedTracker activeStep={0} style={{ width: 300 }}>
-        {labels.map((label, key) => (
-          <TrackerStep key={key} status={key === 1 ? "warning" : undefined}>
-            <StepLabel>{label}</StepLabel>
-          </TrackerStep>
-        ))}
-      </SteppedTracker>
-    );
-
-    cy.mount(TestComponent);
-
-    cy.findAllByRole("listitem")
-      .filter(`:nth-child(${2})`)
-      .findByTestId("WarningSolidIcon")
-      .should("exist");
-  });
-
-  it("should show completed icon if status prop is warning but stage prop is completed", () => {
-    const labels = ["Step 1", "Step 2", "Step 3"];
-
-    const TestComponent = (
-      <SteppedTracker activeStep={0} style={{ width: 300 }}>
-        {labels.map((label, key) => (
-          <TrackerStep
-            key={key}
-            stage={key <= 1 ? "completed" : undefined}
-            status={key === 1 ? "warning" : undefined}
-          >
-            <StepLabel>{label}</StepLabel>
-          </TrackerStep>
-        ))}
-      </SteppedTracker>
-    );
-
-    cy.mount(TestComponent);
-
-    cy.findAllByRole("listitem")
-      .filter(`:nth-child(${2})`)
-      .findByTestId("StepSuccessIcon")
-      .should("exist");
-  });
-
-  it("should show active icon if status prop is warning but step is active", () => {
-    const labels = ["Step 1", "Step 2", "Step 3"];
-
-    const TestComponent = (
-      <SteppedTracker activeStep={1} style={{ width: 300 }}>
-        {labels.map((label, key) => (
-          <TrackerStep key={key} status={key === 1 ? "warning" : undefined}>
-            <StepLabel>{label}</StepLabel>
-          </TrackerStep>
-        ))}
-      </SteppedTracker>
-    );
-
-    cy.mount(TestComponent);
-
-    cy.findAllByRole("listitem")
-      .filter(`:nth-child(${2})`)
-      .findByTestId("StepActiveIcon")
-      .should("exist");
-  });
-
-  it("should show error icon if status prop is error", () => {
-    const labels = ["Step 1", "Step 2", "Step 3"];
-
-    const TestComponent = (
-      <SteppedTracker activeStep={0} style={{ width: 300 }}>
-        {labels.map((label, key) => (
-          <TrackerStep key={key} status={key === 1 ? "error" : undefined}>
-            <StepLabel>{label}</StepLabel>
-          </TrackerStep>
-        ))}
-      </SteppedTracker>
-    );
-
-    cy.mount(TestComponent);
-
-    cy.findAllByRole("listitem")
-      .filter(`:nth-child(${2})`)
-      .findByTestId("ErrorSolidIcon")
-      .should("exist");
+    cy.get("#step-1-nested-stepped-tracker").should("not.exist");
+    cy.get("#step-2-nested-stepped-tracker")
+      .should("have.attr", "aria-hidden", "false")
+      .should("have.attr", "aria-label", "Step 2 substeps");
+    cy.get("#step-3-nested-stepped-tracker").should("not.exist");
   });
 });

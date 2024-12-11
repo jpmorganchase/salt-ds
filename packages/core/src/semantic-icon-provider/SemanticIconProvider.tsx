@@ -7,7 +7,9 @@ import {
   CloseIcon,
   ErrorSolidIcon,
   InfoSolidIcon,
+  LockedIcon,
   OverflowMenuIcon,
+  ProgressInprogressIcon,
   StepActiveIcon,
   StepDefaultIcon,
   StepSuccessIcon,
@@ -48,6 +50,8 @@ export type SemanticIconMap = {
   PendingIcon: ElementType;
   ActiveIcon: ElementType;
   CompletedIcon: ElementType;
+  LockedIcon: ElementType;
+  InProgressIcon: ElementType;
 };
 
 export interface SemanticIconProviderProps {
@@ -84,6 +88,8 @@ const defaultIconMap: SemanticIconMap = {
   PendingIcon: StepDefaultIcon,
   ActiveIcon: StepActiveIcon,
   CompletedIcon: StepSuccessIcon,
+  LockedIcon: LockedIcon,
+  InProgressIcon: ProgressInprogressIcon,
 };
 
 const SemanticIconContext = createContext<SemanticIconMap>(defaultIconMap);
