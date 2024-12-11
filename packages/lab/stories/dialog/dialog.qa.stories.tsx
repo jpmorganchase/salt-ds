@@ -1,4 +1,5 @@
-import { Dialog, H2 } from "@salt-ds/core";
+import { Button, Dialog, H2 } from "@salt-ds/core";
+import { CloseIcon } from "@salt-ds/icons";
 import { DialogHeader } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react";
 import { QAContainer, type QAContainerProps } from "docs/components";
@@ -54,6 +55,18 @@ export const DialogHeaders: StoryFn<QAContainerProps> = () => (
       header={<H2>Terms and conditions</H2>}
       preheader="Ensure you read and agree to these Terms"
       description="Effective date: August 29, 2024"
+    />
+    <DialogHeader
+      actions={
+        <Button aria-label="Close dialog" appearance="transparent">
+          <CloseIcon aria-hidden />
+        </Button>
+      }
+      status="info"
+      style={{
+        width: 600,
+      }}
+      header="Complete terms and conditions for using the services provided by our company"
     />
   </QAContainer>
 );
