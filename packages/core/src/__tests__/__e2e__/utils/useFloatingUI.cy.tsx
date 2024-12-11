@@ -11,11 +11,13 @@ const TestComponent = ({
   contentId = "test-1-content",
   focusManager,
   open = true,
+  disableScroll = false,
 }: {
   id?: string;
   contentId?: string;
   focusManager?: boolean;
   open?: boolean;
+  disableScroll?: boolean;
 }) => {
   const { Component: FloatingComponent } = useFloatingComponent();
   const { context } = useFloatingUI({
@@ -26,6 +28,7 @@ const TestComponent = ({
       <FloatingComponent
         open={Boolean(open)}
         focusManagerProps={focusManager ? { context } : undefined}
+        disableScroll={disableScroll}
       >
         <div id={contentId} />
       </FloatingComponent>
@@ -82,6 +85,30 @@ describe("Use useFloatingComponent", () => {
         "have.length",
         1,
       );
+    });
+  });
+  describe("without disableScroll", () => {
+    it("the document body should not have hidden overflow", () => {
+      mount(
+        <SaltProvider>
+          <TestComponent disableScroll={false} />
+        </SaltProvider>,
+      );
+
+      cy.document().its("documentElement.style.overflow").should("equal", "");
+    });
+  });
+  describe("with disableScroll", () => {
+    it("the document body should have hidden overflow", () => {
+      mount(
+        <SaltProvider>
+          <TestComponent disableScroll={true} />
+        </SaltProvider>,
+      );
+
+      cy.document()
+        .its("documentElement.style.overflow")
+        .should("equal", "hidden");
     });
   });
 });
