@@ -158,7 +158,7 @@ export function Step({
           id={expandTriggerId}
           aria-expanded={expanded}
           aria-labelledby={labelId}
-          aria-description="expand substeps"
+          aria-description="toggle substeps"
           aria-controls={nestedSteppedTrackerId}
           expanded={expanded}
           onClick={(event) => {
