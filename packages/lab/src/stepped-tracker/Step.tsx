@@ -15,15 +15,15 @@ import {
   useEffect,
 } from "react";
 
-import { DepthContext } from "./SteppedTracker.Provider";
 import { StepConnector } from "./Step.Connector";
 import { StepDescription } from "./Step.Description";
 import { StepExpandTrigger } from "./Step.ExpandTrigger";
 import { StepIcon } from "./Step.Icon";
 import { StepLabel } from "./Step.Label";
-import { SteppedTracker } from "./SteppedTracker";
 import { StepSROnly } from "./Step.SROnly";
 import stepCSS from "./Step.css";
+import { SteppedTracker } from "./SteppedTracker";
+import { DepthContext } from "./SteppedTracker.Provider";
 
 export namespace Step {
   export interface Props

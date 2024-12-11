@@ -1,7 +1,7 @@
-import type { ReactNode } from "react";
-import { useWindow } from "@salt-ds/window";
 import { makePrefixer } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
+import type { ReactNode } from "react";
 
 import stepSROnlyCSS from "./Step.SROnly.css";
 
