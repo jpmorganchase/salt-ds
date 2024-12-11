@@ -3,6 +3,7 @@
   --step-icon-base-size: var(--salt-size-icon, 12px);
   --step-icon-size-multiplier: var(--saltIcon-size-multiplier, 1.5);
   --step-icon-size: calc(var(--step-icon-base-size) * var(--step-icon-size-multiplier));
+  --step-depth: var(--saltStep-depth, 0);
 }
 
 .saltSteppedTracker-horizontal .saltStep {
