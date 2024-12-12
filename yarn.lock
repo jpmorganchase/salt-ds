@@ -3233,7 +3233,7 @@ __metadata:
   peerDependencies:
     "@types/luxon": ^3.4.2
     "@types/react": ">=16.14.0"
-    date-fns: ^3.6.0
+    date-fns: ^4.0.0
     dayjs: ^1.11.13
     luxon: ^3.5.0
     moment: ^2.30.1
@@ -3288,7 +3288,7 @@ __metadata:
     clipboard-copy: "npm:^4.0.1"
     clsx: "npm:^2.0.0"
     compute-scroll-into-view: "npm:^3.0.0"
-    date-fns: "npm:^3.6.0"
+    date-fns: "npm:^4.0.0"
     dayjs: "npm:^1.11.13"
     deepmerge: "npm:^4.2.2"
     luxon: "npm:^3.5.0"
@@ -3413,7 +3413,7 @@ __metadata:
     "@types/react": "npm:^18.3.3"
     concurrently: "npm:^9.0.0"
     cross-env: "npm:^7.0.3"
-    date-fns: "npm:^3.6.0"
+    date-fns: "npm:^4.0.0"
     dayjs: "npm:^1.11.13"
     dotenv-load: "npm:^2.0.1"
     lodash-es: "npm:^4.17.21"
@@ -7841,10 +7841,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"date-fns@npm:^3.6.0":
-  version: 3.6.0
-  resolution: "date-fns@npm:3.6.0"
-  checksum: 10/cac35c58926a3b5d577082ff2b253612ec1c79eb6754fddef46b6a8e826501ea2cb346ecbd211205f1ba382ddd1f9d8c3f00bf433ad63cc3063454d294e3a6b8
+"date-fns@npm:^4.0.0":
+  version: 4.1.0
+  resolution: "date-fns@npm:4.1.0"
+  checksum: 10/d5f6e9de5bbc52310f786099e18609289ed5e30af60a71e0646784c8185ddd1d0eebcf7c96b7faaaefc4a8366f3a3a4244d099b6d0866ee2bec80d1361e64342
   languageName: node
   linkType: hard
 
