@@ -1,9 +1,9 @@
 import { Button, SegmentedButtonGroup, StackLayout } from "@salt-ds/core";
 import {
   Step,
+  type StepRecord,
   SteppedTracker,
   useStepReducer,
-  type StepRecord,
 } from "@salt-ds/lab";
 
 const initialSteps: StepRecord[] = [

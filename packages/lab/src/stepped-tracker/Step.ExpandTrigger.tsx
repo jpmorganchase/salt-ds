@@ -7,19 +7,18 @@ import clsx from "clsx";
 
 import stepExpandTriggerCSS from "./Step.ExpandTrigger.css";
 
-export namespace StepExpandTrigger {
-  export interface Props extends ButtonProps {
-    expanded: boolean;
-  }
+export interface StepExpandTriggerProps extends ButtonProps {
+  expanded: boolean;
 }
 
 const withBaseName = makePrefixer("saltStepExpandTrigger");
 
 export function StepExpandTrigger({
+  id,
   expanded,
   className,
   ...props
-}: StepExpandTrigger.Props) {
+}: StepExpandTriggerProps) {
   const { CollapseIcon, ExpandIcon } = useIcon();
   const targetWindow = useWindow();
 
@@ -31,6 +30,7 @@ export function StepExpandTrigger({
 
   return (
     <Button
+      id={id}
       appearance="transparent"
       sentiment="neutral"
       className={clsx(withBaseName(), className)}

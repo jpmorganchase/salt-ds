@@ -1,19 +1,8 @@
-import {
-  type ButtonProps,
-  makePrefixer,
-  useControlled,
-  useId,
-} from "@salt-ds/core";
+import { makePrefixer, useControlled, useId } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import clsx from "clsx";
-import {
-  type CSSProperties,
-  type ComponentPropsWithoutRef,
-  type ReactNode,
-  useContext,
-  useEffect,
-} from "react";
+import { type CSSProperties, useContext, useEffect } from "react";
 
 import { StepConnector } from "./Step.Connector";
 import { StepDescription } from "./Step.Description";
@@ -25,34 +14,7 @@ import stepCSS from "./Step.css";
 import { SteppedTracker } from "./SteppedTracker";
 import { DepthContext } from "./SteppedTracker.Provider";
 
-export namespace Step {
-  export interface Props
-    extends Omit<ComponentPropsWithoutRef<"li">, "onToggle"> {
-    label?: ReactNode;
-    description?: ReactNode;
-    status?: Step.Status;
-    stage?: Step.Stage;
-    expanded?: boolean;
-    defaultExpanded?: boolean;
-    onToggle?: ButtonProps["onClick"];
-    substeps?: Step.Record[];
-    children?: ReactNode;
-  }
-
-  export type Record =
-    | (Omit<Step.Props, "children"> & { id: string })
-    | (Omit<Step.Props, "children"> & { key: string });
-
-  export type Status = "warning" | "error";
-  export type Stage =
-    | "pending"
-    | "locked"
-    | "completed"
-    | "inprogress"
-    | "active";
-
-  export type Depth = number;
-}
+import type { StepProps } from "./Step.types";
 
 const withBaseName = makePrefixer("saltStep");
 
@@ -70,7 +32,7 @@ export function Step({
   substeps,
   children,
   ...props
-}: Step.Props) {
+}: StepProps) {
   const id = useId(idProp);
   const targetWindow = useWindow();
   const depth = useContext(DepthContext);
@@ -105,11 +67,21 @@ export function Step({
   const ariaCurrent = stage === "active" ? "step" : undefined;
   const iconSizeMultiplier = depth === 0 ? 1.5 : 1;
   const hasNestedSteps = !!children || !!substeps;
+  const state = status || stage;
 
   const labelId = `${id}-label`;
   const descriptionId = `${id}-description`;
   const expandTriggerId = `${id}-expand-trigger`;
   const nestedSteppedTrackerId = `${id}-nested-stepped-tracker`;
+
+  const srOnly = {
+    stateId: `${id}-sr-only-state`,
+    stateText: state !== "active" ? state : undefined,
+    substepsId: `${id}-sr-only-substeps`,
+    substepsText: "substeps",
+    toggleSubstepsId: `${id}-sr-only-toggle-substeps`,
+    toggleSubstepsText: "toggle substeps",
+  };
 
   return (
     <li
@@ -136,30 +108,46 @@ export function Step({
       }
       {...props}
     >
+      <StepSROnly>
+        {label} {description} {srOnly.stateText}
+      </StepSROnly>
+      <StepSROnly id={srOnly.toggleSubstepsId} aria-hidden>
+        {srOnly.toggleSubstepsText}
+      </StepSROnly>
+      <StepSROnly id={srOnly.substepsId} aria-hidden>
+        {srOnly.substepsText}
+      </StepSROnly>
       <StepConnector />
+      <StepSROnly id={srOnly.stateId} aria-hidden>
+        {srOnly.stateText}
+      </StepSROnly>
       <StepIcon
         stage={stage}
         status={status}
         sizeMultiplier={iconSizeMultiplier}
+        aria-hidden
       />
       {label && (
-        <StepLabel id={labelId}>
+        <StepLabel id={labelId} aria-hidden>
           {label}
-          {(status || stage) !== "active" && (
-            <StepSROnly>{status || stage}</StepSROnly>
-          )}
         </StepLabel>
       )}
       {description && (
-        <StepDescription id={descriptionId}>{description}</StepDescription>
+        <StepDescription id={descriptionId} aria-hidden>
+          {description}
+        </StepDescription>
       )}
       {hasNestedSteps && (
         <StepExpandTrigger
           id={expandTriggerId}
           aria-expanded={expanded}
-          aria-labelledby={labelId}
-          aria-description="toggle substeps"
           aria-controls={nestedSteppedTrackerId}
+          aria-labelledby={[
+            labelId,
+            descriptionId,
+            srOnly.stateId,
+            srOnly.toggleSubstepsId,
+          ].join(" ")}
           expanded={expanded}
           onClick={(event) => {
             onToggle?.(event);
@@ -170,7 +158,7 @@ export function Step({
       {hasNestedSteps && (
         <SteppedTracker
           id={nestedSteppedTrackerId}
-          aria-label={`${label} substeps`}
+          aria-labelledby={[labelId, srOnly.substepsId].join(" ")}
           aria-hidden={!expanded}
           hidden={!expanded}
         >

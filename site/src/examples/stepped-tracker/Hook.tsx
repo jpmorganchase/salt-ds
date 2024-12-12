@@ -2,9 +2,9 @@ import { Button, FlexLayout } from "@salt-ds/core";
 import { StackLayout } from "@salt-ds/core";
 import {
   Step,
+  type StepRecord,
   SteppedTracker,
   useStepReducer,
-  type StepRecord,
 } from "@salt-ds/lab";
 
 const initialSteps = [
