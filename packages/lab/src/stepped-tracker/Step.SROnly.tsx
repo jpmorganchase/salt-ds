@@ -1,19 +1,17 @@
 import { makePrefixer } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
-import type { ReactNode } from "react";
+import type { ComponentPropsWithoutRef, ReactNode } from "react";
 
 import stepSROnlyCSS from "./Step.SROnly.css";
 
 const withBaseName = makePrefixer("saltStepSROnly");
 
-export namespace StepSROnly {
-  export interface Props {
-    children: ReactNode;
-  }
+export interface StepSROnlyProps extends ComponentPropsWithoutRef<"div"> {
+  children?: ReactNode;
 }
 
-export function StepSROnly({ children, ...props }: StepSROnly.Props) {
+export function StepSROnly({ children, ...props }: StepSROnlyProps) {
   const targetWindow = useWindow();
 
   useComponentCssInjection({

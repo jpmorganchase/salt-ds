@@ -3,12 +3,12 @@ import { useMemo, useReducer } from "react";
 import stepReducer from "./stepReducer";
 import { initStepReducerState } from "./utils";
 
-import type { Step } from "./Step";
-import type { StepReducer } from "./stepReducer";
+import type { StepRecord } from "./Step.types";
+import type { StepReducerOptions } from "./stepReducer.types";
 
 export function useStepReducer(
-  initialSteps: Step.Record[],
-  options?: StepReducer.Options,
+  initialSteps: StepRecord[],
+  options?: StepReducerOptions,
 ) {
   const state = useMemo(
     () => initStepReducerState(initialSteps, options),

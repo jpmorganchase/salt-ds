@@ -1,23 +1,21 @@
 import { type ReactNode, createContext, useContext } from "react";
 
-import type { Step } from "./Step";
-import type { SteppedTracker } from "./SteppedTracker";
+import type { StepDepth } from "./Step.types";
+import type { SteppedTrackerOrientation } from "./SteppedTracker.types";
 
-export const DepthContext = createContext<Step.Depth>(-1);
+export const DepthContext = createContext<StepDepth>(-1);
 export const OrientationContext =
-  createContext<SteppedTracker.Orientation>("horizontal");
+  createContext<SteppedTrackerOrientation>("horizontal");
 
-export namespace SteppedTrackerProvider {
-  export interface Props {
-    orientation: SteppedTracker.Orientation;
-    children: ReactNode;
-  }
+export interface SteppedTrackerProviderProps {
+  orientation: SteppedTrackerOrientation;
+  children: ReactNode;
 }
 
 export function SteppedTrackerProvider({
   orientation: orientationProp,
   children,
-}: SteppedTrackerProvider.Props) {
+}: SteppedTrackerProviderProps) {
   const depth = useContext(DepthContext);
 
   return (

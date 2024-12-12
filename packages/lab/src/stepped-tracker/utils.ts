@@ -1,10 +1,10 @@
-import type { Step } from "./Step";
-import type { StepReducer } from "./stepReducer";
+import type { StepRecord, StepStage } from "./Step.types";
+import type { StepReducerOptions, StepReducerState } from "./stepReducer.types";
 
 export function assignSteps(
-  steps: Step.Record[],
-  stage?: Step.Stage,
-): Step.Record[] {
+  steps: StepRecord[],
+  stage?: StepStage,
+): StepRecord[] {
   return steps.map((step) => {
     step.stage = stage;
     if (step.substeps) {
@@ -15,15 +15,15 @@ export function assignSteps(
   });
 }
 
-export function resetSteps(steps: Step.Record[]): Step.Record[] {
+export function resetSteps(steps: StepRecord[]): StepRecord[] {
   return assignSteps(steps, undefined);
 }
 
 export function autoStageSteps(
-  steps: Step.Record[],
-  options?: StepReducer.Options,
-): Step.Record[] {
-  function autoStageHelper(steps: Step.Record[]): Step.Record[] | null {
+  steps: StepRecord[],
+  options?: StepReducerOptions,
+): StepRecord[] {
+  function autoStageHelper(steps: StepRecord[]): StepRecord[] | null {
     const pivotIndex = steps.findIndex(
       (step) =>
         (step?.id &&
@@ -44,7 +44,7 @@ export function autoStageSteps(
       );
       const nextSteps = assignSteps(steps.slice(pivotIndex + 1), "pending");
 
-      return [...previousSteps, activeStep, ...nextSteps] as Step.Record[];
+      return [...previousSteps, activeStep, ...nextSteps] as StepRecord[];
     }
 
     return steps.reduce(
@@ -62,7 +62,7 @@ export function autoStageSteps(
 
         return acc;
       },
-      null as Step.Record[] | null,
+      null as StepRecord[] | null,
     );
   }
 
@@ -71,7 +71,7 @@ export function autoStageSteps(
   );
 }
 
-export function flattenSteps(steps: Step.Record[]): Step.Record[] {
+export function flattenSteps(steps: StepRecord[]): StepRecord[] {
   return steps.reduce((acc, step) => {
     if (step.substeps) {
       acc.push(...flattenSteps(step.substeps));
@@ -82,12 +82,12 @@ export function flattenSteps(steps: Step.Record[]): Step.Record[] {
     acc.push(step);
 
     return acc;
-  }, [] as Step.Record[]);
+  }, [] as StepRecord[]);
 }
 
 export function initStepReducerState(
-  initialSteps: Step.Record[],
-  options?: StepReducer.Options,
+  initialSteps: StepRecord[],
+  options?: StepReducerOptions,
 ) {
   const steps = autoStageSteps(initialSteps, options);
   const flatSteps = flattenSteps(steps);
@@ -113,5 +113,5 @@ export function initStepReducerState(
     activeStepIndex,
     ended,
     started,
-  } as StepReducer.State;
+  } as StepReducerState;
 }

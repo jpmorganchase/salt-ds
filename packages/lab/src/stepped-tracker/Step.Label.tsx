@@ -5,9 +5,7 @@ import clsx from "clsx";
 
 import stepLabelCSS from "./Step.Label.css";
 
-export namespace StepLabel {
-  export interface Props extends TextProps<"div"> {}
-}
+export interface StepLabelProps extends TextProps<"div"> {}
 
 const withBaseName = makePrefixer("saltStepLabel");
 
@@ -17,7 +15,7 @@ export function StepLabel({
   styleAs = "label",
   children,
   ...props
-}: StepLabel.Props) {
+}: StepLabelProps) {
   const targetWindow = useWindow();
 
   useComponentCssInjection({

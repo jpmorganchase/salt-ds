@@ -1,55 +1,9 @@
-import type { Step } from "./Step";
+import type { StepReducerAction, StepReducerState } from "./stepReducer.types";
 import { assignSteps, autoStageSteps, flattenSteps, resetSteps } from "./utils";
 
-export namespace StepReducer {
-  export interface State {
-    steps: Step.Record[];
-    flatSteps: Step.Record[];
-    activeStep: Step.Record | null;
-    previousStep: Step.Record | null;
-    nextStep: Step.Record | null;
-    activeStepIndex: number;
-    started: boolean;
-    ended: boolean;
-  }
-
-  export type Action =
-    | { type: "next" }
-    | { type: "previous" }
-    | { type: "error" }
-    | { type: "warning" }
-    | { type: "clear" };
-
-  export type Options = {
-    activeStepId?: string;
-  };
-}
-
-/**
- * Extracts all step ids from a array of steps,
- * including top and lower levels.
- *
- * I can't use this type because our codebase
- * is running below TypeScript 5, where "const"
- * in function generics was firstly introduced.
- * Leaving this here for future reference.
- * */
-type AllowedActiveStepIds<
-  S extends Step.Record[],
-  Acc extends string = never,
-> = S extends [{ id: infer ID; substeps?: infer SS }, ...infer R]
-  ? ID extends string
-    ? R extends Step.Record[]
-      ? SS extends Step.Record[]
-        ? AllowedActiveStepIds<R, Acc | AllowedActiveStepIds<SS>>
-        : AllowedActiveStepIds<R, Acc | ID>
-      : Acc
-    : Acc
-  : Acc;
-
 export default function stepReducer(
-  state: StepReducer.State,
-  action: StepReducer.Action,
+  state: StepReducerState,
+  action: StepReducerAction,
 ) {
   if (action.type === "next") {
     if (state.activeStep?.status === "error") {
@@ -95,7 +49,7 @@ export default function stepReducer(
       nextStep,
       started: true,
       ended: true,
-    } as StepReducer.State;
+    } as StepReducerState;
   }
 
   if (action.type === "previous") {
@@ -125,7 +79,7 @@ export default function stepReducer(
         nextStep,
         started: true,
         ended: false,
-      } as StepReducer.State;
+      } as StepReducerState;
     }
 
     const activeStepIndex = -1;
@@ -142,7 +96,7 @@ export default function stepReducer(
       nextStep,
       ended: false,
       started: false,
-    } as StepReducer.State;
+    } as StepReducerState;
   }
 
   if (action.type === "error") {

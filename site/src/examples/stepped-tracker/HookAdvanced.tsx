@@ -1,7 +1,12 @@
 import { Button, SegmentedButtonGroup, StackLayout } from "@salt-ds/core";
-import { Step, SteppedTracker, useStepReducer } from "@salt-ds/lab";
+import {
+  Step,
+  SteppedTracker,
+  useStepReducer,
+  type StepRecord,
+} from "@salt-ds/lab";
 
-const initialSteps: Step.Record[] = [
+const initialSteps: StepRecord[] = [
   {
     id: "step-1",
     label: "Step 1",

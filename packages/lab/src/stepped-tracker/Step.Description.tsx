@@ -5,9 +5,7 @@ import clsx from "clsx";
 
 import stepDescriptionCSS from "./Step.Description.css";
 
-export namespace StepDescription {
-  export interface Props extends TextProps<"div"> {}
-}
+export interface StepDescriptionProps extends TextProps<"div"> {}
 
 const withBaseName = makePrefixer("saltStepDescription");
 
@@ -16,7 +14,7 @@ export function StepDescription({
   className,
   styleAs = "label",
   ...props
-}: StepDescription.Props) {
+}: StepDescriptionProps) {
   const targetWindow = useWindow();
 
   useComponentCssInjection({

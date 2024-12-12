@@ -1,11 +1,4 @@
 import { Step, SteppedTracker } from "@salt-ds/lab";
-import { composeStories } from "@storybook/react";
-
-import * as steppedTrackerStories from "@stories/stepped-tracker/stepped-tracker.stories";
-
-const { VerticalDepth1, VerticalDepth2 } = composeStories(
-  steppedTrackerStories,
-);
 
 describe("<SteppedTracker />", () => {
   it("should expand/collapse when trigger is clicked (depth 1)", () => {

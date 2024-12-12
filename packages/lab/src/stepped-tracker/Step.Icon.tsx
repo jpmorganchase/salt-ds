@@ -5,15 +5,14 @@ import { useWindow } from "@salt-ds/window";
 import clsx from "clsx";
 import { useMemo } from "react";
 
-import type { Step } from "./Step";
 import stepIconCSS from "./Step.Icon.css";
 
-export namespace StepIcon {
-  export interface Props extends IconProps {
-    stage: Step.Stage;
-    status?: Step.Status;
-    sizeMultiplier?: IconProps["size"];
-  }
+import type { StepStage, StepStatus } from "./Step.types";
+
+export interface StepIconProps extends IconProps {
+  stage: StepStage;
+  status?: StepStatus;
+  sizeMultiplier?: IconProps["size"];
 }
 
 const withBaseName = makePrefixer("saltStepIcon");
@@ -25,7 +24,7 @@ export function StepIcon({
   sizeMultiplier = size || 1.5,
   className,
   ...props
-}: StepIcon.Props) {
+}: StepIconProps) {
   const targetWindow = useWindow();
   const IconComponent = useStepIcon({ stage, status });
 
@@ -38,8 +37,6 @@ export function StepIcon({
   return (
     <IconComponent
       size={sizeMultiplier}
-      aria-hidden
-      aria-label={undefined}
       className={clsx(withBaseName(), className)}
       {...props}
     />
@@ -49,7 +46,7 @@ export function StepIcon({
 function useStepIcon({
   stage,
   status,
-}: Pick<StepIcon.Props, "stage" | "status">) {
+}: Pick<StepIconProps, "stage" | "status">) {
   const icons = useIcon();
 
   const stepIconMap = useMemo(
