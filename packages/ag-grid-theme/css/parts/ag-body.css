@@ -150,9 +150,8 @@ div[class*="ag-theme-salt"] .ag-rich-select-list {
 
 div[class*="ag-theme-salt"] .ag-select-list-item[aria-selected="true"],
 div[class*="ag-theme-salt"] .ag-rich-select-row-selected {
-  /* Match selected row to Option */
-  box-shadow: calc(var(--salt-size-border) * -2) 0 0 0 var(--salt-selectable-background-hover), calc(var(--salt-size-border) * -1) 0 0 var(--salt-size-border)
-    var(--salt-selectable-borderColor-selected), 0 calc(var(--salt-size-border) * -1) 0 var(--salt-selectable-borderColor-selected);
+  /* Match selected row border to Option */
+  box-shadow: inset 0px var(--salt-size-border) 0px var(--salt-selectable-borderColor-selected), inset 0px calc(var(--salt-size-border) * -1) 0px var(--salt-selectable-borderColor-selected);
 }
 
 /* Range selection cross cells "fake" outlines */
