@@ -1,3 +1,8 @@
 export * from "./SteppedTracker";
-export * from "./TrackerStep";
-export * from "./StepLabel";
+export * from "./SteppedTracker.types";
+
+export * from "./Step";
+export * from "./Step.types";
+
+export * from "./useStepReducer";
+export * from "./stepReducer.types";

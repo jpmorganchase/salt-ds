@@ -1,0 +1,7 @@
+.saltStepExpandTrigger {
+  grid-area: expand;
+}
+
+.saltButton.saltStepExpandTrigger:focus-visible {
+  outline-offset: calc(-1 * var(--salt-focused-outlineWidth));
+}
