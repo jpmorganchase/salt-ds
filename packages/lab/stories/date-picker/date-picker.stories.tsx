@@ -1,3 +1,4 @@
+import type { OpenChangeReason } from "@floating-ui/react";
 import {
   Button,
   Divider,
@@ -40,7 +41,7 @@ import {
 } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react";
 import type React from "react";
-import type { SyntheticEvent } from "react";
+import type { FocusEvent, SyntheticEvent } from "react";
 import { useCallback, useRef, useState } from "react";
 // CustomDatePickerPanel is a sample component, representing a composition you could create yourselves, not intended for importing into your own projects
 // refer to https://github.com/jpmorganchase/salt-ds/blob/main/packages/lab/src/date-picker/useDatePicker.ts to create your own
@@ -2680,4 +2681,139 @@ WithExperimentalTime.parameters = {
       code: "Disabled for this story, see https://github.com/storybookjs/storybook/issues/11554",
     },
   },
+};
+
+export const UncontrolledOpenOnFocus: StoryFn<
+  DatePickerSingleProps<DateFrameworkType>
+> = ({ selectionVariant, defaultSelectedDate, ...args }) => {
+  return (
+    <DatePicker
+      selectionVariant={"single"}
+      {...args}
+      openOnFocus
+      defaultSelectedDate={defaultSelectedDate}
+    >
+      <DatePickerTrigger>
+        <DatePickerSingleInput />
+      </DatePickerTrigger>
+      <DatePickerOverlay>
+        <DatePickerSinglePanel />
+      </DatePickerOverlay>
+    </DatePicker>
+  );
+};
+
+export const ControlledOpenOnFocus: StoryFn<
+  DatePickerSingleProps<DateFrameworkType>
+> = ({ selectionVariant, defaultSelectedDate, ...args }) => {
+  const [selectedDate, setSelectedDate] = useState<
+    SingleDateSelection<DateFrameworkType> | null | undefined
+  >(defaultSelectedDate ?? null);
+  const [open, setOpen] = useState(false);
+  const { dateAdapter } = useLocalization();
+  const triggerRef = useRef<HTMLInputElement | null>(null);
+  const applyButtonRef = useRef<HTMLButtonElement>(null);
+  const datePickerRef = useRef<HTMLDivElement>(null);
+  const programmaticClose = useRef(false);
+
+  const handleSelectionChange = useCallback(
+    (
+      _event: SyntheticEvent,
+      date: SingleDateSelection<DateFrameworkType> | null,
+      _details: DateInputSingleDetails | undefined,
+    ) => {
+      setSelectedDate(date ?? null);
+    },
+    [dateAdapter],
+  );
+
+  const handleClick = useCallback(() => {
+    setOpen(true);
+  }, []);
+
+  const handleInputFocus = useCallback((event: FocusEvent) => {
+    // Don't re-open if closing and returning focus
+    if (!programmaticClose.current) {
+      setOpen(true);
+    }
+    programmaticClose.current = false;
+  }, []);
+
+  const handleInputBlur = useCallback((event: FocusEvent) => {
+    // Don't close if the overlay now has focus
+    if (!datePickerRef?.current?.contains(event.relatedTarget)) {
+      setOpen(false);
+    }
+  }, []);
+
+  const handleOpen = useCallback(
+    (
+      newOpen: boolean,
+      _event?: Event | undefined,
+      reason?: OpenChangeReason | undefined,
+    ) => {
+      if (reason === undefined) {
+        programmaticClose.current = true;
+        triggerRef?.current?.focus();
+        setTimeout(() => {
+          triggerRef?.current?.setSelectionRange(
+            0,
+            triggerRef.current.value.length,
+          );
+        }, 1);
+      }
+      setOpen(newOpen);
+    },
+    [],
+  );
+
+  const handleApply = useCallback(
+    (
+      event: SyntheticEvent,
+      date: SingleDateSelection<DateFrameworkType> | null,
+    ) => {
+      console.log(
+        `Applied StartDate: ${date ? dateAdapter.format(date, "DD MMM YYYY") : date}`,
+      );
+      setSelectedDate(date);
+    },
+    [dateAdapter],
+  );
+
+  return (
+    <DatePicker
+      selectionVariant={"single"}
+      {...args}
+      onSelectionChange={handleSelectionChange}
+      selectedDate={selectedDate}
+      onApply={handleApply}
+      onOpen={handleOpen}
+      open={open}
+    >
+      <DatePickerTrigger>
+        <DatePickerSingleInput
+          inputRef={triggerRef}
+          inputProps={{
+            onClick: handleClick,
+            onFocus: handleInputFocus,
+            onBlur: handleInputBlur,
+          }}
+        />
+      </DatePickerTrigger>
+      <DatePickerOverlay ref={datePickerRef}>
+        <FlexLayout gap={0} direction="column">
+          <FlexItem>
+            <DatePickerSinglePanel />
+            <Divider variant="tertiary" />
+          </FlexItem>
+          <FlexItem>
+            <DatePickerActions
+              selectionVariant="single"
+              applyButtonRef={applyButtonRef}
+            />
+          </FlexItem>
+        </FlexLayout>
+      </DatePickerOverlay>
+    </DatePicker>
+  );
 };

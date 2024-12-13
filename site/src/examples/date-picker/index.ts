@@ -19,3 +19,5 @@ export * from "./RangeWithLocaleEsES";
 export * from "./RangeWithMinMaxDate";
 export * from "./RangeWithFormField";
 export * from "./RangeBordered";
+export * from "./ControlledOpenOnFocus";
+export * from "./UncontrolledOpenOnFocus";
