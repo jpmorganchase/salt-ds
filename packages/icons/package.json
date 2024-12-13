@@ -9,10 +9,12 @@
   },
   "bugs": "https://github.com/jpmorganchase/salt-ds/issues",
   "main": "src/index.ts",
-  "sideEffects": false,
   "files": [
     "css",
     "saltIcons.css"
+  ],
+  "sideEffects": [
+    "*.css"
   ],
   "scripts": {
     "build": "yarn clean && yarn build:icons && yarn node ../../scripts/build.mjs",

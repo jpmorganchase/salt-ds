@@ -9,7 +9,12 @@
   },
   "bugs": "https://github.com/jpmorganchase/salt-ds/issues",
   "main": "src/index.ts",
-  "sideEffects": false,
+  "files": [
+    "css"
+  ],
+  "sideEffects": [
+    "*.css"
+  ],
   "dependencies": {
     "@floating-ui/react": "^0.26.5",
     "@salt-ds/core": "workspace:^",
@@ -56,8 +61,5 @@
   "scripts": {
     "build": "yarn node ../../scripts/build.mjs",
     "bundle:css": "yarn node ./scripts/build.mjs"
-  },
-  "files": [
-    "css"
-  ]
+  }
 }
