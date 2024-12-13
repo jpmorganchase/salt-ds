@@ -177,7 +177,7 @@ Range.args = {
 
 export const SingleReadOnly = DatePickerSingleTemplate.bind({});
 SingleReadOnly.args = {
-  readOnly: true
+  readOnly: true,
 };
 
 export const RangeReadOnly = DatePickerRangeTemplate.bind({});

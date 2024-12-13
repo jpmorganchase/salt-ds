@@ -113,7 +113,7 @@ interface DatePickerOverlayProviderProps {
   /**
    * A factory method to create a set of interaction, if provided overrides the default interactions
    */
-  interactions?: (context: FloatingContext) => Array<ElementProps | void>;
+  interactions?: (context: FloatingContext) => Array<ElementProps>;
   /**
    * When true, shouldn't open the overlay.
    */
@@ -126,7 +126,7 @@ export const DatePickerOverlayProvider: React.FC<
   open: openProp,
   openOnClick,
   openOnFocus,
-  openOnKeyDown,
+  openOnKeyDown = true,
   defaultOpen,
   onOpen,
   children,
@@ -135,7 +135,7 @@ export const DatePickerOverlayProvider: React.FC<
 }) => {
   const [open, setOpenState, isOpenControlled] = useControlled({
     controlled: openProp,
-    default: Boolean(defaultOpen),
+    default: readOnly ? false : Boolean(defaultOpen),
     name: "DatePicker",
     state: "openDatePickerOverlay",
   });
@@ -146,7 +146,6 @@ export const DatePickerOverlayProvider: React.FC<
     (newOpen: boolean, _event?: Event, reason?: OpenChangeReason) => {
       if (newOpen) {
         if (readOnly) {
-          // When not open overlay when readOnly
           return;
         }
         triggeringElement.current = document.activeElement as HTMLElement;
@@ -192,11 +191,13 @@ export const DatePickerOverlayProvider: React.FC<
       : [
           useDismiss(floatingUIResult.context),
           useFocus(floatingUIResult.context, {
-            enabled: !!openOnFocus,
+            enabled: !!openOnFocus && !readOnly,
           }),
-          useKeyboard(floatingUIResult.context, { enabled: !!openOnKeyDown }),
+          useKeyboard(floatingUIResult.context, {
+            enabled: !!openOnKeyDown && !readOnly,
+          }),
           useClick(floatingUIResult.context, {
-            enabled: !!openOnClick,
+            enabled: !!openOnClick && !readOnly,
             toggle: false,
           }),
         ],
