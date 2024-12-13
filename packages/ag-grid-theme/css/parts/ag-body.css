@@ -41,6 +41,12 @@ div[class*="ag-theme-salt"] .ag-cell-inline-editing:focus-within {
 /* This makes sure custom cell editor would start from no padding. Built-in ag grid editor's padding is added below. */
 div[class*="ag-theme-salt"] .ag-cell-inline-editing {
   padding: 0;
+  /* When styling option corner='rounded', we don't want this to be flipped between rounded and not between editing and normal state */
+  border-radius: 0;
+}
+
+div[class*="ag-theme-salt"] .ag-cell-inline-editing.editable-cell input[class^="ag-"] {
+  padding: 0 var(--salt-spacing-100);
 }
 
 div[class*="ag-theme-salt"] .editable-cell,
@@ -73,12 +79,6 @@ div[class*="ag-theme-salt"] .ag-cell-wrapper.ag-row-group {
   align-items: center;
 }
 
-div[class*="ag-theme-salt"] .ag-cell.editable-cell.ag-cell-focus:focus,
-div[class*="ag-theme-salt"] .editable-numeric-cell.ag-cell-focus:focus,
-div[class*="ag-theme-salt"] .editable-cell.ag-cell-focus:focus-within {
-  overflow: visible;
-}
-
 div[class*="ag-theme-salt"] .ag-cell.editable-cell.ag-cell-focus:focus:before,
 div[class*="ag-theme-salt"] .ag-cell.editable-numeric-cell.ag-cell-focus:focus:before,
 div[class*="ag-theme-salt"] .ag-cell.editable-cell.ag-cell-focus:focus-within:before,
@@ -104,6 +104,57 @@ div[class*="ag-theme-salt"] .editable-numeric-cell input {
   border: none;
   background-color: transparent;
 }
+
+/* Ag Large Text Cell Editor  */
+div[class*="ag-theme-salt"] .ag-large-text-input {
+  padding: 0;
+}
+
+/* Ag Select Cell Editor - all should be scoped with `.editable-cell` so it's not impacting users not using our class */
+
+div[class*="ag-theme-salt"] .editable-cell .ag-picker-field-wrapper {
+  /* Allow cell focus ring to come through */
+  background-color: transparent;
+  border: none;
+}
+
+div[class*="ag-theme-salt"] .ag-select .ag-picker-field-wrapper {
+  border: var(--salt-size-border) var(--salt-separable-borderStyle) var(--salt-editable-borderColor);
+  border-radius: 0;
+}
+
+div[class*="ag-theme-salt"] .ag-ltr .editable-cell .ag-select .ag-picker-field-wrapper,
+div[class*="ag-theme-salt"] .ag-ltr .editable-cell .ag-rich-select .ag-picker-field-wrapper {
+  padding: 0 var(--salt-spacing-100);
+  border-radius: 0;
+}
+
+div[class*="ag-theme-salt"] .ag-ltr .editable-cell .ag-select .ag-icon-small-down::before,
+div[class*="ag-theme-salt"] .ag-ltr .editable-cell .ag-rich-select .ag-icon-small-down::before {
+  /* Change the icon to be aligned with Salt chevron instead of triangle */
+  /* We are not using different icons between collpase / expand, given only collapsed icon is available in ag salt icon font (.ag-picker-collapsed vs .ag-picker-expanded) */
+  content: var(--ag-icon-font-code-contracted);
+}
+
+div[class*="ag-theme-salt"] .ag-ltr .ag-select-list-item,
+div[class*="ag-theme-salt"] .ag-ltr .ag-rich-select-row {
+  /* This can't be scoped to editable-cell given it's sitting within .ag-popup */
+  padding: 0 var(--salt-spacing-100);
+}
+
+div[class*="ag-theme-salt"] .ag-select-list,
+div[class*="ag-theme-salt"] .ag-rich-select-list {
+  /* Match border to OptionList */
+  border: var(--salt-size-border) var(--salt-selectable-borderStyle-selected) var(--salt-selectable-borderColor-selected);
+}
+
+div[class*="ag-theme-salt"] .ag-select-list-item[aria-selected="true"],
+div[class*="ag-theme-salt"] .ag-rich-select-row-selected {
+  /* Match selected row border to Option */
+  box-shadow: inset 0px var(--salt-size-border) 0px var(--salt-selectable-borderColor-selected), inset 0px calc(var(--salt-size-border) * -1) 0px var(--salt-selectable-borderColor-selected);
+}
+
+/* Range selection cross cells "fake" outlines */
 
 div[class*="ag-theme-salt"] .ag-cell.ag-cell-range-selected:not(.ag-cell-range-single-cell).ag-cell-range-top::after {
   content: "";
