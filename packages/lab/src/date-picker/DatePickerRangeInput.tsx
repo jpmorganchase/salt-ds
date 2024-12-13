@@ -6,8 +6,6 @@ import {
 } from "@salt-ds/date-adapters";
 import { clsx } from "clsx";
 import {
-  type KeyboardEvent,
-  type KeyboardEventHandler,
   type SyntheticEvent,
   forwardRef,
   useCallback,
@@ -121,9 +119,8 @@ export const DatePickerRangeInput = forwardRef(function DatePickerRangeInput<
   const { dateAdapter } = useLocalization<TDate>();
   const {
     className,
-    endInputProps: endInputPropsProp,
-    startInputProps: startInputPropsProp,
-    onKeyDown,
+    endInputProps,
+    startInputProps,
     defaultValue,
     format,
     value: valueProp,
@@ -192,29 +189,6 @@ export const DatePickerRangeInput = forwardRef(function DatePickerRangeInput<
       setValue(previousValue.current);
     }
   }, [cancelled]);
-
-  const startInputProps: {
-    onKeyDown: KeyboardEventHandler<HTMLInputElement>;
-  } = {
-    onKeyDown: (event: KeyboardEvent<HTMLInputElement>) => {
-      if (event.key === "ArrowDown") {
-        setOpen(true);
-      }
-      startInputPropsProp?.onKeyDown?.(event);
-    },
-    ...startInputPropsProp,
-  };
-  const endInputProps: {
-    onKeyDown: KeyboardEventHandler<HTMLInputElement>;
-  } = {
-    onKeyDown: (event: KeyboardEvent<HTMLInputElement>) => {
-      if (event.key === "ArrowDown") {
-        setOpen(true);
-      }
-      endInputPropsProp?.onKeyDown?.(event);
-    },
-    ...endInputPropsProp,
-  };
 
   return (
     <DateInputRange
