@@ -117,10 +117,10 @@ export function Step({
       <StepSROnly id={srOnly.substepsId} aria-hidden>
         {srOnly.substepsText}
       </StepSROnly>
-      <StepConnector />
       <StepSROnly id={srOnly.stateId} aria-hidden>
         {srOnly.stateText}
       </StepSROnly>
+      <StepConnector />
       <StepIcon
         stage={stage}
         status={status}
