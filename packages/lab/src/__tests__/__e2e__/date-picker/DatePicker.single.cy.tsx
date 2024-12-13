@@ -90,6 +90,11 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
       cy.findByRole("textbox").click().type("{downArrow}", { force: true });
       cy.findByRole("application").should("not.exist");
     });
+
+    it("SHOULD not open overlay if defaultOpen is set", () => {
+      cy.mount(<Single readOnly defaultOpen />);
+      cy.findByRole("application").should("not.exist");
+    });
   });
 
   adapters.forEach((adapter: SaltDateAdapter<DateFrameworkType>) => {
@@ -482,9 +487,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
         });
 
         it("SHOULD be able to enable the overlay to open on click", () => {
-          cy.mount(
-            <UncontrolledOpen openOnClick defaultSelectedDate={initialDate} />,
-          );
+          cy.mount(<Single openOnClick defaultSelectedDate={initialDate} />);
           cy.findByRole("application").should("not.exist");
           // Simulate opening the calendar on click
           cy.document().find("input").realClick();
@@ -497,18 +500,14 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
             name: adapter.format(updatedDate, "DD MMMM YYYY"),
           }).realClick();
           cy.findByRole("application").should("not.exist");
-          cy.document()
-            .find("input")
-            .should("have.value", updatedFormattedDateValue);
+          cy.findByRole("textbox").should(
+            "have.value",
+            updatedFormattedDateValue,
+          );
         });
 
         it("SHOULD be able to enable the overlay to open on keydown", () => {
-          cy.mount(
-            <UncontrolledOpen
-              openOnKeyDown
-              defaultSelectedDate={initialDate}
-            />,
-          );
+          cy.mount(<Single openOnKeyDown defaultSelectedDate={initialDate} />);
           cy.findByRole("application").should("not.exist");
           // Simulate opening the calendar on arrow down
           cy.document().find("input").realClick();
@@ -523,15 +522,14 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
             name: adapter.format(updatedDate, "DD MMMM YYYY"),
           }).realClick();
           cy.findByRole("application").should("not.exist");
-          cy.document()
-            .find("input")
-            .should("have.value", updatedFormattedDateValue);
+          cy.findByRole("textbox").should(
+            "have.value",
+            updatedFormattedDateValue,
+          );
         });
 
         it("SHOULD be able to enable the overlay to open on focus", () => {
-          cy.mount(
-            <UncontrolledOpen openOnFocus defaultSelectedDate={initialDate} />,
-          );
+          cy.mount(<Single openOnFocus defaultSelectedDate={initialDate} />);
           cy.findByRole("application").should("not.exist");
           // Simulate opening the calendar on focus
           cy.document().find("input").focus();
@@ -544,9 +542,10 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
             name: adapter.format(updatedDate, "DD MMMM YYYY"),
           }).realClick();
           cy.findByRole("application").should("not.exist");
-          cy.document()
-            .find("input")
-            .should("have.value", updatedFormattedDateValue);
+          cy.findByRole("textbox").should(
+            "have.value",
+            updatedFormattedDateValue,
+          );
         });
       });
 
