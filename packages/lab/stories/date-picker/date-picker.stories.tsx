@@ -173,6 +173,17 @@ Range.args = {
   selectionVariant: "range",
 };
 
+export const SingleReadOnly = DatePickerSingleTemplate.bind({});
+SingleReadOnly.args = {
+  readOnly: true,
+};
+
+export const RangeReadOnly = DatePickerRangeTemplate.bind({});
+RangeReadOnly.args = {
+  readOnly: true,
+  selectionVariant: "range",
+};
+
 export const SingleControlled: StoryFn<
   DatePickerSingleProps<DateFrameworkType>
 > = ({ selectionVariant, defaultSelectedDate, ...args }) => {

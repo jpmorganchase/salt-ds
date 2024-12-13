@@ -35,9 +35,61 @@ const {
   SingleWithMinMaxDate,
   SingleWithTodayButton,
   SingleCustomFormat,
-} = datePickerStories as any;
+} = datePickerStories as any; // not using composeStories yet, will break certain test below
 
 describe("GIVEN a DatePicker where selectionVariant is single", () => {
+  describe("WHEN default state", () => {
+    beforeEach(() => {
+      const today = new Date(2024, 4, 6);
+      cy.clock(today, ["Date"]);
+      cy.setDateAdapter(adapterDateFns);
+    });
+
+    afterEach(() => {
+      cy.clock().then((clock) => clock.restore());
+    });
+
+    it("SHOULD show calendar overlay when click the calendar icon button", () => {
+      cy.mount(<Single />);
+
+      // Simulate opening the calendar
+      cy.findByRole("button", { name: "Open Calendar" }).realClick();
+      // Verify that the calendar is displayed
+      cy.findByRole("application").should("exist");
+    });
+
+    it("SHOULD open calendar overlay when using down arrow", () => {
+      cy.mount(<Single />);
+
+      cy.findByRole("textbox").click().type("{downArrow}");
+      // Verify that the calendar is displayed
+      cy.findByRole("application").should("exist");
+    });
+  });
+
+  describe("WHEN readOnly", () => {
+    beforeEach(() => {
+      const today = new Date(2024, 4, 6);
+      cy.clock(today, ["Date"]);
+      cy.setDateAdapter(adapterDateFns);
+    });
+
+    afterEach(() => {
+      cy.clock().then((clock) => clock.restore());
+    });
+
+    it("SHOULD not show calendar icon button", () => {
+      cy.mount(<Single readOnly />);
+      cy.findByRole("button", { name: "Open Calendar" }).should("not.exist");
+    });
+
+    it("SHOULD not open overlay when using down arrow", () => {
+      cy.mount(<Single readOnly />);
+      cy.findByRole("textbox").click().type("{downArrow}", { force: true });
+      cy.findByRole("application").should("not.exist");
+    });
+  });
+
   adapters.forEach((adapter: SaltDateAdapter<DateFrameworkType>) => {
     describe(`Tests with ${adapter.lib}`, () => {
       beforeEach(() => {

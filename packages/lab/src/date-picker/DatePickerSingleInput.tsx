@@ -188,15 +188,17 @@ export const DatePickerSingleInput = forwardRef<
         onDateChange={handleDateChange}
         onDateValueChange={handleDateValueChange}
         endAdornment={
-          <Button
-            appearance="transparent"
-            sentiment="neutral"
-            onClick={handleCalendarButton}
-            disabled={disabled}
-            aria-label="Open Calendar"
-          >
-            <CalendarIcon />
-          </Button>
+          !readOnly && (
+            <Button
+              appearance="transparent"
+              sentiment="neutral"
+              onClick={handleCalendarButton}
+              disabled={disabled}
+              aria-label="Open Calendar"
+            >
+              <CalendarIcon />
+            </Button>
+          )
         }
         onKeyDown={handleOnKeyDown}
         {...rest}

@@ -94,11 +94,15 @@ interface DatePickerOverlayProviderProps {
    * The content to be rendered inside the overlay provider.
    */
   children: ReactNode;
+  /**
+   * When true, shouldn't open the overlay.
+   */
+  readOnly?: boolean;
 }
 
 export const DatePickerOverlayProvider: React.FC<
   DatePickerOverlayProviderProps
-> = ({ open: openProp, defaultOpen, onOpen, children }) => {
+> = ({ open: openProp, defaultOpen, onOpen, children, readOnly }) => {
   const [open, setOpenState] = useControlled({
     controlled: openProp,
     default: Boolean(defaultOpen),
@@ -130,6 +134,10 @@ export const DatePickerOverlayProvider: React.FC<
       reason?: OpenChangeReason | undefined,
     ) => {
       if (newOpen) {
+        if (readOnly) {
+          // When not open overlay when readOnly
+          return;
+        }
         triggeringElement.current = document.activeElement as HTMLElement;
       }
       setOpenState(newOpen);
@@ -141,7 +149,7 @@ export const DatePickerOverlayProvider: React.FC<
         onDismissCallback?.current?.();
       }
     },
-    [onOpen],
+    [onOpen, readOnly],
   );
 
   const floatingUIResult = useFloatingUI({
