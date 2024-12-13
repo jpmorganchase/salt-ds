@@ -1,7 +1,11 @@
 import {
+  type ElementProps,
+  type FloatingContext,
   type OpenChangeReason,
   flip,
+  useClick,
   useDismiss,
+  useFocus,
   useInteractions,
 } from "@floating-ui/react";
 import { createContext, useControlled, useFloatingUI } from "@salt-ds/core";
@@ -9,10 +13,10 @@ import {
   type ReactNode,
   useCallback,
   useContext,
-  useEffect,
   useMemo,
   useRef,
 } from "react";
+import { useKeyboard } from "./useKeyboard";
 
 /**
  * Interface representing the state for a DatePicker overlay.
@@ -82,6 +86,18 @@ interface DatePickerOverlayProviderProps {
    */
   open?: boolean;
   /**
+   * When `open` is uncontrolled, set this to `true` to open on focus
+   */
+  openOnFocus?: boolean;
+  /**
+   * When `open` is uncontrolled, set this to `true` to open on click
+   */
+  openOnClick?: boolean;
+  /**
+   * When `open` is uncontrolled, set this to `true` to open on arrow key down
+   */
+  openOnKeyDown?: boolean;
+  /**
    * Handler for when open state changes
    * @param newOpen - true when opened
    */
@@ -95,6 +111,10 @@ interface DatePickerOverlayProviderProps {
    */
   children: ReactNode;
   /**
+   * A factory method to create a set of interaction, if provided overrides the default interactions
+   */
+  interactions?: (context: FloatingContext) => Array<ElementProps | void>;
+  /**
    * When true, shouldn't open the overlay.
    */
   readOnly?: boolean;
@@ -102,8 +122,18 @@ interface DatePickerOverlayProviderProps {
 
 export const DatePickerOverlayProvider: React.FC<
   DatePickerOverlayProviderProps
-> = ({ open: openProp, defaultOpen, onOpen, children, readOnly }) => {
-  const [open, setOpenState] = useControlled({
+> = ({
+  open: openProp,
+  openOnClick,
+  openOnFocus,
+  openOnKeyDown,
+  defaultOpen,
+  onOpen,
+  children,
+  interactions,
+  readOnly,
+}) => {
+  const [open, setOpenState, isOpenControlled] = useControlled({
     controlled: openProp,
     default: Boolean(defaultOpen),
     name: "DatePicker",
@@ -112,36 +142,30 @@ export const DatePickerOverlayProvider: React.FC<
   const triggeringElement = useRef<HTMLElement | null>(null);
   const onDismissCallback = useRef<() => void>();
 
-  useEffect(() => {
-    if (!open) {
-      const trigger = triggeringElement.current as HTMLElement;
-      if (trigger) {
-        trigger.focus();
-      }
-      if (trigger instanceof HTMLInputElement) {
-        setTimeout(() => {
-          trigger.setSelectionRange(0, trigger.value.length);
-        }, 0);
-      }
-      triggeringElement.current = null;
-    }
-  }, [open]);
-
   const setOpen = useCallback(
-    (
-      newOpen: boolean,
-      _event?: Event | undefined,
-      reason?: OpenChangeReason | undefined,
-    ) => {
+    (newOpen: boolean, _event?: Event, reason?: OpenChangeReason) => {
       if (newOpen) {
         if (readOnly) {
           // When not open overlay when readOnly
           return;
         }
         triggeringElement.current = document.activeElement as HTMLElement;
+      } else if (!isOpenControlled) {
+        const trigger = triggeringElement.current as HTMLElement;
+        if (trigger) {
+          trigger.focus();
+        }
+        if (trigger instanceof HTMLInputElement) {
+          setTimeout(() => {
+            trigger.setSelectionRange(0, trigger.value.length);
+          }, 1);
+        }
+        triggeringElement.current = null;
       }
+
       setOpenState(newOpen);
       onOpen?.(newOpen);
+
       if (
         reason === "escape-key" ||
         (reason === "outside-press" && onDismissCallback.current)
@@ -162,7 +186,22 @@ export const DatePickerOverlayProvider: React.FC<
   const {
     getFloatingProps: _getFloatingPropsCallback,
     getReferenceProps: _getReferenceProps,
-  } = useInteractions([useDismiss(floatingUIResult.context)]);
+  } = useInteractions(
+    interactions
+      ? interactions(floatingUIResult.context)
+      : [
+          useDismiss(floatingUIResult.context),
+          useFocus(floatingUIResult.context, {
+            enabled: !!openOnFocus,
+          }),
+          useKeyboard(floatingUIResult.context, { enabled: !!openOnKeyDown }),
+          useClick(floatingUIResult.context, {
+            enabled: !!openOnClick,
+            toggle: false,
+          }),
+        ],
+  );
+
   const getFloatingPropsCallback = useMemo(
     () => _getFloatingPropsCallback,
     [_getFloatingPropsCallback],
