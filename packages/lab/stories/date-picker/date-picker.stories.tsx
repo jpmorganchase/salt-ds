@@ -1,3 +1,4 @@
+import type { OpenChangeReason } from "@floating-ui/react";
 import {
   Button,
   Divider,
@@ -8,6 +9,7 @@ import {
   FormFieldLabel as FormLabel,
   StackLayout,
   Text,
+  ToggleButton,
 } from "@salt-ds/core";
 import {
   DateDetailError,
@@ -175,7 +177,7 @@ Range.args = {
 
 export const SingleReadOnly = DatePickerSingleTemplate.bind({});
 SingleReadOnly.args = {
-  readOnly: true,
+  readOnly: true
 };
 
 export const RangeReadOnly = DatePickerRangeTemplate.bind({});
@@ -2691,4 +2693,162 @@ WithExperimentalTime.parameters = {
       code: "Disabled for this story, see https://github.com/storybookjs/storybook/issues/11554",
     },
   },
+};
+
+export const UncontrolledOpen: StoryFn<
+  DatePickerSingleProps<DateFrameworkType>
+> = ({ selectionVariant, defaultSelectedDate, ...args }) => {
+  const [openOnClick, setOpenOnClick] = useState(false);
+  const [openOnKeyDown, setOpenOnKeyDown] = useState(false);
+  const [openOnFocus, setOpenOnFocus] = useState(false);
+  return (
+    <StackLayout style={{ width: "400px" }}>
+      <FlexLayout>
+        <ToggleButton
+          aria-label={"open on focus"}
+          value={openOnFocus ? "false" : "true"}
+          onChange={(event) =>
+            setOpenOnFocus(event.currentTarget.value === "true")
+          }
+        >
+          Open On Focus
+        </ToggleButton>
+        <ToggleButton
+          aria-label={"open on click"}
+          value={openOnClick ? "false" : "true"}
+          onChange={(event) =>
+            setOpenOnClick(event.currentTarget.value === "true")
+          }
+        >
+          Open On Click
+        </ToggleButton>
+        <ToggleButton
+          aria-label={"open on key down"}
+          value={openOnKeyDown ? "false" : "true"}
+          onChange={(event) =>
+            setOpenOnKeyDown(event.currentTarget.value === "true")
+          }
+        >
+          Open On Key Down
+        </ToggleButton>
+      </FlexLayout>
+      <DatePicker
+        selectionVariant={"single"}
+        openOnClick={openOnClick}
+        openOnKeyDown={openOnKeyDown}
+        openOnFocus={openOnFocus}
+        {...args}
+        defaultSelectedDate={defaultSelectedDate}
+      >
+        <DatePickerTrigger>
+          <DatePickerSingleInput />
+        </DatePickerTrigger>
+        <DatePickerOverlay>
+          <DatePickerSinglePanel />
+        </DatePickerOverlay>
+      </DatePicker>
+    </StackLayout>
+  );
+};
+
+export const ControlledOpen: StoryFn<
+  DatePickerSingleProps<DateFrameworkType>
+> = ({ selectionVariant, defaultSelectedDate, ...args }) => {
+  const [open, setOpen] = useState(false);
+  const [selectedDate, setSelectedDate] = useState<
+    SingleDateSelection<DateFrameworkType> | null | undefined
+  >(defaultSelectedDate ?? null);
+  const { dateAdapter } = useLocalization();
+  const triggerRef = useRef<HTMLInputElement | null>(null);
+  const applyButtonRef = useRef<HTMLButtonElement>(null);
+  const datePickerRef = useRef<HTMLDivElement>(null);
+
+  const handleSelectionChange = useCallback(
+    (
+      _event: SyntheticEvent,
+      date: SingleDateSelection<DateFrameworkType> | null,
+      _details: DateInputSingleDetails | undefined,
+    ) => {
+      setSelectedDate(date ?? null);
+    },
+    [dateAdapter],
+  );
+
+  const handleApply = useCallback(
+    (
+      event: SyntheticEvent,
+      date: SingleDateSelection<DateFrameworkType> | null,
+    ) => {
+      console.log(
+        `Applied StartDate: ${date ? dateAdapter.format(date, "DD MMM YYYY") : date}`,
+      );
+      setSelectedDate(date);
+      setOpen(false);
+    },
+    [dateAdapter],
+  );
+
+  const handleOpen = useCallback(
+    (
+      newOpen: boolean,
+      _event?: Event | undefined,
+      reason?: OpenChangeReason | undefined,
+    ) => {
+      if (!newOpen && reason === undefined) {
+        triggerRef?.current?.focus();
+        setTimeout(() => {
+          triggerRef?.current?.setSelectionRange(
+            0,
+            triggerRef.current.value.length,
+          );
+        }, 1);
+      }
+      setOpen(newOpen);
+    },
+    [],
+  );
+
+  return (
+    <StackLayout style={{ width: "400px" }}>
+      <FlexLayout>
+        <ToggleButton
+          aria-label={"open picker"}
+          value={open ? "false" : "true"}
+          selected={open}
+          onChange={(event) => {
+            setOpen(event.currentTarget.value === "true");
+          }}
+        >
+          Open
+        </ToggleButton>
+      </FlexLayout>
+      <DatePicker
+        selectionVariant={"single"}
+        {...args}
+        onSelectionChange={handleSelectionChange}
+        selectedDate={selectedDate}
+        onApply={handleApply}
+        onOpen={handleOpen}
+        open={open}
+      >
+        <DatePickerTrigger>
+          <DatePickerSingleInput inputRef={triggerRef} />
+        </DatePickerTrigger>
+        <DatePickerOverlay ref={datePickerRef}>
+          <FlexLayout gap={0} direction="column">
+            <FlexItem>
+              <DatePickerSinglePanel />
+              <Divider variant="tertiary" />
+            </FlexItem>
+            <FlexItem>
+              <DatePickerActions
+                selectionVariant="single"
+                applyButtonRef={applyButtonRef}
+              />
+            </FlexItem>
+          </FlexLayout>
+        </DatePickerOverlay>
+      </DatePicker>
+    </StackLayout>
+  );
 };

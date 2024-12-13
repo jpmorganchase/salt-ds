@@ -7,7 +7,6 @@ import {
 import { CalendarIcon } from "@salt-ds/icons";
 import { clsx } from "clsx";
 import {
-  type KeyboardEvent,
   type SyntheticEvent,
   forwardRef,
   useCallback,
@@ -100,7 +99,6 @@ export const DatePickerSingleInput = forwardRef<
       validate,
       defaultValue,
       onDateValueChange,
-      onKeyDown,
       ...rest
     } = props;
 
@@ -154,16 +152,6 @@ export const DatePickerSingleInput = forwardRef<
       [onDateValueChange],
     );
 
-    const handleOnKeyDown = useCallback(
-      (event: KeyboardEvent<HTMLInputElement>) => {
-        if (event.key === "ArrowDown") {
-          setOpen(true);
-          onKeyDown?.(event);
-        }
-      },
-      [onKeyDown],
-    );
-
     // biome-ignore lint/correctness/useExhaustiveDependencies: should run when open changes and not selected date or value
     useEffect(() => {
       if (open) {
@@ -200,7 +188,6 @@ export const DatePickerSingleInput = forwardRef<
             </Button>
           )
         }
-        onKeyDown={handleOnKeyDown}
         {...rest}
       />
     );

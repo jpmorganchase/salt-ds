@@ -63,6 +63,7 @@ export const DatePickerOverlay = forwardRef<
       focusManagerProps={
         floatingUIResult?.context
           ? {
+              returnFocus: false,
               context: floatingUIResult.context,
               initialFocus: 4,
             }
