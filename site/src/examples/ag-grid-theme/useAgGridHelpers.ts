@@ -3,7 +3,8 @@ import type { GridApi, GridReadyEvent } from "ag-grid-community";
 import { LicenseManager } from "ag-grid-enterprise";
 import type { AgGridReactProps } from "ag-grid-react";
 import { type HTMLAttributes, useMemo, useRef, useState } from "react";
-
+// Import enterprise to showcase theme, make sure to buy your enterprise license if needed
+import "ag-grid-enterprise";
 LicenseManager.setLicenseKey("your license key");
 
 // Helps to set className, rowHeight and headerHeight depending on the current density

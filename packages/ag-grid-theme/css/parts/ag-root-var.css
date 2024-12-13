@@ -27,6 +27,7 @@ div[class*="ag-theme-salt"] {
   --ag-header-height: calc(var(--salt-size-base) + var(--salt-spacing-100));
   /* Replicating min size 12px from Icon.css */
   --ag-icon-size: max(var(--salt-size-icon), 12px);
+  --ag-input-border-color: var(--salt-editable-borderColor);
   --ag-input-focus-border-color: var(--salt-editable-borderColor-hover);
   --ag-input-focus-box-shadow: none;
   --ag-invalid-color: var(--salt-status-error-foreground-informative);
@@ -45,6 +46,7 @@ div[class*="ag-theme-salt"] {
   --ag-selected-tab-underline-color: var(--salt-navigable-indicator-active);
   --ag-selected-tab-underline-width: var(--salt-size-indicator);
   --ag-subheader-background-color: var(--salt-container-primary-background);
+  --ag-control-panel-background-color: var(--salt-container-primary-background);
   --ag-toggle-button-off-background-color: var(--salt-container-primary-background);
   --ag-toggle-button-off-border-color: var(--salt-selectable-borderColor);
   --ag-toggle-button-on-background-color: var(--salt-container-primary-background);
