@@ -9,7 +9,9 @@
   },
   "bugs": "https://github.com/jpmorganchase/salt-ds/issues",
   "main": "src/index.ts",
-  "sideEffects": false,
+  "sideEffects": [
+    "*.css"
+  ],
   "dependencies": {
     "@floating-ui/react": "^0.26.5",
     "@salt-ds/icons": "workspace:^",
