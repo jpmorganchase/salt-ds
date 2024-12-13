@@ -13,6 +13,9 @@
     "/index.css",
     "/css"
   ],
+  "sideEffects": [
+    "*.css"
+  ],
   "scripts": {
     "build": "yarn node ./scripts/build.mjs",
     "build:watch": "yarn node ./scripts/build.mjs --watch"
