@@ -1,3 +1,4 @@
+import { Spinner } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
@@ -7,7 +8,6 @@ import {
   forwardRef,
 } from "react";
 import { makePrefixer } from "../utils";
-import { Spinner } from "@salt-ds/core";
 
 import buttonCss from "./Button.css";
 import { useButton } from "./useButton";
