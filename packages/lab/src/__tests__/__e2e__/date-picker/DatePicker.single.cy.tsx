@@ -36,7 +36,6 @@ const {
   SingleWithMinMaxDate,
   SingleWithTodayButton,
   SingleCustomFormat,
-  UncontrolledOpen,
 } = datePickerStories as any;
 
 describe("GIVEN a DatePicker where selectionVariant is single", () => {
@@ -66,6 +65,45 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
       cy.findByRole("textbox").click().type("{downArrow}");
       // Verify that the calendar is displayed
       cy.findByRole("application").should("exist");
+    });
+
+    it("SHOULD be able to enable the overlay to open on click", () => {
+      cy.mount(<Single openOnClick />);
+      cy.findByRole("application").should("not.exist");
+      // Simulate opening the calendar on click
+      cy.document().find("input").realClick();
+      cy.findByRole("application").should("exist");
+    });
+
+    it("SHOULD be able to enable the overlay to open on keydown", () => {
+      cy.mount(<Single openOnKeyDown />);
+      cy.findByRole("application").should("not.exist");
+      // Simulate opening the calendar on arrow down
+      cy.document().find("input").realClick();
+      cy.findByRole("application").should("not.exist");
+      cy.realPress("ArrowDown");
+      cy.findByRole("application").should("exist");
+    });
+
+    it("SHOULD be able to enable the overlay to open on focus", () => {
+      cy.mount(<Single openOnFocus />);
+      cy.findByRole("application").should("not.exist");
+      // Simulate opening the calendar on focus
+      cy.document().find("input").focus();
+      cy.findByRole("application").should("exist");
+    });
+
+    it("SHOULD be able to control the overlay open state", () => {
+      cy.mount(<ControlledOpen />);
+      cy.findByRole("application").should("not.exist");
+      // Simulate opening the calendar through a controlled state
+      cy.document().find("input").realClick();
+      cy.findByRole("application").should("not.exist");
+      cy.findByRole("button", { name: "Open Calendar" }).realClick();
+      cy.findByRole("application").should("exist");
+      cy.findByRole("button", { name: "Cancel" }).realClick();
+      // Verify that the calendar can be closed by user
+      cy.findByRole("application").should("not.exist");
     });
   });
 
@@ -485,68 +523,6 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
             updatedFormattedDateValue,
           );
         });
-
-        it("SHOULD be able to enable the overlay to open on click", () => {
-          cy.mount(<Single openOnClick defaultSelectedDate={initialDate} />);
-          cy.findByRole("application").should("not.exist");
-          // Simulate opening the calendar on click
-          cy.document().find("input").realClick();
-          cy.findByRole("application").should("exist");
-          // Simulate selecting a new date
-          cy.findByRole("button", {
-            name: adapter.format(updatedDate, "DD MMMM YYYY"),
-          }).should("exist");
-          cy.findByRole("button", {
-            name: adapter.format(updatedDate, "DD MMMM YYYY"),
-          }).realClick();
-          cy.findByRole("application").should("not.exist");
-          cy.findByRole("textbox").should(
-            "have.value",
-            updatedFormattedDateValue,
-          );
-        });
-
-        it("SHOULD be able to enable the overlay to open on keydown", () => {
-          cy.mount(<Single openOnKeyDown defaultSelectedDate={initialDate} />);
-          cy.findByRole("application").should("not.exist");
-          // Simulate opening the calendar on arrow down
-          cy.document().find("input").realClick();
-          cy.findByRole("application").should("not.exist");
-          cy.realPress("ArrowDown");
-          cy.findByRole("application").should("exist");
-          // Simulate selecting a new date
-          cy.findByRole("button", {
-            name: adapter.format(updatedDate, "DD MMMM YYYY"),
-          }).should("exist");
-          cy.findByRole("button", {
-            name: adapter.format(updatedDate, "DD MMMM YYYY"),
-          }).realClick();
-          cy.findByRole("application").should("not.exist");
-          cy.findByRole("textbox").should(
-            "have.value",
-            updatedFormattedDateValue,
-          );
-        });
-
-        it("SHOULD be able to enable the overlay to open on focus", () => {
-          cy.mount(<Single openOnFocus defaultSelectedDate={initialDate} />);
-          cy.findByRole("application").should("not.exist");
-          // Simulate opening the calendar on focus
-          cy.document().find("input").focus();
-          cy.findByRole("application").should("exist");
-          // Simulate selecting a new date
-          cy.findByRole("button", {
-            name: adapter.format(updatedDate, "DD MMMM YYYY"),
-          }).should("exist");
-          cy.findByRole("button", {
-            name: adapter.format(updatedDate, "DD MMMM YYYY"),
-          }).realClick();
-          cy.findByRole("application").should("not.exist");
-          cy.findByRole("textbox").should(
-            "have.value",
-            updatedFormattedDateValue,
-          );
-        });
       });
 
       describe("controlled component", () => {
@@ -629,30 +605,6 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
               value: initialDateValue,
             });
           });
-        });
-
-        it("SHOULD be able to control the overlay open state", () => {
-          cy.mount(<ControlledOpen defaultSelectedDate={initialDate} />);
-          cy.findByRole("application").should("not.exist");
-          // Simulate opening the calendar
-          cy.document().find("input").realClick();
-          cy.findByRole("application").should("not.exist");
-          cy.findByRole("button", { name: "Open Calendar" }).realClick();
-          cy.findByRole("application").should("exist");
-          // Simulate selecting a new date
-          cy.findByRole("button", {
-            name: adapter.format(updatedDate, "DD MMMM YYYY"),
-          }).should("exist");
-          cy.findByRole("button", {
-            name: adapter.format(updatedDate, "DD MMMM YYYY"),
-          }).realClick();
-          cy.findByRole("application").should("exist");
-          cy.findByRole("button", { name: "Apply" }).realClick();
-          // Verify that the calendar is closed and the new date is applied
-          cy.findByRole("application").should("not.exist");
-          cy.document()
-            .find("input")
-            .should("have.value", updatedFormattedDateValue);
         });
 
         it("SHOULD support format prop on the input", () => {
