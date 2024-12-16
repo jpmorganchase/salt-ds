@@ -25,7 +25,7 @@ import {
   SaltProviderNext,
   useCurrentBreakpoint,
 } from "@salt-ds/core";
-import { AdapterDateFns } from "@salt-ds/date-adapters";
+import { AdapterDateFns } from "@salt-ds/date-adapters/date-fns";
 import { LocalizationProvider } from "@salt-ds/lab";
 import clsx from "clsx";
 import { SessionProvider } from "next-auth/react";
