@@ -3,7 +3,7 @@ import { composeStories } from "@storybook/react";
 import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
 
 const composedStories = composeStories(buttonStories);
-const { Default, FocusableWhenDisabled } = composedStories;
+const { Default, FocusableWhenDisabled, LoadingSingle } = composedStories;
 
 describe("Given a Button", () => {
   checkAccessibility(composedStories);
@@ -41,6 +41,20 @@ describe("Given a Button", () => {
     const clickSpy = cy.stub().as("clickSpy");
     cy.mount(<FocusableWhenDisabled onClick={clickSpy} />);
     cy.findByRole("button").should("have.attr", "aria-disabled", "true");
+    cy.realPress("Tab");
+    cy.findByRole("button").should("be.focused");
+    cy.realPress("Enter");
+    cy.get("@clickSpy").should("not.be.called");
+    cy.realPress("Space");
+    cy.get("@clickSpy").should("not.be.called");
+    cy.findByRole("button").realClick();
+    cy.get("@clickSpy").should("not.be.called");
+  });
+
+  it("should be focusable when loading", () => {
+    const clickSpy = cy.stub().as("clickSpy");
+    cy.mount(<LoadingSingle onClick={clickSpy} />);
+    cy.findByRole("button").should("have.attr", "data-loading", "true");
     cy.realPress("Tab");
     cy.findByRole("button").should("be.focused");
     cy.realPress("Enter");

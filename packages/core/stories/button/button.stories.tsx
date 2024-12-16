@@ -205,6 +205,12 @@ export const Loading: StoryFn = () => {
   );
 };
 
+export const LoadingSingle = SingleButtonTemplate.bind({});
+LoadingSingle.args = {
+  loading: true,
+  children: "Loading",
+};
+
 export const FocusableWhenDisabled = SingleButtonTemplate.bind({});
 FocusableWhenDisabled.args = {
   focusableWhenDisabled: true,
