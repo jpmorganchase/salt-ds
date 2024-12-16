@@ -26,6 +26,7 @@ const adapters = [adapterDateFns, adapterDayjs, adapterLuxon, adapterMoment];
 
 const {
   // Storybook wraps components in it's own LocalizationProvider, so do not compose Stories
+  ControlledOpen,
   Single,
   SingleControlled,
   SingleWithConfirmation,
@@ -35,7 +36,7 @@ const {
   SingleWithMinMaxDate,
   SingleWithTodayButton,
   SingleCustomFormat,
-} = datePickerStories as any; // not using composeStories yet, will break certain test below
+} = datePickerStories as any;
 
 describe("GIVEN a DatePicker where selectionVariant is single", () => {
   describe("WHEN default state", () => {
@@ -65,6 +66,45 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
       // Verify that the calendar is displayed
       cy.findByRole("application").should("exist");
     });
+
+    it("SHOULD be able to enable the overlay to open on click", () => {
+      cy.mount(<Single openOnClick />);
+      cy.findByRole("application").should("not.exist");
+      // Simulate opening the calendar on click
+      cy.document().find("input").realClick();
+      cy.findByRole("application").should("exist");
+    });
+
+    it("SHOULD be able to enable the overlay to open on keydown", () => {
+      cy.mount(<Single openOnKeyDown />);
+      cy.findByRole("application").should("not.exist");
+      // Simulate opening the calendar on arrow down
+      cy.document().find("input").realClick();
+      cy.findByRole("application").should("not.exist");
+      cy.realPress("ArrowDown");
+      cy.findByRole("application").should("exist");
+    });
+
+    it("SHOULD be able to enable the overlay to open on focus", () => {
+      cy.mount(<Single openOnFocus />);
+      cy.findByRole("application").should("not.exist");
+      // Simulate opening the calendar on focus
+      cy.document().find("input").focus();
+      cy.findByRole("application").should("exist");
+    });
+
+    it("SHOULD be able to control the overlay open state", () => {
+      cy.mount(<ControlledOpen />);
+      cy.findByRole("application").should("not.exist");
+      // Simulate opening the calendar through a controlled state
+      cy.document().find("input").realClick();
+      cy.findByRole("application").should("not.exist");
+      cy.findByRole("button", { name: "Open Calendar" }).realClick();
+      cy.findByRole("application").should("exist");
+      cy.findByRole("button", { name: "Cancel" }).realClick();
+      // Verify that the calendar can be closed by user
+      cy.findByRole("application").should("not.exist");
+    });
   });
 
   describe("WHEN readOnly", () => {
@@ -86,6 +126,11 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
     it("SHOULD not open overlay when using down arrow", () => {
       cy.mount(<Single readOnly />);
       cy.findByRole("textbox").click().type("{downArrow}", { force: true });
+      cy.findByRole("application").should("not.exist");
+    });
+
+    it("SHOULD not open overlay if defaultOpen is set", () => {
+      cy.mount(<Single readOnly defaultOpen />);
       cy.findByRole("application").should("not.exist");
     });
   });
@@ -388,11 +433,6 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
           cy.findByRole("button", { name: "Apply" }).realClick();
           // Verify that the calendar is closed and the new date is applied
           cy.findByRole("application").should("not.exist");
-          // cy.get("@appliedDateSpy").should(
-          //   "have.been.calledWith",
-          //   Cypress.sinon.match.any,
-          //   updatedDate,
-          // );
           cy.get("@appliedDateSpy").should((spy: any) => {
             const [_event, date] = spy.lastCall.args;
             expect(adapter.isValid(date)).to.be.true;
