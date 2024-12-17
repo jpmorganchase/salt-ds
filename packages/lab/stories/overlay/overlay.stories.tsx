@@ -1,6 +1,6 @@
 import {
   Button,
-  H4,
+  H2,
   Overlay,
   OverlayPanel,
   OverlayPanelContent,
@@ -40,7 +40,14 @@ const HeaderTemplate: StoryFn = ({ onOpenChange, ...props }: OverlayProps) => {
           width: 500,
         }}
       >
-        <OverlayHeader header={<H4 id={id}>Header block</H4>} {...props} />
+        <OverlayHeader
+          header={
+            <H2 styleAs="h4" id={id}>
+              Header block
+            </H2>
+          }
+          {...props}
+        />
         <OverlayPanelContent>
           <StackLayout gap={1}>
             <Text>
@@ -68,11 +75,11 @@ Header.args = {};
 export const LongHeader = HeaderTemplate.bind({});
 LongHeader.args = {
   header: (
-    <H4>
+    <H2 styleAs="h4">
       Comprehensive guidelines and detailed instructions for the optimal use and
       application of our services to ensure maximum efficiency and user
       satisfaction
-    </H4>
+    </H2>
   ),
   actions: (
     <Button
@@ -121,7 +128,11 @@ export const HeaderWithCloseButton = ({ onOpenChange }: OverlayProps) => {
         <OverlayHeader
           preheader="Preheader"
           description="Description"
-          header={<H4 id={id}>Header block</H4>}
+          header={
+            <H2 styleAs="h4" id={id}>
+              Header block
+            </H2>
+          }
           actions={<CloseButton />}
         />
         <OverlayPanelContent>
