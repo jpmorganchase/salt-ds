@@ -3,6 +3,7 @@ export * from "./Neutral";
 export * from "./Deprecated";
 export * from "./Disabled";
 export * from "./Loading";
+export * from "./Announcement";
 export * from "./FocusableWhenDisabled";
 export * from "./FullWidth";
 export * from "./IconAndText";

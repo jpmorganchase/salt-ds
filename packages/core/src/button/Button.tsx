@@ -74,6 +74,13 @@ export interface ButtonProps extends ComponentPropsWithoutRef<"button"> {
    * @since 1.37.0.
    */
   loading?: boolean;
+
+  /**
+   * Additional text to be announced by screen readers. Ideally used in conjunction with the loading prop.
+   *
+   * @since 1.37.0.
+   */
+  announcement?: string;
 }
 
 function variantToAppearanceAndColor(
@@ -104,6 +111,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       appearance: appearanceProp,
       sentiment: sentimentProp,
       type = "button",
+      announcement = "",
       variant = "primary",
       ...restProps
     },
@@ -137,31 +145,36 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     // does not require tabindex="0" attribute
     const { tabIndex, ...restButtonProps } = buttonProps;
     return (
-      <button
-        {...restButtonProps}
-        className={clsx(
-          withBaseName(),
-          withBaseName(variant),
-          {
-            [withBaseName("loading")]: loading,
-            [withBaseName("disabled")]: disabled,
-            [withBaseName("active")]: active,
-            [withBaseName(appearance)]: appearance,
-            [withBaseName(sentiment)]: sentiment,
-          },
-          className,
-        )}
-        {...restProps}
-        ref={ref}
-        type={type}
-      >
-        {loading && (
-          <div className={withBaseName("spinner")}>
-            <Spinner size="small" aria-label="loading" />
-          </div>
-        )}
-        {children}
-      </button>
+      <>
+        <button
+          {...restButtonProps}
+          className={clsx(
+            withBaseName(),
+            withBaseName(variant),
+            {
+              [withBaseName("loading")]: loading,
+              [withBaseName("disabled")]: disabled,
+              [withBaseName("active")]: active,
+              [withBaseName(appearance)]: appearance,
+              [withBaseName(sentiment)]: sentiment,
+            },
+            className,
+          )}
+          {...restProps}
+          ref={ref}
+          type={type}
+        >
+          <span className={withBaseName("sr-only")} role="status">
+            {announcement}
+          </span>
+          {loading && (
+            <div className={withBaseName("spinner")} aria-hidden>
+              <Spinner size="small" aria-hidden aria-label=" " />
+            </div>
+          )}
+          <span aria-hidden={!!announcement}>{children}</span>
+        </button>
+      </>
     );
   },
 );
