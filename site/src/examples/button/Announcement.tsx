@@ -1,5 +1,5 @@
-import { useEffect, type MouseEvent } from "react";
 import { Button } from "@salt-ds/core";
+import { type MouseEvent, useEffect } from "react";
 import { useState } from "react";
 
 // example request
