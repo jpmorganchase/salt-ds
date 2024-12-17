@@ -146,7 +146,7 @@ Default.args = {
   id: "Default",
 };
 export const LongTitle = DialogTemplate.bind({});
-Default.args = {
+LongTitle.args = {
   id: "LongTitle",
   header:
     "Complete terms and conditions for using the services provided by our company",
