@@ -1,5 +1,6 @@
 import {
   Button,
+  H2,
   Overlay,
   OverlayPanel,
   OverlayPanelContent,
@@ -34,7 +35,11 @@ export const WithHeader = (): ReactElement => {
       </OverlayTrigger>
       <OverlayPanel aria-labelledby={id}>
         <OverlayHeader
-          header={<h4 id={id}>Title</h4>}
+          header={
+            <H2 styleAs="h4" id={id}>
+              Title
+            </H2>
+          }
           actions={headerActions}
         />
         <OverlayPanelContent>
