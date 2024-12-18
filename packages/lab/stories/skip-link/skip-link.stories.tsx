@@ -4,6 +4,7 @@ import {
   Button,
   FlexItem,
   FlexLayout,
+  H1,
   NavigationItem,
   SplitLayout,
   StackLayout,
@@ -11,24 +12,13 @@ import {
 import { GithubIcon, StackoverflowIcon, SymphonyIcon } from "@salt-ds/icons";
 import { SkipLink } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import "./skip-link.stories.css";
 
 export default {
   title: "Lab/Skip Link",
   component: SkipLink,
 } as Meta<typeof SkipLink>;
-
-const Item = () => {
-  return (
-    <div
-      style={{
-        padding: "calc(var(--salt-spacing-400)*4)",
-        margin: "var(--salt-spacing-400)",
-        backgroundColor: "var(--salt-color-gray-10)",
-      }}
-    />
-  );
-};
 
 const DefaultStory: StoryFn<typeof SkipLink> = (args) => {
   const headerItems = ["Home", "Transactions", "FX", "Credit Manager"];
@@ -49,51 +39,18 @@ const DefaultStory: StoryFn<typeof SkipLink> = (args) => {
   ];
 
   const [activeHeaderNav, setActiveHeaderNav] = useState(headerItems[0]);
-  const [offset, setOffset] = useState(0);
-
-  const setScroll = () => {
-    setOffset(window.scrollY);
-  };
-
-  useEffect(() => {
-    window.addEventListener("scroll", setScroll);
-    return () => {
-      window.removeEventListener("scroll", setScroll);
-    };
-  }, []);
 
   return (
     <BorderLayout>
       <BorderItem position="north">
         <header>
-          <FlexLayout
-            style={{
-              paddingLeft: "var(--salt-spacing-300)",
-              paddingRight: "var(--salt-spacing-300)",
-              backgroundColor: "var(--salt-container-primary-background)",
-              position: "fixed",
-              width: "100%",
-              boxShadow:
-                offset > 0 ? "var(--salt-overlayable-shadow-scroll)" : "none",
-              borderBottom:
-                "var(--salt-size-border) var(--salt-container-borderStyle) var(--salt-separable-primary-borderColor)",
-            }}
-            justify="space-between"
-            gap={3}
-          >
+          <FlexLayout className="header" justify="space-between" gap={3}>
             <FlexItem align="center">
               Click here and press the Tab key to see the Skip Link
             </FlexItem>
             <nav>
               <SkipLink {...args}>Skip to main content</SkipLink>
-              <ul
-                style={{
-                  display: "flex",
-                  listStyle: "none",
-                  padding: "0",
-                  margin: "0",
-                }}
-              >
+              <ul className="navigation">
                 {headerItems?.map((item) => (
                   <li key={item}>
                     <NavigationItem
@@ -123,16 +80,17 @@ const DefaultStory: StoryFn<typeof SkipLink> = (args) => {
           </FlexLayout>
         </header>
       </BorderItem>
-      <BorderItem
-        position="center"
-        style={{
-          margin: "calc(var(--salt-spacing-300) * 2)",
-        }}
-      >
-        <article id="main">
-          <Item />
-          <Item />
-          <Item />
+      <BorderItem position="center" className="center">
+        <article id="main" className="article">
+          <H1>Explore our offering</H1>
+          <section>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam,
+              consequuntur culpa dolor excepturi fugit in ipsa iusto laudantium
+              magnam minima necessitatibus odio qui quia repellendus sit tempore
+              veniam. At, veritatis.
+            </p>
+          </section>
         </article>
         <SplitLayout endItem={<Button>Next</Button>} />
       </BorderItem>

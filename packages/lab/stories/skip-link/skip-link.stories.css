@@ -1,9 +1,21 @@
-.saltTargetBlankNoIcon-Link .saltLink-icon {
-  display: none;
-}
+.header {
+  padding-left: var(--salt-spacing-300);
+  padding-right: var(--salt-spacing-300);
+  background-color: var(--salt-container-primary-background);
+  position: fixed;
+  width: 100%;
 
-.goalsList {
-  font-size: var(--salt-text-fontSize);
-  font-family: var(--salt-text-fontFamily);
-  line-height: var(--salt-text-lineHeight);
+  border-bottom: var(--salt-size-border) var(--salt-container-borderStyle) var(--salt-separable-primary-borderColor);
+}
+.navigation {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.center {
+  margin: calc(var(--salt-spacing-300) * 2);
+}
+.article {
+  max-width: var(--max-content-width);
 }
