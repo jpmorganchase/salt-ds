@@ -7,6 +7,7 @@ import {
   forwardRef,
   useEffect,
   useRef,
+  useState,
 } from "react";
 import { useManageFocusOnTarget } from "./internal/useManageFocusOnTarget";
 
@@ -24,6 +25,7 @@ const withBaseName = makePrefixer("saltSkipLink");
 
 export const SkipLink = forwardRef<HTMLAnchorElement, SkipLinkProps>(
   function SkipLink({ className, target, children, ...rest }, ref) {
+    const [isTargetAvailable, setIsTargetAvailable] = useState(false);
     const targetWindow = useWindow();
     useComponentCssInjection({
       testId: "salt-skip-link",
@@ -35,6 +37,7 @@ export const SkipLink = forwardRef<HTMLAnchorElement, SkipLinkProps>(
 
     useEffect(() => {
       targetRef.current = document.getElementById(target);
+      setIsTargetAvailable(!!targetRef.current);
     }, [target]);
 
     const eventHandlers = useManageFocusOnTarget({
@@ -42,19 +45,18 @@ export const SkipLink = forwardRef<HTMLAnchorElement, SkipLinkProps>(
       targetClass: withBaseName("target"),
     });
 
+    if (!isTargetAvailable) return null;
     return (
-      targetRef.current && (
-        <a
-          className={clsx(withBaseName(), className)}
-          href={`#${target}`}
-          ref={ref}
-          target="_self"
-          {...eventHandlers}
-          {...rest}
-        >
-          {children}
-        </a>
-      )
+      <a
+        className={clsx(withBaseName(), className)}
+        href={`#${target}`}
+        ref={ref}
+        target="_self"
+        {...eventHandlers}
+        {...rest}
+      >
+        {children}
+      </a>
     );
   },
 );
