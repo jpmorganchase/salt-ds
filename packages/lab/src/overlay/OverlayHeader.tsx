@@ -1,4 +1,4 @@
-import { Text, makePrefixer } from "@salt-ds/core";
+import { H2, Text, makePrefixer } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
@@ -45,12 +45,10 @@ export const OverlayHeader = forwardRef<HTMLDivElement, OverlayHeaderProps>(
     return (
       <div className={clsx(withBaseName(), className)} {...rest} ref={ref}>
         <div className={withBaseName("container")}>
-          <div className={withBaseName("header")}>
-            {preheader && (
-              <Text className={withBaseName("preheader")}>{preheader}</Text>
-            )}
+          <H2 styleAs="h4" className={withBaseName("header")}>
+            {preheader && <Text color="primary">{preheader}</Text>}
             {header}
-          </div>
+          </H2>
           {description && (
             <Text color="secondary" className={withBaseName("description")}>
               {description}

@@ -2,4 +2,4 @@
 "@salt-ds/lab": patch
 ---
 
-fix alignment for titles spanning into multiple lines, wrap labs dialog header in H2 to avoid breaking change
+Overlay and Dialog headers fix alignment for titles spanning into multiple lines, wrap preheader and headers in H2.
