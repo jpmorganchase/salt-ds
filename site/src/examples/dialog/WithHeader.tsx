@@ -3,7 +3,6 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
-  H2,
   H3,
   StackLayout,
   useId,
@@ -44,7 +43,7 @@ export const WithHeader = (): ReactElement => {
       <Dialog open={open} onOpenChange={onOpenChange} id={id}>
         <DialogHeader
           preheader="Settlements"
-          header={<H2>Terms and conditions</H2>}
+          header="Terms and conditions"
           description="Effective date: August 29, 2024"
           actions={closeButton}
         />

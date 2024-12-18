@@ -1,6 +1,5 @@
 import {
   Button,
-  H2,
   Overlay,
   OverlayPanel,
   OverlayPanelContent,
@@ -47,11 +46,7 @@ export const Default: StoryFn<QAContainerProps> = (props) => {
           <OverlayHeader
             preheader="Preheader"
             description="Description"
-            header={
-              <H2 styleAs="h4">
-                Guidelines for optimal use of our application
-              </H2>
-            }
+            header="Guidelines for optimal use of our application"
             actions={<CloseButton />}
           />
           <OverlayPanelContent>
