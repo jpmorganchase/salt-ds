@@ -2,11 +2,15 @@ import type { IconProps } from "@salt-ds/icons";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
-import { type ComponentType, type ReactElement, forwardRef } from "react";
+import {
+  type ComponentPropsWithoutRef,
+  type ComponentType,
+  type ReactElement,
+  forwardRef,
+} from "react";
 import { useIcon } from "../semantic-icon-provider";
-import type { TextProps } from "../text";
-import { makePrefixer } from "../utils";
-import type { RenderPropsType } from "../utils";
+import { Text, type TextProps } from "../text";
+import { type RenderPropsType, makePrefixer } from "../utils";
 import linkCss from "./Link.css";
 import { LinkAction } from "./LinkAction";
 
@@ -18,10 +22,12 @@ const withBaseName = makePrefixer("saltLink");
  * @example
  * <LinkExample to="#link">Action</LinkExample>
  */
-export interface LinkProps extends Omit<TextProps<"a">, "as" | "disabled"> {
+export interface LinkProps
+  extends Omit<ComponentPropsWithoutRef<"a">, "color">,
+    Pick<TextProps<"a">, "maxRows" | "styleAs" | "color" | "variant"> {
   IconComponent?: ComponentType<IconProps> | null;
   /**
-   * Render prop to enable customisation of link element.
+   * Render prop to enable customisation of anchor element.
    */
   render?: RenderPropsType["render"];
 }
@@ -35,7 +41,8 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
     color: colorProp,
     variant,
     target = "_self",
-    render,
+    styleAs,
+    maxRows,
     ...rest
   },
   ref,
@@ -53,14 +60,15 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
     IconComponent === undefined ? ExternalIcon : IconComponent;
 
   return (
-    <LinkAction
-      as="a"
+    <Text
+      as={LinkAction}
       className={clsx(withBaseName(), className)}
       href={href}
       ref={ref}
       target={target}
       color={color}
-      render={render}
+      styleAs={styleAs}
+      maxRows={maxRows}
       {...rest}
     >
       {children}
@@ -72,6 +80,6 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
           <span className={withBaseName("externalLinkADA")}>External</span>
         </>
       )}
-    </LinkAction>
+    </Text>
   );
 });

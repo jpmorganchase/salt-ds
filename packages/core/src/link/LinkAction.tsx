@@ -1,15 +1,10 @@
-import type { ComponentPropsWithoutRef } from "react";
-import { Text } from "../text";
+import { type ComponentPropsWithoutRef, forwardRef } from "react";
 import { renderProps } from "../utils";
 
-interface LinkActionProps extends ComponentPropsWithoutRef<any> {}
+interface LinkActionProps extends ComponentPropsWithoutRef<"a"> {}
 
-export function LinkAction(props: LinkActionProps) {
-  const { render, ...rest } = props;
-
-  if (render) {
-    return renderProps("a", props);
-  }
-
-  return <Text {...rest} />;
-}
+export const LinkAction = forwardRef<HTMLAnchorElement, LinkActionProps>(
+  function LinkAction(props, ref) {
+    return renderProps("a", { ...props, ref });
+  },
+);
