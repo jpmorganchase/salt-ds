@@ -2,9 +2,12 @@ import {
   BorderItem,
   BorderLayout,
   Button,
+  Card,
   FlexItem,
   FlexLayout,
+  GridLayout,
   H1,
+  H2,
   NavigationItem,
   SplitLayout,
   StackLayout,
@@ -37,62 +40,93 @@ const DefaultStory: StoryFn<typeof SkipLink> = (args) => {
       key: "GitHub",
     },
   ];
+  const cardHeaders = [
+    "Economic trends",
+    "Machine learning",
+    "Financial conditions",
+    "Balance sheets",
+    "Outlook hub",
+    "Trading strategies",
+    "Emerging markets",
+    "Support tools",
+    "Index",
+  ];
 
   const [activeHeaderNav, setActiveHeaderNav] = useState(headerItems[0]);
 
   return (
     <BorderLayout>
-      <BorderItem position="north">
-        <header>
-          <FlexLayout className="header" justify="space-between" gap={3}>
-            <FlexItem align="center">
-              Click here and press the Tab key to see the Skip Link
-            </FlexItem>
-            <nav>
-              <SkipLink {...args}>Skip to main content</SkipLink>
-              <ul className="navigation">
-                {headerItems?.map((item) => (
-                  <li key={item}>
-                    <NavigationItem
-                      active={activeHeaderNav === item}
-                      href="#"
-                      onClick={(event) => {
-                        // prevent default to avoid navigation in storybook example
-                        event.preventDefault();
-                        setActiveHeaderNav(item);
-                      }}
-                    >
-                      {item}
-                    </NavigationItem>
-                  </li>
-                ))}
-              </ul>
-            </nav>
-            <FlexItem align="center">
-              <StackLayout direction="row" gap={1}>
-                {headerUtilities?.map((utility) => (
-                  <Button key={utility.key} appearance="transparent">
-                    {utility.icon}
-                  </Button>
-                ))}
-              </StackLayout>
-            </FlexItem>
-          </FlexLayout>
-        </header>
+      <BorderItem position="north" sticky className="app-header" as="header">
+        <FlexLayout className="header" justify="space-between" gap={3}>
+          <FlexItem align="center">
+            Click here and press the Tab key to see the Skip Link
+          </FlexItem>
+          <nav>
+            <SkipLink {...args}>Skip to main content</SkipLink>
+            <ul className="navigation">
+              {headerItems?.map((item) => (
+                <li key={item}>
+                  <NavigationItem
+                    active={activeHeaderNav === item}
+                    href="#"
+                    onClick={(event) => {
+                      // prevent default to avoid navigation in storybook example
+                      event.preventDefault();
+                      setActiveHeaderNav(item);
+                    }}
+                  >
+                    {item}
+                  </NavigationItem>
+                </li>
+              ))}
+            </ul>
+          </nav>
+          <FlexItem align="center">
+            <StackLayout direction="row" gap={1}>
+              {headerUtilities?.map((utility) => (
+                <Button key={utility.key} appearance="transparent">
+                  {utility.icon}
+                </Button>
+              ))}
+            </StackLayout>
+          </FlexItem>
+        </FlexLayout>
       </BorderItem>
       <BorderItem position="center" className="center">
-        <article id="main" className="article">
-          <H1>Explore our offering</H1>
+        <StackLayout as="article">
           <section>
+            <H1 id="main" className="content-header">
+              Explore our offering
+            </H1>
             <p>
               Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam,
               consequuntur culpa dolor excepturi fugit in ipsa iusto laudantium
               magnam minima necessitatibus odio qui quia repellendus sit tempore
               veniam. At, veritatis.
             </p>
+            <GridLayout columns={3}>
+              {cardHeaders.map((title) => {
+                return (
+                  <Card key={title}>
+                    <H2 styleAs="h4">{title}</H2>
+                    <p>
+                      Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                      Aliquam, consequuntur culpa dolor excepturi.
+                    </p>
+                    <p>
+                      Fugit in ipsa iusto laudantium magnam minima
+                      necessitatibus odio qui quia repellendus sit tempore
+                      veniam. At, veritatis.
+                    </p>
+                  </Card>
+                );
+              })}
+            </GridLayout>
           </section>
-        </article>
-        <SplitLayout endItem={<Button>Next</Button>} />
+          <SplitLayout
+            endItem={<Button appearance="bordered">See all themes</Button>}
+          />
+        </StackLayout>
       </BorderItem>
     </BorderLayout>
   );

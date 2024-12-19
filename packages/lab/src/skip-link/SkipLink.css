@@ -29,7 +29,8 @@
   box-shadow: var(--salt-overlayable-shadow);
 }
 
-@keyframes fade-in-out-outline {
+@keyframes fade-out-back-outline {
+  /* required animation to apply an opacity fade-out-back to outline */
   0% {
     outline-color: var(--salt-focused-outlineColor);
   }
@@ -39,6 +40,11 @@
 }
 
 .saltSkipLink-target {
-  animation: fade-in-out-outline var(--salt-duration-notable) var(--salt-animation-timing-function) both;
+  animation: fade-out-back-outline var(--salt-duration-notable) var(--salt-animation-timing-function) both;
   outline: var(--salt-focused-outline);
+}
+@media (prefers-reduced-motion: reduce) {
+  .saltSkipLink-target {
+    animation: none;
+  }
 }
