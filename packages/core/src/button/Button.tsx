@@ -137,33 +137,31 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     // does not require tabindex="0" attribute
     const { tabIndex, ...restButtonProps } = buttonProps;
     return (
-      <>
-        <button
-          {...restButtonProps}
-          className={clsx(
-            withBaseName(),
-            withBaseName(variant),
-            {
-              [withBaseName("loading")]: loading,
-              [withBaseName("disabled")]: disabled,
-              [withBaseName("active")]: active,
-              [withBaseName(appearance)]: appearance,
-              [withBaseName(sentiment)]: sentiment,
-            },
-            className,
-          )}
-          {...restProps}
-          ref={ref}
-          type={type}
-        >
-          {loading && (
-            <div className={withBaseName("spinner")} aria-hidden>
-              <Spinner size="small" aria-hidden disableAnnouncer />
-            </div>
-          )}
-          {children}
-        </button>
-      </>
+      <button
+        {...restButtonProps}
+        className={clsx(
+          withBaseName(),
+          withBaseName(variant),
+          {
+            [withBaseName("loading")]: loading,
+            [withBaseName("disabled")]: disabled,
+            [withBaseName("active")]: active,
+            [withBaseName(appearance)]: appearance,
+            [withBaseName(sentiment)]: sentiment,
+          },
+          className,
+        )}
+        {...restProps}
+        ref={ref}
+        type={type}
+      >
+        {loading && (
+          <div className={withBaseName("spinner")} aria-hidden>
+            <Spinner size="small" aria-hidden disableAnnouncer />
+          </div>
+        )}
+        {children}
+      </button>
     );
   },
 );
