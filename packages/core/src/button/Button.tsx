@@ -71,16 +71,9 @@ export interface ButtonProps extends ComponentPropsWithoutRef<"button"> {
   /**
    * If `true`, the button will be in a loading state. This allows a spinner to be nested inside the button.
    *
-   * @since 1.37.0.
+   * @since 1.38.0.
    */
   loading?: boolean;
-
-  /**
-   * Additional text to be announced by screen readers. Ideally used in conjunction with the loading prop.
-   *
-   * @since 1.37.0.
-   */
-  announcement?: string;
 }
 
 function variantToAppearanceAndColor(
@@ -111,7 +104,6 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       appearance: appearanceProp,
       sentiment: sentimentProp,
       type = "button",
-      announcement = "",
       variant = "primary",
       ...restProps
     },
@@ -164,15 +156,12 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           ref={ref}
           type={type}
         >
-          <span className={withBaseName("sr-only")} role="status">
-            {announcement}
-          </span>
           {loading && (
             <div className={withBaseName("spinner")} aria-hidden>
-              <Spinner size="small" aria-hidden aria-label=" " />
+              <Spinner size="small" aria-hidden disableAnnouncer />
             </div>
           )}
-          <span aria-hidden={!!announcement}>{children}</span>
+          {children}
         </button>
       </>
     );
