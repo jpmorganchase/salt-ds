@@ -50,9 +50,9 @@ These tokens can be used directly to color your components and patterns.
 
 Banner gets its background color from the Status characteristic tokens.
 
-Characteristic: `--status-success-background`
-Palette: `--positive-weak`
-Foundation: `--color-green-100` (light mode) or `--color-green-900` (dark mode)
+- Characteristic: `--status-success-background`
+- Palette: `--positive-weak`
+- Foundation: `--color-green-100` (light mode) or `--color-green-900` (dark mode)
 
 <Image src="/img/theming/theme-v2-02.png" alt="Banner example" />
 
@@ -60,19 +60,19 @@ Foundation: `--color-green-100` (light mode) or `--color-green-900` (dark mode)
 
 To keep the number of design tokens in the Salt system manageable, Salt doesn't have tokens for every attribute of every component and every state.
 
-Instead, Salt provides tokens that reflect the design intent of the system. For example, if all Container borders are 1px thick then Salt provides a single --size-border token which updates all borders. This means we can maintain the cohesive systematic nature of the system as well as the quality of interaction design patterns and accessibility.
+Instead, Salt provides tokens that reflect the design intent of the system. For example, if all container borders are 1px thick then Salt provides a single --size-border token which updates all borders. This means we can maintain the cohesive systematic nature of the system as well as the quality of interaction design patterns and accessibility.
 
 ## Salt themes
 
 Salt has two themes:
 
 1. JPM Brand theme
-2. Legacy UITK theme
-
-<Image
-  src="/img/theming/theme-v2-03.png"
-  alt="JPM brand theme vs Legacy (UITK) theme"
-/>
+2. Legacy (UITK) theme
+   <br />
+   <Image
+     src="/img/theming/theme-v2-03.png"
+     alt="JPM brand theme vs Legacy (UITK) theme"
+   />
 
 ### Legacy (UITK) theme
 
@@ -162,11 +162,11 @@ To install the libraries:
 1. Go to the Assets panel in your Figma file.
 2. Tap on the Libraries icon (open book icon).
 
-<Image src="/img/theming/theme-v2-12.png" alt="installing the libraries" />
+   <Image src="/img/theming/theme-v2-12.png" alt="installing the libraries" />
 
 3. Search for 'Salt DS’.
 
-<Image src="/img/theming/theme-v2-13.png" alt="searching on figma" />
+   <Image src="/img/theming/theme-v2-13.png" alt="searching on figma" />
 
 4. Add the libraries referenced above to your file.
 
@@ -176,7 +176,7 @@ The Themes library includes all the Figma variables needed to style with Salt. I
 
 The variables are set up to match our tokens in code. When inspecting a design in Figma's Dev Mode, you can see references that match our tokens, such as size and spacing values (e.g., `--spacing-100` in Figma maps to`--salt-spacing-100` in code).
 
-Note: In code, all tokens are prefixed with ‘--salt-’, e.g., --salt-spacing-100.
+Note: In code, all tokens are prefixed with ‘--salt-’, e.g., `--salt-spacing-100`.
 
 <Image src="/img/theming/theme-v2-14.png" alt="using the themes library" />
 
@@ -191,13 +191,13 @@ You don't need to add these colors to your project unless you want to use them d
 1. Add components: Drag from the Assets panel.
 2. In the right sidebar, click ‘Apply variable mode' (swatch icon) button in the Layer panel to see all available options.
 
-<Image src="/img/theming/theme-v2-15.png" alt="applying component modes" />
+   <Image src="/img/theming/theme-v2-15.png" alt="applying component modes" />
 
-3. For Pages, Groups, Sections, Frames or Components:
+3. For pages, groups, sections, frames or components:
 
-a. **Mode:** Light, Dark
-b. **Density:** High, Medium, Low, Touch
-c. **Theme:** Legacy (UITK), JPM Brand
+   - **Mode:** Light, Dark
+   - **Density:** High, Medium, Low, Touch
+   - **Theme:** Legacy (UITK), JPM Brand
 
 ### Using themes in Code
 
@@ -293,23 +293,23 @@ In code there are two ways to customize the theme:
 SaltProviderNext styling option props provide the capability to make specific adjusts to the design of Salt components across the system.
 
 ```jsx
-// Example recipe: const sharedStylePresets = {accent: 'teal', corner: 'rounded'};
-import { sharedStylePresets } from '@lob-library/styles';
-
 <SaltProviderNext
-    {... sharedStylePresets}
-    // Any product specific overrides
+    accent="teal"             // or "blue"
+    corner="rounded"          // or "sharp"
+    headingFont="Amplitude"   // or "Open Sans"
+    actionFont="Amplitude"    // or "Open Sans"
 >
 ```
 
 A theme recipe is a defined selection of styling options for your theme. You can use an npm package to ensure consistency. For example, a team can encapsulate preferred presets, allowing product teams to use them without needing detailed knowledge of the options.
 
 ```jsx
+// Example recipe: const sharedStylePresets = {accent: 'teal', corner: 'rounded'};
+import { sharedStylePresets } from '@lob-library/styles';
+
 <SaltProviderNext
-    accent="teal"             // or "blue"
-    corner="rounded"          // or "sharp"
-    headingFont="Amplitude"   // or "Open Sans"
-    actionFont="Amplitude"    // or "Open Sans"
+    {... sharedStylePresets}
+    // Any product specific overrides
 >
 ```
 
