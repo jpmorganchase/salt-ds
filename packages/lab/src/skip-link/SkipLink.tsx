@@ -18,14 +18,14 @@ interface SkipLinkProps extends ComponentPropsWithoutRef<"a"> {
    * The ID of the target element to apply focus when the link is clicked.
    * If the element with this ID is not found, the SkipLink will not be rendered.
    */
-  target: string;
+  targetId: string;
 }
 
 const withBaseName = makePrefixer("saltSkipLink");
 
 export const SkipLink = forwardRef<HTMLAnchorElement, SkipLinkProps>(
   function SkipLink(
-    { className, target, children, onKeyUp, onBlur, onClick, ...rest },
+    { className, targetId, children, onKeyUp, onBlur, onClick, ...rest },
     ref,
   ) {
     const [isTargetAvailable, setIsTargetAvailable] = useState(false);
@@ -39,9 +39,9 @@ export const SkipLink = forwardRef<HTMLAnchorElement, SkipLinkProps>(
     const targetRef = useRef<HTMLElement | null>(null);
 
     useEffect(() => {
-      targetRef.current = document.getElementById(target);
+      targetRef.current = document.getElementById(targetId);
       setIsTargetAvailable(!!targetRef.current);
-    }, [target]);
+    }, [targetId]);
 
     const eventHandlers = useManageFocusOnTarget({
       onKeyUp,
@@ -55,7 +55,7 @@ export const SkipLink = forwardRef<HTMLAnchorElement, SkipLinkProps>(
     return (
       <a
         className={clsx(withBaseName(), className)}
-        href={`#${target}`}
+        href={`#${targetId}`}
         ref={ref}
         target="_self"
         {...eventHandlers}

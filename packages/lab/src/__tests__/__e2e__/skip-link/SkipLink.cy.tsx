@@ -52,7 +52,7 @@ describe("GIVEN a SkipLink", () => {
     });
 
     it("THEN it should hide the skip link if ref is broken", () => {
-      cy.mount(<Default target="" />);
+      cy.mount(<Default targetId="" />);
       cy.findByText(
         "Click here and press the Tab key to see the Skip Link",
       ).click();

@@ -134,7 +134,7 @@ const DefaultStory: StoryFn<typeof SkipLink> = (args) => {
 
 export const Default = DefaultStory.bind({});
 Default.args = {
-  target: "main",
+  targetId: "main",
 };
 Default.parameters = {
   layout: "fullscreen",
