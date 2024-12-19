@@ -24,7 +24,10 @@ interface SkipLinkProps extends ComponentPropsWithoutRef<"a"> {
 const withBaseName = makePrefixer("saltSkipLink");
 
 export const SkipLink = forwardRef<HTMLAnchorElement, SkipLinkProps>(
-  function SkipLink({ className, target, children, ...rest }, ref) {
+  function SkipLink(
+    { className, target, children, onKeyUp, onBlur, onClick, ...rest },
+    ref,
+  ) {
     const [isTargetAvailable, setIsTargetAvailable] = useState(false);
     const targetWindow = useWindow();
     useComponentCssInjection({
@@ -41,6 +44,9 @@ export const SkipLink = forwardRef<HTMLAnchorElement, SkipLinkProps>(
     }, [target]);
 
     const eventHandlers = useManageFocusOnTarget({
+      onKeyUp,
+      onBlur,
+      onClick,
       targetRef,
       targetClass: withBaseName("target"),
     });
