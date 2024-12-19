@@ -8,7 +8,7 @@ const { Default } = composedStories;
 describe("GIVEN a SkipLink", () => {
   checkAccessibility(composedStories);
   describe("WHEN there is a single SkipLink", () => {
-    it("THEN it should move focus to the target element when interacted with", () => {
+    it("THEN it should move focus to the target element when clicked", () => {
       cy.mount(<Default />);
       cy.findByText(
         "Click here and press the Tab key to see the Skip Link",
@@ -20,7 +20,31 @@ describe("GIVEN a SkipLink", () => {
       cy.findByRole("link", { name: "Skip to main content" }).should(
         "be.visible",
       );
+      cy.findByRole("link", { name: "Skip to main content" }).should(
+        "be.focused",
+      );
       cy.findByRole("link", { name: "Skip to main content" }).click();
+      cy.get("#main").should("be.focused");
+      cy.findByRole("link", { name: "Skip to main content" }).should(
+        "not.be.visible",
+      );
+    });
+    it("THEN it should move focus to the target element when navigating with keyboard", () => {
+      cy.mount(<Default />);
+      cy.findByText(
+        "Click here and press the Tab key to see the Skip Link",
+      ).click();
+      cy.findByRole("link", { name: "Skip to main content" }).should(
+        "not.be.visible",
+      );
+      cy.realPress("Tab");
+      cy.findByRole("link", { name: "Skip to main content" }).should(
+        "be.visible",
+      );
+      cy.findByRole("link", { name: "Skip to main content" }).should(
+        "be.focused",
+      );
+      cy.realPress(" ");
       cy.get("#main").should("be.focused");
       cy.findByRole("link", { name: "Skip to main content" }).should(
         "not.be.visible",
