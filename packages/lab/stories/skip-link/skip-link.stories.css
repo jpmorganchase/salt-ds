@@ -1,10 +1,10 @@
+.app-header {
+  z-index: var(--salt-zIndex-appHeader);
+}
 .header {
   padding-left: var(--salt-spacing-300);
   padding-right: var(--salt-spacing-300);
   background-color: var(--salt-container-primary-background);
-  position: fixed;
-  width: 100%;
-
   border-bottom: var(--salt-size-border) var(--salt-container-borderStyle) var(--salt-separable-primary-borderColor);
 }
 .navigation {
@@ -14,8 +14,9 @@
   margin: 0;
 }
 .center {
-  margin: calc(var(--salt-spacing-300) * 2);
+  margin: calc(var(--salt-spacing-300) * 2) auto;
+  max-width: 700px;
 }
-.article {
-  max-width: var(--max-content-width);
+.content-header {
+  padding-top: calc(var(--salt-spacing-300) * 2);
 }
