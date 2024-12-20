@@ -1,5 +1,15 @@
 # @salt-ds/countries
 
+## 1.4.4
+
+### Patch Changes
+
+- 0a5b68b: Marked CSS files as having side effects. This fixes Webpack tree-shaking CSS files when `sideEffects: true` is not set on style-loader rules.
+- Updated dependencies [86d2a28]
+- Updated dependencies [dedbade]
+- Updated dependencies [0a5b68b]
+  - @salt-ds/core@1.38.0
+
 ## 1.4.3
 
 ### Patch Changes
