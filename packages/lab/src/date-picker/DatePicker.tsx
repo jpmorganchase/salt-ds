@@ -21,8 +21,6 @@ export interface DatePickerBaseProps {
   children?: ReactNode;
   /** the open/close state of the overlay. The open/close state will be controlled when this prop is provided. */
   open?: boolean;
-  /** When `open` is uncontrolled, set this to `true` to open on focus */
-  openOnFocus?: boolean;
   /** When `open` is uncontrolled, set this to `true` to open on click */
   openOnClick?: boolean;
   /** When `open` is uncontrolled, set this to `true` to open on arrow key down */
@@ -134,7 +132,6 @@ export const DatePicker = forwardRef(function DatePicker<
     defaultOpen,
     open,
     openOnClick,
-    openOnFocus,
     openOnKeyDown,
     onOpen,
     readOnly,
@@ -146,7 +143,6 @@ export const DatePicker = forwardRef(function DatePicker<
       defaultOpen={defaultOpen}
       open={open}
       openOnClick={openOnClick}
-      openOnFocus={openOnFocus}
       openOnKeyDown={openOnKeyDown}
       onOpen={onOpen}
       readOnly={readOnly}

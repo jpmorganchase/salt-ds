@@ -11,19 +11,9 @@ import { type ReactElement, useState } from "react";
 export const UncontrolledOpen = (): ReactElement => {
   const [openOnClick, setOpenOnClick] = useState(false);
   const [openOnKeyDown, setOpenOnKeyDown] = useState(false);
-  const [openOnFocus, setOpenOnFocus] = useState(false);
   return (
     <StackLayout>
       <FlexLayout>
-        <ToggleButton
-          aria-label={"open on focus"}
-          value={openOnFocus ? "false" : "true"}
-          onChange={(event) =>
-            setOpenOnFocus(event.currentTarget.value === "true")
-          }
-        >
-          Open On Focus
-        </ToggleButton>
         <ToggleButton
           aria-label={"open on click"}
           value={openOnClick ? "false" : "true"}
@@ -47,7 +37,6 @@ export const UncontrolledOpen = (): ReactElement => {
         selectionVariant={"single"}
         openOnClick={openOnClick}
         openOnKeyDown={openOnKeyDown}
-        openOnFocus={openOnFocus}
       >
         <DatePickerTrigger>
           <DatePickerSingleInput />
