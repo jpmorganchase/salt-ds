@@ -1,6 +1,7 @@
 .salt-theme {
   --salt-opacity-0: 0;
-  --salt-opacity-8: 0.08;
+  /*--salt-opacity-8: 0.08; TODO: deprecate and add .1 and .2? */
+  --salt-opacity-10: 0.1;
   --salt-opacity-15: 0.15;
   --salt-opacity-25: 0.25;
   --salt-opacity-40: 0.4;
