@@ -1,5 +1,6 @@
 import { FormField, FormFieldHelperText, FormFieldLabel } from "@salt-ds/core";
-import { AdapterDateFns, type DateFrameworkType } from "@salt-ds/date-adapters";
+import type { DateFrameworkType } from "@salt-ds/date-adapters";
+import { AdapterDateFns } from "@salt-ds/date-adapters/date-fns";
 import {
   Calendar,
   CalendarGrid,
