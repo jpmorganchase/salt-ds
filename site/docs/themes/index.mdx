@@ -41,6 +41,12 @@ In Salt's architecture, theme styles (known as design tokens) are kept separate 
   alt="Salt technology stack"
 />
 
+---
+
+TODO: fill in 2 theme
+
+---
+
 ## Salt Next theme
 
 Salt Next is a new theme for Salt which is built on new design foundations endorsed by the J.P. Morgan Corporate Brand team. It is a non-breaking update to the Salt library which officially brings 'styling options' and 'theming' capability to Salt components.
@@ -49,6 +55,13 @@ Salt design system does not recommend customizing the look-and-feel of the curre
 
 ## Customizing with Salt Next
 
+---
+
+TODO: We shouldn't entirely remove styling options from the doc, given it's avaialble in code.
+Keep in mind that we have a lot more developer audience than designer reading the docs.
+
+---
+
 There are two ways to customize the look-and-feel of components:
 
 1. **System-wide 'styling options'**: Choose from a selection of predefined design choices.
@@ -56,7 +69,13 @@ There are two ways to customize the look-and-feel of components:
 
 ### Styling options
 
-Styling options make it easy to adjust the design of Salt components across the system for a user group or use case:
+Styling options are the backing mechasium behind different themes, making it easy to adjust the design of Salt components across the system for a user group or use case. There are several benefits to using styling options:
+
+- Allows easy modifications within predefined parameters.
+- Ensures a consistent look-and-feel across LOBs, products, or user groups.
+- Design languages can be easily updated as new styling options are released.
+
+Individual products within the LOB can customize their LOB design languages further if needed.
 
 #### Density
 
@@ -94,7 +113,13 @@ Displays heading and/or action fonts as Amplitude or Open Sans.
   alt="Styling options button font example"
 />
 
-### Theme recipe
+### Recommended themes
+
+---
+
+TODO: Should replace Example 1 & 2 with legacy & brand theme
+
+---
 
 Styling options can be combined as a 'theme recipe' to create design languages which are optimized for a specific context, for example:
 
@@ -111,21 +136,6 @@ Styling options can be combined as a 'theme recipe' to create design languages w
   src="/img/theming/theme-recipe-hd-dark-sharp-open-sans-blue.png"
   alt="Theme recipe HD dark sharp Open Sans blue"
 />
-
-**Example #3**: An internal application is frequently to handle operational tasks. An LOB define their design language to be medium density, light mode, sharp corners, open sans font, teal accent.
-
-<Image
-  src="/img/theming/theme-recipe-md-light-sharp-open-sans-teal.png"
-  alt="Theme recipe MD light sharp Open Sans teal"
-/>
-
-There are several benefits to using styling options:
-
-- Allows easy modifications within predefined parameters.
-- Ensures a consistent look-and-feel across LOBs, products, or user groups.
-- Design languages can be easily updated as new styling options are released.
-
-Individual products within the LOB can customize their LOB design languages further if needed.
 
 ### Theming
 
@@ -239,11 +249,13 @@ The current theme offers limited styling options except for density and mode. Cu
 
 **If you are a designer**, be aware that if your product team is continuing to use the current theme you need to continue using the Salt Light and Dark Component Figma libraries, and associated Figma libraries. In H2 2024 we will include current theme support in the new Salt Next [variable-driven Figma library](#new-variable-driven-libraries).
 
-## Guidance on using the Salt Next theme
+## Using themes in Figma
 
-The Salt Next theme is now stable and available in both Figma and code to use in your production delivery.
+---
 
-### Figma
+TODO: this is the biggest section needs to be updated
+
+---
 
 To provide 'styling options' and theming capability the new Salt Next Figma libraries implement Salt design tokens as Figma [variables](https://help.figma.com/hc/en-us/sections/14506605769879-Variables) to define all the visual attributes of components.
 
@@ -323,7 +335,7 @@ The new variable-driven component and pattern library functions similarly to the
 
 While you can set styling options for individual components, we recommend setting the required options for a product / LOB design language at a Figma Page level. This ensures consistency and avoids setting variables component-by-component. Options can be adjusted further at a nested Frame or Component level where you need to mix styling options.
 
-### Code
+## Using themes in code
 
 The new Salt Provider, `SaltProviderNext`, offers new styling options like rounded corners and balanced color palettes. It extends the existing Salt Provider, keeping current options (light / dark modes, density levels) with new props for new options.
 To use it, replace the existing `SaltProvider` with `SaltProviderNext` and import the new theme CSS.
@@ -335,8 +347,8 @@ To use it, replace the existing `SaltProvider` with `SaltProviderNext` and impor
 ```
 
 ```diff
-// Alongside existing `import "@salt-ds/theme/index.css";`
   import "@salt-ds/theme/index.css";
+// Alongside with existing theme css
 + import "@salt-ds/theme/css/theme-next.css";
 ```
 
