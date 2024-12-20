@@ -2700,19 +2700,9 @@ export const UncontrolledOpen: StoryFn<
 > = ({ selectionVariant, defaultSelectedDate, ...args }) => {
   const [openOnClick, setOpenOnClick] = useState(false);
   const [openOnKeyDown, setOpenOnKeyDown] = useState(false);
-  const [openOnFocus, setOpenOnFocus] = useState(false);
   return (
     <StackLayout style={{ width: "400px" }}>
       <FlexLayout>
-        <ToggleButton
-          aria-label={"open on focus"}
-          value={openOnFocus ? "false" : "true"}
-          onChange={(event) =>
-            setOpenOnFocus(event.currentTarget.value === "true")
-          }
-        >
-          Open On Focus
-        </ToggleButton>
         <ToggleButton
           aria-label={"open on click"}
           value={openOnClick ? "false" : "true"}
@@ -2736,7 +2726,6 @@ export const UncontrolledOpen: StoryFn<
         selectionVariant={"single"}
         openOnClick={openOnClick}
         openOnKeyDown={openOnKeyDown}
-        openOnFocus={openOnFocus}
         {...args}
         defaultSelectedDate={defaultSelectedDate}
       >

@@ -85,14 +85,6 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
       cy.findByRole("application").should("exist");
     });
 
-    it("SHOULD be able to enable the overlay to open on focus", () => {
-      cy.mount(<Single openOnFocus />);
-      cy.findByRole("application").should("not.exist");
-      // Simulate opening the calendar on focus
-      cy.document().find("input").focus();
-      cy.findByRole("application").should("exist");
-    });
-
     it("SHOULD be able to control the overlay open state", () => {
       cy.mount(<ControlledOpen />);
       cy.findByRole("application").should("not.exist");

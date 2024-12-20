@@ -5,7 +5,6 @@ import {
   flip,
   useClick,
   useDismiss,
-  useFocus,
   useInteractions,
 } from "@floating-ui/react";
 import { createContext, useControlled, useFloatingUI } from "@salt-ds/core";
@@ -86,10 +85,6 @@ interface DatePickerOverlayProviderProps {
    */
   open?: boolean;
   /**
-   * When `open` is uncontrolled, set this to `true` to open on focus
-   */
-  openOnFocus?: boolean;
-  /**
    * When `open` is uncontrolled, set this to `true` to open on click
    */
   openOnClick?: boolean;
@@ -125,7 +120,6 @@ export const DatePickerOverlayProvider: React.FC<
 > = ({
   open: openProp,
   openOnClick,
-  openOnFocus,
   openOnKeyDown = true,
   defaultOpen,
   onOpen,
@@ -190,9 +184,6 @@ export const DatePickerOverlayProvider: React.FC<
       ? interactions(floatingUIResult.context)
       : [
           useDismiss(floatingUIResult.context),
-          useFocus(floatingUIResult.context, {
-            enabled: !!openOnFocus && !readOnly,
-          }),
           useKeyboard(floatingUIResult.context, {
             enabled: !!openOnKeyDown && !readOnly,
           }),

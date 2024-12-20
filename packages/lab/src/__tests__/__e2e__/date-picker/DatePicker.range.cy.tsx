@@ -93,18 +93,6 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
       cy.realPress("ArrowDown");
       cy.findAllByRole("application").should("have.length", 2);
     });
-
-    it("SHOULD be able to enable the overlay to open on focus", () => {
-      cy.mount(<Range openOnFocus />);
-      cy.findByRole("application").should("not.exist");
-      // Simulate opening the calendar on focus
-      cy.findByLabelText("Start date").focus();
-      cy.findAllByRole("application").should("have.length", 2);
-      cy.document().find("body").realClick();
-      cy.findByRole("application").should("not.exist");
-      cy.findByLabelText("End date").focus();
-      cy.findAllByRole("application").should("have.length", 2);
-    });
   });
 
   describe("WHEN readOnly", () => {
