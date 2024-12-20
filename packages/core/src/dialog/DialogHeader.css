@@ -17,7 +17,6 @@
 /* Styles applied to the status indicator icon overriding its default size */
 .saltDialogHeader .saltStatusIndicator.saltIcon {
   --icon-size: var(--salt-text-h2-lineHeight);
-  padding-top: calc((var(--salt-size-base) - var(--salt-text-h2-lineHeight)) / 2);
 }
 
 /* Styles applied to DialogHeader when accent={true} */
