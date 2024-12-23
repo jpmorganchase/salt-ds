@@ -1,5 +1,18 @@
 # @salt-ds/core
 
+## 1.38.0
+
+### Minor Changes
+
+- 86d2a28: Added `LockedIcon` and `InProgressIcon` to the default icon map in SemanticIconProvider.
+
+### Patch Changes
+
+- dedbade: Fixed Salt Provider in floating ui adding extra attributes to root when mixing styling options.
+- 0a5b68b: Marked CSS files as having side effects. This fixes Webpack tree-shaking CSS files when `sideEffects: true` is not set on style-loader rules.
+- Updated dependencies [0a5b68b]
+  - @salt-ds/icons@1.13.1
+
 ## 1.37.3
 
 ### Patch Changes
