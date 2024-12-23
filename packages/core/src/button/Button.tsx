@@ -1,3 +1,4 @@
+import { Spinner } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
@@ -66,6 +67,13 @@ export interface ButtonProps extends ComponentPropsWithoutRef<"button"> {
    * @since 1.36.0.
    */
   sentiment?: ButtonSentiment;
+
+  /**
+   * If `true`, the button will be in a loading state. This allows a spinner to be nested inside the button.
+   *
+   * @since 1.38.0.
+   */
+  loading?: boolean;
 }
 
 function variantToAppearanceAndColor(
@@ -87,6 +95,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       children,
       className,
       disabled,
+      loading,
       focusableWhenDisabled,
       onKeyUp,
       onKeyDown,
@@ -101,6 +110,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     ref?,
   ): ReactElement<ButtonProps> {
     const { active, buttonProps } = useButton({
+      loading,
       disabled,
       focusableWhenDisabled,
       onKeyUp,
@@ -119,6 +129,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     const mapped = variantToAppearanceAndColor(variant);
     const appearance: ButtonAppearance =
       appearanceProp ?? mapped.appearance ?? "solid";
+
     const sentiment: ButtonSentiment =
       sentimentProp ?? mapped.sentiment ?? "neutral";
 
@@ -132,6 +143,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           withBaseName(),
           withBaseName(variant),
           {
+            [withBaseName("loading")]: loading,
             [withBaseName("disabled")]: disabled,
             [withBaseName("active")]: active,
             [withBaseName(appearance)]: appearance,
@@ -143,6 +155,11 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         ref={ref}
         type={type}
       >
+        {loading && (
+          <div className={withBaseName("spinner")} aria-hidden>
+            <Spinner size="small" aria-hidden disableAnnouncer />
+          </div>
+        )}
         {children}
       </button>
     );

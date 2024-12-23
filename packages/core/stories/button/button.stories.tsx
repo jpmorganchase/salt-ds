@@ -6,7 +6,6 @@ import {
   SettingsSolidIcon,
 } from "@salt-ds/icons";
 import type { Meta, StoryFn } from "@storybook/react";
-
 export default {
   title: "Core/Button",
   component: Button,
@@ -141,6 +140,74 @@ export const Disabled: StoryFn = () => {
       </FlowLayout>
     </StackLayout>
   );
+};
+
+export const Loading: StoryFn = () => {
+  return (
+    <StackLayout gap={3}>
+      <FlowLayout>
+        <Button appearance="solid" sentiment="accented" loading>
+          Solid
+        </Button>
+        <Button appearance="bordered" sentiment="accented" loading>
+          Bordered
+        </Button>
+        <Button appearance="transparent" sentiment="accented" loading>
+          Transparent
+        </Button>
+      </FlowLayout>
+      <FlowLayout>
+        <Button appearance="solid" sentiment="neutral" loading>
+          Solid
+        </Button>
+        <Button appearance="bordered" sentiment="neutral" loading>
+          Bordered
+        </Button>
+        <Button appearance="transparent" sentiment="neutral" loading>
+          Transparent
+        </Button>
+      </FlowLayout>
+      <FlowLayout>
+        <Button appearance="solid" sentiment="positive" loading>
+          Solid
+        </Button>
+        <Button appearance="bordered" sentiment="positive" loading>
+          Bordered
+        </Button>
+        <Button appearance="transparent" sentiment="positive" loading>
+          Transparent
+        </Button>
+      </FlowLayout>
+      <FlowLayout>
+        <Button appearance="solid" sentiment="negative" loading>
+          Solid
+        </Button>
+        <Button appearance="bordered" sentiment="negative" loading>
+          Bordered
+        </Button>
+        <Button appearance="transparent" sentiment="negative" loading>
+          Transparent
+        </Button>
+      </FlowLayout>
+      <FlowLayout>
+        <Button appearance="solid" sentiment="caution" loading>
+          Solid
+        </Button>
+        <Button appearance="bordered" sentiment="caution" loading>
+          Bordered
+        </Button>
+        <Button appearance="transparent" sentiment="caution" loading>
+          Transparent
+        </Button>
+      </FlowLayout>
+    </StackLayout>
+  );
+};
+
+export const LoadingSingle = SingleButtonTemplate.bind({});
+LoadingSingle.args = {
+  children: "Loading",
+  loading: true,
 };
 
 export const FocusableWhenDisabled = SingleButtonTemplate.bind({});
