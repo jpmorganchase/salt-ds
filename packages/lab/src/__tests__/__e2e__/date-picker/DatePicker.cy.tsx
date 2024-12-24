@@ -1,7 +1,9 @@
-import { AdapterDateFns } from "@salt-ds/date-adapters";
-import { AdapterDayjs } from "@salt-ds/date-adapters";
-import { AdapterLuxon } from "@salt-ds/date-adapters";
-import { AdapterMoment } from "@salt-ds/date-adapters";
+import {
+  AdapterDateFns,
+  AdapterDayjs,
+  AdapterLuxon,
+  AdapterMoment,
+} from "@salt-ds/date-adapters";
 import * as datePickerStories from "@stories/date-picker/date-picker.stories";
 import { composeStories } from "@storybook/react";
 import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
