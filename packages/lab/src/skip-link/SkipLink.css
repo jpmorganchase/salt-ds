@@ -16,6 +16,7 @@
   font-family: var(--salt-text-fontFamily);
   white-space: nowrap;
   background: var(--saltSkipLink-background, var(--salt-container-primary-background));
+  z-index: calc(var(--salt-zIndex-appHeader) + 1);
 }
 
 /* Styles applied when the link is focused to display the Skip Link only when in focus*/
