@@ -20,7 +20,7 @@ type Constructor = {
   utc?: (value?: Parameters<typeof defaultDayjs>[0]) => Dayjs;
 };
 
-declare module "../types" {
+declare module "@salt-ds/date-adapters" {
   interface DateFrameworkTypeMap {
     dayjs: Dayjs;
   }

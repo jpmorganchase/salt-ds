@@ -9,7 +9,7 @@ import {
   type Timezone,
 } from "../types";
 
-declare module "../types" {
+declare module "@salt-ds/date-adapters" {
   export interface DateFrameworkTypeMap {
     moment: Moment;
   }

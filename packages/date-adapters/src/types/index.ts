@@ -1,3 +1,4 @@
+import type { DateFrameworkTypeMap } from "./DateFrameworkTypeMap";
 /**
  * Represents the date object of a date framework.
  *
