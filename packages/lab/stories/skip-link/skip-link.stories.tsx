@@ -57,12 +57,12 @@ const DefaultStory: StoryFn<typeof SkipLink> = (args) => {
   return (
     <BorderLayout>
       <BorderItem position="north" sticky className="app-header" as="header">
+        <SkipLink {...args}>Skip to main content</SkipLink>
         <FlexLayout className="header" justify="space-between" gap={3}>
           <FlexItem align="center">
             Click here and press the Tab key to see the Skip Link
           </FlexItem>
           <nav>
-            <SkipLink {...args}>Skip to main content</SkipLink>
             <ul className="navigation">
               {headerItems?.map((item) => (
                 <li key={item}>
