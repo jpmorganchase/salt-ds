@@ -20,6 +20,19 @@
     "jsx": "react-jsx",
     "baseUrl": ".",
     "paths": {
+      "@salt-ds/date-adapters/date-fns": [
+        "packages/date-adapters/src/date-fns-adapter/index.ts"
+      ],
+      "@salt-ds/date-adapters/dayjs": [
+        "packages/date-adapters/src/dayjs-adapter/index.ts"
+      ],
+      "@salt-ds/date-adapters/luxon": [
+        "packages/date-adapters/src/luxon-adapter/index.ts"
+      ],
+      "@salt-ds/date-adapters/moment": [
+        "packages/date-adapters/src/moment-adapter/index.ts"
+      ],
+      "@salt-ds/date-adapters": ["packages/date-adapters/src/types"],
       "@stories/*": [
         "packages/ag-grid-theme/stories/*",
         "packages/core/stories/*",

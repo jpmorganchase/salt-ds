@@ -24,8 +24,8 @@ export function reportTSDiagnostics(diagnostics) {
   }
 }
 
-export async function makeTypings(outDir) {
-  const typescriptConfig = await getTypescriptConfig(cwd);
+export async function makeTypings(outDir, srcDir = path.join(cwd, "src")) {
+  const typescriptConfig = await getTypescriptConfig(cwd, srcDir);
 
   console.log("generating .d.ts files");
 
