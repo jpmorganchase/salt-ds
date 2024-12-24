@@ -1,7 +1,9 @@
-import { AdapterDateFns } from "@salt-ds/date-adapters";
-import { AdapterDayjs } from "@salt-ds/date-adapters";
-import { AdapterLuxon } from "@salt-ds/date-adapters";
-import { AdapterMoment } from "@salt-ds/date-adapters";
+import {
+  AdapterDateFns,
+  AdapterDayjs,
+  AdapterLuxon,
+  AdapterMoment,
+} from "@salt-ds/date-adapters";
 
 import * as calendarStories from "@stories/calendar/calendar.stories";
 import { composeStories } from "@storybook/react";

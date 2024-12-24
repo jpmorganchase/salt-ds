@@ -56,10 +56,6 @@ async function getViteConfig(config: UserConfig) {
             __dirname,
             "./dist/salt-ds-countries",
           ),
-          "@salt-ds/date-adapters": path.resolve(
-            __dirname,
-            "./dist/salt-ds-date-adapters",
-          ),
           "@salt-ds/data-grid": path.resolve(
             __dirname,
             "./dist/salt-ds-data-grid",
@@ -73,7 +69,6 @@ async function getViteConfig(config: UserConfig) {
       optimizeDeps: {
         include: [
           "@salt-ds/core",
-          "@salt-ds/data-adapters",
           "@salt-ds/data-grid",
           "@salt-ds/lab",
           "@salt-ds/icons",

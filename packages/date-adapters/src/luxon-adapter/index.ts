@@ -1,7 +1,7 @@
 import { DateTime, Duration, Settings } from "luxon";
 import {
   type AdapterOptions,
-  DateDetailErrorEnum,
+  DateDetailError,
   type ParserResult,
   type RecommendedFormats,
   type SaltDateAdapter,
@@ -9,7 +9,7 @@ import {
   type Timezone,
 } from "../types";
 
-declare module "../types" {
+declare module "@salt-ds/date-adapters" {
   interface DateFrameworkTypeMap {
     luxon: DateTime;
   }
@@ -234,8 +234,8 @@ export class AdapterLuxon implements SaltDateAdapter<DateTime, string> {
         {
           message: isDateDefined ? "not a valid date" : "no date defined",
           type: isDateDefined
-            ? DateDetailErrorEnum.INVALID_DATE
-            : DateDetailErrorEnum.UNSET,
+            ? DateDetailError.INVALID_DATE
+            : DateDetailError.UNSET,
         },
       ],
     };

@@ -400,7 +400,7 @@ export function useCalendarSelection<TDate extends DateFrameworkType>(
         case "single":
           return (
             isSingleSelectionValueType(selectedDate) &&
-            dateAdapter.isSame(selectedDate, date, "day")
+            dateAdapter.isSame(selectedDate as TDate, date, "day")
           );
         case "multiselect":
           return (

@@ -1,13 +1,13 @@
 import {
-  DateDetailErrorEnum,
+  AdapterDateFns,
+  AdapterDayjs,
+  AdapterLuxon,
+  AdapterMoment,
+  DateDetailError,
   type DateFrameworkType,
   type ParserResult,
   type SaltDateAdapter,
 } from "@salt-ds/date-adapters";
-import { AdapterDateFns } from "@salt-ds/date-adapters";
-import { AdapterDayjs } from "@salt-ds/date-adapters";
-import { AdapterLuxon } from "@salt-ds/date-adapters";
-import { AdapterMoment } from "@salt-ds/date-adapters";
 import { DateInputSingle } from "@salt-ds/lab";
 
 import { es as dateFnsEs } from "date-fns/locale";
@@ -70,16 +70,14 @@ function assertDateChange(
     // assert empty date
     expect(adapter.isValid(date)).to.equal(false);
     expect(details).to.deep.equal({
-      errors: [{ type: DateDetailErrorEnum.UNSET, message: "no date defined" }],
+      errors: [{ type: DateDetailError.UNSET, message: "no date defined" }],
       value: expectedValue,
     });
   } else if (expectedValidDate === null) {
     // assert invalid date
     expect(adapter.isValid(date)).to.equal(false);
     expect(details).to.deep.equal({
-      errors: [
-        { type: DateDetailErrorEnum.UNSET, message: "not a valid date" },
-      ],
+      errors: [{ type: DateDetailError.UNSET, message: "not a valid date" }],
       value: expectedValue,
     });
   }

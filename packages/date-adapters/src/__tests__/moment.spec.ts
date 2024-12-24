@@ -1,7 +1,7 @@
 import moment from "moment";
 import { describe, expect, it } from "vitest";
 import "moment-timezone";
-import { AdapterMoment, DateDetailErrorEnum } from "../index";
+import { AdapterMoment, DateDetailError } from "../index";
 
 describe("GIVEN a AdapterMoment", () => {
   const adapter = new AdapterMoment({ locale: "en" });
@@ -63,7 +63,7 @@ describe("GIVEN a AdapterMoment", () => {
     expect(result.errors).toEqual([
       {
         message: "not a valid date",
-        type: DateDetailErrorEnum.INVALID_DATE,
+        type: DateDetailError.INVALID_DATE,
       },
     ]);
   });

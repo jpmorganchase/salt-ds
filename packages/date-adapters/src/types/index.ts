@@ -1,3 +1,4 @@
+import type { DateFrameworkTypeMap } from "./DateFrameworkTypeMap";
 /**
  * Represents the date object of a date framework.
  *
@@ -11,27 +12,29 @@ export type DateFrameworkType = keyof DateFrameworkTypeMap extends never
 /**
  * Enum representing possible date detail error types.
  */
-export enum DateDetailErrorEnum {
+export const DateDetailError = {
   /** Error type for unset values */
-  UNSET = "unset",
+  UNSET: "unset",
   /** Error type for values that are not a date */
-  NOT_A_DATE = "not-a-date",
+  NOT_A_DATE: "not-a-date",
   /** Error type for invalid date values */
-  INVALID_DATE = "date",
+  INVALID_DATE: "date",
   /** Error type for invalid month values */
-  INVALID_MONTH = "month",
+  INVALID_MONTH: "month",
   /** Error type for invalid day values */
-  INVALID_DAY = "day",
+  INVALID_DAY: "day",
   /** Error type for invalid year values */
-  INVALID_YEAR = "year",
-}
+  INVALID_YEAR: "year",
+} as const;
+export type DateDetailErrorType =
+  (typeof DateDetailError)[keyof typeof DateDetailError];
 
 /**
  * Represents an error detail for a date.
  */
 export type DateDetailError = {
   /** The error code */
-  type: DateDetailErrorEnum | string;
+  type: DateDetailErrorType | string;
   /** The error message */
   message: string;
 };

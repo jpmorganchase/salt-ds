@@ -4,7 +4,7 @@ import {
   FormFieldLabel as FormLabel,
 } from "@salt-ds/core";
 import {
-  DateDetailErrorEnum,
+  DateDetailError,
   type DateFrameworkType,
   type ParserResult,
 } from "@salt-ds/date-adapters";
@@ -40,7 +40,7 @@ export const SingleWithCustomParser = (): ReactElement => {
   >(null);
   const handleSelectionChange = useCallback(
     (
-      event: SyntheticEvent,
+      _event: SyntheticEvent,
       date: SingleDateSelection<DateFrameworkType> | null,
       details: DateInputSingleDetails | undefined,
     ) => {
@@ -83,7 +83,7 @@ export const SingleWithCustomParser = (): ReactElement => {
           date: parsedDate.date,
           value: inputDate,
           errors: [
-            { type: DateDetailErrorEnum.UNSET, message: "no date provided" },
+            { type: DateDetailError.UNSET, message: "no date provided" },
           ],
         };
       }

@@ -3,7 +3,7 @@ import customParseFormat from "dayjs/plugin/customParseFormat";
 import timezone from "dayjs/plugin/timezone";
 import utc from "dayjs/plugin/utc";
 import { describe, expect, it } from "vitest";
-import { AdapterDayjs, DateDetailErrorEnum } from "../index";
+import { AdapterDayjs, DateDetailError } from "../index";
 
 // Extend dayjs with necessary plugins
 dayjs.extend(utc);
@@ -70,7 +70,7 @@ describe("GIVEN a AdapterDayjs", () => {
     expect(result.errors).toEqual([
       {
         message: "not a valid date",
-        type: DateDetailErrorEnum.INVALID_DATE,
+        type: DateDetailError.INVALID_DATE,
       },
     ]);
   });

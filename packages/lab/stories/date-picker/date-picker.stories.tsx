@@ -10,7 +10,7 @@ import {
   Text,
 } from "@salt-ds/core";
 import {
-  DateDetailErrorEnum,
+  DateDetailError,
   type DateFrameworkType,
   type ParserResult,
   type TimeFields,
@@ -1575,7 +1575,7 @@ export const SingleWithCustomParser: StoryFn<
           date: parsedDate.date,
           value: inputDate,
           errors: [
-            { type: DateDetailErrorEnum.UNSET, message: "no date provided" },
+            { type: DateDetailError.UNSET, message: "no date provided" },
           ],
         };
       }
@@ -1714,7 +1714,7 @@ export const RangeWithCustomParser: StoryFn<
           date: parsedDate.date,
           value: inputDate,
           errors: [
-            { type: DateDetailErrorEnum.UNSET, message: "no date provided" },
+            { type: DateDetailError.UNSET, message: "no date provided" },
           ],
         };
       }
@@ -1795,7 +1795,7 @@ export const SingleWithCustomValidation: StoryFn<
       if (date && isWeekend(date)) {
         updatedDetails.errors = updatedDetails?.errors ?? [];
         updatedDetails.errors?.push({
-          type: DateDetailErrorEnum.INVALID_DAY,
+          type: DateDetailError.INVALID_DAY,
           message: "date must be a weekday",
         });
       }
@@ -1842,7 +1842,7 @@ export const SingleWithCustomValidation: StoryFn<
         return details;
       }
       details.errors = details.errors.map((error) => {
-        if (error.type === DateDetailErrorEnum.NOT_A_DATE) {
+        if (error.type === DateDetailError.NOT_A_DATE) {
           error.message = "valid dates are any weekday";
         }
         return error;
