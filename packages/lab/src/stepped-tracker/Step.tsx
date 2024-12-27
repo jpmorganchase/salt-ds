@@ -164,7 +164,7 @@ export function Step({
         >
           {children}
           {substeps?.map((step) => (
-            <Step key={step.id} {...step} />
+            <Step key={step.key || step.id} {...step} />
           ))}
         </SteppedTracker>
       )}
