@@ -1,17 +1,16 @@
-import path from "node:path";
 import { getTsconfig } from "get-tsconfig";
 
 export function distinct(arr) {
   return [...new Set(arr)];
 }
 
-export async function getTypescriptConfig(cwd) {
+export async function getTypescriptConfig(cwd, srcDir) {
   const typescriptConfig = {};
 
   const result = getTsconfig(cwd);
 
   Object.assign(typescriptConfig, result.config, {
-    include: [path.join(cwd, "src")],
+    include: [srcDir],
     exclude: distinct(
       [
         // all TS test files, regardless whether co-located or in test/ etc

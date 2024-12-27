@@ -1,12 +1,12 @@
 import {
-  DateDetailErrorEnum,
+  AdapterDateFns,
+  AdapterDayjs,
+  AdapterLuxon,
+  AdapterMoment,
+  DateDetailError,
   type DateFrameworkType,
   type SaltDateAdapter,
 } from "@salt-ds/date-adapters";
-import { AdapterDateFns } from "@salt-ds/date-adapters";
-import { AdapterDayjs } from "@salt-ds/date-adapters";
-import { AdapterLuxon } from "@salt-ds/date-adapters";
-import { AdapterMoment } from "@salt-ds/date-adapters";
 import {
   DatePicker,
   DatePickerOverlay,
@@ -210,7 +210,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
               value: "",
               errors: [
                 {
-                  type: DateDetailErrorEnum.UNSET,
+                  type: DateDetailError.UNSET,
                   message: "no date defined",
                 },
               ],
@@ -256,7 +256,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
               value: "bad date",
               errors: [
                 {
-                  type: DateDetailErrorEnum.INVALID_DATE,
+                  type: DateDetailError.INVALID_DATE,
                   message: "not a valid date",
                 },
               ],

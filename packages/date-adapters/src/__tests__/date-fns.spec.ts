@@ -1,7 +1,7 @@
 import { isValid } from "date-fns";
 import { enUS } from "date-fns/locale";
 import { describe, expect, it } from "vitest";
-import { AdapterDateFns, DateDetailErrorEnum } from "../index";
+import { AdapterDateFns, DateDetailError } from "../index";
 
 describe("GIVEN a AdapterDateFns", () => {
   const adapter = new AdapterDateFns({ locale: enUS });
@@ -34,7 +34,7 @@ describe("GIVEN a AdapterDateFns", () => {
     expect(result.errors).toEqual([
       {
         message: "not a valid date",
-        type: DateDetailErrorEnum.INVALID_DATE,
+        type: DateDetailError.INVALID_DATE,
       },
     ]);
   });
