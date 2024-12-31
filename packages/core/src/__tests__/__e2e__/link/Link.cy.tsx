@@ -42,4 +42,40 @@ describe("GIVEN a link", () => {
 
     cy.findByTestId(/TearOutIcon/i).should("not.exist");
   });
+
+  it("WHEN `render` is passed a render function, THEN should call `render` to create the element", () => {
+    const testId = "link-testid";
+
+    const mockRender = cy
+      .stub()
+      .as("render")
+      .returns(
+        <a href="#root" data-testid={testId}>
+          Action
+        </a>,
+      );
+
+    cy.mount(<Link href="#root" render={mockRender} />);
+
+    cy.findByTestId(testId).should("exist");
+
+    cy.get("@render").should("have.been.calledWithMatch", {
+      className: Cypress.sinon.match.string,
+      children: Cypress.sinon.match.any,
+    });
+  });
+
+  it("WHEN `render` is given a JSX element, THEN should merge the props and render the JSX element", () => {
+    const testId = "link-testid";
+
+    const mockRender = (
+      <a href="#root" data-testid={testId}>
+        Action
+      </a>
+    );
+
+    cy.mount(<Link href="#root" render={mockRender} />);
+
+    cy.findByTestId(testId).should("exist");
+  });
 });
