@@ -8,325 +8,203 @@ sidebar:
 
 ## What is a Salt theme
 
-Salt theme is a collection of defined visual styles that shape the overall look-and-feel of a digital product. This encompasses elements like color, typography, spacing, and corner radius, ensuring a consistent and cohesive appearance throughout the product.
+A Salt theme is a collection of defined visual styles that shape the overall look-and-feel of a digital product. This encompasses elements like color, typography, spacing, and corner radius, ensuring a consistent and cohesive appearance throughout the product.
 
 A theme in Salt enables delivery teams to streamline the process of creating a consistent design language across their business domain, platforms or products.
 
-### Design tokens
+Salt uses themes to style its technical components and recommended libraries (such as AG Grid and Highcharts). Keeping styles separate to components makes it easy to switch between themes, without breaking or altering the underlying application build.
 
-Salt themes are defined by design tokens that are organized into 3 groups. Each group of tokens has a specific purpose:
+<Image src="/img/theming/theme-v2-01.png" alt="Salt technology stack" />
 
-1. **[Characteristics](/salt/themes/characteristic-tokens)**: Semantically grouped tokens that are used to style components.
-2. **Palette**: Consolidated view of values used in Characteristic tokens – the simplest entry point to modify the theme.
-3. **Foundations**: Ramps of tokens for the raw values that underpin the design system.
+## Design tokens
 
-**Example: Status Characteristic Token in Toast component**
+Salt styles its components and patterns using design tokens. A design token is a text reference (or alias) for a specific value (px, %, pt, #, etc) which is used to style a component attribute (border color, border thickness, fill color, etc).
 
-Toast use status tokens to denote status with color, such as green for success.
+Salt themes are defined by design tokens that are organized into 3 levels:
 
-- Characteristic Token: `--salt-status-success-foreground-decorative`
-- Palette Token: `--salt-palette-success-foreground`
-- Foundation Token: `--salt-color-green-400` (default: `rgb(48, 156, 90)`)
+### Foundation tokens
 
-To keep tokens manageable, Salt doesn't create tokens for every style attribute of a component. Instead, Salt provides tokens that reflect component design decisions. This means we can maintain the quality of interaction design patterns and accessibility.
+Foundation tokens are the base level of the theme. They reference the raw values that underpin the design system. For instance, a color such as --green-100 references rgb(93, 189, 116) and --green-900 references rgb(35, 52, 43).
 
-## Supported themes
+These tokens can be used directly to define spacing and size of components and patterns.
 
-As of Q3 2024, Salt offers two themes: the current theme, that reflects the UI Toolkit (UITK) design language, and the new J.P. Morgan (JPM) brand-endorsed Salt Next theme.
+### Palette tokens
 
-In Salt's architecture, theme styles (known as design tokens) are kept separate from components. Regardless of the chosen theme (the look-and-feel), the underlying components remain the same. This separation makes it easy to switch between themes, without breaking or altering the underlying application build.
+Palette tokens are a subset of the most frequently used Foundation tokens, and are referenced by Characteristics tokens.
 
-<Image
-  src="/img/theming/salt-technology-stack.png"
-  alt="Salt technology stack"
-/>
+A palette token can reference more than one foundational token–this capability enables components to toggle between ‘modes’ (e.g., light or dark). For example, the palette token --palette-positive-weak is --color-green-100 in light mode or --color-green-900 in dark mode.
 
-## Salt Next theme
+The palette level is the simplest point to define or modify a theme. Changing one token here can impact many characteristic tokens (and therefore components).
 
-Salt Next is a new theme for Salt which is built on new design foundations endorsed by the J.P. Morgan Corporate Brand team. It is a non-breaking update to the Salt library which officially brings 'styling options' and 'theming' capability to Salt components.
+Never use a palette token to style components and patterns directly.
 
-Salt design system does not recommend customizing the look-and-feel of the current Salt theme.
+### Characteristics tokens
 
-## Customizing with Salt Next
+A ‘Characteristic’ is a group of tokens that share the same purpose (or semantic). For example, the Status characteristic groups any tokens used to style error, warning or success component states.
 
-There are two ways to customize the look-and-feel of components:
+[Characteristic tokens](/salt/themes/characteristic-tokens) reference palette tokens. For instance, the characteristic token --salt-status-success-background references the palette token --salt-palette-positive-weak.
 
-1. **System-wide 'styling options'**: Choose from a selection of predefined design choices.
-2. **Theming**: Change the value of supported design tokens.
+These tokens can be used directly to color your components and patterns.
 
-### Styling options
+### Banner example
 
-Styling options make it easy to adjust the design of Salt components across the system for a user group or use case:
+Banner gets its background color from the Status characteristic tokens.
 
-#### Density
+- Characteristic: `--status-success-background`
+- Palette: `--positive-weak`
+- Foundation: `--color-green-100` (light mode) or `--color-green-900` (dark mode)
 
-Relates to the amount of content that can fit on a screen based on the size and spacing of components. The four densities are high, medium, low, and touch.
+<Image src="/img/theming/theme-v2-02.png" alt="Banner example" />
 
-<Image
-  src="/img/theming/styling-options-button-densities-example.png"
-  alt="Styling options button densities example"
-/>
+### Design token intent
 
-#### Accent / Mode
+To keep the number of design tokens in the Salt system manageable, Salt doesn't have tokens for every attribute of every component and every state.
 
-Determines the dominant color – blue (aligned to the current theme) or teal (aligned to the Salt Next theme inline with the JP Morgan MasterBrand Styleguide) for light or dark mode.
+Instead, Salt provides tokens that reflect the design intent of the system. For example, if all container borders are 1px thick then Salt provides a single --size-border token which updates all borders. This means we can maintain the cohesive systematic nature of the system as well as the quality of interaction design patterns and accessibility.
 
-<Image
-  src="/img/theming/styling-options-button-accent-mode-example.png"
-  alt="Styling options button accent mode example"
-/>
+## Salt themes
 
-#### Corner radius
+Salt has two themes:
 
-Sets predefined corners in certain components to sharp or round.
+1. JPM Brand theme
+2. Legacy (UITK) theme
+   <br />
+   <Image
+     src="/img/theming/theme-v2-03.png"
+     alt="JPM brand theme vs Legacy (UITK) theme"
+   />
 
-<Image
-  src="/img/theming/styling-options-button-corner-example.png"
-  alt="Styling options button corner example"
-/>
+### Legacy (UITK) theme
 
-#### Font
+We understand that application migration journeys from the UITK system will vary in time and complexity. To enable phased migration of more complex applications, Salt can be used with its Legacy (UITK) theme together with UITK components.
 
-Displays heading and/or action fonts as Amplitude or Open Sans.
+J.P. Morgan employees can read more about [migration journeys](https://go/salt-ds-internal/migration-strategies/index) and [comparisons](https://go/salt-ds-internal/migration-strategies/comparison) between the two systems.
 
-<Image
-  src="/img/theming/styling-options-button-font-example.png"
-  alt="Styling options button font example"
-/>
+### JPM Brand theme
 
-### Theme recipe
+The JPM Brand theme (previously the Salt Next theme) brings the JPM Brand identity to CIB (Commercial & Investment Bank) digital applications and is the long-term visual identity of the Salt system.
 
-Styling options can be combined as a 'theme recipe' to create design languages which are optimized for a specific context, for example:
+Working with Corporate Brand, CIB Marketing and LOB delivery teams, the Salt design system has adopted key styles to ensure visual alignment to the JPM Brand. Although not an exact match, these changes have been approved by both parties to address the complexities of desktop and web applications across the CIB. This brand theme will continue to evolve and grow as core requirements are fed back into the Salt system.
 
-**Example #1**: An external application is infrequently for limited data input An LOB define their design language to be low density, light mode, round corners, amplitude font, teal accent.
+Due to the benefits of improved accessibility and brand alignment, Salt recommends that delivery teams plan to switch to the JPM Brand theme. If you’re a J.P. Morgan employee you can read more about the [JPM Brand theme and if you should use it](https://go/salt-ds-internal/news/blogs/20241113-demystifying-next).
+
+#### Mode and densities
+
+Supports light and dark modes across four densities, with teal serving as the primary accent color across the system–reflecting the JPM brand.
 
 <Image
-  src="/img/theming/theme-recipe-ld-light-round-amplitude-teal.png"
-  alt="Theme recipe LD light round Amplitude teal"
+  src="/img/theming/theme-v2-04.png"
+  alt="Styling options button mode and density example"
 />
 
-**Example #2**: An established internal application is frequently to handling vast amounts of data. An LOB define their design language to be high density, dark mode, sharpcorners, open sans font, blue accent.
+#### Color palette
 
-<Image
-  src="/img/theming/theme-recipe-hd-dark-sharp-open-sans-blue.png"
-  alt="Theme recipe HD dark sharp Open Sans blue"
-/>
+The foundational color palette has been refreshed with updated shades of the same general colors found in UITK (gray, blue, teal, purple, red, orange, and green). These new colors are derived from the hue and saturation values in the JPM MasterBrand Styleguide.
 
-**Example #3**: An internal application is frequently to handle operational tasks. An LOB define their design language to be medium density, light mode, sharp corners, open sans font, teal accent.
+The updated palette creates a lighter and brighter look suitable for both institutional and consumer experiences.
 
-<Image
-  src="/img/theming/theme-recipe-md-light-sharp-open-sans-teal.png"
-  alt="Theme recipe MD light sharp Open Sans teal"
-/>
-
-There are several benefits to using styling options:
-
-- Allows easy modifications within predefined parameters.
-- Ensures a consistent look-and-feel across LOBs, products, or user groups.
-- Design languages can be easily updated as new styling options are released.
-
-Individual products within the LOB can customize their LOB design languages further if needed.
-
-### Theming
-
-If styling options alone don't achieve your desired visual design, you can create a new theme by changing the values of foundational, palette, or characteristic design tokens. This requires a deep understanding of the system, and significant design effort and increased cost. Possible use-cases for theming include:
-
-- Differentiating products while maintaining alignment with J.P. Morgan, e.g. unique accent bar colors for each product in a platform.
-- Aligning with an alternate design system to support migration to Salt.
-- Achieving greater parity with a brand other than J.P. Morgan, such as Chase.
-
-For example, you may choose to use a custom primary color in your app. Here the blue is replaced by a custom magenta (and checked to ensure 4.5:1 color contrast).
-
-<Image
-  src="/img/theming/theming-custom-primary-color-example.png"
-  alt="Theming custom primary color example"
-/>
-
-Any theme changes outside of 'styling options' mean you assume certain responsibilities from Salt. For example, if you change a token for a background color, you must ensure it meets accessibility standards for contrast ratios.
-
-Most design tokens are used across multiple components, so you need to understand the impact and test changes thoroughly across the product. In Figma, create and publish custom components independently of the provided Salt libraries. In code, create a centralized CSS stylesheet with the changes to be imported alongside the Salt theme.
-
-By modifying the theme, you own the cost of the change and are responsible for maintaining it.
-
-## White labelling isn't supported
-
-White labelling allows the design system to be fully customized. It means you can take the base code and make it look completely different. It enables external companies to follow their own brand guidelines or mimic an alternate design system as closely as possible without having to build a design system from scratch.
-
-In code, each component would need to be wrapped and published as a new component, and from a design perspective a new set of libraries would need to be created and maintained.
-
-White labelling requires significant changes and investment, and therefore is not supported by the Salt team.
-
-## Component-level styling options
-
-In addition to the Salt Next theme, Salt is beginning to provide further component-level styling options for full borders (where the border is considered decorative) and drop shadows. The options are on a component-by-component basis and not a system-wide styling option. You can choose whether to have these options on each part of the application.
-
-Optional border support is already being rolled out across Salt's form control components (i.e., Input, Multiline, Combo Box). This feature can be combined with 'Corner' and 'Accent' styling option to provide the capability of Form Fields with full borders and rounded corners (a long request feature), aligned to brand.
-
-<Image
-  src="/img/theming/input-border-styling-options.png"
-  alt="Input border styling options"
-/>
-
-## JPM brand endorsement
-
-Salt Next brings the [JPM brand](https://jpmcbrandtoolbox.com/) identity to CIB (Commercial & Investment Bank) digital applications.
-
-Working with Corporate Brand and CIB Marketing, the Salt design system has adopted key styles to ensure visual alignment to the JPM brand with the Salt Next theme. Although not an exact match, these changes have been approved by both parties to address the complexities of desktop and web applications across the CIB.
-
-### Color palette
-
-The Salt Next foundational color palette has been refreshed with updated shades of the same general colors found in Salt and UITK (gray, blue, teal, purple, red, orange, and green). These new colors are derived from the hue and saturation values in the JPM MasterBrand Styleguide. The updated palette creates a lighter and brighter look suitable for both institutional and consumer experiences.
-
-<Image
-  src="/img/theming/brand-endorsed-color-palette.png"
-  alt="Brand endorsed color palette"
-/>
+<Image src="/img/theming/theme-v2-05.png" alt="Updating color ramps" />
 
 To address the many unused colors in the previous palette, the new color ramps have been reduced to nine swatches per ramp, with 500 as the shared middle value. We call this mode agnostic, meaning the color remains the same when switching between light and dark modes. The rest of the palette is based on 'equivalents,' where the ramp is inverted for dark mode—for example, blue-100 in light mode is equivalent to blue-900 in dark mode and vice versa.
 
-<Image
-  src="/img/theming/mode-agnostic-blue-colors.png"
-  alt="Mode agnostic blue colors"
-/>
+<Image src="/img/theming/theme-v2-06.png" alt="Equivalent colors" />
 
 The 500 series swatches have been carefully selected to ensure that primary text—white or black—achieves a minimum contrast ratio of 4.5:1 when placed on any of them. These swatches serve as the base color value for each ramp, with four lighter and four darker swatches on either side.
 
-<Image
-  src="/img/theming/color-contrast-ensured-500-color-series.png"
-  alt="Color contrast ensured 500 colorseries"
-/>
+<Image src="/img/theming/theme-v2-07.png" alt="500 swatches" />
 
 Primary, secondary, and tertiary backgrounds have been created as standalone swatches and are no longer tied to the color ramps. This includes snow, marble and limestone for light mode; and jet, granite and leather for dark mode.
 
-<Image
-  src="/img/theming/standalone-background-colors.png"
-  alt="Standalone background colors"
-/>
+<Image src="/img/theming/theme-v2-08.png" alt="background colors" />
 
-In addition to the foundational ramp, a revamped categorical color palette has been added, expanding from 20 to 40 color options per mode. The first 20 colors are mode agnostic, following the same principle as the 500 series in the foundational palette, ensuring primary text (white or black) meets a minimum contrast ratio of 4.5:1 when placed on any of these colors.
+A revamped categorical color palette has been added, expanding from 20 to 40 color options per mode. Colors 1 to 20 are mode agnostic (for use in both light and dark mode), following the same principle as the 500 series in the foundational palette, ensuring primary text (white or black) meets a minimum contrast ratio of 4.5:1 when placed on any of these colors.
 
-<Image
-  src="/img/theming/revamped-categorical-color-palette.png"
-  alt="Revamped categorical color palette"
-/>
+<Image src="/img/theming/theme-v2-09.png" alt="categorical palette" />
 
-### Amplitude font
+#### Amplitude font
 
-Salt Next introduces the Amplitude typeface, taken directly from the CIB Brand Guidelines, for use in header and display sizes as well as button labels. Open Sans remains the primary typeface for body copy text sizes and smaller in the Salt Next type ramps.
+The JPM Brand theme introduces the Amplitude typeface, taken directly from the CIB Brand Guidelines, for use in header and display sizes as well as button labels. Open Sans remains the primary typeface for body copy and smaller type.
 
-<Image
-  src="/img/theming/new-amplitude-typeface.png"
-  alt="New Amplitude typeface"
-/>
+<Image src="/img/theming/theme-v2-10.png" alt="amplitude font" />
 
-### Corner ramps
+#### Corner ramps
 
-Salt Next includes the ability to apply predefined corner radiuses to specified components. This rounded corner feature, from the CIB Brand Guidelines, allows designers to create a softer, more consumer-friendly look-and-feel in their products. Each density includes four different radiuses, which help achieve a sense of visual nesting when used together.
+Corner radii have been systematically defined for specific components. Each density includes four different radii, which help achieve a sense of complementary visual nesting when used together.
 
-<Image src="/img/theming/new-corner-ramps.png" alt="New corner ramps" />
+<Image src="/img/theming/theme-v2-11.png" alt="corner ramps" />
 
-## When to use the Salt Next theme
+## Using themes in Figma
 
-Before using the Salt Next theme in design or development you should align with your Product team and check which theme to use, and when an appropriate time to switch themes is.
+As of 2025, Salt provides a single Figma component and pattern library which supports both themes. This new library uses Figma variables to enable a choice of:
 
-Due to the benefits of improved accessibility and brand alignment, and the ability to easily tailor look-and-feel to use cases, Salt recommends that delivery teams plan to switch to the Salt Next theme.
+1. **Mode:** Light, Dark
+2. **Density:** High, Medium, Low, Touch
+3. **Theme:** JPM Brand, Legacy (UITK)
 
-## Guidance on using the current Salt theme
+The Salt libraries you need to install into your projects are:
 
-We understand the importance of the current theme for products migrating from UI Toolkit. We will continue to ensure the availability of the current theme for Salt components.
+1. Salt DS Components and Patterns
+2. Salt DS Themes
+3. Salt DS Assets
 
-The current theme offers limited styling options except for density and mode. Customizing the look-and-feel of the current theme is not recommended. Please note that any customizations made to this theme are your responsibility to maintain.
+_Optional_
 
-**If you are a designer**, be aware that if your product team is continuing to use the current theme you need to continue using the Salt Light and Dark Component Figma libraries, and associated Figma libraries. In H2 2024 we will include current theme support in the new Salt Next [variable-driven Figma library](#new-variable-driven-libraries).
+1. Salt DS Legacy (UITK) Colors
+2. Salt DS JPM Brand Colors
+3. Salt DS JPMC Logo
 
-## Guidance on using the Salt Next theme
+If you are a J.P. Morgan employee, you can read more about the [new libraries and how to start using them](https://go/salt-ds-internal/migration-strategies/salt-ds-figma-migration).
 
-The Salt Next theme is now stable and available in both Figma and code to use in your production delivery.
+### Installing the libraries
 
-### Figma
-
-To provide 'styling options' and theming capability the new Salt Next Figma libraries implement Salt design tokens as Figma [variables](https://help.figma.com/hc/en-us/sections/14506605769879-Variables) to define all the visual attributes of components.
-
-#### New variable-driven libraries
-
-Using Figma variables enables us to reduce the number of Figma libraries we need to provide. Salt Next has the following libraries:
-
-1. Salt (Next) Components & Patterns
-2. Salt (Next) Style Library
-3. Salt (Next) Color Library
-
-The 'Salt Icons' library has been updated with variable support to work with Salt Next components.
-
-To access the libraries:
+To install the libraries:
 
 1. Go to the Assets panel in your Figma file.
 2. Tap on the Libraries icon (open book icon).
 
-   <Image
-     src="/img/theming/figma-next-library-libraries-icon.png"
-     alt="Figma next library libraries icon"
-   />
+   <Image src="/img/theming/theme-v2-12.png" alt="installing the libraries" />
 
-3. Search for 'Salt Next'.
+3. Search for 'Salt DS’.
 
-   <Image
-     src="/img/theming/figma-next-library-add-to-file.png"
-     alt="Figma next library add to file"
-   />
+   <Image src="/img/theming/theme-v2-13.png" alt="searching on figma" />
 
-4. Add the three available libraries (referenced above) to your file.
+4. Add the libraries referenced above to your file.
 
-#### Using the style library
+### Using the Salt DS Themes library
 
-The style library includes all the Figma variables needed to design for Salt. It includes the semantic palette, category colors, size and spacing values, corner radiuses, typographic styles and more. Using Style Library variables to style your components automatically adds 'styling options' to your components.
+The Themes library includes all the Figma variables needed to style with Salt. It includes the semantic palette, category colors, size and spacing values, corner radii, typographic styles and more.
 
-The variables are set up to match our tokens in code. When inspecting a design in Figma's [Dev Mode](https://help.figma.com/hc/en-us/sections/15023066873239-Dev-Mode), you can see references that match our tokens, such as size and spacing values (e.g., `--spacing-100` in Figma maps to `--salt-spacing-100` in code).
+The variables are set up to match our tokens in code. When inspecting a design in Figma's Dev Mode, you can see references that match our tokens, such as size and spacing values (e.g., `--spacing-100` in Figma maps to`--salt-spacing-100` in code).
 
-<Image
-  src="/img/theming/figma-next-library-next-dev-mode.png"
-  alt="Figma next library next dev mode"
-/>
+Note: In code, all tokens are prefixed with ‘--salt-’, e.g., `--salt-spacing-100`.
 
-#### Using the colors library
+<Image src="/img/theming/theme-v2-14.png" alt="using the themes library" />
 
-The colors library provides access to all foundational color ramps (e.g., `--blue-100` to `--blue-900`). These colors are linked to the semantic styles in the Salt Next Styles library.
+### Using the Colors libraries
 
-You don't need to add these colors to your project unless you want to use them directly. For consistency across components and to benefit from 'styling options', Salt recommends only applying variables from the [Salt Next Style library](#using-the-style-library) to your project.
+The Colors libraries provides access to all foundational color ramps (e.g., `--blue-100` to `--blue-900`) for Legacy (UITK) and JPM Brand themes. These colors are linked to the semantic styles in the Salt DS Themes library.
 
-#### Using the component and pattern library
+You don't need to add these colors to your project unless you want to use them directly. For consistency across components, Salt recommends only applying variables from the Salt Themes library to your project.
 
-The new variable-driven component and pattern library functions similarly to the current Salt component library but with key differences:
+### Using component modes in Figma
 
-- No need to switch between light and dark mode libraries.
-- No need to set density at the component level.
-- Access to new 'styling options' like round corners, accent color, and Amplitude as a heading and/or action font.
+1. Add components: Drag from the Assets panel.
+2. In the right sidebar, click ‘Apply variable mode' (swatch icon) button in the Layer panel to see all available options.
 
-#### Using component 'styling options' in Figma
+   <Image src="/img/theming/theme-v2-15.png" alt="applying component modes" />
 
-1.  Add components: Drag from the Assets panel.
-2.  Access 'styling options': In the right sidebar, click 'Change variable mode' (double hexagon) icon in the Layer panel to see all available options.
+3. For pages, groups, sections, frames or components:
 
-    <Image
-      src="/img/theming/figma-next-library-variable-mode-switch.png"
-      alt="Figma next library variable mode switch"
-    />
+   - **Mode:** Light, Dark
+   - **Density:** High, Medium, Low, Touch
+   - **Theme:** Legacy (UITK), JPM Brand
 
-3.  For Pages, Groups, Sections, Frames or Components:
+### Using themes in Code
 
-        1. **Accent / Mode**: Set teal or blue (default) accent color (e.g., indicators in Tabs, CTA buttons) in light or dark mode.
-        1. **Corner**: Switch between sharp (default) and round corners.
-        1. **Density**: Change the size, spacing, corner radius and type size of elements for high (default), medium, low or touch density.
-        1. **Heading Font**: Set display and H1-H4 type styles as Open Sans or Amplitude.
-        1. **Action Font**: Set action components (mostly Buttons) type styles as Open Sans or Amplitude.
+You can define themes in code using the following components:
 
-#### Setting a theme recipe in Figma
-
-While you can set styling options for individual components, we recommend setting the required options for a product / LOB design language at a Figma Page level. This ensures consistency and avoids setting variables component-by-component. Options can be adjusted further at a nested Frame or Component level where you need to mix styling options.
-
-### Code
-
-The new Salt Provider, `SaltProviderNext`, offers new styling options like rounded corners and balanced color palettes. It extends the existing Salt Provider, keeping current options (light / dark modes, density levels) with new props for new options.
-To use it, replace the existing `SaltProvider` with `SaltProviderNext` and import the new theme CSS.
+- SaltProvider component provides the UITK (Legacy) theme
+- SaltProviderNext component provides the JPM Brand theme
 
 ```diff
 // Swap out existing SaltProvider(s)
@@ -340,13 +218,13 @@ To use it, replace the existing `SaltProvider` with `SaltProviderNext` and impor
 + import "@salt-ds/theme/css/theme-next.css";
 ```
 
-The new provider adds `.salt-theme-next` to the root or provider element, along with any needed data attributes (e.g., `data-corner`). All values in `theme-next.css` are scoped to `.salt-theme-next` to override any existing values.
+SaltProviderNext adds `.salt-theme-next` to the root or provider element, along with any needed data attributes (e.g., data-corner). All values in `theme-next.css` are scoped to `.salt-theme-next` to override any existing values.
 
-#### Apply styling options
+#### Set SaltProviderNext as JPM Brand theme
 
-You can apply styling options as corresponding props to `SaltProviderNext` –
+To display components in the JPM Brand theme, you currently need to configure the styling option props of `SaltProviderNext`. You will need to configure the following attributes.
 
-```javascript
+```jsx
 <SaltProviderNext
     accent="teal"             // or "blue"
     corner="rounded"          // or "sharp"
@@ -399,16 +277,33 @@ To ensure that every user sees the Amplitude font correctly, you'll need to add 
 }
 ```
 
-#### Display text sizes
+## Customizing the theme
 
-Display text styles are updated to distinguish them from heading text (h1/h2/h3/h4).
-They are now larger than h1 across densities.
+The design token structure for the JPM Brand theme has been simplified and can be customized if required.
 
-#### Setting a theme recipe in code
+In code there are two ways to customize the theme:
 
-You can use an npm package to ensure consistency. For example, a team can encapsulate preferred presets, allowing product teams to use them without needing detailed knowledge of the options.
+1. System-wide 'styling options'
+2. Targeting design tokens
 
-```javascript
+**Note:** If you choose to theme Salt its your responsibility to maintain and deliver that theme in code and Figma.
+
+#### Styling options and theme recipes
+
+SaltProviderNext styling option props provide the capability to make specific adjusts to the design of Salt components across the system.
+
+```jsx
+<SaltProviderNext
+    accent="teal"             // or "blue"
+    corner="rounded"          // or "sharp"
+    headingFont="Amplitude"   // or "Open Sans"
+    actionFont="Amplitude"    // or "Open Sans"
+>
+```
+
+A theme recipe is a defined selection of styling options for your theme. You can use an npm package to ensure consistency. For example, a team can encapsulate preferred presets, allowing product teams to use them without needing detailed knowledge of the options.
+
+```jsx
 // Example recipe: const sharedStylePresets = {accent: 'teal', corner: 'rounded'};
 import { sharedStylePresets } from '@lob-library/styles';
 
@@ -417,3 +312,33 @@ import { sharedStylePresets } from '@lob-library/styles';
     // Any product specific overrides
 >
 ```
+
+### Theming design tokens
+
+If styling options alone don't achieve your desired visual design, you can create a new theme by changing the values of the Foundation, Palette or Characteristic tokens. This requires a deep understanding of the system, and significant design effort and increased cost. Possible use-cases for theming include:
+
+- Differentiating products while maintaining alignment with J.P. Morgan, e.g. unique accent bar colors for each product in a platform.
+- Aligning with an alternate design system to support migration to Salt.
+- Achieving greater parity with a brand other than J.P. Morgan, such as Chase.
+
+For example, you may choose to use a custom primary color in your app. Here the blue is replaced by a custom magenta (and checked to ensure 4.5:1 color contrast).
+
+<Image src="/img/theming/theme-v2-16.png" alt="custom primary colors" />
+
+Any theme changes mean you assume certain responsibilities from Salt. For example, if you change a token for a background color, you must ensure it meets accessibility standards for contrast ratios.
+
+Most design tokens are used across multiple components, so you need to understand the impact and test changes thoroughly across the product. In Figma, create and publish custom components independently of the provided Salt libraries. In code, create a centralized CSS stylesheet with the changes to be imported alongside the Salt theme.
+
+By modifying the theme, you own the cost of the change and are responsible for maintaining it.
+
+### What about the current theme?
+
+We do not recommend customising the look-and-feel of the current theme. The design token structure has not been optimized for theming. Any customizations made to this theme are your responsibility to maintain.
+
+## White labelling isn't supported
+
+White labelling allows the design system to be fully customized. It means you can take the base code and make it look completely different. It enables external companies to follow their own brand guidelines or mimic an alternate design system as closely as possible without having to build a design system from scratch.
+
+In code, each component would need to be wrapped and published as a new component, and from a design perspective a new set of libraries would need to be created and maintained.
+
+White labelling requires significant changes and investment, and therefore is not supported by the Salt team.
