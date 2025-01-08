@@ -114,9 +114,10 @@ jobs:
         uses: cypress-io/github-action@v6
         with:
           install: false
-          command: yarn run test:components
+          component: true
+          browser: chrome
       - uses: actions/upload-artifact@v4
         if: failure()
         with:
-          name: cypress-screenshots
+          name: cypress-screenshots-${{ matrix.react }}
           path: cypress/screenshots
