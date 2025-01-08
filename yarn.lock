@@ -3361,7 +3361,7 @@ __metadata:
     chromatic: "npm:^11.10.1"
     ci-info: "npm:^4.0.0"
     clsx: "npm:^2.0.0"
-    cypress: "npm:^13.15.2"
+    cypress: "npm:^13.17.0"
     cypress-axe: "npm:^1.5.0"
     cypress-real-events: "npm:^1.13.0"
     deepmerge: "npm:^4.2.2"
@@ -7444,9 +7444,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cypress@npm:^13.15.2":
-  version: 13.15.2
-  resolution: "cypress@npm:13.15.2"
+"cypress@npm:^13.17.0":
+  version: 13.17.0
+  resolution: "cypress@npm:13.17.0"
   dependencies:
     "@cypress/request": "npm:^3.0.6"
     "@cypress/xvfb": "npm:^1.2.4"
@@ -7493,7 +7493,7 @@ __metadata:
     yauzl: "npm:^2.10.0"
   bin:
     cypress: bin/cypress
-  checksum: 10/cf5746744adf2cca916dc1c99bf7d9794599bb0ee42d78d5f656f05140f73962788104d5df88314cc0bee2540795186256c75f2d4fc3652a17d5fba1495e1b06
+  checksum: 10/6c548e2adf7ae127365570680aa32015dbeb94cad30ce4f8a92e2e58d8ef7033b7f0ece50579a0a13eb07061feede0c813ff8d1e50e0feb87520dece5be4ba95
   languageName: node
   linkType: hard
 
