@@ -111,7 +111,10 @@
     "whatwg-url": "^14.0.0",
     "@joshwooding/vite-plugin-react-docgen-typescript": "0.4.2",
     "cookie": "^0.7.0",
-    "esbuild": "^0.24.0"
+    "esbuild": "^0.24.0",
+    "ag-grid-community": "32.2.1",
+    "ag-grid-enterprise": "32.2.1",
+    "ag-grid-react": "32.2.1"
   },
   "browserslist": {
     "production": [
