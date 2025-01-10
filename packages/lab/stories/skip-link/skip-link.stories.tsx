@@ -59,9 +59,7 @@ const DefaultStory: StoryFn<typeof SkipLink> = (args) => {
       <BorderItem position="north" sticky className="app-header" as="header">
         <SkipLink {...args}>Skip to main content</SkipLink>
         <FlexLayout className="header" justify="space-between" gap={3}>
-          <FlexItem align="center">
-            Click here and press the Tab key to see the Skip Link
-          </FlexItem>
+          <FlexItem align="center" />
           <nav>
             <ul className="navigation">
               {headerItems?.map((item) => (
@@ -127,6 +125,9 @@ const DefaultStory: StoryFn<typeof SkipLink> = (args) => {
             endItem={<Button appearance="bordered">See all themes</Button>}
           />
         </StackLayout>
+        <div className="help-text">
+          Click here and press the Tab key to see the Skip Link
+        </div>
       </BorderItem>
     </BorderLayout>
   );

@@ -20,3 +20,9 @@
 .content-header {
   padding-top: calc(var(--salt-spacing-300) * 2);
 }
+.help-text {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: calc(var(--salt-spacing-300) * 2) var(--salt-spacing-100);
+}

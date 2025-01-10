@@ -39,9 +39,11 @@ export const SkipLink = forwardRef<HTMLAnchorElement, SkipLinkProps>(
     const targetRef = useRef<HTMLElement | null>(null);
 
     useEffect(() => {
-      targetRef.current = document.getElementById(targetId);
+      if (targetWindow) {
+        targetRef.current = targetWindow.document.getElementById(targetId);
+      }
       setIsTargetAvailable(!!targetRef.current);
-    }, [targetId]);
+    }, [targetId, targetWindow]);
 
     const eventHandlers = useManageFocusOnTarget({
       onKeyUp,
