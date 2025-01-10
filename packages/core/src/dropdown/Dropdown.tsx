@@ -456,7 +456,9 @@ export const Dropdown = forwardRef(function Dropdown<Item>(
         >
           {!valueText ? placeholder : valueText}
         </span>
-        {!disabled && validationStatus && <StatusAdornment status={validationStatus} />}
+        {!disabled && validationStatus && (
+          <StatusAdornment status={validationStatus} />
+        )}
         {!readOnly && <ExpandIcon open={openState} />}
         <div className={withBaseName("activationIndicator")} />
       </button>
