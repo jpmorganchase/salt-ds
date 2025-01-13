@@ -1,9 +1,28 @@
-.saltTargetBlankNoIcon-Link .saltLink-icon {
-  display: none;
+.app-header {
+  z-index: var(--salt-zIndex-appHeader);
 }
-
-.goalsList {
-  font-size: var(--salt-text-fontSize);
-  font-family: var(--salt-text-fontFamily);
-  line-height: var(--salt-text-lineHeight);
+.header {
+  padding-left: var(--salt-spacing-300);
+  padding-right: var(--salt-spacing-300);
+  background-color: var(--salt-container-primary-background);
+  border-bottom: var(--salt-size-border) var(--salt-container-borderStyle) var(--salt-separable-primary-borderColor);
+}
+.navigation {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.center {
+  margin: calc(var(--salt-spacing-300) * 2) auto;
+  max-width: 700px;
+}
+.content-header {
+  padding-top: calc(var(--salt-spacing-300) * 2);
+}
+.help-text {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: calc(var(--salt-spacing-300) * 2) var(--salt-spacing-100);
 }
