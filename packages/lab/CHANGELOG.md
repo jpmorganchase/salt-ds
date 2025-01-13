@@ -1,5 +1,237 @@
 # @salt-ds/lab
 
+## 1.0.0-alpha.58
+
+### Minor Changes
+
+- 0302830: Updates to Lab `SkipLink`
+
+  - Remove `targetRef` prop, added `target` prop to accept a string representing the ID of the target element.
+  - Updated styling to adhere with the rest of the library styles for consistency.
+  - Fixed an issue where the `SkipLink` would render when the ref to the target element was broken. Now, the skip link will not render at all if the target element is not found.
+
+### Patch Changes
+
+- 0a5b68b: Marked CSS files as having side effects. This fixes Webpack tree-shaking CSS files when `sideEffects: true` is not set on style-loader rules.
+- a9edf03: Fixed DatePicker showing overlay when `readOnly`. Closes #4470.
+- 86d2a28: Refactored SteppedTracker, added Step and useStepReducer
+
+  The `SteppedTracker` is a component that helps you manage a series of steps in a process. It provides a way to navigate between steps, and to track the progress of the process.
+
+  The `<SteppedTracker />` is meant to be used in conjunction with the `<Step />` component and potentially the `useStepReducer()` hook.
+
+  In it's simplest form the `SteppedTracker` can be used like so:
+
+  ```tsx
+  import { SteppedTracker, Step } from "@salt-ds/lab";
+
+  function Example() {
+    return (
+      <SteppedTracker>
+        <Step label="Step 1" stage="completed" />
+        <Step label="Step 2" stage="active" />
+        <Step label="Step 3" stage="pending" />
+      </SteppedTracker>
+    );
+  }
+  ```
+
+  The SteppedTracker component supports nested steps, which can be used to represent sub-steps within a step. This can be done by nesting `<Step />` components within another `<Step />` component. We advise you not to go above 2 levels deep, as it becomes hard to follow for the user.
+
+  ```tsx
+  import { StackLayout } from "@salt-ds/core";
+  import { Step, SteppedTracker } from "@salt-ds/lab";
+
+  export function NestedSteps() {
+    return (
+      <StackLayout style={{ minWidth: "240px" }}>
+        <SteppedTracker orientation="vertical">
+          <Step label="Step 1" stage="completed">
+            <Step label="Step 1.1" stage="completed" />
+          </Step>
+          <Step label="Step 2" stage="inprogress">
+            <Step label="Step 2.1" stage="active" />
+            <Step label="Step 2.2" stage="pending">
+              <Step label="Step 2.2.1" stage="pending" />
+              <Step label="Step 2.2.2" stage="pending" />
+              <Step label="Step 2.2.3" stage="pending" />
+            </Step>
+          </Step>
+          <Step label="Step 3">
+            <Step label="Step 3.1" stage="pending" />
+            <Step label="Step 3.2" stage="pending" />
+            <Step label="Step 3.3" stage="pending">
+              <Step label="Step 3.3.1" stage="pending" />
+              <Step label="Step 3.3.2" stage="pending" />
+              <Step label="Step 3.3.3" stage="pending" />
+            </Step>
+          </Step>
+        </SteppedTracker>
+      </StackLayout>
+    );
+  }
+  ```
+
+  The `SteppedTracker` component is a purely presentational component, meaning that you need to manage the state of the steps yourself. That however becomes tricky when dealing with nested steps. This is where the `useStepReducer()` hook comes in. It is a custom hook that helps you manage the state of a `SteppedTracker` component with nested steps with ease. It has a built-in algorithm that determines the stage of all steps above and below the active step. All you need to do is add `stage: 'active'` to the desired step (see `step-3-3` in the hook example below), the hook will figure out the rest. This is what we call `autoStage`.
+
+  Migrating from the previous SteppedTracker API
+
+  Before:
+
+  ```tsx
+  function Before() {
+    return (
+      <SteppedTracker activeStep={0}>
+        <TrackerStep>
+          <StepLabel>Step One</StepLabel>
+        </TrackerStep>
+        <TrackerStep>
+          <StepLabel>Step Two</StepLabel>
+        </TrackerStep>
+        <TrackerStep>
+          <StepLabel>Step Three</StepLabel>
+        </TrackerStep>
+        <TrackerStep>
+          <StepLabel>Step Four</StepLabel>
+        </TrackerStep>
+      </SteppedTracker>
+    );
+  }
+  ```
+
+  After:
+
+  ```tsx
+  function After() {
+    return (
+      <SteppedTracker>
+        <Step label="Step One" stage="active" />
+        <Step label="Step Two" />
+        <Step label="Step Three" />
+        <Step label="Step Four" />
+      </SteppedTracker>
+    );
+  }
+  ```
+
+  Before:
+
+  ```tsx
+  function Before() {
+    return (
+      <SteppedTracker orientation="vertical" activeStep={8}>
+        <TrackerStep stage="completed">
+          <StepLabel>Step 1</StepLabel>
+        </TrackerStep>
+        <TrackerStep depth={1} stage="completed">
+          <StepLabel>Step 1.1</StepLabel>
+        </TrackerStep>
+        <TrackerStep depth={1} stage="completed">
+          <StepLabel>Step 1.2</StepLabel>
+        </TrackerStep>
+        <TrackerStep depth={1} stage="completed">
+          <StepLabel>Step 1.3</StepLabel>
+        </TrackerStep>
+        <TrackerStep stage="completed">
+          <StepLabel>Step 2</StepLabel>
+        </TrackerStep>
+        <TrackerStep stage="inprogress">
+          <StepLabel>Step 3</StepLabel>
+        </TrackerStep>
+        <TrackerStep depth={1} stage="completed">
+          <StepLabel>Step 3.1</StepLabel>
+        </TrackerStep>
+        <TrackerStep depth={1} stage="completed">
+          <StepLabel>Step 3.2</StepLabel>
+        </TrackerStep>
+        <TrackerStep depth={1} stage="inprogress">
+          <StepLabel>Step 3.3</StepLabel>
+        </TrackerStep>
+        <TrackerStep depth={1}>
+          <StepLabel>Step 3.4</StepLabel>
+        </TrackerStep>
+        <TrackerStep>
+          <StepLabel>Step 4</StepLabel>
+        </TrackerStep>
+      </SteppedTracker>
+    );
+  }
+  ```
+
+  After
+
+  ```tsx
+  function After() {
+    return (
+      <SteppedTracker orientation="vertical">
+        <Step label="Step 1" stage="completed">
+          <Step label="Step 1.1" stage="completed" />
+          <Step label="Step 1.2" stage="completed" />
+          <Step label="Step 1.3" stage="completed" />
+        </Step>
+        <Step label="Step 2" stage="completed" />
+        <Step label="Step 3" stage="inprogress">
+          <Step label="Step 3.1" stage="completed" />
+          <Step label="Step 3.2" stage="completed" />
+          <Step label="Step 3.3" stage="active" />
+          <Step label="Step 3.3" />
+        </Step>
+        <Step label="Step 4" />
+      </SteppedTracker>
+    );
+  }
+  ```
+
+  or you can utilize the hook for nested scenarios, such as the one above
+
+  ```tsx
+  import { Step, SteppedTracker, useStepReducer } from "@salt-ds/lab";
+
+  export function AfterWithHook() {
+    const [state, dispatch] = useStepReducer([
+      {
+        key: "step-1",
+        label: "Step 1",
+        substeps: [
+          { key: "step-1-1", label: "Step 1.1" },
+          { key: "step-1-2", label: "Step 1.2" },
+          { key: "step-1-3", label: "Step 1.3" },
+        ],
+      },
+      { key: "step-2", label: "Step 2" },
+      {
+        key: "step-3",
+        label: "Step 3",
+        substeps: [
+          { key: "step-3-1", label: "Step 3.1" },
+          { key: "step-3-2", label: "Step 3.2" },
+          { key: "step-3-3", label: "Step 3.3", stage: "active" },
+          { key: "step-3-4", label: "Step 3.4" },
+        ],
+      },
+      { key: "step-4", label: "Step 4" },
+    ]);
+
+    return (
+      <StackLayout style={{ width: 240 }}>
+        <SteppedTracker orientation="vertical">
+          {state.steps.map((step) => (
+            <Step key={step.key || step.id} {...step} />
+          ))}
+        </SteppedTracker>
+      </StackLayout>
+    );
+  }
+  ```
+
+- Updated dependencies [86d2a28]
+- Updated dependencies [dedbade]
+- Updated dependencies [0a5b68b]
+- Updated dependencies [cd98ba5]
+- Updated dependencies [bfea9b3]
+  - @salt-ds/core@1.38.0
+  - @salt-ds/icons@1.13.1
+
 ## 1.0.0-alpha.57
 
 ### Patch Changes

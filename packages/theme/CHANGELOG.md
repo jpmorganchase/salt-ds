@@ -1,5 +1,29 @@
 # @salt-ds/theme
 
+## 1.24.0
+
+### Minor Changes
+
+- 06ad53b: Deprecated foreground hover and active palette tokens.
+
+  | Deprecated token                   | Replacement token                |
+  | ---------------------------------- | -------------------------------- |
+  | `--salt-palette-foreground-active` | `--salt-palette-accent-stronger` |
+  | `--salt-palette-foreground-hover`  | `--salt-palette-accent-strong`   |
+
+### Patch Changes
+
+- a2fc9cf: Fixed `--salt-color-autumn-500`, `--salt-color-indigo-500`, `--salt-color-rose-500` not meeting colour contrast requirements in certain scenarios.
+- 0a5b68b: Marked CSS files as having side effects. This fixes Webpack tree-shaking CSS files when `sideEffects: true` is not set on style-loader rules.
+- 06ad53b: Updated content hover and active tokens so that they switch to Teal when using the Next theme.
+
+  ```diff
+  -  --salt-content-foreground-hover: var(--salt-palette-foreground-hover);
+  -  --salt-content-foreground-active: var(--salt-palette-foreground-active);
+  +  --salt-content-foreground-hover: var(--salt-palette-accent-strong);
+  +  --salt-content-foreground-active: var(--salt-palette-accent-stronger);
+  ```
+
 ## 1.23.3
 
 ### Patch Changes
