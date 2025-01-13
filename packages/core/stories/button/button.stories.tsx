@@ -14,6 +14,7 @@ export default {
   // https://github.com/strothj/react-docgen-typescript-loader/issues/47
   argTypes: { onClick: { action: "clicked" } },
 } as Meta<typeof Button>;
+import { useState } from "react";
 
 const SingleButtonTemplate: StoryFn<typeof Button> = (props) => {
   return <Button {...props} />;
@@ -208,6 +209,46 @@ export const LoadingSingle = SingleButtonTemplate.bind({});
 LoadingSingle.args = {
   children: "Loading",
   loading: true,
+};
+
+export const LoadingWithAnnouncement: StoryFn = () => {
+  const [announcement, setAnnouncement] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  // place this outside the components
+  function fetchPDFDocument() {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        const rand = Math.random();
+        if (rand < 0.5) {
+          return resolve({});
+        }
+
+        return reject({});
+      }, 2000);
+    });
+  }
+
+  async function handleClick() {
+    setLoading(true);
+    setAnnouncement("Downloading...");
+
+    await fetchPDFDocument()
+      .then(() => setAnnouncement("Download Successful!"))
+      .catch(() => setAnnouncement("Download Failed!"))
+      .finally(() => {
+        setLoading(false);
+        setTimeout(() => {
+          setAnnouncement("");
+        }, 1000);
+      });
+  }
+
+  return (
+    <Button loading={loading} announcement={announcement} onClick={handleClick}>
+      Download PDF
+    </Button>
+  );
 };
 
 export const FocusableWhenDisabled = SingleButtonTemplate.bind({});

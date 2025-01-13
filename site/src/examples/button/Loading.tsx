@@ -1,7 +1,6 @@
 import { Button, FlowLayout, StackLayout } from "@salt-ds/core";
-import type { ReactElement } from "react";
 
-export const Loading = (): ReactElement => (
+export const Loading = () => (
   <StackLayout gap={3}>
     <FlowLayout>
       <Button appearance="solid" sentiment="positive" loading>
