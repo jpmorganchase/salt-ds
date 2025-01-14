@@ -3,8 +3,8 @@ div[data-mosaic-id="portal-root"] .saltLayerLayout {
 }
 
 div[data-mosaic-id="portal-root"] {
-  --menu-link-padding-vertical: var(--salt-size-unit);
-  --menu-link-padding-horizontal: calc((var(--salt-size-unit) * 3));
+  --menu-link-padding-vertical: var(--salt-spacing-100);
+  --menu-link-padding-horizontal: var(--salt-spacing-300);
   --mosaic-color-dark-actionable-secondary-hover: transparent;
 }
 
@@ -22,7 +22,7 @@ div[data-mosaic-id="portal-root"] aside {
   background-color: var(--salt-container-primary-background);
   top: 0;
   /* Setting the font size because we're not able to wrap the portal in a SaltProvider */
-  font-size: calc(var(--salt-size-unit) * 2);
+  font-size: var(--salt-spacing-200);
 }
 
 div[data-mosaic-id="portal-root"] li a.ps-menu-button {
@@ -41,8 +41,8 @@ div[data-mosaic-id="portal-root"] a[href*="github"] span:before {
     no-repeat;
   content: "";
   display: block;
-  height: calc(var(--salt-size-unit) * 2);
-  width: calc(var(--salt-size-unit) * 2);
+  height: var(--salt-spacing-200);
+  width: var(--salt-spacing-200);
   align-self: center;
 }
 
@@ -51,8 +51,8 @@ div[data-mosaic-id="portal-root"] .saltLayerLayout:before {
   background: url("../../../public/img/logo_mobile.svg") no-repeat;
   content: "";
   display: block;
-  height: calc((var(--salt-size-unit) * 5));
+  height: var(--salt-spacing-300);
   width: 100%;
-  margin-top: calc((var(--salt-size-unit) * 2));
-  margin-left: calc((var(--salt-size-unit) * 3));
+  margin-top: var(--salt-spacing-200);
+  margin-left: var(--salt-spacing-300);
 }
