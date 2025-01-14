@@ -1,5 +1,30 @@
 # @salt-ds/ag-grid-theme
 
+## 2.3.0
+
+### Minor Changes
+
+- 2719afb: - Added theme support for several built-in ag grid provided editors
+
+  - `agLargeTextCellEditor`
+  - `agSelectCellEditor`
+  - `agRichSelectCellEditor`
+  - `agNumberCellEditor`
+  - `agDateStringCellEditor`
+  - Fixed `input` padding within `.editable-cell` during editing
+  - Fixed long text overflow within `.editable-cell` when focused
+
+  Closes #4144
+
+### Patch Changes
+
+- 0a5b68b: Marked CSS files as having side effects. This fixes Webpack tree-shaking CSS files when `sideEffects: true` is not set on style-loader rules.
+- Updated dependencies [a2fc9cf]
+- Updated dependencies [0a5b68b]
+- Updated dependencies [06ad53b]
+- Updated dependencies [06ad53b]
+  - @salt-ds/theme@1.24.0
+
 ## 2.2.0
 
 ### Minor Changes
