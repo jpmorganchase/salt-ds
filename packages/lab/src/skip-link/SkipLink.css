@@ -9,7 +9,9 @@
   padding: 0;
   overflow: hidden;
   position: absolute;
-
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
   color: var(--salt-content-primary-foreground);
   letter-spacing: var(--salt-text-letterSpacing);
   text-decoration: var(--salt-navigable-textDecoration);
@@ -23,7 +25,7 @@
 .saltSkipLink:focus {
   opacity: 1;
   width: auto;
-  height: max(var(--salt-size-base), auto);
+  height: calc(var(--salt-size-base) + var(--salt-spacing-200));
   padding: var(--salt-spacing-100) var(--salt-spacing-300);
   outline: var(--salt-focused-outline);
   outline-offset: calc(-1 * var(--salt-focused-outlineWidth));

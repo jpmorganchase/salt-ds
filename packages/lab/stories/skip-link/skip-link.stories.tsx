@@ -8,6 +8,7 @@ import {
   GridLayout,
   H1,
   H2,
+  H4,
   NavigationItem,
   SplitLayout,
   StackLayout,
@@ -59,7 +60,9 @@ const DefaultStory: StoryFn<typeof SkipLink> = (args) => {
       <BorderItem position="north" sticky className="app-header" as="header">
         <SkipLink {...args}>Skip to main content</SkipLink>
         <FlexLayout className="header" justify="space-between" gap={3}>
-          <FlexItem align="center" />
+          <FlexItem align="center">
+            <H4>LOGO</H4>
+          </FlexItem>
           <nav>
             <ul className="navigation">
               {headerItems?.map((item) => (

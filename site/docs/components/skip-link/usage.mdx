@@ -1,0 +1,33 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+## Using the component
+
+Skip links should be the first focusable element, placed in the screen’s top-left corner. This allows keyboard and screen reader users to easily bypass headers and reach the main content. For more details, see the [App header anatomy](https://www.saltdesignsystem.com/salt/patterns/app-header#anatomy).
+
+### When to use
+
+Consider using skip links to:
+
+- Bypass repetitive navigation or elements at the top of a page, providing direct access to the main content.
+- Ensure screen reader and keyboard users can efficiently reach key sections of your web application.
+- Prevent users from repeatedly hearing header and navigation content on every page before accessing the main content.
+
+## Import
+
+To import `SkipLink` from the core Salt package, use:
+
+```js
+import { SkipLink } from "@salt-ds/lab";
+```
+
+## Props
+
+<PropsTable packageName="lab" componentName="SkipLink" />
