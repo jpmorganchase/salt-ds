@@ -77,7 +77,11 @@ export const AppHeader: FC<AppHeaderProps> = ({
         {!isMobileOrTablet && (
           <>
             {homeLink && (
-              <Link href={homeLink} variant="component">
+              <Link
+                className={styles.logoLink}
+                href={homeLink}
+                variant="component"
+              >
                 {logo && (
                   <Logo>
                     <LogoImage
