@@ -1,0 +1,32 @@
+---
+title: Z-Index
+layout: DetailTechnical
+sidebar:
+  priority: 4
+---
+
+Z-index is a CSS property that controls how elements stack on top of each other. The stack order is defined by an element with a higher z-index appearing on top of an element with a lower z-index.
+
+Z-index and shadow are used together to help distinguish each layer in the stack. Shadow provides the visual element and z-index provides the structural element. Please refer to the [shadow](/salt/foundations/shadow) foundation page if you're using z-index.
+
+## Z-Index ramp
+
+Salt provides z-index tokens that determine an item’s position in the layering order. By providing consistent z-indexes, the design system ensures a predictable hierarchy of visual elements when stacked on top of one another.
+
+<Image
+  src="/img/foundations/z-index.png"
+  alt="Diagram showing a stack of elements to show how Z-index layers items."
+/>
+
+| Token                  | Value |
+| ---------------------- | ----- |
+| `-zIndex-default`      | 1     |
+| `-zIndex-appHeader`    | 1000  |
+| `-zIndex-drawer`       | 1200  |
+| `-zIndex-modal`        | 1300  |
+| `-zIndex-notification` | 1400  |
+| `-zIndex-dragObject`   | 1420  |
+| `-zIndex-contextMenu`  | 1450  |
+| `-zIndex-flyover`      | 1500  |
+
+:fragment{src="../fragments/feedback.mdx"}
