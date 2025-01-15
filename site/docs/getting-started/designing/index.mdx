@@ -7,168 +7,156 @@ sidebar:
 
 Salt provides a comprehensive set of components and styles, which include themes, typography, color palettes, iconography and more. Use the components as they are, out of the box, or adapt them to suit the needs of your business or application.
 
-## Accessibility first
+<Callout title="New Salt DS Figma libraries are live! Plan Your Migration">
 
-One of our main objectives is to offer a complete solution for building great, accessible experiences.
+Plan your migration now to ensure a seamless transition before the existing libraries are unpublished. We're here to help!
 
-To ensure the Salt Design System is as accessible and inclusive as possible, we thoroughly test all our components against WCAG 2.1 AA criteria. This includes checking that they:
+**When can you expect this change?**
 
-- Meet color contrast ratios across small and large text, for best legibility.
-- Reduce users’ cognitive load—with imagery, text size and behavior collectively indicating a clear hierarchy of information.
-- Are optimized for keyboard input and screen readers, using ARIA roles, states and properties that comply with accessibility standards.
+- New libraries published: January 6th, 2025
+- Existing libraries retired: Immediately after release
+- Unpublishing : Existing libraries removed by end of day, February 28th.
+
+For more details, read our Migration guide Have questions? Join our [office hours](https://go/salt-ds-internal/support/office-hours) or [contact us](https://www.saltdesignsystem.com/salt/support-and-contributions/index)
+
+</Callout>
 
 ## What you’ll need
 
 To start designing with Salt, you should:
 
 - Have an active Figma account.
-- Install the Salt font libraries, Open Sans and PT Mono. If you don’t already have them, you can [download them from Google Fonts](https://fonts.google.com/share?selection.family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800|PT+Mono).
+- To use the Salt typography style, install the Open Sans, PT Mono, and Amplitude fonts. If you don't already have them, you can [download Open Sans and PT Mono from Google Fonts.](https://fonts.google.com/share?selection.family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800|PT+Mono) If you are a JPMC employee, you can download the Amplitude font from Self Service.
 
-## The step-by-step process
+## Set up the Figma libraries
 
-### 1. Set up the Figma libraries
+We maintain a comprehensive set of up-to-date libraries in Figma, to help you make beautiful, consistently designed UIs and applications. If you want to start using Salt Design System for your project, first you need to set up the Salt libraries on your Figma. 
 
-We maintain a comprehensive set of up-to-date libraries in Figma, to help you make beautiful, consistently designed UIs and applications.
 
-There are two ways of accessing the libraries—as a J.P. Morgan employee or as a Figma Community user.
 
-#### J.P. Morgan employees
-
-Use the Salt Design System team space to view working files and our comprehensive component guides. You can also instantly add components and styling to your designs.
-
-<InlineCard
-  icon={
-    <Image
-      src="/img/design-getting-started/jpmIcon.svg"
-      alt="J.P. Morgan logo"
-    />
-  }
-  description={
-    <p>
-      To start using the Salt libraries, enable them directly from the “Assets”
-      panel within your Figma file.
-    </p>
-  }
-  url="https://www.figma.com/files/project/72279506"
-  footerText="Explore the Salt team space"
-  keylineColor="var(--site-tertiary-accent-orange)"
-  keyLineAnimation={false}
-/>
-
-#### Community users
-
-If you’re not a J.P. Morgan employee, you can still use Salt components. Our asset and style libraries are publicly available via the Figma Community.
-
-To use the libraries, duplicate them to your own Figma account. Once the libraries are in your drafts, publish the Salt components within your own team or organization space to use them in your design work. Read more about [Community files](https://help.figma.com/hc/en-us/articles/360038510873).
-
-<InlineCard
-  icon={<Image src="/img/design-getting-started/globe.svg" alt="globe" />}
-  description={
-    <p>
-      To start using the Salt libraries, search for the{" "}
-      <span style={{ fontWeight: "bold" }}>@jpmorgan_salt</span> handle in the
-      Figma Community.
-    </p>
-  }
+<GridLayout columns={{ xs: 1, sm: 2 }}>
+  
+  <OverviewCard           
+    title="J.P. Morgan employees"
+    url="https://www.figma.com/files/858076651348346387/project/72279506?fuid=1055082680458678350"
+    footerText="Explore the Salt team space"
+    keylineColor="blue"
+    >
+To start using the Salt libraries, enable them directly from the “Assets” panel within your Figma file.
+  </OverviewCard>
+  
+<OverviewCard 
+  title="Community users" 
   url="https://www.figma.com/@jpmorgan_salt"
-  footerText="Explore the Community"
-  keylineColor="var(--site-tertiary-accent-purple)"
-  keyLineAnimation={false}
-/>
+  footerText="Explore the Community" 
+  keylineColor="blue"
+  >
+To start using the Salt libraries, search for the **@jpmorgan_salt** handle in the Figma Community.
+</OverviewCard>
 
-<Callout title="Migrating your workspace in Figma">
-
-If you’re a community user, you’ll need to follow a migration process once you’ve duplicated the Salt libraries to your Figma project. This involves relinking the components, from your drafts.
-
-To simplify this process, [install this relinker plugin](https://www.figma.com/community/plugin/981892464363185469/Component-Relinker). It automatically relinks components from one organization to another.
-
-For more guidance on migrating files, [watch this video from Figma](https://www.loom.com/share/c85f866041e146e3855c7db38a1ae4bc).
-
-</Callout>
-
-### 2. Add components to your designs
-
-To start using our components, follow the instructions below.
+</GridLayout>
 
 <DesignCards>
 
 <DesignCard
       src="/img/design-getting-started/assets1.png"
-      alt="Screenshot of Figma's assets panel displaying the 'Salt: Components Light' library"
+      alt="Screenshot of Figma's assets panel"
 >
 
-Access the components in the left-hand panel using the “Assets” tab. Click on
-the book icon and search for “Salt” in Libraries.
+1\. Start by opening a new design file in Figma. You'll notice some pre-installed libraries in the Assets panel. Click on the library icon located in the Assets panel to manage your libraries.
 
 </DesignCard>
 
 <DesignCard
       src="/img/design-getting-started/assets2.png"
-      alt="Screenshot of a light mode Button component being dragged out of Figma's assets panel"
+      alt="Screenshot of clicking remove button on the Manage libraries panel"
 >
 
-Switch on the library you need, for example, Components (Light or Dark), Mode,
-Theme Palette, Typography, Icons, Layout Grid, etc.
+2\. Identify any libraries you don't need and click the "Remove" button on the right side to declutter your workspace.
 
 </DesignCard>
 
 <DesignCard
       src="/img/design-getting-started/assets3.png"
-      alt="Screenshot of the word 'button' being searched for in the Figma assets panel and Salt components with matching names being displayed"
+      alt="Screenshot of clicking Browse team libraries on Assets panel"
 >
 
-Use the search function to find the component you need and then drag it to
-your canvas to use it.
+3\. Once your workspace is clean, click the "Browse team libraries" button to search for and install new libraries.
 
 </DesignCard>
 
 <DesignCard
       src="/img/design-getting-started/assets4.png"
-      alt="Screenshot of the Figma's contextual panel for Salt's Button component"
+      alt="Screenshot of typing Salt DS on search field of Manage libraries panel"
 >
 
-To change density and further manipulate the setup, use the contextual panel
-on the right-hand side.
+4\. In the search field, type "Salt DS" to see the Salt DS library.
+
+</DesignCard>
+
+<DesignCard
+      src="/img/design-getting-started/assets5.png"
+      alt="Screenshot of clicking Add to file button of Salt DS Assets library on Manage libraries panel"
+>
+
+5\. Click the "Add to file" button to include the Salt DS library in your design file. For details on each library, see the section below.
+
+</DesignCard>
+
+<DesignCard
+      src="/img/design-getting-started/assets6.png"
+      alt="Screenshot of Salt DS Components and Patterns library has been installed in the Assets panel"
+>
+
+6\. Now, you will be able to see the available Salt DS libraries in the Assets panel. You can start using it in your design projects.
 
 </DesignCard>
 
 </DesignCards>
 
-#### Swapping from light to dark mode and vice versa
+## Salt DS Libraries
 
-If you’ve created your design in one mode and need to change it, use Figma’s Swap Library function to update it instantly—without having to start again.
+Salt offers six libraries in Figma. Install the library that best suits your purpose.
 
-Learn more about [how to swap libraries in Figma](https://help.figma.com/hc/en-us/articles/4404856784663-Swap-style-and-component-libraries#:~:text=Swap%20library%20lets%20you%20replace,style%20or%20component%20name%20only).
+<div className="saltSite-util-space-below-2x">
 
-### 3. Apply semantic colors
+| Library                         | description                                                                                                                               |
+| ------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| Salt DS Components and Patterns | This library includes Salt DS components and patterns. To use Salt components and patterns directly, please install this library.         |
+| Salt DS Themes                  | This library includes styles such as foundations, color, typography, and a responsive grid.                                               |
+| Salt DS Assets                  | This library offers Salt Icons and Country symbols.                                                                                       |
+| Salt DS JPM Brand color         | This library provides color variables for the Salt DS JPM Brand theme.                                                                    |
+| Salt DS Legacy(UITK) Colors     | This library provides color variables for the Salt DS Legacy (UITK) theme.                                                                |
+| Salt DS Logos                   | This library contains logo variations, including 'J.P. Morgan', 'Chase', and dual brand logos. This library is for internal JPMC use only.|
 
-Semantic colors are the light and dark theme libraries that define colors for specific uses, for example, for containers, separators, actionable components, etc. Colors are preassigned to components, but you can also apply them in your designs.
+</div>
 
-To access the full range of semantic colors in Figma, you need to enable the Theme Palette library as follows:
+## Migrating from other libraries
 
-- Open the “Assets” panel on the left-hand menu.
-- Select the book icon to open the libraries, and then search for “Theme Palette.”
-- Enable the library to access the full range of Salt colors.
-- Apply the colors using the Fill area (as fill or stroke) that’s within the design panel on the right-hand side of the Figma UI.
+If you are migrating from other libraries, including Salt (Next), Salt Light, Dark libraries, and UITK, please refer to our [migration guide.](https://go/salt-ds-internal/migration-strategies/new-salt-ds-figma)(JPMC employees only)
 
-### 4. Select icons, if needed
+## Need further assistance?
 
-Icons are available in SVG format, in three sizes (large, medium and small) and in all four densities.
+If you encounter any issues or need additional help despite following the guide, please don't hesitate to reach out. Our support team is here to assist you.
 
-Although icons are embedded within all of our components, you can change an icon to one that’s more suitable to your specific use case. To do this directly from the icon library, swap the instance using the variants panel on the right-hand side.
+<GridLayout columns={{ xs: 1, sm: 2 }}>
+  
+<OverviewCard           
+    title="Office hours"
+    url="https://go/salt-ds-internal/support/office-hours"
+    footerText="Enroll office hours"
+    keylineColor="blue"
+    >
+Enroll in our office hours for live assistance and guidance. (JPMC employees only).
+  </OverviewCard>
 
-<DesignCard
-      src="/img/design-getting-started/SelectIconImg.png"
-      alt="Screenshot of Figma's swap instance menu displaying a list of Salt icons"
->
+<OverviewCard 
+  title="Contact us" 
+  url="mailto:salt.design.system@jpmorgan.com"
+  footerText="Send us an email" 
+  keylineColor="blue"
+  >
+Reach out via email for personalized support. 
+</OverviewCard>
 
-Swapping an icon in Figma
-
-</DesignCard>
-
-<Callout title="Need support?">
-
-For help when manually installing Figma, visit the [Figma support page](https://help.figma.com/hc/en-us/articles/360041057214-Get-help-from-the-Figma-Support-team).
-If you have any questions about Salt’s libraries, please [contact us](../support-and-contributions/).
-
-</Callout>
+</GridLayout>
