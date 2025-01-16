@@ -1,23 +1,7 @@
-.callout {
-  --callout-color: var(--site-tertiary-accent-teal);
+.content p:first-child {
+  margin-top: 0;
 }
 
-.callout hr {
-  border: 0;
-  margin-bottom: var(--salt-size-unit);
-  margin-top: calc(3 * var(--salt-size-unit));
-  background-color: var(--callout-color);
-  height: 3px;
-}
-
-.title {
-  color: var(--callout-color);
-  font-size: var(--salt-text-h4-fontSize);
-  font-weight: var(--salt-text-h4-fontWeight-strong);
-  line-height: var(--salt-text-h4-lineHeight);
-  margin-bottom: var(--salt-size-unit);
-}
-
-.content {
-  margin-bottom: 1em;
+.content p:last-child {
+  margin-bottom: 0;
 }

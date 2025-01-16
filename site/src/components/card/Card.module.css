@@ -73,7 +73,7 @@
 }
 
 .cardDescription {
-  color: var(--salt-content-secondary-foreground);
+  color: var(--salt-content-primary-foreground);
 }
 
 .inlineCardContent {
