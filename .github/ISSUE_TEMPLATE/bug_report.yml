@@ -1,7 +1,7 @@
 name: Bug report 🪲
 description: Something is broken and you have a reproduction? Let us know so we can fix it!
+type: "bug"
 labels:
-  - "type: bug 🪲"
   - "status: awaiting triage"
 body:
   - type: markdown
