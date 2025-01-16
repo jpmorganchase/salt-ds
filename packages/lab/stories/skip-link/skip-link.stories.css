@@ -1,7 +1,7 @@
 .app-header {
   z-index: var(--salt-zIndex-appHeader);
 }
-.header {
+.navbar {
   padding-left: var(--salt-spacing-300);
   padding-right: var(--salt-spacing-300);
   background-color: var(--salt-container-primary-background);
@@ -17,12 +17,12 @@
   margin: calc(var(--salt-spacing-300) * 2) auto;
   max-width: 700px;
 }
-.content-header {
+.header {
   padding-top: calc(var(--salt-spacing-300) * 2);
 }
 .help-text {
   position: absolute;
   top: 0;
   left: 0;
-  padding: calc(var(--salt-spacing-300) * 2) var(--salt-spacing-100);
+  padding: calc(var(--salt-spacing-400) * 2) var(--salt-spacing-300);
 }

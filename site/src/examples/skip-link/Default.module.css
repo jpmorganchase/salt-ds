@@ -1,7 +1,10 @@
 .container {
   position: relative;
 }
-.header {
+.help {
+  margin-bottom: var(--salt-spacing-400);
+}
+.navbar {
   padding-left: var(--salt-spacing-300);
   padding-right: var(--salt-spacing-300);
   background-color: var(--salt-container-primary-background);
@@ -14,12 +17,16 @@
   margin: 0;
 }
 .center {
-  margin: var(--salt-spacing-200) auto;
+  margin: auto;
+  padding: var(--salt-spacing-200);
   max-width: 700px;
 }
-.section h2 {
-  margin-bottom: var(--salt-spacing-200);
+.section {
+  padding-top: var(--salt-spacing-200);
 }
-.content-header {
-  padding: calc(var(--salt-spacing-300) * 2);
+.header {
+  margin-bottom: var(--salt-spacing-300);
+}
+.section h2 {
+  margin-top: calc(var(--salt-spacing-300) + var(--salt-spacing-200));
 }
