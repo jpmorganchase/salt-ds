@@ -211,11 +211,11 @@ LoadingSingle.args = {
   loading: true,
 };
 
-export const LoadingWithAnnouncementProp: StoryFn = () => {
-  const [announcement, setAnnouncement] = useState("");
+export function LoadingAnnouncementProp() {
   const [loading, setLoading] = useState(false);
+  const [loadingAnnouncement, setLoadingAnnouncement] = useState("");
 
-  // place this outside the components
+  // place outside
   function fetchPDFDocument() {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
@@ -231,29 +231,28 @@ export const LoadingWithAnnouncementProp: StoryFn = () => {
 
   async function handleClick() {
     setLoading(true);
-    setAnnouncement("Downloading...");
+    setLoadingAnnouncement("Downloading...");
 
-    await fetchPDFDocument()
-      .then(() => setAnnouncement("Download Successful!"))
-      .catch(() => setAnnouncement("Download Failed!"))
-      .finally(() => {
-        setLoading(false);
-        setTimeout(() => {
-          setAnnouncement("");
-        }, 1000);
-      });
+    await fetchPDFDocument().finally(() => {
+      setLoading(false);
+      setLoadingAnnouncement("");
+    });
   }
 
   return (
-    <Button loading={loading} announcement={announcement} onClick={handleClick}>
+    <Button
+      loading={loading}
+      loadingAnnouncement={loadingAnnouncement}
+      onClick={handleClick}
+    >
       Download PDF
     </Button>
   );
-};
+}
 
-export const LoadingWithAnnouncementChild: StoryFn = () => {
-  const [announcement, setAnnouncement] = useState("");
+export const LoadingAnnouncementChild: StoryFn = () => {
   const [loading, setLoading] = useState(false);
+  const [announcement, setAnnouncement] = useState("");
 
   // place this outside the components
   function fetchPDFDocument() {

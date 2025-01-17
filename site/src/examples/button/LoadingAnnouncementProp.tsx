@@ -15,26 +15,25 @@ function fetchPDFDocument() {
 }
 
 export function LoadingAnnouncementProp() {
-  const [announcement, setAnnouncement] = useState("");
   const [loading, setLoading] = useState(false);
+  const [loadingAnnouncement, setLoadingAnnouncement] = useState("");
 
   async function handleClick() {
     setLoading(true);
-    setAnnouncement("Downloading...");
+    setLoadingAnnouncement("Downloading...");
 
-    await fetchPDFDocument()
-      .then(() => setAnnouncement("Download Successful!"))
-      .catch(() => setAnnouncement("Download Failed!"))
-      .finally(() => {
-        setLoading(false);
-        setTimeout(() => {
-          setAnnouncement("");
-        }, 1000);
-      });
+    await fetchPDFDocument().finally(() => {
+      setLoading(false);
+      setLoadingAnnouncement("");
+    });
   }
 
   return (
-    <Button loading={loading} announcement={announcement} onClick={handleClick}>
+    <Button
+      loading={loading}
+      loadingAnnouncement={loadingAnnouncement}
+      onClick={handleClick}
+    >
       Download PDF
     </Button>
   );

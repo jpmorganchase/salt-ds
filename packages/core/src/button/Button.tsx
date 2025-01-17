@@ -80,7 +80,7 @@ export interface ButtonProps extends ComponentPropsWithoutRef<"button"> {
    *
    * @since 1.38.0.
    */
-  announcement?: string;
+  loadingAnnouncement?: string;
 }
 
 function variantToAppearanceAndColor(
@@ -102,13 +102,13 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       children,
       className,
       disabled,
-      loading,
       focusableWhenDisabled,
       onKeyUp,
       onKeyDown,
       onBlur,
       onClick,
-      announcement,
+      loading,
+      loadingAnnouncement,
       appearance: appearanceProp,
       sentiment: sentimentProp,
       type = "button",
@@ -168,9 +168,11 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
             <Spinner size="small" aria-hidden disableAnnouncer />
           </div>
         )}
-        <span role="status" className={withBaseName("sr-only")}>
-          {announcement}
-        </span>
+        {(loadingAnnouncement || loadingAnnouncement === "") && (
+          <span role="status" className={withBaseName("sr-only")}>
+            {loading ? loadingAnnouncement : null}
+          </span>
+        )}
         {children}
       </button>
     );

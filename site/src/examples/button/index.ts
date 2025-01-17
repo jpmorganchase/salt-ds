@@ -10,4 +10,3 @@ export * from "./IconOnly";
 export * from "./Sentiment";
 export * from "./LoadingAnnouncementProp";
 export * from "./LoadingAnnouncementChild";
-export * from "./UpdatePassword";
