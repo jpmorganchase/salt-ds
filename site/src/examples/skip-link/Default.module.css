@@ -1,5 +1,8 @@
-.app-header {
-  z-index: var(--salt-zIndex-appHeader);
+.container {
+  position: relative;
+}
+.help {
+  margin-bottom: var(--salt-spacing-400);
 }
 .navbar {
   padding-left: var(--salt-spacing-300);
@@ -14,15 +17,16 @@
   margin: 0;
 }
 .center {
-  margin: calc(var(--salt-spacing-300) * 2) auto;
+  margin: auto;
+  padding: var(--salt-spacing-200);
   max-width: 700px;
 }
-.header {
-  padding-top: calc(var(--salt-spacing-300) * 2);
+.section {
+  padding-top: var(--salt-spacing-200);
 }
-.help-text {
-  position: absolute;
-  top: 0;
-  left: 0;
-  padding: calc(var(--salt-spacing-400) * 2) var(--salt-spacing-300);
+.header {
+  margin-bottom: var(--salt-spacing-300);
+}
+.section h2 {
+  margin-top: calc(var(--salt-spacing-300) + var(--salt-spacing-200));
 }

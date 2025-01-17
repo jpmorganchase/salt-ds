@@ -8,9 +8,11 @@ import {
   GridLayout,
   H1,
   H2,
+  H4,
   NavigationItem,
   SplitLayout,
   StackLayout,
+  Text,
 } from "@salt-ds/core";
 import { GithubIcon, StackoverflowIcon, SymphonyIcon } from "@salt-ds/icons";
 import { SkipLink } from "@salt-ds/lab";
@@ -58,8 +60,10 @@ const DefaultStory: StoryFn<typeof SkipLink> = (args) => {
     <BorderLayout>
       <BorderItem position="north" sticky className="app-header" as="header">
         <SkipLink {...args}>Skip to main content</SkipLink>
-        <FlexLayout className="header" justify="space-between" gap={3}>
-          <FlexItem align="center" />
+        <FlexLayout className="navbar" justify="space-between" gap={3}>
+          <FlexItem align="center">
+            <H4 style={{ margin: 0 }}>LOGO</H4>
+          </FlexItem>
           <nav>
             <ul className="navigation">
               {headerItems?.map((item) => (
@@ -92,42 +96,42 @@ const DefaultStory: StoryFn<typeof SkipLink> = (args) => {
       </BorderItem>
       <BorderItem position="center" className="center">
         <StackLayout as="article">
-          <section>
-            <H1 id="main" className="content-header">
+          <StackLayout as="section">
+            <H1 id="main" className="header">
               Explore our offering
             </H1>
-            <p>
+            <Text>
               Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam,
               consequuntur culpa dolor excepturi fugit in ipsa iusto laudantium
               magnam minima necessitatibus odio qui quia repellendus sit tempore
               veniam. At, veritatis.
-            </p>
+            </Text>
             <GridLayout columns={3}>
               {cardHeaders.map((title) => {
                 return (
                   <Card key={title}>
                     <H2 styleAs="h4">{title}</H2>
-                    <p>
+                    <Text>
                       Lorem ipsum dolor sit amet, consectetur adipisicing elit.
                       Aliquam, consequuntur culpa dolor excepturi.
-                    </p>
-                    <p>
+                    </Text>
+                    <Text>
                       Fugit in ipsa iusto laudantium magnam minima
                       necessitatibus odio qui quia repellendus sit tempore
                       veniam. At, veritatis.
-                    </p>
+                    </Text>
                   </Card>
                 );
               })}
             </GridLayout>
-          </section>
+          </StackLayout>
           <SplitLayout
             endItem={<Button appearance="bordered">See all themes</Button>}
           />
         </StackLayout>
-        <div className="help-text">
+        <Text className="help-text">
           Click here and press the Tab key to see the Skip Link
-        </div>
+        </Text>
       </BorderItem>
     </BorderLayout>
   );

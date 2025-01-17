@@ -1,0 +1,38 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+## Keyboard interactions
+
+<KeyboardControls>
+<KeyboardControl keyOrCombos="Tab">
+
+- When focus moves into the webpage, places focus on the skip link.
+- If focus is on the skip link, moves focus to the next focusable element on the page, usually in the header.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Shift + Tab">
+  
+- If focus is on the skip link, closes it and sets focus to the previous focusable element, usually the last browser control.
+- If focus is on the main content of the page, sets focus to the previous focusable element, usually the last item in the header.
+  
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Enter / Space">
+  
+- If focus is on the skip link, activates it, moving focus to the targeted element at the beginning of the main content of the page.
+  
+</KeyboardControl>
+</KeyboardControls>
+
+## References
+
+- https://www.w3.org/WAI/test-evaluate/easy-checks/skip-link/
+- https://www.w3.org/TR/2016/NOTE-WCAG20-TECHS-20161007/G1
+- https://www.w3.org/WAI/WCAG22/Understanding/bypass-blocks
+- https://webaim.org/techniques/skipnav/
