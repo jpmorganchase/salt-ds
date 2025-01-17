@@ -5,7 +5,9 @@
     "jsx": "preserve",
     "incremental": true,
     "paths": {
-      "@salt-ds/date-adapters/*": ["../packages/date-adapters/src/index.ts"]
+      "@salt-ds/date-adapters/*": [
+        "../packages/date-adapters/src/*-adapter/index.ts"
+      ]
     }
   },
   "include": ["src/**/*", "globals.d.ts"],

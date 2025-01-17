@@ -40,8 +40,6 @@ const entryPoints = {
 };
 
 for (const [adapterName, inputPath] of Object.entries(entryPoints)) {
-  const entryFolder = path.basename(path.dirname(inputPath));
-
   await makeTypings(outputDir, path.dirname(inputPath));
 
   const bundle = await rollup({
@@ -114,29 +112,29 @@ await fs.writeJSON(
     typings: "dist-types/types/index.d.ts",
     exports: {
       ".": {
+        types: "./dist-types/types/index.d.ts",
         import: "./dist-es/types/index.js",
         require: "./dist-cjs/types/index.js",
-        types: "./dist-types/types/index.d.ts",
       },
       "./date-fns": {
+        types: "./dist-types/date-fns-adapter/index.d.ts",
         import: "./dist-es/date-fns/index.js",
         require: "./dist-cjs/date-fns/index.js",
-        types: "./dist-types/date-fns-adapter/index.d.ts",
       },
       "./dayjs": {
+        types: "./dist-types/dayjs-adapter/index.d.ts",
         import: "./dist-es/dayjs/index.js",
         require: "./dist-cjs/dayjs/index.js",
-        types: "./dist-types/dayjs-adapter/index.d.ts",
       },
       "./luxon": {
+        types: "./dist-types/luxon-adapter/index.d.ts",
         import: "./dist-es/luxon/index.js",
         require: "./dist-cjs/luxon/index.js",
-        types: "./dist-types/luxon-adapter/index.d.ts",
       },
       "./moment": {
+        types: "./dist-types/moment-adapter/index.d.ts",
         import: "./dist-es/moment/index.js",
         require: "./dist-cjs/moment/index.js",
-        types: "./dist-types/moment-adapter/index.d.ts",
       },
     },
     files: distinct([

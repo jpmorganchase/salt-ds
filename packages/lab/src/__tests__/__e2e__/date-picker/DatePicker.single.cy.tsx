@@ -3,12 +3,10 @@ import {
   type DateFrameworkType,
   type SaltDateAdapter,
 } from "@salt-ds/date-adapters";
-import {
-  AdapterDateFns,
-  AdapterDayjs,
-  AdapterLuxon,
-  AdapterMoment,
-} from "@salt-ds/date-adapters";
+import { AdapterDateFns } from "@salt-ds/date-adapters/date-fns";
+import { AdapterDayjs } from "@salt-ds/date-adapters/dayjs";
+import { AdapterLuxon } from "@salt-ds/date-adapters/luxon";
+import { AdapterMoment } from "@salt-ds/date-adapters/moment";
 import {
   DatePicker,
   DatePickerOverlay,
