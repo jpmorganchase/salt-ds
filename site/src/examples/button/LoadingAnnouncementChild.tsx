@@ -14,7 +14,7 @@ function fetchPDFDocument() {
   });
 }
 
-export function LoadingAnnouncement() {
+export function LoadingAnnouncementChild() {
   const [announcement, setAnnouncement] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -34,7 +34,18 @@ export function LoadingAnnouncement() {
   }
 
   return (
-    <Button loading={loading} announcement={announcement} onClick={handleClick}>
+    <Button loading={loading} onClick={handleClick}>
+      <span
+        role="status"
+        style={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          transform: "translate(-100%, -100%)",
+        }}
+      >
+        {announcement}
+      </span>
       Download PDF
     </Button>
   );

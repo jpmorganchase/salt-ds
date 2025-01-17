@@ -211,7 +211,7 @@ LoadingSingle.args = {
   loading: true,
 };
 
-export const LoadingWithAnnouncement: StoryFn = () => {
+export const LoadingWithAnnouncementProp: StoryFn = () => {
   const [announcement, setAnnouncement] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -246,6 +246,57 @@ export const LoadingWithAnnouncement: StoryFn = () => {
 
   return (
     <Button loading={loading} announcement={announcement} onClick={handleClick}>
+      Download PDF
+    </Button>
+  );
+};
+
+export const LoadingWithAnnouncementChild: StoryFn = () => {
+  const [announcement, setAnnouncement] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  // place this outside the components
+  function fetchPDFDocument() {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        const rand = Math.random();
+        if (rand < 0.5) {
+          return resolve({});
+        }
+
+        return reject({});
+      }, 2000);
+    });
+  }
+
+  async function handleClick() {
+    setLoading(true);
+    setAnnouncement("Downloading...");
+
+    await fetchPDFDocument()
+      .then(() => setAnnouncement("Download Successful!"))
+      .catch(() => setAnnouncement("Download Failed!"))
+      .finally(() => {
+        setLoading(false);
+        setTimeout(() => {
+          setAnnouncement("");
+        }, 1000);
+      });
+  }
+
+  return (
+    <Button loading={loading} onClick={handleClick}>
+      <span
+        role="status"
+        style={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          transform: "translate(-100%, -100%)",
+        }}
+      >
+        {announcement}
+      </span>
       Download PDF
     </Button>
   );
