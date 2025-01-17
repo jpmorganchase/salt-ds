@@ -8,4 +8,6 @@ export * from "./FullWidth";
 export * from "./IconAndText";
 export * from "./IconOnly";
 export * from "./Sentiment";
-export * from "./LoadingAnnouncement";
+export * from "./LoadingAnnouncementProp";
+export * from "./LoadingAnnouncementChild";
+export * from "./UpdatePassword";
