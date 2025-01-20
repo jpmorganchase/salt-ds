@@ -15,8 +15,8 @@ function fetchPDFDocument() {
 }
 
 export function LoadingAnnouncementChild() {
-  const [announcement, setAnnouncement] = useState("");
   const [loading, setLoading] = useState(false);
+  const [announcement, setAnnouncement] = useState("");
 
   async function handleClick() {
     setLoading(true);

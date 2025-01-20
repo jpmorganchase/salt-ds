@@ -215,7 +215,7 @@ export function LoadingAnnouncementProp() {
   const [loading, setLoading] = useState(false);
   const [loadingAnnouncement, setLoadingAnnouncement] = useState("");
 
-  // place outside
+  // place outside the component
   function fetchPDFDocument() {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
@@ -233,10 +233,19 @@ export function LoadingAnnouncementProp() {
     setLoading(true);
     setLoadingAnnouncement("Downloading...");
 
-    await fetchPDFDocument().finally(() => {
-      setLoading(false);
-      setLoadingAnnouncement("");
-    });
+    await fetchPDFDocument()
+      .then(() => {
+        setLoadingAnnouncement("Download Successful!");
+      })
+      .catch(() => {
+        setLoadingAnnouncement("Download Failed!");
+      })
+      .finally(() => {
+        setLoading(false);
+        setTimeout(() => {
+          setLoadingAnnouncement("");
+        }, 1000);
+      });
   }
 
   return (
@@ -254,7 +263,7 @@ export const LoadingAnnouncementChild: StoryFn = () => {
   const [loading, setLoading] = useState(false);
   const [announcement, setAnnouncement] = useState("");
 
-  // place this outside the components
+  // place outside the component
   function fetchPDFDocument() {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
