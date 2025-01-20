@@ -60,14 +60,13 @@ Default.args = {
 
 const PaddingAndMargins: StoryFn<typeof FlexLayout> = (args) => {
   return (
-    <div style={{ border: "solid 1px" }}>
-      <FlexLayout style={{ border: "solid 1px" }} {...args}>
+    <div className="spacing-example-margin">
+      <FlexLayout className="spacing-example-padding" {...args}>
         {Array.from({ length: 5 }, (_, index) => (
           <FlexItem
+            className="spacing-example-gap"
             key={`item-${index + 1}`}
-            style={{ border: "solid 1px" }}
             padding={1}
-            margin={1}
           >
             <p>Item {index + 1}</p>
           </FlexItem>
