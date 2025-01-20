@@ -7,6 +7,7 @@ import {
   type QAContainerNoStyleInjectionProps,
   type QAContainerProps,
 } from "docs/components";
+import "./button.qa.stories.css";
 
 export default {
   title: "Core/Button/Button QA",
@@ -308,6 +309,291 @@ export const AllVariantsGrid: StoryFn<QAContainerProps> = (props) => (
       <SearchIcon />
     </Button>
     <Button disabled sentiment="caution" appearance="transparent">
+      <SearchIcon /> Button
+    </Button>
+    <Button loading className="noSpin" sentiment="accented" appearance="solid">
+      Button
+    </Button>
+    <Button loading className="noSpin" sentiment="accented" appearance="solid">
+      <SearchIcon />
+    </Button>
+    <Button loading className="noSpin" sentiment="accented" appearance="solid">
+      <SearchIcon /> Button
+    </Button>
+    <Button
+      loading
+      className="noSpin"
+      sentiment="accented"
+      appearance="bordered"
+    >
+      Button
+    </Button>
+    <Button
+      loading
+      className="noSpin"
+      sentiment="accented"
+      appearance="bordered"
+    >
+      <SearchIcon />
+    </Button>
+    <Button
+      loading
+      className="noSpin"
+      sentiment="accented"
+      appearance="bordered"
+    >
+      <SearchIcon /> Button
+    </Button>
+    <Button
+      loading
+      className="noSpin"
+      sentiment="accented"
+      appearance="transparent"
+    >
+      Button
+    </Button>
+    <Button
+      loading
+      className="noSpin"
+      sentiment="accented"
+      appearance="transparent"
+    >
+      <SearchIcon />
+    </Button>
+    <Button
+      loading
+      className="noSpin"
+      sentiment="accented"
+      appearance="transparent"
+    >
+      <SearchIcon /> Button
+    </Button>
+    <Button loading className="noSpin" sentiment="neutral" appearance="solid">
+      Button
+    </Button>
+    <Button loading className="noSpin" sentiment="neutral" appearance="solid">
+      <SearchIcon />
+    </Button>
+    <Button loading className="noSpin" sentiment="neutral" appearance="solid">
+      <SearchIcon /> Button
+    </Button>
+    <Button
+      loading
+      className="noSpin"
+      sentiment="neutral"
+      appearance="bordered"
+    >
+      Button
+    </Button>
+    <Button
+      loading
+      className="noSpin"
+      sentiment="neutral"
+      appearance="bordered"
+    >
+      <SearchIcon />
+    </Button>
+    <Button
+      loading
+      className="noSpin"
+      sentiment="neutral"
+      appearance="bordered"
+    >
+      <SearchIcon /> Button
+    </Button>
+    <Button
+      loading
+      className="noSpin"
+      sentiment="neutral"
+      appearance="transparent"
+    >
+      Button
+    </Button>
+    <Button
+      loading
+      className="noSpin"
+      sentiment="neutral"
+      appearance="transparent"
+    >
+      <SearchIcon />
+    </Button>
+    <Button
+      loading
+      className="noSpin"
+      sentiment="neutral"
+      appearance="transparent"
+    >
+      <SearchIcon /> Button
+    </Button>
+    <Button loading className="noSpin" sentiment="positive" appearance="solid">
+      Button
+    </Button>
+    <Button loading className="noSpin" sentiment="positive" appearance="solid">
+      <SearchIcon />
+    </Button>
+    <Button loading className="noSpin" sentiment="positive" appearance="solid">
+      <SearchIcon /> Button
+    </Button>
+    <Button
+      loading
+      className="noSpin"
+      sentiment="positive"
+      appearance="bordered"
+    >
+      Button
+    </Button>
+    <Button
+      loading
+      className="noSpin"
+      sentiment="positive"
+      appearance="bordered"
+    >
+      <SearchIcon />
+    </Button>
+    <Button
+      loading
+      className="noSpin"
+      sentiment="positive"
+      appearance="bordered"
+    >
+      <SearchIcon /> Button
+    </Button>
+    <Button
+      loading
+      className="noSpin"
+      sentiment="positive"
+      appearance="transparent"
+    >
+      Button
+    </Button>
+    <Button
+      loading
+      className="noSpin"
+      sentiment="positive"
+      appearance="transparent"
+    >
+      <SearchIcon />
+    </Button>
+    <Button
+      loading
+      className="noSpin"
+      sentiment="positive"
+      appearance="transparent"
+    >
+      <SearchIcon /> Button
+    </Button>
+    <Button loading className="noSpin" sentiment="negative" appearance="solid">
+      Button
+    </Button>
+    <Button loading className="noSpin" sentiment="negative" appearance="solid">
+      <SearchIcon />
+    </Button>
+    <Button loading className="noSpin" sentiment="negative" appearance="solid">
+      <SearchIcon /> Button
+    </Button>
+    <Button
+      loading
+      className="noSpin"
+      sentiment="negative"
+      appearance="bordered"
+    >
+      Button
+    </Button>
+    <Button
+      loading
+      className="noSpin"
+      sentiment="negative"
+      appearance="bordered"
+    >
+      <SearchIcon />
+    </Button>
+    <Button
+      loading
+      className="noSpin"
+      sentiment="negative"
+      appearance="bordered"
+    >
+      <SearchIcon /> Button
+    </Button>
+    <Button
+      loading
+      className="noSpin"
+      sentiment="negative"
+      appearance="transparent"
+    >
+      Button
+    </Button>
+    <Button
+      loading
+      className="noSpin"
+      sentiment="negative"
+      appearance="transparent"
+    >
+      <SearchIcon />
+    </Button>
+    <Button
+      loading
+      className="noSpin"
+      sentiment="negative"
+      appearance="transparent"
+    >
+      <SearchIcon /> Button
+    </Button>
+    <Button loading className="noSpin" sentiment="caution" appearance="solid">
+      Button
+    </Button>
+    <Button loading className="noSpin" sentiment="caution" appearance="solid">
+      <SearchIcon />
+    </Button>
+    <Button loading className="noSpin" sentiment="caution" appearance="solid">
+      <SearchIcon /> Button
+    </Button>
+    <Button
+      loading
+      className="noSpin"
+      sentiment="caution"
+      appearance="bordered"
+    >
+      Button
+    </Button>
+    <Button
+      loading
+      className="noSpin"
+      sentiment="caution"
+      appearance="bordered"
+    >
+      <SearchIcon />
+    </Button>
+    <Button
+      loading
+      className="noSpin"
+      sentiment="caution"
+      appearance="bordered"
+    >
+      <SearchIcon /> Button
+    </Button>
+    <Button
+      loading
+      className="noSpin"
+      sentiment="caution"
+      appearance="transparent"
+    >
+      Button
+    </Button>
+    <Button
+      loading
+      className="noSpin"
+      sentiment="caution"
+      appearance="transparent"
+    >
+      <SearchIcon />
+    </Button>
+    <Button
+      loading
+      className="noSpin"
+      sentiment="caution"
+      appearance="transparent"
+    >
       <SearchIcon /> Button
     </Button>
   </QAContainer>
@@ -623,6 +909,291 @@ export const NoStyleInjectionGrid: StoryFn<QAContainerNoStyleInjectionProps> = (
       <SearchIcon />
     </Button>
     <Button disabled sentiment="caution" appearance="transparent">
+      <SearchIcon /> Button
+    </Button>
+    <Button loading className="noSpin" sentiment="accented" appearance="solid">
+      Button
+    </Button>
+    <Button loading className="noSpin" sentiment="accented" appearance="solid">
+      <SearchIcon />
+    </Button>
+    <Button loading className="noSpin" sentiment="accented" appearance="solid">
+      <SearchIcon /> Button
+    </Button>
+    <Button
+      loading
+      className="noSpin"
+      sentiment="accented"
+      appearance="bordered"
+    >
+      Button
+    </Button>
+    <Button
+      loading
+      className="noSpin"
+      sentiment="accented"
+      appearance="bordered"
+    >
+      <SearchIcon />
+    </Button>
+    <Button
+      loading
+      className="noSpin"
+      sentiment="accented"
+      appearance="bordered"
+    >
+      <SearchIcon /> Button
+    </Button>
+    <Button
+      loading
+      className="noSpin"
+      sentiment="accented"
+      appearance="transparent"
+    >
+      Button
+    </Button>
+    <Button
+      loading
+      className="noSpin"
+      sentiment="accented"
+      appearance="transparent"
+    >
+      <SearchIcon />
+    </Button>
+    <Button
+      loading
+      className="noSpin"
+      sentiment="accented"
+      appearance="transparent"
+    >
+      <SearchIcon /> Button
+    </Button>
+    <Button loading className="noSpin" sentiment="neutral" appearance="solid">
+      Button
+    </Button>
+    <Button loading className="noSpin" sentiment="neutral" appearance="solid">
+      <SearchIcon />
+    </Button>
+    <Button loading className="noSpin" sentiment="neutral" appearance="solid">
+      <SearchIcon /> Button
+    </Button>
+    <Button
+      loading
+      className="noSpin"
+      sentiment="neutral"
+      appearance="bordered"
+    >
+      Button
+    </Button>
+    <Button
+      loading
+      className="noSpin"
+      sentiment="neutral"
+      appearance="bordered"
+    >
+      <SearchIcon />
+    </Button>
+    <Button
+      loading
+      className="noSpin"
+      sentiment="neutral"
+      appearance="bordered"
+    >
+      <SearchIcon /> Button
+    </Button>
+    <Button
+      loading
+      className="noSpin"
+      sentiment="neutral"
+      appearance="transparent"
+    >
+      Button
+    </Button>
+    <Button
+      loading
+      className="noSpin"
+      sentiment="neutral"
+      appearance="transparent"
+    >
+      <SearchIcon />
+    </Button>
+    <Button
+      loading
+      className="noSpin"
+      sentiment="neutral"
+      appearance="transparent"
+    >
+      <SearchIcon /> Button
+    </Button>
+    <Button loading className="noSpin" sentiment="positive" appearance="solid">
+      Button
+    </Button>
+    <Button loading className="noSpin" sentiment="positive" appearance="solid">
+      <SearchIcon />
+    </Button>
+    <Button loading className="noSpin" sentiment="positive" appearance="solid">
+      <SearchIcon /> Button
+    </Button>
+    <Button
+      loading
+      className="noSpin"
+      sentiment="positive"
+      appearance="bordered"
+    >
+      Button
+    </Button>
+    <Button
+      loading
+      className="noSpin"
+      sentiment="positive"
+      appearance="bordered"
+    >
+      <SearchIcon />
+    </Button>
+    <Button
+      loading
+      className="noSpin"
+      sentiment="positive"
+      appearance="bordered"
+    >
+      <SearchIcon /> Button
+    </Button>
+    <Button
+      loading
+      className="noSpin"
+      sentiment="positive"
+      appearance="transparent"
+    >
+      Button
+    </Button>
+    <Button
+      loading
+      className="noSpin"
+      sentiment="positive"
+      appearance="transparent"
+    >
+      <SearchIcon />
+    </Button>
+    <Button
+      loading
+      className="noSpin"
+      sentiment="positive"
+      appearance="transparent"
+    >
+      <SearchIcon /> Button
+    </Button>
+    <Button loading className="noSpin" sentiment="negative" appearance="solid">
+      Button
+    </Button>
+    <Button loading className="noSpin" sentiment="negative" appearance="solid">
+      <SearchIcon />
+    </Button>
+    <Button loading className="noSpin" sentiment="negative" appearance="solid">
+      <SearchIcon /> Button
+    </Button>
+    <Button
+      loading
+      className="noSpin"
+      sentiment="negative"
+      appearance="bordered"
+    >
+      Button
+    </Button>
+    <Button
+      loading
+      className="noSpin"
+      sentiment="negative"
+      appearance="bordered"
+    >
+      <SearchIcon />
+    </Button>
+    <Button
+      loading
+      className="noSpin"
+      sentiment="negative"
+      appearance="bordered"
+    >
+      <SearchIcon /> Button
+    </Button>
+    <Button
+      loading
+      className="noSpin"
+      sentiment="negative"
+      appearance="transparent"
+    >
+      Button
+    </Button>
+    <Button
+      loading
+      className="noSpin"
+      sentiment="negative"
+      appearance="transparent"
+    >
+      <SearchIcon />
+    </Button>
+    <Button
+      loading
+      className="noSpin"
+      sentiment="negative"
+      appearance="transparent"
+    >
+      <SearchIcon /> Button
+    </Button>
+    <Button loading className="noSpin" sentiment="caution" appearance="solid">
+      Button
+    </Button>
+    <Button loading className="noSpin" sentiment="caution" appearance="solid">
+      <SearchIcon />
+    </Button>
+    <Button loading className="noSpin" sentiment="caution" appearance="solid">
+      <SearchIcon /> Button
+    </Button>
+    <Button
+      loading
+      className="noSpin"
+      sentiment="caution"
+      appearance="bordered"
+    >
+      Button
+    </Button>
+    <Button
+      loading
+      className="noSpin"
+      sentiment="caution"
+      appearance="bordered"
+    >
+      <SearchIcon />
+    </Button>
+    <Button
+      loading
+      className="noSpin"
+      sentiment="caution"
+      appearance="bordered"
+    >
+      <SearchIcon /> Button
+    </Button>
+    <Button
+      loading
+      className="noSpin"
+      sentiment="caution"
+      appearance="transparent"
+    >
+      Button
+    </Button>
+    <Button
+      loading
+      className="noSpin"
+      sentiment="caution"
+      appearance="transparent"
+    >
+      <SearchIcon />
+    </Button>
+    <Button
+      loading
+      className="noSpin"
+      sentiment="caution"
+      appearance="transparent"
+    >
       <SearchIcon /> Button
     </Button>
   </QAContainerNoStyleInjection>

@@ -6,7 +6,6 @@ import {
   SettingsSolidIcon,
 } from "@salt-ds/icons";
 import type { Meta, StoryFn } from "@storybook/react";
-
 export default {
   title: "Core/Button",
   component: Button,
@@ -15,6 +14,7 @@ export default {
   // https://github.com/strothj/react-docgen-typescript-loader/issues/47
   argTypes: { onClick: { action: "clicked" } },
 } as Meta<typeof Button>;
+import { useState } from "react";
 
 const SingleButtonTemplate: StoryFn<typeof Button> = (props) => {
   return <Button {...props} />;
@@ -140,6 +140,173 @@ export const Disabled: StoryFn = () => {
         </Button>
       </FlowLayout>
     </StackLayout>
+  );
+};
+
+export const Loading: StoryFn = () => {
+  return (
+    <StackLayout gap={3}>
+      <FlowLayout>
+        <Button appearance="solid" sentiment="accented" loading>
+          Solid
+        </Button>
+        <Button appearance="bordered" sentiment="accented" loading>
+          Bordered
+        </Button>
+        <Button appearance="transparent" sentiment="accented" loading>
+          Transparent
+        </Button>
+      </FlowLayout>
+      <FlowLayout>
+        <Button appearance="solid" sentiment="neutral" loading>
+          Solid
+        </Button>
+        <Button appearance="bordered" sentiment="neutral" loading>
+          Bordered
+        </Button>
+        <Button appearance="transparent" sentiment="neutral" loading>
+          Transparent
+        </Button>
+      </FlowLayout>
+      <FlowLayout>
+        <Button appearance="solid" sentiment="positive" loading>
+          Solid
+        </Button>
+        <Button appearance="bordered" sentiment="positive" loading>
+          Bordered
+        </Button>
+        <Button appearance="transparent" sentiment="positive" loading>
+          Transparent
+        </Button>
+      </FlowLayout>
+      <FlowLayout>
+        <Button appearance="solid" sentiment="negative" loading>
+          Solid
+        </Button>
+        <Button appearance="bordered" sentiment="negative" loading>
+          Bordered
+        </Button>
+        <Button appearance="transparent" sentiment="negative" loading>
+          Transparent
+        </Button>
+      </FlowLayout>
+      <FlowLayout>
+        <Button appearance="solid" sentiment="caution" loading>
+          Solid
+        </Button>
+        <Button appearance="bordered" sentiment="caution" loading>
+          Bordered
+        </Button>
+        <Button appearance="transparent" sentiment="caution" loading>
+          Transparent
+        </Button>
+      </FlowLayout>
+    </StackLayout>
+  );
+};
+
+export const LoadingSingle = SingleButtonTemplate.bind({});
+LoadingSingle.args = {
+  children: "Loading",
+  loading: true,
+};
+
+export function LoadingAnnouncementProp() {
+  const [loading, setLoading] = useState(false);
+  const [loadingAnnouncement, setLoadingAnnouncement] = useState("");
+
+  // place outside the component
+  function fetchPDFDocument() {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        const rand = Math.random();
+        if (rand < 0.5) {
+          return resolve({});
+        }
+
+        return reject({});
+      }, 2000);
+    });
+  }
+
+  async function handleClick() {
+    setLoading(true);
+    setLoadingAnnouncement("Downloading...");
+
+    await fetchPDFDocument()
+      .then(() => {
+        setLoadingAnnouncement("Download Successful!");
+      })
+      .catch(() => {
+        setLoadingAnnouncement("Download Failed!");
+      })
+      .finally(() => {
+        setLoading(false);
+        setTimeout(() => {
+          setLoadingAnnouncement("");
+        }, 1000);
+      });
+  }
+
+  return (
+    <Button
+      loading={loading}
+      loadingAnnouncement={loadingAnnouncement}
+      onClick={handleClick}
+    >
+      Download PDF
+    </Button>
+  );
+}
+
+export const LoadingAnnouncementChild: StoryFn = () => {
+  const [loading, setLoading] = useState(false);
+  const [announcement, setAnnouncement] = useState("");
+
+  // place outside the component
+  function fetchPDFDocument() {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        const rand = Math.random();
+        if (rand < 0.5) {
+          return resolve({});
+        }
+
+        return reject({});
+      }, 2000);
+    });
+  }
+
+  async function handleClick() {
+    setLoading(true);
+    setAnnouncement("Downloading...");
+
+    await fetchPDFDocument()
+      .then(() => setAnnouncement("Download Successful!"))
+      .catch(() => setAnnouncement("Download Failed!"))
+      .finally(() => {
+        setLoading(false);
+        setTimeout(() => {
+          setAnnouncement("");
+        }, 1000);
+      });
+  }
+
+  return (
+    <Button loading={loading} onClick={handleClick}>
+      <span
+        role="status"
+        style={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          transform: "translate(-100%, -100%)",
+        }}
+      >
+        {announcement}
+      </span>
+      Download PDF
+    </Button>
   );
 };
 

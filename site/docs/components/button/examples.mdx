@@ -76,6 +76,34 @@ A button with the prop `disabled={true}` will suppress all functionality.
 
 </LivePreview>
 
+<LivePreview componentName="button" exampleName="Loading" >
+
+## Loading
+
+Use the loading state for a button that indicates that an action is happening, but the user must wait for it to complete. This is useful for actions that take some time to process, such as submitting a form or loading data.
+
+A button with the prop `loading={true}` will display a spinner to indicate that the action is in progress.
+
+### Best practices
+
+**Accessibility** - Loading is a visual only state, therefore if you have additional accessibility requirements, please handle it manually.
+
+</LivePreview>
+
+## Announcement
+
+<LivePreview componentName="button" exampleName="LoadingAnnouncementProp" >
+
+One way to handle to handle accessibility requirements is to announce a message to screen readers. This can be done by passing the `announcement` prop.
+
+</LivePreview>
+
+<LivePreview componentName="button" exampleName="LoadingAnnouncementChild" >
+
+Another way to achieve the same is to pass a span with role="status" down as a child.
+
+</LivePreview>
+
 <LivePreview componentName="button" exampleName="FocusableWhenDisabled" >
 
 ## Focusable when disabled
