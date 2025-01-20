@@ -3,7 +3,7 @@ import type { ReactElement } from "react";
 import styles from "./index.module.css";
 
 const CustomLinkImplementation = (props: any) => (
-  <a aria-label={"overridden-label"} {...props}>
+  <a {...props}>
     <Text>Your own Link implementation</Text>
   </a>
 );
