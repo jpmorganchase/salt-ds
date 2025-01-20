@@ -168,9 +168,9 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
             <Spinner size="small" aria-hidden disableAnnouncer />
           </div>
         )}
-        {(loadingAnnouncement || loadingAnnouncement === "") && (
+        {typeof loadingAnnouncement === "string" && (
           <span role="status" className={withBaseName("sr-only")}>
-            {loading ? loadingAnnouncement : null}
+            {loadingAnnouncement}
           </span>
         )}
         {children}

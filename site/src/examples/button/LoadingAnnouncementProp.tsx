@@ -22,10 +22,15 @@ export function LoadingAnnouncementProp() {
     setLoading(true);
     setLoadingAnnouncement("Downloading...");
 
-    await fetchPDFDocument().finally(() => {
-      setLoading(false);
-      setLoadingAnnouncement("");
-    });
+    await fetchPDFDocument()
+      .then(() => setLoadingAnnouncement("Download Successful!"))
+      .catch(() => setLoadingAnnouncement("Download Failed!"))
+      .finally(() => {
+        setLoading(false);
+        setTimeout(() => {
+          setLoadingAnnouncement("");
+        }, 1000);
+      });
   }
 
   return (
