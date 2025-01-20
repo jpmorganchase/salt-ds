@@ -1,6 +1,6 @@
 import { Button, makePrefixer, useControlled, useIcon } from "@salt-ds/core";
 import {
-  DateDetailErrorEnum,
+  DateDetailError,
   type DateFrameworkType,
   type SaltDateAdapter,
 } from "@salt-ds/date-adapters";
@@ -57,7 +57,7 @@ export function defaultRangeValidator<TDate extends DateFrameworkType>(
     details.startDate = details.startDate || {};
     details.startDate.errors = details.startDate.errors || [];
     details.startDate.errors.push({
-      type: DateDetailErrorEnum.UNSET,
+      type: DateDetailError.UNSET,
       message: "no start date defined",
     });
   }
@@ -65,7 +65,7 @@ export function defaultRangeValidator<TDate extends DateFrameworkType>(
     details.endDate = details.endDate || {};
     details.endDate.errors = details.endDate.errors || [];
     details.endDate.errors.push({
-      type: DateDetailErrorEnum.UNSET,
+      type: DateDetailError.UNSET,
       message: "no end date defined",
     });
   }

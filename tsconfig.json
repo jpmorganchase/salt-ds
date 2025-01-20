@@ -27,6 +27,9 @@
         "packages/icons/stories/*",
         "packages/lab/stories/*",
         "packages/theme/stories/*"
+      ],
+      "@salt-ds/date-adapters/*": [
+        "./packages/date-adapters/src/*-adapter/index.ts"
       ]
     },
     "types": ["cypress", "@testing-library/cypress", "node"]

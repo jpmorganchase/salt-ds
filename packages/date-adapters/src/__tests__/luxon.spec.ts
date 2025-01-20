@@ -1,6 +1,7 @@
 import { DateTime } from "luxon";
 import { describe, expect, it } from "vitest";
-import { AdapterLuxon, DateDetailErrorEnum } from "../index";
+import { DateDetailError } from "../index";
+import { AdapterLuxon } from "../luxon-adapter";
 
 describe("GIVEN a AdapterLuxon", () => {
   const adapter = new AdapterLuxon({ locale: "en-US" });
@@ -62,7 +63,7 @@ describe("GIVEN a AdapterLuxon", () => {
     expect(result.errors).toEqual([
       {
         message: "not a valid date",
-        type: DateDetailErrorEnum.INVALID_DATE,
+        type: DateDetailError.INVALID_DATE,
       },
     ]);
   });

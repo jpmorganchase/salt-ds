@@ -37,25 +37,25 @@ To import your chosen adapter adapter use one of the following :
 ### date-fns
 
 ```
-import { AdapterDateFns } from "@salt-ds/date-adapters";
+import { AdapterDateFns } from "@salt-ds/date-adapters/date-fns";
 ```
 
 ### dayjs
 
 ```
-import { AdapterDayJs } from "@salt-ds/date-adapters";
+import { AdapterDayJs } from "@salt-ds/date-adapters/dayjs";
 ```
 
 ### luxon
 
 ```
-import { AdapterLuxon } from "@salt-ds/date-adapters";
+import { AdapterLuxon } from "@salt-ds/date-adapters/luxon";
 ```
 
 ### moment (legacy)
 
 ```
-import { AdapterMoment } from "@salt-ds/date-adapters";
+import { AdapterMoment } from "@salt-ds/date-adapters/moment";
 ```
 
 ## Usage
@@ -69,6 +69,7 @@ Each adapter imports the date library defined by your peer dependency but for da
 Passing `dayjs` to `AdapterDayJs` enables you to preconfigure defaults.
 
 ```
+import { AdapterDayJs } from "@salt-ds/date-adapters/dayjs";
 import dayjs from "dayjs";
 dayjs.tz.setDefault('America/New_York');
 
@@ -78,6 +79,7 @@ const dayjsAdapter = new AdapterDayJs(locale, dayjs);
 Passing `moment-timezone` to `AdapterMoment` adapter enables timezone support.
 
 ```
+import { AdapterMoment } from "@salt-ds/date-adapters/moment";
 import moment from "moment-timezone";
 
 const momentAdapter = new AdapterMoment(locale, moment);
@@ -376,7 +378,7 @@ Not normally necessary, but in order to add a new adapter that is a valid `TDate
 /**
  * To add a new adapter, then, add the adapter's date object to `DateFrameworkTypeMap` interface
  */
- declare module "./types" {
+ declare module "@salt-ds/date-adapters" {
    interface DateFrameworkTypeMap {
      luxon: DateTime;
    }
