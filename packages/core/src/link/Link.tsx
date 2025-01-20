@@ -41,8 +41,6 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
     color: colorProp,
     variant,
     target = "_self",
-    styleAs,
-    maxRows,
     ...rest
   },
   ref,
@@ -67,8 +65,6 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
       ref={ref}
       target={target}
       color={color}
-      styleAs={styleAs}
-      maxRows={maxRows}
       {...rest}
     >
       {children}
