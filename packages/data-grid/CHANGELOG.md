@@ -1,5 +1,12 @@
 # @salt-ds/data-grid
 
+## 1.0.11
+
+### Patch Changes
+
+- Updated dependencies [df7760d]
+  - @salt-ds/lab@1.0.0-alpha.59
+
 ## 1.0.10
 
 ### Patch Changes

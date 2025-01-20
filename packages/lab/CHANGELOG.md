@@ -1,5 +1,11 @@
 # @salt-ds/lab
 
+## 1.0.0-alpha.59
+
+### Patch Changes
+
+- df7760d: Add border box to skip link container to ensure height is correctly measured.
+
 ## 1.0.0-alpha.58
 
 ### Minor Changes
