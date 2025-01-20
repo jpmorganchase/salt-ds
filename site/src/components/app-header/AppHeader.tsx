@@ -9,7 +9,7 @@ import {
   Tooltip,
   useBreakpoint,
 } from "@salt-ds/core";
-import { GithubIcon, HelpIcon } from "@salt-ds/icons";
+import { GithubIcon } from "@salt-ds/icons";
 import { Logo, LogoImage } from "@salt-ds/lab";
 import { useRouter } from "next/navigation";
 import type { FC } from "react";
@@ -36,11 +36,6 @@ const createDrawerMenu = (menu: TabsMenu): SidebarItem[] =>
   }, [] as SidebarItem[]);
 
 const actions: TabsMenu = [
-  {
-    title: "Support",
-    link: "/salt/support-and-contributions/index",
-    type: TabMenuItemType.LINK,
-  },
   {
     title: "Github repository",
     link: "https://github.com/jpmorganchase/salt-ds",
@@ -77,7 +72,11 @@ export const AppHeader: FC<AppHeaderProps> = ({
         {!isMobileOrTablet && (
           <>
             {homeLink && (
-              <Link href={homeLink} variant="component">
+              <Link
+                className={styles.logoLink}
+                href={homeLink}
+                variant="component"
+              >
                 {logo && (
                   <Logo>
                     <LogoImage
@@ -122,28 +121,16 @@ export const AppHeader: FC<AppHeaderProps> = ({
         <StackLayout direction="row" align="center" gap={1}>
           <Search />
           {!isMobileOrTablet && (
-            <>
-              <Tooltip content="Github repository" placement="bottom">
-                <Link
-                  href="https://github.com/jpmorganchase/salt-ds"
-                  aria-label="GitHub repository"
-                  variant="component"
-                  className={styles.appHeaderLink}
-                >
-                  <GithubIcon aria-hidden />
-                </Link>
-              </Tooltip>
-              <Tooltip content="Support" placement="bottom">
-                <Link
-                  href="/salt/support-and-contributions/index"
-                  aria-label="Support"
-                  variant="component"
-                  className={styles.appHeaderLink}
-                >
-                  <HelpIcon aria-hidden />
-                </Link>
-              </Tooltip>
-            </>
+            <Tooltip content="Github repository" placement="bottom">
+              <Link
+                href="https://github.com/jpmorganchase/salt-ds"
+                aria-label="GitHub repository"
+                variant="component"
+                className={styles.appHeaderLink}
+              >
+                <GithubIcon aria-hidden />
+              </Link>
+            </Tooltip>
           )}
         </StackLayout>
       </div>

@@ -1,52 +1,53 @@
-/* CSS Variables for the Skip Link */
-.saltSkipLink {
-  --skipLink-padding: var(--saltSkipLink-padding, var(--salt-size-unit));
-  --skipLink-margin: var(--saltSkipLink-margin, var(--salt-size-unit));
-  --skipLink-background: var(--saltSkipLink-background, var(--salt-actionable-primary-background));
-  --skipLink-color: var(--saltSkipLink-color, var(--salt-content-primary-foreground));
-}
-
-/* Overrides */
-.saltSkipLink {
-  --saltLink-color-focus: var(--skipLink-color);
-}
-
-.saltSkipLink-target {
-  --skipLink-target-focus: var(--salt-focused-outline);
-}
-
 /*Styles applied when the link is focused to hide the Skip Link when not in focus*/
 .saltSkipLink {
   top: 0;
   left: 0;
+  opacity: 0;
   width: 1px;
   height: 1px;
-  display: block;
-  opacity: 0;
+  margin: 0;
+  padding: 0;
   overflow: hidden;
   position: absolute;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  color: var(--salt-content-primary-foreground);
+  letter-spacing: var(--salt-text-letterSpacing);
+  text-decoration: var(--salt-navigable-textDecoration);
+  font-family: var(--salt-text-fontFamily);
+  white-space: nowrap;
+  background: var(--saltSkipLink-background, var(--salt-container-primary-background));
+  z-index: calc(var(--salt-zIndex-appHeader) + 1);
 }
 
 /* Styles applied when the link is focused to display the Skip Link only when in focus*/
 .saltSkipLink:focus {
   opacity: 1;
   width: auto;
-  height: auto;
-  white-space: nowrap;
-  margin: var(--skipLink-margin);
-  padding: calc(var(--skipLink-padding) - 1px) var(--skipLink-padding) var(--skipLink-padding);
-  background: var(--skipLink-background);
-  color: var(--skipLink-color);
-  box-shadow: var(--salt-overlayable-shadow-popout);
+  height: calc(var(--salt-size-base) + var(--salt-spacing-200));
+  padding: var(--salt-spacing-100) var(--salt-spacing-300);
+  outline: var(--salt-focused-outline);
+  outline-offset: calc(-1 * var(--salt-focused-outlineWidth));
+  box-shadow: var(--salt-overlayable-shadow);
 }
 
-.saltSkipLink {
-  font-size: var(--salt-text-fontSize);
-  font-family: var(--saltSkipLink-fontFamily, var(--salt-text-fontFamily));
-  line-height: var(--saltSkipLink-lineHeight, var(--salt-text-lineHeight));
+@keyframes fade-out-back-outline {
+  /* required animation to apply an opacity fade-out-back to outline */
+  0% {
+    outline-color: var(--salt-focused-outlineColor);
+  }
+  100% {
+    outline-color: transparent;
+  }
 }
 
-/*Styles applied to the skip link focus target*/
 .saltSkipLink-target {
-  outline: var(--skipLink-target-focus);
+  animation: fade-out-back-outline var(--salt-duration-notable) var(--salt-animation-timing-function) both;
+  outline: var(--salt-focused-outline);
+}
+@media (prefers-reduced-motion: reduce) {
+  .saltSkipLink-target {
+    animation: none;
+  }
 }

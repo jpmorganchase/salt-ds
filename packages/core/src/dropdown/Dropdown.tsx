@@ -160,7 +160,7 @@ export const Dropdown = forwardRef(function Dropdown<Item>(
   const validationStatus = validationStatusProp ?? formFieldValidationStatus;
   const required = formFieldRequired
     ? ["required", "asterisk"].includes(formFieldRequired)
-    : (undefined ?? requiredProp);
+    : requiredProp;
   const listControl = useListControl<Item>({
     open,
     defaultOpen,
@@ -456,7 +456,9 @@ export const Dropdown = forwardRef(function Dropdown<Item>(
         >
           {!valueText ? placeholder : valueText}
         </span>
-        {validationStatus && <StatusAdornment status={validationStatus} />}
+        {!disabled && validationStatus && (
+          <StatusAdornment status={validationStatus} />
+        )}
         {!readOnly && <ExpandIcon open={openState} />}
         <div className={withBaseName("activationIndicator")} />
       </button>
