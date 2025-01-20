@@ -3,11 +3,13 @@
   padding-bottom: var(--salt-spacing-300);
   padding-left: var(--salt-spacing-300);
   padding-right: var(--salt-spacing-300);
-  align-items: center;
   display: flex;
   flex-direction: row;
   gap: var(--salt-spacing-100);
   box-sizing: border-box;
+}
+.saltDialogHeader-header {
+  margin: 0;
 }
 
 .saltDialogHeader-container {
@@ -29,6 +31,7 @@
 /* Styles applied to the status indicator icon overriding its default size */
 .saltDialogHeader .saltStatusIndicator.saltIcon {
   --icon-size: var(--salt-text-h2-lineHeight);
+  padding-top: calc((var(--salt-size-base) - var(--salt-text-h2-lineHeight)) / 2);
 }
 
 /* Styles applied to DialogHeader when accent={true} */

@@ -4,7 +4,6 @@ import {
   OverlayPanel,
   OverlayPanelContent,
   OverlayTrigger,
-  useId,
 } from "@salt-ds/core";
 import { CloseIcon } from "@salt-ds/icons";
 import { OverlayHeader } from "@salt-ds/lab";
@@ -12,7 +11,6 @@ import { type ReactElement, useState } from "react";
 
 export const WithHeader = (): ReactElement => {
   const [open, setOpen] = useState(false);
-  const id = useId();
 
   const onOpenChange = (newOpen: boolean) => setOpen(newOpen);
 
@@ -32,11 +30,8 @@ export const WithHeader = (): ReactElement => {
       <OverlayTrigger>
         <Button>Show Overlay</Button>
       </OverlayTrigger>
-      <OverlayPanel aria-labelledby={id}>
-        <OverlayHeader
-          header={<h4 id={id}>Title</h4>}
-          actions={headerActions}
-        />
+      <OverlayPanel>
+        <OverlayHeader header="Title" actions={headerActions} />
         <OverlayPanelContent>
           <div>Content of Overlay</div>
         </OverlayPanelContent>
