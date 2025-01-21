@@ -1,25 +1,25 @@
-import { Slider } from "@salt-ds/lab";
+import { RangeSlider } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react";
 import { QAContainer, type QAContainerProps } from "docs/components";
 
 export default {
-  title: "Lab/Slider/Slider QA",
-  component: Slider,
-} as Meta<typeof Slider>;
+  title: "Lab/RangeSlider/RangeSlider QA",
+  component: RangeSlider,
+} as Meta<typeof RangeSlider>;
 
 export const ExamplesGrid: StoryFn<QAContainerProps> = (props) => {
   return (
     <QAContainer cols={1} itemPadding={4} {...props}>
-      <Slider defaultValue={-2} max={10} min={-5} step={1} />
-      <Slider
-        defaultValue={-2}
+      <RangeSlider defaultValue={[-2, 4]} max={10} min={-5} step={1} />
+      <RangeSlider
+        defaultValue={[-2, 4]}
         max={10}
         min={-5}
         step={1}
         labelPosition="bottom"
       />
-      <Slider
-        defaultValue={-2}
+      <RangeSlider
+        defaultValue={[-2, 4]}
         max={5}
         min={-5}
         step={1}
@@ -28,7 +28,7 @@ export const ExamplesGrid: StoryFn<QAContainerProps> = (props) => {
           { value: -3, label: "-3" },
           { value: -2, label: "-2" },
           { value: -1, label: "-1" },
-          { value: 0, label: "0" },
+          { value: 0, label: "-0" },
           { value: 1, label: "1" },
           { value: 2, label: "2" },
           { value: 3, label: "3" },
@@ -36,15 +36,15 @@ export const ExamplesGrid: StoryFn<QAContainerProps> = (props) => {
           { value: 5, label: "5" },
         ]}
       />
-      <Slider
-        defaultValue={-2}
+      <RangeSlider
+        defaultValue={[-2, 4]}
         max={10}
         min={-5}
         step={1}
         labelPosition="bottom"
         disabled
       />
-      <Slider defaultValue={-2} max={10} min={-5} step={1} disabled />
+      <RangeSlider defaultValue={[-2, 4]} max={10} min={-5} step={1} disabled />
     </QAContainer>
   );
 };

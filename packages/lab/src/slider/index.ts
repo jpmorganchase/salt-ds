@@ -1,2 +1,3 @@
 export * from "./Slider";
-export * from "./types";
+export * from "./RangeSlider";
+export * from "./internal/useSliderThumb";

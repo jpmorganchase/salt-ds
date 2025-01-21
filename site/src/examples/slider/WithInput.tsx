@@ -5,14 +5,11 @@ import {
   Input,
   StackLayout,
 } from "@salt-ds/core";
-import {
-  Slider,
-  type SliderChangeHandler,
-  type SliderValue,
-} from "@salt-ds/lab";
+import { RangeSlider, Slider } from "@salt-ds/lab";
 import {
   type ChangeEvent,
   type ReactElement,
+  type SyntheticEvent,
   useEffect,
   useState,
 } from "react";
@@ -34,8 +31,8 @@ const validateRange = (values: [string, string], bounds: [number, number]) => {
 };
 
 export const SingleWithInput = () => {
-  const [value, setValue] = useState<SliderValue>([20]);
-  const [inputValue, setInputValue] = useState<string>(value[0].toString());
+  const [value, setValue] = useState<number>(20);
+  const [inputValue, setInputValue] = useState<string>(value.toString());
   const [validationStatus, setValidationStatus] = useState<undefined | "error">(
     undefined,
   );
@@ -44,22 +41,17 @@ export const SingleWithInput = () => {
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const inputValue = event.target.value;
     setInputValue(inputValue);
+    setValue(Number.parseFloat(inputValue));
   };
 
-  const handleChange: SliderChangeHandler = (value: SliderValue) => {
+  const handleChange = (_e: SyntheticEvent, value: number) => {
     setValue(value);
   };
-
-  useEffect(() => {
-    const valid = validateSingle(inputValue, bounds);
-    setValidationStatus(valid ? undefined : "error");
-    setValue([+inputValue]);
-  }, [inputValue]);
 
   return (
     <FormField style={{ width: "400px" }}>
       <FormFieldLabel>Slider with Input</FormFieldLabel>
-      <FlexLayout gap={1} align="center">
+      <FlexLayout gap={3} align="center">
         <Input
           placeholder={inputValue}
           value={inputValue}
@@ -83,7 +75,7 @@ export const SingleWithInput = () => {
 const RangeWithInput = () => {
   const bounds: [number, number] = [0, 100];
 
-  const [value, setValue] = useState<SliderValue>([20, 60]);
+  const [value, setValue] = useState<[number, number]>([20, 60]);
   const [minValue, setMinValue] = useState<string>(bounds[0].toString());
   const [maxValue, setMaxValue] = useState<string>(bounds[1].toString());
   const [validationStatus, setValidationStatus] = useState<undefined | "error">(
@@ -100,7 +92,10 @@ const RangeWithInput = () => {
     setMaxValue(inputValue);
   };
 
-  const handleSliderChange = (value: SliderValue) => {
+  const handleSliderChange = (
+    event: SyntheticEvent,
+    value: [number, number],
+  ) => {
     if (typeof value[1] === "undefined") return false;
     setValue(value);
     setMinValue(value[0].toString());
@@ -117,8 +112,8 @@ const RangeWithInput = () => {
 
   return (
     <FormField style={{ width: "400px" }}>
-      <FormFieldLabel>Slider with Input</FormFieldLabel>
-      <FlexLayout gap={1} align="center">
+      <FormFieldLabel>Range Slider with Input</FormFieldLabel>
+      <FlexLayout gap={3} align="center">
         <Input
           id="slider-min-value"
           placeholder={`${minValue}`}
@@ -127,13 +122,14 @@ const RangeWithInput = () => {
           onChange={handleMinInputChange}
           validationStatus={validationStatus}
         />
-        <Slider
+        <RangeSlider
           style={{ flexGrow: 1 }}
           min={bounds[0]}
           max={bounds[1]}
           value={value}
           onChange={handleSliderChange}
           aria-label="withInput"
+          labelPosition="bottom"
         />
         <Input
           id="slider-max-value"
