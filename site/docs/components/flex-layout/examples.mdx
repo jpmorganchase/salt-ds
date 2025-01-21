@@ -14,7 +14,7 @@ data:
 
 ## Default
 
-By default, `FlexLayout` displays items along the horizontal axis in a row, aligned to the start of the container. The spacing between items is driven by the property `gap`, which is a multiple of the [Salt base unit](/salt/foundations/spacing) and is set to 3. The dimensions of the layout (height or width) are driven by the items contained within it.
+By default, `FlexLayout` displays items along the horizontal axis in a row, aligned to the start of the container. The dimensions of the layout (height or width) are driven by the items contained within it.
 
 ### Best practices
 
@@ -77,5 +77,12 @@ The flex item's `grow` prop enables specific items in the layout to grow and fil
 In contrast to the `grow` prop, the `shrink` prop makes a specific item as small as possible within the layout. By default, `shrink` is set to `1`. If an item is set to `2`, that item would attempt to take half as much space.
 
 </LivePreview>
+  <LivePreview componentName="flex-layout" exampleName="Spacing">
+
+    ## Spacing
+    Flex layout displays items with a gap between items that is a multiple of the [Salt base unit](/salt/foundations/spacing) controlled by the `gap` property and is by default set to 3.
+    The spacing properties `padding` and `margin` are set to 0 by default and can be used to control the layout's inner and outer spacing also as multiples of the Salt base unit.
+
+  </LivePreview>
 
 </LivePreviewControls>
