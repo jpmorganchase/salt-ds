@@ -38,6 +38,6 @@
     "provenance": true
   },
   "scripts": {
-    "build": "yarn node ../../scripts/build.mjs"
+    "build": "yarn node ./scripts/build.mjs"
   }
 }

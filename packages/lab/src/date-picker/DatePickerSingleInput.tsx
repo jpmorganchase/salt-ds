@@ -1,6 +1,6 @@
 import { Button, makePrefixer, useControlled } from "@salt-ds/core";
 import {
-  DateDetailErrorEnum,
+  DateDetailError,
   type DateFrameworkType,
   type SaltDateAdapter,
 } from "@salt-ds/date-adapters";
@@ -53,7 +53,7 @@ function defaultSingleValidation<TDate extends DateFrameworkType>(
   if (!date) {
     details.errors = details.errors ?? [];
     details.errors?.push({
-      type: DateDetailErrorEnum.UNSET,
+      type: DateDetailError.UNSET,
       message: "no date defined",
     });
   } else {

@@ -1,4 +1,4 @@
-import { AdapterDateFns } from "@salt-ds/date-adapters";
+import { AdapterDateFns } from "@salt-ds/date-adapters/date-fns";
 import {
   Calendar,
   CalendarGrid,

@@ -1,13 +1,13 @@
-import { AdapterDateFns } from "@salt-ds/date-adapters";
-import { AdapterDayjs } from "@salt-ds/date-adapters";
-import { AdapterLuxon } from "@salt-ds/date-adapters";
-import { AdapterMoment } from "@salt-ds/date-adapters";
 import {
-  DateDetailErrorEnum,
+  DateDetailError,
   type DateFrameworkType,
   type ParserResult,
   type SaltDateAdapter,
 } from "@salt-ds/date-adapters";
+import { AdapterDateFns } from "@salt-ds/date-adapters/date-fns";
+import { AdapterDayjs } from "@salt-ds/date-adapters/dayjs";
+import { AdapterLuxon } from "@salt-ds/date-adapters/luxon";
+import { AdapterMoment } from "@salt-ds/date-adapters/moment";
 import {
   DateInputRange,
   type DateParserField,
@@ -77,7 +77,7 @@ function assertDateChange(
     // assert empty start date
     expect(adapter.isValid(date.startDate)).to.equal(false);
     expect(details.startDate.errors).to.deep.equal([
-      { type: DateDetailErrorEnum.UNSET, message: "no date defined" },
+      { type: DateDetailError.UNSET, message: "no date defined" },
     ]);
     expect(details.startDate).to.have.property(
       "value",
@@ -87,7 +87,7 @@ function assertDateChange(
     // assert invalid start date
     expect(adapter.isValid(date.startDate)).to.equal(false);
     expect(details.startDate.errors).to.deep.equal([
-      { type: DateDetailErrorEnum.INVALID_DATE, message: "not a valid date" },
+      { type: DateDetailError.INVALID_DATE, message: "not a valid date" },
     ]);
     expect(details.startDate).to.have.property(
       "value",
@@ -105,14 +105,14 @@ function assertDateChange(
     // assert empty end date
     expect(adapter.isValid(date.endDate)).to.equal(false);
     expect(details.endDate.errors).to.deep.equal([
-      { type: DateDetailErrorEnum.UNSET, message: "no date defined" },
+      { type: DateDetailError.UNSET, message: "no date defined" },
     ]);
     expect(details.endDate).to.have.property("value", expectedValue.endDate);
   } else if (expectedDate?.endDate === null) {
     // assert invalid end date
     expect(adapter.isValid(date.endDate)).to.equal(false);
     expect(details.endDate.errors).to.deep.equal([
-      { type: DateDetailErrorEnum.INVALID_DATE, message: "not a valid date" },
+      { type: DateDetailError.INVALID_DATE, message: "not a valid date" },
     ]);
     expect(details.endDate).to.have.property("value", expectedValue.endDate);
   }
@@ -367,7 +367,7 @@ describe("GIVEN a DateInputRange", () => {
                   value: "",
                   errors: [
                     {
-                      type: DateDetailErrorEnum.UNSET,
+                      type: DateDetailError.UNSET,
                       message: "no date defined",
                     },
                   ],

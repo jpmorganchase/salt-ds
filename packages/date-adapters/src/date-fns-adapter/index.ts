@@ -33,7 +33,7 @@ import {
 import { enUS } from "date-fns/locale";
 import {
   type AdapterOptions,
-  DateDetailErrorEnum,
+  DateDetailError,
   type ParserResult,
   type RecommendedFormats,
   type SaltDateAdapter,
@@ -41,7 +41,7 @@ import {
   type Timezone,
 } from "../types";
 
-declare module "../types" {
+declare module "@salt-ds/date-adapters" {
   interface DateFrameworkTypeMap {
     "date-fns": Date;
   }
@@ -213,8 +213,8 @@ export class AdapterDateFns implements SaltDateAdapter<Date, Locale> {
         {
           message: isDateDefined ? "not a valid date" : "no date defined",
           type: isDateDefined
-            ? DateDetailErrorEnum.INVALID_DATE
-            : DateDetailErrorEnum.UNSET,
+            ? DateDetailError.INVALID_DATE
+            : DateDetailError.UNSET,
         },
       ],
     };
