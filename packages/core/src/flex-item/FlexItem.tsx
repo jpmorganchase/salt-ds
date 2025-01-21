@@ -33,27 +33,27 @@ export type FlexItemProps<T extends ElementType> =
     T,
     {
       /**
-       * Allows the alignment specified by parent to be overridden for individual items, default is "start".
+       * Allows the alignment specified by parent to be overridden for individual items; default is `start`.
        */
       align?: flexItemAlignment;
       /**
-       * Defines the ability for an item to shrink x times more compared to its siblings, default is 1.
+       * Defines the ability of an item to shrink x times more than its siblings; default is `1`.
        */
       shrink?: ResponsiveProp<number>;
       /**
-       * Defines the ability for an item to grow x times more compared to its siblings, default is 0.
+       * Defines the ability of an item to grow x times more than its siblings; default is `0`.
        */
       grow?: ResponsiveProp<number>;
       /**
-       * Sets the initial main size of a flex item, default is "auto".
+       * Sets the initial main size of a flex item; default is `auto`.
        */
       basis?: ResponsiveProp<CSSProperties["flexBasis"]>;
       /**
-       * Defines the margin around the component. It can be specified as a number (which acts as a multiplier) or a string representing the margin value. Default is `0`.
+       * Defines the margin around the component as a number (which acts as a multiplier) or a string representing the margin value; default is `0`.
        */
       margin?: ResponsiveProp<number | string>;
       /**
-       * Defines the padding within the component. It can be specified as a number (which acts as a multiplier) or a string representing the padding value. Default is `0`.
+       * Defines the padding within the component as a number (which acts as a multiplier) or a string representing the padding value; default is `0`.
        */
       padding?: ResponsiveProp<number | string>;
     }

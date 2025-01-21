@@ -11,7 +11,7 @@ import { FlexLayout, type FlexLayoutProps } from "../flex-layout";
 import {
   type PolymorphicComponentPropWithRef,
   type PolymorphicRef,
-  makePrefixer,
+  makePrefixer, type ResponsiveProp,
 } from "../utils";
 import splitLayoutCss from "./SplitLayout.css";
 
@@ -22,11 +22,11 @@ export type SplitLayoutProps<T extends ElementType> =
     T,
     {
       /**
-       * Defines the default behavior for how flex items are laid out along the cross axis on the current line.
+       * Defines the default behavior for how flex items are laid out along the cross axis on the current line; default is `stretch`.
        */
       align?: FlexLayoutProps<ElementType>["align"];
       /**
-       * Establishes the main-axis, defining the direction children are placed. Default is "row".
+       * Establishes the main-axis, defining the direction children are placed; default is `row`.
        */
       direction?: FlexLayoutProps<ElementType>["direction"];
       /**
@@ -34,7 +34,7 @@ export type SplitLayoutProps<T extends ElementType> =
        */
       endItem?: ReactNode;
       /**
-       * Controls the space between left and right items.
+       * Controls the space between items; default is `3`.
        */
       gap?: FlexLayoutProps<ElementType>["gap"];
       /**
@@ -42,13 +42,13 @@ export type SplitLayoutProps<T extends ElementType> =
        */
       startItem?: ReactNode;
       /**
-       * Defines the margin around the component. It can be specified as a number (which acts as a multiplier) or a string representing the margin value. Default is `0`.
+       * Defines the margin around the component as a number (which acts as a multiplier) or a string representing the margin value; default is `0`.
        */
-      margin?: FlexLayoutProps<ElementType>["margin"];
+      margin?: ResponsiveProp<number | string>;
       /**
-       * Defines the padding within the component. It can be specified as a number (which acts as a multiplier) or a string representing the padding value. Default is `0`.
+       * Defines the padding within the component as a number (which acts as a multiplier) or a string representing the padding value; default is `0`.
        */
-      padding?: FlexLayoutProps<ElementType>["padding"];
+      padding?: ResponsiveProp<number | string>;
     }
   >;
 
