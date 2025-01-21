@@ -30,7 +30,7 @@
 
 /* Styles applied to icon */
 .saltToast-iconContainer > .saltIcon {
-  margin: calc(var(--salt-spacing-75) + 2px) 0 var(--salt-spacing-75) 0;
+  margin-top: calc(var(--salt-spacing-75) + calc((var(--salt-text-lineHeight) - max(var(--salt-size-icon), 12px)) / 2));
   color: var(--toast-iconColor);
 }
 
