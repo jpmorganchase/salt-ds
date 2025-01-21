@@ -7,11 +7,11 @@ import {
   H2,
   H4,
   NavigationItem,
+  SkipLink,
   SplitLayout,
   StackLayout,
 } from "@salt-ds/core";
 import { ChevronRightIcon, GithubIcon } from "@salt-ds/icons";
-import { SkipLink } from "@salt-ds/lab";
 import type { ReactElement } from "react";
 import { useState } from "react";
 import styles from "./Default.module.css";
