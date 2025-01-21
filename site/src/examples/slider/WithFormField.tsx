@@ -6,13 +6,13 @@ export const WithFormField = (): ReactElement => (
   <StackLayout style={{ width: "400px" }}>
     <FormField>
       <FormFieldLabel>Field Label</FormFieldLabel>
-      <Slider marks="bottom" min={0} max={50} step={10} />
+      <Slider labelPosition="bottom" min={0} max={50} step={10} />
     </FormField>
     <FormField>
       <FormFieldLabel>Field Label</FormFieldLabel>
       <Slider
-        defaultValue={[20, 80]}
-        marks="bottom"
+        defaultValue={80}
+        labelPosition="bottom"
         min={0}
         max={100}
         step={10}
@@ -24,7 +24,7 @@ export const WithFormField = (): ReactElement => (
     </FormField>
     <FormField labelPlacement="left">
       <FormFieldLabel>Field Label</FormFieldLabel>
-      <Slider defaultValue={[20, 80]} min={0} max={100} />
+      <Slider defaultValue={80} min={0} max={100} />
     </FormField>
   </StackLayout>
 );
