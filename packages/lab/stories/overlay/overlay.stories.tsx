@@ -1,6 +1,5 @@
 import {
   Button,
-  H4,
   Overlay,
   OverlayPanel,
   OverlayPanelContent,
@@ -9,20 +8,18 @@ import {
   StackLayout,
   Text,
   Tooltip,
-  useId,
 } from "@salt-ds/core";
 import { CloseIcon } from "@salt-ds/icons";
 import { OverlayHeader } from "@salt-ds/lab";
-import type { Meta } from "@storybook/react";
+import type { Meta, StoryFn } from "@storybook/react";
 import { useState } from "react";
 
 export default {
   title: "Lab/Overlay Header",
 } as Meta<typeof Overlay>;
 
-export const Header = ({ onOpenChange }: OverlayProps) => {
+const HeaderTemplate: StoryFn = ({ onOpenChange, ...props }: OverlayProps) => {
   const [open, setOpen] = useState(false);
-  const id = useId();
 
   const onChange = (newOpen: boolean) => {
     setOpen(newOpen);
@@ -35,12 +32,11 @@ export const Header = ({ onOpenChange }: OverlayProps) => {
         <Button>Show Overlay</Button>
       </OverlayTrigger>
       <OverlayPanel
-        aria-labelledby={id}
         style={{
           width: 500,
         }}
       >
-        <OverlayHeader header={<H4 id={id}>Header block</H4>} />
+        <OverlayHeader header="Header block" {...props} />
         <OverlayPanelContent>
           <StackLayout gap={1}>
             <Text>
@@ -62,9 +58,26 @@ export const Header = ({ onOpenChange }: OverlayProps) => {
   );
 };
 
+export const Header = HeaderTemplate.bind({});
+Header.args = {};
+
+export const LongHeader = HeaderTemplate.bind({});
+LongHeader.args = {
+  header:
+    "Comprehensive guidelines and detailed instructions for the optimal use and application of our services to ensure maximum efficiency and user satisfaction",
+  actions: (
+    <Button
+      aria-label="Close overlay"
+      appearance="transparent"
+      sentiment="neutral"
+    >
+      <CloseIcon aria-hidden />
+    </Button>
+  ),
+};
+
 export const HeaderWithCloseButton = ({ onOpenChange }: OverlayProps) => {
   const [open, setOpen] = useState(false);
-  const id = useId();
 
   const onChange = (newOpen: boolean) => {
     setOpen(newOpen);
@@ -90,7 +103,6 @@ export const HeaderWithCloseButton = ({ onOpenChange }: OverlayProps) => {
         <Button>Show Overlay</Button>
       </OverlayTrigger>
       <OverlayPanel
-        aria-labelledby={id}
         style={{
           width: 500,
         }}
@@ -98,7 +110,7 @@ export const HeaderWithCloseButton = ({ onOpenChange }: OverlayProps) => {
         <OverlayHeader
           preheader="Preheader"
           description="Description"
-          header={<H4 id={id}>Header block</H4>}
+          header="Header block"
           actions={<CloseButton />}
         />
         <OverlayPanelContent>

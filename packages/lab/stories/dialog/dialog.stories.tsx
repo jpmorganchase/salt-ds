@@ -5,7 +5,6 @@ import {
   DialogContent,
   type DialogContentProps,
   type DialogProps,
-  H2,
   SplitLayout,
   StackLayout,
 } from "@salt-ds/core";
@@ -24,7 +23,7 @@ export default {
   component: Dialog,
   args: {
     preheader: "Settlements",
-    header: <H2>Terms and conditions</H2>,
+    header: "Terms and conditions",
     description: "Effective date: August 29, 2024",
     content:
       "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
@@ -145,6 +144,12 @@ export const Default = DialogTemplate.bind({});
 Default.args = {
   id: "Default",
 };
+export const LongTitle = DialogTemplate.bind({});
+LongTitle.args = {
+  id: "LongTitle",
+  header:
+    "Complete terms and conditions for using the services provided by our company",
+};
 
 const AlertDialogTemplate: StoryFn<
   DialogProps & { header: ReactNode; content: ReactNode }
@@ -201,23 +206,23 @@ const AlertDialogTemplate: StoryFn<
 export const InfoStatus = AlertDialogTemplate.bind({});
 InfoStatus.args = {
   status: "info",
-  header: <H2>Info</H2>,
+  header: "Info",
 };
 
 export const SuccessStatus = AlertDialogTemplate.bind({});
 SuccessStatus.args = {
   status: "success",
-  header: <H2>Success</H2>,
+  header: "Success",
 };
 
 export const WarningStatus = AlertDialogTemplate.bind({});
 WarningStatus.args = {
   status: "warning",
-  header: <H2>Warning</H2>,
+  header: "Warning",
 };
 
 export const ErrorStatus = AlertDialogTemplate.bind({});
 ErrorStatus.args = {
   status: "error",
-  header: <H2>Error</H2>,
+  header: "Error",
 };

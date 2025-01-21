@@ -1,4 +1,5 @@
 import {
+  H2,
   StatusIndicator,
   Text,
   type ValidationStatus,
@@ -82,12 +83,10 @@ export const DialogHeader = forwardRef<HTMLDivElement, DialogHeaderProps>(
       >
         {status && <StatusIndicator status={status} />}
         <div className={withBaseName("container")}>
-          <div className={withBaseName("header")}>
-            {preheader && (
-              <Text className={withBaseName("preheader")}>{preheader}</Text>
-            )}
+          <H2 className={withBaseName("header")}>
+            {preheader && <Text color="primary">{preheader}</Text>}
             {header}
-          </div>
+          </H2>
           {description && (
             <Text color="secondary" className={withBaseName("description")}>
               {description}
