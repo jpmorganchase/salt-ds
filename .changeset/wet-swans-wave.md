@@ -2,4 +2,4 @@
 "@salt-ds/core": patch
 ---
 
-Fixed HD Toast icon alignment
+Fixed Toast icon alignment not matching Figma.
