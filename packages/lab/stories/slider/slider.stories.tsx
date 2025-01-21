@@ -1,44 +1,29 @@
 import {
   FlexLayout,
   FormField,
-  FormFieldHelperText,
   FormFieldLabel,
   Input,
   StackLayout,
 } from "@salt-ds/core";
-import { Slider, type SliderProps, type SliderValue } from "@salt-ds/lab";
+import { Slider, type SliderProps } from "@salt-ds/lab";
 import type { StoryFn } from "@storybook/react";
 import { type ChangeEvent, useEffect, useState } from "react";
-
-const validateSingle = (value: string, bounds: [number, number]) => {
-  if (Number.isNaN(Number(value))) return false;
-  if (Number(value) < bounds[0] || Number(value) > bounds[1]) return false;
-  return true;
-};
-
-const validateRange = (values: [string, string], bounds: [number, number]) => {
-  if (values.length !== 2) return false;
-  const [min, max] = values;
-  const minValid = validateSingle(min, bounds);
-  const maxValid = validateSingle(max, bounds);
-  if (!minValid || !maxValid) return false;
-  if (Number(min) > Number(max)) return false;
-  return true;
-};
 
 export default {
   title: "Lab/Slider",
   component: Slider,
 };
 
-const Template: StoryFn<SliderProps> = ({ ...args }) => {
-  return <Slider style={{ width: "300px" }} {...args} />;
+const Template: StoryFn = ({ ...args }) => {
+  return (
+    <div style={{ width: "500px" }}>
+      <Slider {...args} />
+    </div>
+  );
 };
 
 export const Default = Template.bind({});
 Default.args = {
-  min: 0,
-  max: 10,
   "aria-label": "default",
 };
 
@@ -49,44 +34,72 @@ WithNegativeBounds.args = {
   "aria-label": "WithNegativeBounds",
 };
 
-export const CustomStep = () => (
-  <StackLayout gap={10} style={{ width: "400px" }}>
-    <FormField>
-      <FormFieldLabel>Step: 1 (default)</FormFieldLabel>
-      <Slider min={-1} max={1} marks="all" />
-    </FormField>
-    <FormField>
-      <FormFieldLabel>Step: 0.2</FormFieldLabel>
-      <Slider min={-1} max={1} step={0.2} marks="all" />
-    </FormField>
-    <FormField>
-      <FormFieldLabel>Step: 0.25 (two decimal places)</FormFieldLabel>
-      <Slider min={-1} max={1} step={0.25} marks="all" />
-    </FormField>
-    <FormField>
-      <FormFieldLabel>Step: 0.3 (not multiple of total range)</FormFieldLabel>
-      <Slider min={0} max={1} step={0.3} marks="all" defaultValue={[0.9]} />
-    </FormField>
-  </StackLayout>
-);
+export const WithBottomLabels = Template.bind({});
+WithBottomLabels.args = {
+  min: 0,
+  max: 100,
+  defaultValue: 30,
+  "aria-label": "WithBottomLabels",
+  labelPosition: "bottom",
+};
 
-export const BottomMarks = Template.bind({});
-BottomMarks.args = {
-  marks: "bottom",
-  "aria-label": "CustomStep",
+export const withCustomMinMaxLabels = Template.bind({});
+withCustomMinMaxLabels.args = {
+  min: 0,
+  max: 50,
+  defaultValue: 24,
+  minLabel: "Lowest value",
+  maxLabel: "Highest value",
+  labelPosition: "bottom",
+  "aria-label": "WithCustomMinMaxLabels",
+};
+
+export const WithFormatting = Template.bind({});
+WithFormatting.args = {
+  min: 0,
+  max: 50,
+  labelPosition: "bottom",
+  defaultValue: 25,
+  "aria-label": "WithFormatting",
+  format: (value: number) =>
+    Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: "EUR",
+      maximumFractionDigits: 0,
+    }).format(value),
+};
+
+export const Disabled = Template.bind({});
+Disabled.args = {
+  min: 0,
+  max: 50,
+  labelPosition: "bottom",
+  defaultValue: 35,
+  "aria-label": "WithFormatting",
+  disabled: true,
 };
 
 export const WithMarks = Template.bind({});
 WithMarks.args = {
-  min: -5,
-  max: 5,
-  marks: "all",
-  "aria-label": "withMarks",
+  min: 0,
+  max: 10,
+  defaultValue: 5,
+  markers: [
+    {
+      label: "5",
+      value: 5,
+    },
+    {
+      label: "8",
+      value: 8,
+    },
+  ],
+  "aria-label": "With Markers",
 };
 
-export const WithInput = () => {
-  const [value, setValue] = useState<SliderValue>([5]);
-  const [inputValue, setInputValue] = useState<string>(value[0].toString());
+export const WithinFormFieldAndInlineLabels: StoryFn<SliderProps> = () => {
+  const [value, setValue] = useState<number>(5);
+  const [inputValue, setInputValue] = useState<string | number>(value);
   const [validationStatus, setValidationStatus] = useState<undefined | "error">(
     undefined,
   );
@@ -96,23 +109,25 @@ export const WithInput = () => {
     const inputValue = event.target.value;
     setInputValue(inputValue);
     if (Number.isNaN(Number(inputValue))) return;
-    setValue([+inputValue]);
+    setValue(Number.parseFloat(inputValue));
   };
 
-  const handleChange = (value: SliderValue) => {
-    setInputValue(value[0].toString());
-    setValue([+inputValue]);
+  const validateSingle = (value: string | number, bounds: [number, number]) => {
+    if (Number.isNaN(Number(value))) return false;
+    if (Number(value) < bounds[0] || Number(value) > bounds[1]) return false;
+    return true;
   };
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Only need to run when inputValue and bounds change
   useEffect(() => {
     const valid = validateSingle(inputValue, bounds);
     setValidationStatus(valid ? undefined : "error");
-  }, [inputValue]);
+  }, [inputValue, bounds]);
 
   return (
     <FormField>
       <FormFieldLabel> Slider with Input </FormFieldLabel>
-      <FlexLayout gap={1}>
+      <FlexLayout gap={3}>
         <Input
           value={inputValue}
           style={{ width: "10px" }}
@@ -124,79 +139,51 @@ export const WithInput = () => {
           min={bounds[0]}
           max={bounds[1]}
           value={value}
-          onChange={handleChange}
-          aria-label="withInput"
+          onChange={(event, value) => {
+            setInputValue(value);
+            setValue(value);
+          }}
         />
       </FlexLayout>
     </FormField>
   );
 };
 
-const RangeTemplate: StoryFn<SliderProps> = ({ ...args }) => {
-  return <Slider style={{ width: "300px" }} {...args} />;
-};
-
-export const Range = RangeTemplate.bind({});
-Range.args = {
-  min: 0,
-  max: 100,
-  defaultValue: [20, 80],
-};
-
-export const RangeWithMarks = RangeTemplate.bind({});
-RangeWithMarks.args = {
-  min: 0,
-  max: 100,
-  step: 10,
-  defaultValue: [20, 80],
-  marks: "all",
-};
-
-export const RangeWithInput = () => {
-  const bounds: [number, number] = [0, 50];
-
-  const [value, setValue] = useState<SliderValue>([0, 50]);
-  const [minValue, setMinValue] = useState<string>(bounds[0].toString());
-  const [maxValue, setMaxValue] = useState<string>(bounds[1].toString());
+export const WithinFormFieldAndBottomLabels: StoryFn<SliderProps> = () => {
+  const [value, setValue] = useState<number>(5);
+  const [inputValue, setInputValue] = useState<string | number>(value);
   const [validationStatus, setValidationStatus] = useState<undefined | "error">(
     undefined,
   );
+  const bounds: [number, number] = [-50, 50];
 
-  const handleMinInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const inputValue = event.target.value;
-    setMinValue(inputValue);
+    setInputValue(inputValue);
+    if (Number.isNaN(Number(inputValue))) return;
+    setValue(Number.parseFloat(inputValue));
   };
 
-  const handleMaxInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const inputValue = event.target.value;
-    setMaxValue(inputValue);
+  const validateSingle = (value: string | number, bounds: [number, number]) => {
+    if (Number.isNaN(Number(value))) return false;
+    if (Number(value) < bounds[0] || Number(value) > bounds[1]) return false;
+    return true;
   };
 
-  const handleSliderChange = (value: SliderValue) => {
-    if (typeof value[1] === "undefined") return false;
-    setValue(value);
-    setMinValue(value[0].toString());
-    setMaxValue(value[1].toString());
-  };
-
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Only need to run when inputValue and bounds change
   useEffect(() => {
-    const valid = validateRange([minValue, maxValue], bounds);
+    const valid = validateSingle(inputValue, bounds);
     setValidationStatus(valid ? undefined : "error");
-    if (valid) {
-      setValue([Number(minValue), Number(maxValue)]);
-    }
-  }, [minValue, maxValue]);
+  }, [inputValue, bounds]);
 
   return (
     <FormField>
       <FormFieldLabel> Slider with Input </FormFieldLabel>
-      <FormFieldHelperText>Helper text</FormFieldHelperText>
-      <FlexLayout gap={1} align="center">
+      <FlexLayout gap={3}>
         <Input
-          placeholder={minValue}
-          value={minValue}
+          value={inputValue}
           style={{ width: "10px" }}
-          onChange={handleMinInputChange}
+          onChange={handleInputChange}
           validationStatus={validationStatus}
         />
         <Slider
@@ -204,44 +191,79 @@ export const RangeWithInput = () => {
           min={bounds[0]}
           max={bounds[1]}
           value={value}
-          onChange={handleSliderChange}
-          aria-label="withInput"
-        />
-        <Input
-          placeholder={maxValue}
-          value={maxValue}
-          style={{ width: "10px" }}
-          onChange={handleMaxInputChange}
-          validationStatus={validationStatus}
+          onChange={(event, value) => {
+            setInputValue(value);
+            setValue(value);
+          }}
+          labelPosition="bottom"
         />
       </FlexLayout>
     </FormField>
   );
 };
 
-export const WithFormField = () => (
-  <StackLayout style={{ width: "400px" }}>
+export const WithCustomStep = () => (
+  <StackLayout gap={10} style={{ width: "400px" }}>
     <FormField>
-      <FormFieldLabel>Field Label</FormFieldLabel>
-      <Slider marks="bottom" min={0} max={50} step={10} />
+      <FormFieldLabel>Step: 1 (default)</FormFieldLabel>
+      <Slider min={-1} max={1} />
     </FormField>
     <FormField>
-      <FormFieldLabel>Field Label</FormFieldLabel>
+      <FormFieldLabel>Step: 0.2</FormFieldLabel>
+      <Slider min={-1} max={1} step={0.2} />
+    </FormField>
+    <FormField>
+      <FormFieldLabel>Step: 0.25 (two decimal places)</FormFieldLabel>
+      <Slider min={-1} max={1} step={0.25} />
+    </FormField>
+    <FormField>
+      <FormFieldLabel>
+        Step: 0.3 with formatting (not multiple of total range)
+      </FormFieldLabel>
       <Slider
-        defaultValue={[20, 80]}
-        marks="bottom"
         min={0}
-        max={100}
-        step={10}
+        max={1}
+        step={0.3}
+        defaultValue={0.9}
+        format={(value: number) => Intl.NumberFormat().format(value)}
       />
-    </FormField>
-    <FormField labelPlacement="left">
-      <FormFieldLabel>Field Label</FormFieldLabel>
-      <Slider min={0} max={100} />
-    </FormField>
-    <FormField labelPlacement="left">
-      <FormFieldLabel>Field Label</FormFieldLabel>
-      <Slider defaultValue={[20, 80]} min={0} max={100} />
     </FormField>
   </StackLayout>
 );
+
+export const WithNonNumericValues = () => {
+  const [value, setValue] = useState<number>();
+
+  const daysOfTheWeek = [
+    { label: "Monday", value: 1 },
+    { label: "Tuesday", value: 2 },
+    { label: "Wednesday", value: 3 },
+    { label: "Thursday", value: 4 },
+    { label: "Friday", value: 5 },
+    { label: "Saturday", value: 6 },
+    { label: "Sunday", value: 7 },
+  ];
+
+  const getDayOfTheWeek = (value?: number) => {
+    const day = daysOfTheWeek.find((day) => day.value === value);
+    return day ? day.label : "";
+  };
+
+  return (
+    <div style={{ width: "500px" }}>
+      <Slider
+        aria-valuetext={getDayOfTheWeek(value)}
+        minLabel={"Monday"}
+        maxLabel={"Sunday"}
+        min={1}
+        max={7}
+        value={value}
+        onChange={(e, value) => setValue(value)}
+        format={getDayOfTheWeek}
+        markers={daysOfTheWeek.map((day) => {
+          return { value: day.value, label: day.label };
+        })}
+      />
+    </div>
+  );
+};

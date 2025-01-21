@@ -1,0 +1,144 @@
+.saltSliderTrack {
+  --slider-progressPercentage: "0%";
+  /* For range */
+  --slider-progressPercentageStart: "0%";
+  --slider-progressPercentageEnd: "0%";
+
+  --slider-marker-percentage: "0%";
+  --slider-track-background: var(--salt-track-borderColor);
+  --slider-track-fill: var(--salt-accent-borderColor);
+
+  display: flex;
+  position: relative;
+  width: 100%;
+}
+
+.saltSliderTrack-withMarkers {
+  justify-content: unset;
+}
+
+.saltSliderTrack-disabled {
+  cursor: var(--salt-selectable-cursor-disabled);
+}
+
+.saltSliderTrack-container {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.saltSliderTrack-wrapper {
+  align-items: center;
+  display: flex;
+  width: 100%;
+  height: var(--salt-size-base);
+}
+
+.saltSliderTrack-rail {
+  cursor: var(--salt-selectable-cursor-hover);
+  display: flex;
+  flex: 100%;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  height: var(--salt-size-bar);
+  justify-content: space-between;
+  order: 0;
+  position: relative;
+}
+
+.saltSliderTrack-rail::before,
+.saltSliderTrack-rail::after {
+  content: "";
+  display: block;
+  height: 100%;
+}
+
+.saltSliderTrack-rail::before {
+  background: var(--slider-track-fill);
+  border-top-left-radius: var(--salt-palette-corner-strongest);
+  border-bottom-left-radius: var(--salt-palette-corner-strongest);
+  width: calc(var(--slider-progressPercentage) - (var(--salt-size-border-strong) / 2));
+}
+
+.saltSliderTrack-rail::after {
+  background: var(--slider-track-background);
+  border-top-right-radius: var(--salt-palette-corner-strongest);
+  border-bottom-right-radius: var(--salt-palette-corner-strongest);
+  width: calc(100% - var(--slider-progressPercentage) - (var(--salt-size-border-strong) / 2));
+}
+
+.saltSliderTrack-range .saltSliderTrack-rail::before {
+  background: var(--slider-track-background);
+  width: calc(var(--slider-progressPercentageStart) - (var(--salt-size-border-strong) / 2));
+}
+
+.saltSliderTrack-range .saltSliderTrack-rail::after {
+  background: var(--slider-track-background);
+  width: calc(100% - var(--slider-progressPercentageEnd) - (var(--salt-size-border-strong) / 2));
+}
+
+.saltSliderTrack-range .saltSliderTrack-rail .saltSliderTrack-fill {
+  background: var(--slider-track-fill);
+  height: 100%;
+  left: calc(var(--slider-progressPercentageStart) + (var(--salt-size-border-strong) / 2));
+  position: absolute;
+  width: calc(var(--slider-progressPercentageEnd) - var(--slider-progressPercentageStart) - var(--salt-size-border-strong));
+}
+
+.saltSliderTrack-minLabel,
+.saltSliderTrack-maxLabel {
+  user-select: none;
+}
+
+.saltSliderTrack-minLabel {
+  order: 1;
+}
+
+.saltSliderTrack-maxLabel {
+  order: 2;
+}
+
+.saltSliderTrack-withInlineLabels .saltSliderTrack-container {
+  flex-wrap: nowrap;
+  gap: var(--salt-spacing-50);
+}
+
+.saltSliderTrack-withInlineLabels .saltSlider-wrapper {
+  height: unset;
+}
+
+.saltSliderTrack-withInlineLabels .saltSliderTrack-minLabel,
+.saltSliderTrack-withInlineLabels .saltSliderTrack-maxLabel,
+.saltSliderTrack-withInlineLabels .saltSliderTrack-rail {
+  order: unset;
+}
+
+.saltSliderTrack-dragging,
+.saltSliderTrack-dragging .saltSliderTrack-rail {
+  cursor: var(--salt-draggable-grab-cursor-active);
+}
+
+.saltSliderTrack-disabled {
+  --slider-track-fill: var(--salt-accent-borderColor-disabled);
+  --slider-track-background: var(--salt-track-borderColor-disabled);
+}
+
+.saltSliderTrack-disabled .saltSliderTrack-rail {
+  pointer-events: none;
+}
+
+.saltSliderTrack-markers {
+  position: absolute;
+  user-select: none;
+  width: 100%;
+  top: var(--salt-size-base);
+}
+
+.saltSliderTrack-markerLabel {
+  position: absolute;
+  left: var(--slider-marker-percentage);
+  transform: translateX(-50%);
+}

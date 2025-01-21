@@ -4,14 +4,20 @@ import type { ReactElement } from "react";
 
 export const Single = (): ReactElement => (
   <StackLayout gap={3}>
-    <Slider aria-label="single" min={0} max={100} style={{ width: "400px" }} />
     <Slider
       aria-label="single"
-      marks="all"
       min={0}
-      max={50}
-      step={10}
+      max={100}
+      defaultValue={30}
       style={{ width: "400px" }}
+    />
+    <Slider
+      aria-label="single with bottom labels"
+      min={0}
+      max={100}
+      defaultValue={30}
+      style={{ width: "400px" }}
+      labelPosition="bottom"
     />
   </StackLayout>
 );
