@@ -1,0 +1,115 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+<LivePreviewControls>
+<LivePreview componentName="range-slider" exampleName="Default">
+
+## Default
+
+Selection of an interval of values from a `RangeSlider` track. Labels can be displayed either inline or below the track.
+
+A tooltip displays the value of the `RangeSlider`'s "thumbs" when a thumb is focused or hovered. The tooltip remains persistent on cursor drag or moving the thumb along the track with keyboard interaction.
+
+</LivePreview>
+
+<LivePreview componentName="range-slider" exampleName="WithLabels">
+
+## Labels
+
+`RangeSlider`'s labels indicate the minimum and maximum values of the range, and can be located inline with the `RangeSlider` using the `minLabel` and `maxLabel` props or they can be located at the bottom of the `RangeSlider` using the `marks` prop.
+
+</LivePreview>
+
+<LivePreview componentName="range-slider" exampleName="WithCustomStep">
+
+## Custom Step
+
+By default, the `RangeSlider` step increment is set to 1. This can be customized by using the `step` prop. Custom step values can be set to any number, including decimal values up to two decimal places.
+
+</LivePreview>
+
+<LivePreview componentName="range-slider" exampleName="WithFormatting">
+
+## With Formatting
+
+You can pass a callback function to the `format()` prop to format the display values in the tooltip and min/max labels. This can be useful to display units or currency.
+
+### Best practices
+
+- When formatting the values, it is recommended to add the same formatting to the marks if passed.
+
+</LivePreview>
+
+<LivePreview componentName="range-slider" exampleName="WithFormField">
+
+## With Form Field
+
+Wrap the `RangeSlider` in a form field to display a left-aligned or top label. For more information, refer to the [form field documentation.](/salt/components/form-field/examples)
+
+</LivePreview>
+
+<LivePreview componentName="range-slider" exampleName="WithInput">
+
+## With Input
+
+You can display inputs with a `RangeSlider`. Inputs are used to enter a numeric value from the predefined range, enabling the thumb to jump to the specified value.
+
+"Out of range" changes to the value (i.e. setting the input to a value above or below the `RangeSlider`'s `min` and `max` values) will be rounded to the nearest valid value for the `RangeSlider`. The upper and lower values cannot overlap (i.e. the lower value cannot be set to a value higher than the upper value). If the input value is set to a value that would cause an overlap, the range value will be set to the nearest valid value.
+
+### Best practices
+
+- When using inputs, ensure the `RangeSlider` is in a "controlled" mode (by explicitly setting the `value` prop).
+- Use the `RangeSlider`'s `onChange` callback to update the input values when the slider is interacted with.
+- Validate your input value changes and update the `validationStatus` prop on any inputs accordingly.
+- Only use the inline variant of the `RangeSlider` alongside an input. This ensures the size-base alignment of the overall component layout is maintained.
+
+</LivePreview>
+
+<LivePreview componentName="range-slider" exampleName="WithMarks">
+
+## With Marks
+
+You can display marks under the slider track to label specific values. You can combine `marks` with `minLabel` and `maxLabel` to provide even more context regarding the `RangeSlider`.
+
+</LivePreview>
+
+<LivePreview componentName="range-slider" exampleName="WithDisabledTooltip">
+
+## With Disabled Tooltip
+
+If you do not wish to show the tooltip when the `RangeSlider` thumb is hovered, you can disable it via the `showTooltip` prop. This could be useful for instances when your `RangeSlider` is already displaying sufficient information and you do not wish to show a tooltip.
+
+</LivePreview>
+
+<LivePreview componentName="range-slider" exampleName="WithNonNumericValues">
+
+## With Non Numeric values
+
+You can implement a `RangeSlider` that allows users to select non-numeric values, with a focus on accessibility through the use of `aria-valuetext`.
+
+The `RangeSlider` maps numeric values to meaningful non-numeric options, enabling intuitive selection beyond simple numbers. The `aria-valuetext` attribute is, by default, dynamically updated based on the `format()` callback to announce the selected option, providing clear feedback for users with assistive technologies. You also have the choice to update the `aria-valuetext` attribute via props.
+
+### Best practices:
+
+- Create a controlled slider and use your `format()` callback to create formatted labels.
+- Update `aria-valuetext` with the formatted current slider value.
+
+This approach ensures a user-friendly and accessible interface for selecting non-numeric values.
+
+</LivePreview>
+
+<LivePreview componentName="range-slider" exampleName="Disabled">
+
+## Disabled
+
+You can set the `RangeSlider` as disabled.
+
+</LivePreview>
+</LivePreviewControls>

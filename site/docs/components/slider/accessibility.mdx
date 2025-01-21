@@ -8,10 +8,6 @@ data:
   $ref: ./#/data
 ---
 
-## Cursor interaction
-
-Allow cursor interaction of a handle by increasing the target area around the indicator to -size-base. This creates a more accessible click/touch area which meets WCAGs minimum Target Size (2.5.5) standard.
-
 ## Keyboard interactions
 
 <KeyboardControls>
@@ -49,6 +45,18 @@ Allow cursor interaction of a handle by increasing the target area around the in
 <KeyboardControl keyOrCombos="End">
 
 - Set the slider to the last allowed value in its range.
+
+</KeyboardControl>
+
+<KeyboardControl keyOrCombos="Page Up">
+
+- Increase the slider value by a multiple of the standard step size used by the Up Arrow.
+
+</KeyboardControl>
+
+<KeyboardControl keyOrCombos="Page Down">
+
+- Decrease the slider value by a multiple of the standard step size used by the Down Arrow.
 
 </KeyboardControl>
 
