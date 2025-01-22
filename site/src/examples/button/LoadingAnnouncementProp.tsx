@@ -20,17 +20,12 @@ export function LoadingAnnouncementProp() {
 
   async function handleClick() {
     setLoading(true);
-    setLoadingAnnouncement("Downloading...");
+    setLoadingAnnouncement("Downloading");
 
-    await fetchPDFDocument()
-      .then(() => setLoadingAnnouncement("Download Successful!"))
-      .catch(() => setLoadingAnnouncement("Download Failed!"))
-      .finally(() => {
-        setLoading(false);
-        setTimeout(() => {
-          setLoadingAnnouncement("");
-        }, 1000);
-      });
+    await fetchPDFDocument().finally(() => {
+      setLoading(false);
+      setLoadingAnnouncement("");
+    });
   }
 
   return (
