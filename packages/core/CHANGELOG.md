@@ -1,5 +1,32 @@
 # @salt-ds/core
 
+## 1.39.0
+
+### Minor Changes
+
+- 373717d: Added `SkipLink`.
+
+  ```tsx
+  <body>
+  <header>
+    <SkipLink targetId="main">Skip to main content</SkipLink>
+    <nav>
+      {{...}}
+    </nav>
+  </header>
+  <main>
+    <h1 id="main">Main Content</h1>
+  </main>
+  </body>
+
+  ```
+
+- 225a61b: Added `render` prop to `Link`. The `render` prop enables the substitution of the default anchor tag with an alternate link, such as React Router, facilitating integration with routing libraries.
+
+### Patch Changes
+
+- c5d61e2: Fixed Toast icon alignment.
+
 ## 1.38.0
 
 ### Minor Changes
