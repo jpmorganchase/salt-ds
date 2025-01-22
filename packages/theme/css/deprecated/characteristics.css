@@ -133,6 +133,7 @@
   --salt-navigable-tertiary-background-hover: var(--salt-palette-navigate-tertiary-background-hover);
   --salt-navigable-tertiary-background-active: var(--salt-palette-navigate-tertiary-background-active);
   --salt-navigable-indicator-activeDisabled: var(--salt-palette-navigate-indicator-activeDisabled);
+  --salt-navigable-background-hover: var(--salt-palette-navigate-background-hover);
 
   /* Accent */
   --salt-accent-fontWeight: var(--salt-typography-fontWeight-semiBold); /* Use --salt-text-notation-fontWeight */

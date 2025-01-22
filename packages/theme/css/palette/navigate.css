@@ -1,5 +1,4 @@
 .salt-theme[data-mode="light"] {
-  --salt-palette-navigate-background-hover: var(--salt-color-black-fade-background-hover);
   --salt-palette-navigate-foreground-hover: var(--salt-color-blue-600);
   --salt-palette-navigate-foreground-active: var(--salt-color-blue-700);
   --salt-palette-navigate-foreground-visited: var(--salt-color-purple-800);
@@ -8,7 +7,6 @@
 }
 
 .salt-theme[data-mode="dark"] {
-  --salt-palette-navigate-background-hover: var(--salt-color-white-fade-background-hover);
   --salt-palette-navigate-foreground-hover: var(--salt-color-blue-200);
   --salt-palette-navigate-foreground-active: var(--salt-color-blue-300);
   --salt-palette-navigate-foreground-visited: var(--salt-color-purple-100);

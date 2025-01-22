@@ -74,6 +74,7 @@
   --salt-palette-navigate-tertiary-background-active: transparent;
   --salt-palette-navigate-tertiary-background-hover: var(--salt-color-gray-20);
   --salt-palette-navigate-indicator-activeDisabled: var(--salt-color-orange-600-fade-border);
+  --salt-palette-navigate-background-hover: var(--salt-color-black-fade-background-hover);
 
   /* Track */
   --salt-palette-track-border: var(--salt-color-gray-90);
@@ -145,6 +146,7 @@
   --salt-palette-navigate-tertiary-background-active: transparent;
   --salt-palette-navigate-tertiary-background-hover: var(--salt-color-gray-700);
   --salt-palette-navigate-indicator-activeDisabled: var(--salt-color-orange-400-fade-border);
+  --salt-palette-navigate-background-hover: var(--salt-color-white-fade-background-hover);
 
   /* Track */
   --salt-palette-track-border: var(--salt-color-gray-90);
