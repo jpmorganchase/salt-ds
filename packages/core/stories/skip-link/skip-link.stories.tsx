@@ -1,3 +1,7 @@
+import { GithubIcon, StackoverflowIcon, SymphonyIcon } from "@salt-ds/icons";
+import type { Meta, StoryFn } from "@storybook/react";
+import { useState } from "react";
+import "./skip-link.stories.css";
 import {
   BorderItem,
   BorderLayout,
@@ -10,18 +14,14 @@ import {
   H2,
   H4,
   NavigationItem,
+  SkipLink,
   SplitLayout,
   StackLayout,
   Text,
 } from "@salt-ds/core";
-import { GithubIcon, StackoverflowIcon, SymphonyIcon } from "@salt-ds/icons";
-import { SkipLink } from "@salt-ds/lab";
-import type { Meta, StoryFn } from "@storybook/react";
-import { useState } from "react";
-import "./skip-link.stories.css";
 
 export default {
-  title: "Lab/Skip Link",
+  title: "Core/Skip Link",
   component: SkipLink,
 } as Meta<typeof SkipLink>;
 

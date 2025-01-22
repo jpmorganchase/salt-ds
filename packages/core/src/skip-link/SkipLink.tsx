@@ -1,4 +1,3 @@
-import { makePrefixer } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
@@ -9,9 +8,9 @@ import {
   useRef,
   useState,
 } from "react";
-import { useManageFocusOnTarget } from "./internal/useManageFocusOnTarget";
-
+import { makePrefixer } from "../utils";
 import skipLinkCss from "./SkipLink.css";
+import { useManageFocusOnTarget } from "./internal/useManageFocusOnTarget";
 
 interface SkipLinkProps extends ComponentPropsWithoutRef<"a"> {
   /**
