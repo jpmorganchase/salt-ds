@@ -1,5 +1,19 @@
 # @salt-ds/data-grid
 
+## 1.0.11
+
+### Patch Changes
+
+- Updated dependencies [e6c54b7]
+- Updated dependencies [373717d]
+- Updated dependencies [373717d]
+- Updated dependencies [eed82f8]
+- Updated dependencies [225a61b]
+- Updated dependencies [df7760d]
+- Updated dependencies [c5d61e2]
+  - @salt-ds/lab@1.0.0-alpha.59
+  - @salt-ds/core@1.39.0
+
 ## 1.0.10
 
 ### Patch Changes
