@@ -6,6 +6,7 @@ import {
   type FocusEventHandler,
   type InputHTMLAttributes,
   type ReactNode,
+  type Ref,
   forwardRef,
   useRef,
 } from "react";
@@ -15,6 +16,7 @@ import type { DataAttributes } from "../types";
 import {
   makePrefixer,
   useControlled,
+  useForkRef,
   useIsomorphicLayoutEffect,
 } from "../utils";
 import { CheckboxIcon } from "./CheckboxIcon";
@@ -54,6 +56,10 @@ export interface CheckboxProps
    * Properties applied to the input element.
    */
   inputProps?: Partial<InputHTMLAttributes<HTMLInputElement>> & DataAttributes;
+  /**
+   * Used to access the hidden `<input>` element.
+   */
+  inputRef?: Ref<HTMLInputElement>;
   /**
    * The label to be shown next to the checkbox.
    */
@@ -97,6 +103,7 @@ export const Checkbox = forwardRef<HTMLLabelElement, CheckboxProps>(
       error,
       indeterminate,
       inputProps = {},
+      inputRef: inputRefProp,
       label,
       name,
       onBlur,
@@ -156,6 +163,7 @@ export const Checkbox = forwardRef<HTMLLabelElement, CheckboxProps>(
       : undefined;
 
     const inputRef = useRef<HTMLInputElement>(null);
+    const handleInputRef = useForkRef(inputRefProp, inputRef);
 
     const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
       // Workaround for https://github.com/facebook/react/issues/9023
@@ -217,7 +225,7 @@ export const Checkbox = forwardRef<HTMLLabelElement, CheckboxProps>(
           onChange={handleChange}
           onFocus={onFocus}
           type="checkbox"
-          ref={inputRef}
+          ref={handleInputRef}
           {...restInputProps}
         />
         <CheckboxIcon

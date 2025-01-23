@@ -7,6 +7,7 @@ import {
   type FocusEventHandler,
   type InputHTMLAttributes,
   type ReactNode,
+  type Ref,
   forwardRef,
 } from "react";
 import { useFormFieldProps } from "../form-field-context";
@@ -42,6 +43,10 @@ export interface RadioButtonProps
    * Props to be passed to the radio input
    */
   inputProps?: Partial<InputHTMLAttributes<HTMLInputElement>> & DataAttributes;
+  /**
+   * Used to access the hidden `<input>` element.
+   */
+  inputRef?: Ref<HTMLInputElement>;
   /**
    * The label to be shown next to the radio icon
    */
@@ -88,6 +93,7 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
       disabled: disabledProp,
       error,
       inputProps = {},
+      inputRef,
       label,
       name: nameProp,
       onFocus,
@@ -196,6 +202,7 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
           onChange={handleChange}
           onFocus={onFocus}
           type="radio"
+          ref={inputRef}
           {...restInputProps}
         />
         <RadioButtonIcon
