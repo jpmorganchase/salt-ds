@@ -9,6 +9,10 @@
   flex-direction: row;
 }
 
+.saltToggleButtonGroup .saltToggleButton {
+  border-radius: var(--salt-palette-corner-weaker, 0);
+}
+
 .saltToggleButtonGroup-horizontal .saltToggleButton {
   height: calc(var(--salt-size-base) - var(--salt-spacing-100));
 }
