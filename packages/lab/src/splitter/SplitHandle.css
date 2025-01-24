@@ -1,0 +1,39 @@
+.saltSplitHandle {
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2px;
+
+  background-color: lightgrey;
+
+  &[data-resize-handle-state="hover"] {
+    background-color: grey;
+  }
+
+  &[data-resize-handle-state="drag"] {
+    background: royalblue;
+  }
+}
+
+.saltSplitHandle[data-panel-group-direction="horizontal"] {
+  flex-direction: column;
+  width: 2px;
+}
+
+.saltSplitHandle[data-panel-group-direction="horizontal"] > .saltSplitHandle-dot {
+  width: 2px;
+  height: 1px;
+  background-color: black;
+}
+
+.saltSplitHandle[data-panel-group-direction="vertical"] {
+  flex-direction: row;
+  height: 2px;
+}
+
+.saltSplitHandle[data-panel-group-direction="vertical"] > .saltSplitHandle-dot {
+  height: 2px;
+  width: 1px;
+  background-color: black;
+}
