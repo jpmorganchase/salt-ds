@@ -2,15 +2,14 @@
   content: "";
   background: var(--salt-category-5-subtle-background);
   width: 100%;
-  height: var(--flexLayout-gap);
+  height: calc(var(--flexLayout-gap) - 2px);
   position: absolute;
-  left: 0;
-  bottom: calc(var(--flexLayout-gap) * -1);
-  box-sizing: border-box;
+  left: -1px;
+  bottom: calc((var(--flexLayout-gap) + 1px) * -1);
   border: dotted 1px var(--salt-category-3-subtle-borderColor);
 }
 .item {
-  border: var(--salt-container-primary-border);
+  border: solid 1px var(--salt-container-primary-borderColor);
   background: var(--salt-container-primary-background);
 }
 .spacingExamplePadding {

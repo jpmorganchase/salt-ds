@@ -13,7 +13,6 @@ import { type ReactElement, useState } from "react";
 import styles from "./Spacing.module.css";
 
 export const Spacing = (): ReactElement => {
-  const [gap, setGap] = useState<number>(3);
   const [padding, setPadding] = useState<number>(0);
   const [margin, setMargin] = useState<number>(0);
 
@@ -22,12 +21,7 @@ export const Spacing = (): ReactElement => {
       {Array.from({ length: 3 }, (_, index) => (
         <FlexItem
           key={index}
-          className={clsx(
-            {
-              [styles.spacingExampleGap]: gap > 0,
-            },
-            styles.item,
-          )}
+          className={clsx(styles.spacingExampleGap, styles.item)}
           padding={2}
         >
           {index + 1}
@@ -40,12 +34,7 @@ export const Spacing = (): ReactElement => {
       {Array.from({ length: 2 }, (_, index) => (
         <FlexItem
           key={index}
-          className={clsx(
-            {
-              [styles.spacingExampleGap]: gap > 0,
-            },
-            styles.item,
-          )}
+          className={clsx(styles.spacingExampleGap, styles.item)}
           padding={2}
         >
           {index + 4}
@@ -68,7 +57,6 @@ export const Spacing = (): ReactElement => {
           className={clsx({
             [styles.spacingExamplePadding]: padding > 0,
           })}
-          gap={gap}
           padding={padding}
           margin={margin}
           startItem={startItem}
@@ -76,19 +64,6 @@ export const Spacing = (): ReactElement => {
         />
       </div>
       <StackLayout>
-        <FormField>
-          <FormFieldLabel>Gap</FormFieldLabel>
-          <RadioButtonGroup
-            onChange={(e) => setGap(Number.parseInt(e.target.value))}
-            direction="horizontal"
-            value={`${gap}`}
-          >
-            <RadioButton label="0" value="0" />
-            <RadioButton label="1" value="1" />
-            <RadioButton label="2" value="2" />
-            <RadioButton label="3" value="3" />
-          </RadioButtonGroup>
-        </FormField>
         <FormField>
           <FormFieldLabel>Padding</FormFieldLabel>
           <RadioButtonGroup
