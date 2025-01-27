@@ -147,57 +147,132 @@ export const Loading: StoryFn = () => {
   return (
     <StackLayout gap={3}>
       <FlowLayout>
-        <Button appearance="solid" sentiment="accented" loading>
+        <Button
+          appearance="solid"
+          sentiment="accented"
+          loading
+          loadingAnnouncement="loading"
+        >
           Solid
         </Button>
-        <Button appearance="bordered" sentiment="accented" loading>
+        <Button
+          appearance="bordered"
+          sentiment="accented"
+          loading
+          loadingAnnouncement="loading"
+        >
           Bordered
         </Button>
-        <Button appearance="transparent" sentiment="accented" loading>
+        <Button
+          appearance="transparent"
+          sentiment="accented"
+          loading
+          loadingAnnouncement="loading"
+        >
           Transparent
         </Button>
       </FlowLayout>
       <FlowLayout>
-        <Button appearance="solid" sentiment="neutral" loading>
+        <Button
+          appearance="solid"
+          sentiment="neutral"
+          loading
+          loadingAnnouncement="loading"
+        >
           Solid
         </Button>
-        <Button appearance="bordered" sentiment="neutral" loading>
+        <Button
+          appearance="bordered"
+          sentiment="neutral"
+          loading
+          loadingAnnouncement="loading"
+        >
           Bordered
         </Button>
-        <Button appearance="transparent" sentiment="neutral" loading>
+        <Button
+          appearance="transparent"
+          sentiment="neutral"
+          loading
+          loadingAnnouncement="loading"
+        >
           Transparent
         </Button>
       </FlowLayout>
       <FlowLayout>
-        <Button appearance="solid" sentiment="positive" loading>
+        <Button
+          appearance="solid"
+          sentiment="positive"
+          loading
+          loadingAnnouncement="loading"
+        >
           Solid
         </Button>
-        <Button appearance="bordered" sentiment="positive" loading>
+        <Button
+          appearance="bordered"
+          sentiment="positive"
+          loading
+          loadingAnnouncement="loading"
+        >
           Bordered
         </Button>
-        <Button appearance="transparent" sentiment="positive" loading>
+        <Button
+          appearance="transparent"
+          sentiment="positive"
+          loading
+          loadingAnnouncement="loading"
+        >
           Transparent
         </Button>
       </FlowLayout>
       <FlowLayout>
-        <Button appearance="solid" sentiment="negative" loading>
+        <Button
+          appearance="solid"
+          sentiment="negative"
+          loading
+          loadingAnnouncement="loading"
+        >
           Solid
         </Button>
-        <Button appearance="bordered" sentiment="negative" loading>
+        <Button
+          appearance="bordered"
+          sentiment="negative"
+          loading
+          loadingAnnouncement="loading"
+        >
           Bordered
         </Button>
-        <Button appearance="transparent" sentiment="negative" loading>
+        <Button
+          appearance="transparent"
+          sentiment="negative"
+          loading
+          loadingAnnouncement="loading"
+        >
           Transparent
         </Button>
       </FlowLayout>
       <FlowLayout>
-        <Button appearance="solid" sentiment="caution" loading>
+        <Button
+          appearance="solid"
+          sentiment="caution"
+          loading
+          loadingAnnouncement="loading"
+        >
           Solid
         </Button>
-        <Button appearance="bordered" sentiment="caution" loading>
+        <Button
+          appearance="bordered"
+          sentiment="caution"
+          loading
+          loadingAnnouncement="loading"
+        >
           Bordered
         </Button>
-        <Button appearance="transparent" sentiment="caution" loading>
+        <Button
+          appearance="transparent"
+          sentiment="caution"
+          loading
+          loadingAnnouncement="loading"
+        >
           Transparent
         </Button>
       </FlowLayout>
