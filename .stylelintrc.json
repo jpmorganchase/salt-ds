@@ -1,11 +1,15 @@
 {
   "plugins": [
     "./tooling/stylelint/correct-theme-token-usage/index.js",
+    "./tooling/stylelint/no-deprecated-token-usage/index.js",
     "./tooling/stylelint/custom-property-attributes-kebab-case/index.js",
     "./tooling/stylelint/custom-property-starts-with-component-name/index.js"
   ],
   "rules": {
     "salt/correct-theme-token-usage": {
+      "logLevel": "default"
+    },
+    "salt/no-deprecated-token-usage": {
       "logLevel": "default"
     },
     "salt/custom-property-attributes-kebab-case": {
@@ -21,6 +25,20 @@
       "rules": {
         "salt/custom-property-attributes-kebab-case": null,
         "salt/custom-property-starts-with-component-name": null
+      }
+    },
+    {
+      "files": ["**/theme/css/**/*.css"],
+      "rules": {
+        "salt/correct-theme-token-usage": null,
+        "salt/custom-property-attributes-kebab-case": null,
+        "salt/custom-property-starts-with-component-name": null
+      }
+    },
+    {
+      "files": ["**/theme/css/deprecated/**/*.css"],
+      "rules": {
+        "salt/no-deprecated-token-usage": null
       }
     }
   ]
