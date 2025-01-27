@@ -126,8 +126,16 @@
 .saltInteractableCard-secondary.saltInteractableCard-disabled,
 .saltInteractableCard-secondary.saltInteractableCard-disabled:focus,
 .saltInteractableCard-secondary.saltInteractableCard-disabled:active {
-  background: var(--saltInteractableCard-background-disabled, var(--salt-container-secondary-background));
+  background: var(--saltInteractableCard-background-disabled, var(--salt-container-secondary-background-disabled));
   border-color: var(--salt-container-secondary-borderColor-disabled);
+}
+
+/* Styles applied to InteractableCard tertiary variant if `disabled={true}` */
+.saltInteractableCard-tertiary.saltInteractableCard-disabled,
+.saltInteractableCard-tertiary.saltInteractableCard-disabled:focus,
+.saltInteractableCard-tertiary.saltInteractableCard-disabled:active {
+  background: var(--salt-container-tertiary-background-disabled);
+  border-color: var(--salt-container-tertiary-borderColor-disabled);
 }
 
 /* Styles applied to InteractableCard if `selected={true}`and `disabled={true}` */
