@@ -117,22 +117,6 @@ module.exports = stylelint.createPlugin(
         return;
       });
 
-      function complainNoExpecteFoundationOrPalette(
-        index,
-        length,
-        decl,
-        propertyChecked,
-      ) {
-        report({
-          result,
-          ruleName,
-          message: messages.noExpectedFoundationPalette(propertyChecked),
-          node: decl,
-          index,
-          endIndex: index + length,
-        });
-      }
-
       function complainDeprecatedTokenUsage(
         index,
         length,
@@ -146,7 +130,7 @@ module.exports = stylelint.createPlugin(
           node: decl,
           index,
           endIndex: index + length,
-          severity: "warning", // Keep deprecated token in warning for now
+          severity: secondaryOptionObject?.severity ?? "error",
         });
       }
     };

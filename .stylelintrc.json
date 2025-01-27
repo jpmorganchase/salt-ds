@@ -24,7 +24,13 @@
       "files": ["**/ag-grid-theme/**/*.css"],
       "rules": {
         "salt/custom-property-attributes-kebab-case": null,
-        "salt/custom-property-starts-with-component-name": null
+        "salt/custom-property-starts-with-component-name": null,
+        "salt/no-deprecated-token-usage": [
+          false,
+          {
+            "severity": "warning"
+          }
+        ]
       }
     },
     {
@@ -39,6 +45,17 @@
       "files": ["**/theme/css/deprecated/**/*.css"],
       "rules": {
         "salt/no-deprecated-token-usage": null
+      }
+    },
+    {
+      "files": ["**/lab/**/*.css"],
+      "rules": {
+        "salt/no-deprecated-token-usage": [
+          false,
+          {
+            "severity": "warning"
+          }
+        ]
       }
     }
   ]

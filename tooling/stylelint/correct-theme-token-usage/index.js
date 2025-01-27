@@ -132,7 +132,7 @@ module.exports = stylelint.createPlugin(
           if (!firstNode) return;
 
           if (!isAllowedKeys(firstNode.value, verboseLog)) {
-            complainNoExpecteFoundationOrPalette(
+            complainNoExpectedFoundationOrPalette(
               declarationValueIndex(decl) + firstNode.sourceIndex,
               firstNode.value.length,
               decl,
@@ -146,13 +146,13 @@ module.exports = stylelint.createPlugin(
         verboseLog && console.log({ prop });
 
         if (!isAllowedKeys(prop, verboseLog)) {
-          complainNoExpecteFoundationOrPalette(0, prop.length, decl, prop);
+          complainNoExpectedFoundationOrPalette(0, prop.length, decl, prop);
         }
 
         return;
       });
 
-      function complainNoExpecteFoundationOrPalette(
+      function complainNoExpectedFoundationOrPalette(
         index,
         length,
         decl,
