@@ -1,6 +1,6 @@
 .salt-theme {
-  --salt-accent-background: var(--salt-palette-accent-background);
-  --salt-accent-background-disabled: var(--salt-palette-accent-background-disabled);
-  --salt-accent-borderColor: var(--salt-palette-accent-border);
+  --salt-accent-background: var(--salt-palette-accent);
+  --salt-accent-background-disabled: var(--salt-palette-accent-disabled);
+  --salt-accent-borderColor: var(--salt-palette-accent);
   --salt-accent-foreground: var(--salt-palette-accent-foreground);
 }
