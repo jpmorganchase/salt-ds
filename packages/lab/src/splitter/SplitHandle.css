@@ -1,39 +1,71 @@
 .saltSplitHandle {
+  position: relative;
+
   display: inline-flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  align-items: end;
   gap: 2px;
 
-  background-color: lightgrey;
-
-  &[data-resize-handle-state="hover"] {
-    background-color: grey;
-  }
-
-  &[data-resize-handle-state="drag"] {
-    background: royalblue;
-  }
+  background-color: transparent;
 }
 
 .saltSplitHandle[data-panel-group-direction="horizontal"] {
   flex-direction: column;
-  width: 2px;
+  width: 0;
+}
+
+.saltSplitHandle[data-panel-group-direction="horizontal"]::before {
+  content: "";
+  position: absolute;
+  left: -4px;
+  right: 0px;
+  top: 0;
+  bottom: 0;
+  background: transparent;
+}
+
+.saltSplitHandle[data-panel-group-direction="vertical"] {
+  flex-direction: row;
+  height: 0;
+}
+
+.saltSplitHandle[data-panel-group-direction="vertical"]::before {
+  content: "";
+  position: absolute;
+  left: 0px;
+  right: 0px;
+  top: -4px;
+  bottom: 0px;
+  background-color: transparent;
+}
+
+.saltSplitHandle[data-resize-handle-state="hover"]::before {
+  background-color: lightgrey;
+}
+
+.saltSplitHandle[data-resize-handle-state="drag"]::before {
+  background-color: #0078cf;
+}
+
+.saltSplitHandle-dot {
+  background: #000;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.saltSplitHandle[data-resize-handle-state="drag"] > .saltSplitHandle-dot {
+  background-color: #fff;
 }
 
 .saltSplitHandle[data-panel-group-direction="horizontal"] > .saltSplitHandle-dot {
   width: 2px;
   height: 1px;
-  background-color: black;
-}
-
-.saltSplitHandle[data-panel-group-direction="vertical"] {
-  flex-direction: row;
-  height: 2px;
+  transform: translateX(-1px);
 }
 
 .saltSplitHandle[data-panel-group-direction="vertical"] > .saltSplitHandle-dot {
   height: 2px;
   width: 1px;
-  background-color: black;
+  transform: translateY(-1px);
 }
