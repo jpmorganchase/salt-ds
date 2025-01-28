@@ -55,6 +55,18 @@ export const AllExamples: StoryFn<QAContainerProps & { className?: string }> = (
           <Text>Content</Text>
         </InteractableCard>
       </InteractableCardGroup>
+      <InteractableCard disabled>
+        <H1>Disabled primary</H1>
+        <Text>Content</Text>
+      </InteractableCard>
+      <InteractableCard disabled variant="secondary">
+        <H1>Disabled secondary</H1>
+        <Text>Content</Text>
+      </InteractableCard>
+      <InteractableCard disabled variant="tertiary">
+        <H1>Disabled tertiary</H1>
+        <Text>Content</Text>
+      </InteractableCard>
     </QAContainer>
   );
 };
@@ -117,6 +129,18 @@ export const NoStyleInjectionGrid: StoryFn<QAContainerNoStyleInjectionProps> = (
         <Text>Content</Text>
       </InteractableCard>
     </InteractableCardGroup>
+    <InteractableCard disabled>
+      <H1>Disabled primary</H1>
+      <Text>Content</Text>
+    </InteractableCard>
+    <InteractableCard disabled variant="secondary">
+      <H1>Disabled secondary</H1>
+      <Text>Content</Text>
+    </InteractableCard>
+    <InteractableCard disabled variant="tertiary">
+      <H1>Disabled tertiary</H1>
+      <Text>Content</Text>
+    </InteractableCard>
   </QAContainerNoStyleInjection>
 );
 
