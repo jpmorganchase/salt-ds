@@ -1,11 +1,9 @@
 import {
   Button,
-  GridLayout,
   RadioButton,
   RadioButtonGroup,
   makePrefixer,
   useIcon,
-  useId,
 } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
@@ -17,9 +15,10 @@ import {
   type ReactElement,
   forwardRef,
   useEffect,
+  useRef,
+  useState,
 } from "react";
-import { DeckLayout } from "../deck-layout";
-import { useSlideSelection } from "../utils";
+import { CarouselContext } from "./CarouselContext";
 import type { CarouselSlideProps } from "./CarouselSlide";
 
 import carouselCss from "./Carousel.css";
@@ -31,7 +30,7 @@ export interface CarouselProps extends HTMLAttributes<HTMLDivElement> {
    * The initial Index enables you to select the active slide in the carousel.
    * Optional, default 0.
    **/
-  initialIndex?: number;
+  activeSlideIndex?: number;
   /**
    * The animation when the slides are shown.
    * Optional. Defaults to `slide`
@@ -53,23 +52,17 @@ export interface CarouselProps extends HTMLAttributes<HTMLDivElement> {
    * Optional. Defaults to false
    **/
   compact?: boolean;
-  /**
-   * It sets the id for the Carousel Container.
-   * String. Optional
-   */
-  id?: string;
 }
 
 export const Carousel = forwardRef<HTMLDivElement, CarouselProps>(
   function Carousel(
     {
-      initialIndex,
+      activeSlideIndex = 0,
       animation = "slide",
       carouselDescription,
       children,
       className,
       compact,
-      id: idProp,
       ...rest
     },
     ref,
@@ -81,26 +74,35 @@ export const Carousel = forwardRef<HTMLDivElement, CarouselProps>(
       window: targetWindow,
     });
     const { NextIcon, PreviousIcon } = useIcon();
-    const id = useId(idProp);
+
+    const containerRef = useRef<HTMLDivElement>(null);
     const slidesCount = Children.count(children);
+    const [activeSlide, setActiveSlide] = useState(activeSlideIndex);
+    const [slides, setSlides] = useState<string[]>([]);
 
-    const [_, selectedSlide, handleSlideSelection] =
-      useSlideSelection(initialIndex);
-
-    const moveSlide = (direction: "left" | "right") => {
-      const moveLeft =
-        selectedSlide === 0 ? slidesCount - 1 : selectedSlide - 1;
-      const moveRight =
-        selectedSlide === slidesCount - 1 ? 0 : selectedSlide + 1;
-      const newSelection = direction === "left" ? moveLeft : moveRight;
-      const newTransition = direction === "left" ? "decrease" : "increase";
-      handleSlideSelection(newSelection, newTransition);
+    const registerSlide = (slideId: string) => {
+      setSlides((prev) => [...prev, slideId]);
     };
 
+    const scrollToSlide = (index: number) => {
+      if (containerRef.current) {
+        const slideW = containerRef.current.offsetWidth;
+        containerRef.current.scrollTo({
+          left: index * slideW,
+          behavior: "smooth",
+        });
+        setActiveSlide(index);
+      }
+    };
+    const nextSlide = () => scrollToSlide(activeSlide + 1);
+    const prevSlide = () => scrollToSlide(activeSlide - 1);
+    const goToSlide = (index: number) => scrollToSlide(index);
+
+    // TODO: implement on scroll
     const handleRadioChange: ChangeEventHandler<HTMLInputElement> = ({
       target: { value },
     }) => {
-      handleSlideSelection(Number(value));
+      goToSlide(Number(value));
     };
 
     useEffect(() => {
@@ -114,57 +116,69 @@ export const Carousel = forwardRef<HTMLDivElement, CarouselProps>(
     }, [slidesCount]);
 
     return (
-      <GridLayout
-        aria-label={carouselDescription}
-        aria-roledescription="carousel"
-        id={id}
-        role="region"
-        ref={ref}
-        gap={0}
-        columns={3}
-        className={clsx(
-          withBaseName(),
-          compact && withBaseName("compact"),
-          className,
-        )}
-        {...rest}
+      <CarouselContext.Provider
+        value={{
+          activeSlide,
+          nextSlide,
+          prevSlide,
+          goToSlide,
+          slides,
+          registerSlide,
+        }}
       >
-        <Button
-          variant="secondary"
-          className={withBaseName("prev-button")}
-          onClick={() => moveSlide("left")}
+        <div
+          aria-label={carouselDescription}
+          aria-roledescription="carousel"
+          role="region"
+          ref={ref}
+          className={clsx(
+            withBaseName(),
+            compact && withBaseName("compact"),
+            className,
+          )}
+          {...rest}
         >
-          <PreviousIcon size={2} />
-        </Button>
-        <DeckLayout
-          activeIndex={selectedSlide}
-          animation={animation}
-          className={withBaseName("slider")}
-        >
-          {children}
-        </DeckLayout>
-        <Button
-          variant="secondary"
-          className={withBaseName("next-button")}
-          onClick={() => moveSlide("right")}
-        >
-          <NextIcon size={2} />
-        </Button>
-        <div className={withBaseName("dots")}>
-          <RadioButtonGroup
-            aria-label="Carousel buttons"
-            onChange={handleRadioChange}
-            value={`${selectedSlide}`}
-            direction={"horizontal"}
+          <Button
+            appearance="transparent"
+            sentiment="neutral"
+            className={withBaseName("prev-button")}
+            onClick={prevSlide}
+            disabled={activeSlide === 0}
           >
-            {Array.from({ length: slidesCount }, (_, index) => ({
-              value: `${index}`,
-            })).map((radio) => (
-              <RadioButton {...radio} key={radio.value} />
-            ))}
-          </RadioButtonGroup>
+            <PreviousIcon size={2} />
+          </Button>
+          <div
+            ref={containerRef}
+            className={withBaseName("scroll")}
+            aria-live="polite"
+          >
+            {children}
+          </div>
+          <Button
+            appearance="transparent"
+            sentiment="neutral"
+            className={withBaseName("next-button")}
+            onClick={nextSlide}
+            disabled={activeSlide === slidesCount - 1}
+          >
+            <NextIcon size={2} />
+          </Button>
+          <div className={withBaseName("dots")}>
+            <RadioButtonGroup
+              aria-label="Carousel buttons"
+              onChange={handleRadioChange}
+              value={`${activeSlide}`}
+              direction={"horizontal"}
+            >
+              {Array.from({ length: slidesCount }, (_, index) => ({
+                value: `${index}`,
+              })).map((radio) => (
+                <RadioButton {...radio} key={radio.value} />
+              ))}
+            </RadioButtonGroup>
+          </div>
         </div>
-      </GridLayout>
+      </CarouselContext.Provider>
     );
   },
 );
