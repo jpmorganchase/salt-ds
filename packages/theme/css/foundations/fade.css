@@ -50,12 +50,14 @@
   --salt-color-gray-70-fade-background: rgba(180, 183, 190, var(--salt-palette-opacity-disabled));
   --salt-color-gray-200-fade-background: rgba(97, 101, 110, var(--salt-palette-opacity-disabled));
   --salt-color-gray-300-fade-background: rgba(76, 80, 91, var(--salt-palette-opacity-disabled));
+  --salt-color-gray-500-fade-background: rgba(59, 63, 70, var(--salt-palette-opacity-disabled));
   --salt-color-gray-600-fade-background: rgba(47, 49, 54, var(--salt-palette-opacity-disabled));
   --salt-color-gray-800-fade-background: rgba(36, 37, 38, var(--salt-palette-opacity-disabled));
   --salt-color-white-fade-background: rgba(255, 255, 255, var(--salt-palette-opacity-disabled));
   --salt-color-green-500-fade-background: rgba(36, 135, 75, var(--salt-palette-opacity-disabled));
   --salt-color-green-600-fade-background: rgba(24, 114, 61, var(--salt-palette-opacity-disabled));
   --salt-color-red-600-fade-background: rgba(196, 32, 16, var(--salt-palette-opacity-disabled));
+  --salt-color-orange-600-fade-background: rgba(224, 101, 25, var(--salt-palette-opacity-disabled));
 
   --salt-color-white-fade-background-readonly: rgba(255, 255, 255, var(--salt-palette-opacity-background-readonly));
   --salt-color-gray-20-fade-background-readonly: rgba(234, 237, 239, var(--salt-palette-opacity-background-readonly));
