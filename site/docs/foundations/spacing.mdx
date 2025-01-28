@@ -5,15 +5,15 @@ sidebar:
   priority: 2
 ---
 
-Spacing refers to the negative area between elements, serving as a measurement tool. While Salt provides a general approach to spacing, it isn’t an exhaustive set of guidelines. Consistent spacing enhances visual appeal and functionality in layouts. 
+Spacing refers to the negative area between elements, serving as a measurement tool. While Salt provides a general approach to spacing, it isn’t an exhaustive set of guidelines. Consistent spacing enhances visual appeal and functionality in layouts.
 
-For specific component spacing details, please refer to the respective [component page](/salt/components/index). 
+For specific component spacing details, please refer to the respective [component page](/salt/components/index).
 
 ## Spacing ramp
 
-Spatial tokens help align layouts and create consistent visual rhythm. 
+Spatial tokens help align layouts and create consistent visual rhythm.
 
-The Salt spacing system is structured around a base unit of --salt-spacing-100 for each density, with a scale that is proportional across all densities. Every space token within the system is a multiple of --salt-spacing-100 and percentages of the base unit. This scale offers flexibility that uses geometric progressions.  
+The Salt spacing system is structured around a base unit of --salt-spacing-100 for each density, with a scale that is proportional across all densities. Every space token within the system is a multiple of --salt-spacing-100 and percentages of the base unit. This scale offers flexibility that uses geometric progressions.
 
 | Token                | Formula | High Density (HD) | Medium Density (MD) | Low Density (LD) | Touch Density (TD) |
 | -------------------- | ------- | ----------------- | ------------------- | ---------------- | ------------------ |
@@ -41,11 +41,11 @@ The Salt spacing system is structured around a base unit of --salt-spacing-100 f
 
 \*These values are listed in pixels (px).
 
-## Hierarchical spacing 
+## Hierarchical spacing
 
-Spacing tends to consist of a parent space and one or more subspaces. The vertical separation of items such as headings, blocks of text, form elements and cards should follow a consistent pattern to create visual rhythm. 
+Spacing tends to consist of a parent space and one or more subspaces. The vertical separation of items such as headings, blocks of text, form elements and cards should follow a consistent pattern to create visual rhythm.
 
-Horizontal dividers are used to divide regions of a layout and should be spaced consistently with salt-spacing-300 above and below sections. For more information on dividers, please refer to the divider component page. 
+Horizontal dividers are used to divide regions of a layout and should be spaced consistently with salt-spacing-300 above and below sections. For more information on dividers, please refer to the divider component page.
 
 <Image
   src="/img/foundations/spacing-divider.png"
@@ -56,7 +56,7 @@ Horizontal dividers are used to divide regions of a layout and should be spaced 
 
 Headings serve as the primary title of a content type by providing visual separation and hierarchy. All headings should be accompanied by standard spacing above and below. The spacing placed directly below a heading depends on the level of focus placed on the item.
 
-To find out more about how to use spacing in headers, please refer to the [forms pattern page](/salt/patterns/forms). 
+To find out more about how to use spacing in headers, please refer to the [forms pattern page](/salt/patterns/forms).
 
 | Heading | Space above          | Space below          |
 | ------- | -------------------- | -------------------- |
@@ -67,38 +67,33 @@ To find out more about how to use spacing in headers, please refer to the [forms
 
 ### Container spacing
 
-A container represents an enclosed area with information, this is typically anything that is in a div in code. Spacing in containers varies depending on the container size. 
+A container represents an enclosed area with information, this is typically anything that is in a div in code. Spacing in containers varies depending on the container size.
 
-Please refer to the [header block pattern page](/salt/patterns/header-block) to learn more about container spacing in context. 
+Please refer to the [header block pattern page](/salt/patterns/header-block) to learn more about container spacing in context.
 
-
-| Container size | Padding size         | 
-| -------------- | -------------------- | 
-| Large          | `--salt-spacing-300` | 
+| Container size | Padding size         |
+| -------------- | -------------------- |
+| Large          | `--salt-spacing-300` |
 | Medium         | `--salt-spacing-200` |
-| Small          | `--salt-spacing-200` | 
-
+| Small          | `--salt-spacing-200` |
 
 ### Horizontal spacing
 
-Standard spacing between items in a horizontal configuration is typically 300, which aligns with the design systems responsive layout grid, and will automatically adjust depending on what density you're using.  
+Standard spacing between items in a horizontal configuration is typically 300, which aligns with the design systems responsive layout grid, and will automatically adjust depending on what density you're using.
 
-| Horizontal spacing | Space between          | 
-| -------------------| -----------------------| 
-| Buttons            | `--salt-spacing-100`   | 
-| Components         | `--salt-spacing-300`   |
-
+| Horizontal spacing | Space between        |
+| ------------------ | -------------------- |
+| Buttons            | `--salt-spacing-100` |
+| Components         | `--salt-spacing-300` |
 
 <Image
   src="/img/foundations/spacing-buttons.png"
   alt="Diagram of what spacing between buttons should look like."
 />
 
-
 <Image
   src="/img/foundations/spacing-components.png"
   alt="Diagram of what spacing between components should look like."
 />
-
 
 :fragment{src="./fragments/feedback.mdx"}
