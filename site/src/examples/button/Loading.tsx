@@ -2,7 +2,7 @@ import { Button } from "@salt-ds/core";
 import { useState } from "react";
 
 function fetchPDFDocument() {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     setTimeout(() => {
       return resolve({});
     }, 2000);

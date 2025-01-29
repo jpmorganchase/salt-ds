@@ -6,6 +6,8 @@ import {
   SettingsSolidIcon,
 } from "@salt-ds/icons";
 import type { Meta, StoryFn } from "@storybook/react";
+import { useState } from "react";
+
 export default {
   title: "Core/Button",
   component: Button,
@@ -14,7 +16,6 @@ export default {
   // https://github.com/strothj/react-docgen-typescript-loader/issues/47
   argTypes: { onClick: { action: "clicked" } },
 } as Meta<typeof Button>;
-import { useState } from "react";
 
 const SingleButtonTemplate: StoryFn<typeof Button> = (props) => {
   return <Button {...props} />;
@@ -324,57 +325,6 @@ export function LoadingAnnouncementProp() {
     </Button>
   );
 }
-
-export const LoadingAnnouncementChild: StoryFn = () => {
-  const [loading, setLoading] = useState(false);
-  const [announcement, setAnnouncement] = useState("");
-
-  // place outside the component
-  function fetchPDFDocument() {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        const rand = Math.random();
-        if (rand < 0.5) {
-          return resolve({});
-        }
-
-        return reject({});
-      }, 2000);
-    });
-  }
-
-  async function handleClick() {
-    setLoading(true);
-    setAnnouncement("Downloading");
-
-    await fetchPDFDocument()
-      .then(() => setAnnouncement("Download Successful!"))
-      .catch(() => setAnnouncement("Download Failed!"))
-      .finally(() => {
-        setLoading(false);
-        setTimeout(() => {
-          setAnnouncement("");
-        }, 1000);
-      });
-  }
-
-  return (
-    <Button loading={loading} onClick={handleClick}>
-      <span
-        role="status"
-        style={{
-          position: "fixed",
-          top: 0,
-          left: 0,
-          transform: "translate(-100%, -100%)",
-        }}
-      >
-        {announcement}
-      </span>
-      Download PDF
-    </Button>
-  );
-};
 
 export const FocusableWhenDisabled = SingleButtonTemplate.bind({});
 FocusableWhenDisabled.args = {

@@ -8,4 +8,3 @@ export * from "./FullWidth";
 export * from "./IconAndText";
 export * from "./IconOnly";
 export * from "./Sentiment";
-export * from "./Loading";
