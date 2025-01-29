@@ -2,60 +2,57 @@
   position: relative;
 
   display: inline-flex;
-  flex-direction: column;
   justify-content: center;
   align-items: end;
   gap: 2px;
 
-  background-color: transparent;
-}
-
-.saltSplitHandle[data-panel-group-direction="horizontal"] {
-  flex-direction: column;
-  width: 0;
-}
-
-.saltSplitHandle[data-panel-group-direction="horizontal"]::before {
-  content: "";
-  position: absolute;
-  left: -4px;
-  right: 0px;
-  top: 0;
-  bottom: 0;
   background: transparent;
+}
+
+.saltSplitHandle[data-resize-handle-state="hover"] {
+  background-color: lightgrey;
+}
+
+.saltSplitHandle[data-resize-handle-state="drag"] {
+  background-color: #0078cf;
 }
 
 .saltSplitHandle[data-panel-group-direction="vertical"] {
   flex-direction: row;
+}
+
+.saltSplitHandle[data-panel-group-direction="horizontal"] {
+  flex-direction: column;
+}
+
+.saltSplitHandle-bordered[data-panel-group-direction="vertical"] {
+  border-bottom: 1px solid lightgrey;
   height: 0;
 }
 
-.saltSplitHandle[data-panel-group-direction="vertical"]::before {
+.saltSplitHandle-bordered[data-panel-group-direction="horizontal"] {
+  border-right: 1px solid lightgrey;
+  width: 0;
+}
+
+.saltSplitHandle-bordered::before {
   content: "";
   position: absolute;
-  left: 0px;
-  right: 0px;
+  inset: 0;
+  background-color: inherit;
+}
+
+.saltSplitHandle-bordered[data-panel-group-direction="vertical"]::before {
   top: -4px;
-  bottom: 0px;
-  background-color: transparent;
 }
 
-.saltSplitHandle[data-resize-handle-state="hover"]::before {
-  background-color: lightgrey;
-}
-
-.saltSplitHandle[data-resize-handle-state="drag"]::before {
-  background-color: #0078cf;
+.saltSplitHandle-bordered[data-panel-group-direction="horizontal"]::before {
+  left: -4px;
 }
 
 .saltSplitHandle-dot {
   background: #000;
   z-index: 0;
-  pointer-events: none;
-}
-
-.saltSplitHandle[data-resize-handle-state="drag"] > .saltSplitHandle-dot {
-  background-color: #fff;
 }
 
 .saltSplitHandle[data-panel-group-direction="horizontal"] > .saltSplitHandle-dot {
@@ -68,4 +65,16 @@
   height: 2px;
   width: 1px;
   transform: translateY(-1px);
+}
+
+.saltSplitHandle[data-resize-handle-state="drag"] > .saltSplitHandle-dot {
+  background-color: #fff;
+}
+
+.saltSplitHandle-transparent[data-panel-group-direction="vertical"] {
+  height: 4px;
+}
+
+.saltSplitHandle-transparent[data-panel-group-direction="horizontal"] {
+  width: 4px;
 }

@@ -16,7 +16,7 @@ const center = {
   background: "#FFF",
 };
 
-export const Horizontal: StoryFn<typeof Splitter> = () => {
+export const BorderedHorizontal: StoryFn<typeof Splitter> = () => {
   return (
     <FlexLayout
       style={{ width: 420, height: 240, border: "1px solid lightgrey" }}
@@ -25,7 +25,7 @@ export const Horizontal: StoryFn<typeof Splitter> = () => {
         <Split style={center}>
           <Text>Left</Text>
         </Split>
-        <SplitHandle divider />
+        <SplitHandle />
         <Split style={center}>
           <Text>Right</Text>
         </Split>
@@ -34,7 +34,7 @@ export const Horizontal: StoryFn<typeof Splitter> = () => {
   );
 };
 
-export const Vertical: StoryFn<typeof Splitter> = () => {
+export const BorderedVertical: StoryFn<typeof Splitter> = () => {
   return (
     <FlexLayout
       style={{
@@ -43,11 +43,11 @@ export const Vertical: StoryFn<typeof Splitter> = () => {
         border: "1px solid var(--salt-separable-tertiary-borderColor)",
       }}
     >
-      <Splitter orientation="vertical">
+      <Splitter orientation="vertical" appearance="bordered">
         <Split style={center}>
           <Text>Top</Text>
         </Split>
-        <SplitHandle divider />
+        <SplitHandle />
         <Split style={center}>
           <Text>Bottom</Text>
         </Split>
@@ -65,25 +65,25 @@ export const MultiOrientational: StoryFn<typeof Splitter> = () => {
         border: "1px solid lightgrey",
       }}
     >
-      <Splitter orientation="horizontal">
+      <Splitter orientation="horizontal" appearance="bordered">
         <Split>
           <Splitter orientation="vertical">
             <Split style={center}>
               <Text>Top Left</Text>
             </Split>
-            <SplitHandle divider />
+            <SplitHandle />
             <Split style={center}>
               <Text>Bottom Left</Text>
             </Split>
           </Splitter>
         </Split>
-        <SplitHandle divider />
+        <SplitHandle />
         <Split>
           <Splitter orientation="vertical">
             <Split style={center}>
               <Text>Top Right</Text>
             </Split>
-            <SplitHandle divider />
+            <SplitHandle />
             <Split style={center}>
               <Text>Bottom Right</Text>
             </Split>
@@ -94,7 +94,7 @@ export const MultiOrientational: StoryFn<typeof Splitter> = () => {
   );
 };
 
-export function SeeThrough() {
+export function Transparent() {
   return (
     <FlexLayout
       style={{
@@ -104,10 +104,10 @@ export function SeeThrough() {
         background: "lightblue",
       }}
     >
-      <Splitter orientation="horizontal">
+      <Splitter orientation="horizontal" appearance="transparent">
         <Split>
           <Splitter orientation="vertical">
-            <Split style={center}>
+            <Split style={center} collapsible>
               <Text>Top Left</Text>
             </Split>
             <SplitHandle />
