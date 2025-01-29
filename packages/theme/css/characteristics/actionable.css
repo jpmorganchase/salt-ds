@@ -90,7 +90,7 @@
   /* saltButton-negative-solid */
   --salt-actionable-negative-bold-background-active: var(--salt-palette-negative-background-active);
   --salt-actionable-negative-bold-background-disabled: var(--salt-palette-negative-background-disabled);
-  --salt-actionable-negative-bold-background-hover: var(--salt-palette-negative);
+  --salt-actionable-negative-bold-background-hover: var(--salt-palette-negative-background-hover);
   --salt-actionable-negative-bold-background: var(--salt-palette-negative-background);
   --salt-actionable-negative-bold-borderColor-active: var(--salt-palette-alpha-none);
   --salt-actionable-negative-bold-borderColor-disabled: var(--salt-palette-alpha-none);
@@ -104,12 +104,12 @@
   /* saltButton-negative-outline */
   --salt-actionable-negative-background-active: var(--salt-palette-negative-background-active);
   --salt-actionable-negative-background-disabled: var(--salt-palette-alpha-none);
-  --salt-actionable-negative-background-hover: var(--salt-palette-negative);
+  --salt-actionable-negative-background-hover: var(--salt-palette-negative-background-hover);
   --salt-actionable-negative-background: var(--salt-palette-alpha-none);
   --salt-actionable-negative-borderColor-active: var(--salt-palette-alpha-none);
-  --salt-actionable-negative-borderColor-disabled: var(--salt-palette-negative-disabled);
+  --salt-actionable-negative-borderColor-disabled: var(--salt-palette-negative-border-disabled);
   --salt-actionable-negative-borderColor-hover: var(--salt-palette-alpha-none);
-  --salt-actionable-negative-borderColor: var(--salt-palette-negative);
+  --salt-actionable-negative-borderColor: var(--salt-palette-negative-border);
   --salt-actionable-negative-foreground-active: var(--salt-palette-interact-cta-foreground);
   --salt-actionable-negative-foreground-disabled: var(--salt-palette-negative-foreground-disabled);
   --salt-actionable-negative-foreground-hover: var(--salt-palette-interact-cta-foreground);
@@ -118,7 +118,7 @@
   /* saltButton-negative-transparent */
   --salt-actionable-negative-subtle-background-active: var(--salt-palette-negative-background-active);
   --salt-actionable-negative-subtle-background-disabled: var(--salt-palette-alpha-none);
-  --salt-actionable-negative-subtle-background-hover: var(--salt-palette-negative);
+  --salt-actionable-negative-subtle-background-hover: var(--salt-palette-negative-background-hover);
   --salt-actionable-negative-subtle-background: var(--salt-palette-alpha-none);
   --salt-actionable-negative-subtle-borderColor-active: var(--salt-palette-alpha-none);
   --salt-actionable-negative-subtle-borderColor-disabled: var(--salt-palette-alpha-none);
@@ -132,7 +132,7 @@
   /* saltButton-positive-solid */
   --salt-actionable-positive-bold-background-active: var(--salt-palette-positive-background-active);
   --salt-actionable-positive-bold-background-disabled: var(--salt-palette-positive-background-disabled);
-  --salt-actionable-positive-bold-background-hover: var(--salt-palette-positive);
+  --salt-actionable-positive-bold-background-hover: var(--salt-palette-positive-background-hover);
   --salt-actionable-positive-bold-background: var(--salt-palette-positive-background);
   --salt-actionable-positive-bold-borderColor-active: var(--salt-palette-alpha-none);
   --salt-actionable-positive-bold-borderColor-disabled: var(--salt-palette-alpha-none);
@@ -146,12 +146,12 @@
   /* saltButton-positive-outline */
   --salt-actionable-positive-background-active: var(--salt-palette-positive-background-active);
   --salt-actionable-positive-background-disabled: var(--salt-palette-alpha-none);
-  --salt-actionable-positive-background-hover: var(--salt-palette-positive);
+  --salt-actionable-positive-background-hover: var(--salt-palette-positive-background-hover);
   --salt-actionable-positive-background: var(--salt-palette-alpha-none);
   --salt-actionable-positive-borderColor-active: var(--salt-palette-alpha-none);
   --salt-actionable-positive-borderColor-disabled: var(--salt-palette-positive-disabled);
   --salt-actionable-positive-borderColor-hover: var(--salt-palette-alpha-none);
-  --salt-actionable-positive-borderColor: var(--salt-palette-positive);
+  --salt-actionable-positive-borderColor: var(--salt-palette-positive-border);
   --salt-actionable-positive-foreground-active: var(--salt-palette-interact-cta-foreground);
   --salt-actionable-positive-foreground-disabled: var(--salt-palette-positive-foreground-disabled);
   --salt-actionable-positive-foreground-hover: var(--salt-palette-interact-cta-foreground);
@@ -160,7 +160,7 @@
   /* saltButton-positive-transparent */
   --salt-actionable-positive-subtle-background-active: var(--salt-palette-positive-background-active);
   --salt-actionable-positive-subtle-background-disabled: var(--salt-palette-alpha-none);
-  --salt-actionable-positive-subtle-background-hover: var(--salt-palette-positive);
+  --salt-actionable-positive-subtle-background-hover: var(--salt-palette-positive-background-hover);
   --salt-actionable-positive-subtle-background: var(--salt-palette-alpha-none);
   --salt-actionable-positive-subtle-borderColor-active: var(--salt-palette-alpha-none);
   --salt-actionable-positive-subtle-borderColor-disabled: var(--salt-palette-alpha-none);
