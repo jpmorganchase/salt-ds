@@ -66,6 +66,9 @@
   --salt-palette-neutral-primary-border: var(--salt-color-gray-50);
   --salt-palette-neutral-secondary-border: var(--salt-color-gray-50);
   --salt-palette-neutral-tertiary-border: var(--salt-color-gray-50);
+  --salt-palette-neutral-primary-border-disabled: var(--salt-color-gray-50-40a);
+  --salt-palette-neutral-secondary-border-disabled: var(--salt-color-gray-50-40a);
+  --salt-palette-neutral-tertiary-border-disabled: var(--salt-color-gray-50-40a);
 
   /* Status */
   --salt-palette-error-foreground-disabled: var(--salt-color-red-500-fade-foreground);
@@ -151,6 +154,9 @@
   --salt-palette-neutral-primary-border: var(--salt-color-gray-300);
   --salt-palette-neutral-secondary-border: var(--salt-color-gray-300);
   --salt-palette-neutral-tertiary-border: var(--salt-color-gray-300);
+  --salt-palette-neutral-primary-border-disabled: var(--salt-color-gray-300-40a);
+  --salt-palette-neutral-secondary-border-disabled: var(--salt-color-gray-300-40a);
+  --salt-palette-neutral-tertiary-border-disabled: var(--salt-color-gray-300-40a);
 
   /* Status */
   --salt-palette-error-foreground-disabled: var(--salt-color-red-500-fade-foreground);
