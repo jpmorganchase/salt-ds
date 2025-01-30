@@ -14,7 +14,6 @@
   cursor: var(--salt-selectable-cursor-hover);
   box-sizing: border-box;
   flex-shrink: 0;
-  align-items: center;
 }
 
 .saltMenuItem:focus-visible {
@@ -49,6 +48,10 @@
   background: var(--salt-selectable-background-selected);
   box-shadow: 0 calc(var(--salt-size-border) * -1) 0 0 var(--salt-selectable-borderColor-selected), 0 var(--salt-size-border) 0 0 var(--salt-selectable-borderColor-selected);
   box-shadow: 0 calc(var(--salt-size-border) * -1) 0 0 var(--salt-selectable-borderColor-selected), 0 var(--salt-size-border) 0 0 var(--salt-selectable-borderColor-selected);
+}
+
+.saltMenuItem > .saltIcon {
+  min-height: var(--salt-text-lineHeight);
 }
 
 .saltMenuItem-expandIcon.saltIcon {

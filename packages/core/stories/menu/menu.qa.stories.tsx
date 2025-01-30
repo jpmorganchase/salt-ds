@@ -6,7 +6,12 @@ import {
   MenuPanel,
   MenuTrigger,
 } from "@salt-ds/core";
-import { MicroMenuIcon } from "@salt-ds/icons";
+import {
+  CopyIcon,
+  ExportIcon,
+  MicroMenuIcon,
+  SettingsIcon,
+} from "@salt-ds/icons";
 import type { Meta, StoryFn } from "@storybook/react";
 import { QAContainer, type QAContainerProps } from "docs/components";
 
@@ -148,6 +153,60 @@ export const GroupedExamples: StoryFn<QAContainerProps> = (props) => {
 };
 
 GroupedExamples.parameters = {
+  chromatic: {
+    disableSnapshot: false,
+    modes: {
+      theme: {
+        themeNext: "disable",
+      },
+      themeNext: {
+        themeNext: "enable",
+        corner: "rounded",
+        accent: "teal",
+        // Ignore headingFont given font is not loaded
+      },
+    },
+  },
+};
+
+export const WithIconExamples: StoryFn<QAContainerProps> = (props) => {
+  return (
+    <QAContainer
+      itemWidthAuto
+      height={500}
+      width={800}
+      transposeDensity
+      vertical
+      {...props}
+    >
+      <div style={{ width: 190, height: 300 }}>
+        <Menu open>
+          <MenuTrigger>
+            <Button appearance="transparent" aria-label="Open Menu">
+              <MicroMenuIcon aria-hidden />
+            </Button>
+          </MenuTrigger>
+          <MenuPanel>
+            <MenuItem>
+              <CopyIcon aria-hidden />
+              Copy
+            </MenuItem>
+            <MenuItem>
+              <ExportIcon aria-hidden />
+              Export
+            </MenuItem>
+            <MenuItem>
+              <SettingsIcon aria-hidden />
+              Settings
+            </MenuItem>
+          </MenuPanel>
+        </Menu>
+      </div>
+    </QAContainer>
+  );
+};
+
+WithIconExamples.parameters = {
   chromatic: {
     disableSnapshot: false,
     modes: {
