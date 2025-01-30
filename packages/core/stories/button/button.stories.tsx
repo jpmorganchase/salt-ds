@@ -6,6 +6,7 @@ import {
   SettingsSolidIcon,
 } from "@salt-ds/icons";
 import type { Meta, StoryFn } from "@storybook/react";
+import { useState } from "react";
 
 export default {
   title: "Core/Button",
@@ -142,6 +143,188 @@ export const Disabled: StoryFn = () => {
     </StackLayout>
   );
 };
+
+export const Loading: StoryFn = () => {
+  return (
+    <StackLayout gap={3}>
+      <FlowLayout>
+        <Button
+          appearance="solid"
+          sentiment="accented"
+          loading
+          loadingAnnouncement="loading"
+        >
+          Solid
+        </Button>
+        <Button
+          appearance="bordered"
+          sentiment="accented"
+          loading
+          loadingAnnouncement="loading"
+        >
+          Bordered
+        </Button>
+        <Button
+          appearance="transparent"
+          sentiment="accented"
+          loading
+          loadingAnnouncement="loading"
+        >
+          Transparent
+        </Button>
+      </FlowLayout>
+      <FlowLayout>
+        <Button
+          appearance="solid"
+          sentiment="neutral"
+          loading
+          loadingAnnouncement="loading"
+        >
+          Solid
+        </Button>
+        <Button
+          appearance="bordered"
+          sentiment="neutral"
+          loading
+          loadingAnnouncement="loading"
+        >
+          Bordered
+        </Button>
+        <Button
+          appearance="transparent"
+          sentiment="neutral"
+          loading
+          loadingAnnouncement="loading"
+        >
+          Transparent
+        </Button>
+      </FlowLayout>
+      <FlowLayout>
+        <Button
+          appearance="solid"
+          sentiment="positive"
+          loading
+          loadingAnnouncement="loading"
+        >
+          Solid
+        </Button>
+        <Button
+          appearance="bordered"
+          sentiment="positive"
+          loading
+          loadingAnnouncement="loading"
+        >
+          Bordered
+        </Button>
+        <Button
+          appearance="transparent"
+          sentiment="positive"
+          loading
+          loadingAnnouncement="loading"
+        >
+          Transparent
+        </Button>
+      </FlowLayout>
+      <FlowLayout>
+        <Button
+          appearance="solid"
+          sentiment="negative"
+          loading
+          loadingAnnouncement="loading"
+        >
+          Solid
+        </Button>
+        <Button
+          appearance="bordered"
+          sentiment="negative"
+          loading
+          loadingAnnouncement="loading"
+        >
+          Bordered
+        </Button>
+        <Button
+          appearance="transparent"
+          sentiment="negative"
+          loading
+          loadingAnnouncement="loading"
+        >
+          Transparent
+        </Button>
+      </FlowLayout>
+      <FlowLayout>
+        <Button
+          appearance="solid"
+          sentiment="caution"
+          loading
+          loadingAnnouncement="loading"
+        >
+          Solid
+        </Button>
+        <Button
+          appearance="bordered"
+          sentiment="caution"
+          loading
+          loadingAnnouncement="loading"
+        >
+          Bordered
+        </Button>
+        <Button
+          appearance="transparent"
+          sentiment="caution"
+          loading
+          loadingAnnouncement="loading"
+        >
+          Transparent
+        </Button>
+      </FlowLayout>
+    </StackLayout>
+  );
+};
+
+export const LoadingSingle = SingleButtonTemplate.bind({});
+LoadingSingle.args = {
+  children: "Loading",
+  loading: true,
+};
+
+export function LoadingAnnouncementProp() {
+  const [loading, setLoading] = useState(false);
+  const [loadingAnnouncement, setLoadingAnnouncement] = useState("");
+
+  // place outside the component
+  function fetchPDFDocument() {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        const rand = Math.random();
+        if (rand < 0.5) {
+          return resolve({});
+        }
+
+        return reject({});
+      }, 2000);
+    });
+  }
+
+  async function handleClick() {
+    setLoading(true);
+    setLoadingAnnouncement("Downloading");
+
+    await fetchPDFDocument().finally(() => {
+      setLoading(false);
+      setLoadingAnnouncement("");
+    });
+  }
+
+  return (
+    <Button
+      loading={loading}
+      loadingAnnouncement={loadingAnnouncement}
+      onClick={handleClick}
+    >
+      Download PDF
+    </Button>
+  );
+}
 
 export const FocusableWhenDisabled = SingleButtonTemplate.bind({});
 FocusableWhenDisabled.args = {

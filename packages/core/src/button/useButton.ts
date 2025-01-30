@@ -7,6 +7,7 @@ import {
 } from "react";
 
 export interface ButtonHookProps<T extends Element> {
+  loading?: boolean;
   disabled?: boolean;
   focusableWhenDisabled?: boolean;
   onKeyUp?: (event: KeyboardEvent<T>) => void;
@@ -19,6 +20,7 @@ export interface ButtonHookResult<T extends Element> {
   active: boolean;
   buttonProps: {
     "aria-disabled"?: boolean;
+    "data-loading"?: boolean;
     disabled?: boolean;
     tabIndex: number;
     onBlur: (event: FocusEvent<T>) => void;
@@ -29,6 +31,7 @@ export interface ButtonHookResult<T extends Element> {
 }
 
 export const useButton = <T extends Element>({
+  loading,
   disabled,
   focusableWhenDisabled,
   onKeyUp,
@@ -83,10 +86,11 @@ export const useButton = <T extends Element>({
 
   const buttonProps = {
     "aria-disabled": disabled && focusableWhenDisabled ? true : undefined,
+    "data-loading": loading,
     disabled: disabled && !focusableWhenDisabled,
     tabIndex: disabled && !focusableWhenDisabled ? -1 : 0,
     onBlur: handleBlur,
-    onClick: !disabled ? handleClick : undefined,
+    onClick: !loading && !disabled ? handleClick : undefined,
     onKeyDown: handleKeyDown,
     onKeyUp: handleKeyUp,
   };
