@@ -149,7 +149,7 @@
   --salt-actionable-positive-background-hover: var(--salt-palette-positive-background-hover);
   --salt-actionable-positive-background: var(--salt-palette-alpha-none);
   --salt-actionable-positive-borderColor-active: var(--salt-palette-alpha-none);
-  --salt-actionable-positive-borderColor-disabled: var(--salt-palette-positive-disabled);
+  --salt-actionable-positive-borderColor-disabled: var(--salt-palette-positive-border-disabled);
   --salt-actionable-positive-borderColor-hover: var(--salt-palette-alpha-none);
   --salt-actionable-positive-borderColor: var(--salt-palette-positive-border);
   --salt-actionable-positive-foreground-active: var(--salt-palette-interact-cta-foreground);
