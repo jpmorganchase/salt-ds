@@ -1924,10 +1924,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@joshwooding/vite-plugin-react-docgen-typescript@npm:0.4.2":
-  version: 0.4.2
-  resolution: "@joshwooding/vite-plugin-react-docgen-typescript@npm:0.4.2"
+"@joshwooding/vite-plugin-react-docgen-typescript@npm:0.5.0":
+  version: 0.5.0
+  resolution: "@joshwooding/vite-plugin-react-docgen-typescript@npm:0.5.0"
   dependencies:
+    glob: "npm:^10.0.0"
     magic-string: "npm:^0.27.0"
     react-docgen-typescript: "npm:^2.2.2"
   peerDependencies:
@@ -1936,7 +1937,7 @@ __metadata:
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: 10/0878171c598ee85997a2b9ea452715ea3df4c0faa3c646ffc0be62a772c3f4919986a9045864fe7cf2208b3f577bbe1e029f8ea3f3bf83f509be8d7a064f0396
+  checksum: 10/1dcb03f2df1723799a7a9c75ac8360990f75c44fd2425d2d52a9e21882fc3054d372892ab1cad0927864d8a934ad5b347f4ae00b01785649e2a8f1c4b861aa67
   languageName: node
   linkType: hard
 
@@ -9485,7 +9486,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"glob@npm:^10.3.10, glob@npm:^10.3.7":
+"glob@npm:^10.0.0, glob@npm:^10.3.10, glob@npm:^10.3.7":
   version: 10.4.5
   resolution: "glob@npm:10.4.5"
   dependencies:
