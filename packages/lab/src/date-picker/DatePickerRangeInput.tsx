@@ -6,6 +6,7 @@ import {
 } from "@salt-ds/date-adapters";
 import { clsx } from "clsx";
 import {
+  type MouseEventHandler,
   type SyntheticEvent,
   forwardRef,
   useCallback,
@@ -150,9 +151,14 @@ export const DatePickerRangeInput = forwardRef(function DatePickerRangeInput<
     state: "dateValue",
   });
 
-  const handleCalendarButton = useCallback(() => {
-    setOpen(!open);
-  }, [open, setOpen]);
+  const handleCalendarButton: MouseEventHandler<HTMLButtonElement> =
+    useCallback(
+      (event) => {
+        setOpen(!open);
+        event.stopPropagation();
+      },
+      [open, setOpen],
+    );
 
   const handleDateChange = useCallback(
     (

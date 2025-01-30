@@ -10,7 +10,6 @@ import { type ReactElement, useState } from "react";
 
 export const UncontrolledOpen = (): ReactElement => {
   const [openOnClick, setOpenOnClick] = useState(false);
-  const [openOnKeyDown, setOpenOnKeyDown] = useState(false);
   return (
     <StackLayout>
       <FlexLayout>
@@ -23,21 +22,8 @@ export const UncontrolledOpen = (): ReactElement => {
         >
           Open On Click
         </ToggleButton>
-        <ToggleButton
-          aria-label={"open on key down"}
-          value={openOnKeyDown ? "false" : "true"}
-          onChange={(event) =>
-            setOpenOnKeyDown(event.currentTarget.value === "true")
-          }
-        >
-          Open On Key Down
-        </ToggleButton>
       </FlexLayout>
-      <DatePicker
-        selectionVariant={"single"}
-        openOnClick={openOnClick}
-        openOnKeyDown={openOnKeyDown}
-      >
+      <DatePicker selectionVariant={"single"} openOnClick={openOnClick}>
         <DatePickerTrigger>
           <DatePickerSingleInput />
         </DatePickerTrigger>
