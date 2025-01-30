@@ -66,9 +66,9 @@
   --salt-palette-neutral-primary-border: var(--salt-color-gray-50);
   --salt-palette-neutral-secondary-border: var(--salt-color-gray-50);
   --salt-palette-neutral-tertiary-border: var(--salt-color-gray-50);
-  --salt-palette-neutral-primary-border-disabled: var(--salt-color-gray-50-40a);
-  --salt-palette-neutral-secondary-border-disabled: var(--salt-color-gray-50-40a);
-  --salt-palette-neutral-tertiary-border-disabled: var(--salt-color-gray-50-40a);
+  --salt-palette-neutral-primary-border-disabled: var(--salt-color-gray-50-fade-border);
+  --salt-palette-neutral-secondary-border-disabled: var(--salt-color-gray-50-fade-border);
+  --salt-palette-neutral-tertiary-border-disabled: var(--salt-color-gray-50-fade-border);
 
   /* Status */
   --salt-palette-error-foreground-disabled: var(--salt-color-red-500-fade-foreground);
@@ -109,6 +109,8 @@
   --salt-palette-accent-foreground-disabled: var(--salt-color-white-fade-foreground);
   --salt-palette-accent-background: var(--salt-color-blue-500);
   --salt-palette-accent-border: var(--salt-color-blue-500);
+  --salt-palette-accent-background-disabled: var(--salt-color-blue-500-fade-background);
+  --salt-palette-accent-border-disabled: var(--salt-color-blue-500-fade-border);
 }
 
 .salt-theme[data-mode="dark"] {
@@ -154,9 +156,9 @@
   --salt-palette-neutral-primary-border: var(--salt-color-gray-300);
   --salt-palette-neutral-secondary-border: var(--salt-color-gray-300);
   --salt-palette-neutral-tertiary-border: var(--salt-color-gray-300);
-  --salt-palette-neutral-primary-border-disabled: var(--salt-color-gray-300-40a);
-  --salt-palette-neutral-secondary-border-disabled: var(--salt-color-gray-300-40a);
-  --salt-palette-neutral-tertiary-border-disabled: var(--salt-color-gray-300-40a);
+  --salt-palette-neutral-primary-border-disabled: var(--salt-color-gray-300-fade-border);
+  --salt-palette-neutral-secondary-border-disabled: var(--salt-color-gray-300-fade-border);
+  --salt-palette-neutral-tertiary-border-disabled: var(--salt-color-gray-300-fade-border);
 
   /* Status */
   --salt-palette-error-foreground-disabled: var(--salt-color-red-500-fade-foreground);
@@ -197,4 +199,6 @@
   --salt-palette-accent-foreground-disabled: var(--salt-color-white-fade-foreground);
   --salt-palette-accent-background: var(--salt-color-blue-500);
   --salt-palette-accent-border: var(--salt-color-blue-500);
+  --salt-palette-accent-background-disabled: var(--salt-color-blue-500-fade-background);
+  --salt-palette-accent-border-disabled: var(--salt-color-blue-500-fade-border);
 }
