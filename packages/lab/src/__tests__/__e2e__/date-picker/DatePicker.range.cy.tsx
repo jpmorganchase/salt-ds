@@ -77,22 +77,6 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
       cy.findByLabelText("End date").realClick();
       cy.findAllByRole("application").should("have.length", 2);
     });
-
-    it("SHOULD be able to enable the overlay to open on keydown", () => {
-      cy.mount(<Range openOnKeyDown />);
-      cy.findByRole("application").should("not.exist");
-      // Simulate opening the calendar on arrow down
-      cy.findByLabelText("Start date").realClick();
-      cy.findByRole("application").should("not.exist");
-      cy.realPress("ArrowDown");
-      cy.findAllByRole("application").should("have.length", 2);
-      cy.document().find("body").realClick();
-      cy.findByRole("application").should("not.exist");
-      cy.findByLabelText("End date").realClick();
-      cy.findByRole("application").should("not.exist");
-      cy.realPress("ArrowDown");
-      cy.findAllByRole("application").should("have.length", 2);
-    });
   });
 
   describe("WHEN readOnly", () => {

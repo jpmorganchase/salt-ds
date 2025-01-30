@@ -14,6 +14,7 @@ import {
   useContext,
   useMemo,
   useRef,
+  useState,
 } from "react";
 import { useKeyboard } from "./useKeyboard";
 
@@ -89,10 +90,6 @@ interface DatePickerOverlayProviderProps {
    */
   openOnClick?: boolean;
   /**
-   * When `open` is uncontrolled, set this to `true` to open on arrow key down
-   */
-  openOnKeyDown?: boolean;
-  /**
    * Handler for when open state changes
    * @param newOpen - true when opened
    */
@@ -120,7 +117,6 @@ export const DatePickerOverlayProvider: React.FC<
 > = ({
   open: openProp,
   openOnClick,
-  openOnKeyDown = true,
   defaultOpen,
   onOpen,
   children,
@@ -133,18 +129,19 @@ export const DatePickerOverlayProvider: React.FC<
     name: "DatePicker",
     state: "openDatePickerOverlay",
   });
-  const triggeringElement = useRef<HTMLElement | null>(null);
+  const [disableFocus, setDisableFocus] = useState<boolean>(true);
+  const triggeringElementRef = useRef<HTMLElement | null>(null);
   const onDismissCallback = useRef<() => void>();
-
   const setOpen = useCallback(
     (newOpen: boolean, _event?: Event, reason?: OpenChangeReason) => {
       if (newOpen) {
         if (readOnly) {
           return;
         }
-        triggeringElement.current = document.activeElement as HTMLElement;
+        triggeringElementRef.current = document.activeElement as HTMLElement;
+        setDisableFocus(reason === "click"); // prevent the overlay taking focus on click
       } else if (!isOpenControlled) {
-        const trigger = triggeringElement.current as HTMLElement;
+        const trigger = triggeringElementRef.current as HTMLElement;
         if (trigger) {
           trigger.focus();
         }
@@ -153,9 +150,8 @@ export const DatePickerOverlayProvider: React.FC<
             trigger.setSelectionRange(0, trigger.value.length);
           }, 1);
         }
-        triggeringElement.current = null;
+        triggeringElementRef.current = null;
       }
-
       setOpenState(newOpen);
       onOpen?.(newOpen);
 
@@ -177,30 +173,22 @@ export const DatePickerOverlayProvider: React.FC<
   });
 
   const {
-    getFloatingProps: _getFloatingPropsCallback,
-    getReferenceProps: _getReferenceProps,
+    getFloatingProps: getFloatingPropsCallback,
+    getReferenceProps: getReferencePropsCallback,
   } = useInteractions(
     interactions
       ? interactions(floatingUIResult.context)
       : [
           useDismiss(floatingUIResult.context),
           useKeyboard(floatingUIResult.context, {
-            enabled: !!openOnKeyDown && !readOnly,
+            enabled: !readOnly,
           }),
           useClick(floatingUIResult.context, {
             enabled: !!openOnClick && !readOnly,
             toggle: false,
+            keyboardHandlers: false,
           }),
         ],
-  );
-
-  const getFloatingPropsCallback = useMemo(
-    () => _getFloatingPropsCallback,
-    [_getFloatingPropsCallback],
-  );
-  const getReferenceProps = useMemo(
-    () => _getReferenceProps,
-    [_getReferenceProps],
   );
 
   const getFloatingProps = useCallback(
@@ -213,9 +201,15 @@ export const DatePickerOverlayProvider: React.FC<
         width: elements.floating?.offsetWidth,
         height: elements.floating?.offsetHeight,
         ...getFloatingPropsCallback(userProps),
+        focusManagerProps: {
+          disabled: disableFocus,
+          returnFocus: false,
+          context: floatingUIResult.context,
+          initialFocus: 4,
+        },
       };
     },
-    [getFloatingPropsCallback, floatingUIResult],
+    [getFloatingPropsCallback, floatingUIResult, disableFocus],
   );
   const setOnDismiss = useCallback((dismissCallback: () => void) => {
     onDismissCallback.current = dismissCallback;
@@ -232,11 +226,11 @@ export const DatePickerOverlayProvider: React.FC<
   const helpers: DatePickerOverlayHelpers = useMemo(
     () => ({
       getFloatingProps,
-      getReferenceProps,
+      getReferenceProps: getReferencePropsCallback,
       setOpen,
       setOnDismiss,
     }),
-    [getFloatingProps, getReferenceProps, setOpen],
+    [getFloatingProps, getReferencePropsCallback, setOpen],
   );
   const contextValue = useMemo(() => ({ state, helpers }), [state, helpers]);
 

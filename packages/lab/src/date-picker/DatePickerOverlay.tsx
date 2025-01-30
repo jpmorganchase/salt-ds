@@ -60,15 +60,6 @@ export const DatePickerOverlay = forwardRef<
       role="dialog"
       aria-modal="true"
       ref={floatingRef}
-      focusManagerProps={
-        floatingUIResult?.context
-          ? {
-              returnFocus: false,
-              context: floatingUIResult.context,
-              initialFocus: 4,
-            }
-          : undefined
-      }
       {...(getFloatingProps
         ? getFloatingProps({
             ...a11yProps,
