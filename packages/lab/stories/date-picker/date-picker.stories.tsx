@@ -2695,11 +2695,10 @@ WithExperimentalTime.parameters = {
   },
 };
 
-export const UncontrolledOpen: StoryFn<
+export const UncontrolledSingleOpen: StoryFn<
   DatePickerSingleProps<DateFrameworkType>
 > = ({ selectionVariant, defaultSelectedDate, ...args }) => {
   const [openOnClick, setOpenOnClick] = useState(false);
-  const [openOnKeyDown, setOpenOnKeyDown] = useState(false);
   return (
     <StackLayout style={{ width: "400px" }}>
       <FlexLayout>
@@ -2712,20 +2711,10 @@ export const UncontrolledOpen: StoryFn<
         >
           Open On Click
         </ToggleButton>
-        <ToggleButton
-          aria-label={"open on key down"}
-          value={openOnKeyDown ? "false" : "true"}
-          onChange={(event) =>
-            setOpenOnKeyDown(event.currentTarget.value === "true")
-          }
-        >
-          Open On Key Down
-        </ToggleButton>
       </FlexLayout>
       <DatePicker
         selectionVariant={"single"}
         openOnClick={openOnClick}
-        openOnKeyDown={openOnKeyDown}
         {...args}
         defaultSelectedDate={defaultSelectedDate}
       >
@@ -2734,6 +2723,40 @@ export const UncontrolledOpen: StoryFn<
         </DatePickerTrigger>
         <DatePickerOverlay>
           <DatePickerSinglePanel />
+        </DatePickerOverlay>
+      </DatePicker>
+    </StackLayout>
+  );
+};
+
+export const UncontrolledRangeOpen: StoryFn<
+  DatePickerRangeProps<DateFrameworkType>
+> = ({ selectionVariant, defaultSelectedDate, ...args }) => {
+  const [openOnClick, setOpenOnClick] = useState(false);
+  return (
+    <StackLayout style={{ width: "400px" }}>
+      <FlexLayout>
+        <ToggleButton
+          aria-label={"open on click"}
+          value={openOnClick ? "false" : "true"}
+          onChange={(event) =>
+            setOpenOnClick(event.currentTarget.value === "true")
+          }
+        >
+          Open On Click
+        </ToggleButton>
+      </FlexLayout>
+      <DatePicker
+        selectionVariant={"range"}
+        openOnClick={openOnClick}
+        {...args}
+        defaultSelectedDate={defaultSelectedDate}
+      >
+        <DatePickerTrigger>
+          <DatePickerRangeInput />
+        </DatePickerTrigger>
+        <DatePickerOverlay>
+          <DatePickerRangePanel />
         </DatePickerOverlay>
       </DatePicker>
     </StackLayout>
@@ -2783,7 +2806,7 @@ export const ControlledOpen: StoryFn<
       _event?: Event | undefined,
       reason?: OpenChangeReason | undefined,
     ) => {
-      if (!newOpen && reason === undefined) {
+      if (reason === undefined) {
         triggerRef?.current?.focus();
         setTimeout(() => {
           triggerRef?.current?.setSelectionRange(
@@ -2800,16 +2823,14 @@ export const ControlledOpen: StoryFn<
   return (
     <StackLayout style={{ width: "400px" }}>
       <FlexLayout>
-        <ToggleButton
+        <Button
           aria-label={"open picker"}
-          value={open ? "false" : "true"}
-          selected={open}
-          onChange={(event) => {
-            setOpen(event.currentTarget.value === "true");
+          onClick={() => {
+            setOpen(true);
           }}
         >
           Open
-        </ToggleButton>
+        </Button>
       </FlexLayout>
       <DatePicker
         selectionVariant={"single"}

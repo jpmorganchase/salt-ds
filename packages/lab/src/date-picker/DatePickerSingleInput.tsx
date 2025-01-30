@@ -7,6 +7,7 @@ import {
 import { CalendarIcon } from "@salt-ds/icons";
 import { clsx } from "clsx";
 import {
+  type MouseEventHandler,
   type SyntheticEvent,
   forwardRef,
   useCallback,
@@ -120,9 +121,14 @@ export const DatePickerSingleInput = forwardRef<
       state: "value",
     });
 
-    const handleCalendarButton = useCallback(() => {
-      setOpen(!open);
-    }, [open, setOpen]);
+    const handleCalendarButton: MouseEventHandler<HTMLButtonElement> =
+      useCallback(
+        (event) => {
+          setOpen(!open);
+          event.stopPropagation();
+        },
+        [open, setOpen],
+      );
 
     const handleDateChange = useCallback(
       (

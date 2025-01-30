@@ -75,16 +75,6 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
       cy.findByRole("application").should("exist");
     });
 
-    it("SHOULD be able to enable the overlay to open on keydown", () => {
-      cy.mount(<Single openOnKeyDown />);
-      cy.findByRole("application").should("not.exist");
-      // Simulate opening the calendar on arrow down
-      cy.document().find("input").realClick();
-      cy.findByRole("application").should("not.exist");
-      cy.realPress("ArrowDown");
-      cy.findByRole("application").should("exist");
-    });
-
     it("SHOULD be able to control the overlay open state", () => {
       cy.mount(<ControlledOpen />);
       cy.findByRole("application").should("not.exist");

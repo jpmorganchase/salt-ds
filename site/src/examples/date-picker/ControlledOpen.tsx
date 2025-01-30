@@ -1,10 +1,10 @@
 import type { OpenChangeReason } from "@floating-ui/react";
 import {
+  Button,
   Divider,
   FlexItem,
   FlexLayout,
   StackLayout,
-  ToggleButton,
 } from "@salt-ds/core";
 import type { DateFrameworkType } from "@salt-ds/date-adapters";
 import {
@@ -84,16 +84,14 @@ export const ControlledOpen = (): ReactElement => {
   return (
     <StackLayout>
       <FlexLayout>
-        <ToggleButton
+        <Button
           aria-label={"open picker"}
-          value={open ? "false" : "true"}
-          selected={open}
-          onChange={(event) => {
-            setOpen(event.currentTarget.value === "true");
+          onClick={() => {
+            setOpen(true);
           }}
         >
           Open
-        </ToggleButton>
+        </Button>
       </FlexLayout>
       <DatePicker
         selectionVariant={"single"}

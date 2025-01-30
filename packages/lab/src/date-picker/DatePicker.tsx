@@ -23,8 +23,6 @@ export interface DatePickerBaseProps {
   open?: boolean;
   /** When `open` is uncontrolled, set this to `true` to open on click */
   openOnClick?: boolean;
-  /** When `open` is uncontrolled, set this to `true` to open on arrow key down */
-  openOnKeyDown?: boolean;
   /**
    * Handler for when open state changes
    * @param newOpen - true when opened
@@ -128,22 +126,13 @@ export const DatePickerMain = forwardRef<HTMLDivElement, DatePickerProps<any>>(
 export const DatePicker = forwardRef(function DatePicker<
   TDate extends DateFrameworkType,
 >(props: DatePickerProps<TDate>, ref: React.Ref<HTMLDivElement>) {
-  const {
-    defaultOpen,
-    open,
-    openOnClick,
-    openOnKeyDown,
-    onOpen,
-    readOnly,
-    ...rest
-  } = props;
+  const { defaultOpen, open, openOnClick, onOpen, readOnly, ...rest } = props;
 
   return (
     <DatePickerOverlayProvider
       defaultOpen={defaultOpen}
       open={open}
       openOnClick={openOnClick}
-      openOnKeyDown={openOnKeyDown}
       onOpen={onOpen}
       readOnly={readOnly}
     >
