@@ -50,7 +50,8 @@
   box-shadow: 0 calc(var(--salt-size-border) * -1) 0 0 var(--salt-selectable-borderColor-selected), 0 var(--salt-size-border) 0 0 var(--salt-selectable-borderColor-selected);
 }
 
-.saltMenuItem > .saltIcon {
+/* TODO: Find a better way of doing this */
+.saltMenuItem .saltIcon:not(.saltCheckboxIcon-icon) {
   min-height: var(--salt-text-lineHeight);
 }
 
