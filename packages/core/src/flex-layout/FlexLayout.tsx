@@ -1,6 +1,8 @@
+import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import { type ElementType, type ReactElement, forwardRef } from "react";
-
+import { useBreakpoint } from "../breakpoints";
 import {
   type PolymorphicComponentPropWithRef,
   type PolymorphicRef,
@@ -8,10 +10,6 @@ import {
   makePrefixer,
   resolveResponsiveValue,
 } from "../utils";
-
-import { useComponentCssInjection } from "@salt-ds/styles";
-import { useWindow } from "@salt-ds/window";
-import { useBreakpoint } from "../breakpoints";
 import flexLayoutCss from "./FlexLayout.css";
 
 const withBaseName = makePrefixer("saltFlexLayout");
@@ -79,7 +77,7 @@ function parseAlignment(style: string | undefined) {
   return style === "start" || style === "end" ? `flex-${style}` : style;
 }
 
-export function parseSpacing(value: number | string | undefined) {
+function parseSpacing(value: number | string | undefined) {
   if (value === undefined || typeof value === "string") {
     return value;
   }
