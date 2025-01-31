@@ -5,8 +5,9 @@ con: If we offer these values, then it could misleading that we're offering all 
 .salt-theme {
   --salt-color-white-10a: rgba(var(--salt-color-white-rgb), 0.1);
   --salt-color-white-15a: rgba(var(--salt-color-white-rgb), 0.15);
-  --salt-color-white-30a: rgba(var(--salt-color-white-rgb), 0.15);
+  --salt-color-white-30a: rgba(var(--salt-color-white-rgb), 0.3);
   --salt-color-white-40a: rgba(var(--salt-color-white-rgb), 0.4);
+  --salt-color-white-45a: rgba(var(--salt-color-white-rgb), 0.45);
   --salt-color-white-70a: rgba(var(--salt-color-white-rgb), 0.7);
   --salt-color-black-10a: rgba(var(--salt-color-black-rgb), 0.1);
   --salt-color-black-15a: rgba(var(--salt-color-black-rgb), 0.15);
