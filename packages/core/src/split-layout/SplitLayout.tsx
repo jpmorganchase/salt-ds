@@ -41,6 +41,14 @@ export type SplitLayoutProps<T extends ElementType> =
        * Start component to be rendered.
        */
       startItem?: ReactNode;
+      /**
+       * Defines the margin around the component. It can be specified as a number (which acts as a multiplier) or a string representing the margin value. Default is `0`.
+       */
+      margin?: FlexLayoutProps<ElementType>["margin"];
+      /**
+       * Defines the padding within the component. It can be specified as a number (which acts as a multiplier) or a string representing the padding value. Default is `0`.
+       */
+      padding?: FlexLayoutProps<ElementType>["padding"];
     }
   >;
 

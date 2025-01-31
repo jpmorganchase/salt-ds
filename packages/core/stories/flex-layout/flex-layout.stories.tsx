@@ -57,6 +57,31 @@ export const Default = DefaultStory.bind({});
 Default.args = {
   wrap: true,
 };
+
+const PaddingAndMargins: StoryFn<typeof FlexLayout> = (args) => {
+  return (
+    <div className="spacing-example-margin">
+      <FlexLayout className="spacing-example-padding" {...args}>
+        {Array.from({ length: 5 }, (_, index) => (
+          <FlexItem
+            className="spacing-example-gap"
+            key={`item-${index + 1}`}
+            padding={1}
+          >
+            <p>Item {index + 1}</p>
+          </FlexItem>
+        ))}
+      </FlexLayout>
+    </div>
+  );
+};
+export const WithPaddingAndMargins = PaddingAndMargins.bind({});
+WithPaddingAndMargins.args = {
+  wrap: false,
+  gap: 1,
+  padding: 2,
+  margin: 2,
+};
 const SeparatedItemsStory: StoryFn<typeof FlexLayout> = (args) => {
   return (
     <FlexLayout {...args}>

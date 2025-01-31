@@ -4,3 +4,4 @@ export * from "./FlexItemSize";
 export * from "./LayoutPosition";
 export * from "./FlexItemPosition";
 export * from "./ResponsiveLayout";
+export * from "./Spacing";

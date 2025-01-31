@@ -40,6 +40,14 @@ export type StackLayoutProps<T extends ElementType> =
        * Adds a separator between elements, default is false.
        */
       separators?: LayoutSeparator | boolean;
+      /**
+       * Defines the margin around the component. It can be specified as a number (which acts as a multiplier) or a string representing the margin value. Default is `0`.
+       */
+      margin?: FlexLayoutProps<ElementType>["margin"];
+      /**
+       * Defines the padding within the component. It can be specified as a number (which acts as a multiplier) or a string representing the padding value. Default is `0`.
+       */
+      padding?: FlexLayoutProps<ElementType>["padding"];
     }
   >;
 
