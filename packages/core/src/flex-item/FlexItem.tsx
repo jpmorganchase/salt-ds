@@ -13,6 +13,7 @@ import {
   type PolymorphicRef,
   type ResponsiveProp,
   makePrefixer,
+  parseSpacing,
   resolveResponsiveValue,
 } from "../utils";
 import flexItemCss from "./FlexItem.css";
@@ -62,13 +63,6 @@ type FlexItemComponent = <T extends ElementType = "div">(
   props: FlexItemProps<T>,
 ) => ReactElement | null;
 
-function parseSpacing(value: number | string | undefined) {
-  if (value === undefined || typeof value === "string") {
-    return value;
-  }
-
-  return `calc(var(--salt-spacing-100) * ${value})`;
-}
 export const FlexItem: FlexItemComponent = forwardRef(
   <T extends ElementType = "div">(
     {

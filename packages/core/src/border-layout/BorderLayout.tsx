@@ -12,6 +12,7 @@ import { GridLayout, type GridLayoutProps } from "../grid-layout";
 import {
   type PolymorphicComponentPropWithRef,
   type PolymorphicRef,
+  type ResponsiveProp,
   makePrefixer,
 } from "../utils";
 
@@ -35,6 +36,14 @@ export type BorderLayoutProps<T extends ElementType> =
        * Border item components to be rendered.
        */
       children: ReactElement<BorderItemProps<T>>[];
+      /**
+       * Defines the margin around the component. It can be specified as a number (which acts as a multiplier) or a string representing the margin value. Default is `0`.
+       */
+      margin?: ResponsiveProp<number | string>;
+      /**
+       * Defines the padding within the component. It can be specified as a number (which acts as a multiplier) or a string representing the padding value. Default is `0`.
+       */
+      padding?: ResponsiveProp<number | string>;
     }
   >;
 

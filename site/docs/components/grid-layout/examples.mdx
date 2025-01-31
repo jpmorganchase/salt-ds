@@ -14,7 +14,7 @@ data:
 
 ## Default
 
-`GridLayout` defaults to a 12-column grid with one row. The spacing between rows and columns depends on the prop `gap`, which is 3 by default.
+`GridLayout` defaults to a 12-column grid with one row.
 
 Content in `GridLayout` is inside `GridItem` components. This helps control the size and position of content.
 
@@ -88,6 +88,14 @@ Use the `verticalAlignment` and `horizontalAlignment` props to control the posit
 ## Custom columns and rows
 
 The `columns` and `rows` props allow you to pass a string to define a column or row template.
+
+</LivePreview>
+<LivePreview componentName="grid-layout" exampleName="Spacing">
+
+## Spacing
+
+Grid layout displays items with a gap between items that is a multiple of the [Salt base unit](/salt/foundations/spacing) controlled by the `gap`, `columnGap` and `rowGap` properties and is by default set to 3.
+The spacing properties `padding` and `margin` are set to 0 by default and can be used to control the layout's inner and outer spacing (also as multiples of the Salt base unit).
 
 </LivePreview>
 

@@ -9,6 +9,7 @@ import {
   type PolymorphicRef,
   type ResponsiveProp,
   makePrefixer,
+  parseSpacing,
   resolveResponsiveValue,
 } from "../utils";
 import gridItemCss from "./GridItem.css";
@@ -43,6 +44,14 @@ export type GridItemProps<T extends ElementType> =
        * Aligns a grid item inside a cell along the block (column) axis. Defaults to "stretch"
        */
       verticalAlignment?: GridAlignment;
+      /**
+       * Defines the margin around the component. It can be specified as a number (which acts as a multiplier) or a string representing the margin value. Default is `0`.
+       */
+      margin?: ResponsiveProp<number | string>;
+      /**
+       * Defines the padding within the component. It can be specified as a number (which acts as a multiplier) or a string representing the padding value. Default is `0`.
+       */
+      padding?: ResponsiveProp<number | string>;
     }
   >;
 
@@ -63,6 +72,8 @@ export const GridItem: GridItemComponent = forwardRef(
       as,
       children,
       className,
+      margin = 0,
+      padding = 0,
       colSpan = "auto",
       rowSpan = "auto",
       horizontalAlignment = "stretch",
@@ -85,7 +96,8 @@ export const GridItem: GridItemComponent = forwardRef(
     const gridItemColSpan = resolveResponsiveValue(colSpan, matchedBreakpoints);
 
     const gridItemRowSpan = resolveResponsiveValue(rowSpan, matchedBreakpoints);
-
+    const gridItemMargin = resolveResponsiveValue(margin, matchedBreakpoints);
+    const gridItemPadding = resolveResponsiveValue(padding, matchedBreakpoints);
     const gridColumnStart = gridItemColSpan
       ? `span ${gridItemColSpan}`
       : colStart;
@@ -97,6 +109,8 @@ export const GridItem: GridItemComponent = forwardRef(
     const gridRowEnd = gridItemRowSpan ? `span ${gridItemRowSpan}` : rowEnd;
 
     const gridStyles = {
+      "--gridItem-margin": parseSpacing(gridItemMargin),
+      "--gridItem-padding": parseSpacing(gridItemPadding),
       ...style,
       "--gridItem-justifySelf": horizontalAlignment,
       "--gridItem-alignSelf": verticalAlignment,

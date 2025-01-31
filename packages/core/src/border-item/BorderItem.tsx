@@ -6,6 +6,7 @@ import { GridItem, type GridItemProps } from "../grid-item";
 import {
   type PolymorphicComponentPropWithRef,
   type PolymorphicRef,
+  type ResponsiveProp,
   makePrefixer,
 } from "../utils";
 import borderItemCss from "./BorderItem.css";
@@ -40,6 +41,14 @@ export type BorderItemProps<T extends ElementType> =
        * Defines if the item should stick to the edges of its container. Defaults to "false"
        */
       sticky?: boolean;
+      /**
+       * Defines the margin around the component. It can be specified as a number (which acts as a multiplier) or a string representing the margin value. Default is `0`.
+       */
+      margin?: ResponsiveProp<number | string>;
+      /**
+       * Defines the padding within the component. It can be specified as a number (which acts as a multiplier) or a string representing the padding value. Default is `0`.
+       */
+      padding?: ResponsiveProp<number | string>;
     }
   >;
 
