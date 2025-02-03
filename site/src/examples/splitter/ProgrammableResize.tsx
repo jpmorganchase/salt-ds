@@ -1,9 +1,9 @@
 import { Button, FlexLayout, StackLayout, Text } from "@salt-ds/core";
 import {
-  Splitter,
+  type ImperativeSplitHandle,
   Split,
   SplitHandle,
-  type ImperativeSplitHandle,
+  Splitter,
 } from "@salt-ds/lab";
 import { type CSSProperties, useRef } from "react";
 

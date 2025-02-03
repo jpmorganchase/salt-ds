@@ -1,10 +1,10 @@
 import { Button } from "@salt-ds/core";
 import { DoubleChevronLeftIcon, DoubleChevronRightIcon } from "@salt-ds/icons";
 import {
-  Splitter,
+  type ImperativeSplitHandle,
   Split,
   SplitHandle,
-  type ImperativeSplitHandle,
+  Splitter,
 } from "@salt-ds/lab";
 import { type CSSProperties, useRef, useState } from "react";
 
