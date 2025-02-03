@@ -1,5 +1,175 @@
 # @salt-ds/theme
 
+## 1.25.0
+
+### Minor Changes
+
+- 926316f: Simplified the accent, interact, neutral palette tokens by reducing the number of attributes.
+
+  | Deprecated Token                                      | Replacement                            |
+  | ----------------------------------------------------- | -------------------------------------- |
+  | --salt-palette-accent-background                      | --salt-palette-accent                  |
+  | --salt-palette-accent-background-disabled             | --salt-palette-accent-disabled         |
+  | --salt-palette-accent-border                          | --salt-palette-accent                  |
+  | --salt-palette-accent-border-disabled                 | --salt-palette-accent-disabled         |
+  | --salt-palette-interact-cta-foreground-active         | --salt-palette-interact-cta-foreground |
+  | --salt-palette-interact-cta-foreground-hover          | --salt-palette-interact-cta-foreground |
+  | --salt-palette-interact-background                    | --salt-palette-alpha-none              |
+  | --salt-palette-interact-background-disabled           | --salt-palette-alpha-none              |
+  | --salt-palette-interact-border-none                   | --salt-palette-alpha-none              |
+  | --salt-palette-interact-secondary-background          | --salt-palette-alpha-none              |
+  | --salt-palette-interact-secondary-background-disabled | --salt-palette-alpha-none              |
+  | --salt-palette-neutral-primary-background-readonly    | --salt-palette-alpha-none              |
+  | --salt-palette-neutral-secondary-background-readonly  | --salt-palette-alpha-none              |
+  | --salt-palette-neutral-primary-border                 | --salt-palette-neutral-border          |
+  | --salt-palette-neutral-secondary-border               | --salt-palette-neutral-border          |
+  | --salt-palette-neutral-tertiary-border                | --salt-palette-neutral-border          |
+  | --salt-palette-neutral-primary-border-disabled        | --salt-palette-neutral-border-disabled |
+  | --salt-palette-neutral-secondary-border-disabled      | --salt-palette-neutral-border-disabled |
+  | --salt-palette-neutral-tertiary-border-disabled       | --salt-palette-neutral-border-disabled |
+  | --salt-palette-neutral-highlight                      | --salt-palette-alpha                   |
+  | --salt-palette-neutral-secondary-separator            | --salt-palette-alpha                   |
+  | --salt-palette-neutral-selection                      | --salt-palette-alpha-weak              |
+  | --salt-palette-neutral-tertiary-separator             | --salt-palette-alpha-weak              |
+  | --salt-palette-neutral-primary-separator              | --salt-palette-alpha-strong            |
+  | --salt-palette-neutral-backdrop                       | --salt-palette-alpha-backdrop          |
+
+- 926316f: Aligned the theme and theme-next fade/alpha token implementation. All fade tokens have been deprecated and where necessary replaced with alpha tokens.
+
+  | Deprecated Token                                   | Replacement                 |
+  | -------------------------------------------------- | --------------------------- |
+  | --salt-color-blue-30-fade-background               | --salt-color-blue-30-40a    |
+  | --salt-color-blue-100-fade-foreground              | --salt-color-blue-100-40a   |
+  | --salt-color-blue-100-fade-fill                    | --salt-color-blue-100-40a   |
+  | --salt-color-blue-200-fade-foreground              | --salt-color-blue-200-40a   |
+  | --salt-color-blue-500-fade-foreground              | --salt-color-blue-500-40a   |
+  | --salt-color-blue-500-fade-border                  | --salt-color-blue-500-40a   |
+  | --salt-color-blue-500-fade-background              | --salt-color-blue-500-40a   |
+  | --salt-color-blue-600-fade-foreground              | --salt-color-blue-600-40a   |
+  | --salt-color-blue-600-fade-background              | --salt-color-blue-600-40a   |
+  | --salt-color-blue-600-fade-fill                    | --salt-color-blue-600-40a   |
+  | --salt-color-blue-700-fade-background              | --salt-color-blue-700-40a   |
+  | --salt-color-gray-20-fade-background               | --salt-color-gray-20-40a    |
+  | --salt-color-gray-20-fade-background-readonly      | No replacement              |
+  | --salt-color-gray-30-fade-background               | --salt-color-gray-30-40a    |
+  | --salt-color-gray-50-fade-background               | --salt-color-gray-50-40a    |
+  | --salt-color-gray-50-fade-border                   | --salt-color-gray-50-40a    |
+  | --salt-color-gray-60-fade-background               | --salt-color-gray-60-40a    |
+  | --salt-color-gray-60-fade-border                   | --salt-color-gray-60-40a    |
+  | --salt-color-gray-70-fade-background               | --salt-color-gray-70-40a    |
+  | --salt-color-gray-70-fade-foreground               | --salt-color-gray-70-40a    |
+  | --salt-color-gray-90-fade-foreground               | --salt-color-gray-90-40a    |
+  | --salt-color-gray-90-fade-border                   | --salt-color-gray-90-40a    |
+  | --salt-color-gray-90-fade-border-readonly          | --salt-color-gray-90-15a    |
+  | --salt-color-gray-200-fade-background              | --salt-color-gray-200-40a   |
+  | --salt-color-gray-200-fade-foreground              | --salt-color-gray-200-40a   |
+  | --salt-color-gray-200-fade-border                  | --salt-color-gray-200-40a   |
+  | --salt-color-gray-200-fade-border-readonly         | --salt-color-gray-200-15a   |
+  | --salt-color-gray-300-fade-border                  | --salt-color-gray-300-40a   |
+  | --salt-color-gray-300-fade-background              | --salt-color-gray-300-40a   |
+  | --salt-color-gray-600-fade-background              | --salt-color-gray-600-40a   |
+  | --salt-color-gray-600-fade-background-readonly     | No replacement              |
+  | --salt-color-gray-800-fade-background              | --salt-color-gray-800-40a   |
+  | --salt-color-gray-800-fade-background-readonly     | No replacement              |
+  | --salt-color-gray-900-fade-foreground              | --salt-color-gray-900-40a   |
+  | --salt-color-green-200-fade-foreground             | --salt-color-green-200-40a  |
+  | --salt-color-green-300-fade-foreground             | --salt-color-green-300-40a  |
+  | --salt-color-green-400-fade-foreground             | --salt-color-green-400-40a  |
+  | --salt-color-green-400-fade-border                 | --salt-color-green-400-40a  |
+  | --salt-color-green-500-fade-foreground             | --salt-color-green-500-40a  |
+  | --salt-color-green-500-fade-border                 | --salt-color-green-500-40a  |
+  | --salt-color-green-500-fade-background             | --salt-color-green-500-40a  |
+  | --salt-color-green-600-fade-foreground             | --salt-color-green-600-40a  |
+  | --salt-color-green-600-fade-background             | --salt-color-green-600-40a  |
+  | --salt-color-green-700-fade-foreground             | No replacement              |
+  | --salt-color-red-200-fade-foreground               | --salt-color-red-200-40a    |
+  | --salt-color-red-300-fade-foreground               | No replacement              |
+  | --salt-color-red-500-fade-foreground               | --salt-color-red-500-40a    |
+  | --salt-color-red-500-fade-border                   | --salt-color-red-500-40a    |
+  | --salt-color-red-600-fade-foreground               | --salt-color-red-600-40a    |
+  | --salt-color-red-600-fade-background               | --salt-color-red-600-40a    |
+  | --salt-color-red-700-fade-foreground               | No replacement              |
+  | --salt-color-orange-400-fade-foreground            | --salt-color-orange-400-40a |
+  | --salt-color-orange-400-fade-border                | --salt-color-orange-400-40a |
+  | --salt-color-orange-500-fade-border                | --salt-color-orange-500-40a |
+  | --salt-color-orange-600-fade-border                | --salt-color-orange-600-40a |
+  | --salt-color-orange-700-fade-border                | --salt-color-orange-700-40a |
+  | --salt-color-orange-850-fade-foreground            | --salt-color-orange-850-40a |
+  | --salt-color-white-fade-foreground                 | --salt-color-white-40a      |
+  | --salt-color-white-fade-background                 | --salt-color-white-40a      |
+  | --salt-color-white-fade-background-readonly        | No replacement              |
+  | --salt-color-white-fade-backdrop                   | --salt-color-white-70a      |
+  | --salt-color-white-fade-background-highlight       | --salt-color-white-30a      |
+  | --salt-color-white-fade-background-selection       | --salt-color-white-15a      |
+  | --salt-color-white-fade-separatorOpacity-primary   | --salt-color-white-45a      |
+  | --salt-color-white-fade-separatorOpacity-secondary | --salt-color-white-15a      |
+  | --salt-color-white-fade-separatorOpacity-tertiary  | --salt-color-white-10a      |
+  | --salt-color-black-fade-backdrop                   | --salt-color-black-70a      |
+  | --salt-color-black-fade-background-highlight       | --salt-color-black-30a      |
+  | --salt-color-black-fade-background-selection       | --salt-color-black-15a      |
+  | --salt-color-black-fade-separatorOpacity-primary   | --salt-color-black-45a      |
+  | --salt-color-black-fade-separatorOpacity-secondary | --salt-color-black-15a      |
+  | --salt-color-black-fade-separatorOpacity-tertiary  | --salt-color-black-10a      |
+
+- 926316f: Deprecated opacity foundation and palette tokens. There are no direct replacements for these tokens.
+
+  ```css
+  --salt-opacity-0: 0;
+  --salt-opacity-15: 0.15;
+  --salt-opacity-25: 0.25;
+  --salt-opacity-40: 0.4;
+  --salt-opacity-45: 0.45;
+  --salt-opacity-70: 0.7;
+  --salt-palette-opacity-backdrop: var(--salt-opacity-70);
+  --salt-palette-opacity-disabled: var(--salt-opacity-40);
+  --salt-palette-opacity-background-readonly: var(--salt-opacity-0);
+  --salt-palette-opacity-border-readonly: var(--salt-opacity-15);
+  --salt-palette-opacity-primary-border: var(--salt-opacity-45);
+  --salt-palette-opacity-secondary-border: var(--salt-opacity-25);
+  --salt-palette-opacity-tertiary-border: var(--salt-opacity-15);
+  ```
+
+- 926316f: Aligned the color ramp implementation with theme-next. Color tokens now have respective rgb tokens.
+- 1203a3f: Deprecate `--salt-navigable-background-hover` and related tokens.
+
+  - `--salt-navigable-background-hover`
+  - `--salt-palette-navigate-background-hover`
+  - `--salt-color-white-fade-background-hover`
+  - `--salt-color-black-fade-background-hover`
+  - `--salt-opacity-8`
+
+- 926316f: The Alpha palette has been added to the current theme. Previously it was only in theme-next.
+
+  ```diff
+  + --salt-palette-alpha: var(--salt-color-black-30a);
+  + --salt-palette-alpha-strong: var(--salt-color-black-45a);
+  + --salt-palette-alpha-weak: var(--salt-color-black-15a);
+  + --salt-palette-alpha-weaker: var(--salt-color-black-10a);
+  + --salt-palette-alpha-backdrop: var(--salt-color-white-70a);
+  + --salt-palette-alpha-none: transparent;
+  ```
+
+  ```diff
+  + --salt-palette-alpha: var(--salt-color-white-30a);
+  + --salt-palette-alpha-strong: var(--salt-color-white-45a);
+  + --salt-palette-alpha-weak: var(--salt-color-white-15a);
+  + --salt-palette-alpha-weaker: var(--salt-color-white-10a);
+  + --salt-palette-alpha-backdrop: var(--salt-color-black-70a);
+  + --salt-palette-alpha-none: transparent;
+  ```
+
+### Patch Changes
+
+- 3e474a0: Added missing fade token: `--salt-color-gray-500-fade-background`.
+- 3e474a0: Removed incorrectly deprecated tokens:
+
+  - `--salt-color-orange-600-fade-background`
+  - `--salt-palette-negative-foreground-disabled`
+  - `--salt-palette-positive-foreground-disabled`
+  - `--salt-palette-warning-border-disabled`
+  - `--salt-palette-accent-background-disabled`
+  - `--salt-palette-accent-border-disabled`
+
 ## 1.24.0
 
 ### Minor Changes

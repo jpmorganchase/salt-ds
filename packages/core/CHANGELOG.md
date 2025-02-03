@@ -1,5 +1,30 @@
 # @salt-ds/core
 
+## 1.40.0
+
+### Minor Changes
+
+- 6a0db8d: Added `loading` prop/functionality to the Button component. This prop will display a spinner to indicate that the action is in progress. This is useful for actions that take some time to process, such as submitting a form or loading data.
+
+  Added `loadingAnnouncement` prop/functionality to the Button component. This prop will announce a message to screen readers. Meant to be used in conjunction with the `loading` prop.
+
+- 1436b36: Add `padding` and `margin` to `FlexLayout`, `FlexItem`, `FlowLayout`, `StackLayout` and `SplitLayout`
+
+  ```tsx
+  <FlexLayout padding={1} margin={1}>
+    <FlexItem padding={2} margin={2}>
+      Item
+    </FlexItem>
+  </FlexLayout>
+  ```
+
+- efb37a0: Add `inputRef` prop to `Checkbox` and `RadioButton`. The `inputRef` can be used to access the hidden `<input>` element.
+
+### Patch Changes
+
+- 3b1c265: Fixed standalone ToggleButton's corner radius not aligning to Button.
+- 39bd967: Fixed secondary and tertiary InteractableCards having incorrect disabled styling.
+
 ## 1.39.0
 
 ### Minor Changes
