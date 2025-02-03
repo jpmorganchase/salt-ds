@@ -17,6 +17,12 @@
   --salt-opacity-3: 0.4;
   --salt-opacity-4: 0.7;
   --salt-opacity-8: 0.08;
+  --salt-opacity-0: 0;
+  --salt-opacity-15: 0.15;
+  --salt-opacity-25: 0.25;
+  --salt-opacity-40: 0.4;
+  --salt-opacity-45: 0.45;
+  --salt-opacity-70: 0.7;
 
   /* Shadow */
   --salt-shadow-0: none;
@@ -29,10 +35,6 @@
   /* Typography */
   --salt-typography-fontFamily: var(--salt-typography-fontFamily-openSans);
   --salt-typography-fontFamily-code: var(--salt-typography-fontFamily-ptMono);
-
-  /* Fade */
-  --salt-color-white-fade-background-hover: rgba(255, 255, 255, var(--salt-opacity-8));
-  --salt-color-black-fade-background-hover: rgba(0, 0, 0, var(--salt-opacity-8));
 }
 
 .salt-theme[data-mode="light"] {

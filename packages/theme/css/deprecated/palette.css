@@ -14,6 +14,13 @@
   --salt-palette-opacity-background: var(--salt-palette-opacity-disabled);
   --salt-palette-opacity-border: var(--salt-palette-opacity-disabled);
   --salt-palette-opacity-foreground: var(--salt-palette-opacity-disabled);
+  --salt-palette-opacity-backdrop: var(--salt-opacity-70);
+  --salt-palette-opacity-disabled: var(--salt-opacity-40);
+  --salt-palette-opacity-background-readonly: var(--salt-opacity-0);
+  --salt-palette-opacity-border-readonly: var(--salt-opacity-15);
+  --salt-palette-opacity-primary-border: var(--salt-opacity-45);
+  --salt-palette-opacity-secondary-border: var(--salt-opacity-25);
+  --salt-palette-opacity-tertiary-border: var(--salt-opacity-15);
 }
 
 .salt-theme[data-mode="light"] {
@@ -26,6 +33,13 @@
   --salt-palette-interact-primary-background-activeDisabled: var(--salt-color-gray-200-fade-background);
   --salt-palette-interact-secondary-foreground-activeDisabled: var(--salt-color-white-fade-foreground);
   --salt-palette-interact-secondary-background-activeDisabled: var(--salt-color-gray-200-fade-background);
+  --salt-palette-interact-background: transparent;
+  --salt-palette-interact-background-disabled: transparent;
+  --salt-palette-interact-border-none: transparent;
+  --salt-palette-interact-secondary-background: transparent;
+  --salt-palette-interact-secondary-background-disabled: transparent;
+  --salt-palette-interact-cta-foreground-active: var(--salt-color-white);
+  --salt-palette-interact-cta-foreground-hover: var(--salt-color-white);
 
   /* Measure */
   --salt-palette-measured-fill: var(--salt-color-blue-500);
@@ -41,6 +55,20 @@
 
   /* Neutral */
   --salt-palette-neutral-tertiary-background-readonly: transparent;
+  --salt-palette-neutral-backdrop: var(--salt-color-white-fade-backdrop);
+  --salt-palette-neutral-primary-background-readonly: var(--salt-color-white-fade-background-readonly);
+  --salt-palette-neutral-secondary-background-readonly: var(--salt-color-gray-20-fade-background-readonly);
+  --salt-palette-neutral-primary-separator: var(--salt-color-black-fade-separatorOpacity-primary);
+  --salt-palette-neutral-secondary-separator: var(--salt-color-black-fade-separatorOpacity-secondary);
+  --salt-palette-neutral-tertiary-separator: var(--salt-color-black-fade-separatorOpacity-tertiary);
+  --salt-palette-neutral-selection: var(--salt-color-black-fade-background-selection);
+  --salt-palette-neutral-highlight: var(--salt-color-black-fade-background-highlight);
+  --salt-palette-neutral-primary-border: var(--salt-color-gray-50);
+  --salt-palette-neutral-secondary-border: var(--salt-color-gray-50);
+  --salt-palette-neutral-tertiary-border: var(--salt-color-gray-50);
+  --salt-palette-neutral-primary-border-disabled: var(--salt-color-gray-50-fade-border);
+  --salt-palette-neutral-secondary-border-disabled: var(--salt-color-gray-50-fade-border);
+  --salt-palette-neutral-tertiary-border-disabled: var(--salt-color-gray-50-fade-border);
 
   /* Status */
   --salt-palette-error-foreground-disabled: var(--salt-color-red-500-fade-foreground);
@@ -79,6 +107,10 @@
 
   /* Accent */
   --salt-palette-accent-foreground-disabled: var(--salt-color-white-fade-foreground);
+  --salt-palette-accent-background: var(--salt-color-blue-500);
+  --salt-palette-accent-border: var(--salt-color-blue-500);
+  --salt-palette-accent-background-disabled: var(--salt-color-blue-500-fade-background);
+  --salt-palette-accent-border-disabled: var(--salt-color-blue-500-fade-border);
 }
 
 .salt-theme[data-mode="dark"] {
@@ -91,6 +123,13 @@
   --salt-palette-interact-primary-background-activeDisabled: var(--salt-color-gray-70-fade-background);
   --salt-palette-interact-secondary-foreground-activeDisabled: var(--salt-color-gray-900-fade-foreground);
   --salt-palette-interact-secondary-background-activeDisabled: var(--salt-color-gray-70-fade-background);
+  --salt-palette-interact-background: transparent;
+  --salt-palette-interact-background-disabled: transparent;
+  --salt-palette-interact-border-none: transparent;
+  --salt-palette-interact-secondary-background: transparent;
+  --salt-palette-interact-secondary-background-disabled: transparent;
+  --salt-palette-interact-cta-foreground-active: var(--salt-color-white);
+  --salt-palette-interact-cta-foreground-hover: var(--salt-color-white);
 
   /* Measure */
   --salt-palette-measured-fill: var(--salt-color-blue-300);
@@ -106,6 +145,20 @@
 
   /* Neutral */
   --salt-palette-neutral-tertiary-background-readonly: transparent;
+  --salt-palette-neutral-backdrop: var(--salt-color-black-fade-backdrop);
+  --salt-palette-neutral-primary-background-readonly: var(--salt-color-gray-800-fade-background-readonly);
+  --salt-palette-neutral-secondary-background-readonly: var(--salt-color-gray-600-fade-background-readonly);
+  --salt-palette-neutral-primary-separator: var(--salt-color-white-fade-separatorOpacity-primary);
+  --salt-palette-neutral-secondary-separator: var(--salt-color-white-fade-separatorOpacity-secondary);
+  --salt-palette-neutral-tertiary-separator: var(--salt-color-white-fade-separatorOpacity-tertiary);
+  --salt-palette-neutral-selection: var(--salt-color-white-fade-background-selection);
+  --salt-palette-neutral-highlight: var(--salt-color-white-fade-background-highlight);
+  --salt-palette-neutral-primary-border: var(--salt-color-gray-300);
+  --salt-palette-neutral-secondary-border: var(--salt-color-gray-300);
+  --salt-palette-neutral-tertiary-border: var(--salt-color-gray-300);
+  --salt-palette-neutral-primary-border-disabled: var(--salt-color-gray-300-fade-border);
+  --salt-palette-neutral-secondary-border-disabled: var(--salt-color-gray-300-fade-border);
+  --salt-palette-neutral-tertiary-border-disabled: var(--salt-color-gray-300-fade-border);
 
   /* Status */
   --salt-palette-error-foreground-disabled: var(--salt-color-red-500-fade-foreground);
@@ -144,4 +197,8 @@
 
   /* Accent */
   --salt-palette-accent-foreground-disabled: var(--salt-color-white-fade-foreground);
+  --salt-palette-accent-background: var(--salt-color-blue-500);
+  --salt-palette-accent-border: var(--salt-color-blue-500);
+  --salt-palette-accent-background-disabled: var(--salt-color-blue-500-fade-background);
+  --salt-palette-accent-border-disabled: var(--salt-color-blue-500-fade-border);
 }

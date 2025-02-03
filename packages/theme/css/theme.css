@@ -4,11 +4,10 @@
  */
 
 /* Foundations (base values) */
+@import url(foundations/alpha.css);
 @import url(foundations/animation.css);
 @import url(foundations/color.css);
 @import url(foundations/duration.css);
-@import url(foundations/fade.css);
-@import url(foundations/opacity.css);
 @import url(foundations/shadow.css);
 @import url(foundations/size.css);
 @import url(foundations/spacing.css);
@@ -16,6 +15,7 @@
 @import url(foundations/zindex.css);
 
 /* Intermediate palette (refined colors) */
+@import url(palette/alpha.css);
 @import url(palette/accent.css);
 @import url(palette/error.css);
 @import url(palette/categorical.css);
@@ -24,7 +24,6 @@
 @import url(palette/navigate.css);
 @import url(palette/negative.css);
 @import url(palette/neutral.css);
-@import url(palette/opacity.css);
 @import url(palette/positive.css);
 @import url(palette/success.css);
 @import url(palette/text.css);
