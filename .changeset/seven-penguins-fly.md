@@ -4,7 +4,8 @@
 
 # Introducing the Splitter component
 
-The `Splitter` component allows you to split a container into multiple parts, each called `Splits`. Two Splits can be resized by dragging the `SplitHandle` that sits between them.
+
+`Splitter` divides window content into separate regions called `Splits` that can be dragged and resized, allowing users to customize the layout of their workspace.
 
 The Salt Splitter leverages the popular open-source library react-resizable-panels, making adjustments to component names, adding custom styling, and introducing extra functionality to better align with the rest of the components present in our design system.
 

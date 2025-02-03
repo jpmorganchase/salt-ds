@@ -77,13 +77,7 @@ export const Vertical: StoryFn<typeof Splitter> = () => {
 
 export const MultiBordered: StoryFn<typeof Splitter> = () => {
   return (
-    <FlexLayout
-      style={{
-        width: 420,
-        height: 240,
-        border: "1px solid lightgrey",
-      }}
-    >
+    <FlexLayout style={box}>
       <Splitter orientation="horizontal" appearance="bordered">
         <Split>
           <Splitter orientation="vertical">
