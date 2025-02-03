@@ -1,18 +1,18 @@
 import { Button, FlexLayout, StackLayout, Text } from "@salt-ds/core";
 import {
-  Splitter,
+  ArrowLeftIcon,
+  ArrowRightIcon,
+  DoubleChevronLeftIcon,
+  DoubleChevronRightIcon,
+} from "@salt-ds/icons";
+import {
+  type ImperativeSplitHandle,
   Split,
   SplitHandle,
-  type ImperativeSplitHandle,
+  Splitter,
 } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react";
-import { useRef, useState, type CSSProperties } from "react";
-import {
-  DoubleChevronRightIcon,
-  DoubleChevronLeftIcon,
-  ArrowRightIcon,
-  ArrowLeftIcon,
-} from "@salt-ds/icons";
+import { type CSSProperties, useRef, useState } from "react";
 
 export default {
   title: "Lab/Splitter",

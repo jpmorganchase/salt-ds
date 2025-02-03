@@ -1,12 +1,12 @@
+import { makePrefixer } from "@salt-ds/core";
+import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
+import clsx from "clsx";
+import { useContext } from "react";
 import {
   PanelResizeHandle,
   type PanelResizeHandleProps,
 } from "react-resizable-panels";
-import { useContext } from "react";
-import { useWindow } from "@salt-ds/window";
-import { makePrefixer } from "@salt-ds/core";
-import { useComponentCssInjection } from "@salt-ds/styles";
-import clsx from "clsx";
 
 import splitHandleCSS from "./SplitHandle.css";
 import { AppearanceContext } from "./Splitter";

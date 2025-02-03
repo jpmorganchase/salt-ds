@@ -1,15 +1,15 @@
-import { createContext, useContext, type ReactNode } from "react";
-import {
-  PanelGroup,
-  type PanelGroupProps,
-  type ImperativePanelHandle,
-} from "react-resizable-panels";
-import { useWindow } from "@salt-ds/window";
 import { makePrefixer } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
+import clsx from "clsx";
+import { type ReactNode, createContext, useContext } from "react";
+import {
+  type ImperativePanelHandle,
+  PanelGroup,
+  type PanelGroupProps,
+} from "react-resizable-panels";
 
 import splitterCSS from "./Splitter.css";
-import clsx from "clsx";
 
 export const OrientationContext =
   createContext<SplitterProps["orientation"]>("horizontal");

@@ -11,17 +11,12 @@ The Salt Splitter leverages the popular open-source library react-resizable-pane
 ## Remapping
 
 | salt-ds                      | react-resizable-panels       |
-|------------------------------| -----------------------------|
+| ---------------------------- | ---------------------------- |
 | <Splitter />                 | <PanelGroup />               |
 | <Split />                    | <Panel />                    |
 | <SplitHandle />              | <PanelResizeHandle />        |
 | SplitterProps["orientation"] | PanelGroupProps["direction"] |
 
-
 ## Added Functionality
 
 `SplitterProps["appearance"]` - This prop allows you to change the appearance of the Splitter component. The appearance prop here acts similarly to `Button["appearance"]`. It can take one of two options `bordered` (default) and `transparent`. The bordered options will add a border each nested `<SplitHandle />`, while the transparent option will leak through the background color of the parent component.
-
-
-
-
