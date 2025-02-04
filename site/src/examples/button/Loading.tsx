@@ -11,22 +11,19 @@ function fetchPDFDocument() {
 
 export function Loading() {
   const [loading, setLoading] = useState(false);
-  const [loadingAnnouncement, setLoadingAnnouncement] = useState("");
 
   async function handleClick() {
     setLoading(true);
-    setLoadingAnnouncement("Downloading");
 
     await fetchPDFDocument().then(() => {
       setLoading(false);
-      setLoadingAnnouncement("");
     });
   }
 
   return (
     <Button
       loading={loading}
-      loadingAnnouncement={loadingAnnouncement}
+      loadingAnnouncement="Downloading"
       onClick={handleClick}
     >
       Download PDF

@@ -289,7 +289,6 @@ LoadingSingle.args = {
 
 export function LoadingAnnouncementProp() {
   const [loading, setLoading] = useState(false);
-  const [loadingAnnouncement, setLoadingAnnouncement] = useState("");
 
   // place outside the component
   function fetchPDFDocument() {
@@ -307,18 +306,16 @@ export function LoadingAnnouncementProp() {
 
   async function handleClick() {
     setLoading(true);
-    setLoadingAnnouncement("Downloading");
 
     await fetchPDFDocument().finally(() => {
       setLoading(false);
-      setLoadingAnnouncement("");
     });
   }
 
   return (
     <Button
       loading={loading}
-      loadingAnnouncement={loadingAnnouncement}
+      loadingAnnouncement="Downloading"
       onClick={handleClick}
     >
       Download PDF

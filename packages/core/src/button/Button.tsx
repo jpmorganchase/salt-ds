@@ -164,13 +164,13 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         type={type}
       >
         {loading && (
-          <div className={withBaseName("spinner")} aria-hidden>
+          <div className={withBaseName("spinner")}>
             <Spinner size="small" aria-hidden disableAnnouncer />
           </div>
         )}
         {typeof loadingAnnouncement === "string" && (
           <span role="status" className={withBaseName("sr-only")}>
-            {loadingAnnouncement}
+            {loading ? loadingAnnouncement : ""}
           </span>
         )}
         {children}
