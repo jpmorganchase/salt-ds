@@ -17,11 +17,14 @@ import type { DataAttributes } from "../types";
 import { makePrefixer, useControlled } from "../utils";
 
 import inputCss from "./Input.css";
+import { ComponentBase, ComponentBaseProps } from "../component-base";
+import { useDefaultProps } from "../default-props-provider";
 
 const withBaseName = makePrefixer("saltInput");
 
 export interface InputProps
   extends Omit<ComponentPropsWithoutRef<"div">, "defaultValue">,
+    ComponentBaseProps,
     Pick<
       ComponentPropsWithoutRef<"input">,
       "disabled" | "value" | "defaultValue" | "placeholder"
@@ -68,159 +71,162 @@ export interface InputProps
   bordered?: boolean;
 }
 
-export const Input = forwardRef<HTMLDivElement, InputProps>(function Input(
-  {
-    "aria-activedescendant": ariaActiveDescendant,
-    "aria-expanded": ariaExpanded,
-    "aria-owns": ariaOwns,
-    className: classNameProp,
-    disabled,
-    emptyReadOnlyMarker = "—",
-    endAdornment,
-    id,
-    inputProps = {},
-    inputRef,
-    placeholder,
-    readOnly: readOnlyProp,
-    role,
-    startAdornment,
-    style,
-    textAlign = "left",
-    value: valueProp,
-    defaultValue: defaultValueProp = valueProp === undefined ? "" : undefined,
-    validationStatus: validationStatusProp,
-    variant = "primary",
-    bordered = false,
-    ...other
+export const Input = forwardRef<HTMLDivElement, InputProps>(
+  function Input(props, ref) {
+    const {
+      "aria-activedescendant": ariaActiveDescendant,
+      "aria-expanded": ariaExpanded,
+      "aria-owns": ariaOwns,
+      className: classNameProp,
+      disabled,
+      emptyReadOnlyMarker = "—",
+      endAdornment,
+      id,
+      inputProps = {},
+      inputRef,
+      placeholder,
+      readOnly: readOnlyProp,
+      role,
+      startAdornment,
+      style,
+      textAlign = "left",
+      value: valueProp,
+      defaultValue: defaultValueProp = valueProp === undefined ? "" : undefined,
+      validationStatus: validationStatusProp,
+      variant = "primary",
+      bordered = false,
+      ...other
+    } = useDefaultProps({ name: "saltInput", props });
+    const targetWindow = useWindow();
+    useComponentCssInjection({
+      testId: "salt-input",
+      css: inputCss,
+      window: targetWindow,
+    });
+
+    const {
+      a11yProps: {
+        "aria-describedby": formFieldDescribedBy,
+        "aria-labelledby": formFieldLabelledBy,
+      } = {},
+      disabled: formFieldDisabled,
+      readOnly: formFieldReadOnly,
+      necessity: formFieldRequired,
+      validationStatus: formFieldValidationStatus,
+    } = useFormFieldProps();
+
+    const restA11yProps = {
+      "aria-activedescendant": ariaActiveDescendant,
+      "aria-expanded": ariaExpanded,
+      "aria-owns": ariaOwns,
+    };
+
+    const isDisabled = disabled || formFieldDisabled;
+    const isReadOnly = readOnlyProp || formFieldReadOnly;
+    const validationStatus = formFieldValidationStatus ?? validationStatusProp;
+
+    const [focused, setFocused] = useState(false);
+
+    const isEmptyReadOnly = isReadOnly && !defaultValueProp && !valueProp;
+    const defaultValue = isEmptyReadOnly
+      ? emptyReadOnlyMarker
+      : defaultValueProp;
+
+    const {
+      "aria-describedby": inputDescribedBy,
+      "aria-labelledby": inputLabelledBy,
+      onBlur,
+      onChange,
+      onFocus,
+      required: inputPropsRequired,
+      ...restInputProps
+    } = inputProps;
+
+    const isRequired = formFieldRequired
+      ? ["required", "asterisk"].includes(formFieldRequired)
+      : inputPropsRequired;
+
+    const [value, setValue] = useControlled({
+      controlled: valueProp,
+      default: defaultValue,
+      name: "Input",
+      state: "value",
+    });
+
+    const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+      const value = event.target.value;
+      setValue(value);
+      onChange?.(event);
+    };
+
+    const handleBlur = (event: FocusEvent<HTMLInputElement>) => {
+      onBlur?.(event);
+      setFocused(false);
+    };
+
+    const handleFocus = (event: FocusEvent<HTMLInputElement>) => {
+      onFocus?.(event);
+      setFocused(true);
+    };
+
+    const inputStyle = {
+      "--input-textAlign": textAlign,
+      ...style,
+    };
+
+    return (
+      <ComponentBase
+        as={"div"}
+        className={clsx(
+          withBaseName(),
+          withBaseName(variant),
+          {
+            [withBaseName("focused")]: !isDisabled && focused,
+            [withBaseName("disabled")]: isDisabled,
+            [withBaseName("readOnly")]: isReadOnly,
+            [withBaseName(validationStatus || "")]: validationStatus,
+            [withBaseName("bordered")]: bordered,
+          },
+          classNameProp,
+        )}
+        ref={ref}
+        style={inputStyle}
+        {...other}
+      >
+        {startAdornment && (
+          <div className={withBaseName("startAdornmentContainer")}>
+            {startAdornment}
+          </div>
+        )}
+        <input
+          aria-describedby={clsx(formFieldDescribedBy, inputDescribedBy)}
+          aria-labelledby={clsx(formFieldLabelledBy, inputLabelledBy)}
+          className={clsx(withBaseName("input"), inputProps?.className)}
+          disabled={isDisabled}
+          id={id}
+          readOnly={isReadOnly}
+          ref={inputRef}
+          role={role}
+          tabIndex={isDisabled ? -1 : 0}
+          onBlur={handleBlur}
+          onChange={handleChange}
+          onFocus={!isDisabled ? handleFocus : undefined}
+          placeholder={placeholder}
+          value={value}
+          {...restA11yProps}
+          {...restInputProps}
+          required={isRequired}
+        />
+        {!isDisabled && validationStatus && (
+          <StatusAdornment status={validationStatus} />
+        )}
+        {endAdornment && (
+          <div className={withBaseName("endAdornmentContainer")}>
+            {endAdornment}
+          </div>
+        )}
+        <div className={withBaseName("activationIndicator")} />
+      </ComponentBase>
+    );
   },
-  ref,
-) {
-  const targetWindow = useWindow();
-  useComponentCssInjection({
-    testId: "salt-input",
-    css: inputCss,
-    window: targetWindow,
-  });
-
-  const {
-    a11yProps: {
-      "aria-describedby": formFieldDescribedBy,
-      "aria-labelledby": formFieldLabelledBy,
-    } = {},
-    disabled: formFieldDisabled,
-    readOnly: formFieldReadOnly,
-    necessity: formFieldRequired,
-    validationStatus: formFieldValidationStatus,
-  } = useFormFieldProps();
-
-  const restA11yProps = {
-    "aria-activedescendant": ariaActiveDescendant,
-    "aria-expanded": ariaExpanded,
-    "aria-owns": ariaOwns,
-  };
-
-  const isDisabled = disabled || formFieldDisabled;
-  const isReadOnly = readOnlyProp || formFieldReadOnly;
-  const validationStatus = formFieldValidationStatus ?? validationStatusProp;
-
-  const [focused, setFocused] = useState(false);
-
-  const isEmptyReadOnly = isReadOnly && !defaultValueProp && !valueProp;
-  const defaultValue = isEmptyReadOnly ? emptyReadOnlyMarker : defaultValueProp;
-
-  const {
-    "aria-describedby": inputDescribedBy,
-    "aria-labelledby": inputLabelledBy,
-    onBlur,
-    onChange,
-    onFocus,
-    required: inputPropsRequired,
-    ...restInputProps
-  } = inputProps;
-
-  const isRequired = formFieldRequired
-    ? ["required", "asterisk"].includes(formFieldRequired)
-    : inputPropsRequired;
-
-  const [value, setValue] = useControlled({
-    controlled: valueProp,
-    default: defaultValue,
-    name: "Input",
-    state: "value",
-  });
-
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const value = event.target.value;
-    setValue(value);
-    onChange?.(event);
-  };
-
-  const handleBlur = (event: FocusEvent<HTMLInputElement>) => {
-    onBlur?.(event);
-    setFocused(false);
-  };
-
-  const handleFocus = (event: FocusEvent<HTMLInputElement>) => {
-    onFocus?.(event);
-    setFocused(true);
-  };
-
-  const inputStyle = {
-    "--input-textAlign": textAlign,
-    ...style,
-  };
-
-  return (
-    <div
-      className={clsx(
-        withBaseName(),
-        withBaseName(variant),
-        {
-          [withBaseName("focused")]: !isDisabled && focused,
-          [withBaseName("disabled")]: isDisabled,
-          [withBaseName("readOnly")]: isReadOnly,
-          [withBaseName(validationStatus || "")]: validationStatus,
-          [withBaseName("bordered")]: bordered,
-        },
-        classNameProp,
-      )}
-      ref={ref}
-      style={inputStyle}
-      {...other}
-    >
-      {startAdornment && (
-        <div className={withBaseName("startAdornmentContainer")}>
-          {startAdornment}
-        </div>
-      )}
-      <input
-        aria-describedby={clsx(formFieldDescribedBy, inputDescribedBy)}
-        aria-labelledby={clsx(formFieldLabelledBy, inputLabelledBy)}
-        className={clsx(withBaseName("input"), inputProps?.className)}
-        disabled={isDisabled}
-        id={id}
-        readOnly={isReadOnly}
-        ref={inputRef}
-        role={role}
-        tabIndex={isDisabled ? -1 : 0}
-        onBlur={handleBlur}
-        onChange={handleChange}
-        onFocus={!isDisabled ? handleFocus : undefined}
-        placeholder={placeholder}
-        value={value}
-        {...restA11yProps}
-        {...restInputProps}
-        required={isRequired}
-      />
-      {!isDisabled && validationStatus && (
-        <StatusAdornment status={validationStatus} />
-      )}
-      {endAdornment && (
-        <div className={withBaseName("endAdornmentContainer")}>
-          {endAdornment}
-        </div>
-      )}
-      <div className={withBaseName("activationIndicator")} />
-    </div>
-  );
-});
+);

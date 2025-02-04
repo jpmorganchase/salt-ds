@@ -69,6 +69,8 @@ export const withTheme: Decorator = (StoryFn, context) => {
   const {
     density,
     mode,
+    spacing,
+    size,
     styleInjection,
     themeNext,
     corner,
@@ -78,6 +80,21 @@ export const withTheme: Decorator = (StoryFn, context) => {
   } = context.globals;
 
   const Provider = themeNext === "enable" ? SaltProviderNext : SaltProvider;
+
+  const defaultProps = {
+    saltButton: {
+      spacing,
+      size,
+    },
+    saltCard: {
+      spacing,
+      size,
+    },
+    saltInput: {
+      spacing,
+      size,
+    },
+  };
 
   if (mode === "side-by-side" || mode === "stacked") {
     const isStacked = mode === "stacked";
@@ -100,6 +117,7 @@ export const withTheme: Decorator = (StoryFn, context) => {
           <Provider
             applyClassesTo={"child"}
             density={density}
+            defaultProps={defaultProps}
             mode={mode}
             key={`${mode}-${styleInjection}`}
             enableStyleInjection={styleInjection === "enable"}
@@ -120,6 +138,7 @@ export const withTheme: Decorator = (StoryFn, context) => {
   return (
     <Provider
       density={density}
+      defaultProps={defaultProps}
       mode={mode}
       key={`${mode}-${styleInjection}`}
       enableStyleInjection={styleInjection === "enable"}

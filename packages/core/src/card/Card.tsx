@@ -2,10 +2,12 @@ import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import { type ComponentPropsWithoutRef, forwardRef } from "react";
+import { ComponentBase, ComponentBaseProps } from "../component-base";
 
 import { capitalize, makePrefixer } from "../utils";
 
 import cardCss from "./Card.css";
+import { useDefaultProps } from "../default-props-provider";
 
 const withBaseName = makePrefixer("saltCard");
 export interface CardProps extends ComponentPropsWithoutRef<"div"> {
@@ -47,7 +49,7 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(
       hoverable,
       variant = "primary",
       ...rest
-    } = props;
+    } = useDefaultProps({ name: "saltCard", props });
 
     const targetWindow = useWindow();
     useComponentCssInjection({
@@ -57,7 +59,8 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(
     });
 
     return (
-      <div
+      <ComponentBase
+        as={"div"}
         className={clsx(
           withBaseName(),
           withBaseName(variant),
@@ -75,7 +78,7 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(
         {...rest}
       >
         {children}
-      </div>
+      </ComponentBase>
     );
   },
 );

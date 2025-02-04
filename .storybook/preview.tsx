@@ -27,6 +27,7 @@ import { withTextSpacingWrapper } from "./decorators/withTextSpacingWrapper";
 import { withTheme } from "./decorators/withTheme";
 
 import { globalOptions as themeNextGlobals } from "./toolbar/ThemeNextToolbar";
+import { globalOptions as componentBaseGlobals } from "./toolbar/ComponentBaseToolbar";
 
 const densities = ["touch", "low", "medium", "high"];
 const DEFAULT_DENSITY = "medium";
@@ -114,6 +115,7 @@ export const globalTypes: GlobalTypes = {
       title: "Date Adapter",
     },
   },
+  ...componentBaseGlobals,
   ...themeNextGlobals,
 };
 
@@ -170,6 +172,12 @@ export const parameters: Parameters = {
             }
             /* @ts-ignore Waiting for https://github.com/storybookjs/storybook/issues/12982 */
             accent={context.store.userGlobals.globals?.accent}
+            defaultProps={{ button: {
+                /* @ts-ignore Waiting for https://github.com/storybookjs/storybook/issues/12982 */
+                spacing: context.store.userGlobals.globals?.componentBaseSpacing,
+                /* @ts-ignore Waiting for https://github.com/storybookjs/storybook/issues/12982 */
+                size: context.store.userGlobals.globals?.componentBaseSize
+              }}}
           >
             {children}
           </ChosenProvider>
