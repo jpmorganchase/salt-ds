@@ -91,6 +91,15 @@ const getResponsiveValue = <T>(
   )[1];
 };
 
+export const isResponsiveProp = <T>(
+  value: ResponsiveProp<T>,
+  breakpoints: Breakpoints,
+) => {
+  return (
+    isObject(value) && Object.keys(value).some((key) => key in breakpoints)
+  );
+}
+
 export const useResponsiveProp = <T>(
   value: ResponsiveProp<T>,
   defaultValue: T,

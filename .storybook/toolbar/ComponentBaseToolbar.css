@@ -1,0 +1,10 @@
+/* Custom Toolbar */
+.component-base-toolbar-group-wrapper {
+  cursor: not-allowed;
+}
+
+.component-base-toolbar-group-wrapper > span > span {
+  font-weight: bold;
+  color: darkgray;
+}
+
