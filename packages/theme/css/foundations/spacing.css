@@ -28,4 +28,15 @@
   --salt-spacing-300: calc(3 * var(--salt-spacing-100));
   --salt-spacing-350: calc(3.5 * var(--salt-spacing-100));
   --salt-spacing-400: calc(4 * var(--salt-spacing-100));
+  --salt-spacing-450: calc(4.5 * var(--salt-spacing-100));
+  --salt-spacing-500: calc(5 * var(--salt-spacing-100));
+  --salt-spacing-550: calc(5.5 * var(--salt-spacing-100));
+  --salt-spacing-600: calc(6 * var(--salt-spacing-100));
+  --salt-spacing-650: calc(6.5 * var(--salt-spacing-100));
+  --salt-spacing-700: calc(7 * var(--salt-spacing-100));
+  --salt-spacing-750: calc(7.5 * var(--salt-spacing-100));
+  --salt-spacing-800: calc(8 * var(--salt-spacing-100));
+  --salt-spacing-850: calc(8.5 * var(--salt-spacing-100));
+  --salt-spacing-900: calc(9 * var(--salt-spacing-100));
+  --salt-spacing-950: calc(9.5 * var(--salt-spacing-100));
 }
