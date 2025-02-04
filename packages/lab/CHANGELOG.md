@@ -1,5 +1,17 @@
 # @salt-ds/lab
 
+## 1.0.0-alpha.60
+
+### Patch Changes
+
+- 45961dd: Fix dialog and overlay header alignments
+- Updated dependencies [6a0db8d]
+- Updated dependencies [3b1c265]
+- Updated dependencies [1436b36]
+- Updated dependencies [39bd967]
+- Updated dependencies [efb37a0]
+  - @salt-ds/core@1.40.0
+
 ## 1.0.0-alpha.59
 
 ### Minor Changes
