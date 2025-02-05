@@ -19,11 +19,11 @@
 }
 
 .saltSplitHandle[data-resize-handle-state="hover"] {
-  background-color: var(--salt-separable-background-hover);
+  background: var(--salt-separable-background-hover);
 }
 
 .saltSplitHandle[data-resize-handle-state="drag"] {
-  background-color: var(--salt-separable-background-active);
+  background: var(--salt-separable-background-active);
 }
 
 .saltSplitHandle[data-panel-group-direction="vertical"] {
@@ -64,5 +64,38 @@
 }
 
 .saltSplitHandle[data-resize-handle-state="drag"] > .saltSplitHandle-dot {
-  background-color: var(--salt-separable-foreground-active);
+  background: var(--salt-separable-foreground-active);
+}
+
+.saltSplitHandle-accent-top-bottom,
+.saltSplitHandle-accent-left-right {
+  box-shadow: 0 0 0 1px lightgrey;
+}
+
+.saltSplitHandle-accent-left {
+  box-shadow: -1px 0 0 0.5px lightgrey;
+}
+
+.saltSplitHandle-accent-right {
+  box-shadow: 1px 0 0 0.5px lightgrey;
+}
+
+.saltSplitHandle-accent-top {
+  box-shadow: 0 -1px 0 0.5px lightgrey;
+}
+
+.saltSplitHandle-accent-bottom {
+  box-shadow: 0 1px 0 0.5px lightgrey;
+}
+
+.saltSplitHandle-primary {
+  background: var(--salt-container-primary-background);
+}
+
+.saltSplitHandle-secondary {
+  background: var(--salt-container-secondary-background);
+}
+
+.saltSplitHandle-tertiary {
+  background: var(--salt-container-tertiary-background);
 }

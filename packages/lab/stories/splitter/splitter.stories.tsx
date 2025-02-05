@@ -13,9 +13,9 @@ import {
   DoubleChevronRightIcon,
 } from "@salt-ds/icons";
 import {
-  type ImperativeSplitHandle,
-  Split,
+  type ImperativePanelHandle,
   SplitHandle,
+  SplitPanel,
   Splitter,
 } from "@salt-ds/lab";
 import type { Meta } from "@storybook/react";
@@ -24,7 +24,10 @@ import { type CSSProperties, useRef, useState } from "react";
 export default {
   title: "Lab/Splitter",
   components: Splitter,
-  subcomponents: { Split, SplitHandle },
+  subcomponents: {
+    SplitPanel,
+    SplitHandle,
+  },
 } as Meta<typeof Splitter>;
 
 const center = {
@@ -32,7 +35,6 @@ const center = {
   alignItems: "center",
   justifyContent: "center",
   height: "100%",
-  background: "#FFF",
   textAlign: "center",
 } as CSSProperties;
 
@@ -45,17 +47,17 @@ const box = {
 export function Horizontal() {
   return (
     <Splitter style={box} orientation="horizontal">
-      <Split style={center}>
+      <SplitPanel style={center}>
         <Text>Left</Text>
-      </Split>
+      </SplitPanel>
       <SplitHandle />
-      <Split style={center}>
+      <SplitPanel style={center}>
         <Text>Center</Text>
-      </Split>
+      </SplitPanel>
       <SplitHandle />
-      <Split style={center}>
+      <SplitPanel style={center}>
         <Text>Right</Text>
-      </Split>
+      </SplitPanel>
     </Splitter>
   );
 }
@@ -63,17 +65,17 @@ export function Horizontal() {
 export function Vertical() {
   return (
     <Splitter style={box} orientation="vertical" appearance="bordered">
-      <Split style={center}>
+      <SplitPanel style={center}>
         <Text>Top</Text>
-      </Split>
+      </SplitPanel>
       <SplitHandle />
-      <Split style={center}>
+      <SplitPanel style={center}>
         <Text>Middle</Text>
-      </Split>
+      </SplitPanel>
       <SplitHandle />
-      <Split style={center}>
+      <SplitPanel style={center}>
         <Text>Bottom</Text>
-      </Split>
+      </SplitPanel>
     </Splitter>
   );
 }
@@ -81,33 +83,33 @@ export function Vertical() {
 export function MultiBordered() {
   return (
     <Splitter style={box} orientation="horizontal" appearance="bordered">
-      <Split>
+      <SplitPanel>
         <Splitter orientation="vertical">
-          <Split style={center}>
+          <SplitPanel style={center}>
             <Text>Top Left</Text>
-          </Split>
+          </SplitPanel>
           <SplitHandle />
-          <Split style={center}>
+          <SplitPanel style={center}>
             <Text>Middle Left</Text>
-          </Split>
+          </SplitPanel>
           <SplitHandle />
-          <Split style={center}>
+          <SplitPanel style={center}>
             <Text>Bottom Left</Text>
-          </Split>
+          </SplitPanel>
         </Splitter>
-      </Split>
+      </SplitPanel>
       <SplitHandle />
-      <Split>
+      <SplitPanel>
         <Splitter orientation="vertical">
-          <Split style={center}>
+          <SplitPanel style={center}>
             <Text>Top Right</Text>
-          </Split>
+          </SplitPanel>
           <SplitHandle />
-          <Split style={center}>
+          <SplitPanel style={center}>
             <Text>Bottom Right</Text>
-          </Split>
+          </SplitPanel>
         </Splitter>
-      </Split>
+      </SplitPanel>
     </Splitter>
   );
 }
@@ -123,52 +125,106 @@ export function MultiTransparent() {
       }}
     >
       <Splitter orientation="horizontal" appearance="transparent">
-        <Split>
+        <SplitPanel>
           <Splitter orientation="vertical">
-            <Split style={center}>
+            <SplitPanel style={center}>
               <Text>Top Left</Text>
-            </Split>
+            </SplitPanel>
             <SplitHandle />
-            <Split style={center}>
+            <SplitPanel style={center}>
               <Text>Middle Left</Text>
-            </Split>
+            </SplitPanel>
             <SplitHandle />
-            <Split style={center}>
+            <SplitPanel style={center}>
               <Text>Bottom Left</Text>
-            </Split>
+            </SplitPanel>
           </Splitter>
-        </Split>
+        </SplitPanel>
         <SplitHandle />
-        <Split>
+        <SplitPanel>
           <Splitter orientation="vertical">
-            <Split style={center}>
+            <SplitPanel style={center}>
               <Text>Top Right</Text>
-            </Split>
+            </SplitPanel>
             <SplitHandle />
-            <Split style={center}>
+            <SplitPanel style={center}>
               <Text>Bottom Right</Text>
-            </Split>
+            </SplitPanel>
           </Splitter>
-        </Split>
+        </SplitPanel>
       </Splitter>
     </FlexLayout>
+  );
+}
+
+export function Accent() {
+  return (
+    <Splitter orientation="horizontal" style={box}>
+      <SplitPanel defaultSize={25} style={center}>
+        <Text>Left</Text>
+      </SplitPanel>
+      <SplitHandle accent="right" />
+      <SplitPanel style={center}>
+        <Text>Center</Text>
+      </SplitPanel>
+      <SplitHandle accent="left" />
+      <SplitPanel defaultSize={25} style={center}>
+        <Text>Right</Text>
+      </SplitPanel>
+    </Splitter>
+  );
+}
+
+export function Variant() {
+  return (
+    <Splitter orientation="horizontal" style={box}>
+      <SplitPanel variant="secondary" defaultSize={25} style={center}>
+        <Text>Left</Text>
+      </SplitPanel>
+      <SplitHandle accent="right" variant="secondary" />
+      <SplitPanel style={center}>
+        <Text>Center</Text>
+      </SplitPanel>
+      <SplitHandle accent="left" variant="secondary" />
+      <SplitPanel variant="secondary" defaultSize={25} style={center}>
+        <Text>Right</Text>
+      </SplitPanel>
+    </Splitter>
+  );
+}
+
+export function VariantAlt() {
+  return (
+    <Splitter orientation="horizontal" style={box}>
+      <SplitPanel defaultSize={25} style={center}>
+        <Text>Left</Text>
+      </SplitPanel>
+      <SplitHandle accent="left" variant="tertiary" />
+      <SplitPanel style={center} variant="tertiary">
+        <Text>Center</Text>
+      </SplitPanel>
+      <SplitHandle accent="right" variant="tertiary" />
+      <SplitPanel defaultSize={25} style={center}>
+        <Text>Right</Text>
+      </SplitPanel>
+    </Splitter>
   );
 }
 
 export function MinMaxSize() {
   return (
     <Splitter style={box} orientation="horizontal" appearance="bordered">
-      <Split minSize={20} style={center}>
+      <SplitPanel minSize={20} style={center}>
         <Text>Left [20%, X]</Text>
-      </Split>
+      </SplitPanel>
       <SplitHandle />
-      <Split minSize={40} maxSize={60} style={center}>
+      <SplitPanel minSize={40} maxSize={60} style={center}>
         <Text>Middle [30%, 60%]</Text>
-      </Split>
+      </SplitPanel>
       <SplitHandle />
-      <Split minSize={20} style={center}>
+      <SplitPanel minSize={20} style={center}>
         <Text>Right [20%, X]</Text>
-      </Split>
+      </SplitPanel>
     </Splitter>
   );
 }
@@ -176,7 +232,7 @@ export function MinMaxSize() {
 export function CollapsibleSetSize() {
   return (
     <Splitter style={box} orientation="horizontal" appearance="bordered">
-      <Split
+      <SplitPanel
         collapsible
         collapsedSize={15}
         minSize={30}
@@ -184,11 +240,11 @@ export function CollapsibleSetSize() {
         style={center}
       >
         <Text style={center}>Left</Text>
-      </Split>
+      </SplitPanel>
       <SplitHandle />
-      <Split style={center}>
+      <SplitPanel style={center}>
         <Text>Right</Text>
-      </Split>
+      </SplitPanel>
     </Splitter>
   );
 }
@@ -196,19 +252,19 @@ export function CollapsibleSetSize() {
 export function Collapsible0() {
   return (
     <Splitter style={box} orientation="horizontal" appearance="bordered">
-      <Split collapsible collapsedSize={0} minSize={30} style={center}>
+      <SplitPanel collapsible collapsedSize={0} minSize={30} style={center}>
         <Text>Left</Text>
-      </Split>
+      </SplitPanel>
       <SplitHandle />
-      <Split collapsible collapsedSize={0} minSize={30} style={center}>
+      <SplitPanel collapsible collapsedSize={0} minSize={30} style={center}>
         <Text>Right</Text>
-      </Split>
+      </SplitPanel>
     </Splitter>
   );
 }
 
 export function CollapseButton() {
-  const ref = useRef<ImperativeSplitHandle>(null);
+  const ref = useRef<ImperativePanelHandle>(null);
   const [expanded, setExpanded] = useState(true);
 
   function toggle() {
@@ -227,7 +283,7 @@ export function CollapseButton() {
 
   return (
     <Splitter style={box} orientation="horizontal">
-      <Split
+      <SplitPanel
         collapsible
         collapsedSize={15}
         minSize={30}
@@ -240,15 +296,15 @@ export function CollapseButton() {
         <Button appearance="solid" sentiment="neutral" onClick={toggle}>
           {expanded ? <DoubleChevronLeftIcon /> : <DoubleChevronRightIcon />}
         </Button>
-      </Split>
+      </SplitPanel>
       <SplitHandle />
-      <Split style={center}>Content</Split>
+      <SplitPanel style={center}>Content</SplitPanel>
     </Splitter>
   );
 }
 
 export function CollapseDoubleClick() {
-  const ref = useRef<ImperativeSplitHandle>(null);
+  const ref = useRef<ImperativePanelHandle>(null);
 
   function toggle() {
     if (!ref.current) return;
@@ -264,7 +320,7 @@ export function CollapseDoubleClick() {
 
   return (
     <Splitter orientation="horizontal" appearance="bordered" style={box}>
-      <Split
+      <SplitPanel
         ref={ref}
         collapsible
         collapsedSize={0}
@@ -274,19 +330,19 @@ export function CollapseDoubleClick() {
         <Text style={center}>
           Double Click the handle <ArrowRightIcon />
         </Text>
-      </Split>
+      </SplitPanel>
       <SplitHandle onDoubleClick={toggle} />
-      <Split style={center}>
+      <SplitPanel style={center}>
         <Text style={center}>
           <ArrowLeftIcon /> Double Click the handle
         </Text>
-      </Split>
+      </SplitPanel>
     </Splitter>
   );
 }
 
 export function ProgrammableResize() {
-  const ref = useRef<ImperativeSplitHandle>(null);
+  const ref = useRef<ImperativePanelHandle>(null);
 
   function handleResizeLeft(size: number) {
     return () => {
@@ -305,13 +361,13 @@ export function ProgrammableResize() {
       </StackLayout>
       <StackLayout>
         <Splitter style={box} orientation="horizontal" appearance="bordered">
-          <Split ref={ref} style={center}>
+          <SplitPanel ref={ref} style={center}>
             <Text>Left</Text>
-          </Split>
+          </SplitPanel>
           <SplitHandle />
-          <Split style={center}>
+          <SplitPanel style={center}>
             <Text>Right</Text>
-          </Split>
+          </SplitPanel>
         </Splitter>
       </StackLayout>
     </FlexLayout>
@@ -332,9 +388,9 @@ export function WipInsideDrawer() {
       >
         <DialogCloseButton onClick={() => setOpen(false)} />
         <Splitter orientation="horizontal">
-          <Split defaultSize={0} />
+          <SplitPanel defaultSize={0} />
           <SplitHandle />
-          <Split
+          <SplitPanel
             collapsible
             collapsedSize={0}
             minSize={100}
@@ -342,7 +398,7 @@ export function WipInsideDrawer() {
             style={{ padding: "24px" }}
           >
             Hello world!
-          </Split>
+          </SplitPanel>
         </Splitter>
       </Drawer>
     </>

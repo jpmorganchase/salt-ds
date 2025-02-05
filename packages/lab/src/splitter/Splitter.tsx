@@ -3,11 +3,7 @@ import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import clsx from "clsx";
 import { type ReactNode, createContext, useContext } from "react";
-import {
-  type ImperativePanelHandle,
-  PanelGroup,
-  type PanelGroupProps,
-} from "react-resizable-panels";
+import { PanelGroup, type PanelGroupProps } from "react-resizable-panels";
 
 import splitterCSS from "./Splitter.css";
 
@@ -17,14 +13,14 @@ export const OrientationContext =
 export const AppearanceContext = createContext<SplitterAppearance>("bordered");
 export type SplitterAppearance = "bordered" | "transparent";
 
-export type ImperativeSplitHandle = ImperativePanelHandle;
+export type SplitterOrientation = PanelGroupProps["direction"];
 
 export interface SplitterProps extends Omit<PanelGroupProps, "direction"> {
   /**
    * The orientation of the splitter.
    * Replaces `PanelGroupProps["direction"]`
    */
-  orientation: PanelGroupProps["direction"];
+  orientation: SplitterOrientation;
   /**
    * The appearance of the splitter.
    * If set to "transparent", the splitter handle will

@@ -1,12 +1,12 @@
 import { FlexLayout, StackLayout, Text } from "@salt-ds/core";
-import { Split, SplitHandle, Splitter } from "@salt-ds/lab";
+import { SplitHandle, SplitPanel, Splitter } from "@salt-ds/lab";
 import type { Meta } from "@storybook/react";
 import { QAContainer } from "docs/components";
 
 export default {
   title: "Lab/Splitter/Splitter QA",
   component: Splitter,
-  subcomponents: { Split, SplitHandle },
+  subcomponents: { SplitPanel, SplitHandle },
 } as Meta<typeof Splitter>;
 
 const box = {
@@ -26,17 +26,17 @@ export function Horizontal() {
     <QAContainer>
       <StackLayout>
         <Splitter orientation="horizontal" style={box}>
-          <Split>
+          <SplitPanel>
             <Text>Panel 1</Text>
-          </Split>
+          </SplitPanel>
           <SplitHandle />
-          <Split>
+          <SplitPanel>
             <Text>Panel 2</Text>
-          </Split>
+          </SplitPanel>
           <SplitHandle />
-          <Split>
+          <SplitPanel>
             <Text>Panel 3</Text>
-          </Split>
+          </SplitPanel>
         </Splitter>
       </StackLayout>
     </QAContainer>
@@ -48,17 +48,17 @@ export function Vertical() {
     <QAContainer>
       <FlexLayout style={altBox}>
         <Splitter orientation="vertical">
-          <Split>
+          <SplitPanel>
             <Text>Panel 1</Text>
-          </Split>
+          </SplitPanel>
           <SplitHandle />
-          <Split>
+          <SplitPanel>
             <Text>Panel 2</Text>
-          </Split>
+          </SplitPanel>
           <SplitHandle />
-          <Split>
+          <SplitPanel>
             <Text>Panel 3</Text>
-          </Split>
+          </SplitPanel>
         </Splitter>
       </FlexLayout>
     </QAContainer>

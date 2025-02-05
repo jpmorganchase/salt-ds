@@ -1,0 +1,23 @@
+.saltSplitPanel {
+  box-sizing: border-box;
+
+  background: white;
+
+  background: var(--saltPanel-background, var(--panel-background), white);
+}
+
+.saltSplitPanel:has(.saltSplitPanel) {
+  background: unset;
+}
+
+.saltSplitPanel-primary {
+  --saltPanel-background: var(--salt-container-primary-background);
+}
+
+.saltSplitPanel-secondary {
+  --saltPanel-background: var(--salt-container-secondary-background);
+}
+
+.saltSplitPanel-tertiary {
+  --saltPanel-background: var(--salt-container-tertiary-background);
+}
