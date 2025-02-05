@@ -20,6 +20,7 @@ import {
   type QAContainerProps,
 } from "docs/components";
 import "./dialog.stories.css";
+import { CloseIcon } from "@salt-ds/icons";
 import { Fragment } from "react";
 
 export default {
@@ -220,6 +221,14 @@ export const DialogHeaders: StoryFn<QAContainerProps> = () => (
       preheader="Ensure you read and agree to these Terms"
     />
     <DialogHeader
+      style={{
+        width: 600,
+      }}
+      header="Terms and conditions"
+      preheader="Ensure you read and agree to these Terms"
+      description="Effective date: August 29, 2024"
+    />
+    <DialogHeader
       status="info"
       header="Terms and conditions"
       style={{
@@ -227,12 +236,28 @@ export const DialogHeaders: StoryFn<QAContainerProps> = () => (
       }}
     />
     <DialogHeader
+      actions={
+        <Button aria-label="Close dialog" appearance="transparent">
+          <CloseIcon aria-hidden />
+        </Button>
+      }
       status="info"
       style={{
         width: 600,
       }}
       header="Terms and conditions"
-      preheader="Ensure you read and agree to these Terms"
+    />
+    <DialogHeader
+      actions={
+        <Button aria-label="Close dialog" appearance="transparent">
+          <CloseIcon aria-hidden />
+        </Button>
+      }
+      status="info"
+      style={{
+        width: 600,
+      }}
+      header="Complete terms and conditions for using the services provided by our company"
     />
   </QAContainer>
 );
