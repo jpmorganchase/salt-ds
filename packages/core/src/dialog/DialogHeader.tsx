@@ -1,15 +1,20 @@
+import {
+  H2,
+  StatusIndicator,
+  Text,
+  type ValidationStatus,
+} from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
-import clsx from "clsx";
+import { clsx } from "clsx";
 import {
   type ComponentPropsWithoutRef,
   type ReactNode,
   forwardRef,
 } from "react";
-import { StatusIndicator, type ValidationStatus } from "../status-indicator";
-import { H2, Text } from "../text";
-import { makePrefixer } from "../utils";
 import { useDialogContext } from "./DialogContext";
+
+import { makePrefixer } from "../utils";
 import dialogHeaderCss from "./DialogHeader.css";
 
 const withBaseName = makePrefixer("saltDialogHeader");
@@ -30,15 +35,25 @@ export interface DialogHeaderProps extends ComponentPropsWithoutRef<"div"> {
    * Displays the preheader just above the header
    **/
   preheader?: ReactNode;
+  /**
+   * Description text is displayed just below the header
+   **/
+  description?: ReactNode;
+  /**
+   * Actions to be displayed in header
+   */
+  actions?: ReactNode;
 }
 
 export const DialogHeader = forwardRef<HTMLDivElement, DialogHeaderProps>(
   function DialogHeader(props, ref) {
     const {
       className,
+      description,
+      disableAccent,
+      actions,
       header,
       preheader,
-      disableAccent,
       status: statusProp,
       ...rest
     } = props;
@@ -68,14 +83,20 @@ export const DialogHeader = forwardRef<HTMLDivElement, DialogHeaderProps>(
         {...rest}
       >
         {status && <StatusIndicator status={status} />}
-        <H2 className={withBaseName("header")}>
-          {preheader && (
-            <Text variant="secondary" className={withBaseName("preheader")}>
-              {preheader}
+        <div className={withBaseName("container")}>
+          <H2 className={withBaseName("header")}>
+            {preheader && <Text color="primary">{preheader}</Text>}
+            {header}
+          </H2>
+          {description && (
+            <Text color="secondary" className={withBaseName("description")}>
+              {description}
             </Text>
           )}
-          <div>{header}</div>
-        </H2>
+        </div>
+        {actions && (
+          <div className={withBaseName("actionsContainer")}>{actions}</div>
+        )}
       </div>
     );
   },

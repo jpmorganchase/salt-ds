@@ -29,7 +29,6 @@ export * from "./date-input";
 export * from "./date-picker";
 export * from "./deck-item";
 export * from "./deck-layout";
-export * from "./dialog";
 export * from "./dropdown";
 export * from "./editable-label";
 export {
@@ -52,7 +51,6 @@ export * from "./localization-provider";
 export * from "./logo";
 export * from "./menu-button";
 export * from "./metric";
-export * from "./overlay";
 export * from "./portal";
 export * from "./query-input";
 export * from "./responsive";

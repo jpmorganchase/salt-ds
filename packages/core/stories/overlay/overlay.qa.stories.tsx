@@ -1,8 +1,8 @@
 import {
   Button,
   Overlay,
+  OverlayHeader,
   OverlayPanel,
-  OverlayPanelCloseButton,
   OverlayPanelContent,
   OverlayTrigger,
 } from "@salt-ds/core";
@@ -15,6 +15,7 @@ import {
 } from "docs/components";
 
 import "./overlay.stories.css";
+import { CloseIcon } from "@salt-ds/icons";
 
 export default {
   title: "Core/Overlay/Overlay QA",
@@ -93,11 +94,20 @@ NoStyleInjectionGrid.parameters = {
 };
 
 export const CloseButton: StoryFn<QAContainerProps> = (props) => {
+  const CloseButton = () => (
+    <Button
+      aria-label="Close overlay"
+      appearance="transparent"
+      sentiment="neutral"
+    >
+      <CloseIcon aria-hidden />
+    </Button>
+  );
   return (
     <QAContainer
       height={800}
-      cols={5}
-      itemPadding={50}
+      cols={1}
+      itemPadding={80}
       itemWidthAuto
       width={1200}
       {...props}
@@ -106,10 +116,16 @@ export const CloseButton: StoryFn<QAContainerProps> = (props) => {
         <OverlayTrigger>
           <Button>Show Overlay</Button>
         </OverlayTrigger>
-        <OverlayPanel>
-          <OverlayPanelCloseButton />
+        <OverlayPanel
+          style={{
+            width: "30ch",
+          }}
+        >
+          <OverlayHeader
+            header="Guidelines for optimal use of our application"
+            actions={<CloseButton />}
+          />
           <OverlayPanelContent>
-            <h3 className="content-heading">Title</h3>
             <div>Content of Overlay</div>
           </OverlayPanelContent>
         </OverlayPanel>
@@ -152,9 +168,19 @@ export const NoStyleInjectionCloseButton: StoryFn<
           <Button>Show Overlay</Button>
         </OverlayTrigger>
         <OverlayPanel>
-          <OverlayPanelCloseButton />
+          <OverlayHeader
+            header="Guidelines for optimal use of our application"
+            actions={
+              <Button
+                aria-label="Close overlay"
+                appearance="transparent"
+                sentiment="neutral"
+              >
+                <CloseIcon aria-hidden />
+              </Button>
+            }
+          />
           <OverlayPanelContent>
-            <h3 className="content-heading">Title</h3>
             <div>Content of Overlay</div>
           </OverlayPanelContent>
         </OverlayPanel>

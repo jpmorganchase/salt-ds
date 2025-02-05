@@ -1,22 +1,38 @@
 /* Styles applied to the root element */
 .saltDialogHeader {
-  padding-bottom: var(--salt-spacing-100);
+  padding-bottom: var(--salt-spacing-300);
   padding-left: var(--salt-spacing-300);
   padding-right: var(--salt-spacing-300);
-  align-items: center;
   display: flex;
   flex-direction: row;
   gap: var(--salt-spacing-100);
   box-sizing: border-box;
 }
-
 .saltDialogHeader-header {
   margin: 0;
+}
+
+.saltDialogHeader-container {
+  flex-grow: 1;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--salt-spacing-50);
+  padding-top: calc((var(--salt-size-base) - var(--salt-text-h2-lineHeight)) / 2);
+}
+
+.saltDialogHeader-header > .saltText {
+  margin: 0;
+}
+
+.saltDialogHeader-actionsContainer {
+  align-self: flex-start;
 }
 
 /* Styles applied to the status indicator icon overriding its default size */
 .saltDialogHeader .saltStatusIndicator.saltIcon {
   --icon-size: var(--salt-text-h2-lineHeight);
+  padding-top: calc((var(--salt-size-base) - var(--salt-text-h2-lineHeight)) / 2);
 }
 
 /* Styles applied to DialogHeader when accent={true} */
@@ -29,23 +45,7 @@
   position: absolute;
   top: 0;
   left: 0;
-  bottom: var(--salt-spacing-100);
+  bottom: var(--salt-spacing-300);
   width: var(--salt-size-bar);
   background: var(--salt-accent-background);
-}
-
-.saltDialogHeader-error::before {
-  background: var(--salt-status-error-borderColor);
-}
-
-.saltDialogHeader-info::before {
-  background: var(--salt-status-info-borderColor);
-}
-
-.saltDialogHeader-success::before {
-  background: var(--salt-status-success-borderColor);
-}
-
-.saltDialogHeader-warning::before {
-  background: var(--salt-status-warning-borderColor);
 }
