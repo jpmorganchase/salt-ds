@@ -1,0 +1,18 @@
+.saltCarouselSlider {
+  display: flex;
+  scroll-snap-type: x mandatory;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  width: 100%;
+  gap: var(--salt-spacing-100);
+}
+@supports (scrollbar-width: none) {
+  .saltCarouselSlider {
+    scrollbar-width: none;
+  }
+}
+@supports not (scrollbar-width: none) {
+  .saltCarouselSlider::-webkit-scrollbar {
+    display: none;
+  }
+}

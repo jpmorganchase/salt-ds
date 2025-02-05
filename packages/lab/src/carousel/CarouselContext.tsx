@@ -1,28 +1,78 @@
-import { createContext } from "@salt-ds/core";
-import { type SyntheticEvent, useContext } from "react";
+import { createContext, useControlled } from "@salt-ds/core";
+import { type ReactNode, useEffect, useReducer } from "react";
+import {
+  type CarouselReducerDispatch,
+  type CarouselReducerState,
+  carouselReducer,
+} from "./CarouselReducer";
 
-export interface CarouselContextValue {
-  activeSlide: number;
-
-  nextSlide: (event: SyntheticEvent) => void;
-  prevSlide: (event: SyntheticEvent) => void;
-  goToSlide: (index: number) => void;
-  slides: string[];
-  registerSlide: (slideId: string) => void;
-}
-
-export const CarouselContext = createContext<CarouselContextValue>(
-  "CarouselContext",
+export const CarouselStateContext = createContext<CarouselReducerState>(
+  "CarouselStateContext",
   {
-    activeSlide: 0,
-    nextSlide: () => undefined,
-    prevSlide: () => undefined,
-    goToSlide: () => undefined,
-    slides: [],
-    registerSlide: () => undefined,
+    slides: new Map(),
+    activeSlideIndex: 0,
+    visibleSlides: 1,
+    focusedSlideIndex: 0,
+    carouselId: undefined,
+  },
+);
+export const CarouselDispatchContext = createContext<CarouselReducerDispatch>(
+  "CarouselDispatchContext",
+  () => {
+    return;
   },
 );
 
-export function useCarousel() {
-  return useContext(CarouselContext);
+export function CarouselProvider({
+  children,
+  activeSlideIndex: activeSlideIndexProp,
+  defaultActiveSlideIndex = 0,
+  visibleSlides = 1,
+  id,
+}: {
+  children: ReactNode;
+  activeSlideIndex?: number;
+  defaultActiveSlideIndex?: number;
+  visibleSlides?: number;
+  id?: string;
+}) {
+  const [activeSlideIndex, setActiveSlideIndex] = useControlled({
+    controlled: activeSlideIndexProp,
+    default: defaultActiveSlideIndex,
+    name: "Carousel",
+    state: "activeSlideIndex",
+  });
+  const [state, dispatch] = useReducer(carouselReducer, {
+    slides: new Map(),
+    focusedSlideIndex: activeSlideIndex,
+    activeSlideIndex,
+    visibleSlides,
+    carouselId: id,
+  });
+
+  useEffect(() => {
+    dispatch({
+      type: "updateSlideCount",
+      payload: visibleSlides,
+    });
+  }, [visibleSlides]);
+
+  useEffect(() => {
+    dispatch({
+      type: "moveToIndex",
+      payload: activeSlideIndex,
+    });
+  }, [activeSlideIndex]);
+
+  useEffect(() => {
+    activeSlideIndexProp && setActiveSlideIndex(activeSlideIndexProp);
+  }, [activeSlideIndexProp]);
+
+  return (
+    <CarouselStateContext.Provider value={state}>
+      <CarouselDispatchContext.Provider value={dispatch}>
+        {children}
+      </CarouselDispatchContext.Provider>
+    </CarouselStateContext.Provider>
+  );
 }
