@@ -2,8 +2,6 @@
   scroll-snap-align: center;
   display: flex;
   flex-direction: column;
-  /*display: none;*/
-}
-.saltCarouselSlide-active {
-  /*display: block;*/
+  flex: 0 0 100%;
+  max-width: 100%;
 }

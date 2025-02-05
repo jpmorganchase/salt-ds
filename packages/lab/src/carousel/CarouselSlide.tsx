@@ -2,7 +2,7 @@ import { makePrefixer, useId } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
-import { type HTMLAttributes, forwardRef, useEffect, useRef } from "react";
+import { forwardRef, type HTMLAttributes, useEffect, useRef } from "react";
 import { useCarousel } from "./CarouselContext";
 import carouselSlideCss from "./CarouselSlide.css";
 
