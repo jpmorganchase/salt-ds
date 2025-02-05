@@ -1,11 +1,4 @@
-import {
-  Button,
-  DialogCloseButton,
-  Drawer,
-  FlexLayout,
-  StackLayout,
-  Text,
-} from "@salt-ds/core";
+import { Button, FlexLayout, StackLayout, Text } from "@salt-ds/core";
 import {
   ArrowLeftIcon,
   ArrowRightIcon,
@@ -114,7 +107,7 @@ export function MultiBordered() {
   );
 }
 
-export function MultiTransparent() {
+export function Transparent() {
   return (
     <FlexLayout
       style={{
@@ -229,7 +222,7 @@ export function MinMaxSize() {
   );
 }
 
-export function CollapsibleSetSize() {
+export function CollapsibleFixedSizing() {
   return (
     <Splitter style={box} orientation="horizontal" appearance="bordered">
       <SplitPanel
@@ -371,36 +364,5 @@ export function ProgrammableResize() {
         </Splitter>
       </StackLayout>
     </FlexLayout>
-  );
-}
-
-export function WipInsideDrawer() {
-  const [open, setOpen] = useState(false);
-
-  return (
-    <>
-      <Button onClick={() => setOpen(true)}>Open Drawer</Button>
-      <Drawer
-        position="right"
-        open={open}
-        onOpenChange={setOpen}
-        style={{ width: 420, padding: 0 }}
-      >
-        <DialogCloseButton onClick={() => setOpen(false)} />
-        <Splitter orientation="horizontal">
-          <SplitPanel defaultSize={0} />
-          <SplitHandle />
-          <SplitPanel
-            collapsible
-            collapsedSize={0}
-            minSize={100}
-            onCollapse={() => setOpen(false)}
-            style={{ padding: "24px" }}
-          >
-            Hello world!
-          </SplitPanel>
-        </Splitter>
-      </Drawer>
-    </>
   );
 }

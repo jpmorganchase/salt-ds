@@ -36,16 +36,14 @@
   width: 4px;
 }
 
-.saltSplitHandle-bordered {
-  box-shadow: 0 0 0 1px lightgrey;
+/* two handles touching (horizontally) */
+div[data-panel-size="0.0"] + .saltSplitHandle-bordered[data-panel-group-direction="horizontal"] {
+  margin-left: -1px;
 }
 
-.saltSplitHandle-bordered[data-panel-group-direction="horizontal"] + div[data-panel-size="0.0"] + .saltSplitHandle-bordered[data-panel-group-direction="horizontal"] {
-  margin-left: 1px;
-}
-
-.saltSplitHandle-bordered[data-panel-group-direction="vertical"] + div[data-panel-size="0.0"] + .saltSplitHandle-bordered[data-panel-group-direction="vertical"] {
-  margin-top: 1px;
+/* two handles touching (vertically) */
+div[data-panel-size="0.0"] + .saltSplitHandle-bordered[data-panel-group-direction="vertical"] {
+  margin-top: -1px;
 }
 
 .saltSplitHandle-dot {
@@ -67,25 +65,30 @@
   background: var(--salt-separable-foreground-active);
 }
 
-.saltSplitHandle-accent-top-bottom,
+.saltSplitHandle-accent-top-bottom {
+  border-top: 1px solid lightgrey;
+  border-bottom: 1px solid lightgrey;
+}
+
 .saltSplitHandle-accent-left-right {
-  box-shadow: 0 0 0 1px lightgrey;
+  border-left: 1px solid lightgrey;
+  border-right: 1px solid lightgrey;
 }
 
 .saltSplitHandle-accent-left {
-  box-shadow: -1px 0 0 0.5px lightgrey;
+  border-left: 1px solid lightgrey;
 }
 
 .saltSplitHandle-accent-right {
-  box-shadow: 1px 0 0 0.5px lightgrey;
+  border-right: 1px solid lightgrey;
 }
 
 .saltSplitHandle-accent-top {
-  box-shadow: 0 -1px 0 0.5px lightgrey;
+  border-top: 1px solid lightgrey;
 }
 
 .saltSplitHandle-accent-bottom {
-  box-shadow: 0 1px 0 0.5px lightgrey;
+  border-bottom: 1px solid lightgrey;
 }
 
 .saltSplitHandle-primary {

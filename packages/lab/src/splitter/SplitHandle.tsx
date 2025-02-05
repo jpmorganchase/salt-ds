@@ -61,6 +61,7 @@ export function SplitHandle({
     <PanelResizeHandle
       className={clsx(
         withBaseName(),
+        withBaseName(appearance),
         withBaseName("accent", accent),
         variant && withBaseName(variant),
         className,

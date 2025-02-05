@@ -37,6 +37,7 @@ export const SplitPanel = forwardRef<ImperativePanelHandle, SplitPanelProps>(
       <Panel
         data-variant="primary"
         className={clsx(withBaseName(), variant && withBaseName(variant))}
+        ref={ref}
         {...props}
       />
     );
