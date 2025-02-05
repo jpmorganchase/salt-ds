@@ -40,3 +40,8 @@
   color: var(--salt-content-primary-foreground-disabled);
   cursor: var(--salt-selectable-cursor-disabled);
 }
+
+/* TODO: Find a better way of doing this */
+.saltOption .saltIcon:not(.saltCheckboxIcon-icon) {
+  min-height: var(--salt-text-lineHeight);
+}
