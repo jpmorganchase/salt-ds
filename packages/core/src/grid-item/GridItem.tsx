@@ -4,12 +4,12 @@ import { type ElementType, type ReactElement, forwardRef } from "react";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { useBreakpoint } from "../breakpoints";
+import { parseSpacing } from "../flex-layout/parseSpacing";
 import {
   type PolymorphicComponentPropWithRef,
   type PolymorphicRef,
   type ResponsiveProp,
   makePrefixer,
-  parseSpacing,
   resolveResponsiveValue,
 } from "../utils";
 import gridItemCss from "./GridItem.css";

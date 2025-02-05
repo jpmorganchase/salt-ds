@@ -8,12 +8,12 @@ import {
   forwardRef,
 } from "react";
 import { useBreakpoint } from "../breakpoints";
+import { parseSpacing } from "../flex-layout/parseSpacing";
 import {
   type PolymorphicComponentPropWithRef,
   type PolymorphicRef,
   type ResponsiveProp,
   makePrefixer,
-  parseSpacing,
   resolveResponsiveValue,
 } from "../utils";
 import flexItemCss from "./FlexItem.css";

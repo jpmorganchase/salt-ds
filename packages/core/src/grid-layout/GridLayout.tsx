@@ -6,13 +6,13 @@ import {
   type PolymorphicRef,
   type ResponsiveProp,
   makePrefixer,
-  parseSpacing,
   resolveResponsiveValue,
 } from "../utils";
 
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { useBreakpoint } from "../breakpoints";
+import { parseSpacing } from "../flex-layout/parseSpacing";
 import gridLayoutCss from "./GridLayout.css";
 
 export type GridLayoutProps<T extends ElementType> =

@@ -8,10 +8,10 @@ import {
   type PolymorphicRef,
   type ResponsiveProp,
   makePrefixer,
-  parseSpacing,
   resolveResponsiveValue,
 } from "../utils";
 import flexLayoutCss from "./FlexLayout.css";
+import { parseSpacing } from "./parseSpacing";
 
 const withBaseName = makePrefixer("saltFlexLayout");
 
