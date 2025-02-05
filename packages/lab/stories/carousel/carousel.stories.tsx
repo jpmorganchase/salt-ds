@@ -1,6 +1,11 @@
 import type { Meta, StoryFn } from "@storybook/react";
 
-import { Carousel, CarouselSlide } from "@salt-ds/lab";
+import {
+  Carousel,
+  CarouselControls,
+  CarouselSlide,
+  CarouselSlider,
+} from "@salt-ds/lab";
 import "./carousel.stories.css";
 import { Button, H2, SplitLayout, Text } from "@salt-ds/core";
 
@@ -13,20 +18,23 @@ const CarouselExample: StoryFn<typeof Carousel> = (args) => {
   return (
     <div style={{ maxWidth: 600 }}>
       <Carousel {...args}>
-        {Array.from({ length: 5 }, (_, index) => (
-          <CarouselSlide key={`item-${index}`}>
-            <div
-              className={`carousel-image-placeholder carousel-image-placeholder-${
-                index + 1
-              }`}
-            />
-            <div style={{ padding: " 1rem" }}>
-              <H2>Header of the slider {index + 1}</H2>
-              <Text> This is a slider in a carousel</Text>
-              <SplitLayout endItem={<Button>Learn more</Button>} />
-            </div>
-          </CarouselSlide>
-        ))}
+        <CarouselControls />
+        <CarouselSlider>
+          {Array.from({ length: 5 }, (_, index) => (
+            <CarouselSlide key={`item-${index}`}>
+              <div
+                className={`carousel-image-placeholder carousel-image-placeholder-${
+                  index + 1
+                }`}
+              />
+              <div style={{ padding: " 1rem" }}>
+                <H2>Header of the slider {index + 1}</H2>
+                <Text> This is a slider in a carousel</Text>
+                <SplitLayout endItem={<Button>Learn more</Button>} />
+              </div>
+            </CarouselSlide>
+          ))}
+        </CarouselSlider>
       </Carousel>
     </div>
   );
