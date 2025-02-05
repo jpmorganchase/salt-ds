@@ -1,24 +1,29 @@
+.carousel-container {
+  max-width: 600px;
+  width: 80vw;
+}
 .carousel-image-placeholder {
   height: 250px;
-  width: 500px;
-  white-space: normal;
+  width: 100%;
 }
 
-.carousel-image-placeholder-1 {
+.carousel-image-placeholder-1,
+.carousel-image-placeholder-6 {
   background-color: var(--salt-category-1-bold-background);
 }
 
-.carousel-image-placeholder-2 {
+.carousel-image-placeholder-2,
+.carousel-image-placeholder-7 {
   background-color: var(--salt-category-2-bold-background);
 }
-.carousel-image-placeholder-3 {
+.carousel-image-placeholder-3,
+.carousel-image-placeholder-8 {
   background-color: var(--salt-category-3-bold-background);
 }
-
-.carousel-image-placeholder-4 {
+.carousel-image-placeholder-4,
+.carousel-image-placeholder-9 {
   background-color: var(--salt-category-4-bold-background);
 }
-
 .carousel-image-placeholder-5 {
   background-color: var(--salt-category-5-bold-background);
 }
