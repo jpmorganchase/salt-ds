@@ -1,4 +1,4 @@
-import { Link } from "@salt-ds/core";
+import { Link, Text } from "@salt-ds/core";
 import { StackoverflowIcon } from "@salt-ds/icons";
 import type { Meta, StoryFn } from "@storybook/react";
 
@@ -7,100 +7,98 @@ export default {
   component: Link,
 } as Meta<typeof Link>;
 
-export const Primary: StoryFn<typeof Link> = () => {
-  return <Link href="https://www.google.com">Link to URL</Link>;
+const LinkTemplate: StoryFn<typeof Link> = (args) => <Link {...args} />;
+
+export const Primary = LinkTemplate.bind({});
+Primary.args = {
+  href: "https://github.com/salt-ds/core",
+  children: "Link to URL",
 };
 
-export const Secondary: StoryFn<typeof Link> = () => {
+export const Secondary = LinkTemplate.bind({});
+Secondary.args = {
+  color: "secondary",
+  href: "https://github.com/salt-ds/core",
+  children: "Link to URL",
+};
+
+export const Accent = LinkTemplate.bind({});
+Accent.args = {
+  color: "accent",
+  href: "https://github.com/salt-ds/core",
+  children: "Link to URL",
+};
+
+export const InheritColor: StoryFn<typeof Link> = (args) => {
   return (
-    <Link color="secondary" href="https://www.google.com">
-      Link to URL
-    </Link>
+    <Text color="error">
+      You've encountered an error{" "}
+      <Link href="https://github.com/salt-ds/core" color="inherit" {...args}>
+        (#5417)
+      </Link>
+    </Text>
   );
 };
 
-export const InheritColor: StoryFn<typeof Link> = () => {
-  return (
-    <Link color="inherit" href="https://www.google.com">
-      Link to URL
-    </Link>
-  );
+export const TargetBlank = LinkTemplate.bind({});
+TargetBlank.args = {
+  href: "https://github.com/salt-ds/core",
+  children: "Link to URL",
+  target: "_blank",
 };
 
-export const TargetBlank: StoryFn<typeof Link> = () => {
-  return (
-    <Link href="https://www.google.com" target="_blank">
-      Link to URL
-    </Link>
-  );
+export const TargetBlankCustomIcon = LinkTemplate.bind({});
+TargetBlankCustomIcon.args = {
+  href: "https://github.com/salt-ds/core",
+  children: "Link to URL",
+  target: "_blank",
+  IconComponent: StackoverflowIcon,
 };
 
-export const TargetBlankCustomIcon: StoryFn<typeof Link> = () => {
-  return (
-    <Link
-      IconComponent={StackoverflowIcon}
-      href="https://www.google.com"
-      target="_blank"
-    >
-      Link to URL
-    </Link>
-  );
-};
-
-export const Strong: StoryFn<typeof Link> = () => {
-  return (
-    <Link href="#root" target="_blank">
+export const Strong = LinkTemplate.bind({});
+Strong.args = {
+  href: "https://github.com/salt-ds/core",
+  children: (
+    <span>
       This is a <strong>strong</strong> link example
-    </Link>
-  );
+    </span>
+  ),
 };
 
-export const Small: StoryFn<typeof Link> = () => {
-  return (
-    <Link href="#root">
+export const Small = LinkTemplate.bind({});
+Small.args = {
+  href: "https://github.com/salt-ds/core",
+  children: (
+    <span>
       This is a <small>small</small> link example
-    </Link>
-  );
+    </span>
+  ),
 };
 
-export const StyleAs: StoryFn<typeof Link> = () => {
-  return (
-    <Link href="#root" styleAs="label">
-      This is a styleAs label example
-    </Link>
-  );
+export const StyleAs = LinkTemplate.bind({});
+StyleAs.args = {
+  href: "https://github.com/salt-ds/core",
+  children: "This is a styleAs label example",
+  styleAs: "label",
 };
 
-export const TargetBlankNoIcon: StoryFn<typeof Link> = () => {
-  return (
-    <Link IconComponent={null} href="#root" target="_blank">
-      This has no icon
-    </Link>
-  );
+export const TargetBlankNoIcon = LinkTemplate.bind({});
+TargetBlankNoIcon.args = {
+  href: "https://github.com/salt-ds/core",
+  children: "This has no icon",
+  target: "_blank",
+  IconComponent: null,
 };
 
-export const Truncation: StoryFn<typeof Link> = () => {
+export const Truncation: StoryFn<typeof Link> = (args) => {
   return (
     <div style={{ width: 150 }}>
-      <Link href="#root" maxRows={1}>
+      <Link href="#root" maxRows={1} {...args}>
         This is a truncation example
       </Link>
     </div>
   );
 };
-
-// export const WithTooltip: StoryFn<typeof Link> = () => {
-//   return (
-//     <div style={{ width: 50 }}>
-//       <Link
-//         // truncate={true} maxRows={1}
-//         href="https://www.google.com"
-//       >
-//         Link to URL with tooltip
-//       </Link>
-//     </div>
-//   );
-// };
 
 const CustomLinkImplementation = (props: any) => (
   <a href="#root" aria-label={"overridden-label"} {...props}>
@@ -108,15 +106,14 @@ const CustomLinkImplementation = (props: any) => (
   </a>
 );
 
-export const RenderElement: StoryFn<typeof Link> = () => {
-  return <Link href="#root" render={<CustomLinkImplementation />} />;
+export const RenderElement = LinkTemplate.bind({});
+RenderElement.args = {
+  href: "https://github.com/salt-ds/core",
+  render: <CustomLinkImplementation />,
 };
 
-export const RenderProp: StoryFn<typeof Link> = () => {
-  return (
-    <Link
-      href="#root"
-      render={(props) => <CustomLinkImplementation {...props} />}
-    />
-  );
+export const RenderProp = LinkTemplate.bind({});
+RenderProp.args = {
+  href: "https://github.com/salt-ds/core",
+  render: (props) => <CustomLinkImplementation {...props} />,
 };

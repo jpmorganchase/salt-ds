@@ -1,4 +1,4 @@
-import { Link } from "@salt-ds/core";
+import { Link, Text } from "@salt-ds/core";
 import { UserIcon } from "@salt-ds/icons";
 import type { Meta, StoryFn } from "@storybook/react";
 import {
@@ -27,14 +27,14 @@ export const AllVariantsGrid: StoryFn<QAContainerProps> = (props) => (
     <Link href="https://www.google.com" color="secondary">
       Secondary Link
     </Link>
-    <Link href="https://www.google.com" color="secondary" target="_blank">
-      Secondary Link target blank
+    <Link href="https://www.google.com" color="accent">
+      Accent Link
     </Link>
-    <div style={{ width: 150 }}>
-      <Link href="https://www.google.com" maxRows={1} color="secondary">
-        <strong>Strong</strong> and <small>small</small> truncation example
+    <Text color="error">
+      <Link href="https://www.google.com" color="inherit">
+        Inherit Link
       </Link>
-    </div>
+    </Text>
     <Link
       href="https://www.google.com"
       style={{ color: "var(--salt-content-foreground-visited)" }}
@@ -87,14 +87,20 @@ export const NoStyleInjectionGrid: StoryFn<QAContainerNoStyleInjectionProps> = (
     <Link href="https://www.google.com" color="secondary">
       Secondary Link
     </Link>
-    <Link href="https://www.google.com" color="secondary" target="_blank">
-      Secondary Link target blank
+    <Link href="https://www.google.com" color="accent">
+      Accent Link
     </Link>
-    <div style={{ width: 150 }}>
-      <Link href="https://www.google.com" maxRows={1} color="secondary">
-        <strong>Strong</strong> and <small>small</small> truncation example
+    <Text color="error">
+      <Link href="https://www.google.com" color="inherit">
+        Inherit Link
       </Link>
-    </div>
+    </Text>
+    <Link
+      href="https://www.google.com"
+      style={{ color: "var(--salt-content-foreground-visited)" }}
+    >
+      Forced visited
+    </Link>
     <Link
       href="https://www.google.com"
       target="_blank"

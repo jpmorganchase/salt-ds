@@ -24,12 +24,16 @@ const withBaseName = makePrefixer("saltLink");
  */
 export interface LinkProps
   extends Omit<ComponentPropsWithoutRef<"a">, "color">,
-    Pick<TextProps<"a">, "maxRows" | "styleAs" | "color" | "variant"> {
+    Pick<TextProps<"a">, "maxRows" | "styleAs" | "variant"> {
   IconComponent?: ComponentType<IconProps> | null;
   /**
    * Render prop to enable customisation of anchor element.
    */
   render?: RenderPropsType["render"];
+  /*
+   * The color of the text. Defaults to "primary".
+   */
+  color?: "inherit" | "primary" | "secondary" | "accent";
 }
 
 export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
@@ -60,11 +64,17 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
   return (
     <Text
       as={LinkAction}
-      className={clsx(withBaseName(), className)}
+      className={clsx(
+        withBaseName(),
+        {
+          [withBaseName(color)]: color !== "inherit",
+        },
+        className,
+      )}
       href={href}
       ref={ref}
       target={target}
-      color={color}
+      color="inherit"
       {...rest}
     >
       {children}
