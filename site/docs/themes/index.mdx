@@ -297,7 +297,18 @@ There are two ways to change the styles:
 
 `<SaltProviderNext>` is the technical mechanism that styles components with the JPM Brand design foundation. Unlike `<SaltProvider>` (which provides the UITK foundation) the Next Provider has props which provider specific styling options for Salt components.
 
-These props can enable a phased 'theme' migration of Salt components from the Salt UITK styles to Salt JPM Brand styles (teal, sharp, corners, Amplitude) to ensure consistent brand and app experiences across the business.
+These props can enable a phased 'theme' migration of Salt components from the Salt UITK styles to Salt JPM Brand styles. You may consider this short-term option if you are migrating a large complex app or multiple apps within a platform.
+
+Salt doesn't recommend maintaining these styles, but planning a long-term adoption of the JPM Brand styles (teal, sharp, corners, Amplitude) to ensure consistent brand and app experiences across the business.
+
+```jsx
+<SaltProviderNext
+    accent="teal"             // or "blue"
+    corner="rounded"          // or "sharp"
+    headingFont="Amplitude"   // or "Open Sans"
+    actionFont="Amplitude"    // or "Open Sans"
+>
+```
 
 A 'recipe' is a preset selection of these options. You can use an npm package to ensure consistency. For example, a team can encapsulate preferred presets, allowing product teams to use them without needing detailed knowledge of the options.
 
