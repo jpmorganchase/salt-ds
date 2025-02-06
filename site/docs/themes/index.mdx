@@ -279,29 +279,27 @@ To ensure that every user sees the Amplitude font correctly, you'll need to add 
 
 ## Customizing the theme
 
-The design token structure for the JPM Brand theme has been simplified and can be customized if required.
+The design tokens can be customized to adjust look-and-feel.
 
-In code there are two ways to customize the theme:
+Salt's visual design strategy for UI components is to provide:
+
+- **UITK theme** for migration to Salt from the legacy system
+- **JPM Brand theme** as the long-term visual identity
+
+If you do choose to change the tokens it is your responsibility to maintian those styles in code and Figma. Note, we don't provide these options in Figma.
+
+There are two ways to change the styles:
 
 1. System-wide 'styling options'
 2. Targeting design tokens
 
-**Note:** If you choose to theme Salt its your responsibility to maintain and deliver that theme in code and Figma.
-
 #### Styling options and theme recipes
 
-SaltProviderNext styling option props provide the capability to make specific adjusts to the design of Salt components across the system.
+`<SaltProviderNext>` is the technical mechanism that styles components with the JPM Brand design foundation. Unlike `<SaltProvider>` (which provides the UITK foundation) the Next Provider has props which provider specific styling options for Salt components.
 
-```jsx
-<SaltProviderNext
-    accent="teal"
-    corner="rounded"
-    headingFont="Amplitude"
-    actionFont="Amplitude"
->
-```
+These props can enable a phased 'theme' migration of Salt components from the Salt UITK styles to Salt JPM Brand styles (teal, sharp, corners, Amplitude) to ensure consistent brand and app experiences across the business.
 
-A theme recipe is a defined selection of styling options for your theme. You can use an npm package to ensure consistency. For example, a team can encapsulate preferred presets, allowing product teams to use them without needing detailed knowledge of the options.
+A 'recipe' is a preset selection of these options. You can use an npm package to ensure consistency. For example, a team can encapsulate preferred presets, allowing product teams to use them without needing detailed knowledge of the options.
 
 ```jsx
 // Example recipe: const sharedStylePresets = {accent: 'teal', corner: 'rounded'};
