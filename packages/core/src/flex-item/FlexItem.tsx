@@ -8,6 +8,7 @@ import {
   forwardRef,
 } from "react";
 import { useBreakpoint } from "../breakpoints";
+import { parseSpacing } from "../flex-layout/parseSpacing";
 import {
   type PolymorphicComponentPropWithRef,
   type PolymorphicRef,
@@ -62,13 +63,6 @@ type FlexItemComponent = <T extends ElementType = "div">(
   props: FlexItemProps<T>,
 ) => ReactElement | null;
 
-function parseSpacing(value: number | string | undefined) {
-  if (value === undefined || typeof value === "string") {
-    return value;
-  }
-
-  return `calc(var(--salt-spacing-100) * ${value})`;
-}
 export const FlexItem: FlexItemComponent = forwardRef(
   <T extends ElementType = "div">(
     {

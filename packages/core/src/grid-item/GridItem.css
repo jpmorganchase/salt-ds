@@ -6,6 +6,8 @@
   grid-column-start: var(--gridItem-gridColumnStart);
   grid-row-end: var(--gridItem-gridRowEnd);
   grid-column-end: var(--gridItem-gridColumnEnd);
+  margin: var(--gridItem-margin);
+  padding: var(--gridItem-padding);
 }
 
 .saltGridItem-area {

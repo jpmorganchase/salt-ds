@@ -12,6 +12,7 @@ import {
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { useBreakpoint } from "../breakpoints";
+import { parseSpacing } from "../flex-layout/parseSpacing";
 import gridLayoutCss from "./GridLayout.css";
 
 export type GridLayoutProps<T extends ElementType> =
@@ -38,6 +39,14 @@ export type GridLayoutProps<T extends ElementType> =
        * Defines the size of the gutter between the rows by setting a density multiplier. Defaults to 1
        */
       rowGap?: ResponsiveProp<number | string>;
+      /**
+       * Defines the margin around the component. It can be specified as a number (which acts as a multiplier) or a string representing the margin value. Default is `0`.
+       */
+      margin?: ResponsiveProp<number | string>;
+      /**
+       * Defines the padding within the component. It can be specified as a number (which acts as a multiplier) or a string representing the padding value. Default is `0`.
+       */
+      padding?: ResponsiveProp<number | string>;
     }
   >;
 
@@ -55,14 +64,6 @@ function parseGridValue(value: number | string | undefined) {
   return `repeat(${value}, 1fr)`;
 }
 
-function parseSpacing(value: number | string | undefined) {
-  if (value === undefined || typeof value === "string") {
-    return value;
-  }
-
-  return `calc(var(--salt-spacing-100) * ${value})`;
-}
-
 export const GridLayout: GridLayoutComponent = forwardRef(
   <T extends ElementType = "div">(
     {
@@ -72,6 +73,8 @@ export const GridLayout: GridLayoutComponent = forwardRef(
       columns = 12,
       rows = 1,
       gap = 3,
+      margin = 0,
+      padding = 0,
       columnGap,
       rowGap,
       style,
@@ -98,8 +101,11 @@ export const GridLayout: GridLayoutComponent = forwardRef(
     const gridColumnGap = resolveResponsiveValue(columnGap, matchedBreakpoints);
 
     const gridRowGap = resolveResponsiveValue(rowGap, matchedBreakpoints);
-
+    const gridMargin = resolveResponsiveValue(margin, matchedBreakpoints);
+    const gridPadding = resolveResponsiveValue(padding, matchedBreakpoints);
     const gridLayoutStyles = {
+      "--gridLayout-margin": parseSpacing(gridMargin),
+      "--gridLayout-padding": parseSpacing(gridPadding),
       ...style,
       "--gridLayout-columns": parseGridValue(gridColumns),
       "--gridLayout-rows": parseGridValue(gridRows),

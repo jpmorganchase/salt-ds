@@ -1,0 +1,26 @@
+.spacingExampleGap:not(:last-child):after {
+  content: "";
+  background: var(--salt-category-5-subtle-background);
+  height: 100%;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: calc(var(--gridLayout-rowGap) - 2px);
+  transform: translate(calc(var(--gridLayout-rowGap) + 1px), -1px);
+  border: dotted 1px var(--salt-category-3-subtle-borderColor);
+}
+.item {
+  position: relative;
+  border: solid 1px var(--salt-container-primary-borderColor);
+  background: var(--salt-container-primary-background);
+  align-items: center;
+  justify-content: center;
+}
+.spacingExamplePadding {
+  border: dotted 1px var(--salt-category-3-subtle-borderColor);
+  background: var(--salt-category-3-subtle-background);
+}
+.spacingExampleMargin {
+  border: dotted 1px var(--salt-category-4-subtle-borderColor);
+  background: var(--salt-category-4-subtle-background);
+}

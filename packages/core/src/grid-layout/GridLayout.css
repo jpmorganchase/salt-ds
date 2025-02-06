@@ -5,6 +5,8 @@
   row-gap: var(--gridLayout-rowGap);
   grid-template-columns: var(--gridLayout-columns);
   grid-template-rows: var(--gridLayout-rows);
+  margin: var(--gridLayout-margin);
+  padding: var(--gridLayout-padding);
   grid-auto-columns: auto;
   grid-auto-rows: auto;
 }

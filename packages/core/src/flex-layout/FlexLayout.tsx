@@ -11,6 +11,7 @@ import {
   resolveResponsiveValue,
 } from "../utils";
 import flexLayoutCss from "./FlexLayout.css";
+import { parseSpacing } from "./parseSpacing";
 
 const withBaseName = makePrefixer("saltFlexLayout");
 
@@ -75,14 +76,6 @@ type FlexLayoutComponent = <T extends ElementType = "div">(
 
 function parseAlignment(style: string | undefined) {
   return style === "start" || style === "end" ? `flex-${style}` : style;
-}
-
-function parseSpacing(value: number | string | undefined) {
-  if (value === undefined || typeof value === "string") {
-    return value;
-  }
-
-  return `calc(var(--salt-spacing-100) * ${value})`;
 }
 
 export const FlexLayout: FlexLayoutComponent = forwardRef(

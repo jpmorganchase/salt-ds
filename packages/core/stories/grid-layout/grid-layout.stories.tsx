@@ -42,7 +42,30 @@ export const Default = Template.bind({});
 Default.args = {
   columns: { xs: 1, sm: 3, md: 6, lg: 9, xl: 12 },
 };
-
+const PaddingAndMargins: StoryFn<typeof GridLayout> = (args) => {
+  return (
+    <div className="spacing-example-margin">
+      <GridLayout className="spacing-example-padding" {...args}>
+        {Array.from({ length: 12 }, (_, index) => (
+          <GridItem
+            className="spacing-example-gap"
+            key={`item-${index + 1}`}
+            padding={1}
+          >
+            <p>Item {index + 1}</p>
+          </GridItem>
+        ))}
+      </GridLayout>
+    </div>
+  );
+};
+export const WithPaddingAndMargins = PaddingAndMargins.bind({});
+WithPaddingAndMargins.args = {
+  wrap: false,
+  gap: 1,
+  padding: 2,
+  margin: 2,
+};
 const ResponsiveView: StoryFn<typeof GridLayout> = (args) => {
   return (
     <SaltProvider breakpoints={customBreakpoints}>
