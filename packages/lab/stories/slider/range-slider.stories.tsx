@@ -22,10 +22,6 @@ const Template: StoryFn = ({ ...args }) => {
 
 export const Default = Template.bind({});
 Default.args = {
-  min: 0,
-  max: 30,
-  defaultValue: [0, 4],
-  name: "Default range slider",
   "aria-label": "default",
 };
 

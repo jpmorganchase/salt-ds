@@ -24,10 +24,6 @@ const Template: StoryFn = ({ ...args }) => {
 
 export const Default = Template.bind({});
 Default.args = {
-  min: 5,
-  max: 125,
-  defaultValue: 100,
-  step: 5,
   "aria-label": "default",
 };
 

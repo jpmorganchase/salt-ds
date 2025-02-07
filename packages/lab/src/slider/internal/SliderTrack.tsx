@@ -60,7 +60,7 @@ export const SliderTrack = forwardRef<HTMLDivElement, SliderTrackProps>(
       >
         {/* Min Label */}
         {!markers && (
-          <Text as="label" className={withBaseName("minLabel")}>
+          <Text styleAs="label" className={withBaseName("minLabel")}>
             {minLabel || min}
           </Text>
         )}
@@ -81,7 +81,7 @@ export const SliderTrack = forwardRef<HTMLDivElement, SliderTrackProps>(
         </div>
         {/* Max label */}
         {!markers && (
-          <Text as="label" className={withBaseName("maxLabel")}>
+          <Text styleAs="label" className={withBaseName("maxLabel")}>
             {maxLabel || max}
           </Text>
         )}
@@ -98,7 +98,7 @@ export const SliderTrack = forwardRef<HTMLDivElement, SliderTrackProps>(
                     } as React.CSSProperties
                   }
                   key={marker.value}
-                  as="label"
+                  styleAs="label"
                 >
                   {marker.label}
                 </Text>
