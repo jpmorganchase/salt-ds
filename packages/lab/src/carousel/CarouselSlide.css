@@ -1,7 +1,7 @@
 .saltCarouselSlide {
-  scroll-snap-align: center;
+  scroll-snap-align: start; /* was center */
   display: flex;
   flex-direction: column;
   flex: 0 0 100%;
-  max-width: 100%;
+  width: 100%;
 }

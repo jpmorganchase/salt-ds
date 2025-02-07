@@ -1,6 +1,10 @@
+.carousel-container {
+  max-width: 600px;
+  width: 80vw;
+}
 .carousel-image-placeholder {
   height: 250px;
-  width: 500px;
+  width: 100%;
 }
 
 .carousel-image-placeholder-1 {

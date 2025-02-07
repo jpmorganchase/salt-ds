@@ -1,10 +1,4 @@
-import {
-  Button,
-  makePrefixer,
-  RadioButton,
-  RadioButtonGroup,
-  useIcon,
-} from "@salt-ds/core";
+import { Button, makePrefixer, Text, useIcon } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { forwardRef, type HTMLAttributes } from "react";
@@ -12,10 +6,11 @@ import { useCarousel } from "./CarouselContext";
 
 import carouselControlsCss from "./CarouselControls.css";
 
-const withBaseName = makePrefixer("saltCarousel");
+const withBaseName = makePrefixer("saltCarouselControls");
 
 export interface CarouselControlsProps extends HTMLAttributes<HTMLDivElement> {
   /**
+   * TODO: check w design
    * This prop will enable compact / reduced width mode.
    * The navigation buttons would be part of indicators
    * Optional. Defaults to false
@@ -33,48 +28,41 @@ export const CarouselControls = forwardRef<
     css: carouselControlsCss,
     window: targetWindow,
   });
-  const { slides, activeSlide, nextSlide, prevSlide, goToSlide } =
-    useCarousel();
+  const { slides, activeSlide, nextSlide, prevSlide } = useCarousel();
   const { NextIcon, PreviousIcon } = useIcon();
 
   const slidesCount = slides.length;
 
   console.log(activeSlide, slidesCount, slides);
+  const isOnFirstSlide = activeSlide === 0;
+  const isOnLastSlide = activeSlide === slidesCount - 1;
   return (
-    <div ref={ref} className={withBaseName()} {...rest}>
+    <div ref={ref} role="group" className={withBaseName()} {...rest}>
       <Button
-        appearance="transparent"
+        appearance="bordered"
         sentiment="neutral"
         className={withBaseName("prev-button")}
         onClick={prevSlide}
-        disabled={activeSlide === 0}
+        disabled={isOnFirstSlide}
+        aria-label="Previous slide"
       >
-        <PreviousIcon />
+        <PreviousIcon aria-hidden />
       </Button>
       {children}
       <Button
-        appearance="transparent"
+        appearance="bordered"
         sentiment="neutral"
         className={withBaseName("next-button")}
         onClick={nextSlide}
-        disabled={activeSlide === slidesCount - 1}
+        disabled={isOnLastSlide}
+        aria-label="Next slide"
       >
-        <NextIcon />
+        <NextIcon aria-hidden />
       </Button>
-      <div className={withBaseName("dots")}>
-        <RadioButtonGroup
-          aria-label="Carousel buttons"
-          onChange={(e) => goToSlide(Number(e.target.value))}
-          value={`${activeSlide}`}
-          direction={"horizontal"}
-        >
-          {Array.from({ length: slidesCount }, (_, index) => ({
-            value: `${index}`,
-          })).map((radio) => (
-            <RadioButton {...radio} key={radio.value} />
-          ))}
-        </RadioButtonGroup>
-      </div>
+      {/* TODO: check color with design*/}
+      <Text as="span" color="secondary">
+        {activeSlide + 1} of {slidesCount}
+      </Text>
     </div>
   );
 });

@@ -7,7 +7,7 @@ import {
   CarouselSlider,
 } from "@salt-ds/lab";
 import "./carousel.stories.css";
-import { Button, H2, SplitLayout, Text } from "@salt-ds/core";
+import { Button, H2, SplitLayout, StackLayout, Text } from "@salt-ds/core";
 
 export default {
   title: "Lab/Carousel",
@@ -16,7 +16,7 @@ export default {
 
 const CarouselExample: StoryFn<typeof Carousel> = (args) => {
   return (
-    <div style={{ maxWidth: 600 }}>
+    <div className="carousel-container">
       <Carousel {...args}>
         <CarouselControls />
         <CarouselSlider>
@@ -27,11 +27,14 @@ const CarouselExample: StoryFn<typeof Carousel> = (args) => {
                   index + 1
                 }`}
               />
-              <div style={{ padding: " 1rem" }}>
+              <StackLayout gap={0}>
                 <H2>Header of the slider {index + 1}</H2>
-                <Text> This is a slider in a carousel</Text>
+                <Text>
+                  We offer solutions to the world's moast important
+                  corporations, governments and institution.
+                </Text>
                 <SplitLayout endItem={<Button>Learn more</Button>} />
-              </div>
+              </StackLayout>
             </CarouselSlide>
           ))}
         </CarouselSlider>
