@@ -141,6 +141,7 @@
 
 .saltSlider-markers {
   position: relative;
+  user-select: none;
   width: 100%;
 }
 
