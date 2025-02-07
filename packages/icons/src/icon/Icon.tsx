@@ -28,6 +28,8 @@ export const DEFAULT_ICON_SIZE = 1;
 
 export const Icon = forwardRef<SVGSVGElement, IconProps>(function Icon(
   {
+    "aria-hidden": ariaHidden,
+    "aria-label": ariaLabel,
     children,
     className,
     color = "inherit",
@@ -57,7 +59,10 @@ export const Icon = forwardRef<SVGSVGElement, IconProps>(function Icon(
         className,
       )}
       style={style}
-      role="img"
+      // Workaround to fix aria labels being announced even when aria-hidden is set to true on iOS.
+      role={ariaHidden ? undefined : "img"}
+      aria-label={ariaHidden ? undefined : ariaLabel}
+      aria-hidden={ariaHidden}
       {...rest}
       ref={ref}
     >
