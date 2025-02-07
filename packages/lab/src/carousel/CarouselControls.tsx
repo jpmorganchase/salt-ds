@@ -33,7 +33,7 @@ export const CarouselControls = forwardRef<
 
   const slidesCount = slides.length;
 
-  console.log(activeSlide, slidesCount, slides);
+  console.log("activeSlide", activeSlide);
   const isOnFirstSlide = activeSlide === 0;
   const isOnLastSlide = activeSlide === slidesCount - 1;
   return (

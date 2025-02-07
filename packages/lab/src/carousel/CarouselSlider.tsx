@@ -39,8 +39,13 @@ export const CarouselSlider = forwardRef<HTMLDivElement, CarouselSliderProps>(
     });
 
     const [sliderW, setSliderW] = useState(0);
-    const { updateActiveFromScroll, activeSlide, containerRef, goToSlide } =
-      useCarousel();
+    const {
+      updateActiveFromScroll,
+      activeSlide,
+      containerRef,
+      prevSlide,
+      nextSlide,
+    } = useCarousel();
     const slidesCount = Children.count(children);
 
     useEffect(() => {
@@ -55,6 +60,7 @@ export const CarouselSlider = forwardRef<HTMLDivElement, CarouselSliderProps>(
       targetWindow?.addEventListener("resize", handleResize);
       return () => targetWindow?.removeEventListener("resize", handleResize);
     }, []);
+
     useEffect(() => {
       if (process.env.NODE_ENV !== "production") {
         if (slidesCount < 1) {
@@ -64,6 +70,7 @@ export const CarouselSlider = forwardRef<HTMLDivElement, CarouselSliderProps>(
         }
       }
     }, [slidesCount]);
+
     useEffect(() => {
       if (containerRef.current) {
         containerRef.current?.addEventListener("scroll", handleScroll);
@@ -80,8 +87,10 @@ export const CarouselSlider = forwardRef<HTMLDivElement, CarouselSliderProps>(
       }
     };
     const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
-      if (event.key === "ArrowRight") goToSlide(activeSlide + 1);
-      if (event.key === "ArrowLeft") goToSlide(activeSlide - 1);
+      // TODO: we might need a longer delay
+      if (event.repeat) return;
+      if (event.key === "ArrowRight") nextSlide(event);
+      if (event.key === "ArrowLeft") prevSlide(event);
       onKeyDown?.(event);
     };
 

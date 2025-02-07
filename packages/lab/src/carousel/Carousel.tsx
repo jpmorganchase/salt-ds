@@ -36,7 +36,7 @@ export const Carousel = forwardRef<HTMLDivElement, CarouselProps>(
     });
 
     return (
-      <CarouselProvider>
+      <CarouselProvider activeSlideIndex={activeSlideIndex}>
         <div
           aria-label={carouselDescription}
           aria-roledescription="carousel"

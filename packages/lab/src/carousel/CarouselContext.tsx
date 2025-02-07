@@ -3,7 +3,9 @@ import {
   type ReactNode,
   type RefObject,
   type SyntheticEvent,
+  useCallback,
   useContext,
+  useEffect,
   useRef,
   useState,
 } from "react";
@@ -32,11 +34,23 @@ export function useCarousel() {
   return context;
 }
 
-export function CarouselProvider({ children }: { children: ReactNode }) {
-  // TODO: check active slide to initialy set the carousel prop
-  const [activeSlide, setActiveSlide] = useState(0);
+export function CarouselProvider({
+  children,
+  activeSlideIndex = 0,
+}: {
+  children: ReactNode;
+  activeSlideIndex: number;
+}) {
+  const [activeSlide, setActiveSlide] = useState(activeSlideIndex);
   const [slides, setSlides] = useState<string[]>([]);
   const containerRef = useRef<HTMLDivElement>(null);
+  const activeSlideRef = useRef(activeSlide);
+
+  useEffect(() => {
+    console.log("setting from effect");
+    setActiveSlide(activeSlideIndex);
+    scrollToSlide(activeSlideIndex);
+  }, [activeSlideIndex]);
 
   const registerSlide = (slideId: string) => {
     setSlides((prev) => [...prev, slideId]);
@@ -45,9 +59,12 @@ export function CarouselProvider({ children }: { children: ReactNode }) {
   const updateActiveFromScroll = (scrollLeft: number, slideW: number) => {
     const newIndex = Math.round(scrollLeft / slideW);
     if (newIndex !== activeSlide) {
+      console.log("setting from scroll");
+
       setActiveSlide(newIndex);
     }
   };
+
   const scrollToSlide = (index: number) => {
     if (containerRef.current) {
       const slideW = containerRef.current.offsetWidth;
@@ -56,11 +73,16 @@ export function CarouselProvider({ children }: { children: ReactNode }) {
         behavior: "smooth",
       });
     }
-    setActiveSlide(index);
   };
+
+  const goToSlide = useCallback((index: number) => {
+    if (activeSlideRef.current === index) return;
+    activeSlideRef.current = index;
+    setActiveSlide(index);
+  }, []);
+
   const nextSlide = () => scrollToSlide(activeSlide + 1);
   const prevSlide = () => scrollToSlide(activeSlide - 1);
-  const goToSlide = (index: number) => scrollToSlide(index);
 
   return (
     <CarouselContext.Provider
