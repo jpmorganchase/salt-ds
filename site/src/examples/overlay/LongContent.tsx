@@ -1,12 +1,13 @@
 import {
   Button,
   Overlay,
+  OverlayHeader,
   OverlayPanel,
-  OverlayPanelCloseButton,
   OverlayPanelContent,
   OverlayTrigger,
   StackLayout,
 } from "@salt-ds/core";
+import { CloseIcon } from "@salt-ds/icons";
 import { type ReactElement, useState } from "react";
 
 export const LongContent = (): ReactElement => {
@@ -15,6 +16,16 @@ export const LongContent = (): ReactElement => {
   const onOpenChange = (newOpen: boolean) => setOpen(newOpen);
 
   const handleClose = () => setOpen(false);
+
+  const closeButton = (
+    <Button
+      aria-label="Close dialog"
+      appearance="transparent"
+      onClick={handleClose}
+    >
+      <CloseIcon aria-hidden />
+    </Button>
+  );
 
   return (
     <Overlay placement="right" open={open} onOpenChange={onOpenChange}>
@@ -26,7 +37,7 @@ export const LongContent = (): ReactElement => {
           width: 300,
         }}
       >
-        <OverlayPanelCloseButton onClick={handleClose} />
+        <OverlayHeader header="Long content" actions={closeButton} />
         <OverlayPanelContent style={{ height: 200 }}>
           <StackLayout>
             <div>
