@@ -3,7 +3,6 @@ import {
   type ReactNode,
   type RefObject,
   type SyntheticEvent,
-  useCallback,
   useContext,
   useEffect,
   useRef,
@@ -14,7 +13,6 @@ export interface CarouselContextValue {
   activeSlide: number;
   nextSlide: (event: SyntheticEvent) => void;
   prevSlide: (event: SyntheticEvent) => void;
-  goToSlide: (index: number) => void;
   updateActiveFromScroll: (scrollLeft: number, sliderW: number) => void;
   slides: string[];
   registerSlide: (slideId: string) => void;
@@ -44,11 +42,8 @@ export function CarouselProvider({
   const [activeSlide, setActiveSlide] = useState(activeSlideIndex);
   const [slides, setSlides] = useState<string[]>([]);
   const containerRef = useRef<HTMLDivElement>(null);
-  const activeSlideRef = useRef(activeSlide);
 
   useEffect(() => {
-    console.log("setting from effect");
-    setActiveSlide(activeSlideIndex);
     scrollToSlide(activeSlideIndex);
   }, [activeSlideIndex]);
 
@@ -59,8 +54,6 @@ export function CarouselProvider({
   const updateActiveFromScroll = (scrollLeft: number, slideW: number) => {
     const newIndex = Math.round(scrollLeft / slideW);
     if (newIndex !== activeSlide) {
-      console.log("setting from scroll");
-
       setActiveSlide(newIndex);
     }
   };
@@ -75,26 +68,19 @@ export function CarouselProvider({
     }
   };
 
-  const goToSlide = useCallback((index: number) => {
-    if (activeSlideRef.current === index) return;
-    activeSlideRef.current = index;
-    setActiveSlide(index);
-  }, []);
-
   const nextSlide = () => scrollToSlide(activeSlide + 1);
   const prevSlide = () => scrollToSlide(activeSlide - 1);
 
   return (
     <CarouselContext.Provider
       value={{
-        activeSlide,
-        nextSlide,
-        updateActiveFromScroll,
-        prevSlide,
-        goToSlide,
         slides,
+        activeSlide,
         registerSlide,
+        nextSlide,
+        prevSlide,
         containerRef,
+        updateActiveFromScroll,
       }}
     >
       {children}

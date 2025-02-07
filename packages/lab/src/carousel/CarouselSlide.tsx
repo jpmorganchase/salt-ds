@@ -1,8 +1,8 @@
-import { makePrefixer, useId } from "@salt-ds/core";
+import { Button, SplitLayout, makePrefixer, useId } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
-import { forwardRef, type HTMLAttributes, useEffect, useRef } from "react";
+import { type HTMLAttributes, forwardRef, useEffect, useRef } from "react";
 import { useCarousel } from "./CarouselContext";
 import carouselSlideCss from "./CarouselSlide.css";
 
@@ -36,6 +36,10 @@ export const CarouselSlide = forwardRef<HTMLDivElement, CarouselSlideProps>(
         })}
       >
         {children}
+        <SplitLayout
+          className={withBaseName("actions")}
+          startItem={<Button>Learn more</Button>}
+        />
       </div>
     );
   },
