@@ -1,18 +1,28 @@
-import { createContext } from "@salt-ds/core";
+import { createContext, useResizeObserver } from "@salt-ds/core";
 import {
+  type KeyboardEvent,
+  type MouseEvent,
   type ReactNode,
-  type SyntheticEvent,
+  type RefObject,
+  useCallback,
   useContext,
+  useEffect,
+  useRef,
   useState,
 } from "react";
 
 export interface CarouselContextValue {
-  activeSlide: number;
-  nextSlide: (event: SyntheticEvent) => void;
-  prevSlide: (event: SyntheticEvent) => void;
-  goToSlide: (index: number) => void;
-  slides: string[];
-  registerSlide: (slideId: string) => void;
+  firstVisibleSlide: number;
+  visibleSlides: number;
+  slidesCount: number;
+  nextSlide: (event: MouseEvent | KeyboardEvent) => void;
+  prevSlide: (event: MouseEvent | KeyboardEvent) => void;
+  updateActiveFromScroll: (scrollLeft: number) => void;
+  focusSlide: (index: number) => void;
+  registerSlide: (element: HTMLDivElement) => number;
+  unregisterSlide: (index: number) => void;
+  containerRef: RefObject<HTMLDivElement>;
+  carouselId?: string;
 }
 
 export const CarouselContext = createContext<CarouselContextValue | null>(
@@ -28,30 +38,114 @@ export function useCarousel() {
   return context;
 }
 
-export function CarouselProvider({ children }: { children: ReactNode }) {
-  // TODO: check active slide to initialy set the carousel prop
-  const [activeSlide, setActiveSlide] = useState(0);
-  const [slides, setSlides] = useState<string[]>([]);
+export function CarouselProvider({
+  children,
+  activeSlideIndex = 0,
+  visibleSlides = 1,
+  id,
+}: {
+  children: ReactNode;
+  activeSlideIndex?: number;
+  visibleSlides?: number;
+  id?: string;
+}) {
+  const [firstVisibleSlide, setFirstVisibleSlide] = useState(activeSlideIndex);
+  const [visibleFocus, setVisibleFocus] = useState(0);
+  const [sliderW, setSliderW] = useState(0);
+  const slides = useRef<Map<number, HTMLDivElement>>(new Map());
+  const [slidesCount, setSlidesCount] = useState(slides.current.size);
+  useEffect(() => {
+    if (containerRef.current) {
+      scrollToSlide(activeSlideIndex);
+    }
+  }, [activeSlideIndex]);
 
-  const registerSlide = (slideId: string) => {
-    setSlides((prev) => [...prev, slideId]);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  const registerSlide = useCallback((element: HTMLDivElement) => {
+    const assignedIndex = slides.current.size;
+    slides.current.set(assignedIndex, element);
+    setSlidesCount(assignedIndex + 1);
+    return assignedIndex;
+  }, []);
+
+  const unregisterSlide = useCallback((index: number) => {
+    slides.current.delete(index);
+    setSlidesCount(slides.current.size);
+  }, []);
+
+  const updateActiveFromScroll = (scrollLeft: number) => {
+    const newIndex = Math.round(scrollLeft / (sliderW / visibleSlides)) || 0;
+    if (newIndex !== firstVisibleSlide) {
+      setFirstVisibleSlide(newIndex);
+    }
   };
+
+  const handleResize = useCallback(() => {
+    if (!containerRef.current) return;
+    setSliderW(containerRef.current.offsetWidth);
+  }, []);
+
+  useResizeObserver({ ref: containerRef, onResize: handleResize });
+
   const scrollToSlide = (index: number) => {
-    setActiveSlide(index);
+    if (!containerRef.current) return;
+    const sliderWidth = containerRef.current.offsetWidth;
+    const slideWidth = sliderWidth / visibleSlides;
+    const targetScrollLeft = index * slideWidth;
+    containerRef.current.scrollTo({
+      left: targetScrollLeft,
+      behavior: "smooth",
+    });
   };
-  const nextSlide = () => scrollToSlide(activeSlide + 1);
-  const prevSlide = () => scrollToSlide(activeSlide - 1);
-  const goToSlide = (index: number) => scrollToSlide(index);
+
+  const focusSlide = (index: number) => {
+    slides.current.get(index)?.focus();
+  };
+
+  const nextSlide = (event: MouseEvent | KeyboardEvent) => {
+    const nextSlide = firstVisibleSlide + 1;
+    if (!containerRef.current || nextSlide >= slidesCount) return;
+    if (event.type !== "click") {
+      focusSlide(nextSlide);
+      if (visibleFocus < visibleSlides - 1) {
+        setVisibleFocus((prev) => prev + 1);
+      }
+      return;
+    }
+    scrollToSlide(nextSlide);
+  };
+
+  const prevSlide = (event: MouseEvent | KeyboardEvent) => {
+    const previousSlide = firstVisibleSlide - 1;
+    if (!containerRef.current || firstVisibleSlide < 0) return;
+    if (event.type !== "click") {
+      if (visibleFocus >= 0) {
+        focusSlide(previousSlide + visibleFocus);
+        if (previousSlide === firstVisibleSlide) {
+          setVisibleFocus((prev) => prev - 1);
+        }
+        return;
+      }
+      focusSlide(previousSlide);
+    }
+    scrollToSlide(previousSlide);
+  };
 
   return (
     <CarouselContext.Provider
       value={{
-        activeSlide,
+        visibleSlides,
+        slidesCount,
+        focusSlide,
+        firstVisibleSlide,
+        registerSlide,
+        unregisterSlide,
         nextSlide,
         prevSlide,
-        goToSlide,
-        slides,
-        registerSlide,
+        containerRef,
+        updateActiveFromScroll,
+        carouselId: id,
       }}
     >
       {children}

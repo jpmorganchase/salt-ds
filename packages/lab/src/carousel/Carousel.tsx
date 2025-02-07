@@ -1,13 +1,11 @@
-import { makePrefixer } from "@salt-ds/core";
-import { useComponentCssInjection } from "@salt-ds/styles";
-import { useWindow } from "@salt-ds/window";
-import { clsx } from "clsx";
-import { forwardRef, type HTMLAttributes } from "react";
+import {
+  type ResponsiveProp,
+  resolveResponsiveValue,
+  useBreakpoint,
+  useId,
+} from "@salt-ds/core";
+import { type HTMLAttributes, forwardRef } from "react";
 import { CarouselProvider } from "./CarouselContext";
-
-import carouselCss from "./Carousel.css";
-
-const withBaseName = makePrefixer("saltCarousel");
 
 export interface CarouselProps extends HTMLAttributes<HTMLDivElement> {
   /**
@@ -15,38 +13,46 @@ export interface CarouselProps extends HTMLAttributes<HTMLDivElement> {
    * Optional, default 0.
    **/
   activeSlideIndex?: number;
-  // TODO: should slide have an active prop, that sets it as active in the context?
   /**
-   * If this props is passed it will set the aria-label with value to the carousel container.
-   * Optional. Defaults to undefined
-   */
-  carouselDescription?: string;
+   * Number of slides visible at a time.
+   * Optional, default 1.
+   **/
+  visibleSlides?: ResponsiveProp<number> | number;
 }
 
 export const Carousel = forwardRef<HTMLDivElement, CarouselProps>(
   function Carousel(
-    { activeSlideIndex = 0, carouselDescription, children, className, ...rest },
+    {
+      activeSlideIndex = 0,
+      visibleSlides: visibleSlidesProp = 1,
+      children,
+      className,
+      id: idProp,
+      ...rest
+    },
     ref,
   ) {
-    const targetWindow = useWindow();
-    useComponentCssInjection({
-      testId: "salt-carousel",
-      css: carouselCss,
-      window: targetWindow,
-    });
-
+    const { matchedBreakpoints } = useBreakpoint();
+    const visibleSlides = resolveResponsiveValue(
+      visibleSlidesProp,
+      matchedBreakpoints,
+    );
+    const id = useId(idProp);
     return (
-      <CarouselProvider>
-        <div
-          aria-label={carouselDescription}
-          aria-roledescription="carousel"
+      <CarouselProvider
+        activeSlideIndex={activeSlideIndex}
+        visibleSlides={visibleSlides}
+        id={id}
+      >
+        <section
           role="region"
+          aria-roledescription="carousel"
+          id={id}
           ref={ref}
-          className={clsx(withBaseName(), className)}
           {...rest}
         >
           {children}
-        </div>
+        </section>
       </CarouselProvider>
     );
   },

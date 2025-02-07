@@ -2,34 +2,51 @@ import { makePrefixer, useForkRef } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import {
-  Children,
-  forwardRef,
   type HTMLAttributes,
+  type KeyboardEvent,
   type ReactElement,
-  useEffect,
-  useRef,
+  forwardRef,
+  useCallback,
 } from "react";
-import { useCarousel } from "./CarouselContext";
-import carouselSliderCss from "./CarouselSlider.css";
+import { useIntersectionObserver } from "../utils";
+import { type CarouselContextValue, useCarousel } from "./CarouselContext";
 import type { CarouselSlideProps } from "./CarouselSlide";
+import carouselSliderCss from "./CarouselSlider.css";
 
 export interface CarouselSliderProps extends HTMLAttributes<HTMLDivElement> {
   /**
-   * The animation when the slides are shown.
-   * Optional. Defaults to `slide`
-   **/
-  animation?: "slide" | "fade";
-  /**
    * Collection of slides to render
-   * Component must implement CarouselSlideProps. Mandatory.
    */
   children: Array<ReactElement<CarouselSlideProps>>;
 }
 
 const withBaseName = makePrefixer("saltCarouselSlider");
 
+const useKeyNavigation = ({
+  nextSlide,
+  prevSlide,
+}: Pick<CarouselContextValue, "nextSlide" | "prevSlide">) => {
+  return useCallback(
+    (event: KeyboardEvent<HTMLDivElement>) => {
+      if (event.key === "ArrowRight" || event.key === "ArrowLeft") {
+        if (event.repeat) return;
+        event.stopPropagation();
+        if (event.key === "ArrowRight") {
+          nextSlide?.(event);
+        } else if (event.key === "ArrowLeft") {
+          prevSlide?.(event);
+        }
+      }
+    },
+    [nextSlide, prevSlide],
+  );
+};
+
 export const CarouselSlider = forwardRef<HTMLDivElement, CarouselSliderProps>(
-  function CarouselSlider({ animation, children }, ref) {
+  function CarouselSlider(
+    { children, onKeyDown: onKeyDownProp, ...rest },
+    propRef,
+  ) {
     const targetWindow = useWindow();
     useComponentCssInjection({
       testId: "salt-carousel-slide",
@@ -37,36 +54,43 @@ export const CarouselSlider = forwardRef<HTMLDivElement, CarouselSliderProps>(
       window: targetWindow,
     });
 
-    const containerRef = useRef<HTMLDivElement>(null);
+    const {
+      updateActiveFromScroll,
+      containerRef,
+      prevSlide,
+      nextSlide,
+      visibleSlides,
+    } = useCarousel();
+    const handleKeyDown = useKeyNavigation({
+      nextSlide,
+      prevSlide,
+    });
 
-    const slidesCount = Children.count(children);
-    useEffect(() => {
-      if (process.env.NODE_ENV !== "production") {
-        if (slidesCount < 1) {
-          console.warn(
-            "Carousel component requires more than one children to render. At least two elements should be provided.",
-          );
-        }
-      }
-    }, [slidesCount]);
-
-    const { activeSlide } = useCarousel();
-
-    useEffect(() => {
+    // Handlers
+    const handleScroll = useCallback(() => {
       if (containerRef.current) {
-        const slideW = containerRef.current.offsetWidth;
-        containerRef.current.scrollTo({
-          left: activeSlide * slideW,
-          //TODO: double check animations
-          behavior: "smooth",
-        });
+        const scrollLeft = containerRef.current.scrollLeft;
+        updateActiveFromScroll(scrollLeft);
       }
-    }, [activeSlide]);
+    }, [containerRef, updateActiveFromScroll]);
+    useIntersectionObserver({
+      ref: containerRef,
+      onIntersect: handleScroll,
+    });
+
+    const onKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
+      handleKeyDown(event);
+      onKeyDownProp?.(event);
+    };
+    const ref = useForkRef(propRef, containerRef);
     return (
       <div
-        ref={useForkRef(ref, containerRef)}
+        ref={ref}
+        aria-live={visibleSlides === 1 ? "polite" : undefined}
         className={withBaseName()}
-        aria-live="polite"
+        tabIndex={-1}
+        onKeyDown={onKeyDown}
+        {...rest}
       >
         {children}
       </div>
