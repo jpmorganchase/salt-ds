@@ -82,6 +82,8 @@ Set the combo box to read-only to allow values to be displayed that are predefin
 When `readOnly={true}` users will not be able to interact with combo box apart from focusing on it.
 Use to indicate that the pre-selected value is valid but changes are not permitted.
 
+**Note:** ComboBox's role is changed to `"textbox"` when read-only is set to work around browser/screen reader limitations when conveying a read-only state.
+
 </LivePreview>
 
 <LivePreview componentName="combo-box" exampleName="DisabledOption" >
