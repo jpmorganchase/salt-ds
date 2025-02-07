@@ -1,8 +1,10 @@
 import { createContext } from "@salt-ds/core";
 import {
   type ReactNode,
+  type RefObject,
   type SyntheticEvent,
   useContext,
+  useRef,
   useState,
 } from "react";
 
@@ -11,8 +13,10 @@ export interface CarouselContextValue {
   nextSlide: (event: SyntheticEvent) => void;
   prevSlide: (event: SyntheticEvent) => void;
   goToSlide: (index: number) => void;
+  updateActiveFromScroll: (scrollLeft: number, sliderW: number) => void;
   slides: string[];
   registerSlide: (slideId: string) => void;
+  containerRef: RefObject<HTMLDivElement>;
 }
 
 export const CarouselContext = createContext<CarouselContextValue | null>(
@@ -32,11 +36,26 @@ export function CarouselProvider({ children }: { children: ReactNode }) {
   // TODO: check active slide to initialy set the carousel prop
   const [activeSlide, setActiveSlide] = useState(0);
   const [slides, setSlides] = useState<string[]>([]);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   const registerSlide = (slideId: string) => {
     setSlides((prev) => [...prev, slideId]);
   };
+
+  const updateActiveFromScroll = (scrollLeft: number, slideW: number) => {
+    const newIndex = Math.round(scrollLeft / slideW);
+    if (newIndex !== activeSlide) {
+      setActiveSlide(newIndex);
+    }
+  };
   const scrollToSlide = (index: number) => {
+    if (containerRef.current) {
+      const slideW = containerRef.current.offsetWidth;
+      containerRef.current.scrollTo({
+        left: index * slideW,
+        behavior: "smooth",
+      });
+    }
     setActiveSlide(index);
   };
   const nextSlide = () => scrollToSlide(activeSlide + 1);
@@ -48,10 +67,12 @@ export function CarouselProvider({ children }: { children: ReactNode }) {
       value={{
         activeSlide,
         nextSlide,
+        updateActiveFromScroll,
         prevSlide,
         goToSlide,
         slides,
         registerSlide,
+        containerRef,
       }}
     >
       {children}
