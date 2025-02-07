@@ -1,0 +1,12 @@
+.saltCarouselNavigationBar {
+  display: flex;
+  flex-flow: wrap;
+  align-items: center;
+  justify-content: space-between;
+}
+.saltCarouselNavigationBar:last-child {
+  margin-left: auto;
+}
+.saltCarouselNavigationBar h2 {
+  margin: 0;
+}
