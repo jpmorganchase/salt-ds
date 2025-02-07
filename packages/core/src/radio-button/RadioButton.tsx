@@ -192,7 +192,6 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
               inputLabelledBy,
             ) || undefined
           }
-          aria-readonly={readOnly ? "true" : undefined}
           className={clsx(withBaseName("input"), inputClassName)}
           checked={checked}
           disabled={disabled}
