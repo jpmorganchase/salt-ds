@@ -51,7 +51,7 @@ Fallback.args = {
 
 export const AlternativeIcon = Template.bind({});
 AlternativeIcon.args = {
-  fallbackIcon: <UserGroupSolidIcon aria-label="Team Avatar" />,
+  fallbackIcon: <UserGroupSolidIcon aria-hidden />,
 };
 
 const CustomSVG = (

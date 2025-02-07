@@ -63,7 +63,7 @@ export const Avatar = forwardRef<HTMLDivElement, AvatarProps>(function Avatar(
 
   const fallbackIcon =
     fallbackIconProp === undefined ? (
-      <UserIcon aria-label="User Avatar" />
+      <UserIcon aria-hidden />
     ) : (
       fallbackIconProp
     );
@@ -84,19 +84,12 @@ export const Avatar = forwardRef<HTMLDivElement, AvatarProps>(function Avatar(
   const status = useAvatarImage({ src });
   const hasImgNotFailing = status === "loaded";
   if (hasImgNotFailing) {
-    children = <img alt={name} src={src} />;
+    children = <img alt="" src={src} />;
   } else if (childrenProp != null) {
     children = childrenProp;
   }
 
   const avatarInitials = nameToInitials(name);
-
-  const initialsProps = avatarInitials
-    ? {
-        role: "img",
-        "aria-label": name,
-      }
-    : {};
 
   return (
     <div
@@ -107,7 +100,8 @@ export const Avatar = forwardRef<HTMLDivElement, AvatarProps>(function Avatar(
         { [withBaseName("withImage")]: hasImgNotFailing },
         className,
       )}
-      {...initialsProps}
+      role={name ? "img" : undefined}
+      aria-label={name}
       {...rest}
     >
       {children || avatarInitials || fallbackIcon}

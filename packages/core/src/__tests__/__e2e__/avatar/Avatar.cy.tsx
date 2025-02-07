@@ -30,7 +30,7 @@ describe("Given an Avatar", () => {
     it("should show the default if there are no initials", () => {
       cy.mount(<Default src={"bad_url"} />);
       cy.findByTestId("UserSolidIcon").should("exist");
-      cy.findByRole("img").should("have.attr", "aria-label", "User Avatar");
+      cy.findByRole("img").should("not.exist");
     });
   });
   describe("WHEN an image is provided", () => {
