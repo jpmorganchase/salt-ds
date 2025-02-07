@@ -154,3 +154,7 @@
   position: absolute;
   left: calc(var(--slider-marker-percentage) - var(--salt-size-indicator));
 }
+
+.saltSliderThumb-secondThumb {
+  z-index: 10;
+}

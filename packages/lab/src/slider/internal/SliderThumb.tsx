@@ -81,6 +81,7 @@ export const SliderThumb = forwardRef<HTMLInputElement, SliderThumbProps>(
       <div
         className={clsx(withBaseName(), {
           [withBaseName("focused")]: isFocused,
+          [withBaseName("secondThumb")]: index === 1,
         })}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}

@@ -107,7 +107,8 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
   });
 
   const {
-    handleMouseDown,
+    handleMouseDownOnThumb,
+    handleMouseDownOnTrack,
     calculateAndSetThumbPosition,
     calculatePercentage,
     clamp,
@@ -145,7 +146,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
   return (
     <SliderTrack
       disabled={disabled}
-      handleMouseDown={handleMouseDown}
+      handleMouseDown={handleMouseDownOnTrack}
       labelPosition={labelPosition}
       isDragging={isDragging}
       min={min}
@@ -168,7 +169,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
         disabled={disabled}
         format={format}
         handleInputChange={handleInputChange}
-        handleMouseDown={handleMouseDown}
+        handleMouseDown={handleMouseDownOnThumb}
         max={max}
         min={min}
         offsetPercentage={`${progressPercentage}%`}
