@@ -27,13 +27,13 @@ const CarouselExample: StoryFn<typeof Carousel> = (args) => {
                   index + 1
                 }`}
               />
-              <StackLayout gap={0}>
+              <StackLayout gap={2}>
                 <H2>Header of the slider {index + 1}</H2>
                 <Text>
                   We offer solutions to the world's moast important
                   corporations, governments and institution.
                 </Text>
-                <SplitLayout endItem={<Button>Learn more</Button>} />
+                <SplitLayout startItem={<Button>Learn more</Button>} />
               </StackLayout>
             </CarouselSlide>
           ))}
