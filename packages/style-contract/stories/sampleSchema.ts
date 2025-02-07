@@ -2,21 +2,31 @@ import { z } from "zod";
 
 // Define the schema for style properties for .saltButton
 const SaltButtonColorProperties = z.object({
-  "salt-actionable-bold-foreground": z.enum(["white", "black"]),
-  "salt-actionable-bold-background": z.enum(["red", "green", "blue"]),
+  "button-color-default": z.enum(["white", "grey", "black"]).optional(),
+  "button-color-hover": z.enum(["white", "grey", "black"]).optional(),
+  "button-color-active": z.enum(["white", "grey", "black"]).optional(),
+  "button-color-disabled": z.enum(["white", "grey", "black"]).optional(),
+  "button-background-default": z.enum(["red", "green", "blue"]).optional(),
+  "button-background-hover": z.enum(["red", "green", "blue"]).optional(),
+  "button-background-active": z.enum(["red", "green", "blue"]).optional(),
+  "button-background-disabled": z.enum(["red", "green", "blue"]).optional(),
 });
 const SaltButtonSizeProperties = z.object({
-  "saltButton-height": z.string().optional(),
+  "button-height": z.string().optional(),
 });
 
 const SaltButtonSpacingProperties = z.object({
-  "saltButton-padding": z.string().optional(),
+  "button-padding": z.string().optional(),
 });
 
 // Define the schema for style properties for .saltInput
 const SaltInputStyleProperties = z.object({
-  "salt-editable-secondary-background": z.string().optional(),
-  "salt-editable-secondary-foreground": z.string().optional(),
+  "saltInput-contract-height": z.string().optional(),
+  "saltInput-contract-fontSize": z.string().optional(),
+  "salt-editable-primary-background": z
+    .enum(["red", "green", "blue"])
+    .optional(),
+  "salt-editable-primary-foreground": z.enum(["white", "black"]).optional(),
 });
 
 // Define the schema for style properties for .saltCard
@@ -25,7 +35,9 @@ const SaltCardStyleProperties = z.object({
   "salt-card-border": z.string().optional(),
 });
 
-const createResponsivePropSchema = <T extends z.ZodTypeAny>(stylePropertiesSchema: T) =>
+const createResponsivePropSchema = <T extends z.ZodTypeAny>(
+  stylePropertiesSchema: T,
+) =>
   z.union([
     z.object({
       xs: stylePropertiesSchema.optional(),
@@ -36,21 +48,33 @@ const createResponsivePropSchema = <T extends z.ZodTypeAny>(stylePropertiesSchem
     stylePropertiesSchema,
   ]);
 
-const SaltButtonColorSchema = createResponsivePropSchema(SaltButtonColorProperties);
-const SaltButtonSizeSchema = createResponsivePropSchema(SaltButtonSizeProperties);
-const SaltButtonSpacingSchema = createResponsivePropSchema(SaltButtonSpacingProperties);
-const SaltInputStyleSchema = createResponsivePropSchema(SaltInputStyleProperties);
+const SaltButtonColorSchema = createResponsivePropSchema(
+  SaltButtonColorProperties,
+);
+const SaltButtonSizeSchema = createResponsivePropSchema(
+  SaltButtonSizeProperties,
+);
+const SaltButtonSpacingSchema = createResponsivePropSchema(
+  SaltButtonSpacingProperties,
+);
+const SaltInputStyleSchema = createResponsivePropSchema(
+  SaltInputStyleProperties,
+);
 const SaltCardStyleSchema = createResponsivePropSchema(SaltCardStyleProperties);
 
 // Define the schema for specific component selectors
 const ComponentSelectorSchema = z.object({
   ".saltButton": SaltButtonColorSchema.optional(),
+  ".saltButton-neutral.saltButton-solid": SaltButtonColorSchema.optional(),
   ".saltButton.salt-customizable-size-small": SaltButtonSizeSchema.optional(),
   ".saltButton.salt-customizable-size-medium": SaltButtonSizeSchema.optional(),
   ".saltButton.salt-customizable-size-large": SaltButtonSizeSchema.optional(),
-  ".saltButton.salt-customizable-spacing-small": SaltButtonSpacingSchema.optional(),
-  ".saltButton.salt-customizable-spacing-medium": SaltButtonSpacingSchema.optional(),
-  ".saltButton.salt-customizable-spacing-large": SaltButtonSpacingSchema.optional(),
+  ".saltButton.salt-customizable-spacing-small":
+    SaltButtonSpacingSchema.optional(),
+  ".saltButton.salt-customizable-spacing-medium":
+    SaltButtonSpacingSchema.optional(),
+  ".saltButton.salt-customizable-spacing-large":
+    SaltButtonSpacingSchema.optional(),
   ".saltInput": SaltInputStyleSchema.optional(),
   ".saltCard": SaltCardStyleSchema.optional(),
 });

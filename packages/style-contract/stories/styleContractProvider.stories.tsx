@@ -1,4 +1,4 @@
-import { Button, FlowLayout, Input, Text, StackLayout } from "@salt-ds/core";
+import { Button, Input, StackLayout } from "@salt-ds/core";
 import type { Meta, StoryFn } from "@storybook/react";
 import {
   StyleContract,
@@ -7,96 +7,99 @@ import {
 } from "@salt-ds/style-contract";
 
 import { SampleSchema } from "./sampleSchema";
+import { z } from "zod";
 
 const defaultContract = new StyleContract({
   name: "salt",
   contract: {
-    ".saltButton": {
-      sm: {
-        "salt-actionable-bold-foreground": "white",
-        "salt-actionable-bold-background": "blue",
-      },
-      md: {
-        "salt-actionable-bold-foreground": "white",
-        "salt-actionable-bold-background": "green",
-      },
-      lg: {
-        "salt-actionable-bold-foreground": "white",
-        "salt-actionable-bold-background": "red",
-      },
+    ".saltButton-neutral.saltButton-solid": {
+      "button-color-default": "white",
+      "button-color-hover": "grey",
+      "button-color-active": "grey",
+      "button-color-disabled": "black",
+      "button-background-default": "red",
+      "button-background-hover": "green",
+      "button-background-active": "blue",
+      "button-background-disabled": "red",
     },
     ".saltButton.salt-customizable-size-small": {
       sm: {
-        "saltButton-height": "20px",
+        "button-height": "20px",
       },
       md: {
-        "saltButton-height": "40px",
+        "button-height": "30px",
       },
       lg: {
-        "saltButton-height": "60px",
+        "button-height": "40px",
       },
     },
     ".saltButton.salt-customizable-size-medium": {
       sm: {
-        "saltButton-height": "40px",
+        "button-height": "40px",
       },
       md: {
-        "saltButton-height": "60px",
+        "button-height": "50px",
       },
       lg: {
-        "saltButton-height": "80px",
+        "button-height": "60px",
       },
     },
     ".saltButton.salt-customizable-size-large": {
       sm: {
-        "saltButton-height": "60px",
+        "button-height": "60px",
       },
       md: {
-        "saltButton-height": "80px",
+        "button-height": "70px",
       },
       lg: {
-        "saltButton-height": "100px",
+        "button-height": "80px",
       },
     },
     ".saltButton.salt-customizable-spacing-small": {
       sm: {
-        "saltButton-padding": "20px",
+        "button-padding": "0 12px",
       },
       md: {
-        "saltButton-padding": "40px",
+        "button-padding": "0 16px",
       },
       lg: {
-        "saltButton-padding": "60px",
+        "button-padding": "0 20px",
       },
     },
     ".saltButton.salt-customizable-spacing-medium": {
       sm: {
-        "saltButton-padding": "40px",
+        "button-padding": "0 16px",
       },
       md: {
-        "saltButton-padding": "60px",
+        "button-padding": "0 20px",
       },
       lg: {
-        "saltButton-padding": "80px",
+        "button-padding": "0 24px",
       },
     },
     ".saltButton.salt-customizable-spacing-large": {
       sm: {
-        "saltButton-padding": "60px",
+        "button-padding": "0 20px",
       },
       md: {
-        "saltButton-padding": "80px",
+        "button-padding": "0 24px",
       },
       lg: {
-        "saltButton-padding": "100px",
+        "button-padding": "0 28px",
       },
     },
     ".saltInput": {
       sm: {
-        "salt-editable-secondary-background": "yellow",
+        "salt-editable-primary-background": "blue",
+        "salt-editable-primary-foreground": "white",
       },
       md: {
-        "salt-editable-secondary-background": "red",
+        "salt-editable-primary-background": "green",
+        "salt-editable-primary-foreground": "white",
+      },
+      lg: {
+        "salt-editable-primary-background": "red",
+        "salt-editable-primary-foreground": "white",
       },
     },
   },
@@ -122,9 +125,11 @@ export const MultipleContracts: StoryFn<typeof StyleContractProvider> = (
   const productA = new StyleContract({
     name: "scheme A contract",
     contract: {
-      ".saltButton": {
-        "salt-actionable-bold-foreground": "white",
-        "salt-actionable-bold-background": "red",
+      ".saltButton-neutral.saltButton-solid": {
+        "button-background-default": "green",
+        "button-background-hover": "red",
+        "button-background-active": "blue",
+        "button-background-disabled": "red",
       },
     },
     schema: SampleSchema,
@@ -132,18 +137,50 @@ export const MultipleContracts: StoryFn<typeof StyleContractProvider> = (
   const productB = new StyleContract({
     name: "scheme B contract",
     contract: {
-      ".saltButton": {
+      ".saltButton-neutral.saltButton-solid": {
         sm: {
-          "salt-actionable-bold-foreground": "white",
-          "salt-actionable-bold-background": "red",
+          "button-background-default": "green",
+          "button-background-hover": "green",
+          "button-background-active": "blue",
+          "button-background-disabled": "red",
+          "button-color-default": "white",
+          "button-color-hover": "grey",
+          "button-color-active": "grey",
+          "button-color-disabled": "black",
         },
         md: {
-          "salt-actionable-bold-foreground": "white",
-          "salt-actionable-bold-background": "green",
+          "button-background-default": "red",
+          "button-background-hover": "green",
+          "button-background-active": "blue",
+          "button-background-disabled": "red",
+          "button-color-default": "white",
+          "button-color-hover": "grey",
+          "button-color-active": "grey",
+          "button-color-disabled": "black",
         },
         lg: {
-          "salt-actionable-bold-foreground": "white",
-          "salt-actionable-bold-background": "blue",
+          "button-background-default": "blue",
+          "button-background-hover": "green",
+          "button-background-active": "blue",
+          "button-background-disabled": "red",
+          "button-color-default": "white",
+          "button-color-hover": "grey",
+          "button-color-active": "grey",
+          "button-color-disabled": "black",
+        },
+      },
+      ".saltInput": {
+        sm: {
+          "saltInput-contract-height": "60px",
+          "saltInput-contract-fontSize": "20px",
+        },
+        md: {
+          "saltInput-contract-height": "80px",
+          "saltInput-contract-fontSize": "40px",
+        },
+        lg: {
+          "saltInput-contract-height": "100px",
+          "saltInput-contract-fontSize": "60px",
         },
       },
     },
@@ -153,6 +190,7 @@ export const MultipleContracts: StoryFn<typeof StyleContractProvider> = (
     <StyleContractProvider {...args} defaultContract={defaultContract}>
       <StackLayout>
         <Button>Sample Button</Button>
+        <Input value={999.999} />
         <StyleContractDropdown
           contracts={[
             { owner: "product A", contracts: [productA] },
