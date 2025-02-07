@@ -1,7 +1,7 @@
-import { Button, makePrefixer, Text, useIcon } from "@salt-ds/core";
+import { Button, Text, makePrefixer, useIcon } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
-import { forwardRef, type HTMLAttributes } from "react";
+import { type HTMLAttributes, forwardRef } from "react";
 import { useCarousel } from "./CarouselContext";
 
 import carouselControlsCss from "./CarouselControls.css";
@@ -33,9 +33,9 @@ export const CarouselControls = forwardRef<
 
   const slidesCount = slides.length;
 
-  console.log("activeSlide", activeSlide);
   const isOnFirstSlide = activeSlide === 0;
   const isOnLastSlide = activeSlide === slidesCount - 1;
+
   return (
     <div ref={ref} role="group" className={withBaseName()} {...rest}>
       <Button

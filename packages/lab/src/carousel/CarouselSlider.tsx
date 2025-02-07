@@ -3,22 +3,24 @@ import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import {
   Children,
-  forwardRef,
   type HTMLAttributes,
   type KeyboardEvent,
   type ReactElement,
+  forwardRef,
+  useCallback,
   useEffect,
   useState,
 } from "react";
-import { useCarousel } from "./CarouselContext";
-import carouselSliderCss from "./CarouselSlider.css";
+import { type CarouselContextValue, useCarousel } from "./CarouselContext";
 import type { CarouselSlideProps } from "./CarouselSlide";
+import carouselSliderCss from "./CarouselSlider.css";
 
 export interface CarouselSliderProps extends HTMLAttributes<HTMLDivElement> {
   /**
    * The animation when the slides are shown.
    * Optional. Defaults to `slide`
    **/
+  // TODO: implement animations, check w design
   animation?: "slide" | "fade";
   /**
    * Collection of slides to render
@@ -29,8 +31,42 @@ export interface CarouselSliderProps extends HTMLAttributes<HTMLDivElement> {
 
 const withBaseName = makePrefixer("saltCarouselSlider");
 
+const useKeyNavigation = ({
+  nextSlide,
+  prevSlide,
+}: Pick<CarouselContextValue, "nextSlide" | "prevSlide">) => {
+  const [isScrolling, setIsScrolling] = useState(false);
+
+  return useCallback(
+    (event: KeyboardEvent<HTMLDivElement>) => {
+      console.log("scrolling", isScrolling);
+      if (isScrolling) return;
+
+      if (event.key === "ArrowRight" || event.key === "ArrowLeft") {
+        if (event.repeat) return;
+
+        setIsScrolling(true);
+
+        if (event.key === "ArrowRight") {
+          nextSlide?.(event);
+        } else if (event.key === "ArrowLeft") {
+          prevSlide?.(event);
+        }
+
+        setTimeout(() => {
+          setIsScrolling(false);
+        }, 20000);
+      }
+    },
+    [isScrolling, nextSlide, prevSlide],
+  );
+};
+
 export const CarouselSlider = forwardRef<HTMLDivElement, CarouselSliderProps>(
-  function CarouselSlider({ animation, children, onKeyDown }, ref) {
+  function CarouselSlider(
+    { animation, children, onKeyDown: onKeyDownProp },
+    ref,
+  ) {
     const targetWindow = useWindow();
     useComponentCssInjection({
       testId: "salt-carousel-slide",
@@ -46,6 +82,10 @@ export const CarouselSlider = forwardRef<HTMLDivElement, CarouselSliderProps>(
       prevSlide,
       nextSlide,
     } = useCarousel();
+    const handleKeyDown = useKeyNavigation({
+      nextSlide,
+      prevSlide,
+    });
     const slidesCount = Children.count(children);
 
     useEffect(() => {
@@ -86,14 +126,11 @@ export const CarouselSlider = forwardRef<HTMLDivElement, CarouselSliderProps>(
         updateActiveFromScroll(scrollLeft, sliderW);
       }
     };
-    const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
-      // TODO: we might need a longer delay
-      if (event.repeat) return;
-      if (event.key === "ArrowRight") nextSlide(event);
-      if (event.key === "ArrowLeft") prevSlide(event);
-      onKeyDown?.(event);
-    };
 
+    const onKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
+      handleKeyDown(event);
+      onKeyDownProp?.(event);
+    };
     return (
       <div
         ref={useForkRef(ref, containerRef)}
@@ -101,7 +138,7 @@ export const CarouselSlider = forwardRef<HTMLDivElement, CarouselSliderProps>(
         aria-live="polite"
         role="region"
         tabIndex={0}
-        onKeyDown={() => handleKeyDown}
+        onKeyDown={onKeyDown}
       >
         {children}
       </div>
