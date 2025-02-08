@@ -21,12 +21,17 @@ const SaltButtonSpacingProperties = z.object({
 
 // Define the schema for style properties for .saltInput
 const SaltInputStyleProperties = z.object({
-  "saltInput-contract-height": z.string().optional(),
-  "saltInput-contract-fontSize": z.string().optional(),
-  "salt-editable-primary-background": z
-    .enum(["red", "green", "blue"])
-    .optional(),
-  "salt-editable-primary-foreground": z.enum(["white", "black"]).optional(),
+  "input-height": z.string().optional(),
+  "input-fontSize": z.string().optional(),
+  "input-color": z.enum(["white", "grey", "black"]).optional(),
+  "input-borderColor-default": z.enum(["red", "green", "blue"]).optional(),
+  "input-borderColor-hover": z.enum(["red", "green", "blue"]).optional(),
+  "input-borderColor-active": z.enum(["red", "green", "blue"]).optional(),
+  "input-borderColor-disabled": z.enum(["red", "green", "blue"]).optional(),
+  "input-background-default": z.enum(["red", "green", "blue"]).optional(),
+  "input-background-hover": z.enum(["red", "green", "blue"]).optional(),
+  "input-background-active": z.enum(["red", "green", "blue"]).optional(),
+  "input-background-disabled": z.enum(["red", "green", "blue"]).optional(),
 });
 
 // Define the schema for style properties for .saltCard

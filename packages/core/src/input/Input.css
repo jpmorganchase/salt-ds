@@ -1,19 +1,49 @@
 /* Style applied to the root element */
 .saltInput {
-  align-items: center;
-  background: var(--saltInput-background, var(--input-background));
-  border-radius: var(--salt-palette-corner-weak, 0);
-  color: var(--saltInput-color, var(--salt-content-primary-foreground));
+
+  --input-alignItems: center;
+  --input-background: var(--input-background-default);
+  --input-borderRadius: var(--salt-palette-corner-weak, 0);
+  --input-borderStyle: none;
+  --input-borderWidth: var(--salt-size-border, 0);
+  --input-color: var(--salt-content-primary-foreground);
+  --input-cursor: pointer;
+  --input-fontFamily: var(--salt-text-fontFamily);
+  --input-fontSize: var(--salt-text-fontSize);
+  --input-lineHeight: var(--salt-text-lineHeight);
+  --input-letterSpacing: var(--salt-text-letterSpacing);
+  --input-height: var(--salt-size-base);
+  --input-minHeight: var(--salt-size-base);
+  --input-minWidth: 4em;
+  --input-paddingLeft: var(--salt-spacing-100);
+  --input-paddingRight: var(--salt-spacing-100);
+  --input-textAlign: left;
+
+  --input-outlineColor: inherit;
+  --input-outlineStyle: none;
+  --input-outlineWidth: 0;
+
+  /* Properties with contract variable support */
+  align-items: var(--input-alignItems);
+  background: var(--input-background);
+  border-radius: var(--input-borderRadius);
+  border-style: var(--input-borderStyle);
+  border-width: var(--input-borderWidth);
+  color: var(--input-color);
+  cursor: var(--input-cursor);
+  font-family: var(--input-fontFamily);
+  font-size: var(--input-fontSize);
+  line-height: var(--input-lineHeight);
+  letter-spacing: var(--input-letterSpacing);
+  height: var(--input-height);
+  min-height: var(--input-minHeight);
+  min-width: var(--input-minWidth);
+  outline: var(--input-outlineColor) var(--input-outlineStyle) var(--input-outlineWidth);
+  padding-left: var(--input-paddingLeft);
+  padding-right: var(--input-paddingRight);
+
+  /* Other properties */
   display: inline-flex;
-  font-family: var(--salt-text-fontFamily);
-  font-size: var(--saltInput-fontSize, var(--salt-text-fontSize));
-  line-height: var(--saltInput-lineHeight, var(--salt-text-lineHeight));
-  letter-spacing: var(--salt-text-letterSpacing);
-  height: var(--saltInput-height, var(--salt-size-base));
-  min-height: var(--saltInput-minHeight, var(--salt-size-base));
-  min-width: var(--saltInput-minWidth, 4em);
-  padding-left: var(--saltInput-paddingLeft, var(--salt-spacing-100));
-  padding-right: var(--saltInput-paddingRight, var(--salt-spacing-100));
   position: relative;
   width: 100%;
   box-sizing: border-box;
@@ -21,86 +51,94 @@
 }
 
 .saltInput:hover {
-  background: var(--saltInput-background-hover, var(--input-background-hover));
-  cursor: var(--salt-editable-cursor-hover);
+  --input-background: var(--input-background-hover);
+  --input-cursor: var(--salt-editable-cursor-hover);
 }
 
 /* Style applied if `bordered={true}` */
 .saltInput-bordered.saltInput {
-  border: var(--salt-size-border) var(--salt-editable-borderStyle) var(--input-borderColor);
+  --input-borderWidth: var(--salt-size-border);
+  --input-borderStyle: var(--salt-editable-borderStyle);
+  --input-borderColor: var(--input-borderColor-default);
 }
 
 .saltInput-bordered.saltInput:hover {
-  border-style: var(--salt-editable-borderStyle-hover);
-  border-color: var(--input-borderColor-hover);
+  --input-borderStyle: var(--salt-editable-borderStyle-hover);
+  --input-borderColor: var(--input-borderColor-hover);
 }
 
 .saltInput-bordered.saltInput-focused,
 .saltInput-bordered.saltInput-focused:hover {
-  border-style: var(--salt-editable-borderStyle-active);
-  border-color: var(--input-borderColor-active);
+  --input-borderStyle: var(--salt-editable-borderStyle-active);
+  --input-borderColor: var(--input-borderColor-active);
 }
 
 .saltInput-bordered.saltInput-readOnly,
 .saltInput-bordered.saltInput-readOnly:hover {
-  border-style: var(--salt-editable-borderStyle-readonly);
-  border-color: var(--salt-editable-borderColor-readonly);
+  --input-borderStyle: var(--salt-editable-borderStyle-readonly);
+  --input-borderColor: var(--salt-editable-borderColor-readonly);
 }
 
 .saltInput-bordered.saltInput-disabled,
 .saltInput-bordered.saltInput-disabled:hover {
-  border-style: var(--salt-editable-borderStyle-disabled);
-  border-color: var(--salt-editable-borderColor-disabled);
+  --input-borderStyle: var(--salt-editable-borderStyle-disabled);
+  --input-borderColor: var(--salt-editable-borderColor-disabled);
 }
 
 .saltInput-activationIndicator {
+  --activationIndicator-borderColor: var(--salt-size-border);
+  --activationIndicator-borderStyle: var(--salt-editable-borderStyle);
+  --activationIndicator-borderWidth: var(--salt-size-border);
+
   left: 0;
   bottom: 0;
   width: 100%;
   position: absolute;
-  border-bottom: var(--salt-size-border) var(--salt-editable-borderStyle) var(--input-borderColor);
+  border-bottom: var(--activationIndicator-borderWidth) var(--activationIndicator-borderStyle) var(--activationIndicator-borderColor);
 }
 
 .saltInput:hover .saltInput-activationIndicator {
-  border-bottom-style: var(--salt-editable-borderStyle-hover);
-  border-bottom-color: var(--input-borderColor-hover);
+  --activationIndicator-borderColor: var(--input-borderColor-hover);
+  --activationIndicator-borderStyle: var(--salt-editable-borderStyle-hover);
 }
 
 .saltInput-focused .saltInput-activationIndicator,
 .saltInput-focused:hover .saltInput-activationIndicator {
-  border-bottom: var(--salt-size-border-strong) var(--salt-editable-borderStyle-active) var(--input-borderColor-active);
+  --activationIndicator-borderColor: var(--input-borderColor-active);
+  --activationIndicator-borderStyle: var(--salt-editable-borderStyle-active);
+  --activationIndicator-borderWidth: var(--salt-size-border-strong);
 }
 
 .saltInput-readOnly .saltInput-activationIndicator,
 .saltInput-readOnly:hover .saltInput-activationIndicator {
-  border-bottom-style: var(--salt-editable-borderStyle-readonly);
-  border-bottom-color: var(--salt-editable-borderColor-readonly);
+  --activationIndicator-borderColor: var(--salt-editable-borderColor-readonly);
+  --activationIndicator-borderStyle: var(--salt-editable-borderStyle-readonly);
 }
 
 .saltInput-disabled .saltInput-activationIndicator,
 .saltInput-disabled:hover .saltInput-activationIndicator {
-  border-bottom-style: var(--salt-editable-borderStyle-disabled);
-  border-bottom-color: var(--salt-editable-borderColor-disabled);
+  --activationIndicator-borderColor: var(--salt-editable-borderColor-disabled);
+  --activationIndicator-borderStyle: var(--salt-editable-borderStyle-disabled);
 }
 
 .saltInput-bordered .saltInput-activationIndicator,
 .saltInput-bordered.saltInput-readOnly .saltInput-activationIndicator,
 .saltInput-bordered.saltInput-disabled:hover .saltInput-activationIndicator {
-  border-bottom-width: 0;
+  --activationIndicator-borderWidth: 0;
 }
 
 .saltInput-bordered.saltInput-focused .saltInput-activationIndicator {
-  border-bottom-width: calc(var(--salt-size-border-strong) - var(--salt-size-border));
+  --activationIndicator-borderWidth: calc(var(--salt-size-border-strong) - var(--salt-size-border));;
 }
 
 /* Class applied if `variant="primary"` */
 .saltInput-primary {
-  --input-background: var(--salt-editable-primary-background);
+  --input-background-default: var(--salt-editable-primary-background);
   --input-background-active: var(--salt-editable-primary-background-active);
   --input-background-hover: var(--salt-editable-primary-background-hover);
   --input-background-disabled: var(--salt-editable-primary-background-disabled);
   --input-background-readonly: var(--salt-editable-primary-background-readonly);
-  --input-borderColor: var(--salt-editable-borderColor);
+  --input-borderColor-default: var(--salt-editable-borderColor);
   --input-borderColor-active: var(--salt-editable-borderColor-active);
   --input-borderColor-hover: var(--salt-editable-borderColor-hover);
   --input-outlineColor: var(--salt-focused-outlineColor);
@@ -108,12 +146,12 @@
 
 /* Class applied if `variant="secondary"` */
 .saltInput-secondary {
-  --input-background: var(--salt-editable-secondary-background);
+  --input-background-default: var(--salt-editable-secondary-background);
   --input-background-active: var(--salt-editable-secondary-background-active);
   --input-background-hover: var(--salt-editable-secondary-background-active);
   --input-background-disabled: var(--salt-editable-secondary-background-disabled);
   --input-background-readonly: var(--salt-editable-secondary-background-readonly);
-  --input-borderColor: var(--salt-editable-borderColor);
+  --input-borderColor-default: var(--salt-editable-borderColor);
   --input-borderColor-active: var(--salt-editable-borderColor-active);
   --input-borderColor-hover: var(--salt-editable-borderColor-hover);
   --input-outlineColor: var(--salt-focused-outlineColor);
@@ -121,11 +159,11 @@
 
 /* Style applied to input if `validationState="error"` */
 .saltInput-error {
-  --input-background: var(--salt-status-error-background);
+  --input-background-default: var(--salt-status-error-background);
   --input-background-active: var(--salt-status-error-background);
   --input-background-hover: var(--salt-status-error-background);
   --input-background-readonly: var(--salt-status-error-background);
-  --input-borderColor: var(--salt-status-error-borderColor);
+  --input-borderColor-default: var(--salt-status-error-borderColor);
   --input-borderColor-active: var(--salt-status-error-borderColor);
   --input-borderColor-hover: var(--salt-status-error-borderColor);
   --input-outlineColor: var(--salt-status-error-borderColor);
@@ -133,11 +171,11 @@
 
 /* Style applied to input if `validationState="warning"` */
 .saltInput-warning {
-  --input-background: var(--salt-status-warning-background);
+  --input-background-default: var(--salt-status-warning-background);
   --input-background-active: var(--salt-status-warning-background);
   --input-background-hover: var(--salt-status-warning-background);
   --input-background-readonly: var(--salt-status-warning-background);
-  --input-borderColor: var(--salt-status-warning-borderColor);
+  --input-borderColor-default: var(--salt-status-warning-borderColor);
   --input-borderColor-active: var(--salt-status-warning-borderColor);
   --input-borderColor-hover: var(--salt-status-warning-borderColor);
   --input-outlineColor: var(--salt-status-warning-borderColor);
@@ -145,11 +183,11 @@
 
 /* Style applied to input if `validationState="success"` */
 .saltInput-success {
-  --input-background: var(--salt-status-success-background);
+  --input-background-default: var(--salt-status-success-background);
   --input-background-active: var(--salt-status-success-background);
   --input-background-hover: var(--salt-status-success-background);
   --input-background-readonly: var(--salt-status-success-background);
-  --input-borderColor: var(--salt-status-success-borderColor);
+  --input-borderColor-default: var(--salt-status-success-borderColor);
   --input-borderColor-active: var(--salt-status-success-borderColor);
   --input-borderColor-hover: var(--salt-status-success-borderColor);
   --input-outlineColor: var(--salt-status-success-borderColor);
@@ -158,70 +196,88 @@
 /* Styling when focused */
 .saltInput-focused,
 .saltInput-focused:hover {
-  background: var(--saltInput-background-active, var(--input-background-active));
-  cursor: var(--salt-editable-cursor-active);
-  outline: var(--saltInput-outline, var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--input-outlineColor));
+  --input-background-default: var(--input-background-active);
+  --input-cursor: var(--salt-editable-cursor-active);
+  --input-outlineStyle: var(--salt-focused-outlineStyle);
+  --input-outlineWidth: var(--salt-focused-outlineWidth);
 }
 
 /* Style applied if `readOnly={true}` */
 .saltInput.saltInput-readOnly {
-  background: var(--input-background-readonly);
-  cursor: var(--salt-editable-cursor-readonly);
+  --input-background-default: var(--input-background-readonly);
+  --input-cursor: var(--salt-editable-cursor-readonly);
 }
 
 /* Style applied to input if `disabled={true}` */
 .saltInput.saltInput-disabled,
 .saltInput.saltInput-disabled:hover {
-  background: var(--input-background-disabled);
-  cursor: var(--salt-editable-cursor-disabled);
-  color: var(--saltInput-color-disabled, var(--salt-content-primary-foreground-disabled));
+  --input-background-default: var(--input-background-disabled);
+  --input-cursor: var(--salt-editable-cursor-disabled);
+  --input-color:  var(--salt-content-primary-foreground-disabled);
 }
 
 /* Style applied to start adornments */
 .saltInput-startAdornmentContainer {
+  --startAdornment-paddingRight: var(--salt-spacing-100);
+  --startAdornment-columnGap: var(--salt-spacing-100);
+  --startAdornment-marginLeft: 0;
+  --startAdornment-marginRight: 0;
+
   align-items: center;
   display: inline-flex;
-  padding-right: var(--salt-spacing-100);
-  column-gap: var(--salt-spacing-100);
+  padding-right: var(--startAdornment-paddingRight);
+  column-gap: var(--startAdornment-columnGap);
+  margin-left: var(--startAdornment-marginLeft);
+  margin-right: var(--startAdornment-marginRight);
 }
 
 /* Style applied to end adornments */
 .saltInput-endAdornmentContainer {
+  --endAdornment-paddingLeft: var(--salt-spacing-100);
+  --endAdornment-columnGap: var(--salt-spacing-100);
+  --endAdornment-marginLeft: 0;
+  --endAdornment-marginRight: 0;
+
   align-items: center;
   display: inline-flex;
-  padding-left: var(--salt-spacing-100);
-  column-gap: var(--salt-spacing-100);
+  padding-left: var(--endAdornment-paddingLeft);
+  column-gap: var(--endAdornment-columnGap);
+  margin-left: var(--endAdornment-marginLeft);
+  margin-right: var(--endAdornment-marginRight);
 }
 
 .saltInput-readOnly .saltInput-startAdornmentContainer {
-  margin-left: var(--salt-spacing-50);
+  --startAdornment-marginLeft: var(--salt-spacing-50);
 }
 
 .saltInput-startAdornmentContainer .saltButton ~ .saltButton {
-  margin-left: calc(-1 * var(--salt-spacing-50));
+  --startAdornment-marginLeft: calc(-1 * var(--salt-spacing-50));
 }
 
 .saltInput-endAdornmentContainer .saltButton ~ .saltButton {
-  margin-left: calc(-1 * var(--salt-spacing-50));
+  --endAdornment-marginLeft: calc(-1 * var(--salt-spacing-50));
 }
 
 .saltInput-startAdornmentContainer .saltButton:first-child {
-  margin-left: calc(var(--salt-spacing-50) * -1);
+  --endAdornment-marginLeft: calc(var(--salt-spacing-50) * -1);
 }
 
 .saltInput-endAdornmentContainer .saltButton:last-child {
-  margin-right: calc(var(--salt-spacing-50) * -1);
+  --endAdornment-marginRight: calc(var(--salt-spacing-50) * -1);
 }
 
 .saltInput-startAdornmentContainer > .saltButton,
 .saltInput-endAdornmentContainer > .saltButton {
-  --saltButton-padding: calc(var(--salt-spacing-50) - var(--salt-size-border));
-  --saltButton-height: calc(var(--salt-size-base) - var(--salt-spacing-100));
-  --saltButton-borderRadius: var(--salt-palette-corner-weaker);
+  --button-padding: calc(var(--salt-spacing-50) - var(--salt-size-border));
+  --button-height: calc(var(--salt-size-base) - var(--salt-spacing-100));
+  --button-borderRadius: var(--salt-palette-corner-weaker);
 }
 
 /* Style applied to inner input component */
 .saltInput-input {
+  letter-spacing: var(--input-letterSpacing);
+  text-align: var(--input-textAlign);
+
   background: none;
   border: none;
   box-sizing: content-box;
@@ -231,32 +287,34 @@
   flex: 1;
   font: inherit;
   height: 100%;
-  letter-spacing: var(--saltInput-letterSpacing, 0);
   margin: 0;
   min-width: 0;
   overflow: hidden;
+  outline-style: none;
   padding: 0;
-  text-align: var(--input-textAlign, left);
   width: 100%;
 }
 
 /* Reset in the  class */
 .saltInput-input:focus {
-  outline: none;
+  --input-outlineStyle: none;
 }
 
 /* Style applied to selected input */
 .saltInput-input::selection {
-  background: var(--salt-content-foreground-highlight);
+  --selection-background: var(--salt-content-foreground-highlight);
+  background: var(--selection-background);
 }
 
 /* Style applied to placeholder text */
 .saltInput-input::placeholder {
-  color: var(--salt-content-secondary-foreground);
-  font-weight: var(--salt-text-fontWeight-small);
+  --placeholder-color: var(--salt-content-secondary-foreground);
+  --placeholder-fontWeight:  var(--salt-text-fontWeight-small);
+  color: var(--placeholder-color);
+  font-weight: var(--placeholder-fontWeight);
 }
 
 /* Style applied to selected input if `disabled={true}` */
 .saltInput-disabled .saltInput-input::selection {
-  background: none;
+  --selection-background: none;
 }

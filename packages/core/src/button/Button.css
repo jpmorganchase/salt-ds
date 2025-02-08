@@ -51,25 +51,25 @@ This approach allows us to share contracts that manage style tokens and provide 
   --button-borderWidth: var(--salt-size-border, 0);
   --button-color: var(--button-color-default, inherit);
   --button-cursor: pointer;
-  --button-font-family: var(--salt-text-action-fontFamily);
-  --button-font-size: var(--salt-text-fontSize);
-  --button-font-weight: var(--salt-text-action-fontWeight);
+  --button-fontFamily: var(--salt-text-action-fontFamily);
+  --button-fontSize: var(--salt-text-fontSize);
+  --button-fontWeight: var(--salt-text-action-fontWeight);
   --button-gap: var(--salt-spacing-50);
   --button-height: var(--salt-size-base);
-  --button-justify-content: center;
-  --button-letter-spacing: var(--salt-text-action-letterSpacing);
-  --button-line-height: var(--salt-text-lineHeight);
+  --button-justifyContent: center;
+  --button-letterSpacing: var(--salt-text-action-letterSpacing);
+  --button-lineHeight: var(--salt-text-lineHeight);
   --button-margin: 0;
-  --button-min-width: unset;
+  --button-minWidth: unset;
   --button-padding: 0 calc(var(--salt-spacing-100) - var(--salt-size-border, 0));
-  --button-text-align: var(--salt-text-action-textAlign);
-  --button-text-transform: var(--salt-text-action-textTransform);
+  --button-textAlign: var(--salt-text-action-textAlign);
+  --button-textTransform: var(--salt-text-action-textTransform);
   --button-width: auto;
 
-  --button-outline-style: none;
-  --button-outline-width: var(--salt-focused-outlineWidth);
-  --button-outline-color: var(--salt-focused-outlineColor);
-  --button-outline-offset: var(--salt-focused-outlineOffset);
+  --button-outlineStyle: none;
+  --button-outlineWidth: var(--salt-focused-outlineWidth);
+  --button-outlineColor: var(--salt-focused-outlineColor);
+  --button-outlineOffset: var(--salt-focused-outlineOffset);
 
   /* Properties with contract variable support */
   align-items: var(--button-alignItems);
@@ -80,28 +80,26 @@ This approach allows us to share contracts that manage style tokens and provide 
   border-width: var(--button-borderWidth);
   color: var(--button-color);
   cursor: var(--button-cursor);
-  font-family: var(--button-font-family);
-  font-size: var(--button-font-size);
-  font-weight: var(--button-font-weight);
+  font-family: var(--button-fontFamily);
+  font-size: var(--button-fontSize);
+  font-weight: var(--button-fontWeight);
   gap: var(--button-gap);
   height: var(--button-height);
-  justify-content: var(--button-justify-content);
-  letter-spacing: var(--button-letter-spacing);
-  line-height: var(--button-line-height);
+  justify-content: var(--button-justifyContent);
+  letter-spacing: var(--button-letterSpacing);
+  line-height: var(--button-lineHeight);
   margin: var(--button-margin);
-  min-width: var(--button-min-width);
+  min-width: var(--button-minWidth);
+  outline: var(--button-outlineColor) var(--button-outlineStyle) var(--button-outlineWidth);
+  outline-offset: var(--button-outlineOffset);
   padding: var(--button-padding);
-  text-align: var(--button-text-align);
-  text-transform: var(--button-text-transform);
+  text-align: var(--button-textAlign);
+  text-transform: var(--button-textTransform);
   width: var(--button-width);
-
-  outline-style: var(--button-outline-style);
-  outline-width: var(--button-outline-width);
-  outline-color: var(--button-outline-color);
-  outline-offset: var(--button-outline-offset);
 
   /* Other properties */
   appearance: none;
+  box-sizing: border-box;
   display: inline-flex;
   position: relative;
   text-decoration: none;
@@ -470,8 +468,8 @@ This approach allows us to share contracts that manage style tokens and provide 
   position: absolute;
   inset: 0;
   display: flex;
-  --button-align-items: center;
-  --button-justify-content: center;
+  --button-alignItems: center;
+  --button-justifyContent: center;
 }
 
 .saltButton-sr-only {
