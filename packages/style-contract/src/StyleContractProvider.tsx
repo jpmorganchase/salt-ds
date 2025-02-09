@@ -1,24 +1,32 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
 import {
-  Breakpoints,
-  resolveResponsiveValue,
+  type Breakpoints,
   isResponsiveProp,
+  resolveResponsiveValue,
   useBreakpoint,
   useBreakpoints,
 } from "@salt-ds/core";
-import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
-import { z, ZodSchema } from "zod";
-import { StyleContract } from "./StyleContract";
+import { useWindow } from "@salt-ds/window";
+import type React from "react";
+import { createContext, useContext, useMemo, useState } from "react";
+import type { StyleContract } from "./StyleContract";
 
 let providerInstanceCount = 0;
 
-interface StyleContractProviderProps<T extends ZodSchema<any>> {
+/**
+ * Props for the StyleContractProvider component.
+ * @template T - The type of the contract declarations.
+ */
+interface StyleContractProviderProps<T> {
   defaultContract: StyleContract<T>;
 }
 
-export interface StyleContractProviderValue<T extends ZodSchema<any>> {
-  contract: z.infer<T>;
+/**
+ * Value provided by the StyleContractContext.
+ * @template T - The type of the contract declarations.
+ */
+export interface StyleContractProviderValue<T> {
+  contract: T;
   setContract: (newContract: StyleContract<T> | null) => void;
 }
 
@@ -26,20 +34,18 @@ const StyleContractContext = createContext<
   StyleContractProviderValue<any> | undefined
 >(undefined);
 
-function generateCssFromContracts(
-  contract: Record<string, string>,
+function generateCssFromContracts<T>(
+  contract: T,
   matchedBreakpoints: (keyof Breakpoints)[],
   providerClass: string,
 ): string {
   const breakpoints = useBreakpoints();
   return Object.entries(contract)
     .reduce<string[]>((result, [componentSelector, contract]) => {
-      let resolvedContract;
-      if (isResponsiveProp(contract, breakpoints)) {
-        resolvedContract = resolveResponsiveValue(contract, matchedBreakpoints);
-      } else {
-        resolvedContract = contract;
-      }
+      const resolvedContract = isResponsiveProp(contract, breakpoints)
+        ? resolveResponsiveValue(contract, matchedBreakpoints)
+        : contract;
+
       if (resolvedContract) {
         const properties = Object.entries(resolvedContract)
           .map(([key, value]) => `--${key}: ${value};`)
@@ -52,37 +58,31 @@ function generateCssFromContracts(
     .join(" ");
 }
 
-export function StyleContractProvider<T extends ZodSchema<any>>({
+/**
+ * Provides a style contract to its children.
+ * @template T - The type of the contract declarations.
+ */
+export function StyleContractProvider<T>({
   defaultContract,
   children,
 }: React.PropsWithChildren<StyleContractProviderProps<T>>) {
   const [contract, setContractState] = useState(defaultContract);
 
-  function setContract(newContract: StyleContract<T> | null) {
-    if (newContract) {
-      setContractState(newContract);
-    } else {
-      setContractState(defaultContract);
-    }
-  }
-
-  useEffect(() => {
-    try {
-      contract.validate();
-    } catch (error) {
-      if (process.env.NODE_ENV !== "production") {
-        console.error(error);
-      }
-    }
-  }, [contract]);
+  const setContract = (newContract: StyleContract<T> | null) => {
+    setContractState(newContract || defaultContract);
+  };
 
   const providerClass = `salt-style-contract-${providerInstanceCount++}`;
   const { matchedBreakpoints } = useBreakpoint();
 
-  const css = generateCssFromContracts(
-    contract.contract,
-    matchedBreakpoints,
-    providerClass,
+  const css = useMemo(
+    () =>
+      generateCssFromContracts<T>(
+        contract.contract,
+        matchedBreakpoints,
+        providerClass,
+      ),
+    [contract, matchedBreakpoints, providerClass],
   );
 
   const targetWindow = useWindow();
@@ -101,7 +101,11 @@ export function StyleContractProvider<T extends ZodSchema<any>>({
   );
 }
 
-export function useStyleContract<T extends ZodSchema<any>>() {
+/**
+ * Hook to use the style contract context.
+ * @template T - The type of the contract declarations.
+ */
+export function useStyleContract<T>() {
   const context = useContext(
     StyleContractContext as React.Context<
       StyleContractProviderValue<T> | undefined

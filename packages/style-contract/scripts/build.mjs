@@ -4,10 +4,12 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { deleteSync } from "del";
 import esbuild from "esbuild";
-import glob from "fast-glob";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const buildFolder = path.join(__dirname, "../../../dist/salt-ds-style-contract/css");
+const buildFolder = path.join(
+  __dirname,
+  "../../../dist/salt-ds-style-contract/css",
+);
 const absWorkingDir = path.resolve(__dirname, "..");
 const outfileName = "salt-adapter.css";
 const entryFile = `src/${crypto.randomUUID()}.css`;

@@ -1,15 +1,13 @@
 import { Button, Input, StackLayout } from "@salt-ds/core";
-import type { Meta, StoryFn } from "@storybook/react";
 import {
   StyleContract,
-  StyleContractProvider,
   StyleContractDropdown,
+  StyleContractProvider,
 } from "@salt-ds/style-contract";
+import type { Meta, StoryFn } from "@storybook/react";
+import type { SampleContract } from "./SampleContract";
 
-import { SampleSchema } from "./sampleSchema";
-import { z } from "zod";
-
-const defaultContract = new StyleContract({
+const defaultContract = new StyleContract<SampleContract>({
   name: "salt",
   contract: {
     ".saltButton-neutral.saltButton-solid": {
@@ -124,7 +122,6 @@ const defaultContract = new StyleContract({
       },
     },
   },
-  schema: SampleSchema,
 });
 
 export default {
@@ -143,7 +140,7 @@ export const Default: StoryFn<typeof StyleContractProvider> = (args) => {
 export const MultipleContracts: StoryFn<typeof StyleContractProvider> = (
   args,
 ) => {
-  const productA = new StyleContract({
+  const productA = new StyleContract<SampleContract>({
     name: "scheme A contract",
     contract: {
       ".saltButton-neutral.saltButton-solid": {
@@ -153,9 +150,8 @@ export const MultipleContracts: StoryFn<typeof StyleContractProvider> = (
         "button-background-disabled": "red",
       },
     },
-    schema: SampleSchema,
   });
-  const productB = new StyleContract({
+  const productB = new StyleContract<SampleContract>({
     name: "scheme B contract",
     contract: {
       ".saltButton-neutral.saltButton-solid": {
@@ -232,7 +228,6 @@ export const MultipleContracts: StoryFn<typeof StyleContractProvider> = (
         },
       },
     },
-    schema: SampleSchema,
   });
   return (
     <StyleContractProvider {...args} defaultContract={defaultContract}>

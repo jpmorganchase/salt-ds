@@ -1,3 +1,3 @@
-export * from './StyleContract';
-export * from './StyleContractProvider';
-export * from './StyleContractDropdown';
+export * from "./StyleContract";
+export * from "./StyleContractProvider";
+export * from "./StyleContractDropdown";
