@@ -1,46 +1,66 @@
-import React, { forwardRef } from "react";
 import {
   Dropdown,
-  DropdownProps,
+  type DropdownProps,
   Option,
   OptionGroup,
 } from "@salt-ds/core";
-import { StyleContract } from "./StyleContract";
-import { useStyleContract } from './StyleContractProvider';
+import type React from "react";
+import { forwardRef } from "react";
+import type { StyleContract } from "./StyleContract";
+import { useStyleContract } from "./StyleContractProvider";
 
-import { z, ZodSchema } from "zod";
-
-export interface Contracts<T extends ZodSchema<any>> {
+/**
+ * Represents a collection of style contracts owned by a specific entity.
+ * @template T - The type of the contract declarations.
+ */
+export interface Contracts<T> {
   owner: string;
   contracts: StyleContract<T>[];
 }
 
-interface StyleContractDropdownOption<T extends ZodSchema<any>> {
+/**
+ * Represents an option in the style contract dropdown.
+ * @template T - The type of the contract declarations.
+ */
+interface StyleContractDropdownOption<T> {
   owner: string;
-  contract: z.infer<T>;
+  contract: StyleContract<T>;
 }
 
-interface StyleContractDropdownProps<T extends ZodSchema<any>>
+/**
+ * Props for the StyleContractDropdown component.
+ * @template T - The type of the contract declarations.
+ */
+interface StyleContractDropdownProps<T>
   extends DropdownProps<StyleContractDropdownOption<T> | null> {
   contracts: Contracts<T>[];
 }
 
 const SALT_DEFAULT_OPTION = "Salt default";
 
+/**
+ * Capitalizes the first letter of a word.
+ * @param word - The word to capitalize.
+ * @returns The word with the first letter capitalized.
+ */
 const capitalizeFirstLetter = (word: string) =>
   word.charAt(0).toUpperCase() + word.slice(1);
 
+/**
+ * A dropdown component for selecting style contracts.
+ * @template T - The type of the contract declarations.
+ */
 export const StyleContractDropdown = forwardRef<
   HTMLButtonElement,
-  StyleContractDropdownProps<any>
->(function StyleContractDropdown<T extends ZodSchema<any>>(
+  React.PropsWithChildren<StyleContractDropdownProps<any>>
+>(function StyleContractDropdown<T>(
   {
     contracts,
     ...rest
   }: React.PropsWithChildren<StyleContractDropdownProps<T>>,
   ref: React.Ref<HTMLButtonElement>,
 ) {
-  const { setContract } = useStyleContract();
+  const { setContract } = useStyleContract<T>();
 
   const handleSelectionChange: DropdownProps<StyleContractDropdownOption<T> | null>["onSelectionChange"] =
     (_event, newSelected) => {
@@ -49,16 +69,13 @@ export const StyleContractDropdown = forwardRef<
         setContract(null);
         return;
       }
-      setContract(selectedOption.contract);
+      setContract(selectedOption ? selectedOption.contract : null);
     };
 
-  const formatValue = (value: StyleContractDropdownOption<T> | null) => {
-    if (!value) {
-      return SALT_DEFAULT_OPTION;
-    }
-    const { owner, contract } = value;
-    return `${capitalizeFirstLetter(owner)} - ${capitalizeFirstLetter(contract.name)}`;
-  };
+  const formatValue = (value: StyleContractDropdownOption<T> | null) =>
+    value
+      ? `${capitalizeFirstLetter(value.owner)} - ${capitalizeFirstLetter(value.contract.name)}`
+      : SALT_DEFAULT_OPTION;
 
   return (
     <Dropdown
@@ -71,7 +88,7 @@ export const StyleContractDropdown = forwardRef<
       <Option key="__salt_style_contract_none" value={null}>
         {SALT_DEFAULT_OPTION}
       </Option>
-      {contracts.map(({ owner, contracts:contractItems }) => (
+      {contracts.map(({ owner, contracts: contractItems }) => (
         <OptionGroup key={owner} label={capitalizeFirstLetter(owner)}>
           {contractItems.map((contract) => (
             <Option key={contract.name} value={{ owner, contract }}>
