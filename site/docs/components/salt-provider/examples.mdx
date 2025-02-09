@@ -10,7 +10,7 @@ data:
 
 <LivePreviewControls>
 
-    <LivePreview componentName="salt-provider" exampleName="Theme" >
+<LivePreview componentName="salt-provider" exampleName="Theme" >
 
 ## Theme
 
@@ -18,9 +18,9 @@ Use `SaltProvider` to change the theme of your application with the `theme` prop
 
 Use the `useTheme` hook to access the currently active theme.
 
-    </LivePreview>
+</LivePreview>
 
-    <LivePreview componentName="salt-provider" exampleName="Modes" >
+<LivePreview componentName="salt-provider" exampleName="Modes" >
 
 ## Modes
 
@@ -30,9 +30,9 @@ You can use the mode toggle at the top of this page to change the mode in the ex
 
 Use the `useTheme` hook to access the current mode.
 
-    </LivePreview>
+</LivePreview>
 
-    <LivePreview componentName="salt-provider" exampleName="Density" >
+<LivePreview componentName="salt-provider" exampleName="Density" >
 
 ## Density
 
@@ -42,9 +42,20 @@ You can use the density toggle at the top of this page to change the density and
 
 Use the `useDensity` hook to access the current density.
 
-    </LivePreview>
+</LivePreview>
 
-    <LivePreview componentName="salt-provider" exampleName="Breakpoints" >
+<LivePreview componentName="salt-provider" exampleName="DensityResponsive" >
+
+## Responsive density
+
+It is recommended to use `"touch"` density on touchscreen/mobile devices. There are a few ways to achieve this:
+
+1. Passing a responsive value to the `density` prop.
+2. Using media queries or other methods to detect devices.
+
+</LivePreview>
+
+<LivePreview componentName="salt-provider" exampleName="Breakpoints" >
 
 ## Breakpoints
 
@@ -52,14 +63,14 @@ Use the `breakpoints` prop to customize the CSS media queries that hooks such as
 
 Use the `useBreakpoints` hook to access the current breakpoints defined via the Salt Provider. This is a low-level hook used internally in other hooks.
 
-    </LivePreview>
+</LivePreview>
 
-    <LivePreview componentName="salt-provider" exampleName="NestedProviders" >
+<LivePreview componentName="salt-provider" exampleName="NestedProviders" >
 
 ## Nested providers
 
 You can use `SaltProvider` to create scoped themes, allowing you to mix themes, modes, densities and breakpoints in your application. Familiarize yourself with the guidance on our [foundations](/salt/foundations/index) pages, where we recommend that you use this sparingly. Nested providers will inherit values from parent providers.
 
-    </LivePreview>
+</LivePreview>
 
 </LivePreviewControls>
