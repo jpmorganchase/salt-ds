@@ -34,17 +34,8 @@ interface StyleContractDropdownOption<T extends Contract> {
 interface StyleContractDropdownProps<T extends Contract>
   extends DropdownProps<StyleContractDropdownOption<T> | null> {
   contracts: Contracts<T>[];
+  noContractAppliedLabel?: string;
 }
-
-const SALT_DEFAULT_OPTION = "Salt default";
-
-/**
- * Capitalizes the first letter of a word.
- * @param word - The word to capitalize.
- * @returns The word with the first letter capitalized.
- */
-const capitalizeFirstLetter = (word: string) =>
-  word.charAt(0).toUpperCase() + word.slice(1);
 
 /**
  * A dropdown component for selecting style contracts.
@@ -56,6 +47,7 @@ export const StyleContractDropdown = forwardRef<
 >(function StyleContractDropdown<T extends Contract>(
   {
     contracts,
+    noContractAppliedLabel = "No contract applied",
     ...rest
   }: React.PropsWithChildren<StyleContractDropdownProps<T>>,
   ref: React.Ref<HTMLButtonElement>,
@@ -73,9 +65,7 @@ export const StyleContractDropdown = forwardRef<
     };
 
   const formatValue = (value: StyleContractDropdownOption<T> | null) =>
-    value
-      ? `${capitalizeFirstLetter(value.owner)} - ${capitalizeFirstLetter(value.contract.name)}`
-      : SALT_DEFAULT_OPTION;
+    value ? `${value.owner} - ${value.contract.name}` : noContractAppliedLabel;
 
   return (
     <Dropdown
@@ -86,13 +76,13 @@ export const StyleContractDropdown = forwardRef<
       {...rest}
     >
       <Option key="__salt_style_contract_none" value={null}>
-        {SALT_DEFAULT_OPTION}
+        {noContractAppliedLabel}
       </Option>
       {contracts.map(({ owner, contracts: contractItems }) => (
-        <OptionGroup key={owner} label={capitalizeFirstLetter(owner)}>
+        <OptionGroup key={owner} label={owner}>
           {contractItems.map((contract) => (
             <Option key={contract.name} value={{ owner, contract }}>
-              {capitalizeFirstLetter(contract.name)}
+              {contract.name}
             </Option>
           ))}
         </OptionGroup>
