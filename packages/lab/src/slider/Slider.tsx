@@ -1,63 +1,93 @@
-import { Label, makePrefixer, useControlled } from "@salt-ds/core";
+import {
+  type ChangeEvent,
+  type HTMLAttributes,
+  type SyntheticEvent,
+  forwardRef,
+} from "react";
+
+import { useControlled, useFormFieldProps } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
-import { clsx } from "clsx";
-import { type HTMLAttributes, forwardRef } from "react";
-import { SliderContext, SliderMarks, SliderTrack } from "./internal";
 
 import sliderCss from "./Slider.css";
-import { parseValueProp } from "./internal/utils";
-import type { SliderChangeHandler, SliderValue } from "./types";
-
-const withBaseName = makePrefixer("saltSlider");
-
-const defaultMin = 0;
-const defaultMax = 10;
-const defaultStep = 1;
+import { SliderThumb } from "./internal/SliderThumb";
+import { SliderTrack } from "./internal/SliderTrack";
+import { useSliderThumb } from "./internal/useSliderThumb";
+import { toFloat } from "./internal/utils";
 
 export interface SliderProps
   extends Omit<HTMLAttributes<HTMLDivElement>, "onChange" | "defaultValue"> {
   /**
-   * Minimum slider value
+   * Initial value of the slider
    */
-  min?: number;
+  defaultValue?: number;
+  /**
+   * Disable the slider
+   */
+  disabled?: boolean;
+  /**
+   * A callback to format the display value in the tooltip
+   */
+  format?: (value: number) => string | number;
+  /**
+   * Position of the labels
+   */
+  labelPosition?: "bottom" | "inline";
+  /**
+   * The markers to show under the slider to label some values
+   */
+  markers?: { label: string; value: number }[];
   /**
    * Maximum slider value
    */
   max?: number;
   /**
+   * Minimum slider value
+   */
+  min?: number;
+  /**
+   * Name of the input
+   */
+  name?: string;
+  /**
+   * Label for maximum value
+   */
+  maxLabel?: string;
+  /**
+   * Label for the minimum value
+   */
+  minLabel?: string;
+  /**
+   * Change handler to be used when in a controlled state
+   */
+  onChange?: (event: SyntheticEvent, value: number) => void;
+  /**
    * Minimum interval the slider thumb can move
    */
   step?: number;
   /**
-   * Initial value of the slider
-   */
-  defaultValue?: SliderValue;
-  /**
-   * The markings the slider is displayed with
-   */
-  marks?: "inline" | "bottom" | "all";
-  /**
    * Value of the slider, to be used when in a controlled state
    */
-  value?: SliderValue;
-  /**
-   * Change handler to be used when in a controlled state
-   */
-  onChange?: SliderChangeHandler;
+  value?: number;
 }
 
 export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
   {
-    min = defaultMin,
-    max = defaultMax,
-    step = defaultStep,
-    value: valueProp,
-    defaultValue = [0],
-    onChange,
-    className,
     "aria-label": ariaLabel,
-    marks = "inline",
+    "aria-valuetext": ariaValueText,
+    defaultValue = 0,
+    disabled: disabledProp = false,
+    format,
+    labelPosition = "inline",
+    markers,
+    min = 0,
+    minLabel,
+    max = 10,
+    maxLabel,
+    onChange,
+    step = 1,
+    value: valueProp,
+    style: styleProp,
     ...rest
   },
   ref,
@@ -69,59 +99,86 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
     window: targetWindow,
   });
 
-  const [value, setValue] = useControlled<SliderValue>({
-    controlled: parseValueProp(valueProp, min, max),
+  const [valueState, setValue] = useControlled({
+    controlled: valueProp,
     default: defaultValue,
     name: "Slider",
-    state: "Value",
+    state: "value",
   });
 
-  const handleSliderChange = (value: SliderValue) => {
-    setValue(value);
-    onChange?.(value);
+  const {
+    handlePointerDownOnThumb,
+    handlePointerDownOnTrack,
+    calculateAndSetThumbPosition,
+    calculatePercentage,
+    clamp,
+    isDragging,
+    sliderRef,
+  } = useSliderThumb({
+    min,
+    max,
+    step,
+    valueState,
+    // @ts-ignore onChange can accept both number and [number, number] value types
+    onChange,
+    // @ts-ignore setValue can accept both number and [number, number] value types
+    setValue,
+  });
+
+  const {
+    a11yProps: {
+      "aria-labelledby": formFieldLabelledBy,
+      "aria-describedby": formFieldDescribedBy,
+    } = {},
+    disabled: formFieldDisabled,
+  } = useFormFieldProps();
+
+  const disabled = formFieldDisabled || disabledProp;
+  const value = clamp(valueState);
+  const progressPercentage = calculatePercentage(toFloat(value));
+
+  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const parsedValue = toFloat(event.target.value);
+    setValue(parsedValue);
+    onChange?.(event, parsedValue);
   };
 
   return (
-    <SliderContext.Provider
-      value={{
-        value,
-        min,
-        max,
-        step,
-        onChange: handleSliderChange,
-        ariaLabel,
-      }}
+    <SliderTrack
+      disabled={disabled}
+      handlePointerDown={handlePointerDownOnTrack}
+      labelPosition={labelPosition}
+      isDragging={isDragging}
+      min={min}
+      minLabel={minLabel}
+      max={max}
+      maxLabel={maxLabel}
+      markers={markers}
+      progressPercentage={progressPercentage}
+      ref={ref}
+      sliderRef={sliderRef}
+      style={styleProp}
     >
-      <div
-        ref={ref}
-        className={clsx(
-          withBaseName(),
-          { [withBaseName("bottomLabel")]: marks !== "inline" },
-          className,
-        )}
+      <SliderThumb
+        aria-describedby={formFieldDescribedBy}
+        aria-label={ariaLabel}
+        aria-labelledby={formFieldLabelledBy}
+        aria-valuemax={max}
+        aria-valuemin={min}
+        aria-valuetext={ariaValueText}
+        disabled={disabled}
+        format={format}
+        handleInputChange={handleInputChange}
+        handlePointerDown={handlePointerDownOnThumb}
+        max={max}
+        min={min}
+        offsetPercentage={`${progressPercentage}%`}
+        onChange={calculateAndSetThumbPosition}
+        step={step}
+        thumbValue={value}
+        trackDragging={isDragging}
         {...rest}
-      >
-        {marks !== "all" && (
-          <Label
-            className={clsx(withBaseName("label"), {
-              [withBaseName("labelMinBottom")]: marks !== "inline",
-            })}
-          >
-            {min}
-          </Label>
-        )}
-        <SliderTrack />
-        {marks !== "all" && (
-          <Label
-            className={clsx(withBaseName("label"), {
-              [withBaseName("labelMaxBottom")]: marks !== "inline",
-            })}
-          >
-            {max}
-          </Label>
-        )}
-        {marks === "all" && <SliderMarks max={max} min={min} step={step} />}
-      </div>
-    </SliderContext.Provider>
+      />
+    </SliderTrack>
   );
 });

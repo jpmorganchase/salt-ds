@@ -1,111 +1,112 @@
-import { makePrefixer } from "@salt-ds/core";
-import {
-  type ComponentPropsWithoutRef,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { Text, makePrefixer } from "@salt-ds/core";
+import { clsx } from "clsx";
+import { type HTMLAttributes, type RefObject, forwardRef } from "react";
+import { calculateMarkerPosition } from "./utils";
 
-import type { ActiveThumbIndex, SliderValue, ThumbIndex } from "../types";
-import { useSliderContext } from "./SliderContext";
-import { SliderSelection } from "./SliderSelection";
-import { SliderThumb } from "./SliderThumb";
-import {
-  getNearestIndex,
-  getValue,
-  preventOverlappingValues,
-  setValue,
-} from "./utils";
+const withBaseName = makePrefixer("saltSlider");
 
-export interface SliderTrackProps extends ComponentPropsWithoutRef<"div"> {}
+interface SliderTrackProps
+  extends Omit<HTMLAttributes<HTMLDivElement>, "onChange" | "defaultValue"> {
+  children: React.ReactNode;
+  disabled: boolean;
+  handlePointerDown: (event: React.PointerEvent<HTMLDivElement>) => void;
+  isDragging: boolean;
+  labelPosition: "inline" | "bottom";
+  markers?: { label: string; value: number }[];
+  max: number;
+  maxLabel?: number | string;
+  min: number;
+  minLabel?: number | string;
+  progressPercentage?: number;
+  progressPercentageRange?: [number, number];
+  sliderRef: RefObject<HTMLDivElement>;
+}
 
-const withBaseName = makePrefixer("saltSliderTrack");
-
-export const SliderTrack = ({ ...props }: SliderTrackProps) => {
-  const { min, max, step, value, onChange } = useSliderContext();
-
-  const trackRef = useRef<HTMLDivElement>(null);
-
-  const valueRef = useRef<SliderValue>(value);
-
-  const [activeThumb, setActiveThumbState] =
-    useState<ActiveThumbIndex>(undefined);
-  const activeThumbRef = useRef<ActiveThumbIndex>(undefined);
-  const pointerDown = useRef(false);
-
-  const setActiveThumb = (index: ActiveThumbIndex) => {
-    setActiveThumbState(index);
-    activeThumbRef.current = index;
-  };
-
-  const handlePointerUp = () => {
-    setActiveThumb(undefined);
-    pointerDown.current = false;
-  };
-
-  const handlePointerDown = (event: React.PointerEvent<HTMLDivElement>) => {
-    if (event.button !== 0) return;
-    const { clientX } = event;
-    const newValue: number = getValue(trackRef, min, max, step, clientX);
-    const nearestIndex = getNearestIndex(value, newValue);
-    setValue(value, newValue, value.length > 1 ? nearestIndex : 0, onChange);
-    setActiveThumb(nearestIndex);
-    pointerDown.current = true;
-  };
-
-  const handlePointerMove = (event: PointerEvent) => {
-    if (!pointerDown.current || typeof activeThumbRef.current === "undefined")
-      return;
-    const thumb = activeThumbRef.current;
-    const { clientX } = event;
-    const rawValue: number = getValue(trackRef, min, max, step, clientX);
-    const newValue = preventOverlappingValues(
-      valueRef.current,
-      rawValue,
-      thumb,
+export const SliderTrack = forwardRef<HTMLDivElement, SliderTrackProps>(
+  function SliderTrack(
+    {
+      className: classNameProp,
+      children,
+      disabled,
+      handlePointerDown,
+      isDragging,
+      labelPosition,
+      markers,
+      max,
+      maxLabel,
+      min,
+      minLabel,
+      progressPercentage,
+      progressPercentageRange,
+      sliderRef,
+      ...rest
+    },
+    ref,
+  ) {
+    return (
+      <div
+        className={clsx(
+          withBaseName(),
+          {
+            [withBaseName("disabled")]: disabled,
+            [withBaseName("dragging")]: isDragging,
+            [withBaseName(`${labelPosition}Labels`)]: !markers,
+            [withBaseName("withMarkers")]: markers,
+          },
+          classNameProp,
+        )}
+        ref={ref}
+        {...rest}
+      >
+        {/* Min Label */}
+        {!markers && (
+          <Text styleAs="label" className={withBaseName("minLabel")}>
+            {minLabel || min}
+          </Text>
+        )}
+        {/* Slider Track */}
+        <div
+          className={withBaseName("track")}
+          onPointerDown={handlePointerDown}
+          ref={sliderRef}
+          style={
+            {
+              "--slider-progressPercentage": `${progressPercentage}%`,
+              "--slider-progressPercentageStart": `${progressPercentageRange?.[0]}%`,
+              "--slider-progressPercentageEnd": `${progressPercentageRange?.[1]}%`,
+            } as React.CSSProperties
+          }
+        >
+          {children}
+        </div>
+        {/* Max label */}
+        {!markers && (
+          <Text styleAs="label" className={withBaseName("maxLabel")}>
+            {maxLabel || max}
+          </Text>
+        )}
+        {/* Markers */}
+        {markers && (
+          <div className={withBaseName("markers")}>
+            {markers.map(
+              (marker: { label: string; value: number | string }) => (
+                <Text
+                  className={withBaseName("marker-label")}
+                  style={
+                    {
+                      "--slider-marker-percentage": `${calculateMarkerPosition(marker.value, min, max)}%`,
+                    } as React.CSSProperties
+                  }
+                  key={marker.value}
+                  styleAs="label"
+                >
+                  {marker.label}
+                </Text>
+              ),
+            )}
+          </div>
+        )}
+      </div>
     );
-    setValue(valueRef.current, newValue, thumb, onChange);
-  };
-
-  const handlePointerOut = () => {
-    if (!pointerDown.current) {
-      setActiveThumb(undefined);
-    }
-  };
-
-  useEffect(() => {
-    window.addEventListener("pointerup", handlePointerUp);
-    window.addEventListener("pointermove", handlePointerMove);
-    return () => {
-      window.removeEventListener("pointerup", handlePointerUp);
-      window.removeEventListener("pointermove", handlePointerMove);
-    };
-  }, []);
-
-  useEffect(() => {
-    valueRef.current = value;
-  }, [value]);
-
-  return (
-    <div
-      className={withBaseName()}
-      ref={trackRef}
-      onPointerDown={handlePointerDown}
-      onPointerOut={handlePointerOut}
-      {...props}
-    >
-      <div className={withBaseName("rail")} />
-      <SliderSelection />
-      {value.map((_, i) => {
-        return (
-          <SliderThumb
-            key={i}
-            index={i as ThumbIndex}
-            activeThumb={activeThumb}
-            setActiveThumb={setActiveThumb}
-          />
-        );
-      })}
-    </div>
-  );
-};
+  },
+);

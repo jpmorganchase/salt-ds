@@ -1,90 +1,126 @@
 .saltSlider {
-  display: grid;
-  gap: var(--salt-spacing-100);
-  grid-template-columns: auto 1fr auto;
+  --slider-progressPercentage: "0%";
+  --slider-marker-percentage: "0%";
+
+  --slider-progressPercentageStart: "0%";
+  --slider-progressPercentageEnd: "0%";
+
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  gap: var(--salt-spacing-50);
+  height: 30px;
+  position: relative;
+  width: 100%;
+}
+
+.saltSlider-disabled {
+  cursor: not-allowed;
+}
+
+.saltSlider-withMarkers {
+  flex-direction: column;
+  gap: calc((var(--salt-size-base) - var(--salt-size-selectable)) / 2);
+}
+
+.saltSlider-bottomLabels {
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.saltSlider-bottomLabels .saltSlider-track {
+  flex: 100%;
+  order: 0;
+}
+
+.saltSlider-bottomLabels .saltSlider-minLabel {
+  order: 1;
+}
+
+.saltSlider-bottomLabels .saltSlider-maxLabel {
+  order: 2;
+}
+
+.saltSlider-minLabel,
+.saltSlider-maxLabel {
   user-select: none;
 }
 
-.saltSlider-label {
-  height: var(--salt-size-base);
-  display: flex;
-  align-items: center;
-}
-
-.saltSlider-bottomLabel {
-  grid-template-columns: 1fr;
-  gap: 0;
-}
-.saltSlider-bottomLabel .saltSlider-label {
-  height: auto;
-}
-
-.saltSlider-labelMinBottom {
-  grid-row: 2;
-  grid-column: 1;
-  justify-self: start;
-  width: min-content;
-}
-
-.saltSlider-labelMaxBottom {
-  grid-row: 2;
-  grid-column: 1;
-  justify-self: end;
-  width: min-content;
-}
-
-.saltSliderTrack {
-  display: flex;
+.saltSlider-track {
   position: relative;
-  cursor: pointer;
-  align-items: center;
-  height: var(--salt-size-base);
-}
-
-.saltSliderTrack-rail {
-  height: var(--salt-size-bar);
-  background: var(--salt-track-borderColor);
   width: 100%;
-  position: absolute;
+  background: linear-gradient(to right, var(--salt-accent-borderColor) var(--slider-progressPercentage), var(--salt-track-borderColor) var(--slider-progressPercentage));
+  height: var(--salt-size-bar);
+  cursor: pointer;
 }
 
-.saltSliderTrack:active {
+.saltSlider-range .saltSlider-track {
+  background: linear-gradient(
+    to right,
+    var(--salt-track-borderColor) var(--slider-progressPercentageStart),
+    var(--salt-accent-borderColor) var(--slider-progressPercentageStart),
+    var(--salt-accent-borderColor) var(--slider-progressPercentageEnd),
+    var(--salt-track-borderColor) var(--slider-progressPercentageEnd)
+  );
+}
+
+.saltSlider-dragging,
+.saltSlider-dragging .saltSlider-track,
+.saltSlider-dragging .saltSliderThumb {
   cursor: grabbing;
 }
 
-.saltSliderThumb-container {
+.saltSliderThumb {
   position: absolute;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transform: translate(-50%, 0%);
-  width: var(--salt-size-base);
-  height: var(--salt-size-base);
+  width: var(--salt-size-indicator);
+  height: var(--salt-size-selectable);
+  background: var(--salt-accent-borderColor);
+  transform: translateX(-50%);
+  cursor: pointer;
+  outline: none;
+  top: -5px;
 }
 
-.saltSliderThumb-tooltip {
+.saltSlider-disabled .saltSlider-track,
+.saltSlider-disabled .saltSliderThumb {
+  pointer-events: none;
+}
+
+.saltSliderThumb-focused {
+  outline-style: var(--salt-focused-outlineStyle);
+  outline-width: var(--salt-focused-outlineWidth);
+  outline-offset: var(--salt-focused-outlineOffset);
+  outline-color: var(--salt-focused-outlineColor);
+}
+
+.saltSliderThumb:active {
+  cursor: grabbing;
+}
+
+.saltSliderTooltip {
+  position: absolute;
   background: var(--salt-container-primary-background);
-  border-color: var(--salt-status-info-borderColor);
-  border-style: var(--salt-container-borderStyle);
-  border-width: var(--salt-size-border);
-  line-height: var(--salt-text-lineHeight);
-  box-shadow: var(--salt-overlayable-shadow-popout);
-  color: var(--salt-content-primary-foreground);
-  max-width: var(--saltTooltip-maxWidth, 230px);
-  padding: var(--saltTooltip-padding, var(--salt-size-unit));
-  position: absolute;
-  z-index: var(--salt-zIndex-flyover);
-  transform: translate(0, -100%);
-  display: none;
+  bottom: 50%;
+  transform: translate(-50%, -50%);
+  border: 1px solid var(--salt-accent-borderColor);
+  padding: 6px;
+  user-select: none;
+  z-index: 1;
+  left: var(--slider-progressPercentage);
+  visibility: hidden;
 }
 
-.saltSliderThumb-tooltip-arrow {
+.saltSliderTooltip-visible,
+.saltSliderTooltip:hover {
+  visibility: visible;
+}
+
+.saltSliderTooltip-arrow {
   position: absolute;
   pointer-events: none;
   top: 100%;
   left: 50%;
-  transform: translate(-50%, 0);
-  stroke: none;
+  transform: translateX(-50%);
   fill: var(--salt-container-primary-background);
   stroke: var(--salt-status-info-borderColor);
   stroke-width: var(--salt-size-border);
@@ -92,45 +128,38 @@
   height: var(--salt-size-icon);
 }
 
-.saltSliderThumb-tooltip-visible {
-  display: block;
-}
-
-.saltSliderThumb-container:hover .saltSliderThumb-tooltip {
-  display: block;
-}
-
-.saltSliderThumb {
-  position: relative;
+.saltSliderThumb-input {
+  opacity: 0.0001;
+  -webkit-appearance: none;
+  appearance: none;
+  pointer-events: none;
+  left: var(--slider-progressPercentage);
   width: var(--salt-size-indicator);
   height: var(--salt-size-selectable);
-  background: var(--salt-accent-borderColor);
-}
-
-.saltSliderThumb:focus-visible {
-  outline-style: var(--salt-focused-outlineStyle);
-  outline-width: var(--salt-focused-outlineWidth);
-  outline-offset: var(--salt-focused-outlineOffset);
-  outline-color: var(--salt-focused-outlineColor);
-}
-
-.saltSliderSelection {
-  height: var(--salt-size-bar);
-  background: var(--salt-accent-borderColor);
-  align-items: start;
+  border: 0;
+  margin: 0;
+  padding: 0;
   position: absolute;
+  cursor: pointer;
+  overflow: hidden;
+  background: 0 0;
 }
 
-.saltSliderSelection-range {
-  align-items: center;
+.saltSlider-dragging .saltSliderThumb-input {
+  cursor: grabbing;
 }
 
-.saltSliderMarks {
+.saltSlider-markers {
   position: relative;
+  user-select: none;
+  width: 100%;
 }
 
-.saltSliderMarks-mark {
+.saltSlider-marker-label {
   position: absolute;
-  transform: translate(-50%);
-  line-height: var(--salt-text-lineHeight);
+  left: calc(var(--slider-marker-percentage) - var(--salt-size-indicator));
+}
+
+.saltSliderThumb-secondThumb {
+  z-index: 10;
 }

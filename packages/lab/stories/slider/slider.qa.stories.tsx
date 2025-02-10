@@ -3,94 +3,48 @@ import type { Meta, StoryFn } from "@storybook/react";
 import { QAContainer, type QAContainerProps } from "docs/components";
 
 export default {
-  title: "Lab/Slider/Slider QA",
+  title: "Lab/Slider/QA",
   component: Slider,
 } as Meta<typeof Slider>;
 
-export const Default: StoryFn<QAContainerProps> = (props) => {
+export const ExamplesGrid: StoryFn<QAContainerProps> = (props) => {
   return (
-    <QAContainer
-      height={800}
-      cols={5}
-      itemPadding={50}
-      itemWidthAuto
-      width={1200}
-      {...props}
-    >
-      <Slider style={{ width: "300px" }} />
-    </QAContainer>
-  );
-};
-
-Default.parameters = {
-  chromatic: { disableSnapshot: false },
-};
-
-export const BottomLabel: StoryFn<QAContainerProps> = (props) => {
-  return (
-    <QAContainer
-      height={800}
-      cols={5}
-      itemPadding={50}
-      itemWidthAuto
-      width={1200}
-      {...props}
-    >
-      <Slider style={{ width: "300px" }} marks="bottom" defaultValue={[5]} />
-    </QAContainer>
-  );
-};
-
-BottomLabel.parameters = {
-  chromatic: { disableSnapshot: false },
-};
-
-export const WithMarks: StoryFn<QAContainerProps> = (props) => {
-  return (
-    <QAContainer
-      height={800}
-      cols={5}
-      itemPadding={50}
-      itemWidthAuto
-      width={1200}
-      {...props}
-    >
+    <QAContainer cols={1} itemPadding={4} {...props}>
+      <Slider defaultValue={0.5} max={10} min={-5} step={0.5} />
       <Slider
-        style={{ width: "300px" }}
-        marks="all"
-        step={2}
-        defaultValue={[4]}
+        defaultValue={0.5}
+        max={10}
+        min={-5}
+        step={0.5}
+        labelPosition="bottom"
+      />
+      <Slider
+        defaultValue={0.5}
+        max={10}
+        min={-5}
+        step={0.5}
+        markers={[
+          { value: 1, label: "1" },
+          { value: 5, label: "5" },
+        ]}
       />
     </QAContainer>
   );
 };
 
-WithMarks.parameters = {
-  chromatic: { disableSnapshot: false },
-};
-
-export const Range: StoryFn<QAContainerProps> = (props) => {
-  return (
-    <QAContainer
-      height={800}
-      cols={5}
-      itemPadding={50}
-      itemWidthAuto
-      width={1200}
-      {...props}
-    >
-      <Slider
-        style={{ width: "300px" }}
-        marks="bottom"
-        step={2}
-        min={0}
-        max={50}
-        defaultValue={[10, 40]}
-      />
-    </QAContainer>
-  );
-};
-
-Range.parameters = {
-  chromatic: { disableSnapshot: false },
+ExamplesGrid.parameters = {
+  chromatic: {
+    disableSnapshot: false,
+    modes: {
+      theme: {
+        themeNext: "disable",
+      },
+      themeNext: {
+        themeNext: "enable",
+        corner: "rounded",
+        accent: "teal",
+        // Ignore headingFont given font is not loaded
+      },
+    },
+  },
 };

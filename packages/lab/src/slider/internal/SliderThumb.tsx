@@ -1,82 +1,141 @@
-import { Label, makePrefixer } from "@salt-ds/core";
-import { clsx } from "clsx";
-import { type ComponentPropsWithoutRef, useState } from "react";
-import type { ActiveThumbIndex, ThumbIndex } from "../types";
-import { useSliderContext } from "./SliderContext";
-import { useKeyDownThumb } from "./useKeyDownThumb";
-import { getPercentage } from "./utils";
+import { makePrefixer } from "@salt-ds/core";
+import { useWindow } from "@salt-ds/window";
+import clsx from "clsx";
+import {
+  type ChangeEvent,
+  type HTMLAttributes,
+  forwardRef,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
+import { SliderTooltip } from "./SliderTooltip";
 
 const withBaseName = makePrefixer("saltSliderThumb");
 
-export interface SliderThumbProps extends ComponentPropsWithoutRef<"div"> {
-  index: ThumbIndex;
-  activeThumb: ActiveThumbIndex;
-  setActiveThumb: (index: ActiveThumbIndex) => void;
+interface SliderThumbProps
+  extends Omit<
+    HTMLAttributes<HTMLInputElement>,
+    "onChange" | "defaultValue" | "min" | "max"
+  > {
+  disabled: boolean;
+  format?: (value: number) => number | string;
+  handleInputChange: (event: ChangeEvent<HTMLInputElement>) => void;
+  handlePointerDown: (event: React.PointerEvent<HTMLDivElement>) => void;
+  index?: number;
+  min: number;
+  max: number;
+  offsetPercentage?: string;
+  onChange: (event: PointerEvent | React.PointerEvent) => void;
+  step: number;
+  thumbValue: [number, number] | number;
+  trackDragging: boolean;
 }
 
-export function SliderThumb(props: SliderThumbProps): JSX.Element {
-  const { index, activeThumb, setActiveThumb } = props;
+export const SliderThumb = forwardRef<HTMLInputElement, SliderThumbProps>(
+  function SliderThumb(
+    {
+      "aria-label": ariaLabel,
+      "aria-valuetext": ariaValueText,
+      "aria-labelledby": ariaLabelledBy,
+      disabled,
+      format,
+      handleInputChange,
+      handlePointerDown,
+      index = 0,
+      min,
+      max,
+      offsetPercentage,
+      onChange,
+      step,
+      thumbValue,
+      trackDragging,
+      ...rest
+    },
+    ref,
+  ) {
+    const [isTooltipVisible, setIsTooltipVisible] = useState(false);
+    const [isFocused, setIsFocused] = useState(false);
+    const inputRef = useRef<HTMLInputElement>(null);
+    const targetWindow = useWindow();
 
-  const [focussed, setFocussed] = useState(false);
+    useEffect(() => {
+      if (isTooltipVisible) {
+        targetWindow?.addEventListener("keydown", handleKeyDown);
+      }
+      return () => targetWindow?.removeEventListener("keydown", handleKeyDown);
+    }, [targetWindow, isTooltipVisible]);
 
-  const { min, max, step, value, onChange, ariaLabel } = useSliderContext();
+    const handlePointerEnter = () => setIsTooltipVisible(true);
 
-  const onKeyDown = useKeyDownThumb(min, max, step, value, onChange, index);
+    const handlePointerLeave = () => {
+      // Delay hiding the tooltip to enable tooltip
+      // visibility on hover
+      setTimeout(() => {
+        setIsTooltipVisible(false);
+      }, 250);
+    };
 
-  const thumbValue = value[index];
+    const handleFocus = () => {
+      // We add focus to the input to get the keyboard
+      // interactions for the slider out of the box.
+      if (inputRef.current) inputRef.current.focus();
 
-  const thumbPosition = getPercentage(min, max, thumbValue as number);
+      setIsFocused(true);
+      setIsTooltipVisible(true);
+    };
 
-  const handlePointerOver = () => {
-    if (activeThumb === undefined && index !== null) setActiveThumb(index);
-  };
+    const handleBlur = () => {
+      setIsFocused(false);
+      setIsTooltipVisible(false);
+    };
 
-  const handleFocus = () => {
-    setFocussed(true);
-    if (index !== null) setActiveThumb(index);
-  };
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setIsTooltipVisible(false);
+      }
+    };
 
-  const handleBlur = () => {
-    setFocussed(false);
-    setActiveThumb(undefined);
-  };
+    const value = Array.isArray(thumbValue) ? thumbValue[index] : thumbValue;
+    const formattedValue = format ? format(value) : value;
 
-  const showTooltip = focussed || activeThumb === index;
-
-  return (
-    <div
-      style={{ left: `${thumbPosition}%` }}
-      className={withBaseName("container")}
-      onPointerOver={handlePointerOver}
-      onFocus={handleFocus}
-      onBlur={handleBlur}
-    >
+    return (
       <div
-        className={clsx(withBaseName("tooltip"), {
-          [withBaseName("tooltip-visible")]: showTooltip,
+        aria-describedby={`sliderTooltip-${index}`}
+        className={clsx(withBaseName(), {
+          [withBaseName("focused")]: isFocused,
+          [withBaseName("secondThumb")]: index === 1,
         })}
-        aria-expanded={showTooltip}
+        onPointerEnter={handlePointerEnter}
+        onPointerLeave={handlePointerLeave}
+        onPointerDown={handlePointerDown}
+        style={{ left: offsetPercentage }}
+        ref={ref}
       >
-        <svg
-          className={withBaseName("tooltip-arrow")}
-          aria-hidden="true"
-          viewBox="0 1 14 14"
-        >
-          <path d="M0,0 H14 L7,7 Q7,7 7,7 Z" />
-        </svg>
-        <Label>{value[index]}</Label>
+        <SliderTooltip
+          id={`sliderTooltip-${index}`}
+          value={formattedValue}
+          isVisible={(isTooltipVisible || trackDragging) && !disabled}
+        />
+        <input
+          disabled={disabled}
+          type="range"
+          ref={inputRef}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
+          className={withBaseName("input")}
+          value={value}
+          onChange={handleInputChange}
+          aria-labelledby={ariaLabelledBy}
+          aria-valuenow={value}
+          aria-valuetext={ariaValueText}
+          aria-label={ariaLabel}
+          min={min}
+          max={max}
+          step={step}
+          {...rest}
+        />
       </div>
-      <div
-        className={withBaseName()}
-        onKeyDown={onKeyDown}
-        role="slider"
-        aria-valuemin={min}
-        aria-valuemax={max}
-        aria-valuenow={index === 1 ? value[1] : value[0]}
-        aria-label={ariaLabel}
-        aria-orientation="horizontal"
-        tabIndex={0}
-      />
-    </div>
-  );
-}
+    );
+  },
+);

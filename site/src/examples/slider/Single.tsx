@@ -7,11 +7,10 @@ export const Single = (): ReactElement => (
     <Slider aria-label="single" min={0} max={100} style={{ width: "400px" }} />
     <Slider
       aria-label="single"
-      marks="all"
       min={0}
-      max={50}
-      step={10}
+      max={100}
       style={{ width: "400px" }}
+      labelPosition="bottom"
     />
   </StackLayout>
 );
