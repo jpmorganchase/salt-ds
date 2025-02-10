@@ -30,8 +30,12 @@ export const ButtonSentimentValues = [
 export type ButtonVariant = (typeof ButtonVariantValues)[number];
 export type ButtonAppearance = (typeof ButtonAppearanceValues)[number];
 export type ButtonSentiment = (typeof ButtonSentimentValues)[number];
+import { ComponentBase, type ComponentBaseProps } from "../component-base";
+import { useDefaultProps } from "../default-props-provider";
 
-export interface ButtonProps extends ComponentPropsWithoutRef<"button"> {
+export interface ButtonProps
+  extends ComponentPropsWithoutRef<"button">,
+    ComponentBaseProps {
   /**
    * If `true`, the button will be disabled.
    */
@@ -97,8 +101,8 @@ function variantToAppearanceAndColor(
 }
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  function Button(
-    {
+  function Button(props, ref?): ReactElement<ButtonProps> {
+    const {
       children,
       className,
       disabled,
@@ -114,9 +118,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       type = "button",
       variant = "primary",
       ...restProps
-    },
-    ref?,
-  ): ReactElement<ButtonProps> {
+    } = useDefaultProps({ name: "saltButton", props });
     const { active, buttonProps } = useButton({
       loading,
       disabled,
@@ -145,7 +147,8 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     // does not require tabindex="0" attribute
     const { tabIndex, ...restButtonProps } = buttonProps;
     return (
-      <button
+      <ComponentBase
+        as={"button"}
         {...restButtonProps}
         className={clsx(
           withBaseName(),
@@ -174,7 +177,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           </span>
         )}
         {children}
-      </button>
+      </ComponentBase>
     );
   },
 );
