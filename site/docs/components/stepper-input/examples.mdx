@@ -117,6 +117,8 @@ You can set stepper input to a read-only state. The user can't edit the value te
 
 By default, the marker is an em dash. If your application requires a different marker, you can set it via the `emptyReadOnlyMarker` prop.
 
+**Note:** Stepper input's role is changed to `"textbox"` when read-only is set to work around browser/screen reader limitations when conveying a read-only state.
+
 ### Best practices
 
 Use the read-only state when the user needs the value for their flow or current task but cannot edit it, for example, because of user permissions.

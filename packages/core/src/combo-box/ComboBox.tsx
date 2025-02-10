@@ -438,13 +438,14 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
           </>
         }
         onChange={handleChange}
-        role="combobox"
+        // Workaround to have readonly conveyed by screen readers (https://github.com/jpmorganchase/salt-ds/issues/4586)
+        role={readOnly ? "textbox" : "combobox"}
         disabled={disabled}
         readOnly={readOnly}
         inputProps={{
-          role: "combobox",
-          "aria-expanded": openState,
-          "aria-controls": openState ? listId : undefined,
+          "aria-readonly": readOnly ? "true" : undefined,
+          "aria-expanded": !readOnly ? openState : undefined,
+          "aria-controls": openState && !readOnly ? listId : undefined,
           onKeyDown: handleKeyDown,
           ...inputPropsProp,
         }}

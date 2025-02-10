@@ -349,12 +349,22 @@ export const StepperInput = forwardRef<HTMLDivElement, StepperInputProps>(
           )}
           <input
             aria-describedby={clsx(formFieldDescribedBy, inputDescribedBy)}
-            aria-invalid={isOutOfRange(value, min, max)}
             aria-labelledby={clsx(formFieldLabelledBy, inputLabelledBy)}
-            aria-valuemax={toFloat(toFixedDecimalPlaces(max, decimalPlaces))}
-            aria-valuemin={toFloat(toFixedDecimalPlaces(min, decimalPlaces))}
+            aria-invalid={
+              !isReadOnly ? isOutOfRange(value, min, max) : undefined
+            }
+            aria-valuemax={
+              !isReadOnly
+                ? toFloat(toFixedDecimalPlaces(max, decimalPlaces))
+                : undefined
+            }
+            aria-valuemin={
+              !isReadOnly
+                ? toFloat(toFixedDecimalPlaces(min, decimalPlaces))
+                : undefined
+            }
             aria-valuenow={
-              value && !Number.isNaN(toFloat(value))
+              value && !Number.isNaN(toFloat(value)) && !isReadOnly
                 ? toFloat(toFixedDecimalPlaces(toFloat(value), decimalPlaces))
                 : undefined
             }
@@ -370,9 +380,11 @@ export const StepperInput = forwardRef<HTMLDivElement, StepperInputProps>(
             onKeyDown={handleInputKeyDown}
             placeholder={placeholder}
             readOnly={isReadOnly}
+            aria-readonly={isReadOnly ? "true" : undefined}
             ref={forkedInputRef}
             required={isRequired}
-            role="spinbutton"
+            // Workaround to have readonly conveyed by screen readers (https://github.com/jpmorganchase/salt-ds/issues/4586)
+            role={isReadOnly ? "textbox" : "spinbutton"}
             tabIndex={isDisabled ? -1 : 0}
             value={value}
             {...restInputProps}
