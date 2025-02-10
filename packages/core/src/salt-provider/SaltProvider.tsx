@@ -31,6 +31,10 @@ import type {
   ThemeName,
 } from "../theme";
 import { useIsomorphicLayoutEffect } from "../utils/useIsomorphicLayoutEffect";
+import {
+  type ResponsiveProp,
+  resolveResponsiveValue,
+} from "../utils/useResponsiveProp";
 import { ViewportProvider } from "../viewport";
 import saltProviderCss from "./SaltProvider.css";
 
@@ -179,13 +183,13 @@ interface SaltProviderBaseProps {
    */
   applyClassesTo?: TargetElement;
   /**
-   * Either "high", "medium", "low" or "touch".
+   * Either "high", "medium", "low" or "touch", or a responsive value.
    * Determines the amount of content that can fit on a screen based on the size and spacing of components.
    * Refer to [density](https://www.saltdesignsystem.com/salt/foundations/density) doc for more detail.
    *
    * @default "medium"
    */
-  density?: Density;
+  density?: ResponsiveProp<Density>;
   /**
    * A string. Specifies custom theme name(s) you want to apply, similar to `className`.
    */
@@ -258,12 +262,16 @@ function InternalSaltProvider({
     actionFont: inheritedActionFont,
   } = useContext(ThemeContext);
 
+  const breakpoints = breakpointsProp ?? DEFAULT_BREAKPOINTS;
+  const matchedBreakpoints = useMatchedBreakpoints(breakpoints);
   const isRootProvider = inheritedTheme === undefined || inheritedTheme === "";
-  const density = densityProp ?? inheritedDensity ?? DEFAULT_DENSITY;
+  const density =
+    resolveResponsiveValue(densityProp, matchedBreakpoints) ??
+    inheritedDensity ??
+    DEFAULT_DENSITY;
   const themeName =
     themeProp ?? (inheritedTheme === "" ? DEFAULT_THEME_NAME : inheritedTheme);
   const mode = modeProp ?? inheritedMode;
-  const breakpoints = breakpointsProp ?? DEFAULT_BREAKPOINTS;
   const corner = cornerProp ?? inheritedCorner ?? DEFAULT_CORNER;
   const headingFont =
     headingFontProp ?? inheritedHeadingFont ?? DEFAULT_HEADING_FONT;
@@ -376,8 +384,6 @@ function InternalSaltProvider({
     accent,
     actionFont,
   ]);
-
-  const matchedBreakpoints = useMatchedBreakpoints(breakpoints);
 
   const saltProvider = (
     <DensityContext.Provider value={density}>
