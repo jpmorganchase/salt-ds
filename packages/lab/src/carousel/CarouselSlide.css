@@ -1,0 +1,18 @@
+.saltCarouselSlide {
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  flex: 0 0 100%;
+  width: 100%;
+  padding-bottom: var(--salt-spacing-200);
+}
+.saltCarouselSlide-actions {
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity var(--salt-duration-perceptible) ease-in-out, visibility var(--salt-duration-perceptible) ease-in-out;
+}
+
+.saltCarouselSlide-active .saltCarouselSlide-actions {
+  opacity: 100;
+  visibility: visible;
+}
