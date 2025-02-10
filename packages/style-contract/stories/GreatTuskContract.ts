@@ -4,6 +4,6 @@ type SystemProperties = {
   "salt-text-action-textTransform"?: "capitalize";
 };
 
-export interface RillaboomContract {
+export interface GreatTuskContract {
   system?: ResponsiveProp<SystemProperties>;
 }

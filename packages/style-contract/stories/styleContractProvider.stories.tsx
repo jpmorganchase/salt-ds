@@ -5,8 +5,8 @@ import {
   StyleContractProvider,
 } from "@salt-ds/style-contract";
 import type { Meta, StoryFn } from "@storybook/react";
-import type { GoodraContract } from "./GoodraContract";
-import type { RillaboomContract } from "./RillaboomContract";
+import type { GreatTuskContract } from "./GreatTuskContract";
+import type { RaichuContract } from "./RaichuContract";
 import type { SampleContract } from "./SampleContract";
 
 const defaultContract = new StyleContract<SampleContract>({
@@ -224,7 +224,7 @@ export const MultipleContracts: StoryFn<typeof StyleContractProvider> = (
       },
     },
   });
-  const rillaboomProposedContract = new StyleContract<RillaboomContract>({
+  const raichuProposedContract = new StyleContract<RaichuContract>({
     name: "proposed",
     contract: {
       system: {
@@ -232,7 +232,7 @@ export const MultipleContracts: StoryFn<typeof StyleContractProvider> = (
       },
     },
   });
-  const goodraProposedContract = new StyleContract<GoodraContract>({
+  const greatTuskProposedContract = new StyleContract<GreatTuskContract>({
     name: "proposed",
     contract: {
       system: {
@@ -241,15 +241,15 @@ export const MultipleContracts: StoryFn<typeof StyleContractProvider> = (
     },
   });
   return (
-    <StyleContractProvider {...args} defaultContract={defaultContract}>
+    <StyleContractProvider {...args}>
       <StackLayout>
         <Button>Sample Button</Button>
         <Input value={999.999} />
         <StyleContractDropdown
           contracts={[
             { owner: "Salt", contracts: [saltTestContract] },
-            { owner: "Rillaboom", contracts: [rillaboomProposedContract] },
-            { owner: "Goodra", contracts: [goodraProposedContract] },
+            { owner: "Raichu", contracts: [raichuProposedContract] },
+            { owner: "Great Tusk", contracts: [greatTuskProposedContract] },
           ]}
         />
       </StackLayout>

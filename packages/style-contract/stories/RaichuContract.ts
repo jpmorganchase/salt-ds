@@ -4,6 +4,6 @@ type SystemProperties = {
   "salt-text-action-textTransform"?: "capitalize";
 };
 
-export interface GoodraContract {
+export interface RaichuContract {
   system?: ResponsiveProp<SystemProperties>;
 }
