@@ -1,17 +1,17 @@
 import { FormField, FormFieldLabel, StackLayout } from "@salt-ds/core";
-import { Slider } from "@salt-ds/lab";
+import { RangeSlider } from "@salt-ds/lab";
 import type { ReactElement } from "react";
 
-export const WithFormField = (): ReactElement => (
+export const WithFormFieldRange = (): ReactElement => (
   <StackLayout style={{ width: "400px" }}>
     <FormField>
       <FormFieldLabel>Field Label</FormFieldLabel>
-      <Slider labelPosition="bottom" min={0} max={50} step={10} />
+      <RangeSlider labelPosition="bottom" min={0} max={50} step={10} />
     </FormField>
     <FormField>
       <FormFieldLabel>Field Label</FormFieldLabel>
-      <Slider
-        defaultValue={80}
+      <RangeSlider
+        defaultValue={[30, 80]}
         labelPosition="bottom"
         min={0}
         max={100}
@@ -20,11 +20,11 @@ export const WithFormField = (): ReactElement => (
     </FormField>
     <FormField labelPlacement="left">
       <FormFieldLabel>Field Label</FormFieldLabel>
-      <Slider min={0} max={100} />
+      <RangeSlider min={0} max={100} defaultValue={[30, 80]} />
     </FormField>
     <FormField labelPlacement="left">
       <FormFieldLabel>Field Label</FormFieldLabel>
-      <Slider defaultValue={80} min={0} max={100} />
+      <RangeSlider min={0} max={100} defaultValue={[30, 80]} />
     </FormField>
   </StackLayout>
 );

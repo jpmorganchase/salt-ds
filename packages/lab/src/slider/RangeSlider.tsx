@@ -52,6 +52,14 @@ export interface RangeSliderProps
    */
   name?: string;
   /**
+   * Label for maximum value
+   */
+  maxLabel?: string;
+  /**
+   * Label for the minimum value
+   */
+  minLabel?: string;
+  /**
    * Change handler to be used when in a controlled state
    */
   onChange?: (event: SyntheticEvent, value: [number, number]) => void;
@@ -77,6 +85,8 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>(
       markers,
       max = 10,
       min = 0,
+      maxLabel,
+      minLabel,
       defaultValue = [min, max],
       onChange,
       step = 1,
@@ -153,8 +163,10 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>(
         isDragging={isDragging}
         labelPosition={labelPosition}
         markers={markers}
-        max={max}
         min={min}
+        minLabel={minLabel}
+        max={max}
+        maxLabel={maxLabel}
         progressPercentageRange={[percentageStart, percentageEnd]}
         ref={ref}
         sliderRef={sliderRef}

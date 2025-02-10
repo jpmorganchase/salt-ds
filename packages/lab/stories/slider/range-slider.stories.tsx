@@ -132,3 +132,13 @@ export const ControlledWithInput: StoryFn<RangeSliderProps> = () => {
     </FormField>
   );
 };
+
+export const withCustomMinMaxLabels = Template.bind({});
+withCustomMinMaxLabels.args = {
+  min: 0,
+  max: 50,
+  defaultValue: [10, 30],
+  minLabel: "Lowest value",
+  maxLabel: "Highest value",
+  labelPosition: "bottom",
+};
