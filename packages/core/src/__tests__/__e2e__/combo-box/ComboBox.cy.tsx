@@ -282,15 +282,18 @@ describe("Given a ComboBox", () => {
 
   it("should not allow the value to be changed when it is readonly", () => {
     cy.mount(<Readonly />);
-    cy.findByRole("combobox").should("have.attr", "readonly");
-    cy.findByRole("combobox").should("have.value", "California");
-    cy.findByRole("combobox").realClick();
+    cy.findByRole("textbox").should("have.attr", "readonly");
+    cy.findByRole("textbox").should("have.attr", "aria-readonly", "true");
+    cy.findByRole("textbox").should("not.have.attr", "aria-expanded");
+    cy.findByRole("textbox").should("not.have.attr", "aria-controls");
+    cy.findByRole("textbox").should("have.value", "California");
+    cy.findByRole("textbox").realClick();
 
-    cy.findByRole("combobox").should("be.focused");
+    cy.findByRole("textbox").should("be.focused");
     cy.findByRole("listbox").should("not.exist");
 
     cy.realType("abc");
-    cy.findByRole("combobox").should("have.value", "California");
+    cy.findByRole("textbox").should("have.value", "California");
   });
 
   it("should not receive focus via tab if it is disabled", () => {
