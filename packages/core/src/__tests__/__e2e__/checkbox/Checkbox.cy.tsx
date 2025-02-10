@@ -22,6 +22,11 @@ describe("GIVEN a Checkbox", () => {
       cy.findByRole("checkbox").should("be.checked");
     });
 
+    it("THEN should not have aria-checked set", () => {
+      cy.mount(<Checkbox defaultChecked />);
+      cy.findByRole("checkbox").should("not.have.attr", "aria-checked");
+    });
+
     describe("WHEN the checkbox is clicked", () => {
       it("THEN should toggle the selection state", () => {
         const changeSpy = cy.stub().as("changeSpy");

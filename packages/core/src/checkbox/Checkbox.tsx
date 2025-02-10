@@ -200,7 +200,6 @@ export const Checkbox = forwardRef<HTMLLabelElement, CheckboxProps>(
         {...rest}
       >
         <input
-          aria-checked={checked}
           aria-readonly={readOnly || undefined}
           aria-describedby={clsx(
             checkboxGroup === undefined
@@ -226,8 +225,6 @@ export const Checkbox = forwardRef<HTMLLabelElement, CheckboxProps>(
           onChange={handleChange}
           onFocus={onFocus}
           type="checkbox"
-          // biome-ignore lint/a11y/noRedundantRoles: role="checkbox" is needed when aria-readonly is present
-          role="checkbox"
           ref={handleInputRef}
           {...restInputProps}
         />
