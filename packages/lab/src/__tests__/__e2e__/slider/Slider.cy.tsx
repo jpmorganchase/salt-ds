@@ -58,13 +58,14 @@ describe("Given a Slider", () => {
       cy.get("@changeSpy").should("have.callCount", 4);
     });
 
-    it("THEN it should display a tooltip on mouseover", () => {
-      cy.mount(<Slider style={{ width: "400px" }} />);
+    it("THEN it should display a tooltip on mouseover with correct value", () => {
+      cy.mount(<Slider style={{ width: "400px" }} defaultValue={2} />);
       cy.get(".saltSliderThumb").trigger("mouseover");
       cy.get(".saltSliderTooltip").should("be.visible");
+      cy.get(".saltSliderTooltip").should("have.text", "2");
       // And hide tooltip on mouseout
       cy.get(".saltSliderThumb").trigger("mouseout");
-      cy.get(".saltSliderTooltip").should("not.exist");
+      cy.get(".saltSliderTooltip").should("not.be.visible");
     });
   });
 });

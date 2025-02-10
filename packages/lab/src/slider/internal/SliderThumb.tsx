@@ -1,9 +1,11 @@
 import { makePrefixer } from "@salt-ds/core";
+import { useWindow } from "@salt-ds/window";
 import clsx from "clsx";
 import {
   type ChangeEvent,
   type HTMLAttributes,
   forwardRef,
+  useEffect,
   useRef,
   useState,
 } from "react";
@@ -52,13 +54,27 @@ export const SliderThumb = forwardRef<HTMLInputElement, SliderThumbProps>(
     },
     ref,
   ) {
-    const [tooltipVisible, setTooltipVisible] = useState(false);
+    const [isTooltipVisible, setIsTooltipVisible] = useState(false);
     const [isFocused, setIsFocused] = useState(false);
     const inputRef = useRef<HTMLInputElement>(null);
+    const targetWindow = useWindow();
 
-    const handleMouseEnter = () => setTooltipVisible(true);
+    useEffect(() => {
+      if (isTooltipVisible) {
+        targetWindow?.addEventListener("keydown", handleKeyDown);
+      }
+      return () => targetWindow?.removeEventListener("keydown", handleKeyDown);
+    }, [targetWindow, isTooltipVisible]);
 
-    const handleMouseLeave = () => setTooltipVisible(false);
+    const handleMouseEnter = () => setIsTooltipVisible(true);
+
+    const handleMouseLeave = () => {
+      // Delay hiding the tooltip to enable tooltip
+      // visibility on hover
+      setTimeout(() => {
+        setIsTooltipVisible(false);
+      }, 250);
+    };
 
     const handleFocus = () => {
       // We add focus to the input to get the keyboard
@@ -66,12 +82,18 @@ export const SliderThumb = forwardRef<HTMLInputElement, SliderThumbProps>(
       if (inputRef.current) inputRef.current.focus();
 
       setIsFocused(true);
-      setTooltipVisible(true);
+      setIsTooltipVisible(true);
     };
 
     const handleBlur = () => {
       setIsFocused(false);
-      setTooltipVisible(false);
+      setIsTooltipVisible(false);
+    };
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setIsTooltipVisible(false);
+      }
     };
 
     const value = Array.isArray(thumbValue) ? thumbValue[index] : thumbValue;
@@ -79,6 +101,7 @@ export const SliderThumb = forwardRef<HTMLInputElement, SliderThumbProps>(
 
     return (
       <div
+        aria-describedby={`sliderTooltip-${index}`}
         className={clsx(withBaseName(), {
           [withBaseName("focused")]: isFocused,
           [withBaseName("secondThumb")]: index === 1,
@@ -89,9 +112,11 @@ export const SliderThumb = forwardRef<HTMLInputElement, SliderThumbProps>(
         style={{ left: offsetPercentage }}
         ref={ref}
       >
-        {(tooltipVisible || trackDragging) && !disabled && (
-          <SliderTooltip value={formattedValue} />
-        )}
+        <SliderTooltip
+          id={`sliderTooltip-${index}`}
+          value={formattedValue}
+          isVisible={(isTooltipVisible || trackDragging) && !disabled}
+        />
         <input
           disabled={disabled}
           type="range"

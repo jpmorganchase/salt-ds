@@ -1,14 +1,23 @@
 import { Text, makePrefixer } from "@salt-ds/core";
+import clsx from "clsx";
 
 const withBaseName = makePrefixer("saltSliderTooltip");
 
 interface SliderTooltipProps {
   value: number | string;
+  isVisible?: boolean;
+  id: string;
 }
 
-export const SliderTooltip = ({ value }: SliderTooltipProps) => {
+export const SliderTooltip = ({ value, isVisible, id }: SliderTooltipProps) => {
   return (
-    <div className={withBaseName()} role="tooltip">
+    <div
+      className={clsx(withBaseName(), {
+        [withBaseName("visible")]: isVisible,
+      })}
+      role="tooltip"
+      id={id}
+    >
       <svg
         className={withBaseName("arrow")}
         aria-hidden="true"

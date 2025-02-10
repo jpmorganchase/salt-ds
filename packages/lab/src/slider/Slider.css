@@ -104,10 +104,15 @@
   transform: translate(-50%, -50%);
   border: 1px solid var(--salt-accent-borderColor);
   padding: 6px;
-  pointer-events: none;
   user-select: none;
   z-index: 1;
   left: var(--slider-progressPercentage);
+  visibility: hidden;
+}
+
+.saltSliderTooltip-visible,
+.saltSliderTooltip:hover {
+  visibility: visible;
 }
 
 .saltSliderTooltip-arrow {
