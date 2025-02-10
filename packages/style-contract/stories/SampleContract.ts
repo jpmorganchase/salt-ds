@@ -38,21 +38,29 @@ type SaltCardStyleProperties = {
   "salt-card-border"?: string;
 };
 
+type SaltContractSystemProperties = {
+  "salt-text-action-textTransform"?: "capitalize";
+};
+
 type SaltButtonColorSchema = ResponsiveProp<SaltButtonColorProperties>;
 type SaltButtonSizeSchema = ResponsiveProp<SaltButtonSizeProperties>;
 type SaltButtonSpacingSchema = ResponsiveProp<SaltButtonSpacingProperties>;
 type SaltInputStyleSchema = ResponsiveProp<SaltInputStyleProperties>;
 type SaltCardStyleSchema = ResponsiveProp<SaltCardStyleProperties>;
+type SaltContractSystemSchema = ResponsiveProp<SaltContractSystemProperties>;
 
 export interface SampleContract {
-  ".saltButton"?: SaltButtonColorSchema;
-  ".saltButton-neutral.saltButton-solid"?: SaltButtonColorSchema;
-  ".saltButton.salt-customizable-size-small"?: SaltButtonSizeSchema;
-  ".saltButton.salt-customizable-size-medium"?: SaltButtonSizeSchema;
-  ".saltButton.salt-customizable-size-large"?: SaltButtonSizeSchema;
-  ".saltButton.salt-customizable-spacing-small"?: SaltButtonSpacingSchema;
-  ".saltButton.salt-customizable-spacing-medium"?: SaltButtonSpacingSchema;
-  ".saltButton.salt-customizable-spacing-large"?: SaltButtonSpacingSchema;
-  ".saltInput"?: SaltInputStyleSchema;
-  ".saltCard"?: SaltCardStyleSchema;
+  system?: SaltContractSystemProperties,
+  custom?: {
+    ".saltSystem"?: SaltContractSystemSchema;
+    ".saltButton-neutral.saltButton-solid"?: SaltButtonColorSchema;
+    ".saltButton.salt-customizable-size-small"?: SaltButtonSizeSchema;
+    ".saltButton.salt-customizable-size-medium"?: SaltButtonSizeSchema;
+    ".saltButton.salt-customizable-size-large"?: SaltButtonSizeSchema;
+    ".saltButton.salt-customizable-spacing-small"?: SaltButtonSpacingSchema;
+    ".saltButton.salt-customizable-spacing-medium"?: SaltButtonSpacingSchema;
+    ".saltButton.salt-customizable-spacing-large"?: SaltButtonSpacingSchema;
+    ".saltInput"?: SaltInputStyleSchema;
+    ".saltCard"?: SaltCardStyleSchema;
+  }
 }
