@@ -434,7 +434,6 @@ This approach allows us to share contracts that manage style tokens and provide 
   --button-borderColor: var(--button-borderColor-hover);
 }
 
-
 /* Pseudo-class applied to the root element when Button is active and not disabled */
 .saltButton:active,
 .saltButton.saltButton-active {

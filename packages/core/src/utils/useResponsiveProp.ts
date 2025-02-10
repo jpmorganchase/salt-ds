@@ -98,7 +98,7 @@ export const isResponsiveProp = <T>(
   return (
     isObject(value) && Object.keys(value).some((key) => key in breakpoints)
   );
-}
+};
 
 export const useResponsiveProp = <T>(
   value: ResponsiveProp<T>,

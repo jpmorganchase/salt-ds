@@ -2,12 +2,12 @@ import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import { type ComponentPropsWithoutRef, forwardRef } from "react";
-import { ComponentBase, ComponentBaseProps } from "../component-base";
+import { ComponentBase } from "../component-base";
 
 import { capitalize, makePrefixer } from "../utils";
 
-import cardCss from "./Card.css";
 import { useDefaultProps } from "../default-props-provider";
+import cardCss from "./Card.css";
 
 const withBaseName = makePrefixer("saltCard");
 export interface CardProps extends ComponentPropsWithoutRef<"div"> {

@@ -1,10 +1,11 @@
-import React, { forwardRef } from "react";
 import { clsx } from "clsx";
+import type React from "react";
+import { forwardRef } from "react";
 import {
-  PolymorphicRef,
-  useBreakpoint,
+  type PolymorphicRef,
+  type ResponsiveProp,
   resolveResponsiveValue,
-  ResponsiveProp,
+  useBreakpoint,
 } from "../index";
 
 // Define a mapping from size and spacing to class names

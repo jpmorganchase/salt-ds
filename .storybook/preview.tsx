@@ -26,8 +26,8 @@ import { withResponsiveWrapper } from "./decorators/withResponsiveWrapper";
 import { withTextSpacingWrapper } from "./decorators/withTextSpacingWrapper";
 import { withTheme } from "./decorators/withTheme";
 
-import { globalOptions as themeNextGlobals } from "./toolbar/ThemeNextToolbar";
 import { globalOptions as componentBaseGlobals } from "./toolbar/ComponentBaseToolbar";
+import { globalOptions as themeNextGlobals } from "./toolbar/ThemeNextToolbar";
 
 const densities = ["touch", "low", "medium", "high"];
 const DEFAULT_DENSITY = "medium";
@@ -172,12 +172,15 @@ export const parameters: Parameters = {
             }
             /* @ts-ignore Waiting for https://github.com/storybookjs/storybook/issues/12982 */
             accent={context.store.userGlobals.globals?.accent}
-            defaultProps={{ button: {
+            defaultProps={{
+              saltButton: {
+                spacing:
+                  /* @ts-ignore Waiting for https://github.com/storybookjs/storybook/issues/12982 */
+                  context.store.userGlobals.globals?.componentBaseSpacing,
                 /* @ts-ignore Waiting for https://github.com/storybookjs/storybook/issues/12982 */
-                spacing: context.store.userGlobals.globals?.componentBaseSpacing,
-                /* @ts-ignore Waiting for https://github.com/storybookjs/storybook/issues/12982 */
-                size: context.store.userGlobals.globals?.componentBaseSize
-              }}}
+                size: context.store.userGlobals.globals?.componentBaseSize,
+              },
+            }}
           >
             {children}
           </ChosenProvider>
