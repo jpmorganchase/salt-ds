@@ -1,8 +1,8 @@
 .saltLink {
+  --link-color: "inherit";
   --link-color-hover: var(--saltLink-color-hover, var(--salt-content-foreground-hover));
   --link-color-active: var(--saltLink-color-active, var(--salt-content-foreground-active));
   --link-color-visited: var(--saltLink-color-visited, var(--salt-content-foreground-visited));
-  /* When focused, we also want hover style */
   --link-color-focus: var(--saltLink-color-focus, var(--link-color-hover));
 
   --link-textDecoration: var(--salt-navigable-textDecoration);
@@ -13,7 +13,7 @@
 }
 
 /* Main css class */
-.saltLink {
+.saltLink.saltText {
   color: var(--link-color);
   letter-spacing: var(--salt-text-letterSpacing);
   text-decoration: var(--link-textDecoration);
@@ -21,13 +21,33 @@
 }
 
 /* Primary variant */
-.saltText-primary {
+.saltLink-primary {
   --link-color: var(--salt-content-primary-foreground);
 }
 
 /* Secondary variant */
-.saltText-secondary {
+.saltLink-secondary {
   --link-color: var(--salt-content-secondary-foreground);
+}
+
+.saltLink-accent {
+  --link-color: var(--salt-content-accent-foreground);
+}
+
+.saltLink-info {
+  --link-color: var(--salt-status-info-foreground-informative);
+}
+
+.saltLink-error {
+  --link-color: var(--salt-status-error-foreground-informative);
+}
+
+.saltLink-warning {
+  --link-color: var(--salt-status-warning-foreground-informative);
+}
+
+.saltLink-success {
+  --link-color: var(--salt-status-success-foreground-informative);
 }
 
 /* External link's icon */
