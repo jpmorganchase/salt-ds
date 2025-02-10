@@ -93,57 +93,66 @@ export function StyleContractProvider<T extends Contract>({
   defaultContract,
   children,
 }: React.PropsWithChildren<StyleContractProviderProps<T>>) {
-  const [contract, setContractState] = useState(defaultContract);
+  const [contract, setContractState] = useState<StyleContract<T> | null>(
+    defaultContract,
+  );
 
   const setContract = (newContract: StyleContract<T> | null) => {
-    setContractState(newContract || defaultContract);
+    setContractState(newContract);
   };
 
   const providerClass = `salt-style-contract-${providerInstanceCount++}`;
   const { matchedBreakpoints } = useBreakpoint();
   const breakpoints = useBreakpoints();
 
-  const componentCss = useMemo(
-    () =>
-      generateCustomCssFromContract<T>(
-        contract.contract.component,
-        matchedBreakpoints,
-        providerClass,
-        breakpoints,
-      ),
-    [
-      breakpoints,
-      contract?.contract.component,
+  const componentCss = useMemo(() => {
+    if (!contract) {
+      return;
+    }
+    return generateCustomCssFromContract<T>(
+      contract.contract.component,
       matchedBreakpoints,
       providerClass,
-    ],
-  );
-  const systemCss = useMemo(
-    () =>
-      generateSystemCssFromContract<T>(
-        contract.contract.system,
-        matchedBreakpoints,
-        providerClass,
-        breakpoints,
-      ),
-    [breakpoints, contract?.contract.system, matchedBreakpoints, providerClass],
-  );
+      breakpoints,
+    );
+  }, [
+    breakpoints,
+    contract?.contract?.component,
+    matchedBreakpoints,
+    providerClass,
+  ]);
+  const systemCss = useMemo(() => {
+    if (!contract) {
+      return;
+    }
+    return generateSystemCssFromContract<T>(
+      contract.contract.system,
+      matchedBreakpoints,
+      providerClass,
+      breakpoints,
+    );
+  }, [
+    breakpoints,
+    contract?.contract?.system,
+    matchedBreakpoints,
+    providerClass,
+  ]);
 
   const targetWindow = useWindow();
   useComponentCssInjection({
     testId: `component ${providerClass}`,
-    css: componentCss,
+    css: componentCss || "",
     window: targetWindow,
   });
   useComponentCssInjection({
     testId: `system ${providerClass}`,
-    css: systemCss,
+    css: systemCss || "",
     window: targetWindow,
   });
 
   return (
     <StyleContractContext.Provider
-      value={{ contract: contract.contract, setContract }}
+      value={{ contract: contract?.contract, setContract }}
     >
       <div className={providerClass}>{children}</div>
     </StyleContractContext.Provider>

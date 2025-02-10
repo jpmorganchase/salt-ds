@@ -241,7 +241,7 @@ export const MultipleContracts: StoryFn<typeof StyleContractProvider> = (
     },
   });
   return (
-    <StyleContractProvider {...args} defaultContract={defaultContract}>
+    <StyleContractProvider {...args}>
       <StackLayout>
         <Button>Sample Button</Button>
         <Input value={999.999} />
