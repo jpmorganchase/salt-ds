@@ -1,0 +1,104 @@
+.saltSplitHandle {
+  position: relative;
+
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2px;
+
+  background: var(--salt-separable-background);
+}
+
+.saltSplitHandle::after {
+  content: "";
+  position: absolute;
+  left: -5px;
+  right: -5px;
+  top: 0;
+  bottom: 0;
+}
+
+.saltSplitHandle[data-resize-handle-state="hover"] {
+  background: var(--salt-separable-background-hover);
+}
+
+.saltSplitHandle[data-resize-handle-state="drag"] {
+  background: var(--salt-separable-background-active);
+}
+
+.saltSplitHandle[data-panel-group-direction="vertical"] {
+  flex-direction: row;
+  height: 4px;
+}
+
+.saltSplitHandle[data-panel-group-direction="horizontal"] {
+  flex-direction: column;
+  width: 4px;
+}
+
+/* two handles touching (horizontally) */
+div[data-panel-size="0.0"] + .saltSplitHandle-bordered[data-panel-group-direction="horizontal"] {
+  margin-left: -1px;
+}
+
+/* two handles touching (vertically) */
+div[data-panel-size="0.0"] + .saltSplitHandle-bordered[data-panel-group-direction="vertical"] {
+  margin-top: -1px;
+}
+
+.saltSplitHandle-dot {
+  background: var(--salt-separable-foreground);
+  z-index: 0;
+}
+
+.saltSplitHandle[data-panel-group-direction="horizontal"] > .saltSplitHandle-dot {
+  width: 2px;
+  height: 1px;
+}
+
+.saltSplitHandle[data-panel-group-direction="vertical"] > .saltSplitHandle-dot {
+  height: 2px;
+  width: 1px;
+}
+
+.saltSplitHandle[data-resize-handle-state="drag"] > .saltSplitHandle-dot {
+  background: var(--salt-separable-foreground-active);
+}
+
+.saltSplitHandle-accent-top-bottom {
+  border-top: 1px solid lightgrey;
+  border-bottom: 1px solid lightgrey;
+}
+
+.saltSplitHandle-accent-left-right {
+  border-left: 1px solid lightgrey;
+  border-right: 1px solid lightgrey;
+}
+
+.saltSplitHandle-accent-left {
+  border-left: 1px solid lightgrey;
+}
+
+.saltSplitHandle-accent-right {
+  border-right: 1px solid lightgrey;
+}
+
+.saltSplitHandle-accent-top {
+  border-top: 1px solid lightgrey;
+}
+
+.saltSplitHandle-accent-bottom {
+  border-bottom: 1px solid lightgrey;
+}
+
+.saltSplitHandle-primary {
+  background: var(--salt-container-primary-background);
+}
+
+.saltSplitHandle-secondary {
+  background: var(--salt-container-secondary-background);
+}
+
+.saltSplitHandle-tertiary {
+  background: var(--salt-container-tertiary-background);
+}

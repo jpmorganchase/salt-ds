@@ -1,0 +1,8 @@
+.saltSplitter {
+  --salt-separable-background: rgba(0, 0, 0, 0);
+  --salt-separable-foreground: rgba(0, 0, 0);
+  --salt-separable-background-hover: rgba(0, 0, 0, 0.3);
+  --salt-separable-foreground-hover: rgba(0, 0, 0);
+  --salt-separable-background-active: rgba(0, 120, 207, 1);
+  --salt-separable-foreground-active: rgba(255, 255, 255, 1);
+}

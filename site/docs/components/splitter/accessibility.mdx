@@ -1,0 +1,59 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+## Keyboard interactions
+
+Keyboard interactions apply to only the `SplitHandle`s, nested inside Stepper components.
+
+<KeyboardControls>
+
+<KeyboardControl keyOrCombos="ArrowUp">
+  - Moves the handle up in a vertical splitter.
+</KeyboardControl>
+
+<KeyboardControl keyOrCombos="ArrowDown">
+  - Moves the handle down in a vertical splitter.
+</KeyboardControl>
+
+<KeyboardControl keyOrCombos="ArrowLeft">
+  - Moves the handle left in a horizontal splitter.
+</KeyboardControl>
+
+<KeyboardControl keyOrCombos="ArrowRight">
+  - Moves the handle right in a horizontal splitter.
+</KeyboardControl>
+
+<KeyboardControl keyOrCombos="Enter">
+  - If the associated split is not collapsed, collapses the split. If the split
+  is collapsed, restores the splitter to it's previous position.
+</KeyboardControl>
+
+<KeyboardControl keyOrCombos="Home">
+  - Moves the handle of the vertical splitter as top as possible or as left as
+  possible in the horizontal splitter. - Rules for min and max sizing are
+  respected.
+</KeyboardControl>
+
+<KeyboardControl keyOrCombos="End">
+  - Moves the handle of the vertical splitter as bottom as possible or as right
+  as possible in the horizontal splitter. - Rules for min and max sizing are
+  respected.
+</KeyboardControl>
+
+<KeyboardControl keyOrCombos="Shift + Tab">
+  - Moves the focus up to the previous expand button.
+</KeyboardControl>
+
+<KeyboardControl keyOrCombos="Enter / Space">
+
+- Applicable to only steps with substeps. Those steps are in the collapsed state by default. Using this action on an the arrow button expands or collapses the step.
+
+</KeyboardControl>
+</KeyboardControls>
