@@ -21,6 +21,7 @@ import {
   DEFAULT_BREAKPOINTS,
   useMatchedBreakpoints,
 } from "../breakpoints";
+import { DefaultPropsProvider } from "../default-props-provider";
 import type {
   Accent,
   ActionFont,
@@ -33,7 +34,6 @@ import type {
 import { useIsomorphicLayoutEffect } from "../utils/useIsomorphicLayoutEffect";
 import { ViewportProvider } from "../viewport";
 import saltProviderCss from "./SaltProvider.css";
-import { DefaultPropsProvider } from "../default-props-provider";
 
 export const DEFAULT_DENSITY = "medium";
 

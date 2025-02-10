@@ -1,7 +1,7 @@
 import { addons, types } from "@storybook/manager-api";
 import saltTheme from "./SaltTheme";
-import { ThemeNextToolbar } from "./toolbar/ThemeNextToolbar";
 import { ComponentBaseToolbar } from "./toolbar/ComponentBaseToolbar";
+import { ThemeNextToolbar } from "./toolbar/ThemeNextToolbar";
 
 addons.setConfig({
   theme: saltTheme,

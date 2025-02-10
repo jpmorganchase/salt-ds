@@ -63,7 +63,10 @@ async function getViteConfig(config: UserConfig) {
           "@salt-ds/icons": path.resolve(__dirname, "./dist/salt-ds-icons"),
           "@salt-ds/lab": path.resolve(__dirname, "./dist/salt-ds-lab"),
           "@salt-ds/styles": path.resolve(__dirname, "./dist/salt-ds-styles"),
-          "@salt-ds/style-contract": path.resolve(__dirname, "./dist/salt-style-contract"),
+          "@salt-ds/style-contract": path.resolve(
+            __dirname,
+            "./dist/salt-style-contract",
+          ),
           "@salt-ds/window": path.resolve(__dirname, "./dist/salt-ds-window"),
         },
       },

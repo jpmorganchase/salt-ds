@@ -16,9 +16,9 @@ import { StatusAdornment } from "../status-adornment";
 import type { DataAttributes } from "../types";
 import { makePrefixer, useControlled } from "../utils";
 
-import inputCss from "./Input.css";
-import { ComponentBase, ComponentBaseProps } from "../component-base";
+import { ComponentBase, type ComponentBaseProps } from "../component-base";
 import { useDefaultProps } from "../default-props-provider";
+import inputCss from "./Input.css";
 
 const withBaseName = makePrefixer("saltInput");
 

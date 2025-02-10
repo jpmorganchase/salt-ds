@@ -5,7 +5,7 @@ import {
   TooltipLinkList,
   WithTooltip,
 } from "@storybook/components";
-import { BeakerIcon, CheckIcon } from "@storybook/icons";
+import { CheckIcon } from "@storybook/icons";
 import { useGlobals } from "@storybook/manager-api";
 import { clsx } from "clsx";
 import type { AnchorHTMLAttributes } from "react";
@@ -26,7 +26,7 @@ export const globalOptions: Record<
   spacing: {
     name: "componentBaseSpacing",
     description: "Switch spacing",
-    defaultValue: '',
+    defaultValue: "",
     items: ["small", "medium", "large"],
   },
   size: {
@@ -34,7 +34,7 @@ export const globalOptions: Record<
     description: "Switch size",
     defaultValue: "",
     items: ["small", "medium", "large"],
-  }
+  },
 };
 
 const GroupWrapper = ({

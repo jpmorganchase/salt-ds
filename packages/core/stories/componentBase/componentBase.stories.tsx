@@ -1,34 +1,34 @@
 import {
-  Box,
   Button,
-  BoxProps,
-  useDefaultProps,
-  useBreakpoint,
-  resolveResponsiveValue,
-  Text,
+  ComponentBase,
+  type ComponentBaseProps,
   StackLayout,
+  Text,
+  resolveResponsiveValue,
+  useBreakpoint,
+  useDefaultProps,
 } from "@salt-ds/core";
 import type { Meta, StoryFn } from "@storybook/react";
 import "../layout/layout.stories.css";
 export default {
-  title: "Core/Box",
-  component: Box,
+  title: "Core/ComponentBase",
+  component: ComponentBase,
   argTypes: {
     as: { type: "string" },
     position: {
       control: { type: "select" },
     },
   },
-} as Meta<typeof Box>;
+} as Meta<typeof ComponentBase>;
 
-const BorderedBox: React.FC<BoxProps> = (props) => {
+const SizedComponentBase: React.FC<ComponentBaseProps> = (props) => {
   const { matchedBreakpoints } = useBreakpoint();
   const currentBreakpoint = resolveResponsiveValue(
     { xs: "xs", sm: "sm", md: "md", lg: "lg", xl: "xl" },
     matchedBreakpoints,
   );
   const { size: defaultSize, ...rest } = useDefaultProps({
-    name: "button",
+    name: "saltButton",
     props,
   });
   const currentSize = props?.size
@@ -41,17 +41,18 @@ const BorderedBox: React.FC<BoxProps> = (props) => {
   );
 };
 
-export const BoxWithBreakpointsWrapper: StoryFn = () => {
+export const ComponentBaseWithBreakpointsWrapper: StoryFn = () => {
   return (
     <StackLayout>
       <Text>
-        Box A - will resize across breakpoints driven by responsive props
+        Component A - will resize across breakpoints driven by responsive props
       </Text>
       <Text>
-        Box B - will follow the defaultProps defined by DefaultPropsProvider
+        Component B - will follow the defaultProps defined by
+        DefaultPropsProvider
       </Text>
       <div style={{ display: "flex", gap: "var(--salt-spacing-200)" }}>
-        <BorderedBox
+        <SizedComponentBase
           size={{
             xs: "small",
             sm: "medium",
@@ -60,9 +61,9 @@ export const BoxWithBreakpointsWrapper: StoryFn = () => {
             xl: "large",
           }}
         >
-          Box A
-        </BorderedBox>
-        <BorderedBox>Box B</BorderedBox>
+          Component A
+        </SizedComponentBase>
+        <SizedComponentBase>Component B</SizedComponentBase>
       </div>
     </StackLayout>
   );
