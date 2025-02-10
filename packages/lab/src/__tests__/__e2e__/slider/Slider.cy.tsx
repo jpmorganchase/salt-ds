@@ -21,7 +21,7 @@ describe("Given a Slider", () => {
     it("THEN onChange should fire on pointer down on slider track", () => {
       const changeSpy = cy.stub().as("changeSpy");
       cy.mount(<Slider style={{ width: "400px" }} onChange={changeSpy} />);
-      cy.get(".saltSlider-track").trigger("mousedown", {
+      cy.get(".saltSlider-track").trigger("pointerdown", {
         button: 0,
         clientX: 50,
         clientY: 50,
@@ -58,13 +58,13 @@ describe("Given a Slider", () => {
       cy.get("@changeSpy").should("have.callCount", 4);
     });
 
-    it("THEN it should display a tooltip on mouseover with correct value", () => {
+    it("THEN it should display a tooltip on pointerover with correct value", () => {
       cy.mount(<Slider style={{ width: "400px" }} defaultValue={2} />);
-      cy.get(".saltSliderThumb").trigger("mouseover");
+      cy.get(".saltSliderThumb").trigger("pointerover");
       cy.get(".saltSliderTooltip").should("be.visible");
       cy.get(".saltSliderTooltip").should("have.text", "2");
-      // And hide tooltip on mouseout
-      cy.get(".saltSliderThumb").trigger("mouseout");
+      // And hide tooltip on pointerout
+      cy.get(".saltSliderThumb").trigger("pointerout");
       cy.get(".saltSliderTooltip").should("not.be.visible");
     });
   });

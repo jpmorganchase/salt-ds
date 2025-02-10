@@ -21,12 +21,12 @@ interface SliderThumbProps
   disabled: boolean;
   format?: (value: number) => number | string;
   handleInputChange: (event: ChangeEvent<HTMLInputElement>) => void;
-  handleMouseDown: (event: React.MouseEvent<HTMLDivElement>) => void;
+  handlePointerDown: (event: React.PointerEvent<HTMLDivElement>) => void;
   index?: number;
   min: number;
   max: number;
   offsetPercentage?: string;
-  onChange: (event: MouseEvent | React.MouseEvent) => void;
+  onChange: (event: PointerEvent | React.PointerEvent) => void;
   step: number;
   thumbValue: [number, number] | number;
   trackDragging: boolean;
@@ -41,7 +41,7 @@ export const SliderThumb = forwardRef<HTMLInputElement, SliderThumbProps>(
       disabled,
       format,
       handleInputChange,
-      handleMouseDown,
+      handlePointerDown,
       index = 0,
       min,
       max,
@@ -66,9 +66,9 @@ export const SliderThumb = forwardRef<HTMLInputElement, SliderThumbProps>(
       return () => targetWindow?.removeEventListener("keydown", handleKeyDown);
     }, [targetWindow, isTooltipVisible]);
 
-    const handleMouseEnter = () => setIsTooltipVisible(true);
+    const handlePointerEnter = () => setIsTooltipVisible(true);
 
-    const handleMouseLeave = () => {
+    const handlePointerLeave = () => {
       // Delay hiding the tooltip to enable tooltip
       // visibility on hover
       setTimeout(() => {
@@ -106,9 +106,9 @@ export const SliderThumb = forwardRef<HTMLInputElement, SliderThumbProps>(
           [withBaseName("focused")]: isFocused,
           [withBaseName("secondThumb")]: index === 1,
         })}
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
-        onMouseDown={handleMouseDown}
+        onPointerEnter={handlePointerEnter}
+        onPointerLeave={handlePointerLeave}
+        onPointerDown={handlePointerDown}
         style={{ left: offsetPercentage }}
         ref={ref}
       >

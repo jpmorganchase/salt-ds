@@ -9,7 +9,7 @@ interface SliderTrackProps
   extends Omit<HTMLAttributes<HTMLDivElement>, "onChange" | "defaultValue"> {
   children: React.ReactNode;
   disabled: boolean;
-  handleMouseDown: (event: React.MouseEvent<HTMLDivElement>) => void;
+  handlePointerDown: (event: React.PointerEvent<HTMLDivElement>) => void;
   isDragging: boolean;
   labelPosition: "inline" | "bottom";
   markers?: { label: string; value: number }[];
@@ -28,7 +28,7 @@ export const SliderTrack = forwardRef<HTMLDivElement, SliderTrackProps>(
       className: classNameProp,
       children,
       disabled,
-      handleMouseDown,
+      handlePointerDown,
       isDragging,
       labelPosition,
       markers,
@@ -67,7 +67,7 @@ export const SliderTrack = forwardRef<HTMLDivElement, SliderTrackProps>(
         {/* Slider Track */}
         <div
           className={withBaseName("track")}
-          onMouseDown={handleMouseDown}
+          onPointerDown={handlePointerDown}
           ref={sliderRef}
           style={
             {

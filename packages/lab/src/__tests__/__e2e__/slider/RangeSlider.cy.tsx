@@ -22,29 +22,29 @@ describe("Given a Range Slider", () => {
   it("should trigger onChange when clicked on the track", () => {
     const changeSpy = cy.stub().as("changeSpy");
     cy.mount(<RangeSlider style={{ width: "400px" }} onChange={changeSpy} />);
-    cy.get(".saltSlider-track").trigger("mousedown", {
+    cy.get(".saltSlider-track").trigger("pointerdown", {
       button: 0,
       clientX: 500,
       clientY: 50,
     });
     cy.get("@changeSpy").should("have.callCount", 1);
-    cy.get(".saltSlider-track").trigger("mouseup");
+    cy.get(".saltSlider-track").trigger("pointerup");
   });
 
   it("should set thumb positions correctly when clicked on the track", () => {
     cy.mount(<RangeSlider style={{ width: "400px" }} />);
-    cy.get(".saltSlider-track").trigger("mousedown", {
+    cy.get(".saltSlider-track").trigger("pointerdown", {
       button: 0,
       clientX: 500,
       clientY: 50,
     });
-    cy.get(".saltSlider-track").trigger("mouseup");
-    cy.get(".saltSlider-track").trigger("mousedown", {
+    cy.get(".saltSlider-track").trigger("pointerup");
+    cy.get(".saltSlider-track").trigger("pointerdown", {
       button: 0,
       clientX: 700,
       clientY: 50,
     });
-    cy.get(".saltSlider-track").trigger("mouseup");
+    cy.get(".saltSlider-track").trigger("pointerup");
 
     // First thumb
     cy.findAllByRole("slider").eq(0).should("have.attr", "aria-valuenow", "1");
@@ -88,26 +88,26 @@ describe("Given a Range Slider", () => {
     cy.mount(<RangeSlider style={{ width: "400px" }} defaultValue={[2, 5]} />);
 
     // Hover the first thumb
-    cy.get(".saltSliderThumb").eq(0).trigger("mouseover");
+    cy.get(".saltSliderThumb").eq(0).trigger("pointerover");
     // First thumb's tooltip should be visible and have correct value
     cy.get(".saltSliderTooltip").eq(0).should("be.visible");
     cy.get(".saltSliderTooltip").eq(0).should("have.text", "2");
     // Second thumb's tooltip should not be visible
     cy.get(".saltSliderTooltip").eq(1).should("not.be.visible");
 
-    cy.get(".saltSliderThumb").eq(0).trigger("mouseout");
+    cy.get(".saltSliderThumb").eq(0).trigger("pointerout");
     cy.wait(250);
     cy.get(".saltSliderTooltip").should("not.be.visible");
 
     // Hover the second thumb
-    cy.get(".saltSliderThumb").eq(1).trigger("mouseover");
+    cy.get(".saltSliderThumb").eq(1).trigger("pointerover");
     // Second thumb's tooltip should be visible and have correct value
     cy.get(".saltSliderTooltip").eq(1).should("be.visible");
     cy.get(".saltSliderTooltip").eq(1).should("have.text", "5");
     // First thumb's tooltip should not be visible
     cy.get(".saltSliderTooltip").eq(0).should("not.be.visible");
 
-    cy.get(".saltSliderThumb").eq(1).trigger("mouseout");
+    cy.get(".saltSliderThumb").eq(1).trigger("pointerout");
     cy.wait(250);
     cy.get(".saltSliderTooltip").should("not.be.visible");
   });

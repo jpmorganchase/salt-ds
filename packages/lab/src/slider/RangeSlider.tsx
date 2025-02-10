@@ -119,8 +119,8 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>(
     } = useFormFieldProps();
 
     const {
-      handleMouseDownOnThumb,
-      handleMouseDownOnTrack,
+      handlePointerDownOnThumb,
+      handlePointerDownOnTrack,
       calculateAndSetThumbPosition,
       calculatePercentage,
       clampRange,
@@ -159,7 +159,7 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>(
       <SliderTrack
         className={withBaseName("range")}
         disabled={disabled}
-        handleMouseDown={handleMouseDownOnTrack}
+        handlePointerDown={handlePointerDownOnTrack}
         isDragging={isDragging}
         labelPosition={labelPosition}
         markers={markers}
@@ -183,8 +183,8 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>(
             disabled={disabled}
             format={format}
             handleInputChange={(event) => handleInputChange(event, thumbIndex)}
-            handleMouseDown={(event) =>
-              handleMouseDownOnThumb(event, thumbIndex)
+            handlePointerDown={(event) =>
+              handlePointerDownOnThumb(event, thumbIndex)
             }
             index={thumbIndex}
             key={`thumb-${thumbIndex}`}

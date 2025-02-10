@@ -19,7 +19,7 @@ export const useSliderThumb = ({
 }: Pick<SliderProps, "min" | "max" | "step"> & {
   setValue: Dispatch<SetStateAction<number | [number, number]>>;
   onChange?: (
-    event: MouseEvent | React.MouseEvent,
+    event: PointerEvent | React.PointerEvent,
     value: number | [number, number],
   ) => void;
   valueState: number | [number, number];
@@ -31,16 +31,16 @@ export const useSliderThumb = ({
 
   useEffect(() => {
     if (isDragging) {
-      targetWindow?.addEventListener("mousemove", handleMouseMove);
-      targetWindow?.addEventListener("mouseup", handleMouseUp);
+      targetWindow?.addEventListener("pointermove", handlePointerMove);
+      targetWindow?.addEventListener("pointerup", handlePointerUp);
     } else {
-      targetWindow?.removeEventListener("mousemove", handleMouseMove);
-      targetWindow?.removeEventListener("mouseup", handleMouseUp);
+      targetWindow?.removeEventListener("pointermove", handlePointerMove);
+      targetWindow?.removeEventListener("Pointerup", handlePointerUp);
     }
 
     return () => {
-      targetWindow?.removeEventListener("mousemove", handleMouseMove);
-      targetWindow?.removeEventListener("mouseup", handleMouseUp);
+      targetWindow?.removeEventListener("pointermove", handlePointerMove);
+      targetWindow?.removeEventListener("pointerup", handlePointerUp);
     };
   }, [isDragging, targetWindow]);
 
@@ -112,7 +112,7 @@ export const useSliderThumb = ({
   );
 
   const calculateAndSetThumbPosition = useCallback(
-    (event: MouseEvent | React.MouseEvent) => {
+    (event: PointerEvent | React.PointerEvent) => {
       if (!sliderRef.current) return;
 
       const newValue = getClickedPosition(event.clientX);
@@ -145,8 +145,8 @@ export const useSliderThumb = ({
 
   // ******* Event Handlers ***********
 
-  const handleMouseDownOnThumb = useCallback(
-    (event: React.MouseEvent<HTMLDivElement>, thumbIndex?: number) => {
+  const handlePointerDownOnThumb = useCallback(
+    (event: React.PointerEvent<HTMLDivElement>, thumbIndex?: number) => {
       event.preventDefault();
       event.stopPropagation();
       setIsDragging(true);
@@ -168,8 +168,8 @@ export const useSliderThumb = ({
     [getClickedPosition, setValue, onChange, sliderValue],
   );
 
-  const handleMouseDownOnTrack = useCallback(
-    (event: React.MouseEvent<HTMLDivElement>) => {
+  const handlePointerDownOnTrack = useCallback(
+    (event: React.PointerEvent<HTMLDivElement>) => {
       event.preventDefault();
       setIsDragging(true);
       const newValue = getClickedPosition(event.clientX);
@@ -218,18 +218,18 @@ export const useSliderThumb = ({
     [getClickedPosition, setValue, onChange, sliderValue],
   );
 
-  const handleMouseMove = (event: MouseEvent) =>
+  const handlePointerMove = (event: PointerEvent) =>
     calculateAndSetThumbPosition(event);
 
-  const handleMouseUp = () => setIsDragging(false);
+  const handlePointerUp = () => setIsDragging(false);
 
   return {
     calculateAndSetThumbPosition,
     calculatePercentage,
     clamp,
     clampRange,
-    handleMouseDownOnThumb,
-    handleMouseDownOnTrack,
+    handlePointerDownOnThumb,
+    handlePointerDownOnTrack,
     preventThumbOverlap,
     isDragging,
     sliderRef,
