@@ -31,7 +31,7 @@ Accent.args = {
 
 export const InheritColor: StoryFn<typeof Link> = (args) => {
   return (
-    <div style={{ color: "purple" }}>
+    <div style={{ color: "magenta" }}>
       <Link href="https://github.com/salt-ds/core" color="inherit" {...args}>
         Link to URL
       </Link>
