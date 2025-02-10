@@ -140,13 +140,16 @@ export const CustomStep = () => (
       <Slider min={-1} max={1} step={0.25} aria-label="thirdSlider" />
     </FormField>
     <FormField>
-      <FormFieldLabel>Step: 0.3 (not multiple of total range)</FormFieldLabel>
+      <FormFieldLabel>
+        Step: 0.3 with formatting (not multiple of total range)
+      </FormFieldLabel>
       <Slider
         min={0}
         max={1}
         step={0.3}
         defaultValue={0.9}
         aria-label="fourthSlider"
+        format={(value: number) => Intl.NumberFormat().format(value)}
       />
     </FormField>
   </StackLayout>

@@ -8,7 +8,7 @@ import { toFloat } from "packages/lab/src/slider/internal/utils";
 import { type ChangeEvent, type SyntheticEvent, useState } from "react";
 
 export default {
-  title: "Lab/Slider/RangeSlider",
+  title: "Lab/RangeSlider",
   component: RangeSlider,
 };
 
