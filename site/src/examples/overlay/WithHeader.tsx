@@ -1,12 +1,12 @@
 import {
   Button,
   Overlay,
+  OverlayHeader,
   OverlayPanel,
   OverlayPanelContent,
   OverlayTrigger,
 } from "@salt-ds/core";
 import { CloseIcon } from "@salt-ds/icons";
-import { OverlayHeader } from "@salt-ds/lab";
 import { type ReactElement, useState } from "react";
 
 export const WithHeader = (): ReactElement => {

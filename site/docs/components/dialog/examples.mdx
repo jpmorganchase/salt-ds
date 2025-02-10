@@ -57,14 +57,12 @@ Dialog sizes are typically used for different scenarios:
 For default dialogs, you can pass the `accent` prop to `DialogHeader` which accepts a boolean to render an accent bar in the header of the dialog. You cannot render the accent bar when a status is also being rendered.
 
 </LivePreview>
+<LivePreview componentName="dialog" exampleName="WithHeader" >
+  ##  Header
 
-<LivePreview componentName="dialog" exampleName="CloseButton" >
-## Close button
-
-You can also render the `DialogCloseButton` as a child of the `Dialog` component to render a close button in the top right corner of the dialog. You can pass the `onClick` prop like with any `Button` component to handle the close button click.
+`DialogHeader` follows our standardized header for container components and app regions, and it can be added to provide a structured header for dialog. The header includes a title and actions that follows our [Header Block pattern](/salt/patterns/header-block).
 
 </LivePreview>
-
 <LivePreview componentName="dialog" exampleName="Preheader" >
   ## Preheader
 
@@ -72,6 +70,14 @@ You can use the optional `preheader` prop to render a preheader above the main h
 
 </LivePreview>
 
+<LivePreview componentName="dialog" exampleName="CloseButton" >
+## Close button
+
+You can also render the `DialogCloseButton` as a child of the `Dialog` component to render a close button in the top right corner of the dialog. You can pass the `onClick` prop like with any `Button` component to handle the close button click.
+
+**Note:** `DialogCloseButton` is deprecated. Use the prop `actions` within `DialogHeader` instead.
+
+</LivePreview>
 <LivePreview componentName="dialog" exampleName="Info" >
 
 ## Info
@@ -133,14 +139,6 @@ This forces a user to action something within the dialog.
 ## Disable scrim
 
 Use the `disableScrim` prop to prevent the scrim from rendering.
-
-</LivePreview>
-<LivePreview componentName="dialog" exampleName="WithHeader" >
-  ##  🚧 Header updates
-
-`DialogHeader`'s update follows our standardized header for container components and app regions, and it can be added to provide a structured header for dialog. The header includes a title and actions that follows our Header Block pattern.
-
-**Note:** This change is currently in Lab.
 
 </LivePreview>
 </LivePreviewControls>
