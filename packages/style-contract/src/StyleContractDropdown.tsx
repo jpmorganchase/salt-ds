@@ -6,14 +6,14 @@ import {
 } from "@salt-ds/core";
 import type React from "react";
 import { forwardRef } from "react";
-import type { StyleContract } from "./StyleContract";
+import type { Contract, StyleContract } from "./StyleContract";
 import { useStyleContract } from "./StyleContractProvider";
 
 /**
  * Represents a collection of style contracts owned by a specific entity.
  * @template T - The type of the contract declarations.
  */
-export interface Contracts<T> {
+export interface Contracts<T extends Contract> {
   owner: string;
   contracts: StyleContract<T>[];
 }
@@ -22,7 +22,7 @@ export interface Contracts<T> {
  * Represents an option in the style contract dropdown.
  * @template T - The type of the contract declarations.
  */
-interface StyleContractDropdownOption<T> {
+interface StyleContractDropdownOption<T extends Contract> {
   owner: string;
   contract: StyleContract<T>;
 }
@@ -31,7 +31,7 @@ interface StyleContractDropdownOption<T> {
  * Props for the StyleContractDropdown component.
  * @template T - The type of the contract declarations.
  */
-interface StyleContractDropdownProps<T>
+interface StyleContractDropdownProps<T extends Contract>
   extends DropdownProps<StyleContractDropdownOption<T> | null> {
   contracts: Contracts<T>[];
 }
@@ -53,7 +53,7 @@ const capitalizeFirstLetter = (word: string) =>
 export const StyleContractDropdown = forwardRef<
   HTMLButtonElement,
   React.PropsWithChildren<StyleContractDropdownProps<any>>
->(function StyleContractDropdown<T>(
+>(function StyleContractDropdown<T extends Contract>(
   {
     contracts,
     ...rest

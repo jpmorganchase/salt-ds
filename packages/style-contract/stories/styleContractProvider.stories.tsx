@@ -10,115 +10,117 @@ import type { SampleContract } from "./SampleContract";
 const defaultContract = new StyleContract<SampleContract>({
   name: "salt",
   contract: {
-    ".saltButton-neutral.saltButton-solid": {
-      "button-color-default": "white",
-      "button-color-hover": "grey",
-      "button-color-active": "grey",
-      "button-color-disabled": "black",
-      "button-background-default": "red",
-      "button-background-hover": "green",
-      "button-background-active": "blue",
-      "button-background-disabled": "red",
-    },
-    ".saltButton.salt-customizable-size-small": {
-      sm: {
-        "button-height": "20px",
+    custom: {
+      ".saltButton-neutral.saltButton-solid": {
+        "button-color-default": "white",
+        "button-color-hover": "grey",
+        "button-color-active": "grey",
+        "button-color-disabled": "black",
+        "button-background-default": "red",
+        "button-background-hover": "green",
+        "button-background-active": "blue",
+        "button-background-disabled": "red",
       },
-      md: {
-        "button-height": "30px",
+      ".saltButton.salt-customizable-size-small": {
+        sm: {
+          "button-height": "20px",
+        },
+        md: {
+          "button-height": "30px",
+        },
+        lg: {
+          "button-height": "40px",
+        },
       },
-      lg: {
-        "button-height": "40px",
+      ".saltButton.salt-customizable-size-medium": {
+        sm: {
+          "button-height": "40px",
+        },
+        md: {
+          "button-height": "50px",
+        },
+        lg: {
+          "button-height": "60px",
+        },
       },
-    },
-    ".saltButton.salt-customizable-size-medium": {
-      sm: {
-        "button-height": "40px",
+      ".saltButton.salt-customizable-size-large": {
+        sm: {
+          "button-height": "60px",
+        },
+        md: {
+          "button-height": "70px",
+        },
+        lg: {
+          "button-height": "80px",
+        },
       },
-      md: {
-        "button-height": "50px",
+      ".saltButton.salt-customizable-spacing-small": {
+        sm: {
+          "button-padding": "0 12px",
+        },
+        md: {
+          "button-padding": "0 16px",
+        },
+        lg: {
+          "button-padding": "0 20px",
+        },
       },
-      lg: {
-        "button-height": "60px",
+      ".saltButton.salt-customizable-spacing-medium": {
+        sm: {
+          "button-padding": "0 16px",
+        },
+        md: {
+          "button-padding": "0 20px",
+        },
+        lg: {
+          "button-padding": "0 24px",
+        },
       },
-    },
-    ".saltButton.salt-customizable-size-large": {
-      sm: {
-        "button-height": "60px",
+      ".saltButton.salt-customizable-spacing-large": {
+        sm: {
+          "button-padding": "0 20px",
+        },
+        md: {
+          "button-padding": "0 24px",
+        },
+        lg: {
+          "button-padding": "0 28px",
+        },
       },
-      md: {
-        "button-height": "70px",
-      },
-      lg: {
-        "button-height": "80px",
-      },
-    },
-    ".saltButton.salt-customizable-spacing-small": {
-      sm: {
-        "button-padding": "0 12px",
-      },
-      md: {
-        "button-padding": "0 16px",
-      },
-      lg: {
-        "button-padding": "0 20px",
-      },
-    },
-    ".saltButton.salt-customizable-spacing-medium": {
-      sm: {
-        "button-padding": "0 16px",
-      },
-      md: {
-        "button-padding": "0 20px",
-      },
-      lg: {
-        "button-padding": "0 24px",
-      },
-    },
-    ".saltButton.salt-customizable-spacing-large": {
-      sm: {
-        "button-padding": "0 20px",
-      },
-      md: {
-        "button-padding": "0 24px",
-      },
-      lg: {
-        "button-padding": "0 28px",
-      },
-    },
-    ".saltInput": {
-      sm: {
-        "input-color": "white",
-        "input-background-default": "blue",
-        "input-background-hover": "green",
-        "input-background-active": "blue",
-        "input-background-disabled": "red",
-        "input-borderColor-default": "red",
-        "input-borderColor-hover": "green",
-        "input-borderColor-active": "blue",
-        "input-borderColor-disabled": "blue",
-      },
-      md: {
-        "input-color": "white",
-        "input-background-default": "blue",
-        "input-background-hover": "green",
-        "input-background-active": "blue",
-        "input-background-disabled": "red",
-        "input-borderColor-default": "red",
-        "input-borderColor-hover": "green",
-        "input-borderColor-active": "blue",
-        "input-borderColor-disabled": "blue",
-      },
-      lg: {
-        "input-color": "white",
-        "input-background-default": "blue",
-        "input-background-hover": "green",
-        "input-background-active": "blue",
-        "input-background-disabled": "red",
-        "input-borderColor-default": "red",
-        "input-borderColor-hover": "green",
-        "input-borderColor-active": "blue",
-        "input-borderColor-disabled": "blue",
+      ".saltInput": {
+        sm: {
+          "input-color": "white",
+          "input-background-default": "blue",
+          "input-background-hover": "green",
+          "input-background-active": "blue",
+          "input-background-disabled": "red",
+          "input-borderColor-default": "red",
+          "input-borderColor-hover": "green",
+          "input-borderColor-active": "blue",
+          "input-borderColor-disabled": "blue",
+        },
+        md: {
+          "input-color": "white",
+          "input-background-default": "blue",
+          "input-background-hover": "green",
+          "input-background-active": "blue",
+          "input-background-disabled": "red",
+          "input-borderColor-default": "red",
+          "input-borderColor-hover": "green",
+          "input-borderColor-active": "blue",
+          "input-borderColor-disabled": "blue",
+        },
+        lg: {
+          "input-color": "white",
+          "input-background-default": "blue",
+          "input-background-hover": "green",
+          "input-background-active": "blue",
+          "input-background-disabled": "red",
+          "input-borderColor-default": "red",
+          "input-borderColor-hover": "green",
+          "input-borderColor-active": "blue",
+          "input-borderColor-disabled": "blue",
+        },
       },
     },
   },
@@ -143,88 +145,95 @@ export const MultipleContracts: StoryFn<typeof StyleContractProvider> = (
   const productA = new StyleContract<SampleContract>({
     name: "scheme A contract",
     contract: {
-      ".saltButton-neutral.saltButton-solid": {
-        "button-background-default": "green",
-        "button-background-hover": "red",
-        "button-background-active": "blue",
-        "button-background-disabled": "red",
+      custom: {
+        ".saltButton-neutral.saltButton-solid": {
+          "button-background-default": "green",
+          "button-background-hover": "red",
+          "button-background-active": "blue",
+          "button-background-disabled": "red",
+        },
       },
     },
   });
   const productB = new StyleContract<SampleContract>({
     name: "scheme B contract",
     contract: {
-      ".saltButton-neutral.saltButton-solid": {
-        sm: {
-          "button-background-default": "green",
-          "button-background-hover": "green",
-          "button-background-active": "blue",
-          "button-background-disabled": "red",
-          "button-color-default": "white",
-          "button-color-hover": "grey",
-          "button-color-active": "grey",
-          "button-color-disabled": "black",
-        },
-        md: {
-          "button-background-default": "red",
-          "button-background-hover": "green",
-          "button-background-active": "blue",
-          "button-background-disabled": "red",
-          "button-color-default": "white",
-          "button-color-hover": "grey",
-          "button-color-active": "grey",
-          "button-color-disabled": "black",
-        },
-        lg: {
-          "button-background-default": "blue",
-          "button-background-hover": "green",
-          "button-background-active": "blue",
-          "button-background-disabled": "red",
-          "button-color-default": "white",
-          "button-color-hover": "grey",
-          "button-color-active": "grey",
-          "button-color-disabled": "black",
-        },
+      system: {
+        "salt-text-action-textTransform": "capitalize",
       },
-      ".saltInput": {
-        sm: {
-          "input-height": "60px",
-          "input-fontSize": "20px",
-          "input-color": "white",
-          "input-background-default": "blue",
-          "input-background-hover": "green",
-          "input-background-active": "blue",
-          "input-background-disabled": "red",
-          "input-borderColor-default": "red",
-          "input-borderColor-hover": "green",
-          "input-borderColor-active": "blue",
-          "input-borderColor-disabled": "blue",
+      custom: {
+        ".saltButton-neutral.saltButton-solid": {
+          sm: {
+            "button-background-default": "green",
+            "button-background-hover": "green",
+            "button-background-active": "blue",
+            "button-background-disabled": "red",
+            "button-color-default": "white",
+            "button-color-hover": "grey",
+            "button-color-active": "grey",
+            "button-color-disabled": "black",
+          },
+          md: {
+            "button-background-default": "red",
+            "button-background-hover": "green",
+            "button-background-active": "blue",
+            "button-background-disabled": "red",
+            "button-color-default": "white",
+            "button-color-hover": "grey",
+            "button-color-active": "grey",
+            "button-color-disabled": "black",
+          },
+          lg: {
+            "button-background-default": "blue",
+            "button-background-hover": "green",
+            "button-background-active": "blue",
+            "button-background-disabled": "red",
+            "button-color-default": "white",
+            "button-color-hover": "grey",
+            "button-color-active": "grey",
+            "button-color-disabled": "black",
+          },
         },
-        md: {
-          "input-height": "80px",
-          "input-fontSize": "40px",
-          "input-color": "white",
-          "input-background-default": "blue",
-          "input-background-hover": "green",
-          "input-background-active": "blue",
-          "input-background-disabled": "red",
-          "input-borderColor-default": "red",
-          "input-borderColor-hover": "green",
-          "input-borderColor-active": "blue",
-          "input-borderColor-disabled": "blue",
-        },
-        lg: {
-          "input-height": "100px",
-          "input-fontSize": "60px",
-          "input-color": "white",
-          "input-background-default": "blue",
-          "input-background-hover": "green",
-          "input-background-active": "blue",
-          "input-background-disabled": "red",
-          "input-borderColor-default": "red",
-          "input-borderColor-hover": "green",
-          "input-borderColor-active": "blue",
-          "input-borderColor-disabled": "blue",
+        ".saltInput": {
+          sm: {
+            "input-height": "60px",
+            "input-fontSize": "20px",
+            "input-color": "white",
+            "input-background-default": "blue",
+            "input-background-hover": "green",
+            "input-background-active": "blue",
+            "input-background-disabled": "red",
+            "input-borderColor-default": "red",
+            "input-borderColor-hover": "green",
+            "input-borderColor-active": "blue",
+            "input-borderColor-disabled": "blue",
+          },
+          md: {
+            "input-height": "80px",
+            "input-fontSize": "40px",
+            "input-color": "white",
+            "input-background-default": "blue",
+            "input-background-hover": "green",
+            "input-background-active": "blue",
+            "input-background-disabled": "red",
+            "input-borderColor-default": "red",
+            "input-borderColor-hover": "green",
+            "input-borderColor-active": "blue",
+            "input-borderColor-disabled": "blue",
+          },
+          lg: {
+            "input-height": "100px",
+            "input-fontSize": "60px",
+            "input-color": "white",
+            "input-background-default": "blue",
+            "input-background-hover": "green",
+            "input-background-active": "blue",
+            "input-background-disabled": "red",
+            "input-borderColor-default": "red",
+            "input-borderColor-hover": "green",
+            "input-borderColor-active": "blue",
+            "input-borderColor-disabled": "blue",
+          },
         },
       },
     },
