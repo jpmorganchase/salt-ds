@@ -13,17 +13,16 @@ import {
   shift,
   useFloating,
 } from "@floating-ui/react";
-import { useWindow } from "@salt-ds/window";
 import {
   type ComponentPropsWithoutRef,
   type ReactNode,
   createContext,
   forwardRef,
   useContext,
-  useEffect,
   useMemo,
 } from "react";
 import { SaltProvider, SaltProviderNext, useTheme } from "../../salt-provider";
+import { usePreventScroll } from "../usePreventScroll";
 
 export interface FloatingComponentProps
   extends ComponentPropsWithoutRef<"div"> {
@@ -75,24 +74,9 @@ const DefaultFloatingComponent = forwardRef<
   };
 
   const { themeNext } = useTheme();
-
-  const targetWindow = useWindow();
+  usePreventScroll({ isDisabled: !disableScroll || !open });
 
   const ChosenSaltProvider = themeNext ? SaltProviderNext : SaltProvider;
-
-  useEffect(() => {
-    if (!disableScroll || !targetWindow) {
-      return;
-    }
-    if (open) {
-      targetWindow.document.documentElement.style.overflow = "hidden";
-    } else {
-      targetWindow.document.documentElement.style.removeProperty("overflow");
-    }
-    return () => {
-      targetWindow.document.documentElement.style.removeProperty("overflow");
-    };
-  }, [disableScroll, open, targetWindow]);
 
   if (focusManagerProps && open) {
     return (

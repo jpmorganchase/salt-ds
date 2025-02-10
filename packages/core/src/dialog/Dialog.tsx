@@ -148,7 +148,7 @@ export const Dialog = forwardRef<HTMLDivElement, DialogProps>(
             ref={floatingRef}
             width={elements.floating?.offsetWidth}
             height={elements.floating?.offsetHeight}
-            disableScroll={true}
+            disableScroll
             focusManagerProps={{
               context: context,
               initialFocus,
