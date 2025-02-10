@@ -65,6 +65,18 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
       // Verify that the calendar is displayed
       cy.findAllByRole("application").should("have.length", 2);
     });
+
+    it("SHOULD be able to enable the overlay to open on click", () => {
+      cy.mount(<Range openOnClick />);
+      cy.findByRole("application").should("not.exist");
+      // Simulate opening the calendar on click
+      cy.findByLabelText("Start date").realClick();
+      cy.findAllByRole("application").should("have.length", 2);
+      cy.document().find("body").realClick();
+      cy.findByRole("application").should("not.exist");
+      cy.findByLabelText("End date").realClick();
+      cy.findAllByRole("application").should("have.length", 2);
+    });
   });
 
   describe("WHEN readOnly", () => {
