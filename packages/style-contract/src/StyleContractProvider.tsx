@@ -35,15 +35,15 @@ const StyleContractContext = createContext<
 >(undefined);
 
 /**
- * Generate custom CSS from a `custom` contract.
+ * Generate component level styles from a `component` contract.
  * The styles are keyed by component selector and are used to override component tokens.
  */
 function generateCustomCssFromContract<T extends Record<string, string>>(
   contract: T,
   matchedBreakpoints: (keyof Breakpoints)[],
   providerClass: string,
+  breakpoints: Breakpoints,
 ): string {
-  const breakpoints = useBreakpoints();
   return Object.entries(contract || {})
     .reduce<string[]>((result, [componentSelector, contract]) => {
       const resolvedContract = isResponsiveProp(contract, breakpoints)
@@ -63,14 +63,14 @@ function generateCustomCssFromContract<T extends Record<string, string>>(
 }
 
 /**
- * Generate system CSS from a `system` contract.
+ * Generate system-wide styles from a `system` contract.
  * The styles are keyed by system token and are used to override system tokens.
- */function generateSystemCssFromContract<T extends Record<string, string>>(
+ */ function generateSystemCssFromContract<T extends Record<string, string>>(
   contract: T,
   matchedBreakpoints: (keyof Breakpoints)[],
   providerClass: string,
+  breakpoints: Breakpoints,
 ): string {
-  const breakpoints = useBreakpoints();
   return Object.entries(contract || {})
     .reduce<string[]>((result, [token, value]) => {
       const resolvedValue = isResponsiveProp(value, breakpoints)
@@ -101,22 +101,38 @@ export function StyleContractProvider<T extends Contract>({
 
   const providerClass = `salt-style-contract-${providerInstanceCount++}`;
   const { matchedBreakpoints } = useBreakpoint();
+  const breakpoints = useBreakpoints();
 
-  const customCss =  generateCustomCssFromContract<T>(
-        contract.contract.custom,
+  const componentCss = useMemo(
+    () =>
+      generateCustomCssFromContract<T>(
+        contract.contract.component,
         matchedBreakpoints,
         providerClass,
-      );
-  const systemCss = generateSystemCssFromContract<T>(
+        breakpoints,
+      ),
+    [
+      breakpoints,
+      contract?.contract.component,
+      matchedBreakpoints,
+      providerClass,
+    ],
+  );
+  const systemCss = useMemo(
+    () =>
+      generateSystemCssFromContract<T>(
         contract.contract.system,
         matchedBreakpoints,
         providerClass,
-      );
+        breakpoints,
+      ),
+    [breakpoints, contract?.contract.system, matchedBreakpoints, providerClass],
+  );
 
   const targetWindow = useWindow();
   useComponentCssInjection({
-    testId: `custom ${providerClass}`,
-    css: customCss,
+    testId: `component ${providerClass}`,
+    css: componentCss,
     window: targetWindow,
   });
   useComponentCssInjection({

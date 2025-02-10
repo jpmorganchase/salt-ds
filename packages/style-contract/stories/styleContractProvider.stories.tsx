@@ -5,12 +5,14 @@ import {
   StyleContractProvider,
 } from "@salt-ds/style-contract";
 import type { Meta, StoryFn } from "@storybook/react";
+import type { GoodraContract } from "./GoodraContract";
+import type { RillaboomContract } from "./RillaboomContract";
 import type { SampleContract } from "./SampleContract";
 
 const defaultContract = new StyleContract<SampleContract>({
   name: "salt",
   contract: {
-    custom: {
+    component: {
       ".saltButton-neutral.saltButton-solid": {
         "button-color-default": "white",
         "button-color-hover": "grey",
@@ -142,26 +144,10 @@ export const Default: StoryFn<typeof StyleContractProvider> = (args) => {
 export const MultipleContracts: StoryFn<typeof StyleContractProvider> = (
   args,
 ) => {
-  const productA = new StyleContract<SampleContract>({
-    name: "scheme A contract",
+  const saltTestContract = new StyleContract<SampleContract>({
+    name: "test",
     contract: {
-      custom: {
-        ".saltButton-neutral.saltButton-solid": {
-          "button-background-default": "green",
-          "button-background-hover": "red",
-          "button-background-active": "blue",
-          "button-background-disabled": "red",
-        },
-      },
-    },
-  });
-  const productB = new StyleContract<SampleContract>({
-    name: "scheme B contract",
-    contract: {
-      system: {
-        "salt-text-action-textTransform": "capitalize",
-      },
-      custom: {
+      component: {
         ".saltButton-neutral.saltButton-solid": {
           sm: {
             "button-background-default": "green",
@@ -238,6 +224,22 @@ export const MultipleContracts: StoryFn<typeof StyleContractProvider> = (
       },
     },
   });
+  const rillaboomProposedContract = new StyleContract<RillaboomContract>({
+    name: "proposed",
+    contract: {
+      system: {
+        "salt-text-action-textTransform": "capitalize",
+      },
+    },
+  });
+  const goodraProposedContract = new StyleContract<GoodraContract>({
+    name: "proposed",
+    contract: {
+      system: {
+        "salt-text-action-textTransform": "capitalize",
+      },
+    },
+  });
   return (
     <StyleContractProvider {...args} defaultContract={defaultContract}>
       <StackLayout>
@@ -245,8 +247,9 @@ export const MultipleContracts: StoryFn<typeof StyleContractProvider> = (
         <Input value={999.999} />
         <StyleContractDropdown
           contracts={[
-            { owner: "product A", contracts: [productA] },
-            { owner: "product B", contracts: [productB] },
+            { owner: "Salt", contracts: [saltTestContract] },
+            { owner: "Rillaboom", contracts: [rillaboomProposedContract] },
+            { owner: "Goodra", contracts: [goodraProposedContract] },
           ]}
         />
       </StackLayout>

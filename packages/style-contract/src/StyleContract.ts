@@ -1,12 +1,12 @@
 /**
  * The contract may include:
- * - Custom overrides for component-level modifications
- * - System overrides that affect the entire design system
+ * - `component` overrides for component-level modifications
+ * - `system` overrides that affect the entire design system
  */
 export type Contract = {
-  custom?: any;
+  component?: any;
   system?: any;
-}
+};
 
 /**
  * Props for creating a StyleContract.
