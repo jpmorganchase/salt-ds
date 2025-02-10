@@ -1,5 +1,27 @@
 # @salt-ds/core
 
+## 1.41.0
+
+### Minor Changes
+
+- 7510f56: Add `padding` and `margin` to `GridLayout`, `GridItem`, `BorderLayout` and `BorderItem`
+
+  ```tsx
+  <GridLayout padding={1} margin={1}>
+    <GridItem padding={2} margin={2}>
+      Item
+    </GridItem>
+  </GridLayout>
+  ```
+
+### Patch Changes
+
+- fd86394: Fix layout paddings and margins beings set by default
+- ea5fc00: Improve screen reader support for Avatar.
+- ba0f436: Added centered vertical alignment to MenuItem
+- Updated dependencies [021e90d]
+  - @salt-ds/icons@1.13.2
+
 ## 1.40.0
 
 ### Minor Changes

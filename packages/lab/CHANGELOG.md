@@ -1,5 +1,17 @@
 # @salt-ds/lab
 
+## 1.0.0-alpha.61
+
+### Patch Changes
+
+- Updated dependencies [fd86394]
+- Updated dependencies [021e90d]
+- Updated dependencies [7510f56]
+- Updated dependencies [ea5fc00]
+- Updated dependencies [ba0f436]
+  - @salt-ds/core@1.41.0
+  - @salt-ds/icons@1.13.2
+
 ## 1.0.0-alpha.60
 
 ### Patch Changes
