@@ -1,4 +1,5 @@
 import { Link, type LinkProps } from "@jpmorganchase/mosaic-components";
+import { LinkedIcon } from "@salt-ds/icons";
 import clsx from "clsx";
 import {
   type ElementType,
@@ -63,7 +64,9 @@ export const AnchorHeading: FC<PropsWithChildren<AnchorHeadingProps>> = ({
       >
         <Component id={id} {...rest}>
           {children}
-          <span className={styles.badgeContainer}>{hovered ? "#" : null}</span>
+          <span className={styles.badgeContainer}>
+            {hovered ? <LinkedIcon color="inherit" /> : null}
+          </span>
         </Component>
       </Link>
     </div>
