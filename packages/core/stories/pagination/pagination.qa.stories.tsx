@@ -51,7 +51,7 @@ const Template = (args: PaginationProps & PaginatorProps & StoryProps) => {
   );
 };
 
-export const AllExamplesGrid: StoryFn<QAContainerProps> = (props) => {
+export const AllExamplesGrid: StoryFn<QAContainerProps> = () => {
   return (
     <QAContainer
       cols={4}
@@ -60,7 +60,6 @@ export const AllExamplesGrid: StoryFn<QAContainerProps> = (props) => {
       height={1400}
       width={2700}
       className="saltMetricQA"
-      imgSrc={props.imgSrc}
     >
       <Template count={5} siblingCount={2} boundaryCount={1} />
       <Template count={25} siblingCount={2} boundaryCount={1} goTo />

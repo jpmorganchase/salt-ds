@@ -4368,15 +4368,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@storybook/docs-tools@npm:^8.4.4":
-  version: 8.4.4
-  resolution: "@storybook/docs-tools@npm:8.4.4"
-  peerDependencies:
-    storybook: ^8.2.0 || ^8.3.0-0 || ^8.4.0-0 || ^8.5.0-0 || ^8.6.0-0
-  checksum: 10/13c3fffbb80ac6c6f9b54820ab4bf825fa4e9b79c9b9478f97ba1fdcc8acc81d3f7aa5f274a3c176f00f918bf6b1ef6e4efdf378755131a967ea78549cb74c59
-  languageName: node
-  linkType: hard
-
 "@storybook/global@npm:^5.0.0":
   version: 5.0.0
   resolution: "@storybook/global@npm:5.0.0"
@@ -5101,13 +5092,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/css-tree@npm:^2.0.0":
-  version: 2.0.0
-  resolution: "@types/css-tree@npm:2.0.0"
-  checksum: 10/6a46cc73249dfd717f0a5bb25ea6a859c0f18d35ebfe0c03b6d060263a26e8364b5ce6948ca716d91a3d707342570c2ce026a68339eb1c4fdf4ac004e422d25c
-  languageName: node
-  linkType: hard
-
 "@types/debug@npm:^4.0.0":
   version: 4.1.7
   resolution: "@types/debug@npm:4.1.7"
@@ -5144,16 +5128,6 @@ __metadata:
   version: 1.3.0
   resolution: "@types/github-slugger@npm:1.3.0"
   checksum: 10/6561f26814d7c6bf619b1abfba07930ddc2f71e1e1d58a03c20852fd4086ec17f8ee98a44a8ac77ba917c0ff7052cd3fe74071fba59bd526dff8a3a980e2e528
-  languageName: node
-  linkType: hard
-
-"@types/glob@npm:^8.0.0":
-  version: 8.0.1
-  resolution: "@types/glob@npm:8.0.1"
-  dependencies:
-    "@types/minimatch": "npm:^5.1.2"
-    "@types/node": "npm:*"
-  checksum: 10/98f3d0403c09638348a2f3b30aac2a3d6bdc306bce3ceb868f4794fef4f02727ccdf0dab0c7b7d65fd38a1afa1e48f02de56d29d2babe94ee9b204ca54acb31f
   languageName: node
   linkType: hard
 
@@ -5251,13 +5225,6 @@ __metadata:
   version: 2.0.3
   resolution: "@types/mdx@npm:2.0.3"
   checksum: 10/41deb51c29535913af01d25f0e1414cfb5a6948d0e60e77e4aca895694de48bf0ac69c5a81fe2d9617d726cb253001ef82a65b683d5ef51987d15aa1931d086b
-  languageName: node
-  linkType: hard
-
-"@types/minimatch@npm:^5.1.2":
-  version: 5.1.2
-  resolution: "@types/minimatch@npm:5.1.2"
-  checksum: 10/94db5060d20df2b80d77b74dd384df3115f01889b5b6c40fa2dfa27cfc03a68fb0ff7c1f2a0366070263eb2e9d6bfd8c87111d4bc3ae93c3f291297c1bf56c85
   languageName: node
   linkType: hard
 
@@ -7262,7 +7229,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"css-tree@npm:^2.0.4, css-tree@npm:^2.2.1, css-tree@npm:^2.3.1":
+"css-tree@npm:^2.2.1, css-tree@npm:^2.3.1":
   version: 2.3.1
   resolution: "css-tree@npm:2.3.1"
   dependencies:
@@ -7281,32 +7248,6 @@ __metadata:
   checksum: 10/1959c4b0e268bf8db1b3a1776a5ba9ae3a464ccd1226bfa62799cb0a3d0039006e21fb95cec4dec9d687a9a9b90f692dff2d230b631527ece700f4bfb419aaf3
   languageName: node
   linkType: hard
-
-"css-variable-docgen-components@workspace:tooling/css-variable-docgen-components":
-  version: 0.0.0-use.local
-  resolution: "css-variable-docgen-components@workspace:tooling/css-variable-docgen-components"
-  dependencies:
-    "@storybook/addon-docs": "npm:^8.4.4"
-    "@storybook/blocks": "npm:^8.4.4"
-    "@storybook/components": "npm:^8.4.4"
-    "@storybook/docs-tools": "npm:^8.4.4"
-    "@storybook/theming": "npm:^8.4.4"
-    polished: "npm:^4.0.5"
-  languageName: unknown
-  linkType: soft
-
-"css-variable-docgen-plugin@workspace:tooling/css-variable-docgen-plugin":
-  version: 0.0.0-use.local
-  resolution: "css-variable-docgen-plugin@workspace:tooling/css-variable-docgen-plugin"
-  dependencies:
-    "@types/css-tree": "npm:^2.0.0"
-    css-tree: "npm:^2.0.4"
-    glob: "npm:^8.0.0"
-    glob-promise: "npm:^6.0.0"
-  peerDependencies:
-    vite: ">2.0.0-0"
-  languageName: unknown
-  linkType: soft
 
 "css-what@npm:^5.0.1, css-what@npm:^5.1.0":
   version: 5.1.0
@@ -9471,17 +9412,6 @@ __metadata:
   dependencies:
     is-glob: "npm:^4.0.1"
   checksum: 10/32cd106ce8c0d83731966d31517adb766d02c3812de49c30cfe0675c7c0ae6630c11214c54a5ae67aca882cf738d27fd7768f21aa19118b9245950554be07247
-  languageName: node
-  linkType: hard
-
-"glob-promise@npm:^6.0.0":
-  version: 6.0.2
-  resolution: "glob-promise@npm:6.0.2"
-  dependencies:
-    "@types/glob": "npm:^8.0.0"
-  peerDependencies:
-    glob: ^8.0.3
-  checksum: 10/3caa63b052ddcf28d3498a0c93ef623bc43d0fa57487844782b77175c32db1602fd63e4e26091075125083b21eb3e81b4318d5d24139b9b033a764e64b6b3bc3
   languageName: node
   linkType: hard
 
@@ -13782,7 +13712,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"polished@npm:^4.0.5, polished@npm:^4.2.2":
+"polished@npm:^4.2.2":
   version: 4.2.2
   resolution: "polished@npm:4.2.2"
   dependencies:

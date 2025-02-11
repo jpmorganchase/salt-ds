@@ -122,7 +122,7 @@ const getComponent = (props: { variant?: string; className?: string }) => {
 };
 
 export const AllExamplesGrid: StoryFn<QAContainerProps> = (props) => {
-  const { className, imgSrc } = props;
+  const { className } = props;
 
   return (
     <QAContainer
@@ -130,7 +130,6 @@ export const AllExamplesGrid: StoryFn<QAContainerProps> = (props) => {
       vertical
       transposeDensity
       className="saltContactDetailsQA"
-      imgSrc={imgSrc}
       height={1150}
     >
       {getComponent({ variant: "default", className })}

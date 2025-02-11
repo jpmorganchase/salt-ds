@@ -1,6 +1,5 @@
 import { GridLayout, Panel } from "@salt-ds/core";
 import type { Meta, StoryFn } from "@storybook/react";
-import { AllRenderer } from "docs/components";
 
 export default {
   title: "Core/Panel",
@@ -8,32 +7,6 @@ export default {
 } as Meta<typeof Panel>;
 
 const Template: StoryFn<typeof Panel> = (args) => <Panel {...args} />;
-
-export const All: StoryFn<typeof Panel> = (props) => {
-  return (
-    <>
-      <h1>Primary</h1>
-      <AllRenderer>
-        <Panel {...props} />
-      </AllRenderer>
-      <h1>Secondary</h1>
-      <AllRenderer>
-        <Panel variant="secondary" {...props} />
-      </AllRenderer>
-      <h1>Tertiary</h1>
-      <AllRenderer>
-        <Panel variant="tertiary" {...props} />
-      </AllRenderer>
-    </>
-  );
-};
-
-All.args = {
-  children: <p>This is a Panel</p>,
-};
-All.argTypes = {
-  children: { control: false },
-};
 
 export const Primary = Template.bind({});
 Primary.args = {

@@ -1,8 +1,8 @@
 import { Spinner, Text } from "@salt-ds/core";
-import { ColorBlock } from "docs/components/ColorBlock";
 import { useEffect, useState } from "react";
 import { Table } from "../mdx/table";
 import styles from "./AccordianView.module.css";
+import { ColorBlock } from "./style-blocks/ColorBlock";
 
 type CssVariableData = Record<string, string>;
 

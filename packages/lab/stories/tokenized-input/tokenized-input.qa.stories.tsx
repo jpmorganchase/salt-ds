@@ -1,6 +1,6 @@
 import { TokenizedInput } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react";
-import { AllRenderer } from "docs/components";
+import { QAContainer } from "docs/components";
 
 export default {
   title: "Lab/Tokenized Input/QA",
@@ -9,34 +9,25 @@ export default {
 
 export const ExamplesGrid: StoryFn<typeof TokenizedInput> = (props) => {
   return (
-    <AllRenderer>
-      <div
-        style={{
-          background: "inherit",
-          display: "inline-grid",
-          gridTemplate: "auto / repeat(4,auto)",
-          gap: "4px",
-        }}
-      >
-        <TokenizedInput
-          initialSelectedItems={[
-            "abc",
-            "defghi",
-            "jklm",
-            "nopqrstu",
-            "vwexyz",
-            "very looooooooooong looooooooooong long pill",
-          ]}
-          onChange={undefined}
-          style={{ maxWidth: 292, width: 200 }}
-        />
-        <TokenizedInput
-          disabled
-          initialSelectedItems={["Value 1", "Value 2", "Value 3"]}
-          style={{ width: 200 }}
-        />
-      </div>
-    </AllRenderer>
+    <QAContainer cols={2} height={250} width={1000}>
+      <TokenizedInput
+        initialSelectedItems={[
+          "abc",
+          "defghi",
+          "jklm",
+          "nopqrstu",
+          "vwexyz",
+          "very looooooooooong looooooooooong long pill",
+        ]}
+        onChange={undefined}
+        style={{ maxWidth: 292, width: 200 }}
+      />
+      <TokenizedInput
+        disabled
+        initialSelectedItems={["Value 1", "Value 2", "Value 3"]}
+        style={{ width: 200 }}
+      />
+    </QAContainer>
   );
 };
 

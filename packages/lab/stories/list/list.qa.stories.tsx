@@ -10,8 +10,8 @@ export default {
   component: List,
 } as Meta<typeof List>;
 
-export const AllExamples: StoryFn<QAContainerProps> = ({ imgSrc }) => (
-  <QAContainer cols={4} height={950} imgSrc={imgSrc} itemPadding={5}>
+export const AllExamples: StoryFn<QAContainerProps> = () => (
+  <QAContainer cols={4} height={950} itemPadding={5}>
     <List
       aria-label="Listbox example"
       displayedItemCount={5}

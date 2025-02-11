@@ -2,11 +2,6 @@ import { ArgTypes, Canvas, Meta } from "@storybook/addon-docs";
 import { Grid, GridColumn } from "@salt-ds/data-grid";
 import { Banner, BannerContent } from "@salt-ds/core";
 import { LazyStoryCanvas } from "./LazyStoryCanvas";
-import {
-  CharacteristicUsage,
-  CSSClassTable,
-} from "css-variable-docgen-components";
-import HelpAndSupport from "docs/blocks/help-and-support.mdx";
 import * as DataGridStories from "./grid.stories";
 import * as DataGridVariantStories from "./grid-variants.stories";
 import * as DataGridColumnGroupStories from "./grid-columnGroups.stories";
@@ -283,14 +278,6 @@ Note: if your test expects an element to be rendered, and it is out of the viewp
 Virtual DOM environments like JSDOM in Jest do not have any dimensions, therefore will not render any rows. We recommend using Cypress for testing the grid.
 To make tests work, ensure your grid is big enough and have scrolling implemented, closely mimicking how a user would experience using it.
 
-### CSS Class
-
-<CSSClassTable of={Grid} />
-
-### Characteristics used
-
-<CharacteristicUsage of={Grid} />
-
 # Accessibility
 
 The grid is accessible by assistive technologies like screen readers, and provides full WAI-ARIA support.
@@ -341,5 +328,3 @@ _Note: the keys below represent the expected interaction on Windows OS. For Mac 
 | <kbd>Ctrl</kbd> and <kbd>V</kbd>      | Pastes values to cell/s.                                                                                                                                                                                                               |
 | <kbd>Ctrl</kbd> and <kbd>Z</kbd>      | Undoes the last action.                                                                                                                                                                                                                |
 | <kbd>Ctrl</kbd> and <kbd>Y</kbd>      | Redoes the last action.                                                                                                                                                                                                                |
-
-<HelpAndSupport />

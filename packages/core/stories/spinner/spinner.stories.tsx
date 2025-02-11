@@ -1,7 +1,6 @@
-import { Button, Card, GridItem, GridLayout, H1, Spinner } from "@salt-ds/core";
+import { Button, Card, GridItem, GridLayout, Spinner } from "@salt-ds/core";
 import { CoffeeIcon } from "@salt-ds/icons";
 import type { Meta, StoryFn } from "@storybook/react";
-import { AllRenderer } from "docs/components";
 import { useEffect, useState } from "react";
 
 export default {
@@ -15,25 +14,6 @@ export default {
 
 const Template: StoryFn<typeof Spinner> = (args) => {
   return <Spinner {...args} />;
-};
-
-export const All: StoryFn = () => {
-  return (
-    <div>
-      <H1>Default</H1>
-      <AllRenderer>
-        <Spinner />
-      </AllRenderer>
-      <H1>Large</H1>
-      <AllRenderer>
-        <Spinner size="large" />
-      </AllRenderer>
-      <H1>Small</H1>
-      <AllRenderer>
-        <Spinner size="small" />
-      </AllRenderer>
-    </div>
-  );
 };
 
 export const Default = Template.bind({});

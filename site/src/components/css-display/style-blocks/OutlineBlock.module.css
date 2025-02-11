@@ -1,0 +1,7 @@
+.cell {
+  width: var(--salt-size-base);
+  height: var(--salt-size-base);
+  justify-self: end;
+
+  border-radius: 0;
+}
