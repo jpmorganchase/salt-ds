@@ -32,7 +32,7 @@ export const ControlledOpen = (): ReactElement => {
     SingleDateSelection<DateFrameworkType> | null | undefined
   >(null);
   const { dateAdapter } = useLocalization();
-  const triggerRef = useRef<HTMLInputElement | null>(null);
+  const triggerRef = useRef<HTMLInputElement>(null);
   const applyButtonRef = useRef<HTMLButtonElement>(null);
   const datePickerRef = useRef<HTMLDivElement>(null);
 
@@ -68,9 +68,9 @@ export const ControlledOpen = (): ReactElement => {
       reason?: OpenChangeReason | undefined,
     ) => {
       if (reason === undefined) {
-        triggerRef?.current?.focus();
+        triggerRef.current?.focus();
         setTimeout(() => {
-          triggerRef?.current?.setSelectionRange(
+          triggerRef.current?.setSelectionRange(
             0,
             triggerRef.current.value.length,
           );
