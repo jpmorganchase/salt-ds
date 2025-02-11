@@ -9,9 +9,9 @@ export default {
 } as Meta<typeof FormField>;
 
 export const AllExamplesGrid: StoryFn<QAContainerProps> = (props) => {
-  const { imgSrc, className } = props;
+  const { className } = props;
   return (
-    <QAContainer imgSrc={imgSrc}>
+    <QAContainer>
       <FormField
         className={clsx(className)}
         label="Default Form Field description label"

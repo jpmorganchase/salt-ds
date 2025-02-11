@@ -85,25 +85,9 @@ In `theme/css/deprecated/characteristics.css`, add these 3 tokens:
 }
 ```
 
-5. In the appropriate `.mdx` documentation file, add the `withNotes` prop to a new `DocGrid` titled with `### **Deprecated:** These tokens have been deprecated`. In the documentation component of the relevant token, add the `replacementToken` prop with the token to replace with as in [3] or [4], or otherwise make the value of the `replacementToken` "N/A":
-
-```jsx
-<DocGrid withNotes>
-  <ColorBlock
-    colorVar="--salt-text-token-3"
-    replacementToken="--salt-text-token-1"
-  />
-  <ColorBlock colorVar="--salt-text-token-4" replacementToken="N/A" />
-  <ColorBlock
-    colorVar="--salt-text-token-5"
-    replacementToken="--salt-text-token-1"
-  />
-</DocGrid>
-```
-
-6. Add a changeset with the appropriate information.
-7. Any components using the deprecated tokens where the replacement token has the same value can use the replacement token instead immediately. If the value of the replacement token differs, this should be noted in the changeset.
-8. On the next breaking change release, the deprecated tokens can be carefully removed and it should be ensured that the removed token is no longer used anywhere in the codebase.
+5. Add a changeset with the appropriate information.
+6. Any components using the deprecated tokens where the replacement token has the same value can use the replacement token instead immediately. If the value of the replacement token differs, this should be noted in the changeset.
+7. On the next breaking change release, the deprecated tokens can be carefully removed and it should be ensured that the removed token is no longer used anywhere in the codebase.
 
 #### How to manage component CSS API and local tokens
 

@@ -10,19 +10,19 @@ import {
   Tooltip,
 } from "@salt-ds/core";
 import { CopyIcon } from "@salt-ds/icons";
-import { ColorBlock } from "docs/components/ColorBlock";
-import { CursorBlock } from "docs/components/CursorBlock";
-import { FontSizeBlock } from "docs/components/FontSizeBlock";
-import { FontWeightBlock } from "docs/components/FontWeightBlock";
-import { LetterSpacingBlock } from "docs/components/LetterSpacingBlock";
-import { LineBlock } from "docs/components/LineBlock";
-import { OutlineBlock } from "docs/components/OutlineBlock";
-import { ShadowBlockCell } from "docs/components/ShadowBlock";
-import { TextBlock } from "docs/components/TextBlock";
 import { type FC, useEffect, useState } from "react";
 import { Table } from "../mdx/table";
 import styles from "./AccordianView.module.css";
 import chars from "./descriptions";
+import { ColorBlock } from "./style-blocks/ColorBlock";
+import { CursorBlock } from "./style-blocks/CursorBlock";
+import { FontSizeBlock } from "./style-blocks/FontSizeBlock";
+import { FontWeightBlock } from "./style-blocks/FontWeightBlock";
+import { LetterSpacingBlock } from "./style-blocks/LetterSpacingBlock";
+import { LineBlock } from "./style-blocks/LineBlock";
+import { OutlineBlock } from "./style-blocks/OutlineBlock";
+import { ShadowBlockCell } from "./style-blocks/ShadowBlock";
+import { TextBlock } from "./style-blocks/TextBlock";
 
 type CssVariableData = {
   [key: string]: string;

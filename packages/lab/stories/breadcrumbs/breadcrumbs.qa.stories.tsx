@@ -11,16 +11,9 @@ export default {
 
 export const AllExamplesGrid: StoryFn = (props: {
   className?: string;
-  imgSrc?: string;
 }) => {
   return (
-    <QAContainer
-      cols={4}
-      transposeDensity
-      vertical
-      className="saltMetricQA"
-      imgSrc={props.imgSrc}
-    >
+    <QAContainer cols={4} transposeDensity vertical className="saltMetricQA">
       <Breadcrumbs
         className={props.className}
         data-jpmui-test="breadcrumbs-example"

@@ -11,8 +11,8 @@ export default {
 
 const initialTabs = ["Home", "Transactions", "Loans", "Checks", "Liquidity"];
 
-export const QA: StoryFn<QAContainerProps> = ({ imgSrc }) => (
-  <QAContainer cols={1} imgSrc={imgSrc} itemPadding={12} width={1200}>
+export const QA: StoryFn<QAContainerProps> = () => (
+  <QAContainer cols={1} itemPadding={12} width={1200}>
     <Tabstrip source={initialTabs} />
     <Tabstrip centered source={initialTabs} />
     <Tabstrip

@@ -16,7 +16,6 @@ export const AllExamplesGrid: StoryFn<QAContainerProps> = (props) => {
       transposeDensity
       height={1400}
       className="saltMetricQA"
-      imgSrc={props.imgSrc}
     >
       <Metric
         align="left"

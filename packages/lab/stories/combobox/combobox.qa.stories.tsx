@@ -9,15 +9,8 @@ export default {
   component: ComboBox,
 } as Meta<typeof ComboBox>;
 
-export const AllExamples: StoryFn<QAContainerProps> = ({ imgSrc }) => (
-  <QAContainer
-    cols={4}
-    imgSrc={imgSrc}
-    itemPadding={12}
-    transposeDensity
-    vertical
-    width={1200}
-  >
+export const AllExamples: StoryFn<QAContainerProps> = () => (
+  <QAContainer cols={4} itemPadding={12} transposeDensity vertical width={1200}>
     <div style={{ height: 300 }}>
       <FormField
         helperText="This is some help text"

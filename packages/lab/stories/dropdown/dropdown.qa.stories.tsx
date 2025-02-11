@@ -9,11 +9,10 @@ export default {
   component: Dropdown,
 };
 
-export const AllExamples: StoryFn<QAContainerProps> = ({ imgSrc }) => (
+export const AllExamples: StoryFn<QAContainerProps> = () => (
   <QAContainer
     cols={4}
     height={1200}
-    imgSrc={imgSrc}
     itemPadding={12}
     transposeDensity
     vertical

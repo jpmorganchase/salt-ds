@@ -1,6 +1,5 @@
 import { dirname, join } from "node:path";
 import type { StorybookConfig } from "@storybook/react-vite";
-import { cssVariableDocgen } from "css-variable-docgen-plugin";
 import type { UserConfig } from "vite";
 import { typescriptTurbosnap } from "vite-plugin-typescript-turbosnap";
 import { cssInline } from "../tooling/css-inline-plugin";
@@ -33,7 +32,7 @@ const config: StorybookConfig = {
     const { mergeConfig } = await import("vite");
 
     const customConfig: UserConfig = {
-      plugins: [cssInline(), cssVariableDocgen()],
+      plugins: [cssInline()],
       server: {
         watch: {
           ignored: ["**/coverage/**"],

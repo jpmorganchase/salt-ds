@@ -18,14 +18,13 @@ import "./styles.css";
 
 import { SaltProvider, SaltProviderNext } from "@salt-ds/core";
 import { DocsContainer } from "@storybook/addon-docs";
-import { withDateMock } from "docs/decorators/withDateMock";
-import { withLocalization } from "docs/decorators/withLocalization";
-import { withResponsiveWrapper } from "docs/decorators/withResponsiveWrapper";
-import { withScaffold } from "docs/decorators/withScaffold";
-import { WithTextSpacingWrapper } from "docs/decorators/withTextSpacingWrapper";
-import { withTheme } from "docs/decorators/withTheme";
 import { initialize, mswLoader } from "msw-storybook-addon";
 import type { ComponentProps } from "react";
+import { withDateMock } from "./decorators/withDateMock";
+import { withLocalization } from "./decorators/withLocalization";
+import { withResponsiveWrapper } from "./decorators/withResponsiveWrapper";
+import { withTextSpacingWrapper } from "./decorators/withTextSpacingWrapper";
+import { withTheme } from "./decorators/withTheme";
 
 import { globalOptions as themeNextGlobals } from "./toolbar/ThemeNextToolbar";
 
@@ -90,15 +89,6 @@ export const globalTypes: GlobalTypes = {
     toolbar: {
       title: "Text Spacing",
       items: ["disable", "enable"],
-    },
-  },
-  scaffold: {
-    name: "Scaffold",
-    description: "Enables the testing scaffold",
-    defaultValue: "disable",
-    toolbar: {
-      items: ["disable", "enable"],
-      title: "Scaffold",
     },
   },
   styleInjection: {
@@ -194,11 +184,10 @@ export const parameters: Parameters = {
 // Bottom most is outermost
 export const decorators = [
   // When theme provider alone is outside of density provider, some variables can't be resolved. Use withSaltProvider
-  withScaffold,
   withResponsiveWrapper,
   withTheme,
   withLocalization,
-  WithTextSpacingWrapper,
+  withTextSpacingWrapper,
   withDateMock,
 ];
 

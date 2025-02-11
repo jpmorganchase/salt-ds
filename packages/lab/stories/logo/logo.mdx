@@ -1,10 +1,4 @@
 import { Canvas, Meta, ArgTypes } from "@storybook/blocks";
-import { Logo, LogoImage, LogoSeparator } from "@salt-ds/lab";
-import {
-  CharacteristicUsage,
-  CSSClassTable,
-} from "css-variable-docgen-components";
-import HelpAndSupport from "docs/blocks/help-and-support.mdx";
 import * as LogoStories from "./logo.stories";
 
 <Meta title="Documentation/Lab/Logo" />
@@ -73,38 +67,8 @@ import { Logo, LogoImage, LogoSeparator } from '@salt-ds/lab';
 
 <ArgTypes of={LogoStories} />
 
-### CSS Class
-
-#### Logo
-
-<CSSClassTable of={Logo} />
-
-#### LogoImage
-
-<CSSClassTable of={LogoImage} />
-
-#### LogoSeparator
-
-<CSSClassTable of={LogoSeparator} />
-
-### Characteristics Used
-
-#### Logo
-
-<CharacteristicUsage of={Logo} />
-
-#### LogoImage
-
-<CharacteristicUsage of={LogoImage} />
-
-#### LogoSeparator
-
-<CharacteristicUsage of={LogoSeparator} />
-
 ## Accessibility
 
 Logo is accessible by assistive technologies like screen readers, and provides full WAI - ARIA support.
 
 Any focusable elements included in the Logo content will need to be checked and tested accordingly.
-
-<HelpAndSupport />

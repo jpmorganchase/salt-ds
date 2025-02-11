@@ -13,7 +13,6 @@ import {
   Fragment,
   type HTMLAttributes,
 } from "react";
-import { DraggableImg } from "./DraggableSnapshot";
 
 import "./QAContainer.css";
 
@@ -23,7 +22,6 @@ export interface QAContainerProps extends HTMLAttributes<HTMLDivElement> {
   cols?: number;
   height?: number;
   enableStyleInjection?: boolean;
-  imgSrc?: string;
   itemPadding?: number;
   itemWidthAuto?: boolean;
   transposeDensity?: boolean;
@@ -81,7 +79,6 @@ export const QAContainer = ({
   height,
   itemPadding,
   itemWidthAuto,
-  imgSrc,
   transposeDensity,
   vertical,
   width,
@@ -140,7 +137,6 @@ export const QAContainer = ({
           </Fragment>
         ))
       )}
-      {imgSrc && <DraggableImg src={imgSrc} style={style} />}
     </div>
   );
 };
