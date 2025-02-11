@@ -37,6 +37,11 @@ type SaltCardStyleProperties = {
   "salt-card-background"?: string;
   "salt-card-border"?: string;
 };
+type SaltTextSizeProperties = {
+  "text-fontSize"?: string;
+  "text-fontWeight"?: string;
+  "text-lineHeight"?: string;
+};
 
 type SystemProperties = {
   "salt-text-action-textTransform"?: "capitalize";
@@ -46,12 +51,10 @@ export interface SampleContract {
   system?: SystemProperties;
   component?: {
     ".saltButton-neutral.saltButton-solid"?: ResponsiveProp<SaltButtonColorProperties>;
-    ".saltButton.salt-customizable-size-small"?: ResponsiveProp<SaltButtonSizeProperties>;
-    ".saltButton.salt-customizable-size-medium"?: ResponsiveProp<SaltButtonSizeProperties>;
-    ".saltButton.salt-customizable-size-large"?: ResponsiveProp<SaltButtonSizeProperties>;
-    ".saltButton.salt-customizable-spacing-small"?: ResponsiveProp<SaltButtonSpacingProperties>;
-    ".saltButton.salt-customizable-spacing-medium"?: ResponsiveProp<SaltButtonSpacingProperties>;
-    ".saltButton.salt-customizable-spacing-large"?: ResponsiveProp<SaltButtonSpacingProperties>;
+    ".saltText"?: ResponsiveProp<SaltTextSizeProperties>;
+    "h1.salt-size-small"?: ResponsiveProp<SaltTextSizeProperties>;
+    "h1.salt-size-medium"?: ResponsiveProp<SaltTextSizeProperties>;
+    "h1.salt-size-large"?: ResponsiveProp<SaltTextSizeProperties>;
     ".saltInput"?: ResponsiveProp<SaltInputStyleProperties>;
     ".saltCard"?: ResponsiveProp<SaltCardStyleProperties>;
   };

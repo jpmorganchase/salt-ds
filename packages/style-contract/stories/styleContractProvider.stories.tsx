@@ -1,4 +1,4 @@
-import { Button, Input, StackLayout } from "@salt-ds/core";
+import { Button, H1, Input, StackLayout, Text } from "@salt-ds/core";
 import {
   StyleContract,
   StyleContractDropdown,
@@ -22,72 +22,6 @@ const defaultContract = new StyleContract<SampleContract>({
         "button-background-hover": "green",
         "button-background-active": "blue",
         "button-background-disabled": "red",
-      },
-      ".saltButton.salt-customizable-size-small": {
-        sm: {
-          "button-height": "20px",
-        },
-        md: {
-          "button-height": "30px",
-        },
-        lg: {
-          "button-height": "40px",
-        },
-      },
-      ".saltButton.salt-customizable-size-medium": {
-        sm: {
-          "button-height": "40px",
-        },
-        md: {
-          "button-height": "50px",
-        },
-        lg: {
-          "button-height": "60px",
-        },
-      },
-      ".saltButton.salt-customizable-size-large": {
-        sm: {
-          "button-height": "60px",
-        },
-        md: {
-          "button-height": "70px",
-        },
-        lg: {
-          "button-height": "80px",
-        },
-      },
-      ".saltButton.salt-customizable-spacing-small": {
-        sm: {
-          "button-padding": "0 12px",
-        },
-        md: {
-          "button-padding": "0 16px",
-        },
-        lg: {
-          "button-padding": "0 20px",
-        },
-      },
-      ".saltButton.salt-customizable-spacing-medium": {
-        sm: {
-          "button-padding": "0 16px",
-        },
-        md: {
-          "button-padding": "0 20px",
-        },
-        lg: {
-          "button-padding": "0 24px",
-        },
-      },
-      ".saltButton.salt-customizable-spacing-large": {
-        sm: {
-          "button-padding": "0 20px",
-        },
-        md: {
-          "button-padding": "0 24px",
-        },
-        lg: {
-          "button-padding": "0 28px",
-        },
       },
       ".saltInput": {
         sm: {
@@ -148,9 +82,21 @@ export const MultipleContracts: StoryFn<typeof StyleContractProvider> = (
     name: "test",
     contract: {
       component: {
+        "h1.salt-size-small": {
+          "text-fontSize": "20px",
+          "text-lineHeight": "1",
+        },
+        "h1.salt-size-medium": {
+          "text-fontSize": "28px",
+          "text-lineHeight": "1",
+        },
+        "h1.salt-size-large": {
+          "text-fontSize": "36px",
+          "text-lineHeight": "1",
+        },
         ".saltButton-neutral.saltButton-solid": {
           sm: {
-            "button-background-default": "green",
+            "button-background-default": "red",
             "button-background-hover": "green",
             "button-background-active": "blue",
             "button-background-disabled": "red",
@@ -245,6 +191,22 @@ export const MultipleContracts: StoryFn<typeof StyleContractProvider> = (
       <StackLayout>
         <Button>Sample Button</Button>
         <Input value={999.999} />
+        <StackLayout align={"baseline"} direction={"row"}>
+          <Text as="h1" size={"small"}>
+            Text - Small
+          </Text>
+          <Text as="h1" size={"medium"}>
+            Text - Medium
+          </Text>
+          <Text as="h1" size={"large"}>
+            Text - Large
+          </Text>
+        </StackLayout>
+        <StackLayout align={"baseline"} direction={"row"}>
+          <H1 size={"small"}>H1 - Small</H1>
+          <H1 size={"medium"}>H1 - Medium</H1>
+          <H1 size={"large"}>H1 - Large</H1>
+        </StackLayout>
         <StyleContractDropdown
           contracts={[
             { owner: "Salt", contracts: [saltTestContract] },

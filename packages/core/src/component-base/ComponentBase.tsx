@@ -10,16 +10,16 @@ import {
 
 // Define a mapping from size and spacing to class names
 const sizeClassMap = {
-  small: "salt-customizable-size-small",
-  medium: "salt-customizable-size-medium",
-  large: "salt-customizable-size-large",
+  small: "salt-size-small",
+  medium: "salt-size-medium",
+  large: "salt-size-large",
 };
 type Size = keyof typeof sizeClassMap;
 
 const spacingClassMap = {
-  small: "salt-customizable-spacing-small",
-  medium: "salt-customizable-spacing-medium",
-  large: "salt-customizable-spacing-large",
+  small: "salt-spacing-small",
+  medium: "salt-spacing-medium",
+  large: "salt-spacing-large",
 };
 type Spacing = keyof typeof spacingClassMap;
 
