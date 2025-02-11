@@ -1,6 +1,10 @@
-.saltCarouselControls {
+.saltCarouselControls h2 {
+  margin: 0;
+}
+.saltCarouselControls-controls {
   display: flex;
   gap: var(--salt-spacing-100);
-  padding: var(--salt-spacing-100);
+  padding-top: var(--salt-spacing-100);
+  padding-bottom: var(--salt-spacing-100);
   align-items: center;
 }

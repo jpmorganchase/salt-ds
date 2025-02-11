@@ -1,6 +1,7 @@
 import { makePrefixer, useForkRef } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
+import { clsx } from "clsx";
 import {
   Children,
   type HTMLAttributes,
@@ -39,7 +40,6 @@ const useKeyNavigation = ({
 
   return useCallback(
     (event: KeyboardEvent<HTMLDivElement>) => {
-      console.log("scrolling", isScrolling);
       if (isScrolling) return;
 
       if (event.key === "ArrowRight" || event.key === "ArrowLeft") {
@@ -81,6 +81,7 @@ export const CarouselSlider = forwardRef<HTMLDivElement, CarouselSliderProps>(
       containerRef,
       prevSlide,
       nextSlide,
+      bordered,
     } = useCarousel();
     const handleKeyDown = useKeyNavigation({
       nextSlide,
@@ -134,7 +135,9 @@ export const CarouselSlider = forwardRef<HTMLDivElement, CarouselSliderProps>(
     return (
       <div
         ref={useForkRef(ref, containerRef)}
-        className={withBaseName()}
+        className={clsx(withBaseName(), {
+          [withBaseName("bordered")]: bordered,
+        })}
         aria-live="polite"
         role="region"
         tabIndex={0}

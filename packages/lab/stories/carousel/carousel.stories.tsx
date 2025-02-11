@@ -7,33 +7,44 @@ import {
   CarouselSlider,
 } from "@salt-ds/lab";
 import "./carousel.stories.css";
-import { H2, StackLayout, Text } from "@salt-ds/core";
+import { Button, H3, StackLayout, Text } from "@salt-ds/core";
 
 export default {
   title: "Lab/Carousel",
   component: Carousel,
 } as Meta<typeof Carousel>;
 
+function SliderContent(props: { index: number }) {
+  return (
+    <StackLayout gap={1}>
+      <H3>Header of the slider {props.index + 1}</H3>
+      <Text>
+        We offer solutions to the world's moast important corporations,
+        governments and institution.
+      </Text>
+    </StackLayout>
+  );
+}
+
 const CarouselExample: StoryFn<typeof Carousel> = (args) => {
   return (
     <div className="carousel-container">
-      <Carousel activeSlideIndex={2} {...args}>
-        <CarouselControls />
+      <Carousel {...args}>
+        <CarouselControls title="Slides" />
         <CarouselSlider>
           {Array.from({ length: 5 }, (_, index) => (
-            <CarouselSlide key={`item-${index}`}>
-              <div
-                className={`carousel-image-placeholder carousel-image-placeholder-${
-                  index + 1
-                }`}
-              />
-              <StackLayout gap={2}>
-                <H2>Header of the slider {index + 1}</H2>
-                <Text>
-                  We offer solutions to the world's moast important
-                  corporations, governments and institution.
-                </Text>
-              </StackLayout>
+            <CarouselSlide
+              key={`item-${index}`}
+              media={
+                <div
+                  className={`carousel-image-placeholder carousel-image-placeholder-${
+                    index + 1
+                  }`}
+                />
+              }
+              actions={<Button>Learn more</Button>}
+            >
+              <SliderContent index={index} />
             </CarouselSlide>
           ))}
         </CarouselSlider>
@@ -42,4 +53,6 @@ const CarouselExample: StoryFn<typeof Carousel> = (args) => {
   );
 };
 export const Basic = CarouselExample.bind({});
-Basic.args = {};
+Basic.args = {
+  bordered: false,
+};

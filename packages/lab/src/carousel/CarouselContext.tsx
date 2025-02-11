@@ -3,6 +3,7 @@ import {
   type ReactNode,
   type RefObject,
   type SyntheticEvent,
+  useCallback,
   useContext,
   useEffect,
   useRef,
@@ -11,6 +12,7 @@ import {
 
 export interface CarouselContextValue {
   activeSlide: number;
+  bordered: boolean;
   nextSlide: (event: SyntheticEvent) => void;
   prevSlide: (event: SyntheticEvent) => void;
   updateActiveFromScroll: (scrollLeft: number, sliderW: number) => void;
@@ -35,9 +37,11 @@ export function useCarousel() {
 export function CarouselProvider({
   children,
   activeSlideIndex = 0,
+  bordered = false,
 }: {
   children: ReactNode;
-  activeSlideIndex: number;
+  activeSlideIndex?: number;
+  bordered?: boolean;
 }) {
   const [activeSlide, setActiveSlide] = useState(activeSlideIndex);
   const [slides, setSlides] = useState<string[]>([]);
@@ -47,9 +51,9 @@ export function CarouselProvider({
     scrollToSlide(activeSlideIndex);
   }, [activeSlideIndex]);
 
-  const registerSlide = (slideId: string) => {
+  const registerSlide = useCallback((slideId: string) => {
     setSlides((prev) => [...prev, slideId]);
-  };
+  }, []);
 
   const updateActiveFromScroll = (scrollLeft: number, slideW: number) => {
     const newIndex = Math.round(scrollLeft / slideW);
@@ -76,6 +80,7 @@ export function CarouselProvider({
       value={{
         slides,
         activeSlide,
+        bordered,
         registerSlide,
         nextSlide,
         prevSlide,

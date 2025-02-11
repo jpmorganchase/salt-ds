@@ -1,4 +1,11 @@
-import { Button, Text, makePrefixer, useIcon } from "@salt-ds/core";
+import {
+  Button,
+  H2,
+  SplitLayout,
+  Text,
+  makePrefixer,
+  useIcon,
+} from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { type HTMLAttributes, forwardRef } from "react";
@@ -8,20 +15,12 @@ import carouselControlsCss from "./CarouselControls.css";
 
 const withBaseName = makePrefixer("saltCarouselControls");
 
-export interface CarouselControlsProps extends HTMLAttributes<HTMLDivElement> {
-  /**
-   * TODO: check w design
-   * This prop will enable compact / reduced width mode.
-   * The navigation buttons would be part of indicators
-   * Optional. Defaults to false
-   **/
-  compact?: boolean;
-}
+export interface CarouselControlsProps extends HTMLAttributes<HTMLDivElement> {}
 
 export const CarouselControls = forwardRef<
   HTMLDivElement,
   CarouselControlsProps
->(function CarouselControls({ children, className, compact, ...rest }, ref) {
+>(function CarouselControls({ title, className, ...rest }, ref) {
   const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-carousel-controls",
@@ -36,8 +35,18 @@ export const CarouselControls = forwardRef<
   const isOnFirstSlide = activeSlide === 0;
   const isOnLastSlide = activeSlide === slidesCount - 1;
 
-  return (
-    <div ref={ref} role="group" className={withBaseName()} {...rest}>
+  const ControlsLabel = () => (
+    <Text as="span">
+      <strong>
+        {/* TODO: check w dev, this will need changing or a formatter*/}
+        {activeSlide + 1} of {slidesCount}
+      </strong>
+    </Text>
+  );
+  const Controls = () => (
+    <div role="group" className={withBaseName("controls")}>
+      {/*  TODO: check w dev, currently some props are in the context and some out, should title go in context? */}
+      {title && <ControlsLabel />}
       <Button
         appearance="bordered"
         sentiment="neutral"
@@ -48,7 +57,6 @@ export const CarouselControls = forwardRef<
       >
         <PreviousIcon aria-hidden />
       </Button>
-      {children}
       <Button
         appearance="bordered"
         sentiment="neutral"
@@ -59,10 +67,18 @@ export const CarouselControls = forwardRef<
       >
         <NextIcon aria-hidden />
       </Button>
-      {/* TODO: check color with design*/}
-      <Text as="span" color="secondary">
-        {activeSlide + 1} of {slidesCount}
-      </Text>
+      {!title && <ControlsLabel />}
     </div>
+  );
+
+  return (
+    <SplitLayout
+      align="center"
+      className={withBaseName()}
+      ref={ref}
+      startItem={title ? <H2>{title}</H2> : <Controls />}
+      endItem={title && <Controls />}
+      {...rest}
+    />
   );
 });
