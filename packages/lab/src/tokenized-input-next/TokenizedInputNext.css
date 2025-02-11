@@ -213,13 +213,13 @@
 }
 
 .saltTokenizedInputNext .saltButton {
-  --saltButton-padding: 0;
-  --saltButton-height: calc(var(--salt-size-base) - var(--salt-spacing-100));
-  --saltButton-width: calc(var(--salt-size-base) - var(--salt-spacing-100));
+  --button-padding: 0;
+  --button-height: calc(var(--salt-size-base) - var(--salt-spacing-100));
+  --button-width: calc(var(--salt-size-base) - var(--salt-spacing-100));
 }
 
 .saltTokenizedInputNext .saltButton.saltTokenizedInputNext-endAdornment {
-  --saltButton-margin: auto calc(var(--salt-spacing-50) * -1) auto auto;
+  --button-margin: auto calc(var(--salt-spacing-50) * -1) auto auto;
 }
 .saltTokenizedInputNext-hidden {
   display: none;

@@ -20,8 +20,8 @@
 }
 
 /* .saltToolbarField:not([data-overflow-indicator]) > .saltButton {
-  --saltButton-fontSize: 0;
-  --saltButton-letterSpacing: 0;
+  --button-fontSize: 0;
+  --button-letterSpacing: 0;
 } */
 
 .saltToolbar > .Responsive-inner {

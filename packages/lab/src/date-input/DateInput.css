@@ -204,8 +204,8 @@
 }
 
 .saltDateInput-endAdornmentContainer > .saltButton {
-  --saltButton-padding: var(--salt-spacing-50);
-  --saltButton-height: calc(var(--salt-size-base) - var(--salt-spacing-100));
+  --button-padding: var(--salt-spacing-50);
+  --button-height: calc(var(--salt-size-base) - var(--salt-spacing-100));
 }
 
 /* Style applied to inner input component */

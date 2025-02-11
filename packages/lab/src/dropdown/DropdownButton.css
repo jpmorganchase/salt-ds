@@ -1,15 +1,15 @@
 .saltDropdownButton {
-  --saltButton-background-hover: var(--salt-actionable-secondary-background);
-  --saltButton-background-active: var(--salt-actionable-secondary-background);
-  --saltButton-fontWeight: var(--salt-text-fontWeight-strong); /* TODO: Check with design */
-  --saltButton-textAlign: left;
-  --saltButton-textTransform: none;
-  --saltButton-width: 100%;
+  --button-background-hover: var(--salt-actionable-secondary-background);
+  --button-background-active: var(--salt-actionable-secondary-background);
+  --button-fontWeight: var(--salt-text-fontWeight-strong); /* TODO: Check with design */
+  --button-textAlign: left;
+  --button-textTransform: none;
+  --button-width: 100%;
 }
 
 .saltDropdownButton:active {
   --saltIcon-color: var(--salt-actionable-secondary-foreground);
-  --saltButton-text-color-active: var(--salt-actionable-secondary-foreground);
+  --button-color-active: var(--salt-actionable-secondary-foreground);
 }
 
 .saltDropdownButton-fullwidth {

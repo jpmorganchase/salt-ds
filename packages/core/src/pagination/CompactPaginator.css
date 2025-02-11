@@ -6,7 +6,7 @@
 }
 
 .saltCompactPaginator-arrowButton {
-  --saltButton-width: var(--salt-size-base);
-  --saltButton-height: var(--salt-size-base);
-  --saltButton-padding: var(--salt-spacing-100);
+  --button-width: var(--salt-size-base);
+  --button-height: var(--salt-size-base);
+  --button-padding: var(--salt-spacing-100);
 }

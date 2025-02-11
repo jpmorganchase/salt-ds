@@ -69,7 +69,7 @@
 
 /* Styles applied when orientation = "vertical" */
 .saltNavigationItem-vertical {
-  --saltButton-margin: var(--salt-spacing-50) 0;
+  --button-margin: var(--salt-spacing-50) 0;
 
   min-height: calc(var(--salt-size-base) + var(--salt-spacing-50) * 2);
   padding-right: var(--salt-spacing-100);

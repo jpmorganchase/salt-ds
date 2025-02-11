@@ -65,8 +65,8 @@
 }
 
 .saltTabstrip-overflowMenu-open {
-  --saltButton-background: var(--salt-actionable-secondary-background-active);
-  --saltButton-text-color: var(--salt-actionable-secondary-text-color-active);
+  --button-background: var(--salt-actionable-secondary-background-active);
+  --button-text-color: var(--salt-actionable-secondary-text-color-active);
 }
 
 .saltTabstrip-overflowMenu-open .saltButton {
