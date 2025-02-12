@@ -9,10 +9,10 @@ import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
   Children,
-  forwardRef,
   type HTMLAttributes,
   type KeyboardEvent,
   type ReactElement,
+  forwardRef,
   useCallback,
   useEffect,
   useState,
