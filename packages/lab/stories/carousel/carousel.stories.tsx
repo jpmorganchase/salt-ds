@@ -7,7 +7,7 @@ import {
   CarouselSlider,
 } from "@salt-ds/lab";
 import "./carousel.stories.css";
-import { Button, H3, StackLayout, Text } from "@salt-ds/core";
+import { Button, H2, H3, StackLayout, Text } from "@salt-ds/core";
 
 export default {
   title: "Lab/Carousel",
@@ -30,7 +30,7 @@ const CarouselExample: StoryFn<typeof Carousel> = (args) => {
   return (
     <div className="carousel-container">
       <Carousel {...args}>
-        <CarouselControls title="Slides" />
+        <CarouselControls title={<H2>Slides</H2>} />
         <CarouselSlider>
           {Array.from({ length: 5 }, (_, index) => (
             <CarouselSlide

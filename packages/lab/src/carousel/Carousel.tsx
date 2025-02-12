@@ -8,11 +8,6 @@ export interface CarouselProps extends HTMLAttributes<HTMLDivElement> {
    **/
   activeSlideIndex?: number;
   /**
-   * If this props is passed it will set the aria-label with value to the carousel container.
-   * Optional. Defaults to undefined
-   */
-  carouselDescription?: string;
-  /**
    * A boolean. When `true`, the slider will receive a full border.
    */
   bordered?: boolean;
@@ -20,25 +15,12 @@ export interface CarouselProps extends HTMLAttributes<HTMLDivElement> {
 
 export const Carousel = forwardRef<HTMLDivElement, CarouselProps>(
   function Carousel(
-    {
-      activeSlideIndex = 0,
-      bordered = false,
-      carouselDescription,
-      children,
-      className,
-      ...rest
-    },
+    { activeSlideIndex = 0, bordered = false, children, className, ...rest },
     ref,
   ) {
     return (
       <CarouselProvider activeSlideIndex={activeSlideIndex} bordered={bordered}>
-        <div
-          aria-label={carouselDescription}
-          aria-roledescription="carousel"
-          role="region"
-          ref={ref}
-          {...rest}
-        >
+        <div aria-roledescription="carousel" role="region" ref={ref} {...rest}>
           {children}
         </div>
       </CarouselProvider>

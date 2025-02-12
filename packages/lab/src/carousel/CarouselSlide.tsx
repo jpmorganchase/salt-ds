@@ -1,4 +1,4 @@
-import { SplitLayout, makePrefixer, useId } from "@salt-ds/core";
+import { makePrefixer, useId } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
@@ -51,12 +51,13 @@ export const CarouselSlide = forwardRef<HTMLDivElement, CarouselSlideProps>(
           })}
         >
           {children}
-          <SplitLayout
+          <div
             className={clsx(withBaseName("actions"), {
               [withBaseName("active")]: isActive,
             })}
-            startItem={actions}
-          />
+          >
+            {actions}
+          </div>
         </div>
       </div>
     );

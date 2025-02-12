@@ -1,3 +1,11 @@
+.saltCarouselControls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.saltCarouselControls:last-child {
+  margin-left: auto;
+}
 .saltCarouselControls h2 {
   margin: 0;
 }

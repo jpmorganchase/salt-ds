@@ -1,13 +1,18 @@
-import { makePrefixer, useForkRef } from "@salt-ds/core";
+import {
+  makePrefixer,
+  useForkRef,
+  useIntersectionObserver,
+  useResizeObserver,
+} from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
   Children,
+  forwardRef,
   type HTMLAttributes,
   type KeyboardEvent,
   type ReactElement,
-  forwardRef,
   useCallback,
   useEffect,
   useState,
@@ -77,7 +82,6 @@ export const CarouselSlider = forwardRef<HTMLDivElement, CarouselSliderProps>(
     const [sliderW, setSliderW] = useState(0);
     const {
       updateActiveFromScroll,
-      activeSlide,
       containerRef,
       prevSlide,
       nextSlide,
@@ -89,18 +93,14 @@ export const CarouselSlider = forwardRef<HTMLDivElement, CarouselSliderProps>(
     });
     const slidesCount = Children.count(children);
 
-    useEffect(() => {
+    const handleResize = useCallback(() => {
+      if (!containerRef.current) return;
       if (containerRef.current) {
         setSliderW(containerRef.current.offsetWidth);
       }
-      const handleResize = () => {
-        if (containerRef.current) {
-          setSliderW(containerRef.current.offsetWidth);
-        }
-      };
-      targetWindow?.addEventListener("resize", handleResize);
-      return () => targetWindow?.removeEventListener("resize", handleResize);
-    }, []);
+    }, [containerRef]);
+
+    useResizeObserver({ ref: containerRef, onResize: handleResize });
 
     useEffect(() => {
       if (process.env.NODE_ENV !== "production") {
@@ -112,14 +112,6 @@ export const CarouselSlider = forwardRef<HTMLDivElement, CarouselSliderProps>(
       }
     }, [slidesCount]);
 
-    useEffect(() => {
-      if (containerRef.current) {
-        containerRef.current?.addEventListener("scroll", handleScroll);
-      }
-      return () =>
-        containerRef?.current?.removeEventListener("scroll", handleScroll);
-    }, [sliderW, activeSlide]);
-
     // Handlers
     const handleScroll = () => {
       if (containerRef.current) {
@@ -127,6 +119,10 @@ export const CarouselSlider = forwardRef<HTMLDivElement, CarouselSliderProps>(
         updateActiveFromScroll(scrollLeft, sliderW);
       }
     };
+    useIntersectionObserver({
+      ref: containerRef,
+      onIntersect: handleScroll,
+    });
 
     const onKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
       handleKeyDown(event);

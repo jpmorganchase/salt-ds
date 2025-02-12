@@ -1,21 +1,17 @@
-import {
-  Button,
-  H2,
-  SplitLayout,
-  Text,
-  makePrefixer,
-  useIcon,
-} from "@salt-ds/core";
+import { Button, Text, makePrefixer, useIcon } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
-import { type HTMLAttributes, forwardRef } from "react";
+import { type HTMLAttributes, type ReactNode, forwardRef } from "react";
 import { useCarousel } from "./CarouselContext";
 
 import carouselControlsCss from "./CarouselControls.css";
 
 const withBaseName = makePrefixer("saltCarouselControls");
 
-export interface CarouselControlsProps extends HTMLAttributes<HTMLDivElement> {}
+export interface CarouselControlsProps
+  extends Omit<HTMLAttributes<HTMLDivElement>, "title"> {
+  title?: ReactNode;
+}
 
 export const CarouselControls = forwardRef<
   HTMLDivElement,
@@ -72,13 +68,9 @@ export const CarouselControls = forwardRef<
   );
 
   return (
-    <SplitLayout
-      align="center"
-      className={withBaseName()}
-      ref={ref}
-      startItem={title ? <H2>{title}</H2> : <Controls />}
-      endItem={title && <Controls />}
-      {...rest}
-    />
+    <div className={withBaseName()} ref={ref}>
+      {title}
+      <Controls />
+    </div>
   );
 });
