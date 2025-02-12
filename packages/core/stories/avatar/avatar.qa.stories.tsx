@@ -20,6 +20,10 @@ export const AllVariantsGrid: StoryFn<QAContainerProps> = (props) => (
     <Avatar size={2} src="bad_url" name="Peter Piper" />
     <Avatar size={3} src="bad_url" />
     <Avatar size={3} fallbackIcon={<SaltShakerIcon />} />
+    {Array.from({ length: 20 }).map((_, i) => (
+      // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+      <Avatar key={i} name="Peter Piper" category={i + 1} />
+    ))}
   </QAContainer>
 );
 
@@ -48,6 +52,10 @@ export const NoStyleInjectionGrid: StoryFn<QAContainerNoStyleInjectionProps> = (
     <Avatar size={2} src="bad_url" name="Peter Piper" />
     <Avatar size={3} src="bad_url" />
     <Avatar size={3} fallbackIcon={<SaltShakerIcon />} />
+    {Array.from({ length: 20 }).map((_, i) => (
+      // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+      <Avatar key={i} name="Peter Piper" category={i + 1} />
+    ))}
   </QAContainerNoStyleInjection>
 );
 
