@@ -1,7 +1,7 @@
-.linkExample.linkExample:visited {
-  color: invalid-value-to-disable-visited-styles;
+.linkExample.linkExample {
+  --link-color-visited: var(--link-color);
 }
 
 .visitedLink.visitedLink {
-  color: var(--link-color-visited);
+  --link-color: var(--link-color-visited);
 }

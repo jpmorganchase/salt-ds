@@ -4,7 +4,7 @@
   --link-color-active: "inherit";
   --link-color-visited: var(--salt-content-foreground-visited);
   --link-color-focus: "inherit";
-  --link-focus-outlineColor: "inherit";
+  --link-focus-outlineColor: currentColor;
 
   --link-textDecoration: var(--salt-navigable-textDecoration);
   --link-textDecoration-hover: var(--salt-navigable-textDecoration-hover);
@@ -23,30 +23,30 @@
 /* Primary variant */
 .saltLink-primary {
   --link-color: var(--salt-content-primary-foreground);
-  --link-color-hover: var(--salt-content-foreground-hover);
-  --link-color-active: var(--salt-content-foreground-active);
-  --link-color-visited: var(--salt-content-foreground-visited);
-  --link-color-focus: var(--salt-content-foreground-hover);
+  --link-color-hover: var(--salt-content-primary-foreground);
+  --link-color-active: var(--salt-content-primary-foreground);
+  --link-color-focus: var(--salt-content-primary-foreground);
   --link-focus-outlineColor: var(--salt-focused-outlineColor);
+  --link-color-visited: var(--salt-content-foreground-visited);
 }
 
 /* Secondary variant */
 .saltLink-secondary {
   --link-color: var(--salt-content-secondary-foreground);
-  --link-color-hover: var(--salt-content-foreground-hover);
-  --link-color-active: var(--salt-content-foreground-active);
-  --link-color-visited: var(--salt-content-foreground-visited);
-  --link-color-focus: var(--salt-content-foreground-hover);
+  --link-color-hover: var(--salt-content-secondary-foreground);
+  --link-color-active: var(--salt-content-secondary-foreground);
+  --link-color-focus: var(--salt-content-secondary-foreground);
   --link-focus-outlineColor: var(--salt-focused-outlineColor);
+  --link-color-visited: var(--salt-content-foreground-visited);
 }
 
 .saltLink-accent {
   --link-color: var(--salt-content-accent-foreground);
-  --link-color-hover: var(--salt-content-foreground-hover);
-  --link-color-active: var(--salt-content-foreground-active);
-  --link-color-visited: var(--salt-content-foreground-visited);
-  --link-color-focus: var(--salt-content-foreground-hover);
+  --link-color-hover: var(--salt-content-accent-foreground);
+  --link-color-active: var(--salt-content-accent-foreground);
+  --link-color-focus: var(--salt-content-accent-foreground);
   --link-focus-outlineColor: var(--salt-focused-outlineColor);
+  --link-color-visited: var(--salt-content-foreground-visited);
 }
 
 /* External link's icon */
