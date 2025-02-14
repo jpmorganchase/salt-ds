@@ -4,11 +4,12 @@ import {
   resolveResponsiveValue,
   useBreakpoint,
   useBreakpoints,
+  OverlayClassNameProvider,
 } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import type React from "react";
-import { createContext, useContext, useMemo, useState } from "react";
+import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import type { Contract, StyleContract } from "./StyleContract";
 
 let providerInstanceCount = 0;
@@ -96,14 +97,19 @@ export function StyleContractProvider<T extends Contract>({
   const [contract, setContractState] = useState<StyleContract<T> | null>(
     defaultContract,
   );
-
   const setContract = (newContract: StyleContract<T> | null) => {
     setContractState(newContract);
   };
 
-  const providerClass = `salt-style-contract-${providerInstanceCount++}`;
+  const [providerClassName, setProviderClassName] = useState<string>("");
+
   const { matchedBreakpoints } = useBreakpoint();
   const breakpoints = useBreakpoints();
+
+  useEffect(() => {
+    const nextProviderClassName = `salt-style-contract-${providerInstanceCount++}`;
+    setProviderClassName(nextProviderClassName);
+  }, [matchedBreakpoints]);
 
   const componentCss = useMemo(() => {
     if (!contract) {
@@ -112,14 +118,14 @@ export function StyleContractProvider<T extends Contract>({
     return generateCustomCssFromContract<T>(
       contract.contract.component,
       matchedBreakpoints,
-      providerClass,
+      providerClassName,
       breakpoints,
     );
   }, [
     breakpoints,
     contract?.contract?.component,
     matchedBreakpoints,
-    providerClass,
+    providerClassName,
   ]);
   const systemCss = useMemo(() => {
     if (!contract) {
@@ -128,24 +134,24 @@ export function StyleContractProvider<T extends Contract>({
     return generateSystemCssFromContract<T>(
       contract.contract.system,
       matchedBreakpoints,
-      providerClass,
+      providerClassName,
       breakpoints,
     );
   }, [
     breakpoints,
     contract?.contract?.system,
     matchedBreakpoints,
-    providerClass,
+    providerClassName,
   ]);
 
   const targetWindow = useWindow();
   useComponentCssInjection({
-    testId: `component ${providerClass}`,
+    testId: `component ${providerClassName}`,
     css: componentCss || "",
     window: targetWindow,
   });
   useComponentCssInjection({
-    testId: `system ${providerClass}`,
+    testId: `system ${providerClassName}`,
     css: systemCss || "",
     window: targetWindow,
   });
@@ -154,7 +160,9 @@ export function StyleContractProvider<T extends Contract>({
     <StyleContractContext.Provider
       value={{ contract: contract?.contract, setContract }}
     >
-      <div className={providerClass}>{children}</div>
+      <OverlayClassNameProvider className={providerClassName}>
+        <div className={providerClassName}>{children}</div>
+      </OverlayClassNameProvider>
     </StyleContractContext.Provider>
   );
 }

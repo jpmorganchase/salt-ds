@@ -18,12 +18,17 @@ export interface FormFieldLabelProps
    * Using "sentence" gives more prominent styling
    */
   intent?: "label" | "sentence";
+  /**
+   * Alignment of label. Defaults to "left"
+   */
+  textAlign?: "left" | "right";
 }
 
 export const FormFieldLabel = ({
   className,
   children,
   intent = "label",
+  textAlign = "left",
   ...restProps
 }: FormFieldLabelProps) => {
   const { a11yProps, disabled, necessity } = useFormFieldProps();
@@ -43,7 +48,12 @@ export const FormFieldLabel = ({
   return (
     <Label
       as="label"
-      className={clsx(withBaseName(), withBaseName(intent), className)}
+      className={clsx(
+        withBaseName(),
+        withBaseName(intent),
+        withBaseName(textAlign),
+        className,
+      )}
       id={a11yProps?.["aria-labelledby"]}
       disabled={disabled}
       variant="secondary"

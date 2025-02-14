@@ -1,4 +1,11 @@
-import { Button, H1, Input, StackLayout, Text } from "@salt-ds/core";
+import {
+  Button,
+  H1,
+  Input,
+  SaltProvider,
+  StackLayout,
+  Text,
+} from "@salt-ds/core";
 import {
   StyleContract,
   StyleContractDropdown,
@@ -8,6 +15,8 @@ import type { Meta, StoryFn } from "@storybook/react";
 import type { GreatTuskContract } from "./GreatTuskContract";
 import type { RaichuContract } from "./RaichuContract";
 import type { SampleContract } from "./SampleContract";
+import { MockTicket } from "./MockTicket";
+import { MarketsContract } from "./MarketsContract";
 
 const defaultContract = new StyleContract<SampleContract>({
   name: "salt",
@@ -72,6 +81,47 @@ export const Default: StoryFn<typeof StyleContractProvider> = (args) => {
     <StyleContractProvider {...args} defaultContract={defaultContract}>
       <Button>Sample Button</Button>
     </StyleContractProvider>
+  );
+};
+
+const marketsContract = new StyleContract<MarketsContract>({
+  name: "proposed",
+  contract: {
+    system: {
+      "salt-text-action-textTransform": "capitalize",
+    },
+    component: {
+      ".saltInput": {
+        "input-boxShadow": "inset 0 1px 0 rgba(0, 0, 0, 0.5)",
+      },
+      ".saltInput.salt-size-large": {
+        "input-height": "32px",
+      },
+      ".saltText.salt-size-large": {
+        "text-fontSize": "20px",
+        "text-lineHeight": "26px",
+      },
+      ".saltFormFieldLabel.salt-size-large": {
+        "formFieldLabel-lineHeight": "32px",
+      },
+    },
+  },
+});
+
+export const MockTicketWithContract: StoryFn<typeof StyleContractProvider> = (
+  args,
+) => {
+  return (
+    <SaltProvider density="high">
+      <StyleContractProvider {...args}>
+        <StackLayout>
+          <MockTicket />
+          <StyleContractDropdown
+            contracts={[{ owner: "Markets", contracts: [marketsContract] }]}
+          />
+        </StackLayout>
+      </StyleContractProvider>
+    </SaltProvider>
   );
 };
 
@@ -191,6 +241,17 @@ export const MultipleContracts: StoryFn<typeof StyleContractProvider> = (
       <StackLayout>
         <Button>Sample Button</Button>
         <Input value={999.999} />
+        <StackLayout gap={0} align={"baseline"} direction={"row"}>
+          <Text as="h1" size={"small"}>
+            1.03
+          </Text>
+          <Text as="h1" size={"large"}>
+            <strong>45</strong>
+          </Text>
+          <Text as="h1" size={"medium"}>
+            3
+          </Text>
+        </StackLayout>
         <StackLayout align={"baseline"} direction={"row"}>
           <Text as="h1" size={"small"}>
             Text - Small

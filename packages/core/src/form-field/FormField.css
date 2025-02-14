@@ -1,18 +1,41 @@
+/**
+  Deprecated Variables Notice:
+
+  The CSS variables listed below are deprecated and should be replaced with their corresponding SaltStyleContract variables.
+  This approach allows us to share contracts that manage style tokens and provide a structured way for users to implement known levels of customization.
+
+  --saltFormField-width
+*/
+
 .saltFormField {
+  --formField-gap: var(--salt-spacing-100);
+  --formField-width: 100%;
+  --formField-fontFamily: var(--salt-text-fontFamily);
+  --formField-fontSize: var(--salt-text-fontSize);
+  --formField-fontWeight: var(--salt-text-fontWeight);
+  --formField-gridTemplateColumns: unset;
+  --formField-gridColumnGap: unset;
+  --formField-lineHeight: var(--salt-text-lineHeight);
+  --formField-paddingTop: unset;
+
+  gap: var(--formField-gap);
+  width: var(--formField-width);
+
   display: inline-grid;
   position: relative;
-  gap: var(--salt-spacing-100);
   text-align: left;
-  width: var(--saltFormField-width, 100%);
 
-  font-family: var(--salt-text-fontFamily);
-  font-size: var(--salt-text-fontSize);
-  font-weight: var(--salt-text-fontWeight);
-  line-height: var(--salt-text-lineHeight);
+  font-family: var(--formField-fontFamily);
+  font-size: var(--formField-fontSize);
+  font-weight: var(--formField-fontWeight);
+  line-height: var(--formField-lineHeight);
+  grid-template-columns: var(--formField-gridTemplateColumns);
+  grid-column-gap: var(--formField-gridColumnGap);
+  padding-top: var(--formField-paddingTop);
 }
 
 .saltFormField-labelTop {
-  gap: var(--salt-spacing-75);
+  --formField-gap: var(--salt-spacing-75);
   grid-auto-rows: min-content;
   grid-template-areas:
     "label"
@@ -24,12 +47,14 @@
 }
 
 .saltFormField-labelLeft {
-  grid-template-columns: var(--saltFormField-label-width, var(--formField-label-width, 40%)) 1fr;
+  --formField-gridTemplateColumns: 40% 1fr;
+  align-self: center;
   grid-template-areas: "label controls";
 }
 
 .saltFormField-labelRight {
-  grid-template-columns: var(--saltFormField-label-width, var(--formField-label-width, 40%)) 1fr;
+  align-self: center;
+  --formField-gridTemplateColumns: 40% 1fr;
   grid-template-areas: "label controls";
 }
 
@@ -40,7 +65,7 @@
 
 .saltFormField-labelRight .saltFormFieldLabel,
 .saltFormField-labelLeft .saltFormFieldLabel {
-  padding-top: var(--salt-spacing-100);
+  --formField-paddingTop: var(--salt-spacing-100);
 }
 
 .saltFormField-labelRight .saltFormFieldLabel {
@@ -52,7 +77,7 @@
   display: grid;
   grid-auto-columns: minmax(0, 1fr);
   grid-auto-flow: column;
-  grid-column-gap: var(--salt-spacing-100);
+  --formField-gridColumnGap: var(--salt-spacing-100);
 }
 
 .saltFormFieldLabel {
@@ -64,7 +89,7 @@
 }
 
 .saltFormField-disabled {
-  --saltInput-outline: none;
+  --input-outline: none;
   --saltCheckbox-outline: none;
   --saltRadioButton-outline: none;
 }

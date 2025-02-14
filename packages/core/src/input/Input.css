@@ -18,6 +18,7 @@
   --input-paddingLeft: var(--salt-spacing-100);
   --input-paddingRight: var(--salt-spacing-100);
   --input-textAlign: left;
+  --input-boxShadow: none;
 
   --input-outlineColor: inherit;
   --input-outlineStyle: none;
@@ -29,6 +30,7 @@
   border-radius: var(--input-borderRadius);
   border-style: var(--input-borderStyle);
   border-width: var(--input-borderWidth);
+  box-shadow: var(--input-boxShadow);
   color: var(--input-color);
   cursor: var(--input-cursor);
   font-family: var(--input-fontFamily);

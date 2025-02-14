@@ -1,0 +1,85 @@
+.app {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  height: 200px;
+  position: relative;
+}
+
+.ticket {
+  width: 260px !important;
+}
+
+.price-panel {
+  display: flex;
+  width: 100%;
+  padding: var(--salt-spacing-100);
+  flex-direction: column;
+  gap: var(--salt-spacing-100);
+  align-items: center;
+  border: 1px solid #ccc;
+}
+
+.hatched-right {
+  width: 200px;
+  height: 52px;
+  background-color: white;
+  background-image: linear-gradient(
+      45deg,
+      var(--salt-color-green-20) 2%,
+      transparent 10%,
+      transparent 50%,
+      var(--salt-color-green-20) 50%,
+      var(--salt-color-green-20) 60%,
+      transparent 60%,
+      transparent
+    ),
+    linear-gradient(45deg, var(--salt-color-green-20) 2%, transparent 10%, transparent 50%, var(--salt-color-green-20) 50%, var(--salt-color-green-20) 60%, transparent 60%, transparent);
+  background-size: 12px 12px; /* Size of the pattern */
+  background-position:
+    0 0,
+    2px 2px; /* Offset the second gradient */
+}
+
+.hatched-left {
+  width: 200px;
+  height: 52px;
+  background-color: white;
+  background-image: linear-gradient(
+      -45deg,
+      var(--salt-color-green-20) 2%,
+      transparent 10%,
+      transparent 50%,
+      var(--salt-color-green-20) 50%,
+      var(--salt-color-green-20) 60%,
+      transparent 60%,
+      transparent
+    ),
+    linear-gradient(-45deg, var(--salt-color-green-20) 2%, transparent 10%, transparent 50%, var(--salt-color-green-20) 50%, var(--salt-color-green-20) 60%, transparent 60%, transparent);
+  background-size: 12px 12px;
+  background-position:
+    0 0,
+    6px 6px;
+}
+
+.left-aligned {
+  align-self: flex-start;
+  width: 100%;
+  text-align: left;
+}
+.right-aligned {
+  align-self: flex-end;
+  width: 100%;
+  text-align: right;
+}
+.centered {
+  text-align: center;
+}
+
+.stepper-input {
+  height: auto;
+}
+
+.price {
+  margin: 0;
+}

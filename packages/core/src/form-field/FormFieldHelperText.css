@@ -1,14 +1,28 @@
+/**
+  Deprecated Variables Notice:
+
+  The CSS variables listed below are deprecated and should be replaced with their corresponding SaltStyleContract variables.
+  This approach allows us to share contracts that manage style tokens and provide a structured way for users to implement known levels of customization.
+
+  --saltFormField-helperText-fontStyle
+*/
+
 .saltFormFieldHelperText {
+  --formFieldHelperText-fontStyle: unset;
+  --formFieldHelperText-columnGap: unset;
+
+  column-gap: var(--formFieldHelperText-columnGap);
   cursor: default;
   display: flex;
   flex-direction: row;
+  font-style: var(--formFieldHelperText-fontStyle);
   width: 100%;
 }
 
 .saltFormFieldHelperText .saltText {
-  font-style: var(--saltFormField-helperText-fontStyle, var(--salt-editable-help-fontStyle));
+  --formFieldHelperText-fontStyle: var(--salt-editable-help-fontStyle);
 }
 
 .saltFormFieldHelperText-withValidation {
-  column-gap: var(--salt-spacing-75);
+  --formFieldHelperText-columnGap: var(--salt-spacing-75);
 }

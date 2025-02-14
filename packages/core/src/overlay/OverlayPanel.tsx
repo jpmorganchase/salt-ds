@@ -10,6 +10,7 @@ import {
 import { makePrefixer, useFloatingComponent, useForkRef } from "../utils";
 import { useOverlayContext } from "./OverlayContext";
 import overlayPanelCss from "./OverlayPanel.css";
+import { useOverlayClassName } from "./OverlayClassNameContext";
 
 const withBaseName = makePrefixer("saltOverlayPanel");
 export interface OverlayPanelProps extends ComponentPropsWithoutRef<"div"> {
@@ -49,11 +50,12 @@ export const OverlayPanel = forwardRef<HTMLDivElement, OverlayPanelProps>(
     const handleRef = useForkRef<HTMLDivElement>(floating, ref);
 
     const { top, left, width, height, position } = floatingStyles;
+    const { className: additionalClassName } = useOverlayClassName();
 
     return (
       <FloatingComponent
         open={openState}
-        className={clsx(withBaseName(), className)}
+        className={clsx(withBaseName(), className, additionalClassName)}
         aria-modal="true"
         {...getFloatingProps()}
         ref={handleRef}

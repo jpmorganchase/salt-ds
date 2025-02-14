@@ -1,6 +1,34 @@
+/**
+  Deprecated Variables Notice:
+
+  The CSS variables listed below are deprecated and should be replaced with their corresponding SaltStyleContract variables.
+  This approach allows us to share contracts that manage style tokens and provide a structured way for users to implement known levels of customization.
+
+  --saltFormField-label-fontWeight
+*/
+
 .saltFormFieldLabel.saltText {
-  font-weight: var(--saltFormField-label-fontWeight, var(--salt-text-fontWeight-strong));
-  width: 100%;
+  --formFieldLabel-alignSelf: unset;
+  --formFieldLabel-color: unset;
+  --formFieldLabel-fontSize: unset;
+  --formFieldLabel-fontStyle: unset;
+  --formFieldLabel-fontWeight: var(--salt-text-fontWeight-strong);
+  --formFieldLabel-justifySelf: unset;
+  --formFieldLabel-lineHeight: unset;
+  --formFieldLabel-paddingTop: unset;
+  --formFieldLabel-paddingRight: unset;
+  --formFieldLabel-width: 100%;
+
+  align-self: var(--formFieldLabel-alignSelf);
+  align-self: var(--formFieldLabel-alignSelf);
+  color: var(--formFieldLabel-color);
+  font-size: var(--formFieldLabel-fontSize);
+  font-style: var(--formFieldLabel-fontStyle);
+  font-weight: var(--formFieldLabel-fontWeight);
+  justify-self: var(--formFieldLabel-justifySelf);
+  padding-top: var(--formFieldLabel-paddingTop);
+  padding-right: var(--formFieldLabel-paddingRight);
+  width: var(--formFieldLabel-width);
 }
 
 .saltFormFieldLabel:hover + .saltFormField-controls * {
@@ -8,16 +36,28 @@
 }
 
 .saltFormField-labelLeft .saltFormFieldLabel.saltText {
-  align-self: baseline;
-  padding-top: var(--salt-spacing-100);
+  --formFieldLabel-alignSelf: baseline;
+  --formFieldLabel-paddingTop: var(--salt-spacing-100);
 }
 
 .saltFormFieldLabel-necessityLabel {
-  font-weight: var(--salt-text-fontWeight);
-  font-style: var(--salt-editable-help-fontStyle);
+  --formFieldLabel-fontStyle: var(--salt-editable-help-fontStyle);
+  --formFieldLabel-fontWeight: var(--salt-text-fontWeight);
 }
 
 .saltFormFieldLabel-sentence.saltText {
-  color: var(--salt-content-primary-foreground);
-  font-size: var(--salt-text-fontSize);
+  --formFieldLabel-color: var(--salt-content-primary-foreground);
+  --formFieldLabel-fontSize: var(--salt-text-fontSize);
 }
+
+.saltFormFieldLabel-left.saltText {
+  --formFieldLabel-justifySelf: flex-start;
+}
+
+.saltFormFieldLabel-right.saltText {
+  --formFieldLabel-justifySelf: flex-end;
+  --formFieldLabel-paddingRight: var(--salt-spacing-200);
+  --formFieldLabel-width: auto;
+}
+
+
