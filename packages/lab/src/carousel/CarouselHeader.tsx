@@ -1,7 +1,7 @@
 import { makePrefixer } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
-import { type HTMLAttributes, type ReactNode, forwardRef } from "react";
+import { forwardRef, type HTMLAttributes, type ReactNode } from "react";
 
 import { CarouselControls } from "./CarouselControls";
 import carouselControlsCss from "./CarouselHeader.css";
@@ -25,7 +25,7 @@ export const CarouselHeader = forwardRef<HTMLDivElement, CarouselHeaderProps>(
     return (
       <div className={withBaseName()} ref={ref} {...rest}>
         {title}
-        <CarouselControls labelPlacement={title ? "right" : "left"} />
+        <CarouselControls labelPlacement={title ? "left" : "right"} />
       </div>
     );
   },

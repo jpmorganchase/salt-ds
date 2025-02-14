@@ -70,7 +70,7 @@ export const WithTitle: StoryFn<typeof Carousel> = (args) => {
   return (
     <div className="carousel-container">
       <Carousel {...args}>
-        <CarouselHeader />
+        <CarouselHeader title={<H2>Slider</H2>} />
         <CarouselSlider>
           {Array.from({ length: 5 }, (_, index) => (
             <CarouselSlide
@@ -96,7 +96,7 @@ export const BorderedSlides: StoryFn<typeof Carousel> = (args) => {
   return (
     <div className="carousel-container">
       <Carousel {...args} visibleSlides={2}>
-        <CarouselHeader title={<H2>Slider</H2>} />
+        <CarouselHeader />
         <CarouselSlider>
           {Array.from({ length: 5 }, (_, index) => (
             <CarouselSlide
