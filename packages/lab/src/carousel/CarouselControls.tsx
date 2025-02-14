@@ -1,7 +1,7 @@
 import { Button, Text, makePrefixer, useIcon } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
-import { type HTMLAttributes, type ReactNode, forwardRef } from "react";
+import { type HTMLAttributes, type SyntheticEvent, forwardRef } from "react";
 import { useCarousel } from "./CarouselContext";
 
 import carouselControlsCss from "./CarouselControls.css";
@@ -10,43 +10,52 @@ const withBaseName = makePrefixer("saltCarouselControls");
 
 export interface CarouselControlsProps
   extends Omit<HTMLAttributes<HTMLDivElement>, "title"> {
-  title?: ReactNode;
+  onMoveBack?: (event: SyntheticEvent<HTMLButtonElement>) => void;
+  onMoveForward?: (event: SyntheticEvent<HTMLButtonElement>) => void;
+  labelPlacement?: "left" | "right";
 }
 
 export const CarouselControls = forwardRef<
   HTMLDivElement,
   CarouselControlsProps
->(function CarouselControls({ title, className, ...rest }, ref) {
+>(function CarouselControls(
+  { onMoveBack, onMoveForward, className, labelPlacement = "right", ...rest },
+  ref,
+) {
   const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-carousel-controls",
     css: carouselControlsCss,
     window: targetWindow,
   });
-  const { slides, activeSlide, nextSlide, prevSlide } = useCarousel();
+  const { slides, activeSlide, nextSlide, prevSlide, visibleSlides } =
+    useCarousel();
   const { NextIcon, PreviousIcon } = useIcon();
 
   const slidesCount = slides.length;
 
   const isOnFirstSlide = activeSlide === 0;
-  const isOnLastSlide = activeSlide === slidesCount - 1;
+  const isOnLastSlide = activeSlide === slidesCount - visibleSlides;
 
   const ControlsLabel = () => (
     <Text as="span">
       <strong>
         {/* TODO: check w dev, this will need changing or a formatter*/}
-        {activeSlide + 1} of {slidesCount}
+        {activeSlide + 1}{" "}
+        {visibleSlides - 1 > 0 && ` - ${activeSlide + visibleSlides}`} of{" "}
+        {slidesCount}
       </strong>
     </Text>
   );
-  const Controls = () => (
-    <div role="group" className={withBaseName("controls")}>
-      {/*  TODO: check w dev, currently some props are in the context and some out, should title go in context? */}
-      {title && <ControlsLabel />}
+
+  return (
+    <div role="group" className={withBaseName()} {...rest}>
+      {labelPlacement === "left" && <ControlsLabel />}
       <Button
         appearance="bordered"
         sentiment="neutral"
         className={withBaseName("prev-button")}
+        // TODO: think about onClicks passing down, should controls be independent?
         onClick={prevSlide}
         disabled={isOnFirstSlide}
         aria-label="Previous slide"
@@ -63,14 +72,7 @@ export const CarouselControls = forwardRef<
       >
         <NextIcon aria-hidden />
       </Button>
-      {!title && <ControlsLabel />}
-    </div>
-  );
-
-  return (
-    <div className={withBaseName()} ref={ref}>
-      {title}
-      <Controls />
+      {labelPlacement === "right" && <ControlsLabel />}
     </div>
   );
 });

@@ -21,12 +21,13 @@ export interface CarouselSlideProps extends HTMLAttributes<HTMLDivElement> {
    * The image to be displayed inside the slide
    */
   media?: ReactNode;
+  bordered?: boolean;
 }
 
 const withBaseName = makePrefixer("saltCarouselSlide");
 
 export const CarouselSlide = forwardRef<HTMLDivElement, CarouselSlideProps>(
-  function CarouselSlide({ actions, media, children }, ref) {
+  function CarouselSlide({ actions, bordered, media, children }, ref) {
     const targetWindow = useWindow();
     useComponentCssInjection({
       testId: "salt-carousel-slide",
@@ -35,30 +36,40 @@ export const CarouselSlide = forwardRef<HTMLDivElement, CarouselSlideProps>(
     });
 
     const slideRef = useRef(useId());
-    const { activeSlide, registerSlide, slides, bordered } = useCarousel();
+    const { activeSlide, registerSlide, slides, visibleSlides } = useCarousel();
 
     useEffect(() => {
       slideRef.current && registerSlide(slideRef.current);
     }, [registerSlide]);
-
     const isActive = slides[activeSlide] === slideRef.current;
     return (
-      <div role="group" ref={ref} className={withBaseName()}>
+      <div
+        role="group"
+        ref={ref}
+        className={clsx(withBaseName(), {
+          [withBaseName("bordered")]: bordered,
+        })}
+        style={{
+          "--carousel-width": `calc(100% / ${visibleSlides})`,
+        }}
+      >
         {media}
-        <div
-          className={clsx(withBaseName("content"), {
-            [withBaseName("bordered")]: bordered,
-          })}
-        >
-          {children}
+        {children && (
           <div
-            className={clsx(withBaseName("actions"), {
-              [withBaseName("active")]: isActive,
+            className={clsx(withBaseName("content"), {
+              [withBaseName("card")]: bordered,
             })}
           >
-            {actions}
+            {children}
+            <div
+              className={clsx(withBaseName("actions"), {
+                [withBaseName("active")]: isActive,
+              })}
+            >
+              {actions}
+            </div>
           </div>
-        </div>
+        )}
       </div>
     );
   },

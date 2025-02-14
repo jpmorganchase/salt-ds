@@ -1,0 +1,11 @@
+.saltCarouselHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.saltCarouselHeader:last-child {
+  margin-left: auto;
+}
+.saltCarouselHeader h2 {
+  margin: 0;
+}

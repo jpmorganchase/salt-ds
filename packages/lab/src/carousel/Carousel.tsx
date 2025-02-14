@@ -1,3 +1,8 @@
+import {
+  type ResponsiveProp,
+  resolveResponsiveValue,
+  useBreakpoint,
+} from "@salt-ds/core";
 import { type HTMLAttributes, forwardRef } from "react";
 import { CarouselProvider } from "./CarouselContext";
 
@@ -7,19 +12,30 @@ export interface CarouselProps extends HTMLAttributes<HTMLDivElement> {
    * Optional, default 0.
    **/
   activeSlideIndex?: number;
-  /**
-   * A boolean. When `true`, the slider will receive a full border.
-   */
-  bordered?: boolean;
+  visibleSlides?: ResponsiveProp<number> | number;
 }
 
 export const Carousel = forwardRef<HTMLDivElement, CarouselProps>(
   function Carousel(
-    { activeSlideIndex = 0, bordered = false, children, className, ...rest },
+    {
+      activeSlideIndex = 0,
+      visibleSlides: visibleSlidesProp = 1,
+      children,
+      className,
+      ...rest
+    },
     ref,
   ) {
+    const { matchedBreakpoints } = useBreakpoint();
+    const visibleSlides = resolveResponsiveValue(
+      visibleSlidesProp,
+      matchedBreakpoints,
+    );
     return (
-      <CarouselProvider activeSlideIndex={activeSlideIndex} bordered={bordered}>
+      <CarouselProvider
+        activeSlideIndex={activeSlideIndex}
+        visibleSlides={visibleSlides}
+      >
         <div aria-roledescription="carousel" role="region" ref={ref} {...rest}>
           {children}
         </div>

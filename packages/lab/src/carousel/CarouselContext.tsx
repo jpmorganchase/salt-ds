@@ -1,4 +1,4 @@
-import { createContext } from "@salt-ds/core";
+import { createContext, useResizeObserver } from "@salt-ds/core";
 import {
   type ReactNode,
   type RefObject,
@@ -11,11 +11,11 @@ import {
 
 export interface CarouselContextValue {
   activeSlide: number;
-  bordered: boolean;
+  visibleSlides: number;
   nextSlide: (event: SyntheticEvent) => void;
   prevSlide: (event: SyntheticEvent) => void;
   goToSlide: (index: number) => void;
-  updateActiveFromScroll: (scrollLeft: number, sliderW: number) => void;
+  updateActiveFromScroll: (scrollLeft: number) => void;
   slides: string[];
   registerSlide: (slideId: string) => void;
   containerRef: RefObject<HTMLDivElement>;
@@ -37,47 +37,59 @@ export function useCarousel() {
 export function CarouselProvider({
   children,
   activeSlideIndex = 0,
-  bordered = false,
+  visibleSlides = 1,
 }: {
   children: ReactNode;
   activeSlideIndex?: number;
-  bordered?: boolean;
+  visibleSlides?: number;
 }) {
   const [activeSlide, setActiveSlide] = useState(activeSlideIndex);
   const [slides, setSlides] = useState<string[]>([]);
+  const [sliderW, setSliderW] = useState(0);
+
   const containerRef = useRef<HTMLDivElement>(null);
 
   const registerSlide = useCallback((slideId: string) => {
     setSlides((prev) => [...prev, slideId]);
   }, []);
 
-  const updateActiveFromScroll = (scrollLeft: number, slideW: number) => {
-    const newIndex = Math.round(scrollLeft / slideW) | 0;
+  const updateActiveFromScroll = (scrollLeft: number) => {
+    const newIndex =
+      Math.round(scrollLeft / (sliderW / visibleSlides)) | activeSlideIndex;
     if (newIndex !== activeSlide) {
       setActiveSlide(newIndex);
     }
   };
 
+  const handleResize = useCallback(() => {
+    if (!containerRef.current) return;
+    if (containerRef.current) {
+      setSliderW(containerRef.current.offsetWidth);
+    }
+  }, [containerRef]);
+
+  useResizeObserver({ ref: containerRef, onResize: handleResize });
+
   const scrollToSlide = (index: number) => {
     if (containerRef.current) {
       const slideW = containerRef.current.offsetWidth;
       containerRef.current.scrollTo({
-        left: index * slideW,
+        left: index * (slideW / visibleSlides),
         behavior: "smooth",
       });
     }
   };
 
   const goToSlide = (index: number) => scrollToSlide(index);
-  const nextSlide = () => scrollToSlide(activeSlide + 1);
-  const prevSlide = () => scrollToSlide(activeSlide - 1);
+  const nextSlide = () => scrollToSlide(activeSlide + visibleSlides);
+  const prevSlide = () => scrollToSlide(activeSlide - visibleSlides);
 
   return (
     <CarouselContext.Provider
       value={{
+        visibleSlides,
         slides,
         activeSlide,
-        bordered,
         registerSlide,
         nextSlide,
         prevSlide,

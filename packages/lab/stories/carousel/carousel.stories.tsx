@@ -2,12 +2,13 @@ import type { Meta, StoryFn } from "@storybook/react";
 
 import {
   Carousel,
-  CarouselControls,
+  CarouselHeader,
   CarouselSlide,
   CarouselSlider,
 } from "@salt-ds/lab";
 import "./carousel.stories.css";
-import { Button, H2, H3, StackLayout, Text } from "@salt-ds/core";
+import { H2, H3, SplitLayout, StackLayout, Text } from "@salt-ds/core";
+import { CarouselControls } from "../../src/carousel/CarouselControls";
 
 export default {
   title: "Lab/Carousel",
@@ -19,7 +20,7 @@ function SliderContent(props: { index: number }) {
     <StackLayout gap={1}>
       <H3>Header of the slider {props.index + 1}</H3>
       <Text>
-        We offer solutions to the world's moast important corporations,
+        We offer solutions to the world's most important corporations,
         governments and institution.
       </Text>
     </StackLayout>
@@ -30,7 +31,7 @@ const CarouselExample: StoryFn<typeof Carousel> = (args) => {
   return (
     <div className="carousel-container">
       <Carousel {...args}>
-        <CarouselControls title={<H2>Slides</H2>} />
+        <CarouselHeader />
         <CarouselSlider>
           {Array.from({ length: 5 }, (_, index) => (
             <CarouselSlide
@@ -42,7 +43,6 @@ const CarouselExample: StoryFn<typeof Carousel> = (args) => {
                   }`}
                 />
               }
-              actions={<Button>Learn more</Button>}
             >
               <SliderContent index={index} />
             </CarouselSlide>
@@ -53,6 +53,103 @@ const CarouselExample: StoryFn<typeof Carousel> = (args) => {
   );
 };
 export const Basic = CarouselExample.bind({});
-Basic.args = {
-  bordered: false,
+Basic.args = {};
+
+export const WithVisibleSlides = CarouselExample.bind({});
+WithVisibleSlides.args = {
+  visibleSlides: { xs: 1, sm: 2, md: 3 },
+};
+
+// TODO: fix active index moves
+// export const WithActiveIndex = CarouselExample.bind({});
+// WithActiveIndex.args = {
+//   activeSlideIndex: 4,
+// };
+
+export const WithTitle: StoryFn<typeof Carousel> = (args) => {
+  return (
+    <div className="carousel-container">
+      <Carousel {...args}>
+        <CarouselHeader />
+        <CarouselSlider>
+          {Array.from({ length: 5 }, (_, index) => (
+            <CarouselSlide
+              key={`item-${index}`}
+              media={
+                <div
+                  className={`carousel-image-placeholder carousel-image-placeholder-${
+                    index + 1
+                  }`}
+                />
+              }
+            >
+              <SliderContent index={index} />
+            </CarouselSlide>
+          ))}
+        </CarouselSlider>
+      </Carousel>
+    </div>
+  );
+};
+
+export const BorderedSlides: StoryFn<typeof Carousel> = (args) => {
+  return (
+    <div className="carousel-container">
+      <Carousel {...args} visibleSlides={2}>
+        <CarouselHeader title={<H2>Slider</H2>} />
+        <CarouselSlider>
+          {Array.from({ length: 5 }, (_, index) => (
+            <CarouselSlide
+              bordered
+              key={`item-${index}`}
+              media={
+                <div
+                  className={`carousel-image-placeholder carousel-image-placeholder-${
+                    index + 1
+                  }`}
+                />
+              }
+            >
+              <SliderContent index={index} />
+            </CarouselSlide>
+          ))}
+        </CarouselSlider>
+      </Carousel>
+    </div>
+  );
+};
+
+const ControlsPositioningExample: StoryFn<typeof CarouselControls> = (args) => {
+  return (
+    <div className="carousel-container">
+      <Carousel>
+        <CarouselSlider>
+          {Array.from({ length: 5 }, (_, index) => (
+            <CarouselSlide
+              key={`item-${index}`}
+              media={
+                <div
+                  className={`carousel-image-placeholder carousel-image-placeholder-${
+                    index + 1
+                  }`}
+                />
+              }
+            />
+          ))}
+        </CarouselSlider>
+        <SplitLayout
+          startItem={
+            args.labelPlacement !== "left" && <CarouselControls {...args} />
+          }
+          endItem={
+            args.labelPlacement === "left" && <CarouselControls {...args} />
+          }
+        />
+      </Carousel>
+    </div>
+  );
+};
+export const ControlsPositioning = ControlsPositioningExample.bind({});
+ControlsPositioning.args = {
+  labelPlacement: "left",
 };
