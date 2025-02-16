@@ -72,15 +72,15 @@ export const LivePreview: FC<LivePreviewProps> = ({
       .catch((e) => console.error(`Failed to load example ${exampleName}`, e));
   }, [exampleName, componentName]);
 
-  const { density, mode, accent, corner, themeNext, headingFont, actionFont } =
-    useLivePreviewControls();
+  const { density, mode, theme } = useLivePreviewControls();
 
   const handleShowCodeToggle = (event: ChangeEvent<HTMLInputElement>) => {
     const newShowCode = event.target.checked;
     setShowCode(newShowCode);
   };
 
-  const ChosenSaltProvider = themeNext ? SaltProviderNext : SaltProvider;
+  const ChosenSaltProvider =
+    theme === "brand" ? SaltProviderNext : SaltProvider;
 
   const panelId = useId();
 
@@ -96,10 +96,10 @@ export const LivePreview: FC<LivePreviewProps> = ({
           <LocalizationProvider DateAdapter={AdapterDateFns}>
             <ChosenSaltProvider
               mode={mode}
-              accent={accent}
-              corner={corner}
-              headingFont={headingFont}
-              actionFont={actionFont}
+              accent="teal"
+              corner="rounded"
+              headingFont="Amplitude"
+              actionFont="Amplitude"
             >
               <div className={styles.exampleWithSwitch}>
                 <div className={styles.example}>
