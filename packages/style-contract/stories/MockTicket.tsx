@@ -28,7 +28,12 @@ import {
   StepperInput,
 } from "@salt-ds/lab";
 import { useState } from "react";
-import { ChevronRightIcon, CloseIcon } from "@salt-ds/icons";
+import {
+  ChevronRightIcon,
+  CloseIcon,
+  RefreshIcon,
+  SwapIcon,
+} from "@salt-ds/icons";
 import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import mockTicketCss from "./MockTicket.css";
@@ -45,10 +50,12 @@ const CloseButton: React.FC<ButtonProps> = (props) => (
 );
 
 export const MockTicket = () => {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
 
   const onChange = (newOpen: boolean) => {
-    setOpen(newOpen);
+    if (newOpen) {
+      setOpen(newOpen);
+    }
   };
 
   const handleClose = () => setOpen(false);
@@ -64,7 +71,7 @@ export const MockTicket = () => {
     <div className={"app"}>
       <Overlay open={open} onOpenChange={onChange}>
         <OverlayTrigger>
-          <Button>Open Ticket</Button>
+          {!open ? <Button>Open Ticket</Button> : <span />}
         </OverlayTrigger>
         <OverlayPanel className={"ticket"}>
           <OverlayHeader
@@ -76,8 +83,11 @@ export const MockTicket = () => {
             <StackLayout direction="column" gap={2}>
               <SplitLayout
                 endItem={
-                  <Button appearance="transparent">
-                    <strong>Additional Parameters</strong>
+                  <Button
+                    className="additionalParameters"
+                    appearance="transparent"
+                  >
+                    Additional Parameters
                     <ChevronRightIcon aria-hidden />
                   </Button>
                 }
@@ -115,11 +125,15 @@ export const MockTicket = () => {
                 </StackLayout>
               </StackLayout>
               <FormField labelPlacement="left">
-                <FormLabel size="large" textAlign={"right"}>Currency Pair</FormLabel>
+                <FormLabel size="large" textAlign={"right"}>
+                  Currency Pair
+                </FormLabel>
                 <Input bordered size={"large"} defaultValue="EURUSD" />
               </FormField>
               <FormField labelPlacement="left">
-                <FormLabel size="large" textAlign={"right"}>Order Type</FormLabel>
+                <FormLabel size="large" textAlign={"right"}>
+                  Order Type
+                </FormLabel>
                 <Dropdown bordered defaultSelected={["Swap Take Profit"]}>
                   <Option value="1" key={"option1"}>
                     Swap Take Profit
@@ -129,52 +143,63 @@ export const MockTicket = () => {
               <StackLayout direction={"row"}>
                 <FormField labelPlacement="left">
                   <FormLabel textAlign={"right"}>Amount</FormLabel>
-                  <Input bordered defaultValue="1m" />
+                  <div className={"amountContainer"}>
+                    <Input bordered defaultValue="1m" />
+                    <Button>EUR</Button>
+                  </div>
                 </FormField>
-                <Button>EUR</Button>
               </StackLayout>
               <StackLayout direction={"row"}>
-                <Button appearance="solid" sentiment="accented">
-                  Sell <ChevronRightIcon aria-hidden />
-                </Button>
-                <DatePicker selectionVariant="single">
-                  <DatePickerTrigger>
-                    <DatePickerSingleInput bordered />
-                  </DatePickerTrigger>
-                  <DatePickerOverlay>
-                    <DatePickerSinglePanel />
-                  </DatePickerOverlay>
-                </DatePicker>
+                <FormField labelPlacement={"left"}>
+                  <Button className="sell" size={"small"}>
+                    Sell <SwapIcon aria-hidden />
+                  </Button>
+                  <DatePicker selectionVariant="single">
+                    <DatePickerTrigger>
+                      <DatePickerSingleInput bordered />
+                    </DatePickerTrigger>
+                    <DatePickerOverlay>
+                      <DatePickerSinglePanel />
+                    </DatePickerOverlay>
+                  </DatePicker>
+                </FormField>
               </StackLayout>
               <StackLayout direction={"row"}>
-                <Button appearance="solid" sentiment="accented">
-                  Buy <ChevronRightIcon aria-hidden />
-                </Button>
-                <DatePicker selectionVariant="single">
-                  <DatePickerTrigger>
-                    <DatePickerSingleInput bordered />
-                  </DatePickerTrigger>
-                  <DatePickerOverlay>
-                    <DatePickerSinglePanel />
-                  </DatePickerOverlay>
-                </DatePicker>
+                <FormField labelPlacement={"left"}>
+                  <Button
+                    className="buy"
+                    size={"small"}
+                  >
+                    Buy <SwapIcon aria-hidden />
+                  </Button>
+                  <DatePicker selectionVariant="single">
+                    <DatePickerTrigger>
+                      <DatePickerSingleInput bordered />
+                    </DatePickerTrigger>
+                    <DatePickerOverlay>
+                      <DatePickerSinglePanel />
+                    </DatePickerOverlay>
+                  </DatePicker>
+                </FormField>
               </StackLayout>
               <StackLayout direction={"row"}>
-                <FlexItem>
-                  <FormField>
-                    <FormLabel>Limit Price</FormLabel>
-                    <Button appearance="solid" sentiment="accented">
-                      <ChevronRightIcon aria-hidden />
-                    </Button>
+                  <FormField labelPlacement="left">
+                    <FormLabel textAlign={"right"} >
+                      <div className={"limitPriceLabel"}>
+                        <span>Limit Price</span>
+                      <Button>
+                        <RefreshIcon aria-hidden />
+                      </Button>
+                      </div>
+                    </FormLabel>
+                    <StepperInput
+                      className="stepper-input"
+                      decimalPlaces={2}
+                      step={0.01}
+                      textAlign={"center"}
+                      value={19.535}
+                    />
                   </FormField>
-                </FlexItem>
-                <FlexItem>
-                  <StepperInput
-                    className="stepper-input"
-                    decimalPlaces={2}
-                    step={0.01}
-                  />
-                </FlexItem>
               </StackLayout>
               <FormField labelPlacement="left">
                 <FormLabel textAlign={"right"}>Client Account</FormLabel>
@@ -184,7 +209,9 @@ export const MockTicket = () => {
                   </Option>
                 </Dropdown>
               </FormField>
-              <Button>Submit Sell & Buy Order</Button>
+              <Button className={"submit"} size={"large"}>
+                Submit Sell & Buy Order
+              </Button>
             </StackLayout>
           </OverlayPanelContent>
         </OverlayPanel>

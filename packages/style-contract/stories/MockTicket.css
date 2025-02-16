@@ -7,6 +7,7 @@
 }
 
 .ticket {
+  box-sizing: border-box;
   width: 260px !important;
 }
 
@@ -76,10 +77,63 @@
   text-align: center;
 }
 
+/** TODO refactor stepper-input styles and set these via contract */
 .stepper-input {
-  height: auto;
+  height: 48px;
+  font-size: 28px;
+  font-weight: bold;
+  line-height: 1;
+}
+.saltStepperInput-inputContainer.saltStepperInput-primary {
+  height: 48px;
 }
 
 .price {
   margin: 0;
+  font-weight: bold;
+}
+
+.amountContainer {
+  display: flex;
+}
+.amountContainer > .saltInput {
+  flex: 1;
+}
+.amountContainer > .saltButton {
+  margin-left: var(--salt-spacing-100);
+  flex: 0 0 auto;
+}
+
+.saltButton.additionalParameters {
+  margin-top: var(--salt-spacing-100);
+}
+
+.buy,
+.sell {
+  margin-right: var(--salt-spacing-100);
+}
+
+.limitPriceLabel {
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+  gap: var(--salt-spacing-200);
+}
+
+.saltButton {
+  border-style: hidden;
+}
+/** TODO: where should this belong? **/
+.saltButton::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  box-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 0.5),
+    inset 0 -1px 1px rgba(0, 0, 0, 0.5);
+  border-radius: var(--salt-palette-corner-weak, 0);
+  pointer-events: none;
 }

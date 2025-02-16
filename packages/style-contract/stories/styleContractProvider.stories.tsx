@@ -89,17 +89,40 @@ const marketsContract = new StyleContract<MarketsContract>({
   contract: {
     system: {
       "salt-text-action-textTransform": "capitalize",
+      "salt-palette-corner-weak": "2px"
     },
     component: {
       ".saltInput": {
         "input-boxShadow": "inset 0 1px 0 rgba(0, 0, 0, 0.5)",
       },
+      ".saltButton": {
+        "button-border": "1px hidden transparent"
+      },
+      ".saltButton.buy": {
+        "button-background": "linear-gradient(to bottom, var(--salt-color-blue-300), var(--salt-color-blue-400))",
+      },
+      ".saltButton.sell": {
+        "button-background": "linear-gradient(to bottom, var(--salt-color-red-300), var(--salt-color-red-400))",
+      },
+      ".saltButton.submit": {
+        "button-background": "linear-gradient(to bottom, var(--salt-color-orange-200), var(--salt-color-orange-300))",
+      },
+      ".saltButton.salt-size-large": {
+        "button-height": "32px",
+      },
       ".saltInput.salt-size-large": {
         "input-height": "32px",
+        "input-fontSize": "20px",
       },
       ".saltText.salt-size-large": {
         "text-fontSize": "20px",
         "text-lineHeight": "26px",
+      },
+      ".saltFormField": {
+        "formField-gridTemplateColumns": "33.3% 1fr",
+      },
+      ".saltFormFieldLabel-right.saltText": {
+        "formFieldLabel-paddingRight": "var(--salt-spacing-100)",
       },
       ".saltFormFieldLabel.salt-size-large": {
         "formFieldLabel-lineHeight": "32px",
