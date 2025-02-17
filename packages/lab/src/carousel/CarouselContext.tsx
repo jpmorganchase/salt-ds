@@ -63,10 +63,8 @@ export function CarouselProvider({
 
   const handleResize = useCallback(() => {
     if (!containerRef.current) return;
-    if (containerRef.current) {
-      setSliderW(containerRef.current.offsetWidth);
-    }
-  }, [containerRef]);
+    setSliderW(containerRef.current.offsetWidth);
+  }, []);
 
   useResizeObserver({ ref: containerRef, onResize: handleResize });
 

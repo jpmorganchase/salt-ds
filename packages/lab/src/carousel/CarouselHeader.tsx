@@ -1,7 +1,7 @@
 import { makePrefixer } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
-import { forwardRef, type HTMLAttributes, type ReactNode } from "react";
+import { type HTMLAttributes, type ReactNode, forwardRef } from "react";
 
 import { CarouselControls } from "./CarouselControls";
 import carouselControlsCss from "./CarouselHeader.css";

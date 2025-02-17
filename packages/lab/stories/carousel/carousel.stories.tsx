@@ -7,7 +7,7 @@ import {
   CarouselSlider,
 } from "@salt-ds/lab";
 import "./carousel.stories.css";
-import { H2, H3, SplitLayout, StackLayout, Text } from "@salt-ds/core";
+import { Button, H2, H3, SplitLayout, StackLayout, Text } from "@salt-ds/core";
 import { CarouselControls } from "../../src/carousel/CarouselControls";
 
 export default {
@@ -91,11 +91,68 @@ export const WithTitle: StoryFn<typeof Carousel> = (args) => {
     </div>
   );
 };
+export const WithActions: StoryFn<typeof Carousel> = (args) => {
+  return (
+    <div className="carousel-container">
+      <Carousel {...args} visibleSlides={{ xs: 1, sm: 2, md: 3 }}>
+        <CarouselHeader />
+        <CarouselSlider>
+          {Array.from({ length: 5 }, (_, index) => (
+            <CarouselSlide
+              actions={
+                <Button onClick={() => console.log("actioned")}>
+                  Learn more
+                </Button>
+              }
+              key={`item-${index}`}
+              media={
+                <div
+                  className={`carousel-image-placeholder carousel-image-placeholder-${
+                    index + 1
+                  }`}
+                />
+              }
+            >
+              <SliderContent index={index} />
+            </CarouselSlide>
+          ))}
+        </CarouselSlider>
+      </Carousel>
+    </div>
+  );
+};
 
 export const BorderedSlides: StoryFn<typeof Carousel> = (args) => {
   return (
     <div className="carousel-container">
-      <Carousel {...args} visibleSlides={2}>
+      <Carousel {...args}>
+        <CarouselHeader />
+        <CarouselSlider>
+          {Array.from({ length: 5 }, (_, index) => (
+            <CarouselSlide
+              bordered
+              key={`item-${index}`}
+              media={
+                <div
+                  className={`carousel-image-placeholder carousel-image-placeholder-${
+                    index + 1
+                  }`}
+                />
+              }
+            >
+              <SliderContent index={index} />
+            </CarouselSlide>
+          ))}
+        </CarouselSlider>
+      </Carousel>
+    </div>
+  );
+};
+
+export const BorderedMultipleSlides: StoryFn<typeof Carousel> = (args) => {
+  return (
+    <div className="carousel-container">
+      <Carousel {...args} visibleSlides={{ xs: 1, sm: 2, md: 3 }}>
         <CarouselHeader />
         <CarouselSlider>
           {Array.from({ length: 5 }, (_, index) => (

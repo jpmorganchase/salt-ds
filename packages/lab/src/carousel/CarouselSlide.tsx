@@ -27,7 +27,7 @@ export interface CarouselSlideProps extends HTMLAttributes<HTMLDivElement> {
 const withBaseName = makePrefixer("saltCarouselSlide");
 
 export const CarouselSlide = forwardRef<HTMLDivElement, CarouselSlideProps>(
-  function CarouselSlide({ actions, bordered, media, children }, ref) {
+  function CarouselSlide({ actions, bordered, media, children, style }, ref) {
     const targetWindow = useWindow();
     useComponentCssInjection({
       testId: "salt-carousel-slide",
@@ -41,7 +41,19 @@ export const CarouselSlide = forwardRef<HTMLDivElement, CarouselSlideProps>(
     useEffect(() => {
       slideRef.current && registerSlide(slideRef.current);
     }, [registerSlide]);
-    const isActive = slides[activeSlide] === slideRef.current;
+    const currentSlide = slideRef.current;
+    const isActive =
+      currentSlide &&
+      slides.indexOf(currentSlide) >= activeSlide &&
+      slides.indexOf(currentSlide) < activeSlide + visibleSlides;
+
+    const SlideStyles = {
+      "--carousel-slide-width":
+        visibleSlides > 1
+          ? `calc((100% / ${visibleSlides}) - var(--salt-spacing-200)/${visibleSlides})`
+          : undefined,
+      ...style,
+    };
     return (
       <div
         role="group"
@@ -49,9 +61,7 @@ export const CarouselSlide = forwardRef<HTMLDivElement, CarouselSlideProps>(
         className={clsx(withBaseName(), {
           [withBaseName("bordered")]: bordered,
         })}
-        style={{
-          "--carousel-width": `calc(100% / ${visibleSlides})`,
-        }}
+        style={SlideStyles}
       >
         {media}
         {children && (

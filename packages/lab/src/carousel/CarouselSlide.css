@@ -3,15 +3,20 @@
   display: flex;
   flex-direction: column;
   flex: 0 0 auto;
-  width: var(--carousel-width, 100%);
+  box-sizing: border-box;
+  width: var(--carousel-slide-width, 100%);
   gap: var(--salt-spacing-200);
 }
 .saltCarouselSlide-actions {
+  display: none;
+}
+.saltCarouselSlide-actions.saltCarouselSlide-active {
   display: flex;
 }
 .saltCarouselSlide-content {
   display: flex;
   flex-direction: column;
+  box-sizing: border-box;
   gap: var(--salt-spacing-200);
 }
 .saltCarouselSlide-card {
