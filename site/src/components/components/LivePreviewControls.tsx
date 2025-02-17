@@ -1,22 +1,21 @@
 import {
-  type Accent,
-  type ActionFont,
-  type Corner,
   type Density,
+  Dropdown,
   FlexItem,
-  type HeadingFont,
+  FormField,
+  FormFieldLabel,
   type Mode,
+  Option,
   SaltProvider,
   type SaltProviderNextProps,
   StackLayout,
-  Switch,
   Text,
   ToggleButton,
   ToggleButtonGroup,
   Tooltip,
   useBreakpoint,
 } from "@salt-ds/core";
-import { DarkIcon, HelpIcon, LightIcon } from "@salt-ds/icons";
+import { DarkIcon, LightIcon } from "@salt-ds/icons";
 import {
   type FC,
   type ReactElement,
@@ -40,11 +39,19 @@ const defaultDensity = densities[1];
 
 const defaultMode = modes[0];
 
+type Theme = "legacy" | "brand";
+const defaultTheme = "legacy";
+
+const themeToDisplayName = {
+  legacy: "Legacy UITK",
+  brand: "JPM Brand",
+};
+
 export type LivePreviewContextType = Pick<
   SaltProviderNextProps,
-  "accent" | "mode" | "density" | "corner" | "headingFont" | "actionFont"
+  "mode" | "density"
 > & {
-  themeNext?: boolean;
+  theme?: Theme;
 };
 
 export const LivePreviewContext = createContext<LivePreviewContextType>({});
@@ -54,11 +61,7 @@ export const LivePreviewControls: FC<LivePreviewControlsProps> = ({
 }) => {
   const [density, setDensity] = useState<Density>(defaultDensity);
   const [mode, setMode] = useState<Mode>(defaultMode);
-  const [themeNext, setThemeNext] = useState(false);
-  const [accent, setAccent] = useState<Accent>("blue");
-  const [corner, setCorner] = useState<Corner>("sharp");
-  const [headingFont, setHeadingFont] = useState<HeadingFont>("Open Sans");
-  const [actionFont, setActionFont] = useState<ActionFont>("Open Sans");
+  const [theme, setTheme] = useState<Theme>(defaultTheme);
 
   const { matchedBreakpoints } = useBreakpoint();
   const isMobileView = !matchedBreakpoints.includes("md");
@@ -71,43 +74,55 @@ export const LivePreviewControls: FC<LivePreviewControlsProps> = ({
     setMode(event.currentTarget.value as Mode);
   };
 
+  const handleThemeChange = (_: SyntheticEvent, newTheme: Theme[]) => {
+    setTheme(newTheme[0]);
+  };
+
   const themeNextSwitch = (
-    <div
-      className={clsx(styles.themeNextSwitch, {
-        [styles.mobileSwitchAlignment]: isMobileView,
-      })}
-    >
-      <Tooltip content="Salt Next theme enables more styling options. Refer to Themes page for more information.">
-        <Switch
-          label={
-            <StackLayout gap={0.5} direction="row" align="center">
-              <span>Salt Next theme</span>
-              <HelpIcon aria-hidden />
-            </StackLayout>
-          }
-          checked={themeNext}
-          onChange={() => setThemeNext((prev) => !prev)}
-        />
-      </Tooltip>
+    <div>
+      <FormField
+        labelPlacement={isMobileView ? "top" : "left"}
+        style={{ "--saltFormField-label-width": "5.6ch" } as any}
+      >
+        <FormFieldLabel>Theme</FormFieldLabel>
+        <Dropdown
+          bordered
+          selected={[theme]}
+          onSelectionChange={handleThemeChange}
+          style={{ minWidth: "16ch" }}
+          valueToString={(value) => themeToDisplayName[value]}
+        >
+          <Tooltip
+            disabled={isMobileView}
+            content="The legacy UITK theme enables phased migration from UITK to Salt."
+          >
+            <Option value="legacy" />
+          </Tooltip>
+          <Tooltip
+            disabled={isMobileView}
+            content="The JPM Brand theme (previously the Salt Next theme) brings the JPM Brand identity to CIB (Commercial & Investment Bank) digital applications and is the long-term visual identity of the Salt system."
+          >
+            <Option value="brand" />
+          </Tooltip>
+        </Dropdown>
+      </FormField>
     </div>
   );
 
-  const responstiveToggleGroupDirection = {
+  const responsiveToggleGroupDirection = {
     xs: "column",
-    sm: "column",
     md: "row",
-    lg: "row",
-    xl: "row",
   } as const;
 
   const densityToggleGroup = (
     <StackLayout
       gap={0.75}
       align="baseline"
-      direction={responstiveToggleGroupDirection}
-      // style={{ flexBasis: 300 }}
+      direction={responsiveToggleGroupDirection}
     >
-      <Text styleAs="label">Density</Text>
+      <Text styleAs="label" color="secondary">
+        <strong>Density</strong>
+      </Text>
       <ToggleButtonGroup
         aria-label="Select density"
         value={density}
@@ -133,10 +148,11 @@ export const LivePreviewControls: FC<LivePreviewControlsProps> = ({
     <StackLayout
       gap={0.75}
       align="baseline"
-      direction={responstiveToggleGroupDirection}
-      // style={{ flexBasis: 200 }}
+      direction={responsiveToggleGroupDirection}
     >
-      <Text styleAs="label">Mode</Text>
+      <Text styleAs="label" color="secondary">
+        <strong>Mode</strong>
+      </Text>
       <FlexItem>
         <ToggleButtonGroup
           aria-label="Select mode"
@@ -154,93 +170,6 @@ export const LivePreviewControls: FC<LivePreviewControlsProps> = ({
     </StackLayout>
   );
 
-  const cornerToggleGroup = (
-    <StackLayout
-      gap={0.75}
-      align="baseline"
-      direction={responstiveToggleGroupDirection}
-    >
-      <Text styleAs="label">Corner</Text>
-      <ToggleButtonGroup
-        disabled={!themeNext}
-        aria-label="Select corner"
-        value={corner}
-        onChange={() => {
-          setCorner((prev) => (prev === "rounded" ? "sharp" : "rounded"));
-        }}
-      >
-        <ToggleButton value="sharp">Sharp</ToggleButton>
-        <ToggleButton value="rounded">Rounded</ToggleButton>
-      </ToggleButtonGroup>
-    </StackLayout>
-  );
-
-  const accentToggleGroup = (
-    <StackLayout
-      gap={0.75}
-      align="baseline"
-      direction={responstiveToggleGroupDirection}
-    >
-      <Text styleAs="label">Accent</Text>
-      <ToggleButtonGroup
-        disabled={!themeNext}
-        value={accent}
-        onChange={() => {
-          setAccent((prev) => (prev === "blue" ? "teal" : "blue"));
-        }}
-      >
-        <ToggleButton value="blue">Blue</ToggleButton>
-        <ToggleButton value="teal">Teal</ToggleButton>
-      </ToggleButtonGroup>
-    </StackLayout>
-  );
-
-  const headingFontToggleGroup = (
-    <StackLayout
-      gap={0.75}
-      align="baseline"
-      direction={responstiveToggleGroupDirection}
-    >
-      <Text styleAs="label">Heading font</Text>
-      <ToggleButtonGroup
-        disabled={!themeNext}
-        aria-label="Select heading font"
-        value={headingFont}
-        onChange={() => {
-          setHeadingFont((prev) =>
-            prev === "Open Sans" ? "Amplitude" : "Open Sans",
-          );
-        }}
-      >
-        <ToggleButton value="Open Sans">Open Sans</ToggleButton>
-        <ToggleButton value="Amplitude">Amplitude</ToggleButton>
-      </ToggleButtonGroup>
-    </StackLayout>
-  );
-
-  const actionFontToggleGroup = (
-    <StackLayout
-      gap={0.75}
-      align="baseline"
-      direction={responstiveToggleGroupDirection}
-    >
-      <Text styleAs="label">Action font</Text>
-      <ToggleButtonGroup
-        disabled={!themeNext}
-        aria-label="Select action font"
-        value={actionFont}
-        onChange={() => {
-          setActionFont((prev) =>
-            prev === "Open Sans" ? "Amplitude" : "Open Sans",
-          );
-        }}
-      >
-        <ToggleButton value="Open Sans">Open Sans</ToggleButton>
-        <ToggleButton value="Amplitude">Amplitude</ToggleButton>
-      </ToggleButtonGroup>
-    </StackLayout>
-  );
-
   return (
     <>
       <SaltProvider density="medium">
@@ -249,18 +178,8 @@ export const LivePreviewControls: FC<LivePreviewControlsProps> = ({
             [styles.stickyControls]: !isMobileView,
           })}
         >
-          <div className={styles.toggleGroupsContainer}>
-            {densityToggleGroup}
-            {modeToggleGroup}
-            {themeNext ? (
-              <>
-                {cornerToggleGroup}
-                {accentToggleGroup}
-                {headingFontToggleGroup}
-                {actionFontToggleGroup}
-              </>
-            ) : null}
-          </div>
+          {densityToggleGroup}
+          {modeToggleGroup}
           {themeNextSwitch}
         </div>
       </SaltProvider>
@@ -268,11 +187,7 @@ export const LivePreviewControls: FC<LivePreviewControlsProps> = ({
         value={{
           density,
           mode,
-          themeNext,
-          accent,
-          corner,
-          headingFont,
-          actionFont,
+          theme,
         }}
       >
         {children}
