@@ -3,9 +3,9 @@ import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
+  forwardRef,
   type HTMLAttributes,
   type ReactNode,
-  forwardRef,
   useEffect,
   useRef,
 } from "react";
@@ -62,6 +62,7 @@ export const CarouselSlide = forwardRef<HTMLDivElement, CarouselSlideProps>(
           [withBaseName("bordered")]: bordered,
         })}
         style={SlideStyles}
+        aria-hidden={!isActive}
       >
         {media}
         {children && (

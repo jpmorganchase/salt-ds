@@ -50,7 +50,7 @@ const useKeyNavigation = ({
 
         setTimeout(() => {
           setIsScrolling(false);
-        }, 20000);
+        }, 300);
       }
     },
     [isScrolling, nextSlide, prevSlide],

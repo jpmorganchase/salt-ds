@@ -61,16 +61,16 @@ WithVisibleSlides.args = {
 };
 
 // TODO: fix active index moves
-// export const WithActiveIndex = CarouselExample.bind({});
-// WithActiveIndex.args = {
-//   activeSlideIndex: 4,
-// };
+export const WithActiveIndex = CarouselExample.bind({});
+WithActiveIndex.args = {
+  activeSlideIndex: 4,
+};
 
 export const WithTitle: StoryFn<typeof Carousel> = (args) => {
   return (
     <div className="carousel-container">
-      <Carousel {...args}>
-        <CarouselHeader title={<H2>Slider</H2>} />
+      <Carousel {...args} aria-labelledby="carousel-title">
+        <CarouselHeader title={<H2 id="carousel-title">Slider</H2>} />
         <CarouselSlider>
           {Array.from({ length: 5 }, (_, index) => (
             <CarouselSlide

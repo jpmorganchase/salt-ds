@@ -5,6 +5,7 @@ import {
   type SyntheticEvent,
   useCallback,
   useContext,
+  useEffect,
   useRef,
   useState,
 } from "react";
@@ -47,6 +48,12 @@ export function CarouselProvider({
   const [slides, setSlides] = useState<string[]>([]);
   const [sliderW, setSliderW] = useState(0);
 
+  useEffect(() => {
+    if (containerRef.current) {
+      scrollToSlide(activeSlideIndex);
+    }
+  }, [activeSlideIndex]);
+
   const containerRef = useRef<HTMLDivElement>(null);
 
   const registerSlide = useCallback((slideId: string) => {
@@ -54,8 +61,7 @@ export function CarouselProvider({
   }, []);
 
   const updateActiveFromScroll = (scrollLeft: number) => {
-    const newIndex =
-      Math.round(scrollLeft / (sliderW / visibleSlides)) | activeSlideIndex;
+    const newIndex = Math.round(scrollLeft / (sliderW / visibleSlides)) || 0;
     if (newIndex !== activeSlide) {
       setActiveSlide(newIndex);
     }

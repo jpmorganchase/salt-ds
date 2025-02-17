@@ -40,9 +40,8 @@ export const CarouselControls = forwardRef<
   const ControlsLabel = () => (
     <Text as="span">
       <strong>
-        {/* TODO: check w dev, this will need changing or a formatter*/}
-        {activeSlide + 1}{" "}
-        {visibleSlides - 1 > 0 && ` - ${activeSlide + visibleSlides}`} of{" "}
+        {activeSlide + 1}
+        {visibleSlides > 1 && ` - ${activeSlide + visibleSlides}`} of{" "}
         {slidesCount}
       </strong>
     </Text>
