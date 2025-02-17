@@ -1,8 +1,8 @@
 diff --git a/dist/changesets-assemble-release-plan.cjs.js b/dist/changesets-assemble-release-plan.cjs.js
-index 60427457c887f2d72168fecec83d79088c68e3a4..f7dff687f2e8ca0a5a9cad957416a1ae493603df 100644
+index e32a5e5d39c3bd920201b5694632d2b44c92d486..16b2a8322956c5c97c3c62f48c9c550c335a52f6 100644
 --- a/dist/changesets-assemble-release-plan.cjs.js
 +++ b/dist/changesets-assemble-release-plan.cjs.js
-@@ -111,6 +111,9 @@ function incrementVersion(release, preInfo) {
+@@ -159,6 +159,9 @@ function incrementVersion(release, preInfo) {
    }
  
    let version = semverInc__default["default"](release.oldVersion, release.type);
@@ -12,7 +12,7 @@ index 60427457c887f2d72168fecec83d79088c68e3a4..f7dff687f2e8ca0a5a9cad957416a1ae
  
    if (preInfo !== undefined && preInfo.state.mode !== "exit") {
      let preVersion = preInfo.preVersions.get(release.name);
-@@ -297,7 +300,8 @@ function shouldBumpMajor({
+@@ -345,7 +348,8 @@ function shouldBumpMajor({
    onlyUpdatePeerDependentsWhenOutOfRange
  }) {
    // we check if it is a peerDependency because if it is, our dependent bump type might need to be major.
@@ -23,10 +23,10 @@ index 60427457c887f2d72168fecec83d79088c68e3a4..f7dff687f2e8ca0a5a9cad957416a1ae
    !onlyUpdatePeerDependentsWhenOutOfRange || !semverSatisfies__default["default"](incrementVersion(nextRelease, preInfo), versionRange)) && ( // bump major only if the dependent doesn't already has a major release.
    !releases.has(dependent) || releases.has(dependent) && releases.get(dependent).type !== "major");
 diff --git a/dist/changesets-assemble-release-plan.esm.js b/dist/changesets-assemble-release-plan.esm.js
-index f6583cf3f639e1fe4df764a015689dea74127236..dae3155ef05941872a434ac24411e2ab8aa8e662 100644
+index 221822a2e3ac86431b8aadeaf5f01eaee72a5c8e..1d1eb7c999c3e6bf3d5ec19d6703335e5ed3b657 100644
 --- a/dist/changesets-assemble-release-plan.esm.js
 +++ b/dist/changesets-assemble-release-plan.esm.js
-@@ -100,6 +100,9 @@ function incrementVersion(release, preInfo) {
+@@ -148,6 +148,9 @@ function incrementVersion(release, preInfo) {
    }
  
    let version = semverInc(release.oldVersion, release.type);
@@ -36,7 +36,7 @@ index f6583cf3f639e1fe4df764a015689dea74127236..dae3155ef05941872a434ac24411e2ab
  
    if (preInfo !== undefined && preInfo.state.mode !== "exit") {
      let preVersion = preInfo.preVersions.get(release.name);
-@@ -286,7 +289,8 @@ function shouldBumpMajor({
+@@ -334,7 +337,8 @@ function shouldBumpMajor({
    onlyUpdatePeerDependentsWhenOutOfRange
  }) {
    // we check if it is a peerDependency because if it is, our dependent bump type might need to be major.
