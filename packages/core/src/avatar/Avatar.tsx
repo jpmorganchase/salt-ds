@@ -31,6 +31,10 @@ export interface AvatarProps extends HTMLAttributes<HTMLDivElement> {
    * Icon to be used as a default item. Defaults to `UserIcon`
    */
   fallbackIcon?: ReactNode;
+  /**
+   * Changes Avatar's background to a categorical color. Valid categories are 1-20. If an invalid category is used the accent color will be used.
+   */
+  category?: number;
 }
 
 const withBaseName = makePrefixer("saltAvatar");
@@ -46,6 +50,7 @@ const defaultNameToInitials = (name?: string) =>
 
 export const Avatar = forwardRef<HTMLDivElement, AvatarProps>(function Avatar(
   {
+    category,
     className,
     children: childrenProp,
     name,
@@ -97,7 +102,10 @@ export const Avatar = forwardRef<HTMLDivElement, AvatarProps>(function Avatar(
       style={style}
       className={clsx(
         withBaseName(),
-        { [withBaseName("withImage")]: hasImgNotFailing },
+        {
+          [withBaseName(`category-${category}`)]: category !== undefined,
+          [withBaseName("withImage")]: hasImgNotFailing,
+        },
         className,
       )}
       role={name ? "img" : undefined}
