@@ -233,16 +233,7 @@ export const Example1 = () => {
         <Link href="#" color="secondary">
           Link
         </Link>
-        <Link href="#" color="info">
-          Link
-        </Link>
-        <Link href="#" color="success">
-          Link
-        </Link>
-        <Link href="#" color="warning">
-          Link
-        </Link>
-        <Link href="#" color="error">
+        <Link href="#" color="accent">
           Link
         </Link>
         <Link href="#" target="_blank">

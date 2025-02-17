@@ -1,19 +1,19 @@
 .saltLink {
-  --link-color-hover: var(--saltLink-color-hover, var(--salt-content-foreground-hover));
-  --link-color-active: var(--saltLink-color-active, var(--salt-content-foreground-active));
-  --link-color-visited: var(--saltLink-color-visited, var(--salt-content-foreground-visited));
-  /* When focused, we also want hover style */
-  --link-color-focus: var(--saltLink-color-focus, var(--link-color-hover));
+  --link-color: "inherit";
+  --link-color-hover: "inherit";
+  --link-color-active: "inherit";
+  --link-color-visited: var(--salt-content-foreground-visited);
+  --link-color-focus: "inherit";
+  --link-focus-outlineColor: currentColor;
 
   --link-textDecoration: var(--salt-navigable-textDecoration);
   --link-textDecoration-hover: var(--salt-navigable-textDecoration-hover);
 
   --link-fontFamily: var(--salt-text-fontFamily);
-  --link-focus-outline: var(--salt-focused-outline);
 }
 
 /* Main css class */
-.saltLink {
+.saltLink.saltText {
   color: var(--link-color);
   letter-spacing: var(--salt-text-letterSpacing);
   text-decoration: var(--link-textDecoration);
@@ -21,13 +21,32 @@
 }
 
 /* Primary variant */
-.saltText-primary {
+.saltLink-primary {
   --link-color: var(--salt-content-primary-foreground);
+  --link-color-hover: var(--salt-content-primary-foreground);
+  --link-color-active: var(--salt-content-primary-foreground);
+  --link-color-focus: var(--salt-content-primary-foreground);
+  --link-focus-outlineColor: var(--salt-focused-outlineColor);
+  --link-color-visited: var(--salt-content-foreground-visited);
 }
 
 /* Secondary variant */
-.saltText-secondary {
+.saltLink-secondary {
   --link-color: var(--salt-content-secondary-foreground);
+  --link-color-hover: var(--salt-content-secondary-foreground);
+  --link-color-active: var(--salt-content-secondary-foreground);
+  --link-color-focus: var(--salt-content-secondary-foreground);
+  --link-focus-outlineColor: var(--salt-focused-outlineColor);
+  --link-color-visited: var(--salt-content-foreground-visited);
+}
+
+.saltLink-accent {
+  --link-color: var(--salt-content-accent-foreground);
+  --link-color-hover: var(--salt-content-accent-foreground);
+  --link-color-active: var(--salt-content-accent-foreground);
+  --link-color-focus: var(--salt-content-accent-foreground);
+  --link-focus-outlineColor: var(--salt-focused-outlineColor);
+  --link-color-visited: var(--salt-content-foreground-visited);
 }
 
 /* External link's icon */
@@ -38,24 +57,25 @@
 
 /* Set color for visited link */
 .saltLink:visited {
-  color: var(--link-color-visited);
+  color: var(--saltLink-color-visited, var(--link-color-visited));
 }
 
 /* Set color for hovered link */
 .saltLink:hover {
-  color: var(--link-color-hover);
+  color: var(--saltLink-color-hover, var(--link-color-hover));
   text-decoration: var(--link-textDecoration-hover);
 }
 
 /* Set color for active link */
 .saltLink:active {
-  color: var(--link-color-active);
+  color: var(--saltLink-color-active, var(--link-color-active));
 }
 
 /* Set color for focused link */
 .saltLink:focus {
-  outline: var(--link-focus-outline);
-  color: var(--link-color-focus);
+  color: var(--saltLink-color-focus, var(--link-color-focus));
+  outline: var(--salt-focused-outline);
+  outline-color: var(--link-focus-outlineColor);
   text-decoration: var(--link-textDecoration-hover);
 }
 
