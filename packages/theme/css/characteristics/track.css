@@ -5,4 +5,5 @@
   --salt-track-borderStyle-incomplete: dotted;
 
   --salt-track-borderColor: var(--salt-palette-neutral-border);
+  --salt-track-borderColor-disabled: var(--salt-palette-neutral-border-disabled);
 }

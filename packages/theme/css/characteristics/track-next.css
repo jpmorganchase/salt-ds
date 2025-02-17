@@ -1,3 +1,4 @@
 .salt-theme.salt-theme-next {
   --salt-track-borderColor: var(--salt-palette-alpha-weak);
+  --salt-track-borderColor-disabled: var(--salt-palette-alpha-weaker);
 }
