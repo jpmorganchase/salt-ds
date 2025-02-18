@@ -13,13 +13,21 @@ export interface CarouselControlsProps
   onMoveBack?: (event: SyntheticEvent<HTMLButtonElement>) => void;
   onMoveForward?: (event: SyntheticEvent<HTMLButtonElement>) => void;
   labelPlacement?: "left" | "right";
+  disabled?: boolean;
 }
 
 export const CarouselControls = forwardRef<
   HTMLDivElement,
   CarouselControlsProps
 >(function CarouselControls(
-  { onMoveBack, onMoveForward, className, labelPlacement = "right", ...rest },
+  {
+    onMoveBack,
+    onMoveForward,
+    disabled,
+    className,
+    labelPlacement = "right",
+    ...rest
+  },
   ref,
 ) {
   const targetWindow = useWindow();
@@ -47,16 +55,24 @@ export const CarouselControls = forwardRef<
     </Text>
   );
 
+  function handlePrevClick(event: SyntheticEvent<HTMLButtonElement>) {
+    prevSlide(event);
+    onMoveBack?.(event);
+  }
+  function handleNextClick(event: SyntheticEvent<HTMLButtonElement>) {
+    nextSlide(event);
+    onMoveForward?.(event);
+  }
+
   return (
-    <div role="group" className={withBaseName()} {...rest}>
+    <div role="group" className={withBaseName()} ref={ref} {...rest}>
       {labelPlacement === "left" && <ControlsLabel />}
       <Button
         appearance="bordered"
         sentiment="neutral"
         className={withBaseName("prev-button")}
-        // TODO: think about onClicks passing down, should controls be independent?
-        onClick={prevSlide}
-        disabled={isOnFirstSlide}
+        onClick={handlePrevClick}
+        disabled={isOnFirstSlide || disabled}
         aria-label="Previous slide"
       >
         <PreviousIcon aria-hidden />
@@ -65,8 +81,8 @@ export const CarouselControls = forwardRef<
         appearance="bordered"
         sentiment="neutral"
         className={withBaseName("next-button")}
-        onClick={nextSlide}
-        disabled={isOnLastSlide}
+        onClick={handleNextClick}
+        disabled={isOnLastSlide || disabled}
         aria-label="Next slide"
       >
         <NextIcon aria-hidden />

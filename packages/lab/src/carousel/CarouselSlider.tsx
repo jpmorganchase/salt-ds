@@ -95,6 +95,7 @@ export const CarouselSlider = forwardRef<HTMLDivElement, CarouselSliderProps>(
         className={withBaseName()}
         aria-live="polite"
         role="region"
+        tabIndex={0}
         onKeyDown={onKeyDown}
       >
         {children}

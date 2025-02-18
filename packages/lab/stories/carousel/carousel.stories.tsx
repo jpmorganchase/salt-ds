@@ -18,10 +18,10 @@ export default {
 function SliderContent(props: { index: number }) {
   return (
     <StackLayout gap={1}>
-      <H3>Header of the slider {props.index + 1}</H3>
+      <H3>Categorical bold background {props.index + 1}</H3>
       <Text>
-        We offer solutions to the world's most important corporations,
-        governments and institution.
+        Categorical colors are used for data visualization and other components
+        that support categories.
       </Text>
     </StackLayout>
   );
@@ -52,25 +52,31 @@ const CarouselExample: StoryFn<typeof Carousel> = (args) => {
     </div>
   );
 };
-export const Basic = CarouselExample.bind({});
-Basic.args = {};
+export const Default = CarouselExample.bind({});
+Default.args = {
+  "aria-label": "Categorical backgrounds carousel",
+};
 
 export const WithVisibleSlides = CarouselExample.bind({});
 WithVisibleSlides.args = {
   visibleSlides: { xs: 1, sm: 2, md: 3 },
+  "aria-label": "Categorical backgrounds carousel",
 };
 
 // TODO: fix active index moves
 export const WithActiveIndex = CarouselExample.bind({});
 WithActiveIndex.args = {
   activeSlideIndex: 4,
+  "aria-label": "Categorical backgrounds carousel",
 };
 
 export const WithTitle: StoryFn<typeof Carousel> = (args) => {
   return (
     <div className="carousel-container">
       <Carousel {...args} aria-labelledby="carousel-title">
-        <CarouselHeader title={<H2 id="carousel-title">Slider</H2>} />
+        <CarouselHeader
+          title={<H2 id="carousel-title">Categorical Backgrounds</H2>}
+        />
         <CarouselSlider>
           {Array.from({ length: 5 }, (_, index) => (
             <CarouselSlide
@@ -94,7 +100,11 @@ export const WithTitle: StoryFn<typeof Carousel> = (args) => {
 export const WithActions: StoryFn<typeof Carousel> = (args) => {
   return (
     <div className="carousel-container">
-      <Carousel {...args} visibleSlides={{ xs: 1, sm: 2, md: 3 }}>
+      <Carousel
+        {...args}
+        visibleSlides={{ xs: 1, sm: 2, md: 3 }}
+        aria-label="Categorical backgrounds carousel"
+      >
         <CarouselHeader />
         <CarouselSlider>
           {Array.from({ length: 5 }, (_, index) => (
@@ -125,7 +135,7 @@ export const WithActions: StoryFn<typeof Carousel> = (args) => {
 export const BorderedSlides: StoryFn<typeof Carousel> = (args) => {
   return (
     <div className="carousel-container">
-      <Carousel {...args}>
+      <Carousel {...args} aria-label="Categorical backgrounds carousel">
         <CarouselHeader />
         <CarouselSlider>
           {Array.from({ length: 5 }, (_, index) => (
@@ -152,7 +162,11 @@ export const BorderedSlides: StoryFn<typeof Carousel> = (args) => {
 export const BorderedMultipleSlides: StoryFn<typeof Carousel> = (args) => {
   return (
     <div className="carousel-container">
-      <Carousel {...args} visibleSlides={{ xs: 1, sm: 2, md: 3 }}>
+      <Carousel
+        {...args}
+        visibleSlides={{ xs: 1, sm: 2, md: 3 }}
+        aria-label="Categorical backgrounds carousel"
+      >
         <CarouselHeader />
         <CarouselSlider>
           {Array.from({ length: 5 }, (_, index) => (
@@ -179,7 +193,7 @@ export const BorderedMultipleSlides: StoryFn<typeof Carousel> = (args) => {
 const ControlsPositioningExample: StoryFn<typeof CarouselControls> = (args) => {
   return (
     <div className="carousel-container">
-      <Carousel>
+      <Carousel aria-label="Categorical backgrounds carousel">
         <CarouselSlider>
           {Array.from({ length: 5 }, (_, index) => (
             <CarouselSlide
