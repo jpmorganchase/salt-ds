@@ -20,10 +20,26 @@ export const AllVariantsGrid: StoryFn<QAContainerProps> = (props) => (
     <Avatar size={2} src="bad_url" name="Peter Piper" />
     <Avatar size={3} src="bad_url" />
     <Avatar size={3} fallbackIcon={<SaltShakerIcon />} />
-    {Array.from({ length: 20 }).map((_, i) => (
-      // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
-      <Avatar key={i} name="Peter Piper" category={i + 1} />
-    ))}
+    <Avatar name="Peter Piper" color="category-1" />
+    <Avatar name="Peter Piper" color="category-2" />
+    <Avatar name="Peter Piper" color="category-3" />
+    <Avatar name="Peter Piper" color="category-4" />
+    <Avatar name="Peter Piper" color="category-5" />
+    <Avatar name="Peter Piper" color="category-6" />
+    <Avatar name="Peter Piper" color="category-7" />
+    <Avatar name="Peter Piper" color="category-8" />
+    <Avatar name="Peter Piper" color="category-9" />
+    <Avatar name="Peter Piper" color="category-10" />
+    <Avatar name="Peter Piper" color="category-11" />
+    <Avatar name="Peter Piper" color="category-12" />
+    <Avatar name="Peter Piper" color="category-13" />
+    <Avatar name="Peter Piper" color="category-14" />
+    <Avatar name="Peter Piper" color="category-15" />
+    <Avatar name="Peter Piper" color="category-16" />
+    <Avatar name="Peter Piper" color="category-17" />
+    <Avatar name="Peter Piper" color="category-18" />
+    <Avatar name="Peter Piper" color="category-19" />
+    <Avatar name="Peter Piper" color="category-20" />
   </QAContainer>
 );
 
@@ -52,10 +68,26 @@ export const NoStyleInjectionGrid: StoryFn<QAContainerNoStyleInjectionProps> = (
     <Avatar size={2} src="bad_url" name="Peter Piper" />
     <Avatar size={3} src="bad_url" />
     <Avatar size={3} fallbackIcon={<SaltShakerIcon />} />
-    {Array.from({ length: 20 }).map((_, i) => (
-      // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
-      <Avatar key={i} name="Peter Piper" category={i + 1} />
-    ))}
+    <Avatar name="Peter Piper" color="category-1" />
+    <Avatar name="Peter Piper" color="category-2" />
+    <Avatar name="Peter Piper" color="category-3" />
+    <Avatar name="Peter Piper" color="category-4" />
+    <Avatar name="Peter Piper" color="category-5" />
+    <Avatar name="Peter Piper" color="category-6" />
+    <Avatar name="Peter Piper" color="category-7" />
+    <Avatar name="Peter Piper" color="category-8" />
+    <Avatar name="Peter Piper" color="category-9" />
+    <Avatar name="Peter Piper" color="category-10" />
+    <Avatar name="Peter Piper" color="category-11" />
+    <Avatar name="Peter Piper" color="category-12" />
+    <Avatar name="Peter Piper" color="category-13" />
+    <Avatar name="Peter Piper" color="category-14" />
+    <Avatar name="Peter Piper" color="category-15" />
+    <Avatar name="Peter Piper" color="category-16" />
+    <Avatar name="Peter Piper" color="category-17" />
+    <Avatar name="Peter Piper" color="category-18" />
+    <Avatar name="Peter Piper" color="category-19" />
+    <Avatar name="Peter Piper" color="category-20" />
   </QAContainerNoStyleInjection>
 );
 
