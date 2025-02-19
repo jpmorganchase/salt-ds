@@ -438,7 +438,7 @@ describe("Given a Tabstrip", () => {
     );
 
     cy.findByRole("button", { name: "Lots Close tab" }).realClick();
-    cy.findByRole("tab", { name: "Transactions" })
+    cy.findByRole("tab", { name: "More" })
       .should("have.attr", "aria-selected", "true")
       .and("be.focused");
   });
