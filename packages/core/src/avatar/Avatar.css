@@ -1,7 +1,5 @@
 /* Default variables applied to the root element */
 .saltAvatar {
-  --avatar-background: var(--saltAvatar-background, var(--salt-accent-background));
-  --avatar-foreground: var(--saltAvatar-foreground, var(--salt-accent-foreground));
   --avatar-size-multiplier: var(--saltAvatar-size-multiplier, 1);
   --avatar-base-size: var(--salt-size-base);
   --avatar-base-fontSize: var(--saltAvatar-fontSize, var(--salt-text-notation-fontSize));
@@ -13,8 +11,8 @@
 
 /* Style applied to the root element */
 .saltAvatar {
-  color: var(--avatar-foreground);
-  background: var(--avatar-background);
+  color: var(--saltAvatar-foreground, var(--avatar-foreground));
+  background: var(--saltAvatar-background, var(--avatar-background));
   font-size: var(--avatar-fontSize);
   line-height: var(--saltAvatar-lineHeight, var(--salt-text-notation-lineHeight));
   font-family: var(--salt-text-fontFamily);
@@ -30,6 +28,11 @@
   align-items: center;
   overflow: hidden;
   user-select: none;
+}
+
+.saltAvatar-accent {
+  --avatar-background: var(--salt-accent-background);
+  --avatar-foreground: var(--salt-accent-foreground);
 }
 
 .saltAvatar-category-1 {

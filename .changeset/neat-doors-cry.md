@@ -2,8 +2,8 @@
 "@salt-ds/core": minor
 ---
 
-Added `category` to `Avatar`. Using `category` will change Avatar's background to one of the 20 categorical colors. If an invalid category is used Avatar will used accent.
+Added `color` prop to `Avatar`. Using `color` will change Avatar's background to one of the 20 categorical colors or accent.
 
 ```tsx
-<Avatar category={1} />
+<Avatar color="category-1" />
 ```
