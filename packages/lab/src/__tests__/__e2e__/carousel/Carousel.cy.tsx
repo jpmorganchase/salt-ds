@@ -3,7 +3,7 @@ import { composeStories } from "@storybook/react";
 import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
 
 const composedStories = composeStories(carouselStories);
-const { Default } = composedStories;
+const { Default, WithActions } = composedStories;
 describe("GIVEN a 100% width slides carousel", () => {
   checkAccessibility(composedStories);
   describe("WHEN the default is rendered with slides", () => {
@@ -15,23 +15,25 @@ describe("GIVEN a 100% width slides carousel", () => {
     it("SHOULD move to the next slide with button", () => {
       cy.mount(<Default />);
       cy.findByText("1 of 5").should("exist");
-      cy.findAllByRole("button").eq(0).should("be.disabled");
-      cy.findAllByRole("button").eq(1).click();
+      cy.findAllByRole("button", { name: "Previous slide" }).should(
+        "be.disabled",
+      );
+      cy.findAllByRole("button", { name: "Next slide" }).click();
       cy.findByText("2 of 5").should("exist");
     });
 
     it("SHOULD move to the previous slide with button", () => {
       cy.mount(<Default />);
       // move one to the left
-      cy.findAllByRole("button").eq(1).click();
+      cy.findAllByRole("button", { name: "Next slide" }).click();
       // test back button
-      cy.findAllByRole("button").eq(0).click();
+      cy.findAllByRole("button", { name: "Previous slide" }).click();
       cy.findByText("1 of 5").should("exist");
     });
     it("SHOULD update labels when scrolling", () => {
       cy.mount(<Default />);
       cy.findByText("1 of 5").should("exist");
-      cy.get(".saltCarouselSlider").scrollTo("100%");
+      cy.get(".saltCarouselSlider").scrollTo("topRight");
       cy.findByText("5 of 5").should("exist");
     });
     it("SHOULD support keyboard navigation", () => {
@@ -41,11 +43,23 @@ describe("GIVEN a 100% width slides carousel", () => {
       cy.get(".saltCarouselSlider").realPress("ArrowLeft");
       cy.findByText("1 of 5").should("exist");
     });
-    // TODO: test navigation when actions (tab goes in, tab after that doesnt move slides)
+    describe("WHEN navigating with keyboard keys", () => {
+      it("SHOULD NOT move slides when tabbing out of actions within", () => {
+        cy.mount(<WithActions />);
+        cy.findByText("1 - 2 of 5").should("exist");
+        cy.realPress("Tab");
+        cy.findAllByRole("button", { name: "Next slide" }).should("have.focus");
+        cy.realPress("Tab");
+        cy.realPress("Tab");
+        cy.realPress("Tab");
+        // slides should not have been changed
+        cy.findByText("1 - 2 of 5").should("exist");
+      });
+    });
   });
 });
 describe("GIVEN a carousel with responsive visibleItems", () => {
-  it.only("SHOULD render properly with different visible items based on viewport", () => {
+  it("SHOULD render properly with different visible items based on viewport", () => {
     cy.viewport(590, 900); // xs viewport
     cy.mount(<Default visibleSlides={{ xs: 1, sm: 2, md: 3 }} />);
     cy.findByText("1 of 5").should("exist");

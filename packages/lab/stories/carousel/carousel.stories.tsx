@@ -59,7 +59,7 @@ Default.args = {
 
 export const WithVisibleSlides = CarouselExample.bind({});
 WithVisibleSlides.args = {
-  visibleSlides: { xs: 1, sm: 2, md: 3 },
+  visibleSlides: { sm: 1, md: 2 },
   "aria-label": "Categorical backgrounds carousel",
 };
 
@@ -102,7 +102,7 @@ export const WithActions: StoryFn<typeof Carousel> = (args) => {
     <div className="carousel-container">
       <Carousel
         {...args}
-        visibleSlides={{ xs: 1, sm: 2, md: 3 }}
+        visibleSlides={{ sm: 1, md: 2 }}
         aria-label="Categorical backgrounds carousel"
       >
         <CarouselHeader />
@@ -164,7 +164,7 @@ export const BorderedMultipleSlides: StoryFn<typeof Carousel> = (args) => {
     <div className="carousel-container">
       <Carousel
         {...args}
-        visibleSlides={{ xs: 1, sm: 2, md: 3 }}
+        visibleSlides={{ sm: 1, md: 2 }}
         aria-label="Categorical backgrounds carousel"
       >
         <CarouselHeader />
