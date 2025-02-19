@@ -1,5 +1,11 @@
 # @salt-ds/icons
 
+## 1.13.2
+
+### Patch Changes
+
+- 021e90d: Fixed hidden icons being announced on iOS.
+
 ## 1.13.1
 
 ### Patch Changes
