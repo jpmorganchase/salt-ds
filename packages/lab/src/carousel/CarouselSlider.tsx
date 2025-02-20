@@ -96,6 +96,7 @@ export const CarouselSlider = forwardRef<HTMLDivElement, CarouselSliderProps>(
         aria-live="polite"
         aria-atomic="false"
         onKeyDown={onKeyDown}
+        tabIndex={0}
       >
         {children}
       </div>

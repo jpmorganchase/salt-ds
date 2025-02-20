@@ -1,7 +1,12 @@
 import { Button, Text, makePrefixer, useIcon } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
-import { type HTMLAttributes, type SyntheticEvent, forwardRef } from "react";
+import {
+  type HTMLAttributes,
+  type SyntheticEvent,
+  forwardRef,
+  useRef,
+} from "react";
 import { useCarousel } from "./CarouselContext";
 
 import carouselControlsCss from "./CarouselControls.css";
@@ -40,13 +45,17 @@ export const CarouselControls = forwardRef<
     useCarousel();
   const { NextIcon, PreviousIcon } = useIcon();
 
+  const prevButtonRef = useRef<HTMLButtonElement | null>(null);
+  const nextButtonRef = useRef<HTMLButtonElement | null>(null);
+
   const slidesCount = slides.length;
 
   const isOnFirstSlide = activeSlide === 0;
   const isOnLastSlide = activeSlide === slidesCount - visibleSlides;
 
   const ControlsLabel = () => (
-    <Text as="span">
+    // TODO: check w J
+    <Text as="span" aria-live="polite" aria-atomic="true">
       <strong>
         {activeSlide + 1}
         {visibleSlides > 1 && ` - ${activeSlide + visibleSlides}`} of{" "}
@@ -58,16 +67,23 @@ export const CarouselControls = forwardRef<
   function handlePrevClick(event: SyntheticEvent<HTMLButtonElement>) {
     prevSlide(event);
     onMoveBack?.(event);
+    if (activeSlide === 1) {
+      nextButtonRef.current?.focus();
+    }
   }
   function handleNextClick(event: SyntheticEvent<HTMLButtonElement>) {
     nextSlide(event);
     onMoveForward?.(event);
+    if (activeSlide === slidesCount - visibleSlides - 1) {
+      prevButtonRef.current?.focus();
+    }
   }
 
   return (
     <div role="group" className={withBaseName()} ref={ref} {...rest}>
       {labelPlacement === "left" && <ControlsLabel />}
       <Button
+        ref={prevButtonRef}
         appearance="bordered"
         sentiment="neutral"
         className={withBaseName("prev-button")}
@@ -78,6 +94,7 @@ export const CarouselControls = forwardRef<
         <PreviousIcon aria-hidden />
       </Button>
       <Button
+        ref={nextButtonRef}
         appearance="bordered"
         sentiment="neutral"
         className={withBaseName("next-button")}

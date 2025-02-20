@@ -30,6 +30,25 @@ describe("GIVEN a 100% width slides carousel", () => {
       cy.findAllByRole("button", { name: "Previous slide" }).click();
       cy.findByText("1 of 5").should("exist");
     });
+    it("SHOULD move focus to the next button when reaching far left", () => {
+      cy.mount(<Default activeSlideIndex={1} />);
+      cy.findByText("2 of 5").should("exist");
+      cy.findAllByRole("button", { name: "Previous slide" }).click();
+      cy.findAllByRole("button", { name: "Previous slide" }).should(
+        "be.disabled",
+      );
+      cy.findAllByRole("button", { name: "Next slide" }).should("have.focus");
+    });
+
+    it("SHOULD move focus to the prev button when reaching far right", () => {
+      cy.mount(<Default activeSlideIndex={3} />);
+      cy.findByText("4 of 5").should("exist");
+      cy.findAllByRole("button", { name: "Next slide" }).click();
+      cy.findAllByRole("button", { name: "Next slide" }).should("be.disabled");
+      cy.findAllByRole("button", { name: "Previous slide" }).should(
+        "have.focus",
+      );
+    });
     it("SHOULD update labels when scrolling", () => {
       cy.mount(<Default />);
       cy.findByText("1 of 5").should("exist");
