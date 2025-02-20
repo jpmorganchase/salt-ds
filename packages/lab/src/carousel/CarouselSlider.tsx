@@ -94,8 +94,7 @@ export const CarouselSlider = forwardRef<HTMLDivElement, CarouselSliderProps>(
         ref={useForkRef(ref, containerRef)}
         className={withBaseName()}
         aria-live="polite"
-        role="region"
-        tabIndex={0}
+        aria-atomic="false"
         onKeyDown={onKeyDown}
       >
         {children}

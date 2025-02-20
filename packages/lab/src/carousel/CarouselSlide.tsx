@@ -57,6 +57,7 @@ export const CarouselSlide = forwardRef<HTMLDivElement, CarouselSlideProps>(
     return (
       <div
         role="group"
+        aria-roledescription="slide"
         ref={ref}
         className={clsx(withBaseName(), {
           [withBaseName("bordered")]: bordered,

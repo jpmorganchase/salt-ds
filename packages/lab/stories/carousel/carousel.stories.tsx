@@ -7,8 +7,7 @@ import {
   CarouselSlider,
 } from "@salt-ds/lab";
 import "./carousel.stories.css";
-import { Button, H2, H3, SplitLayout, StackLayout, Text } from "@salt-ds/core";
-import { CarouselControls } from "../../src/carousel/CarouselControls";
+import { Button, H2, H3, StackLayout, Text } from "@salt-ds/core";
 
 export default {
   title: "Lab/Carousel",
@@ -18,7 +17,9 @@ export default {
 function SliderContent(props: { index: number }) {
   return (
     <StackLayout gap={1}>
-      <H3>Categorical bold background {props.index + 1}</H3>
+      <H3 id={`slide-title-${props.index}`}>
+        Categorical bold background {props.index + 1}
+      </H3>
       <Text>
         Categorical colors are used for data visualization and other components
         that support categories.
@@ -36,6 +37,7 @@ const CarouselExample: StoryFn<typeof Carousel> = (args) => {
           {Array.from({ length: 5 }, (_, index) => (
             <CarouselSlide
               key={`item-${index}`}
+              aria-labelledby={`slide-title-${index}`}
               media={
                 <div
                   className={`carousel-image-placeholder carousel-image-placeholder-${
@@ -54,20 +56,20 @@ const CarouselExample: StoryFn<typeof Carousel> = (args) => {
 };
 export const Default = CarouselExample.bind({});
 Default.args = {
-  "aria-label": "Categorical backgrounds carousel",
+  "aria-label": "Categorical backgrounds",
 };
 
 export const WithVisibleSlides = CarouselExample.bind({});
 WithVisibleSlides.args = {
   visibleSlides: { sm: 1, md: 2 },
-  "aria-label": "Categorical backgrounds carousel",
+  "aria-label": "Categorical backgrounds",
 };
 
 // TODO: fix active index moves
 export const WithActiveIndex = CarouselExample.bind({});
 WithActiveIndex.args = {
   activeSlideIndex: 4,
-  "aria-label": "Categorical backgrounds carousel",
+  "aria-label": "Categorical backgrounds",
 };
 
 export const WithTitle: StoryFn<typeof Carousel> = (args) => {
@@ -81,6 +83,7 @@ export const WithTitle: StoryFn<typeof Carousel> = (args) => {
           {Array.from({ length: 5 }, (_, index) => (
             <CarouselSlide
               key={`item-${index}`}
+              aria-labelledby={`slide-title-${index}`}
               media={
                 <div
                   className={`carousel-image-placeholder carousel-image-placeholder-${
@@ -103,7 +106,7 @@ export const WithActions: StoryFn<typeof Carousel> = (args) => {
       <Carousel
         {...args}
         visibleSlides={{ sm: 1, md: 2 }}
-        aria-label="Categorical backgrounds carousel"
+        aria-label="Categorical backgrounds"
       >
         <CarouselHeader />
         <CarouselSlider>
@@ -115,6 +118,7 @@ export const WithActions: StoryFn<typeof Carousel> = (args) => {
                 </Button>
               }
               key={`item-${index}`}
+              aria-labelledby={`slide-title-${index}`}
               media={
                 <div
                   className={`carousel-image-placeholder carousel-image-placeholder-${
@@ -135,13 +139,14 @@ export const WithActions: StoryFn<typeof Carousel> = (args) => {
 export const BorderedSlides: StoryFn<typeof Carousel> = (args) => {
   return (
     <div className="carousel-container">
-      <Carousel {...args} aria-label="Categorical backgrounds carousel">
+      <Carousel {...args} aria-label="Categorical backgrounds">
         <CarouselHeader />
         <CarouselSlider>
           {Array.from({ length: 5 }, (_, index) => (
             <CarouselSlide
               bordered
               key={`item-${index}`}
+              aria-labelledby={`slide-title-${index}`}
               media={
                 <div
                   className={`carousel-image-placeholder carousel-image-placeholder-${
@@ -165,7 +170,7 @@ export const BorderedMultipleSlides: StoryFn<typeof Carousel> = (args) => {
       <Carousel
         {...args}
         visibleSlides={{ sm: 1, md: 2 }}
-        aria-label="Categorical backgrounds carousel"
+        aria-label="Categorical backgrounds"
       >
         <CarouselHeader />
         <CarouselSlider>
@@ -173,6 +178,7 @@ export const BorderedMultipleSlides: StoryFn<typeof Carousel> = (args) => {
             <CarouselSlide
               bordered
               key={`item-${index}`}
+              aria-labelledby={`slide-title-${index}`}
               media={
                 <div
                   className={`carousel-image-placeholder carousel-image-placeholder-${
@@ -188,39 +194,4 @@ export const BorderedMultipleSlides: StoryFn<typeof Carousel> = (args) => {
       </Carousel>
     </div>
   );
-};
-
-const ControlsPositioningExample: StoryFn<typeof CarouselControls> = (args) => {
-  return (
-    <div className="carousel-container">
-      <Carousel aria-label="Categorical backgrounds carousel">
-        <CarouselSlider>
-          {Array.from({ length: 5 }, (_, index) => (
-            <CarouselSlide
-              key={`item-${index}`}
-              media={
-                <div
-                  className={`carousel-image-placeholder carousel-image-placeholder-${
-                    index + 1
-                  }`}
-                />
-              }
-            />
-          ))}
-        </CarouselSlider>
-        <SplitLayout
-          startItem={
-            args.labelPlacement !== "left" && <CarouselControls {...args} />
-          }
-          endItem={
-            args.labelPlacement === "left" && <CarouselControls {...args} />
-          }
-        />
-      </Carousel>
-    </div>
-  );
-};
-export const ControlsPositioning = ControlsPositioningExample.bind({});
-ControlsPositioning.args = {
-  labelPlacement: "left",
 };
