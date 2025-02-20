@@ -96,14 +96,17 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
       cy.clock(today, ["Date"]);
       cy.setDateAdapter(adapterDateFns);
     });
-  
+
     afterEach(() => {
       cy.clock().then((clock) => clock.restore());
     });
-  
+
     it("SHOULD disable calendar button and input", () => {
       cy.mount(<Single disabled />);
-      cy.findByRole("button", { name: "Open Calendar" }).should("have.attr", "disabled");
+      cy.findByRole("button", { name: "Open Calendar" }).should(
+        "have.attr",
+        "disabled",
+      );
       cy.findByRole("textbox").should("have.attr", "disabled");
     });
   });
