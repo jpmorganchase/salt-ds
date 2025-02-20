@@ -90,6 +90,24 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
     });
   });
 
+  describe("WHEN disabled", () => {
+    beforeEach(() => {
+      const today = new Date(2024, 4, 6);
+      cy.clock(today, ["Date"]);
+      cy.setDateAdapter(adapterDateFns);
+    });
+  
+    afterEach(() => {
+      cy.clock().then((clock) => clock.restore());
+    });
+  
+    it("SHOULD disable calendar button and input", () => {
+      cy.mount(<Single disabled />);
+      cy.findByRole("button", { name: "Open Calendar" }).should("have.attr", "disabled");
+      cy.findByRole("textbox").should("have.attr", "disabled");
+    });
+  });
+
   adapters.forEach((adapter: SaltDateAdapter<DateFrameworkType>) => {
     describe(`Tests with ${adapter.lib}`, () => {
       beforeEach(() => {

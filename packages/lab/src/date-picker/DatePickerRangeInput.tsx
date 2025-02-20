@@ -229,6 +229,7 @@ export const DatePickerRangeInput = forwardRef(function DatePickerRangeInput<
       startInputProps={startInputProps}
       endInputProps={endInputProps}
       readOnly={readOnly}
+      disabled={disabled}
       ref={ref}
       onDateChange={handleDateChange}
       onDateValueChange={handleDateValueChange}
