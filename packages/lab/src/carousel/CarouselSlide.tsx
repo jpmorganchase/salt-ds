@@ -1,4 +1,4 @@
-import { makePrefixer, useId } from "@salt-ds/core";
+import { makePrefixer, useForkRef } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
@@ -27,7 +27,10 @@ export interface CarouselSlideProps extends HTMLAttributes<HTMLDivElement> {
 const withBaseName = makePrefixer("saltCarouselSlide");
 
 export const CarouselSlide = forwardRef<HTMLDivElement, CarouselSlideProps>(
-  function CarouselSlide({ actions, bordered, media, children, style }, ref) {
+  function CarouselSlide(
+    { actions, bordered, media, children, style, ...rest },
+    ref,
+  ) {
     const targetWindow = useWindow();
     useComponentCssInjection({
       testId: "salt-carousel-slide",
@@ -35,17 +38,21 @@ export const CarouselSlide = forwardRef<HTMLDivElement, CarouselSlideProps>(
       window: targetWindow,
     });
 
-    const slideRef = useRef(useId());
-    const { activeSlide, registerSlide, slides, visibleSlides } = useCarousel();
+    const slideRef = useRef<HTMLDivElement>(null);
+    const { activeSlide, registerSlide, slideRefs, visibleSlides } =
+      useCarousel();
 
     useEffect(() => {
-      slideRef.current && registerSlide(slideRef.current);
+      if (slideRef.current) {
+        registerSlide(slideRef);
+      }
     }, [registerSlide]);
-    const currentSlide = slideRef.current;
+
+    const index = slideRefs.indexOf(slideRef);
     const isActive =
-      currentSlide &&
-      slides.indexOf(currentSlide) >= activeSlide &&
-      slides.indexOf(currentSlide) < activeSlide + visibleSlides;
+      slideRef.current &&
+      index >= activeSlide &&
+      index < activeSlide + visibleSlides;
 
     const SlideStyles = {
       "--carousel-slide-width":
@@ -58,12 +65,14 @@ export const CarouselSlide = forwardRef<HTMLDivElement, CarouselSlideProps>(
       <div
         role="group"
         aria-roledescription="slide"
-        ref={ref}
+        ref={useForkRef(ref, slideRef)}
         className={clsx(withBaseName(), {
           [withBaseName("bordered")]: bordered,
         })}
         style={SlideStyles}
+        tabIndex={isActive ? 0 : -1}
         aria-hidden={!isActive}
+        {...rest}
       >
         {media}
         {children && (

@@ -83,7 +83,7 @@ export const WithTitle: StoryFn<typeof Carousel> = (args) => {
           {Array.from({ length: 5 }, (_, index) => (
             <CarouselSlide
               key={`item-${index}`}
-              aria-labelledby={`slide-title-${index}`}
+              aria-labelledby={`slide-title-${index}, ${index + 1} of 5`}
               media={
                 <div
                   className={`carousel-image-placeholder carousel-image-placeholder-${

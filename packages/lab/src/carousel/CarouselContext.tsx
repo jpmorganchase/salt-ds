@@ -17,8 +17,9 @@ export interface CarouselContextValue {
   prevSlide: (event: SyntheticEvent) => void;
   goToSlide: (index: number) => void;
   updateActiveFromScroll: (scrollLeft: number) => void;
-  slides: string[];
-  registerSlide: (slideId: string) => void;
+  slideRefs: RefObject<HTMLDivElement>[];
+  focusSlide: (index: number) => void;
+  registerSlide: (ref: RefObject<HTMLDivElement>) => void;
   containerRef: RefObject<HTMLDivElement>;
 }
 
@@ -45,9 +46,8 @@ export function CarouselProvider({
   visibleSlides?: number;
 }) {
   const [activeSlide, setActiveSlide] = useState(activeSlideIndex);
-  const [slides, setSlides] = useState<string[]>([]);
   const [sliderW, setSliderW] = useState(0);
-
+  const slideRefs = useRef<Array<RefObject<HTMLDivElement>>>([]).current;
   useEffect(() => {
     if (containerRef.current) {
       scrollToSlide(activeSlideIndex);
@@ -56,9 +56,15 @@ export function CarouselProvider({
 
   const containerRef = useRef<HTMLDivElement>(null);
 
-  const registerSlide = useCallback((slideId: string) => {
-    setSlides((prev) => [...prev, slideId]);
-  }, []);
+  const registerSlide = useCallback(
+    (ref: RefObject<HTMLDivElement>) => {
+      slideRefs.push(ref);
+    },
+    [slideRefs],
+  );
+  const focusSlide = (index: number) => {
+    slideRefs[index].current?.focus();
+  };
 
   const updateActiveFromScroll = (scrollLeft: number) => {
     const newIndex = Math.round(scrollLeft / (sliderW / visibleSlides)) || 0;
@@ -92,7 +98,8 @@ export function CarouselProvider({
     <CarouselContext.Provider
       value={{
         visibleSlides,
-        slides,
+        slideRefs,
+        focusSlide,
         activeSlide,
         registerSlide,
         nextSlide,

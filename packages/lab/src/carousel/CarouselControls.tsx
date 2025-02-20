@@ -41,21 +41,20 @@ export const CarouselControls = forwardRef<
     css: carouselControlsCss,
     window: targetWindow,
   });
-  const { slides, activeSlide, nextSlide, prevSlide, visibleSlides } =
+  const { slideRefs, activeSlide, nextSlide, prevSlide, visibleSlides } =
     useCarousel();
   const { NextIcon, PreviousIcon } = useIcon();
 
   const prevButtonRef = useRef<HTMLButtonElement | null>(null);
   const nextButtonRef = useRef<HTMLButtonElement | null>(null);
 
-  const slidesCount = slides.length;
+  const slidesCount = slideRefs?.length;
 
   const isOnFirstSlide = activeSlide === 0;
   const isOnLastSlide = activeSlide === slidesCount - visibleSlides;
 
   const ControlsLabel = () => (
-    // TODO: check w J
-    <Text as="span" aria-live="polite" aria-atomic="true">
+    <Text as="span">
       <strong>
         {activeSlide + 1}
         {visibleSlides > 1 && ` - ${activeSlide + visibleSlides}`} of{" "}
