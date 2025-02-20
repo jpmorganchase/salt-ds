@@ -1,5 +1,23 @@
 # @salt-ds/lab
 
+## 1.0.0-alpha.61
+
+### Patch Changes
+
+- 98d3aac: Improved screen reader support for read-only stepper inputs.
+- Updated dependencies [90b85d4]
+- Updated dependencies [90b85d4]
+- Updated dependencies [fd86394]
+- Updated dependencies [56a997c]
+- Updated dependencies [9a75603]
+- Updated dependencies [021e90d]
+- Updated dependencies [7510f56]
+- Updated dependencies [98d3aac]
+- Updated dependencies [ea5fc00]
+- Updated dependencies [ba0f436]
+  - @salt-ds/core@1.41.0
+  - @salt-ds/icons@1.13.2
+
 ## 1.0.0-alpha.60
 
 ### Patch Changes

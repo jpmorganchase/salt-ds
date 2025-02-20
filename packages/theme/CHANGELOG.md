@@ -1,5 +1,63 @@
 # @salt-ds/theme
 
+## 1.26.0
+
+### Minor Changes
+
+- 90b85d4: Deprecated `--salt-palette-navigate-foreground-hover` and `--salt-palette-navigate-foreground-active` and replaced them with `--salt-palette-accent-foreground-informative`.
+- 8ca3b2f: Added white 20, black 20 and 40 to the legacy alpha foundation:
+
+  ```css
+  --salt-color-white-20a: rgba(var(--salt-color-white-rgb), 0.2);
+  --salt-color-black-20a: rgba(var(--salt-color-black-rgb), 0.2);
+  --salt-color-black-40a: rgba(var(--salt-color-black-rgb), 0.4);
+  ```
+
+  Deprecated alpha 15 and 45 tokens in white and black in both themes:
+
+  ```css
+  --salt-color-white-15a: rgba(var(--salt-color-white-rgb), 0.15);
+  --salt-color-white-45a: rgba(var(--salt-color-white-rgb), 0.45);
+  --salt-color-black-15a: rgba(var(--salt-color-black-rgb), 0.15);
+  --salt-color-black-45a: rgba(var(--salt-color-black-rgb), 0.45);
+  ```
+
+- 8ca3b2f: Rebalanced the alpha palette by updating the strong and weak tokens:
+
+  ```diff
+  - --salt-palette-alpha-strong: var(--salt-color-black-45a);
+  - --salt-palette-alpha-weak: var(--salt-color-black-15a);
+  + --salt-palette-alpha-strong: var(--salt-color-black-40a);
+  + --salt-palette-alpha-weak: var(--salt-color-black-20a);
+  ```
+
+  ```diff
+  - --salt-palette-alpha-strong: var(--salt-color-white-45a);
+  - --salt-palette-alpha-weak: var(--salt-color-white-15a);
+  + --salt-palette-alpha-strong: var(--salt-color-white-40a);
+  + --salt-palette-alpha-weak: var(--salt-color-white-20a);
+  ```
+
+- 3764d72: Undeprecated `--salt-accent-borderColor-disabled` and `--salt-track-borderColor-disabled`.
+- d22534b: Extended the spacing foundation to spacing-950.
+
+  ```diff
+  + --salt-spacing-450
+  + --salt-spacing-500
+  + --salt-spacing-550
+  + --salt-spacing-600
+  + --salt-spacing-650
+  + --salt-spacing-700
+  + --salt-spacing-750
+  + --salt-spacing-800
+  + --salt-spacing-850
+  + --salt-spacing-900
+  + --salt-spacing-950
+  ```
+
+- 90b85d4: Added `--salt-content-accent-foreground` to theme and theme-next.
+- 8ca3b2f: Updated `--salt-track-borderColor` to be lighter in the Salt Next theme.
+
 ## 1.25.0
 
 ### Minor Changes

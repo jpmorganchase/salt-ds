@@ -1,5 +1,45 @@
 # @salt-ds/core
 
+## 1.41.0
+
+### Minor Changes
+
+- 90b85d4: Added accent colored Links.
+
+  ```tsx
+  <Link href="#" color="accent">
+    Link text
+  </Link>
+  ```
+
+- 9a75603: Added `color` prop to `Avatar`. Using `color` will change Avatar's background to one of the 20 categorical colors or accent.
+
+  ```tsx
+  <Avatar color="category-1" />
+  ```
+
+- 7510f56: Add `padding` and `margin` to `GridLayout`, `GridItem`, `BorderLayout` and `BorderItem`
+
+  ```tsx
+  <GridLayout padding={1} margin={1}>
+    <GridItem padding={2} margin={2}>
+      Item
+    </GridItem>
+  </GridLayout>
+  ```
+
+### Patch Changes
+
+- 90b85d4: When Link is set to `color="inherit"` its hover, active and focus colors will now also be inherited.
+  Fixed status colors being included in Link's `color` type. This was accidentally added when status color support was added to Text. If you need to achieve this behaviour you can use `color="inherit"`.
+- fd86394: Fix layout paddings and margins beings set by default
+- 56a997c: Fixed FormField incorrectly applying `align-self` when `labelPlacement` is `"left"` or `"right"`.
+- 98d3aac: Improved screen-reader support for read-only combo boxes.
+- ea5fc00: Improve screen reader support for Avatar.
+- ba0f436: Added centered vertical alignment to MenuItem
+- Updated dependencies [021e90d]
+  - @salt-ds/icons@1.13.2
+
 ## 1.40.0
 
 ### Minor Changes
