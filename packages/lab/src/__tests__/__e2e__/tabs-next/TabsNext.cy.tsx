@@ -102,6 +102,8 @@ describe("Given a Tabstrip", () => {
 
     cy.findAllByRole("tab").filter(":visible").should("have.length", 4);
 
+    cy.findByLabelText("Width").focus();
+
     cy.realPress("Tab");
     cy.findByRole("tab", { name: "Home" }).should("be.focused");
 
@@ -168,7 +170,8 @@ describe("Given a Tabstrip", () => {
     cy.mount(<Overflow />);
 
     cy.get("[data-overflowbutton]").realClick();
-    cy.findAllByRole("tab").filter(":visible").should("have.length", 17);
+    // 17 - 1, overflow menu overflows off screen
+    cy.findAllByRole("tab").filter(":visible").should("have.length", 16);
 
     cy.wait(500);
 
@@ -193,6 +196,29 @@ describe("Given a Tabstrip", () => {
     cy.get("[data-overflowbutton]").realClick();
     cy.realPress("Enter");
     cy.findByRole("tab", { name: "Checks" })
+      .should("have.attr", "aria-selected", "true")
+      .should("be.focused");
+  });
+
+  it("should allow selection in the menu when only having enough space for the newly selected tab", () => {
+    cy.mount(<Overflow />);
+
+    cy.findByLabelText("Width").click().type("{selectall}").type("160");
+
+    cy.findAllByRole("tab").filter(":visible").should("have.length", 1);
+
+    cy.get("[data-overflowbutton]").realClick();
+    cy.findByRole("tab", { name: "Liquidity" }).realClick();
+
+    cy.findByRole("tab", { name: "Liquidity" })
+      .should("have.attr", "aria-selected", "true")
+      .should("be.focused");
+
+    cy.findAllByRole("tab").filter(":visible").should("have.length", 1);
+
+    cy.get("[data-overflowbutton]").realClick();
+    cy.realPress("Enter");
+    cy.findByRole("tab", { name: "Home" })
       .should("have.attr", "aria-selected", "true")
       .should("be.focused");
   });

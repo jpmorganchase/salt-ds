@@ -34,6 +34,9 @@ export function useOverflow({
   children,
   selected,
 }: UseOverflowProps) {
+  /**
+   * `visibleCount` doesn't include newly selected tab from overflow menu, which is removed in `computeVisible`
+   */
   const [{ visibleCount, isMeasuring }, setVisibleItems] = useValueEffect({
     visibleCount: tabs.length,
     isMeasuring: false,
@@ -102,7 +105,8 @@ export function useOverflow({
           }
         }
 
-        return Math.max(1, newVisibleCount);
+        // minimal count should be 0, if there is no space for any tab apart from selected tab from the overflow menu
+        return Math.max(0, newVisibleCount);
       }
       return visibleCount;
     };
@@ -163,8 +167,8 @@ export function useOverflow({
   }, [container, updateOverflow]);
 
   const childArray = useMemo(() => Children.toArray(children), [children]);
-  const visible = childArray.slice(0, visibleCount || 1);
-  const hidden = childArray.slice(visibleCount || 1);
+  const visible = childArray.slice(0, visibleCount);
+  const hidden = childArray.slice(visibleCount);
 
   const hiddenSelectedIndex = hidden.findIndex(
     // @ts-ignore
