@@ -1,7 +1,7 @@
 import {
   type ElementProps,
   type FloatingContext,
-  type OpenChangeReason,
+  type OpenChangeReason as FloatingUIOpenChangeReason,
   flip,
   useClick,
   useDismiss,
@@ -18,6 +18,12 @@ import {
 } from "react";
 import { useKeyboard } from "./useKeyboard";
 
+/** Reason for overlay state change, can be a custom reason */
+export type DatePickerOpenChangeReason =
+  | FloatingUIOpenChangeReason
+  | "apply"
+  | "cancel"
+  | string;
 /**
  * Interface representing the state for a DatePicker overlay.
  */
@@ -47,13 +53,19 @@ interface DatePickerOverlayHelpers {
   /**
    * Sets the open state of the overlay.
    * @param newOpen - The new value for the open state.
+   * @param event - event that triggered the state change
+   * @param reason - reason for the the state change
    */
-  setOpen: (newOpen: boolean) => void;
+  setOpen: (
+    newOpen: boolean,
+    event?: Event,
+    reason?: DatePickerOpenChangeReason,
+  ) => void;
   /**~
    * Register a callback for when onDismiss is called
    * @param onDismissCallback
    */
-  setOnDismiss: (onDismissCallback: () => void) => void;
+  setOnDismiss: (onDismissCallback: (event?: Event) => void) => void;
 }
 
 /**
@@ -92,8 +104,14 @@ interface DatePickerOverlayProviderProps {
   /**
    * Handler for when open state changes
    * @param newOpen - true when opened
+   * @param event - event that triggered the state change
+   * @param reason - reason for the the state change
    */
-  onOpen?: (newOpen: boolean) => void;
+  onOpen?: (
+    newOpen: boolean,
+    event?: Event,
+    reason?: DatePickerOpenChangeReason,
+  ) => void;
   /**
    * The default open state of the overlay.
    */
@@ -125,15 +143,15 @@ export const DatePickerOverlayProvider: React.FC<
 }) => {
   const [open, setOpenState, isOpenControlled] = useControlled({
     controlled: openProp,
-    default: readOnly ? false : Boolean(defaultOpen),
+    default: Boolean(defaultOpen),
     name: "DatePicker",
     state: "openDatePickerOverlay",
   });
   const [disableFocus, setDisableFocus] = useState<boolean>(true);
   const triggeringElementRef = useRef<HTMLElement | null>(null);
-  const onDismissCallback = useRef<() => void>();
-  const setOpen = useCallback(
-    (newOpen: boolean, _event?: Event, reason?: OpenChangeReason) => {
+  const onDismissCallback = useRef<(event?: Event) => void>();
+  const handleOpenChange = useCallback(
+    (newOpen: boolean, event?: Event, reason?: DatePickerOpenChangeReason) => {
       if (newOpen) {
         if (readOnly) {
           return;
@@ -153,7 +171,7 @@ export const DatePickerOverlayProvider: React.FC<
         triggeringElementRef.current = null;
       }
       setOpenState(newOpen);
-      onOpen?.(newOpen);
+      onOpen?.(newOpen, event, reason);
 
       if (
         reason === "escape-key" ||
@@ -165,9 +183,10 @@ export const DatePickerOverlayProvider: React.FC<
     [onOpen, readOnly],
   );
 
+  const openState = open && !readOnly;
   const floatingUIResult = useFloatingUI({
-    open,
-    onOpenChange: setOpen,
+    open: openState,
+    onOpenChange: handleOpenChange,
     placement: "bottom-start",
     middleware: [flip({ fallbackStrategy: "initialPlacement" })],
   });
@@ -211,13 +230,16 @@ export const DatePickerOverlayProvider: React.FC<
     },
     [getFloatingPropsCallback, floatingUIResult, disableFocus],
   );
-  const setOnDismiss = useCallback((dismissCallback: () => void) => {
-    onDismissCallback.current = dismissCallback;
-  }, []);
+  const setOnDismiss = useCallback(
+    (dismissCallback: (event?: Event) => void) => {
+      onDismissCallback.current = dismissCallback;
+    },
+    [],
+  );
 
   const state: DatePickerOverlayState = useMemo(
     () => ({
-      open,
+      open: openState,
       floatingUIResult,
     }),
     [open, floatingUIResult],
@@ -227,10 +249,10 @@ export const DatePickerOverlayProvider: React.FC<
     () => ({
       getFloatingProps,
       getReferenceProps: getReferencePropsCallback,
-      setOpen,
+      setOpen: handleOpenChange,
       setOnDismiss,
     }),
-    [getFloatingProps, getReferencePropsCallback, setOpen],
+    [getFloatingProps, getReferencePropsCallback, handleOpenChange],
   );
   const contextValue = useMemo(() => ({ state, helpers }), [state, helpers]);
 

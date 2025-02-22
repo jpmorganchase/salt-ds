@@ -6,7 +6,10 @@ import {
   type SingleDatePickerState,
   SingleDateSelectionContext,
 } from "./DatePickerContext";
-import { DatePickerOverlayProvider } from "./DatePickerOverlayProvider";
+import {
+  type DatePickerOpenChangeReason,
+  DatePickerOverlayProvider,
+} from "./DatePickerOverlayProvider";
 import {
   type UseDatePickerRangeProps,
   type UseDatePickerSingleProps,
@@ -26,8 +29,14 @@ export interface DatePickerBaseProps {
   /**
    * Handler for when open state changes
    * @param newOpen - true when opened
+   * @param event - event that triggered the state change
+   * @param reason - reason for the the state change
    */
-  onOpen?: (newOpen: boolean) => void;
+  onOpen?: (
+    newOpen: boolean,
+    event?: Event,
+    reason?: DatePickerOpenChangeReason,
+  ) => void;
   /**
    * the initial open/close state of the overlay, when the open/close state is un-controlled.
    */

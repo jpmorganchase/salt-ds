@@ -1,4 +1,3 @@
-import type { OpenChangeReason } from "@floating-ui/react";
 import {
   Button,
   Divider,
@@ -23,6 +22,7 @@ import {
   DateParserField,
   DatePicker,
   DatePickerActions,
+  type DatePickerOpenChangeReason,
   DatePickerOverlay,
   DatePickerRangeInput,
   type DatePickerRangeInputProps,
@@ -2774,6 +2774,7 @@ export const ControlledOpen: StoryFn<
   const triggerRef = useRef<HTMLInputElement>(null);
   const applyButtonRef = useRef<HTMLButtonElement>(null);
   const datePickerRef = useRef<HTMLDivElement>(null);
+  const previousSelectedDate = useRef<typeof selectedDate>(selectedDate);
 
   const handleSelectionChange = useCallback(
     (
@@ -2792,19 +2793,27 @@ export const ControlledOpen: StoryFn<
       date: SingleDateSelection<DateFrameworkType> | null,
     ) => {
       console.log(
-        `Applied StartDate: ${date ? dateAdapter.format(date, "DD MMM YYYY") : date}`,
+        `Applied date: ${date ? dateAdapter.format(date, "DD MMM YYYY") : date}`,
       );
       setSelectedDate(date);
+      previousSelectedDate.current = date;
       setOpen(false);
+      args?.onApply?.(event, date);
     },
-    [dateAdapter],
+    [args?.onApply, dateAdapter],
   );
+
+  const handleCancel = useCallback(() => {
+    setSelectedDate(previousSelectedDate.current);
+    setSelectedDate(previousSelectedDate.current);
+    args?.onCancel?.();
+  }, [args?.onCancel]);
 
   const handleOpen = useCallback(
     (
       newOpen: boolean,
-      _event?: Event | undefined,
-      reason?: OpenChangeReason | undefined,
+      _event?: Event,
+      reason?: DatePickerOpenChangeReason | string,
     ) => {
       if (reason === undefined) {
         triggerRef.current?.focus();
@@ -2821,44 +2830,33 @@ export const ControlledOpen: StoryFn<
   );
 
   return (
-    <StackLayout style={{ width: "400px" }}>
-      <FlexLayout>
-        <Button
-          aria-label={"open picker"}
-          onClick={() => {
-            setOpen(true);
-          }}
-        >
-          Open
-        </Button>
-      </FlexLayout>
-      <DatePicker
-        selectionVariant={"single"}
-        {...args}
-        onSelectionChange={handleSelectionChange}
-        selectedDate={selectedDate}
-        onApply={handleApply}
-        onOpen={handleOpen}
-        open={open}
-      >
-        <DatePickerTrigger>
-          <DatePickerSingleInput inputRef={triggerRef} />
-        </DatePickerTrigger>
-        <DatePickerOverlay ref={datePickerRef}>
-          <FlexLayout gap={0} direction="column">
-            <FlexItem>
-              <DatePickerSinglePanel />
-              <Divider variant="tertiary" />
-            </FlexItem>
-            <FlexItem>
-              <DatePickerActions
-                selectionVariant="single"
-                applyButtonRef={applyButtonRef}
-              />
-            </FlexItem>
-          </FlexLayout>
-        </DatePickerOverlay>
-      </DatePicker>
-    </StackLayout>
+    <DatePicker
+      selectionVariant={"single"}
+      {...args}
+      onSelectionChange={handleSelectionChange}
+      selectedDate={selectedDate}
+      onApply={handleApply}
+      onCancel={handleCancel}
+      onOpen={handleOpen}
+      open={open}
+    >
+      <DatePickerTrigger>
+        <DatePickerSingleInput inputRef={triggerRef} />
+      </DatePickerTrigger>
+      <DatePickerOverlay ref={datePickerRef}>
+        <FlexLayout gap={0} direction="column">
+          <FlexItem>
+            <DatePickerSinglePanel />
+            <Divider variant="tertiary" />
+          </FlexItem>
+          <FlexItem>
+            <DatePickerActions
+              selectionVariant="single"
+              applyButtonRef={applyButtonRef}
+            />
+          </FlexItem>
+        </FlexLayout>
+      </DatePickerOverlay>
+    </DatePicker>
   );
 };

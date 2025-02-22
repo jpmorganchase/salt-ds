@@ -47,8 +47,8 @@ export function defaultRangeValidator<TDate extends DateFrameworkType>(
   dateAdapter: SaltDateAdapter<TDate>,
   date: DateRangeSelection<TDate> | null,
   details: DateInputRangeDetails,
-  minDate: TDate | undefined,
-  maxDate: TDate | undefined,
+  minDate?: TDate,
+  maxDate?: TDate,
 ): DateInputRangeDetails {
   const { startDate, endDate } = date || {};
 
@@ -154,7 +154,7 @@ export const DatePickerRangeInput = forwardRef(function DatePickerRangeInput<
   const handleCalendarButton: MouseEventHandler<HTMLButtonElement> =
     useCallback(
       (event) => {
-        setOpen(!open);
+        setOpen(!open, event.nativeEvent, "click");
         event.stopPropagation();
       },
       [open, setOpen],

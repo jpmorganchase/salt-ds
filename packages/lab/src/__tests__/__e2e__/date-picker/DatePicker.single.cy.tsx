@@ -81,10 +81,16 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
       // Simulate opening the calendar through a controlled state
       cy.document().find("input").realClick();
       cy.findByRole("application").should("not.exist");
+      // Simulate overlay closing when cancelled
       cy.findByRole("button", { name: "Open Calendar" }).realClick();
       cy.findByRole("application").should("exist");
       cy.findByRole("button", { name: "Cancel" }).realClick();
-      // Verify that the calendar can be closed by user
+      cy.findByRole("application").should("not.exist");
+      // Simulate overlay closing when date applied
+      cy.findByRole("button", { name: "Open Calendar" }).realClick();
+      cy.findByRole("application").should("exist");
+      cy.findByRole("button", { name: "Apply" }).realClick();
+      // Verify that the calendar is closed and the new date is applied
       cy.findByRole("application").should("not.exist");
     });
   });
