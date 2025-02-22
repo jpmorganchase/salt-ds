@@ -1,16 +1,10 @@
-import type { OpenChangeReason } from "@floating-ui/react";
-import {
-  Button,
-  Divider,
-  FlexItem,
-  FlexLayout,
-  StackLayout,
-} from "@salt-ds/core";
+import { Divider, FlexItem, FlexLayout } from "@salt-ds/core";
 import type { DateFrameworkType } from "@salt-ds/date-adapters";
 import {
   type DateInputSingleDetails,
   DatePicker,
   DatePickerActions,
+  type DatePickerOpenChangeReason,
   DatePickerOverlay,
   DatePickerSingleInput,
   DatePickerSinglePanel,
@@ -35,6 +29,7 @@ export const ControlledOpen = (): ReactElement => {
   const triggerRef = useRef<HTMLInputElement>(null);
   const applyButtonRef = useRef<HTMLButtonElement>(null);
   const datePickerRef = useRef<HTMLDivElement>(null);
+  const previousSelectedDate = useRef<typeof selectedDate>(selectedDate);
 
   const handleSelectionChange = useCallback(
     (
@@ -53,20 +48,22 @@ export const ControlledOpen = (): ReactElement => {
       date: SingleDateSelection<DateFrameworkType> | null,
     ) => {
       console.log(
-        `Applied StartDate: ${date ? dateAdapter.format(date, "DD MMM YYYY") : date}`,
+        `Applied date: ${date ? dateAdapter.format(date, "DD MMM YYYY") : date}`,
       );
       setSelectedDate(date);
+      previousSelectedDate.current = date;
       setOpen(false);
     },
     [dateAdapter],
   );
 
+  const handleCancel = useCallback(() => {
+    setSelectedDate(previousSelectedDate.current);
+    setSelectedDate(previousSelectedDate.current);
+  }, []);
+
   const handleOpen = useCallback(
-    (
-      newOpen: boolean,
-      _event?: Event | undefined,
-      reason?: OpenChangeReason | undefined,
-    ) => {
+    (newOpen: boolean, _event?: Event, reason?: DatePickerOpenChangeReason) => {
       if (reason === undefined) {
         triggerRef.current?.focus();
         setTimeout(() => {
@@ -82,43 +79,32 @@ export const ControlledOpen = (): ReactElement => {
   );
 
   return (
-    <StackLayout>
-      <FlexLayout>
-        <Button
-          aria-label={"open picker"}
-          onClick={() => {
-            setOpen(true);
-          }}
-        >
-          Open
-        </Button>
-      </FlexLayout>
-      <DatePicker
-        selectionVariant={"single"}
-        onSelectionChange={handleSelectionChange}
-        selectedDate={selectedDate}
-        onApply={handleApply}
-        onOpen={handleOpen}
-        open={open}
-      >
-        <DatePickerTrigger>
-          <DatePickerSingleInput inputRef={triggerRef} />
-        </DatePickerTrigger>
-        <DatePickerOverlay ref={datePickerRef}>
-          <FlexLayout gap={0} direction="column">
-            <FlexItem>
-              <DatePickerSinglePanel />
-              <Divider variant="tertiary" />
-            </FlexItem>
-            <FlexItem>
-              <DatePickerActions
-                selectionVariant="single"
-                applyButtonRef={applyButtonRef}
-              />
-            </FlexItem>
-          </FlexLayout>
-        </DatePickerOverlay>
-      </DatePicker>
-    </StackLayout>
+    <DatePicker
+      selectionVariant={"single"}
+      onSelectionChange={handleSelectionChange}
+      selectedDate={selectedDate}
+      onApply={handleApply}
+      onCancel={handleCancel}
+      onOpen={handleOpen}
+      open={open}
+    >
+      <DatePickerTrigger>
+        <DatePickerSingleInput inputRef={triggerRef} />
+      </DatePickerTrigger>
+      <DatePickerOverlay ref={datePickerRef}>
+        <FlexLayout gap={0} direction="column">
+          <FlexItem>
+            <DatePickerSinglePanel />
+            <Divider variant="tertiary" />
+          </FlexItem>
+          <FlexItem>
+            <DatePickerActions
+              selectionVariant="single"
+              applyButtonRef={applyButtonRef}
+            />
+          </FlexItem>
+        </FlexLayout>
+      </DatePickerOverlay>
+    </DatePicker>
   );
 };

@@ -47,8 +47,8 @@ function defaultSingleValidation<TDate extends DateFrameworkType>(
   dateAdapter: SaltDateAdapter<TDate>,
   date: TDate,
   details: DateInputSingleDetails,
-  minDate: TDate | undefined,
-  maxDate: TDate | undefined,
+  minDate?: TDate,
+  maxDate?: TDate,
 ): DateInputSingleDetails {
   if (!date) {
     details.errors = details.errors ?? [];
@@ -124,7 +124,7 @@ export const DatePickerSingleInput = forwardRef<
     const handleCalendarButton: MouseEventHandler<HTMLButtonElement> =
       useCallback(
         (event) => {
-          setOpen(!open);
+          setOpen(!open, event.nativeEvent, "click");
           event.stopPropagation();
         },
         [open, setOpen],

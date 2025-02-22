@@ -2,6 +2,7 @@ export * from "./DatePicker";
 export * from "./DatePickerActions";
 export * from "./DatePickerContext";
 export * from "./DatePickerOverlay";
+export * from "./DatePickerOverlayProvider";
 export * from "./DatePickerRangeInput";
 export * from "./DatePickerRangePanel";
 export * from "./DatePickerSingleInput";
