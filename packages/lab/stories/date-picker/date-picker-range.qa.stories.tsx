@@ -3,6 +3,7 @@ import {
   DatePickerOverlay,
   DatePickerRangeInput,
   DatePickerRangePanel,
+  type DatePickerRangeProps,
   DatePickerTrigger,
   useLocalization,
 } from "@salt-ds/lab";
@@ -32,7 +33,9 @@ const QAContainerParameters = {
   },
 };
 
-const renderQAContainer = () => {
+const renderQAContainer = (
+  props?: Omit<DatePickerRangeProps<unknown>, "selectionVariant">,
+) => {
   const { dateAdapter } = useLocalization();
   const startDate = dateAdapter.today();
   const endDate = dateAdapter.add(startDate, { months: 4, weeks: 1 });
@@ -115,4 +118,19 @@ RangeWithLocaleAndLuxon.parameters = {
   ...QAContainerParameters,
   dateLocale: "es-ES",
   dateAdapter: "luxon",
+};
+
+export const RangeDisabled: StoryFn<QAContainerProps> = () =>
+  renderQAContainer({ disabled: true });
+RangeWithMoment.parameters = {
+  ...QAContainerParameters,
+  dateLocale: "en-US",
+  dateAdapter: "moment",
+};
+export const RangeReadonly: StoryFn<QAContainerProps> = () =>
+  renderQAContainer({ readOnly: true });
+RangeWithMoment.parameters = {
+  ...QAContainerParameters,
+  dateLocale: "en-US",
+  dateAdapter: "moment",
 };
