@@ -14,6 +14,7 @@
   text-align: left;
   cursor: var(--salt-actionable-cursor-hover);
   box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .saltAccordionHeader:focus-visible {
