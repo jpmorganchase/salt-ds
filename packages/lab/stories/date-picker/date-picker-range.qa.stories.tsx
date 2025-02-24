@@ -49,6 +49,7 @@ const renderQAContainer = (
           }}
           selectionVariant="range"
           open
+          {...props}
         >
           <DatePickerTrigger>
             <DatePickerRangeInput />
