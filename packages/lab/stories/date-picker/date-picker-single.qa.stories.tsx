@@ -2,7 +2,7 @@ import {
   DatePicker,
   DatePickerOverlay,
   DatePickerSingleInput,
-  DatePickerSinglePanel,
+  DatePickerSingleGridPanel,
   DatePickerTrigger,
   useLocalization,
 } from "@salt-ds/lab";
@@ -46,7 +46,7 @@ const renderQAContainer = () => {
             <DatePickerSingleInput />
           </DatePickerTrigger>
           <DatePickerOverlay>
-            <DatePickerSinglePanel />
+            <DatePickerSingleGridPanel />
           </DatePickerOverlay>
         </DatePicker>
       </div>

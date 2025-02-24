@@ -11,7 +11,7 @@ import {
   DatePicker,
   DatePickerOverlay,
   DatePickerSingleInput,
-  DatePickerSinglePanel,
+  DatePickerSingleGridPanel,
 } from "@salt-ds/lab";
 import * as datePickerStories from "@stories/date-picker/date-picker.stories";
 
@@ -575,7 +575,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
             >
               <DatePickerSingleInput />
               <DatePickerOverlay>
-                <DatePickerSinglePanel />
+                <DatePickerSingleGridPanel />
               </DatePickerOverlay>
             </DatePicker>,
           );

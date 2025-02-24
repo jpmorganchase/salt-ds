@@ -6,106 +6,53 @@ import {
   FormFieldHelperText,
   StackLayout,
   makePrefixer,
+  resolveResponsiveValue,
+  useBreakpoint,
   useControlled,
 } from "@salt-ds/core";
 import type { DateFrameworkType } from "@salt-ds/date-adapters";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import clsx from "clsx";
-import {
-  type ComponentPropsWithoutRef,
-  type SyntheticEvent,
-  forwardRef,
-  useCallback,
-  useState,
-} from "react";
+import { type SyntheticEvent, forwardRef, useCallback, useState } from "react";
 import {
   CalendarGrid,
-  type CalendarGridProps,
   CalendarNavigation,
-  type CalendarNavigationProps,
-  type CalendarSingleProps,
-  CalendarWeekHeader,
-  type CalendarWeekHeaderProps,
+  type CalendarRangeProps,
 } from "../calendar";
-import { Calendar, type SingleDateSelection } from "../calendar";
+import { Calendar, type DateRangeSelection } from "../calendar";
 import { useLocalization } from "../localization-provider";
-import { useDatePickerContext } from "./DatePickerContext";
+import {
+  type RangeDatePickerState,
+  useDatePickerContext,
+} from "./DatePickerContext";
 import datePickerPanelCss from "./DatePickerPanel.css";
+import type { DatePickerPanelBaseProps } from "./DatePickerSingleGridPanel";
 
-/**
- * Props for the DatePickerSinglePanel component.
- * @template T - The type of the selected date.
- */
-export interface DatePickerSinglePanelProps<TDate extends DateFrameworkType>
-  extends ComponentPropsWithoutRef<"div"> {
-  /**
-   * Callback fired when a date is selected.
-   * @param event - The synthetic event.
-   * @param selectedDate - The selected date or null.
-   */
-  onSelectionChange?: (
-    event: SyntheticEvent,
-    selectedDate?: TDate | null,
-  ) => void;
+const withBaseName = makePrefixer("saltDatePickerRangeGridPanel");
 
-  /**
-   * Helper text to be displayed below the date picker.
-   */
-  helperText?: string;
+export type DatePickerRangeGridPanelProps<TDate extends DateFrameworkType> =
+  DatePickerPanelBaseProps<TDate> &
+    DateRangeSelection<TDate> & {
+      onSelectionChange?: (
+        event: SyntheticEvent,
+        selectedDate?: DateRangeSelection<TDate> | null,
+      ) => void;
+      CalendarProps?: Partial<
+        Omit<
+          CalendarRangeProps<TDate>,
+          | "selectionVariant"
+          | "selectedDate"
+          | "defaultSelectedDate"
+          | "onSelectionChange"
+          | "onVisibleMonthChange"
+        >
+      >;
+    };
 
-  /**
-   * The currently visible month.
-   */
-  visibleMonth?: TDate;
-
-  /**
-   * The default visible month.
-   */
-  defaultVisibleMonth?: TDate;
-
-  /**
-   * Callback fired when the visible month changes.
-   * @param event - The synthetic event.
-   * @param visibleMonth - The new visible month.
-   */
-  onVisibleMonthChange?: (event: SyntheticEvent, visibleMonth: TDate) => void;
-
-  /**
-   * Props to be passed to the Calendar component.
-   */
-  CalendarProps?: Partial<
-    Omit<
-      CalendarSingleProps<TDate>,
-      | "selectionVariant"
-      | "selectedDate"
-      | "defaultSelectedDate"
-      | "onSelectionChange"
-      | "onVisibleMonthChange"
-    >
-  >;
-  /**
-   * Props to be passed to the CalendarNavigation component.
-   */
-  CalendarNavigationProps?: CalendarNavigationProps<TDate>;
-  /**
-   * Props to be passed to the CalendarWeekHeader component.
-   */
-  CalendarWeekHeaderProps?: CalendarWeekHeaderProps;
-  /**
-   * Props to be passed to the CalendarDataGrid component.
-   */
-  CalendarDataGridProps?: CalendarGridProps<TDate>;
-}
-
-const withBaseName = makePrefixer("saltDatePickerPanel");
-
-export const DatePickerSinglePanel = forwardRef(function DatePickerSinglePanel<
+export const DatePickerRangeGridPanel = forwardRef(function DatePickerGridPanel<
   TDate extends DateFrameworkType,
->(
-  props: DatePickerSinglePanelProps<SingleDateSelection<TDate>>,
-  ref: React.Ref<HTMLDivElement>,
-) {
+>(props: DatePickerRangeGridPanelProps<TDate>, ref: React.Ref<HTMLDivElement>) {
   const { dateAdapter } = useLocalization<TDate>();
 
   const {
@@ -119,25 +66,37 @@ export const DatePickerSinglePanel = forwardRef(function DatePickerSinglePanel<
     onVisibleMonthChange,
     helperText,
     onSelectionChange,
+    numberOfVisibleMonths = 1,
+    columns = numberOfVisibleMonths,
     ...rest
   } = props;
 
   const targetWindow = useWindow();
   useComponentCssInjection({
-    testId: "salt-date-picker-single-panel",
+    testId: "salt-date-picker-range-grid-panel",
     css: datePickerPanelCss,
     window: targetWindow,
   });
 
+  const stateAndHelpers: RangeDatePickerState<TDate> = useDatePickerContext({
+    selectionVariant: "range",
+  });
+
   const {
     state: {
-      selectedDate,
+      selectedDate = null,
       minDate = dateAdapter.startOf(dateAdapter.today(), "month"),
       maxDate = dateAdapter.add(minDate, { months: 1 }),
     },
     helpers: { select },
-  } = useDatePickerContext<TDate>({ selectionVariant: "single" });
+  } = stateAndHelpers;
 
+  const { matchedBreakpoints } = useBreakpoint();
+
+  const responsiveColumns =
+    resolveResponsiveValue(columns, matchedBreakpoints) ?? 1;
+  const responsiveNumberOfVisibleMonths =
+    resolveResponsiveValue(numberOfVisibleMonths, matchedBreakpoints) ?? 1;
   const [hoveredDate, setHoveredDate] = useState<TDate | null>(null);
 
   const [uncontrolledDefaultVisibleMonth] = useState(() => {
@@ -149,23 +108,25 @@ export const DatePickerSinglePanel = forwardRef(function DatePickerSinglePanel<
   const [visibleMonth, setVisibleMonth] = useControlled({
     controlled: visibleMonthProp,
     default: uncontrolledDefaultVisibleMonth,
-    name: "DatePickerSinglePanel",
+    name: "DatePickerGridPanel",
     state: "visibleMonth",
   });
 
   const handleSelectionChange = useCallback(
-    (event: SyntheticEvent, newDate: SingleDateSelection<TDate> | null) => {
-      select(event, newDate);
-      onSelectionChange?.(event, newDate);
+    (
+      event: SyntheticEvent,
+      newDate: TDate | DateRangeSelection<TDate> | null,
+    ) => {
+      console.log("handleSelectionChange", newDate);
+      const dateRange = newDate as DateRangeSelection<TDate> | null;
+      select(event, dateRange);
+      onSelectionChange?.(event, dateRange);
     },
-    [select, onSelectionChange],
+    [onSelectionChange, select],
   );
 
   const handleHoveredDateChange = useCallback(
-    (
-      event: SyntheticEvent,
-      newHoveredDate: SingleDateSelection<TDate> | null,
-    ) => {
+    (event: SyntheticEvent, newHoveredDate: TDate | null) => {
       setHoveredDate(newHoveredDate);
       if (newHoveredDate && CalendarProps?.onHoveredDateChange) {
         CalendarProps.onHoveredDateChange(event, newHoveredDate);
@@ -184,8 +145,7 @@ export const DatePickerSinglePanel = forwardRef(function DatePickerSinglePanel<
     [onVisibleMonthChange],
   );
 
-  const baseCalendarProps: Partial<CalendarSingleProps<TDate>> = {
-    selectionVariant: "single",
+  const calendarProps = {
     visibleMonth,
     hoveredDate,
     onHoveredDateChange: handleHoveredDateChange,
@@ -212,12 +172,17 @@ export const DatePickerSinglePanel = forwardRef(function DatePickerSinglePanel<
         </FlexItem>
       )}
       <FlexLayout gap={0}>
-        {/* Avoid Dropdowns in Calendar inheriting the FormField's state */}
         <FormFieldContext.Provider value={{} as FormFieldContextValue}>
-          <Calendar selectionVariant="single" {...baseCalendarProps}>
+          <Calendar
+            selectionVariant={"range"}
+            numberOfVisibleMonths={responsiveNumberOfVisibleMonths}
+            {...(calendarProps as Partial<CalendarRangeProps<TDate>>)}
+          >
             <CalendarNavigation {...CalendarNavigationProps} />
-            <CalendarWeekHeader {...CalendarWeekHeaderProps} />
-            <CalendarGrid {...CalendarDataGridProps} />
+            <CalendarGrid
+              columns={responsiveColumns}
+              {...CalendarDataGridProps}
+            />
           </Calendar>
         </FormFieldContext.Provider>
       </FlexLayout>

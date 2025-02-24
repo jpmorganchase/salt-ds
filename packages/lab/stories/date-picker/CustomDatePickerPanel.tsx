@@ -12,7 +12,7 @@ import {
 import type { DateFrameworkType } from "@salt-ds/date-adapters";
 import {
   DatePickerRangePanel,
-  DatePickerSinglePanel,
+  DatePickerSingleGridPanel,
   type RangeDatePickerState,
   type SingleDatePickerState,
   useDatePickerContext,
@@ -116,7 +116,7 @@ export const CustomDatePickerPanel = forwardRef<
         {selectionVariant === "range" ? (
           <DatePickerRangePanel />
         ) : (
-          <DatePickerSinglePanel />
+          <DatePickerSingleGridPanel />
         )}
       </FlexLayout>
     </StackLayout>
