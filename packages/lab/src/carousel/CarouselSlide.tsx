@@ -39,7 +39,7 @@ export const CarouselSlide = forwardRef<HTMLDivElement, CarouselSlideProps>(
     });
 
     const slideRef = useRef<HTMLDivElement>(null);
-    const { activeSlide, registerSlide, slideRefs, visibleSlides } =
+    const { firstVisibleSlide, registerSlide, slideRefs, visibleSlides } =
       useCarousel();
 
     useEffect(() => {
@@ -49,10 +49,10 @@ export const CarouselSlide = forwardRef<HTMLDivElement, CarouselSlideProps>(
     }, [registerSlide]);
 
     const index = slideRefs.indexOf(slideRef);
-    const isActive =
+    const isVisible =
       slideRef.current &&
-      index >= activeSlide &&
-      index < activeSlide + visibleSlides;
+      index >= firstVisibleSlide &&
+      index < firstVisibleSlide + visibleSlides;
 
     const SlideStyles = {
       "--carousel-slide-width":
@@ -70,8 +70,7 @@ export const CarouselSlide = forwardRef<HTMLDivElement, CarouselSlideProps>(
           [withBaseName("bordered")]: bordered,
         })}
         style={SlideStyles}
-        tabIndex={isActive ? 0 : -1}
-        aria-hidden={!isActive}
+        tabIndex={isVisible ? 0 : -1}
         {...rest}
       >
         {media}
@@ -84,7 +83,7 @@ export const CarouselSlide = forwardRef<HTMLDivElement, CarouselSlideProps>(
             {children}
             <div
               className={clsx(withBaseName("actions"), {
-                [withBaseName("active")]: isActive,
+                [withBaseName("active")]: isVisible,
               })}
             >
               {actions}

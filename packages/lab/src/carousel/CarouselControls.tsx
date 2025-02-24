@@ -41,7 +41,7 @@ export const CarouselControls = forwardRef<
     css: carouselControlsCss,
     window: targetWindow,
   });
-  const { slideRefs, activeSlide, nextSlide, prevSlide, visibleSlides } =
+  const { slideRefs, firstVisibleSlide, nextSlide, prevSlide, visibleSlides } =
     useCarousel();
   const { NextIcon, PreviousIcon } = useIcon();
 
@@ -50,14 +50,14 @@ export const CarouselControls = forwardRef<
 
   const slidesCount = slideRefs?.length;
 
-  const isOnFirstSlide = activeSlide === 0;
-  const isOnLastSlide = activeSlide === slidesCount - visibleSlides;
+  const isOnFirstSlide = firstVisibleSlide === 0;
+  const isOnLastSlide = firstVisibleSlide === slidesCount - visibleSlides;
 
   const ControlsLabel = () => (
     <Text as="span">
       <strong>
-        {activeSlide + 1}
-        {visibleSlides > 1 && ` - ${activeSlide + visibleSlides}`} of{" "}
+        {firstVisibleSlide + 1}
+        {visibleSlides > 1 && ` - ${firstVisibleSlide + visibleSlides}`} of{" "}
         {slidesCount}
       </strong>
     </Text>
@@ -66,14 +66,14 @@ export const CarouselControls = forwardRef<
   function handlePrevClick(event: SyntheticEvent<HTMLButtonElement>) {
     prevSlide(event);
     onMoveBack?.(event);
-    if (activeSlide === 1) {
+    if (firstVisibleSlide === 1) {
       nextButtonRef.current?.focus();
     }
   }
   function handleNextClick(event: SyntheticEvent<HTMLButtonElement>) {
     nextSlide(event);
     onMoveForward?.(event);
-    if (activeSlide === slidesCount - visibleSlides - 1) {
+    if (firstVisibleSlide === slidesCount - visibleSlides - 1) {
       prevButtonRef.current?.focus();
     }
   }
