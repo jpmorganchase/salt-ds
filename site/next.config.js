@@ -9,7 +9,6 @@ module.exports = {
   transpilePackages: [
     "@jpmorganchase/mosaic-components",
     "@jpmorganchase/mosaic-content-editor-plugin",
-    "@jpmorganchase/mosaic-labs-components",
     "@jpmorganchase/mosaic-layouts",
     "@jpmorganchase/mosaic-open-api-component",
     "@jpmorganchase/mosaic-site-components",
