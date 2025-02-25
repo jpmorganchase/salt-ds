@@ -404,12 +404,11 @@ describe("Given a Tabstrip", () => {
     cy.mount(<Overflow />);
     cy.findAllByRole("tab").filter(":visible").should("have.length", 4);
 
-    cy.findByRole("tablist").invoke("css", "max-width", 500);
-    cy.wait(500);
+    cy.findByLabelText("Width").click().type("{selectall}").type("500");
+    cy.findByLabelText("Width").should("be.focused");
     cy.findAllByRole("tab").filter(":visible").should("have.length", 6);
-
-    cy.findByRole("tablist").invoke("css", "max-width", 200);
-    cy.wait(500);
+    cy.findByLabelText("Width").click().type("{selectall}").type("250");
+    cy.findByLabelText("Width").should("be.focused");
     cy.findAllByRole("tab").filter(":visible").should("have.length", 2);
   });
 
