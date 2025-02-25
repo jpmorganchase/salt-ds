@@ -53,13 +53,15 @@ export function CarouselProvider({
     if (containerRef.current) {
       scrollToSlide(activeSlideIndex);
     }
-  }, [activeSlideIndex]);
+  }, []);
 
   const containerRef = useRef<HTMLDivElement>(null);
 
   const registerSlide = useCallback(
     (ref: RefObject<HTMLDivElement>) => {
-      slideRefs.push(ref);
+      if (!slideRefs.includes(ref)) {
+        slideRefs.push(ref);
+      }
     },
     [slideRefs],
   );
@@ -102,10 +104,10 @@ export function CarouselProvider({
       const sliderWidth = container.offsetWidth;
       const slideWidth = sliderWidth / visibleSlides;
       const targetScrollLeft = nextSlide * slideWidth;
-      if (
+      const isFullyVisible =
         container.scrollLeft - targetScrollLeft - sliderWidth / visibleSlides <
-        1
-      ) {
+        1;
+      if (isFullyVisible) {
         focusSlide(nextSlide);
         if (visibleFocus < visibleSlides - 1) {
           setVisibleFocus((prev) => prev + 1);
@@ -118,12 +120,14 @@ export function CarouselProvider({
 
   const prevSlide = (event: SyntheticEvent) => {
     const previousSlide = firstVisibleSlide - 1;
-    if (!containerRef.current || previousSlide < 0) return;
+    if (!containerRef.current || firstVisibleSlide < 0) return;
     if (event.type !== "click") {
-      if (visibleFocus > 0) {
+      if (visibleFocus >= 0) {
         focusSlide(previousSlide + visibleFocus);
-        // TODO: fix: this should only happen once it returns to the fist page
-        // setVisibleFocus((prev) => prev - 1);
+        if (previousSlide === firstVisibleSlide) {
+          setVisibleFocus((prev) => prev - 1);
+        }
+
         return;
       }
       focusSlide(previousSlide);

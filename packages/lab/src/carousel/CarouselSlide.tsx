@@ -14,13 +14,16 @@ import carouselSlideCss from "./CarouselSlide.css";
 
 export interface CarouselSlideProps extends HTMLAttributes<HTMLDivElement> {
   /**
-   * Actions to be displayed in the content footer
+   * Actions to be displayed in the content footer.
    */
   actions?: ReactNode;
   /**
-   * The image to be displayed inside the slide
+   * The media to be displayed inside the slide.
    */
   media?: ReactNode;
+  /**
+   * Styling variant with full border. Defaults to false.
+   */
   bordered?: boolean;
 }
 

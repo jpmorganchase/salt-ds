@@ -12,6 +12,10 @@ export interface CarouselProps extends HTMLAttributes<HTMLDivElement> {
    * Optional, default 0.
    **/
   activeSlideIndex?: number;
+  /**
+   * Number of slides visible at a time.
+   * Optional, default 0.
+   **/
   visibleSlides?: ResponsiveProp<number> | number;
 }
 

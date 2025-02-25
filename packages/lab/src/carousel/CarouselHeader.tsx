@@ -10,6 +10,9 @@ const withBaseName = makePrefixer("saltCarouselHeader");
 
 export interface CarouselHeaderProps
   extends Omit<HTMLAttributes<HTMLDivElement>, "title"> {
+  /**
+   * The title of the carousel that accompanies the controls.
+   */
   title?: ReactNode;
 }
 

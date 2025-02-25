@@ -20,7 +20,6 @@ import carouselSliderCss from "./CarouselSlider.css";
 export interface CarouselSliderProps extends HTMLAttributes<HTMLDivElement> {
   /**
    * Collection of slides to render
-   * Component must implement CarouselSlideProps. Mandatory.
    */
   children: Array<ReactElement<CarouselSlideProps>>;
 }
