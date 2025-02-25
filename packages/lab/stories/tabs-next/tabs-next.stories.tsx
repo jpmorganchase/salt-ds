@@ -203,18 +203,31 @@ WithBadge.args = {
 };
 
 export const Overflow: StoryFn<typeof TabsNext> = (args) => {
+  const [width, setWidth] = useState(400);
   return (
-    <TabsNext {...args}>
-      <TabBar inset divider>
-        <TabListNext style={{ maxWidth: 350, margin: "auto" }}>
-          {lotsOfTabs.map((label) => (
-            <TabNext value={label} key={label}>
-              <TabNextTrigger>{label}</TabNextTrigger>
-            </TabNext>
-          ))}
-        </TabListNext>
-      </TabBar>
-    </TabsNext>
+    <StackLayout style={{ width }}>
+      <FormField>
+        <FormFieldLabel>Width</FormFieldLabel>
+        <Input
+          inputProps={{
+            type: "number",
+            value: width,
+            onChange: (e) => setWidth(Number(e.target.value)),
+          }}
+        />
+      </FormField>
+      <TabsNext {...args}>
+        <TabBar inset divider>
+          <TabListNext style={{ margin: "auto" }}>
+            {lotsOfTabs.map((label) => (
+              <TabNext value={label} key={label}>
+                <TabNextTrigger>{label}</TabNextTrigger>
+              </TabNext>
+            ))}
+          </TabListNext>
+        </TabBar>
+      </TabsNext>
+    </StackLayout>
   );
 };
 
