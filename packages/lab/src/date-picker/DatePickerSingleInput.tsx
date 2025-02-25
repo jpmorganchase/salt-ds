@@ -184,6 +184,7 @@ export const DatePickerSingleInput = forwardRef<
         className={clsx(withBaseName(), className)}
         date={selectedDate ?? null}
         readOnly={readOnly}
+        disabled={disabled}
         ref={ref}
         onDateChange={handleDateChange}
         onDateValueChange={handleDateValueChange}
