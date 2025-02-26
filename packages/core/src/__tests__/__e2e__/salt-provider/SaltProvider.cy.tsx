@@ -503,5 +503,21 @@ describe("Given a SaltProviderNext", () => {
         .and("have.attr", "data-unstable-action-font", "Open Sans")
         .and("have.attr", "data-announcer", "true");
     });
+
+    it("should allow responsive density values", () => {
+      mount(
+        <SaltProvider density={{ xs: "touch", sm: "low" }}>
+          <TestComponent />
+        </SaltProvider>,
+      );
+
+      cy.get("#test-1").should("exist").and("have.attr", "data-density", "low");
+
+      cy.viewport(499, 900);
+
+      cy.get("#test-1")
+        .should("exist")
+        .and("have.attr", "data-density", "touch");
+    });
   });
 });
