@@ -52,16 +52,6 @@ const config: StorybookConfig = {
           ignored: ["**/coverage/**"],
         },
       },
-      optimizeDeps: {
-        entries: [
-          "@storybook/icons",
-          "@storybook/manager-api",
-          "dayjs",
-          "luxon",
-          "moment",
-          "date-fns",
-        ],
-      },
     };
 
     if (configType === "PRODUCTION" && config.root) {
