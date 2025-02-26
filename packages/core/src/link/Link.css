@@ -73,7 +73,7 @@
 /* Set color for visited link */
 .saltLink:visited {
   color: var(--saltLink-color-visited, var(--link-color-visited));
-  text-decoration: var(--link-textDecoration);
+  text-decoration: var(--link-textDecoration-visited);
 }
 
 /* Set color for hovered link */
