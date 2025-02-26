@@ -6,7 +6,13 @@
   box-sizing: border-box;
   width: var(--carousel-slide-width, 100%);
   gap: var(--salt-spacing-200);
+  padding: var(--salt-focused-outlineWidth);
 }
+.saltCarouselSlide:focus-visible {
+  outline: var(--salt-focused-outline);
+  outline-offset: calc(0px - var(--salt-focused-outlineWidth));
+}
+
 .saltCarouselSlide-actions {
   display: none;
 }
