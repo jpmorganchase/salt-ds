@@ -51,6 +51,9 @@ export const AllVariantsGrid: StoryFn<QAContainerProps> = (props) => (
     <Link href="https://www.google.com" target="_blank" IconComponent={null}>
       No icon
     </Link>
+    <Link href="https://www.google.com" underline="hover">
+      Underline hover
+    </Link>
   </QAContainer>
 );
 
@@ -110,6 +113,9 @@ export const NoStyleInjectionGrid: StoryFn<QAContainerNoStyleInjectionProps> = (
     </Link>
     <Link href="https://www.google.com" target="_blank" IconComponent={null}>
       No icon
+    </Link>
+    <Link href="https://www.google.com" underline="hover">
+      Underline hover
     </Link>
   </QAContainerNoStyleInjection>
 );

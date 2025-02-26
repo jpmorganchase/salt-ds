@@ -14,7 +14,7 @@
   box-sizing: border-box;
   color: var(--salt-content-primary-foreground);
   letter-spacing: var(--salt-text-letterSpacing);
-  text-decoration: var(--salt-navigable-textDecoration);
+  text-decoration: var(--salt-typography-textDecoration-underline);
   font-family: var(--salt-text-fontFamily);
   white-space: nowrap;
   background: var(--saltSkipLink-background, var(--salt-container-primary-background));

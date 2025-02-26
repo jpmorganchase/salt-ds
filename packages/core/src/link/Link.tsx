@@ -10,7 +10,7 @@ import {
 } from "react";
 import { useIcon } from "../semantic-icon-provider";
 import { Text, type TextProps } from "../text";
-import { type RenderPropsType, makePrefixer } from "../utils";
+import { type RenderPropsType, capitalize, makePrefixer } from "../utils";
 import linkCss from "./Link.css";
 import { LinkAction } from "./LinkAction";
 
@@ -25,6 +25,9 @@ const withBaseName = makePrefixer("saltLink");
 export interface LinkProps
   extends Omit<ComponentPropsWithoutRef<"a">, "color">,
     Pick<TextProps<"a">, "maxRows" | "styleAs" | "variant"> {
+  /**
+   * Icon component displayed for external links. Defaults to `ExternalIcon` from `SemanticIconProvider`.
+   */
   IconComponent?: ComponentType<IconProps> | null;
   /**
    * Render prop to enable customisation of anchor element.
@@ -34,6 +37,14 @@ export interface LinkProps
    * The color of the text. Defaults to "primary".
    */
   color?: "inherit" | "primary" | "secondary" | "accent";
+  /**
+   *
+   * Either "link" or "hover".
+   * Determines when underline should be applied to the link.
+   *
+   * @default "link".
+   */
+  underline?: "link" | "hover";
 }
 
 export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
@@ -45,6 +56,7 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
     color: colorProp,
     variant,
     target = "_self",
+    underline = "link",
     ...rest
   },
   ref,
@@ -66,6 +78,7 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
       as={LinkAction}
       className={clsx(
         withBaseName(),
+        withBaseName(`underline${capitalize(underline)}`),
         {
           [withBaseName(color)]: color !== "inherit",
         },

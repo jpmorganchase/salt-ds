@@ -11,9 +11,4 @@
 
   --salt-navigable-indicator-hover: var(--salt-palette-navigate-indicator-hover);
   --salt-navigable-indicator-active: var(--salt-palette-navigate-indicator-active);
-
-  /* Link */
-  --salt-navigable-textDecoration: underline;
-  --salt-navigable-textDecoration-hover: none;
-  --salt-navigable-textDecoration-selected: underline;
 }
