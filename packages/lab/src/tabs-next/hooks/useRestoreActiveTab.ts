@@ -21,8 +21,14 @@ export function useRestoreActiveTab({
   removedActiveTabRef,
 }: UseHandleRemovalProps) {
   const tabsRef = useRef(tabs);
+  const previousTabsRef = useRef(tabs);
+
   useIsomorphicLayoutEffect(() => {
     tabsRef.current = tabs;
+
+    return () => {
+      previousTabsRef.current = tabs;
+    };
   }, [tabs]);
 
   useEffect(() => {
@@ -37,50 +43,59 @@ export function useRestoreActiveTab({
             ? mutation.removedNodes[0]
             : null;
 
+        const removedItemWasTab =
+          removedActiveTabRef.current && removedItem?.dataset?.overflowitem;
+
         const activeTabWasRemoved =
-          removedActiveTabRef.current &&
-          removedItem?.dataset?.overflowitem &&
+          removedItemWasTab &&
           !tabsRef.current.find(
             ({ value }) => value === removedActiveTabRef.current,
           );
 
         if (activeTabWasRemoved) {
           const removedTab =
-            removedItem.querySelector<HTMLElement>('[role="tab"]');
-
-          const previousTab =
-            mutation.previousSibling instanceof HTMLElement
-              ? mutation.previousSibling.querySelector<HTMLElement>(
-                  '[role="tab"]',
-                )
-              : null;
+            removedItem?.querySelector<HTMLElement>('[role="tab"]');
 
           let nextTab: HTMLElement | null | undefined = null;
 
-          if (!previousTab) {
+          if (
+            removedTab?.ariaSelected === "true" &&
+            realSelectedIndex.current != null &&
+            realSelectedIndex.current >= 0
+          ) {
             nextTab =
-              mutation.nextSibling instanceof HTMLElement
-                ? mutation.nextSibling?.querySelector<HTMLElement>(
+              tabsRef.current[
+                Math.min(realSelectedIndex.current, tabsRef.current.length - 1)
+              ]?.element;
+          }
+
+          if (!nextTab) {
+            const previousTab =
+              mutation.previousSibling instanceof HTMLElement
+                ? mutation.previousSibling.querySelector<HTMLElement>(
                     '[role="tab"]',
                   )
                 : null;
-          } else {
-            const nextTabIndex = previousTab
-              ? Math.min(
-                  tabsRef.current.findIndex(
+
+            if (!previousTab) {
+              nextTab =
+                mutation.nextSibling instanceof HTMLElement
+                  ? mutation.nextSibling?.querySelector<HTMLElement>(
+                      '[role="tab"]',
+                    )
+                  : null;
+            } else {
+              const nextTabIndex = previousTab
+                ? tabsRef.current.findIndex(
                     ({ element }) => element === previousTab,
-                  ) + 1,
-                  tabsRef.current.length - 1,
-                )
-              : -1;
+                  ) + 1
+                : -1;
 
-            const offset =
-              removedTab?.ariaSelected === "true" &&
-              realSelectedIndex.current != null
-                ? Math.max(realSelectedIndex.current, 0)
-                : 0;
-
-            nextTab = tabsRef.current[nextTabIndex + offset]?.element;
+              nextTab =
+                tabsRef.current[
+                  Math.min(nextTabIndex, tabsRef.current.length - 1)
+                ]?.element;
+            }
           }
 
           if (
@@ -106,17 +121,18 @@ export function useRestoreActiveTab({
           removedActiveTabRef.current = undefined;
         }
 
-        if (removedActiveTabRef.current && mutation.addedNodes.length > 0) {
-          const tabElement = tabsRef.current.find(
-            ({ value }) => value === removedActiveTabRef.current,
-          )?.element;
+        // Focus the tab if it was moved from the overflow menu into the visible tabs
+        if (removedActiveTabRef.current) {
+          if (removedItemWasTab) {
+            const tabElement = tabsRef.current.find(
+              ({ value }) => value === removedActiveTabRef.current,
+            )?.element;
 
-          if (
-            tabElement &&
-            mutation.addedNodes[0]?.contains(tabElement) &&
-            win.document.activeElement === win.document.body
-          ) {
-            tabElement.focus();
+            if (win.document.activeElement === win.document.body) {
+              tabElement?.focus();
+            }
+          } else if (removedItem?.dataset.overflow) {
+            tabsRef.current[tabsRef.current.length - 1]?.element?.focus();
           }
         }
       }

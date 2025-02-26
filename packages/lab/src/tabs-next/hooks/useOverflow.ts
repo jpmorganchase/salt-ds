@@ -216,10 +216,18 @@ export function useOverflow({
     (child) => child?.props?.value === selected,
   );
 
+  useIsomorphicLayoutEffect(() => {
+    if (visibleCount === childArray.length) {
+      realSelectedIndex.current = childArray.findIndex(
+        // @ts-ignore
+        (child) => child?.props?.value === selected,
+      );
+    }
+  }, [visibleCount, childArray, selected]);
+
   if (selected && hiddenSelectedIndex !== -1) {
     const removed = hidden.splice(hiddenSelectedIndex, 1);
     visible.push(removed[0]);
-    realSelectedIndex.current = hiddenSelectedIndex;
   }
 
   if (isMeasuring) {
