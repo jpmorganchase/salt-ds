@@ -148,6 +148,7 @@ export const Dialog = forwardRef<HTMLDivElement, DialogProps>(
             ref={floatingRef}
             width={elements.floating?.offsetWidth}
             height={elements.floating?.offsetHeight}
+            lockScroll
             focusManagerProps={{
               context: context,
               initialFocus,
