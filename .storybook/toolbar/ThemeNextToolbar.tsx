@@ -24,34 +24,40 @@ export const globalOptions: Record<
   { name: string; description: string; defaultValue: string; items: string[] }
 > = {
   themeNext: {
-    name: "Experimental theme next",
+    name: "Theme next",
     description: "Turn on/off theme next",
     defaultValue: "disable",
     items: ["enable", "disable"],
   },
   corner: {
-    name: "Experimental corner",
+    name: "Corner",
     description: "Switch corner to sharp / rounded",
     defaultValue: "sharp",
     items: ["sharp", "rounded"],
   },
   headingFont: {
-    name: "Experimental heading font",
+    name: "Heading font",
     description: "Switch heading font to open sans / amplitude",
     defaultValue: "Open Sans",
     items: ["Open Sans", "Amplitude"],
   },
   accent: {
-    name: "Experimental accent",
+    name: "Accent",
     description: "Switch accent to blue / teal",
     defaultValue: "blue",
     items: ["blue", "teal"],
   },
   actionFont: {
-    name: "Experimental action font",
+    name: "Action font",
     description: "Switch action font to open sans / amplitude",
     defaultValue: "Open Sans",
     items: ["Open Sans", "Amplitude"],
+  },
+  actionCase: {
+    name: "Action case",
+    description: "Switch action case to original / uppercase",
+    defaultValue: "uppercase",
+    items: ["uppercase", "original"],
   },
 };
 

@@ -27,6 +27,7 @@ const TestComponent = ({
     accent,
     actionFont,
     headingFont,
+    actionCase,
     // Test backwards compatibilty using `UNSTABLE_` variables
     UNSTABLE_corner,
     UNSTABLE_accent,
@@ -48,6 +49,7 @@ const TestComponent = ({
       data-accent={accent}
       data-heading-font={headingFont}
       data-action-font={actionFont}
+      data-action-case={actionCase}
       data-themeNext={themeNext}
       // Test backwards compatibilty using `UNSTABLE_` variables
       data-unstable-corner={UNSTABLE_corner}
@@ -410,6 +412,7 @@ describe("Given a SaltProviderNext", () => {
           accent="teal"
           headingFont="Amplitude"
           actionFont="Amplitude"
+          actionCase="original"
         >
           <TestComponent />
           <SaltProviderNext density="medium">
@@ -429,6 +432,7 @@ describe("Given a SaltProviderNext", () => {
         .and("have.attr", "data-accent", "teal")
         .and("have.attr", "data-heading-font", "Amplitude")
         .and("have.attr", "data-action-font", "Amplitude")
+        .and("have.attr", "data-action-case", "original")
         .and("have.attr", "data-unstable-corner", "rounded")
         .and("have.attr", "data-unstable-accent", "teal")
         .and("have.attr", "data-unstable-heading-font", "Amplitude")
@@ -443,6 +447,7 @@ describe("Given a SaltProviderNext", () => {
         .and("have.attr", "data-accent", "teal")
         .and("have.attr", "data-heading-font", "Amplitude")
         .and("have.attr", "data-action-font", "Amplitude")
+        .and("have.attr", "data-action-case", "original")
         .and("have.attr", "data-unstable-corner", "rounded")
         .and("have.attr", "data-unstable-accent", "teal")
         .and("have.attr", "data-unstable-heading-font", "Amplitude")
@@ -458,6 +463,7 @@ describe("Given a SaltProviderNext", () => {
           accent="teal"
           headingFont="Amplitude"
           actionFont="Amplitude"
+          actionCase="original"
         >
           <TestComponent />
           <SaltProviderNext
@@ -466,6 +472,7 @@ describe("Given a SaltProviderNext", () => {
             accent="blue"
             headingFont="Open Sans"
             actionFont="Open Sans"
+            actionCase="uppercase"
           >
             <TestComponent id="test-2" />
           </SaltProviderNext>
@@ -483,6 +490,7 @@ describe("Given a SaltProviderNext", () => {
         .and("have.attr", "data-accent", "teal")
         .and("have.attr", "data-heading-font", "Amplitude")
         .and("have.attr", "data-action-font", "Amplitude")
+        .and("have.attr", "data-action-case", "original")
         .and("have.attr", "data-unstable-corner", "rounded")
         .and("have.attr", "data-unstable-accent", "teal")
         .and("have.attr", "data-unstable-heading-font", "Amplitude")
@@ -497,6 +505,7 @@ describe("Given a SaltProviderNext", () => {
         .and("have.attr", "data-accent", "blue")
         .and("have.attr", "data-heading-font", "Open Sans")
         .and("have.attr", "data-action-font", "Open Sans")
+        .and("have.attr", "data-action-case", "uppercase")
         .and("have.attr", "data-unstable-corner", "sharp")
         .and("have.attr", "data-unstable-accent", "blue")
         .and("have.attr", "data-unstable-heading-font", "Open Sans")

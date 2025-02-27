@@ -23,6 +23,7 @@ import {
 } from "../breakpoints";
 import type {
   Accent,
+  ActionCase,
   ActionFont,
   Corner,
   Density,
@@ -44,6 +45,7 @@ const DEFAULT_CORNER: Corner = "sharp";
 const DEFAULT_HEADING_FONT: HeadingFont = "Open Sans";
 const DEFAULT_ACCENT: Accent = "blue";
 const DEFAULT_ACTION_FONT: ActionFont = "Open Sans";
+const DEFAULT_ACTION_CASE: ActionCase = "uppercase";
 export interface ThemeContextProps {
   theme: ThemeName;
   mode: Mode;
@@ -62,6 +64,7 @@ export interface ThemeContextProps {
   actionFont: ActionFont;
   /** @deprecated use `actionFont` */
   UNSTABLE_actionFont: ActionFont;
+  actionCase: ActionCase;
 }
 
 export const DensityContext = createContext<Density>(DEFAULT_DENSITY);
@@ -78,6 +81,7 @@ export const ThemeContext = createContext<ThemeContextProps>({
   UNSTABLE_accent: DEFAULT_ACCENT,
   actionFont: DEFAULT_ACTION_FONT,
   UNSTABLE_actionFont: DEFAULT_ACTION_FONT,
+  actionCase: DEFAULT_ACTION_CASE,
 });
 
 export const BreakpointContext =
@@ -115,6 +119,7 @@ const createThemedChildren = ({
   headingFont,
   accent,
   actionFont,
+  actionCase,
 }: {
   children: ReactNode;
   themeName: ThemeName;
@@ -129,6 +134,7 @@ const createThemedChildren = ({
     "data-heading-font": headingFont,
     "data-accent": accent,
     "data-action-font": actionFont,
+    "data-action-case": actionCase,
   };
   if (applyClassesTo === "root") {
     return children;
@@ -243,6 +249,7 @@ function InternalSaltProvider({
   headingFont: headingFontProp,
   accent: accentProp,
   actionFont: actionFontProp,
+  actionCase: actionCaseProp,
 }: Omit<
   SaltProviderProps & ThemeNextProps & SaltProviderNextProps,
   "enableStyleInjection"
@@ -256,6 +263,7 @@ function InternalSaltProvider({
     headingFont: inheritedHeadingFont,
     accent: inheritedAccent,
     actionFont: inheritedActionFont,
+    actionCase: inheritedActionCase,
   } = useContext(ThemeContext);
 
   const isRootProvider = inheritedTheme === undefined || inheritedTheme === "";
@@ -270,6 +278,8 @@ function InternalSaltProvider({
   const accent = accentProp ?? inheritedAccent ?? DEFAULT_ACCENT;
   const actionFont =
     actionFontProp ?? inheritedActionFont ?? DEFAULT_ACTION_FONT;
+  const actionCase =
+    actionCaseProp ?? inheritedActionCase ?? DEFAULT_ACTION_CASE;
 
   const applyClassesTo =
     applyClassesToProp ?? (isRootProvider ? "root" : "scope");
@@ -291,6 +301,7 @@ function InternalSaltProvider({
       headingFont: headingFont,
       accent: accent,
       actionFont: actionFont,
+      actionCase: actionCase,
       // Backward compatibility
       UNSTABLE_corner: corner,
       UNSTABLE_headingFont: headingFont,
@@ -306,6 +317,7 @@ function InternalSaltProvider({
       headingFont,
       accent,
       actionFont,
+      actionCase,
     ],
   );
 
@@ -320,6 +332,7 @@ function InternalSaltProvider({
     headingFont,
     accent,
     actionFont,
+    actionCase,
   });
 
   useIsomorphicLayoutEffect(() => {
@@ -340,6 +353,7 @@ function InternalSaltProvider({
             headingFont;
           targetWindow.document.documentElement.dataset.accent = accent;
           targetWindow.document.documentElement.dataset.actionFont = actionFont;
+          targetWindow.document.documentElement.dataset.actionCase = actionCase;
         }
       } else {
         console.warn(
@@ -360,6 +374,7 @@ function InternalSaltProvider({
           delete targetWindow.document.documentElement.dataset.headingFont;
           delete targetWindow.document.documentElement.dataset.accent;
           delete targetWindow.document.documentElement.dataset.actionFont;
+          delete targetWindow.document.documentElement.dataset.actionCase;
         }
       }
     };
@@ -433,6 +448,12 @@ interface SaltProviderNextAdditionalProps {
    * @default "Open Sans"
    */
   actionFont?: ActionFont;
+  /**
+   * Either "uppercase" or "original".
+   * Determines font case of action components, mostly Buttons.
+   * @default "uppercase"
+   */
+  actionCase?: ActionCase;
 }
 
 export type SaltProviderNextProps = SaltProviderProps &

@@ -22,3 +22,11 @@
   --salt-palette-text-notation-fontWeight-small: var(--salt-typography-fontWeight-regular);
   --salt-palette-text-notation-fontWeight-strong: var(--salt-typography-fontWeight-bold);
 }
+
+.salt-theme[data-action-case="uppercase"] {
+  --salt-palette-text-action-textTransform: var(--salt-typography-textTransform-uppercase);
+}
+
+.salt-theme[data-action-case="original"] {
+  --salt-palette-text-action-textTransform: var(--salt-typography-textTransform-none);
+}

@@ -75,6 +75,7 @@ export const withTheme: Decorator = (StoryFn, context) => {
     headingFont,
     accent,
     actionFont,
+    actionCase,
   } = context.globals;
 
   const Provider = themeNext === "enable" ? SaltProviderNext : SaltProvider;
@@ -107,6 +108,7 @@ export const withTheme: Decorator = (StoryFn, context) => {
             headingFont={headingFont}
             accent={accent}
             actionFont={actionFont}
+            actionCase={actionCase}
           >
             <Panel>
               <StoryFn />
@@ -127,6 +129,7 @@ export const withTheme: Decorator = (StoryFn, context) => {
       headingFont={headingFont}
       accent={accent}
       actionFont={actionFont}
+      actionCase={actionCase}
     >
       <SetBackground viewMode={context.viewMode} id={context.id} />
       <StoryFn />
