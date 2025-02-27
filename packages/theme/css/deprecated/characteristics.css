@@ -121,6 +121,7 @@
   --salt-text-primary-foreground-disabled: var(--salt-palette-neutral-primary-foreground-disabled);
   --salt-text-secondary-foreground: var(--salt-palette-neutral-secondary-foreground);
   --salt-text-secondary-foreground-disabled: var(--salt-palette-neutral-secondary-foreground-disabled);
+  --salt-text-textDecoration: var(--salt-typography-textDecoration-none);
 
   /* Navigable */
   --salt-navigable-primary-background: var(--salt-palette-navigate-primary-background);

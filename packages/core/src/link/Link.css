@@ -21,7 +21,6 @@
 }
 
 .saltLink-underlineHover {
-  /* These overrides navigable characteristics */
   --link-textDecoration: var(--salt-typography-textDecoration-none);
   --link-textDecoration-hover: var(--salt-typography-textDecoration-underline);
   --link-textDecoration-focus: var(--salt-typography-textDecoration-none);

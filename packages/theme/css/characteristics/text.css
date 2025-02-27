@@ -3,7 +3,6 @@
   --salt-text-letterSpacing: 0;
   --salt-text-textAlign: left;
   --salt-text-textAlign-embedded: center;
-  --salt-text-textDecoration: var(--salt-typography-textDecoration-none);
   --salt-text-textTransform: none;
 
   /* Action */
