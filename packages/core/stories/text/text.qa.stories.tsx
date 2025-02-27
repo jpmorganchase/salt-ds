@@ -20,7 +20,6 @@ import {
   type QAContainerNoStyleInjectionProps,
   type QAContainerProps,
 } from "docs/components";
-import { text } from "stream/consumers";
 
 export default {
   title: "Core/Text/Text QA",
