@@ -449,7 +449,7 @@ interface SaltProviderNextAdditionalProps {
    */
   actionFont?: ActionFont;
   /**
-   * Either "uppercase" or "original".
+   * Either "uppercase" or "asTyped".
    * Determines font case of action components, mostly Buttons.
    * @default "uppercase"
    */

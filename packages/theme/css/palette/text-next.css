@@ -48,3 +48,11 @@
 
   --salt-palette-text-action-fontWeight: var(--salt-typography-fontWeight-medium);
 }
+
+.salt-theme-next.salt-theme[data-action-case="uppercase"] {
+  --salt-palette-text-action-textTransform: var(--salt-typography-textTransform-uppercase);
+}
+
+.salt-theme-next.salt-theme[data-action-case="asTyped"] {
+  --salt-palette-text-action-textTransform: var(--salt-typography-textTransform-none);
+}

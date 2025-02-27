@@ -20,6 +20,7 @@ import {
   type QAContainerNoStyleInjectionProps,
   type QAContainerProps,
 } from "docs/components";
+import { text } from "stream/consumers";
 
 export default {
   title: "Core/Text/Text QA",
@@ -105,6 +106,7 @@ AllVariantsGrid.parameters = {
         themeNext: "enable",
         corner: "rounded",
         accent: "teal",
+        textCase: "asTyped",
         // Ignore headingFont given font is not loaded
       },
     },

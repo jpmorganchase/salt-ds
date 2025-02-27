@@ -55,9 +55,9 @@ export const globalOptions: Record<
   },
   actionCase: {
     name: "Action case",
-    description: "Switch action case to original / uppercase",
+    description: "Switch action case to asTyped / uppercase",
     defaultValue: "uppercase",
-    items: ["uppercase", "original"],
+    items: ["uppercase", "asTyped"],
   },
 };
 

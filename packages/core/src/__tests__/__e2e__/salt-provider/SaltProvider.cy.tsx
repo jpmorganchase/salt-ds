@@ -412,7 +412,7 @@ describe("Given a SaltProviderNext", () => {
           accent="teal"
           headingFont="Amplitude"
           actionFont="Amplitude"
-          actionCase="original"
+          actionCase="asTyped"
         >
           <TestComponent />
           <SaltProviderNext density="medium">
@@ -432,7 +432,7 @@ describe("Given a SaltProviderNext", () => {
         .and("have.attr", "data-accent", "teal")
         .and("have.attr", "data-heading-font", "Amplitude")
         .and("have.attr", "data-action-font", "Amplitude")
-        .and("have.attr", "data-action-case", "original")
+        .and("have.attr", "data-action-case", "asTyped")
         .and("have.attr", "data-unstable-corner", "rounded")
         .and("have.attr", "data-unstable-accent", "teal")
         .and("have.attr", "data-unstable-heading-font", "Amplitude")
@@ -447,7 +447,7 @@ describe("Given a SaltProviderNext", () => {
         .and("have.attr", "data-accent", "teal")
         .and("have.attr", "data-heading-font", "Amplitude")
         .and("have.attr", "data-action-font", "Amplitude")
-        .and("have.attr", "data-action-case", "original")
+        .and("have.attr", "data-action-case", "asTyped")
         .and("have.attr", "data-unstable-corner", "rounded")
         .and("have.attr", "data-unstable-accent", "teal")
         .and("have.attr", "data-unstable-heading-font", "Amplitude")
@@ -463,7 +463,7 @@ describe("Given a SaltProviderNext", () => {
           accent="teal"
           headingFont="Amplitude"
           actionFont="Amplitude"
-          actionCase="original"
+          actionCase="asTyped"
         >
           <TestComponent />
           <SaltProviderNext
@@ -490,7 +490,7 @@ describe("Given a SaltProviderNext", () => {
         .and("have.attr", "data-accent", "teal")
         .and("have.attr", "data-heading-font", "Amplitude")
         .and("have.attr", "data-action-font", "Amplitude")
-        .and("have.attr", "data-action-case", "original")
+        .and("have.attr", "data-action-case", "asTyped")
         .and("have.attr", "data-unstable-corner", "rounded")
         .and("have.attr", "data-unstable-accent", "teal")
         .and("have.attr", "data-unstable-heading-font", "Amplitude")
