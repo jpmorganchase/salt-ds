@@ -12,6 +12,13 @@ import {
 import { useCarousel } from "./CarouselContext";
 import carouselSlideCss from "./CarouselSlide.css";
 
+export const CarouselSlideAppearanceValues = [
+  "bordered",
+  "transparent",
+] as const;
+export type CarouselSlideAppearance =
+  (typeof CarouselSlideAppearanceValues)[number];
+
 export interface CarouselSlideProps extends HTMLAttributes<HTMLDivElement> {
   /**
    * Actions to be displayed in the content footer.
@@ -22,16 +29,17 @@ export interface CarouselSlideProps extends HTMLAttributes<HTMLDivElement> {
    */
   media?: ReactNode;
   /**
-   * Styling variant with full border. Defaults to false.
-   */
-  bordered?: boolean;
+   * The appearance of the slide. Options are 'bordered', and 'transparent'.
+   * 'transparent' is the default value.
+   * */
+  appearance?: CarouselSlideAppearance;
 }
 
 const withBaseName = makePrefixer("saltCarouselSlide");
 
 export const CarouselSlide = forwardRef<HTMLDivElement, CarouselSlideProps>(
   function CarouselSlide(
-    { actions, bordered, media, children, style, ...rest },
+    { actions, appearance, media, children, style, ...rest },
     ref,
   ) {
     const targetWindow = useWindow();
@@ -70,7 +78,7 @@ export const CarouselSlide = forwardRef<HTMLDivElement, CarouselSlideProps>(
         aria-roledescription="slide"
         ref={useForkRef(ref, slideRef)}
         className={clsx(withBaseName(), {
-          [withBaseName("bordered")]: bordered,
+          [withBaseName("bordered")]: appearance === "bordered",
         })}
         style={SlideStyles}
         tabIndex={isVisible ? 0 : -1}
@@ -80,7 +88,7 @@ export const CarouselSlide = forwardRef<HTMLDivElement, CarouselSlideProps>(
         {children && (
           <div
             className={clsx(withBaseName("content"), {
-              [withBaseName("card")]: bordered,
+              [withBaseName("card")]: appearance === "bordered",
             })}
           >
             {children}

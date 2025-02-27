@@ -6,7 +6,6 @@
   box-sizing: border-box;
   width: var(--carousel-slide-width, 100%);
   gap: var(--salt-spacing-200);
-  padding: var(--salt-focused-outlineWidth);
 }
 .saltCarouselSlide:focus-visible {
   outline: var(--salt-focused-outline);
@@ -24,6 +23,8 @@
   flex-direction: column;
   box-sizing: border-box;
   gap: var(--salt-spacing-200);
+  padding-left: var(--salt-spacing-25);
+  padding-bottom: var(--salt-spacing-25);
 }
 .saltCarouselSlide-card {
   padding: var(--salt-spacing-200);
