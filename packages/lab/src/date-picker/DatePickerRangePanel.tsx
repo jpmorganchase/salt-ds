@@ -31,7 +31,6 @@ import {
   type CalendarOffsetProps,
   type CalendarProps,
   type CalendarRangeProps,
-  CalendarWeekHeader,
   type CalendarWeekHeaderProps,
   type DateRangeSelection,
   type UseCalendarSelectionRangeProps,
@@ -360,14 +359,20 @@ export const DatePickerRangePanel = forwardRef(function DatePickerRangePanel<
       <FlexLayout gap={0}>
         {/* Avoid Dropdowns in Calendar inheriting the FormField's state */}
         <FormFieldContext.Provider value={{} as FormFieldContextValue}>
-          <Calendar selectionVariant={"range"} {...StartCalendarProps}>
+          <Calendar
+            selectionVariant={"range"}
+            numberOfVisibleMonths={1}
+            {...StartCalendarProps}
+          >
             <CalendarNavigation {...StartCalendarNavigationProps} />
-            <CalendarWeekHeader {...StartCalendarWeekHeaderProps} />
             <CalendarGrid {...StartCalendarDataGridProps} />
           </Calendar>
-          <Calendar selectionVariant={"range"} {...EndCalendarProps}>
+          <Calendar
+            selectionVariant={"range"}
+            numberOfVisibleMonths={1}
+            {...EndCalendarProps}
+          >
             <CalendarNavigation {...EndCalendarNavigationProps} />
-            <CalendarWeekHeader {...EndCalendarWeekHeaderProps} />
             <CalendarGrid {...EndCalendarDataGridProps} />
           </Calendar>
         </FormFieldContext.Provider>

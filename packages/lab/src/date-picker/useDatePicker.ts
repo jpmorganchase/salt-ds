@@ -260,6 +260,7 @@ export function useDatePicker<
       date: DateRangeSelection<TDate> | null,
       details: DateInputRangeDetails,
     ) => {
+      console.log("selectRange", date, details);
       setSelectedDate(date);
       if (selectionVariant === "range") {
         onSelectionChange?.(event, date, details);

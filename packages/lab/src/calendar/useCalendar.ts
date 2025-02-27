@@ -1,4 +1,9 @@
-import { useControlled } from "@salt-ds/core";
+import {
+  type ResponsiveProp,
+  resolveResponsiveValue,
+  useBreakpoint,
+  useControlled,
+} from "@salt-ds/core";
 import type { DateFrameworkType } from "@salt-ds/date-adapters";
 import {
   type SyntheticEvent,
@@ -71,6 +76,12 @@ interface UseCalendarBaseProps<TDate> {
    * The maximum selectable date.
    */
   maxDate?: TDate;
+  /**
+   * Number of visible months, maximum 12, defaults to 1
+   */
+  numberOfVisibleMonths: ResponsiveProp<
+    1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12
+  >;
 }
 
 /**
@@ -197,6 +208,11 @@ export interface UseCalendarReturn<TDate extends DateFrameworkType> {
      * Whether the calendar is currently focused.
      */
     calendarFocused: boolean;
+
+    /**
+     * Number of visible months
+     */
+    numberOfVisibleMonths: number;
 
     /**
      * Additional state properties from selectionManager.state.
@@ -398,12 +414,19 @@ export function useCalendar<TDate extends DateFrameworkType>(
     isDayDisabled = defaultIsDayDisabled,
     minDate = defaultMinDate,
     maxDate = defaultMaxDate,
+    numberOfVisibleMonths = 1,
     selectionVariant,
     onHoveredDateChange,
     hoveredDate,
     // startDateOffset,
     // endDateOffset,
   } = props;
+
+  const { matchedBreakpoints } = useBreakpoint();
+
+  const responsiveNumberOfVisibleMonths =
+    resolveResponsiveValue(numberOfVisibleMonths, matchedBreakpoints) ?? 1;
+
   const [visibleMonth, setVisibleMonthState] = useControlled({
     controlled: visibleMonthProp
       ? dateAdapter.startOf(visibleMonthProp, "month", locale)
@@ -474,9 +497,26 @@ export function useCalendar<TDate extends DateFrameworkType>(
 
   const [calendarFocused, setCalendarFocused] = useState(false);
 
-  const isInVisibleMonth = useCallback(
-    (date: TDate | undefined | null): date is TDate =>
-      date != null && dateAdapter.isSame(date, visibleMonth, "month"),
+  const isDayVisible = useCallback(
+    (date?: TDate | null) => {
+      if (!date) {
+        return false;
+      }
+      const startInsideDays = dateAdapter.startOf(
+        visibleMonth,
+        "month",
+        locale,
+      );
+
+      if (dateAdapter.compare(date, startInsideDays) < 0) return false;
+
+      const endVisibleMonth = dateAdapter.add(visibleMonth, {
+        months: responsiveNumberOfVisibleMonths - 1,
+      });
+      const endInsideDays = dateAdapter.endOf(endVisibleMonth, "month", locale);
+
+      return !(dateAdapter.compare(date, endInsideDays) > 0);
+    },
     [visibleMonth],
   );
 
@@ -486,10 +526,10 @@ export function useCalendar<TDate extends DateFrameworkType>(
       (selectionVariant === "range" || selectionVariant === "offset") &&
       isDateRangeSelection<TDate>(selectedDate)
     ) {
-      if (isInVisibleMonth(selectedDate?.startDate)) {
+      if (isDayVisible(selectedDate?.startDate)) {
         return selectedDate.startDate;
       }
-      if (isInVisibleMonth(selectedDate?.endDate)) {
+      if (isDayVisible(selectedDate?.endDate)) {
         return selectedDate.endDate;
       }
     } else if (
@@ -498,7 +538,7 @@ export function useCalendar<TDate extends DateFrameworkType>(
     ) {
       // return first selected day in visible month
       const selectionInMonth = selectedDate
-        .filter((day) => isInVisibleMonth(day))
+        .filter((day) => isDayVisible(day))
         .sort((a, b) => dateAdapter.compare(a, b));
       if (selectionInMonth.length > 0) {
         return selectionInMonth[0];
@@ -507,14 +547,14 @@ export function useCalendar<TDate extends DateFrameworkType>(
       selectionVariant === "single" &&
       !isDateRangeSelection(selectedDate) &&
       !Array.isArray(selectedDate) &&
-      isInVisibleMonth(selectedDate)
+      isDayVisible(selectedDate)
     ) {
       return selectedDate;
     }
     // Defaults
     if (
       isDaySelectable(dateAdapter.today(locale)) &&
-      isInVisibleMonth(dateAdapter.today(locale))
+      isDayVisible(dateAdapter.today(locale))
     ) {
       return dateAdapter.today(locale);
     }
@@ -527,31 +567,14 @@ export function useCalendar<TDate extends DateFrameworkType>(
     }
     return null;
   }, [
-    isInVisibleMonth,
+    isDayVisible,
     selectionVariant,
     selectionManager.state.selectedDate,
     visibleMonth,
   ]);
 
-  const [focusedDate, setFocusedDateState] = useState<TDate | null>(
+  const [focusedDate, setFocusedDateState] = useState<TDate | null | undefined>(
     getInitialFocusedDate,
-  );
-
-  const isDayVisible = useCallback(
-    (date: TDate) => {
-      const startInsideDays = dateAdapter.startOf(
-        visibleMonth,
-        "month",
-        locale,
-      );
-
-      if (dateAdapter.compare(date, startInsideDays) < 0) return false;
-
-      const endInsideDays = dateAdapter.endOf(visibleMonth, "month", locale);
-
-      return !(dateAdapter.compare(date, endInsideDays) > 0);
-    },
-    [visibleMonth],
   );
 
   const setVisibleMonth = useCallback(
@@ -608,6 +631,7 @@ export function useCalendar<TDate extends DateFrameworkType>(
           locale,
           minDate,
           maxDate,
+          numberOfVisibleMonths: responsiveNumberOfVisibleMonths,
           selectionVariant,
           hideOutOfRangeDates,
           calendarFocused,

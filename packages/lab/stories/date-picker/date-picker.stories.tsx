@@ -4,6 +4,7 @@ import {
   FlexItem,
   FlexLayout,
   FormField,
+  FormFieldLabel,
   FormFieldHelperText as FormHelperText,
   FormFieldLabel as FormLabel,
   StackLayout,
@@ -24,25 +25,27 @@ import {
   DatePickerActions,
   type DatePickerOpenChangeReason,
   DatePickerOverlay,
+  DatePickerRangeGridPanel,
+  type DatePickerRangeGridPanelProps,
   DatePickerRangeInput,
   type DatePickerRangeInputProps,
   DatePickerRangePanel,
   type DatePickerRangeProps,
+  DatePickerSingleGridPanel,
+  type DatePickerSingleGridPanelProps,
   DatePickerSingleInput,
   type DatePickerSingleInputProps,
-  DatePickerSinglePanel,
-  type DatePickerSinglePanelProps,
   type DatePickerSingleProps,
   DatePickerTrigger,
   type DateRangeSelection,
+  Input,
   type SingleDatePickerState,
   type SingleDateSelection,
   useDatePickerContext,
   useLocalization,
 } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react";
-import type React from "react";
-import type { SyntheticEvent } from "react";
+import type { ChangeEvent, SyntheticEvent } from "react";
 import { useCallback, useRef, useState } from "react";
 // CustomDatePickerPanel is a sample component, representing a composition you could create yourselves, not intended for importing into your own projects
 // refer to https://github.com/jpmorganchase/salt-ds/blob/main/packages/lab/src/date-picker/useDatePicker.ts to create your own
@@ -100,7 +103,7 @@ const DatePickerSingleTemplate: StoryFn<
         <DatePickerSingleInput />
       </DatePickerTrigger>
       <DatePickerOverlay>
-        <DatePickerSinglePanel />
+        <DatePickerSingleGridPanel />
       </DatePickerOverlay>
     </DatePicker>
   );
@@ -231,7 +234,7 @@ export const SingleControlled: StoryFn<
           <DatePickerSingleInput />
         </DatePickerTrigger>
         <DatePickerOverlay>
-          <DatePickerSinglePanel />
+          <DatePickerSingleGridPanel />
         </DatePickerOverlay>
       </DatePicker>
       <FlexLayout>
@@ -466,6 +469,207 @@ RangeControlled.parameters = {
   },
 };
 
+export const SingleMultiRow: StoryFn<
+  DatePickerSingleProps<DateFrameworkType>
+> = ({ selectionVariant, defaultSelectedDate, ...args }) => {
+  const { dateAdapter } = useLocalization();
+  const [numberOfVisibleMonths, setNumberOfVisibleMonths] = useState("1");
+  const [columns, setColumns] = useState("1");
+  const [step, setStep] = useState("1");
+
+  const handleSelectionChange = useCallback(
+    (
+      event: SyntheticEvent,
+      date: SingleDateSelection<DateFrameworkType> | null,
+      details: DateInputSingleDetails | undefined,
+    ) => {
+      const { value, errors } = details || {};
+      console.log(
+        `Selected date: ${dateAdapter.isValid(date) ? dateAdapter.format(date, "DD MMM YYYY") : date}`,
+      );
+      if (errors?.length) {
+        console.log(
+          `Error(s): ${errors
+            .map(({ type, message }) => `type=${type} message=${message}`)
+            .join(",")}`,
+        );
+        if (value) {
+          console.log(`Original Value: ${value}`);
+        }
+      }
+      args?.onSelectionChange?.(event, date, details);
+    },
+    [args?.onSelectionChange, dateAdapter],
+  );
+
+  return (
+    <StackLayout>
+      <StackLayout direction={"row"}>
+        <FormField>
+          <FormFieldLabel>Number of columns</FormFieldLabel>
+          <Input
+            value={columns}
+            onChange={(event: ChangeEvent<HTMLInputElement>) => {
+              setColumns(event.target.value);
+            }}
+          />
+        </FormField>
+        <FormField>
+          <FormFieldLabel>Number of months in grid</FormFieldLabel>
+          <Input
+            value={numberOfVisibleMonths}
+            onChange={(event: ChangeEvent<HTMLInputElement>) => {
+              setNumberOfVisibleMonths(event.target.value);
+            }}
+          />
+        </FormField>
+        <FormField>
+          <FormFieldLabel>Step</FormFieldLabel>
+          <Input
+            value={step}
+            onChange={(event: ChangeEvent<HTMLInputElement>) => {
+              setStep(event.target.value);
+            }}
+          />
+        </FormField>
+      </StackLayout>
+      <DatePicker
+        {...args}
+        selectionVariant="single"
+        onSelectionChange={handleSelectionChange}
+      >
+        <DatePickerTrigger>
+          <DatePickerSingleInput />
+        </DatePickerTrigger>
+        <DatePickerOverlay>
+          <DatePickerSingleGridPanel
+            columns={Number.parseInt(columns, 10)}
+            numberOfVisibleMonths={
+              Number.parseInt(
+                numberOfVisibleMonths,
+                10,
+              ) as DatePickerSingleGridPanelProps<any>["numberOfVisibleMonths"]
+            }
+            CalendarNavigationProps={{ step: Number.parseInt(step, 10) }}
+            defaultVisibleMonth={dateAdapter.startOf(
+              dateAdapter.today(),
+              "year",
+            )}
+          />
+        </DatePickerOverlay>
+      </DatePicker>
+    </StackLayout>
+  );
+};
+
+export const RangeMultiRow: StoryFn<
+  DatePickerRangeProps<DateFrameworkType>
+> = ({ selectionVariant, defaultSelectedDate, ...args }) => {
+  const { dateAdapter } = useLocalization();
+  const [numberOfVisibleMonths, setNumberOfVisibleMonths] = useState("1");
+  const [columns, setColumns] = useState("1");
+  const [step, setStep] = useState("1");
+  const handleSelectionChange = useCallback(
+    (
+      event: SyntheticEvent,
+      date: DateRangeSelection<DateFrameworkType> | null,
+      details: DateInputRangeDetails | undefined,
+    ) => {
+      const { startDate, endDate } = date ?? {};
+      const {
+        startDate: {
+          value: startDateOriginalValue = undefined,
+          errors: startDateErrors = undefined,
+        } = {},
+        endDate: {
+          value: endDateOriginalValue = undefined,
+          errors: endDateErrors = undefined,
+        } = {},
+      } = details || {};
+      console.log(
+        `StartDate: ${dateAdapter.isValid(startDate) ? dateAdapter.format(startDate, "DD MMM YYYY") : startDate}, EndDate: ${dateAdapter.isValid(endDate) ? dateAdapter.format(endDate, "DD MMM YYYY") : endDate}`,
+      );
+      if (startDateErrors?.length) {
+        console.log(
+          `StartDate Error(s): ${startDateErrors.map(({ type, message }) => `type: ${type} message: ${message}`).join(",")}`,
+        );
+        if (startDateOriginalValue) {
+          console.log(`StartDate Original Value: ${startDateOriginalValue}`);
+        }
+      }
+      if (endDateErrors?.length) {
+        console.log(
+          `EndDate Error(s): ${endDateErrors.map(({ type, message }) => `type: ${type} message: ${message}`).join(",")}`,
+        );
+        if (endDateOriginalValue) {
+          console.log(`EndDate Original Value: ${endDateOriginalValue}`);
+        }
+      }
+      args?.onSelectionChange?.(event, date, details);
+    },
+    [args?.onSelectionChange, dateAdapter],
+  );
+
+  return (
+    <StackLayout>
+      <StackLayout direction={"row"}>
+        <FormField>
+          <FormFieldLabel>Number of columns</FormFieldLabel>
+          <Input
+            value={columns}
+            onChange={(event: ChangeEvent<HTMLInputElement>) => {
+              setColumns(event.target.value);
+            }}
+          />
+        </FormField>
+        <FormField>
+          <FormFieldLabel>Number of months in grid</FormFieldLabel>
+          <Input
+            value={numberOfVisibleMonths}
+            onChange={(event: ChangeEvent<HTMLInputElement>) => {
+              setNumberOfVisibleMonths(event.target.value);
+            }}
+          />
+        </FormField>
+        <FormField>
+          <FormFieldLabel>Step</FormFieldLabel>
+          <Input
+            value={step}
+            onChange={(event: ChangeEvent<HTMLInputElement>) => {
+              setStep(event.target.value);
+            }}
+          />
+        </FormField>
+      </StackLayout>
+      <DatePicker
+        {...args}
+        selectionVariant="range"
+        onSelectionChange={handleSelectionChange}
+      >
+        <DatePickerTrigger>
+          <DatePickerRangeInput />
+        </DatePickerTrigger>
+        <DatePickerOverlay>
+          <DatePickerRangeGridPanel
+            columns={Number.parseInt(columns, 10)}
+            numberOfVisibleMonths={
+              Number.parseInt(
+                numberOfVisibleMonths,
+                10,
+              ) as DatePickerRangeGridPanelProps<any>["numberOfVisibleMonths"]
+            }
+            CalendarNavigationProps={{ step: Number.parseInt(step, 10) }}
+            defaultVisibleMonth={dateAdapter.startOf(
+              dateAdapter.today(),
+              "year",
+            )}
+          />
+        </DatePickerOverlay>
+      </DatePicker>
+    </StackLayout>
+  );
+};
+
 export const SingleWithMinMaxDate: StoryFn<
   DatePickerSingleProps<DateFrameworkType>
 > = ({ selectionVariant, ...args }) => {
@@ -530,7 +734,7 @@ export const SingleWithMinMaxDate: StoryFn<
           <DatePickerSingleInput />
         </DatePickerTrigger>
         <DatePickerOverlay>
-          <DatePickerSinglePanel
+          <DatePickerSingleGridPanel
             defaultVisibleMonth={defaultVisibleMonth}
             helperText={helperText}
           />
@@ -699,7 +903,7 @@ export const SingleWithInitialError: StoryFn<
           <DatePickerSingleInput defaultValue="bad date" />
         </DatePickerTrigger>
         <DatePickerOverlay>
-          <DatePickerSinglePanel helperText={helperText} />
+          <DatePickerSingleGridPanel helperText={helperText} />
         </DatePickerOverlay>
       </DatePicker>
       {!open ? <FormHelperText>{helperText}</FormHelperText> : null}
@@ -862,7 +1066,7 @@ export const SingleWithFormField: StoryFn<
           <DatePickerSingleInput />
         </DatePickerTrigger>
         <DatePickerOverlay>
-          <DatePickerSinglePanel helperText={helperText} />
+          <DatePickerSingleGridPanel helperText={helperText} />
         </DatePickerOverlay>
       </DatePicker>
       {!open ? <FormHelperText>{helperText}</FormHelperText> : null}
@@ -1198,7 +1402,7 @@ export const SingleWithTodayButton: StoryFn<
               <Divider />
             </FlexItem>
             <FlexItem>
-              <DatePickerSinglePanel helperText={helperText} />
+              <DatePickerSingleGridPanel helperText={helperText} />
             </FlexItem>
             <FlexItem>
               <Divider />
@@ -1330,7 +1534,7 @@ export const SingleWithConfirmation: StoryFn<
         <DatePickerOverlay>
           <FlexLayout gap={0} direction="column">
             <FlexItem>
-              <DatePickerSinglePanel helperText={helperText} />
+              <DatePickerSingleGridPanel helperText={helperText} />
               <Divider variant="tertiary" />
             </FlexItem>
             <FlexItem>
@@ -1612,7 +1816,7 @@ export const SingleWithCustomParser: StoryFn<
           <DatePickerSingleInput parse={customParser} />
         </DatePickerTrigger>
         <DatePickerOverlay>
-          <DatePickerSinglePanel helperText={helperText} />
+          <DatePickerSingleGridPanel helperText={helperText} />
         </DatePickerOverlay>
       </DatePicker>
       {!open ? <FormHelperText>{helperText}</FormHelperText> : null}
@@ -1885,7 +2089,7 @@ export const SingleWithCustomValidation: StoryFn<
           <DatePickerSingleInput validate={validateAndCustomizeError} />
         </DatePickerTrigger>
         <DatePickerOverlay>
-          <DatePickerSinglePanel
+          <DatePickerSingleGridPanel
             helperText={helperText}
             CalendarProps={{ isDayUnselectable }}
           />
@@ -1964,7 +2168,7 @@ export const SingleWithLocaleEsES: StoryFn<
           <DatePickerSingleInput />
         </DatePickerTrigger>
         <DatePickerOverlay>
-          <DatePickerSinglePanel helperText={helperText} />
+          <DatePickerSingleGridPanel helperText={helperText} />
         </DatePickerOverlay>
       </DatePicker>
       {!open ? <FormHelperText>{helperText}</FormHelperText> : null}
@@ -2130,7 +2334,7 @@ export const SingleWithLocaleZhCN: StoryFn<
     return <>{dateAdapter.format(day, "D")}</>;
   }
 
-  const CalendarDataGridProps: DatePickerSinglePanelProps<DateFrameworkType>["CalendarDataGridProps"] =
+  const CalendarDataGridProps: DatePickerSingleGridPanelProps<DateFrameworkType>["CalendarDataGridProps"] =
     {
       getCalendarMonthProps: () => ({ renderDayContents }),
     };
@@ -2151,7 +2355,7 @@ export const SingleWithLocaleZhCN: StoryFn<
           />
         </DatePickerTrigger>
         <DatePickerOverlay>
-          <DatePickerSinglePanel
+          <DatePickerSingleGridPanel
             helperText={helperText}
             CalendarDataGridProps={CalendarDataGridProps}
             CalendarNavigationProps={{ formatMonth: "MMMM" }}
@@ -2219,7 +2423,7 @@ export const SingleBordered: StoryFn<
           <DatePickerSingleInput bordered />
         </DatePickerTrigger>
         <DatePickerOverlay>
-          <DatePickerSinglePanel
+          <DatePickerSingleGridPanel
             helperText={helperText}
             CalendarNavigationProps={{
               MonthDropdownProps: { bordered: true },
@@ -2370,7 +2574,7 @@ export const SingleCustomFormat: StoryFn<
         <DatePickerSingleInput format={format} />
       </DatePickerTrigger>
       <DatePickerOverlay>
-        <DatePickerSinglePanel />
+        <DatePickerSingleGridPanel />
       </DatePickerOverlay>
     </DatePicker>
   );
@@ -2722,7 +2926,7 @@ export const UncontrolledSingleOpen: StoryFn<
           <DatePickerSingleInput />
         </DatePickerTrigger>
         <DatePickerOverlay>
-          <DatePickerSinglePanel />
+          <DatePickerSingleGridPanel />
         </DatePickerOverlay>
       </DatePicker>
     </StackLayout>
@@ -2846,7 +3050,7 @@ export const ControlledOpen: StoryFn<
       <DatePickerOverlay ref={datePickerRef}>
         <FlexLayout gap={0} direction="column">
           <FlexItem>
-            <DatePickerSinglePanel />
+            <DatePickerSingleGridPanel />
             <Divider variant="tertiary" />
           </FlexItem>
           <FlexItem>
