@@ -1,0 +1,42 @@
+.CustomAccordion {
+  border-radius: var(--salt-palette-corner);
+}
+.CustomAccordion.CustomAccordion-primary {
+  background: var(--salt-container-primary-background);
+  padding: var(--salt-spacing-200);
+
+  /* Special treatment for primary card, which would be toggled by theme switch panel */
+  box-shadow: var(--customTheme-boxShadow, var(--salt-overlayable-shadow));
+  border-width: var(--customTheme-borderWidth, var(--salt-size-border));
+  border-style: var(--salt-container-borderStyle);
+  border-color: var(--salt-container-primary-borderColor);
+}
+
+.CustomAccordion.CustomAccordion-secondary .CustomAccordion-header {
+  background: var(--salt-container-secondary-background);
+  padding-inline: var(--salt-spacing-100);
+}
+
+.CustomAccordion .CustomAccordion-header {
+  border: 0;
+  width: 100%;
+  background: none;
+  min-height: calc(var(--salt-size-base) + var(--salt-spacing-100));
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.CustomAccordion-header-actionable {
+  cursor: var(--salt-actionable-cursor-hover);
+}
+
+.CustomAccordion-headerContainer {
+  width: 100%;
+  margin-inline-end: var(--salt-spacing-100);
+}
+
+.CustomAccordion .CustomAccordion-header .CustomAccordion-header-collapse,
+.CustomAccordion .CustomAccordion-header .CustomAccordion-header-expand {
+  margin: var(--salt-spacing-100);
+}

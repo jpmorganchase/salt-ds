@@ -3467,7 +3467,8 @@ __metadata:
     "@salt-ds/core": "workspace:^"
     "@salt-ds/styles": "workspace:*"
     "@salt-ds/window": "workspace:*"
-    zod: "npm:^3.24.1"
+    highcharts: "npm:^10.3.3"
+    highcharts-react-official: "npm:^3.2.1"
   languageName: unknown
   linkType: soft
 
@@ -9877,6 +9878,23 @@ __metadata:
   version: 4.0.3
   resolution: "headers-polyfill@npm:4.0.3"
   checksum: 10/3a008aa2ef71591e2077706efb48db1b2729b90cf646cc217f9b69744e35cca4ba463f39debb6000904aa7de4fada2e5cc682463025d26bcc469c1d99fa5af27
+  languageName: node
+  linkType: hard
+
+"highcharts-react-official@npm:^3.2.1":
+  version: 3.2.1
+  resolution: "highcharts-react-official@npm:3.2.1"
+  peerDependencies:
+    highcharts: ">=6.0.0"
+    react: ">=16.8.0"
+  checksum: 10/47d90801804ff83f1a07393adece16b367d8305a020d2a72f2411984f0c8e2b3a654f19e607cc94c347ae4a5db4dbc15087889dcacf2b74e120dbb9bc739b3f6
+  languageName: node
+  linkType: hard
+
+"highcharts@npm:^10.3.3":
+  version: 10.3.3
+  resolution: "highcharts@npm:10.3.3"
+  checksum: 10/7085b584379fe35cc9a45ffeac950ed1c0de8ee4bd0efaaa3224f3772b4ec1c92e225b10188172286cfbb6bb75ae8b4ffbf0bbbe3e6cb3147d04481637015097
   languageName: node
   linkType: hard
 

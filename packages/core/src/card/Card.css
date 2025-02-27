@@ -1,68 +1,125 @@
+/**
+  Deprecated Variables Notice:
+
+  The CSS variables listed below are deprecated and should be replaced with their corresponding SaltStyleContract variables.
+  This approach allows us to share contracts that manage style tokens and provide a structured way for users to implement known levels of customization.
+
+--saltCard-borderWidth
+--saltCard-padding
+--saltCard-borderRadius
+--saltCard-background
+--saltCard-accent-color
+--saltCard-boxShadow-hover
+--saltCard-cursor-hover
+--saltCard-boxShadow-active
+--saltCard-boxShadow-disabled
+--saltCard-color-disabled
+--saltCard-cursor-disabled
+*/
+
 /* Styles applied to the root element */
 .saltCard {
-  border-width: var(--saltCard-borderWidth, var(--salt-size-border));
-  border-style: var(--salt-container-borderStyle);
-  padding: var(--saltCard-padding, var(--salt-spacing-200));
-  position: relative;
-  transition: box-shadow var(--salt-duration-instant) ease-in-out;
+  --card-background: none;
+  --card-border-color: none;
+  --card-border-style: none;
+  --card-border-radius: var(--salt-palette-corner, 0);
+  --card-border-width: var(--salt-size-border);
+  --card-box-shadow: none;
+  --card-cursor: unset;
+  --card-color: inherit;
+  --card-outline: unset;
+  --card-outline-offset: unset;
+  --card-padding: var(--salt-spacing-200);
+  --card-padding: var(--salt-spacing-200);
+  --card-transition: box-shadow var(--salt-duration-instant) ease-in-out;
+
+  /** Accent */
+  --card-accent-background: none;
+  --card-accent-top: unset;
+  --card-accent-right: unset;
+  --card-accent-bottom: unset;
+  --card-accent-left: unset;
+  --card-accent-width: unset;
+  --card-accent-height: unset;
+
+  background: var(--card-background);
+  border-color: var(--card-border-color);
+  border-style: var(--card-border-style);
+  border-radius: var(--card-border-radius);
+  border-width: var(--card-border-width);
+  box-shadow: var(--card-box-shadow);
+  color: var(--card-color);
+  cursor: var(--card-cursor);
+  outline: var(--card-outline);
+  outline-offset: var(--card-outline-offset);
+  padding: var(--card-padding);
+  transition: var(--card-transition);
+
   box-sizing: border-box;
-  border-radius: var(--saltCard-borderRadius, var(--salt-palette-corner, 0));
   overflow: hidden;
-  --card-accent-color: var(--salt-accent-background);
-}
-
-.saltCard-primary {
-  background: var(--saltCard-background, var(--salt-container-primary-background));
-  border-color: var(--salt-container-primary-borderColor);
-}
-
-.saltCard-secondary {
-  background: var(--saltCard-background, var(--salt-container-secondary-background));
-  border-color: var(--salt-container-secondary-borderColor);
-}
-
-.saltCard-tertiary {
-  background: var(--saltCard-background, var(--salt-container-tertiary-background));
-  border-color: var(--salt-container-tertiary-borderColor);
+  position: relative;
 }
 
 /* Styles applied to create accent */
 .saltCard-accent::after {
   content: "";
   position: absolute;
-  background-color: var(--saltCard-accent-color, var(--card-accent-color));
+  background: var(--card-accent-background);
 }
 
 /* Styles applied to Card if `accent="bottom"` (default) */
 .saltCard-accentBottom::after {
-  left: calc(-1 * var(--salt-size-border));
-  bottom: calc(-1 * var(--salt-size-border));
-  height: var(--salt-size-bar);
-  width: calc(100% + calc(2 * var(--salt-size-border)));
+  --card-accent-left: calc(-1 * var(--salt-size-border));
+  --card-accent-bottom: calc(-1 * var(--salt-size-border));
+  --card-accent-height: var(--salt-size-bar);
+  --card-accent-width: calc(100% + calc(2 * var(--salt-size-border)));
 }
 
 /* Styles applied to Card if `accent="left"` */
 .saltCard-accentLeft::after {
-  left: calc(-1 * var(--salt-size-border));
-  top: calc(-1 * var(--salt-size-border));
-  height: calc(100% + calc(2 * var(--salt-size-border)));
-  width: var(--salt-size-bar);
+  --card-accent-left: calc(-1 * var(--salt-size-border));
+  --card-accent-top: calc(-1 * var(--salt-size-border));
+  --card-accent-height: calc(100% + calc(2 * var(--salt-size-border)));
+  --card-accent-width: var(--salt-size-bar);
 }
 
 /* Styles applied to Card if `accent="top"` */
 .saltCard-accentTop::after {
-  left: calc(-1 * var(--salt-size-border));
-  top: calc(-1 * var(--salt-size-border));
-  height: var(--salt-size-bar);
-  width: calc(100% + calc(2 * var(--salt-size-border)));
+  --card-accent-left: calc(-1 * var(--salt-size-border));
+  --card-accent-top: calc(-1 * var(--salt-size-border));
+  --card-accent-height: var(--salt-size-bar);
+  --card-accent-width: calc(100% + calc(2 * var(--salt-size-border)));
 }
 
 /* Styles applied to Card if `accent="right"` */
 .saltCard-accentRight::after {
-  right: calc(-1 * var(--salt-size-border));
-  top: calc(-1 * var(--salt-size-border));
-  height: calc(100% + calc(2 * var(--salt-size-border)));
-  width: var(--salt-size-bar);
+  --card-accent-right: calc(-1 * var(--salt-size-border));
+  --card-accent-top: calc(-1 * var(--salt-size-border));
+  --card-accent-height: calc(100% + calc(2 * var(--salt-size-border)));
+  --card-accent-width: var(--salt-size-bar);
+}
+
+.saltCard-primary {
+  --card-background: var(--salt-container-primary-background);
+  --card-border-color: var(--salt-container-primary-borderColor);
+}
+
+.saltCard-secondary {
+  --card-background: var(--salt-container-secondary-background);
+  --card-border-color: var(--salt-container-secondary-borderColor);
+}
+
+.saltCard-tertiary {
+  --card-background: var(--salt-container-tertiary-background);
+  --card-border-color: var(--salt-container-tertiary-borderColor);
+}
+
+/* Styles applied if `hoverable` is set */
+@media (hover: hover) {
+  .saltCard-hoverable:hover {
+    --card-box-shadow: var(--salt-overlayable-shadow-hover);
+    --card-border-color: var(--salt-actionable-accented-borderColor-hover);
+  }
 }
 
 /*
@@ -80,43 +137,35 @@
 /* **Deprecated:** Styles applied on hover if `interactable={true}` */
 a:focus .saltCard-interactable,
 .saltCard-interactable:hover {
-  box-shadow: var(--saltCard-boxShadow-hover, var(--salt-overlayable-shadow-hover));
-  cursor: var(--saltCard-cursor-hover, var(--salt-selectable-cursor-hover));
-  border-color: var(--salt-actionable-accented-borderColor-hover);
+  --card-box-shadow: var(--salt-overlayable-shadow-hover);
+  --card-cursor: var(--salt-selectable-cursor-hover);
+  --card-border-color: var(--salt-actionable-accented-borderColor-hover);
   position: relative;
-}
-
-/* Styles applied if `hoverable` is set */
-@media (hover: hover) {
-  .saltCard-hoverable:hover {
-    box-shadow: var(--saltCard-boxShadow-hover, var(--salt-overlayable-shadow-hover));
-    border-color: var(--salt-actionable-accented-borderColor-hover);
-  }
 }
 
 /* **Deprecated:** Styles applied on active state if `interactable={true}` */
 .saltCard-interactable:active {
-  border-color: var(--salt-actionable-accented-borderColor-active);
-  box-shadow: var(--saltCard-boxShadow-active, var(--salt-overlayable-shadow-hover));
-  outline: var(--salt-focused-outline);
-  outline-offset: var(--salt-focused-outlineOffset);
+  --card-box-shadow: var(--salt-overlayable-shadow-hover);
+  --card-border-color: var(--salt-actionable-accented-borderColor-active);
+  --card-outline: var(--salt-focused-outline);
+  --card-outline-offset: var(--salt-focused-outlineOffset);
 }
 
 /* **Deprecated:** Styles applied on hover if `interactable={true}` and `disabled={true}` */
 a:focus .saltCard-interactable.saltCard-disabled,
 .saltCard-interactable.saltCard-disabled:hover,
 .saltCard-interactable.saltCard-disabled:active {
-  box-shadow: var(--saltCard-boxShadow-disabled, var(--salt-overlayable-shadow));
+  --card-box-shadow: var(--salt-overlayable-shadow);
 }
 
 /* **Deprecated:** Styles applied if `disabled={true}` */
 .saltCard-disabled,
 .saltCard-disabled.saltCard-interactable,
 a:focus .saltCard-interactable.saltCard-disabled {
-  border-color: var(--salt-container-primary-borderColor-disabled);
-  color: var(--saltCard-color-disabled, var(--salt-content-primary-foreground-disabled));
-  cursor: var(--saltCard-cursor-disabled, var(--salt-selectable-cursor-disabled));
-  outline: none;
+  --card-border-color: var(--salt-container-primary-borderColor-disabled);
+  --card-color: var(--salt-content-primary-foreground-disabled);
+  --card-cursor: var(--salt-selectable-cursor-disabled);
+  --card-outline: none;
 }
 
 /* **Deprecated:** Styles applied to nested divs if `disabled={true}` */

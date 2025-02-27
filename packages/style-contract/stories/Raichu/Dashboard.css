@@ -1,0 +1,92 @@
+
+  .appHeader {
+    /* // button height + 1x spacing top & bottom */
+    height: calc(var(--salt-size-base) + var(--salt-spacing-200));
+    padding-inline: var(--salt-spacing-300);
+    background: var(--salt-container-secondary-background);
+    border-bottom: var(--salt-size-border) var(--salt-container-borderStyle) var(--salt-container-secondary-borderColor);
+  }
+
+  .appHeaderSearchInputContainer {
+    max-width: calc(20 * var(--salt-size-base));
+  }
+
+  .sideNav {
+    padding: var(--salt-spacing-200);
+    width: calc(8 * var(--salt-size-base));
+    background-color: var(--salt-container-secondary-background);
+    flex-shrink: 0;
+  }
+
+  .sideNav ul {
+    list-style: none;
+    padding-left: 0;
+  }
+
+  .mainContent {
+    width: 100%;
+    padding-block: var(--salt-spacing-300);
+    display: flex;
+    justify-content: center;
+    background-color: var(--salt-container-secondary-background);
+  }
+
+  .mainContent {
+  }
+
+  .dashboardBody {
+    max-width: calc(50 * var(--salt-size-base));
+    width: 100%;
+    margin-inline: var(--salt-spacing-300);
+  }
+
+  .contentGrid {
+    /* equal height */
+    grid-auto-rows: 1fr;
+    /* equal width */
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .fullHeight {
+    height: 100%;
+  }
+
+  .cardEqualColumnGrid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .accordionBlocks.accordionBlocks.accordionBlocks {
+    border: none;
+  }
+
+  .quickActionLink {
+    --salt-navigable-textDecoration: none;
+    --salt-navigable-textDecoration-hover: underline;
+    /* Don't show purple visited color */
+    --link-color-visited: var(--link-color);
+  }
+
+  .moneyMovementChart {
+    --highcharts-color-0: var(--salt-color-plum-500);
+    --highcharts-color-1: var(--salt-color-jade-500);
+  }
+
+  .formFieldLabelFitContent:global(.saltFormField-labelLeft) {
+    --saltFormField-label-width: fit-content;
+  }
+
+  .dashboardAccordionsdropdown {
+    width: calc(4 * var(--salt-size-base));
+  }
+
+  .fgPositive {
+    color: var(--salt-status-positive-foreground);
+  }
+
+  .fgNegative {
+    color: var(--salt-status-negative-foreground);
+  }
+
+  .fontStrong {
+    font-weight: 600;
+  }

@@ -1,0 +1,9 @@
+img.logo-img {
+  height: var(--salt-size-base);
+}
+
+.logo-separator {
+  height: var(--salt-size-selectable);
+  width: var(--salt-size-border);
+  background-color: var(--salt-separable-tertiary-borderColor);
+}

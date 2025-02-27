@@ -4,6 +4,7 @@ import {
   resolveResponsiveValue,
   useBreakpoint,
   useBreakpoints,
+  useTheme,
   OverlayClassNameProvider,
 } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
@@ -111,6 +112,8 @@ export function StyleContractProvider<T extends Contract>({
     setProviderClassName(nextProviderClassName);
   }, [matchedBreakpoints]);
 
+  const { mode } = useTheme();
+
   const componentCss = useMemo(() => {
     if (!contract) {
       return;
@@ -161,7 +164,9 @@ export function StyleContractProvider<T extends Contract>({
       value={{ contract: contract?.contract, setContract }}
     >
       <OverlayClassNameProvider className={providerClassName}>
-        <div className={providerClassName}>{children}</div>
+        <div className={providerClassName}>
+          <div data-mode={mode}>{children}</div>
+        </div>
       </OverlayClassNameProvider>
     </StyleContractContext.Provider>
   );

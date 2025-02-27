@@ -1,8 +1,10 @@
 import {
   Button,
+  Card,
+  Display3,
   H1,
   Input,
-  SaltProvider,
+  SaltProviderNext,
   StackLayout,
   Text,
 } from "@salt-ds/core";
@@ -17,6 +19,8 @@ import type { RaichuContract } from "./RaichuContract";
 import type { SampleContract } from "./SampleContract";
 import { MockTicket } from "./MockTicket";
 import { MarketsContract } from "./MarketsContract";
+import Dashboard from "./Raichu/index";
+import { AlphaCardContract } from "./AlphaCardContract";
 
 const defaultContract = new StyleContract<SampleContract>({
   name: "salt",
@@ -89,23 +93,26 @@ const marketsContract = new StyleContract<MarketsContract>({
   contract: {
     system: {
       "salt-text-action-textTransform": "capitalize",
-      "salt-palette-corner-weak": "2px"
+      "salt-palette-corner-weak": "2px",
     },
     component: {
       ".saltInput": {
         "input-boxShadow": "inset 0 1px 0 rgba(0, 0, 0, 0.5)",
       },
       ".saltButton": {
-        "button-border": "1px hidden transparent"
+        "button-border": "1px hidden transparent",
       },
       ".saltButton.buy": {
-        "button-background": "linear-gradient(to bottom, var(--salt-color-blue-300), var(--salt-color-blue-400))",
+        "button-background":
+          "linear-gradient(to bottom, var(--salt-color-blue-300), var(--salt-color-blue-400))",
       },
       ".saltButton.sell": {
-        "button-background": "linear-gradient(to bottom, var(--salt-color-red-300), var(--salt-color-red-400))",
+        "button-background":
+          "linear-gradient(to bottom, var(--salt-color-red-300), var(--salt-color-red-400))",
       },
       ".saltButton.submit": {
-        "button-background": "linear-gradient(to bottom, var(--salt-color-orange-200), var(--salt-color-orange-300))",
+        "button-background":
+          "linear-gradient(to bottom, var(--salt-color-orange-200), var(--salt-color-orange-300))",
       },
       ".saltButton.salt-size-large": {
         "button-height": "32px",
@@ -135,7 +142,7 @@ export const MockTicketWithContract: StoryFn<typeof StyleContractProvider> = (
   args,
 ) => {
   return (
-    <SaltProvider density="high">
+    <SaltProviderNext density="high">
       <StyleContractProvider {...args}>
         <StackLayout>
           <MockTicket />
@@ -144,7 +151,7 @@ export const MockTicketWithContract: StoryFn<typeof StyleContractProvider> = (
           />
         </StackLayout>
       </StyleContractProvider>
-    </SaltProvider>
+    </SaltProviderNext>
   );
 };
 
@@ -300,5 +307,205 @@ export const MultipleContracts: StoryFn<typeof StyleContractProvider> = (
         />
       </StackLayout>
     </StyleContractProvider>
+  );
+};
+
+export const MockDashboardWithContract: StoryFn<
+  typeof StyleContractProvider
+> = (args) => {
+  const raichuProposedContract = new StyleContract<RaichuContract>({
+    name: "proposed",
+    contract: {
+      system: {
+        "salt-text-action-textTransform": "capitalize",
+      },
+      component: {
+        '[data-mode="dark"] .saltCard.saltCard-primary': {
+          "card-background": "rgba(255, 255, 255, 0.3)",
+          "card-border-color": "rgba(0, 0, 0, 0.3)",
+          "card-border-radius": "var(--salt-curve-250)",
+          "card-box-shadow": "0px 2px 4px 0px var(--salt-shadow-200-color)",
+          "card-padding": "var(--salt-spacing-300)",
+          "card-border-width": "var(--salt-size-border)",
+        },
+        '[data-mode="dark"] .saltCard.saltCard-secondary': {
+          "card-background": "rgba(255, 255, 255, 0.2)",
+          "card-border-color": "rgba(0, 0, 0, 0.2)",
+          "card-border-radius": "var(--salt-curve-200)",
+          "card-box-shadow": "0px 2px 4px 0px var(--salt-shadow-200-color)",
+          "card-padding": "var(--salt-spacing-200)",
+          "card-border-width": "var(--salt-size-border)",
+        },
+        '[data-mode="dark"] .saltCard.saltCard-tertiary': {
+          "card-background": "rgba(255, 255, 255, 0.1)",
+          "card-border-color": "rgba(0, 0, 0, 0.1)",
+          "card-border-radius": "var(--salt-curve-150)",
+          "card-box-shadow": "0px 2px 4px 0px var(--salt-shadow-200-color)",
+          "card-padding": "var(--salt-spacing-100)",
+          "card-border-width": "var(--salt-size-border)",
+        },
+        '[data-mode="light"] .saltCard.saltCard-primary': {
+          "card-background": "rgba(0, 0, 0, 0.3)",
+          "card-border-color": "rgba(255, 255, 255, 0.3)",
+          "card-border-radius": "var(--salt-curve-250)",
+          "card-box-shadow": "0px 2px 4px 0px var(--salt-shadow-200-color)",
+          "card-padding": "var(--salt-spacing-300)",
+          "card-border-width": "var(--salt-size-border)",
+        },
+        '[data-mode="light"] .saltCard.saltCard-secondary': {
+          "card-background": "rgba(0, 0, 0, 0.2)",
+          "card-border-color": "rgba(255, 255, 255, 0.2)",
+          "card-border-radius": "var(--salt-curve-200)",
+          "card-box-shadow": "0px 2px 4px 0px var(--salt-shadow-200-color)",
+          "card-padding": "var(--salt-spacing-200)",
+          "card-border-width": "var(--salt-size-border)",
+        },
+        '[data-mode="light"] .saltCard.saltCard-tertiary': {
+          "card-background": "rgba(0, 0, 0, 0.1)",
+          "card-border-color": "rgba(255, 255, 255, 0.1)",
+          "card-border-radius": "var(--salt-curve-150)",
+          "card-box-shadow": "0px 2px 4px 0px var(--salt-shadow-200-color)",
+          "card-padding": "var(--salt-spacing-100)",
+          "card-border-width": "var(--salt-size-border)",
+        },
+      },
+    },
+  });
+
+  return (
+    <SaltProviderNext
+      density="low"
+      accent="teal"
+      actionFont={"Amplitude"}
+      corner={"rounded"}
+      headingFont={"Amplitude"}
+    >
+      <StyleContractProvider {...args}>
+        <StackLayout>
+          <StyleContractDropdown
+            contracts={[
+              { owner: "Raichu", contracts: [raichuProposedContract] },
+            ]}
+          />
+          <Dashboard />
+        </StackLayout>
+      </StyleContractProvider>
+    </SaltProviderNext>
+  );
+};
+
+export const AlphaCard: StoryFn<typeof StyleContractProvider> = (args) => {
+  const alphaCardContract = new StyleContract<AlphaCardContract>({
+    name: "proposed",
+    contract: {
+      component: {
+        '[data-mode="dark"] .saltCard.saltCard-primary': {
+          "card-background": "rgba(255, 255, 255, 0.3)",
+          "card-border-color": "rgba(0, 0, 0, 0.3)",
+          "card-border-radius": "var(--salt-curve-250)",
+          "card-box-shadow": "0px 2px 4px 0px var(--salt-shadow-200-color)",
+          "card-padding": "var(--salt-spacing-300)",
+          "card-border-width": "var(--salt-size-border)",
+        },
+        '[data-mode="dark"] .saltCard.saltCard-secondary': {
+          "card-background": "rgba(255, 255, 255, 0.2)",
+          "card-border-color": "rgba(0, 0, 0, 0.2)",
+          "card-border-radius": "var(--salt-curve-200)",
+          "card-box-shadow": "0px 2px 4px 0px var(--salt-shadow-200-color)",
+          "card-padding": "var(--salt-spacing-200)",
+          "card-border-width": "var(--salt-size-border)",
+        },
+        '[data-mode="dark"] .saltCard.saltCard-tertiary': {
+          "card-background": "rgba(255, 255, 255, 0.1)",
+          "card-border-color": "rgba(0, 0, 0, 0.1)",
+          "card-border-radius": "var(--salt-curve-150)",
+          "card-box-shadow": "0px 2px 4px 0px var(--salt-shadow-200-color)",
+          "card-padding": "var(--salt-spacing-100)",
+          "card-border-width": "var(--salt-size-border)",
+        },
+        '[data-mode="light"] .saltCard.saltCard-primary': {
+          "card-background": "rgba(0, 0, 0, 0.3)",
+          "card-border-color": "rgba(255, 255, 255, 0.3)",
+          "card-border-radius": "var(--salt-curve-150)",
+          "card-box-shadow": "0px 2px 4px 0px var(--salt-shadow-200-color)",
+          "card-padding": "var(--salt-spacing-300)",
+          "card-border-width": "var(--salt-size-border)",
+        },
+        '[data-mode="light"] .saltCard.saltCard-secondary': {
+          "card-background": "rgba(0, 0, 0, 0.2)",
+          "card-border-color": "rgba(255, 255, 255, 0.2)",
+          "card-border-radius": "var(--salt-curve-200)",
+          "card-box-shadow": "0px 2px 4px 0px var(--salt-shadow-200-color)",
+          "card-padding": "var(--salt-spacing-200)",
+          "card-border-width": "var(--salt-size-border)",
+        },
+        '[data-mode="light"] .saltCard.saltCard-tertiary': {
+          "card-background": "rgba(0, 0, 0, 0.1)",
+          "card-border-color": "rgba(255, 255, 255, 0.1)",
+          "card-border-radius": "var(--salt-curve-150)",
+          "card-box-shadow": "0px 2px 4px 0px var(--salt-shadow-200-color)",
+          "card-padding": "var(--salt-spacing-100)",
+          "card-border-width": "var(--salt-size-border)",
+        },
+      },
+    },
+  });
+
+  const Content = ({ label }: { label: string }) => (
+    <StackLayout gap={0}>
+      <Text>
+        <strong>{label}</strong>
+      </Text>
+      <StackLayout gap={0} direction="row" align="baseline">
+        <Display3>9999.99</Display3>
+        <StackLayout gap={0.5} direction="row" align="baseline">
+          <Text>
+            <strong>.00</strong>
+          </Text>
+          <Text color="secondary">USD</Text>
+        </StackLayout>
+      </StackLayout>
+      <Text color="secondary">
+        <small>17th Jan 2019</small>
+      </Text>
+    </StackLayout>
+  );
+
+  return (
+    <SaltProviderNext density="low">
+      <StackLayout>
+        <H1>Solid / Out The Box</H1>
+        <StackLayout direction={"row"}>
+          <Card variant={"primary"}>
+            <Content label={"primary"} />
+          </Card>
+          <Card variant={"secondary"}>
+            <Content label={"secondary"} />
+          </Card>
+          <Card variant={"tertiary"}>
+            <Content label={"tertiary"} />
+          </Card>
+        </StackLayout>
+        <StyleContractProvider {...args}>
+          <StackLayout>
+            <H1>Alpha / With Contract </H1>
+            <StackLayout direction={"row"}>
+              <Card variant={"primary"}>
+                <Content label={"primary"} />
+              </Card>
+              <Card variant={"secondary"}>
+                <Content label={"secondary"} />
+              </Card>
+              <Card variant={"tertiary"}>
+                <Content label={"tertiary"} />
+              </Card>
+            </StackLayout>
+            <StyleContractDropdown
+              contracts={[{ owner: "Salt", contracts: [alphaCardContract] }]}
+            />
+          </StackLayout>
+        </StyleContractProvider>
+      </StackLayout>
+    </SaltProviderNext>
   );
 };

@@ -1,0 +1,30 @@
+@layer defaults, resets, font, theme, components, utilities;
+
+@layer resets {
+  body {
+    margin: 0;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin: 0;
+  }
+}
+
+@layer font {
+  @font-face {
+    font-family: "Amplitude";
+    font-weight: 500;
+    src: url("../../assets/Amplitude-Medium.otf");
+  }
+
+  @font-face {
+    font-family: "Amplitude";
+    font-weight: 400;
+    src: url("../../assets/Amplitude-Regular.otf");
+  }
+}
