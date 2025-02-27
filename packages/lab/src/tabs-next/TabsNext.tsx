@@ -9,12 +9,7 @@ import {
   useState,
 } from "react";
 
-import {
-  makePrefixer,
-  useControlled,
-  useEventCallback,
-  useIsomorphicLayoutEffect,
-} from "@salt-ds/core";
+import { makePrefixer, useControlled, useEventCallback } from "@salt-ds/core";
 import { clsx } from "clsx";
 import { type Item, TabsNextContext } from "./TabsNextContext";
 import { useCollection } from "./hooks/useCollection";
@@ -61,7 +56,7 @@ export const TabsNext = forwardRef<HTMLDivElement, TabsNextProps>(
     } = useCollection({ wrap: true });
 
     const activeTab = useRef<Pick<Item, "id" | "value">>();
-    const returnFocus = useRef<string | undefined>(undefined);
+    const removedActiveTabRef = useRef<string | undefined>(undefined);
 
     const [menuOpen, setMenuOpen] = useState(false);
 
@@ -71,12 +66,6 @@ export const TabsNext = forwardRef<HTMLDivElement, TabsNextProps>(
       name: "TabListNext",
       state: "selected",
     });
-
-    // This ref is needed so we can read the current selected item in the containFocus() function.
-    const selectedRef = useRef<string | undefined>(undefined);
-    useIsomorphicLayoutEffect(() => {
-      selectedRef.current = selected;
-    }, [selected]);
 
     const setSelected = useCallback(
       (event: SyntheticEvent | null, value: string) => {
@@ -95,7 +84,7 @@ export const TabsNext = forwardRef<HTMLDivElement, TabsNextProps>(
       });
 
       return () => {
-        const items = cleanup();
+        cleanup();
         setValueToIdMap(({ map }) => {
           map.delete(item.value);
           return { map };
@@ -105,61 +94,7 @@ export const TabsNext = forwardRef<HTMLDivElement, TabsNextProps>(
           return;
         }
 
-        returnFocus.current = item.value;
-
-        const containFocus = () => {
-          const activeIndex = items.current.findIndex(
-            (i) => item.value === i.value,
-          );
-
-          const nextIndex =
-            activeIndex === items.current.length - 1
-              ? items.current.length - 2
-              : activeIndex + 1;
-
-          const nextActive = items.current[nextIndex];
-
-          returnFocus.current = nextActive.value;
-
-          if (selectedRef.current === item.value) {
-            setSelected(null, nextActive.value);
-          }
-
-          nextActive?.element?.focus();
-        };
-
-        if (document.activeElement === document.body) {
-          requestAnimationFrame(() => {
-            if (document.activeElement === document.body) {
-              containFocus();
-            }
-          });
-        } else {
-          const handleFocusOut = (event: FocusEvent) => {
-            if (!event.relatedTarget) {
-              requestAnimationFrame(() => {
-                if (document.activeElement === document.body) {
-                  containFocus();
-                }
-              });
-            }
-          };
-
-          item.element.ownerDocument.addEventListener(
-            "focusout",
-            handleFocusOut,
-            {
-              once: true,
-            },
-          );
-
-          setTimeout(() => {
-            item.element.ownerDocument.removeEventListener(
-              "focusout",
-              handleFocusOut,
-            );
-          }, 1000);
-        }
+        removedActiveTabRef.current = item.value;
       };
     });
 
@@ -207,7 +142,7 @@ export const TabsNext = forwardRef<HTMLDivElement, TabsNextProps>(
         activeTab,
         menuOpen,
         setMenuOpen,
-        returnFocus,
+        removedActiveTabRef,
       }),
       [
         registerPanel,

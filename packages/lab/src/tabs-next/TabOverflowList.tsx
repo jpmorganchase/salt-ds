@@ -139,7 +139,7 @@ export const TabOverflowList = forwardRef<HTMLDivElement, TabOverflowListProps>(
     if (childCount === 0 && !isMeasuring) return null;
 
     return (
-      <div className={withBaseName()} ref={handleRootRef}>
+      <div className={withBaseName()} ref={handleRootRef} data-overflow>
         <Button
           data-overflowbutton
           tabIndex={-1}
