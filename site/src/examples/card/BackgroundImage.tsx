@@ -8,8 +8,10 @@ export const BackgroundImage = (): ReactElement => {
         {
           backgroundImage: 'url("/img/examples/backgroundImg.png")',
           backgroundSize: "cover",
-          //   Make sure text are visible on both light and dark modes
-          "--salt-content-primary-foreground": "var(--salt-color-white)",
+          // Make sure text meets color contrast standards in both light and dark modes.
+          // Example image is dark, so use content bold color for texts and links.
+          "--salt-content-primary-foreground":
+            "var(--salt-content-bold-foreground)",
         } as CSSProperties
       }
     >
