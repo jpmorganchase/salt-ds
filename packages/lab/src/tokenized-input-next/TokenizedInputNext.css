@@ -215,11 +215,11 @@
 .saltTokenizedInputNext .saltButton {
   --button-padding: 0;
   --button-height: calc(var(--salt-size-base) - var(--salt-spacing-100));
-  --button-width: calc(var(--salt-size-base) - var(--salt-spacing-100));
+  width: calc(var(--salt-size-base) - var(--salt-spacing-100));
 }
 
 .saltTokenizedInputNext .saltButton.saltTokenizedInputNext-endAdornment {
-  --button-margin: auto calc(var(--salt-spacing-50) * -1) auto auto;
+  margin: auto calc(var(--salt-spacing-50) * -1) auto auto;
 }
 .saltTokenizedInputNext-hidden {
   display: none;

@@ -43,69 +43,53 @@ This approach allows us to share contracts that manage style tokens and provide 
 */
 
 .saltButton {
-  --button-alignItems: center;
   --button-background: var(--button-background-default);
-  --button-borderColor: var(--button-borderColor-default, transparent);
+  --button-borderColor: var(--button-borderColor-default);
   --button-borderRadius: var(--salt-palette-corner-weak, 0);
   --button-borderStyle: solid;
-  --button-borderWidth: var(--salt-size-border, 0);
-  --button-color: var(--button-color-default, inherit);
-  --button-cursor: pointer;
-  --button-fontFamily: var(--salt-text-action-fontFamily);
-  --button-fontSize: var(--salt-text-fontSize);
-  --button-fontWeight: var(--salt-text-action-fontWeight);
+  --button-borderWidth: var(--salt-size-border);
+  --button-color: var(--button-color-default);
+  --button-padding: 0 calc(var(--salt-spacing-100) - var(--salt-size-border));
   --button-gap: var(--salt-spacing-50);
   --button-height: var(--salt-size-base);
-  --button-justifyContent: center;
-  --button-letterSpacing: var(--salt-text-action-letterSpacing);
-  --button-lineHeight: var(--salt-text-lineHeight);
-  --button-margin: 0;
-  --button-minWidth: unset;
-  --button-padding: 0 calc(var(--salt-spacing-100) - var(--salt-size-border, 0));
-  --button-textAlign: var(--salt-text-action-textAlign);
-  --button-textTransform: var(--salt-text-action-textTransform);
-  --button-width: auto;
-
-  --button-outlineStyle: none;
-  --button-outlineWidth: var(--salt-focused-outlineWidth);
-  --button-outlineColor: var(--salt-focused-outlineColor);
-  --button-outlineOffset: var(--salt-focused-outlineOffset);
 
   /* Properties with contract variable support */
-  align-items: var(--button-alignItems);
   background: var(--button-background);
   border-color: var(--button-borderColor);
   border-radius: var(--button-borderRadius);
   border-style: var(--button-borderStyle);
   border-width: var(--button-borderWidth);
   color: var(--button-color);
-  cursor: var(--button-cursor);
-  font-family: var(--button-fontFamily);
-  font-size: var(--button-fontSize);
-  font-weight: var(--button-fontWeight);
+  padding: var(--button-padding);
   gap: var(--button-gap);
   height: var(--button-height);
-  justify-content: var(--button-justifyContent);
-  letter-spacing: var(--button-letterSpacing);
-  line-height: var(--button-lineHeight);
-  margin: var(--button-margin);
-  min-width: var(--button-minWidth);
-  outline: var(--button-outlineColor) var(--button-outlineStyle) var(--button-outlineWidth);
-  outline-offset: var(--button-outlineOffset);
-  padding: var(--button-padding);
-  text-align: var(--button-textAlign);
-  text-transform: var(--button-textTransform);
-  width: var(--button-width);
+
+  --button-cursor: var(--salt-actionable-cursor-hover);
+  cursor: var(--button-cursor);
+
+  font-weight: var(--salt-text-action-fontWeight);
+  text-align: var(--salt-text-action-textAlign);
+  font-family: var(--salt-text-action-fontFamily);
+  font-size: var(--salt-text-fontSize);
+  text-transform: var(--salt-text-action-textTransform);
+  letter-spacing: var(--salt-text-action-letterSpacing);
+  line-height: var(--salt-text-lineHeight);
 
   /* Other properties */
   appearance: none;
+  -webkit-appearance: none;
   box-sizing: border-box;
   display: inline-flex;
   position: relative;
   text-decoration: none;
   transition: none;
-  -webkit-appearance: none;
   -webkit-tap-highlight-color: transparent;
+  align-items: center;
+  min-width: unset;
+  width: auto;
+  margin: 0;
+  justify-content: center;
+  outline: none;
 }
 
 .saltButton-accented.saltButton-solid {
@@ -166,7 +150,6 @@ This approach allows us to share contracts that manage style tokens and provide 
   --button-borderColor-hover: var(--salt-actionable-accented-borderColor);
   --button-borderColor-active: var(--salt-actionable-accented-borderColor);
   --button-borderColor-disabled: var(--salt-actionable-accented-borderColor);
-  --button-cursor: progress;
 }
 
 .saltButton-neutral.saltButton-solid {
@@ -227,7 +210,6 @@ This approach allows us to share contracts that manage style tokens and provide 
   --button-borderColor-hover: var(--salt-actionable-borderColor);
   --button-borderColor-active: var(--salt-actionable-borderColor);
   --button-borderColor-disabled: var(--salt-actionable-borderColor);
-  --button-cursor: progress;
 }
 
 .saltButton-negative.saltButton-solid {
@@ -288,7 +270,6 @@ This approach allows us to share contracts that manage style tokens and provide 
   --button-borderColor-hover: var(--salt-actionable-negative-borderColor);
   --button-borderColor-active: var(--salt-actionable-negative-borderColor);
   --button-borderColor-disabled: var(--salt-actionable-negative-borderColor);
-  --button-cursor: progress;
 }
 
 .saltButton-positive.saltButton-solid {
@@ -349,7 +330,6 @@ This approach allows us to share contracts that manage style tokens and provide 
   --button-borderColor-hover: var(--salt-actionable-positive-borderColor);
   --button-borderColor-active: var(--salt-actionable-positive-borderColor);
   --button-borderColor-disabled: var(--salt-actionable-positive-borderColor);
-  --button-cursor: progress;
 }
 
 .saltButton-caution.saltButton-solid {
@@ -410,7 +390,6 @@ This approach allows us to share contracts that manage style tokens and provide 
   --button-borderColor-hover: var(--salt-actionable-caution-borderColor);
   --button-borderColor-active: var(--salt-actionable-caution-borderColor);
   --button-borderColor-disabled: var(--salt-actionable-caution-borderColor);
-  --button-cursor: progress;
 }
 
 /* Pseudo-class applied to the root element on hover when Button is not active or disabled */
@@ -424,8 +403,12 @@ This approach allows us to share contracts that manage style tokens and provide 
 .saltButton:focus-visible {
   --button-background: var(--button-background-hover);
   --button-borderColor: var(--button-borderColor-hover);
-  --button-outlineStyle: var(--salt-focused-outlineStyle);
   --button-color: var(--button-color-hover);
+
+  outline-color: var(--salt-focused-outlineColor);
+  outline-style: var(--salt-focused-outlineStyle);
+  outline-width: var(--salt-focused-outlineWidth);
+  outline-offset: var(--salt-focused-outlineOffset);
 }
 
 /* Pseudo-class applied to the root element on focus when Button is active */
@@ -463,12 +446,16 @@ This approach allows us to share contracts that manage style tokens and provide 
   --button-cursor: var(--salt-actionable-cursor-disabled);
 }
 
+.saltButton-loading {
+  --button-cursor: progress;
+}
+
 .saltButton-spinner {
   position: absolute;
   inset: 0;
   display: flex;
-  --button-alignItems: center;
-  --button-justifyContent: center;
+  align-items: center;
+  justify-content: center;
 }
 
 .saltButton-sr-only {

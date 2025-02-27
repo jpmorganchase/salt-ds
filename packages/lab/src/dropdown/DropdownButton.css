@@ -1,10 +1,10 @@
 .saltDropdownButton {
   --button-background-hover: var(--salt-actionable-secondary-background);
   --button-background-active: var(--salt-actionable-secondary-background);
-  --button-fontWeight: var(--salt-text-fontWeight-strong); /* TODO: Check with design */
-  --button-textAlign: left;
-  --button-textTransform: none;
-  --button-width: 100%;
+  font-weight: var(--salt-text-fontWeight-strong); /* TODO: Check with design */
+  text-align: left;
+  text-transform: none;
+  width: 100%;
 }
 
 .saltDropdownButton:active {

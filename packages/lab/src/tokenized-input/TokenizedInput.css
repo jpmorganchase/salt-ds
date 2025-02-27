@@ -107,7 +107,7 @@
 .saltTokenizedInput-expandButton.saltButton {
   padding: 0 calc(var(--tokenizedInput-spacing) / 4);
   --button-height: calc(var(--tokenizedInput-height) - var(--tokenizedInput-spacing) * 1.5);
-  --button-margin: calc(var(--tokenizedInput-gutter-size) / 2) 0;
+  margin: calc(var(--tokenizedInput-gutter-size) / 2) 0;
 }
 
 /* Styles applied to root component and pill container if `expanded={true}` */

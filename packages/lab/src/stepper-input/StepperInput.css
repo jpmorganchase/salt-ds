@@ -280,7 +280,7 @@
 /* Styles applied to stepper buttons */
 .saltStepperInput-stepperButton {
   --button-height: calc((var(--salt-size-base) - var(--stepperInput-buttonGap)) * 0.5);
-  --button-width: var(--salt-size-base);
+  width: var(--salt-size-base);
 }
 
 .saltStepperInput-stepperButtonIncrement {

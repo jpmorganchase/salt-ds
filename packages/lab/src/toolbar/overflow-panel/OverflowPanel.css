@@ -5,7 +5,6 @@
 }
 
 .saltOverflowPanel-content {
-  --button-justifyContent: flex-start;
   align-items: stretch;
   color: var(--salt-content-primary-foreground);
   border: var(--salt-size-border) var(--salt-container-borderStyle) var(--salt-container-primary-borderColor);
@@ -13,6 +12,10 @@
   flex-direction: column;
   padding: calc(var(--salt-size-unit) * 1.5) 0;
   outline: none;
+}
+
+.saltOverflowPanel-content .saltButton {
+  justify-content: flex-start;
 }
 
 .saltOverflowPanel [aria-expanded="true"] {

@@ -1,4 +1,4 @@
 #toolbar-simple-collapsible [data-collapsed] {
-  --button-fontSize: 0;
-  --button-letterSpacing: 0;
+  font-size: 0;
+  letter-spacing: 0;
 }
