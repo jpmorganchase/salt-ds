@@ -1,30 +1,48 @@
 .saltPageButton {
-  --saltButton-minWidth: var(--salt-size-base);
-  --saltButton-fontWeight: var(--salt-text-fontWeight);
-  --saltButton-height: var(--salt-size-base);
-  --saltButton-text-color: var(--salt-content-primary-foreground);
-  --saltButton-background-active: var(--salt-selectable-background-selected);
-  --saltButton-text-color-active: var(--salt-content-primary-foreground);
+  min-width: var(--salt-size-base);
+  font-weight: var(--salt-text-fontWeight);
+  height: var(--salt-size-base);
+  color: var(--salt-content-primary-foreground);
+  background: var(--salt-selectable-background);
+  appearance: none;
+  box-sizing: border-box;
+  padding: 0 var(--salt-spacing-100);
+  border: none;
+  font-size: var(--salt-text-fontSize);
+  font-family: var(--salt-text-action-fontFamily);
+  line-height: var(--salt-text-lineHeight);
+  letter-spacing: var(--salt-text-action-letterSpacing);
+  cursor: var(--salt-selectable-cursor-hover);
+  border-radius: var(--salt-palette-corner-weak, 0);
 }
 
 .saltPageButton:hover,
 .saltPageButton:focus-visible {
-  --saltButton-text-color-hover: var(--salt-content-primary-foreground);
-  --saltButton-background-hover: var(--salt-selectable-background-hover);
+  background: var(--salt-selectable-background-hover);
+}
+
+.saltPageButton:active,
+.saltPageButton-active {
+  background: var(--salt-selectable-background-selected);
+}
+
+.saltPageButton:focus-visible {
+  outline: var(--salt-focused-outline);
 }
 
 .saltPageButton:disabled {
-  --saltButton-text-color-disabled: var(--salt-content-secondary-foreground);
-  --saltButton-cursor-disabled: var(--salt-editable-cursor-readonly);
+  color: var(--salt-content-secondary-foreground);
+  background: var(--salt-selectable-background);
+  cursor: var(--salt-editable-cursor-readonly);
 }
 
 .saltPageButton-selected {
-  --saltButton-background: var(--salt-selectable-background-selected);
+  background: var(--salt-selectable-background-selected);
 }
 .saltPageButton-selected:focus-visible {
-  --saltButton-background-hover: var(--salt-selectable-background-selected);
+  background: var(--salt-selectable-background-selected);
 }
 
 .saltPageButton-fixed {
-  --saltButton-padding: 0;
+  padding: 0;
 }
