@@ -1,0 +1,48 @@
+.saltNode {
+  display: grid;
+  grid-template-rows: 24px 0fr;
+  line-height: 24px;
+  font-size: 16px;
+
+  transition-property: grid-template-rows;
+  transition-timing-function: ease-in-out;
+  transition-duration: 0.3s;
+  outline: none;
+  outline-offset: -2px;
+  cursor: pointer;
+}
+
+.saltNode:focus[data-is-active="true"] > span {
+  background: #edf2fe;
+  outline: 2px dashed #8da4ef;
+  outline-offset: -2px;
+}
+
+.saltNode[aria-selected="true"] > span {
+  background: #d2deff;
+}
+
+.saltNode[aria-selected="true"]:focus > span {
+  background: #d2deff;
+}
+
+.saltNode[aria-expanded="true"] {
+  grid-template-rows: 24px 1fr;
+}
+
+.saltNode[aria-expanded="true"] > span {
+  font-weight: bold;
+}
+
+.saltNode > span {
+  padding-left: calc(var(--node-depth, 0) * 16px + 16px);
+  padding-right: 16px;
+
+  user-select: none;
+}
+
+.saltNode-group {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}

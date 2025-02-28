@@ -1,371 +1,245 @@
-import { makePrefixer, useForkRef, useIdMemo } from "@salt-ds/core";
-import { clsx } from "clsx";
 import {
-  type ForwardedRef,
-  type MouseEvent,
-  type ReactElement,
-  forwardRef,
-  isValidElement,
-  useCallback,
-  useRef,
+  useReducer,
+  useEffect,
+  createContext,
+  type ReactNode,
+  type ComponentProps,
+  type KeyboardEvent,
+  type Dispatch,
 } from "react";
 
-import {
-  type CollectionIndexer,
-  type CollectionItem,
-  GROUP_SELECTION_NONE,
-  type SelectHandler,
-  type SelectionChangeHandler,
-  type SelectionStrategy,
-  type SingleSelectionStrategy,
-  calcPreferredHeight,
-  closestListItemIndex,
-  isSelected,
-  useAutoSizer,
-  useCollectionItems,
-} from "../common-hooks";
-import type { TreeProps } from "./treeTypes";
-
-import { TreeNode } from "./TreeNode";
-import { useTree } from "./useTree";
-
+import treeReducer from "./Tree.reducer";
+import type Node from "./Node";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
+import { makePrefixer } from "@salt-ds/core";
+import treeCSS from "./Tree.css";
 
-import treeCss from "./Tree.css";
+export const DepthContext = createContext<Node.Depth>(-1);
+export const ActiveIdContext = createContext<Node.Id>("");
+export const ExpandedIdsContext = createContext<Set<Node.Id>>(new Set());
+export const SelectedIdsContext = createContext<Set<Node.Id>>(new Set());
+export const IdToElementContext = createContext<Map<Node.Id, Node.Element>>(
+  new Map(),
+);
+export const IdToChildrenIdsContext = createContext<Map<Node.Id, Set<Node.Id>>>(
+  new Map(),
+);
+export const DispatchContext = createContext<Dispatch<Tree.Action>>(() => ({}));
 
 const withBaseName = makePrefixer("saltTree");
 
-const getSelectedItemsFromSource = (
-  source: any[],
-  selectionStrategy: SelectionStrategy,
-  result: any[] = [],
-) => {
-  const isSingleSelection =
-    selectionStrategy === "default" || selectionStrategy === "deselectable";
-  for (const item of source) {
-    if (item.selected === true) {
-      result.push(item);
-      if (isSingleSelection) {
-        break;
-      }
-    }
-    if (item.childNodes) {
-      getSelectedItemsFromSource(item.childNodes, selectionStrategy, result);
-      if (isSingleSelection && result.length === 1) {
-        break;
-      }
-    }
+namespace Tree {
+  export interface Props extends ComponentProps<"ul"> {
+    children?: ReactNode;
   }
 
-  return isSingleSelection ? result[0] : result.length > 0 ? result : undefined;
-};
+  export type IdToElement = Map<Node.Id, Node.Element>;
+  export type IdToParentId = Map<Node.Id, Node.ParentId>;
+  export type IdToChildrenIds = Map<Node.ParentId, Set<Node.Id>>;
+  export type CharToNodeIds = Map<Node.Char, Set<Node.Id>>;
 
-export const Tree = forwardRef(function Tree<
-  Item,
-  Selection extends SelectionStrategy = "deselectable",
->(
-  {
-    className,
-    defaultSelected,
-    disabled,
-    groupSelection = GROUP_SELECTION_NONE,
-    height,
-    id: idProp,
-    onHighlight,
-    onToggle,
-    onSelect,
-    onSelectionChange,
-    revealSelected,
-    selected: selectedProp,
-    selectionStrategy,
-    source,
-    style: styleProp,
-    width,
-    ...htmlAttributes
-  }: TreeProps<Item, Selection>,
-  forwardedRef?: ForwardedRef<HTMLDivElement>,
-) {
+  export interface State {
+    idToElement: Tree.IdToElement;
+    idToParentId: Tree.IdToParentId;
+    idToChildrenIds: Tree.IdToChildrenIds;
+
+    charToNodeIds: Tree.CharToNodeIds;
+
+    activeId: Node.Id;
+    leafIds: Set<Node.Id>;
+    expandedIds: Set<Node.Id>;
+    selectedIds: Set<Node.Id>;
+  }
+
+  export type Action =
+    | {
+        type: "register";
+        payload: {
+          id: Node.Id;
+          element: Node.Element;
+          label: Node.Label;
+          parentId: Node.Id | null;
+          isLeaf: boolean;
+        };
+      }
+    | {
+        type: "unregister";
+        payload: {
+          id: Node.Id;
+          label: Node.Label;
+        };
+      }
+    | { type: "focus/first" }
+    | { type: "focus/last" }
+    | { type: "focus/next" }
+    | { type: "focus/previous" }
+    | { type: "focus/parent" }
+    | { type: "focus/id"; payload: Node.Id }
+    | { type: "focus/char"; payload: Node.Char }
+    | { type: "expand/level" }
+    | { type: "expand/active" }
+    | { type: "expand/id"; payload: Node.Id }
+    | { type: "collapse/active" }
+    | { type: "toggle/active" }
+    | { type: "toggle/id"; payload: Node.Id }
+    | { type: "select/level" }
+    | { type: "select/active" }
+    | { type: "select/id"; payload: Node.Id }
+    | { type: "select/reset" }
+    | { type: "select/range"; payload: [Node.Id, Node.Id] }
+    | { type: "deselect/all" }
+    | { type: "deselect/active" }
+    | { type: "deselect/id"; payload: Node.Id };
+}
+
+function Tree({ children }: Tree.Props) {
+  const [state, dispatch] = useReducer(treeReducer, {
+    activeId: "",
+    leafIds: new Set(),
+    expandedIds: new Set(),
+    selectedIds: new Set(),
+    idToElement: new Map(),
+    idToParentId: new Map(),
+    idToChildrenIds: new Map(),
+    charToNodeIds: new Map(),
+  } as Tree.State);
   const targetWindow = useWindow();
+
+  useEffect(() => {
+    if (state.activeId) {
+      state.idToElement.get(state.activeId)?.focus();
+    }
+  }, [state.activeId]);
+
   useComponentCssInjection({
     testId: "salt-tree",
-    css: treeCss,
+    css: treeCSS,
     window: targetWindow,
   });
 
-  const id = useIdMemo(idProp);
-  const rootRef = useRef(null);
-  const contentRef = useRef(null);
+  function handleKeyDown(event: KeyboardEvent) {
+    switch (event.key) {
+      case "ArrowDown": {
+        event.preventDefault();
 
-  const collectionHook = useCollectionItems<Item>({
-    id,
-    source,
-    options: {
-      noChildrenLabel: "No children available",
-      revealSelected: revealSelected
-        ? Boolean(selectedProp) || Boolean(defaultSelected) || false
-        : undefined,
-    },
-  });
+        return dispatch({ type: "focus/next" });
+      }
+      case "ArrowUp": {
+        event.preventDefault();
 
-  //------------- from original List
-  const preferredHeight =
-    height ??
-    calcPreferredHeight({
-      displayedItemCount: 10,
-      itemCount: collectionHook.data.length,
-      itemHeight: 36,
-      // getItemHeight,
-      // itemGapSize,
-    });
+        return dispatch({ type: "focus/previous" });
+      }
+      case "ArrowRight": {
+        event.preventDefault();
 
-  const autoSize = useAutoSizer<HTMLDivElement>({
-    containerRef: rootRef,
-    responsive: width === undefined || height === undefined,
-    height: preferredHeight,
-    width,
-  });
-  //---------------
-
-  const handleSelect = useCallback<SelectHandler<CollectionItem<Item>>>(
-    (evt, selectedItem) => {
-      if (onSelect) {
-        if (isValidElement(selectedItem.value)) {
-          onSelect(evt, selectedItem.label as any);
-        } else if (selectedItem.value !== null) {
-          onSelect(evt, selectedItem.value);
+        if (state.expandedIds.has(state.activeId)) {
+          return dispatch({ type: "focus/next" });
         }
+
+        return dispatch({ type: "expand/active" });
       }
-    },
-    [onSelect],
-  );
+      case "ArrowLeft": {
+        event.preventDefault();
 
-  const handleSelectionChange = useCallback<
-    SelectionChangeHandler<CollectionItem<Item>, Selection>
-  >(
-    (evt, selected) => {
-      type returnType = Selection extends SingleSelectionStrategy
-        ? Item | null
-        : Item[];
-      if (onSelectionChange) {
-        onSelectionChange(
-          evt,
-          Array.isArray(selected)
-            ? (selected.map((s) => s.value) as returnType)
-            : selected && (selected.value as returnType),
-        );
+        if (state.expandedIds.has(state.activeId)) {
+          return dispatch({
+            type: "collapse/active",
+          });
+        }
+
+        return dispatch({
+          type: "focus/parent",
+        });
       }
-    },
-    [onSelectionChange],
-  );
-
-  // const getSelected = (
-  //   sel: Item | null | Item[]
-  // ):
-  //   | undefined
-  //   | (Selection extends SingleSelectionStrategy
-  //       ? CollectionItem<Item> | null
-  //       : CollectionItem<Item>[]) => {
-  //   if (sel !== undefined) {
-  //     return collectionHook.itemToCollectionItem<Selection, typeof sel>(sel);
-  //   } else if (Array.isArray(source)) {
-  //     const selected = getSelectedItemsFromSource(
-  //       source,
-  //       selectionStrategy ?? "default"
-  //     );
-  //     return Array.isArray(selected)
-  //       ? collectionHook.itemToCollectionItem(selected)
-  //       : selected
-  //       ? collectionHook.toCollectionItem(selected)
-  //       : undefined;
-  //   }
-  // };
-
-  const {
-    focusVisible,
-    highlightedIdx,
-    highlightItemAtIndex,
-    listHandlers,
-    listProps,
-    listItemHandlers,
-    selected,
-  } = useTree<Item, Selection>({
-    collectionHook,
-    containerRef: rootRef,
-    contentRef,
-    // Note this isn't enough for a Tree, because of nested structure
-    defaultSelected: collectionHook.itemToCollectionItem<
-      Selection,
-      typeof defaultSelected
-    >(defaultSelected),
-    disabled,
-    groupSelection,
-    onHighlight,
-    onSelect: handleSelect,
-    onSelectionChange: handleSelectionChange,
-    onToggle,
-    selected: collectionHook.itemToCollectionItem<
-      Selection,
-      typeof selectedProp
-    >(selectedProp),
-    selectionStrategy,
-  });
-
-  // TODO move into useTree (see useList)
-  const defaultItemHandlers = {
-    onMouseEnter: (evt: MouseEvent) => {
-      // if (!isScrolling.current) {
-      const idx = closestListItemIndex(evt.target as HTMLElement);
-      if (idx != null) {
-        highlightItemAtIndex(idx);
+      case "Enter": {
+        event.preventDefault();
+        return dispatch({
+          type: "toggle/active",
+        });
       }
-      // onMouseEnterListItem && onMouseEnterListItem(evt, idx);
-      // }
-    },
-  };
-
-  const propsCommonToAllListItems = {
-    ...defaultItemHandlers,
-    ...listItemHandlers,
-    isLeaf: true,
-    role: "treeitem",
-  };
-  // const allowGroupSelect = groupSelectionEnabled(groupSelection);
-  const allowGroupSelect = false;
-
-  /**
-   * Add a ListItem from source item
-   */
-  function addLeafNode(
-    list: ReactElement[],
-    item: CollectionItem<Item>,
-    idx: CollectionIndexer,
-  ) {
-    const itemProps = {
-      "aria-disabled": disabled || item.disabled,
-      "aria-level": item.level,
-      "data-idx": idx.value,
-      description: item.description,
-      id: item.id,
-      key: item.id,
-      highlighted: idx.value === highlightedIdx || undefined,
-      selected: isSelected<Item>(selected, item),
-      className: clsx({
-        focusVisible: focusVisible === idx.value,
-      }),
-    };
-
-    list.push(
-      <TreeNode
-        {...propsCommonToAllListItems}
-        {...itemProps}
-        label={item.label}
-      >
-        {/* {item.icon ? <span className={`${classBase}Node-icon`} /> : null} */}
-      </TreeNode>,
-    );
-    idx.value += 1;
-  }
-
-  function addGroupNode(
-    list: ReactElement[],
-    items: CollectionItem<Item>[],
-    idx: CollectionIndexer,
-    id: string,
-    title: string,
-  ) {
-    const { value: i } = idx;
-    const item = items[i];
-    idx.value += 1;
-    list.push(
-      <TreeNode
-        {...defaultItemHandlers}
-        {...listItemHandlers}
-        aria-disabled={disabled || item.disabled}
-        aria-expanded={item.expanded}
-        aria-level={item.level}
-        className={clsx({
-          focusVisible: focusVisible === i,
-          [withBaseName("toggle")]: !allowGroupSelect,
-        })}
-        // data-icon={child.icon}
-        data-idx={i}
-        data-selectable
-        description={item.description}
-        highlighted={i === highlightedIdx}
-        id={id}
-        key={`header-${i}`}
-        label={title}
-        selected={isSelected<Item>(selected, item)}
-      >
-        {item.expanded ? (
-          <ul className={withBaseName("child-nodes")} role="group">
-            {renderItems(items, idx, (item.level ?? 0) + 1)}
-          </ul>
-        ) : null}
-      </TreeNode>,
-    );
-  }
-
-  const renderItems = (
-    items: CollectionItem<Item>[],
-    idx: CollectionIndexer = { value: 0 },
-    level = 1,
-  ): ReactElement[] => {
-    const listItems: ReactElement[] = [];
-    while (idx.value < items.length) {
-      const item = items[idx.value];
-      if (item.level != null && item.level < level) {
-        break;
+      case "Home": {
+        event.preventDefault();
+        return dispatch({
+          type: "focus/first",
+        });
       }
-      if (item.childNodes != null && item.id != null && item.label != null) {
-        addGroupNode(listItems, items, idx, item.id, item.label);
-      } else {
-        addLeafNode(listItems, item, idx);
+      case "End": {
+        event.preventDefault();
+        return dispatch({
+          type: "focus/last",
+        });
+      }
+      case "*": {
+        event.preventDefault();
+        return dispatch({
+          type: "expand/level",
+        });
+      }
+      case " ": {
+        event.preventDefault();
+        return dispatch({
+          type: "select/active",
+        });
+      }
+      // biome-ignore lint/suspicious/noFallthroughSwitchClause: <explanation>
+      case "a": {
+        if (event.metaKey) {
+          event.preventDefault();
+          return dispatch({
+            type: "select/level",
+          });
+        }
+        // fall through
+      }
+      default: {
+        const char = event.key.toUpperCase();
+
+        if (event.code !== `Key${char}`) return;
+
+        return dispatch({
+          type: "focus/char",
+          payload: char,
+        });
       }
     }
-
-    return listItems;
-  };
-
-  function renderEmpty() {
-    // if (emptyMessage || showEmptyMessage) {
-    //   return (
-    //     <span className={withBaseName("empty-message")}>
-    //       {emptyMessage ?? defaultEmptyMessage}
-    //     </span>
-    //   );
-    // } else {
-    return null;
-    // }
   }
 
-  const renderContent = () => {
-    if (collectionHook.data.length) {
-      return renderItems(collectionHook.data);
+  function handleFocus() {
+    if (!state.activeId) {
+      dispatch({
+        type: "focus/first",
+      });
     }
-    renderEmpty();
-  };
+  }
+
+  const tabIndex = state.activeId ? -1 : 0;
 
   return (
-    <div
-      {...htmlAttributes}
-      {...listHandlers}
-      {...listProps}
-      className={clsx(withBaseName(), className)}
-      id={`Tree-${id}`}
-      ref={useForkRef(rootRef, forwardedRef)}
-      style={{ ...styleProp, ...autoSize }}
-      tabIndex={0}
-    >
-      <ul
-        className={withBaseName("scrollingContentContainer")}
-        ref={contentRef}
-        role="tree"
-        // style={{ height: contentHeight }}
-      >
-        {renderContent()}
-      </ul>
-    </div>
+    <DepthContext.Provider value={0}>
+      <DispatchContext.Provider value={dispatch}>
+        <ActiveIdContext.Provider value={state.activeId}>
+          <SelectedIdsContext.Provider value={state.selectedIds}>
+            <ExpandedIdsContext.Provider value={state.expandedIds}>
+              <IdToElementContext.Provider value={state.idToElement}>
+                <IdToChildrenIdsContext.Provider value={state.idToChildrenIds}>
+                  <ul
+                    role="tree"
+                    tabIndex={tabIndex}
+                    onFocus={handleFocus}
+                    onKeyDown={handleKeyDown}
+                    className={withBaseName()}
+                  >
+                    {children}
+                  </ul>
+                </IdToChildrenIdsContext.Provider>
+              </IdToElementContext.Provider>
+            </ExpandedIdsContext.Provider>
+          </SelectedIdsContext.Provider>
+        </ActiveIdContext.Provider>
+      </DispatchContext.Provider>
+    </DepthContext.Provider>
   );
-});
+}
+
+export default Tree;

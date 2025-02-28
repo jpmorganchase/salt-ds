@@ -1,227 +1,93 @@
-import { Tree } from "@salt-ds/lab";
-import { groupByInitialLetter, usa_states_cities } from "../list/list.data";
-import { folderData } from "./tree.data";
+import React, { useState } from "react";
+
+import { Tree, Node } from "@salt-ds/lab";
 
 export default {
   title: "Lab/Tree",
   component: Tree,
+  subcomponents: { Node },
+  parameters: {
+    layout: "centered",
+  },
 };
 
-function createSampleTreeData(autoExpanded = true, wideLeafNodeParentId = "") {
-  return [
-    {
-      id: "a",
-      label: "1",
-      description: "description",
-      expanded: autoExpanded,
-      childNodes: [
-        {
-          id: "b",
-          label: "2",
-          expanded: autoExpanded,
-          childNodes: [
-            {
-              id: "c",
-              label: "3",
-              expanded: autoExpanded,
-              childNodes: [
-                {
-                  id: wideLeafNodeParentId || "d",
-                  label: "4",
-                  description: "description",
-                  expanded: autoExpanded,
-                  childNodes: [
-                    {
-                      id: `${wideLeafNodeParentId || "e"}-1`,
-                      label: "5",
-                      description: "description",
-                    },
-                  ].concat(
-                    wideLeafNodeParentId
-                      ? [
-                          {
-                            id: `${wideLeafNodeParentId || "e"}-2`,
-                            label: "6",
-                            description: "description",
-                          },
-                          {
-                            id: `${wideLeafNodeParentId || "e"}-3`,
-                            label: "7",
-                            description: "description",
-                          },
-                        ]
-                      : [],
-                  ),
-                },
-              ],
-            },
-            {
-              id: "f",
-              label: "8",
-              expanded: autoExpanded,
-              childNodes: [
-                {
-                  id: "h",
-                  label: "9",
-                  description: "description",
-                  expanded: autoExpanded,
-                  childNodes: [
-                    {
-                      id: "e",
-                      label: "10",
-                      description: "description",
-                    },
-                    {
-                      id: "z",
-                      label: "11",
-                    },
-                  ],
-                },
-              ],
-            },
-          ],
-        },
-      ],
-    },
-  ];
+export function Basic() {
+  return (
+    <Tree>
+      <Node id="0" label="Node.tsx" />
+      <Node id="1" label="Tree.tsx" />
+      <Node id="2" label="index.ts" />
+    </Tree>
+  );
 }
 
-const source = [
-  {
-    id: "expanded-node-1",
-    description: "Node with children",
-    expanded: true,
-    childNodes: [
-      {
-        selected: true,
-        id: "selected-node-1",
-        label: "child",
-      },
-      {
-        selected: true,
-        id: "selected-node-2",
-        label: "child",
-      },
-    ],
-  },
-];
+export function Depth1() {
+  const [show, setShow] = useState(false);
 
-export const Default = () => {
-  const handleChange = (e, selected) => {
-    console.log(`selected ${selected}`);
-  };
-  return (
-    <Tree
-      height={800}
-      onSelectionChange={handleChange}
-      selection="checkbox"
-      source={groupByInitialLetter(usa_states_cities, "groups-only")}
-      width={350}
-    />
-  );
-};
-
-export const Cypress = () => {
-  const handleSelectionChange = (evt, selected) => {
-    console.log("selectionChange", { selected });
-  };
-
-  return (
-    <Tree
-      height={800}
-      onSelectionChange={handleSelectionChange}
-      selection="checkbox"
-      width={350}
-      source={source}
-      // defaultSelected={source[0].childNodes[0]}
-    />
-  );
-};
-
-const iconTreeStyle = `
-  .arrow-toggle {
-    --saltTree-toggle-collapse: var(--svg-triangle-right);
-    --saltTree-toggle-expand: var(--svg-triangle-right);
-    --saltTree-node-expanded-transform: rotate(45deg) translate(1px, 1px);
-   }
-`;
-
-export const SimpleTree = () => {
-  const source = [
-    {
-      label: "Fruits",
-      childNodes: [
-        { label: "Oranges" },
-        { label: "Pineapple" },
-        {
-          label: "Apples",
-          childNodes: [
-            { label: "Macintosh" },
-            { label: "Granny Smith" },
-            { label: "Fuji" },
-          ],
-        },
-        { label: "Bananas" },
-        { label: "Pears" },
-      ],
-    },
-    { label: "Vegatables" },
-    { label: "Grain" },
+  const children = [
+    <Node key="2-0" id="2-0" label="Node.tsx" />,
+    <Node key="2-1" id="2-1" label="Tree.tsx" />,
+    <Node key="2-2" id="2-2" label="index.ts" />,
   ];
 
-  return <Tree groupSelection="single" source={source} />;
-};
-
-export const SimpleTreeIcons = () => {
-  const handleChange = (e, selected) => {
-    console.log(`selected ${selected.join(",")}`);
-  };
   return (
-    <div
-      style={{ width: 900, display: "flex", gap: 50, alignItems: "flex-start" }}
-    >
-      <style>{iconTreeStyle}</style>
-      <Tree
-        className="arrow-toggle"
-        height={600}
-        onSelectionChange={handleChange}
-        source={folderData}
-        width={400}
-      />
-    </div>
+    <>
+      <button onClick={() => setShow(!show)}>Show / Hide</button>
+      <Tree>
+        <Node id="0" label="Tree">
+          <Node id="0-0" label="Node.tsx" />
+          <Node id="0-1" label="Tree.tsx" />
+          <Node id="0-2" label="index.ts" />
+        </Node>
+        <Node id="1" label="Button.tsx" />
+        {show && children}
+      </Tree>
+    </>
   );
-};
+}
 
-// export const RevealSelected = () => {
-//   const handleChange = (e, selected) => {
-//     console.log(`selected ${selected.join(",")}`);
-//   };
+export function Depth2() {
+  return (
+    <Tree>
+      <Node label="components">
+        <Node label="Tree">
+          <Node label="Node.css.ts" />
+          <Node label="Node.tsx" />
+          <Node label="Tree.css.ts" />
+          <Node label="Tree.reducer.ts" />
+          <Node label="Tree.tsx" />
+          <Node label="index.ts" />
+          <Node label="utils.ts" />
+        </Node>
+        <Node label="Button">
+          <Node label="Button.tsx" />
+          <Node label="index.ts" />
+        </Node>
+      </Node>
+      <Node label="containers" />
+    </Tree>
+  );
+}
 
-//   const [, source] = useItemsWithIds(folderData);
-//   console.log({ source });
+export function DefaultExpanded() {
+  return (
+    <Tree>
+      <Node id="0" label="Tree" defaultExpanded>
+        <Node id="0-0" label="Node.tsx" />
+        <Node id="0-1" label="Tree.tsx" />
+        <Node id="0-2" label="index.ts" />
+      </Node>
+      <Node id="1" label="Button.tsx" />
+    </Tree>
+  );
+}
 
-//   console.log({ source });
-//   return (
-//     <div
-//       style={{ width: 900, display: "flex", gap: 50, alignItems: "flex-start" }}
-//     >
-//       <div
-//         style={{
-//           fontFamily: "Roboto",
-//           maxHeight: 800,
-//           width: 150,
-//           position: "relative",
-//         }}
-//       >
-//         <style>{iconTreeStyle}</style>
-//         <Tree
-//           className="arrow-toggle"
-//           defaultSelected={["root-0.1.0.0.0"]}
-//           onSelectionChange={handleChange}
-//           source={source}
-//           revealSelected
-//         />
-//       </div>
-//     </div>
-//   );
-// };
+export function Controlled() {
+  return (
+    <Tree>
+      <Node id="0" label="Node.tsx" />
+      <Node id="1" label="Tree.tsx" />
+      <Node id="2" label="index.ts" />
+    </Tree>
+  );
+}
