@@ -55,41 +55,40 @@ export const CarouselControls = forwardRef<
     css: carouselControlsCss,
     window: targetWindow,
   });
-  const { slideRefs, firstVisibleSlide, nextSlide, prevSlide, visibleSlides } =
-    useCarousel();
+  const {
+    slideRefs,
+    firstVisibleSlide,
+    nextSlide,
+    prevSlide,
+    visibleSlides,
+    carouselId,
+  } = useCarousel();
   const { NextIcon, PreviousIcon } = useIcon();
-
   const prevButtonRef = useRef<HTMLButtonElement | null>(null);
   const nextButtonRef = useRef<HTMLButtonElement | null>(null);
-
   const slidesCount = slideRefs?.length;
 
   const isOnFirstSlide = firstVisibleSlide === 0;
   const isOnLastSlide = firstVisibleSlide === slidesCount - visibleSlides;
 
+  const controlsLabel = `${firstVisibleSlide + 1} ${visibleSlides > 1 ? ` - ${firstVisibleSlide + visibleSlides}` : ""} of
+        ${slidesCount}`;
+
   const ControlsLabel = () => (
-    <Text as="span">
-      <strong>
-        {firstVisibleSlide + 1}
-        {visibleSlides > 1 && ` - ${firstVisibleSlide + visibleSlides}`} of{" "}
-        {slidesCount}
-      </strong>
+    <Text as="span" id="carousel-controls-announcer">
+      <span className={withBaseName("sr-only")}>Moved to</span>
+      <strong>{controlsLabel}</strong>
     </Text>
   );
 
   function handlePrevClick(event: SyntheticEvent<HTMLButtonElement>) {
     prevSlide(event);
     onMoveBack?.(event);
-    if (firstVisibleSlide === 1) {
-      nextButtonRef.current?.focus();
-    }
   }
+
   function handleNextClick(event: SyntheticEvent<HTMLButtonElement>) {
     nextSlide(event);
     onMoveForward?.(event);
-    if (firstVisibleSlide === slidesCount - visibleSlides - 1) {
-      prevButtonRef.current?.focus();
-    }
   }
 
   return (
@@ -97,23 +96,27 @@ export const CarouselControls = forwardRef<
       {labelPlacement === "left" && <ControlsLabel />}
       <Button
         ref={prevButtonRef}
+        focusableWhenDisabled
         appearance="bordered"
         sentiment="neutral"
         className={withBaseName("prev-button")}
         onClick={handlePrevClick}
         disabled={isOnFirstSlide || disabled}
-        aria-label="Previous slide"
+        aria-controls={carouselId}
+        aria-label={`Previous slide${visibleSlides > 1 ? "s" : ""}`}
       >
         <PreviousIcon aria-hidden />
       </Button>
       <Button
         ref={nextButtonRef}
+        focusableWhenDisabled
         appearance="bordered"
         sentiment="neutral"
         className={withBaseName("next-button")}
         onClick={handleNextClick}
         disabled={isOnLastSlide || disabled}
-        aria-label="Next slide"
+        aria-controls={carouselId}
+        aria-label={`Next slide${visibleSlides > 1 ? "s" : ""}`}
       >
         <NextIcon aria-hidden />
       </Button>

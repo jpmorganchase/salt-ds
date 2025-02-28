@@ -2,6 +2,7 @@ import {
   type ResponsiveProp,
   resolveResponsiveValue,
   useBreakpoint,
+  useId,
 } from "@salt-ds/core";
 import { type HTMLAttributes, forwardRef } from "react";
 import { CarouselProvider } from "./CarouselContext";
@@ -26,6 +27,7 @@ export const Carousel = forwardRef<HTMLDivElement, CarouselProps>(
       visibleSlides: visibleSlidesProp = 1,
       children,
       className,
+      id: idProp,
       ...rest
     },
     ref,
@@ -35,14 +37,24 @@ export const Carousel = forwardRef<HTMLDivElement, CarouselProps>(
       visibleSlidesProp,
       matchedBreakpoints,
     );
+    const id = useId(idProp);
     return (
       <CarouselProvider
         activeSlideIndex={activeSlideIndex}
         visibleSlides={visibleSlides}
+        id={id}
       >
-        <div aria-roledescription="carousel" role="region" ref={ref} {...rest}>
+        <section
+          role="region"
+          aria-roledescription="carousel"
+          aria-live="polite"
+          aria-atomic="false"
+          id={id}
+          ref={ref}
+          {...rest}
+        >
           {children}
-        </div>
+        </section>
       </CarouselProvider>
     );
   },

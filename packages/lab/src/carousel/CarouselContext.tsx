@@ -21,6 +21,7 @@ export interface CarouselContextValue {
   focusSlide: (index: number) => void;
   registerSlide: (ref: RefObject<HTMLDivElement>) => void;
   containerRef: RefObject<HTMLDivElement>;
+  carouselId?: string;
 }
 
 export const CarouselContext = createContext<CarouselContextValue | null>(
@@ -40,10 +41,12 @@ export function CarouselProvider({
   children,
   activeSlideIndex = 0,
   visibleSlides = 1,
+  id,
 }: {
   children: ReactNode;
   activeSlideIndex?: number;
   visibleSlides?: number;
+  id?: string;
 }) {
   const [firstVisibleSlide, setFirstVisibleSlide] = useState(activeSlideIndex);
   const [visibleFocus, setVisibleFocus] = useState(0);
@@ -148,6 +151,7 @@ export function CarouselProvider({
         goToSlide,
         containerRef,
         updateActiveFromScroll,
+        carouselId: id,
       }}
     >
       {children}
