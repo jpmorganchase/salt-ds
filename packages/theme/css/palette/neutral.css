@@ -11,6 +11,8 @@
   --salt-palette-neutral-secondary-foreground-disabled: var(--salt-color-gray-200-40a);
   --salt-palette-neutral-tertiary-background: var(--salt-color-gray-30);
   --salt-palette-neutral-tertiary-background-disabled: var(--salt-color-gray-30-40a);
+
+  --salt-palette-neutral-alpha-background: var(--salt-color-white-30a);
 }
 
 .salt-theme[data-mode="dark"] {
@@ -26,4 +28,6 @@
   --salt-palette-neutral-secondary-foreground-disabled: var(--salt-color-gray-70-40a);
   --salt-palette-neutral-tertiary-background: var(--salt-color-gray-500);
   --salt-palette-neutral-tertiary-background-disabled: var(--salt-color-gray-500-40a);
+
+  --salt-palette-neutral-alpha-background: var(--salt-color-black-30a);
 }

@@ -21,6 +21,15 @@
 
 .variantCard {
   height: 144px;
+  width: 260px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.alphaCard {
+  height: 144px;
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;

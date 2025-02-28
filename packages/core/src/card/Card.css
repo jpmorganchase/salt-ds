@@ -4,6 +4,7 @@
   border-style: var(--salt-container-borderStyle);
   padding: var(--saltCard-padding, var(--salt-spacing-200));
   position: relative;
+  box-shadow: var(--salt-overlayable-shadow);
   transition: box-shadow var(--salt-duration-instant) ease-in-out;
   box-sizing: border-box;
   border-radius: var(--saltCard-borderRadius, var(--salt-palette-corner, 0));
@@ -13,17 +14,22 @@
 
 .saltCard-primary {
   background: var(--saltCard-background, var(--salt-container-primary-background));
-  border-color: var(--salt-container-primary-borderColor);
+  border-color: var(--salt-container-alpha-borderColor);
 }
 
 .saltCard-secondary {
   background: var(--saltCard-background, var(--salt-container-secondary-background));
-  border-color: var(--salt-container-secondary-borderColor);
+  border-color: var(--salt-container-alpha-borderColor);
 }
 
 .saltCard-tertiary {
   background: var(--saltCard-background, var(--salt-container-tertiary-background));
-  border-color: var(--salt-container-tertiary-borderColor);
+  border-color: var(--salt-container-alpha-borderColor);
+}
+
+.saltCard-alpha {
+  background: var(--saltCard-background, var(--salt-container-alpha-background));
+  border-color: var(--salt-container-alpha-borderColor);
 }
 
 /* Styles applied to create accent */

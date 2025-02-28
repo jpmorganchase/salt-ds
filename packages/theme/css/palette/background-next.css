@@ -5,6 +5,8 @@
   --salt-palette-background-secondary-disabled: var(--salt-color-background-marble-40a);
   --salt-palette-background-tertiary: var(--salt-color-background-limestone);
   --salt-palette-background-tertiary-disabled: var(--salt-color-background-limestone-40a);
+
+  --salt-palette-background-alpha: var(--salt-color-white-30a);
 }
 .salt-theme.salt-theme-next[data-mode="dark"] {
   --salt-palette-background-primary: var(--salt-color-background-jet);
@@ -13,4 +15,6 @@
   --salt-palette-background-secondary-disabled: var(--salt-color-background-granite-40a);
   --salt-palette-background-tertiary: var(--salt-color-background-leather);
   --salt-palette-background-tertiary-disabled: var(--salt-color-background-leather-40a);
+
+  --salt-palette-background-alpha: var(--salt-color-black-30a);
 }

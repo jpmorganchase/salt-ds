@@ -45,6 +45,10 @@ export const AllExamplesUsingText: StoryFn<
         <H1>Accent left</H1>
         <Text>Content</Text>
       </Card>
+      <Card variant="alpha">
+        <H1>Alpha card</H1>
+        <Text>Content</Text>
+      </Card>
     </QAContainer>
   );
 };
@@ -95,6 +99,10 @@ export const NoStyleInjectionGrid: StoryFn<QAContainerNoStyleInjectionProps> = (
     </Card>
     <Card accent="left">
       <H1>Accent left</H1>
+      <Text>Content</Text>
+    </Card>
+    <Card variant="alpha">
+      <H1>Alpha card</H1>
       <Text>Content</Text>
     </Card>
   </QAContainerNoStyleInjection>
