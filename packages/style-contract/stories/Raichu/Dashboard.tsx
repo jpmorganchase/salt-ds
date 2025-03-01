@@ -22,7 +22,6 @@ import {
   LinkProps,
   Option,
   Pagination,
-  Panel,
   SplitLayout,
   StackLayout,
   Text,
@@ -65,11 +64,14 @@ import {
   TabNextTrigger,
   TabsNext,
 } from "@salt-ds/lab";
-import { ColDef, ColumnApi } from "ag-grid-community";
-import { AgGridReact } from "ag-grid-react";
-import { useAgGridHelpers} from "@salt-ds/ag-grid-theme/src/dependencies/useAgGridHelpers";
+import { ColDef, ColumnApi, GridApi, GridReadyEvent } from "ag-grid-community";
+import { AgGridReact, AgGridReactProps } from "ag-grid-react";
 import {
+  CSSProperties,
   HTMLAttributes,
+  useEffect,
+  useMemo,
+  useRef,
   useState,
 } from "react";
 import buildingImage from "../assets/building.png";
@@ -82,7 +84,96 @@ import { CustomAccordion } from "./components/CustomAccordion";
 import { HorizontalSeparator } from "./components/Separators";
 
 import clsx from "clsx";
-import "./Dashboard.css";
+import { useWindow } from "@salt-ds/window";
+import { useComponentCssInjection } from "@salt-ds/styles";
+import styles from "./Dashboard.css";
+
+// Custom hook, only change is adding "ag-theme-salt-variant-zebra"
+function useAgGridHelpers(
+  compact = false,
+  containerStyles: CSSProperties = {},
+): {
+  containerProps: HTMLAttributes<HTMLDivElement>;
+  agGridProps: AgGridReactProps;
+  isGridReady: boolean;
+  api?: GridApi;
+  columnApi?: ColumnApi;
+  compact?: boolean;
+} {
+  const apiRef = useRef<{ api: GridApi; columnApi: ColumnApi }>();
+  const [isGridReady, setGridReady] = useState(false);
+  const density = useDensity();
+  const { mode } = useTheme();
+
+  const [rowHeight, listItemHeight] = useMemo(() => {
+    switch (["ag-theme-salt", density].join("-")) {
+      case compact && "ag-theme-salt-high":
+        return [20, 20];
+      case "ag-theme-salt-high":
+        return [24, 24];
+      case "ag-theme-salt-medium":
+        return [36, 36];
+      case "ag-theme-salt-low":
+        return [48, 48];
+      case "ag-theme-salt-touch":
+        return [60, 60];
+      default:
+        return [20, 24];
+    }
+  }, [density, compact]);
+
+  const className = `ag-theme-salt-${density}${
+    compact && density === "high" ? `-compact` : ``
+  }-${mode}`;
+
+  const onGridReady = ({ api, columnApi }: GridReadyEvent) => {
+    apiRef.current = { api, columnApi };
+    api.sizeColumnsToFit();
+    setGridReady(true);
+  };
+
+  useEffect(() => {
+    // setHeaderHeight doesn't work if not in setTimeout
+    setTimeout(() => {
+      if (isGridReady) {
+        apiRef.current!.api.resetRowHeights();
+        apiRef.current!.api.setHeaderHeight(rowHeight);
+        apiRef.current!.api.setFloatingFiltersHeight(rowHeight);
+        // TODO how to set listItemHeight as the "ag-filter-virtual-list-item" height? Issue 2479
+
+        apiRef.current!.api.sizeColumnsToFit();
+      }
+    }, 2000);
+  }, [rowHeight, isGridReady, listItemHeight]);
+
+  return {
+    containerProps: {
+      className: clsx("ag-theme-salt-variant-zebra", className),
+      style: {
+        height: "calc(14 * var(--salt-size-base))",
+        width: "100%",
+        ...containerStyles,
+      },
+    },
+    agGridProps: {
+      onGridReady,
+      rowHeight,
+      headerHeight: rowHeight,
+      suppressMenuHide: true,
+      defaultColDef: {
+        // filter: true,
+        resizable: true,
+        sortable: true,
+        filterParams: {
+          cellHeight: listItemHeight,
+        },
+      },
+    },
+    isGridReady,
+    api: apiRef.current?.api,
+    columnApi: apiRef.current?.columnApi,
+  };
+}
 
 function HighlightMetric(props: {
   data: { name: string; number: string; date?: string };
@@ -166,80 +257,80 @@ function DashboardWelcome() {
     },
   ];
   return (
-      <Card
-        className={"welcomeCard"}
-        style={{ backgroundImage: `url(${bgImage})` }}
-      >
-        <StackLayout gap={2}>
-          <StackLayout gap={1} direction="row">
-            <Avatar size={2} />
-            <StackLayout gap={0.5}>
-              <H1>Welcome, Faith</H1>
-              <Text>Last login was 2 days ago</Text>
-            </StackLayout>
+    <Card
+      className={"welcomeCard"}
+      style={{ backgroundImage: `url(${bgImage})` }}
+    >
+      <StackLayout gap={2}>
+        <StackLayout gap={1} direction="row">
+          <Avatar size={2} />
+          <StackLayout gap={0.5}>
+            <H1>Welcome, Faith</H1>
+            <Text>Last login was 2 days ago</Text>
           </StackLayout>
-          <FlowLayout gap={1}>
-            <Button appearance="bordered">
-              <SendIcon />
-              Send a wire
-            </Button>
-            <Button appearance="bordered">
-              <SuccessCircleIcon /> Approve payments
-            </Button>
-            <Button appearance="bordered">
-              <ArrowRightIcon /> Reports inbox
-            </Button>
-            <Button appearance="bordered">
-              <InboxIcon /> Documents inbox
-            </Button>
-            <Button appearance="bordered">
-              <AddIcon /> Add new user
-            </Button>
-            <Button appearance="bordered">
-              <LockedIcon /> Manage user permission
-            </Button>
-          </FlowLayout>
-          <Divider variant="tertiary" />
-          <GridLayout
-            columns={3}
-            rowGap={1}
-            columnGap={2}
-            className={"cardEqualColumnGrid"}
-          >
-            <GridItem verticalAlignment="center" colSpan={2}>
-              <FlexLayout gap={1} align="baseline">
-                <H2>Highlights</H2>
-                <Text color="secondary">{"(all values shown in USD)"}</Text>
-              </FlexLayout>
-            </GridItem>
-            <GridItem horizontalAlignment="end">
-              <Pagination
-                count={2}
-                page={page}
-                onPageChange={(_, newPage) => setPage(newPage)}
-              >
-                <CompactPaginator />
-              </Pagination>
-            </GridItem>
-          </GridLayout>
-
-          <FlowLayout>
-            {data.map((d) => (
-              <FlexItem grow={1} basis={0} shrink={1}>
-                <HighlightMetric data={d} key={d.name} />
-              </FlexItem>
-            ))}
-            <FlexItem grow={1} basis={0} shrink={1}>
-              <EmptyMetric>
-                <AddIcon />
-                <Text>
-                  <strong>Add card</strong>
-                </Text>
-              </EmptyMetric>
-            </FlexItem>
-          </FlowLayout>
         </StackLayout>
-      </Card>
+        <FlowLayout gap={1}>
+          <Button appearance="bordered">
+            <SendIcon />
+            Send a wire
+          </Button>
+          <Button appearance="bordered">
+            <SuccessCircleIcon /> Approve payments
+          </Button>
+          <Button appearance="bordered">
+            <ArrowRightIcon /> Reports inbox
+          </Button>
+          <Button appearance="bordered">
+            <InboxIcon /> Documents inbox
+          </Button>
+          <Button appearance="bordered">
+            <AddIcon /> Add new user
+          </Button>
+          <Button appearance="bordered">
+            <LockedIcon /> Manage user permission
+          </Button>
+        </FlowLayout>
+        <Divider variant="tertiary" />
+        <GridLayout
+          columns={3}
+          rowGap={1}
+          columnGap={2}
+          className={"cardEqualColumnGrid"}
+        >
+          <GridItem verticalAlignment="center" colSpan={2}>
+            <FlexLayout gap={1} align="baseline">
+              <H2>Highlights</H2>
+              <Text color="secondary">{"(all values shown in USD)"}</Text>
+            </FlexLayout>
+          </GridItem>
+          <GridItem horizontalAlignment="end">
+            <Pagination
+              count={2}
+              page={page}
+              onPageChange={(_, newPage) => setPage(newPage)}
+            >
+              <CompactPaginator />
+            </Pagination>
+          </GridItem>
+        </GridLayout>
+
+        <FlowLayout>
+          {data.map((d) => (
+            <FlexItem grow={1} basis={0} shrink={1}>
+              <HighlightMetric data={d} key={d.name} />
+            </FlexItem>
+          ))}
+          <FlexItem grow={1} basis={0} shrink={1}>
+            <EmptyMetric>
+              <AddIcon />
+              <Text>
+                <strong>Add card</strong>
+              </Text>
+            </EmptyMetric>
+          </FlexItem>
+        </FlowLayout>
+      </StackLayout>
+    </Card>
   );
 }
 
@@ -488,10 +579,7 @@ function MoneyMovementChartAccordion() {
 
   const toolbarStart = (
     <StackLayout gap={1} direction="row">
-      <FormField
-        labelPlacement="left"
-        className={"formFieldLabelFitContent"}
-      >
+      <FormField labelPlacement="left" className={"formFieldLabelFitContent"}>
         <FormFieldLabel>Time</FormFieldLabel>
         <Dropdown bordered value="Past 6 months">
           <Option value="past-6m">Past 6 months</Option>
@@ -499,10 +587,7 @@ function MoneyMovementChartAccordion() {
           <Option value="past-3y">Past 3 years</Option>
         </Dropdown>
       </FormField>
-      <FormField
-        labelPlacement="left"
-        className={"formFieldLabelFitContent"}
-      >
+      <FormField labelPlacement="left" className={"formFieldLabelFitContent"}>
         <FormFieldLabel>Accounts</FormFieldLabel>
         <Dropdown
           bordered
@@ -890,17 +975,9 @@ function RecentTransactionsAccordion() {
       type: "rightAligned", // cellClass won't be applied
       cellClass: (params) => {
         if (params.value.startsWith("+")) {
-          return clsx(
-            "fgPositive",
-            "ag-right-aligned-cell",
-            "fontStrong",
-          );
+          return clsx("fgPositive", "ag-right-aligned-cell", "fontStrong");
         } else if (params.value.startsWith("-")) {
-          return clsx(
-            "fgNegative",
-            "ag-right-aligned-cell",
-            "fontStrong",
-          );
+          return clsx("fgNegative", "ag-right-aligned-cell", "fontStrong");
         }
         return clsx("ag-right-aligned-cell", "fontStrong");
       },
@@ -1032,7 +1109,7 @@ const teamMembers: MemberInfo[] = [
     phone: "+1 (212) 555-0100",
     email: "brian.stipe@example.com",
   },
-] as const;
+];
 
 function YourTeamAccordion() {
   return (
@@ -1212,10 +1289,7 @@ function ForYouAccordion() {
 
 function DashboardLeftColumn() {
   return (
-    <StackLayout
-      gap={3}
-      className={clsx("dashboardAccordions", "contentGrid")}
-    >
+    <StackLayout gap={3} className={clsx("dashboardAccordions", "contentGrid")}>
       <DashboardWelcome />
 
       {/* <TasksAccordion /> */}
@@ -1282,17 +1356,19 @@ function DashboardLeftColumn() {
 function DashboardBody() {
   return (
     <main className={clsx("mainContent")}>
-      <Panel>
       <StackLayout className={"dashboardBody"} gap={1}>
         <DashboardLeftColumn />
       </StackLayout>
-      </Panel>
     </main>
   );
 }
 
 export function Dashboard() {
-  return (
-    <DashboardBody />
-  );
+  const targetWindow = useWindow();
+  useComponentCssInjection({
+    testId: "salt-story-raichu-dashboard",
+    css: styles,
+    window: targetWindow,
+  });
+  return <DashboardBody />;
 }

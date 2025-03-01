@@ -1,8 +1,10 @@
 import clsx from "clsx";
 import { StackLayout, useControlled } from "@salt-ds/core";
-import "./CustomAccordion.css";
 import { ReactNode } from "react";
 import { ChevronDownIcon, ChevronUpIcon } from "@salt-ds/icons";
+import {useWindow} from "@salt-ds/window";
+import {useComponentCssInjection} from "@salt-ds/styles";
+import styles from "./CustomAccordion.css";
 
 export const CustomAccordion = ({
                                   header,
@@ -23,6 +25,13 @@ export const CustomAccordion = ({
   className?: string;
   disableCollapse?: boolean;
 }) => {
+  const targetWindow = useWindow();
+  useComponentCssInjection({
+    testId: "salt-story-raichu-accordion",
+    css: styles,
+    window: targetWindow,
+  });
+
   const [expanded, setExpanded] = useControlled({
     default: defaultExpanded,
     name: "CustomAccordion",

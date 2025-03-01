@@ -40,7 +40,7 @@
     margin-inline: var(--salt-spacing-300);
   }
 
-  .contentGrid {
+  .saltGridLayout.contentGrid {
     /* equal height */
     grid-auto-rows: 1fr;
     /* equal width */

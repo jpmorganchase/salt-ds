@@ -22,6 +22,8 @@ import { MarketsContract } from "./MarketsContract";
 import Dashboard from "./Raichu/index";
 import { AlphaCardContract } from "./AlphaCardContract";
 
+import "./styles.css";
+
 const defaultContract = new StyleContract<SampleContract>({
   name: "salt",
   contract: {

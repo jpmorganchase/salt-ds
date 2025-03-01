@@ -16,6 +16,7 @@
     "*.css"
   ],
   "dependencies": {
+    "@salt-ds/ag-grid-theme": "workspace:*",
     "@salt-ds/core": "workspace:^",
     "@salt-ds/styles": "workspace:*",
     "@salt-ds/window": "workspace:*",
@@ -23,8 +24,8 @@
     "highcharts-react-official": "^3.2.1"
   },
   "devDendencies": {
-    "ag-grid-enterprise": "31.2.0",
-    "ag-grid-react": "31.2.0",
+    "ag-grid-community": "^32.0.0",
+    "ag-grid-react": "^32.0.0",
     "highcharts": "^10.3.3",
     "highcharts-react-official": "^3.2.1"
   },

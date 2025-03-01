@@ -3185,7 +3185,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@salt-ds/ag-grid-theme@workspace:packages/ag-grid-theme":
+"@salt-ds/ag-grid-theme@workspace:*, @salt-ds/ag-grid-theme@workspace:packages/ag-grid-theme":
   version: 0.0.0-use.local
   resolution: "@salt-ds/ag-grid-theme@workspace:packages/ag-grid-theme"
   dependencies:
@@ -3464,6 +3464,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@salt-ds/style-contract@workspace:packages/style-contract"
   dependencies:
+    "@salt-ds/ag-grid-theme": "workspace:*"
     "@salt-ds/core": "workspace:^"
     "@salt-ds/styles": "workspace:*"
     "@salt-ds/window": "workspace:*"
