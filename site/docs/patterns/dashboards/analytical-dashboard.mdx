@@ -1,5 +1,6 @@
 ---
 title: Analytical dashboard
+description: "An analytical dashboard enables users to analyze trends, patterns and metrics effectively. You can use this to present data in a hierarchical and intuitive manner.\n\nThe mock-ups displayed in this pattern are available as [templates](https://www.figma.com/file/O3FYUQYXLosmEuZc0T30Qo/Analytical-Dashboard-Pattern?type=design&node-id=1288-5747&mode=design&t=Pu46NKEwCeMRSjPD-0) in Figma _(J.P. Morgan employees only)_."
 layout: DetailPattern
 aliases:
   - /salt/patterns/dashboards/analytical-dashboard
@@ -14,10 +15,6 @@ data:
     ]
   components: ["Border layout", "Flow layout", "Stack layout", "Tabs"]
 ---
-
-An analytical dashboard enables users to analyze trends, patterns and metrics effectively. You can use this to present data in a hierarchical and intuitive manner.
-
-The mock-ups displayed in this pattern are available as [templates](https://www.figma.com/file/O3FYUQYXLosmEuZc0T30Qo/Analytical-Dashboard-Pattern?type=design&node-id=1288-5747&mode=design&t=Pu46NKEwCeMRSjPD-0) in Figma _(J.P. Morgan employees only)_.
 
 <ImageSwitcher
   images={[
@@ -101,7 +98,7 @@ When considering the visual hierarchy of an analytical dashboard, ensure the mos
 3. Charts and graphs
 4. Data grids or tables
 
-<ExampleContainer type="positive" customPillText="Best practices">
+<GuidanceCallout type="positive" customPillText="Best practices">
 
 - Use [`Drawer`](../../components/drawer) to display an expandable panel
   overlaid above a region of your dashboard rather than embedded within the
@@ -111,7 +108,7 @@ When considering the visual hierarchy of an analytical dashboard, ensure the mos
   of the border layout instead of a drawer, which can hinder the dashboard user
   experience by hiding key interactive components.
 
-</ExampleContainer>
+</GuidanceCallout>
 
 ### Partially aligned layout
 
@@ -268,11 +265,11 @@ Use [`Card`](../../components/card) as a container or widget type to position an
   caption="Cards are a good choice for enabling responsive design."
 />
 
-<ExampleContainer type="positive" customPillText="Best practices">
+<GuidanceCallout type="positive" customPillText="Best practices">
   Keep the content layout within individual cards as consistent as possible
   across the dashboard. This supports scalability, especially if main components
   anchor to familiar locations within a card.
-</ExampleContainer>
+</GuidanceCallout>
 
 #### Layout and style
 

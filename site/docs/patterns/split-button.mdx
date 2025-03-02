@@ -1,5 +1,6 @@
 ---
 title: Split button
+description: "A split button enables users to perform a main action and access relevant, supplementary actions inside a menu."
 layout: DetailPattern
 tags:
   - pattern
@@ -12,8 +13,6 @@ data:
     ]
   components: ["Button", "Menu", "Segmented Button Group", "Tooltip"]
 ---
-
-A split button enables users to perform a main action and access relevant, supplementary actions inside a menu. 
 
 <Diagram
   src="/img/patterns/split-button/split-button-hero-shot.png"
@@ -69,9 +68,9 @@ You can use CTA buttons, primary buttons and secondary buttons in a split button
   border
 />
 
-<ExampleContainer type="positive" customPillText="Best practices">
+<GuidanceCallout type="positive" customPillText="Best practices">
 Don’t mix the button variants in the same split button.
-</ExampleContainer>
+</GuidanceCallout>
 
 ## Multiple actions
 
@@ -95,10 +94,10 @@ The main action is represented by an icon-only button to minimize the width of t
   caption="Example showing the main action represented by an icon with a tooltip."
 />
 
-<ExampleContainer type="positive" customPillText="Best practices">
+<GuidanceCallout type="positive" customPillText="Best practices">
 - Avoid using an icon-only split button if your target audience is unlikely to recognize the proposed icons.
 - Use a textual label if your main action is high priority. This ensures users are more likely to see it.
 - Use a [tooltip](/salt/components/tooltip) to describe or label the action.
-</ExampleContainer>
+</GuidanceCallout>
 
 :fragment{src="./fragments/feedback.mdx"}

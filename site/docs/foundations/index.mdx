@@ -7,106 +7,68 @@ sidebar:
 
 Foundations are the fundamental principles that guide the creation of a cohesive design language, enabling you to build products that are easy to use and visually appealing.
 
-<GridLayout columns={{ xs: 1, sm: 2 }}>
-
-   <OverviewCard
-    icon={<Image src="/img/foundations/color.svg" alt="color"  />}
-    title="Color"
-    url="./color"
-    keylineColor="purple"
-    >
-Colors can be used to communicate meaning, establish visual hierarchy, and differentiate products, all while ensuring a cohesive and accessible experience.
-
-  </OverviewCard>
-
-   <OverviewCard
-    icon={<Image src="/img/foundations/density.svg" alt="density"  />}
-    title="Density"
-    url="./density"
-    keylineColor="teal"
-    >
-Density relates to the amount of content that can fit on a screen based on the size and spacing of components.
-
-  </OverviewCard>
-
-<OverviewCard
-    icon={<Image src="/img/foundations/duration.svg" alt="duration"  />}
-    title="Duration"
-    url="./duration"
-    keylineColor="orange"
-    >
-The time between the moment a user performs an action and the moment feedback is given by the system.
-
-  </OverviewCard>
-
-   <OverviewCard
-    icon={<Image src="/img/foundations/iconography.svg" alt="iconography"  />}
-    title="Iconography"
-    url="./iconography"
-    keylineColor="blue"
-    >
-Icons are visually simplified and recognizable symbols that represent a specific action, object or concept. 
-
-  </OverviewCard>
-
-  <OverviewCard
-    icon={<Image src="/img/foundations/modes.svg" alt="modes"  />}              
-    title="Modes"
-    url="./modes"
-    keylineColor="green"
-    >
-Modes enable the color palette to change from light to dark, providing the flexibility to choose an option that best fits a preference or need.
-
-  </OverviewCard>
-
-<OverviewCard
-    icon={<Image src="/img/foundations/responsiveness.svg" alt="responsiveness"  />}              
-    title="Responsiveness"
-    url="./responsiveness"
-    keylineColor="purple"
-    >
-A responsive layout makes dynamic changes to the appearance of a product in response to the size of the screen.
-
-  </OverviewCard>
-
-   <OverviewCard
-    icon={<Image src="/img/foundations/shadow.svg" alt="shadow"  />}
-    title="Shadow"
-    url="./shadow"
-    keylineColor="teal"
-    >
-A shadow gives the perception of depth and distance between different layers, helping to create a visual hierarchy that enhances comprehension and engagement.
-
-  </OverviewCard>
-
-  <OverviewCard
-    icon={<Image src="/img/foundations/size.svg" alt="size"  />}            
-    title="Size"
-    url="./size"
-    keylineColor="orange"
-    >
-Size refers to the restricted dimensions provided within the design system that can refer to the height and/or width of an element.
-
-  </OverviewCard>
-
-  <OverviewCard
-    icon={<Image src="/img/foundations/spacing.svg" alt="spacing"  />}              
-    title="Spacing"
-    url="./spacing"
-    keylineColor="blue"
-    >
-The organization of space is a key aspect of design. Spatial tokens help align layouts and create consistent visual rhythm.
-
-  </OverviewCard>
-
-  <OverviewCard
-    icon={<Image src="/img/foundations/typography.svg" alt="typography"  />}            
-    title="Typography"
-    url="./typography"
-    keylineColor="green"
-    >
-Typography can help to enhance readability, establish hierarchy and set a visual tone, resulting in more effective communication.
-
-  </OverviewCard>
- 
-</GridLayout>
+<QuickLinks
+  columns={{ xs: 1, md: 2 }}
+  links={[
+    {
+      title: "Color",
+      description:
+        "Colors can be used to communicate meaning, establish visual hierarchy, and differentiate products, all while ensuring a cohesive and accessible experience.",
+      href: "./color",
+    },
+    {
+      title: "Density",
+      description:
+        "Density relates to the amount of content that can fit on a screen based on the size and spacing of components.",
+      href: "./density",
+    },
+    {
+      title: "Duration",
+      description:
+        "The time between the moment a user performs an action and the moment feedback is given by the system.",
+      href: "./duration",
+    },
+    {
+      title: "Iconography",
+      description:
+        "Icons are visually simplified and recognizable symbols that represent a specific action, object or concept.",
+      href: "./iconography",
+    },
+    {
+      title: "Modes",
+      description:
+        "Modes enable the color palette to change from light to dark, providing the flexibility to choose an option that best fits a preference or need.",
+      href: "./modes",
+    },
+    {
+      title: "Responsiveness",
+      description:
+        "A responsive layout makes dynamic changes to the appearance of a product in response to the size of the screen.",
+      href: "./responsiveness",
+    },
+    {
+      title: "Shadow",
+      description:
+        "A shadow gives the perception of depth and distance between different layers, helping to create a visual hierarchy that enhances comprehension and engagement.",
+      href: "./elevation",
+    },
+    {
+      title: "Size",
+      description:
+        "Size refers to the restricted dimensions provided within the design system that can refer to the height and/or width of an element.",
+      href: "./size",
+    },
+    {
+      title: "Spacing",
+      description:
+        "The organization of space is a key aspect of design. Spatial tokens help align layouts and create consistent visual rhythm.",
+      href: "./spacing",
+    },
+    {
+      title: "Typography",
+      description:
+        "Typography can help to enhance readability, establish hierarchy and set a visual tone, resulting in more effective communication.",
+      href: "./typography",
+    },
+  ]}
+/>

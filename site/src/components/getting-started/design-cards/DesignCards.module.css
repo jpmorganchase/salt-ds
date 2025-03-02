@@ -41,7 +41,7 @@
   margin-bottom: 0;
 }
 
-@media screen and (max-width: 996px) {
+@media not screen and (min-width: 960px) {
   .row {
     flex-direction: column;
     gap: 0;

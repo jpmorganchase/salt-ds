@@ -184,19 +184,14 @@ export const AccordionView: FC<{ value: string }> = ({ value }) => {
                     <td>
                       <Tooltip
                         className={styles.tooltip}
-                        content={
-                          <>
-                            {" "}
-                            <BlockView name={name} />
-                          </>
-                        }
+                        content={<BlockView name={name} />}
                         onOpenChange={function _l() {}}
                       >
                         <Link className={styles.tooltip}> {name}</Link>
                       </Tooltip>
 
                       <div className={styles.hideView}>
-                        {name}{" "}
+                        {name}&nbsp;
                         <Button
                           className={styles.alignButton}
                           variant="secondary"
@@ -204,7 +199,7 @@ export const AccordionView: FC<{ value: string }> = ({ value }) => {
                           aria-label="Copy to clipboard"
                         >
                           <CopyIcon />
-                        </Button>{" "}
+                        </Button>
                       </div>
                     </td>
                     <td>{value}</td>

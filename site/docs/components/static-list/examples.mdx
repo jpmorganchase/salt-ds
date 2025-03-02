@@ -8,17 +8,11 @@ data:
   $ref: ./#/data
 ---
 
-<LivePreviewControls>
-
-<LivePreview componentName="static-list" exampleName="Default" >
-
 ## Default
 
 The default `Static list` allows users to show non-interactive list items.
 
-</LivePreview>
-
-<LivePreview componentName="static-list" exampleName="ComplexLabel" >
+<LivePreview componentName="static-list" exampleName="Default" />
 
 ## Complex label
 
@@ -26,9 +20,7 @@ For complex labels, you can add additional elements to provide further context o
 
 **Note:** To ensure correct spacing when using buttons or icons, wrap your static content inside `StaticListItemContent`.
 
-</LivePreview>
-
-<LivePreview componentName="static-list" exampleName="WithIcons" >
+<LivePreview componentName="static-list" exampleName="ComplexLabel" />
 
 ## With icons
 
@@ -39,9 +31,7 @@ For complex labels, you can add additional elements to provide further context o
 - Icons should be displayed before labels.
 - Use icons consistently across all static list items within the same group.
 
-</LivePreview>
-
-<LivePreview componentName="static-list" exampleName="WithButtons" >
+<LivePreview componentName="static-list" exampleName="WithIcons" />
 
 ## With buttons
 
@@ -49,14 +39,10 @@ You can use [`Button`](/salt/components/button) to add actions to the `StaticLis
 
 **Note:** Buttons should be associated to the list item content using `aria-label` or `aria-labelledby`.
 
-</LivePreview>
-
-<LivePreview componentName="static-list" exampleName="WithDividers" >
+<LivePreview componentName="static-list" exampleName="WithButtons" />
 
 ## With dividers
 
 You can separate the list of `StaticListItem`s by adding a [`Divider`](../divider) component between items.
 
-</LivePreview>
-
-</LivePreviewControls>
+<LivePreview componentName="static-list" exampleName="WithDividers" />

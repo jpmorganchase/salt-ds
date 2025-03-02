@@ -1,3 +1,7 @@
+.pre {
+  max-width: 80vw;
+}
+
 .pre button {
   /* customise copy button */
   --color-dark-actionable-primary-hover: transparent;

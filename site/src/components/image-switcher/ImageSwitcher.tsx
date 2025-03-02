@@ -1,5 +1,5 @@
 import { Image } from "@jpmorganchase/mosaic-site-components";
-import { Switch } from "@salt-ds/core";
+import { SaltProviderNext, Switch } from "@salt-ds/core";
 import { type ChangeEvent, useState } from "react";
 import styles from "./ImageSwitcher.module.css";
 
@@ -20,25 +20,29 @@ export function ImageSwitcher(props: ImageSwitcherProps): JSX.Element {
   const currentImage = toggle ? images[1] : images[0];
 
   return (
-    <figure className={styles.figure}>
-      <div className={styles.container}>
-        <div className={styles.header}>
-          <Switch
-            className={styles.switch}
-            checked={toggle}
-            onChange={handleToggle}
-            label={label}
-          />
+    <SaltProviderNext mode="light" applyClassesTo="child">
+      <figure className={styles.figure}>
+        <div className={styles.container}>
+          <div className={styles.header}>
+            <Switch
+              className={styles.switch}
+              checked={toggle}
+              onChange={handleToggle}
+              label={label}
+            />
+          </div>
+          {currentImage && (
+            <Image
+              className={styles.image}
+              alt={currentImage?.alt}
+              src={currentImage?.src}
+            />
+          )}
         </div>
-        {currentImage && (
-          <Image
-            className={styles.image}
-            alt={currentImage?.alt}
-            src={currentImage?.src}
-          />
+        {caption && (
+          <figcaption className={styles.caption}>{caption}</figcaption>
         )}
-      </div>
-      {caption && <figcaption className={styles.caption}>{caption}</figcaption>}
-    </figure>
+      </figure>
+    </SaltProviderNext>
   );
 }

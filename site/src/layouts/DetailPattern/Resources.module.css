@@ -1,6 +1,6 @@
 .root {
   position: relative;
-  padding-block: var(--salt-spacing-200);
+  padding: var(--salt-spacing-200);
 }
 
 .root::before {

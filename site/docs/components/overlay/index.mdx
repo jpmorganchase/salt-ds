@@ -2,25 +2,17 @@
 title: Overlay
 data:
   description: "`Overlay` reveals supplementary content when the user clicks a UI trigger element. It remains active and open until the user dismisses it. It can contain interactive and focusable elements, such as buttons and links."
-
-  # Fill in the info from the content template's "Metadata" table below.
-  # To omit optional items, comment them out with #
   sourceCodeUrl: "https://github.com/jpmorganchase/salt-ds/tree/main/packages/core/src/overlay"
   package:
     name: "@salt-ds/core"
     initialVersion: "1.24.0"
   alsoKnownAs: ["Popover"]
-  relatedComponents: [
-      # Add a { name: "...", relationship: "..." } block for each
-      # related component here (separated by commas).
-      # Permitted values for relationship are: "similarTo" or
-      # "contains".
+  relatedComponents:
+    [
       { name: "Button", relationship: "contains" },
       { name: "Drawer", relationship: "similarTo" },
       { name: "Tooltip", relationship: "similarTo" },
     ]
-
-# Leave this as is
 layout: DetailComponent
 ---
 

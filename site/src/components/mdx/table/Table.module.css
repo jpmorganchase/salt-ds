@@ -1,53 +1,44 @@
 .table {
-  --table-data-padding: 0.75rem;
-}
-
-.table {
   display: inline-table;
   width: 100%;
   border-collapse: collapse;
   table-layout: fixed;
   word-wrap: break-word;
+  position: relative;
+}
+
+.table tbody td {
+  padding-block: var(--salt-spacing-100);
 }
 
 .table thead {
-  position: sticky;
-  top: var(--ifm-navbar-height);
-  z-index: 2;
-}
-
-.table thead tr {
-  border: none;
-  box-shadow: 0 4px 2px -2px rgba(0, 0, 0, 0.1);
-  -webkit-box-shadow: 0 4px 2px -2px rgba(0, 0, 0, 0.1);
-}
-
-.table thead tr th {
+  color: var(--salt-content-secondary-foreground);
+  font-weight: var(--salt-text-label-fontWeight-strong);
+  font-size: var(--salt-text-label-fontSize);
+  line-height: var(--salt-text-label-lineHeight);
   text-align: left;
-  background: var(--salt-color-white);
+  border-bottom: var(--salt-size-border) var(--salt-separable-borderStyle) var(--salt-separable-primary-borderColor);
+}
+
+.table tbody tr {
+  border-bottom: var(--salt-size-border) var(--salt-separable-borderStyle) var(--salt-separable-tertiary-borderColor);
+}
+
+.table td,
+.table th {
+  height: calc(var(--salt-spacing-100) + var(--salt-size-base));
 }
 
 .table th,
 .table td {
-  border: none;
-  font-size: var(--salt-text-fontSize);
-  padding: var(--table-data-padding);
+  padding-left: var(--salt-spacing-100);
+  position: relative;
 }
 
-.table tr {
-  border-bottom: 1px solid var(--salt-separable-tertiary-borderColor);
-  border-top: 1px solid var(--salt-separable-tertiary-borderColor);
-}
-
-.table th {
-  color: var(--salt-content-secondary-foreground);
-  font-weight: var(--salt-text-h4-fontWeight);
-}
-
-.table tr td:not(:last-child) {
-  border-right: 1px solid var(--salt-separable-tertiary-borderColor);
-}
-
-.table tr th + th {
-  border-left: 1px solid var(--salt-color-gray-90-fade-border-readonly);
+.table tr th + th::before {
+  content: "";
+  height: calc(var(--salt-size-base) / 2 - 2 * var(--salt-size-border));
+  border-left: var(--salt-size-border) var(--salt-separable-borderStyle) var(--salt-separable-tertiary-borderColor);
+  left: 0;
+  position: absolute;
 }

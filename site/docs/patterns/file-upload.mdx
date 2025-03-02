@@ -1,16 +1,18 @@
 ---
 title: File upload
+description: "A file upload allows users to transfer one or multiple files from an external source to the web application. This pattern is commonly embedded in forms or as a standalone element."
 layout: DetailPattern
 tags:
   - pattern
 aliases:
   - /salt/patterns/file-upload
 data:
-  resources: []
+  resources:
+    [
+      { href: "https://storybook.saltdesignsystem.com/?path=/story/patterns-file-upload--file-upload-example", label: "Examples" }
+    ]
   components: ["File Drop Zone", "Static List"]
 ---
-
-A file upload allows users to transfer one or multiple files from an external source to the web application. This pattern is commonly embedded in forms or as a standalone element.
 
 <Diagram
   src="/img/patterns/file-upload/file-upload.png"
@@ -26,11 +28,11 @@ Use this pattern to:
 - Upload single or multiple files within modals or full-page experiences.
 - Display file upload progress, file listings, and management options.
 
-<ExampleContainer type="positive" customPillText="Best practices">
+<GuidanceCallout type="positive" customPillText="Best practices">
   - Consider using a full-page layout or a drawer if additional actions need to be performed on the files. 
   - When used in dialogs, ensure that submit actions are disabled until the file upload is complete. 
   - When used in drawers, the upload status (e.g., completed) should remain  visible regardless of the drawer's open or close actions.
-</ExampleContainer>
+</GuidanceCallout>
 
 ## How to build
 
@@ -70,11 +72,11 @@ The file drop zone component enables users to upload files by providing a design
   border
 />
 
-<ExampleContainer type="positive" customPillText="Best practices">
+<GuidanceCallout type="positive" customPillText="Best practices">
   - The file drop zone component should support both single and multiple file uploads.
   - Restrict file selection to allowed file types.
   - Include text elements to assist users in making informed decisions.
-</ExampleContainer>
+</GuidanceCallout>
 
 ## Space-restricted areas
 
@@ -86,11 +88,11 @@ In space-restricted scenarios, single file uploads can be facilitated using a bu
   border
 />
 
-<ExampleContainer type="positive" customPillText="Best practices">
+<GuidanceCallout type="positive" customPillText="Best practices">
   - Use a button for single file uploads only
   - Restrict file selection to allowed file types
   - Include text elements to help users make informed decisions
-</ExampleContainer>
+</GuidanceCallout>
 
 ## Uploading files
 
@@ -152,9 +154,9 @@ Alternatively, group error messages can be displayed using a banner component po
   border
 />
 
-<ExampleContainer type="positive" customPillText="Best practices">
+<GuidanceCallout type="positive" customPillText="Best practices">
   - Clearly communicate the issue and offer a solution
   - Ensure error messages are simple and concise
-</ExampleContainer>
+</GuidanceCallout>
 
 :fragment{src="./fragments/feedback.mdx"}

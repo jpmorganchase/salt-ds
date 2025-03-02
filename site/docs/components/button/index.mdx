@@ -2,26 +2,18 @@
 title: Button
 data:
   description: "`Button` is an interactive component that allows the user to execute an action. Button comes in three distinct appearances: solid, bordered, and transparent. These styles provide greater choice and flexibility for establishing hierarchy and affordance within a UI. You can display a button with or without a text description or icon."
-
-  # Fill in the info from the content template's "Metadata" table below.
-  # To omit optional items, comment them out with #
   sourceCodeUrl: "https://github.com/jpmorganchase/salt-ds/blob/main/packages/core/src/button/Button.tsx"
   package:
     name: "@salt-ds/core"
   alsoKnownAs: ["Action", "UI action"]
-  relatedComponents: [
-      # Add a { name: "...", relationship: "..." } block for each
-      # related component here (separated by commas).
-      # Permitted values for relationship are: "similarTo" or
-      # "contains".
+  relatedComponents:
+    [
       { name: "Link", relationship: "similarTo" },
       { name: "Pill", relationship: "similarTo" },
       { name: "Icon", relationship: "contains" },
       { name: "Status indicator", relationship: "contains" },
     ]
   relatedPatterns: ["Button bar", "Split button"]
-
-# Leave this as is
 layout: DetailComponent
 ---
 

@@ -1,20 +1,21 @@
 .container {
-  border: var(--salt-size-border) var(--salt-container-borderStyle) var(--salt-container-primary-borderColor);
+  border: var(--salt-size-border) var(--salt-container-borderStyle) var(--salt-container-secondary-borderColor);
   margin-top: var(--salt-spacing-200);
+  border-radius: var(--salt-palette-corner);
+  overflow: hidden;
 }
 
 .componentPreview {
-  min-height: 25vh;
   display: flex;
   flex-direction: row;
 }
 
-.componentPreview.smallViewport {
-  min-height: 35vh;
-  flex-direction: column;
+@media not screen and (min-width: 960px) {
+  .componentPreview {
+    flex-direction: column;
+  }
 }
-
-.codePreview {
+S .codePreview {
   border-top: var(--salt-size-border) var(--salt-container-borderStyle) var(--salt-container-primary-borderColor);
 }
 
@@ -33,11 +34,9 @@
   justify-content: center;
   flex-wrap: wrap;
   gap: var(--salt-spacing-200);
-  padding-top: var(--salt-spacing-300);
-}
-
-.switch {
-  align-self: flex-end;
+  padding-inline: var(--salt-spacing-200);
+  padding-block: var(--salt-spacing-600);
+  background-color: var(--salt-container-primary-background);
 }
 
 .exampleWithSwitch {
@@ -45,8 +44,13 @@
   flex-direction: column;
   flex: 1;
   background: var(--salt-container-primary-background);
+}
+
+.toolbar {
+  display: flex;
+  justify-content: flex-end;
   padding: var(--salt-spacing-200);
-  gap: var(--salt-spacing-300);
+  border-top: var(--salt-size-border) var(--salt-separable-borderStyle) var(--salt-separable-tertiary-borderColor);
 }
 
 .codePanel {
@@ -65,6 +69,11 @@
 
 .codePanelInner {
   overflow: hidden;
+}
+
+.codePanelInner > div {
+  margin-bottom: 0;
+  max-width: 100%;
 }
 
 @media (prefers-reduced-motion: reduce) {
