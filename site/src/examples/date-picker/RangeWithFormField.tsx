@@ -91,7 +91,7 @@ export const RangeWithFormField = (): ReactElement => {
       <DatePicker
         selectionVariant="range"
         onSelectionChange={handleSelectionChange}
-        onOpen={setOpen}
+        onOpenChange={setOpen}
       >
         <DatePickerTrigger>
           <DatePickerRangeInput />

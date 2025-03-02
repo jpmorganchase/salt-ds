@@ -532,9 +532,15 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
           cy.findByLabelText("Start date").should("have.value", "05 Jan 2025");
           cy.findByLabelText("End date").should("have.value", "06 Jan 2025");
           // Simulate opening the calendar
-          cy.findByRole("button", { name: "Open Calendar" }).realClick();
+          cy.findByRole("button", { name: "Open Calendar" })
+            .realClick()
+            .type("{downArrow}");
           // Verify that the calendar is displayed
           cy.findAllByRole("application").should("have.length", 2);
+          //Verify the start date is focused
+          cy.findByRole("button", {
+            name: adapter.format(initialRangeDate.startDate, "DD MMMM YYYY"),
+          }).should("be.focused");
           // Verify that the default selected dates are highlighted in the calendar
           cy.findByRole("button", {
             name: "05 January 2025",
@@ -591,9 +597,15 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
           cy.findByLabelText("Start date").should("have.value", "05 Jan 2025");
           cy.findByLabelText("End date").should("have.value", "06 Jan 2025");
           // Simulate opening the calendar
-          cy.findByRole("button", { name: "Open Calendar" }).realClick();
+          cy.findByRole("button", { name: "Open Calendar" })
+            .realClick()
+            .type("{downArrow}");
           // Verify that the calendar is displayed
           cy.findAllByRole("application").should("have.length", 2);
+          //Verify the start date is focused
+          cy.findByRole("button", {
+            name: adapter.format(initialRangeDate.startDate, "DD MMMM YYYY"),
+          }).should("be.focused");
           // Verify that the selected dates are highlighted in the calendar
           cy.findByRole("button", {
             name: "05 January 2025",

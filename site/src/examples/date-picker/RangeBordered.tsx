@@ -90,7 +90,7 @@ export const RangeBordered = (): ReactElement => {
       <DatePicker
         selectionVariant="range"
         onSelectionChange={handleSelectionChange}
-        onOpen={setOpen}
+        onOpenChange={setOpen}
       >
         <DatePickerTrigger>
           <DatePickerRangeInput bordered />

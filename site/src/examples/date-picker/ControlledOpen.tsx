@@ -62,7 +62,7 @@ export const ControlledOpen = (): ReactElement => {
     setSelectedDate(previousSelectedDate.current);
   }, []);
 
-  const handleOpen = useCallback(
+  const handleOpenChange = useCallback(
     (newOpen: boolean, _event?: Event, reason?: DatePickerOpenChangeReason) => {
       if (reason === undefined) {
         triggerRef.current?.focus();
@@ -85,7 +85,7 @@ export const ControlledOpen = (): ReactElement => {
       selectedDate={selectedDate}
       onApply={handleApply}
       onCancel={handleCancel}
-      onOpen={handleOpen}
+      onOpenChange={handleOpenChange}
       open={open}
     >
       <DatePickerTrigger>

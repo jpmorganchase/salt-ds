@@ -500,9 +500,15 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
           // Verify that the default selected date is displayed
           cy.findByRole("textbox").should("have.value", initialDateValue);
           // Simulate opening the calendar
-          cy.findByRole("button", { name: "Open Calendar" }).realClick();
+          cy.findByRole("button", { name: "Open Calendar" })
+            .realClick()
+            .type("{downArrow}");
           // Verify that the calendar is displayed
           cy.findByRole("application").should("exist");
+          //Verify the selected date is focused
+          cy.findByRole("button", {
+            name: adapter.format(initialDate, "DD MMMM YYYY"),
+          }).should("be.focused");
           // Verify that the default selected date is highlighted in the calendar
           cy.findByRole("button", {
             name: adapter.format(initialDate, "DD MMMM YYYY"),
@@ -540,9 +546,15 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
           // Verify that the selected date is displayed
           cy.findByRole("textbox").should("have.value", initialDateValue);
           // Simulate opening the calendar
-          cy.findByRole("button", { name: "Open Calendar" }).realClick();
+          cy.findByRole("button", { name: "Open Calendar" })
+            .realClick()
+            .type("{downArrow}");
           // Verify that the calendar is displayed
           cy.findByRole("application").should("exist");
+          //Verify the selected date is focused
+          cy.findByRole("button", {
+            name: adapter.format(initialDate, "DD MMMM YYYY"),
+          }).should("be.focused");
           // Verify that the selected date is highlighted in the calendar
           cy.findByRole("button", {
             name: adapter.format(initialDate, "DD MMMM YYYY"),

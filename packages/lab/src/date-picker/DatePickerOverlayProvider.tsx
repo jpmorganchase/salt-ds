@@ -107,7 +107,7 @@ interface DatePickerOverlayProviderProps {
    * @param event - event that triggered the state change
    * @param reason - reason for the the state change
    */
-  onOpen?: (
+  onOpenChange?: (
     newOpen: boolean,
     event?: Event,
     reason?: DatePickerOpenChangeReason,
@@ -136,7 +136,7 @@ export const DatePickerOverlayProvider: React.FC<
   open: openProp,
   openOnClick,
   defaultOpen,
-  onOpen,
+  onOpenChange,
   children,
   interactions,
   readOnly,
@@ -171,7 +171,7 @@ export const DatePickerOverlayProvider: React.FC<
         triggeringElementRef.current = null;
       }
       setOpenState(newOpen);
-      onOpen?.(newOpen, event, reason);
+      onOpenChange?.(newOpen, event, reason);
 
       if (
         reason === "escape-key" ||
@@ -180,7 +180,7 @@ export const DatePickerOverlayProvider: React.FC<
         onDismissCallback?.current?.();
       }
     },
-    [onOpen, readOnly],
+    [onOpenChange, readOnly],
   );
 
   const openState = open && !readOnly;

@@ -32,7 +32,7 @@ export interface DatePickerBaseProps {
    * @param event - event that triggered the state change
    * @param reason - reason for the the state change
    */
-  onOpen?: (
+  onOpenChange?: (
     newOpen: boolean,
     event?: Event,
     reason?: DatePickerOpenChangeReason,
@@ -135,14 +135,15 @@ export const DatePickerMain = forwardRef<HTMLDivElement, DatePickerProps<any>>(
 export const DatePicker = forwardRef(function DatePicker<
   TDate extends DateFrameworkType,
 >(props: DatePickerProps<TDate>, ref: React.Ref<HTMLDivElement>) {
-  const { defaultOpen, open, openOnClick, onOpen, readOnly, ...rest } = props;
+  const { defaultOpen, open, openOnClick, onOpenChange, readOnly, ...rest } =
+    props;
 
   return (
     <DatePickerOverlayProvider
       defaultOpen={defaultOpen}
       open={open}
       openOnClick={openOnClick}
-      onOpen={onOpen}
+      onOpenChange={onOpenChange}
       readOnly={readOnly}
     >
       <DatePickerMain {...rest} readOnly={readOnly} ref={ref} />
