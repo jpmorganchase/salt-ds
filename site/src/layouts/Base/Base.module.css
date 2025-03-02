@@ -1,0 +1,32 @@
+.root {
+  height: 100vh;
+  display: grid;
+  grid-template-areas: "header header" "left middle" "footer footer";
+  grid-template-rows: auto 1fr auto;
+  grid-template-columns: 0.6fr minmax(0, 2.5fr);
+}
+
+.oneColumn {
+  grid-template-areas: "header" "middle" "footer";
+  grid-template-columns: 1fr;
+}
+
+.middle {
+  grid-area: middle;
+  display: flex;
+  flex-direction: column;
+}
+
+.twoColumn {
+  display: flex;
+  padding-block: var(--salt-spacing-200);
+}
+
+.content {
+  flex: 1;
+  min-width: 1px;
+}
+
+.content > :global(.wrapper) {
+  padding-inline: var(--salt-spacing-300);
+}

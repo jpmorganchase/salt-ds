@@ -23,7 +23,6 @@ module.exports = {
       // and before all files including _next/public files which
       // allows overriding page files
       beforeFiles: [
-        { source: "/favicon.ico", destination: "/img/favicon.png" },
         {
           source: "/getting-started/:path*",
           destination: "/salt/getting-started/:path*",

@@ -14,7 +14,7 @@ export const Info = (): ReactElement => (
   <StackLayout gap={3} style={{ width: "80%" }}>
     <Banner>
       <BannerContent>
-        There has been an update to the{" "}
+        There has been an update to the&nbsp;
         <Link href="#">Terms and Conditions</Link>.
       </BannerContent>
       <BannerActions>
