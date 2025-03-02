@@ -1,20 +1,24 @@
-/* Bump up `.link` so color set by mosaic-theme will have lower priority */
-.root .link.link,
-.root .link.link:hover,
-.root .link.link:visited {
-  color: inherit;
-}
-
-.link {
+.link.link {
   display: block;
+  text-decoration: none;
 }
 
 .link:focus-visible {
   outline: var(--salt-focused-outline);
 }
 
+.link:hover .badgeContainer,
+.link:focus-visible .badgeContainer {
+  visibility: visible;
+}
+
 .badgeContainer {
-  padding-left: 0.5rem;
+  visibility: hidden;
+  padding-left: var(--salt-spacing-50);
   text-decoration: underline;
   color: var(--salt-content-foreground-hover);
+}
+
+.root:first-child h4 {
+  margin-top: 0;
 }

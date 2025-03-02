@@ -1,0 +1,48 @@
+main {
+  font-size: var(--salt-text-fontSize);
+  line-height: var(--salt-text-lineHeight);
+}
+
+@media not screen and (min-width: 960px) {
+  .saltText.saltText-display1 {
+    font-size: var(--salt-text-display2-fontSize);
+    font-weight: var(--salt-text-display2-fontWeight);
+    line-height: var(--salt-text-display2-lineHeight);
+  }
+
+  .saltText.saltText-display2 {
+    font-size: var(--salt-text-display3-fontSize);
+    font-weight: var(--salt-text-display3-fontWeight);
+    line-height: var(--salt-text-display3-lineHeight);
+  }
+
+  .saltText.saltText-display3 {
+    font-size: var(--salt-text-display4-fontSize);
+    font-weight: var(--salt-text-display4-fontWeight);
+    line-height: var(--salt-text-display4-lineHeight);
+  }
+
+  .saltText.saltText-display4 {
+    font-size: var(--salt-text-h1-fontSize);
+    font-weight: var(--salt-text-h1-fontWeight);
+    line-height: var(--salt-text-h1-lineHeight);
+  }
+
+  .saltText.saltText-h1 {
+    font-size: var(--salt-text-h2-fontSize);
+    font-weight: var(--salt-text-h2-fontWeight);
+    line-height: var(--salt-text-h2-lineHeight);
+  }
+
+  .saltText.saltText-h2 {
+    font-size: var(--salt-text-h3-fontSize);
+    font-weight: var(--salt-text-h3-fontWeight);
+    line-height: var(--salt-text-h3-lineHeight);
+  }
+
+  .saltText.saltText-h3 {
+    font-size: var(--salt-text-h4-fontSize);
+    font-weight: var(--salt-text-h4-fontWeight);
+    line-height: var(--salt-text-h4-lineHeight);
+  }
+}

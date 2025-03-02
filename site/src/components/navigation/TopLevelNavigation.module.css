@@ -1,0 +1,9 @@
+.root {
+  padding-inline: var(--salt-spacing-200);
+}
+
+@media screen and (min-width: 960px) {
+  .root {
+    padding-left: 0;
+  }
+}

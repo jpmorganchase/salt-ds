@@ -1,3 +1,7 @@
+.root {
+  margin-block: var(--salt-spacing-200);
+}
+
 .content p:first-child {
   margin-top: 0;
 }

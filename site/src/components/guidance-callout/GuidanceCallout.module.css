@@ -1,0 +1,40 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  padding: var(--salt-spacing-200);
+  gap: var(--salt-spacing-150);
+  border: var(--salt-size-border) var(--salt-container-borderStyle) var(--salt-container-primary-borderColor);
+  margin-block: var(--salt-spacing-300);
+  border-radius: var(--salt-palette-corner-weaker);
+}
+
+@media not screen and (min-width: 960px) {
+  .root {
+    padding: var(--salt-spacing-100);
+  }
+}
+
+.content > :first-child {
+  margin-top: 0;
+}
+
+.content > :last-child {
+  margin-bottom: 0;
+}
+
+.content img {
+  width: 100%;
+  height: auto;
+}
+
+.pill {
+  color: var(--salt-content-bold-foreground);
+}
+
+.positive .pill {
+  background-color: var(--salt-status-success-bold-background);
+}
+
+.negative .pill {
+  background-color: var(--salt-status-error-bold-background);
+}

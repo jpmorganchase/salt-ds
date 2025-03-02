@@ -1,0 +1,7 @@
+.root {
+  padding-inline: var(--salt-spacing-200);
+}
+
+.root ul {
+  margin-bottom: 0;
+}

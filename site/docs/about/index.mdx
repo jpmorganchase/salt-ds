@@ -7,26 +7,24 @@ sidebar:
 
 Salt is the J.P. Morgan design system, an open-source solution for building exceptional products and digital experiences in financial services and other industries.
 
-<GridLayout columns={{ xs: 1, sm: 2 }}>
-  
-  <OverviewCard           
-    title="Roadmap"
-    url="./roadmap"
-    keylineColor="green"
-    >
-The roadmap details our plans and priorities for future development.
-  </OverviewCard>
-  
-<OverviewCard title="Glossary" url="./glossary" keylineColor="blue">
-  A glossary of terms.
-</OverviewCard>
-
-  <OverviewCard
-    title="Supported Platforms"
-    url="./supported-platforms"
-    keylineColor="orange"
-  >
-    The platforms supported by Salt.
-  </OverviewCard>
-  
-</GridLayout>
+<QuickLinks
+  columns={{ xs: 1, md: 2 }}
+  links={[
+    {
+      title: "Roadmap",
+      description:
+        "The roadmap details our plans and priorities for future development.",
+      href: "./roadmap",
+    },
+    {
+      title: "Glossary",
+      description: "A glossary of terms.",
+      href: "./glossary",
+    },
+    {
+      title: "Supported Platforms",
+      description: "The platforms supported by Salt.",
+      href: "./supported-platforms",
+    },
+  ]}
+/>

@@ -8,183 +8,134 @@ data:
   $ref: ./#/data
 ---
 
-<LivePreviewControls>
-
-<LivePreview componentName="date-picker" exampleName="Single">
-
 ## Single date
 
 An uncontrolled `DatePicker`, composed of a `DateInput` and a `Calendar` component, allows users to select a single date when the `selectionVariant` prop is set to "single", without requiring explicit state management in the parent component, making it ideal for simple date selection tasks.
 
-</LivePreview>
-
-<LivePreview componentName="date-picker" exampleName="Range">
+<LivePreview componentName="date-picker" exampleName="Single" />
 
 ## Date range
 
 An uncontrolled `DatePicker`, composed of a `DateInput` and a `Calendar` component, allows users to select a date range when the `selectionVariant` prop is set to "range", without requiring explicit state management in the parent component, making it ideal for selecting start and end dates for various applications.
 
-</LivePreview>
-
-<LivePreview componentName="date-picker" exampleName="SingleControlled">
+<LivePreview componentName="date-picker" exampleName="Range" />
 
 ## Controlled single date
 
 A controlled `DatePicker`, composed of a `DateInput` and a `Calendar` component, allows users to select a single date when the `selectionVariant` prop is set to "single", with the parent component explicitly managing the date state, providing greater control over the date selection process.
 
-</LivePreview>
-
-<LivePreview componentName="date-picker" exampleName="RangeControlled">
+<LivePreview componentName="date-picker" exampleName="SingleControlled" />
 
 ## Controlled date range
 
 A controlled `DatePicker`, composed of a `DateInput` and a `Calendar` component, allows users to select a date range when the `selectionVariant` prop is set to "range", with the parent component explicitly managing the start and end date states, providing greater control over the date range selection process.
 
-</LivePreview>
-
-<LivePreview componentName="date-picker" exampleName="SingleWithFormField">
+<LivePreview componentName="date-picker" exampleName="RangeControlled" />
 
 ## Single date within FormField
 
 A `DatePicker` with `selectionVariant` set to "single", inside a `FormField`, provides the field with a visible label, help text, and a status message for validation feedback.
 
-</LivePreview>
-
-<LivePreview componentName="date-picker" exampleName="RangeWithFormField">
+<LivePreview componentName="date-picker" exampleName="SingleWithFormField" />
 
 ## Date range within FormField
 
 A `DatePicker` with `selectionVariant` set to "range", inside a `FormField`, provides the field with a visible label, help text, and a status message for validation feedback.
 
-</LivePreview>
-
-<LivePreview componentName="date-picker" exampleName="SingleWithInitialError">
+<LivePreview componentName="date-picker" exampleName="RangeWithFormField" />
 
 ## Single with initial error
 
 When used with `FormField`, the `validationStatus` prop can be used to recreate an initial error state.
 
-</LivePreview>
-
-<LivePreview componentName="date-picker" exampleName="RangeWithInitialError">
+<LivePreview componentName="date-picker" exampleName="SingleWithInitialError" />
 
 ## Range with initial error
 
 When used with `FormField`, the `validationStatus` prop can be used to recreate an initial error state.
 
-</LivePreview>
-
-<LivePreview componentName="date-picker" exampleName="SingleWithMinMaxDate">
+<LivePreview componentName="date-picker" exampleName="RangeWithInitialError" />
 
 ## Single with min/max date
 
 To constrain the selected date within a specific range, use the `minDate` and/or `maxDate` props. If `minDate` is not provided, it defaults to the year 1900. If `maxDate` is undefined, it defaults to the year 2100. This ensures that the selected date remains within the specified range.
 
-</LivePreview>
-
-<LivePreview componentName="date-picker" exampleName="RangeWithMinMaxDate">
+<LivePreview componentName="date-picker" exampleName="SingleWithMinMaxDate" />
 
 ## Range with min/max date
 
 To constrain the selected date within a specific range, use the `minDate` and/or `maxDate` props. If `minDate` is not provided, it defaults to the year 1900. If `maxDate` is undefined, it defaults to the year 2100. This ensures that the selected date remains within the specified range.
 
-</LivePreview>
-
-<LivePreview componentName="date-picker" exampleName="SingleWithCustomPanel">
+<LivePreview componentName="date-picker" exampleName="RangeWithMinMaxDate" />
 
 ## Single with custom content
 
 The composed nature of the `DatePicker` enables you to control the content of the overlay using the `children` prop. Use the recommended panels or compose them with your own.
 
-</LivePreview>
-
-<LivePreview componentName="date-picker" exampleName="RangeWithCustomPanel">
+<LivePreview componentName="date-picker" exampleName="SingleWithCustomPanel" />
 
 ## Range with custom content
 
 The composed nature of the `DatePicker` enables you to control the content of the overlay using the `children` prop. Use the recommended panels or compose them with your own.
 
-</LivePreview>
-
-<LivePreview componentName="date-picker" exampleName="SingleWithTodayButton">
+<LivePreview componentName="date-picker" exampleName="RangeWithCustomPanel" />
 
 ## Single with today button
 
 The `children` prop enables you to compose additional controls to your Date Picker component, such as a 'Today' button.
 
-</LivePreview>
-
-<LivePreview componentName="date-picker" exampleName="SingleWithConfirmation">
+<LivePreview componentName="date-picker" exampleName="SingleWithTodayButton" />
 
 ## Single with confirmation
 
 You can change dates upon selection, or apply the selection with additional controls.
 
-</LivePreview>
-
-<LivePreview componentName="date-picker" exampleName="RangeWithConfirmation">
+<LivePreview componentName="date-picker" exampleName="SingleWithConfirmation" />
 
 ## Range with confirmation
 
 You can change dates upon selection, or apply the selection with additional controls.
 
-</LivePreview>
-
-<LivePreview componentName="date-picker" exampleName="SingleWithCustomParser">
+<LivePreview componentName="date-picker" exampleName="RangeWithConfirmation" />
 
 ## Single with custom parser
 
 A custom parser can be used to handle specific date formats or shorthand date entries.
 
-</LivePreview>
-
-<LivePreview componentName="date-picker" exampleName="SingleWithLocaleEnUS">
+<LivePreview componentName="date-picker" exampleName="SingleWithCustomParser" />
 
 ## Single with locale
 
 When the `locale` prop is provided, the `DatePicker` component uses it to define the locale, ensuring that date formats, month names, and other locale-specific elements are displayed according to the specified locale.
 
-</LivePreview>
-
-<LivePreview componentName="date-picker" exampleName="RangeWithLocaleEsES">
+<LivePreview componentName="date-picker" exampleName="SingleWithLocaleEnUS" />
 
 ## Range with locale
 
 When the `locale` prop is provided, the `DatePicker` component uses it to define the locale, ensuring that date formats, month names, and other locale-specific elements are displayed according to the specified locale.
 
-</LivePreview>
-
-<LivePreview componentName="date-picker" exampleName="SingleBordered">
+<LivePreview componentName="date-picker" exampleName="RangeWithLocaleEsES" />
 
 ## Bordered single
 
 A `DatePicker` component with a border provides a visually distinct area for selecting dates, enhancing the user interface by clearly delineating the component boundaries. This styling can improve usability and accessibility by making the calendar controls more noticeable and easier to interact with.
 
-</LivePreview>
-
-<LivePreview componentName="date-picker" exampleName="RangeBordered">
+<LivePreview componentName="date-picker" exampleName="SingleBordered" />
 
 ## Bordered range
 
 A `DatePicker` component with a border provides a visually distinct area for selecting dates, enhancing the user interface by clearly delineating the component boundaries. This styling can improve usability and accessibility by making the calendar controls more noticeable and easier to interact with.
 
-</LivePreview>
-
-<LivePreview componentName="date-picker" exampleName="UncontrolledOpen">
+<LivePreview componentName="date-picker" exampleName="RangeBordered" />
 
 ## Uncontrolled open
 
 By default, the overlay's open state is uncontrolled and opens only when the calendar button or down arrow is used. However, it can also be configured to open using the `openOnClick` prop.
 
-</LivePreview>
-
-<LivePreview componentName="date-picker" exampleName="ControlledOpen">
+<LivePreview componentName="date-picker" exampleName="UncontrolledOpen" />
 
 ## Controlled open
 
 By default, the overlay's open state is uncontrolled and opens only when the calendar button is pressed or down arrow is used. However, you can fully control the overlay's open behavior using the `open` prop. When you control the open state, you also take responsibility for handling the input's focus behavior after a selection is made.
 
-</LivePreview>
-
-</LivePreviewControls>
-```
+<LivePreview componentName="date-picker" exampleName="ControlledOpen" />

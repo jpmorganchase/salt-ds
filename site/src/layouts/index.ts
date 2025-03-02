@@ -2,7 +2,5 @@ export * from "./DetailComponent";
 export * from "./DetailContentOnly";
 export * from "./DetailPattern";
 export * from "./DetailTechnical";
+export * from "./DetailError";
 export * from "./Landing";
-export * from "./LayoutColumns";
-export * from "./LayoutFullWidth";
-export * from "./types";

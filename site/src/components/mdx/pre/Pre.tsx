@@ -1,15 +1,15 @@
 import type { PreProps } from "@jpmorganchase/mosaic-components";
-import {
-  Pre as InnerPre,
-  withMarkdownSpacing,
-} from "@jpmorganchase/mosaic-components";
-import type { FC, PropsWithChildren } from "react";
+import { Pre as MosaicPre } from "@jpmorganchase/mosaic-components";
+import { forwardRef } from "react";
 import styles from "./Pre.module.css";
+import "prismjs/themes/prism.css";
 
-const MosaicPre = withMarkdownSpacing(InnerPre);
-
-export const Pre: FC<PropsWithChildren<PreProps>> = ({ ...props }) => (
-  <div className={styles.pre}>
-    <MosaicPre {...props} />
-  </div>
+export const Pre = forwardRef<HTMLDivElement, PreProps>(
+  function Pre(props, ref) {
+    return (
+      <div className={styles.pre} ref={ref}>
+        <MosaicPre {...props} />
+      </div>
+    );
+  },
 );

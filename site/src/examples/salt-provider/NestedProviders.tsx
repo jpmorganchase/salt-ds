@@ -15,7 +15,7 @@ export const NestedProviders = (): ReactElement => {
         density is {density}.
         <SaltProvider mode={invertMode(mode)}>
           <Card className={styles.nestedCard}>
-            This Card is wrapped with a nested Salt Provider, the mode is{" "}
+            This Card is wrapped with a nested Salt Provider, the mode is&nbsp;
             {invertMode(mode)} and the density is inherited from the parent
             provider.
           </Card>
