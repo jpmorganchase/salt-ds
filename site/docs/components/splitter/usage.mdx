@@ -1,0 +1,44 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+## Using the components
+
+### When to use
+
+- To divide a window into sections or panes by introducing a moveable separator
+- To customize the layout of a workspace within an allowed range
+- To change the relative size of the panes
+
+### When not to use
+
+- If a window has enough space to host the Content
+- If the panes' content is not relevant to each other
+
+## Import
+
+To import `Splitter` and related components from the lab Salt package, use:
+
+```
+import { Splitter, SplitPanel, SplitHandle } from "@salt-ds/lab";
+```
+
+## Props
+
+### `Splitter`
+
+<PropsTable packageName="lab" componentName="Splitter" />
+
+### `SplitPanel`
+
+<PropsTable packageName="lab" componentName="SplitPanel" />
+
+### `SplitHandle`
+
+<PropsTable packageName="lab" componentName="SplitHandle" />
