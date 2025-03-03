@@ -15,16 +15,29 @@
 .saltCarouselSlide-actions {
   display: none;
 }
+
+.saltCarouselSlide-sr-only {
+  position: fixed;
+  top: 0;
+  left: 0;
+  transform: translate(-100%, -100%);
+}
+
 .saltCarouselSlide-actions.saltCarouselSlide-active {
   display: flex;
 }
-.saltCarouselSlide-content {
+.saltCarouselSlide-container {
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
   gap: var(--salt-spacing-200);
   padding-left: var(--salt-spacing-25);
   padding-bottom: var(--salt-spacing-25);
+}
+.saltCarouselSlide-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--salt-spacing-100);
 }
 .saltCarouselSlide-card {
   padding: var(--salt-spacing-200);

@@ -14,12 +14,14 @@ describe("GIVEN a 100% width slides carousel", () => {
   describe("WHEN moving slides with buttons", () => {
     it("SHOULD move to the next slide with button", () => {
       cy.mount(<Default />);
-      cy.findByText("1 of 5").should("exist");
+      cy.findByText("1 of 4").should("exist");
       cy.findAllByRole("button", { name: "Previous slide" }).should(
-        "be.disabled",
+        "have.attr",
+        "aria-disabled",
+        "true",
       );
       cy.findAllByRole("button", { name: "Next slide" }).click();
-      cy.findByText("2 of 5").should("exist");
+      cy.findByText("2 of 4").should("exist");
     });
 
     it("SHOULD move to the previous slide with button", () => {
@@ -28,32 +30,34 @@ describe("GIVEN a 100% width slides carousel", () => {
       cy.findAllByRole("button", { name: "Next slide" }).click();
       // test back button
       cy.findAllByRole("button", { name: "Previous slide" }).click();
-      cy.findByText("1 of 5").should("exist");
+      cy.findByText("1 of 4").should("exist");
     });
-    it("SHOULD move focus to the next button when reaching far left", () => {
+    it("SHOULD disable previous button when reaching far left", () => {
       cy.mount(<Default activeSlideIndex={1} />);
-      cy.findByText("2 of 5").should("exist");
+      cy.findByText("2 of 4").should("exist");
       cy.findAllByRole("button", { name: "Previous slide" }).click();
       cy.findAllByRole("button", { name: "Previous slide" }).should(
-        "be.disabled",
+        "have.attr",
+        "aria-disabled",
+        "true",
       );
-      cy.findAllByRole("button", { name: "Next slide" }).should("have.focus");
     });
 
-    it("SHOULD move focus to the prev button when reaching far right", () => {
+    it("SHOULD disable next button when reaching far right", () => {
       cy.mount(<Default activeSlideIndex={3} />);
-      cy.findByText("4 of 5").should("exist");
+      cy.findByText("4 of 4").should("exist");
       cy.findAllByRole("button", { name: "Next slide" }).click();
-      cy.findAllByRole("button", { name: "Next slide" }).should("be.disabled");
-      cy.findAllByRole("button", { name: "Previous slide" }).should(
-        "have.focus",
+      cy.findAllByRole("button", { name: "Next slide" }).should(
+        "have.attr",
+        "aria-disabled",
+        "true",
       );
     });
     it("SHOULD update labels when scrolling", () => {
       cy.mount(<Default />);
-      cy.findByText("1 of 5").should("exist");
+      cy.findByText("1 of 4").should("exist");
       cy.get(".saltCarouselSlider").scrollTo("topRight");
-      cy.findByText("5 of 5").should("exist");
+      cy.findByText("4 of 4").should("exist");
     });
     it("SHOULD support keyboard navigation", () => {
       cy.mount(<Default />);
@@ -61,21 +65,20 @@ describe("GIVEN a 100% width slides carousel", () => {
       cy.realPress("Tab");
       cy.findAllByRole("group").get('[tabindex="0"]').should("have.focus");
       cy.get(".saltCarouselSlider").realPress("ArrowRight");
-      cy.findByText("2 of 5").should("exist");
+      cy.findByText("2 of 4").should("exist");
       cy.get(".saltCarouselSlider").realPress("ArrowLeft");
-      cy.findByText("1 of 5").should("exist");
+      cy.findByText("1 of 4").should("exist");
     });
     describe("WHEN navigating with keyboard keys", () => {
       it("SHOULD NOT move slides when tabbing out of actions within", () => {
         cy.mount(<WithActions />);
-        cy.findByText("1 - 2 of 5").should("exist");
-        cy.realPress("Tab");
-        cy.findAllByRole("button", { name: "Next slide" }).should("have.focus");
-        cy.realPress("Tab");
+        cy.findByText("1 - 2 of 4").should("exist");
+        cy.findAllByRole("button", { name: "Next slides" }).focus();
+        // tab through visible elements
         cy.realPress("Tab");
         cy.realPress("Tab");
         // slides should not have been changed
-        cy.findByText("1 - 2 of 5").should("exist");
+        cy.findByText("1 - 2 of 4").should("exist");
       });
     });
   });
@@ -84,14 +87,14 @@ describe("GIVEN a carousel with responsive visibleItems", () => {
   it("SHOULD render properly with different visible items based on viewport", () => {
     cy.viewport(590, 900); // xs viewport
     cy.mount(<Default visibleSlides={{ xs: 1, sm: 2, md: 3 }} />);
-    cy.findByText("1 of 5").should("exist");
+    cy.findByText("1 of 4").should("exist");
 
     cy.viewport(700, 900); // sm viewport
     cy.mount(<Default visibleSlides={{ xs: 1, sm: 2, md: 3 }} />);
-    cy.findByText("1 - 2 of 5").should("exist");
+    cy.findByText("1 - 2 of 4").should("exist");
 
     cy.viewport(961, 1200); // md viewport
     cy.mount(<Default visibleSlides={{ xs: 1, sm: 2, md: 3 }} />);
-    cy.findByText("1 - 3 of 5").should("exist");
+    cy.findByText("1 - 3 of 4").should("exist");
   });
 });

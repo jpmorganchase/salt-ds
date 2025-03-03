@@ -47,8 +47,6 @@ export const Carousel = forwardRef<HTMLDivElement, CarouselProps>(
         <section
           role="region"
           aria-roledescription="carousel"
-          aria-live="polite"
-          aria-atomic="false"
           id={id}
           ref={ref}
           {...rest}

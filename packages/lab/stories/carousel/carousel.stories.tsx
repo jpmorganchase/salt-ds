@@ -7,7 +7,7 @@ import {
   CarouselSlider,
 } from "@salt-ds/lab";
 import "./carousel.stories.css";
-import { H2, H3, StackLayout, Text } from "@salt-ds/core";
+import { H2, H3, Link, Text } from "@salt-ds/core";
 
 export default {
   title: "Lab/Carousel",
@@ -43,44 +43,31 @@ const content = [
     link: "Download app",
   },
 ];
-function SliderContent(props: {
-  index: number;
-  slide: { title: string; content: string };
-}) {
-  const {
-    slide: { title, content },
-    index,
-  } = props;
-  return (
-    <StackLayout gap={1}>
-      <H3 id={`slide-title-${index}`}>{title}</H3>
-      <Text>{content}</Text>
-    </StackLayout>
-  );
-}
 
-const CarouselExample: StoryFn<typeof Carousel> = (args) => {
+const renderSlides = (appearance?: "bordered", withActions?: boolean) =>
+  content.map((slide, index) => (
+    <CarouselSlide
+      key={slide.title}
+      appearance={appearance}
+      header={<H3 id={`slide-title-${slide.slideId}`}>{slide.title}</H3>}
+      aria-labelledby={`slide-title-${slide.slideId}`}
+      media={
+        <div
+          className={`carousel-image-placeholder carousel-image-placeholder-${index + 1}`}
+        />
+      }
+      actions={withActions && <Link href="#">{slide.link}</Link>}
+    >
+      <Text>{slide.content}</Text>
+    </CarouselSlide>
+  ));
+
+const CarouselExample: StoryFn<typeof Carousel> = (args, navigationBarArgs) => {
   return (
     <div className="carousel-container">
       <Carousel {...args}>
         <CarouselNavigationBar />
-        <CarouselSlider>
-          {content.map((slide, index) => (
-            <CarouselSlide
-              key={slide.title}
-              aria-labelledby={`slide-title-${slide.slideId}`}
-              media={
-                <div
-                  className={`carousel-image-placeholder carousel-image-placeholder-${
-                    index + 1
-                  }`}
-                />
-              }
-            >
-              <SliderContent index={index} slide={slide} />
-            </CarouselSlide>
-          ))}
-        </CarouselSlider>
+        <CarouselSlider>{renderSlides()}</CarouselSlider>
       </Carousel>
     </div>
   );
@@ -96,24 +83,7 @@ export const Bordered: StoryFn<typeof Carousel> = (args) => {
     <div className="carousel-container">
       <Carousel {...args} aria-label="Account overview">
         <CarouselNavigationBar />
-        <CarouselSlider>
-          {content.map((slide, index) => (
-            <CarouselSlide
-              appearance="bordered"
-              key={slide.title}
-              aria-labelledby={`slide-title-${slide.slideId}`}
-              media={
-                <div
-                  className={`carousel-image-placeholder carousel-image-placeholder-${
-                    index + 1
-                  }`}
-                />
-              }
-            >
-              <SliderContent index={index} slide={slide} />
-            </CarouselSlide>
-          ))}
-        </CarouselSlider>
+        <CarouselSlider>{renderSlides("bordered")}</CarouselSlider>
       </Carousel>
     </div>
   );
@@ -135,24 +105,7 @@ export const WithActions: StoryFn<typeof Carousel> = (args) => {
         aria-label="Account overview"
       >
         <CarouselNavigationBar />
-        <CarouselSlider>
-          {content.map((slide, index) => (
-            <CarouselSlide
-              appearance="bordered"
-              key={slide.title}
-              aria-labelledby={`slide-title-${slide.slideId}`}
-              media={
-                <div
-                  className={`carousel-image-placeholder carousel-image-placeholder-${
-                    index + 1
-                  }`}
-                />
-              }
-            >
-              <SliderContent index={index} slide={slide} />
-            </CarouselSlide>
-          ))}
-        </CarouselSlider>
+        <CarouselSlider>{renderSlides("bordered", true)}</CarouselSlider>
       </Carousel>
     </div>
   );
@@ -165,24 +118,7 @@ export const WithTitleInNavigationBar: StoryFn<typeof Carousel> = (args) => {
         <CarouselNavigationBar
           title={<H2 id="carousel-title">Categorical Backgrounds</H2>}
         />
-        <CarouselSlider>
-          {content.map((slide, index) => (
-            <CarouselSlide
-              appearance="bordered"
-              key={slide.title}
-              aria-labelledby={`slide-title-${slide.slideId}`}
-              media={
-                <div
-                  className={`carousel-image-placeholder carousel-image-placeholder-${
-                    index + 1
-                  }`}
-                />
-              }
-            >
-              <SliderContent index={index} slide={slide} />
-            </CarouselSlide>
-          ))}
-        </CarouselSlider>
+        <CarouselSlider>{renderSlides("bordered")}</CarouselSlider>
       </Carousel>
     </div>
   );

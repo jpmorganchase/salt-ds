@@ -76,7 +76,6 @@ export const CarouselControls = forwardRef<
 
   const ControlsLabel = () => (
     <Text as="span" id="carousel-controls-announcer">
-      <span className={withBaseName("sr-only")}>Moved to</span>
       <strong>{controlsLabel}</strong>
     </Text>
   );
@@ -92,7 +91,14 @@ export const CarouselControls = forwardRef<
   }
 
   return (
-    <div role="group" className={withBaseName()} ref={ref} {...rest}>
+    <div
+      role="group"
+      className={withBaseName()}
+      aria-live="polite"
+      aria-atomic="false"
+      ref={ref}
+      {...rest}
+    >
       {labelPlacement === "left" && <ControlsLabel />}
       <Button
         ref={prevButtonRef}

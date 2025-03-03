@@ -33,13 +33,17 @@ export interface CarouselSlideProps extends HTMLAttributes<HTMLDivElement> {
    * 'transparent' is the default value.
    * */
   appearance?: CarouselSlideAppearance;
+  /**
+   * Header text
+   */
+  header?: ReactNode;
 }
 
 const withBaseName = makePrefixer("saltCarouselSlide");
 
 export const CarouselSlide = forwardRef<HTMLDivElement, CarouselSlideProps>(
   function CarouselSlide(
-    { actions, appearance, media, children, style, ...rest },
+    { actions, appearance, media, header, children, style, ...rest },
     ref,
   ) {
     const targetWindow = useWindow();
@@ -87,11 +91,17 @@ export const CarouselSlide = forwardRef<HTMLDivElement, CarouselSlideProps>(
         {media}
         {children && (
           <div
-            className={clsx(withBaseName("content"), {
+            className={clsx(withBaseName("container"), {
               [withBaseName("card")]: appearance === "bordered",
             })}
           >
-            {children}
+            <div className={withBaseName("content")}>
+              <span className={clsx(withBaseName("sr-only"))}>
+                {isVisible && header}
+              </span>
+              {header}
+              {children}
+            </div>
             <div
               className={clsx(withBaseName("actions"), {
                 [withBaseName("active")]: isVisible,
