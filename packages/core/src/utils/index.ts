@@ -16,7 +16,6 @@ export * from "./useForkRef";
 export * from "./useId";
 export * from "./useIsFocusVisible";
 export * from "./useIsomorphicLayoutEffect";
-export * from "./useIntersectionObserver";
 export * from "./usePrevious";
 export * from "./useResponsiveProp";
 export * from "./mergeProps";

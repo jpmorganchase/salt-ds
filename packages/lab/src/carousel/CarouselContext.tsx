@@ -20,6 +20,7 @@ export interface CarouselContextValue {
   slideRefs: RefObject<HTMLDivElement>[];
   focusSlide: (index: number) => void;
   registerSlide: (ref: RefObject<HTMLDivElement>) => void;
+  unregisterSlide: (ref: RefObject<HTMLDivElement>) => void;
   containerRef: RefObject<HTMLDivElement>;
   carouselId?: string;
 }
@@ -69,6 +70,9 @@ export function CarouselProvider({
     [slideRefs],
   );
 
+  const unregisterSlide = useCallback((ref: RefObject<HTMLDivElement>) => {
+    slideRefs.filter((register) => register.current === ref.current);
+  }, []);
   const updateActiveFromScroll = (scrollLeft: number) => {
     const newIndex = Math.round(scrollLeft / (sliderW / visibleSlides)) || 0;
     if (newIndex !== firstVisibleSlide) {
@@ -146,6 +150,7 @@ export function CarouselProvider({
         focusSlide,
         firstVisibleSlide,
         registerSlide,
+        unregisterSlide,
         nextSlide,
         prevSlide,
         goToSlide,

@@ -1,5 +1,5 @@
+import { ownerWindow } from "@salt-ds/core/src/utils/ownerWindow";
 import { type RefObject, useEffect, useRef } from "react";
-import { ownerWindow } from "./ownerWindow";
 
 export interface UseIntersectionObserverProps {
   ref: RefObject<HTMLElement>;

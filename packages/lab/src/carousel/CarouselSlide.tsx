@@ -12,13 +12,6 @@ import {
 import { useCarousel } from "./CarouselContext";
 import carouselSlideCss from "./CarouselSlide.css";
 
-export const CarouselSlideAppearanceValues = [
-  "bordered",
-  "transparent",
-] as const;
-export type CarouselSlideAppearance =
-  (typeof CarouselSlideAppearanceValues)[number];
-
 export interface CarouselSlideProps extends HTMLAttributes<HTMLDivElement> {
   /**
    * Actions to be displayed in the content footer.
@@ -32,7 +25,7 @@ export interface CarouselSlideProps extends HTMLAttributes<HTMLDivElement> {
    * The appearance of the slide. Options are 'bordered', and 'transparent'.
    * 'transparent' is the default value.
    * */
-  appearance?: CarouselSlideAppearance;
+  appearance?: "bordered" | "transparent";
   /**
    * Header text
    */
@@ -54,14 +47,20 @@ export const CarouselSlide = forwardRef<HTMLDivElement, CarouselSlideProps>(
     });
 
     const slideRef = useRef<HTMLDivElement>(null);
-    const { firstVisibleSlide, registerSlide, slideRefs, visibleSlides } =
-      useCarousel();
+    const {
+      firstVisibleSlide,
+      registerSlide,
+      unregisterSlide,
+      slideRefs,
+      visibleSlides,
+    } = useCarousel();
 
     useEffect(() => {
       if (slideRef.current) {
         registerSlide(slideRef);
       }
-    }, [registerSlide]);
+      return () => unregisterSlide(slideRef);
+    }, [registerSlide, unregisterSlide]);
 
     const index = slideRefs.indexOf(slideRef);
     const isVisible =
