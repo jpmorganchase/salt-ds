@@ -30,7 +30,7 @@ const useKeyNavigation = ({
     (event: KeyboardEvent<HTMLDivElement>) => {
       if (event.key === "ArrowRight" || event.key === "ArrowLeft") {
         if (event.repeat) return;
-
+        event.stopPropagation();
         if (event.key === "ArrowRight") {
           nextSlide?.(event);
         } else if (event.key === "ArrowLeft") {
@@ -81,8 +81,6 @@ export const CarouselSlider = forwardRef<HTMLDivElement, CarouselSliderProps>(
       <div
         ref={useForkRef(ref, containerRef)}
         className={withBaseName()}
-        aria-live="polite"
-        aria-atomic="false"
         tabIndex={-1}
         onKeyDown={onKeyDown}
         {...rest}
