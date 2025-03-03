@@ -3,9 +3,9 @@ import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
+  forwardRef,
   type HTMLAttributes,
   type ReactNode,
-  forwardRef,
   useEffect,
   useRef,
 } from "react";
@@ -102,13 +102,15 @@ export const CarouselSlide = forwardRef<HTMLDivElement, CarouselSlideProps>(
               {header}
               {children}
             </div>
-            <div
-              className={clsx(withBaseName("actions"), {
-                [withBaseName("active")]: isVisible,
-              })}
-            >
-              {actions}
-            </div>
+            {actions && (
+              <div
+                className={clsx(withBaseName("actions"), {
+                  [withBaseName("active")]: isVisible,
+                })}
+              >
+                {actions}
+              </div>
+            )}
           </div>
         )}
       </div>
