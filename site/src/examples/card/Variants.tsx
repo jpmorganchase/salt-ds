@@ -24,17 +24,17 @@ export const Variants = (): ReactElement => {
         className={styles.variantContainer}
       >
         <Panel variant="primary">
-          <Card variant="alpha" className={styles.alphaCard}>
+          <Card variant="ghost" className={styles.ghostCard}>
             Alpha
           </Card>
         </Panel>
         <Panel variant="secondary">
-          <Card variant="alpha" className={styles.alphaCard}>
+          <Card variant="ghost" className={styles.ghostCard}>
             Alpha
           </Card>
         </Panel>
         <Panel variant="tertiary">
-          <Card variant="alpha" className={styles.alphaCard}>
+          <Card variant="ghost" className={styles.ghostCard}>
             Alpha
           </Card>
         </Panel>
