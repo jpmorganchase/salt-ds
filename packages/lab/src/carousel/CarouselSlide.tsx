@@ -3,9 +3,9 @@ import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
+  forwardRef,
   type HTMLAttributes,
   type ReactNode,
-  forwardRef,
   useEffect,
   useRef,
 } from "react";
@@ -97,10 +97,10 @@ export const CarouselSlide = forwardRef<HTMLDivElement, CarouselSlideProps>(
             })}
           >
             <div className={withBaseName("content")}>
-              <span className={clsx(withBaseName("sr-only"))}>
-                {isVisible && header}
-                {isVisible && `${index + 1} of ${slideRefs.length}`}
-              </span>
+              {/*<span className={clsx(withBaseName("sr-only"))}>*/}
+              {/*  {isVisible && header}*/}
+              {/*  {isVisible && `${index + 1} of ${slideRefs.length}`}*/}
+              {/*</span>*/}
               {header}
               {children}
             </div>
