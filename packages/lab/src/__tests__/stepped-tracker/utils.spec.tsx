@@ -6,11 +6,11 @@ import {
   flattenSteps,
   initStepReducerState,
   resetSteps,
-} from "./utils";
+} from "../../stepped-tracker/utils";
 
-import type { StepRecord } from "./Step.types";
+import type { StepRecord } from "../../stepped-tracker/Step.types";
 
-describe("SteppedTracker > utils.ts", () => {
+describe("SteppedTracker > utils", () => {
   describe("resetSteps", () => {
     it("should set the stage of all steps to undefined", () => {
       const steps: StepRecord[] = [

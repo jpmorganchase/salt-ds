@@ -1,8 +1,8 @@
 import { describe, expect, it } from "vitest";
 
-import type { StepRecord } from "./Step.types";
-import stepReducer from "./stepReducer";
-import { initStepReducerState } from "./utils";
+import type { StepRecord } from "../../stepped-tracker/Step.types";
+import stepReducer from "../../stepped-tracker/stepReducer";
+import { initStepReducerState } from "../../stepped-tracker/utils";
 
 describe("stepReducer", () => {
   describe("next", () => {
