@@ -3,10 +3,10 @@ import type { StepRecord } from ".";
 export interface StepReducerState {
   steps: StepRecord[];
   flatSteps: StepRecord[];
+  activeStepIndex: number;
   activeStep: StepRecord | null;
   previousStep: StepRecord | null;
   nextStep: StepRecord | null;
-  activeStepIndex: number;
   started: boolean;
   ended: boolean;
 }
@@ -14,9 +14,10 @@ export interface StepReducerState {
 export type StepReducerAction =
   | { type: "next" }
   | { type: "previous" }
-  | { type: "error" }
-  | { type: "warning" }
-  | { type: "clear" };
+  | { type: "reset" }
+  | { type: "status/error" }
+  | { type: "status/warning" }
+  | { type: "status/clear" };
 
 export interface StepReducerOptions {
   activeStepId?: string;

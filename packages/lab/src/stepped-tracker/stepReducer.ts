@@ -1,124 +1,189 @@
 import type { StepReducerAction, StepReducerState } from "./stepReducer.types";
-import { assignSteps, autoStageSteps, flattenSteps, resetSteps } from "./utils";
+import {
+  assignStepStatus,
+  assignStepsStage,
+  autoStageSteps,
+  flattenSteps,
+  resetSteps,
+} from "./utils";
 
 export default function stepReducer(
   state: StepReducerState,
   action: StepReducerAction,
-) {
-  if (action.type === "next") {
-    if (state.activeStep?.status === "error") {
-      return state;
-    }
-
-    const steps = resetSteps(state.steps);
-    const flatSteps = flattenSteps(steps);
-
-    if (state.nextStep) {
-      const activeStepIndex = state.activeStepIndex + 1;
-      const activeStep = flatSteps[activeStepIndex];
-      const previousStep = flatSteps[activeStepIndex - 1] || null;
-      const nextStep = flatSteps[activeStepIndex + 1] || null;
-
-      if (activeStep) {
-        activeStep.stage = "active";
+): StepReducerState {
+  switch (action.type) {
+    case "next": {
+      if (state.activeStep?.status === "error") {
+        return state;
       }
 
+      const activeStepIndex = state.activeStepIndex + 1;
+      const lastStepIndex = state.flatSteps.length - 1;
+
+      if (activeStepIndex > lastStepIndex) {
+        const steps = assignStepsStage(state.steps, "completed");
+        const flatSteps = flattenSteps(steps);
+
+        return {
+          steps,
+          flatSteps,
+          activeStepIndex: lastStepIndex + 1,
+          activeStep: null,
+          previousStep: flatSteps[lastStepIndex],
+          nextStep: null,
+          started: true,
+          ended: true,
+        };
+      }
+
+      const activeStepId = state.flatSteps[activeStepIndex].id;
+      const steps = autoStageSteps(resetSteps(state.steps), { activeStepId });
+      const flatSteps = flattenSteps(steps);
+
       return {
-        steps: autoStageSteps(steps),
+        steps,
         flatSteps,
         activeStepIndex,
-        activeStep,
-        previousStep,
-        nextStep,
+        activeStep: flatSteps[activeStepIndex],
+        previousStep: flatSteps[activeStepIndex - 1],
+        nextStep: flatSteps[activeStepIndex + 1] ?? null,
         started: true,
         ended: false,
       };
     }
 
-    const activeStepIndex = flatSteps.length;
-    const previousStep = flatSteps.at(-1);
-    const activeStep = null;
-    const nextStep = null;
-
-    return {
-      steps: assignSteps(steps, "completed"),
-      flatSteps,
-      activeStepIndex,
-      activeStep,
-      previousStep,
-      nextStep,
-      started: true,
-      ended: true,
-    } as StepReducerState;
-  }
-
-  if (action.type === "previous") {
-    if (state.activeStep?.status === "error") {
-      return state;
-    }
-
-    const steps = resetSteps(state.steps);
-    const flatSteps = flattenSteps(steps);
-
-    if (state.previousStep) {
-      const activeStepIndex = state.activeStepIndex - 1;
-      const activeStep = flatSteps[activeStepIndex];
-      const previousStep = flatSteps[activeStepIndex - 1] || null;
-      const nextStep = flatSteps[activeStepIndex + 1] || null;
-
-      if (activeStep) {
-        activeStep.stage = "active";
+    case "previous": {
+      if (state.activeStep?.status === "error") {
+        return state;
       }
 
+      const activeStepIndex = state.activeStepIndex - 1;
+
+      if (activeStepIndex < 0) {
+        const steps = assignStepsStage(state.steps, "pending");
+        const flatSteps = flattenSteps(steps);
+
+        return {
+          steps,
+          flatSteps,
+          activeStepIndex: -1,
+          activeStep: null,
+          previousStep: null,
+          nextStep: flatSteps[0],
+          started: false,
+          ended: false,
+        };
+      }
+
+      const activeStepId = state.flatSteps[activeStepIndex].id;
+      const steps = autoStageSteps(resetSteps(state.steps), { activeStepId });
+      const flatSteps = flattenSteps(steps);
+
       return {
-        steps: autoStageSteps(steps),
+        steps,
         flatSteps,
         activeStepIndex,
-        activeStep,
-        previousStep,
-        nextStep,
+        activeStep: flatSteps[activeStepIndex],
+        previousStep: flatSteps[activeStepIndex - 1] ?? null,
+        nextStep: flatSteps[activeStepIndex + 1],
         started: true,
         ended: false,
-      } as StepReducerState;
+      };
     }
 
-    const activeStepIndex = -1;
-    const activeStep = null;
-    const previousStep = null;
-    const nextStep = flatSteps.at(0);
+    case "status/error": {
+      const { activeStep, activeStepIndex } = state;
 
-    return {
-      steps: assignSteps(steps, "pending"),
-      flatSteps,
-      activeStepIndex,
-      activeStep,
-      previousStep,
-      nextStep,
-      ended: false,
-      started: false,
-    } as StepReducerState;
-  }
+      if (!activeStep) {
+        return state;
+      }
 
-  if (action.type === "error") {
-    if (state.activeStep) {
-      state.activeStep.status = "error";
-      return { ...state };
+      const activeStepId = activeStep.id;
+
+      const steps = assignStepStatus(state.steps, activeStepId, "error");
+      const flatSteps = flattenSteps(steps);
+
+      return {
+        ...state,
+        steps,
+        flatSteps,
+        activeStepIndex,
+        activeStep: flatSteps[activeStepIndex],
+        previousStep: flatSteps[activeStepIndex - 1] ?? null,
+        nextStep: flatSteps[activeStepIndex + 1],
+      };
+    }
+
+    case "status/warning": {
+      const { activeStep, activeStepIndex } = state;
+
+      if (!activeStep) {
+        return state;
+      }
+
+      const activeStepId = activeStep.id;
+
+      const steps = assignStepStatus(state.steps, activeStepId, "warning");
+      const flatSteps = flattenSteps(steps);
+
+      return {
+        ...state,
+        steps,
+        flatSteps,
+        activeStepIndex,
+        activeStep: flatSteps[activeStepIndex],
+        previousStep: flatSteps[activeStepIndex - 1] ?? null,
+        nextStep: flatSteps[activeStepIndex + 1],
+      };
+    }
+
+    case "status/clear": {
+      const { activeStep, activeStepIndex } = state;
+
+      if (!activeStep) {
+        return state;
+      }
+
+      const activeStepId = activeStep.id;
+
+      const steps = assignStepStatus(state.steps, activeStepId, undefined);
+      const flatSteps = flattenSteps(steps);
+
+      return {
+        ...state,
+        steps,
+        flatSteps,
+        activeStepIndex,
+        activeStep: flatSteps[activeStepIndex],
+        previousStep: flatSteps[activeStepIndex - 1] ?? null,
+        nextStep: flatSteps[activeStepIndex + 1],
+      };
+    }
+
+    case "reset": {
+      const firstStepId = state.flatSteps[0].id;
+
+      const steps = autoStageSteps(
+        resetSteps(state.steps, { resetStatus: true }),
+        { activeStepId: firstStepId },
+      );
+      const flatSteps = flattenSteps(steps);
+
+      return {
+        steps,
+        flatSteps,
+        activeStepIndex: 0,
+        activeStep: flatSteps[0],
+        previousStep: null,
+        nextStep: flatSteps[1],
+        started: true,
+        ended: false,
+      };
+    }
+
+    default: {
+      const exhaustiveCheck: never = action;
+      throw new Error(`Unhandled action: ${exhaustiveCheck}`);
     }
   }
-
-  if (action.type === "warning") {
-    if (state.activeStep) {
-      state.activeStep.status = "warning";
-      return { ...state };
-    }
-  }
-
-  if (action.type === "clear") {
-    if (state.activeStep) {
-      state.activeStep.status = undefined;
-      return { ...state };
-    }
-  }
-
-  return state;
 }
