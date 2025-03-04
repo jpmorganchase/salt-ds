@@ -75,7 +75,7 @@ export const CarouselControls = forwardRef<
         ${slidesCount}`;
 
   const ControlsLabel = () => (
-    <Text as="span" id="carousel-controls-announcer">
+    <Text as="span" aria-live="off">
       <strong>{controlsLabel}</strong>
     </Text>
   );
@@ -93,9 +93,8 @@ export const CarouselControls = forwardRef<
   return (
     <div
       role="group"
+      aria-label="Carousel controls"
       className={withBaseName()}
-      aria-live="polite"
-      aria-atomic="false"
       ref={ref}
       {...rest}
     >
@@ -109,7 +108,7 @@ export const CarouselControls = forwardRef<
         onClick={handlePrevClick}
         disabled={isOnFirstSlide || disabled}
         aria-controls={carouselId}
-        aria-label={`Previous slide${visibleSlides > 1 ? "s" : ""}`}
+        aria-label={`Previous slide ${firstVisibleSlide} of ${slidesCount}`}
       >
         <PreviousIcon aria-hidden />
       </Button>
@@ -122,7 +121,7 @@ export const CarouselControls = forwardRef<
         onClick={handleNextClick}
         disabled={isOnLastSlide || disabled}
         aria-controls={carouselId}
-        aria-label={`Next slide${visibleSlides > 1 ? "s" : ""}`}
+        aria-label={`Next slide ${firstVisibleSlide + visibleSlides + 1} of ${slidesCount}`}
       >
         <NextIcon aria-hidden />
       </Button>

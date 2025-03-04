@@ -80,6 +80,7 @@ export const CarouselSlider = forwardRef<HTMLDivElement, CarouselSliderProps>(
     return (
       <div
         ref={useForkRef(ref, containerRef)}
+        aria-live="polite"
         className={withBaseName()}
         tabIndex={-1}
         onKeyDown={onKeyDown}

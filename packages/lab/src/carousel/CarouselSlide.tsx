@@ -79,14 +79,14 @@ export const CarouselSlide = forwardRef<HTMLDivElement, CarouselSlideProps>(
       <div
         role="group"
         aria-roledescription="slide"
-        aria-live="polite"
-        aria-atomic="false"
+        aria-label={`${index + 1} of ${slideRefs.length}`}
         ref={useForkRef(ref, slideRef)}
         className={clsx(withBaseName(), {
           [withBaseName("bordered")]: appearance === "bordered",
         })}
         style={SlideStyles}
         tabIndex={isVisible ? 0 : -1}
+        hidden={!isVisible}
         {...rest}
       >
         {media}
@@ -98,6 +98,7 @@ export const CarouselSlide = forwardRef<HTMLDivElement, CarouselSlideProps>(
           >
             <div className={withBaseName("content")}>
               <span className={clsx(withBaseName("sr-only"))}>
+                {isVisible && header}
                 {isVisible && `${index + 1} of ${slideRefs.length}`}
               </span>
               {header}
