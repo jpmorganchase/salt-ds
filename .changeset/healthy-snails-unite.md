@@ -5,8 +5,8 @@
 Added new container ghost charactersitic tokens
 
 ```css
---salt-container-alpha-background: var(--salt-palette-alpha-low);
---salt-container-alpha-borderColor: var(--salt-palette-alpha-contrast-low);
+--salt-container-ghost-background: var(--salt-palette-alpha-low);
+--salt-container-ghost-borderColor: var(--salt-palette-alpha-contrast-low);
 ```
 
 Added new palette alpha tokens
