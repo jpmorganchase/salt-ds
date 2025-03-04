@@ -1,0 +1,21 @@
+/* stylelint-disable salt/correct-theme-token-usage */
+
+.box {
+  width: 420px;
+  height: 240px;
+  border: 1px solid var(--salt-separable-secondary-borderColor);
+}
+
+.boxGrey {
+  padding: 56px;
+  box-sizing: content-box;
+  background: var(--salt-container-secondary-background);
+}
+
+.center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  height: 100%;
+}

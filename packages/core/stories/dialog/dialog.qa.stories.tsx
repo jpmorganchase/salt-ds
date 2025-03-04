@@ -9,8 +9,10 @@ import {
   DialogHeader,
   type DialogProps,
   SaltProvider,
+  SaltProviderNext,
   StackLayout,
   VALIDATION_NAMED_STATUS,
+  useTheme,
 } from "@salt-ds/core";
 import type { Meta, StoryFn } from "@storybook/react";
 import {
@@ -71,25 +73,27 @@ const DialogTemplate: StoryFn<
 
 export const StatusVariants: StoryFn = () => {
   const DensityValues = ["high", "medium", "low", "touch"] as const;
+  const { themeNext } = useTheme();
+  const ChosenProvider = themeNext ? SaltProviderNext : SaltProvider;
   return (
     <StackLayout gap={1}>
       {DensityValues.map((density) => {
         return (
           <Fragment key={density}>
-            <SaltProvider density={density}>
+            <ChosenProvider density={density}>
               <DialogTemplate />
-            </SaltProvider>
-            <SaltProvider density={density} mode="dark">
+            </ChosenProvider>
+            <ChosenProvider density={density} mode="dark">
               <DialogTemplate />
-            </SaltProvider>
+            </ChosenProvider>
             {VALIDATION_NAMED_STATUS.map((status) => (
               <Fragment key={status}>
-                <SaltProvider density={density}>
+                <ChosenProvider density={density}>
                   <DialogTemplate status={status} />
-                </SaltProvider>
-                <SaltProvider density={density} mode="dark">
+                </ChosenProvider>
+                <ChosenProvider density={density} mode="dark">
                   <DialogTemplate status={status} />
-                </SaltProvider>
+                </ChosenProvider>
               </Fragment>
             ))}
           </Fragment>
@@ -117,6 +121,9 @@ StatusVariants.parameters = {
 };
 
 export const ContentVariants: StoryFn = () => {
+  const { themeNext } = useTheme();
+  const ChosenProvider = themeNext ? SaltProviderNext : SaltProvider;
+
   const DensityValues = ["high", "medium", "low", "touch"] as const;
   const longContent = (
     <StackLayout style={{ maxHeight: 180 }}>
@@ -169,18 +176,18 @@ export const ContentVariants: StoryFn = () => {
     <StackLayout style={{ width: 1200, height: 380 }} gap={1}>
       {DensityValues.map((density) => (
         <Fragment key={density}>
-          <SaltProvider density={density}>
+          <ChosenProvider density={density}>
             <DialogTemplate content={longContent} maxHeight={500} />
-          </SaltProvider>
-          <SaltProvider density={density} mode="dark">
+          </ChosenProvider>
+          <ChosenProvider density={density} mode="dark">
             <DialogTemplate content={longContent} maxHeight={500} />
-          </SaltProvider>
-          <SaltProvider density={density}>
+          </ChosenProvider>
+          <ChosenProvider density={density}>
             <DialogTemplate longDialog maxHeight={500} />
-          </SaltProvider>
-          <SaltProvider density={density} mode="dark">
+          </ChosenProvider>
+          <ChosenProvider density={density} mode="dark">
             <DialogTemplate longDialog maxHeight={500} />
-          </SaltProvider>
+          </ChosenProvider>
         </Fragment>
       ))}
     </StackLayout>
