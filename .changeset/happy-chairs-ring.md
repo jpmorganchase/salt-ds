@@ -24,9 +24,9 @@ After:
 export type StepRecord = Omit<StepProps, "children"> & { id: string };
 ```
 
-Whether you pass down both `id` and `key` or just `key` is up to you. We advise using the former. Here are the two examples, side by side:
+We recommend passing down `id` and `key` for optimal results, although you could just provide `key`. Please refer to the examples provided for further clarification.
 
-Pass `id` as both `id` and `key`:
+Recommended approach, pass `id` as both `id` and `key`:
 
 ```tsx
 <SteppedTracker>
