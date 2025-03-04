@@ -116,7 +116,7 @@ export const WithTitleInNavigationBar: StoryFn<typeof Carousel> = (args) => {
     <div className="carousel-container">
       <Carousel {...args} aria-labelledby="carousel-title">
         <CarouselNavigationBar
-          title={<H2 id="carousel-title">Categorical Backgrounds</H2>}
+          title={<H2 id="carousel-title">Account overview</H2>}
         />
         <CarouselSlider>{renderSlides("bordered")}</CarouselSlider>
       </Carousel>

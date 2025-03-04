@@ -1,10 +1,10 @@
-import { Button, Text, makePrefixer, useIcon } from "@salt-ds/core";
+import { Button, makePrefixer, Text, useIcon } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import {
+  forwardRef,
   type HTMLAttributes,
   type SyntheticEvent,
-  forwardRef,
   useRef,
 } from "react";
 import { useCarousel } from "./CarouselContext";
@@ -75,7 +75,11 @@ export const CarouselControls = forwardRef<
         ${slidesCount}`;
 
   const ControlsLabel = () => (
-    <Text as="span" aria-live="off">
+    <Text
+      as="span"
+      aria-live={visibleSlides > 1 ? "polite" : "off"}
+      aria-atomic={visibleSlides > 1}
+    >
       <strong>{controlsLabel}</strong>
     </Text>
   );
@@ -91,13 +95,7 @@ export const CarouselControls = forwardRef<
   }
 
   return (
-    <div
-      role="group"
-      aria-label="Carousel controls"
-      className={withBaseName()}
-      ref={ref}
-      {...rest}
-    >
+    <div className={withBaseName()} ref={ref} {...rest}>
       {labelPlacement === "left" && <ControlsLabel />}
       <Button
         ref={prevButtonRef}
@@ -108,7 +106,7 @@ export const CarouselControls = forwardRef<
         onClick={handlePrevClick}
         disabled={isOnFirstSlide || disabled}
         aria-controls={carouselId}
-        aria-label={`Previous slide ${firstVisibleSlide} of ${slidesCount}`}
+        aria-label={`Previous slide${visibleSlides > 1 ? "s" : ""}`}
       >
         <PreviousIcon aria-hidden />
       </Button>
@@ -121,7 +119,7 @@ export const CarouselControls = forwardRef<
         onClick={handleNextClick}
         disabled={isOnLastSlide || disabled}
         aria-controls={carouselId}
-        aria-label={`Next slide ${firstVisibleSlide + visibleSlides + 1} of ${slidesCount}`}
+        aria-label={`Next slide${visibleSlides > 1 ? "s" : ""}`}
       >
         <NextIcon aria-hidden />
       </Button>

@@ -1,4 +1,4 @@
-import { makePrefixer, useForkRef } from "@salt-ds/core";
+import { makePrefixer, useForkRef, useId } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
@@ -36,7 +36,16 @@ const withBaseName = makePrefixer("saltCarouselSlide");
 
 export const CarouselSlide = forwardRef<HTMLDivElement, CarouselSlideProps>(
   function CarouselSlide(
-    { actions, appearance, media, header, children, style, ...rest },
+    {
+      actions,
+      appearance,
+      media,
+      header,
+      children,
+      "aria-labelledby": ariaLabelledBy,
+      style,
+      ...rest
+    },
     ref,
   ) {
     const targetWindow = useWindow();
@@ -45,7 +54,7 @@ export const CarouselSlide = forwardRef<HTMLDivElement, CarouselSlideProps>(
       css: carouselSlideCss,
       window: targetWindow,
     });
-
+    console.log(ariaLabelledBy);
     const slideRef = useRef<HTMLDivElement>(null);
     const {
       firstVisibleSlide,
@@ -75,11 +84,12 @@ export const CarouselSlide = forwardRef<HTMLDivElement, CarouselSlideProps>(
           : undefined,
       ...style,
     };
+    const randomid = useId();
     return (
       <div
         role="group"
         aria-roledescription="slide"
-        aria-label={`${index + 1} of ${slideRefs.length}`}
+        aria-labelledby={clsx(ariaLabelledBy, randomid)}
         ref={useForkRef(ref, slideRef)}
         className={clsx(withBaseName(), {
           [withBaseName("bordered")]: appearance === "bordered",
@@ -97,10 +107,9 @@ export const CarouselSlide = forwardRef<HTMLDivElement, CarouselSlideProps>(
             })}
           >
             <div className={withBaseName("content")}>
-              {/*<span className={clsx(withBaseName("sr-only"))}>*/}
-              {/*  {isVisible && header}*/}
-              {/*  {isVisible && `${index + 1} of ${slideRefs.length}`}*/}
-              {/*</span>*/}
+              <span id={randomid} className={clsx(withBaseName("sr-only"))}>
+                {isVisible && `${index + 1} of ${slideRefs.length}`}
+              </span>
               {header}
               {children}
             </div>
