@@ -131,7 +131,7 @@ export const AccentVariations: StoryFn<typeof Card> = (args) => {
 };
 
 export const Variants: StoryFn<typeof Card> = (args) => {
-  const variants = ["primary", "secondary", "tertiary", "alpha"] as const;
+  const variants = ["primary", "secondary", "tertiary", "ghost"] as const;
   return (
     <StackLayout style={{ width: 600 }}>
       {variants.map((variant) => {

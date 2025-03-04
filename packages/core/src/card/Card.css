@@ -14,22 +14,22 @@
 
 .saltCard-primary {
   background: var(--saltCard-background, var(--salt-container-primary-background));
-  border-color: var(--salt-container-alpha-borderColor);
+  border-color: var(--salt-container-primary-borderColor);
 }
 
 .saltCard-secondary {
   background: var(--saltCard-background, var(--salt-container-secondary-background));
-  border-color: var(--salt-container-alpha-borderColor);
+  border-color: var(--salt-container-secondary-borderColor);
 }
 
 .saltCard-tertiary {
   background: var(--saltCard-background, var(--salt-container-tertiary-background));
-  border-color: var(--salt-container-alpha-borderColor);
+  border-color: var(--salt-container-tertiary-borderColor);
 }
 
-.saltCard-alpha {
-  background: var(--saltCard-background, var(--salt-container-alpha-background));
-  border-color: var(--salt-container-alpha-borderColor);
+.saltCard-ghost {
+  background: var(--saltCard-background, var(--salt-container-ghost-background));
+  border-color: var(--salt-container-ghost-borderColor);
 }
 
 /* Styles applied to create accent */

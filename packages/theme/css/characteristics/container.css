@@ -16,6 +16,6 @@
   --salt-container-tertiary-borderColor: var(--salt-palette-neutral-border);
   --salt-container-tertiary-borderColor-disabled: var(--salt-palette-neutral-border-disabled);
 
-  --salt-container-alpha-background: var(--salt-palette-neutral-alpha-background);
-  --salt-container-alpha-borderColor: var(--salt-palette-alpha);
+  --salt-container-alpha-background: var(--salt-palette-alpha-low);
+  --salt-container-alpha-borderColor: var(--salt-palette-alpha-contrast-low);
 }
