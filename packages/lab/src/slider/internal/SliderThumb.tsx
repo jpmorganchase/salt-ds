@@ -24,14 +24,14 @@ interface SliderThumbProps
   handleInputChange: (event: ChangeEvent<HTMLInputElement>) => void;
   handlePointerDown: (event: React.PointerEvent<HTMLDivElement>) => void;
   index?: number;
-  min: number;
   max: number;
-  name?: string;
+  maxLabel?: string;
+  min: number;
+  minLabel?: string;
   offsetPercentage?: string;
-  onChange: (event: PointerEvent | React.PointerEvent) => void;
+  sliderValue: [number, number] | number;
   step: number;
   stepMultiplier: number;
-  thumbValue: [number, number] | number;
   trackDragging: boolean;
 }
 
@@ -44,14 +44,14 @@ export const SliderThumb = ({
   handleInputChange,
   handlePointerDown,
   index = 0,
-  min,
   max,
-  name,
+  maxLabel,
+  min,
+  minLabel,
   offsetPercentage,
-  onChange,
+  sliderValue,
   step,
   stepMultiplier,
-  thumbValue,
   trackDragging,
   ...rest
 }: SliderThumbProps) => {
@@ -67,7 +67,8 @@ export const SliderThumb = ({
     const [isFocused, setIsFocused] = useState(false);
     const inputRef = useRef<HTMLInputElement>(null);
     const id = useId();
-    const value = Array.isArray(thumbValue) ? thumbValue[index] : thumbValue;
+    const accessibleTextId = `saltSlider-${id}-${index}`;
+    const value = Array.isArray(sliderValue) ? sliderValue[index] : sliderValue;
     const formattedValue = format ? format(value) : value;
 
     useEffect(() => {
@@ -154,7 +155,7 @@ export const SliderThumb = ({
       >
         <SliderTooltip
           value={formattedValue}
-          isVisible={(isTooltipVisible || trackDragging) && !disabled}
+          open={(isTooltipVisible || trackDragging) && !disabled}
         />
         <input
           disabled={disabled}
@@ -168,24 +169,24 @@ export const SliderThumb = ({
           onKeyDown={handleKeydownOnThumb}
           aria-labelledby={ariaLabelledBy}
           aria-valuenow={value}
-          aria-valuetext={ariaValueText}
+          aria-valuetext={ariaValueText || format?.(value).toString()}
           aria-label={ariaLabel}
-          aria-describedby={`saltSlider-${id}-${index}`}
+          aria-describedby={accessibleTextId}
           min={min}
           max={max}
-          name={name}
           step={step}
           {...rest}
         />
         {/* Accessible text */}
         <span
           aria-hidden="true"
-          id={`saltSlider-${id}-${index}`}
+          id={accessibleTextId}
           className={withBaseName("accessibleText")}
         >
-          {Array.isArray(thumbValue) &&
-            `${index === 0 ? "leading" : "trailing"}, ${thumbValue[0]} to ${thumbValue[1]}, `}
-          Slider range minimum {min}, maximum {max}
+          {Array.isArray(sliderValue) &&
+            `${index === 0 ? "leading" : "trailing"}, ${format?.(sliderValue[0]) || sliderValue[0]} to ${format?.(sliderValue[1]) || sliderValue[1]}, `}
+          Slider range minimum {minLabel || format?.(min) || min}, maximum{" "}
+          {maxLabel || format?.(max) || max}
           {step !== 1 && `, Increments of ${step}`}
         </span>
       </div>

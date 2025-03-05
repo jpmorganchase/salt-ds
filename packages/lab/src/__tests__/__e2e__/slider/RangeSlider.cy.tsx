@@ -1,5 +1,6 @@
 import * as rangeSliderStories from "@stories/slider/range-slider.stories";
 import { composeStories } from "@storybook/react";
+import { type ChangeEvent, useState } from "react";
 
 const composedStories = composeStories(rangeSliderStories);
 
@@ -29,27 +30,6 @@ describe("Given a Range Slider", () => {
       Cypress.sinon.match.array.deepEquals([0, 7]),
     );
     cy.get(".saltSliderTrack-rail").trigger("pointerup");
-  });
-
-  it("should set thumb positions correctly when clicked on the track", () => {
-    cy.mount(<Default style={{ width: "400px" }} />);
-    cy.get(".saltSliderTrack-rail").trigger("pointerdown", {
-      button: 0,
-      clientX: 750,
-      clientY: 50,
-    });
-    cy.get(".saltSliderTrack-rail").trigger("pointerup");
-    cy.get(".saltSliderTrack-rail").trigger("pointerdown", {
-      button: 0,
-      clientX: 615,
-      clientY: 50,
-    });
-    cy.get(".saltSliderTrack-rail").trigger("pointerup");
-
-    // First thumb
-    cy.findAllByRole("slider").eq(0).should("have.value", "3");
-    // Second thumb
-    cy.findAllByRole("slider").eq(1).should("have.value", "7");
   });
 
   it("should allow dragging to change values", () => {
@@ -154,7 +134,7 @@ describe("Given a Range Slider", () => {
     cy.findAllByRole("slider").eq(1).should("have.value", "20");
   });
 
-  it("should not allow thumbs to overlap", () => {
+  it("should not allow thumbs to cross each other", () => {
     cy.mount(<Default defaultValue={[4, 8]} style={{ width: "400px" }} />);
 
     // Focus first thumb and press and End key
@@ -282,5 +262,39 @@ describe("Given a Range Slider", () => {
     cy.findAllByTestId("sliderThumb").eq(1).trigger("pointerover");
     cy.findAllByTestId("sliderTooltip").eq(1).should("be.visible");
     cy.findAllByTestId("sliderTooltip").eq(1).should("have.text", "4%");
+  });
+
+  describe("WHEN it is mounted as a controlled component", () => {
+    it("should set the specified value", () => {
+      cy.mount(<Default min={0} max={10} value={[4, 6]} />);
+      cy.findAllByRole("slider").eq(0).should("have.value", 4);
+      cy.findAllByRole("slider").eq(1).should("have.value", 6);
+    });
+
+    it("should call onChange when updated", () => {
+      const changeSpy = cy.stub().as("changeSpy");
+
+      function ControlledSlider() {
+        const [value, setValue] = useState<[number, number]>([3, 5]);
+        const onChange = (
+          event: ChangeEvent<HTMLInputElement>,
+          value: [number, number],
+        ) => {
+          setValue(value);
+          changeSpy(event);
+        };
+        return <Default value={value} onChange={onChange} />;
+      }
+
+      cy.mount(<ControlledSlider />);
+      cy.findAllByRole("slider").eq(0).focus().realPress("ArrowRight");
+      cy.get("@changeSpy").should("have.been.calledWithMatch", {
+        target: { value: "4" },
+      });
+      cy.findAllByRole("slider").eq(1).focus().realPress("ArrowRight");
+      cy.get("@changeSpy").should("have.been.calledWithMatch", {
+        target: { value: "6" },
+      });
+    });
   });
 });

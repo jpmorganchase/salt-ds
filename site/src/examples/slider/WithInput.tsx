@@ -14,29 +14,37 @@ import {
   useState,
 } from "react";
 
-const validateSingle = (value: string, bounds: [number, number]) => {
-  if (Number.isNaN(Number(value))) return false;
-  if (Number(value) < bounds[0] || Number(value) > bounds[1]) return false;
+const validateSingle = (value: number, bounds: [number, number]) => {
+  if (Number.isNaN(value)) return false;
+  if (value < bounds[0] || value > bounds[1]) return false;
   return true;
 };
 
-const validateRange = (values: [string, string], bounds: [number, number]) => {
+const validateRange = (values: [number, number], bounds: [number, number]) => {
   if (values.length !== 2) return false;
   const [min, max] = values;
   const minValid = validateSingle(min, bounds);
   const maxValid = validateSingle(max, bounds);
   if (!minValid || !maxValid) return false;
-  if (Number(min) > Number(max)) return false;
+  if (min > max) return false;
   return true;
 };
 
 export const SingleWithInput = () => {
+  const bounds: [number, number] = [-50, 50];
   const [value, setValue] = useState<number>(20);
   const [inputValue, setInputValue] = useState<string>(value.toString());
   const [validationStatus, setValidationStatus] = useState<undefined | "error">(
     undefined,
   );
-  const bounds: [number, number] = [-50, 50];
+
+  useEffect(() => {
+    const valid = validateSingle(value, bounds);
+    setValidationStatus(valid ? undefined : "error");
+    if (valid) {
+      setValue(value);
+    }
+  }, [value]);
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const inputValue = event.target.value;
@@ -44,8 +52,12 @@ export const SingleWithInput = () => {
     setValue(Number.parseFloat(inputValue));
   };
 
-  const handleChange = (_e: SyntheticEvent, value: number) => {
+  const handleSliderChange = (
+    _e: SyntheticEvent<unknown> | Event,
+    value: number,
+  ) => {
     setValue(value);
+    setInputValue(value.toString());
   };
 
   return (
@@ -63,8 +75,7 @@ export const SingleWithInput = () => {
           min={bounds[0]}
           max={bounds[1]}
           value={value}
-          onChange={handleChange}
-          aria-label="withInput"
+          onChange={handleSliderChange}
           style={{ flexGrow: 1 }}
         />
       </FlexLayout>
@@ -75,40 +86,45 @@ export const SingleWithInput = () => {
 const RangeWithInput = () => {
   const bounds: [number, number] = [0, 100];
 
-  const [value, setValue] = useState<[number, number]>([20, 60]);
-  const [minValue, setMinValue] = useState<string>(bounds[0].toString());
-  const [maxValue, setMaxValue] = useState<string>(bounds[1].toString());
+  const [value, setValue] = useState<[number, number]>([10, 20]);
+  const [minInputValue, setMinInputValue] = useState<string>("10");
+  const [maxInputValue, setMaxInputValue] = useState<string>("20");
   const [validationStatus, setValidationStatus] = useState<undefined | "error">(
     undefined,
   );
 
+  useEffect(() => {
+    const valid = validateRange(value, bounds);
+    setValidationStatus(valid ? undefined : "error");
+    if (valid) {
+      setValue(value);
+    }
+  }, [value]);
+
   const handleMinInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const inputValue = event.target.value;
-    setMinValue(inputValue);
+    setMinInputValue(inputValue);
+    const newSliderValue = [...value];
+    newSliderValue[0] = Number.parseFloat(inputValue);
+    setValue(newSliderValue as [number, number]);
   };
 
   const handleMaxInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const inputValue = event.target.value;
-    setMaxValue(inputValue);
+    setMaxInputValue(inputValue);
+    const newSliderValue = [...value];
+    newSliderValue[1] = Number.parseFloat(inputValue);
+    setValue(newSliderValue as [number, number]);
   };
 
   const handleSliderChange = (
-    event: SyntheticEvent,
+    _e: SyntheticEvent<unknown> | Event,
     value: [number, number],
   ) => {
-    if (typeof value[1] === "undefined") return false;
     setValue(value);
-    setMinValue(value[0].toString());
-    setMaxValue(value[1].toString());
+    setMinInputValue(value[0].toString());
+    setMaxInputValue(value[1].toString());
   };
-
-  useEffect(() => {
-    const valid = validateRange([minValue, maxValue], bounds);
-    setValidationStatus(valid ? undefined : "error");
-    if (valid) {
-      setValue([Number(minValue), Number(maxValue)]);
-    }
-  }, [minValue, maxValue]);
 
   return (
     <FormField style={{ width: "400px" }}>
@@ -116,26 +132,25 @@ const RangeWithInput = () => {
       <FlexLayout gap={3} align="center">
         <Input
           id="slider-min-value"
-          placeholder={`${minValue}`}
-          value={minValue}
-          style={{ width: "10px" }}
+          placeholder={minInputValue}
+          value={minInputValue}
+          style={{ flex: 1 }}
           onChange={handleMinInputChange}
           validationStatus={validationStatus}
         />
         <RangeSlider
-          style={{ flexGrow: 1 }}
+          style={{ flex: 3 }}
           min={bounds[0]}
           max={bounds[1]}
           value={value}
           onChange={handleSliderChange}
-          aria-label="withInput"
           labelPosition="bottom"
         />
         <Input
           id="slider-max-value"
-          placeholder={`${maxValue}`}
-          value={maxValue}
-          style={{ width: "10px" }}
+          placeholder={`${maxInputValue}`}
+          value={maxInputValue}
+          style={{ flex: 1 }}
           onChange={handleMaxInputChange}
           validationStatus={validationStatus}
         />
