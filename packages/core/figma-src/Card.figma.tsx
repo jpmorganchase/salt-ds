@@ -4,7 +4,7 @@ import { InteractableCard } from "../src/interactable-card/";
 // Tertiary Interactable Card/Accent Left
 figma.connect(
   InteractableCard,
-  "https://www.figma.com/design/ChsbbO7pLomT4F5H6tQyLP/Salt-(Next)-Components-%26-Patterns?node-id=44325%3A4200",
+  "https://www.figma.com/design/7Fh5JbUUM84pYwLt9tpJh2/Salt-DS-Components-and-Patterns?node-id=44325%3A4200",
   {
     props: {
       // customContent: figma.boolean("Custom content"),

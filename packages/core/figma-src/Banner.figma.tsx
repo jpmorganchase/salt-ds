@@ -9,13 +9,13 @@ import {
   Text,
 } from "../src/index";
 
-// Warning https://www.figma.com/design/ChsbbO7pLomT4F5H6tQyLP/Salt-(Next)-Components-%26-Patterns?m=auto&node-id=7997-78021
+// Warning https://www.figma.com/design/7Fh5JbUUM84pYwLt9tpJh2/Salt-DS-Components-and-Patterns?m=auto&node-id=7997-78021
 
 // Success Banner
 // Need to split to 2 blocks - see issue https://github.com/figma/code-connect/issues/200#issuecomment-2457330375
 figma.connect(
   Banner,
-  "https://www.figma.com/design/ChsbbO7pLomT4F5H6tQyLP/Salt-(Next)-Components-%26-Patterns?node-id=7997%3A78070",
+  "https://www.figma.com/design/7Fh5JbUUM84pYwLt9tpJh2/Salt-DS-Components-and-Patterns?node-id=7997%3A78070",
   {
     variant: { "Show title": true },
     props: {
@@ -46,7 +46,9 @@ figma.connect(
       <Banner status="success" variant={props.variant}>
         <BannerContent>
           <StackLayout gap={1}>
-            <Text><strong>{props.title}</strong></Text>
+            <Text>
+              <strong>{props.title}</strong>
+            </Text>
             {props.description}
             {props.contentArea}
           </StackLayout>
@@ -58,7 +60,7 @@ figma.connect(
 );
 figma.connect(
   Banner,
-  "https://www.figma.com/design/ChsbbO7pLomT4F5H6tQyLP/Salt-(Next)-Components-%26-Patterns?node-id=7997%3A78070",
+  "https://www.figma.com/design/7Fh5JbUUM84pYwLt9tpJh2/Salt-DS-Components-and-Patterns?node-id=7997%3A78070",
   {
     variant: { "Show title": false },
     props: {

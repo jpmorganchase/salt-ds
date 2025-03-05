@@ -5,7 +5,7 @@ import figma from "@figma/code-connect";
 // Tooltip status - Info
 figma.connect(
   Tooltip,
-  "https://www.figma.com/design/ChsbbO7pLomT4F5H6tQyLP/Salt-(Next)-Components-%26-Patterns?node-id=25341%3A5243",
+  "https://www.figma.com/design/7Fh5JbUUM84pYwLt9tpJh2/Salt-DS-Components-and-Patterns?node-id=25341%3A5243",
   {
     props: {
       // These props were automatically mapped based on your linked code:
@@ -33,7 +33,7 @@ figma.connect(
 // Tooltip status - Success
 figma.connect(
   Tooltip,
-  "https://www.figma.com/design/ChsbbO7pLomT4F5H6tQyLP/Salt-(Next)-Components-%26-Patterns?node-id=25349-12018",
+  "https://www.figma.com/design/7Fh5JbUUM84pYwLt9tpJh2/Salt-DS-Components-and-Patterns?node-id=25349-12018",
   {
     props: {
       // These props were automatically mapped based on your linked code:
@@ -59,10 +59,10 @@ figma.connect(
   },
 );
 
-// Warning - https://www.figma.com/design/ChsbbO7pLomT4F5H6tQyLP/Salt-(Next)-Components-%26-Patterns?node-id=25349-12245&t=ah5WkRCF59YmebzE-4
+// Warning - https://www.figma.com/design/7Fh5JbUUM84pYwLt9tpJh2/Salt-DS-Components-and-Patterns?node-id=25349-12245&t=ah5WkRCF59YmebzE-4
 figma.connect(
   Tooltip,
-  "https://www.figma.com/design/ChsbbO7pLomT4F5H6tQyLP/Salt-(Next)-Components-%26-Patterns?node-id=25349-12245",
+  "https://www.figma.com/design/7Fh5JbUUM84pYwLt9tpJh2/Salt-DS-Components-and-Patterns?node-id=25349-12245",
   {
     props: {
       // These props were automatically mapped based on your linked code:
@@ -88,10 +88,10 @@ figma.connect(
   },
 );
 
-// Error  - https://www.figma.com/design/ChsbbO7pLomT4F5H6tQyLP/Salt-(Next)-Components-%26-Patterns?node-id=25353-12452&t=ah5WkRCF59YmebzE-4
+// Error  - https://www.figma.com/design/7Fh5JbUUM84pYwLt9tpJh2/Salt-DS-Components-and-Patterns?node-id=25353-12452&t=ah5WkRCF59YmebzE-4
 figma.connect(
   Tooltip,
-  "https://www.figma.com/design/ChsbbO7pLomT4F5H6tQyLP/Salt-(Next)-Components-%26-Patterns?node-id=25353-12452",
+  "https://www.figma.com/design/7Fh5JbUUM84pYwLt9tpJh2/Salt-DS-Components-and-Patterns?node-id=25353-12452",
   {
     props: {
       // These props were automatically mapped based on your linked code:
@@ -117,10 +117,10 @@ figma.connect(
   },
 );
 
-// Default - https://www.figma.com/design/ChsbbO7pLomT4F5H6tQyLP/Salt-(Next)-Components-%26-Patterns?node-id=25358-12659&t=ah5WkRCF59YmebzE-4
+// Default - https://www.figma.com/design/7Fh5JbUUM84pYwLt9tpJh2/Salt-DS-Components-and-Patterns?node-id=25358-12659&t=ah5WkRCF59YmebzE-4
 figma.connect(
   Tooltip,
-  "https://www.figma.com/design/ChsbbO7pLomT4F5H6tQyLP/Salt-(Next)-Components-%26-Patterns?node-id=25358-12659",
+  "https://www.figma.com/design/7Fh5JbUUM84pYwLt9tpJh2/Salt-DS-Components-and-Patterns?node-id=25358-12659",
   {
     props: {
       // These props were automatically mapped based on your linked code:

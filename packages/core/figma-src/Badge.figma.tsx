@@ -11,7 +11,7 @@ import { Badge } from "../src/badge/Badge";
 
 figma.connect(
   Badge,
-  "https://www.figma.com/design/ChsbbO7pLomT4F5H6tQyLP/Salt-(Next)-Components-%26-Patterns?node-id=9106%3A83184",
+  "https://www.figma.com/design/7Fh5JbUUM84pYwLt9tpJh2/Salt-DS-Components-and-Patterns?node-id=9106%3A83184",
   {
     props: {
       value: figma.string("Badge value"),
@@ -24,7 +24,7 @@ figma.connect(
 // Manual created - Dot badge
 figma.connect(
   Badge,
-  "https://www.figma.com/design/ChsbbO7pLomT4F5H6tQyLP/Salt-(Next)-Components-%26-Patterns?node-id=31292-7021",
+  "https://www.figma.com/design/7Fh5JbUUM84pYwLt9tpJh2/Salt-DS-Components-and-Patterns?node-id=31292-7021",
   {
     props: {},
     example: () => <Badge />,

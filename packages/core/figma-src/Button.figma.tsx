@@ -4,7 +4,7 @@ import { Button } from "../src/button/Button";
 // Neutral - 5594:10494
 figma.connect(
   Button,
-  "https://www.figma.com/design/ChsbbO7pLomT4F5H6tQyLP/Salt-(Next)-Components-%26-Patterns?node-id=5594%3A10494",
+  "https://www.figma.com/design/7Fh5JbUUM84pYwLt9tpJh2/Salt-DS-Components-and-Patterns?node-id=5594%3A10494",
   {
     props: {
       // These props were automatically mapped based on your linked code:
@@ -49,7 +49,7 @@ figma.connect(
 // Accented - 5594:10364
 figma.connect(
   Button,
-  "https://www.figma.com/design/ChsbbO7pLomT4F5H6tQyLP/Salt-(Next)-Components-%26-Patterns?node-id=5594%3A10364",
+  "https://www.figma.com/design/7Fh5JbUUM84pYwLt9tpJh2/Salt-DS-Components-and-Patterns?node-id=5594%3A10364",
   {
     props: {
       // These props were automatically mapped based on your linked code:
@@ -95,7 +95,7 @@ figma.connect(
 // Caution - 32192:104949
 figma.connect(
   Button,
-  "https://www.figma.com/design/ChsbbO7pLomT4F5H6tQyLP/Salt-(Next)-Components-%26-Patterns?node-id=32192%3A104949",
+  "https://www.figma.com/design/7Fh5JbUUM84pYwLt9tpJh2/Salt-DS-Components-and-Patterns?node-id=32192%3A104949",
   {
     props: {
       // These props were automatically mapped based on your linked code:
@@ -140,7 +140,7 @@ figma.connect(
 // Positive - 32189:104771
 figma.connect(
   Button,
-  "https://www.figma.com/design/ChsbbO7pLomT4F5H6tQyLP/Salt-(Next)-Components-%26-Patterns?node-id=32189%3A104771",
+  "https://www.figma.com/design/7Fh5JbUUM84pYwLt9tpJh2/Salt-DS-Components-and-Patterns?node-id=32189%3A104771",
   {
     props: {
       // These props were automatically mapped based on your linked code:
@@ -185,7 +185,7 @@ figma.connect(
 // Negative - 32148:16178
 figma.connect(
   Button,
-  "https://www.figma.com/design/ChsbbO7pLomT4F5H6tQyLP/Salt-(Next)-Components-%26-Patterns?node-id=32148%3A16178",
+  "https://www.figma.com/design/7Fh5JbUUM84pYwLt9tpJh2/Salt-DS-Components-and-Patterns?node-id=32148%3A16178",
   {
     props: {
       // These props were automatically mapped based on your linked code:

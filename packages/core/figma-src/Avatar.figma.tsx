@@ -1,10 +1,10 @@
 import figma from "@figma/code-connect";
 import { Avatar } from "../src/avatar/Avatar";
 
-// Icon - https://www.figma.com/design/ChsbbO7pLomT4F5H6tQyLP/Salt-(Next)-Components-%26-Patterns?m=auto&node-id=24377-78056
+// Icon variant - https://www.figma.com/design/7Fh5JbUUM84pYwLt9tpJh2/Salt-DS-Components-and-Patterns?m=auto&node-id=24377-78056
 figma.connect(
   Avatar,
-  "https://www.figma.com/design/ChsbbO7pLomT4F5H6tQyLP/Salt-(Next)-Components-%26-Patterns?node-id=24377-78056",
+  "https://www.figma.com/design/7Fh5JbUUM84pYwLt9tpJh2/Salt-DS-Components-and-Patterns?node-id=24377-78056",
   {
     props: {
       size: figma.enum("Size", {
@@ -21,7 +21,7 @@ figma.connect(
 // Initials
 figma.connect(
   Avatar,
-  "https://www.figma.com/design/ChsbbO7pLomT4F5H6tQyLP/Salt-(Next)-Components-%26-Patterns?node-id=24377%3A78140",
+  "https://www.figma.com/design/7Fh5JbUUM84pYwLt9tpJh2/Salt-DS-Components-and-Patterns?node-id=24377%3A78140",
   {
     props: {
       size: figma.enum("Size", {
@@ -36,10 +36,10 @@ figma.connect(
   },
 );
 
-// Image - https://www.figma.com/design/ChsbbO7pLomT4F5H6tQyLP/Salt-(Next)-Components-%26-Patterns?m=auto&node-id=5688-71628
+// Image - https://www.figma.com/design/7Fh5JbUUM84pYwLt9tpJh2/Salt-DS-Components-and-Patterns?m=auto&node-id=5688-71628
 figma.connect(
   Avatar,
-  "https://www.figma.com/design/ChsbbO7pLomT4F5H6tQyLP/Salt-(Next)-Components-%26-Patterns?node-id=5688-71628",
+  "https://www.figma.com/design/7Fh5JbUUM84pYwLt9tpJh2/Salt-DS-Components-and-Patterns?node-id=5688-71628",
   {
     props: {
       size: figma.enum("Size", {
