@@ -3,4 +3,4 @@
 ---
 
 - Added `variant="ghost"` to Card.
-- Added deafult shadow to all Card variants.
+- Added default shadow to all Card variants.
