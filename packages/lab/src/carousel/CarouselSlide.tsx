@@ -1,11 +1,11 @@
-import { makePrefixer, useForkRef, useId } from "@salt-ds/core";
+import { makePrefixer, useForkRef } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
-  forwardRef,
   type HTMLAttributes,
   type ReactNode,
+  forwardRef,
   useEffect,
   useRef,
 } from "react";
@@ -54,7 +54,6 @@ export const CarouselSlide = forwardRef<HTMLDivElement, CarouselSlideProps>(
       css: carouselSlideCss,
       window: targetWindow,
     });
-    console.log(ariaLabelledBy);
     const slideRef = useRef<HTMLDivElement>(null);
     const {
       firstVisibleSlide,
@@ -84,19 +83,19 @@ export const CarouselSlide = forwardRef<HTMLDivElement, CarouselSlideProps>(
           : undefined,
       ...style,
     };
-    const randomid = useId();
     return (
       <div
         role="group"
         aria-roledescription="slide"
-        aria-labelledby={clsx(ariaLabelledBy, randomid)}
+        aria-labelledby={clsx(ariaLabelledBy)}
         ref={useForkRef(ref, slideRef)}
         className={clsx(withBaseName(), {
           [withBaseName("bordered")]: appearance === "bordered",
         })}
         style={SlideStyles}
         tabIndex={isVisible ? 0 : -1}
-        hidden={!isVisible}
+        hidden={!isVisible ? true : undefined}
+        aria-hidden={!isVisible ? true : undefined}
         {...rest}
       >
         {media}
@@ -107,7 +106,7 @@ export const CarouselSlide = forwardRef<HTMLDivElement, CarouselSlideProps>(
             })}
           >
             <div className={withBaseName("content")}>
-              <span id={randomid} className={clsx(withBaseName("sr-only"))}>
+              <span className={clsx(withBaseName("sr-only"))}>
                 {isVisible && `${index + 1} of ${slideRefs.length}`}
               </span>
               {header}

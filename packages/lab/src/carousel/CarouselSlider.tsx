@@ -2,10 +2,10 @@ import { makePrefixer, useForkRef } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import {
-  forwardRef,
   type HTMLAttributes,
   type KeyboardEvent,
   type ReactElement,
+  forwardRef,
   useCallback,
 } from "react";
 import { useIntersectionObserver } from "../utils";
@@ -85,7 +85,7 @@ export const CarouselSlider = forwardRef<HTMLDivElement, CarouselSliderProps>(
     return (
       <div
         ref={useForkRef(ref, containerRef)}
-        aria-live={visibleSlides === 1 ? "polite" : "off"}
+        aria-live={visibleSlides === 1 ? "polite" : undefined}
         className={withBaseName()}
         tabIndex={-1}
         onKeyDown={onKeyDown}

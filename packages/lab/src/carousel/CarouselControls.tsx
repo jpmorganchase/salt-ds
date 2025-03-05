@@ -1,10 +1,10 @@
-import { Button, makePrefixer, Text, useIcon } from "@salt-ds/core";
+import { Button, Text, makePrefixer, useIcon } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import {
-  forwardRef,
   type HTMLAttributes,
   type SyntheticEvent,
+  forwardRef,
   useRef,
 } from "react";
 import { useCarousel } from "./CarouselContext";
@@ -71,16 +71,10 @@ export const CarouselControls = forwardRef<
   const isOnFirstSlide = firstVisibleSlide === 0;
   const isOnLastSlide = firstVisibleSlide === slidesCount - visibleSlides;
 
-  const controlsLabel = `${firstVisibleSlide + 1} ${visibleSlides > 1 ? ` - ${firstVisibleSlide + visibleSlides}` : ""} of
-        ${slidesCount}`;
-
-  const ControlsLabel = () => (
-    <Text
-      as="span"
-      aria-live={visibleSlides > 1 ? "polite" : "off"}
-      aria-atomic={visibleSlides > 1}
-    >
-      <strong>{controlsLabel}</strong>
+  const controlsLabel = (
+    <Text as="span" aria-live={visibleSlides === 1 ? undefined : "polite"}>
+      <strong>{`${firstVisibleSlide + 1} ${visibleSlides > 1 ? ` - ${firstVisibleSlide + visibleSlides}` : ""} of
+        ${slidesCount}`}</strong>
     </Text>
   );
 
@@ -96,7 +90,7 @@ export const CarouselControls = forwardRef<
 
   return (
     <div className={withBaseName()} ref={ref} {...rest}>
-      {labelPlacement === "left" && <ControlsLabel />}
+      {labelPlacement === "left" && controlsLabel}
       <Button
         ref={prevButtonRef}
         focusableWhenDisabled
@@ -123,7 +117,7 @@ export const CarouselControls = forwardRef<
       >
         <NextIcon aria-hidden />
       </Button>
-      {labelPlacement === "right" && <ControlsLabel />}
+      {labelPlacement === "right" && controlsLabel}
     </div>
   );
 });
