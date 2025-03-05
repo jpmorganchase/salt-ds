@@ -10,12 +10,12 @@ import clsx from "clsx";
 import { SliderThumb } from "./internal/SliderThumb";
 import { SliderTrack } from "./internal/SliderTrack";
 import { useSliderThumb } from "./internal/useSliderThumb";
-import { toFloat } from "./internal/utils";
+import { calculatePercentage, clamp, toFloat } from "./internal/utils";
 
 export interface SliderProps
   extends Omit<HTMLAttributes<HTMLDivElement>, "onChange" | "defaultValue"> {
   /**
-   * Initial value of the slider
+   * The default value. Use when the component is not controlled.
    */
   defaultValue?: number;
   /**
@@ -51,19 +51,22 @@ export interface SliderProps
    */
   minLabel?: string;
   /**
-   * Name of the slider input
+   * Callback called when slider value is changed.
+   * Event is either an Input change event or a click event.
    */
-  name?: string;
+  onChange?: (event: SyntheticEvent<unknown> | Event, value: number) => void;
   /**
-   * Change handler to be used when in a controlled state
+   * Callback called when the slider is stopped from being dragged or
+   * its value is changed from the keyboard.
+   * Event is either an Input change event or a click event.
    */
-  onChange?: (event: SyntheticEvent, value: number) => void;
+  onChangeEnd?: (event: SyntheticEvent<unknown> | Event, value: number) => void;
   /**
    * Minimum interval the slider thumb can move
    */
   step?: number;
   /**
-   * The multiplier for the step when using PageUp and PageDown keys via keyboard interaction
+   * Maximum interval the slider thumb can move when using PageUp and PageDown keys
    */
   stepMultiplier?: number;
   /**
@@ -86,8 +89,8 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
     minLabel,
     max = 10,
     maxLabel,
-    name,
     onChange,
+    onChangeEnd,
     step = 1,
     stepMultiplier = 2,
     value: valueProp,
@@ -105,9 +108,6 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
   const {
     handlePointerDownOnThumb,
     handlePointerDownOnTrack,
-    calculateAndSetThumbPosition,
-    calculatePercentage,
-    clamp,
     isDragging,
     sliderRef,
   } = useSliderThumb({
@@ -115,9 +115,8 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
     max,
     step,
     valueState,
-    // @ts-ignore onChange can accept both number and [number, number] value types
     onChange,
-    // @ts-ignore setValue can accept both number and [number, number] value types
+    onChangeEnd,
     setValue,
   });
 
@@ -127,13 +126,14 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
   } = useFormFieldProps();
 
   const disabled = formFieldDisabled || disabledProp;
-  const value = clamp(valueState);
-  const progressPercentage = calculatePercentage(toFloat(value));
+  const value = clamp(valueState, min, max);
+  const progressPercentage = calculatePercentage(toFloat(value), max, min);
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const parsedValue = toFloat(event.target.value);
     setValue(parsedValue);
     onChange?.(event, parsedValue);
+    onChangeEnd?.(event, parsedValue);
   };
 
   return (
@@ -163,14 +163,14 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
         format={format}
         handleInputChange={handleInputChange}
         handlePointerDown={handlePointerDownOnThumb}
-        max={max}
         min={min}
-        name={name}
+        minLabel={minLabel}
+        max={max}
+        maxLabel={maxLabel}
         offsetPercentage={`${progressPercentage}%`}
-        onChange={calculateAndSetThumbPosition}
+        sliderValue={value}
         step={step}
         stepMultiplier={stepMultiplier}
-        thumbValue={value}
         trackDragging={isDragging}
       />
     </SliderTrack>

@@ -8,10 +8,10 @@ const withBaseName = makePrefixer("saltSliderTooltip");
 
 interface SliderTooltipProps {
   value: number | string;
-  isVisible?: boolean;
+  open?: boolean;
 }
 
-export const SliderTooltip = ({ value, isVisible }: SliderTooltipProps) => {
+export const SliderTooltip = ({ value, open }: SliderTooltipProps) => {
   const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-slider-tooltip",
@@ -23,10 +23,9 @@ export const SliderTooltip = ({ value, isVisible }: SliderTooltipProps) => {
     <div
       aria-hidden
       className={clsx(withBaseName(), {
-        [withBaseName("visible")]: isVisible,
+        [withBaseName("visible")]: open,
       })}
       data-testid="sliderTooltip"
-      role="tooltip"
     >
       <svg
         className={withBaseName("arrow")}

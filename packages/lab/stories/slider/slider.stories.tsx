@@ -139,7 +139,7 @@ export const WithinFormFieldAndInlineLabels: StoryFn<SliderProps> = () => {
           min={bounds[0]}
           max={bounds[1]}
           value={value}
-          onChange={(event, value) => {
+          onChange={(_e, value) => {
             setInputValue(value);
             setValue(value);
           }}
@@ -191,7 +191,7 @@ export const WithinFormFieldAndBottomLabels: StoryFn<SliderProps> = () => {
           min={bounds[0]}
           max={bounds[1]}
           value={value}
-          onChange={(event, value) => {
+          onChange={(_e, value) => {
             setInputValue(value);
             setValue(value);
           }}
@@ -210,11 +210,21 @@ export const WithCustomStep = () => (
     </FormField>
     <FormField>
       <FormFieldLabel>Step: 0.2</FormFieldLabel>
-      <Slider min={-1} max={1} step={0.2} />
+      <Slider
+        min={-1}
+        max={1}
+        step={0.2}
+        format={(value: number) => Intl.NumberFormat().format(value)}
+      />
     </FormField>
     <FormField>
       <FormFieldLabel>Step: 0.25 (two decimal places)</FormFieldLabel>
-      <Slider min={-1} max={1} step={0.25} />
+      <Slider
+        min={-1}
+        max={1}
+        step={0.25}
+        format={(value: number) => Intl.NumberFormat().format(value)}
+      />
     </FormField>
     <FormField>
       <FormFieldLabel>
@@ -258,7 +268,7 @@ export const WithNonNumericValues = () => {
         min={1}
         max={7}
         value={value}
-        onChange={(e, value) => setValue(value)}
+        onChange={(_e, value) => setValue(value)}
         format={getDayOfTheWeek}
         markers={daysOfTheWeek.map((day) => {
           return { value: day.value, label: day.label };
