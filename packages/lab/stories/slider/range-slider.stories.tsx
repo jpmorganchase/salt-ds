@@ -8,7 +8,7 @@ import {
 import { RangeSlider, type RangeSliderProps } from "@salt-ds/lab";
 import type { StoryFn } from "@storybook/react";
 import { toFloat } from "packages/lab/src/slider/internal/utils";
-import { type ChangeEvent, type SyntheticEvent, useState } from "react";
+import { type ChangeEvent, useState } from "react";
 
 export default {
   title: "Lab/RangeSlider",
@@ -122,7 +122,7 @@ export const WithinFormFieldAndInlineLabels: StoryFn<RangeSliderProps> = () => {
       <FlexLayout gap={2}>
         <Input
           value={minInputValue}
-          style={{ width: "10px" }}
+          style={{ flex: 1 }}
           onChange={(event: ChangeEvent<HTMLInputElement>) =>
             handleInputChange(event, "min")
           }
@@ -132,19 +132,17 @@ export const WithinFormFieldAndInlineLabels: StoryFn<RangeSliderProps> = () => {
           max={bounds[1]}
           step={3}
           value={value}
-          onChange={(
-            e: SyntheticEvent | MouseEvent,
-            value: [number, number],
-          ) => {
+          onChange={(_e, value: [number, number]) => {
             setMinInputValue(value[0]);
             setMaxInputValue(value[1]);
             setValue(value);
           }}
           aria-label="withInput"
+          style={{ flex: 5 }}
         />
         <Input
           value={maxInputValue}
-          style={{ width: "10px" }}
+          style={{ flex: 1 }}
           onChange={(event: ChangeEvent<HTMLInputElement>) =>
             handleInputChange(event, "max")
           }
@@ -188,7 +186,7 @@ export const WithinFormFieldAndBottomLabels: StoryFn<RangeSliderProps> = () => {
       <FlexLayout gap={2}>
         <Input
           value={minInputValue}
-          style={{ width: "10px" }}
+          style={{ flex: 1 }}
           onChange={(event: ChangeEvent<HTMLInputElement>) =>
             handleInputChange(event, "min")
           }
@@ -198,20 +196,18 @@ export const WithinFormFieldAndBottomLabels: StoryFn<RangeSliderProps> = () => {
           max={bounds[1]}
           step={3}
           value={value}
-          onChange={(
-            e: SyntheticEvent | MouseEvent,
-            value: [number, number],
-          ) => {
+          onChange={(_e, value: [number, number]) => {
             setMinInputValue(value[0]);
             setMaxInputValue(value[1]);
             setValue(value);
           }}
           aria-label="withInput"
           labelPosition="bottom"
+          style={{ flex: 5 }}
         />
         <Input
           value={maxInputValue}
-          style={{ width: "10px" }}
+          style={{ flex: 1 }}
           onChange={(event: ChangeEvent<HTMLInputElement>) =>
             handleInputChange(event, "max")
           }
@@ -251,6 +247,7 @@ export const WithCustomStep = () => (
         step={0.2}
         defaultValue={[-1, 0.2]}
         aria-label="secondSlider"
+        format={(value: number) => Intl.NumberFormat().format(value)}
       />
     </FormField>
     <FormField>
@@ -261,6 +258,7 @@ export const WithCustomStep = () => (
         step={0.25}
         defaultValue={[-1, 0.25]}
         aria-label="thirdSlider"
+        format={(value: number) => Intl.NumberFormat().format(value)}
       />
     </FormField>
     <FormField>

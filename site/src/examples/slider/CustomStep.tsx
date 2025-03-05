@@ -10,11 +10,21 @@ export const CustomStep = (): ReactElement => (
     </FormField>
     <FormField>
       <FormFieldLabel>Step: 0.2</FormFieldLabel>
-      <Slider min={-1} max={1} step={0.2} />
+      <Slider
+        min={-1}
+        max={1}
+        step={0.2}
+        format={(value: number) => Intl.NumberFormat().format(value)}
+      />
     </FormField>
     <FormField>
       <FormFieldLabel>Step: 0.25 (two decimal places)</FormFieldLabel>
-      <Slider min={-1} max={1} step={0.25} />
+      <Slider
+        min={-1}
+        max={1}
+        step={0.25}
+        format={(value: number) => Intl.NumberFormat().format(value)}
+      />
     </FormField>
     <FormField>
       <FormFieldLabel>Step: 0.3 (not multiple of total range)</FormFieldLabel>

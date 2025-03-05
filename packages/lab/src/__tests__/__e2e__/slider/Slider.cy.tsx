@@ -1,5 +1,6 @@
 import * as sliderStories from "@stories/slider/slider.stories";
 import { composeStories } from "@storybook/react";
+import { type ChangeEvent, useState } from "react";
 
 const composedStories = composeStories(sliderStories);
 
@@ -196,5 +197,53 @@ describe("Given a Slider", () => {
     cy.findByTestId("sliderThumb").trigger("pointerover");
     cy.findByTestId("sliderTooltip").should("be.visible");
     cy.findByTestId("sliderTooltip").should("have.text", "2%");
+  });
+
+  describe("WHEN it is mounted as an uncontrolled component", () => {
+    it("should respect the default values", () => {
+      cy.mount(<Default min={0} max={10} defaultValue={4} />);
+      cy.findByRole("slider").should("have.value", 4);
+    });
+
+    it("should update value when the thumb is moved", () => {
+      const changeSpy = cy.stub().as("changeSpy");
+      cy.mount(
+        <Default min={0} max={10} defaultValue={4} onChange={changeSpy} />,
+      );
+
+      cy.findByRole("slider").focus().realPress("ArrowRight");
+      cy.get("@changeSpy").should(
+        "have.been.calledWith",
+        Cypress.sinon.match.any,
+        5,
+      );
+      cy.findByRole("slider").should("have.value", 5);
+    });
+  });
+
+  describe("WHEN it is mounted as a controlled component", () => {
+    it("should set the specified value", () => {
+      cy.mount(<Default min={0} max={10} value={4} />);
+      cy.findByRole("slider").should("have.value", 4);
+    });
+
+    it("should call onChange when updated", () => {
+      const changeSpy = cy.stub().as("changeSpy");
+
+      function ControlledSlider() {
+        const [value, setValue] = useState<number>(3);
+        const onChange = (event: ChangeEvent<HTMLInputElement>) => {
+          setValue(Number.parseFloat(event.target.value));
+          changeSpy(event);
+        };
+        return <Default value={value} onChange={onChange} />;
+      }
+
+      cy.mount(<ControlledSlider />);
+      cy.findByRole("slider").focus().realPress("ArrowRight");
+      cy.get("@changeSpy").should("have.been.calledWithMatch", {
+        target: { value: "4" },
+      });
+    });
   });
 });

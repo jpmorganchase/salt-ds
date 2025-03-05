@@ -31,16 +31,7 @@ Selection of a range of values from a slider track. This determines a minimum an
 
 ## Custom step
 
-By default, the slider step increment is set to 1. This can be customized by using the ‘step’ prop.
-
-Custom step values can be set to any number, including decimal values up to two decimal places.
-
-If a custom step value is provided that is not a multiple of the range, the slider will round the maximum selectable value to the largest multiple of the step that is less than the maximum value. **Note:** This will render the final portion of the slider track inaccessible by keyboard navigation but still draggable by pointer (the portion between the rounded maximum value and the actual maximum value). Step calculations are made from `0`, so the same rounding logic applies to negative values, but in the opposite direction.
-
-### Best practices
-
-- Use a step value that is a multiple of the range to ensure the entire range is selectable.
-- Use a step value that is relative to the granularity of the scale to prevent tedious slider selections.
+By default, the slider step increment is set to 1. This can be customized by using the ‘step’ prop. Custom step values can be set to any number, including decimal values up to two decimal places.
 
 </LivePreview>
 
@@ -139,7 +130,7 @@ This approach ensures a user-friendly and accessible interface for selecting non
 
 ## Disabled slider
 
-You can set the slider as disabled
+You can set the slider as disabled.
 
 </LivePreview>
 </LivePreviewControls>
