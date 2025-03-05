@@ -27,9 +27,9 @@
   align-items: center;
 }
 
-.ghostCard {
-  width: 100%;
+.exampleGradient {
   display: flex;
   justify-content: center;
   align-items: center;
+  background: linear-gradient(var(--salt-container-primary-background) 0%, var(--salt-container-secondary-background) 100%);
 }
