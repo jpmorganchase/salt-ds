@@ -1,25 +1,27 @@
-import { Text, type TextProps, makePrefixer } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import clsx from "clsx";
+import { Text, type TextProps } from "../text";
+import { makePrefixer } from "../utils";
 
-import stepDescriptionCSS from "./Step.Description.css";
+import stepLabelCSS from "./Step.Label.css";
 
-export interface StepDescriptionProps extends TextProps<"div"> {}
+export interface StepLabelProps extends TextProps<"div"> {}
 
-const withBaseName = makePrefixer("saltStepDescription");
+const withBaseName = makePrefixer("saltStepLabel");
 
-export function StepDescription({
+export function StepLabel({
   id,
   className,
   styleAs = "label",
+  children,
   ...props
-}: StepDescriptionProps) {
+}: StepLabelProps) {
   const targetWindow = useWindow();
 
   useComponentCssInjection({
-    testId: "salt-step-description",
-    css: stepDescriptionCSS,
+    testId: "salt-step-label",
+    css: stepLabelCSS,
     window: targetWindow,
   });
 
@@ -29,6 +31,8 @@ export function StepDescription({
       styleAs="label"
       className={clsx(withBaseName(), className)}
       {...props}
-    />
+    >
+      {children}
+    </Text>
   );
 }

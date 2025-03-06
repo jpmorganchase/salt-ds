@@ -1,5 +1,4 @@
-import { StackLayout } from "@salt-ds/core";
-import { Step, SteppedTracker } from "@salt-ds/lab";
+import { StackLayout, Step, SteppedTracker } from "@salt-ds/core";
 
 export const OrientationHorizontal = () => {
   return (
