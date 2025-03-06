@@ -1,18 +1,14 @@
 import { SaltProviderNext, Switch, useId } from "@salt-ds/core";
 import { SaltProvider } from "@salt-ds/core";
-import clsx from "clsx";
 import {
   type ChangeEvent,
   type ElementType,
   type FC,
-  type ReactElement,
-  type ReactNode,
   useEffect,
   useState,
 } from "react";
-import useIsMobileView from "../../utils/useIsMobileView";
 import { Pre } from "../mdx/pre";
-import { useLivePreviewControls } from "./useLivePreviewControls";
+import { useLivePreviewControls } from "./LivePreviewProvider";
 
 import { AdapterDateFns } from "@salt-ds/date-adapters/date-fns";
 import { LocalizationProvider } from "@salt-ds/lab";
@@ -21,27 +17,13 @@ import styles from "./LivePreview.module.css";
 type LivePreviewProps = {
   componentName: string;
   exampleName: string;
-
-  /**
-   * Text label that will be used for this example in the list view in place
-   * of an auto-generated one based on the `exampleName`.
-   *
-   * Should ideally match the H3 text in the description content that
-   * accompanies this example (provided via the `children` prop).
-   */
-  displayName?: string;
-  list?: ReactElement;
-  children?: ReactNode;
 };
 
 export const LivePreview: FC<LivePreviewProps> = ({
   componentName,
   exampleName,
-  children,
 }) => {
   const [showCode, setShowCode] = useState<boolean>(false);
-
-  const isMobileView = useIsMobileView();
 
   const [ComponentExample, setComponentExample] = useState<{
     Example?: ElementType;
@@ -85,15 +67,10 @@ export const LivePreview: FC<LivePreviewProps> = ({
   const panelId = useId();
 
   return (
-    <>
-      {children}
-      <div className={styles.container}>
-        <div
-          className={clsx(styles.componentPreview, {
-            [styles.smallViewport]: isMobileView,
-          })}
-        >
-          <LocalizationProvider DateAdapter={AdapterDateFns}>
+    <div className={styles.container}>
+      <div className={styles.componentPreview}>
+        <LocalizationProvider DateAdapter={AdapterDateFns}>
+          <div className={styles.exampleWithSwitch}>
             <ChosenSaltProvider
               mode={mode}
               accent="teal"
@@ -101,41 +78,41 @@ export const LivePreview: FC<LivePreviewProps> = ({
               headingFont="Amplitude"
               actionFont="Amplitude"
             >
-              <div className={styles.exampleWithSwitch}>
-                <div className={styles.example}>
-                  <ChosenSaltProvider density={density}>
-                    {ComponentExample.Example && <ComponentExample.Example />}
-                  </ChosenSaltProvider>
-                </div>
-                <ChosenSaltProvider density="medium">
-                  <Switch
-                    checked={showCode}
-                    onChange={handleShowCodeToggle}
-                    className={styles.switch}
-                    label="Show code"
-                    aria-controls={panelId}
-                  />
+              <div className={styles.example}>
+                <ChosenSaltProvider density={density} mode={mode}>
+                  {ComponentExample.Example && <ComponentExample.Example />}
                 </ChosenSaltProvider>
               </div>
             </ChosenSaltProvider>
-          </LocalizationProvider>
-        </div>
-
-        <div
-          className={styles.codePanel}
-          aria-hidden={!showCode}
-          hidden={!showCode}
-          id={panelId}
-        >
-          <div className={styles.codePanelInner}>
-            <Pre className={styles.codePreview}>
-              <div className="language-tsx">
-                {ComponentExample.sourceCode.trimEnd()}
+            <SaltProviderNext density="medium" applyClassesTo="child">
+              <div className={styles.toolbar}>
+                <Switch
+                  checked={showCode}
+                  onChange={handleShowCodeToggle}
+                  className={styles.switch}
+                  label="Show code"
+                  aria-controls={panelId}
+                />
               </div>
-            </Pre>
+            </SaltProviderNext>
           </div>
+        </LocalizationProvider>
+      </div>
+
+      <div
+        className={styles.codePanel}
+        aria-hidden={!showCode}
+        hidden={!showCode}
+        id={panelId}
+      >
+        <div className={styles.codePanelInner}>
+          <Pre className={styles.codePreview}>
+            <div className="language-tsx">
+              {ComponentExample.sourceCode.trimEnd()}
+            </div>
+          </Pre>
         </div>
       </div>
-    </>
+    </div>
   );
 };

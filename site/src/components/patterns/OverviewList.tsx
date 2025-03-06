@@ -1,4 +1,5 @@
-import { Link } from "@jpmorganchase/mosaic-components";
+import { Link } from "@salt-ds/core";
+import { LinkBase } from "../link/Link";
 import styles from "./OverviewList.module.css";
 
 export interface OverviewListProps {
@@ -13,9 +14,8 @@ export function OverviewList({ patterns = [] }: OverviewListProps) {
         .map((pattern) => (
           <li key={pattern.route}>
             <Link
-              className={styles.link}
               href={pattern.route}
-              variant="document"
+              render={<LinkBase href={pattern.route} />}
             >
               {pattern.title}
             </Link>

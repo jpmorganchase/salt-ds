@@ -8,8 +8,6 @@ data:
   $ref: ./#/data
 ---
 
-<LivePreviewControls>
-<LivePreview componentName="badge" exampleName="Default">
 ## Default
 
 The `Badge` is anchored to the top-right corner when attached to a child component such as a button. As the number of alphanumeric characters increases, the badge width expands but stays in the same place.
@@ -18,8 +16,7 @@ The `Badge` is anchored to the top-right corner when attached to a child compone
 
 Use a badge to summarize the overall state of the content the badge is anchored to. For example, you may want to provide a quick overview of the number of new or unread items.
 
-</LivePreview>
-<LivePreview componentName="badge" exampleName="InlineBadge">
+<LivePreview componentName="badge" exampleName="Default" />
 
 ## Inline badge
 
@@ -28,8 +25,7 @@ To place a badge inline instead of in the top-right corner of an element, don't 
 - Using a badge inline with text clarifies which part of the content the badge relates to.
 - Highlight specific details within the content to draw the user’s attention, such as using a badge inside a tab.
 
-</LivePreview>
-<LivePreview componentName="badge" exampleName="BadgeWithMaximumDigits">
+<LivePreview componentName="badge" exampleName="InlineBadge" />
 
 ## Badge with maximum digits
 
@@ -37,16 +33,13 @@ Specify the maximum displayed number with the `max` prop. If `value` exceeds `ma
 
 - Without a `max` value, the component limits the value to three digits by default, displaying `999+` for any values over 999.
 
-</LivePreview>
-<LivePreview componentName="badge" exampleName="BadgeWithString">
-    
+<LivePreview componentName="badge" exampleName="BadgeWithMaximumDigits" />
+
 ## Badge with string
 
 The `value` property can accept both a `number` and a `string`. When you pass a string, the badge will not clamp the value.
 
-</LivePreview>
-
-<LivePreview componentName="badge" exampleName="DotBadge">
+<LivePreview componentName="badge" exampleName="BadgeWithString" />
 
 ## Dot badge
 
@@ -58,13 +51,10 @@ A dot badge is a circular dot that notifies users of changes in state.
 - If there is a 3:1 contrast between the badge and the element it is attached to, the badge can be anchored to the element's contents.
 - If the icon graphic has number on the right top, don't anchor the badge directly to it to avoid blocking the number.
 
-</LivePreview>
-
-<LivePreview componentName="badge" exampleName="InlineDotBadge">
+<LivePreview componentName="badge" exampleName="DotBadge" />
 
 ## Inline dot badge
 
 Similarly to a regular badge, you can place a dot badge inline. To do this, do not pass `children` to the badge.
 
-</LivePreview>
-</LivePreviewControls>
+<LivePreview componentName="badge" exampleName="InlineDotBadge" />

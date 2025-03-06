@@ -1,0 +1,8 @@
+.root {
+  padding: 0;
+}
+
+.logo {
+  padding-inline: var(--salt-spacing-200);
+  margin-top: var(--salt-spacing-100);
+}

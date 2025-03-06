@@ -8,17 +8,11 @@ data:
   $ref: ./#/data
 ---
 
-<LivePreviewControls>
-
-<LivePreview componentName="menu" exampleName="SingleLevel" >
-
 ## Single level
 
 Clicking on the menu trigger will display a list of actions that the user can take.
 
-</LivePreview>
-
-<LivePreview componentName="menu" exampleName="Multilevel" >
+<LivePreview componentName="menu" exampleName="SingleLevel" />
 
 ## Multilevel
 
@@ -29,25 +23,19 @@ Menus can contain submenus which present the user with a set of items to interac
 - Creating submenus as separate components will allow you to reuse them in different parts of your application and make your code more maintainable.
 - Limit the number of levels in your menu to avoid overwhelming users.
 
-</LivePreview>
-
-<LivePreview componentName="menu" exampleName="GroupedItems" >
+<LivePreview componentName="menu" exampleName="Multilevel" />
 
 ## Grouped items
 
 Menu items can optionally be grouped together to organize related actions using a group label and separator.
 
-</LivePreview>
-
-<LivePreview componentName="menu" exampleName="SeparatorOnly" >
+<LivePreview componentName="menu" exampleName="GroupedItems" />
 
 ## Separator only
 
 A `MenuGroup` can be used without a `label` prop to visually separate groups of menu items.
 
-</LivePreview>
-
-<LivePreview componentName="menu" exampleName="WithIcon" >
+<LivePreview componentName="menu" exampleName="SeparatorOnly" />
 
 ## With icon
 
@@ -58,38 +46,29 @@ Icons can be used to help users quickly identify the type of action they can tak
 - Icons should be displayed before a menu item label.
 - Use icons consistently across all menu items within the same group.
 
-</LivePreview>
-
-<LivePreview componentName="menu" exampleName="Placement" >
+<LivePreview componentName="menu" exampleName="WithIcon" />
 
 ## Placement
 
 Placement of the menu can be specified using `placement` prop. The menu will be positioned relative to child of the `MenuTrigger` component.
 By default, the root menu is aligned to the "bottom-start" of the trigger element and submenus to the "right-start" of the parent menu item.
 
-</LivePreview>
-
-<LivePreview componentName="menu" exampleName="Scrolling" >
+<LivePreview componentName="menu" exampleName="Placement" />
 
 ## Scrolling
 
 When a menu extends beyond the application window, the menu defaults to span the maximum height of the viewport and scroll.
 
-</LivePreview>
-
-<LivePreview componentName="menu" exampleName="VirtualElement" >
+<LivePreview componentName="menu" exampleName="Scrolling" />
 
 ## Virtual element
 
 A Menu can be shown relative to a virtual element using the `getVirtualElement` prop. This can be used to create a context menu.
 
-</LivePreview>
-<LivePreview componentName="menu" exampleName="Descriptions" >
+<LivePreview componentName="menu" exampleName="VirtualElement" />
 
 ## Descriptions
 
 You can add descriptions to provide extra context using the [`Text`](../text) and [`Stack Layout`](../stack-layout) components.
 
-</LivePreview>
-  
-</LivePreviewControls>
+<LivePreview componentName="menu" exampleName="Descriptions" />

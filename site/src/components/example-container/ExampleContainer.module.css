@@ -5,7 +5,7 @@
   position: relative;
 }
 
-@media screen and (max-width: 996px) {
+@media not screen and (min-width: 960px) {
   .root {
     padding: var(--salt-spacing-100);
   }

@@ -8,18 +8,13 @@ data:
   $ref: ./#/data
 ---
 
-<LivePreviewControls>
-<LivePreview componentName="border-layout" exampleName="Default" >
-
 ## Default
 
 You can set `BorderLayout` to display five regions: North, East, South, West and Center. You must display at least one region alongside the Center region in the layout.
 
 By default, there are no gaps between regions.
 
-</LivePreview>
-
-<LivePreview componentName="border-layout" exampleName="CustomRegionSize" >
+<LivePreview componentName="border-layout" exampleName="Default" />
 
 ## Custom region size
 
@@ -27,9 +22,7 @@ You can manually define the size of regions. This example shows how to set the W
 
 This layout would work well where a fixed-width side navigation is necessary, alongside responsive page content.
 
-</LivePreview>
-
-<LivePreview componentName="border-layout" exampleName="GapBetweenRegions" >
+<LivePreview componentName="border-layout" exampleName="CustomRegionSize" />
 
 ## Gap between regions
 
@@ -38,33 +31,25 @@ You can add a gap between each region. The `gap` prop is a multiplier that align
 - The standard gap between column and row elements in Salt is 3 times the base unit.
 - Use `columnGap` and `rowGap` properties to set a specific gap in a particular dimension or `gap` to update both values simultaneously.
 
-</LivePreview>
-
-<LivePreview componentName="border-layout" exampleName="HideRegions" >
+<LivePreview componentName="border-layout" exampleName="GapBetweenRegions" />
 
 ## Hide regions
 
 `BorderLayout` can display any combination of border items. This example demonstrates a layout with North, West and Center regions.
 
-</LivePreview>
-
-<LivePreview componentName="border-layout" exampleName="BorderItemPosition" >
+<LivePreview componentName="border-layout" exampleName="HideRegions" />
 
 ## Border item position
 
 Set the `position` property of the border item wrapper to define where content should be displayed in the layout: North, East, South, West or Center.
 
-</LivePreview>
-
-<LivePreview componentName="border-layout" exampleName="BorderItemAlignment" >
+<LivePreview componentName="border-layout" exampleName="BorderItemPosition" />
 
 ## Border item alignment
 
 Use the `verticalAlignment` and `horizontalAlignment` properties of the border item wrapper to determine how content should align in the region.
 
-</LivePreview>
-
-<LivePreview componentName="border-layout" exampleName="StickyPositioning" >
+<LivePreview componentName="border-layout" exampleName="BorderItemAlignment" />
 
 ## Sticky positioning
 
@@ -72,11 +57,10 @@ Use the `sticky` prop of the border item wrapper to define a region as sticky. W
 
 This is particularly useful if you require a region to remain visible at all times. For more information, see [CSS `position: sticky`](https://developer.mozilla.org/en-US/docs/Web/CSS/position#sticky).
 
-</LivePreview>
-  <LivePreview componentName="border-layout" exampleName="Spacing">
+<LivePreview componentName="border-layout" exampleName="StickyPositioning" />
 
-    ## Inner and Outer Spacing
-    The spacing properties `padding` and `margin` are set to 0 by default and can be used to control the layout's inner and outer spacing as multiples of the [Salt base unit](/salt/foundations/spacing).
+## Inner and Outer Spacing
 
-  </LivePreview>
-</LivePreviewControls>
+The spacing properties `padding` and `margin` are set to 0 by default and can be used to control the layout's inner and outer spacing as multiples of the [Salt base unit](/salt/foundations/spacing).
+
+<LivePreview componentName="border-layout" exampleName="Spacing" />

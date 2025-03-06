@@ -8,27 +8,19 @@ data:
   $ref: ./#/data
 ---
 
-<LivePreviewControls>
-  
-<LivePreview componentName="button" exampleName="Accented">
-
 ## Accented
 
 The accented button is the main button set for your UI. It is typically used for the core actions in your workflow. Three different appearances are available based on the prominence required for the actions.
 
 In the [Salt Next theme](../../themes/index), the accented button adopts a blue or teal styling option.
 
-</LivePreview>
-  
-<LivePreview componentName="button" exampleName="Neutral">
+<LivePreview componentName="button" exampleName="Accented" />
 
 ## Neutral
 
 The neutral button is ideal for routine, non-urgent actions or tasks that require less visual prominence on the page. The neutral solid button can also be used as an alternative to the accented bordered button for secondary actions that need to stand out more.
 
-</LivePreview>
-
-<LivePreview componentName="button" exampleName="Sentiment">
+<LivePreview componentName="button" exampleName="Sentiment" />
 
 ## Other sentiments
 
@@ -38,9 +30,7 @@ Button has three other sentiments available—positive, caution and negative. Us
 - **Caution**: Alerts users to potential consequences that may arise from taking an action.
 - **Negative**: Indicates actions that lead to negative outcomes.
 
-</LivePreview>
-  
-<LivePreview componentName="button" exampleName="IconAndText">
+<LivePreview componentName="button" exampleName="Neutral" />
 
 ## Icon and text
 
@@ -51,9 +41,7 @@ Button can display both an icon and text to visually reinforce the meaning of th
 - **Left of the Text**: Place an icon to the left of the text to further describe the action, such as “upload”, “print”, or “share”. This additional description can make it easier for users to identify actions.
 - **Right of the Text**: Place an icon to the right of the text to suggest direction or movement, such as opening a menu overlay, expanding a panel, or exporting a document. When the user activates the button, there's typically an immediate visual change.
 
-</LivePreview>
-
-<LivePreview componentName="button" exampleName="IconOnly">
+<LivePreview componentName="button" exampleName="IconAndText" />
 
 ## Icon only
 
@@ -64,9 +52,7 @@ Use an icon-only button without text when screen space is limited, and the icon 
 - **Self-Explanatory Icons**: An icon-only button should use well-known symbols that are self-explanatory. If the icon's purpose isn't clear on its own, include a text description.
 - **Tooltips**: Add a [`Tooltip`](../tooltip) to an icon-only button to describe the action, such as “Edit this form”, “Print this document”, or “Lock document state”.
 
-</LivePreview>
-
-<LivePreview componentName="button" exampleName="Disabled" >
+<LivePreview componentName="button" exampleName="IconOnly" />
 
 ## Disabled
 
@@ -74,9 +60,7 @@ Use the disabled state for a button that the user can’t press.
 
 A button with the prop `disabled={true}` will suppress all functionality.
 
-</LivePreview>
-
-<LivePreview componentName="button" exampleName="Loading" >
+<LivePreview componentName="button" exampleName="Disabled" />
 
 ## Loading
 
@@ -88,9 +72,7 @@ A button with the prop `loading={true}` will display a spinner to indicate that 
 
 **Accessibility** - The `loading` prop should be used in conjunction with the `loadingAnnouncement` prop to provide additional context to screen readers.
 
-</LivePreview>
-
-<LivePreview componentName="button" exampleName="FocusableWhenDisabled" >
+<LivePreview componentName="button" exampleName="Loading" />
 
 ## Focusable when disabled
 
@@ -98,17 +80,13 @@ If a disabled element can be enabled (either by the user or by the system), it s
 
 This is useful when you want to show a tooltip or a popover when the user interacts with the button.
 
-</LivePreview>
-
-<LivePreview componentName="button" exampleName="FullWidth" >
+<LivePreview componentName="button" exampleName="FocusableWhenDisabled" />
 
 ## Full width
 
 Use full width buttons on mobile devices or smaller viewports, the button will take up the full width of its container.
 
-</LivePreview>
-  
-<LivePreview componentName="button" exampleName="Deprecated">
+<LivePreview componentName="button" exampleName="FullWidth" />
 
 ## Deprecated variants
 
@@ -118,6 +96,4 @@ The previous call-to-action (CTA), Primary, and Secondary buttons have been seam
 - Primary: `sentiment="neutral" appearance="solid"`
 - Secondary: `sentiment="neutral" appearance="transparent"`
 
-</LivePreview>
-
-</LivePreviewControls>
+<LivePreview componentName="button" exampleName="Deprecated" />

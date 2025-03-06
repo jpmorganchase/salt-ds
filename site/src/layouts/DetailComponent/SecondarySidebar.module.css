@@ -22,7 +22,7 @@
 .list,
 .link {
   display: flex;
-  gap: var(--salt-size-unit);
+  gap: var(--salt-spacing-100);
   flex-wrap: wrap;
 }
 

@@ -8,10 +8,6 @@ data:
   $ref: ./#/data
 ---
 
-<LivePreviewControls>
-
-<LivePreview componentName="grid-layout" exampleName="Default">
-
 ## Default
 
 `GridLayout` defaults to a 12-column grid with one row.
@@ -24,17 +20,13 @@ Content in `GridLayout` is inside `GridItem` components. This helps control the 
 - Any items displayed beyond 12 columns (or the number of defined columns) will wrap to a subsequent row.
 - Use `columnGap` and `rowGap` properties to set a specific gap in a particular dimension or `gap` to update both values simultaneously.
 
-</LivePreview>
-
-<LivePreview componentName="grid-layout" exampleName="ColumnsAndRows">
+<LivePreview componentName="grid-layout" exampleName="Default" />
 
 ## Columns and rows
 
 Use grid layout `column` and `row` properties to control the number of columns and rows in the layout.
 
-</LivePreview>
-
-<LivePreview componentName="grid-layout" exampleName="ResponsiveLayout">
+<LivePreview componentName="grid-layout" exampleName="ColumnsAndRows" />
 
 ## Responsive layout
 
@@ -53,9 +45,7 @@ columns={{ xs: 1, sm: 2, lg: 12, md: 12, xl: 12 }}
 - Use the grid layout’s responsive properties when the flow of the grid is dependent on the viewport size, such as when a user typically resizes their application or webpage and content needs to remain visible.
 - Define specific layout behaviors per breakpoint to optimize the content display across different device sizes.
 
-</LivePreview>
-
-<LivePreview componentName="grid-layout" exampleName="SpanningColumnsAndRows">
+<LivePreview componentName="grid-layout" exampleName="ResponsiveLayout" />
 
 ## Spanning columns and rows
 
@@ -65,38 +55,32 @@ Although it is possible to use `GridLayout` without using `GridItem`, we strongl
 
 Spanning multiple columns and rows is an effective way to drive visual hierarchy in the layout. For example, grid items at the top of an analytical dashboard are typically larger in size to emphasize data visualizations, such as charts or metrics.
 
-</LivePreview>
-
-<LivePreview componentName="grid-layout" exampleName="ExpandingAndCollapsingItems">
+<LivePreview componentName="grid-layout" exampleName="SpanningColumnsAndRows" />
 
 ## Expanding and collapsing items
 
 Use the `colSpan` and `rowSpan` props to dynamically control the size of an item in the grid to show more or less content to the user. This example shows how to expand a grid item in the layout and reposition surrounding grid items at the same time.
 
-</LivePreview>
-
-<LivePreview componentName="grid-layout" exampleName="PositioningItems">
+<LivePreview
+  componentName="grid-layout"
+  exampleName="ExpandingAndCollapsingItems"
+/>
 
 ## Positioning items
 
 Use the `verticalAlignment` and `horizontalAlignment` props to control the position of content in the grid layout.
 
-</LivePreview>
-
-<LivePreview componentName="grid-layout" exampleName="CustomColumnsAndRows">
+<LivePreview componentName="grid-layout" exampleName="PositioningItems" />
 
 ## Custom columns and rows
 
 The `columns` and `rows` props allow you to pass a string to define a column or row template.
 
-</LivePreview>
-<LivePreview componentName="grid-layout" exampleName="Spacing">
+<LivePreview componentName="grid-layout" exampleName="CustomColumnsAndRows" />
 
 ## Spacing
 
 Grid layout displays items with a gap between items that is a multiple of the [Salt base unit](/salt/foundations/spacing) controlled by the `gap`, `columnGap` and `rowGap` properties and is by default set to 3.
 The spacing properties `padding` and `margin` are set to 0 by default and can be used to control the layout's inner and outer spacing (also as multiples of the Salt base unit).
 
-</LivePreview>
-
-</LivePreviewControls>
+<LivePreview componentName="grid-layout" exampleName="Spacing" />
