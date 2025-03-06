@@ -1,0 +1,10 @@
+.root {
+  padding: var(--salt-spacing-200);
+  gap: var(--salt-spacing-100);
+  display: flex;
+  flex-direction: column;
+}
+
+.action {
+  margin-top: auto;
+}
