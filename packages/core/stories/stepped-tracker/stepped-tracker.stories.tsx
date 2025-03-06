@@ -4,19 +4,17 @@ import {
   Panel,
   SegmentedButtonGroup,
   StackLayout,
-  Text,
-} from "@salt-ds/core";
-import {
   Step,
   type StepRecord,
   SteppedTracker,
+  Text,
   useStepReducer,
-} from "@salt-ds/lab";
+} from "@salt-ds/core";
 import type { Meta, StoryFn } from "@storybook/react";
 import { useEffect } from "react";
 
 export default {
-  title: "Lab/SteppedTracker",
+  title: "Core/SteppedTracker",
   component: SteppedTracker,
   subcomponents: { Step },
 } as Meta<typeof SteppedTracker>;
