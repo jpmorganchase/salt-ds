@@ -122,7 +122,6 @@ export const useRangeSliderThumb = ({
         min,
         step,
       );
-      console.log("new value", newValue);
       if (newValue === undefined) return;
       const newValues = [...sliderValues] as [number, number];
       // Find nearest thumb

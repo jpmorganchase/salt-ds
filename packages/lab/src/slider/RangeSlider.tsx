@@ -19,39 +19,41 @@ export interface RangeSliderProps
    */
   defaultValue?: [number, number];
   /**
-   * Disable the slider
+   * Disable the slider.
    */
   disabled?: boolean;
   /**
-   * A callback to format the display value in the tooltip
+   * A callback to format the display value in the tooltip, min and max labels
+   * and the `aria-valuetext` attribute.
    */
   format?: (value: number) => string | number;
   /**
-   * Position of the labels
+   * Position of the labels.
    */
   labelPosition?: "bottom" | "inline";
   /**
-   * The markers to show under the slider to label some values
+   * The markers to show under the slider to label specific values.
    */
   markers?: { label: string; value: number }[];
   /**
-   * Maximum slider value
+   * Maximum slider value.
    */
   max?: number;
   /**
-   * Minimum slider value
+   * Minimum slider value.
    */
   min?: number;
   /**
-   * Label for maximum value
+   * Label for maximum value.
    */
   maxLabel?: string;
   /**
-   * Label for minimum value
+   * Label for minimum value.
    */
   minLabel?: string;
   /**
-   * Callback when slider value is changed.
+   * Callback called when slider value is changed.
+   * Event is either an Input change event or a click event.
    */
   onChange?: (
     event: SyntheticEvent<unknown> | Event,
@@ -59,22 +61,23 @@ export interface RangeSliderProps
   ) => void;
   /**
    * Callback called when the slider is stopped from being dragged or
-   * its value is changed from the keyboard
+   * its value is changed from the keyboard.
+   * Event is either an Input change event or a click event.
    */
   onChangeEnd?: (
     event: SyntheticEvent<unknown> | Event,
     value: [number, number],
   ) => void;
   /**
-   * Minimum interval the slider thumb can move
+   * Minimum interval the slider thumb can move.
    */
   step?: number;
   /**
-   * Maximum interval the slider thumb can move when using PageUp and PageDown keys
+   * Maximum interval the slider thumb can move when using PageUp and PageDown keys.
    */
   stepMultiplier?: number;
   /**
-   * Value of the slider, to be used when in a controlled state
+   * Value of the slider, to be used when in a controlled state.
    */
   value?: [number, number];
 }
@@ -85,7 +88,6 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>(
       "aria-label": ariaLabel,
       "aria-labelledby": ariaLabelledBy,
       "aria-valuetext": ariaValueText,
-      className,
       disabled: disabledProp = false,
       format,
       labelPosition = "inline",
@@ -135,8 +137,8 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>(
 
     const disabled = formFieldDisabled || disabledProp;
     const value: [number, number] = clampRange(valueState, max, min);
-    const percentageStart = calculatePercentage(value[0], max, min);
-    const percentageEnd = calculatePercentage(value[1], max, min);
+    const progressPercentageStart = calculatePercentage(value[0], max, min);
+    const progressPercentageEnd = calculatePercentage(value[1], max, min);
 
     const thumbProps = {
       "aria-label": ariaLabel,
@@ -170,16 +172,19 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>(
         format={format}
         handlePointerDown={handlePointerDownOnTrack}
         isDragging={isDragging}
+        isRange
         labelPosition={labelPosition}
         markers={markers}
         min={min}
         minLabel={minLabel}
         max={max}
         maxLabel={maxLabel}
-        progressPercentageRange={[percentageStart, percentageEnd]}
+        progressPercentageRange={[
+          progressPercentageStart,
+          progressPercentageEnd,
+        ]}
         ref={ref}
         sliderRef={sliderRef}
-        isRange
         {...rest}
       >
         <SliderThumb

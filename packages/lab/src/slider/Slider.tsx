@@ -19,35 +19,36 @@ export interface SliderProps
    */
   defaultValue?: number;
   /**
-   * Disable the slider
+   * Disable the slider.
    */
   disabled?: boolean;
   /**
-   * A callback to format the display value in the tooltip
+   * A callback to format the display value in the tooltip, min and max labels
+   * and the `aria-valuetext` attribute.
    */
   format?: (value: number) => string | number;
   /**
-   * Position of the labels
+   * Position of the labels.
    */
   labelPosition?: "bottom" | "inline";
   /**
-   * The markers to show under the slider to label some values
+   * The markers to show under the slider to label specific values.
    */
   markers?: { label: string; value: number }[];
   /**
-   * Maximum slider value
+   * Maximum slider value.
    */
   max?: number;
   /**
-   * Minimum slider value
+   * Minimum slider value.
    */
   min?: number;
   /**
-   * Label for maximum value
+   * Label for maximum value.
    */
   maxLabel?: string;
   /**
-   * Label for the minimum value
+   * Label for the minimum value.
    */
   minLabel?: string;
   /**
@@ -62,15 +63,15 @@ export interface SliderProps
    */
   onChangeEnd?: (event: SyntheticEvent<unknown> | Event, value: number) => void;
   /**
-   * Minimum interval the slider thumb can move
+   * Minimum interval the slider thumb can move.
    */
   step?: number;
   /**
-   * Maximum interval the slider thumb can move when using PageUp and PageDown keys
+   * Maximum interval the slider thumb can move when using PageUp and PageDown keys.
    */
   stepMultiplier?: number;
   /**
-   * Value of the slider, to be used when in a controlled state
+   * Value of the slider, to be used when in a controlled state.
    */
   value?: number;
 }
@@ -106,6 +107,11 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
   });
 
   const {
+    a11yProps: { "aria-labelledby": formFieldLabelledBy } = {},
+    disabled: formFieldDisabled,
+  } = useFormFieldProps();
+
+  const {
     handlePointerDownOnThumb,
     handlePointerDownOnTrack,
     isDragging,
@@ -119,11 +125,6 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
     onChangeEnd,
     setValue,
   });
-
-  const {
-    a11yProps: { "aria-labelledby": formFieldLabelledBy } = {},
-    disabled: formFieldDisabled,
-  } = useFormFieldProps();
 
   const disabled = formFieldDisabled || disabledProp;
   const value = clamp(valueState, max, min);
