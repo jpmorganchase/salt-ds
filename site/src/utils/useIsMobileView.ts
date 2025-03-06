@@ -1,10 +1,6 @@
-import { useViewport } from "@salt-ds/core";
+import { useBreakpoint } from "@salt-ds/core";
 
-const useIsMobileView = (): boolean => {
-  const viewport = useViewport();
-
-  const isMobileView = viewport <= 996;
-  return isMobileView;
-};
-
-export default useIsMobileView;
+export function useIsMobileView() {
+  const { matchedBreakpoints } = useBreakpoint();
+  return !matchedBreakpoints.includes("md");
+}
