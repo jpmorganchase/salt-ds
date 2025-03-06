@@ -6,7 +6,7 @@ type CalloutProps = { title: string; children: ReactNode };
 
 export const Callout = ({ title, children }: CalloutProps) => {
   return (
-    <Banner>
+    <Banner className={styles.root}>
       <BannerContent>
         <StackLayout gap={1}>
           <H4>{title}</H4>
