@@ -1,5 +1,3 @@
-@import "./base/";
-@import "./global/";
-@import "./navbar/";
-@import "./theme/";
-@import "./utilities/";
+@import "./base/index.css";
+@import "./global/index.css";
+@import "./theme/index.css";

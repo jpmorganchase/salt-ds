@@ -1,12 +1,6 @@
 :root {
   --max-container-width: 1920px;
   --max-content-width: min(var(--max-container-width), 120ch);
-  /* Refer to `--site-navigation-height`, can't directly define here given density reference is different */
-  --navbar-height: 60px;
-
-  /* "Special" colors used mainly on homepage */
-  --salt-site-dark-accent: #10212b;
-  --salt-site-dark-accent-secondary: #0e1b23;
 }
 
 :root {
@@ -14,12 +8,10 @@
   text-rendering: optimizelegibility;
 }
 
-::selection {
-  background: var(--salt-content-foreground-highlight);
+body {
+  background: var(--salt-container-primary-background);
 }
 
-@media screen and (max-width: 959px) {
-  :root {
-    --navbar-height: 80px;
-  }
+::selection {
+  background: var(--salt-content-foreground-highlight);
 }

@@ -28,7 +28,7 @@ p {
   margin-bottom: var(--salt-spacing-100);
 }
 
-@media screen and (max-width: 768px) {
+@media not screen and (min-width: 960px) {
   h2 {
     --heading-font-size: var(--salt-text-h3-fontSize);
     --heading-font-weight: var(--salt-text-h3-fontWeight);
