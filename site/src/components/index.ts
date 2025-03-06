@@ -1,6 +1,5 @@
 export {
   GridLayout,
-  GridItem,
   Card,
   H1,
   Panel,
