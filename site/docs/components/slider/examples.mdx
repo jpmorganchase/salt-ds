@@ -30,7 +30,7 @@ Selection of a single value from a `Slider` track. A tooltip displays the value 
 
 ## Custom Step
 
-By default, the `Slider` step increment is set to 1. This can be customized by using the ‘step’ prop. Custom step values can be set to any number, including decimal values up to two decimal places.
+By default, the `Slider` step increment is set to 1. This can be customized by using the `step` prop. Custom step values can be set to any number, including decimal values up to two decimal places.
 
 </LivePreview>
 
@@ -102,11 +102,8 @@ The `Slider` maps numeric values to meaningful non-numeric options, enabling int
 
 ### Best practices:
 
-- State Management: Utilizes `useState` to track the selected option.
-
-- Dynamic Labels: Converts numeric values to descriptive labels for both display and accessibility.
-
-- Markers: Configured to visually represent each option on the slider track.
+- create a controlled slider and use your format function to create formatted labels
+- update `aria-valuetext` with the formatted current slider value
 
 This approach ensures a user-friendly and accessible interface for selecting non-numeric values.
 

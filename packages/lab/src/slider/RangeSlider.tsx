@@ -3,6 +3,7 @@ import {
   type HTMLAttributes,
   type SyntheticEvent,
   forwardRef,
+  useRef,
 } from "react";
 
 import { useControlled, useFormFieldProps } from "@salt-ds/core";
@@ -110,6 +111,7 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>(
       name: "RangeSlider",
       state: "value",
     });
+    const lastValueState = useRef(valueState);
 
     const {
       a11yProps: { "aria-labelledby": formFieldLabelledBy } = {},
@@ -159,9 +161,14 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>(
     ) => {
       const parsedValue = toFloat(event.target.value);
       const values = preventThumbOverlap(parsedValue, value, thumbIndex);
-      setValue(values as [number, number]);
-      onChange?.(event, values as [number, number]);
-      onChangeEnd?.(event, values as [number, number]);
+      const hasValuesChanged = values[0] !== lastValueState.current[0] || values[1] !== lastValueState.current[1];
+      if (hasValuesChanged) {
+        const values = preventThumbOverlap(parsedValue, value, thumbIndex);
+        setValue(values as [number, number]);
+        onChange?.(event, values as [number, number]);
+        onChangeEnd?.(event, values as [number, number]);
+        lastValueState.current= values;
+      }
     };
 
     return (

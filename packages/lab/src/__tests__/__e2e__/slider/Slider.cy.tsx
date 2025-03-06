@@ -42,26 +42,40 @@ describe("Given a Slider", () => {
         onChange={changeSpy}
       />,
     );
+    // Focus and press and ArrowRight key
     cy.findByRole("slider").focus().realPress("ArrowRight");
     cy.findByRole("slider").should("have.value", "105");
     cy.get("@changeSpy").should("have.callCount", 1);
 
+    // Press ArrowLeft key
+    cy.findByRole("slider").realPress("ArrowLeft");
+    cy.findByRole("slider").should("have.value", "100");
+    cy.get("@changeSpy").should("have.callCount", 2);
+    // Try to change the previous/previous value
     cy.findByRole("slider").realPress("ArrowLeft");
     cy.findByRole("slider").should("have.value", "100");
     cy.get("@changeSpy").should("have.callCount", 2);
 
+    // Press End key
     cy.findByRole("slider").realPress("End");
     cy.findByRole("slider").should("have.value", "125");
     cy.get("@changeSpy").should("have.callCount", 3);
+    // Try to change the maximum/previous value
+    cy.findByRole("slider").focus().realPress("ArrowRight");
+    cy.findByRole("slider").should("have.value", "125");
+    cy.get("@changeSpy").should("have.callCount", 3);
 
+    // Press Home key
     cy.findByRole("slider").realPress("Home");
     cy.findByRole("slider").should("have.value", "5");
     cy.get("@changeSpy").should("have.callCount", 4);
 
+    // Press PageUp key
     cy.findByRole("slider").focus().realPress("PageUp");
     // It should have a greater step increase
     cy.findByRole("slider").should("have.value", "15");
 
+    // Press PageDown key
     cy.findByRole("slider").focus().realPress("PageDown");
     // It should have a greater step decrease
     cy.findByRole("slider").should("have.value", "5");

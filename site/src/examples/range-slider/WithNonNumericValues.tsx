@@ -27,7 +27,7 @@ export const WithNonNumericValues = (): ReactElement => {
       min={1}
       max={7}
       value={value}
-      onChange={(e, value) => setValue(value)}
+      onChange={(_e, value) => setValue(value)}
       format={getDayOfTheWeek}
       markers={daysOfTheWeek.map((day) => {
         return { value: day.value, label: day.label };

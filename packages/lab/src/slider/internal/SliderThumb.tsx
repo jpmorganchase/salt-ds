@@ -1,10 +1,11 @@
 import { makePrefixer, useId } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
-import clsx from "clsx";
+import { clsx } from "clsx";
 import {
   type ChangeEvent,
   type ComponentPropsWithoutRef,
+  useCallback,
   useEffect,
   useRef,
   useState,
@@ -71,12 +72,18 @@ export const SliderThumb = ({
     const value = Array.isArray(sliderValue) ? sliderValue[index] : sliderValue;
     const formattedValue = format ? format(value) : value;
 
+    const handleKeyDown = useCallback((event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setIsTooltipVisible(false);
+      }
+    }, []);
+
     useEffect(() => {
       if (isTooltipVisible) {
         targetWindow?.addEventListener("keydown", handleKeyDown);
       }
       return () => targetWindow?.removeEventListener("keydown", handleKeyDown);
-    }, [targetWindow, isTooltipVisible]);
+    }, [handleKeyDown, targetWindow, isTooltipVisible]);
 
     const handlePointerEnter = () => setIsTooltipVisible(true);
 
@@ -96,12 +103,6 @@ export const SliderThumb = ({
     const handleBlur = () => {
       setIsFocused(false);
       setIsTooltipVisible(false);
-    };
-
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        setIsTooltipVisible(false);
-      }
     };
 
     const handleKeydownOnThumb = (event: React.KeyboardEvent) => {

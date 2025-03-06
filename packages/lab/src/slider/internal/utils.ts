@@ -15,7 +15,7 @@ export const calculateMarkerPosition = (
     ? min
     : Math.min(Math.max(toFloat(value), min), max);
   const markerPosition = ((clampedValue - min) / (max - min)) * 100;
-  return markerPosition;
+  return Math.round(markerPosition * 100) / 100;
 };
 
 export const calculatePercentage = (value: number, max: number, min: number) =>

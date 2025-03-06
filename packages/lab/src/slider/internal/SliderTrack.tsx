@@ -89,9 +89,15 @@ export const SliderTrack = forwardRef<HTMLDivElement, SliderTrackProps>(
               ref={sliderRef}
               style={
                 {
-                  "--slider-progressPercentage": `${progressPercentage}%`,
-                  "--slider-progressPercentageStart": `${progressPercentageRange?.[0]}%`,
-                  "--slider-progressPercentageEnd": `${progressPercentageRange?.[1]}%`,
+                  ...(progressPercentage !== undefined && {
+                    "--slider-progressPercentage": `${progressPercentage}%`,
+                  }),
+                  ...(progressPercentageRange?.[0] !== undefined && {
+                    "--slider-progressPercentageStart": `${progressPercentageRange[0]}%`,
+                  }),
+                  ...(progressPercentageRange?.[1] !== undefined && {
+                    "--slider-progressPercentageEnd": `${progressPercentageRange[1]}%`,
+                  }),
                 } as React.CSSProperties
               }
             >
