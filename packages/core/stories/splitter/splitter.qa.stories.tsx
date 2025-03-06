@@ -1,10 +1,16 @@
-import { FlexLayout, StackLayout, Text } from "@salt-ds/core";
-import { SplitHandle, SplitPanel, Splitter } from "@salt-ds/lab";
+import {
+  FlexLayout,
+  SplitHandle,
+  SplitPanel,
+  Splitter,
+  StackLayout,
+  Text,
+} from "@salt-ds/core";
 import type { Meta } from "@storybook/react";
 import { QAContainer } from "docs/components";
 
 export default {
-  title: "Lab/Splitter/Splitter QA",
+  title: "Core/Splitter/Splitter QA",
   component: Splitter,
   subcomponents: { SplitPanel, SplitHandle },
 } as Meta<typeof Splitter>;
