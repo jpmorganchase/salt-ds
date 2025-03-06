@@ -1,9 +1,9 @@
-import { Button, type ButtonProps } from "@salt-ds/core";
-import { makePrefixer } from "@salt-ds/core";
-import { useIcon } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import clsx from "clsx";
+import { Button, type ButtonProps } from "../button";
+import { useIcon } from "../semantic-icon-provider";
+import { makePrefixer } from "../utils";
 
 import stepExpandTriggerCSS from "./Step.ExpandTrigger.css";
 
