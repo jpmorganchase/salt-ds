@@ -2,7 +2,7 @@
 "@salt-ds/theme": minor
 ---
 
-Added new container ghost charactersitic tokens
+Added new container ghost characteristic tokens
 
 ```css
 --salt-container-ghost-background: var(--salt-palette-alpha-low);
