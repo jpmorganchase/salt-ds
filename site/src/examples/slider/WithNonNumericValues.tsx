@@ -3,7 +3,7 @@ import { Slider } from "@salt-ds/lab";
 import { type ReactElement, useState } from "react";
 
 export const WithNonNumericValues = (): ReactElement => {
-  const [value, setValue] = useState<number>();
+  const [value, setValue] = useState<number>(3);
 
   const daysOfTheWeek = [
     { label: "Monday", value: 1 },

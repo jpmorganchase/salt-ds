@@ -9,35 +9,34 @@ data:
 ---
 
 <LivePreviewControls>
-<LivePreview componentName="slider" exampleName="Single">
 
-## Single
+<LivePreview componentName="slider" exampleName="Default">
 
-Selection of a single value from a slider track. Labels can be displayed either inline or below the track.
+## Default
 
-A tooltip displays the value of the slider "thumb" when the thumb is focused or hovered. The tooltip remains persistent on cursor drag or moving the thumb along the track with keyboard interaction.
+Selection of a single value from a `Slider` track. A tooltip displays the value of the `Slider` "thumb" when the thumb is focused or hovered. The tooltip remains persistent on cursor drag or moving the thumb along the track with keyboard interaction.
 
 </LivePreview>
 
-<LivePreview componentName="slider" exampleName="Range">
+<LivePreview componentName="slider" exampleName="Labels">
 
-## Range
+## Labels
 
-Selection of a range of values from a slider track. This determines a minimum and maximum range. Values can be displayed either inline or below the track. Thumbs cannot pass or overlap.
+`Slider`'s labels indicate the minimum and maximum values of the range, and can be located either inline (default), or at the bottom of the `Slider`.
 
 </LivePreview>
 
 <LivePreview componentName="slider" exampleName="CustomStep">
 
-## Custom step
+## Custom Step
 
-By default, the slider step increment is set to 1. This can be customized by using the ‘step’ prop. Custom step values can be set to any number, including decimal values up to two decimal places.
+By default, the `Slider` step increment is set to 1. This can be customized by using the ‘step’ prop. Custom step values can be set to any number, including decimal values up to two decimal places.
 
 </LivePreview>
 
 <LivePreview componentName="slider" exampleName="WithFormatting">
 
-## With formatting
+## With Formatting
 
 You can pass a callback function to the `format()` prop to format the display values in the tooltip and min/max labels. This can be useful to display units or currency.
 
@@ -47,46 +46,33 @@ You can pass a callback function to the `format()` prop to format the display va
 
 </LivePreview>
 
-<LivePreview componentName="slider" exampleName="WithFormFieldSingle">
+<LivePreview componentName="slider" exampleName="WithFormField">
 
-## With form field (single slider)
+## With Form Field
 
-Wrap single slider in a form field to display a left-aligned or top label. For more information, refer to the [form field documentation.](/salt/components/form-field/examples)
-
-### Best practices
-
-We recommend using labels with slider to provide context and aid the user in understanding the value being selected.
-
-</LivePreview>
-
-<LivePreview componentName="slider" exampleName="WithFormFieldRange">
-
-## With form field (range slider)
-
-Wrap range slider in a form field to display a left-aligned or top label. For more information, refer to the [form field documentation.](/salt/components/form-field/examples)
+Wrap the `Slider` in a form field to display a left-aligned or top label. For more information, refer to the [form field documentation.](/salt/components/form-field/examples)
 
 ### Best practices
 
-We recommend using labels with range slider to provide context and aid the user in understanding the value being selected.
+We recommend using labels with `Slider` to provide context and aid the user in understanding the value being selected.
 
 </LivePreview>
 
 <LivePreview componentName="slider" exampleName="WithInput">
 
-## With input
+## With Input
 
-You can display inputs with either a single or range slider. Inputs are used to enter a numeric value from the predefined range, enabling the thumb to jump to the specified value.
+You can display inputs with the `Slider`. Inputs are used to enter a numeric value from the predefined range, enabling the thumb to jump to the specified value.
 
-"Out of range" changes to the value (i.e. setting the input to a value above or below the slider's `min` and `max` values) will be rounded to the nearest valid value for the slider. When using a range slider, the upper and lower values cannot overlap (i.e. the lower value cannot be set to a value higher than the upper value). If the input value is set to a value that would cause an overlap, the range value will be set to the nearest valid value.
+"Out of range" changes to the value (i.e. setting the input to a value above or below the slider's `min` and `max` values) will be rounded to the nearest valid value for the `Slider`.
 
 ### Best practices
 
-- For single slider, display one input to the left of the track.
-- When using inputs, ensure the slider is in "controlled" mode (by explicitly setting the `value` prop).
-- Use the slider's `onChange` callback to update the input values when the slider is interacted with.
+- Display one input to the left of the track.
+- When using inputs, ensure the `Slider` is in "controlled" mode (by explicitly setting the `value` prop).
+- Use the `Slider`'s `onChange` callback to update the input values when the `Slider` is interacted with.
 - Validate your input value changes and update the `validationStatus` prop on any inputs accordingly.
-- For single slider, display one input to the left of the track.
-- Only use the inline variant of slider alongside an input. This ensures the size-base alignment of the overall component layout is maintained.
+- Only use the inline labels of the `Slider` alongside an input via the `labelPosition`. This ensures the size-base alignment of the overall component layout is maintained.
 
 </LivePreview>
 
@@ -110,13 +96,13 @@ You can customize the min and max labels.
 
 ## With Non Numeric values
 
-You can implement a slider that allows users to select non-numeric values, with a focus on accessibility through the use of `aria-valuetext`.
+You can implement a `Slider` that allows users to select non-numeric values, with a focus on accessibility through the use of `aria-valuetext`.
 
-The slider maps numeric values to meaningful non-numeric options, enabling intuitive selection beyond simple numbers. The `aria-valuetext` attribute is dynamically updated to announce the selected option, providing clear feedback for users with assistive technologies. Each option is marked on the slider, offering visual guidance on available selections.
+The `Slider` maps numeric values to meaningful non-numeric options, enabling intuitive selection beyond simple numbers. The `aria-valuetext` attribute is dynamically updated to announce the selected option, providing clear feedback for users with assistive technologies. Each option is marked on the `Slider`, offering visual guidance on available selections.
 
 ### Best practices:
 
-- State Management: Utilizes useState to track the selected option.
+- State Management: Utilizes `useState` to track the selected option.
 
 - Dynamic Labels: Converts numeric values to descriptive labels for both display and accessibility.
 
@@ -128,9 +114,9 @@ This approach ensures a user-friendly and accessible interface for selecting non
 
 <LivePreview componentName="slider" exampleName="Disabled">
 
-## Disabled slider
+## Disabled
 
-You can set the slider as disabled.
+You can set the `Slider` as disabled.
 
 </LivePreview>
 </LivePreviewControls>
