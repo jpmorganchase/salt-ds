@@ -4,7 +4,6 @@ layout: Landing
 frameOverrides:
   header:
     homeLink: /salt/index
-    logo: /img/logo.svg
     searchNamespace: salt
     menu:
       - title: About
@@ -19,7 +18,7 @@ frameOverrides:
         link: /salt/components/index
       - title: Patterns
         link: /salt/patterns/index
-      - title: Support
+      - title: Support & contributions
         link: /salt/support-and-contributions/index
   footer:
     links:
@@ -29,6 +28,66 @@ frameOverrides:
         to: https://www.jpmorgan.com/privacy
       - label: Contact us
         to: /salt/support-and-contributions/index
+data:
+  latestUpdates:
+    $tag: latest-update-feature
 ---
 
-<Homepage />
+<QuickLinks
+  columns={{ xs: 1, md: 2 }}
+  links={[
+    {
+      title: "Foundations",
+      description:
+        "Apply core principles for a cohesive and user-friendly design language.",
+      action: "Learn about Salt Foundations",
+      href: "/salt/foundations",
+    },
+    {
+      title: "Components",
+      description:
+        "Access accessible, well-documented  UI components with design specs for J.P. Morgan employees.",
+      action: "Play with Salt Components",
+      href: "/salt/components",
+    },
+    {
+      title: "Patterns",
+      description:
+        "Utilize adaptable patterns to solve business challenges with detailed examples and guidance",
+      action: "Browser Salt Patterns",
+      href: "/salt/patterns",
+    },
+    {
+      title: "Themes & Tokens",
+      description:
+        "Apply core principles for a cohesive and user-friendly design language.",
+      action: "See Salt's Themes",
+      href: "/salt/themes",
+    },
+  ]}
+/>
+
+<Impact title="What to expect" action={{ label: "Learn more about Salt", href: "/salt/about" }}>
+
+- Step-by-step installation guides
+- Comprehensive migration resources for J.P. Morgan teams
+- Components and patterns that are tested against WCAG 2.1 AA
+- Theming and rebranding support
+- Responsiveness as standard - Hooks, utilities and design tokens
+- Modular building blocks - A lightweight, efficient codebase
+
+</Impact>
+
+## Latest updates
+
+<GridLayout columns={{ xs: 1, md: 3 }}>
+  {meta.data.latestUpdates.map((page) => (
+    <ArticleCard
+      key={page.route}
+      title={page.title}
+      description={page.data.updateText}
+      timestamp={page.lastModified}
+      action={{ href: page.route }}
+    />
+  ))}
+</GridLayout>
