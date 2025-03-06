@@ -1,6 +1,6 @@
-import { makePrefixer } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
+import { makePrefixer } from "../utils";
 
 import stepConnectorCSS from "./Step.Connector.css";
 
