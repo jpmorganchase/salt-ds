@@ -48,18 +48,15 @@ export const useSliderThumb = ({
 
   const calculateAndSetThumbPosition = (event: PointerEvent) => {
     if (!sliderRef.current) return;
-
     const newValue = getClickedPosition(
       sliderRef,
       event.clientX,
-      min,
       max,
+      min,
       step,
     );
-
     if (newValue === undefined || currentSliderValueRef.current === newValue)
       return;
-
     currentSliderValueRef.current = newValue;
     setValue(newValue);
     onChange?.(event, newValue);
@@ -80,8 +77,8 @@ export const useSliderThumb = ({
       const newValue = getClickedPosition(
         sliderRef,
         event.clientX,
-        min,
         max,
+        min,
         step,
       );
       if (newValue === undefined) return;

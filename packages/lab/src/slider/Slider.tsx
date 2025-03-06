@@ -126,7 +126,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
   } = useFormFieldProps();
 
   const disabled = formFieldDisabled || disabledProp;
-  const value = clamp(valueState, min, max);
+  const value = clamp(valueState, max, min);
   const progressPercentage = calculatePercentage(toFloat(value), max, min);
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {

@@ -9,7 +9,7 @@ import {
   useState,
 } from "react";
 import type { SliderProps } from "../Slider";
-import { getClickedPosition } from "./utils";
+import { clampRange, getClickedPosition } from "./utils";
 
 type UseRangeSliderThumbProps = Pick<SliderProps, "min" | "max" | "step"> & {
   onChange?: (
@@ -36,8 +36,8 @@ export const useRangeSliderThumb = ({
   const [isDragging, setIsDragging] = useState(false);
   const [thumbIndexState, setIsThumbIndex] = useState<number>(0);
   const currentSliderValueRef = useRef<[number, number]>(valueState);
-
   const sliderRef = useRef<HTMLDivElement>(null);
+  const sliderValues = clampRange(valueState, max, min);
   const targetWindow = useWindow();
 
   useEffect(() => {
@@ -53,27 +53,6 @@ export const useRangeSliderThumb = ({
       targetWindow?.removeEventListener("pointerup", handlePointerUp);
     };
   }, [isDragging, targetWindow]);
-
-  const clampRange = useCallback(
-    (range: [number, number]): [number, number] => {
-      let [start, end] = range;
-
-      if (Number.isNaN(start)) {
-        start = min;
-      }
-      if (Number.isNaN(end)) {
-        end = max;
-      }
-      if (start > end) {
-        [start, end] = [end, start];
-      }
-      start = Math.min(Math.max(start, min), max);
-      end = Math.min(Math.max(end, min), max);
-
-      return [start, end];
-    },
-    [min, max],
-  );
 
   const preventThumbOverlap = useCallback(
     (
@@ -94,24 +73,19 @@ export const useRangeSliderThumb = ({
     [],
   );
 
-  const clampedCurrentSliderValue = clampRange(currentSliderValueRef.current);
-
   const calculateAndSetThumbPosition = (event: PointerEvent) => {
     if (!sliderRef.current) return;
-
     const newValue = getClickedPosition(
       sliderRef,
       event.clientX,
-      min,
       max,
+      min,
       step,
     );
-
     if (newValue === undefined) return;
-
     const newValues = preventThumbOverlap(
       newValue,
-      clampedCurrentSliderValue as [number, number],
+      sliderValues as [number, number],
       thumbIndexState,
     );
 
@@ -144,12 +118,13 @@ export const useRangeSliderThumb = ({
       const newValue = getClickedPosition(
         sliderRef,
         event.clientX,
-        min,
         max,
+        min,
         step,
       );
+      console.log("new value", newValue);
       if (newValue === undefined) return;
-      const newValues = [...clampedCurrentSliderValue] as [number, number];
+      const newValues = [...sliderValues] as [number, number];
       // Find nearest thumb
       const distanceToThumb0 = Math.abs(newValue - newValues[0]);
       const distanceToThumb1 = Math.abs(newValue - newValues[1]);
@@ -180,7 +155,7 @@ export const useRangeSliderThumb = ({
       setValue(newValues);
       onChange?.(event, newValues);
     },
-    [clampedCurrentSliderValue, max, min, onChange, setValue, step],
+    [sliderValues, max, min, onChange, setValue, step],
   );
 
   const handlePointerMove = (event: PointerEvent) => {
@@ -193,7 +168,6 @@ export const useRangeSliderThumb = ({
   };
 
   return {
-    clampRange,
     handlePointerDownOnThumb,
     handlePointerDownOnTrack,
     isDragging,

@@ -1,4 +1,4 @@
-import * as rangeSliderStories from "@stories/slider/range-slider.stories";
+import * as rangeSliderStories from "@stories/range-slider/range-slider.stories";
 import { composeStories } from "@storybook/react";
 import { type ChangeEvent, useState } from "react";
 

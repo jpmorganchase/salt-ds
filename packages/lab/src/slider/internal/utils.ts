@@ -5,8 +5,8 @@ export const toFloat = (value: number | string) =>
 
 export const calculateMarkerPosition = (
   value: number | string,
-  min: number,
   max: number,
+  min: number,
 ) => {
   if (min === max) {
     return 0;
@@ -21,15 +21,37 @@ export const calculateMarkerPosition = (
 export const calculatePercentage = (value: number, max: number, min: number) =>
   ((value - min) / (max - min)) * 100;
 
-export const clamp = (value: number, min: number, max: number) => {
+export const clamp = (value: number, max: number, min: number) => {
   return Number.isNaN(value) ? min : Math.min(Math.max(value, min), max);
+};
+
+export const clampRange = (
+  range: [number, number],
+  max: number,
+  min: number,
+) => {
+  let [start, end] = range;
+
+  if (Number.isNaN(start)) {
+    start = min;
+  }
+  if (Number.isNaN(end)) {
+    end = max;
+  }
+  if (start > end) {
+    [start, end] = [end, start];
+  }
+  start = Math.min(Math.max(start, min), max);
+  end = Math.min(Math.max(end, min), max);
+
+  return [start, end] as [number, number];
 };
 
 export const getClickedPosition = (
   sliderRef: RefObject<HTMLDivElement>,
   clientX: number,
-  min: number,
   max: number,
+  min: number,
   step: number,
 ) => {
   if (!sliderRef.current) return;
@@ -38,5 +60,5 @@ export const getClickedPosition = (
   const rawValue =
     ((clientX - sliderRect.left) / sliderRect.width) * (max - min) + min;
   const steppedValue = Math.round(rawValue / step) * step;
-  return clamp(steppedValue, min, max);
+  return clamp(steppedValue, max, min);
 };
