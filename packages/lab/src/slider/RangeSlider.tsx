@@ -10,7 +10,7 @@ import clsx from "clsx";
 import { SliderThumb } from "./internal/SliderThumb";
 import { SliderTrack } from "./internal/SliderTrack";
 import { useRangeSliderThumb } from "./internal/useRangeSliderThumb";
-import { calculatePercentage, toFloat } from "./internal/utils";
+import { calculatePercentage, clampRange, toFloat } from "./internal/utils";
 
 export interface RangeSliderProps
   extends Omit<HTMLAttributes<HTMLDivElement>, "onChange" | "defaultValue"> {
@@ -119,7 +119,6 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>(
     const {
       handlePointerDownOnThumb,
       handlePointerDownOnTrack,
-      clampRange,
       isDragging,
       sliderRef,
       thumbIndexState,
@@ -135,7 +134,7 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>(
     });
 
     const disabled = formFieldDisabled || disabledProp;
-    const value: [number, number] = clampRange(valueState);
+    const value: [number, number] = clampRange(valueState, max, min);
     const percentageStart = calculatePercentage(value[0], max, min);
     const percentageEnd = calculatePercentage(value[1], max, min);
 

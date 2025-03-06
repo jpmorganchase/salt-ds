@@ -276,3 +276,39 @@ export const WithCustomStep = () => (
     </FormField>
   </StackLayout>
 );
+
+export const WithNonNumericValues = () => {
+  const [value, setValue] = useState<[number, number]>();
+
+  const daysOfTheWeek = [
+    { label: "Monday", value: 1 },
+    { label: "Tuesday", value: 2 },
+    { label: "Wednesday", value: 3 },
+    { label: "Thursday", value: 4 },
+    { label: "Friday", value: 5 },
+    { label: "Saturday", value: 6 },
+    { label: "Sunday", value: 7 },
+  ];
+
+  const getDayOfTheWeek = (value?: number) => {
+    const day = daysOfTheWeek.find((day) => day.value === value);
+    return day ? day.label : "";
+  };
+
+  return (
+    <div style={{ width: "500px" }}>
+      <RangeSlider
+        minLabel={"Monday"}
+        maxLabel={"Sunday"}
+        min={1}
+        max={7}
+        value={value}
+        onChange={(_e, value) => setValue(value)}
+        format={getDayOfTheWeek}
+        markers={daysOfTheWeek.map((day) => {
+          return { value: day.value, label: day.label };
+        })}
+      />
+    </div>
+  );
+};

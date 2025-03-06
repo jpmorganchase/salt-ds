@@ -127,7 +127,7 @@ export const SliderTrack = forwardRef<HTMLDivElement, SliderTrackProps>(
                     styleAs="label"
                     style={
                       {
-                        "--slider-marker-percentage": `${calculateMarkerPosition(value, min, max)}%`,
+                        "--slider-marker-percentage": `${calculateMarkerPosition(value, max, min)}%`,
                       } as React.CSSProperties
                     }
                   >
