@@ -1,15 +1,3 @@
 .heading3 {
-  --heading-margin-bottom: 16px;
-}
-
-.heading3 {
-  margin-top: calc(var(--salt-size-unit) * 3);
-  margin-bottom: var(--heading-margin-bottom);
-  font-size: var(--salt-text-h3-fontSize);
-  font-weight: var(--salt-text-h3-fontWeight-strong);
-  line-height: var(--salt-text-h3-lineHeight);
-}
-
-.heading3 + h4 {
-  margin-top: 0;
+  margin: 0;
 }

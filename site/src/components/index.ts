@@ -1,10 +1,16 @@
-export { GridLayout } from "@salt-ds/core";
-export { Card, H1, Panel, Text } from "@salt-ds/core";
+export {
+  GridLayout,
+  Card,
+  H1,
+  Panel,
+  Text,
+  Accordion,
+  AccordionHeader,
+  AccordionPanel,
+} from "@salt-ds/core";
 
-export * from "./accordion";
 export * from "./app-header";
 export * from "./callout";
-export * from "./card";
 
 export * from "./components";
 export * from "./country-symbol-preview";
@@ -15,7 +21,11 @@ export * from "./getting-started";
 export * from "./image-switcher";
 export * from "./keyboard-controls";
 export * from "./mdx";
-export * from "./support-and-contributions";
 export * from "./css-display";
 export * from "./patterns";
 export * from "./icon-preview";
+
+export * from "./hero";
+export * from "./quick-links";
+export * from "./impact";
+export * from "./article-card/ArticleCard";

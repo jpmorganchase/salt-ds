@@ -24,7 +24,7 @@
 
 .table thead tr th {
   text-align: left;
-  background: var(--salt-color-white);
+  background: var(--salt-container-primary-background);
 }
 
 .table th,
@@ -35,19 +35,19 @@
 }
 
 .table tr {
-  border-bottom: 1px solid var(--salt-separable-tertiary-borderColor);
-  border-top: 1px solid var(--salt-separable-tertiary-borderColor);
+  border-bottom: var(--salt-size-border) var(--salt-separable-borderStyle) var(--salt-separable-tertiary-borderColor);
+  border-top: var(--salt-size-border) var(--salt-separable-borderStyle) var(--salt-separable-tertiary-borderColor);
 }
 
 .table th {
-  color: var(--salt-content-secondary-foreground);
+  color: var(--salt-content-primary-foreground);
   font-weight: var(--salt-text-h4-fontWeight);
 }
 
 .table tr td:not(:last-child) {
-  border-right: 1px solid var(--salt-separable-tertiary-borderColor);
+  border-right: var(--salt-size-border) var(--salt-separable-borderStyle) var(--salt-separable-tertiary-borderColor);
 }
 
 .table tr th + th {
-  border-left: 1px solid var(--salt-color-gray-90-fade-border-readonly);
+  border-left: var(--salt-size-border) var(--salt-separable-borderStyle) var(--salt-color-gray-90-fade-border-readonly);
 }
