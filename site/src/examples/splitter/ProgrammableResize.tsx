@@ -1,10 +1,13 @@
-import { Button, FlexLayout, StackLayout, Text } from "@salt-ds/core";
 import {
+  Button,
+  FlexLayout,
   type ImperativePanelHandle,
   SplitHandle,
   SplitPanel,
   Splitter,
-} from "@salt-ds/lab";
+  StackLayout,
+  Text,
+} from "@salt-ds/core";
 import { useRef } from "react";
 
 import styles from "./splitter.module.css";

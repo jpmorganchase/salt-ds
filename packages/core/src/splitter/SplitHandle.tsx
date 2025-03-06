@@ -1,4 +1,3 @@
-import { makePrefixer } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import clsx from "clsx";
@@ -7,9 +6,13 @@ import {
   PanelResizeHandle,
   type PanelResizeHandleProps,
 } from "react-resizable-panels";
+import { makePrefixer } from "../utils";
 
 import splitHandleCSS from "./SplitHandle.css";
-import { AppearanceContext, OrientationContext } from "./Splitter";
+import {
+  SplitterAppearanceContext,
+  SplitterOrientationContext,
+} from "./Splitter";
 import { computeAccent, computeVariant } from "./utils";
 
 const withBaseName = makePrefixer("saltSplitHandle");
@@ -58,8 +61,8 @@ export function SplitHandle({
   ...props
 }: SplitHandleProps) {
   const targetWindow = useWindow();
-  const appearance = useContext(AppearanceContext);
-  const orientation = useContext(OrientationContext);
+  const appearance = useContext(SplitterAppearanceContext);
+  const orientation = useContext(SplitterOrientationContext);
 
   const variant = variantProp ?? computeVariant(appearance);
   const border = borderProp ?? computeAccent(appearance, orientation);
