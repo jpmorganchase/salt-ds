@@ -4,11 +4,11 @@ import styles from "./index.module.css";
 
 export const Underline = (): ReactElement => (
   <StackLayout align="start">
-    <Link href="#" underline="link" className={styles.linkExample}>
-      Underline link
+    <Link href="#" className={styles.linkExample}>
+      Underline default
     </Link>
-    <Link href="#" underline="hover" className={styles.linkExample}>
-      Underline hover
+    <Link href="#" underline="never" className={styles.linkExample}>
+      Underline never
     </Link>
   </StackLayout>
 );

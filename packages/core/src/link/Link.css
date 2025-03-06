@@ -9,7 +9,7 @@
   --link-fontFamily: var(--salt-text-fontFamily);
 }
 
-.saltLink-underlineLink {
+.saltLink-underlineDefault {
   --link-textDecoration: var(--salt-typography-textDecoration-underline);
   --link-textDecoration-hover: var(--salt-typography-textDecoration-none);
   /* Active takes default */
@@ -20,9 +20,9 @@
   --link-textDecoration-visited: var(--link-textDecoration);
 }
 
-.saltLink-underlineHover {
+.saltLink-underlineNever {
   --link-textDecoration: var(--salt-typography-textDecoration-none);
-  --link-textDecoration-hover: var(--salt-typography-textDecoration-underline);
+  --link-textDecoration-hover: var(--salt-typography-textDecoration-none);
 }
 
 /* Main css class */

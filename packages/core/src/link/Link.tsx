@@ -39,12 +39,12 @@ export interface LinkProps
   color?: "inherit" | "primary" | "secondary" | "accent";
   /**
    *
-   * Either "link" or "hover".
+   * Either "default" or "never".
    * Determines when underline should be applied to the link.
    *
-   * @default "link".
+   * @default "default".
    */
-  underline?: "link" | "hover";
+  underline?: "default" | "never";
 }
 
 export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
