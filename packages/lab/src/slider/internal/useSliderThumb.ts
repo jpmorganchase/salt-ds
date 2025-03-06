@@ -28,9 +28,37 @@ export const useSliderThumb = ({
   valueState,
 }: UseSliderThumbProps) => {
   const [isDragging, setIsDragging] = useState(false);
-  const currentSliderValueRef = useRef<number>(valueState);
+  const currentValueRef = useRef<number>(valueState);
   const sliderRef = useRef<HTMLDivElement>(null);
   const targetWindow = useWindow();
+
+  const handlePointerMove = useCallback(
+    (event: PointerEvent) => {
+      if (!sliderRef.current) return;
+      const newValue = getClickedPosition(
+        sliderRef,
+        event.clientX,
+        max,
+        min,
+        step,
+      );
+      if (newValue === undefined || currentValueRef.current === newValue) {
+        return;
+      }
+      currentValueRef.current = newValue;
+      setValue(newValue);
+      onChange?.(event, newValue);
+    },
+    [max, min, onChange, setValue, step],
+  );
+
+  const handlePointerUp = useCallback(
+    (event: PointerEvent) => {
+      setIsDragging(false);
+      onChangeEnd?.(event, currentValueRef.current);
+    },
+    [onChangeEnd],
+  );
 
   useEffect(() => {
     if (isDragging) {
@@ -44,31 +72,16 @@ export const useSliderThumb = ({
       targetWindow?.removeEventListener("pointermove", handlePointerMove);
       targetWindow?.removeEventListener("pointerup", handlePointerUp);
     };
-  }, [isDragging, targetWindow]);
+  }, [handlePointerMove, handlePointerUp, isDragging, targetWindow]);
 
-  const calculateAndSetThumbPosition = (event: PointerEvent) => {
-    if (!sliderRef.current) return;
-    const newValue = getClickedPosition(
-      sliderRef,
-      event.clientX,
-      max,
-      min,
-      step,
-    );
-    if (newValue === undefined || currentSliderValueRef.current === newValue)
-      return;
-    currentSliderValueRef.current = newValue;
-    setValue(newValue);
-    onChange?.(event, newValue);
-  };
-
-  const handlePointerDownOnThumb = (
-    event: React.PointerEvent<HTMLDivElement>,
-  ) => {
-    event.preventDefault();
-    event.stopPropagation();
-    setIsDragging(true);
-  };
+  const handlePointerDownOnThumb = useCallback(
+    (event: React.PointerEvent<HTMLDivElement>) => {
+      event.preventDefault();
+      event.stopPropagation();
+      setIsDragging(true);
+    },
+    [],
+  );
 
   const handlePointerDownOnTrack = useCallback(
     (event: React.PointerEvent<HTMLDivElement>) => {
@@ -81,21 +94,15 @@ export const useSliderThumb = ({
         min,
         step,
       );
-      if (newValue === undefined) return;
+      if (newValue === undefined || currentValueRef.current === newValue) {
+        return;
+      }
+      currentValueRef.current = newValue;
       setValue(newValue);
       onChange?.(event, newValue);
     },
     [max, min, onChange, setValue, step],
   );
-
-  const handlePointerMove = (event: PointerEvent) => {
-    calculateAndSetThumbPosition(event);
-  };
-
-  const handlePointerUp = (event: PointerEvent) => {
-    setIsDragging(false);
-    onChangeEnd?.(event, currentSliderValueRef.current);
-  };
 
   return {
     handlePointerDownOnThumb,
