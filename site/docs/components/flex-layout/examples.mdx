@@ -8,10 +8,6 @@ data:
   $ref: ./#/data
 ---
 
-<LivePreviewControls>
-
-<LivePreview componentName="flex-layout" exampleName="Default">
-
 ## Default
 
 By default, `FlexLayout` displays items along the horizontal axis in a row, aligned to the start of the container. The dimensions of the layout (height or width) are driven by the items contained within it.
@@ -20,17 +16,13 @@ By default, `FlexLayout` displays items along the horizontal axis in a row, alig
 
 Set `wrap={true}` to overflow items onto subsequent rows when they no longer fit in the container.
 
-</LivePreview>
-
-<LivePreview componentName="flex-layout" exampleName="ColumnDirection">
+<LivePreview componentName="flex-layout" exampleName="Default" />
 
 ## Column direction
 
 The flex layout `direction` prop defines the main axis that items are displayed along. Set `direction` to `column` to display items in a vertical direction.
 
-</LivePreview>
-
-<LivePreview componentName="flex-layout" exampleName="LayoutPosition">
+<LivePreview componentName="flex-layout" exampleName="ColumnDirection" />
 
 ## Layout position
 
@@ -40,9 +32,7 @@ Use `justify` to define how to distribute any remaining space between or around 
 
 If there is additional space available in the cross-axis of the layout (i.e., beside a row, or above/below a column), the `align` prop defines how items should be positioned within that space.
 
-</LivePreview>
-
-<LivePreview componentName="flex-layout" exampleName="ResponsiveLayout">
+<LivePreview componentName="flex-layout" exampleName="LayoutPosition" />
 
 ## Responsive layout
 
@@ -54,17 +44,13 @@ A responsive prop is a prop that takes either multiple values (one value per bre
 direction={{ xs: "row", sm: "column", lg: "row", md: "column", xl: "row" }}
 ```
 
-</LivePreview>
-
-<LivePreview componentName="flex-layout" exampleName="FlexItemPosition">
+<LivePreview componentName="flex-layout" exampleName="ResponsiveLayout" />
 
 ## Flex item position
 
 Use the flex item's `align` prop to set an alignment for a specific item in the layout. Use the `align` prop to set the item’s position along the cross-axis of the layout (i.e., perpendicular to the `direction`–`row` or `column`).
 
-</LivePreview>
-
-<LivePreview componentName="flex-layout" exampleName="FlexItemSize">
+<LivePreview componentName="flex-layout" exampleName="FlexItemPosition" />
 
 ## Flex item size
 
@@ -76,13 +62,10 @@ The flex item's `grow` prop enables specific items in the layout to grow and fil
 
 In contrast to the `grow` prop, the `shrink` prop makes a specific item as small as possible within the layout. By default, `shrink` is set to `1`. If an item is set to `2`, that item would attempt to take half as much space.
 
-</LivePreview>
-  <LivePreview componentName="flex-layout" exampleName="Spacing">
+<LivePreview componentName="flex-layout" exampleName="FlexItemSize" />
 
-    ## Spacing
-    Flex layout displays items with a gap between items that is a multiple of the [Salt base unit](/salt/foundations/spacing) controlled by the `gap` property and is by default set to 3.
-    The spacing properties `padding` and `margin` are set to 0 by default and can be used to control the layout's inner and outer spacing (also as multiples of the Salt base unit).
+## Spacing
+Flex layout displays items with a gap between items that is a multiple of the [Salt base unit](/salt/foundations/spacing) controlled by the `gap` property and is by default set to 3.
+The spacing properties `padding` and `margin` are set to 0 by default and can be used to control the layout's inner and outer spacing (also as multiples of the Salt base unit).
 
-  </LivePreview>
-
-</LivePreviewControls>
+<LivePreview componentName="flex-layout" exampleName="Spacing" />

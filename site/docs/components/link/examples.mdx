@@ -8,17 +8,11 @@ data:
   $ref: ./#/data
 ---
 
-<LivePreviewControls>
-
-<LivePreview componentName="link" exampleName="Default">
-
 ## Default
 
 By default, a link will only navigate the user within the same tab, replacing the page where the user followed the link.
 
-</LivePreview>
-
-  <LivePreview componentName="link" exampleName="OpenInANewTab">
+<LivePreview componentName="link" exampleName="Default" />
 
 ## Open in a new tab
 
@@ -34,9 +28,7 @@ There are a few cases where it’s recommended, like when the link is in the mid
 
 When linking to third party content, we recommended setting `rel=”noopener”` or `rel=”noreferrer”`. Although this is default behaviour in newer browsers, explicitly specifying this helps protect users of legacy browsers. For more information, read “[Links to cross-origin destinations are unsafe](https://web.dev/external-anchors-use-rel-noopener/)”.
 
-  </LivePreview>
-
-  <LivePreview componentName="link" exampleName="Color">
+<LivePreview componentName="link" exampleName="OpenInANewTab" />
 
 ## Color
 
@@ -44,33 +36,29 @@ To help create a visual hierarchy using a link, use the `color` prop. The defaul
 
 When `color` is set to `"inherit"` Link's hover, active and focus colors will also be inherited.
 
-  </LivePreview>
-
-    <LivePreview componentName="link" exampleName="Visited">
+<LivePreview componentName="link" exampleName="Color" />
 
 ## Visited
 
 Links change color after a user clicks on them. This tells the user which links they have already visited.
 
-  </LivePreview>
-
-  <LivePreview componentName="link" exampleName="Variant" >
+<LivePreview componentName="link" exampleName="Visited" />
 
 ## Variant
 
 **Note:** This prop is deprecated. Use the `color` prop instead.
 
-  </LivePreview>
-
-  <LivePreview componentName="link" exampleName="RenderElement" displayName="Render prop - element">
+<LivePreview componentName="link" exampleName="Variant" />
 
 ## Render prop - element
 
 Using the `render` prop, you can customize the element rendered by the Link. Props defined on the JSX element will be merged with props from the Link.
 
-  </LivePreview>
-
-  <LivePreview componentName="link" exampleName="RenderProp" displayName="Render prop - callback">
+<LivePreview
+  componentName="link"
+  exampleName="RenderElement"
+  displayName="Render prop - element"
+/>
 
 ## Render prop - callback
 
@@ -78,6 +66,8 @@ The `render` prop can also accept a function. This approach allows more control 
 
 When a function is passed to the `render` prop, it's your responsibility to merge props within the function itself.
 
-  </LivePreview>
-
-</LivePreviewControls>
+<LivePreview
+  componentName="link"
+  exampleName="RenderProp"
+  displayName="Render prop - callback"
+/>
