@@ -1,12 +1,12 @@
-import { Slider } from "@salt-ds/lab";
+import { RangeSlider } from "@salt-ds/lab";
 import type { ReactElement } from "react";
 
 export const WithMarkers = (): ReactElement => (
-  <Slider
+  <RangeSlider
     aria-label="single"
     min={0}
     max={50}
-    defaultValue={30}
+    defaultValue={[20, 50]}
     style={{ width: "400px" }}
     labelPosition="bottom"
     markers={[
