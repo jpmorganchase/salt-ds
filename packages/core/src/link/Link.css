@@ -23,7 +23,6 @@
 .saltLink-underlineHover {
   --link-textDecoration: var(--salt-typography-textDecoration-none);
   --link-textDecoration-hover: var(--salt-typography-textDecoration-underline);
-  --link-textDecoration-focus: var(--salt-typography-textDecoration-none);
 }
 
 /* Main css class */
