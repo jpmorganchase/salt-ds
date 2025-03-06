@@ -9,9 +9,10 @@ import {
   ParentChildLayout,
   SplitLayout,
   StackLayout,
+  Step,
+  SteppedTracker,
   useId,
 } from "@salt-ds/core";
-import { Step, SteppedTracker } from "@salt-ds/lab";
 import { type ReactElement, useState } from "react";
 
 const SmallDialog = (): ReactElement => {
