@@ -107,8 +107,8 @@ await fs.writeJSON(
   {
     ...packageJson,
     dependencies: await transformWorkspaceDeps(packageJson.dependencies),
-    main: "dist-cjs/index.js",
-    module: "dist-es/index.js",
+    main: "dist-cjs/types/index.js",
+    module: "dist-es/types/index.js",
     typings: "dist-types/types/index.d.ts",
     exports: {
       ".": {
