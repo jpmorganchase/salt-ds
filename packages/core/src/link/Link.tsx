@@ -56,7 +56,7 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(function Link(
     color: colorProp,
     variant,
     target = "_self",
-    underline = "link",
+    underline = "default",
     ...rest
   },
   ref,
