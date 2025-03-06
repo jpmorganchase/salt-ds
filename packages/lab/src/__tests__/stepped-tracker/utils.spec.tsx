@@ -1,16 +1,16 @@
 import { describe, expect, it } from "vitest";
 
 import {
-  assignSteps,
+  assignStepsStage,
   autoStageSteps,
   flattenSteps,
   initStepReducerState,
   resetSteps,
-} from "./utils";
+} from "../../stepped-tracker/utils";
 
-import type { StepRecord } from "./Step.types";
+import type { StepRecord } from "../../stepped-tracker/Step.types";
 
-describe("SteppedTracker > utils.ts", () => {
+describe("SteppedTracker > utils", () => {
   describe("resetSteps", () => {
     it("should set the stage of all steps to undefined", () => {
       const steps: StepRecord[] = [
@@ -75,11 +75,11 @@ describe("SteppedTracker > utils.ts", () => {
       ]);
     });
   });
-  describe("assignSteps", () => {
+  describe("assignStepsStage", () => {
     it("should assign an array of steps to a stage (completed)", () => {
       const steps: StepRecord[] = [{ id: "1" }, { id: "2" }, { id: "3" }];
 
-      const result = assignSteps(steps, "completed");
+      const result = assignStepsStage(steps, "completed");
 
       expect(result).toEqual([
         { id: "1", stage: "completed" },
@@ -90,7 +90,7 @@ describe("SteppedTracker > utils.ts", () => {
     it("should assign an array of steps to a stage (pending)", () => {
       const steps: StepRecord[] = [{ id: "1" }, { id: "2" }, { id: "3" }];
 
-      const result = assignSteps(steps, "pending");
+      const result = assignStepsStage(steps, "pending");
 
       expect(result).toEqual([
         { id: "1", stage: "pending" },
@@ -116,7 +116,7 @@ describe("SteppedTracker > utils.ts", () => {
         },
       ];
 
-      const result = assignSteps(steps, "completed");
+      const result = assignStepsStage(steps, "completed");
 
       expect(result).toEqual([
         { id: "1", stage: "completed" },

@@ -20,7 +20,7 @@ export function Hook() {
     <StackLayout style={{ minWidth: "240px" }}>
       <SteppedTracker>
         {state.steps.map((step) => (
-          <Step key={step.key || step.id} {...step} />
+          <Step key={step.id} {...step} />
         ))}
       </SteppedTracker>
       <FlexLayout justify="space-between">
