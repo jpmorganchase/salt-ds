@@ -1,0 +1,19 @@
+@import "ag-grid-community/styles/ag-grid.css";
+@import "@salt-ds/ag-grid-theme/salt-ag-theme.css";
+@import "./Raichu/css/highcharts.css";
+
+@layer font;
+
+@layer font {
+  @font-face {
+    font-family: "Amplitude";
+    font-weight: 500;
+    src: url("./assets/Amplitude-Medium.otf");
+  }
+
+  @font-face {
+    font-family: "Amplitude";
+    font-weight: 400;
+    src: url("./assets/Amplitude-Regular.otf");
+  }
+}

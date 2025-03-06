@@ -14,6 +14,8 @@ export * from "./button";
 export * from "./card";
 export * from "./checkbox";
 export * from "./combo-box";
+export * from "./component-base";
+export * from "./default-props-provider";
 export * from "./dialog";
 export * from "./divider";
 export * from "./drawer";

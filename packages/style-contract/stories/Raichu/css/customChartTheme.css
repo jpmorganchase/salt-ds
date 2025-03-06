@@ -1,0 +1,43 @@
+/* .highcharts-light */
+
+/* Without `html`, `:root, .highcharts-light` would have higher specificity */
+html.salt-theme {
+  --highcharts-background-color: var(--salt-container-primary-background);
+}
+
+html.salt-theme-next {
+  --highcharts-color-0: var(--salt-palette-categorical-1);
+  --highcharts-color-1: var(--salt-palette-categorical-2);
+  --highcharts-color-2: var(--salt-palette-categorical-3);
+  --highcharts-color-3: var(--salt-palette-categorical-4);
+  --highcharts-color-4: var(--salt-palette-categorical-5);
+  --highcharts-color-5: var(--salt-palette-categorical-6);
+  --highcharts-color-6: var(--salt-palette-categorical-7);
+  --highcharts-color-7: var(--salt-palette-categorical-8);
+  --highcharts-color-8: var(--salt-palette-categorical-9);
+  --highcharts-color-9: var(--salt-palette-categorical-10);
+}
+
+[class^="sample-app"] .highcharts-axis-labels,
+[class*=" sample-app"] .highcharts-axis-labels {
+  fill: var(--salt-content-secondary-foreground);
+}
+
+[class^="sample-app"] .highcharts-legend-item > text,
+[class*=" sample-app"] .highcharts-legend-item > text {
+  fill: var(--salt-content-secondary-foreground);
+  font-size: var(--saltText-fontSize, var(--salt-text-fontSize));
+  font-weight: var(--saltText-fontWeight, var(--salt-text-fontWeight));
+}
+
+[class^="sample-app"] .highcharts-tooltip text,
+[class*=" sample-app"] .highcharts-tooltip text,
+[class^="sample-app"] .highcharts-root text,
+[class*=" sample-app"] .highcharts-root text {
+  fill: var(--salt-content-primary-foreground);
+}
+
+[class^="sample-app"] .highcharts-grid-line,
+[class*=" sample-app"] .highcharts-grid-line {
+  stroke: var(--salt-separable-tertiary-borderColor);
+}

@@ -1,0 +1,139 @@
+.app {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  height: 200px;
+  position: relative;
+}
+
+.ticket {
+  box-sizing: border-box;
+  width: 260px !important;
+}
+
+.price-panel {
+  display: flex;
+  width: 100%;
+  padding: var(--salt-spacing-100);
+  flex-direction: column;
+  gap: var(--salt-spacing-100);
+  align-items: center;
+  border: 1px solid #ccc;
+}
+
+.hatched-right {
+  width: 200px;
+  height: 52px;
+  background-color: white;
+  background-image: linear-gradient(
+      45deg,
+      var(--salt-color-green-20) 2%,
+      transparent 10%,
+      transparent 50%,
+      var(--salt-color-green-20) 50%,
+      var(--salt-color-green-20) 60%,
+      transparent 60%,
+      transparent
+    ),
+    linear-gradient(45deg, var(--salt-color-green-20) 2%, transparent 10%, transparent 50%, var(--salt-color-green-20) 50%, var(--salt-color-green-20) 60%, transparent 60%, transparent);
+  background-size: 12px 12px; /* Size of the pattern */
+  background-position:
+    0 0,
+    2px 2px; /* Offset the second gradient */
+}
+
+.hatched-left {
+  width: 200px;
+  height: 52px;
+  background-color: white;
+  background-image: linear-gradient(
+      -45deg,
+      var(--salt-color-green-20) 2%,
+      transparent 10%,
+      transparent 50%,
+      var(--salt-color-green-20) 50%,
+      var(--salt-color-green-20) 60%,
+      transparent 60%,
+      transparent
+    ),
+    linear-gradient(-45deg, var(--salt-color-green-20) 2%, transparent 10%, transparent 50%, var(--salt-color-green-20) 50%, var(--salt-color-green-20) 60%, transparent 60%, transparent);
+  background-size: 12px 12px;
+  background-position:
+    0 0,
+    6px 6px;
+}
+
+.left-aligned {
+  align-self: flex-start;
+  width: 100%;
+  text-align: left;
+}
+.right-aligned {
+  align-self: flex-end;
+  width: 100%;
+  text-align: right;
+}
+.centered {
+  text-align: center;
+}
+
+/** TODO refactor stepper-input styles and set these via contract */
+.stepper-input {
+  height: 48px;
+  font-size: 28px;
+  font-weight: bold;
+  line-height: 1;
+}
+.saltStepperInput-inputContainer.saltStepperInput-primary {
+  height: 48px;
+}
+
+.price {
+  margin: 0;
+  font-weight: bold;
+}
+
+.amountContainer {
+  display: flex;
+}
+.amountContainer > .saltInput {
+  flex: 1;
+}
+.amountContainer > .saltButton {
+  margin-left: var(--salt-spacing-100);
+  flex: 0 0 auto;
+}
+
+.saltButton.additionalParameters {
+  margin-top: var(--salt-spacing-100);
+}
+
+.buy,
+.sell {
+  margin-right: var(--salt-spacing-100);
+}
+
+.limitPriceLabel {
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+  gap: var(--salt-spacing-200);
+}
+
+.saltButton {
+  border-style: hidden;
+}
+/** TODO: where should this belong? **/
+.saltButton::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  box-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 0.5),
+    inset 0 -1px 1px rgba(0, 0, 0, 0.5);
+  border-radius: var(--salt-palette-corner-weak, 0);
+  pointer-events: none;
+}

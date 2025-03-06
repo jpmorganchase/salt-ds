@@ -1,5 +1,6 @@
 import { addons, types } from "@storybook/manager-api";
 import saltTheme from "./SaltTheme";
+import { ComponentBaseToolbar } from "./toolbar/ComponentBaseToolbar";
 import { ThemeNextToolbar } from "./toolbar/ThemeNextToolbar";
 
 addons.setConfig({
@@ -12,5 +13,11 @@ addons.register("theme-next-addon", () => {
     //👇 Sets the type of UI element in Storybook
     type: types.TOOL,
     render: ThemeNextToolbar,
+  });
+  addons.add("component-base-addon/toolbar", {
+    title: "Component Base toolbar",
+    //👇 Sets the type of UI element in Storybook
+    type: types.TOOL,
+    render: ComponentBaseToolbar,
   });
 });

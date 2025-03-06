@@ -1,5 +1,6 @@
 import { clsx } from "clsx";
 import { type ElementType, type ReactElement, forwardRef } from "react";
+import { ComponentBase, type ComponentBaseProps } from "../component-base";
 import {
   type PolymorphicComponentPropWithRef,
   type PolymorphicRef,
@@ -13,7 +14,7 @@ import textCss from "./Text.css";
 
 export type TextProps<T extends ElementType> = PolymorphicComponentPropWithRef<
   T,
-  {
+  ComponentBaseProps<T> & {
     /**
      * Applies disabled styling when true
      */
@@ -80,14 +81,13 @@ export const Text: TextComponent = forwardRef(function Text<
     window: targetWindow,
   });
 
-  const Component = as ?? "div";
-
-  const textStyles = { "--text-max-rows": maxRows, ...style };
+  const textStyles = { "--text-lineClamp": maxRows, ...style };
 
   const color = variant ?? colorProp ?? "primary";
 
   return (
-    <Component
+    <ComponentBase
+      as={as ?? "div"}
       className={clsx(
         withBaseName(),
         {
@@ -103,6 +103,6 @@ export const Text: TextComponent = forwardRef(function Text<
       style={textStyles}
     >
       {children}
-    </Component>
+    </ComponentBase>
   );
 });

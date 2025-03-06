@@ -21,6 +21,7 @@ import {
   DEFAULT_BREAKPOINTS,
   useMatchedBreakpoints,
 } from "../breakpoints";
+import { DefaultPropsProvider } from "../default-props-provider";
 import type {
   Accent,
   ActionFont,
@@ -186,6 +187,7 @@ interface SaltProviderBaseProps {
    * @default "medium"
    */
   density?: Density;
+  defaultProps?: Record<string, any>;
   /**
    * A string. Specifies custom theme name(s) you want to apply, similar to `className`.
    */
@@ -235,6 +237,7 @@ function InternalSaltProvider({
   applyClassesTo: applyClassesToProp,
   children,
   density: densityProp,
+  defaultProps,
   theme: themeProp,
   mode: modeProp,
   breakpoints: breakpointsProp,
@@ -380,15 +383,17 @@ function InternalSaltProvider({
   const matchedBreakpoints = useMatchedBreakpoints(breakpoints);
 
   const saltProvider = (
-    <DensityContext.Provider value={density}>
-      <ThemeContext.Provider value={themeContextValue}>
-        <BreakpointProvider matchedBreakpoints={matchedBreakpoints}>
-          <BreakpointContext.Provider value={breakpoints}>
-            <ViewportProvider>{themedChildren}</ViewportProvider>
-          </BreakpointContext.Provider>
-        </BreakpointProvider>
-      </ThemeContext.Provider>
-    </DensityContext.Provider>
+    <DefaultPropsProvider value={defaultProps}>
+      <DensityContext.Provider value={density}>
+        <ThemeContext.Provider value={themeContextValue}>
+          <BreakpointProvider matchedBreakpoints={matchedBreakpoints}>
+            <BreakpointContext.Provider value={breakpoints}>
+              <ViewportProvider>{themedChildren}</ViewportProvider>
+            </BreakpointContext.Provider>
+          </BreakpointProvider>
+        </ThemeContext.Provider>
+      </DensityContext.Provider>
+    </DefaultPropsProvider>
   );
 
   if (isRootProvider) {

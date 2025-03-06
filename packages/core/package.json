@@ -15,9 +15,11 @@
   "dependencies": {
     "@floating-ui/react": "^0.26.28",
     "@salt-ds/icons": "workspace:^",
+    "@salt-ds/style-contract": "workspace:*",
     "@salt-ds/styles": "workspace:*",
     "@salt-ds/window": "workspace:*",
-    "clsx": "^2.0.0"
+    "clsx": "^2.0.0",
+    "zod": "^3.24.1"
   },
   "peerDependencies": {
     "@types/react": ">=16.14.0",

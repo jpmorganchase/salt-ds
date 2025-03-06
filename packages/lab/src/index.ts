@@ -23,6 +23,7 @@ export * from "./cascading-menu";
 export * from "./color-chooser";
 export * from "./combo-box";
 export * from "./combo-box-deprecated";
+export * from "../../core/src/component-base";
 export * from "./contact-details";
 export * from "./content-status";
 export * from "./date-input";
