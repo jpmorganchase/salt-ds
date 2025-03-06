@@ -3,6 +3,7 @@ import {
   type HTMLAttributes,
   type SyntheticEvent,
   forwardRef,
+  useRef
 } from "react";
 
 import { useControlled, useFormFieldProps } from "@salt-ds/core";
@@ -105,6 +106,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
     name: "Slider",
     state: "value",
   });
+  const lastValueState = useRef(valueState);
 
   const {
     a11yProps: { "aria-labelledby": formFieldLabelledBy } = {},
@@ -132,9 +134,12 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const parsedValue = toFloat(event.target.value);
-    setValue(parsedValue);
-    onChange?.(event, parsedValue);
-    onChangeEnd?.(event, parsedValue);
+    if (parsedValue !== lastValueState.current) {
+      setValue(parsedValue);
+      onChange?.(event, parsedValue);
+      onChangeEnd?.(event, parsedValue);
+      lastValueState.current = parsedValue;
+    }
   };
 
   return (

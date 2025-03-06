@@ -242,7 +242,7 @@ export const WithCustomStep = () => (
 );
 
 export const WithNonNumericValues = () => {
-  const [value, setValue] = useState<number>();
+  const [value, setValue] = useState<number>(3);
 
   const daysOfTheWeek = [
     { label: "Monday", value: 1 },

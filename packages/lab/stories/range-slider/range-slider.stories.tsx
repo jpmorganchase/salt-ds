@@ -5,7 +5,7 @@ import {
   Input,
   StackLayout,
 } from "@salt-ds/core";
-import { RangeSlider, type RangeSliderProps } from "@salt-ds/lab";
+import {RangeSlider, type RangeSliderProps, Slider} from "@salt-ds/lab";
 import type { StoryFn } from "@storybook/react";
 import { toFloat } from "packages/lab/src/slider/internal/utils";
 import { type ChangeEvent, useState } from "react";
@@ -278,7 +278,7 @@ export const WithCustomStep = () => (
 );
 
 export const WithNonNumericValues = () => {
-  const [value, setValue] = useState<[number, number]>();
+  const [value, setValue] = useState<[number, number]>([1, 3]);
 
   const daysOfTheWeek = [
     { label: "Monday", value: 1 },
@@ -296,19 +296,18 @@ export const WithNonNumericValues = () => {
   };
 
   return (
-    <div style={{ width: "500px" }}>
-      <RangeSlider
-        minLabel={"Monday"}
-        maxLabel={"Sunday"}
-        min={1}
-        max={7}
-        value={value}
-        onChange={(_e, value) => setValue(value)}
-        format={getDayOfTheWeek}
-        markers={daysOfTheWeek.map((day) => {
-          return { value: day.value, label: day.label };
-        })}
-      />
-    </div>
+    <RangeSlider
+      style={{ width: "500px" }}
+      minLabel={"Monday"}
+      maxLabel={"Sunday"}
+      min={1}
+      max={7}
+      value={value}
+      onChange={(_e, value) => setValue(value)}
+      format={getDayOfTheWeek}
+      markers={daysOfTheWeek.map((day) => {
+        return { value: day.value, label: day.label };
+      })}
+    />
   );
 };

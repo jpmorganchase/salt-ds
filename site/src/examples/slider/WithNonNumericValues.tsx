@@ -21,20 +21,19 @@ export const WithNonNumericValues = (): ReactElement => {
   };
 
   return (
-    <StackLayout gap={3} style={{ width: "500px" }}>
-      <Slider
-        aria-valuetext={getDayOfTheWeek(value)}
-        minLabel={"Monday"}
-        maxLabel={"Sunday"}
-        min={1}
-        max={7}
-        value={value}
-        onChange={(e, value) => setValue(value)}
-        format={getDayOfTheWeek}
-        markers={daysOfTheWeek.map((day) => {
-          return { value: day.value, label: day.label };
-        })}
-      />
-    </StackLayout>
+    <Slider
+      style={{ width: "500px" }}
+      aria-valuetext={getDayOfTheWeek(value)}
+      minLabel={"Monday"}
+      maxLabel={"Sunday"}
+      min={1}
+      max={7}
+      value={value}
+      onChange={(_e, value) => setValue(value)}
+      format={getDayOfTheWeek}
+      markers={daysOfTheWeek.map((day) => {
+        return { value: day.value, label: day.label };
+      })}
+    />
   );
 };

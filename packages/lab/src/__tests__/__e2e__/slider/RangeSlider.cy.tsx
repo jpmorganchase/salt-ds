@@ -78,40 +78,56 @@ describe("Given a Range Slider", () => {
   });
 
   it("should change thumb positions based on keyboard navigation", () => {
+    const changeSpy = cy.stub().as("changeSpy");
     cy.mount(
       <Default
         defaultValue={[4, 8]}
         min={0}
         max={30}
+        onChange={changeSpy}
         style={{ width: "400px" }}
       />,
     );
 
-    // Focus and move first thumb
+    // Focus first thumb and press ArrowRight key
     cy.findAllByRole("slider").eq(0).focus().realPress("ArrowRight");
     cy.findAllByRole("slider").eq(0).should("have.value", "5");
+    cy.get("@changeSpy").should("have.callCount", 1);
 
-    // Focus and move second thumb
+    // Focus second thumb and press ArrowLeft key
     cy.findAllByRole("slider").eq(1).focus().realPress("ArrowLeft");
     cy.findAllByRole("slider").eq(1).should("have.value", "7");
+    cy.get("@changeSpy").should("have.callCount", 2);
 
     // Focus first thumb and press and Home key
     cy.findAllByRole("slider").eq(0).focus().realPress("Home");
     cy.findAllByRole("slider").eq(0).should("have.value", "0");
+    cy.get("@changeSpy").should("have.callCount", 3);
+    // Try to change the minimum/previous value
+    cy.findAllByRole("slider").eq(0).realPress("ArrowLeft");
+    cy.findAllByRole("slider").eq(0).should("have.value", "0");
+    cy.get("@changeSpy").should("have.callCount", 3);
 
     // Focus second thumb and press and End key
     cy.findAllByRole("slider").eq(1).focus().realPress("End");
     cy.findAllByRole("slider").eq(1).should("have.value", "30");
+    cy.get("@changeSpy").should("have.callCount", 4);
+    // Try to change the maximum/previous value
+    cy.findAllByRole("slider").eq(1).focus().realPress("ArrowRight");
+    cy.findAllByRole("slider").eq(0).should("have.value", "30");
+    cy.get("@changeSpy").should("have.callCount", 4);
 
     // Focus first thumb and press and Page Up key
     cy.findAllByRole("slider").eq(0).focus().realPress("PageUp");
     // It should have a greater step increase
     cy.findAllByRole("slider").eq(0).should("have.value", "2");
+    cy.get("@changeSpy").should("have.callCount", 5);
 
     // Focus second thumb and press and Page Up key
     cy.findAllByRole("slider").eq(1).focus().realPress("PageDown");
     // It should have a greater step decrease
     cy.findAllByRole("slider").eq(1).should("have.value", "28");
+    cy.get("@changeSpy").should("have.callCount", 6);
   });
 
   it("should move the thumb in larger increments when step multiplier is increased", () => {
