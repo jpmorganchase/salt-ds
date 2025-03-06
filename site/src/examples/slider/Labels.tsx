@@ -2,7 +2,7 @@ import { StackLayout } from "@salt-ds/core";
 import { Slider } from "@salt-ds/lab";
 import type { ReactElement } from "react";
 
-export const Single = (): ReactElement => (
+export const Labels = (): ReactElement => (
   <StackLayout gap={3}>
     <Slider
       aria-label="single"
@@ -12,7 +12,7 @@ export const Single = (): ReactElement => (
       style={{ width: "400px" }}
     />
     <Slider
-      aria-label="single with bottom labels"
+      aria-label="single"
       min={0}
       max={100}
       defaultValue={30}
