@@ -1,0 +1,37 @@
+.root {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.background {
+  object-fit: cover;
+}
+
+.content {
+  width: 70%;
+  padding: var(--salt-spacing-300);
+  gap: var(--salt-spacing-100);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  z-index: 1;
+}
+
+.title {
+  margin: 0;
+}
+
+@media not screen and (min-width: 960px) {
+  .content {
+    width: 100%;
+  }
+}
+
+.actions {
+  display: flex;
+  flex-direction: row;
+  gap: var(--salt-spacing-100);
+  margin-top: var(--salt-spacing-100);
+}
