@@ -12,6 +12,8 @@
   --salt-text-action-textTransform: uppercase;
   --salt-text-action-textAlign: center;
   --salt-text-action-fontWeight: var(--salt-palette-text-action-fontWeight);
+  --salt-text-action-fontWeight-small: var(--salt-palette-text-action-fontWeight-small);
+  --salt-text-action-fontWeight-strong: var(--salt-palette-text-action-fontWeight-strong);
 
   /* Body text (should be used as default) */
   --salt-text-fontFamily: var(--salt-palette-text-fontFamily);
