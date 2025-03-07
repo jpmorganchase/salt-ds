@@ -10,10 +10,11 @@ import { makePrefixer } from "../utils";
 
 import splitHandleCSS from "./SplitHandle.css";
 import {
+  type SplitterAppearance,
   SplitterAppearanceContext,
+  type SplitterOrientation,
   SplitterOrientationContext,
 } from "./Splitter";
-import { computeAccent, computeVariant } from "./utils";
 
 const withBaseName = makePrefixer("saltSplitHandle");
 
@@ -64,8 +65,8 @@ export function SplitHandle({
   const appearance = useContext(SplitterAppearanceContext);
   const orientation = useContext(SplitterOrientationContext);
 
-  const variant = variantProp ?? computeVariant(appearance);
-  const border = borderProp ?? computeAccent(appearance, orientation);
+  const variant = variantProp ?? deriveVariant(appearance);
+  const border = borderProp ?? deriveBorder(appearance, orientation);
 
   useComponentCssInjection({
     testId: "salt-split-handle",
@@ -93,4 +94,25 @@ export function SplitHandle({
       <span className={withBaseName("dot")} />
     </PanelResizeHandle>
   );
+}
+
+function deriveBorder(
+  appearance: SplitterAppearance,
+  orientation: SplitterOrientation,
+): SplitHandleBorder {
+  if (appearance === "transparent") {
+    return "none";
+  }
+
+  if (orientation === "horizontal") {
+    return "top-bottom";
+  }
+
+  return "left-right";
+}
+
+function deriveVariant(
+  appearance: SplitterAppearance,
+): "primary" | "transparent" {
+  return appearance === "bordered" ? "primary" : "transparent";
 }
