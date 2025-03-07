@@ -11,25 +11,23 @@ export function Impact({
 }) {
   return (
     <div className={styles.root}>
-      <div className={styles.content}>
-        <GridLayout columns={{ xs: 1, md: 2 }}>
-          {impacts.map(({ title, description }) => (
-            <GridItem key={title}>
-              <H3>{title}</H3>
-              <Text>{description}</Text>
-            </GridItem>
-          ))}
-        </GridLayout>
-        {action && (
-          <Link
-            className={styles.action}
-            href={action.href}
-            render={<LinkBase href={action.href} />}
-          >
-            {action.label}
-          </Link>
-        )}
-      </div>
+      <GridLayout columns={{ xs: 1, md: 2 }}>
+        {impacts.map(({ title, description }) => (
+          <GridItem className={styles.section} key={title}>
+            <H3>{title}</H3>
+            <Text>{description}</Text>
+          </GridItem>
+        ))}
+      </GridLayout>
+      {action && (
+        <Link
+          className={styles.action}
+          href={action.href}
+          render={<LinkBase href={action.href} />}
+        >
+          {action.label}
+        </Link>
+      )}
     </div>
   );
 }

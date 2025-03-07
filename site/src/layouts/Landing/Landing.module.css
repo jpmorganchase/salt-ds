@@ -37,7 +37,3 @@
   flex-direction: column;
   gap: var(--salt-spacing-300);
 }
-
-.content {
-  padding-block: var(--salt-spacing-300);
-}
