@@ -33,9 +33,9 @@ export interface SliderProps
    */
   labelPosition?: "bottom" | "inline";
   /**
-   * The markers to show under the slider to label specific values.
+   * Marks that are displayed under the track.
    */
-  markers?: { label: string; value: number }[];
+  marks?: { label: string; value: number }[];
   /**
    * Maximum slider value.
    */
@@ -86,7 +86,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
     disabled: disabledProp = false,
     format,
     labelPosition = "inline",
-    markers,
+    marks,
     min = 0,
     minLabel,
     max = 10,
@@ -153,7 +153,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
       minLabel={minLabel}
       max={max}
       maxLabel={maxLabel}
-      markers={markers}
+      marks={marks}
       progressPercentage={progressPercentage}
       ref={ref}
       sliderRef={sliderRef}

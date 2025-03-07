@@ -1,7 +1,7 @@
 import { Slider } from "@salt-ds/lab";
 import type { ReactElement } from "react";
 
-export const WithMarkers = (): ReactElement => (
+export const WithMarks = (): ReactElement => (
   <Slider
     aria-label="single"
     min={0}
@@ -9,7 +9,7 @@ export const WithMarkers = (): ReactElement => (
     defaultValue={30}
     style={{ width: "400px" }}
     labelPosition="bottom"
-    markers={[
+    marks={[
       {
         value: 10,
         label: "10",
