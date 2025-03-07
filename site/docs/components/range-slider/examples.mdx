@@ -80,15 +80,17 @@ You can display inputs with a `RangeSlider`. Inputs are used to enter a numeric 
 
 ## With Marks
 
-You can display marks under the values of your choice with custom labels.
+You can display marks under the slider track between the minimum and maximum labels to highlight certain values.
+
+Please note that minimum and maximum labels will always be visible and you can not control them through `marks`. Refer to the [Custom Min/Max labels](#with-custom-minmax-labels) example for more details.
 
 </LivePreview>
 
 <LivePreview componentName="range-slider" exampleName="WithCustomLabels">
 
-## With Custom Min/Max labels
+## With Custom Minimum and Maximum labels
 
-You can customize the min and max labels.
+You can customize the minimum and maximum labels.
 
 </LivePreview>
 
@@ -98,15 +100,12 @@ You can customize the min and max labels.
 
 You can implement a `RangeSlider` that allows users to select non-numeric values, with a focus on accessibility through the use of `aria-valuetext`.
 
-The `RangeSlider` maps numeric values to meaningful non-numeric options, enabling intuitive selection beyond simple numbers. The `aria-valuetext` attribute is dynamically updated to announce the selected option, providing clear feedback for users with assistive technologies. Each option is marked on the slider, offering visual guidance on available selections.
+The `RangeSlider` maps numeric values to meaningful non-numeric options, enabling intuitive selection beyond simple numbers. The `aria-valuetext` attribute is, by default, dynamically updated based on the `format()` callback to announce the selected option, providing clear feedback for users with assistive technologies. You also have the choice to update the `aria-valuetext` attribute via props.
 
 ### Best practices:
 
-- State Management: Utilizes `useState` to track the selected option.
-
-- Dynamic Labels: Converts numeric values to descriptive labels for both display and accessibility.
-
-- Markers: Configured to visually represent each option on the slider track.
+- Create a controlled slider and use your `format()` callback to create formatted labels.
+- Update `aria-valuetext` with the formatted current slider value.
 
 This approach ensures a user-friendly and accessible interface for selecting non-numeric values.
 

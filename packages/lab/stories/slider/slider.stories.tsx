@@ -260,20 +260,19 @@ export const WithNonNumericValues = () => {
   };
 
   return (
-    <div style={{ width: "500px" }}>
-      <Slider
-        aria-valuetext={getDayOfTheWeek(value)}
-        minLabel={"Monday"}
-        maxLabel={"Sunday"}
-        min={1}
-        max={7}
-        value={value}
-        onChange={(_e, value) => setValue(value)}
-        format={getDayOfTheWeek}
-        marks={daysOfTheWeek.map((day) => {
-          return { value: day.value, label: day.label };
-        })}
-      />
-    </div>
+    <Slider
+      aria-label="Days of the week"
+      minLabel={"Monday"}
+      maxLabel={"Sunday"}
+      min={1}
+      max={7}
+      value={value}
+      onChange={(_e, value) => setValue(value)}
+      format={getDayOfTheWeek}
+      marks={daysOfTheWeek.map((day) => {
+        return { value: day.value, label: day.label };
+      })}
+      style={{ width: "500px" }}
+    />
   );
 };
