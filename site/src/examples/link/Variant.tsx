@@ -3,7 +3,7 @@ import type { ReactElement } from "react";
 import styles from "./index.module.css";
 
 export const Variant = (): ReactElement => (
-  <StackLayout>
+  <StackLayout align="start">
     <Link href="#" variant="primary" className={styles.linkExample}>
       Primary Link variant
     </Link>
