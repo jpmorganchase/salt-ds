@@ -103,18 +103,10 @@ describe("Given a Range Slider", () => {
     cy.findAllByRole("slider").eq(0).focus().realPress("Home");
     cy.findAllByRole("slider").eq(0).should("have.value", "0");
     cy.get("@changeSpy").should("have.callCount", 3);
-    // Try to change the minimum/previous value
-    cy.findAllByRole("slider").eq(0).realPress("ArrowLeft");
-    cy.findAllByRole("slider").eq(0).should("have.value", "0");
-    cy.get("@changeSpy").should("have.callCount", 3);
 
     // Focus second thumb and press and End key
     cy.findAllByRole("slider").eq(1).focus().realPress("End");
     cy.findAllByRole("slider").eq(1).should("have.value", "30");
-    cy.get("@changeSpy").should("have.callCount", 4);
-    // Try to change the maximum/previous value
-    cy.findAllByRole("slider").eq(1).focus().realPress("ArrowRight");
-    cy.findAllByRole("slider").eq(0).should("have.value", "30");
     cy.get("@changeSpy").should("have.callCount", 4);
 
     // Focus first thumb and press and Page Up key
@@ -123,7 +115,7 @@ describe("Given a Range Slider", () => {
     cy.findAllByRole("slider").eq(0).should("have.value", "2");
     cy.get("@changeSpy").should("have.callCount", 5);
 
-    // Focus second thumb and press and Page Up key
+    // Focus second thumb and press and Page Down key
     cy.findAllByRole("slider").eq(1).focus().realPress("PageDown");
     // It should have a greater step decrease
     cy.findAllByRole("slider").eq(1).should("have.value", "28");
@@ -163,26 +155,31 @@ describe("Given a Range Slider", () => {
   });
 
   it("should not allow thumbs to go beyond min and max values", () => {
+    const changeSpy = cy.stub().as("changeSpy");
     cy.mount(
       <Default
         min={2}
         max={9}
         defaultValue={[4, 8]}
+        onChange={changeSpy}
         style={{ width: "400px" }}
       />,
     );
-
     // Focus first thumb, press Home key and then Arrow Left
     cy.findAllByRole("slider").eq(0).focus().realPress("Home");
     cy.findAllByRole("slider").eq(0).focus().realPress("ArrowLeft");
-    // Thumb shouldn't go less than min value
+    cy.get("@changeSpy").should("have.callCount", 1);
+    // Thumb shouldn't go less than min and onChange should not be called
     cy.findAllByRole("slider").eq(0).should("have.value", "2");
+    cy.get("@changeSpy").should("have.callCount", 1);
 
     // Focus second thumb, press End key and then Arrow Right
     cy.findAllByRole("slider").eq(1).focus().realPress("End");
     cy.findAllByRole("slider").eq(1).focus().realPress("ArrowRight");
-    // Thumb shouldn't go more than max value
+    cy.get("@changeSpy").should("have.callCount", 2);
+    // Thumb shouldn't go more than max value and onChange should not be called
     cy.findAllByRole("slider").eq(1).should("have.value", "9");
+    cy.get("@changeSpy").should("have.callCount", 2);
   });
 
   it("should display a tooltip with correct value only when thumb is hovered", () => {

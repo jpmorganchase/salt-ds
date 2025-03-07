@@ -42,7 +42,7 @@ describe("Given a Slider", () => {
         onChange={changeSpy}
       />,
     );
-    // Focus and press and ArrowRight key
+    // Focus and press ArrowRight key
     cy.findByRole("slider").focus().realPress("ArrowRight");
     cy.findByRole("slider").should("have.value", "105");
     cy.get("@changeSpy").should("have.callCount", 1);
@@ -51,34 +51,28 @@ describe("Given a Slider", () => {
     cy.findByRole("slider").realPress("ArrowLeft");
     cy.findByRole("slider").should("have.value", "100");
     cy.get("@changeSpy").should("have.callCount", 2);
-    // Try to change the previous/previous value
-    cy.findByRole("slider").realPress("ArrowLeft");
-    cy.findByRole("slider").should("have.value", "100");
-    cy.get("@changeSpy").should("have.callCount", 2);
-
-    // Press End key
-    cy.findByRole("slider").realPress("End");
-    cy.findByRole("slider").should("have.value", "125");
-    cy.get("@changeSpy").should("have.callCount", 3);
-    // Try to change the maximum/previous value
-    cy.findByRole("slider").focus().realPress("ArrowRight");
-    cy.findByRole("slider").should("have.value", "125");
-    cy.get("@changeSpy").should("have.callCount", 3);
-
-    // Press Home key
-    cy.findByRole("slider").realPress("Home");
-    cy.findByRole("slider").should("have.value", "5");
-    cy.get("@changeSpy").should("have.callCount", 4);
 
     // Press PageUp key
     cy.findByRole("slider").focus().realPress("PageUp");
     // It should have a greater step increase
-    cy.findByRole("slider").should("have.value", "15");
+    cy.findByRole("slider").should("have.value", "110");
+    cy.get("@changeSpy").should("have.callCount", 3);
 
     // Press PageDown key
     cy.findByRole("slider").focus().realPress("PageDown");
     // It should have a greater step decrease
+    cy.findByRole("slider").should("have.value", "100");
+    cy.get("@changeSpy").should("have.callCount", 4);
+
+    // Press Home key
+    cy.findByRole("slider").realPress("Home");
     cy.findByRole("slider").should("have.value", "5");
+    cy.get("@changeSpy").should("have.callCount", 5);
+
+    // // Press End key
+    cy.findByRole("slider").realPress("End");
+    cy.findByRole("slider").should("have.value", "125");
+    cy.get("@changeSpy").should("have.callCount", 6);
   });
 
   it("should move the thumb in larger increments when step multiplier is increased", () => {
@@ -169,19 +163,30 @@ describe("Given a Slider", () => {
   });
 
   it("should not allow the thumb to go beyond min and max values", () => {
-    cy.mount(<Default style={{ width: "400px" }} min={5} max={20} />);
-
-    // Focus the thumb, press the Home key and then Arrow Left
+    const changeSpy = cy.stub().as("changeSpy");
+    cy.mount(
+      <Default
+        style={{ width: "400px" }}
+        min={5}
+        max={20}
+        onChange={changeSpy}
+      />,
+    );
+    // Focus the thumb, press the Home key and then Arrow Left.
     cy.findByRole("slider").focus().realPress("Home");
     cy.findByRole("slider").focus().realPress("ArrowLeft");
-    // Thumb shouldn't go less than min
+    cy.get("@changeSpy").should("have.callCount", 1);
+    // Thumb shouldn't go less than min and onChange should not be called
     cy.findByRole("slider").should("have.attr", "aria-valuenow", "5");
+    cy.get("@changeSpy").should("have.callCount", 1);
 
     // Focus the thumb, press the End key and then Arrow Right
     cy.findByRole("slider").focus().realPress("End");
     cy.findByRole("slider").focus().realPress("ArrowRight");
-    // Thumb shouldn't go less than min
+    cy.get("@changeSpy").should("have.callCount", 2);
+    // Thumb shouldn't go less than min and onChange should not be called
     cy.findByRole("slider").should("have.attr", "aria-valuenow", "20");
+    cy.get("@changeSpy").should("have.callCount", 2);
   });
 
   it("should render custom min max labels when passed", () => {

@@ -5,7 +5,7 @@ import {
   Input,
   StackLayout,
 } from "@salt-ds/core";
-import {RangeSlider, type RangeSliderProps, Slider} from "@salt-ds/lab";
+import { RangeSlider, type RangeSliderProps } from "@salt-ds/lab";
 import type { StoryFn } from "@storybook/react";
 import { toFloat } from "packages/lab/src/slider/internal/utils";
 import { type ChangeEvent, useState } from "react";
