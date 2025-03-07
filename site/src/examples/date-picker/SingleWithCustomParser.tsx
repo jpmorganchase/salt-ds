@@ -111,7 +111,7 @@ export const SingleWithCustomParser = (): ReactElement => {
       <DatePicker
         selectionVariant="single"
         onSelectionChange={handleSelectionChange}
-        onOpen={setOpen}
+        onOpenChange={setOpen}
       >
         <DatePickerTrigger>
           <DatePickerSingleInput parse={customParser} />

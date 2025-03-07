@@ -100,7 +100,7 @@ export const RangeWithMinMaxDate = (): ReactElement => {
         minDate={minDate}
         maxDate={maxDate}
         onSelectionChange={handleSelectionChange}
-        onOpen={setOpen}
+        onOpenChange={setOpen}
       >
         <DatePickerTrigger>
           <DatePickerRangeInput />

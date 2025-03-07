@@ -93,7 +93,7 @@ export const RangeWithCustomPanel = (): ReactElement => {
       <DatePicker
         selectionVariant="range"
         onSelectionChange={handleSelectionChange}
-        onOpen={setOpen}
+        onOpenChange={setOpen}
       >
         <DatePickerTrigger>
           <DatePickerRangeInput />

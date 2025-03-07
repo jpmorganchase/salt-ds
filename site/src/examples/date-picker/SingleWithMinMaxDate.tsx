@@ -75,7 +75,7 @@ export const SingleWithMinMaxDate = (): ReactElement => {
         minDate={minDate}
         maxDate={maxDate}
         onSelectionChange={handleSelectionChange}
-        onOpen={setOpen}
+        onOpenChange={setOpen}
       >
         <DatePickerTrigger>
           <DatePickerSingleInput />

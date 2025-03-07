@@ -50,8 +50,9 @@ interface DatePickerBaseState<TDate extends DateFrameworkType> {
   helpers: {
     /**
      * Cancels the DatePicker action.
+     * @param event - event that triggered the state change
      */
-    cancel: () => void;
+    cancel: (event?: Event) => void;
     /**
      * Sets the enableApply state.
      * @param newEnableApply - The new value for enableApply.

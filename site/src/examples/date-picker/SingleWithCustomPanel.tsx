@@ -69,7 +69,7 @@ export const SingleWithCustomPanel = (): ReactElement => {
       <DatePicker
         selectionVariant="single"
         onSelectionChange={handleSelectionChange}
-        onOpen={setOpen}
+        onOpenChange={setOpen}
       >
         <DatePickerTrigger>
           <DatePickerSingleInput />

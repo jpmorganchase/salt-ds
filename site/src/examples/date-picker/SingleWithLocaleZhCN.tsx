@@ -94,7 +94,7 @@ export const SingleWithLocaleZhCN = (): ReactElement => {
       <DatePicker
         selectionVariant={"single"}
         onSelectionChange={handleSelectionChange}
-        onOpen={setOpen}
+        onOpenChange={setOpen}
       >
         <DatePickerTrigger>
           <DatePickerSingleInput

@@ -68,7 +68,7 @@ export const SingleWithInitialError = (): ReactElement => {
         selectionVariant="single"
         defaultSelectedDate={dateAdapter.parse("bad date", "DD MMM YYYY").date}
         onSelectionChange={handleSelectionChange}
-        onOpen={setOpen}
+        onOpenChange={setOpen}
       >
         <DatePickerTrigger>
           <DatePickerSingleInput defaultValue="bad date" />
