@@ -1,22 +1,65 @@
-import type { StepRecord, StepStage } from "./Step.types";
+import type { StepRecord, StepStage, StepStatus } from "./Step.types";
 import type { StepReducerOptions, StepReducerState } from "./stepReducer.types";
 
-export function assignSteps(
+export function assignStepsStage(
   steps: StepRecord[],
   stage?: StepStage,
 ): StepRecord[] {
   return steps.map((step) => {
-    step.stage = stage;
+    if (!step.substeps) {
+      return { ...step, stage };
+    }
+
+    return {
+      ...step,
+      stage,
+      substeps: assignStepsStage(step.substeps, stage),
+    };
+  });
+}
+
+export function assignStepStatus(
+  steps: StepRecord[],
+  stepId: string,
+  status: StepStatus | undefined,
+): StepRecord[] {
+  return steps.map((step) => {
+    if (step.id === stepId) {
+      return { ...step, status };
+    }
+
     if (step.substeps) {
-      step.substeps = assignSteps(step.substeps, stage);
+      return {
+        ...step,
+        substeps: assignStepStatus(step.substeps, stepId, status),
+      };
     }
 
     return step;
   });
 }
 
-export function resetSteps(steps: StepRecord[]): StepRecord[] {
-  return assignSteps(steps, undefined);
+export function resetSteps(
+  steps: StepRecord[],
+  options = { resetStatus: false },
+): StepRecord[] {
+  const { resetStatus } = options;
+
+  return steps.map((step) => {
+    if (!step.substeps) {
+      return {
+        ...step,
+        stage: undefined,
+        status: !resetStatus ? step.status : undefined,
+      };
+    }
+
+    return {
+      ...step,
+      stage: undefined,
+      substeps: resetSteps(step.substeps, options),
+    };
+  });
 }
 
 export function autoStageSteps(
@@ -38,11 +81,14 @@ export function autoStageSteps(
 
       activeStep.stage ||= "active";
 
-      const previousSteps = assignSteps(
+      const previousSteps = assignStepsStage(
         steps.slice(0, pivotIndex),
         "completed",
       );
-      const nextSteps = assignSteps(steps.slice(pivotIndex + 1), "pending");
+      const nextSteps = assignStepsStage(
+        steps.slice(pivotIndex + 1),
+        "pending",
+      );
 
       return [...previousSteps, activeStep, ...nextSteps] as StepRecord[];
     }
@@ -67,7 +113,8 @@ export function autoStageSteps(
   }
 
   return (
-    autoStageHelper(steps) || assignSteps(steps, steps[0].stage || "pending")
+    autoStageHelper(steps) ||
+    assignStepsStage(steps, steps[0].stage || "pending")
   );
 }
 

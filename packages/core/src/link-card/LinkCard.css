@@ -1,15 +1,16 @@
 /* Styles applied to LinkCard */
 .saltLinkCard {
-  border-width: var(--saltLinkCard-borderWidth, var(--salt-size-border));
-  border-style: var(--saltLinkCard-borderStyle, var(--salt-container-borderStyle));
   border-radius: var(--saltLinkCard-borderRadius, var(--salt-palette-corner, 0));
+  border-style: var(--saltLinkCard-borderStyle, var(--salt-container-borderStyle));
+  border-width: var(--saltLinkCard-borderWidth, var(--salt-size-border));
+  box-shadow: var(--salt-overlayable-shadow);
   display: block;
+  overflow: hidden;
   padding: var(--saltLinkCard-padding, var(--salt-spacing-200));
   position: relative;
   text-decoration: none;
   transition: box-shadow var(--salt-duration-instant) ease-in-out;
   --linkCard-accent-color: var(--salt-accent-background);
-  overflow: hidden;
 }
 
 /* Styles applied to LinkCard when variant="primary" */
