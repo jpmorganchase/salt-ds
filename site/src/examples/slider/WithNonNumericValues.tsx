@@ -22,7 +22,6 @@ export const WithNonNumericValues = (): ReactElement => {
   return (
     <Slider
       style={{ width: "500px" }}
-      aria-valuetext={getDayOfTheWeek(value)}
       minLabel={"Monday"}
       maxLabel={"Sunday"}
       min={1}

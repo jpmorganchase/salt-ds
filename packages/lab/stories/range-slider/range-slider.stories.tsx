@@ -297,6 +297,7 @@ export const WithNonNumericValues = () => {
 
   return (
     <RangeSlider
+      aria-label="Days of the week"
       style={{ width: "500px" }}
       minLabel={"Monday"}
       maxLabel={"Sunday"}
