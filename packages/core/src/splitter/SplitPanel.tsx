@@ -1,4 +1,3 @@
-import { makePrefixer, useId } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import clsx from "clsx";
@@ -8,6 +7,7 @@ import {
   Panel,
   type PanelProps,
 } from "react-resizable-panels";
+import { makePrefixer, useId } from "../utils";
 
 import splitPanelCSS from "./SplitPanel.css";
 
