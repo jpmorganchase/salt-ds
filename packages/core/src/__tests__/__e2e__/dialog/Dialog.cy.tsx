@@ -65,7 +65,7 @@ describe("GIVEN a Dialog", () => {
 
       cy.findByRole("button", { name: "Open dialog" }).realClick();
 
-      cy.get(".saltDialogHeader-preheader").should("be.visible");
+      cy.get(".saltDialogHeader-header").contains("I am a preheader");
     });
   });
 
@@ -165,20 +165,20 @@ describe("GIVEN a Dialog", () => {
       cy.mount(<Default />);
       cy.findByRole("button", { name: "Open dialog" }).realClick();
       cy.findByRole("dialog").should("be.visible");
+      cy.findAllByRole("button", { name: "Close dialog" }).should("be.focused");
+      cy.realPress("Tab");
       cy.findAllByRole("button", { name: "Cancel" }).should("be.focused");
       cy.realPress("Tab");
       cy.findAllByRole("button", { name: "Previous" }).should("be.focused");
       cy.realPress("Tab");
       cy.findAllByRole("button", { name: "Next" }).should("be.focused");
       cy.realPress("Tab");
-      cy.findAllByRole("button", { name: "Close dialog" }).should("be.focused");
-      cy.realPress("Tab");
       //back to the first button
-      cy.findAllByRole("button", { name: "Cancel" }).should("be.focused");
+      cy.findAllByRole("button", { name: "Close dialog" }).should("be.focused");
     });
 
     it("THEN should support initialFocus being set", () => {
-      cy.mount(<Default initialFocus={2} />);
+      cy.mount(<Default initialFocus={3} />);
       cy.findByRole("button", { name: "Open dialog" }).realClick();
       cy.findByRole("dialog").should("be.visible");
       cy.findByRole("button", { name: "Next" }).should("be.focused");

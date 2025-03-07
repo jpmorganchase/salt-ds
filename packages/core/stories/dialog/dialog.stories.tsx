@@ -2,7 +2,6 @@ import {
   Button,
   Dialog,
   DialogActions,
-  DialogCloseButton,
   DialogContent,
   type DialogContentProps,
   DialogHeader,
@@ -18,6 +17,7 @@ import {
   useState,
 } from "react";
 import "./dialog.stories.css";
+import { CloseIcon } from "@salt-ds/icons";
 
 export default {
   title: "Core/Dialog",
@@ -40,12 +40,16 @@ const UnmountLogger = () => {
 
 const DialogTemplate: StoryFn<
   Omit<DialogProps, "content"> &
-    Pick<ComponentProps<typeof DialogHeader>, "header" | "preheader"> & {
+    Pick<
+      ComponentProps<typeof DialogHeader>,
+      "header" | "preheader" | "description"
+    > & {
       content: DialogContentProps["children"];
     }
 > = ({
   header,
   preheader,
+  description,
   content,
   id,
   size,
@@ -66,6 +70,15 @@ const DialogTemplate: StoryFn<
     setOpen(false);
   };
 
+  const CloseButton = () => (
+    <Button
+      aria-label="Close dialog"
+      appearance="transparent"
+      onClick={handleClose}
+    >
+      <CloseIcon aria-hidden />
+    </Button>
+  );
   return (
     <>
       <Button data-testid="dialog-button" onClick={handleRequestOpen}>
@@ -78,7 +91,12 @@ const DialogTemplate: StoryFn<
         id={id}
         size={size}
       >
-        <DialogHeader header={header} preheader={preheader} />
+        <DialogHeader
+          header={header}
+          preheader={preheader}
+          description={description}
+          actions={<CloseButton />}
+        />{" "}
         <DialogContent>
           {content}
           <UnmountLogger />
@@ -92,7 +110,6 @@ const DialogTemplate: StoryFn<
             Next
           </Button>
         </DialogActions>
-        <DialogCloseButton onClick={handleClose} />
       </Dialog>
     </>
   );
@@ -349,13 +366,26 @@ export const StickyFooter: StoryFn<typeof Dialog> = ({
     setOpen(false);
   };
 
+  const CloseButton = () => (
+    <Button
+      aria-label="Close dialog"
+      appearance="transparent"
+      onClick={handleClose}
+    >
+      <CloseIcon aria-hidden />
+    </Button>
+  );
+
   return (
     <>
       <Button data-testid="dialog-button" onClick={handleRequestOpen}>
         Click to open dialog
       </Button>
       <Dialog open={open} onOpenChange={onOpenChange} className="longDialog">
-        <DialogHeader header="Congratulations! You have created a Dialog." />
+        <DialogHeader
+          header="Congratulations! You have created a Dialog."
+          actions={<CloseButton />}
+        />
         <DialogContent>
           Lorem Ipsum is simply dummy text of the printing and typesetting
           industry. Lorem Ipsum has been the industry's standard dummy text ever
@@ -371,7 +401,6 @@ export const StickyFooter: StoryFn<typeof Dialog> = ({
             Next
           </Button>
         </DialogActions>
-        <DialogCloseButton onClick={handleClose} />
       </Dialog>
     </>
   );
