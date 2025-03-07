@@ -1,5 +1,5 @@
-import type { ButtonProps } from "@salt-ds/core";
 import type { ComponentPropsWithoutRef, ReactNode } from "react";
+import type { ButtonProps } from "../button";
 
 export interface StepProps
   extends Omit<ComponentPropsWithoutRef<"li">, "onToggle"> {
