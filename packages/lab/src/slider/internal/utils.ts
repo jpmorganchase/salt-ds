@@ -3,7 +3,7 @@ import type { RefObject } from "react";
 export const toFloat = (value: number | string) =>
   typeof value === "string" ? Number.parseFloat(value) : value;
 
-export const calculateMarkerPosition = (
+export const calculateMarkPosition = (
   value: number | string,
   max: number,
   min: number,
@@ -14,8 +14,8 @@ export const calculateMarkerPosition = (
   const clampedValue = Number.isNaN(toFloat(value))
     ? min
     : Math.min(Math.max(toFloat(value), min), max);
-  const markerPosition = ((clampedValue - min) / (max - min)) * 100;
-  return Math.round(markerPosition * 100) / 100;
+  const markPosition = ((clampedValue - min) / (max - min)) * 100;
+  return Math.round(markPosition * 100) / 100;
 };
 
 export const calculatePercentage = (value: number, max: number, min: number) =>

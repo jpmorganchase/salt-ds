@@ -23,7 +23,7 @@ export const ExamplesGrid: StoryFn<QAContainerProps> = (props) => {
         max={5}
         min={-5}
         step={1}
-        markers={[
+        marks={[
           { value: -4, label: "-4" },
           { value: -3, label: "-3" },
           { value: -2, label: "-2" },

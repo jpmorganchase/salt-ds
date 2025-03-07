@@ -1,7 +1,7 @@
 import { RangeSlider } from "@salt-ds/lab";
 import type { ReactElement } from "react";
 
-export const WithMarkers = (): ReactElement => (
+export const WithMarks = (): ReactElement => (
   <RangeSlider
     aria-label="single"
     min={0}
@@ -9,7 +9,7 @@ export const WithMarkers = (): ReactElement => (
     defaultValue={[20, 50]}
     style={{ width: "400px" }}
     labelPosition="bottom"
-    markers={[
+    marks={[
       {
         value: 10,
         label: "10",

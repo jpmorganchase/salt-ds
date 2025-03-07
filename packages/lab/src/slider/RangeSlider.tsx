@@ -32,9 +32,9 @@ export interface RangeSliderProps
    */
   labelPosition?: "bottom" | "inline";
   /**
-   * The markers to show under the slider to label some values
+   * Marks that are displayed under the track.
    */
-  markers?: { label: string; value: number }[];
+  marks?: { label: string; value: number }[];
   /**
    * Maximum slider value
    */
@@ -90,7 +90,7 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>(
       disabled: disabledProp = false,
       format,
       labelPosition = "inline",
-      markers,
+      marks,
       max = 10,
       min = 0,
       maxLabel,
@@ -180,7 +180,7 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>(
         handlePointerDown={handlePointerDownOnTrack}
         isDragging={isDragging}
         labelPosition={labelPosition}
-        markers={markers}
+        marks={marks}
         min={min}
         minLabel={minLabel}
         max={max}

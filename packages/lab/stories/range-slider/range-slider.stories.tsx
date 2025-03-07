@@ -75,7 +75,7 @@ WithMarks.args = {
   min: 0,
   max: 10,
   defaultValue: [0, 5],
-  markers: [
+  marks: [
     {
       label: "5",
       value: 5,
@@ -85,7 +85,7 @@ WithMarks.args = {
       value: 8,
     },
   ],
-  "aria-label": "With Markers",
+  "aria-label": "With Marks",
 };
 
 export const WithinFormFieldAndInlineLabels: StoryFn<RangeSliderProps> = () => {
@@ -305,7 +305,7 @@ export const WithNonNumericValues = () => {
       value={value}
       onChange={(_e, value) => setValue(value)}
       format={getDayOfTheWeek}
-      markers={daysOfTheWeek.map((day) => {
+      marks={daysOfTheWeek.map((day) => {
         return { value: day.value, label: day.label };
       })}
     />

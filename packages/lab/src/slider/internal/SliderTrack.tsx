@@ -4,7 +4,7 @@ import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import { type HTMLAttributes, type RefObject, forwardRef } from "react";
 import sliderTrackCss from "./SliderTrack.css";
-import { calculateMarkerPosition } from "./utils";
+import { calculateMarkPosition } from "./utils";
 
 const withBaseName = makePrefixer("saltSliderTrack");
 
@@ -17,7 +17,7 @@ interface SliderTrackProps
   isDragging: boolean;
   isRange?: boolean;
   labelPosition: "inline" | "bottom";
-  markers?: { label: string; value: number }[];
+  marks?: { label: string; value: number }[];
   max: number;
   maxLabel?: number | string;
   min: number;
@@ -37,7 +37,7 @@ export const SliderTrack = forwardRef<HTMLDivElement, SliderTrackProps>(
       isDragging,
       isRange = false,
       labelPosition,
-      markers,
+      marks,
       max,
       maxLabel,
       min,
@@ -62,9 +62,9 @@ export const SliderTrack = forwardRef<HTMLDivElement, SliderTrackProps>(
           [withBaseName("disabled")]: disabled,
           [withBaseName("dragging")]: isDragging,
           [withBaseName("withInlineLabels")]:
-            !markers && labelPosition === "inline",
+            !marks && labelPosition === "inline",
           [withBaseName("range")]: isRange,
-          [withBaseName("withMarkers")]: markers,
+          [withBaseName("withMarks")]: marks,
         })}
         data-testid="sliderTrack"
         ref={ref}
@@ -116,24 +116,24 @@ export const SliderTrack = forwardRef<HTMLDivElement, SliderTrackProps>(
             {maxLabel || format?.(max) || max}
           </Text>
         </div>
-        {/* Markers */}
-        {markers && (
-          <div className={withBaseName("markers")}>
-            {markers.map(({ label, value }) => {
+        {/* Marks */}
+        {marks && (
+          <div className={withBaseName("marks")}>
+            {marks.map(({ label, value }) => {
               return (
                 value !== min &&
                 value !== max && (
                   <Text
                     aria-hidden
-                    className={withBaseName("markerLabel")}
-                    data-testid="marker"
+                    className={withBaseName("markLabel")}
+                    data-testid="mark"
                     disabled={disabled}
                     color="secondary"
                     key={value}
                     styleAs="label"
                     style={
                       {
-                        "--slider-marker-percentage": `${calculateMarkerPosition(value, max, min)}%`,
+                        "--slider-mark-percentage": `${calculateMarkPosition(value, max, min)}%`,
                       } as React.CSSProperties
                     }
                   >

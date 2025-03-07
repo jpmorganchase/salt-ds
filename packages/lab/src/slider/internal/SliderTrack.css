@@ -4,7 +4,7 @@
   --slider-progressPercentageStart: 0%;
   --slider-progressPercentageEnd: 0%;
 
-  --slider-marker-percentage: 0%;
+  --slider-mark-percentage: 0%;
   --slider-track-background: var(--salt-track-borderColor);
   --slider-track-fill: var(--salt-accent-borderColor);
 
@@ -13,7 +13,7 @@
   width: 100%;
 }
 
-.saltSliderTrack-withMarkers {
+.saltSliderTrack-withMarks {
   justify-content: unset;
 }
 
@@ -130,15 +130,15 @@
   pointer-events: none;
 }
 
-.saltSliderTrack-markers {
+.saltSliderTrack-marks {
   position: absolute;
   user-select: none;
   width: 100%;
   top: var(--salt-size-base);
 }
 
-.saltSliderTrack-markerLabel {
+.saltSliderTrack-markLabel {
   position: absolute;
-  left: var(--slider-marker-percentage);
+  left: var(--slider-mark-percentage);
   transform: translateX(-50%);
 }
