@@ -30,6 +30,39 @@ describe("Given a Slider", () => {
     );
   });
 
+  it("should fire onChangeEnd when user stops dragging", () => {
+    const changeEndSpy = cy.stub().as("changeEndSpy");
+    cy.mount(<Default style={{ width: "400px" }} onChangeEnd={changeEndSpy} />);
+    cy.get(".saltSliderTrack-rail").trigger("pointerdown", {
+      button: 0,
+      clientX: 750,
+      clientY: 50,
+    });
+    // onChangeEnd is not called when dragging
+    cy.get("@changeEndSpy").should("have.callCount", 0);
+    // onChangeEnd is called when dragging stops
+    cy.get(".saltSliderTrack-rail").trigger("pointerup");
+    cy.get("@changeEndSpy").should("have.callCount", 1);
+    cy.get("@changeEndSpy").should(
+      "have.been.calledWith",
+      Cypress.sinon.match.any,
+      9,
+    );
+  });
+
+  it("should trigger onChangeEnd during keyboard navigation", () => {
+    const changeEndSpy = cy.stub().as("changeEndSpy");
+    cy.mount(<Default style={{ width: "400px" }} onChangeEnd={changeEndSpy} />);
+
+    // Focus and press ArrowRight key
+    cy.findByRole("slider").focus().realPress("ArrowRight");
+    cy.get("@changeEndSpy").should(
+      "have.been.calledWith",
+      Cypress.sinon.match.any,
+      1,
+    );
+  });
+
   it("should change the thumb position on slider based on keyboard navigation", () => {
     const changeSpy = cy.stub().as("changeSpy");
     cy.mount(
@@ -102,7 +135,6 @@ describe("Given a Slider", () => {
         onChange={changeSpy}
       />,
     );
-
     // Drag the thumb
     cy.findByTestId("sliderThumb").trigger("pointerdown");
     cy.findByTestId("sliderThumb").trigger("pointermove", {
@@ -164,29 +196,35 @@ describe("Given a Slider", () => {
 
   it("should not allow the thumb to go beyond min and max values", () => {
     const changeSpy = cy.stub().as("changeSpy");
+    const changeEndSpy = cy.stub().as("changeEndSpy");
     cy.mount(
       <Default
         style={{ width: "400px" }}
         min={5}
         max={20}
         onChange={changeSpy}
+        onChangeEnd={changeEndSpy}
       />,
     );
     // Focus the thumb, press the Home key and then Arrow Left.
     cy.findByRole("slider").focus().realPress("Home");
     cy.findByRole("slider").focus().realPress("ArrowLeft");
     cy.get("@changeSpy").should("have.callCount", 1);
-    // Thumb shouldn't go less than min and onChange should not be called
+    cy.get("@changeEndSpy").should("have.callCount", 1);
+    // Thumb shouldn't go less than min and onChange and onChangeEnd should not be called
     cy.findByRole("slider").should("have.attr", "aria-valuenow", "5");
     cy.get("@changeSpy").should("have.callCount", 1);
+    cy.get("@changeEndSpy").should("have.callCount", 1);
 
     // Focus the thumb, press the End key and then Arrow Right
     cy.findByRole("slider").focus().realPress("End");
     cy.findByRole("slider").focus().realPress("ArrowRight");
     cy.get("@changeSpy").should("have.callCount", 2);
-    // Thumb shouldn't go less than min and onChange should not be called
+    cy.get("@changeEndSpy").should("have.callCount", 2);
+    // Thumb shouldn't go less than min and onChange and onChangeEnd should not be called
     cy.findByRole("slider").should("have.attr", "aria-valuenow", "20");
     cy.get("@changeSpy").should("have.callCount", 2);
+    cy.get("@changeEndSpy").should("have.callCount", 2);
   });
 
   it("should render custom min max labels when passed", () => {
@@ -246,8 +284,9 @@ describe("Given a Slider", () => {
       cy.findByRole("slider").should("have.value", 4);
     });
 
-    it("should call onChange when updated", () => {
+    it("should call onChange and onChangeEnd when updated", () => {
       const changeSpy = cy.stub().as("changeSpy");
+      const changeEndSpy = cy.stub().as("changeEndSpy");
 
       function ControlledSlider() {
         const [value, setValue] = useState<number>(3);
@@ -255,12 +294,27 @@ describe("Given a Slider", () => {
           setValue(Number.parseFloat(event.target.value));
           changeSpy(event);
         };
-        return <Default value={value} onChange={onChange} />;
+        const onChangeEnd = (
+          event: ChangeEvent<HTMLInputElement>,
+          value: [number, number],
+        ) => {
+          changeEndSpy(event);
+        };
+        return (
+          <Default
+            value={value}
+            onChange={onChange}
+            onChangeEnd={onChangeEnd}
+          />
+        );
       }
 
       cy.mount(<ControlledSlider />);
       cy.findByRole("slider").focus().realPress("ArrowRight");
       cy.get("@changeSpy").should("have.been.calledWithMatch", {
+        target: { value: "4" },
+      });
+      cy.get("@changeEndSpy").should("have.been.calledWithMatch", {
         target: { value: "4" },
       });
     });
