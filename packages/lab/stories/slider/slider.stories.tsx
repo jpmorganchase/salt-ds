@@ -125,17 +125,18 @@ export const WithinFormFieldAndInlineLabels: StoryFn<SliderProps> = () => {
   }, [inputValue, bounds]);
 
   return (
-    <FormField>
+    <FormField style={{ width: "400px" }}>
       <FormFieldLabel> Slider with Input </FormFieldLabel>
       <FlexLayout gap={3}>
         <Input
           value={inputValue}
-          style={{ width: "10px" }}
+          style={{ flex: 1 }}
+          inputProps={{ style: { textAlign: "center" } }}
           onChange={handleInputChange}
           validationStatus={validationStatus}
         />
         <Slider
-          style={{ width: "300px" }}
+          style={{ flex: "100%" }}
           min={bounds[0]}
           max={bounds[1]}
           value={value}
@@ -177,17 +178,18 @@ export const WithinFormFieldAndBottomLabels: StoryFn<SliderProps> = () => {
   }, [inputValue, bounds]);
 
   return (
-    <FormField>
+    <FormField style={{ width: "400px" }}>
       <FormFieldLabel> Slider with Input </FormFieldLabel>
       <FlexLayout gap={3}>
         <Input
           value={inputValue}
-          style={{ width: "10px" }}
+          style={{ flex: 1 }}
+          inputProps={{ style: { textAlign: "center" } }}
           onChange={handleInputChange}
           validationStatus={validationStatus}
         />
         <Slider
-          style={{ width: "300px" }}
+          style={{ flex: "100%" }}
           min={bounds[0]}
           max={bounds[1]}
           value={value}
