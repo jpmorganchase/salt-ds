@@ -130,26 +130,26 @@ describe("Given a Slider", () => {
     cy.findByTestId("sliderTooltip").should("not.be.visible");
   });
 
-  it("should render markers when provided", () => {
+  it("should render marks when provided", () => {
     cy.mount(
       <Default
         style={{ width: "400px" }}
-        markers={[
+        marks={[
           { value: 2, label: "2" },
           { value: 3, label: "3" },
         ]}
       />,
     );
 
-    cy.findAllByTestId("marker").eq(0).should("have.text", "2");
-    cy.findAllByTestId("marker").eq(1).should("have.text", "3");
+    cy.findAllByTestId("mark").eq(0).should("have.text", "2");
+    cy.findAllByTestId("mark").eq(1).should("have.text", "3");
   });
 
-  it("should not render inline min/max labels when markers are provided", () => {
+  it("should not render inline min/max labels when marks are provided", () => {
     cy.mount(
       <Default
         style={{ width: "400px" }}
-        markers={[
+        marks={[
           { value: 2, label: "2" },
           { value: 3, label: "3" },
         ]}

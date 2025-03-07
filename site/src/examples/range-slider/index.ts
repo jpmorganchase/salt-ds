@@ -6,5 +6,5 @@ export * from "./WithCustomLabels";
 export * from "./WithFormatting";
 export * from "./WithFormField";
 export * from "./WithInput";
-export * from "./WithMarkers";
+export * from "./WithMarks";
 export * from "./WithNonNumericValues";
