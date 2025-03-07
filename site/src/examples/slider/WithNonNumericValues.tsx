@@ -1,4 +1,3 @@
-import { StackLayout } from "@salt-ds/core";
 import { Slider } from "@salt-ds/lab";
 import { type ReactElement, useState } from "react";
 

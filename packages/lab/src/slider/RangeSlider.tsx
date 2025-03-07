@@ -111,7 +111,7 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>(
       name: "RangeSlider",
       state: "value",
     });
-    const lastValueState = useRef(valueState);
+    const lastValueRef = useRef<[number, number]>(valueState);
 
     const {
       a11yProps: { "aria-labelledby": formFieldLabelledBy } = {},
@@ -161,13 +161,15 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>(
     ) => {
       const parsedValue = toFloat(event.target.value);
       const values = preventThumbOverlap(parsedValue, value, thumbIndex);
-      const hasValuesChanged = values[0] !== lastValueState.current[0] || values[1] !== lastValueState.current[1];
-      if (hasValuesChanged) {
+      const haveValuesChanged =
+        values[0] !== lastValueRef.current[0] ||
+        values[1] !== lastValueRef.current[1];
+      if (haveValuesChanged) {
         const values = preventThumbOverlap(parsedValue, value, thumbIndex);
         setValue(values as [number, number]);
         onChange?.(event, values as [number, number]);
         onChangeEnd?.(event, values as [number, number]);
-        lastValueState.current= values;
+        lastValueRef.current = values;
       }
     };
 

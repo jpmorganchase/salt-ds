@@ -35,7 +35,7 @@ export const useRangeSliderThumb = ({
 }: UseRangeSliderThumbProps) => {
   const [isDragging, setIsDragging] = useState(false);
   const [thumbIndexState, setIsThumbIndex] = useState<number>(0);
-  const currentValueRef = useRef<[number, number]>(valueState);
+  const lastValueRef = useRef<[number, number]>(valueState);
   const sliderRef = useRef<HTMLDivElement>(null);
   const sliderValues = clampRange(valueState, max, min);
   const targetWindow = useWindow();
@@ -77,10 +77,10 @@ export const useRangeSliderThumb = ({
       );
 
       if (
-        newValues[0] !== currentValueRef.current[0] ||
-        newValues[1] !== currentValueRef.current[1]
+        newValues[0] !== lastValueRef.current[0] ||
+        newValues[1] !== lastValueRef.current[1]
       ) {
-        currentValueRef.current = newValues;
+        lastValueRef.current = newValues;
         setValue(newValues);
         onChange?.(event, newValues);
       }
@@ -100,7 +100,7 @@ export const useRangeSliderThumb = ({
   const handlePointerUp = useCallback(
     (event: PointerEvent) => {
       setIsDragging(false);
-      onChangeEnd?.(event, currentValueRef.current);
+      onChangeEnd?.(event, lastValueRef.current);
     },
     [onChangeEnd],
   );
@@ -172,10 +172,10 @@ export const useRangeSliderThumb = ({
         }
       }
       if (
-        newValues[0] !== currentValueRef.current[0] ||
-        newValues[1] !== currentValueRef.current[1]
+        newValues[0] !== lastValueRef.current[0] ||
+        newValues[1] !== lastValueRef.current[1]
       ) {
-        currentValueRef.current = newValues;
+        lastValueRef.current = newValues;
         setValue(newValues);
         onChange?.(event, newValues);
       }

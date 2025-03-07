@@ -3,7 +3,7 @@ import {
   type HTMLAttributes,
   type SyntheticEvent,
   forwardRef,
-  useRef
+  useRef,
 } from "react";
 
 import { useControlled, useFormFieldProps } from "@salt-ds/core";
@@ -105,7 +105,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
     name: "Slider",
     state: "value",
   });
-  const lastValueState = useRef(valueState);
+  const lastValueState = useRef<number>(valueState);
 
   const {
     handlePointerDownOnThumb,
