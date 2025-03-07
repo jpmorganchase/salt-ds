@@ -76,22 +76,23 @@ const RangeWithInput = () => {
           placeholder={minInputValue}
           value={minInputValue}
           style={{ flex: 1 }}
+          inputProps={{ style: { textAlign: "center" } }}
           onChange={handleMinInputChange}
           validationStatus={validationStatus}
         />
         <RangeSlider
-          style={{ flex: 3 }}
+          style={{ flex: "100%" }}
           min={bounds[0]}
           max={bounds[1]}
           value={value}
           onChange={handleSliderChange}
-          labelPosition="bottom"
         />
         <Input
           id="slider-max-value"
           placeholder={`${maxInputValue}`}
           value={maxInputValue}
           style={{ flex: 1 }}
+          inputProps={{ style: { textAlign: "center" } }}
           onChange={handleMaxInputChange}
           validationStatus={validationStatus}
         />

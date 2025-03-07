@@ -118,14 +118,15 @@ export const WithinFormFieldAndInlineLabels: StoryFn<RangeSliderProps> = () => {
 
   return (
     <FormField style={{ width: "400px" }}>
-      <FormFieldLabel>Range Slider with Input </FormFieldLabel>
-      <FlexLayout gap={2}>
+      <FormFieldLabel>Range Slider with Input</FormFieldLabel>
+      <FlexLayout style={{ width: "100%" }} gap={2}>
         <Input
           value={minInputValue}
-          style={{ flex: 1 }}
           onChange={(event: ChangeEvent<HTMLInputElement>) =>
             handleInputChange(event, "min")
           }
+          style={{ flex: 1 }}
+          inputProps={{ style: { textAlign: "center" } }}
         />
         <RangeSlider
           min={bounds[0]}
@@ -138,14 +139,15 @@ export const WithinFormFieldAndInlineLabels: StoryFn<RangeSliderProps> = () => {
             setValue(value);
           }}
           aria-label="withInput"
-          style={{ flex: 5 }}
+          style={{ flex: "100%" }}
         />
         <Input
           value={maxInputValue}
-          style={{ flex: 1 }}
           onChange={(event: ChangeEvent<HTMLInputElement>) =>
             handleInputChange(event, "max")
           }
+          style={{ flex: 1 }}
+          inputProps={{ style: { textAlign: "center" } }}
         />
       </FlexLayout>
     </FormField>
@@ -182,11 +184,12 @@ export const WithinFormFieldAndBottomLabels: StoryFn<RangeSliderProps> = () => {
 
   return (
     <FormField style={{ width: "400px" }}>
-      <FormFieldLabel> Slider with Input </FormFieldLabel>
+      <FormFieldLabel>Range Slider with Input</FormFieldLabel>
       <FlexLayout gap={2}>
         <Input
           value={minInputValue}
           style={{ flex: 1 }}
+          inputProps={{ style: { textAlign: "center" } }}
           onChange={(event: ChangeEvent<HTMLInputElement>) =>
             handleInputChange(event, "min")
           }
@@ -203,11 +206,12 @@ export const WithinFormFieldAndBottomLabels: StoryFn<RangeSliderProps> = () => {
           }}
           aria-label="withInput"
           labelPosition="bottom"
-          style={{ flex: 5 }}
+          style={{ flex: "100%" }}
         />
         <Input
           value={maxInputValue}
           style={{ flex: 1 }}
+          inputProps={{ style: { textAlign: "center" } }}
           onChange={(event: ChangeEvent<HTMLInputElement>) =>
             handleInputChange(event, "max")
           }
