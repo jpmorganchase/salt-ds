@@ -106,7 +106,8 @@
   gap: var(--salt-spacing-50);
 }
 
-.saltSliderTrack-withInlineLabels .saltSlider-wrapper {
+.saltSliderTrack-withInlineLabels .saltSliderTrack-wrapper {
+  flex: 1;
   height: unset;
 }
 
