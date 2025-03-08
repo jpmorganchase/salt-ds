@@ -10,8 +10,8 @@ import { AdapterMoment } from "@salt-ds/date-adapters/moment";
 import {
   DatePicker,
   DatePickerOverlay,
-  DatePickerSingleInput,
   DatePickerSingleGridPanel,
+  DatePickerSingleInput,
 } from "@salt-ds/lab";
 import * as datePickerStories from "@stories/date-picker/date-picker.stories";
 
@@ -188,6 +188,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
         cy.findByRole("textbox").click().clear().type(initialDateValue);
         cy.realPress("Tab");
         cy.findByRole("textbox").should("have.value", initialDateValue);
+        // Verify there is a valid date change event
         cy.get("@selectionChangeSpy").should("have.been.calledOnce");
         cy.get("@selectionChangeSpy").should((spy: any) => {
           const [_event, date, details] = spy.lastCall.args;
@@ -202,6 +203,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
         // Simulate entering an invalid date
         cy.findByRole("textbox").click().clear().type("bad date");
         cy.realPress("Tab");
+        // Verify there is a invalid date change event
         cy.get("@selectionChangeSpy").should("have.been.calledTwice");
         cy.get("@selectionChangeSpy").should((spy: any) => {
           const [_event, date, details] = spy.lastCall.args;
@@ -216,9 +218,10 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
             ],
           });
         });
-        // Different invalid date should call the event
+        // Simulate entering another invalid date
         cy.findByRole("textbox").click().clear().type("another bad date 2");
         cy.realPress("Tab");
+        // Verify there is another invalid date change event
         cy.get("@selectionChangeSpy").should("have.callCount", 3);
         cy.get("@selectionChangeSpy").should((spy: any) => {
           const [_event, date, details] = spy.lastCall.args;
@@ -233,11 +236,13 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
             ],
           });
         });
+        // Simulate correcting the date
         cy.findByRole("textbox")
           .click()
           .clear()
           .type(updatedFormattedDateValue);
         cy.realPress("Tab");
+        // Verify there is a valid date change event
         cy.get("@selectionChangeSpy").should("have.callCount", 4);
         cy.get("@selectionChangeSpy").should((spy: any) => {
           const [_event, date, details] = spy.lastCall.args;
@@ -249,6 +254,15 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
             value: updatedFormattedDateValue,
           });
         });
+        // Give the focus but don't change the date
+        cy.findByRole("textbox").focus();
+        cy.realPress("Tab");
+        cy.findByRole("textbox").should(
+          "have.value",
+          updatedFormattedDateValue,
+        );
+        // Verify there is no change event
+        cy.get("@selectionChangeSpy").should("have.callCount", 4);
       });
 
       it("SHOULD only be able to select a date between min/max", () => {
