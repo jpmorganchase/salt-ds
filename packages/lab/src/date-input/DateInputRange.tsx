@@ -338,7 +338,14 @@ export const DateInputRange = forwardRef<
     // Update date string value when selected date changes
     useEffect(() => {
       setDateValueFromDate(date);
-    }, [date, date?.startDate, date?.endDate]);
+    }, [
+      date,
+      date?.startDate,
+      date?.endDate,
+      dateAdapter.format,
+      format,
+      locale,
+    ]);
 
     const [focused, setFocused] = useState(false);
 
@@ -426,7 +433,6 @@ export const DateInputRange = forwardRef<
           endDate: endDateParseDetails,
         });
       }
-      lastAppliedValue.current = { ...newDateValue };
     };
 
     const handleStartInputChange: ChangeEventHandler<HTMLInputElement> = (
@@ -452,6 +458,7 @@ export const DateInputRange = forwardRef<
     const handleStartInputFocus: FocusEventHandler<HTMLInputElement> = (
       event,
     ) => {
+      lastAppliedValue.current = dateValue;
       setFocused(true);
       startInputPropsOnFocus?.(event);
     };
@@ -459,6 +466,7 @@ export const DateInputRange = forwardRef<
     const handleEndInputFocus: FocusEventHandler<HTMLInputElement> = (
       event,
     ) => {
+      lastAppliedValue.current = dateValue;
       setFocused(true);
       endInputPropsOnFocus?.(event);
     };
