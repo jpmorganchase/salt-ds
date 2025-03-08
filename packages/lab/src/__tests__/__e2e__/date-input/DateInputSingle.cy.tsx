@@ -179,6 +179,12 @@ describe("GIVEN a DateInputSingle", () => {
         cy.findByRole("textbox").click().clear().type(initialDateValue);
         cy.realPress("Tab");
         cy.get("@dateChangeSpy").should("have.callCount", 4);
+
+        // Test giving focus but not changing the date
+        cy.findByRole("textbox").click();
+        cy.realPress("Tab");
+        cy.findByRole("textbox").should("have.value", initialDateValue);
+        cy.get("@dateChangeSpy").should("have.callCount", 4);
       });
 
       it("SHOULD support custom formatter", () => {

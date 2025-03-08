@@ -1,8 +1,8 @@
 import {
   DatePicker,
   DatePickerOverlay,
-  DatePickerSingleInput,
   DatePickerSingleGridPanel,
+  DatePickerSingleInput,
   DatePickerTrigger,
   useLocalization,
 } from "@salt-ds/lab";

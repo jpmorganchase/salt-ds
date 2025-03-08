@@ -204,6 +204,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
           .clear()
           .type(initialRangeDateValue.startDate);
         cy.realPress("Tab");
+        // Verify there is a valid change event
         cy.findByLabelText("Start date").should(
           "have.value",
           initialRangeDateValue.startDate,
@@ -235,6 +236,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
           .clear()
           .type(initialRangeDateValue.endDate);
         cy.realPress("Tab");
+        // Verify there is a valid change event
         cy.get("@selectionChangeSpy").should("have.been.calledTwice");
         cy.get("@selectionChangeSpy").should((spy: any) => {
           const [_event, date, details] = spy.lastCall.args;
@@ -254,6 +256,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
         // Simulate entering an invalid end date
         cy.findByLabelText("End date").clear().type("bad date");
         cy.realPress("Tab");
+        // Verify there is an invalid change event
         cy.get("@selectionChangeSpy").should("have.been.calledThrice");
         cy.get("@selectionChangeSpy").should((spy: any) => {
           const [_event, date, details] = spy.lastCall.args;
@@ -275,6 +278,31 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
             },
           });
         });
+        // Simulate correcting the date range
+        cy.findByLabelText("Start date")
+          .click()
+          .clear()
+          .type(initialRangeDateValue.startDate);
+        cy.findByLabelText("End date")
+          .clear()
+          .type(initialRangeDateValue.endDate);
+        cy.realPress("Tab");
+        cy.get("@selectionChangeSpy").should("have.callCount", 4);
+        // Simulate receiving focus but the date range not changing
+        cy.findByLabelText("Start date").focus();
+        cy.realPress("Tab");
+        cy.findByLabelText("Start date").should(
+          "have.value",
+          initialRangeDateValue.startDate,
+        );
+        cy.findByLabelText("End date").should("have.focus");
+        cy.realPress("Tab");
+        cy.findByLabelText("End date").should(
+          "have.value",
+          initialRangeDateValue.endDate,
+        );
+        // Verify there is no change event
+        cy.get("@selectionChangeSpy").should("have.callCount", 4);
       });
 
       it("SHOULD support custom panel with tenors", () => {
