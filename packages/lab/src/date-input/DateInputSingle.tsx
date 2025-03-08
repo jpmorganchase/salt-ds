@@ -223,7 +223,6 @@ export const DateInputSingle = forwardRef<
         (dateAdapter.isValid(date) || date === null) &&
         hasValueChanged
       ) {
-        lastAppliedValue.current = formattedValue;
         setDateValue(formattedValue);
         onDateValueChange?.(null, formattedValue);
       }
@@ -281,9 +280,6 @@ export const DateInputSingle = forwardRef<
         }
         onDateChange?.(event, parsedDate, parseDetails);
       }
-      lastAppliedValue.current = dateAdapter.isValid(parsedDate)
-        ? formattedValue
-        : dateValue;
     };
 
     const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
@@ -295,6 +291,7 @@ export const DateInputSingle = forwardRef<
     };
 
     const handleFocus: FocusEventHandler<HTMLInputElement> = (event) => {
+      lastAppliedValue.current = dateValue;
       setFocused(true);
       inputPropsOnFocus?.(event);
     };
