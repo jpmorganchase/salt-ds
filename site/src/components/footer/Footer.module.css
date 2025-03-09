@@ -6,7 +6,6 @@
 
 .footer {
   grid-area: footer;
-  width: 100%;
   border-top: var(--salt-size-border) var(--salt-separable-borderStyle) var(--salt-separable-tertiary-borderColor);
   background-color: var(--salt-container-primary-background);
   padding: var(--footer-padding-vertical) var(--footer-padding-horizontal);

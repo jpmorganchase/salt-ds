@@ -1,3 +1,4 @@
+import type { LayoutProps } from "@jpmorganchase/mosaic-layouts/dist/types";
 import { PageNavigation } from "@jpmorganchase/mosaic-site-components";
 import {
   type SiteState,
@@ -6,7 +7,6 @@ import {
 } from "@jpmorganchase/mosaic-store";
 import {
   Button,
-  Divider,
   Overlay,
   OverlayPanel,
   OverlayPanelContent,
@@ -32,13 +32,16 @@ import {
   useLivePreviewControls,
 } from "../../components/components/LivePreviewProvider";
 import { CTALink } from "../../components/cta-link/CTALink";
+import { LinkList } from "../../components/link-list/LinkList";
 import { TopLevelNavigation } from "../../components/navigation/TopLevelNavigation";
 import { TableOfContents } from "../../components/toc/index";
+import { getHrefFromComponent } from "../../utils/getHrefFromComponent";
 import { Base } from "../Base/Base";
 import { PageHeading } from "../Base/PageHeading";
-import type { LayoutProps } from "../types";
+import { PrimarySidebar } from "../Base/PrimarySidebar";
+import { SecondarySidebar } from "../Base/SecondarySidebar";
+import { RelatedPatterns } from "../DetailPattern/RelatedPatterns";
 import styles from "./DetailComponent.module.css";
-import SecondarySidebar from "./SecondarySidebar";
 
 const tabs = [
   { name: "examples", label: "Examples" },
@@ -156,13 +159,28 @@ function ComponentPageHeading({ title }: { title?: string }) {
   );
 }
 
+function getRelatedComponentLinks(
+  relatedComponents: Data["relatedComponents"],
+  relationship: Relationship,
+) {
+  return (
+    relatedComponents
+      ?.filter((component) => component.relationship === relationship)
+      .map((component) => ({
+        href: getHrefFromComponent(component.name),
+        label: component.name,
+      }))
+      .sort((a, b) => a.label.localeCompare(b.label)) ?? []
+  );
+}
+
 export const DetailComponent: FC<LayoutProps> = ({ children }) => {
   const { replace, push } = useRouter();
   const { route } = useRoute();
 
   const newRoute = route?.substring(0, route.lastIndexOf("/") + 1);
 
-  const additionalData = useComponentData();
+  const { relatedComponents } = useComponentData();
 
   const isOverview = route?.endsWith("components/index");
 
@@ -179,8 +197,8 @@ export const DetailComponent: FC<LayoutProps> = ({ children }) => {
     push(`${newRoute}${value}`);
   };
 
-  const PrimarySidebar = (
-    <div className={styles.primarySidebar}>
+  const LeftSidebar = (
+    <PrimarySidebar className={styles.primarySidebar}>
       <div className={styles.sidebarExtras}>
         <Overlay>
           <OverlayTrigger>
@@ -195,28 +213,34 @@ export const DetailComponent: FC<LayoutProps> = ({ children }) => {
           </OverlayPanel>
         </Overlay>
       </div>
-      <Divider variant="tertiary" />
       <TopLevelNavigation />
-      <Divider variant="tertiary" />
       <div className={styles.navigation}>
         <PageNavigation />
       </div>
-    </div>
+    </PrimarySidebar>
   );
 
+  const similarToLinks = getRelatedComponentLinks(
+    relatedComponents,
+    "similarTo",
+  );
+  const containsList = getRelatedComponentLinks(relatedComponents, "contains");
+
   const RightSidebar = (
-    <div className={styles.secondarySidebar}>
-      <SecondarySidebar
-        additionalData={additionalData}
-        tableOfContents={<TableOfContents />}
-      />
-    </div>
+    <SecondarySidebar>
+      <TableOfContents />
+      <div className={styles.sidebarSection}>
+        <LinkList heading="Similar to" links={similarToLinks} />
+        <LinkList heading="Contains" links={containsList} />
+      </div>
+      <RelatedPatterns />
+    </SecondarySidebar>
   );
 
   return (
     <LivePreviewProvider>
       <Base
-        LeftSidebar={PrimarySidebar}
+        LeftSidebar={LeftSidebar}
         RightSidebar={RightSidebar}
         Heading={ComponentPageHeading}
       >

@@ -4,7 +4,6 @@
   gap: var(--salt-spacing-100);
   padding: var(--salt-spacing-200) var(--salt-spacing-300);
   background: var(--salt-container-secondary-background);
-  width: 100%;
 }
 
 .root h1 {

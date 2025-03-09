@@ -15,7 +15,7 @@ export * from "./callout";
 export * from "./components";
 export * from "./country-symbol-preview";
 export * from "./diagrams";
-export * from "./example-container";
+export * from "./guidance-callout";
 export * from "./footer";
 export * from "./getting-started";
 export * from "./image-switcher";

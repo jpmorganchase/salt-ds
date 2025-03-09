@@ -1,34 +1,25 @@
-.tabBar {
-  z-index: calc(var(--salt-zIndex-default) + 1);
-}
-
 @media screen and (min-width: 960px) {
   .content {
     padding-inline: var(--salt-spacing-300);
   }
 }
 
-.content {
-  padding-inline: var(--salt-spacing-200);
-}
-
-.primarySidebar {
-  grid-area: left;
-  position: sticky;
-  background: var(--salt-container-primary-background);
-  padding-block: var(--salt-spacing-200);
-  display: flex;
-  flex-direction: column;
-  gap: var(--salt-spacing-200);
-}
-
 .navigation {
+  border-top: var(--salt-size-border) var(--salt-separable-borderStyle) var(--salt-separable-tertiary-borderColor);
   padding-right: var(--salt-spacing-300);
 }
 
 .secondarySidebar {
-  flex: 0 0 15vw;
-  position: sticky;
+  flex: 0 0 20%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--salt-spacing-200);
+  padding-top: var(--salt-spacing-200);
+}
+
+.sidebarSection {
+  padding-inline: var(--salt-spacing-300);
+  border-top: var(--salt-size-border) var(--salt-separable-borderStyle) var(--salt-separable-tertiary-borderColor);
 }
 
 .tabPanel {
@@ -39,10 +30,19 @@
   margin-top: var(--salt-spacing-100);
 }
 
+.primarySidebar.primarySidebar {
+  padding: 0;
+}
+
 .sidebarExtras {
-  padding-inline: var(--salt-spacing-200);
+  padding: var(--salt-spacing-200);
   display: flex;
   flex-direction: column;
+  border-bottom: var(--salt-size-border) var(--salt-separable-borderStyle) var(--salt-separable-tertiary-borderColor);
+  position: sticky;
+  background: var(--salt-container-primary-background);
+  top: -1px;
+  z-index: 1;
 }
 
 .toggleGroup.toggleGroup {

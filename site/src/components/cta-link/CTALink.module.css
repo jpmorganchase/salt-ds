@@ -55,6 +55,18 @@
   --cta-borderColor-active: var(--salt-actionable-accented-bold-borderColor-active);
 }
 
+.neutral.solid {
+  --cta-color-default: var(--salt-actionable-bold-foreground);
+  --cta-color-hover: var(--salt-actionable-bold-foreground-hover);
+  --cta-color-active: var(--salt-actionable-bold-foreground-active);
+  --cta-background-default: var(--salt-actionable-bold-background);
+  --cta-background-hover: var(--salt-actionable-bold-background-hover);
+  --cta-background-active: var(--salt-actionable-bold-background-active);
+  --cta-borderColor-default: var(--salt-actionable-bold-borderColor);
+  --cta-borderColor-hover: var(--salt-actionable-bold-borderColor-hover);
+  --cta-borderColor-active: var(--salt-actionable-bold-borderColor-active);
+}
+
 .neutral.bordered {
   --cta-color-default: var(--salt-actionable-foreground);
   --cta-color-hover: var(--salt-actionable-foreground);

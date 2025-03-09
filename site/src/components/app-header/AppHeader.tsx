@@ -2,7 +2,7 @@ import type { TabsMenu } from "@jpmorganchase/mosaic-components";
 import { Button, StackLayout, Tooltip } from "@salt-ds/core";
 import { GithubIcon, MenuIcon } from "@salt-ds/icons";
 import { type FC, useContext } from "react";
-import { LayoutContext } from "../../layouts/context/LayoutContext";
+import { LayoutContext } from "../../layouts/LayoutContext";
 import { useIsMobileView } from "../../utils/useIsMobileView";
 import { CTALink } from "../cta-link/CTALink";
 import { LinkBase } from "../link/Link";

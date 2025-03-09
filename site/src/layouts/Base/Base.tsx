@@ -9,7 +9,7 @@ import {
 } from "react";
 import { AppHeader, Footer } from "src/components";
 import { useIsMobileView } from "src/utils/useIsMobileView";
-import { LayoutContext } from "../context/LayoutContext";
+import { LayoutContext } from "../LayoutContext";
 import styles from "./Base.module.css";
 import { Drawer } from "./Drawer";
 import { PageHeading, type PageHeadingProps } from "./PageHeading";
@@ -75,7 +75,9 @@ export function Base({
         <AppHeader />
         {LeftSidebar}
         <div className={styles.middle}>
-          <Heading title={title} description={description} />
+          {(title || description) && (
+            <Heading title={title} description={description} />
+          )}
           <div className={styles.twoColumn}>
             <div className={styles.content}>{children}</div>
             {RightSidebar}

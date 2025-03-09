@@ -5,6 +5,9 @@
   background: var(--salt-container-primary-background);
   height: calc(var(--salt-spacing-200) + var(--salt-size-base));
   border-bottom: var(--salt-size-border) var(--salt-separable-borderStyle) var(--salt-separable-primary-borderColor);
+  position: sticky;
+  top: 0;
+  z-index: var(--salt-zIndex-appHeader);
 }
 
 @media not screen and (min-width: 960px) {

@@ -115,7 +115,8 @@
     "esbuild": "^0.25.0",
     "ag-grid-community": "32.2.1",
     "ag-grid-enterprise": "32.2.1",
-    "ag-grid-react": "32.2.1"
+    "ag-grid-react": "32.2.1",
+    "react-error-boundary": "^4.0.0"
   },
   "browserslist": {
     "production": [

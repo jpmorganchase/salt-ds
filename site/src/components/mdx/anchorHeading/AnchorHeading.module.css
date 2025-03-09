@@ -1,5 +1,6 @@
-.link {
+.link.link {
   display: block;
+  text-decoration: none;
 }
 
 .link:focus-visible {
@@ -18,10 +19,6 @@
   color: var(--salt-content-foreground-hover);
 }
 
-.root {
-  margin-block: var(--salt-spacing-200);
-}
-
-.root:first-child {
-  margin-block-start: 0;
+.root:first-child h4 {
+  margin-top: 0;
 }

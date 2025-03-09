@@ -28,6 +28,7 @@
   display: flex;
   flex-direction: column;
   margin-block: var(--salt-spacing-300);
+  gap: var(--salt-spacing-100);
 }
 
 .diagram:first-child {

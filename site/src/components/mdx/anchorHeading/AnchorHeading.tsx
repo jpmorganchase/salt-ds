@@ -1,5 +1,6 @@
 import { LinkedIcon } from "@salt-ds/icons";
 import clsx from "clsx";
+import type NextLink from "next/link";
 import type {
   ComponentPropsWithoutRef,
   ElementType,
@@ -8,9 +9,8 @@ import type {
   PropsWithChildren,
   ReactNode,
 } from "react";
-import type NextLink from "next/link";
-import styles from "./AnchorHeading.module.css";
 import { LinkBase } from "../../link/Link";
+import styles from "./AnchorHeading.module.css";
 
 interface TypographyProps {
   children: ReactNode;

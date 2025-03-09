@@ -1,11 +1,10 @@
 :root {
-  --max-container-width: 1920px;
-  --max-content-width: min(var(--max-container-width), 120ch);
-}
-
-:root {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizelegibility;
+}
+
+html {
+  scroll-margin-top: var(--salt-spacing-200);
 }
 
 body {

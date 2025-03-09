@@ -1,9 +1,10 @@
 .root {
-  height: 100vh;
+  min-height: 100vh;
   display: grid;
   grid-template-areas: "header header" "left middle" "footer footer";
   grid-template-rows: auto 1fr auto;
-  grid-template-columns: 0.6fr minmax(0, 2.5fr);
+  grid-template-columns: auto 1fr;
+  position: relative;
 }
 
 .oneColumn {
@@ -15,18 +16,17 @@
   grid-area: middle;
   display: flex;
   flex-direction: column;
+  height: 100%;
 }
 
 .twoColumn {
   display: flex;
-  padding-block: var(--salt-spacing-200);
+  height: 100%;
 }
 
 .content {
   flex: 1;
   min-width: 1px;
-}
-
-.content > :global(.wrapper) {
   padding-inline: var(--salt-spacing-300);
+  padding-block: var(--salt-spacing-200);
 }

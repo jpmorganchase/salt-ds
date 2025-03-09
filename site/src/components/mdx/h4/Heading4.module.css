@@ -1,4 +1,3 @@
 .heading4 {
-  margin-top: calc(var(--salt-size-unit) * 2);
-  margin-bottom: var(--salt-size-unit);
+  margin: 0;
 }

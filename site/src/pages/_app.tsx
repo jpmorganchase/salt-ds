@@ -1,23 +1,11 @@
-import {
-  ImageProvider,
-  LinkProvider,
-  getMarkdownComponents,
-  withMarkdownSpacing,
-} from "@jpmorganchase/mosaic-components";
-import {
-  LayoutProvider,
-  layouts as mosaicLayouts,
-} from "@jpmorganchase/mosaic-layouts";
+import { LayoutProvider } from "@jpmorganchase/mosaic-layouts";
 import {
   BaseUrlProvider,
-  Image,
-  Link,
   Metadata,
 } from "@jpmorganchase/mosaic-site-components";
 import { Sitemap } from "@jpmorganchase/mosaic-sitemap-component";
 import { useColorMode } from "@jpmorganchase/mosaic-store";
 import { StoreProvider, useCreateStore } from "@jpmorganchase/mosaic-store";
-import { ssrClassName } from "@jpmorganchase/mosaic-theme";
 import { themeClassName } from "@jpmorganchase/mosaic-theme";
 import { type Density, SaltProviderNext } from "@salt-ds/core";
 import { AdapterDateFns } from "@salt-ds/date-adapters/date-fns";
@@ -40,28 +28,22 @@ import * as saltLayouts from "../layouts";
 import type { MyAppProps } from "../types/mosaic";
 
 import "@jpmorganchase/mosaic-components/index.css";
-import "@jpmorganchase/mosaic-content-editor-plugin/index.css";
-import "@jpmorganchase/mosaic-layouts/index.css";
 import "@jpmorganchase/mosaic-site-components/index.css";
 import "@jpmorganchase/mosaic-sitemap-component/index.css";
 import "@jpmorganchase/mosaic-theme/baseline.css";
 import "@jpmorganchase/mosaic-theme/index.css";
 import "@salt-ds/theme/css/theme-next.css";
 import "@salt-ds/theme/index.css";
-import "prismjs/themes/prism.css";
 
 import "../css/index.css";
 import { useIsMobileView } from "../utils/useIsMobileView";
 
 const components = {
-  ...getMarkdownComponents(),
   ...saltComponents,
-  Image,
-  img: withMarkdownSpacing(Image),
   Sitemap,
 };
 
-const layoutComponents = { ...mosaicLayouts, ...saltLayouts };
+const layoutComponents = { ...saltLayouts };
 
 const colorMode: "light" | "dark" = "light";
 
@@ -116,7 +98,6 @@ const useHasHydrated = () => {
 interface ThemeProviderProps {
   /** Applies to `SaltProvider` `theme` prop */
   themeClassName?: string;
-  className?: string;
   children?: ReactNode;
 }
 
@@ -139,17 +120,11 @@ function DensitySetter({
 
 // This is a direct copy of Mosaic's ThemeProvider + injecting density, so that we can control top level provider's density,
 // which impacts both children as well as portal (e.g. mobile menu drawer)
-function ThemeProvider({
-  themeClassName,
-  className,
-  children,
-}: ThemeProviderProps) {
+function ThemeProvider({ themeClassName, children }: ThemeProviderProps) {
   const hasHydrated = useHasHydrated();
   const colorMode = useColorMode();
 
   const [density, setDensity] = useState<Density>("low");
-
-  const ssrClassname = hasHydrated ? undefined : ssrClassName;
 
   return (
     <SaltProviderNext
@@ -162,10 +137,8 @@ function ThemeProvider({
       headingFont="Amplitude"
     >
       <DensitySetter setDensity={setDensity} />
-      <div className={clsx(ssrClassname, className)}>
-        {children}
-        <div data-mosaic-id="portal-root" />
-      </div>
+      {children}
+      <div data-mosaic-id="portal-root" />
     </SaltProviderNext>
   );
 }
@@ -204,13 +177,12 @@ export default function MyApp({
             )}
           >
             <BaseUrlProvider>
-              <ImageProvider value={Image}>
-                <LinkProvider value={Link}>
-                  <LayoutProvider layoutComponents={layoutComponents}>
-                    <Component components={components} {...pageProps} />
-                  </LayoutProvider>
-                </LinkProvider>
-              </ImageProvider>
+              <LayoutProvider
+                defaultLayout="DetailError"
+                layoutComponents={layoutComponents}
+              >
+                <Component components={components} {...pageProps} />
+              </LayoutProvider>
             </BaseUrlProvider>
           </ThemeProvider>
         </LocalizationProvider>

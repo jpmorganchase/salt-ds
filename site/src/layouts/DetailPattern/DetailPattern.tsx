@@ -1,3 +1,4 @@
+import type { LayoutProps } from "@jpmorganchase/mosaic-layouts/dist/types";
 import { Image, PageNavigation } from "@jpmorganchase/mosaic-site-components";
 import { type SiteState, useStore } from "@jpmorganchase/mosaic-store";
 import { Divider } from "@salt-ds/core";
@@ -6,8 +7,9 @@ import { CTALink } from "../../components/cta-link/CTALink";
 import { TopLevelNavigation } from "../../components/navigation/TopLevelNavigation";
 import { TableOfContents } from "../../components/toc";
 import { PageHeading } from "../Base/PageHeading";
+import { PrimarySidebar } from "../Base/PrimarySidebar";
+import { SecondarySidebar } from "../Base/SecondarySidebar";
 import { Base } from "../Base/index";
-import type { LayoutProps } from "../types/index";
 import { Components } from "./Components";
 import styles from "./DetailPattern.module.css";
 import { RelatedPatterns } from "./RelatedPatterns";
@@ -56,26 +58,26 @@ function PatternPageHeading({
 }
 
 export const DetailPattern: FC<LayoutProps> = ({ children }) => {
-  const PrimarySidebar = (
-    <div className={styles.primarySidebar}>
+  const LeftSidebar = (
+    <PrimarySidebar>
       <TopLevelNavigation />
       <Divider variant="tertiary" />
       <PageNavigation />
-    </div>
+    </PrimarySidebar>
   );
 
   const RightSidebar = (
-    <div className={styles.secondarySidebar}>
+    <SecondarySidebar>
       <TableOfContents />
       <Components />
       <RelatedPatterns />
       <Resources />
-    </div>
+    </SecondarySidebar>
   );
 
   return (
     <Base
-      LeftSidebar={PrimarySidebar}
+      LeftSidebar={LeftSidebar}
       RightSidebar={RightSidebar}
       Heading={PatternPageHeading}
     >

@@ -1,9 +1,9 @@
 import { Text } from "@salt-ds/core";
 import type { FC } from "react";
 
+import type { LayoutProps } from "@jpmorganchase/mosaic-layouts/dist/types";
 import { Footer, Hero } from "../../components/index";
 import { Search } from "../../components/search";
-import type { LayoutProps } from "../types/index";
 import styles from "./Landing.module.css";
 
 export const Landing: FC<LayoutProps> = ({ children }) => {

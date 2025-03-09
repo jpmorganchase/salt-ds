@@ -1,9 +1,14 @@
-import { CloseIcon, type IconProps, SuccessTickIcon } from "@salt-ds/icons";
+import {
+  CloseIcon,
+  type IconProps,
+  SuccessCircleSolidIcon,
+} from "@salt-ds/icons";
 import clsx from "clsx";
 import type { FC, ReactNode } from "react";
-import styles from "./ExampleContainer.module.css";
+import styles from "./GuidanceCallout.module.css";
+import { Tag } from "@salt-ds/core";
 
-export interface ExampleContainerProps {
+export interface GuidanceCalloutProps {
   children: ReactNode;
   type: "positive" | "negative" | "neutral";
   customPillText?: string;
@@ -15,7 +20,7 @@ const TypePill = ({
   type,
 }: {
   text: string;
-  type: ExampleContainerProps["type"];
+  type: GuidanceCalloutProps["type"];
 }) => {
   const iconProps: Partial<IconProps> = {
     "aria-hidden": true,
@@ -24,18 +29,18 @@ const TypePill = ({
   };
 
   return (
-    <strong className={styles.pill}>
+    <Tag className={clsx(styles.pill)}>
       {type === "positive" ? (
-        <SuccessTickIcon {...iconProps} />
+        <SuccessCircleSolidIcon {...iconProps} />
       ) : type === "negative" ? (
         <CloseIcon {...iconProps} />
       ) : null}
       {text}
-    </strong>
+    </Tag>
   );
 };
 
-export const ExampleContainer: FC<ExampleContainerProps> = ({
+export const GuidanceCallout: FC<GuidanceCalloutProps> = ({
   children,
   type,
   customPillText,

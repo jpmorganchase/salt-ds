@@ -1,6 +1,6 @@
+import { useColorMode, useStoreActions } from "@jpmorganchase/mosaic-store";
 import { Button } from "@salt-ds/core";
 import { DarkIcon, LightIcon } from "@salt-ds/icons";
-import { useColorMode, useStoreActions } from "@jpmorganchase/mosaic-store";
 import { useEffect, useState } from "react";
 
 export function ModeToggle() {

@@ -184,11 +184,7 @@ export const AccordionView: FC<{ value: string }> = ({ value }) => {
                     <td>
                       <Tooltip
                         className={styles.tooltip}
-                        content={
-                          <>
-                            <BlockView name={name} />
-                          </>
-                        }
+                        content={<BlockView name={name} />}
                         onOpenChange={function _l() {}}
                       >
                         <Link className={styles.tooltip}> {name}</Link>
