@@ -45,7 +45,7 @@ const useKeyNavigation = ({
 export const CarouselSlider = forwardRef<HTMLDivElement, CarouselSliderProps>(
   function CarouselSlider(
     { children, onKeyDown: onKeyDownProp, ...rest },
-    ref,
+    propRef,
   ) {
     const targetWindow = useWindow();
     useComponentCssInjection({
@@ -82,9 +82,10 @@ export const CarouselSlider = forwardRef<HTMLDivElement, CarouselSliderProps>(
       handleKeyDown(event);
       onKeyDownProp?.(event);
     };
+    const ref = useForkRef(propRef, containerRef);
     return (
       <div
-        ref={useForkRef(ref, containerRef)}
+        ref={ref}
         aria-live={visibleSlides === 1 ? "polite" : undefined}
         className={withBaseName()}
         tabIndex={-1}

@@ -1,8 +1,9 @@
 import { createContext, useResizeObserver } from "@salt-ds/core";
 import {
+  type KeyboardEvent,
+  type MouseEvent,
   type ReactNode,
   type RefObject,
-  type SyntheticEvent,
   useCallback,
   useContext,
   useEffect,
@@ -13,8 +14,8 @@ import {
 export interface CarouselContextValue {
   firstVisibleSlide: number;
   visibleSlides: number;
-  nextSlide: (event: SyntheticEvent) => void;
-  prevSlide: (event: SyntheticEvent) => void;
+  nextSlide: (event: MouseEvent | KeyboardEvent) => void;
+  prevSlide: (event: MouseEvent | KeyboardEvent) => void;
   goToSlide: (index: number) => void;
   updateActiveFromScroll: (scrollLeft: number) => void;
   slideRefs: RefObject<HTMLDivElement>[];
@@ -103,7 +104,7 @@ export function CarouselProvider({
   };
   const goToSlide = (index: number) => scrollToSlide(index);
 
-  const nextSlide = (event: SyntheticEvent) => {
+  const nextSlide = (event: MouseEvent | KeyboardEvent) => {
     const nextSlide = firstVisibleSlide + 1;
     if (!containerRef.current || nextSlide >= slideRefs.length) return;
     if (event.type !== "click") {
@@ -125,7 +126,7 @@ export function CarouselProvider({
     scrollToSlide(nextSlide);
   };
 
-  const prevSlide = (event: SyntheticEvent) => {
+  const prevSlide = (event: MouseEvent | KeyboardEvent) => {
     const previousSlide = firstVisibleSlide - 1;
     if (!containerRef.current || firstVisibleSlide < 0) return;
     if (event.type !== "click") {

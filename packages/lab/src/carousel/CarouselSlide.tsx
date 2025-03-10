@@ -46,7 +46,7 @@ export const CarouselSlide = forwardRef<HTMLDivElement, CarouselSlideProps>(
       style,
       ...rest
     },
-    ref,
+    refProp,
   ) {
     const targetWindow = useWindow();
     useComponentCssInjection({
@@ -83,12 +83,13 @@ export const CarouselSlide = forwardRef<HTMLDivElement, CarouselSlideProps>(
           : undefined,
       ...style,
     };
+    const ref = useForkRef(refProp, slideRef);
     return (
       <div
         role="group"
         aria-roledescription="slide"
         aria-labelledby={clsx(ariaLabelledBy)}
-        ref={useForkRef(ref, slideRef)}
+        ref={ref}
         className={clsx(withBaseName(), {
           [withBaseName("bordered")]: appearance === "bordered",
         })}
