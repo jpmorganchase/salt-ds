@@ -5962,59 +5962,59 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ag-charts-community@npm:10.2.0":
-  version: 10.2.0
-  resolution: "ag-charts-community@npm:10.2.0"
+"ag-charts-community@npm:10.3.4":
+  version: 10.3.4
+  resolution: "ag-charts-community@npm:10.3.4"
   dependencies:
-    ag-charts-locale: "npm:10.2.0"
-    ag-charts-types: "npm:10.2.0"
-  checksum: 10/02b9a67d9f32b0574c0c9b11c53be2c8359fdc11114a9a718166b8925c6dfdbf0eb52f8aef43447f9f6c518e594c0ef1804acccbc3e5f4409e88f7c3bd364ffb
+    ag-charts-locale: "npm:10.3.4"
+    ag-charts-types: "npm:10.3.4"
+  checksum: 10/e1c3afa2e6ec6f4bddc0274b6762394a0c743931e9bcdd5ebb206239c7a4a2f281355a4fbbc1113e98567ed68dcf02f571cca4b1972ff6e1151b8f64eff3c802
   languageName: node
   linkType: hard
 
-"ag-charts-locale@npm:10.2.0":
-  version: 10.2.0
-  resolution: "ag-charts-locale@npm:10.2.0"
-  checksum: 10/814c99d4d25834d01b871a640407b44f12d98cda07b740d17dcffec8d049a4fb9edd03e57dfe32e72f982c82594423ce4c0d93eadb1fb758a5e1529d4209a087
+"ag-charts-locale@npm:10.3.4":
+  version: 10.3.4
+  resolution: "ag-charts-locale@npm:10.3.4"
+  checksum: 10/396dc0ef256588f8288946301ecc155e230c53acfe1728af61e20e6a195296b6fa496c9c4765ae1df0dbe0fa02ab773ab1e5a8b72767a7dbd85c4d83e5869db6
   languageName: node
   linkType: hard
 
-"ag-charts-types@npm:10.2.0":
-  version: 10.2.0
-  resolution: "ag-charts-types@npm:10.2.0"
-  checksum: 10/f6aee22c0d99606535131e3ffcafb30c4f60ee219fd014993ad5d1898aaa0db49a1d608fa725601acfd92eb9a0880e6a7a236113552498f0e51a97554687561f
+"ag-charts-types@npm:10.3.4":
+  version: 10.3.4
+  resolution: "ag-charts-types@npm:10.3.4"
+  checksum: 10/f69d16353ce6f9ac4b164fbfedbb660b129d8c30eeec51a24b66aca051a75775df0d6dd5c649322a6ec787b1a5725f6e7c7c5a7d23b963aed19961a2d7555ee9
   languageName: node
   linkType: hard
 
-"ag-grid-community@npm:32.2.1":
-  version: 32.2.1
-  resolution: "ag-grid-community@npm:32.2.1"
+"ag-grid-community@npm:32.3.4":
+  version: 32.3.4
+  resolution: "ag-grid-community@npm:32.3.4"
   dependencies:
-    ag-charts-types: "npm:10.2.0"
-  checksum: 10/e5f71723752405e42aa66e07cb7b22acf025f05cb6805ef5d20a93348fb8ad7f2157a502c458177582bf87b942d5131bc00e52b05c0df5ca47bcc65d89f12dbb
+    ag-charts-types: "npm:10.3.4"
+  checksum: 10/a5773eacbd177e94373b086c692e89b54979d3cd1bcfd345f7e48097ebc953ea12f293ebcc33aad03786348f4ea139fbde43ee6f336f72d8ed3bc01942244720
   languageName: node
   linkType: hard
 
-"ag-grid-enterprise@npm:32.2.1":
-  version: 32.2.1
-  resolution: "ag-grid-enterprise@npm:32.2.1"
+"ag-grid-enterprise@npm:32.3.4":
+  version: 32.3.4
+  resolution: "ag-grid-enterprise@npm:32.3.4"
   dependencies:
-    ag-charts-community: "npm:10.2.0"
-    ag-grid-community: "npm:32.2.1"
-  checksum: 10/0228dc50ae756ed51e55046e36879e8dc1df18772744b88ac936663032acac5560e1d2e5c4d1f7ab9ac024b7bd7e65d0e43e8f8ef498523222faf8aaae4a2057
+    ag-charts-community: "npm:10.3.4"
+    ag-grid-community: "npm:32.3.4"
+  checksum: 10/ff1327e9453313f6c5233d36325d5f027a6abeaed1960fe371d57738843793f939b5594281672ae01c0432d519e9078897ba58d754429ada7c70d28a0d7d519d
   languageName: node
   linkType: hard
 
-"ag-grid-react@npm:32.2.1":
-  version: 32.2.1
-  resolution: "ag-grid-react@npm:32.2.1"
+"ag-grid-react@npm:32.3.4":
+  version: 32.3.4
+  resolution: "ag-grid-react@npm:32.3.4"
   dependencies:
-    ag-grid-community: "npm:32.2.1"
+    ag-grid-community: "npm:32.3.4"
     prop-types: "npm:^15.8.1"
   peerDependencies:
-    react: ^16.3.0 || ^17.0.0 || ^18.0.0
-    react-dom: ^16.3.0 || ^17.0.0 || ^18.0.0
-  checksum: 10/f5e0f03af453c604f9907b7884f5fc097612497567b5643a0305a59aa3ab0af11f170cacd1a3e362442fdb319b26620616583c578e6b5c6291d40649d5d19e29
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+    react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+  checksum: 10/1ba25100158f7f26057cce08c03e029b5424eff22821831ba86bd13ca31879918bc4e21dd92cb1fd8d40e89ac83bb2b271084daef8178663b6d5b3e395d9d5cc
   languageName: node
   linkType: hard
 

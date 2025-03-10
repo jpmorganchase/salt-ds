@@ -113,9 +113,9 @@
     "@joshwooding/vite-plugin-react-docgen-typescript": "0.4.2",
     "cookie": "^0.7.0",
     "esbuild": "^0.25.0",
-    "ag-grid-community": "32.2.1",
-    "ag-grid-enterprise": "32.2.1",
-    "ag-grid-react": "32.2.1"
+    "ag-grid-community": "32.3.4",
+    "ag-grid-enterprise": "32.3.4",
+    "ag-grid-react": "32.3.4"
   },
   "browserslist": {
     "production": [
