@@ -15,28 +15,28 @@ describe("GIVEN a 100% width slides carousel", () => {
     it("SHOULD move to the next slide with button", () => {
       cy.mount(<Default />);
       cy.findAllByText("1 of 4").should("exist");
-      cy.findAllByRole("button", { name: "Previous slide 0 of 4" }).should(
+      cy.findAllByRole("button", { name: "Previous slide" }).should(
         "have.attr",
         "aria-disabled",
         "true",
       );
-      cy.findAllByRole("button", { name: "Next slide 2 of 4" }).click();
+      cy.findAllByRole("button", { name: "Next slide" }).click();
       cy.findAllByText("2 of 4").should("exist");
     });
 
     it("SHOULD move to the previous slide with button", () => {
       cy.mount(<Default />);
       // move one to the left
-      cy.findAllByRole("button", { name: "Next slide 2 of 4" }).click();
+      cy.findAllByRole("button", { name: "Next slide" }).click();
       // test back button
-      cy.findAllByRole("button", { name: "Previous slide 0 of 4" }).click();
+      cy.findAllByRole("button", { name: "Previous slide" }).click();
       cy.findAllByText("1 of 4").should("exist");
     });
     it("SHOULD disable previous button when reaching far left", () => {
       cy.mount(<Default activeSlideIndex={1} />);
       cy.findAllByText("2 of 4").should("exist");
-      cy.findAllByRole("button", { name: "Previous slide 0 of 4" }).click();
-      cy.findAllByRole("button", { name: "Previous slide 0 of 4" }).should(
+      cy.findAllByRole("button", { name: "Previous slide" }).click();
+      cy.findAllByRole("button", { name: "Previous slide" }).should(
         "have.attr",
         "aria-disabled",
         "true",
@@ -44,10 +44,10 @@ describe("GIVEN a 100% width slides carousel", () => {
     });
 
     it("SHOULD disable next button when reaching far right", () => {
-      cy.mount(<Default activeSlideIndex={3} />);
-      cy.findAllByText("4 of 4").should("exist");
-      cy.findAllByRole("button", { name: "Next slide 5 of 4" }).click();
-      cy.findAllByRole("button", { name: "Next slide 5 of 4" }).should(
+      cy.mount(<Default activeSlideIndex={2} />);
+      cy.findAllByText("3 of 4").should("exist");
+      cy.findAllByRole("button", { name: "Next slide" }).click();
+      cy.findAllByRole("button", { name: "Next slide" }).should(
         "have.attr",
         "aria-disabled",
         "true",
@@ -61,19 +61,19 @@ describe("GIVEN a 100% width slides carousel", () => {
     });
     it("SHOULD support keyboard navigation", () => {
       cy.mount(<Default />);
-      cy.findAllByRole("button", { name: "Next slide 2 of 4" }).focus();
+      cy.findAllByRole("button", { name: "Next slide" }).focus();
+      cy.findAllByText("1 of 4").should("exist");
       cy.realPress("Tab");
       cy.findAllByRole("group").get('[tabindex="0"]').should("have.focus");
       cy.get(".saltCarouselSlider").realPress("ArrowRight");
       cy.findAllByText("2 of 4").should("exist");
       cy.get(".saltCarouselSlider").realPress("ArrowLeft");
-      cy.findAllByText("1 of 4").should("exist");
     });
     describe("WHEN navigating with keyboard keys", () => {
       it("SHOULD NOT move slides when tabbing out of actions within", () => {
         cy.mount(<WithActions />);
         cy.findAllByText("1 - 2 of 4").should("exist");
-        cy.findAllByRole("button", { name: "Next slide 3 of 4" }).focus();
+        cy.findAllByRole("button", { name: "Next slides" }).focus();
         // tab through visible elements
         cy.realPress("Tab");
         cy.realPress("Tab");

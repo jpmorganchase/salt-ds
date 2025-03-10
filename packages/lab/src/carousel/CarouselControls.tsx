@@ -3,6 +3,7 @@ import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import {
   type HTMLAttributes,
+  type MouseEvent,
   type SyntheticEvent,
   forwardRef,
   useRef,
@@ -56,7 +57,7 @@ export const CarouselControls = forwardRef<
     window: targetWindow,
   });
   const {
-    slideRefs,
+    slidesCount,
     firstVisibleSlide,
     nextSlide,
     prevSlide,
@@ -66,24 +67,23 @@ export const CarouselControls = forwardRef<
   const { NextIcon, PreviousIcon } = useIcon();
   const prevButtonRef = useRef<HTMLButtonElement | null>(null);
   const nextButtonRef = useRef<HTMLButtonElement | null>(null);
-  const slidesCount = slideRefs?.length;
 
   const isOnFirstSlide = firstVisibleSlide === 0;
   const isOnLastSlide = firstVisibleSlide === slidesCount - visibleSlides;
-
-  const controlsLabel = (
+  console.log(slidesCount);
+  const controlsLabel = slidesCount >= 1 && (
     <Text as="span" aria-live={visibleSlides === 1 ? undefined : "polite"}>
-      <strong>{`${firstVisibleSlide + 1} ${visibleSlides > 1 ? ` - ${firstVisibleSlide + visibleSlides}` : ""} of
+      <strong>{`${firstVisibleSlide + 1} ${visibleSlides > 1 && slidesCount > 1 ? ` - ${firstVisibleSlide + visibleSlides}` : ""} of
         ${slidesCount}`}</strong>
     </Text>
   );
 
-  function handlePrevClick(event: SyntheticEvent<HTMLButtonElement>) {
+  function handlePrevClick(event: MouseEvent<HTMLButtonElement>) {
     prevSlide(event);
     onMoveBack?.(event);
   }
 
-  function handleNextClick(event: SyntheticEvent<HTMLButtonElement>) {
+  function handleNextClick(event: MouseEvent<HTMLButtonElement>) {
     nextSlide(event);
     onMoveForward?.(event);
   }

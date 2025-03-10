@@ -8,6 +8,7 @@ import {
   forwardRef,
   useEffect,
   useRef,
+  useState,
 } from "react";
 import { useCarousel } from "./CarouselContext";
 import carouselSlideCss from "./CarouselSlide.css";
@@ -55,27 +56,32 @@ export const CarouselSlide = forwardRef<HTMLDivElement, CarouselSlideProps>(
       window: targetWindow,
     });
     const slideRef = useRef<HTMLDivElement>(null);
+    const [index, setIndex] = useState<number | null>(null);
     const {
+      slidesCount,
       firstVisibleSlide,
       registerSlide,
       unregisterSlide,
-      slideRefs,
       visibleSlides,
     } = useCarousel();
 
     useEffect(() => {
       if (slideRef.current) {
-        registerSlide(slideRef);
+        const assignedIndex = registerSlide(slideRef.current);
+        setIndex(assignedIndex);
       }
-      return () => unregisterSlide(slideRef);
+      return () => {
+        if (index !== null) {
+          unregisterSlide(index);
+        }
+      };
     }, [registerSlide, unregisterSlide]);
 
-    const index = slideRefs.indexOf(slideRef);
     const isVisible =
-      slideRef.current &&
+      index !== null &&
       index >= firstVisibleSlide &&
       index < firstVisibleSlide + visibleSlides;
-
+    console.log(isVisible);
     const SlideStyles = {
       "--carousel-slide-width":
         visibleSlides > 1
@@ -108,7 +114,7 @@ export const CarouselSlide = forwardRef<HTMLDivElement, CarouselSlideProps>(
           >
             <div className={withBaseName("content")}>
               <span className={clsx(withBaseName("sr-only"))}>
-                {isVisible && `${index + 1} of ${slideRefs.length}`}
+                {isVisible && `${slidesCount} of ${slidesCount}`}
               </span>
               {header}
               {children}
