@@ -29,10 +29,6 @@ export interface SliderProps
    */
   format?: (value: number) => string | number;
   /**
-   * Position of the labels.
-   */
-  labelPosition?: "bottom" | "inline";
-  /**
    * Marks that are displayed under the track.
    */
   marks?: { label: string; value: number }[];
@@ -64,6 +60,10 @@ export interface SliderProps
    */
   onChangeEnd?: (event: SyntheticEvent<unknown> | Event, value: number) => void;
   /**
+   * Show the slider value in a tooltip when the thumb is hovered.
+   */
+  showTooltip?: boolean;
+  /**
    * Minimum interval the slider thumb can move.
    */
   step?: number;
@@ -85,7 +85,6 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
     defaultValue = 0,
     disabled: disabledProp = false,
     format,
-    labelPosition = "inline",
     marks,
     min = 0,
     minLabel,
@@ -93,6 +92,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
     maxLabel,
     onChange,
     onChangeEnd,
+    showTooltip = true,
     step = 1,
     stepMultiplier = 2,
     value: valueProp,
@@ -147,7 +147,6 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
       disabled={disabled}
       format={format}
       handlePointerDown={handlePointerDownOnTrack}
-      labelPosition={labelPosition}
       isDragging={isDragging}
       min={min}
       minLabel={minLabel}
@@ -175,6 +174,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
         maxLabel={maxLabel}
         offsetPercentage={`${progressPercentage}%`}
         sliderValue={value}
+        showTooltip={showTooltip}
         step={step}
         stepMultiplier={stepMultiplier}
         trackDragging={isDragging}

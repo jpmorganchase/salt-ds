@@ -19,15 +19,15 @@ A tooltip displays the value of the `RangeSlider`'s "thumbs" when a thumb is foc
 
 </LivePreview>
 
-<LivePreview componentName="range-slider" exampleName="Labels">
+<LivePreview componentName="range-slider" exampleName="WithLabels">
 
 ## Labels
 
-`RangeSlider`'s labels indicate the minimum and maximum values of the range, and can be located either inline (default), or at the bottom of the `RangeSlider`.
+`RangeSlider`'s labels indicate the minimum and maximum values of the range, and can be located inline with the `RangeSlider` using the `minLabel` and `maxLabel` props or they can be located at the bottom of the `RangeSlider` using the `marks` prop.
 
 </LivePreview>
 
-<LivePreview componentName="range-slider" exampleName="CustomStep">
+<LivePreview componentName="range-slider" exampleName="WithCustomStep">
 
 ## Custom Step
 
@@ -53,10 +53,6 @@ You can pass a callback function to the `format()` prop to format the display va
 
 Wrap the `RangeSlider` in a form field to display a left-aligned or top label. For more information, refer to the [form field documentation.](/salt/components/form-field/examples)
 
-### Best practices
-
-We recommend using labels with the `RangeSlider` to provide context and aid the user in understanding the value being selected.
-
 </LivePreview>
 
 <LivePreview componentName="range-slider" exampleName="WithInput">
@@ -80,17 +76,15 @@ You can display inputs with a `RangeSlider`. Inputs are used to enter a numeric 
 
 ## With Marks
 
-You can display marks under the slider track between the minimum and maximum labels to highlight certain values.
-
-Please note that minimum and maximum labels will always be visible and you can not control them through `marks`. Refer to the [Custom Min/Max labels](#with-custom-minmax-labels) example for more details.
+You can display marks under the slider track to label specific values. You can combine `marks` with `minLabel` and `maxLabel` to provide even more context regarding the `RangeSlider`.
 
 </LivePreview>
 
-<LivePreview componentName="range-slider" exampleName="WithCustomLabels">
+<LivePreview componentName="range-slider" exampleName="WithDisabledTooltip">
 
-## With Custom Minimum and Maximum labels
+## With Disabled Tooltip
 
-You can customize the minimum and maximum labels.
+If you do not wish to show the tooltip when the `RangeSlider` thumb is hovered, you can disable it via the `showTooltip` prop. This could be useful for instances when your `RangeSlider` is already displaying sufficient information and you do not wish to show a tooltip.
 
 </LivePreview>
 

@@ -9,12 +9,7 @@
   --slider-track-fill: var(--salt-accent-borderColor);
 
   display: flex;
-  position: relative;
   width: 100%;
-}
-
-.saltSliderTrack-withMarks {
-  justify-content: unset;
 }
 
 .saltSliderTrack-disabled {
@@ -22,30 +17,28 @@
 }
 
 .saltSliderTrack-container {
-  width: 100%;
+  align-items: center;
   display: flex;
   flex-direction: row;
-  align-items: center;
-  flex-wrap: wrap;
-  justify-content: space-between;
+  gap: var(--salt-spacing-50);
+  width: 100%;
 }
 
 .saltSliderTrack-wrapper {
   align-items: center;
   display: flex;
-  width: 100%;
+  flex: 1;
   height: var(--salt-size-base);
+  position: relative;
+  width: 100%;
 }
 
 .saltSliderTrack-rail {
   cursor: var(--salt-selectable-cursor-hover);
   display: flex;
   flex: 100%;
-  flex-direction: row;
-  flex-wrap: nowrap;
   height: var(--salt-size-bar);
   justify-content: space-between;
-  order: 0;
   position: relative;
 }
 
@@ -91,30 +84,6 @@
 .saltSliderTrack-minLabel,
 .saltSliderTrack-maxLabel {
   user-select: none;
-}
-
-.saltSliderTrack-minLabel {
-  order: 1;
-}
-
-.saltSliderTrack-maxLabel {
-  order: 2;
-}
-
-.saltSliderTrack-withInlineLabels .saltSliderTrack-container {
-  flex-wrap: nowrap;
-  gap: var(--salt-spacing-50);
-}
-
-.saltSliderTrack-withInlineLabels .saltSliderTrack-wrapper {
-  flex: 1;
-  height: unset;
-}
-
-.saltSliderTrack-withInlineLabels .saltSliderTrack-minLabel,
-.saltSliderTrack-withInlineLabels .saltSliderTrack-maxLabel,
-.saltSliderTrack-withInlineLabels .saltSliderTrack-rail {
-  order: unset;
 }
 
 .saltSliderTrack-dragging,

@@ -9,11 +9,11 @@ export const WithFormField = (): ReactElement => {
     <FormField style={{ width: "400px" }}>
       <FormFieldLabel>Field Label</FormFieldLabel>
       <Slider
-        defaultValue={80}
         min={0}
         max={20}
         value={sliderValue}
-        labelPosition="bottom"
+        minLabel="0"
+        maxLabel="20"
         onChange={(e, value) => {
           setSliderValue(value);
         }}

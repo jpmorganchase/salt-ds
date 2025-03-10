@@ -60,6 +60,8 @@ export const SingleWithInput = () => {
           min={bounds[0]}
           max={bounds[1]}
           value={value}
+          minLabel="-50"
+          maxLabel="50"
           onChange={handleSliderChange}
           style={{ flex: "100%" }}
         />

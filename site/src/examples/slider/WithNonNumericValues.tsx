@@ -22,8 +22,6 @@ export const WithNonNumericValues = (): ReactElement => {
   return (
     <Slider
       style={{ width: "500px" }}
-      minLabel={"Monday"}
-      maxLabel={"Sunday"}
       min={1}
       max={7}
       value={value}

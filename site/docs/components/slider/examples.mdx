@@ -18,15 +18,15 @@ Selection of a single value from a `Slider` track. A tooltip displays the value 
 
 </LivePreview>
 
-<LivePreview componentName="slider" exampleName="Labels">
+<LivePreview componentName="slider" exampleName="WithLabels">
 
 ## Labels
 
-`Slider`'s labels indicate the minimum and maximum values of the range, and can be located either inline (default), or at the bottom of the `Slider`.
+`Slider`'s labels indicate the minimum and maximum values of the range, and can be located inline with the `Slider` using the `minLabel` and `maxLabel` props or they can be located at the bottom of the `Slider` using the `marks` prop.
 
 </LivePreview>
 
-<LivePreview componentName="slider" exampleName="CustomStep">
+<LivePreview componentName="slider" exampleName="WithCustomStep">
 
 ## Custom Step
 
@@ -38,7 +38,7 @@ By default, the `Slider` step increment is set to 1. This can be customized by u
 
 ## With Formatting
 
-You can pass a callback function to the `format()` prop to format the display values in the tooltip and min/max labels. This can be useful to display units or currency.
+You can pass a callback function to the `format()` prop to format the display values in the tooltip. This `format()` callback will also be applied to screen reader announcements to ensure accessibility. You can use the `format()` callback to to display units or currency.
 
 ### Best practices
 
@@ -51,10 +51,6 @@ You can pass a callback function to the `format()` prop to format the display va
 ## With Form Field
 
 Wrap the `Slider` in a form field to display a left-aligned or top label. For more information, refer to the [form field documentation.](/salt/components/form-field/examples)
-
-### Best practices
-
-We recommend using labels with `Slider` to provide context and aid the user in understanding the value being selected.
 
 </LivePreview>
 
@@ -80,17 +76,15 @@ You can display inputs with the `Slider`. Inputs are used to enter a numeric val
 
 ## With Marks
 
-You can display marks under the slider track between the minimum and maximum labels to highlight certain values.
-
-Please note that minimum and maximum labels will always be visible and you can not control them through `marks`. Refer to the [Custom Min/Max labels](#with-custom-minmax-labels) example for more details.
+You can display marks under the slider track to label specific values. You can combine `marks` with `minLabel` and `maxLabel` to provide even more context regarding the `Slider`.
 
 </LivePreview>
 
-<LivePreview componentName="slider" exampleName="WithCustomLabels">
+<LivePreview componentName="slider" exampleName="WithDisabledTooltip">
 
-## With Custom Minimum and Maximum labels
+## With Disabled Tooltip
 
-You can customize the minimum and maximum labels.
+If you do not wish to show the tooltip when the `Slider` thumb is hovered, you can disable it via the `showTooltip` prop. This could be useful for instances when your `Slider` is already displaying sufficient information and you do not wish to show a tooltip.
 
 </LivePreview>
 

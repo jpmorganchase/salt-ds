@@ -27,7 +27,7 @@ describe("Given a Range Slider", () => {
     cy.get("@changeSpy").should(
       "have.been.calledWith",
       Cypress.sinon.match.any,
-      Cypress.sinon.match.array.deepEquals([0, 7]),
+      Cypress.sinon.match.array.deepEquals([0, 8]),
     );
     cy.get(".saltSliderTrack-rail").trigger("pointerup");
   });
@@ -48,7 +48,7 @@ describe("Given a Range Slider", () => {
     cy.get("@changeEndSpy").should(
       "have.been.calledWith",
       Cypress.sinon.match.any,
-      Cypress.sinon.match.array.deepEquals([0, 7]),
+      Cypress.sinon.match.array.deepEquals([0, 8]),
     );
   });
 
@@ -86,11 +86,11 @@ describe("Given a Range Slider", () => {
     });
     cy.findAllByTestId("sliderThumb").eq(1).trigger("pointerup");
     // Value should be updated
-    cy.findAllByRole("slider").eq(1).should("have.value", "7");
+    cy.findAllByRole("slider").eq(1).should("have.value", "8");
     cy.get("@changeSpy").should(
       "have.been.calledWith",
       Cypress.sinon.match.any,
-      Cypress.sinon.match.array.deepEquals([0, 7]),
+      Cypress.sinon.match.array.deepEquals([0, 8]),
     );
 
     // Drag the first thumb
@@ -102,11 +102,11 @@ describe("Given a Range Slider", () => {
     });
     cy.findAllByTestId("sliderThumb").eq(0).trigger("pointerup");
     // Value should be updated
-    cy.findAllByRole("slider").eq(0).should("have.value", "1");
+    cy.findAllByRole("slider").eq(0).should("have.value", "3");
     cy.get("@changeSpy").should(
       "have.been.calledWith",
       Cypress.sinon.match.any,
-      Cypress.sinon.match.array.deepEquals([1, 7]),
+      Cypress.sinon.match.array.deepEquals([3, 8]),
     );
   });
 
@@ -249,6 +249,18 @@ describe("Given a Range Slider", () => {
     cy.get(".saltSliderTooltip").should("not.be.visible");
   });
 
+  it("should not show tooltip when showTooltip is set to false", () => {
+    cy.mount(
+      <Default
+        style={{ width: "400px" }}
+        defaultValue={[2, 4]}
+        showTooltip={false}
+      />,
+    );
+    cy.findAllByTestId("sliderThumb").eq(0).trigger("pointerover");
+    cy.findByTestId("sliderTooltip").should("not.exist");
+  });
+
   it("should render marks when provided", () => {
     cy.mount(
       <Default
@@ -264,7 +276,7 @@ describe("Given a Range Slider", () => {
     cy.findAllByTestId("mark").eq(1).should("have.text", "3");
   });
 
-  it("should not render inline min/max labels when marks are provided", () => {
+  it("should render inline min/max labels and marks when provided", () => {
     cy.mount(
       <Default
         style={{ width: "400px" }}
@@ -272,13 +284,15 @@ describe("Given a Range Slider", () => {
           { value: 2, label: "2" },
           { value: 3, label: "3" },
         ]}
+        minLabel="Very low"
+        maxLabel="Very high"
       />,
     );
 
-    cy.get(".saltSliderTrack").should(
-      "not.have.class",
-      ".saltSlider-inlineLabels",
-    );
+    cy.findByText("Very low").should("exist");
+    cy.findByText("Very high").should("exist");
+    cy.findAllByTestId("mark").eq(0).should("have.text", "2");
+    cy.findAllByTestId("mark").eq(1).should("have.text", "3");
   });
 
   it("should render custom min max labels when passed", () => {

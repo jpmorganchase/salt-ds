@@ -26,7 +26,7 @@ describe("Given a Slider", () => {
     cy.get("@changeSpy").should(
       "have.been.calledWith",
       Cypress.sinon.match.any,
-      9,
+      8,
     );
   });
 
@@ -46,7 +46,7 @@ describe("Given a Slider", () => {
     cy.get("@changeEndSpy").should(
       "have.been.calledWith",
       Cypress.sinon.match.any,
-      9,
+      8,
     );
   });
 
@@ -144,11 +144,11 @@ describe("Given a Slider", () => {
     });
     cy.findByTestId("sliderThumb").trigger("pointerup");
     // Value should be updated
-    cy.findByRole("slider").should("have.value", "9");
+    cy.findByRole("slider").should("have.value", "8");
     cy.get("@changeSpy").should(
       "have.been.calledWith",
       Cypress.sinon.match.any,
-      9,
+      8,
     );
   });
 
@@ -160,6 +160,18 @@ describe("Given a Slider", () => {
     // And hide tooltip on pointerout
     cy.findByTestId("sliderThumb").trigger("pointerout");
     cy.findByTestId("sliderTooltip").should("not.be.visible");
+  });
+
+  it("should not show tooltip when showTooltip is set to false", () => {
+    cy.mount(
+      <Default
+        style={{ width: "400px" }}
+        defaultValue={2}
+        showTooltip={false}
+      />,
+    );
+    cy.findByTestId("sliderThumb").trigger("pointerover");
+    cy.findByTestId("sliderTooltip").should("not.exist");
   });
 
   it("should render marks when provided", () => {
@@ -177,7 +189,7 @@ describe("Given a Slider", () => {
     cy.findAllByTestId("mark").eq(1).should("have.text", "3");
   });
 
-  it("should not render inline min/max labels when marks are provided", () => {
+  it("should render inline min/max labels and marks when provided", () => {
     cy.mount(
       <Default
         style={{ width: "400px" }}
@@ -185,13 +197,15 @@ describe("Given a Slider", () => {
           { value: 2, label: "2" },
           { value: 3, label: "3" },
         ]}
+        minLabel="Very low"
+        maxLabel="Very high"
       />,
     );
 
-    cy.findByTestId("sliderTrack").should(
-      "not.have.class",
-      ".saltSlider-inlineLabels",
-    );
+    cy.findByText("Very low").should("exist");
+    cy.findByText("Very high").should("exist");
+    cy.findAllByTestId("mark").eq(0).should("have.text", "2");
+    cy.findAllByTestId("mark").eq(1).should("have.text", "3");
   });
 
   it("should not allow the thumb to go beyond min and max values", () => {
@@ -227,7 +241,7 @@ describe("Given a Slider", () => {
     cy.get("@changeEndSpy").should("have.callCount", 2);
   });
 
-  it("should render custom min max labels when passed", () => {
+  it("should render min max labels when passed", () => {
     cy.mount(
       <Default
         style={{ width: "400px" }}
@@ -246,7 +260,7 @@ describe("Given a Slider", () => {
     cy.findByRole("slider").should("be.disabled");
   });
 
-  it("should format the tooltip text and min/max labels when a format function is passed", () => {
+  it("should format the tooltip text when a format function is passed", () => {
     cy.mount(
       <Default defaultValue={2} format={(value: number) => `${value}%`} />,
     );

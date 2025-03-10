@@ -30,6 +30,7 @@ interface SliderThumbProps
   min: number;
   minLabel?: string;
   offsetPercentage?: string;
+  showTooltip?: boolean;
   sliderValue: [number, number] | number;
   step: number;
   stepMultiplier: number;
@@ -50,6 +51,7 @@ export const SliderThumb = ({
   min,
   minLabel,
   offsetPercentage,
+  showTooltip,
   sliderValue,
   step,
   stepMultiplier,
@@ -64,8 +66,8 @@ export const SliderThumb = ({
       window: targetWindow,
     });
 
-    const [isTooltipVisible, setIsTooltipVisible] = useState(false);
     const [isFocused, setIsFocused] = useState(false);
+    const [isTooltipVisible, setIsTooltipVisible] = useState(false);
     const inputRef = useRef<HTMLInputElement>(null);
     const id = useId();
     const accessibleTextId = `saltSlider-${id}-${index}`;
@@ -79,11 +81,11 @@ export const SliderThumb = ({
     }, []);
 
     useEffect(() => {
-      if (isTooltipVisible) {
+      if (showTooltip && isTooltipVisible) {
         targetWindow?.addEventListener("keydown", handleKeyDown);
       }
       return () => targetWindow?.removeEventListener("keydown", handleKeyDown);
-    }, [handleKeyDown, targetWindow, isTooltipVisible]);
+    }, [handleKeyDown, isTooltipVisible, showTooltip, targetWindow]);
 
     const handlePointerEnter = () => setIsTooltipVisible(true);
 
@@ -97,12 +99,12 @@ export const SliderThumb = ({
 
     const handleFocus = () => {
       setIsFocused(true);
-      setIsTooltipVisible(true);
+      if (showTooltip) setIsTooltipVisible(true);
     };
 
     const handleBlur = () => {
       setIsFocused(false);
-      setIsTooltipVisible(false);
+      if (showTooltip) setIsTooltipVisible(false);
     };
 
     const handleKeydownOnThumb = (event: React.KeyboardEvent) => {
@@ -149,15 +151,19 @@ export const SliderThumb = ({
           [withBaseName("secondThumb")]: index === 1,
         })}
         data-testid="sliderThumb"
-        onPointerEnter={handlePointerEnter}
-        onPointerLeave={handlePointerLeave}
         onPointerDown={handlePointerDown}
         style={{ left: offsetPercentage }}
+        {...(showTooltip && {
+          onPointerEnter: handlePointerEnter,
+          onPointerLeave: handlePointerLeave,
+        })}
       >
-        <SliderTooltip
-          value={formattedValue}
-          open={(isTooltipVisible || trackDragging) && !disabled}
-        />
+        {showTooltip && (
+          <SliderTooltip
+            value={formattedValue}
+            open={(isTooltipVisible || trackDragging) && !disabled}
+          />
+        )}
         <input
           disabled={disabled}
           type="range"
@@ -186,8 +192,9 @@ export const SliderThumb = ({
         >
           {Array.isArray(sliderValue) &&
             `${index === 0 ? "leading" : "trailing"}, ${format?.(sliderValue[0]) || sliderValue[0]} to ${format?.(sliderValue[1]) || sliderValue[1]}, `}
-          Slider range minimum {minLabel || format?.(min) || min}, maximum{" "}
-          {maxLabel || format?.(max) || max}
+          Slider range {minLabel && `From ${minLabel}, `}
+          {maxLabel && `To ${maxLabel},`} minimum {format?.(min) || min},
+          maximum {format?.(max) || max}
           {step !== 1 && `, Increments of ${step}`}
         </span>
       </div>

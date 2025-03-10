@@ -6,7 +6,7 @@ export const WithFormField = (): ReactElement => {
   return (
     <FormField style={{ width: "400px" }}>
       <FormFieldLabel>Field Label</FormFieldLabel>
-      <RangeSlider min={0} max={50} step={10} labelPosition="bottom" />
+      <RangeSlider min={0} max={50} step={10} minLabel="0" maxLabel="50" />
     </FormField>
   );
 };

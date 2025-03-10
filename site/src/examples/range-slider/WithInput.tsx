@@ -25,9 +25,9 @@ const validateRange = (values: [number, number], bounds: [number, number]) => {
 };
 
 const RangeWithInput = () => {
-  const bounds: [number, number] = [0, 100];
+  const bounds: [number, number] = [-50, 50];
 
-  const [value, setValue] = useState<[number, number]>([10, 20]);
+  const [value, setValue] = useState<[number, number]>([-10, 20]);
   const [minInputValue, setMinInputValue] = useState<string>("10");
   const [maxInputValue, setMaxInputValue] = useState<string>("20");
   const [validationStatus, setValidationStatus] = useState<undefined | "error">(
@@ -84,6 +84,8 @@ const RangeWithInput = () => {
           style={{ flex: "100%" }}
           min={bounds[0]}
           max={bounds[1]}
+          minLabel="-50"
+          maxLabel="50"
           value={value}
           onChange={handleSliderChange}
         />

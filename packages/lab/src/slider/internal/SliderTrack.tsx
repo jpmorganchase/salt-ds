@@ -16,7 +16,6 @@ interface SliderTrackProps
   handlePointerDown: (event: React.PointerEvent<HTMLDivElement>) => void;
   isDragging: boolean;
   isRange?: boolean;
-  labelPosition: "inline" | "bottom";
   marks?: { label: string; value: number }[];
   max: number;
   maxLabel?: number | string;
@@ -36,7 +35,6 @@ export const SliderTrack = forwardRef<HTMLDivElement, SliderTrackProps>(
       handlePointerDown,
       isDragging,
       isRange = false,
-      labelPosition,
       marks,
       max,
       maxLabel,
@@ -61,8 +59,6 @@ export const SliderTrack = forwardRef<HTMLDivElement, SliderTrackProps>(
         className={clsx(withBaseName(), {
           [withBaseName("disabled")]: disabled,
           [withBaseName("dragging")]: isDragging,
-          [withBaseName("withInlineLabels")]:
-            !marks && labelPosition === "inline",
           [withBaseName("range")]: isRange,
           [withBaseName("withMarks")]: marks,
         })}
@@ -71,16 +67,17 @@ export const SliderTrack = forwardRef<HTMLDivElement, SliderTrackProps>(
         {...rest}
       >
         <div className={clsx(withBaseName("container"))}>
-          {/* Min Label */}
-          <Text
-            aria-hidden
-            className={withBaseName("minLabel")}
-            color="secondary"
-            disabled={disabled}
-            styleAs="label"
-          >
-            {minLabel || format?.(min) || min}
-          </Text>
+          {minLabel && (
+            <Text
+              aria-hidden
+              className={withBaseName("minLabel")}
+              color="secondary"
+              disabled={disabled}
+              styleAs="label"
+            >
+              {minLabel || format?.(min)}
+            </Text>
+          )}
           {/* Slider Track */}
           <div className={withBaseName("wrapper")}>
             <div
@@ -104,46 +101,44 @@ export const SliderTrack = forwardRef<HTMLDivElement, SliderTrackProps>(
               {isRange && <div className={clsx(withBaseName("fill"))} />}
               {children}
             </div>
+            {/* Marks */}
+            {marks && (
+              <div className={withBaseName("marks")}>
+                {marks.map(({ label, value }) => {
+                  return (
+                    <Text
+                      aria-hidden
+                      className={withBaseName("markLabel")}
+                      data-testid="mark"
+                      disabled={disabled}
+                      color="secondary"
+                      key={value}
+                      styleAs="label"
+                      style={
+                        {
+                          "--slider-mark-percentage": `${calculateMarkPosition(value, max, min)}%`,
+                        } as React.CSSProperties
+                      }
+                    >
+                      {label}
+                    </Text>
+                  );
+                })}
+              </div>
+            )}
           </div>
-          {/* Max label */}
-          <Text
-            aria-hidden
-            className={withBaseName("maxLabel")}
-            color="secondary"
-            disabled={disabled}
-            styleAs="label"
-          >
-            {maxLabel || format?.(max) || max}
-          </Text>
+          {maxLabel && (
+            <Text
+              aria-hidden
+              className={withBaseName("maxLabel")}
+              color="secondary"
+              disabled={disabled}
+              styleAs="label"
+            >
+              {maxLabel || format?.(max)}
+            </Text>
+          )}
         </div>
-        {/* Marks */}
-        {marks && (
-          <div className={withBaseName("marks")}>
-            {marks.map(({ label, value }) => {
-              return (
-                value !== min &&
-                value !== max && (
-                  <Text
-                    aria-hidden
-                    className={withBaseName("markLabel")}
-                    data-testid="mark"
-                    disabled={disabled}
-                    color="secondary"
-                    key={value}
-                    styleAs="label"
-                    style={
-                      {
-                        "--slider-mark-percentage": `${calculateMarkPosition(value, max, min)}%`,
-                      } as React.CSSProperties
-                    }
-                  >
-                    {label}
-                  </Text>
-                )
-              );
-            })}
-          </div>
-        )}
       </div>
     );
   },

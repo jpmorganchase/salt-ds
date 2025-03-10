@@ -29,10 +29,6 @@ export interface RangeSliderProps
    */
   format?: (value: number) => string | number;
   /**
-   * Position of the labels.
-   */
-  labelPosition?: "bottom" | "inline";
-  /**
    * Marks that are displayed under the track.
    */
   marks?: { label: string; value: number }[];
@@ -70,6 +66,10 @@ export interface RangeSliderProps
     value: [number, number],
   ) => void;
   /**
+   * Show the slider value in a tooltip when the thumb is hovered.
+   */
+  showTooltip?: boolean;
+  /**
    * Minimum interval the slider thumb can move.
    */
   step?: number;
@@ -91,7 +91,6 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>(
       "aria-valuetext": ariaValueText,
       disabled: disabledProp = false,
       format,
-      labelPosition = "inline",
       marks,
       max = 10,
       min = 0,
@@ -99,6 +98,7 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>(
       minLabel,
       onChange,
       onChangeEnd,
+      showTooltip = true,
       step = 1,
       stepMultiplier = 2,
       value: valueProp,
@@ -151,7 +151,10 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>(
       disabled: disabled,
       format: format,
       max: max,
+      maxLabel: maxLabel,
       min: min,
+      minLabel: minLabel,
+      showTooltip: showTooltip,
       step: step,
       stepMultiplier: stepMultiplier,
       sliderValue: value,
@@ -182,7 +185,6 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>(
         handlePointerDown={handlePointerDownOnTrack}
         isDragging={isDragging}
         isRange
-        labelPosition={labelPosition}
         marks={marks}
         min={min}
         minLabel={minLabel}
