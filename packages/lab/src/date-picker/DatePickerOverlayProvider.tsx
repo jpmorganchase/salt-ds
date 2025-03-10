@@ -1,6 +1,9 @@
 import {
-  type OpenChangeReason,
+  type ElementProps,
+  type FloatingContext,
+  type OpenChangeReason as FloatingUIOpenChangeReason,
   flip,
+  useClick,
   useDismiss,
   useInteractions,
 } from "@floating-ui/react";
@@ -9,11 +12,18 @@ import {
   type ReactNode,
   useCallback,
   useContext,
-  useEffect,
   useMemo,
   useRef,
+  useState,
 } from "react";
+import { useKeyboard } from "./useKeyboard";
 
+/** Reason for overlay state change, can be a custom reason */
+export type DatePickerOpenChangeReason =
+  | FloatingUIOpenChangeReason
+  | "apply"
+  | "cancel"
+  | string;
 /**
  * Interface representing the state for a DatePicker overlay.
  */
@@ -43,13 +53,19 @@ interface DatePickerOverlayHelpers {
   /**
    * Sets the open state of the overlay.
    * @param newOpen - The new value for the open state.
+   * @param event - event that triggered the state change
+   * @param reason - reason for the the state change
    */
-  setOpen: (newOpen: boolean) => void;
+  setOpen: (
+    newOpen: boolean,
+    event?: Event,
+    reason?: DatePickerOpenChangeReason,
+  ) => void;
   /**~
    * Register a callback for when onDismiss is called
    * @param onDismissCallback
    */
-  setOnDismiss: (onDismissCallback: () => void) => void;
+  setOnDismiss: (onDismissCallback: (event?: Event) => void) => void;
 }
 
 /**
@@ -82,10 +98,20 @@ interface DatePickerOverlayProviderProps {
    */
   open?: boolean;
   /**
+   * When `open` is uncontrolled, set this to `true` to open on click
+   */
+  openOnClick?: boolean;
+  /**
    * Handler for when open state changes
    * @param newOpen - true when opened
+   * @param event - event that triggered the state change
+   * @param reason - reason for the the state change
    */
-  onOpen?: (newOpen: boolean) => void;
+  onOpenChange?: (
+    newOpen: boolean,
+    event?: Event,
+    reason?: DatePickerOpenChangeReason,
+  ) => void;
   /**
    * The default open state of the overlay.
    */
@@ -95,6 +121,10 @@ interface DatePickerOverlayProviderProps {
    */
   children: ReactNode;
   /**
+   * A factory method to create a set of interaction, if provided overrides the default interactions
+   */
+  interactions?: (context: FloatingContext) => Array<ElementProps>;
+  /**
    * When true, shouldn't open the overlay.
    */
   readOnly?: boolean;
@@ -102,46 +132,47 @@ interface DatePickerOverlayProviderProps {
 
 export const DatePickerOverlayProvider: React.FC<
   DatePickerOverlayProviderProps
-> = ({ open: openProp, defaultOpen, onOpen, children, readOnly }) => {
-  const [open, setOpenState] = useControlled({
+> = ({
+  open: openProp,
+  openOnClick,
+  defaultOpen,
+  onOpenChange,
+  children,
+  interactions,
+  readOnly,
+}) => {
+  const [open, setOpenState, isOpenControlled] = useControlled({
     controlled: openProp,
     default: Boolean(defaultOpen),
     name: "DatePicker",
     state: "openDatePickerOverlay",
   });
-  const triggeringElement = useRef<HTMLElement | null>(null);
-  const onDismissCallback = useRef<() => void>();
-
-  useEffect(() => {
-    if (!open) {
-      const trigger = triggeringElement.current as HTMLElement;
-      if (trigger) {
-        trigger.focus();
-      }
-      if (trigger instanceof HTMLInputElement) {
-        setTimeout(() => {
-          trigger.setSelectionRange(0, trigger.value.length);
-        }, 0);
-      }
-      triggeringElement.current = null;
-    }
-  }, [open]);
-
-  const setOpen = useCallback(
-    (
-      newOpen: boolean,
-      _event?: Event | undefined,
-      reason?: OpenChangeReason | undefined,
-    ) => {
+  const [disableFocus, setDisableFocus] = useState<boolean>(true);
+  const triggeringElementRef = useRef<HTMLElement | null>(null);
+  const onDismissCallback = useRef<(event?: Event) => void>();
+  const handleOpenChange = useCallback(
+    (newOpen: boolean, event?: Event, reason?: DatePickerOpenChangeReason) => {
       if (newOpen) {
         if (readOnly) {
-          // When not open overlay when readOnly
           return;
         }
-        triggeringElement.current = document.activeElement as HTMLElement;
+        triggeringElementRef.current = document.activeElement as HTMLElement;
+        setDisableFocus(reason === "click"); // prevent the overlay taking focus on click
+      } else if (!isOpenControlled) {
+        const trigger = triggeringElementRef.current as HTMLElement;
+        if (trigger) {
+          trigger.focus();
+        }
+        if (trigger instanceof HTMLInputElement) {
+          setTimeout(() => {
+            trigger.setSelectionRange(0, trigger.value.length);
+          }, 1);
+        }
+        triggeringElementRef.current = null;
       }
       setOpenState(newOpen);
-      onOpen?.(newOpen);
+      onOpenChange?.(newOpen, event, reason);
+
       if (
         reason === "escape-key" ||
         (reason === "outside-press" && onDismissCallback.current)
@@ -149,27 +180,34 @@ export const DatePickerOverlayProvider: React.FC<
         onDismissCallback?.current?.();
       }
     },
-    [onOpen, readOnly],
+    [onOpenChange, readOnly],
   );
 
+  const openState = open && !readOnly;
   const floatingUIResult = useFloatingUI({
-    open,
-    onOpenChange: setOpen,
+    open: openState,
+    onOpenChange: handleOpenChange,
     placement: "bottom-start",
     middleware: [flip({ fallbackStrategy: "initialPlacement" })],
   });
 
   const {
-    getFloatingProps: _getFloatingPropsCallback,
-    getReferenceProps: _getReferenceProps,
-  } = useInteractions([useDismiss(floatingUIResult.context)]);
-  const getFloatingPropsCallback = useMemo(
-    () => _getFloatingPropsCallback,
-    [_getFloatingPropsCallback],
-  );
-  const getReferenceProps = useMemo(
-    () => _getReferenceProps,
-    [_getReferenceProps],
+    getFloatingProps: getFloatingPropsCallback,
+    getReferenceProps: getReferencePropsCallback,
+  } = useInteractions(
+    interactions
+      ? interactions(floatingUIResult.context)
+      : [
+          useDismiss(floatingUIResult.context),
+          useKeyboard(floatingUIResult.context, {
+            enabled: !readOnly,
+          }),
+          useClick(floatingUIResult.context, {
+            enabled: !!openOnClick && !readOnly,
+            toggle: false,
+            keyboardHandlers: false,
+          }),
+        ],
   );
 
   const getFloatingProps = useCallback(
@@ -182,17 +220,26 @@ export const DatePickerOverlayProvider: React.FC<
         width: elements.floating?.offsetWidth,
         height: elements.floating?.offsetHeight,
         ...getFloatingPropsCallback(userProps),
+        focusManagerProps: {
+          disabled: disableFocus,
+          returnFocus: false,
+          context: floatingUIResult.context,
+          initialFocus: 4,
+        },
       };
     },
-    [getFloatingPropsCallback, floatingUIResult],
+    [getFloatingPropsCallback, floatingUIResult, disableFocus],
   );
-  const setOnDismiss = useCallback((dismissCallback: () => void) => {
-    onDismissCallback.current = dismissCallback;
-  }, []);
+  const setOnDismiss = useCallback(
+    (dismissCallback: (event?: Event) => void) => {
+      onDismissCallback.current = dismissCallback;
+    },
+    [],
+  );
 
   const state: DatePickerOverlayState = useMemo(
     () => ({
-      open,
+      open: openState,
       floatingUIResult,
     }),
     [open, floatingUIResult],
@@ -201,11 +248,11 @@ export const DatePickerOverlayProvider: React.FC<
   const helpers: DatePickerOverlayHelpers = useMemo(
     () => ({
       getFloatingProps,
-      getReferenceProps,
-      setOpen,
+      getReferenceProps: getReferencePropsCallback,
+      setOpen: handleOpenChange,
       setOnDismiss,
     }),
-    [getFloatingProps, getReferenceProps, setOpen],
+    [getFloatingProps, getReferencePropsCallback, handleOpenChange],
   );
   const contextValue = useMemo(() => ({ state, helpers }), [state, helpers]);
 
