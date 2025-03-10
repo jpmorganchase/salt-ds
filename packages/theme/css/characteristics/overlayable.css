@@ -9,5 +9,5 @@
 
   --salt-overlayable-background: var(--salt-palette-alpha-high);
   --salt-overlayable-background-highlight: var(--salt-palette-alpha-contrast-low);
-  --salt-overlayable-rangeSelection: var(--salt-palette-alpha-contrast-lower);
+  --salt-overlayable-background-rangeSelection: var(--salt-palette-alpha-contrast-lower);
 }
