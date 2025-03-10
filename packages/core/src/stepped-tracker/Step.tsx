@@ -1,8 +1,8 @@
-import { makePrefixer, useControlled, useId } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import clsx from "clsx";
 import { type CSSProperties, useContext, useEffect } from "react";
+import { makePrefixer, useControlled, useId } from "../utils";
 
 import { StepConnector } from "./Step.Connector";
 import { StepDescription } from "./Step.Description";
