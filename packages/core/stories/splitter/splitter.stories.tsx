@@ -1,18 +1,29 @@
-import { Button, FlexLayout, StackLayout, Text } from "@salt-ds/core";
-import { DoubleChevronLeftIcon, DoubleChevronRightIcon } from "@salt-ds/icons";
 import {
+  Button,
+  FlexLayout,
   type ImperativePanelHandle,
   SplitHandle,
   SplitPanel,
   Splitter,
-} from "@salt-ds/lab";
+  StackLayout,
+  Text,
+  ToggleButton,
+  ToggleButtonGroup,
+} from "@salt-ds/core";
+import {
+  DoubleChevronLeftIcon,
+  DoubleChevronRightIcon,
+  EditIcon,
+  InboxIcon,
+  SendIcon,
+} from "@salt-ds/icons";
 import type { Meta } from "@storybook/react";
 import { useRef, useState } from "react";
 
 import "./splitter.stories.css";
 
 export default {
-  title: "Lab/Splitter",
+  title: "Core/Splitter",
   components: Splitter,
   subcomponents: {
     SplitPanel,
@@ -24,16 +35,16 @@ export function Horizontal() {
   return (
     <FlexLayout className="box">
       <Splitter orientation="horizontal">
-        <SplitPanel id="top" className="center">
-          <Text>Top</Text>
+        <SplitPanel id="left" className="center">
+          <Text>Left</Text>
         </SplitPanel>
-        <SplitHandle aria-label="Resize Top/Middle" />
-        <SplitPanel id="middle" className="center">
-          <Text>Middle</Text>
+        <SplitHandle aria-label="Resize Left/Center" />
+        <SplitPanel id="center" className="center">
+          <Text>Center</Text>
         </SplitPanel>
-        <SplitHandle aria-label="Resize Middle/Bottom" />
+        <SplitHandle aria-label="Resize Center/Bottom" />
         <SplitPanel id="bottom" className="center">
-          <Text>Bottom</Text>
+          <Text>Right</Text>
         </SplitPanel>
       </Splitter>
     </FlexLayout>
@@ -44,34 +55,34 @@ export function Vertical() {
   return (
     <FlexLayout className="box">
       <Splitter orientation="vertical">
-        <SplitPanel id="left" className="center">
-          <Text>Left</Text>
+        <SplitPanel id="top" className="center">
+          <Text>Top</Text>
         </SplitPanel>
-        <SplitHandle aria-label="Resize Left/Center" />
+        <SplitHandle aria-label="Resize Top/Center" />
         <SplitPanel id="center" className="center">
           <Text>Center</Text>
         </SplitPanel>
-        <SplitHandle aria-label="Resize Center/Right" />
-        <SplitPanel id="right" className="center">
-          <Text>Right</Text>
+        <SplitHandle aria-label="Resize Center/Bottom" />
+        <SplitPanel id="bottom" className="center">
+          <Text>Bottom</Text>
         </SplitPanel>
       </Splitter>
     </FlexLayout>
   );
 }
 
-export function MultiOrientational() {
+export function MultipleOrientations() {
   return (
     <FlexLayout className="box">
-      <Splitter orientation="vertical">
+      <Splitter orientation="horizontal">
         <SplitPanel>
-          <Splitter orientation="horizontal">
+          <Splitter orientation="vertical">
             <SplitPanel className="center">
               <Text>Top Left</Text>
             </SplitPanel>
             <SplitHandle />
             <SplitPanel className="center">
-              <Text>Middle Left</Text>
+              <Text>Center Left</Text>
             </SplitPanel>
             <SplitHandle />
             <SplitPanel className="center">
@@ -81,7 +92,7 @@ export function MultiOrientational() {
         </SplitPanel>
         <SplitHandle />
         <SplitPanel>
-          <Splitter orientation="horizontal">
+          <Splitter orientation="vertical">
             <SplitPanel className="center">
               <Text>Top Right</Text>
             </SplitPanel>
@@ -98,16 +109,16 @@ export function MultiOrientational() {
 
 export function Transparent() {
   return (
-    <FlexLayout className="box boxGrey">
-      <Splitter orientation="vertical" appearance="transparent">
+    <FlexLayout className="box boxSecondary">
+      <Splitter orientation="horizontal" appearance="transparent">
         <SplitPanel>
-          <Splitter orientation="horizontal">
+          <Splitter orientation="vertical">
             <SplitPanel className="center">
               <Text>Top Left</Text>
             </SplitPanel>
             <SplitHandle />
             <SplitPanel className="center">
-              <Text>Middle Left</Text>
+              <Text>Center Left</Text>
             </SplitPanel>
             <SplitHandle />
             <SplitPanel className="center">
@@ -117,7 +128,7 @@ export function Transparent() {
         </SplitPanel>
         <SplitHandle />
         <SplitPanel>
-          <Splitter orientation="horizontal">
+          <Splitter orientation="vertical">
             <SplitPanel className="center">
               <Text>Top Right</Text>
             </SplitPanel>
@@ -135,7 +146,7 @@ export function Transparent() {
 export function Border() {
   return (
     <FlexLayout className="box">
-      <Splitter orientation="vertical">
+      <Splitter orientation="horizontal">
         <SplitPanel id="left" minSize={0} defaultSize={25} className="center">
           <Text>Left</Text>
         </SplitPanel>
@@ -155,7 +166,7 @@ export function Border() {
 export function Variant() {
   return (
     <FlexLayout className="box">
-      <Splitter orientation="vertical">
+      <Splitter orientation="horizontal">
         <SplitPanel
           variant="secondary"
           minSize={0}
@@ -185,13 +196,13 @@ export function Variant() {
 export function Size() {
   return (
     <FlexLayout className="box">
-      <Splitter orientation="vertical" appearance="bordered">
+      <Splitter orientation="horizontal" appearance="bordered">
         <SplitPanel minSize={20} className="center">
           <Text>Left [20%, X]</Text>
         </SplitPanel>
         <SplitHandle />
-        <SplitPanel id="middle" minSize={40} maxSize={60} className="center">
-          <Text>Middle [30%, 60%]</Text>
+        <SplitPanel id="center" minSize={40} maxSize={60} className="center">
+          <Text>Center [30%, 60%]</Text>
         </SplitPanel>
         <SplitHandle />
         <SplitPanel minSize={20} className="center">
@@ -205,22 +216,59 @@ export function Size() {
 export function CollapsibleSetSize() {
   return (
     <FlexLayout className="box">
-      <Splitter orientation="vertical" appearance="bordered">
+      <Splitter orientation="horizontal" appearance="bordered">
         <SplitPanel
           collapsible
           collapsedSize={15}
           minSize={30}
-          maxSize={30}
+          maxSize={50}
           className="center"
         >
           <Text>
             Left <br />
-            {"{10%, 30%}"}
+            {"[30, 50]"} <br />
+            {"{15%}"}
           </Text>
         </SplitPanel>
         <SplitHandle />
         <SplitPanel className="center">
           <Text>Right</Text>
+        </SplitPanel>
+      </Splitter>
+    </FlexLayout>
+  );
+}
+
+export function CollapsibleContainerQuery() {
+  return (
+    <FlexLayout className="box">
+      <Splitter orientation="horizontal" appearance="bordered">
+        <SplitPanel
+          collapsible
+          collapsedSize={10}
+          defaultSize={30}
+          minSize={20}
+          maxSize={50}
+          className="sidePanel"
+        >
+          <ToggleButtonGroup orientation="vertical" defaultValue="inbox">
+            <ToggleButton value="inbox">
+              <InboxIcon />
+              <span>Inbox</span>
+            </ToggleButton>
+            <ToggleButton value="draft">
+              <EditIcon />
+              <span>Draft</span>
+            </ToggleButton>
+            <ToggleButton value="sent">
+              <SendIcon />
+              <span>Sent</span>
+            </ToggleButton>
+          </ToggleButtonGroup>
+        </SplitPanel>
+        <SplitHandle />
+        <SplitPanel className="center">
+          <Text>Content</Text>
         </SplitPanel>
       </Splitter>
     </FlexLayout>
@@ -247,7 +295,7 @@ export function CollapsibleTo0() {
 
   return (
     <FlexLayout className="box">
-      <Splitter orientation="vertical">
+      <Splitter orientation="horizontal">
         <SplitPanel
           collapsible
           collapsedSize={0}
@@ -298,7 +346,7 @@ export function ProgrammableResize() {
       </StackLayout>
       <StackLayout>
         <FlexLayout className="box">
-          <Splitter orientation="vertical" appearance="bordered">
+          <Splitter orientation="horizontal" appearance="bordered">
             <SplitPanel ref={ref} className="center">
               <Text>Left</Text>
             </SplitPanel>

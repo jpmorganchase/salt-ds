@@ -1,11 +1,12 @@
-import { Button, FlexLayout } from "@salt-ds/core";
-import { DoubleChevronLeftIcon, DoubleChevronRightIcon } from "@salt-ds/icons";
 import {
+  Button,
+  FlexLayout,
   type ImperativePanelHandle,
   SplitHandle,
   SplitPanel,
   Splitter,
-} from "@salt-ds/lab";
+} from "@salt-ds/core";
+import { DoubleChevronLeftIcon, DoubleChevronRightIcon } from "@salt-ds/icons";
 import { useRef, useState } from "react";
 
 import styles from "./splitter.module.css";
@@ -30,7 +31,7 @@ export function CollapsibleTo0() {
 
   return (
     <FlexLayout className={styles.box}>
-      <Splitter orientation="vertical">
+      <Splitter orientation="horizontal">
         <SplitPanel
           collapsible
           collapsedSize={0}
