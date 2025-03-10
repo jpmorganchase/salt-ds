@@ -1,3 +1,4 @@
+import { Tag } from "@salt-ds/core";
 import {
   CloseIcon,
   type IconProps,
@@ -6,7 +7,6 @@ import {
 import clsx from "clsx";
 import type { FC, ReactNode } from "react";
 import styles from "./GuidanceCallout.module.css";
-import { Tag } from "@salt-ds/core";
 
 export interface GuidanceCalloutProps {
   children: ReactNode;

@@ -37,8 +37,8 @@
   display: contents;
 }
 
-.linkContainer a {
-  --link-color: var(--salt-content-secondary-foreground);
+.linkContainer a:global(.saltLink) {
+  --link-color-visited: var(--link-color);
 }
 @media screen and (max-width: 1280px) {
   .footer {

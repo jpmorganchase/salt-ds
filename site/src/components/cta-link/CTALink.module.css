@@ -21,6 +21,7 @@
   margin: 0;
   height: var(--salt-size-base);
   text-align: var(--salt-text-action-textAlign);
+  text-decoration: var(--salt-typography-textDecoration-none);
   -webkit-tap-highlight-color: transparent;
 }
 

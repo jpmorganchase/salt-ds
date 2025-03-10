@@ -17,7 +17,7 @@ pre {
 code[class*="language-"],
 pre[class*="language-"] {
   background: none;
-  text-shadow: 0 1px white;
+  text-shadow: none;
   text-align: left;
   white-space: pre;
   word-spacing: normal;

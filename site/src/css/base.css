@@ -1,10 +1,18 @@
 :root {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizelegibility;
+  box-sizing: border-box;
+}
+
+*,
+*:after,
+*:before {
+  box-sizing: inherit;
 }
 
 body {
   background: var(--salt-container-primary-background);
+  margin: 0;
 }
 
 ::selection {

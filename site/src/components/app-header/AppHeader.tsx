@@ -1,7 +1,7 @@
-import type { TabsMenu } from "@jpmorganchase/mosaic-components";
+import { useAppHeader } from "@jpmorganchase/mosaic-store";
 import { Button, StackLayout, Tooltip } from "@salt-ds/core";
 import { GithubIcon, MenuIcon } from "@salt-ds/icons";
-import { type FC, useContext } from "react";
+import { useContext } from "react";
 import { LayoutContext } from "../../layouts/LayoutContext";
 import { useIsMobileView } from "../../utils/useIsMobileView";
 import { CTALink } from "../cta-link/CTALink";
@@ -11,16 +11,11 @@ import { ModeToggle } from "../mode-switch/ModeToggle";
 import { Search } from "../search";
 import styles from "./AppHeader.module.css";
 
-export interface AppHeaderProps {
-  homeLink?: string;
-  logo?: string;
-  menu?: TabsMenu;
-  title?: string;
-}
-
-export const AppHeader: FC<AppHeaderProps> = ({ homeLink, menu = [] }) => {
+export const AppHeader = () => {
   const isMobileOrTablet = useIsMobileView();
   const layoutContext = useContext(LayoutContext);
+  const appHeader = useAppHeader();
+  const homeLink = appHeader?.homeLink;
 
   return (
     <header className={styles.root}>

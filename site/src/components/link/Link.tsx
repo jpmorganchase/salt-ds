@@ -1,4 +1,4 @@
-import { useResolveRelativeUrl } from "@jpmorganchase/mosaic-site-components";
+import { useResolveRelativeUrl } from "../../utils/useResolveRelativeUrl";
 import { Link as SaltLink } from "@salt-ds/core";
 import NextLink from "next/link";
 import { type ComponentPropsWithoutRef, forwardRef } from "react";

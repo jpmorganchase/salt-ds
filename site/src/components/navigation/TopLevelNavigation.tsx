@@ -1,28 +1,37 @@
-import type { TabsMenu } from "@jpmorganchase/mosaic-components";
 import {
-  VerticalNavigation,
-  withAppHeaderAdapter,
-} from "@jpmorganchase/mosaic-site-components";
-import type { SidebarItem } from "@jpmorganchase/mosaic-store";
+  type AppHeaderMenu,
+  type SidebarItem,
+  useAppHeader,
+} from "@jpmorganchase/mosaic-store";
 import { Dropdown, Option } from "@salt-ds/core";
 import { useRouter } from "next/router";
 import { useIsMobileView } from "../../utils/useIsMobileView";
+import { VerticalNavigation } from "../navigation/VerticalNavigation";
 import styles from "./TopLevelNavigation.module.css";
 
-function TopLevelNavigationInner({ menu }: { menu: TabsMenu }) {
-  const router = useRouter();
-
-  const sidebarMenu = menu.map(
-    (item) =>
-      ({
-        id: item.title,
-        name: item.title,
-        kind: item.type === "link" ? "data" : "group",
+function createSidebarItems(menu: AppHeaderMenu) {
+  return menu.reduce<SidebarItem[]>((result, menuItem) => {
+    if (menuItem?.title && menuItem.type === "link") {
+      const tabsLinkItem: SidebarItem = {
+        id: menuItem.title,
+        name: menuItem.title,
+        kind: "data",
+        hidden: false,
         data: {
-          link: "link" in item ? item.link : "",
+          level: 0,
+          link: menuItem.link,
         },
-      }) as SidebarItem,
-  );
+      };
+      result.push(tabsLinkItem);
+    }
+    return result;
+  }, []);
+}
+
+export function TopLevelNavigation() {
+  const router = useRouter();
+  const appHeader = useAppHeader();
+  const sidebarMenu = createSidebarItems(appHeader?.menu ?? []);
 
   const selectedId = sidebarMenu.filter((currentValue) => {
     const urlWithoutIndex =
@@ -60,7 +69,3 @@ function TopLevelNavigationInner({ menu }: { menu: TabsMenu }) {
     </div>
   );
 }
-
-const TopLevelNavigation = withAppHeaderAdapter(TopLevelNavigationInner);
-
-export { TopLevelNavigation };
