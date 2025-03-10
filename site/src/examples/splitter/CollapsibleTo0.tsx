@@ -31,7 +31,7 @@ export function CollapsibleTo0() {
 
   return (
     <FlexLayout className={styles.box}>
-      <Splitter orientation="vertical">
+      <Splitter orientation="horizontal">
         <SplitPanel
           collapsible
           collapsedSize={0}

@@ -11,9 +11,9 @@ import styles from "./splitter.module.css";
 export function MultipleOrientations() {
   return (
     <FlexLayout className={styles.box}>
-      <Splitter orientation="vertical">
+      <Splitter orientation="horizontal">
         <SplitPanel>
-          <Splitter orientation="horizontal">
+          <Splitter orientation="vertical">
             <SplitPanel className={styles.center}>
               <Text>Top Left</Text>
             </SplitPanel>
@@ -29,7 +29,7 @@ export function MultipleOrientations() {
         </SplitPanel>
         <SplitHandle />
         <SplitPanel>
-          <Splitter orientation="horizontal">
+          <Splitter orientation="vertical">
             <SplitPanel className={styles.center}>
               <Text>Top Right</Text>
             </SplitPanel>

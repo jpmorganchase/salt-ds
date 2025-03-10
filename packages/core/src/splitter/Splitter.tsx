@@ -33,15 +33,13 @@ export function Splitter({
   const appearanceContext = useContext(SplitterAppearanceContext);
   const appearance = appearanceProp ?? appearanceContext;
 
-  const direction = orientation === "horizontal" ? "vertical" : "horizontal";
-
   return (
     <SplitterOrientationContext.Provider value={orientation}>
       <SplitterAppearanceContext.Provider value={appearance}>
         <PanelGroup
           data-orientation={orientation}
           data-appearance={appearance}
-          direction={direction}
+          direction={orientation}
           {...props}
         />
       </SplitterAppearanceContext.Provider>

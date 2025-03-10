@@ -11,16 +11,16 @@ import { Splitter, SplitPanel, SplitHandle, Text } from "@salt-ds/core";
 function Example() {
   return (
     <Splitter orientation="horizontal">
-      <SplitPanel id="top">
-        <Text>Top</Text>
+      <SplitPanel id="left">
+        <Text>Left</Text>
       </SplitPanel>
-      <SplitHandle aria-label="Resize Top/Center" />
+      <SplitHandle aria-label="Resize Left/Center" />
       <SplitPanel id="center">
         <Text>Center</Text>
       </SplitPanel>
-      <SplitHandle aria-label="Resize Center/Bottom" />
+      <SplitHandle aria-label="Resize Right/Bottom" />
       <SplitPanel id="bottom">
-        <Text>Bottom</Text>
+        <Text>Right</Text>
       </SplitPanel>
     </Splitter>
   );

@@ -44,8 +44,8 @@ export interface SplitHandleProps extends PanelResizeHandleProps {
    *
    * Default is based on the orientation and appearance
    * set on the parent Stepper components, ex.
-   * bordered + vertical = left-right
-   * bordered + horizontal = top-bottom
+   * bordered + horizontal = left-right
+   * bordered + vertical = top-bottom
    * transparent = none
    */
   border?: SplitHandleBorder;
@@ -104,7 +104,7 @@ function deriveBorder(
     return "none";
   }
 
-  if (orientation === "horizontal") {
+  if (orientation === "vertical") {
     return "top-bottom";
   }
 

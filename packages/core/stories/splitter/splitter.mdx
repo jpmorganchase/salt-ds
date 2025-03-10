@@ -10,17 +10,16 @@ The Salt Splitter leverages the popular open-source library react-resizable-pane
 
 ## Remapping
 
-| salt-ds                                      | react-resizable-panels                       |
-| -------------------------------------------- | -------------------------------------------- |
-| `<Splitter />`                               | `<PanelGroup />`                             |
-| `<SplitPanel />`                             | `<Panel />`                                  |
-| `<SplitHandle />`                            | `<PanelResizeHandle />`                      |
-| `SplitterProps["orientation"]["vertical"]`   | `PanelGroupProps["direction"]["horizontal"]` |
-| `SplitterProps["orientation"]["horizontal"]` | `PanelGroupProps["direction"]["vertical"]`   |
+| salt-ds                        | react-resizable-panels        |
+| ------------------------------ | ----------------------------- |
+| `<Splitter />`                 | `<PanelGroup />`              |
+| `<SplitPanel />`               | `<Panel />`                   |
+| `<SplitHandle />`              | `<PanelResizeHandle />`       |
+| `SplitterProps["orientation"]` | `PanelGroupProps["direction"] |
 
 ## Overridden Functionality
 
-`SplitterProps["orientation"]` - Replaced the `direction` prop with `orientation` to better align with the rest of the components present in our design system. The orientation prop takes one of two options `horizontal` and `vertical`. Keep in mind that they are the opposite of the base library's `direction` prop.
+`SplitterProps["orientation"]` - Replaced the `direction` prop with `orientation` to better align with the rest of the components present in our design system. The orientation prop takes one of two options `horizontal` and `vertical`.
 
 ## Additional Functionality
 
@@ -30,4 +29,4 @@ The Salt Splitter leverages the popular open-source library react-resizable-pane
 
 `SplitHandle["variant"]` - Change the background color of the SplitHandle component. It behaves similarly to the `SplitPanelProps["variant"]` prop and it is meant to be used in combination with it. The variant prop can take one of three options - `primary` (default), `secondary`, `tertiary`. Follows the same behavior as our Panel component.
 
-`SplitHandle["border"]` - Override the border placement of the SplitHandle component. The border prop takes one of seven options - `top`, `bottom`, `left`, `right`, `top-bottom`, `left-right`, `none`. The default value is computed based on the orientation and appearance of the parent Splitter component. If the parent splitter's orientation is `horizontal` and the appearance is `bordered`, the default value will be `top-bottom`. If the orientation is `vertical` and the appearance is `bordered`, the default value will be `left-right`. If the appearance is `transparent`, the default value will be `none`.
+`SplitHandle["border"]` - Override the border placement of the SplitHandle component. The border prop takes one of seven options - `top`, `bottom`, `left`, `right`, `top-bottom`, `left-right`, `none`. The default value is computed based on the orientation and appearance of the parent Splitter component. If the parent splitter's orientation is `horizontal` and the appearance is `bordered`, the default value will be `left-right`. If the orientation is `vertical` and the appearance is `bordered`, the default value will be `top-bottom`. If the appearance is `transparent`, the default value will be `none`.

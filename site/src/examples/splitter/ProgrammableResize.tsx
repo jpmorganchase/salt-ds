@@ -32,7 +32,7 @@ export function ProgrammableResize() {
       </StackLayout>
       <StackLayout>
         <FlexLayout className={styles.box}>
-          <Splitter orientation="vertical" appearance="bordered">
+          <Splitter orientation="horizontal" appearance="bordered">
             <SplitPanel ref={ref} className={styles.center}>
               <Text>Left</Text>
             </SplitPanel>

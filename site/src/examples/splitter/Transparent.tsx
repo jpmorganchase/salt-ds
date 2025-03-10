@@ -13,9 +13,9 @@ import styles from "./splitter.module.css";
 export function Transparent() {
   return (
     <FlexLayout className={clsx(styles.box, styles.boxSecondary)}>
-      <Splitter orientation="vertical" appearance="transparent">
+      <Splitter orientation="horizontal" appearance="transparent">
         <SplitPanel>
-          <Splitter orientation="horizontal">
+          <Splitter orientation="vertical">
             <SplitPanel className={styles.center}>
               <Text>Top Left</Text>
             </SplitPanel>
@@ -31,7 +31,7 @@ export function Transparent() {
         </SplitPanel>
         <SplitHandle />
         <SplitPanel>
-          <Splitter orientation="horizontal">
+          <Splitter orientation="vertical">
             <SplitPanel className={styles.center}>
               <Text>Top Right</Text>
             </SplitPanel>

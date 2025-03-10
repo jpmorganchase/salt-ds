@@ -3,7 +3,6 @@ import {
   SplitHandle,
   SplitPanel,
   Splitter,
-  StackLayout,
   Text,
 } from "@salt-ds/core";
 import type { Meta } from "@storybook/react";
@@ -15,23 +14,13 @@ export default {
   subcomponents: { SplitPanel, SplitHandle },
 } as Meta<typeof Splitter>;
 
-const box = {
-  width: 240,
-  height: 80,
-  border: "1px solid lightgrey",
-};
-
-const altBox = {
-  width: 80,
-  height: 240,
-  border: "1px solid lightgrey",
-};
+import "./splitter.stories.css";
 
 export function Horizontal() {
   return (
     <QAContainer>
-      <StackLayout>
-        <Splitter orientation="horizontal" style={box}>
+      <FlexLayout className="box">
+        <Splitter orientation="horizontal">
           <SplitPanel>
             <Text>Panel 1</Text>
           </SplitPanel>
@@ -44,7 +33,7 @@ export function Horizontal() {
             <Text>Panel 3</Text>
           </SplitPanel>
         </Splitter>
-      </StackLayout>
+      </FlexLayout>
     </QAContainer>
   );
 }
@@ -52,8 +41,8 @@ export function Horizontal() {
 export function Vertical() {
   return (
     <QAContainer>
-      <FlexLayout style={altBox}>
-        <Splitter orientation="vertical">
+      <FlexLayout className="box">
+        <Splitter orientation="vertical" className="box">
           <SplitPanel>
             <Text>Panel 1</Text>
           </SplitPanel>

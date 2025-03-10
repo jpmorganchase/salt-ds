@@ -11,7 +11,7 @@ import styles from "./splitter.module.css";
 export function Collapsible() {
   return (
     <FlexLayout className={styles.box}>
-      <Splitter orientation="vertical" appearance="bordered">
+      <Splitter orientation="horizontal" appearance="bordered">
         <SplitPanel
           collapsible
           collapsedSize={10}

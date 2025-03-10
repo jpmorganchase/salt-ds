@@ -35,6 +35,26 @@ export function Horizontal() {
   return (
     <FlexLayout className="box">
       <Splitter orientation="horizontal">
+        <SplitPanel id="left" className="center">
+          <Text>Left</Text>
+        </SplitPanel>
+        <SplitHandle aria-label="Resize Left/Center" />
+        <SplitPanel id="center" className="center">
+          <Text>Center</Text>
+        </SplitPanel>
+        <SplitHandle aria-label="Resize Center/Bottom" />
+        <SplitPanel id="bottom" className="center">
+          <Text>Right</Text>
+        </SplitPanel>
+      </Splitter>
+    </FlexLayout>
+  );
+}
+
+export function Vertical() {
+  return (
+    <FlexLayout className="box">
+      <Splitter orientation="vertical">
         <SplitPanel id="top" className="center">
           <Text>Top</Text>
         </SplitPanel>
@@ -51,32 +71,12 @@ export function Horizontal() {
   );
 }
 
-export function Vertical() {
-  return (
-    <FlexLayout className="box">
-      <Splitter orientation="vertical">
-        <SplitPanel id="left" className="center">
-          <Text>Left</Text>
-        </SplitPanel>
-        <SplitHandle aria-label="Resize Left/Center" />
-        <SplitPanel id="center" className="center">
-          <Text>Center</Text>
-        </SplitPanel>
-        <SplitHandle aria-label="Resize Center/Right" />
-        <SplitPanel id="right" className="center">
-          <Text>Right</Text>
-        </SplitPanel>
-      </Splitter>
-    </FlexLayout>
-  );
-}
-
 export function MultipleOrientations() {
   return (
     <FlexLayout className="box">
-      <Splitter orientation="vertical">
+      <Splitter orientation="horizontal">
         <SplitPanel>
-          <Splitter orientation="horizontal">
+          <Splitter orientation="vertical">
             <SplitPanel className="center">
               <Text>Top Left</Text>
             </SplitPanel>
@@ -92,7 +92,7 @@ export function MultipleOrientations() {
         </SplitPanel>
         <SplitHandle />
         <SplitPanel>
-          <Splitter orientation="horizontal">
+          <Splitter orientation="vertical">
             <SplitPanel className="center">
               <Text>Top Right</Text>
             </SplitPanel>
@@ -110,9 +110,9 @@ export function MultipleOrientations() {
 export function Transparent() {
   return (
     <FlexLayout className="box boxSecondary">
-      <Splitter orientation="vertical" appearance="transparent">
+      <Splitter orientation="horizontal" appearance="transparent">
         <SplitPanel>
-          <Splitter orientation="horizontal">
+          <Splitter orientation="vertical">
             <SplitPanel className="center">
               <Text>Top Left</Text>
             </SplitPanel>
@@ -128,7 +128,7 @@ export function Transparent() {
         </SplitPanel>
         <SplitHandle />
         <SplitPanel>
-          <Splitter orientation="horizontal">
+          <Splitter orientation="vertical">
             <SplitPanel className="center">
               <Text>Top Right</Text>
             </SplitPanel>
@@ -146,7 +146,7 @@ export function Transparent() {
 export function Border() {
   return (
     <FlexLayout className="box">
-      <Splitter orientation="vertical">
+      <Splitter orientation="horizontal">
         <SplitPanel id="left" minSize={0} defaultSize={25} className="center">
           <Text>Left</Text>
         </SplitPanel>
@@ -166,7 +166,7 @@ export function Border() {
 export function Variant() {
   return (
     <FlexLayout className="box">
-      <Splitter orientation="vertical">
+      <Splitter orientation="horizontal">
         <SplitPanel
           variant="secondary"
           minSize={0}
@@ -196,7 +196,7 @@ export function Variant() {
 export function Size() {
   return (
     <FlexLayout className="box">
-      <Splitter orientation="vertical" appearance="bordered">
+      <Splitter orientation="horizontal" appearance="bordered">
         <SplitPanel minSize={20} className="center">
           <Text>Left [20%, X]</Text>
         </SplitPanel>
@@ -216,7 +216,7 @@ export function Size() {
 export function CollapsibleSetSize() {
   return (
     <FlexLayout className="box">
-      <Splitter orientation="vertical" appearance="bordered">
+      <Splitter orientation="horizontal" appearance="bordered">
         <SplitPanel
           collapsible
           collapsedSize={15}
@@ -242,7 +242,7 @@ export function CollapsibleSetSize() {
 export function CollapsibleContainerQuery() {
   return (
     <FlexLayout className="box">
-      <Splitter orientation="vertical" appearance="bordered">
+      <Splitter orientation="horizontal" appearance="bordered">
         <SplitPanel
           collapsible
           collapsedSize={10}
@@ -295,7 +295,7 @@ export function CollapsibleTo0() {
 
   return (
     <FlexLayout className="box">
-      <Splitter orientation="vertical">
+      <Splitter orientation="horizontal">
         <SplitPanel
           collapsible
           collapsedSize={0}
@@ -346,7 +346,7 @@ export function ProgrammableResize() {
       </StackLayout>
       <StackLayout>
         <FlexLayout className="box">
-          <Splitter orientation="vertical" appearance="bordered">
+          <Splitter orientation="horizontal" appearance="bordered">
             <SplitPanel ref={ref} className="center">
               <Text>Left</Text>
             </SplitPanel>

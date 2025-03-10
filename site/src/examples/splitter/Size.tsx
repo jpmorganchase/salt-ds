@@ -11,7 +11,7 @@ import styles from "./splitter.module.css";
 export function Size() {
   return (
     <FlexLayout className={styles.box}>
-      <Splitter orientation="vertical" appearance="bordered">
+      <Splitter orientation="horizontal" appearance="bordered">
         <SplitPanel minSize={20} className={styles.center}>
           <Text>Left [20%, X]</Text>
         </SplitPanel>
