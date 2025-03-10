@@ -1,6 +1,6 @@
-import { Image } from "@jpmorganchase/mosaic-site-components";
 import { SaltProviderNext, Switch } from "@salt-ds/core";
 import { type ChangeEvent, useState } from "react";
+import { Image } from "../mdx/image";
 import styles from "./ImageSwitcher.module.css";
 
 export interface ImageSwitcherProps {

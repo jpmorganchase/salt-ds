@@ -1,21 +1,13 @@
-import { LayoutProvider } from "@jpmorganchase/mosaic-layouts";
-import {
-  BaseUrlProvider,
-  Metadata,
-} from "@jpmorganchase/mosaic-site-components";
-import { Sitemap } from "@jpmorganchase/mosaic-sitemap-component";
+import { LayoutProvider } from "../layouts/LayoutProvider";
 import { useColorMode } from "@jpmorganchase/mosaic-store";
 import { StoreProvider, useCreateStore } from "@jpmorganchase/mosaic-store";
-import { themeClassName } from "@jpmorganchase/mosaic-theme";
 import { type Density, SaltProviderNext } from "@salt-ds/core";
 import { AdapterDateFns } from "@salt-ds/date-adapters/date-fns";
 import { LocalizationProvider } from "@salt-ds/lab";
 import clsx from "clsx";
-import { SessionProvider } from "next-auth/react";
 import type { AppProps } from "next/app";
 import { Open_Sans, PT_Mono } from "next/font/google";
 import localFont from "next/font/local";
-import Head from "next/head";
 import {
   type Dispatch,
   type ReactNode,
@@ -27,20 +19,15 @@ import * as saltComponents from "../components";
 import * as saltLayouts from "../layouts";
 import type { MyAppProps } from "../types/mosaic";
 
-import "@jpmorganchase/mosaic-components/index.css";
-import "@jpmorganchase/mosaic-site-components/index.css";
-import "@jpmorganchase/mosaic-sitemap-component/index.css";
-import "@jpmorganchase/mosaic-theme/baseline.css";
-import "@jpmorganchase/mosaic-theme/index.css";
 import "@salt-ds/theme/css/theme-next.css";
 import "@salt-ds/theme/index.css";
 
 import "../css/index.css";
 import { useIsMobileView } from "../utils/useIsMobileView";
+import { Metadata } from "../Metadata/index";
 
 const components = {
   ...saltComponents,
-  Sitemap,
 };
 
 const layoutComponents = { ...saltLayouts };
@@ -164,29 +151,24 @@ export default function MyApp({
   const createStore = useCreateStore(storeProps);
 
   return (
-    <SessionProvider>
-      <StoreProvider value={createStore()}>
-        <Metadata Component={Head} />
-        <LocalizationProvider DateAdapter={AdapterDateFns}>
-          <ThemeProvider
-            themeClassName={clsx(
-              themeClassName,
-              ptMono.variable,
-              openSans.variable,
-              amplitude.variable,
-            )}
+    <StoreProvider value={createStore()}>
+      <Metadata />
+      <LocalizationProvider DateAdapter={AdapterDateFns}>
+        <ThemeProvider
+          themeClassName={clsx(
+            ptMono.variable,
+            openSans.variable,
+            amplitude.variable,
+          )}
+        >
+          <LayoutProvider
+            defaultLayout="DetailError"
+            layoutComponents={layoutComponents}
           >
-            <BaseUrlProvider>
-              <LayoutProvider
-                defaultLayout="DetailError"
-                layoutComponents={layoutComponents}
-              >
-                <Component components={components} {...pageProps} />
-              </LayoutProvider>
-            </BaseUrlProvider>
-          </ThemeProvider>
-        </LocalizationProvider>
-      </StoreProvider>
-    </SessionProvider>
+            <Component components={components} {...pageProps} />
+          </LayoutProvider>
+        </ThemeProvider>
+      </LocalizationProvider>
+    </StoreProvider>
   );
 }

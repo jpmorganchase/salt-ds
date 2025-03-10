@@ -1,10 +1,10 @@
-import { Image } from "@jpmorganchase/mosaic-site-components";
 import { clsx } from "clsx";
 import type { ReactNode } from "react";
+import { Image } from "../mdx/image";
 
-import styles from "./Diagrams.module.css";
-import { SaltProvider, SaltProviderNext } from "@salt-ds/core";
 import { useColorMode } from "@jpmorganchase/mosaic-store";
+import { SaltProvider, SaltProviderNext } from "@salt-ds/core";
+import styles from "./Diagrams.module.css";
 
 interface DiagramProps {
   src: string;

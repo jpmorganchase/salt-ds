@@ -1,5 +1,4 @@
 import type { LayoutProps } from "@jpmorganchase/mosaic-layouts/dist/types";
-import { PageNavigation } from "@jpmorganchase/mosaic-site-components";
 import {
   type SiteState,
   useRoute,
@@ -33,6 +32,7 @@ import {
 } from "../../components/components/LivePreviewProvider";
 import { CTALink } from "../../components/cta-link/CTALink";
 import { LinkList } from "../../components/link-list/LinkList";
+import { PageNavigation } from "../../components/navigation/PageNavigation";
 import { TopLevelNavigation } from "../../components/navigation/TopLevelNavigation";
 import { TableOfContents } from "../../components/toc/index";
 import { getHrefFromComponent } from "../../utils/getHrefFromComponent";
@@ -229,10 +229,13 @@ export const DetailComponent: FC<LayoutProps> = ({ children }) => {
   const RightSidebar = (
     <SecondarySidebar>
       <TableOfContents />
-      <div className={styles.sidebarSection}>
-        <LinkList heading="Similar to" links={similarToLinks} />
-        <LinkList heading="Contains" links={containsList} />
-      </div>
+      {similarToLinks.length > 0 ||
+        (containsList.length > 0 && (
+          <div className={styles.sidebarSection}>
+            <LinkList heading="Similar to" links={similarToLinks} />
+            <LinkList heading="Contains" links={containsList} />
+          </div>
+        ))}
       <RelatedPatterns />
     </SecondarySidebar>
   );

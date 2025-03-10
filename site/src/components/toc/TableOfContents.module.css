@@ -2,6 +2,23 @@
   padding-inline: var(--salt-spacing-200);
 }
 
+.heading {
+  font-family: var(--salt-text-label-fontFamily);
+  font-size: var(--salt-text-label-fontSize);
+  font-weight: var(--salt-text-label-fontWeight-strong);
+  line-height: var(--salt-text-label-lineHeight);
+  letter-spacing: var(--salt-text-letterSpacing);
+}
+
 .root ul {
   margin-bottom: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--salt-size-border);
+}
+
+.root li {
+  list-style: none;
+  padding: 0;
 }
