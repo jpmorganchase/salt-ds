@@ -1,7 +1,7 @@
 import { H1, Text } from "@salt-ds/core";
+import dynamic from "next/dynamic";
 import type { ReactNode } from "react";
 import styles from "./PageHeading.module.css";
-import dynamic from "next/dynamic";
 
 const Markdown = dynamic(import("../../components/markdown/Markdown"));
 

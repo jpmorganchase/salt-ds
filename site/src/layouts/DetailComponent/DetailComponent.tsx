@@ -24,7 +24,7 @@ import {
   TabNextTrigger,
   TabsNext,
 } from "@salt-ds/lab";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/router";
 import { type FC, type SyntheticEvent, useEffect } from "react";
 import {
   LivePreviewProvider,
@@ -194,7 +194,7 @@ export const DetailComponent: FC<LayoutProps> = ({ children }) => {
   }, [currentTab, newRoute, replace, isOverview]);
 
   const handleTabChange = (_: SyntheticEvent | null, value: string) => {
-    push(`${newRoute}${value}`);
+    push(`${newRoute}${value}`, undefined, { scroll: false });
   };
 
   const LeftSidebar = (

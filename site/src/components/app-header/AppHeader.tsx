@@ -1,5 +1,5 @@
 import { useAppHeader } from "@jpmorganchase/mosaic-store";
-import { Button, StackLayout, Tooltip } from "@salt-ds/core";
+import { Button, Tooltip } from "@salt-ds/core";
 import { GithubIcon, MenuIcon } from "@salt-ds/icons";
 import { useContext } from "react";
 import { LayoutContext } from "../../layouts/LayoutContext";
@@ -22,7 +22,7 @@ export const AppHeader = () => {
       {isMobileOrTablet && (
         <Button
           aria-label="Open menu"
-          appearance="bordered"
+          appearance="transparent"
           sentiment="neutral"
           onClick={() => layoutContext.setDrawerOpen(true)}
         >
@@ -35,12 +35,7 @@ export const AppHeader = () => {
             <Logo />
           </LinkBase>
         )}
-        <StackLayout
-          direction="row"
-          align="center"
-          gap={1}
-          className={styles.actions}
-        >
+        <div className={styles.actions}>
           <Search className={styles.search} />
           {!isMobileOrTablet && (
             <Tooltip content="Github repository" placement="bottom">
@@ -48,14 +43,14 @@ export const AppHeader = () => {
                 href="https://github.com/jpmorganchase/salt-ds"
                 aria-label="GitHub repository"
                 sentiment="neutral"
-                appearance="bordered"
+                appearance="transparent"
               >
                 <GithubIcon aria-hidden />
               </CTALink>
             </Tooltip>
           )}
-          <ModeToggle />
-        </StackLayout>
+          <ModeToggle appearance="transparent" />
+        </div>
       </div>
     </header>
   );

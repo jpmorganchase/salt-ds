@@ -11,10 +11,10 @@ export function Impact({
 }) {
   return (
     <div className={styles.root}>
-      <GridLayout columns={{ xs: 1, md: 2 }}>
+      <GridLayout columns={{ xs: 1, md: 2 }} gap={{ md: 3, xs: 1 }}>
         {impacts.map(({ title, description }) => (
           <GridItem className={styles.section} key={title}>
-            <H3>{title}</H3>
+            <H3 className={styles.title}>{title}</H3>
             <Text>{description}</Text>
           </GridItem>
         ))}

@@ -2,10 +2,20 @@
   margin-block: var(--salt-spacing-200);
 }
 
-.content p:first-child {
+.root h4 {
+  margin: 0;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--salt-spacing-100);
+}
+
+.text p:first-child {
   margin-top: 0;
 }
 
-.content p:last-child {
+.text p:last-child {
   margin-bottom: 0;
 }

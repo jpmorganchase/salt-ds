@@ -1,9 +1,9 @@
 import { useColorMode, useStoreActions } from "@jpmorganchase/mosaic-store";
-import { Button } from "@salt-ds/core";
+import { Button, Tooltip } from "@salt-ds/core";
 import { DarkIcon, LightIcon } from "@salt-ds/icons";
-import { useEffect, useState } from "react";
+import { type ComponentPropsWithoutRef, useEffect, useState } from "react";
 
-export function ModeToggle() {
+export function ModeToggle(props: ComponentPropsWithoutRef<typeof Button>) {
   const colorMode = useColorMode();
   const { setColorMode } = useStoreActions();
 
@@ -14,20 +14,26 @@ export function ModeToggle() {
   if (!mounted) return null;
 
   return (
-    <Button
-      appearance="bordered"
-      sentiment="neutral"
-      onClick={() => {
-        if (colorMode === "light") {
-          setColorMode("dark");
-        } else {
-          setColorMode("light");
-        }
-      }}
-      aria-label={`Switch to ${colorMode === "light" ? "dark" : "light"} mode`}
+    <Tooltip
+      placement="bottom"
+      content={`Switch to ${colorMode === "light" ? "dark" : "light"} mode`}
     >
-      {colorMode === "dark" && <LightIcon aria-hidden />}
-      {colorMode === "light" && <DarkIcon aria-hidden />}
-    </Button>
+      <Button
+        appearance="bordered"
+        sentiment="neutral"
+        onClick={() => {
+          if (colorMode === "light") {
+            setColorMode("dark");
+          } else {
+            setColorMode("light");
+          }
+        }}
+        aria-label={`Switch to ${colorMode === "light" ? "dark" : "light"} mode`}
+        {...props}
+      >
+        {colorMode === "dark" && <LightIcon aria-hidden />}
+        {colorMode === "light" && <DarkIcon aria-hidden />}
+      </Button>
+    </Tooltip>
   );
 }

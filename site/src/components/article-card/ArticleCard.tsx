@@ -27,12 +27,20 @@ export function ArticleCard({
 
   return (
     <Card className={styles.root}>
-      {date && <Text styleAs="label">{date}</Text>}
-      <Text maxRows={2} styleAs="h2">
-        {title}
-      </Text>
-      {author && <Text styleAs="label">{author}</Text>}
-      {description && <Text maxRows={3}>{description}</Text>}
+      <div className={styles.content}>
+        <div className={styles.title}>
+          {date && (
+            <Text styleAs="label" color="secondary">
+              {date}
+            </Text>
+          )}
+          <Text maxRows={2} styleAs="h2">
+            {title}
+          </Text>
+        </div>
+        {author && <Text styleAs="label">{author}</Text>}
+        {description && <Text maxRows={3}>{description}</Text>}
+      </div>
       {action && (
         <div className={styles.action}>
           <Link href={action.href} render={<LinkBase href={action.href} />}>

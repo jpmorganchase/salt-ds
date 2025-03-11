@@ -15,15 +15,17 @@ export default function CodeHighlight({ code, language }: CodeHighlightProps) {
     <Highlight {...defaultPrismProps} code={trimmedCode} language={language}>
       {({ tokens, getLineProps, getTokenProps }) => (
         <>
-          {tokens.map((line, i) => (
-            // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
-            <div key={i} {...getLineProps({ line, key: i })} style={{}}>
-              {line.map((token, key) => (
-                // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
-                <span key={key} {...getTokenProps({ token, key })} style={{}} />
-              ))}
-            </div>
-          ))}
+          {tokens.map((line, i) => {
+            const { key, ...rest } = getLineProps({ line, key: i });
+            return (
+              <div key={key} {...rest} style={{}}>
+                {line.map((token, i) => {
+                  const { key, ...rest } = getTokenProps({ token, key: i });
+                  return <span key={key} {...rest} style={{}} />;
+                })}
+              </div>
+            );
+          })}
         </>
       )}
     </Highlight>

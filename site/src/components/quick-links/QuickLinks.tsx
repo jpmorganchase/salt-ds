@@ -25,25 +25,32 @@ export function QuickLink({
   return (
     <LinkBase href={href} passHref legacyBehavior>
       <LinkCard className={styles.card}>
-        <Text styleAs="h2">{title}</Text>
-        <Text className={styles.cardDescription}>{children}</Text>
-        <Link render={<span />}>{action}</Link>
+        <div className={styles.cardContent}>
+          <Text className={styles.cardTitle} styleAs="h2">
+            {title}
+          </Text>
+          <Text className={styles.cardDescription}>{children}</Text>
+        </div>
+        <Link className={styles.cardAction} render={<span />}>
+          {action}
+        </Link>
       </LinkCard>
     </LinkBase>
   );
+}
+
+interface QuickLinkProps extends GridLayoutProps<"div"> {
+  links: QuickLinkData[];
 }
 
 export function QuickLinks({
   links,
   children,
   columns = { md: 4, sm: 2, xs: 1 },
-}: {
-  children?: ReactNode;
-  links: QuickLinkData[];
-  columns?: GridLayoutProps<"div">["columns"];
-}): JSX.Element {
+  ...rest
+}: QuickLinkProps): JSX.Element {
   return (
-    <GridLayout className={styles.root} columns={columns}>
+    <GridLayout className={styles.root} columns={columns} {...rest}>
       {children ||
         links.map(({ href, title, description, action }) => (
           <QuickLink key={href} href={href} title={title} action={action}>

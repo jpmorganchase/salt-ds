@@ -25,10 +25,12 @@
   -webkit-tap-highlight-color: transparent;
 }
 
-.root:hover {
-  background: var(--cta-background-hover);
-  color: var(--cta-color-hover);
-  border-color: var(--cta-borderColor-hover);
+@media (hover: hover) {
+  .root:hover {
+    background: var(--cta-background-hover);
+    color: var(--cta-color-hover);
+    border-color: var(--cta-borderColor-hover);
+  }
 }
 
 .root:active {

@@ -1,4 +1,3 @@
-import { LayoutProvider } from "../layouts/LayoutProvider";
 import { useColorMode } from "@jpmorganchase/mosaic-store";
 import { StoreProvider, useCreateStore } from "@jpmorganchase/mosaic-store";
 import { type Density, SaltProviderNext } from "@salt-ds/core";
@@ -17,14 +16,15 @@ import {
 } from "react";
 import * as saltComponents from "../components";
 import * as saltLayouts from "../layouts";
+import { LayoutProvider } from "../layouts/LayoutProvider";
 import type { MyAppProps } from "../types/mosaic";
 
 import "@salt-ds/theme/css/theme-next.css";
 import "@salt-ds/theme/index.css";
 
 import "../css/index.css";
-import { useIsMobileView } from "../utils/useIsMobileView";
 import { Metadata } from "../Metadata/index";
+import { useIsMobileView } from "../utils/useIsMobileView";
 
 const components = {
   ...saltComponents,
@@ -156,6 +156,7 @@ export default function MyApp({
       <LocalizationProvider DateAdapter={AdapterDateFns}>
         <ThemeProvider
           themeClassName={clsx(
+            "salt-editorial",
             ptMono.variable,
             openSans.variable,
             amplitude.variable,
