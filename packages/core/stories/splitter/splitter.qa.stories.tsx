@@ -16,14 +16,14 @@ export default {
 } as Meta<typeof Splitter>;
 
 const box = {
-  width: 240,
-  height: 80,
+  width: 80,
+  height: 120,
   border: "1px solid lightgrey",
 };
 
 const altBox = {
-  width: 80,
-  height: 240,
+  width: 240,
+  height: 80,
   border: "1px solid lightgrey",
 };
 
