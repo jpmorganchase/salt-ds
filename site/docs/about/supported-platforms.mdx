@@ -20,6 +20,12 @@ We support:
 
 Salt doesn't support Internet Explorer.
 
+## Progressive Enhancement with Newer Features
+
+While Salt supports the above browser versions, we also embrace progressive enhancement by utilizing newer browser features, such as CSS `:has()`, when available. These features are wrapped in `@supports` rules to ensure they are only applied if the user's browser supports them. This approach allows us to deliver an enhanced experience for users with modern browsers while maintaining compatibility with older versions.
+
+Important Note: Users on older browsers that do not support these newer features may experience a sub-optimal user experience. We recommend keeping your browser up-to-date to take full advantage of the latest features and improvements.
+
 ## React
 
 Salt supports the most recent, stable versions of React. We support 16.14.0 and later, but we recommend the newest version that your application can support.
