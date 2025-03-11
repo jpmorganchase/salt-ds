@@ -6,5 +6,6 @@ export * from "./Border";
 export * from "./Variant";
 export * from "./Size";
 export * from "./Collapsible";
+export * from "./CollapsibleContainerQuery";
 export * from "./CollapsibleTo0";
 export * from "./ProgrammableResize";
