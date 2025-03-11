@@ -1,16 +1,23 @@
-name: "Link auto fix"
+name: "Lint auto fix"
+
 on:
-  workflow_dispatch:
+  pull_request:
+    types: [ labeled ]
 
 permissions:
   contents: write
+  pull-requests: write
 
 jobs:
   lint:
+    if: ${{ github.event.label.name == 'lint:autofix' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{github.event.pull_request.head.ref}}
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
@@ -29,3 +36,17 @@ jobs:
           git add .
           git commit -m "[Bot] Lint auto fix"
           git push
+      - name: Remove label
+        uses: actions/github-script@v7
+        with:
+          script: |
+            try {
+              await github.rest.issues.removeLabel({
+                issue_number: ${{ steps.run_metadata.outputs.issueNumber }},
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                name: ["lint:autofix"]
+              });
+            } catch (error) {
+              console.log(error);
+            }
