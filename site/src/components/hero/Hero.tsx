@@ -1,33 +1,12 @@
-import { useColorMode } from "@jpmorganchase/mosaic-store";
 import { H1, Text } from "@salt-ds/core";
 import Image from "next/image";
-import { useIsMobileView } from "../../utils/useIsMobileView";
 import { CTALink } from "../cta-link/CTALink";
 import { ModeToggle } from "../mode-switch/ModeToggle";
 import styles from "./Hero.module.css";
 import background from "./hero.svg";
-import logoLDDark from "./jpm_ld_dark.svg";
-import logoLDLight from "./jpm_ld_light.svg";
-import logoTDDark from "./jpm_td_dark.svg";
-import logoTDLight from "./jpm_td_light.svg";
-
-const logoMap = {
-  dark: {
-    mobile: logoTDDark,
-    desktop: logoLDDark,
-  },
-  light: {
-    mobile: logoTDLight,
-    desktop: logoLDLight,
-  },
-};
+import { EyebrowLogo } from "./EyebrowLogo";
 
 export function Hero() {
-  const colorMode = useColorMode();
-  const isMobileOrTablet = useIsMobileView();
-
-  const src = logoMap[colorMode][isMobileOrTablet ? "mobile" : "desktop"];
-
   return (
     <div className={styles.root}>
       <Image
@@ -39,7 +18,7 @@ export function Hero() {
       />
       <div className={styles.content}>
         <div className={styles.eyebrow}>
-          <Image src={src} alt="" priority />
+          <EyebrowLogo />
           <H1 styleAs="display2" className={styles.title}>
             <strong>Salt Design System</strong>
           </H1>
