@@ -9,7 +9,7 @@ data:
 ---
 
 ## Best practices
-- The chevron icon should be hidden from screen readers.
+- Hide the chevron icon from screen readers.
 - For assistive technologies, the visible label on a control usually acts as the accessible name. 
   - If modifying the accessible name, the accordion's accessible name must include the visible name (the label).
 - Within a group of accordion headers, all headers should be the same heading level. 
@@ -39,5 +39,5 @@ data:
 
 ## Known Issue
 - VoiceOver/Safari on Mac does not report state changes dynamically for Accordion buttons.
-  - Only Workaround is to tab away and shift+tab back to this control then it will announce the state.
+  - Only workaround is to tab away and shift+tab back to this control then it will announce the state.
   - This is reproducible in the [APG accordion example](https://www.w3.org/WAI/ARIA/apg/patterns/accordion/examples/accordion/) as well. 
