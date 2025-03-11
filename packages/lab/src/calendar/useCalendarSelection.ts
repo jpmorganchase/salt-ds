@@ -435,7 +435,7 @@ export function useCalendarSelection<TDate extends DateFrameworkType>(
     (date: TDate) => {
       return !!hoveredDate && dateAdapter.isSame(date, hoveredDate, "day");
     },
-    [hoveredDate],
+    [dateAdapter, hoveredDate],
   );
 
   const isSelectedSpan = useCallback(
@@ -443,8 +443,8 @@ export function useCalendarSelection<TDate extends DateFrameworkType>(
       if (
         (selectionVariant === "range" || selectionVariant === "offset") &&
         isDateRangeSelection(selectedDate) &&
-        selectedDate?.startDate &&
-        selectedDate?.endDate
+        dateAdapter.isValid(selectedDate.startDate) &&
+        dateAdapter.isValid(selectedDate.endDate)
       ) {
         return (
           dateAdapter.compare(date, selectedDate.startDate) > 0 &&
@@ -453,15 +453,15 @@ export function useCalendarSelection<TDate extends DateFrameworkType>(
       }
       return false;
     },
-    [selectionVariant, selectedDate],
+    [dateAdapter, selectionVariant, selectedDate],
   );
   const isHoveredSpan = useCallback(
     (date: TDate) => {
       if (
         (selectionVariant === "range" || selectionVariant === "offset") &&
         isDateRangeSelection(selectedDate) &&
-        selectedDate.startDate &&
-        !selectedDate.endDate &&
+        dateAdapter.isValid(selectedDate.startDate) &&
+        !dateAdapter.isValid(selectedDate.endDate) &&
         hoveredDate
       ) {
         const isForwardRange =
@@ -477,7 +477,7 @@ export function useCalendarSelection<TDate extends DateFrameworkType>(
       }
       return false;
     },
-    [selectionVariant, selectedDate, hoveredDate, isDaySelectable],
+    [dateAdapter, selectionVariant, selectedDate, hoveredDate, isDaySelectable],
   );
 
   const isSelectedStart = useCallback(
@@ -485,13 +485,13 @@ export function useCalendarSelection<TDate extends DateFrameworkType>(
       if (
         (selectionVariant === "range" || selectionVariant === "offset") &&
         isDateRangeSelection(selectedDate) &&
-        selectedDate.startDate
+        dateAdapter.isValid(selectedDate.startDate)
       ) {
         return dateAdapter.isSame(selectedDate.startDate, date, "day");
       }
       return false;
     },
-    [selectionVariant, selectedDate],
+    [dateAdapter, selectionVariant, selectedDate],
   );
 
   const isSelectedEnd = useCallback(
@@ -499,13 +499,13 @@ export function useCalendarSelection<TDate extends DateFrameworkType>(
       if (
         (selectionVariant === "range" || selectionVariant === "offset") &&
         isDateRangeSelection(selectedDate) &&
-        selectedDate.endDate
+        dateAdapter.isValid(selectedDate.endDate)
       ) {
         return dateAdapter.isSame(selectedDate.endDate, date, "day");
       }
       return false;
     },
-    [selectionVariant, selectedDate],
+    [dateAdapter, selectionVariant, selectedDate],
   );
 
   const isHoveredOffset = useCallback(
