@@ -179,7 +179,7 @@
 }
 
 /* Style applied to start adornments */
-.saltInput-startAdornmentContainer {
+.saltDateInput-startAdornmentContainer {
   align-items: center;
   display: inline-flex;
   padding-right: var(--salt-spacing-100);
@@ -190,7 +190,7 @@
 .saltDateInput-endAdornmentContainer {
   display: inline-flex;
   padding-left: var(--salt-spacing-100);
-  column-gap: var(--salt-spacing-100);
+  column-gap: var(--salt-spacing-50);
   margin-left: auto;
   align-items: end;
 }
@@ -203,9 +203,11 @@
   margin-right: calc(var(--salt-spacing-50) * -1);
 }
 
+.saltDateInput-startAdornmentContainer > .saltButton,
 .saltDateInput-endAdornmentContainer > .saltButton {
-  --saltButton-padding: var(--salt-spacing-50);
+  --saltButton-padding: calc(var(--salt-spacing-50) - var(--salt-size-border));
   --saltButton-height: calc(var(--salt-size-base) - var(--salt-spacing-100));
+  --saltButton-borderRadius: var(--salt-palette-corner-weaker);
 }
 
 /* Style applied to inner input component */
