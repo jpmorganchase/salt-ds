@@ -1,16 +1,13 @@
-import { clsx } from "clsx";
 import Image from "next/image";
-import styles from "./Logo.module.css";
+import logoLDDark from "./jpm_ld_dark.svg";
+import logoLDLight from "./jpm_ld_light.svg";
+import logoTDDark from "./jpm_td_dark.svg";
+import logoTDLight from "./jpm_td_light.svg";
+import styles from "./EyebrowLogo.module.css";
 
-import type { ComponentPropsWithoutRef } from "react";
-import logoLDDark from "../hero/jpm_ld_dark.svg";
-import logoLDLight from "../hero/jpm_ld_light.svg";
-import logoTDDark from "../hero/jpm_td_dark.svg";
-import logoTDLight from "../hero/jpm_td_light.svg";
-
-export function Logo({ className, ...props }: ComponentPropsWithoutRef<"div">) {
+export function EyebrowLogo() {
   return (
-    <div className={clsx(styles.root, className)} {...props}>
+    <>
       <Image
         src={logoLDDark}
         alt=""
@@ -35,6 +32,6 @@ export function Logo({ className, ...props }: ComponentPropsWithoutRef<"div">) {
         fetchPriority="high"
         className={styles.logoTDLight}
       />
-    </div>
+    </>
   );
 }
