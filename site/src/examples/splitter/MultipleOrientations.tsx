@@ -1,9 +1,14 @@
-import { FlexLayout, Text } from "@salt-ds/core";
-import { SplitHandle, SplitPanel, Splitter } from "@salt-ds/lab";
+import {
+  FlexLayout,
+  SplitHandle,
+  SplitPanel,
+  Splitter,
+  Text,
+} from "@salt-ds/core";
 
 import styles from "./splitter.module.css";
 
-export function MultiOrientational() {
+export function MultipleOrientations() {
   return (
     <FlexLayout className={styles.box}>
       <Splitter orientation="vertical">
@@ -14,7 +19,7 @@ export function MultiOrientational() {
             </SplitPanel>
             <SplitHandle />
             <SplitPanel className={styles.center}>
-              <Text>Middle Left</Text>
+              <Text>Center Left</Text>
             </SplitPanel>
             <SplitHandle />
             <SplitPanel className={styles.center}>

@@ -3180,6 +3180,7 @@ __metadata:
     "@salt-ds/styles": "workspace:*"
     "@salt-ds/window": "workspace:*"
     clsx: "npm:^2.0.0"
+    react-resizable-panels: "npm:^2.1.7"
   peerDependencies:
     "@types/react": ">=16.14.0"
     react: ">=16.14.0"
@@ -3301,7 +3302,6 @@ __metadata:
     moment-timezone: "npm:^0.5.46"
     no-scroll: "npm:^2.1.1"
     react-color: "npm:^2.19.3"
-    react-resizable-panels: "npm:^2.1.7"
     react-window: "npm:^1.8.6"
     rifm: "npm:^0.12.0"
     tabbable: "npm:^6.0.0"

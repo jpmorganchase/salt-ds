@@ -4,9 +4,10 @@ import { PanelGroup, type PanelGroupProps } from "react-resizable-panels";
 export type SplitterAppearance = "bordered" | "transparent";
 export type SplitterOrientation = "horizontal" | "vertical";
 
-export const OrientationContext =
+export const SplitterOrientationContext =
   createContext<SplitterOrientation>("vertical");
-export const AppearanceContext = createContext<SplitterAppearance>("bordered");
+export const SplitterAppearanceContext =
+  createContext<SplitterAppearance>("bordered");
 
 export interface SplitterProps extends Omit<PanelGroupProps, "direction"> {
   /**
@@ -29,21 +30,21 @@ export function Splitter({
   appearance: appearanceProp,
   ...props
 }: SplitterProps) {
-  const appearanceContext = useContext(AppearanceContext);
+  const appearanceContext = useContext(SplitterAppearanceContext);
   const appearance = appearanceProp ?? appearanceContext;
 
   const direction = orientation === "horizontal" ? "vertical" : "horizontal";
 
   return (
-    <OrientationContext.Provider value={orientation}>
-      <AppearanceContext.Provider value={appearance}>
+    <SplitterOrientationContext.Provider value={orientation}>
+      <SplitterAppearanceContext.Provider value={appearance}>
         <PanelGroup
           data-orientation={orientation}
           data-appearance={appearance}
           direction={direction}
           {...props}
         />
-      </AppearanceContext.Provider>
-    </OrientationContext.Provider>
+      </SplitterAppearanceContext.Provider>
+    </SplitterOrientationContext.Provider>
   );
 }
