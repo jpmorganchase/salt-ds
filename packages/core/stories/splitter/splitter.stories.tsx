@@ -253,16 +253,16 @@ export function CollapsibleContainerQuery() {
         >
           <ToggleButtonGroup orientation="vertical" defaultValue="inbox">
             <ToggleButton value="inbox">
-              <InboxIcon aria-label="Inbox" />
-              <span aria-hidden>Inbox</span>
+              <InboxIcon />
+              <span>Inbox</span>
             </ToggleButton>
             <ToggleButton value="draft">
-              <EditIcon aria-label="Draft" />
-              <span aria-hidden>Draft</span>
+              <EditIcon />
+              <span>Draft</span>
             </ToggleButton>
             <ToggleButton value="sent">
-              <SendIcon aria-label="Sent" />
-              <span aria-hidden>Sent</span>
+              <SendIcon />
+              <span>Sent</span>
             </ToggleButton>
           </ToggleButtonGroup>
         </SplitPanel>
