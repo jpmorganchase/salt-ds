@@ -1,12 +1,10 @@
-/* stylelint-disable salt/correct-theme-token-usage */
-
 .box {
   width: 420px;
   height: 240px;
   border: 1px solid var(--salt-separable-secondary-borderColor);
 }
 
-.boxGrey {
+.boxSecondary {
   padding: 56px;
   box-sizing: content-box;
   background: var(--salt-container-secondary-background);

@@ -1,0 +1,43 @@
+.box {
+  width: 420px;
+  height: 240px;
+  border: 1px solid var(--salt-separable-secondary-borderColor);
+}
+
+.boxSecondary {
+  padding: 56px;
+  box-sizing: content-box;
+  background: var(--salt-container-secondary-background);
+}
+
+.center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  height: 100%;
+}
+
+.sidePanel > .saltToggleButtonGroup-vertical {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  border: none;
+}
+
+@supports (container-type: inline-size) {
+  .sidePanel {
+    container-type: inline-size;
+    container-name: side-panel;
+  }
+
+  @container side-panel (max-width: 64px) {
+    .sidePanel > .saltToggleButtonGroup-vertical > button {
+      justify-content: center;
+    }
+
+    .sidePanel > .saltToggleButtonGroup-vertical > button > span {
+      display: none;
+    }
+  }
+}

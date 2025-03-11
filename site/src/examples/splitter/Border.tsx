@@ -1,5 +1,10 @@
-import { FlexLayout, Text } from "@salt-ds/core";
-import { SplitHandle, SplitPanel, Splitter } from "@salt-ds/lab";
+import {
+  FlexLayout,
+  SplitHandle,
+  SplitPanel,
+  Splitter,
+  Text,
+} from "@salt-ds/core";
 
 import styles from "./splitter.module.css";
 
