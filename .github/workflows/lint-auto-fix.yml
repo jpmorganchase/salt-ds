@@ -2,7 +2,7 @@ name: "Lint auto fix"
 
 on:
   pull_request:
-    types: [ labeled ]
+    types: [labeled]
 
 permissions:
   contents: write
