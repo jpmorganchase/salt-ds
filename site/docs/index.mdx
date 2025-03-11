@@ -67,7 +67,7 @@ data:
     {
       title: "Small components, flexible patterns",
       description:
-        "We know we can't build components for every use case across every line of business, so we focus on building small, quality components and then demonstrate how to put them together as pattern examples which address specific business requirements.",
+        "We can't build components for every use case across every line of business, so we focus on building small, quality components and demonstrate putting them together as pattern examples for specific business requirements.",
     },
     {
       title: "Lightweight, dependency-light",
@@ -77,17 +77,17 @@ data:
     {
       title: "Composable APIs",
       description:
-        "We have looked at the friction points created by legacy APIs to make them more consistent an composable. We can't build component features for all use cases but with our APIs you can compose other elements in Salt components to address your specific user interaction.",
+        "We have looked at the friction points of legacy APIs to make them more consistent an composable. Our components have features for most common use cases and their APIs allow them to be composed with other elements for nuanced cases.",
     },
     {
       title: "A systematic spacing grid",
       description:
-        "We build all of our components to support our four systems of density by using a 4px scaling system that allows you to use components that 'fit' together cohesively at a size which is optimal for the amount of data you have on the screen.",
+        "All of our components support our four density systems by using a 4px scaling grid that allows you to use components that 'fit' together cohesively at a size which is optimal for the amount of data you have on the screen.",
     },
     {
       title: "WCAG 2.1 accessibility",
       description:
-        "We follow Web Content Accessibility Guidelines (WCAG) 2.1 to level AA standards. Salt components are developed with accessibility as a core requirement, not an afterthought. We believe in digital inclusion an are committed to supporting the diverse needs of all users.",
+        "Our components follow Web Content Accessibility Guidelines (WCAG) 2.1 to AA standards as a core requirement, not an afterthought. We believe in digital inclusion and commit to supporting diverse user needs.",
     },
     {
       title: "Token-driven styling",
@@ -100,31 +100,25 @@ data:
 
 ## How to find help
 
-<QuickLinks columns={{ md: 3, xs: 1 }}>
+<QuickLinks columns={{ md: 3, xs: 1 }} gap={{ md:3, xs: 1 }}>
     
   <QuickLink title="J.P. Morgan internal resources" action="Visit Salt's internal site" href="https://go/salt-ds">
-    Salt's internal site provides JPM employees with a wealth of information, including:
-    
-    - Roadmaps & OKRs
-    - UI Toolkit migration material
-    - News updates, blog articles and videos
-    - Contribution & shared business patterns
-    - Brand resources
+    A wealth of information for JPM employees, including OKRs, migration guides, updates & training and shared patterns.
   </QuickLink>
     
   <QuickLink title="J.P. Morgan contributor" action="Get help from the team and community" href="https://go/salt-ds">
       Make the mot of our growing community inside JPM to quickly find the support that you need.
   </QuickLink>
     
-  <QuickLink title="External contributor" action="Access Open Source support" href="https://go/salt-ds">
-     Suggest improvements to the Salt system, its components and its foundation, or help us to improve the system by reporting a bug.
+  <QuickLink title="External contributor" action="Access Open Source support" href="/salt/support-and-contributions/index">
+     Suggest improvements to out system and documentation, or help us to raise the quality bar by reporting a bug.
   </QuickLink>
 
 </QuickLinks>
 
 ## Latest updates
 
-<GridLayout columns={{ xs: 1, sm: 3 }}>
+<ArticleCards columns={{ xs: 1, sm: 3 }} gap={{ md: 3, xs: 1 }}>
   {meta.data.latestUpdates.map((page) => (
     <ArticleCard
       key={page.route}
@@ -134,4 +128,4 @@ data:
       action={{ href: page.route }}
     />
   ))}
-</GridLayout>
+</ArticleCards>

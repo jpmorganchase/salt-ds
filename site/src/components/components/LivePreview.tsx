@@ -77,9 +77,11 @@ export const LivePreview: FC<LivePreviewProps> = ({
               corner="rounded"
               headingFont="Amplitude"
               actionFont="Amplitude"
+              applyClassesTo="scope"
             >
               <div className={styles.example}>
-                <ChosenSaltProvider density={density} mode={mode}>
+                {/* Blank theme is needed here to prevent the site theme being inherited */}
+                <ChosenSaltProvider applyClassesTo="scope" theme="" density={density} mode={mode}>
                   {ComponentExample.Example && <ComponentExample.Example />}
                 </ChosenSaltProvider>
               </div>

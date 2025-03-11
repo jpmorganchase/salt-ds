@@ -1,9 +1,9 @@
 import Image from "next/image";
+import styles from "./EyebrowLogo.module.css";
 import logoLDDark from "./jpm_ld_dark.svg";
 import logoLDLight from "./jpm_ld_light.svg";
 import logoTDDark from "./jpm_td_dark.svg";
 import logoTDLight from "./jpm_td_light.svg";
-import styles from "./EyebrowLogo.module.css";
 
 export function EyebrowLogo() {
   return (

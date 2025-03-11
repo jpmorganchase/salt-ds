@@ -1,6 +1,6 @@
+import type { ComponentPropsWithoutRef } from "react";
 import ReactMarkdown from "react-markdown";
 import { code, p, ul } from "../mdx/index";
-import type { ComponentPropsWithoutRef } from "react";
 
 const components = { code, ul, p };
 

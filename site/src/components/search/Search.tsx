@@ -5,12 +5,11 @@ import {
   type ComboBoxProps,
   Option,
   OptionGroup,
-  StackLayout,
   Text,
   capitalize,
 } from "@salt-ds/core";
 import { CloseIcon, SearchIcon } from "@salt-ds/icons";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/router";
 import {
   type ChangeEvent,
   type SyntheticEvent,
@@ -29,19 +28,17 @@ function SearchResult({
 }) {
   return (
     <Option className={styles.result} value={result.route}>
-      <StackLayout gap={0.5} align="start">
-        <Text>{result.title}</Text>
-        {result.content && (
-          <Text
-            styleAs="label"
-            color="secondary"
-            className={styles.resultDescription}
-          >
-            {/* biome-ignore lint/security/noDangerouslySetInnerHtml: result.content is HTML we want to show */}
-            <span dangerouslySetInnerHTML={{ __html: result.content }} />
-          </Text>
-        )}
-      </StackLayout>
+      <Text>{result.title}</Text>
+      {result.content && (
+        <Text
+          styleAs="label"
+          color="secondary"
+          className={styles.resultDescription}
+        >
+          {/* biome-ignore lint/security/noDangerouslySetInnerHtml: result.content is HTML we want to show */}
+          <span dangerouslySetInnerHTML={{ __html: result.content }} />
+        </Text>
+      )}
     </Option>
   );
 }

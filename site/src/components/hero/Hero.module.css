@@ -4,7 +4,12 @@
   justify-content: center;
   width: 100%;
   padding: var(--salt-spacing-300) var(--salt-spacing-600);
-  gap: var(--salt-spacing-300);
+}
+
+@media not screen and (min-width: 960px) {
+  .root {
+    padding-inline: var(--salt-spacing-100);
+  }
 }
 
 .background {
@@ -17,6 +22,7 @@
   display: flex;
   flex-direction: column;
   z-index: 1;
+  width: var(--site-width);
   max-width: var(--site-max-width);
 }
 

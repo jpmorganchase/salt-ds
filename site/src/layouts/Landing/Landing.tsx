@@ -1,4 +1,4 @@
-import { Text } from "@salt-ds/core";
+import { H1 } from "@salt-ds/core";
 import type { FC } from "react";
 
 import type { LayoutProps } from "@jpmorganchase/mosaic-layouts/dist/types";
@@ -14,7 +14,7 @@ export const Landing: FC<LayoutProps> = ({ children }) => {
         <div className={styles.middle}>
           <div className={styles.content}>
             <div className={styles.search}>
-              <Text styleAs="h1">Discover the power of Salt</Text>
+              <H1>Discover the power of Salt</H1>
               <Search
                 aria-label="Search for components, guides and more."
                 placeholder="Search for components, guides and more."

@@ -10,12 +10,6 @@
   z-index: var(--salt-zIndex-appHeader);
 }
 
-@media not screen and (min-width: 960px) {
-  .root {
-    padding-left: var(--salt-spacing-100);
-  }
-}
-
 .content {
   display: flex;
   width: 100%;
@@ -25,17 +19,34 @@
   padding-inline: var(--salt-spacing-300);
 }
 
+.actions {
+  display: flex;
+  gap: var(--salt-spacing-100);
+  justify-content: flex-end;
+  width: 100%;
+}
+
+@media not screen and (min-width: 960px) {
+  .root {
+    padding-inline: var(--salt-spacing-100);
+  }
+
+  .content {
+    padding-right: 0;
+    padding-left: var(--salt-spacing-100);
+  }
+
+  .actions {
+    gap: var(--salt-spacing-100);
+  }
+}
+
 .itemTitle {
   white-space: nowrap;
 }
 
 .logoLink:focus-visible {
   outline: var(--salt-focused-outline);
-}
-
-.actions {
-  justify-content: flex-end;
-  width: 100%;
 }
 
 .search {

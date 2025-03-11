@@ -1,7 +1,7 @@
-import { useResolveRelativeUrl } from "../../../utils/useResolveRelativeUrl";
 import { clsx } from "clsx";
 import NextImage, { type ImageProps as NextImageProps } from "next/image";
 import { forwardRef } from "react";
+import { useResolveRelativeUrl } from "../../../utils/useResolveRelativeUrl";
 import styles from "./Image.module.css";
 
 export interface ImageProps extends Omit<NextImageProps, "src"> {

@@ -28,4 +28,4 @@ export * from "./icon-preview";
 export * from "./hero";
 export * from "./quick-links";
 export * from "./impact";
-export * from "./article-card/ArticleCard";
+export * from "./article-card";
