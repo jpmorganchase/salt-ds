@@ -41,9 +41,9 @@ export const useNumberInput = ({
   | "readOnly"
   | "step"
   | "stepBlock"
-  | "value"
 > & {
   setValue: Dispatch<SetStateAction<string | number | undefined>>;
+  value: string | number;
   inputRef: MutableRefObject<HTMLInputElement | null>;
 }) => {
   const setValueInRange = useCallback(
@@ -65,7 +65,7 @@ export const useNumberInput = ({
 
   const decrementValue = useCallback(
     (event?: SyntheticEvent, block?: boolean) => {
-      if (value === undefined || isAtMin(value, min)) return;
+      if (isAtMin(value, min)) return;
       const decrementStep = block ? stepBlock : step;
       const nextValue =
         value === "" ? -decrementStep : toFloat(value) - decrementStep;
@@ -76,7 +76,7 @@ export const useNumberInput = ({
 
   const incrementValue = useCallback(
     (event?: SyntheticEvent, block?: boolean) => {
-      if (value === undefined || isAtMax(value, max)) return;
+      if (isAtMax(value, max)) return;
       const incrementStep = block ? stepBlock : step;
       const nextValue =
         value === "" ? incrementStep : toFloat(value) + incrementStep;
