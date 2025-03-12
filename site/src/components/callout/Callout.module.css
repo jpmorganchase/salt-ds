@@ -12,10 +12,6 @@
   gap: var(--salt-spacing-100);
 }
 
-.text p:first-child {
-  margin-top: 0;
-}
-
 .text p:last-child {
   margin-bottom: 0;
 }

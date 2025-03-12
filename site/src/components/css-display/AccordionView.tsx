@@ -2,17 +2,15 @@ import {
   Accordion,
   AccordionHeader,
   AccordionPanel,
-  Banner,
-  BannerContent,
   Button,
-  Link,
+  SaltProvider,
   Spinner,
-  Tooltip,
+  Text,
 } from "@salt-ds/core";
 import { CopyIcon } from "@salt-ds/icons";
 import { type FC, useEffect, useState } from "react";
 import { Table } from "../mdx/table";
-import styles from "./AccordianView.module.css";
+import styles from "./AccordionView.module.css";
 import chars from "./descriptions";
 import { ColorBlock } from "./style-blocks/ColorBlock";
 import { CursorBlock } from "./style-blocks/CursorBlock";
@@ -28,7 +26,7 @@ type CssVariableData = {
   [key: string]: string;
 };
 
-const color: string[] = new Array(
+const color = [
   "background",
   "foreground",
   "color",
@@ -36,26 +34,21 @@ const color: string[] = new Array(
   "borderColor",
   "outlineColor",
   "indicator",
-);
+];
 
-const fontSize: string[] = new Array("fontSize", "minHeight");
-const fontWeight: string[] = new Array("fontWeight");
-const cursor: string[] = new Array("cursor");
-const letters: string[] = new Array("letterSpacing");
-const border: string[] = new Array(
-  "borderStyle",
-  "borderWidth",
-  "outlineWidth",
-  "outlineStyle",
-);
-const text: string[] = new Array("fontStyle");
-const outline: string[] = new Array("outline");
-const shadow: string[] = new Array("shadow");
-const align: string[] = new Array("textAlign");
-const textDecoration: string[] = new Array("textDecoration");
-const transform: string[] = new Array("textTransform");
-const fontFamily: string[] = new Array("fontFamily");
-const lineHeight: string[] = new Array("lineHeight");
+const fontSize = ["fontSize", "minHeight"];
+const fontWeight = ["fontWeight"];
+const cursor = ["cursor"];
+const letters = ["letterSpacing"];
+const border = ["borderStyle", "borderWidth", "outlineWidth", "outlineStyle"];
+const text = ["fontStyle"];
+const outline = ["outline"];
+const shadow = ["shadow"];
+const align = ["textAlign"];
+const textDecoration = ["textDecoration"];
+const transform = ["textTransform"];
+const fontFamily = ["fontFamily"];
+const lineHeight = ["lineHeight"];
 
 const BlockView: FC<{ name: string }> = ({ name }) => {
   switch (true) {
@@ -93,12 +86,7 @@ const BlockView: FC<{ name: string }> = ({ name }) => {
 };
 
 const handleCopyToClipboard = (text: string) => {
-  const textField = document.createElement("textarea");
-  textField.innerText = text;
-  document.body.appendChild(textField);
-  textField.select();
-  document.execCommand("copy");
-  textField.remove();
+  navigator.clipboard.writeText(text).catch(() => {});
 };
 
 export const AccordionView: FC<{ value: string }> = ({ value }) => {
@@ -107,14 +95,8 @@ export const AccordionView: FC<{ value: string }> = ({ value }) => {
 
   useEffect(() => {
     const fetchJsonData = async () => {
-      try {
-        const data = require("./cssCharacteristics.json");
-        setCssVariablesData(data);
-      } catch (err) {
-        <Banner>
-          <BannerContent>Failed to load characteristic data</BannerContent>
-        </Banner>;
-      }
+      const data = await import("./cssCharacteristics.json");
+      setCssVariablesData(data.default);
     };
 
     fetchJsonData();
@@ -157,15 +139,18 @@ export const AccordionView: FC<{ value: string }> = ({ value }) => {
       {Object.entries(groupedData).map(([groupName, groupData]) => (
         <Accordion key={groupName} value={groupName}>
           <AccordionHeader>
-            <h3> {groupName.charAt(0).toUpperCase() + groupName.slice(1)}</h3>
+            <h3 className={styles.heading}>
+              {" "}
+              {groupName.charAt(0).toUpperCase() + groupName.slice(1)}
+            </h3>
           </AccordionHeader>
           <AccordionPanel>
-            <p className={styles.description}>
+            <Text className={styles.description}>
               {
                 chars.find((obj: { key: string }) => obj.key === groupName)
                   ?.value
               }
-            </p>
+            </Text>
 
             <Table className={styles.table}>
               <thead>
@@ -179,28 +164,21 @@ export const AccordionView: FC<{ value: string }> = ({ value }) => {
                 {Object.entries(groupData).map(([name, value]) => (
                   <tr key={name}>
                     <td className={styles.viewColumn}>
-                      <BlockView name={name} />
+                      <SaltProvider theme="">
+                        <BlockView name={name} />
+                      </SaltProvider>
                     </td>
                     <td>
-                      <Tooltip
-                        className={styles.tooltip}
-                        content={<BlockView name={name} />}
-                        onOpenChange={function _l() {}}
+                      {name}&nbsp;
+                      <Button
+                        className={styles.alignButton}
+                        sentiment="neutral"
+                        appearance="transparent"
+                        onClick={() => handleCopyToClipboard(name)}
+                        aria-label="Copy to clipboard"
                       >
-                        <Link className={styles.tooltip}> {name}</Link>
-                      </Tooltip>
-
-                      <div className={styles.hideView}>
-                        {name}&nbsp;
-                        <Button
-                          className={styles.alignButton}
-                          variant="secondary"
-                          onClick={() => handleCopyToClipboard(name)}
-                          aria-label="Copy to clipboard"
-                        >
-                          <CopyIcon />
-                        </Button>
-                      </div>
+                        <CopyIcon />
+                      </Button>
                     </td>
                     <td>{value}</td>
                   </tr>

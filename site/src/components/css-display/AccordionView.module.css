@@ -1,0 +1,16 @@
+.alignButton {
+  right: 0;
+}
+
+.cellContainer {
+  position: relative;
+}
+
+.loading {
+  display: flex;
+  margin: 0 auto;
+}
+
+.heading {
+  margin: 0;
+}

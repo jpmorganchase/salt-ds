@@ -1,12 +1,19 @@
 .pre {
-  max-width: 60vw;
+  max-width: 100vw;
   position: relative;
 }
 
-@media not screen and (min-width: 960px) {
-  .pre {
-    max-width: 80vw;
-  }
+.pre pre {
+  border-radius: var(--salt-palette-corner-weak);
+  padding: var(--salt-spacing-200);
+  overflow-x: auto;
+  margin: 0;
+}
+
+:global([data-mode="dark"]) .pre pre,
+:global([data-mode="dark"]) .pre pre span {
+  background-color: var(--shiki-dark-bg) !important;
+  color: var(--shiki-dark) !important;
 }
 
 .copyButton {

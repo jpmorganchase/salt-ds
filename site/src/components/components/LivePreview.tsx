@@ -81,7 +81,12 @@ export const LivePreview: FC<LivePreviewProps> = ({
             >
               <div className={styles.example}>
                 {/* Blank theme is needed here to prevent the site theme being inherited */}
-                <ChosenSaltProvider applyClassesTo="scope" theme="" density={density} mode={mode}>
+                <ChosenSaltProvider
+                  applyClassesTo="scope"
+                  theme=""
+                  density={density}
+                  mode={mode}
+                >
                   {ComponentExample.Example && <ComponentExample.Example />}
                 </ChosenSaltProvider>
               </div>

@@ -19,6 +19,6 @@
   color: var(--salt-content-foreground-hover);
 }
 
-.root:first-child h4 {
+.root:first-child :is(h2, h3, h4) {
   margin-top: 0;
 }

@@ -31,8 +31,7 @@ export function Footer({ className }: FooterProps) {
           ))}
         </div>
         <div className={styles.copyright}>
-          © {new Date().getFullYear()} JPMorgan Chase & Co. All rights
-          reserved.
+          © {new Date().getFullYear()} JPMorgan Chase & Co. All rights reserved.
         </div>
       </div>
     </footer>

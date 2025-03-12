@@ -31,9 +31,11 @@ export function QuickLink({
           </Text>
           <Text className={styles.cardDescription}>{children}</Text>
         </div>
-        <Link className={styles.cardAction} render={<span />}>
-          {action}
-        </Link>
+        {action && (
+          <Link className={styles.cardAction} render={<span />}>
+            {action}
+          </Link>
+        )}
       </LinkCard>
     </LinkBase>
   );
@@ -46,11 +48,15 @@ interface QuickLinkProps extends GridLayoutProps<"div"> {
 export function QuickLinks({
   links,
   children,
-  columns = { md: 4, sm: 2, xs: 1 },
   ...rest
 }: QuickLinkProps): JSX.Element {
   return (
-    <GridLayout className={styles.root} columns={columns} {...rest}>
+    <GridLayout
+      className={styles.root}
+      columns={{ md: 4, sm: 2, xs: 1 }}
+      gap={{ md: 3, xs: 1 }}
+      {...rest}
+    >
       {children ||
         links.map(({ href, title, description, action }) => (
           <QuickLink key={href} href={href} title={title} action={action}>

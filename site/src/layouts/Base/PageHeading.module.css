@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   gap: var(--salt-spacing-100);
-  padding: var(--salt-spacing-200) var(--salt-spacing-300);
+  padding: var(--salt-spacing-200) var(--salt-spacing-100);
   background: var(--salt-container-secondary-background);
 }
 
@@ -11,6 +11,10 @@
 }
 
 @media screen and (min-width: 960px) {
+  .root {
+    padding-inline: var(--salt-spacing-300);
+  }
+
   .root .description {
     max-width: 70%;
   }
