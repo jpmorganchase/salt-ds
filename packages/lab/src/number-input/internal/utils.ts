@@ -23,13 +23,11 @@ export const toFloat = (inputValue: number | string) => {
 export const sanitizedInput = (numberString: string) =>
   (numberString.match(ACCEPT_INPUT) || []).join("");
 
-export const isAtMax = (value: number | string | undefined, max: number) => {
-  if (value === undefined) return true;
+export const isAtMax = (value: number | string, max: number) => {
   return toFloat(value) >= max;
 };
 
-export const isAtMin = (value: number | string | undefined, min: number) => {
-  if (value === undefined) return true;
+export const isAtMin = (value: number | string, min: number) => {
   return toFloat(value) <= min;
 };
 

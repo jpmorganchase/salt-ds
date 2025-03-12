@@ -27,9 +27,9 @@ export interface StatusAdornmentProps extends IconProps {
 }
 
 const statusToAriaLabelMap: Record<AdornmentValidationStatus, string> = {
-  error: "error",
-  warning: "warning",
-  success: "success",
+  error: "error.",
+  warning: "warning.",
+  success: "success.",
 };
 
 const withBaseName = makePrefixer("saltStatusAdornment");

@@ -8,6 +8,7 @@ import {
   useForkRef,
   useFormFieldProps,
   useIcon,
+  useId,
 } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
@@ -63,7 +64,7 @@ export interface NumberInputProps
    */
   emptyReadOnlyMarker?: string;
   /**
-   * End adornment component
+   * End adornment component.
    */
   endAdornment?: ReactNode;
   /**
@@ -76,7 +77,7 @@ export interface NumberInputProps
    */
   inputProps?: InputHTMLAttributes<HTMLInputElement>;
   /**
-   * Optional ref for the input component
+   * Optional ref for the input component.
    */
   inputRef?: Ref<HTMLInputElement>;
   /**
@@ -106,11 +107,11 @@ export interface NumberInputProps
    */
   readOnly?: boolean;
   /**
-   * Start adornment component
+   * Start adornment component.
    */
   startAdornment?: ReactNode;
   /**
-   * The amount to increment or decrement the value by when using the number buttons or Up Arrow and Down Arrow keys. Default to 1.
+   * The amount to increment or decrement the value by when using the number input buttons or Up Arrow and Down Arrow keys. Defaults to 1.
    * @default 1
    */
   step?: number;
@@ -151,6 +152,7 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       emptyReadOnlyMarker = "—",
       endAdornment,
       hideButtons,
+      id: idProp,
       inputProps: inputPropsProp = {},
       inputRef: inputRefProp,
       max = Number.MAX_SAFE_INTEGER,
@@ -192,6 +194,7 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
     const isDisabled = disabled || formFieldDisabled;
     const isReadOnly = readOnlyProp || formFieldReadOnly;
     const validationStatus = formFieldValidationStatus ?? validationStatusProp;
+    const validationStatusId = useId(idProp);
 
     const {
       "aria-describedby": inputDescribedBy,
@@ -209,7 +212,7 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       ? ["required", "asterisk"].includes(formFieldRequired)
       : inputRequired;
 
-    const [value, setValue] = useControlled({
+    const [valueState, setValue] = useControlled({
       controlled: valueProp,
       default:
         typeof defaultValueProp === "number"
@@ -224,6 +227,8 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
 
     const inputRef = useRef<HTMLInputElement | null>(null);
     const forkedInputRef = useForkRef(inputRef, inputRefProp);
+    // If value is undefined, start increments/decrements from 0 if min is less than 0 otherwise from min
+    const value = valueState === undefined ? (min < 0 ? 0 : min) : valueState;
 
     const {
       decrementButtonProps,
@@ -348,10 +353,16 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
             </div>
           )}
           <input
-            aria-describedby={clsx(formFieldDescribedBy, inputDescribedBy)}
+            aria-describedby={clsx(
+              validationStatusId,
+              formFieldDescribedBy,
+              inputDescribedBy,
+            )}
             aria-labelledby={clsx(formFieldLabelledBy, inputLabelledBy)}
             aria-invalid={
-              !isReadOnly ? isOutOfRange(value, min, max) : undefined
+              !isReadOnly
+                ? isOutOfRange(value, min, max) || validationStatus === "error"
+                : undefined
             }
             aria-valuemax={
               !isReadOnly
@@ -368,6 +379,8 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
                 ? toFloat(toFixedDecimalPlaces(toFloat(value), decimalPlaces))
                 : undefined
             }
+            // Workaround to have the value announced by screen reader on Safari.
+            {...(!isReadOnly && { "aria-valuetext": value.toString() })}
             className={clsx(
               withBaseName("input"),
               withBaseName(`inputTextAlign${capitalize(textAlign)}`),
@@ -390,7 +403,10 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
             {...restInputProps}
           />
           {!isDisabled && validationStatus && (
-            <StatusAdornment status={validationStatus} />
+            <StatusAdornment
+              status={validationStatus}
+              id={validationStatusId}
+            />
           )}
           {endAdornment && (
             <div className={withBaseName("endAdornmentContainer")}>
