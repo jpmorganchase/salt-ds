@@ -8,8 +8,8 @@ import {
   type DateInputSingleDetails,
   DatePicker,
   DatePickerOverlay,
+  DatePickerSingleGridPanel,
   DatePickerSingleInput,
-  DatePickerSinglePanel,
   DatePickerTrigger,
   type SingleDateSelection,
   useLocalization,
@@ -32,7 +32,7 @@ export const SingleWithInitialError = (): ReactElement => {
   );
   const handleSelectionChange = useCallback(
     (
-      event: SyntheticEvent,
+      _event: SyntheticEvent,
       date: SingleDateSelection<DateFrameworkType> | null,
       details: DateInputSingleDetails | undefined,
     ) => {
@@ -74,7 +74,7 @@ export const SingleWithInitialError = (): ReactElement => {
           <DatePickerSingleInput defaultValue="bad date" />
         </DatePickerTrigger>
         <DatePickerOverlay>
-          <DatePickerSinglePanel helperText={helperText} />
+          <DatePickerSingleGridPanel helperText={helperText} />
         </DatePickerOverlay>
       </DatePicker>
       {!open ? <FormHelperText>{helperText}</FormHelperText> : null}

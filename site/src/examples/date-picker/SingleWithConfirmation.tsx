@@ -12,8 +12,8 @@ import {
   DatePicker,
   DatePickerActions,
   DatePickerOverlay,
+  DatePickerSingleGridPanel,
   DatePickerSingleInput,
-  DatePickerSinglePanel,
   DatePickerTrigger,
   type SingleDateSelection,
   useLocalization,
@@ -84,7 +84,7 @@ export const SingleWithConfirmation = (): ReactElement => {
     [dateAdapter],
   );
 
-  const handleOpenChange = useCallback(
+  const handleOpen = useCallback(
     (opening: boolean) => {
       if (opening) {
         savedState.current = {
@@ -105,7 +105,7 @@ export const SingleWithConfirmation = (): ReactElement => {
 
   const handleApply = useCallback(
     (
-      event: SyntheticEvent,
+      _event: SyntheticEvent,
       date: SingleDateSelection<DateFrameworkType> | null,
     ) => {
       console.log(
@@ -127,7 +127,7 @@ export const SingleWithConfirmation = (): ReactElement => {
         onApply={handleApply}
         onCancel={handleCancel}
         onSelectionChange={handleSelectionChange}
-        onOpenChange={handleOpenChange}
+        onOpenChange={handleOpen}
         selectedDate={selectedDate}
       >
         <DatePickerTrigger>
@@ -136,7 +136,7 @@ export const SingleWithConfirmation = (): ReactElement => {
         <DatePickerOverlay>
           <FlexLayout gap={0} direction="column">
             <FlexItem>
-              <DatePickerSinglePanel helperText={helperText} />
+              <DatePickerSingleGridPanel helperText={helperText} />
               <Divider variant="tertiary" />
             </FlexItem>
             <FlexItem>
