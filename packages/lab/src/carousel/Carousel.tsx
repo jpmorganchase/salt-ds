@@ -9,10 +9,10 @@ import { CarouselProvider } from "./CarouselContext";
 
 export interface CarouselProps extends HTMLAttributes<HTMLDivElement> {
   /**
-   * The initial Index enables you to select the active slide in the carousel.
+   * The initial Index enables you to select the first visible slide in the carousel.
    * Optional, default 0.
    **/
-  activeSlideIndex?: number;
+  firstVisibleSlideIndex?: number;
   /**
    * Number of slides visible at a time.
    * Optional, default 1.
@@ -23,7 +23,7 @@ export interface CarouselProps extends HTMLAttributes<HTMLDivElement> {
 export const Carousel = forwardRef<HTMLDivElement, CarouselProps>(
   function Carousel(
     {
-      activeSlideIndex = 0,
+      firstVisibleSlideIndex = 0,
       visibleSlides: visibleSlidesProp = 1,
       children,
       className,
@@ -40,7 +40,7 @@ export const Carousel = forwardRef<HTMLDivElement, CarouselProps>(
     const id = useId(idProp);
     return (
       <CarouselProvider
-        activeSlideIndex={activeSlideIndex}
+        firstVisibleSlideIndex={firstVisibleSlideIndex}
         visibleSlides={visibleSlides}
         id={id}
       >

@@ -57,7 +57,7 @@ export const CarouselControls = forwardRef<
     window: targetWindow,
   });
   const {
-    slidesCount,
+    slideCount,
     firstVisibleSlide,
     nextSlide,
     prevSlide,
@@ -69,11 +69,11 @@ export const CarouselControls = forwardRef<
   const nextButtonRef = useRef<HTMLButtonElement | null>(null);
 
   const isOnFirstSlide = firstVisibleSlide === 0;
-  const isOnLastSlide = firstVisibleSlide === slidesCount - visibleSlides;
-  const controlsLabel = slidesCount >= 1 && (
+  const isOnLastSlide = firstVisibleSlide === slideCount - visibleSlides;
+  const controlsLabel = slideCount >= 1 && (
     <Text as="span" aria-live={visibleSlides === 1 ? undefined : "polite"}>
-      <strong>{`${firstVisibleSlide + 1} ${visibleSlides > 1 && slidesCount > 1 ? ` - ${firstVisibleSlide + visibleSlides}` : ""} of
-        ${slidesCount}`}</strong>
+      <strong>{`${firstVisibleSlide + 1} ${visibleSlides > 1 && slideCount > 1 ? ` - ${firstVisibleSlide + visibleSlides}` : ""} of
+        ${slideCount}`}</strong>
     </Text>
   );
 

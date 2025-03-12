@@ -34,7 +34,7 @@ describe("GIVEN a 100% width slides carousel", () => {
       cy.findAllByText("1 of 4").should("exist");
     });
     it("SHOULD disable previous button when reaching far left", () => {
-      cy.mount(<Default activeSlideIndex={1} />);
+      cy.mount(<Default firstVisibleSlideIndex={1} />);
       cy.findAllByText("2 of 4").should("exist");
       cy.findAllByRole("button", { name: "Previous slide" }).click();
       cy.findAllByRole("button", { name: "Previous slide" }).should(
@@ -45,7 +45,7 @@ describe("GIVEN a 100% width slides carousel", () => {
     });
 
     it("SHOULD disable next button when reaching far right", () => {
-      cy.mount(<Default activeSlideIndex={2} />);
+      cy.mount(<Default firstVisibleSlideIndex={2} />);
       cy.findAllByText("3 of 4").should("exist");
       cy.findAllByRole("button", { name: "Next slide" }).click();
       cy.findAllByText("4 of 4").should("exist");
