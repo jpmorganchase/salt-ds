@@ -1,4 +1,3 @@
-import type { StepReducerAction, StepReducerState } from "./stepReducer.types";
 import {
   assignStepStatus,
   assignStepsStage,
@@ -6,6 +5,31 @@ import {
   flattenSteps,
   resetSteps,
 } from "./utils";
+
+import type { StepRecord } from "./Step";
+
+export interface StepReducerState {
+  steps: StepRecord[];
+  flatSteps: StepRecord[];
+  activeStepIndex: number;
+  activeStep: StepRecord | null;
+  previousStep: StepRecord | null;
+  nextStep: StepRecord | null;
+  started: boolean;
+  ended: boolean;
+}
+
+export type StepReducerAction =
+  | { type: "next" }
+  | { type: "previous" }
+  | { type: "reset" }
+  | { type: "status/error" }
+  | { type: "status/warning" }
+  | { type: "status/clear" };
+
+export interface StepReducerOptions {
+  activeStepId?: string;
+}
 
 export default function stepReducer(
   state: StepReducerState,
