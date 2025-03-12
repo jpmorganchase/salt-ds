@@ -11,7 +11,7 @@ import {
   useStepReducer,
 } from "@salt-ds/core";
 import type { Meta, StoryFn } from "@storybook/react";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 
 export default {
   title: "Core/SteppedTracker",
@@ -360,13 +360,13 @@ export const BareBones: StoryFn<typeof SteppedTracker> = () => {
 };
 
 export const ProgrammaticElement: StoryFn<typeof SteppedTracker> = () => {
-  // place this outside to avoid re-rendering
-  const stepIdToElement = {
+  // place this outside or useMemo to avoid re-rendering
+  const stepIdToElement = useMemo(() => ({
     "step-1": <Text key="step-1-content">Step 1 Content</Text>,
     "step-2": <Text key="step-2-content">Step 2 Content</Text>,
     "step-3": <Text key="step-3-content">Step 3 Content</Text>,
     default: <Text key="default-content">No Step is currently active</Text>,
-  };
+  }), []);
 
   const [state, dispatch] = useStepReducer([
     { id: "step-1", label: "Step 1", stage: "active" },

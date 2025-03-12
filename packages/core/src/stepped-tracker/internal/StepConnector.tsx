@@ -1,8 +1,8 @@
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
-import { makePrefixer } from "../utils";
+import { makePrefixer } from "../../utils";
 
-import stepConnectorCSS from "./Step.Connector.css";
+import stepConnectorCSS from "./StepConnector.css";
 
 const withBaseName = makePrefixer("saltStepConnector");
 

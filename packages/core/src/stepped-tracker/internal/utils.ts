@@ -1,4 +1,4 @@
-import type { StepRecord, StepStage, StepStatus } from "./Step";
+import type { StepRecord, StepStage, StepStatus } from "../Step";
 import type { StepReducerOptions, StepReducerState } from "./stepReducer";
 
 export function assignStepsStage(

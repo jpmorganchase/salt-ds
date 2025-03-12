@@ -1,7 +1,7 @@
 import { type ReactNode, createContext, useContext } from "react";
 
-import type { StepDepth } from "./Step";
-import type { SteppedTrackerOrientation } from "./SteppedTracker";
+import type { StepDepth } from "../Step";
+import type { SteppedTrackerOrientation } from "../SteppedTracker";
 
 export const DepthContext = createContext<StepDepth>(-1);
 export const OrientationContext =

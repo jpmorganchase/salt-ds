@@ -1,21 +1,21 @@
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import type { ComponentPropsWithoutRef, ReactNode } from "react";
-import { makePrefixer } from "../utils";
+import { makePrefixer } from "../../utils";
 
-import stepSROnlyCSS from "./Step.SROnly.css";
+import stepSROnlyCSS from "./StepScreenReaderOnly.css";
 
-const withBaseName = makePrefixer("saltStepSROnly");
+const withBaseName = makePrefixer("saltStepScreenReaderOnly");
 
-export interface StepSROnlyProps extends ComponentPropsWithoutRef<"div"> {
+export interface StepScreenReaderOnlyProps extends ComponentPropsWithoutRef<"div"> {
   children?: ReactNode;
 }
 
-export function StepSROnly({ children, ...props }: StepSROnlyProps) {
+export function StepScreenReaderOnly({ children, ...props }: StepScreenReaderOnlyProps) {
   const targetWindow = useWindow();
 
   useComponentCssInjection({
-    testId: "salt-step-sr-only",
+    testId: "salt-step-screen-reader-only",
     css: stepSROnlyCSS,
     window: targetWindow,
   });
