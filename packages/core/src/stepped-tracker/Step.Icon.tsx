@@ -8,7 +8,7 @@ import { makePrefixer } from "../utils";
 
 import stepIconCSS from "./Step.Icon.css";
 
-import type { StepStage, StepStatus } from "./Step.types";
+import type { StepStage, StepStatus } from "./Step";
 
 export interface StepIconProps extends IconProps {
   stage: StepStage;
