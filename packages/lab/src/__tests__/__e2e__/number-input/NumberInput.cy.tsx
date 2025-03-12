@@ -3,7 +3,7 @@ import { composeStories } from "@storybook/react";
 
 const composedStories = composeStories(numberInputStories);
 
-const { Default, MinAndMaxValue, RefreshAdornment } = composedStories;
+const { Default, MinAndMaxValue, ResetAdornment } = composedStories;
 
 describe("Number Input", () => {
   it("renders with default props", () => {
@@ -352,12 +352,12 @@ describe("Number Input", () => {
     cy.findByTestId("ErrorSolidIcon").should("exist");
   });
 
-  it("refreshes to default value in RefreshAdornment example", () => {
-    cy.mount(<RefreshAdornment />);
+  it("resets to default value in ResetAdornment example", () => {
+    cy.mount(<ResetAdornment />);
 
     cy.findByRole("spinbutton").focus().realPress("ArrowUp");
     cy.findByRole("spinbutton").should("have.value", "11");
-    cy.findByRole("button", { name: "refresh" }).realClick();
+    cy.findByRole("button", { name: "Reset Number Input" }).realClick();
     cy.findByRole("spinbutton").should("have.value", "10");
   });
 });
