@@ -6,7 +6,7 @@ import {
   resetSteps,
 } from "./utils";
 
-import type { StepRecord } from "./Step";
+import type { StepRecord } from "../Step";
 
 export interface StepReducerState {
   steps: StepRecord[];

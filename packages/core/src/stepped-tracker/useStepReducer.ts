@@ -1,11 +1,15 @@
 import { useCallback, useReducer } from "react";
 
-import stepReducer from "./stepReducer";
+import stepReducer from "./internal/stepReducer";
 
 import type { StepRecord } from "./Step";
-import type { StepReducerOptions } from "./stepReducer";
-import { initStepReducerState } from "./utils";
+import type { StepReducerOptions } from "./internal/stepReducer";
+import { initStepReducerState } from "./internal/utils";
 
+/**
+ * @experimental
+ * This hook is experimental and may change in future releases.
+ */
 export function useStepReducer(
   initialSteps: StepRecord[],
   options?: StepReducerOptions,
