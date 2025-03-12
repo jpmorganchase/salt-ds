@@ -18,7 +18,3 @@
 .cardTitle {
   margin: 0;
 }
-
-.cardDescription p:first-child {
-  margin-top: 0;
-}

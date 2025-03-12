@@ -1,6 +1,7 @@
-import { type characteristic, getCharacteristicValue } from "@salt-ds/core";
+import {} from "@salt-ds/core";
 import { clsx } from "clsx";
 
+import { useCallback, useState } from "react";
 import styles from "./ColorBlock.module.css";
 
 export const ColorBlock = ({
@@ -13,20 +14,30 @@ export const ColorBlock = ({
   hideToken?: boolean;
   replacementToken?: string;
 }) => {
-  const characteristicName = colorVar
-    .split("--salt-")[1]
-    .split("-")[0] as characteristic;
-  const color = getCharacteristicValue(
-    "salt-theme",
-    characteristicName,
-    colorVar.split(`${characteristicName}-`)[1],
-  );
-  const withBorder = color?.replaceAll(" ", "").includes("255,255,255");
-  const transparent = color?.includes("transparent");
+  const [withBorder, setWithBorder] = useState(false);
+  const [transparent, setTransparent] = useState(false);
+
+  const handleStyling = useCallback((node: HTMLDivElement) => {
+    if (node) {
+      setWithBorder(
+        window
+          .getComputedStyle(node)
+          .backgroundColor.replaceAll(" ", "")
+          .includes("255,255,255"),
+      );
+      setTransparent(
+        window
+          .getComputedStyle(node)
+          .backgroundColor.replaceAll(" ", "")
+          .includes("0,0,0,0"),
+      );
+    }
+  }, []);
 
   return (
     <>
       <div
+        ref={handleStyling}
         style={!transparent ? { background: `var(${colorVar})` } : undefined}
         className={clsx(
           styles.root,

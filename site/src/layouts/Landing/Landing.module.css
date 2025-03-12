@@ -53,6 +53,10 @@
     padding-inline: var(--salt-spacing-100);
   }
 
+  .root h1 {
+    margin-bottom: var(--salt-spacing-100);
+  }
+
   .root h2 {
     margin-top: var(--salt-spacing-200);
   }

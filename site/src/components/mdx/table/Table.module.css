@@ -1,10 +1,14 @@
+.root {
+  max-width: 100vw;
+  overflow-x: auto;
+}
+
 .table {
   display: inline-table;
-  width: 100%;
   border-collapse: collapse;
   table-layout: fixed;
-  word-wrap: break-word;
   position: relative;
+  margin-block: var(--salt-spacing-100);
 }
 
 .table tbody td {
@@ -31,8 +35,12 @@
 
 .table th,
 .table td {
-  padding-left: var(--salt-spacing-100);
+  padding-inline: var(--salt-spacing-100);
   position: relative;
+}
+
+.table th {
+  white-space: nowrap;
 }
 
 .table tr th + th::before {

@@ -3,10 +3,10 @@ import Image from "next/image";
 import styles from "./Logo.module.css";
 
 import type { ComponentPropsWithoutRef } from "react";
-import logoLDDark from "../hero/jpm_ld_dark.svg";
-import logoLDLight from "../hero/jpm_ld_light.svg";
-import logoTDDark from "../hero/jpm_td_dark.svg";
-import logoTDLight from "../hero/jpm_td_light.svg";
+import logoLDDark from "./logo_ld_dark.svg";
+import logoLDLight from "./logo_ld_light.svg";
+import logoTDDark from "./logo_td_dark.svg";
+import logoTDLight from "./logo_td_light.svg";
 
 export function Logo({ className, ...props }: ComponentPropsWithoutRef<"div">) {
   return (

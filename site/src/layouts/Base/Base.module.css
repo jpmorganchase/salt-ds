@@ -9,7 +9,7 @@
 
 .oneColumn {
   grid-template-areas: "header" "middle" "footer";
-  grid-template-columns: 1fr;
+  grid-template-columns: 100%;
 }
 
 .middle {
@@ -29,4 +29,10 @@
   min-width: 1px;
   padding-inline: var(--salt-spacing-300);
   padding-block: var(--salt-spacing-200);
+}
+
+@media not screen and (min-width: 960px) {
+  .content {
+    padding-inline: var(--salt-spacing-100);
+  }
 }

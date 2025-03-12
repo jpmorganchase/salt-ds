@@ -114,7 +114,7 @@ export function IconPreview() {
 
   return (
     <StackLayout className={styles.root} gap={1}>
-      <FlexLayout>
+      <FlexLayout wrap>
         <FlexItem>
           <Input
             placeholder="Search icons"

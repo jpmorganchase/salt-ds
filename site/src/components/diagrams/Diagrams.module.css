@@ -1,6 +1,6 @@
 .diagramsContainer {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: 100%;
   gap: var(--salt-spacing-300);
   margin-block: var(--salt-spacing-300);
 }
