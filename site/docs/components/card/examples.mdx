@@ -11,20 +11,29 @@ data:
 <LivePreviewControls>
 
 <LivePreview componentName="card" exampleName="Default">
+
 ## Card
 
 By default, the card component does not have any interactive or focusable elements.
 
 </LivePreview>
 
-<LivePreview componentName="card" exampleName="Variants" >
 ## Variants
 
-All card components provide primary, secondary and tertiary variants, offering flexibility and enabling differentiation based on visual hierarchy within your UI.
+<LivePreview componentName="card" exampleName="Variants" >
+
+Cards are available in several variants: primary, secondary, and tertiary, with an additional ghost variant for static cards. These variants can be combined to create different levels of hierarchy within your UI. There is no strict order to follow; the choice largely depends on the content, layout, and structure of your UI. Select the variant that best aligns with the design language you are establishing and the hierarchy you aim to create.
+
+</LivePreview>
+
+<LivePreview componentName="card" exampleName="Ghost" >
+
+Ghost cards can create a seamless integration with the surrounding elements, making the layout feel more fluid and less compartmentalized. This can be useful in designs where a continuous flow of information is desired. For example, if you want to highlight particular content over the top of a custom background, image or gradient.
 
 </LivePreview>
 
 <LivePreview componentName="card" exampleName="Accents" >
+
 ## Accents
 
 - The accent in a card is optional, but you can use it to indicate meaning (such as product or brand color).
@@ -34,6 +43,7 @@ All card components provide primary, secondary and tertiary variants, offering f
 </LivePreview>
 
 <LivePreview componentName="card" exampleName="Actions" >
+
 ## Actions
 
 You can incorporate actions like [links](../link) or [buttons](../button) into a card. Don't embed actions into a link card or an interactable card, as the card itself is the interactive element.
@@ -41,6 +51,7 @@ You can incorporate actions like [links](../link) or [buttons](../button) into a
 </LivePreview>
 
 <LivePreview componentName="card" exampleName="LinkCardExample">
+
 ## Link card
 
 - Use a link card when the entire card is clickable and navigates the user within the same tab or to a new tab.
@@ -50,13 +61,23 @@ You can incorporate actions like [links](../link) or [buttons](../button) into a
 </LivePreview>
 
 <LivePreview componentName="card" exampleName="FullWidthImage" >
+
 ## Full width image
 
 When using images in cards, set the image to span the card's entire width. You can do this by setting `--saltCard-padding: 0` and putting padding around any content below the image.
 
 </LivePreview>
 
+<LivePreview componentName="card" exampleName="BackgroundImage" >
+
+## Image as background
+
+You can set an image as the background of a card using [`background-image`](https://developer.mozilla.org/en-US/docs/Web/CSS/background-image) in CSS. Ensure there is enough contrast between the color of the text and the colors of the background image. [WCAG](https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html) recommends a contrast ratio of at least 4.5:1 for regular text and 3:1 for larger text.
+
+</LivePreview>
+
 <LivePreview componentName="card" exampleName="CustomPadding" >
+
 ## Custom padding
 
 - By default, the card components include `--salt-spacing-200` inner padding.
@@ -67,13 +88,16 @@ When using images in cards, set the image to span the card's entire width. You c
 </LivePreview>
 
 <LivePreview componentName="card" exampleName="CustomAccent" >
+
 ## Custom accent
 
 - By default, the card components accent color uses `--salt-container-primary-borderColor` or `--salt-container-secondary-borderColor` depending on the variant.
 - When there is a need to associate a brand or product color to the accent bar, you can override `--saltCard-accent-color` or `--saltLinkCard-accent-color` with the desired color.
 
 </LivePreview>
+
 <LivePreview componentName="card" exampleName="InteractableCardExample">
+
 ## Interactable card
 
 Use an Interactable card when the entire card functions as a button, or when the entire card needs to be selectable from a group of cards.
@@ -81,6 +105,7 @@ Use an Interactable card when the entire card functions as a button, or when the
 </LivePreview>
 
 <LivePreview componentName="card" exampleName="DisabledInteractableCard" >
+
 ## Disabled interactable card
 
 The Interactable card component can be disabled to prevent the user from interacting with it, e.g., if the option is temporarily unavailable
@@ -88,6 +113,7 @@ The Interactable card component can be disabled to prevent the user from interac
 </LivePreview>
 
 <LivePreview componentName="card" exampleName="ToggleGroup" >
+
 ## Toggle group
 
 Interactable cards can be used as a toggle button. This would typically be when used within a group context, facilitating single or multi selection.
@@ -95,6 +121,7 @@ Interactable cards can be used as a toggle button. This would typically be when 
 </LivePreview>
 
 <LivePreview componentName="card" exampleName="DisabledToggleGroup" >
+
 ## Disabled toggle group
 
 - Set both `disabled={true}` and `selected={true}` to apply selected-disabled styling to interactable cards.

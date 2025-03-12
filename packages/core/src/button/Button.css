@@ -391,6 +391,15 @@
   cursor: progress;
 }
 
+.saltButton strong {
+  font-weight: var(--salt-text-action-fontWeight-strong);
+}
+
+.saltButton small {
+  font-size: inherit;
+  font-weight: var(--salt-text-action-fontWeight-small);
+}
+
 .saltButton-spinner {
   position: absolute;
   inset: 0;

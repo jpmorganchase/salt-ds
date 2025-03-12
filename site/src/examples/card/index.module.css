@@ -21,7 +21,15 @@
 
 .variantCard {
   height: 144px;
+  width: 260px;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.exampleGradient {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(var(--salt-container-primary-background) 0%, var(--salt-container-secondary-background) 100%);
 }

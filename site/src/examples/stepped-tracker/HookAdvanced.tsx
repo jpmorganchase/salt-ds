@@ -46,7 +46,7 @@ export const HookAdvanced = () => {
     <StackLayout style={{ width: 240 }}>
       <SteppedTracker orientation="vertical">
         {state.steps.map((step) => (
-          <Step key={step.key || step.id} {...step} />
+          <Step key={step.id} {...step} />
         ))}
       </SteppedTracker>
       <SegmentedButtonGroup>
@@ -68,27 +68,34 @@ export const HookAdvanced = () => {
             Next
           </Button>
         )}
+        <Button
+          onClick={() => {
+            dispatch({ type: "reset" });
+          }}
+        >
+          Reset
+        </Button>
       </SegmentedButtonGroup>
       <SegmentedButtonGroup>
         {state.started && !state.ended && (
           <>
             <Button
               onClick={() => {
-                dispatch({ type: "error" });
+                dispatch({ type: "status/error" });
               }}
             >
               Error
             </Button>
             <Button
               onClick={() => {
-                dispatch({ type: "warning" });
+                dispatch({ type: "status/warning" });
               }}
             >
               Warning
             </Button>
             <Button
               onClick={() => {
-                dispatch({ type: "clear" });
+                dispatch({ type: "status/clear" });
               }}
             >
               Clear

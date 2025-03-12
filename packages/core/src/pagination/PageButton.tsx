@@ -1,6 +1,5 @@
 import { clsx } from "clsx";
 import { type MouseEventHandler, forwardRef } from "react";
-import { Button } from "../button";
 import { makePrefixer } from "../utils";
 import { usePaginationContext } from "./usePaginationContext";
 
@@ -32,10 +31,9 @@ export const PageButton = forwardRef<HTMLButtonElement, PageButtonProps>(
     };
 
     return (
-      <Button
+      <button
         aria-label={`Page ${page} of ${count}`}
         aria-current={selected ? "page" : undefined}
-        appearance="transparent"
         className={clsx(withBaseName(), {
           [withBaseName("selected")]: selected,
           [withBaseName("fixed")]: page < 100,
@@ -43,9 +41,10 @@ export const PageButton = forwardRef<HTMLButtonElement, PageButtonProps>(
         onClick={onClick}
         disabled={disabled}
         ref={ref}
+        type="button"
       >
         {page}
-      </Button>
+      </button>
     );
   },
 );

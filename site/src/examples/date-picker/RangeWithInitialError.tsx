@@ -97,7 +97,7 @@ export const RangeWithInitialError = (): ReactElement => {
           endDate: null,
         }}
         onSelectionChange={handleSelectionChange}
-        onOpen={setOpen}
+        onOpenChange={setOpen}
       >
         <DatePickerTrigger>
           <DatePickerRangeInput

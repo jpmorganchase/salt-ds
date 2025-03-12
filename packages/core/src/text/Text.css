@@ -103,6 +103,13 @@
   text-align: var(--salt-text-action-textAlign);
   font-weight: var(--salt-text-action-fontWeight);
 }
+.saltText-action.saltText strong {
+  font-weight: var(--salt-text-action-fontWeight-strong);
+}
+.saltText-action.saltText small {
+  font-size: inherit;
+  font-weight: var(--salt-text-action-fontWeight-small);
+}
 
 /* Code */
 code.saltText,

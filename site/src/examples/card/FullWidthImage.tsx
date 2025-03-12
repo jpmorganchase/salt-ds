@@ -10,14 +10,8 @@ export const FullWidthImage = (): ReactElement => {
         alt="placeholder image"
         style={{ width: "100%" }}
       />
-      <StackLayout
-        // Apply padding around the content below the image for a full width image
-        style={{
-          padding: "var(--salt-spacing-200)",
-        }}
-        align="start"
-      >
-        <StackLayout gap={1}>
+      <StackLayout padding={2} align="start">
+        <StackLayout padding={0} gap={1}>
           <H3>Sustainable investing products</H3>
           <Text>
             We have a commitment to provide a wide range of investment solutions

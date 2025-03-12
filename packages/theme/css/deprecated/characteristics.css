@@ -121,6 +121,7 @@
   --salt-text-primary-foreground-disabled: var(--salt-palette-neutral-primary-foreground-disabled);
   --salt-text-secondary-foreground: var(--salt-palette-neutral-secondary-foreground);
   --salt-text-secondary-foreground-disabled: var(--salt-palette-neutral-secondary-foreground-disabled);
+  --salt-text-textDecoration: var(--salt-typography-textDecoration-none);
 
   /* Navigable */
   --salt-navigable-primary-background: var(--salt-palette-navigate-primary-background);
@@ -134,6 +135,10 @@
   --salt-navigable-tertiary-background-active: var(--salt-palette-navigate-tertiary-background-active);
   --salt-navigable-indicator-activeDisabled: var(--salt-palette-navigate-indicator-activeDisabled);
   --salt-navigable-background-hover: var(--salt-palette-navigate-background-hover);
+
+  --salt-navigable-textDecoration: var(--salt-typography-textDecoration-underline);
+  --salt-navigable-textDecoration-hover: var(--salt-typography-textDecoration-none);
+  --salt-navigable-textDecoration-selected: var(--salt-typography-textDecoration-underline);
 
   /* Accent */
   --salt-accent-fontWeight: var(--salt-typography-fontWeight-semiBold); /* Use --salt-text-notation-fontWeight */

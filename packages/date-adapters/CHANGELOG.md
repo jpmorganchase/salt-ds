@@ -1,5 +1,13 @@
 # @salt-ds/date-adapters
 
+## 0.1.0-alpha.3
+
+### Patch Changes
+
+- ea84dd2: Fixed package entry points (main, module) pointing to non-existent file.
+
+  Fixes [#4748](https://github.com/jpmorganchase/salt-ds/issues/4748).
+
 ## 0.1.0-alpha.2
 
 ### Patch Changes
