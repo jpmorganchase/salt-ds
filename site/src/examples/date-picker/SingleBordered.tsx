@@ -8,8 +8,8 @@ import {
   type DateInputSingleDetails,
   DatePicker,
   DatePickerOverlay,
+  DatePickerSingleGridPanel,
   DatePickerSingleInput,
-  DatePickerSinglePanel,
   DatePickerTrigger,
   type SingleDateSelection,
   useLocalization,
@@ -32,7 +32,7 @@ export const SingleBordered = (): ReactElement => {
   );
   const handleSelectionChange = useCallback(
     (
-      event: SyntheticEvent,
+      _event: SyntheticEvent,
       date: SingleDateSelection<DateFrameworkType> | null,
       details: DateInputSingleDetails | undefined,
     ) => {
@@ -73,7 +73,7 @@ export const SingleBordered = (): ReactElement => {
           <DatePickerSingleInput bordered />
         </DatePickerTrigger>
         <DatePickerOverlay>
-          <DatePickerSinglePanel
+          <DatePickerSingleGridPanel
             helperText={helperText}
             CalendarNavigationProps={{
               MonthDropdownProps: { bordered: true },

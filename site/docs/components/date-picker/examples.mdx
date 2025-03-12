@@ -32,6 +32,18 @@ A controlled `DatePicker`, composed of a `DateInput` and a `Calendar` component,
 
 <LivePreview componentName="date-picker" exampleName="RangeControlled" />
 
+## Single selection grid view
+
+Use `SingleGridPanel` to provide a grid of multiple calendars, enabling the user to select the date from a wider range of visible months.
+
+<LivePreview componentName="date-picker" exampleName="SingleGridPanel" />
+
+## Range selection grid view
+
+Use `RangeGridPanel` to provide a grid of multiple calendars, enabling the user to select the date from a wider range of visible months.
+
+<LivePreview componentName="date-picker" exampleName="RangeGridPanel" />
+
 ## Single date within FormField
 
 A `DatePicker` with `selectionVariant` set to "single", inside a `FormField`, provides the field with a visible label, help text, and a status message for validation feedback.
@@ -61,6 +73,42 @@ When used with `FormField`, the `validationStatus` prop can be used to recreate 
 To constrain the selected date within a specific range, use the `minDate` and/or `maxDate` props. If `minDate` is not provided, it defaults to the year 1900. If `maxDate` is undefined, it defaults to the year 2100. This ensures that the selected date remains within the specified range.
 
 <LivePreview componentName="date-picker" exampleName="SingleWithMinMaxDate" />
+
+## Single with disabled dates
+
+Disabled dates are not selectable. To implement this, use the `isDayUnselectable` prop to pass a function that determines whether a day is unselectable and provides the tooltip description.
+
+<LivePreview componentName="date-picker" exampleName="SingleWithDisabledDates" />
+
+## Range with disabled dates
+
+Disabled dates are not selectable. To implement this, use the `isDayUnselectable` prop to pass a function that determines whether a day is unselectable and provides the tooltip description.
+
+<LivePreview componentName="date-picker" exampleName="RangeWithDisabledDates" />
+
+## Single with unselectable dates
+
+Unselectable dates are visually distinct from selectable dates. When a user attempts to select an unselectable date, the calendar displays a tooltip with additional information. To implement this, use the `isDayUnselectable` prop to pass a function that determines whether a day is unselectable and provides the tooltip description.
+
+<LivePreview componentName="date-picker" exampleName="SingleWithUnselectableDates" />
+
+## Range with unselectable dates
+
+Unselectable dates are visually distinct from selectable dates. When a user attempts to select an unselectable date, the calendar displays a tooltip with additional information. To implement this, use the `isDayUnselectable` prop to pass a function that determines whether a day is unselectable and provides the tooltip description.
+
+<LivePreview componentName="date-picker" exampleName="RangeWithUnselectableDates" />
+
+## Single with highlighted dates
+
+Highlighted dates are marked by a triangle in the top right corner, indicating an event associated with that day. When a user hovers over a highlighted date, the calendar displays a tooltip with additional information. To implement this, use the `isDayHighlighted` prop to pass a function that determines whether a day is highlighted and provides the tooltip description.
+
+<LivePreview componentName="date-picker" exampleName="SingleWithHighlightedDates" />
+
+## Range with highlighted dates
+
+Highlighted dates are marked by a triangle in the top right corner, indicating an event associated with that day. When a user hovers over a highlighted date, the calendar displays a tooltip with additional information. To implement this, use the `isDayHighlighted` prop to pass a function that determines whether a day is highlighted and provides the tooltip description.
+
+<LivePreview componentName="date-picker" exampleName="RangeWithHighlightedDates" />
 
 ## Range with min/max date
 

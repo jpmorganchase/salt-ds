@@ -8,9 +8,9 @@ import {
   type DateInputSingleDetails,
   DatePicker,
   DatePickerOverlay,
+  DatePickerSingleGridPanel,
+  type DatePickerSingleGridPanelProps,
   DatePickerSingleInput,
-  DatePickerSinglePanel,
-  type DatePickerSinglePanelProps,
   DatePickerTrigger,
   type SingleDateSelection,
   useLocalization,
@@ -83,7 +83,7 @@ export const SingleWithLocaleZhCN = (): ReactElement => {
     return <>{dateAdapter.format(day, "D")}</>;
   }
 
-  const CalendarDataGridProps: DatePickerSinglePanelProps<DateFrameworkType>["CalendarDataGridProps"] =
+  const CalendarDataGridProps: DatePickerSingleGridPanelProps<DateFrameworkType>["CalendarDataGridProps"] =
     {
       getCalendarMonthProps: () => ({ renderDayContents }),
     };
@@ -103,7 +103,7 @@ export const SingleWithLocaleZhCN = (): ReactElement => {
           />
         </DatePickerTrigger>
         <DatePickerOverlay>
-          <DatePickerSinglePanel
+          <DatePickerSingleGridPanel
             helperText={helperText}
             CalendarDataGridProps={CalendarDataGridProps}
             CalendarNavigationProps={{ formatMonth: "MMMM" }}

@@ -6,8 +6,8 @@ import {
   DatePickerActions,
   type DatePickerOpenChangeReason,
   DatePickerOverlay,
+  DatePickerSingleGridPanel,
   DatePickerSingleInput,
-  DatePickerSinglePanel,
   DatePickerTrigger,
   type SingleDateSelection,
   useLocalization,
@@ -44,7 +44,7 @@ export const ControlledOpen = (): ReactElement => {
 
   const handleApply = useCallback(
     (
-      event: SyntheticEvent,
+      _event: SyntheticEvent,
       date: SingleDateSelection<DateFrameworkType> | null,
     ) => {
       console.log(
@@ -62,8 +62,9 @@ export const ControlledOpen = (): ReactElement => {
     setSelectedDate(previousSelectedDate.current);
   }, []);
 
-  const handleOpenChange = useCallback(
-    (newOpen: boolean, _event?: Event, reason?: DatePickerOpenChangeReason) => {
+  const handleOpen = useCallback(
+    (newOpen: boolean, reason?: DatePickerOpenChangeReason) => {
+      // reason === undefined denotes a programmatic/controlled open, so focus behaviour is owned by the code
       if (reason === undefined) {
         triggerRef.current?.focus();
         setTimeout(() => {
@@ -85,7 +86,7 @@ export const ControlledOpen = (): ReactElement => {
       selectedDate={selectedDate}
       onApply={handleApply}
       onCancel={handleCancel}
-      onOpenChange={handleOpenChange}
+      onOpenChange={handleOpen}
       open={open}
     >
       <DatePickerTrigger>
@@ -94,7 +95,7 @@ export const ControlledOpen = (): ReactElement => {
       <DatePickerOverlay ref={datePickerRef}>
         <FlexLayout gap={0} direction="column">
           <FlexItem>
-            <DatePickerSinglePanel />
+            <DatePickerSingleGridPanel />
             <Divider variant="tertiary" />
           </FlexItem>
           <FlexItem>

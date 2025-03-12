@@ -3,8 +3,8 @@ import {
   type DateInputSingleDetails,
   DatePicker,
   DatePickerOverlay,
+  DatePickerSingleGridPanel,
   DatePickerSingleInput,
-  DatePickerSinglePanel,
   DatePickerTrigger,
   type SingleDateSelection,
   useLocalization,
@@ -46,7 +46,7 @@ export const Single = (): ReactElement => {
         <DatePickerSingleInput />
       </DatePickerTrigger>
       <DatePickerOverlay>
-        <DatePickerSinglePanel />
+        <DatePickerSingleGridPanel />
       </DatePickerOverlay>
     </DatePicker>
   );

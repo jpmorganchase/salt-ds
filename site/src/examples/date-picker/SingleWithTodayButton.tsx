@@ -12,8 +12,8 @@ import {
   type DateInputSingleDetails,
   DatePicker,
   DatePickerOverlay,
+  DatePickerSingleGridPanel,
   DatePickerSingleInput,
-  DatePickerSinglePanel,
   DatePickerTrigger,
   type SingleDatePickerState,
   type SingleDateSelection,
@@ -59,7 +59,7 @@ export const SingleWithTodayButton = (): ReactElement => {
   );
   const handleSelectionChange = useCallback(
     (
-      event: SyntheticEvent,
+      _event: SyntheticEvent,
       date: SingleDateSelection<DateFrameworkType> | null,
       details: DateInputSingleDetails | undefined,
     ) => {
@@ -105,7 +105,7 @@ export const SingleWithTodayButton = (): ReactElement => {
               <Divider />
             </FlexItem>
             <FlexItem>
-              <DatePickerSinglePanel helperText={helperText} />
+              <DatePickerSingleGridPanel helperText={helperText} />
             </FlexItem>
             <FlexItem>
               <Divider />

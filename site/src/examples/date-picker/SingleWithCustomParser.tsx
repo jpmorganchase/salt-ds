@@ -12,8 +12,8 @@ import {
   type DateInputSingleDetails,
   DatePicker,
   DatePickerOverlay,
+  DatePickerSingleGridPanel,
   DatePickerSingleInput,
-  DatePickerSinglePanel,
   DatePickerTrigger,
   type SingleDateSelection,
   useLocalization,
@@ -117,7 +117,7 @@ export const SingleWithCustomParser = (): ReactElement => {
           <DatePickerSingleInput parse={customParser} />
         </DatePickerTrigger>
         <DatePickerOverlay>
-          <DatePickerSinglePanel helperText={helperText} />
+          <DatePickerSingleGridPanel helperText={helperText} />
         </DatePickerOverlay>
       </DatePicker>
       {!open ? <FormHelperText>{helperText}</FormHelperText> : null}
