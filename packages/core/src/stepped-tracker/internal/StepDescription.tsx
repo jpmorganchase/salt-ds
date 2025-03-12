@@ -1,10 +1,10 @@
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import clsx from "clsx";
-import { Text, type TextProps } from "../text";
-import { makePrefixer } from "../utils";
+import { Text, type TextProps } from "../../text";
+import { makePrefixer } from "../../utils";
 
-import stepDescriptionCSS from "./Step.Description.css";
+import stepDescriptionCSS from "./StepDescription.css";
 
 export interface StepDescriptionProps extends TextProps<"div"> {}
 

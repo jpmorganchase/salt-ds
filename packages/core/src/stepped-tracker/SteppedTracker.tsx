@@ -7,7 +7,7 @@ import { makePrefixer } from "../utils";
 import {
   OrientationContext,
   SteppedTrackerProvider,
-} from "./SteppedTracker.Provider";
+} from "./internal/SteppedTrackerProvider";
 import SteppedTrackerCSS from "./SteppedTracker.css";
 
 const withBaseName = makePrefixer("saltSteppedTracker");
