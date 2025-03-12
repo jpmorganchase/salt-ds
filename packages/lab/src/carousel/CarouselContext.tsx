@@ -14,10 +14,10 @@ import {
 export interface CarouselContextValue {
   firstVisibleSlide: number;
   visibleSlides: number;
-  slidesCount: number;
+  slideCount: number;
   nextSlide: (event: MouseEvent | KeyboardEvent) => void;
   prevSlide: (event: MouseEvent | KeyboardEvent) => void;
-  updateActiveFromScroll: (scrollLeft: number) => void;
+  updateFirstVisibleFromScroll: (scrollLeft: number) => void;
   focusSlide: (index: number) => void;
   registerSlide: (element: HTMLDivElement) => number;
   unregisterSlide: (index: number) => void;
@@ -40,42 +40,45 @@ export function useCarousel() {
 
 export function CarouselProvider({
   children,
-  activeSlideIndex = 0,
+  firstVisibleSlideIndex = 0,
   visibleSlides = 1,
   id,
 }: {
   children: ReactNode;
-  activeSlideIndex?: number;
+  firstVisibleSlideIndex?: number;
   visibleSlides?: number;
   id?: string;
 }) {
-  const [firstVisibleSlide, setFirstVisibleSlide] = useState(activeSlideIndex);
+  const [firstVisibleSlide, setFirstVisibleSlide] = useState(
+    firstVisibleSlideIndex,
+  );
   const [visibleFocus, setVisibleFocus] = useState(0);
-  const [sliderW, setSliderW] = useState(0);
+  const [sliderWidth, setSliderWidth] = useState(0);
   const slides = useRef<Map<number, HTMLDivElement>>(new Map());
-  const [slidesCount, setSlidesCount] = useState(slides.current.size);
+  const [slideCount, setSlideCount] = useState(slides.current.size);
   useEffect(() => {
     if (containerRef.current) {
-      scrollToSlide(activeSlideIndex);
+      scrollToSlide(firstVisibleSlideIndex);
     }
-  }, [activeSlideIndex]);
+  }, [firstVisibleSlideIndex]);
 
   const containerRef = useRef<HTMLDivElement>(null);
 
   const registerSlide = useCallback((element: HTMLDivElement) => {
     const assignedIndex = slides.current.size;
     slides.current.set(assignedIndex, element);
-    setSlidesCount(assignedIndex + 1);
+    setSlideCount(assignedIndex + 1);
     return assignedIndex;
   }, []);
 
   const unregisterSlide = useCallback((index: number) => {
     slides.current.delete(index);
-    setSlidesCount(slides.current.size);
+    setSlideCount(slides.current.size);
   }, []);
 
-  const updateActiveFromScroll = (scrollLeft: number) => {
-    const newIndex = Math.round(scrollLeft / (sliderW / visibleSlides)) || 0;
+  const updateFirstVisibleFromScroll = (scrollLeft: number) => {
+    const newIndex =
+      Math.round(scrollLeft / (sliderWidth / visibleSlides)) || 0;
     if (newIndex !== firstVisibleSlide) {
       setFirstVisibleSlide(newIndex);
     }
@@ -83,7 +86,7 @@ export function CarouselProvider({
 
   const handleResize = useCallback(() => {
     if (!containerRef.current) return;
-    setSliderW(containerRef.current.offsetWidth);
+    setSliderWidth(containerRef.current.offsetWidth);
   }, []);
 
   useResizeObserver({ ref: containerRef, onResize: handleResize });
@@ -105,7 +108,7 @@ export function CarouselProvider({
 
   const nextSlide = (event: MouseEvent | KeyboardEvent) => {
     const nextSlide = firstVisibleSlide + 1;
-    if (!containerRef.current || nextSlide >= slidesCount) return;
+    if (!containerRef.current || nextSlide >= slideCount) return;
     if (event.type !== "click") {
       focusSlide(nextSlide);
       if (visibleFocus < visibleSlides - 1) {
@@ -136,7 +139,7 @@ export function CarouselProvider({
     <CarouselContext.Provider
       value={{
         visibleSlides,
-        slidesCount,
+        slideCount,
         focusSlide,
         firstVisibleSlide,
         registerSlide,
@@ -144,7 +147,7 @@ export function CarouselProvider({
         nextSlide,
         prevSlide,
         containerRef,
-        updateActiveFromScroll,
+        updateFirstVisibleFromScroll,
         carouselId: id,
       }}
     >

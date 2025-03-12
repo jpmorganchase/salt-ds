@@ -23,7 +23,7 @@
   transform: translate(-100%, -100%);
 }
 
-.saltCarouselSlide-actions.saltCarouselSlide-active {
+.saltCarouselSlide-actions.saltCarouselSlide-visible {
   display: flex;
 }
 .saltCarouselSlide-container {

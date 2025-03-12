@@ -58,7 +58,7 @@ export const CarouselSlide = forwardRef<HTMLDivElement, CarouselSlideProps>(
     const slideRef = useRef<HTMLDivElement>(null);
     const [index, setIndex] = useState<number | null>(null);
     const {
-      slidesCount,
+      slideCount,
       firstVisibleSlide,
       registerSlide,
       unregisterSlide,
@@ -113,7 +113,7 @@ export const CarouselSlide = forwardRef<HTMLDivElement, CarouselSlideProps>(
           >
             <div className={withBaseName("content")}>
               <span className={clsx(withBaseName("sr-only"))}>
-                {isVisible && `${slidesCount} of ${slidesCount}`}
+                {isVisible && `${slideCount} of ${slideCount}`}
               </span>
               {header}
               {children}
@@ -121,7 +121,7 @@ export const CarouselSlide = forwardRef<HTMLDivElement, CarouselSlideProps>(
             {actions && (
               <div
                 className={clsx(withBaseName("actions"), {
-                  [withBaseName("active")]: isVisible,
+                  [withBaseName("visible")]: isVisible,
                 })}
               >
                 {actions}

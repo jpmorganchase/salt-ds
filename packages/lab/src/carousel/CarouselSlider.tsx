@@ -55,7 +55,7 @@ export const CarouselSlider = forwardRef<HTMLDivElement, CarouselSliderProps>(
     });
 
     const {
-      updateActiveFromScroll,
+      updateFirstVisibleFromScroll,
       containerRef,
       prevSlide,
       nextSlide,
@@ -70,9 +70,9 @@ export const CarouselSlider = forwardRef<HTMLDivElement, CarouselSliderProps>(
     const handleScroll = useCallback(() => {
       if (containerRef.current) {
         const scrollLeft = containerRef.current.scrollLeft;
-        updateActiveFromScroll(scrollLeft);
+        updateFirstVisibleFromScroll(scrollLeft);
       }
-    }, [containerRef, updateActiveFromScroll]);
+    }, [containerRef, updateFirstVisibleFromScroll]);
     useIntersectionObserver({
       ref: containerRef,
       onIntersect: handleScroll,
