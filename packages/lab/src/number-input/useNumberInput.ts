@@ -8,18 +8,12 @@ import {
 } from "react";
 import type { NumberInputProps } from "./NumberInput";
 import { useActivateWhileMouseDown } from "./internal/useActivateWhileMouseDown";
-import {
-  isAtMax,
-  isAtMin,
-  toFixedDecimalPlaces,
-  toFloat,
-} from "./internal/utils";
+import { isAtMax, isAtMin, toFloat } from "./internal/utils";
 
 /**
  * Manages increment / decrement logic
  */
 export const useNumberInput = ({
-  decimalPlaces = 0,
   disabled,
   inputRef,
   max = Number.MAX_SAFE_INTEGER,
@@ -28,61 +22,60 @@ export const useNumberInput = ({
   readOnly,
   setValue,
   step = 1,
-  stepBlock = 10,
+  stepMultiplier = 2,
   value,
+  parse,
+  decimalScale,
+  userEditingRef,
 }: Pick<
   NumberInputProps,
-  | "decimalPlaces"
   | "disabled"
   | "inputRef"
   | "max"
   | "min"
   | "onChange"
+  | "parse"
+  | "decimalScale"
   | "readOnly"
   | "step"
-  | "stepBlock"
-  | "value"
+  | "stepMultiplier"
 > & {
-  setValue: Dispatch<SetStateAction<string | number | undefined>>;
+  setValue: Dispatch<SetStateAction<string | number>>;
+  value: string | number;
   inputRef: MutableRefObject<HTMLInputElement | null>;
+  userEditingRef: MutableRefObject<boolean>;
 }) => {
-  const setValueInRange = useCallback(
-    (event: SyntheticEvent | undefined, modifiedValue: number) => {
+  const updateValue = useCallback(
+    (event: SyntheticEvent | undefined, nextValue: number) => {
       if (readOnly) return;
-      let nextValue = modifiedValue;
-      if (nextValue < min) nextValue = min;
-      if (nextValue > max) nextValue = max;
+      const updatedValue = nextValue.toFixed(decimalScale);
 
-      const roundedValue = toFixedDecimalPlaces(nextValue, decimalPlaces);
-      if (Number.isNaN(toFloat(roundedValue))) return;
-
-      setValue(roundedValue);
-
-      onChange?.(event, roundedValue);
+      setValue(updatedValue);
+      onChange?.(event, toFloat(updatedValue));
     },
-    [decimalPlaces, min, max, onChange, readOnly, setValue],
+    [onChange, readOnly, setValue, decimalScale],
   );
 
   const decrementValue = useCallback(
     (event?: SyntheticEvent, block?: boolean) => {
-      if (value === undefined || isAtMin(value, min)) return;
-      const decrementStep = block ? stepBlock : step;
-      const nextValue =
-        value === "" ? -decrementStep : toFloat(value) - decrementStep;
-      setValueInRange(event, nextValue);
+      if (isAtMin(value, min)) return;
+      const decrementStep = block ? stepMultiplier * step : step;
+      const parsedValue = parse?.(value) || value;
+      const nextValue = toFloat(parsedValue) - decrementStep;
+      updateValue(event, nextValue);
     },
-    [value, min, step, stepBlock, setValueInRange],
+    [value, min, step, stepMultiplier, updateValue, parse],
   );
 
   const incrementValue = useCallback(
     (event?: SyntheticEvent, block?: boolean) => {
-      if (value === undefined || isAtMax(value, max)) return;
-      const incrementStep = block ? stepBlock : step;
-      const nextValue =
-        value === "" ? incrementStep : toFloat(value) + incrementStep;
-      setValueInRange(event, nextValue);
+      if (isAtMax(value, max)) return;
+      const incrementStep = block ? stepMultiplier * step : step;
+      const parsedValue = parse?.(value) || value;
+      const nextValue = toFloat(parsedValue) + incrementStep;
+      updateValue(event, nextValue);
     },
-    [value, max, step, stepBlock, setValueInRange],
+    [value, max, step, stepMultiplier, updateValue, parse],
   );
 
   const { activate: decrementSpinner } = useActivateWhileMouseDown(
@@ -108,6 +101,8 @@ export const useNumberInput = ({
     "aria-label": "increment value",
     disabled: disabled || isAtMax(value, max),
     onMouseDown: (event: MouseEvent<HTMLButtonElement>) => {
+      event.preventDefault();
+      userEditingRef.current = true;
       if (event.nativeEvent.button !== 0) {
         // To match closely with <input type='input'>
         return;
@@ -121,6 +116,8 @@ export const useNumberInput = ({
     "aria-label": "decrement value",
     disabled: disabled || isAtMin(value, min),
     onMouseDown: (event: MouseEvent<HTMLButtonElement>) => {
+      event.preventDefault();
+      userEditingRef.current = true;
       if (event.nativeEvent.button !== 0) {
         // To match closely with <input type='input'>
         return;
