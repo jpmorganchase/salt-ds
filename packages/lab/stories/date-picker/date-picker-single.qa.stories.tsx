@@ -2,7 +2,7 @@ import {
   DatePicker,
   DatePickerOverlay,
   DatePickerSingleInput,
-  DatePickerSinglePanel,
+  DatePickerSingleGridPanel,
   type DatePickerSingleProps,
   DatePickerTrigger,
   useLocalization,
@@ -37,12 +37,36 @@ const renderQAContainer = (
   props?: Omit<DatePickerSingleProps<unknown>, "selectionVariant">,
 ) => {
   const { dateAdapter } = useLocalization();
+  const checkDayOfWeek = (
+    day: string | false,
+    targetDayIndex: number,
+    luxonOffset: number,
+    message: string,
+  ) => {
+    const dayOfWeek = dateAdapter.getDayOfWeek(day);
+    const isTargetDay =
+      (dateAdapter.lib === "luxon" && dayOfWeek === luxonOffset) ||
+      (dateAdapter.lib !== "luxon" && dayOfWeek === targetDayIndex);
+
+    return isTargetDay ? message : false;
+  };
+
+  const isMonday = (day: ReturnType<any>) =>
+    checkDayOfWeek(day, 0, 1, "is a Monday");
+  const isSaturday = (day: ReturnType<any>) =>
+    checkDayOfWeek(day, 6, 5, "is a weekend");
+  const isFriday = (day: ReturnType<any>) =>
+    checkDayOfWeek(day, 5, 4, "is a Friday");
+
   return (
     <QAContainer itemPadding={10} width={1000}>
       <div style={{ height: 500 }}>
         <DatePicker
           defaultSelectedDate={dateAdapter.today()}
           selectionVariant="single"
+          isDayDisabled={isMonday}
+          isDayHighlighted={isFriday}
+          isDayUnselectable={isSaturday}
           open
           {...props}
         >
@@ -50,7 +74,7 @@ const renderQAContainer = (
             <DatePickerSingleInput />
           </DatePickerTrigger>
           <DatePickerOverlay>
-            <DatePickerSinglePanel />
+            <DatePickerSingleGridPanel />
           </DatePickerOverlay>
         </DatePicker>
       </div>

@@ -34,7 +34,7 @@ export const SingleWithCustomPanel = (): ReactElement => {
   );
   const handleSelectionChange = useCallback(
     (
-      event: SyntheticEvent,
+      _event: SyntheticEvent,
       date: SingleDateSelection<DateFrameworkType> | null,
       details: DateInputSingleDetails | undefined,
     ) => {

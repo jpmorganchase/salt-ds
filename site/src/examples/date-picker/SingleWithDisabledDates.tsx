@@ -14,16 +14,13 @@ import {
   type SingleDateSelection,
   useLocalization,
 } from "@salt-ds/lab";
-import {
-  type ReactElement,
-  type SyntheticEvent,
-  useCallback,
-  useState,
-} from "react";
+import { type SyntheticEvent, useCallback, useState } from "react";
+import type { ReactElement } from "react";
 
-export const SingleWithFormField = (): ReactElement => {
+export const SingleWithDisabledDates = (): ReactElement => {
   const { dateAdapter } = useLocalization();
-  const defaultHelperText = "Date format DD MMM YYYY (e.g. 09 Jun 2024)";
+  const defaultHelperText =
+    "A weekday, in the format DD MMM YYYY (e.g. 09 Jun 2024)";
   const errorHelperText = "Please enter a valid date in DD MMM YYYY format";
   const [helperText, setHelperText] = useState(defaultHelperText);
   const [open, setOpen] = useState<boolean>(false);
@@ -61,11 +58,21 @@ export const SingleWithFormField = (): ReactElement => {
     [dateAdapter],
   );
 
+  const isDayDisabled = (day: ReturnType<typeof dateAdapter.date>) => {
+    const dayOfWeek = dateAdapter.getDayOfWeek(day);
+    const isWeekend =
+      (dateAdapter.lib === "luxon" && (dayOfWeek === 7 || dayOfWeek === 6)) ||
+      (dateAdapter.lib !== "luxon" && (dayOfWeek === 0 || dayOfWeek === 6));
+
+    return isWeekend ? "weekends are disabled" : false;
+  };
+
   return (
     <FormField style={{ width: "256px" }} validationStatus={validationStatus}>
       <FormLabel>Select a date</FormLabel>
       <DatePicker
         selectionVariant="single"
+        isDayDisabled={isDayDisabled}
         onSelectionChange={handleSelectionChange}
         onOpenChange={setOpen}
       >

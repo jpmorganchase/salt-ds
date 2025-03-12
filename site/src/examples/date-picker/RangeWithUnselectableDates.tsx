@@ -8,23 +8,19 @@ import {
   type DateInputRangeDetails,
   DatePicker,
   DatePickerOverlay,
+  DatePickerRangeGridPanel,
   DatePickerRangeInput,
-  DatePickerRangePanel,
   DatePickerTrigger,
   type DateRangeSelection,
   useLocalization,
 } from "@salt-ds/lab";
-import {
-  type ReactElement,
-  type SyntheticEvent,
-  useCallback,
-  useState,
-} from "react";
+import { type SyntheticEvent, useCallback, useState } from "react";
+import type { ReactElement } from "react";
 
-export const RangeWithFormField = (): ReactElement => {
+export const RangeWithUnselectableDates = (): ReactElement => {
   const { dateAdapter } = useLocalization();
   const defaultHelperText =
-    "Select range DD MMM YYYY - DD MMM YYYY (e.g. 09 Jun 2024)";
+    "A weekday, in the format DD MMM YYYY (e.g. 09 Jun 2024)";
   const errorHelperText = "Please enter a valid date in DD MMM YYYY format";
   const [helperText, setHelperText] = useState(defaultHelperText);
   const [open, setOpen] = useState<boolean>(false);
@@ -70,12 +66,12 @@ export const RangeWithFormField = (): ReactElement => {
       if (startDateErrors?.length && startDateOriginalValue) {
         setValidationStatus("error");
         setHelperText(
-          `${errorHelperText} - start date ${startDateErrors[0].message}`,
+          `${errorHelperText} - start date, ${startDateErrors[0].message}`,
         );
       } else if (endDateErrors?.length && endDateOriginalValue) {
         setValidationStatus("error");
         setHelperText(
-          `${errorHelperText} - end date ${endDateErrors[0].message}`,
+          `${errorHelperText} - end date, ${endDateErrors[0].message}`,
         );
       } else {
         setValidationStatus(undefined);
@@ -85,11 +81,21 @@ export const RangeWithFormField = (): ReactElement => {
     [dateAdapter],
   );
 
+  const isDayUnselectable = (day: ReturnType<typeof dateAdapter.date>) => {
+    const dayOfWeek = dateAdapter.getDayOfWeek(day);
+    const isWeekend =
+      (dateAdapter.lib === "luxon" && (dayOfWeek === 7 || dayOfWeek === 6)) ||
+      (dateAdapter.lib !== "luxon" && (dayOfWeek === 0 || dayOfWeek === 6));
+
+    return isWeekend ? "weekends are un-selectable" : false;
+  };
+
   return (
     <FormField style={{ width: "256px" }} validationStatus={validationStatus}>
       <FormLabel>Select a date range</FormLabel>
       <DatePicker
         selectionVariant="range"
+        isDayUnselectable={isDayUnselectable}
         onSelectionChange={handleSelectionChange}
         onOpenChange={setOpen}
       >
@@ -97,7 +103,7 @@ export const RangeWithFormField = (): ReactElement => {
           <DatePickerRangeInput />
         </DatePickerTrigger>
         <DatePickerOverlay>
-          <DatePickerRangePanel helperText={helperText} />
+          <DatePickerRangeGridPanel helperText={helperText} />
         </DatePickerOverlay>
       </DatePicker>
       {!open ? <FormHelperText>{helperText}</FormHelperText> : null}

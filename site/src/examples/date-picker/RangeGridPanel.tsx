@@ -1,39 +1,33 @@
-import {
-  FormField,
-  FormFieldHelperText as FormHelperText,
-  FormFieldLabel as FormLabel,
-} from "@salt-ds/core";
-import type { DateFrameworkType } from "@salt-ds/date-adapters";
+import type {StoryFn} from "@storybook/react";
 import {
   type DateInputRangeDetails,
   DatePicker,
   DatePickerOverlay,
+  DatePickerRangeGridPanel,
+  type DatePickerRangeGridPanelProps,
   DatePickerRangeInput,
-  DatePickerRangePanel,
   DatePickerTrigger,
   type DateRangeSelection,
-  useLocalization,
+  Input,
+  useLocalization
 } from "@salt-ds/lab";
+import type {DateFrameworkType} from "@salt-ds/date-adapters";
 import {
-  type ReactElement,
+  type ChangeEvent,
   type SyntheticEvent,
   useCallback,
-  useState,
+  useState
 } from "react";
+import {FormField, FormFieldLabel, StackLayout} from "@salt-ds/core";
 
-export const RangeWithFormField = (): ReactElement => {
+export const RangeMultiRow = () => {
   const { dateAdapter } = useLocalization();
-  const defaultHelperText =
-    "Select range DD MMM YYYY - DD MMM YYYY (e.g. 09 Jun 2024)";
-  const errorHelperText = "Please enter a valid date in DD MMM YYYY format";
-  const [helperText, setHelperText] = useState(defaultHelperText);
-  const [open, setOpen] = useState<boolean>(false);
-  const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
-    undefined,
-  );
+  const [numberOfVisibleMonths, setNumberOfVisibleMonths] = useState("1");
+  const [columns, setColumns] = useState("1");
+  const [step, setStep] = useState("1");
   const handleSelectionChange = useCallback(
     (
-      _event: SyntheticEvent,
+      event: SyntheticEvent,
       date: DateRangeSelection<DateFrameworkType> | null,
       details: DateInputRangeDetails | undefined,
     ) => {
@@ -67,40 +61,61 @@ export const RangeWithFormField = (): ReactElement => {
           console.log(`EndDate Original Value: ${endDateOriginalValue}`);
         }
       }
-      if (startDateErrors?.length && startDateOriginalValue) {
-        setValidationStatus("error");
-        setHelperText(
-          `${errorHelperText} - start date ${startDateErrors[0].message}`,
-        );
-      } else if (endDateErrors?.length && endDateOriginalValue) {
-        setValidationStatus("error");
-        setHelperText(
-          `${errorHelperText} - end date ${endDateErrors[0].message}`,
-        );
-      } else {
-        setValidationStatus(undefined);
-        setHelperText(defaultHelperText);
-      }
     },
     [dateAdapter],
   );
 
   return (
-    <FormField style={{ width: "256px" }} validationStatus={validationStatus}>
-      <FormLabel>Select a date range</FormLabel>
+    <StackLayout>
+      <StackLayout direction={"row"}>
+        <FormField>
+          <FormFieldLabel>Number of columns</FormFieldLabel>
+          <Input
+            value={columns}
+            onChange={(event: ChangeEvent<HTMLInputElement>) => {
+              setColumns(event.target.value);
+            }}
+          />
+        </FormField>
+        <FormField>
+          <FormFieldLabel>Number of months in grid</FormFieldLabel>
+          <Input
+            value={numberOfVisibleMonths}
+            onChange={(event: ChangeEvent<HTMLInputElement>) => {
+              setNumberOfVisibleMonths(event.target.value);
+            }}
+          />
+        </FormField>
+        <FormField>
+          <FormFieldLabel>Step</FormFieldLabel>
+          <Input
+            value={step}
+            onChange={(event: ChangeEvent<HTMLInputElement>) => {
+              setStep(event.target.value);
+            }}
+          />
+        </FormField>
+      </StackLayout>
       <DatePicker
         selectionVariant="range"
         onSelectionChange={handleSelectionChange}
-        onOpenChange={setOpen}
       >
         <DatePickerTrigger>
           <DatePickerRangeInput />
         </DatePickerTrigger>
         <DatePickerOverlay>
-          <DatePickerRangePanel helperText={helperText} />
+          <DatePickerRangeGridPanel
+            columns={Number.parseInt(columns, 10)}
+            numberOfVisibleMonths={
+              Number.parseInt(
+                numberOfVisibleMonths,
+                10,
+              ) as DatePickerRangeGridPanelProps<any>["numberOfVisibleMonths"]
+            }
+            CalendarNavigationProps={{ step: Number.parseInt(step, 10) }}
+          />
         </DatePickerOverlay>
       </DatePicker>
-      {!open ? <FormHelperText>{helperText}</FormHelperText> : null}
-    </FormField>
+    </StackLayout>
   );
 };
