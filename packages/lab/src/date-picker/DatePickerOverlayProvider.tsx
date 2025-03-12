@@ -16,6 +16,7 @@ import {
   useRef,
   useState,
 } from "react";
+import { useFocusOut } from "./useFocusOut";
 import { useKeyboard } from "./useKeyboard";
 
 /** Reason for overlay state change, can be a custom reason */
@@ -104,12 +105,10 @@ interface DatePickerOverlayProviderProps {
   /**
    * Handler for when open state changes
    * @param newOpen - true when opened
-   * @param event - event that triggered the state change
    * @param reason - reason for the the state change
    */
   onOpenChange?: (
     newOpen: boolean,
-    event?: Event,
     reason?: DatePickerOpenChangeReason,
   ) => void;
   /**
@@ -151,7 +150,7 @@ export const DatePickerOverlayProvider: React.FC<
   const triggeringElementRef = useRef<HTMLElement | null>(null);
   const onDismissCallback = useRef<(event?: Event) => void>();
   const handleOpenChange = useCallback(
-    (newOpen: boolean, event?: Event, reason?: DatePickerOpenChangeReason) => {
+    (newOpen: boolean, _event?: Event, reason?: DatePickerOpenChangeReason) => {
       if (newOpen) {
         if (readOnly) {
           return;
@@ -171,7 +170,7 @@ export const DatePickerOverlayProvider: React.FC<
         triggeringElementRef.current = null;
       }
       setOpenState(newOpen);
-      onOpenChange?.(newOpen, event, reason);
+      onOpenChange?.(newOpen, reason);
 
       if (
         reason === "escape-key" ||
@@ -191,6 +190,13 @@ export const DatePickerOverlayProvider: React.FC<
     middleware: [flip({ fallbackStrategy: "initialPlacement" })],
   });
 
+  const onFocusOut = useCallback(
+    (event: FocusEvent) => {
+      handleOpenChange(false, event, "focus-out");
+    },
+    [handleOpenChange],
+  );
+
   const {
     getFloatingProps: getFloatingPropsCallback,
     getReferenceProps: getReferencePropsCallback,
@@ -198,10 +204,18 @@ export const DatePickerOverlayProvider: React.FC<
     interactions
       ? interactions(floatingUIResult.context)
       : [
-          useDismiss(floatingUIResult.context),
+          useDismiss(floatingUIResult.context, {}),
           useKeyboard(floatingUIResult.context, {
             enabled: !readOnly,
           }),
+            useFocusOut(floatingUIResult.context, {
+              enabled: !readOnly,
+              onFocusOut,
+              outsidePress: event => {
+                const target = event.target as Node;
+                return !(target instanceof Element && target.closest('[data-floating-ui-focusable]'))
+              }
+            }),
           useClick(floatingUIResult.context, {
             enabled: !!openOnClick && !readOnly,
             toggle: false,
