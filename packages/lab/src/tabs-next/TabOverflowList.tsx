@@ -1,4 +1,5 @@
 import {
+  flip,
   FloatingTree,
   offset,
   size,
@@ -86,6 +87,7 @@ export const TabOverflowList = forwardRef<HTMLDivElement, TabOverflowListProps>(
       placement: "bottom-start",
       middleware: [
         offset(1),
+        flip(),
         size({
           apply({ elements, availableHeight }) {
             Object.assign(elements.floating.style, {

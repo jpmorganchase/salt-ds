@@ -12,6 +12,7 @@
   box-shadow: var(--salt-overlayable-shadow-popout);
   box-sizing: border-box;
   border-radius: var(--salt-palette-corner, 0);
+  left: -100%;
 }
 
 .saltTabOverflow-listContainer {
