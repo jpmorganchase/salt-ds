@@ -6,9 +6,9 @@ import {
   flattenSteps,
   initStepReducerState,
   resetSteps,
-} from "../../stepped-tracker/utils";
+} from "../../../stepped-tracker/utils";
 
-import type { StepRecord } from "../../stepped-tracker/Step";
+import type { StepRecord } from "../../../stepped-tracker/Step";
 
 describe("SteppedTracker > utils", () => {
   describe("resetSteps", () => {
