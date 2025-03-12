@@ -22,6 +22,24 @@ import { useDatePickerOverlay } from "./DatePickerOverlayProvider";
 interface UseDatePickerBaseProps<TDate> {
   /** If `true`, the component is disabled. */
   disabled?: boolean;
+  /**
+   * Function to determine if a day is disabled.
+   * @param date - The date to check.
+   * @returns A string reason if the day is disabled, otherwise `false` or `undefined`.
+   */
+  isDayDisabled?: (date: TDate) => string | false | undefined;
+  /**
+   * Function to determine if a day is highlighted.
+   * @param date - The date to check.
+   * @returns A string reason if the day is highlighted, otherwise `false` or `undefined`.
+   */
+  isDayHighlighted?: (date: TDate) => string | false | undefined;
+  /**
+   * Function to determine if a day is unselectable.
+   * @param date - The date to check.
+   * @returns A string reason if the day is unselectable, otherwise `false` or `undefined`.
+   */
+  isDayUnselectable?: (date: TDate) => string | false | undefined;
   /** If `true`, the component is read-only. */
   readOnly?: boolean;
   /**
@@ -152,6 +170,7 @@ export function useDatePicker<
   ref: React.ForwardedRef<HTMLDivElement>,
 ): SingleDatePickerState<TDate> | RangeDatePickerState<TDate> {
   const {
+    dateAdapter,
     defaultDates: { minDate: defaultMinDate, maxDate: defaultMaxDate },
   } = useLocalization<TDate>();
   const {
@@ -159,6 +178,9 @@ export function useDatePicker<
     disabled,
     selectionVariant,
     defaultSelectedDate,
+    isDayDisabled,
+    isDayHighlighted,
+    isDayUnselectable,
     selectedDate: selectedDateProp,
     onSelectionChange,
     onApply,
@@ -220,6 +242,24 @@ export function useDatePicker<
     [setCancelled, setOpen, onApply],
   );
 
+  const checkAndPushError = (
+    date: TDate | null | undefined,
+    checkFunction: ((date: TDate) => string | false | undefined) | undefined,
+    errorType: string,
+    details: {
+      errors?: { type: string; message: string | false | undefined }[];
+    } = {},
+  ) => {
+    const errorMessage = date ? checkFunction?.(date) : false;
+    if (errorMessage) {
+      details.errors = details.errors ?? [];
+      details.errors.push({
+        type: errorType,
+        message: errorMessage,
+      });
+    }
+  };
+
   const selectSingle = useCallback(
     (
       event: SyntheticEvent,
@@ -227,15 +267,22 @@ export function useDatePicker<
       details: DateInputSingleDetails,
     ) => {
       setSelectedDate(date);
+      checkAndPushError(date, isDayDisabled, "disabled", details);
+      checkAndPushError(date, isDayUnselectable, "unselectable", details);
+
       if (selectionVariant === "single") {
         onSelectionChange?.(event, date, details);
       }
-      if (!enableApply && date) {
+      const canBeApplied =
+        dateAdapter.isValid(date) && !details?.errors?.length;
+      if (!enableApply && canBeApplied) {
         applySingle(event, date);
       }
     },
     [
       applySingle,
+      isDayDisabled,
+      isDayUnselectable,
       enableApply,
       onSelectionChange,
       selectionVariant,
@@ -261,15 +308,50 @@ export function useDatePicker<
       details: DateInputRangeDetails,
     ) => {
       setSelectedDate(date);
+      checkAndPushError(
+        date?.startDate,
+        isDayDisabled,
+        "disabled",
+        details?.startDate,
+      );
+      checkAndPushError(
+        date?.endDate,
+        isDayDisabled,
+        "disabled",
+        details?.endDate,
+      );
+      checkAndPushError(
+        date?.startDate,
+        isDayUnselectable,
+        "unselectable",
+        details?.startDate,
+      );
+      checkAndPushError(
+        date?.endDate,
+        isDayUnselectable,
+        "unselectable",
+        details?.endDate,
+      );
+
       if (selectionVariant === "range") {
         onSelectionChange?.(event, date, details);
       }
-      if (!enableApply && date?.startDate && date?.endDate) {
+      const isAValidRange =
+        dateAdapter.isValid(date?.startDate) &&
+        dateAdapter.isValid(date?.endDate);
+      const isValidSelection =
+        !details?.startDate?.errors?.length &&
+        !details?.endDate?.errors?.length;
+      const canBeApplied = isAValidRange && isValidSelection;
+      if (!enableApply && canBeApplied) {
         applyRange(event, date);
       }
     },
     [
+      dateAdapter,
       applyRange,
+      isDayDisabled,
+      isDayUnselectable,
       enableApply,
       onSelectionChange,
       selectionVariant,
@@ -300,6 +382,9 @@ export function useDatePicker<
     },
     helpers: {
       cancel,
+      isDayDisabled,
+      isDayHighlighted,
+      isDayUnselectable,
       setEnableApply,
     },
   };
