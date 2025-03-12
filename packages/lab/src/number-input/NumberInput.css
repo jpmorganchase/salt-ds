@@ -1,24 +1,34 @@
 /* Styles applied to number container */
 .saltNumberInput {
-  --numberInput-border: none;
+  --numberInput-border: var(--salt-size-border) var(--salt-container-borderStyle) var(--numberInput-borderColor);
   --numberInput-borderColor: var(--salt-editable-borderColor);
   --numberInput-borderStyle: var(--salt-editable-borderStyle);
   --numberInput-outlineColor: var(--salt-focused-outlineColor);
   --numberInput-borderWidth: var(--salt-size-fixed-100);
 
   align-items: center;
+  background: var(--numberInput-background);
+  border-radius: var(--salt-palette-corner-weak, 0);
+  box-sizing: border-box;
   color: var(--salt-content-primary-foreground);
   display: inline-flex;
   font-family: var(--salt-text-fontFamily);
   font-size: var(--salt-text-fontSize);
+  gap: var(--salt-spacing-50);
   height: var(--salt-size-base);
-  line-height: var(--salt-text-lineHeight);
   min-height: var(--salt-size-base);
   min-width: 4em;
+  overflow: hidden;
+  padding-left: var(--salt-spacing-100);
+  padding-right: var(--salt-spacing-50);
+  padding-top: var(--salt-spacing-50);
+  padding-bottom: var(--salt-spacing-50);
+  position: relative;
   width: 100%;
-  box-sizing: border-box;
+}
 
-  gap: var(--salt-spacing-50);
+.saltNumberInput-bordered {
+  border: var(--numberInput-border);
 }
 
 .saltNumberInput:hover {
@@ -89,21 +99,6 @@
   --numberInput-background-readonly: var(--salt-status-success-background);
 }
 
-.saltNumberInput-inputContainer {
-  display: flex;
-  background: var(--numberInput-background);
-  border-radius: var(--salt-palette-corner-weak, 0);
-  border: var(--numberInput-border);
-  box-sizing: border-box;
-  height: var(--salt-size-base);
-  min-height: var(--salt-size-base);
-  overflow: hidden;
-  padding-left: var(--salt-spacing-100);
-  padding-right: var(--salt-spacing-100);
-  position: relative;
-  flex-grow: 1;
-}
-
 /* Style applied to inner input component */
 .saltNumberInput-input {
   background: none;
@@ -114,11 +109,10 @@
   display: block;
   flex: 1;
   font: inherit;
-  height: 100%;
-  letter-spacing: var(--saltNumberInput-letterSpacing, 0);
+  letter-spacing: var(--salt-text-letterSpacing);
+  line-height: var(--salt-text-lineHeight);
   margin: 0;
   min-width: 0;
-  overflow: hidden;
   padding: 0;
   text-align: var(--numberInput-textAlign);
   width: 100%;
@@ -140,7 +134,7 @@
 }
 
 /* Styling when focused */
-.saltNumberInput-focused {
+.saltNumberInput:focus-within {
   --numberInput-borderColor: var(--numberInput-outlineColor);
   --numberInput-borderWidth: var(--salt-size-fixed-200);
 
@@ -186,14 +180,6 @@
   color: var(--saltNumberInput-color-disabled, var(--salt-content-primary-foreground-disabled));
 }
 
-.saltNumberInput-activationIndicator {
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  position: absolute;
-  border-bottom: var(--numberInput-borderWidth) var(--numberInput-borderStyle) var(--numberInput-borderColor);
-}
-
 /* Style applied if `bordered={true}` */
 .saltNumberInput-bordered {
   --numberInput-border: var(--salt-size-fixed-100) var(--salt-container-borderStyle) var(--numberInput-borderColor);
@@ -228,24 +214,8 @@
   column-gap: var(--salt-spacing-100);
 }
 
-.saltNumberInput-readOnly .saltNumberInput-startAdornmentContainer {
-  margin-left: var(--salt-spacing-50);
-}
-
-.saltNumberInput-startAdornmentContainer .saltButton ~ .saltButton {
-  margin-left: calc(-1 * var(--salt-spacing-50));
-}
-
-.saltNumberInput-endAdornmentContainer .saltButton ~ .saltButton {
-  margin-left: calc(-1 * var(--salt-spacing-50));
-}
-
-.saltNumberInput-startAdornmentContainer .saltButton:first-child {
+.saltNumberInput-startAdornmentContainer {
   margin-left: calc(var(--salt-spacing-50) * -1);
-}
-
-.saltNumberInput-endAdornmentContainer .saltButton:last-child {
-  margin-right: calc(var(--salt-spacing-50) * -1);
 }
 
 .saltNumberInput-startAdornmentContainer > .saltButton,
@@ -256,15 +226,15 @@
 }
 
 .saltNumberInput-inputTextAlignLeft {
-  text-align: left;
+  --numberInput-textAlign: left;
 }
 
 .saltNumberInput-inputTextAlignCenter {
-  text-align: center;
+  --numberInput-textAlign: center;
 }
 
 .saltNumberInput-inputTextAlignRight {
-  text-align: right;
+  --numberInput-textAlign: right;
 }
 
 /* --- Buttons --- */
@@ -275,17 +245,47 @@
   display: flex;
   flex-direction: column;
   gap: var(--numberInput-buttonGap);
+  justify-content: center;
+}
+
+.saltNumberInput-hiddenButtons .saltNumberInput-buttonContainer {
+  display: none;
 }
 
 /* Styles applied to number buttons */
 .saltNumberInput-numberButton {
-  --saltButton-height: calc((var(--salt-size-base) - var(--numberInput-buttonGap)) * 0.5);
-  --saltButton-width: var(--salt-size-base);
+  --saltButton-height: calc((var(--salt-size-base) - (var(--salt-spacing-50) * 2) - var(--salt-size-border-strong)) / 2);
+  --saltButton-width: calc(var(--salt-size-base) - var(--salt-spacing-100));
 }
 
 .saltNumberInput-numberButtonIncrement {
-  --saltButton-borderRadius: var(--salt-palette-corner-weak, 0) var(--salt-palette-corner-weak, 0) 0 0;
+  --saltButton-borderRadius: var(--salt-palette-corner-weaker, 0) var(--salt-palette-corner-weaker, 0) 0 0;
 }
 .saltNumberInput-numberButtonDecrement {
-  --saltButton-borderRadius: 0 0 var(--salt-palette-corner-weak, 0) var(--salt-palette-corner-weak, 0);
+  --saltButton-borderRadius: 0 0 var(--salt-palette-corner-weaker, 0) var(--salt-palette-corner-weaker, 0);
+}
+
+.saltNumberInput-activationIndicator {
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  position: absolute;
+  border-bottom: var(--salt-size-border) var(--salt-editable-borderStyle) var(--salt-editable-borderColor);
+}
+
+.saltNumberInput:hover .saltNumberInput-activationIndicator {
+  border-bottom-style: var(--salt-editable-borderStyle-hover);
+  border-bottom-color: var(--salt-editable-borderColor-hover);
+}
+
+.saltNumberInput:focus-within .saltNumberInput-activationIndicator {
+  border-bottom: var(--salt-size-border-strong) var(--salt-editable-borderStyle-active) var(--salt-editable-borderColor-active);
+}
+
+.saltNumberInput-bordered .saltNumberInput-activationIndicator {
+  border-bottom-width: 0;
+}
+
+.saltNumberInput-bordered.saltNumberInput:focus-within .saltNumberInput-activationIndicator {
+  border-bottom-width: calc(var(--salt-size-border-strong) - var(--salt-size-border));
 }
