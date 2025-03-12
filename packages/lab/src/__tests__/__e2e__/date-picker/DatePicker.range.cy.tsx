@@ -34,6 +34,8 @@ const {
   RangeWithCustomParser,
   RangeWithFormField,
   RangeWithMinMaxDate,
+  RangeWithDisabledDates,
+  RangeWithUnselectableDates,
   RangeCustomFormat,
 } = datePickerStories as any;
 
@@ -76,6 +78,28 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
       cy.findByRole("application").should("not.exist");
       cy.findByLabelText("End date").realClick();
       cy.findAllByRole("application").should("have.length", 2);
+    });
+
+    it("SHOULD hide calendar upon focus out", () => {
+      cy.mount(<Range />);
+
+      // Simulate opening the calendar
+      cy.findAllByRole("textbox")
+        .eq(0)
+        .click()
+        .type("{downArrow}", { force: true });
+      // Verify the overlay opens
+      cy.findAllByRole("application").should("have.length", 2);
+      // Simulate re-focusing the input
+      cy.findAllByRole("textbox").eq(0).click();
+      // Simulate tabbing out
+      cy.realPress("Tab");
+      cy.findAllByRole("application").should("have.length", 2);
+      cy.realPress("Tab");
+      cy.findAllByRole("application").should("have.length", 2);
+      cy.realPress("Tab");
+      // Verify the overlay closes
+      cy.findByRole("application").should("not.exist");
     });
   });
 
@@ -548,6 +572,88 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
           cy.findByRole("button", {
             name: "06 January 2025",
           }).should("have.attr", "aria-pressed", "true");
+        });
+
+        it("SHOULD not be able to select disabled dates", () => {
+          cy.mount(
+            <RangeWithDisabledDates defaultSelectedDate={initialRangeDate} />,
+          );
+
+          const startDate = adapter.parse("01 May 2024", "DD MMM YYYY").date;
+          const endDate = adapter.parse("31 May 2024", "DD MMM YYYY").date;
+          let currentDate = adapter.clone(startDate);
+
+          // Simulate opening the calendar
+          cy.findByRole("button", { name: "Open Calendar" }).realClick();
+          // Verify that the calendar is displayed
+          cy.findByRole("application").should("exist");
+
+          while (currentDate <= endDate) {
+            const formattedDate = adapter.format(currentDate, "DD MMMM YYYY");
+            const dayOfWeek = adapter.getDayOfWeek(currentDate);
+            const isWeekend =
+              (adapter.lib === "luxon" &&
+                (dayOfWeek === 7 || dayOfWeek === 6)) ||
+              (adapter.lib !== "luxon" && (dayOfWeek === 0 || dayOfWeek === 6));
+            if (isWeekend) {
+              // Verify weekend dates are disabled
+              cy.findByRole("button", { name: formattedDate }).should(
+                "have.attr",
+                "aria-disabled",
+                "true",
+              );
+            } else {
+              // Verify weekday dates are enabled
+              cy.findByRole("button", { name: formattedDate }).should(
+                "not.have.attr",
+                "aria-disabled",
+                "true",
+              );
+            }
+            currentDate = adapter.add(currentDate, { days: 1 });
+          }
+        });
+
+        it("SHOULD not be able to select un-selectable dates", () => {
+          cy.mount(
+            <RangeWithUnselectableDates
+              defaultSelectedDate={initialRangeDate}
+            />,
+          );
+
+          const startDate = adapter.parse("01 May 2024", "DD MMM YYYY").date;
+          const endDate = adapter.parse("31 May 2024", "DD MMM YYYY").date;
+          let currentDate = adapter.clone(startDate);
+
+          // Simulate opening the calendar
+          cy.findByRole("button", { name: "Open Calendar" }).realClick();
+          // Verify that the calendar is displayed
+          cy.findByRole("application").should("exist");
+
+          while (currentDate <= endDate) {
+            const formattedDate = adapter.format(currentDate, "DD MMMM YYYY");
+            const dayOfWeek = adapter.getDayOfWeek(currentDate);
+            const isWeekend =
+              (adapter.lib === "luxon" &&
+                (dayOfWeek === 7 || dayOfWeek === 6)) ||
+              (adapter.lib !== "luxon" && (dayOfWeek === 0 || dayOfWeek === 6));
+            if (isWeekend) {
+              // Verify weekend dates are disabled
+              cy.findByRole("button", { name: formattedDate }).should(
+                "have.attr",
+                "aria-disabled",
+                "true",
+              );
+            } else {
+              // Verify weekday dates are enabled
+              cy.findByRole("button", { name: formattedDate }).should(
+                "not.have.attr",
+                "aria-disabled",
+                "true",
+              );
+            }
+            currentDate = adapter.add(currentDate, { days: 1 });
+          }
         });
 
         it("SHOULD be able to select a date", () => {
