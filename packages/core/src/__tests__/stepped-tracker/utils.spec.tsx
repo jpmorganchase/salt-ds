@@ -8,7 +8,7 @@ import {
   resetSteps,
 } from "../../stepped-tracker/utils";
 
-import type { StepRecord } from "../../stepped-tracker/Step.types";
+import type { StepRecord } from "../../stepped-tracker/Step";
 
 describe("SteppedTracker > utils", () => {
   describe("resetSteps", () => {
