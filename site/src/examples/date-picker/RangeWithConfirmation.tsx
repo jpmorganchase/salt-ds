@@ -51,7 +51,7 @@ export const RangeWithConfirmation = (): ReactElement => {
   });
   const handleSelectionChange = useCallback(
     (
-      event: SyntheticEvent,
+      _event: SyntheticEvent,
       date: DateRangeSelection<DateFrameworkType> | null,
       details: DateInputRangeDetails | undefined,
     ) => {
@@ -107,7 +107,7 @@ export const RangeWithConfirmation = (): ReactElement => {
     [dateAdapter],
   );
 
-  const handleOpenChange = useCallback(
+  const handleOpen = useCallback(
     (opening: boolean) => {
       if (opening) {
         savedValidationState.current = validationStatus;
@@ -124,7 +124,7 @@ export const RangeWithConfirmation = (): ReactElement => {
 
   const handleApply = useCallback(
     (
-      event: SyntheticEvent,
+      _event: SyntheticEvent,
       date: DateRangeSelection<DateFrameworkType> | null,
     ) => {
       const { startDate, endDate } = date ?? {};
@@ -147,7 +147,7 @@ export const RangeWithConfirmation = (): ReactElement => {
         onApply={handleApply}
         onCancel={handleCancel}
         onSelectionChange={handleSelectionChange}
-        onOpenChange={handleOpenChange}
+        onOpenChange={handleOpen}
         selectedDate={selectedDate}
       >
         <DatePickerTrigger>
