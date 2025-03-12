@@ -1,8 +1,8 @@
 import { describe, expect, it } from "vitest";
 
-import type { StepRecord } from "../../stepped-tracker/Step";
-import stepReducer from "../../stepped-tracker/stepReducer";
-import { initStepReducerState } from "../../stepped-tracker/utils";
+import type { StepRecord } from "@salt-ds/core";
+import { stepReducer } from "../../../stepped-tracker/stepReducer";
+import { initStepReducerState } from "../../../stepped-tracker/utils";
 
 describe("stepReducer", () => {
   describe("next", () => {
