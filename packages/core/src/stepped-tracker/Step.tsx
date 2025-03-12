@@ -11,15 +11,15 @@ import {
 import { makePrefixer, useControlled, useId } from "../utils";
 
 import type { ButtonProps } from "../button";
-import { StepConnector } from "./Step.Connector";
-import { StepDescription } from "./Step.Description";
-import { StepExpandTrigger } from "./Step.ExpandTrigger";
-import { StepIcon } from "./Step.Icon";
-import { StepLabel } from "./Step.Label";
-import { StepSROnly } from "./Step.SROnly";
+import { StepConnector } from "./internal/StepConnector";
+import { StepDescription } from "./internal/StepDescription";
+import { StepExpandTrigger } from "./internal/StepExpandTrigger";
+import { StepIcon } from "./internal/StepIcon";
+import { StepLabel } from "./internal/StepLabel";
+import { StepScreenReaderOnly } from "./internal/StepScreenReaderOnly";
 import stepCSS from "./Step.css";
 import { SteppedTracker } from "./SteppedTracker";
-import { DepthContext } from "./SteppedTracker.Provider";
+import { DepthContext } from "./internal/SteppedTrackerProvider";
 
 export interface StepProps
   extends Omit<ComponentPropsWithoutRef<"li">, "onToggle"> {
@@ -45,6 +45,19 @@ export type StepStage =
   | "active";
 
 export type StepDepth = number;
+
+export interface StepProps
+  extends Omit<ComponentPropsWithoutRef<"li">, "onToggle"> {
+  label?: ReactNode;
+  description?: ReactNode;
+  status?: StepStatus;
+  stage?: StepStage;
+  expanded?: boolean;
+  defaultExpanded?: boolean;
+  onToggle?: ButtonProps["onClick"];
+  substeps?: StepRecord[];
+  children?: ReactNode;
+}
 
 const withBaseName = makePrefixer("saltStep");
 
@@ -138,18 +151,18 @@ export function Step({
       }
       {...props}
     >
-      <StepSROnly>
+      <StepScreenReaderOnly>
         {label} {description} {srOnly.stateText}
-      </StepSROnly>
-      <StepSROnly id={srOnly.toggleSubstepsId} aria-hidden>
+      </StepScreenReaderOnly>
+      <StepScreenReaderOnly id={srOnly.toggleSubstepsId} aria-hidden>
         {srOnly.toggleSubstepsText}
-      </StepSROnly>
-      <StepSROnly id={srOnly.substepsId} aria-hidden>
+      </StepScreenReaderOnly>
+      <StepScreenReaderOnly id={srOnly.substepsId} aria-hidden>
         {srOnly.substepsText}
-      </StepSROnly>
-      <StepSROnly id={srOnly.stateId} aria-hidden>
+      </StepScreenReaderOnly>
+      <StepScreenReaderOnly id={srOnly.stateId} aria-hidden>
         {srOnly.stateText}
-      </StepSROnly>
+      </StepScreenReaderOnly>
       <StepConnector />
       <StepIcon
         stage={stage}
