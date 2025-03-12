@@ -8,8 +8,8 @@ import {
   type DateInputSingleDetails,
   DatePicker,
   DatePickerOverlay,
+  DatePickerSingleGridPanel,
   DatePickerSingleInput,
-  DatePickerSinglePanel,
   DatePickerTrigger,
   type SingleDateSelection,
   useLocalization,
@@ -30,7 +30,6 @@ export const SingleWithLocaleEnUS = (): ReactElement => {
   // <LocalizationProvider DateAdapter={DateAdapter} locale="en"></LocalizationProvider>
   const { dateAdapter } = useLocalization();
   const isDateFns = dateAdapter.lib === "date-fns";
-  const isDayjs = dateAdapter.lib === "dayjs";
   if (isDateFns) {
     dateAdapter.locale = dateFnsEnUs;
   } else {
@@ -45,7 +44,7 @@ export const SingleWithLocaleEnUS = (): ReactElement => {
   );
   const handleSelectionChange = useCallback(
     (
-      event: SyntheticEvent,
+      _event: SyntheticEvent,
       date: SingleDateSelection<DateFrameworkType> | null,
       details: DateInputSingleDetails | undefined,
     ) => {
@@ -86,7 +85,7 @@ export const SingleWithLocaleEnUS = (): ReactElement => {
           <DatePickerSingleInput />
         </DatePickerTrigger>
         <DatePickerOverlay>
-          <DatePickerSinglePanel helperText={helperText} />
+          <DatePickerSingleGridPanel helperText={helperText} />
         </DatePickerOverlay>
       </DatePicker>
       {!open ? <FormHelperText>{helperText}</FormHelperText> : null}
