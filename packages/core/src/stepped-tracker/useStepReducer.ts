@@ -2,8 +2,8 @@ import { useCallback, useReducer } from "react";
 
 import stepReducer from "./stepReducer";
 
-import type { StepRecord } from "./Step.types";
-import type { StepReducerOptions } from "./stepReducer.types";
+import type { StepRecord } from "./Step";
+import type { StepReducerOptions } from "./stepReducer";
 import { initStepReducerState } from "./utils";
 
 export function useStepReducer(

@@ -1,9 +1,16 @@
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import clsx from "clsx";
-import { type CSSProperties, useContext, useEffect } from "react";
+import {
+  type CSSProperties,
+  type ComponentPropsWithoutRef,
+  type ReactNode,
+  useContext,
+  useEffect,
+} from "react";
 import { makePrefixer, useControlled, useId } from "../utils";
 
+import type { ButtonProps } from "../button";
 import { StepConnector } from "./Step.Connector";
 import { StepDescription } from "./Step.Description";
 import { StepExpandTrigger } from "./Step.ExpandTrigger";
@@ -14,7 +21,30 @@ import stepCSS from "./Step.css";
 import { SteppedTracker } from "./SteppedTracker";
 import { DepthContext } from "./SteppedTracker.Provider";
 
-import type { StepProps } from "./Step.types";
+export interface StepProps
+  extends Omit<ComponentPropsWithoutRef<"li">, "onToggle"> {
+  label?: ReactNode;
+  description?: ReactNode;
+  status?: StepStatus;
+  stage?: StepStage;
+  expanded?: boolean;
+  defaultExpanded?: boolean;
+  onToggle?: ButtonProps["onClick"];
+  substeps?: StepRecord[];
+  children?: ReactNode;
+}
+
+export type StepRecord = Omit<StepProps, "children"> & { id: string };
+
+export type StepStatus = "warning" | "error";
+export type StepStage =
+  | "pending"
+  | "locked"
+  | "completed"
+  | "inprogress"
+  | "active";
+
+export type StepDepth = number;
 
 const withBaseName = makePrefixer("saltStep");
 
