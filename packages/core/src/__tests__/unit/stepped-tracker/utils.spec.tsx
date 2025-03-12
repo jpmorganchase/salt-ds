@@ -6,7 +6,7 @@ import {
   flattenSteps,
   initStepReducerState,
   resetSteps,
-} from "../../../stepped-tracker/utils";
+} from "../../../stepped-tracker/internal/utils";
 
 import type { StepRecord } from "../../../stepped-tracker/Step";
 
