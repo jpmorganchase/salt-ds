@@ -5,7 +5,6 @@
   border-radius: var(--salt-palette-corner-weak, 0);
   color: var(--saltDateInput-color, var(--salt-content-primary-foreground));
   display: inline-flex;
-  gap: var(--salt-spacing-50);
   font-family: var(--salt-text-fontFamily);
   font-size: var(--saltDateInput-fontSize, var(--salt-text-fontSize));
   line-height: var(--saltDateInput-lineHeight, var(--salt-text-lineHeight));
@@ -16,9 +15,9 @@
   padding-left: var(--saltDateInput-paddingLeft, var(--salt-spacing-100));
   padding-right: var(--saltDateInput-paddingRight, var(--salt-spacing-100));
   position: relative;
-  width: 100%;
   box-sizing: border-box;
   overflow: hidden;
+  width: 100%;
 }
 
 .saltDateInput:hover {
@@ -189,9 +188,7 @@
 /* Style applied to end adornments */
 .saltDateInput-endAdornmentContainer {
   display: inline-flex;
-  padding-left: var(--salt-spacing-100);
   column-gap: var(--salt-spacing-50);
-  margin-left: auto;
   align-items: end;
 }
 
@@ -227,6 +224,7 @@
   padding: 0;
   text-align: left;
   width: min-content;
+  width: 100%;
 }
 
 /* Reset in the  class */
