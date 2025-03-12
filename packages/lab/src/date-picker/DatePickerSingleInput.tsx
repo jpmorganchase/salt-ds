@@ -94,8 +94,6 @@ export const DatePickerSingleInput = forwardRef<
 
     const {
       className,
-      onFocus,
-      onBlur,
       value: valueProp,
       validate,
       defaultValue,
