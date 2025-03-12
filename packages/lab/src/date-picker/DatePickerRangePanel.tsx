@@ -31,8 +31,6 @@ import {
   type CalendarOffsetProps,
   type CalendarProps,
   type CalendarRangeProps,
-  CalendarWeekHeader,
-  type CalendarWeekHeaderProps,
   type DateRangeSelection,
   type UseCalendarSelectionRangeProps,
 } from "../calendar";
@@ -119,13 +117,9 @@ export interface DatePickerRangePanelProps<TDate extends DateFrameworkType>
     >
   >;
   /**
-   * Props to be passed to the start date CalendarWeekHeader component.
-   */
-  StartCalendarWeekHeaderProps?: CalendarWeekHeaderProps;
-  /**
    * Props to be passed to the start date CalendarDataGrid component.
    */
-  StartCalendarDataGridProps?: CalendarGridProps<TDate>;
+  StartCalendarGridProps?: CalendarGridProps<TDate>;
 
   /**
    * Props to be passed to the end date CalendarNavigation component.
@@ -145,13 +139,9 @@ export interface DatePickerRangePanelProps<TDate extends DateFrameworkType>
    */
   EndCalendarNavigationProps?: CalendarNavigationProps<TDate>;
   /**
-   * Props to be passed to the end date CalendarWeekHeader component.
-   */
-  EndCalendarWeekHeaderProps?: CalendarWeekHeaderProps;
-  /**
    * Props to be passed to the end date CalendarDataGrid component.
    */
-  EndCalendarDataGridProps?: CalendarGridProps<TDate>;
+  EndCalendarGridProps?: CalendarGridProps<TDate>;
 }
 
 function getFallbackVisibleMonths<TDate extends DateFrameworkType>(
@@ -200,12 +190,10 @@ export const DatePickerRangePanel = forwardRef(function DatePickerRangePanel<
     onSelectionChange,
     StartCalendarProps: StartCalendarPropsProp,
     StartCalendarNavigationProps,
-    StartCalendarWeekHeaderProps,
-    StartCalendarDataGridProps,
+    StartCalendarGridProps,
     EndCalendarProps: EndCalendarPropsProp,
     EndCalendarNavigationProps,
-    EndCalendarWeekHeaderProps,
-    EndCalendarDataGridProps,
+    EndCalendarGridProps,
     ...rest
   } = props;
 
@@ -222,7 +210,7 @@ export const DatePickerRangePanel = forwardRef(function DatePickerRangePanel<
       minDate = dateAdapter.startOf(dateAdapter.today(), "month"),
       maxDate = dateAdapter.add(minDate, { months: 1 }),
     },
-    helpers: { select },
+    helpers: { select, isDayDisabled, isDayHighlighted, isDayUnselectable },
   } = useDatePickerContext<TDate>({ selectionVariant: "range" });
 
   const [hoveredDate, setHoveredDate] = useState<TDate | null>(null);
@@ -323,6 +311,9 @@ export const DatePickerRangePanel = forwardRef(function DatePickerRangePanel<
     visibleMonth: startVisibleMonth,
     hoveredDate: getHoveredDate(selectedDate?.startDate, hoveredDate),
     selectedDate: calendarSelectedDate,
+    isDayDisabled,
+    isDayHighlighted,
+    isDayUnselectable,
     onHoveredDateChange: handleHoveredStartDateChange,
     onVisibleMonthChange: handleStartVisibleMonthChange,
     onSelectionChange: handleSelectionChange,
@@ -334,6 +325,9 @@ export const DatePickerRangePanel = forwardRef(function DatePickerRangePanel<
   const EndCalendarProps = {
     visibleMonth: endVisibleMonth,
     hoveredDate,
+    isDayDisabled,
+    isDayHighlighted,
+    isDayUnselectable,
     selectedDate: calendarSelectedDate,
     onHoveredDateChange: handleHoveredEndDateChange,
     onVisibleMonthChange: handleEndVisibleMonthChange,
@@ -362,13 +356,11 @@ export const DatePickerRangePanel = forwardRef(function DatePickerRangePanel<
         <FormFieldContext.Provider value={{} as FormFieldContextValue}>
           <Calendar selectionVariant={"range"} {...StartCalendarProps}>
             <CalendarNavigation {...StartCalendarNavigationProps} />
-            <CalendarWeekHeader {...StartCalendarWeekHeaderProps} />
-            <CalendarGrid {...StartCalendarDataGridProps} />
+            <CalendarGrid {...StartCalendarGridProps} />
           </Calendar>
           <Calendar selectionVariant={"range"} {...EndCalendarProps}>
             <CalendarNavigation {...EndCalendarNavigationProps} />
-            <CalendarWeekHeader {...EndCalendarWeekHeaderProps} />
-            <CalendarGrid {...EndCalendarDataGridProps} />
+            <CalendarGrid {...EndCalendarGridProps} />
           </Calendar>
         </FormFieldContext.Provider>
       </FlexLayout>

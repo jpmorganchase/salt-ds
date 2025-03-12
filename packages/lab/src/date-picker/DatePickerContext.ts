@@ -54,6 +54,24 @@ interface DatePickerBaseState<TDate extends DateFrameworkType> {
      */
     cancel: (event?: Event) => void;
     /**
+     * Function to determine if a day is disabled.
+     * @param date - The date to check.
+     * @returns A string reason if the day is disabled, otherwise `false` or `undefined`.
+     */
+    isDayDisabled?: (date: TDate) => string | false | undefined;
+    /**
+     * Function to determine if a day is highlighted.
+     * @param date - The date to check.
+     * @returns A string reason if the day is highlighted, otherwise `false` or `undefined`.
+     */
+    isDayHighlighted?: (date: TDate) => string | false | undefined;
+    /**
+     * Function to determine if a day is unselectable.
+     * @param date - The date to check.
+     * @returns A string reason if the day is unselectable, otherwise `false` or `undefined`.
+     */
+    isDayUnselectable?: (date: TDate) => string | false | undefined;
+    /**
      * Sets the enableApply state.
      * @param newEnableApply - The new value for enableApply.
      */
