@@ -1,4 +1,4 @@
-import { makePrefixer } from "@salt-ds/core";
+import { type ResponsiveProp, makePrefixer } from "@salt-ds/core";
 import { clsx } from "clsx";
 import {
   type ComponentPropsWithoutRef,
@@ -37,6 +37,12 @@ export interface CalendarBaseProps extends ComponentPropsWithoutRef<"div"> {
    * Locale for date formatting
    */
   locale?: any;
+  /**
+   * Number of visible months, maximum 12, defaults to 1
+   */
+  numberOfVisibleMonths?: ResponsiveProp<
+    1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12
+  >;
 }
 
 /**
@@ -126,6 +132,7 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps<any>>(
       locale,
       minDate,
       maxDate,
+      numberOfVisibleMonths = 1,
       selectionVariant,
       onHoveredDateChange,
       hoveredDate,
@@ -154,6 +161,7 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps<any>>(
       locale,
       minDate,
       maxDate,
+      numberOfVisibleMonths,
       selectionVariant,
       onHoveredDateChange,
       hideOutOfRangeDates,
