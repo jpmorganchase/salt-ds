@@ -8,10 +8,10 @@ import {
   forwardRef,
   useCallback,
 } from "react";
-import { useIntersectionObserver } from "../utils";
 import { type CarouselContextValue, useCarousel } from "./CarouselContext";
 import type { CarouselSlideProps } from "./CarouselSlide";
 import carouselSliderCss from "./CarouselSlider.css";
+import { useIntersectionObserver } from "./useIntersectionObserver";
 
 export interface CarouselSliderProps extends HTMLAttributes<HTMLDivElement> {
   /**
