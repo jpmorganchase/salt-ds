@@ -118,17 +118,17 @@ data:
 
 ## Latest updates
 
-<ArticleCards columns={{ xs: 1, sm: 3 }} gap={{ md: 3, xs: 1 }}>
+<ArticleCards columns={{ xs: 1, sm: 2 }} gap={{ md: 3, xs: 1 }}>
   {meta.data.latestUpdates
     .sort((a, b) => b.lastModifiedDate - a.lastModifiedDate)
-    .slice(0, 3)
+    .slice(0, 2)
     .map((update) => (
       <ArticleCard
         key={update.route}
         title={update.title}
         description={update.description}
         timestamp={update.lastModifiedDate}
-        action={{ href: update.data.href }}
+        action={{ href: update.data.href, label: "Read the release notes" }}
       />
     ))}
 </ArticleCards>

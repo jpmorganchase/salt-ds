@@ -15,6 +15,7 @@ export function OverviewList({ patterns = [] }: OverviewListProps) {
           <li key={pattern.route}>
             <Link
               href={pattern.route}
+              className={styles.link}
               render={<LinkBase href={pattern.route} />}
             >
               {pattern.title}

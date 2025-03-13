@@ -6,6 +6,6 @@
   flex-direction: column;
   gap: var(--salt-spacing-200);
   overflow-y: auto;
-  padding-top: var(--salt-spacing-200);
+  padding-block: var(--salt-spacing-200);
   min-width: min-content;
 }
