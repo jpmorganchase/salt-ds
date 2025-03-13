@@ -3,12 +3,12 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
+  DialogHeader,
   H3,
   StackLayout,
   useId,
 } from "@salt-ds/core";
 import { CloseIcon } from "@salt-ds/icons";
-import { DialogHeader } from "@salt-ds/lab";
 import { type ReactElement, useState } from "react";
 
 export const WithHeader = (): ReactElement => {
@@ -41,12 +41,7 @@ export const WithHeader = (): ReactElement => {
     <>
       <Button onClick={handleRequestOpen}>Open dialog with header</Button>
       <Dialog open={open} onOpenChange={onOpenChange} id={id}>
-        <DialogHeader
-          preheader="Settlements"
-          header="Terms and conditions"
-          description="Effective date: August 29, 2024"
-          actions={closeButton}
-        />
+        <DialogHeader header="Terms and conditions" actions={closeButton} />
         <DialogContent style={{ maxHeight: 250 }}>
           <StackLayout>
             <div>
