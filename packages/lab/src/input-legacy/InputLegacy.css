@@ -111,7 +111,7 @@
 /* Style applied to salt Button used within Input component adornments */
 .saltInputLegacy .saltInputLegacy-suffixContainer > .saltButton,
 .saltInputLegacy .saltInputLegacy-prefixContainer > .saltButton {
-  height: calc(var(--saltButton-height, var(--salt-size-base)) - (var(--inputLegacy-button-inset) * 2));
+  height: calc(var(--button-height, var(--salt-size-base)) - (var(--inputLegacy-button-inset) * 2));
   margin: var(--inputLegacy-button-inset);
   padding: 0 calc(var(--salt-size-unit) - var(--inputLegacy-button-inset));
 }
