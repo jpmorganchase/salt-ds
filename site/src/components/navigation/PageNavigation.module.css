@@ -4,6 +4,6 @@
 
 @media not screen and (min-width: 960px) {
   .root {
-    padding-inline: var(--salt-spacing-200);
+    padding: 0;
   }
 }

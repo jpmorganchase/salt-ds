@@ -1,5 +1,6 @@
 import { Card, Link, Text } from "@salt-ds/core";
 import { LinkBase } from "../link/Link";
+import Markdown from "../markdown/Markdown";
 import styles from "./ArticleCard.module.css";
 
 export interface ArticleCardProps {
@@ -19,8 +20,8 @@ export function ArticleCard({
 }: ArticleCardProps) {
   const date = timestamp
     ? new Date(timestamp).toLocaleDateString(undefined, {
-        weekday: "short",
         day: "2-digit",
+        month: "short",
         year: "numeric",
       })
     : null;
@@ -39,7 +40,7 @@ export function ArticleCard({
           </Text>
         </div>
         {author && <Text styleAs="label">{author}</Text>}
-        {description && <Text maxRows={3}>{description}</Text>}
+        {description && <Markdown>{description}</Markdown>}
       </div>
       {action && (
         <div className={styles.action}>

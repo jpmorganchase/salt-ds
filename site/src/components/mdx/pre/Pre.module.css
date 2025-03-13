@@ -4,6 +4,7 @@
 }
 
 .pre pre {
+  font-family: var(--salt-text-code-fontFamily);
   border-radius: var(--salt-palette-corner-weak);
   padding: var(--salt-spacing-200);
   overflow-x: auto;

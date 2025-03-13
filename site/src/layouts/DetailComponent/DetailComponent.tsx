@@ -6,6 +6,7 @@ import {
 } from "@jpmorganchase/mosaic-store";
 import {
   Button,
+  Divider,
   Overlay,
   OverlayPanel,
   OverlayPanelContent,
@@ -15,7 +16,7 @@ import {
   ToggleButton,
   ToggleButtonGroup,
 } from "@salt-ds/core";
-import { GithubIcon, SaltShakerIcon } from "@salt-ds/icons";
+import { GithubIcon, SettingsSolidIcon } from "@salt-ds/icons";
 import {
   TabBar,
   TabListNext,
@@ -153,6 +154,18 @@ function ComponentPageHeading({ title }: { title?: string }) {
           >
             <GithubIcon aria-hidden /> View source code
           </CTALink>
+          <Overlay>
+            <OverlayTrigger>
+              <Button sentiment="neutral" appearance="bordered">
+                <SettingsSolidIcon aria-hidden />
+              </Button>
+            </OverlayTrigger>
+            <OverlayPanel>
+              <OverlayPanelContent>
+                <ThemeControls />
+              </OverlayPanelContent>
+            </OverlayPanel>
+          </Overlay>
         </div>
       )}
     </PageHeading>
@@ -199,24 +212,9 @@ export const DetailComponent: FC<LayoutProps> = ({ children }) => {
 
   const LeftSidebar = (
     <PrimarySidebar className={styles.primarySidebar}>
-      <div className={styles.sidebarExtras}>
-        <Overlay>
-          <OverlayTrigger>
-            <Button sentiment="neutral" appearance="solid">
-              <SaltShakerIcon aria-hidden /> Theme Options
-            </Button>
-          </OverlayTrigger>
-          <OverlayPanel>
-            <OverlayPanelContent>
-              <ThemeControls />
-            </OverlayPanelContent>
-          </OverlayPanel>
-        </Overlay>
-      </div>
       <TopLevelNavigation />
-      <div className={styles.navigation}>
-        <PageNavigation />
-      </div>
+      <Divider variant="tertiary" />
+      <PageNavigation />
     </PrimarySidebar>
   );
 
