@@ -221,6 +221,43 @@ describe("Given a Range Slider", () => {
     cy.get("@changeEndSpy").should("have.callCount", 2);
   });
 
+  it("should set range slider value to minimum if default value is less than minimum", () => {
+    cy.mount(
+      <Default
+        style={{ width: "400px" }}
+        min={0}
+        max={10}
+        defaultValue={[-10, 10]}
+      />,
+    );
+    cy.findAllByRole("slider").eq(0).should("have.value", 0);
+  });
+
+  it("should set range slider value to maximum if default value is greater than maximum", () => {
+    cy.mount(
+      <Default
+        style={{ width: "400px" }}
+        min={0}
+        max={10}
+        defaultValue={[5, 100]}
+      />,
+    );
+    cy.findAllByRole("slider").eq(1).should("have.value", 10);
+  });
+
+  it("should round the range slider value to the next step value if default value is not a multiple of the step", () => {
+    cy.mount(
+      <Default
+        style={{ width: "400px" }}
+        min={0}
+        max={10}
+        defaultValue={[1.5, 4.5]}
+      />,
+    );
+    cy.findAllByRole("slider").eq(0).should("have.value", 2);
+    cy.findAllByRole("slider").eq(1).should("have.value", 5);
+  });
+
   it("should display a tooltip with correct value only when thumb is hovered", () => {
     cy.mount(<Default style={{ width: "400px" }} defaultValue={[2, 5]} />);
 

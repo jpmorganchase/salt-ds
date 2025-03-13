@@ -102,7 +102,7 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>(
       step = 1,
       stepMultiplier = 2,
       value: valueProp,
-      defaultValue = [min, min + step],
+      defaultValue = [min, min + (max - min) / 2],
       ...rest
     },
     ref,
@@ -138,7 +138,7 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>(
     });
 
     const disabled = formFieldDisabled || disabledProp;
-    const value: [number, number] = clampRange(valueState, max, min);
+    const value: [number, number] = clampRange(valueState, max, min, step);
     const progressPercentageStart = calculatePercentage(value[0], max, min);
     const progressPercentageEnd = calculatePercentage(value[1], max, min);
 

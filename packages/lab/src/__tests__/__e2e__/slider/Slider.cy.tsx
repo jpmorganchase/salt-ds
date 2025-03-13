@@ -241,6 +241,42 @@ describe("Given a Slider", () => {
     cy.get("@changeEndSpy").should("have.callCount", 2);
   });
 
+  it("should set slider value to minimum if default value is less than minimum", () => {
+    cy.mount(
+      <Default
+        style={{ width: "400px" }}
+        min={0}
+        max={10}
+        defaultValue={-10}
+      />,
+    );
+    cy.findByRole("slider").should("have.value", 0);
+  });
+
+  it("should set slider value to maximum if default value is greater than maximum", () => {
+    cy.mount(
+      <Default
+        style={{ width: "400px" }}
+        min={0}
+        max={10}
+        defaultValue={100}
+      />,
+    );
+    cy.findByRole("slider").should("have.value", 10);
+  });
+
+  it("should round the slider value to the next step value if default value is not a multiple of the step", () => {
+    cy.mount(
+      <Default
+        style={{ width: "400px" }}
+        min={0}
+        max={10}
+        defaultValue={1.5}
+      />,
+    );
+    cy.findByRole("slider").should("have.value", 2);
+  });
+
   it("should render min max labels when passed", () => {
     cy.mount(
       <Default

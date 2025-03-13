@@ -82,7 +82,6 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
     "aria-label": ariaLabel,
     "aria-labelledby": ariaLabelledBy,
     "aria-valuetext": ariaValueText,
-    defaultValue = 0,
     disabled: disabledProp = false,
     format,
     marks,
@@ -96,6 +95,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
     step = 1,
     stepMultiplier = 2,
     value: valueProp,
+    defaultValue = min + (max - min) / 2,
     ...rest
   },
   ref,
@@ -129,7 +129,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
   });
 
   const disabled = formFieldDisabled || disabledProp;
-  const value = clamp(valueState, max, min);
+  const value = clamp(valueState, max, min, step);
   const progressPercentage = calculatePercentage(toFloat(value), max, min);
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {

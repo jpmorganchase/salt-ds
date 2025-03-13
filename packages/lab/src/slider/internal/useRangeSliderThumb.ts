@@ -37,7 +37,7 @@ export const useRangeSliderThumb = ({
   const [thumbIndexState, setIsThumbIndex] = useState<number>(0);
   const lastValueRef = useRef<[number, number]>(valueState);
   const sliderRef = useRef<HTMLDivElement>(null);
-  const sliderValues = clampRange(valueState, max, min);
+  const sliderValues = clampRange(valueState, max, min, step);
   const targetWindow = useWindow();
 
   const preventThumbOverlap = useCallback(

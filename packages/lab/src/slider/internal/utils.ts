@@ -21,14 +21,29 @@ export const calculateMarkPosition = (
 export const calculatePercentage = (value: number, max: number, min: number) =>
   ((value - min) / (max - min)) * 100;
 
-export const clamp = (value: number, max: number, min: number) => {
-  return Number.isNaN(value) ? min : Math.min(Math.max(value, min), max);
+export const clamp = (
+  value: number,
+  max: number,
+  min: number,
+  step: number,
+) => {
+  if (Number.isNaN(value)) {
+    return min;
+  }
+  // Clamp the value between min and max
+  const clampedValue = Math.min(Math.max(value, min), max);
+  // Round to the next positive multiple of the step
+  const remainder = clampedValue % step;
+  const roundedValue =
+    remainder === 0 ? clampedValue : clampedValue + step - remainder;
+  return roundedValue;
 };
 
 export const clampRange = (
   range: [number, number],
   max: number,
   min: number,
+  step: number,
 ) => {
   let [start, end] = range;
 
@@ -41,9 +56,16 @@ export const clampRange = (
   if (start > end) {
     [start, end] = [end, start];
   }
+  // Clamp the start and end values
   start = Math.min(Math.max(start, min), max);
   end = Math.min(Math.max(end, min), max);
-
+  // Round to the next positive multiple of the step
+  const roundToNextMultiple = (value: number) => {
+    const remainder = value % step;
+    return remainder === 0 ? value : value + step - remainder;
+  };
+  start = roundToNextMultiple(start);
+  end = roundToNextMultiple(end);
   return [start, end] as [number, number];
 };
 
@@ -60,5 +82,5 @@ export const getClickedPosition = (
   const rawValue =
     ((clientX - sliderRect.left) / sliderRect.width) * (max - min) + min;
   const steppedValue = Math.round(rawValue / step) * step;
-  return clamp(steppedValue, max, min);
+  return clamp(steppedValue, max, min, step);
 };
