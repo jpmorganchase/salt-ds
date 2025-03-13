@@ -1,4 +1,4 @@
-import { createContext, useControlled, useResizeObserver } from "@salt-ds/core";
+import { createContext, useResizeObserver } from "@salt-ds/core";
 import {
   type KeyboardEvent,
   type MouseEvent,
@@ -6,7 +6,7 @@ import {
   type RefObject,
   useCallback,
   useContext,
-  useEffect,
+  useLayoutEffect,
   useRef,
   useState,
 } from "react";
@@ -49,23 +49,24 @@ export function CarouselProvider({
   visibleSlides?: number;
   id?: string;
 }) {
-  const [firstVisibleSlide, setFirstVisibleSlide, isFirstVisibleControlled] =
-    useControlled({
-      controlled: firstVisibleSlideIndex,
-      default: 0,
-      name: "Carousel",
-      state: "firstVisibleSlide",
-    });
+  const [firstVisibleSlide, setFirstVisibleSlide] = useState(
+    firstVisibleSlideIndex,
+  );
   const [visibleFocus, setVisibleFocus] = useState(0);
   const [sliderWidth, setSliderWidth] = useState(0);
   const slides = useRef<Map<number, HTMLDivElement>>(new Map());
   const [slideCount, setSlideCount] = useState(slides.current.size);
 
-  useEffect(() => {
-    if (!isFirstVisibleControlled && containerRef.current) {
-      scrollToSlide(firstVisibleSlide);
-    }
-  }, [firstVisibleSlide, isFirstVisibleControlled]);
+  useLayoutEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+    requestAnimationFrame(() => {
+      container.scrollTo({
+        left: firstVisibleSlideIndex * (container.offsetWidth / visibleSlides),
+        behavior: "instant",
+      });
+    });
+  }, [firstVisibleSlideIndex]);
 
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -97,8 +98,9 @@ export function CarouselProvider({
   useResizeObserver({ ref: containerRef, onResize: handleResize });
 
   const scrollToSlide = (index: number) => {
-    if (!containerRef.current) return;
-    const sliderWidth = containerRef.current.offsetWidth;
+    const container = containerRef.current;
+    if (!container) return;
+    const sliderWidth = container.offsetWidth;
     const slideWidth = sliderWidth / visibleSlides;
     const targetScrollLeft = index * slideWidth;
     containerRef.current.scrollTo({
