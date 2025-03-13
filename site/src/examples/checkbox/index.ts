@@ -11,3 +11,4 @@ export * from "./WrapGroup";
 export * from "./Indeterminate";
 export * from "./WithFormField";
 export * from "./WithDescription";
+export * from "./Controlled";
