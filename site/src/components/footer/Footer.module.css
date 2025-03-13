@@ -1,14 +1,8 @@
 .footer {
-  --footer-items-separator-height: var(--salt-text-lineHeight);
-  --footer-padding-horizontal: var(--salt-spacing-300);
-  --footer-padding-vertical: var(--salt-spacing-100);
-}
-
-.footer {
   grid-area: footer;
   border-top: var(--salt-size-border) var(--salt-separable-borderStyle) var(--salt-separable-tertiary-borderColor);
   background-color: var(--salt-container-primary-background);
-  padding: var(--footer-padding-vertical) var(--footer-padding-horizontal);
+  padding: var(--salt-spacing-100) var(--salt-spacing-300);
   color: var(--salt-content-secondary-foreground);
 }
 
@@ -17,6 +11,18 @@
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
+  gap: var(--salt-spacing-100);
+}
+
+.saltMessage {
+  display: flex;
+  gap: var(--salt-spacing-50);
+}
+
+.copyrightContainer {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--salt-spacing-25);
 }
 
 .links {
@@ -29,7 +35,7 @@
   width: var(--salt-size-border);
   content: "";
   background-color: var(--salt-separable-secondary-borderColor);
-  height: var(--footer-items-separator-height);
+  height: var(--salt-text-lineHeight);
   align-self: center;
 }
 
@@ -40,27 +46,20 @@
 .linkContainer a:global(.saltLink) {
   --link-color-visited: var(--link-color);
 }
-@media screen and (max-width: 1280px) {
-  .footer {
-    --footer-padding-horizontal: var(--salt-spacing-100);
-    --footer-padding-vertical: var(--salt-spacing-100);
-  }
-}
 
-@media (max-width: 996px) {
+@media not screen and (min-width: 960px) {
   .footer {
-    --footer-padding-horizontal: var(--salt-spacing-100);
-    --footer-padding-vertical: var(--salt-spacing-100);
-  }
-}
-
-@media screen and (max-width: 768px) {
-  .footer {
-    --footer-padding-horizontal: var(--salt-spacing-100);
-    --footer-padding-vertical: var(--salt-spacing-100);
+    padding-inline: var(--salt-spacing-100);
   }
 
   .container {
+    gap: var(--salt-spacing-50);
+  }
+}
+
+@media not screen and (min-width: 599px) {
+  .copyrightContainer {
+    flex-direction: column;
     gap: var(--salt-spacing-50);
   }
 }

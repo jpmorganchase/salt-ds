@@ -27,14 +27,14 @@
   height: auto;
 }
 
-.pill {
+.pill.pill {
   color: var(--salt-content-bold-foreground);
 }
 
-.positive .pill {
+.positive .pill.pill {
   background-color: var(--salt-status-success-bold-background);
 }
 
-.negative .pill {
+.negative .pill.pill {
   background-color: var(--salt-status-error-bold-background);
 }
