@@ -18,3 +18,7 @@
 .cardTitle {
   margin: 0;
 }
+
+.cardDescription :last-child {
+  margin-bottom: 0;
+}
