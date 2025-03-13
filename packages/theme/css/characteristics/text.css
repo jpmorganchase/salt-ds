@@ -225,3 +225,18 @@
   --salt-text-notation-fontSize: 8px;
   --salt-text-notation-lineHeight: 10px;
 }
+
+/* Prototype */
+.salt-theme.salt-theme.salt-theme {
+  --salt-text-h1-lineHeight: 1.3;
+  --salt-text-h2-lineHeight: 1.3;
+  --salt-text-h3-lineHeight: 1.3;
+  --salt-text-h4-lineHeight: 1.3;
+  --salt-text-label-lineHeight: 1.3;
+  --salt-text-lineHeight: 1.3;
+  --salt-text-display1-lineHeight: 1.3;
+  --salt-text-display2-lineHeight: 1.3;
+  --salt-text-display3-lineHeight: 1.3;
+  --salt-text-display4-lineHeight: 1.3;
+  --salt-text-notation-lineHeight: 1.3;
+}
