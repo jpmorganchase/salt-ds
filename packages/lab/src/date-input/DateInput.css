@@ -247,3 +247,8 @@
   color: var(--salt-content-secondary-foreground);
   font-weight: var(--salt-text-fontWeight-small);
 }
+
+/* Style applied to the dash between two inputs in range date input */
+.saltDateInput-dash {
+  margin: 0 var(--salt-spacing-50);
+}
