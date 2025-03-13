@@ -26,17 +26,21 @@ export const clamp = (
   max: number,
   min: number,
   step: number,
+  decimalPlaces: number,
 ) => {
   if (Number.isNaN(value)) {
     return min;
   }
   // Clamp the value between min and max
   const clampedValue = Math.min(Math.max(value, min), max);
-  // Round to the next positive multiple of the step
-  const remainder = clampedValue % step;
-  const roundedValue =
-    remainder === 0 ? clampedValue : clampedValue + step - remainder;
-  return roundedValue;
+  // Round to the nearest multiple of the step
+  let roundedValue = Math.round(clampedValue / step) * step;
+  // Ensure the rounded value does not exceed max
+  if (roundedValue > max) {
+    roundedValue = max;
+  }
+
+  return Number.parseFloat(roundedValue.toFixed(decimalPlaces));
 };
 
 export const clampRange = (
@@ -44,6 +48,7 @@ export const clampRange = (
   max: number,
   min: number,
   step: number,
+  decimalPlaces: number,
 ) => {
   let [start, end] = range;
 
@@ -56,16 +61,8 @@ export const clampRange = (
   if (start > end) {
     [start, end] = [end, start];
   }
-  // Clamp the start and end values
-  start = Math.min(Math.max(start, min), max);
-  end = Math.min(Math.max(end, min), max);
-  // Round to the next positive multiple of the step
-  const roundToNextMultiple = (value: number) => {
-    const remainder = value % step;
-    return remainder === 0 ? value : value + step - remainder;
-  };
-  start = roundToNextMultiple(start);
-  end = roundToNextMultiple(end);
+  start = clamp(start, max, min, step, decimalPlaces);
+  end = clamp(end, max, min, step, decimalPlaces);
   return [start, end] as [number, number];
 };
 
@@ -75,6 +72,7 @@ export const getClickedPosition = (
   max: number,
   min: number,
   step: number,
+  decimalPlaces: number,
 ) => {
   if (!sliderRef.current) return;
 
@@ -82,5 +80,5 @@ export const getClickedPosition = (
   const rawValue =
     ((clientX - sliderRect.left) / sliderRect.width) * (max - min) + min;
   const steppedValue = Math.round(rawValue / step) * step;
-  return clamp(steppedValue, max, min, step);
+  return clamp(steppedValue, max, min, step, decimalPlaces);
 };

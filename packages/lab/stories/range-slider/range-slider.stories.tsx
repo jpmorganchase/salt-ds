@@ -453,21 +453,6 @@ export const WithCustomStep = () => (
         format={(value: number) => Intl.NumberFormat().format(value)}
       />
     </FormField>
-    <FormField>
-      <FormFieldLabel>
-        Step: 0.3 with formatting (not multiple of total range)
-      </FormFieldLabel>
-      <RangeSlider
-        min={0}
-        max={1}
-        minLabel="0"
-        maxLabel="1"
-        step={0.3}
-        defaultValue={[0.3, 0.9]}
-        aria-label="fourthSlider"
-        format={(value: number) => Intl.NumberFormat().format(value)}
-      />
-    </FormField>
   </StackLayout>
 );
 

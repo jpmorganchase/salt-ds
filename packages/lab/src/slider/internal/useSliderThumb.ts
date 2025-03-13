@@ -12,6 +12,7 @@ import type { SliderProps } from "../Slider";
 import { getClickedPosition } from "./utils";
 
 type UseSliderThumbProps = Pick<SliderProps, "min" | "max" | "step"> & {
+  decimalPlaces: number;
   onChange?: (event: SyntheticEvent<unknown> | Event, value: number) => void;
   onChangeEnd?: (event: SyntheticEvent<unknown> | Event, value: number) => void;
   setValue: Dispatch<SetStateAction<number>>;
@@ -19,6 +20,7 @@ type UseSliderThumbProps = Pick<SliderProps, "min" | "max" | "step"> & {
 };
 
 export const useSliderThumb = ({
+  decimalPlaces,
   min = 0,
   max = 10,
   step = 1,
@@ -41,6 +43,7 @@ export const useSliderThumb = ({
         max,
         min,
         step,
+        decimalPlaces,
       );
       if (newValue === undefined || lastValueRef.current === newValue) {
         return;
@@ -49,7 +52,7 @@ export const useSliderThumb = ({
       setValue(newValue);
       onChange?.(event, newValue);
     },
-    [max, min, onChange, setValue, step],
+    [decimalPlaces, max, min, onChange, setValue, step],
   );
 
   const handlePointerUp = useCallback(
@@ -93,6 +96,7 @@ export const useSliderThumb = ({
         max,
         min,
         step,
+        decimalPlaces,
       );
       if (newValue === undefined || lastValueRef.current === newValue) {
         return;
@@ -101,7 +105,7 @@ export const useSliderThumb = ({
       setValue(newValue);
       onChange?.(event, newValue);
     },
-    [max, min, onChange, setValue, step],
+    [decimalPlaces, max, min, onChange, setValue, step],
   );
 
   return {

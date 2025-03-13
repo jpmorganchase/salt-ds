@@ -33,6 +33,10 @@ A tooltip displays the value of the `RangeSlider`'s "thumbs" when a thumb is foc
 
 By default, the `RangeSlider` step increment is set to 1. This can be customized by using the `step` prop. Custom step values can be set to any number, including decimal values up to two decimal places.
 
+### Best practices
+
+Custom step should always be a multiple of the maximum value to ensure that all values of the `RangeSlider` are reachable.
+
 </LivePreview>
 
 <LivePreview componentName="range-slider" exampleName="WithFormatting">

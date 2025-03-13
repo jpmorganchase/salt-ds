@@ -11,12 +11,18 @@ describe("Given a Slider", () => {
     cy.mount(<Default />);
 
     cy.findByRole("slider").should("exist");
-    cy.findByRole("slider").should("have.value", "0");
+    cy.findByRole("slider").should("have.value", "5");
   });
 
   it("should fire onChange on pointer down on slider track", () => {
     const changeSpy = cy.stub().as("changeSpy");
-    cy.mount(<Default style={{ width: "400px" }} onChange={changeSpy} />);
+    cy.mount(
+      <Default
+        style={{ width: "400px" }}
+        defaultValue={0}
+        onChange={changeSpy}
+      />,
+    );
     cy.get(".saltSliderTrack-rail").trigger("pointerdown", {
       button: 0,
       clientX: 750,
@@ -46,7 +52,7 @@ describe("Given a Slider", () => {
     cy.get("@changeEndSpy").should(
       "have.been.calledWith",
       Cypress.sinon.match.any,
-      8,
+      5,
     );
   });
 
@@ -59,7 +65,7 @@ describe("Given a Slider", () => {
     cy.get("@changeEndSpy").should(
       "have.been.calledWith",
       Cypress.sinon.match.any,
-      1,
+      6,
     );
   });
 
@@ -306,6 +312,25 @@ describe("Given a Slider", () => {
     cy.findByTestId("sliderTooltip").should("have.text", "2%");
   });
 
+  it("should round to the decimal places provided", () => {
+    cy.mount(
+      <Default
+        min={0}
+        max={4.3}
+        step={0.375}
+        decimalPlaces={2}
+        defaultValue={0}
+      />,
+    );
+
+    cy.findByRole("slider").focus().realPress("ArrowRight");
+    cy.findByRole("slider").should("have.attr", "value", 0.38);
+    cy.findByRole("slider").focus().realPress("ArrowRight");
+    cy.findByRole("slider").should("have.attr", "value", 0.75);
+    cy.findByRole("slider").focus().realPress("ArrowRight");
+    cy.findByRole("slider").should("have.attr", "value", 1.13);
+  });
+
   describe("WHEN it is mounted as an uncontrolled component", () => {
     it("should respect the default values", () => {
       cy.mount(<Default min={0} max={10} defaultValue={4} />);
@@ -367,6 +392,30 @@ describe("Given a Slider", () => {
       cy.get("@changeEndSpy").should("have.been.calledWithMatch", {
         target: { value: "4" },
       });
+    });
+  });
+
+  describe("WHEN step is not a multiple of the range", () => {
+    it("should only have values that are allowed, multiple of steps", () => {
+      cy.mount(<Default min={0} max={1} step={0.3} defaultValue={0} />);
+
+      // Keyboard navigation forward
+      cy.findByRole("slider").focus().realPress("ArrowRight");
+      cy.findByRole("slider").should("have.value", 0.3);
+      cy.findByRole("slider").focus().realPress("ArrowRight");
+      cy.findByRole("slider").should("have.value", 0.6);
+      cy.findByRole("slider").focus().realPress("ArrowRight");
+      cy.findByRole("slider").should("have.value", 0.9);
+      cy.findByRole("slider").focus().realPress("ArrowRight");
+      cy.findByRole("slider").should("have.value", 0.9);
+
+      // Keyboard navigation backward
+      cy.findByRole("slider").focus().realPress("ArrowLeft");
+      cy.findByRole("slider").should("have.value", 0.6);
+      cy.findByRole("slider").focus().realPress("ArrowLeft");
+      cy.findByRole("slider").should("have.value", 0.3);
+      cy.findByRole("slider").focus().realPress("ArrowLeft");
+      cy.findByRole("slider").should("have.value", 0);
     });
   });
 });

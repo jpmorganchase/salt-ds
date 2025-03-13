@@ -404,20 +404,6 @@ export const WithCustomStep = () => (
         format={(value: number) => Intl.NumberFormat().format(value)}
       />
     </FormField>
-    <FormField>
-      <FormFieldLabel>
-        Step: 0.3 with formatting (not multiple of total range)
-      </FormFieldLabel>
-      <Slider
-        min={0}
-        max={1}
-        minLabel="0"
-        maxLabel="1"
-        step={0.3}
-        defaultValue={0.9}
-        format={(value: number) => Intl.NumberFormat().format(value)}
-      />
-    </FormField>
   </StackLayout>
 );
 
