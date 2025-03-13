@@ -78,12 +78,12 @@ export const CarouselControls = forwardRef<
   );
 
   function handlePrevClick(event: MouseEvent<HTMLButtonElement>) {
-    prevSlide(event);
+    prevSlide();
     onPrevious?.(event);
   }
 
   function handleNextClick(event: MouseEvent<HTMLButtonElement>) {
-    nextSlide(event);
+    nextSlide();
     onNext?.(event);
   }
 

@@ -11,7 +11,6 @@ import {
 import { type CarouselContextValue, useCarousel } from "./CarouselContext";
 import type { CarouselSlideProps } from "./CarouselSlide";
 import carouselSliderCss from "./CarouselSlider.css";
-import { useIntersectionObserver } from "./useIntersectionObserver";
 
 export interface CarouselSliderProps extends HTMLAttributes<HTMLDivElement> {
   /**
@@ -32,9 +31,9 @@ const useKeyNavigation = ({
         if (event.repeat) return;
         event.stopPropagation();
         if (event.key === "ArrowRight") {
-          nextSlide?.(event);
+          nextSlide?.();
         } else {
-          prevSlide?.(event);
+          prevSlide?.();
         }
       }
     },
@@ -54,28 +53,10 @@ export const CarouselSlider = forwardRef<HTMLDivElement, CarouselSliderProps>(
       window: targetWindow,
     });
 
-    const {
-      updateFirstVisibleFromScroll,
-      containerRef,
-      prevSlide,
-      nextSlide,
-      visibleSlides,
-    } = useCarousel();
+    const { containerRef, prevSlide, nextSlide, visibleSlides } = useCarousel();
     const handleKeyDown = useKeyNavigation({
       nextSlide,
       prevSlide,
-    });
-
-    // Handlers
-    const handleScroll = useCallback(() => {
-      if (containerRef.current) {
-        const scrollLeft = containerRef.current.scrollLeft;
-        updateFirstVisibleFromScroll(scrollLeft);
-      }
-    }, [containerRef, updateFirstVisibleFromScroll]);
-    useIntersectionObserver({
-      ref: containerRef,
-      onIntersect: handleScroll,
     });
 
     const onKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
