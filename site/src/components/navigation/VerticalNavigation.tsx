@@ -15,6 +15,7 @@ export type VerticalNavigationProps = {
   selectedNodeId?: string;
   /** Navigation item data */
   menu: SidebarItem[];
+  className?: string;
 };
 
 const renderItem: NavigationItemProps["render"] = ({ href, ...rest }) => {
@@ -111,6 +112,7 @@ export const VerticalNavigation: React.FC<VerticalNavigationProps> = ({
   menu,
   selectedGroupIds = new Set(),
   selectedNodeId,
+  className,
 }) => {
   const [expandedGroupIds, setExpandedGroupIds] = useState(selectedGroupIds);
   const [prevSelectedNodeId, setPreviousSelectedNodeId] =
@@ -122,7 +124,7 @@ export const VerticalNavigation: React.FC<VerticalNavigationProps> = ({
   }
 
   return (
-    <nav>
+    <nav className={className}>
       <StackLayout
         data-testid="vertical-navigation"
         as="ul"

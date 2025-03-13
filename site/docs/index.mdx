@@ -119,13 +119,16 @@ data:
 ## Latest updates
 
 <ArticleCards columns={{ xs: 1, sm: 3 }} gap={{ md: 3, xs: 1 }}>
-  {meta.data.latestUpdates.map((page) => (
-    <ArticleCard
-      key={page.route}
-      title={page.title}
-      description={page.data.updateText}
-      timestamp={page.lastModified}
-      action={{ href: page.route }}
-    />
-  ))}
+  {meta.data.latestUpdates
+    .sort((a, b) => b.lastModifiedDate - a.lastModifiedDate)
+    .slice(0, 3)
+    .map((update) => (
+      <ArticleCard
+        key={update.route}
+        title={update.title}
+        description={update.description}
+        timestamp={update.lastModifiedDate}
+        action={{ href: update.data.href }}
+      />
+    ))}
 </ArticleCards>

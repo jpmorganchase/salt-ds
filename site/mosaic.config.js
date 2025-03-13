@@ -1,6 +1,7 @@
 const deepmerge = require("deepmerge");
 const mosaicConfig = require("@jpmorganchase/mosaic-standard-generator/dist/fs.config.js");
 const dotenvLoad = require("dotenv-load");
+const { pathToFileURL } = require("node:url");
 dotenvLoad();
 
 /** Enhance/modify your Mosaic core fs
@@ -71,6 +72,19 @@ module.exports = deepmerge(saltConfig, {
         rootDir: "./docs",
         prefixDir: "salt",
         extensions: [".mdx"],
+      },
+    },
+    {
+      modulePath: "@jpmorganchase/mosaic-source-http",
+      namespace: "salt",
+      options: {
+        prefixDir: "salt-github",
+        endpoints: [
+          "https://api.github.com/repos/jpmorganchase/salt-ds/releases",
+        ],
+        transformResponseToPagesModulePath: pathToFileURL(
+          require.resolve("./src/mosaic-plugins/mosaic-github-transformer.mjs"),
+        ).toString(),
       },
     },
   ],

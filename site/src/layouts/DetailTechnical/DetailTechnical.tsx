@@ -14,9 +14,7 @@ export const DetailTechnical: FC<LayoutProps> = ({ children }) => {
     <PrimarySidebar>
       <TopLevelNavigation />
       <Divider variant="tertiary" />
-      <div className={styles.navigation}>
-        <PageNavigation />
-      </div>
+      <PageNavigation />
     </PrimarySidebar>
   );
 
