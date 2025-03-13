@@ -1,13 +1,11 @@
-import { useColorMode } from "@jpmorganchase/mosaic-store";
-import type { Density, Mode, SaltProviderNextProps } from "@salt-ds/core";
+import type { Density, Mode } from "@salt-ds/core";
 import { type ReactNode, createContext, useContext, useState } from "react";
 
 type Theme = "legacy" | "brand";
 
-export type LivePreviewContextType = Pick<
-  SaltProviderNextProps,
-  "mode" | "density"
-> & {
+export type LivePreviewContextType = {
+  density?: Density;
+  mode?: Mode | "system";
   theme?: Theme;
   setTheme: (theme: Theme) => void;
   setDensity: (density: Density) => void;
@@ -18,7 +16,7 @@ const defaultDensity: Density = "medium";
 const defaultTheme: Theme = "brand";
 
 export const LivePreviewContext = createContext<LivePreviewContextType>({
-  mode: undefined,
+  mode: "system",
   density: defaultDensity,
   theme: defaultTheme,
   setDensity: () => {},
@@ -27,12 +25,10 @@ export const LivePreviewContext = createContext<LivePreviewContextType>({
 });
 
 export function LivePreviewProvider({ children }: { children: ReactNode }) {
-  const siteMode = useColorMode();
   const [density, setDensity] = useState<Density>(defaultDensity);
-  const [modeState, setMode] = useState<Mode | undefined>(undefined);
+  const [mode, setMode] = useState<Mode | "system">("system");
   const [theme, setTheme] = useState<Theme>(defaultTheme);
 
-  const mode = modeState ?? siteMode;
   return (
     <LivePreviewContext.Provider
       value={{ mode, density, theme, setDensity, setMode, setTheme }}

@@ -111,6 +111,7 @@ function ThemeControls() {
           onChange={(event) => setMode(event.currentTarget.value as any)}
           value={mode}
         >
+          <ToggleButton value="system">System</ToggleButton>
           <ToggleButton value="light">Light</ToggleButton>
           <ToggleButton value="dark">Dark</ToggleButton>
         </ToggleButtonGroup>

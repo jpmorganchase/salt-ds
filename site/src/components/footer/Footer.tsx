@@ -1,4 +1,5 @@
-import { Link as SaltLink } from "@salt-ds/core";
+import { Link as SaltLink, Text } from "@salt-ds/core";
+import { SaltShakerSolidIcon } from "@salt-ds/icons";
 import clsx from "clsx";
 import NextLink from "next/link";
 import type { ComponentPropsWithoutRef } from "react";
@@ -24,14 +25,29 @@ export function Footer({ className }: FooterProps) {
                 render={<NextLink href={to} />}
                 href={to}
                 underline="never"
+                styleAs="notation"
               >
                 {label}
               </SaltLink>
             </div>
           ))}
         </div>
-        <div className={styles.copyright}>
-          © {new Date().getFullYear()} JPMorgan Chase & Co. All rights reserved.
+        <div className={styles.copyrightContainer}>
+          <Text
+            color="secondary"
+            styleAs="notation"
+            className={styles.saltMessage}
+          >
+            <SaltShakerSolidIcon aria-hidden /> Site by Salt with Salt.
+          </Text>
+          <Text
+            className={styles.copyright}
+            color="secondary"
+            styleAs="notation"
+          >
+            ©&nbsp;{new Date().getFullYear()} JPMorgan Chase & Co. All rights
+            reserved.
+          </Text>
         </div>
       </div>
     </footer>

@@ -36,12 +36,8 @@
 
 .table th,
 .table td {
-  padding-inline: var(--salt-spacing-100);
+  padding: var(--salt-spacing-100);
   position: relative;
-}
-
-.table th {
-  white-space: nowrap;
 }
 
 .table tr th + th::before {
@@ -50,4 +46,6 @@
   border-left: var(--salt-size-border) var(--salt-separable-borderStyle) var(--salt-separable-tertiary-borderColor);
   left: 0;
   position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
 }

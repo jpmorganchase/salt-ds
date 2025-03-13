@@ -10,6 +10,7 @@ import {
 import { Pre } from "../mdx/pre";
 import { useLivePreviewControls } from "./LivePreviewProvider";
 
+import { useColorMode } from "@jpmorganchase/mosaic-store";
 import { AdapterDateFns } from "@salt-ds/date-adapters/date-fns";
 import { LocalizationProvider } from "@salt-ds/lab";
 import styles from "./LivePreview.module.css";
@@ -23,6 +24,7 @@ export const LivePreview: FC<LivePreviewProps> = ({
   componentName,
   exampleName,
 }) => {
+  const siteMode = useColorMode();
   const [showCode, setShowCode] = useState<boolean>(false);
 
   const [ComponentExample, setComponentExample] = useState<{
@@ -54,8 +56,8 @@ export const LivePreview: FC<LivePreviewProps> = ({
       .catch((e) => console.error(`Failed to load example ${exampleName}`, e));
   }, [exampleName, componentName]);
 
-  const { density, mode, theme } = useLivePreviewControls();
-
+  const { density, mode: exampleMode, theme } = useLivePreviewControls();
+  const mode = (exampleMode === "system" ? siteMode : exampleMode) ?? siteMode;
   const handleShowCodeToggle = (event: ChangeEvent<HTMLInputElement>) => {
     const newShowCode = event.target.checked;
     setShowCode(newShowCode);
