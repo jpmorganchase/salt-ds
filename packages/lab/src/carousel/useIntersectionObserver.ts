@@ -3,7 +3,7 @@ import { type RefObject, useEffect, useRef } from "react";
 
 export interface UseIntersectionObserverProps {
   ref: RefObject<HTMLElement>;
-  onIntersect: (index: number) => void;
+  onIntersect: (isVisible: boolean) => void;
   threshold?: number;
   rootMargin?: string;
 }
@@ -17,26 +17,13 @@ export function useIntersectionObserver({
   const observerRef = useRef<IntersectionObserver | null>(null);
 
   useEffect(() => {
-    const container = ref?.current;
-    if (!container) return;
-
-    const items = Array.from(container.children);
-    if (items.length === 0) return;
-
-    const win = ownerWindow(container);
+    const element = ref.current;
+    if (!element) return;
+    const win = ownerWindow(element);
 
     observerRef.current = new win.IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting) {
-            requestAnimationFrame(() => {
-              const index = items.indexOf(entry.target as HTMLElement);
-              if (index !== -1) {
-                onIntersect(index);
-              }
-            });
-          }
-        }
+      ([entry]) => {
+        onIntersect(entry.isIntersecting);
       },
       {
         threshold,
@@ -44,9 +31,7 @@ export function useIntersectionObserver({
       },
     );
 
-    for (const item of items) {
-      observerRef.current?.observe(item);
-    }
+    observerRef.current?.observe(element);
 
     return () => {
       observerRef.current?.disconnect();

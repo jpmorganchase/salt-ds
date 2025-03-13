@@ -1,4 +1,4 @@
-import { makePrefixer, useForkRef } from "@salt-ds/core";
+import { makePrefixer, useForkRef, useIdMemo } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
@@ -12,6 +12,7 @@ import {
 } from "react";
 import { useCarousel } from "./CarouselContext";
 import carouselSlideCss from "./CarouselSlide.css";
+import { useIntersectionObserver } from "./useIntersectionObserver";
 
 export interface CarouselSlideProps extends HTMLAttributes<HTMLDivElement> {
   /**
@@ -32,6 +33,10 @@ export interface CarouselSlideProps extends HTMLAttributes<HTMLDivElement> {
    * Header content to be displayed at the top of the slide. This can be text or any other React node.
    **/
   header?: ReactNode;
+  /**
+   * Carousel slide id.
+   */
+  id?: string;
 }
 
 const withBaseName = makePrefixer("saltCarouselSlide");
@@ -46,6 +51,7 @@ export const CarouselSlide = forwardRef<HTMLDivElement, CarouselSlideProps>(
       children,
       "aria-labelledby": ariaLabelledBy,
       style,
+      id: idProp,
       ...rest
     },
     refProp,
@@ -57,31 +63,28 @@ export const CarouselSlide = forwardRef<HTMLDivElement, CarouselSlideProps>(
       window: targetWindow,
     });
     const slideRef = useRef<HTMLDivElement>(null);
-    const [index, setIndex] = useState<number | null>(null);
-    const {
-      slideCount,
-      firstVisibleSlide,
-      registerSlide,
-      unregisterSlide,
-      visibleSlides,
-    } = useCarousel();
+    const [isVisible, setIsVisible] = useState(false);
+    const id = useIdMemo(idProp);
+    const { slideCount, registerSlide, unregisterSlide, visibleSlides } =
+      useCarousel();
 
     useEffect(() => {
       if (slideRef.current) {
-        const assignedIndex = registerSlide(slideRef.current);
-        setIndex(assignedIndex);
+        registerSlide(id, slideRef.current);
       }
       return () => {
-        if (index !== null) {
-          unregisterSlide(index);
+        if (id) {
+          unregisterSlide(id);
         }
       };
-    }, [registerSlide, unregisterSlide]);
+    }, [registerSlide, unregisterSlide, id]);
 
-    const isVisible =
-      index !== null &&
-      index >= firstVisibleSlide &&
-      index < firstVisibleSlide + visibleSlides;
+    useIntersectionObserver({
+      ref: slideRef,
+      onIntersect: (isVisible) => {
+        setIsVisible(isVisible);
+      },
+    });
     const SlideStyles = {
       "--carousel-slide-width":
         visibleSlides > 1
@@ -95,7 +98,7 @@ export const CarouselSlide = forwardRef<HTMLDivElement, CarouselSlideProps>(
         role="group"
         aria-roledescription="slide"
         aria-labelledby={ariaLabelledBy}
-        ref={ref}
+        id={id}
         className={clsx(withBaseName(), {
           [withBaseName("bordered")]: appearance === "bordered",
         })}
@@ -104,6 +107,7 @@ export const CarouselSlide = forwardRef<HTMLDivElement, CarouselSlideProps>(
         hidden={!isVisible ? true : undefined}
         aria-hidden={!isVisible ? true : undefined}
         {...rest}
+        ref={ref}
       >
         {media}
         {children && (
