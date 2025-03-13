@@ -16,6 +16,10 @@ import { calculatePercentage, clamp, toFloat } from "./internal/utils";
 export interface SliderProps
   extends Omit<HTMLAttributes<HTMLDivElement>, "onChange" | "defaultValue"> {
   /**
+   * The number of allowed decimal places
+   */
+  decimalPlaces?: number;
+  /**
    * The default value. Use when the component is not controlled.
    */
   defaultValue?: number;
@@ -82,7 +86,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
     "aria-label": ariaLabel,
     "aria-labelledby": ariaLabelledBy,
     "aria-valuetext": ariaValueText,
-    defaultValue = 0,
+    decimalPlaces = 2,
     disabled: disabledProp = false,
     format,
     marks,
@@ -96,6 +100,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
     step = 1,
     stepMultiplier = 2,
     value: valueProp,
+    defaultValue = min + (max - min) / 2,
     ...rest
   },
   ref,
@@ -119,6 +124,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
     isDragging,
     sliderRef,
   } = useSliderThumb({
+    decimalPlaces,
     min,
     max,
     step,
@@ -129,7 +135,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
   });
 
   const disabled = formFieldDisabled || disabledProp;
-  const value = clamp(valueState, max, min);
+  const value = clamp(valueState, max, min, step, decimalPlaces);
   const progressPercentage = calculatePercentage(toFloat(value), max, min);
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {

@@ -16,6 +16,10 @@ import { calculatePercentage, clampRange, toFloat } from "./internal/utils";
 export interface RangeSliderProps
   extends Omit<HTMLAttributes<HTMLDivElement>, "onChange" | "defaultValue"> {
   /**
+   * The number of allowed decimal places
+   */
+  decimalPlaces?: number;
+  /**
    * The default value. Use when the component is not controlled.
    */
   defaultValue?: [number, number];
@@ -89,6 +93,7 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>(
       "aria-label": ariaLabel,
       "aria-labelledby": ariaLabelledBy,
       "aria-valuetext": ariaValueText,
+      decimalPlaces = 2,
       disabled: disabledProp = false,
       format,
       marks,
@@ -102,7 +107,7 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>(
       step = 1,
       stepMultiplier = 2,
       value: valueProp,
-      defaultValue = [min, min + step],
+      defaultValue = [min, min + (max - min) / 2],
       ...rest
     },
     ref,
@@ -128,6 +133,7 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>(
       thumbIndexState,
       preventThumbOverlap,
     } = useRangeSliderThumb({
+      decimalPlaces,
       min,
       max,
       step,
@@ -138,7 +144,13 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>(
     });
 
     const disabled = formFieldDisabled || disabledProp;
-    const value: [number, number] = clampRange(valueState, max, min);
+    const value: [number, number] = clampRange(
+      valueState,
+      max,
+      min,
+      step,
+      decimalPlaces,
+    );
     const progressPercentageStart = calculatePercentage(value[0], max, min);
     const progressPercentageEnd = calculatePercentage(value[1], max, min);
 

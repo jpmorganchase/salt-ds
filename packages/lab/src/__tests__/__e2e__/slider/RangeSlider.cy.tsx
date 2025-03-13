@@ -12,12 +12,18 @@ describe("Given a Range Slider", () => {
 
     cy.findAllByRole("slider").should("exist");
     cy.findAllByRole("slider").eq(0).should("have.value", "0");
-    cy.findAllByRole("slider").eq(1).should("have.value", "1");
+    cy.findAllByRole("slider").eq(1).should("have.value", "5");
   });
 
   it("should trigger onChange when clicked on the track", () => {
     const changeSpy = cy.stub().as("changeSpy");
-    cy.mount(<Default style={{ width: "400px" }} onChange={changeSpy} />);
+    cy.mount(
+      <Default
+        style={{ width: "400px" }}
+        defaultValue={[0, 2]}
+        onChange={changeSpy}
+      />,
+    );
     cy.get(".saltSliderTrack-rail").trigger("pointerdown", {
       button: 0,
       clientX: 750,
@@ -34,7 +40,13 @@ describe("Given a Range Slider", () => {
 
   it("should trigger onChangeEnd with the final value when user stops dragging", () => {
     const changeEndSpy = cy.stub().as("changeEndSpy");
-    cy.mount(<Default style={{ width: "400px" }} onChangeEnd={changeEndSpy} />);
+    cy.mount(
+      <Default
+        style={{ width: "400px" }}
+        onChangeEnd={changeEndSpy}
+        defaultValue={[0, 1]}
+      />,
+    );
     cy.get(".saltSliderTrack-rail").trigger("pointerdown", {
       button: 0,
       clientX: 750,
@@ -61,7 +73,7 @@ describe("Given a Range Slider", () => {
     cy.get("@changeEndSpy").should(
       "have.been.calledWith",
       Cypress.sinon.match.any,
-      Cypress.sinon.match.array.deepEquals([0, 2]),
+      Cypress.sinon.match.array.deepEquals([0, 6]),
     );
   });
 
@@ -221,6 +233,43 @@ describe("Given a Range Slider", () => {
     cy.get("@changeEndSpy").should("have.callCount", 2);
   });
 
+  it("should set range slider value to minimum if default value is less than minimum", () => {
+    cy.mount(
+      <Default
+        style={{ width: "400px" }}
+        min={0}
+        max={10}
+        defaultValue={[-10, 10]}
+      />,
+    );
+    cy.findAllByRole("slider").eq(0).should("have.value", 0);
+  });
+
+  it("should set range slider value to maximum if default value is greater than maximum", () => {
+    cy.mount(
+      <Default
+        style={{ width: "400px" }}
+        min={0}
+        max={10}
+        defaultValue={[5, 100]}
+      />,
+    );
+    cy.findAllByRole("slider").eq(1).should("have.value", 10);
+  });
+
+  it("should round the range slider value to the next step value if default value is not a multiple of the step", () => {
+    cy.mount(
+      <Default
+        style={{ width: "400px" }}
+        min={0}
+        max={10}
+        defaultValue={[1.5, 4.5]}
+      />,
+    );
+    cy.findAllByRole("slider").eq(0).should("have.value", 2);
+    cy.findAllByRole("slider").eq(1).should("have.value", 5);
+  });
+
   it("should display a tooltip with correct value only when thumb is hovered", () => {
     cy.mount(<Default style={{ width: "400px" }} defaultValue={[2, 5]} />);
 
@@ -330,6 +379,23 @@ describe("Given a Range Slider", () => {
     cy.findAllByTestId("sliderTooltip").eq(1).should("have.text", "4%");
   });
 
+  it("should round to the decimal places provided", () => {
+    cy.mount(
+      <Default
+        min={0}
+        max={4.3}
+        step={0.375}
+        decimalPlaces={2}
+        defaultValue={[0, 0.375]}
+      />,
+    );
+
+    cy.findAllByRole("slider").eq(1).focus().realPress("ArrowRight");
+    cy.findAllByRole("slider").eq(1).should("have.attr", "value", 0.75);
+    cy.findAllByRole("slider").eq(1).focus().realPress("ArrowRight");
+    cy.findAllByRole("slider").eq(1).should("have.attr", "value", 1.13);
+  });
+
   describe("WHEN it is mounted as a controlled component", () => {
     it("should set the specified value", () => {
       cy.mount(<Default min={0} max={10} value={[4, 6]} />);
@@ -381,6 +447,28 @@ describe("Given a Range Slider", () => {
       cy.get("@changeEndSpy").should("have.been.calledWithMatch", {
         target: { value: "6" },
       });
+    });
+  });
+
+  describe("WHEN step is not a multiple of the range", () => {
+    it("should only have values that are allowed, multiple of steps", () => {
+      cy.mount(<Default min={0} max={1} step={0.3} defaultValue={[0, 0.3]} />);
+
+      // Keyboard navigation forward
+      cy.findAllByRole("slider").eq(1).focus().realPress("ArrowRight");
+      cy.findAllByRole("slider").eq(1).should("have.value", 0.6);
+      cy.findAllByRole("slider").eq(1).focus().realPress("ArrowRight");
+      cy.findAllByRole("slider").eq(1).should("have.value", 0.9);
+      cy.findAllByRole("slider").eq(1).focus().realPress("ArrowRight");
+      cy.findAllByRole("slider").eq(1).should("have.value", 0.9);
+
+      // Keyboard navigation backward
+      cy.findAllByRole("slider").eq(1).focus().realPress("ArrowLeft");
+      cy.findAllByRole("slider").eq(1).should("have.value", 0.6);
+      cy.findAllByRole("slider").eq(1).focus().realPress("ArrowLeft");
+      cy.findAllByRole("slider").eq(1).should("have.value", 0.3);
+      cy.findAllByRole("slider").eq(1).focus().realPress("ArrowLeft");
+      cy.findAllByRole("slider").eq(1).should("have.value", 0);
     });
   });
 });

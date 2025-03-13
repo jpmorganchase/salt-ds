@@ -60,17 +60,17 @@
   background: var(--slider-track-background);
   border-top-right-radius: var(--salt-palette-corner-weaker);
   border-bottom-right-radius: var(--salt-palette-corner-weaker);
-  width: calc(100% - var(--slider-progressPercentage) - (var(--salt-size-border-strong) / 2));
+  width: calc(100% - var(--slider-progressPercentage) - (var(--salt-size-border-strong) * 2));
 }
 
 .saltSliderTrack-range .saltSliderTrack-rail::before {
   background: var(--slider-track-background);
-  width: calc(var(--slider-progressPercentageStart) - (var(--salt-size-border-strong) / 2));
+  width: calc(var(--slider-progressPercentageStart) - (var(--salt-size-border-strong) * 2));
 }
 
 .saltSliderTrack-range .saltSliderTrack-rail::after {
   background: var(--slider-track-background);
-  width: calc(100% - var(--slider-progressPercentageEnd) - (var(--salt-size-border-strong) / 2));
+  width: calc(100% - var(--slider-progressPercentageEnd) - (var(--salt-size-border-strong) * 2));
 }
 
 .saltSliderTrack-range .saltSliderTrack-rail .saltSliderTrack-fill {

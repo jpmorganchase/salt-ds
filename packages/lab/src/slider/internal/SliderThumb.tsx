@@ -111,25 +111,11 @@ export const SliderThumb = ({
       let newValue = value;
 
       switch (event.key) {
-        case "ArrowRight":
-        case "ArrowUp":
-          newValue = Math.min(value + step, max);
-          break;
-        case "ArrowLeft":
-        case "ArrowDown":
-          newValue = Math.max(value - step, min);
-          break;
         case "PageUp":
           newValue = Math.min(value + step * stepMultiplier, max);
           break;
         case "PageDown":
           newValue = Math.max(value - step * stepMultiplier, min);
-          break;
-        case "Home":
-          newValue = min;
-          break;
-        case "End":
-          newValue = max;
           break;
         default:
           return;
