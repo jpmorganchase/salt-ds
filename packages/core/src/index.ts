@@ -64,3 +64,4 @@ export * from "./utils";
 export * from "./viewport";
 export * from "./types";
 export * from "./semantic-icon-provider";
+export * from "./splitter";

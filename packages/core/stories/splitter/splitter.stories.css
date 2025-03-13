@@ -18,7 +18,7 @@
   height: 100%;
 }
 
-.sidePanelButtonGroup {
+.sidePanel > .saltToggleButtonGroup-vertical {
   width: 100%;
   height: 100%;
   box-sizing: border-box;
@@ -32,11 +32,11 @@
   }
 
   @container side-panel (max-width: 64px) {
-    .sidePanel > .sidePanelButtonGroup > button {
+    .sidePanel > .saltToggleButtonGroup-vertical > button {
       justify-content: center;
     }
 
-    .sidePanel > .sidePanelButtonGroup > button > span {
+    .sidePanel > .saltToggleButtonGroup-vertical > button > span {
       display: none;
     }
   }

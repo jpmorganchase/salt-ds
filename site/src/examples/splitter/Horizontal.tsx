@@ -1,5 +1,10 @@
-import { FlexLayout, Text } from "@salt-ds/core";
-import { SplitHandle, SplitPanel, Splitter } from "@salt-ds/lab";
+import {
+  FlexLayout,
+  SplitHandle,
+  SplitPanel,
+  Splitter,
+  Text,
+} from "@salt-ds/core";
 
 import styles from "./splitter.module.css";
 
@@ -11,8 +16,8 @@ export function Horizontal() {
           <Text>Top</Text>
         </SplitPanel>
         <SplitHandle />
-        <SplitPanel id="middle" className={styles.center}>
-          <Text>Middle</Text>
+        <SplitPanel id="center" className={styles.center}>
+          <Text>Center</Text>
         </SplitPanel>
         <SplitHandle />
         <SplitPanel id="bottom" className={styles.center}>
