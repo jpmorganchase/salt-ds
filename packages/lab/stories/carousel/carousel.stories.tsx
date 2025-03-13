@@ -80,6 +80,13 @@ Default.args = {
   id: "carousel-example",
 };
 
+export const WithSetVisibleSlide = CarouselExample.bind({});
+WithSetVisibleSlide.args = {
+  "aria-label": "Account overview",
+  id: "carousel-example",
+  firstVisibleSlideIndex: 3,
+};
+
 export const Bordered: StoryFn<typeof Carousel> = (args) => {
   return (
     <div className="carousel-container">
