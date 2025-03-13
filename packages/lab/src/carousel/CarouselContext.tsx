@@ -1,4 +1,4 @@
-import { createContext, useResizeObserver } from "@salt-ds/core";
+import { createContext, useControlled, useResizeObserver } from "@salt-ds/core";
 import {
   type KeyboardEvent,
   type MouseEvent,
@@ -49,18 +49,23 @@ export function CarouselProvider({
   visibleSlides?: number;
   id?: string;
 }) {
-  const [firstVisibleSlide, setFirstVisibleSlide] = useState(
-    firstVisibleSlideIndex,
-  );
+  const [firstVisibleSlide, setFirstVisibleSlide, isFirstVisibleControlled] =
+    useControlled({
+      controlled: firstVisibleSlideIndex,
+      default: 0,
+      name: "Carousel",
+      state: "firstVisibleSlide",
+    });
   const [visibleFocus, setVisibleFocus] = useState(0);
   const [sliderWidth, setSliderWidth] = useState(0);
   const slides = useRef<Map<number, HTMLDivElement>>(new Map());
   const [slideCount, setSlideCount] = useState(slides.current.size);
+
   useEffect(() => {
-    if (containerRef.current) {
-      scrollToSlide(firstVisibleSlideIndex);
+    if (!isFirstVisibleControlled && containerRef.current) {
+      scrollToSlide(firstVisibleSlide);
     }
-  }, [firstVisibleSlideIndex]);
+  }, [firstVisibleSlide, isFirstVisibleControlled]);
 
   const containerRef = useRef<HTMLDivElement>(null);
 
