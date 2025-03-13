@@ -204,7 +204,7 @@
 .saltPillInput-endAdornmentContainer {
   align-items: center;
   display: inline-flex;
-  padding-left: var(--salt-spacing-100);
+  padding-left: var(--salt-spacing-50);
   padding-top: var(--salt-spacing-50);
   column-gap: var(--salt-spacing-100);
   align-self: flex-start;
