@@ -66,7 +66,7 @@ export function CarouselProvider({
         behavior: "instant",
       });
     });
-  }, [firstVisibleSlideIndex]);
+  }, [firstVisibleSlideIndex, visibleSlides]);
 
   const containerRef = useRef<HTMLDivElement>(null);
 
