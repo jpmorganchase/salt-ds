@@ -1,30 +1,23 @@
-import { FormField, FormFieldLabel, StackLayout } from "@salt-ds/core";
+import { FormField, FormFieldLabel } from "@salt-ds/core";
 import { Slider } from "@salt-ds/lab";
-import type { ReactElement } from "react";
+import { type ReactElement, useState } from "react";
 
-export const WithFormField = (): ReactElement => (
-  <StackLayout style={{ width: "400px" }}>
-    <FormField>
-      <FormFieldLabel>Field Label</FormFieldLabel>
-      <Slider marks="bottom" min={0} max={50} step={10} />
-    </FormField>
-    <FormField>
+export const WithFormField = (): ReactElement => {
+  const [sliderValue, setSliderValue] = useState<number>(5);
+
+  return (
+    <FormField style={{ width: "400px" }}>
       <FormFieldLabel>Field Label</FormFieldLabel>
       <Slider
-        defaultValue={[20, 80]}
-        marks="bottom"
         min={0}
-        max={100}
-        step={10}
+        max={20}
+        value={sliderValue}
+        minLabel="0"
+        maxLabel="20"
+        onChange={(e, value) => {
+          setSliderValue(value);
+        }}
       />
     </FormField>
-    <FormField labelPlacement="left">
-      <FormFieldLabel>Field Label</FormFieldLabel>
-      <Slider min={0} max={100} />
-    </FormField>
-    <FormField labelPlacement="left">
-      <FormFieldLabel>Field Label</FormFieldLabel>
-      <Slider defaultValue={[20, 80]} min={0} max={100} />
-    </FormField>
-  </StackLayout>
-);
+  );
+};

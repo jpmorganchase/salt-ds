@@ -1,0 +1,63 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+## Keyboard interactions
+
+<KeyboardControls>
+<KeyboardControl keyOrCombos="Tab">
+
+- If focus is outside the `RangeSlider`, moves focus to the `RangeSlider` indicator within the tabbing order.
+- If focus is on the first thumb of the `RangeSlider`, moves focus to the second thumb. If focus is on the second thumb, moves focus to the next component within the tabbing order.
+
+</KeyboardControl>
+
+<KeyboardControl keyOrCombos="Shift + Tab">
+
+- Moves focus to the previous item within the tabbing order
+
+</KeyboardControl>
+
+<KeyboardControl keyOrCombos="Up arrow / Right arrow">
+
+- Increase the value of the `RangeSlider` by one step.
+
+</KeyboardControl>
+
+<KeyboardControl keyOrCombos="Down arrow / Left arrow">
+
+- Decrease the value of the `RangeSlider` by one step.
+
+</KeyboardControl>
+
+<KeyboardControl keyOrCombos="Home">
+
+- Set the `RangeSlider` to the first allowed value in its range.
+
+</KeyboardControl>
+
+<KeyboardControl keyOrCombos="End">
+
+- Set the `RangeSlider` to the last allowed value in its range.
+
+</KeyboardControl>
+
+<KeyboardControl keyOrCombos="Page Up">
+
+- Increase the `RangeSlider` value by an amount larger than the step change made by Up Arrow. This amount can be controlled via the `stepMultiplier` prop.
+
+</KeyboardControl>
+
+<KeyboardControl keyOrCombos="Page Down">
+
+- Decrease the `RangeSlider` value by an amount larger than the step change made by Down Arrow. This amount can be controlled via the `stepMultiplier` prop.
+
+</KeyboardControl>
+
+</KeyboardControls>
