@@ -1,11 +1,10 @@
-import { StackLayout } from "@salt-ds/core";
-import { Step, SteppedTracker } from "@salt-ds/lab";
+import { StackLayout, Step, SteppedTracker } from "@salt-ds/core";
 import { QAContainer, type QAContainerProps } from "docs/components";
 
 import type { Meta, StoryFn } from "@storybook/react";
 
 export default {
-  title: "Lab/SteppedTracker/SteppedTracker QA",
+  title: "Core/SteppedTracker/SteppedTracker QA",
   component: SteppedTracker,
   subcomponents: { Step },
 } as Meta<typeof SteppedTracker>;

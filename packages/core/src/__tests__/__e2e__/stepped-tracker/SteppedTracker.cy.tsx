@@ -1,4 +1,4 @@
-import { Step, SteppedTracker } from "@salt-ds/lab";
+import { Step, SteppedTracker } from "@salt-ds/core";
 
 describe("<SteppedTracker />", () => {
   it("should expand/collapse when trigger is clicked (depth 1)", () => {
