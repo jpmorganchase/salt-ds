@@ -33,7 +33,7 @@ const useKeyNavigation = ({
         event.stopPropagation();
         if (event.key === "ArrowRight") {
           nextSlide?.(event);
-        } else if (event.key === "ArrowLeft") {
+        } else {
           prevSlide?.(event);
         }
       }
@@ -49,7 +49,7 @@ export const CarouselSlider = forwardRef<HTMLDivElement, CarouselSliderProps>(
   ) {
     const targetWindow = useWindow();
     useComponentCssInjection({
-      testId: "salt-carousel-slide",
+      testId: "salt-carousel-slider",
       css: carouselSliderCss,
       window: targetWindow,
     });
