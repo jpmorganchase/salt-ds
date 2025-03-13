@@ -2,10 +2,10 @@ import { makePrefixer, useForkRef } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import {
+  forwardRef,
   type HTMLAttributes,
   type KeyboardEvent,
   type ReactElement,
-  forwardRef,
   useCallback,
 } from "react";
 import { type CarouselContextValue, useCarousel } from "./CarouselContext";
@@ -31,9 +31,9 @@ const useKeyNavigation = ({
         if (event.repeat) return;
         event.stopPropagation();
         if (event.key === "ArrowRight") {
-          nextSlide?.();
+          nextSlide?.(true);
         } else {
-          prevSlide?.();
+          prevSlide?.(true);
         }
       }
     },

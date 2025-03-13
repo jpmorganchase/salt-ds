@@ -13,12 +13,13 @@ export interface CarouselContextValue {
   firstVisibleSlide: number;
   visibleSlides: number;
   slideCount: number;
-  nextSlide: () => void;
-  prevSlide: () => void;
+  nextSlide: (moveFocus: boolean) => void;
+  prevSlide: (moveFocus: boolean) => void;
   registerSlide: (id: string, element: HTMLDivElement) => number;
   unregisterSlide: (id: string) => void;
   containerRef: RefObject<HTMLDivElement>;
   carouselId?: string;
+  getSlideRef?: (index: number) => HTMLDivElement;
 }
 
 export const CarouselContext = createContext<CarouselContextValue | null>(
@@ -78,7 +79,7 @@ export function CarouselProvider({
     setSlideCount(slides.current.size);
   }, []);
 
-  const nextSlide = () => {
+  const nextSlide = (moveFocus = false) => {
     const container = containerRef.current;
     if (!container || firstVisibleSlide >= slideCount - 1) return;
 
@@ -89,9 +90,13 @@ export function CarouselProvider({
       behavior: "smooth",
     });
     setFirstVisibleSlide(nextIndex);
+    if (moveFocus) {
+      const focusTargetIndex = Math.min(nextIndex, slideCount - 1);
+      getSlideRef(focusTargetIndex)?.focus();
+    }
   };
 
-  const prevSlide = () => {
+  const prevSlide = (moveFocus = false) => {
     const container = containerRef.current;
     if (!container || firstVisibleSlide <= 0) return;
     const prevIndex = firstVisibleSlide - 1;
@@ -101,7 +106,15 @@ export function CarouselProvider({
       behavior: "smooth",
     });
     setFirstVisibleSlide(prevIndex);
+    if (moveFocus) {
+      getSlideRef(prevIndex)?.focus();
+    }
   };
+
+  const getSlideRef = useCallback((index: number) => {
+    const slideEntries = [...slides.current.values()];
+    return slideEntries[index]?.element ?? null;
+  }, []);
 
   return (
     <CarouselContext.Provider
@@ -115,6 +128,7 @@ export function CarouselProvider({
         prevSlide,
         containerRef,
         carouselId: id,
+        getSlideRef,
       }}
     >
       {children}
