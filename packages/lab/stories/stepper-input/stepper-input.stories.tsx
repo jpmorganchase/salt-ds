@@ -50,6 +50,7 @@ export const Bordered: StoryFn<StepperInputProps> = (args) => {
 };
 Bordered.args = {
   bordered: true,
+  defaultValue: "",
 };
 
 export const ReadOnly: StoryFn<StepperInputProps> = (args) => {
@@ -232,7 +233,7 @@ export const RefreshAdornment: StoryFn<StepperInputProps> = (args) => {
         endAdornment={
           <Button
             variant="secondary"
-            aria-label="refresh"
+            aria-label="Refresh stepper input"
             onClick={() => setValue(10)}
           >
             <RefreshIcon aria-hidden />
@@ -260,6 +261,8 @@ export const CustomButtons: StoryFn<StepperInputProps> = (args) => {
         value={value}
         startAdornment={
           <Button
+            aria-hidden
+            tabIndex={-1}
             aria-label="decrement value"
             onClick={() =>
               setValue(
@@ -269,11 +272,13 @@ export const CustomButtons: StoryFn<StepperInputProps> = (args) => {
               )
             }
           >
-            <RemoveIcon aria-hidden />
+            <RemoveIcon />
           </Button>
         }
         endAdornment={
           <Button
+            aria-hidden
+            tabIndex={-1}
             aria-label="increment value"
             onClick={() =>
               setValue(
@@ -283,7 +288,7 @@ export const CustomButtons: StoryFn<StepperInputProps> = (args) => {
               )
             }
           >
-            <AddIcon aria-hidden />
+            <AddIcon />
           </Button>
         }
       />

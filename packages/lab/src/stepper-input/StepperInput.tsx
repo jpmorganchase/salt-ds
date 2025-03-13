@@ -8,6 +8,7 @@ import {
   useForkRef,
   useFormFieldProps,
   useIcon,
+  useId,
 } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
@@ -151,6 +152,7 @@ export const StepperInput = forwardRef<HTMLDivElement, StepperInputProps>(
       emptyReadOnlyMarker = "—",
       endAdornment,
       hideButtons,
+      id: idProp,
       inputProps: inputPropsProp = {},
       inputRef: inputRefProp,
       max = Number.MAX_SAFE_INTEGER,
@@ -189,6 +191,7 @@ export const StepperInput = forwardRef<HTMLDivElement, StepperInputProps>(
       validationStatus: formFieldValidationStatus,
     } = useFormFieldProps();
 
+    const id = useId(idProp);
     const isDisabled = disabled || formFieldDisabled;
     const isReadOnly = readOnlyProp || formFieldReadOnly;
     const validationStatus = formFieldValidationStatus ?? validationStatusProp;
@@ -224,6 +227,8 @@ export const StepperInput = forwardRef<HTMLDivElement, StepperInputProps>(
 
     const inputRef = useRef<HTMLInputElement | null>(null);
     const forkedInputRef = useForkRef(inputRef, inputRefProp);
+    // If value is undefined, start increments/decrements from 0 if min is less than 0 otherwise from min
+    const valueState = value === undefined ? (min < 0 ? 0 : min) : value;
 
     const {
       decrementButtonProps,
@@ -241,7 +246,7 @@ export const StepperInput = forwardRef<HTMLDivElement, StepperInputProps>(
       readOnly: isReadOnly,
       step,
       stepBlock,
-      value,
+      valueState,
     });
 
     const handleInputFocus = (event: FocusEvent<HTMLInputElement>) => {
@@ -348,10 +353,12 @@ export const StepperInput = forwardRef<HTMLDivElement, StepperInputProps>(
             </div>
           )}
           <input
-            aria-describedby={clsx(formFieldDescribedBy, inputDescribedBy)}
+            aria-describedby={clsx(id, formFieldDescribedBy, inputDescribedBy)}
             aria-labelledby={clsx(formFieldLabelledBy, inputLabelledBy)}
             aria-invalid={
-              !isReadOnly ? isOutOfRange(value, min, max) : undefined
+              !isReadOnly
+                ? isOutOfRange(value, min, max) || validationStatus === "error"
+                : undefined
             }
             aria-valuemax={
               !isReadOnly
@@ -390,7 +397,7 @@ export const StepperInput = forwardRef<HTMLDivElement, StepperInputProps>(
             {...restInputProps}
           />
           {!isDisabled && validationStatus && (
-            <StatusAdornment status={validationStatus} />
+            <StatusAdornment status={validationStatus} id={id} />
           )}
           {endAdornment && (
             <div className={withBaseName("endAdornmentContainer")}>
