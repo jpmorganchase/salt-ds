@@ -7,7 +7,6 @@ import {
   type CalendarProps,
   type CalendarRangeProps,
   type CalendarSingleProps,
-  CalendarWeekHeader,
   type UseCalendarSelectionRangeProps,
   type UseCalendarSelectionSingleProps,
   useLocalization,
@@ -30,7 +29,6 @@ export default {
     children: (
       <>
         <CalendarNavigation />
-        <CalendarWeekHeader />
         <CalendarGrid />
       </>
     ),
@@ -46,7 +44,6 @@ const Template: StoryFn<typeof Calendar> = (args) => {
       defaultSelectedDate={dateAdapter.today()}
     >
       <CalendarNavigation />
-      <CalendarWeekHeader />
       <CalendarGrid />
     </Calendar>
   );
@@ -62,7 +59,6 @@ export const Single: StoryFn<typeof Calendar> = (args) => {
       selectionVariant="single"
     >
       <CalendarNavigation />
-      <CalendarWeekHeader />
       <CalendarGrid />
     </Calendar>
   );
@@ -79,7 +75,6 @@ export const Range: StoryFn<typeof Calendar> = (args) => {
       selectionVariant="range"
     >
       <CalendarNavigation />
-      <CalendarWeekHeader />
       <CalendarGrid />
     </Calendar>
   );
@@ -139,7 +134,6 @@ export const Multiselect: StoryFn<typeof Calendar> = ({
       hideOutOfRangeDates
     >
       <CalendarNavigation />
-      <CalendarWeekHeader />
       <CalendarGrid />
     </Calendar>
   );
@@ -159,7 +153,6 @@ export const Offset: StoryFn<typeof Calendar> = (args) => {
       selectionVariant="offset"
     >
       <CalendarNavigation />
-      <CalendarWeekHeader />
       <CalendarGrid />
     </Calendar>
   );
@@ -173,7 +166,7 @@ export const UnselectableDates: StoryFn<typeof Calendar> = (args) => {
       (dateAdapter.lib === "luxon" && (dayOfWeek === 7 || dayOfWeek === 6)) ||
       (dateAdapter.lib !== "luxon" && (dayOfWeek === 0 || dayOfWeek === 6));
 
-    return isWeekend ? "Weekends are un-selectable" : false;
+    return isWeekend ? "weekends are un-selectable" : false;
   };
   return (
     <Calendar
@@ -182,7 +175,6 @@ export const UnselectableDates: StoryFn<typeof Calendar> = (args) => {
       isDayUnselectable={isDayUnselectable}
     >
       <CalendarNavigation />
-      <CalendarWeekHeader />
       <CalendarGrid />
     </Calendar>
   );
@@ -205,7 +197,6 @@ export const DisabledDates: StoryFn<typeof Calendar> = (args) => {
       isDayDisabled={isDayDisabled}
     >
       <CalendarNavigation />
-      <CalendarWeekHeader />
       <CalendarGrid />
     </Calendar>
   );
@@ -226,7 +217,6 @@ export const HighlightedDates: StoryFn<typeof Calendar> = (args) => {
       isDayHighlighted={isDayHighlighted}
     >
       <CalendarNavigation />
-      <CalendarWeekHeader />
       <CalendarGrid />
     </Calendar>
   );
@@ -236,7 +226,6 @@ export const HideOutOfRangeDates: StoryFn<typeof Calendar> = (args) => {
   return (
     <Calendar {...(args as any)} selectionVariant="single" hideOutOfRangeDates>
       <CalendarNavigation />
-      <CalendarWeekHeader />
       <CalendarGrid />
     </Calendar>
   );
@@ -246,7 +235,6 @@ export const HideYearDropdown: StoryFn<typeof Calendar> = (args) => {
   return (
     <Calendar {...args}>
       <CalendarNavigation hideYearDropdown />
-      <CalendarWeekHeader />
       <CalendarGrid />
     </Calendar>
   );
@@ -273,7 +261,6 @@ export const TodayButton: StoryFn<
     >
       <StackLayout gap={0}>
         <CalendarNavigation />
-        <CalendarWeekHeader />
         <CalendarGrid />
         <Divider />
         <Button
@@ -298,7 +285,6 @@ export const CustomDayRender: StoryFn<typeof Calendar> = (args) => {
   return (
     <Calendar {...args}>
       <CalendarNavigation />
-      <CalendarWeekHeader />
       <CalendarGrid getCalendarMonthProps={() => ({ renderDayContents })} />
     </Calendar>
   );
@@ -308,7 +294,6 @@ export const FadeMonthAnimation: StoryFn<typeof Calendar> = (args) => {
   return (
     <Calendar {...args} className={"FadeMonthAnimation"}>
       <CalendarNavigation />
-      <CalendarWeekHeader />
       <CalendarGrid getCalendarMonthProps={() => ({ renderDayContents })} />
     </Calendar>
   );
@@ -329,7 +314,6 @@ export const MinMaxDate: StoryFn<typeof Calendar> = (args) => {
       maxDate={maxDate}
     >
       <CalendarNavigation />
-      <CalendarWeekHeader />
       <CalendarGrid />
     </Calendar>
   );
@@ -421,7 +405,6 @@ export const TwinCalendars: StoryFn<
         onSelectionChange={handleSelectionChange}
       >
         <CalendarNavigation />
-        <CalendarWeekHeader />
         <CalendarGrid />
       </Calendar>
       <Calendar
@@ -436,7 +419,6 @@ export const TwinCalendars: StoryFn<
         onSelectionChange={handleSelectionChange}
       >
         <CalendarNavigation />
-        <CalendarWeekHeader />
         <CalendarGrid />
       </Calendar>
     </div>
@@ -453,7 +435,6 @@ export const WithLocale: StoryFn<typeof Calendar> = (args) => {
   return (
     <Calendar {...args}>
       <CalendarNavigation />
-      <CalendarWeekHeader />
       <CalendarGrid />
     </Calendar>
   );
@@ -465,7 +446,6 @@ export const Bordered: StoryFn<typeof Calendar> = (args) => (
       MonthDropdownProps={{ bordered: true }}
       YearDropdownProps={{ bordered: true }}
     />
-    <CalendarWeekHeader />
     <CalendarGrid />
   </Calendar>
 );
