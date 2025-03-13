@@ -3,9 +3,9 @@ import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
+  forwardRef,
   type HTMLAttributes,
   type ReactNode,
-  forwardRef,
   useEffect,
   useRef,
   useState,
@@ -76,7 +76,7 @@ export const CarouselSlide = forwardRef<HTMLDivElement, CarouselSlideProps>(
           unregisterSlide(index);
         }
       };
-    }, [registerSlide, unregisterSlide, index]);
+    }, [registerSlide, unregisterSlide]);
 
     const isVisible =
       index !== null &&
