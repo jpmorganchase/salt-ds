@@ -16,20 +16,21 @@ import carouselSlideCss from "./CarouselSlide.css";
 export interface CarouselSlideProps extends HTMLAttributes<HTMLDivElement> {
   /**
    * Actions to be displayed in the content footer.
-   */
+   **/
   actions?: ReactNode;
   /**
-   * The media to be displayed inside the slide.
-   */
+   * Media content to be displayed inside the slide. This could include images, videos, etc., that are visually prominent.
+   * It differs from children in that media is intended to be the main visual element of the slide.
+   **/
   media?: ReactNode;
   /**
    * The appearance of the slide. Options are 'bordered', and 'transparent'.
    * 'transparent' is the default value.
-   * */
+   **/
   appearance?: "bordered" | "transparent";
   /**
-   * Header text
-   */
+   * Header content to be displayed at the top of the slide. This can be text or any other React node.
+   **/
   header?: ReactNode;
 }
 
@@ -75,7 +76,7 @@ export const CarouselSlide = forwardRef<HTMLDivElement, CarouselSlideProps>(
           unregisterSlide(index);
         }
       };
-    }, [registerSlide, unregisterSlide]);
+    }, [registerSlide, unregisterSlide, index]);
 
     const isVisible =
       index !== null &&
@@ -93,7 +94,7 @@ export const CarouselSlide = forwardRef<HTMLDivElement, CarouselSlideProps>(
       <div
         role="group"
         aria-roledescription="slide"
-        aria-labelledby={clsx(ariaLabelledBy)}
+        aria-labelledby={ariaLabelledBy}
         ref={ref}
         className={clsx(withBaseName(), {
           [withBaseName("bordered")]: appearance === "bordered",
@@ -112,7 +113,7 @@ export const CarouselSlide = forwardRef<HTMLDivElement, CarouselSlideProps>(
             })}
           >
             <div className={withBaseName("content")}>
-              <span className={clsx(withBaseName("sr-only"))}>
+              <span className={withBaseName("sr-only")}>
                 {isVisible && `${slideCount} of ${slideCount}`}
               </span>
               {header}

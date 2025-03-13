@@ -17,13 +17,13 @@ const withBaseName = makePrefixer("saltCarouselControls");
 export interface CarouselControlsProps
   extends Omit<HTMLAttributes<HTMLDivElement>, "title"> {
   /**
-   * Callback when back button is clicked.
+   * Callback when Back button is clicked.
    */
-  onMoveBack?: (event: SyntheticEvent<HTMLButtonElement>) => void;
+  onPrevious?: (event: SyntheticEvent<HTMLButtonElement>) => void;
   /**
-   * Callback when forward button is clicked.
+   * Callback when Next button is clicked.
    */
-  onMoveForward?: (event: SyntheticEvent<HTMLButtonElement>) => void;
+  onNext?: (event: SyntheticEvent<HTMLButtonElement>) => void;
   /**
    * Location of the label relative to the controls.
    *
@@ -41,8 +41,8 @@ export const CarouselControls = forwardRef<
   CarouselControlsProps
 >(function CarouselControls(
   {
-    onMoveBack,
-    onMoveForward,
+    onPrevious,
+    onNext,
     disabled,
     className,
     labelPlacement = "right",
@@ -79,12 +79,12 @@ export const CarouselControls = forwardRef<
 
   function handlePrevClick(event: MouseEvent<HTMLButtonElement>) {
     prevSlide(event);
-    onMoveBack?.(event);
+    onPrevious?.(event);
   }
 
   function handleNextClick(event: MouseEvent<HTMLButtonElement>) {
     nextSlide(event);
-    onMoveForward?.(event);
+    onNext?.(event);
   }
 
   return (

@@ -4,7 +4,7 @@ import { useWindow } from "@salt-ds/window";
 import { type HTMLAttributes, type ReactNode, forwardRef } from "react";
 
 import { CarouselControls } from "./CarouselControls";
-import carouselControlsCss from "./CarouselNavigationBar.css";
+import carouselNavigationBarCss from "./CarouselNavigationBar.css";
 
 const withBaseName = makePrefixer("saltCarouselNavigationBar");
 
@@ -22,8 +22,8 @@ export const CarouselNavigationBar = forwardRef<
 >(function CarouselNavigationBar({ title, className, ...rest }, ref) {
   const targetWindow = useWindow();
   useComponentCssInjection({
-    testId: "salt-carousel-controls",
-    css: carouselControlsCss,
+    testId: "salt-carousel-navigation-bar",
+    css: carouselNavigationBarCss,
     window: targetWindow,
   });
 

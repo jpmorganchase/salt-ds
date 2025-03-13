@@ -33,7 +33,7 @@ export const CarouselContext = createContext<CarouselContextValue | null>(
 export function useCarousel() {
   const context = useContext(CarouselContext);
   if (!context) {
-    throw new Error("useCarousel must be used within carousel provider");
+    throw new Error("useCarousel must be used within CarouselProvider");
   }
   return context;
 }
