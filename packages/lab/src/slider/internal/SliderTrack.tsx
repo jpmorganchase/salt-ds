@@ -4,7 +4,7 @@ import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import { type HTMLAttributes, type RefObject, forwardRef } from "react";
 import sliderTrackCss from "./SliderTrack.css";
-import { calculateMarkPosition } from "./utils";
+import { calculateMarkPosition, calculatePercentage } from "./utils";
 
 const withBaseName = makePrefixer("saltSliderTrack");
 
@@ -12,6 +12,7 @@ interface SliderTrackProps
   extends Omit<HTMLAttributes<HTMLDivElement>, "onChange" | "defaultValue"> {
   children: React.ReactNode;
   disabled: boolean;
+  enableMarkTicks?: boolean;
   format?: (value: number) => string | number;
   handlePointerDown: (event: React.PointerEvent<HTMLDivElement>) => void;
   isDragging: boolean;
@@ -32,6 +33,7 @@ export const SliderTrack = forwardRef<HTMLDivElement, SliderTrackProps>(
     {
       children,
       disabled,
+      enableMarkTicks,
       format,
       handlePointerDown,
       isDragging,
@@ -41,8 +43,8 @@ export const SliderTrack = forwardRef<HTMLDivElement, SliderTrackProps>(
       maxLabel,
       min,
       minLabel,
-      progressPercentage,
-      progressPercentageRange,
+      progressPercentage = 0,
+      progressPercentageRange = [0, 0],
       restrictLabelOverflow,
       sliderRef,
       ...rest
@@ -56,6 +58,28 @@ export const SliderTrack = forwardRef<HTMLDivElement, SliderTrackProps>(
       window: targetWindow,
     });
 
+    const checkIsMarkSelected = (value: number) => {
+      const markPercentage = calculatePercentage(value, max, min);
+      if (isRange) {
+        return (
+          markPercentage > progressPercentageRange[0] &&
+          markPercentage < progressPercentageRange[1]
+        );
+      }
+      return markPercentage < progressPercentage;
+    };
+
+    const checkIsMarkOverlapped = (value: number) => {
+      const markPercentage = calculatePercentage(value, max, min);
+      if (isRange) {
+        return (
+          markPercentage === progressPercentageRange[0] ||
+          markPercentage === progressPercentageRange[1]
+        );
+      }
+      return markPercentage === progressPercentage;
+    };
+
     return (
       <div
         className={clsx(withBaseName(), {
@@ -64,6 +88,7 @@ export const SliderTrack = forwardRef<HTMLDivElement, SliderTrackProps>(
           [withBaseName("range")]: isRange,
           [withBaseName("withMarks")]: marks,
           [withBaseName("restrictLabelOverflow")]: restrictLabelOverflow,
+          [withBaseName("withMarkTicks")]: enableMarkTicks,
         })}
         data-testid="sliderTrack"
         ref={ref}
@@ -109,22 +134,40 @@ export const SliderTrack = forwardRef<HTMLDivElement, SliderTrackProps>(
               <div className={withBaseName("marks")}>
                 {marks.map(({ label, value }) => {
                   return (
-                    <Text
-                      aria-hidden
-                      className={withBaseName("markLabel")}
-                      data-testid="mark"
-                      disabled={disabled}
-                      color="secondary"
+                    <div
+                      className={withBaseName("mark")}
                       key={value}
-                      styleAs="label"
                       style={
                         {
                           "--slider-mark-percentage": `${calculateMarkPosition(value, max, min)}%`,
                         } as React.CSSProperties
                       }
                     >
-                      {label}
-                    </Text>
+                      <div
+                        className={clsx(
+                          withBaseName("markTick"),
+                          {
+                            [withBaseName("markSelected")]:
+                              checkIsMarkSelected(value),
+                          },
+                          {
+                            [withBaseName("markTickHidden")]:
+                              checkIsMarkOverlapped(value),
+                          },
+                        )}
+                        data-testid="markTick"
+                      />
+                      <Text
+                        aria-hidden
+                        className={withBaseName("markLabel")}
+                        data-testid="mark"
+                        disabled={disabled}
+                        color="secondary"
+                        styleAs="label"
+                      >
+                        {label}
+                      </Text>
+                    </div>
                   );
                 })}
               </div>

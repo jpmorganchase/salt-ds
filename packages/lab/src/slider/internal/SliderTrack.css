@@ -56,11 +56,19 @@
   width: calc(var(--slider-progressPercentage) - (var(--salt-size-border-strong) / 2));
 }
 
+.saltSliderTrack-withMarkTicks .saltSliderTrack-rail::before {
+  border-bottom-left-radius: unset;
+}
+
 .saltSliderTrack-rail::after {
   background: var(--slider-track-background);
   border-top-right-radius: var(--salt-palette-corner-weaker);
   border-bottom-right-radius: var(--salt-palette-corner-weaker);
   width: calc(100% - var(--slider-progressPercentage) - (var(--salt-size-border-strong) * 2));
+}
+
+.saltSliderTrack-withMarkTicks .saltSliderTrack-rail::after {
+  border-bottom-right-radius: unset;
 }
 
 .saltSliderTrack-range .saltSliderTrack-rail::before {
@@ -104,16 +112,51 @@
   position: absolute;
   user-select: none;
   width: 100%;
-  top: var(--salt-size-base);
+  top: calc((var(--salt-size-base) / 2) + (var(--salt-size-bar) / 2));
+}
+
+.saltSliderTrack-mark {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  justify-content: center;
+  left: var(--slider-mark-percentage);
+  transform: translateX(-50%);
+  gap: 4px;
 }
 
 .saltSliderTrack-markLabel {
-  position: absolute;
-  left: var(--slider-mark-percentage);
-  transform: translateX(-50%);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.saltSliderTrack-markTick {
+  height: 5px;
+  width: var(--salt-size-border-strong);
+  background: var(--slider-track-background);
+  visibility: hidden;
+}
+
+.saltSliderTrack-withMarkTicks .saltSliderTrack-markTick {
+  visibility: visible;
+}
+
+.saltSliderTrack-withMarkTicks .saltSliderTrack-markTickHidden {
+  visibility: hidden;
+}
+
+.saltSliderTrack-mark:last-of-type .saltSliderTrack-markTick {
+  transform: translateX(-50%);
+}
+
+.saltSliderTrack-mark:first-of-type .saltSliderTrack-markTick {
+  transform: translateX(50%);
+}
+
+.saltSliderTrack-markSelected {
+  background: var(--slider-track-fill);
 }
 
 .saltSliderTrack-restrictLabelOverflow .saltSliderTrack-markLabel:first-of-type {

@@ -28,6 +28,10 @@ export interface SliderProps
    */
   disabled?: boolean;
   /**
+   * Show visual ticks above the mark labels
+   */
+  enableMarkTicks?: boolean;
+  /**
    * A callback to format the display value in the tooltip, min and max labels
    * and the `aria-valuetext` attribute.
    */
@@ -93,6 +97,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
     "aria-valuetext": ariaValueText,
     decimalPlaces = 2,
     disabled: disabledProp = false,
+    enableMarkTicks,
     format,
     marks,
     min = 0,
@@ -157,6 +162,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
   return (
     <SliderTrack
       disabled={disabled}
+      enableMarkTicks={enableMarkTicks}
       format={format}
       handlePointerDown={handlePointerDownOnTrack}
       isDragging={isDragging}
