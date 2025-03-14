@@ -1,5 +1,5 @@
 import type { SearchIndex } from "@jpmorganchase/mosaic-store";
-import Fuse from "fuse.js";
+import type Fuse from "fuse.js";
 
 interface BestIndex {
   index: Fuse.RangeTuple;
@@ -73,11 +73,12 @@ export const getBestMatch = (
   return fallback;
 };
 
-export const performSearch = (
+export const performSearch = async (
   index: SearchIndex,
   term: string,
   config: Fuse.IFuseOptions<unknown>,
 ) => {
+  const Fuse = (await import("fuse.js")).default;
   const fuse = new Fuse(index, config);
   const results = fuse.search(term);
 

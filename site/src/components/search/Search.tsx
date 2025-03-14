@@ -14,6 +14,7 @@ import {
   type ChangeEvent,
   type SyntheticEvent,
   useDeferredValue,
+  useEffect,
   useMemo,
   useState,
 } from "react";
@@ -75,16 +76,22 @@ export function Search(props: ComboBoxProps) {
     router.push(route[0]);
   };
 
-  const results = useMemo(() => {
-    const data = searchIndex
-      ? performSearch(searchIndex, query, {
-          ...searchConfig,
-          minMatchCharLength: 3,
-          threshold: 0,
-          keys: [{ name: "title", weight: 5 }, "content", "route"],
-        })
-      : [];
+  const [data, setData] = useState<
+    { content: string; route: string; title: string }[]
+  >([]);
 
+  useEffect(() => {
+    if (searchIndex) {
+      performSearch(searchIndex, query, {
+        ...searchConfig,
+        minMatchCharLength: 3,
+        threshold: 0,
+        keys: [{ name: "title", weight: 5 }, "content", "route"],
+      }).then((newData) => setData(newData));
+    }
+  }, [searchIndex, query, searchConfig]);
+
+  const results = useMemo(() => {
     return data.reduce(
       (acc, option) => {
         const category = capitalize(
@@ -107,7 +114,7 @@ export function Search(props: ComboBoxProps) {
       },
       {} as Record<string, typeof data>,
     );
-  }, [searchConfig, searchIndex, query]);
+  }, [data]);
 
   return (
     <ComboBox

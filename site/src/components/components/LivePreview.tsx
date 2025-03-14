@@ -35,25 +35,17 @@ export const LivePreview: FC<LivePreviewProps> = ({
     sourceCode: "",
   });
   useEffect(() => {
-    async function fetchExample() {
-      const Example = (
-        (await import(`../../examples/${componentName}`)) as Record<
-          string,
-          ElementType
-        >
-      )[exampleName];
-      const sourceCode = (
-        (await import(
-          `../../examples/${componentName}/${exampleName}.tsx?raw`
-        )) as Record<string, string>
-      ).default;
+    async function prepare() {
+      const fetchExample = (await import("./fetchExample")).default;
 
-      return { Example, sourceCode };
+      fetchExample(componentName, exampleName)
+        .then((data) => setComponentExample(data))
+        .catch((e) =>
+          console.error(`Failed to load example ${exampleName}`, e),
+        );
     }
 
-    fetchExample()
-      .then((data) => setComponentExample(data))
-      .catch((e) => console.error(`Failed to load example ${exampleName}`, e));
+    prepare();
   }, [exampleName, componentName]);
 
   const { density, mode: exampleMode, theme } = useLivePreviewControls();

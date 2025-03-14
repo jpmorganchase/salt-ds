@@ -1,5 +1,7 @@
 import { useMeta, useRoute } from "@jpmorganchase/mosaic-store";
+import type { DrawerProps } from "@salt-ds/core";
 import { clsx } from "clsx";
+import dynamic from "next/dynamic";
 import {
   type ComponentType,
   type ReactNode,
@@ -11,8 +13,11 @@ import { AppHeader, Footer } from "src/components";
 import { useIsMobileView } from "src/utils/useIsMobileView";
 import { LayoutContext } from "../LayoutContext";
 import styles from "./Base.module.css";
-import { Drawer } from "./Drawer";
 import { PageHeading, type PageHeadingProps } from "./PageHeading";
+
+const Drawer = dynamic<DrawerProps>(() =>
+  import("./Drawer").then((mod) => mod.Drawer),
+);
 
 export function Base({
   children,

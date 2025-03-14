@@ -4,41 +4,25 @@ import {
   useRoute,
   useStore,
 } from "@jpmorganchase/mosaic-store";
-import {
-  Button,
-  Divider,
-  Overlay,
-  OverlayPanel,
-  OverlayPanelContent,
-  OverlayTrigger,
-  StackLayout,
-  Text,
-  ToggleButton,
-  ToggleButtonGroup,
-} from "@salt-ds/core";
-import { GithubIcon, SettingsSolidIcon } from "@salt-ds/icons";
+import { Divider } from "@salt-ds/core";
 import {
   TabBar,
-  TabListNext,
+  type TabListNextProps,
   TabNext,
   TabNextPanel,
   TabNextTrigger,
   TabsNext,
 } from "@salt-ds/lab";
+import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import { type FC, type SyntheticEvent, useEffect } from "react";
-import {
-  LivePreviewProvider,
-  useLivePreviewControls,
-} from "../../components/components/LivePreviewProvider";
-import { CTALink } from "../../components/cta-link/CTALink";
+import { LivePreviewProvider } from "../../components/components/LivePreviewProvider";
 import { LinkList } from "../../components/link-list/LinkList";
 import { PageNavigation } from "../../components/navigation/PageNavigation";
 import { TopLevelNavigation } from "../../components/navigation/TopLevelNavigation";
 import { TableOfContents } from "../../components/toc/index";
 import { getHrefFromComponent } from "../../utils/getHrefFromComponent";
 import { Base } from "../Base/Base";
-import { PageHeading } from "../Base/PageHeading";
 import { PrimarySidebar } from "../Base/PrimarySidebar";
 import { SecondarySidebar } from "../Base/SecondarySidebar";
 import { RelatedPatterns } from "../DetailPattern/RelatedPatterns";
@@ -51,6 +35,10 @@ const tabs = [
 ];
 
 export type Relationship = "similarTo" | "contains";
+
+const TabListNext = dynamic<TabListNextProps>(() =>
+  import("@salt-ds/lab").then((mod) => mod.TabListNext),
+);
 
 interface RelatedComponent {
   name: string;
@@ -73,105 +61,7 @@ export interface Data {
   featureRequest?: string;
 }
 
-type CustomSiteState = SiteState & { data?: Data };
-
-function useComponentData(): Data {
-  return useStore((state: CustomSiteState) => ({ ...state.data }));
-}
-
-function ThemeControls() {
-  const { density, mode, theme, setDensity, setMode, setTheme } =
-    useLivePreviewControls();
-
-  return (
-    <StackLayout gap={1} padding={1}>
-      <StackLayout gap={0.75} align="baseline" padding={0}>
-        <Text styleAs="label" color="secondary">
-          <strong>Density</strong>
-        </Text>
-        <ToggleButtonGroup
-          className={styles.toggleGroup}
-          aria-label="Select density"
-          value={density}
-          onChange={(event) => setDensity(event.currentTarget.value as any)}
-        >
-          <ToggleButton value="high">High</ToggleButton>
-          <ToggleButton value="medium">Medium</ToggleButton>
-          <ToggleButton value="low">Low</ToggleButton>
-          <ToggleButton value="touch">Touch</ToggleButton>
-        </ToggleButtonGroup>
-      </StackLayout>
-      <StackLayout gap={0.75} align="baseline" padding={0}>
-        <Text styleAs="label" color="secondary">
-          <strong>Mode</strong>
-        </Text>
-        <ToggleButtonGroup
-          className={styles.toggleGroup}
-          aria-label="Select mode"
-          onChange={(event) => setMode(event.currentTarget.value as any)}
-          value={mode}
-        >
-          <ToggleButton value="system">System</ToggleButton>
-          <ToggleButton value="light">Light</ToggleButton>
-          <ToggleButton value="dark">Dark</ToggleButton>
-        </ToggleButtonGroup>
-      </StackLayout>
-      <StackLayout gap={0.75} align="baseline" padding={0}>
-        <Text styleAs="label" color="secondary">
-          <strong>Themes</strong>
-        </Text>
-
-        <ToggleButtonGroup
-          className={styles.toggleGroup}
-          aria-label="Select themes"
-          onChange={(event) => setTheme(event.currentTarget.value as any)}
-          value={theme}
-        >
-          <ToggleButton value="legacy">Legacy</ToggleButton>
-          <ToggleButton value="brand">JPM Brand</ToggleButton>
-        </ToggleButtonGroup>
-      </StackLayout>
-    </StackLayout>
-  );
-}
-
-function ComponentPageHeading({ title }: { title?: string }) {
-  const { description, sourceCodeUrl, alsoKnownAs = [] } = useComponentData();
-
-  return (
-    <PageHeading title={title} description={description}>
-      {alsoKnownAs.length > 0 && (
-        <Text>
-          Also known as: <small>{alsoKnownAs.join(", ")}</small>
-        </Text>
-      )}
-
-      {sourceCodeUrl && (
-        <div className={styles.headingActions}>
-          <CTALink
-            appearance="bordered"
-            sentiment="neutral"
-            href={sourceCodeUrl}
-          >
-            <GithubIcon aria-hidden /> View source code
-          </CTALink>
-          <Overlay>
-            <OverlayTrigger>
-              <Button sentiment="neutral" appearance="bordered">
-                <SettingsSolidIcon aria-hidden />
-              </Button>
-            </OverlayTrigger>
-            <OverlayPanel>
-              <OverlayPanelContent>
-                <ThemeControls />
-              </OverlayPanelContent>
-            </OverlayPanel>
-          </Overlay>
-        </div>
-      )}
-    </PageHeading>
-  );
-}
+export type CustomSiteState = SiteState & { data?: Data };
 
 function getRelatedComponentLinks(
   relatedComponents: Data["relatedComponents"],
@@ -188,13 +78,17 @@ function getRelatedComponentLinks(
   );
 }
 
+const ComponentPageHeading = dynamic(() => import("./ComponentPageHeading"));
+
 export const DetailComponent: FC<LayoutProps> = ({ children }) => {
   const { replace, push } = useRouter();
   const { route } = useRoute();
 
   const newRoute = route?.substring(0, route.lastIndexOf("/") + 1);
 
-  const { relatedComponents } = useComponentData();
+  const { relatedComponents } = useStore(
+    (state: CustomSiteState) => state.data ?? {},
+  );
 
   const isOverview = route?.endsWith("components/index");
 
@@ -253,7 +147,7 @@ export const DetailComponent: FC<LayoutProps> = ({ children }) => {
             value={currentTab?.name ?? tabs[0].name}
             onChange={handleTabChange}
           >
-            <TabBar className={styles.tabBar} divider>
+            <TabBar divider>
               <TabListNext appearance="transparent">
                 {tabs.map(({ name, label }) => (
                   <TabNext key={name} value={name}>
