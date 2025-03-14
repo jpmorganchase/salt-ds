@@ -78,8 +78,9 @@ export const FoundationColorView = ({
   const [data, setData] = useState<CssVariableData | null>(null);
 
   useEffect(() => {
-    const fetchJsonData = () => {
-      const data = require("./cssFoundations.json") as CssVariableData;
+    const fetchJsonData = async () => {
+      const data = (await import("./cssFoundations.json"))
+        .default as CssVariableData;
       const colorKeys = Object.keys(data).filter((x) =>
         /^--salt-color-\w+(-\d+)?$/.test(x),
       );
@@ -98,7 +99,7 @@ export const FoundationColorView = ({
       );
     };
 
-    void fetchJsonData();
+    fetchJsonData();
   }, [group]);
 
   if (data === null) {

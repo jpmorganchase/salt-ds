@@ -12,6 +12,7 @@ export const Metadata = () => {
       {Array.isArray(meta.breadcrumbs) && meta.breadcrumbs.length > 0 && (
         <meta content={JSON.stringify(meta.breadcrumbs)} name="breadcrumbs" />
       )}
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
     </Head>
   );
 };

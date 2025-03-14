@@ -3,11 +3,20 @@ import {
   type SidebarItem,
   useAppHeader,
 } from "@jpmorganchase/mosaic-store";
-import { Dropdown, Option } from "@salt-ds/core";
+import type { DropdownProps, OptionProps } from "@salt-ds/core";
+import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import { useIsMobileView } from "../../utils/useIsMobileView";
 import { VerticalNavigation } from "../navigation/VerticalNavigation";
 import styles from "./TopLevelNavigation.module.css";
+
+const Dropdown = dynamic<DropdownProps<SidebarItem>>(() =>
+  import("@salt-ds/core").then((mod) => mod.Dropdown),
+);
+
+const Option = dynamic<OptionProps>(() =>
+  import("@salt-ds/core").then((mod) => mod.Option),
+);
 
 function createSidebarItems(menu: AppHeaderMenu) {
   return menu.reduce<SidebarItem[]>((result, menuItem) => {
@@ -46,7 +55,7 @@ export function TopLevelNavigation() {
   return (
     <div className={styles.root}>
       {isMobileOrTablet ? (
-        <Dropdown<SidebarItem>
+        <Dropdown
           selected={[selectedId]}
           bordered
           valueToString={(item) => item?.name}

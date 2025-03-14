@@ -1,5 +1,5 @@
 .root {
-  flex: 0 0 20%;
+  flex: 0 0 250px;
   display: flex;
   flex-direction: column;
   gap: var(--salt-spacing-200);
