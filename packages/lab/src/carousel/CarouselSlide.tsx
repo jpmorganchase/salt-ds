@@ -3,14 +3,15 @@ import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
+  forwardRef,
   type HTMLAttributes,
   type ReactNode,
-  forwardRef,
+  useContext,
   useEffect,
   useRef,
   useState,
 } from "react";
-import { useCarousel } from "./CarouselContext";
+import { CarouselDispatchContext, useCarousel } from "./CarouselContext";
 import carouselSlideCss from "./CarouselSlide.css";
 import { useIntersectionObserver } from "./useIntersectionObserver";
 
@@ -62,22 +63,17 @@ export const CarouselSlide = forwardRef<HTMLDivElement, CarouselSlideProps>(
       css: carouselSlideCss,
       window: targetWindow,
     });
+    const dispatch = useContext(CarouselDispatchContext);
     const slideRef = useRef<HTMLDivElement>(null);
     const [isVisible, setIsVisible] = useState(false);
     const id = useIdMemo(idProp);
-    const { slideCount, registerSlide, unregisterSlide, visibleSlides } =
-      useCarousel();
+    const { slideCount, visibleSlides } = useCarousel();
 
     useEffect(() => {
-      if (slideRef.current) {
-        registerSlide(id, slideRef.current);
-      }
-      return () => {
-        if (id) {
-          unregisterSlide(id);
-        }
-      };
-    }, [registerSlide, unregisterSlide, id]);
+      if (!slideRef.current) return;
+      dispatch({ type: "register", payload: [id, slideRef.current] });
+      return () => dispatch({ type: "unregister", payload: id });
+    }, [dispatch, id]);
 
     useIntersectionObserver({
       ref: slideRef,

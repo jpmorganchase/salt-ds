@@ -4,19 +4,24 @@ import {
   type RefObject,
   useCallback,
   useContext,
+  useEffect,
   useLayoutEffect,
+  useReducer,
   useRef,
   useState,
 } from "react";
+import {
+  carouselReducer,
+  CarouselReducerDispatch,
+  CarouselReducerState,
+} from "./CarouselReducer";
 
 export interface CarouselContextValue {
   firstVisibleSlide: number;
   visibleSlides: number;
   slideCount: number;
-  nextSlide: (moveFocus: boolean) => void;
-  prevSlide: (moveFocus: boolean) => void;
-  registerSlide: (id: string, element: HTMLDivElement) => number;
-  unregisterSlide: (id: string) => void;
+  nextSlide: (moveFocus?: boolean) => void;
+  prevSlide: (moveFocus?: boolean) => void;
   containerRef: RefObject<HTMLDivElement>;
   carouselId?: string;
   getSlideRef?: (index: number) => HTMLDivElement;
@@ -25,6 +30,17 @@ export interface CarouselContextValue {
 export const CarouselContext = createContext<CarouselContextValue | null>(
   "CarouselContext",
   null,
+);
+
+export const CarouselStateContext = createContext<CarouselReducerState>(
+  "CarouselStateContext",
+  { slides: new Map() },
+);
+export const CarouselDispatchContext = createContext<CarouselReducerDispatch>(
+  "CarouselDispatchContext",
+  () => {
+    return;
+  },
 );
 
 export function useCarousel() {
@@ -46,6 +62,8 @@ export function CarouselProvider({
   visibleSlides?: number;
   id?: string;
 }) {
+  const [state, dispatch] = useReducer(carouselReducer, { slides: new Map() });
+
   const [firstVisibleSlide, setFirstVisibleSlide] = useState(
     firstVisibleSlideIndex,
   );
@@ -66,18 +84,6 @@ export function CarouselProvider({
   }, [firstVisibleSlideIndex, visibleSlides]);
 
   const containerRef = useRef<HTMLDivElement>(null);
-
-  const registerSlide = useCallback((id: string, element: HTMLDivElement) => {
-    const assignedIndex = slides.current.size;
-    slides.current.set(id, { element, index: assignedIndex });
-    setSlideCount(assignedIndex + 1);
-    return assignedIndex;
-  }, []);
-
-  const unregisterSlide = useCallback((id: string) => {
-    slides.current.delete(id);
-    setSlideCount(slides.current.size);
-  }, []);
 
   const nextSlide = (moveFocus = false) => {
     const container = containerRef.current;
@@ -116,22 +122,27 @@ export function CarouselProvider({
     return slideEntries[index]?.element ?? null;
   }, []);
 
+  useEffect(() => {
+    console.log({ state });
+  }, [state]);
   return (
-    <CarouselContext.Provider
-      value={{
-        visibleSlides,
-        slideCount,
-        firstVisibleSlide,
-        registerSlide,
-        unregisterSlide,
-        nextSlide,
-        prevSlide,
-        containerRef,
-        carouselId: id,
-        getSlideRef,
-      }}
-    >
-      {children}
-    </CarouselContext.Provider>
+    <CarouselStateContext.Provider value={state}>
+      <CarouselDispatchContext.Provider value={dispatch}>
+        <CarouselContext.Provider
+          value={{
+            visibleSlides,
+            slideCount,
+            firstVisibleSlide,
+            nextSlide,
+            prevSlide,
+            containerRef,
+            carouselId: id,
+            getSlideRef,
+          }}
+        >
+          {children}
+        </CarouselContext.Provider>
+      </CarouselDispatchContext.Provider>
+    </CarouselStateContext.Provider>
   );
 }

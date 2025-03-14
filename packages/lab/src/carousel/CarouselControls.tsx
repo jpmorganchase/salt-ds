@@ -1,14 +1,15 @@
-import { Button, Text, makePrefixer, useIcon } from "@salt-ds/core";
+import { Button, makePrefixer, Text, useIcon } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import {
+  forwardRef,
   type HTMLAttributes,
   type MouseEvent,
   type SyntheticEvent,
-  forwardRef,
+  useContext,
   useRef,
 } from "react";
-import { useCarousel } from "./CarouselContext";
+import { CarouselStateContext, useCarousel } from "./CarouselContext";
 
 import carouselControlsCss from "./CarouselControls.css";
 
@@ -56,14 +57,10 @@ export const CarouselControls = forwardRef<
     css: carouselControlsCss,
     window: targetWindow,
   });
-  const {
-    slideCount,
-    firstVisibleSlide,
-    nextSlide,
-    prevSlide,
-    visibleSlides,
-    carouselId,
-  } = useCarousel();
+  const { firstVisibleSlide, nextSlide, prevSlide, visibleSlides, carouselId } =
+    useCarousel();
+  const { slides } = useContext(CarouselStateContext);
+  const slideCount = slides.size;
   const { NextIcon, PreviousIcon } = useIcon();
   const prevButtonRef = useRef<HTMLButtonElement | null>(null);
   const nextButtonRef = useRef<HTMLButtonElement | null>(null);
