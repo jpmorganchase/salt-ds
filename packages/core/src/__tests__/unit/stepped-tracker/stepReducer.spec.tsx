@@ -157,4 +157,46 @@ describe("stepReducer", () => {
       expect(state.nextStep).toHaveProperty("id", "2");
     });
   });
+
+  describe("goto", () => {
+    it("should go to the specified step by stepId", () => {
+      const steps: StepRecord[] = [
+        { id: "1", label: "Step 1" },
+        { id: "2", label: "Step 2" },
+        { id: "3", label: "Step 3" },
+      ];
+
+      let state = initStepReducerState(steps);
+
+      // Use the "goto" action to jump to step with id "2"
+      state = stepReducer(state, { type: "goto", stepId: "2" });
+
+      expect(state.started).toBe(true);
+      expect(state.ended).toBe(false);
+      expect(state.activeStepIndex).toBe(1);
+      expect(state.activeStep).toHaveProperty("id", "2");
+      expect(state.previousStep).toHaveProperty("id", "1");
+      expect(state.nextStep).toHaveProperty("id", "3");
+
+      // Use the "goto" action to jump to the last step with id "3"
+      state = stepReducer(state, { type: "goto", stepId: "3" });
+
+      expect(state.started).toBe(true);
+      expect(state.ended).toBe(true);
+      expect(state.activeStepIndex).toBe(2);
+      expect(state.activeStep).toHaveProperty("id", "3");
+      expect(state.previousStep).toHaveProperty("id", "2");
+      expect(state.nextStep).toBe(null);
+
+      // Use the "goto" action to jump to the first step with id "1"
+      state = stepReducer(state, { type: "goto", stepId: "1" });
+
+      expect(state.started).toBe(true);
+      expect(state.ended).toBe(false);
+      expect(state.activeStepIndex).toBe(0);
+      expect(state.activeStep).toHaveProperty("id", "1");
+      expect(state.previousStep).toBe(null);
+      expect(state.nextStep).toHaveProperty("id", "2");
+    });
+  });
 });
