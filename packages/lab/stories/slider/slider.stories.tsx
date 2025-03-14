@@ -96,6 +96,64 @@ WithMarks.parameters = {
   actions: { disable: true },
 };
 
+export const WithMarkTicks = Template.bind({});
+WithMarkTicks.args = {
+  min: 0,
+  max: 10,
+  marks: [
+    {
+      label: "0",
+      value: 0,
+    },
+    {
+      label: "1",
+      value: 1,
+    },
+    {
+      label: "2",
+      value: 2,
+    },
+    {
+      label: "3",
+      value: 3,
+    },
+    {
+      label: "4",
+      value: 4,
+    },
+    {
+      label: "5",
+      value: 5,
+    },
+    {
+      label: "6",
+      value: 6,
+    },
+    {
+      label: "7",
+      value: 7,
+    },
+    {
+      label: "8",
+      value: 8,
+    },
+    {
+      label: "9",
+      value: 9,
+    },
+    {
+      label: "10",
+      value: 10,
+    },
+  ],
+  "aria-label": "With Mark Ticks",
+  enableMarkTicks: true,
+};
+
+WithMarkTicks.parameters = {
+  actions: { disable: true },
+};
+
 export const WithInlineLabelsAndMarks = Template.bind({});
 WithInlineLabelsAndMarks.args = {
   "aria-label": "WithInlineLabelsAndMarks",
@@ -404,20 +462,6 @@ export const WithCustomStep = () => (
         format={(value: number) => Intl.NumberFormat().format(value)}
       />
     </FormField>
-    <FormField>
-      <FormFieldLabel>
-        Step: 0.3 with formatting (not multiple of total range)
-      </FormFieldLabel>
-      <Slider
-        min={0}
-        max={1}
-        minLabel="0"
-        maxLabel="1"
-        step={0.3}
-        defaultValue={0.9}
-        format={(value: number) => Intl.NumberFormat().format(value)}
-      />
-    </FormField>
   </StackLayout>
 );
 
@@ -453,6 +497,23 @@ export const WithNonNumericValues = () => {
       style={{ width: "500px" }}
     />
   );
+};
+
+export const WithRestrictedLabelOverflow = Template.bind({});
+
+WithRestrictedLabelOverflow.args = {
+  "aria-label": "WithRestrictedLabelOverflow",
+  marks: [
+    {
+      value: 0,
+      label: "Very low",
+    },
+    {
+      value: 10,
+      label: "Very high",
+    },
+  ],
+  restrictLabelOverflow: true,
 };
 
 export const Disabled = Template.bind({});

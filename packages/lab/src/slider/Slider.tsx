@@ -16,6 +16,10 @@ import { calculatePercentage, clamp, toFloat } from "./internal/utils";
 export interface SliderProps
   extends Omit<HTMLAttributes<HTMLDivElement>, "onChange" | "defaultValue"> {
   /**
+   * The number of allowed decimal places
+   */
+  decimalPlaces?: number;
+  /**
    * The default value. Use when the component is not controlled.
    */
   defaultValue?: number;
@@ -23,6 +27,10 @@ export interface SliderProps
    * Disable the slider.
    */
   disabled?: boolean;
+  /**
+   * Show visual ticks above the mark labels
+   */
+  enableMarkTicks?: boolean;
   /**
    * A callback to format the display value in the tooltip, min and max labels
    * and the `aria-valuetext` attribute.
@@ -60,6 +68,11 @@ export interface SliderProps
    */
   onChangeEnd?: (event: SyntheticEvent<unknown> | Event, value: number) => void;
   /**
+   * When bottom labels for minimum and maximum values are set, ensure
+   * that they are confined within the boundary of the slider.
+   */
+  restrictLabelOverflow?: boolean;
+  /**
    * Show the slider value in a tooltip when the thumb is hovered.
    */
   showTooltip?: boolean;
@@ -82,8 +95,9 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
     "aria-label": ariaLabel,
     "aria-labelledby": ariaLabelledBy,
     "aria-valuetext": ariaValueText,
-    defaultValue = 0,
+    decimalPlaces = 2,
     disabled: disabledProp = false,
+    enableMarkTicks,
     format,
     marks,
     min = 0,
@@ -92,10 +106,12 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
     maxLabel,
     onChange,
     onChangeEnd,
+    restrictLabelOverflow = false,
     showTooltip = true,
     step = 1,
     stepMultiplier = 2,
     value: valueProp,
+    defaultValue = min + (max - min) / 2,
     ...rest
   },
   ref,
@@ -119,6 +135,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
     isDragging,
     sliderRef,
   } = useSliderThumb({
+    decimalPlaces,
     min,
     max,
     step,
@@ -129,7 +146,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
   });
 
   const disabled = formFieldDisabled || disabledProp;
-  const value = clamp(valueState, max, min);
+  const value = clamp(valueState, max, min, step, decimalPlaces);
   const progressPercentage = calculatePercentage(toFloat(value), max, min);
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -145,6 +162,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
   return (
     <SliderTrack
       disabled={disabled}
+      enableMarkTicks={enableMarkTicks}
       format={format}
       handlePointerDown={handlePointerDownOnTrack}
       isDragging={isDragging}
@@ -155,6 +173,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
       marks={marks}
       progressPercentage={progressPercentage}
       ref={ref}
+      restrictLabelOverflow={restrictLabelOverflow}
       sliderRef={sliderRef}
       {...rest}
     >

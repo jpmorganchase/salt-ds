@@ -30,16 +30,5 @@ export const WithCustomStep = (): ReactElement => (
         format={(value: number) => Intl.NumberFormat().format(value)}
       />
     </FormField>
-    <FormField>
-      <FormFieldLabel>Step: 0.3 (not multiple of total range)</FormFieldLabel>
-      <RangeSlider
-        min={0}
-        max={2}
-        step={0.3}
-        minLabel="0"
-        maxLabel="2"
-        format={(value: number) => Intl.NumberFormat().format(value)}
-      />
-    </FormField>
   </StackLayout>
 );

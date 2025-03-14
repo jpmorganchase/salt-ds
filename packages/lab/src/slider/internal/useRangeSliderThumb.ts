@@ -12,6 +12,7 @@ import type { SliderProps } from "../Slider";
 import { clampRange, getClickedPosition } from "./utils";
 
 type UseRangeSliderThumbProps = Pick<SliderProps, "min" | "max" | "step"> & {
+  decimalPlaces: number;
   onChange?: (
     event: SyntheticEvent<unknown> | Event,
     value: [number, number],
@@ -25,6 +26,7 @@ type UseRangeSliderThumbProps = Pick<SliderProps, "min" | "max" | "step"> & {
 };
 
 export const useRangeSliderThumb = ({
+  decimalPlaces,
   min = 0,
   max = 10,
   step = 1,
@@ -37,7 +39,7 @@ export const useRangeSliderThumb = ({
   const [thumbIndexState, setIsThumbIndex] = useState<number>(0);
   const lastValueRef = useRef<[number, number]>(valueState);
   const sliderRef = useRef<HTMLDivElement>(null);
-  const sliderValues = clampRange(valueState, max, min);
+  const sliderValues = clampRange(valueState, max, min, step, decimalPlaces);
   const targetWindow = useWindow();
 
   const preventThumbOverlap = useCallback(
@@ -68,6 +70,7 @@ export const useRangeSliderThumb = ({
         max,
         min,
         step,
+        decimalPlaces,
       );
       if (newValue === undefined) return;
       const newValues = preventThumbOverlap(
@@ -86,6 +89,7 @@ export const useRangeSliderThumb = ({
       }
     },
     [
+      decimalPlaces,
       max,
       min,
       step,
@@ -141,6 +145,7 @@ export const useRangeSliderThumb = ({
         max,
         min,
         step,
+        decimalPlaces,
       );
       if (newValue === undefined) return;
       const newValues = [...sliderValues] as [number, number];
@@ -180,7 +185,7 @@ export const useRangeSliderThumb = ({
         onChange?.(event, newValues);
       }
     },
-    [sliderValues, max, min, onChange, setValue, step],
+    [decimalPlaces, sliderValues, max, min, onChange, setValue, step],
   );
 
   return {
