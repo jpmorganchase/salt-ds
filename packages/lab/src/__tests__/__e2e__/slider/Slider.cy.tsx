@@ -180,7 +180,7 @@ describe("Given a Slider", () => {
     cy.findByTestId("sliderTooltip").should("not.exist");
   });
 
-  it("should render marks when provided", () => {
+  it("should render marks when provided and not show mark ticks by default", () => {
     cy.mount(
       <Default
         style={{ width: "400px" }}
@@ -193,6 +193,24 @@ describe("Given a Slider", () => {
 
     cy.findAllByTestId("mark").eq(0).should("have.text", "2");
     cy.findAllByTestId("mark").eq(1).should("have.text", "3");
+    cy.findAllByTestId("markTick").should("not.be.visible");
+  });
+
+  it("should render mark ticks when enabled with marks", () => {
+    cy.mount(
+      <Default
+        style={{ width: "400px" }}
+        marks={[
+          { value: 2, label: "2" },
+          { value: 3, label: "3" },
+        ]}
+        enableMarkTicks={true}
+      />,
+    );
+
+    cy.findAllByTestId("mark").eq(0).should("have.text", "2");
+    cy.findAllByTestId("mark").eq(1).should("have.text", "3");
+    cy.findAllByTestId("markTick").should("be.visible");
   });
 
   it("should render inline min/max labels and marks when provided", () => {
