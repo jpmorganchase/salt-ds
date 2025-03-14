@@ -70,6 +70,11 @@ export interface RangeSliderProps
     value: [number, number],
   ) => void;
   /**
+   * When bottom labels for minimum and maximum values are set, ensure
+   * that they are confined within the boundary of the slider.
+   */
+  restrictLabelOverflow?: boolean;
+  /**
    * Show the slider value in a tooltip when the thumb is hovered.
    */
   showTooltip?: boolean;
@@ -103,6 +108,7 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>(
       minLabel,
       onChange,
       onChangeEnd,
+      restrictLabelOverflow = false,
       showTooltip = true,
       step = 1,
       stepMultiplier = 2,
@@ -207,6 +213,7 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>(
           progressPercentageEnd,
         ]}
         ref={ref}
+        restrictLabelOverflow={restrictLabelOverflow}
         sliderRef={sliderRef}
         {...rest}
       >

@@ -23,6 +23,7 @@ interface SliderTrackProps
   minLabel?: number | string;
   progressPercentage?: number;
   progressPercentageRange?: [number, number];
+  restrictLabelOverflow: boolean;
   sliderRef: RefObject<HTMLDivElement>;
 }
 
@@ -42,6 +43,7 @@ export const SliderTrack = forwardRef<HTMLDivElement, SliderTrackProps>(
       minLabel,
       progressPercentage,
       progressPercentageRange,
+      restrictLabelOverflow,
       sliderRef,
       ...rest
     },
@@ -61,6 +63,7 @@ export const SliderTrack = forwardRef<HTMLDivElement, SliderTrackProps>(
           [withBaseName("dragging")]: isDragging,
           [withBaseName("range")]: isRange,
           [withBaseName("withMarks")]: marks,
+          [withBaseName("restrictLabelOverflow")]: restrictLabelOverflow,
         })}
         data-testid="sliderTrack"
         ref={ref}
