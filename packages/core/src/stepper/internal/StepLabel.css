@@ -1,0 +1,17 @@
+.saltStepLabel {
+  grid-area: label;
+}
+
+.saltStepper-horizontal .saltStepLabel {
+  margin-top: var(--salt-spacing-50);
+}
+
+.saltStepper-vertical .saltStepLabel {
+  padding-top: calc((var(--salt-size-base) - var(--salt-text-label-lineHeight)) / 2);
+  padding-bottom: calc((var(--salt-size-base) - var(--salt-text-label-lineHeight)) / 2);
+  padding-left: calc((var(--step-depth)) * var(--salt-spacing-100));
+}
+
+.saltStep-depth-0 > .saltText.saltStepLabel {
+  font-weight: var(--salt-text-fontWeight-strong);
+}
