@@ -1,7 +1,9 @@
-import { useCallback, useReducer } from "react";
-
-import stepReducer from "./internal/stepReducer";
-
+import { useCallback, useReducer, Reducer } from "react";
+import {
+  stepReducer,
+  type StepReducerState,
+  type StepReducerAction,
+} from "./internal/stepReducer";
 import type { StepRecord } from "./Step";
 import type { StepReducerOptions } from "./internal/stepReducer";
 import { initStepReducerState } from "./internal/utils";
@@ -13,7 +15,7 @@ import { initStepReducerState } from "./internal/utils";
 export function useStepReducer(
   initialSteps: StepRecord[],
   options?: StepReducerOptions,
-) {
+): [StepReducerState, React.Dispatch<StepReducerAction>] {
   const initializer = useCallback(
     (initialSteps: StepRecord[]) => {
       return initStepReducerState(initialSteps, options);
@@ -21,5 +23,8 @@ export function useStepReducer(
     [options],
   );
 
-  return useReducer(stepReducer, initialSteps, initializer);
+  return useReducer<
+    Reducer<StepReducerState, StepReducerAction>,
+    StepRecord[]
+  >(stepReducer, initialSteps, initializer);
 }
