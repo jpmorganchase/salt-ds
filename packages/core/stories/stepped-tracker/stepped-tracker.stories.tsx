@@ -1,6 +1,7 @@
 import {
   Button,
   FlexLayout,
+  Link,
   Panel,
   SegmentedButtonGroup,
   StackLayout,
@@ -8,6 +9,7 @@ import {
   type StepRecord,
   SteppedTracker,
   Text,
+  Tooltip,
   useStepReducer,
 } from "@salt-ds/core";
 import type { Meta, StoryFn } from "@storybook/react";
@@ -275,34 +277,37 @@ export const VerticalDepth2 = () => {
 export const VerticalInteractiveUsingSteppedReducer: StoryFn<
   typeof SteppedTracker
 > = () => {
-  const initialState: StepRecord[] = [
-    {
-      id: "step-1",
-      label: "Step 1",
-      defaultExpanded: true,
-      substeps: [
-        { id: "step-1-1", label: "Step 1.1" },
-        { id: "step-1-2", label: "Step 1.2" },
-        {
-          id: "step-1-3",
-          label: "Step 1.3",
-          defaultExpanded: true,
-          substeps: [
-            { id: "step-1-3-1", label: "Step 1.3.1" },
-            { id: "step-1-3-2", label: "Step 1.3.2" },
-            {
-              id: "step-1-3-3",
-              label: "Step 1.3.3",
-              description: "This is just a description text",
-            },
-          ],
-        },
-        { id: "step-1-4", label: "Step 1.4" },
-      ],
-    },
-    { id: "step-2", label: "Step 2" },
-    { id: "step-3", label: "Step 3" },
-  ];
+  const initialState: StepRecord[] = useMemo(
+    () => [
+      {
+        id: "step-1",
+        label: "Step 1",
+        defaultExpanded: true,
+        substeps: [
+          { id: "step-1-1", label: "Step 1.1" },
+          { id: "step-1-2", label: "Step 1.2" },
+          {
+            id: "step-1-3",
+            label: "Step 1.3",
+            defaultExpanded: true,
+            substeps: [
+              { id: "step-1-3-1", label: "Step 1.3.1" },
+              { id: "step-1-3-2", label: "Step 1.3.2" },
+              {
+                id: "step-1-3-3",
+                label: "Step 1.3.3",
+                description: "This is just a description text",
+              },
+            ],
+          },
+          { id: "step-1-4", label: "Step 1.4" },
+        ],
+      },
+      { id: "step-2", label: "Step 2" },
+      { id: "step-3", label: "Step 3" },
+    ],
+    [],
+  );
 
   const [state, dispatch] = useStepReducer(initialState, {
     activeStepId: "step-1-3-2",
@@ -361,12 +366,15 @@ export const BareBones: StoryFn<typeof SteppedTracker> = () => {
 
 export const ProgrammaticElement: StoryFn<typeof SteppedTracker> = () => {
   // place this outside or useMemo to avoid re-rendering
-  const stepIdToElement = useMemo(() => ({
-    "step-1": <Text key="step-1-content">Step 1 Content</Text>,
-    "step-2": <Text key="step-2-content">Step 2 Content</Text>,
-    "step-3": <Text key="step-3-content">Step 3 Content</Text>,
-    default: <Text key="default-content">No Step is currently active</Text>,
-  }), []);
+  const stepIdToElement = useMemo(
+    () => ({
+      "step-1": <Text key="step-1-content">Step 1 Content</Text>,
+      "step-2": <Text key="step-2-content">Step 2 Content</Text>,
+      "step-3": <Text key="step-3-content">Step 3 Content</Text>,
+      default: <Text key="default-content">No Step is currently active</Text>,
+    }),
+    [],
+  );
 
   const [state, dispatch] = useStepReducer([
     { id: "step-1", label: "Step 1", stage: "active" },
@@ -405,6 +413,190 @@ export const ProgrammaticElement: StoryFn<typeof SteppedTracker> = () => {
           </Button>
         )}
       </FlexLayout>
+    </StackLayout>
+  );
+};
+
+export const HorizontalStepsWithLinks: StoryFn<typeof SteppedTracker> = () => {
+  const initialState: StepRecord[] = useMemo(
+    () => [
+      { id: "step-1", label: "Step 1" },
+      { id: "step-2", label: "Step 2" },
+      { id: "step-3", label: "Step 3" },
+      { id: "step-4", label: "Step 4" },
+    ],
+    [],
+  );
+
+  const [state, dispatch] = useStepReducer(initialState, {
+    activeStepId: "step-1-3-2",
+  });
+
+  return (
+    <StackLayout style={{ width: 320, alignItems: "center" }}>
+      <SteppedTracker>
+        {state.steps.map((step) => (
+          <Step
+            key={step.id}
+            {...step}
+            render={(props) => {
+              if (props.stage === "completed") {
+                return (
+                  <Tooltip content={"reset to first step"} placement={"bottom"}>
+                    <Link
+                      tabIndex={0}
+                      aria-label="return to first step"
+                      className="saltStepAction"
+                      onKeyDown={(event) => {
+                        if (event.key === "Enter") {
+                          dispatch({ type: "goto", stepId: "step-1" });
+                        }
+                      }}
+                      onClick={() =>
+                        dispatch({ type: "goto", stepId: "step-1" })
+                      }
+                    >
+                      {props.children}
+                    </Link>
+                  </Tooltip>
+                );
+              }
+              return <>{props.children}</>;
+            }}
+          />
+        ))}
+      </SteppedTracker>
+      <SegmentedButtonGroup>
+        <Button
+          onClick={() => {
+            dispatch({ type: "previous" });
+          }}
+        >
+          Previous
+        </Button>
+        <Button
+          onClick={() => {
+            dispatch({ type: "next" });
+          }}
+        >
+          Next
+        </Button>
+      </SegmentedButtonGroup>
+      <SegmentedButtonGroup>
+        <Button onClick={() => dispatch({ type: "status/error" })}>
+          Error
+        </Button>
+        <Button onClick={() => dispatch({ type: "status/warning" })}>
+          Warning
+        </Button>
+        <Button onClick={() => dispatch({ type: "status/clear" })}>
+          Clear
+        </Button>
+        <Button onClick={() => dispatch({ type: "reset" })}>Reset</Button>
+      </SegmentedButtonGroup>
+    </StackLayout>
+  );
+};
+
+export const VerticalStepsWithLinks: StoryFn<typeof SteppedTracker> = () => {
+  const initialState: StepRecord[] = useMemo(
+    () => [
+      {
+        id: "step-1",
+        label: "Step 1",
+        defaultExpanded: true,
+        substeps: [
+          { id: "step-1-1", label: "Step 1.1" },
+          { id: "step-1-2", label: "Step 1.2" },
+          {
+            id: "step-1-3",
+            label: "Step 1.3",
+            defaultExpanded: true,
+            substeps: [
+              { id: "step-1-3-1", label: "Step 1.3.1" },
+              { id: "step-1-3-2", label: "Step 1.3.2" },
+              {
+                id: "step-1-3-3",
+                label: "Step 1.3.3",
+                description: "This is just a description text",
+              },
+            ],
+          },
+          { id: "step-1-4", label: "Step 1.4" },
+        ],
+      },
+      { id: "step-2", label: "Step 2" },
+      { id: "step-3", label: "Step 3" },
+    ],
+    [],
+  );
+
+  const [state, dispatch] = useStepReducer(initialState, {
+    activeStepId: "step-1-3-2",
+  });
+
+  return (
+    <StackLayout style={{ width: 240, alignItems: "center" }}>
+      <SteppedTracker orientation={"vertical"}>
+        {state.steps.map((step) => (
+          <Step
+            key={step.id}
+            {...step}
+            render={(props) => {
+              if (props.stage === "completed") {
+                return (
+                  <Tooltip content={"reset to first step"} placement={"right"}>
+                    <Link
+                      tabIndex={0}
+                      aria-label="return to first step"
+                      className="saltStepAction"
+                      onKeyDown={(event) => {
+                        if (event.key === "Enter") {
+                          dispatch({ type: "goto", stepId: "step-1" });
+                        }
+                      }}
+                      onClick={() =>
+                        dispatch({ type: "goto", stepId: "step-1" })
+                      }
+                    >
+                      {props.children}
+                    </Link>
+                  </Tooltip>
+                );
+              }
+              return <>{props.children}</>;
+            }}
+          />
+        ))}
+      </SteppedTracker>
+      <SegmentedButtonGroup>
+        <Button
+          onClick={() => {
+            dispatch({ type: "previous" });
+          }}
+        >
+          Previous
+        </Button>
+        <Button
+          onClick={() => {
+            dispatch({ type: "next" });
+          }}
+        >
+          Next
+        </Button>
+      </SegmentedButtonGroup>
+      <SegmentedButtonGroup>
+        <Button onClick={() => dispatch({ type: "status/error" })}>
+          Error
+        </Button>
+        <Button onClick={() => dispatch({ type: "status/warning" })}>
+          Warning
+        </Button>
+        <Button onClick={() => dispatch({ type: "status/clear" })}>
+          Clear
+        </Button>
+        <Button onClick={() => dispatch({ type: "reset" })}>Reset</Button>
+      </SegmentedButtonGroup>
     </StackLayout>
   );
 };

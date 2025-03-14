@@ -25,13 +25,14 @@ export type StepReducerAction =
   | { type: "reset" }
   | { type: "status/error" }
   | { type: "status/warning" }
-  | { type: "status/clear" };
+  | { type: "status/clear" }
+  | { type: "goto"; stepId: string };
 
 export interface StepReducerOptions {
   activeStepId?: string;
 }
 
-export default function stepReducer(
+export function stepReducer(
   state: StepReducerState,
   action: StepReducerAction,
 ): StepReducerState {
@@ -112,6 +113,25 @@ export default function stepReducer(
         nextStep: flatSteps[activeStepIndex + 1],
         started: true,
         ended: false,
+      };
+    }
+
+    case "goto": {
+      const { stepId: activeStepId } = action;
+      const steps = autoStageSteps(resetSteps(state.steps), { activeStepId });
+      const flatSteps = flattenSteps(steps);
+      const lastStepIndex = state.flatSteps.length - 1;
+      let activeStepIndex = flatSteps.findIndex((step) => step.stage === "active");
+
+      return {
+        steps,
+        flatSteps,
+        activeStepIndex,
+        activeStep: flatSteps[activeStepIndex],
+        previousStep: flatSteps[activeStepIndex - 1] ?? null,
+        nextStep: flatSteps[activeStepIndex + 1] ?? null,
+        started: true,
+        ended: activeStepIndex === lastStepIndex,
       };
     }
 
