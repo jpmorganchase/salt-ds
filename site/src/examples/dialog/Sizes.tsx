@@ -10,7 +10,7 @@ import {
   SplitLayout,
   StackLayout,
   Step,
-  SteppedTracker,
+  Stepper,
   useId,
 } from "@salt-ds/core";
 import { type ReactElement, useState } from "react";
@@ -207,12 +207,12 @@ const LargeDialog = (): ReactElement => {
             />
           }
           endItem={
-            <SteppedTracker style={{ width: "400px" }}>
+            <Stepper style={{ width: "400px" }}>
               <Step label="Beneficiary" stage="active" />
               <Step label="Amount" />
               <Step label="Account" />
               <Step label="Delivery" />
-            </SteppedTracker>
+            </Stepper>
           }
         />
 
