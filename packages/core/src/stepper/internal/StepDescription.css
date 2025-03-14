@@ -1,0 +1,16 @@
+.saltStepDescription {
+  grid-area: description;
+}
+
+.saltStepper-vertical .saltStepDescription {
+  padding-bottom: var(--salt-spacing-300);
+  padding-left: calc((var(--step-depth)) * var(--salt-spacing-100));
+}
+
+.saltStep-status-warning > .saltStepDescription {
+  color: var(--salt-status-warning-foreground-informative);
+}
+
+.saltStep-status-error > .saltStepDescription {
+  color: var(--salt-status-error-foreground-informative);
+}
