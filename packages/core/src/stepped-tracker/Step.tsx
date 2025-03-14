@@ -8,7 +8,12 @@ import {
   useContext,
   useEffect,
 } from "react";
-import { makePrefixer, useControlled, useId } from "../utils";
+import {
+  makePrefixer,
+  type RenderPropsType,
+  useControlled,
+  useId,
+} from "../utils";
 
 import type { ButtonProps } from "../button";
 import { StepConnector } from "./internal/StepConnector";
@@ -20,6 +25,7 @@ import { StepScreenReaderOnly } from "./internal/StepScreenReaderOnly";
 import stepCSS from "./Step.css";
 import { SteppedTracker } from "./SteppedTracker";
 import { DepthContext } from "./internal/SteppedTrackerProvider";
+import { StepAction } from "./internal/StepAction";
 
 export interface StepProps
   extends Omit<ComponentPropsWithoutRef<"li">, "onToggle"> {
@@ -50,6 +56,10 @@ export interface StepProps
   extends Omit<ComponentPropsWithoutRef<"li">, "onToggle"> {
   label?: ReactNode;
   description?: ReactNode;
+  /**
+   * Render prop to enable customisation of Step element.
+   */
+  render?: RenderPropsType["render"];
   status?: StepStatus;
   stage?: StepStage;
   expanded?: boolean;
@@ -71,10 +81,11 @@ export function Step({
   defaultExpanded,
   onToggle,
   className,
+  render,
   style,
   substeps,
   children,
-  ...props
+  ...rest
 }: StepProps) {
   const id = useId(idProp);
   const targetWindow = useWindow();
@@ -117,7 +128,7 @@ export function Step({
   const expandTriggerId = `${id}-expand-trigger`;
   const nestedSteppedTrackerId = `${id}-nested-stepped-tracker`;
 
-  const srOnly = {
+  const screenReaderOnly = {
     stateId: `${id}-sr-only-state`,
     stateText: state !== "active" ? state : undefined,
     substepsId: `${id}-sr-only-substeps`,
@@ -149,19 +160,19 @@ export function Step({
           ...style,
         } as CSSProperties
       }
-      {...props}
+      {...rest}
     >
       <StepScreenReaderOnly>
-        {label} {description} {srOnly.stateText}
+        {label} {description} {screenReaderOnly.stateText}
       </StepScreenReaderOnly>
-      <StepScreenReaderOnly id={srOnly.toggleSubstepsId} aria-hidden>
-        {srOnly.toggleSubstepsText}
+      <StepScreenReaderOnly id={screenReaderOnly.toggleSubstepsId} aria-hidden>
+        {screenReaderOnly.toggleSubstepsText}
       </StepScreenReaderOnly>
-      <StepScreenReaderOnly id={srOnly.substepsId} aria-hidden>
-        {srOnly.substepsText}
+      <StepScreenReaderOnly id={screenReaderOnly.substepsId} aria-hidden>
+        {screenReaderOnly.substepsText}
       </StepScreenReaderOnly>
-      <StepScreenReaderOnly id={srOnly.stateId} aria-hidden>
-        {srOnly.stateText}
+      <StepScreenReaderOnly id={screenReaderOnly.stateId} aria-hidden>
+        {screenReaderOnly.stateText}
       </StepScreenReaderOnly>
       <StepConnector />
       <StepIcon
@@ -172,7 +183,19 @@ export function Step({
       />
       {label && (
         <StepLabel id={labelId} aria-hidden>
-          {label}
+          <StepAction
+            render={
+              render ??
+              function renderStepLabelChildren(props: any) {
+                return <>{props.children}</>;
+              }
+            }
+            stepId={id}
+            stage={stage}
+            status={status}
+          >
+            {label}
+          </StepAction>
         </StepLabel>
       )}
       {description && (
@@ -188,8 +211,8 @@ export function Step({
           aria-labelledby={[
             labelId,
             descriptionId,
-            srOnly.stateId,
-            srOnly.toggleSubstepsId,
+            screenReaderOnly.stateId,
+            screenReaderOnly.toggleSubstepsId,
           ].join(" ")}
           expanded={expanded}
           onClick={(event) => {
@@ -201,13 +224,13 @@ export function Step({
       {hasNestedSteps && (
         <SteppedTracker
           id={nestedSteppedTrackerId}
-          aria-labelledby={[labelId, srOnly.substepsId].join(" ")}
+          aria-labelledby={[labelId, screenReaderOnly.substepsId].join(" ")}
           aria-hidden={!expanded}
           hidden={!expanded}
         >
           {children}
           {substeps?.map((step) => (
-            <Step key={step.id} {...step} />
+            <Step key={step.id} {...step} render={render} />
           ))}
         </SteppedTracker>
       )}
