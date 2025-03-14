@@ -8,3 +8,4 @@ export * from "./WithInput";
 export * from "./WithLabels";
 export * from "./WithMarks";
 export * from "./WithNonNumericValues";
+export * from "./WithRestrictedLabelOverflow";

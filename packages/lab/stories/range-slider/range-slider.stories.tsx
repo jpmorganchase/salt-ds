@@ -490,6 +490,23 @@ export const WithNonNumericValues = () => {
   );
 };
 
+export const WithRestrictedLabelOverflow = Template.bind({});
+
+WithRestrictedLabelOverflow.args = {
+  "aria-label": "WithRestrictedLabelOverflow",
+  marks: [
+    {
+      value: 0,
+      label: "Very low",
+    },
+    {
+      value: 10,
+      label: "Very high",
+    },
+  ],
+  restrictLabelOverflow: true,
+};
+
 export const Disabled = Template.bind({});
 Disabled.args = {
   "aria-label": "Disabled",

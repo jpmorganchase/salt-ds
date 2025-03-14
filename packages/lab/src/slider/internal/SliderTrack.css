@@ -111,4 +111,15 @@
   position: absolute;
   left: var(--slider-mark-percentage);
   transform: translateX(-50%);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.saltSliderTrack-restrictLabelOverflow .saltSliderTrack-markLabel:first-of-type {
+  transform: unset;
+}
+
+.saltSliderTrack-restrictLabelOverflow .saltSliderTrack-markLabel:last-of-type {
+  transform: translateX(-100%);
 }

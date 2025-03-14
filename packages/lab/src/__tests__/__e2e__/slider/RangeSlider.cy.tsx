@@ -396,6 +396,29 @@ describe("Given a Range Slider", () => {
     cy.findAllByRole("slider").eq(1).should("have.attr", "value", 1.13);
   });
 
+  it("should restrict labels from overflowing slider boundaries when set", () => {
+    cy.mount(
+      <Default
+        restrictLabelOverflow
+        marks={[
+          {
+            value: 0,
+            label: "Very low",
+          },
+          {
+            value: 10,
+            label: "Very high",
+          },
+        ]}
+      />,
+    );
+
+    cy.findByTestId("sliderTrack").should(
+      "have.class",
+      "saltSliderTrack-restrictLabelOverflow",
+    );
+  });
+
   describe("WHEN it is mounted as a controlled component", () => {
     it("should set the specified value", () => {
       cy.mount(<Default min={0} max={10} value={[4, 6]} />);

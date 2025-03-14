@@ -64,6 +64,11 @@ export interface SliderProps
    */
   onChangeEnd?: (event: SyntheticEvent<unknown> | Event, value: number) => void;
   /**
+   * When bottom labels for minimum and maximum values are set, ensure
+   * that they are confined within the boundary of the slider.
+   */
+  restrictLabelOverflow?: boolean;
+  /**
    * Show the slider value in a tooltip when the thumb is hovered.
    */
   showTooltip?: boolean;
@@ -96,6 +101,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
     maxLabel,
     onChange,
     onChangeEnd,
+    restrictLabelOverflow = false,
     showTooltip = true,
     step = 1,
     stepMultiplier = 2,
@@ -161,6 +167,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
       marks={marks}
       progressPercentage={progressPercentage}
       ref={ref}
+      restrictLabelOverflow={restrictLabelOverflow}
       sliderRef={sliderRef}
       {...rest}
     >
