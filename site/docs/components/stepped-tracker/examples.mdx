@@ -44,9 +44,21 @@ active Step child children are to have a stage of `inprogress`.
 
 <LivePreview componentName="stepped-tracker" exampleName="NestedSteps" />
 
+## Horizontal With Links
+
+To enable a user to interact with the steps, provide a `render` function to replace the label with a [Link](../link).
+
+<LivePreview componentName="stepped-tracker" exampleName="HorizontalWithLinks" />
+
+## Vertical With Links
+
+To enable a user to interact with the steps, provide a `render` function to replace the label with a [Link](../link).
+
+<LivePreview componentName="stepped-tracker" exampleName="VerticalWithLinks" />
+
 ## Hook
 
-The `SteppedTracker` and `Step` component are purely presentational components.
+The `SteppedTracker` and `Step` component are primarily presentational components.
 If you want to control the state of the `SteppedTracker` you can utilize the `useStepReducer` hook.
 
 <LivePreview componentName="stepped-tracker" exampleName="Hook" />
