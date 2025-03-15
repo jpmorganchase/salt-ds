@@ -1,3 +1,7 @@
 .paragraph {
-  font-size: var(--salt-text-fontSize);
+  margin: var(--salt-spacing-100) 0 var(--salt-spacing-100);
+}
+
+.paragraph:first-child {
+  margin-top: 0;
 }

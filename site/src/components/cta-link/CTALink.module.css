@@ -1,0 +1,99 @@
+.root {
+  align-items: center;
+  appearance: none;
+  color: var(--cta-color-default);
+  background: var(--cta-background-default);
+  border-color: var(--cta-borderColor-default);
+  border-style: solid;
+  border-width: var(--salt-size-border);
+  border-radius: var(--salt-palette-corner-weak, 0);
+  cursor: var(--salt-actionable-cursor-hover);
+  display: inline-flex;
+  gap: var(--salt-spacing-50);
+  justify-content: center;
+  font-size: var(--salt-text-fontSize);
+  font-family: var(--salt-text-action-fontFamily);
+  line-height: var(--salt-text-lineHeight);
+  letter-spacing: var(--salt-text-action-letterSpacing);
+  text-transform: var(--salt-text-action-textTransform);
+  font-weight: var(--salt-text-action-fontWeight);
+  padding: 0 calc(var(--salt-spacing-100) - var(--salt-size-border));
+  margin: 0;
+  height: var(--salt-size-base);
+  text-align: var(--salt-text-action-textAlign);
+  text-decoration: var(--salt-typography-textDecoration-none);
+  -webkit-tap-highlight-color: transparent;
+}
+
+@media (hover: hover) {
+  .root:hover {
+    background: var(--cta-background-hover);
+    color: var(--cta-color-hover);
+    border-color: var(--cta-borderColor-hover);
+  }
+}
+
+.root:active {
+  background: var(--cta-background-active);
+  color: var(--cta-color-active);
+  border-color: var(--cta-borderColor-active);
+}
+
+.root:focus-visible {
+  background: var(--cta-background-hover);
+  color: var(--cta-color-hover);
+  border-color: var(--cta-borderColor-hover);
+  outline: var(--salt-focused-outline);
+}
+
+.accented.solid {
+  --cta-color-default: var(--salt-actionable-accented-bold-foreground);
+  --cta-color-hover: var(--salt-actionable-accented-bold-foreground-hover);
+  --cta-color-active: var(--salt-actionable-accented-bold-foreground-active);
+  --cta-background-default: var(--salt-actionable-accented-bold-background);
+  --cta-background-hover: var(--salt-actionable-accented-bold-background-hover);
+  --cta-background-active: var(--salt-actionable-accented-bold-background-active);
+  --cta-borderColor-default: var(--salt-actionable-accented-bold-borderColor);
+  --cta-borderColor-hover: var(--salt-actionable-accented-bold-borderColor-hover);
+  --cta-borderColor-active: var(--salt-actionable-accented-bold-borderColor-active);
+}
+
+.neutral.solid {
+  --cta-color-default: var(--salt-actionable-bold-foreground);
+  --cta-color-hover: var(--salt-actionable-bold-foreground-hover);
+  --cta-color-active: var(--salt-actionable-bold-foreground-active);
+  --cta-background-default: var(--salt-actionable-bold-background);
+  --cta-background-hover: var(--salt-actionable-bold-background-hover);
+  --cta-background-active: var(--salt-actionable-bold-background-active);
+  --cta-borderColor-default: var(--salt-actionable-bold-borderColor);
+  --cta-borderColor-hover: var(--salt-actionable-bold-borderColor-hover);
+  --cta-borderColor-active: var(--salt-actionable-bold-borderColor-active);
+}
+
+.neutral.bordered {
+  --cta-color-default: var(--salt-actionable-foreground);
+  --cta-color-hover: var(--salt-actionable-foreground);
+  --cta-color-active: var(--salt-actionable-foreground);
+  --cta-background-default: var(--salt-actionable-background);
+  --cta-background-hover: var(--salt-actionable-background);
+  --cta-background-active: var(--salt-actionable-background);
+  --cta-borderColor-default: var(--salt-actionable-borderColor);
+  --cta-borderColor-hover: var(--salt-actionable-borderColor-hover);
+  --cta-borderColor-active: var(--salt-actionable-borderColor-active);
+}
+
+.neutral.transparent {
+  --cta-color-default: var(--salt-actionable-subtle-foreground);
+  --cta-color-hover: var(--salt-actionable-subtle-foreground);
+  --cta-color-active: var(--salt-actionable-subtle-foreground);
+  --cta-background-default: var(--salt-actionable-subtle-background);
+  --cta-background-hover: var(--salt-actionable-subtle-background);
+  --cta-background-active: var(--salt-actionable-subtle-background);
+  --cta-borderColor-default: var(--salt-actionable-subtle-borderColor);
+  --cta-borderColor-hover: var(--salt-actionable-subtle-borderColor-hover);
+  --cta-borderColor-active: var(--salt-actionable-subtle-borderColor-active);
+}
+
+.root img {
+  display: block;
+}

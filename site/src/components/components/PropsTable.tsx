@@ -1,9 +1,8 @@
+import dynamic from "next/dynamic";
 import { type FC, useEffect, useState } from "react";
-import ReactMarkdown from "react-markdown";
-import { code, p, ul } from "../mdx";
 import { Table } from "../mdx/table";
 
-const components = { code, ul, p };
+const Markdown = dynamic(import("../markdown/Markdown"));
 
 type PropsTableType = {
   /**
@@ -25,11 +24,6 @@ type Props = {
       name: string;
     };
   };
-};
-
-type ComponentData = {
-  displayName: string;
-  props: Props;
 };
 
 type JSONData = {
@@ -95,9 +89,7 @@ export const PropsTable: FC<PropsTableType> = ({
                   <code>{type.name}</code>
                 </td>
                 <td>
-                  <ReactMarkdown components={components}>
-                    {description}
-                  </ReactMarkdown>
+                  <Markdown>{description}</Markdown>
                 </td>
                 <td>
                   <code>{defaultValue ? defaultValue.value : "-"}</code>

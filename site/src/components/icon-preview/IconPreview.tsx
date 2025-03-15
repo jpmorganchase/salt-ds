@@ -14,11 +14,22 @@ import {
   Text,
 } from "@salt-ds/core";
 import { CloseIcon, SearchIcon } from "@salt-ds/icons";
-import { type ChangeEvent, useDeferredValue, useMemo, useState } from "react";
+import {
+  type ChangeEvent,
+  useDeferredValue,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import styles from "./IconPreview.module.css";
-import { allIcons } from "./allIconsList";
 
 export function IconPreview() {
+  const [allIcons, setAllIcons] = useState<Record<string, any>>({});
+
+  useEffect(() => {
+    import("./allIconsList").then((module) => setAllIcons(module.allIcons));
+  }, []);
+
   const [search, setSearch] = useState("");
   const deferredSearch = useDeferredValue(search.toLowerCase());
   const [variants, setVariants] = useState<("solid" | "outline")[]>([
@@ -55,7 +66,7 @@ export function IconPreview() {
           (variants.includes("solid") && isSolidIcon))
       );
     });
-  }, [deferredSearch, variants]);
+  }, [deferredSearch, variants, allIcons]);
 
   const renderIcons = useMemo(() => {
     if (filteredIcons.length > 0) {
@@ -103,7 +114,7 @@ export function IconPreview() {
 
   return (
     <StackLayout className={styles.root} gap={1}>
-      <FlexLayout>
+      <FlexLayout wrap>
         <FlexItem>
           <Input
             placeholder="Search icons"

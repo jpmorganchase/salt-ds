@@ -1,0 +1,20 @@
+.root {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  gap: var(--salt-spacing-300);
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--salt-spacing-100);
+}
+
+.title {
+  margin: 0;
+}
+
+.action {
+  align-self: flex-start;
+}

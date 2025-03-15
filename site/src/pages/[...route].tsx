@@ -1,4 +1,3 @@
-import { Body } from "@jpmorganchase/mosaic-site-components";
 import {
   type MiddlewareResult,
   createMiddlewareRunner,
@@ -6,6 +5,7 @@ import {
 } from "@jpmorganchase/mosaic-site-middleware";
 import type { GetServerSidePropsContext, GetServerSidePropsResult } from "next";
 import type { ComponentPropsWithoutRef } from "react";
+import { Body } from "../Body/Body";
 
 import type { MyAppProps, MyMiddlewareProps } from "../types/mosaic";
 
@@ -33,10 +33,10 @@ export async function getServerSideProps(
 
 /** MyApp will be passed MyAppProps which is created by combining the result of all props created by Middleware */
 const MyApp = ({
-  component,
+  components,
   type,
   ...props
 }: ComponentPropsWithoutRef<typeof Body>) => (
-  <Body component={component} type={type} {...props} />
+  <Body components={components} type={type} {...props} />
 );
 export default MyApp;

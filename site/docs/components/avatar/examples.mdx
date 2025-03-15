@@ -8,17 +8,13 @@ data:
   $ref: ./#/data
 ---
 
-<LivePreviewControls>
-<LivePreview componentName="avatar" exampleName="Image" >
-
 ## Image
 
 You can pass an image as the avatar image using the `src` prop.
 
 You can also pass a custom image or SVG as the child of the component. Note that for images passed as children, you'll also need to handle the fallback logic.
 
-</LivePreview>
-<LivePreview componentName="avatar" exampleName="Initials" >
+<LivePreview componentName="avatar" exampleName="Image" />
 
 ## Initials
 
@@ -27,26 +23,22 @@ If a photo is not available, the avatar will fall back to initials or an icon:
 - You can use initials when a photo is unavailable, but profile information is.
 - Use an icon when neither a photo nor profile information is available.
 
-</LivePreview>
-<LivePreview componentName="avatar" exampleName="Categories" >
+<LivePreview componentName="avatar" exampleName="Initials" />
 
 ## Categories
 
 The `color` prop can be used to change Avatar's background to one of the 20 [categorical colors](/salt/foundations/color#categorical).
 
-</LivePreview>
-<LivePreview componentName="avatar" exampleName="Sizes" >
+<LivePreview componentName="avatar" exampleName="Categories" />
 
 ## Sizes
 
 You can use the `size` prop to modify the avatar size. Each avatar variant has a default size across all four densities, equal to the [size foundation](/salt/foundations/size) `size-base`: 20px (HD), 28px (MD), 36px (LD), and 44px (TD). The size property acts as a multiplier of the base size.
 
-</LivePreview>
-<LivePreview componentName="avatar" exampleName="CustomFallbackIcon" >
+<LivePreview componentName="avatar" exampleName="Sizes" />
 
 ## Custom fallback icon
 
 `Avatar` renders with an icon defined by `UserSolidIcon`, but you can pass an alternative icon as `fallbackIcon`.
 
-</LivePreview>
-</LivePreviewControls>
+<LivePreview componentName="avatar" exampleName="CustomFallbackIcon" />

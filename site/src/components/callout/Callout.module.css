@@ -1,7 +1,17 @@
-.content p:first-child {
-  margin-top: 0;
+.root {
+  margin-block: var(--salt-spacing-200);
 }
 
-.content p:last-child {
+.root h4 {
+  margin: 0;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--salt-spacing-100);
+}
+
+.text p:last-child {
   margin-bottom: 0;
 }

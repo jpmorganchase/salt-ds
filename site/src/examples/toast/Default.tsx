@@ -6,7 +6,7 @@ export const Default = (): ReactElement => (
   <Toast>
     <ToastContent>
       <Text>
-        Updated to latest version of Salt. See{" "}
+        Updated to latest version of Salt. See&nbsp;
         <Link href="https://github.com/jpmorganchase/salt-ds/releases">
           what's new
         </Link>

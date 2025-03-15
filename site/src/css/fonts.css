@@ -1,0 +1,6 @@
+.salt-theme[data-mode="light"],
+.salt-theme[data-mode="dark"] {
+  --salt-typography-fontFamily-ptMono: var(--site-font-family-ptMono);
+  --salt-typography-fontFamily-openSans: var(--site-font-family-openSans);
+  --salt-typography-fontFamily-amplitude: var(--site-font-family-amplitude);
+}

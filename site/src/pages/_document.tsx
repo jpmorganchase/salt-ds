@@ -1,16 +1,25 @@
 import { Head, Html, Main, NextScript } from "next/document";
 
-const description =
-  "Salt is the J.P. Morgan design system, an open-source solution for building exceptional products and digital experiences in financial services and other industries.";
-
 /*
  * This is the same as the default Next.js _document.js, but with lang="en".
  */
 export default function Document() {
   return (
-    <Html lang="en">
+    <Html lang="en" className="salt-theme salt-theme-next salt-editorial">
       <Head>
-        <meta name="description" content={description} />
+        <script
+          // biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation>
+          dangerouslySetInnerHTML={{
+            __html: `
+              try {
+                const theme = JSON.parse(localStorage.getItem("mosaic-theme-pref")).state.colorMode || "light";
+                 document.documentElement.setAttribute("data-mode", theme);
+              } catch (e) {
+                //
+              }
+            `,
+          }}
+        />
       </Head>
       <body>
         <Main />

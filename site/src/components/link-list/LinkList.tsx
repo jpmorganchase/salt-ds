@@ -1,9 +1,8 @@
-import { Image } from "@jpmorganchase/mosaic-site-components";
-
 import { Heading4 } from "../mdx/h4";
-import { Link } from "../mdx/link";
+import { Image } from "../mdx/image";
 
-import { Text } from "@salt-ds/core";
+import { Link, Text } from "@salt-ds/core";
+import { LinkBase } from "../link/Link";
 import styles from "./LinkList.module.css";
 
 type LinkData = { href: string; label: string };
@@ -47,7 +46,12 @@ function LinkWithLogo({ href, label }: LinkData) {
   return (
     <div className={styles.link}>
       <Image src={`/img/${logo}_logo.svg`} alt={""} aria-hidden />
-      <Link href={href} target="_blank">
+      <Link
+        render={<LinkBase href={href} />}
+        href={href}
+        target="_blank"
+        IconComponent={null}
+      >
         {label}
       </Link>
     </div>

@@ -1,5 +1,6 @@
 ---
 title: Metric
+description: "A metric displays an important number value prominently. You can add indicators or labels to help provide context to the presented value."
 layout: DetailPattern
 tags:
   - pattern
@@ -14,8 +15,6 @@ data:
   components: ["Icon", "Link", "Stack layout", "Text"]
 ---
 
-A metric displays an important number value prominently. You can add indicators or labels to help provide context to the presented value.
-
   <Diagram
     src="/img/patterns/metric/metric-hero-shot.png"
     alt="Two example metrics displaying positive and negative indicators."
@@ -29,12 +28,12 @@ Use the pattern to give more prominence to key measurements. Metrics often serve
 
 You can add multiple metrics to your UI if needed. Visual differences, like size and positioning, can help users understand which metrics are most important.
 
-<ExampleContainer type="positive" customPillText="Best practices">
+<GuidanceCallout type="positive" customPillText="Best practices">
   - Place metrics higher in your layout when you want to emphasize their importance.
   - Never leave the user guessing how to interpret your metric. Make sure you provide enough context, and use subtitles and indicators to minimize ambiguity.
   - Keep titles and values as short and concise as possible. Round or truncate values to significant figures, and use common abbreviations instead of spelling out words.
   - Avoid displaying more than five metrics in a single dashboard view. This can clutter the user's screen and overwhelm them with too much information.
-</ExampleContainer>
+</GuidanceCallout>
 
 ## How to build
 
@@ -78,9 +77,9 @@ Metric is available in three sizes—small, medium and large. Change the size of
 
 See the vertical and horizontal examples below for individual spacing values.
 
-<ExampleContainer type="positive" customPillText="Best practices">
+<GuidanceCallout type="positive" customPillText="Best practices">
  Use the same orientation when displaying multiple metrics within a single view for greater visual consistency. Do not mix vertical and horizontal metrics.
-</ExampleContainer>
+</GuidanceCallout>
 
 ### Vertical metric
 
@@ -158,9 +157,9 @@ Place subtitles directly beneath the title, and subvalues beneath the key value.
     border
   />
 
-<ExampleContainer type="positive" customPillText="Best practices">
+<GuidanceCallout type="positive" customPillText="Best practices">
   To give more context about a metric value, such as whether it is positive or negative, use the subvalue to provide past data, average, threshold or target values, or comparable high or low values.
-</ExampleContainer>
+</GuidanceCallout>
 
 ## Link
 

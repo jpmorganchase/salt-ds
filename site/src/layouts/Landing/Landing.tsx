@@ -1,15 +1,34 @@
+import { type ComboBoxProps, H1 } from "@salt-ds/core";
 import type { FC } from "react";
-import { AppHeader, Footer } from "../../components";
 
-import { LayoutBase } from "@jpmorganchase/mosaic-layouts";
-import { LayoutFullWidth } from "../LayoutFullWidth";
-import layoutStyles from "../index.module.css";
-import type { LayoutProps } from "../types/index";
+import type { LayoutProps } from "@jpmorganchase/mosaic-layouts/dist/types";
+import dynamic from "next/dynamic";
+import { Footer, Hero } from "../../components/index";
+import styles from "./Landing.module.css";
 
-export const Landing: FC<LayoutProps> = ({ FooterProps, children }) => (
-  <LayoutBase Header={<AppHeader />} className={layoutStyles.base}>
-    <LayoutFullWidth Footer={<Footer {...FooterProps} />}>
-      {children}
-    </LayoutFullWidth>
-  </LayoutBase>
+const Search = dynamic<ComboBoxProps>(() =>
+  import("../../components/search").then((mod) => mod.Search),
 );
+
+export const Landing: FC<LayoutProps> = ({ children }) => {
+  return (
+    <div className={styles.root}>
+      <main className={styles.main}>
+        <Hero />
+        <div className={styles.middle}>
+          <div className={styles.content}>
+            <div className={styles.search}>
+              <H1>Discover the power of Salt</H1>
+              <Search
+                aria-label="Search for components, guides and more."
+                placeholder="Search for components, guides and more."
+              />
+            </div>
+            <div>{children}</div>
+          </div>
+        </div>
+      </main>
+      <Footer />
+    </div>
+  );
+};

@@ -52,7 +52,7 @@ const HDCompactGrid = () => {
 export const HDCompact = () => {
   // Enforce a high density
   return (
-    <SaltProvider density="high">
+    <SaltProvider density="high" applyClassesTo="scope">
       <HDCompactGrid />
     </SaltProvider>
   );

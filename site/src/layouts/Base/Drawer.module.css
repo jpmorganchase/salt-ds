@@ -1,0 +1,15 @@
+.root.root {
+  padding: 0 0 var(--salt-spacing-200);
+  width: 100%;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  padding: var(--salt-spacing-100) var(--salt-spacing-200);
+}
+
+.logoLink:focus-visible {
+  outline: var(--salt-focused-outline);
+}

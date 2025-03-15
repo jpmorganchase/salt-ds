@@ -8,17 +8,13 @@ data:
   $ref: ./#/data
 ---
 
-<LivePreviewControls>
-<LivePreview componentName="input" exampleName="Primary" >
-
 ## Primary
 
 `Input` comprises value text and a focus ring. The component is initially empty; once it has focus, it accepts text on a single line only.
 
 The default variant for Input is "primary."
 
-</LivePreview>
-<LivePreview componentName="input" exampleName="Secondary" >
+<LivePreview componentName="input" exampleName="Primary" />
 
 ## Secondary
 
@@ -26,15 +22,13 @@ The default variant for Input is "primary."
 
 For recommendations on variant choice, see the [forms pattern](salt/patterns/forms).
 
-</LivePreview>
-<LivePreview componentName="input" exampleName="Disabled" >
+<LivePreview componentName="input" exampleName="Secondary" />
 
 ## Disabled
 
 You can disable the input, resulting in no action when the user interacts with it.
 
-</LivePreview>
-<LivePreview componentName="input" exampleName="Readonly" >
+<LivePreview componentName="input" exampleName="Disabled" />
 
 ## Read-only
 
@@ -44,8 +38,7 @@ By default, the marker is an em dash. If your application requires a different m
 
 - Use the read-only state when the user needs the value for their flow or current task but cannot edit it, for example, because of user permissions.
 
-</LivePreview>
-<LivePreview componentName="input" exampleName="Placeholder" >
+<LivePreview componentName="input" exampleName="Readonly" />
 
 ## Placeholder
 
@@ -59,15 +52,13 @@ Instead, use helper text beneath the field to provide instructions or directions
 
 You can find more information [in the W3C form instructions](https://www.w3.org/WAI/tutorials/forms/instructions/).
 
-</LivePreview>
-<LivePreview componentName="input" exampleName="Spellcheck" >
+<LivePreview componentName="input" exampleName="Placeholder" />
 
 ## Spellcheck
 
 Turn on automatic spellchecking using `inputProps`.
 
-</LivePreview>
-<LivePreview componentName="input" exampleName="StaticAdornments" >
+<LivePreview componentName="input" exampleName="Spellcheck" />
 
 ## Static adornments
 
@@ -79,8 +70,7 @@ You can use [text](/salt/components/text) and [icons](/salt/foundations/iconogra
 
 **Note:** Don't rely on static adornments for labelling, screen readers will not read them out.
 
-</LivePreview>
-<LivePreview componentName="input" exampleName="ButtonAdornments" >
+<LivePreview componentName="input" exampleName="StaticAdornments" />
 
 ## Button adornments
 
@@ -88,8 +78,7 @@ You can use [`Button`](/salt/components/button) at the beginning or end of the i
 
 Disable your interactive buttons or make them read-only should they match the state of the containing input field.
 
-</LivePreview>
-<LivePreview componentName="input" exampleName="Validation" >
+<LivePreview componentName="input" exampleName="ButtonAdornments" />
 
 ## Validation
 
@@ -100,8 +89,7 @@ Input can show validation states (warning, success and error) with the prop `val
 - Use the error state to alert the user of a critical issue related to the input. This issue, which may jeopardize completion of the task, usually requires action from the user to resolve the error.
 - Display the warning state when you need to alert the user of a potential issue that won’t prevent them from continuing with a task but may cause errors if they don't address it.
 
-</LivePreview>
-<LivePreview componentName="input" exampleName="TextAlignment" >
+<LivePreview componentName="input" exampleName="Validation" />
 
 ## Text alignment
 
@@ -111,8 +99,7 @@ Numeric values often have right alignment to make comparing them easier. However
 
 You may choose to center-align an input field to bring emphasis to a value. However, this should be the exception, and you should use it sparingly.
 
-</LivePreview>
-<LivePreview componentName="input" exampleName="Bordered">
+<LivePreview componentName="input" exampleName="TextAlignment" />
 
 ## Bordered
 
@@ -120,5 +107,4 @@ To style Input with a full border, set `bordered={true}`.
 
 We recommend this styling when the field uses the same fill color as the background (i.e., a primary fill color on a primary background).
 
-</LivePreview>
-</LivePreviewControls>
+<LivePreview componentName="input" exampleName="Bordered" />

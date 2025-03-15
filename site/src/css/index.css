@@ -1,5 +1,4 @@
-@import "./base/";
-@import "./global/";
-@import "./navbar/";
-@import "./theme/";
-@import "./utilities/";
+@import "./base.css";
+@import "./fonts.css";
+@import "./patches.css";
+@import "./editorial.css";
