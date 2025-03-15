@@ -17,12 +17,12 @@ const saltConfig = {
   plugins: [
     ...mosaicConfig.plugins,
     {
-      modulePath: "@jpmorganchase/mosaic-plugins/SidebarPlugin",
+      modulePath: require.resolve("./src/mosaic-plugins/SidebarPlugin.mjs"),
+      priority: 2,
       options: { rootDirGlob: "*/*" },
     },
     {
       modulePath: "@jpmorganchase/mosaic-plugins/BreadcrumbsPlugin",
-      disabled: true,
     },
     {
       modulePath: "@jpmorganchase/mosaic-plugins/SearchIndexPlugin",

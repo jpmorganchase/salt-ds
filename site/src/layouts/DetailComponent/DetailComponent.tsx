@@ -4,7 +4,6 @@ import {
   useRoute,
   useStore,
 } from "@jpmorganchase/mosaic-store";
-import { Divider } from "@salt-ds/core";
 import {
   TabBar,
   type TabListNextProps,
@@ -19,7 +18,6 @@ import { type FC, type SyntheticEvent, useEffect } from "react";
 import { LivePreviewProvider } from "../../components/components/LivePreviewProvider";
 import { LinkList } from "../../components/link-list/LinkList";
 import { PageNavigation } from "../../components/navigation/PageNavigation";
-import { TopLevelNavigation } from "../../components/navigation/TopLevelNavigation";
 import { TableOfContents } from "../../components/toc/index";
 import { getHrefFromComponent } from "../../utils/getHrefFromComponent";
 import { Base } from "../Base/Base";
@@ -107,8 +105,6 @@ export const DetailComponent: FC<LayoutProps> = ({ children }) => {
 
   const LeftSidebar = (
     <PrimarySidebar className={styles.primarySidebar}>
-      <TopLevelNavigation />
-      <Divider variant="tertiary" />
       <PageNavigation />
     </PrimarySidebar>
   );

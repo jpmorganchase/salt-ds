@@ -3,7 +3,7 @@
   display: grid;
   grid-template-areas: "header header" "left middle" "footer footer";
   grid-template-rows: auto 1fr auto;
-  grid-template-columns: auto 1fr;
+  grid-template-columns: 300px auto;
   position: relative;
 }
 

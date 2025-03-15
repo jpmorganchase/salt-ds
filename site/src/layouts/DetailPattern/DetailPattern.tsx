@@ -1,11 +1,9 @@
 import type { LayoutProps } from "@jpmorganchase/mosaic-layouts/dist/types";
 import { type SiteState, useStore } from "@jpmorganchase/mosaic-store";
-import { Divider } from "@salt-ds/core";
 import type { FC } from "react";
 import { CTALink } from "../../components/cta-link/CTALink";
 import { Image } from "../../components/mdx/image";
 import { PageNavigation } from "../../components/navigation/PageNavigation";
-import { TopLevelNavigation } from "../../components/navigation/TopLevelNavigation";
 import { TableOfContents } from "../../components/toc";
 import { PageHeading } from "../Base/PageHeading";
 import { PrimarySidebar } from "../Base/PrimarySidebar";
@@ -61,8 +59,6 @@ function PatternPageHeading({
 export const DetailPattern: FC<LayoutProps> = ({ children }) => {
   const LeftSidebar = (
     <PrimarySidebar>
-      <TopLevelNavigation />
-      <Divider variant="tertiary" />
       <PageNavigation />
     </PrimarySidebar>
   );
