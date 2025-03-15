@@ -87,7 +87,7 @@ const renderNavigationItem = (
           as="ul"
           gap="var(--salt-size-border)"
           style={{
-            width: 250,
+            width: "100%",
             listStyle: "none",
             paddingLeft: 0,
           }}

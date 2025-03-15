@@ -2176,7 +2176,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@jpmorganchase/mosaic-schemas@npm:^0.1.0-beta.90":
+"@jpmorganchase/mosaic-schemas@npm:0.1.0-beta.90, @jpmorganchase/mosaic-schemas@npm:^0.1.0-beta.90":
   version: 0.1.0-beta.90
   resolution: "@jpmorganchase/mosaic-schemas@npm:0.1.0-beta.90"
   dependencies:
@@ -3403,6 +3403,7 @@ __metadata:
     "@jpmorganchase/mosaic-cli": "npm:0.1.0-beta.90"
     "@jpmorganchase/mosaic-layouts": "npm:0.1.0-beta.90"
     "@jpmorganchase/mosaic-plugins": "npm:0.1.0-beta.90"
+    "@jpmorganchase/mosaic-schemas": "npm:0.1.0-beta.90"
     "@jpmorganchase/mosaic-source-git-repo": "npm:0.1.0-beta.90"
     "@jpmorganchase/mosaic-source-http": "npm:0.1.0-beta.90"
     "@jpmorganchase/mosaic-source-local-folder": "npm:0.1.0-beta.90"
