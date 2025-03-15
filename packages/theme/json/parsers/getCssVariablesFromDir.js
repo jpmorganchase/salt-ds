@@ -11,19 +11,24 @@ const lowDensityRegex = /\.salt-density-low.*?\{(.*?)\}.*?/s;
 const touchDensityRegex = /\.salt-density-touch.*?\{(.*?)\}.*?/s;
 const generalThemeRegex = /\.salt-theme.\{(.*?)\}.*?/s;
 
+// TODO: how to deal with double modes, e.g. `.salt-theme-next[data-mode="light"][data-accent="blue"]`
 const lightModeNextRegex =
-  /\.salt-theme-next\[data-mode="light"\].*?\{(.*?)\}.*?/s;
+  /\.salt-theme(-next)?\[data-mode="light"\].*?\{(.*?)\}.*?/s;
 const darkModeNextRegex =
-  /\.salt-theme-next\[data-mode="dark"\].*?\{(.*?)\}.*?/s;
+  /\.salt-theme(-next)?\[data-mode="dark"\].*?\{(.*?)\}.*?/s;
 const generalThemeNextRegex = /\.salt-theme-next.\{(.*?)\}.*?/s;
-const openSansFontRegex =
-  /\.salt-theme-next\[data-heading-font="Open Sans"\].\{(.*?)\}.*?/s;
-const amplitudeFontRegex =
-  /\.salt-theme-next\[data-heading-font="Amplitude"\].\{(.*?)\}.*?/s;
+const openSansHeadingFontRegex =
+  /\.salt-theme(-next)?\[data-heading-font="Open Sans"\].\{(.*?)\}.*?/s;
+const amplitudeHeadingFontRegex =
+  /\.salt-theme(-next)?\[data-heading-font="Amplitude"\].\{(.*?)\}.*?/s;
+const openSansActionFontRegex =
+  /\.salt-theme(-next)?\[data-action-font="Open Sans"\].\{(.*?)\}.*?/s;
+const amplitudeActionFontRegex =
+  /\.salt-theme(-next)?\[data-action-font="Amplitude"\].\{(.*?)\}.*?/s;
 const roundedCornerRegex =
-  /\.salt-theme-next\[data-corner="rounded"].\{(.*?)\}.*?/s;
+  /\.salt-theme(-next)?\[data-corner="rounded"].\{(.*?)\}.*?/s;
 const sharpCornerRegex =
-  /\.salt-theme-next\[data-corner="sharp"].\{(.*?)\}.*?/s;
+  /\.salt-theme(-next)?\[data-corner="sharp"].\{(.*?)\}.*?/s;
 
 function isNonColor(token) {
   const tokenParts = token.split("-");
@@ -34,7 +39,7 @@ function isNonColor(token) {
       "background",
       "outlineColor",
       "indicator",
-    ].includes(part)
+    ].includes(part),
   );
   return !isColor;
 }
@@ -49,11 +54,13 @@ function processFile(
     mdVariables,
     ldVariables,
     tdVariables,
-    openSansVariables,
-    amplitudeVariables,
+    openSansHeadingVariables,
+    amplitudeHeadingVariables,
+    openSansActionVariables,
+    amplitudeActionVariables,
     roundedCornerVariables,
     sharpCornerVariables,
-  }
+  },
 ) {
   // Process CSS files
   const cssContent = fs.readFileSync(filePath, "utf8");
@@ -66,8 +73,10 @@ function processFile(
   let lightContent;
   let darkContent;
   let generalContent;
-  let amplitudeContent;
-  let openSansContent;
+  let amplitudeHeadingContent;
+  let openSansHeadingContent;
+  let amplitudeActionContent;
+  let openSansActionContent;
   let roundedCornerContent;
   let sharpCornerContent;
 
@@ -75,8 +84,10 @@ function processFile(
     lightContent = cssContent.match(lightModeNextRegex);
     darkContent = cssContent.match(darkModeNextRegex);
     generalContent = cssContent.match(generalThemeNextRegex);
-    amplitudeContent = cssContent.match(amplitudeFontRegex);
-    openSansContent = cssContent.match(openSansFontRegex);
+    amplitudeHeadingContent = cssContent.match(amplitudeHeadingFontRegex);
+    openSansHeadingContent = cssContent.match(openSansHeadingFontRegex);
+    amplitudeActionContent = cssContent.match(amplitudeActionFontRegex);
+    openSansActionContent = cssContent.match(openSansActionFontRegex);
     roundedCornerContent = cssContent.match(roundedCornerRegex);
     sharpCornerContent = cssContent.match(sharpCornerRegex);
   } else {
@@ -134,18 +145,38 @@ function processFile(
       cssVariables[variableName] = variableValue;
     }
   }
-  if (amplitudeContent) {
-    while ((match = cssVariableRegex.exec(amplitudeContent[0])) !== null) {
+  if (amplitudeHeadingContent) {
+    while (
+      (match = cssVariableRegex.exec(amplitudeHeadingContent[0])) !== null
+    ) {
       const variableName = match[1];
       const variableValue = match[2].trim();
-      amplitudeVariables[variableName] = variableValue;
+      amplitudeHeadingVariables[variableName] = variableValue;
     }
   }
-  if (openSansContent) {
-    while ((match = cssVariableRegex.exec(openSansContent[0])) !== null) {
+  if (openSansHeadingContent) {
+    while (
+      (match = cssVariableRegex.exec(openSansHeadingContent[0])) !== null
+    ) {
       const variableName = match[1];
       const variableValue = match[2].trim();
-      openSansVariables[variableName] = variableValue;
+      openSansHeadingVariables[variableName] = variableValue;
+    }
+  }
+  if (amplitudeActionContent) {
+    while (
+      (match = cssVariableRegex.exec(amplitudeActionContent[0])) !== null
+    ) {
+      const variableName = match[1];
+      const variableValue = match[2].trim();
+      amplitudeActionVariables[variableName] = variableValue;
+    }
+  }
+  if (openSansActionContent) {
+    while ((match = cssVariableRegex.exec(openSansActionContent[0])) !== null) {
+      const variableName = match[1];
+      const variableValue = match[2].trim();
+      openSansActionVariables[variableName] = variableValue;
     }
   }
   if (roundedCornerContent) {
@@ -173,14 +204,17 @@ module.exports = {
     const mdVariables = {};
     const ldVariables = {};
     const tdVariables = {};
-    const openSansVariables = {};
-    const amplitudeVariables = {};
+    const openSansHeadingVariables = {};
+    const amplitudeHeadingVariables = {};
+    const openSansActionVariables = {};
+    const amplitudeActionVariables = {};
     const roundedCornerVariables = {};
     const sharpCornerVariables = {};
     const files = fs.readdirSync(dirPath);
     const dirFiles = files.map((file) => file.replace(".css", ""));
     const isFoundationsDir = dirPath.includes("foundations");
-    files.forEach((file) => {
+
+    for (const file of files) {
       const filePath = path.join(dirPath, file);
       const fileName = file.replace(".css", "");
 
@@ -202,13 +236,15 @@ module.exports = {
           mdVariables,
           ldVariables,
           tdVariables,
-          openSansVariables,
-          amplitudeVariables,
+          openSansHeadingVariables,
+          amplitudeHeadingVariables,
+          openSansActionVariables,
+          amplitudeActionVariables,
           roundedCornerVariables,
           sharpCornerVariables,
         });
       }
-    });
+    }
     return {
       light: lightModeVariables,
       dark: darkModeVariables,
@@ -217,8 +253,10 @@ module.exports = {
       low: ldVariables,
       touch: tdVariables,
       general: cssVariables,
-      openSans: openSansVariables,
-      amplitude: amplitudeVariables,
+      openSansHeading: openSansHeadingVariables,
+      amplitudeHeading: amplitudeHeadingVariables,
+      openSansAction: openSansActionVariables,
+      amplitudeAction: amplitudeActionVariables,
       rounded: roundedCornerVariables,
       sharp: sharpCornerVariables,
     };

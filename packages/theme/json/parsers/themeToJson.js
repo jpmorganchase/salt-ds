@@ -33,7 +33,13 @@ function extractOpacity(color) {
 const jsonTokens = {
   modes: ["$light", "$dark"],
   densities: ["$high", "$medium", "$low", "$touch"],
-  fonts: ["$amplitude", "$openSans"],
+  // TODO: split fonts to headingFont & actionFont, so mode name sticks to values
+  fonts: [
+    "$amplitudeHeading",
+    "$openSansHeading",
+    "$amplitudeAction",
+    "$openSansAction",
+  ],
   corners: ["$rounded", "$sharp"],
   palette: {},
   foundations: {},
@@ -205,7 +211,7 @@ function format(variables) {
                 blur: blur,
                 spread: spread,
                 color: `{foundations.shadow.${removePrefix(
-                  stripVarFunc(color)
+                  stripVarFunc(color),
                 )}}`,
               };
             }
@@ -256,7 +262,7 @@ function format(variables) {
               "background",
               "outlineColor",
               "indicator",
-            ].includes(part)
+            ].includes(part),
           )
         ) {
           type = "color";
@@ -333,7 +339,7 @@ function format(variables) {
             semantic,
             tokenName,
             type,
-            tokenValue
+            tokenValue,
           );
         }
       }
@@ -341,15 +347,31 @@ function format(variables) {
   }
 }
 
+const defaultStruct = {
+  light: {},
+  dark: {},
+  high: {},
+  medium: {},
+  low: {},
+  touch: {},
+  general: {},
+  openSansHeading: {},
+  amplitudeHeading: {},
+  openSansAction: {},
+  amplitudeAction: {},
+  rounded: {},
+  sharp: {},
+};
+
 function themeToJson() {
   const paletteVariables = fromDir(
-    path.resolve(__dirname, "../../css/palette")
+    path.resolve(__dirname, "../../css/palette"),
   );
   const foundationVariables = fromDir(
-    path.resolve(__dirname, "../../css/foundations")
+    path.resolve(__dirname, "../../css/foundations"),
   );
   const characteristicVariables = fromDir(
-    path.resolve(__dirname, "../../css/characteristics")
+    path.resolve(__dirname, "../../css/characteristics"),
   );
   format({
     $rounded: {
@@ -363,15 +385,25 @@ function themeToJson() {
       ...foundationVariables.sharp,
       ...characteristicVariables.sharp,
     },
-    $amplitude: {
-      ...paletteVariables.amplitude,
-      ...foundationVariables.amplitude,
-      ...characteristicVariables.amplitude,
+    $amplitudeHeading: {
+      ...paletteVariables.amplitudeHeading,
+      ...foundationVariables.amplitudeHeading,
+      ...characteristicVariables.amplitudeHeading,
     },
-    $openSans: {
-      ...paletteVariables.openSans,
-      ...foundationVariables.openSans,
-      ...characteristicVariables.openSans,
+    $openSansHeading: {
+      ...paletteVariables.openSansHeading,
+      ...foundationVariables.openSansHeading,
+      ...characteristicVariables.openSansHeading,
+    },
+    $amplitudeAction: {
+      ...paletteVariables.amplitudeAction,
+      ...foundationVariables.amplitudeAction,
+      ...characteristicVariables.amplitudeAction,
+    },
+    $openSansAction: {
+      ...paletteVariables.openSansAction,
+      ...foundationVariables.openSansAction,
+      ...characteristicVariables.openSansAction,
     },
     $light: {
       ...paletteVariables.light,
