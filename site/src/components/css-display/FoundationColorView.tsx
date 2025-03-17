@@ -1,4 +1,4 @@
-import { Spinner, Text } from "@salt-ds/core";
+import { SaltProvider, Spinner, Text } from "@salt-ds/core";
 import { useEffect, useState } from "react";
 import { Table } from "../mdx/table";
 import styles from "./AccordionView.module.css";
@@ -55,7 +55,9 @@ const ColorTable = ({ data }: { data: CssVariableData }) => {
         {Object.entries(data).map(([name, value]) => (
           <tr key={name}>
             <td className={styles.viewColumn}>
-              <ColorBlock hideToken colorVar={name} />
+              <SaltProvider theme="">
+                <ColorBlock hideToken colorVar={name} />
+              </SaltProvider>
             </td>
             <td>
               <Text styleAs="code">{name}</Text>
