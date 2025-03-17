@@ -1,15 +1,19 @@
-import { Button, makePrefixer, Text, useIcon } from "@salt-ds/core";
+import { Button, Text, makePrefixer, useIcon } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import {
-  forwardRef,
   type HTMLAttributes,
   type MouseEvent,
   type SyntheticEvent,
+  forwardRef,
   useContext,
   useRef,
 } from "react";
-import { CarouselStateContext, useCarousel } from "./CarouselContext";
+import {
+  CarouselDispatchContext,
+  CarouselStateContext,
+  useCarousel,
+} from "./CarouselContext";
 
 import carouselControlsCss from "./CarouselControls.css";
 
@@ -57,16 +61,27 @@ export const CarouselControls = forwardRef<
     css: carouselControlsCss,
     window: targetWindow,
   });
-  const { firstVisibleSlide, nextSlide, prevSlide, visibleSlides, carouselId } =
-    useCarousel();
-  const { slides } = useContext(CarouselStateContext);
+  const { carouselId } = useCarousel();
+  const { slides, firstVisibleSlideId, visibleSlides } =
+    useContext(CarouselStateContext);
+  const dispatch = useContext(CarouselDispatchContext);
+
   const slideCount = slides.size;
   const { NextIcon, PreviousIcon } = useIcon();
+
   const prevButtonRef = useRef<HTMLButtonElement | null>(null);
   const nextButtonRef = useRef<HTMLButtonElement | null>(null);
 
+  const slideIds = [...slides.keys()];
+  const firstVisibleSlide = slideIds.indexOf(
+    firstVisibleSlideId || slideIds[0],
+  );
+  const prevId = slideIds[firstVisibleSlide - 1] || null;
+  const nextId = slideIds[firstVisibleSlide + 1] || null;
+
   const isOnFirstSlide = firstVisibleSlide === 0;
   const isOnLastSlide = firstVisibleSlide === slideCount - visibleSlides;
+
   const controlsLabel = slideCount >= 1 && (
     <Text as="span" aria-live={visibleSlides === 1 ? undefined : "polite"}>
       <strong>{`${firstVisibleSlide + 1} ${visibleSlides > 1 && slideCount > 1 ? ` - ${firstVisibleSlide + visibleSlides}` : ""} of
@@ -75,12 +90,14 @@ export const CarouselControls = forwardRef<
   );
 
   function handlePrevClick(event: MouseEvent<HTMLButtonElement>) {
-    prevSlide();
+    if (!prevId) return;
+    dispatch({ type: "move", payload: prevId });
     onPrevious?.(event);
   }
 
   function handleNextClick(event: MouseEvent<HTMLButtonElement>) {
-    nextSlide();
+    if (!nextId) return;
+    dispatch({ type: "move", payload: nextId });
     onNext?.(event);
   }
 

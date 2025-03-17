@@ -1,22 +1,20 @@
-import { Dispatch } from "react";
-import { bool, boolean } from "yup";
+import type { Dispatch } from "react";
 
 type SlideElement = HTMLDivElement;
 type SlideId = string;
 
 export interface CarouselReducerState {
   slides: Map<SlideId, SlideElement>;
-  // firstVisibleSlide: number;
-  // visibleSlides: number;
+  firstVisibleSlideId: SlideId;
+  visibleSlides: number;
   // containerRef: RefObject<HTMLDivElement>;
   // carouselId?: string;
 }
 export type CarouselReducerAction =
   | { type: "register"; payload: [SlideId, SlideElement] }
   | { type: "unregister"; payload: SlideId }
-  | { type: "next"; payload: boolean };
-// | { type: "previous"; payload: MouseEvent | KeyboardEvent }
-// | { type: "focus"; payload: number };
+  | { type: "move"; payload: SlideId }
+  | { type: "focus"; payload: SlideId };
 export type CarouselReducerDispatch = Dispatch<CarouselReducerAction>;
 
 export function carouselReducer(
@@ -43,25 +41,19 @@ export function carouselReducer(
         slides: new Map(slides),
       };
     }
-    case "next": {
-      const {} = state;
-      if ()
-
+    case "move": {
+      const { slides } = state;
+      const id = action.payload;
+      if (!slides.has(id)) return state;
       return {
         ...state,
-      };
-    }
-    case "previous": {
-      return {
-        ...state,
+        firstVisibleSlideId: id,
       };
     }
     case "focus": {
       const { slides } = state;
-      const index = action.payload;
-
-      slides.get(index)?.focus();
-
+      const id = action.payload;
+      slides.get(id)?.focus();
       return state;
     }
     default: {

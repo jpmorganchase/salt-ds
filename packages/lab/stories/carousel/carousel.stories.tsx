@@ -9,8 +9,8 @@ import {
 } from "@salt-ds/lab";
 import "./carousel.stories.css";
 import { Button, H2, H3, Link, Text } from "@salt-ds/core";
-import { useState } from "react";
 import { AddIcon, RemoveIcon } from "@salt-ds/icons";
+import { useState } from "react";
 
 export default {
   title: "Lab/Carousel",

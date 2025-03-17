@@ -3,15 +3,18 @@ import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
-  forwardRef,
   type HTMLAttributes,
   type ReactNode,
+  forwardRef,
   useContext,
   useEffect,
   useRef,
   useState,
 } from "react";
-import { CarouselDispatchContext, useCarousel } from "./CarouselContext";
+import {
+  CarouselDispatchContext,
+  CarouselStateContext,
+} from "./CarouselContext";
 import carouselSlideCss from "./CarouselSlide.css";
 import { useIntersectionObserver } from "./useIntersectionObserver";
 
@@ -64,11 +67,12 @@ export const CarouselSlide = forwardRef<HTMLDivElement, CarouselSlideProps>(
       window: targetWindow,
     });
     const dispatch = useContext(CarouselDispatchContext);
+    const { slides, visibleSlides } = useContext(CarouselStateContext);
+
     const slideRef = useRef<HTMLDivElement>(null);
     const [isVisible, setIsVisible] = useState(false);
     const id = useIdMemo(idProp);
-    const { slideCount, visibleSlides } = useCarousel();
-
+    const slideCount = slides.size;
     useEffect(() => {
       if (!slideRef.current) return;
       dispatch({ type: "register", payload: [id, slideRef.current] });
