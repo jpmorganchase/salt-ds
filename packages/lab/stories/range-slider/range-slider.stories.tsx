@@ -148,7 +148,7 @@ WithMarkTicks.args = {
     },
   ],
   "aria-label": "With Mark Ticks",
-  enableMarkTicks: true,
+  showTicks: true,
 };
 
 WithMarkTicks.parameters = {
@@ -181,7 +181,7 @@ WithRestrictToMarks.args = {
     },
   ],
   "aria-label": "With Restrict to Marks",
-  enableMarkTicks: true,
+  showTicks: true,
   restrictToMarks: true,
   defaultValue: [0, 8],
 };
@@ -211,6 +211,45 @@ WithInlineLabelsAndMarks.args = {
 
 WithInlineLabelsAndMarks.parameters = {
   actions: { disable: true },
+};
+
+export const WithInlineLabelsMarksAndTicks = Template.bind({});
+WithInlineLabelsMarksAndTicks.args = {
+  "aria-label": "WithInlineLabelsMarksAndTicks",
+  min: 0,
+  max: 50,
+  step: 10,
+  minLabel: "Very low",
+  maxLabel: "Very high",
+  marks: [
+    { label: "0", value: 0 },
+    { label: "10", value: 10 },
+    { label: "20", value: 20 },
+    { label: "30", value: 30 },
+    { label: "40", value: 40 },
+    { label: "50", value: 50 },
+  ],
+  showTicks: true,
+};
+
+WithInlineLabelsMarksAndTicks.parameters = {
+  actions: { disable: true },
+};
+
+export const WithConstrainedLabelPosition = Template.bind({});
+WithConstrainedLabelPosition.args = {
+  "aria-label": "WithConstrainedLabelPosition",
+  marks: [
+    {
+      value: 0,
+      label: "Very low",
+    },
+    {
+      value: 10,
+      label: "Very high",
+    },
+  ],
+  constrainLabelPosition: true,
 };
 
 export const WithDisabledTooltip = Template.bind({});
@@ -581,23 +620,6 @@ export const WithNonNumericValues = () => {
       })}
     />
   );
-};
-
-export const WithRestrictedLabelOverflow = Template.bind({});
-
-WithRestrictedLabelOverflow.args = {
-  "aria-label": "WithRestrictedLabelOverflow",
-  marks: [
-    {
-      value: 0,
-      label: "Very low",
-    },
-    {
-      value: 10,
-      label: "Very high",
-    },
-  ],
-  restrictLabelOverflow: true,
 };
 
 export const Disabled = Template.bind({});

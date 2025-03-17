@@ -81,7 +81,7 @@ const RangeWithInput = () => {
           validationStatus={validationStatus}
         />
         <RangeSlider
-          style={{ flex: "100%" }}
+          style={{ flex: 6 }}
           min={bounds[0]}
           max={bounds[1]}
           minLabel="-50"

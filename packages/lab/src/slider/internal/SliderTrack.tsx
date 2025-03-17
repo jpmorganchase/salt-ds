@@ -11,8 +11,9 @@ const withBaseName = makePrefixer("saltSliderTrack");
 interface SliderTrackProps
   extends Omit<HTMLAttributes<HTMLDivElement>, "onChange" | "defaultValue"> {
   children: React.ReactNode;
+  constrainLabelPosition: boolean;
   disabled: boolean;
-  enableMarkTicks?: boolean;
+  showTicks?: boolean;
   format?: (value: number) => string | number;
   handlePointerDown: (event: React.PointerEvent<HTMLDivElement>) => void;
   isDragging: boolean;
@@ -24,7 +25,6 @@ interface SliderTrackProps
   minLabel?: number | string;
   progressPercentage?: number;
   progressPercentageRange?: [number, number];
-  restrictLabelOverflow: boolean;
   sliderRef: RefObject<HTMLDivElement>;
 }
 
@@ -32,8 +32,9 @@ export const SliderTrack = forwardRef<HTMLDivElement, SliderTrackProps>(
   function SliderTrack(
     {
       children,
+      constrainLabelPosition,
       disabled,
-      enableMarkTicks,
+      showTicks,
       format,
       handlePointerDown,
       isDragging,
@@ -45,7 +46,6 @@ export const SliderTrack = forwardRef<HTMLDivElement, SliderTrackProps>(
       minLabel,
       progressPercentage = 0,
       progressPercentageRange = [0, 0],
-      restrictLabelOverflow,
       sliderRef,
       ...rest
     },
@@ -103,8 +103,8 @@ export const SliderTrack = forwardRef<HTMLDivElement, SliderTrackProps>(
           [withBaseName("dragging")]: isDragging,
           [withBaseName("range")]: isRange,
           [withBaseName("withMarks")]: marks,
-          [withBaseName("restrictLabelOverflow")]: restrictLabelOverflow,
-          [withBaseName("withMarkTicks")]: enableMarkTicks,
+          [withBaseName("constrainLabelPosition")]: constrainLabelPosition,
+          [withBaseName("withMarkTicks")]: showTicks,
         })}
         data-testid="sliderTrack"
         ref={ref}
@@ -126,8 +126,8 @@ export const SliderTrack = forwardRef<HTMLDivElement, SliderTrackProps>(
           <div className={withBaseName("wrapper")}>
             <div
               className={clsx(withBaseName("rail"), {
-                [withBaseName("hasMinTick")]: hasMinTick() && enableMarkTicks,
-                [withBaseName("hasMaxTick")]: hasMaxTick() && enableMarkTicks,
+                [withBaseName("hasMinTick")]: hasMinTick() && showTicks,
+                [withBaseName("hasMaxTick")]: hasMaxTick() && showTicks,
               })}
               onPointerDown={handlePointerDown}
               ref={sliderRef}

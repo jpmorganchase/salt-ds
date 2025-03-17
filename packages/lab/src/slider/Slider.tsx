@@ -16,6 +16,11 @@ import { calculatePercentage, clamp, toFloat } from "./internal/utils";
 export interface SliderProps
   extends Omit<HTMLAttributes<HTMLDivElement>, "onChange" | "defaultValue"> {
   /**
+   * When bottom labels for minimum and maximum values are set, ensure
+   * that they are confined within the boundary of the slider.
+   */
+  constrainLabelPosition?: boolean;
+  /**
    * The number of allowed decimal places
    */
   decimalPlaces?: number;
@@ -27,10 +32,6 @@ export interface SliderProps
    * Disable the slider.
    */
   disabled?: boolean;
-  /**
-   * Show visual ticks above the mark labels
-   */
-  enableMarkTicks?: boolean;
   /**
    * A callback to format the display value in the tooltip, min and max labels
    * and the `aria-valuetext` attribute.
@@ -68,14 +69,13 @@ export interface SliderProps
    */
   onChangeEnd?: (event: SyntheticEvent<unknown> | Event, value: number) => void;
   /**
-   * When bottom labels for minimum and maximum values are set, ensure
-   * that they are confined within the boundary of the slider.
-   */
-  restrictLabelOverflow?: boolean;
-  /**
    * Restrict slider value to marks only. The step will be ignored.
    */
   restrictToMarks?: boolean;
+  /**
+   * Show visual ticks above the marks.
+   */
+  showTicks?: boolean;
   /**
    * Show the slider value in a tooltip when the thumb is hovered.
    */
@@ -99,9 +99,10 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
     "aria-label": ariaLabel,
     "aria-labelledby": ariaLabelledBy,
     "aria-valuetext": ariaValueText,
+    constrainLabelPosition = false,
     decimalPlaces = 2,
     disabled: disabledProp = false,
-    enableMarkTicks,
+    showTicks,
     format,
     marks,
     min = 0,
@@ -110,7 +111,6 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
     maxLabel,
     onChange,
     onChangeEnd,
-    restrictLabelOverflow = false,
     restrictToMarks = false,
     showTooltip = true,
     step = 1,
@@ -179,7 +179,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
   return (
     <SliderTrack
       disabled={disabled}
-      enableMarkTicks={enableMarkTicks}
+      showTicks={showTicks}
       format={format}
       handlePointerDown={handlePointerDownOnTrack}
       isDragging={isDragging}
@@ -190,7 +190,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
       marks={marks}
       progressPercentage={progressPercentage}
       ref={ref}
-      restrictLabelOverflow={restrictLabelOverflow}
+      constrainLabelPosition={constrainLabelPosition}
       sliderRef={sliderRef}
       {...rest}
     >

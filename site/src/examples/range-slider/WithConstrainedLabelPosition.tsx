@@ -1,9 +1,9 @@
 import { RangeSlider } from "@salt-ds/lab";
 import type { ReactElement } from "react";
 
-export const WithRestrictedLabelOverflow = (): ReactElement => (
+export const WithConstrainedLabelPosition = (): ReactElement => (
   <RangeSlider
-    aria-label="WithRestrictedLabelOverflow"
+    aria-label="WithConstrainedLabelPosition"
     style={{ width: "400px" }}
     marks={[
       {
@@ -15,6 +15,6 @@ export const WithRestrictedLabelOverflow = (): ReactElement => (
         label: "Very high",
       },
     ]}
-    restrictLabelOverflow
+    constrainLabelPosition
   />
 );

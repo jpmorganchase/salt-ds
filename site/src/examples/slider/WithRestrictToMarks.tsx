@@ -67,7 +67,7 @@ export const WithRestrictToMarks = (): ReactElement => (
         },
       ]}
       restrictToMarks
-      enableMarkTicks
+      showTicks
     />
   </StackLayout>
 );

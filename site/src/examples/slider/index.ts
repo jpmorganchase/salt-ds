@@ -1,5 +1,6 @@
 export * from "./Default";
 export * from "./Disabled";
+export * from "./WithConstrainedLabelPosition";
 export * from "./WithCustomStep";
 export * from "./WithDisabledTooltip";
 export * from "./WithFormatting";
@@ -8,5 +9,4 @@ export * from "./WithInput";
 export * from "./WithLabels";
 export * from "./WithMarks";
 export * from "./WithNonNumericValues";
-export * from "./WithRestrictedLabelOverflow";
 export * from "./WithRestrictToMarks";

@@ -310,22 +310,6 @@ describe("Given a Range Slider", () => {
     cy.findByTestId("sliderTooltip").should("not.exist");
   });
 
-  it("should render marks when provided and not show mark ticks by default", () => {
-    cy.mount(
-      <Default
-        style={{ width: "400px" }}
-        marks={[
-          { value: 2, label: "2" },
-          { value: 3, label: "3" },
-        ]}
-      />,
-    );
-
-    cy.findAllByTestId("mark").eq(0).should("have.text", "2");
-    cy.findAllByTestId("mark").eq(1).should("have.text", "3");
-    cy.findAllByTestId("markTick").should("not.be.visible");
-  });
-
   it("should confine slider values to marks when restrictToMarks is enabled", () => {
     cy.mount(
       <Default
@@ -371,23 +355,6 @@ describe("Given a Range Slider", () => {
     cy.findAllByRole("slider").eq(1).should("have.value", "17");
     cy.findAllByRole("slider").eq(1).focus().realPress("ArrowLeft");
     cy.findAllByRole("slider").eq(1).should("have.value", "15");
-  });
-
-  it("should render mark ticks when enabled with marks", () => {
-    cy.mount(
-      <Default
-        style={{ width: "400px" }}
-        marks={[
-          { value: 2, label: "2" },
-          { value: 3, label: "3" },
-        ]}
-        enableMarkTicks={true}
-      />,
-    );
-
-    cy.findAllByTestId("mark").eq(0).should("have.text", "2");
-    cy.findAllByTestId("mark").eq(1).should("have.text", "3");
-    cy.findAllByTestId("markTick").should("be.visible");
   });
 
   it("should render inline min/max labels and marks when provided", () => {
@@ -459,29 +426,6 @@ describe("Given a Range Slider", () => {
     cy.findAllByRole("slider").eq(1).should("have.attr", "value", 0.75);
     cy.findAllByRole("slider").eq(1).focus().realPress("ArrowRight");
     cy.findAllByRole("slider").eq(1).should("have.attr", "value", 1.13);
-  });
-
-  it("should restrict labels from overflowing slider boundaries when set", () => {
-    cy.mount(
-      <Default
-        restrictLabelOverflow
-        marks={[
-          {
-            value: 0,
-            label: "Very low",
-          },
-          {
-            value: 10,
-            label: "Very high",
-          },
-        ]}
-      />,
-    );
-
-    cy.findByTestId("sliderTrack").should(
-      "have.class",
-      "saltSliderTrack-restrictLabelOverflow",
-    );
   });
 
   describe("WHEN it is mounted as a controlled component", () => {

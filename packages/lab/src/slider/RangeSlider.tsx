@@ -16,6 +16,11 @@ import { calculatePercentage, clampRange, toFloat } from "./internal/utils";
 export interface RangeSliderProps
   extends Omit<HTMLAttributes<HTMLDivElement>, "onChange" | "defaultValue"> {
   /**
+   * When bottom labels for minimum and maximum values are set, ensure
+   * that they are confined within the boundary of the slider.
+   */
+  constrainLabelPosition?: boolean;
+  /**
    * The number of allowed decimal places
    */
   decimalPlaces?: number;
@@ -28,9 +33,9 @@ export interface RangeSliderProps
    */
   disabled?: boolean;
   /**
-   * Show visual ticks above the mark labels
+   * Show visual ticks above the marks.
    */
-  enableMarkTicks?: boolean;
+  showTicks?: boolean;
   /**
    * A callback to format the display value in the tooltip, min and max labels
    * and the `aria-valuetext` attribute.
@@ -74,11 +79,6 @@ export interface RangeSliderProps
     value: [number, number],
   ) => void;
   /**
-   * When bottom labels for minimum and maximum values are set, ensure
-   * that they are confined within the boundary of the slider.
-   */
-  restrictLabelOverflow?: boolean;
-  /**
    * Restrict slider value to marks only. The step will be ignored.
    */
   restrictToMarks?: boolean;
@@ -106,9 +106,10 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>(
       "aria-label": ariaLabel,
       "aria-labelledby": ariaLabelledBy,
       "aria-valuetext": ariaValueText,
+      constrainLabelPosition = false,
       decimalPlaces = 2,
       disabled: disabledProp = false,
-      enableMarkTicks,
+      showTicks,
       format,
       marks,
       max = 10,
@@ -117,7 +118,6 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>(
       minLabel,
       onChange,
       onChangeEnd,
-      restrictLabelOverflow = false,
       restrictToMarks = false,
       showTooltip = true,
       step = 1,
@@ -216,7 +216,7 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>(
     return (
       <SliderTrack
         disabled={disabled}
-        enableMarkTicks={enableMarkTicks}
+        showTicks={showTicks}
         format={format}
         handlePointerDown={handlePointerDownOnTrack}
         isDragging={isDragging}
@@ -231,7 +231,7 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>(
           progressPercentageEnd,
         ]}
         ref={ref}
-        restrictLabelOverflow={restrictLabelOverflow}
+        constrainLabelPosition={constrainLabelPosition}
         sliderRef={sliderRef}
         {...rest}
       >

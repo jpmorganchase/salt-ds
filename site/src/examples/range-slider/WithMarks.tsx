@@ -43,7 +43,7 @@ export const WithMarks = (): ReactElement => (
       max={50}
       defaultValue={[10, 30]}
       style={{ width: "400px" }}
-      enableMarkTicks
+      showTicks
       marks={[
         {
           value: 0,

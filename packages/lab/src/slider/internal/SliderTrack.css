@@ -5,7 +5,7 @@
   --slider-progressPercentageEnd: 0%;
 
   --slider-mark-percentage: 0%;
-  --slider-track-background: var(--salt-palette-alpha-contrast-medium);
+  --slider-track-background: var(--salt-track-borderColor);
   --slider-track-fill: var(--salt-accent-borderColor);
 
   display: flex;
@@ -159,10 +159,10 @@
   background: var(--slider-track-fill);
 }
 
-.saltSliderTrack-restrictLabelOverflow .saltSliderTrack-mark:first-of-type .saltSliderTrack-markLabel {
+.saltSliderTrack-constrainLabelPosition .saltSliderTrack-mark:first-of-type .saltSliderTrack-markLabel {
   transform: translateX(50%);
 }
 
-.saltSliderTrack-restrictLabelOverflow .saltSliderTrack-mark:last-of-type .saltSliderTrack-markLabel {
+.saltSliderTrack-constrainLabelPosition .saltSliderTrack-mark:last-of-type .saltSliderTrack-markLabel {
   transform: translateX(-50%);
 }
