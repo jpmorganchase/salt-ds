@@ -80,6 +80,22 @@ export const SliderTrack = forwardRef<HTMLDivElement, SliderTrackProps>(
       return markPercentage === progressPercentage;
     };
 
+    const hasMinTick = () => {
+      if (!marks) return false;
+      const minMark = marks.reduce((min, current) => {
+        return current.value < min.value ? current : min;
+      });
+      return minMark.value === min;
+    };
+
+    const hasMaxTick = () => {
+      if (!marks) return false;
+      const maxMark = marks.reduce((max, current) => {
+        return current.value > max.value ? current : max;
+      });
+      return maxMark.value === max;
+    };
+
     return (
       <div
         className={clsx(withBaseName(), {
@@ -109,7 +125,10 @@ export const SliderTrack = forwardRef<HTMLDivElement, SliderTrackProps>(
           {/* Slider Track */}
           <div className={withBaseName("wrapper")}>
             <div
-              className={clsx(withBaseName("rail"))}
+              className={clsx(withBaseName("rail"), {
+                [withBaseName("hasMinTick")]: hasMinTick() && enableMarkTicks,
+                [withBaseName("hasMaxTick")]: hasMaxTick() && enableMarkTicks,
+              })}
               onPointerDown={handlePointerDown}
               ref={sliderRef}
               style={

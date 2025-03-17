@@ -79,6 +79,10 @@ export interface RangeSliderProps
    */
   restrictLabelOverflow?: boolean;
   /**
+   * Restrict slider value to marks only. The step will be ignored.
+   */
+  restrictToMarks?: boolean;
+  /**
    * Show the slider value in a tooltip when the thumb is hovered.
    */
   showTooltip?: boolean;
@@ -114,6 +118,7 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>(
       onChange,
       onChangeEnd,
       restrictLabelOverflow = false,
+      restrictToMarks = false,
       showTooltip = true,
       step = 1,
       stepMultiplier = 2,
@@ -136,24 +141,6 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>(
       disabled: formFieldDisabled,
     } = useFormFieldProps();
 
-    const {
-      handlePointerDownOnThumb,
-      handlePointerDownOnTrack,
-      isDragging,
-      sliderRef,
-      thumbIndexState,
-      preventThumbOverlap,
-    } = useRangeSliderThumb({
-      decimalPlaces,
-      min,
-      max,
-      step,
-      valueState,
-      onChange,
-      onChangeEnd,
-      setValue,
-    });
-
     const disabled = formFieldDisabled || disabledProp;
     const value: [number, number] = clampRange(
       valueState,
@@ -161,6 +148,8 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>(
       min,
       step,
       decimalPlaces,
+      marks,
+      restrictToMarks,
     );
     const progressPercentageStart = calculatePercentage(value[0], max, min);
     const progressPercentageEnd = calculatePercentage(value[1], max, min);
@@ -201,6 +190,29 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>(
       }
     };
 
+    const {
+      handleKeydownOnThumb,
+      handlePointerDownOnThumb,
+      handlePointerDownOnTrack,
+      isDragging,
+      sliderRef,
+      thumbIndexState,
+      preventThumbOverlap,
+    } = useRangeSliderThumb({
+      decimalPlaces,
+      handleInputChange,
+      marks,
+      min,
+      max,
+      step,
+      value,
+      onChange,
+      onChangeEnd,
+      restrictToMarks,
+      setValue,
+      stepMultiplier,
+    });
+
     return (
       <SliderTrack
         disabled={disabled}
@@ -227,6 +239,7 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>(
           index={0}
           handleInputChange={(event) => handleInputChange(event, 0)}
           handlePointerDown={(event) => handlePointerDownOnThumb(event, 0)}
+          handleKeydownOnThumb={(event) => handleKeydownOnThumb(event, 0)}
           offsetPercentage={`${calculatePercentage(value[0], max, min)}%`}
           trackDragging={isDragging && thumbIndexState === 0}
           {...thumbProps}
@@ -235,6 +248,7 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>(
           index={1}
           handleInputChange={(event) => handleInputChange(event, 1)}
           handlePointerDown={(event) => handlePointerDownOnThumb(event, 1)}
+          handleKeydownOnThumb={(event) => handleKeydownOnThumb(event, 1)}
           offsetPercentage={`${calculatePercentage(value[1], max, min)}%`}
           trackDragging={isDragging && thumbIndexState === 1}
           {...thumbProps}

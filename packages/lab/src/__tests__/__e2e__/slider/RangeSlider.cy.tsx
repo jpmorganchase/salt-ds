@@ -4,7 +4,7 @@ import { type ChangeEvent, useState } from "react";
 
 const composedStories = composeStories(rangeSliderStories);
 
-const { Default } = composedStories;
+const { Default, WithRestrictToMarks } = composedStories;
 
 describe("Given a Range Slider", () => {
   it("should render with default props", () => {
@@ -324,6 +324,53 @@ describe("Given a Range Slider", () => {
     cy.findAllByTestId("mark").eq(0).should("have.text", "2");
     cy.findAllByTestId("mark").eq(1).should("have.text", "3");
     cy.findAllByTestId("markTick").should("not.be.visible");
+  });
+
+  it("should confine slider values to marks when restrictToMarks is enabled", () => {
+    cy.mount(
+      <Default
+        defaultValue={[0, 14]}
+        style={{ width: "400px" }}
+        restrictToMarks={true}
+        max={20}
+        marks={[
+          { value: 1, label: "1" },
+          { value: 3, label: "3" },
+          { value: 5, label: "5" },
+          { value: 7, label: "7" },
+          { value: 9, label: "9" },
+          { value: 15, label: "15" },
+          { value: 17, label: "17" },
+          { value: 20, label: "20" },
+        ]}
+      />,
+    );
+
+    // Default values of both thumbs should be the nearest mark
+    cy.findAllByRole("slider").eq(0).should("have.value", "1");
+    cy.findAllByRole("slider").eq(1).should("have.value", "15");
+
+    // Navigate the first thumb, it should jump between marks
+    cy.findAllByRole("slider").eq(0).focus().realPress("ArrowRight");
+    cy.findAllByRole("slider").eq(0).should("have.value", "3");
+    cy.findAllByRole("slider").eq(0).focus().realPress("ArrowRight");
+    cy.findAllByRole("slider").eq(0).should("have.value", "5");
+    cy.findAllByRole("slider").eq(0).focus().realPress("PageUp");
+    cy.findAllByRole("slider").eq(0).should("have.value", "7");
+    cy.findAllByRole("slider").eq(0).focus().realPress("PageDown");
+    cy.findAllByRole("slider").eq(0).should("have.value", "5");
+    cy.findAllByRole("slider").eq(0).focus().realPress("ArrowLeft");
+    cy.findAllByRole("slider").eq(0).should("have.value", "3");
+
+    // Navigate the second thumb, it should jump between marks
+    cy.findAllByRole("slider").eq(1).focus().realPress("ArrowRight");
+    cy.findAllByRole("slider").eq(1).should("have.value", "17");
+    cy.findAllByRole("slider").eq(1).focus().realPress("PageUp");
+    cy.findAllByRole("slider").eq(1).should("have.value", "20");
+    cy.findAllByRole("slider").eq(1).focus().realPress("PageDown");
+    cy.findAllByRole("slider").eq(1).should("have.value", "17");
+    cy.findAllByRole("slider").eq(1).focus().realPress("ArrowLeft");
+    cy.findAllByRole("slider").eq(1).should("have.value", "15");
   });
 
   it("should render mark ticks when enabled with marks", () => {

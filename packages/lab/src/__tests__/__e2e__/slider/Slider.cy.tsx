@@ -196,6 +196,35 @@ describe("Given a Slider", () => {
     cy.findAllByTestId("markTick").should("not.be.visible");
   });
 
+  it("should confine slider values to marks when restrictToMarks is enabled", () => {
+    cy.mount(
+      <Default
+        defaultValue={0}
+        style={{ width: "400px" }}
+        restrictToMarks={true}
+        marks={[
+          { value: 2, label: "2" },
+          { value: 5, label: "5" },
+          { value: 9, label: "9" },
+        ]}
+      />,
+    );
+
+    cy.findByRole("slider").should("have.value", "2");
+    cy.findByRole("slider").focus().realPress("ArrowRight");
+    cy.findByRole("slider").should("have.value", "5");
+    cy.findByRole("slider").focus().realPress("ArrowRight");
+    cy.findByRole("slider").should("have.value", 9);
+
+    // Reverse
+    cy.findByRole("slider").focus().realPress("ArrowLeft");
+    cy.findByRole("slider").should("have.value", 5);
+    cy.findByRole("slider").focus().realPress("ArrowLeft");
+    cy.findByRole("slider").should("have.value", 2);
+    cy.findByRole("slider").focus().realPress("ArrowLeft");
+    cy.findByRole("slider").should("have.value", 2);
+  });
+
   it("should render mark ticks when enabled with marks", () => {
     cy.mount(
       <Default

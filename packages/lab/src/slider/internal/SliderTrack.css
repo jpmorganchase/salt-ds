@@ -5,7 +5,7 @@
   --slider-progressPercentageEnd: 0%;
 
   --slider-mark-percentage: 0%;
-  --slider-track-background: var(--salt-track-borderColor);
+  --slider-track-background: var(--salt-palette-alpha-contrast-medium);
   --slider-track-fill: var(--salt-accent-borderColor);
 
   display: flex;
@@ -56,7 +56,7 @@
   width: calc(var(--slider-progressPercentage) - (var(--salt-size-border-strong) / 2));
 }
 
-.saltSliderTrack-withMarkTicks .saltSliderTrack-rail::before {
+.saltSliderTrack-hasMinTick.saltSliderTrack-rail::before {
   border-bottom-left-radius: unset;
 }
 
@@ -67,7 +67,7 @@
   width: calc(100% - var(--slider-progressPercentage) - (var(--salt-size-border-strong) * 2));
 }
 
-.saltSliderTrack-withMarkTicks .saltSliderTrack-rail::after {
+.saltSliderTrack-hasMaxTick.saltSliderTrack-rail::after {
   border-bottom-right-radius: unset;
 }
 
@@ -159,10 +159,10 @@
   background: var(--slider-track-fill);
 }
 
-.saltSliderTrack-restrictLabelOverflow .saltSliderTrack-markLabel:first-of-type {
-  transform: unset;
+.saltSliderTrack-restrictLabelOverflow .saltSliderTrack-mark:first-of-type .saltSliderTrack-markLabel {
+  transform: translateX(50%);
 }
 
-.saltSliderTrack-restrictLabelOverflow .saltSliderTrack-markLabel:last-of-type {
-  transform: translateX(-100%);
+.saltSliderTrack-restrictLabelOverflow .saltSliderTrack-mark:last-of-type .saltSliderTrack-markLabel {
+  transform: translateX(-50%);
 }

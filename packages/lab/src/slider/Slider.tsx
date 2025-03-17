@@ -73,6 +73,10 @@ export interface SliderProps
    */
   restrictLabelOverflow?: boolean;
   /**
+   * Restrict slider value to marks only. The step will be ignored.
+   */
+  restrictToMarks?: boolean;
+  /**
    * Show the slider value in a tooltip when the thumb is hovered.
    */
   showTooltip?: boolean;
@@ -107,6 +111,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
     onChange,
     onChangeEnd,
     restrictLabelOverflow = false,
+    restrictToMarks = false,
     showTooltip = true,
     step = 1,
     stepMultiplier = 2,
@@ -122,32 +127,23 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
     name: "Slider",
     state: "value",
   });
-  const lastValueState = useRef<number>(valueState);
-
   const {
     a11yProps: { "aria-labelledby": formFieldLabelledBy } = {},
     disabled: formFieldDisabled,
   } = useFormFieldProps();
 
-  const {
-    handlePointerDownOnThumb,
-    handlePointerDownOnTrack,
-    isDragging,
-    sliderRef,
-  } = useSliderThumb({
-    decimalPlaces,
-    min,
-    max,
-    step,
-    valueState,
-    onChange,
-    onChangeEnd,
-    setValue,
-  });
-
   const disabled = formFieldDisabled || disabledProp;
-  const value = clamp(valueState, max, min, step, decimalPlaces);
+  const value = clamp(
+    valueState,
+    max,
+    min,
+    step,
+    decimalPlaces,
+    marks,
+    restrictToMarks,
+  );
   const progressPercentage = calculatePercentage(toFloat(value), max, min);
+  const lastValueState = useRef<number>(value);
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const parsedValue = toFloat(event.target.value);
@@ -158,6 +154,27 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
       lastValueState.current = parsedValue;
     }
   };
+
+  const {
+    handleKeydownOnThumb,
+    handlePointerDownOnThumb,
+    handlePointerDownOnTrack,
+    isDragging,
+    sliderRef,
+  } = useSliderThumb({
+    decimalPlaces,
+    handleInputChange,
+    marks,
+    min,
+    max,
+    step,
+    value,
+    onChange,
+    onChangeEnd,
+    restrictToMarks,
+    setValue,
+    stepMultiplier,
+  });
 
   return (
     <SliderTrack
@@ -187,6 +204,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
         format={format}
         handleInputChange={handleInputChange}
         handlePointerDown={handlePointerDownOnThumb}
+        handleKeydownOnThumb={handleKeydownOnThumb}
         min={min}
         minLabel={minLabel}
         max={max}

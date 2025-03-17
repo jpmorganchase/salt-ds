@@ -154,6 +154,41 @@ WithMarkTicks.parameters = {
   actions: { disable: true },
 };
 
+export const WithRestrictToMarks = Template.bind({});
+WithRestrictToMarks.args = {
+  marks: [
+    {
+      label: "1",
+      value: 1,
+    },
+
+    {
+      label: "5",
+      value: 5,
+    },
+    {
+      label: "6",
+      value: 6,
+    },
+    {
+      label: "7",
+      value: 7,
+    },
+    {
+      label: "10",
+      value: 10,
+    },
+  ],
+  "aria-label": "With Restrict to Marks",
+  enableMarkTicks: true,
+  restrictToMarks: true,
+  defaultValue: 0,
+};
+
+WithRestrictToMarks.parameters = {
+  actions: { disable: true },
+};
+
 export const WithInlineLabelsAndMarks = Template.bind({});
 WithInlineLabelsAndMarks.args = {
   "aria-label": "WithInlineLabelsAndMarks",
