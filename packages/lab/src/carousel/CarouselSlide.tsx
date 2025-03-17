@@ -85,6 +85,7 @@ export const CarouselSlide = forwardRef<HTMLDivElement, CarouselSlideProps>(
         setIsVisible(isVisible);
       },
     });
+
     const SlideStyles = {
       "--carousel-slide-width":
         visibleSlides > 1

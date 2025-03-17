@@ -1,31 +1,20 @@
 import { createContext } from "@salt-ds/core";
-import {
-  type ReactNode,
-  type RefObject,
-  useContext,
-  useLayoutEffect,
-  useReducer,
-  useRef,
-} from "react";
+import { type ReactNode, useLayoutEffect, useReducer, useRef } from "react";
 import {
   type CarouselReducerDispatch,
   type CarouselReducerState,
   carouselReducer,
 } from "./CarouselReducer";
 
-export interface CarouselContextValue {
-  containerRef: RefObject<HTMLDivElement>;
-  carouselId?: string;
-}
-
-export const CarouselContext = createContext<CarouselContextValue | null>(
-  "CarouselContext",
-  null,
-);
-
 export const CarouselStateContext = createContext<CarouselReducerState>(
   "CarouselStateContext",
-  { slides: new Map(), firstVisibleSlide: 0, visibleSlides: 1 },
+  {
+    slides: new Map(),
+    firstVisibleSlideIndex: 0,
+    visibleSlides: 1,
+    containerRef: null,
+    carouselId: undefined,
+  },
 );
 export const CarouselDispatchContext = createContext<CarouselReducerDispatch>(
   "CarouselDispatchContext",
@@ -33,14 +22,6 @@ export const CarouselDispatchContext = createContext<CarouselReducerDispatch>(
     return;
   },
 );
-
-export function useCarousel() {
-  const context = useContext(CarouselContext);
-  if (!context) {
-    throw new Error("useCarousel must be used within CarouselProvider");
-  }
-  return context;
-}
 
 export function CarouselProvider({
   children,
@@ -57,13 +38,11 @@ export function CarouselProvider({
 
   const [state, dispatch] = useReducer(carouselReducer, {
     slides: new Map(),
-    firstVisibleSlide: firstVisibleSlideIndex,
-    visibleSlides,
+    firstVisibleSlideIndex,
+    visibleSlides: visibleSlides,
+    containerRef,
+    carouselId: id,
   });
-
-  const slides = useRef<
-    Map<string, { element: HTMLDivElement; index: number }>
-  >(new Map());
 
   useLayoutEffect(() => {
     const container = containerRef.current;
@@ -74,19 +53,12 @@ export function CarouselProvider({
         behavior: "instant",
       });
     });
-  }, [firstVisibleSlideIndex, visibleSlides]);
+  }, [firstVisibleSlideIndex]);
 
   return (
     <CarouselStateContext.Provider value={state}>
       <CarouselDispatchContext.Provider value={dispatch}>
-        <CarouselContext.Provider
-          value={{
-            containerRef,
-            carouselId: id,
-          }}
-        >
-          {children}
-        </CarouselContext.Provider>
+        {children}
       </CarouselDispatchContext.Provider>
     </CarouselStateContext.Provider>
   );

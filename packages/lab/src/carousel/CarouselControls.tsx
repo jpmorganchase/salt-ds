@@ -12,7 +12,6 @@ import {
 import {
   CarouselDispatchContext,
   CarouselStateContext,
-  useCarousel,
 } from "./CarouselContext";
 
 import carouselControlsCss from "./CarouselControls.css";
@@ -61,8 +60,7 @@ export const CarouselControls = forwardRef<
     css: carouselControlsCss,
     window: targetWindow,
   });
-  const { carouselId } = useCarousel();
-  const { slides, firstVisibleSlideId, visibleSlides } =
+  const { slides, carouselId, firstVisibleSlideIndex, visibleSlides } =
     useContext(CarouselStateContext);
   const dispatch = useContext(CarouselDispatchContext);
 
@@ -73,18 +71,16 @@ export const CarouselControls = forwardRef<
   const nextButtonRef = useRef<HTMLButtonElement | null>(null);
 
   const slideIds = [...slides.keys()];
-  const firstVisibleSlide = slideIds.indexOf(
-    firstVisibleSlideId || slideIds[0],
-  );
-  const prevId = slideIds[firstVisibleSlide - 1] || null;
-  const nextId = slideIds[firstVisibleSlide + 1] || null;
 
-  const isOnFirstSlide = firstVisibleSlide === 0;
-  const isOnLastSlide = firstVisibleSlide === slideCount - visibleSlides;
+  const prevId = slideIds[firstVisibleSlideIndex - 1] || null;
+  const nextId = slideIds[firstVisibleSlideIndex + 1] || null;
+
+  const isOnFirstSlide = firstVisibleSlideIndex === 0;
+  const isOnLastSlide = firstVisibleSlideIndex === slideCount - visibleSlides;
 
   const controlsLabel = slideCount >= 1 && (
     <Text as="span" aria-live={visibleSlides === 1 ? undefined : "polite"}>
-      <strong>{`${firstVisibleSlide + 1} ${visibleSlides > 1 && slideCount > 1 ? ` - ${firstVisibleSlide + visibleSlides}` : ""} of
+      <strong>{`${firstVisibleSlideIndex + 1} ${visibleSlides > 1 && slideCount > 1 ? ` - ${firstVisibleSlideIndex + visibleSlides}` : ""} of
         ${slideCount}`}</strong>
     </Text>
   );
@@ -92,12 +88,14 @@ export const CarouselControls = forwardRef<
   function handlePrevClick(event: MouseEvent<HTMLButtonElement>) {
     if (!prevId) return;
     dispatch({ type: "move", payload: prevId });
+    dispatch({ type: "scroll", payload: prevId });
     onPrevious?.(event);
   }
 
   function handleNextClick(event: MouseEvent<HTMLButtonElement>) {
     if (!nextId) return;
     dispatch({ type: "move", payload: nextId });
+    dispatch({ type: "scroll", payload: nextId });
     onNext?.(event);
   }
 
