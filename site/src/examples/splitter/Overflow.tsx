@@ -88,6 +88,7 @@ export function Overflow() {
         </Splitter>
       </FlexLayout>
       <Button
+        style={{ alignSelf: "center" }}
         onClick={handleEnableOverflow}
         aria-label="toggle enable overflow"
       >
