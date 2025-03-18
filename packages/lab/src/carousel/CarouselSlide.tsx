@@ -6,11 +6,15 @@ import {
   type HTMLAttributes,
   type ReactNode,
   forwardRef,
+  useContext,
   useEffect,
   useRef,
   useState,
 } from "react";
-import { useCarousel } from "./CarouselContext";
+import {
+  CarouselDispatchContext,
+  CarouselStateContext,
+} from "./CarouselContext";
 import carouselSlideCss from "./CarouselSlide.css";
 import { useIntersectionObserver } from "./useIntersectionObserver";
 
@@ -62,22 +66,19 @@ export const CarouselSlide = forwardRef<HTMLDivElement, CarouselSlideProps>(
       css: carouselSlideCss,
       window: targetWindow,
     });
+    const dispatch = useContext(CarouselDispatchContext);
+    const { slides, visibleSlides, firstVisibleSlideIndex } =
+      useContext(CarouselStateContext);
+
     const slideRef = useRef<HTMLDivElement>(null);
     const [isVisible, setIsVisible] = useState(false);
     const id = useIdMemo(idProp);
-    const { slideCount, registerSlide, unregisterSlide, visibleSlides } =
-      useCarousel();
-
+    const slideCount = slides.size;
     useEffect(() => {
-      if (slideRef.current) {
-        registerSlide(id, slideRef.current);
-      }
-      return () => {
-        if (id) {
-          unregisterSlide(id);
-        }
-      };
-    }, [registerSlide, unregisterSlide, id]);
+      if (!slideRef.current) return;
+      dispatch({ type: "register", payload: [id, slideRef.current] });
+      return () => dispatch({ type: "unregister", payload: id });
+    }, [dispatch, id]);
 
     useIntersectionObserver({
       ref: slideRef,
@@ -85,6 +86,7 @@ export const CarouselSlide = forwardRef<HTMLDivElement, CarouselSlideProps>(
         setIsVisible(isVisible);
       },
     });
+
     const SlideStyles = {
       "--carousel-slide-width":
         visibleSlides > 1
@@ -118,7 +120,7 @@ export const CarouselSlide = forwardRef<HTMLDivElement, CarouselSlideProps>(
           >
             <div className={withBaseName("content")}>
               <span className={withBaseName("sr-only")}>
-                {isVisible && `${slideCount} of ${slideCount}`}
+                {isVisible && `${firstVisibleSlideIndex} of ${slideCount}`}
               </span>
               {header}
               {children}

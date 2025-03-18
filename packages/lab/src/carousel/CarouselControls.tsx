@@ -6,9 +6,13 @@ import {
   type MouseEvent,
   type SyntheticEvent,
   forwardRef,
+  useContext,
   useRef,
 } from "react";
-import { useCarousel } from "./CarouselContext";
+import {
+  CarouselDispatchContext,
+  CarouselStateContext,
+} from "./CarouselContext";
 
 import carouselControlsCss from "./CarouselControls.css";
 
@@ -56,34 +60,40 @@ export const CarouselControls = forwardRef<
     css: carouselControlsCss,
     window: targetWindow,
   });
-  const {
-    slideCount,
-    firstVisibleSlide,
-    nextSlide,
-    prevSlide,
-    visibleSlides,
-    carouselId,
-  } = useCarousel();
+  const { slides, carouselId, firstVisibleSlideIndex, visibleSlides } =
+    useContext(CarouselStateContext);
+  const dispatch = useContext(CarouselDispatchContext);
+
+  const slideCount = slides.size;
   const { NextIcon, PreviousIcon } = useIcon();
+
   const prevButtonRef = useRef<HTMLButtonElement | null>(null);
   const nextButtonRef = useRef<HTMLButtonElement | null>(null);
 
-  const isOnFirstSlide = firstVisibleSlide === 0;
-  const isOnLastSlide = firstVisibleSlide === slideCount - visibleSlides;
+  const slideIds = [...slides.keys()];
+
+  const prevId = slideIds[firstVisibleSlideIndex - 1] || null;
+  const nextId = slideIds[firstVisibleSlideIndex + 1] || null;
+
+  const isOnFirstSlide = firstVisibleSlideIndex === 0;
+  const isOnLastSlide = firstVisibleSlideIndex === slideCount - visibleSlides;
+
   const controlsLabel = slideCount >= 1 && (
     <Text as="span" aria-live={visibleSlides === 1 ? undefined : "polite"}>
-      <strong>{`${firstVisibleSlide + 1} ${visibleSlides > 1 && slideCount > 1 ? ` - ${firstVisibleSlide + visibleSlides}` : ""} of
+      <strong>{`${firstVisibleSlideIndex + 1} ${visibleSlides > 1 && slideCount > 1 ? ` - ${firstVisibleSlideIndex + visibleSlides}` : ""} of
         ${slideCount}`}</strong>
     </Text>
   );
 
   function handlePrevClick(event: MouseEvent<HTMLButtonElement>) {
-    prevSlide();
+    if (!prevId) return;
+    dispatch({ type: "scroll", payload: prevId });
     onPrevious?.(event);
   }
 
   function handleNextClick(event: MouseEvent<HTMLButtonElement>) {
-    nextSlide();
+    if (!nextId) return;
+    dispatch({ type: "scroll", payload: nextId });
     onNext?.(event);
   }
 

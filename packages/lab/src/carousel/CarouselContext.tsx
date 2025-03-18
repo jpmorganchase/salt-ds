@@ -1,39 +1,33 @@
 import { createContext } from "@salt-ds/core";
 import {
   type ReactNode,
-  type RefObject,
-  useCallback,
-  useContext,
+  useEffect,
   useLayoutEffect,
+  useReducer,
   useRef,
-  useState,
 } from "react";
+import {
+  type CarouselReducerDispatch,
+  type CarouselReducerState,
+  carouselReducer,
+} from "./CarouselReducer";
 
-export interface CarouselContextValue {
-  firstVisibleSlide: number;
-  visibleSlides: number;
-  slideCount: number;
-  nextSlide: (moveFocus: boolean) => void;
-  prevSlide: (moveFocus: boolean) => void;
-  registerSlide: (id: string, element: HTMLDivElement) => number;
-  unregisterSlide: (id: string) => void;
-  containerRef: RefObject<HTMLDivElement>;
-  carouselId?: string;
-  getSlideRef?: (index: number) => HTMLDivElement;
-}
-
-export const CarouselContext = createContext<CarouselContextValue | null>(
-  "CarouselContext",
-  null,
+export const CarouselStateContext = createContext<CarouselReducerState>(
+  "CarouselStateContext",
+  {
+    slides: new Map(),
+    firstVisibleSlideIndex: 0,
+    visibleSlides: 1,
+    containerRef: null,
+    carouselId: undefined,
+  },
 );
-
-export function useCarousel() {
-  const context = useContext(CarouselContext);
-  if (!context) {
-    throw new Error("useCarousel must be used within CarouselProvider");
-  }
-  return context;
-}
+export const CarouselDispatchContext = createContext<CarouselReducerDispatch>(
+  "CarouselDispatchContext",
+  () => {
+    return;
+  },
+);
 
 export function CarouselProvider({
   children,
@@ -46,13 +40,18 @@ export function CarouselProvider({
   visibleSlides?: number;
   id?: string;
 }) {
-  const [firstVisibleSlide, setFirstVisibleSlide] = useState(
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [state, dispatch] = useReducer(carouselReducer, {
+    slides: new Map(),
     firstVisibleSlideIndex,
-  );
-  const slides = useRef<
-    Map<string, { element: HTMLDivElement; index: number }>
-  >(new Map());
-  const [slideCount, setSlideCount] = useState(slides.current.size);
+    visibleSlides,
+    containerRef,
+    carouselId: id,
+  });
+
+  useEffect(() => {
+    dispatch({ type: "updateSlideCount", payload: visibleSlides });
+  }, [visibleSlides]);
 
   useLayoutEffect(() => {
     const container = containerRef.current;
@@ -65,73 +64,11 @@ export function CarouselProvider({
     });
   }, [firstVisibleSlideIndex, visibleSlides]);
 
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  const registerSlide = useCallback((id: string, element: HTMLDivElement) => {
-    const assignedIndex = slides.current.size;
-    slides.current.set(id, { element, index: assignedIndex });
-    setSlideCount(assignedIndex + 1);
-    return assignedIndex;
-  }, []);
-
-  const unregisterSlide = useCallback((id: string) => {
-    slides.current.delete(id);
-    setSlideCount(slides.current.size);
-  }, []);
-
-  const nextSlide = (moveFocus = false) => {
-    const container = containerRef.current;
-    if (!container || firstVisibleSlide >= slideCount - 1) return;
-
-    const nextIndex = firstVisibleSlide + 1;
-    const slideWidth = container.offsetWidth / visibleSlides;
-    containerRef.current.scrollBy({
-      left: slideWidth,
-      behavior: "smooth",
-    });
-    setFirstVisibleSlide(nextIndex);
-    if (moveFocus) {
-      const focusTargetIndex = Math.min(nextIndex, slideCount - 1);
-      getSlideRef(focusTargetIndex)?.focus();
-    }
-  };
-
-  const prevSlide = (moveFocus = false) => {
-    const container = containerRef.current;
-    if (!container || firstVisibleSlide <= 0) return;
-    const prevIndex = firstVisibleSlide - 1;
-    const slideWidth = container.offsetWidth / visibleSlides;
-    containerRef.current.scrollBy({
-      left: -slideWidth,
-      behavior: "smooth",
-    });
-    setFirstVisibleSlide(prevIndex);
-    if (moveFocus) {
-      getSlideRef(prevIndex)?.focus();
-    }
-  };
-
-  const getSlideRef = useCallback((index: number) => {
-    const slideEntries = [...slides.current.values()];
-    return slideEntries[index]?.element ?? null;
-  }, []);
-
   return (
-    <CarouselContext.Provider
-      value={{
-        visibleSlides,
-        slideCount,
-        firstVisibleSlide,
-        registerSlide,
-        unregisterSlide,
-        nextSlide,
-        prevSlide,
-        containerRef,
-        carouselId: id,
-        getSlideRef,
-      }}
-    >
-      {children}
-    </CarouselContext.Provider>
+    <CarouselStateContext.Provider value={state}>
+      <CarouselDispatchContext.Provider value={dispatch}>
+        {children}
+      </CarouselDispatchContext.Provider>
+    </CarouselStateContext.Provider>
   );
 }

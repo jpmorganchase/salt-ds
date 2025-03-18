@@ -2,13 +2,16 @@ import { makePrefixer, useForkRef } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import {
-  forwardRef,
   type HTMLAttributes,
   type KeyboardEvent,
   type ReactElement,
-  useCallback,
+  forwardRef,
+  useContext,
 } from "react";
-import { type CarouselContextValue, useCarousel } from "./CarouselContext";
+import {
+  CarouselDispatchContext,
+  CarouselStateContext,
+} from "./CarouselContext";
 import type { CarouselSlideProps } from "./CarouselSlide";
 import carouselSliderCss from "./CarouselSlider.css";
 
@@ -20,26 +23,6 @@ export interface CarouselSliderProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 const withBaseName = makePrefixer("saltCarouselSlider");
-
-const useKeyNavigation = ({
-  nextSlide,
-  prevSlide,
-}: Pick<CarouselContextValue, "nextSlide" | "prevSlide">) => {
-  return useCallback(
-    (event: KeyboardEvent<HTMLDivElement>) => {
-      if (event.key === "ArrowRight" || event.key === "ArrowLeft") {
-        if (event.repeat) return;
-        event.stopPropagation();
-        if (event.key === "ArrowRight") {
-          nextSlide?.(true);
-        } else {
-          prevSlide?.(true);
-        }
-      }
-    },
-    [nextSlide, prevSlide],
-  );
-};
 
 export const CarouselSlider = forwardRef<HTMLDivElement, CarouselSliderProps>(
   function CarouselSlider(
@@ -53,16 +36,40 @@ export const CarouselSlider = forwardRef<HTMLDivElement, CarouselSliderProps>(
       window: targetWindow,
     });
 
-    const { containerRef, prevSlide, nextSlide, visibleSlides } = useCarousel();
-    const handleKeyDown = useKeyNavigation({
-      nextSlide,
-      prevSlide,
-    });
+    const dispatch = useContext(CarouselDispatchContext);
+    const { slides, firstVisibleSlideIndex, visibleSlides, containerRef } =
+      useContext(CarouselStateContext);
+    const slideIds = [...slides.keys()];
 
+    const prevId = slideIds[firstVisibleSlideIndex - 1] || null;
+    const nextId = slideIds[firstVisibleSlideIndex + 1] || null;
     const onKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
-      handleKeyDown(event);
+      if (event.key === "ArrowRight" || event.key === "ArrowLeft") {
+        if (event.repeat) return;
+        event.stopPropagation();
+        if (event.key === "ArrowRight") {
+          if (!nextId) return;
+          dispatch({ type: "scroll", payload: nextId });
+          dispatch({ type: "focus", payload: nextId });
+        } else {
+          if (!prevId) return;
+          dispatch({ type: "scroll", payload: prevId });
+          dispatch({ type: "focus", payload: prevId });
+        }
+      }
       onKeyDownProp?.(event);
     };
+    const handleScroll = () => {
+      const container = containerRef?.current;
+      if (!container) return;
+      const scrollLeft = container.scrollLeft;
+      const newIndex =
+        Math.round(scrollLeft / (container.offsetWidth / visibleSlides)) || 0;
+      if (newIndex !== firstVisibleSlideIndex) {
+        dispatch({ type: "move", payload: slideIds[newIndex] });
+      }
+    };
+
     const ref = useForkRef(propRef, containerRef);
     return (
       <div
@@ -71,6 +78,7 @@ export const CarouselSlider = forwardRef<HTMLDivElement, CarouselSliderProps>(
         className={withBaseName()}
         tabIndex={-1}
         onKeyDown={onKeyDown}
+        onScroll={handleScroll}
         {...rest}
       >
         {children}
