@@ -5,13 +5,13 @@ export type {
   useCollectionItems,
 } from "./common-hooks";
 
-export type {
-  ListChangeHandler as ListChangeHandlerDeprecated,
-  ListSelectHandler as ListSelectHandlerDeprecated,
-} from "./list-deprecated";
 export {
   ListItemBase as ListItemBaseDeprecated,
   useListItem as useListItemDeprecated,
+} from "./list-deprecated";
+export type {
+  ListChangeHandler as ListChangeHandlerDeprecated,
+  ListSelectHandler as ListSelectHandlerDeprecated,
 } from "./list-deprecated";
 
 export * from "./app-header";
@@ -32,18 +32,18 @@ export * from "./deck-layout";
 export * from "./dialog";
 export * from "./dropdown";
 export * from "./editable-label";
+export * from "./form-field-context-legacy";
 export {
   FormFieldLegacy as FormField,
-  type FormFieldLegacyProps as FormFieldProps,
   FormLabel,
+  type FormFieldLegacyProps as FormFieldProps,
 } from "./form-field-legacy";
-export * from "./form-field-context-legacy";
 export * from "./form-group";
 export * from "./formatted-input";
 export {
   InputLegacy as Input,
-  type InputLegacyProps as InputProps,
   StaticInputAdornment,
+  type InputLegacyProps as InputProps,
 } from "./input-legacy";
 export * from "./layer-layout";
 export * from "./list";
@@ -52,6 +52,7 @@ export * from "./localization-provider";
 export * from "./logo";
 export * from "./menu-button";
 export * from "./metric";
+export * from "./number-input";
 export * from "./overlay";
 export * from "./portal";
 export * from "./query-input";
@@ -61,7 +62,6 @@ export * from "./slider";
 export * from "./splitter";
 export * from "./static-list";
 export * from "./stepped-tracker";
-export * from "./stepper-input";
 export * from "./system-status";
 export * from "./tabs";
 export * from "./tabs-next";

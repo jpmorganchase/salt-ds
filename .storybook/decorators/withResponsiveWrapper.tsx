@@ -1,5 +1,5 @@
 import { ToggleButton, ToggleButtonGroup, Tooltip } from "@salt-ds/core";
-import { Slider, StepperInput } from "@salt-ds/lab";
+import { Slider, NumberInput } from "@salt-ds/lab";
 import type { Decorator } from "@storybook/react";
 import { type ReactNode, type SyntheticEvent, useState } from "react";
 import "./ResponsiveContainer.css";
@@ -31,7 +31,7 @@ const ResponsiveContainer = ({ children }: { children?: ReactNode }) => {
             <ToggleButton value="vw/vh">vw/vh</ToggleButton>
           </Tooltip>
         </ToggleButtonGroup>
-        <StepperInput
+        <NumberInput
           value={containerWidth[0]}
           max={maxUnits}
           min={10}
@@ -45,7 +45,7 @@ const ResponsiveContainer = ({ children }: { children?: ReactNode }) => {
           onChange={(event, value) => setWidth([toFloat(value)])}
           value={containerWidth[0]}
         />
-        <StepperInput
+        <NumberInput
           value={containerHeight[0]}
           max={maxUnits}
           min={10}

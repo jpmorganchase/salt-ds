@@ -6,7 +6,7 @@ import {
   StackLayout,
 } from "@salt-ds/core";
 import { AddIcon, RefreshIcon, RemoveIcon, SyncIcon } from "@salt-ds/icons";
-import { StepperInput } from "@salt-ds/lab";
+import { NumberInput } from "@salt-ds/lab";
 import { useEffect, useState } from "react";
 
 const RefreshAdornment = () => {
@@ -15,7 +15,7 @@ const RefreshAdornment = () => {
   return (
     <FormField>
       <FormFieldLabel>Refresh adornment</FormFieldLabel>
-      <StepperInput
+      <NumberInput
         value={value}
         onChange={(_, newValue) => setValue(newValue)}
         step={5}
@@ -51,7 +51,7 @@ const SyncAdornment = () => {
   return (
     <FormField>
       <FormFieldLabel>Sync adornment</FormFieldLabel>
-      <StepperInput
+      <NumberInput
         value={value}
         onChange={(_, newValue) => setValue(newValue)}
         decimalPlaces={2}
@@ -84,7 +84,7 @@ const CustomButtons = () => {
   return (
     <FormField>
       <FormFieldLabel>Custom buttons</FormFieldLabel>
-      <StepperInput
+      <NumberInput
         hideButtons
         value={value}
         textAlign="center"

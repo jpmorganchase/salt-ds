@@ -8,11 +8,15 @@ data:
   $ref: ./#/data
 ---
 
+<LivePreviewControls>
+<LivePreview componentName="number-input" exampleName="Default" >
+
 ## Default
 
-Stepper input has an increment step value of 1 and a step block value of 10, and you can only use it to accept numeric characters.
+Number input has an increment step value of 1 and a step block value of 10, and you can only use it to accept numeric characters.
 
-<LivePreview componentName="stepper-input" exampleName="Default" />
+</LivePreview>
+<LivePreview componentName="number-input" exampleName="Variants" >
 
 ## Variants
 
@@ -20,28 +24,31 @@ The component comes in two variants: primary and secondary. The primary variant 
 
 When choosing between the primary and secondary variants, consider the background color on which the component will be placed.
 
-<LivePreview componentName="stepper-input" exampleName="Variants" />
+</LivePreview>
+<LivePreview componentName="number-input" exampleName="Bordered" >
 
 ## Bordered
 
-To style the stepper input with a full border, set `bordered={true}`. This styling is ideal when the input field uses the same fill color as the background, such as a primary fill color on a primary background.
+To style the number input with a full border, set `bordered={true}`. This styling is ideal when the input field uses the same fill color as the background, such as a primary fill color on a primary background.
 
-<LivePreview componentName="stepper-input" exampleName="Bordered" />
+</LivePreview>
+<LivePreview componentName="number-input" exampleName="Validation" >
 
 ## Validation
 
-The stepper input can show validation states—error, warning, and success—by using the `validationStatus` prop.
+The number input can show validation states—error, warning, and success—by using the `validationStatus` prop.
 
 ### Best practices
 
 - Use the error state to alert the user of a critical issue that’s related to the input. This issue, which may jeopardize completion of the task, usually requires action from the user to resolve the error.
 - Display the warning state when you need to alert the user of a potential issue—that won’t prevent the user from continuing with the task, but may cause errors if it’s not addressed.
 
-<LivePreview componentName="stepper-input" exampleName="Validation" />
+</LivePreview>
+<LivePreview componentName="number-input" exampleName="Decimals" >
 
 ## Decimals
 
-By default, the Stepper Input accepts values with zero decimal places. If a user needs to enter a value with decimals, such as a monetary amount, the number of decimal places can be customized.
+By default, the Number Input accepts values with zero decimal places. If a user needs to enter a value with decimals, such as a monetary amount, the number of decimal places can be customized.
 
 If the user enters a value that doesn't match the specified decimal places, the component will adjust the value to the correct number of decimal places when it loses focus. For example, if the component is set to accept two decimal places and the user enters "12," the displayed value will be "12.00."
 
@@ -51,7 +58,8 @@ The component will also round the value up or down as necessary to match the spe
 
 The number of decimal places should be suitable for the specific use case. For instance, avoid accepting three decimal places when a retail user is dealing with currencies like pounds sterling or U.S. dollars, which typically require only two decimal places.
 
-<LivePreview componentName="stepper-input" exampleName="Decimals" />
+</LivePreview>
+<LivePreview componentName="number-input" exampleName="Limits" >
 
 ## Min and max value
 
@@ -62,7 +70,8 @@ If you need to limit the range of accepted values, you’re able to set a maximu
 - Clearly state the accepted value range in the form field’s helper text.
 - Use the form field error state to inform users who manually type in a value outside the accepted range that the value is invalid.
 
-<LivePreview componentName="stepper-input" exampleName="Limits" />
+</LivePreview>
+<LivePreview componentName="number-input" exampleName="StepAndBlock" >
 
 ## Custom steps
 
@@ -73,7 +82,8 @@ Customize the default, increment and block values to suit your use case.
 - Pick a default value that reflects the desired value for most users, such as the most frequently submitted number.
 - Make sure you set an increment value that’s appropriate for the context. For example, if the user needs to enter ”Number of people”, adjustments of 0.5 would be confusing. If you’re undecided, consider using an increment value of 1.
 
-<LivePreview componentName="stepper-input" exampleName="StepAndBlock" />
+</LivePreview>
+<LivePreview componentName="number-input" exampleName="ButtonAdornments" >
 
 ## Button adornments
 
@@ -89,33 +99,36 @@ Sync to a live value from a source that is constantly changing, for example, whe
 
 **Custom buttons**:
 
-Customize the positioning and appearance of the stepper buttons to meet specific product requirements or restrictions.
+Customize the positioning and appearance of the number buttons to meet specific product requirements or restrictions.
 
-<LivePreview componentName="stepper-input" exampleName="ButtonAdornments" />
+</LivePreview>
+<LivePreview componentName="number-input" exampleName="Disabled" >
 
 ## Disabled
 
-You can disable a stepper input, resulting in no action when the user interacts with it.
+You can disable a number input, resulting in no action when the user interacts with it.
 
-<LivePreview componentName="stepper-input" exampleName="Disabled" />
+</LivePreview>
+<LivePreview componentName="number-input" exampleName="Readonly" >
 
 ## Read-only
 
-You can set stepper input to a read-only state. The user can't edit the value text in this state, but they can highlight and copy it.
+You can set number input to a read-only state. The user can't edit the value text in this state, but they can highlight and copy it.
 
 By default, the marker is an em dash. If your application requires a different marker, you can set it via the `emptyReadOnlyMarker` prop.
 
-**Note:** Stepper input's role is changed to `"textbox"` when read-only is set to work around browser/screen reader limitations when conveying a read-only state.
+**Note:** Number input's role is changed to `"textbox"` when read-only is set to work around browser/screen reader limitations when conveying a read-only state.
 
 ### Best practices
 
 Use the read-only state when the user needs the value for their flow or current task but cannot edit it, for example, because of user permissions.
 
-<LivePreview componentName="stepper-input" exampleName="Readonly" />
+</LivePreview>
+<LivePreview componentName="number-input" exampleName="TextAlignment" >
 
 ## Text alignment
 
-To aid visual flow, the numeric value sits directly beneath the label and other form field elements, which are left aligned by default. If you need to change the stepper input’s alignment to suit your particular use case or layout, you can configure it to be right or center aligned.
+To aid visual flow, the numeric value sits directly beneath the label and other form field elements, which are left aligned by default. If you need to change the number input’s alignment to suit your particular use case or layout, you can configure it to be right or center aligned.
 
 Use the `textAlign` prop to change the alignment to “center” or “right.”
 

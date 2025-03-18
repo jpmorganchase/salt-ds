@@ -1,11 +1,11 @@
-import * as stepperInputStories from "@stories/stepper-input/stepper-input.stories";
+import * as numberInputStories from "@stories/number-input/number-input.stories";
 import { composeStories } from "@storybook/react";
 
-const composedStories = composeStories(stepperInputStories);
+const composedStories = composeStories(numberInputStories);
 
 const { Default, MinAndMaxValue, RefreshAdornment } = composedStories;
 
-describe("Stepper Input", () => {
+describe("Number Input", () => {
   it("renders with default props", () => {
     cy.mount(<Default />);
     // Component should render with two buttons - increment, and decrement
