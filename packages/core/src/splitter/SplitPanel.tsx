@@ -41,7 +41,6 @@ export const SplitPanel = forwardRef<ImperativePanelHandle, SplitPanelProps>(
       <Panel
         id={id}
         minSize={minSize}
-        data-variant={variant}
         className={clsx(withBaseName(), withBaseName(variant), className)}
         ref={ref}
         {...props}

@@ -77,8 +77,6 @@ export function SplitHandle({
   return (
     <PanelResizeHandle
       hitAreaMargins={hitAreaMargins}
-      data-variant={variant}
-      data-border={border}
       className={clsx(
         withBaseName(),
         withBaseName(appearance),
