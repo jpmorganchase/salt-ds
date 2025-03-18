@@ -1,9 +1,4 @@
-import React, {
-  type ReactNode,
-  createContext,
-  useContext,
-  forwardRef,
-} from "react";
+import { type ReactNode, createContext, forwardRef, useContext } from "react";
 import {
   type ImperativePanelGroupHandle,
   PanelGroup,
