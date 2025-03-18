@@ -7,6 +7,7 @@ export interface CarouselReducerState {
   slides: Map<SlideId, SlideElement>;
   firstVisibleSlideIndex: number;
   visibleSlides: number;
+  focusedSlideIndex: number;
   containerRef: RefObject<HTMLDivElement> | null;
   carouselId?: string;
 }
@@ -78,7 +79,9 @@ export function carouselReducer(
       const { slides } = state;
       const id = action.payload;
       slides.get(id)?.focus();
-      return state;
+      const slideIds = [...slides.keys()];
+      const index = slideIds.indexOf(id || slideIds[0]);
+      return { ...state, focusedSlideIndex: index };
     }
     default: {
       const exhaustiveCheck: never = action;

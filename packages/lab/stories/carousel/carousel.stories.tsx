@@ -17,27 +17,27 @@ export default {
 
 const content = [
   {
-    slideId: 0,
+    headerId: 0,
     title: "Your accounts. On the move",
     content: "Discover our latest personal accounts app for iOS.",
     link: "Open an account",
   },
   {
-    slideId: 1,
+    headerId: 1,
     title: "Preview your account information",
     content:
       "The new dashboard provides a complete overview of all your key account details.",
     link: "Go to dashboard",
   },
   {
-    slideId: 2,
+    headerId: 2,
     title: "Clear view of your cash positions",
     content:
       "Dedicated screen showing your positions, currencies and accounts.",
     link: "Learn more about views",
   },
   {
-    slideId: 3,
+    headerId: 3,
     title: "Redesigned accounts",
     content:
       "Simplified view of all your accounts, with search functionality across all transactions.",
@@ -50,8 +50,8 @@ const renderSlides = (appearance?: "bordered", withActions?: boolean) =>
     <CarouselSlide
       key={slide.title}
       appearance={appearance}
-      header={<H3 id={`slide-title-${slide.slideId}`}>{slide.title}</H3>}
-      aria-labelledby={`slide-title-${slide.slideId}`}
+      header={<H3 id={`slide-title-${slide.headerId}`}>{slide.title}</H3>}
+      aria-labelledby={`slide-title-${slide.headerId}`}
       media={
         <div
           className={`carousel-image-placeholder carousel-image-placeholder-${index + 1}`}

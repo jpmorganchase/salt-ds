@@ -2,10 +2,10 @@ import { makePrefixer, useForkRef } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import {
+  forwardRef,
   type HTMLAttributes,
   type KeyboardEvent,
   type ReactElement,
-  forwardRef,
   useContext,
 } from "react";
 import {
@@ -37,11 +37,18 @@ export const CarouselSlider = forwardRef<HTMLDivElement, CarouselSliderProps>(
     });
 
     const dispatch = useContext(CarouselDispatchContext);
-    const { slides, firstVisibleSlideIndex, visibleSlides, containerRef } =
-      useContext(CarouselStateContext);
+    const {
+      slides,
+      firstVisibleSlideIndex,
+      focusedSlideIndex,
+      visibleSlides,
+      containerRef,
+    } = useContext(CarouselStateContext);
     const slideIds = [...slides.keys()];
-
-    const prevId = slideIds[firstVisibleSlideIndex - 1] || null;
+    const prevId =
+      focusedSlideIndex > firstVisibleSlideIndex
+        ? slideIds[focusedSlideIndex - 1]
+        : slideIds[firstVisibleSlideIndex - 1] || null;
     const nextId = slideIds[firstVisibleSlideIndex + 1] || null;
     const onKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
       if (event.key === "ArrowRight" || event.key === "ArrowLeft") {

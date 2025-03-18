@@ -7,9 +7,9 @@ import {
   useRef,
 } from "react";
 import {
+  carouselReducer,
   type CarouselReducerDispatch,
   type CarouselReducerState,
-  carouselReducer,
 } from "./CarouselReducer";
 
 export const CarouselStateContext = createContext<CarouselReducerState>(
@@ -59,6 +59,7 @@ export function CarouselProvider({
     requestAnimationFrame(() => {
       container.scrollTo({
         left: firstVisibleSlideIndex * (container.offsetWidth / visibleSlides),
+        // @ts-ignore instant scroll
         behavior: "instant",
       });
     });
