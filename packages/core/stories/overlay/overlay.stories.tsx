@@ -6,7 +6,6 @@ import {
   Overlay,
   OverlayHeader,
   OverlayPanel,
-  OverlayPanelCloseButton,
   OverlayPanelContent,
   type OverlayProps,
   OverlayTrigger,
@@ -168,6 +167,18 @@ export const LongContent = () => {
   };
 
   const handleClose = () => setOpen(false);
+
+  const CloseButton = () => (
+    <Button
+      aria-label="Close overlay"
+      appearance="transparent"
+      sentiment="neutral"
+      onClick={handleClose}
+    >
+      <CloseIcon aria-hidden />
+    </Button>
+  );
+
   return (
     <Overlay placement="right" open={open} onOpenChange={onOpenChange}>
       <OverlayTrigger>
@@ -178,7 +189,7 @@ export const LongContent = () => {
           width: 300,
         }}
       >
-        <OverlayPanelCloseButton onClick={handleClose} />
+        <OverlayHeader header="Title" actions={<CloseButton />} />
         <OverlayPanelContent style={{ height: 200 }}>
           <StackLayout>
             <div>

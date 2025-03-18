@@ -5,21 +5,15 @@
   padding: var(--saltOverlay-content-padding, var(--salt-spacing-100));
 }
 
-.saltOverlayHeader ~ .saltOverlayPanelContent-separator {
-  border-top: var(--salt-size-border) var(--salt-separable-borderStyle) transparent;
-}
-
 .saltOverlayPanelContent-overflow {
   padding-right: var(--salt-spacing-100);
+  border-top: var(--salt-size-border) var(--salt-separable-borderStyle) transparent;
+  border-bottom: var(--salt-size-border) var(--salt-separable-borderStyle) transparent;
   overflow-y: auto;
 }
-
-.saltOverlayHeader ~ .saltOverlayPanelContent-scroll {
-  border-top: var(--salt-size-border) var(--salt-separable-borderStyle) var(--salt-separable-tertiary-borderColor);
-  box-shadow: var(--salt-overlayable-shadow-scroll);
-  margin-top: calc(0 - var(--salt-size-border));
+.saltOverlayPanelContent-overflow.saltOverlayPanelContent-scroll-bottom {
+  border-bottom: var(--salt-size-border) var(--salt-separable-borderStyle) var(--salt-separable-tertiary-borderColor);
 }
-
-.saltOverlayHeader ~ .saltOverlayPanelContent-separator ~ .saltOverlayPanelContent {
-  padding-top: 0;
+.saltOverlayPanelContent-overflow.saltOverlayPanelContent-scroll-top {
+  border-top: var(--salt-size-border) var(--salt-separable-borderStyle) var(--salt-separable-tertiary-borderColor);
 }

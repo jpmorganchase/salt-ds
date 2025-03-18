@@ -125,9 +125,7 @@ export const CloseButton: StoryFn<QAContainerProps> = (props) => {
             header="Guidelines for optimal use of our application"
             actions={<CloseButton />}
           />
-          <OverlayPanelContent>
-            <div>Content of Overlay</div>
-          </OverlayPanelContent>
+          <OverlayPanelContent>Content of Overlay</OverlayPanelContent>
         </OverlayPanel>
       </Overlay>
     </QAContainer>
