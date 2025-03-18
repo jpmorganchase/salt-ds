@@ -1,5 +1,5 @@
 import { ToggleButton, ToggleButtonGroup, Tooltip } from "@salt-ds/core";
-import { Slider, NumberInput } from "@salt-ds/lab";
+import { NumberInput, Slider } from "@salt-ds/lab";
 import type { Decorator } from "@storybook/react";
 import { type ReactNode, type SyntheticEvent, useState } from "react";
 import "./ResponsiveContainer.css";
