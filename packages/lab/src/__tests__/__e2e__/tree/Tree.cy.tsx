@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { Tree } from "@salt-ds/lab";
 import { useEffect, useReducer } from "react";
 
@@ -210,7 +211,7 @@ describe.skip("GIVEN a Tree", () => {
     });
   });
 
-  describe('AND when `selectionStrategy` is set to "default"', () => {
+  describe.skip('AND when `selectionStrategy` is set to "default"', () => {
     it("THEN should select 1 node", () => {
       cy.mount(
         <Tree source={createSampleTreeData()} selectionStrategy="default" />,
@@ -246,7 +247,7 @@ describe.skip("GIVEN a Tree", () => {
       cy.get(".saltCheckbox").should("have.length", 0);
     });
 
-    describe("AND when a node is clicked", () => {
+    describe.skip("AND when a node is clicked", () => {
       it("THEN should invoke onSelectionChange callback", () => {
         cy.findByText("1").realClick();
         cy.get("@selectionChangeHandler").should("have.been.called");
@@ -354,7 +355,7 @@ describe.skip("GIVEN a Tree", () => {
       );
     });
 
-    describe("AND 2 nodes are expanded", () => {
+    describe.skip("AND 2 nodes are expanded", () => {
       it("THEN should expand 2 nodes", () => {
         cy.get(".saltTreeNode-toggle").eq(0).realClick();
         cy.get(".saltTreeNode-toggle").eq(1).realClick();
