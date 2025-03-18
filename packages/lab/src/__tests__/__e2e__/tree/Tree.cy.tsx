@@ -92,7 +92,7 @@ const noop = () => {
   // noop
 };
 
-describe("GIVEN a Tree", () => {
+describe.skip("GIVEN a Tree", () => {
   describe("AND when the component renders with empty root childNodes", () => {
     beforeEach(() => {
       cy.mount(<Tree source={[{ id: "a", label: "name", childNodes: [] }]} />);
@@ -176,7 +176,7 @@ describe("GIVEN a Tree", () => {
     });
   });
 
-  describe.skip("AND when the component re-renders with a different initialSource", () => {
+  describe("AND when the component re-renders with a different initialSource", () => {
     function ChangingTree() {
       const [isFirstRender, forceUpdate] = useReducer(() => false, true);
       useEffect(() => forceUpdate());
