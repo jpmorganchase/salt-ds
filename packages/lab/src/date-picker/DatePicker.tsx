@@ -29,12 +29,10 @@ export interface DatePickerBaseProps {
   /**
    * Handler for when open state changes
    * @param newOpen - true when opened
-   * @param event - event that triggered the state change
    * @param reason - reason for the the state change
    */
   onOpenChange?: (
     newOpen: boolean,
-    event?: Event,
     reason?: DatePickerOpenChangeReason,
   ) => void;
   /**
@@ -80,6 +78,9 @@ export const DatePickerMain = forwardRef<HTMLDivElement, DatePickerProps<any>>(
       children,
       readOnly,
       disabled,
+      isDayDisabled,
+      isDayHighlighted,
+      isDayUnselectable,
       selectionVariant,
       defaultSelectedDate,
       selectedDate,
@@ -94,6 +95,9 @@ export const DatePickerMain = forwardRef<HTMLDivElement, DatePickerProps<any>>(
     const useDatePickerProps: any = {
       readOnly,
       disabled,
+      isDayDisabled,
+      isDayHighlighted,
+      isDayUnselectable,
       selectionVariant,
       defaultSelectedDate,
       selectedDate,

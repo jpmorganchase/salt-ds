@@ -566,7 +566,7 @@ describe("GIVEN a Calendar", () => {
           });
         });
 
-        it("SHOULD not allow selection of unselectable dates", () => {
+        it("SHOULD not allow selection of un-selectable dates", () => {
           cy.mount(<UnselectableDates defaultVisibleMonth={testDate} />);
 
           // Define the weekend dates in March 2024
