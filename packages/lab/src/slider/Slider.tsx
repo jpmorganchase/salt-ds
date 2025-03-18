@@ -7,7 +7,7 @@ import {
 } from "react";
 
 import { useControlled, useFormFieldProps } from "@salt-ds/core";
-import clsx from "clsx";
+import { clsx } from "clsx";
 import { SliderThumb } from "./internal/SliderThumb";
 import { SliderTrack } from "./internal/SliderTrack";
 import { useSliderThumb } from "./internal/useSliderThumb";
@@ -16,16 +16,19 @@ import { calculatePercentage, clamp, toFloat } from "./internal/utils";
 export interface SliderProps
   extends Omit<HTMLAttributes<HTMLDivElement>, "onChange" | "defaultValue"> {
   /**
-   * When bottom labels for minimum and maximum values are set, ensure
-   * that they are confined within the boundary of the slider.
+   * When minimum and maximum labels are defined, ensure
+   * they are confined within the boundary of the slider.
+   * @default false
    */
   constrainLabelPosition?: boolean;
   /**
    * The number of allowed decimal places
+   * @default 2
    */
   decimalPlaces?: number;
   /**
    * The default value. Use when the component is not controlled.
+   * @default min + (max - min) / 2,
    */
   defaultValue?: number;
   /**
@@ -43,10 +46,12 @@ export interface SliderProps
   marks?: { label: string; value: number }[];
   /**
    * Maximum slider value.
+   * @default 10
    */
   max?: number;
   /**
    * Minimum slider value.
+   * @default 0
    */
   min?: number;
   /**
@@ -78,14 +83,17 @@ export interface SliderProps
   showTicks?: boolean;
   /**
    * Show the slider value in a tooltip when the thumb is hovered.
+   * @default true
    */
   showTooltip?: boolean;
   /**
    * Minimum interval the slider thumb can move.
+   * @default 1
    */
   step?: number;
   /**
    * Maximum interval the slider thumb can move when using PageUp and PageDown keys.
+   * @default 2
    */
   stepMultiplier?: number;
   /**
@@ -99,10 +107,8 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
     "aria-label": ariaLabel,
     "aria-labelledby": ariaLabelledBy,
     "aria-valuetext": ariaValueText,
-    constrainLabelPosition = false,
     decimalPlaces = 2,
     disabled: disabledProp = false,
-    showTicks,
     format,
     marks,
     min = 0,
@@ -143,15 +149,15 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
     restrictToMarks,
   );
   const progressPercentage = calculatePercentage(toFloat(value), max, min);
-  const lastValueState = useRef<number>(value);
+  const lastValueRef = useRef<number>(value);
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const parsedValue = toFloat(event.target.value);
-    if (parsedValue !== lastValueState.current) {
+    if (parsedValue !== lastValueRef.current) {
       setValue(parsedValue);
       onChange?.(event, parsedValue);
       onChangeEnd?.(event, parsedValue);
-      lastValueState.current = parsedValue;
+      lastValueRef.current = parsedValue;
     }
   };
 
@@ -179,7 +185,6 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
   return (
     <SliderTrack
       disabled={disabled}
-      showTicks={showTicks}
       format={format}
       handlePointerDown={handlePointerDownOnTrack}
       isDragging={isDragging}
@@ -190,7 +195,6 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
       marks={marks}
       progressPercentage={progressPercentage}
       ref={ref}
-      constrainLabelPosition={constrainLabelPosition}
       sliderRef={sliderRef}
       {...rest}
     >

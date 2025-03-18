@@ -28,6 +28,16 @@ Selection of a single value from a `Slider` track. A tooltip displays the value 
 
 <LivePreview componentName="slider" exampleName="WithMarks">
 
+<LivePreview componentName="slider" exampleName="WithConstrainedLabelPosition">
+
+## With Constrained Label Position
+
+You can use the `constrainLabelPosition` prop to ensure that the bottom labels remain within the `Slider`'s boundaries. When enabled (`true`), it prevents labels from extending beyond the `Slider`, maintaining a tidy and consistent appearance. This is particularly useful for preserving layout integrity and ensuring label readability across various screen sizes.
+
+**Note:** Enabling `constrainLabelPosition` may lead to inconsistent spacing between marks. Use this option carefully to balance visual clarity and distribution.
+
+</LivePreview>
+
 ## With Marks
 
 You can display marks under the `Slider` track to label specific values. The `showTicks` property allows you to display small ticks above the marks, enhancing visual guidance for users by providing clear reference points along the track. This feature improves usability by making it easier for users to select precise values.
@@ -44,15 +54,14 @@ The `restrictToMarks` property, when enabled, confines the `Slider`'s movement t
 
 </LivePreview>
 
-<LivePreview componentName="slider" exampleName="WithConstrainedLabelPosition">
+<LivePreview componentName="slider" exampleName="Disabled">
 
-## With Constrained Label Position
+## Disabled
 
-You can use the `constrainLabelPosition` prop to ensure that the bottom labels remain within the `Slider`'s boundaries. When enabled (`true`), it prevents labels from extending beyond the `Slider`, maintaining a tidy and consistent appearance. This is particularly useful for preserving layout integrity and ensuring label readability across various screen sizes.
-
-**Note:** Enabling `constrainLabelPosition` may lead to inconsistent spacing between marks. Use this option carefully to balance visual clarity and distribution.
+You can set the `Slider` as disabled.
 
 </LivePreview>
+</LivePreviewControls>
 
 <LivePreview componentName="slider" exampleName="WithCustomStep">
 
@@ -62,7 +71,7 @@ By default, the `Slider` step increment is set to 1. This can be customized by u
 
 ### Best practices
 
-Custom step should always be a multiple of the maximum value to ensure that all values of the `Slider` are reachable.
+We recommend (max - min) to be evenly divisible by the step to ensure that all values of the `Slider` are reachable.
 
 </LivePreview>
 
@@ -104,11 +113,11 @@ You can display inputs with the `Slider`. Inputs are used to enter a numeric val
 
 </LivePreview>
 
-<LivePreview componentName="slider" exampleName="WithDisabledTooltip">
+<LivePreview componentName="slider" exampleName="WithHiddenTooltip">
 
-## With Disabled Tooltip
+## Hide Tooltip
 
-If you do not wish to show the tooltip when the `Slider` thumb is hovered, you can disable it via the `showTooltip` prop. This could be useful for instances when your `Slider` is already displaying sufficient information and you do not wish to show a tooltip.
+To hide the tooltip when hovering over the Slider thumb, you can use the showTooltip prop. This is beneficial in cases where your Slider already conveys enough information, eliminating the need for a tooltip.
 
 </LivePreview>
 
@@ -128,12 +137,3 @@ The `Slider` maps numeric values to meaningful non-numeric options, enabling int
 This approach ensures a user-friendly and accessible interface for selecting non-numeric values.
 
 </LivePreview>
-
-<LivePreview componentName="slider" exampleName="Disabled">
-
-## Disabled
-
-You can set the `Slider` as disabled.
-
-</LivePreview>
-</LivePreviewControls>

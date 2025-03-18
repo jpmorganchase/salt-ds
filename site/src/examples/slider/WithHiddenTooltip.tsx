@@ -1,6 +1,6 @@
 import { Slider } from "@salt-ds/lab";
 
-export const WithDisabledTooltip = () => (
+export const WithHiddenTooltip = () => (
   <Slider
     aria-label="single"
     min={0}

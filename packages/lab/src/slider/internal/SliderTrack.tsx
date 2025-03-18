@@ -11,7 +11,7 @@ const withBaseName = makePrefixer("saltSliderTrack");
 interface SliderTrackProps
   extends Omit<HTMLAttributes<HTMLDivElement>, "onChange" | "defaultValue"> {
   children: React.ReactNode;
-  constrainLabelPosition: boolean;
+  constrainLabelPosition?: boolean;
   disabled: boolean;
   showTicks?: boolean;
   format?: (value: number) => string | number;
@@ -32,7 +32,7 @@ export const SliderTrack = forwardRef<HTMLDivElement, SliderTrackProps>(
   function SliderTrack(
     {
       children,
-      constrainLabelPosition,
+      constrainLabelPosition = false,
       disabled,
       showTicks,
       format,
@@ -81,19 +81,11 @@ export const SliderTrack = forwardRef<HTMLDivElement, SliderTrackProps>(
     };
 
     const hasMinTick = () => {
-      if (!marks) return false;
-      const minMark = marks.reduce((min, current) => {
-        return current.value < min.value ? current : min;
-      });
-      return minMark.value === min;
+      return marks?.some((mark) => mark.value === min) || false;
     };
 
     const hasMaxTick = () => {
-      if (!marks) return false;
-      const maxMark = marks.reduce((max, current) => {
-        return current.value > max.value ? current : max;
-      });
-      return maxMark.value === max;
+      return marks?.some((mark) => mark.value === max) || false;
     };
 
     return (

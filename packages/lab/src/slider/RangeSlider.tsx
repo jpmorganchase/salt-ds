@@ -7,7 +7,7 @@ import {
 } from "react";
 
 import { useControlled, useFormFieldProps } from "@salt-ds/core";
-import clsx from "clsx";
+import { clsx } from "clsx";
 import { SliderThumb } from "./internal/SliderThumb";
 import { SliderTrack } from "./internal/SliderTrack";
 import { useRangeSliderThumb } from "./internal/useRangeSliderThumb";
@@ -16,16 +16,18 @@ import { calculatePercentage, clampRange, toFloat } from "./internal/utils";
 export interface RangeSliderProps
   extends Omit<HTMLAttributes<HTMLDivElement>, "onChange" | "defaultValue"> {
   /**
-   * When bottom labels for minimum and maximum values are set, ensure
-   * that they are confined within the boundary of the slider.
+   * When minimum and maximum labels are defined, ensure
+   * they are confined within the boundary of the slider.
    */
   constrainLabelPosition?: boolean;
   /**
    * The number of allowed decimal places
+   * @default 2
    */
   decimalPlaces?: number;
   /**
    * The default value. Use when the component is not controlled.
+   * @default [min, min + (max - min) / 2]
    */
   defaultValue?: [number, number];
   /**
@@ -47,10 +49,12 @@ export interface RangeSliderProps
   marks?: { label: string; value: number }[];
   /**
    * Maximum slider value.
+   * @default 10
    */
   max?: number;
   /**
    * Minimum slider value.
+   * @default 0
    */
   min?: number;
   /**
@@ -84,14 +88,17 @@ export interface RangeSliderProps
   restrictToMarks?: boolean;
   /**
    * Show the slider value in a tooltip when the thumb is hovered.
+   * @default true
    */
   showTooltip?: boolean;
   /**
    * Minimum interval the slider thumb can move.
+   * @default 1
    */
   step?: number;
   /**
    * Maximum interval the slider thumb can move when using PageUp and PageDown keys.
+   * @default 2
    */
   stepMultiplier?: number;
   /**
@@ -106,10 +113,8 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>(
       "aria-label": ariaLabel,
       "aria-labelledby": ariaLabelledBy,
       "aria-valuetext": ariaValueText,
-      constrainLabelPosition = false,
       decimalPlaces = 2,
       disabled: disabledProp = false,
-      showTicks,
       format,
       marks,
       max = 10,
@@ -216,7 +221,6 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>(
     return (
       <SliderTrack
         disabled={disabled}
-        showTicks={showTicks}
         format={format}
         handlePointerDown={handlePointerDownOnTrack}
         isDragging={isDragging}
@@ -231,7 +235,6 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>(
           progressPercentageEnd,
         ]}
         ref={ref}
-        constrainLabelPosition={constrainLabelPosition}
         sliderRef={sliderRef}
         {...rest}
       >
