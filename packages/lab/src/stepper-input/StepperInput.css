@@ -250,9 +250,9 @@
 
 .saltStepperInput-startAdornmentContainer > .saltButton,
 .saltStepperInput-endAdornmentContainer > .saltButton {
-  --saltButton-padding: calc(var(--salt-spacing-50) - var(--salt-size-border));
-  --saltButton-height: calc(var(--salt-size-base) - var(--salt-spacing-100));
-  --saltButton-borderRadius: var(--salt-palette-corner-weaker);
+  --button-padding: calc(var(--salt-spacing-50) - var(--salt-size-border));
+  --button-height: calc(var(--salt-size-base) - var(--salt-spacing-100));
+  --button-borderRadius: var(--salt-palette-corner-weaker);
 }
 
 .saltStepperInput-inputTextAlignLeft {
@@ -279,13 +279,13 @@
 
 /* Styles applied to stepper buttons */
 .saltStepperInput-stepperButton {
-  --saltButton-height: calc((var(--salt-size-base) - var(--stepperInput-buttonGap)) * 0.5);
-  --saltButton-width: var(--salt-size-base);
+  --button-height: calc((var(--salt-size-base) - var(--stepperInput-buttonGap)) * 0.5);
+  width: var(--salt-size-base);
 }
 
 .saltStepperInput-stepperButtonIncrement {
-  --saltButton-borderRadius: var(--salt-palette-corner-weak, 0) var(--salt-palette-corner-weak, 0) 0 0;
+  --button-borderRadius: var(--salt-palette-corner-weak, 0) var(--salt-palette-corner-weak, 0) 0 0;
 }
 .saltStepperInput-stepperButtonDecrement {
-  --saltButton-borderRadius: 0 0 var(--salt-palette-corner-weak, 0) var(--salt-palette-corner-weak, 0);
+  --button-borderRadius: 0 0 var(--salt-palette-corner-weak, 0) var(--salt-palette-corner-weak, 0);
 }
