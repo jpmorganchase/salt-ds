@@ -2,7 +2,7 @@ export * from "./Default";
 export * from "./Disabled";
 export * from "./WithConstrainedLabelPosition";
 export * from "./WithCustomStep";
-export * from "./WithDisabledTooltip";
+export * from "./WithHiddenTooltip";
 export * from "./WithFormatting";
 export * from "./WithFormField";
 export * from "./WithInput";

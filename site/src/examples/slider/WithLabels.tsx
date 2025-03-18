@@ -17,7 +17,7 @@ export const WithLabels = (): ReactElement => (
       />
     </FormField>
     <FormField>
-      <FormFieldLabel>Labelled by marks</FormFieldLabel>
+      <FormFieldLabel>Min/max labelled by marks</FormFieldLabel>
       <Slider
         aria-label="single"
         min={0}

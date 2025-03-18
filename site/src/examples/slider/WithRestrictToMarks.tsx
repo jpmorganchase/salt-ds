@@ -5,7 +5,7 @@ import type { ReactElement } from "react";
 export const WithRestrictToMarks = (): ReactElement => (
   <StackLayout gap={6}>
     <FormField>
-      <FormFieldLabel>Slider restricted to marks</FormFieldLabel>
+      <FormFieldLabel>Restricted to marks</FormFieldLabel>
       <Slider
         aria-label="Slider restricted to marks"
         style={{ width: "400px" }}
@@ -40,9 +40,9 @@ export const WithRestrictToMarks = (): ReactElement => (
       />
     </FormField>
     <FormField>
-      <FormFieldLabel>Slider restricted to marks with ticks</FormFieldLabel>
+      <FormFieldLabel>Restricted to marks, with ticks</FormFieldLabel>
       <Slider
-        aria-label="Slider restricted to marks with mark ticks"
+        aria-label="Slider restricted to marks, with mark ticks"
         style={{ width: "400px" }}
         marks={[
           {

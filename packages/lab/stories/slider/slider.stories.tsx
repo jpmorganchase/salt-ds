@@ -252,9 +252,9 @@ WithConstrainedLabelPosition.args = {
   constrainLabelPosition: true,
 };
 
-export const WithDisabledTooltip = Template.bind({});
-WithDisabledTooltip.args = {
-  "aria-label": "WithDisabledTooltip",
+export const WithHiddenTooltip = Template.bind({});
+WithHiddenTooltip.args = {
+  "aria-label": "WithHiddenTooltip",
   min: 0,
   max: 50,
   defaultValue: 20,
@@ -272,7 +272,7 @@ WithDisabledTooltip.args = {
   ],
 };
 
-WithDisabledTooltip.parameters = {
+WithHiddenTooltip.parameters = {
   actions: { disable: true },
 };
 

@@ -69,7 +69,7 @@ const RangeWithInput = () => {
 
   return (
     <FormField style={{ width: "400px" }}>
-      <FormFieldLabel>Range Slider with Input</FormFieldLabel>
+      <FormFieldLabel>RangeSlider with Input</FormFieldLabel>
       <FlexLayout gap={3} align="center">
         <Input
           id="slider-min-value"

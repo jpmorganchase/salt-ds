@@ -1,6 +1,6 @@
 import { RangeSlider } from "@salt-ds/lab";
 
-export const WithDisabledTooltip = () => (
+export const WithHiddenTooltip = () => (
   <RangeSlider
     aria-label="single"
     min={0}
