@@ -22,3 +22,7 @@
 .root:first-child :is(h2, h3, h4) {
   margin-top: 0;
 }
+
+.root :is(h2, h3, h4) {
+  scroll-margin-top: var(--salt-spacing-600);
+}

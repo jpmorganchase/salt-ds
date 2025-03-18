@@ -1,5 +1,5 @@
 .root {
-  min-height: 100vh;
+  height: 100vh;
   display: grid;
   grid-template-areas: "header header" "left middle" "footer footer";
   grid-template-rows: auto 1fr auto;
@@ -22,7 +22,6 @@
 
 .twoColumn {
   display: flex;
-  height: 100%;
 }
 
 .content {

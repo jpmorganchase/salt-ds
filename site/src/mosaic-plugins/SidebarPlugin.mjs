@@ -54,8 +54,7 @@ function sortSidebarData(sidebarData) {
     if (group?.childNodes?.length > 1) {
       const sortedChildNodes = group.childNodes.sort(
         (pageA, pageB) =>
-          (pageB.priority ? pageB.priority : -1) -
-            (pageA.priority ? pageA.priority : -1) ||
+          (pageB.priority ?? -1) - (pageA.priority ?? -1) ||
           sortBySharedSortConfig(pageA, pageB),
       );
       sortSidebarData(group.childNodes);
@@ -95,15 +94,15 @@ function getSortFieldData(page, sharedSortConfig) {
   let fieldData;
   if (sharedSortConfig !== undefined) {
     const { field, dataType = "string" } = sharedSortConfig;
-    field
-      .replace(/^(?:\.\.\/|\.\/)+/, "")
-      .split("/")
-      .forEach((part) => {
-        const source = fieldData === undefined ? page : fieldData;
-        if (Object.prototype.hasOwnProperty.call(source, part)) {
-          fieldData = source[part];
-        }
-      });
+    const parts = field.replace(/^(?:\.\.\/|\.\/)+/, "").split("/");
+
+    for (const part of parts) {
+      const source = fieldData ?? page;
+      if (Object.hasOwn(source, part)) {
+        fieldData = source[part];
+      }
+    }
+
     switch (dataType) {
       case "date":
         fieldData = new Date(fieldData).getTime(); // call getTime to convert to a number
@@ -164,12 +163,12 @@ const SidebarPlugin = {
   },
   async $beforeSend(
     mutableFilesystem,
-    { config, serialiser, ignorePages, pageExtensions, namespace },
+    { serialiser, ignorePages, pageExtensions, namespace },
     { filename = "sidebar.json", rootDirGlob = "*" },
   ) {
     /**
      * Create a list of pages that should be used to build a sidebar.json
-     * @param dirName - root path of sidebar
+     * @param rootDir - root path of sidebar
      */
     async function createPageList(rootDir) {
       const isChildOfRootDir = (pagePath) => {
@@ -244,6 +243,7 @@ const SidebarPlugin = {
         )
           ? result[groupPath].childNodes
           : [];
+        const groupPriority = page.sidebar?.groupPriority;
         let newGroupNode = {
           ...result[groupPath],
           id: path.posix.dirname(page.route),
@@ -256,8 +256,8 @@ const SidebarPlugin = {
             name: page.sidebar?.groupLabel || name,
           };
 
-          if (priority != null) {
-            newGroupNode.priority = priority;
+          if (groupPriority != null) {
+            newGroupNode.priority = groupPriority;
           }
         }
         if (!isGroupDefaultPage && sortConfigPages[groupPath] !== undefined) {
@@ -280,31 +280,18 @@ const SidebarPlugin = {
       const linkedGroupMap = cloneDeep(groupMap);
       const sortedGroupMapKeys =
         Object.keys(linkedGroupMap).sort(sortByPathLevel);
-      sortedGroupMapKeys.forEach((groupPath) => {
+
+      for (const groupPath of sortedGroupMapKeys) {
         const parentGroupPath = path.posix.dirname(groupPath);
         if (linkedGroupMap[parentGroupPath] === undefined) {
-          return;
+          continue;
         }
         linkedGroupMap[parentGroupPath].childNodes = [
           ...linkedGroupMap[parentGroupPath].childNodes,
           linkedGroupMap[groupPath],
         ];
-      });
+      }
       return [linkedGroupMap[dirName]];
-    }
-    /**
-     * Link each page to a sidebar.json file via ref
-     * @param pages - sidebar pages
-     * @param dirName - root path of sidebar
-     */
-    function addSidebarDataToFrontmatter(pages, dirName) {
-      pages.forEach((page) => {
-        config.setRef(
-          String(page.fullPath),
-          ["sidebarData", "$ref"],
-          path.posix.join(dirName, filename, "#", "pages"),
-        );
-      });
     }
 
     const rootUserJourneys = await mutableFilesystem.promises.glob(
@@ -338,9 +325,7 @@ const SidebarPlugin = {
     );
 
     sidebar = sidebar.sort(
-      (pageA, pageB) =>
-        (pageB.priority ? pageB.priority : -1) -
-        (pageA.priority ? pageA.priority : -1),
+      (pageA, pageB) => (pageB.priority ?? -1) - (pageA.priority ?? -1),
     );
 
     if (sidebar.length > 0) {

@@ -47,6 +47,7 @@ export const AppHeader = () => {
               aria-label="GitHub repository"
               sentiment="neutral"
               appearance="transparent"
+              target="_blank"
             >
               <GithubIcon aria-hidden />
             </CTALink>

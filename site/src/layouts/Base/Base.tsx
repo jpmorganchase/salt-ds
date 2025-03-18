@@ -1,5 +1,5 @@
 import { useMeta, useRoute } from "@jpmorganchase/mosaic-store";
-import type { DrawerProps } from "@salt-ds/core";
+import { type DrawerProps, SkipLink, useId } from "@salt-ds/core";
 import { clsx } from "clsx";
 import dynamic from "next/dynamic";
 import {
@@ -68,6 +68,8 @@ export function Base({
     [drawerOpen],
   );
 
+  const headingId = useId();
+
   return (
     <LayoutContext.Provider value={context}>
       <div
@@ -77,17 +79,20 @@ export function Base({
           className,
         )}
       >
+        {headingId && (
+          <SkipLink targetId={headingId}>Skip to main content</SkipLink>
+        )}
         <AppHeader />
         {LeftSidebar}
-        <div className={styles.middle}>
+        <main className={styles.middle}>
           {(title || description) && (
-            <Heading title={title} description={description} />
+            <Heading title={title} description={description} id={headingId} />
           )}
           <div className={styles.twoColumn}>
             <div className={styles.content}>{children}</div>
             {RightSidebar}
           </div>
-        </div>
+        </main>
         <Footer />
       </div>
     </LayoutContext.Provider>

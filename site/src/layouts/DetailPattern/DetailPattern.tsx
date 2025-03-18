@@ -5,7 +5,7 @@ import { CTALink } from "../../components/cta-link/CTALink";
 import { Image } from "../../components/mdx/image";
 import { PageNavigation } from "../../components/navigation/PageNavigation";
 import { TableOfContents } from "../../components/toc";
-import { PageHeading } from "../Base/PageHeading";
+import { PageHeading, type PageHeadingProps } from "../Base/PageHeading";
 import { PrimarySidebar } from "../Base/PrimarySidebar";
 import { SecondarySidebar } from "../Base/SecondarySidebar";
 import { Base } from "../Base/index";
@@ -29,7 +29,8 @@ type CustomSiteState = SiteState & { data?: Data };
 function PatternPageHeading({
   title,
   description,
-}: { title?: string; description?: string }) {
+  id,
+}: PageHeadingProps): JSX.Element {
   const resourcesArray =
     useStore((state: CustomSiteState) => state.data?.resources) ?? [];
 
@@ -38,7 +39,7 @@ function PatternPageHeading({
   )[0];
 
   return (
-    <PageHeading title={title} description={description}>
+    <PageHeading title={title} description={description} id={id}>
       <div className={styles.headingActions}>
         {exampleLink && (
           <CTALink

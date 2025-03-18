@@ -9,15 +9,17 @@ export interface PageHeadingProps {
   title?: string;
   description?: string;
   children?: ReactNode;
+  id?: string;
 }
 
 export function PageHeading({
   title,
   description,
   children,
+  id,
 }: PageHeadingProps) {
   return (
-    <div className={styles.root}>
+    <div className={styles.root} id={id}>
       <H1 styleAs={"display4"}>{title}</H1>
       {description && (
         <Text className={styles.description}>

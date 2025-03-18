@@ -13,7 +13,7 @@ import {
 import { GithubIcon, SettingsSolidIcon } from "@salt-ds/icons";
 import { CTALink } from "../../components/cta-link/CTALink";
 import { useLivePreviewControls } from "../../components/index";
-import { PageHeading } from "../Base/PageHeading";
+import { PageHeading, type PageHeadingProps } from "../Base/PageHeading";
 import type { CustomSiteState } from "./DetailComponent";
 import styles from "./DetailComponent.module.css";
 
@@ -73,7 +73,7 @@ function ThemeControls() {
   );
 }
 
-export default function ComponentPageHeading({ title }: { title?: string }) {
+export default function ComponentPageHeading({ title, id }: PageHeadingProps) {
   const {
     description,
     sourceCodeUrl,
@@ -81,7 +81,7 @@ export default function ComponentPageHeading({ title }: { title?: string }) {
   } = useStore((state: CustomSiteState) => state.data ?? {});
 
   return (
-    <PageHeading title={title} description={description}>
+    <PageHeading title={title} description={description} id={id}>
       {alsoKnownAs.length > 0 && (
         <Text>
           Also known as: <small>{alsoKnownAs.join(", ")}</small>
