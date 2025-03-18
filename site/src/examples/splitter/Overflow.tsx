@@ -36,7 +36,7 @@ export function Overflow() {
 
   return (
     <StackLayout direction={"column"}>
-      <FlexLayout className={styles.box} style={{ width: "600px"}}>
+      <FlexLayout className={styles.box} style={{ width: "600px" }}>
         <Splitter className="box" orientation="vertical">
           <SplitPanel>
             <Splitter orientation="horizontal">
