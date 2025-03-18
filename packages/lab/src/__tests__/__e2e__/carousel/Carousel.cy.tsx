@@ -58,7 +58,7 @@ describe("GIVEN a 100% width slides carousel", () => {
     it("SHOULD update labels when scrolling", () => {
       cy.mount(<Default />);
       cy.findAllByText("1 of 4").should("exist");
-      cy.get(".saltCarouselSlider").scrollTo("topRight");
+      cy.get(".saltCarouselSlider").scrollTo("right");
       cy.findAllByText("4 of 4").should("exist");
     });
     it("SHOULD support keyboard navigation", () => {
@@ -74,13 +74,13 @@ describe("GIVEN a 100% width slides carousel", () => {
     describe("WHEN navigating with keyboard keys", () => {
       it("SHOULD NOT move slides when tabbing out of actions within", () => {
         cy.mount(<WithActions />);
-        cy.findAllByText("1 - 2 of 4").should("exist");
+        cy.findByText("1 - 2 of 4").should("exist");
         cy.findAllByRole("button", { name: "Next slides" }).focus();
         // tab through visible elements
         cy.realPress("Tab");
         cy.realPress("Tab");
         // slides should not have been changed
-        cy.findAllByText("1 - 2 of 4").should("exist");
+        cy.findByText("1 - 2 of 4").should("exist");
       });
     });
   });
@@ -93,10 +93,10 @@ describe("GIVEN a carousel with responsive visibleItems", () => {
 
     cy.viewport(700, 900); // sm viewport
     cy.mount(<Default visibleSlides={{ xs: 1, sm: 2, md: 3 }} />);
-    cy.findAllByText("1 - 2 of 4").should("exist");
+    cy.findByText("1 - 2 of 4").should("exist");
 
     cy.viewport(961, 1200); // md viewport
     cy.mount(<Default visibleSlides={{ xs: 1, sm: 2, md: 3 }} />);
-    cy.findAllByText("1 - 3 of 4").should("exist");
+    cy.findByText("1 - 3 of 4").should("exist");
   });
 });

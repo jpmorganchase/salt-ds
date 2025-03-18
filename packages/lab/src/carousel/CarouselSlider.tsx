@@ -2,10 +2,10 @@ import { makePrefixer, useForkRef } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import {
+  forwardRef,
   type HTMLAttributes,
   type KeyboardEvent,
   type ReactElement,
-  forwardRef,
   useContext,
 } from "react";
 import {
@@ -46,7 +46,7 @@ export const CarouselSlider = forwardRef<HTMLDivElement, CarouselSliderProps>(
     } = useContext(CarouselStateContext);
     const slideIds = [...slides.keys()];
     const prevId =
-      focusedSlideIndex > firstVisibleSlideIndex
+      focusedSlideIndex && focusedSlideIndex > firstVisibleSlideIndex
         ? slideIds[focusedSlideIndex - 1]
         : slideIds[firstVisibleSlideIndex - 1] || null;
     const nextId = slideIds[firstVisibleSlideIndex + 1] || null;
