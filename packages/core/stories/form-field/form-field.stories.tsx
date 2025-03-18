@@ -4,6 +4,7 @@ import {
   CheckboxGroup,
   FlowLayout,
   FormField,
+  FormFieldHelperText,
   type FormFieldLabelPlacement,
   FormFieldHelperText as FormHelperText,
   FormFieldLabel as FormLabel,
@@ -26,6 +27,7 @@ import {
   type ChangeEventHandler,
   useState,
 } from "react";
+import "./form-field.stories.css";
 
 export default {
   title: "Core/Form Field",
@@ -1090,6 +1092,36 @@ export const MultiColumnGrid: StoryFn<typeof FormField> = (props) => {
       <FormField {...props}>
         <FormLabel>Form Field label</FormLabel>
         <Input defaultValue="Value" />
+      </FormField>
+    </StackLayout>
+  );
+};
+
+export const CustomRequired: StoryFn<typeof FormField> = (props) => {
+  return (
+    <StackLayout
+      style={{
+        maxWidth: 500,
+      }}
+    >
+      <Text styleAs="h3">
+        Extended styling using <code>--salt-content-attention-foreground</code>
+      </Text>
+      <FormField necessity="asterisk" {...props}>
+        <FormLabel>Email address</FormLabel>
+        <Input placeholder="Your email" bordered />
+        <FormFieldHelperText>
+          By signing up, you are agreeing to our Terms of Service and Privacy
+          Policy.
+        </FormFieldHelperText>
+      </FormField>
+      <FormField necessity="required" {...props}>
+        <FormLabel>Email address</FormLabel>
+        <Input placeholder="Your email" />
+        <FormFieldHelperText>
+          By signing up, you are agreeing to our Terms of Service and Privacy
+          Policy.
+        </FormFieldHelperText>
       </FormField>
     </StackLayout>
   );
