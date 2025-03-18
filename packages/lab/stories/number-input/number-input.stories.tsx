@@ -260,7 +260,7 @@ export const CustomButtons: StoryFn<NumberInputProps> = (args) => {
         value={value}
         startAdornment={
           <Button
-            aria-hidden
+            aria-label="decrement value"
             onClick={() =>
               setValue(
                 typeof value === "string"
