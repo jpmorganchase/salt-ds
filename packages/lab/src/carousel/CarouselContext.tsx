@@ -7,9 +7,9 @@ import {
   useRef,
 } from "react";
 import {
-  carouselReducer,
   type CarouselReducerDispatch,
   type CarouselReducerState,
+  carouselReducer,
 } from "./CarouselReducer";
 
 export const CarouselStateContext = createContext<CarouselReducerState>(
@@ -18,6 +18,7 @@ export const CarouselStateContext = createContext<CarouselReducerState>(
     slides: new Map(),
     firstVisibleSlideIndex: 0,
     visibleSlides: 1,
+    focusedSlideIndex: undefined,
     containerRef: null,
     carouselId: undefined,
   },

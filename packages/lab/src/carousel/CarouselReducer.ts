@@ -7,7 +7,7 @@ export interface CarouselReducerState {
   slides: Map<SlideId, SlideElement>;
   firstVisibleSlideIndex: number;
   visibleSlides: number;
-  focusedSlideIndex: number;
+  focusedSlideIndex?: number;
   containerRef: RefObject<HTMLDivElement> | null;
   carouselId?: string;
 }
