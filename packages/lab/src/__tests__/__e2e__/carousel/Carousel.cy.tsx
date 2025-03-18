@@ -59,13 +59,15 @@ describe("GIVEN a 100% width slides carousel", () => {
       cy.mount(<Default />);
       cy.findAllByText("1 of 4").should("exist");
       cy.get(".saltCarouselSlider").scrollTo("right");
+      cy.wait(100);
       cy.findAllByText("4 of 4").should("exist");
     });
     it("SHOULD support keyboard navigation", () => {
       cy.mount(<Default />);
-      cy.findAllByRole("button", { name: "Next slide" }).focus();
       cy.findAllByText("1 of 4").should("exist");
+      cy.findAllByRole("button", { name: "Next slide" }).focus();
       cy.realPress("Tab");
+      cy.findAllByRole("group").get('[tabindex="0"]').should("exist");
       cy.findAllByRole("group").get('[tabindex="0"]').should("have.focus");
       cy.get(".saltCarouselSlider").realPress("ArrowRight");
       cy.findAllByText("2 of 4").should("exist");
