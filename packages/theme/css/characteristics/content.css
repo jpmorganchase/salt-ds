@@ -5,7 +5,7 @@
   --salt-content-secondary-foreground: var(--salt-palette-neutral-secondary-foreground);
   --salt-content-secondary-foreground-disabled: var(--salt-palette-neutral-secondary-foreground-disabled);
   --salt-content-accent-foreground: var(--salt-palette-accent-foreground-informative);
-  --salt-content-attention-foreground: var(--salt-palette-error-foreground-informative);
+  --salt-content-attention-foreground: var(--salt-palette-negative-foreground);
 
   --salt-content-bold-foreground: var(--salt-palette-interact-cta-foreground);
   --salt-content-bold-foreground-disabled: var(--salt-palette-interact-cta-foreground-disabled);
