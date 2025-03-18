@@ -1,5 +1,9 @@
 import {
   Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogHeader,
   FlexLayout,
   type ImperativePanelHandle,
   SplitHandle,
@@ -168,25 +172,25 @@ export function Variant() {
     <FlexLayout className="box">
       <Splitter orientation="vertical">
         <SplitPanel
-          variant="secondary"
+          variant="primary"
           minSize={0}
           defaultSize={25}
-          className="center"
+          className={"center"}
         >
-          <Text>Left</Text>
+          <Text>Primary</Text>
         </SplitPanel>
-        <SplitHandle border="right" variant="secondary" />
-        <SplitPanel minSize={50} className="center">
-          <Text>Center</Text>
+        <SplitHandle border="right" variant="primary" />
+        <SplitPanel variant="secondary" minSize={50} className={"center"}>
+          <Text>Secondary</Text>
         </SplitPanel>
-        <SplitHandle border="left" variant="secondary" />
+        <SplitHandle border="left" variant="tertiary" />
         <SplitPanel
-          variant="secondary"
+          variant="tertiary"
           minSize={0}
           defaultSize={25}
-          className="center"
+          className={"center"}
         >
-          <Text>Right</Text>
+          <Text>Tertiary</Text>
         </SplitPanel>
       </Splitter>
     </FlexLayout>
@@ -360,3 +364,185 @@ export function ProgrammableResize() {
     </FlexLayout>
   );
 }
+
+export function Overflow() {
+  const [allowOverflow, setAllowOverflow] = useState(false);
+
+  function handleEnableOverflow() {
+    setAllowOverflow(!allowOverflow);
+  }
+
+  function SampleContent({ rows = 6 }) {
+    const quote =
+      '"Simplicity is the ultimate sophistication." - Leonardo da Vinci';
+    const grid = Array.from({ length: rows }, () => quote);
+
+    return (
+      <>
+        {grid.map((line, index) => (
+          <div key={index} style={{ whiteSpace: "nowrap" }}>
+            {`Line ${index + 1} of ${rows}: ${line}`}
+          </div>
+        ))}
+      </>
+    );
+  }
+
+  const overflowProps = allowOverflow ? { overflow: "auto" } : {};
+
+  return (
+    <StackLayout style={{ width: "100%" }}>
+      <FlexLayout className="box">
+        <Splitter orientation="vertical">
+          <SplitPanel>
+            <Splitter orientation="horizontal">
+              <SplitPanel className="center">
+                <div
+                  style={{ width: "100%", height: "100%", ...overflowProps }}
+                >
+                  <SampleContent />
+                </div>
+              </SplitPanel>
+              <SplitHandle />
+              <SplitPanel className="center">
+                <div
+                  style={{ width: "100%", height: "100%", ...overflowProps }}
+                >
+                  <SampleContent />
+                </div>
+              </SplitPanel>
+              <SplitHandle />
+              <SplitPanel className="center">
+                <div
+                  style={{ width: "100%", height: "100%", ...overflowProps }}
+                >
+                  <SampleContent />
+                </div>
+              </SplitPanel>
+            </Splitter>
+          </SplitPanel>
+          <SplitHandle />
+          <SplitPanel>
+            <Splitter orientation="horizontal">
+              <SplitPanel className="center">
+                <div
+                  style={{ width: "100%", height: "100%", ...overflowProps }}
+                >
+                  <SampleContent />
+                </div>
+              </SplitPanel>
+              <SplitHandle />
+              <SplitPanel className="center">
+                <div
+                  style={{ width: "100%", height: "100%", ...overflowProps }}
+                >
+                  <SampleContent />
+                </div>
+              </SplitPanel>
+            </Splitter>
+          </SplitPanel>
+        </Splitter>
+      </FlexLayout>
+      <Button
+        onClick={handleEnableOverflow}
+        aria-label="toggle enable overflow"
+      >
+        {allowOverflow ? "Disable overflow (Default)" : "Enable overflow"}
+      </Button>
+    </StackLayout>
+  );
+}
+
+export function LocalPersistence() {
+  return (
+    <FlexLayout className="box">
+      <Splitter orientation="vertical" autoSaveId={"salt-splitter-demo"}>
+        <SplitPanel id="left" className="center">
+          <Text>Left</Text>
+        </SplitPanel>
+        <SplitHandle aria-label="Resize Left/Center" />
+        <SplitPanel id="center" className="center">
+          <Text>Center</Text>
+        </SplitPanel>
+        <SplitHandle aria-label="Resize Center/Right" />
+        <SplitPanel id="right" className="center">
+          <Text>Right</Text>
+        </SplitPanel>
+      </Splitter>
+    </FlexLayout>
+  );
+}
+
+export const InsideWindow = () => {
+  const [open, setOpen] = useState(false);
+
+  const handleRequestOpen = () => {
+    setOpen(true);
+  };
+
+  const onOpenChange = (value: boolean) => {
+    setOpen(value);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  return (
+    <>
+      <Button data-testid="dialog-button" onClick={handleRequestOpen}>
+        Click to open dialog
+      </Button>
+      <Dialog
+        style={{ width: "420px" }}
+        role="alertdialog"
+        open={open}
+        onOpenChange={onOpenChange}
+        // focus the ok instead of the cancel button
+        initialFocus={1}
+      >
+        <DialogHeader header={"Splitter inside Portalled window"} />
+        <DialogContent
+          className={"box"}
+          style={{ width: "100%", padding: 0, margin: 0 }}
+        >
+          <Splitter orientation="vertical">
+            <SplitPanel>
+              <Splitter orientation="horizontal">
+                <SplitPanel className="center">
+                  <Text>Top Left</Text>
+                </SplitPanel>
+                <SplitHandle />
+                <SplitPanel className="center">
+                  <Text>Center Left</Text>
+                </SplitPanel>
+                <SplitHandle />
+                <SplitPanel className="center">
+                  <Text>Bottom Left</Text>
+                </SplitPanel>
+              </Splitter>
+            </SplitPanel>
+            <SplitHandle />
+            <SplitPanel>
+              <Splitter orientation="horizontal">
+                <SplitPanel className="center">
+                  <Text>Top Right</Text>
+                </SplitPanel>
+                <SplitHandle />
+                <SplitPanel className="center">
+                  <Text>Bottom Right</Text>
+                </SplitPanel>
+              </Splitter>
+            </SplitPanel>
+          </Splitter>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>Cancel</Button>
+          <Button sentiment="accented" onClick={handleClose}>
+            Ok
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </>
+  );
+};
