@@ -1,5 +1,11 @@
 import { createContext } from "@salt-ds/core";
-import { type ReactNode, useLayoutEffect, useReducer, useRef } from "react";
+import {
+  type ReactNode,
+  useEffect,
+  useLayoutEffect,
+  useReducer,
+  useRef,
+} from "react";
 import {
   type CarouselReducerDispatch,
   type CarouselReducerState,
@@ -35,14 +41,17 @@ export function CarouselProvider({
   id?: string;
 }) {
   const containerRef = useRef<HTMLDivElement>(null);
-
   const [state, dispatch] = useReducer(carouselReducer, {
     slides: new Map(),
     firstVisibleSlideIndex,
-    visibleSlides: visibleSlides,
+    visibleSlides,
     containerRef,
     carouselId: id,
   });
+
+  useEffect(() => {
+    dispatch({ type: "updateSlideCount", payload: visibleSlides });
+  }, [visibleSlides]);
 
   useLayoutEffect(() => {
     const container = containerRef.current;
@@ -53,7 +62,7 @@ export function CarouselProvider({
         behavior: "instant",
       });
     });
-  }, [firstVisibleSlideIndex]);
+  }, [firstVisibleSlideIndex, visibleSlides]);
 
   return (
     <CarouselStateContext.Provider value={state}>

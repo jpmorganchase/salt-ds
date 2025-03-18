@@ -49,12 +49,10 @@ export const CarouselSlider = forwardRef<HTMLDivElement, CarouselSliderProps>(
         event.stopPropagation();
         if (event.key === "ArrowRight") {
           if (!nextId) return;
-          dispatch({ type: "move", payload: nextId });
           dispatch({ type: "scroll", payload: nextId });
           dispatch({ type: "focus", payload: nextId });
         } else {
           if (!prevId) return;
-          dispatch({ type: "move", payload: prevId });
           dispatch({ type: "scroll", payload: prevId });
           dispatch({ type: "focus", payload: prevId });
         }

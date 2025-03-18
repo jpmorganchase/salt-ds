@@ -67,7 +67,8 @@ export const CarouselSlide = forwardRef<HTMLDivElement, CarouselSlideProps>(
       window: targetWindow,
     });
     const dispatch = useContext(CarouselDispatchContext);
-    const { slides, visibleSlides } = useContext(CarouselStateContext);
+    const { slides, visibleSlides, firstVisibleSlideIndex } =
+      useContext(CarouselStateContext);
 
     const slideRef = useRef<HTMLDivElement>(null);
     const [isVisible, setIsVisible] = useState(false);
@@ -119,7 +120,7 @@ export const CarouselSlide = forwardRef<HTMLDivElement, CarouselSlideProps>(
           >
             <div className={withBaseName("content")}>
               <span className={withBaseName("sr-only")}>
-                {isVisible && `${slideCount} of ${slideCount}`}
+                {isVisible && `${firstVisibleSlideIndex} of ${slideCount}`}
               </span>
               {header}
               {children}

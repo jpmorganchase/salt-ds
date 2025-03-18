@@ -8,9 +8,7 @@ import {
   CarouselSlider,
 } from "@salt-ds/lab";
 import "./carousel.stories.css";
-import { Button, H2, H3, Link, Text } from "@salt-ds/core";
-import { AddIcon, RemoveIcon } from "@salt-ds/icons";
-import { useState } from "react";
+import { H2, H3, Link, Text } from "@salt-ds/core";
 
 export default {
   title: "Lab/Carousel",
@@ -71,59 +69,6 @@ const CarouselExample: StoryFn<typeof Carousel> = (args, navigationBarArgs) => {
       <Carousel {...args}>
         <CarouselNavigationBar />
         <CarouselSlider>{renderSlides()}</CarouselSlider>
-      </Carousel>
-    </div>
-  );
-};
-export const AddRemove: StoryFn<typeof Carousel> = (
-  args,
-  navigationBarArgs,
-) => {
-  const [slides, setSlides] = useState(content);
-
-  function addSlides() {
-    setSlides([
-      ...slides,
-      {
-        slideId: slides.length,
-        title: "Your accounts. On the move",
-        content: "Discover our latest personal accounts app for iOS.",
-        link: "Open an account",
-      },
-    ]);
-  }
-
-  function removeOne() {
-    setSlides(slides.slice(0, -1));
-  }
-  return (
-    <div className="carousel-container">
-      <Button onClick={addSlides}>
-        <AddIcon />
-      </Button>
-      <Button onClick={removeOne}>
-        <RemoveIcon />
-      </Button>
-      <Carousel {...args}>
-        <CarouselNavigationBar />
-        <CarouselSlider>
-          {slides.map((slide, index) => (
-            <CarouselSlide
-              key={slide.title}
-              header={
-                <H3 id={`slide-title-${slide.slideId}`}>{slide.title}</H3>
-              }
-              aria-labelledby={`slide-title-${slide.slideId}`}
-              media={
-                <div
-                  className={`carousel-image-placeholder carousel-image-placeholder-${index + 1}`}
-                />
-              }
-            >
-              <Text>{slide.content}</Text>
-            </CarouselSlide>
-          ))}
-        </CarouselSlider>
       </Carousel>
     </div>
   );

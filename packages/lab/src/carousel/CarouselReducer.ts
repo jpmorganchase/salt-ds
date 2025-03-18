@@ -13,6 +13,7 @@ export interface CarouselReducerState {
 export type CarouselReducerAction =
   | { type: "register"; payload: [SlideId, SlideElement] }
   | { type: "unregister"; payload: SlideId }
+  | { type: "updateSlideCount"; payload: number }
   | { type: "move"; payload: SlideId }
   | { type: "scroll"; payload: SlideId }
   | { type: "focus"; payload: SlideId };
@@ -52,6 +53,11 @@ export function carouselReducer(
         ...state,
         firstVisibleSlideIndex: index,
       };
+    }
+    case "updateSlideCount": {
+      const visibleSlides = action.payload;
+
+      return { ...state, visibleSlides: visibleSlides };
     }
     case "scroll": {
       const { slides, containerRef, visibleSlides } = state;

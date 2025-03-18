@@ -26,7 +26,6 @@ export const Carousel = forwardRef<HTMLDivElement, CarouselProps>(
       firstVisibleSlideIndex = 0,
       visibleSlides: visibleSlidesProp = 1,
       children,
-      className,
       id: idProp,
       ...rest
     },

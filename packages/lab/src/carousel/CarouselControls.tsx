@@ -87,14 +87,12 @@ export const CarouselControls = forwardRef<
 
   function handlePrevClick(event: MouseEvent<HTMLButtonElement>) {
     if (!prevId) return;
-    dispatch({ type: "move", payload: prevId });
     dispatch({ type: "scroll", payload: prevId });
     onPrevious?.(event);
   }
 
   function handleNextClick(event: MouseEvent<HTMLButtonElement>) {
     if (!nextId) return;
-    dispatch({ type: "move", payload: nextId });
     dispatch({ type: "scroll", payload: nextId });
     onNext?.(event);
   }
