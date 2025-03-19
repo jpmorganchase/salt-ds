@@ -102,6 +102,8 @@ describe("Given a Tabstrip", () => {
 
     cy.findAllByRole("tab").filter(":visible").should("have.length", 4);
 
+    cy.findByLabelText("Width").focus();
+
     cy.realPress("Tab");
     cy.findByRole("tab", { name: "Home" }).should("be.focused");
 
@@ -168,12 +170,13 @@ describe("Given a Tabstrip", () => {
     cy.mount(<Overflow />);
 
     cy.get("[data-overflowbutton]").realClick();
-    cy.findAllByRole("tab").filter(":visible").should("have.length", 17);
+    // 17 - 1, overflow menu overflows off screen
+    cy.findAllByRole("tab").filter(":visible").should("have.length", 16);
+
+    cy.wait(500);
 
     cy.get("body").click(0, 0);
-    cy.findAllByRole("tab")
-      .filter(":visible", { timeout: 500 })
-      .should("have.length", 4);
+    cy.findAllByRole("tab").filter(":visible").should("have.length", 4);
   });
 
   it("should allow selection in the menu", () => {
@@ -200,16 +203,14 @@ describe("Given a Tabstrip", () => {
   it("should allow selection in the menu when only having enough space for the newly selected tab", () => {
     cy.mount(<Overflow />);
 
-    cy.findByRole("tablist").invoke("css", "max-width", 140);
+    cy.findByLabelText("Width").click().type("{selectall}").type("160");
 
-    cy.findAllByRole("tab")
-      .filter(":visible", { timeout: 500 })
-      .should("have.length", 1);
+    cy.findAllByRole("tab").filter(":visible").should("have.length", 1);
 
     cy.get("[data-overflowbutton]").realClick();
     cy.findByRole("tab", { name: "Liquidity" }).realClick();
 
-    cy.findByRole("tab", { name: "Liquidity", timeout: 500 })
+    cy.findByRole("tab", { name: "Liquidity" })
       .should("have.attr", "aria-selected", "true")
       .should("be.focused");
 
@@ -403,15 +404,12 @@ describe("Given a Tabstrip", () => {
     cy.mount(<Overflow />);
     cy.findAllByRole("tab").filter(":visible").should("have.length", 4);
 
-    cy.findByRole("tablist").invoke("css", "max-width", 500);
-    cy.findAllByRole("tab")
-      .filter(":visible", { timeout: 500 })
-      .should("have.length", 6);
-
-    cy.findByRole("tablist").invoke("css", "max-width", 200);
-    cy.findAllByRole("tab")
-      .filter(":visible", { timeout: 500 })
-      .should("have.length", 2);
+    cy.findByLabelText("Width").click().type("{selectall}").type("500");
+    cy.findByLabelText("Width").should("be.focused");
+    cy.findAllByRole("tab").filter(":visible").should("have.length", 6);
+    cy.findByLabelText("Width").click().type("{selectall}").type("250");
+    cy.findByLabelText("Width").should("be.focused");
+    cy.findAllByRole("tab").filter(":visible").should("have.length", 2);
   });
 
   it("should support a controlled API", () => {
@@ -443,41 +441,4 @@ describe("Given a Tabstrip", () => {
       .should("have.attr", "aria-selected", "true")
       .and("be.focused");
   });
-
-  it(
-    "should not cause page overflow when overflow menu is not visible",
-    { viewportWidth: 280, viewportHeight: 280 },
-    () => {
-      cy.get("body").invoke("css", "display", "block");
-
-      cy.mount(<Overflow />);
-      cy.findAllByRole("tab").filter(":visible").should("have.length", 2);
-
-      // no horizontal overflow
-      cy.get("html").then((body) => {
-        console.log(body[0]);
-        const { clientWidth, scrollWidth } = body[0];
-        expect(clientWidth).to.equal(scrollWidth);
-      });
-    },
-  );
-
-  it(
-    "should flip overflow menu placement if there is enough space",
-    { viewportWidth: 430 },
-    () => {
-      cy.get("body").invoke("css", "display", "block");
-
-      cy.mount(<Overflow />);
-      cy.findAllByRole("tab").filter(":visible").should("have.length", 4);
-
-      cy.get("[data-overflowbutton]").realClick();
-
-      // no horizontal overflow, menu should flip in horizontally
-      cy.get("html", { timeout: 500 }).then((body) => {
-        const { clientWidth, scrollWidth } = body[0];
-        expect(clientWidth).to.equal(scrollWidth);
-      });
-    },
-  );
 });

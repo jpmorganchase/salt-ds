@@ -1,6 +1,5 @@
 import {
   FloatingTree,
-  flip,
   offset,
   size,
   useDismiss,
@@ -94,7 +93,6 @@ export const TabOverflowList = forwardRef<HTMLDivElement, TabOverflowListProps>(
             });
           },
         }),
-        flip(),
       ],
     });
 

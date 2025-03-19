@@ -25,9 +25,6 @@
 .saltTabOverflow-list[data-hidden="true"] {
   opacity: 0;
   pointer-events: none;
-  /* Avoid causing page to overflow with the hidden elements */
-  width: 1px;
-  height: 1px;
 }
 
 .saltTabOverflow-list .saltTabNext {
