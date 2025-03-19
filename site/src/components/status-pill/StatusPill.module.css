@@ -1,9 +1,0 @@
-.root {
-  font-size: var(--salt-text-label-fontSize);
-  font-weight: var(--salt-text-fontWeight);
-  line-height: var(--salt-text-label-lineHeight);
-  text-transform: capitalize;
-  background-color: var(--salt-accent-background);
-  border-radius: 999px; /* Ensure perfect pill shape at virtually any size */
-  padding: 0 var(--salt-size-adornmentGap);
-}

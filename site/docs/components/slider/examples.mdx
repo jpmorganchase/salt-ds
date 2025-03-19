@@ -8,33 +8,23 @@ data:
   $ref: ./#/data
 ---
 
-<LivePreviewControls>
-
-<LivePreview componentName="slider" exampleName="Default">
-
 ## Default
 
 Selection of a single value from a `Slider` track. A tooltip displays the value of the `Slider` "thumb" when the thumb is focused or hovered. The tooltip remains persistent on cursor drag or moving the thumb along the track with keyboard interaction.
 
-</LivePreview>
-
-<LivePreview componentName="slider" exampleName="WithLabels">
+<LivePreview componentName="slider" exampleName="Default" />
 
 ## Labels
 
 `Slider`'s labels indicate the minimum and maximum values of the range, and can be located inline with the `Slider` using the `minLabel` and `maxLabel` props or they can be located at the bottom of the `Slider` using the `marks` prop.
 
-</LivePreview>
-
-<LivePreview componentName="slider" exampleName="WithCustomStep">
+<LivePreview componentName="slider" exampleName="WithLabels" />
 
 ## Custom Step
 
 By default, the `Slider` step increment is set to 1. This can be customized by using the `step` prop. Custom step values can be set to any number, including decimal values up to two decimal places.
 
-</LivePreview>
-
-<LivePreview componentName="slider" exampleName="WithFormatting">
+<LivePreview componentName="slider" exampleName="WithCustomStep" />
 
 ## With Formatting
 
@@ -44,17 +34,13 @@ You can pass a callback function to the `format()` prop to format the display va
 
 - When formatting the values, it is recommended to add the same formatting to the marks if passed.
 
-</LivePreview>
-
-<LivePreview componentName="slider" exampleName="WithFormField">
+<LivePreview componentName="slider" exampleName="WithFormatting" />
 
 ## With Form Field
 
 Wrap the `Slider` in a form field to display a left-aligned or top label. For more information, refer to the [form field documentation.](/salt/components/form-field/examples)
 
-</LivePreview>
-
-<LivePreview componentName="slider" exampleName="WithInput">
+<LivePreview componentName="slider" exampleName="WithFormField" />
 
 ## With Input
 
@@ -70,25 +56,19 @@ You can display inputs with the `Slider`. Inputs are used to enter a numeric val
 - Validate your input value changes and update the `validationStatus` prop on any inputs accordingly.
 - Only use the inline labels of the `Slider` alongside an input via the `labelPosition`. This ensures the size-base alignment of the overall component layout is maintained.
 
-</LivePreview>
-
-<LivePreview componentName="slider" exampleName="WithMarks">
+<LivePreview componentName="slider" exampleName="WithInput" />
 
 ## With Marks
 
 You can display marks under the slider track to label specific values. You can combine `marks` with `minLabel` and `maxLabel` to provide even more context regarding the `Slider`.
 
-</LivePreview>
-
-<LivePreview componentName="slider" exampleName="WithDisabledTooltip">
+<LivePreview componentName="slider" exampleName="WithMarks" />
 
 ## With Disabled Tooltip
 
 If you do not wish to show the tooltip when the `Slider` thumb is hovered, you can disable it via the `showTooltip` prop. This could be useful for instances when your `Slider` is already displaying sufficient information and you do not wish to show a tooltip.
 
-</LivePreview>
-
-<LivePreview componentName="slider" exampleName="WithNonNumericValues">
+<LivePreview componentName="slider" exampleName="WithDisabledTooltip" />
 
 ## With Non Numeric values
 
@@ -103,13 +83,10 @@ The `Slider` maps numeric values to meaningful non-numeric options, enabling int
 
 This approach ensures a user-friendly and accessible interface for selecting non-numeric values.
 
-</LivePreview>
-
-<LivePreview componentName="slider" exampleName="Disabled">
+<LivePreview componentName="slider" exampleName="WithNonNumericValues" />
 
 ## Disabled
 
 You can set the `Slider` as disabled.
 
-</LivePreview>
-</LivePreviewControls>
+<LivePreview componentName="slider" exampleName="Disabled" />

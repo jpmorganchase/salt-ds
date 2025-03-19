@@ -1,14 +1,15 @@
-import { Link, type LinkProps } from "@jpmorganchase/mosaic-components";
 import { LinkedIcon } from "@salt-ds/icons";
 import clsx from "clsx";
-import {
-  type ElementType,
-  type FC,
-  type HTMLProps,
-  type PropsWithChildren,
-  type ReactNode,
-  useState,
+import type NextLink from "next/link";
+import type {
+  ComponentPropsWithoutRef,
+  ElementType,
+  FC,
+  HTMLProps,
+  PropsWithChildren,
+  ReactNode,
 } from "react";
+import { LinkBase } from "../../link/Link";
 import styles from "./AnchorHeading.module.css";
 
 interface TypographyProps {
@@ -26,7 +27,7 @@ interface TypographyProps {
 export interface AnchorHeadingProps extends HTMLProps<HTMLHeadingElement> {
   children: ReactNode[];
   Component: FC<PropsWithChildren<TypographyProps>>;
-  LinkProps?: LinkProps;
+  LinkProps?: ComponentPropsWithoutRef<typeof NextLink>;
 }
 
 export const AnchorHeading: FC<PropsWithChildren<AnchorHeadingProps>> = ({
@@ -37,38 +38,17 @@ export const AnchorHeading: FC<PropsWithChildren<AnchorHeadingProps>> = ({
   LinkProps: LinkPropsProp = {},
   ...rest
 }) => {
-  const [hovered, setHovered] = useState(false);
-
-  const handleMouseEnter = () => {
-    setHovered(true);
-  };
-  const handleMouseLeave = () => {
-    setHovered(false);
-  };
-
-  const { link } = LinkPropsProp;
-  const anchorLink = link || `#${id}`;
+  const anchorLink = `#${id}`;
   return (
     <div className={clsx(styles.root, className)}>
-      <Link
-        className={styles.link}
-        {...LinkPropsProp}
-        endIcon="none"
-        link={anchorLink}
-        hovered={hovered}
-        variant="heading"
-        LinkBaseProps={{
-          onMouseEnter: handleMouseEnter,
-          onMouseLeave: handleMouseLeave,
-        }}
-      >
+      <LinkBase {...LinkPropsProp} href={anchorLink} className={styles.link}>
         <Component id={id} {...rest}>
           {children}
           <span className={styles.badgeContainer}>
-            {hovered ? <LinkedIcon color="inherit" /> : null}
+            <LinkedIcon color="inherit" />
           </span>
         </Component>
-      </Link>
+      </LinkBase>
     </div>
   );
 };

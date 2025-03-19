@@ -1,15 +1,32 @@
-import { Sidebar } from "@jpmorganchase/mosaic-site-components";
+import type { LayoutProps } from "@jpmorganchase/mosaic-layouts/dist/types";
 import type { FC } from "react";
-import { TableOfContents } from "../../components/toc";
-import { DetailBase } from "../DetailBase";
-import type { LayoutProps } from "../types/index";
+import { PageNavigation } from "../../components/navigation/PageNavigation";
+import { TableOfContents } from "../../components/toc/index";
+import { PrimarySidebar } from "../Base/PrimarySidebar";
+import { SecondarySidebar } from "../Base/SecondarySidebar";
+import { Base } from "../Base/index";
+import styles from "./DetailTechnical.module.css";
 
 export const DetailTechnical: FC<LayoutProps> = ({ children }) => {
-  const SecondarySidebar = <TableOfContents />;
+  const LeftSidebar = (
+    <PrimarySidebar>
+      <PageNavigation />
+    </PrimarySidebar>
+  );
+
+  const RightSidebar = (
+    <SecondarySidebar>
+      <TableOfContents />
+    </SecondarySidebar>
+  );
 
   return (
-    <DetailBase sidebar={<Sidebar sticky>{SecondarySidebar}</Sidebar>}>
+    <Base
+      className={styles.root}
+      LeftSidebar={LeftSidebar}
+      RightSidebar={RightSidebar}
+    >
       {children}
-    </DetailBase>
+    </Base>
   );
 };

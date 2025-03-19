@@ -1,5 +1,6 @@
 ---
 title: Contact details
+description: "Contact details display communication information for a person, company, distribution list or individual channel. This can include a name, a phone number or email address."
 layout: DetailPattern
 tags:
   - pattern
@@ -12,8 +13,6 @@ data:
     ]
   components: ["Avatar", "Button", "Flow layout", "Icon", "Stack layout", "Text", "Tooltip"]
 ---
-
-Contact details display communication information for a person, company, distribution list or individual channel. This can include a name, a phone number or email address.
 
  <Diagram
     src="/img/patterns/contact-details/contact-details.png"
@@ -28,9 +27,9 @@ Use this pattern to:
 - Display contact information in a directory or CRM (Customer Relationship Management) system.
 - Allow users to populate form fields in a workflow with details from a list of contacts, e.g., client contact selection for a ticket.
 
-<ExampleContainer type="positive" customPillText="Best practices">
+<GuidanceCallout type="positive" customPillText="Best practices">
 Consider a data grid when you need to display many contacts with a standardized set of contact information.
-</ExampleContainer>
+</GuidanceCallout>
 
 ## How to build
 
@@ -48,9 +47,9 @@ The contact details pattern comprises an avatar and text elements:
     border
 />
 
-<ExampleContainer type="positive" customPillText="Best practices">
+<GuidanceCallout type="positive" customPillText="Best practices">
 Keep label lengths similar to ensure close proximity to their respective values. If you’re displaying supplementary details, we recommend that you left align their labels.
-</ExampleContainer>
+</GuidanceCallout>
 
 ### Layout
 
@@ -89,9 +88,9 @@ You can use icon descriptors as a visually concise alternative to textual labels
     border
   />
 
-<ExampleContainer type="positive" customPillText="Best practices">
+<GuidanceCallout type="positive" customPillText="Best practices">
 Refrain from using icon descriptors when you have multiple values for similar channels, such as work and cellphone numbers.
-</ExampleContainer>
+</GuidanceCallout>
 
 ## Using links
 
@@ -151,9 +150,9 @@ If you’re displaying supplementary details, you can configure them to be colla
     border
   />
 
-<ExampleContainer type="positive" customPillText="Best practices">
+<GuidanceCallout type="positive" customPillText="Best practices">
 Consider making supplementary details collapsible when they contain secondary information, and don’t need to be always on display.
-</ExampleContainer>
+</GuidanceCallout>
 
 ## List version
 

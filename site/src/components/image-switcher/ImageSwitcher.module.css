@@ -1,4 +1,5 @@
 .container {
+  background: var(--salt-container-primary-background);
   border: var(--salt-size-border) var(--salt-container-borderStyle) var(--salt-container-primary-borderColor);
   padding: var(--salt-spacing-200);
   gap: var(--salt-spacing-300);
@@ -6,7 +7,7 @@
   flex-direction: column;
 }
 
-@media screen and (max-width: 996px) {
+@media not screen and (min-width: 960px) {
   .container {
     padding: var(--salt-spacing-100);
     gap: var(--salt-spacing-200);

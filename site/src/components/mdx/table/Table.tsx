@@ -4,13 +4,15 @@ import styles from "./Table.module.css";
 
 export interface TableProps extends HTMLProps<HTMLTableElement> {}
 
-export const Table = forwardRef<HTMLTableElement, TableProps>(function Table(
-  { children, className },
+export const Table = forwardRef<HTMLDivElement, TableProps>(function Table(
+  { children, className, ...rest },
   ref,
 ) {
   return (
-    <table className={clsx(styles.table, className)} ref={ref}>
-      {children}
-    </table>
+    <div className={clsx(styles.root, className)} ref={ref}>
+      <table className={styles.table} {...rest}>
+        {children}
+      </table>
+    </div>
   );
 });

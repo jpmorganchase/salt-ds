@@ -1,18 +1,29 @@
-.pre button {
-  /* customise copy button */
-  --color-dark-actionable-primary-hover: transparent;
-  --color-dark-actionable-primary-regular: transparent;
-  --color-dark-actionable-label-light: var(--salt-color-gray-300);
+.pre {
+  max-width: 100vw;
+  position: relative;
 }
 
-.pre button {
-  border: var(--salt-size-border) var(--salt-selectable-borderStyle) var(--salt-color-gray-300);
-  border-radius: 0.4rem;
-  padding: 0 var(--salt-size-unit);
-  margin: calc(var(--salt-size-unit) / 2);
+.pre pre {
+  font-family: var(--salt-text-code-fontFamily);
+  border-radius: var(--salt-palette-corner-weak);
+  padding: var(--salt-spacing-200);
+  overflow-x: auto;
+  margin: 0;
 }
 
-.pre button svg {
-  width: calc(var(--salt-size-unit) * 1.5);
-  height: calc(var(--salt-size-unit) * 1.5);
+:global([data-mode="dark"]) .pre pre,
+:global([data-mode="dark"]) .pre pre span {
+  background-color: var(--shiki-dark-bg) !important;
+  color: var(--shiki-dark) !important;
+}
+
+.copyButton {
+  position: absolute;
+  top: 0;
+  right: 0;
+  visibility: hidden;
+}
+
+.pre:hover .copyButton {
+  visibility: visible;
 }

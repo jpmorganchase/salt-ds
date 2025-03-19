@@ -1,0 +1,12 @@
+.root {
+  grid-area: left;
+  position: relative;
+  background: var(--salt-container-primary-background);
+  display: flex;
+  flex-direction: column;
+  gap: var(--salt-spacing-200);
+  overflow-y: auto;
+  padding-block: var(--salt-spacing-300);
+  padding-right: var(--salt-spacing-300);
+  min-width: min-content;
+}

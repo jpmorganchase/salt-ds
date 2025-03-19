@@ -1,0 +1,30 @@
+:root {
+  box-sizing: border-box;
+}
+
+*,
+*:after,
+*:before {
+  box-sizing: inherit;
+}
+
+body {
+  color: var(--salt-content-primary-foreground);
+  background: var(--salt-container-primary-background);
+  font-size: var(--salt-text-fontSize);
+  line-height: var(--salt-text-lineHeight);
+  font-weight: var(--salt-text-fontWeight);
+  letter-spacing: var(--salt-text-letterSpacing);
+  margin: 0;
+  width: 100%;
+  min-width: 320px;
+  min-height: 100vh;
+  font-synthesis: style;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background: var(--salt-content-foreground-highlight);
+}

@@ -1,12 +1,8 @@
 .footer {
-  --footer-items-separator-height: 16px;
-  --footer-padding-horizontal: calc(var(--salt-size-unit) * 3);
-  --footer-padding-vertical: var(--salt-size-unit);
-}
-
-.footer {
-  background-color: var(--salt-color-gray-900);
-  padding: var(--footer-padding-vertical) var(--footer-padding-horizontal);
+  grid-area: footer;
+  border-top: var(--salt-size-border) var(--salt-separable-borderStyle) var(--salt-separable-tertiary-borderColor);
+  background-color: var(--salt-container-primary-background);
+  padding: var(--salt-spacing-100) var(--salt-spacing-300);
   color: var(--salt-content-secondary-foreground);
 }
 
@@ -15,19 +11,31 @@
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
+  gap: var(--salt-spacing-100);
+}
+
+.saltMessage {
+  display: flex;
+  gap: var(--salt-spacing-50);
+}
+
+.copyrightContainer {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--salt-spacing-25);
 }
 
 .links {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--salt-size-unit);
+  gap: var(--salt-spacing-100);
 }
 
 .links > *:not(:last-child):after {
   width: var(--salt-size-border);
   content: "";
   background-color: var(--salt-separable-secondary-borderColor);
-  height: var(--footer-items-separator-height);
+  height: var(--salt-text-lineHeight);
   align-self: center;
 }
 
@@ -35,30 +43,23 @@
   display: contents;
 }
 
-.linkContainer a {
-  --link-color: var(--salt-content-secondary-foreground);
-}
-@media screen and (max-width: 1280px) {
-  .footer {
-    --footer-padding-horizontal: var(--salt-size-unit);
-    --footer-padding-vertical: var(--salt-size-unit);
-  }
+.linkContainer a:global(.saltLink) {
+  --link-color-visited: var(--link-color);
 }
 
-@media (max-width: 996px) {
+@media not screen and (min-width: 960px) {
   .footer {
-    --footer-padding-horizontal: var(--salt-size-unit);
-    --footer-padding-vertical: var(--salt-size-unit);
-  }
-}
-
-@media screen and (max-width: 768px) {
-  .footer {
-    --footer-padding-horizontal: var(--salt-size-unit);
-    --footer-padding-vertical: var(--salt-size-unit);
+    padding-inline: var(--salt-spacing-100);
   }
 
   .container {
-    gap: calc(var(--salt-size-unit) / 2);
+    gap: var(--salt-spacing-50);
+  }
+}
+
+@media not screen and (min-width: 599px) {
+  .copyrightContainer {
+    flex-direction: column;
+    gap: var(--salt-spacing-50);
   }
 }

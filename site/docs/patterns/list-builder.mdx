@@ -1,5 +1,6 @@
 ---
 title: List builder
+description: "A list builder allows users to create a bespoke list of items from an original list, also known as a pick list, adding or removing items as required. Users can filter the items by using the filter input field."
 layout: DetailPattern
 tags:
   - pattern
@@ -13,8 +14,6 @@ data:
   components: ["List", "Input", "Button", "Text", "Stack layout"]
   relatedPatterns: ["List filtering"]
 ---
-
-A list builder allows users to create a bespoke list of items from an original list, also known as a pick list, adding or removing items as required. Users can filter the items by using the filter input field.
 
   <Diagram
     src="/img/patterns/list-builder/list-builder.png"
@@ -35,10 +34,10 @@ Typical use cases for using a list builder include:
 - Creating a distribution list.
 - Creating a list of accounts for use in transactions.
 
-<ExampleContainer type="positive" customPillText="Best practices">
+<GuidanceCallout type="positive" customPillText="Best practices">
 - Apply a consistent logic to the order of displayed items. Display pick list items chronologically or in alphabetical order, provided there are no pre-defined requirements.
 - Only use a list builder when there are at least five items to choose from. If you have fewer items, use a single reorderable list.
-</ExampleContainer>
+</GuidanceCallout>
 
 ## How to build
 
@@ -57,9 +56,9 @@ The list builder has three functional areas:
     border
   />
 
-<ExampleContainer type="positive" customPillText="Best practices">
+<GuidanceCallout type="positive" customPillText="Best practices">
 Apply a consistent logic to the order of displayed items. Display pick list items chronologically or in alphabetical order, provided there are no predefined requirements.
-</ExampleContainer>
+</GuidanceCallout>
 
 ### Layout
 
@@ -83,12 +82,12 @@ There are two common behaviors for positioning selected items within the list:
 
 When moving items from the selected item list back to the pick list, position them according to the pick list's existing sort order. This makes items in large pick lists as quick and easy to find as possible.
 
-<ExampleContainer type="positive" customPillText="Best practices">
+<GuidanceCallout type="positive" customPillText="Best practices">
 - Change list labels based on your use case. Make sure to keep them clear and concise.
 - Always display a label for ADA compliance and to help users identify the purpose of the list, for example, a list of available/picked columns within a grid.
 - Show a count in brackets to help users keep track of the number of items in the list.
 - Incorporate more buttons into the button bar according to your use case. Examples include “move to top” and “move to bottom” functionalities.
-</ExampleContainer>
+</GuidanceCallout>
 
 ## Multiple selection
 
@@ -138,9 +137,9 @@ Display a message to prompt or instruct the user when a list is empty. You can c
     caption="An empty state message."
   />
 
-<ExampleContainer type="positive" customPillText="Best practices">
+<GuidanceCallout type="positive" customPillText="Best practices">
 Horizontally and vertically center the empty state message in the container.
-</ExampleContainer>
+</GuidanceCallout>
 
 ## Stack layout
 
@@ -154,9 +153,9 @@ Use a stack layout to compose the list builder vertically for interfaces with li
     caption="A vertically aligned list builder using a stack layout."
   />
 
-<ExampleContainer type="positive" customPillText="Best practices">
+<GuidanceCallout type="positive" customPillText="Best practices">
 Use a minimum width of 8ems and ensure that the list builder spans the full width of the screen or its parent container.
-</ExampleContainer>
+</GuidanceCallout>
 
 ## Filter and sort
 
@@ -170,8 +169,8 @@ In both the pick list and the selected item list, users can [apply filters](/sal
     caption="Filter and sort behaviors for a list builder."
   />
 
-<ExampleContainer type="positive" customPillText="Best practices">
+<GuidanceCallout type="positive" customPillText="Best practices">
 Include a sort button within the pick list, enabling users to organize the list in either ascending or descending order.
-</ExampleContainer>
+</GuidanceCallout>
 
 :fragment{src="./fragments/feedback.mdx"}

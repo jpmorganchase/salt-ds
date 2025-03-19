@@ -1,5 +1,6 @@
 ---
 title: Navigation
+description: "A navigation provides users with a structured and intuitive way to go to different pages, sections or features of your website or application. It tells users where they are at all times and ensures they can easily get to where they need to go. Use this pattern to provide consistency that helps users navigate your website or application easily and efficiently."
 layout: DetailPattern
 tags:
   - pattern
@@ -13,8 +14,6 @@ data:
   components: ["Navigation item"]
   relatedPatterns: ["Vertical navigation"]
 ---
-
-A navigation provides users with a structured and intuitive way to go to different pages, sections or features of your website or application. It tells users where they are at all times and ensures they can easily get to where they need to go. Use this pattern to provide consistency that helps users navigate your website or application easily and efficiently.
 
 <Diagram
   src="/img/patterns/navigation/navigation-example.png"
@@ -73,10 +72,10 @@ You would normally use a horizontal navigation within an application header, at 
   border
 />
 
-<ExampleContainer type="positive" customPillText="Best practices">
+<GuidanceCallout type="positive" customPillText="Best practices">
   Use horizontal navigation when you have fewer than eight items. Otherwise,
   consider a vertical group of items.
-</ExampleContainer>
+</GuidanceCallout>
 
 ### Default
 
@@ -100,10 +99,10 @@ You can use icon descriptors to signify effectively the navigation item’s purp
   border
 />
 
-<ExampleContainer type="positive" customPillText="Best practices">
+<GuidanceCallout type="positive" customPillText="Best practices">
   Ensure that icon descriptors are consistent across all items within the same
   hierarchy level. This helps keep them equally weighted.
-</ExampleContainer>
+</GuidanceCallout>
 
 ## Vertical navigation
 
@@ -155,13 +154,13 @@ Use the underlying layout grid to set a minimum width for your navigation pane a
   caption="Example showing a responsive navigation."
 />
 
-<ExampleContainer type="positive" customPillText="Best practices">
+<GuidanceCallout type="positive" customPillText="Best practices">
 - Use a layout grid for the full width of your app’s resolution if it isn't
   responsive, or just for the content area if it is. 
 - Use [Salt
   breakpoints](/salt/foundations/responsiveness#breakpoints) to determine how
   the navigation displays at various viewport sizes.
-</ExampleContainer>
+</GuidanceCallout>
 
 ## Combined navigation
 

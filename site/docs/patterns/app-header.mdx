@@ -1,5 +1,6 @@
 ---
 title: App header
+description: "An app header is a consistently available element that sits at the top of every application interface. It contains a brand logo or mark and application-wide functionality, including navigation and utility actions."
 layout: DetailPattern
 tags:
   - pattern
@@ -13,8 +14,6 @@ data:
   components: ["Navigation item", "Button"]
   relatedPatterns: ["Navigation", "Vertical navigation"]
 ---
-
-An app header is a consistently available element that sits at the top of every application interface. It contains a brand logo or mark and application-wide functionality, including navigation and utility actions.
 
   <Diagram
     src="/img/patterns/app-header/app-header-hero.png"
@@ -93,12 +92,12 @@ Consider the following when placing your logo in the app header:
     border
   />
 
-<ExampleContainer type="positive" customPillText="Best practices">
+<GuidanceCallout type="positive" customPillText="Best practices">
 - Always place the logo on the top-left corner of the application.
 - You can place a title or app name in text form next to the logo.
 - Link the logo to the app home page. 
 - The logo should give users a sense of place while providing a large enough clickable target area.
-</ExampleContainer>
+</GuidanceCallout>
 
 ## Header only
 
@@ -145,12 +144,12 @@ For small viewport experiences, the app logo remains visible, while navigation a
     border
   />
 
-<ExampleContainer type="positive" customPillText="Best practices">
+<GuidanceCallout type="positive" customPillText="Best practices">
  - Navigation items sit on top of the utility actions in the hierarchy of the hamburger menu.
  - If a search utility action is part of the app header, keep search functionality persistently available for small viewports. 
  - Consider medium, large and extra large [Salt breakpoints](/salt/foundations/responsiveness#breakpoints) for desktop experiences. 
  - Consider extra small and small [Salt breakpoints](/salt/foundations/responsiveness#breakpoints) for mobile experiences.
-</ExampleContainer>
+</GuidanceCallout>
 
 ## Sticky header position
 
