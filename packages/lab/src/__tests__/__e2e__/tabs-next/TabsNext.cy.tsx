@@ -209,7 +209,7 @@ describe("Given a Tabstrip", () => {
     cy.get("[data-overflowbutton]").realClick();
     cy.findByRole("tab", { name: "Liquidity" }).realClick();
 
-    cy.findByRole("tab", { name: "Liquidity" })
+    cy.findByRole("tab", { name: "Liquidity", timeout: 500 })
       .should("have.attr", "aria-selected", "true")
       .should("be.focused");
 
@@ -409,7 +409,9 @@ describe("Given a Tabstrip", () => {
       .should("have.length", 6);
 
     cy.findByRole("tablist").invoke("css", "max-width", 200);
-    cy.findAllByRole("tab").filter(":visible", { timeout: 500 }).should("have.length", 2);
+    cy.findAllByRole("tab")
+      .filter(":visible", { timeout: 500 })
+      .should("have.length", 2);
   });
 
   it("should support a controlled API", () => {
@@ -472,7 +474,7 @@ describe("Given a Tabstrip", () => {
       cy.get("[data-overflowbutton]").realClick();
 
       // no horizontal overflow, menu should flip in horizontally
-      cy.get("html", { timeout: 500}).then((body) => {
+      cy.get("html", { timeout: 500 }).then((body) => {
         const { clientWidth, scrollWidth } = body[0];
         expect(clientWidth).to.equal(scrollWidth);
       });
