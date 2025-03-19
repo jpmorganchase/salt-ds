@@ -11,6 +11,7 @@ import {
 import type { Meta, StoryFn } from "@storybook/react";
 import {
   type ComponentProps,
+  type MouseEventHandler,
   type PropsWithChildren,
   type ReactNode,
   useEffect,
@@ -37,6 +38,16 @@ const UnmountLogger = () => {
   }, []);
   return null;
 };
+
+const CloseButton = ({
+  onClick,
+}: {
+  onClick: MouseEventHandler<HTMLButtonElement> | undefined;
+}) => (
+  <Button aria-label="Close dialog" appearance="transparent" onClick={onClick}>
+    <CloseIcon aria-hidden />
+  </Button>
+);
 
 const DialogTemplate: StoryFn<
   Omit<DialogProps, "content"> &
@@ -70,15 +81,6 @@ const DialogTemplate: StoryFn<
     setOpen(false);
   };
 
-  const CloseButton = () => (
-    <Button
-      aria-label="Close dialog"
-      appearance="transparent"
-      onClick={handleClose}
-    >
-      <CloseIcon aria-hidden />
-    </Button>
-  );
   return (
     <>
       <Button data-testid="dialog-button" onClick={handleRequestOpen}>
@@ -95,8 +97,8 @@ const DialogTemplate: StoryFn<
           header={header}
           preheader={preheader}
           description={description}
-          actions={<CloseButton />}
-        />{" "}
+          actions={<CloseButton onClick={handleClose} />}
+        />
         <DialogContent>
           {content}
           <UnmountLogger />
@@ -366,16 +368,6 @@ export const StickyFooter: StoryFn<typeof Dialog> = ({
     setOpen(false);
   };
 
-  const CloseButton = () => (
-    <Button
-      aria-label="Close dialog"
-      appearance="transparent"
-      onClick={handleClose}
-    >
-      <CloseIcon aria-hidden />
-    </Button>
-  );
-
   return (
     <>
       <Button data-testid="dialog-button" onClick={handleRequestOpen}>
@@ -384,7 +376,7 @@ export const StickyFooter: StoryFn<typeof Dialog> = ({
       <Dialog open={open} onOpenChange={onOpenChange} className="longDialog">
         <DialogHeader
           header="Congratulations! You have created a Dialog."
-          actions={<CloseButton />}
+          actions={<CloseButton onClick={handleClose} />}
         />
         <DialogContent>
           Lorem Ipsum is simply dummy text of the printing and typesetting

@@ -12,7 +12,7 @@ data:
 <LivePreview componentName="dialog" exampleName="Default" >
 ## Default
 
-The dialog displays with a header, content area, and action bar. The component is modal, meaning it prevents interaction with the rest of the UI while open and must be addressed by clicking one of the action buttons or dismissing with the close button. If the content of the dialog extends beyond the end of the screen, the `DialogContent` area will become scrollable.
+The dialog displays with a header, content area, and action bar. The component is modal, meaning it prevents interaction with the rest of the UI while open and must be addressed by clicking one of the action buttons or dismissing with the close button in `DialogHeader`. If the content of the dialog extends beyond the end of the screen, the `DialogContent` area will become scrollable.
 
 </LivePreview>
 
@@ -69,15 +69,7 @@ For default dialogs, you can pass the `accent` prop to `DialogHeader` which acce
 You can use the optional `preheader` prop to render a preheader above the main header of your dialog
 
 </LivePreview>
-
-<LivePreview componentName="dialog" exampleName="CloseButton" >
-## Close button
-
-You can also render the `DialogCloseButton` as a child of the `Dialog` component to render a close button in the top right corner of the dialog. You can pass the `onClick` prop like with any `Button` component to handle the close button click.
-
-**Note:** `DialogCloseButton` is deprecated. Use the prop `actions` within `DialogHeader` instead.
-
-</LivePreview>
+  
 <LivePreview componentName="dialog" exampleName="Info" >
 
 ## Info
@@ -139,6 +131,14 @@ This forces a user to action something within the dialog.
 ## Disable scrim
 
 Use the `disableScrim` prop to prevent the scrim from rendering.
+
+</LivePreview>
+<LivePreview componentName="dialog" exampleName="CloseButton" >
+  ## Deprecated Close button
+
+You can also render the `DialogCloseButton` as a child of the `Dialog` component to render a close button in the top right corner of the dialog. You can pass the `onClick` prop like with any `Button` component to handle the close button click.
+
+**Note:** `DialogCloseButton` is deprecated. Use the prop `actions` within `DialogHeader` instead.
 
 </LivePreview>
 </LivePreviewControls>

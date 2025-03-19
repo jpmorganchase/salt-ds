@@ -3,6 +3,7 @@ import {
   Overlay,
   OverlayHeader,
   OverlayPanel,
+  OverlayPanelCloseButton,
   OverlayPanelContent,
   OverlayTrigger,
 } from "@salt-ds/core";
@@ -133,6 +134,51 @@ export const CloseButton: StoryFn<QAContainerProps> = (props) => {
 };
 
 CloseButton.parameters = {
+  chromatic: {
+    disableSnapshot: false,
+    modes: {
+      theme: {
+        themeNext: "disable",
+      },
+      themeNext: {
+        themeNext: "enable",
+        corner: "rounded",
+        accent: "teal",
+        // Ignore headingFont given font is not loaded
+      },
+    },
+  },
+};
+
+export const DeprecatedCloseButton: StoryFn<QAContainerProps> = (props) => {
+  return (
+    <QAContainer
+      height={800}
+      cols={1}
+      itemPadding={80}
+      itemWidthAuto
+      width={1200}
+      {...props}
+    >
+      <Overlay open>
+        <OverlayTrigger>
+          <Button>Show Overlay</Button>
+        </OverlayTrigger>
+        <OverlayPanel
+          style={{
+            width: "30ch",
+          }}
+        >
+          <OverlayPanelCloseButton />
+          <OverlayHeader header="Guidelines for optimal use of our application" />
+          <OverlayPanelContent>Content of Overlay</OverlayPanelContent>
+        </OverlayPanel>
+      </Overlay>
+    </QAContainer>
+  );
+};
+
+DeprecatedCloseButton.parameters = {
   chromatic: {
     disableSnapshot: false,
     modes: {

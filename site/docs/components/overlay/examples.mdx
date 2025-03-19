@@ -31,16 +31,6 @@ Use the `placement` prop to position overlay content to the `top`, `bottom`, `le
 `OverlayHeader` follows our standardized header for container components and app regions, and it can be added as a child of the `OverlayPanel` component to provide a structured header for overlay. The header includes a title and actions that follows our [Header Block pattern](/salt/patterns/header-block). This approach is recommended over using the `OverlayPanelCloseButton` separately.
 
 </LivePreview>
-   <LivePreview componentName="overlay" exampleName="CloseButton">
-
-## Close button
-
-`OverlayPanelCloseButton` can be added as a child of the `OverlayPanel` component to render a close button in the top right corner of the OverlayPanel. You can pass the `onClick` prop like with any `Button` component to handle the close button click.
-
-**Note:** `OverlayPanelCloseButton` is deprecated. Use the prop `actions` within `OverlayHeader` instead.
-
-</LivePreview>
-
   <LivePreview componentName="overlay" exampleName="LongContent">
 
 ## Long content
@@ -56,4 +46,14 @@ When overlay content extends beyond the set height, the content defaults to scro
 With actions, users can decide if interacting with content in the overlay should close the overlay. This example shows how activating the **Export** button triggers the export function, closes the overlay, and returns focus to the trigger element.
 
   </LivePreview>
+<LivePreview componentName="overlay" exampleName="CloseButton">
+
+## Deprecated Close button
+
+`OverlayPanelCloseButton` can be added as a child of the `OverlayPanel` component to render a close button in the top right corner of the OverlayPanel. You can pass the `onClick` prop like with any `Button` component to handle the close button click.
+
+**Note:** `OverlayPanelCloseButton` is deprecated. Use the prop `actions` within `OverlayHeader` instead.
+
+</LivePreview>
+
 </LivePreviewControls>
