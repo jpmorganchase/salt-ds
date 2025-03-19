@@ -170,10 +170,10 @@ describe("Given a Tabstrip", () => {
     cy.get("[data-overflowbutton]").realClick();
     cy.findAllByRole("tab").filter(":visible").should("have.length", 17);
 
-    cy.wait(500);
-
     cy.get("body").click(0, 0);
-    cy.findAllByRole("tab").filter(":visible").should("have.length", 4);
+    cy.findAllByRole("tab")
+      .filter(":visible", { timeout: 500 })
+      .should("have.length", 4);
   });
 
   it("should allow selection in the menu", () => {
@@ -201,9 +201,10 @@ describe("Given a Tabstrip", () => {
     cy.mount(<Overflow />);
 
     cy.findByRole("tablist").invoke("css", "max-width", 140);
-    cy.wait(500);
 
-    cy.findAllByRole("tab").filter(":visible").should("have.length", 1);
+    cy.findAllByRole("tab")
+      .filter(":visible", { timeout: 500 })
+      .should("have.length", 1);
 
     cy.get("[data-overflowbutton]").realClick();
     cy.findByRole("tab", { name: "Liquidity" }).realClick();
@@ -403,12 +404,12 @@ describe("Given a Tabstrip", () => {
     cy.findAllByRole("tab").filter(":visible").should("have.length", 4);
 
     cy.findByRole("tablist").invoke("css", "max-width", 500);
-    cy.wait(500);
-    cy.findAllByRole("tab").filter(":visible").should("have.length", 6);
+    cy.findAllByRole("tab")
+      .filter(":visible", { timeout: 500 })
+      .should("have.length", 6);
 
     cy.findByRole("tablist").invoke("css", "max-width", 200);
-    cy.wait(500);
-    cy.findAllByRole("tab").filter(":visible").should("have.length", 2);
+    cy.findAllByRole("tab").filter(":visible", { timeout: 500 }).should("have.length", 2);
   });
 
   it("should support a controlled API", () => {
@@ -469,11 +470,9 @@ describe("Given a Tabstrip", () => {
       cy.findAllByRole("tab").filter(":visible").should("have.length", 4);
 
       cy.get("[data-overflowbutton]").realClick();
-      cy.wait(500);
 
       // no horizontal overflow, menu should flip in horizontally
-      cy.get("html").then((body) => {
-        console.log(body[0]);
+      cy.get("html", { timeout: 500}).then((body) => {
         const { clientWidth, scrollWidth } = body[0];
         expect(clientWidth).to.equal(scrollWidth);
       });
