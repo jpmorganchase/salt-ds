@@ -3,6 +3,7 @@ import {
   NavigationItem,
   type NavigationItemProps,
   StackLayout,
+  Tag,
 } from "@salt-ds/core";
 import type React from "react";
 import { type MouseEventHandler, useState } from "react";
@@ -33,7 +34,8 @@ const renderNavigationItem = (
   setExpanded: React.Dispatch<React.SetStateAction<Set<string>>>,
   level: number,
 ) => {
-  const { id, kind, name } = item;
+  // @ts-ignore
+  const { id, kind, name, data } = item;
   const isGroup = kind === "group";
   const hasSinglePageInGroup = isGroup && item.childNodes.length === 1;
   const singlePageInGroup: SidebarNode | undefined =
@@ -68,6 +70,8 @@ const renderNavigationItem = (
     }
   };
 
+  const status = data?.status;
+
   return (
     <li key={id}>
       <NavigationItem
@@ -80,7 +84,7 @@ const renderNavigationItem = (
         expanded={isExpanded}
         level={level}
       >
-        {name}
+        {name} {status && <Tag bordered>{status}</Tag>}
       </NavigationItem>
       {shouldRenderAsParent && isExpanded ? (
         <StackLayout

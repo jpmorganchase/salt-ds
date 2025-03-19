@@ -237,6 +237,10 @@ const SidebarPlugin = {
           newChildNode.priority = priorityValue;
         }
 
+        if (page?.data?.status) {
+          newChildNode.status = page.data.status;
+        }
+
         const currentChildNodes = Object.prototype.hasOwnProperty.call(
           result,
           groupPath,
@@ -249,17 +253,23 @@ const SidebarPlugin = {
           id: path.posix.dirname(page.route),
           kind: "group",
           childNodes: [...currentChildNodes, newChildNode],
+          data: {},
         };
         if (isGroupDefaultPage) {
           newGroupNode = {
             ...newGroupNode,
             name: page.sidebar?.groupLabel || name,
           };
-
-          if (groupPriority != null) {
-            newGroupNode.priority = groupPriority;
-          }
         }
+
+        if (groupPriority != null) {
+          newGroupNode.priority = groupPriority;
+        }
+
+        if (page?.data?.groupStatus) {
+          newGroupNode.data.status = page.data.groupStatus;
+        }
+
         if (!isGroupDefaultPage && sortConfigPages[groupPath] !== undefined) {
           const fieldData = getSortFieldData(page, sortConfigPages[groupPath]);
           newChildNode.sharedSortConfig = {

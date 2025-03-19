@@ -1,5 +1,5 @@
 import { useAppHeader } from "@jpmorganchase/mosaic-store";
-import { Button, type ComboBoxProps } from "@salt-ds/core";
+import { Button, type ComboBoxProps, Tooltip } from "@salt-ds/core";
 import { GithubIcon, MenuIcon } from "@salt-ds/icons";
 import dynamic from "next/dynamic";
 import { useContext } from "react";
@@ -42,15 +42,17 @@ export const AppHeader = () => {
         <div className={styles.actions}>
           <Search className={styles.search} />
           {!isMobileOrTablet && (
-            <CTALink
-              href="https://github.com/jpmorganchase/salt-ds"
-              aria-label="GitHub repository"
-              sentiment="neutral"
-              appearance="transparent"
-              target="_blank"
-            >
-              <GithubIcon aria-hidden />
-            </CTALink>
+            <Tooltip content="GitHub repository" placement="bottom">
+              <CTALink
+                href="https://github.com/jpmorganchase/salt-ds"
+                aria-label="GitHub repository"
+                sentiment="neutral"
+                appearance="transparent"
+                target="_blank"
+              >
+                <GithubIcon aria-hidden />
+              </CTALink>
+            </Tooltip>
           )}
           <ModeToggle appearance="transparent" />
         </div>

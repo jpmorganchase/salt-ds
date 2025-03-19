@@ -29,10 +29,16 @@
   min-width: 1px;
   padding-inline: var(--salt-spacing-300);
   padding-block: var(--salt-spacing-200);
+  display: flex;
+  justify-content: center;
 }
 
 @media not screen and (min-width: 960px) {
   .content {
     padding-inline: var(--salt-spacing-100);
   }
+}
+
+.middle :global(.wrapper) {
+  max-width: 100ch;
 }

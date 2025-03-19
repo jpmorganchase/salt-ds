@@ -55,8 +55,7 @@ const saltConfig = {
       ),
       options: {
         labPackageName: "@salt-ds/lab",
-        statusLabel: "Lab component",
-        icon: "🚧",
+        statusLabel: "Release candidate",
       },
     },
   ],

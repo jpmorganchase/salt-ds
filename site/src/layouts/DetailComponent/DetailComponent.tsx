@@ -57,6 +57,7 @@ export interface Data {
   package?: ComponentNpmInfo;
   bugReport?: string;
   featureRequest?: string;
+  status?: string;
 }
 
 export type CustomSiteState = SiteState & { data?: Data };

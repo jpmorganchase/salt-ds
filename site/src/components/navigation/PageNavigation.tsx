@@ -1,5 +1,4 @@
 import { useSidebar, useStore } from "@jpmorganchase/mosaic-store";
-import styles from "./PageNavigation.module.css";
 import { VerticalNavigation } from "./VerticalNavigation";
 
 export function PageNavigation() {
@@ -7,7 +6,6 @@ export function PageNavigation() {
   const { selectedNodeId, selectedGroupIds } = useSidebar();
   return (
     <VerticalNavigation
-      className={styles.root}
       // @ts-ignore
       menu={menu}
       selectedNodeId={selectedNodeId}

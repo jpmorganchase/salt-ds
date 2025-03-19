@@ -20,13 +20,15 @@ export function PageHeading({
 }: PageHeadingProps) {
   return (
     <div className={styles.root} id={id}>
-      <H1 styleAs={"display4"}>{title}</H1>
-      {description && (
-        <Text className={styles.description}>
-          <Markdown>{description}</Markdown>
-        </Text>
-      )}
-      {children}
+      <div className={styles.content}>
+        <H1 styleAs={"display4"}>{title}</H1>
+        {description && (
+          <Text className={styles.description}>
+            <Markdown>{description}</Markdown>
+          </Text>
+        )}
+        {children}
+      </div>
     </div>
   );
 }

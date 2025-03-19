@@ -13,8 +13,19 @@
   width: 100%;
 }
 
+.title {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--salt-spacing-100);
+}
+
 .root h1 {
   margin: 0;
+}
+
+.tagLink {
+  text-decoration: none;
 }
 
 @media screen and (min-width: 960px) {
