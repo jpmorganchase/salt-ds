@@ -86,7 +86,7 @@ import {
   DatePickerSingleInput,
   DatePickerTrigger,
 } from "../../src/date-picker/";
-import { StepperInput } from "../../src/stepper-input";
+import { NumberInput } from "../../src/number-input";
 
 import "ag-grid-community/styles/ag-grid.css";
 import "../../../../dist/salt-ds-ag-grid-theme/salt-ag-theme.css";
@@ -474,7 +474,7 @@ export const FormStatusAlignment = () => {
           />
         </DatePickerTrigger>
       </DatePicker>
-      <StepperInput defaultValue={0} validationStatus="error" />
+      <NumberInput defaultValue={0} validationStatus="error" />
     </StackLayout>
   );
 };
