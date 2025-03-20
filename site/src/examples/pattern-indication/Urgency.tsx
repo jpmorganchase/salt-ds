@@ -32,7 +32,7 @@ export const Urgency = () => {
       <FlexLayout gap={0.5} align="center">
         <UrgencyMediumIcon
           size={2}
-          style={{ color: "var(--salt-color-warning-500)" }}
+          style={{ color: "var(--salt-color-orange-500)" }}
         />
         <Code>urgency-medium</Code>
       </FlexLayout>
