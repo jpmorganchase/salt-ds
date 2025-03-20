@@ -63,7 +63,7 @@ export const SingleWithInput = () => {
           minLabel="-50"
           maxLabel="50"
           onChange={handleSliderChange}
-          style={{ flex: "100%" }}
+          style={{ flex: 8 }}
         />
       </FlexLayout>
     </FormField>

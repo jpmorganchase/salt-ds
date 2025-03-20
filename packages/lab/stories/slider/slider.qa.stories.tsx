@@ -30,36 +30,29 @@ export const ExamplesGrid: StoryFn<QAContainerProps> = (props) => {
         ]}
         minLabel="Very low"
         maxLabel="Very high"
+        showTicks
       />
       <Slider
-        defaultValue={-2}
         max={5}
-        min={-5}
         step={1}
         marks={[
-          { value: -5, label: "-5" },
-          { value: -4, label: "-4" },
-          { value: -3, label: "-3" },
-          { value: -2, label: "-2" },
-          { value: -1, label: "-1" },
           { value: 0, label: "0" },
-          { value: 1, label: "1" },
-          { value: 2, label: "2" },
           { value: 3, label: "3" },
-          { value: 4, label: "4" },
           { value: 5, label: "5" },
         ]}
+        restrictToMarks
       />
       <Slider
-        defaultValue={-2}
-        max={10}
-        min={-5}
+        max={5}
         step={1}
-        minLabel="-5"
-        maxLabel="10"
+        marks={[
+          { value: 0, label: "Very Low" },
+          { value: 5, label: "Very High" },
+        ]}
+        constrainLabelPosition
       />
       <Slider
-        defaultValue={-2}
+        defaultValue={30}
         min={0}
         max={100}
         format={(value) => `${value}%`}

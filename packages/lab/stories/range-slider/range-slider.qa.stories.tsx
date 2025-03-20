@@ -11,28 +11,6 @@ export const ExamplesGrid: StoryFn<QAContainerProps> = (props) => {
   return (
     <QAContainer cols={1} itemPadding={4} {...props}>
       <RangeSlider
-        defaultValue={[-2, 4]}
-        max={5}
-        min={-5}
-        step={1}
-        marks={[
-          { value: -5, label: "-5" },
-          { value: -4, label: "-4" },
-          { value: -3, label: "-3" },
-          { value: -2, label: "-2" },
-          { value: -1, label: "-1" },
-          { value: 0, label: "-0" },
-          { value: 1, label: "1" },
-          { value: 2, label: "2" },
-          { value: 3, label: "3" },
-          { value: 4, label: "4" },
-          { value: 5, label: "5" },
-        ]}
-        minLabel="Very low"
-        maxLabel="Very high"
-      />
-      <RangeSlider
-        defaultValue={[-2, 6]}
         max={5}
         min={-5}
         step={1}
@@ -49,17 +27,30 @@ export const ExamplesGrid: StoryFn<QAContainerProps> = (props) => {
           { value: 4, label: "4" },
           { value: 5, label: "5" },
         ]}
+        minLabel="Very low"
+        maxLabel="Very high"
+        showTicks
       />
       <RangeSlider
-        defaultValue={[-2, 4]}
-        max={10}
-        min={-5}
+        max={5}
         step={1}
-        minLabel="-5"
-        maxLabel="10"
+        marks={[
+          { value: 0, label: "0" },
+          { value: 3, label: "3" },
+          { value: 5, label: "5" },
+        ]}
+        restrictToMarks
       />
       <RangeSlider
-        defaultValue={[0, 40]}
+        max={5}
+        step={1}
+        marks={[
+          { value: 0, label: "Very Low" },
+          { value: 5, label: "Very High" },
+        ]}
+        constrainLabelPosition
+      />
+      <RangeSlider
         min={0}
         max={100}
         format={(value) => `${value}%`}
@@ -67,7 +58,14 @@ export const ExamplesGrid: StoryFn<QAContainerProps> = (props) => {
         minLabel="0%"
         maxLabel="100%"
       />
-      <RangeSlider defaultValue={[-2, 4]} max={10} min={-5} step={1} disabled />
+      <RangeSlider
+        max={10}
+        min={-5}
+        step={1}
+        minLabel="0"
+        maxLabel="10"
+        disabled
+      />
     </QAContainer>
   );
 };

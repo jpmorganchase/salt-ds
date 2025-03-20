@@ -23,6 +23,7 @@ interface SliderThumbProps
   disabled: boolean;
   format?: (value: number) => number | string;
   handleInputChange: (event: ChangeEvent<HTMLInputElement>) => void;
+  handleKeydownOnThumb: (event: React.KeyboardEvent) => void;
   handlePointerDown: (event: React.PointerEvent<HTMLDivElement>) => void;
   index?: number;
   max: number;
@@ -44,6 +45,7 @@ export const SliderThumb = ({
   disabled,
   format,
   handleInputChange,
+  handleKeydownOnThumb,
   handlePointerDown,
   index = 0,
   max,
@@ -105,41 +107,6 @@ export const SliderThumb = ({
     const handleBlur = () => {
       setIsFocused(false);
       if (showTooltip) setIsTooltipVisible(false);
-    };
-
-    const handleKeydownOnThumb = (event: React.KeyboardEvent) => {
-      let newValue = value;
-
-      switch (event.key) {
-        case "ArrowRight":
-        case "ArrowUp":
-          newValue = Math.min(value + step, max);
-          break;
-        case "ArrowLeft":
-        case "ArrowDown":
-          newValue = Math.max(value - step, min);
-          break;
-        case "PageUp":
-          newValue = Math.min(value + step * stepMultiplier, max);
-          break;
-        case "PageDown":
-          newValue = Math.max(value - step * stepMultiplier, min);
-          break;
-        case "Home":
-          newValue = min;
-          break;
-        case "End":
-          newValue = max;
-          break;
-        default:
-          return;
-      }
-
-      event.preventDefault();
-
-      handleInputChange({
-        target: { value: newValue.toString() },
-      } as ChangeEvent<HTMLInputElement>);
     };
 
     return (
