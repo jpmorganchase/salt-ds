@@ -6,15 +6,11 @@ export default defineConfig({
   test: {
     testTimeout: 15000,
     logHeapUsage: true,
+    fileParallelism: true,
     expect: {
       poll: {
         timeout: 2000,
       }
-    },
-    poolOptions: {
-      threads: {
-        useAtomics: true, // Set to true or false as needed
-      },
     },
     include: ["**/*.spec.[jt]s?(x)"],
   },
