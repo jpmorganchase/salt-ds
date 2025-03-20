@@ -119,6 +119,8 @@ jobs:
           install: false
           component: true
           browser: chrome
+          # don't merge me!!!
+          spec: packages/lab/src/__tests__/__e2e__/tabs-next/TabsNext.cy.tsx
       - uses: actions/upload-artifact@v4
         if: failure()
         with:
