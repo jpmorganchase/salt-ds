@@ -215,6 +215,10 @@ describe("Given a Tabstrip", () => {
     cy.findAllByRole("tab").filter(":visible").should("have.length", 1);
 
     cy.realPress("ArrowRight");
+    // focus on overflow menu, not selected yet
+    cy.findByRole("tab", { name: "Home" })
+      .should("have.attr", "aria-selected", "false")
+      .should("be.focused");
     cy.realPress("Enter");
     cy.findByRole("tab", { name: "Home" })
       .should("have.attr", "aria-selected", "true")
