@@ -232,12 +232,13 @@ describe("Given a Tabstrip", () => {
         cy.task("log", "Home tab parent html");
         cy.task("log", $ele.html());
       });
+    cy.findByRole("tab", { name: "Home" })
+      .should("have.attr", "aria-selected", "true")
+      .should("be.focused");
     cy.get(".saltTabsNext").then(($ele) => {
       cy.task("log", "saltTabsNext html");
       cy.task("log", $ele.html());
     });
-    // .should("have.attr", "aria-selected", "true")
-    // .should("be.focused");
   });
 
   it("should support adding tabs", () => {
