@@ -5,8 +5,6 @@
   --slider-progressPercentageEnd: 0%;
 
   --slider-mark-percentage: 0%;
-  --slider-track-background: var(--salt-track-borderColor);
-  --slider-track-fill: var(--salt-accent-borderColor);
 
   display: flex;
   width: 100%;
@@ -17,6 +15,9 @@
 }
 
 .saltSliderTrack-container {
+  --slider-track-background: var(--salt-track-borderColor);
+  --slider-track-fill: var(--salt-accent-borderColor);
+
   align-items: center;
   display: flex;
   flex-direction: row;

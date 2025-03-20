@@ -4,7 +4,7 @@ import { type ChangeEvent, useState } from "react";
 
 const composedStories = composeStories(rangeSliderStories);
 
-const { Default, WithRestrictToMarks } = composedStories;
+const { Default } = composedStories;
 
 describe("Given a Range Slider", () => {
   it("should render with default props", () => {
