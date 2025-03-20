@@ -1,5 +1,32 @@
 # @salt-ds/lab
 
+## 1.0.0-alpha.63
+
+### Minor Changes
+
+- 9287b09: enabled uncontrolled/un-controlled open behaviour for `DatePicker`
+
+  - added `openOnClick` props to `DatePicker`.
+  - when the triggering element (`DateInput`) is focused, arrow key down, will now open the DatePicker by default
+  - revise the controlled behaviour of the `open` prop on `DatePickerOverlay`.
+
+### Patch Changes
+
+- 5639e94: Renamed StepperInput to NumberInput.
+- 4731908: Slider / RangeSlider updates
+
+  - track now support tick marks with the `showTicks` prop.
+  - `restrictToMarks` prop will snap the value to the closest mark.
+  - `decimalPlaces` prop specifies the number of decimal places for the value.
+  - `constrainLabelPosition` will ensure that mark labels remain within the boundary of the track.
+
+  This represents the final feature set before we move these changes to a stable API in core.
+
+- a1c89e2: Update Slider component implementation to have separate `Slider` and `RangeSlider` components, with improved accessibility and test coverage.
+- e93ee6f: Fixed the `TabsNext` overflow menu position when there is enough space, and prevented the hidden menu from causing the page to overflow.
+
+  Closes #4617.
+
 ## 1.0.0-alpha.62
 
 ### Minor Changes
