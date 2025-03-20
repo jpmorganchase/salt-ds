@@ -125,10 +125,11 @@ Default.args = {
 export const LongContent = DialogTemplate.bind({});
 
 LongContent.args = {
+  style: { maxHeight: "100%" },
   header: "Congratulations! You have created a Dialog.",
   content: (
     <>
-      <StackLayout>
+      <StackLayout style={{ maxHeight: "200px" }}>
         <div>
           Lorem Ipsum is simply dummy text of the printing and typesetting
           industry. Lorem Ipsum has been the industry's standard dummy text ever

@@ -11,9 +11,6 @@
   border-bottom: var(--salt-size-border) var(--salt-separable-borderStyle) transparent;
   overflow-y: auto;
 }
-.saltOverlayPanelContent-overflow.saltOverlayPanelContent-scroll-bottom {
-  border-bottom: var(--salt-size-border) var(--salt-separable-borderStyle) var(--salt-separable-tertiary-borderColor);
-}
 .saltOverlayPanelContent-overflow.saltOverlayPanelContent-scroll-top {
   border-top: var(--salt-size-border) var(--salt-separable-borderStyle) var(--salt-separable-tertiary-borderColor);
 }
