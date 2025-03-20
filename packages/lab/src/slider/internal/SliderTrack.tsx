@@ -32,6 +32,7 @@ export const SliderTrack = forwardRef<HTMLDivElement, SliderTrackProps>(
   function SliderTrack(
     {
       children,
+      className,
       constrainLabelPosition = false,
       disabled,
       showTicks,
@@ -90,7 +91,7 @@ export const SliderTrack = forwardRef<HTMLDivElement, SliderTrackProps>(
 
     return (
       <div
-        className={clsx(withBaseName(), {
+        className={clsx(withBaseName(), className, {
           [withBaseName("disabled")]: disabled,
           [withBaseName("dragging")]: isDragging,
           [withBaseName("range")]: isRange,
