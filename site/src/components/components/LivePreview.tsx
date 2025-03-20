@@ -18,11 +18,13 @@ import styles from "./LivePreview.module.css";
 type LivePreviewProps = {
   componentName: string;
   exampleName: string;
+  hideCode?: boolean;
 };
 
 export const LivePreview: FC<LivePreviewProps> = ({
   componentName,
   exampleName,
+  hideCode,
 }) => {
   const siteMode = useColorMode();
   const [showCode, setShowCode] = useState<boolean>(false);
@@ -85,35 +87,38 @@ export const LivePreview: FC<LivePreviewProps> = ({
                 </ChosenSaltProvider>
               </div>
             </ChosenSaltProvider>
-            <SaltProviderNext density="medium" applyClassesTo="child">
-              <div className={styles.toolbar}>
-                <Switch
-                  checked={showCode}
-                  onChange={handleShowCodeToggle}
-                  className={styles.switch}
-                  label="Show code"
-                  aria-controls={panelId}
-                />
-              </div>
-            </SaltProviderNext>
+            {!hideCode && (
+              <SaltProviderNext density="medium" applyClassesTo="child">
+                <div className={styles.toolbar}>
+                  <Switch
+                    checked={showCode}
+                    onChange={handleShowCodeToggle}
+                    className={styles.switch}
+                    label="Show code"
+                    aria-controls={panelId}
+                  />
+                </div>
+              </SaltProviderNext>
+            )}
           </div>
         </LocalizationProvider>
       </div>
-
-      <div
-        className={styles.codePanel}
-        aria-hidden={!showCode}
-        hidden={!showCode}
-        id={panelId}
-      >
-        <div className={styles.codePanelInner}>
-          <Pre className={styles.codePreview}>
-            <div className="language-tsx">
-              {ComponentExample.sourceCode.trimEnd()}
-            </div>
-          </Pre>
+      {!hideCode && (
+        <div
+          className={styles.codePanel}
+          aria-hidden={!showCode}
+          hidden={!showCode}
+          id={panelId}
+        >
+          <div className={styles.codePanelInner}>
+            <Pre className={styles.codePreview}>
+              <div className="language-tsx">
+                {ComponentExample.sourceCode.trimEnd()}
+              </div>
+            </Pre>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };
