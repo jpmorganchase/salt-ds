@@ -7,6 +7,7 @@
 @import url(foundations/alpha.css);
 @import url(foundations/animation.css);
 @import url(foundations/color.css);
+@import url(foundations/curve.css);
 @import url(foundations/duration.css);
 @import url(foundations/shadow.css);
 @import url(foundations/size.css);
@@ -19,6 +20,7 @@
 @import url(palette/accent.css);
 @import url(palette/error.css);
 @import url(palette/categorical.css);
+@import url(palette/corner.css);
 @import url(palette/info.css);
 @import url(palette/interact.css);
 @import url(palette/navigate.css);

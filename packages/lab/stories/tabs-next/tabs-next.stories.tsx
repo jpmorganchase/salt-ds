@@ -206,7 +206,7 @@ export const Overflow: StoryFn<typeof TabsNext> = (args) => {
   return (
     <TabsNext {...args}>
       <TabBar inset divider>
-        <TabListNext style={{ maxWidth: 350, margin: "auto" }}>
+        <TabListNext style={{ margin: "auto", maxWidth: 360 }}>
           {lotsOfTabs.map((label) => (
             <TabNext value={label} key={label}>
               <TabNextTrigger>{label}</TabNextTrigger>

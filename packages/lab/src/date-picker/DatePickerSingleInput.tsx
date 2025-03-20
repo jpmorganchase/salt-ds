@@ -7,7 +7,7 @@ import {
 import { CalendarIcon } from "@salt-ds/icons";
 import { clsx } from "clsx";
 import {
-  type KeyboardEvent,
+  type MouseEventHandler,
   type SyntheticEvent,
   forwardRef,
   useCallback,
@@ -47,8 +47,8 @@ function defaultSingleValidation<TDate extends DateFrameworkType>(
   dateAdapter: SaltDateAdapter<TDate>,
   date: TDate,
   details: DateInputSingleDetails,
-  minDate: TDate | undefined,
-  maxDate: TDate | undefined,
+  minDate?: TDate,
+  maxDate?: TDate,
 ): DateInputSingleDetails {
   if (!date) {
     details.errors = details.errors ?? [];
@@ -100,7 +100,6 @@ export const DatePickerSingleInput = forwardRef<
       validate,
       defaultValue,
       onDateValueChange,
-      onKeyDown,
       ...rest
     } = props;
 
@@ -122,9 +121,14 @@ export const DatePickerSingleInput = forwardRef<
       state: "value",
     });
 
-    const handleCalendarButton = useCallback(() => {
-      setOpen(!open);
-    }, [open, setOpen]);
+    const handleCalendarButton: MouseEventHandler<HTMLButtonElement> =
+      useCallback(
+        (event) => {
+          setOpen(!open, event.nativeEvent, "click");
+          event.stopPropagation();
+        },
+        [open, setOpen],
+      );
 
     const handleDateChange = useCallback(
       (
@@ -154,16 +158,6 @@ export const DatePickerSingleInput = forwardRef<
       [onDateValueChange],
     );
 
-    const handleOnKeyDown = useCallback(
-      (event: KeyboardEvent<HTMLInputElement>) => {
-        if (event.key === "ArrowDown") {
-          setOpen(true);
-          onKeyDown?.(event);
-        }
-      },
-      [onKeyDown],
-    );
-
     // biome-ignore lint/correctness/useExhaustiveDependencies: should run when open changes and not selected date or value
     useEffect(() => {
       if (open) {
@@ -184,6 +178,7 @@ export const DatePickerSingleInput = forwardRef<
         className={clsx(withBaseName(), className)}
         date={selectedDate ?? null}
         readOnly={readOnly}
+        disabled={disabled}
         ref={ref}
         onDateChange={handleDateChange}
         onDateValueChange={handleDateValueChange}
@@ -200,7 +195,6 @@ export const DatePickerSingleInput = forwardRef<
             </Button>
           )
         }
-        onKeyDown={handleOnKeyDown}
         {...rest}
       />
     );

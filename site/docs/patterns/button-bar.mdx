@@ -1,5 +1,6 @@
 ---
 title: Button bar
+description: "A button bar displays possible actions for users to take when they reach the end of a task. You can use it to provide consistent presentation of button types and orders within pages or dialogs across your applications."
 layout: DetailPattern
 tags:
   - pattern
@@ -13,8 +14,6 @@ data:
   components: ["Button", "Split layout", "Stack layout"]
   relatedPatterns: ["Forms"]
 ---
-
-A button bar displays possible actions for users to take when they reach the end of a task. You can use it to provide consistent presentation of button types and orders within pages or dialogs across your applications.
 
   <Diagram
     src="/img/patterns/button-bar/button-bar-hero-shot.png"
@@ -108,9 +107,9 @@ Remember to use a hierarchy when making your button choices, much like following
     alt="Example showing button bar with Next button on right as solid, Previous as bordered to the left of Next, and Cancel as transparent to the left of Previous."
   />
 
-<ExampleContainer type="positive" customPillText="Best practices">
+<GuidanceCallout type="positive" customPillText="Best practices">
   Provide only one solid button for a given task—the action that allows the user to complete the task.
-</ExampleContainer>
+</GuidanceCallout>
 
 ## Combining button sentiments
 
@@ -158,10 +157,10 @@ The container and the type of scenario determine the position of actions (solid,
     border
   />
 
-<ExampleContainer type="positive" customPillText="Best practices">
+<GuidanceCallout type="positive" customPillText="Best practices">
   - Group core onward actions for the form to ensure they remain accessible on browser zoom (e.g., **Previous**, **Next**, **Cancel** or **Submit**).
   - You should display tertiary actions that aren’t core to the workflow at the opposite end of the button bar.
-</ExampleContainer>
+</GuidanceCallout>
 
 ## Button bar position
 
@@ -233,10 +232,10 @@ Order of stacked buttons: In a stacked button layout, we recommend buttons stack
     border
   />
 
-<ExampleContainer type="positive" customPillText="Best practices">
+<GuidanceCallout type="positive" customPillText="Best practices">
   - Enable the stacked layout when you have longer button labels that may not fit within the horizontal layout at smaller button bar widths.
   - If users will access your application on a mobile device, use a stacked button layout to ensure an adequate touch-area for the buttons.
-</ExampleContainer>
+</GuidanceCallout>
 
 ### Building a stacked button bar
 

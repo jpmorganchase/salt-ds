@@ -8,6 +8,7 @@ import {
   FormFieldLabel as FormLabel,
   StackLayout,
   Text,
+  ToggleButton,
 } from "@salt-ds/core";
 import {
   DateDetailError,
@@ -21,6 +22,7 @@ import {
   DateParserField,
   DatePicker,
   DatePickerActions,
+  type DatePickerOpenChangeReason,
   DatePickerOverlay,
   DatePickerRangeInput,
   type DatePickerRangeInputProps,
@@ -522,7 +524,7 @@ export const SingleWithMinMaxDate: StoryFn<
         maxDate={maxDate}
         {...args}
         onSelectionChange={handleSelectionChange}
-        onOpen={setOpen}
+        onOpenChange={setOpen}
       >
         <DatePickerTrigger>
           <DatePickerSingleInput />
@@ -622,7 +624,7 @@ export const RangeWithMinMaxDate: StoryFn<
         maxDate={maxDate}
         {...args}
         onSelectionChange={handleSelectionChange}
-        onOpen={setOpen}
+        onOpenChange={setOpen}
       >
         <DatePickerTrigger>
           <DatePickerRangeInput />
@@ -691,7 +693,7 @@ export const SingleWithInitialError: StoryFn<
         defaultSelectedDate={dateAdapter.parse("bad date", "DD MMM YYYY").date}
         {...args}
         onSelectionChange={handleSelectionChange}
-        onOpen={setOpen}
+        onOpenChange={setOpen}
       >
         <DatePickerTrigger>
           <DatePickerSingleInput defaultValue="bad date" />
@@ -785,7 +787,7 @@ export const RangeWithInitialError: StoryFn<
         }}
         {...args}
         onSelectionChange={handleSelectionChange}
-        onOpen={setOpen}
+        onOpenChange={setOpen}
       >
         <DatePickerTrigger>
           <DatePickerRangeInput
@@ -854,7 +856,7 @@ export const SingleWithFormField: StoryFn<
         selectionVariant="single"
         {...args}
         onSelectionChange={handleSelectionChange}
-        onOpen={setOpen}
+        onOpenChange={setOpen}
       >
         <DatePickerTrigger>
           <DatePickerSingleInput />
@@ -942,7 +944,7 @@ export const RangeWithFormField: StoryFn<
         selectionVariant="range"
         {...args}
         onSelectionChange={handleSelectionChange}
-        onOpen={setOpen}
+        onOpenChange={setOpen}
       >
         <DatePickerTrigger>
           <DatePickerRangeInput />
@@ -1006,7 +1008,7 @@ export const SingleWithCustomPanel: StoryFn<
         selectionVariant="single"
         {...args}
         onSelectionChange={handleSelectionChange}
-        onOpen={setOpen}
+        onOpenChange={setOpen}
       >
         <DatePickerTrigger>
           <DatePickerSingleInput />
@@ -1097,7 +1099,7 @@ export const RangeWithCustomPanel: StoryFn<
         selectionVariant="range"
         {...args}
         onSelectionChange={handleSelectionChange}
-        onOpen={setOpen}
+        onOpenChange={setOpen}
       >
         <DatePickerTrigger>
           <DatePickerRangeInput />
@@ -1185,7 +1187,7 @@ export const SingleWithTodayButton: StoryFn<
         selectionVariant="single"
         {...args}
         onSelectionChange={handleSelectionChange}
-        onOpen={setOpen}
+        onOpenChange={setOpen}
       >
         <DatePickerTrigger>
           <DatePickerSingleInput />
@@ -1273,7 +1275,7 @@ export const SingleWithConfirmation: StoryFn<
     [args?.onSelectionChange, dateAdapter],
   );
 
-  const handleOpen = useCallback(
+  const handleOpenChange = useCallback(
     (opening: boolean) => {
       if (opening) {
         savedState.current = {
@@ -1319,7 +1321,7 @@ export const SingleWithConfirmation: StoryFn<
         onApply={handleApply}
         onCancel={handleCancel}
         onSelectionChange={handleSelectionChange}
-        onOpen={handleOpen}
+        onOpenChange={handleOpenChange}
         selectedDate={selectedDate}
       >
         <DatePickerTrigger>
@@ -1435,7 +1437,7 @@ export const RangeWithConfirmation: StoryFn<
     [args?.onSelectionChange, dateAdapter],
   );
 
-  const handleOpen = useCallback(
+  const handleOpenChange = useCallback(
     (opening: boolean) => {
       if (opening) {
         savedValidationState.current = validationStatus;
@@ -1478,7 +1480,7 @@ export const RangeWithConfirmation: StoryFn<
         onApply={handleApply}
         onCancel={handleCancel}
         onSelectionChange={handleSelectionChange}
-        onOpen={handleOpen}
+        onOpenChange={handleOpenChange}
         selectedDate={selectedDate}
       >
         <DatePickerTrigger>
@@ -1604,7 +1606,7 @@ export const SingleWithCustomParser: StoryFn<
         selectionVariant="single"
         {...args}
         onSelectionChange={handleSelectionChange}
-        onOpen={setOpen}
+        onOpenChange={setOpen}
       >
         <DatePickerTrigger>
           <DatePickerSingleInput parse={customParser} />
@@ -1877,7 +1879,7 @@ export const SingleWithCustomValidation: StoryFn<
         selectionVariant="single"
         {...args}
         onSelectionChange={handleSelectionChange}
-        onOpen={setOpen}
+        onOpenChange={setOpen}
       >
         <DatePickerTrigger>
           <DatePickerSingleInput validate={validateAndCustomizeError} />
@@ -1956,7 +1958,7 @@ export const SingleWithLocaleEsES: StoryFn<
         selectionVariant={"single"}
         {...args}
         onSelectionChange={handleSelectionChange}
-        onOpen={setOpen}
+        onOpenChange={setOpen}
       >
         <DatePickerTrigger>
           <DatePickerSingleInput />
@@ -2055,7 +2057,7 @@ export const RangeWithLocaleEsES: StoryFn<
         selectionVariant={"range"}
         {...args}
         onSelectionChange={handleSelectionChange}
-        onOpen={setOpen}
+        onOpenChange={setOpen}
       >
         <DatePickerTrigger>
           <DatePickerRangeInput />
@@ -2140,7 +2142,7 @@ export const SingleWithLocaleZhCN: StoryFn<
         selectionVariant={"single"}
         {...args}
         onSelectionChange={handleSelectionChange}
-        onOpen={setOpen}
+        onOpenChange={setOpen}
       >
         <DatePickerTrigger>
           <DatePickerSingleInput
@@ -2211,7 +2213,7 @@ export const SingleBordered: StoryFn<
         selectionVariant="single"
         {...args}
         onSelectionChange={handleSelectionChange}
-        onOpen={setOpen}
+        onOpenChange={setOpen}
       >
         <DatePickerTrigger>
           <DatePickerSingleInput bordered />
@@ -2304,7 +2306,7 @@ export const RangeBordered: StoryFn<
         selectionVariant="range"
         {...args}
         onSelectionChange={handleSelectionChange}
-        onOpen={setOpen}
+        onOpenChange={setOpen}
       >
         <DatePickerTrigger>
           <DatePickerRangeInput bordered />
@@ -2691,4 +2693,170 @@ WithExperimentalTime.parameters = {
       code: "Disabled for this story, see https://github.com/storybookjs/storybook/issues/11554",
     },
   },
+};
+
+export const UncontrolledSingleOpen: StoryFn<
+  DatePickerSingleProps<DateFrameworkType>
+> = ({ selectionVariant, defaultSelectedDate, ...args }) => {
+  const [openOnClick, setOpenOnClick] = useState(false);
+  return (
+    <StackLayout style={{ width: "400px" }}>
+      <FlexLayout>
+        <ToggleButton
+          aria-label={"open on click"}
+          value={openOnClick ? "false" : "true"}
+          onChange={(event) =>
+            setOpenOnClick(event.currentTarget.value === "true")
+          }
+        >
+          Open On Click
+        </ToggleButton>
+      </FlexLayout>
+      <DatePicker
+        selectionVariant={"single"}
+        openOnClick={openOnClick}
+        {...args}
+        defaultSelectedDate={defaultSelectedDate}
+      >
+        <DatePickerTrigger>
+          <DatePickerSingleInput />
+        </DatePickerTrigger>
+        <DatePickerOverlay>
+          <DatePickerSinglePanel />
+        </DatePickerOverlay>
+      </DatePicker>
+    </StackLayout>
+  );
+};
+
+export const UncontrolledRangeOpen: StoryFn<
+  DatePickerRangeProps<DateFrameworkType>
+> = ({ selectionVariant, defaultSelectedDate, ...args }) => {
+  const [openOnClick, setOpenOnClick] = useState(false);
+  return (
+    <StackLayout style={{ width: "400px" }}>
+      <FlexLayout>
+        <ToggleButton
+          aria-label={"open on click"}
+          value={openOnClick ? "false" : "true"}
+          onChange={(event) =>
+            setOpenOnClick(event.currentTarget.value === "true")
+          }
+        >
+          Open On Click
+        </ToggleButton>
+      </FlexLayout>
+      <DatePicker
+        selectionVariant={"range"}
+        openOnClick={openOnClick}
+        {...args}
+        defaultSelectedDate={defaultSelectedDate}
+      >
+        <DatePickerTrigger>
+          <DatePickerRangeInput />
+        </DatePickerTrigger>
+        <DatePickerOverlay>
+          <DatePickerRangePanel />
+        </DatePickerOverlay>
+      </DatePicker>
+    </StackLayout>
+  );
+};
+
+export const ControlledOpen: StoryFn<
+  DatePickerSingleProps<DateFrameworkType>
+> = ({ selectionVariant, defaultSelectedDate, ...args }) => {
+  const [open, setOpen] = useState(false);
+  const [selectedDate, setSelectedDate] = useState<
+    SingleDateSelection<DateFrameworkType> | null | undefined
+  >(defaultSelectedDate ?? null);
+  const { dateAdapter } = useLocalization();
+  const triggerRef = useRef<HTMLInputElement>(null);
+  const applyButtonRef = useRef<HTMLButtonElement>(null);
+  const datePickerRef = useRef<HTMLDivElement>(null);
+  const previousSelectedDate = useRef<typeof selectedDate>(selectedDate);
+
+  const handleSelectionChange = useCallback(
+    (
+      _event: SyntheticEvent,
+      date: SingleDateSelection<DateFrameworkType> | null,
+      _details: DateInputSingleDetails | undefined,
+    ) => {
+      setSelectedDate(date ?? null);
+    },
+    [dateAdapter],
+  );
+
+  const handleApply = useCallback(
+    (
+      event: SyntheticEvent,
+      date: SingleDateSelection<DateFrameworkType> | null,
+    ) => {
+      console.log(
+        `Applied date: ${date ? dateAdapter.format(date, "DD MMM YYYY") : date}`,
+      );
+      setSelectedDate(date);
+      previousSelectedDate.current = date;
+      setOpen(false);
+      args?.onApply?.(event, date);
+    },
+    [args?.onApply, dateAdapter],
+  );
+
+  const handleCancel = useCallback(() => {
+    setSelectedDate(previousSelectedDate.current);
+    setSelectedDate(previousSelectedDate.current);
+    args?.onCancel?.();
+  }, [args?.onCancel]);
+
+  const handleOpenChange = useCallback(
+    (
+      newOpen: boolean,
+      _event?: Event,
+      reason?: DatePickerOpenChangeReason | string,
+    ) => {
+      if (reason === undefined) {
+        triggerRef.current?.focus();
+        setTimeout(() => {
+          triggerRef.current?.setSelectionRange(
+            0,
+            triggerRef.current.value.length,
+          );
+        }, 1);
+      }
+      setOpen(newOpen);
+    },
+    [],
+  );
+
+  return (
+    <DatePicker
+      selectionVariant={"single"}
+      {...args}
+      onSelectionChange={handleSelectionChange}
+      selectedDate={selectedDate}
+      onApply={handleApply}
+      onCancel={handleCancel}
+      onOpenChange={handleOpenChange}
+      open={open}
+    >
+      <DatePickerTrigger>
+        <DatePickerSingleInput inputRef={triggerRef} />
+      </DatePickerTrigger>
+      <DatePickerOverlay ref={datePickerRef}>
+        <FlexLayout gap={0} direction="column">
+          <FlexItem>
+            <DatePickerSinglePanel />
+            <Divider variant="tertiary" />
+          </FlexItem>
+          <FlexItem>
+            <DatePickerActions
+              selectionVariant="single"
+              applyButtonRef={applyButtonRef}
+            />
+          </FlexItem>
+        </FlexLayout>
+      </DatePickerOverlay>
+    </DatePicker>
+  );
 };

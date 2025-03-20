@@ -1,3 +1,8 @@
-.toc {
-  margin-bottom: var(--salt-spacing-200);
+.secondarySidebar {
+  flex: 0 0 15vw;
+  padding: var(--salt-spacing-200);
+}
+
+.headingActions {
+  margin-top: var(--salt-spacing-200);
 }

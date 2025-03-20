@@ -1,0 +1,34 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+## Using the component
+
+### When to use
+
+- When selecting a range of numeric values or relative scale.
+- When the exact value does not matter (depending on the size of the predefined range), but an approximate interval is good enough.
+
+### When not to use
+
+- When it’s important to select an exact numeric value that falls within a significantly large range, for example, 1-1000. Instead, use [Input](/salt/components/input).
+- When displaying progress through a series of separate steps, such as a wizard or multistep form. Use [SteppedTracker
+  ](/salt/components/stepped-tracker) instead.
+
+## Import
+
+To import `RangeSlider` from the lab Salt package, use:
+
+```js
+import { RangeSlider } from "@salt-ds/lab";
+```
+
+## Props
+
+<PropsTable packageName="lab" componentName="RangeSlider" />

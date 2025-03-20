@@ -1,34 +1,122 @@
 ---
 title: Salt Design System
+description: "Salt is J.P. Morgan's open-source design system, providing accessible components and extensive design resources to create exceptional digital experiences across lines of business."
 layout: Landing
+sidebar:
+  exclude: true
 frameOverrides:
   header:
     homeLink: /salt/index
-    logo: /img/logo.svg
     searchNamespace: salt
-    menu:
-      - title: About
-        link: /salt/about/index
-      - title: Get started
-        link: /salt/getting-started/index
-      - title: Foundations
-        link: /salt/foundations/index
-      - title: Themes
-        link: /salt/themes/index
-      - title: Components
-        link: /salt/components/index
-      - title: Patterns
-        link: /salt/patterns/index
-      - title: Support
-        link: /salt/support-and-contributions/index
-  footer:
-    links:
-      - label: Terms of use
-        to: https://www.jpmorgan.com/terms
-      - label: Privacy policy
-        to: https://www.jpmorgan.com/privacy
-      - label: Contact us
-        to: /salt/support-and-contributions/index
+    menu: []
+data:
+  latestUpdates:
+    $tag: latest-update-feature
 ---
 
-<Homepage />
+<QuickLinks
+  columns={{ xs: 1, md: 2 }}
+  links={[
+    {
+      title: "Foundations",
+      description:
+        "Apply core principles for a cohesive and user-friendly design language.",
+      action: "Learn about Salt Foundations",
+      href: "/salt/foundations",
+    },
+    {
+      title: "Components",
+      description:
+        "Find accessible, well-documented UI components and examples.",
+      action: "Play with Salt Components",
+      href: "/salt/components",
+    },
+    {
+      title: "Patterns",
+      description:
+        "Use detailed pattern guidance to create compositions that are specific to your use case.",
+      action: "Be inspired with Salt Patterns",
+      href: "/salt/patterns",
+    },
+    {
+      title: "Tokens & Themes",
+      description:
+        "Understand the structure of our design tokens and how they are used to create Salt themes.",
+      action: "Apply Salt Themes",
+      href: "/salt/themes",
+    },
+  ]}
+/>
+
+## What to expect
+
+<Impact
+  impacts={[
+    {
+      title: "Small components, flexible patterns",
+      description:
+        "We can't build components for every use case across every line of business, so we focus on building small, quality components and demonstrate putting them together as pattern examples for specific business requirements.",
+    },
+    {
+      title: "Lightweight, dependency-light",
+      description:
+        "We aim to keep Salt as lightweight as possible, with minimal dependencies. We've built our components from the ground up to be customizable and easy to keep up-to-date.",
+    },
+    {
+      title: "Composable APIs",
+      description:
+        "We have looked at the friction points of legacy APIs to make them more consistent and composable. Our components have features for most common use cases and their APIs allow them to be composed with other elements for nuanced cases.",
+    },
+    {
+      title: "A systematic spacing grid",
+      description:
+        "All of our components support our four density systems by using a 4px scaling grid. This allows you to use components that 'fit' together cohesively at a size which is optimal for the amount of data you have on the screen.",
+    },
+    {
+      title: "WCAG 2.1 accessibility",
+      description:
+        "Our components follow Web Content Accessibility Guidelines (WCAG) 2.1 to AA standards as a core requirement, not an afterthought. We believe in digital inclusion and commit to supporting diverse user needs.",
+    },
+    {
+      title: "Token-driven styling",
+      description:
+        "Styling is driven holistically through an abstraction of CSS variables that link components together. No third-party libraries, just vanilla CSS!",
+    },
+  ]}
+  action={{ label: "Learn more about Salt", href: "/salt/about" }}
+/>
+
+## How to find help
+
+<QuickLinks columns={{ md: 3, xs: 1 }} >
+    
+  <QuickLink title="J.P. Morgan internal resources" action="Visit Salt's internal site" href="https://go/salt-ds">
+    A wealth of information for JPM employees, including OKRs, migration guides, updates, training and shared patterns.
+  </QuickLink>
+    
+  <QuickLink title="J.P. Morgan contributor" action="Get help from the team and community" href="https://go/salt-ds-support">
+      Make the most of our growing community inside JPM to quickly find the support that you need.
+  </QuickLink>
+    
+  <QuickLink title="External contributor" action="Access Open Source support" href="/salt/support-and-contributions/index">
+     Suggest improvements to our system and documentation, or help us to raise the quality bar by reporting a bug.
+  </QuickLink>
+
+</QuickLinks>
+
+## Latest updates
+
+<ArticleCards columns={{ xs: 1, sm: 2 }} gap={{ md: 3, xs: 1 }}>
+  {meta.data.latestUpdates
+    .sort((a, b) => b.lastModifiedDate - a.lastModifiedDate)
+    .slice(0, 2)
+    .map((update) => (
+      <ArticleCard
+        key={update.route}
+        title={update.title}
+        description={update.description}
+        timestamp={update.lastModifiedDate}
+        action={{ href: update.data.href, label: "Read the release notes" }}
+      />
+    ))}
+</ArticleCards>

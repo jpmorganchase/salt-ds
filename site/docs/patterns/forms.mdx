@@ -1,5 +1,6 @@
 ---
 title: Forms
+description: "A form allows you to capture data, gather opinions and receive information in a consistent format. This pattern provides guidelines for creating forms that are flexible to business domain, user experience and channel."
 layout: DetailPattern
 tags:
   - pattern
@@ -15,8 +16,6 @@ data:
       { href: "https://storybook.saltdesignsystem.com/?path=/story/patterns-forms--standard-layout", label: "Examples" },
     ]  
 ---
-
-A form allows you to capture data, gather opinions and receive information in a consistent format. This pattern provides guidelines for creating forms that are flexible to business domain, user experience and channel.
 
 <Diagram
   src="/img/patterns/forms/form-pattern.png"
@@ -66,11 +65,11 @@ A form control consists of a [form field](/salt/components/form-field) wrapped a
 
 Read more in the [spacing foundation](../foundations/spacing).
 
-<ExampleContainer type="positive" customPillText="Best practices">
+<GuidanceCallout type="positive" customPillText="Best practices">
 - Align the width of a form field to the number of columns that best reflect the length of its expected text.
 - Use the Figma “Salt Layout Grid” style library, which aligns to Salt breakpoints. Pick the style that fits to your density and frame width.
 - Use “Compact layout” for very data-dense forms.
-</ExampleContainer>
+</GuidanceCallout>
 
 #### Headings
 
@@ -101,10 +100,10 @@ Use horizontal separators to increase visual hierarchy alongside fills and headi
   label="Show spacing"
 />
 
-<ExampleContainer type="positive" customPillText="Best practices">
+<GuidanceCallout type="positive" customPillText="Best practices">
 - Break a long form up into sections (or sequential steps) of, ideally, 7 (+/-2) form fields (Miller’s Law).
 - Inset separators so that they don’t extend into the column layout margin.
-</ExampleContainer>
+</GuidanceCallout>
 
 ### Multiple columns
 
@@ -239,9 +238,9 @@ Choose the combination that best fits:
   </Diagram>
 </Diagrams>
 
-<ExampleContainer type="positive" label="Best practices">
+<GuidanceCallout type="positive" label="Best practices">
   Use a bordered multiline field when the form field fill matches the background fill.
-</ExampleContainer>
+</GuidanceCallout>
 
 ## Label or question
 
@@ -321,15 +320,15 @@ The default label placement for form fields. Top placement offers:
   </Diagram>
 </Diagrams>
 
-<ExampleContainer type="positive">
+<GuidanceCallout type="positive">
 - Ensure both top and left placed labels align to the same layout grid configuration.
 - All left placement labels in the form should have the same width (determined by the field with the longest label).
 - Avoid left placement when the form is displayed in different languages, or on mobile/smaller viewports.
-</ExampleContainer>
+</GuidanceCallout>
 
-<ExampleContainer type="negative">
+<GuidanceCallout type="negative">
 - Don't mix label placements across the same form.
-</ExampleContainer>
+</GuidanceCallout>
 
 ## Compact form
 
@@ -350,13 +349,13 @@ Use these layouts to display a:
   label="Show spacing"
 />
 
-<ExampleContainer type="positive" customPillText="Best practices">
+<GuidanceCallout type="positive" customPillText="Best practices">
 If a compact form is editable, display it with:
 
 - Secondary fields.
 - Primary background.
 - Right-aligned labels (see “Label placement”).
-</ExampleContainer>
+</GuidanceCallout>
 
 ### Read-only summary
 
@@ -367,14 +366,14 @@ If a compact form is editable, display it with:
   border
 />
 
-<ExampleContainer type="positive" customPillText="Best practices">
+<GuidanceCallout type="positive" customPillText="Best practices">
 If a compact form is for reference (e.g., a summary/comparison), display it with:
 
 - Primary fields.
 - Primary background.
 - Read-only state.
 - Left-aligned labels (see “Label placement”).
-</ExampleContainer>
+</GuidanceCallout>
 
 ## Progressive disclosure
 
@@ -398,10 +397,10 @@ These use accordions to progressively reveal fields in long, dense forms. Sectio
   label="Expand sections"
 />
 
-<ExampleContainer type="positive" customPillText="Best practices">
+<GuidanceCallout type="positive" customPillText="Best practices">
 - Expand the first section on displaying the form.
 - Align the left edge of fields to the accordion label and the right edge to the underlying layout grid.
-</ExampleContainer>
+</GuidanceCallout>
 
 ### Combining nonexpandable and expandable sections
 

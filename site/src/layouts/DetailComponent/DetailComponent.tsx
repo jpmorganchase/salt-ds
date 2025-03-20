@@ -1,32 +1,30 @@
-import { Sidebar } from "@jpmorganchase/mosaic-site-components";
+import type { LayoutProps } from "@jpmorganchase/mosaic-layouts/dist/types";
 import {
   type SiteState,
-  useMeta,
   useRoute,
   useStore,
 } from "@jpmorganchase/mosaic-store";
 import {
   TabBar,
-  TabListNext,
+  type TabListNextProps,
   TabNext,
   TabNextPanel,
   TabNextTrigger,
   TabsNext,
 } from "@salt-ds/lab";
-import { useRouter } from "next/navigation";
-import { type FC, type SyntheticEvent, useEffect, useState } from "react";
-import ReactMarkdown from "react-markdown";
-import { a, code, p, ul } from "../../components/mdx";
-import { TableOfContents } from "../../components/toc";
-import useIsMobileView from "../../utils/useIsMobileView";
-import { DetailBase } from "../DetailBase";
-import type { LayoutProps } from "../types";
+import dynamic from "next/dynamic";
+import { useRouter } from "next/router";
+import { type FC, type SyntheticEvent, useEffect } from "react";
+import { LivePreviewProvider } from "../../components/components/LivePreviewProvider";
+import { LinkList } from "../../components/link-list/LinkList";
+import { PageNavigation } from "../../components/navigation/PageNavigation";
+import { TableOfContents } from "../../components/toc/index";
+import { getHrefFromComponent } from "../../utils/getHrefFromComponent";
+import { Base } from "../Base/Base";
+import { PrimarySidebar } from "../Base/PrimarySidebar";
+import { SecondarySidebar } from "../Base/SecondarySidebar";
+import { RelatedPatterns } from "../DetailPattern/RelatedPatterns";
 import styles from "./DetailComponent.module.css";
-import MobileDrawer from "./MobileDrawer";
-import SecondarySidebar from "./SecondarySidebar";
-import TitleWithDrawer from "./TitleWithDrawer";
-
-const components = { code, ul, p, a } as any;
 
 const tabs = [
   { name: "examples", label: "Examples" },
@@ -35,6 +33,10 @@ const tabs = [
 ];
 
 export type Relationship = "similarTo" | "contains";
+
+const TabListNext = dynamic<TabListNextProps>(() =>
+  import("@salt-ds/lab").then((mod) => mod.TabListNext),
+);
 
 interface RelatedComponent {
   name: string;
@@ -47,109 +49,118 @@ interface ComponentNpmInfo {
 }
 
 export interface Data {
-  description: string;
-  alsoKnownAs: string[];
-  relatedComponents: RelatedComponent[];
-  relatedPatterns: string[];
-  sourceCodeUrl: string;
-  package: ComponentNpmInfo;
+  description?: string;
+  alsoKnownAs?: string[];
+  relatedComponents?: RelatedComponent[];
+  relatedPatterns?: string[];
+  sourceCodeUrl?: string;
+  package?: ComponentNpmInfo;
   bugReport?: string;
   featureRequest?: string;
+  status?: string;
 }
 
-type CustomSiteState = SiteState & { data?: Data };
+export type CustomSiteState = SiteState & { data?: Data };
+
+function getRelatedComponentLinks(
+  relatedComponents: Data["relatedComponents"],
+  relationship: Relationship,
+) {
+  return (
+    relatedComponents
+      ?.filter((component) => component.relationship === relationship)
+      .map((component) => ({
+        href: getHrefFromComponent(component.name),
+        label: component.name,
+      }))
+      .sort((a, b) => a.label.localeCompare(b.label)) ?? []
+  );
+}
+
+const ComponentPageHeading = dynamic(() => import("./ComponentPageHeading"));
 
 export const DetailComponent: FC<LayoutProps> = ({ children }) => {
-  const [openDrawer, setOpenDrawer] = useState(false);
-
   const { replace, push } = useRouter();
   const { route } = useRoute();
 
   const newRoute = route?.substring(0, route.lastIndexOf("/") + 1);
 
-  const useData = useStore((state: CustomSiteState) => {
-    const defaultData: Partial<Data> = {
-      bugReport:
-        "https://github.com/jpmorganchase/salt-ds/issues/new?assignees=&labels=type%3A+bug+%F0%9F%AA%B2%2Cstatus%3A+awaiting+triage&template=bug_report.yml",
-      featureRequest:
-        "https://github.com/jpmorganchase/salt-ds/issues/new?assignees=&labels=type%3A+enhancement+%F0%9F%92%A1%2Cstatus%3A+awaiting+triage&template=feature_request.yml",
-    };
+  const { relatedComponents } = useStore(
+    (state: CustomSiteState) => state.data ?? {},
+  );
 
-    return state.data ? { ...defaultData, ...state.data } : undefined;
-  });
-
-  const { description } = useData ?? {};
+  const isOverview = route?.endsWith("components/index");
 
   const currentTab = tabs.find(({ name }) => route?.includes(name));
 
   useEffect(() => {
     // Default to first tab, "Examples"
-    if (!currentTab) {
+    if (!currentTab && !isOverview) {
       replace(`${newRoute}${tabs[0].name}`);
     }
-  }, [currentTab, newRoute, replace]);
-
-  const isMobileView = useIsMobileView();
+  }, [currentTab, newRoute, replace, isOverview]);
 
   const handleTabChange = (_: SyntheticEvent | null, value: string) => {
-    push(`${newRoute}${value}`);
+    push(`${newRoute}${value}`, undefined, { scroll: false });
   };
 
-  const {
-    meta: { title },
-  } = useMeta();
+  const LeftSidebar = (
+    <PrimarySidebar className={styles.primarySidebar}>
+      <PageNavigation />
+    </PrimarySidebar>
+  );
+
+  const similarToLinks = getRelatedComponentLinks(
+    relatedComponents,
+    "similarTo",
+  );
+  const containsList = getRelatedComponentLinks(relatedComponents, "contains");
+
+  const RightSidebar = (
+    <SecondarySidebar>
+      <TableOfContents />
+      {similarToLinks.length > 0 ||
+        (containsList.length > 0 && (
+          <div className={styles.sidebarSection}>
+            <LinkList heading="Similar to" links={similarToLinks} />
+            <LinkList heading="Contains" links={containsList} />
+          </div>
+        ))}
+      <RelatedPatterns />
+    </SecondarySidebar>
+  );
 
   return (
-    <DetailBase
-      sidebar={
-        !isMobileView ? (
-          <Sidebar sticky>
-            {
-              <SecondarySidebar
-                additionalData={useData}
-                tableOfContents={<TableOfContents />}
-              />
-            }
-          </Sidebar>
-        ) : undefined
-      }
-      pageTitle={
-        isMobileView ? (
-          <TitleWithDrawer
-            title={title}
-            openDrawer={openDrawer}
-            setOpenDrawer={setOpenDrawer}
-          />
-        ) : undefined
-      }
-      isMobileView={isMobileView}
-    >
-      {isMobileView && (
-        <MobileDrawer
-          open={openDrawer}
-          drawerContent={<SecondarySidebar additionalData={useData} />}
-        />
-      )}
-      <ReactMarkdown components={components}>{description ?? ""}</ReactMarkdown>
-      <TabsNext
-        value={currentTab?.name ?? tabs[0].name}
-        onChange={handleTabChange}
+    <LivePreviewProvider>
+      <Base
+        LeftSidebar={LeftSidebar}
+        RightSidebar={RightSidebar}
+        Heading={ComponentPageHeading}
       >
-        <TabBar className={styles.tabBar} divider>
-          <TabListNext appearance="transparent">
-            {tabs.map(({ name, label }) => (
-              <TabNext key={name} value={name}>
-                <TabNextTrigger>{label}</TabNextTrigger>
-              </TabNext>
+        {isOverview ? children : undefined}
+        {!isOverview && (
+          <TabsNext
+            className={styles.content}
+            value={currentTab?.name ?? tabs[0].name}
+            onChange={handleTabChange}
+          >
+            <TabBar divider>
+              <TabListNext appearance="transparent">
+                {tabs.map(({ name, label }) => (
+                  <TabNext key={name} value={name}>
+                    <TabNextTrigger>{label}</TabNextTrigger>
+                  </TabNext>
+                ))}
+              </TabListNext>
+            </TabBar>
+            {tabs.map(({ name }) => (
+              <TabNextPanel className={styles.tabPanel} key={name} value={name}>
+                {children}
+              </TabNextPanel>
             ))}
-          </TabListNext>
-        </TabBar>
-        {tabs.map(({ name }) => (
-          <TabNextPanel key={name} value={name}>
-            {children}
-          </TabNextPanel>
-        ))}
-      </TabsNext>
-    </DetailBase>
+          </TabsNext>
+        )}
+      </Base>
+    </LivePreviewProvider>
   );
 };

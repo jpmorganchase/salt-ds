@@ -23,7 +23,7 @@ export interface TabsNextContextValue
   selected?: string;
   setSelected: (event: SyntheticEvent, value: string) => void;
   activeTab: MutableRefObject<Pick<Item, "id" | "value"> | undefined>;
-  returnFocus: MutableRefObject<string | undefined>;
+  removedActiveTabRef: MutableRefObject<string | undefined>;
   menuOpen: boolean;
   setMenuOpen: Dispatch<SetStateAction<boolean>>;
 }
@@ -44,7 +44,7 @@ export const TabsNextContext = createContext<TabsNextContextValue>(
     getTabId: () => undefined,
     setSelected: () => undefined,
     activeTab: { current: undefined },
-    returnFocus: { current: undefined },
+    removedActiveTabRef: { current: undefined },
     menuOpen: false,
     setMenuOpen: () => undefined,
   },

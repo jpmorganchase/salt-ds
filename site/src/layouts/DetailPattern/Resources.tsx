@@ -32,8 +32,13 @@ type Data = {
 type CustomSiteState = SiteState & { data?: Data };
 
 export function Resources() {
-  const resourcesArray =
+  let resourcesArray =
     useStore((state: CustomSiteState) => state.data?.resources) ?? [];
+
+  resourcesArray = resourcesArray.filter(
+    (resource) =>
+      !resource.href.startsWith("https://storybook.saltdesignsystem.com"),
+  );
 
   const { internal, external } = splitResources(resourcesArray);
 

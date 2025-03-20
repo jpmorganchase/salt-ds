@@ -1,5 +1,4 @@
 ---
-# Leave the frontmatter as is
 title:
   $ref: ./#/title
 layout: DetailComponent
@@ -8,10 +7,6 @@ sidebar:
 data:
   $ref: ./#/data
 ---
-
-<LivePreviewControls>
-
-<LivePreview componentName="component-name" exampleName="ComponentExample">
 
 ## Component example title
 
@@ -25,8 +20,6 @@ If you omit it, the `exampleName` will be displayed in the list for this example
 
 See the readme for more details about this section. Delete if not applicable.
 
-</LivePreview>
+<LivePreview componentName="component-name" exampleName="ComponentExample" />
 
-{/* Add more <LivePreview>...</LivePreview> blocks here as needed */}
-
-</LivePreviewControls>
+{/* Add more ...<LivePreview /> blocks here as needed */}

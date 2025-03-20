@@ -1,5 +1,6 @@
 ---
 title: Content status
+description: "A content status provides information about content in a container component of an application. It remains onscreen until a situation resolves or the user takes action, making it a great tool for communication and guidance."
 layout: DetailPattern
 tags:
   - pattern
@@ -12,10 +13,6 @@ data:
     ]
   components: ["Button", "Progress", "Spinner", "Stack layout", "Status indicator", "Text"]
 ---
-
-A content status provides information about content in a container component of an application.
-
-It remains onscreen until a situation resolves or the user takes action, making it a great tool for communication and guidance.
 
 <Diagram
   src="/img/patterns/content-status/content-status.png"
@@ -61,10 +58,10 @@ The content status consists of three functional areas:
   content="Anatomy of content status."
 />
 
-<ExampleContainer type="positive" customPillText="Best practices">
+<GuidanceCallout type="positive" customPillText="Best practices">
 - Text line length shouldn't exceed 80 characters. See the [typography foundation](/salt/foundations/typography) for more information.
 - You should horizontally and vertically center the pattern in the container.
-</ExampleContainer>
+</GuidanceCallout>
 
 ### Supporting messages
 
@@ -125,12 +122,12 @@ Use the error status to communicate a critical issue that prevents the user from
   border
 />
 
-<ExampleContainer type="positive" customPillText="Best practices">
+<GuidanceCallout type="positive" customPillText="Best practices">
  Error and warning messages should: 
  1. Notify users when there’s an issue. 
  2. Identify and explain the issue. 
  3. Provide a resolution.
-</ExampleContainer>
+</GuidanceCallout>
 
 
 ## Success message

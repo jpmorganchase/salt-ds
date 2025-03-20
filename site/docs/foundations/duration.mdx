@@ -11,16 +11,12 @@ Duration represents the time between a user performing an action and the system 
 
 There are four durations available to choose from: instant, perceptible, notable and cut-off.
 
-<div className="saltSite-util-space-below-2x">
-
 | Token                         | Duration (milliseconds) |
 | ----------------------------- | ----------------------- |
 | `--salt-duration-instant`     | 0                       |
 | `--salt-duration-perceptible` | 300                     |
 | `--salt-duration-notable`     | 1,000                   |
 | `--salt-duration-cutoff`      | 10,000                  |
-
-</div>
 
 It's important to use the correct duration to ensure the user feels in control of the interface. The duration should reflect the importance of the element or information being animated. Responses that occur too quickly can distract or obstruct a workflow (e.g., tooltips should never appear instantly as a user moves the mouse pointer over the user interface (UI)). If responses occur too slowly, the application may appear unresponsive, resulting in unnecessary clicks or potential user error (e.g., a system action occurs, but a progress component isn't displayed quickly enough to communicate its state).
 
@@ -40,7 +36,6 @@ A perceptible duration is a short, but detectable delay between a user's action 
 <Image
   src="/img/foundations/duration-perceptible.png"
   alt="Example of duration perceptible"
-  className="saltSite-util-space-below-1x"
 />
 
 Perceptible duration is recommended for revealing secondary guidance or information to a user.
@@ -54,7 +49,6 @@ A 1s delay is usually the maximum limit for experiencing an interaction as one c
 <Image
   src="/img/foundations/duration-notable.svg"
   alt="Example of duration notable"
-  className="saltSite-util-space-below-2x"
 />
 
 With a delay of 1s (`salt-duration-notable`) there's no need to provide visual feedback to the user; however, it can be used as a breakpoint. Once a delay has exceeded the 'notable' duration, it's useful to indicate to the user that the system is working on the problem, for example by displaying a progress indicator or loading state.
@@ -75,7 +69,6 @@ Cut-off, `salt-duration-cutoff`, is the point at which any attempt for a system 
 <Image
   src="/img/foundations/duration-cutoff.svg"
   alt="Example of duration cut-off"
-  className="saltSite-util-space-below-2x"
 />
 
 To prevent a frustrating or unproductive user experience, the time until a cut-off duration can be used for:

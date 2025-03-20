@@ -6,8 +6,7 @@ import {
 } from "@salt-ds/date-adapters";
 import { clsx } from "clsx";
 import {
-  type KeyboardEvent,
-  type KeyboardEventHandler,
+  type MouseEventHandler,
   type SyntheticEvent,
   forwardRef,
   useCallback,
@@ -48,8 +47,8 @@ export function defaultRangeValidator<TDate extends DateFrameworkType>(
   dateAdapter: SaltDateAdapter<TDate>,
   date: DateRangeSelection<TDate> | null,
   details: DateInputRangeDetails,
-  minDate: TDate | undefined,
-  maxDate: TDate | undefined,
+  minDate?: TDate,
+  maxDate?: TDate,
 ): DateInputRangeDetails {
   const { startDate, endDate } = date || {};
 
@@ -121,9 +120,8 @@ export const DatePickerRangeInput = forwardRef(function DatePickerRangeInput<
   const { dateAdapter } = useLocalization<TDate>();
   const {
     className,
-    endInputProps: endInputPropsProp,
-    startInputProps: startInputPropsProp,
-    onKeyDown,
+    endInputProps,
+    startInputProps,
     defaultValue,
     format,
     value: valueProp,
@@ -153,9 +151,14 @@ export const DatePickerRangeInput = forwardRef(function DatePickerRangeInput<
     state: "dateValue",
   });
 
-  const handleCalendarButton = useCallback(() => {
-    setOpen(!open);
-  }, [open, setOpen]);
+  const handleCalendarButton: MouseEventHandler<HTMLButtonElement> =
+    useCallback(
+      (event) => {
+        setOpen(!open, event.nativeEvent, "click");
+        event.stopPropagation();
+      },
+      [open, setOpen],
+    );
 
   const handleDateChange = useCallback(
     (
@@ -193,29 +196,6 @@ export const DatePickerRangeInput = forwardRef(function DatePickerRangeInput<
     }
   }, [cancelled]);
 
-  const startInputProps: {
-    onKeyDown: KeyboardEventHandler<HTMLInputElement>;
-  } = {
-    onKeyDown: (event: KeyboardEvent<HTMLInputElement>) => {
-      if (event.key === "ArrowDown") {
-        setOpen(true);
-      }
-      startInputPropsProp?.onKeyDown?.(event);
-    },
-    ...startInputPropsProp,
-  };
-  const endInputProps: {
-    onKeyDown: KeyboardEventHandler<HTMLInputElement>;
-  } = {
-    onKeyDown: (event: KeyboardEvent<HTMLInputElement>) => {
-      if (event.key === "ArrowDown") {
-        setOpen(true);
-      }
-      endInputPropsProp?.onKeyDown?.(event);
-    },
-    ...endInputPropsProp,
-  };
-
   return (
     <DateInputRange
       value={
@@ -229,6 +209,7 @@ export const DatePickerRangeInput = forwardRef(function DatePickerRangeInput<
       startInputProps={startInputProps}
       endInputProps={endInputProps}
       readOnly={readOnly}
+      disabled={disabled}
       ref={ref}
       onDateChange={handleDateChange}
       onDateValueChange={handleDateValueChange}

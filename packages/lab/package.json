@@ -1,6 +1,6 @@
 {
   "name": "@salt-ds/lab",
-  "version": "1.0.0-alpha.61",
+  "version": "1.0.0-alpha.62",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
@@ -31,6 +31,7 @@
     "deepmerge": "^4.2.2",
     "no-scroll": "^2.1.1",
     "react-color": "^2.19.3",
+    "react-resizable-panels": "^2.1.7",
     "react-window": "^1.8.6",
     "rifm": "^0.12.0",
     "tabbable": "^6.0.0",

@@ -1,7 +1,6 @@
 .root {
-  width: calc(2 * var(--salt-size-base) + var(--salt-size-unit));
+  width: calc(2 * var(--salt-size-base) + var(--salt-spacing-100));
   height: var(--salt-size-base);
-  justify-self: end;
 
   border-color: transparent;
   border-style: var(--salt-container-borderStyle);

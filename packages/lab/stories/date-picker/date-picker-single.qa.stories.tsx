@@ -3,6 +3,7 @@ import {
   DatePickerOverlay,
   DatePickerSingleInput,
   DatePickerSinglePanel,
+  type DatePickerSingleProps,
   DatePickerTrigger,
   useLocalization,
 } from "@salt-ds/lab";
@@ -32,7 +33,9 @@ const QAContainerParameters = {
   },
 };
 
-const renderQAContainer = () => {
+const renderQAContainer = (
+  props?: Omit<DatePickerSingleProps<unknown>, "selectionVariant">,
+) => {
   const { dateAdapter } = useLocalization();
   return (
     <QAContainer itemPadding={10} width={1000}>
@@ -41,6 +44,7 @@ const renderQAContainer = () => {
           defaultSelectedDate={dateAdapter.today()}
           selectionVariant="single"
           open
+          {...props}
         >
           <DatePickerTrigger>
             <DatePickerSingleInput />
@@ -110,4 +114,19 @@ SingleWithLocaleAndLuxon.parameters = {
   ...QAContainerParameters,
   dateLocale: "es-ES",
   dateAdapter: "luxon",
+};
+
+export const SingleDisabled: StoryFn<QAContainerProps> = () =>
+  renderQAContainer({ disabled: true });
+SingleWithMoment.parameters = {
+  ...QAContainerParameters,
+  dateLocale: "en-US",
+  dateAdapter: "moment",
+};
+export const SingleReadonly: StoryFn<QAContainerProps> = () =>
+  renderQAContainer({ readOnly: true });
+SingleWithMoment.parameters = {
+  ...QAContainerParameters,
+  dateLocale: "en-US",
+  dateAdapter: "moment",
 };

@@ -1,0 +1,37 @@
+.root {
+  display: flex;
+  flex-direction: row;
+  gap: var(--salt-spacing-200);
+}
+
+.logoTDDark {
+  display: none;
+}
+
+.logoTDLight {
+  display: none;
+}
+
+.logoLDDark {
+  display: none;
+}
+
+.logoLDLight {
+  display: none;
+}
+
+:global(.salt-theme[data-mode="dark"].salt-density-touch) .logoTDDark {
+  display: unset;
+}
+
+:global(.salt-theme[data-mode="light"].salt-density-touch) .logoTDLight {
+  display: unset;
+}
+
+:global(.salt-theme[data-mode="dark"].salt-density-low) .logoLDDark {
+  display: block;
+}
+
+:global(.salt-theme[data-mode="light"].salt-density-low) .logoLDLight {
+  display: unset;
+}

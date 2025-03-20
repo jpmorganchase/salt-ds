@@ -1,0 +1,24 @@
+.root {
+  margin-top: var(--salt-spacing-200);
+}
+
+.card.card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--salt-spacing-300);
+}
+
+.cardContent {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--salt-spacing-200);
+}
+
+.cardTitle {
+  margin: 0;
+}
+
+.cardDescription :last-child {
+  margin-bottom: 0;
+}

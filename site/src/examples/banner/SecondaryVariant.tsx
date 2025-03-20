@@ -5,7 +5,7 @@ export const SecondaryVariant = (): ReactElement => (
   <StackLayout>
     <Banner variant="secondary" status="info">
       <BannerContent>
-        There has been an update to the{" "}
+        There has been an update to the&nbsp;
         <Link href="#">Terms and Conditions</Link>.
       </BannerContent>
     </Banner>

@@ -1,0 +1,35 @@
+.saltSliderTooltip {
+  background: var(--salt-container-primary-background);
+  border-color: var(--salt-status-info-borderColor);
+  border-style: var(--saltTooltip-borderStyle, var(--salt-container-borderStyle));
+  border-width: var(--saltTooltip-borderWidth, var(--salt-size-border));
+  border-radius: var(--saltTooltip-borderRadius, var(--salt-palette-corner-weak, 0));
+  box-shadow: var(--saltTooltip-shadow, var(--salt-overlayable-shadow-popout));
+  bottom: 50%;
+  left: 50%;
+  padding: var(--salt-spacing-50) var(--salt-spacing-100);
+  position: absolute;
+  transform: translate(-50%, -50%);
+  text-align: var(--saltTooltip-textAlign, left);
+  user-select: none;
+  visibility: hidden;
+  z-index: var(--saltTooltip-zIndex, var(--salt-zIndex-flyover));
+}
+
+.saltSliderTooltip-visible,
+.saltSliderTooltip:hover {
+  visibility: visible;
+}
+
+.saltSliderTooltip-arrow {
+  fill: var(--salt-container-primary-background);
+  height: var(--salt-size-icon);
+  left: 50%;
+  position: absolute;
+  pointer-events: none;
+  top: 100%;
+  transform: translateX(-50%);
+  stroke: var(--salt-status-info-borderColor);
+  stroke-width: var(--salt-size-border);
+  width: var(--salt-size-icon);
+}

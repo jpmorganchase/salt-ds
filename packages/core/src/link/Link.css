@@ -6,10 +6,23 @@
   --link-color-focus: "inherit";
   --link-focus-outlineColor: currentColor;
 
-  --link-textDecoration: var(--salt-navigable-textDecoration);
-  --link-textDecoration-hover: var(--salt-navigable-textDecoration-hover);
-
   --link-fontFamily: var(--salt-text-fontFamily);
+}
+
+.saltLink-underlineDefault {
+  --link-textDecoration: var(--salt-typography-textDecoration-underline);
+  --link-textDecoration-hover: var(--salt-typography-textDecoration-none);
+  /* Active takes default */
+  --link-textDecoration-active: var(--link-textDecoration);
+  /* Focus takes hover */
+  --link-textDecoration-focus: var(--link-textDecoration-hover);
+  /* Visited takes default */
+  --link-textDecoration-visited: var(--link-textDecoration);
+}
+
+.saltLink-underlineNever {
+  --link-textDecoration: var(--salt-typography-textDecoration-none);
+  --link-textDecoration-hover: var(--salt-typography-textDecoration-none);
 }
 
 /* Main css class */
@@ -58,6 +71,7 @@
 /* Set color for visited link */
 .saltLink:visited {
   color: var(--saltLink-color-visited, var(--link-color-visited));
+  text-decoration: var(--link-textDecoration-visited);
 }
 
 /* Set color for hovered link */
@@ -69,6 +83,7 @@
 /* Set color for active link */
 .saltLink:active {
   color: var(--saltLink-color-active, var(--link-color-active));
+  text-decoration: var(--link-textDecoration-active);
 }
 
 /* Set color for focused link */
@@ -76,7 +91,7 @@
   color: var(--saltLink-color-focus, var(--link-color-focus));
   outline: var(--salt-focused-outline);
   outline-color: var(--link-focus-outlineColor);
-  text-decoration: var(--link-textDecoration-hover);
+  text-decoration: var(--link-textDecoration-focus);
 }
 
 /* Class for ADA content */

@@ -2,24 +2,16 @@
 title: Stack layout
 data:
   description: "`StackLayout` displays items in horizontal or vertical order on a single line. It builds on the `FlexLayout` component and is best for small-scale layouts where displaying components in a single row or column is necessary. It may benefit from supported visual separators, such as a row of charts or a scrolling side panel comprising multiple sections. For additional control of the size and position of content, use `FlexItem` for each content item inside `StackLayout`."
-
-  # Fill in the info from the content template's "Metadata" table below.
-  # To omit optional items, comment them out with #
   sourceCodeUrl: "https://github.com/jpmorganchase/salt-ds/blob/main/packages/core/src/stack-layout/StackLayout.tsx"
   package:
     name: "@salt-ds/core"
   alsoKnownAs: ["Inline layout", "Flex layout", "Column layout"]
-  relatedComponents: [
-      # Add a { name: "...", relationship: "..." } block for each
-      # related component here (separated by commas).
-      # Permitted values for relationship are: "similarTo" or
-      # "contains".
+  relatedComponents:
+    [
       { name: "Flow layout", relationship: "similarTo" },
       { name: "Split layout", relationship: "similarTo" },
       { name: "Flex layout", relationship: "contains" },
     ]
-
-# Leave this as is
 layout: DetailComponent
 ---
 

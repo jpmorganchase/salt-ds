@@ -212,7 +212,7 @@ export function useDatePicker<
   const applySingle = useCallback(
     (event: SyntheticEvent, date: SingleDateSelection<TDate> | null): void => {
       setCancelled(false);
-      setOpen(false);
+      setOpen(false, event.nativeEvent, "apply");
       if (selectionVariant === "single") {
         onApply?.(event, date);
       }
@@ -246,7 +246,7 @@ export function useDatePicker<
   const applyRange = useCallback(
     (event: SyntheticEvent, date: DateRangeSelection<TDate> | null): void => {
       setCancelled(false);
-      setOpen(false);
+      setOpen(false, event.nativeEvent, "apply");
       if (selectionVariant === "range") {
         onApply?.(event, date);
       }
@@ -277,11 +277,14 @@ export function useDatePicker<
     ],
   );
 
-  const cancel = useCallback(() => {
-    setCancelled(true);
-    setOpen(false);
-    onCancel?.();
-  }, [setCancelled, setOpen, onCancel]);
+  const cancel = useCallback(
+    (event?: Event) => {
+      setCancelled(true);
+      setOpen(false, event, "cancel");
+      onCancel?.();
+    },
+    [setCancelled, setOpen, onCancel],
+  );
 
   const returnValue = {
     state: {

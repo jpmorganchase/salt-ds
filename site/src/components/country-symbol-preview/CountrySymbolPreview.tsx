@@ -8,8 +8,12 @@ import {
   StatusIndicator,
   Text,
 } from "@salt-ds/core";
-import { LazyCountrySymbol, countryMetaMap } from "@salt-ds/countries";
+import {
+  type LazyCountrySymbolProps,
+  countryMetaMap,
+} from "@salt-ds/countries";
 import { CloseIcon, SearchIcon } from "@salt-ds/icons";
+import dynamic from "next/dynamic";
 import {
   type ChangeEvent,
   Suspense,
@@ -18,6 +22,10 @@ import {
   useState,
 } from "react";
 import styles from "./CountrySymbolPreview.module.css";
+
+const LazyCountrySymbol = dynamic<LazyCountrySymbolProps>(() =>
+  import("@salt-ds/countries").then((mod) => mod.LazyCountrySymbol),
+);
 
 export const CountrySymbolPreview = () => {
   const [search, setSearch] = useState("");

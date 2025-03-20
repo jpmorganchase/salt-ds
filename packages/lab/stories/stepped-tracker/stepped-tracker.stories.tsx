@@ -1,11 +1,19 @@
 import {
   Button,
   FlexLayout,
+  Panel,
   SegmentedButtonGroup,
   StackLayout,
+  Text,
 } from "@salt-ds/core";
-import { Step, SteppedTracker, useStepReducer } from "@salt-ds/lab";
+import {
+  Step,
+  type StepRecord,
+  SteppedTracker,
+  useStepReducer,
+} from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react";
+import { useEffect } from "react";
 
 export default {
   title: "Lab/SteppedTracker",
@@ -85,16 +93,25 @@ export const HorizontalInteractiveUsingSteppedReducer: StoryFn<
   typeof SteppedTracker
 > = () => {
   const [state, dispatch] = useStepReducer([
-    { key: "step-1", label: "Step 1" },
-    { key: "step-2", label: "Step 2", stage: "active" },
-    { key: "step-3", label: "Step 3" },
+    { id: "step-1", label: "Step 1", stage: "active" },
+    { id: "step-2", label: "Step 2" },
+    { id: "step-3", label: "Step 3" },
   ]);
+
+  function handleNext() {
+    console.log("Before", state);
+    dispatch({ type: "next" });
+  }
+
+  useEffect(() => {
+    console.log("After", state);
+  }, [state]);
 
   return (
     <StackLayout style={{ width: 320, alignItems: "center" }}>
       <SteppedTracker>
         {state.steps.map((step) => (
-          <Step key={step.key || step.id} {...step} />
+          <Step key={step.id} {...step} />
         ))}
       </SteppedTracker>
       <FlexLayout justify="space-between">
@@ -107,15 +124,7 @@ export const HorizontalInteractiveUsingSteppedReducer: StoryFn<
             Previous
           </Button>
         )}
-        {!state.ended && (
-          <Button
-            onClick={() => {
-              dispatch({ type: "next" });
-            }}
-          >
-            Next
-          </Button>
-        )}
+        {!state.ended && <Button onClick={handleNext}>Next</Button>}
       </FlexLayout>
     </StackLayout>
   );
@@ -130,7 +139,7 @@ export const Vertical: StoryFn<typeof SteppedTracker> = () => {
         width: "100%",
       }}
     >
-      <SteppedTracker>
+      <SteppedTracker orientation="vertical">
         <Step label="Step 1" stage="completed" />
         <Step label="Step 2" stage="active" />
         <Step label="Step 3" />
@@ -268,46 +277,117 @@ export const VerticalDepth2 = () => {
 export const VerticalInteractiveUsingSteppedReducer: StoryFn<
   typeof SteppedTracker
 > = () => {
-  const [state, dispatch] = useStepReducer(
-    [
-      {
-        id: "step-1",
-        label: "Step 1",
-        defaultExpanded: true,
-        substeps: [
-          { id: "step-1-1", label: "Step 1.1" },
-          { id: "step-1-2", label: "Step 1.2" },
-          {
-            id: "step-1-3",
-            label: "Step 1.3",
-            defaultExpanded: true,
-            substeps: [
-              { id: "step-1-3-1", label: "Step 1.3.1" },
-              { id: "step-1-3-2", label: "Step 1.3.2" },
-              {
-                id: "step-1-3-3",
-                label: "Step 1.3.3",
-                description: "This is just a description text",
-              },
-            ],
-          },
-          { id: "step-1-4", label: "Step 1.4" },
-        ],
-      },
-      { id: "step-2", label: "Step 2" },
-      { id: "step-3", label: "Step 3" },
-    ],
-    { activeStepId: "step-1-3-2" },
-  );
+  const initialState: StepRecord[] = [
+    {
+      id: "step-1",
+      label: "Step 1",
+      defaultExpanded: true,
+      substeps: [
+        { id: "step-1-1", label: "Step 1.1" },
+        { id: "step-1-2", label: "Step 1.2" },
+        {
+          id: "step-1-3",
+          label: "Step 1.3",
+          defaultExpanded: true,
+          substeps: [
+            { id: "step-1-3-1", label: "Step 1.3.1" },
+            { id: "step-1-3-2", label: "Step 1.3.2" },
+            {
+              id: "step-1-3-3",
+              label: "Step 1.3.3",
+              description: "This is just a description text",
+            },
+          ],
+        },
+        { id: "step-1-4", label: "Step 1.4" },
+      ],
+    },
+    { id: "step-2", label: "Step 2" },
+    { id: "step-3", label: "Step 3" },
+  ];
+
+  const [state, dispatch] = useStepReducer(initialState, {
+    activeStepId: "step-1-3-2",
+  });
 
   return (
     <StackLayout style={{ width: 240, alignItems: "center" }}>
       <SteppedTracker orientation="vertical">
         {state.steps.map((step) => (
-          <Step key={step.key || step.id} {...step} />
+          <Step key={step.id} {...step} />
         ))}
       </SteppedTracker>
       <SegmentedButtonGroup>
+        <Button
+          onClick={() => {
+            dispatch({ type: "previous" });
+          }}
+        >
+          Previous
+        </Button>
+        <Button
+          onClick={() => {
+            dispatch({ type: "next" });
+          }}
+        >
+          Next
+        </Button>
+      </SegmentedButtonGroup>
+      <SegmentedButtonGroup>
+        <Button onClick={() => dispatch({ type: "status/error" })}>
+          Error
+        </Button>
+        <Button onClick={() => dispatch({ type: "status/warning" })}>
+          Warning
+        </Button>
+        <Button onClick={() => dispatch({ type: "status/clear" })}>
+          Clear
+        </Button>
+        <Button onClick={() => dispatch({ type: "reset" })}>Reset</Button>
+      </SegmentedButtonGroup>
+    </StackLayout>
+  );
+};
+
+export const BareBones: StoryFn<typeof SteppedTracker> = () => {
+  return (
+    <StackLayout style={{ minWidth: "240px", width: "100%" }}>
+      <SteppedTracker>
+        <Step stage="completed" />
+        <Step stage="active" />
+        <Step />
+      </SteppedTracker>
+    </StackLayout>
+  );
+};
+
+export const ProgrammaticElement: StoryFn<typeof SteppedTracker> = () => {
+  // place this outside to avoid re-rendering
+  const stepIdToElement = {
+    "step-1": <Text key="step-1-content">Step 1 Content</Text>,
+    "step-2": <Text key="step-2-content">Step 2 Content</Text>,
+    "step-3": <Text key="step-3-content">Step 3 Content</Text>,
+    default: <Text key="default-content">No Step is currently active</Text>,
+  };
+
+  const [state, dispatch] = useStepReducer([
+    { id: "step-1", label: "Step 1", stage: "active" },
+    { id: "step-2", label: "Step 2" },
+    { id: "step-3", label: "Step 3" },
+  ]);
+
+  const activeStepId = (state.activeStep?.id ??
+    "default") as keyof typeof stepIdToElement;
+
+  return (
+    <StackLayout style={{ width: 320, alignItems: "center" }}>
+      <SteppedTracker>
+        {state.steps.map((step) => (
+          <Step key={step.id} {...step} />
+        ))}
+      </SteppedTracker>
+      <Panel variant="secondary">{stepIdToElement[activeStepId]}</Panel>
+      <FlexLayout justify="space-between">
         {state.started && (
           <Button
             onClick={() => {
@@ -326,30 +406,7 @@ export const VerticalInteractiveUsingSteppedReducer: StoryFn<
             Next
           </Button>
         )}
-      </SegmentedButtonGroup>
-      <SegmentedButtonGroup>
-        {state.started && !state.ended && (
-          <>
-            <Button onClick={() => dispatch({ type: "error" })}>Error</Button>
-            <Button onClick={() => dispatch({ type: "warning" })}>
-              Warning
-            </Button>
-            <Button onClick={() => dispatch({ type: "clear" })}>Clear</Button>
-          </>
-        )}
-      </SegmentedButtonGroup>
-    </StackLayout>
-  );
-};
-
-export const BareBones: StoryFn<typeof SteppedTracker> = () => {
-  return (
-    <StackLayout style={{ minWidth: "240px", width: "100%" }}>
-      <SteppedTracker>
-        <Step stage="completed" />
-        <Step stage="active" />
-        <Step />
-      </SteppedTracker>
+      </FlexLayout>
     </StackLayout>
   );
 };

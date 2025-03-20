@@ -1,0 +1,79 @@
+---
+  title:
+    $ref: ./#/title
+  layout: DetailComponent
+  sidebar:
+    exclude: true
+  data:
+    $ref: ./#/data
+---
+
+## Horizontal
+
+The `Splitter` component accepts an orientation prop.
+
+Set the `orientation` prop to `horizontal` to position handles horizontally.
+
+<LivePreview componentName="splitter" exampleName="Horizontal" />
+
+## Vertical
+
+Set the `orientation` prop to `vertical` to position handles vertically.
+
+<LivePreview componentName="splitter" exampleName="Vertical" />
+
+## Multi-orientational
+
+You can nest another `Splitter` component within a `SplitPanel` to achieve a multi-orientational layout. This allows you to create more complex and flexible designs by combining horizontal and vertical splits within the same interface.
+
+<LivePreview componentName="splitter" exampleName="MultiOrientational" />
+
+## Transparent
+
+The transparent `Splitter` variant allows the background color of the parent container to show through by making the handles see-through.
+
+<LivePreview componentName="splitter" exampleName="Transparent" />
+
+## Border
+
+Use the `border` prop to configure which sides of the `SplitHandle` component will have a border. This prop accepts one of seven options: `top`, `bottom`, `left`, `right`, `top-bottom`, `left-right`, or `none`.
+
+The default value for the `border` prop is dynamically computed based on the `orientation` and `appearance` of the parent `Splitter` component. Here’s how it works:
+
+- If the parent `Splitter` has a `vertical` orientation and a `bordered` appearance, the default value for `border` will be `left-right`.
+- If the parent `Splitter` has a `horizontal` orientation and a `bordered` appearance, the default value for `border` will be `top-bottom`.
+- If the parent `Splitter` has a `transparent` appearance, the default value for `border` will be `none`.
+
+<LivePreview componentName="splitter" exampleName="Border" />
+
+## Variant
+
+Use the `variant` prop to configure the background of the `SplitHandle` and `SplitPanel`. This prop accepts: `primary`, `secondary`, or `tertiary` background options.
+
+<LivePreview componentName="splitter" exampleName="Variant" />
+
+## Size
+
+The combination of minSize, maxSize and defaultSize props provides fine-grained control over the splitter layout. By setting size boundaries, you can ensure visual balance and an optimal user experience.
+
+By default every `SplitPanel` has a `minSize` of `10`. This is to ensure that 2 `SplitHandles` can't be placed directly next to each other.
+
+<LivePreview componentName="splitter" exampleName="Size" />
+
+## Collapsible
+
+The `SplitPanel` components can be made collapsible by setting the `collapsible` and `collapsedSize` props. You can define a set size for the collapsed state using the `collapsedSize` prop. This allows you to maintain a specific size for the panel when collapsed, optimizing usability and accessibility.
+
+<LivePreview componentName="splitter" exampleName="Collapsible" />
+
+## Collapsible To 0
+
+When the panel is allowed to be collapsed at 0, we advice to have a secondary way of expanding it. This can be in the form of an additional button on the page, and/or adding a double click event to the handle.
+
+<LivePreview componentName="splitter" exampleName="CollapsibleTo0" />
+
+## Programmable Resize
+
+Collapsing, expanding or resizing a `SplitPanel` can be controlled externally using the imperative ref API.
+
+<LivePreview componentName="splitter" exampleName="ProgrammableResize" />

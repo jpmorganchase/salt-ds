@@ -1,0 +1,5 @@
+@media not screen and (min-width: 960px) {
+  .navigation {
+    padding-right: 0;
+  }
+}

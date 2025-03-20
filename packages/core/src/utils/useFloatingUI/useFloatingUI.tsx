@@ -22,6 +22,7 @@ import {
   useMemo,
 } from "react";
 import { SaltProvider, SaltProviderNext, useTheme } from "../../salt-provider";
+import { usePreventScroll } from "../usePreventScroll";
 
 export interface FloatingComponentProps
   extends ComponentPropsWithoutRef<"div"> {
@@ -45,6 +46,10 @@ export interface FloatingComponentProps
   width?: number;
   height?: number;
   position?: Strategy;
+  /**
+   * Makes the page unscrollable when the floating component is open.
+   */
+  lockScroll?: boolean;
 }
 
 const DefaultFloatingComponent = forwardRef<
@@ -59,6 +64,7 @@ const DefaultFloatingComponent = forwardRef<
     width,
     height,
     focusManagerProps,
+    lockScroll,
     ...rest
   } = props;
   const style = {
@@ -68,6 +74,7 @@ const DefaultFloatingComponent = forwardRef<
   };
 
   const { themeNext } = useTheme();
+  usePreventScroll({ isDisabled: !lockScroll || !open });
 
   const ChosenSaltProvider = themeNext ? SaltProviderNext : SaltProvider;
 

@@ -1,5 +1,28 @@
 # @salt-ds/core
 
+## 1.42.0
+
+### Minor Changes
+
+- 38da566: Added strong and small font weight support to `Text` when `styleAs="action"`.
+  `<strong>` and `<small>` work in `Button` as well.
+- aac1500: - Added `variant="ghost"` to Card with translucent background.
+  - Added default shadow to all Card, Link Card and Interactable Card variants.
+- 803d0c0: Added `underline` prop to `Link`. It controls when the underline text decoration is applied to a link.
+
+  ```
+  <Link underline="default">Underline default</Link>
+  <Link underline="never">Underline never</Link>
+  ```
+
+- e783dd5: Added `lockScroll` prop to FloatingComponent that makes the page unscrollable when the floating component is open.
+
+### Patch Changes
+
+- 32de853: Refactored Pagination to simplify page button styling.
+- 7a84d72: Fixed Accordion flashing blue when tapped on mobile devices.
+- c30b6a4: Revert layout padding and margin defaults removal to avoid margins and paddings being inherited from parent containers.
+
 ## 1.41.0
 
 ### Minor Changes
