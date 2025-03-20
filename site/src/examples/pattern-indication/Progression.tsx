@@ -31,7 +31,7 @@ const data = [
       "Draft – An item has been picked up or assigned to a user, and is ready to be worked on/addressed",
     ],
   },
-] satisfies ProgressionData[];
+] as ProgressionData[];
 
 const rowIdGetter = (row: ProgressionData) => row.progression;
 

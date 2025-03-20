@@ -30,7 +30,7 @@ const data = [
     iconName: "success-circle",
     ExampleIcon: SuccessCircleIcon,
   },
-] satisfies StatusData[];
+] as StatusData[];
 
 const rowIdGetter = (row: StatusData) => row.status;
 
