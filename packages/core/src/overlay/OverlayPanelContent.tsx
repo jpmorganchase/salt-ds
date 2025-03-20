@@ -73,8 +73,8 @@ export const OverlayPanelContent = forwardRef<
       <div
         className={clsx(withBaseName("container"), {
           [withBaseName("overflow")]: isOverflowing,
-          [withBaseName("scroll-top")]: scrollBarTop,
-          [withBaseName("scroll-bottom")]: scrollBarBottom,
+          [withBaseName("scroll-top")]: isOverflowing && scrollBarTop,
+          [withBaseName("scroll-bottom")]: isOverflowing && scrollBarBottom,
         })}
         onScrollCapture={handleScroll}
         {...rest}

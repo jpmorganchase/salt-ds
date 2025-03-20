@@ -73,7 +73,11 @@ export const DialogContent = forwardRef<HTMLDivElement, DialogContentProps>(
 
     return (
       <>
-        <div className={clsx({ [withBaseName("scroll")]: scrollBarTop })} />
+        <div
+          className={clsx({
+            [withBaseName("scroll")]: isOverflowing && scrollBarTop,
+          })}
+        />
         <div
           className={clsx(
             withBaseName(),
@@ -88,7 +92,11 @@ export const DialogContent = forwardRef<HTMLDivElement, DialogContentProps>(
         >
           {children}
         </div>
-        <div className={clsx({ [withBaseName("scroll")]: scrollBarBottom })} />
+        <div
+          className={clsx({
+            [withBaseName("scroll")]: isOverflowing && scrollBarBottom,
+          })}
+        />
       </>
     );
   },
