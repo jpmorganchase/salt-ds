@@ -16,15 +16,6 @@
   gap: var(--salt-spacing-100);
 }
 
-.toggleGroup.toggleGroup {
-  width: 100%;
-}
-
-.toggleGroup.toggleGroup button {
-  width: unset;
-  flex: 1;
-}
-
 .overlay {
   max-width: 100vw;
 }
