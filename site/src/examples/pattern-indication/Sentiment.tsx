@@ -12,7 +12,7 @@ const data = [
   { sentiment: "Caution", color: "orange", feeling: "Carefullness" },
   { sentiment: "Negative", color: "red", feeling: "Negativity" },
   { sentiment: "Positive", color: "green", feeling: "Positivity" },
-] satisfies SentimentData[];
+] as SentimentData[];
 
 const rowIdGetter = (row: SentimentData) => row.sentiment;
 
