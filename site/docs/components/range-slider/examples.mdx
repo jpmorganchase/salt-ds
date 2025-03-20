@@ -10,9 +10,7 @@ data:
 
 ## Default
 
-Selection of an interval of values from a `RangeSlider` track. Labels can be displayed either inline or below the track.
-
-A tooltip displays the value of the `RangeSlider`'s "thumbs" when a thumb is focused or hovered. The tooltip remains persistent on cursor drag or moving the thumb along the track with keyboard interaction.
+Selection of an interval of values from a `RangeSlider` track. A tooltip displays the value of the `RangeSlider`'s "thumbs" when a thumb is focused or hovered.
 
 <LivePreview componentName="range-slider" exampleName="Default" />
 
@@ -20,39 +18,50 @@ A tooltip displays the value of the `RangeSlider`'s "thumbs" when a thumb is foc
 
 `RangeSlider`'s labels indicate the minimum and maximum values of the range, and can be located inline with the `RangeSlider` using the `minLabel` and `maxLabel` props or they can be located at the bottom of the `RangeSlider` using the `marks` prop.
 
-</LivePreview>
+<LivePreview componentName="range-slider" exampleName="WithLabels">
 
-<LivePreview componentName="range-slider" exampleName="WithRestrictedLabelOverflow">
-
-## With Constrained Label Position
+## With constrained label position
 
 You can use the `constrainLabelPosition` prop to ensure that the bottom labels remain within the `RangeSlider`'s boundaries. When enabled (`true`), it prevents labels from extending beyond the `RangeSlider`, maintaining a tidy and consistent appearance. This is particularly useful for preserving layout integrity and ensuring label readability across various screen sizes.
 
-**Note:** Enabling `constrainLabelPosition` may lead to inconsistent spacing between labels. Use this option carefully to balance visual clarity and label distribution.
+**Note:** Enabling `constrainLabelPosition` may lead to inconsistent spacing between marks. Use this option carefully to balance visual clarity and label distribution.
 
-<LivePreview componentName="range-slider" exampleName="WithRestrictedLabelOverflow"/>
+<LivePreview
+  componentName="range-slider"
+  exampleName="WithConstrainedLabelPosition"
+/>
 
-## With Marks
+## With marks
 
 You can display marks under the `RangeSlider` track to label specific values. The `showTicks` property allows you to display small ticks above the marks, enhancing visual guidance for users by providing clear reference points along the track. This feature improves usability by making it easier for users to select precise values.
 
 You can combine `marks` with `minLabel` and `maxLabel` to provide even more context regarding the `RangeSlider`.
 
-<LivePreview componentName="range-slider" exampleName="WithRestrictToMarks"/>
+<LivePreview componentName="range-slider" exampleName="WithMarks" />
 
-## Restrict to Marks
+## Restrict to marks
 
 The `restrictToMarks` property, when enabled, confines the `Slider`'s movement to predefined values specified in the `marks` array. This means that the `Slider` can only stop at these specific values, rather than any arbitrary value along the `Slider`'s range. The `step` property is ignored in this case.
 
-<LivePreview componentName="range-slider" exampleName="WithRestrictToMarks"/>
+<LivePreview componentName="range-slider" exampleName="WithRestrictToMarks" />
 
-## Custom Step
+## Disabled
+
+You can set the `RangeSlider` as disabled.
+
+<LivePreview componentName="range-slider" exampleName="Disabled" />
+
+## Custom step
 
 By default, the `RangeSlider` step increment is set to 1. This can be customized by using the `step` prop. Custom step values can be set to any number, including decimal values up to two decimal places.
 
+### Best practices
+
+We recommend (max - min) to be evenly divisible by the step to ensure that all values of the `RangeSlider` are reachable.
+
 <LivePreview componentName="range-slider" exampleName="WithCustomStep" />
 
-## With Formatting
+## With formatting
 
 You can pass a callback function to the `format()` prop to format the display values in the tooltip and min/max labels. This can be useful to display units or currency.
 
@@ -62,9 +71,9 @@ When formatting the values, it is recommended to add the same formatting to the 
 
 <LivePreview componentName="range-slider" exampleName="WithFormatting" />
 
-## With Form Field
+## Form field compatibility
 
-You can wrap the the `RangeSlider` in a form field and display a label. For more information, refer to the [form field documentation.](/salt/components/form-field/examples)
+You can wrap the `RangeSlider` in a form field and display a label. For more information, refer to the [form field documentation.](/salt/components/form-field/examples)
 
 <LivePreview componentName="range-slider" exampleName="WithFormField" />
 
@@ -76,40 +85,22 @@ You can display inputs with a `RangeSlider`. Inputs are used to enter a numeric 
 
 ### Best practices
 
-- When using inputs, ensure the `RangeSlider` is in a "controlled" mode (by explicitly setting the `value` prop).
-- Use the `RangeSlider`'s `onChange` callback to update the input values when the slider is interacted with.
+- When using inputs, ensure the `RangeSlider` is controlled (by explicitly setting the `value` prop).
+- Use the `RangeSlider`'s `onChange` callback to update the input values when the `RanegSlider` is interacted with.
 - Validate your input value changes and update the `validationStatus` prop on any inputs accordingly.
-- Only use the inline variant of the `RangeSlider` alongside an input. This ensures the size-base alignment of the overall component layout is maintained.
+- Only use the inline labels of the `RangeSlider` alongside an input. This ensures the size-base alignment of the overall component layout is maintained.
 
 <LivePreview componentName="range-slider" exampleName="WithInput" />
 
-## With Marks
+## Hide tooltip
 
-You can display marks under the `RangeSlider` track to label specific values. The `showTicks` property allows you to display small ticks above the marks, enhancing visual guidance for users by providing clear reference points along the track. This feature improves usability by making it easier for users to select precise values.
+To hide the tooltip when hovering over the `RangeSlider` thumb, you can use the `showTooltip` prop. This is beneficial in cases where your `RangeSlider` already conveys enough information, eliminating the need for a tooltip.
 
-You can combine `marks` with `minLabel` and `maxLabel` to provide even more context regarding the `RangeSlider`.
+<LivePreview componentName="range-slider" exampleName="WithHiddenTooltip">
 
-<LivePreview componentName="range-slider" exampleName="WithMarks" />
+## With non-numeric values
 
-### Restrict to Marks
-
-The `restrictToMarks` property, when enabled, confines the `Slider`'s movement to predefined values specified in the `marks` array. This means that the `Slider` can only stop at these specific values, rather than any arbitrary value along the `Slider`'s range. The `step` property is ignored in this case.
-
-<LivePreview componentName="range-slider" exampleName="WithRestrictToMarks"/>
-
-</LivePreview>
-
-<LivePreview componentName="range-slider" exampleName="WithDisabledTooltip">
-
-## With Disabled Tooltip
-
-If you do not wish to show the tooltip when the `RangeSlider` thumb is hovered, you can disable it via the `showTooltip` prop. This could be useful for instances when your `RangeSlider` is already displaying sufficient information and you do not wish to show a tooltip.
-
-<LivePreview componentName="range-slider" exampleName="WithDisabledTooltip" />
-
-## With Non Numeric values
-
-You can implement a `RangeSlider` that allows users to select non-numeric values, with a focus on accessibility through the use of `aria-valuetext`.
+You can implement a `RangeSlider` that allows users to select non-numeric values with the help of the `format()` callback and with a focus on accessibility through the use of `aria-valuetext`.
 
 The `RangeSlider` maps numeric values to meaningful non-numeric options, enabling intuitive selection beyond simple numbers. The `aria-valuetext` attribute is, by default, dynamically updated based on the `format()` callback to announce the selected option, providing clear feedback for users with assistive technologies. You also have the choice to update the `aria-valuetext` attribute via props.
 
@@ -120,22 +111,4 @@ The `RangeSlider` maps numeric values to meaningful non-numeric options, enablin
 
 This approach ensures a user-friendly and accessible interface for selecting non-numeric values.
 
-</LivePreview>
-
-<LivePreview componentName="range-slider" exampleName="WithRestrictedLabelOverflow">
-
-## With Restricted Label Overflow
-
-You can use the `restrictedLabelOverflow` prop to ensure that the bottom labels remain within the `RangeSlider`'s boundaries. When enabled (`true`), it prevents labels from extending beyond the `RangeSlider`, maintaining a tidy and consistent appearance. This is particularly useful for preserving layout integrity and ensuring label readability across various screen sizes.
-
-**Note:** Enabling `restrictedLabelOverflow` may lead to inconsistent spacing between labels. Use this option carefully to balance visual clarity and label distribution.
-
-</LivePreview>
-
-<LivePreview componentName="range-slider" exampleName="Disabled">
-
-## Disabled
-
-You can set the `RangeSlider` as disabled.
-
-<LivePreview componentName="range-slider" exampleName="Disabled" />
+<LivePreview componentName="range-slider" exampleName="WithNonNumericValues">

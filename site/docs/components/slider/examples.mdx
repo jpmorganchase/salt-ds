@@ -8,25 +8,17 @@ data:
   $ref: ./#/data
 ---
 
-<LivePreviewControls>
-
-<LivePreview componentName="slider" exampleName="Default">
-
 ## Default
 
 Selection of a single value from a `Slider` track. A tooltip displays the value of the `Slider` "thumb" when the thumb is focused or hovered.
 
-</LivePreview>
-
-<LivePreview componentName="slider" exampleName="WithLabels">
+<LivePreview componentName="slider" exampleName="Default" />
 
 ## Labels
 
 `Slider`'s labels indicate the minimum and maximum values of the range, and can be located inline with the `Slider` using the `minLabel` and `maxLabel` props or they can be located at the bottom of the `Slider` using the `marks` prop.
 
-</LivePreview>
-
-<LivePreview componentName="slider" exampleName="WithConstrainedLabelPosition">
+<LivePreview componentName="slider" exampleName="WithLabels" />
 
 ## With constrained label position
 
@@ -34,9 +26,10 @@ You can use the `constrainLabelPosition` prop to ensure that the bottom labels r
 
 **Note:** Enabling `constrainLabelPosition` may lead to inconsistent spacing between marks. Use this option carefully to balance visual clarity and distribution.
 
-</LivePreview>
-
-<LivePreview componentName="slider" exampleName="WithMarks">
+<LivePreview
+  componentName="slider"
+  exampleName="WithConstrainedLabelPosition"
+/>
 
 ## With marks
 
@@ -44,25 +37,19 @@ You can display marks under the `Slider` track to label specific values. The `sh
 
 You can combine `marks` with `minLabel` and `maxLabel` to provide even more context regarding the `Slider`.
 
-</LivePreview>
-
-<LivePreview componentName="slider" exampleName="WithRestrictToMarks">
+<LivePreview componentName="slider" exampleName="WithMarks" />
 
 ## Restrict to marks
 
 The `restrictToMarks` property, when enabled, confines the `Slider`'s movement to predefined values specified in the `marks` array. This means that the `Slider` can only stop at these specific values, rather than any arbitrary value along the `Slider`'s range. The `step` property is ignored in this case.
 
-</LivePreview>
-
-<LivePreview componentName="slider" exampleName="Disabled">
+<LivePreview componentName="slider" exampleName="WithRestrictToMarks" />
 
 ## Disabled
 
 You can set the `Slider` as disabled.
 
-</LivePreview>
-
-<LivePreview componentName="slider" exampleName="WithCustomStep">
+<LivePreview componentName="slider" exampleName="Disabled" />
 
 ## Custom step
 
@@ -72,9 +59,7 @@ By default, the `Slider` step increment is set to 1. This can be customized by u
 
 We recommend (max - min) to be evenly divisible by the step to ensure that all values of the `Slider` are reachable.
 
-</LivePreview>
-
-<LivePreview componentName="slider" exampleName="WithFormatting">
+<LivePreview componentName="slider" exampleName="WithCustomStep" />
 
 ## With formatting
 
@@ -84,17 +69,13 @@ You can pass a callback function to the `format()` prop to format the display va
 
 When formatting the values, it is recommended to add the same formatting to the marks if passed.
 
-</LivePreview>
-
-<LivePreview componentName="slider" exampleName="WithFormField">
+<LivePreview componentName="slider" exampleName="WithFormatting" />
 
 ## Form field compatibility
 
 You can wrap the `Slider` in a form field and display a label. For more information, refer to the [form field documentation.](/salt/components/form-field/examples)
 
-</LivePreview>
-
-<LivePreview componentName="slider" exampleName="WithInput">
+<LivePreview componentName="slider" exampleName="WithFormField" />
 
 ## With Input
 
@@ -110,17 +91,13 @@ You can display inputs with the `Slider`. Inputs are used to enter a numeric val
 - Validate your input value changes and update the `validationStatus` prop on any inputs accordingly.
 - Only use the inline labels of the `Slider` alongside an input via the `labelPosition`. This ensures the size-base alignment of the overall component layout is maintained.
 
-</LivePreview>
-
-<LivePreview componentName="slider" exampleName="WithHiddenTooltip">
+<LivePreview componentName="slider" exampleName="WithInput" />
 
 ## Hide tooltip
 
 To hide the tooltip when hovering over the Slider thumb, you can use the `showTooltip` prop. This is beneficial in cases where your Slider already conveys enough information, eliminating the need for a tooltip.
 
-</LivePreview>
-
-<LivePreview componentName="slider" exampleName="WithNonNumericValues">
+<LivePreview componentName="slider" exampleName="WithHiddenTooltip" />
 
 ## With non-numeric values
 
@@ -135,6 +112,4 @@ The `Slider` maps numeric values to meaningful non-numeric options, enabling int
 
 This approach ensures a user-friendly and accessible interface for selecting non-numeric values.
 
-</LivePreview>
-
-</LivePreviewControls>
+<LivePreview componentName="slider" exampleName="WithNonNumericValues" />
