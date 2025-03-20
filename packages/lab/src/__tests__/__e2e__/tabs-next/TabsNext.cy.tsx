@@ -214,12 +214,13 @@ describe("Given a Tabstrip", () => {
 
     cy.findAllByRole("tab").filter(":visible").should("have.length", 1);
 
-    cy.get("[data-overflowbutton]").realClick();
+    cy.realPress("ArrowRight");
     cy.realPress("Enter");
-    cy.wait(500);
     cy.findByRole("tab", { name: "Home" })
       .should("have.attr", "aria-selected", "true")
       .should("be.focused");
+
+    cy.findAllByRole("tab").filter(":visible").should("have.length", 1);
   });
 
   it("should support adding tabs", () => {
