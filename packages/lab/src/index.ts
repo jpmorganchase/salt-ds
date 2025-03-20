@@ -52,7 +52,6 @@ export * from "./logo";
 export * from "./menu-button";
 export * from "./metric";
 export * from "./number-input";
-export * from "./overlay";
 export * from "./portal";
 export * from "./query-input";
 export * from "./responsive";
