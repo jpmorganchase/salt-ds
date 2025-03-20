@@ -8,14 +8,11 @@ data:
   $ref: ./#/data
 ---
 
-<LivePreview componentName="number-input" exampleName="Default" >
-
 ## Default
 
 Number input has an increment step value of 1 and a step block value of 10, and you can only use it to accept numeric characters.
 
-</LivePreview>
-<LivePreview componentName="number-input" exampleName="Variants" >
+<LivePreview componentName="number-input" exampleName="Default" />
 
 ## Variants
 
@@ -23,15 +20,13 @@ The component comes in two variants: primary and secondary. The primary variant 
 
 When choosing between the primary and secondary variants, consider the background color on which the component will be placed.
 
-</LivePreview>
-<LivePreview componentName="number-input" exampleName="Bordered" >
+<LivePreview componentName="number-input" exampleName="Variants" />
 
 ## Bordered
 
 To style the number input with a full border, set `bordered={true}`. This styling is ideal when the input field uses the same fill color as the background, such as a primary fill color on a primary background.
 
-</LivePreview>
-<LivePreview componentName="number-input" exampleName="Validation" >
+<LivePreview componentName="number-input" exampleName="Bordered" />
 
 ## Validation
 
@@ -42,8 +37,7 @@ The number input can show validation states—error, warning, and success—by u
 - Use the error state to alert the user of a critical issue that’s related to the input. This issue, which may jeopardize completion of the task, usually requires action from the user to resolve the error.
 - Display the warning state when you need to alert the user of a potential issue—that won’t prevent the user from continuing with the task, but may cause errors if it’s not addressed.
 
-</LivePreview>
-<LivePreview componentName="number-input" exampleName="Decimals" >
+<LivePreview componentName="number-input" exampleName="Validation" />
 
 ## Decimals
 
@@ -57,8 +51,7 @@ The component will also round the value up or down as necessary to match the spe
 
 The number of decimal places should be suitable for the specific use case. For instance, avoid accepting three decimal places when a retail user is dealing with currencies like pounds sterling or U.S. dollars, which typically require only two decimal places.
 
-</LivePreview>
-<LivePreview componentName="number-input" exampleName="Limits" >
+<LivePreview componentName="number-input" exampleName="Decimals" />
 
 ## Min and max value
 
@@ -69,8 +62,7 @@ If you need to limit the range of accepted values, you’re able to set a maximu
 - Clearly state the accepted value range in the form field’s helper text.
 - Use the form field error state to inform users who manually type in a value outside the accepted range that the value is invalid.
 
-</LivePreview>
-<LivePreview componentName="number-input" exampleName="StepAndBlock" >
+<LivePreview componentName="number-input" exampleName="Limits" />
 
 ## Custom steps
 
@@ -81,8 +73,7 @@ Customize the default, increment and block values to suit your use case.
 - Pick a default value that reflects the desired value for most users, such as the most frequently submitted number.
 - Make sure you set an increment value that’s appropriate for the context. For example, if the user needs to enter ”Number of people”, adjustments of 0.5 would be confusing. If you’re undecided, consider using an increment value of 1.
 
-</LivePreview>
-<LivePreview componentName="number-input" exampleName="ButtonAdornments" >
+<LivePreview componentName="number-input" exampleName="StepAndBlock" />
 
 ## Button adornments
 
@@ -100,15 +91,13 @@ Sync to a live value from a source that is constantly changing, for example, whe
 
 Customize the positioning and appearance of the number buttons to meet specific product requirements or restrictions.
 
-</LivePreview>
-<LivePreview componentName="number-input" exampleName="Disabled" >
+<LivePreview componentName="number-input" exampleName="ButtonAdornments" />
 
 ## Disabled
 
 You can disable a number input, resulting in no action when the user interacts with it.
 
-</LivePreview>
-<LivePreview componentName="number-input" exampleName="Readonly" >
+<LivePreview componentName="number-input" exampleName="Disabled" />
 
 ## Read-only
 
@@ -122,8 +111,7 @@ By default, the marker is an em dash. If your application requires a different m
 
 Use the read-only state when the user needs the value for their flow or current task but cannot edit it, for example, because of user permissions.
 
-</LivePreview>
-<LivePreview componentName="number-input" exampleName="TextAlignment" >
+<LivePreview componentName="number-input" exampleName="Readonly" />
 
 ## Text alignment
 
@@ -136,4 +124,4 @@ Use the `textAlign` prop to change the alignment to “center” or “right.”
 - Numeric values often have right alignment to make comparing them easier. However, sometimes number fields don't relate to each other or mix with text fields in a form, so left alignment may promote better visual flow.
 - You may choose to center-align an input field to bring emphasis to a value. However, this should be the exception, and you should use it sparingly.
 
-</LivePreview>
+<LivePreview componentName="number-input" exampleName="TextAlignment" />
