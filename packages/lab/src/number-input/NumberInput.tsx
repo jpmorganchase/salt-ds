@@ -33,12 +33,12 @@ import {
   toFloat,
 } from "./internal/utils";
 
-import stepperInputCss from "./StepperInput.css";
-import { useStepperInput } from "./useStepperInput";
+import numberInputCss from "./NumberInput.css";
+import { useNumberInput } from "./useNumberInput";
 
-const withBaseName = makePrefixer("saltStepperInput");
+const withBaseName = makePrefixer("saltNumberInput");
 
-export interface StepperInputProps
+export interface NumberInputProps
   extends Omit<ComponentPropsWithoutRef<"div">, "onChange"> {
   /**
    * A boolean. When `true`, the input will receive a full border.
@@ -53,7 +53,7 @@ export interface StepperInputProps
    */
   defaultValue?: number | string;
   /**
-   * If `true`, the stepper input will be disabled.
+   * If `true`, the number input will be disabled.
    */
   disabled?: boolean;
   /**
@@ -67,7 +67,7 @@ export interface StepperInputProps
    */
   endAdornment?: ReactNode;
   /**
-   * Whether to hide the stepper buttons. Defaults to `false`.
+   * Whether to hide the number buttons. Defaults to `false`.
    * @default false
    */
   hideButtons?: boolean;
@@ -90,7 +90,7 @@ export interface StepperInputProps
    */
   min?: number;
   /**
-   * Callback when stepper input value is changed.
+   * Callback when number input value is changed.
    * @param event - the event triggers value change, could be undefined during increment / decrement button long press
    */
   onChange?: (
@@ -110,7 +110,7 @@ export interface StepperInputProps
    */
   startAdornment?: ReactNode;
   /**
-   * The amount to increment or decrement the value by when using the stepper buttons or Up Arrow and Down Arrow keys. Default to 1.
+   * The amount to increment or decrement the value by when using the number buttons or Up Arrow and Down Arrow keys. Default to 1.
    * @default 1
    */
   step?: number;
@@ -135,13 +135,13 @@ export interface StepperInputProps
    */
   variant?: "primary" | "secondary";
   /**
-   * The value of the stepper input. The component will be controlled if this prop is provided.
+   * The value of the number input. The component will be controlled if this prop is provided.
    */
   value?: number | string | undefined;
 }
 
-export const StepperInput = forwardRef<HTMLDivElement, StepperInputProps>(
-  function StepperInput(
+export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
+  function NumberInput(
     {
       bordered,
       className: classNameProp,
@@ -171,8 +171,8 @@ export const StepperInput = forwardRef<HTMLDivElement, StepperInputProps>(
   ) {
     const targetWindow = useWindow();
     useComponentCssInjection({
-      testId: "salt-stepper-input",
-      css: stepperInputCss,
+      testId: "salt-number-input",
+      css: numberInputCss,
       window: targetWindow,
     });
 
@@ -215,7 +215,7 @@ export const StepperInput = forwardRef<HTMLDivElement, StepperInputProps>(
         typeof defaultValueProp === "number"
           ? toFixedDecimalPlaces(defaultValueProp, decimalPlaces)
           : defaultValueProp,
-      name: "StepperInput",
+      name: "NumberInput",
       state: "value",
     });
 
@@ -230,7 +230,7 @@ export const StepperInput = forwardRef<HTMLDivElement, StepperInputProps>(
       decrementValue,
       incrementButtonProps,
       incrementValue,
-    } = useStepperInput({
+    } = useNumberInput({
       inputRef,
       setValue,
       decimalPlaces,
@@ -404,8 +404,8 @@ export const StepperInput = forwardRef<HTMLDivElement, StepperInputProps>(
           <div className={withBaseName("buttonContainer")}>
             <Button
               className={clsx(
-                withBaseName("stepperButton"),
-                withBaseName("stepperButtonIncrement"),
+                withBaseName("numberButton"),
+                withBaseName("numberButtonIncrement"),
               )}
               {...incrementButtonProps}
             >
@@ -413,8 +413,8 @@ export const StepperInput = forwardRef<HTMLDivElement, StepperInputProps>(
             </Button>
             <Button
               className={clsx(
-                withBaseName("stepperButton"),
-                withBaseName("stepperButtonDecrement"),
+                withBaseName("numberButton"),
+                withBaseName("numberButtonDecrement"),
               )}
               {...decrementButtonProps}
             >
