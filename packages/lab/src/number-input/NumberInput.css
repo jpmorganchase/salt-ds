@@ -1,0 +1,291 @@
+/* Styles applied to number container */
+.saltNumberInput {
+  --numberInput-border: none;
+  --numberInput-borderColor: var(--salt-editable-borderColor);
+  --numberInput-borderStyle: var(--salt-editable-borderStyle);
+  --numberInput-outlineColor: var(--salt-focused-outlineColor);
+  --numberInput-borderWidth: var(--salt-size-border);
+
+  align-items: center;
+  color: var(--salt-content-primary-foreground);
+  display: inline-flex;
+  font-family: var(--salt-text-fontFamily);
+  font-size: var(--salt-text-fontSize);
+  height: var(--salt-size-base);
+  line-height: var(--salt-text-lineHeight);
+  min-height: var(--salt-size-base);
+  min-width: 4em;
+  width: 100%;
+  box-sizing: border-box;
+
+  gap: var(--salt-spacing-50);
+}
+
+.saltNumberInput:hover {
+  --numberInput-borderStyle: var(--salt-editable-borderStyle-hover);
+  --numberInput-borderColor: var(--salt-editable-borderColor-hover);
+
+  background: var(--numberInput-background-hover);
+  cursor: var(--salt-editable-cursor-hover);
+}
+
+.saltNumberInput:active {
+  --numberInput-borderColor: var(--salt-editable-borderColor-active);
+  --numberInput-borderStyle: var(--salt-editable-borderStyle-active);
+  --numberInput-borderWidth: var(--salt-editable-borderWidth-active);
+
+  background: var(--numberInput-background-active);
+  cursor: var(--salt-editable-cursor-active);
+}
+
+/* Class applied if `variant="primary"` */
+.saltNumberInput-primary {
+  --numberInput-background: var(--salt-editable-primary-background);
+  --numberInput-background-active: var(--salt-editable-primary-background-active);
+  --numberInput-background-hover: var(--salt-editable-primary-background-hover);
+  --numberInput-background-disabled: var(--salt-editable-primary-background-disabled);
+  --numberInput-background-readonly: var(--salt-editable-primary-background-readonly);
+}
+
+/* Class applied if `variant="secondary"` */
+.saltNumberInput-secondary {
+  --numberInput-background: var(--salt-editable-secondary-background);
+  --numberInput-background-active: var(--salt-editable-secondary-background-active);
+  --numberInput-background-hover: var(--salt-editable-secondary-background-active);
+  --numberInput-background-disabled: var(--salt-editable-secondary-background-disabled);
+  --numberInput-background-readonly: var(--salt-editable-secondary-background-readonly);
+}
+
+/* Style applied to input if `validationState="error"` */
+.saltNumberInput-error,
+.saltNumberInput-error:hover {
+  --numberInput-background: var(--salt-status-error-background);
+  --numberInput-background-active: var(--salt-status-error-background);
+  --numberInput-background-hover: var(--salt-status-error-background);
+  --numberInput-borderColor: var(--salt-status-error-borderColor);
+  --numberInput-outlineColor: var(--salt-status-error-borderColor);
+  --numberInput-background-readonly: var(--salt-status-error-background);
+}
+
+/* Style applied to input if `validationState="warning"` */
+.saltNumberInput-warning,
+.saltNumberInput-warning:hover {
+  --numberInput-background: var(--salt-status-warning-background);
+  --numberInput-background-active: var(--salt-status-warning-background);
+  --numberInput-background-hover: var(--salt-status-warning-background);
+  --numberInput-borderColor: var(--salt-status-warning-borderColor);
+  --numberInput-outlineColor: var(--salt-status-warning-borderColor);
+  --numberInput-background-readonly: var(--salt-status-warning-background);
+}
+
+/* Style applied to input if `validationState="success"` */
+.saltNumberInput-success,
+.saltNumberInput-success:hover {
+  --numberInput-background: var(--salt-status-success-background);
+  --numberInput-background-active: var(--salt-status-success-background);
+  --numberInput-background-hover: var(--salt-status-success-background);
+  --numberInput-borderColor: var(--salt-status-success-borderColor);
+  --numberInput-outlineColor: var(--salt-status-success-borderColor);
+  --numberInput-background-readonly: var(--salt-status-success-background);
+}
+
+.saltNumberInput-inputContainer {
+  display: flex;
+  background: var(--numberInput-background);
+  border-radius: var(--salt-palette-corner-weak, 0);
+  border: var(--numberInput-border);
+  box-sizing: border-box;
+  height: var(--salt-size-base);
+  min-height: var(--salt-size-base);
+  overflow: hidden;
+  padding-left: var(--salt-spacing-100);
+  padding-right: var(--salt-spacing-100);
+  position: relative;
+  flex-grow: 1;
+}
+
+/* Style applied to inner input component */
+.saltNumberInput-input {
+  background: none;
+  border: none;
+  box-sizing: content-box;
+  color: inherit;
+  cursor: inherit;
+  display: block;
+  flex: 1;
+  font: inherit;
+  height: 100%;
+  letter-spacing: var(--saltNumberInput-letterSpacing, 0);
+  margin: 0;
+  min-width: 0;
+  overflow: hidden;
+  padding: 0;
+  text-align: var(--numberInput-textAlign);
+  width: 100%;
+}
+
+.saltNumberInput-input:focus {
+  outline: none;
+}
+
+/* Style applied to selected input */
+.saltNumberInput-input::selection {
+  background: var(--salt-content-foreground-highlight);
+}
+
+/* Style applied to placeholder text */
+.saltNumberInput-input::placeholder {
+  color: var(--salt-content-secondary-foreground);
+  font-weight: var(--salt-text-fontWeight-small);
+}
+
+/* Styling when focused */
+.saltNumberInput-focused {
+  --numberInput-borderColor: var(--numberInput-outlineColor);
+  --numberInput-borderWidth: var(--salt-editable-borderWidth-active);
+
+  outline: var(--saltNumberInput-outline, var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--numberInput-outlineColor));
+}
+
+/* Style applied if `readOnly={true}` */
+.saltNumberInput-readOnly {
+  --numberInput-borderColor: var(--salt-editable-borderColor-readonly);
+  --numberInput-borderStyle: var(--salt-editable-borderStyle-readonly);
+  --numberInput-borderWidth: var(--salt-size-border);
+
+  background: var(--numberInput-background-readonly);
+  cursor: var(--salt-editable-cursor-readonly);
+}
+
+/* Styling when focused if `disabled={true}` */
+.saltNumberInput-focused.saltNumberInput-disabled {
+  --numberInput-borderWidth: var(--salt-size-border);
+  outline: none;
+}
+
+/* Styling when focused if `readOnly={true}` */
+.saltNumberInput-focused.saltNumberInput-readOnly {
+  --numberInput-borderWidth: var(--salt-size-border);
+}
+
+/* Style applied to selected input if `disabled={true}` */
+.saltNumberInput-disabled .saltNumberInput-input::selection {
+  background: none;
+}
+
+/* Style applied to input if `disabled={true}` */
+.saltNumberInput-disabled,
+.saltNumberInput-disabled:hover,
+.saltNumberInput-disabled:active {
+  --numberInput-borderColor: var(--salt-editable-borderColor-disabled);
+  --numberInput-borderStyle: var(--salt-editable-borderStyle-disabled);
+  --numberInput-borderWidth: var(--salt-size-border);
+
+  background: var(--numberInput-background-disabled);
+  cursor: var(--salt-editable-cursor-disabled);
+  color: var(--saltNumberInput-color-disabled, var(--salt-content-primary-foreground-disabled));
+}
+
+.saltNumberInput-activationIndicator {
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  position: absolute;
+  border-bottom: var(--numberInput-borderWidth) var(--numberInput-borderStyle) var(--numberInput-borderColor);
+}
+
+/* Style applied if `bordered={true}` */
+.saltNumberInput-bordered {
+  --numberInput-border: var(--salt-size-border) var(--salt-container-borderStyle) var(--numberInput-borderColor);
+  --numberInput-borderWidth: 0;
+}
+
+/* Style applied if focused or active when `bordered={true}` */
+.saltNumberInput-bordered.saltNumberInput-focused,
+.saltNumberInput-bordered:active {
+  --numberInput-borderWidth: var(--salt-editable-borderWidth-active);
+}
+
+/* Styling when focused if `disabled={true}` or `readOnly={true}` when `bordered={true}` */
+.saltNumberInput-bordered.saltNumberInput-readOnly,
+.saltNumberInput-bordered.saltNumberInput-disabled:hover {
+  --numberInput-borderWidth: 0;
+}
+
+/* Style applied to start adornments */
+.saltNumberInput-startAdornmentContainer {
+  align-items: center;
+  display: inline-flex;
+  padding-right: var(--salt-spacing-100);
+  column-gap: var(--salt-spacing-100);
+}
+
+/* Style applied to end adornments */
+.saltNumberInput-endAdornmentContainer {
+  align-items: center;
+  display: inline-flex;
+  padding-left: var(--salt-spacing-100);
+  column-gap: var(--salt-spacing-100);
+}
+
+.saltNumberInput-readOnly .saltNumberInput-startAdornmentContainer {
+  margin-left: var(--salt-spacing-50);
+}
+
+.saltNumberInput-startAdornmentContainer .saltButton ~ .saltButton {
+  margin-left: calc(-1 * var(--salt-spacing-50));
+}
+
+.saltNumberInput-endAdornmentContainer .saltButton ~ .saltButton {
+  margin-left: calc(-1 * var(--salt-spacing-50));
+}
+
+.saltNumberInput-startAdornmentContainer .saltButton:first-child {
+  margin-left: calc(var(--salt-spacing-50) * -1);
+}
+
+.saltNumberInput-endAdornmentContainer .saltButton:last-child {
+  margin-right: calc(var(--salt-spacing-50) * -1);
+}
+
+.saltNumberInput-startAdornmentContainer > .saltButton,
+.saltNumberInput-endAdornmentContainer > .saltButton {
+  --saltButton-padding: calc(var(--salt-spacing-50) - var(--salt-size-border));
+  --saltButton-height: calc(var(--salt-size-base) - var(--salt-spacing-100));
+  --saltButton-borderRadius: var(--salt-palette-corner-weaker);
+}
+
+.saltNumberInput-inputTextAlignLeft {
+  text-align: left;
+}
+
+.saltNumberInput-inputTextAlignCenter {
+  text-align: center;
+}
+
+.saltNumberInput-inputTextAlignRight {
+  text-align: right;
+}
+
+/* --- Buttons --- */
+
+/* Styles applied to number buttons container */
+.saltNumberInput-buttonContainer {
+  --numberInput-buttonGap: var(--salt-size-border-strong);
+  display: flex;
+  flex-direction: column;
+  gap: var(--numberInput-buttonGap);
+}
+
+/* Styles applied to number buttons */
+.saltNumberInput-numberButton {
+  --saltButton-height: calc((var(--salt-size-base) - var(--numberInput-buttonGap)) * 0.5);
+  --saltButton-width: var(--salt-size-base);
+}
+
+.saltNumberInput-numberButtonIncrement {
+  --saltButton-borderRadius: var(--salt-palette-corner-weak, 0) var(--salt-palette-corner-weak, 0) 0 0;
+}
+.saltNumberInput-numberButtonDecrement {
+  --saltButton-borderRadius: 0 0 var(--salt-palette-corner-weak, 0) var(--salt-palette-corner-weak, 0);
+}

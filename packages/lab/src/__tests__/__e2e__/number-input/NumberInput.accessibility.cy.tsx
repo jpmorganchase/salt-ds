@@ -1,11 +1,11 @@
-import * as stepperInputStories from "@stories/stepper-input/stepper-input.stories";
+import * as numberInputStories from "@stories/number-input/number-input.stories";
 import { composeStories } from "@storybook/react";
 import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
 
-const composedStories = composeStories(stepperInputStories);
+const composedStories = composeStories(numberInputStories);
 const { Default } = composedStories;
 
-describe("Stepper Input - Accessibility", () => {
+describe("Number Input - Accessibility", () => {
   checkAccessibility(composedStories);
 
   it("sets the correct default ARIA attributes on input", () => {
@@ -27,7 +27,7 @@ describe("Stepper Input - Accessibility", () => {
   it("has the correct labelling when wrapped in a `FormField`", () => {
     cy.mount(<Default defaultValue={-10} min={0} />);
 
-    cy.findByRole("spinbutton").should("have.accessibleName", "Stepper Input");
+    cy.findByRole("spinbutton").should("have.accessibleName", "Number Input");
     cy.findByRole("spinbutton").should(
       "have.accessibleDescription",
       "Please enter a number",

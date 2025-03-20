@@ -1,5 +1,5 @@
 import { FormField, FormFieldHelperText, FormFieldLabel } from "@salt-ds/core";
-import { StepperInput } from "@salt-ds/lab";
+import { NumberInput } from "@salt-ds/lab";
 import { useState } from "react";
 
 export const Limits = () => {
@@ -19,8 +19,8 @@ export const Limits = () => {
       validationStatus={isError ? "error" : undefined}
       style={{ width: "256px" }}
     >
-      <FormFieldLabel>Stepper input with limited range</FormFieldLabel>
-      <StepperInput
+      <FormFieldLabel>Number input with limited range</FormFieldLabel>
+      <NumberInput
         value={value}
         onChange={(_, changedValue) => setValue(changedValue)}
         max={max}

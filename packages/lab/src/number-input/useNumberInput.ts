@@ -6,7 +6,7 @@ import {
   type SyntheticEvent,
   useCallback,
 } from "react";
-import type { StepperInputProps } from "./StepperInput";
+import type { NumberInputProps } from "./NumberInput";
 import { useActivateWhileMouseDown } from "./internal/useActivateWhileMouseDown";
 import {
   isAtMax,
@@ -18,7 +18,7 @@ import {
 /**
  * Manages increment / decrement logic
  */
-export const useStepperInput = ({
+export const useNumberInput = ({
   decimalPlaces = 0,
   disabled,
   inputRef,
@@ -31,7 +31,7 @@ export const useStepperInput = ({
   stepBlock = 10,
   value,
 }: Pick<
-  StepperInputProps,
+  NumberInputProps,
   | "decimalPlaces"
   | "disabled"
   | "inputRef"
