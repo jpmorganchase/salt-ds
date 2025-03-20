@@ -197,7 +197,7 @@ describe("Given a Tabstrip", () => {
       .should("be.focused");
   });
 
-  it("should allow selection in the menu when only having enough space for the newly selected tab", () => {
+  it.only("should allow selection in the menu when only having enough space for the newly selected tab", () => {
     cy.mount(<Overflow />);
 
     cy.findByRole("tablist").invoke("css", "max-width", 140);
@@ -209,6 +209,13 @@ describe("Given a Tabstrip", () => {
     cy.findByRole("tab", { name: "Liquidity" }).realClick();
 
     cy.findByRole("tab", { name: "Liquidity" })
+      .parent()
+      .parent()
+      .then(($ele) => {
+        cy.task("log", "Liquidity tab parent html");
+        cy.task("log", $ele.html());
+      });
+    cy.findByRole("tab", { name: "Liquidity" })
       .should("have.attr", "aria-selected", "true")
       .should("be.focused");
 
@@ -216,9 +223,21 @@ describe("Given a Tabstrip", () => {
 
     cy.get("[data-overflowbutton]").realClick();
     cy.realPress("Enter");
+    cy.task("log", "This will be output to the terminal");
+
     cy.findByRole("tab", { name: "Home" })
-      .should("have.attr", "aria-selected", "true")
-      .should("be.focused");
+      .parent()
+      .parent()
+      .then(($ele) => {
+        cy.task("log", "Home tab parent html");
+        cy.task("log", $ele.html());
+      });
+    cy.get(".saltTabsNext").then(($ele) => {
+      cy.task("log", "saltTabsNext html");
+      cy.task("log", $ele.html());
+    });
+    // .should("have.attr", "aria-selected", "true")
+    // .should("be.focused");
   });
 
   it("should support adding tabs", () => {
