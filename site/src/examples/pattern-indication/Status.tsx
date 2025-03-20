@@ -27,9 +27,8 @@ export const Status = () => {
       <FlexLayout gap={0.5} align="center">
         <SuccessCircleIcon
           size={2}
-          style={{ color: "var(--salt-color-blue-500)" }}
+          style={{ color: "var(--salt-color-green-500)" }}
         />
-
         <Code>success-circle</Code>
       </FlexLayout>
     </FlowLayout>
