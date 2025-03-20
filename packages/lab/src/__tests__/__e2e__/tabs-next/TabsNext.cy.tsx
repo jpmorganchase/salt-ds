@@ -216,6 +216,7 @@ describe("Given a Tabstrip", () => {
 
     cy.get("[data-overflowbutton]").realClick();
     cy.realPress("Enter");
+    cy.wait(500);
     cy.findByRole("tab", { name: "Home" })
       .should("have.attr", "aria-selected", "true")
       .should("be.focused");
