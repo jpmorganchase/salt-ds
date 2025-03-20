@@ -60,8 +60,13 @@ export const CarouselControls = forwardRef<
     css: carouselControlsCss,
     window: targetWindow,
   });
-  const { slides, carouselId, firstVisibleSlideIndex, visibleSlides } =
-    useContext(CarouselStateContext);
+  const {
+    slides,
+    carouselId,
+    firstVisibleSlideIndex,
+    visibleSlides,
+    announcerText,
+  } = useContext(CarouselStateContext);
   const dispatch = useContext(CarouselDispatchContext);
 
   const slideCount = slides.size;
@@ -78,10 +83,16 @@ export const CarouselControls = forwardRef<
   const isOnFirstSlide = firstVisibleSlideIndex === 0;
   const isOnLastSlide = firstVisibleSlideIndex === slideCount - visibleSlides;
 
+  console.log(announcerText);
   const controlsLabel = slideCount >= 1 && (
-    <Text as="span" aria-live={visibleSlides === 1 ? undefined : "polite"}>
-      <strong>{`${firstVisibleSlideIndex + 1} ${visibleSlides > 1 && slideCount > 1 ? ` - ${firstVisibleSlideIndex + visibleSlides}` : ""} of
-        ${slideCount}`}</strong>
+    <Text as="span" aria-live="polite">
+      <strong>
+        {`${firstVisibleSlideIndex + 1} ${visibleSlides > 1 && slideCount > 1 ? ` - ${firstVisibleSlideIndex + visibleSlides}` : ""} of
+        ${slideCount}`}
+        <span className={withBaseName("sr-only")}>
+          {visibleSlides === 1 && announcerText}
+        </span>
+      </strong>
     </Text>
   );
 

@@ -81,7 +81,6 @@ export const CarouselSlider = forwardRef<HTMLDivElement, CarouselSliderProps>(
     return (
       <div
         ref={ref}
-        aria-live={visibleSlides === 1 ? "polite" : undefined}
         className={withBaseName()}
         tabIndex={-1}
         onKeyDown={onKeyDown}

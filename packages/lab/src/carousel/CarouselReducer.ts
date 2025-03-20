@@ -5,6 +5,7 @@ type SlideId = string;
 
 export interface CarouselReducerState {
   slides: Map<SlideId, SlideElement>;
+  announcerText: string;
   firstVisibleSlideIndex: number;
   visibleSlides: number;
   focusedSlideIndex?: number;
@@ -53,6 +54,7 @@ export function carouselReducer(
       return {
         ...state,
         firstVisibleSlideIndex: index,
+        announcerText: slides.get(id)?.innerText,
       };
     }
     case "updateSlideCount": {
