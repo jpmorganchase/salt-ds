@@ -211,14 +211,18 @@ describe("Given a Tabstrip", () => {
     cy.findByRole("tab", { name: "Liquidity" })
       .should("have.attr", "aria-selected", "true")
       .should("be.focused");
+    // This test randomly fails with React 17. Add a few screenshot to help.
+    cy.screenshot();
 
     cy.findAllByRole("tab").filter(":visible").should("have.length", 1);
 
     cy.get("[data-overflowbutton]").realClick();
+    cy.screenshot();
     // make sure menu appear
     cy.findAllByRole("tab").filter(":visible").should("have.length", 14);
     cy.findByRole("tab", { name: "Home" }).should("be.focused");
     cy.realPress("Enter");
+    cy.screenshot();
     cy.findByRole("tab", { name: "Home" })
       .should("have.attr", "aria-selected", "true")
       .should("be.focused");
