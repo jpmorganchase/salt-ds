@@ -28,3 +28,7 @@
 .overlay {
   max-width: 100vw;
 }
+
+.content {
+  min-width: 1px;
+}
