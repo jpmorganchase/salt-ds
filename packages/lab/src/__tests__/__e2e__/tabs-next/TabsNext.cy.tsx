@@ -197,7 +197,7 @@ describe("Given a Tabstrip", () => {
       .should("be.focused");
   });
 
-  it.only("should allow selection in the menu when only having enough space for the newly selected tab", () => {
+  it("should allow selection in the menu when only having enough space for the newly selected tab", () => {
     cy.mount(<Overflow />);
 
     cy.findByRole("tablist").invoke("css", "max-width", 140);
