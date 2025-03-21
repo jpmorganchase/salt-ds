@@ -1,5 +1,5 @@
 ---
-"@salt-ds/theme": major
+"@salt-ds/theme": patch
 ---
 
 Change `--salt-track-borderColor` token from `--salt-palette-alpha-contrast-lower` to `--salt-palette-alpha-contrast-medium`.
