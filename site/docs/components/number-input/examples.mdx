@@ -77,11 +77,15 @@ Customize the default, increment and block values to suit your use case.
 
 ## Button adornments
 
-You can use [Button](/salt/components/button) at the end of the input field with the `endAdornment` prop. Buttons can allow for custom interactivity within the input field itself. Examples include:
+You can use [Button](/salt/components/button) at the end of the input field with the `endAdornment` prop. Buttons can allow for custom interactivity within the input field itself.
 
-**Refresh adornment**:
+When using buttons like the reset or sync adornments, it's important to provide immediate feedback to users, especially those relying on screen readers. Implementing an `aria-live` region allows dynamic content changes to be announced by screen readers. This ensures that users are informed about actions like resetting or synchronizing the input field, enhancing their understanding and interaction with the application.
 
-Reset the input to it’s default value, using the refresh button.
+Examples include:
+
+**Reset adornment**:
+
+Reset the input to it’s default value, using the reset button
 
 **Sync adornment**:
 

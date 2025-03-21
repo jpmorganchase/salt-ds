@@ -27,6 +27,7 @@ export const useNumberInput = ({
   onChange,
   readOnly,
   setValue,
+  setFocused,
   step = 1,
   stepBlock = 10,
   value,
@@ -41,9 +42,10 @@ export const useNumberInput = ({
   | "readOnly"
   | "step"
   | "stepBlock"
-  | "value"
 > & {
   setValue: Dispatch<SetStateAction<string | number | undefined>>;
+  setFocused: Dispatch<SetStateAction<boolean>>;
+  value: string | number;
   inputRef: MutableRefObject<HTMLInputElement | null>;
 }) => {
   const setValueInRange = useCallback(
@@ -65,7 +67,7 @@ export const useNumberInput = ({
 
   const decrementValue = useCallback(
     (event?: SyntheticEvent, block?: boolean) => {
-      if (value === undefined || isAtMin(value, min)) return;
+      if (isAtMin(value, min)) return;
       const decrementStep = block ? stepBlock : step;
       const nextValue =
         value === "" ? -decrementStep : toFloat(value) - decrementStep;
@@ -76,7 +78,7 @@ export const useNumberInput = ({
 
   const incrementValue = useCallback(
     (event?: SyntheticEvent, block?: boolean) => {
-      if (value === undefined || isAtMax(value, max)) return;
+      if (isAtMax(value, max)) return;
       const incrementStep = block ? stepBlock : step;
       const nextValue =
         value === "" ? incrementStep : toFloat(value) + incrementStep;
@@ -108,6 +110,8 @@ export const useNumberInput = ({
     "aria-label": "increment value",
     disabled: disabled || isAtMax(value, max),
     onMouseDown: (event: MouseEvent<HTMLButtonElement>) => {
+      event.preventDefault();
+      setFocused(true);
       if (event.nativeEvent.button !== 0) {
         // To match closely with <input type='input'>
         return;
@@ -121,6 +125,8 @@ export const useNumberInput = ({
     "aria-label": "decrement value",
     disabled: disabled || isAtMin(value, min),
     onMouseDown: (event: MouseEvent<HTMLButtonElement>) => {
+      event.preventDefault();
+      setFocused(true);
       if (event.nativeEvent.button !== 0) {
         // To match closely with <input type='input'>
         return;
