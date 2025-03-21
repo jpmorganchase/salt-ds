@@ -209,38 +209,19 @@ describe("Given a Tabstrip", () => {
     cy.findByRole("tab", { name: "Liquidity" }).realClick();
 
     cy.findByRole("tab", { name: "Liquidity" })
-      .parent()
-      .parent()
-      .then(($ele) => {
-        cy.task("log", "Liquidity tab parent html");
-        cy.task("log", $ele.html());
-      });
-    cy.findByRole("tab", { name: "Liquidity" })
       .should("have.attr", "aria-selected", "true")
       .should("be.focused");
 
     cy.findAllByRole("tab").filter(":visible").should("have.length", 1);
 
     cy.get("[data-overflowbutton]").realClick();
+    // make sure menu appear
+    cy.findAllByRole("tab").filter(":visible").should("have.length", 14);
+    cy.findByRole("tab", { name: "Home" }).should("be.focused");
     cy.realPress("Enter");
-    cy.task("log", "This will be output to the terminal");
-
-    cy.findByRole("tab", { name: "Home" })
-      .parent()
-      .parent()
-      .then(($ele) => {
-        cy.task("log", "Home tab parent html");
-        cy.task("log", $ele.html());
-      });
     cy.findByRole("tab", { name: "Home" })
       .should("have.attr", "aria-selected", "true")
       .should("be.focused");
-    cy.get(".saltTabsNext").then(($ele) => {
-      cy.task("log", "saltTabsNext html");
-      cy.task("log", $ele.html());
-    });
-
-    cy.findAllByRole("tab").filter(":visible").should("have.length", 1);
   });
 
   it("should support adding tabs", () => {
