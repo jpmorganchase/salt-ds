@@ -1,6 +1,16 @@
 import type { LayoutProps } from "@jpmorganchase/mosaic-layouts/dist/types";
 import { type SiteState, useStore } from "@jpmorganchase/mosaic-store";
+import {
+  Button,
+  Overlay,
+  OverlayPanel,
+  OverlayPanelContent,
+  OverlayTrigger,
+} from "@salt-ds/core";
+import { SettingsSolidIcon } from "@salt-ds/icons";
 import type { FC } from "react";
+import { LivePreviewProvider } from "../../components";
+import { ThemeControls } from "../../components/components/ThemeControls";
 import { CTALink } from "../../components/cta-link/CTALink";
 import { Image } from "../../components/mdx/image";
 import { PageNavigation } from "../../components/navigation/PageNavigation";
@@ -22,6 +32,7 @@ type ResourcesArray = {
 
 type Data = {
   resources: ResourcesArray;
+  showThemeControl?: boolean;
 };
 
 type CustomSiteState = SiteState & { data?: Data };
@@ -33,6 +44,8 @@ function PatternPageHeading({
 }: PageHeadingProps): JSX.Element {
   const resourcesArray =
     useStore((state: CustomSiteState) => state.data?.resources) ?? [];
+  const showThemeControl =
+    useStore((state: CustomSiteState) => state.data?.showThemeControl) ?? false;
 
   const exampleLink = resourcesArray.filter((resource) =>
     resource.href.startsWith("https://storybook.saltdesignsystem.com"),
@@ -51,6 +64,24 @@ function PatternPageHeading({
             <Image src="/img/storybook_logo.svg" alt={""} aria-hidden /> View
             Example
           </CTALink>
+        )}
+        {showThemeControl && (
+          <Overlay>
+            <OverlayTrigger>
+              <Button
+                sentiment="neutral"
+                appearance="bordered"
+                aria-label="Theme Controls"
+              >
+                <SettingsSolidIcon aria-hidden />
+              </Button>
+            </OverlayTrigger>
+            <OverlayPanel className={styles.overlay}>
+              <OverlayPanelContent>
+                <ThemeControls />
+              </OverlayPanelContent>
+            </OverlayPanel>
+          </Overlay>
         )}
       </div>
     </PageHeading>
@@ -74,12 +105,14 @@ export const DetailPattern: FC<LayoutProps> = ({ children }) => {
   );
 
   return (
-    <Base
-      LeftSidebar={LeftSidebar}
-      RightSidebar={RightSidebar}
-      Heading={PatternPageHeading}
-    >
-      {children}
-    </Base>
+    <LivePreviewProvider>
+      <Base
+        LeftSidebar={LeftSidebar}
+        RightSidebar={RightSidebar}
+        Heading={PatternPageHeading}
+      >
+        {children}
+      </Base>
+    </LivePreviewProvider>
   );
 };
