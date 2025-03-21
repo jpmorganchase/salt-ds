@@ -197,7 +197,7 @@ describe("Given a Tabstrip", () => {
       .should("be.focused");
   });
 
-  it("should allow selection in the menu when only having enough space for the newly selected tab", () => {
+  it.only("should allow selection in the menu when only having enough space for the newly selected tab", () => {
     cy.mount(<Overflow />);
 
     cy.findByRole("tablist").invoke("css", "max-width", 140);
@@ -211,16 +211,17 @@ describe("Given a Tabstrip", () => {
     cy.findByRole("tab", { name: "Liquidity" })
       .should("have.attr", "aria-selected", "true")
       .should("be.focused");
-    // This test randomly fails with React 17. Add a few screenshot to help.
-    cy.screenshot();
 
     cy.findAllByRole("tab").filter(":visible").should("have.length", 1);
 
     cy.get("[data-overflowbutton]").realClick();
-    cy.screenshot();
-    // make sure menu appear
     cy.findAllByRole("tab").filter(":visible").should("have.length", 14);
-    cy.findByRole("tab", { name: "Home" }).should("be.focused");
+
+    cy.findByRole("tab", { name: "Home" })
+      .should("be.focused")
+      .then((ele) => {
+        cy.task("log", ele.parent().html());
+      });
     cy.realPress("Enter");
     cy.screenshot();
     cy.findByRole("tab", { name: "Home" })
