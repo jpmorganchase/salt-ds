@@ -238,6 +238,7 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
     } = useNumberInput({
       inputRef,
       setValue,
+      setFocused,
       decimalPlaces,
       disabled,
       max,

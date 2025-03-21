@@ -27,6 +27,7 @@ export const useNumberInput = ({
   onChange,
   readOnly,
   setValue,
+  setFocused,
   step = 1,
   stepBlock = 10,
   value,
@@ -43,6 +44,7 @@ export const useNumberInput = ({
   | "stepBlock"
 > & {
   setValue: Dispatch<SetStateAction<string | number | undefined>>;
+  setFocused: Dispatch<SetStateAction<boolean>>;
   value: string | number;
   inputRef: MutableRefObject<HTMLInputElement | null>;
 }) => {
@@ -108,6 +110,8 @@ export const useNumberInput = ({
     "aria-label": "increment value",
     disabled: disabled || isAtMax(value, max),
     onMouseDown: (event: MouseEvent<HTMLButtonElement>) => {
+      event.preventDefault();
+      setFocused(true);
       if (event.nativeEvent.button !== 0) {
         // To match closely with <input type='input'>
         return;
@@ -121,6 +125,8 @@ export const useNumberInput = ({
     "aria-label": "decrement value",
     disabled: disabled || isAtMin(value, min),
     onMouseDown: (event: MouseEvent<HTMLButtonElement>) => {
+      event.preventDefault();
+      setFocused(true);
       if (event.nativeEvent.button !== 0) {
         // To match closely with <input type='input'>
         return;
