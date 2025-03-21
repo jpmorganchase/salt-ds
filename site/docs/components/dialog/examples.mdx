@@ -10,7 +10,7 @@ data:
 
 ## Default
 
-The dialog displays with a header, content area, and action bar. The component is modal, meaning it prevents interaction with the rest of the UI while open and must be addressed by clicking one of the action buttons or dismissing with the close button. If the content of the dialog extends beyond the end of the screen, the `DialogContent` area will become scrollable.
+The dialog displays with a header, content area, and action bar. The component is modal, meaning it prevents interaction with the rest of the UI while open and must be addressed by clicking one of the action buttons or dismissing with the close button in `DialogHeader`. If the content of the dialog extends beyond the end of the screen, the `DialogContent` area will become scrollable.
 
 <LivePreview componentName="dialog" exampleName="Default" />
 
@@ -52,11 +52,11 @@ For default dialogs, you can pass the `accent` prop to `DialogHeader` which acce
 
 <LivePreview componentName="dialog" exampleName="WithoutAccent" />
 
-## Close button
+## Header
 
-You can also render the `DialogCloseButton` as a child of the `Dialog` component to render a close button in the top right corner of the dialog. You can pass the `onClick` prop like with any `Button` component to handle the close button click.
+`DialogHeader` follows our standardized header for container components and app regions, and it can be added to provide a structured header for dialog. The header includes a title and actions that follows our [Header Block pattern](/salt/patterns/header-block).
 
-<LivePreview componentName="dialog" exampleName="CloseButton" />
+<LivePreview componentName="dialog" exampleName="WithHeader" />
 
 ## Preheader
 
@@ -118,10 +118,10 @@ Use the `disableScrim` prop to prevent the scrim from rendering.
 
 <LivePreview componentName="dialog" exampleName="DisableScrim" />
 
-## 🚧 Header updates
+## Deprecated Close button
 
-`DialogHeader`'s update follows our standardized header for container components and app regions, and it can be added to provide a structured header for dialog. The header includes a title and actions that follows our Header Block pattern.
+You can also render the `DialogCloseButton` as a child of the `Dialog` component to render a close button in the top right corner of the dialog. You can pass the `onClick` prop like with any `Button` component to handle the close button click.
 
-**Note:** This change is currently in Lab.
+**Note:** `DialogCloseButton` is deprecated. Use the prop `actions` within `DialogHeader` instead.
 
-<LivePreview componentName="dialog" exampleName="WithHeader" />
+<LivePreview componentName="dialog" exampleName="CloseButton" />

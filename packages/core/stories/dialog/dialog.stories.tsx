@@ -2,7 +2,6 @@ import {
   Button,
   Dialog,
   DialogActions,
-  DialogCloseButton,
   DialogContent,
   type DialogContentProps,
   DialogHeader,
@@ -12,12 +11,14 @@ import {
 import type { Meta, StoryFn } from "@storybook/react";
 import {
   type ComponentProps,
+  type MouseEventHandler,
   type PropsWithChildren,
   type ReactNode,
   useEffect,
   useState,
 } from "react";
 import "./dialog.stories.css";
+import { CloseIcon } from "@salt-ds/icons";
 
 export default {
   title: "Core/Dialog",
@@ -38,14 +39,28 @@ const UnmountLogger = () => {
   return null;
 };
 
+const CloseButton = ({
+  onClick,
+}: {
+  onClick: MouseEventHandler<HTMLButtonElement> | undefined;
+}) => (
+  <Button aria-label="Close dialog" appearance="transparent" onClick={onClick}>
+    <CloseIcon aria-hidden />
+  </Button>
+);
+
 const DialogTemplate: StoryFn<
   Omit<DialogProps, "content"> &
-    Pick<ComponentProps<typeof DialogHeader>, "header" | "preheader"> & {
+    Pick<
+      ComponentProps<typeof DialogHeader>,
+      "header" | "preheader" | "description"
+    > & {
       content: DialogContentProps["children"];
     }
 > = ({
   header,
   preheader,
+  description,
   content,
   id,
   size,
@@ -78,7 +93,12 @@ const DialogTemplate: StoryFn<
         id={id}
         size={size}
       >
-        <DialogHeader header={header} preheader={preheader} />
+        <DialogHeader
+          header={header}
+          preheader={preheader}
+          description={description}
+          actions={<CloseButton onClick={handleClose} />}
+        />
         <DialogContent>
           {content}
           <UnmountLogger />
@@ -92,7 +112,6 @@ const DialogTemplate: StoryFn<
             Next
           </Button>
         </DialogActions>
-        <DialogCloseButton onClick={handleClose} />
       </Dialog>
     </>
   );
@@ -106,10 +125,11 @@ Default.args = {
 export const LongContent = DialogTemplate.bind({});
 
 LongContent.args = {
+  style: { maxHeight: "100%" },
   header: "Congratulations! You have created a Dialog.",
   content: (
     <>
-      <StackLayout>
+      <StackLayout style={{ maxHeight: "200px" }}>
         <div>
           Lorem Ipsum is simply dummy text of the printing and typesetting
           industry. Lorem Ipsum has been the industry's standard dummy text ever
@@ -355,7 +375,10 @@ export const StickyFooter: StoryFn<typeof Dialog> = ({
         Click to open dialog
       </Button>
       <Dialog open={open} onOpenChange={onOpenChange} className="longDialog">
-        <DialogHeader header="Congratulations! You have created a Dialog." />
+        <DialogHeader
+          header="Congratulations! You have created a Dialog."
+          actions={<CloseButton onClick={handleClose} />}
+        />
         <DialogContent>
           Lorem Ipsum is simply dummy text of the printing and typesetting
           industry. Lorem Ipsum has been the industry's standard dummy text ever
@@ -371,7 +394,6 @@ export const StickyFooter: StoryFn<typeof Dialog> = ({
             Next
           </Button>
         </DialogActions>
-        <DialogCloseButton onClick={handleClose} />
       </Dialog>
     </>
   );
