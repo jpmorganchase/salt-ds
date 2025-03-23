@@ -11,6 +11,7 @@ import { useCalendarContext } from "./internal/CalendarContext";
 
 /**
  * Props for the CalendarMonthHeader component.
+ * @template TDate - The type of the date object.
  */
 export interface CalendarMonthHeaderProps<TDate extends DateFrameworkType>
   extends ComponentPropsWithRef<"div"> {

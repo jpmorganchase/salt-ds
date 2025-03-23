@@ -47,6 +47,7 @@ export interface CalendarBaseProps extends ComponentPropsWithoutRef<"div"> {
 
 /**
  * Props for the Calendar component with single date selection.
+ * @template TDate - The type of the date object.
  */
 export interface CalendarSingleProps<TDate extends DateFrameworkType>
   extends CalendarBaseProps,
@@ -59,6 +60,7 @@ export interface CalendarSingleProps<TDate extends DateFrameworkType>
 
 /**
  * Props for the Calendar component with date range selection.
+ * @template TDate - The type of the date object.
  */
 export interface CalendarRangeProps<TDate extends DateFrameworkType>
   extends CalendarBaseProps,
@@ -71,6 +73,7 @@ export interface CalendarRangeProps<TDate extends DateFrameworkType>
 
 /**
  * Props for the Calendar component with multi-select date selection.
+ * @template TDate - The type of the date object.
  */
 export interface CalendarMultiSelectProps<TDate extends DateFrameworkType>
   extends CalendarBaseProps,
@@ -83,6 +86,7 @@ export interface CalendarMultiSelectProps<TDate extends DateFrameworkType>
 
 /**
  * Props for the Calendar component with offset date selection.
+ * @template TDate - The type of the date object.
  */
 export interface CalendarOffsetProps<TDate extends DateFrameworkType>
   extends CalendarBaseProps,
@@ -95,6 +99,7 @@ export interface CalendarOffsetProps<TDate extends DateFrameworkType>
 
 /**
  * Type representing the props for the Calendar component with various selection variants.
+ * @template TDate - The type of the date object.
  */
 export type CalendarProps<TDate extends DateFrameworkType> =
   | CalendarSingleProps<TDate>

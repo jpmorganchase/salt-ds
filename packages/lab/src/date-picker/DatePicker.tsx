@@ -43,7 +43,7 @@ export interface DatePickerBaseProps {
 
 /**
  * Props for the DatePicker component, when `selectionVariant` is `single`.
- * @template T
+ * @template TDate - The type of the date object.
  */
 export interface DatePickerSingleProps<TDate extends DateFrameworkType>
   extends DatePickerBaseProps,
@@ -53,7 +53,7 @@ export interface DatePickerSingleProps<TDate extends DateFrameworkType>
 
 /**
  * Props for the DatePicker component, when `selectionVariant` is `range`.
- * @template T
+ * @template TDate - The type of the date object.
  */
 export interface DatePickerRangeProps<TDate extends DateFrameworkType>
   extends DatePickerBaseProps,
@@ -63,7 +63,7 @@ export interface DatePickerRangeProps<TDate extends DateFrameworkType>
 
 /**
  * Props for the DatePicker component.
- * @template T
+ * @template TDate - The type of the date object.
  */
 export type DatePickerProps<TDate extends DateFrameworkType> =
   | DatePickerSingleProps<TDate>

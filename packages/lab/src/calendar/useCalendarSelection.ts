@@ -15,16 +15,19 @@ import { useCalendarContext } from "./internal/CalendarContext";
 
 /**
  * Type representing a single date selection.
+ * @template TDate - The type of the date object.
  */
 export type SingleDateSelection<TDate extends DateFrameworkType> = TDate;
 
 /**
  * Type representing multiple date selections.
+ * @template TDate - The type of the date object.
  */
 export type MultipleDateSelection<TDate extends DateFrameworkType> = TDate[];
 
 /**
  * Type representing a date range selection.
+ * @template TDate - The type of the date object.
  */
 export type DateRangeSelection<TDate extends DateFrameworkType> = {
   /**
@@ -39,6 +42,7 @@ export type DateRangeSelection<TDate extends DateFrameworkType> = {
 
 /**
  * Type representing all possible selection value types.
+ * @template TDate - The type of the date object.
  */
 export type AllSelectionValueType<TDate extends DateFrameworkType> =
   | SingleDateSelection<TDate>
@@ -48,6 +52,7 @@ export type AllSelectionValueType<TDate extends DateFrameworkType> =
 
 /**
  * Checks if a value is a single date selection.
+ * @template TDate - The type of the date object.
  * @param value - The value to check.
  * @returns `true` if the value is a single date selection, otherwise `false`.
  */
@@ -63,6 +68,7 @@ export function isSingleSelectionValueType<TDate extends DateFrameworkType>(
 
 /**
  * Checks if a value is a date range selection.
+ * @template TDate - The type of the date object.
  * @param value - The value to check.
  * @returns `true` if the value is a date range selection, otherwise `false`.
  */
@@ -79,6 +85,7 @@ export function isDateRangeSelection<TDate extends DateFrameworkType>(
 
 /**
  * Checks if a value is a multiple date selection.
+ * @template TDate - The type of the date object.
  * @param value - The value to check.
  * @returns `true` if the value is a multiple date selection, otherwise `false`.
  */
@@ -94,7 +101,7 @@ export function isMultipleDateSelection<TDate extends DateFrameworkType>(
 
 /**
  * Base properties for calendar UseCalendarSelection hook.
- * @template SelectionVariantType - The type of the selection variant.
+ * @template TDate - The type of the date object.
  */
 interface UseCalendarSelectionBaseProps<TDate extends DateFrameworkType> {
   /**
@@ -120,6 +127,7 @@ interface UseCalendarSelectionBaseProps<TDate extends DateFrameworkType> {
 
 /**
  * UseCalendar hook props to return a calendar day's status
+ * @template TDate - The type of the date object.
  */
 export interface UseCalendarSelectionOffsetProps<
   TDate extends DateFrameworkType,
@@ -164,6 +172,7 @@ export interface UseCalendarSelectionOffsetProps<
 
 /**
  * Properties for the range date selection hook.
+ * @template TDate - The type of the date object.
  */
 export interface UseCalendarSelectionRangeProps<TDate extends DateFrameworkType>
   extends UseCalendarSelectionBaseProps<TDate> {
@@ -192,6 +201,7 @@ export interface UseCalendarSelectionRangeProps<TDate extends DateFrameworkType>
 
 /**
  * Properties for the multi-select date selection hook.
+ * @template TDate - The type of the date object.
  */
 export interface UseCalendarSelectionMultiSelectProps<
   TDate extends DateFrameworkType,
@@ -221,6 +231,7 @@ export interface UseCalendarSelectionMultiSelectProps<
 
 /**
  * Properties for the single date selection hook.
+ * @template TDate - The type of the date object.
  */
 export interface UseCalendarSelectionSingleProps<
   TDate extends DateFrameworkType,
@@ -250,6 +261,7 @@ export interface UseCalendarSelectionSingleProps<
 
 /**
  * UseCalendarSelection hook props, wth the selection variant determining the return type of the date selection
+ * @template TDate - The type of the date object.
  */
 export type UseCalendarSelectionProps<TDate extends DateFrameworkType> =
   | UseCalendarSelectionSingleProps<TDate>

@@ -1,4 +1,5 @@
-import type {StoryFn} from "@storybook/react";
+import { FormField, FormFieldLabel, StackLayout } from "@salt-ds/core";
+import type { DateFrameworkType } from "@salt-ds/date-adapters";
 import {
   type DateInputRangeDetails,
   DatePicker,
@@ -9,16 +10,14 @@ import {
   DatePickerTrigger,
   type DateRangeSelection,
   Input,
-  useLocalization
+  useLocalization,
 } from "@salt-ds/lab";
-import type {DateFrameworkType} from "@salt-ds/date-adapters";
 import {
   type ChangeEvent,
   type SyntheticEvent,
   useCallback,
-  useState
+  useState,
 } from "react";
-import {FormField, FormFieldLabel, StackLayout} from "@salt-ds/core";
 
 export const RangeMultiRow = () => {
   const { dateAdapter } = useLocalization();

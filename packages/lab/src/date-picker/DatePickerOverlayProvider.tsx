@@ -208,14 +208,17 @@ export const DatePickerOverlayProvider: React.FC<
           useKeyboard(floatingUIResult.context, {
             enabled: !readOnly,
           }),
-            useFocusOut(floatingUIResult.context, {
-              enabled: !readOnly,
-              onFocusOut,
-              outsidePress: event => {
-                const target = event.target as Node;
-                return !(target instanceof Element && target.closest('[data-floating-ui-focusable]'))
-              }
-            }),
+          useFocusOut(floatingUIResult.context, {
+            enabled: !readOnly,
+            onFocusOut,
+            outsidePress: (event) => {
+              const target = event.target as Node;
+              return !(
+                target instanceof Element &&
+                target.closest("[data-floating-ui-focusable]")
+              );
+            },
+          }),
           useClick(floatingUIResult.context, {
             enabled: !!openOnClick && !readOnly,
             toggle: false,
