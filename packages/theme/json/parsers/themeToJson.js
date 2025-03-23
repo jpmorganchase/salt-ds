@@ -59,7 +59,7 @@ function addToJson(key, themeLevel, semantic, tokenName, type, tokenValue) {
     // In this case, value will belong to either a mode or density,
     // ensure to keep all values within the field
     tokenValue = {
-      [key]: tokenValue,
+      ["$" + key]: tokenValue,
       ...(jsonTokens[themeLevel][semantic] &&
         jsonTokens[themeLevel][semantic][tokenName] && {
           ...jsonTokens[themeLevel][semantic][tokenName].$value,
@@ -363,84 +363,10 @@ const defaultStruct = {
   sharp: {},
 };
 
-function themeToJson() {
-  const paletteVariables = fromDir(
-    path.resolve(__dirname, "../../css/palette"),
-  );
-  const foundationVariables = fromDir(
-    path.resolve(__dirname, "../../css/foundations"),
-  );
-  const characteristicVariables = fromDir(
-    path.resolve(__dirname, "../../css/characteristics"),
-  );
-  format({
-    $rounded: {
-      ...paletteVariables.rounded,
-      /* corners are only palette, but adding for safety */
-      ...foundationVariables.rounded,
-      ...characteristicVariables.rounded,
-    },
-    $sharp: {
-      ...paletteVariables.sharp,
-      ...foundationVariables.sharp,
-      ...characteristicVariables.sharp,
-    },
-    $amplitudeHeading: {
-      ...paletteVariables.amplitudeHeading,
-      ...foundationVariables.amplitudeHeading,
-      ...characteristicVariables.amplitudeHeading,
-    },
-    $openSansHeading: {
-      ...paletteVariables.openSansHeading,
-      ...foundationVariables.openSansHeading,
-      ...characteristicVariables.openSansHeading,
-    },
-    $amplitudeAction: {
-      ...paletteVariables.amplitudeAction,
-      ...foundationVariables.amplitudeAction,
-      ...characteristicVariables.amplitudeAction,
-    },
-    $openSansAction: {
-      ...paletteVariables.openSansAction,
-      ...foundationVariables.openSansAction,
-      ...characteristicVariables.openSansAction,
-    },
-    $light: {
-      ...paletteVariables.light,
-      ...foundationVariables.light,
-      ...characteristicVariables.light,
-    },
-    $dark: {
-      ...paletteVariables.dark,
-      ...foundationVariables.dark,
-      ...characteristicVariables.dark,
-    },
-    $high: {
-      ...paletteVariables.high,
-      ...foundationVariables.high,
-      ...characteristicVariables.high,
-    },
-    $medium: {
-      ...paletteVariables.medium,
-      ...foundationVariables.medium,
-      ...characteristicVariables.medium,
-    },
-    $touch: {
-      ...paletteVariables.touch,
-      ...foundationVariables.touch,
-      ...characteristicVariables.touch,
-    },
-    $low: {
-      ...paletteVariables.low,
-      ...foundationVariables.low,
-      ...characteristicVariables.low,
-    },
-    general: {
-      ...paletteVariables.general,
-      ...foundationVariables.general,
-      ...characteristicVariables.general,
-    },
-  });
+function themeToJson(themeNext = false) {
+  const variables = fromDir(path.resolve(__dirname, "../../css"), themeNext);
+
+  format(variables);
 
   return jsonTokens;
 }
@@ -450,11 +376,17 @@ module.exports = function getJson() {
 };
 
 const themeJson = themeToJson();
-const jsonData = JSON.stringify(themeJson, null, 2);
-const outputPath = path.join(__dirname, "../theme.json");
+writeJson(themeJson, "../theme.json");
+const themeNextJson = themeToJson(true);
+writeJson(themeNextJson, "../theme-next.json");
 
-try {
-  fs.writeFileSync(outputPath, jsonData, "utf8");
-} catch (err) {
-  console.error("Error writing JSON file:", err);
+function writeJson(json, filePath) {
+  const jsonString = JSON.stringify(json, null, 2);
+  const outputPath = path.join(__dirname, filePath);
+
+  try {
+    fs.writeFileSync(outputPath, jsonString, "utf8");
+  } catch (err) {
+    console.error("Error writing JSON file:", err);
+  }
 }

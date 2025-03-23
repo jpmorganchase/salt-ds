@@ -12,7 +12,8 @@
   "files": [
     "/index.css",
     "/css",
-    "/json/theme.json"
+    "/json/theme.json",
+    "/json/theme-next.json"
   ],
   "sideEffects": [
     "*.css"
