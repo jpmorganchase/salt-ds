@@ -9,6 +9,7 @@ import type {
 
 /**
  * Interface representing the base state for a DatePicker.
+ * @template TDate - The type of the date object.
  */
 interface DatePickerBaseState<TDate extends DateFrameworkType> {
   /**

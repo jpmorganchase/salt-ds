@@ -1,4 +1,5 @@
-import type { StoryFn } from "@storybook/react";
+import { FormField, FormFieldLabel, StackLayout } from "@salt-ds/core";
+import type { DateFrameworkType } from "@salt-ds/date-adapters";
 import {
   type DateInputSingleDetails,
   DatePicker,
@@ -11,14 +12,12 @@ import {
   type SingleDateSelection,
   useLocalization,
 } from "@salt-ds/lab";
-import type { DateFrameworkType } from "@salt-ds/date-adapters";
 import {
   type ChangeEvent,
   type SyntheticEvent,
   useCallback,
   useState,
 } from "react";
-import { FormField, FormFieldLabel, StackLayout } from "@salt-ds/core";
 
 export const SingleGridPanel = () => {
   const { dateAdapter } = useLocalization();

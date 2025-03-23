@@ -26,6 +26,7 @@ import {
 
 /**
  * Interface representing the base properties UseCalendar hook.
+ * @template TDate - The type of the date object.
  */
 interface UseCalendarBaseProps<TDate> {
   /**
@@ -98,6 +99,7 @@ export interface UseCalendarSingleProps<TDate extends DateFrameworkType>
 
 /**
  * UseCalendar hook props for a date range selection Calendar.
+ * @template TDate - The type of the date object.
  */
 export interface UseCalendarRangeProps<TDate extends DateFrameworkType>
   extends UseCalendarSelectionRangeProps<TDate>,
@@ -110,6 +112,7 @@ export interface UseCalendarRangeProps<TDate extends DateFrameworkType>
 
 /**
  * UseCalendar hook props for a multi-select Calendar.
+ * @template TDate - The type of the date object.
  */
 export interface UseCalendarMultiSelectProps<TDate extends DateFrameworkType>
   extends UseCalendarSelectionMultiSelectProps<TDate>,
@@ -122,6 +125,7 @@ export interface UseCalendarMultiSelectProps<TDate extends DateFrameworkType>
 
 /**
  * UseCalendar hook props for an offset date selection Calendar.
+ * @template TDate - The type of the date object.
  */
 export interface UseCalendarOffsetProps<TDate extends DateFrameworkType>
   extends UseCalendarSelectionOffsetProps<TDate>,
@@ -134,6 +138,7 @@ export interface UseCalendarOffsetProps<TDate extends DateFrameworkType>
 
 /**
  * UseCalendar hook props, wth the selection variant determining the return type of the date selection
+ * @template TDate - The type of the date object.
  */
 export type UseCalendarProps<TDate extends DateFrameworkType> =
   | UseCalendarSingleProps<TDate>
@@ -161,8 +166,7 @@ const defaultIsDayDisabled = (): false => false;
 
 /**
  * Represents the return type of the useCalendar hook.
- *
- * @template TDate - The type of the date object used in the calendar.
+ * @template TDate - The type of the date object.
  */
 export interface UseCalendarReturn<TDate extends DateFrameworkType> {
   /**

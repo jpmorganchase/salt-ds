@@ -41,17 +41,47 @@ import {
 } from "./DatePickerContext";
 import datePickerPanelCss from "./DatePickerPanel.css";
 
+/**
+ * Base props for the DatePickerPanel grid components.
+ * @template TDate - The type of the date object.
+ */
 export interface DatePickerPanelBaseProps<TDate extends DateFrameworkType>
   extends ComponentPropsWithoutRef<"div"> {
+  /**
+   * Helper text to be displayed below the date picker.
+   */
   helperText?: string;
+  /**
+   * The visible month for the first visible calendar
+   */
   visibleMonth?: TDate;
+  /**
+   * Number of columns.
+   */
   columns?: ResponsiveProp<number | string>;
+  /**
+   * Number of visible months, maximum 12, defaults to 1
+   */
   numberOfVisibleMonths?: ResponsiveProp<
     1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12
   >;
+  /**
+   * The default visible month.
+   */
   defaultVisibleMonth?: TDate;
+  /**
+   * Callback fired when the visible month changes.
+   * @param event - The synthetic event.
+   * @param visibleMonth - The new visible month.
+   */
   onVisibleMonthChange?: (event: SyntheticEvent, visibleMonth: TDate) => void;
+  /**
+   * Props to be passed to the CalendarNavigation component.
+   */
   CalendarNavigationProps?: Partial<CalendarNavigationProps<TDate>>;
+  /**
+   * Props to be passed to the CalendarGrid component.
+   */
   CalendarGridProps?: Partial<CalendarGridProps<TDate>>;
 }
 
@@ -135,7 +165,7 @@ export const DatePickerSingleGridPanel = forwardRef(
     const [visibleMonth, setVisibleMonth] = useControlled({
       controlled: visibleMonthProp,
       default: uncontrolledDefaultVisibleMonth,
-      name: "DatePickerGridPanel",
+      name: "DatePickerSingleGridPanel",
       state: "visibleMonth",
     });
 
@@ -170,8 +200,6 @@ export const DatePickerSingleGridPanel = forwardRef(
       },
       [onVisibleMonthChange],
     );
-
-    console.log('visibleMonth', visibleMonth);
 
     const calendarProps = {
       visibleMonth,

@@ -33,6 +33,7 @@ import { generateMonthsForYear, monthDiff } from "./internal/utils";
 
 /**
  * Props for the CalendarNavigation component.
+ * @template TDate - The type of the date object.
  */
 export interface CalendarNavigationProps<TDate extends DateFrameworkType>
   extends ComponentPropsWithRef<"div"> {

@@ -43,7 +43,7 @@ export type DateInputSingleDetails = DateDetail;
 
 /**
  * Props for the DateInputSingle component.
- * @template T
+ * @template TDate - The type of the date object.
  */
 export interface DateInputSingleProps<TDate extends DateFrameworkType>
   extends Omit<ComponentPropsWithoutRef<"div">, "defaultValue">,

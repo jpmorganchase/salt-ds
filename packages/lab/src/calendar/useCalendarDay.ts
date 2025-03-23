@@ -52,6 +52,7 @@ export interface DayStatus {
 
 /**
  * UseCalendar hook props to return a calendar day's status
+ * @template TDate - The type of the date object.
  */
 export interface useCalendarDayProps<TDate> {
   /**

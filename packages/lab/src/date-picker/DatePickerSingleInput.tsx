@@ -28,6 +28,7 @@ const withBaseName = makePrefixer("saltDatePickerSingleInput");
 
 /**
  * Props for the DatePickerSingleInput component.
+ * @template TDate - The type of the date object.
  */
 export interface DatePickerSingleInputProps<TDate extends DateFrameworkType>
   extends DateInputSingleProps<TDate> {
