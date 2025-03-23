@@ -40,7 +40,7 @@ import datePickerPanelCss from "./DatePickerPanel.css";
 
 /**
  * Props for the DatePickerRangePanel component.
- * @template T - The type of the selected date range.
+ * @template TDate - The type of the date object.
  */
 export interface DatePickerRangePanelProps<TDate extends DateFrameworkType>
   extends ComponentPropsWithoutRef<"div"> {

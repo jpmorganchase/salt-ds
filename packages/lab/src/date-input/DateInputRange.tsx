@@ -67,7 +67,7 @@ export enum DateParserField {
 
 /**
  * Props for the DateInputRange component.
- * @template T
+ * @template TDate - The type of the date object.
  */
 export interface DateInputRangeProps<TDate extends DateFrameworkType>
   extends Omit<ComponentPropsWithoutRef<"div">, "defaultValue" | "onChange">,
