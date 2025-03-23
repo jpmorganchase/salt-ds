@@ -85,8 +85,10 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
       // Verify the overlay opens
       cy.findByRole("application").should("exist");
       // Simulate re-focusing the input
-      cy.findByRole("textbox").click();
+      cy.document().find("input").realClick();
       // Simulate tabbing out
+      cy.realPress("Tab");
+      cy.findByRole("application").should("exist");
       cy.realPress("Tab");
       // Verify the overlay closes
       cy.findByRole("application").should("not.exist");
