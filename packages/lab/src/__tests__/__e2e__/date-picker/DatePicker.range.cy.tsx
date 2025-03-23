@@ -91,7 +91,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
       // Verify the overlay opens
       cy.findAllByRole("application").should("have.length", 2);
       // Simulate re-focusing the input
-      cy.findAllByRole("textbox").eq(0).click();
+      cy.findByLabelText("Start date").realClick();
       // Simulate tabbing out
       cy.realPress("Tab");
       cy.findAllByRole("application").should("have.length", 2);
@@ -607,8 +607,8 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
             <RangeWithDisabledDates defaultSelectedDate={initialRangeDate} />,
           );
 
-          const startDate = adapter.parse("01 May 2024", "DD MMM YYYY").date;
-          const endDate = adapter.parse("31 May 2024", "DD MMM YYYY").date;
+          const startDate = adapter.parse("01 Jan 2025", "DD MMM YYYY").date;
+          const endDate = adapter.parse("31 Jan 2025", "DD MMM YYYY").date;
           let currentDate = adapter.clone(startDate);
 
           // Simulate opening the calendar
@@ -649,8 +649,8 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
             />,
           );
 
-          const startDate = adapter.parse("01 May 2024", "DD MMM YYYY").date;
-          const endDate = adapter.parse("31 May 2024", "DD MMM YYYY").date;
+          const startDate = adapter.parse("01 Jan 2025", "DD MMM YYYY").date;
+          const endDate = adapter.parse("31 Jan 2025", "DD MMM YYYY").date;
           let currentDate = adapter.clone(startDate);
 
           // Simulate opening the calendar
