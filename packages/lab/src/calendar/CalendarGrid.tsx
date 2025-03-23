@@ -14,10 +14,14 @@ import {
 import type { DateFrameworkType } from "@salt-ds/date-adapters";
 import { useLocalization } from "../localization-provider";
 import { CalendarMonthHeader } from "./CalendarMonthHeader";
-import { type CalendarWeekHeaderProps, CalendarWeekHeader } from "./CalendarWeekHeader";
+import {
+  CalendarWeekHeader,
+  type CalendarWeekHeaderProps,
+} from "./CalendarWeekHeader";
 
 /**
  * Props for the CalendarGrid component.
+ * @template TDate - The type of the date object.
  */
 export interface CalendarGridProps<TDate extends DateFrameworkType>
   extends ComponentPropsWithoutRef<"div"> {
@@ -92,7 +96,7 @@ export const CalendarGrid = forwardRef<HTMLDivElement, CalendarGridProps<any>>(
               {numberOfVisibleMonths > 1 ? (
                 <CalendarMonthHeader month={gridItemVisibleMonth} />
               ) : null}
-              <CalendarWeekHeader {...CalendarWeekHeaderProps}/>
+              <CalendarWeekHeader {...CalendarWeekHeaderProps} />
               <CalendarMonth
                 {...getCalendarMonthProps(gridItemVisibleMonth)}
                 date={gridItemVisibleMonth}

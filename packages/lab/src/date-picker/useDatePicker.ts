@@ -58,8 +58,7 @@ interface UseDatePickerBaseProps<TDate> {
 
 /**
  * Props for single date selection.
- *
- * @template TDate - The type of the date framework.
+ * @template TDate - The type of the date object.
  */
 export interface UseDatePickerSingleProps<TDate extends DateFrameworkType>
   extends UseDatePickerBaseProps<TDate> {
@@ -99,8 +98,7 @@ export interface UseDatePickerSingleProps<TDate extends DateFrameworkType>
 
 /**
  * Props for date range selection.
- *
- * @template TDate - The type of the date framework.
+ * @template TDate - The type of the date object.
  */
 export interface UseDatePickerRangeProps<TDate extends DateFrameworkType>
   extends UseDatePickerBaseProps<TDate> {
@@ -140,8 +138,7 @@ export interface UseDatePickerRangeProps<TDate extends DateFrameworkType>
 
 /**
  * Props for the useDatePicker hook.
- *
- * @template TDate - The type of the date framework.
+ * @template TDate - The type of the date object.
  * @template SelectionVariant - The selection variant, either "single" or "range".
  */
 export type UseDatePickerProps<
@@ -155,8 +152,7 @@ export type UseDatePickerProps<
 
 /**
  * Custom hook for managing date picker state.
- *
- * @template TDate - The type of the date framework.
+ * @template TDate - The type of the date object.
  * @template SelectionVariant - The selection variant, either "single" or "range".
  * @param props - The props for the date picker.
  * @param ref - The ref for the date picker container.
@@ -242,7 +238,7 @@ export function useDatePicker<
     [setCancelled, setOpen, onApply],
   );
 
-  const checkAndPushError = (
+  const checkAndAddError = (
     date: TDate | null | undefined,
     checkFunction: ((date: TDate) => string | false | undefined) | undefined,
     errorType: string,
@@ -267,8 +263,8 @@ export function useDatePicker<
       details: DateInputSingleDetails,
     ) => {
       setSelectedDate(date);
-      checkAndPushError(date, isDayDisabled, "disabled", details);
-      checkAndPushError(date, isDayUnselectable, "unselectable", details);
+      checkAndAddError(date, isDayDisabled, "disabled", details);
+      checkAndAddError(date, isDayUnselectable, "unselectable", details);
 
       if (selectionVariant === "single") {
         onSelectionChange?.(event, date, details);
@@ -308,25 +304,25 @@ export function useDatePicker<
       details: DateInputRangeDetails,
     ) => {
       setSelectedDate(date);
-      checkAndPushError(
+      checkAndAddError(
         date?.startDate,
         isDayDisabled,
         "disabled",
         details?.startDate,
       );
-      checkAndPushError(
+      checkAndAddError(
         date?.endDate,
         isDayDisabled,
         "disabled",
         details?.endDate,
       );
-      checkAndPushError(
+      checkAndAddError(
         date?.startDate,
         isDayUnselectable,
         "unselectable",
         details?.startDate,
       );
-      checkAndPushError(
+      checkAndAddError(
         date?.endDate,
         isDayUnselectable,
         "unselectable",
