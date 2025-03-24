@@ -1,4 +1,3 @@
-import { useId } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
@@ -10,7 +9,7 @@ import {
   useRef,
   useState,
 } from "react";
-import { makePrefixer } from "../../utils";
+import { makePrefixer, useId } from "../../utils";
 import sliderThumbCss from "./SliderThumb.css";
 import { SliderTooltip } from "./SliderTooltip";
 
