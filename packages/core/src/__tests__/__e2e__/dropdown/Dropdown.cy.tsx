@@ -306,14 +306,14 @@ describe("Given a Dropdown", () => {
       Cypress.sinon.match.any,
       Cypress.sinon.match.array.deepEquals(["Alabama"]),
     );
-    cy.findByRole("option", { name: "Alabama" }).should("be.ariaSelected");
+    cy.findByRole("option", { name: "Alabama" }).should("be.ariaChecked");
     cy.findByRole("option", { name: "Alaska" }).realClick();
     cy.get("@selectionChange").should(
       "have.been.calledWith",
       Cypress.sinon.match.any,
       Cypress.sinon.match.array.deepEquals(["Alabama", "Alaska"]),
     );
-    cy.findByRole("option", { name: "Alaska" }).should("be.ariaSelected");
+    cy.findByRole("option", { name: "Alaska" }).should("be.ariaChecked");
     cy.findByRole("listbox").should("exist");
     cy.findByRole("combobox").should("have.text", "Alabama, Alaska");
   });
@@ -329,7 +329,7 @@ describe("Given a Dropdown", () => {
       Cypress.sinon.match.any,
       Cypress.sinon.match.array.deepEquals(["Alabama"]),
     );
-    cy.findByRole("option", { name: "Alabama" }).should("be.ariaSelected");
+    cy.findByRole("option", { name: "Alabama" }).should("be.ariaChecked");
     cy.realPress("ArrowDown");
     cy.realPress("Enter");
     cy.get("@selectionChange").should(
@@ -373,7 +373,7 @@ describe("Given a Dropdown", () => {
     cy.findByRole("option", { name: "John Doe" }).should("exist");
     cy.realType("Jane");
     cy.findByRole("option", { name: "Jane Doe" }).realClick();
-    cy.findByRole("option", { name: "Jane Doe" }).should("be.ariaSelected");
+    cy.findByRole("option", { name: "Jane Doe" }).should("be.ariaChecked");
     cy.findByRole("combobox").should("have.text", "Jane Doe");
   });
 
