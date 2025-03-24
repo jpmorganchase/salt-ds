@@ -117,7 +117,7 @@ export interface DatePickerRangePanelProps<TDate extends DateFrameworkType>
     >
   >;
   /**
-   * Props to be passed to the start date CalendarDataGrid component.
+   * Props to be passed to the start date CalendarGrid component.
    */
   StartCalendarGridProps?: CalendarGridProps<TDate>;
 
@@ -139,7 +139,7 @@ export interface DatePickerRangePanelProps<TDate extends DateFrameworkType>
    */
   EndCalendarNavigationProps?: CalendarNavigationProps<TDate>;
   /**
-   * Props to be passed to the end date CalendarDataGrid component.
+   * Props to be passed to the end date CalendarGrid component.
    */
   EndCalendarGridProps?: CalendarGridProps<TDate>;
 }
