@@ -2,7 +2,7 @@
 "@salt-ds/core": minor
 ---
 
-Added `Slider` and `RangeSlider` components.
+Add `Slider` and `RangeSlider` components to core.
 
 ```tsx
 <Slider
