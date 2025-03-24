@@ -1,50 +1,19 @@
 ---
-title: Responsiveness
+title: Breakpoints
 layout: DetailTechnical
 sidebar:
-  priority: 6
+  priority: 2
 ---
 
-A responsive layout makes dynamic changes to the appearance of a product in response to the size of the screen.
+Responsive design utilizes breakpoints to adapt layouts across various screen sizes, orientations and web browsers from Extra Small (XS) to Extra Large (XL). This approach ensures content remains readable and accessible, enhancing user experience by allowing layouts to fluidly adjust across mobile, tablet, and desktop devices.
 
-Responsiveness provides a fluid and flexible layout that adapts to screen size and offers an optimized experience.
+## Breakpoint ramps
 
-A responsive design changes the layout of elements on the screen (including hiding/showing some elements) based on the size of the screen, e.g. a design will reflow as you resize the browser window to ensure the application remains usable.
+**Desktop devices**: On desktop, any density can be applied based on content need. This flexibility allows designers to select the most suitable density, whether for data-heavy or content-light applications.
 
-## Layout grid
+**Mobile and tablet devices**: For these devices, touch density is recommended. It ensures optimal touch targets, facilitating easier interaction with the interface using fingers.
 
-A responsive layout is made up of a set of consistently proportioned columns, separated by gutters, and flanked by margins.
-
-<ImageSwitcher
-  images={[
-    { src: "/img/foundations/responsive-grid-off.svg", alt: "" },
-    { src: "/img/foundations/responsive-grid-on.svg", alt: "" },
-  ]}
-  label="Show columns"
-/>
-
-- Gutters - The gutter is the space between columns.
-- Margins - Left and right spacing on the screen are margins.
-- Columns - Columns divide the content of the page into various numbers of columns depending on the breakpoint.
-
-Basic layout grids are included in the design system to provide a starting point for designing any user interface.
-
-The gutters and margins are set using `--salt-spacing-300` across all densities. The number of columns and their widths vary depending on the density and breakpoint set. Find all you need to know about densities on the [density foundation](./density)
-
-| Token                | High Density (HD) | Medium Density (MD) | Low Density (LD) | Touch Density (TD) |
-| -------------------- | ----------------- | ------------------- | ---------------- | ------------------ |
-| `--salt-spacing-300` | 12                | 24                  | 36               | 48                 |
-
-## Breakpoints
-
-In responsive design, a breakpoint is the width at which a layout will adapt in order to provide the best possible user experience.
-
-<Image
-  src="/img/foundations/responsive-breakpoints.svg"
-  alt="Illustration of individual breakpoints"
-/>
-
-The number of columns in a layout varies dependent on the breakpoint and the density chosen for that breakpoint. For each combination, the margin and gutter size remains constant, whereas the width of each column will vary as a percentage of the overall width.
+Learn more about Salt densities in the [density foundation](/salt/foundations/density).
 
 ### High density
 
@@ -86,4 +55,4 @@ The number of columns in a layout varies dependent on the breakpoint and the den
 | Large       | 1280-1919  | 6       | `--salt-spacing-300` | `--salt-spacing-300` |
 | Extra Large | >1920      | 8       | `--salt-spacing-300` | `--salt-spacing-300` |
 
-:fragment{src="./fragments/feedback.mdx"}
+:fragment{src="../fragments/feedback.mdx"}
