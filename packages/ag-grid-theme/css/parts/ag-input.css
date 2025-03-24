@@ -1,46 +1,46 @@
 /* INPUT */
 
-div[class*="ag-theme-salt"] .ag-filter input[class^="ag-"][type="text"],
-div[class*="ag-theme-salt"] .ag-filter input[class^="ag-"][type="number"],
-div[class*="ag-theme-salt"] .ag-column-select input[class^="ag-"][type="text"],
-div[class*="ag-theme-salt"] .ag-column-select input[class^="ag-"][type="number"] {
+.ag-filter input[class^="ag-"][type="text"],
+.ag-filter input[class^="ag-"][type="number"],
+.ag-column-select input[class^="ag-"][type="text"],
+.ag-column-select input[class^="ag-"][type="number"] {
   border: none;
   border-bottom: var(--salt-size-border) var(--salt-editable-borderStyle) var(--salt-editable-borderColor);
   height: calc(var(--salt-size-base) + var(--salt-spacing-100));
   padding: 0 var(--salt-spacing-100);
 }
 
-div[class*="ag-theme-salt"] .ag-filter input[class^="ag-"][type="text"]::placeholder,
-div[class*="ag-theme-salt"] .ag-filter input[class^="ag-"][type="number"]::placeholder,
-div[class*="ag-theme-salt"] .ag-column-select input[class^="ag-"][type="text"]::placeholder,
-div[class*="ag-theme-salt"] .ag-column-select input[class^="ag-"][type="number"]::placeholder {
+.ag-filter input[class^="ag-"][type="text"]::placeholder,
+.ag-filter input[class^="ag-"][type="number"]::placeholder,
+.ag-column-select input[class^="ag-"][type="text"]::placeholder,
+.ag-column-select input[class^="ag-"][type="number"]::placeholder {
   color: var(--salt-content-secondary-foreground);
   opacity: 1;
 }
 
-div[class*="ag-theme-salt"] .ag-filter input[class^="ag-"][type="text"]:focus,
-div[class*="ag-theme-salt"] .ag-filter input[class^="ag-"][type="number"]:focus,
-div[class*="ag-theme-salt"] .ag-column-select input[class^="ag-"][type="text"]:focus,
-div[class*="ag-theme-salt"] .ag-column-select input[class^="ag-"][type="number"]:focus {
+.ag-filter input[class^="ag-"][type="text"]:focus,
+.ag-filter input[class^="ag-"][type="number"]:focus,
+.ag-column-select input[class^="ag-"][type="text"]:focus,
+.ag-column-select input[class^="ag-"][type="number"]:focus {
   outline: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--salt-focused-outlineColor);
   outline-offset: -2px;
 }
 /* Large text editor, matching multiline input */
-div[class*="ag-theme-salt"] .ag-popup-editor .ag-large-text textarea[class^="ag-"] {
+.ag-popup-editor .ag-large-text textarea[class^="ag-"] {
   border-radius: var(--salt-palette-corner-weak, 0);
   padding: var(--salt-spacing-100) var(--salt-spacing-100);
 }
 
-div[class*="ag-theme-salt"] .ag-popup-editor .ag-large-text,
-div[class*="ag-theme-salt"] .ag-autocomplete-list-popup {
+.ag-popup-editor .ag-large-text,
+.ag-autocomplete-list-popup {
   /* Don't apply a border, but rather textarea border below is used, otherwise focus ring position could be a problem. */
   border: none;
 }
-div[class*="ag-theme-salt"] .ag-popup-editor .ag-large-text textarea[class^="ag-"] {
+.ag-popup-editor .ag-large-text textarea[class^="ag-"] {
   /* When textarea is not in focus, simulating a popup list (OptionList) border color */
   border-color: var(--salt-selectable-borderColor-selected);
 }
 
-div[class*="ag-theme-salt"] .ag-popup-editor .ag-large-text textarea[class^="ag-"]:focus {
+.ag-popup-editor .ag-large-text textarea[class^="ag-"]:focus {
   outline: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--salt-focused-outlineColor);
 }
