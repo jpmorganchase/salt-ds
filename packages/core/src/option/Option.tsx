@@ -112,7 +112,8 @@ export const Option = forwardRef<HTMLDivElement, OptionProps>(
     return (
       <div
         aria-disabled={disabled ? "true" : undefined}
-        aria-selected={multiselect ? undefined : selected}
+        aria-selected={selected}
+        // NVDA checkes for aria-checked on multiselect options. Other AT works fine with `aria-selected`
         aria-checked={multiselect ? selected : undefined}
         className={clsx(
           withBaseName(),

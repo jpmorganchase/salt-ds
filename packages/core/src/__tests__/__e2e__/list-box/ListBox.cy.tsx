@@ -146,6 +146,7 @@ describe("GIVEN a List box", () => {
       Cypress.sinon.match.any,
       Cypress.sinon.match.array.deepEquals(["Alabama"]),
     );
+    cy.findByRole("option", { name: "Alabama" }).should("be.ariaSelected");
     cy.findByRole("option", { name: "Alabama" }).should("be.ariaChecked");
     cy.findByRole("option", { name: "Alaska" }).realClick();
     cy.get("@selectionChange").should(
@@ -153,6 +154,7 @@ describe("GIVEN a List box", () => {
       Cypress.sinon.match.any,
       Cypress.sinon.match.array.deepEquals(["Alabama", "Alaska"]),
     );
+    cy.findByRole("option", { name: "Alaska" }).should("be.ariaSelected");
     cy.findByRole("option", { name: "Alaska" }).should("be.ariaChecked");
   });
 
@@ -174,6 +176,7 @@ describe("GIVEN a List box", () => {
       Cypress.sinon.match.any,
       Cypress.sinon.match.array.deepEquals(["Alabama", "Alaska"]),
     );
+    cy.findByRole("option", { name: "Alabama" }).should("be.ariaSelected");
     cy.findByRole("option", { name: "Alaska" }).should("be.ariaChecked");
   });
 
