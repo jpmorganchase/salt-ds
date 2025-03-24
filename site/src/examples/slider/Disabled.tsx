@@ -1,4 +1,4 @@
-import { Slider } from "@salt-ds/lab";
+import { Slider } from "@salt-ds/core";
 import type { ReactElement } from "react";
 
 export const Disabled = (): ReactElement => (

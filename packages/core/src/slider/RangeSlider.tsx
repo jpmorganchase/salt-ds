@@ -1,12 +1,12 @@
+import { clsx } from "clsx";
 import {
   type ChangeEvent,
   type HTMLAttributes,
   forwardRef,
   useRef,
 } from "react";
-
-import { useControlled, useFormFieldProps } from "@salt-ds/core";
-import { clsx } from "clsx";
+import { useFormFieldProps } from "../form-field-context";
+import { useControlled } from "../utils";
 import { SliderThumb } from "./internal/SliderThumb";
 import { SliderTrack } from "./internal/SliderTrack";
 import { useRangeSliderThumb } from "./internal/useRangeSliderThumb";

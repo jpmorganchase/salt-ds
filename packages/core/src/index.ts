@@ -54,6 +54,7 @@ export * from "./text";
 export * from "./theme";
 export * from "./toast";
 export * from "./salt-provider";
+export * from "./slider";
 export * from "./split-layout";
 export * from "./switch";
 export * from "./tag";

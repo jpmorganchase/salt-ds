@@ -1,12 +1,11 @@
-import { FormField, FormFieldLabel } from "@salt-ds/core";
-import { RangeSlider } from "@salt-ds/lab";
+import { FormField, FormFieldLabel, Slider } from "@salt-ds/core";
 import type { Meta, StoryFn } from "@storybook/react";
 import { QAContainer, type QAContainerProps } from "docs/components";
 
 export default {
-  title: "Lab/RangeSlider/RangeSlider QA",
-  component: RangeSlider,
-} as Meta<typeof RangeSlider>;
+  title: "Core/Slider/Slider QA",
+  component: Slider,
+} as Meta<typeof Slider>;
 
 const marks = [
   { value: 0, label: "0" },
@@ -27,20 +26,19 @@ export const ExamplesGrid: StoryFn<QAContainerProps> = (props) => {
     <QAContainer width={1300} cols={1} itemPadding={10} {...props}>
       <FormField labelPlacement="left">
         <FormFieldLabel>With inline labels</FormFieldLabel>
-        <RangeSlider minLabel="Min Label" maxLabel="Max Label" />
+        <Slider minLabel="Min Label" maxLabel="Max Label" />
       </FormField>
       <FormField labelPlacement="left">
         <FormFieldLabel>With marks</FormFieldLabel>
-        <RangeSlider marks={marks} min={0} max={10} />
+        <Slider marks={marks} min={0} max={10} />
       </FormField>
       <FormField labelPlacement="left">
         <FormFieldLabel>With marks and ticks</FormFieldLabel>
-        <RangeSlider marks={marks} showTicks min={0} max={10} />
+        <Slider marks={marks} showTicks min={0} max={10} />
       </FormField>
       <FormField labelPlacement="left">
         <FormFieldLabel>With inline labels, marks and ticks</FormFieldLabel>
-        <RangeSlider
-          defaultValue={[3, 6]}
+        <Slider
           marks={marks}
           minLabel="Min label"
           maxLabel="Max label"
@@ -51,7 +49,7 @@ export const ExamplesGrid: StoryFn<QAContainerProps> = (props) => {
       </FormField>
       <FormField labelPlacement="left">
         <FormFieldLabel>Restricted to marks</FormFieldLabel>
-        <RangeSlider
+        <Slider
           marks={[
             { value: 0, label: "0" },
             { value: 5, label: "5" },
@@ -69,7 +67,7 @@ export const ExamplesGrid: StoryFn<QAContainerProps> = (props) => {
         <FormFieldLabel>
           With constrained label position and ticks
         </FormFieldLabel>
-        <RangeSlider
+        <Slider
           marks={[
             { value: 0, label: "Min label" },
             { value: 10, label: "Max label" },
@@ -82,7 +80,7 @@ export const ExamplesGrid: StoryFn<QAContainerProps> = (props) => {
       </FormField>
       <FormField labelPlacement="left">
         <FormFieldLabel>With formatting</FormFieldLabel>
-        <RangeSlider
+        <Slider
           marks={[
             { value: 0, label: "0 EUR" },
             { value: 10, label: "10 EUR" },
@@ -96,7 +94,7 @@ export const ExamplesGrid: StoryFn<QAContainerProps> = (props) => {
       </FormField>
       <FormField labelPlacement="left">
         <FormFieldLabel>With negative bounds</FormFieldLabel>
-        <RangeSlider
+        <Slider
           marks={[
             { value: -5, label: "-5" },
             { value: 5, label: "5" },
@@ -109,15 +107,15 @@ export const ExamplesGrid: StoryFn<QAContainerProps> = (props) => {
       </FormField>
       <FormField labelPlacement="left">
         <FormFieldLabel>Disabled</FormFieldLabel>
-        <RangeSlider disabled />
+        <Slider disabled />
       </FormField>
       <FormField>
         <FormFieldLabel>With top form field label</FormFieldLabel>
-        <RangeSlider minLabel="Min Label" maxLabel="Max Label" />
+        <Slider minLabel="Min Label" maxLabel="Max Label" />
       </FormField>
       <FormField>
         <FormFieldLabel>With top form field label and marks</FormFieldLabel>
-        <RangeSlider
+        <Slider
           minLabel="Min Label"
           maxLabel="Max Label"
           marks={marks}
