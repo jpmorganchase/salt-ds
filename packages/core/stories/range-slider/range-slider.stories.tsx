@@ -7,8 +7,8 @@ import {
   type RangeSliderProps,
   StackLayout,
 } from "@salt-ds/core";
-import { toFloat } from "@salt-ds/core/src/slider/internal/utils";
 import type { StoryFn } from "@storybook/react";
+import { toFloat } from "packages/core/src/slider/internal/utils";
 import { type ChangeEvent, useState } from "react";
 
 const marks = [
