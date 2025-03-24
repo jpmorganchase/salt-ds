@@ -197,6 +197,23 @@ WithConstrainedLabelPosition.args = {
   constrainLabelPosition: true,
 };
 
+export const WithConstrainedLabelPositionAndTicks = Template.bind({});
+WithConstrainedLabelPositionAndTicks.args = {
+  "aria-label": "WithConstrainedLabelPositionAndTicks",
+  marks: [
+    {
+      value: 0,
+      label: "Very low",
+    },
+    {
+      value: 10,
+      label: "Very high",
+    },
+  ],
+  constrainLabelPosition: true,
+  showTicks: true,
+};
+
 export const WithHiddenTooltip = Template.bind({});
 WithHiddenTooltip.args = {
   "aria-label": "WithHiddenTooltip",
