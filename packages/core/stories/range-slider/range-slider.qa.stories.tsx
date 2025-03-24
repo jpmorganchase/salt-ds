@@ -1,10 +1,9 @@
-import { FormField, FormFieldLabel } from "@salt-ds/core";
-import { RangeSlider } from "@salt-ds/lab";
+import { FormField, FormFieldLabel, RangeSlider } from "@salt-ds/core";
 import type { Meta, StoryFn } from "@storybook/react";
 import { QAContainer, type QAContainerProps } from "docs/components";
 
 export default {
-  title: "Lab/RangeSlider/RangeSlider QA",
+  title: "Core/RangeSlider/RangeSlider QA",
   component: RangeSlider,
 } as Meta<typeof RangeSlider>;
 

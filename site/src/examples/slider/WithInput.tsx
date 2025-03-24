@@ -1,5 +1,10 @@
-import { FlexLayout, FormField, FormFieldLabel, Input } from "@salt-ds/core";
-import { Slider } from "@salt-ds/lab";
+import {
+  FlexLayout,
+  FormField,
+  FormFieldLabel,
+  Input,
+  Slider,
+} from "@salt-ds/core";
 import {
   type ChangeEvent,
   type ReactElement,
