@@ -107,7 +107,7 @@ export const RangeWithConfirmation = (): ReactElement => {
     [dateAdapter],
   );
 
-  const handleOpen = useCallback(
+  const handleOpenChange = useCallback(
     (opening: boolean) => {
       if (opening) {
         savedValidationState.current = validationStatus;
@@ -147,7 +147,7 @@ export const RangeWithConfirmation = (): ReactElement => {
         onApply={handleApply}
         onCancel={handleCancel}
         onSelectionChange={handleSelectionChange}
-        onOpenChange={handleOpen}
+        onOpenChange={handleOpenChange}
         selectedDate={selectedDate}
       >
         <DatePickerTrigger>

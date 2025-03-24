@@ -19,7 +19,7 @@ import {
   useState,
 } from "react";
 
-export const RangeMultiRow = () => {
+export const RangeGridPanel = () => {
   const { dateAdapter } = useLocalization();
   const [numberOfVisibleMonths, setNumberOfVisibleMonths] = useState("1");
   const [columns, setColumns] = useState("1");

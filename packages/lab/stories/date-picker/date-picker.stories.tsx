@@ -1471,7 +1471,7 @@ export const SingleWithConfirmation: StoryFn<
     [args?.onSelectionChange, dateAdapter],
   );
 
-  const handleOpen = useCallback(
+  const handleOpenChange = useCallback(
     (opening: boolean) => {
       if (opening) {
         savedState.current = {
@@ -1517,7 +1517,7 @@ export const SingleWithConfirmation: StoryFn<
         onApply={handleApply}
         onCancel={handleCancel}
         onSelectionChange={handleSelectionChange}
-        onOpenChange={handleOpen}
+        onOpenChange={handleOpenChange}
         selectedDate={selectedDate}
       >
         <DatePickerTrigger>
@@ -1633,7 +1633,7 @@ export const RangeWithConfirmation: StoryFn<
     [args?.onSelectionChange, dateAdapter],
   );
 
-  const handleOpen = useCallback(
+  const handleOpenChange = useCallback(
     (opening: boolean) => {
       if (opening) {
         savedValidationState.current = validationStatus;
@@ -1676,7 +1676,7 @@ export const RangeWithConfirmation: StoryFn<
         onApply={handleApply}
         onCancel={handleCancel}
         onSelectionChange={handleSelectionChange}
-        onOpenChange={handleOpen}
+        onOpenChange={handleOpenChange}
         selectedDate={selectedDate}
       >
         <DatePickerTrigger>
@@ -3324,7 +3324,7 @@ export const ControlledOpen: StoryFn<
     args?.onCancel?.();
   }, [args?.onCancel]);
 
-  const handleOpen = useCallback(
+  const handleOpenChange = useCallback(
     (newOpen: boolean, reason?: DatePickerOpenChangeReason | string) => {
       // reason === undefined denotes a programmatic/controlled open, so focus behaviour is owned by the code
       if (reason === undefined) {
@@ -3349,7 +3349,7 @@ export const ControlledOpen: StoryFn<
       selectedDate={selectedDate}
       onApply={handleApply}
       onCancel={handleCancel}
-      onOpenChange={handleOpen}
+      onOpenChange={handleOpenChange}
       open={open}
     >
       <DatePickerTrigger>

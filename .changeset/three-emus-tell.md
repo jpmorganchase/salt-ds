@@ -22,7 +22,6 @@
 ```
 <DatePicker
   selectionVariant="range"
-  onSelectionChange={handleSelectionChange}
 >
   <DatePickerTrigger>
     <DatePickerRangeInput />
@@ -37,7 +36,13 @@ Note: `DatePickerRangePanel` remains unchanged and provides a dual `Calendar` da
 
 - A new `CalendarMonthHeader` component has been added, used by `CalendarGrid` to display a multi-month grid of `Calendar` components.
 - `DatePicker` now supports `isDayDisabled`, `isDayUnselectable`, and `isDayHighlighted` props, rather than providing them through the `Calendar` props.
-- The `DatePickerOverlayProvider` prop `onOpen` has been renamed to `onOpenChange` to be consistent with other APIs in Salt.
+- The `DatePickerOverlayProvider` prop `onOpenChange` has changed signature and `event` has been removed, to create a consistent API with other components.
+
+```diff
+- onOpenChange?: ( newOpen: boolean, event?: Event, reason?: DatePickerOpenChangeReason) => void;
++ onOpenChange?: ( newOpen: boolean, reason?: DatePickerOpenChangeReason) => void;
+```
+
 - Added `useFocusOut` floating-ui middleware to close the overlay upon focus out.
 - Fixed a bug where the change event was triggered by blur when the entered date had not changed.
 - Fixed the styling of disabled and unselectable days, which previously used the same style.
