@@ -1,5 +1,4 @@
-import { FormField, FormFieldLabel } from "@salt-ds/core";
-import { Slider } from "@salt-ds/lab";
+import { FormField, FormFieldLabel, Slider } from "@salt-ds/core";
 import { type ReactElement, useState } from "react";
 
 export const WithFormField = (): ReactElement => {

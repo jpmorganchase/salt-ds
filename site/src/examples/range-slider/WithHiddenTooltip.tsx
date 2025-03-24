@@ -1,4 +1,4 @@
-import { RangeSlider } from "@salt-ds/lab";
+import { RangeSlider } from "@salt-ds/core";
 
 export const WithHiddenTooltip = () => (
   <RangeSlider

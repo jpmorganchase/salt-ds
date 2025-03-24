@@ -3,14 +3,15 @@ import {
   FormField,
   FormFieldLabel,
   Input,
+  Slider,
+  type SliderProps,
   StackLayout,
 } from "@salt-ds/core";
-import { Slider, type SliderProps } from "@salt-ds/lab";
 import type { StoryFn } from "@storybook/react";
 import { type ChangeEvent, useEffect, useState } from "react";
 
 export default {
-  title: "Lab/Slider",
+  title: "Core/Slider",
   component: Slider,
 };
 

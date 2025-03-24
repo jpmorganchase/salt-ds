@@ -3,15 +3,16 @@ import {
   FormField,
   FormFieldLabel,
   Input,
+  RangeSlider,
+  type RangeSliderProps,
   StackLayout,
 } from "@salt-ds/core";
-import { RangeSlider, type RangeSliderProps } from "@salt-ds/lab";
+import { toFloat } from "@salt-ds/core/src/slider/internal/utils";
 import type { StoryFn } from "@storybook/react";
-import { toFloat } from "packages/lab/src/slider/internal/utils";
 import { type ChangeEvent, useState } from "react";
 
 export default {
-  title: "Lab/RangeSlider",
+  title: "Core/RangeSlider",
   component: RangeSlider,
 };
 
