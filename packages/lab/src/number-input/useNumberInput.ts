@@ -29,7 +29,7 @@ export const useNumberInput = ({
   setValue,
   setFocused,
   step = 1,
-  stepBlock = 10,
+  stepMultiplier = 2,
   value,
 }: Pick<
   NumberInputProps,
@@ -41,7 +41,7 @@ export const useNumberInput = ({
   | "onChange"
   | "readOnly"
   | "step"
-  | "stepBlock"
+  | "stepMultiplier"
 > & {
   setValue: Dispatch<SetStateAction<string | number | undefined>>;
   setFocused: Dispatch<SetStateAction<boolean>>;
@@ -68,23 +68,23 @@ export const useNumberInput = ({
   const decrementValue = useCallback(
     (event?: SyntheticEvent, block?: boolean) => {
       if (isAtMin(value, min)) return;
-      const decrementStep = block ? stepBlock : step;
+      const decrementStep = block ? stepMultiplier * step : step;
       const nextValue =
         value === "" ? -decrementStep : toFloat(value) - decrementStep;
       setValueInRange(event, nextValue);
     },
-    [value, min, step, stepBlock, setValueInRange],
+    [value, min, step, stepMultiplier, setValueInRange],
   );
 
   const incrementValue = useCallback(
     (event?: SyntheticEvent, block?: boolean) => {
       if (isAtMax(value, max)) return;
-      const incrementStep = block ? stepBlock : step;
+      const incrementStep = block ? stepMultiplier * step : step;
       const nextValue =
         value === "" ? incrementStep : toFloat(value) + incrementStep;
       setValueInRange(event, nextValue);
     },
-    [value, max, step, stepBlock, setValueInRange],
+    [value, max, step, stepMultiplier, setValueInRange],
   );
 
   const { activate: decrementSpinner } = useActivateWhileMouseDown(

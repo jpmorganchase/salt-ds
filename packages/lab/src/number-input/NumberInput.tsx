@@ -116,11 +116,11 @@ export interface NumberInputProps
    */
   step?: number;
   /**
-   * The amount to change the value when the value is incremented or decremented by holding Shift and pressing Up arrow or Down arrow keys.
-   * Defaults to 10.
-   * @default 10
+   * Defines the factor by which the step value is multiplied to determine the maximum increment or decrement when the Shift key
+   * is held while pressing the Up Arrow or Down Arrow keys for faster adjustments of the value. The default multiplier is 2.
+   * @default 2
    */
-  stepBlock?: number;
+  stepMultiplier?: number;
   /**
    * Alignment of text within container. Defaults to "left".
    * @default "left"
@@ -162,7 +162,7 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       readOnly: readOnlyProp,
       startAdornment,
       step = 1,
-      stepBlock = 10,
+      stepMultiplier = 2,
       textAlign = "left",
       validationStatus: validationStatusProp,
       value: valueProp,
@@ -246,7 +246,7 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       onChange: onChangeProp,
       readOnly: isReadOnly,
       step,
-      stepBlock,
+      stepMultiplier,
       value,
     });
 

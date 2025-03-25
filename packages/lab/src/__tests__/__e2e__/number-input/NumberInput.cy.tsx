@@ -98,7 +98,7 @@ describe("Number Input", () => {
 
   it("increments specified `step` and `stepBlock` value when using keyboards", () => {
     cy.mount(
-      <Default defaultValue={10} step={10} stepBlock={100} max={2000} />,
+      <Default defaultValue={10} step={10} stepMultiplier={10} max={2000} />,
     );
 
     cy.findByRole("spinbutton").focus().realPress("ArrowUp");
@@ -126,7 +126,7 @@ describe("Number Input", () => {
 
   it("decrements specified `step` and `stepBlock` value when using keyboards", () => {
     cy.mount(
-      <Default defaultValue={10} step={10} stepBlock={100} min={-2000} />,
+      <Default defaultValue={10} step={10} stepMultiplier={10} min={-2000} />,
     );
 
     cy.findByRole("spinbutton").focus().realPress("ArrowDown");
