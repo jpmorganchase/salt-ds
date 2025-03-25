@@ -180,14 +180,14 @@ export type DatePickerState<TDate extends DateFrameworkType> =
  * Context for single date selection.
  */
 export const SingleDateSelectionContext = createContext<
-  SingleDatePickerState<any> | undefined
+  SingleDatePickerState<DateFrameworkType> | undefined
 >("SingleDateSelectionContext", undefined);
 
 /**
  * Context for date range selection.
  */
 export const DateRangeSelectionContext = createContext<
-  RangeDatePickerState<any> | undefined
+  RangeDatePickerState<DateFrameworkType> | undefined
 >("DateRangeSelectionContext", undefined);
 
 /**

@@ -6,7 +6,8 @@ import type { DateFrameworkTypeMap } from "./DateFrameworkTypeMap";
  */
 
 export type DateFrameworkType = keyof DateFrameworkTypeMap extends never
-  ? any
+  ? // biome-ignore lint/suspicious/noExplicitAny: date framework
+    any
   : DateFrameworkTypeMap[keyof DateFrameworkTypeMap];
 
 /**
@@ -112,6 +113,7 @@ export type ParserResult<TDate extends DateFrameworkType> = {
  */
 export interface SaltDateAdapter<
   TDate extends DateFrameworkType,
+  // biome-ignore lint/suspicious/noExplicitAny: locale is date framework dependent
   TLocale = any,
 > {
   /**
@@ -377,6 +379,7 @@ export interface SaltDateAdapter<
   getDayOfWeekName(
     dow: number,
     format: "long" | "short" | "narrow",
+    // biome-ignore lint/suspicious/noExplicitAny: locale is date framework dependent
     locale?: any,
   ): string;
 

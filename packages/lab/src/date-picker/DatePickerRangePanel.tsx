@@ -269,7 +269,7 @@ export const DatePickerRangePanel = forwardRef(function DatePickerRangePanel<
       }
       onStartVisibleMonthChange?.(event, newVisibleMonth);
     },
-    [endVisibleMonth, onStartVisibleMonthChange],
+    [dateAdapter, endVisibleMonth, onStartVisibleMonthChange],
   );
 
   const handleEndVisibleMonthChange = useCallback(
@@ -285,7 +285,7 @@ export const DatePickerRangePanel = forwardRef(function DatePickerRangePanel<
       }
       onEndVisibleMonthChange?.(event, newVisibleMonth);
     },
-    [startVisibleMonth, onEndVisibleMonthChange],
+    [dateAdapter, startVisibleMonth, onEndVisibleMonthChange],
   );
 
   function getHoveredDate(date?: TDate | null, hoveredDate?: TDate | null) {
