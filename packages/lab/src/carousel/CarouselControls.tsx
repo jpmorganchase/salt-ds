@@ -60,13 +60,8 @@ export const CarouselControls = forwardRef<
     css: carouselControlsCss,
     window: targetWindow,
   });
-  const {
-    slides,
-    carouselId,
-    firstVisibleSlideIndex,
-    visibleSlides,
-    announcerText,
-  } = useContext(CarouselStateContext);
+  const { slides, carouselId, firstVisibleSlideIndex, visibleSlides } =
+    useContext(CarouselStateContext);
   const dispatch = useContext(CarouselDispatchContext);
 
   const slideCount = slides.size;
@@ -76,22 +71,26 @@ export const CarouselControls = forwardRef<
   const nextButtonRef = useRef<HTMLButtonElement | null>(null);
 
   const slideIds = [...slides.keys()];
-
+  const currentId = slideIds[firstVisibleSlideIndex] || null;
   const prevId = slideIds[firstVisibleSlideIndex - 1] || null;
   const nextId = slideIds[firstVisibleSlideIndex + 1] || null;
 
   const isOnFirstSlide = firstVisibleSlideIndex === 0;
   const isOnLastSlide = firstVisibleSlideIndex === slideCount - visibleSlides;
 
-  console.log(announcerText);
+  const currentSlideLabel =
+    (currentId && slides.get(currentId)?.getAttribute("aria-labelledby")) ||
+    undefined;
+
   const controlsLabel = slideCount >= 1 && (
-    <Text as="span" aria-live="polite">
+    <Text
+      as="span"
+      aria-live="polite"
+      aria-labelledby={visibleSlides === 1 ? currentSlideLabel : undefined}
+    >
       <strong>
         {`${firstVisibleSlideIndex + 1} ${visibleSlides > 1 && slideCount > 1 ? ` - ${firstVisibleSlideIndex + visibleSlides}` : ""} of
         ${slideCount}`}
-        <span className={withBaseName("sr-only")}>
-          {visibleSlides === 1 && announcerText}
-        </span>
       </strong>
     </Text>
   );
