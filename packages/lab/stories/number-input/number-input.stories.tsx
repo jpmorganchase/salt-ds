@@ -219,7 +219,7 @@ export const CustomStep: StoryFn<NumberInputProps> = (args) => {
 CustomStep.args = {
   defaultValue: 1,
   step: 5,
-  stepBlock: 50,
+  stepMultiplier: 10,
 };
 
 export const TextAlignment: StoryFn<NumberInputProps> = (args) => (
