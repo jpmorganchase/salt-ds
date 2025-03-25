@@ -303,8 +303,8 @@ WithFormatting.args = {
       maximumFractionDigits: 0,
     }).format(value),
   marks: [
-    { value: 0, label: "0€" },
-    { value: 50, label: "50€" },
+    { value: 0, label: "€0" },
+    { value: 50, label: "€50" },
   ],
 };
 
