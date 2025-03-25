@@ -69,7 +69,10 @@ export type DatePickerProps<TDate extends DateFrameworkType> =
   | DatePickerSingleProps<TDate>
   | DatePickerRangeProps<TDate>;
 
-export const DatePickerMain = forwardRef<HTMLDivElement, DatePickerProps<any>>(
+export const DatePickerMain = forwardRef<
+  HTMLDivElement,
+  DatePickerProps<DateFrameworkType>
+>(
   <TDate extends DateFrameworkType>(
     props: DatePickerProps<TDate>,
     ref: React.Ref<HTMLDivElement>,

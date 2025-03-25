@@ -39,7 +39,7 @@ export const ControlledOpen = (): ReactElement => {
     ) => {
       setSelectedDate(date ?? null);
     },
-    [dateAdapter],
+    [],
   );
 
   const handleApply = useCallback(

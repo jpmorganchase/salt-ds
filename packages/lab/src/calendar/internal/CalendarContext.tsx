@@ -5,7 +5,9 @@ import type { UseCalendarReturn } from "../useCalendar";
 interface CalendarState<TDate extends DateFrameworkType>
   extends UseCalendarReturn<TDate> {}
 
-const CalendarContext = createContext<CalendarState<any> | null>(null);
+const CalendarContext = createContext<CalendarState<DateFrameworkType> | null>(
+  null,
+);
 
 if (process.env.NODE_ENV !== "production") {
   CalendarContext.displayName = "CalendarContext";
