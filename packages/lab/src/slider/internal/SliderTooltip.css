@@ -33,3 +33,7 @@
   stroke-width: var(--salt-size-border);
   width: var(--salt-size-icon);
 }
+
+.saltSliderTooltip-text {
+  white-space: nowrap;
+}
