@@ -34,7 +34,7 @@ export const SliderTooltip = ({ value, open }: SliderTooltipProps) => {
       >
         <path d="M0,0 H14 L7,7 Q7,7 7,7 Z" />
       </svg>
-      <Text>{value}</Text>
+      <Text className={withBaseName("text")}>{value}</Text>
     </div>
   );
 };

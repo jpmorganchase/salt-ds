@@ -1,3 +1,4 @@
+import { FormField, FormFieldLabel } from "@salt-ds/core";
 import { RangeSlider } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react";
 import { QAContainer, type QAContainerProps } from "docs/components";
@@ -9,63 +10,126 @@ export default {
 
 export const ExamplesGrid: StoryFn<QAContainerProps> = (props) => {
   return (
-    <QAContainer cols={1} itemPadding={4} {...props}>
-      <RangeSlider
-        max={5}
-        min={-5}
-        step={1}
-        marks={[
-          { value: -5, label: "-5" },
-          { value: -4, label: "-4" },
-          { value: -3, label: "-3" },
-          { value: -2, label: "-2" },
-          { value: -1, label: "-1" },
-          { value: 0, label: "0" },
-          { value: 1, label: "1" },
-          { value: 2, label: "2" },
-          { value: 3, label: "3" },
-          { value: 4, label: "4" },
-          { value: 5, label: "5" },
-        ]}
-        minLabel="Very low"
-        maxLabel="Very high"
-        showTicks
-      />
-      <RangeSlider
-        max={5}
-        step={1}
-        marks={[
-          { value: 0, label: "0" },
-          { value: 3, label: "3" },
-          { value: 5, label: "5" },
-        ]}
-        restrictToMarks
-      />
-      <RangeSlider
-        max={5}
-        step={1}
-        marks={[
-          { value: 0, label: "Very Low" },
-          { value: 5, label: "Very High" },
-        ]}
-        constrainLabelPosition
-      />
-      <RangeSlider
-        min={0}
-        max={100}
-        format={(value) => `${value}%`}
-        step={1}
-        minLabel="0%"
-        maxLabel="100%"
-      />
-      <RangeSlider
-        max={10}
-        min={-5}
-        step={1}
-        minLabel="0"
-        maxLabel="10"
-        disabled
-      />
+    <QAContainer cols={1} itemPadding={6} {...props}>
+      <FormField>
+        <FormFieldLabel>With inline labels</FormFieldLabel>
+        <RangeSlider minLabel="Min Label" maxLabel="Max Label" />
+      </FormField>
+      <FormField>
+        <FormFieldLabel>With marks</FormFieldLabel>
+        <RangeSlider
+          marks={[
+            { value: 0, label: "0" },
+            { value: 1, label: "1" },
+            { value: 2, label: "2" },
+            { value: 3, label: "3" },
+            { value: 4, label: "4" },
+            { value: 5, label: "5" },
+            { value: 6, label: "6" },
+            { value: 7, label: "7" },
+            { value: 8, label: "8" },
+            { value: 9, label: "9" },
+            { value: 10, label: "10" },
+          ]}
+        />
+      </FormField>
+      <FormField>
+        <FormFieldLabel>With marks and ticks</FormFieldLabel>
+        <RangeSlider
+          marks={[
+            { value: 0, label: "0" },
+            { value: 1, label: "1" },
+            { value: 2, label: "2" },
+            { value: 3, label: "3" },
+            { value: 4, label: "4" },
+            { value: 5, label: "5" },
+            { value: 6, label: "6" },
+            { value: 7, label: "7" },
+            { value: 8, label: "8" },
+            { value: 9, label: "9" },
+            { value: 10, label: "10" },
+          ]}
+          showTicks
+        />
+      </FormField>
+      <FormField>
+        <FormFieldLabel>With inline labels, marks and ticks</FormFieldLabel>
+        <RangeSlider
+          defaultValue={[3, 6]}
+          marks={[
+            { value: 0, label: "0" },
+            { value: 1, label: "1" },
+            { value: 2, label: "2" },
+            { value: 3, label: "3" },
+            { value: 4, label: "4" },
+            { value: 5, label: "5" },
+            { value: 6, label: "6" },
+            { value: 7, label: "7" },
+            { value: 8, label: "8" },
+            { value: 9, label: "9" },
+            { value: 10, label: "10" },
+          ]}
+          minLabel="Min label"
+          maxLabel="Max label"
+          showTicks
+        />
+      </FormField>
+      <FormField>
+        <FormFieldLabel>Restricted to marks</FormFieldLabel>
+        <RangeSlider
+          marks={[
+            { value: 0, label: "0" },
+            { value: 5, label: "5" },
+            { value: 6, label: "6" },
+            { value: 7, label: "7" },
+            { value: 10, label: "10" },
+          ]}
+          showTicks
+          restrictToMarks
+        />
+      </FormField>
+      <FormField>
+        <FormFieldLabel>
+          With constrained label position and ticks
+        </FormFieldLabel>
+        <RangeSlider
+          marks={[
+            { value: 0, label: "Min label" },
+            { value: 10, label: "Max label" },
+          ]}
+          constrainLabelPosition
+          showTicks
+        />
+      </FormField>
+      <FormField>
+        <FormFieldLabel>With formatting</FormFieldLabel>
+        <RangeSlider
+          marks={[
+            { value: 0, label: "0 EUR" },
+            { value: 10, label: "10 EUR" },
+          ]}
+          constrainLabelPosition
+          showTicks
+          format={(value: number) => `${value} EUR`}
+        />
+      </FormField>
+      <FormField>
+        <FormFieldLabel>With negative bounds</FormFieldLabel>
+        <RangeSlider
+          marks={[
+            { value: -5, label: "-5" },
+            { value: 5, label: "5" },
+          ]}
+          constrainLabelPosition
+          showTicks
+          min={-5}
+          max={5}
+        />
+      </FormField>
+      <FormField>
+        <FormFieldLabel>Disabled</FormFieldLabel>
+        <RangeSlider disabled />
+      </FormField>
     </QAContainer>
   );
 };
