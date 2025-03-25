@@ -20,7 +20,7 @@
   align-items: center;
   display: flex;
   flex-direction: row;
-  gap: var(--salt-spacing-50);
+  gap: var(--salt-spacing-100);
   width: 100%;
 }
 
@@ -64,7 +64,7 @@
   background: var(--slider-track-background);
   border-top-right-radius: var(--salt-palette-corner-weaker);
   border-bottom-right-radius: var(--salt-palette-corner-weaker);
-  width: calc(100% - var(--slider-progressPercentage) - (var(--salt-size-border-strong) * 2));
+  width: calc(100% - var(--slider-progressPercentage) - 1.5 * var(--salt-size-border-strong));
 }
 
 .saltSliderTrack-hasMaxTick.saltSliderTrack-rail::after {
@@ -108,61 +108,59 @@
   pointer-events: none;
 }
 
+.saltSliderTrack-ticks {
+  top: calc((var(--salt-size-base) / 2) + (var(--salt-size-bar) / 2));
+  position: absolute;
+  width: 100%;
+}
+
+.saltSliderTrack-tick {
+  background: var(--slider-track-background);
+  height: calc((var(--salt-size-selectable) - var(--salt-size-bar)) / 2);
+  position: absolute;
+  transform: translate(-50%);
+  width: var(--salt-size-border-strong);
+}
+
+.saltSliderTrack-withTicks .saltSliderTrack-tickHidden {
+  visibility: hidden;
+}
+
+.saltSliderTrack-tickSelected {
+  background: var(--slider-track-fill);
+}
+
+.saltSliderTrack-tick:first-of-type {
+  transform: unset;
+}
+
+.saltSliderTrack-tick:last-of-type {
+  transform: translateX(-100%);
+}
+
 .saltSliderTrack-marks {
   position: absolute;
   user-select: none;
   width: 100%;
-  top: calc((var(--salt-size-base) / 2) + (var(--salt-size-bar) / 2));
-}
-
-.saltSliderTrack-mark {
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  position: absolute;
-  justify-content: center;
-  left: var(--slider-mark-percentage);
-  transform: translateX(-50%);
-  gap: 4px;
 }
 
 .saltSliderTrack-markLabel {
-  white-space: nowrap;
+  color: var(--salt-content-secondary-foreground);
+  font-family: var(--salt-text-label-fontFamily);
+  font-weight: var(--salt-text-label-fontWeight);
+  font-size: var(--salt-text-label-fontSize);
   overflow: hidden;
+  position: absolute;
   text-overflow: ellipsis;
-}
-
-.saltSliderTrack-markTick {
-  height: 5px;
-  width: var(--salt-size-border-strong);
-  background: var(--slider-track-background);
-  visibility: hidden;
-}
-
-.saltSliderTrack-withMarkTicks .saltSliderTrack-markTick {
-  visibility: visible;
-}
-
-.saltSliderTrack-withMarkTicks .saltSliderTrack-markTickHidden {
-  visibility: hidden;
-}
-
-.saltSliderTrack-mark:last-of-type .saltSliderTrack-markTick {
   transform: translateX(-50%);
+  top: calc((var(--salt-size-base) / 2) - var(--salt-size-bar));
+  white-space: nowrap;
 }
 
-.saltSliderTrack-mark:first-of-type .saltSliderTrack-markTick {
-  transform: translateX(50%);
+.saltSliderTrack-constrainLabelPosition .saltSliderTrack-markLabel:first-of-type {
+  transform: translateX(0%);
 }
 
-.saltSliderTrack-markSelected {
-  background: var(--slider-track-fill);
-}
-
-.saltSliderTrack-constrainLabelPosition .saltSliderTrack-mark:first-of-type .saltSliderTrack-markLabel {
-  transform: translateX(50%);
-}
-
-.saltSliderTrack-constrainLabelPosition .saltSliderTrack-mark:last-of-type .saltSliderTrack-markLabel {
-  transform: translateX(-50%);
+.saltSliderTrack-constrainLabelPosition .saltSliderTrack-markLabel:last-of-type {
+  transform: translateX(-100%);
 }
