@@ -2,14 +2,14 @@
   --slider-track-background: var(--salt-track-borderColor);
   --slider-track-fill: var(--salt-accent-borderColor);
   --slider-progressPercentage: 0%;
+  --slider-tick-height: calc((var(--salt-size-selectable) - var(--salt-size-bar)) / 2);
   /* For range */
   --slider-progressPercentageStart: 0%;
   --slider-progressPercentageEnd: 0%;
 
-  --slider-mark-percentage: 0%;
-  --slider-tick-height: calc((var(--salt-size-selectable) - var(--salt-size-bar)) / 2);
-
   display: flex;
+  /* To wrap the marks within the boundary box */
+  margin-bottom: calc(var(--salt-size-base) / 2);
   width: 100%;
 }
 
@@ -54,7 +54,7 @@
   background: var(--slider-track-fill);
   border-top-left-radius: var(--salt-palette-corner-weaker);
   border-bottom-left-radius: var(--salt-palette-corner-weaker);
-  width: calc(var(--slider-progressPercentage) - (var(--salt-size-border-strong) / 2));
+  width: calc(var(--slider-progressPercentage) - 1.5 * var(--salt-size-border-strong));
 }
 
 .saltSliderTrack-hasMinTick.saltSliderTrack-rail::before {
@@ -74,20 +74,20 @@
 
 .saltSliderTrack-range .saltSliderTrack-rail::before {
   background: var(--slider-track-background);
-  width: calc(var(--slider-progressPercentageStart) - (var(--salt-size-border-strong) * 2));
+  width: calc(var(--slider-progressPercentageStart) - (var(--salt-size-border-strong) * 1.5));
 }
 
 .saltSliderTrack-range .saltSliderTrack-rail::after {
   background: var(--slider-track-background);
-  width: calc(100% - var(--slider-progressPercentageEnd) - (var(--salt-size-border-strong) * 2));
+  width: calc(100% - var(--slider-progressPercentageEnd) - (var(--salt-size-border-strong) * 1.5));
 }
 
 .saltSliderTrack-range .saltSliderTrack-rail .saltSliderTrack-fill {
   background: var(--slider-track-fill);
   height: 100%;
-  left: calc(var(--slider-progressPercentageStart) + (var(--salt-size-border-strong) / 2));
+  left: calc(var(--slider-progressPercentageStart) + 1.5 * var(--salt-size-border-strong));
   position: absolute;
-  width: calc(var(--slider-progressPercentageEnd) - var(--slider-progressPercentageStart) - var(--salt-size-border-strong));
+  width: calc(var(--slider-progressPercentageEnd) - var(--slider-progressPercentageStart) - var(--salt-size-border-strong) * 3);
 }
 
 .saltSliderTrack-minLabel,
