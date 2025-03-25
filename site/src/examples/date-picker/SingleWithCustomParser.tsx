@@ -1,6 +1,5 @@
 import {
   FormField,
-  FormFieldHelperText as FormHelperText,
   FormFieldLabel as FormLabel,
 } from "@salt-ds/core";
 import {
@@ -10,7 +9,7 @@ import {
 } from "@salt-ds/date-adapters";
 import {
   type DateInputSingleDetails,
-  DatePicker,
+  DatePicker, DatePickerHelperText,
   DatePickerOverlay,
   DatePickerSingleGridPanel,
   DatePickerSingleInput,
@@ -31,7 +30,6 @@ export const SingleWithCustomParser = (): ReactElement => {
     "Date format DD MMM YYYY (e.g. 09 Jun 2024) or +/-D (e.g. +7)";
   const errorHelperText = "Please enter a valid date in DD MMM YYYY format";
   const [helperText, setHelperText] = useState(defaultHelperText);
-  const [open, setOpen] = useState<boolean>(false);
   const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
     undefined,
   );
@@ -111,7 +109,6 @@ export const SingleWithCustomParser = (): ReactElement => {
       <DatePicker
         selectionVariant="single"
         onSelectionChange={handleSelectionChange}
-        onOpenChange={setOpen}
       >
         <DatePickerTrigger>
           <DatePickerSingleInput parse={customParser} />
@@ -119,8 +116,8 @@ export const SingleWithCustomParser = (): ReactElement => {
         <DatePickerOverlay>
           <DatePickerSingleGridPanel helperText={helperText} />
         </DatePickerOverlay>
+        <DatePickerHelperText>{helperText}</DatePickerHelperText>
       </DatePicker>
-      {!open ? <FormHelperText>{helperText}</FormHelperText> : null}
     </FormField>
   );
 };

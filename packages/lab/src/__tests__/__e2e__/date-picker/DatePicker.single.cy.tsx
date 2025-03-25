@@ -331,6 +331,26 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
         });
       });
 
+      it("SHOULD render helper text in the panel when opened ", () => {
+        cy.mount(<SingleWithFormField />);
+        // Verify the helper text is visible on the page
+        cy.get('[id^="helperText-"]').filter((index, element) => {
+          return !Cypress.$(element).closest('[data-floating-ui-portal]').length;
+        }).should('be.visible');
+        // Simulate opening the calendar
+        cy.findByRole("button", { name: "Open Calendar" }).realClick();
+        // Verify that the dialog is opened
+        cy.findByRole("application").should("exist");
+        // Verify the helper text is not visible on the page
+        cy.get('[id^="helperText-"]').filter((index, element) => {
+          return !Cypress.$(element).closest('[data-floating-ui-portal]').length;
+        }).should('not.be.visible');
+        // Verify the helper text has moved to the dialog panel
+        cy.get('[id^="helperText-"]').filter((index, element) => {
+          return Cypress.$(element).closest('[role="dialog"]').length > 0;
+        }).should('be.visible');
+      });
+
       it("SHOULD support custom panel with tenors", () => {
         const selectionChangeSpy = cy.stub().as("selectionChangeSpy");
         cy.mount(

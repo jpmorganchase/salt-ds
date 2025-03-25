@@ -5,7 +5,6 @@ import {
   FlexLayout,
   FormField,
   FormFieldLabel,
-  FormFieldHelperText as FormHelperText,
   FormFieldLabel as FormLabel,
   Input,
   StackLayout,
@@ -24,6 +23,7 @@ import {
   DateParserField,
   DatePicker,
   DatePickerActions,
+  DatePickerHelperText,
   type DatePickerOpenChangeReason,
   DatePickerOverlay,
   DatePickerRangeGridPanel,
@@ -668,7 +668,6 @@ export const SingleWithMinMaxDate: StoryFn<
   const { dateAdapter } = useLocalization();
   const defaultHelperText = "Select date between 15 Jan 2030 and 15 Jan 2031";
   const errorHelperText = "Please enter an in-range date in DD MMM YYYY format";
-  const [open, setOpen] = useState<boolean>(false);
   const [helperText, setHelperText] = useState(defaultHelperText);
   const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
     undefined,
@@ -720,7 +719,6 @@ export const SingleWithMinMaxDate: StoryFn<
         maxDate={maxDate}
         {...args}
         onSelectionChange={handleSelectionChange}
-        onOpenChange={setOpen}
       >
         <DatePickerTrigger>
           <DatePickerSingleInput />
@@ -730,9 +728,9 @@ export const SingleWithMinMaxDate: StoryFn<
             defaultVisibleMonth={defaultVisibleMonth}
             helperText={helperText}
           />
+          <DatePickerHelperText>{helperText}</DatePickerHelperText>
         </DatePickerOverlay>
       </DatePicker>
-      {!open ? <FormHelperText>{helperText}</FormHelperText> : null}
     </FormField>
   );
 };
@@ -743,7 +741,6 @@ export const RangeWithMinMaxDate: StoryFn<
   const { dateAdapter } = useLocalization();
   const defaultHelperText = "Select date between 15 Jan 2030 and 15 Jan 2031";
   const errorHelperText = "Please enter an in-range date in DD MMM YYYY format";
-  const [open, setOpen] = useState<boolean>(false);
   const [helperText, setHelperText] = useState(defaultHelperText);
   const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
     undefined,
@@ -820,7 +817,6 @@ export const RangeWithMinMaxDate: StoryFn<
         maxDate={maxDate}
         {...args}
         onSelectionChange={handleSelectionChange}
-        onOpenChange={setOpen}
       >
         <DatePickerTrigger>
           <DatePickerRangeInput />
@@ -832,8 +828,8 @@ export const RangeWithMinMaxDate: StoryFn<
             helperText={helperText}
           />
         </DatePickerOverlay>
+        <DatePickerHelperText>{helperText}</DatePickerHelperText>
       </DatePicker>
-      {!open ? <FormHelperText>{helperText}</FormHelperText> : null}
     </FormField>
   );
 };
@@ -844,7 +840,6 @@ export const SingleWithInitialError: StoryFn<
   const { dateAdapter } = useLocalization();
   const defaultHelperText = "Date format DD MMM YYYY (e.g. 09 Jun 2024)";
   const errorHelperText = "Please enter a valid date in DD MMM YYYY format";
-  const [open, setOpen] = useState<boolean>(false);
   const [helperText, setHelperText] = useState(errorHelperText);
   const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
     "error",
@@ -889,7 +884,6 @@ export const SingleWithInitialError: StoryFn<
         defaultSelectedDate={dateAdapter.parse("bad date", "DD MMM YYYY").date}
         {...args}
         onSelectionChange={handleSelectionChange}
-        onOpenChange={setOpen}
       >
         <DatePickerTrigger>
           <DatePickerSingleInput defaultValue="bad date" />
@@ -897,8 +891,8 @@ export const SingleWithInitialError: StoryFn<
         <DatePickerOverlay>
           <DatePickerSingleGridPanel helperText={helperText} />
         </DatePickerOverlay>
+       <DatePickerHelperText>{helperText}</DatePickerHelperText>
       </DatePicker>
-      {!open ? <FormHelperText>{helperText}</FormHelperText> : null}
     </FormField>
   );
 };
@@ -910,7 +904,6 @@ export const RangeWithInitialError: StoryFn<
   const defaultHelperText =
     "Select range DD MMM YYYY - DD MMM YYYY (e.g. 09 Jun 2024)";
   const errorHelperText = "Please enter a valid date in DD MMM YYYY format";
-  const [open, setOpen] = useState<boolean>(false);
   const [helperText, setHelperText] = useState(errorHelperText);
   const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
     "error",
@@ -983,7 +976,6 @@ export const RangeWithInitialError: StoryFn<
         }}
         {...args}
         onSelectionChange={handleSelectionChange}
-        onOpenChange={setOpen}
       >
         <DatePickerTrigger>
           <DatePickerRangeInput
@@ -996,8 +988,8 @@ export const RangeWithInitialError: StoryFn<
             defaultStartVisibleMonth={defaultStartVisibleMonth}
           />
         </DatePickerOverlay>
+        <DatePickerHelperText>{helperText}</DatePickerHelperText>
       </DatePicker>
-      {!open ? <FormHelperText>{helperText}</FormHelperText> : null}
     </FormField>
   );
 };
@@ -1009,7 +1001,6 @@ export const SingleWithFormField: StoryFn<
   const defaultHelperText = "Date format DD MMM YYYY (e.g. 09 Jun 2024)";
   const errorHelperText = "Please enter a valid date in DD MMM YYYY format";
   const [helperText, setHelperText] = useState(defaultHelperText);
-  const [open, setOpen] = useState<boolean>(false);
   const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
     undefined,
   );
@@ -1052,7 +1043,6 @@ export const SingleWithFormField: StoryFn<
         selectionVariant="single"
         {...args}
         onSelectionChange={handleSelectionChange}
-        onOpenChange={setOpen}
       >
         <DatePickerTrigger>
           <DatePickerSingleInput />
@@ -1060,8 +1050,8 @@ export const SingleWithFormField: StoryFn<
         <DatePickerOverlay>
           <DatePickerSingleGridPanel helperText={helperText} />
         </DatePickerOverlay>
+        <DatePickerHelperText>{helperText}</DatePickerHelperText>
       </DatePicker>
-      {!open ? <FormHelperText>{helperText}</FormHelperText> : null}
     </FormField>
   );
 };
@@ -1074,7 +1064,6 @@ export const RangeWithFormField: StoryFn<
     "Select range DD MMM YYYY - DD MMM YYYY (e.g. 09 Jun 2024)";
   const errorHelperText = "Please enter a valid date in DD MMM YYYY format";
   const [helperText, setHelperText] = useState(defaultHelperText);
-  const [open, setOpen] = useState<boolean>(false);
   const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
     undefined,
   );
@@ -1140,7 +1129,6 @@ export const RangeWithFormField: StoryFn<
         selectionVariant="range"
         {...args}
         onSelectionChange={handleSelectionChange}
-        onOpenChange={setOpen}
       >
         <DatePickerTrigger>
           <DatePickerRangeInput />
@@ -1148,8 +1136,8 @@ export const RangeWithFormField: StoryFn<
         <DatePickerOverlay>
           <DatePickerRangeGridPanel helperText={helperText} />
         </DatePickerOverlay>
+        <DatePickerHelperText>{helperText}</DatePickerHelperText>
       </DatePicker>
-      {!open ? <FormHelperText>{helperText}</FormHelperText> : null}
     </FormField>
   );
 };
@@ -1161,7 +1149,6 @@ export const SingleWithCustomPanel: StoryFn<
   const defaultHelperText = "Date format DD MMM YYYY (e.g. 09 Jun 2024)";
   const errorHelperText = "Please enter a valid date in DD MMM YYYY format";
   const [helperText, setHelperText] = useState(defaultHelperText);
-  const [open, setOpen] = useState<boolean>(false);
   const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
     undefined,
   );
@@ -1204,7 +1191,6 @@ export const SingleWithCustomPanel: StoryFn<
         selectionVariant="single"
         {...args}
         onSelectionChange={handleSelectionChange}
-        onOpenChange={setOpen}
       >
         <DatePickerTrigger>
           <DatePickerSingleInput />
@@ -1215,8 +1201,8 @@ export const SingleWithCustomPanel: StoryFn<
             helperText={helperText}
           />
         </DatePickerOverlay>
+        <DatePickerHelperText>{helperText}</DatePickerHelperText>
       </DatePicker>
-      {!open ? <FormHelperText>{helperText}</FormHelperText> : null}
     </FormField>
   );
 };
@@ -1229,7 +1215,6 @@ export const RangeWithCustomPanel: StoryFn<
     "Select range DD MMM YYYY - DD MMM YYYY (e.g. 09 Jun 2024)";
   const errorHelperText = "Please enter a valid date in DD MMM YYYY format";
   const [helperText, setHelperText] = useState(defaultHelperText);
-  const [open, setOpen] = useState<boolean>(false);
   const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
     undefined,
   );
@@ -1295,7 +1280,6 @@ export const RangeWithCustomPanel: StoryFn<
         selectionVariant="range"
         {...args}
         onSelectionChange={handleSelectionChange}
-        onOpenChange={setOpen}
       >
         <DatePickerTrigger>
           <DatePickerRangeInput />
@@ -1306,8 +1290,8 @@ export const RangeWithCustomPanel: StoryFn<
             helperText={helperText}
           />
         </DatePickerOverlay>
+        <DatePickerHelperText>{helperText}</DatePickerHelperText>
       </DatePicker>
-      {!open ? <FormHelperText>{helperText}</FormHelperText> : null}
     </FormField>
   );
 };
@@ -1340,7 +1324,6 @@ export const SingleWithTodayButton: StoryFn<
   const defaultHelperText = "Date format DD MMM YYYY (e.g. 09 Jun 2024)";
   const errorHelperText = "Please enter a valid date in DD MMM YYYY format";
   const [helperText, setHelperText] = useState(defaultHelperText);
-  const [open, setOpen] = useState<boolean>(false);
   const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
     undefined,
   );
@@ -1383,7 +1366,6 @@ export const SingleWithTodayButton: StoryFn<
         selectionVariant="single"
         {...args}
         onSelectionChange={handleSelectionChange}
-        onOpenChange={setOpen}
       >
         <DatePickerTrigger>
           <DatePickerSingleInput />
@@ -1404,8 +1386,8 @@ export const SingleWithTodayButton: StoryFn<
             </FlexItem>
           </FlexLayout>
         </DatePickerOverlay>
+        <DatePickerHelperText>{helperText}</DatePickerHelperText>
       </DatePicker>
-      {!open ? <FormHelperText>{helperText}</FormHelperText> : null}
     </FormField>
   );
 };
@@ -1417,7 +1399,6 @@ export const SingleWithConfirmation: StoryFn<
   const defaultHelperText = "Date format DD MMM YYYY (e.g. 09 Jun 2024)";
   const errorHelperText = "Please enter a valid date in DD MMM YYYY format";
   const applyButtonRef = useRef<HTMLButtonElement>(null);
-  const [open, setOpen] = useState<boolean>(false);
   const [helperText, setHelperText] = useState<string>(defaultHelperText);
   const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
     undefined,
@@ -1479,7 +1460,6 @@ export const SingleWithConfirmation: StoryFn<
           validationStatus,
         };
       }
-      setOpen(opening);
     },
     [helperText, validationStatus],
   );
@@ -1540,8 +1520,8 @@ export const SingleWithConfirmation: StoryFn<
             </FlexItem>
           </FlexLayout>
         </DatePickerOverlay>
+        <DatePickerHelperText>{helperText}</DatePickerHelperText>
       </DatePicker>
-      {!open ? <FormHelperText>{helperText}</FormHelperText> : null}
     </FormField>
   );
 };
@@ -1555,7 +1535,6 @@ export const RangeWithConfirmation: StoryFn<
   const errorHelperText = "Please enter a valid date in DD MMM YYYY format";
   const applyButtonRef = useRef<HTMLButtonElement>(null);
   const [helperText, setHelperText] = useState<string>(defaultHelperText);
-  const [open] = useState<boolean>(false);
   const [validationStatus, setValidationStatus] = useState<
     "error" | undefined
   >();
@@ -1699,8 +1678,8 @@ export const RangeWithConfirmation: StoryFn<
             </FlexItem>
           </FlexLayout>
         </DatePickerOverlay>
+        <DatePickerHelperText>{helperText}</DatePickerHelperText>
       </DatePicker>
-      {!open ? <FormHelperText>{helperText}</FormHelperText> : null}
     </FormField>
   );
 };
@@ -1721,7 +1700,6 @@ export const SingleWithCustomParser: StoryFn<
     "Date format DD MMM YYYY (e.g. 09 Jun 2024) or +/-D (e.g. +7)";
   const errorHelperText = "Please enter a valid date in DD MMM YYYY format";
   const [helperText, setHelperText] = useState(defaultHelperText);
-  const [open, setOpen] = useState<boolean>(false);
   const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
     undefined,
   );
@@ -1803,7 +1781,6 @@ export const SingleWithCustomParser: StoryFn<
         selectionVariant="single"
         {...args}
         onSelectionChange={handleSelectionChange}
-        onOpenChange={setOpen}
       >
         <DatePickerTrigger>
           <DatePickerSingleInput parse={customParser} />
@@ -1811,8 +1788,8 @@ export const SingleWithCustomParser: StoryFn<
         <DatePickerOverlay>
           <DatePickerSingleGridPanel helperText={helperText} />
         </DatePickerOverlay>
+        <DatePickerHelperText>{helperText}</DatePickerHelperText>
       </DatePicker>
-      {!open ? <FormHelperText>{helperText}</FormHelperText> : null}
     </FormField>
   );
 };
@@ -1832,7 +1809,6 @@ export const RangeWithCustomParser: StoryFn<
     "Date format DD MMM YYYY (e.g. 09 Jun 2024) or +/-D (e.g. +7)";
   const errorHelperText = "Please enter a valid date in DD MMM YYYY format";
   const [helperText, setHelperText] = useState(defaultHelperText);
-  const [open, setOpen] = useState<boolean>(false);
   const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
     undefined,
   );
@@ -1948,7 +1924,6 @@ export const RangeWithCustomParser: StoryFn<
         selectionVariant="range"
         {...args}
         onSelectionChange={handleSelectionChange}
-        onOpenChange={setOpen}
         selectedDate={selectedDate}
       >
         <DatePickerTrigger>
@@ -1957,8 +1932,8 @@ export const RangeWithCustomParser: StoryFn<
         <DatePickerOverlay>
           <DatePickerRangePanel />
         </DatePickerOverlay>
+        <DatePickerHelperText>{helperText}</DatePickerHelperText>
       </DatePicker>
-      {!open ? <FormHelperText>{helperText}</FormHelperText> : null}
     </FormField>
   );
 };
@@ -1978,7 +1953,6 @@ export const SingleWithUnselectableDates: StoryFn<
     "A weekday, in the format DD MMM YYYY (e.g. 09 Jun 2024)";
   const errorHelperText = "Please enter a valid date in DD MMM YYYY format";
   const [helperText, setHelperText] = useState(defaultHelperText);
-  const [open, setOpen] = useState<boolean>(false);
   const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
     undefined,
   );
@@ -2031,7 +2005,6 @@ export const SingleWithUnselectableDates: StoryFn<
         {...args}
         isDayUnselectable={isDayUnselectable}
         onSelectionChange={handleSelectionChange}
-        onOpenChange={setOpen}
       >
         <DatePickerTrigger>
           <DatePickerSingleInput />
@@ -2039,8 +2012,8 @@ export const SingleWithUnselectableDates: StoryFn<
         <DatePickerOverlay>
           <DatePickerSingleGridPanel helperText={helperText} />
         </DatePickerOverlay>
+        <DatePickerHelperText>{helperText}</DatePickerHelperText>
       </DatePicker>
-      {!open ? <FormHelperText>{helperText}</FormHelperText> : null}
     </FormField>
   );
 };
@@ -2053,7 +2026,6 @@ export const RangeWithUnselectableDates: StoryFn<
     "A weekday, in the format DD MMM YYYY (e.g. 09 Jun 2024)";
   const errorHelperText = "Please enter a valid date in DD MMM YYYY format";
   const [helperText, setHelperText] = useState(defaultHelperText);
-  const [open, setOpen] = useState<boolean>(false);
   const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
     undefined,
   );
@@ -2129,7 +2101,6 @@ export const RangeWithUnselectableDates: StoryFn<
         {...args}
         isDayUnselectable={isDayUnselectable}
         onSelectionChange={handleSelectionChange}
-        onOpenChange={setOpen}
       >
         <DatePickerTrigger>
           <DatePickerRangeInput />
@@ -2137,8 +2108,8 @@ export const RangeWithUnselectableDates: StoryFn<
         <DatePickerOverlay>
           <DatePickerRangeGridPanel helperText={helperText} />
         </DatePickerOverlay>
+        <DatePickerHelperText>{helperText}</DatePickerHelperText>
       </DatePicker>
-      {!open ? <FormHelperText>{helperText}</FormHelperText> : null}
     </FormField>
   );
 };
@@ -2151,7 +2122,6 @@ export const SingleWithDisabledDates: StoryFn<
     "A weekday, in the format DD MMM YYYY (e.g. 09 Jun 2024)";
   const errorHelperText = "Please enter a valid date in DD MMM YYYY format";
   const [helperText, setHelperText] = useState(defaultHelperText);
-  const [open, setOpen] = useState<boolean>(false);
   const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
     undefined,
   );
@@ -2204,7 +2174,6 @@ export const SingleWithDisabledDates: StoryFn<
         {...args}
         isDayDisabled={isDayDisabled}
         onSelectionChange={handleSelectionChange}
-        onOpenChange={setOpen}
       >
         <DatePickerTrigger>
           <DatePickerSingleInput />
@@ -2212,8 +2181,8 @@ export const SingleWithDisabledDates: StoryFn<
         <DatePickerOverlay>
           <DatePickerSingleGridPanel helperText={helperText} />
         </DatePickerOverlay>
+        <DatePickerHelperText>{helperText}</DatePickerHelperText>
       </DatePicker>
-      {!open ? <FormHelperText>{helperText}</FormHelperText> : null}
     </FormField>
   );
 };
@@ -2226,7 +2195,6 @@ export const RangeWithDisabledDates: StoryFn<
     "A weekday, in the format DD MMM YYYY (e.g. 09 Jun 2024)";
   const errorHelperText = "Please enter a valid date in DD MMM YYYY format";
   const [helperText, setHelperText] = useState(defaultHelperText);
-  const [open, setOpen] = useState<boolean>(false);
   const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
     undefined,
   );
@@ -2302,7 +2270,6 @@ export const RangeWithDisabledDates: StoryFn<
         {...args}
         isDayDisabled={isDayDisabled}
         onSelectionChange={handleSelectionChange}
-        onOpenChange={setOpen}
       >
         <DatePickerTrigger>
           <DatePickerRangeInput />
@@ -2310,8 +2277,8 @@ export const RangeWithDisabledDates: StoryFn<
         <DatePickerOverlay>
           <DatePickerRangeGridPanel helperText={helperText} />
         </DatePickerOverlay>
+        <DatePickerHelperText>{helperText}</DatePickerHelperText>
       </DatePicker>
-      {!open ? <FormHelperText>{helperText}</FormHelperText> : null}
     </FormField>
   );
 };
@@ -2324,7 +2291,6 @@ export const SingleWitHighlightedDates: StoryFn<
     "A weekday, in the format DD MMM YYYY (e.g. 09 Jun 2024)";
   const errorHelperText = "Please enter a valid date in DD MMM YYYY format";
   const [helperText, setHelperText] = useState(defaultHelperText);
-  const [open, setOpen] = useState<boolean>(false);
   const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
     undefined,
   );
@@ -2377,7 +2343,6 @@ export const SingleWitHighlightedDates: StoryFn<
         {...args}
         isDayHighlighted={isDayHighlighted}
         onSelectionChange={handleSelectionChange}
-        onOpenChange={setOpen}
       >
         <DatePickerTrigger>
           <DatePickerSingleInput />
@@ -2385,8 +2350,8 @@ export const SingleWitHighlightedDates: StoryFn<
         <DatePickerOverlay>
           <DatePickerSingleGridPanel helperText={helperText} />
         </DatePickerOverlay>
+        <DatePickerHelperText>{helperText}</DatePickerHelperText>
       </DatePicker>
-      {!open ? <FormHelperText>{helperText}</FormHelperText> : null}
     </FormField>
   );
 };
@@ -2399,7 +2364,6 @@ export const RangeWithHighlightedDates: StoryFn<
     "A weekday, in the format DD MMM YYYY (e.g. 09 Jun 2024)";
   const errorHelperText = "Please enter a valid date in DD MMM YYYY format";
   const [helperText, setHelperText] = useState(defaultHelperText);
-  const [open, setOpen] = useState<boolean>(false);
   const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
     undefined,
   );
@@ -2475,7 +2439,6 @@ export const RangeWithHighlightedDates: StoryFn<
         {...args}
         isDayHighlighted={isDayHighlighted}
         onSelectionChange={handleSelectionChange}
-        onOpenChange={setOpen}
       >
         <DatePickerTrigger>
           <DatePickerRangeInput />
@@ -2483,8 +2446,8 @@ export const RangeWithHighlightedDates: StoryFn<
         <DatePickerOverlay>
           <DatePickerRangeGridPanel helperText={helperText} />
         </DatePickerOverlay>
+        <DatePickerHelperText>{helperText}</DatePickerHelperText>
       </DatePicker>
-      {!open ? <FormHelperText>{helperText}</FormHelperText> : null}
     </FormField>
   );
 };
@@ -2508,7 +2471,6 @@ export const RangeWithLocaleEsES: StoryFn<
   const defaultHelperText = `Locale ${isDateFns ? dateAdapter.locale.code : dateAdapter.locale}`;
   const errorHelperText = "Please enter a valid date in DD MMM YYYY format";
   const [helperText, setHelperText] = useState(defaultHelperText);
-  const [open, setOpen] = useState<boolean>(false);
   const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
     undefined,
   );
@@ -2574,7 +2536,6 @@ export const RangeWithLocaleEsES: StoryFn<
         selectionVariant={"range"}
         {...args}
         onSelectionChange={handleSelectionChange}
-        onOpenChange={setOpen}
       >
         <DatePickerTrigger>
           <DatePickerRangeInput />
@@ -2582,8 +2543,8 @@ export const RangeWithLocaleEsES: StoryFn<
         <DatePickerOverlay>
           <DatePickerRangePanel helperText={helperText} />
         </DatePickerOverlay>
+        <DatePickerHelperText>{helperText}</DatePickerHelperText>
       </DatePicker>
-      {!open ? <FormHelperText>{helperText}</FormHelperText> : null}
     </FormField>
   );
 };
@@ -2607,7 +2568,6 @@ export const SingleWithLocaleZhCN: StoryFn<
   const defaultHelperText = `Locale ${isDateFns ? dateAdapter.locale.code : dateAdapter.locale}`;
   const errorHelperText = "Please enter a valid date in DD MMM YYYY format";
   const [helperText, setHelperText] = useState(defaultHelperText);
-  const [open, setOpen] = useState<boolean>(false);
   const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
     undefined,
   );
@@ -2659,7 +2619,6 @@ export const SingleWithLocaleZhCN: StoryFn<
         selectionVariant={"single"}
         {...args}
         onSelectionChange={handleSelectionChange}
-        onOpenChange={setOpen}
       >
         <DatePickerTrigger>
           <DatePickerSingleInput
@@ -2674,8 +2633,8 @@ export const SingleWithLocaleZhCN: StoryFn<
             CalendarNavigationProps={{ formatMonth: "MMMM" }}
           />
         </DatePickerOverlay>
+        <DatePickerHelperText>{helperText}</DatePickerHelperText>
       </DatePicker>
-      {!open ? <FormHelperText>{helperText}</FormHelperText> : null}
     </FormField>
   );
 };
@@ -2687,7 +2646,6 @@ export const SingleBordered: StoryFn<
   const defaultHelperText = "Date format DD MMM YYYY (e.g. 09 Jun 2024)";
   const errorHelperText = "Please enter a valid date in DD MMM YYYY format";
   const [helperText, setHelperText] = useState(defaultHelperText);
-  const [open, setOpen] = useState<boolean>(false);
   const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
     undefined,
   );
@@ -2730,7 +2688,6 @@ export const SingleBordered: StoryFn<
         selectionVariant="single"
         {...args}
         onSelectionChange={handleSelectionChange}
-        onOpenChange={setOpen}
       >
         <DatePickerTrigger>
           <DatePickerSingleInput bordered />
@@ -2744,8 +2701,8 @@ export const SingleBordered: StoryFn<
             }}
           />
         </DatePickerOverlay>
+        <DatePickerHelperText>{helperText}</DatePickerHelperText>
       </DatePicker>
-      {!open ? <FormHelperText>{helperText}</FormHelperText> : null}
     </FormField>
   );
 };
@@ -2757,7 +2714,6 @@ export const RangeBordered: StoryFn<
   const defaultHelperText = "Date format DD MMM YYYY (e.g. 09 Jun 2024)";
   const errorHelperText = "Please enter a valid date in DD MMM YYYY format";
   const [helperText, setHelperText] = useState(defaultHelperText);
-  const [open, setOpen] = useState<boolean>(false);
   const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
     undefined,
   );
@@ -2823,7 +2779,6 @@ export const RangeBordered: StoryFn<
         selectionVariant="range"
         {...args}
         onSelectionChange={handleSelectionChange}
-        onOpenChange={setOpen}
       >
         <DatePickerTrigger>
           <DatePickerRangeInput bordered />
@@ -2841,8 +2796,8 @@ export const RangeBordered: StoryFn<
             }}
           />
         </DatePickerOverlay>
+        <DatePickerHelperText>{helperText}</DatePickerHelperText>
       </DatePicker>
-      {!open ? <FormHelperText>{helperText}</FormHelperText> : null}
     </FormField>
   );
 };

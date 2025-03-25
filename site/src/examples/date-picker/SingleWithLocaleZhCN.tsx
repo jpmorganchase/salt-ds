@@ -1,12 +1,11 @@
 import {
   FormField,
-  FormFieldHelperText as FormHelperText,
   FormFieldLabel as FormLabel,
 } from "@salt-ds/core";
 import type { DateFrameworkType } from "@salt-ds/date-adapters";
 import {
   type DateInputSingleDetails,
-  DatePicker,
+  DatePicker, DatePickerHelperText,
   DatePickerOverlay,
   DatePickerSingleGridPanel,
   type DatePickerSingleGridPanelProps,
@@ -44,7 +43,6 @@ export const SingleWithLocaleZhCN = (): ReactElement => {
   const defaultHelperText = `Locale ${isDateFns ? dateAdapter.locale.code : dateAdapter.locale}`;
   const errorHelperText = "Please enter a valid date in DD MMM YYYY format";
   const [helperText, setHelperText] = useState(defaultHelperText);
-  const [open, setOpen] = useState<boolean>(false);
   const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
     undefined,
   );
@@ -94,7 +92,6 @@ export const SingleWithLocaleZhCN = (): ReactElement => {
       <DatePicker
         selectionVariant={"single"}
         onSelectionChange={handleSelectionChange}
-        onOpenChange={setOpen}
       >
         <DatePickerTrigger>
           <DatePickerSingleInput
@@ -109,8 +106,8 @@ export const SingleWithLocaleZhCN = (): ReactElement => {
             CalendarNavigationProps={{ formatMonth: "MMMM" }}
           />
         </DatePickerOverlay>
+        <DatePickerHelperText>{helperText}</DatePickerHelperText>
       </DatePicker>
-      {!open ? <FormHelperText>{helperText}</FormHelperText> : null}
     </FormField>
   );
 };

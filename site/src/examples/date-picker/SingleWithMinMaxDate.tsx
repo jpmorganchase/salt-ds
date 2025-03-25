@@ -1,12 +1,11 @@
 import {
   FormField,
-  FormFieldHelperText as FormHelperText,
   FormFieldLabel as FormLabel,
 } from "@salt-ds/core";
 import type { DateFrameworkType } from "@salt-ds/date-adapters";
 import {
   type DateInputSingleDetails,
-  DatePicker,
+  DatePicker, DatePickerHelperText,
   DatePickerOverlay,
   DatePickerSingleGridPanel,
   DatePickerSingleInput,
@@ -25,7 +24,6 @@ export const SingleWithMinMaxDate = (): ReactElement => {
   const { dateAdapter } = useLocalization();
   const defaultHelperText = "Select date between 15/01/2030 and 15/01/2031";
   const errorHelperText = "Please enter an in-range date in DD MMM YYYY format";
-  const [open, setOpen] = useState<boolean>(false);
   const [helperText, setHelperText] = useState(defaultHelperText);
   const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
     undefined,
@@ -75,7 +73,6 @@ export const SingleWithMinMaxDate = (): ReactElement => {
         minDate={minDate}
         maxDate={maxDate}
         onSelectionChange={handleSelectionChange}
-        onOpenChange={setOpen}
       >
         <DatePickerTrigger>
           <DatePickerSingleInput />
@@ -86,8 +83,8 @@ export const SingleWithMinMaxDate = (): ReactElement => {
             helperText={helperText}
           />
         </DatePickerOverlay>
+        <DatePickerHelperText>{helperText}</DatePickerHelperText>
       </DatePicker>
-      {!open ? <FormHelperText>{helperText}</FormHelperText> : null}
     </FormField>
   );
 };

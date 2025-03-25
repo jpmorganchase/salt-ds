@@ -1,12 +1,11 @@
 import {
   FormField,
-  FormFieldHelperText as FormHelperText,
   FormFieldLabel as FormLabel,
 } from "@salt-ds/core";
 import type { DateFrameworkType } from "@salt-ds/date-adapters";
 import {
   type DateInputRangeDetails,
-  DatePicker,
+  DatePicker, DatePickerHelperText,
   DatePickerOverlay,
   DatePickerRangeGridPanel,
   DatePickerRangeInput,
@@ -23,7 +22,6 @@ export const RangeWithDisabledDates = (): ReactElement => {
     "A weekday, in the format DD MMM YYYY (e.g. 09 Jun 2024)";
   const errorHelperText = "Please enter a valid date in DD MMM YYYY format";
   const [helperText, setHelperText] = useState(defaultHelperText);
-  const [open, setOpen] = useState<boolean>(false);
   const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
     undefined,
   );
@@ -101,7 +99,6 @@ export const RangeWithDisabledDates = (): ReactElement => {
         selectionVariant="range"
         isDayDisabled={isDayDisabled}
         onSelectionChange={handleSelectionChange}
-        onOpenChange={setOpen}
       >
         <DatePickerTrigger>
           <DatePickerRangeInput />
@@ -109,8 +106,8 @@ export const RangeWithDisabledDates = (): ReactElement => {
         <DatePickerOverlay>
           <DatePickerRangeGridPanel helperText={helperText} />
         </DatePickerOverlay>
+        <DatePickerHelperText>{helperText}</DatePickerHelperText>
       </DatePicker>
-      {!open ? <FormHelperText>{helperText}</FormHelperText> : null}
     </FormField>
   );
 };
