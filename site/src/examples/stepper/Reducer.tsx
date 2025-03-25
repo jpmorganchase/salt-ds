@@ -5,7 +5,7 @@ import {
   Step,
   type StepRecord,
   Stepper,
-  useStepperReducer,
+  useStepReducer,
 } from "@salt-ds/core";
 
 const initialSteps = [
@@ -15,7 +15,7 @@ const initialSteps = [
 ] as StepRecord[];
 
 export function Reducer() {
-  const [state, dispatch] = useStepperReducer(initialSteps);
+  const [state, dispatch] = useStepReducer(initialSteps);
 
   return (
     <StackLayout style={{ minWidth: "240px" }}>

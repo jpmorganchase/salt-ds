@@ -6,14 +6,18 @@ import {
   SegmentedButtonGroup,
   StackLayout,
   Step,
+  type StepProps,
   type StepRecord,
+  type StepReducerDispatch,
   Stepper,
   Text,
   Tooltip,
-  useStepperReducer,
+  useStepReducer,
 } from "@salt-ds/core";
 import type { Meta, StoryFn } from "@storybook/react";
-import { useEffect, useMemo } from "react";
+import { useMemo } from "react";
+
+import "./stepper.stories.css";
 
 export default {
   title: "Core/Stepper",
@@ -64,87 +68,6 @@ export const HorizontalLongText: StoryFn<typeof Stepper> = () => {
           status="warning"
         />
       </Stepper>
-    </StackLayout>
-  );
-};
-
-export const HorizontalWithLinks: StoryFn<typeof Stepper> = () => {
-  const initialState: StepRecord[] = useMemo(
-    () => [
-      { id: "step-1", label: "Step 1" },
-      { id: "step-2", label: "Step 2" },
-      { id: "step-3", label: "Step 3" },
-      { id: "step-4", label: "Step 4" },
-    ],
-    [],
-  );
-
-  const [state, dispatch] = useStepperReducer(initialState, {
-    activeStepId: "step-1-3-2",
-  });
-
-  return (
-    <StackLayout style={{ width: 320, alignItems: "center" }}>
-      <Stepper>
-        {state.steps.map((step) => (
-          <Step
-            key={step.id}
-            {...step}
-            render={(props) => {
-              if (props.stage === "completed") {
-                return (
-                  <Tooltip content={"reset to first step"} placement={"bottom"}>
-                    <Link
-                      tabIndex={0}
-                      aria-label="return to first step"
-                      className="saltStepAction"
-                      onKeyDown={(event) => {
-                        if (event.key === "Enter") {
-                          dispatch({ type: "goto", stepId: "step-1" });
-                        }
-                      }}
-                      onClick={() =>
-                        dispatch({ type: "goto", stepId: "step-1" })
-                      }
-                    >
-                      {props.children}
-                    </Link>
-                  </Tooltip>
-                );
-              }
-              return <>{props.children}</>;
-            }}
-          />
-        ))}
-      </Stepper>
-      <SegmentedButtonGroup>
-        <Button
-          onClick={() => {
-            dispatch({ type: "previous" });
-          }}
-        >
-          Previous
-        </Button>
-        <Button
-          onClick={() => {
-            dispatch({ type: "next" });
-          }}
-        >
-          Next
-        </Button>
-      </SegmentedButtonGroup>
-      <SegmentedButtonGroup>
-        <Button onClick={() => dispatch({ type: "status/error" })}>
-          Error
-        </Button>
-        <Button onClick={() => dispatch({ type: "status/warning" })}>
-          Warning
-        </Button>
-        <Button onClick={() => dispatch({ type: "status/clear" })}>
-          Clear
-        </Button>
-        <Button onClick={() => dispatch({ type: "reset" })}>Reset</Button>
-      </SegmentedButtonGroup>
     </StackLayout>
   );
 };
@@ -204,7 +127,7 @@ export const VerticalDepth1: StoryFn<typeof Stepper> = () => {
         <Step
           id="step-1"
           label="Step 1"
-          description="completed"
+          description="Description text"
           stage="completed"
         >
           <Step id="step-1-1" label="Step 1.1" stage="completed" />
@@ -277,124 +200,33 @@ export const VerticalDepth2 = () => {
   );
 };
 
-export const VerticalWithLinks: StoryFn<typeof Stepper> = () => {
-  const initialState: StepRecord[] = useMemo(
-    () => [
-      {
-        id: "step-1",
-        label: "Step 1",
-        defaultExpanded: true,
-        substeps: [
-          { id: "step-1-1", label: "Step 1.1" },
-          { id: "step-1-2", label: "Step 1.2" },
-          {
-            id: "step-1-3",
-            label: "Step 1.3",
-            defaultExpanded: true,
-            substeps: [
-              { id: "step-1-3-1", label: "Step 1.3.1" },
-              { id: "step-1-3-2", label: "Step 1.3.2" },
-              {
-                id: "step-1-3-3",
-                label: "Step 1.3.3",
-                description: "This is just a description text",
-              },
-            ],
-          },
-          { id: "step-1-4", label: "Step 1.4" },
-        ],
-      },
-      { id: "step-2", label: "Step 2" },
-      { id: "step-3", label: "Step 3" },
-    ],
-    [],
-  );
-
-  const [state, dispatch] = useStepperReducer(initialState, {
-    activeStepId: "step-1-3-2",
-  });
-
+export const StageStatus: StoryFn<typeof Stepper> = () => {
   return (
-    <StackLayout style={{ width: 240, alignItems: "center" }}>
-      <Stepper orientation={"vertical"}>
-        {state.steps.map((step) => (
-          <Step
-            key={step.id}
-            {...step}
-            render={(props) => {
-              if (props.stage === "completed") {
-                return (
-                  <Tooltip content={"reset to first step"} placement={"right"}>
-                    <Link
-                      tabIndex={0}
-                      aria-label="return to first step"
-                      className="saltStepAction"
-                      onKeyDown={(event) => {
-                        if (event.key === "Enter") {
-                          dispatch({ type: "goto", stepId: "step-1" });
-                        }
-                      }}
-                      onClick={() =>
-                        dispatch({ type: "goto", stepId: "step-1" })
-                      }
-                    >
-                      {props.children}
-                    </Link>
-                  </Tooltip>
-                );
-              }
-              return <>{props.children}</>;
-            }}
-          />
-        ))}
+    <StackLayout
+      style={{
+        minWidth: "640px",
+        width: "100%",
+      }}
+    >
+      <Stepper>
+        <Step label="Pending" description="stage" stage="pending" />
+        <Step label="Inprogress" description="stage" stage="inprogress" />
+        <Step label="Active" description="stage" stage="active" />
+        <Step label="Completed" description="stage" stage="completed" />
+        <Step label="Locked" description="stage" stage="locked" />
+        <Step label="Error" description="status" status="error" />
+        <Step label="Warning" description="status" status="warning" />
       </Stepper>
-      <SegmentedButtonGroup>
-        <Button
-          onClick={() => {
-            dispatch({ type: "previous" });
-          }}
-        >
-          Previous
-        </Button>
-        <Button
-          onClick={() => {
-            dispatch({ type: "next" });
-          }}
-        >
-          Next
-        </Button>
-      </SegmentedButtonGroup>
-      <SegmentedButtonGroup>
-        <Button onClick={() => dispatch({ type: "status/error" })}>
-          Error
-        </Button>
-        <Button onClick={() => dispatch({ type: "status/warning" })}>
-          Warning
-        </Button>
-        <Button onClick={() => dispatch({ type: "status/clear" })}>
-          Clear
-        </Button>
-        <Button onClick={() => dispatch({ type: "reset" })}>Reset</Button>
-      </SegmentedButtonGroup>
     </StackLayout>
   );
 };
 
-export const Controlled: StoryFn<typeof Stepper> = () => {
-  const [state, dispatch] = useStepperReducer([
-    { id: "step-1", label: "Step 1", stage: "active" },
-    { id: "step-2", label: "Step 2" },
+export const Reducer: StoryFn<typeof Stepper> = () => {
+  const [state, dispatch] = useStepReducer([
+    { id: "step-1", label: "Step 1" },
+    { id: "step-2", label: "Step 2", stage: "active" }, // <- notice active
     { id: "step-3", label: "Step 3" },
   ]);
-
-  function handleNext() {
-    console.log("Before", state);
-    dispatch({ type: "next" });
-  }
-
-  useEffect(() => {
-    console.log("After", state);
-  }, [state]);
 
   return (
     <StackLayout style={{ width: 320, alignItems: "center" }}>
@@ -413,13 +245,21 @@ export const Controlled: StoryFn<typeof Stepper> = () => {
             Previous
           </Button>
         )}
-        {!state.ended && <Button onClick={handleNext}>Next</Button>}
+        {!state.ended && (
+          <Button
+            onClick={() => {
+              dispatch({ type: "next" });
+            }}
+          >
+            Next
+          </Button>
+        )}
       </FlexLayout>
     </StackLayout>
   );
 };
 
-export const ControlledContent: StoryFn<typeof Stepper> = () => {
+export const ReducerContent: StoryFn<typeof Stepper> = () => {
   const stepIdToElement = useMemo(
     () => ({
       "step-1": <Text key="step-1-content">Step 1 Content</Text>,
@@ -430,7 +270,7 @@ export const ControlledContent: StoryFn<typeof Stepper> = () => {
     [],
   );
 
-  const [state, dispatch] = useStepperReducer([
+  const [state, dispatch] = useStepReducer([
     { id: "step-1", label: "Step 1", stage: "active" },
     { id: "step-2", label: "Step 2" },
     { id: "step-3", label: "Step 3" },
@@ -471,27 +311,6 @@ export const ControlledContent: StoryFn<typeof Stepper> = () => {
   );
 };
 
-export const StageStatus: StoryFn<typeof Stepper> = () => {
-  return (
-    <StackLayout
-      style={{
-        minWidth: "640px",
-        width: "100%",
-      }}
-    >
-      <Stepper>
-        <Step label="Pending" description="stage" stage="pending" />
-        <Step label="Inprogress" description="stage" stage="inprogress" />
-        <Step label="Active" description="stage" stage="active" />
-        <Step label="Completed" description="stage" stage="completed" />
-        <Step label="Locked" description="stage" stage="locked" />
-        <Step label="Error" description="status" status="error" />
-        <Step label="Warning" description="status" status="warning" />
-      </Stepper>
-    </StackLayout>
-  );
-};
-
 export const ReducerAdvanced: StoryFn<typeof Stepper> = () => {
   const initialState: StepRecord[] = useMemo(
     () => [
@@ -525,7 +344,7 @@ export const ReducerAdvanced: StoryFn<typeof Stepper> = () => {
     [],
   );
 
-  const [state, dispatch] = useStepperReducer(initialState, {
+  const [state, dispatch] = useStepReducer(initialState, {
     activeStepId: "step-1-3-2",
   });
 
@@ -534,6 +353,134 @@ export const ReducerAdvanced: StoryFn<typeof Stepper> = () => {
       <Stepper orientation="vertical">
         {state.steps.map((step) => (
           <Step key={step.id} {...step} />
+        ))}
+      </Stepper>
+      <SegmentedButtonGroup>
+        <Button
+          onClick={() => {
+            dispatch({ type: "previous" });
+          }}
+        >
+          Previous
+        </Button>
+        <Button
+          onClick={() => {
+            dispatch({ type: "next" });
+          }}
+        >
+          Next
+        </Button>
+      </SegmentedButtonGroup>
+      <SegmentedButtonGroup>
+        <Button onClick={() => dispatch({ type: "status/error" })}>
+          Error
+        </Button>
+        <Button onClick={() => dispatch({ type: "status/warning" })}>
+          Warning
+        </Button>
+        <Button onClick={() => dispatch({ type: "status/clear" })}>
+          Clear
+        </Button>
+        <Button onClick={() => dispatch({ type: "reset" })}>Reset</Button>
+      </SegmentedButtonGroup>
+    </StackLayout>
+  );
+};
+
+export const ReducerLinks: StoryFn<typeof Stepper> = () => {
+  // keep the LinkStepProps outside
+  interface LinkStepProps extends StepProps {
+    id: string;
+    dispatch: StepReducerDispatch;
+  }
+
+  // keep the LinkStep outside
+  function LinkStep({
+    id,
+    label: labelProp,
+    stage,
+    substeps,
+    children,
+    dispatch,
+    ...props
+  }: LinkStepProps) {
+    const label = useMemo(() => {
+      if (stage !== "completed") return labelProp;
+      if (children || substeps) return labelProp;
+
+      const ariaLabel = `Go back to ${labelProp}`;
+
+      return (
+        <Tooltip content={ariaLabel} placement="bottom">
+          <Link
+            role="button"
+            tabIndex={0}
+            onClick={() => {
+              dispatch({
+                type: "goto",
+                payload: id,
+              });
+            }}
+            aria-label={ariaLabel}
+            className="linkStep-link"
+          >
+            {labelProp}
+          </Link>
+        </Tooltip>
+      );
+    }, [id, labelProp, substeps, children, stage, dispatch]);
+
+    return (
+      <Step id={id} label={label} stage={stage} {...props}>
+        {children ||
+          substeps?.map((step) => (
+            <LinkStep key={step.id} dispatch={dispatch} {...step} />
+          ))}
+      </Step>
+    );
+  }
+
+  const initialState: StepRecord[] = useMemo(
+    () => [
+      {
+        id: "step-1",
+        label: "Step 1",
+        defaultExpanded: true,
+        substeps: [
+          { id: "step-1-1", label: "Step 1.1" },
+          { id: "step-1-2", label: "Step 1.2" },
+          {
+            id: "step-1-3",
+            label: "Step 1.3",
+            defaultExpanded: true,
+            substeps: [
+              { id: "step-1-3-1", label: "Step 1.3.1" },
+              { id: "step-1-3-2", label: "Step 1.3.2" },
+              {
+                id: "step-1-3-3",
+                label: "Step 1.3.3",
+                description: "This is just a description text",
+              },
+            ],
+          },
+          { id: "step-1-4", label: "Step 1.4" },
+        ],
+      },
+      { id: "step-2", label: "Step 2" },
+      { id: "step-3", label: "Step 3" },
+    ],
+    [],
+  );
+
+  const [state, dispatch] = useStepReducer(initialState, {
+    activeStepId: "step-1-3-2",
+  });
+
+  return (
+    <StackLayout style={{ width: 240, alignItems: "center" }}>
+      <Stepper orientation="vertical">
+        {state.steps.map((step) => (
+          <LinkStep key={step.id} dispatch={dispatch} {...step} />
         ))}
       </Stepper>
       <SegmentedButtonGroup>

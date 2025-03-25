@@ -8,8 +8,6 @@
     $ref: ./#/data
 ---
 
-<LivePreviewControls>
-
 ## Orientation
 
 ### Horizontal (default)
@@ -41,28 +39,14 @@ for the horizontal orientation.
 
 <LivePreview componentName="stepper" exampleName="NestedSteps" />
 
-## Horizontal With Links
-
-To enable a user to interact with the steps, provide a `render` function to
-replace the label with a [Link](../link).
-
-<LivePreview componentName="stepper" exampleName="HorizontalWithLinks" />
-
-## Vertical With Links
-
-To enable a user to interact with the steps, provide a `render` function to
-replace the label with a [Link](../link).
-
-<LivePreview componentName="stepper" exampleName="VerticalWithLinks" />
-
 ## Controlled Stepper
 
 The `Stepper` and `Step` component are primarily presentational components.
-If you want to control the state of the `Stepper` you can utilize the `useStepperReducer` hook.
+If you want to control the state of the `Stepper` you can utilize the `useStepReducer` hook.
 
 <LivePreview componentName="stepper" exampleName="Reducer" />
 
-The `useStepperReducer` hook provides intelligent management of step stages in a linear process.
+The `useStepReducer` hook provides intelligent management of step stages in a linear process.
 
 <LivePreview componentName="stepper" exampleName="ReducerAdvanced" />
 
@@ -88,7 +72,7 @@ Here's how it works:
   - Supported action types include:
     - `'next'`: Move to the next step.
     - `'previous'`: Move to the previous step.
-    - `'warning'`: Set the status of the active step to `'warning'`.
-    - `'error'`: Set the status of the active step to `'error'`.
-    - `'clear'`: Reset the status of the active step to `undefined`.
+    - `'status/warning'`: Set the status of the active step to `'warning'`.
+    - `'status/error'`: Set the status of the active step to `'error'`.
+    - `'status/clear'`: Reset the status of the active step to `undefined`.
     - `'goto'`: Set the `activeStep`
