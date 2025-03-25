@@ -445,7 +445,7 @@ export const WithInputAndInlineLabels: StoryFn<RangeSliderProps> = () => {
   );
 };
 
-export const WithInputAndMarks: StoryFn<RangeSliderProps> = () => {
+export const WithInputAndMarksAndTicks: StoryFn<RangeSliderProps> = () => {
   const [value, setValue] = useState<[number, number]>([-20, 30]);
   const [minInputValue, setMinInputValue] = useState<string | number>(value[0]);
   const [maxInputValue, setMaxInputValue] = useState<string | number>(value[1]);
@@ -511,6 +511,7 @@ export const WithInputAndMarks: StoryFn<RangeSliderProps> = () => {
               label: "50",
             },
           ]}
+          showTicks
         />
         <Input
           value={maxInputValue}
