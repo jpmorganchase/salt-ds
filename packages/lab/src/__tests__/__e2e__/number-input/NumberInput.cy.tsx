@@ -96,7 +96,7 @@ describe("Number Input", () => {
     cy.findByRole("spinbutton").should("have.value", "3.15");
   });
 
-  it("increments specified `step` and `stepBlock` value when using keyboards", () => {
+  it("increments specified `step` and `stepMultiplier` value when using keyboards", () => {
     cy.mount(
       <Default defaultValue={10} step={10} stepMultiplier={10} max={2000} />,
     );
@@ -124,7 +124,7 @@ describe("Number Input", () => {
     cy.findByRole("spinbutton").should("have.value", "-0.01");
   });
 
-  it("decrements specified `step` and `stepBlock` value when using keyboards", () => {
+  it("decrements specified `step` and `stepMultiplier` value when using keyboards", () => {
     cy.mount(
       <Default defaultValue={10} step={10} stepMultiplier={10} min={-2000} />,
     );
