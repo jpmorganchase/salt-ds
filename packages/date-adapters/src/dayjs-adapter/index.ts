@@ -74,6 +74,7 @@ export class AdapterDayjs implements SaltDateAdapter<Dayjs, string> {
    * @param date
    * @private
    */
+  // biome-ignore lint/suspicious/noExplicitAny: date object
   private isDayjs(date: any): date is Dayjs {
     return date instanceof this.dayjs().constructor;
   }
@@ -235,6 +236,7 @@ export class AdapterDayjs implements SaltDateAdapter<Dayjs, string> {
    * @param date - The Day.js date object to check.
    * @returns True if the date is valid date object, false otherwise.
    */
+  // biome-ignore lint/suspicious/noExplicitAny: date object
   public isValid(date: any): date is Dayjs {
     return this.isDayjs(date) ? date.isValid() : false;
   }

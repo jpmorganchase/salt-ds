@@ -126,6 +126,7 @@ export interface DateInputRangeProps<TDate extends DateFrameworkType>
   /**
    * Locale for date formatting and parsing
    */
+  // biome-ignore lint/suspicious/noExplicitAny: locale is date framework dependent
   locale?: any;
   /**
    * Parser callback, if not using the adapter's parser
@@ -138,6 +139,7 @@ export interface DateInputRangeProps<TDate extends DateFrameworkType>
     value: string,
     field: DateParserField,
     format: string,
+    // biome-ignore lint/suspicious/noExplicitAny: locale is date framework dependent
     locale?: any,
   ) => ParserResult<TDate>;
   /**
@@ -186,7 +188,7 @@ export interface DateInputRangeProps<TDate extends DateFrameworkType>
 
 export const DateInputRange = forwardRef<
   HTMLDivElement,
-  DateInputRangeProps<any>
+  DateInputRangeProps<DateFrameworkType>
 >(
   <TDate extends DateFrameworkType>(
     props: DateInputRangeProps<TDate>,
@@ -272,7 +274,7 @@ export const DateInputRange = forwardRef<
         startDate,
         endDate,
       };
-    }, [defaultValue, dateAdapter, parseProp, format]);
+    }, [defaultValue, parseDateValue]);
 
     const [date, setDate] = useControlled({
       controlled: dateProp,
@@ -335,7 +337,7 @@ export const DateInputRange = forwardRef<
       return newDateValue;
     };
 
-    // Update date string value when selected date changes
+    // biome-ignore lint/correctness/useExhaustiveDependencies: Update date string value ONLY when selected date changes, not when date string itself change
     useEffect(() => {
       setDateValueFromDate(date);
     }, [

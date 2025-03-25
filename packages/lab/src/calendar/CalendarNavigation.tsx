@@ -173,18 +173,12 @@ function useCalendarNavigation<TDate extends DateFrameworkType>() {
       }
       setVisibleMonth(event, newMonth);
     },
-    [
-      dateAdapter,
-      isOutsideAllowedYears,
-      isOutsideAllowedMonths,
-      setVisibleMonth,
-      visibleMonth,
-    ],
+    [dateAdapter, isOutsideAllowedMonths, setVisibleMonth, visibleMonth],
   );
 
   const months: TDate[] = useMemo(
     () => generateMonthsForYear<TDate>(dateAdapter, visibleMonth),
-    [visibleMonth],
+    [dateAdapter, visibleMonth],
   );
 
   const years: TDate[] = useMemo(
@@ -271,7 +265,7 @@ function OptionWithTooltip<TDate extends DateFrameworkType>({
 
 export const CalendarNavigation = forwardRef<
   HTMLDivElement,
-  CalendarNavigationProps<any>
+  CalendarNavigationProps<DateFrameworkType>
 >(
   <TDate extends DateFrameworkType>(
     props: CalendarNavigationProps<TDate>,
@@ -345,7 +339,7 @@ export const CalendarNavigation = forwardRef<
         });
         moveToMonth(event, newVisibleMonth);
       },
-      [moveToMonth, visibleMonth],
+      [dateAdapter, moveToMonth, visibleMonth],
     );
 
     const formatMonth = useCallback(
@@ -357,7 +351,7 @@ export const CalendarNavigation = forwardRef<
           ? dateAdapter.format(date, hideYearDropdown ? "MMMM" : "MMM")
           : "";
       },
-      [dateAdapter, formatMonthProp, locale],
+      [dateAdapter, formatMonthProp, hideYearDropdown, locale],
     );
 
     const formatYear = useCallback(

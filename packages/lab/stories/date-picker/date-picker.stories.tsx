@@ -548,7 +548,7 @@ export const SingleGridPanel: StoryFn<
               Number.parseInt(
                 numberOfVisibleMonths,
                 10,
-              ) as DatePickerSingleGridPanelProps<any>["numberOfVisibleMonths"]
+              ) as DatePickerSingleGridPanelProps<DateFrameworkType>["numberOfVisibleMonths"]
             }
             CalendarNavigationProps={{ step: Number.parseInt(step, 10) }}
           />
@@ -652,7 +652,7 @@ export const RangeGridPanel: StoryFn<
               Number.parseInt(
                 numberOfVisibleMonths,
                 10,
-              ) as DatePickerRangeGridPanelProps<any>["numberOfVisibleMonths"]
+              ) as DatePickerRangeGridPanelProps<DateFrameworkType>["numberOfVisibleMonths"]
             }
             CalendarNavigationProps={{ step: Number.parseInt(step, 10) }}
           />
@@ -1765,6 +1765,7 @@ export const SingleWithCustomParser: StoryFn<
     (
       inputDate: string,
       format: string,
+      // biome-ignore lint/suspicious/noExplicitAny: locale takes many forms based on framework
       locale: any,
     ): ParserResult<DateFrameworkType> => {
       if (!inputDate?.length) {
@@ -1904,6 +1905,7 @@ export const RangeWithCustomParser: StoryFn<
       inputDate: string,
       field: DateParserField,
       format: string,
+      // biome-ignore lint/suspicious/noExplicitAny: locale takes many forms based on framework
       locale: any,
     ): ParserResult<DateFrameworkType> => {
       if (!inputDate?.length) {
@@ -2638,7 +2640,7 @@ export const SingleWithLocaleZhCN: StoryFn<
       }
       args?.onSelectionChange?.(event, date, details);
     },
-    [args?.onSelectionChange, dateAdapter, defaultHelperText],
+    [args?.onSelectionChange, isDateFns, dateAdapter, defaultHelperText],
   );
 
   function renderDayContents(day: DateFrameworkType) {
@@ -3100,6 +3102,7 @@ export const WithExperimentalTime: StoryFn<
     [
       args?.onSelectionChange,
       dateAdapter,
+      selectedTime,
       selectedTime?.startTime,
       selectedTime?.endTime,
     ],
@@ -3116,7 +3119,7 @@ export const WithExperimentalTime: StoryFn<
         );
       }
     },
-    [selectedDate],
+    [dateAdapter, selectedDate],
   );
 
   function addTimeToDate(
@@ -3155,7 +3158,7 @@ export const WithExperimentalTime: StoryFn<
       previousSelectedDate.current = selectedDate;
       onApplyProp?.(event, date);
     },
-    [onApplyProp],
+    [dateAdapter, onApplyProp, selectedDate],
   );
 
   const handleCancel = useCallback(() => {
@@ -3299,7 +3302,7 @@ export const ControlledOpen: StoryFn<
     ) => {
       setSelectedDate(date ?? null);
     },
-    [dateAdapter],
+    [],
   );
 
   const handleApply = useCallback(

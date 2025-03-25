@@ -36,6 +36,7 @@ export interface CalendarBaseProps extends ComponentPropsWithoutRef<"div"> {
   /**
    * Locale for date formatting
    */
+  // biome-ignore lint/suspicious/noExplicitAny: locale is date framework dependent
   locale?: any;
   /**
    * Number of visible months, maximum 12, defaults to 1
@@ -109,7 +110,10 @@ export type CalendarProps<TDate extends DateFrameworkType> =
 
 const withBaseName = makePrefixer("saltCalendar");
 
-export const Calendar = forwardRef<HTMLDivElement, CalendarProps<any>>(
+export const Calendar = forwardRef<
+  HTMLDivElement,
+  CalendarProps<DateFrameworkType>
+>(
   <TDate extends DateFrameworkType>(
     props: CalendarProps<TDate>,
     ref: React.Ref<HTMLDivElement>,

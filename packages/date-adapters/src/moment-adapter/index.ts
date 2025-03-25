@@ -55,6 +55,7 @@ export class AdapterMoment implements SaltDateAdapter<Moment, string> {
    * @returns True if the timezone plugin is available, false otherwise.
    */
   private hasTimezonePlugin = () =>
+    // biome-ignore lint/suspicious/noExplicitAny: date framework plugin dependent
     typeof (this.moment as any).tz !== "undefined";
 
   /**
@@ -109,7 +110,8 @@ export class AdapterMoment implements SaltDateAdapter<Moment, string> {
     const parsedValue =
       timezone === "default"
         ? this.moment(value)
-        : (this.moment as any).tz(value, timezone);
+        : // biome-ignore lint/suspicious/noExplicitAny: date framework plugin dependent
+          (this.moment as any).tz(value, timezone);
 
     if (this.locale === undefined && locale === undefined) {
       return parsedValue;
@@ -227,6 +229,7 @@ export class AdapterMoment implements SaltDateAdapter<Moment, string> {
    * @param date - The Moment.js date object to check.
    * @returns True if the date is valid date object, false otherwise.
    */
+  // biome-ignore lint/suspicious/noExplicitAny: date framework
   public isValid(date: any): date is Moment {
     return this.moment.isMoment(date) ? date.isValid() : false;
   }

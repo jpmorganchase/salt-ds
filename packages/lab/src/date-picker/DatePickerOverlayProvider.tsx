@@ -179,7 +179,7 @@ export const DatePickerOverlayProvider: React.FC<
         onDismissCallback?.current?.();
       }
     },
-    [onOpenChange, readOnly],
+    [isOpenControlled, onOpenChange, readOnly],
   );
 
   const openState = open && !readOnly;
@@ -259,7 +259,7 @@ export const DatePickerOverlayProvider: React.FC<
       open: openState,
       floatingUIResult,
     }),
-    [open, floatingUIResult],
+    [openState, floatingUIResult],
   );
 
   const helpers: DatePickerOverlayHelpers = useMemo(
@@ -269,7 +269,12 @@ export const DatePickerOverlayProvider: React.FC<
       setOpen: handleOpenChange,
       setOnDismiss,
     }),
-    [getFloatingProps, getReferencePropsCallback, handleOpenChange],
+    [
+      getFloatingProps,
+      getReferencePropsCallback,
+      handleOpenChange,
+      setOnDismiss,
+    ],
   );
   const contextValue = useMemo(() => ({ state, helpers }), [state, helpers]);
 

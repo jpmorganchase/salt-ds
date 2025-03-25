@@ -50,6 +50,7 @@ const adapters = [adapterDateFns, adapterDayjs, adapterLuxon, adapterMoment];
  * @param adapter
  */
 function assertDateChange(
+  // biome-ignore lint/suspicious/noExplicitAny: spy
   spy: any,
   expectedValue: string,
   expectedDate: DateFrameworkType | null | undefined,

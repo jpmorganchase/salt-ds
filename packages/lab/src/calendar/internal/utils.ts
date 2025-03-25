@@ -6,6 +6,7 @@ import type {
 export function daysOfWeek<TDate extends DateFrameworkType>(
   dateAdapter: SaltDateAdapter<TDate>,
   format: "long" | "short" | "narrow",
+  // biome-ignore lint/suspicious/noExplicitAny: locale is date framework dependent
   locale?: any,
 ) {
   return Array.from({ length: 7 }, (_, day) =>
@@ -26,6 +27,7 @@ export function generateMonthsForYear<TDate extends DateFrameworkType>(
 export function generateVisibleDays<TDate extends DateFrameworkType>(
   dateAdapter: SaltDateAdapter<TDate>,
   currentMonth: TDate,
+  // biome-ignore lint/suspicious/noExplicitAny: locale is date framework dependent
   locale?: any,
 ) {
   const totalDays = 6 * 7;

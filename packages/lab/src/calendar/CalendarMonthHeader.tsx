@@ -30,7 +30,7 @@ const withBaseName = makePrefixer("saltCalendarMonthHeader");
 
 export const CalendarMonthHeader = forwardRef<
   HTMLDivElement,
-  CalendarMonthHeaderProps<any>
+  CalendarMonthHeaderProps<DateFrameworkType>
 >(
   <TDate extends DateFrameworkType>(
     props: CalendarMonthHeaderProps<TDate>,

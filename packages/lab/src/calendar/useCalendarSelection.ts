@@ -56,8 +56,8 @@ export type AllSelectionValueType<TDate extends DateFrameworkType> =
  * @param value - The value to check.
  * @returns `true` if the value is a single date selection, otherwise `false`.
  */
-// biome-ignore lint/suspicious/noExplicitAny: type guard
 export function isSingleSelectionValueType<TDate extends DateFrameworkType>(
+  // biome-ignore lint/suspicious/noExplicitAny: date framework dependent
   value: any,
 ): value is TDate {
   return (
@@ -72,8 +72,8 @@ export function isSingleSelectionValueType<TDate extends DateFrameworkType>(
  * @param value - The value to check.
  * @returns `true` if the value is a date range selection, otherwise `false`.
  */
-// biome-ignore lint/suspicious/noExplicitAny: type guard
 export function isDateRangeSelection<TDate extends DateFrameworkType>(
+  // biome-ignore lint/suspicious/noExplicitAny: date framework dependent
   value: any,
 ): value is DateRangeSelection<TDate> {
   return (
@@ -394,13 +394,21 @@ export function useCalendarSelection<TDate extends DateFrameworkType>(
               endDate: getEndDateOffset(newSelectedDate),
             };
             setSelectedDateState(newOffsetDate);
-            props.onSelectionChange?.(event, newOffsetDate);
+            onSelectionChange?.(event, newOffsetDate);
             break;
           }
         }
       }
     },
-    [isDaySelectable, selectedDate, selectionVariant, onSelectionChange],
+    [
+      dateAdapter,
+      getEndDateOffset,
+      getStartDateOffset,
+      isDaySelectable,
+      selectedDate,
+      selectionVariant,
+      onSelectionChange,
+    ],
   );
 
   const isSelected = useCallback(
@@ -536,6 +544,7 @@ export function useCalendarSelection<TDate extends DateFrameworkType>(
       return false;
     },
     [
+      dateAdapter,
       getStartDateOffset,
       getEndDateOffset,
       hoveredDate,

@@ -1,9 +1,9 @@
-import React, { forwardRef } from "react";
+import type { DateFrameworkType } from "@salt-ds/date-adapters";
+import { forwardRef } from "react";
 import {
   DatePickerSingleGridPanel,
-  DatePickerSingleGridPanelProps,
+  type DatePickerSingleGridPanelProps,
 } from "./DatePickerSingleGridPanel";
-import { DateFrameworkType } from "@salt-ds/date-adapters";
 
 /**
  * @deprecated DatePickerSinglePanel is deprecated. Use DatePickerSingleGridPanel instead.

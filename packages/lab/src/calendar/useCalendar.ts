@@ -68,6 +68,7 @@ interface UseCalendarBaseProps<TDate> {
   /**
    * Locale for date formatting
    */
+  // biome-ignore lint/suspicious/noExplicitAny: locale is date framework dependent
   locale?: any;
   /**
    * The minimum selectable date.
@@ -186,6 +187,7 @@ export interface UseCalendarReturn<TDate extends DateFrameworkType> {
     /**
      * The locale used for date formatting.
      */
+    // biome-ignore lint/suspicious/noExplicitAny: locale takes many forms based on framework
     locale: any;
 
     /**
@@ -221,6 +223,7 @@ export interface UseCalendarReturn<TDate extends DateFrameworkType> {
     /**
      * Additional state properties from selectionManager.state.
      */
+    // biome-ignore lint/suspicious/noExplicitAny: user defined
     [key: string]: any; // Use a more specific type if possible
   };
 
@@ -447,7 +450,7 @@ export function useCalendar<TDate extends DateFrameworkType>(
         dateAdapter.compare(date, maxDate) > 0
       );
     },
-    [maxDate, minDate],
+    [dateAdapter, maxDate, minDate],
   );
 
   const isOutsideAllowedMonths = useCallback(
@@ -459,7 +462,7 @@ export function useCalendar<TDate extends DateFrameworkType>(
         dateAdapter.compare(startOfMonth, maxDate) > 0
       );
     },
-    [minDate, maxDate],
+    [dateAdapter, locale, minDate, maxDate],
   );
 
   const isOutsideAllowedYears = useCallback(
@@ -471,7 +474,7 @@ export function useCalendar<TDate extends DateFrameworkType>(
         dateAdapter.compare(startOfYear, maxDate) > 0
       );
     },
-    [minDate, maxDate],
+    [dateAdapter, locale, minDate, maxDate],
   );
 
   const isDaySelectable = useCallback(
@@ -521,7 +524,7 @@ export function useCalendar<TDate extends DateFrameworkType>(
 
       return !(dateAdapter.compare(date, endInsideDays) > 0);
     },
-    [visibleMonth],
+    [dateAdapter, locale, responsiveNumberOfVisibleMonths, visibleMonth],
   );
 
   const getInitialFocusedDate = useCallback(() => {
@@ -571,6 +574,9 @@ export function useCalendar<TDate extends DateFrameworkType>(
     }
     return null;
   }, [
+    dateAdapter,
+    locale,
+    isDaySelectable,
     isDayVisible,
     selectionVariant,
     selectionManager.state.selectedDate,
@@ -609,7 +615,9 @@ export function useCalendar<TDate extends DateFrameworkType>(
       }
     },
     [
+      dateAdapter,
       focusedDate,
+      locale,
       isDaySelectable,
       isDayVisible,
       isOutsideAllowedDates,
@@ -673,6 +681,7 @@ export function useCalendar<TDate extends DateFrameworkType>(
       isOutsideAllowedDates,
       isOutsideAllowedMonths,
       isOutsideAllowedYears,
+      responsiveNumberOfVisibleMonths,
       selectionManager,
     ],
   );

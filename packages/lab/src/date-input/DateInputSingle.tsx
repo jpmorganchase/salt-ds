@@ -100,6 +100,7 @@ export interface DateInputSingleProps<TDate extends DateFrameworkType>
   /**
    * Locale for date formatting and parsing
    */
+  // biome-ignore lint/suspicious/noExplicitAny: locale is date framework dependent
   locale?: any;
   /**
    * Parser callback, if not using the adapter's parser
@@ -107,6 +108,7 @@ export interface DateInputSingleProps<TDate extends DateFrameworkType>
    * @param format - format required
    * @param locale - locale required
    */
+  // biome-ignore lint/suspicious/noExplicitAny: locale is date framework dependent
   parse?: (value: string, format: string, locale?: any) => ParserResult<TDate>;
   /**
    * Input value. Use when the input value is controlled.
@@ -145,7 +147,7 @@ export interface DateInputSingleProps<TDate extends DateFrameworkType>
 
 export const DateInputSingle = forwardRef<
   HTMLDivElement,
-  DateInputSingleProps<any>
+  DateInputSingleProps<DateFrameworkType>
 >(
   <TDate extends DateFrameworkType>(
     props: DateInputSingleProps<TDate>,

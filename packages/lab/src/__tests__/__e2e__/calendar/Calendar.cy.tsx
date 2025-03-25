@@ -51,6 +51,7 @@ const {
   TwinCalendars,
   UnselectableDates,
   WithLocale,
+  // biome-ignore lint/suspicious/noExplicitAny: storybook stories
 } = calendarStories as any;
 
 describe("GIVEN a Calendar", () => {

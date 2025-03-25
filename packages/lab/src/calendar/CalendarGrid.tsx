@@ -41,7 +41,10 @@ export interface CalendarGridProps<TDate extends DateFrameworkType>
   ) => Omit<CalendarMonthProps<TDate>, "date">;
 }
 
-export const CalendarGrid = forwardRef<HTMLDivElement, CalendarGridProps<any>>(
+export const CalendarGrid = forwardRef<
+  HTMLDivElement,
+  CalendarGridProps<DateFrameworkType>
+>(
   <TDate extends DateFrameworkType>(
     props: CalendarGridProps<TDate>,
     ref: React.Ref<HTMLDivElement>,
@@ -92,7 +95,9 @@ export const CalendarGrid = forwardRef<HTMLDivElement, CalendarGridProps<any>>(
             months: index,
           });
           return (
-            <GridItem key={`calendar-grid-item-${index}`}>
+            <GridItem
+              key={`calendar-grid-item-${dateAdapter.format(visibleMonth, "MMMM YYYY")}`}
+            >
               {numberOfVisibleMonths > 1 ? (
                 <CalendarMonthHeader month={gridItemVisibleMonth} />
               ) : null}
