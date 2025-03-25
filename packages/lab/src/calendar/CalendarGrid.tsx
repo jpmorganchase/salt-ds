@@ -13,7 +13,10 @@ import {
 
 import type { DateFrameworkType } from "@salt-ds/date-adapters";
 import { useLocalization } from "../localization-provider";
-import { CalendarMonthHeader } from "./CalendarMonthHeader";
+import {
+  CalendarMonthHeader,
+  CalendarMonthHeaderProps,
+} from "./CalendarMonthHeader";
 import {
   CalendarWeekHeader,
   type CalendarWeekHeaderProps,
@@ -34,6 +37,10 @@ export interface CalendarGridProps<TDate extends DateFrameworkType>
    */
   CalendarWeekHeaderProps?: Partial<CalendarWeekHeaderProps>;
   /**
+   * Props for `CalendarMonthHeader`
+   */
+  CalendarMonthHeaderProps?: Partial<CalendarMonthHeaderProps<TDate>>;
+  /**
    * Props getter to pass to each CalendarMonth element
    */
   getCalendarMonthProps?: (
@@ -51,6 +58,7 @@ export const CalendarGrid = forwardRef<
   ) => {
     const {
       CalendarWeekHeaderProps,
+      CalendarMonthHeaderProps,
       columns = 1,
       onFocus,
       onBlur,
@@ -99,7 +107,10 @@ export const CalendarGrid = forwardRef<
               key={`calendar-grid-item-${dateAdapter.format(gridItemVisibleMonth, "MMMM YYYY")}`}
             >
               {numberOfVisibleMonths > 1 ? (
-                <CalendarMonthHeader month={gridItemVisibleMonth} />
+                <CalendarMonthHeader
+                  {...CalendarMonthHeaderProps}
+                  month={gridItemVisibleMonth}
+                />
               ) : null}
               <CalendarWeekHeader {...CalendarWeekHeaderProps} />
               <CalendarMonth
