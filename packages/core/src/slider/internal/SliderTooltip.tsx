@@ -1,7 +1,7 @@
-import { Text } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import clsx from "clsx";
+import { Text } from "../../text";
 import { makePrefixer } from "../../utils";
 import sliderTooltipCss from "./SliderTooltip.css";
 
