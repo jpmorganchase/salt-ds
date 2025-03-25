@@ -66,6 +66,7 @@ function addToJson(key, themeLevel, semantic, tokenName, type, tokenValue) {
         }),
     };
   }
+  // TODO: make `jsonTokens` pure, so 2 themes won't colide.
   jsonTokens[themeLevel][semantic] = {
     ...jsonTokens[themeLevel][semantic],
     [tokenName]: {
@@ -368,6 +369,7 @@ function themeToJson(themeNext = false) {
 
   format(variables);
 
+  // TODO: make `jsonTokens` pure, so 2 themes won't colide.
   return jsonTokens;
 }
 
@@ -377,6 +379,7 @@ module.exports = function getJson() {
 
 const themeJson = themeToJson();
 writeJson(themeJson, "../theme.json");
+// TODO: why teal is not in ourput json?
 const themeNextJson = themeToJson(true);
 writeJson(themeNextJson, "../theme-next.json");
 
