@@ -1,4 +1,4 @@
-import { FormField, FormFieldLabel, StackLayout } from "@salt-ds/core";
+import { Input, FormField, FormFieldLabel, StackLayout } from "@salt-ds/core";
 import type { DateFrameworkType } from "@salt-ds/date-adapters";
 import {
   type DateInputSingleDetails,
@@ -8,7 +8,6 @@ import {
   type DatePickerSingleGridPanelProps,
   DatePickerSingleInput,
   DatePickerTrigger,
-  Input,
   type SingleDateSelection,
   useLocalization,
 } from "@salt-ds/lab";

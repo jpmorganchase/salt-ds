@@ -1,4 +1,4 @@
-import { FormField, FormFieldLabel, StackLayout } from "@salt-ds/core";
+import { Input, FormField, FormFieldLabel, StackLayout } from "@salt-ds/core";
 import type { DateFrameworkType } from "@salt-ds/date-adapters";
 import {
   type DateInputRangeDetails,
@@ -9,7 +9,6 @@ import {
   DatePickerRangeInput,
   DatePickerTrigger,
   type DateRangeSelection,
-  Input,
   useLocalization,
 } from "@salt-ds/lab";
 import {
