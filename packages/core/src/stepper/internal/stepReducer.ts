@@ -1,3 +1,5 @@
+import type { Dispatch } from "react";
+
 import {
   assignStepStatus,
   assignStepsStage,
@@ -6,7 +8,7 @@ import {
   resetSteps,
 } from "./utils";
 
-import type { StepRecord } from "../Step";
+import type { StepId, StepRecord } from "../Step";
 
 export interface StepReducerState {
   steps: StepRecord[];
@@ -26,13 +28,15 @@ export type StepReducerAction =
   | { type: "status/error" }
   | { type: "status/warning" }
   | { type: "status/clear" }
-  | { type: "goto"; stepId: string };
+  | { type: "goto"; payload: StepId };
+
+export type StepReducerDispatch = Dispatch<StepReducerAction>;
 
 export interface StepReducerOptions {
   activeStepId?: string;
 }
 
-export function stepReducer(
+export function StepReducer(
   state: StepReducerState,
   action: StepReducerAction,
 ): StepReducerState {
@@ -117,7 +121,7 @@ export function stepReducer(
     }
 
     case "goto": {
-      const { stepId: activeStepId } = action;
+      const activeStepId = action.payload;
       const steps = autoStageSteps(resetSteps(state.steps), { activeStepId });
       const flatSteps = flattenSteps(steps);
       const lastStepIndex = state.flatSteps.length - 1;

@@ -1,5 +1,5 @@
 import type { StepRecord, StepStage, StepStatus } from "../Step";
-import type { StepReducerOptions, StepReducerState } from "./stepReducer";
+import type { StepReducerOptions, StepReducerState } from "./StepReducer";
 
 export function assignStepsStage(
   steps: StepRecord[],
