@@ -18,12 +18,9 @@ import {
 import type { ButtonProps } from "../button";
 import stepCSS from "./Step.css";
 import { Stepper } from "./Stepper";
-import { StepAction } from "./internal/StepAction";
 import { StepConnector } from "./internal/StepConnector";
-import { StepDescription } from "./internal/StepDescription";
 import { StepExpandTrigger } from "./internal/StepExpandTrigger";
 import { StepIcon } from "./internal/StepIcon";
-import { StepLabel } from "./internal/StepLabel";
 import { StepScreenReaderOnly } from "./internal/StepScreenReaderOnly";
 import { StepText } from "./internal/StepText";
 
@@ -56,10 +53,6 @@ export interface StepProps
   extends Omit<ComponentPropsWithoutRef<"li">, "onToggle"> {
   label?: ReactNode;
   description?: ReactNode;
-  /**
-   * Render prop to enable customisation of Step element.
-   */
-  render?: RenderPropsType["render"];
   status?: StepStatus;
   stage?: StepStage;
   expanded?: boolean;
@@ -81,7 +74,6 @@ export function Step({
   defaultExpanded,
   onToggle,
   className,
-  render,
   style,
   substeps,
   children,
@@ -184,17 +176,6 @@ export function Step({
       />
       {label && (
         <StepText id={labelId} purpose="label" aria-hidden>
-          <StepAction
-            render={
-              render ??
-              function renderStepLabelChildren(props: any) {
-                return <>{props.children}</>;
-              }
-            }
-            stepId={id}
-            stage={stage}
-            status={status}
-          >
             {label}
         </StepText>
       )}
@@ -230,7 +211,7 @@ export function Step({
         >
           {children}
           {substeps?.map((step) => (
-            <Step key={step.id} {...step} render={render} />
+            <Step key={step.id} {...step} />
           ))}
         </Stepper>
       )}
