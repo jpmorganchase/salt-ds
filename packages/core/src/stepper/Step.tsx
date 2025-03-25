@@ -8,12 +8,7 @@ import {
   useContext,
   useEffect,
 } from "react";
-import {
-  type RenderPropsType,
-  makePrefixer,
-  useControlled,
-  useId,
-} from "../utils";
+import { makePrefixer, useControlled, useId } from "../utils";
 
 import type { ButtonProps } from "../button";
 import stepCSS from "./Step.css";
@@ -23,6 +18,10 @@ import { StepExpandTrigger } from "./internal/StepExpandTrigger";
 import { StepIcon } from "./internal/StepIcon";
 import { StepScreenReaderOnly } from "./internal/StepScreenReaderOnly";
 import { StepText } from "./internal/StepText";
+import {
+  StepDepthContext,
+  StepperOrientationContext,
+} from "./internal/StepperProvider";
 
 export interface StepProps
   extends Omit<ComponentPropsWithoutRef<"li">, "onToggle"> {
@@ -37,9 +36,12 @@ export interface StepProps
   children?: ReactNode;
 }
 
+export type StepId = string;
+
 export type StepRecord = Omit<StepProps, "children"> & { id: string };
 
 export type StepStatus = "warning" | "error";
+
 export type StepStage =
   | "pending"
   | "locked"
@@ -81,8 +83,8 @@ export function Step({
 }: StepProps) {
   const id = useId(idProp);
   const targetWindow = useWindow();
-  const depth = useContext(DepthContext);
-  const orientation = useContext(OrientationContext);
+  const depth = useContext(StepDepthContext);
+  const orientation = useContext(StepperOrientationContext);
 
   const [expanded, setExpanded] = useControlled({
     name: "Step",
@@ -109,7 +111,7 @@ export function Step({
         console.warn("<Stepper /> does not support, nested, horizontal views");
       }
     }
-  }, [depth]);
+  }, [depth, orientation, substeps]);
 
   const ariaCurrent = stage === "active" ? "step" : undefined;
   const iconSizeMultiplier = depth === 0 ? 1.5 : 1;
@@ -176,7 +178,7 @@ export function Step({
       />
       {label && (
         <StepText id={labelId} purpose="label" aria-hidden>
-            {label}
+          {label}
         </StepText>
       )}
       {description && (

@@ -3,9 +3,9 @@ import { type ReactNode, createContext, useContext } from "react";
 import type { StepDepth } from "../Step";
 import type { StepperOrientation } from "../Stepper";
 
-export const DepthContext = createContext<StepDepth>(-1);
-export const OrientationContext =
+export const StepperOrientationContext =
   createContext<StepperOrientation>("horizontal");
+export const StepDepthContext = createContext<StepDepth>(-1);
 
 export interface StepperProviderProps {
   orientation: StepperOrientation;
@@ -16,13 +16,13 @@ export function StepperProvider({
   orientation: orientationProp,
   children,
 }: StepperProviderProps) {
-  const depth = useContext(DepthContext);
+  const depth = useContext(StepDepthContext);
 
   return (
-    <OrientationContext.Provider value={orientationProp}>
-      <DepthContext.Provider value={depth + 1}>
+    <StepperOrientationContext.Provider value={orientationProp}>
+      <StepDepthContext.Provider value={depth + 1}>
         {children}
-      </DepthContext.Provider>
-    </OrientationContext.Provider>
+      </StepDepthContext.Provider>
+    </StepperOrientationContext.Provider>
   );
 }
