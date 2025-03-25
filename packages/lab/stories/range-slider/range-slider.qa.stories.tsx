@@ -10,7 +10,7 @@ export default {
 
 export const ExamplesGrid: StoryFn<QAContainerProps> = (props) => {
   return (
-    <QAContainer cols={1} itemPadding={6} {...props}>
+    <QAContainer width={1100} cols={1} itemPadding={10} {...props}>
       <FormField>
         <FormFieldLabel>With inline labels</FormFieldLabel>
         <RangeSlider minLabel="Min Label" maxLabel="Max Label" />
