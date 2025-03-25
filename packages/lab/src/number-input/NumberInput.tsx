@@ -42,23 +42,27 @@ const withBaseName = makePrefixer("saltNumberInput");
 export interface NumberInputProps
   extends Omit<ComponentPropsWithoutRef<"div">, "onChange"> {
   /**
-   * A boolean. When `true`, the input will receive a full border.
+   * A boolean property that determines the border style of the `NumberInput`.
+   * - When set to `true`, the `NumberInput` will display a full border.
+   * - When set to `false` or omitted, the `NumberInput` will not have a border.
+   * @default false
    */
   bordered?: boolean;
   /**
-   * The number of decimal places to display.
+   * The number of allowed decimal places
+   * @default 2
    */
   decimalPlaces?: number;
   /**
-   * Sets the initial default value of the component.
+   * The default value. Use when the component is not controlled.
    */
   defaultValue?: number | string;
   /**
-   * If `true`, the number input will be disabled.
+   * Disable the `NumberInput`.
    */
   disabled?: boolean;
   /**
-   * The marker to use in an empty read only Input.
+   * The marker to use in an empty, read-only `NumberInput`.
    * Use `''` to disable this feature. Defaults to '—'.
    * @default '—'
    */
@@ -68,7 +72,7 @@ export interface NumberInputProps
    */
   endAdornment?: ReactNode;
   /**
-   * Whether to hide the number buttons. Defaults to `false`.
+   * Hide the number buttons. Defaults to `false`.
    * @default false
    */
   hideButtons?: boolean;
@@ -91,19 +95,23 @@ export interface NumberInputProps
    */
   min?: number;
   /**
-   * Callback when number input value is changed.
-   * @param event - the event triggers value change, could be undefined during increment / decrement button long press
+   * Callback function that is triggered when the value of the `NumberInput` changes.
+   *
+   * @param event - The event that triggers the value change. This may be `undefined` during a long press on the increment or decrement buttons.
+   * @param value - The new value of the `NumberInput`, which can be a number or a string.
    */
   onChange?: (
     event: SyntheticEvent | undefined,
     value: number | string,
   ) => void;
   /**
-   * A string. Displayed in a dimmed color when the input value is empty.
+   * A string displayed in a dimmed color when the `NumberInput` value is empty.
    */
   placeholder?: string | undefined;
   /**
-   * A boolean. If `true`, the component is not editable by the user.
+   * A boolean property that controls the editability of the `NumberInput`.
+   * - When set to `true`, the `NumberInput` becomes read-only, preventing user edits.
+   * - When set to `false` or omitted, the `NumberInput` is editable by the user.
    */
   readOnly?: boolean;
   /**
@@ -111,18 +119,21 @@ export interface NumberInputProps
    */
   startAdornment?: ReactNode;
   /**
-   * The amount to increment or decrement the value by when using the number input buttons or Up Arrow and Down Arrow keys. Defaults to 1.
+   * The amount to increment or decrement the value by when using the `NumberInput` buttons or Up Arrow and Down Arrow keys. Defaults to 1.
    * @default 1
    */
   step?: number;
   /**
    * Defines the factor by which the step value is multiplied to determine the maximum increment or decrement when the Shift key
-   * is held while pressing the Up Arrow or Down Arrow keys for faster adjustments of the value. The default multiplier is 2.
+   * is held while pressing the Up Arrow or Down Arrow keys for faster adjustments of the value. The default multiplier value is 2.
    * @default 2
    */
   stepMultiplier?: number;
   /**
-   * Alignment of text within container. Defaults to "left".
+   * Specifies the alignment of the text within the `NumberInput`.
+   * - Options include "left", "center", and "right".
+   * - Defaults to "left" if not specified.
+   *
    * @default "left"
    */
   textAlign?: "left" | "center" | "right";
@@ -136,7 +147,7 @@ export interface NumberInputProps
    */
   variant?: "primary" | "secondary";
   /**
-   * The value of the number input. The component will be controlled if this prop is provided.
+   * Value of the `NumberInput`, to be used when in a controlled state.
    */
   value?: number | string | undefined;
 }
