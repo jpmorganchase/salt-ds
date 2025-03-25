@@ -4,7 +4,7 @@ import {
   assignStepsStage,
   autoStageSteps,
   flattenSteps,
-  initStepReducerState,
+  initStepperReducerState,
   resetSteps,
 } from "../../../stepper/internal/utils";
 
@@ -388,7 +388,7 @@ describe("Stepper > utils", () => {
       ]);
     });
   });
-  describe("initStepReducerState", () => {
+  describe("initStepperReducerState", () => {
     it("should work when active stage is in the beginning of initialSteps ", () => {
       const initialSteps: StepRecord[] = [
         { id: "1", stage: "active" },
@@ -396,7 +396,7 @@ describe("Stepper > utils", () => {
         { id: "3" },
       ];
 
-      const state = initStepReducerState(initialSteps);
+      const state = initStepperReducerState(initialSteps);
 
       expect(state.activeStepIndex).toEqual(0);
       expect(state.activeStep).toEqual(state.steps[0]);
@@ -418,7 +418,7 @@ describe("Stepper > utils", () => {
         { id: "3" },
       ];
 
-      const state = initStepReducerState(initialSteps);
+      const state = initStepperReducerState(initialSteps);
 
       expect(state.activeStepIndex).toEqual(1);
       expect(state.activeStep).toEqual(state.steps[1]);
@@ -440,7 +440,7 @@ describe("Stepper > utils", () => {
         { id: "3", stage: "active" },
       ];
 
-      const state = initStepReducerState(initialSteps);
+      const state = initStepperReducerState(initialSteps);
 
       expect(state.activeStepIndex).toEqual(2);
       expect(state.activeStep).toEqual(state.steps[2]);
@@ -462,7 +462,7 @@ describe("Stepper > utils", () => {
         { id: "3" },
       ];
 
-      const state = initStepReducerState(initialSteps);
+      const state = initStepperReducerState(initialSteps);
 
       expect(state.activeStepIndex).toEqual(-1);
       expect(state.activeStep).toEqual(null);
@@ -484,7 +484,7 @@ describe("Stepper > utils", () => {
         { id: "3", stage: "completed" },
       ];
 
-      const state = initStepReducerState(initialSteps);
+      const state = initStepperReducerState(initialSteps);
 
       expect(state.activeStepIndex).toEqual(state.flatSteps.length);
       expect(state.activeStep).toEqual(null);

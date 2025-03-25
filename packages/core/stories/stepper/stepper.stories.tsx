@@ -8,11 +8,11 @@ import {
   Step,
   type StepProps,
   type StepRecord,
-  type StepReducerDispatch,
   Stepper,
+  type StepperReducerDispatch,
   Text,
   Tooltip,
-  useStepReducer,
+  useStepperReducer,
 } from "@salt-ds/core";
 import type { Meta, StoryFn } from "@storybook/react";
 import { useMemo } from "react";
@@ -222,7 +222,7 @@ export const StageStatus: StoryFn<typeof Stepper> = () => {
 };
 
 export const Reducer: StoryFn<typeof Stepper> = () => {
-  const [state, dispatch] = useStepReducer([
+  const [state, dispatch] = useStepperReducer([
     { id: "step-1", label: "Step 1" },
     { id: "step-2", label: "Step 2", stage: "active" }, // <- notice active
     { id: "step-3", label: "Step 3" },
@@ -270,7 +270,7 @@ export const ReducerContent: StoryFn<typeof Stepper> = () => {
     [],
   );
 
-  const [state, dispatch] = useStepReducer([
+  const [state, dispatch] = useStepperReducer([
     { id: "step-1", label: "Step 1", stage: "active" },
     { id: "step-2", label: "Step 2" },
     { id: "step-3", label: "Step 3" },
@@ -344,7 +344,7 @@ export const ReducerAdvanced: StoryFn<typeof Stepper> = () => {
     [],
   );
 
-  const [state, dispatch] = useStepReducer(initialState, {
+  const [state, dispatch] = useStepperReducer(initialState, {
     activeStepId: "step-1-3-2",
   });
 
@@ -391,7 +391,7 @@ export const ReducerLinks: StoryFn<typeof Stepper> = () => {
   // keep the LinkStepProps outside
   interface LinkStepProps extends StepProps {
     id: string;
-    dispatch: StepReducerDispatch;
+    dispatch: StepperReducerDispatch;
   }
 
   // keep the LinkStep outside
@@ -472,7 +472,7 @@ export const ReducerLinks: StoryFn<typeof Stepper> = () => {
     [],
   );
 
-  const [state, dispatch] = useStepReducer(initialState, {
+  const [state, dispatch] = useStepperReducer(initialState, {
     activeStepId: "step-1-3-2",
   });
 

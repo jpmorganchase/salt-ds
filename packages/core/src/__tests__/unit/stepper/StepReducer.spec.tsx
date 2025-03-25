@@ -1,10 +1,10 @@
 import { describe, expect, it } from "vitest";
 
 import type { StepRecord } from "../../../stepper";
-import { StepReducer } from "../../../stepper/internal/StepReducer";
-import { initStepReducerState } from "../../../stepper/internal/utils";
+import { StepperReducer } from "../../../stepper/internal/StepperReducer";
+import { initStepperReducerState } from "../../../stepper/internal/utils";
 
-describe("StepReducer", () => {
+describe("StepperReducer", () => {
   describe("next", () => {
     it("should move to next step if there is one", () => {
       const steps: StepRecord[] = [
@@ -13,8 +13,8 @@ describe("StepReducer", () => {
         { id: "3", label: "Step 3" },
       ];
 
-      let state = initStepReducerState(steps);
-      state = StepReducer(state, { type: "next" });
+      let state = initStepperReducerState(steps);
+      state = StepperReducer(state, { type: "next" });
 
       expect(state.started).toBe(true);
       expect(state.ended).toBe(false);
@@ -23,7 +23,7 @@ describe("StepReducer", () => {
       expect(state.previousStep).toHaveProperty("id", "1");
       expect(state.nextStep).toHaveProperty("id", "3");
 
-      state = StepReducer(state, { type: "next" });
+      state = StepperReducer(state, { type: "next" });
 
       expect(state.started).toBe(true);
       expect(state.ended).toBe(false);
@@ -33,7 +33,7 @@ describe("StepReducer", () => {
 
       expect(state.nextStep).toBe(null);
 
-      state = StepReducer(state, { type: "next" });
+      state = StepperReducer(state, { type: "next" });
 
       expect(state.started).toBe(true);
       expect(state.ended).toBe(true);
@@ -42,7 +42,7 @@ describe("StepReducer", () => {
       expect(state.previousStep).toHaveProperty("id", "3");
       expect(state.nextStep).toBe(null);
 
-      state = StepReducer(state, { type: "next" });
+      state = StepperReducer(state, { type: "next" });
 
       expect(state.started).toBe(true);
       expect(state.ended).toBe(true);
@@ -61,8 +61,8 @@ describe("StepReducer", () => {
         { id: "3", stage: "active" },
       ];
 
-      let state = initStepReducerState(steps);
-      state = StepReducer(state, { type: "previous" });
+      let state = initStepperReducerState(steps);
+      state = StepperReducer(state, { type: "previous" });
 
       expect(state.started).toBe(true);
       expect(state.ended).toBe(false);
@@ -71,7 +71,7 @@ describe("StepReducer", () => {
       expect(state.previousStep).toHaveProperty("id", "1");
       expect(state.nextStep).toHaveProperty("id", "3");
 
-      state = StepReducer(state, { type: "previous" });
+      state = StepperReducer(state, { type: "previous" });
 
       expect(state.started).toBe(true);
       expect(state.ended).toBe(false);
@@ -80,7 +80,7 @@ describe("StepReducer", () => {
       expect(state.previousStep).toBe(null);
       expect(state.nextStep).toHaveProperty("id", "2");
 
-      state = StepReducer(state, { type: "previous" });
+      state = StepperReducer(state, { type: "previous" });
 
       expect(state.started).toBe(false);
       expect(state.ended).toBe(false);
@@ -89,7 +89,7 @@ describe("StepReducer", () => {
       expect(state.previousStep).toBe(null);
       expect(state.nextStep).toHaveProperty("id", "1");
 
-      state = StepReducer(state, { type: "previous" });
+      state = StepperReducer(state, { type: "previous" });
     });
   });
 
@@ -101,8 +101,8 @@ describe("StepReducer", () => {
         { id: "3" },
       ];
 
-      let state = initStepReducerState(steps);
-      state = StepReducer(state, { type: "status/error" });
+      let state = initStepperReducerState(steps);
+      state = StepperReducer(state, { type: "status/error" });
 
       expect(state.started).toBe(true);
       expect(state.ended).toBe(false);
@@ -112,8 +112,8 @@ describe("StepReducer", () => {
       expect(state.previousStep).toHaveProperty("id", "1");
       expect(state.nextStep).toHaveProperty("id", "3");
 
-      expect(StepReducer(state, { type: "next" })).toBe(state);
-      expect(StepReducer(state, { type: "previous" })).toBe(state);
+      expect(StepperReducer(state, { type: "next" })).toBe(state);
+      expect(StepperReducer(state, { type: "previous" })).toBe(state);
     });
   });
 
@@ -125,7 +125,7 @@ describe("StepReducer", () => {
         { id: "3" },
       ];
 
-      const state = StepReducer(initStepReducerState(steps), {
+      const state = StepperReducer(initStepperReducerState(steps), {
         type: "status/clear",
       });
 
@@ -147,7 +147,9 @@ describe("StepReducer", () => {
         { id: "3" },
       ];
 
-      const state = StepReducer(initStepReducerState(steps), { type: "reset" });
+      const state = StepperReducer(initStepperReducerState(steps), {
+        type: "reset",
+      });
 
       expect(state.started).toBe(true);
       expect(state.ended).toBe(false);
@@ -166,10 +168,10 @@ describe("StepReducer", () => {
         { id: "3", label: "Step 3" },
       ];
 
-      let state = initStepReducerState(steps);
+      let state = initStepperReducerState(steps);
 
       // Use the "goto" action to jump to step with id "2"
-      state = StepReducer(state, { type: "goto", payload: "2" });
+      state = StepperReducer(state, { type: "goto", payload: "2" });
 
       expect(state.started).toBe(true);
       expect(state.ended).toBe(false);
@@ -179,7 +181,7 @@ describe("StepReducer", () => {
       expect(state.nextStep).toHaveProperty("id", "3");
 
       // Use the "goto" action to jump to the last step with id "3"
-      state = StepReducer(state, { type: "goto", payload: "3" });
+      state = StepperReducer(state, { type: "goto", payload: "3" });
 
       expect(state.started).toBe(true);
       expect(state.ended).toBe(true);
@@ -189,7 +191,7 @@ describe("StepReducer", () => {
       expect(state.nextStep).toBe(null);
 
       // Use the "goto" action to jump to the first step with id "1"
-      state = StepReducer(state, { type: "goto", payload: "1" });
+      state = StepperReducer(state, { type: "goto", payload: "1" });
 
       expect(state.started).toBe(true);
       expect(state.ended).toBe(false);

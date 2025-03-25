@@ -1,5 +1,8 @@
 import type { StepRecord, StepStage, StepStatus } from "../Step";
-import type { StepReducerOptions, StepReducerState } from "./StepReducer";
+import type {
+  StepperReducerOptions,
+  StepperReducerState,
+} from "./StepperReducer";
 
 export function assignStepsStage(
   steps: StepRecord[],
@@ -64,7 +67,7 @@ export function resetSteps(
 
 export function autoStageSteps(
   steps: StepRecord[],
-  options?: StepReducerOptions,
+  options?: StepperReducerOptions,
 ): StepRecord[] {
   function autoStageHelper(steps: StepRecord[]): StepRecord[] | null {
     const pivotIndex = steps.findIndex(
@@ -132,9 +135,9 @@ export function flattenSteps(steps: StepRecord[]): StepRecord[] {
   }, [] as StepRecord[]);
 }
 
-export function initStepReducerState(
+export function initStepperReducerState(
   initialSteps: StepRecord[],
-  options?: StepReducerOptions,
+  options?: StepperReducerOptions,
 ) {
   const steps = autoStageSteps(initialSteps, options);
   const flatSteps = flattenSteps(steps);
@@ -160,5 +163,5 @@ export function initStepReducerState(
     activeStepIndex,
     ended,
     started,
-  } as StepReducerState;
+  } as StepperReducerState;
 }

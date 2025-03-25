@@ -10,7 +10,7 @@ import {
 
 import type { StepId, StepRecord } from "../Step";
 
-export interface StepReducerState {
+export interface StepperReducerState {
   steps: StepRecord[];
   flatSteps: StepRecord[];
   activeStepIndex: number;
@@ -21,7 +21,7 @@ export interface StepReducerState {
   ended: boolean;
 }
 
-export type StepReducerAction =
+export type StepperReducerAction =
   | { type: "next" }
   | { type: "previous" }
   | { type: "reset" }
@@ -30,16 +30,16 @@ export type StepReducerAction =
   | { type: "status/clear" }
   | { type: "goto"; payload: StepId };
 
-export type StepReducerDispatch = Dispatch<StepReducerAction>;
+export type StepperReducerDispatch = Dispatch<StepperReducerAction>;
 
-export interface StepReducerOptions {
+export interface StepperReducerOptions {
   activeStepId?: string;
 }
 
-export function StepReducer(
-  state: StepReducerState,
-  action: StepReducerAction,
-): StepReducerState {
+export function StepperReducer(
+  state: StepperReducerState,
+  action: StepperReducerAction,
+): StepperReducerState {
   switch (action.type) {
     case "next": {
       if (state.activeStep?.status === "error") {
@@ -233,7 +233,7 @@ export function StepReducer(
 
     default: {
       const exhaustiveCheck: never = action;
-      throw new Error(`Unhandled action: ${exhaustiveCheck}`);
+      throw new Error(`Unhandled StepperReducer Action: ${exhaustiveCheck}`);
     }
   }
 }

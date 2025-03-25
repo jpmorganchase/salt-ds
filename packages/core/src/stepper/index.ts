@@ -1,8 +1,9 @@
 export * from "./Stepper";
 export * from "./Step";
-export * from "./useStepReducer";
+export * from "./useStepperReducer";
 export type {
-  StepReducerState,
-  StepReducerAction,
-  StepReducerDispatch,
-} from "./internal/StepReducer";
+  StepperReducerState,
+  StepperReducerAction,
+  StepperReducerDispatch,
+  StepperReducerOptions,
+} from "./internal/StepperReducer";
