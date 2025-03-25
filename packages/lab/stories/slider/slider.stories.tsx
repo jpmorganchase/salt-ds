@@ -421,7 +421,7 @@ export const WithInputAndInlineLabels: StoryFn<SliderProps> = () => {
   );
 };
 
-export const WithInputAndMarks: StoryFn<SliderProps> = () => {
+export const WithInputAndMarksAndTicks: StoryFn<SliderProps> = () => {
   const [value, setValue] = useState<number>(0);
   const [inputValue, setInputValue] = useState<string | number>(value);
   const [validationStatus, setValidationStatus] = useState<undefined | "error">(
@@ -482,6 +482,7 @@ export const WithInputAndMarks: StoryFn<SliderProps> = () => {
               label: "50",
             },
           ]}
+          showTicks
         />
       </FlexLayout>
     </FormField>

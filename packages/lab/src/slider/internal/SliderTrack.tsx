@@ -116,13 +116,15 @@ export const SliderTrack = forwardRef<HTMLDivElement, SliderTrackProps>(
             </Text>
           )}
           {/* Slider Track */}
-          <div className={withBaseName("wrapper")}>
+          <div
+            onPointerDown={handlePointerDown}
+            className={withBaseName("wrapper")}
+          >
             <div
               className={clsx(withBaseName("rail"), {
                 [withBaseName("hasMinTick")]: hasMinTick() && showTicks,
                 [withBaseName("hasMaxTick")]: hasMaxTick() && showTicks,
               })}
-              onPointerDown={handlePointerDown}
               ref={sliderRef}
               style={
                 {
