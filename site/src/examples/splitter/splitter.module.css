@@ -18,6 +18,14 @@
   height: 100%;
 }
 
+.h100 {
+  height: 100%;
+}
+
+.scroll {
+  overflow: scroll;
+}
+
 .sidePanelButtonGroup {
   width: 100%;
   height: 100%;

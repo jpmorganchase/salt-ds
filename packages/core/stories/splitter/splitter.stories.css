@@ -10,6 +10,14 @@
   background: var(--salt-container-secondary-background);
 }
 
+.h100 {
+  height: 100%;
+}
+
+.scroll {
+  overflow: auto;
+}
+
 .center {
   display: flex;
   align-items: center;
