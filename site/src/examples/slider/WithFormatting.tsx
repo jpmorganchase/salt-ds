@@ -5,8 +5,8 @@ export const WithFormatting = (): ReactElement => (
   <Slider
     defaultValue={5}
     style={{ width: "400px" }}
-    minLabel="0€"
-    maxLabel="10€"
+    minLabel="€0"
+    maxLabel="€10"
     format={(value: number) =>
       Intl.NumberFormat("en-US", {
         style: "currency",

@@ -8,9 +8,12 @@
   --slider-progressPercentageEnd: 0%;
 
   display: flex;
+  width: 100%;
+}
+
+.saltSliderTrack.saltSliderTrack-withMarks {
   /* To wrap the marks within the boundary box */
   margin-bottom: calc(var(--salt-size-base) / 2);
-  width: 100%;
 }
 
 .saltSliderTrack-disabled {
