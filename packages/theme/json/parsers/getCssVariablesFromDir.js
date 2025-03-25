@@ -1,215 +1,240 @@
-const fs = require("fs");
-const path = require("path");
+const fs = require("node:fs");
+const path = require("node:path");
+const csstree = require("css-tree");
 
-const cssVariableRegex = /([a-zA-Z0-9_-]+)\s*:\s*([^;]+)/g;
-
-const lightModeRegex = /\.salt-theme\[data-mode="light"\].*?\{(.*?)\}.*?/s;
-const darkModeRegex = /\.salt-theme\[data-mode="dark"\].*?\{(.*?)\}.*?/s;
-const highDensityRegex = /\.salt-density-high.*?\{(.*?)\}.*?/s;
-const mediumDensityRegex = /\.salt-density-medium.*?\{(.*?)\}.*?/s;
-const lowDensityRegex = /\.salt-density-low.*?\{(.*?)\}.*?/s;
-const touchDensityRegex = /\.salt-density-touch.*?\{(.*?)\}.*?/s;
-const generalThemeRegex = /\.salt-theme.\{(.*?)\}.*?/s;
-
-// TODO: how to deal with double modes, e.g. `.salt-theme-next[data-mode="light"][data-accent="blue"]`
-const lightModeNextRegex =
-  /\.salt-theme(-next)?\[data-mode="light"\].*?\{(.*?)\}.*?/s;
-const darkModeNextRegex =
-  /\.salt-theme(-next)?\[data-mode="dark"\].*?\{(.*?)\}.*?/s;
-const generalThemeNextRegex = /\.salt-theme-next.\{(.*?)\}.*?/s;
-const openSansHeadingFontRegex =
-  /\.salt-theme(-next)?\[data-heading-font="Open Sans"\].\{(.*?)\}.*?/s;
-const amplitudeHeadingFontRegex =
-  /\.salt-theme(-next)?\[data-heading-font="Amplitude"\].\{(.*?)\}.*?/s;
-const openSansActionFontRegex =
-  /\.salt-theme(-next)?\[data-action-font="Open Sans"\].\{(.*?)\}.*?/s;
-const amplitudeActionFontRegex =
-  /\.salt-theme(-next)?\[data-action-font="Amplitude"\].\{(.*?)\}.*?/s;
-const roundedCornerRegex =
-  /\.salt-theme(-next)?\[data-corner="rounded"].\{(.*?)\}.*?/s;
-const sharpCornerRegex =
-  /\.salt-theme(-next)?\[data-corner="sharp"].\{(.*?)\}.*?/s;
-
-function isNonColor(token) {
-  const tokenParts = token.split("-");
-  const isColor = tokenParts.find((part) =>
-    [
-      "borderColor",
-      "foreground",
-      "background",
-      "outlineColor",
-      "indicator",
-    ].includes(part),
-  );
-  return !isColor;
+function matchSelectorRule(child, rule) {
+  const { type, value } = rule;
+  switch (type) {
+    case "classname": {
+      return child.type === "ClassSelector" && child.name === value;
+    }
+    case "data-attribute": {
+      return (
+        child.type === "AttributeSelector" &&
+        child.name.name === value.name &&
+        child.value &&
+        child.value.value === value.value
+      );
+    }
+    default: {
+      console.warn("Unknown rule type", type);
+      return false;
+    }
+  }
 }
 
-function processFile(
-  filePath,
-  {
-    cssVariables,
-    lightModeVariables,
-    darkModeVariables,
-    hdVariables,
-    mdVariables,
-    ldVariables,
-    tdVariables,
-    openSansHeadingVariables,
-    amplitudeHeadingVariables,
-    openSansActionVariables,
-    amplitudeActionVariables,
-    roundedCornerVariables,
-    sharpCornerVariables,
-  },
-) {
+// Function to extract CSS variables for a given rules, e.g., matching classname, or data attribute
+// example: [{type: 'classname', value: 'class1'}, {type: 'data-attribute', value: {name: 'data-theme', value: 'light'}}]
+function extractCSSVariablesForMatchingRules(ast, rules) {
+  const variables = {};
+
+  // Traverse the AST
+  csstree.walk(ast, (node) => {
+    if (node.type === "Rule" && node.prelude.type === "SelectorList") {
+      // Check if the selector matches the given classname and data attribute
+      const selectorListChildren = node.prelude.children;
+      // console.log({ selectorListChildren, size: selectorListChildren.size });
+      const rulesMatched = selectorListChildren.some((selector) => {
+        for (const rule of rules) {
+          if (
+            // matching selector with rule number
+            selector.children.size !== rules.length ||
+            // match selector in **any** order
+            !selector.children.some((c) => matchSelectorRule(c, rule))
+          ) {
+            return false;
+          }
+        }
+
+        return true;
+      });
+
+      if (rulesMatched) {
+        // Traverse the declaration block to find CSS variables
+        csstree.walk(node.block, (declaration) => {
+          if (
+            declaration.type === "Declaration" &&
+            declaration.property.startsWith("--")
+          ) {
+            variables[declaration.property] = csstree.generate(
+              declaration.value,
+            );
+          }
+        });
+      }
+    }
+  });
+
+  return variables;
+}
+
+const THEME_RULES_MAP = {
+  general: [{ type: "classname", value: "salt-theme" }],
+  light: [
+    { type: "classname", value: "salt-theme" },
+    { type: "data-attribute", value: { name: "data-mode", value: "light" } },
+  ],
+  dark: [
+    { type: "classname", value: "salt-theme" },
+    { type: "data-attribute", value: { name: "data-mode", value: "dark" } },
+  ],
+  // .salt-density-touch,
+  // .salt-density-low,
+  // .salt-density-medium,
+  // .salt-density-high
+  high: [{ type: "classname", value: "salt-density-high" }],
+  medium: [{ type: "classname", value: "salt-density-medium" }],
+  low: [{ type: "classname", value: "salt-density-low" }],
+  touch: [{ type: "classname", value: "salt-density-touch" }],
+};
+
+const THEME_NEXT_RULES_MAP = {
+  general: [
+    { type: "classname", value: "salt-theme" },
+    { type: "classname", value: "salt-theme-next" },
+  ],
+  light: [
+    { type: "classname", value: "salt-theme" },
+    { type: "classname", value: "salt-theme-next" },
+    { type: "data-attribute", value: { name: "data-mode", value: "light" } },
+  ],
+  dark: [
+    { type: "classname", value: "salt-theme" },
+    { type: "classname", value: "salt-theme-next" },
+    { type: "data-attribute", value: { name: "data-mode", value: "dark" } },
+  ],
+  high: [
+    { type: "classname", value: "salt-theme-next" },
+    { type: "classname", value: "salt-density-high" },
+  ],
+  medium: [
+    { type: "classname", value: "salt-theme-next" },
+    { type: "classname", value: "salt-density-medium" },
+  ],
+  low: [
+    { type: "classname", value: "salt-theme-next" },
+    { type: "classname", value: "salt-density-low" },
+  ],
+  touch: [
+    { type: "classname", value: "salt-theme-next" },
+    { type: "classname", value: "salt-density-touch" },
+  ],
+  // .salt-theme.salt-theme-next[data-mode="light"][data-accent="blue"] {
+  lightBlue: [
+    { type: "classname", value: "salt-theme" },
+    { type: "data-attribute", value: { name: "data-mode", value: "light" } },
+    { type: "data-attribute", value: { name: "data-accent", value: "blue" } },
+  ],
+  darkBlue: [
+    { type: "classname", value: "salt-theme" },
+    { type: "data-attribute", value: { name: "data-mode", value: "dark" } },
+    { type: "data-attribute", value: { name: "data-accent", value: "blue" } },
+  ],
+  lightTeal: [
+    { type: "classname", value: "salt-theme" },
+    { type: "data-attribute", value: { name: "data-mode", value: "light" } },
+    { type: "data-attribute", value: { name: "data-accent", value: "teal" } },
+  ],
+  darkTeal: [
+    { type: "classname", value: "salt-theme" },
+    { type: "data-attribute", value: { name: "data-mode", value: "dark" } },
+    { type: "data-attribute", value: { name: "data-accent", value: "teal" } },
+  ],
+  // .salt-theme-next[data-corner="rounded"]
+  rounded: [
+    { type: "classname", value: "salt-theme" },
+    {
+      type: "data-attribute",
+      value: { name: "data-corner", value: "rounded" },
+    },
+  ],
+  sharp: [
+    { type: "classname", value: "salt-theme" },
+    {
+      type: "data-attribute",
+      value: { name: "data-corner", value: "sharp" },
+    },
+  ],
+  // .salt-theme-next.salt-theme[data-heading-font="Open Sans"]
+  openSansHeading: [
+    { type: "classname", value: "salt-theme" },
+    { type: "classname", value: "salt-theme-next" },
+    {
+      type: "data-attribute",
+      value: { name: "data-heading-font", value: "Open Sans" },
+    },
+  ],
+  amplitudeHeading: [
+    { type: "classname", value: "salt-theme" },
+    { type: "classname", value: "salt-theme-next" },
+    {
+      type: "data-attribute",
+      value: { name: "data-heading-font", value: "Amplitude" },
+    },
+  ],
+  openSansAction: [
+    { type: "classname", value: "salt-theme" },
+    { type: "classname", value: "salt-theme-next" },
+    {
+      type: "data-attribute",
+      value: { name: "data-action-font", value: "Open Sans" },
+    },
+  ],
+  amplitudeAction: [
+    { type: "classname", value: "salt-theme" },
+    { type: "classname", value: "salt-theme-next" },
+    {
+      type: "data-attribute",
+      value: { name: "data-action-font", value: "Amplitude" },
+    },
+  ],
+};
+
+/**
+ * - Process all legacy theme files
+ * - Process all theme next files, override values appeared already in legacy theme
+ *
+ * For each file, process it to return a list of grouped tokens, specifies which styling options
+ * (or generic rules) it would match. e.g.
+ * - `ClassSelector`, name = "salt-theme"
+ * - `AttributeSelector` name.name = "data-mode", value.value = "light"
+ *
+ * Input: List of rules to be matched, use `findAll` to locate
+ * Return a list of rules with token record <name: value>
+ */
+function processFileAst(filePath, cssVariables, themeNext) {
   // Process CSS files
-  const cssContent = fs.readFileSync(filePath, "utf8");
+  const ast = csstree.parse(fs.readFileSync(filePath, { encoding: "utf-8" }));
 
-  let match;
-  let hdContent = cssContent.match(highDensityRegex);
-  let mdContent = cssContent.match(mediumDensityRegex);
-  let ldContent = cssContent.match(lowDensityRegex);
-  let tdContent = cssContent.match(touchDensityRegex);
-  let lightContent;
-  let darkContent;
-  let generalContent;
-  let amplitudeHeadingContent;
-  let openSansHeadingContent;
-  let amplitudeActionContent;
-  let openSansActionContent;
-  let roundedCornerContent;
-  let sharpCornerContent;
-
-  if (filePath.includes("next")) {
-    lightContent = cssContent.match(lightModeNextRegex);
-    darkContent = cssContent.match(darkModeNextRegex);
-    generalContent = cssContent.match(generalThemeNextRegex);
-    amplitudeHeadingContent = cssContent.match(amplitudeHeadingFontRegex);
-    openSansHeadingContent = cssContent.match(openSansHeadingFontRegex);
-    amplitudeActionContent = cssContent.match(amplitudeActionFontRegex);
-    openSansActionContent = cssContent.match(openSansActionFontRegex);
-    roundedCornerContent = cssContent.match(roundedCornerRegex);
-    sharpCornerContent = cssContent.match(sharpCornerRegex);
-  } else {
-    lightContent = cssContent.match(lightModeRegex);
-    darkContent = cssContent.match(darkModeRegex);
-    generalContent = cssContent.match(generalThemeRegex);
-  }
-
-  if (lightContent) {
-    while ((match = cssVariableRegex.exec(lightContent[0])) !== null) {
-      const variableName = match[1];
-      const variableValue = match[2].trim();
-      lightModeVariables[variableName] = variableValue;
-    }
-  }
-  if (darkContent) {
-    while ((match = cssVariableRegex.exec(darkContent[0])) !== null) {
-      const variableName = match[1];
-      const variableValue = match[2].trim();
-      darkModeVariables[variableName] = variableValue;
-    }
-  }
-  if (hdContent) {
-    while ((match = cssVariableRegex.exec(hdContent[0])) !== null) {
-      const variableName = match[1];
-      const variableValue = match[2].trim();
-      hdVariables[variableName] = variableValue;
-    }
-  }
-  if (mdContent) {
-    while ((match = cssVariableRegex.exec(mdContent[0])) !== null) {
-      const variableName = match[1];
-      const variableValue = match[2].trim();
-      mdVariables[variableName] = variableValue;
-    }
-  }
-  if (ldContent) {
-    while ((match = cssVariableRegex.exec(ldContent[0])) !== null) {
-      const variableName = match[1];
-      const variableValue = match[2].trim();
-      ldVariables[variableName] = variableValue;
-    }
-  }
-  if (tdContent) {
-    while ((match = cssVariableRegex.exec(tdContent[0])) !== null) {
-      const variableName = match[1];
-      const variableValue = match[2].trim();
-      tdVariables[variableName] = variableValue;
-    }
-  }
-  if (generalContent) {
-    while ((match = cssVariableRegex.exec(generalContent[0])) !== null) {
-      const variableName = match[1];
-      const variableValue = match[2].trim();
-      cssVariables[variableName] = variableValue;
-    }
-  }
-  if (amplitudeHeadingContent) {
-    while (
-      (match = cssVariableRegex.exec(amplitudeHeadingContent[0])) !== null
-    ) {
-      const variableName = match[1];
-      const variableValue = match[2].trim();
-      amplitudeHeadingVariables[variableName] = variableValue;
-    }
-  }
-  if (openSansHeadingContent) {
-    while (
-      (match = cssVariableRegex.exec(openSansHeadingContent[0])) !== null
-    ) {
-      const variableName = match[1];
-      const variableValue = match[2].trim();
-      openSansHeadingVariables[variableName] = variableValue;
-    }
-  }
-  if (amplitudeActionContent) {
-    while (
-      (match = cssVariableRegex.exec(amplitudeActionContent[0])) !== null
-    ) {
-      const variableName = match[1];
-      const variableValue = match[2].trim();
-      amplitudeActionVariables[variableName] = variableValue;
-    }
-  }
-  if (openSansActionContent) {
-    while ((match = cssVariableRegex.exec(openSansActionContent[0])) !== null) {
-      const variableName = match[1];
-      const variableValue = match[2].trim();
-      openSansActionVariables[variableName] = variableValue;
-    }
-  }
-  if (roundedCornerContent) {
-    while ((match = cssVariableRegex.exec(roundedCornerContent[0])) !== null) {
-      const variableName = match[1];
-      const variableValue = match[2].trim();
-      roundedCornerVariables[variableName] = variableValue;
-    }
-  }
-  if (sharpCornerContent) {
-    while ((match = cssVariableRegex.exec(sharpCornerContent[0])) !== null) {
-      const variableName = match[1];
-      const variableValue = match[2].trim();
-      sharpCornerVariables[variableName] = variableValue;
-    }
+  for (const [key, rules] of Object.entries(
+    themeNext ? THEME_NEXT_RULES_MAP : THEME_RULES_MAP,
+  )) {
+    cssVariables[key] = {
+      ...cssVariables[key],
+      ...extractCSSVariablesForMatchingRules(ast, rules),
+    };
   }
 }
 
 module.exports = {
-  fromDir: function getCssVariablesFromDir(dirPath) {
+  fromDir: function getCssVariablesFromDir(
+    dirPath,
+    themeNext = false,
+    ignoreDeprecated = true,
+  ) {
     const cssVariables = {};
-    const lightModeVariables = {};
-    const darkModeVariables = {};
-    const hdVariables = {};
-    const mdVariables = {};
-    const ldVariables = {};
-    const tdVariables = {};
-    const openSansHeadingVariables = {};
-    const amplitudeHeadingVariables = {};
-    const openSansActionVariables = {};
-    const amplitudeActionVariables = {};
-    const roundedCornerVariables = {};
-    const sharpCornerVariables = {};
+    // const lightModeVariables = {};
+    // const darkModeVariables = {};
+    // const hdVariables = {};
+    // const mdVariables = {};
+    // const ldVariables = {};
+    // const tdVariables = {};
+    // const openSansHeadingVariables = {};
+    // const amplitudeHeadingVariables = {};
+    // const openSansActionVariables = {};
+    // const amplitudeActionVariables = {};
+    // const roundedCornerVariables = {};
+    // const sharpCornerVariables = {};
     const files = fs.readdirSync(dirPath);
     const dirFiles = files.map((file) => file.replace(".css", ""));
     const isFoundationsDir = dirPath.includes("foundations");
@@ -220,45 +245,28 @@ module.exports = {
 
       const stats = fs.statSync(filePath);
       if (stats.isDirectory()) {
-        // Recursively process subdirectories
-        Object.assign(cssVariables, getCssVariablesFromDir(filePath));
+        if (!ignoreDeprecated || !filePath.includes("deprecated")) {
+          // Recursively process subdirectories
+          Object.assign(cssVariables, getCssVariablesFromDir(filePath));
+        } else {
+          console.info("Skipping deprecated folder");
+        }
       } else if (
         stats.isFile() &&
-        path.extname(file) === ".css" &&
-        ((isFoundationsDir && !dirFiles.includes(`${fileName}-next`)) ||
-          (!isFoundationsDir && fileName.includes("-next")))
+        path.extname(file) === ".css"
+        // &&
+        // ((isFoundationsDir && !dirFiles.includes(`${fileName}-next`)) ||
+        //   (!isFoundationsDir && fileName.includes("-next")))
       ) {
-        processFile(filePath, {
-          cssVariables,
-          lightModeVariables,
-          darkModeVariables,
-          hdVariables,
-          mdVariables,
-          ldVariables,
-          tdVariables,
-          openSansHeadingVariables,
-          amplitudeHeadingVariables,
-          openSansActionVariables,
-          amplitudeActionVariables,
-          roundedCornerVariables,
-          sharpCornerVariables,
-        });
+        console.info("Processing", filePath);
+
+        processFileAst(filePath, cssVariables, false);
+        if (themeNext) {
+          // process theme next tokens, if the same token exist, will be overridden
+          processFileAst(filePath, cssVariables, true);
+        }
       }
     }
-    return {
-      light: lightModeVariables,
-      dark: darkModeVariables,
-      high: hdVariables,
-      medium: mdVariables,
-      low: ldVariables,
-      touch: tdVariables,
-      general: cssVariables,
-      openSansHeading: openSansHeadingVariables,
-      amplitudeHeading: amplitudeHeadingVariables,
-      openSansAction: openSansActionVariables,
-      amplitudeAction: amplitudeActionVariables,
-      rounded: roundedCornerVariables,
-      sharp: sharpCornerVariables,
-    };
+    return cssVariables;
   },
 };

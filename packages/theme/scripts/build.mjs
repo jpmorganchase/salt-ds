@@ -9,6 +9,7 @@ const FILES_TO_COPY = [
   "CHANGELOG.md",
   "package.json",
   "json/theme.json",
+  "json/theme-next.json",
 ];
 
 const cwd = process.cwd();
