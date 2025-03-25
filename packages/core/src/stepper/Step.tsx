@@ -25,7 +25,7 @@ import { StepExpandTrigger } from "./internal/StepExpandTrigger";
 import { StepIcon } from "./internal/StepIcon";
 import { StepLabel } from "./internal/StepLabel";
 import { StepScreenReaderOnly } from "./internal/StepScreenReaderOnly";
-import { DepthContext, OrientationContext } from "./internal/StepperProvider";
+import { StepText } from "./internal/StepText";
 
 export interface StepProps
   extends Omit<ComponentPropsWithoutRef<"li">, "onToggle"> {
@@ -183,7 +183,7 @@ export function Step({
         aria-hidden
       />
       {label && (
-        <StepLabel id={labelId} aria-hidden>
+        <StepText id={labelId} purpose="label" aria-hidden>
           <StepAction
             render={
               render ??
@@ -196,13 +196,12 @@ export function Step({
             status={status}
           >
             {label}
-          </StepAction>
-        </StepLabel>
+        </StepText>
       )}
       {description && (
-        <StepDescription id={descriptionId} aria-hidden>
+        <StepText id={descriptionId} purpose="description" aria-hidden>
           {description}
-        </StepDescription>
+        </StepText>
       )}
       {hasNestedSteps && (
         <StepExpandTrigger
