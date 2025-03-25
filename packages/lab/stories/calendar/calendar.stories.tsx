@@ -70,6 +70,7 @@ export const Range: StoryFn<typeof Calendar> = (args) => {
   const endDate = dateAdapter.add(startDate, { days: 4 });
   return (
     <Calendar
+      // biome-ignore lint/suspicious/noExplicitAny: story args
       {...(args as any)}
       defaultSelectedDate={{ startDate, endDate }}
       selectionVariant="range"
@@ -127,6 +128,7 @@ export const Multiselect: StoryFn<typeof Calendar> = ({
   ).date;
   return (
     <Calendar
+      // biome-ignore lint/suspicious/noExplicitAny: story args
       {...(args as any)}
       selectionVariant="multiselect"
       defaultVisibleMonth={defaultVisibleMonth}
@@ -147,6 +149,7 @@ export const Offset: StoryFn<typeof Calendar> = (args) => {
   const endDate = dateAdapter.add(startDate, { days: 4 });
   return (
     <Calendar
+      // biome-ignore lint/suspicious/noExplicitAny: story args
       {...(args as any)}
       defaultSelectedDate={{ startDate, endDate }}
       endDateOffset={endDateOffset}
@@ -170,6 +173,7 @@ export const UnselectableDates: StoryFn<typeof Calendar> = (args) => {
   };
   return (
     <Calendar
+      // biome-ignore lint/suspicious/noExplicitAny: story args
       {...(args as any)}
       selectionVariant="single"
       isDayUnselectable={isDayUnselectable}
@@ -192,6 +196,7 @@ export const DisabledDates: StoryFn<typeof Calendar> = (args) => {
   };
   return (
     <Calendar
+      // biome-ignore lint/suspicious/noExplicitAny: story args
       {...(args as any)}
       selectionVariant="single"
       isDayDisabled={isDayDisabled}
@@ -212,6 +217,7 @@ export const HighlightedDates: StoryFn<typeof Calendar> = (args) => {
   };
   return (
     <Calendar
+      // biome-ignore lint/suspicious/noExplicitAny: story args
       {...(args as any)}
       selectionVariant="single"
       isDayHighlighted={isDayHighlighted}
@@ -224,6 +230,7 @@ export const HighlightedDates: StoryFn<typeof Calendar> = (args) => {
 
 export const HideOutOfRangeDates: StoryFn<typeof Calendar> = (args) => {
   return (
+    // biome-ignore lint/suspicious/noExplicitAny: story args
     <Calendar {...(args as any)} selectionVariant="single" hideOutOfRangeDates>
       <CalendarNavigation />
       <CalendarGrid />
@@ -328,7 +335,9 @@ export const TwinCalendars: StoryFn<
   ...args
 }) => {
   const { dateAdapter } = useLocalization<DateFrameworkType>();
+
   const today = dateAdapter.today();
+  // biome-ignore lint/suspicious/noExplicitAny: date framework dependent
   const [hoveredDate, setHoveredDate] = useState<any | null>(null);
   const handleHoveredDateChange: CalendarProps<DateFrameworkType>["onHoveredDateChange"] =
     (event, newHoveredDate) => {
@@ -356,7 +365,7 @@ export const TwinCalendars: StoryFn<
         setEndVisibleMonth(dateAdapter.add(newVisibleMonth, { months: 1 }));
       }
     },
-    [endVisibleMonth],
+    [dateAdapter, endVisibleMonth],
   );
 
   const handleEndVisibleMonthChange = useCallback(
@@ -378,7 +387,7 @@ export const TwinCalendars: StoryFn<
         );
       }
     },
-    [startVisibleMonth],
+    [dateAdapter, startVisibleMonth],
   );
 
   const [selectedDate, setSelectedDate] =

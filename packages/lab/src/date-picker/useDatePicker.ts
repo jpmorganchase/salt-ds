@@ -235,26 +235,29 @@ export function useDatePicker<
         onApply?.(event, date);
       }
     },
-    [setCancelled, setOpen, onApply],
+    [selectionVariant, setOpen, onApply],
   );
 
-  const checkAndAddError = (
-    date: TDate | null | undefined,
-    checkFunction: ((date: TDate) => string | false | undefined) | undefined,
-    errorType: string,
-    details: {
-      errors?: { type: string; message: string | false | undefined }[];
-    } = {},
-  ) => {
-    const errorMessage = date ? checkFunction?.(date) : false;
-    if (errorMessage) {
-      details.errors = details.errors ?? [];
-      details.errors.push({
-        type: errorType,
-        message: errorMessage,
-      });
-    }
-  };
+  const checkAndAddError = useCallback(
+    (
+      date: TDate | null | undefined,
+      checkFunction: ((date: TDate) => string | false | undefined) | undefined,
+      errorType: string,
+      details: {
+        errors?: { type: string; message: string | false | undefined }[];
+      } = {},
+    ) => {
+      const errorMessage = date ? checkFunction?.(date) : false;
+      if (errorMessage) {
+        details.errors = details.errors ?? [];
+        details.errors.push({
+          type: errorType,
+          message: errorMessage,
+        });
+      }
+    },
+    [],
+  );
 
   const selectSingle = useCallback(
     (
@@ -276,13 +279,14 @@ export function useDatePicker<
       }
     },
     [
+      checkAndAddError,
+      dateAdapter,
       applySingle,
       isDayDisabled,
       isDayUnselectable,
       enableApply,
       onSelectionChange,
       selectionVariant,
-      setSelectedDate,
     ],
   );
 
@@ -294,7 +298,7 @@ export function useDatePicker<
         onApply?.(event, date);
       }
     },
-    [onApply, setCancelled, setOpen, selectionVariant],
+    [onApply, setOpen, selectionVariant],
   );
 
   const selectRange = useCallback(
@@ -344,6 +348,7 @@ export function useDatePicker<
       }
     },
     [
+      checkAndAddError,
       dateAdapter,
       applyRange,
       isDayDisabled,
@@ -351,7 +356,6 @@ export function useDatePicker<
       enableApply,
       onSelectionChange,
       selectionVariant,
-      setSelectedDate,
     ],
   );
 
@@ -361,7 +365,7 @@ export function useDatePicker<
       setOpen(false, event, "cancel");
       onCancel?.();
     },
-    [setCancelled, setOpen, onCancel],
+    [setOpen, onCancel],
   );
 
   const returnValue = {

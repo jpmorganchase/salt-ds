@@ -172,7 +172,7 @@ export const DatePickerRangeInput = forwardRef(function DatePickerRangeInput<
         : defaultRangeValidator(dateAdapter, date, details, minDate, maxDate);
       select(event, date, validatedDetails);
     },
-    [select, minDate, maxDate],
+    [dateAdapter, select, minDate, maxDate, validate],
   );
 
   const handleDateValueChange = useCallback(
@@ -190,7 +190,6 @@ export const DatePickerRangeInput = forwardRef(function DatePickerRangeInput<
     }
   }, [open]);
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: avoid excessive re-rendering
   useEffect(() => {
     if (cancelled) {
       setValue(previousValue.current);

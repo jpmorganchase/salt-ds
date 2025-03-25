@@ -38,6 +38,7 @@ const {
   SingleWithTodayButton,
   SingleWithUnselectableDates,
   SingleCustomFormat,
+  // biome-ignore lint/suspicious/noExplicitAny: storybook stories
 } = datePickerStories as any;
 
 describe("GIVEN a DatePicker where selectionVariant is single", () => {
@@ -192,6 +193,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
         cy.findByRole("textbox").should("have.value", initialDateValue);
         // Verify there is a valid date change event
         cy.get("@selectionChangeSpy").should("have.been.calledOnce");
+        // biome-ignore lint/suspicious/noExplicitAny: spy
         cy.get("@selectionChangeSpy").should((spy: any) => {
           const [_event, date, details] = spy.lastCall.args;
           expect(adapter.isValid(date)).to.be.true;
@@ -207,6 +209,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
         cy.realPress("Tab");
         // Verify there is a invalid date change event
         cy.get("@selectionChangeSpy").should("have.been.calledTwice");
+        // biome-ignore lint/suspicious/noExplicitAny: spy
         cy.get("@selectionChangeSpy").should((spy: any) => {
           const [_event, date, details] = spy.lastCall.args;
           expect(adapter.isValid(date)).to.be.false;
@@ -225,6 +228,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
         cy.realPress("Tab");
         // Verify there is another invalid date change event
         cy.get("@selectionChangeSpy").should("have.callCount", 3);
+        // biome-ignore lint/suspicious/noExplicitAny: spy
         cy.get("@selectionChangeSpy").should((spy: any) => {
           const [_event, date, details] = spy.lastCall.args;
           expect(adapter.isValid(date)).to.be.false;
@@ -246,6 +250,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
         cy.realPress("Tab");
         // Verify there is a valid date change event
         cy.get("@selectionChangeSpy").should("have.callCount", 4);
+        // biome-ignore lint/suspicious/noExplicitAny: spy
         cy.get("@selectionChangeSpy").should((spy: any) => {
           const [_event, date, details] = spy.lastCall.args;
           expect(adapter.isValid(date)).to.be.true;
@@ -317,6 +322,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
         // Verify that the calendar is closed and the selected date is displayed
         cy.findByRole("application").should("not.exist");
         cy.findByRole("textbox").should("have.value", "15 Jan 2031");
+        // biome-ignore lint/suspicious/noExplicitAny: spy
         cy.get("@selectionChangeSpy").should((spy: any) => {
           const [_event, date, details] = spy.lastCall.args;
           expect(adapter.isValid(date)).to.be.true;
@@ -344,6 +350,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
         cy.findByRole("application").should("not.exist");
         cy.realPress("Tab");
         const futureDate = adapter.add(adapter.today(), { years: 15 });
+        // biome-ignore lint/suspicious/noExplicitAny: spy
         cy.get("@selectionChangeSpy").should((spy: any) => {
           const [_event, date, details] = spy.lastCall.args;
           expect(adapter.isValid(date)).to.be.true;
@@ -373,6 +380,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
         cy.findByRole("application").should("not.exist");
         cy.realPress("Tab");
         const today = adapter.today();
+        // biome-ignore lint/suspicious/noExplicitAny: spy
         cy.get("@selectionChangeSpy").should((spy: any) => {
           const [_event, date, details] = spy.lastCall.args;
           expect(adapter.isValid(date)).to.be.true;
@@ -417,6 +425,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
           cy.document()
             .find("input")
             .should("have.value", adapter.format(updatedDate, "DD MMM YYYY"));
+          // biome-ignore lint/suspicious/noExplicitAny: spy
           cy.get("@selectionChangeSpy").should((spy: any) => {
             const [_event, date, details] = spy.lastCall.args;
             expect(adapter.isValid(date)).to.be.true;
@@ -463,6 +472,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
           cy.document()
             .find("input")
             .should("have.value", updatedFormattedDateValue);
+          // biome-ignore lint/suspicious/noExplicitAny: spy
           cy.get("@selectionChangeSpy").should((spy: any) => {
             const [_event, date, details] = spy.lastCall.args;
             expect(adapter.isValid(date)).to.be.true;
@@ -475,6 +485,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
           cy.findByRole("button", { name: "Apply" }).realClick();
           // Verify that the calendar is closed and the new date is applied
           cy.findByRole("application").should("not.exist");
+          // biome-ignore lint/suspicious/noExplicitAny: spy
           cy.get("@appliedDateSpy").should((spy: any) => {
             const [_event, date] = spy.lastCall.args;
             expect(adapter.isValid(date)).to.be.true;
@@ -497,6 +508,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
         cy.findByRole("textbox").click().clear().type(initialDateValue);
         cy.realPress("Tab");
         cy.findByRole("textbox").should("have.value", initialDateValue);
+        // biome-ignore lint/suspicious/noExplicitAny: spy
         cy.get("@selectionChangeSpy").should((spy: any) => {
           const [_event, date, details] = spy.lastCall.args;
           expect(adapter.isValid(date)).to.be.true;
@@ -512,6 +524,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
         cy.realPress("Tab");
         cy.get("@selectionChangeSpy").should("have.been.calledTwice");
         const futureDate = adapter.add(initialDate, { days: 7 });
+        // biome-ignore lint/suspicious/noExplicitAny: spy
         cy.get("@selectionChangeSpy").should((spy: any) => {
           const [_event, date, details] = spy.lastCall.args;
           expect(adapter.isValid(date)).to.be.true;
@@ -729,6 +742,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
           cy.findByRole("textbox").click().clear().type(initialDateValue);
           cy.realPress("Tab");
           cy.findByRole("textbox").should("have.value", initialDateValue);
+          // biome-ignore lint/suspicious/noExplicitAny: spy
           cy.get("@selectionChangeSpy").should((spy: any) => {
             const [_event, date, details] = spy.lastCall.args;
             expect(adapter.isValid(date)).to.be.true;
