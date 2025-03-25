@@ -1,10 +1,10 @@
 import { describe, expect, it } from "vitest";
 
 import type { StepRecord } from "../../../stepper";
-import { stepReducer } from "../../../stepper/internal/StepReducer";
+import { StepReducer } from "../../../stepper/internal/StepReducer";
 import { initStepReducerState } from "../../../stepper/internal/utils";
 
-describe("stepReducer", () => {
+describe("StepReducer", () => {
   describe("next", () => {
     it("should move to next step if there is one", () => {
       const steps: StepRecord[] = [
@@ -14,7 +14,7 @@ describe("stepReducer", () => {
       ];
 
       let state = initStepReducerState(steps);
-      state = stepReducer(state, { type: "next" });
+      state = StepReducer(state, { type: "next" });
 
       expect(state.started).toBe(true);
       expect(state.ended).toBe(false);
@@ -23,7 +23,7 @@ describe("stepReducer", () => {
       expect(state.previousStep).toHaveProperty("id", "1");
       expect(state.nextStep).toHaveProperty("id", "3");
 
-      state = stepReducer(state, { type: "next" });
+      state = StepReducer(state, { type: "next" });
 
       expect(state.started).toBe(true);
       expect(state.ended).toBe(false);
@@ -33,7 +33,7 @@ describe("stepReducer", () => {
 
       expect(state.nextStep).toBe(null);
 
-      state = stepReducer(state, { type: "next" });
+      state = StepReducer(state, { type: "next" });
 
       expect(state.started).toBe(true);
       expect(state.ended).toBe(true);
@@ -42,7 +42,7 @@ describe("stepReducer", () => {
       expect(state.previousStep).toHaveProperty("id", "3");
       expect(state.nextStep).toBe(null);
 
-      state = stepReducer(state, { type: "next" });
+      state = StepReducer(state, { type: "next" });
 
       expect(state.started).toBe(true);
       expect(state.ended).toBe(true);
@@ -62,7 +62,7 @@ describe("stepReducer", () => {
       ];
 
       let state = initStepReducerState(steps);
-      state = stepReducer(state, { type: "previous" });
+      state = StepReducer(state, { type: "previous" });
 
       expect(state.started).toBe(true);
       expect(state.ended).toBe(false);
@@ -71,7 +71,7 @@ describe("stepReducer", () => {
       expect(state.previousStep).toHaveProperty("id", "1");
       expect(state.nextStep).toHaveProperty("id", "3");
 
-      state = stepReducer(state, { type: "previous" });
+      state = StepReducer(state, { type: "previous" });
 
       expect(state.started).toBe(true);
       expect(state.ended).toBe(false);
@@ -80,7 +80,7 @@ describe("stepReducer", () => {
       expect(state.previousStep).toBe(null);
       expect(state.nextStep).toHaveProperty("id", "2");
 
-      state = stepReducer(state, { type: "previous" });
+      state = StepReducer(state, { type: "previous" });
 
       expect(state.started).toBe(false);
       expect(state.ended).toBe(false);
@@ -89,7 +89,7 @@ describe("stepReducer", () => {
       expect(state.previousStep).toBe(null);
       expect(state.nextStep).toHaveProperty("id", "1");
 
-      state = stepReducer(state, { type: "previous" });
+      state = StepReducer(state, { type: "previous" });
     });
   });
 
@@ -102,7 +102,7 @@ describe("stepReducer", () => {
       ];
 
       let state = initStepReducerState(steps);
-      state = stepReducer(state, { type: "status/error" });
+      state = StepReducer(state, { type: "status/error" });
 
       expect(state.started).toBe(true);
       expect(state.ended).toBe(false);
@@ -112,8 +112,8 @@ describe("stepReducer", () => {
       expect(state.previousStep).toHaveProperty("id", "1");
       expect(state.nextStep).toHaveProperty("id", "3");
 
-      expect(stepReducer(state, { type: "next" })).toBe(state);
-      expect(stepReducer(state, { type: "previous" })).toBe(state);
+      expect(StepReducer(state, { type: "next" })).toBe(state);
+      expect(StepReducer(state, { type: "previous" })).toBe(state);
     });
   });
 
@@ -125,7 +125,7 @@ describe("stepReducer", () => {
         { id: "3" },
       ];
 
-      const state = stepReducer(initStepReducerState(steps), {
+      const state = StepReducer(initStepReducerState(steps), {
         type: "status/clear",
       });
 
@@ -147,7 +147,7 @@ describe("stepReducer", () => {
         { id: "3" },
       ];
 
-      const state = stepReducer(initStepReducerState(steps), { type: "reset" });
+      const state = StepReducer(initStepReducerState(steps), { type: "reset" });
 
       expect(state.started).toBe(true);
       expect(state.ended).toBe(false);
@@ -169,7 +169,7 @@ describe("stepReducer", () => {
       let state = initStepReducerState(steps);
 
       // Use the "goto" action to jump to step with id "2"
-      state = stepReducer(state, { type: "goto", stepId: "2" });
+      state = StepReducer(state, { type: "goto", payload: "2" });
 
       expect(state.started).toBe(true);
       expect(state.ended).toBe(false);
@@ -179,7 +179,7 @@ describe("stepReducer", () => {
       expect(state.nextStep).toHaveProperty("id", "3");
 
       // Use the "goto" action to jump to the last step with id "3"
-      state = stepReducer(state, { type: "goto", stepId: "3" });
+      state = StepReducer(state, { type: "goto", payload: "3" });
 
       expect(state.started).toBe(true);
       expect(state.ended).toBe(true);
@@ -189,7 +189,7 @@ describe("stepReducer", () => {
       expect(state.nextStep).toBe(null);
 
       // Use the "goto" action to jump to the first step with id "1"
-      state = stepReducer(state, { type: "goto", stepId: "1" });
+      state = StepReducer(state, { type: "goto", payload: "1" });
 
       expect(state.started).toBe(true);
       expect(state.ended).toBe(false);
