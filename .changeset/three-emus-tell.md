@@ -34,7 +34,28 @@
 
 Note: `DatePickerRangePanel` remains unchanged and provides a dual `Calendar` date view, with individual month/year dropdowns for the start and end date range.
 
+- `CalendarWeekHeader` is now rendered by `CalendarGrid` and can be customized using the `CalendarWeekHeaderProps` prop.
+- `CalendarMonthHeader` is now rendered by `CalendarGrid` and can be customized using the `CalendarMonthHeaderProps` prop.
 - A new `CalendarMonthHeader` component has been added, used by `CalendarGrid` to display a multi-month grid of `Calendar` components.
+- `DatePickerRangePanel` props `StartCalendarWeekHeaderProps` and `EndCalendarWeekHeaderProps` removed.
+  Pass props to `CalendarWeekHeader` using `StartCalendarGridProps -> CalendarWeekHeaderProps` and `EndCalendarGridProps -> CalendarWeekHeaderProps`.
+
+```
+<DatePicker
+  selectionVariant="range"
+>
+  <DatePickerTrigger>
+    <DatePickerRangeInput />
+  </DatePickerTrigger>
+  <DatePickerOverlay>
+    <DatePickerRangePanel
+     StartCalendarGridProps={{ CalendarWeekHeaderProps: { "data-test-id" : "some value" }}}
+     EndCalendarGridProps={{ CalendarWeekHeaderProps: { "data-test-id" : "some value" }}}
+     />
+  </DatePickerOverlay>
+</DatePicker>
+```
+
 - `DatePicker` now supports `isDayDisabled`, `isDayUnselectable`, and `isDayHighlighted` props, rather than providing them through the `Calendar` props.
 - The `DatePickerOverlayProvider` prop `onOpenChange` has changed signature and `event` has been removed, to create a consistent API with other components.
 
