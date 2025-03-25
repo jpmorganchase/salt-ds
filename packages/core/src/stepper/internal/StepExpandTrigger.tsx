@@ -31,8 +31,8 @@ export function StepExpandTrigger({
   return (
     <Button
       id={id}
-      appearance="transparent"
       sentiment="neutral"
+      appearance="transparent"
       className={clsx(withBaseName(), className)}
       {...props}
     >

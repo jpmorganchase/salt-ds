@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 
 import type { StepRecord } from "../../../stepper";
-import { stepReducer } from "../../../stepper/internal/stepReducer";
+import { stepReducer } from "../../../stepper/internal/StepReducer";
 import { initStepReducerState } from "../../../stepper/internal/utils";
 
 describe("stepReducer", () => {

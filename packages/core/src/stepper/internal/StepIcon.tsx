@@ -50,7 +50,7 @@ function useStepIcon({
 }: Pick<StepIconProps, "stage" | "status">) {
   const icons = useIcon();
 
-  const stepIconMap = useMemo(
+  const stateToIcon = useMemo(
     () => ({
       error: icons.ErrorIcon,
       warning: icons.WarningIcon,
@@ -63,5 +63,5 @@ function useStepIcon({
     [icons],
   );
 
-  return stepIconMap[status || stage];
+  return stateToIcon[status || stage];
 }
