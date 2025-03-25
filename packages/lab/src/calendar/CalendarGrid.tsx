@@ -96,7 +96,7 @@ export const CalendarGrid = forwardRef<
           });
           return (
             <GridItem
-              key={`calendar-grid-item-${dateAdapter.format(visibleMonth, "MMMM YYYY")}`}
+              key={`calendar-grid-item-${dateAdapter.format(gridItemVisibleMonth, "MMMM YYYY")}`}
             >
               {numberOfVisibleMonths > 1 ? (
                 <CalendarMonthHeader month={gridItemVisibleMonth} />
