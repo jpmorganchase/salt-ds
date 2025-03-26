@@ -383,7 +383,7 @@ chai.use(hasFocusVisible);
  * Checks if the class includes the expected highlighted class
  *
  * @example
- * cy.findByRole('option).should('be.ariaSelected')
+ * cy.findByRole('option).should('be.highlighted')
  */
 const hasAriaSelected: ChaiPlugin = (_chai, utils) => {
   function assertHasAriaSelected(this: AssertionStatic) {
@@ -414,42 +414,6 @@ const hasAriaSelected: ChaiPlugin = (_chai, utils) => {
 
 // registers our assertion function "isHighlighted" with Chai
 chai.use(hasAriaSelected);
-
-/**
- * Checks if the class includes the expected highlighted class
- *
- * @example
- * cy.findByRole('option).should('be.ariaChecked')
- */
-const hasAriaChecked: ChaiPlugin = (_chai, utils) => {
-  function assertHasAriaChecked(this: AssertionStatic) {
-    const root = this._obj.get(0);
-    // make sure it's an Element
-    new _chai.Assertion(
-      root.nodeType,
-      `Expected an Element but got '${String(root)}'`,
-    ).to.equal(1);
-
-    const ariaChecked = this._obj.attr("aria-checked");
-
-    this.assert(
-      ariaChecked === "true",
-      `expected \n${elementToString(
-        root,
-      )} to have aria-checked #{exp}, got #{act} instead.`,
-      `expected \n${elementToString(
-        root,
-      )} to have aria-checked = #{exp}, got #{act} instead`,
-      "true",
-      ariaChecked,
-    );
-  }
-
-  _chai.Assertion.addMethod("ariaChecked", assertHasAriaChecked);
-};
-
-// registers our assertion function "isHighlighted" with Chai
-chai.use(hasAriaChecked);
 
 /**
  * Checks if the element is in the viewport
