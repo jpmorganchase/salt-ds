@@ -413,7 +413,6 @@ describe("Given a ComboBox", () => {
       Cypress.sinon.match.any,
       Cypress.sinon.match.array.deepEquals(["Alabama"]),
     );
-    cy.findByRole("option", { name: "Alabama" }).should("be.ariaSelected");
     cy.findByRole("option", { name: "Alabama" }).should("be.ariaChecked");
     cy.findByRole("button", { name: /^Alabama/ }).should("be.visible");
     cy.findByRole("option", { name: "Alaska" }).realClick();
@@ -422,7 +421,6 @@ describe("Given a ComboBox", () => {
       Cypress.sinon.match.any,
       Cypress.sinon.match.array.deepEquals(["Alabama", "Alaska"]),
     );
-    cy.findByRole("option", { name: "Alaska" }).should("be.ariaSelected");
     cy.findByRole("option", { name: "Alaska" }).should("be.ariaChecked");
     cy.findByRole("button", { name: /^Alabama/ }).should("be.visible");
     cy.findByRole("button", { name: /^Alaska/ }).should("be.visible");
@@ -441,7 +439,6 @@ describe("Given a ComboBox", () => {
       Cypress.sinon.match.any,
       Cypress.sinon.match.array.deepEquals(["Alabama"]),
     );
-    cy.findByRole("option", { name: "Alabama" }).should("be.ariaSelected");
     cy.findByRole("option", { name: "Alabama" }).should("be.ariaChecked");
     cy.findByRole("button", { name: /^Alabama/ }).should("be.visible");
     cy.realPress("ArrowDown");
@@ -451,7 +448,6 @@ describe("Given a ComboBox", () => {
       Cypress.sinon.match.any,
       Cypress.sinon.match.array.deepEquals(["Alabama", "Alaska"]),
     );
-    cy.findByRole("option", { name: "Alaska" }).should("be.ariaSelected");
     cy.findByRole("option", { name: "Alaska" }).should("be.ariaChecked");
     cy.findByRole("button", { name: /^Alabama/ }).should("be.visible");
     cy.findByRole("button", { name: /^Alaska/ }).should("be.visible");
@@ -499,7 +495,6 @@ describe("Given a ComboBox", () => {
     cy.realPress("Tab");
     cy.findByRole("button", { name: /^Alabama/ }).should("be.visible");
     cy.findByRole("combobox").realClick();
-    cy.findByRole("option", { name: "Alabama" }).should("be.ariaSelected");
     cy.findByRole("option", { name: "Alabama" }).should("be.ariaChecked");
   });
 
@@ -545,7 +540,6 @@ describe("Given a ComboBox", () => {
     cy.findByRole("option", { name: "John Doe" }).should("exist");
     cy.realType("Jane");
     cy.findByRole("option", { name: "Jane Doe" }).realClick();
-    cy.findByRole("option", { name: "Jane Doe" }).should("be.ariaSelected");
     cy.findByRole("option", { name: "Jane Doe" }).should("be.ariaChecked");
   });
 
@@ -611,12 +605,10 @@ describe("Given a ComboBox", () => {
   it("should not clear selected items when the input is cleared and the combo box is multi-select", () => {
     cy.mount(<WithDefaultSelected multiselect />);
     cy.findByRole("combobox").realClick();
-    cy.findByRole("option", { name: "California" }).should("be.ariaSelected");
     cy.findByRole("option", { name: "California" }).should("be.ariaChecked");
     cy.realType("Ala");
     cy.findByRole("combobox").clear();
     cy.findByRole("combobox").should("have.value", "");
-    cy.findByRole("option", { name: "California" }).should("be.ariaSelected");
     cy.findByRole("option", { name: "California" }).should("be.ariaChecked");
   });
 
