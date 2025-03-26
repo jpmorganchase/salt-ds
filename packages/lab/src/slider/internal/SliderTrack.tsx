@@ -4,14 +4,16 @@ import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import { type HTMLAttributes, type RefObject, forwardRef } from "react";
 import sliderTrackCss from "./SliderTrack.css";
-import { calculateMarkPosition } from "./utils";
+import { calculateMarkPosition, calculatePercentage } from "./utils";
 
 const withBaseName = makePrefixer("saltSliderTrack");
 
 interface SliderTrackProps
   extends Omit<HTMLAttributes<HTMLDivElement>, "onChange" | "defaultValue"> {
   children: React.ReactNode;
+  constrainLabelPosition?: boolean;
   disabled: boolean;
+  showTicks?: boolean;
   format?: (value: number) => string | number;
   handlePointerDown: (event: React.PointerEvent<HTMLDivElement>) => void;
   isDragging: boolean;
@@ -30,7 +32,10 @@ export const SliderTrack = forwardRef<HTMLDivElement, SliderTrackProps>(
   function SliderTrack(
     {
       children,
+      className,
+      constrainLabelPosition = false,
       disabled,
+      showTicks,
       format,
       handlePointerDown,
       isDragging,
@@ -40,8 +45,8 @@ export const SliderTrack = forwardRef<HTMLDivElement, SliderTrackProps>(
       maxLabel,
       min,
       minLabel,
-      progressPercentage,
-      progressPercentageRange,
+      progressPercentage = 0,
+      progressPercentageRange = [0, 0],
       sliderRef,
       ...rest
     },
@@ -54,13 +59,45 @@ export const SliderTrack = forwardRef<HTMLDivElement, SliderTrackProps>(
       window: targetWindow,
     });
 
+    const checkIsMarkSelected = (value: number) => {
+      const markPercentage = calculatePercentage(value, max, min);
+      if (isRange) {
+        return (
+          markPercentage > progressPercentageRange[0] &&
+          markPercentage < progressPercentageRange[1]
+        );
+      }
+      return markPercentage < progressPercentage;
+    };
+
+    const checkIsMarkOverlapped = (value: number) => {
+      const markPercentage = calculatePercentage(value, max, min);
+      if (isRange) {
+        return (
+          markPercentage === progressPercentageRange[0] ||
+          markPercentage === progressPercentageRange[1]
+        );
+      }
+      return markPercentage === progressPercentage;
+    };
+
+    const hasMinTick = () => {
+      return marks?.some((mark) => mark.value === min) || false;
+    };
+
+    const hasMaxTick = () => {
+      return marks?.some((mark) => mark.value === max) || false;
+    };
+
     return (
       <div
-        className={clsx(withBaseName(), {
+        className={clsx(withBaseName(), className, {
           [withBaseName("disabled")]: disabled,
           [withBaseName("dragging")]: isDragging,
           [withBaseName("range")]: isRange,
           [withBaseName("withMarks")]: marks,
+          [withBaseName("constrainLabelPosition")]: constrainLabelPosition,
+          [withBaseName("withMarkTicks")]: showTicks,
         })}
         data-testid="sliderTrack"
         ref={ref}
@@ -81,7 +118,10 @@ export const SliderTrack = forwardRef<HTMLDivElement, SliderTrackProps>(
           {/* Slider Track */}
           <div className={withBaseName("wrapper")}>
             <div
-              className={clsx(withBaseName("rail"))}
+              className={clsx(withBaseName("rail"), {
+                [withBaseName("hasMinTick")]: hasMinTick() && showTicks,
+                [withBaseName("hasMaxTick")]: hasMaxTick() && showTicks,
+              })}
               onPointerDown={handlePointerDown}
               ref={sliderRef}
               style={
@@ -106,22 +146,40 @@ export const SliderTrack = forwardRef<HTMLDivElement, SliderTrackProps>(
               <div className={withBaseName("marks")}>
                 {marks.map(({ label, value }) => {
                   return (
-                    <Text
-                      aria-hidden
-                      className={withBaseName("markLabel")}
-                      data-testid="mark"
-                      disabled={disabled}
-                      color="secondary"
+                    <div
+                      className={withBaseName("mark")}
                       key={value}
-                      styleAs="label"
                       style={
                         {
                           "--slider-mark-percentage": `${calculateMarkPosition(value, max, min)}%`,
                         } as React.CSSProperties
                       }
                     >
-                      {label}
-                    </Text>
+                      <div
+                        className={clsx(
+                          withBaseName("markTick"),
+                          {
+                            [withBaseName("markSelected")]:
+                              checkIsMarkSelected(value),
+                          },
+                          {
+                            [withBaseName("markTickHidden")]:
+                              checkIsMarkOverlapped(value),
+                          },
+                        )}
+                        data-testid="markTick"
+                      />
+                      <Text
+                        aria-hidden
+                        className={withBaseName("markLabel")}
+                        data-testid="mark"
+                        disabled={disabled}
+                        color="secondary"
+                        styleAs="label"
+                      >
+                        {label}
+                      </Text>
+                    </div>
                   );
                 })}
               </div>

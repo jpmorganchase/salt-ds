@@ -1,12 +1,12 @@
 .saltSliderTrack {
+  --slider-track-background: var(--salt-track-borderColor);
+  --slider-track-fill: var(--salt-accent-borderColor);
   --slider-progressPercentage: 0%;
   /* For range */
   --slider-progressPercentageStart: 0%;
   --slider-progressPercentageEnd: 0%;
 
   --slider-mark-percentage: 0%;
-  --slider-track-background: var(--salt-track-borderColor);
-  --slider-track-fill: var(--salt-accent-borderColor);
 
   display: flex;
   width: 100%;
@@ -56,21 +56,29 @@
   width: calc(var(--slider-progressPercentage) - (var(--salt-size-border-strong) / 2));
 }
 
+.saltSliderTrack-hasMinTick.saltSliderTrack-rail::before {
+  border-bottom-left-radius: unset;
+}
+
 .saltSliderTrack-rail::after {
   background: var(--slider-track-background);
   border-top-right-radius: var(--salt-palette-corner-weaker);
   border-bottom-right-radius: var(--salt-palette-corner-weaker);
-  width: calc(100% - var(--slider-progressPercentage) - (var(--salt-size-border-strong) / 2));
+  width: calc(100% - var(--slider-progressPercentage) - (var(--salt-size-border-strong) * 2));
+}
+
+.saltSliderTrack-hasMaxTick.saltSliderTrack-rail::after {
+  border-bottom-right-radius: unset;
 }
 
 .saltSliderTrack-range .saltSliderTrack-rail::before {
   background: var(--slider-track-background);
-  width: calc(var(--slider-progressPercentageStart) - (var(--salt-size-border-strong) / 2));
+  width: calc(var(--slider-progressPercentageStart) - (var(--salt-size-border-strong) * 2));
 }
 
 .saltSliderTrack-range .saltSliderTrack-rail::after {
   background: var(--slider-track-background);
-  width: calc(100% - var(--slider-progressPercentageEnd) - (var(--salt-size-border-strong) / 2));
+  width: calc(100% - var(--slider-progressPercentageEnd) - (var(--salt-size-border-strong) * 2));
 }
 
 .saltSliderTrack-range .saltSliderTrack-rail .saltSliderTrack-fill {
@@ -104,11 +112,57 @@
   position: absolute;
   user-select: none;
   width: 100%;
-  top: var(--salt-size-base);
+  top: calc((var(--salt-size-base) / 2) + (var(--salt-size-bar) / 2));
+}
+
+.saltSliderTrack-mark {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  justify-content: center;
+  left: var(--slider-mark-percentage);
+  transform: translateX(-50%);
+  gap: 4px;
 }
 
 .saltSliderTrack-markLabel {
-  position: absolute;
-  left: var(--slider-mark-percentage);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.saltSliderTrack-markTick {
+  height: 5px;
+  width: var(--salt-size-border-strong);
+  background: var(--slider-track-background);
+  visibility: hidden;
+}
+
+.saltSliderTrack-withMarkTicks .saltSliderTrack-markTick {
+  visibility: visible;
+}
+
+.saltSliderTrack-withMarkTicks .saltSliderTrack-markTickHidden {
+  visibility: hidden;
+}
+
+.saltSliderTrack-mark:last-of-type .saltSliderTrack-markTick {
+  transform: translateX(-50%);
+}
+
+.saltSliderTrack-mark:first-of-type .saltSliderTrack-markTick {
+  transform: translateX(50%);
+}
+
+.saltSliderTrack-markSelected {
+  background: var(--slider-track-fill);
+}
+
+.saltSliderTrack-constrainLabelPosition .saltSliderTrack-mark:first-of-type .saltSliderTrack-markLabel {
+  transform: translateX(50%);
+}
+
+.saltSliderTrack-constrainLabelPosition .saltSliderTrack-mark:last-of-type .saltSliderTrack-markLabel {
   transform: translateX(-50%);
 }

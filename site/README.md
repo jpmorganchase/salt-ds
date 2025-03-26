@@ -25,5 +25,6 @@ SNAPSHOT_MODE=active
 Run the following command and navigate to `http://localhost:3000/salt/index`.
 
 ```
+yarn gen:snapshot
 yarn serve
 ```

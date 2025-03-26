@@ -1,5 +1,11 @@
 # @salt-ds/theme
 
+## 1.28.0
+
+### Minor Changes
+
+- ea8b4e3: Added new `--salt-content-attention-foreground` token.
+
 ## 1.27.0
 
 ### Minor Changes
