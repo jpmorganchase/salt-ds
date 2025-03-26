@@ -18,7 +18,6 @@ import {
   SendIcon,
 } from "@salt-ds/icons";
 import type { Meta } from "@storybook/react";
-import clsx from "clsx";
 import { useRef, useState } from "react";
 
 import "./splitter.stories.css";

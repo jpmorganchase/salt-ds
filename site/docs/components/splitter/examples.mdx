@@ -84,8 +84,8 @@ Collapsing, expanding or resizing a `SplitPanel` can be controlled externally us
 
 <LivePreview componentName="splitter" exampleName="ProgrammableResize" />
 
-## Overflow
+## Local Persistence
 
-`SplitPanel` clips it's content by default, to avoid showing scrollbars while resizing. Content can still be configured to overflow within a panel though.
+The `autoSaveId` prop can be used to persist the size of each `SplitPanel`. This allows the layout to be restored to its previous state when the user refreshes to the page.
 
-<LivePreview componentName="splitter" exampleName="Overflow" />
+<LivePreview componentName="splitter" exampleName="LocalPersistence" />

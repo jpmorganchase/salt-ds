@@ -9,5 +9,4 @@ export * from "./Collapsible";
 export * from "./CollapsibleContainerQuery";
 export * from "./CollapsibleTo0";
 export * from "./ProgrammableResize";
-export * from "./Overflow";
 export * from "./LocalPersistence";

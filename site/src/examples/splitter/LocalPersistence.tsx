@@ -13,11 +13,11 @@ export function LocalPersistence() {
     <FlexLayout className={styles.box}>
       <Splitter orientation="vertical" autoSaveId="splitter-persistence">
         <SplitPanel id="left" className={styles.center}>
-          <Text>1. Resize the panel</Text>
+          <Text>Left</Text>
         </SplitPanel>
         <SplitHandle aria-label="Resize Left/Right" />
         <SplitPanel id="right" className={styles.center}>
-          <Text>2. Refresh the page</Text>
+          <Text>Right</Text>
         </SplitPanel>
       </Splitter>
     </FlexLayout>
