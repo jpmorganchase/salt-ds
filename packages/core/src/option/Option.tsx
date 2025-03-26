@@ -112,8 +112,7 @@ export const Option = forwardRef<HTMLDivElement, OptionProps>(
     return (
       <div
         aria-disabled={disabled ? "true" : undefined}
-        aria-selected={multiselect ? undefined : selected}
-        aria-checked={multiselect ? selected : undefined}
+        aria-selected={selected}
         className={clsx(
           withBaseName(),
           {

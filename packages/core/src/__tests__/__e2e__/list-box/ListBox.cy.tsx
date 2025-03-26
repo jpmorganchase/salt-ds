@@ -146,14 +146,22 @@ describe("GIVEN a List box", () => {
       Cypress.sinon.match.any,
       Cypress.sinon.match.array.deepEquals(["Alabama"]),
     );
-    cy.findByRole("option", { name: "Alabama" }).should("be.ariaChecked");
+    cy.findByRole("option", { name: "Alabama" }).should(
+      "have.attr",
+      "aria-selected",
+      "true",
+    );
     cy.findByRole("option", { name: "Alaska" }).realClick();
     cy.get("@selectionChange").should(
       "have.been.calledWith",
       Cypress.sinon.match.any,
       Cypress.sinon.match.array.deepEquals(["Alabama", "Alaska"]),
     );
-    cy.findByRole("option", { name: "Alaska" }).should("be.ariaChecked");
+    cy.findByRole("option", { name: "Alaska" }).should(
+      "have.attr",
+      "aria-selected",
+      "true",
+    );
   });
 
   it("should allow multiple options to be selected with the keyboard", () => {
@@ -166,7 +174,11 @@ describe("GIVEN a List box", () => {
       Cypress.sinon.match.any,
       Cypress.sinon.match.array.deepEquals(["Alabama"]),
     );
-    cy.findByRole("option", { name: "Alabama" }).should("be.ariaChecked");
+    cy.findByRole("option", { name: "Alabama" }).should(
+      "have.attr",
+      "aria-selected",
+      "true",
+    );
     cy.realPress("ArrowDown");
     cy.realPress("Enter");
     cy.get("@selectionChange").should(
@@ -174,7 +186,11 @@ describe("GIVEN a List box", () => {
       Cypress.sinon.match.any,
       Cypress.sinon.match.array.deepEquals(["Alabama", "Alaska"]),
     );
-    cy.findByRole("option", { name: "Alaska" }).should("be.ariaChecked");
+    cy.findByRole("option", { name: "Alaska" }).should(
+      "have.attr",
+      "aria-selected",
+      "true",
+    );
   });
 
   it("should support grouping", () => {
