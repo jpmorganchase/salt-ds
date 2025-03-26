@@ -3,7 +3,7 @@ import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
-  type HTMLAttributes,
+  type ComponentProps,
   type ReactNode,
   forwardRef,
   useContext,
@@ -18,7 +18,10 @@ import {
 import carouselSlideCss from "./CarouselSlide.css";
 import { useIntersectionObserver } from "./useIntersectionObserver";
 
-export interface CarouselSlideProps extends HTMLAttributes<HTMLDivElement> {
+export type CarouselSlideId = string;
+export type CarouselSlideElement = HTMLDivElement;
+
+export interface CarouselSlideProps extends ComponentProps<"div"> {
   /**
    * Actions to be displayed in the content footer.
    **/
@@ -94,6 +97,7 @@ export const CarouselSlide = forwardRef<HTMLDivElement, CarouselSlideProps>(
           : undefined,
       ...style,
     };
+
     const ref = useForkRef(refProp, slideRef);
     const helperText = `${firstVisibleSlideIndex + 1} of ${slideCount}`;
     return (

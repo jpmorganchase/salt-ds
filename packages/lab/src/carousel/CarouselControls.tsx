@@ -67,8 +67,8 @@ export const CarouselControls = forwardRef<
   const slideCount = slides.size;
   const { NextIcon, PreviousIcon } = useIcon();
 
-  const prevButtonRef = useRef<HTMLButtonElement | null>(null);
-  const nextButtonRef = useRef<HTMLButtonElement | null>(null);
+  const prevButtonRef = useRef<HTMLButtonElement>(null);
+  const nextButtonRef = useRef<HTMLButtonElement>(null);
 
   const slideIds = [...slides.keys()];
 
