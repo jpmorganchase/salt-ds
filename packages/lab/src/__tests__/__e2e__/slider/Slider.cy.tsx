@@ -310,10 +310,12 @@ describe("Given a Slider", () => {
     cy.findByText("Custom Max Label").should("exist");
   });
 
-  it("should be disabled when set", () => {
+  it("should be disabled when set and not receive focus", () => {
     cy.mount(<Default disabled defaultValue={2} />);
 
     cy.findByRole("slider").should("be.disabled");
+    cy.realPress("Tab");
+    cy.findByRole("slider").should("not.be.focused");
   });
 
   it("should format the tooltip text when a format function is passed", () => {

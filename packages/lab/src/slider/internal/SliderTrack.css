@@ -38,6 +38,15 @@
   width: 100%;
 }
 
+.saltSliderTrack-disabled,
+.saltSliderTrack-disabled .saltSliderTrack-wrapper {
+  cursor: var(--salt-selectable-cursor-disabled);
+}
+
+.saltSliderTrack-disabled .saltSliderTrack-wrapper {
+  pointer-events: none;
+}
+
 .saltSliderTrack-rail {
   display: flex;
   flex: 100%;
@@ -106,10 +115,6 @@
 .saltSliderTrack-disabled {
   --slider-track-fill: var(--salt-accent-borderColor-disabled);
   --slider-track-background: var(--salt-track-borderColor-disabled);
-}
-
-.saltSliderTrack-disabled .saltSliderTrack-rail {
-  pointer-events: none;
 }
 
 .saltSliderTrack-ticks {
