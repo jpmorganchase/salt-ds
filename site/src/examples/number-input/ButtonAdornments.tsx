@@ -22,7 +22,7 @@ const ResetAdornment = () => {
   const [value, setValue] = useState<number | string>(defaultValue);
   const [accessibleText, setAccessibleText] = useState("");
 
-  const formFieldLabel = "Number Input with Refresh adornment";
+  const formFieldLabel = "Number Input with Reset adornment";
   const accessibleTextId = useId();
 
   const clearAccessibleText = () =>
