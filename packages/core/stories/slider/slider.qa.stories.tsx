@@ -1,9 +1,9 @@
-import { Slider } from "@salt-ds/lab";
+import { Slider } from "@salt-ds/core";
 import type { Meta, StoryFn } from "@storybook/react";
 import { QAContainer, type QAContainerProps } from "docs/components";
 
 export default {
-  title: "Lab/Slider/Slider QA",
+  title: "Core/Slider/Slider QA",
   component: Slider,
 } as Meta<typeof Slider>;
 

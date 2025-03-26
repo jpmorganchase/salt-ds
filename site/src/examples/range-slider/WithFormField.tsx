@@ -1,5 +1,4 @@
-import { FormField, FormFieldLabel } from "@salt-ds/core";
-import { RangeSlider } from "@salt-ds/lab";
+import { FormField, FormFieldLabel, RangeSlider } from "@salt-ds/core";
 import type { ReactElement } from "react";
 
 export const WithFormField = (): ReactElement => {

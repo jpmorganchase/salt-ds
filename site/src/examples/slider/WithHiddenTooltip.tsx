@@ -1,4 +1,4 @@
-import { Slider } from "@salt-ds/lab";
+import { Slider } from "@salt-ds/core";
 
 export const WithHiddenTooltip = () => (
   <Slider
