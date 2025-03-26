@@ -2,7 +2,7 @@
 "@salt-ds/lab": patch
 ---
 
-Improved QA stories and added design updates, including
+Added design updates, including
 
 - white gap on both sides of the `Slider` and `RangeSlider` thumbs.
 - increased spacing between inline labels and track.
