@@ -348,3 +348,15 @@ export const CustomButtons: StoryFn<NumberInputProps> = (args) => {
     </FormField>
   );
 };
+
+export const HiddenButtons: StoryFn<NumberInputProps> = (args) => {
+  return (
+    <FormField>
+      <FormFieldLabel>Number Input</FormFieldLabel>
+      <NumberInput {...args} />
+    </FormField>
+  );
+};
+HiddenButtons.args = {
+  hideButtons: true,
+};
