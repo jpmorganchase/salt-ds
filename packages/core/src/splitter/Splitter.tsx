@@ -5,6 +5,7 @@ import {
   type PanelGroupProps,
 } from "react-resizable-panels";
 
+export type SplitterRef = ImperativePanelGroupHandle;
 export type SplitterAppearance = "bordered" | "transparent";
 export type SplitterOrientation = "horizontal" | "vertical";
 
@@ -29,7 +30,7 @@ export interface SplitterProps extends Omit<PanelGroupProps, "direction"> {
   children: ReactNode;
 }
 
-export const Splitter = forwardRef<ImperativePanelGroupHandle, SplitterProps>(
+export const Splitter = forwardRef<SplitterRef, SplitterProps>(
   function Splitter(
     { orientation, appearance: appearanceProp, ...props },
     ref,

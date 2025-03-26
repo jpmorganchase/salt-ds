@@ -1,13 +1,9 @@
 import {
   Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogHeader,
   FlexLayout,
-  type ImperativePanelHandle,
   SplitHandle,
   SplitPanel,
+  type SplitPanelRef,
   Splitter,
   StackLayout,
   Text,
@@ -271,7 +267,7 @@ export function CollapsibleContainerQuery() {
 }
 
 export function CollapsibleTo0() {
-  const ref = useRef<ImperativePanelHandle>(null);
+  const ref = useRef<SplitPanelRef>(null);
   const [expanded, setExpanded] = useState(true);
 
   function toggle() {
@@ -322,7 +318,7 @@ export function CollapsibleTo0() {
 }
 
 export function ProgrammableResize() {
-  const ref = useRef<ImperativePanelHandle>(null);
+  const ref = useRef<SplitPanelRef>(null);
 
   function handleResizeLeft(size: number) {
     return () => {
@@ -361,156 +357,13 @@ export function LocalPersistence() {
     <FlexLayout className="box">
       <Splitter orientation="vertical" autoSaveId="splitter-persistence">
         <SplitPanel id="left" className="center">
-          <Text>1. Resize the panel</Text>
+          <Text>Left</Text>
         </SplitPanel>
         <SplitHandle aria-label="Resize Left/Right" />
         <SplitPanel id="right" className="center">
-          <Text>2. Refresh the page</Text>
+          <Text>Right</Text>
         </SplitPanel>
       </Splitter>
     </FlexLayout>
   );
 }
-
-const nameToQuote = new Map([
-  ["Leonardo", "Simplicity is the ultimate sophistication."],
-  ["Albert", "Imagination is more important than knowledge."],
-  ["Isaac", "Nature and nature's laws lay hid in night."],
-  ["Marie", "Nothing in life is to be feared, it is only to be understood."],
-  ["Ada", "That brain of mine is something more than merely mortal."],
-  ["Roosevelt", "The only thing we have to fear is fear itself"],
-  ["Churchill", "Success is not final, failure is not fatal."],
-  ["Gandhi", "Be the change that you wish to see in the world."],
-  ["Mandela", "It always seems impossible until it's done."],
-  ["King", "The time is always right to do what is right."],
-  ["Jobs", "Stay hungry, stay foolish."],
-  ["Lennon", "Life is what happens when you're busy making other plans."],
-  ["Twain", "The secret of getting ahead is getting started."],
-]);
-
-function Quotes() {
-  return (
-    <>
-      {[...nameToQuote].map(([name, quote], index) => (
-        <Text key={name} style={{ whiteSpace: "nowrap" }}>
-          {`Quote ${index + 1} of ${nameToQuote.size}: ${quote}`}
-        </Text>
-      ))}
-    </>
-  );
-}
-
-export function Overflow() {
-  const [enableScroll, setEnableScroll] = useState(false);
-
-  function toggleScroll() {
-    setEnableScroll(!enableScroll);
-  }
-
-  return (
-    <StackLayout direction="column">
-      <FlexLayout className="box">
-        <Splitter orientation="vertical">
-          <SplitPanel>
-            <FlexLayout
-              gap={1}
-              padding={1}
-              direction="column"
-              className={clsx("h100", enableScroll && "scroll")}
-            >
-              <Quotes />
-            </FlexLayout>
-          </SplitPanel>
-          <SplitHandle />
-          <SplitPanel>
-            <FlexLayout
-              gap={1}
-              padding={1}
-              direction="column"
-              className={clsx("h100", enableScroll && "scroll")}
-            >
-              <Quotes />
-            </FlexLayout>
-          </SplitPanel>
-        </Splitter>
-      </FlexLayout>
-      <Button onClick={toggleScroll}>
-        {enableScroll ? "Disable Scroll" : "Enable Scroll"}
-      </Button>
-    </StackLayout>
-  );
-}
-
-export const InsideWindow = () => {
-  const [open, setOpen] = useState(false);
-
-  const handleRequestOpen = () => {
-    setOpen(true);
-  };
-
-  const onOpenChange = (value: boolean) => {
-    setOpen(value);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  return (
-    <>
-      <Button data-testid="dialog-button" onClick={handleRequestOpen}>
-        Click to open dialog
-      </Button>
-      <Dialog
-        style={{ width: "420px" }}
-        role="alertdialog"
-        open={open}
-        onOpenChange={onOpenChange}
-        // focus the ok instead of the cancel button
-        initialFocus={1}
-      >
-        <DialogHeader header="Splitter inside Portalled window" />
-        <DialogContent
-          className="box"
-          style={{ width: "100%", padding: 0, margin: 0 }}
-        >
-          <Splitter orientation="vertical">
-            <SplitPanel>
-              <Splitter orientation="horizontal">
-                <SplitPanel className="center">
-                  <Text>Top Left</Text>
-                </SplitPanel>
-                <SplitHandle />
-                <SplitPanel className="center">
-                  <Text>Center Left</Text>
-                </SplitPanel>
-                <SplitHandle />
-                <SplitPanel className="center">
-                  <Text>Bottom Left</Text>
-                </SplitPanel>
-              </Splitter>
-            </SplitPanel>
-            <SplitHandle />
-            <SplitPanel>
-              <Splitter orientation="horizontal">
-                <SplitPanel className="center">
-                  <Text>Top Right</Text>
-                </SplitPanel>
-                <SplitHandle />
-                <SplitPanel className="center">
-                  <Text>Bottom Right</Text>
-                </SplitPanel>
-              </Splitter>
-            </SplitPanel>
-          </Splitter>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button sentiment="accented" onClick={handleClose}>
-            Ok
-          </Button>
-        </DialogActions>
-      </Dialog>
-    </>
-  );
-};

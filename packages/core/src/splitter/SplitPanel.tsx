@@ -11,6 +11,7 @@ import { makePrefixer, useId } from "../utils";
 
 import splitPanelCSS from "./SplitPanel.css";
 
+export type SplitPanelRef = ImperativePanelHandle;
 export type SplitPanelVariant = "primary" | "secondary" | "tertiary";
 
 export interface SplitPanelProps extends PanelProps {
@@ -23,7 +24,7 @@ export interface SplitPanelProps extends PanelProps {
 
 const withBaseName = makePrefixer("saltSplitPanel");
 
-export const SplitPanel = forwardRef<ImperativePanelHandle, SplitPanelProps>(
+export const SplitPanel = forwardRef<SplitPanelRef, SplitPanelProps>(
   function SplitPanel(
     { id: idProp, variant = "primary", minSize = 10, className, ...props },
     ref,
