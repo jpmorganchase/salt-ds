@@ -1,5 +1,6 @@
 import { useWindow } from "@salt-ds/window";
 import {
+  type ChangeEvent,
   type Dispatch,
   type SetStateAction,
   type SyntheticEvent,
@@ -9,26 +10,36 @@ import {
   useState,
 } from "react";
 import type { SliderProps } from "../Slider";
-import { getClickedPosition } from "./utils";
+import { getClickedPosition, getKeyboardValue } from "./utils";
 
 type UseSliderThumbProps = Pick<SliderProps, "min" | "max" | "step"> & {
+  decimalPlaces: number;
+  handleInputChange: (event: ChangeEvent<HTMLInputElement>) => void;
+  marks?: { label: string; value: number }[];
   onChange?: (event: SyntheticEvent<unknown> | Event, value: number) => void;
   onChangeEnd?: (event: SyntheticEvent<unknown> | Event, value: number) => void;
+  restrictToMarks?: boolean;
   setValue: Dispatch<SetStateAction<number>>;
-  valueState: number;
+  stepMultiplier: number;
+  value: number;
 };
 
 export const useSliderThumb = ({
+  decimalPlaces,
+  handleInputChange,
+  marks,
   min = 0,
   max = 10,
   step = 1,
   onChange,
   onChangeEnd,
+  restrictToMarks,
   setValue,
-  valueState,
+  stepMultiplier,
+  value,
 }: UseSliderThumbProps) => {
   const [isDragging, setIsDragging] = useState(false);
-  const lastValueRef = useRef<number>(valueState);
+  const lastValueRef = useRef<number>(value);
   const sliderRef = useRef<HTMLDivElement>(null);
   const targetWindow = useWindow();
 
@@ -41,6 +52,9 @@ export const useSliderThumb = ({
         max,
         min,
         step,
+        decimalPlaces,
+        marks,
+        restrictToMarks,
       );
       if (newValue === undefined || lastValueRef.current === newValue) {
         return;
@@ -49,7 +63,7 @@ export const useSliderThumb = ({
       setValue(newValue);
       onChange?.(event, newValue);
     },
-    [max, min, onChange, setValue, step],
+    [decimalPlaces, marks, max, min, onChange, setValue, restrictToMarks, step],
   );
 
   const handlePointerUp = useCallback(
@@ -93,6 +107,9 @@ export const useSliderThumb = ({
         max,
         min,
         step,
+        decimalPlaces,
+        marks,
+        restrictToMarks,
       );
       if (newValue === undefined || lastValueRef.current === newValue) {
         return;
@@ -101,10 +118,28 @@ export const useSliderThumb = ({
       setValue(newValue);
       onChange?.(event, newValue);
     },
-    [max, min, onChange, setValue, step],
+    [decimalPlaces, marks, max, min, onChange, restrictToMarks, setValue, step],
   );
 
+  const handleKeydownOnThumb = (event: React.KeyboardEvent) => {
+    const newValue = getKeyboardValue(
+      event,
+      value,
+      step,
+      stepMultiplier,
+      max,
+      min,
+      restrictToMarks,
+      marks,
+    );
+
+    handleInputChange({
+      target: { value: newValue.toString() },
+    } as ChangeEvent<HTMLInputElement>);
+  };
+
   return {
+    handleKeydownOnThumb,
     handlePointerDownOnThumb,
     handlePointerDownOnTrack,
     isDragging,

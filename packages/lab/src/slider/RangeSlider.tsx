@@ -7,7 +7,7 @@ import {
 } from "react";
 
 import { useControlled, useFormFieldProps } from "@salt-ds/core";
-import clsx from "clsx";
+import { clsx } from "clsx";
 import { SliderThumb } from "./internal/SliderThumb";
 import { SliderTrack } from "./internal/SliderTrack";
 import { useRangeSliderThumb } from "./internal/useRangeSliderThumb";
@@ -16,13 +16,28 @@ import { calculatePercentage, clampRange, toFloat } from "./internal/utils";
 export interface RangeSliderProps
   extends Omit<HTMLAttributes<HTMLDivElement>, "onChange" | "defaultValue"> {
   /**
+   * When minimum and maximum labels are defined, ensure
+   * they are confined within the boundary of the slider.
+   */
+  constrainLabelPosition?: boolean;
+  /**
+   * The number of allowed decimal places
+   * @default 2
+   */
+  decimalPlaces?: number;
+  /**
    * The default value. Use when the component is not controlled.
+   * @default [min, min + (max - min) / 2]
    */
   defaultValue?: [number, number];
   /**
    * Disable the slider.
    */
   disabled?: boolean;
+  /**
+   * Show visual ticks above the marks.
+   */
+  showTicks?: boolean;
   /**
    * A callback to format the display value in the tooltip, min and max labels
    * and the `aria-valuetext` attribute.
@@ -34,10 +49,12 @@ export interface RangeSliderProps
   marks?: { label: string; value: number }[];
   /**
    * Maximum slider value.
+   * @default 10
    */
   max?: number;
   /**
    * Minimum slider value.
+   * @default 0
    */
   min?: number;
   /**
@@ -66,15 +83,22 @@ export interface RangeSliderProps
     value: [number, number],
   ) => void;
   /**
+   * Restrict slider value to marks only. The step will be ignored.
+   */
+  restrictToMarks?: boolean;
+  /**
    * Show the slider value in a tooltip when the thumb is hovered.
+   * @default true
    */
   showTooltip?: boolean;
   /**
    * Minimum interval the slider thumb can move.
+   * @default 1
    */
   step?: number;
   /**
    * Maximum interval the slider thumb can move when using PageUp and PageDown keys.
+   * @default 2
    */
   stepMultiplier?: number;
   /**
@@ -89,6 +113,7 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>(
       "aria-label": ariaLabel,
       "aria-labelledby": ariaLabelledBy,
       "aria-valuetext": ariaValueText,
+      decimalPlaces = 2,
       disabled: disabledProp = false,
       format,
       marks,
@@ -98,11 +123,12 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>(
       minLabel,
       onChange,
       onChangeEnd,
+      restrictToMarks = false,
       showTooltip = true,
       step = 1,
       stepMultiplier = 2,
       value: valueProp,
-      defaultValue = [min, min + step],
+      defaultValue = [min, min + (max - min) / 2],
       ...rest
     },
     ref,
@@ -120,25 +146,16 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>(
       disabled: formFieldDisabled,
     } = useFormFieldProps();
 
-    const {
-      handlePointerDownOnThumb,
-      handlePointerDownOnTrack,
-      isDragging,
-      sliderRef,
-      thumbIndexState,
-      preventThumbOverlap,
-    } = useRangeSliderThumb({
-      min,
-      max,
-      step,
-      valueState,
-      onChange,
-      onChangeEnd,
-      setValue,
-    });
-
     const disabled = formFieldDisabled || disabledProp;
-    const value: [number, number] = clampRange(valueState, max, min);
+    const value: [number, number] = clampRange(
+      valueState,
+      max,
+      min,
+      step,
+      decimalPlaces,
+      marks,
+      restrictToMarks,
+    );
     const progressPercentageStart = calculatePercentage(value[0], max, min);
     const progressPercentageEnd = calculatePercentage(value[1], max, min);
 
@@ -178,6 +195,29 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>(
       }
     };
 
+    const {
+      handleKeydownOnThumb,
+      handlePointerDownOnThumb,
+      handlePointerDownOnTrack,
+      isDragging,
+      sliderRef,
+      thumbIndexState,
+      preventThumbOverlap,
+    } = useRangeSliderThumb({
+      decimalPlaces,
+      handleInputChange,
+      marks,
+      min,
+      max,
+      step,
+      value,
+      onChange,
+      onChangeEnd,
+      restrictToMarks,
+      setValue,
+      stepMultiplier,
+    });
+
     return (
       <SliderTrack
         disabled={disabled}
@@ -202,6 +242,7 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>(
           index={0}
           handleInputChange={(event) => handleInputChange(event, 0)}
           handlePointerDown={(event) => handlePointerDownOnThumb(event, 0)}
+          handleKeydownOnThumb={(event) => handleKeydownOnThumb(event, 0)}
           offsetPercentage={`${calculatePercentage(value[0], max, min)}%`}
           trackDragging={isDragging && thumbIndexState === 0}
           {...thumbProps}
@@ -210,6 +251,7 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>(
           index={1}
           handleInputChange={(event) => handleInputChange(event, 1)}
           handlePointerDown={(event) => handlePointerDownOnThumb(event, 1)}
+          handleKeydownOnThumb={(event) => handleKeydownOnThumb(event, 1)}
           offsetPercentage={`${calculatePercentage(value[1], max, min)}%`}
           trackDragging={isDragging && thumbIndexState === 1}
           {...thumbProps}

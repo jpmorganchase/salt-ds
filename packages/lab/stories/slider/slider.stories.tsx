@@ -96,6 +96,99 @@ WithMarks.parameters = {
   actions: { disable: true },
 };
 
+export const WithMarkTicks = Template.bind({});
+WithMarkTicks.args = {
+  min: 0,
+  max: 10,
+  marks: [
+    {
+      label: "0",
+      value: 0,
+    },
+    {
+      label: "1",
+      value: 1,
+    },
+    {
+      label: "2",
+      value: 2,
+    },
+    {
+      label: "3",
+      value: 3,
+    },
+    {
+      label: "4",
+      value: 4,
+    },
+    {
+      label: "5",
+      value: 5,
+    },
+    {
+      label: "6",
+      value: 6,
+    },
+    {
+      label: "7",
+      value: 7,
+    },
+    {
+      label: "8",
+      value: 8,
+    },
+    {
+      label: "9",
+      value: 9,
+    },
+    {
+      label: "10",
+      value: 10,
+    },
+  ],
+  "aria-label": "With Mark Ticks",
+  showTicks: true,
+};
+
+WithMarkTicks.parameters = {
+  actions: { disable: true },
+};
+
+export const WithRestrictToMarks = Template.bind({});
+WithRestrictToMarks.args = {
+  marks: [
+    {
+      label: "1",
+      value: 1,
+    },
+
+    {
+      label: "5",
+      value: 5,
+    },
+    {
+      label: "6",
+      value: 6,
+    },
+    {
+      label: "7",
+      value: 7,
+    },
+    {
+      label: "10",
+      value: 10,
+    },
+  ],
+  "aria-label": "With Restrict to Marks",
+  showTicks: true,
+  restrictToMarks: true,
+  defaultValue: 0,
+};
+
+WithRestrictToMarks.parameters = {
+  actions: { disable: true },
+};
+
 export const WithInlineLabelsAndMarks = Template.bind({});
 WithInlineLabelsAndMarks.args = {
   "aria-label": "WithInlineLabelsAndMarks",
@@ -119,9 +212,49 @@ WithInlineLabelsAndMarks.parameters = {
   actions: { disable: true },
 };
 
-export const WithDisabledTooltip = Template.bind({});
-WithDisabledTooltip.args = {
-  "aria-label": "WithDisabledTooltip",
+export const WithInlineLabelsMarksAndTicks = Template.bind({});
+WithInlineLabelsMarksAndTicks.args = {
+  "aria-label": "WithInlineLabelsMarksAndTicks",
+  min: 0,
+  max: 50,
+  defaultValue: 30,
+  step: 10,
+  minLabel: "Very low",
+  maxLabel: "Very high",
+  marks: [
+    { label: "0", value: 0 },
+    { label: "10", value: 10 },
+    { label: "20", value: 20 },
+    { label: "30", value: 30 },
+    { label: "40", value: 40 },
+    { label: "50", value: 50 },
+  ],
+  showTicks: true,
+};
+
+WithInlineLabelsMarksAndTicks.parameters = {
+  actions: { disable: true },
+};
+
+export const WithConstrainedLabelPosition = Template.bind({});
+WithConstrainedLabelPosition.args = {
+  "aria-label": "WithConstrainedLabelPosition",
+  marks: [
+    {
+      value: 0,
+      label: "Very low",
+    },
+    {
+      value: 10,
+      label: "Very high",
+    },
+  ],
+  constrainLabelPosition: true,
+};
+
+export const WithHiddenTooltip = Template.bind({});
+WithHiddenTooltip.args = {
+  "aria-label": "WithHiddenTooltip",
   min: 0,
   max: 50,
   defaultValue: 20,
@@ -139,7 +272,7 @@ WithDisabledTooltip.args = {
   ],
 };
 
-WithDisabledTooltip.parameters = {
+WithHiddenTooltip.parameters = {
   actions: { disable: true },
 };
 
@@ -401,20 +534,6 @@ export const WithCustomStep = () => (
         minLabel="-1"
         maxLabel="1"
         step={0.25}
-        format={(value: number) => Intl.NumberFormat().format(value)}
-      />
-    </FormField>
-    <FormField>
-      <FormFieldLabel>
-        Step: 0.3 with formatting (not multiple of total range)
-      </FormFieldLabel>
-      <Slider
-        min={0}
-        max={1}
-        minLabel="0"
-        maxLabel="1"
-        step={0.3}
-        defaultValue={0.9}
         format={(value: number) => Intl.NumberFormat().format(value)}
       />
     </FormField>

@@ -1,11 +1,11 @@
-import { Slider } from "@salt-ds/lab";
+import { RangeSlider } from "@salt-ds/lab";
 
-export const WithDisabledTooltip = () => (
-  <Slider
+export const WithHiddenTooltip = () => (
+  <RangeSlider
     aria-label="single"
     min={0}
     max={50}
-    defaultValue={30}
+    defaultValue={[20, 40]}
     style={{ width: "400px" }}
     showTooltip={false}
     minLabel="Very low"
