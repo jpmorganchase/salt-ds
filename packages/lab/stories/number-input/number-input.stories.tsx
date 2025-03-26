@@ -155,7 +155,11 @@ export const Controlled: StoryFn<NumberInputProps> = (args) => {
             >
               <RefreshIcon aria-hidden />
             </Button>
-            <span id={accessibleTextId} style={accessibleTextStyles}>
+            <span
+              id={accessibleTextId}
+              style={accessibleTextStyles}
+              aria-live="polite"
+            >
               {accessibleText}
             </span>
           </>
@@ -284,7 +288,6 @@ export const ResetAdornment: StoryFn<NumberInputProps> = (args) => {
               id={accessibleTextId}
               style={accessibleTextStyles}
               aria-live="polite"
-              aria-atomic
             >
               {accessibleText}
             </span>
