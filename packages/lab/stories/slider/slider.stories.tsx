@@ -9,6 +9,53 @@ import { Slider, type SliderProps } from "@salt-ds/lab";
 import type { StoryFn } from "@storybook/react";
 import { type ChangeEvent, useEffect, useState } from "react";
 
+const marks = [
+  {
+    label: "0",
+    value: 0,
+  },
+  {
+    label: "1",
+    value: 1,
+  },
+  {
+    label: "2",
+    value: 2,
+  },
+  {
+    label: "3",
+    value: 3,
+  },
+  {
+    label: "4",
+    value: 4,
+  },
+  {
+    label: "5",
+    value: 5,
+  },
+  {
+    label: "6",
+    value: 6,
+  },
+  {
+    label: "7",
+    value: 7,
+  },
+  {
+    label: "8",
+    value: 8,
+  },
+  {
+    label: "9",
+    value: 9,
+  },
+  {
+    label: "10",
+    value: 10,
+  },
+];
+
 export default {
   title: "Lab/Slider",
   component: Slider,
@@ -43,52 +90,7 @@ export const WithMarks = Template.bind({});
 WithMarks.args = {
   min: 0,
   max: 10,
-  marks: [
-    {
-      label: "0",
-      value: 0,
-    },
-    {
-      label: "1",
-      value: 1,
-    },
-    {
-      label: "2",
-      value: 2,
-    },
-    {
-      label: "3",
-      value: 3,
-    },
-    {
-      label: "4",
-      value: 4,
-    },
-    {
-      label: "5",
-      value: 5,
-    },
-    {
-      label: "6",
-      value: 6,
-    },
-    {
-      label: "7",
-      value: 7,
-    },
-    {
-      label: "8",
-      value: 8,
-    },
-    {
-      label: "9",
-      value: 9,
-    },
-    {
-      label: "10",
-      value: 10,
-    },
-  ],
+  marks: marks,
   "aria-label": "With Marks",
 };
 
@@ -100,52 +102,7 @@ export const WithMarkTicks = Template.bind({});
 WithMarkTicks.args = {
   min: 0,
   max: 10,
-  marks: [
-    {
-      label: "0",
-      value: 0,
-    },
-    {
-      label: "1",
-      value: 1,
-    },
-    {
-      label: "2",
-      value: 2,
-    },
-    {
-      label: "3",
-      value: 3,
-    },
-    {
-      label: "4",
-      value: 4,
-    },
-    {
-      label: "5",
-      value: 5,
-    },
-    {
-      label: "6",
-      value: 6,
-    },
-    {
-      label: "7",
-      value: 7,
-    },
-    {
-      label: "8",
-      value: 8,
-    },
-    {
-      label: "9",
-      value: 9,
-    },
-    {
-      label: "10",
-      value: 10,
-    },
-  ],
+  marks: marks,
   "aria-label": "With Mark Ticks",
   showTicks: true,
 };
@@ -310,6 +267,45 @@ WithFormatting.args = {
 
 WithFormatting.parameters = {
   actions: { disable: true },
+};
+
+export const WithinFormField: StoryFn<SliderProps> = () => {
+  return (
+    <StackLayout gap={4}>
+      <FormField
+        labelPlacement="left"
+        style={
+          {
+            "--saltFormField-label-width": "16%",
+            width: "500px",
+          } as React.CSSProperties
+        }
+      >
+        <FormFieldLabel>Form field left</FormFieldLabel>
+        <Slider minLabel="0" maxLabel="10" />
+      </FormField>
+      <FormField
+        labelPlacement="left"
+        style={
+          {
+            "--saltFormField-label-width": "30%",
+            width: "500px",
+          } as React.CSSProperties
+        }
+      >
+        <FormFieldLabel>Form field left (with marks)</FormFieldLabel>
+        <Slider showTicks marks={marks} />
+      </FormField>
+      <FormField>
+        <FormFieldLabel>Form field top</FormFieldLabel>
+        <Slider minLabel="0" maxLabel="10" />
+      </FormField>
+      <FormField>
+        <FormFieldLabel>Form field top (with marks)</FormFieldLabel>
+        <Slider showTicks marks={marks} />
+      </FormField>
+    </StackLayout>
+  );
 };
 
 export const WithInput: StoryFn<SliderProps> = () => {
@@ -485,27 +481,6 @@ export const WithInputAndMarksAndTicks: StoryFn<SliderProps> = () => {
           showTicks
         />
       </FlexLayout>
-    </FormField>
-  );
-};
-
-export const WithinFormField: StoryFn<SliderProps> = () => {
-  const [value, setValue] = useState<number>(5);
-
-  return (
-    <FormField style={{ width: "500px" }}>
-      <FormFieldLabel>Slider within Form Field</FormFieldLabel>
-      <Slider
-        style={{ flex: "100%" }}
-        min={-50}
-        max={50}
-        value={value}
-        onChange={(_e, value) => {
-          setValue(value);
-        }}
-        minLabel="-50"
-        maxLabel="50"
-      />
     </FormField>
   );
 };

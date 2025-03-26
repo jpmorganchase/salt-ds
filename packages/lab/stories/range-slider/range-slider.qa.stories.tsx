@@ -8,73 +8,46 @@ export default {
   component: RangeSlider,
 } as Meta<typeof RangeSlider>;
 
+const marks = [
+  { value: 0, label: "0" },
+  { value: 1, label: "1" },
+  { value: 2, label: "2" },
+  { value: 3, label: "3" },
+  { value: 4, label: "4" },
+  { value: 5, label: "5" },
+  { value: 6, label: "6" },
+  { value: 7, label: "7" },
+  { value: 8, label: "8" },
+  { value: 9, label: "9" },
+  { value: 10, label: "10" },
+];
+
 export const ExamplesGrid: StoryFn<QAContainerProps> = (props) => {
   return (
-    <QAContainer width={1100} cols={1} itemPadding={10} {...props}>
-      <FormField>
+    <QAContainer width={1300} cols={1} itemPadding={10} {...props}>
+      <FormField labelPlacement="left">
         <FormFieldLabel>With inline labels</FormFieldLabel>
         <RangeSlider minLabel="Min Label" maxLabel="Max Label" />
       </FormField>
-      <FormField>
+      <FormField labelPlacement="left">
         <FormFieldLabel>With marks</FormFieldLabel>
-        <RangeSlider
-          marks={[
-            { value: 0, label: "0" },
-            { value: 1, label: "1" },
-            { value: 2, label: "2" },
-            { value: 3, label: "3" },
-            { value: 4, label: "4" },
-            { value: 5, label: "5" },
-            { value: 6, label: "6" },
-            { value: 7, label: "7" },
-            { value: 8, label: "8" },
-            { value: 9, label: "9" },
-            { value: 10, label: "10" },
-          ]}
-        />
+        <RangeSlider marks={marks} />
       </FormField>
-      <FormField>
+      <FormField labelPlacement="left">
         <FormFieldLabel>With marks and ticks</FormFieldLabel>
-        <RangeSlider
-          marks={[
-            { value: 0, label: "0" },
-            { value: 1, label: "1" },
-            { value: 2, label: "2" },
-            { value: 3, label: "3" },
-            { value: 4, label: "4" },
-            { value: 5, label: "5" },
-            { value: 6, label: "6" },
-            { value: 7, label: "7" },
-            { value: 8, label: "8" },
-            { value: 9, label: "9" },
-            { value: 10, label: "10" },
-          ]}
-          showTicks
-        />
+        <RangeSlider marks={marks} showTicks />
       </FormField>
-      <FormField>
+      <FormField labelPlacement="left">
         <FormFieldLabel>With inline labels, marks and ticks</FormFieldLabel>
         <RangeSlider
           defaultValue={[3, 6]}
-          marks={[
-            { value: 0, label: "0" },
-            { value: 1, label: "1" },
-            { value: 2, label: "2" },
-            { value: 3, label: "3" },
-            { value: 4, label: "4" },
-            { value: 5, label: "5" },
-            { value: 6, label: "6" },
-            { value: 7, label: "7" },
-            { value: 8, label: "8" },
-            { value: 9, label: "9" },
-            { value: 10, label: "10" },
-          ]}
+          marks={marks}
           minLabel="Min label"
           maxLabel="Max label"
           showTicks
         />
       </FormField>
-      <FormField>
+      <FormField labelPlacement="left">
         <FormFieldLabel>Restricted to marks</FormFieldLabel>
         <RangeSlider
           marks={[
@@ -88,7 +61,7 @@ export const ExamplesGrid: StoryFn<QAContainerProps> = (props) => {
           restrictToMarks
         />
       </FormField>
-      <FormField>
+      <FormField labelPlacement="left">
         <FormFieldLabel>
           With constrained label position and ticks
         </FormFieldLabel>
@@ -101,7 +74,7 @@ export const ExamplesGrid: StoryFn<QAContainerProps> = (props) => {
           showTicks
         />
       </FormField>
-      <FormField>
+      <FormField labelPlacement="left">
         <FormFieldLabel>With formatting</FormFieldLabel>
         <RangeSlider
           marks={[
@@ -113,7 +86,7 @@ export const ExamplesGrid: StoryFn<QAContainerProps> = (props) => {
           format={(value: number) => `${value} EUR`}
         />
       </FormField>
-      <FormField>
+      <FormField labelPlacement="left">
         <FormFieldLabel>With negative bounds</FormFieldLabel>
         <RangeSlider
           marks={[
@@ -126,9 +99,22 @@ export const ExamplesGrid: StoryFn<QAContainerProps> = (props) => {
           max={5}
         />
       </FormField>
-      <FormField>
+      <FormField labelPlacement="left">
         <FormFieldLabel>Disabled</FormFieldLabel>
         <RangeSlider disabled />
+      </FormField>
+      <FormField>
+        <FormFieldLabel>With top form field label</FormFieldLabel>
+        <RangeSlider minLabel="Min Label" maxLabel="Max Label" />
+      </FormField>
+      <FormField>
+        <FormFieldLabel>With top form field label and marks</FormFieldLabel>
+        <RangeSlider
+          minLabel="Min Label"
+          maxLabel="Max Label"
+          marks={marks}
+          showTicks
+        />
       </FormField>
     </QAContainer>
   );

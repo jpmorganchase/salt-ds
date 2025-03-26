@@ -174,3 +174,19 @@
 .saltSliderTrack-constrainLabelPosition .saltSliderTrack-markLabel:last-of-type {
   transform: translateX(-100%);
 }
+
+/* Styles applied when slider and range slider are inside a form field */
+
+.saltFormField .saltSliderTrack.saltSliderTrack-withMark {
+  margin-bottom: 0;
+}
+
+.saltFormField .saltSliderTrack-container {
+  --saltFormField-label-width: 10%;
+
+  height: var(--salt-size-base);
+}
+
+.saltFormField .saltSliderTrack-markLabel {
+  top: calc((var(--salt-size-base) - var(--salt-size-bar)) / 2);
+}
