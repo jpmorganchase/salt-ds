@@ -1,6 +1,7 @@
 export * from "./Single";
 export * from "./SingleControlled";
 export * from "./SingleGridPanel";
+export * from "./SingleResponsiveGridPanel";
 export * from "./SingleWithConfirmation";
 export * from "./SingleWithCustomParser";
 export * from "./SingleWithCustomPanel";
@@ -17,6 +18,7 @@ export * from "./SingleBordered";
 export * from "./Range";
 export * from "./RangeControlled";
 export * from "./RangeGridPanel";
+export * from "./RangeResponsiveGridPanel";
 export * from "./RangeWithConfirmation";
 export * from "./RangeWithCustomPanel";
 export * from "./RangeWithDisabledDates";
