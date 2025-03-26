@@ -99,7 +99,7 @@ const SyncAdornment = () => {
         onChange={(_, newValue) => setValue(newValue)}
         decimalPlaces={2}
         step={0.01}
-        stepMultiplier={0.1}
+        stepMultiplier={3}
         endAdornment={
           <>
             <Button
