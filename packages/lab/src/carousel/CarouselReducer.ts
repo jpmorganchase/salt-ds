@@ -1,25 +1,24 @@
-import type { Dispatch, RefObject } from "react";
+import type { Dispatch } from "react";
 
-type SlideElement = HTMLDivElement;
-type SlideId = string;
+import type { CarouselSlideId, CarouselSlideElement } from "./CarouselSlide";
 
 export interface CarouselReducerState {
-  slides: Map<SlideId, SlideElement>;
+  slides: Map<CarouselSlideId, CarouselSlideElement>;
   firstVisibleSlideIndex: number;
   visibleSlides: number;
-  focusedSlideIndex?: number;
-  containerRef: RefObject<HTMLDivElement> | null;
+  focusedSlideIndex: number;
   carouselId?: string;
 }
 export type CarouselReducerAction =
-  | { type: "register"; payload: [SlideId, SlideElement] }
-  | { type: "unregister"; payload: SlideId }
+  | { type: "register"; payload: [CarouselSlideId, CarouselSlideElement] }
+  | { type: "unregister"; payload: CarouselSlideId }
   | { type: "updateSlideCount"; payload: number }
-  | { type: "move"; payload: SlideId }
-  | { type: "scroll"; payload: SlideId }
-  | { type: "focus"; payload: SlideId };
+  | { type: "move"; payload: CarouselSlideId }
+  | { type: "scroll"; payload: CarouselSlideId };
+
 export type CarouselReducerDispatch = Dispatch<CarouselReducerAction>;
 
+// TODO: Ask: What is the difference between move, scroll and focus?
 export function carouselReducer(
   state: CarouselReducerState,
   action: CarouselReducerAction,
@@ -44,6 +43,7 @@ export function carouselReducer(
         slides: new Map(slides),
       };
     }
+    // moves the first visible item
     case "move": {
       const { slides } = state;
       const id = action.payload;
@@ -60,28 +60,19 @@ export function carouselReducer(
 
       return { ...state, visibleSlides: visibleSlides };
     }
+
     case "scroll": {
-      const { slides, containerRef, visibleSlides } = state;
       const id = action.payload;
-      const container = containerRef?.current;
-      if (!container || !slides.has(id)) return state;
-      const slideIds = [...slides.keys()];
-      const index = slideIds.indexOf(id || slideIds[0]);
-      requestAnimationFrame(() => {
-        container.scrollTo({
-          left: index * (container.offsetWidth / visibleSlides),
-          behavior: "smooth",
-        });
-      });
-      return state;
-    }
-    case "focus": {
       const { slides } = state;
-      const id = action.payload;
-      slides.get(id)?.focus();
-      const slideIds = [...slides.keys()];
-      const index = slideIds.indexOf(id || slideIds[0]);
-      return { ...state, focusedSlideIndex: index };
+
+      const focusedSlideIndex = [...slides.keys()].indexOf(id);
+
+      if (focusedSlideIndex === -1) return state;
+
+      return {
+        ...state,
+        focusedSlideIndex,
+      };
     }
     default: {
       const exhaustiveCheck: never = action;
