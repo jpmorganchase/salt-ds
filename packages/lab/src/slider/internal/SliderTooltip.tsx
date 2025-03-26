@@ -32,7 +32,14 @@ export const SliderTooltip = ({ value, open }: SliderTooltipProps) => {
         aria-hidden="true"
         viewBox="0 1 14 14"
       >
-        <path d="M0,0 H14 L7,7 Q7,7 7,7 Z" />
+        <path
+          d="M0,0 H14 L7,7 Q7,7 7,7 Z"
+          stroke=" var(--salt-container-primary-background)"
+        />
+        <path
+          d="M0,0 H14 L7,7 Q7,7 7,7 Z"
+          stroke="var(--salt-container-primary-borderColor)"
+        />
       </svg>
       <Text className={withBaseName("text")}>{value}</Text>
     </div>
