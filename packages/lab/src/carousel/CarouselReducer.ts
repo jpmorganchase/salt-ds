@@ -1,6 +1,6 @@
 import type { Dispatch } from "react";
 
-import type { CarouselSlideId, CarouselSlideElement } from "./CarouselSlide";
+import type { CarouselSlideElement, CarouselSlideId } from "./CarouselSlide";
 
 export interface CarouselReducerState {
   slides: Map<CarouselSlideId, CarouselSlideElement>;
@@ -18,7 +18,6 @@ export type CarouselReducerAction =
 
 export type CarouselReducerDispatch = Dispatch<CarouselReducerAction>;
 
-// TODO: Ask: What is the difference between move, scroll and focus?
 export function carouselReducer(
   state: CarouselReducerState,
   action: CarouselReducerAction,

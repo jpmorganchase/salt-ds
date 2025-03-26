@@ -3,13 +3,13 @@ import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
+  type ComponentProps,
   type ReactNode,
   forwardRef,
   useContext,
   useEffect,
   useRef,
   useState,
-  type ComponentProps,
 } from "react";
 import {
   CarouselDispatchContext,

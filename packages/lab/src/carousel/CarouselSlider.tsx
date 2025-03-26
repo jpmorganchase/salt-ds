@@ -7,8 +7,8 @@ import {
   type ReactElement,
   forwardRef,
   useContext,
-  useRef,
   useLayoutEffect,
+  useRef,
 } from "react";
 import {
   CarouselDispatchContext,
