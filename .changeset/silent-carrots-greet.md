@@ -10,4 +10,4 @@ Added accessibility improvements including:
 
 Refactored `stepBlock` prop to be `stepMultiplier` to be consistent with `Slider` and `RangeSlider` components and to ensure that valid values remain reachable.
 
-Updates site documentation and prop descriptions.
+Updated site documentation and prop descriptions.
