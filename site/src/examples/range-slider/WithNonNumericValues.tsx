@@ -21,7 +21,7 @@ export const WithNonNumericValues = (): ReactElement => {
 
   return (
     <RangeSlider
-      style={{ width: "500px" }}
+      style={{ width: "600px" }}
       min={1}
       max={7}
       value={value}

@@ -11,7 +11,7 @@ export const WithMarks = (): ReactElement => (
         min={0}
         max={50}
         defaultValue={[10, 30]}
-        style={{ width: "400px" }}
+        style={{ width: "600px" }}
         marks={[
           {
             value: 0,
@@ -47,7 +47,7 @@ export const WithMarks = (): ReactElement => (
         min={0}
         max={50}
         defaultValue={[10, 30]}
-        style={{ width: "400px" }}
+        style={{ width: "600px" }}
         showTicks
         marks={[
           {
@@ -84,7 +84,7 @@ export const WithMarks = (): ReactElement => (
         min={0}
         max={50}
         defaultValue={[10, 30]}
-        style={{ width: "400px" }}
+        style={{ width: "600px" }}
         minLabel="Very low"
         maxLabel="Very high"
         marks={[

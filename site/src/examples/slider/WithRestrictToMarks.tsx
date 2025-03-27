@@ -8,7 +8,7 @@ export const WithRestrictToMarks = (): ReactElement => (
       <FormFieldLabel>Restricted to marks</FormFieldLabel>
       <Slider
         aria-label="Slider restricted to marks"
-        style={{ width: "400px" }}
+        style={{ width: "600px" }}
         marks={[
           { value: 5, label: "5" },
           { value: 15, label: "15" },
@@ -27,7 +27,7 @@ export const WithRestrictToMarks = (): ReactElement => (
       <FormFieldLabel>Restricted to marks, with ticks</FormFieldLabel>
       <Slider
         aria-label="Slider restricted to marks, with mark ticks"
-        style={{ width: "400px" }}
+        style={{ width: "600px" }}
         marks={[
           { value: 5, label: "5" },
           { value: 15, label: "15" },

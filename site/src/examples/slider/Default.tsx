@@ -7,6 +7,6 @@ export const Default = (): ReactElement => (
     min={0}
     max={100}
     defaultValue={30}
-    style={{ width: "400px" }}
+    style={{ width: "600px" }}
   />
 );

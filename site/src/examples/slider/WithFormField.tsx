@@ -52,36 +52,36 @@ const marks = [
 export const WithFormField = (): ReactElement => {
   return (
     <StackLayout gap={3}>
-      <FormField style={{ width: "400px" }}>
-        <FormFieldLabel>Field Label</FormFieldLabel>
+      <FormField style={{ width: "600px" }}>
+        <FormFieldLabel>Field label</FormFieldLabel>
         <Slider minLabel="0" maxLabel="10" />
       </FormField>
-      <FormField style={{ width: "400px" }}>
-        <FormFieldLabel>Field Label</FormFieldLabel>
+      <FormField style={{ width: "600px" }}>
+        <FormFieldLabel>Field label</FormFieldLabel>
         <Slider constrainLabelPosition showTicks marks={marks} />
       </FormField>
       <FormField
         labelPlacement="left"
         style={
           {
-            "--saltFormField-label-width": "20%",
-            width: "400px",
+            "--saltFormField-label-width": "16%",
+            width: "600px",
           } as React.CSSProperties
         }
       >
-        <FormFieldLabel>Field Label left</FormFieldLabel>
+        <FormFieldLabel>Field label left</FormFieldLabel>
         <Slider minLabel="0" maxLabel="10" />
       </FormField>
       <FormField
         labelPlacement="left"
         style={
           {
-            "--saltFormField-label-width": "20%",
-            width: "400px",
+            "--saltFormField-label-width": "16%",
+            width: "600px",
           } as React.CSSProperties
         }
       >
-        <FormFieldLabel>Field Label left</FormFieldLabel>
+        <FormFieldLabel>Field label left</FormFieldLabel>
         <Slider marks={marks} showTicks constrainLabelPosition />
       </FormField>
     </StackLayout>
