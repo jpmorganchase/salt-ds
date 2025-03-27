@@ -1,4 +1,4 @@
-import { makePrefixer, useForkRef, useIdMemo } from "@salt-ds/core";
+import { makePrefixer, useForkRef, useId, useIdMemo } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
@@ -70,12 +70,12 @@ export const CarouselSlide = forwardRef<HTMLDivElement, CarouselSlideProps>(
       window: targetWindow,
     });
     const dispatch = useContext(CarouselDispatchContext);
-    const { slides, visibleSlides, firstVisibleSlideIndex } =
-      useContext(CarouselStateContext);
+    const { slides, visibleSlides } = useContext(CarouselStateContext);
 
     const slideRef = useRef<HTMLDivElement>(null);
     const [isVisible, setIsVisible] = useState(false);
     const id = useIdMemo(idProp);
+    const announcerId = useId();
     const slideCount = slides.size;
     useEffect(() => {
       if (!slideRef.current) return;
@@ -99,12 +99,14 @@ export const CarouselSlide = forwardRef<HTMLDivElement, CarouselSlideProps>(
     };
 
     const ref = useForkRef(refProp, slideRef);
-    const helperText = `${firstVisibleSlideIndex + 1} of ${slideCount}`;
+    const slideIds = [...slides.keys()];
+    const index = slideIds.indexOf(id || slideIds[0]);
+    const helperText = `${index + 1} of ${slideCount}`;
     return (
       <div
         role="group"
         aria-roledescription="slide"
-        aria-labelledby={ariaLabelledBy}
+        aria-labelledby={clsx(ariaLabelledBy, announcerId)}
         id={id}
         className={clsx(withBaseName(), {
           [withBaseName("bordered")]: appearance === "bordered",
@@ -124,8 +126,10 @@ export const CarouselSlide = forwardRef<HTMLDivElement, CarouselSlideProps>(
             })}
           >
             <div className={withBaseName("content")}>
-              {visibleSlides === 1 && isVisible && (
-                <span className={withBaseName("sr-only")}>{helperText}</span>
+              {visibleSlides > 1 && isVisible && (
+                <span id={announcerId} className={withBaseName("sr-only")}>
+                  {helperText}
+                </span>
               )}
               {header}
               {children}

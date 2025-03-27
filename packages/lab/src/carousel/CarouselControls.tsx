@@ -8,6 +8,7 @@ import {
   forwardRef,
   useContext,
   useRef,
+  useState,
 } from "react";
 import {
   CarouselDispatchContext,
@@ -67,21 +68,41 @@ export const CarouselControls = forwardRef<
   const slideCount = slides.size;
   const { NextIcon, PreviousIcon } = useIcon();
 
+  const [isFocused, setIsFocused] = useState(false);
+  function handleFocusCapture() {
+    !isFocused && setIsFocused(true);
+  }
+  function handleBlurCapture() {
+    isFocused && setIsFocused(false);
+  }
+
   const prevButtonRef = useRef<HTMLButtonElement>(null);
   const nextButtonRef = useRef<HTMLButtonElement>(null);
 
   const slideIds = [...slides.keys()];
 
+  const currentId = slideIds[firstVisibleSlideIndex] || null;
   const prevId = slideIds[firstVisibleSlideIndex - 1] || null;
   const nextId = slideIds[firstVisibleSlideIndex + 1] || null;
 
   const isOnFirstSlide = firstVisibleSlideIndex === 0;
   const isOnLastSlide = firstVisibleSlideIndex === slideCount - visibleSlides;
+  const currentSlideLabel =
+    (currentId && slides.get(currentId)?.getAttribute("aria-labelledby")) ||
+    undefined;
 
   const controlsLabel = slideCount >= 1 && (
-    <Text as="span" aria-live={visibleSlides === 1 ? undefined : "polite"}>
-      <strong>{`${firstVisibleSlideIndex + 1} ${visibleSlides > 1 && slideCount > 1 ? ` - ${firstVisibleSlideIndex + visibleSlides}` : ""} of
-        ${slideCount}`}</strong>
+    <Text
+      as="span"
+      aria-live="polite"
+      aria-labelledby={
+        visibleSlides === 1 && isFocused ? currentSlideLabel : undefined
+      }
+    >
+      <strong>
+        {`${firstVisibleSlideIndex + 1} ${visibleSlides > 1 && slideCount > 1 ? ` - ${firstVisibleSlideIndex + visibleSlides}` : ""} of
+        ${slideCount}`}
+      </strong>
     </Text>
   );
 
@@ -98,7 +119,13 @@ export const CarouselControls = forwardRef<
   }
 
   return (
-    <div className={withBaseName()} ref={ref} {...rest}>
+    <div
+      className={withBaseName()}
+      ref={ref}
+      {...rest}
+      onFocusCapture={handleFocusCapture}
+      onBlurCapture={handleBlurCapture}
+    >
       {labelPlacement === "left" && controlsLabel}
       <Button
         ref={prevButtonRef}

@@ -5,3 +5,10 @@
   padding-bottom: var(--salt-spacing-100);
   align-items: center;
 }
+
+.saltCarouselControls-sr-only {
+  position: fixed;
+  top: 0;
+  left: 0;
+  transform: translate(-100%, -100%);
+}
