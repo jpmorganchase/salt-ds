@@ -1,11 +1,5 @@
 import { createContext } from "@salt-ds/core";
-import {
-  type ReactNode,
-  useEffect,
-  useLayoutEffect,
-  useReducer,
-  useRef,
-} from "react";
+import { type ReactNode, useEffect, useReducer } from "react";
 import {
   type CarouselReducerDispatch,
   type CarouselReducerState,
@@ -18,8 +12,7 @@ export const CarouselStateContext = createContext<CarouselReducerState>(
     slides: new Map(),
     firstVisibleSlideIndex: 0,
     visibleSlides: 1,
-    focusedSlideIndex: undefined,
-    containerRef: null,
+    focusedSlideIndex: 0,
     carouselId: undefined,
   },
 );
@@ -41,30 +34,20 @@ export function CarouselProvider({
   visibleSlides?: number;
   id?: string;
 }) {
-  const containerRef = useRef<HTMLDivElement>(null);
   const [state, dispatch] = useReducer(carouselReducer, {
     slides: new Map(),
+    focusedSlideIndex: firstVisibleSlideIndex,
     firstVisibleSlideIndex,
     visibleSlides,
-    containerRef,
     carouselId: id,
   });
 
   useEffect(() => {
-    dispatch({ type: "updateSlideCount", payload: visibleSlides });
-  }, [visibleSlides]);
-
-  useLayoutEffect(() => {
-    const container = containerRef.current;
-    if (!container) return;
-    requestAnimationFrame(() => {
-      container.scrollTo({
-        left: firstVisibleSlideIndex * (container.offsetWidth / visibleSlides),
-        // @ts-ignore instant scroll
-        behavior: "instant",
-      });
+    dispatch({
+      type: "updateSlideCount",
+      payload: visibleSlides,
     });
-  }, [firstVisibleSlideIndex, visibleSlides]);
+  }, [visibleSlides]);
 
   return (
     <CarouselStateContext.Provider value={state}>

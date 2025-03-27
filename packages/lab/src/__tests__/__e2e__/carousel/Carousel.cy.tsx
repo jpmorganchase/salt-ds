@@ -58,7 +58,9 @@ describe("GIVEN a 100% width slides carousel", () => {
     it("SHOULD update labels when scrolling", () => {
       cy.mount(<Default />);
       cy.findAllByText("1 of 4").should("exist");
-      cy.get(".saltCarouselSlider").scrollTo("right");
+      cy.get(".saltCarouselSlider").then((slider) => {
+        slider[0].scrollLeft = slider[0].scrollWidth; // Manually set the scroll position
+      });
       cy.wait(100);
       cy.findAllByText("4 of 4").should("exist");
     });
@@ -67,8 +69,7 @@ describe("GIVEN a 100% width slides carousel", () => {
       cy.findAllByText("1 of 4").should("exist");
       cy.findAllByRole("button", { name: "Next slide" }).focus();
       cy.realPress("Tab");
-      cy.findAllByRole("group").get('[tabindex="0"]').should("exist");
-      cy.findAllByRole("group").get('[tabindex="0"]').should("have.focus");
+      cy.focused().should("have.attr", "role", "group");
       cy.get(".saltCarouselSlider").realPress("ArrowRight");
       cy.findAllByText("2 of 4").should("exist");
       cy.get(".saltCarouselSlider").realPress("ArrowLeft");

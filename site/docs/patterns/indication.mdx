@@ -1,0 +1,120 @@
+---
+title: Indication
+description: "The indication pattern provides a starting point for designers to apply common indication scenarios, with consideration for color, iconography and recommended labeling guidelines. "
+layout: DetailPattern
+tags:
+  - pattern
+aliases:
+  - /salt/patterns/indication
+data:
+  resources:
+    [
+      { href: "https://storybook.saltdesignsystem.com/?path=/story/patterns-indication", label: "Examples" }
+    ]
+  components: ["Icon"]
+  showThemeControl: true
+---
+
+## Indication types
+
+There are four types of indication:
+
+- Status
+- Sentiment
+- Progression
+- Urgency
+
+## Status
+
+Status indicates the state or condition of a system or process. Each status helps users understand what’s happening, what actions are needed, and whether any issues need to be addressed.
+
+The Salt Design System includes 4 statuses with associated colors and icons:
+
+| Status | Color | Icon | 
+| --- | --- | --- |
+| Info | <ColorIndicator fillColor="blue" size={1.5}/> | `InfoIcon` |
+| Warning | <ColorIndicator fillColor="orange" size={1.5}/> | `WarningIcon` |
+| Error | <ColorIndicator fillColor="red" size={1.5}/> | `ErrorIcon` |
+| Success | <ColorIndicator fillColor="green" size={1.5}/> | `SuccessCircleIcon` |
+
+<LivePreview componentName="pattern-indication" exampleName="Status" />
+
+## Sentiment
+
+Sentiment helps guide users through an interface by providing visual cues about potential outcomes. Each sentiment evokes specific feelings such as negativity, carefulness, comfort, trust or positivity.
+
+The Salt design system includes 5 sentiments with associated colors:
+
+
+| Sentiment | Color | Feeling | 
+| --- | --- | --- |
+| Neutral | <ColorIndicator fillColor="gray" size={1.5}/> | Comfort |
+| Accented | <ColorIndicator fillColor="accent" size={1.5}/> | Trust |
+| Caution | <ColorIndicator fillColor="orange" size={1.5}/> | Carefulness |
+| Negative | <ColorIndicator fillColor="red" size={1.5}/> | Negativity |
+| Positive | <ColorIndicator fillColor="green" size={1.5}/> | Positivity |
+
+
+## Progression
+
+A progression is a sequence of steps through which a piece of work passes from initiation to completion.
+
+Progression is sequential but does not escalate. Not all steps are mandatory and can be skipped or repeated. Some processes may branch or result in different outcomes. The statuses are usually unique to a particular journey. Some processes may be relatively simple in nature (e.g. To-do, Doing, Done). Others are more complex, with the possibility of sub-status’ (e.g. In Progress, In Progress - Pending approval, In Progress - Approved). 
+
+There are 5 main stages of progression with associated colors and icons:
+
+
+- **Static**:
+    - To do – An item that is ready to be picked up or assigned to a user
+    - Draft – An item has been picked up or assigned to a user, and is ready to be worked on/addressed
+- **In Progress**: 
+    - On hold – An item is temporarily not being dealt with and is paused
+    - In progress – An item is actively being worked on/addressed, with no blockers
+- **Alart**: 
+    - Pending – An item is being worked on but may be waiting for another process or input
+- **At Risk**: 
+    - Canceled – An item has been deliberately closed or removed, likely due to a negative circumstance
+    - Rejected – An item has been dismissed or failed, likely due to an error, and requires further action
+- **Complete**: 
+    - Completed – An item is finished or ready, and requires no further action
+    - Closed – An item is not being actively worked on and does not require further action
+
+
+| Progression | Color | Icon |
+| --- | --- | --- | 
+| Static | <ColorIndicator fillColor="gray" size={1.5}/> | `ProgressTodoIcon` `ProgressDraftIcon` |
+| In Progress | <ColorIndicator fillColor="accent" size={1.5}/> | `ProgressOnhold` `ProgressInprogressIcon` |
+| Alert | <ColorIndicator fillColor="orange" size={1.5}/> | `ProgressPending` |
+| At Risk | <ColorIndicator fillColor="red" size={1.5}/> | `ProgressCancelledIcon` `ProgressRejectedIcon` |
+| Complete | <ColorIndicator fillColor="green" size={1.5}/> | `ProgressCompleteIcon` `ProgressClosedIcon` |
+
+<LivePreview componentName="pattern-indication" exampleName="Progression" />
+
+## Urgency
+
+Urgency indicates the level of risk associated with an item, process or entity to be communicated. 
+
+Urgency levels escalate, but do not have to be followed in a sequence. An item may step through each level, but can also jump between levels depending on its condition. Factors determining urgency include:
+
+- Risk
+- Escalation
+- Age
+
+There are 5 levels of urgency with associated colors and icons:
+
+- **None**: No urgency or priority level, neutral item with no action required from the user
+- **Low**: Non-priority item with low threat to threshold/deadline, doesn’t require immediate acknowledgement from the user
+- **Medium**: Moderate level of priority nearing threshold/deadline, item can be addressed at a later stage by the user
+- **High**: Nearing threshold/deadline, item to be addressed by user to prevent a more serious outcome in workflow
+- **On Time**: Indicates that the process has begun, but not enough time has elapsed to increase the urgency to "low"
+
+
+| Urgency | Color | Icon |
+| --- | --- | --- | 
+| None | <ColorIndicator fillColor="gray" size={1.5}/> | `UrgencyNoneIcon` |
+| Low | <ColorIndicator fillColor="accent" size={1.5}/> | `UrgencyLowIcon` |
+| Medium | <ColorIndicator fillColor="orange" size={1.5}/> | `UrgencyMediumIcon` |
+| High | <ColorIndicator fillColor="red" size={1.5}/> | `UrgencyHighIcon` |
+| On Time | <ColorIndicator fillColor="green" size={1.5}/> | Icon TBD |
+
+<LivePreview componentName="pattern-indication" exampleName="Urgency" />

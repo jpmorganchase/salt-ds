@@ -11,12 +11,18 @@ describe("Given a Slider", () => {
     cy.mount(<Default />);
 
     cy.findByRole("slider").should("exist");
-    cy.findByRole("slider").should("have.value", "0");
+    cy.findByRole("slider").should("have.value", "5");
   });
 
   it("should fire onChange on pointer down on slider track", () => {
     const changeSpy = cy.stub().as("changeSpy");
-    cy.mount(<Default style={{ width: "400px" }} onChange={changeSpy} />);
+    cy.mount(
+      <Default
+        style={{ width: "400px" }}
+        defaultValue={0}
+        onChange={changeSpy}
+      />,
+    );
     cy.get(".saltSliderTrack-rail").trigger("pointerdown", {
       button: 0,
       clientX: 750,
@@ -46,7 +52,7 @@ describe("Given a Slider", () => {
     cy.get("@changeEndSpy").should(
       "have.been.calledWith",
       Cypress.sinon.match.any,
-      8,
+      5,
     );
   });
 
@@ -59,7 +65,7 @@ describe("Given a Slider", () => {
     cy.get("@changeEndSpy").should(
       "have.been.calledWith",
       Cypress.sinon.match.any,
-      1,
+      6,
     );
   });
 
@@ -174,19 +180,33 @@ describe("Given a Slider", () => {
     cy.findByTestId("sliderTooltip").should("not.exist");
   });
 
-  it("should render marks when provided", () => {
+  it("should confine slider values to marks when restrictToMarks is enabled", () => {
     cy.mount(
       <Default
+        defaultValue={0}
         style={{ width: "400px" }}
+        restrictToMarks={true}
         marks={[
           { value: 2, label: "2" },
-          { value: 3, label: "3" },
+          { value: 5, label: "5" },
+          { value: 9, label: "9" },
         ]}
       />,
     );
 
-    cy.findAllByTestId("mark").eq(0).should("have.text", "2");
-    cy.findAllByTestId("mark").eq(1).should("have.text", "3");
+    cy.findByRole("slider").should("have.value", "2");
+    cy.findByRole("slider").focus().realPress("ArrowRight");
+    cy.findByRole("slider").should("have.value", "5");
+    cy.findByRole("slider").focus().realPress("ArrowRight");
+    cy.findByRole("slider").should("have.value", 9);
+
+    // Reverse
+    cy.findByRole("slider").focus().realPress("ArrowLeft");
+    cy.findByRole("slider").should("have.value", 5);
+    cy.findByRole("slider").focus().realPress("ArrowLeft");
+    cy.findByRole("slider").should("have.value", 2);
+    cy.findByRole("slider").focus().realPress("ArrowLeft");
+    cy.findByRole("slider").should("have.value", 2);
   });
 
   it("should render inline min/max labels and marks when provided", () => {
@@ -241,6 +261,42 @@ describe("Given a Slider", () => {
     cy.get("@changeEndSpy").should("have.callCount", 2);
   });
 
+  it("should set slider value to minimum if default value is less than minimum", () => {
+    cy.mount(
+      <Default
+        style={{ width: "400px" }}
+        min={0}
+        max={10}
+        defaultValue={-10}
+      />,
+    );
+    cy.findByRole("slider").should("have.value", 0);
+  });
+
+  it("should set slider value to maximum if default value is greater than maximum", () => {
+    cy.mount(
+      <Default
+        style={{ width: "400px" }}
+        min={0}
+        max={10}
+        defaultValue={100}
+      />,
+    );
+    cy.findByRole("slider").should("have.value", 10);
+  });
+
+  it("should round the slider value to the next step value if default value is not a multiple of the step", () => {
+    cy.mount(
+      <Default
+        style={{ width: "400px" }}
+        min={0}
+        max={10}
+        defaultValue={1.5}
+      />,
+    );
+    cy.findByRole("slider").should("have.value", 2);
+  });
+
   it("should render min max labels when passed", () => {
     cy.mount(
       <Default
@@ -268,6 +324,25 @@ describe("Given a Slider", () => {
     cy.findByTestId("sliderThumb").trigger("pointerover");
     cy.findByTestId("sliderTooltip").should("be.visible");
     cy.findByTestId("sliderTooltip").should("have.text", "2%");
+  });
+
+  it("should round to the decimal places provided", () => {
+    cy.mount(
+      <Default
+        min={0}
+        max={4.3}
+        step={0.375}
+        decimalPlaces={2}
+        defaultValue={0}
+      />,
+    );
+
+    cy.findByRole("slider").focus().realPress("ArrowRight");
+    cy.findByRole("slider").should("have.attr", "value", 0.38);
+    cy.findByRole("slider").focus().realPress("ArrowRight");
+    cy.findByRole("slider").should("have.attr", "value", 0.75);
+    cy.findByRole("slider").focus().realPress("ArrowRight");
+    cy.findByRole("slider").should("have.attr", "value", 1.13);
   });
 
   describe("WHEN it is mounted as an uncontrolled component", () => {
@@ -305,6 +380,8 @@ describe("Given a Slider", () => {
       function ControlledSlider() {
         const [value, setValue] = useState<number>(3);
         const onChange = (event: ChangeEvent<HTMLInputElement>) => {
+          // React 16 backwards compatibility
+          event.persist();
           setValue(Number.parseFloat(event.target.value));
           changeSpy(event);
         };
@@ -312,6 +389,8 @@ describe("Given a Slider", () => {
           event: ChangeEvent<HTMLInputElement>,
           value: [number, number],
         ) => {
+          // React 16 backwards compatibility
+          event.persist();
           changeEndSpy(event);
         };
         return (
@@ -331,6 +410,30 @@ describe("Given a Slider", () => {
       cy.get("@changeEndSpy").should("have.been.calledWithMatch", {
         target: { value: "4" },
       });
+    });
+  });
+
+  describe("WHEN step is not a multiple of the range", () => {
+    it("should only have values that are allowed, multiple of steps", () => {
+      cy.mount(<Default min={0} max={1} step={0.3} defaultValue={0} />);
+
+      // Keyboard navigation forward
+      cy.findByRole("slider").focus().realPress("ArrowRight");
+      cy.findByRole("slider").should("have.value", 0.3);
+      cy.findByRole("slider").focus().realPress("ArrowRight");
+      cy.findByRole("slider").should("have.value", 0.6);
+      cy.findByRole("slider").focus().realPress("ArrowRight");
+      cy.findByRole("slider").should("have.value", 0.9);
+      cy.findByRole("slider").focus().realPress("ArrowRight");
+      cy.findByRole("slider").should("have.value", 0.9);
+
+      // Keyboard navigation backward
+      cy.findByRole("slider").focus().realPress("ArrowLeft");
+      cy.findByRole("slider").should("have.value", 0.6);
+      cy.findByRole("slider").focus().realPress("ArrowLeft");
+      cy.findByRole("slider").should("have.value", 0.3);
+      cy.findByRole("slider").focus().realPress("ArrowLeft");
+      cy.findByRole("slider").should("have.value", 0);
     });
   });
 });

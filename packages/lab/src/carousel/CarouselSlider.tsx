@@ -7,6 +7,8 @@ import {
   type ReactElement,
   forwardRef,
   useContext,
+  useLayoutEffect,
+  useRef,
 } from "react";
 import {
   CarouselDispatchContext,
@@ -25,57 +27,81 @@ export interface CarouselSliderProps extends HTMLAttributes<HTMLDivElement> {
 const withBaseName = makePrefixer("saltCarouselSlider");
 
 export const CarouselSlider = forwardRef<HTMLDivElement, CarouselSliderProps>(
-  function CarouselSlider(
-    { children, onKeyDown: onKeyDownProp, ...rest },
-    propRef,
-  ) {
+  function CarouselSlider({ children, onKeyDown, ...rest }, propRef) {
     const targetWindow = useWindow();
     useComponentCssInjection({
       testId: "salt-carousel-slider",
       css: carouselSliderCss,
       window: targetWindow,
     });
-
+    const containerRef = useRef<HTMLDivElement>(null);
+    const hasRun = useRef(false);
+    const { slides, firstVisibleSlideIndex, focusedSlideIndex, visibleSlides } =
+      useContext(CarouselStateContext);
     const dispatch = useContext(CarouselDispatchContext);
-    const {
-      slides,
-      firstVisibleSlideIndex,
-      focusedSlideIndex,
-      visibleSlides,
-      containerRef,
-    } = useContext(CarouselStateContext);
     const slideIds = [...slides.keys()];
-    const prevId =
-      focusedSlideIndex && focusedSlideIndex > firstVisibleSlideIndex
-        ? slideIds[focusedSlideIndex - 1]
-        : slideIds[firstVisibleSlideIndex - 1] || null;
-    const nextId = slideIds[firstVisibleSlideIndex + 1] || null;
-    const onKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
-      if (event.key === "ArrowRight" || event.key === "ArrowLeft") {
-        if (event.repeat) return;
-        event.stopPropagation();
-        if (event.key === "ArrowRight") {
-          if (!nextId) return;
-          dispatch({ type: "scroll", payload: nextId });
-          dispatch({ type: "focus", payload: nextId });
-        } else {
-          if (!prevId) return;
+
+    const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
+      if (event.repeat) return;
+      switch (event.key) {
+        case "ArrowLeft": {
+          const prevId =
+            focusedSlideIndex && focusedSlideIndex > firstVisibleSlideIndex
+              ? slideIds[focusedSlideIndex - 1]
+              : slideIds[firstVisibleSlideIndex - 1] || null;
+
+          if (!prevId) break;
+
           dispatch({ type: "scroll", payload: prevId });
-          dispatch({ type: "focus", payload: prevId });
+
+          slides.get(prevId)?.focus();
+
+          break;
+        }
+        case "ArrowRight": {
+          const nextId = slideIds[firstVisibleSlideIndex + 1] || null;
+
+          if (!nextId) break;
+
+          dispatch({ type: "scroll", payload: nextId });
+
+          slides.get(nextId)?.focus();
+
+          break;
         }
       }
-      onKeyDownProp?.(event);
+      onKeyDown?.(event);
     };
+
     const handleScroll = () => {
       const container = containerRef?.current;
       if (!container) return;
       const scrollLeft = container.scrollLeft;
-      const newIndex =
-        Math.round(scrollLeft / (container.offsetWidth / visibleSlides)) || 0;
+      const slideWidth = container.offsetWidth / visibleSlides;
+      const newIndex = Math.round(scrollLeft / slideWidth) || 0;
+
       if (newIndex !== firstVisibleSlideIndex) {
         dispatch({ type: "move", payload: slideIds[newIndex] });
       }
     };
+
+    useLayoutEffect(() => {
+      const container = containerRef.current;
+      if (!container) return;
+
+      const scrollBehavior = hasRun.current ? "smooth" : "instant";
+      const slideWidth = container.offsetWidth / visibleSlides;
+
+      requestAnimationFrame(() => {
+        container.scrollTo({
+          left: focusedSlideIndex * slideWidth,
+          // @ts-ignore
+          behavior: scrollBehavior,
+        });
+      });
+
+      hasRun.current = true;
+    }, [focusedSlideIndex, visibleSlides]);
 
     const ref = useForkRef(propRef, containerRef);
     return (
@@ -83,7 +109,7 @@ export const CarouselSlider = forwardRef<HTMLDivElement, CarouselSliderProps>(
         ref={ref}
         className={withBaseName()}
         tabIndex={-1}
-        onKeyDown={onKeyDown}
+        onKeyDown={handleKeyDown}
         onScroll={handleScroll}
         {...rest}
       >

@@ -99,7 +99,6 @@ export const LivePreview: FC<LivePreviewProps> = ({
           </div>
         </LocalizationProvider>
       </div>
-
       <div
         className={styles.codePanel}
         aria-hidden={!showCode}

@@ -1,9 +1,9 @@
-import { makePrefixer, useForkRef, useIdMemo } from "@salt-ds/core";
+import { makePrefixer, useForkRef, useId, useIdMemo } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
-  type HTMLAttributes,
+  type ComponentProps,
   type ReactNode,
   forwardRef,
   useContext,
@@ -19,7 +19,10 @@ import {
 import carouselSlideCss from "./CarouselSlide.css";
 import { useIntersectionObserver } from "./useIntersectionObserver";
 
-export interface CarouselSlideProps extends HTMLAttributes<HTMLDivElement> {
+export type CarouselSlideId = string;
+export type CarouselSlideElement = HTMLDivElement;
+
+export interface CarouselSlideProps extends ComponentProps<"div"> {
   /**
    * Actions to be displayed in the content footer.
    **/
@@ -68,12 +71,12 @@ export const CarouselSlide = forwardRef<HTMLDivElement, CarouselSlideProps>(
       window: targetWindow,
     });
     const dispatch = useContext(CarouselDispatchContext);
-    const { slides, visibleSlides, firstVisibleSlideIndex } =
-      useContext(CarouselStateContext);
+    const { slides, visibleSlides } = useContext(CarouselStateContext);
 
     const slideRef = useRef<HTMLDivElement>(null);
     const [isVisible, setIsVisible] = useState(false);
     const id = useIdMemo(idProp);
+    const announcerId = useId();
     const slideCount = slides.size;
     useEffect(() => {
       if (!slideRef.current) return;
@@ -97,6 +100,7 @@ export const CarouselSlide = forwardRef<HTMLDivElement, CarouselSlideProps>(
           : undefined,
       ...style,
     };
+
     const ref = useForkRef(refProp, slideRef);
     const slideIds = [...slides.keys()];
     const index = slideIds.indexOf(id || slideIds[0]);
