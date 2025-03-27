@@ -8,7 +8,7 @@ interface Heading3Props extends Omit<ComponentPropsWithoutRef<"h3">, "color"> {
 }
 
 export const Heading3: FC<Heading3Props> = ({ children, ...rest }) => (
-  <H3 className={styles.heading3} {...rest}>
+  <H3 className={styles.heading3} data-mdx="heading3" {...rest}>
     {children}
   </H3>
 );
