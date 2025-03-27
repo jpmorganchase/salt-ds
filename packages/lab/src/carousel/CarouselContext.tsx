@@ -21,6 +21,7 @@ export const CarouselStateContext = createContext<CarouselReducerState>(
     focusedSlideIndex: undefined,
     containerRef: null,
     carouselId: undefined,
+    activeHeading: "",
   },
 );
 export const CarouselDispatchContext = createContext<CarouselReducerDispatch>(
@@ -48,6 +49,7 @@ export function CarouselProvider({
     visibleSlides,
     containerRef,
     carouselId: id,
+    activeHeading: "",
   });
 
   useEffect(() => {

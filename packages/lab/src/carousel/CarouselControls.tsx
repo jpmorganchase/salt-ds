@@ -60,8 +60,13 @@ export const CarouselControls = forwardRef<
     css: carouselControlsCss,
     window: targetWindow,
   });
-  const { slides, carouselId, firstVisibleSlideIndex, visibleSlides } =
-    useContext(CarouselStateContext);
+  const {
+    slides,
+    carouselId,
+    firstVisibleSlideIndex,
+    visibleSlides,
+    activeHeading,
+  } = useContext(CarouselStateContext);
   const dispatch = useContext(CarouselDispatchContext);
 
   const slideCount = slides.size;
@@ -78,22 +83,25 @@ export const CarouselControls = forwardRef<
   const isOnFirstSlide = firstVisibleSlideIndex === 0;
   const isOnLastSlide = firstVisibleSlideIndex === slideCount - visibleSlides;
 
-  const currentSlideLabel =
-    (currentId && slides.get(currentId)?.getAttribute("aria-labelledby")) ||
-    undefined;
-
-  const controlsLabel = slideCount >= 1 && (
-    <Text
-      as="span"
-      aria-live="polite"
-      aria-labelledby={visibleSlides === 1 ? currentSlideLabel : undefined}
-    >
-      <strong>
-        {`${firstVisibleSlideIndex + 1} ${visibleSlides > 1 && slideCount > 1 ? ` - ${firstVisibleSlideIndex + visibleSlides}` : ""} of
-        ${slideCount}`}
-      </strong>
-    </Text>
-  );
+  const controlsLabel =
+    slideCount >= 1 && visibleSlides === 1 ? (
+      <Text as="span" aria-live="polite">
+        <strong>{`${firstVisibleSlideIndex + 1} of ${slideCount}`}</strong>
+        <div className="saltCarouselSlide-sr-only">{activeHeading}</div>
+      </Text>
+    ) : (
+      slideCount >= 1 && (
+        <Text as="span" aria-live="polite">
+          <strong>
+            {`${firstVisibleSlideIndex + 1} ${
+              visibleSlides > 1 && slideCount > 1
+                ? ` - ${firstVisibleSlideIndex + visibleSlides}`
+                : ""
+            } of ${slideCount}`}
+          </strong>
+        </Text>
+      )
+    );
 
   function handlePrevClick(event: MouseEvent<HTMLButtonElement>) {
     if (!prevId) return;

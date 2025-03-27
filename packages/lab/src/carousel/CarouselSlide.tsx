@@ -68,8 +68,7 @@ export const CarouselSlide = forwardRef<HTMLDivElement, CarouselSlideProps>(
       window: targetWindow,
     });
     const dispatch = useContext(CarouselDispatchContext);
-    const { slides, visibleSlides, firstVisibleSlideIndex } =
-      useContext(CarouselStateContext);
+    const { slides, visibleSlides } = useContext(CarouselStateContext);
 
     const slideRef = useRef<HTMLDivElement>(null);
     const [isVisible, setIsVisible] = useState(false);
@@ -89,6 +88,16 @@ export const CarouselSlide = forwardRef<HTMLDivElement, CarouselSlideProps>(
     });
 
     const announcerId = useId();
+    const headingRef = useRef<HTMLHeadingElement>(null);
+
+    useEffect(() => {
+      if (isVisible && headingRef.current) {
+        const text = headingRef.current.textContent || "";
+        if (visibleSlides === 1) {
+          dispatch({ type: "updateHeading", payload: text });
+        }
+      }
+    }, [isVisible, visibleSlides, dispatch]);
 
     const SlideStyles = {
       "--carousel-slide-width":
@@ -126,11 +135,15 @@ export const CarouselSlide = forwardRef<HTMLDivElement, CarouselSlideProps>(
           >
             <div className={withBaseName("content")}>
               {visibleSlides > 1 && isVisible && (
-                <span id={announcerId} className={withBaseName("sr-only")}>
+                <span
+                  id={announcerId}
+                  className={withBaseName("sr-only")}
+                  aria-hidden="true"
+                >
                   {helperText}
                 </span>
               )}
-              {header}
+              {header && <span ref={headingRef}>{header}</span>}
               <div>{children}</div>
             </div>
             {actions && (

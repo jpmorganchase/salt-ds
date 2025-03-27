@@ -10,6 +10,7 @@ export interface CarouselReducerState {
   focusedSlideIndex?: number;
   containerRef: RefObject<HTMLDivElement> | null;
   carouselId?: string;
+  activeHeading?: string;
 }
 export type CarouselReducerAction =
   | { type: "register"; payload: [SlideId, SlideElement] }
@@ -17,7 +18,9 @@ export type CarouselReducerAction =
   | { type: "updateSlideCount"; payload: number }
   | { type: "move"; payload: SlideId }
   | { type: "scroll"; payload: SlideId }
-  | { type: "focus"; payload: SlideId };
+  | { type: "focus"; payload: SlideId }
+  | { type: "updateHeading"; payload: string };
+
 export type CarouselReducerDispatch = Dispatch<CarouselReducerAction>;
 
 export function carouselReducer(
@@ -57,7 +60,6 @@ export function carouselReducer(
     }
     case "updateSlideCount": {
       const visibleSlides = action.payload;
-
       return { ...state, visibleSlides: visibleSlides };
     }
     case "scroll": {
@@ -82,6 +84,9 @@ export function carouselReducer(
       const slideIds = [...slides.keys()];
       const index = slideIds.indexOf(id || slideIds[0]);
       return { ...state, focusedSlideIndex: index };
+    }
+    case "updateHeading": {
+      return { ...state, activeHeading: action.payload };
     }
     default: {
       const exhaustiveCheck: never = action;
