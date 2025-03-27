@@ -1,9 +1,9 @@
 import {
   Button,
   FlexLayout,
-  type ImperativePanelHandle,
   SplitHandle,
   SplitPanel,
+  type SplitPanelRef,
   Splitter,
   StackLayout,
   Text,
@@ -167,26 +167,16 @@ export function Variant() {
   return (
     <FlexLayout className="box">
       <Splitter orientation="vertical">
-        <SplitPanel
-          variant="secondary"
-          minSize={0}
-          defaultSize={25}
-          className="center"
-        >
-          <Text>Left</Text>
+        <SplitPanel variant="primary" className="center">
+          <Text>Primary</Text>
         </SplitPanel>
-        <SplitHandle border="right" variant="secondary" />
-        <SplitPanel minSize={50} className="center">
-          <Text>Center</Text>
+        <SplitHandle variant="secondary" border="left" />
+        <SplitPanel variant="secondary" className="center">
+          <Text>Secondary</Text>
         </SplitPanel>
-        <SplitHandle border="left" variant="secondary" />
-        <SplitPanel
-          variant="secondary"
-          minSize={0}
-          defaultSize={25}
-          className="center"
-        >
-          <Text>Right</Text>
+        <SplitHandle variant="tertiary" border="left" />
+        <SplitPanel variant="tertiary" className="center">
+          <Text>Tertiary</Text>
         </SplitPanel>
       </Splitter>
     </FlexLayout>
@@ -276,7 +266,7 @@ export function CollapsibleContainerQuery() {
 }
 
 export function CollapsibleTo0() {
-  const ref = useRef<ImperativePanelHandle>(null);
+  const ref = useRef<SplitPanelRef>(null);
   const [expanded, setExpanded] = useState(true);
 
   function toggle() {
@@ -327,7 +317,7 @@ export function CollapsibleTo0() {
 }
 
 export function ProgrammableResize() {
-  const ref = useRef<ImperativePanelHandle>(null);
+  const ref = useRef<SplitPanelRef>(null);
 
   function handleResizeLeft(size: number) {
     return () => {
@@ -357,6 +347,22 @@ export function ProgrammableResize() {
           </Splitter>
         </FlexLayout>
       </StackLayout>
+    </FlexLayout>
+  );
+}
+
+export function LocalPersistence() {
+  return (
+    <FlexLayout className="box">
+      <Splitter orientation="vertical" autoSaveId="splitter-persistence">
+        <SplitPanel id="left" className="center">
+          <Text>Left</Text>
+        </SplitPanel>
+        <SplitHandle aria-label="Resize Left/Right" />
+        <SplitPanel id="right" className="center">
+          <Text>Right</Text>
+        </SplitPanel>
+      </Splitter>
     </FlexLayout>
   );
 }

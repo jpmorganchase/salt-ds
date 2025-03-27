@@ -1,9 +1,9 @@
 import {
   Button,
   FlexLayout,
-  type ImperativePanelHandle,
   SplitHandle,
   SplitPanel,
+  type SplitPanelRef,
   Splitter,
   StackLayout,
   Text,
@@ -13,7 +13,7 @@ import { useRef } from "react";
 import styles from "./splitter.module.css";
 
 export function ProgrammableResize() {
-  const ref = useRef<ImperativePanelHandle>(null);
+  const ref = useRef<SplitPanelRef>(null);
 
   function handleResizeLeft(size: number) {
     return () => {

@@ -1,6 +1,11 @@
-import { type ReactNode, createContext, useContext } from "react";
-import { PanelGroup, type PanelGroupProps } from "react-resizable-panels";
+import { type ReactNode, createContext, forwardRef, useContext } from "react";
+import {
+  type ImperativePanelGroupHandle,
+  PanelGroup,
+  type PanelGroupProps,
+} from "react-resizable-panels";
 
+export type SplitterRef = ImperativePanelGroupHandle;
 export type SplitterAppearance = "bordered" | "transparent";
 export type SplitterOrientation = "horizontal" | "vertical";
 
@@ -25,26 +30,24 @@ export interface SplitterProps extends Omit<PanelGroupProps, "direction"> {
   children: ReactNode;
 }
 
-export function Splitter({
-  orientation,
-  appearance: appearanceProp,
-  ...props
-}: SplitterProps) {
-  const appearanceContext = useContext(SplitterAppearanceContext);
-  const appearance = appearanceProp ?? appearanceContext;
+export const Splitter = forwardRef<SplitterRef, SplitterProps>(
+  function Splitter(
+    { orientation, appearance: appearanceProp, ...props },
+    ref,
+  ) {
+    const appearanceContext = useContext(SplitterAppearanceContext);
+    const appearance = appearanceProp ?? appearanceContext;
 
-  const direction = orientation === "horizontal" ? "vertical" : "horizontal";
+    // Re-map the splitter's orientation to the direction expected by the react-resizable-panels API.
+    // A "horizontal" splitter orientation requires a "vertical" panel direction, and vice versa.
+    const direction = orientation === "horizontal" ? "vertical" : "horizontal";
 
-  return (
-    <SplitterOrientationContext.Provider value={orientation}>
-      <SplitterAppearanceContext.Provider value={appearance}>
-        <PanelGroup
-          data-orientation={orientation}
-          data-appearance={appearance}
-          direction={direction}
-          {...props}
-        />
-      </SplitterAppearanceContext.Provider>
-    </SplitterOrientationContext.Provider>
-  );
-}
+    return (
+      <SplitterOrientationContext.Provider value={orientation}>
+        <SplitterAppearanceContext.Provider value={appearance}>
+          <PanelGroup ref={ref} direction={direction} {...props} />
+        </SplitterAppearanceContext.Provider>
+      </SplitterOrientationContext.Provider>
+    );
+  },
+);

@@ -1,9 +1,9 @@
 import {
   Button,
   FlexLayout,
-  type ImperativePanelHandle,
   SplitHandle,
   SplitPanel,
+  type SplitPanelRef,
   Splitter,
 } from "@salt-ds/core";
 import { DoubleChevronLeftIcon, DoubleChevronRightIcon } from "@salt-ds/icons";
@@ -12,7 +12,7 @@ import { useRef, useState } from "react";
 import styles from "./splitter.module.css";
 
 export function CollapsibleTo0() {
-  const ref = useRef<ImperativePanelHandle>(null);
+  const ref = useRef<SplitPanelRef>(null);
   const [expanded, setExpanded] = useState(true);
 
   function toggle() {
