@@ -9,7 +9,6 @@
   right: 0;
   top: 0;
 }
-.saltOverlayPanelCloseButton ~ .saltOverlayPanelContent,
-.saltOverlayPanelCloseButton ~ .saltOverlayHeader {
+.saltOverlayPanelCloseButton ~ .saltOverlayPanelContent {
   padding-right: var(--salt-spacing-400);
 }

@@ -30,8 +30,8 @@ export interface DialogContentProps extends HTMLAttributes<HTMLDivElement> {
 export const DialogContent = forwardRef<HTMLDivElement, DialogContentProps>(
   function DialogContent(props, ref) {
     const { children, className, ...rest } = props;
-    const [scrollBarTop, setScrollBarTop] = useState(false);
-    const [scrollBarBottom, setScrollBarBottom] = useState(true);
+    const [scrolledTop, setScrolledTop] = useState(false);
+    const [scrolledBottom, setScrolledBottom] = useState(true);
     const [isOverflowing, setIsOverflowing] = useState(false);
 
     const divRef = useRef<HTMLDivElement>(null);
@@ -41,8 +41,8 @@ export const DialogContent = forwardRef<HTMLDivElement, DialogContentProps>(
       targetWindow?.requestAnimationFrame(() => {
         const container = divRef.current;
         if (!container) return;
-        setScrollBarTop(container.scrollTop > 0);
-        setScrollBarBottom(
+        setScrolledTop(container.scrollTop > 0);
+        setScrolledBottom(
           container.scrollHeight -
             container.scrollTop -
             container.clientHeight !==
@@ -75,7 +75,7 @@ export const DialogContent = forwardRef<HTMLDivElement, DialogContentProps>(
       <>
         <div
           className={clsx({
-            [withBaseName("scroll")]: isOverflowing && scrollBarTop,
+            [withBaseName("scroll")]: isOverflowing && scrolledTop,
           })}
         />
         <div
@@ -94,7 +94,7 @@ export const DialogContent = forwardRef<HTMLDivElement, DialogContentProps>(
         </div>
         <div
           className={clsx({
-            [withBaseName("scroll")]: isOverflowing && scrollBarBottom,
+            [withBaseName("scroll")]: isOverflowing && scrolledBottom,
           })}
         />
       </>

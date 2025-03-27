@@ -11,7 +11,7 @@
   flex: 1 1 auto;
 }
 .saltDialogContent-overflow {
-  padding-right: var(--salt-spacing-300);
+  padding-right: var(--salt-spacing-100);
 }
 
 .saltDialogContent-scroll {
