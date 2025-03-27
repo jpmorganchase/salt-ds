@@ -66,10 +66,11 @@ describe("GIVEN a 100% width slides carousel", () => {
     it("SHOULD support keyboard navigation", () => {
       cy.mount(<Default />);
       cy.findAllByText("1 of 4").should("exist");
-      cy.get(".saltCarouselSlider").focus();
-      cy.get(".saltCarouselSlider").realPress("ArrowRight");
+      cy.findAllByRole("group").get('[tabindex="0"]').focus();
+      cy.findAllByRole("group").get('[tabindex="0"]').realPress("ArrowRight");
       cy.findAllByText("2 of 4").should("exist");
-      cy.get(".saltCarouselSlider").realPress("ArrowLeft");
+      cy.wait(100);
+      cy.findAllByRole("group").get('[tabindex="0"]').realPress("ArrowLeft");
       cy.findAllByText("1 of 4").should("exist");
     });
     describe("WHEN navigating with keyboard keys", () => {
