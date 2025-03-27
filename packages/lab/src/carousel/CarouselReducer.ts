@@ -1,16 +1,16 @@
 import type { Dispatch } from "react";
 
-import type { CarouselSlideElement, CarouselSlideId } from "./CarouselSlide";
+import type { CarouselSlideId, CarouselSlideMeta } from "./CarouselSlide";
 
 export interface CarouselReducerState {
-  slides: Map<CarouselSlideId, CarouselSlideElement>;
+  slides: Map<CarouselSlideId, CarouselSlideMeta>;
   firstVisibleSlideIndex: number;
   visibleSlides: number;
   focusedSlideIndex: number;
   carouselId?: string;
 }
 export type CarouselReducerAction =
-  | { type: "register"; payload: [CarouselSlideId, CarouselSlideElement] }
+  | { type: "register"; payload: [CarouselSlideId, CarouselSlideMeta] }
   | { type: "unregister"; payload: CarouselSlideId }
   | { type: "updateSlideCount"; payload: number }
   | { type: "move"; payload: CarouselSlideId }
@@ -25,8 +25,8 @@ export function carouselReducer(
   switch (action.type) {
     case "register": {
       const { slides } = state;
-      const [id, element] = action.payload;
-      slides.set(id, element);
+      const [id, { element, labelId }] = action.payload;
+      slides.set(id, { element, labelId });
       return {
         ...state,
         slides: new Map(slides),

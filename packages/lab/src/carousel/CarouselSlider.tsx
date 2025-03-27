@@ -54,7 +54,7 @@ export const CarouselSlider = forwardRef<HTMLDivElement, CarouselSliderProps>(
 
           dispatch({ type: "scroll", payload: prevId });
 
-          slides.get(prevId)?.focus();
+          slides.get(prevId)?.element.focus();
 
           break;
         }
@@ -65,7 +65,7 @@ export const CarouselSlider = forwardRef<HTMLDivElement, CarouselSliderProps>(
 
           dispatch({ type: "scroll", payload: nextId });
 
-          slides.get(nextId)?.focus();
+          slides.get(nextId)?.element.focus();
 
           break;
         }
