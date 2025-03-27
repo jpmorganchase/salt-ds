@@ -35,6 +35,7 @@ export const CarouselSlider = forwardRef<HTMLDivElement, CarouselSliderProps>(
       window: targetWindow,
     });
     const containerRef = useRef<HTMLDivElement>(null);
+    const hasRun = useRef(false);
     const { slides, firstVisibleSlideIndex, focusedSlideIndex, visibleSlides } =
       useContext(CarouselStateContext);
     const dispatch = useContext(CarouselDispatchContext);
@@ -88,14 +89,18 @@ export const CarouselSlider = forwardRef<HTMLDivElement, CarouselSliderProps>(
       const container = containerRef.current;
       if (!container) return;
 
+      const scrollBehavior = hasRun.current ? "smooth" : "instant";
       const slideWidth = container.offsetWidth / visibleSlides;
 
       requestAnimationFrame(() => {
         container.scrollTo({
           left: focusedSlideIndex * slideWidth,
-          behavior: "smooth",
+          // @ts-ignore
+          behavior: scrollBehavior,
         });
       });
+
+      hasRun.current = true;
     }, [focusedSlideIndex, visibleSlides]);
 
     const ref = useForkRef(propRef, containerRef);
