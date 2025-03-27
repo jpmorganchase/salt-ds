@@ -4,9 +4,9 @@
 
 Promote updated `DialogHeader` component to core. `DialogHeader`'s update follows our standardized header for container components and app regions, and it can be added to provide a structured header for dialog. The header includes a title and actions that follows our Header Block pattern.
 
-- Fix default initialFocus to close button as per accessibility guidance, .
-- Padding bottom update to DialogHeader from `--salt-spacing-300` to `--salt-spacing-300`
-- Close button in `DialogHeader` aligns horizontally with header icon.
+- Fixed default `initialFocus` to close button (if used) as per accessibility guidance.
+- Updated bottom padding of DialogHeader from `--salt-spacing-300` to `--salt-spacing-100`
+- Updated close button position in `DialogHeader` to horizontally align with header icon using the new `actions` prop.
 
 ```typescript
 <Dialog open={open} onOpenChange={onOpenChange} id={id}>
