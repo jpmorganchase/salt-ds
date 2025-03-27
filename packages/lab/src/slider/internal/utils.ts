@@ -50,9 +50,11 @@ export const clamp = (
   }
   // Round to the nearest multiple of the step
   let roundedValue = Math.round(clampedValue / step) * step;
-  // Ensure the rounded value does not exceed max
+  // Ensure the rounded value does not exceed max or min
   if (roundedValue > max) {
     roundedValue = max;
+  } else if (roundedValue < min) {
+    roundedValue = min;
   }
   return Number.parseFloat(roundedValue.toFixed(decimalPlaces));
 };
