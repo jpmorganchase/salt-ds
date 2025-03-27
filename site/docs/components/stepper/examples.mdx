@@ -1,0 +1,78 @@
+---
+  title:
+    $ref: ./#/title
+  layout: DetailComponent
+  sidebar:
+    exclude: true
+  data:
+    $ref: ./#/data
+---
+
+## Orientation
+
+### Horizontal (default)
+
+<LivePreview componentName="stepper" exampleName="Horizontal" />
+
+### Vertical
+
+<LivePreview componentName="stepper" exampleName="Vertical" />
+
+## Stage + Status
+
+<LivePreview componentName="stepper" exampleName="StageStatus" />
+
+The `Step` component changes based on the `stage` and `status` props.
+In case they are both set, `status` will take precedence over `stage`.
+These 2 props control various aspects of the component, such as:
+icon selection, description text color and track (connector) style.
+
+## Nested Steps
+
+When using the `Stepper` component in vertical orientation, you can nest
+`Step` components other `Step` components. When done so, the parent `Step`
+renders another `Stepper` and places the nested `Steps` (children) inside of
+it. Additionally an expand button is added on the parent `Step` to expand or
+collapse the substeps. The parent Step containing the active Step child
+children are to have a stage of `inprogress`. Nested steps are not supported
+for the horizontal orientation.
+
+<LivePreview componentName="stepper" exampleName="NestedSteps" />
+
+## Controlled Stepper
+
+The `Stepper` and `Step` component are primarily presentational components.
+If you want to control the state of the `Stepper` you can utilize the `useStepperReducer` hook.
+
+<LivePreview componentName="stepper" exampleName="Reducer" />
+
+The `useStepperReducer` hook provides intelligent management of step stages in a linear process.
+
+<LivePreview componentName="stepper" exampleName="ReducerAdvanced" />
+
+Here's how it works:
+
+- **Automatic Staging**:
+
+  - By setting `stage: 'active'` on any step, the hook automatically determines the stages of all other steps, both before and after the active step.
+
+- **State Object**:
+
+  - The state object returned by the hook includes several useful properties:
+    - `steps`: The list of all steps.
+    - `flatSteps`: A flattened version of the steps.
+    - `activeStep`: The currently active step.
+    - `previousStep`: The step immediately before the active step.
+    - `nextStep`: The step immediately after the active step.
+    - `started`: A boolean indicating if the process has started.
+    - `ended`: A boolean indicating if the process has ended.
+
+- **Dispatch Method**:
+  - Similar to the native `useReducer` hook, the `dispatch` method accepts an action object with a `type`.
+  - Supported action types include:
+    - `'next'`: Move to the next step.
+    - `'previous'`: Move to the previous step.
+    - `'status/warning'`: Set the status of the active step to `'warning'`.
+    - `'status/error'`: Set the status of the active step to `'error'`.
+    - `'status/clear'`: Reset the status of the active step to `undefined`.
+    - `'goto'`: Set the `activeStep`
