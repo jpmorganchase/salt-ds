@@ -62,7 +62,7 @@ export default {
 };
 
 const Template: StoryFn = ({ ...args }) => {
-  return <Slider style={{ width: "500px" }} {...args} />;
+  return <Slider style={{ width: "600px" }} {...args} />;
 };
 
 export const Default = Template.bind({});
@@ -265,7 +265,7 @@ export const WithinFormField: StoryFn<SliderProps> = () => {
         style={
           {
             "--saltFormField-label-width": "16%",
-            width: "500px",
+            width: "600px",
           } as React.CSSProperties
         }
       >
@@ -277,7 +277,7 @@ export const WithinFormField: StoryFn<SliderProps> = () => {
         style={
           {
             "--saltFormField-label-width": "30%",
-            width: "500px",
+            width: "600px",
           } as React.CSSProperties
         }
       >
@@ -324,7 +324,7 @@ export const WithInput: StoryFn<SliderProps> = () => {
   }, [inputValue, bounds]);
 
   return (
-    <FormField style={{ width: "500px" }}>
+    <FormField style={{ width: "600px" }}>
       <FormFieldLabel> Slider with Input </FormFieldLabel>
       <FlexLayout gap={3}>
         <Input
@@ -377,7 +377,7 @@ export const WithInputAndInlineLabels: StoryFn<SliderProps> = () => {
   }, [inputValue, bounds]);
 
   return (
-    <FormField style={{ width: "500px" }}>
+    <FormField style={{ width: "600px" }}>
       <FormFieldLabel> Slider with Input </FormFieldLabel>
       <FlexLayout gap={3}>
         <Input
@@ -433,7 +433,7 @@ export const WithInputAndMarksAndTicks: StoryFn<SliderProps> = () => {
   }, [inputValue, bounds]);
 
   return (
-    <FormField style={{ width: "500px" }}>
+    <FormField style={{ width: "600px" }}>
       <FormFieldLabel> Slider with Input </FormFieldLabel>
       <FlexLayout gap={3}>
         <Input
@@ -474,7 +474,7 @@ export const WithInputAndMarksAndTicks: StoryFn<SliderProps> = () => {
 };
 
 export const WithCustomStep = () => (
-  <StackLayout gap={10} style={{ width: "500px" }}>
+  <StackLayout gap={10} style={{ width: "600px" }}>
     <FormField>
       <FormFieldLabel>Step: 1 (default)</FormFieldLabel>
       <Slider min={-1} max={1} minLabel="-1" maxLabel="1" />
@@ -533,7 +533,7 @@ export const WithNonNumericValues = () => {
       marks={daysOfTheWeek.map((day) => {
         return { value: day.value, label: day.label };
       })}
-      style={{ width: "500px" }}
+      style={{ width: "600px" }}
     />
   );
 };

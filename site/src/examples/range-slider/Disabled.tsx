@@ -7,6 +7,6 @@ export const Disabled = (): ReactElement => (
     minLabel="0"
     maxLabel="10"
     disabled
-    style={{ width: "400px" }}
+    style={{ width: "600px" }}
   />
 );

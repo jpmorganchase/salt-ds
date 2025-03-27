@@ -63,7 +63,7 @@ export default {
 };
 
 const Template: StoryFn = ({ ...args }) => {
-  return <RangeSlider style={{ width: "500px" }} {...args} />;
+  return <RangeSlider style={{ width: "600px" }} {...args} />;
 };
 
 export const Default = Template.bind({});
@@ -263,7 +263,7 @@ export const WithinFormField: StoryFn<RangeSliderProps> = () => {
         style={
           {
             "--saltFormField-label-width": "16%",
-            width: "500px",
+            width: "600px",
           } as React.CSSProperties
         }
       >
@@ -275,7 +275,7 @@ export const WithinFormField: StoryFn<RangeSliderProps> = () => {
         style={
           {
             "--saltFormField-label-width": "30%",
-            width: "500px",
+            width: "600px",
           } as React.CSSProperties
         }
       >
@@ -323,7 +323,7 @@ export const WithInput: StoryFn<RangeSliderProps> = () => {
   };
 
   return (
-    <FormField style={{ width: "500px" }}>
+    <FormField style={{ width: "600px" }}>
       <FormFieldLabel>Range Slider with Input</FormFieldLabel>
       <FlexLayout style={{ width: "100%" }} gap={2}>
         <Input
@@ -389,7 +389,7 @@ export const WithInputAndInlineLabels: StoryFn<RangeSliderProps> = () => {
   };
 
   return (
-    <FormField style={{ width: "500px" }}>
+    <FormField style={{ width: "600px" }}>
       <FormFieldLabel>Range Slider with Input</FormFieldLabel>
       <FlexLayout style={{ width: "100%" }} gap={2}>
         <Input
@@ -457,7 +457,7 @@ export const WithInputAndMarksAndTicks: StoryFn<RangeSliderProps> = () => {
   };
 
   return (
-    <FormField style={{ width: "500px" }}>
+    <FormField style={{ width: "600px" }}>
       <FormFieldLabel>Range Slider with Input</FormFieldLabel>
       <FlexLayout gap={3}>
         <Input
@@ -510,7 +510,7 @@ export const WithInputAndMarksAndTicks: StoryFn<RangeSliderProps> = () => {
 };
 
 export const WithCustomStep = () => (
-  <StackLayout gap={10} style={{ width: "500px" }}>
+  <StackLayout gap={10} style={{ width: "600px" }}>
     <FormField>
       <FormFieldLabel>Step: 1 (default)</FormFieldLabel>
       <RangeSlider
@@ -572,7 +572,7 @@ export const WithNonNumericValues = () => {
   return (
     <RangeSlider
       aria-label="Days of the week"
-      style={{ width: "500px" }}
+      style={{ width: "600px" }}
       min={1}
       max={7}
       value={value}
