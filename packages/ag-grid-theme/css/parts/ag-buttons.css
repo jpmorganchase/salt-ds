@@ -1,6 +1,6 @@
 /* BUTTON */
 
-div[class*="ag-theme-salt"] .ag-standard-button {
+.ag-standard-button {
   background: var(--salt-actionable-secondary-background);
   border: 0;
   color: var(--salt-actionable-secondary-foreground);
@@ -11,33 +11,33 @@ div[class*="ag-theme-salt"] .ag-standard-button {
   text-transform: uppercase;
 }
 
-div[class*="ag-theme-salt"] .ag-standard-button:hover {
+.ag-standard-button:hover {
   background-color: var(--salt-actionable-secondary-background-hover);
   color: var(--salt-actionable-secondary-foreground-hover);
 }
 
-div[class*="ag-theme-salt"] .ag-ltr .ag-filter-apply-panel-button {
+.ag-ltr .ag-filter-apply-panel-button {
   margin-left: 8px;
 }
 
-div[class*="ag-theme-salt"] .ag-standard-button.ag-filter-apply-panel-button[ref="applyFilterButton"],
-div[class*="ag-theme-salt"] .ag-standard-button.ag-filter-apply-panel-button[data-ref="applyFilterButton"] {
+.ag-standard-button.ag-filter-apply-panel-button[ref="applyFilterButton"],
+.ag-standard-button.ag-filter-apply-panel-button[data-ref="applyFilterButton"] {
   background: var(--salt-actionable-cta-background);
   color: var(--salt-actionable-cta-foreground);
 }
 
-div[class*="ag-theme-salt"] .ag-standard-button.ag-filter-apply-panel-button[ref="applyFilterButton"]:hover,
-div[class*="ag-theme-salt"] .ag-standard-button.ag-filter-apply-panel-button[data-ref="applyFilterButton"]:hover {
+.ag-standard-button.ag-filter-apply-panel-button[ref="applyFilterButton"]:hover,
+.ag-standard-button.ag-filter-apply-panel-button[data-ref="applyFilterButton"]:hover {
   background: var(--salt-actionable-cta-background-hover);
   color: var(--salt-actionable-cta-foreground-hover);
 }
 
-div[class*="ag-theme-salt"] .ag-keyboard-focus .ag-header-cell:focus:after {
+.ag-keyboard-focus .ag-header-cell:focus:after {
   border: 0;
 }
 
-div[class*="ag-theme-salt"] button[class^="ag-"]:focus,
-div[class*="ag-theme-salt"] input[class^="ag-"][type="button"]:focus {
+button[class^="ag-"]:focus,
+input[class^="ag-"][type="button"]:focus {
   box-shadow: none;
   outline-style: var(--salt-focused-outlineStyle);
   outline-width: var(--salt-focused-outlineWidth);
@@ -45,7 +45,7 @@ div[class*="ag-theme-salt"] input[class^="ag-"][type="button"]:focus {
   outline-offset: var(--salt-focused-outlineOffset);
 }
 
-div[class*="ag-theme-salt"] .ag-menu .ag-filter-body-wrapper {
+.ag-menu .ag-filter-body-wrapper {
   display: flex;
   flex-direction: column;
   gap: 0;
@@ -53,27 +53,27 @@ div[class*="ag-theme-salt"] .ag-menu .ag-filter-body-wrapper {
   margin-top: var(--salt-spacing-100);
 }
 
-div[class*="ag-theme-salt"] .ag-menu .ag-menu-column-select-wrapper {
+.ag-menu .ag-menu-column-select-wrapper {
   margin-top: var(--salt-spacing-100);
 }
 
-div[class*="ag-theme-salt"] .ag-simple-filter-body-wrapper > * {
+.ag-simple-filter-body-wrapper > * {
   margin-bottom: var(--salt-spacing-100);
 }
 
-div[class*="ag-theme-salt"] .ag-mini-filter {
+.ag-mini-filter {
   margin: 0;
   padding-left: var(--salt-spacing-50);
   padding-right: var(--salt-spacing-50);
 }
 
-div[class*="ag-theme-salt"] .ag-set-filter-item {
+.ag-set-filter-item {
   margin: 0;
   padding-left: var(--salt-spacing-100);
   padding-right: var(--salt-spacing-100);
 }
 
-div[class*="ag-theme-salt"] .ag-status-bar {
+.ag-status-bar {
   border: none;
   border-top: var(--salt-size-border) var(--salt-separable-borderStyle) var(--salt-container-primary-borderColor);
   color: var(--salt-content-secondary-foreground);
@@ -85,30 +85,30 @@ div[class*="ag-theme-salt"] .ag-status-bar {
   padding: 0 var(--salt-spacing-100);
 }
 
-div[class*="ag-theme-salt"] .ag-status-name-value {
+.ag-status-name-value {
   padding: 0;
   margin: 0 var(--salt-spacing-100);
 }
 
-div[class*="ag-theme-salt"] .ag-status-name-value-value {
+.ag-status-name-value-value {
   font-weight: var(--salt-text-fontWeight-strong);
   color: var(--salt-content-primary-foreground);
 }
 
-div[class*="ag-theme-salt"] .ag-paging-panel {
+.ag-paging-panel {
   border-color: var(--salt-separable-secondary-borderColor);
 }
 
-div[class*="ag-theme-salt"] .ag-floating-bottom {
+.ag-floating-bottom {
   border-color: var(--salt-container-primary-borderColor);
 }
 
-div[class*="ag-theme-salt"] .ag-column-drop-horizontal {
+.ag-column-drop-horizontal {
   border-bottom: var(--salt-size-border) var(--salt-separable-borderStyle) var(--salt-container-primary-borderColor);
   height: calc(var(--salt-size-base) + var(--salt-spacing-100));
 }
 
-div[class*="ag-theme-salt"] .ag-column-drop-cell {
+.ag-column-drop-cell {
   border-radius: 0;
 }
 
