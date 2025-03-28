@@ -5,8 +5,11 @@
   padding-bottom: var(--salt-spacing-100);
   align-items: center;
 }
-
 .saltCarouselControls-sr-only {
+  display: none;
+}
+.saltCarouselControls:focus-within .saltCarouselControls-sr-only {
+  display: block;
   position: fixed;
   top: 0;
   left: 0;

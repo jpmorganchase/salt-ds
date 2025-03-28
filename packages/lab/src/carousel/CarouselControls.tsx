@@ -53,7 +53,8 @@ const LiveCarouselAnnouncer = (
   const slideIds = [...slides.keys()];
   const currentId = slideIds[firstVisibleSlideIndex] || null;
   const currentLabelId =
-    (currentId && slides.get(currentId)?.labelId) || undefined;
+    (visibleSlides === 1 && currentId && slides.get(currentId)?.labelId) ||
+    undefined;
   const slideCount = slides.size;
 
   const announcement = `${firstVisibleSlideIndex + 1} ${visibleSlides > 1 && slideCount > 1 ? ` - ${firstVisibleSlideIndex + visibleSlides}` : ""} of
@@ -61,8 +62,8 @@ const LiveCarouselAnnouncer = (
   return (
     <div
       aria-live="polite"
-      aria-atomic="true"
       aria-labelledby={currentLabelId}
+      aria-atomic="false"
       {...props}
     >
       {announcement}
