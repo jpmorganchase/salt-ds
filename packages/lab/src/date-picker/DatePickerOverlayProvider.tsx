@@ -157,7 +157,7 @@ export const DatePickerOverlayProvider: React.FC<
         }
         triggeringElementRef.current = document.activeElement as HTMLElement;
         setDisableFocus(reason === "click"); // prevent the overlay taking focus on click
-      } else if (!isOpenControlled) {
+      } else if (!isOpenControlled && reason !== "focus-out") {
         const trigger = triggeringElementRef.current as HTMLElement;
         if (trigger) {
           trigger.focus();
@@ -173,6 +173,7 @@ export const DatePickerOverlayProvider: React.FC<
       onOpenChange?.(newOpen, reason);
 
       if (
+        reason === "focus-out" ||
         reason === "escape-key" ||
         (reason === "outside-press" && onDismissCallback.current)
       ) {
@@ -190,13 +191,6 @@ export const DatePickerOverlayProvider: React.FC<
     middleware: [flip({ fallbackStrategy: "initialPlacement" })],
   });
 
-  const onFocusOut = useCallback(
-    (event: FocusEvent) => {
-      handleOpenChange(false, event, "focus-out");
-    },
-    [handleOpenChange],
-  );
-
   const {
     getFloatingProps: getFloatingPropsCallback,
     getReferenceProps: getReferencePropsCallback,
@@ -208,21 +202,13 @@ export const DatePickerOverlayProvider: React.FC<
           useKeyboard(floatingUIResult.context, {
             enabled: !readOnly,
           }),
-          useFocusOut(floatingUIResult.context, {
-            enabled: !readOnly,
-            onFocusOut,
-            outsidePress: (event) => {
-              const target = event.target as Node;
-              return !(
-                target instanceof Element &&
-                target.closest("[data-floating-ui-focusable]")
-              );
-            },
-          }),
           useClick(floatingUIResult.context, {
             enabled: !!openOnClick && !readOnly,
             toggle: false,
             keyboardHandlers: false,
+          }),
+          useFocusOut(floatingUIResult.context, {
+            enabled: !readOnly,
           }),
         ],
   );
@@ -241,7 +227,6 @@ export const DatePickerOverlayProvider: React.FC<
           disabled: disableFocus,
           returnFocus: false,
           context: floatingUIResult.context,
-          initialFocus: 4,
         },
       };
     },

@@ -9,7 +9,8 @@ import type { DateFrameworkType } from "@salt-ds/date-adapters";
 import {
   type DateInputSingleDetails,
   DatePicker,
-  DatePickerActions, DatePickerHelperText,
+  DatePickerActions,
+  DatePickerHelperText,
   DatePickerOverlay,
   DatePickerSingleGridPanel,
   DatePickerSingleInput,
