@@ -1,16 +1,19 @@
-import { Button, FlexLayout, StackLayout, Text } from "@salt-ds/core";
 import {
-  type ImperativePanelHandle,
+  Button,
+  FlexLayout,
   SplitHandle,
   SplitPanel,
+  type SplitPanelRef,
   Splitter,
-} from "@salt-ds/lab";
+  StackLayout,
+  Text,
+} from "@salt-ds/core";
 import { useRef } from "react";
 
 import styles from "./splitter.module.css";
 
 export function ProgrammableResize() {
-  const ref = useRef<ImperativePanelHandle>(null);
+  const ref = useRef<SplitPanelRef>(null);
 
   function handleResizeLeft(size: number) {
     return () => {
