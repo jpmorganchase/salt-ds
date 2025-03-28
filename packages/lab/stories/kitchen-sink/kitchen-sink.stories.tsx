@@ -2,18 +2,22 @@ import {
   Badge,
   Button,
   Card,
+  ComboBox,
   Dialog,
   DialogActions,
   DialogContent,
   DialogHeader,
   Display1,
+  Dropdown,
   FlexItem,
   FlexLayout,
   H1,
   H2,
   H3,
+  Input,
   Link,
   ListBox,
+  MultilineInput,
   Option,
   RadioButton,
   RadioButtonGroup,
@@ -77,6 +81,12 @@ import {
   HorizontalIconOnly as ToggleButtonGroupHorizontalIon,
   HorizontalTextOnly as ToggleButtonGroupHorizontalText,
 } from "../../../core/stories/toggle-button-group/toggle-button-group.stories";
+import {
+  DatePicker,
+  DatePickerSingleInput,
+  DatePickerTrigger,
+} from "../../src/date-picker/";
+import { NumberInput } from "../../src/number-input";
 
 import "ag-grid-community/styles/ag-grid.css";
 import "../../../../dist/salt-ds-ag-grid-theme/salt-ag-theme.css";
@@ -439,6 +449,32 @@ export const Example1 = () => {
           },
         ]}
       />
+    </StackLayout>
+  );
+};
+
+export const FormStatusAlignment = () => {
+  return (
+    <StackLayout gap={1}>
+      <Input defaultValue="Input" validationStatus="error" />
+      <MultilineInput defaultValue="MultilineInput" validationStatus="error" />
+      <ComboBox value="Combo Box without Option" validationStatus="error" />
+      <ComboBox defaultValue="Combo Box with Option" validationStatus="error">
+        <Option value="1" />
+      </ComboBox>
+      <Dropdown value="Dropdown without Option" validationStatus="error" />
+      <Dropdown value="Dropdown with Option" validationStatus="error">
+        <Option value="1" />
+      </Dropdown>
+      <DatePicker selectionVariant="single">
+        <DatePickerTrigger>
+          <DatePickerSingleInput
+            defaultValue="bad date"
+            validationStatus="error"
+          />
+        </DatePickerTrigger>
+      </DatePicker>
+      <NumberInput defaultValue={0} validationStatus="error" />
     </StackLayout>
   );
 };

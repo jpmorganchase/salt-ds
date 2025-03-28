@@ -5,7 +5,6 @@
   border-radius: var(--salt-palette-corner-weak, 0);
   color: var(--saltDateInput-color, var(--salt-content-primary-foreground));
   display: inline-flex;
-  gap: var(--salt-spacing-50);
   font-family: var(--salt-text-fontFamily);
   font-size: var(--saltDateInput-fontSize, var(--salt-text-fontSize));
   line-height: var(--saltDateInput-lineHeight, var(--salt-text-lineHeight));
@@ -16,9 +15,9 @@
   padding-left: var(--saltDateInput-paddingLeft, var(--salt-spacing-100));
   padding-right: var(--saltDateInput-paddingRight, var(--salt-spacing-100));
   position: relative;
-  width: 100%;
   box-sizing: border-box;
   overflow: hidden;
+  width: 100%;
 }
 
 .saltDateInput:hover {
@@ -179,7 +178,7 @@
 }
 
 /* Style applied to start adornments */
-.saltInput-startAdornmentContainer {
+.saltDateInput-startAdornmentContainer {
   align-items: center;
   display: inline-flex;
   padding-right: var(--salt-spacing-100);
@@ -189,9 +188,7 @@
 /* Style applied to end adornments */
 .saltDateInput-endAdornmentContainer {
   display: inline-flex;
-  padding-left: var(--salt-spacing-100);
-  column-gap: var(--salt-spacing-100);
-  margin-left: auto;
+  column-gap: var(--salt-spacing-50);
   align-items: end;
 }
 
@@ -203,9 +200,11 @@
   margin-right: calc(var(--salt-spacing-50) * -1);
 }
 
+.saltDateInput-startAdornmentContainer > .saltButton,
 .saltDateInput-endAdornmentContainer > .saltButton {
-  --saltButton-padding: var(--salt-spacing-50);
+  --saltButton-padding: calc(var(--salt-spacing-50) - var(--salt-size-border));
   --saltButton-height: calc(var(--salt-size-base) - var(--salt-spacing-100));
+  --saltButton-borderRadius: var(--salt-palette-corner-weaker);
 }
 
 /* Style applied to inner input component */
@@ -225,6 +224,7 @@
   padding: 0;
   text-align: left;
   width: min-content;
+  width: 100%;
 }
 
 /* Reset in the  class */
@@ -246,4 +246,9 @@
 .saltDateInput-input::placeholder {
   color: var(--salt-content-secondary-foreground);
   font-weight: var(--salt-text-fontWeight-small);
+}
+
+/* Style applied to the dash between two inputs in range date input */
+.saltDateInput-dash {
+  margin: 0 var(--salt-spacing-50);
 }

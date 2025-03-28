@@ -97,12 +97,16 @@ export type DropdownProps<Item = string> = {
 } & Omit<ComponentPropsWithoutRef<"button">, "value" | "defaultValue"> &
   ListControlProps<Item>;
 
+const withBaseName = makePrefixer("saltDropdown");
+
 function ExpandIcon({ open }: { open: boolean }) {
   const { CollapseIcon, ExpandIcon } = useIcon();
-  return open ? <CollapseIcon aria-hidden /> : <ExpandIcon aria-hidden />;
+  return open ? (
+    <CollapseIcon className={withBaseName("toggle")} aria-hidden />
+  ) : (
+    <ExpandIcon className={withBaseName("toggle")} aria-hidden />
+  );
 }
-
-const withBaseName = makePrefixer("saltDropdown");
 
 export const Dropdown = forwardRef(function Dropdown<Item>(
   props: DropdownProps<Item>,
@@ -448,7 +452,11 @@ export const Dropdown = forwardRef(function Dropdown<Item>(
           ...rest,
         })}
       >
-        {startAdornment}
+        {startAdornment && (
+          <div className={withBaseName("startAdornmentContainer")}>
+            {startAdornment}
+          </div>
+        )}
         <span
           className={clsx(withBaseName("content"), {
             [withBaseName("placeholder")]: !valueText,
