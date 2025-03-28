@@ -19,6 +19,7 @@
   flex-direction: column;
   gap: var(--salt-spacing-50);
   padding-top: calc((var(--salt-size-base) - var(--salt-text-h2-lineHeight)) / 2);
+  align-items: flex-start;
 }
 
 .saltDialogHeader-header > .saltText {
