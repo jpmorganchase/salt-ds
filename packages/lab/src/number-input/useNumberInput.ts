@@ -27,8 +27,9 @@ export const useNumberInput = ({
   onChange,
   readOnly,
   setValue,
+  setFocused,
   step = 1,
-  stepBlock = 10,
+  stepMultiplier = 2,
   value,
 }: Pick<
   NumberInputProps,
@@ -40,10 +41,11 @@ export const useNumberInput = ({
   | "onChange"
   | "readOnly"
   | "step"
-  | "stepBlock"
-  | "value"
+  | "stepMultiplier"
 > & {
   setValue: Dispatch<SetStateAction<string | number | undefined>>;
+  setFocused: Dispatch<SetStateAction<boolean>>;
+  value: string | number;
   inputRef: MutableRefObject<HTMLInputElement | null>;
 }) => {
   const setValueInRange = useCallback(
@@ -65,24 +67,24 @@ export const useNumberInput = ({
 
   const decrementValue = useCallback(
     (event?: SyntheticEvent, block?: boolean) => {
-      if (value === undefined || isAtMin(value, min)) return;
-      const decrementStep = block ? stepBlock : step;
+      if (isAtMin(value, min)) return;
+      const decrementStep = block ? stepMultiplier * step : step;
       const nextValue =
         value === "" ? -decrementStep : toFloat(value) - decrementStep;
       setValueInRange(event, nextValue);
     },
-    [value, min, step, stepBlock, setValueInRange],
+    [value, min, step, stepMultiplier, setValueInRange],
   );
 
   const incrementValue = useCallback(
     (event?: SyntheticEvent, block?: boolean) => {
-      if (value === undefined || isAtMax(value, max)) return;
-      const incrementStep = block ? stepBlock : step;
+      if (isAtMax(value, max)) return;
+      const incrementStep = block ? stepMultiplier * step : step;
       const nextValue =
         value === "" ? incrementStep : toFloat(value) + incrementStep;
       setValueInRange(event, nextValue);
     },
-    [value, max, step, stepBlock, setValueInRange],
+    [value, max, step, stepMultiplier, setValueInRange],
   );
 
   const { activate: decrementSpinner } = useActivateWhileMouseDown(
@@ -108,6 +110,8 @@ export const useNumberInput = ({
     "aria-label": "increment value",
     disabled: disabled || isAtMax(value, max),
     onMouseDown: (event: MouseEvent<HTMLButtonElement>) => {
+      event.preventDefault();
+      setFocused(true);
       if (event.nativeEvent.button !== 0) {
         // To match closely with <input type='input'>
         return;
@@ -121,6 +125,8 @@ export const useNumberInput = ({
     "aria-label": "decrement value",
     disabled: disabled || isAtMin(value, min),
     onMouseDown: (event: MouseEvent<HTMLButtonElement>) => {
+      event.preventDefault();
+      setFocused(true);
       if (event.nativeEvent.button !== 0) {
         // To match closely with <input type='input'>
         return;

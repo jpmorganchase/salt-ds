@@ -3,7 +3,7 @@ import { composeStories } from "@storybook/react";
 
 const composedStories = composeStories(numberInputStories);
 
-const { Default, MinAndMaxValue, RefreshAdornment } = composedStories;
+const { Default, MinAndMaxValue, ResetAdornment } = composedStories;
 
 describe("Number Input", () => {
   it("renders with default props", () => {
@@ -96,9 +96,9 @@ describe("Number Input", () => {
     cy.findByRole("spinbutton").should("have.value", "3.15");
   });
 
-  it("increments specified `step` and `stepBlock` value when using keyboards", () => {
+  it("increments specified `step` and `stepMultiplier` value when using keyboards", () => {
     cy.mount(
-      <Default defaultValue={10} step={10} stepBlock={100} max={2000} />,
+      <Default defaultValue={10} step={10} stepMultiplier={10} max={2000} />,
     );
 
     cy.findByRole("spinbutton").focus().realPress("ArrowUp");
@@ -124,9 +124,9 @@ describe("Number Input", () => {
     cy.findByRole("spinbutton").should("have.value", "-0.01");
   });
 
-  it("decrements specified `step` and `stepBlock` value when using keyboards", () => {
+  it("decrements specified `step` and `stepMultiplier` value when using keyboards", () => {
     cy.mount(
-      <Default defaultValue={10} step={10} stepBlock={100} min={-2000} />,
+      <Default defaultValue={10} step={10} stepMultiplier={10} min={-2000} />,
     );
 
     cy.findByRole("spinbutton").focus().realPress("ArrowDown");
@@ -352,12 +352,12 @@ describe("Number Input", () => {
     cy.findByTestId("ErrorSolidIcon").should("exist");
   });
 
-  it("refreshes to default value in RefreshAdornment example", () => {
-    cy.mount(<RefreshAdornment />);
+  it("resets to default value in ResetAdornment example", () => {
+    cy.mount(<ResetAdornment />);
 
     cy.findByRole("spinbutton").focus().realPress("ArrowUp");
     cy.findByRole("spinbutton").should("have.value", "11");
-    cy.findByRole("button", { name: "refresh" }).realClick();
+    cy.findByRole("button", { name: "Reset Number Input" }).realClick();
     cy.findByRole("spinbutton").should("have.value", "10");
   });
 });
