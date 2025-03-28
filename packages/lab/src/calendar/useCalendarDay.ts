@@ -52,6 +52,7 @@ export interface DayStatus {
 
 /**
  * UseCalendar hook props to return a calendar day's status
+ * @template TDate - The type of the date object.
  */
 export interface useCalendarDayProps<TDate> {
   /**
@@ -120,7 +121,7 @@ export function useCalendarDay<TDate extends DateFrameworkType>(
       : -1;
   const today = dateAdapter.isSame(dateAdapter.today(locale), date, "day");
 
-  const unselectableReason = isDayUnselectable(date) || isDayDisabled(date);
+  const unselectableReason = isDayUnselectable(date);
   const highlightedReason = isDayHighlighted(date);
 
   const disabled =

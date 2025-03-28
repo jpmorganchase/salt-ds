@@ -28,6 +28,7 @@ const withBaseName = makePrefixer("saltDatePickerSingleInput");
 
 /**
  * Props for the DatePickerSingleInput component.
+ * @template TDate - The type of the date object.
  */
 export interface DatePickerSingleInputProps<TDate extends DateFrameworkType>
   extends DateInputSingleProps<TDate> {
@@ -84,7 +85,7 @@ function defaultSingleValidation<TDate extends DateFrameworkType>(
 
 export const DatePickerSingleInput = forwardRef<
   HTMLDivElement,
-  DatePickerSingleInputProps<any>
+  DatePickerSingleInputProps<DateFrameworkType>
 >(
   <TDate extends DateFrameworkType>(
     props: DatePickerSingleInputProps<TDate>,
@@ -94,8 +95,6 @@ export const DatePickerSingleInput = forwardRef<
 
     const {
       className,
-      onFocus,
-      onBlur,
       value: valueProp,
       validate,
       defaultValue,
@@ -147,7 +146,7 @@ export const DatePickerSingleInput = forwardRef<
             );
         select(event, date, validatedDetails);
       },
-      [select, validate],
+      [dateAdapter, minDate, maxDate, select, validate],
     );
 
     const handleDateValueChange = useCallback(
@@ -165,7 +164,6 @@ export const DatePickerSingleInput = forwardRef<
       }
     }, [open]);
 
-    // biome-ignore lint/correctness/useExhaustiveDependencies: avoid excessive re-rendering
     useEffect(() => {
       if (cancelled) {
         setValue(previousValue?.current);

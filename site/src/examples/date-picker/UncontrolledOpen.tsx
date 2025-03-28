@@ -2,8 +2,8 @@ import { FlexLayout, StackLayout, ToggleButton } from "@salt-ds/core";
 import {
   DatePicker,
   DatePickerOverlay,
+  DatePickerSingleGridPanel,
   DatePickerSingleInput,
-  DatePickerSinglePanel,
   DatePickerTrigger,
 } from "@salt-ds/lab";
 import { type ReactElement, useState } from "react";
@@ -28,7 +28,7 @@ export const UncontrolledOpen = (): ReactElement => {
           <DatePickerSingleInput />
         </DatePickerTrigger>
         <DatePickerOverlay>
-          <DatePickerSinglePanel />
+          <DatePickerSingleGridPanel />
         </DatePickerOverlay>
       </DatePicker>
     </StackLayout>

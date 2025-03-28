@@ -43,7 +43,7 @@ export type DateInputSingleDetails = DateDetail;
 
 /**
  * Props for the DateInputSingle component.
- * @template T
+ * @template TDate - The type of the date object.
  */
 export interface DateInputSingleProps<TDate extends DateFrameworkType>
   extends Omit<ComponentPropsWithoutRef<"div">, "defaultValue">,
@@ -100,6 +100,7 @@ export interface DateInputSingleProps<TDate extends DateFrameworkType>
   /**
    * Locale for date formatting and parsing
    */
+  // biome-ignore lint/suspicious/noExplicitAny: locale is date framework dependent
   locale?: any;
   /**
    * Parser callback, if not using the adapter's parser
@@ -107,6 +108,7 @@ export interface DateInputSingleProps<TDate extends DateFrameworkType>
    * @param format - format required
    * @param locale - locale required
    */
+  // biome-ignore lint/suspicious/noExplicitAny: locale is date framework dependent
   parse?: (value: string, format: string, locale?: any) => ParserResult<TDate>;
   /**
    * Input value. Use when the input value is controlled.
@@ -145,7 +147,7 @@ export interface DateInputSingleProps<TDate extends DateFrameworkType>
 
 export const DateInputSingle = forwardRef<
   HTMLDivElement,
-  DateInputSingleProps<any>
+  DateInputSingleProps<DateFrameworkType>
 >(
   <TDate extends DateFrameworkType>(
     props: DateInputSingleProps<TDate>,
@@ -223,7 +225,6 @@ export const DateInputSingle = forwardRef<
         (dateAdapter.isValid(date) || date === null) &&
         hasValueChanged
       ) {
-        lastAppliedValue.current = formattedValue;
         setDateValue(formattedValue);
         onDateValueChange?.(null, formattedValue);
       }
@@ -281,9 +282,6 @@ export const DateInputSingle = forwardRef<
         }
         onDateChange?.(event, parsedDate, parseDetails);
       }
-      lastAppliedValue.current = dateAdapter.isValid(parsedDate)
-        ? formattedValue
-        : dateValue;
     };
 
     const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
@@ -295,6 +293,7 @@ export const DateInputSingle = forwardRef<
     };
 
     const handleFocus: FocusEventHandler<HTMLInputElement> = (event) => {
+      lastAppliedValue.current = dateValue;
       setFocused(true);
       inputPropsOnFocus?.(event);
     };

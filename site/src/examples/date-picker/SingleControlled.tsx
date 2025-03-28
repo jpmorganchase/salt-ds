@@ -3,8 +3,8 @@ import {
   type DateInputSingleDetails,
   DatePicker,
   DatePickerOverlay,
+  DatePickerSingleGridPanel,
   DatePickerSingleInput,
-  DatePickerSinglePanel,
   DatePickerTrigger,
   type SingleDateSelection,
   useLocalization,
@@ -23,7 +23,7 @@ export const SingleControlled = (): ReactElement => {
   >(null);
   const handleSelectionChange = useCallback(
     (
-      event: SyntheticEvent,
+      _event: SyntheticEvent,
       date: SingleDateSelection<DateFrameworkType> | null,
       details: DateInputSingleDetails | undefined,
     ) => {
@@ -56,7 +56,7 @@ export const SingleControlled = (): ReactElement => {
         <DatePickerSingleInput />
       </DatePickerTrigger>
       <DatePickerOverlay>
-        <DatePickerSinglePanel />
+        <DatePickerSingleGridPanel />
       </DatePickerOverlay>
     </DatePicker>
   );

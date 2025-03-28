@@ -3,14 +3,13 @@ import {
   FlexItem,
   FlexLayout,
   FormField,
-  FormFieldHelperText as FormHelperText,
   FormFieldLabel as FormLabel,
 } from "@salt-ds/core";
 import type { DateFrameworkType } from "@salt-ds/date-adapters";
 import {
   type DateInputRangeDetails,
   DatePicker,
-  DatePickerActions,
+  DatePickerActions, DatePickerHelperText,
   DatePickerOverlay,
   DatePickerRangeInput,
   DatePickerRangePanel,
@@ -33,7 +32,6 @@ export const RangeWithConfirmation = (): ReactElement => {
   const errorHelperText = "Please enter a valid date in DD MMM YYYY format";
   const applyButtonRef = useRef<HTMLButtonElement>(null);
   const [helperText, setHelperText] = useState<string>(defaultHelperText);
-  const [open] = useState<boolean>(false);
   const [validationStatus, setValidationStatus] = useState<
     "error" | undefined
   >();
@@ -51,7 +49,7 @@ export const RangeWithConfirmation = (): ReactElement => {
   });
   const handleSelectionChange = useCallback(
     (
-      event: SyntheticEvent,
+      _event: SyntheticEvent,
       date: DateRangeSelection<DateFrameworkType> | null,
       details: DateInputRangeDetails | undefined,
     ) => {
@@ -124,7 +122,7 @@ export const RangeWithConfirmation = (): ReactElement => {
 
   const handleApply = useCallback(
     (
-      event: SyntheticEvent,
+      _event: SyntheticEvent,
       date: DateRangeSelection<DateFrameworkType> | null,
     ) => {
       const { startDate, endDate } = date ?? {};
@@ -170,8 +168,8 @@ export const RangeWithConfirmation = (): ReactElement => {
             </FlexItem>
           </FlexLayout>
         </DatePickerOverlay>
+        <DatePickerHelperText>{helperText}</DatePickerHelperText>
       </DatePicker>
-      {!open ? <FormHelperText>{helperText}</FormHelperText> : null}
     </FormField>
   );
 };

@@ -33,7 +33,7 @@ moment.updateLocale("zh-cn", {
   },
 });
 
-// biome-ignore lint/suspicious/noExplicitAny: Date framework adapter
+// biome-ignore lint/suspicious/noExplicitAny: date framework adapter
 const dateAdapterMap: Record<string, any> = {
   moment: AdapterMoment,
   dayjs: AdapterDayjs,
@@ -44,6 +44,7 @@ const dateAdapterMap: Record<string, any> = {
 const getDateLocale = (
   selectedAdapter: string,
   selectedLocale: string,
+  // biome-ignore lint/suspicious/noExplicitAny: date framework specific
 ): any => {
   if (selectedAdapter === "date-fns") {
     return selectedLocale === US_OPTION ? dateFnsEnUs : dateFnsZhCn;

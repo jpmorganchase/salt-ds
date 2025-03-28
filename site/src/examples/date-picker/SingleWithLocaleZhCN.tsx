@@ -1,16 +1,15 @@
 import {
   FormField,
-  FormFieldHelperText as FormHelperText,
   FormFieldLabel as FormLabel,
 } from "@salt-ds/core";
 import type { DateFrameworkType } from "@salt-ds/date-adapters";
 import {
   type DateInputSingleDetails,
-  DatePicker,
+  DatePicker, DatePickerHelperText,
   DatePickerOverlay,
+  DatePickerSingleGridPanel,
+  type DatePickerSingleGridPanelProps,
   DatePickerSingleInput,
-  DatePickerSinglePanel,
-  type DatePickerSinglePanelProps,
   DatePickerTrigger,
   type SingleDateSelection,
   useLocalization,
@@ -44,7 +43,6 @@ export const SingleWithLocaleZhCN = (): ReactElement => {
   const defaultHelperText = `Locale ${isDateFns ? dateAdapter.locale.code : dateAdapter.locale}`;
   const errorHelperText = "Please enter a valid date in DD MMM YYYY format";
   const [helperText, setHelperText] = useState(defaultHelperText);
-  const [open, setOpen] = useState<boolean>(false);
   const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
     undefined,
   );
@@ -83,7 +81,7 @@ export const SingleWithLocaleZhCN = (): ReactElement => {
     return <>{dateAdapter.format(day, "D")}</>;
   }
 
-  const CalendarDataGridProps: DatePickerSinglePanelProps<DateFrameworkType>["CalendarDataGridProps"] =
+  const CalendarDataProps: DatePickerSingleGridPanelProps<DateFrameworkType>["CalendarGridProps"] =
     {
       getCalendarMonthProps: () => ({ renderDayContents }),
     };
@@ -94,7 +92,6 @@ export const SingleWithLocaleZhCN = (): ReactElement => {
       <DatePicker
         selectionVariant={"single"}
         onSelectionChange={handleSelectionChange}
-        onOpenChange={setOpen}
       >
         <DatePickerTrigger>
           <DatePickerSingleInput
@@ -103,14 +100,14 @@ export const SingleWithLocaleZhCN = (): ReactElement => {
           />
         </DatePickerTrigger>
         <DatePickerOverlay>
-          <DatePickerSinglePanel
+          <DatePickerSingleGridPanel
             helperText={helperText}
-            CalendarDataGridProps={CalendarDataGridProps}
+            CalendarGridProps={CalendarDataProps}
             CalendarNavigationProps={{ formatMonth: "MMMM" }}
           />
         </DatePickerOverlay>
+        <DatePickerHelperText>{helperText}</DatePickerHelperText>
       </DatePicker>
-      {!open ? <FormHelperText>{helperText}</FormHelperText> : null}
     </FormField>
   );
 };
