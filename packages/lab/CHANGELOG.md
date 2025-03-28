@@ -1,5 +1,14 @@
 # @salt-ds/lab
 
+## 1.0.0-alpha.64
+
+### Patch Changes
+
+- 2bdfbfb: Fixed DateInput adornment size and spacing, to align with rest of form controls.
+- Updated dependencies [2bdfbfb]
+- Updated dependencies [ef8f30a]
+  - @salt-ds/core@1.42.1
+
 ## 1.0.0-alpha.63
 
 ### Minor Changes

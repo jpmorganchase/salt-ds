@@ -1,5 +1,16 @@
 # @salt-ds/core
 
+## 1.42.1
+
+### Patch Changes
+
+- 2bdfbfb: Fixed ComboBox and Dropdown status adornment spacing, to align with rest of form controls.
+
+  Closes #4794
+
+- ef8f30a: Fixed ComboBox having 2 popup lists due to browser's default `autoComplete` behaviour on `input`.
+  You can still enable it via `inputProps={{autoComplete: "on"}}` if needed.
+
 ## 1.42.0
 
 ### Minor Changes
