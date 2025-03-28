@@ -1,6 +1,7 @@
 import {
   Button,
   Overlay,
+  OverlayHeader,
   OverlayPanel,
   OverlayPanelCloseButton,
   OverlayPanelContent,
@@ -15,6 +16,7 @@ import {
 } from "docs/components";
 
 import "./overlay.stories.css";
+import { CloseIcon } from "@salt-ds/icons";
 
 export default {
   title: "Core/Overlay/Overlay QA",
@@ -93,11 +95,20 @@ NoStyleInjectionGrid.parameters = {
 };
 
 export const CloseButton: StoryFn<QAContainerProps> = (props) => {
+  const CloseButton = () => (
+    <Button
+      aria-label="Close overlay"
+      appearance="transparent"
+      sentiment="neutral"
+    >
+      <CloseIcon aria-hidden />
+    </Button>
+  );
   return (
     <QAContainer
       height={800}
-      cols={5}
-      itemPadding={50}
+      cols={1}
+      itemPadding={80}
       itemWidthAuto
       width={1200}
       {...props}
@@ -106,12 +117,16 @@ export const CloseButton: StoryFn<QAContainerProps> = (props) => {
         <OverlayTrigger>
           <Button>Show Overlay</Button>
         </OverlayTrigger>
-        <OverlayPanel>
-          <OverlayPanelCloseButton />
-          <OverlayPanelContent>
-            <h3 className="content-heading">Title</h3>
-            <div>Content of Overlay</div>
-          </OverlayPanelContent>
+        <OverlayPanel
+          style={{
+            width: "30ch",
+          }}
+        >
+          <OverlayHeader
+            header="Guidelines for optimal use of our application"
+            actions={<CloseButton />}
+          />
+          <OverlayPanelContent>Content of Overlay</OverlayPanelContent>
         </OverlayPanel>
       </Overlay>
     </QAContainer>
@@ -119,6 +134,51 @@ export const CloseButton: StoryFn<QAContainerProps> = (props) => {
 };
 
 CloseButton.parameters = {
+  chromatic: {
+    disableSnapshot: false,
+    modes: {
+      theme: {
+        themeNext: "disable",
+      },
+      themeNext: {
+        themeNext: "enable",
+        corner: "rounded",
+        accent: "teal",
+        // Ignore headingFont given font is not loaded
+      },
+    },
+  },
+};
+
+export const DeprecatedCloseButton: StoryFn<QAContainerProps> = (props) => {
+  return (
+    <QAContainer
+      height={800}
+      cols={1}
+      itemPadding={80}
+      itemWidthAuto
+      width={1200}
+      {...props}
+    >
+      <Overlay open>
+        <OverlayTrigger>
+          <Button>Show Overlay</Button>
+        </OverlayTrigger>
+        <OverlayPanel
+          style={{
+            width: "30ch",
+          }}
+        >
+          <OverlayPanelCloseButton />
+          <OverlayHeader header="Guidelines for optimal use of our application" />
+          <OverlayPanelContent>Content of Overlay</OverlayPanelContent>
+        </OverlayPanel>
+      </Overlay>
+    </QAContainer>
+  );
+};
+
+DeprecatedCloseButton.parameters = {
   chromatic: {
     disableSnapshot: false,
     modes: {
@@ -152,9 +212,19 @@ export const NoStyleInjectionCloseButton: StoryFn<
           <Button>Show Overlay</Button>
         </OverlayTrigger>
         <OverlayPanel>
-          <OverlayPanelCloseButton />
+          <OverlayHeader
+            header="Guidelines for optimal use of our application"
+            actions={
+              <Button
+                aria-label="Close overlay"
+                appearance="transparent"
+                sentiment="neutral"
+              >
+                <CloseIcon aria-hidden />
+              </Button>
+            }
+          />
           <OverlayPanelContent>
-            <h3 className="content-heading">Title</h3>
             <div>Content of Overlay</div>
           </OverlayPanelContent>
         </OverlayPanel>
