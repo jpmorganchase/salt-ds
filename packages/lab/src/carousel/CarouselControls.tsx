@@ -95,6 +95,10 @@ export const CarouselControls = forwardRef<
     (visibleSlides === 1 && currentId && slides.get(currentId)?.labelId) ||
     undefined;
 
+  const currentSlideLabel =
+    (currentId && slides.get(currentId)?.getAttribute("aria-labelledby")) ||
+    undefined;
+
   const controlsLabel = slideCount >= 1 && (
     <Text
       as="span"

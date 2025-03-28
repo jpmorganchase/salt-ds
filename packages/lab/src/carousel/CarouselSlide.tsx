@@ -8,6 +8,7 @@ import {
   forwardRef,
   useContext,
   useEffect,
+  useId,
   useRef,
   useState,
 } from "react";
@@ -97,6 +98,8 @@ export const CarouselSlide = forwardRef<HTMLDivElement, CarouselSlideProps>(
         setIsVisible(isVisible);
       },
     });
+
+    const announcerId = useId();
 
     const SlideStyles = {
       "--carousel-slide-width":
