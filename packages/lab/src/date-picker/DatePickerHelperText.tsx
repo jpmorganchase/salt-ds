@@ -1,12 +1,12 @@
-import { forwardRef } from "react";
-import { clsx } from "clsx";
 import {
   FormFieldHelperText,
   type FormFieldHelperTextProps,
   makePrefixer,
 } from "@salt-ds/core";
-import { useWindow } from "@salt-ds/window";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
+import { clsx } from "clsx";
+import { forwardRef } from "react";
 import datePickerHelperText from "./DatePickerHelperText.css";
 import { useDatePickerOverlay } from "./DatePickerOverlayProvider";
 

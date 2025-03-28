@@ -891,7 +891,7 @@ export const SingleWithInitialError: StoryFn<
         <DatePickerOverlay>
           <DatePickerSingleGridPanel helperText={helperText} />
         </DatePickerOverlay>
-       <DatePickerHelperText>{helperText}</DatePickerHelperText>
+        <DatePickerHelperText>{helperText}</DatePickerHelperText>
       </DatePicker>
     </FormField>
   );

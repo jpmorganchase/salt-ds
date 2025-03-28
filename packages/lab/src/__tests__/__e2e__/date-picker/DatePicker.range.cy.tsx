@@ -184,6 +184,86 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
         endDate: adapter.parse("16/01/2025", "DD/MM/YYYY").date,
       };
 
+      it("SHOULD be able to tab between all elements", () => {
+        cy.mount(<Range defaultSelectedDate={initialRangeDate} />);
+
+        // Simulate opening the overlay
+        cy.findByLabelText("Start date").click().type("{downArrow}");
+        // Verify that the calendar is opened
+        cy.findAllByRole("application").should("have.length", 2);
+        // Verify the first element focused in the first calendar
+        cy.findAllByLabelText("Previous Month")
+          .first()
+          .closest('[role="button"]')
+          .should("be.focused");
+        // Simulate tabbing between all elements in the overlay
+        cy.realPress("Tab");
+        cy.findAllByLabelText("Month Dropdown").first().should("be.focused");
+        cy.realPress("Tab");
+        cy.findAllByLabelText("Year Dropdown").first().should("be.focused");
+        cy.realPress("Tab");
+        cy.findAllByLabelText("Next Month")
+          .first()
+          .closest('[role="button"]')
+          .should("be.focused");
+        cy.realPress("Tab");
+        cy.findByRole("button", {
+          name: adapter.format(initialRangeDate.startDate, "DD MMMM YYYY"),
+        }).should("be.focused");
+        cy.realPress("Tab");
+        // Verify the first element focused in the second calendar
+        cy.findAllByLabelText("Previous Month")
+          .eq(1)
+          .closest('[role="button"]')
+          .should("be.focused");
+        // Simulate tabbing between all elements in the overlay
+        cy.realPress("Tab");
+        cy.findAllByLabelText("Month Dropdown").eq(1).should("be.focused");
+        cy.realPress("Tab");
+        cy.findAllByLabelText("Year Dropdown").eq(1).should("be.focused");
+        cy.realPress("Tab");
+        cy.findAllByLabelText("Next Month")
+          .eq(1)
+          .closest('[role="button"]')
+          .should("be.focused");
+        cy.realPress("Tab");
+        const firstOfNextMonth = adapter.startOf(
+          adapter.add(initialRangeDate.startDate, { months: 1 }),
+          "month",
+        );
+        cy.findByRole("button", {
+          name: adapter.format(firstOfNextMonth, "DD MMMM YYYY"),
+        }).should("be.focused");
+        cy.realPress("Tab");
+        // Verify focus returns to the first element in the overlay
+        cy.findAllByLabelText("Previous Month")
+          .eq(0)
+          .closest('[role="button"]')
+          .should("be.focused");
+        // Simulate closing the overlay
+        cy.realPress("Escape");
+        // Verify that the calendar is closed
+        cy.findByRole("application").should("not.exist");
+        // Verify focus returns to the triggering element
+        cy.findByLabelText("Start date").should("be.focused");
+        // Simulate tabbing to end date
+        cy.realPress("Tab");
+        // Verify end date is focused
+        cy.findByLabelText("End date").should("be.focused");
+        // Simulate tabbing to calendar button
+        cy.realPress("Tab");
+        // Verify calendar button is focused
+        cy.findByLabelText("calendar")
+          .closest('[role="button"]')
+          .should("be.focused");
+        // Simulate tabbing out of date picker
+        cy.realPress("Tab");
+        // Verify the date picker loses focus
+        cy.findByLabelText("calendar")
+          .closest('[role="button"]')
+          .should("not.be.focused");
+      });
+
       it("SHOULD only be able to select a date between min/max", () => {
         const selectionChangeSpy = cy.stub().as("selectionChangeSpy");
         cy.mount(
@@ -365,23 +445,30 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
       it("SHOULD render helper text in the panel when opened ", () => {
         cy.mount(<RangeWithFormField />);
         // Verify the helper text is visible on the page
-        cy.get('[id^="helperText-"]').filter((index, element) => {
-          return !Cypress.$(element).closest('[data-floating-ui-portal]').length;
-        }).should('be.visible');
+        cy.get('[id^="helperText-"]')
+          .filter((index, element) => {
+            return !Cypress.$(element).closest("[data-floating-ui-portal]")
+              .length;
+          })
+          .should("be.visible");
         // Simulate opening the calendar
         cy.findByRole("button", { name: "Open Calendar" }).realClick();
         // Verify that the dialog is opened
         cy.findByRole("application").should("exist");
         // Verify the helper text is not visible on the page
-        cy.get('[id^="helperText-"]').filter((index, element) => {
-          return !Cypress.$(element).closest('[data-floating-ui-portal]').length;
-        }).should('not.be.visible');
+        cy.get('[id^="helperText-"]')
+          .filter((index, element) => {
+            return !Cypress.$(element).closest("[data-floating-ui-portal]")
+              .length;
+          })
+          .should("not.be.visible");
         // Verify the helper text has moved to the dialog panel
-        cy.get('[id^="helperText-"]').filter((index, element) => {
-          return Cypress.$(element).closest('[role="dialog"]').length > 0;
-        }).should('be.visible');
+        cy.get('[id^="helperText-"]')
+          .filter((index, element) => {
+            return Cypress.$(element).closest('[role="dialog"]').length > 0;
+          })
+          .should("be.visible");
       });
-
 
       it("SHOULD support custom panel with tenors", () => {
         const selectionChangeSpy = cy.stub().as("selectionChangeSpy");
