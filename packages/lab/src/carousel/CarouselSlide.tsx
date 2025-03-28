@@ -134,7 +134,11 @@ export const CarouselSlide = forwardRef<HTMLDivElement, CarouselSlideProps>(
             })}
           >
             <div className={withBaseName("content")}>
-              <span id={announcerId} className={withBaseName("sr-only")}>
+              <span
+                id={announcerId}
+                className={withBaseName("sr-only")}
+                aria-hidden="true"
+              >
                 {helperText}
               </span>
               {header}
