@@ -2,7 +2,6 @@ import { Button, Text, makePrefixer, useIcon } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import {
-  type ClassAttributes,
   type HTMLAttributes,
   type MouseEvent,
   type SyntheticEvent,
@@ -11,7 +10,6 @@ import {
   useRef,
   useState,
 } from "react";
-import type { JSX } from "react/jsx-runtime";
 import {
   CarouselDispatchContext,
   CarouselStateContext,
@@ -43,33 +41,6 @@ export interface CarouselControlsProps
   disabled?: boolean;
 }
 
-const LiveCarouselAnnouncer = (
-  props: JSX.IntrinsicAttributes &
-    ClassAttributes<HTMLDivElement> &
-    HTMLAttributes<HTMLDivElement>,
-) => {
-  const { slides, firstVisibleSlideIndex, visibleSlides } =
-    useContext(CarouselStateContext);
-  const slideIds = [...slides.keys()];
-  const currentId = slideIds[firstVisibleSlideIndex] || null;
-  const currentLabelId =
-    (visibleSlides === 1 && currentId && slides.get(currentId)?.labelId) ||
-    undefined;
-  const slideCount = slides.size;
-
-  const announcement = `${firstVisibleSlideIndex + 1} ${visibleSlides > 1 && slideCount > 1 ? ` - ${firstVisibleSlideIndex + visibleSlides}` : ""} of
-  ${slideCount}`;
-  return (
-    <div
-      aria-live="polite"
-      aria-labelledby={currentLabelId}
-      aria-atomic="false"
-      {...props}
-    >
-      {announcement}
-    </div>
-  );
-};
 export const CarouselControls = forwardRef<
   HTMLDivElement,
   CarouselControlsProps
@@ -107,17 +78,30 @@ export const CarouselControls = forwardRef<
 
   const prevButtonRef = useRef<HTMLButtonElement>(null);
   const nextButtonRef = useRef<HTMLButtonElement>(null);
-
   const slideIds = [...slides.keys()];
 
+  const currentId = slideIds[firstVisibleSlideIndex] || null;
   const prevId = slideIds[firstVisibleSlideIndex - 1] || null;
   const nextId = slideIds[firstVisibleSlideIndex + 1] || null;
 
   const isOnFirstSlide = firstVisibleSlideIndex === 0;
   const isOnLastSlide = firstVisibleSlideIndex === slideCount - visibleSlides;
 
+  const isAnnouncerOn =
+    nextButtonRef.current === document.activeElement ||
+    prevButtonRef.current === document.activeElement;
+
+  const currentLabelId =
+    (visibleSlides === 1 && currentId && slides.get(currentId)?.labelId) ||
+    undefined;
+
   const controlsLabel = slideCount >= 1 && (
-    <Text as="span">
+    <Text
+      as="span"
+      aria-live={isAnnouncerOn ? "polite" : undefined}
+      aria-labelledby={currentLabelId}
+      aria-atomic="false"
+    >
       <strong>
         {`${firstVisibleSlideIndex + 1} ${visibleSlides > 1 && slideCount > 1 ? ` - ${firstVisibleSlideIndex + visibleSlides}` : ""} of
         ${slideCount}`}
@@ -145,7 +129,6 @@ export const CarouselControls = forwardRef<
       onFocusCapture={handleFocusCapture}
       onBlurCapture={handleBlurCapture}
     >
-      <LiveCarouselAnnouncer className={withBaseName("sr-only")} />
       {labelPlacement === "left" && controlsLabel}
       <Button
         ref={prevButtonRef}
