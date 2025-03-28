@@ -1,182 +1,217 @@
 import {
   Button,
-  StatusAdornment,
-  type ValidationStatus,
-  capitalize,
+  Input,
+  type InputProps,
   makePrefixer,
   useControlled,
   useForkRef,
   useFormFieldProps,
   useIcon,
-  useId,
 } from "@salt-ds/core";
+import {
+  OnValueChange as ReactNumberFormatOnValueChange,
+  NumberFormatValues,
+  NumericFormatProps,
+  NumberFormatBase,
+  NumberFormatBaseProps,
+  useNumericFormat,
+} from "react-number-format";
+import { clsx } from 'clsx';
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
-import { clsx } from "clsx";
-import {
-  type ChangeEvent,
+import React, {
   type ComponentPropsWithoutRef,
-  type FocusEvent,
-  type InputHTMLAttributes,
   type KeyboardEvent,
-  type ReactNode,
   type Ref,
-  type SyntheticEvent,
   forwardRef,
   useRef,
-  useState,
 } from "react";
-import {
-  isAllowedNonNumeric,
-  isOutOfRange,
-  sanitizedInput,
-  toFixedDecimalPlaces,
-  toFloat,
-} from "./internal/utils";
+import { isInvalid, isValidNumber } from "./internal/utils";
 
 import numberInputCss from "./NumberInput.css";
 import { useNumberInput } from "./useNumberInput";
 
 const withBaseName = makePrefixer("saltNumberInput");
 
+/** Regular expression to match strings representing negative zero
+ * "-0", "-0.", "-0.0", "-0.00", "-0.000", etc
+ * and positive zero with leading decimal places
+ * "0.", "0.0", "0.00", "0.000", etc.
+ */
+const matchLeadingDecimalZero = /^(0\.0*|-0(\.0*)?)$/;
+
+/** Regular expression to match numbers with leading zeros
+ * "01", "006", "00.02"
+ * and their negative counterparts
+ * "-0010", "-000.293"
+ */
+const matchLeadingZeros = /^-?0\d+(\.\d+)?\.?$/;
+
+export type NumberInputValueChange = ReactNumberFormatOnValueChange;
+
 export interface NumberInputProps
-  extends Omit<ComponentPropsWithoutRef<"div">, "onChange"> {
+  extends ComponentPropsWithoutRef<"div">,
+    Pick<
+      InputProps,
+      | "bordered"
+      | "disabled"
+      | "emptyReadOnlyMarker"
+      | "startAdornment"
+      | "endAdornment"
+      | "placeholder"
+      | "readOnly"
+      | "textAlign"
+      | "validationStatus"
+      | "variant"
+    > {
   /**
-   * A boolean property that determines the border style of the `NumberInput`.
-   * - When set to `true`, the `NumberInput` will display a full border.
-   * - When set to `false` or omitted, the `NumberInput` will not have a border.
-   * @default false
+   * Determines whether leading zeros are allowed.
+   * If set to `false`, leading zeros are removed when the input value becomes a valid number.
+   * Defaults to `true`.
    */
-  bordered?: boolean;
+  allowLeadingZeros?: boolean;
   /**
-   * The number of allowed decimal places
-   * @default 2
+   * Determines whether negative values are allowed.
+   * Defaults to `true`.
    */
-  decimalPlaces?: number;
+  allowNegative?: boolean;
   /**
-   * The default value. Use when the component is not controlled.
+   * Limits the number of digits that can be entered after the decimal point.
    */
-  defaultValue?: number | string;
+  decimalScale?: number;
   /**
-   * Disable the `NumberInput`.
+   * Character used as a decimal separator.
+   * Defaults to `'.'`.
    */
-  disabled?: boolean;
+  decimalSeparator?: string;
   /**
-   * The marker to use in an empty, read-only `NumberInput`.
-   * Use `''` to disable this feature. Defaults to '—'.
-   * @default '—'
+   * Default start value.
+   * If no default value is provided, the input is empty. This number represents the value
+   * the input would start from if the user uses the increment or decrement buttons.
    */
-  emptyReadOnlyMarker?: string;
+  defaultStartValue?: number;
   /**
-   * End adornment component.
+   * The default value of the input.
    */
-  endAdornment?: ReactNode;
+  defaultValue?: string | number;
   /**
-   * Hide the number buttons. Defaults to `false`.
-   * @default false
+   * If set, zeros are added after `decimalSeparator` to match the given `decimalScale`.
+   * Defaults to `false`.
    */
-  hideButtons?: boolean;
+  fixedDecimalScale?: boolean;
+  format?: NumberFormatBaseProps['format'],
   /**
-   * [Attributes](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#Attributes) applied to the `input` element.
+   * Determines whether the controls are hidden.
+   * Defaults to `false`.
    */
-  inputProps?: InputHTMLAttributes<HTMLInputElement>;
+  hideControls?: boolean;
+  /**
+   * Props passed to the Input component
+   */
+  InputProps?: InputProps;
   /**
    * Optional ref for the input component.
    */
   inputRef?: Ref<HTMLInputElement>;
   /**
-   * The maximum value that can be selected. Defaults to Number.MAX_SAFE_INTEGER.
-   * @default Number.MAX_SAFE_INTEGER
+   * A function to validate the input value.
+   * If this function returns `false`, the `onChange` will not be called and the input value will not change.
+   */
+  isAllowed?: (values: NumberFormatValues) => boolean;
+  /**
+   * The maximum value that can be selected.
+   * Defaults to `Number.MAX_SAFE_INTEGER`.
    */
   max?: number;
   /**
-   * The minimum value that can be selected. Defaults to Number.MIN_SAFE_INTEGER.
-   * @default Number.MIN_SAFE_INTEGER
+   * The minimum value that can be selected.
+   * Defaults to `Number.MIN_SAFE_INTEGER`.
    */
   min?: number;
   /**
-   * Callback function that is triggered when the value of the `NumberInput` changes.
-   *
-   * @param event - The event that triggers the value change. This may be `undefined` during a long press on the increment or decrement buttons.
-   * @param value - The new value of the `NumberInput`, which can be a number or a string.
+   * Called when value changes from either increment/decrement buttons or direct input
    */
-  onChange?: (
-    event: SyntheticEvent | undefined,
-    value: number | string,
-  ) => void;
+  onValueChange?: NumberInputValueChange;
   /**
-   * A string displayed in a dimmed color when the `NumberInput` value is empty.
+   * Prefix added before the input value.
    */
-  placeholder?: string | undefined;
+  prefix?: string;
   /**
-   * A boolean property that controls the editability of the `NumberInput`.
-   * - When set to `true`, the `NumberInput` becomes read-only, preventing user edits.
-   * - When set to `false` or omitted, the `NumberInput` is editable by the user.
+   * Formfield, required field
    */
-  readOnly?: boolean;
+  required?: boolean;
   /**
-   * Start adornment component.
-   */
-  startAdornment?: ReactNode;
-  /**
-   * The amount to increment or decrement the value by when using the `NumberInput` buttons or Up Arrow and Down Arrow keys. Defaults to 1.
-   * @default 1
+   * The amount to increment or decrement the value by when using the `NumberInput` buttons or Up Arrow and Down Arrow keys.
+   * Defaults to `1`.
    */
   step?: number;
   /**
    * Defines the factor by which the step value is multiplied to determine the maximum increment or decrement when the Shift key
-   * is held while pressing the Up Arrow or Down Arrow keys for faster adjustments of the value. The default multiplier value is 2.
-   * @default 2
+   * is held while pressing the Up Arrow or Down Arrow keys for faster adjustments of the value.
+   * Defaults to `2`.
    */
   stepMultiplier?: number;
   /**
-   * Specifies the alignment of the text within the `NumberInput`.
-   * - Options include "left", "center", and "right".
-   * - Defaults to "left" if not specified.
-   *
-   * @default "left"
+   * Suffix added after the input value.
    */
-  textAlign?: "left" | "center" | "right";
+  suffix?: string;
   /**
-   * Validation status.
+   * A character used to separate thousands.
+   * Can be a string or a boolean.
    */
-  validationStatus?: Extract<ValidationStatus, "error" | "warning" | "success">;
+  thousandSeparator?: string | boolean;
   /**
-   * Styling variant. Defaults to "primary".
-   * @default "primary"
+   * Defines the thousand grouping style.
+   * Options are `'thousand'`, `'lakh'`, `'wan'`, or `'none'`.
    */
-  variant?: "primary" | "secondary";
+  thousandsGroupStyle?: "thousand" | "lakh" | "wan" | "none";
   /**
-   * Value of the `NumberInput`, to be used when in a controlled state.
+   * The current value of the input.
    */
-  value?: number | string | undefined;
+  value?: string | number;
+  valueIsNumericString?: boolean;
 }
 
 export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
   function NumberInput(
     {
-      bordered,
-      className: classNameProp,
-      decimalPlaces = 0,
+      // NumericFormat props
+      allowLeadingZeros,
+      allowNegative,
+      decimalScale = 0,
+      decimalSeparator,
+      defaultStartValue = 0,
       defaultValue: defaultValueProp,
-      disabled,
-      emptyReadOnlyMarker = "—",
-      endAdornment,
-      hideButtons,
-      id: idProp,
-      inputProps: inputPropsProp = {},
-      inputRef: inputRefProp,
+      fixedDecimalScale,
+      format,
+      hideControls,
+      isAllowed,
       max = Number.MAX_SAFE_INTEGER,
       min = Number.MIN_SAFE_INTEGER,
-      onChange: onChangeProp,
-      placeholder,
-      readOnly: readOnlyProp,
-      startAdornment,
+      prefix,
+      thousandSeparator,
+      thousandsGroupStyle,
       step = 1,
       stepMultiplier = 2,
+      suffix,
+      value: valueProp,
+      // Input props
+      bordered,
+      className: classNameProp,
+      disabled,
+      inputRef: inputRefProp,
+      emptyReadOnlyMarker = "—",
+      endAdornment,
+      onChange,
+      onKeyDown,
+      onValueChange,
+      placeholder,
+      readOnly,
+      required,
+      startAdornment,
       textAlign = "left",
       validationStatus: validationStatusProp,
-      value: valueProp,
+      valueIsNumericString,
       variant = "primary",
       ...restProps
     },
@@ -191,244 +226,168 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
 
     const { IncreaseIcon, DecreaseIcon } = useIcon();
 
-    const {
-      a11yProps: {
-        "aria-describedby": formFieldDescribedBy,
-        "aria-labelledby": formFieldLabelledBy,
-      } = {},
-      disabled: formFieldDisabled,
-      readOnly: formFieldReadOnly,
-      necessity: formFieldRequired,
-      validationStatus: formFieldValidationStatus,
-    } = useFormFieldProps();
+    const formatRef = useRef<NumberFormatBaseProps["format"] | null>(null);
+    const lastChangeValueRef = useRef<NumberFormatValues | null>(null);
 
-    const isDisabled = disabled || formFieldDisabled;
-    const isReadOnly = readOnlyProp || formFieldReadOnly;
-    const validationStatus = formFieldValidationStatus ?? validationStatusProp;
-    const validationStatusId = useId(idProp);
+    const inputRef = useRef<HTMLInputElement | null>(null);
+    const forkedInputRef = useForkRef(inputRef, inputRefProp);
 
-    const {
-      "aria-describedby": inputDescribedBy,
-      "aria-labelledby": inputLabelledBy,
-      className: inputClassName,
-      onBlur: inputOnBlur,
-      onChange: inputOnChange,
-      onFocus: inputOnFocus,
-      required: inputRequired,
-      onKeyDown: inputOnKeyDown,
-      ...restInputProps
-    } = inputPropsProp;
+    const { validationStatus: formFieldValidationStatus } = useFormFieldProps();
 
-    const isRequired = formFieldRequired
-      ? ["required", "asterisk"].includes(formFieldRequired)
-      : inputRequired;
-
-    const [valueState, setValue] = useControlled({
+    const [value, setValue] = useControlled({
       controlled: valueProp,
-      default:
-        typeof defaultValueProp === "number"
-          ? toFixedDecimalPlaces(defaultValueProp, decimalPlaces)
-          : defaultValueProp,
+      default: defaultValueProp,
       name: "NumberInput",
       state: "value",
     });
 
-    // Won't be needed when `:has` css can be used
-    const [focused, setFocused] = useState(false);
+    const handleValueChange: NumberInputValueChange = (payload, sourceInfo ) => {
+      const newValue =
+        isValidNumber(payload.floatValue, payload.value) &&
+        !matchLeadingDecimalZero.test(payload.value) &&
+        !(allowLeadingZeros ? matchLeadingZeros.test(payload.value) : false)
+          ? payload.floatValue
+          : payload.value;
 
-    const inputRef = useRef<HTMLInputElement | null>(null);
-    const forkedInputRef = useForkRef(inputRef, inputRefProp);
-    // If value is undefined, start increments/decrements from 0 if min is less than 0 otherwise from min
-    const value = valueState === undefined ? (min < 0 ? 0 : min) : valueState;
+      if (["event", "increment", "decrement", "keyboard"].includes(sourceInfo.source as any)) {
+        setValue(newValue);
+      }
+      if (
+        payload.formattedValue !== lastChangeValueRef.current?.formattedValue ||
+        payload.floatValue !== lastChangeValueRef.current?.floatValue ||
+        payload.value !== lastChangeValueRef.current?.value
+      ) {
+        onValueChange?.(payload, sourceInfo);
+      }
+      lastChangeValueRef.current = payload;
+    };
 
     const {
       decrementButtonProps,
-      decrementValue,
       incrementButtonProps,
-      incrementValue,
+      incrementNumber,
+      decrementNumber,
+      setNumber,
     } = useNumberInput({
+      defaultStartValue,
+      disabled: disabled || readOnly,
+      format: formatRef?.current,
       inputRef,
-      setValue,
-      setFocused,
-      decimalPlaces,
-      disabled,
       max,
       min,
-      onChange: onChangeProp,
-      readOnly: isReadOnly,
+      onValueChange: handleValueChange,
       step,
-      stepMultiplier,
       value,
     });
 
-    const handleInputFocus = (event: FocusEvent<HTMLInputElement>) => {
-      setFocused(true);
-
-      inputOnFocus?.(event);
-    };
-
-    const handleInputBlur = (event: FocusEvent<HTMLInputElement>) => {
-      setFocused(false);
-
-      if (value === undefined) return;
-
-      const floatValue = toFloat(value);
-      if (Number.isNaN(floatValue)) {
-        // Keep original value if NaN
-        setValue(value);
-        onChangeProp?.(event, value);
-      } else {
-        const roundedValue = toFixedDecimalPlaces(floatValue, decimalPlaces);
-
-        if (value !== "" && !isAllowedNonNumeric(value)) {
-          setValue(roundedValue);
-        }
-
-        onChangeProp?.(event, roundedValue);
-      }
-
-      inputOnBlur?.(event);
-    };
-
-    const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-      const changedValue = event.target.value;
-
-      setValue(sanitizedInput(changedValue));
-
-      onChangeProp?.(event, sanitizedInput(changedValue));
-      inputOnChange?.(event);
-    };
-
     const handleInputKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
       switch (event.key) {
-        case "ArrowUp": {
+        case "ArrowUp":
           event.preventDefault();
-          const block = event.shiftKey;
-          incrementValue(event, block);
+          incrementNumber(event, event.shiftKey ? stepMultiplier : step, "keyboard");
           break;
-        }
-        case "ArrowDown": {
+        case "ArrowDown":
           event.preventDefault();
-          const block = event.shiftKey;
-          decrementValue(event, block);
+          decrementNumber(event, event.shiftKey ? stepMultiplier : step, "keyboard");
           break;
-        }
-        case "Home": {
+        case "Home":
           event.preventDefault();
-          setValue(min);
-          onChangeProp?.(event, min);
+          setNumber(event, min, "keyboard");
           break;
-        }
-        case "End": {
+        case "End":
           event.preventDefault();
-          setValue(max);
-          onChangeProp?.(event, max);
+          setNumber(event, max, "keyboard");
           break;
-        }
-        case "PageUp": {
+        case "PageUp":
           event.preventDefault();
-          incrementValue(event, true);
+          incrementNumber(event, stepMultiplier * step, "keyboard");
           break;
-        }
-        case "PageDown": {
+        case "PageDown":
           event.preventDefault();
-          decrementValue(event, true);
+          decrementNumber(event, stepMultiplier * step, "keyboard");
           break;
-        }
       }
-
-      inputOnKeyDown?.(event);
+      onKeyDown?.(event);
     };
+
+    const ariaInvalid = typeof value === "number" && isInvalid(value, min, max);
+    const ariaValueMin =
+      typeof max === "number" && !Number.isNaN(min)
+        ? parseFloat(min.toFixed(decimalScale))
+        : undefined;
+    const ariaValueMax =
+      typeof max === "number" && !Number.isNaN(max)
+        ? parseFloat(max.toFixed(decimalScale))
+        : undefined;
+    const ariaValueNow =
+      typeof value === "number" && !Number.isNaN(value)
+        ? parseFloat(value.toFixed(decimalScale))
+        : undefined;
+
+    const NumericFormatBaseProps: NumericFormatProps & InputProps = {
+      "aria-invalid":
+        !readOnly &&
+        (ariaInvalid ||
+          validationStatusProp ||
+          formFieldValidationStatus === "error")
+          ? "true"
+          : "false",
+      "aria-valuemax": !readOnly ? ariaValueMax : undefined,
+      "aria-valuemin": !readOnly ? ariaValueMin : undefined,
+      "aria-valuenow": !readOnly ? ariaValueNow : undefined,
+      allowLeadingZeros,
+      allowNegative,
+      className: withBaseName("input"),
+      customInput: Input,
+      decimalScale,
+      decimalSeparator,
+      disabled: disabled,
+      endAdornment,
+      fixedDecimalScale,
+      isAllowed,
+      onChange,
+      onValueChange: handleValueChange,
+      onKeyDown: handleInputKeyDown,
+      prefix,
+      suffix,
+      textAlign,
+      thousandSeparator,
+      thousandsGroupStyle,
+      value,
+      // Salt props
+      "aria-readonly": readOnly ? "true" : undefined,
+      bordered,
+      emptyReadOnlyMarker,
+      inputRef: forkedInputRef,
+      placeholder,
+      readOnly,
+      required,
+      role: readOnly ? "textbox" : "spinbutton",
+      startAdornment,
+      tabIndex: disabled ? -1 : 0,
+      validationStatus: validationStatusProp || formFieldValidationStatus,
+      valueIsNumericString,
+      variant
+  };
+
+    /* Extract the formatter, so we can use it for increment/decrement onValueChange events */
+    const { format:formatCallback, ...numberFormatRest } = useNumericFormat(
+      NumericFormatBaseProps,
+    );
+    formatRef.current = format ?? formatCallback;
 
     return (
       <div
-        className={clsx(withBaseName(), classNameProp)}
+        className={clsx(withBaseName(), classNameProp, {
+          [withBaseName("disabled")]: disabled,
+          [withBaseName("readOnly")]: readOnly,
+          [withBaseName("bordered")]: bordered,
+        })}
         {...restProps}
         ref={ref}
       >
-        <div
-          className={clsx(
-            withBaseName("inputContainer"),
-            withBaseName(variant),
-            {
-              [withBaseName("focused")]: !isDisabled && focused,
-              [withBaseName("disabled")]: isDisabled,
-              [withBaseName("readOnly")]: isReadOnly,
-              [withBaseName(validationStatus || "")]: validationStatus,
-              [withBaseName("bordered")]: bordered,
-            },
-          )}
-        >
-          {startAdornment && (
-            <div className={withBaseName("startAdornmentContainer")}>
-              {startAdornment}
-            </div>
-          )}
-          <input
-            aria-describedby={clsx(
-              validationStatusId,
-              formFieldDescribedBy,
-              inputDescribedBy,
-            )}
-            aria-labelledby={clsx(formFieldLabelledBy, inputLabelledBy)}
-            aria-invalid={
-              !isReadOnly
-                ? isOutOfRange(value, min, max) || validationStatus === "error"
-                : undefined
-            }
-            aria-valuemax={
-              !isReadOnly
-                ? toFloat(toFixedDecimalPlaces(max, decimalPlaces))
-                : undefined
-            }
-            aria-valuemin={
-              !isReadOnly
-                ? toFloat(toFixedDecimalPlaces(min, decimalPlaces))
-                : undefined
-            }
-            aria-valuenow={
-              value && !Number.isNaN(toFloat(value)) && !isReadOnly
-                ? toFloat(toFixedDecimalPlaces(toFloat(value), decimalPlaces))
-                : undefined
-            }
-            // Workaround to have the value announced by screen reader on Safari.
-            {...(!isReadOnly && { "aria-valuetext": value.toString() })}
-            className={clsx(
-              withBaseName("input"),
-              withBaseName(`inputTextAlign${capitalize(textAlign)}`),
-              inputClassName,
-            )}
-            disabled={isDisabled}
-            onBlur={handleInputBlur}
-            onChange={handleInputChange}
-            onFocus={!isDisabled ? handleInputFocus : undefined}
-            onKeyDown={handleInputKeyDown}
-            placeholder={placeholder}
-            readOnly={isReadOnly}
-            aria-readonly={isReadOnly ? "true" : undefined}
-            ref={forkedInputRef}
-            required={isRequired}
-            // Workaround to have readonly conveyed by screen readers (https://github.com/jpmorganchase/salt-ds/issues/4586)
-            role={isReadOnly ? "textbox" : "spinbutton"}
-            tabIndex={isDisabled ? -1 : 0}
-            value={value}
-            {...restInputProps}
-          />
-          {!isDisabled && validationStatus && (
-            <StatusAdornment
-              status={validationStatus}
-              id={validationStatusId}
-            />
-          )}
-          {endAdornment && (
-            <div className={withBaseName("endAdornmentContainer")}>
-              {endAdornment}
-            </div>
-          )}
-          <div className={withBaseName("activationIndicator")} />
-        </div>
-
-        {!hideButtons && !isReadOnly && (
+        <NumberFormatBase {...numberFormatRest} format={formatRef.current} />
+        {!hideControls && !readOnly && (
           <div className={withBaseName("buttonContainer")}>
             <Button
               className={clsx(

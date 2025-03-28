@@ -7,25 +7,46 @@ import {
   useId,
 } from "@salt-ds/core";
 import { AddIcon, RefreshIcon, RemoveIcon } from "@salt-ds/icons";
-import { NumberInput, type NumberInputProps } from "@salt-ds/lab";
+import { NumberInput, type NumberInputProps, NumberInputValueChange } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react";
-import { useState } from "react";
+import {
+  ChangeEventHandler,
+  useState
+} from "react";
 export default {
   title: "Lab/Number Input",
   component: NumberInput,
 } as Meta<typeof NumberInput>;
 
 export const Default: StoryFn<NumberInputProps> = (args) => {
+  const handleChange: ChangeEventHandler<HTMLInputElement> = event => {
+    console.log(
+      "change event",
+      event.target.value,
+      typeof event.target.value,
+    );
+    args.onChange?.(event);
+  };
+  const handleValueChange:NumberInputValueChange = (values, source) => {
+    console.log(
+      "change value event",
+      values,
+      source,
+    );
+    args.onValueChange?.(values, source);
+  };
+
   return (
     <FormField>
       <FormFieldLabel>Number Input</FormFieldLabel>
-      <NumberInput {...args} />
+      <NumberInput
+        {...args}
+        onChange={handleChange}
+        onValueChange={handleValueChange}
+      />
       <FormFieldHelperText>Please enter a number</FormFieldHelperText>
     </FormField>
   );
-};
-Default.args = {
-  defaultValue: 0,
 };
 
 export const Secondary: StoryFn<NumberInputProps> = (args) => {
@@ -85,15 +106,15 @@ export const Validation: StoryFn<typeof NumberInput> = (args) => {
     <StackLayout>
       <FormField validationStatus="error">
         <FormFieldLabel>Error Number Input</FormFieldLabel>
-        <NumberInput defaultValue={"Error value"} {...args} />
+        <NumberInput defaultValue="Error value" {...args} />
       </FormField>
       <FormField validationStatus="warning">
         <FormFieldLabel>Warning Number Input</FormFieldLabel>
-        <NumberInput defaultValue={"Warning value"} {...args} />
+        <NumberInput defaultValue="Warning value" {...args} />
       </FormField>
       <FormField validationStatus="success">
         <FormFieldLabel>Success Number Input</FormFieldLabel>
-        <NumberInput defaultValue={"Success value"} {...args} />
+        <NumberInput defaultValue="Success value" {...args} />
       </FormField>
     </StackLayout>
   );
@@ -103,7 +124,7 @@ export const DecimalPlaces: StoryFn<NumberInputProps> = (args) => {
   return (
     <FormField>
       <FormFieldLabel>Number Input</FormFieldLabel>
-      <NumberInput decimalPlaces={2} step={0.01} {...args} />
+      <NumberInput decimalScale={2} step={0.01} {...args} />
       <FormFieldHelperText>Please enter a number</FormFieldHelperText>
     </FormField>
   );
@@ -136,16 +157,19 @@ export const Controlled: StoryFn<NumberInputProps> = (args) => {
       <FormFieldLabel>{formFieldLabel}</FormFieldLabel>
       <NumberInput
         {...args}
-        decimalPlaces={2}
+        decimalScale={2}
         value={value}
-        onChange={(_event, value) => {
-          setValue(value);
+        onValueChange={(values, source) => {
+          const newValue = values.floatValue ?? "";
+          setValue(newValue);
+          args?.onValueChange?.(values, source);
         }}
         endAdornment={
           <>
             <Button
               aria-describedby={accessibleTextId}
-              variant="secondary"
+              appearance="transparent"
+              sentiment="neutral"
               aria-label={`Reset ${formFieldLabel}`}
               onClick={() => {
                 setValue(1.11);
@@ -193,8 +217,9 @@ export const MinAndMaxValue: StoryFn<NumberInputProps> = (args) => {
       <NumberInput
         {...args}
         value={value}
-        onChange={(_event, value) => {
-          setValue(value);
+        onValueChange={(values, source) => {
+          setValue(values.floatValue ?? "");
+          args?.onValueChange?.(values, source);
         }}
         max={max}
         min={min}
@@ -263,14 +288,16 @@ export const ResetAdornment: StoryFn<NumberInputProps> = (args) => {
       <NumberInput
         {...args}
         value={value}
-        onChange={(_event, value) => {
-          setValue(value);
+        onValueChange={(values, source) => {
+          setValue(values.floatValue ?? "");
+          args?.onValueChange?.(values, source);
         }}
         endAdornment={
           <>
             <Button
               aria-describedby={accessibleTextId}
-              variant="secondary"
+              appearance="transparent"
+              sentiment="neutral"
               aria-label={`Reset ${formFieldLabel}`}
               onClick={() => {
                 setValue(10);
@@ -304,10 +331,11 @@ export const CustomButtons: StoryFn<NumberInputProps> = (args) => {
       <FormFieldLabel>Number Input</FormFieldLabel>
       <NumberInput
         {...args}
-        hideButtons
+        hideControls
         textAlign="center"
-        onChange={(_event, value) => {
-          setValue(value);
+        onValueChange={(values, source) => {
+          setValue(values.floatValue ?? "");
+          args?.onValueChange?.(values, source);
         }}
         value={value}
         startAdornment={

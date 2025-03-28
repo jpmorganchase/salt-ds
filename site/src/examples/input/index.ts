@@ -7,6 +7,7 @@ export * from "./Readonly";
 export * from "./Secondary";
 export * from "./Spellcheck";
 export * from "./StaticAdornments";
+export * from "./Placeholder";
 export * from "./Primary";
 export * from "./TextAlignment";
 export * from "./Validation";

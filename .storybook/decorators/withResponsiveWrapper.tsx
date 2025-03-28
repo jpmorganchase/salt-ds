@@ -35,21 +35,21 @@ const ResponsiveContainer = ({ children }: { children?: ReactNode }) => {
           value={containerWidth[0]}
           max={maxUnits}
           min={10}
-          onChange={(_event, nextValue) => setWidth([nextValue as number])}
+          onValueChange={(values) => setWidth([values.floatValue ?? 0])}
         />
         <Slider
           className="StoryContainer-slider"
           id="width"
           max={maxUnits}
           min={10}
-          onChange={(event, value) => setWidth([toFloat(value)])}
+          onChange={(_e, value) => setWidth([toFloat(value)])}
           value={containerWidth[0]}
         />
         <NumberInput
           value={containerHeight[0]}
           max={maxUnits}
           min={10}
-          onChange={(_event, nextValue) => setHeight([nextValue as number])}
+          onValueChange={(values) => setHeight([values.floatValue ?? 0])}
         />
         <Slider
           className="StoryContainer-slider"

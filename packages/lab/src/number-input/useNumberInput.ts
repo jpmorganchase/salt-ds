@@ -1,144 +1,196 @@
 import {
-  type Dispatch,
   type MouseEvent,
   type MutableRefObject,
-  type SetStateAction,
   type SyntheticEvent,
   useCallback,
 } from "react";
+import {NumberFormatBaseProps} from "react-number-format";
 import type { NumberInputProps } from "./NumberInput";
 import { useActivateWhileMouseDown } from "./internal/useActivateWhileMouseDown";
 import {
-  isAtMax,
-  isAtMin,
-  toFixedDecimalPlaces,
-  toFloat,
+  getDecimalPlaces,
+  canDecrement,
+  canIncrement,
+  isNumberString,
 } from "./internal/utils";
 
-/**
- * Manages increment / decrement logic
- */
+export type useNumberInputProps = Pick<
+  NumberInputProps,
+  "defaultStartValue" | "disabled" | "max" | "min" | "onValueChange" | "step"
+> & {
+  format: NumberFormatBaseProps["format"] | null | undefined;
+  inputRef: MutableRefObject<HTMLInputElement | null>;
+  value: string | number | undefined;
+};
+
+type SourceOfChange = "keyboard" | "increment" | "decrement";
+
 export const useNumberInput = ({
-  decimalPlaces = 0,
+  defaultStartValue = 0,
   disabled,
+  format,
   inputRef,
   max = Number.MAX_SAFE_INTEGER,
   min = Number.MIN_SAFE_INTEGER,
-  onChange,
-  readOnly,
-  setValue,
-  setFocused,
-  step = 1,
-  stepMultiplier = 2,
-  value,
-}: Pick<
-  NumberInputProps,
-  | "decimalPlaces"
-  | "disabled"
-  | "inputRef"
-  | "max"
-  | "min"
-  | "onChange"
-  | "readOnly"
-  | "step"
-  | "stepMultiplier"
-> & {
-  setValue: Dispatch<SetStateAction<string | number | undefined>>;
-  setFocused: Dispatch<SetStateAction<boolean>>;
-  value: string | number;
-  inputRef: MutableRefObject<HTMLInputElement | null>;
-}) => {
-  const setValueInRange = useCallback(
-    (event: SyntheticEvent | undefined, modifiedValue: number) => {
-      if (readOnly) return;
-      let nextValue = modifiedValue;
-      if (nextValue < min) nextValue = min;
-      if (nextValue > max) nextValue = max;
+  onValueChange,
+  step: stepProp = 1,
+  value = "",
+}: useNumberInputProps) => {
+  const isDecrementDisabled =
+    disabled ||
+    (typeof value === "number" && min !== undefined && value <= min);
+  const isIncrementDisabled =
+    disabled ||
+    (typeof value === "number" && max !== undefined && value >= max);
 
-      const roundedValue = toFixedDecimalPlaces(nextValue, decimalPlaces);
-      if (Number.isNaN(toFloat(roundedValue))) return;
+  const updateValue = useCallback((
+    newValue: number,
+    source: SourceOfChange,
+  ) => {
+    const decimalPlaces = getDecimalPlaces(newValue);
+    const fixedValue = newValue.toFixed(decimalPlaces);
+    const formattedValue = format?.(fixedValue) ?? fixedValue;
+    const floatValue = parseFloat(formattedValue);
 
-      setValue(roundedValue);
+    onValueChange?.(
+      {
+        floatValue,
+        formattedValue: formattedValue.toString(),
+        value: formattedValue.toString(),
+      },
+      { source: source as any },
+    );
+  }, [onValueChange]);
 
-      onChange?.(event, roundedValue);
+  const setNumber = useCallback(
+    (_event: SyntheticEvent | undefined, newValue: number, source: SourceOfChange) => {
+      const maxPrecision = Math.max(
+        getDecimalPlaces(value),
+        getDecimalPlaces(newValue),
+      );
+      const factor = 10 ** maxPrecision;
+      let val: number;
+
+      if (
+        !isNumberString(value) &&
+        (typeof value !== "number" ||
+        Number.isNaN(value))
+      ) {
+        val = defaultStartValue;
+      } else {
+        // Scale the newValue to an integer
+        val = Math.round(newValue * factor) / factor;
+      }
+
+      // Ensure the value is within the min and max bounds
+      val = Math.min(Math.max(val, min), max);
+      updateValue(val, source);
     },
-    [decimalPlaces, min, max, onChange, readOnly, setValue],
+    [value, defaultStartValue, min, max, updateValue],
   );
 
-  const decrementValue = useCallback(
-    (event?: SyntheticEvent, block?: boolean) => {
-      if (isAtMin(value, min)) return;
-      const decrementStep = block ? stepMultiplier * step : step;
-      const nextValue =
-        value === "" ? -decrementStep : toFloat(value) - decrementStep;
-      setValueInRange(event, nextValue);
+  const spinHandler = useCallback(
+    (
+      _event: SyntheticEvent | undefined,
+      step: number = stepProp,
+      source: SourceOfChange
+    ) => {
+      const maxPrecision = Math.max(
+        getDecimalPlaces(value),
+        getDecimalPlaces(step),
+      );
+      const factor = 10 ** maxPrecision;
+      let val: number;
+
+      if (
+        (!isNumberString(value) && typeof value !== "number") ||
+        Number.isNaN(value)
+      ) {
+        val = defaultStartValue;
+      } else {
+        const scaledValue = Math.round(Number(value) * factor);
+        const scaledStep = Math.round(step * factor);
+        val = scaledValue + scaledStep;
+        val = val / factor;
+      }
+      // Ensure the value is within the min and max bounds
+      val = Math.min(Math.max(val, min), max);
+      updateValue(val, source);
     },
-    [value, min, step, stepMultiplier, setValueInRange],
+    [value, defaultStartValue, stepProp, min, max, updateValue],
   );
 
-  const incrementValue = useCallback(
-    (event?: SyntheticEvent, block?: boolean) => {
-      if (isAtMax(value, max)) return;
-      const incrementStep = block ? stepMultiplier * step : step;
-      const nextValue =
-        value === "" ? incrementStep : toFloat(value) + incrementStep;
-      setValueInRange(event, nextValue);
+  const incrementNumber = useCallback(
+    (event: SyntheticEvent | undefined, step: number = stepProp, source: SourceOfChange = "increment") => {
+      if (canIncrement(value)) {
+        spinHandler(event, step, source);
+      }
     },
-    [value, max, step, stepMultiplier, setValueInRange],
+    [value, stepProp, spinHandler],
   );
 
-  const { activate: decrementSpinner } = useActivateWhileMouseDown(
-    (event?: SyntheticEvent) => decrementValue(event),
-    isAtMin(value, min),
+  const decrementNumber = useCallback(
+    (event: SyntheticEvent | undefined, step: number = stepProp,  source: SourceOfChange = "decrement") => {
+      if (canDecrement(value)) {
+        spinHandler(event, step * -1, source);
+      }
+    },
+    [value, stepProp, spinHandler],
   );
 
   const { activate: incrementSpinner } = useActivateWhileMouseDown(
-    (event?: SyntheticEvent) => incrementValue(event),
-    isAtMax(value, max),
+    (event?: SyntheticEvent) => incrementNumber(event),
+    isIncrementDisabled,
   );
 
-  const handleButtonMouseUp = () => inputRef.current?.focus();
+  const { activate: decrementSpinner } = useActivateWhileMouseDown(
+    (event?: SyntheticEvent) => decrementNumber(event),
+    isDecrementDisabled,
+  );
 
   const commonButtonProps = {
     "aria-hidden": true,
     tabIndex: -1,
-    onMouseUp: handleButtonMouseUp,
+    onMouseUp: () => {
+      const input = inputRef.current;
+      if (input) {
+        input.focus();
+        input.setSelectionRange(0, input.value.length);
+      }
+    },
   };
 
   const incrementButtonProps = {
     ...commonButtonProps,
     "aria-label": "increment value",
-    disabled: disabled || isAtMax(value, max),
+    disabled: isIncrementDisabled,
     onMouseDown: (event: MouseEvent<HTMLButtonElement>) => {
       event.preventDefault();
-      setFocused(true);
-      if (event.nativeEvent.button !== 0) {
+      if (event.nativeEvent.button === 0) {
         // To match closely with <input type='input'>
-        return;
+        incrementSpinner(event);
       }
-      incrementSpinner(event);
     },
   };
 
   const decrementButtonProps = {
     ...commonButtonProps,
     "aria-label": "decrement value",
-    disabled: disabled || isAtMin(value, min),
+    disabled: isDecrementDisabled,
     onMouseDown: (event: MouseEvent<HTMLButtonElement>) => {
       event.preventDefault();
-      setFocused(true);
-      if (event.nativeEvent.button !== 0) {
+      if (event.nativeEvent.button === 0) {
         // To match closely with <input type='input'>
-        return;
+        decrementSpinner(event);
       }
-      decrementSpinner(event);
     },
   };
 
   return {
     incrementButtonProps,
     decrementButtonProps,
-    incrementValue,
-    decrementValue,
+    setNumber,
+    incrementNumber,
+    decrementNumber,
   };
 };

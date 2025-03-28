@@ -8,40 +8,57 @@ data:
   $ref: ./#/data
 ---
 
-## Default
+## Primary
 
 The `NumberInput`, by default, features an increment `step` of 1, enabling precise value adjustments. For larger value adjustments, users can utilize the `Shift` key in combination with the `Arrow` keys to apply a `stepMultiplier` which is 2 by default.
 
-<LivePreview componentName="number-input" exampleName="Default" />
+The default variant for `NumberInput` is "primary."
 
-## Variants
+<LivePreview componentName="number-input" exampleName="Primary" />
 
-The `NumberInput` is available in two variants: `primary` and `secondary`. The default variant is `primary` but you can switch to `secondary` using the `variant` prop.
+## Secondary
 
-When deciding between the `primary` and `secondary` variants, take into account the background color where the component will be displayed.
+`Input` has a "secondary" variant.
 
-<LivePreview componentName="number-input" exampleName="Variants" />
+For recommendations on variant choice, see the [forms pattern](salt/patterns/forms).
 
-## Bordered
+<LivePreview componentName="number-input" exampleName="Secondary" />
 
-To apply a full border to the `NumberInput`, you can use the `bordered` prop. This styling is particularly effective when the input field shares the same fill color as the background, such as using a primary fill color on a primary background.
+## Disabled
 
-<LivePreview componentName="number-input" exampleName="Bordered" />
+The `NumberInput` can be disabled to prevent any user interaction or input.
 
-## Validation
+<LivePreview componentName="number-input" exampleName="Disabled" />
 
-The `NumberInput` can display validation states, `error`, `warning`, and `success`, through the `validationStatus` prop.
+## Read-only
+
+You can set `NumberInput` to a read-only state. The user can't edit the value text in this state, but they can highlight and copy it.
+
+By default, the marker is an em dash. If your application requires a different marker, you can set it via the `emptyReadOnlyMarker` prop.
+
+- Use the read-only state when the user needs the value for their flow or current task but cannot edit it, for example, because of user permissions.
+
+**Note:** To address browser and screen reader limitations in conveying a read-only state, the `NumberInput`'s role is changed to `textbox` when set to read-only.
+
+<LivePreview componentName="number-input" exampleName="ReadOnly" />
+
+## Placeholder
+
+You can use a placeholder to prompt user input if there's no default value.
 
 ### Best practices
 
-- **Error state**: Utilize the error state to notify users of a critical issue related to the input. This issue may hinder task completion and typically requires user intervention to resolve.
-- **Warning state** Use the warning state to caution users about a potential issue. While this issue won't stop users from proceeding with the task, it may lead to errors if not addressed.
+Never use placeholder text to provide the user with contextual help since it will disappear when the user starts typing and doesn't meet minimum contrast requirements. Doing so is a WCAG failure.
 
-<LivePreview componentName="number-input" exampleName="Validation" />
+Instead, use helper text beneath the field to provide instructions or directions necessary to complete the field, and reserve the placeholder text to support the help message, or provide an example of the suggested content.
+
+You can find more information [in the W3C form instructions](https://www.w3.org/WAI/tutorials/forms/instructions/).
+
+<LivePreview componentName="number-input" exampleName="Placeholder" />
 
 ## Decimals
 
-By default, the `NumberInput` component is configured to accept values with zero decimal places. However, if users need to input values with decimals, such as monetary amounts, the number of decimal places can be customized through the `decimalPlaces` prop.
+By default, the `NumberInput` component is configured to accept values with zero decimal places. However, if users need to input values with decimals, such as monetary amounts, the number of decimal places can be customized through the `decimalScale` prop.
 
 When a user enters a value that doesn't align with the specified decimal places, the component will automatically adjust the value to the correct number of decimal places once it loses focus. For instance, if the component is set to accept two decimal places and the user inputs "12," it will display "12.00."
 
@@ -62,18 +79,42 @@ To limit the range of accepted values, you can specify a minimum, maximum, or bo
 - Clearly communicate the accepted value range by utilizing the `FormField`'s helper text to guide users.
 - Use the `FormField` error state to alert users when they manually enter a value outside the permitted range, indicating that the input is invalid.
 
-<LivePreview componentName="number-input" exampleName="Limits" />
+By specifying just `min` and `max` you can create an error state for out of range values.
+
+<LivePreview componentName="number-input" exampleName="MinMax" />
+
+Alternatively, a more strict implementation, can limit entry to only in-range values.
+
+<LivePreview componentName="number-input" exampleName="StrictMinMax" />
 
 ## Custom steps
 
-You can customize the `default` value of the `NumberInput` along with `step` and `stepMultiplier` to tailor the values according to your usecase.
+You can customize the `step` of the `NumberInput` to tailor to your use-case. The `stepMultiplier` is used in combination with the keyboard controls to provide an alternative step value.
 
 ### Best practices
 
-- Choose a `default` value that represents the most common or desired input for the majority of users, such as the number most frequently submitted.
+- Choose a `step` value that represents the most common or desired input for the majority of users, such as the number most frequently submitted.
 - Make sure the `step` value is suitable for the context. For example, when users are inputting a "Number of people," increments of 0.5 may cause confusion. If unsure, maintain the step at 1 to ensure clarity and simplicity.
 
-<LivePreview componentName="number-input" exampleName="StepAndBlock" />
+<LivePreview componentName="number-input" exampleName="StepAndMultiplier" />
+
+## Formatting
+
+Number formatting is provided through [react-number-format](https://s-yadav.github.io/react-number-format/)
+
+<LivePreview componentName="number-input" exampleName="Formatting" />
+
+## Negative values
+
+Negative values can be entered by default.
+
+<LivePreview componentName="number-input" exampleName="Negative" />
+
+## Custom Formatter
+
+The `format` prop enables a custom formatter to be added
+
+<LivePreview componentName="number-input" exampleName="CustomFormatting" />{" "}
 
 ## Button adornments
 
@@ -95,29 +136,22 @@ Customize the positioning and appearance of `NumberInput`'s arrow buttons to ali
 
 <LivePreview componentName="number-input" exampleName="ButtonAdornments" />
 
-## Disabled
+## Validation
 
-The `NumberInput` can be disabled to prevent any user interaction or input.
-
-<LivePreview componentName="number-input" exampleName="Disabled" />
-
-## Read-only
-
-The `NumberInput` can be set to a read-only state using the `readOnly` prop, allowing users to highlight and copy the value without editing it.
-
-By default, an em dash is used as the marker. If your application requires a different marker, you can customize it using the `emptyReadOnlyMarker` prop.
-
-**Note:** To address browser and screen reader limitations in conveying a read-only state, the `NumberInput`'s role is changed to `textbox` when set to read-only.
+The `NumberInput` can display validation states, `error`, `warning`, and `success`, through the `validationStatus` prop.
 
 ### Best practices
 
-Utilize the read-only state when users need to view the value for their workflow or current task but are not permitted to edit it, such as due to user permissions.
+- **Error state**: Utilize the error state to notify users of a critical issue related to the input. This issue may hinder task completion and typically requires user intervention to resolve.
+- **Warning state** Use the warning state to caution users about a potential issue. While this issue won't stop users from proceeding with the task, it may lead to errors if not addressed.
 
-<LivePreview componentName="number-input" exampleName="Readonly" />
+<LivePreview componentName="number-input" exampleName="Validation" />
 
 ## Text alignment
 
-To maintain a cohesive visual flow, numeric values are left-aligned by default, positioned directly beneath the label and other form field elements. If your specific use case or layout requires a different alignment, you can adjust the `NumberInput` to be right or center aligned using the `textAlign` prop.
+Text has left alignment by default. Use the `textAlign` prop to change the alignment to “center” or “right.”
+
+Numeric values often have right alignment to make comparing them easier. However, sometimes number fields don't relate to each other or mix with text fields in a form, so left alignment may promote better visual flow. Consider your use case when deciding on input field alignment.
 
 ### Best practices
 
@@ -125,3 +159,9 @@ To maintain a cohesive visual flow, numeric values are left-aligned by default, 
 - Center alignment can be used to emphasize a particular value, but it should be applied sparingly and only in exceptional cases to avoid disrupting the visual consistency.
 
 <LivePreview componentName="number-input" exampleName="TextAlignment" />
+
+## Bordered
+
+To apply a full border to the `NumberInput`, you can use the `bordered` prop. This styling is particularly effective when the input field shares the same fill color as the background, such as using a primary fill color on a primary background.
+
+<LivePreview componentName="number-input" exampleName="Bordered" />

@@ -3301,6 +3301,7 @@ __metadata:
     moment-timezone: "npm:^0.5.46"
     no-scroll: "npm:^2.1.1"
     react-color: "npm:^2.19.3"
+    react-number-format: "npm:^5.4.3"
     react-resizable-panels: "npm:^2.1.7"
     react-window: "npm:^1.8.6"
     rifm: "npm:^0.12.0"
@@ -14402,6 +14403,16 @@ __metadata:
     "@types/react": ">=18"
     react: ">=18"
   checksum: 10/71ce31f200982f641d363888a26e8fb52a199a589124f20295e9be870fa3aed26fcfa14d1dc766d83df666a15cb82359291bfda207bd55d5728ff376d217e079
+  languageName: node
+  linkType: hard
+
+"react-number-format@npm:^5.4.3":
+  version: 5.4.3
+  resolution: "react-number-format@npm:5.4.3"
+  peerDependencies:
+    react: ^0.14 || ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+    react-dom: ^0.14 || ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+  checksum: 10/351c70a8f3dcdc8469f4c27acb7ab18a2010e2bb6ea4eefb0be742aee517ee90a2b14772f1df43393acac158cff9e78268a49909f7f46577ec9acf07f4ec0fdf
   languageName: node
   linkType: hard
 

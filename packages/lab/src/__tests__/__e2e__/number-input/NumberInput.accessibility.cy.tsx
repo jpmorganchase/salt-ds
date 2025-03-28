@@ -11,7 +11,7 @@ describe("Number Input - Accessibility", () => {
   it("sets the correct default ARIA attributes on input", () => {
     cy.mount(
       <Default
-        decimalPlaces={2}
+        decimalScale={2}
         defaultValue={-20.1}
         max={250.23}
         min={-500.11}

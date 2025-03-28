@@ -35,7 +35,7 @@ const ResetAdornment = () => {
       <FormFieldLabel>{formFieldLabel}</FormFieldLabel>
       <NumberInput
         value={value}
-        onChange={(_, newValue) => setValue(newValue)}
+        onValueChange={(newValue) => setValue(newValue.floatValue ?? "")}
         step={5}
         stepMultiplier={10}
         endAdornment={
@@ -68,8 +68,8 @@ const ResetAdornment = () => {
 };
 
 const SyncAdornment = () => {
-  const [randomLiveValue, setRandomLiveValue] = useState("14.75");
-  const [value, setValue] = useState<number | string>(randomLiveValue);
+  const [randomLiveValue, setRandomLiveValue] = useState(14.75);
+  const [value, setValue] = useState<number|string>(randomLiveValue);
   const [accessibleText, setAccessibleText] = useState("");
 
   const formFieldLabel = "Number Input with Sync adornment";
@@ -79,7 +79,7 @@ const SyncAdornment = () => {
     const intervalId = setInterval(() => {
       const randomDelta = Number.parseFloat((Math.random() * 2 - 1).toFixed(2));
       setRandomLiveValue((prev) =>
-        (Number.parseFloat(prev) + randomDelta).toFixed(2),
+        prev + randomDelta
       );
     }, 500);
 
@@ -96,8 +96,8 @@ const SyncAdornment = () => {
       <FormFieldLabel>{formFieldLabel}</FormFieldLabel>
       <NumberInput
         value={value}
-        onChange={(_, newValue) => setValue(newValue)}
-        decimalPlaces={2}
+        onValueChange={(newValue) => setValue(newValue.floatValue ?? "")}
+        decimalScale={2}
         step={0.01}
         stepMultiplier={0.1}
         endAdornment={
@@ -131,7 +131,7 @@ const SyncAdornment = () => {
 
 const CustomButtons = () => {
   const step = 1;
-  const [value, setValue] = useState<number | string>(10);
+  const [value, setValue] = useState<number| string>(10);
 
   const updateValue = (multiplier: -1 | 1) => {
     if (typeof value === "number") {
@@ -143,10 +143,10 @@ const CustomButtons = () => {
     <FormField>
       <FormFieldLabel>Number Input with Custom buttons</FormFieldLabel>
       <NumberInput
-        hideButtons
+        hideControls
         value={value}
         textAlign="center"
-        onChange={(_, newValue) => setValue(newValue)}
+        onValueChange={(newValue) => setValue(newValue.floatValue ?? "")}
         startAdornment={
           <Button aria-hidden tabIndex={-1} onClick={() => updateValue(-1)}>
             <RemoveIcon aria-hidden />
