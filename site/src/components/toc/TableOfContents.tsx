@@ -4,8 +4,8 @@ import clsx from "clsx";
 import {
   type ComponentPropsWithoutRef,
   useEffect,
-  useState,
   useRef,
+  useState,
 } from "react";
 import styles from "./TableOfContents.module.css";
 
