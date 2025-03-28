@@ -4,7 +4,7 @@ import type { ReactElement } from "react";
 export const WithConstrainedLabelPosition = (): ReactElement => (
   <Slider
     aria-label="WithConstrainedLabelPosition"
-    style={{ width: "400px" }}
+    style={{ width: "600px" }}
     marks={[
       {
         value: 0,

@@ -10,13 +10,60 @@ import type { StoryFn } from "@storybook/react";
 import { toFloat } from "packages/lab/src/slider/internal/utils";
 import { type ChangeEvent, useState } from "react";
 
+const marks = [
+  {
+    label: "0",
+    value: 0,
+  },
+  {
+    label: "1",
+    value: 1,
+  },
+  {
+    label: "2",
+    value: 2,
+  },
+  {
+    label: "3",
+    value: 3,
+  },
+  {
+    label: "4",
+    value: 4,
+  },
+  {
+    label: "5",
+    value: 5,
+  },
+  {
+    label: "6",
+    value: 6,
+  },
+  {
+    label: "7",
+    value: 7,
+  },
+  {
+    label: "8",
+    value: 8,
+  },
+  {
+    label: "9",
+    value: 9,
+  },
+  {
+    label: "10",
+    value: 10,
+  },
+];
+
 export default {
   title: "Lab/RangeSlider",
   component: RangeSlider,
 };
 
 const Template: StoryFn = ({ ...args }) => {
-  return <RangeSlider style={{ width: "500px" }} {...args} />;
+  return <RangeSlider style={{ width: "600px" }} {...args} />;
 };
 
 export const Default = Template.bind({});
@@ -44,52 +91,7 @@ export const WithMarks = Template.bind({});
 WithMarks.args = {
   min: 0,
   max: 10,
-  marks: [
-    {
-      label: "0",
-      value: 0,
-    },
-    {
-      label: "1",
-      value: 1,
-    },
-    {
-      label: "2",
-      value: 2,
-    },
-    {
-      label: "3",
-      value: 3,
-    },
-    {
-      label: "4",
-      value: 4,
-    },
-    {
-      label: "5",
-      value: 5,
-    },
-    {
-      label: "6",
-      value: 6,
-    },
-    {
-      label: "7",
-      value: 7,
-    },
-    {
-      label: "8",
-      value: 8,
-    },
-    {
-      label: "9",
-      value: 9,
-    },
-    {
-      label: "10",
-      value: 10,
-    },
-  ],
+  marks: marks,
   "aria-label": "With Marks",
 };
 
@@ -101,52 +103,7 @@ export const WithMarkTicks = Template.bind({});
 WithMarkTicks.args = {
   min: 0,
   max: 10,
-  marks: [
-    {
-      label: "0",
-      value: 0,
-    },
-    {
-      label: "1",
-      value: 1,
-    },
-    {
-      label: "2",
-      value: 2,
-    },
-    {
-      label: "3",
-      value: 3,
-    },
-    {
-      label: "4",
-      value: 4,
-    },
-    {
-      label: "5",
-      value: 5,
-    },
-    {
-      label: "6",
-      value: 6,
-    },
-    {
-      label: "7",
-      value: 7,
-    },
-    {
-      label: "8",
-      value: 8,
-    },
-    {
-      label: "9",
-      value: 9,
-    },
-    {
-      label: "10",
-      value: 10,
-    },
-  ],
+  marks: marks,
   "aria-label": "With Mark Ticks",
   showTicks: true,
 };
@@ -158,32 +115,19 @@ WithMarkTicks.parameters = {
 export const WithRestrictToMarks = Template.bind({});
 WithRestrictToMarks.args = {
   marks: [
-    {
-      label: "1",
-      value: 1,
-    },
-
-    {
-      label: "5",
-      value: 5,
-    },
-    {
-      label: "6",
-      value: 6,
-    },
-    {
-      label: "7",
-      value: 7,
-    },
-    {
-      label: "10",
-      value: 10,
-    },
+    { value: 5, label: "5" },
+    { value: 15, label: "15" },
+    { value: 25, label: "25" },
+    { value: 35, label: "35" },
+    { value: 70, label: "70" },
+    { value: 80, label: "80" },
+    { value: 90, label: "90" },
   ],
+  min: 0,
+  max: 100,
   "aria-label": "With Restrict to Marks",
   showTicks: true,
   restrictToMarks: true,
-  defaultValue: [0, 8],
 };
 
 WithRestrictToMarks.parameters = {
@@ -302,13 +246,52 @@ WithFormatting.args = {
       maximumFractionDigits: 0,
     }).format(value),
   marks: [
-    { value: 0, label: "0€" },
-    { value: 50, label: "50€" },
+    { value: 0, label: "€0" },
+    { value: 50, label: "€50" },
   ],
 };
 
 WithFormatting.parameters = {
   actions: { disable: true },
+};
+
+export const WithinFormField: StoryFn<RangeSliderProps> = () => {
+  return (
+    <StackLayout gap={4}>
+      <FormField
+        labelPlacement="left"
+        style={
+          {
+            "--saltFormField-label-width": "16%",
+            width: "600px",
+          } as React.CSSProperties
+        }
+      >
+        <FormFieldLabel>Form field left</FormFieldLabel>
+        <RangeSlider minLabel="0" maxLabel="10" />
+      </FormField>
+      <FormField
+        labelPlacement="left"
+        style={
+          {
+            "--saltFormField-label-width": "30%",
+            width: "600px",
+          } as React.CSSProperties
+        }
+      >
+        <FormFieldLabel>Form field left (with marks)</FormFieldLabel>
+        <RangeSlider showTicks marks={marks} />
+      </FormField>
+      <FormField>
+        <FormFieldLabel>Form field top</FormFieldLabel>
+        <RangeSlider minLabel="0" maxLabel="10" />
+      </FormField>
+      <FormField>
+        <FormFieldLabel>Form field top (with marks)</FormFieldLabel>
+        <RangeSlider showTicks marks={marks} />
+      </FormField>
+    </StackLayout>
+  );
 };
 
 export const WithInput: StoryFn<RangeSliderProps> = () => {
@@ -340,7 +323,7 @@ export const WithInput: StoryFn<RangeSliderProps> = () => {
   };
 
   return (
-    <FormField style={{ width: "500px" }}>
+    <FormField style={{ width: "600px" }}>
       <FormFieldLabel>Range Slider with Input</FormFieldLabel>
       <FlexLayout style={{ width: "100%" }} gap={2}>
         <Input
@@ -406,7 +389,7 @@ export const WithInputAndInlineLabels: StoryFn<RangeSliderProps> = () => {
   };
 
   return (
-    <FormField style={{ width: "500px" }}>
+    <FormField style={{ width: "600px" }}>
       <FormFieldLabel>Range Slider with Input</FormFieldLabel>
       <FlexLayout style={{ width: "100%" }} gap={2}>
         <Input
@@ -445,7 +428,7 @@ export const WithInputAndInlineLabels: StoryFn<RangeSliderProps> = () => {
   );
 };
 
-export const WithInputAndMarks: StoryFn<RangeSliderProps> = () => {
+export const WithInputAndMarksAndTicks: StoryFn<RangeSliderProps> = () => {
   const [value, setValue] = useState<[number, number]>([-20, 30]);
   const [minInputValue, setMinInputValue] = useState<string | number>(value[0]);
   const [maxInputValue, setMaxInputValue] = useState<string | number>(value[1]);
@@ -474,7 +457,7 @@ export const WithInputAndMarks: StoryFn<RangeSliderProps> = () => {
   };
 
   return (
-    <FormField style={{ width: "500px" }}>
+    <FormField style={{ width: "600px" }}>
       <FormFieldLabel>Range Slider with Input</FormFieldLabel>
       <FlexLayout gap={3}>
         <Input
@@ -511,6 +494,7 @@ export const WithInputAndMarks: StoryFn<RangeSliderProps> = () => {
               label: "50",
             },
           ]}
+          showTicks
         />
         <Input
           value={maxInputValue}
@@ -525,29 +509,8 @@ export const WithInputAndMarks: StoryFn<RangeSliderProps> = () => {
   );
 };
 
-export const WithinFormField: StoryFn<RangeSliderProps> = () => {
-  const [value, setValue] = useState<[number, number]>([20, 40]);
-
-  return (
-    <FormField style={{ width: "500px" }}>
-      <FormFieldLabel>Range Slider within Form Field</FormFieldLabel>
-      <RangeSlider
-        style={{ flex: "100%" }}
-        min={-50}
-        max={50}
-        value={value}
-        onChange={(_e, value) => {
-          setValue(value);
-        }}
-        minLabel="-50"
-        maxLabel="50"
-      />
-    </FormField>
-  );
-};
-
 export const WithCustomStep = () => (
-  <StackLayout gap={10} style={{ width: "500px" }}>
+  <StackLayout gap={10} style={{ width: "600px" }}>
     <FormField>
       <FormFieldLabel>Step: 1 (default)</FormFieldLabel>
       <RangeSlider
@@ -609,7 +572,7 @@ export const WithNonNumericValues = () => {
   return (
     <RangeSlider
       aria-label="Days of the week"
-      style={{ width: "500px" }}
+      style={{ width: "600px" }}
       min={1}
       max={7}
       value={value}
