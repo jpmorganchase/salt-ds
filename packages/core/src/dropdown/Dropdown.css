@@ -11,7 +11,6 @@
   display: inline-flex;
   align-items: center;
   padding: 0 var(--salt-spacing-100);
-  gap: var(--salt-spacing-100);
   color: var(--dropdown-color);
   font-family: var(--salt-text-fontFamily);
   font-size: var(--salt-text-fontSize);
@@ -183,4 +182,12 @@
 .saltDropdown-placeholder {
   color: var(--salt-content-secondary-foreground);
   font-weight: var(--salt-text-fontWeight-small);
+}
+
+.saltDropdown-startAdornmentContainer {
+  margin-right: var(--salt-spacing-100);
+}
+
+.saltDropdown .saltDropdown-toggle {
+  margin-left: var(--salt-spacing-100);
 }

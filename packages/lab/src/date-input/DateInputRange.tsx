@@ -554,7 +554,7 @@ export const DateInputRange = forwardRef<
           onFocus={!isDisabled ? handleStartInputFocus : undefined}
           required={startInputIsRequired}
         />
-        <span>-</span>
+        <span className={withBaseName("dash")}>-</span>
         <input
           autoComplete="off"
           aria-describedby={clsx(
