@@ -3,7 +3,7 @@ import { RangeSlider } from "@salt-ds/lab";
 import type { ReactElement } from "react";
 
 export const WithLabels = (): ReactElement => (
-  <StackLayout gap={6}>
+  <StackLayout gap={6} style={{ width: "600px" }}>
     <FormField>
       <FormFieldLabel>Min/max labels</FormFieldLabel>
       <RangeSlider
@@ -13,7 +13,6 @@ export const WithLabels = (): ReactElement => (
         minLabel="0"
         maxLabel="100"
         defaultValue={[30, 50]}
-        style={{ width: "600px" }}
       />
     </FormField>
     <FormField>
@@ -23,7 +22,6 @@ export const WithLabels = (): ReactElement => (
         min={0}
         max={100}
         defaultValue={[30, 50]}
-        style={{ width: "600px" }}
         marks={[
           {
             value: 0,

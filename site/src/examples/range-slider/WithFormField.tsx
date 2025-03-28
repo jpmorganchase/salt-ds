@@ -51,12 +51,12 @@ const marks = [
 
 export const WithFormField = (): ReactElement => {
   return (
-    <StackLayout gap={3}>
-      <FormField style={{ width: "600px" }}>
+    <StackLayout gap={3} style={{ width: "600px" }}>
+      <FormField>
         <FormFieldLabel>Field label</FormFieldLabel>
         <RangeSlider minLabel="0" maxLabel="10" />
       </FormField>
-      <FormField style={{ width: "600px" }}>
+      <FormField>
         <FormFieldLabel>Field label</FormFieldLabel>
         <RangeSlider constrainLabelPosition showTicks marks={marks} />
       </FormField>
@@ -65,7 +65,6 @@ export const WithFormField = (): ReactElement => {
         style={
           {
             "--saltFormField-label-width": "16%",
-            width: "600px",
           } as React.CSSProperties
         }
       >
@@ -77,7 +76,6 @@ export const WithFormField = (): ReactElement => {
         style={
           {
             "--saltFormField-label-width": "16%",
-            width: "600px",
           } as React.CSSProperties
         }
       >

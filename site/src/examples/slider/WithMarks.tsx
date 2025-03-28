@@ -3,7 +3,7 @@ import { Slider } from "@salt-ds/lab";
 import type { ReactElement } from "react";
 
 export const WithMarks = (): ReactElement => (
-  <StackLayout gap={6}>
+  <StackLayout gap={6} style={{ width: "600px" }}>
     <FormField>
       <FormFieldLabel>With marks</FormFieldLabel>
       <Slider
@@ -11,7 +11,6 @@ export const WithMarks = (): ReactElement => (
         min={0}
         max={50}
         defaultValue={30}
-        style={{ width: "600px" }}
         marks={[
           {
             value: 0,
@@ -47,7 +46,6 @@ export const WithMarks = (): ReactElement => (
         min={0}
         max={50}
         defaultValue={30}
-        style={{ width: "600px" }}
         showTicks
         marks={[
           {
@@ -84,7 +82,6 @@ export const WithMarks = (): ReactElement => (
         min={0}
         max={50}
         defaultValue={30}
-        style={{ width: "600px" }}
         minLabel="Very low"
         maxLabel="Very high"
         marks={[

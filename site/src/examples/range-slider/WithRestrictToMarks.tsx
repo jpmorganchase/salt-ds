@@ -3,12 +3,11 @@ import { RangeSlider } from "@salt-ds/lab";
 import type { ReactElement } from "react";
 
 export const WithRestrictToMarks = (): ReactElement => (
-  <StackLayout gap={6}>
+  <StackLayout gap={6} style={{ width: "600px" }}>
     <FormField>
       <FormFieldLabel>Restricted to marks</FormFieldLabel>
       <RangeSlider
         aria-label="RangeSlider restricted to marks"
-        style={{ width: "600px" }}
         marks={[
           { value: 5, label: "5" },
           { value: 15, label: "15" },
@@ -27,7 +26,6 @@ export const WithRestrictToMarks = (): ReactElement => (
       <FormFieldLabel>Restricted to marks, with ticks</FormFieldLabel>
       <RangeSlider
         aria-label="Restricted to marks with mark ticks"
-        style={{ width: "600px" }}
         marks={[
           { value: 5, label: "5" },
           { value: 15, label: "15" },

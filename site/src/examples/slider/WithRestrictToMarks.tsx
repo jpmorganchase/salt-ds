@@ -3,12 +3,11 @@ import { Slider } from "@salt-ds/lab";
 import type { ReactElement } from "react";
 
 export const WithRestrictToMarks = (): ReactElement => (
-  <StackLayout gap={6}>
+  <StackLayout gap={6} style={{ width: "600px" }}>
     <FormField>
       <FormFieldLabel>Restricted to marks</FormFieldLabel>
       <Slider
         aria-label="Slider restricted to marks"
-        style={{ width: "600px" }}
         marks={[
           { value: 5, label: "5" },
           { value: 15, label: "15" },
@@ -27,7 +26,6 @@ export const WithRestrictToMarks = (): ReactElement => (
       <FormFieldLabel>Restricted to marks, with ticks</FormFieldLabel>
       <Slider
         aria-label="Slider restricted to marks, with mark ticks"
-        style={{ width: "600px" }}
         marks={[
           { value: 5, label: "5" },
           { value: 15, label: "15" },

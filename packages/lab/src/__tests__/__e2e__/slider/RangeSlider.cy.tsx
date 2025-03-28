@@ -389,7 +389,7 @@ describe("Given a Range Slider", () => {
     cy.findByText("Custom Max Label").should("exist");
   });
 
-  it("should be disabled when set and not receive focus", () => {
+  it("should be disabled when set and should not receive focus when disabled", () => {
     cy.mount(<Default disabled defaultValue={[2, 3]} />);
 
     cy.findAllByRole("slider").should("be.disabled");
