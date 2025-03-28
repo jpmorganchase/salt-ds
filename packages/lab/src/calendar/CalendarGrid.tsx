@@ -15,7 +15,7 @@ import type { DateFrameworkType } from "@salt-ds/date-adapters";
 import { useLocalization } from "../localization-provider";
 import {
   CalendarMonthHeader,
-  CalendarMonthHeaderProps,
+  type CalendarMonthHeaderProps,
 } from "./CalendarMonthHeader";
 import {
   CalendarWeekHeader,
