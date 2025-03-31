@@ -5,16 +5,20 @@ sidebar:
   priority: 12
 ---
 
-Density relates to the amount of content that can fit on a screen based on the size and spacing of components. The base density is a configuration set as a starting point when creating a product using Salt. All components, spacing, and typographic elements will align and remain proportionate regardless of the density you choose. Density can be changed at a page or region level. 
+Density relates to the amount of content that can fit on a screen based on the size and spacing of components. Choose a base density as a starting point when creating a product using Salt. All components, spacing, and typographic elements will align and remain proportionate regardless of the density you choose. Density can be changed at a page or region level. For more information about mixing densities, please refer to the [mixing densities section](/salt/foundations/density/examples#mixing-densities) on this page. 
+
+To learn how to change Salt density with Figma variables, watch [our demo video](https://techtube.prod.aws.jpmchase.net/#/videos/c7717cb0-4332-4cf0-9c8c-7f66e5eaf339) by the design team. (Internal users only)
+
+For information on how to implement density in code, you can learn more on the [Salt provider page](/salt/components/salt-provider/examples#density). 
 
 Salt offers 4 densities: 
 
 | Density   | Use case                                                                                |
 | --------- | --------------------------------------------------------------------------------------- |
-| High      | Optimized for data-heavy or complex applications (e.g., trading platforms)              |
-| Medium    | Optimized for standard applications and websites (i.e., default density)                |
-| Low       | Optimized for data/content-light interfaces (e.g., marketing and communications)        |
-| Touch     | Optimized for touch interactions (e.g., mobile and tablet devices)                      |
+| High      | Optimized for data-heavy or complex applications such as trading platforms              |
+| Medium    | Optimized for standard applications and websites at default density                     |
+| Low       | Optimized for data/content-light interfaces such as marketing and communications        |
+| Touch     | Optimized for touch interactions in mobile and tablet devices                           |
 
 <Image
   src="/img/foundations/density-buttons.png"
@@ -23,7 +27,7 @@ Salt offers 4 densities:
 
 ## High density (HD)
 
-High density scales components down to their smallest size and reduces the size between elements to ensure a compact layout. High density is deisgned for frequent application use by experienced users.
+High density scales components down to their smallest size and reduces the size between elements to ensure a compact layout. High density is designed for frequent application use by experienced users.
 
 <Image
   src="/img/foundations/density-skeletons.png"
@@ -32,7 +36,7 @@ High density scales components down to their smallest size and reduces the size 
 
 ## Medium density (MD)
 
-Medium density is the default solution for most use cases. It is ideal for most standard applications or content-rich websites.
+Medium density is the default solution for most use cases. It's ideal for most standard applications or content-rich websites.
 
 ## Low density (LD)
 
@@ -46,7 +50,7 @@ For more information on how to adjust typography and spacing in TD, please refer
 
 ## Mixing densities
 
-Density is intended to be used one density at a time, only changing when part of a responsive breakpoint.
+Density is intended to be used one at a time, only changing when part of a responsive breakpoint. To learn more about densities at various breakpoints, please refer to the [breakpoints page](/salt/foundations/breakpoints).
 
 When applying density:
 - Pick a density and be consistent with it across your application
@@ -58,7 +62,5 @@ Before mixing densities, consider other ways to establish hierarchy or emphasise
 - Mixing primary and secondary background colors
 - Applying greater spacing between elements
 - Scaling components
-
-To learn more about densities at various breakpoints, please refer to the [breakpoints page](/salt/foundations/breakpoints).
 
 :fragment{src="./fragments/feedback.mdx"}
