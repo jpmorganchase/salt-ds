@@ -1,4 +1,4 @@
-import { H2, Text, makePrefixer } from "@salt-ds/core";
+import { H2, Text } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
@@ -7,6 +7,8 @@ import {
   type ReactNode,
   forwardRef,
 } from "react";
+import { makePrefixer } from "../utils";
+
 import overlayHeaderCss from "./OverlayHeader.css";
 
 const withBaseName = makePrefixer("saltOverlayHeader");
