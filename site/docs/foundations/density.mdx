@@ -5,59 +5,64 @@ sidebar:
   priority: 12
 ---
 
-Density relates to the amount of content that can fit on a screen based on the [size](./size) and [spacing](./spacing) of components.
+Density relates to the amount of content that can fit on a screen based on the size and spacing of components. Choose a base density as a starting point when creating a product using Salt. All components, spacing, and typographic elements will align and remain proportionate regardless of the density you choose. Density can be changed at a page or region level. For more information about mixing densities, please refer to the [mixing densities section](#mixing-densities) on this page.
 
-When creating a product using the design system, choose a base density as a starting point. All components, spacing, and typographic elements will align and remain proportionate regardless of the density you choose.
+To learn how to change Salt density with Figma variables, watch [our demo video](https://go/techtube/#/videos/c7717cb0-4332-4cf0-9c8c-7f66e5eaf339) by the design team. (Internal users only)
 
-There are four densities available to choose from:
+For information on how to implement density in code, you can learn more on the [Salt provider page](/salt/components/salt-provider/examples#density).
 
-- High
-- Medium
-- Low
-- Touch
+Salt offers 4 densities:
+
+| Density | Use case                                                                         |
+| ------- | -------------------------------------------------------------------------------- |
+| High    | Optimized for data-heavy or complex applications such as trading platforms       |
+| Medium  | Optimized for standard applications and websites at default density              |
+| Low     | Optimized for data/content-light interfaces such as marketing and communications |
+| Touch   | Optimized for touch interactions in mobile and tablet devices                    |
 
 <Image
-  src="/img/foundations/density-example.svg"
-  alt="Example of all densities side-by-side"
+  src="/img/foundations/density-buttons.png"
+  alt="Example of Button in all densities side-by-side"
 />
 
 ## High density (HD)
 
-High density scales components down to their smallest size and reduces the size between elements to ensure a compact layout.
+High density scales components down to their smallest size and reduces the size between elements to ensure a compact layout. High density is designed for frequent application use by experienced users.
 
-High density is optimized for data-heavy or complex applications, such as trading platforms. It is optimized for frequent use by experienced power users.
+<Image
+  src="/img/foundations/density-skeletons.png"
+  alt="Example of Dialog skeleton in high density and medium density side-by-side"
+/>
 
 ## Medium density (MD)
 
-Medium density is the default solution for most use cases. It is ideal for most standard applications or content-rich websites.
+Medium density is the default solution for most use cases. It's ideal for most standard applications or content-rich websites.
 
 ## Low density (LD)
 
-Low density is optimized for content-light interfaces. It's ideal for marketing, communications, or onboarding experiences. In contrast to 'high density', low density is intended for infrequently used applications by inexperienced users.
+Low density is optimized for content-light interfaces. It's ideal for marketing, communications, or onboarding experiences. In contrast to high density, low density is intended for infrequently used applications by inexperienced users.
 
 ## Touch density (TD)
 
-Touch density scales components to their largest increment and is intended for mobile or tablet devices only.
+Touch density’s main purpose is to address accessibility concerns on smaller viewports that deal with higher resolutions. When a screen has a higher resolution, touch targets are adjusted to remain large enough for easy interaction.
+
+For more information on how to adjust typography and spacing in TD, please refer to the [small viewports page](/salt/foundations/small-viewports).
 
 ## Mixing densities
 
-Density is intended to be used one density at a time, only changing when part of a [responsive layout](./responsiveness). When applying density:
+Density is intended to be used one at a time, only changing when part of a responsive breakpoint. To learn more about densities at various breakpoints, please refer to the [breakpoints page](/salt/foundations/breakpoints).
+
+When applying density:
 
 - Pick a density and be consistent with it across your application
 - Alternatively, set density to align to breakpoints and define which density to use per breakpoint
-- If the use case requires it, mix densities, but do it sparingly in order to provide greater emphasis to a single component or small group of components, such as log-in fields.
+- If the use case requires it, you can mix densities only at a regional level and not at a component level
 
-The [Responsiveness](./responsiveness) foundation includes guidance on recommended breakpoints for each density.
+Before mixing densities, consider other ways to establish hierarchy or emphasise certain elements:
 
-Before mixing densities, consider other ways to establish hierarchy or emphasise certain elements, such as:
-
-- Using typographic hierarchy or weight.
-- Mixing primary and secondary background colors.
-- Applying greater spacing between elements.
-- Scaling components.
-
-If you still need to mix densities, do it sparingly. Although possible, the components within the system are not designed to be mixed. This does not mean they can't be mixed, but they are designed around a specific scaling system that ensures components of the same density align. The components are not designed to 'fit' together across densities.
-
-Mixing the density of components sparingly can help to create emphasis without visual disruption. However, if overused, there may be issues with component alignment and use of [spacing tokens](./spacing).
+- Using typographic hierarchy or weight
+- Mixing primary and secondary background colors
+- Applying greater spacing between elements
+- Scaling components
 
 :fragment{src="./fragments/feedback.mdx"}
