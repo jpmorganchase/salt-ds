@@ -36,6 +36,7 @@
   border: 0;
 }
 
+/* SLoooow */
 button[class^="ag-"]:focus,
 input[class^="ag-"][type="button"]:focus {
   box-shadow: none;
@@ -57,6 +58,7 @@ input[class^="ag-"][type="button"]:focus {
   margin-top: var(--salt-spacing-100);
 }
 
+/* SLoooow */
 .ag-simple-filter-body-wrapper > * {
   margin-bottom: var(--salt-spacing-100);
 }
