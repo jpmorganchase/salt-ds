@@ -3,11 +3,13 @@ import {
   Children,
   type ElementType,
   type ReactElement,
+  type ReactNode,
   forwardRef,
+  isValidElement,
   useEffect,
 } from "react";
 
-import type { BorderItemProps } from "../border-item";
+import type { BorderPosition } from "../border-item";
 import { GridLayout, type GridLayoutProps } from "../grid-layout";
 import {
   type PolymorphicComponentPropWithRef,
@@ -35,9 +37,7 @@ export type BorderLayoutProps<T extends ElementType> =
       /**
        * Border item components to be rendered.
        */
-      children:
-        | ReactElement<BorderItemProps<T>>[]
-        | ReactElement<BorderItemProps<T>>;
+      children: ReactNode;
       /**
        * Defines the margin around the component. It can be specified as a number (which acts as a multiplier) or a string representing the margin value. Default is `0`.
        */
@@ -64,8 +64,8 @@ export const BorderLayout: BorderLayoutComponent = forwardRef(
   ) => {
     const borderAreas = Children.map(
       children,
-      (child: ReactElement<BorderItemProps<T>>) => child.props.position,
-    );
+      (child) => isValidElement(child) && child.props.position,
+    ) as BorderPosition[];
 
     const topSection = borderAreas.includes("north")
       ? "north ".repeat(numberOfColumns)
