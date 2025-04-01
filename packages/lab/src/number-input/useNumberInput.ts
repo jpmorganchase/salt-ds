@@ -4,7 +4,7 @@ import {
   type SyntheticEvent,
   useCallback,
 } from "react";
-import {NumberFormatBaseProps} from "react-number-format";
+import { NumberFormatBaseProps } from "react-number-format";
 import type { NumberInputProps } from "./NumberInput";
 import { useActivateWhileMouseDown } from "./internal/useActivateWhileMouseDown";
 import {
@@ -43,27 +43,31 @@ export const useNumberInput = ({
     disabled ||
     (typeof value === "number" && max !== undefined && value >= max);
 
-  const updateValue = useCallback((
-    newValue: number,
-    source: SourceOfChange,
-  ) => {
-    const decimalPlaces = getDecimalPlaces(newValue);
-    const fixedValue = newValue.toFixed(decimalPlaces);
-    const formattedValue = format?.(fixedValue) ?? fixedValue;
-    const floatValue = Number.parseFloat(formattedValue);
+  const updateValue = useCallback(
+    (newValue: number, source: SourceOfChange) => {
+      const decimalPlaces = getDecimalPlaces(newValue);
+      const fixedValue = newValue.toFixed(decimalPlaces);
+      const formattedValue = format?.(fixedValue) ?? fixedValue;
+      const floatValue = Number.parseFloat(formattedValue);
 
-    onValueChange?.(
-      {
-        floatValue,
-        formattedValue: formattedValue.toString(),
-        value: formattedValue.toString(),
-      },
-      { source: source as any },
-    );
-  }, [onValueChange]);
+      onValueChange?.(
+        {
+          floatValue,
+          formattedValue: formattedValue.toString(),
+          value: formattedValue.toString(),
+        },
+        { source: source as any },
+      );
+    },
+    [onValueChange],
+  );
 
   const setNumber = useCallback(
-    (_event: SyntheticEvent | undefined, newValue: number, source: SourceOfChange) => {
+    (
+      _event: SyntheticEvent | undefined,
+      newValue: number,
+      source: SourceOfChange,
+    ) => {
       const maxPrecision = Math.max(
         getDecimalPlaces(value),
         getDecimalPlaces(newValue),
@@ -73,8 +77,7 @@ export const useNumberInput = ({
 
       if (
         !isNumberString(value) &&
-        (typeof value !== "number" ||
-        Number.isNaN(value))
+        (typeof value !== "number" || Number.isNaN(value))
       ) {
         val = defaultStartValue;
       } else {
@@ -93,7 +96,7 @@ export const useNumberInput = ({
     (
       _event: SyntheticEvent | undefined,
       step: number = stepProp,
-      source: SourceOfChange
+      source: SourceOfChange,
     ) => {
       const maxPrecision = Math.max(
         getDecimalPlaces(value),
@@ -121,7 +124,11 @@ export const useNumberInput = ({
   );
 
   const incrementNumber = useCallback(
-    (event: SyntheticEvent | undefined, step: number = stepProp, source: SourceOfChange = "increment") => {
+    (
+      event: SyntheticEvent | undefined,
+      step: number = stepProp,
+      source: SourceOfChange = "increment",
+    ) => {
       if (canIncrement(value)) {
         spinHandler(event, step, source);
       }
@@ -130,7 +137,11 @@ export const useNumberInput = ({
   );
 
   const decrementNumber = useCallback(
-    (event: SyntheticEvent | undefined, step: number = stepProp,  source: SourceOfChange = "decrement") => {
+    (
+      event: SyntheticEvent | undefined,
+      step: number = stepProp,
+      source: SourceOfChange = "decrement",
+    ) => {
       if (canDecrement(value)) {
         spinHandler(event, step * -1, source);
       }
