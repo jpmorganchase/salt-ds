@@ -5,13 +5,13 @@ sidebar:
   priority: 10
 ---
 
-Duration represents the time between a user performing an action and the system giving feedback. It’s essential to indicate to users that something is happening when they interact with an element. Consistency in timing provides user comfort and can increase trust in a system. The duration should match the significance of the animated element or information. 
+Duration represents the time between a user performing an action and the system giving feedback. It’s essential to indicate to users that something is happening when they interact with an element. Consistency in timing provides user comfort and can increase trust in a system. The duration should match the significance of the animated element or information.
 
-For detailed information on how to apply duration in design and the use cases, please refer to [this blog post](). (Internal users only) 
+For detailed information on how to apply duration in design and the use cases, please refer to [this blog post](). (Internal users only)
 
 ## Duration ramps
 
-The Salt design system provides four durations to choose from: 
+The Salt design system provides four durations to choose from:
 
 | Token                         | Duration (milliseconds) |
 | ----------------------------- | ----------------------- |
@@ -22,7 +22,7 @@ The Salt design system provides four durations to choose from:
 
 ## Instant (0ms)
 
-An instant duration is an immediate system response to a user’s interaction within 0–100ms. Users feel they've directly caused the outcome of the interaction. No feedback is required as the system response itself is the feedback. Interactions that can trigger an instant response include clicking a radio button, typing into an editable field, dragging an object, or hovering over a button (pictured below). 
+An instant duration is an immediate system response to a user’s interaction within 0–100ms. Users feel they've directly caused the outcome of the interaction. No feedback is required as the system response itself is the feedback. Interactions that can trigger an instant response include clicking a radio button, typing into an editable field, dragging an object, or hovering over a button (pictured below).
 
 <Image
   src="/img/foundations/duration-instant.png"
@@ -31,7 +31,7 @@ An instant duration is an immediate system response to a user’s interaction wi
 
 ## Perceptible (300ms)
 
-A perceptible duration is a short detectable delay between a user's action and the system's response. It’s recommended for revealing secondary guidance or information to the user. For example, tooltips shouldn't appear instantly as the mouse moves over the UI.  
+A perceptible duration is a short detectable delay between a user's action and the system's response. It’s recommended for revealing secondary guidance or information to the user. For example, tooltips shouldn't appear instantly as the mouse moves over the UI.
 
 <Image
   src="/img/foundations/duration-perceptible.png"
@@ -53,9 +53,10 @@ With a delay of 1s (`salt-duration-notable`) there's no need to provide visual f
 
 ## Cut-off (10s)
 
-Cut-off is the point at which any attempt for a system to respond should finish, and a status message should be displayed. If responses are too slow, the application may seem unresponsive, leading to unnecessary clicks or user errors. 
+Cut-off is the point at which any attempt for a system to respond should finish, and a status message should be displayed. If responses are too slow, the application may seem unresponsive, leading to unnecessary clicks or user errors.
 
 To prevent a frustrating or unproductive user experience, the time until a cut-off duration can be used for:
+
 - Displaying messages that inform the user of the current interaction and which processes are taking time
 - Displaying general hints and tips for using the application
 - If possible, allowing the user to continue using other parts of the UI while the content loads
