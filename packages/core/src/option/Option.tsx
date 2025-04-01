@@ -10,7 +10,7 @@ import {
   useMemo,
   useRef,
 } from "react";
-import { Checkbox } from "../checkbox";
+import { CheckboxIcon } from "../checkbox";
 import {
   type OptionValue,
   useListControlContext,
@@ -128,13 +128,7 @@ export const Option = forwardRef<HTMLDivElement, OptionProps>(
         onMouseOver={handleMouseOver}
         {...rest}
       >
-        {multiselect && (
-          <Checkbox
-            checked={selected}
-            aria-hidden="true"
-            inputProps={{ tabIndex: -1 }}
-          />
-        )}
+        {multiselect && <CheckboxIcon checked={selected} />}
         {children ?? valueToString(value)}
       </div>
     );
