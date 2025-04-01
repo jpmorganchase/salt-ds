@@ -1,21 +1,36 @@
 /* Tool Panel */
 
-div[class*="ag-theme-salt"] .ag-tool-panel-wrapper > .ag-react-container {
+.ag-theme-salt-light .ag-tool-panel-wrapper > .ag-react-container,
+.ag-theme-salt-dark .ag-tool-panel-wrapper > .ag-react-container,
+.ag-theme-salt-compact-light .ag-tool-panel-wrapper > .ag-react-container,
+.ag-theme-salt-compact-dark .ag-tool-panel-wrapper > .ag-react-container {
   width: inherit;
 }
 
-div[class*="ag-theme-salt"] .ag-side-buttons {
+.ag-theme-salt-light .ag-side-buttons,
+.ag-theme-salt-dark .ag-side-buttons,
+.ag-theme-salt-compact-light .ag-side-buttons,
+.ag-theme-salt-compact-dark .ag-side-buttons {
   min-width: calc(var(--salt-size-base) + var(--salt-spacing-100));
 }
 
-div[class*="ag-theme-salt"] button.ag-side-button-button {
+.ag-theme-salt-light button.ag-side-button-button,
+.ag-theme-salt-dark button.ag-side-button-button,
+.ag-theme-salt-compact-light button.ag-side-button-button,
+.ag-theme-salt-compact-dark button.ag-side-button-button {
   padding: var(--salt-spacing-100) var(--salt-spacing-50);
 }
 
-div[class*="ag-theme-salt"] .ag-column-drop-vertical-empty-message {
+.ag-theme-salt-light .ag-column-drop-vertical-empty-message,
+.ag-theme-salt-dark .ag-column-drop-vertical-empty-message,
+.ag-theme-salt-compact-light .ag-column-drop-vertical-empty-message,
+.ag-theme-salt-compact-dark .ag-column-drop-vertical-empty-message {
   padding: var(--salt-spacing-100);
 }
 
-div[class*="ag-theme-salt"] .ag-side-button-icon-wrapper {
+.ag-theme-salt-light .ag-side-button-icon-wrapper,
+.ag-theme-salt-dark .ag-side-button-icon-wrapper,
+.ag-theme-salt-compact-light .ag-side-button-icon-wrapper,
+.ag-theme-salt-compact-dark .ag-side-button-icon-wrapper {
   margin-bottom: var(--salt-spacing-100);
 }

@@ -10,10 +10,10 @@ div[class*="ag-theme-salt"] .ag-column-select input[class^="ag-"][type="number"]
   padding: 0 var(--salt-spacing-100);
 }
 
-div[class*="ag-theme-salt"] .ag-filter input[class^="ag-"][type="text"]::placeholder,
-div[class*="ag-theme-salt"] .ag-filter input[class^="ag-"][type="number"]::placeholder,
-div[class*="ag-theme-salt"] .ag-column-select input[class^="ag-"][type="text"]::placeholder,
-div[class*="ag-theme-salt"] .ag-column-select input[class^="ag-"][type="number"]::placeholder {
+div[class*="ag-theme-salt"] .ag-filter input[type="text"]::placeholder,
+div[class*="ag-theme-salt"] .ag-filter input[type="number"]::placeholder,
+div[class*="ag-theme-salt"] .ag-column-select input[type="text"]::placeholder,
+div[class*="ag-theme-salt"] .ag-column-select input[type="number"]::placeholder {
   color: var(--salt-content-secondary-foreground);
   opacity: 1;
 }
