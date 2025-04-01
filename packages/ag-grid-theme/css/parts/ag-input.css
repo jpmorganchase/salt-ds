@@ -1,6 +1,6 @@
 /* INPUT */
 
-/* SLoooow */
+/* SLoooow ? */
 .ag-filter input[class^="ag-"][type="text"],
 .ag-filter input[class^="ag-"][type="number"],
 .ag-column-select input[class^="ag-"][type="text"],
@@ -11,16 +11,16 @@
   padding: 0 var(--salt-spacing-100);
 }
 
-/* SLoooow */
-.ag-filter input[class^="ag-"][type="text"]::placeholder,
+/* SLoooow yes !!! `[class^="ag-"]` is slow */
+/* .ag-filter input[class^="ag-"][type="text"]::placeholder,
 .ag-filter input[class^="ag-"][type="number"]::placeholder,
 .ag-column-select input[class^="ag-"][type="text"]::placeholder,
 .ag-column-select input[class^="ag-"][type="number"]::placeholder {
   color: var(--salt-content-secondary-foreground);
   opacity: 1;
-}
+} */
 
-/* SLoooow */
+/* SLoooow ? */
 .ag-filter input[class^="ag-"][type="text"]:focus,
 .ag-filter input[class^="ag-"][type="number"]:focus,
 .ag-column-select input[class^="ag-"][type="text"]:focus,
@@ -28,7 +28,7 @@
   outline: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--salt-focused-outlineColor);
   outline-offset: -2px;
 }
-/* SLoooow */
+/* SLoooow ? */
 /* Large text editor, matching multiline input */
 .ag-popup-editor .ag-large-text textarea[class^="ag-"] {
   border-radius: var(--salt-palette-corner-weak, 0);
@@ -40,12 +40,12 @@
   /* Don't apply a border, but rather textarea border below is used, otherwise focus ring position could be a problem. */
   border: none;
 }
-/* SLoooow */
+/* SLoooow ? */
 .ag-popup-editor .ag-large-text textarea[class^="ag-"] {
   /* When textarea is not in focus, simulating a popup list (OptionList) border color */
   border-color: var(--salt-selectable-borderColor-selected);
 }
-/* SLoooow */
+/* SLoooow ? */
 
 .ag-popup-editor .ag-large-text textarea[class^="ag-"]:focus {
   outline: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--salt-focused-outlineColor);

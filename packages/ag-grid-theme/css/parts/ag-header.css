@@ -152,7 +152,7 @@
   outline-offset: 2px;
 }
 
-/* SLoooow */
+/* SLoooow ? */
 .ag-floating-filter input[class^="ag-"][type="number"],
 .ag-floating-filter input[class^="ag-"][type="text"] {
   /* Avoid floating filter's input clips focus ring */
@@ -163,7 +163,7 @@
   padding: 0 var(--salt-spacing-50);
 }
 
-/* SLoooow */
+/* SLoooow ? */
 .ag-floating-filter-input input[class^="ag-"][type="text"],
 .ag-floating-filter-input input[class^="ag-"][type="number"] {
   border: none;

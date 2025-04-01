@@ -18,17 +18,17 @@
 
 /* CELL */
 
-/* SLoooow */
+/* SLoooow ? */
 .ag-cell.ag-cell-last-left-pinned:not(.ag-cell-range-right):not(.ag-cell-range-single-cell) {
   border-right-color: var(--salt-separable-secondary-borderColor);
 }
 
-/* SLoooow */
+/* SLoooow ? */
 .ag-cell.ag-cell-first-right-pinned:not(.ag-cell-range-left):not(.ag-cell-range-single-cell) {
   border-left-color: var(--salt-separable-secondary-borderColor);
 }
 
-/* SLoooow */
+/* SLoooow ? */
 .ag-cell {
   border: none;
   line-height: calc(var(--ag-line-height) - 1px);
@@ -48,7 +48,7 @@
   border-radius: 0;
 }
 
-/* SLoooow */
+/* SLoooow ? */
 .ag-cell-inline-editing.editable-cell input[class^="ag-"] {
   padding: 0 var(--salt-spacing-100);
 }
@@ -59,7 +59,7 @@
   outline-offset: -1px;
 }
 
-/* SLoooow */
+/* SLoooow ? */
 .ag-cell.numeric-cell,
 .editable-numeric-cell {
   text-align: right;
@@ -70,22 +70,37 @@
   text-align: right;
 }
 
-/* SLoooow */
-.ag-has-focus .ag-cell.ag-cell-focus:not(.ag-cell-range-selected),
-.ag-context-menu-open .ag-cell.ag-cell-focus:not(.ag-cell-range-selected),
-.ag-cell-range-single-cell,
+/* SLoooow yes !!!!!*/
+/* changed to ag grid demo focus ring selectors */
+.ag-ltr.ag-ltr .ag-cell-focus:not(.ag-cell-range-selected):focus-within,
+.ag-ltr.ag-ltr .ag-context-menu-open .ag-cell-focus:not(.ag-cell-range-selected),
+.ag-ltr.ag-ltr .ag-full-width-row.ag-row-focus:focus .ag-cell-wrapper.ag-row-group,
+.ag-ltr.ag-ltr .ag-cell-range-single-cell,
+.ag-ltr.ag-ltr .ag-cell-range-single-cell.ag-cell-range-handle,
+.ag-rtl.ag-rtl .ag-cell-focus:not(.ag-cell-range-selected):focus-within,
+.ag-rtl.ag-rtl .ag-context-menu-open .ag-cell-focus:not(.ag-cell-range-selected),
+.ag-rtl.ag-rtl .ag-full-width-row.ag-row-focus:focus .ag-cell-wrapper.ag-row-group,
+.ag-rtl.ag-rtl .ag-cell-range-single-cell,
+.ag-rtl.ag-rtl .ag-cell-range-single-cell.ag-cell-range-handle {
+  outline: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--salt-focused-outlineColor);
+  outline-offset: -2px;
+  border-width: 0;
+}
+/* .ag-has-focus .ag-cell.ag-cell-focus:not(.ag-cell-range-selected), */
+/* .ag-context-menu-open .ag-cell.ag-cell-focus:not(.ag-cell-range-selected), */
+/* .ag-cell-range-single-cell,
 .ag-cell-range-single-cell.ag-cell-range-handle,
 .ag-cell-focus:not(.ag-cell-range-selected):focus-within {
   outline: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--salt-focused-outlineColor);
   outline-offset: -2px;
   border-width: 0;
-}
+} */
 
 .ag-cell-wrapper.ag-row-group {
   align-items: center;
 }
 
-/* SLoooow */
+/* SLoooow ? */
 .ag-cell.editable-cell.ag-cell-focus:focus:before,
 .ag-cell.editable-numeric-cell.ag-cell-focus:focus:before,
 .ag-cell.editable-cell.ag-cell-focus:focus-within:before,
@@ -100,7 +115,7 @@
   z-index: 2;
 }
 
-/* SLoooow */
+/* SLoooow ? */
 .editable-numeric-cell input,
 input[class^="ag-"][type="number"] {
   padding: 0 var(--salt-spacing-100);
@@ -164,7 +179,7 @@ input[class^="ag-"][type="number"] {
 
 /* Range selection cross cells "fake" outlines */
 
-/* SLoooow */
+/* SLoooow ? */
 .ag-cell.ag-cell-range-selected:not(.ag-cell-range-single-cell).ag-cell-range-top::after {
   content: "";
   top: 0;
@@ -175,7 +190,7 @@ input[class^="ag-"][type="number"] {
   border-top: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--salt-focused-outlineColor);
 }
 
-/* SLoooow */
+/* SLoooow ? */
 .ag-cell.ag-cell-range-selected:not(.ag-cell-range-single-cell).ag-cell-range-right::after {
   content: "";
   top: 0;
@@ -186,7 +201,7 @@ input[class^="ag-"][type="number"] {
   border-right: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--salt-focused-outlineColor);
 }
 
-/* SLoooow */
+/* SLoooow ? */
 .ag-cell.ag-cell-range-selected:not(.ag-cell-range-single-cell).ag-cell-range-bottom::after {
   content: "";
   top: 0;
@@ -197,7 +212,7 @@ input[class^="ag-"][type="number"] {
   border-bottom: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--salt-focused-outlineColor);
 }
 
-/* SLoooow */
+/* SLoooow ?*/
 .ag-cell.ag-cell-range-selected:not(.ag-cell-range-single-cell).ag-cell-range-left::after {
   content: "";
   top: 0;
