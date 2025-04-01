@@ -1,15 +1,24 @@
 /* ROW */
 
-div[class*="ag-theme-salt"] .ag-row {
+.ag-theme-salt-light .ag-row,
+.ag-theme-salt-dark .ag-row,
+.ag-theme-salt-compact-light .ag-row,
+.ag-theme-salt-compact-dark .ag-row {
   font-size: var(--salt-text-fontSize);
 }
 
-div[class*="ag-theme-salt"] .ag-row-selected {
+.ag-theme-salt-light .ag-row-selected,
+.ag-theme-salt-dark .ag-row-selected,
+.ag-theme-salt-compact-light .ag-row-selected,
+.ag-theme-salt-compact-dark .ag-row-selected {
   background-color: var(--salt-selectable-background-selected);
   border-color: var(--salt-selectable-borderColor-selected);
 }
 
-div[class*="ag-theme-salt"] .ag-row-selected:before {
+.ag-theme-salt-light .ag-row-selected:before,
+.ag-theme-salt-dark .ag-row-selected:before,
+.ag-theme-salt-compact-light .ag-row-selected:before,
+.ag-theme-salt-compact-dark .ag-row-selected:before {
   background-color: var(--salt-selectable-borderColor-selected);
   background-image: none;
   height: var(--salt-size-border);
@@ -18,15 +27,24 @@ div[class*="ag-theme-salt"] .ag-row-selected:before {
 
 /* CELL */
 
-div[class*="ag-theme-salt"] .ag-cell.ag-cell-last-left-pinned:not(.ag-cell-range-right):not(.ag-cell-range-single-cell) {
+.ag-theme-salt-light .ag-cell.ag-cell-last-left-pinned:not(.ag-cell-range-right):not(.ag-cell-range-single-cell),
+.ag-theme-salt-dark .ag-cell.ag-cell-last-left-pinned:not(.ag-cell-range-right):not(.ag-cell-range-single-cell),
+.ag-theme-salt-compact-light .ag-cell.ag-cell-last-left-pinned:not(.ag-cell-range-right):not(.ag-cell-range-single-cell),
+.ag-theme-salt-compact-dark .ag-cell.ag-cell-last-left-pinned:not(.ag-cell-range-right):not(.ag-cell-range-single-cell) {
   border-right-color: var(--salt-separable-secondary-borderColor);
 }
 
-div[class*="ag-theme-salt"] .ag-cell.ag-cell-first-right-pinned:not(.ag-cell-range-left):not(.ag-cell-range-single-cell) {
+.ag-theme-salt-light .ag-cell.ag-cell-first-right-pinned:not(.ag-cell-range-left):not(.ag-cell-range-single-cell),
+.ag-theme-salt-dark .ag-cell.ag-cell-first-right-pinned:not(.ag-cell-range-left):not(.ag-cell-range-single-cell),
+.ag-theme-salt-compact-light .ag-cell.ag-cell-first-right-pinned:not(.ag-cell-range-left):not(.ag-cell-range-single-cell),
+.ag-theme-salt-compact-dark .ag-cell.ag-cell-first-right-pinned:not(.ag-cell-range-left):not(.ag-cell-range-single-cell) {
   border-left-color: var(--salt-separable-secondary-borderColor);
 }
 
-div[class*="ag-theme-salt"] .ag-cell {
+.ag-theme-salt-light .ag-cell,
+.ag-theme-salt-dark .ag-cell,
+.ag-theme-salt-compact-light .ag-cell,
+.ag-theme-salt-compact-dark .ag-cell {
   border: none;
   line-height: calc(var(--ag-line-height) - 1px);
   padding-left: var(--salt-spacing-100);
@@ -34,55 +52,94 @@ div[class*="ag-theme-salt"] .ag-cell {
 }
 
 /* This is not restricted to `.editable-cell`, so any custom editor would get the same background treatment */
-div[class*="ag-theme-salt"] .ag-cell-inline-editing:focus-within {
+.ag-theme-salt-light .ag-cell-inline-editing:focus-within,
+.ag-theme-salt-dark .ag-cell-inline-editing:focus-within,
+.ag-theme-salt-compact-light .ag-cell-inline-editing:focus-within,
+.ag-theme-salt-compact-dark .ag-cell-inline-editing:focus-within {
   background: var(--salt-container-primary-background);
 }
 
 /* This makes sure custom cell editor would start from no padding. Built-in ag grid editor's padding is added below. */
-div[class*="ag-theme-salt"] .ag-cell-inline-editing {
+.ag-theme-salt-light .ag-cell-inline-editing,
+.ag-theme-salt-dark .ag-cell-inline-editing,
+.ag-theme-salt-compact-light .ag-cell-inline-editing,
+.ag-theme-salt-compact-dark .ag-cell-inline-editing {
   padding: 0;
   /* When styling option corner='rounded', we don't want this to be flipped between rounded and not between editing and normal state */
   border-radius: 0;
 }
 
-div[class*="ag-theme-salt"] .ag-cell-inline-editing.editable-cell input[class^="ag-"] {
+.ag-theme-salt-light .ag-cell-inline-editing.editable-cell input[class^="ag-"],
+.ag-theme-salt-dark .ag-cell-inline-editing.editable-cell input[class^="ag-"],
+.ag-theme-salt-compact-light .ag-cell-inline-editing.editable-cell input[class^="ag-"],
+.ag-theme-salt-compact-dark .ag-cell-inline-editing.editable-cell input[class^="ag-"] {
   padding: 0 var(--salt-spacing-100);
 }
 
-div[class*="ag-theme-salt"] .editable-cell,
-div[class*="ag-theme-salt"] .editable-numeric-cell {
+.ag-theme-salt-light .editable-cell,
+.ag-theme-salt-light .editable-numeric-cell,
+.ag-theme-salt-dark .editable-cell,
+.ag-theme-salt-dark .editable-numeric-cell,
+.ag-theme-salt-compact-light .editable-cell,
+.ag-theme-salt-compact-light .editable-numeric-cell,
+.ag-theme-salt-compact-dark .editable-cell,
+.ag-theme-salt-compact-dark .editable-numeric-cell {
   outline: var(--salt-size-border) var(--salt-container-borderStyle) var(--salt-editable-borderColor);
   outline-offset: -1px;
 }
 
-div[class*="ag-theme-salt"] .ag-cell.numeric-cell,
-div[class*="ag-theme-salt"] .editable-numeric-cell {
+.ag-theme-salt-light .ag-cell.numeric-cell,
+.ag-theme-salt-light .editable-numeric-cell,
+.ag-theme-salt-dark .ag-cell.numeric-cell,
+.ag-theme-salt-dark .editable-numeric-cell,
+.ag-theme-salt-compact-light .ag-cell.numeric-cell,
+.ag-theme-salt-compact-light .editable-numeric-cell,
+.ag-theme-salt-compact-dark .ag-cell.numeric-cell,
+.ag-theme-salt-compact-dark .editable-numeric-cell {
   text-align: right;
 }
 
 /* Special case when user finish editing and click out side of the grid. */
-div[class*="ag-theme-salt"] .ag-cell.numeric-cell.ag-cell-inline-editing .ag-cell-editor input:not(:focus) {
+.ag-theme-salt-light .ag-cell.numeric-cell.ag-cell-inline-editing .ag-cell-editor input:not(:focus),
+.ag-theme-salt-dark .ag-cell.numeric-cell.ag-cell-inline-editing .ag-cell-editor input:not(:focus),
+.ag-theme-salt-compact-light .ag-cell.numeric-cell.ag-cell-inline-editing .ag-cell-editor input:not(:focus),
+.ag-theme-salt-compact-dark .ag-cell.numeric-cell.ag-cell-inline-editing .ag-cell-editor input:not(:focus) {
   text-align: right;
 }
 
-div[class*="ag-theme-salt"] .ag-has-focus .ag-cell.ag-cell-focus:not(.ag-cell-range-selected),
-div[class*="ag-theme-salt"] .ag-context-menu-open .ag-cell.ag-cell-focus:not(.ag-cell-range-selected),
-div[class*="ag-theme-salt"] .ag-cell-range-single-cell,
-div[class*="ag-theme-salt"] .ag-cell-range-single-cell.ag-cell-range-handle,
-div[class*="ag-theme-salt"] .ag-cell-focus:not(.ag-cell-range-selected):focus-within {
+div[class*="ag-theme-salt"] .ag-ltr.ag-cell-focus:not(.ag-cell-range-selected):focus-within,
+div[class*="ag-theme-salt"] .ag-ltr.ag-context-menu-open .ag-cell-focus:not(.ag-cell-range-selected),
+div[class*="ag-theme-salt"] .ag-ltr.ag-full-width-row.ag-row-focus:focus .ag-cell-wrapper.ag-row-group,
+div[class*="ag-theme-salt"] .ag-ltr.ag-cell-range-single-cell,
+div[class*="ag-theme-salt"] .ag-ltr.ag-cell-range-single-cell.ag-cell-range-handle {
   outline: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--salt-focused-outlineColor);
   outline-offset: -2px;
   border-width: 0;
 }
 
-div[class*="ag-theme-salt"] .ag-cell-wrapper.ag-row-group {
+.ag-theme-salt-light .ag-cell-wrapper.ag-row-group,
+.ag-theme-salt-dark .ag-cell-wrapper.ag-row-group,
+.ag-theme-salt-compact-light .ag-cell-wrapper.ag-row-group,
+.ag-theme-salt-compact-dark .ag-cell-wrapper.ag-row-group {
   align-items: center;
 }
 
-div[class*="ag-theme-salt"] .ag-cell.editable-cell.ag-cell-focus:focus:before,
-div[class*="ag-theme-salt"] .ag-cell.editable-numeric-cell.ag-cell-focus:focus:before,
-div[class*="ag-theme-salt"] .ag-cell.editable-cell.ag-cell-focus:focus-within:before,
-div[class*="ag-theme-salt"] .editable-cell.ag-cell-inline-editing:before {
+.ag-theme-salt-light .ag-cell.editable-cell.ag-cell-focus:focus:before,
+.ag-theme-salt-light .ag-cell.editable-numeric-cell.ag-cell-focus:focus:before,
+.ag-theme-salt-light .ag-cell.editable-cell.ag-cell-focus:focus-within:before,
+.ag-theme-salt-light .editable-cell.ag-cell-inline-editing:before,
+.ag-theme-salt-dark .ag-cell.editable-cell.ag-cell-focus:focus:before,
+.ag-theme-salt-dark .ag-cell.editable-numeric-cell.ag-cell-focus:focus:before,
+.ag-theme-salt-dark .ag-cell.editable-cell.ag-cell-focus:focus-within:before,
+.ag-theme-salt-dark .editable-cell.ag-cell-inline-editing:before,
+.ag-theme-salt-compact-light .ag-cell.editable-cell.ag-cell-focus:focus:before,
+.ag-theme-salt-compact-light .ag-cell.editable-numeric-cell.ag-cell-focus:focus:before,
+.ag-theme-salt-compact-light .ag-cell.editable-cell.ag-cell-focus:focus-within:before,
+.ag-theme-salt-compact-light .editable-cell.ag-cell-inline-editing:before,
+.ag-theme-salt-compact-dark .ag-cell.editable-cell.ag-cell-focus:focus:before,
+.ag-theme-salt-compact-dark .ag-cell.editable-numeric-cell.ag-cell-focus:focus:before,
+.ag-theme-salt-compact-dark .ag-cell.editable-cell.ag-cell-focus:focus-within:before,
+.ag-theme-salt-compact-dark .editable-cell.ag-cell-inline-editing:before {
   border-bottom: calc(var(--salt-size-adornment) + 4px) solid transparent;
   border-left: calc(var(--salt-size-adornment) + 4px) solid var(--salt-editable-borderColor-hover);
   border-top: 0 solid transparent;
@@ -93,70 +150,124 @@ div[class*="ag-theme-salt"] .editable-cell.ag-cell-inline-editing:before {
   z-index: 2;
 }
 
-div[class*="ag-theme-salt"] .editable-numeric-cell input,
-div[class*="ag-theme-salt"] input[class^="ag-"][type="number"] {
+.ag-theme-salt-light .editable-numeric-cell input,
+.ag-theme-salt-light input[class^="ag-"][type="number"],
+.ag-theme-salt-dark .editable-numeric-cell input,
+.ag-theme-salt-dark input[class^="ag-"][type="number"],
+.ag-theme-salt-compact-light .editable-numeric-cell input,
+.ag-theme-salt-compact-light input[class^="ag-"][type="number"],
+.ag-theme-salt-compact-dark .editable-numeric-cell input,
+.ag-theme-salt-compact-dark input[class^="ag-"][type="number"] {
   padding: 0 var(--salt-spacing-100);
   height: calc(var(--salt-size-base) + var(--salt-spacing-100));
 }
 
-div[class*="ag-theme-salt"] .editable-cell input,
-div[class*="ag-theme-salt"] .editable-numeric-cell input {
+.ag-theme-salt-light .editable-cell input,
+.ag-theme-salt-light .editable-numeric-cell input,
+.ag-theme-salt-dark .editable-cell input,
+.ag-theme-salt-dark .editable-numeric-cell input,
+.ag-theme-salt-compact-light .editable-cell input,
+.ag-theme-salt-compact-light .editable-numeric-cell input,
+.ag-theme-salt-compact-dark .editable-cell input,
+.ag-theme-salt-compact-dark .editable-numeric-cell input {
   border: none;
   background-color: transparent;
 }
 
 /* Ag Large Text Cell Editor  */
-div[class*="ag-theme-salt"] .ag-large-text-input {
+.ag-theme-salt-light .ag-large-text-input,
+.ag-theme-salt-dark .ag-large-text-input,
+.ag-theme-salt-compact-light .ag-large-text-input,
+.ag-theme-salt-compact-dark .ag-large-text-input {
   padding: 0;
 }
 
 /* Ag Select Cell Editor - all should be scoped with `.editable-cell` so it's not impacting users not using our class */
 
-div[class*="ag-theme-salt"] .editable-cell .ag-picker-field-wrapper {
+.ag-theme-salt-light .editable-cell .ag-picker-field-wrapper,
+.ag-theme-salt-dark .editable-cell .ag-picker-field-wrapper,
+.ag-theme-salt-compact-light .editable-cell .ag-picker-field-wrapper,
+.ag-theme-salt-compact-dark .editable-cell .ag-picker-field-wrapper {
   /* Allow cell focus ring to come through */
   background-color: transparent;
   border: none;
 }
 
-div[class*="ag-theme-salt"] .ag-select .ag-picker-field-wrapper {
+.ag-theme-salt-light .ag-select .ag-picker-field-wrapper,
+.ag-theme-salt-dark .ag-select .ag-picker-field-wrapper,
+.ag-theme-salt-compact-light .ag-select .ag-picker-field-wrapper,
+.ag-theme-salt-compact-dark .ag-select .ag-picker-field-wrapper {
   border: var(--salt-size-border) var(--salt-separable-borderStyle) var(--salt-editable-borderColor);
   border-radius: 0;
 }
 
-div[class*="ag-theme-salt"] .ag-ltr .editable-cell .ag-select .ag-picker-field-wrapper,
-div[class*="ag-theme-salt"] .ag-ltr .editable-cell .ag-rich-select .ag-picker-field-wrapper {
+.ag-theme-salt-light .ag-ltr .editable-cell .ag-select .ag-picker-field-wrapper,
+.ag-theme-salt-light .ag-ltr .editable-cell .ag-rich-select .ag-picker-field-wrapper,
+.ag-theme-salt-dark .ag-ltr .editable-cell .ag-select .ag-picker-field-wrapper,
+.ag-theme-salt-dark .ag-ltr .editable-cell .ag-rich-select .ag-picker-field-wrapper,
+.ag-theme-salt-compact-light .ag-ltr .editable-cell .ag-select .ag-picker-field-wrapper,
+.ag-theme-salt-compact-light .ag-ltr .editable-cell .ag-rich-select .ag-picker-field-wrapper,
+.ag-theme-salt-compact-dark .ag-ltr .editable-cell .ag-select .ag-picker-field-wrapper,
+.ag-theme-salt-compact-dark .ag-ltr .editable-cell .ag-rich-select .ag-picker-field-wrapper {
   padding: 0 var(--salt-spacing-100);
   border-radius: 0;
 }
 
-div[class*="ag-theme-salt"] .ag-ltr .editable-cell .ag-select .ag-icon-small-down::before,
-div[class*="ag-theme-salt"] .ag-ltr .editable-cell .ag-rich-select .ag-icon-small-down::before {
+.ag-theme-salt-light .ag-ltr .editable-cell .ag-select .ag-icon-small-down::before,
+.ag-theme-salt-light .ag-ltr .editable-cell .ag-rich-select .ag-icon-small-down::before,
+.ag-theme-salt-dark .ag-ltr .editable-cell .ag-select .ag-icon-small-down::before,
+.ag-theme-salt-dark .ag-ltr .editable-cell .ag-rich-select .ag-icon-small-down::before,
+.ag-theme-salt-compact-light .ag-ltr .editable-cell .ag-select .ag-icon-small-down::before,
+.ag-theme-salt-compact-light .ag-ltr .editable-cell .ag-rich-select .ag-icon-small-down::before,
+.ag-theme-salt-compact-dark .ag-ltr .editable-cell .ag-select .ag-icon-small-down::before,
+.ag-theme-salt-compact-dark .ag-ltr .editable-cell .ag-rich-select .ag-icon-small-down::before {
   /* Change the icon to be aligned with Salt chevron instead of triangle */
   /* We are not using different icons between collpase / expand, given only collapsed icon is available in ag salt icon font (.ag-picker-collapsed vs .ag-picker-expanded) */
   content: var(--ag-icon-font-code-contracted);
 }
 
-div[class*="ag-theme-salt"] .ag-ltr .ag-select-list-item,
-div[class*="ag-theme-salt"] .ag-ltr .ag-rich-select-row {
+.ag-theme-salt-light .ag-ltr .ag-select-list-item,
+.ag-theme-salt-light .ag-ltr .ag-rich-select-row,
+.ag-theme-salt-dark .ag-ltr .ag-select-list-item,
+.ag-theme-salt-dark .ag-ltr .ag-rich-select-row,
+.ag-theme-salt-compact-light .ag-ltr .ag-select-list-item,
+.ag-theme-salt-compact-light .ag-ltr .ag-rich-select-row,
+.ag-theme-salt-compact-dark .ag-ltr .ag-select-list-item,
+.ag-theme-salt-compact-dark .ag-ltr .ag-rich-select-row {
   /* This can't be scoped to editable-cell given it's sitting within .ag-popup */
   padding: 0 var(--salt-spacing-100);
 }
 
-div[class*="ag-theme-salt"] .ag-select-list,
-div[class*="ag-theme-salt"] .ag-rich-select-list {
+.ag-theme-salt-light .ag-select-list,
+.ag-theme-salt-light .ag-rich-select-list,
+.ag-theme-salt-dark .ag-select-list,
+.ag-theme-salt-dark .ag-rich-select-list,
+.ag-theme-salt-compact-light .ag-select-list,
+.ag-theme-salt-compact-light .ag-rich-select-list,
+.ag-theme-salt-compact-dark .ag-select-list,
+.ag-theme-salt-compact-dark .ag-rich-select-list {
   /* Match border to OptionList */
   border: var(--salt-size-border) var(--salt-selectable-borderStyle-selected) var(--salt-selectable-borderColor-selected);
 }
 
-div[class*="ag-theme-salt"] .ag-select-list-item[aria-selected="true"],
-div[class*="ag-theme-salt"] .ag-rich-select-row-selected {
+.ag-theme-salt-light .ag-select-list-item[aria-selected="true"],
+.ag-theme-salt-light .ag-rich-select-row-selected,
+.ag-theme-salt-dark .ag-select-list-item[aria-selected="true"],
+.ag-theme-salt-dark .ag-rich-select-row-selected,
+.ag-theme-salt-compact-light .ag-select-list-item[aria-selected="true"],
+.ag-theme-salt-compact-light .ag-rich-select-row-selected,
+.ag-theme-salt-compact-dark .ag-select-list-item[aria-selected="true"],
+.ag-theme-salt-compact-dark .ag-rich-select-row-selected {
   /* Match selected row border to Option */
   box-shadow: inset 0px var(--salt-size-border) 0px var(--salt-selectable-borderColor-selected), inset 0px calc(var(--salt-size-border) * -1) 0px var(--salt-selectable-borderColor-selected);
 }
 
 /* Range selection cross cells "fake" outlines */
 
-div[class*="ag-theme-salt"] .ag-cell.ag-cell-range-selected:not(.ag-cell-range-single-cell).ag-cell-range-top::after {
+.ag-theme-salt-light .ag-cell.ag-cell-range-selected:not(.ag-cell-range-single-cell).ag-cell-range-top::after,
+.ag-theme-salt-dark .ag-cell.ag-cell-range-selected:not(.ag-cell-range-single-cell).ag-cell-range-top::after,
+.ag-theme-salt-compact-light .ag-cell.ag-cell-range-selected:not(.ag-cell-range-single-cell).ag-cell-range-top::after,
+.ag-theme-salt-compact-dark .ag-cell.ag-cell-range-selected:not(.ag-cell-range-single-cell).ag-cell-range-top::after {
   content: "";
   top: 0;
   right: 0;
@@ -166,7 +277,10 @@ div[class*="ag-theme-salt"] .ag-cell.ag-cell-range-selected:not(.ag-cell-range-s
   border-top: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--salt-focused-outlineColor);
 }
 
-div[class*="ag-theme-salt"] .ag-cell.ag-cell-range-selected:not(.ag-cell-range-single-cell).ag-cell-range-right::after {
+.ag-theme-salt-light .ag-cell.ag-cell-range-selected:not(.ag-cell-range-single-cell).ag-cell-range-right::after,
+.ag-theme-salt-dark .ag-cell.ag-cell-range-selected:not(.ag-cell-range-single-cell).ag-cell-range-right::after,
+.ag-theme-salt-compact-light .ag-cell.ag-cell-range-selected:not(.ag-cell-range-single-cell).ag-cell-range-right::after,
+.ag-theme-salt-compact-dark .ag-cell.ag-cell-range-selected:not(.ag-cell-range-single-cell).ag-cell-range-right::after {
   content: "";
   top: 0;
   right: 0;
@@ -176,7 +290,10 @@ div[class*="ag-theme-salt"] .ag-cell.ag-cell-range-selected:not(.ag-cell-range-s
   border-right: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--salt-focused-outlineColor);
 }
 
-div[class*="ag-theme-salt"] .ag-cell.ag-cell-range-selected:not(.ag-cell-range-single-cell).ag-cell-range-bottom::after {
+.ag-theme-salt-light .ag-cell.ag-cell-range-selected:not(.ag-cell-range-single-cell).ag-cell-range-bottom::after,
+.ag-theme-salt-dark .ag-cell.ag-cell-range-selected:not(.ag-cell-range-single-cell).ag-cell-range-bottom::after,
+.ag-theme-salt-compact-light .ag-cell.ag-cell-range-selected:not(.ag-cell-range-single-cell).ag-cell-range-bottom::after,
+.ag-theme-salt-compact-dark .ag-cell.ag-cell-range-selected:not(.ag-cell-range-single-cell).ag-cell-range-bottom::after {
   content: "";
   top: 0;
   right: 0;
@@ -186,7 +303,10 @@ div[class*="ag-theme-salt"] .ag-cell.ag-cell-range-selected:not(.ag-cell-range-s
   border-bottom: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--salt-focused-outlineColor);
 }
 
-div[class*="ag-theme-salt"] .ag-cell.ag-cell-range-selected:not(.ag-cell-range-single-cell).ag-cell-range-left::after {
+.ag-theme-salt-light .ag-cell.ag-cell-range-selected:not(.ag-cell-range-single-cell).ag-cell-range-left::after,
+.ag-theme-salt-dark .ag-cell.ag-cell-range-selected:not(.ag-cell-range-single-cell).ag-cell-range-left::after,
+.ag-theme-salt-compact-light .ag-cell.ag-cell-range-selected:not(.ag-cell-range-single-cell).ag-cell-range-left::after,
+.ag-theme-salt-compact-dark .ag-cell.ag-cell-range-selected:not(.ag-cell-range-single-cell).ag-cell-range-left::after {
   content: "";
   top: 0;
   right: 0;
