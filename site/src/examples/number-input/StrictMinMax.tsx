@@ -46,7 +46,9 @@ export const StrictMinMax = () => {
           max={max}
           isAllowed={({ floatValue }) => {
             return (
-              floatValue === undefined || (floatValue >= 0 && floatValue <= max)
+              floatValue === undefined ||
+              ((min === undefined || floatValue >= min) &&
+                (max === undefined || floatValue <= max))
             );
           }}
         />
