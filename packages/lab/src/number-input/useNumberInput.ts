@@ -50,7 +50,7 @@ export const useNumberInput = ({
     const decimalPlaces = getDecimalPlaces(newValue);
     const fixedValue = newValue.toFixed(decimalPlaces);
     const formattedValue = format?.(fixedValue) ?? fixedValue;
-    const floatValue = parseFloat(formattedValue);
+    const floatValue = Number.parseFloat(formattedValue);
 
     onValueChange?.(
       {

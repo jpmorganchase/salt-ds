@@ -730,7 +730,7 @@ describe("Given a NumberInput", () => {
   it("is controlled when the `value` prop is provided", () => {
     const valueChangeSpy = cy.stub().as("valueChangeSpy");
     function ControlledNumberInput() {
-      const [value, setValue] = useState<Number>(10);
+      const [value, setValue] = useState<number | string>(10);
       const onValueChange: NumberInputProps["onValueChange"] = (
         values,
         source,

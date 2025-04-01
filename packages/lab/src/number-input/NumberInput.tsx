@@ -16,7 +16,7 @@ import {
   NumberFormatBaseProps,
   useNumericFormat,
 } from "react-number-format";
-import { clsx } from 'clsx';
+import { clsx } from "clsx";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import React, {
@@ -99,7 +99,7 @@ export interface NumberInputProps
    * Defaults to `false`.
    */
   fixedDecimalScale?: boolean;
-  format?: NumberFormatBaseProps['format'],
+  format?: NumberFormatBaseProps["format"];
   /**
    * Determines whether the controls are hidden.
    * Defaults to `false`.
@@ -241,7 +241,7 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       state: "value",
     });
 
-    const handleValueChange: NumberInputValueChange = (payload, sourceInfo ) => {
+    const handleValueChange: NumberInputValueChange = (payload, sourceInfo) => {
       const newValue =
         isValidNumber(payload.floatValue, payload.value) &&
         !matchLeadingDecimalZero.test(payload.value) &&
@@ -249,7 +249,11 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
           ? payload.floatValue
           : payload.value;
 
-      if (["event", "increment", "decrement", "keyboard"].includes(sourceInfo.source as any)) {
+      if (
+        ["event", "increment", "decrement", "keyboard"].includes(
+          sourceInfo.source as any,
+        )
+      ) {
         setValue(newValue);
       }
       if (
@@ -284,11 +288,19 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       switch (event.key) {
         case "ArrowUp":
           event.preventDefault();
-          incrementNumber(event, event.shiftKey ? stepMultiplier : step, "keyboard");
+          incrementNumber(
+            event,
+            event.shiftKey ? stepMultiplier : step,
+            "keyboard",
+          );
           break;
         case "ArrowDown":
           event.preventDefault();
-          decrementNumber(event, event.shiftKey ? stepMultiplier : step, "keyboard");
+          decrementNumber(
+            event,
+            event.shiftKey ? stepMultiplier : step,
+            "keyboard",
+          );
           break;
         case "Home":
           event.preventDefault();
@@ -313,15 +325,15 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
     const ariaInvalid = typeof value === "number" && isInvalid(value, min, max);
     const ariaValueMin =
       typeof max === "number" && !Number.isNaN(min)
-        ? parseFloat(min.toFixed(decimalScale))
+        ? Number.parseFloat(min.toFixed(decimalScale))
         : undefined;
     const ariaValueMax =
       typeof max === "number" && !Number.isNaN(max)
-        ? parseFloat(max.toFixed(decimalScale))
+        ? Number.parseFloat(max.toFixed(decimalScale))
         : undefined;
     const ariaValueNow =
       typeof value === "number" && !Number.isNaN(value)
-        ? parseFloat(value.toFixed(decimalScale))
+        ? Number.parseFloat(value.toFixed(decimalScale))
         : undefined;
 
     const NumericFormatBaseProps: NumericFormatProps & InputProps = {
@@ -367,11 +379,11 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       tabIndex: disabled ? -1 : 0,
       validationStatus: validationStatusProp || formFieldValidationStatus,
       valueIsNumericString,
-      variant
-  };
+      variant,
+    };
 
     /* Extract the formatter, so we can use it for increment/decrement onValueChange events */
-    const { format:formatCallback, ...numberFormatRest } = useNumericFormat(
+    const { format: formatCallback, ...numberFormatRest } = useNumericFormat(
       NumericFormatBaseProps,
     );
     formatRef.current = format ?? formatCallback;
