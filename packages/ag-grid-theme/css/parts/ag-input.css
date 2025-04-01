@@ -1,46 +1,98 @@
 /* INPUT */
-
-div[class*="ag-theme-salt"] .ag-filter input[class^="ag-"][type="text"],
-div[class*="ag-theme-salt"] .ag-filter input[class^="ag-"][type="number"],
-div[class*="ag-theme-salt"] .ag-column-select input[class^="ag-"][type="text"],
-div[class*="ag-theme-salt"] .ag-column-select input[class^="ag-"][type="number"] {
+.ag-theme-salt-light .ag-filter input[class^="ag-"][type="text"],
+.ag-theme-salt-dark .ag-filter input[class^="ag-"][type="text"],
+.ag-theme-salt-compact-light .ag-filter input[class^="ag-"][type="text"],
+.ag-theme-salt-compact-dark .ag-filter input[class^="ag-"][type="text"],
+.ag-theme-salt-light .ag-filter input[class^="ag-"][type="number"],
+.ag-theme-salt-dark .ag-filter input[class^="ag-"][type="number"],
+.ag-theme-salt-compact-light .ag-filter input[class^="ag-"][type="number"],
+.ag-theme-salt-compact-dark .ag-filter input[class^="ag-"][type="number"],
+.ag-theme-salt-light .ag-column-select input[class^="ag-"][type="text"],
+.ag-theme-salt-dark .ag-column-select input[class^="ag-"][type="text"],
+.ag-theme-salt-compact-light .ag-column-select input[class^="ag-"][type="text"],
+.ag-theme-salt-compact-dark .ag-column-select input[class^="ag-"][type="text"],
+.ag-theme-salt-light .ag-column-select input[class^="ag-"][type="number"],
+.ag-theme-salt-dark .ag-column-select input[class^="ag-"][type="number"],
+.ag-theme-salt-compact-light .ag-column-select input[class^="ag-"][type="number"],
+.ag-theme-salt-compact-dark .ag-column-select input[class^="ag-"][type="number"] {
   border: none;
   border-bottom: var(--salt-size-border) var(--salt-editable-borderStyle) var(--salt-editable-borderColor);
   height: calc(var(--salt-size-base) + var(--salt-spacing-100));
   padding: 0 var(--salt-spacing-100);
 }
 
-div[class*="ag-theme-salt"] .ag-filter input[type="text"]::placeholder,
-div[class*="ag-theme-salt"] .ag-filter input[type="number"]::placeholder,
-div[class*="ag-theme-salt"] .ag-column-select input[type="text"]::placeholder,
-div[class*="ag-theme-salt"] .ag-column-select input[type="number"]::placeholder {
+.ag-theme-salt-light .ag-filter input[type="text"]::placeholder,
+.ag-theme-salt-dark .ag-filter input[type="text"]::placeholder,
+.ag-theme-salt-compact-light .ag-filter input[type="text"]::placeholder,
+.ag-theme-salt-compact-dark .ag-filter input[type="text"]::placeholder,
+.ag-theme-salt-light .ag-filter input[type="number"]::placeholder,
+.ag-theme-salt-dark .ag-filter input[type="number"]::placeholder,
+.ag-theme-salt-compact-light .ag-filter input[type="number"]::placeholder,
+.ag-theme-salt-compact-dark .ag-filter input[type="number"]::placeholder,
+.ag-theme-salt-light .ag-column-select input[type="text"]::placeholder,
+.ag-theme-salt-dark .ag-column-select input[type="text"]::placeholder,
+.ag-theme-salt-compact-light .ag-column-select input[type="text"]::placeholder,
+.ag-theme-salt-compact-dark .ag-column-select input[type="text"]::placeholder,
+.ag-theme-salt-light .ag-column-select input[type="number"]::placeholder,
+.ag-theme-salt-dark .ag-column-select input[type="number"]::placeholder,
+.ag-theme-salt-compact-light .ag-column-select input[type="number"]::placeholder,
+.ag-theme-salt-compact-dark .ag-column-select input[type="number"]::placeholder {
   color: var(--salt-content-secondary-foreground);
   opacity: 1;
 }
 
-div[class*="ag-theme-salt"] .ag-filter input[class^="ag-"][type="text"]:focus,
-div[class*="ag-theme-salt"] .ag-filter input[class^="ag-"][type="number"]:focus,
-div[class*="ag-theme-salt"] .ag-column-select input[class^="ag-"][type="text"]:focus,
-div[class*="ag-theme-salt"] .ag-column-select input[class^="ag-"][type="number"]:focus {
+.ag-theme-salt-light .ag-filter input[class^="ag-"][type="text"]:focus,
+.ag-theme-salt-dark .ag-filter input[class^="ag-"][type="text"]:focus,
+.ag-theme-salt-compact-light .ag-filter input[class^="ag-"][type="text"]:focus,
+.ag-theme-salt-compact-dark .ag-filter input[class^="ag-"][type="text"]:focus,
+.ag-theme-salt-light .ag-filter input[class^="ag-"][type="number"]:focus,
+.ag-theme-salt-dark .ag-filter input[class^="ag-"][type="number"]:focus,
+.ag-theme-salt-compact-light .ag-filter input[class^="ag-"][type="number"]:focus,
+.ag-theme-salt-compact-dark .ag-filter input[class^="ag-"][type="number"]:focus,
+.ag-theme-salt-light .ag-column-select input[class^="ag-"][type="text"]:focus,
+.ag-theme-salt-dark .ag-column-select input[class^="ag-"][type="text"]:focus,
+.ag-theme-salt-compact-light .ag-column-select input[class^="ag-"][type="text"]:focus,
+.ag-theme-salt-compact-dark .ag-column-select input[class^="ag-"][type="text"]:focus,
+.ag-theme-salt-light .ag-column-select input[class^="ag-"][type="number"]:focus,
+.ag-theme-salt-dark .ag-column-select input[class^="ag-"][type="number"]:focus,
+.ag-theme-salt-compact-light .ag-column-select input[class^="ag-"][type="number"]:focus,
+.ag-theme-salt-compact-dark .ag-column-select input[class^="ag-"][type="number"]:focus {
   outline: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--salt-focused-outlineColor);
   outline-offset: -2px;
 }
+
 /* Large text editor, matching multiline input */
-div[class*="ag-theme-salt"] .ag-popup-editor .ag-large-text textarea[class^="ag-"] {
+.ag-theme-salt-light .ag-popup-editor .ag-large-text textarea[class^="ag-"],
+.ag-theme-salt-dark .ag-popup-editor .ag-large-text textarea[class^="ag-"],
+.ag-theme-salt-compact-light .ag-popup-editor .ag-large-text textarea[class^="ag-"],
+.ag-theme-salt-compact-dark .ag-popup-editor .ag-large-text textarea[class^="ag-"] {
   border-radius: var(--salt-palette-corner-weak, 0);
   padding: var(--salt-spacing-100) var(--salt-spacing-100);
 }
 
-div[class*="ag-theme-salt"] .ag-popup-editor .ag-large-text,
-div[class*="ag-theme-salt"] .ag-autocomplete-list-popup {
+.ag-theme-salt-light .ag-popup-editor .ag-large-text,
+.ag-theme-salt-dark .ag-popup-editor .ag-large-text,
+.ag-theme-salt-compact-light .ag-popup-editor .ag-large-text,
+.ag-theme-salt-compact-dark .ag-popup-editor .ag-large-text,
+.ag-theme-salt-light .ag-autocomplete-list-popup,
+.ag-theme-salt-dark .ag-autocomplete-list-popup,
+.ag-theme-salt-compact-light .ag-autocomplete-list-popup,
+.ag-theme-salt-compact-dark .ag-autocomplete-list-popup {
   /* Don't apply a border, but rather textarea border below is used, otherwise focus ring position could be a problem. */
   border: none;
 }
-div[class*="ag-theme-salt"] .ag-popup-editor .ag-large-text textarea[class^="ag-"] {
+
+.ag-theme-salt-light .ag-popup-editor .ag-large-text textarea[class^="ag-"],
+.ag-theme-salt-dark .ag-popup-editor .ag-large-text textarea[class^="ag-"],
+.ag-theme-salt-compact-light .ag-popup-editor .ag-large-text textarea[class^="ag-"],
+.ag-theme-salt-compact-dark .ag-popup-editor .ag-large-text textarea[class^="ag-"] {
   /* When textarea is not in focus, simulating a popup list (OptionList) border color */
   border-color: var(--salt-selectable-borderColor-selected);
 }
 
-div[class*="ag-theme-salt"] .ag-popup-editor .ag-large-text textarea[class^="ag-"]:focus {
+.ag-theme-salt-light .ag-popup-editor .ag-large-text textarea[class^="ag-"]:focus,
+.ag-theme-salt-dark .ag-popup-editor .ag-large-text textarea[class^="ag-"]:focus,
+.ag-theme-salt-compact-light .ag-popup-editor .ag-large-text textarea[class^="ag-"]:focus,
+.ag-theme-salt-compact-dark .ag-popup-editor .ag-large-text textarea[class^="ag-"]:focus {
   outline: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--salt-focused-outlineColor);
 }

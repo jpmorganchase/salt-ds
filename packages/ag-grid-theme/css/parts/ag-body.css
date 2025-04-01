@@ -107,11 +107,26 @@
   text-align: right;
 }
 
-div[class*="ag-theme-salt"] .ag-ltr.ag-cell-focus:not(.ag-cell-range-selected):focus-within,
-div[class*="ag-theme-salt"] .ag-ltr.ag-context-menu-open .ag-cell-focus:not(.ag-cell-range-selected),
-div[class*="ag-theme-salt"] .ag-ltr.ag-full-width-row.ag-row-focus:focus .ag-cell-wrapper.ag-row-group,
-div[class*="ag-theme-salt"] .ag-ltr.ag-cell-range-single-cell,
-div[class*="ag-theme-salt"] .ag-ltr.ag-cell-range-single-cell.ag-cell-range-handle {
+.ag-theme-salt-light .ag-ltr.ag-cell-focus:not(.ag-cell-range-selected):focus-within,
+.ag-theme-salt-dark .ag-ltr.ag-cell-focus:not(.ag-cell-range-selected):focus-within,
+.ag-theme-salt-compact-light .ag-ltr.ag-cell-focus:not(.ag-cell-range-selected):focus-within,
+.ag-theme-salt-compact-dark .ag-ltr.ag-cell-focus:not(.ag-cell-range-selected):focus-within,
+.ag-theme-salt-light .ag-ltr.ag-context-menu-open .ag-cell-focus:not(.ag-cell-range-selected),
+.ag-theme-salt-dark .ag-ltr.ag-context-menu-open .ag-cell-focus:not(.ag-cell-range-selected),
+.ag-theme-salt-compact-light .ag-ltr.ag-context-menu-open .ag-cell-focus:not(.ag-cell-range-selected),
+.ag-theme-salt-compact-dark .ag-ltr.ag-context-menu-open .ag-cell-focus:not(.ag-cell-range-selected),
+.ag-theme-salt-light .ag-ltr.ag-full-width-row.ag-row-focus:focus .ag-cell-wrapper.ag-row-group,
+.ag-theme-salt-dark .ag-ltr.ag-full-width-row.ag-row-focus:focus .ag-cell-wrapper.ag-row-group,
+.ag-theme-salt-compact-light .ag-ltr.ag-full-width-row.ag-row-focus:focus .ag-cell-wrapper.ag-row-group,
+.ag-theme-salt-compact-dark .ag-ltr.ag-full-width-row.ag-row-focus:focus .ag-cell-wrapper.ag-row-group,
+.ag-theme-salt-light .ag-ltr.ag-cell-range-single-cell,
+.ag-theme-salt-dark .ag-ltr.ag-cell-range-single-cell,
+.ag-theme-salt-compact-light .ag-ltr.ag-cell-range-single-cell,
+.ag-theme-salt-compact-dark .ag-ltr.ag-cell-range-single-cell,
+.ag-theme-salt-light .ag-ltr.ag-cell-range-single-cell.ag-cell-range-handle,
+.ag-theme-salt-dark .ag-ltr.ag-cell-range-single-cell.ag-cell-range-handle,
+.ag-theme-salt-compact-light .ag-ltr.ag-cell-range-single-cell.ag-cell-range-handle,
+.ag-theme-salt-compact-dark .ag-ltr.ag-cell-range-single-cell.ag-cell-range-handle {
   outline: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--salt-focused-outlineColor);
   outline-offset: -2px;
   border-width: 0;
