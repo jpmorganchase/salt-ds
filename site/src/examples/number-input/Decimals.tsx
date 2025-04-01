@@ -61,7 +61,7 @@ export const Decimals = () => {
         </FormFieldLabel>
         <NumberInput
           defaultValue={12.0}
-          decimalScale={2}
+          decimalScale={decimalScale}
           decimalSeparator={decimalSeparator}
           fixedDecimalScale
           step={0.01}
