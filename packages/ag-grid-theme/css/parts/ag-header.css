@@ -77,25 +77,25 @@
 
 /** Move sort arrow towards menu icon */
 /** v32 doesn't have filter icon */
-.ag-theme-salt-light .ag-ltr .ag-header-cell:not(.ag-right-aligned-header) .ag-header-label-icon.ag-hidden+.ag-sort-indicator-container,
-.ag-theme-salt-dark .ag-ltr .ag-header-cell:not(.ag-right-aligned-header) .ag-header-label-icon.ag-hidden+.ag-sort-indicator-container,
-.ag-theme-salt-compact-light .ag-ltr .ag-header-cell:not(.ag-right-aligned-header) .ag-header-label-icon.ag-hidden+.ag-sort-indicator-container,
-.ag-theme-salt-compact-dark .ag-ltr .ag-header-cell:not(.ag-right-aligned-header) .ag-header-label-icon.ag-hidden+.ag-sort-indicator-container,
-.ag-theme-salt-light .ag-ltr .ag-header-cell:not(.ag-right-aligned-header) .ag-header-cell-text+.ag-sort-indicator-container,
-.ag-theme-salt-dark .ag-ltr .ag-header-cell:not(.ag-right-aligned-header) .ag-header-cell-text+.ag-sort-indicator-container,
-.ag-theme-salt-compact-light .ag-ltr .ag-header-cell:not(.ag-right-aligned-header) .ag-header-cell-text+.ag-sort-indicator-container,
-.ag-theme-salt-compact-dark .ag-ltr .ag-header-cell:not(.ag-right-aligned-header) .ag-header-cell-text+.ag-sort-indicator-container {
+.ag-theme-salt-light .ag-ltr .ag-header-cell:not(.ag-right-aligned-header) .ag-header-label-icon.ag-hidden + .ag-sort-indicator-container,
+.ag-theme-salt-dark .ag-ltr .ag-header-cell:not(.ag-right-aligned-header) .ag-header-label-icon.ag-hidden + .ag-sort-indicator-container,
+.ag-theme-salt-compact-light .ag-ltr .ag-header-cell:not(.ag-right-aligned-header) .ag-header-label-icon.ag-hidden + .ag-sort-indicator-container,
+.ag-theme-salt-compact-dark .ag-ltr .ag-header-cell:not(.ag-right-aligned-header) .ag-header-label-icon.ag-hidden + .ag-sort-indicator-container,
+.ag-theme-salt-light .ag-ltr .ag-header-cell:not(.ag-right-aligned-header) .ag-header-cell-text + .ag-sort-indicator-container,
+.ag-theme-salt-dark .ag-ltr .ag-header-cell:not(.ag-right-aligned-header) .ag-header-cell-text + .ag-sort-indicator-container,
+.ag-theme-salt-compact-light .ag-ltr .ag-header-cell:not(.ag-right-aligned-header) .ag-header-cell-text + .ag-sort-indicator-container,
+.ag-theme-salt-compact-dark .ag-ltr .ag-header-cell:not(.ag-right-aligned-header) .ag-header-cell-text + .ag-sort-indicator-container {
   margin-left: auto;
 }
 
-.ag-theme-salt-light .ag-ltr .ag-header-cell.ag-right-aligned-header .ag-header-label-icon.ag-hidden+.ag-sort-indicator-container,
-.ag-theme-salt-dark .ag-ltr .ag-header-cell.ag-right-aligned-header .ag-header-label-icon.ag-hidden+.ag-sort-indicator-container,
-.ag-theme-salt-compact-light .ag-ltr .ag-header-cell.ag-right-aligned-header .ag-header-label-icon.ag-hidden+.ag-sort-indicator-container,
-.ag-theme-salt-compact-dark .ag-ltr .ag-header-cell.ag-right-aligned-header .ag-header-label-icon.ag-hidden+.ag-sort-indicator-container,
-.ag-theme-salt-light .ag-ltr .ag-header-cell.ag-right-aligned-header .ag-header-cell-text+.ag-sort-indicator-container,
-.ag-theme-salt-dark .ag-ltr .ag-header-cell.ag-right-aligned-header .ag-header-cell-text+.ag-sort-indicator-container,
-.ag-theme-salt-compact-light .ag-ltr .ag-header-cell.ag-right-aligned-header .ag-header-cell-text+.ag-sort-indicator-container,
-.ag-theme-salt-compact-dark .ag-ltr .ag-header-cell.ag-right-aligned-header .ag-header-cell-text+.ag-sort-indicator-container {
+.ag-theme-salt-light .ag-ltr .ag-header-cell.ag-right-aligned-header .ag-header-label-icon.ag-hidden + .ag-sort-indicator-container,
+.ag-theme-salt-dark .ag-ltr .ag-header-cell.ag-right-aligned-header .ag-header-label-icon.ag-hidden + .ag-sort-indicator-container,
+.ag-theme-salt-compact-light .ag-ltr .ag-header-cell.ag-right-aligned-header .ag-header-label-icon.ag-hidden + .ag-sort-indicator-container,
+.ag-theme-salt-compact-dark .ag-ltr .ag-header-cell.ag-right-aligned-header .ag-header-label-icon.ag-hidden + .ag-sort-indicator-container,
+.ag-theme-salt-light .ag-ltr .ag-header-cell.ag-right-aligned-header .ag-header-cell-text + .ag-sort-indicator-container,
+.ag-theme-salt-dark .ag-ltr .ag-header-cell.ag-right-aligned-header .ag-header-cell-text + .ag-sort-indicator-container,
+.ag-theme-salt-compact-light .ag-ltr .ag-header-cell.ag-right-aligned-header .ag-header-cell-text + .ag-sort-indicator-container,
+.ag-theme-salt-compact-dark .ag-ltr .ag-header-cell.ag-right-aligned-header .ag-header-cell-text + .ag-sort-indicator-container {
   margin-right: auto;
 }
 
@@ -311,10 +311,10 @@
   border: none;
 }
 
-.ag-theme-salt-light .ag-header-cell:not(.ag-column-resizing)+.ag-header-cell.ag-column-menu-visible:not(.ag-column-hover):not(.ag-header-cell-moving):hover,
-.ag-theme-salt-dark .ag-header-cell:not(.ag-column-resizing)+.ag-header-cell.ag-column-menu-visible:not(.ag-column-hover):not(.ag-header-cell-moving):hover,
-.ag-theme-salt-compact-light .ag-header-cell:not(.ag-column-resizing)+.ag-header-cell.ag-column-menu-visible:not(.ag-column-hover):not(.ag-header-cell-moving):hover,
-.ag-theme-salt-compact-dark .ag-header-cell:not(.ag-column-resizing)+.ag-header-cell.ag-column-menu-visible:not(.ag-column-hover):not(.ag-header-cell-moving):hover,
+.ag-theme-salt-light .ag-header-cell:not(.ag-column-resizing) + .ag-header-cell.ag-column-menu-visible:not(.ag-column-hover):not(.ag-header-cell-moving):hover,
+.ag-theme-salt-dark .ag-header-cell:not(.ag-column-resizing) + .ag-header-cell.ag-column-menu-visible:not(.ag-column-hover):not(.ag-header-cell-moving):hover,
+.ag-theme-salt-compact-light .ag-header-cell:not(.ag-column-resizing) + .ag-header-cell.ag-column-menu-visible:not(.ag-column-hover):not(.ag-header-cell-moving):hover,
+.ag-theme-salt-compact-dark .ag-header-cell:not(.ag-column-resizing) + .ag-header-cell.ag-column-menu-visible:not(.ag-column-hover):not(.ag-header-cell-moving):hover,
 .ag-theme-salt-light .ag-header-cell:not(.ag-column-hover):first-of-type:not(.ag-header-cell-moving).ag-column-menu-visible:hover,
 .ag-theme-salt-dark .ag-header-cell:not(.ag-column-hover):first-of-type:not(.ag-header-cell-moving).ag-column-menu-visible:hover,
 .ag-theme-salt-compact-light .ag-header-cell:not(.ag-column-hover):first-of-type:not(.ag-header-cell-moving).ag-column-menu-visible:hover,

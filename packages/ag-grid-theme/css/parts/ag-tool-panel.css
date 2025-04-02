@@ -1,8 +1,8 @@
 /* Tool Panel */
-.ag-theme-salt-light .ag-tool-panel-wrapper>.ag-react-container,
-.ag-theme-salt-dark .ag-tool-panel-wrapper>.ag-react-container,
-.ag-theme-salt-compact-light .ag-tool-panel-wrapper>.ag-react-container,
-.ag-theme-salt-compact-dark .ag-tool-panel-wrapper>.ag-react-container {
+.ag-theme-salt-light .ag-tool-panel-wrapper > .ag-react-container,
+.ag-theme-salt-dark .ag-tool-panel-wrapper > .ag-react-container,
+.ag-theme-salt-compact-light .ag-tool-panel-wrapper > .ag-react-container,
+.ag-theme-salt-compact-dark .ag-tool-panel-wrapper > .ag-react-container {
   width: inherit;
 }
 
