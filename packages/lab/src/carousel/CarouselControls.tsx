@@ -4,6 +4,7 @@ import { useWindow } from "@salt-ds/window";
 import {
   type HTMLAttributes,
   type MouseEvent,
+  type ReactNode,
   type SyntheticEvent,
   forwardRef,
   useContext,
@@ -42,6 +43,10 @@ export interface CarouselControlsProps
    * If `true`, the carousel controls will be disabled.
    * **/
   disabled?: boolean;
+  /**
+   * The title of the carousel that accompanies the controls.
+   */
+  title?: ReactNode;
 }
 
 export const CarouselControls = forwardRef<
@@ -53,6 +58,7 @@ export const CarouselControls = forwardRef<
     onNext,
     disabled,
     className,
+    title,
     labelPlacement = "right",
     ...rest
   },
@@ -132,41 +138,44 @@ export const CarouselControls = forwardRef<
   }
 
   return (
-    <div
-      className={withBaseName()}
-      ref={ref}
-      {...rest}
-      onFocusCapture={handleFocusCapture}
-      onBlurCapture={handleBlurCapture}
-    >
-      {labelPlacement === "left" && controlsLabel}
-      <Button
-        ref={prevButtonRef}
-        focusableWhenDisabled
-        appearance="bordered"
-        sentiment="neutral"
-        className={withBaseName("prev-button")}
-        onClick={handlePrevClick}
-        disabled={isOnFirstSlide || disabled}
-        aria-controls={carouselId}
-        aria-label={`Previous slide${visibleSlides > 1 ? "s" : ""}`}
+    <div className={withBaseName("container")} ref={ref} {...rest}>
+      {title}
+      <div
+        className={withBaseName()}
+        ref={ref}
+        {...rest}
+        onFocusCapture={handleFocusCapture}
+        onBlurCapture={handleBlurCapture}
       >
-        <PreviousIcon aria-hidden />
-      </Button>
-      <Button
-        ref={nextButtonRef}
-        focusableWhenDisabled
-        appearance="bordered"
-        sentiment="neutral"
-        className={withBaseName("next-button")}
-        onClick={handleNextClick}
-        disabled={isOnLastSlide || disabled}
-        aria-controls={carouselId}
-        aria-label={`Next slide${visibleSlides > 1 ? "s" : ""}`}
-      >
-        <NextIcon aria-hidden />
-      </Button>
-      {labelPlacement === "right" && controlsLabel}
+        {(labelPlacement === "left" || title) && controlsLabel}
+        <Button
+          ref={prevButtonRef}
+          focusableWhenDisabled
+          appearance="bordered"
+          sentiment="neutral"
+          className={withBaseName("prev-button")}
+          onClick={handlePrevClick}
+          disabled={isOnFirstSlide || disabled}
+          aria-controls={carouselId}
+          aria-label={`Previous slide${visibleSlides > 1 ? "s" : ""}`}
+        >
+          <PreviousIcon aria-hidden />
+        </Button>
+        <Button
+          ref={nextButtonRef}
+          focusableWhenDisabled
+          appearance="bordered"
+          sentiment="neutral"
+          className={withBaseName("next-button")}
+          onClick={handleNextClick}
+          disabled={isOnLastSlide || disabled}
+          aria-controls={carouselId}
+          aria-label={`Next slide${visibleSlides > 1 ? "s" : ""}`}
+        >
+          <NextIcon aria-hidden />
+        </Button>
+        {labelPlacement === "right" && !title && controlsLabel}
+      </div>
     </div>
   );
 });

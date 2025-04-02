@@ -5,6 +5,19 @@
   padding-bottom: var(--salt-spacing-100);
   align-items: center;
 }
+.saltCarouselControls-container {
+  display: flex;
+  flex-flow: wrap;
+  align-items: center;
+  justify-content: space-between;
+}
+.saltCarouselControls-container:last-child {
+  margin-left: auto;
+}
+.saltCarouselControls-container h2 {
+  margin: 0;
+}
+
 .saltCarouselControls-sr-only {
   display: none;
 }

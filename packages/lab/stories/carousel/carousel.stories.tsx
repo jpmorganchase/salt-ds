@@ -3,7 +3,6 @@ import type { Meta, StoryFn } from "@storybook/react";
 import {
   Carousel,
   CarouselControls,
-  CarouselNavigationBar,
   CarouselSlide,
   CarouselSlider,
 } from "@salt-ds/lab";
@@ -68,7 +67,7 @@ const CarouselExample: StoryFn<typeof Carousel> = (args, navigationBarArgs) => {
   return (
     <div className="carousel-container">
       <Carousel {...args}>
-        <CarouselNavigationBar />
+        <CarouselControls />
         <CarouselSlider>{renderSlides()}</CarouselSlider>
       </Carousel>
     </div>
@@ -92,7 +91,7 @@ export const Bordered: StoryFn<typeof Carousel> = (args) => {
   return (
     <div className="carousel-container">
       <Carousel {...args} aria-label="Account overview">
-        <CarouselNavigationBar />
+        <CarouselControls />
         <CarouselSlider>{renderSlides("bordered")}</CarouselSlider>
       </Carousel>
     </div>
@@ -128,18 +127,18 @@ export const WithActions: StoryFn<typeof Carousel> = (args) => {
         visibleSlides={{ sm: 1, md: 2 }}
         aria-label="Account overview"
       >
-        <CarouselNavigationBar />
+        <CarouselControls />
         <CarouselSlider>{renderSlides("bordered", true)}</CarouselSlider>
       </Carousel>
     </div>
   );
 };
 
-export const WithTitleInNavigationBar: StoryFn<typeof Carousel> = (args) => {
+export const WithTitle: StoryFn<typeof Carousel> = (args) => {
   return (
     <div className="carousel-container">
       <Carousel {...args} aria-labelledby="carousel-title">
-        <CarouselNavigationBar
+        <CarouselControls
           title={<H2 id="carousel-title">Account overview</H2>}
         />
         <CarouselSlider>{renderSlides("bordered")}</CarouselSlider>
