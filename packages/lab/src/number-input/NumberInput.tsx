@@ -325,15 +325,15 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
     const ariaInvalid = typeof value === "number" && isInvalid(value, min, max);
     const ariaValueMin =
       typeof max === "number" && !Number.isNaN(min)
-        ? Number.parseFloat(min.toFixed(decimalScale))
+        ? Number.parseFloat(Math.abs(min).toFixed(decimalScale)) * Math.sign(min)
         : undefined;
     const ariaValueMax =
       typeof max === "number" && !Number.isNaN(max)
-        ? Number.parseFloat(max.toFixed(decimalScale))
+        ? Number.parseFloat(Math.abs(max).toFixed(decimalScale)) * Math.sign(max)
         : undefined;
     const ariaValueNow =
       typeof value === "number" && !Number.isNaN(value)
-        ? Number.parseFloat(value.toFixed(decimalScale))
+        ? Number.parseFloat(Math.abs(value).toFixed(decimalScale)) * Math.sign(value)
         : undefined;
 
     const NumericFormatBaseProps: NumericFormatProps & InputProps = {
