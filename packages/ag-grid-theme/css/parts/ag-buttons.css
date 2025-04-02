@@ -92,10 +92,10 @@
   margin-top: var(--salt-spacing-100);
 }
 
-.ag-theme-salt-light .ag-simple-filter-body-wrapper>*,
-.ag-theme-salt-dark .ag-simple-filter-body-wrapper>*,
-.ag-theme-salt-compact-light .ag-simple-filter-body-wrapper>*,
-.ag-theme-salt-compact-dark .ag-simple-filter-body-wrapper>* {
+.ag-theme-salt-light .ag-simple-filter-body-wrapper > *,
+.ag-theme-salt-dark .ag-simple-filter-body-wrapper > *,
+.ag-theme-salt-compact-light .ag-simple-filter-body-wrapper > *,
+.ag-theme-salt-compact-dark .ag-simple-filter-body-wrapper > * {
   margin-bottom: var(--salt-spacing-100);
 }
 
