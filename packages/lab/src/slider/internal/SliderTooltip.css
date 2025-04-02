@@ -1,6 +1,6 @@
 .saltSliderTooltip {
   background: var(--salt-container-primary-background);
-  border-color: var(--salt-status-info-borderColor);
+  border-color: var(--salt-container-primary-borderColor);
   border-style: var(--saltTooltip-borderStyle, var(--salt-container-borderStyle));
   border-width: var(--saltTooltip-borderWidth, var(--salt-size-border));
   border-radius: var(--saltTooltip-borderRadius, var(--salt-palette-corner-weak, 0));
@@ -29,7 +29,11 @@
   pointer-events: none;
   top: 100%;
   transform: translateX(-50%);
-  stroke: var(--salt-status-info-borderColor);
+  stroke: var(--salt-container-primary-borderColor);
   stroke-width: var(--salt-size-border);
   width: var(--salt-size-icon);
+}
+
+.saltSliderTooltip-text {
+  white-space: nowrap;
 }

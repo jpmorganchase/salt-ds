@@ -198,15 +198,15 @@ describe("Given a Slider", () => {
     cy.findByRole("slider").focus().realPress("ArrowRight");
     cy.findByRole("slider").should("have.value", "5");
     cy.findByRole("slider").focus().realPress("ArrowRight");
-    cy.findByRole("slider").should("have.value", 9);
+    cy.findByRole("slider").should("have.value", "9");
 
     // Reverse
     cy.findByRole("slider").focus().realPress("ArrowLeft");
-    cy.findByRole("slider").should("have.value", 5);
+    cy.findByRole("slider").should("have.value", "5");
     cy.findByRole("slider").focus().realPress("ArrowLeft");
-    cy.findByRole("slider").should("have.value", 2);
+    cy.findByRole("slider").should("have.value", "2");
     cy.findByRole("slider").focus().realPress("ArrowLeft");
-    cy.findByRole("slider").should("have.value", 2);
+    cy.findByRole("slider").should("have.value", "2");
   });
 
   it("should render inline min/max labels and marks when provided", () => {
@@ -310,10 +310,12 @@ describe("Given a Slider", () => {
     cy.findByText("Custom Max Label").should("exist");
   });
 
-  it("should be disabled when set", () => {
+  it("should be disabled when set and should not receive focus when disabled", () => {
     cy.mount(<Default disabled defaultValue={2} />);
 
     cy.findByRole("slider").should("be.disabled");
+    cy.realPress("Tab");
+    cy.findByRole("slider").should("not.be.focused");
   });
 
   it("should format the tooltip text when a format function is passed", () => {

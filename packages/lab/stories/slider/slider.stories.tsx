@@ -9,13 +9,60 @@ import { Slider, type SliderProps } from "@salt-ds/lab";
 import type { StoryFn } from "@storybook/react";
 import { type ChangeEvent, useEffect, useState } from "react";
 
+const marks = [
+  {
+    label: "0",
+    value: 0,
+  },
+  {
+    label: "1",
+    value: 1,
+  },
+  {
+    label: "2",
+    value: 2,
+  },
+  {
+    label: "3",
+    value: 3,
+  },
+  {
+    label: "4",
+    value: 4,
+  },
+  {
+    label: "5",
+    value: 5,
+  },
+  {
+    label: "6",
+    value: 6,
+  },
+  {
+    label: "7",
+    value: 7,
+  },
+  {
+    label: "8",
+    value: 8,
+  },
+  {
+    label: "9",
+    value: 9,
+  },
+  {
+    label: "10",
+    value: 10,
+  },
+];
+
 export default {
   title: "Lab/Slider",
   component: Slider,
 };
 
 const Template: StoryFn = ({ ...args }) => {
-  return <Slider style={{ width: "500px" }} {...args} />;
+  return <Slider style={{ width: "600px" }} {...args} />;
 };
 
 export const Default = Template.bind({});
@@ -43,52 +90,7 @@ export const WithMarks = Template.bind({});
 WithMarks.args = {
   min: 0,
   max: 10,
-  marks: [
-    {
-      label: "0",
-      value: 0,
-    },
-    {
-      label: "1",
-      value: 1,
-    },
-    {
-      label: "2",
-      value: 2,
-    },
-    {
-      label: "3",
-      value: 3,
-    },
-    {
-      label: "4",
-      value: 4,
-    },
-    {
-      label: "5",
-      value: 5,
-    },
-    {
-      label: "6",
-      value: 6,
-    },
-    {
-      label: "7",
-      value: 7,
-    },
-    {
-      label: "8",
-      value: 8,
-    },
-    {
-      label: "9",
-      value: 9,
-    },
-    {
-      label: "10",
-      value: 10,
-    },
-  ],
+  marks: marks,
   "aria-label": "With Marks",
 };
 
@@ -100,52 +102,7 @@ export const WithMarkTicks = Template.bind({});
 WithMarkTicks.args = {
   min: 0,
   max: 10,
-  marks: [
-    {
-      label: "0",
-      value: 0,
-    },
-    {
-      label: "1",
-      value: 1,
-    },
-    {
-      label: "2",
-      value: 2,
-    },
-    {
-      label: "3",
-      value: 3,
-    },
-    {
-      label: "4",
-      value: 4,
-    },
-    {
-      label: "5",
-      value: 5,
-    },
-    {
-      label: "6",
-      value: 6,
-    },
-    {
-      label: "7",
-      value: 7,
-    },
-    {
-      label: "8",
-      value: 8,
-    },
-    {
-      label: "9",
-      value: 9,
-    },
-    {
-      label: "10",
-      value: 10,
-    },
-  ],
+  marks: marks,
   "aria-label": "With Mark Ticks",
   showTicks: true,
 };
@@ -157,28 +114,16 @@ WithMarkTicks.parameters = {
 export const WithRestrictToMarks = Template.bind({});
 WithRestrictToMarks.args = {
   marks: [
-    {
-      label: "1",
-      value: 1,
-    },
-
-    {
-      label: "5",
-      value: 5,
-    },
-    {
-      label: "6",
-      value: 6,
-    },
-    {
-      label: "7",
-      value: 7,
-    },
-    {
-      label: "10",
-      value: 10,
-    },
+    { value: 5, label: "5" },
+    { value: 15, label: "15" },
+    { value: 25, label: "25" },
+    { value: 35, label: "35" },
+    { value: 70, label: "70" },
+    { value: 80, label: "80" },
+    { value: 90, label: "90" },
   ],
+  min: 0,
+  max: 100,
   "aria-label": "With Restrict to Marks",
   showTicks: true,
   restrictToMarks: true,
@@ -303,13 +248,52 @@ WithFormatting.args = {
       maximumFractionDigits: 0,
     }).format(value),
   marks: [
-    { value: 0, label: "0€" },
-    { value: 50, label: "50€" },
+    { value: 0, label: "€0" },
+    { value: 50, label: "€50" },
   ],
 };
 
 WithFormatting.parameters = {
   actions: { disable: true },
+};
+
+export const WithinFormField: StoryFn<SliderProps> = () => {
+  return (
+    <StackLayout gap={4}>
+      <FormField
+        labelPlacement="left"
+        style={
+          {
+            "--saltFormField-label-width": "16%",
+            width: "600px",
+          } as React.CSSProperties
+        }
+      >
+        <FormFieldLabel>Form field left</FormFieldLabel>
+        <Slider minLabel="0" maxLabel="10" />
+      </FormField>
+      <FormField
+        labelPlacement="left"
+        style={
+          {
+            "--saltFormField-label-width": "30%",
+            width: "600px",
+          } as React.CSSProperties
+        }
+      >
+        <FormFieldLabel>Form field left (with marks)</FormFieldLabel>
+        <Slider showTicks marks={marks} />
+      </FormField>
+      <FormField>
+        <FormFieldLabel>Form field top</FormFieldLabel>
+        <Slider minLabel="0" maxLabel="10" />
+      </FormField>
+      <FormField>
+        <FormFieldLabel>Form field top (with marks)</FormFieldLabel>
+        <Slider showTicks marks={marks} />
+      </FormField>
+    </StackLayout>
+  );
 };
 
 export const WithInput: StoryFn<SliderProps> = () => {
@@ -340,7 +324,7 @@ export const WithInput: StoryFn<SliderProps> = () => {
   }, [inputValue, bounds]);
 
   return (
-    <FormField style={{ width: "500px" }}>
+    <FormField style={{ width: "600px" }}>
       <FormFieldLabel> Slider with Input </FormFieldLabel>
       <FlexLayout gap={3}>
         <Input
@@ -393,7 +377,7 @@ export const WithInputAndInlineLabels: StoryFn<SliderProps> = () => {
   }, [inputValue, bounds]);
 
   return (
-    <FormField style={{ width: "500px" }}>
+    <FormField style={{ width: "600px" }}>
       <FormFieldLabel> Slider with Input </FormFieldLabel>
       <FlexLayout gap={3}>
         <Input
@@ -421,7 +405,7 @@ export const WithInputAndInlineLabels: StoryFn<SliderProps> = () => {
   );
 };
 
-export const WithInputAndMarks: StoryFn<SliderProps> = () => {
+export const WithInputAndMarksAndTicks: StoryFn<SliderProps> = () => {
   const [value, setValue] = useState<number>(0);
   const [inputValue, setInputValue] = useState<string | number>(value);
   const [validationStatus, setValidationStatus] = useState<undefined | "error">(
@@ -449,7 +433,7 @@ export const WithInputAndMarks: StoryFn<SliderProps> = () => {
   }, [inputValue, bounds]);
 
   return (
-    <FormField style={{ width: "500px" }}>
+    <FormField style={{ width: "600px" }}>
       <FormFieldLabel> Slider with Input </FormFieldLabel>
       <FlexLayout gap={3}>
         <Input
@@ -482,35 +466,15 @@ export const WithInputAndMarks: StoryFn<SliderProps> = () => {
               label: "50",
             },
           ]}
+          showTicks
         />
       </FlexLayout>
     </FormField>
   );
 };
 
-export const WithinFormField: StoryFn<SliderProps> = () => {
-  const [value, setValue] = useState<number>(5);
-
-  return (
-    <FormField style={{ width: "500px" }}>
-      <FormFieldLabel>Slider within Form Field</FormFieldLabel>
-      <Slider
-        style={{ flex: "100%" }}
-        min={-50}
-        max={50}
-        value={value}
-        onChange={(_e, value) => {
-          setValue(value);
-        }}
-        minLabel="-50"
-        maxLabel="50"
-      />
-    </FormField>
-  );
-};
-
 export const WithCustomStep = () => (
-  <StackLayout gap={10} style={{ width: "500px" }}>
+  <StackLayout gap={10} style={{ width: "600px" }}>
     <FormField>
       <FormFieldLabel>Step: 1 (default)</FormFieldLabel>
       <Slider min={-1} max={1} minLabel="-1" maxLabel="1" />
@@ -569,7 +533,7 @@ export const WithNonNumericValues = () => {
       marks={daysOfTheWeek.map((day) => {
         return { value: day.value, label: day.label };
       })}
-      style={{ width: "500px" }}
+      style={{ width: "600px" }}
     />
   );
 };
