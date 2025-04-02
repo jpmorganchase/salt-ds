@@ -97,7 +97,7 @@ export const SliderTrack = forwardRef<HTMLDivElement, SliderTrackProps>(
           [withBaseName("range")]: isRange,
           [withBaseName("withMarks")]: marks,
           [withBaseName("constrainLabelPosition")]: constrainLabelPosition,
-          [withBaseName("withMarkTicks")]: showTicks,
+          [withBaseName("withTicks")]: showTicks,
         })}
         data-testid="sliderTrack"
         ref={ref}
@@ -116,13 +116,15 @@ export const SliderTrack = forwardRef<HTMLDivElement, SliderTrackProps>(
             </Text>
           )}
           {/* Slider Track */}
-          <div className={withBaseName("wrapper")}>
+          <div
+            onPointerDown={handlePointerDown}
+            className={withBaseName("wrapper")}
+          >
             <div
               className={clsx(withBaseName("rail"), {
                 [withBaseName("hasMinTick")]: hasMinTick() && showTicks,
                 [withBaseName("hasMaxTick")]: hasMaxTick() && showTicks,
               })}
-              onPointerDown={handlePointerDown}
               ref={sliderRef}
               style={
                 {
@@ -141,47 +143,45 @@ export const SliderTrack = forwardRef<HTMLDivElement, SliderTrackProps>(
               {isRange && <div className={clsx(withBaseName("fill"))} />}
               {children}
             </div>
+            {/* Ticks */}
+            {marks && showTicks && (
+              <div className={withBaseName("ticks")}>
+                {marks.map(({ value }) => (
+                  <span
+                    key={`${value}-tick`}
+                    style={{
+                      left: `${calculateMarkPosition(value, max, min)}%`,
+                    }}
+                    className={clsx(
+                      withBaseName("tick"),
+                      {
+                        [withBaseName("tickSelected")]:
+                          checkIsMarkSelected(value),
+                      },
+                      {
+                        [withBaseName("tickHidden")]:
+                          checkIsMarkOverlapped(value),
+                      },
+                    )}
+                  />
+                ))}
+              </div>
+            )}
             {/* Marks */}
             {marks && (
               <div className={withBaseName("marks")}>
-                {marks.map(({ label, value }) => {
-                  return (
-                    <div
-                      className={withBaseName("mark")}
-                      key={value}
-                      style={
-                        {
-                          "--slider-mark-percentage": `${calculateMarkPosition(value, max, min)}%`,
-                        } as React.CSSProperties
-                      }
-                    >
-                      <div
-                        className={clsx(
-                          withBaseName("markTick"),
-                          {
-                            [withBaseName("markSelected")]:
-                              checkIsMarkSelected(value),
-                          },
-                          {
-                            [withBaseName("markTickHidden")]:
-                              checkIsMarkOverlapped(value),
-                          },
-                        )}
-                        data-testid="markTick"
-                      />
-                      <Text
-                        aria-hidden
-                        className={withBaseName("markLabel")}
-                        data-testid="mark"
-                        disabled={disabled}
-                        color="secondary"
-                        styleAs="label"
-                      >
-                        {label}
-                      </Text>
-                    </div>
-                  );
-                })}
+                {marks.map(({ label, value }) => (
+                  <span
+                    data-testid="mark"
+                    key={`${value}-mark`}
+                    className={withBaseName("markLabel")}
+                    style={{
+                      left: `${calculateMarkPosition(value, max, min)}%`,
+                    }}
+                  >
+                    {label}
+                  </span>
+                ))}
               </div>
             )}
           </div>
