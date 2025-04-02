@@ -1,10 +1,5 @@
 import { H3, StackLayout, Text } from "@salt-ds/core";
-import {
-  Carousel,
-  CarouselNavigationBar,
-  CarouselSlide,
-  CarouselSlider,
-} from "@salt-ds/lab";
+import { Carousel, CarouselSlide, CarouselSlider } from "@salt-ds/lab";
 import type { ReactElement } from "react";
 
 function SliderContent(props: { index: number }) {
@@ -23,7 +18,6 @@ function SliderContent(props: { index: number }) {
 export const Default = (): ReactElement => {
   return (
     <Carousel>
-      <CarouselNavigationBar />
       <CarouselSlider>
         {Array.from({ length: 5 }, (_, index) => (
           <CarouselSlide
