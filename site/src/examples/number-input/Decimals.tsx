@@ -6,33 +6,49 @@ import {
   StackLayout,
 } from "@salt-ds/core";
 import { NumberInput } from "@salt-ds/lab";
-import {ChangeEvent, SyntheticEvent, useState} from "react";
+import { ChangeEvent, SyntheticEvent, useState } from "react";
 
 export const Decimals = () => {
-  const [decimalSeparator, setDecimalSeparator] = useState<string>('.');
-  const [decimalScale, setDecimalScale] = useState<number | undefined>(2);
+  const [decimalSeparator, setDecimalSeparator] = useState<string>(".");
+  const [decimalScale, setDecimalScale] = useState<number>(2);
+  const [decimalScaleValidationStatus, setDecimalScaleValidationStatus] =
+    useState<"error" | undefined>();
   const [step, setStep] = useState<number | undefined>(1);
 
   return (
-    <StackLayout style={{ width: "356px" }}>
-        <StackLayout direction={"row"}>
-          <FormField>
+    <StackLayout style={{ width: "400px" }}>
+      <StackLayout direction={"row"}>
+        <FormField validationStatus={decimalScaleValidationStatus}>
           <FormFieldLabel>Decimal Scale</FormFieldLabel>
           <NumberInput
+            allowNegative={false}
             min={0}
             max={14}
             value={decimalScale}
-            onValueChange={(value) => setDecimalScale(value.floatValue)}
+            onValueChange={(value) => {
+              if (
+                value?.floatValue !== undefined &&
+                value.floatValue >= 0 &&
+                value.floatValue <= 14
+              ) {
+                setDecimalScale(value.floatValue ?? "");
+                setDecimalScaleValidationStatus(undefined);
+              } else {
+                setDecimalScaleValidationStatus("error");
+              }
+            }}
           />
           <FormFieldHelperText>
-            Enter a number of decimal places
+            Enter a number of decimal places, max = 14
           </FormFieldHelperText>
         </FormField>
         <FormField>
           <FormFieldLabel>Step</FormFieldLabel>
           <NumberInput
             value={step}
-            onValueChange={(value) => setStep(value.floatValue)}
+            decimalScale={decimalScale}
+            fixedDecimalScale
+            onValueChange={(value) => setStep(value.floatValue ?? 0)}
           />
           <FormFieldHelperText>Enter a step value</FormFieldHelperText>
         </FormField>
@@ -40,7 +56,9 @@ export const Decimals = () => {
           <FormFieldLabel>Decimal Separator</FormFieldLabel>
           <Input
             value={decimalSeparator}
-            onChange={(event: ChangeEvent<HTMLInputElement>) => setDecimalSeparator(event.target.value)}
+            onChange={(event: ChangeEvent<HTMLInputElement>) =>
+              setDecimalSeparator(event.target.value)
+            }
           />
           <FormFieldHelperText>
             Enter a number of decimal places
@@ -66,7 +84,7 @@ export const Decimals = () => {
           decimalScale={decimalScale}
           decimalSeparator={decimalSeparator}
           fixedDecimalScale
-          step={0.01}
+          step={step}
           endAdornment="USD"
         />
         <FormFieldHelperText>Please enter a decimal value</FormFieldHelperText>
