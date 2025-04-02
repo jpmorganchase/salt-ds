@@ -19,6 +19,8 @@ export const Decimals = () => {
           <FormField>
           <FormFieldLabel>Decimal Scale</FormFieldLabel>
           <NumberInput
+            min={0}
+            max={14}
             value={decimalScale}
             onValueChange={(value) => setDecimalScale(value.floatValue)}
           />
