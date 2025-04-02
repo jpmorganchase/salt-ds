@@ -113,7 +113,7 @@ jobs:
             await exec.exec('yarn changeset publish --no-git-tag --snapshot --tag snapshot', [], options);
 
             const { COMMENT_ID } = process.env
-            const [_, packagesStdin] = output.split("success packages published successfully:\n")
+            const [_, packagesStdin] = output.split("packages published successfully:\n")
 
             const newTags = packagesStdin ? packagesStdin.split("\n").flatMap(package => Array.from(package.matchAll(/\s+(.*)/g),m => m[1])) : [];
 
