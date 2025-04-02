@@ -1,0 +1,45 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+## Keyboard interactions
+
+<KeyboardControls>
+<KeyboardControl keyOrCombos="Tab">
+
+- If focus is outside carousel, moves focus into the Carousel, setting focus on the first active button.
+- If focus is on the previous button, moves focus to the next button.
+- If focus is on the last active button moves focus to the first visible carousel slide.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Enter">
+- if focus is on next button, it moves to the next slide and keeps focus within the button.
+- if focus is on previous button, it moves to the previous slide and keeps focus within the button.
+</KeyboardControl>
+
+<KeyboardControl keyOrCombos="Shift + Tab">
+  
+- If focus is outside carousel and carousel is the previous element in the tabbing order, moves focus into the Carousel, setting focus on the first active button.
+- If focus is on the next button, moves focus to the previous button.
+- If focus is on the first visible slide, moves focus to the last active button in controls.
+
+</KeyboardControl>
+
+<KeyboardControl keyOrCombos="Right arrow">
+
+- If focus is in a slide and there are more slides to the right, moves the focus to the next slide.
+
+</KeyboardControl>
+
+<KeyboardControl keyOrCombos="Left arrow">
+
+- If focus is in a slide and there are more slides to the left, moves the focus to the previous slide.
+
+</KeyboardControl>
+</KeyboardControls>
