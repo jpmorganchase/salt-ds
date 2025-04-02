@@ -1,4 +1,4 @@
-import { H3, StackLayout, Text } from "@salt-ds/core";
+import { H2, H3, StackLayout, Text } from "@salt-ds/core";
 import {
   Carousel,
   CarouselControls,
@@ -32,10 +32,12 @@ const renderMediaPlaceholder = (index: number) => (
   />
 );
 
-export const Default = (): ReactElement => {
+export const WithTitle = (): ReactElement => {
   return (
-    <Carousel aria-label="Categorical colors">
-      <CarouselControls />
+    <Carousel aria-labelledby="carousel-title">
+      <CarouselControls
+        title={<H2 id="carousel-title">Categorical colors</H2>}
+      />
       <CarouselSlider>
         {Array.from({ length: 5 }, (_, index) => (
           <CarouselSlide

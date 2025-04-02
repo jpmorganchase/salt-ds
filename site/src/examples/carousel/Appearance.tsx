@@ -32,13 +32,14 @@ const renderMediaPlaceholder = (index: number) => (
   />
 );
 
-export const Default = (): ReactElement => {
+export const Appearance = (): ReactElement => {
   return (
     <Carousel aria-label="Categorical colors">
       <CarouselControls />
       <CarouselSlider>
         {Array.from({ length: 5 }, (_, index) => (
           <CarouselSlide
+            appearance="bordered"
             key={`item-${index}`}
             aria-labelledby={`slide-title-${index}`}
             media={renderMediaPlaceholder(index)}
