@@ -74,4 +74,10 @@ describe("Given a Button", () => {
     cy.mount(<Default />);
     cy.findByRole("button").should("have.attr", "type", "button");
   });
+
+  it("should render default Button when invalid variant is passed in", () => {
+    // @ts-expect-error test invalid variant
+    cy.mount(<Default variant="invalid" />);
+    cy.findByRole("button").should("have.class", 'saltButton');
+  });
 });
