@@ -41,10 +41,10 @@
   border-left-color: var(--salt-separable-secondary-borderColor);
 }
 
-.ag-theme-salt-light .ag-cell,
-.ag-theme-salt-dark .ag-cell,
-.ag-theme-salt-compact-light .ag-cell,
-.ag-theme-salt-compact-dark .ag-cell {
+.ag-theme-salt-light .ag-ltr .ag-cell, 
+.ag-theme-salt-dark .ag-ltr .ag-cell,
+.ag-theme-salt-compact-light .ag-ltr .ag-cell,
+.ag-theme-salt-compact-dark .ag-ltr .ag-cell {
   border: none;
   line-height: calc(var(--ag-line-height) - 1px);
   padding-left: var(--salt-spacing-100);
@@ -60,10 +60,10 @@
 }
 
 /* This makes sure custom cell editor would start from no padding. Built-in ag grid editor's padding is added below. */
-.ag-theme-salt-light .ag-cell-inline-editing,
-.ag-theme-salt-dark .ag-cell-inline-editing,
-.ag-theme-salt-compact-light .ag-cell-inline-editing,
-.ag-theme-salt-compact-dark .ag-cell-inline-editing {
+.ag-theme-salt-light .ag-ltr .ag-cell-inline-editing,
+.ag-theme-salt-dark .ag-ltr .ag-cell-inline-editing,
+.ag-theme-salt-compact-light .ag-ltr .ag-cell-inline-editing,
+.ag-theme-salt-compact-dark .ag-ltr .ag-cell-inline-editing {
   padding: 0;
   /* When styling option corner='rounded', we don't want this to be flipped between rounded and not between editing and normal state */
   border-radius: 0;
@@ -129,7 +129,7 @@
 .ag-theme-salt-compact-dark .ag-ltr .ag-cell-range-single-cell.ag-cell-range-handle {
   outline: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--salt-focused-outlineColor);
   outline-offset: -2px;
-  border-width: 0;
+  border-color: transparent;
 }
 
 .ag-theme-salt-light .ag-cell-wrapper.ag-row-group,
