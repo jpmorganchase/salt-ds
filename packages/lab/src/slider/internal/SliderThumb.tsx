@@ -20,6 +20,8 @@ interface SliderThumbProps
     ComponentPropsWithoutRef<"input">,
     "onChange" | "defaultValue" | "min" | "max"
   > {
+  accessibleMaxText?: string;
+  accessibleMinText?: string;
   disabled: boolean;
   format?: (value: number) => number | string;
   handleInputChange: (event: ChangeEvent<HTMLInputElement>) => void;
@@ -35,6 +37,7 @@ interface SliderThumbProps
   offsetPercentage?: string;
   onBlur: () => void;
   onFocus: () => void;
+  restrictToMarks?: boolean;
   showTooltip?: boolean;
   sliderValue: [number, number] | number;
   step: number;
@@ -46,6 +49,8 @@ export const SliderThumb = ({
   "aria-label": ariaLabel,
   "aria-valuetext": ariaValueText,
   "aria-labelledby": ariaLabelledBy,
+  accessibleMaxText,
+  accessibleMinText,
   disabled,
   format,
   onBlur,
@@ -61,6 +66,7 @@ export const SliderThumb = ({
   min,
   minLabel,
   offsetPercentage,
+  restrictToMarks,
   showTooltip,
   sliderValue,
   step,
@@ -157,10 +163,16 @@ export const SliderThumb = ({
         >
           {Array.isArray(sliderValue) &&
             `${index === 0 ? "leading" : "trailing"}, ${format?.(sliderValue[0]) || sliderValue[0]} to ${format?.(sliderValue[1]) || sliderValue[1]}, `}
-          Slider range {minLabel && `From ${minLabel}, `}
-          {maxLabel && `To ${maxLabel},`} minimum {format?.(min) || min},
-          maximum {format?.(max) || max}
-          {step !== 1 && `, Increments of ${step}`}
+          slider range{" "}
+          {accessibleMinText
+            ? `${accessibleMinText} ${min}, `
+            : `minimum ${format?.(min) || min}, `}
+          {accessibleMaxText
+            ? `${accessibleMaxText} ${max} `
+            : `maximum ${format?.(max) || max}`}
+          {restrictToMarks
+            ? ", custom increments"
+            : step !== 1 && `, increments of ${step}`}
         </span>
       </div>
     );

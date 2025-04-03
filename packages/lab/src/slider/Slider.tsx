@@ -15,6 +15,14 @@ import { calculatePercentage, clamp, toFloat } from "./internal/utils";
 export interface SliderProps
   extends Omit<HTMLAttributes<HTMLDivElement>, "onChange" | "defaultValue"> {
   /**
+   * Accessible text to announce maximum value label.
+   */
+  accessibleMaxText?: string;
+  /**
+   * Accessible text to announce minimum value label.
+   */
+  accessibleMinText?: string;
+  /**
    * When minimum and maximum labels are defined, ensure
    * they are confined within the boundary of the slider.
    * @default false
@@ -106,6 +114,8 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
     "aria-label": ariaLabel,
     "aria-labelledby": ariaLabelledBy,
     "aria-valuetext": ariaValueText,
+    accessibleMaxText,
+    accessibleMinText,
     decimalPlaces = 2,
     disabled: disabledProp = false,
     format,
@@ -208,6 +218,8 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
         aria-valuemax={max}
         aria-valuemin={min}
         aria-valuetext={ariaValueText}
+        accessibleMaxText={accessibleMaxText}
+        accessibleMinText={accessibleMinText}
         disabled={disabled}
         format={format}
         onBlur={handleBlur}
@@ -222,6 +234,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
         max={max}
         maxLabel={maxLabel}
         offsetPercentage={`${progressPercentage}%`}
+        restrictToMarks={restrictToMarks}
         sliderValue={value}
         showTooltip={showTooltip}
         step={step}

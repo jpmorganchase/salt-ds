@@ -68,7 +68,7 @@ const RangeWithInput = () => {
   };
 
   return (
-    <FormField style={{ width: "600px" }}>
+    <FormField style={{ width: "80%" }}>
       <FormFieldLabel>RangeSlider with Input</FormFieldLabel>
       <FlexLayout gap={3} align="center">
         <Input

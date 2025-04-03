@@ -15,6 +15,14 @@ import { calculatePercentage, clampRange, toFloat } from "./internal/utils";
 export interface RangeSliderProps
   extends Omit<HTMLAttributes<HTMLDivElement>, "onChange" | "defaultValue"> {
   /**
+   * Accessible text to announce maximum value label.
+   */
+  accessibleMaxText?: string;
+  /**
+   * Accessible text to announce minimum value label.
+   */
+  accessibleMinText?: string;
+  /**
    * When minimum and maximum labels are defined, ensure
    * they are confined within the boundary of the slider.
    */
@@ -106,6 +114,8 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>(
       "aria-label": ariaLabel,
       "aria-labelledby": ariaLabelledBy,
       "aria-valuetext": ariaValueText,
+      accessibleMaxText,
+      accessibleMinText,
       decimalPlaces = 2,
       disabled: disabledProp = false,
       format,
@@ -206,12 +216,15 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>(
       "aria-valuemax": max,
       "aria-valuemin": min,
       "aria-valuetext": ariaValueText,
+      accessibleMaxText: accessibleMaxText,
+      accessibleMinText: accessibleMinText,
       disabled: disabled,
       format: format,
       max: max,
       maxLabel: maxLabel,
       min: min,
       minLabel: minLabel,
+      restrictToMarks: restrictToMarks,
       showTooltip: showTooltip,
       step: step,
       stepMultiplier: stepMultiplier,

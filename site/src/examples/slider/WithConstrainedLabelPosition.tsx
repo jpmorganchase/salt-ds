@@ -3,12 +3,11 @@ import { Slider } from "@salt-ds/lab";
 import type { ReactElement } from "react";
 
 export const WithConstrainedLabelPosition = (): ReactElement => (
-  <StackLayout gap={6}>
+  <StackLayout gap={6} style={{ width: "80%" }}>
     <FormField>
       <FormFieldLabel>With constrained label position</FormFieldLabel>
       <Slider
         aria-label="WithConstrainedLabelPosition"
-        style={{ width: "400px" }}
         marks={[
           {
             value: 0,
@@ -26,7 +25,6 @@ export const WithConstrainedLabelPosition = (): ReactElement => (
       <FormFieldLabel>With constrained label position and ticks</FormFieldLabel>
       <Slider
         aria-label="WithConstrainedLabelPosition"
-        style={{ width: "400px" }}
         marks={[
           {
             value: 0,

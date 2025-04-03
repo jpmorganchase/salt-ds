@@ -6,7 +6,7 @@ export const WithHiddenTooltip = () => (
     min={0}
     max={50}
     defaultValue={[20, 40]}
-    style={{ width: "600px" }}
+    style={{ width: "80%" }}
     showTooltip={false}
     minLabel="Very low"
     maxLabel="Very high"

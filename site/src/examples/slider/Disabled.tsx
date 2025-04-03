@@ -3,7 +3,7 @@ import type { ReactElement } from "react";
 
 export const Disabled = (): ReactElement => (
   <Slider
-    style={{ width: "600px" }}
+    style={{ width: "80%" }}
     defaultValue={5}
     disabled
     minLabel="0"

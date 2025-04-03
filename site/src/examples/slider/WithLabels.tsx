@@ -3,7 +3,7 @@ import { Slider } from "@salt-ds/lab";
 import type { ReactElement } from "react";
 
 export const WithLabels = (): ReactElement => (
-  <StackLayout gap={6} style={{ width: "600px" }}>
+  <StackLayout gap={6} style={{ width: "80%" }}>
     <FormField>
       <FormFieldLabel>Min/max labels</FormFieldLabel>
       <Slider
@@ -16,20 +16,37 @@ export const WithLabels = (): ReactElement => (
       />
     </FormField>
     <FormField>
-      <FormFieldLabel>Min/max labelled by marks</FormFieldLabel>
+      <FormFieldLabel>Min/max labels with accessible text</FormFieldLabel>
+      <Slider
+        aria-label="single"
+        min={0}
+        max={100}
+        minLabel="Very low"
+        maxLabel="Very high"
+        accessibleMinText="Very low"
+        accessibleMaxText="Very high"
+        defaultValue={30}
+      />
+    </FormField>
+    <FormField>
+      <FormFieldLabel>
+        Min/max labelled by marks with accessible text
+      </FormFieldLabel>
       <Slider
         aria-label="single"
         min={0}
         max={100}
         defaultValue={30}
+        accessibleMinText="Very low"
+        accessibleMaxText="Very high"
         marks={[
           {
             value: 0,
-            label: "0",
+            label: "Very low",
           },
           {
             value: 100,
-            label: "100",
+            label: "Very high",
           },
         ]}
       />
