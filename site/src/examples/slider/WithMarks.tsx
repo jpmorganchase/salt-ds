@@ -1,5 +1,4 @@
-import { FormField, FormFieldLabel, StackLayout } from "@salt-ds/core";
-import { Slider } from "@salt-ds/lab";
+import { FormField, FormFieldLabel, Slider, StackLayout } from "@salt-ds/core";
 import type { ReactElement } from "react";
 
 export const WithMarks = (): ReactElement => (
@@ -84,6 +83,7 @@ export const WithMarks = (): ReactElement => (
         defaultValue={30}
         minLabel="Very low"
         maxLabel="Very high"
+        showTicks
         marks={[
           {
             value: 0,

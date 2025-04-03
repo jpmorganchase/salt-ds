@@ -56,7 +56,6 @@ export * from "./portal";
 export * from "./query-input";
 export * from "./responsive";
 export * from "./search-input";
-export * from "./slider";
 export * from "./splitter";
 export * from "./static-list";
 export * from "./stepped-tracker";
