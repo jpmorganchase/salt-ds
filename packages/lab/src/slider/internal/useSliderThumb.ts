@@ -95,6 +95,8 @@ export const useSliderThumb = ({
   const handlePointerDownOnThumb = useCallback(
     (event: React.PointerEvent<HTMLDivElement>) => {
       event.preventDefault();
+      // To prevent the pointerdown event from bubbling up to the slider track
+      //  and triggering its pointerdown event
       event.stopPropagation();
       if (inputRef.current) inputRef.current.focus();
       setIsDragging(true);
@@ -106,7 +108,6 @@ export const useSliderThumb = ({
   const handlePointerDownOnTrack = useCallback(
     (event: React.PointerEvent<HTMLDivElement>) => {
       event.preventDefault();
-      event.stopPropagation();
       if (inputRef.current) inputRef.current.focus();
       setIsDragging(true);
       setIsFocusVisible(false);

@@ -1,7 +1,6 @@
 import {
   type ChangeEvent,
   type HTMLAttributes,
-  type SyntheticEvent,
   forwardRef,
   useRef,
 } from "react";
@@ -69,19 +68,13 @@ export interface RangeSliderProps
    * Callback called when slider value is changed.
    * Event is either an Input change event or a click event.
    */
-  onChange?: (
-    event: SyntheticEvent<unknown> | Event,
-    value: [number, number],
-  ) => void;
+  onChange?: (event: Event, value: [number, number]) => void;
   /**
    * Callback called when the slider is stopped from being dragged or
    * its value is changed from the keyboard.
    * Event is either an Input change event or a click event.
    */
-  onChangeEnd?: (
-    event: SyntheticEvent<unknown> | Event,
-    value: [number, number],
-  ) => void;
+  onChangeEnd?: (event: Event, value: [number, number]) => void;
   /**
    * Restrict slider value to marks only. The step will be ignored.
    */
@@ -174,8 +167,8 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>(
       if (haveValuesChanged) {
         const values = preventThumbOverlap(parsedValue, value, thumbIndex);
         setValue(values as [number, number]);
-        onChange?.(event, values as [number, number]);
-        onChangeEnd?.(event, values as [number, number]);
+        onChange?.(event.nativeEvent, values as [number, number]);
+        onChangeEnd?.(event.nativeEvent, values as [number, number]);
         lastValueRef.current = values;
       }
     };
@@ -254,8 +247,8 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>(
           trackDragging={isDragging && thumbIndexState === 0}
           isFocusVisible={isFocusVisible && thumbIndexState === 0}
           inputRef={inputRefs[0]}
-          handleFocus={() => handleFocus(0)}
-          handleBlur={() => handleBlur(0)}
+          onFocus={() => handleFocus(0)}
+          onBlur={() => handleBlur(0)}
           {...thumbProps}
         />
         <SliderThumb
@@ -267,8 +260,8 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>(
           trackDragging={isDragging && thumbIndexState === 1}
           isFocusVisible={isFocusVisible && thumbIndexState === 1}
           inputRef={inputRefs[1]}
-          handleFocus={() => handleFocus(1)}
-          handleBlur={() => handleBlur(1)}
+          onFocus={() => handleFocus(1)}
+          onBlur={() => handleBlur(1)}
           {...thumbProps}
         />
       </SliderTrack>

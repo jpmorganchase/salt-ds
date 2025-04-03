@@ -22,8 +22,6 @@ interface SliderThumbProps
   > {
   disabled: boolean;
   format?: (value: number) => number | string;
-  handleBlur: () => void;
-  handleFocus: (event: React.FocusEvent) => void;
   handleInputChange: (event: ChangeEvent<HTMLInputElement>) => void;
   handleKeydownOnThumb: (event: React.KeyboardEvent) => void;
   handlePointerDown: (event: React.PointerEvent<HTMLDivElement>) => void;
@@ -35,6 +33,8 @@ interface SliderThumbProps
   min: number;
   minLabel?: string;
   offsetPercentage?: string;
+  onBlur: () => void;
+  onFocus: () => void;
   showTooltip?: boolean;
   sliderValue: [number, number] | number;
   step: number;
@@ -48,8 +48,8 @@ export const SliderThumb = ({
   "aria-labelledby": ariaLabelledBy,
   disabled,
   format,
-  handleBlur,
-  handleFocus,
+  onBlur,
+  onFocus,
   handleInputChange,
   handleKeydownOnThumb,
   handlePointerDown,
@@ -133,8 +133,8 @@ export const SliderThumb = ({
           disabled={disabled}
           type="range"
           ref={inputRef}
-          onFocus={handleFocus}
-          onBlur={handleBlur}
+          onFocus={onFocus}
+          onBlur={onBlur}
           className={withBaseName("input")}
           value={value}
           onChange={handleInputChange}

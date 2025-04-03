@@ -4,7 +4,6 @@ import {
   type Dispatch,
   type RefObject,
   type SetStateAction,
-  type SyntheticEvent,
   useCallback,
   useEffect,
   useRef,
@@ -21,14 +20,8 @@ type UseRangeSliderThumbProps = Pick<SliderProps, "min" | "max" | "step"> & {
   ) => void;
   inputRefs: RefObject<HTMLInputElement>[];
   marks?: { label: string; value: number }[];
-  onChange?: (
-    event: SyntheticEvent<unknown> | Event,
-    value: [number, number],
-  ) => void;
-  onChangeEnd?: (
-    event: SyntheticEvent<unknown> | Event,
-    value: [number, number],
-  ) => void;
+  onChange?: (event: Event, value: [number, number]) => void;
+  onChangeEnd?: (event: Event, value: [number, number]) => void;
   restrictToMarks?: boolean;
   setValue: Dispatch<SetStateAction<[number, number]>>;
   stepMultiplier: number;
@@ -142,6 +135,8 @@ export const useRangeSliderThumb = ({
   const handlePointerDownOnThumb = useCallback(
     (event: React.PointerEvent<HTMLDivElement>, thumbIndex: number) => {
       event.preventDefault();
+      // To prevent the pointerdown event from bubbling up to the slider track
+      //  and triggering its pointerdown event
       event.stopPropagation();
 
       inputRefs[thumbIndex].current?.focus();
@@ -210,7 +205,7 @@ export const useRangeSliderThumb = ({
       ) {
         lastValueRef.current = newValues;
         setValue(newValues);
-        onChange?.(event, newValues);
+        onChange?.(event.nativeEvent, newValues);
       }
     },
     [
