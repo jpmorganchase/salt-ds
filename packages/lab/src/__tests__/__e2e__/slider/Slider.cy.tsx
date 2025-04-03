@@ -383,7 +383,7 @@ describe("Given a Slider", () => {
         const [value, setValue] = useState<number>(3);
         const onChange = (event: ChangeEvent<HTMLInputElement>) => {
           // React 16 backwards compatibility
-          event.persist();
+          // event.persist();
           setValue(Number.parseFloat(event.target.value));
           changeSpy(event);
         };
@@ -392,7 +392,7 @@ describe("Given a Slider", () => {
           value: [number, number],
         ) => {
           // React 16 backwards compatibility
-          event.persist();
+          // event.persist();
           changeEndSpy(event);
         };
         return (
@@ -436,6 +436,108 @@ describe("Given a Slider", () => {
       cy.findByRole("slider").should("have.value", 0.3);
       cy.findByRole("slider").focus().realPress("ArrowLeft");
       cy.findByRole("slider").should("have.value", 0);
+    });
+  });
+
+  describe("WHEN focused", () => {
+    it("should display a focus ring when focused via Tab key", () => {
+      cy.mount(<Default />);
+      cy.realPress("Tab");
+      cy.findByRole("slider").should("have.focus");
+      cy.findByTestId("sliderThumb").should(
+        "have.class",
+        "saltSliderThumb-focusVisible",
+      );
+    });
+
+    it("should display a focus ring after losing and regaining focus", () => {
+      cy.mount(<Default />);
+      cy.findByRole("slider").focus();
+      cy.findByTestId("sliderThumb").should(
+        "have.class",
+        "saltSliderThumb-focusVisible",
+      );
+      cy.realPress("Tab");
+      cy.findByRole("slider").should("not.have.focus");
+      cy.realPress(["Shift", "Tab"]);
+      cy.findByRole("slider").should("have.focus");
+      cy.findByTestId("sliderThumb").should(
+        "have.class",
+        "saltSliderThumb-focusVisible",
+      );
+    });
+
+    it("should have a focus ring when focused and navigated via keyboard", () => {
+      cy.mount(<Default />);
+
+      cy.findByRole("slider").focus().realPress("ArrowRight");
+      cy.findByTestId("sliderThumb").should(
+        "have.class",
+        "saltSliderThumb-focusVisible",
+      );
+    });
+
+    it("should have focus but not display a focus ring when clicked and dragged via mouse", () => {
+      cy.mount(<Default />);
+
+      cy.findByTestId("sliderThumb").trigger("pointerdown");
+      cy.findByTestId("sliderThumb").trigger("pointermove", {
+        button: 0,
+        clientX: 750,
+        clientY: 50,
+      });
+      cy.findByRole("slider").should("have.focus");
+      cy.findByTestId("sliderThumb").should(
+        "not.have.class",
+        "saltSliderThumb-focusVisible",
+      );
+    });
+
+    it("should have focus but not display a focus ring when clicked without dragging", () => {
+      cy.mount(<Default />);
+      cy.findByTestId("sliderThumb").trigger("pointerdown");
+      cy.findByRole("slider").should("have.focus");
+      cy.findByTestId("sliderThumb").should(
+        "not.have.class",
+        "saltSliderThumb-focusVisible",
+      );
+    });
+
+    it("should allow keyboard navigation after mouse interaction with correct focus visible behaviour", () => {
+      const changeSpy = cy.stub().as("changeSpy");
+      cy.mount(<Default onChange={changeSpy} />);
+
+      // Click and drag slider via mouse
+      cy.findByTestId("sliderThumb").trigger("pointerdown");
+      cy.findByTestId("sliderThumb").trigger("pointermove", {
+        button: 0,
+        clientX: 750,
+        clientY: 50,
+      });
+      cy.findByTestId("sliderThumb").trigger("pointerup");
+      // Slider should retain focus
+      cy.findByRole("slider").should("have.focus");
+      // onChange should be called
+      cy.get("@changeSpy").should("have.callCount", 1);
+      // Focus ring should not be visible
+      cy.findByTestId("sliderThumb").should(
+        "not.have.class",
+        "saltSliderThumb-focusVisible",
+      );
+      // Tooltip should not be visible
+      cy.findByTestId("sliderTooltip").should("not.be.visible");
+
+      // Navigate via keyboard without manually focusing
+      cy.realPress("ArrowRight");
+      // onChange should be called
+      cy.get("@changeSpy").should("have.callCount", 2);
+      // Focus ring should be visible
+      cy.findByTestId("sliderThumb").should(
+        "have.class",
+        "saltSliderThumb-focusVisible",
+      );
+      // Tooltip should be visible
+      cy.findByTestId("sliderTooltip").should("be.visible");
     });
   });
 });

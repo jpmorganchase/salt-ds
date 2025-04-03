@@ -5,9 +5,9 @@ import { clsx } from "clsx";
 import {
   type ChangeEvent,
   type ComponentPropsWithoutRef,
+  type RefObject,
   useCallback,
   useEffect,
-  useRef,
   useState,
 } from "react";
 import sliderThumbCss from "./SliderThumb.css";
@@ -22,10 +22,14 @@ interface SliderThumbProps
   > {
   disabled: boolean;
   format?: (value: number) => number | string;
+  handleBlur: () => void;
+  handleFocus: (event: React.FocusEvent) => void;
   handleInputChange: (event: ChangeEvent<HTMLInputElement>) => void;
   handleKeydownOnThumb: (event: React.KeyboardEvent) => void;
   handlePointerDown: (event: React.PointerEvent<HTMLDivElement>) => void;
   index?: number;
+  inputRef?: RefObject<HTMLInputElement>;
+  isFocusVisible: boolean;
   max: number;
   maxLabel?: string;
   min: number;
@@ -44,10 +48,14 @@ export const SliderThumb = ({
   "aria-labelledby": ariaLabelledBy,
   disabled,
   format,
+  handleBlur,
+  handleFocus,
   handleInputChange,
   handleKeydownOnThumb,
   handlePointerDown,
   index = 0,
+  inputRef,
+  isFocusVisible,
   max,
   maxLabel,
   min,
@@ -68,9 +76,7 @@ export const SliderThumb = ({
       window: targetWindow,
     });
 
-    const [isFocused, setIsFocused] = useState(false);
     const [isTooltipVisible, setIsTooltipVisible] = useState(false);
-    const inputRef = useRef<HTMLInputElement>(null);
     const id = useId();
     const accessibleTextId = `saltSlider-${id}-${index}`;
     const value = Array.isArray(sliderValue) ? sliderValue[index] : sliderValue;
@@ -99,20 +105,10 @@ export const SliderThumb = ({
       }, 300);
     };
 
-    const handleFocus = () => {
-      setIsFocused(true);
-      if (showTooltip) setIsTooltipVisible(true);
-    };
-
-    const handleBlur = () => {
-      setIsFocused(false);
-      if (showTooltip) setIsTooltipVisible(false);
-    };
-
     return (
       <div
         className={clsx(withBaseName(), {
-          [withBaseName("focused")]: isFocused,
+          [withBaseName("focusVisible")]: isFocusVisible,
           [withBaseName("disabled")]: disabled,
           [withBaseName("dragging")]: trackDragging,
           [withBaseName("secondThumb")]: index === 1,
@@ -128,7 +124,9 @@ export const SliderThumb = ({
         {showTooltip && (
           <SliderTooltip
             value={formattedValue}
-            open={(isTooltipVisible || trackDragging) && !disabled}
+            open={
+              (isTooltipVisible || trackDragging || isFocusVisible) && !disabled
+            }
           />
         )}
         <input

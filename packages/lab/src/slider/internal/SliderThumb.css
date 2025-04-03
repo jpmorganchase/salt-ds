@@ -16,7 +16,7 @@
   pointer-events: none;
 }
 
-.saltSliderThumb-focused {
+.saltSliderThumb-focusVisible {
   outline-style: var(--salt-focused-outlineStyle);
   outline-width: var(--salt-focused-outlineWidth);
   outline-offset: var(--salt-focused-outlineOffset);
