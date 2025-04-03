@@ -448,6 +448,7 @@ describe("Given a Range Slider", () => {
           event: ChangeEvent<HTMLInputElement>,
           value: [number, number],
         ) => {
+          event.persist();
           setValue(value);
           changeSpy(event);
         };
@@ -455,6 +456,7 @@ describe("Given a Range Slider", () => {
           event: ChangeEvent<HTMLInputElement>,
           value: [number, number],
         ) => {
+          event.persist();
           changeEndSpy(event);
         };
 
