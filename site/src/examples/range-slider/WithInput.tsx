@@ -72,6 +72,7 @@ const RangeWithInput = () => {
       <FormFieldLabel>RangeSlider with Input</FormFieldLabel>
       <FlexLayout gap={3} align="center">
         <Input
+          aria-label="Minimum input"
           id="slider-min-value"
           placeholder={minInputValue}
           value={minInputValue}
@@ -90,6 +91,7 @@ const RangeWithInput = () => {
           onChange={handleSliderChange}
         />
         <Input
+          aria-label="Maximum input"
           id="slider-max-value"
           placeholder={`${maxInputValue}`}
           value={maxInputValue}

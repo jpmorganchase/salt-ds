@@ -345,6 +345,7 @@ export const WithInput: StoryFn<RangeSliderProps> = () => {
       <FormFieldLabel>Range Slider with Input</FormFieldLabel>
       <FlexLayout style={{ width: "100%" }} gap={2}>
         <Input
+          aria-label="Minimum input"
           value={minInputValue}
           onChange={(event: ChangeEvent<HTMLInputElement>) =>
             handleInputChange(event, "min")
@@ -366,6 +367,7 @@ export const WithInput: StoryFn<RangeSliderProps> = () => {
           style={{ flex: "100%" }}
         />
         <Input
+          aria-label="Maximum input"
           value={maxInputValue}
           onChange={(event: ChangeEvent<HTMLInputElement>) =>
             handleInputChange(event, "max")
@@ -411,6 +413,7 @@ export const WithInputAndInlineLabels: StoryFn<RangeSliderProps> = () => {
       <FormFieldLabel>Range Slider with Input</FormFieldLabel>
       <FlexLayout style={{ width: "100%" }} gap={2}>
         <Input
+          aria-label="Minimum input"
           value={minInputValue}
           onChange={(event: ChangeEvent<HTMLInputElement>) =>
             handleInputChange(event, "min")
@@ -434,6 +437,7 @@ export const WithInputAndInlineLabels: StoryFn<RangeSliderProps> = () => {
           maxLabel="50"
         />
         <Input
+          aria-label="Maximum input"
           value={maxInputValue}
           onChange={(event: ChangeEvent<HTMLInputElement>) =>
             handleInputChange(event, "max")
@@ -479,6 +483,7 @@ export const WithInputAndMarksAndTicks: StoryFn<RangeSliderProps> = () => {
       <FormFieldLabel>Range Slider with Input</FormFieldLabel>
       <FlexLayout gap={3}>
         <Input
+          aria-label="Minimum input"
           value={minInputValue}
           style={{ flex: 1 }}
           inputProps={{ style: { textAlign: "center" } }}
@@ -515,6 +520,7 @@ export const WithInputAndMarksAndTicks: StoryFn<RangeSliderProps> = () => {
           showTicks
         />
         <Input
+          aria-label="Maximum input"
           value={maxInputValue}
           style={{ flex: 1 }}
           inputProps={{ style: { textAlign: "center" } }}
