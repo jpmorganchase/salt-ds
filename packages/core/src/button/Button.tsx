@@ -136,10 +136,10 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 
     const mapped = variantToAppearanceAndColor(variant);
     const appearance: ButtonAppearance =
-      appearanceProp ?? mapped.appearance ?? "solid";
+      appearanceProp ?? mapped?.appearance ?? "solid";
 
     const sentiment: ButtonSentiment =
-      sentimentProp ?? mapped.sentiment ?? "neutral";
+      sentimentProp ?? mapped?.sentiment ?? "neutral";
 
     // we do not want to spread tab index in this case because the button element
     // does not require tabindex="0" attribute
