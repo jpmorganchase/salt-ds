@@ -41,7 +41,7 @@
   border-left-color: var(--salt-separable-secondary-borderColor);
 }
 
-.ag-theme-salt-light .ag-ltr .ag-cell, 
+.ag-theme-salt-light .ag-ltr .ag-cell,
 .ag-theme-salt-dark .ag-ltr .ag-cell,
 .ag-theme-salt-compact-light .ag-ltr .ag-cell,
 .ag-theme-salt-compact-dark .ag-ltr .ag-cell {
