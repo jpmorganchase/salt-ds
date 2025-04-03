@@ -448,8 +448,6 @@ describe("Given a Range Slider", () => {
           event: ChangeEvent<HTMLInputElement>,
           value: [number, number],
         ) => {
-          // React 16 backwards compatibility
-          // event.persist();
           setValue(value);
           changeSpy(event);
         };
@@ -457,8 +455,6 @@ describe("Given a Range Slider", () => {
           event: ChangeEvent<HTMLInputElement>,
           value: [number, number],
         ) => {
-          // React 16 backwards compatibility
-          // event.persist();
           changeEndSpy(event);
         };
 

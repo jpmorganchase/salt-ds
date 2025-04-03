@@ -382,7 +382,6 @@ describe("Given a Slider", () => {
       function ControlledSlider() {
         const [value, setValue] = useState<number>(3);
         const onChange = (event: ChangeEvent<HTMLInputElement>) => {
-          // React 16 backwards compatibility
           setValue(Number.parseFloat(event.target.value));
           changeSpy(event);
         };
@@ -390,7 +389,6 @@ describe("Given a Slider", () => {
           event: ChangeEvent<HTMLInputElement>,
           value: [number, number],
         ) => {
-          // React 16 backwards compatibility
           changeEndSpy(event);
         };
         return (

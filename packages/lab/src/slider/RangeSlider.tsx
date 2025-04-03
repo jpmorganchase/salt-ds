@@ -66,13 +66,13 @@ export interface RangeSliderProps
   minLabel?: string;
   /**
    * Callback called when slider value is changed.
-   * Event is either an Input change event or a click event.
+   * It provides a generic event and the current value of the slider.
    */
   onChange?: (event: Event, value: [number, number]) => void;
   /**
    * Callback called when the slider is stopped from being dragged or
-   * its value is changed from the keyboard.
-   * Event is either an Input change event or a click event.
+   * its value is changed from the keyboard. It provides a generic
+   * event and the current value of the slider.
    */
   onChangeEnd?: (event: Event, value: [number, number]) => void;
   /**
