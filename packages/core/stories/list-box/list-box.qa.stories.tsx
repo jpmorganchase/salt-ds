@@ -11,27 +11,39 @@ export default {
 export const AllExamples: StoryFn<QAContainerProps> = () => (
   <QAContainer cols={4} transposeDensity width={1200}>
     <ListBox defaultSelected={[shortColorData[0]]}>
-      {shortColorData.map((color) => (
-        <Option key={color} value={color} />
+      {shortColorData.map((color, index) => (
+        <Option
+          key={color}
+          disabled={index === 5 || index === 8}
+          value={color}
+        />
       ))}
     </ListBox>
     <ListBox
       multiselect
       defaultSelected={[shortColorData[0], shortColorData[1]]}
     >
-      {shortColorData.map((color) => (
-        <Option key={color} value={color} />
+      {shortColorData.map((color, index) => (
+        <Option
+          key={color}
+          disabled={index === 5 || index === 8}
+          value={color}
+        />
       ))}
     </ListBox>
     <ListBox bordered defaultSelected={[shortColorData[0]]}>
-      {shortColorData.map((color) => (
-        <Option key={color} value={color} />
+      {shortColorData.map((color, index) => (
+        <Option
+          key={color}
+          disabled={index === 5 || index === 8}
+          value={color}
+        />
       ))}
     </ListBox>
-    <ListBox>
+    <ListBox defaultSelected={[shortColorData[1]]}>
       <OptionGroup label="B">
-        {shortColorData.slice(0, 4).map((color) => (
-          <Option key={color} value={color} />
+        {shortColorData.slice(0, 4).map((color, index) => (
+          <Option key={color} disabled={index === 2} value={color} />
         ))}
       </OptionGroup>
     </ListBox>
