@@ -382,7 +382,6 @@ describe("Given a Slider", () => {
       function ControlledSlider() {
         const [value, setValue] = useState<number>(3);
         const onChange = (event: ChangeEvent<HTMLInputElement>) => {
-          event.persist();
           setValue(Number.parseFloat(event.target.value));
           changeSpy(event);
         };
@@ -390,7 +389,6 @@ describe("Given a Slider", () => {
           event: ChangeEvent<HTMLInputElement>,
           value: [number, number],
         ) => {
-          event.persist();
           changeEndSpy(event);
         };
         return (
@@ -405,10 +403,10 @@ describe("Given a Slider", () => {
       cy.mount(<ControlledSlider />);
       cy.findByRole("slider").focus().realPress("ArrowRight");
       cy.get("@changeSpy").should("have.been.calledWithMatch", {
-        target: { value: "4" },
+        Cypress.sinon.match.any, "4"
       });
       cy.get("@changeEndSpy").should("have.been.calledWithMatch", {
-        target: { value: "4" },
+        Cypress.sinon.match.any, "4"
       });
     });
   });

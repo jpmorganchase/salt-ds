@@ -448,7 +448,6 @@ describe("Given a Range Slider", () => {
           event: ChangeEvent<HTMLInputElement>,
           value: [number, number],
         ) => {
-          event.persist();
           setValue(value);
           changeSpy(event);
         };
@@ -456,7 +455,6 @@ describe("Given a Range Slider", () => {
           event: ChangeEvent<HTMLInputElement>,
           value: [number, number],
         ) => {
-          event.persist();
           changeEndSpy(event);
         };
 
@@ -472,17 +470,17 @@ describe("Given a Range Slider", () => {
       cy.mount(<ControlledSlider />);
       cy.findAllByRole("slider").eq(0).focus().realPress("ArrowRight");
       cy.get("@changeSpy").should("have.been.calledWithMatch", {
-        target: { value: "4" },
+        Cypress.sinon.match.any, "4"
       });
       cy.get("@changeEndSpy").should("have.been.calledWithMatch", {
-        target: { value: "4" },
+        Cypress.sinon.match.any, "4"
       });
       cy.findAllByRole("slider").eq(1).focus().realPress("ArrowRight");
       cy.get("@changeSpy").should("have.been.calledWithMatch", {
-        target: { value: "6" },
+        Cypress.sinon.match.any, "6"
       });
       cy.get("@changeEndSpy").should("have.been.calledWithMatch", {
-        target: { value: "6" },
+        Cypress.sinon.match.any, "6"
       });
     });
   });
