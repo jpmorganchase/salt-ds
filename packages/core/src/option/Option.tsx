@@ -128,7 +128,7 @@ export const Option = forwardRef<HTMLDivElement, OptionProps>(
         onMouseOver={handleMouseOver}
         {...rest}
       >
-        {multiselect && <CheckboxIcon checked={selected} />}
+        {multiselect && <CheckboxIcon checked={selected} disabled={disabled} />}
         {children ?? valueToString(value)}
       </div>
     );
