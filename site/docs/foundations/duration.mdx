@@ -5,11 +5,13 @@ sidebar:
   priority: 10
 ---
 
-Duration represents the time between a user performing an action and the system giving feedback. Consistency in timing provides comfort and can increase trust in a system.
+Duration represents the time between a user performing an action and the system giving feedback. It’s essential to indicate to users that something is happening when they interact with an element. Consistency in timing provides user comfort and can increase trust in a system. The duration should match the significance of the animated element or information.
 
-## Duration scale
+For detailed information on how to apply duration in design and the use cases, please refer to the [Understanding Duration in User Experience - Insights from the Salt Design System blog post](https://go/salt-ds-internal/news/blogs/20250402-duration#). (Internal users only)
 
-There are four durations available to choose from: instant, perceptible, notable and cut-off.
+## Duration ramps
+
+The Salt design system provides four durations to choose from:
 
 | Token                         | Duration (milliseconds) |
 | ----------------------------- | ----------------------- |
@@ -18,67 +20,50 @@ There are four durations available to choose from: instant, perceptible, notable
 | `--salt-duration-notable`     | 1,000                   |
 | `--salt-duration-cutoff`      | 10,000                  |
 
-It's important to use the correct duration to ensure the user feels in control of the interface. The duration should reflect the importance of the element or information being animated. Responses that occur too quickly can distract or obstruct a workflow (e.g., tooltips should never appear instantly as a user moves the mouse pointer over the user interface (UI)). If responses occur too slowly, the application may appear unresponsive, resulting in unnecessary clicks or potential user error (e.g., a system action occurs, but a progress component isn't displayed quickly enough to communicate its state).
+## Instant (0 milliseconds)
 
-## Instant (0ms)
-
-An instant duration is an immediate response by the system to a user’s interaction within 0–100ms. The response should take no more than 100ms to complete. Interactions that can trigger an instant response include hovering over a button, clicking a radio button, typing into an editable field, or dragging an object. No feedback is required as the system response itself is the feedback.
+An instant duration is an immediate system response to a user’s interaction within 0–100ms. Users feel they've directly caused the outcome of the interaction. No feedback is required as the system response itself is the feedback. Interactions that can trigger an instant response include clicking a radio button, typing into an editable field, dragging an object, or hovering over a button (pictured below).
 
 <Image
-  src="/img/foundations/duration-instant.svg"
+  src="/img/foundations/duration-instant.png"
   alt="Example of duration instant"
 />
 
-## Perceptible (300ms)
+## Perceptible (300 milliseconds)
 
-A perceptible duration is a short, but detectable delay between a user's action and the system's response.
+A perceptible duration is a short detectable delay between a user's action and the system's response. It’s recommended for revealing secondary guidance or information to the user. For example, tooltips shouldn't appear instantly as the mouse moves over the UI.
 
 <Image
   src="/img/foundations/duration-perceptible.png"
   alt="Example of duration perceptible"
 />
 
-Perceptible duration is recommended for revealing secondary guidance or information to a user.
+## Notable (1 second)
 
-## Notable (1s)
+Notable delays are intentional and may be required to load or retrieve results. Should users experience delays longer than 1s, they may become frustrated, which can result in them abandoning the action they were trying to take. A 1s delay is usually the maximum limit for experiencing an interaction as one continuous flow. The user understands a ‘notable’ duration as a two-way interaction between them and the system.
 
-With a notable duration, the user is aware the system is slow to respond. A feeling of loss of control may occur, so it's important the delay is clearly communicated. Notable delays are intentional and may be required to load a data grid or retrieve search results. Should users experience delays longer than 1s they may feel held back by the system.
-
-A 1s delay is usually the maximum limit for experiencing an interaction as one continuous flow. The user understands a ‘notable’ duration as a two-way interaction between them and the system. By contrast, with an instant (100ms) duration, users feel they've directly caused the outcome of the interaction.
+A progress cursor or [spinner component](/salt/components/spinner/examples) can be used to prevent users from wondering whether the action they just took didn’t work or is simply taking time to process.
 
 <Image
-  src="/img/foundations/duration-notable.svg"
+  src="/img/foundations/duration-notable.png"
   alt="Example of duration notable"
 />
 
 With a delay of 1s (`salt-duration-notable`) there's no need to provide visual feedback to the user; however, it can be used as a breakpoint. Once a delay has exceeded the 'notable' duration, it's useful to indicate to the user that the system is working on the problem, for example by displaying a progress indicator or loading state.
 
-#### Recommended visual feedback:
+## Cut-off (10 seconds)
 
-[Spinner](../components/spinner) is a visual representation of a process that is taking an indeterminate amount of time to complete. A spinner can be displayed at any point between `salt-duration-notable` and `salt-duration-cutoff`, but should not be displayed any sooner, as the assumption should be that the user's actions will have completed before it's necessary to show a loading state.
-
-<Image
-  src="/img/foundations/duration-timebetween.svg"
-  alt="Example of time between notable and cut-off"
-/>
-
-## Cut-off (10s)
-
-Cut-off, `salt-duration-cutoff`, is the point at which any attempt for a system to respond should finish, and a status message should be displayed.
-
-<Image
-  src="/img/foundations/duration-cutoff.svg"
-  alt="Example of duration cut-off"
-/>
+Cut-off is the point at which any attempt for a system to respond should finish, and a status message should be displayed. If responses are too slow, the application may seem unresponsive, leading to unnecessary clicks or user errors.
 
 To prevent a frustrating or unproductive user experience, the time until a cut-off duration can be used for:
 
-- Displaying messages that inform the user of the current interaction and which processes are taking time.
-- Displaying general hints and tips for using the application.
-- If possible, allowing the user to continue using other parts of the UI while the content loads.
+- Displaying messages that inform the user of the current interaction and which processes are taking time
+- Displaying general hints and tips for using the application
+- If possible, allowing the user to continue using other parts of the UI while the content loads
 
-#### Exceeding the 10 second cut-off point:
-
-There may be a requirement for a system to continue loading an interaction for an indeterminate amount of time, past the cut-off point, due to a workflow dependency. A system may need to support a highly performant UI that concurrently updates a significant number of data points such as a trading platform.
+<Image
+  src="/img/foundations/duration-cutoff.png"
+  alt="Example of duration cut-off"
+/>
 
 :fragment{src="./fragments/feedback.mdx"}
