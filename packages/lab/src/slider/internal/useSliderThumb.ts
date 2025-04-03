@@ -141,9 +141,29 @@ export const useSliderThumb = ({
     ],
   );
 
-  const handleKeydownOnThumb = (event: React.KeyboardEvent) => {
-    const newValue = getKeyboardValue(
-      event,
+  const handleKeydownOnThumb = useCallback(
+    (event: React.KeyboardEvent) => {
+      const newValue = getKeyboardValue(
+        event,
+        value,
+        step,
+        stepMultiplier,
+        max,
+        min,
+        restrictToMarks,
+        marks,
+      );
+
+      setIsFocusVisible(true);
+      if (newValue === undefined || lastValueRef.current === newValue) {
+        return;
+      }
+      lastValueRef.current = newValue;
+      handleInputChange({
+        target: { value: newValue.toString() },
+      } as ChangeEvent<HTMLInputElement>);
+    },
+    [
       value,
       step,
       stepMultiplier,
@@ -151,17 +171,9 @@ export const useSliderThumb = ({
       min,
       restrictToMarks,
       marks,
-    );
-
-    setIsFocusVisible(true);
-    if (newValue === undefined || lastValueRef.current === newValue) {
-      return;
-    }
-    lastValueRef.current = newValue;
-    handleInputChange({
-      target: { value: newValue.toString() },
-    } as ChangeEvent<HTMLInputElement>);
-  };
+      handleInputChange,
+    ],
+  );
 
   const handleFocus = () => setIsFocusVisible(true);
 

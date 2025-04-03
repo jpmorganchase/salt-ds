@@ -222,31 +222,40 @@ export const useRangeSliderThumb = ({
     ],
   );
 
-  const handleKeydownOnThumb = (
-    event: React.KeyboardEvent,
-    thumbIndex: number,
-  ) => {
-    const newValue = getKeyboardValue(
-      event,
-      value[thumbIndex],
+  const handleKeydownOnThumb = useCallback(
+    (event: React.KeyboardEvent, thumbIndex: number) => {
+      const newValue = getKeyboardValue(
+        event,
+        value[thumbIndex],
+        step,
+        stepMultiplier,
+        max,
+        min,
+        restrictToMarks,
+        marks,
+      );
+      setIsFocusVisible(true);
+      if (newValue !== lastValueRef.current[thumbIndex]) {
+        lastValueRef.current[thumbIndex] = newValue;
+        handleInputChange(
+          {
+            target: { value: newValue.toString() },
+          } as ChangeEvent<HTMLInputElement>,
+          thumbIndex,
+        );
+      }
+    },
+    [
+      value,
       step,
       stepMultiplier,
       max,
       min,
       restrictToMarks,
       marks,
-    );
-    setIsFocusVisible(true);
-    if (newValue !== lastValueRef.current[thumbIndex]) {
-      lastValueRef.current[thumbIndex] = newValue;
-      handleInputChange(
-        {
-          target: { value: newValue.toString() },
-        } as ChangeEvent<HTMLInputElement>,
-        thumbIndex,
-      );
-    }
-  };
+      handleInputChange,
+    ],
+  );
 
   const handleFocus = (thumbIndex: number) => {
     setIsThumbIndex(thumbIndex);
