@@ -383,7 +383,6 @@ describe("Given a Slider", () => {
         const [value, setValue] = useState<number>(3);
         const onChange = (event: ChangeEvent<HTMLInputElement>) => {
           // React 16 backwards compatibility
-          // event.persist();
           setValue(Number.parseFloat(event.target.value));
           changeSpy(event);
         };
@@ -392,7 +391,6 @@ describe("Given a Slider", () => {
           value: [number, number],
         ) => {
           // React 16 backwards compatibility
-          // event.persist();
           changeEndSpy(event);
         };
         return (
@@ -459,6 +457,10 @@ describe("Given a Slider", () => {
       );
       cy.realPress("Tab");
       cy.findByRole("slider").should("not.have.focus");
+      cy.findByTestId("sliderThumb").should(
+        "not.have.class",
+        "saltSliderThumb-focusVisible",
+      );
       cy.realPress(["Shift", "Tab"]);
       cy.findByRole("slider").should("have.focus");
       cy.findByTestId("sliderThumb").should(
@@ -519,6 +521,11 @@ describe("Given a Slider", () => {
       cy.findByRole("slider").should("have.focus");
       // onChange should be called
       cy.get("@changeSpy").should("have.callCount", 1);
+      cy.get("@changeSpy").should(
+        "have.been.calledWith",
+        Cypress.sinon.match.any,
+        7,
+      );
       // Focus ring should not be visible
       cy.findByTestId("sliderThumb").should(
         "not.have.class",
@@ -531,10 +538,26 @@ describe("Given a Slider", () => {
       cy.realPress("ArrowRight");
       // onChange should be called
       cy.get("@changeSpy").should("have.callCount", 2);
+      cy.get("@changeSpy").should(
+        "have.been.calledWith",
+        Cypress.sinon.match.any,
+        8,
+      );
       // Focus ring should be visible
       cy.findByTestId("sliderThumb").should(
         "have.class",
         "saltSliderThumb-focusVisible",
+      );
+      // Tab away from the slider
+      cy.realPress("Tab");
+      // Tab back to the slider
+      cy.realPress(["Shift", "Tab"]);
+      cy.realPress("ArrowRight");
+      cy.get("@changeSpy").should("have.callCount", 3);
+      cy.get("@changeSpy").should(
+        "have.been.calledWith",
+        Cypress.sinon.match.any,
+        9,
       );
       // Tooltip should be visible
       cy.findByTestId("sliderTooltip").should("be.visible");

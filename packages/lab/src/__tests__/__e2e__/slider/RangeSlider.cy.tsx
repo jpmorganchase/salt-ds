@@ -652,7 +652,7 @@ describe("Given a Range Slider", () => {
       cy.findAllByTestId("sliderThumb")
         .eq(1)
         .should("not.have.class", "saltSliderThumb-focusVisible");
-      cy.get("@changeSpy").should("have.callCount", 1);
+      cy.get("@changeSpy").should("have.callCount", 0);
     });
 
     it("should allow keyboard navigation after mouse interaction with correct focus visible behaviour", () => {
@@ -673,6 +673,11 @@ describe("Given a Range Slider", () => {
       cy.findAllByRole("slider").eq(1).should("not.have.focus");
       // onChange should be called
       cy.get("@changeSpy").should("have.callCount", 1);
+      cy.get("@changeSpy").should(
+        "have.been.calledWith",
+        Cypress.sinon.match.any,
+        Cypress.sinon.match.array.deepEquals([5, 8]),
+      );
       // Focus ring should not be visible on both thumbs
       cy.findAllByTestId("sliderThumb")
         .eq(0)
@@ -687,6 +692,11 @@ describe("Given a Range Slider", () => {
       // Navigate via keyboard without manually focusing
       cy.realPress("ArrowRight");
       // onChange should be called
+      cy.get("@changeSpy").should(
+        "have.been.calledWith",
+        Cypress.sinon.match.any,
+        Cypress.sinon.match.array.deepEquals([6, 8]),
+      );
       cy.get("@changeSpy").should("have.callCount", 2);
       // Focus ring should be visible on first thumb but not on the second thumb
       cy.findAllByTestId("sliderThumb")
@@ -715,6 +725,28 @@ describe("Given a Range Slider", () => {
         .eq(1)
         .should("have.class", "saltSliderThumb-focusVisible");
       cy.get("@changeSpy").should("have.callCount", 3);
+      cy.get("@changeSpy").should(
+        "have.been.calledWith",
+        Cypress.sinon.match.any,
+        Cypress.sinon.match.array.deepEquals([6, 9]),
+      );
+
+      // Tab away from the slider
+      cy.realPress("Tab");
+      // Tab back to the slider on the second thumb
+      cy.realPress(["Shift", "Tab"]);
+      cy.findAllByRole("slider").eq(1).should("have.focus");
+      cy.findAllByTestId("sliderThumb")
+        .eq(1)
+        .should("have.class", "saltSliderThumb-focusVisible");
+      // Navigate the second thumb
+      cy.realPress("ArrowLeft");
+      cy.get("@changeSpy").should("have.callCount", 4);
+      cy.get("@changeSpy").should(
+        "have.been.calledWith",
+        Cypress.sinon.match.any,
+        Cypress.sinon.match.array.deepEquals([6, 8]),
+      );
     });
   });
 });
