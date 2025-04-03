@@ -16,16 +16,10 @@ describe("Given a Slider", () => {
 
   it("should fire onChange on pointer down on slider track", () => {
     const changeSpy = cy.stub().as("changeSpy");
-    cy.mount(
-      <Default
-        style={{ width: "400px" }}
-        defaultValue={0}
-        onChange={changeSpy}
-      />,
-    );
+    cy.mount(<Default defaultValue={0} onChange={changeSpy} />);
     cy.get(".saltSliderTrack-rail").trigger("pointerdown", {
       button: 0,
-      clientX: 750,
+      clientX: 720,
       clientY: 50,
     });
     cy.get("@changeSpy").should("have.callCount", 1);
@@ -38,10 +32,10 @@ describe("Given a Slider", () => {
 
   it("should fire onChangeEnd when user stops dragging", () => {
     const changeEndSpy = cy.stub().as("changeEndSpy");
-    cy.mount(<Default style={{ width: "400px" }} onChangeEnd={changeEndSpy} />);
+    cy.mount(<Default onChangeEnd={changeEndSpy} />);
     cy.get(".saltSliderTrack-rail").trigger("pointerdown", {
       button: 0,
-      clientX: 750,
+      clientX: 720,
       clientY: 50,
     });
     // onChangeEnd is not called when dragging
@@ -58,7 +52,7 @@ describe("Given a Slider", () => {
 
   it("should trigger onChangeEnd during keyboard navigation", () => {
     const changeEndSpy = cy.stub().as("changeEndSpy");
-    cy.mount(<Default style={{ width: "400px" }} onChangeEnd={changeEndSpy} />);
+    cy.mount(<Default onChangeEnd={changeEndSpy} />);
 
     // Focus and press ArrowRight key
     cy.findByRole("slider").focus().realPress("ArrowRight");
@@ -73,7 +67,6 @@ describe("Given a Slider", () => {
     const changeSpy = cy.stub().as("changeSpy");
     cy.mount(
       <Default
-        style={{ width: "400px" }}
         min={5}
         max={125}
         step={5}
@@ -116,13 +109,7 @@ describe("Given a Slider", () => {
 
   it("should move the thumb in larger increments when step multiplier is increased", () => {
     cy.mount(
-      <Default
-        defaultValue={10}
-        min={0}
-        max={30}
-        stepMultiplier={10}
-        style={{ width: "400px" }}
-      />,
+      <Default defaultValue={10} min={0} max={30} stepMultiplier={10} />,
     );
 
     // Focus and move first thumb
@@ -132,20 +119,12 @@ describe("Given a Slider", () => {
 
   it("should allow dragging to change values", () => {
     const changeSpy = cy.stub().as("changeSpy");
-    cy.mount(
-      <Default
-        style={{ width: "400px" }}
-        min={0}
-        max={10}
-        default={5}
-        onChange={changeSpy}
-      />,
-    );
+    cy.mount(<Default min={0} max={10} default={5} onChange={changeSpy} />);
     // Drag the thumb
     cy.findByTestId("sliderThumb").trigger("pointerdown");
     cy.findByTestId("sliderThumb").trigger("pointermove", {
       button: 0,
-      clientX: 750,
+      clientX: 720,
       clientY: 50,
     });
     cy.findByTestId("sliderThumb").trigger("pointerup");
@@ -159,7 +138,7 @@ describe("Given a Slider", () => {
   });
 
   it("should display a tooltip on pointerover with correct value", () => {
-    cy.mount(<Default style={{ width: "400px" }} defaultValue={2} />);
+    cy.mount(<Default defaultValue={2} />);
     cy.findByTestId("sliderThumb").trigger("pointerover");
     cy.findByTestId("sliderTooltip").should("be.visible");
     cy.findByTestId("sliderTooltip").should("have.text", "2");
@@ -169,13 +148,7 @@ describe("Given a Slider", () => {
   });
 
   it("should not show tooltip when showTooltip is set to false", () => {
-    cy.mount(
-      <Default
-        style={{ width: "400px" }}
-        defaultValue={2}
-        showTooltip={false}
-      />,
-    );
+    cy.mount(<Default defaultValue={2} showTooltip={false} />);
     cy.findByTestId("sliderThumb").trigger("pointerover");
     cy.findByTestId("sliderTooltip").should("not.exist");
   });
@@ -184,7 +157,6 @@ describe("Given a Slider", () => {
     cy.mount(
       <Default
         defaultValue={0}
-        style={{ width: "400px" }}
         restrictToMarks={true}
         marks={[
           { value: 2, label: "2" },
@@ -212,7 +184,6 @@ describe("Given a Slider", () => {
   it("should render inline min/max labels and marks when provided", () => {
     cy.mount(
       <Default
-        style={{ width: "400px" }}
         marks={[
           { value: 2, label: "2" },
           { value: 3, label: "3" },
@@ -233,7 +204,6 @@ describe("Given a Slider", () => {
     const changeEndSpy = cy.stub().as("changeEndSpy");
     cy.mount(
       <Default
-        style={{ width: "400px" }}
         min={5}
         max={20}
         onChange={changeSpy}
@@ -262,48 +232,23 @@ describe("Given a Slider", () => {
   });
 
   it("should set slider value to minimum if default value is less than minimum", () => {
-    cy.mount(
-      <Default
-        style={{ width: "400px" }}
-        min={0}
-        max={10}
-        defaultValue={-10}
-      />,
-    );
+    cy.mount(<Default min={0} max={10} defaultValue={-10} />);
     cy.findByRole("slider").should("have.value", 0);
   });
 
   it("should set slider value to maximum if default value is greater than maximum", () => {
-    cy.mount(
-      <Default
-        style={{ width: "400px" }}
-        min={0}
-        max={10}
-        defaultValue={100}
-      />,
-    );
+    cy.mount(<Default min={0} max={10} defaultValue={100} />);
     cy.findByRole("slider").should("have.value", 10);
   });
 
   it("should round the slider value to the next step value if default value is not a multiple of the step", () => {
-    cy.mount(
-      <Default
-        style={{ width: "400px" }}
-        min={0}
-        max={10}
-        defaultValue={1.5}
-      />,
-    );
+    cy.mount(<Default min={0} max={10} defaultValue={1.5} />);
     cy.findByRole("slider").should("have.value", 2);
   });
 
   it("should render min max labels when passed", () => {
     cy.mount(
-      <Default
-        style={{ width: "400px" }}
-        minLabel={"Custom Min Label"}
-        maxLabel={"Custom Max Label"}
-      />,
+      <Default minLabel={"Custom Min Label"} maxLabel={"Custom Max Label"} />,
     );
 
     cy.findByText("Custom Min Label").should("exist");
@@ -382,14 +327,14 @@ describe("Given a Slider", () => {
       function ControlledSlider() {
         const [value, setValue] = useState<number>(3);
         const onChange = (event: ChangeEvent<HTMLInputElement>) => {
-          setValue(Number.parseFloat(event.target.value));
-          changeSpy(event);
+          const newValue = Number.parseFloat(event.target.value);
+          setValue(newValue);
+          changeSpy(event, newValue);
         };
-        const onChangeEnd = (
-          event: ChangeEvent<HTMLInputElement>,
-          value: [number, number],
-        ) => {
-          changeEndSpy(event);
+        const onChangeEnd = (event: ChangeEvent<HTMLInputElement>) => {
+          const newValue = Number.parseFloat(event.target.value);
+          setValue(newValue);
+          changeEndSpy(event, newValue);
         };
         return (
           <Default
@@ -402,12 +347,16 @@ describe("Given a Slider", () => {
 
       cy.mount(<ControlledSlider />);
       cy.findByRole("slider").focus().realPress("ArrowRight");
-      cy.get("@changeSpy").should("have.been.calledWithMatch", {
-        Cypress.sinon.match.any, "4"
-      });
-      cy.get("@changeEndSpy").should("have.been.calledWithMatch", {
-        Cypress.sinon.match.any, "4"
-      });
+      cy.get("@changeSpy").should(
+        "have.been.calledWith",
+        Cypress.sinon.match.any,
+        4,
+      );
+      cy.get("@changeEndSpy").should(
+        "have.been.calledWith",
+        Cypress.sinon.match.any,
+        4,
+      );
     });
   });
 
@@ -511,7 +460,7 @@ describe("Given a Slider", () => {
       cy.findByTestId("sliderThumb").trigger("pointerdown");
       cy.findByTestId("sliderThumb").trigger("pointermove", {
         button: 0,
-        clientX: 750,
+        clientX: 700,
         clientY: 50,
       });
       cy.findByTestId("sliderThumb").trigger("pointerup");

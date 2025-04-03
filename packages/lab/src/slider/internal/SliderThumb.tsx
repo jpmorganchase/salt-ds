@@ -163,7 +163,7 @@ export const SliderThumb = ({
         >
           {Array.isArray(sliderValue) &&
             `${index === 0 ? "leading" : "trailing"}, ${format?.(sliderValue[0]) || sliderValue[0]} to ${format?.(sliderValue[1]) || sliderValue[1]}, `}
-          slider range{" "}
+          range{" "}
           {accessibleMinText
             ? `${accessibleMinText} ${min}, `
             : `minimum ${format?.(min) || min}, `}
