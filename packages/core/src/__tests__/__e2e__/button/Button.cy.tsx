@@ -78,6 +78,6 @@ describe("Given a Button", () => {
   it("should render default Button when invalid variant is passed in", () => {
     // @ts-expect-error test invalid variant
     cy.mount(<Default variant="invalid" />);
-    cy.findByRole("button").should("have.class", 'saltButton');
+    cy.findByRole("button").should("have.class", "saltButton");
   });
 });
