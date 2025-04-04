@@ -43,3 +43,11 @@ data:
 
 </KeyboardControl>
 </KeyboardControls>
+
+## Known Issue
+
+- VoiceOver/Safari on Mac bug: When shift+tab from the CTA (link or button), there's an empty focus stop. **(This is not a Salt bug)**
+  - Focus moves to the slide, but VoiceOver doesn't announce the slide's content.
+    - Single slide: Pressing shit+tab again will move focus to either the (next) control button
+    - Multiple slides: Pressing shit+tab again will move focus to the last focusable element in the prevoius slide or the prevoius slide if the prevoius slide doesn't contain any interactive elements. 
+  - Now pressing tab will place focus on the slide and will announce the slide's content.
