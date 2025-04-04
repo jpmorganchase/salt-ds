@@ -86,6 +86,8 @@ export function Step({
   const depth = useContext(StepDepthContext);
   const orientation = useContext(StepperOrientationContext);
 
+  const hasNestedSteps = !!children || !!substeps;
+
   const [expanded, setExpanded] = useControlled({
     name: "Step",
     state: "expanded",
@@ -107,15 +109,16 @@ export function Step({
       if (depth > 2) {
         console.warn("<Step /> should not be nested more than 2 levels deep!");
       }
-      if (orientation === "horizontal" && substeps) {
-        console.warn("<Stepper /> does not support, nested, horizontal views");
+      if (orientation === "horizontal" && hasNestedSteps) {
+        console.warn(
+          "<Stepper /> does not support nested steps in horizontal orientation!",
+        );
       }
     }
-  }, [depth, orientation, substeps]);
+  }, [depth, orientation, children, substeps]);
 
   const ariaCurrent = stage === "active" ? "step" : undefined;
   const iconSizeMultiplier = depth === 0 ? 1.5 : 1;
-  const hasNestedSteps = !!children || !!substeps;
   const state = status || stage;
 
   const labelId = `${id}-label`;
@@ -186,7 +189,7 @@ export function Step({
           {description}
         </StepText>
       )}
-      {hasNestedSteps && (
+      {hasNestedSteps && orientation === "vertical" && (
         <StepExpandTrigger
           id={expandTriggerId}
           aria-expanded={expanded}
@@ -204,7 +207,7 @@ export function Step({
           }}
         />
       )}
-      {hasNestedSteps && (
+      {hasNestedSteps && orientation === "vertical" && (
         <Stepper
           id={nestedStepperId}
           aria-labelledby={[labelId, screenReaderOnly.substepsId].join(" ")}

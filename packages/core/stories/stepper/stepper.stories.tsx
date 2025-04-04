@@ -514,3 +514,70 @@ export const ReducerLinks: StoryFn<typeof Stepper> = () => {
     </StackLayout>
   );
 };
+
+export const ReducerHorizontalNestedSteps: StoryFn<typeof Stepper> = () => {
+  const stepIdToElement = useMemo(
+    () => ({
+      "step-1-1": <Text key="step-1-content">Step 1-1 Content</Text>,
+      "step-1-2": <Text key="step-1-content">Step 1-2 Content</Text>,
+      "step-1-3": <Text key="step-1-content">Step 1-3 Content</Text>,
+      "step-1-4": <Text key="step-1-content">Step 1-4 Content</Text>,
+      "step-2": <Text key="step-2-content">Step 2 Content</Text>,
+      "step-3": <Text key="step-3-content">Step 3 Content</Text>,
+      default: <Text key="default-content">No Step is currently active</Text>,
+    }),
+    [],
+  );
+
+  const [state, dispatch] = useStepperReducer(
+    [
+      {
+        id: "step-1",
+        label: "Step 1",
+        substeps: [
+          { id: "step-1-1", label: "Step 1.1" },
+          { id: "step-1-2", label: "Step 1.2" },
+          { id: "step-1-3", label: "Step 1.3" },
+          { id: "step-1-4", label: "Step 1.4" },
+        ],
+      },
+      { id: "step-2", label: "Step 2" },
+      { id: "step-3", label: "Step 3" },
+    ],
+    { activeStepId: "step-1-1" },
+  );
+
+  const activeStepId = (state.activeStep?.id ??
+    "default") as keyof typeof stepIdToElement;
+
+  return (
+    <StackLayout style={{ width: 320, alignItems: "center" }}>
+      <Stepper orientation="horizontal">
+        {state.steps.map((step) => (
+          <Step key={step.id} {...step} />
+        ))}
+      </Stepper>
+      <Panel variant="secondary">{stepIdToElement[activeStepId]}</Panel>
+      <FlexLayout justify="space-between">
+        {state.started && (
+          <Button
+            onClick={() => {
+              dispatch({ type: "previous" });
+            }}
+          >
+            Previous
+          </Button>
+        )}
+        {!state.ended && (
+          <Button
+            onClick={() => {
+              dispatch({ type: "next" });
+            }}
+          >
+            Next
+          </Button>
+        )}
+      </FlexLayout>
+    </StackLayout>
+  );
+};
