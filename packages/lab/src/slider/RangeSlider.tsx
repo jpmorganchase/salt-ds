@@ -1,7 +1,6 @@
 import {
   type ChangeEvent,
   type HTMLAttributes,
-  type SyntheticEvent,
   forwardRef,
   useRef,
 } from "react";
@@ -15,6 +14,14 @@ import { calculatePercentage, clampRange, toFloat } from "./internal/utils";
 
 export interface RangeSliderProps
   extends Omit<HTMLAttributes<HTMLDivElement>, "onChange" | "defaultValue"> {
+  /**
+   * Accessible text to announce maximum value label.
+   */
+  accessibleMaxText?: string;
+  /**
+   * Accessible text to announce minimum value label.
+   */
+  accessibleMinText?: string;
   /**
    * When minimum and maximum labels are defined, ensure
    * they are confined within the boundary of the slider.
@@ -67,21 +74,15 @@ export interface RangeSliderProps
   minLabel?: string;
   /**
    * Callback called when slider value is changed.
-   * Event is either an Input change event or a click event.
+   * It provides a generic event and the current value of the slider.
    */
-  onChange?: (
-    event: SyntheticEvent<unknown> | Event,
-    value: [number, number],
-  ) => void;
+  onChange?: (event: Event, value: [number, number]) => void;
   /**
    * Callback called when the slider is stopped from being dragged or
-   * its value is changed from the keyboard.
-   * Event is either an Input change event or a click event.
+   * its value is changed from the keyboard. It provides a generic
+   * event and the current value of the slider.
    */
-  onChangeEnd?: (
-    event: SyntheticEvent<unknown> | Event,
-    value: [number, number],
-  ) => void;
+  onChangeEnd?: (event: Event, value: [number, number]) => void;
   /**
    * Restrict slider value to marks only. The step will be ignored.
    */
@@ -113,6 +114,8 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>(
       "aria-label": ariaLabel,
       "aria-labelledby": ariaLabelledBy,
       "aria-valuetext": ariaValueText,
+      accessibleMaxText,
+      accessibleMinText,
       decimalPlaces = 2,
       disabled: disabledProp = false,
       format,
@@ -147,6 +150,9 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>(
     } = useFormFieldProps();
 
     const disabled = formFieldDisabled || disabledProp;
+    const inputRefs = Array.from({ length: 2 }, () =>
+      useRef<HTMLInputElement>(null),
+    );
     const value: [number, number] = clampRange(
       valueState,
       max,
@@ -158,24 +164,6 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>(
     );
     const progressPercentageStart = calculatePercentage(value[0], max, min);
     const progressPercentageEnd = calculatePercentage(value[1], max, min);
-
-    const thumbProps = {
-      "aria-label": ariaLabel,
-      "aria-labelledby": clsx(formFieldLabelledBy, ariaLabelledBy),
-      "aria-valuemax": max,
-      "aria-valuemin": min,
-      "aria-valuetext": ariaValueText,
-      disabled: disabled,
-      format: format,
-      max: max,
-      maxLabel: maxLabel,
-      min: min,
-      minLabel: minLabel,
-      showTooltip: showTooltip,
-      step: step,
-      stepMultiplier: stepMultiplier,
-      sliderValue: value,
-    };
 
     const handleInputChange = (
       event: ChangeEvent<HTMLInputElement>,
@@ -189,23 +177,27 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>(
       if (haveValuesChanged) {
         const values = preventThumbOverlap(parsedValue, value, thumbIndex);
         setValue(values as [number, number]);
-        onChange?.(event, values as [number, number]);
-        onChangeEnd?.(event, values as [number, number]);
+        onChange?.(event.nativeEvent, values as [number, number]);
+        onChangeEnd?.(event.nativeEvent, values as [number, number]);
         lastValueRef.current = values;
       }
     };
 
     const {
+      handleBlur,
+      handleFocus,
       handleKeydownOnThumb,
       handlePointerDownOnThumb,
       handlePointerDownOnTrack,
       isDragging,
+      isFocusVisible,
       sliderRef,
       thumbIndexState,
       preventThumbOverlap,
     } = useRangeSliderThumb({
       decimalPlaces,
       handleInputChange,
+      inputRefs,
       marks,
       min,
       max,
@@ -217,6 +209,27 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>(
       setValue,
       stepMultiplier,
     });
+
+    const thumbProps = {
+      "aria-label": ariaLabel,
+      "aria-labelledby": clsx(formFieldLabelledBy, ariaLabelledBy),
+      "aria-valuemax": max,
+      "aria-valuemin": min,
+      "aria-valuetext": ariaValueText,
+      accessibleMaxText: accessibleMaxText,
+      accessibleMinText: accessibleMinText,
+      disabled: disabled,
+      format: format,
+      max: max,
+      maxLabel: maxLabel,
+      min: min,
+      minLabel: minLabel,
+      restrictToMarks: restrictToMarks,
+      showTooltip: showTooltip,
+      step: step,
+      stepMultiplier: stepMultiplier,
+      sliderValue: value,
+    };
 
     return (
       <SliderTrack
@@ -245,6 +258,10 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>(
           handleKeydownOnThumb={(event) => handleKeydownOnThumb(event, 0)}
           offsetPercentage={`${calculatePercentage(value[0], max, min)}%`}
           trackDragging={isDragging && thumbIndexState === 0}
+          isFocusVisible={isFocusVisible && thumbIndexState === 0}
+          inputRef={inputRefs[0]}
+          onFocus={() => handleFocus(0)}
+          onBlur={() => handleBlur(0)}
           {...thumbProps}
         />
         <SliderThumb
@@ -254,6 +271,10 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>(
           handleKeydownOnThumb={(event) => handleKeydownOnThumb(event, 1)}
           offsetPercentage={`${calculatePercentage(value[1], max, min)}%`}
           trackDragging={isDragging && thumbIndexState === 1}
+          isFocusVisible={isFocusVisible && thumbIndexState === 1}
+          inputRef={inputRefs[1]}
+          onFocus={() => handleFocus(1)}
+          onBlur={() => handleBlur(1)}
           {...thumbProps}
         />
       </SliderTrack>

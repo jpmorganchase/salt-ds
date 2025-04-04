@@ -45,7 +45,7 @@ export const SingleWithInput = () => {
   };
 
   return (
-    <FormField style={{ width: "600px" }}>
+    <FormField style={{ width: "80%" }}>
       <FormFieldLabel>Slider with Input</FormFieldLabel>
       <FlexLayout gap={3} align="center">
         <Input

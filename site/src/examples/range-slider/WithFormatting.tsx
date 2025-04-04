@@ -4,7 +4,7 @@ import type { ReactElement } from "react";
 export const WithFormatting = (): ReactElement => (
   <RangeSlider
     defaultValue={[2, 5]}
-    style={{ width: "600px" }}
+    style={{ width: "80%" }}
     minLabel="€0"
     maxLabel="€10"
     format={(value: number) =>

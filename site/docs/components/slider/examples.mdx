@@ -18,6 +18,10 @@ Selection of a single value from a `Slider` track. A tooltip displays the value 
 
 `Slider`'s labels indicate the minimum and maximum values of the range, and can be located inline with the `Slider` using the `minLabel` and `maxLabel` props or they can be located at the bottom of the `Slider` using the `marks` prop.
 
+### Best practices
+
+When adding custom text for labelling minimum and maximum values on the slider, either via `minLabel` and `maxLabel` props or via `marks`, we recommend adding corresponding `accessibleMinText` and `accessibleMaxText` so that the screen reader can make accurate announcements for enhanced accessibilty.
+
 <LivePreview componentName="slider" exampleName="WithLabels" />
 
 ## With constrained label position

@@ -3,7 +3,7 @@ import { Slider } from "@salt-ds/lab";
 import type { ReactElement } from "react";
 
 export const WithCustomStep = (): ReactElement => (
-  <StackLayout gap={6} style={{ width: "600px" }}>
+  <StackLayout gap={6} style={{ width: "80%" }}>
     <FormField>
       <FormFieldLabel>Step: 1 (default)</FormFieldLabel>
       <Slider min={-1} max={1} minLabel="-1" maxLabel="1" />

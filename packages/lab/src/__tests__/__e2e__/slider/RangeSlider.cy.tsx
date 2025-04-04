@@ -17,16 +17,10 @@ describe("Given a Range Slider", () => {
 
   it("should trigger onChange when clicked on the track", () => {
     const changeSpy = cy.stub().as("changeSpy");
-    cy.mount(
-      <Default
-        style={{ width: "400px" }}
-        defaultValue={[0, 2]}
-        onChange={changeSpy}
-      />,
-    );
+    cy.mount(<Default defaultValue={[0, 2]} onChange={changeSpy} />);
     cy.get(".saltSliderTrack-rail").trigger("pointerdown", {
       button: 0,
-      clientX: 750,
+      clientX: 720,
       clientY: 50,
     });
     cy.get("@changeSpy").should("have.callCount", 1);
@@ -40,16 +34,10 @@ describe("Given a Range Slider", () => {
 
   it("should trigger onChangeEnd with the final value when user stops dragging", () => {
     const changeEndSpy = cy.stub().as("changeEndSpy");
-    cy.mount(
-      <Default
-        style={{ width: "400px" }}
-        onChangeEnd={changeEndSpy}
-        defaultValue={[0, 1]}
-      />,
-    );
+    cy.mount(<Default onChangeEnd={changeEndSpy} defaultValue={[0, 1]} />);
     cy.get(".saltSliderTrack-rail").trigger("pointerdown", {
       button: 0,
-      clientX: 750,
+      clientX: 720,
       clientY: 50,
     });
     // onChangeEnd is not called when dragging
@@ -66,7 +54,7 @@ describe("Given a Range Slider", () => {
 
   it("should trigger onChangeEnd during keyboard navigation", () => {
     const changeEndSpy = cy.stub().as("changeEndSpy");
-    cy.mount(<Default style={{ width: "400px" }} onChangeEnd={changeEndSpy} />);
+    cy.mount(<Default onChangeEnd={changeEndSpy} />);
 
     // Focus second thumb and press ArrowRight key
     cy.findAllByRole("slider").eq(1).focus().realPress("ArrowRight");
@@ -80,20 +68,14 @@ describe("Given a Range Slider", () => {
   it("should allow dragging to change values", () => {
     const changeSpy = cy.stub().as("changeSpy");
     cy.mount(
-      <Default
-        style={{ width: "400px" }}
-        min={0}
-        max={10}
-        default={[0, 1]}
-        onChange={changeSpy}
-      />,
+      <Default min={0} max={10} default={[0, 1]} onChange={changeSpy} />,
     );
 
     // Drag the second thumb
     cy.findAllByTestId("sliderThumb").eq(1).trigger("pointerdown");
     cy.findAllByTestId("sliderThumb").eq(1).trigger("pointermove", {
       button: 0,
-      clientX: 750,
+      clientX: 720,
       clientY: 50,
     });
     cy.findAllByTestId("sliderThumb").eq(1).trigger("pointerup");
@@ -109,7 +91,7 @@ describe("Given a Range Slider", () => {
     cy.findAllByTestId("sliderThumb").eq(0).trigger("pointerdown");
     cy.findAllByTestId("sliderThumb").eq(0).trigger("pointermove", {
       button: 0,
-      clientX: 550,
+      clientX: 590,
       clientY: 50,
     });
     cy.findAllByTestId("sliderThumb").eq(0).trigger("pointerup");
@@ -125,13 +107,7 @@ describe("Given a Range Slider", () => {
   it("should change thumb positions based on keyboard navigation", () => {
     const changeSpy = cy.stub().as("changeSpy");
     cy.mount(
-      <Default
-        defaultValue={[4, 8]}
-        min={0}
-        max={30}
-        onChange={changeSpy}
-        style={{ width: "400px" }}
-      />,
+      <Default defaultValue={[4, 8]} min={0} max={30} onChange={changeSpy} />,
     );
 
     // Focus first thumb and press ArrowRight key
@@ -169,13 +145,7 @@ describe("Given a Range Slider", () => {
 
   it("should move the thumb in larger increments when step multiplier is increased", () => {
     cy.mount(
-      <Default
-        defaultValue={[0, 30]}
-        min={0}
-        max={30}
-        stepMultiplier={10}
-        style={{ width: "400px" }}
-      />,
+      <Default defaultValue={[0, 30]} min={0} max={30} stepMultiplier={10} />,
     );
 
     // Focus and move first thumb
@@ -188,7 +158,7 @@ describe("Given a Range Slider", () => {
   });
 
   it("should not allow thumbs to cross each other", () => {
-    cy.mount(<Default defaultValue={[4, 8]} style={{ width: "400px" }} />);
+    cy.mount(<Default defaultValue={[4, 8]} />);
 
     // Focus first thumb and press and End key
     cy.findAllByRole("slider").eq(0).focus().realPress("End");
@@ -209,7 +179,6 @@ describe("Given a Range Slider", () => {
         defaultValue={[4, 8]}
         onChange={changeSpy}
         onChangeEnd={changeEndSpy}
-        style={{ width: "400px" }}
       />,
     );
     // Focus first thumb, press Home key and then Arrow Left
@@ -234,44 +203,23 @@ describe("Given a Range Slider", () => {
   });
 
   it("should set range slider value to minimum if default value is less than minimum", () => {
-    cy.mount(
-      <Default
-        style={{ width: "400px" }}
-        min={0}
-        max={10}
-        defaultValue={[-10, 10]}
-      />,
-    );
+    cy.mount(<Default min={0} max={10} defaultValue={[-10, 10]} />);
     cy.findAllByRole("slider").eq(0).should("have.value", 0);
   });
 
   it("should set range slider value to maximum if default value is greater than maximum", () => {
-    cy.mount(
-      <Default
-        style={{ width: "400px" }}
-        min={0}
-        max={10}
-        defaultValue={[5, 100]}
-      />,
-    );
+    cy.mount(<Default min={0} max={10} defaultValue={[5, 100]} />);
     cy.findAllByRole("slider").eq(1).should("have.value", 10);
   });
 
   it("should round the range slider value to the next step value if default value is not a multiple of the step", () => {
-    cy.mount(
-      <Default
-        style={{ width: "400px" }}
-        min={0}
-        max={10}
-        defaultValue={[1.5, 4.5]}
-      />,
-    );
+    cy.mount(<Default min={0} max={10} defaultValue={[1.5, 4.5]} />);
     cy.findAllByRole("slider").eq(0).should("have.value", 2);
     cy.findAllByRole("slider").eq(1).should("have.value", 5);
   });
 
   it("should display a tooltip with correct value only when thumb is hovered", () => {
-    cy.mount(<Default style={{ width: "400px" }} defaultValue={[2, 5]} />);
+    cy.mount(<Default defaultValue={[2, 5]} />);
 
     // Hover the first thumb
     cy.get(".saltSliderThumb").eq(0).trigger("pointerover");
@@ -299,13 +247,7 @@ describe("Given a Range Slider", () => {
   });
 
   it("should not show tooltip when showTooltip is set to false", () => {
-    cy.mount(
-      <Default
-        style={{ width: "400px" }}
-        defaultValue={[2, 4]}
-        showTooltip={false}
-      />,
-    );
+    cy.mount(<Default defaultValue={[2, 4]} showTooltip={false} />);
     cy.findAllByTestId("sliderThumb").eq(0).trigger("pointerover");
     cy.findByTestId("sliderTooltip").should("not.exist");
   });
@@ -314,7 +256,6 @@ describe("Given a Range Slider", () => {
     cy.mount(
       <Default
         defaultValue={[0, 14]}
-        style={{ width: "400px" }}
         restrictToMarks={true}
         max={20}
         marks={[
@@ -360,7 +301,6 @@ describe("Given a Range Slider", () => {
   it("should render inline min/max labels and marks when provided", () => {
     cy.mount(
       <Default
-        style={{ width: "400px" }}
         marks={[
           { value: 2, label: "2" },
           { value: 3, label: "3" },
@@ -378,11 +318,7 @@ describe("Given a Range Slider", () => {
 
   it("should render custom min max labels when passed", () => {
     cy.mount(
-      <Default
-        style={{ width: "400px" }}
-        minLabel={"Custom Min Label"}
-        maxLabel={"Custom Max Label"}
-      />,
+      <Default minLabel={"Custom Min Label"} maxLabel={"Custom Max Label"} />,
     );
 
     cy.findByText("Custom Min Label").should("exist");
@@ -448,18 +384,14 @@ describe("Given a Range Slider", () => {
           event: ChangeEvent<HTMLInputElement>,
           value: [number, number],
         ) => {
-          // React 16 backwards compatibility
-          event.persist();
           setValue(value);
-          changeSpy(event);
+          changeSpy(event, value);
         };
         const onChangeEnd = (
           event: ChangeEvent<HTMLInputElement>,
           value: [number, number],
         ) => {
-          // React 16 backwards compatibility
-          event.persist();
-          changeEndSpy(event);
+          changeEndSpy(event, value);
         };
 
         return (
@@ -473,19 +405,27 @@ describe("Given a Range Slider", () => {
 
       cy.mount(<ControlledSlider />);
       cy.findAllByRole("slider").eq(0).focus().realPress("ArrowRight");
-      cy.get("@changeSpy").should("have.been.calledWithMatch", {
-        target: { value: "4" },
-      });
-      cy.get("@changeEndSpy").should("have.been.calledWithMatch", {
-        target: { value: "4" },
-      });
+      cy.get("@changeSpy").should(
+        "have.been.calledWithMatch",
+        Cypress.sinon.match.any,
+        [4, 5],
+      );
+      cy.get("@changeEndSpy").should(
+        "have.been.calledWithMatch",
+        Cypress.sinon.match.any,
+        [4, 5],
+      );
       cy.findAllByRole("slider").eq(1).focus().realPress("ArrowRight");
-      cy.get("@changeSpy").should("have.been.calledWithMatch", {
-        target: { value: "6" },
-      });
-      cy.get("@changeEndSpy").should("have.been.calledWithMatch", {
-        target: { value: "6" },
-      });
+      cy.get("@changeSpy").should(
+        "have.been.calledWithMatch",
+        Cypress.sinon.match.any,
+        [4, 6],
+      );
+      cy.get("@changeEndSpy").should(
+        "have.been.calledWithMatch",
+        Cypress.sinon.match.any,
+        [4, 6],
+      );
     });
   });
 
@@ -508,6 +448,245 @@ describe("Given a Range Slider", () => {
       cy.findAllByRole("slider").eq(1).should("have.value", 0.3);
       cy.findAllByRole("slider").eq(1).focus().realPress("ArrowLeft");
       cy.findAllByRole("slider").eq(1).should("have.value", 0);
+    });
+  });
+
+  describe("WHEN focused", () => {
+    it("should display a focus ring on the first thumb when focused via Tab key", () => {
+      cy.mount(<Default />);
+      // First tab
+      cy.realPress("Tab");
+      // First thumb focused
+      cy.findAllByRole("slider").eq(0).should("have.focus");
+      cy.findAllByTestId("sliderThumb")
+        .eq(0)
+        .should("have.class", "saltSliderThumb-focusVisible");
+      // Second tab
+      cy.realPress("Tab");
+      // Second thumb focused
+      cy.findAllByRole("slider").eq(1).should("have.focus");
+      cy.findAllByTestId("sliderThumb")
+        .eq(1)
+        .should("have.class", "saltSliderThumb-focusVisible");
+    });
+
+    it("should display a focus ring after losing and regaining focus", () => {
+      cy.mount(<Default />);
+
+      // Focus first thumb
+      cy.findAllByRole("slider").eq(0).focus();
+      // Should display focus ring
+      cy.findAllByTestId("sliderThumb")
+        .eq(0)
+        .should("have.class", "saltSliderThumb-focusVisible");
+      // Focus away from first thumb
+      cy.realPress("Tab");
+      // Should not display focus ring on first thumb
+      cy.findAllByRole("slider").eq(0).should("not.have.focus");
+      // Focus back to first thumb
+      cy.realPress(["Shift", "Tab"]);
+      // Should display focus ring on first thumb again
+      cy.findAllByRole("slider").eq(0).should("have.focus");
+      cy.findAllByTestId("sliderThumb")
+        .eq(0)
+        .should("have.class", "saltSliderThumb-focusVisible");
+    });
+
+    it("should have a focus ring when focused and navigated via keyboard", () => {
+      const changeSpy = cy.stub().as("changeSpy");
+
+      cy.mount(<Default onChange={changeSpy} />);
+
+      // Focus and navigate first thumb
+      cy.findAllByRole("slider").eq(0).focus().realPress("ArrowRight");
+      // First thumb should display focus ring
+      cy.findAllByTestId("sliderThumb")
+        .eq(0)
+        .should("have.class", "saltSliderThumb-focusVisible");
+      // Second thumb should not display focus ring
+      cy.findAllByTestId("sliderThumb")
+        .eq(1)
+        .should("not.have.class", "saltSliderThumb-focusVisible");
+      cy.get("@changeSpy").should("have.callCount", 1);
+
+      // Focus and navigate second thumb
+      cy.findAllByRole("slider").eq(1).focus().realPress("ArrowRight");
+      // Second thumb should display focus ring
+      cy.findAllByTestId("sliderThumb")
+        .eq(1)
+        .should("have.class", "saltSliderThumb-focusVisible");
+      // First thumb should not display focus ring
+      cy.findAllByTestId("sliderThumb")
+        .eq(0)
+        .should("not.have.class", "saltSliderThumb-focusVisible");
+      cy.get("@changeSpy").should("have.callCount", 2);
+    });
+
+    it("should have focus but not display a focus ring when clicked and dragged via mouse", () => {
+      cy.mount(<Default />);
+
+      // Click and drag first thumb
+      cy.findAllByTestId("sliderThumb").eq(0).trigger("pointerdown");
+      cy.findAllByTestId("sliderThumb").eq(0).trigger("pointermove", {
+        button: 0,
+        clientX: 750,
+        clientY: 50,
+      });
+      // First thumb should be focused but should not display a focus ring
+      cy.findAllByRole("slider").eq(0).should("have.focus");
+      cy.findAllByTestId("sliderThumb")
+        .eq(0)
+        .should("not.have.class", "saltSliderThumb-focusVisible");
+      // Second thumb should not be focused nor should it display a focus ring
+      cy.findAllByRole("slider").eq(1).should("not.have.focus");
+      cy.findAllByTestId("sliderThumb")
+        .eq(1)
+        .should("not.have.class", "saltSliderThumb-focusVisible");
+    });
+
+    it("should have focus but not display a focus ring when clicked on the thumb without dragging", () => {
+      const changeSpy = cy.stub().as("changeSpy");
+
+      cy.mount(<Default onChange={changeSpy} />);
+      // Click on the first thumb
+      cy.findAllByTestId("sliderThumb").eq(0).trigger("pointerdown");
+      // First thumb should have focus but should not display a focus ring
+      cy.findAllByRole("slider").eq(0).should("have.focus");
+      cy.findAllByTestId("sliderThumb")
+        .eq(0)
+        .should("not.have.class", "saltSliderThumb-focusVisible");
+      // Second thumb should not have focus nor should it display a focus ring
+      cy.findAllByRole("slider").eq(1).should("not.have.focus");
+      cy.findAllByTestId("sliderThumb")
+        .eq(1)
+        .should("not.have.class", "saltSliderThumb-focusVisible");
+      cy.get("@changeSpy").should("have.callCount", 0);
+
+      // Click on the second thumb
+      cy.findAllByTestId("sliderThumb").eq(1).trigger("pointerdown");
+      // Second thumb should have focus but should not display a focus ring
+      cy.findAllByRole("slider").eq(1).should("have.focus");
+      cy.findAllByTestId("sliderThumb")
+        .eq(1)
+        .should("not.have.class", "saltSliderThumb-focusVisible");
+      // First thumb should not have focus nor should it display a focus ring
+      cy.findAllByRole("slider").eq(0).should("not.have.focus");
+      cy.findAllByTestId("sliderThumb")
+        .eq(0)
+        .should("not.have.class", "saltSliderThumb-focusVisible");
+      cy.get("@changeSpy").should("have.callCount", 0);
+    });
+
+    it("should have focus on closest thumb but not display a focus ring when clicked on the track without dragging", () => {
+      const changeSpy = cy.stub().as("changeSpy");
+
+      cy.mount(<Default onChange={changeSpy} />);
+      // Click on the track
+      cy.get(".saltSliderTrack-rail").trigger("pointerdown", {
+        button: 0,
+        clientX: 750,
+        clientY: 50,
+      });
+      // Second thumb should have focus but should not display a focus ring
+      cy.findAllByRole("slider").eq(1).should("have.focus");
+      cy.findAllByTestId("sliderThumb")
+        .eq(1)
+        .should("not.have.class", "saltSliderThumb-focusVisible");
+      cy.get("@changeSpy").should("have.callCount", 0);
+    });
+
+    it("should allow keyboard navigation after mouse interaction with correct focus visible behaviour", () => {
+      const changeSpy = cy.stub().as("changeSpy");
+
+      cy.mount(<Default onChange={changeSpy} defaultValue={[0, 8]} />);
+      // Click and drag first thumb
+      cy.findAllByTestId("sliderThumb").eq(0).trigger("pointerdown");
+      cy.findAllByTestId("sliderThumb").eq(0).trigger("pointermove", {
+        button: 0,
+        clientX: 650,
+        clientY: 50,
+      });
+      cy.findAllByTestId("sliderThumb").eq(0).trigger("pointerup");
+      // First thumb should retain focus
+      cy.findAllByRole("slider").eq(0).should("have.focus");
+      // Second thumb should not have focus
+      cy.findAllByRole("slider").eq(1).should("not.have.focus");
+      // onChange should be called
+      cy.get("@changeSpy").should("have.callCount", 1);
+      cy.get("@changeSpy").should(
+        "have.been.calledWith",
+        Cypress.sinon.match.any,
+        Cypress.sinon.match.array.deepEquals([5, 8]),
+      );
+      // Focus ring should not be visible on both thumbs
+      cy.findAllByTestId("sliderThumb")
+        .eq(0)
+        .should("not.have.class", "saltSliderThumb-focusVisible");
+      cy.findAllByTestId("sliderThumb")
+        .eq(1)
+        .should("not.have.class", "saltSliderThumb-focusVisible");
+      // Tooltip should not be visible
+      cy.findAllByTestId("sliderTooltip").eq(0).should("not.be.visible");
+      cy.findAllByTestId("sliderTooltip").eq(1).should("not.be.visible");
+
+      // Navigate via keyboard without manually focusing
+      cy.realPress("ArrowRight");
+      // onChange should be called
+      cy.get("@changeSpy").should(
+        "have.been.calledWith",
+        Cypress.sinon.match.any,
+        Cypress.sinon.match.array.deepEquals([6, 8]),
+      );
+      cy.get("@changeSpy").should("have.callCount", 2);
+      // Focus ring should be visible on first thumb but not on the second thumb
+      cy.findAllByTestId("sliderThumb")
+        .eq(0)
+        .should("have.class", "saltSliderThumb-focusVisible");
+      cy.findAllByTestId("sliderThumb")
+        .eq(1)
+        .should("not.have.class", "saltSliderThumb-focusVisible");
+      // Tooltip for first thumb should be visible
+      cy.findAllByTestId("sliderTooltip").eq(0).should("be.visible");
+      cy.findAllByTestId("sliderTooltip").eq(1).should("not.be.visible");
+
+      // Pressing Tab should focus the second thumb
+      cy.realPress("Tab");
+      cy.findAllByRole("slider").eq(1).should("have.focus");
+      cy.findAllByTestId("sliderThumb")
+        .eq(1)
+        .should("have.class", "saltSliderThumb-focusVisible");
+      // Tooltip for second thumb should be visible
+      cy.findAllByTestId("sliderTooltip").eq(1).should("be.visible");
+      cy.findAllByTestId("sliderTooltip").eq(0).should("not.be.visible");
+      // Second thumb be focused and updated via keyboard navigation
+      cy.realPress("ArrowRight");
+      cy.findAllByRole("slider").eq(1).should("have.focus");
+      cy.findAllByTestId("sliderThumb")
+        .eq(1)
+        .should("have.class", "saltSliderThumb-focusVisible");
+      cy.get("@changeSpy").should("have.callCount", 3);
+      cy.get("@changeSpy").should(
+        "have.been.calledWith",
+        Cypress.sinon.match.any,
+        Cypress.sinon.match.array.deepEquals([6, 9]),
+      );
+
+      // Tab away from the slider
+      cy.realPress("Tab");
+      // Tab back to the slider on the second thumb
+      cy.realPress(["Shift", "Tab"]);
+      cy.findAllByRole("slider").eq(1).should("have.focus");
+      cy.findAllByTestId("sliderThumb")
+        .eq(1)
+        .should("have.class", "saltSliderThumb-focusVisible");
+      // Navigate the second thumb
+      cy.realPress("ArrowLeft");
+      cy.get("@changeSpy").should("have.callCount", 4);
+      cy.get("@changeSpy").should(
+        "have.been.calledWith",
+        Cypress.sinon.match.any,
+        Cypress.sinon.match.array.deepEquals([6, 8]),
+      );
     });
   });
 });

@@ -1,7 +1,6 @@
 import {
   type ChangeEvent,
   type HTMLAttributes,
-  type SyntheticEvent,
   forwardRef,
   useRef,
 } from "react";
@@ -15,6 +14,14 @@ import { calculatePercentage, clamp, toFloat } from "./internal/utils";
 
 export interface SliderProps
   extends Omit<HTMLAttributes<HTMLDivElement>, "onChange" | "defaultValue"> {
+  /**
+   * Accessible text to announce maximum value label.
+   */
+  accessibleMaxText?: string;
+  /**
+   * Accessible text to announce minimum value label.
+   */
+  accessibleMinText?: string;
   /**
    * When minimum and maximum labels are defined, ensure
    * they are confined within the boundary of the slider.
@@ -64,15 +71,15 @@ export interface SliderProps
   minLabel?: string;
   /**
    * Callback called when slider value is changed.
-   * Event is either an Input change event or a click event.
+   * It provides a generic event and the current value of the slider.
    */
-  onChange?: (event: SyntheticEvent<unknown> | Event, value: number) => void;
+  onChange?: (event: Event, value: number) => void;
   /**
    * Callback called when the slider is stopped from being dragged or
-   * its value is changed from the keyboard.
-   * Event is either an Input change event or a click event.
+   * its value is changed from the keyboard. It provides a generic
+   * event and the current value of the slider.
    */
-  onChangeEnd?: (event: SyntheticEvent<unknown> | Event, value: number) => void;
+  onChangeEnd?: (event: Event, value: number) => void;
   /**
    * Restrict slider value to marks only. The step will be ignored.
    */
@@ -107,6 +114,8 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
     "aria-label": ariaLabel,
     "aria-labelledby": ariaLabelledBy,
     "aria-valuetext": ariaValueText,
+    accessibleMaxText,
+    accessibleMinText,
     decimalPlaces = 2,
     disabled: disabledProp = false,
     format,
@@ -139,6 +148,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
   } = useFormFieldProps();
 
   const disabled = formFieldDisabled || disabledProp;
+  const inputRef = useRef<HTMLInputElement>(null);
   const value = clamp(
     valueState,
     max,
@@ -155,21 +165,25 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
     const parsedValue = toFloat(event.target.value);
     if (parsedValue !== lastValueRef.current) {
       setValue(parsedValue);
-      onChange?.(event, parsedValue);
-      onChangeEnd?.(event, parsedValue);
+      onChange?.(event.nativeEvent, parsedValue);
+      onChangeEnd?.(event.nativeEvent, parsedValue);
       lastValueRef.current = parsedValue;
     }
   };
 
   const {
+    handleBlur,
+    handleFocus,
     handleKeydownOnThumb,
     handlePointerDownOnThumb,
     handlePointerDownOnTrack,
     isDragging,
+    isFocusVisible,
     sliderRef,
   } = useSliderThumb({
     decimalPlaces,
     handleInputChange,
+    inputRef,
     marks,
     min,
     max,
@@ -204,16 +218,23 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
         aria-valuemax={max}
         aria-valuemin={min}
         aria-valuetext={ariaValueText}
+        accessibleMaxText={accessibleMaxText}
+        accessibleMinText={accessibleMinText}
         disabled={disabled}
         format={format}
+        onBlur={handleBlur}
+        onFocus={handleFocus}
         handleInputChange={handleInputChange}
         handlePointerDown={handlePointerDownOnThumb}
         handleKeydownOnThumb={handleKeydownOnThumb}
+        inputRef={inputRef}
+        isFocusVisible={isFocusVisible}
         min={min}
         minLabel={minLabel}
         max={max}
         maxLabel={maxLabel}
         offsetPercentage={`${progressPercentage}%`}
+        restrictToMarks={restrictToMarks}
         sliderValue={value}
         showTooltip={showTooltip}
         step={step}

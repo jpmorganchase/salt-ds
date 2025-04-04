@@ -62,7 +62,7 @@ export default {
 };
 
 const Template: StoryFn = ({ ...args }) => {
-  return <Slider style={{ width: "600px" }} {...args} />;
+  return <Slider style={{ width: "300px" }} {...args} />;
 };
 
 export const Default = Template.bind({});
@@ -79,6 +79,8 @@ WithInlineLabels.args = {
   "aria-label": "WithInlineLabels",
   minLabel: "Lowest value",
   maxLabel: "Highest value",
+  accessibleMinText: "Lowest value",
+  accessibleMaxText: "Highest value",
   defaultValue: 4,
 };
 
@@ -143,6 +145,8 @@ WithInlineLabelsAndMarks.args = {
   step: 10,
   minLabel: "Very low",
   maxLabel: "Very high",
+  accessibleMinText: "Very low",
+  accessibleMaxText: "Very high",
   marks: [
     { label: "0", value: 0 },
     { label: "10", value: 10 },
@@ -166,6 +170,8 @@ WithInlineLabelsMarksAndTicks.args = {
   step: 10,
   minLabel: "Very low",
   maxLabel: "Very high",
+  accessibleMinText: "Very low",
+  accessibleMaxText: "Very high",
   marks: [
     { label: "0", value: 0 },
     { label: "10", value: 10 },
@@ -197,6 +203,23 @@ WithConstrainedLabelPosition.args = {
   constrainLabelPosition: true,
 };
 
+export const WithConstrainedLabelPositionAndTicks = Template.bind({});
+WithConstrainedLabelPositionAndTicks.args = {
+  "aria-label": "WithConstrainedLabelPositionAndTicks",
+  marks: [
+    {
+      value: 0,
+      label: "Very low",
+    },
+    {
+      value: 10,
+      label: "Very high",
+    },
+  ],
+  constrainLabelPosition: true,
+  showTicks: true,
+};
+
 export const WithHiddenTooltip = Template.bind({});
 WithHiddenTooltip.args = {
   "aria-label": "WithHiddenTooltip",
@@ -205,6 +228,8 @@ WithHiddenTooltip.args = {
   defaultValue: 20,
   minLabel: "Very low",
   maxLabel: "Very high",
+  accessibleMinText: "Very low",
+  accessibleMaxText: "Very high",
   showTooltip: false,
   step: 10,
   marks: [
@@ -259,13 +284,12 @@ WithFormatting.parameters = {
 
 export const WithinFormField: StoryFn<SliderProps> = () => {
   return (
-    <StackLayout gap={4}>
+    <StackLayout gap={4} style={{ width: "400px" }}>
       <FormField
         labelPlacement="left"
         style={
           {
             "--saltFormField-label-width": "16%",
-            width: "600px",
           } as React.CSSProperties
         }
       >
@@ -276,8 +300,7 @@ export const WithinFormField: StoryFn<SliderProps> = () => {
         labelPlacement="left"
         style={
           {
-            "--saltFormField-label-width": "30%",
-            width: "600px",
+            "--saltFormField-label-width": "40%",
           } as React.CSSProperties
         }
       >
@@ -324,7 +347,7 @@ export const WithInput: StoryFn<SliderProps> = () => {
   }, [inputValue, bounds]);
 
   return (
-    <FormField style={{ width: "600px" }}>
+    <FormField style={{ width: "300px" }}>
       <FormFieldLabel> Slider with Input </FormFieldLabel>
       <FlexLayout gap={3}>
         <Input
@@ -377,7 +400,7 @@ export const WithInputAndInlineLabels: StoryFn<SliderProps> = () => {
   }, [inputValue, bounds]);
 
   return (
-    <FormField style={{ width: "600px" }}>
+    <FormField style={{ width: "350px" }}>
       <FormFieldLabel> Slider with Input </FormFieldLabel>
       <FlexLayout gap={3}>
         <Input
@@ -433,7 +456,7 @@ export const WithInputAndMarksAndTicks: StoryFn<SliderProps> = () => {
   }, [inputValue, bounds]);
 
   return (
-    <FormField style={{ width: "600px" }}>
+    <FormField style={{ width: "350px" }}>
       <FormFieldLabel> Slider with Input </FormFieldLabel>
       <FlexLayout gap={3}>
         <Input
@@ -474,7 +497,7 @@ export const WithInputAndMarksAndTicks: StoryFn<SliderProps> = () => {
 };
 
 export const WithCustomStep = () => (
-  <StackLayout gap={10} style={{ width: "600px" }}>
+  <StackLayout gap={10} style={{ width: "300px" }}>
     <FormField>
       <FormFieldLabel>Step: 1 (default)</FormFieldLabel>
       <Slider min={-1} max={1} minLabel="-1" maxLabel="1" />
@@ -533,7 +556,7 @@ export const WithNonNumericValues = () => {
       marks={daysOfTheWeek.map((day) => {
         return { value: day.value, label: day.label };
       })}
-      style={{ width: "600px" }}
+      style={{ width: "400px" }}
     />
   );
 };

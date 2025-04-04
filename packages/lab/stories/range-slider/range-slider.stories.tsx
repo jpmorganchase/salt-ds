@@ -63,7 +63,7 @@ export default {
 };
 
 const Template: StoryFn = ({ ...args }) => {
-  return <RangeSlider style={{ width: "600px" }} {...args} />;
+  return <RangeSlider style={{ width: "300px" }} {...args} />;
 };
 
 export const Default = Template.bind({});
@@ -80,6 +80,8 @@ WithInlineLabels.args = {
   "aria-label": "WithInlineLabels",
   minLabel: "Lowest value",
   maxLabel: "Highest value",
+  accessibleMinText: "Lowest value",
+  accessibleMaxText: "Highest value",
   defaultValue: [0, 4],
 };
 
@@ -143,6 +145,8 @@ WithInlineLabelsAndMarks.args = {
   defaultValue: [10, 30],
   minLabel: "Very low",
   maxLabel: "Very high",
+  accessibleMinText: "Very low",
+  accessibleMaxText: "Very high",
   marks: [
     { label: "0", value: 0 },
     { label: "10", value: 10 },
@@ -165,6 +169,8 @@ WithInlineLabelsMarksAndTicks.args = {
   step: 10,
   minLabel: "Very low",
   maxLabel: "Very high",
+  accessibleMinText: "Very low",
+  accessibleMaxText: "Very high",
   marks: [
     { label: "0", value: 0 },
     { label: "10", value: 10 },
@@ -196,6 +202,24 @@ WithConstrainedLabelPosition.args = {
   constrainLabelPosition: true,
 };
 
+export const WithConstrainedLabelPositionAndTicks = Template.bind({});
+WithConstrainedLabelPositionAndTicks.args = {
+  "aria-label": "WithConstrainedLabelPositionAndTicks",
+  defaultValue: [2, 5],
+  marks: [
+    {
+      value: 0,
+      label: "Very low",
+    },
+    {
+      value: 10,
+      label: "Very high",
+    },
+  ],
+  constrainLabelPosition: true,
+  showTicks: true,
+};
+
 export const WithHiddenTooltip = Template.bind({});
 WithHiddenTooltip.args = {
   "aria-label": "WithDisabledTooltip",
@@ -204,6 +228,8 @@ WithHiddenTooltip.args = {
   defaultValue: [20, 40],
   minLabel: "Very low",
   maxLabel: "Very high",
+  accessibleMinText: "Very low",
+  accessibleMaxText: "Very high",
   showTooltip: false,
   step: 10,
   marks: [
@@ -257,13 +283,12 @@ WithFormatting.parameters = {
 
 export const WithinFormField: StoryFn<RangeSliderProps> = () => {
   return (
-    <StackLayout gap={4}>
+    <StackLayout gap={4} style={{ width: "400px" }}>
       <FormField
         labelPlacement="left"
         style={
           {
             "--saltFormField-label-width": "16%",
-            width: "600px",
           } as React.CSSProperties
         }
       >
@@ -274,8 +299,7 @@ export const WithinFormField: StoryFn<RangeSliderProps> = () => {
         labelPlacement="left"
         style={
           {
-            "--saltFormField-label-width": "30%",
-            width: "600px",
+            "--saltFormField-label-width": "40%",
           } as React.CSSProperties
         }
       >
@@ -323,10 +347,11 @@ export const WithInput: StoryFn<RangeSliderProps> = () => {
   };
 
   return (
-    <FormField style={{ width: "600px" }}>
+    <FormField style={{ width: "400px" }}>
       <FormFieldLabel>Range Slider with Input</FormFieldLabel>
       <FlexLayout style={{ width: "100%" }} gap={2}>
         <Input
+          aria-label="Minimum input"
           value={minInputValue}
           onChange={(event: ChangeEvent<HTMLInputElement>) =>
             handleInputChange(event, "min")
@@ -348,6 +373,7 @@ export const WithInput: StoryFn<RangeSliderProps> = () => {
           style={{ flex: "100%" }}
         />
         <Input
+          aria-label="Maximum input"
           value={maxInputValue}
           onChange={(event: ChangeEvent<HTMLInputElement>) =>
             handleInputChange(event, "max")
@@ -389,10 +415,11 @@ export const WithInputAndInlineLabels: StoryFn<RangeSliderProps> = () => {
   };
 
   return (
-    <FormField style={{ width: "600px" }}>
+    <FormField style={{ width: "400px" }}>
       <FormFieldLabel>Range Slider with Input</FormFieldLabel>
       <FlexLayout style={{ width: "100%" }} gap={2}>
         <Input
+          aria-label="Minimum input"
           value={minInputValue}
           onChange={(event: ChangeEvent<HTMLInputElement>) =>
             handleInputChange(event, "min")
@@ -416,6 +443,7 @@ export const WithInputAndInlineLabels: StoryFn<RangeSliderProps> = () => {
           maxLabel="50"
         />
         <Input
+          aria-label="Maximum input"
           value={maxInputValue}
           onChange={(event: ChangeEvent<HTMLInputElement>) =>
             handleInputChange(event, "max")
@@ -457,10 +485,11 @@ export const WithInputAndMarksAndTicks: StoryFn<RangeSliderProps> = () => {
   };
 
   return (
-    <FormField style={{ width: "600px" }}>
+    <FormField style={{ width: "400px" }}>
       <FormFieldLabel>Range Slider with Input</FormFieldLabel>
       <FlexLayout gap={3}>
         <Input
+          aria-label="Minimum input"
           value={minInputValue}
           style={{ flex: 1 }}
           inputProps={{ style: { textAlign: "center" } }}
@@ -497,6 +526,7 @@ export const WithInputAndMarksAndTicks: StoryFn<RangeSliderProps> = () => {
           showTicks
         />
         <Input
+          aria-label="Maximum input"
           value={maxInputValue}
           style={{ flex: 1 }}
           inputProps={{ style: { textAlign: "center" } }}
@@ -510,7 +540,7 @@ export const WithInputAndMarksAndTicks: StoryFn<RangeSliderProps> = () => {
 };
 
 export const WithCustomStep = () => (
-  <StackLayout gap={10} style={{ width: "600px" }}>
+  <StackLayout gap={10} style={{ width: "300px" }}>
     <FormField>
       <FormFieldLabel>Step: 1 (default)</FormFieldLabel>
       <RangeSlider
@@ -572,7 +602,7 @@ export const WithNonNumericValues = () => {
   return (
     <RangeSlider
       aria-label="Days of the week"
-      style={{ width: "600px" }}
+      style={{ width: "400px" }}
       min={1}
       max={7}
       value={value}

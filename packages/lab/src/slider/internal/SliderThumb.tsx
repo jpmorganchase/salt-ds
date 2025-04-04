@@ -5,9 +5,9 @@ import { clsx } from "clsx";
 import {
   type ChangeEvent,
   type ComponentPropsWithoutRef,
+  type RefObject,
   useCallback,
   useEffect,
-  useRef,
   useState,
 } from "react";
 import sliderThumbCss from "./SliderThumb.css";
@@ -20,17 +20,24 @@ interface SliderThumbProps
     ComponentPropsWithoutRef<"input">,
     "onChange" | "defaultValue" | "min" | "max"
   > {
+  accessibleMaxText?: string;
+  accessibleMinText?: string;
   disabled: boolean;
   format?: (value: number) => number | string;
   handleInputChange: (event: ChangeEvent<HTMLInputElement>) => void;
   handleKeydownOnThumb: (event: React.KeyboardEvent) => void;
   handlePointerDown: (event: React.PointerEvent<HTMLDivElement>) => void;
   index?: number;
+  inputRef?: RefObject<HTMLInputElement>;
+  isFocusVisible: boolean;
   max: number;
   maxLabel?: string;
   min: number;
   minLabel?: string;
   offsetPercentage?: string;
+  onBlur: () => void;
+  onFocus: () => void;
+  restrictToMarks?: boolean;
   showTooltip?: boolean;
   sliderValue: [number, number] | number;
   step: number;
@@ -42,17 +49,24 @@ export const SliderThumb = ({
   "aria-label": ariaLabel,
   "aria-valuetext": ariaValueText,
   "aria-labelledby": ariaLabelledBy,
+  accessibleMaxText,
+  accessibleMinText,
   disabled,
   format,
+  onBlur,
+  onFocus,
   handleInputChange,
   handleKeydownOnThumb,
   handlePointerDown,
   index = 0,
+  inputRef,
+  isFocusVisible,
   max,
   maxLabel,
   min,
   minLabel,
   offsetPercentage,
+  restrictToMarks,
   showTooltip,
   sliderValue,
   step,
@@ -68,9 +82,7 @@ export const SliderThumb = ({
       window: targetWindow,
     });
 
-    const [isFocused, setIsFocused] = useState(false);
     const [isTooltipVisible, setIsTooltipVisible] = useState(false);
-    const inputRef = useRef<HTMLInputElement>(null);
     const id = useId();
     const accessibleTextId = `saltSlider-${id}-${index}`;
     const value = Array.isArray(sliderValue) ? sliderValue[index] : sliderValue;
@@ -99,20 +111,10 @@ export const SliderThumb = ({
       }, 300);
     };
 
-    const handleFocus = () => {
-      setIsFocused(true);
-      if (showTooltip) setIsTooltipVisible(true);
-    };
-
-    const handleBlur = () => {
-      setIsFocused(false);
-      if (showTooltip) setIsTooltipVisible(false);
-    };
-
     return (
       <div
         className={clsx(withBaseName(), {
-          [withBaseName("focused")]: isFocused,
+          [withBaseName("focusVisible")]: isFocusVisible,
           [withBaseName("disabled")]: disabled,
           [withBaseName("dragging")]: trackDragging,
           [withBaseName("secondThumb")]: index === 1,
@@ -128,15 +130,17 @@ export const SliderThumb = ({
         {showTooltip && (
           <SliderTooltip
             value={formattedValue}
-            open={(isTooltipVisible || trackDragging) && !disabled}
+            open={
+              (isTooltipVisible || trackDragging || isFocusVisible) && !disabled
+            }
           />
         )}
         <input
           disabled={disabled}
           type="range"
           ref={inputRef}
-          onFocus={handleFocus}
-          onBlur={handleBlur}
+          onFocus={onFocus}
+          onBlur={onBlur}
           className={withBaseName("input")}
           value={value}
           onChange={handleInputChange}
@@ -159,10 +163,16 @@ export const SliderThumb = ({
         >
           {Array.isArray(sliderValue) &&
             `${index === 0 ? "leading" : "trailing"}, ${format?.(sliderValue[0]) || sliderValue[0]} to ${format?.(sliderValue[1]) || sliderValue[1]}, `}
-          Slider range {minLabel && `From ${minLabel}, `}
-          {maxLabel && `To ${maxLabel},`} minimum {format?.(min) || min},
-          maximum {format?.(max) || max}
-          {step !== 1 && `, Increments of ${step}`}
+          range{" "}
+          {accessibleMinText
+            ? `${accessibleMinText} ${min}, `
+            : `minimum ${format?.(min) || min}, `}
+          {accessibleMaxText
+            ? `${accessibleMaxText} ${max} `
+            : `maximum ${format?.(max) || max}`}
+          {restrictToMarks
+            ? ", custom increments"
+            : step !== 1 && `, increments of ${step}`}
         </span>
       </div>
     );

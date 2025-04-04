@@ -2,8 +2,8 @@ import { useWindow } from "@salt-ds/window";
 import {
   type ChangeEvent,
   type Dispatch,
+  type RefObject,
   type SetStateAction,
-  type SyntheticEvent,
   useCallback,
   useEffect,
   useRef,
@@ -18,15 +18,10 @@ type UseRangeSliderThumbProps = Pick<SliderProps, "min" | "max" | "step"> & {
     event: ChangeEvent<HTMLInputElement>,
     thumbIndex: number,
   ) => void;
+  inputRefs: RefObject<HTMLInputElement>[];
   marks?: { label: string; value: number }[];
-  onChange?: (
-    event: SyntheticEvent<unknown> | Event,
-    value: [number, number],
-  ) => void;
-  onChangeEnd?: (
-    event: SyntheticEvent<unknown> | Event,
-    value: [number, number],
-  ) => void;
+  onChange?: (event: Event, value: [number, number]) => void;
+  onChangeEnd?: (event: Event, value: [number, number]) => void;
   restrictToMarks?: boolean;
   setValue: Dispatch<SetStateAction<[number, number]>>;
   stepMultiplier: number;
@@ -36,6 +31,7 @@ type UseRangeSliderThumbProps = Pick<SliderProps, "min" | "max" | "step"> & {
 export const useRangeSliderThumb = ({
   decimalPlaces,
   handleInputChange,
+  inputRefs,
   marks,
   min = 0,
   max = 10,
@@ -48,6 +44,7 @@ export const useRangeSliderThumb = ({
   value,
 }: UseRangeSliderThumbProps) => {
   const [isDragging, setIsDragging] = useState(false);
+  const [isFocusVisible, setIsFocusVisible] = useState(false);
   const [thumbIndexState, setIsThumbIndex] = useState<number>(0);
   const lastValueRef = useRef<[number, number]>(value);
   const sliderRef = useRef<HTMLDivElement>(null);
@@ -115,6 +112,7 @@ export const useRangeSliderThumb = ({
   const handlePointerUp = useCallback(
     (event: PointerEvent) => {
       setIsDragging(false);
+      setIsFocusVisible(false);
       onChangeEnd?.(event, lastValueRef.current);
     },
     [onChangeEnd],
@@ -135,21 +133,27 @@ export const useRangeSliderThumb = ({
   }, [handlePointerMove, handlePointerUp, isDragging, targetWindow]);
 
   const handlePointerDownOnThumb = useCallback(
-    (event: React.PointerEvent<HTMLDivElement>, thumbIndex?: number) => {
+    (event: React.PointerEvent<HTMLDivElement>, thumbIndex: number) => {
       event.preventDefault();
+      // To prevent the pointerdown event from bubbling up to the slider track
+      //  and triggering its pointerdown event
       event.stopPropagation();
+
+      inputRefs[thumbIndex].current?.focus();
       setIsDragging(true);
+      setIsFocusVisible(false);
       if (thumbIndex !== undefined) {
         setIsThumbIndex(thumbIndex);
       }
     },
-    [],
+    [inputRefs],
   );
 
   const handlePointerDownOnTrack = useCallback(
     (event: React.PointerEvent<HTMLDivElement>) => {
       event.preventDefault();
       setIsDragging(true);
+
       const newValue = getClickedPosition(
         sliderRef,
         event.clientX,
@@ -160,6 +164,8 @@ export const useRangeSliderThumb = ({
         marks,
         restrictToMarks,
       );
+      let closestThumbIndex = 0;
+
       if (newValue === undefined) return;
       const newValues = [...value] as [number, number];
       // Find nearest thumb
@@ -168,34 +174,38 @@ export const useRangeSliderThumb = ({
       if (distanceToThumb0 > distanceToThumb1) {
         // Move the second thumb
         newValues[1] = newValue;
-        setIsThumbIndex(1);
+        closestThumbIndex = 1;
       } else if (distanceToThumb0 < distanceToThumb1) {
         // Move the first thumb
         newValues[0] = newValue;
-        setIsThumbIndex(0);
+        closestThumbIndex = 0;
       } else {
         // If distances are equal, determine based on the click position
         if (newValue < newValues[0]) {
           // Clicked position is before both thumbs, move the first thumb
           newValues[0] = newValue;
-          setIsThumbIndex(0);
+          closestThumbIndex = 0;
         } else if (newValue > newValues[1]) {
           // Clicked position is after both thumbs, move the second thumb
           newValues[1] = newValue;
-          setIsThumbIndex(1);
+          closestThumbIndex = 1;
         } else {
           // Clicked position is between the thumbs, move the first thumb
           newValues[0] = newValue;
-          setIsThumbIndex(0);
+          closestThumbIndex = 0;
         }
       }
+      setIsThumbIndex(closestThumbIndex);
+      inputRefs[closestThumbIndex].current?.focus();
+      setIsFocusVisible(false);
+
       if (
         newValues[0] !== lastValueRef.current[0] ||
         newValues[1] !== lastValueRef.current[1]
       ) {
         lastValueRef.current = newValues;
         setValue(newValues);
-        onChange?.(event, newValues);
+        onChange?.(event.nativeEvent, newValues);
       }
     },
     [
@@ -204,6 +214,7 @@ export const useRangeSliderThumb = ({
       value,
       max,
       min,
+      inputRefs,
       onChange,
       restrictToMarks,
       setValue,
@@ -211,34 +222,59 @@ export const useRangeSliderThumb = ({
     ],
   );
 
-  const handleKeydownOnThumb = (
-    event: React.KeyboardEvent,
-    thumbIndex: number,
-  ) => {
-    const newValue = getKeyboardValue(
-      event,
-      value[thumbIndex],
+  const handleKeydownOnThumb = useCallback(
+    (event: React.KeyboardEvent, thumbIndex: number) => {
+      const newValue = getKeyboardValue(
+        event,
+        value[thumbIndex],
+        step,
+        stepMultiplier,
+        max,
+        min,
+        restrictToMarks,
+        marks,
+      );
+      setIsFocusVisible(true);
+      if (newValue !== lastValueRef.current[thumbIndex]) {
+        lastValueRef.current[thumbIndex] = newValue;
+        handleInputChange(
+          {
+            target: { value: newValue.toString() },
+          } as ChangeEvent<HTMLInputElement>,
+          thumbIndex,
+        );
+      }
+    },
+    [
+      value,
       step,
       stepMultiplier,
       max,
       min,
       restrictToMarks,
       marks,
-    );
+      handleInputChange,
+    ],
+  );
 
-    handleInputChange(
-      {
-        target: { value: newValue.toString() },
-      } as ChangeEvent<HTMLInputElement>,
-      thumbIndex,
-    );
+  const handleFocus = (thumbIndex: number) => {
+    setIsThumbIndex(thumbIndex);
+    setIsFocusVisible(true);
+  };
+
+  const handleBlur = (thumbIndex: number) => {
+    setIsThumbIndex(thumbIndex);
+    setIsFocusVisible(false);
   };
 
   return {
+    handleBlur,
+    handleFocus,
     handleKeydownOnThumb,
     handlePointerDownOnThumb,
     handlePointerDownOnTrack,
     isDragging,
+    isFocusVisible,
     preventThumbOverlap,
     sliderRef,
     thumbIndexState,
