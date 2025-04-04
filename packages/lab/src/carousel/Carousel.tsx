@@ -1,28 +1,16 @@
 import {
-  Button,
-  GridLayout,
-  RadioButton,
-  RadioButtonGroup,
+  type ResponsiveProp,
   makePrefixer,
-  useIcon,
+  resolveResponsiveValue,
+  useBreakpoint,
   useId,
 } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
-import {
-  type ChangeEventHandler,
-  Children,
-  type HTMLAttributes,
-  type ReactElement,
-  forwardRef,
-  useEffect,
-} from "react";
-import { DeckLayout } from "../deck-layout";
-import { useSlideSelection } from "../utils";
-import type { CarouselSlideProps } from "./CarouselSlide";
-
+import { type HTMLAttributes, forwardRef } from "react";
 import carouselCss from "./Carousel.css";
+import { CarouselProvider } from "./CarouselContext";
 
 const withBaseName = makePrefixer("saltCarousel");
 
@@ -31,44 +19,30 @@ export interface CarouselProps extends HTMLAttributes<HTMLDivElement> {
    * The initial Index enables you to select the active slide in the carousel.
    * Optional, default 0.
    **/
-  initialIndex?: number;
+  defaultActiveSlideIndex?: number;
   /**
-   * The animation when the slides are shown.
-   * Optional. Defaults to `slide`
+   * Controlled index of active slide in the carousel.
    **/
-  animation?: "slide" | "fade";
+  activeSlideIndex?: number;
   /**
-   * If this props is passed it will set the aria-label with value to the carousel container.
-   * Optional. Defaults to undefined
+   * Set the placement of the CarouselControls relative to the CarouselSlider element. Defaults to `top`.
    */
-  carouselDescription?: string;
+  controlsPlacement?: "top" | "bottom";
   /**
-   * Collection of slides to render
-   * Component must implement CarouselSlideProps. Mandatory.
-   */
-  children: Array<ReactElement<CarouselSlideProps>>;
-  /**
-   * This prop will enable compact / reduced width mode.
-   * The navigation buttons would be part of indicators
-   * Optional. Defaults to false
+   * Number of slides visible at a time.
+   * Optional, default 1.
    **/
-  compact?: boolean;
-  /**
-   * It sets the id for the Carousel Container.
-   * String. Optional
-   */
-  id?: string;
+  visibleSlides?: ResponsiveProp<number>;
 }
 
 export const Carousel = forwardRef<HTMLDivElement, CarouselProps>(
   function Carousel(
     {
-      initialIndex,
-      animation = "slide",
-      carouselDescription,
+      defaultActiveSlideIndex = 0,
+      activeSlideIndex,
+      visibleSlides: visibleSlidesProp = 1,
       children,
-      className,
-      compact,
+      controlsPlacement = "top",
       id: idProp,
       ...rest
     },
@@ -80,91 +54,33 @@ export const Carousel = forwardRef<HTMLDivElement, CarouselProps>(
       css: carouselCss,
       window: targetWindow,
     });
-    const { NextIcon, PreviousIcon } = useIcon();
+    const { matchedBreakpoints } = useBreakpoint();
+
+    const visibleSlides = resolveResponsiveValue(
+      visibleSlidesProp,
+      matchedBreakpoints,
+    );
     const id = useId(idProp);
-    const slidesCount = Children.count(children);
-
-    const [_, selectedSlide, handleSlideSelection] =
-      useSlideSelection(initialIndex);
-
-    const moveSlide = (direction: "left" | "right") => {
-      const moveLeft =
-        selectedSlide === 0 ? slidesCount - 1 : selectedSlide - 1;
-      const moveRight =
-        selectedSlide === slidesCount - 1 ? 0 : selectedSlide + 1;
-      const newSelection = direction === "left" ? moveLeft : moveRight;
-      const newTransition = direction === "left" ? "decrease" : "increase";
-      handleSlideSelection(newSelection, newTransition);
-    };
-
-    const handleRadioChange: ChangeEventHandler<HTMLInputElement> = ({
-      target: { value },
-    }) => {
-      handleSlideSelection(Number(value));
-    };
-
-    useEffect(() => {
-      if (process.env.NODE_ENV !== "production") {
-        if (slidesCount < 1) {
-          console.warn(
-            "Carousel component requires more than one children to render. At least two elements should be provided.",
-          );
-        }
-      }
-    }, [slidesCount]);
-
     return (
-      <GridLayout
-        aria-label={carouselDescription}
-        aria-roledescription="carousel"
+      <CarouselProvider
+        defaultActiveSlideIndex={defaultActiveSlideIndex}
+        activeSlideIndex={activeSlideIndex}
+        visibleSlides={visibleSlides}
         id={id}
-        role="region"
-        ref={ref}
-        gap={0}
-        columns={3}
-        className={clsx(
-          withBaseName(),
-          compact && withBaseName("compact"),
-          className,
-        )}
-        {...rest}
       >
-        <Button
-          variant="secondary"
-          className={withBaseName("prev-button")}
-          onClick={() => moveSlide("left")}
-        >
-          <PreviousIcon size={2} />
-        </Button>
-        <DeckLayout
-          activeIndex={selectedSlide}
-          animation={animation}
-          className={withBaseName("slider")}
+        <section
+          role="region"
+          className={clsx(withBaseName(), {
+            [withBaseName(controlsPlacement)]: controlsPlacement === "bottom",
+          })}
+          aria-roledescription="carousel"
+          id={id}
+          ref={ref}
+          {...rest}
         >
           {children}
-        </DeckLayout>
-        <Button
-          variant="secondary"
-          className={withBaseName("next-button")}
-          onClick={() => moveSlide("right")}
-        >
-          <NextIcon size={2} />
-        </Button>
-        <div className={withBaseName("dots")}>
-          <RadioButtonGroup
-            aria-label="Carousel buttons"
-            onChange={handleRadioChange}
-            value={`${selectedSlide}`}
-            direction={"horizontal"}
-          >
-            {Array.from({ length: slidesCount }, (_, index) => ({
-              value: `${index}`,
-            })).map((radio) => (
-              <RadioButton {...radio} key={radio.value} />
-            ))}
-          </RadioButtonGroup>
-        </div>
-      </GridLayout>
+        </section>
+      </CarouselProvider>
     );
   },
 );
