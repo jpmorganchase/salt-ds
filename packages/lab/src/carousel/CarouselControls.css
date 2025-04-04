@@ -4,6 +4,7 @@
   padding-top: var(--salt-spacing-100);
   padding-bottom: var(--salt-spacing-100);
   align-items: center;
+  grid-area: controls;
 }
 .saltCarouselControls-container {
   display: flex;

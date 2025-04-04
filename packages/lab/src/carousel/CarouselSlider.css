@@ -5,6 +5,7 @@
   scroll-behavior: smooth;
   width: 100%;
   gap: var(--salt-spacing-100);
+  grid-area: slider;
 }
 @supports (scrollbar-width: none) {
   .saltCarouselSlider {

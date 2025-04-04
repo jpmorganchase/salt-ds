@@ -101,12 +101,16 @@ export const Bordered: StoryFn<typeof Carousel> = (args) => {
 export const WithBottomControls: StoryFn<typeof Carousel> = (args) => {
   return (
     <div className="carousel-container">
-      <Carousel {...args} aria-label="Account overview">
-        <CarouselSlider>{renderSlides("bordered")}</CarouselSlider>
+      <Carousel
+        {...args}
+        aria-label="Account overview"
+        controlsPlacement="bottom"
+      >
         <CarouselControls
           onNext={(_, index) => console.log(index)}
           onPrevious={(_, index) => console.log(index)}
         />
+        <CarouselSlider>{renderSlides("bordered")}</CarouselSlider>
       </Carousel>
     </div>
   );

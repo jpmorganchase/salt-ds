@@ -1,0 +1,10 @@
+.saltCarousel {
+  display: grid;
+  grid-template-areas: "controls" "slider";
+  grid-template-rows: auto 1fr;
+}
+
+.saltCarousel.saltCarousel-bottom {
+  grid-template-areas: "slider" "controls";
+  grid-template-rows: 1fr auto;
+}
