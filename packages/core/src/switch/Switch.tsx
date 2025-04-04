@@ -26,16 +26,16 @@ export interface SwitchProps
     "children" | "onFocus" | "onBlur" | "onChange"
   > {
   /**
-   * If `true`, the checkbox will be checked.
+   * If `true`, the switch will be checked.
    */
   checked?: boolean;
   /**
-   * Whether the checkbox component is checked by default
+   * Whether the switch component is checked by default
    * This will be disregarded if checked is already set.
    */
   defaultChecked?: boolean;
   /**
-   * If `true`, the checkbox will be disabled.
+   * If `true`, the switch will be disabled.
    */
   disabled?: boolean;
   /**
@@ -43,7 +43,7 @@ export interface SwitchProps
    */
   inputProps?: Partial<ComponentPropsWithoutRef<"input">> & DataAttributes;
   /**
-   * The label to be shown next to the checkbox.
+   * The label to be shown next to the switch.
    */
   label?: ReactNode;
   /**
@@ -51,7 +51,7 @@ export interface SwitchProps
    */
   name?: string;
   /**
-   * Callback when checkbox loses focus.
+   * Callback when switch loses focus.
    */
   onBlur?: FocusEventHandler<HTMLInputElement>;
   /**
@@ -59,11 +59,11 @@ export interface SwitchProps
    */
   onChange?: ChangeEventHandler<HTMLInputElement>;
   /**
-   * Callback when checkbox gains focus.
+   * Callback when switch gains focus.
    */
   onFocus?: FocusEventHandler<HTMLInputElement>;
   /**
-   * The value of the checkbox.
+   * The value of the switch.
    */
   value?: string;
 }
