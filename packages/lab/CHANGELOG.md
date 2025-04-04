@@ -1,5 +1,23 @@
 # @salt-ds/lab
 
+## 1.0.0-alpha.64
+
+### Minor Changes
+
+- 78eaee3: - Removed `DialogHeader` from labs and promoted to core.
+  - Removed `OverlayHeader` from labs and promoted to core.
+
+### Patch Changes
+
+- 2bdfbfb: Fixed DateInput adornment size and spacing, to align with rest of form controls.
+- Updated dependencies [78eaee3]
+- Updated dependencies [20abfb6]
+- Updated dependencies [c59472d]
+- Updated dependencies [2bdfbfb]
+- Updated dependencies [0073384]
+- Updated dependencies [ef8f30a]
+  - @salt-ds/core@1.43.0
+
 ## 1.0.0-alpha.63
 
 ### Minor Changes
