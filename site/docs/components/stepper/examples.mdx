@@ -22,20 +22,27 @@
 
 <LivePreview componentName="stepper" exampleName="StageStatus" />
 
-The `Step` component changes based on the `stage` and `status` props.
-In case they are both set, `status` will take precedence over `stage`.
-These 2 props control various aspects of the component, such as:
-icon selection, description text color and track (connector) style.
+The `Step` component's appearance depends on its `stage` and `status` props.
+When both are set, `status` takes precedence over `stage`. These props control:
+
+- Icon selection
+- Description text color
+- Track (connector) style
 
 ## Nested Steps
 
-When using the `Stepper` component in vertical orientation, you can nest
-`Step` components other `Step` components. When done so, the parent `Step`
-renders another `Stepper` and places the nested `Steps` (children) inside of
-it. Additionally an expand button is added on the parent `Step` to expand or
-collapse the substeps. The parent Step containing the active Step child
-children are to have a stage of `inprogress`. Nested steps are not supported
-for the horizontal orientation.
+The `Stepper` component supports nested steps when used in vertical orientation.
+You can nest `Step` components within other `Step` components to create hierarchical step structures.
+
+### Behavior
+
+- When nesting steps, the parent `Step` automatically renders a new `Stepper` containing its child steps
+- An expand/collapse button appears on parent steps to toggle visibility of nested steps
+- Parent steps containing the active child step are automatically set to `inprogress` state
+
+### Limitations
+
+- Nested steps are only supported in vertical orientation
 
 <LivePreview componentName="stepper" exampleName="NestedSteps" />
 
@@ -75,4 +82,3 @@ Here's how it works:
     - `'status/warning'`: Set the status of the active step to `'warning'`.
     - `'status/error'`: Set the status of the active step to `'error'`.
     - `'status/clear'`: Reset the status of the active step to `undefined`.
-    - `'goto'`: Set the `activeStep`
