@@ -22,11 +22,11 @@ Set the `orientation` prop to `vertical` to position handles vertically.
 
 <LivePreview componentName="splitter" exampleName="Vertical" />
 
-## Multi-orientational
+## Multiple Orientation
 
-You can nest another `Splitter` component within a `SplitPanel` to achieve a multi-orientational layout. This allows you to create more complex and flexible designs by combining horizontal and vertical splits within the same interface.
+You can nest another `Splitter` component within a `SplitPanel` to achieve a multiple orientations layout. This allows you to create more complex and flexible designs by combining horizontal and vertical splits within the same interface.
 
-<LivePreview componentName="splitter" exampleName="MultiOrientational" />
+<LivePreview componentName="splitter" exampleName="MultipleOrientations" />
 
 ## Transparent
 
@@ -66,6 +66,12 @@ The `SplitPanel` components can be made collapsible by setting the `collapsible`
 
 <LivePreview componentName="splitter" exampleName="Collapsible" />
 
+## Collapsible with Container Query
+
+You can utilize container queries to control how the content inside the `SplitPanel` components behave at different breakpoints. This allows you to create a responsive layout that adapts to the available screen space.
+
+<LivePreview componentName="splitter" exampleName="CollapsibleContainerQuery" />
+
 ## Collapsible To 0
 
 When the panel is allowed to be collapsed at 0, we advice to have a secondary way of expanding it. This can be in the form of an additional button on the page, and/or adding a double click event to the handle.
@@ -77,3 +83,9 @@ When the panel is allowed to be collapsed at 0, we advice to have a secondary wa
 Collapsing, expanding or resizing a `SplitPanel` can be controlled externally using the imperative ref API.
 
 <LivePreview componentName="splitter" exampleName="ProgrammableResize" />
+
+## Local Persistence
+
+The `autoSaveId` prop can be used to persist the size of each `SplitPanel`. This allows the layout to be restored to its previous state when the user refreshes to the page.
+
+<LivePreview componentName="splitter" exampleName="LocalPersistence" />

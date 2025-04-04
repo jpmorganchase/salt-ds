@@ -8,18 +8,14 @@ import {
 
 import styles from "./splitter.module.css";
 
-export function Vertical() {
+export function LocalPersistence() {
   return (
     <FlexLayout className={styles.box}>
-      <Splitter orientation="vertical">
+      <Splitter orientation="vertical" autoSaveId="splitter-persistence">
         <SplitPanel id="left" className={styles.center}>
           <Text>Left</Text>
         </SplitPanel>
-        <SplitHandle />
-        <SplitPanel id="center" className={styles.center}>
-          <Text>Center</Text>
-        </SplitPanel>
-        <SplitHandle />
+        <SplitHandle aria-label="Resize Left/Right" />
         <SplitPanel id="right" className={styles.center}>
           <Text>Right</Text>
         </SplitPanel>

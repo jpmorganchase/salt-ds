@@ -1,5 +1,10 @@
-import { FlexLayout, Text } from "@salt-ds/core";
-import { SplitHandle, SplitPanel, Splitter } from "@salt-ds/lab";
+import {
+  FlexLayout,
+  SplitHandle,
+  SplitPanel,
+  Splitter,
+  Text,
+} from "@salt-ds/core";
 
 import styles from "./splitter.module.css";
 
@@ -7,26 +12,16 @@ export function Variant() {
   return (
     <FlexLayout className={styles.box}>
       <Splitter orientation="vertical">
-        <SplitPanel
-          variant="secondary"
-          minSize={0}
-          defaultSize={25}
-          className={styles.center}
-        >
-          <Text>Left</Text>
+        <SplitPanel variant="primary" className={styles.center}>
+          <Text>Primary</Text>
         </SplitPanel>
-        <SplitHandle border="right" variant="secondary" />
-        <SplitPanel minSize={50} className={styles.center}>
-          <Text>Center</Text>
+        <SplitHandle variant="secondary" border="left" />
+        <SplitPanel variant="secondary" className={styles.center}>
+          <Text>Secondary</Text>
         </SplitPanel>
-        <SplitHandle border="left" variant="secondary" />
-        <SplitPanel
-          variant="secondary"
-          minSize={0}
-          defaultSize={25}
-          className={styles.center}
-        >
-          <Text>Right</Text>
+        <SplitHandle variant="tertiary" border="left" />
+        <SplitPanel variant="tertiary" className={styles.center}>
+          <Text>Tertiary</Text>
         </SplitPanel>
       </Splitter>
     </FlexLayout>
