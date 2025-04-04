@@ -10,6 +10,7 @@
 ### Patch Changes
 
 - 2bdfbfb: Fixed DateInput adornment size and spacing, to align with rest of form controls.
+- 5725384: Fixed the focus visible behaviour of Slider and RangeSlider.
 - Updated dependencies [78eaee3]
 - Updated dependencies [20abfb6]
 - Updated dependencies [c59472d]
