@@ -31,11 +31,11 @@ export const ExamplesGrid: StoryFn<QAContainerProps> = (props) => {
       </FormField>
       <FormField labelPlacement="left">
         <FormFieldLabel>With marks</FormFieldLabel>
-        <Slider marks={marks} />
+        <Slider marks={marks} min={0} max={10} />
       </FormField>
       <FormField labelPlacement="left">
         <FormFieldLabel>With marks and ticks</FormFieldLabel>
-        <Slider marks={marks} showTicks />
+        <Slider marks={marks} showTicks min={0} max={10} />
       </FormField>
       <FormField labelPlacement="left">
         <FormFieldLabel>With inline labels, marks and ticks</FormFieldLabel>
@@ -44,6 +44,8 @@ export const ExamplesGrid: StoryFn<QAContainerProps> = (props) => {
           minLabel="Min label"
           maxLabel="Max label"
           showTicks
+          min={0}
+          max={10}
         />
       </FormField>
       <FormField labelPlacement="left">
@@ -58,6 +60,8 @@ export const ExamplesGrid: StoryFn<QAContainerProps> = (props) => {
           ]}
           showTicks
           restrictToMarks
+          min={0}
+          max={10}
         />
       </FormField>
       <FormField labelPlacement="left">
@@ -71,6 +75,8 @@ export const ExamplesGrid: StoryFn<QAContainerProps> = (props) => {
           ]}
           constrainLabelPosition
           showTicks
+          min={0}
+          max={10}
         />
       </FormField>
       <FormField labelPlacement="left">
@@ -83,6 +89,8 @@ export const ExamplesGrid: StoryFn<QAContainerProps> = (props) => {
           constrainLabelPosition
           showTicks
           format={(value: number) => `${value} EUR`}
+          min={0}
+          max={10}
         />
       </FormField>
       <FormField labelPlacement="left">
@@ -113,6 +121,8 @@ export const ExamplesGrid: StoryFn<QAContainerProps> = (props) => {
           maxLabel="Max Label"
           marks={marks}
           showTicks
+          min={0}
+          max={10}
         />
       </FormField>
     </QAContainer>

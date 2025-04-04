@@ -3,10 +3,10 @@ import type { ReactElement } from "react";
 
 export const WithFormatting = (): ReactElement => (
   <RangeSlider
-    defaultValue={[2, 5]}
+    aria-label="with formatting"
     style={{ width: "80%" }}
     minLabel="€0"
-    maxLabel="€10"
+    maxLabel="€100"
     format={(value: number) =>
       Intl.NumberFormat("en-US", {
         style: "currency",

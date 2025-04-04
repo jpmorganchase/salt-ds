@@ -3,7 +3,7 @@ import type { ReactElement } from "react";
 
 export const Default = (): ReactElement => (
   <Slider
-    aria-label="single"
+    aria-label="default"
     min={0}
     max={100}
     defaultValue={30}

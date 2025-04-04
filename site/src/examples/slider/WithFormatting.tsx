@@ -3,7 +3,7 @@ import type { ReactElement } from "react";
 
 export const WithFormatting = (): ReactElement => (
   <Slider
-    defaultValue={5}
+    aria-label="with formatting"
     style={{ width: "80%" }}
     format={(value: number) =>
       Intl.NumberFormat("en-US", {
@@ -12,5 +12,7 @@ export const WithFormatting = (): ReactElement => (
         maximumFractionDigits: 0,
       }).format(value)
     }
+    minLabel="€0"
+    maxLabel="€100"
   />
 );

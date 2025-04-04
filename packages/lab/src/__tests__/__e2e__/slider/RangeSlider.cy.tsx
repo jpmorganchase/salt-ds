@@ -12,15 +12,17 @@ describe("Given a Range Slider", () => {
 
     cy.findAllByRole("slider").should("exist");
     cy.findAllByRole("slider").eq(0).should("have.value", "0");
-    cy.findAllByRole("slider").eq(1).should("have.value", "5");
+    cy.findAllByRole("slider").eq(1).should("have.value", "50");
   });
 
   it("should trigger onChange when clicked on the track", () => {
     const changeSpy = cy.stub().as("changeSpy");
-    cy.mount(<Default defaultValue={[0, 2]} onChange={changeSpy} />);
+    cy.mount(
+      <Default defaultValue={[0, 2]} onChange={changeSpy} min={0} max={10} />,
+    );
     cy.get(".saltSliderTrack-rail").trigger("pointerdown", {
       button: 0,
-      clientX: 720,
+      clientX: 750,
       clientY: 50,
     });
     cy.get("@changeSpy").should("have.callCount", 1);
@@ -34,10 +36,17 @@ describe("Given a Range Slider", () => {
 
   it("should trigger onChangeEnd with the final value when user stops dragging", () => {
     const changeEndSpy = cy.stub().as("changeEndSpy");
-    cy.mount(<Default onChangeEnd={changeEndSpy} defaultValue={[0, 1]} />);
+    cy.mount(
+      <Default
+        onChangeEnd={changeEndSpy}
+        defaultValue={[0, 1]}
+        min={0}
+        max={10}
+      />,
+    );
     cy.get(".saltSliderTrack-rail").trigger("pointerdown", {
       button: 0,
-      clientX: 720,
+      clientX: 750,
       clientY: 50,
     });
     // onChangeEnd is not called when dragging
@@ -54,7 +63,7 @@ describe("Given a Range Slider", () => {
 
   it("should trigger onChangeEnd during keyboard navigation", () => {
     const changeEndSpy = cy.stub().as("changeEndSpy");
-    cy.mount(<Default onChangeEnd={changeEndSpy} />);
+    cy.mount(<Default onChangeEnd={changeEndSpy} min={0} max={10} />);
 
     // Focus second thumb and press ArrowRight key
     cy.findAllByRole("slider").eq(1).focus().realPress("ArrowRight");
@@ -75,7 +84,7 @@ describe("Given a Range Slider", () => {
     cy.findAllByTestId("sliderThumb").eq(1).trigger("pointerdown");
     cy.findAllByTestId("sliderThumb").eq(1).trigger("pointermove", {
       button: 0,
-      clientX: 720,
+      clientX: 750,
       clientY: 50,
     });
     cy.findAllByTestId("sliderThumb").eq(1).trigger("pointerup");
@@ -91,7 +100,7 @@ describe("Given a Range Slider", () => {
     cy.findAllByTestId("sliderThumb").eq(0).trigger("pointerdown");
     cy.findAllByTestId("sliderThumb").eq(0).trigger("pointermove", {
       button: 0,
-      clientX: 590,
+      clientX: 540,
       clientY: 50,
     });
     cy.findAllByTestId("sliderThumb").eq(0).trigger("pointerup");
@@ -158,7 +167,7 @@ describe("Given a Range Slider", () => {
   });
 
   it("should not allow thumbs to cross each other", () => {
-    cy.mount(<Default defaultValue={[4, 8]} />);
+    cy.mount(<Default defaultValue={[4, 8]} min={0} max={10} />);
 
     // Focus first thumb and press and End key
     cy.findAllByRole("slider").eq(0).focus().realPress("End");
@@ -219,7 +228,7 @@ describe("Given a Range Slider", () => {
   });
 
   it("should display a tooltip with correct value only when thumb is hovered", () => {
-    cy.mount(<Default defaultValue={[2, 5]} />);
+    cy.mount(<Default defaultValue={[2, 5]} min={0} max={10} />);
 
     // Hover the first thumb
     cy.get(".saltSliderThumb").eq(0).trigger("pointerover");
@@ -247,7 +256,9 @@ describe("Given a Range Slider", () => {
   });
 
   it("should not show tooltip when showTooltip is set to false", () => {
-    cy.mount(<Default defaultValue={[2, 4]} showTooltip={false} />);
+    cy.mount(
+      <Default defaultValue={[2, 4]} min={0} max={10} showTooltip={false} />,
+    );
     cy.findAllByTestId("sliderThumb").eq(0).trigger("pointerover");
     cy.findByTestId("sliderTooltip").should("not.exist");
   });
@@ -307,6 +318,8 @@ describe("Given a Range Slider", () => {
         ]}
         minLabel="Very low"
         maxLabel="Very high"
+        min={0}
+        max={10}
       />,
     );
 
@@ -326,7 +339,7 @@ describe("Given a Range Slider", () => {
   });
 
   it("should be disabled when set and should not receive focus when disabled", () => {
-    cy.mount(<Default disabled defaultValue={[2, 3]} />);
+    cy.mount(<Default disabled />);
 
     cy.findAllByRole("slider").should("be.disabled");
     cy.realPress("Tab");
@@ -335,19 +348,17 @@ describe("Given a Range Slider", () => {
   });
 
   it("should format the tooltip text and min/max labels when a format function is passed", () => {
-    cy.mount(
-      <Default defaultValue={[2, 4]} format={(value: number) => `${value}%`} />,
-    );
+    cy.mount(<Default format={(value: number) => `${value}%`} />);
 
     cy.findAllByTestId("sliderThumb").eq(0).trigger("pointerover");
     cy.findAllByTestId("sliderTooltip").eq(0).should("be.visible");
-    cy.findAllByTestId("sliderTooltip").eq(0).should("have.text", "2%");
+    cy.findAllByTestId("sliderTooltip").eq(0).should("have.text", "0%");
 
     cy.findAllByTestId("sliderThumb").eq(0).trigger("pointerout");
 
     cy.findAllByTestId("sliderThumb").eq(1).trigger("pointerover");
     cy.findAllByTestId("sliderTooltip").eq(1).should("be.visible");
-    cy.findAllByTestId("sliderTooltip").eq(1).should("have.text", "4%");
+    cy.findAllByTestId("sliderTooltip").eq(1).should("have.text", "50%");
   });
 
   it("should round to the decimal places provided", () => {
@@ -399,6 +410,8 @@ describe("Given a Range Slider", () => {
             value={value}
             onChange={onChange}
             onChangeEnd={onChangeEnd}
+            min={0}
+            max={10}
           />
         );
       }
@@ -495,7 +508,7 @@ describe("Given a Range Slider", () => {
     it("should have a focus ring when focused and navigated via keyboard", () => {
       const changeSpy = cy.stub().as("changeSpy");
 
-      cy.mount(<Default onChange={changeSpy} />);
+      cy.mount(<Default onChange={changeSpy} min={0} max={10} />);
 
       // Focus and navigate first thumb
       cy.findAllByRole("slider").eq(0).focus().realPress("ArrowRight");
@@ -523,7 +536,7 @@ describe("Given a Range Slider", () => {
     });
 
     it("should have focus but not display a focus ring when clicked and dragged via mouse", () => {
-      cy.mount(<Default />);
+      cy.mount(<Default min={0} max={10} />);
 
       // Click and drag first thumb
       cy.findAllByTestId("sliderThumb").eq(0).trigger("pointerdown");
@@ -598,7 +611,9 @@ describe("Given a Range Slider", () => {
     it("should allow keyboard navigation after mouse interaction with correct focus visible behaviour", () => {
       const changeSpy = cy.stub().as("changeSpy");
 
-      cy.mount(<Default onChange={changeSpy} defaultValue={[0, 8]} />);
+      cy.mount(
+        <Default onChange={changeSpy} defaultValue={[0, 8]} min={0} max={10} />,
+      );
       // Click and drag first thumb
       cy.findAllByTestId("sliderThumb").eq(0).trigger("pointerdown");
       cy.findAllByTestId("sliderThumb").eq(0).trigger("pointermove", {
