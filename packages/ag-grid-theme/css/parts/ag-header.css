@@ -1,93 +1,161 @@
 /* HEADER */
-
-div[class*="ag-theme-salt"] .ag-header {
+.ag-theme-salt-light .ag-header,
+.ag-theme-salt-dark .ag-header,
+.ag-theme-salt-compact-light .ag-header,
+.ag-theme-salt-compact-dark .ag-header {
   /* Header icon should be the same as text color, aka secondary color */
   --ag-icon-font-color: var(--ag-header-foreground-color);
 }
 
-div[class*="ag-theme-salt"] .ag-advanced-filter-header,
-div[class*="ag-theme-salt"] .ag-header {
+.ag-theme-salt-light .ag-advanced-filter-header,
+.ag-theme-salt-dark .ag-advanced-filter-header,
+.ag-theme-salt-compact-light .ag-advanced-filter-header,
+.ag-theme-salt-compact-dark .ag-advanced-filter-header,
+.ag-theme-salt-light .ag-header,
+.ag-theme-salt-dark .ag-header,
+.ag-theme-salt-compact-light .ag-header,
+.ag-theme-salt-compact-dark .ag-header {
   border-bottom: var(--salt-size-border) var(--salt-separable-borderStyle) var(--salt-separable-primary-borderColor);
 }
 
-div[class*="ag-theme-salt"] .ag-header-row {
+.ag-theme-salt-light .ag-header-row,
+.ag-theme-salt-dark .ag-header-row,
+.ag-theme-salt-compact-light .ag-header-row,
+.ag-theme-salt-compact-dark .ag-header-row {
   font-size: var(--salt-text-label-fontSize);
   font-weight: var(--salt-text-label-fontWeight-strong);
 }
 
-div[class*="ag-theme-salt"] .ag-header-cell:focus-visible::after {
+.ag-theme-salt-light .ag-header-cell:focus-visible::after,
+.ag-theme-salt-dark .ag-header-cell:focus-visible::after,
+.ag-theme-salt-compact-light .ag-header-cell:focus-visible::after,
+.ag-theme-salt-compact-dark .ag-header-cell:focus-visible::after {
   /* Remove ag grid default border */
   border: none;
 }
-div[class*="ag-theme-salt"] .ag-header-cell:focus-visible {
+
+.ag-theme-salt-light .ag-header-cell:focus-visible,
+.ag-theme-salt-dark .ag-header-cell:focus-visible,
+.ag-theme-salt-compact-light .ag-header-cell:focus-visible,
+.ag-theme-salt-compact-dark .ag-header-cell:focus-visible {
   outline: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--salt-focused-outlineColor);
   outline-offset: -2px;
   border-width: 0;
 }
 
-div[class*="ag-theme-salt"] .ag-pinned-left-header {
+.ag-theme-salt-light .ag-pinned-left-header,
+.ag-theme-salt-dark .ag-pinned-left-header,
+.ag-theme-salt-compact-light .ag-pinned-left-header,
+.ag-theme-salt-compact-dark .ag-pinned-left-header {
   border-right-color: var(--salt-separable-secondary-borderColor);
 }
 
-div[class*="ag-theme-salt"] .ag-pinned-right-header {
+.ag-theme-salt-light .ag-pinned-right-header,
+.ag-theme-salt-dark .ag-pinned-right-header,
+.ag-theme-salt-compact-light .ag-pinned-right-header,
+.ag-theme-salt-compact-dark .ag-pinned-right-header {
   border-left-color: var(--salt-separable-secondary-borderColor);
 }
 
-div[class*="ag-theme-salt"] .ag-header-row:not(:first-child) .ag-header-cell:not(.ag-header-span-height.ag-header-span-total) {
+.ag-theme-salt-light .ag-header-row:not(:first-child) .ag-header-cell:not(.ag-header-span-height.ag-header-span-total),
+.ag-theme-salt-dark .ag-header-row:not(:first-child) .ag-header-cell:not(.ag-header-span-height.ag-header-span-total),
+.ag-theme-salt-compact-light .ag-header-row:not(:first-child) .ag-header-cell:not(.ag-header-span-height.ag-header-span-total),
+.ag-theme-salt-compact-dark .ag-header-row:not(:first-child) .ag-header-cell:not(.ag-header-span-height.ag-header-span-total) {
   border-top-color: var(--salt-container-primary-borderColor);
 }
 
-div[class*="ag-theme-salt"] .ag-header-row:not(:first-child) .ag-header-cell:not(.ag-header-span-height.ag-header-span-total):focus,
-div[class*="ag-theme-salt"] .ag-header-row:not(:first-child) .ag-header-group-cell.ag-header-group-cell-with-group:focus {
+.ag-theme-salt-light .ag-header-row:not(:first-child) .ag-header-cell:not(.ag-header-span-height.ag-header-span-total):focus,
+.ag-theme-salt-dark .ag-header-row:not(:first-child) .ag-header-cell:not(.ag-header-span-height.ag-header-span-total):focus,
+.ag-theme-salt-compact-light .ag-header-row:not(:first-child) .ag-header-cell:not(.ag-header-span-height.ag-header-span-total):focus,
+.ag-theme-salt-compact-dark .ag-header-row:not(:first-child) .ag-header-cell:not(.ag-header-span-height.ag-header-span-total):focus,
+.ag-theme-salt-light .ag-header-row:not(:first-child) .ag-header-group-cell.ag-header-group-cell-with-group:focus,
+.ag-theme-salt-dark .ag-header-row:not(:first-child) .ag-header-group-cell.ag-header-group-cell-with-group:focus,
+.ag-theme-salt-compact-light .ag-header-row:not(:first-child) .ag-header-group-cell.ag-header-group-cell-with-group:focus,
+.ag-theme-salt-compact-dark .ag-header-row:not(:first-child) .ag-header-group-cell.ag-header-group-cell-with-group:focus {
   border: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--salt-focused-outlineColor);
 }
 
 /** Move sort arrow towards menu icon */
 /** v32 doesn't have filter icon */
-div[class*="ag-theme-salt"] .ag-ltr .ag-header-cell:not(.ag-right-aligned-header) .ag-header-label-icon.ag-hidden + .ag-sort-indicator-container,
-div[class*="ag-theme-salt"] .ag-ltr .ag-header-cell:not(.ag-right-aligned-header) .ag-header-cell-text + .ag-sort-indicator-container {
+.ag-theme-salt-light .ag-ltr .ag-header-cell:not(.ag-right-aligned-header) .ag-header-label-icon.ag-hidden + .ag-sort-indicator-container,
+.ag-theme-salt-dark .ag-ltr .ag-header-cell:not(.ag-right-aligned-header) .ag-header-label-icon.ag-hidden + .ag-sort-indicator-container,
+.ag-theme-salt-compact-light .ag-ltr .ag-header-cell:not(.ag-right-aligned-header) .ag-header-label-icon.ag-hidden + .ag-sort-indicator-container,
+.ag-theme-salt-compact-dark .ag-ltr .ag-header-cell:not(.ag-right-aligned-header) .ag-header-label-icon.ag-hidden + .ag-sort-indicator-container,
+.ag-theme-salt-light .ag-ltr .ag-header-cell:not(.ag-right-aligned-header) .ag-header-cell-text + .ag-sort-indicator-container,
+.ag-theme-salt-dark .ag-ltr .ag-header-cell:not(.ag-right-aligned-header) .ag-header-cell-text + .ag-sort-indicator-container,
+.ag-theme-salt-compact-light .ag-ltr .ag-header-cell:not(.ag-right-aligned-header) .ag-header-cell-text + .ag-sort-indicator-container,
+.ag-theme-salt-compact-dark .ag-ltr .ag-header-cell:not(.ag-right-aligned-header) .ag-header-cell-text + .ag-sort-indicator-container {
   margin-left: auto;
 }
 
-div[class*="ag-theme-salt"] .ag-ltr .ag-header-cell.ag-right-aligned-header .ag-header-label-icon.ag-hidden + .ag-sort-indicator-container,
-div[class*="ag-theme-salt"] .ag-ltr .ag-header-cell.ag-right-aligned-header .ag-header-cell-text + .ag-sort-indicator-container {
+.ag-theme-salt-light .ag-ltr .ag-header-cell.ag-right-aligned-header .ag-header-label-icon.ag-hidden + .ag-sort-indicator-container,
+.ag-theme-salt-dark .ag-ltr .ag-header-cell.ag-right-aligned-header .ag-header-label-icon.ag-hidden + .ag-sort-indicator-container,
+.ag-theme-salt-compact-light .ag-ltr .ag-header-cell.ag-right-aligned-header .ag-header-label-icon.ag-hidden + .ag-sort-indicator-container,
+.ag-theme-salt-compact-dark .ag-ltr .ag-header-cell.ag-right-aligned-header .ag-header-label-icon.ag-hidden + .ag-sort-indicator-container,
+.ag-theme-salt-light .ag-ltr .ag-header-cell.ag-right-aligned-header .ag-header-cell-text + .ag-sort-indicator-container,
+.ag-theme-salt-dark .ag-ltr .ag-header-cell.ag-right-aligned-header .ag-header-cell-text + .ag-sort-indicator-container,
+.ag-theme-salt-compact-light .ag-ltr .ag-header-cell.ag-right-aligned-header .ag-header-cell-text + .ag-sort-indicator-container,
+.ag-theme-salt-compact-dark .ag-ltr .ag-header-cell.ag-right-aligned-header .ag-header-cell-text + .ag-sort-indicator-container {
   margin-right: auto;
 }
 
-div[class*="ag-theme-salt"] .ag-sort-indicator-container {
+.ag-theme-salt-light .ag-sort-indicator-container,
+.ag-theme-salt-dark .ag-sort-indicator-container,
+.ag-theme-salt-compact-light .ag-sort-indicator-container,
+.ag-theme-salt-compact-dark .ag-sort-indicator-container {
   align-items: center;
 }
 
-div[class*="ag-theme-salt"] .ag-ltr .ag-header-cell.ag-right-aligned-header .ag-sort-indicator-icon {
+.ag-theme-salt-light .ag-ltr .ag-header-cell.ag-right-aligned-header .ag-sort-indicator-icon,
+.ag-theme-salt-dark .ag-ltr .ag-header-cell.ag-right-aligned-header .ag-sort-indicator-icon,
+.ag-theme-salt-compact-light .ag-ltr .ag-header-cell.ag-right-aligned-header .ag-sort-indicator-icon,
+.ag-theme-salt-compact-dark .ag-ltr .ag-header-cell.ag-right-aligned-header .ag-sort-indicator-icon {
   padding-left: var(--salt-spacing-100);
 }
 
-div[class*="ag-theme-salt"] .ag-ltr .ag-header-cell:not(.ag-right-aligned-header) .ag-sort-indicator-icon {
+.ag-theme-salt-light .ag-ltr .ag-header-cell:not(.ag-right-aligned-header) .ag-sort-indicator-icon,
+.ag-theme-salt-dark .ag-ltr .ag-header-cell:not(.ag-right-aligned-header) .ag-sort-indicator-icon,
+.ag-theme-salt-compact-light .ag-ltr .ag-header-cell:not(.ag-right-aligned-header) .ag-sort-indicator-icon,
+.ag-theme-salt-compact-dark .ag-ltr .ag-header-cell:not(.ag-right-aligned-header) .ag-sort-indicator-icon {
   padding-right: var(--salt-spacing-100);
 }
 
-div[class*="ag-theme-salt"] .ag-ltr .ag-header-cell:not(.ag-right-aligned-header) .ag-header-label-icon {
+.ag-theme-salt-light .ag-ltr .ag-header-cell:not(.ag-right-aligned-header) .ag-header-label-icon,
+.ag-theme-salt-dark .ag-ltr .ag-header-cell:not(.ag-right-aligned-header) .ag-header-label-icon,
+.ag-theme-salt-compact-light .ag-ltr .ag-header-cell:not(.ag-right-aligned-header) .ag-header-label-icon,
+.ag-theme-salt-compact-dark .ag-ltr .ag-header-cell:not(.ag-right-aligned-header) .ag-header-label-icon {
   margin-left: auto;
   padding-right: var(--salt-spacing-100);
 }
 
-div[class*="ag-theme-salt"] .ag-ltr .ag-header-cell.ag-right-aligned-header .ag-header-label-icon {
+.ag-theme-salt-light .ag-ltr .ag-header-cell.ag-right-aligned-header .ag-header-label-icon,
+.ag-theme-salt-dark .ag-ltr .ag-header-cell.ag-right-aligned-header .ag-header-label-icon,
+.ag-theme-salt-compact-light .ag-ltr .ag-header-cell.ag-right-aligned-header .ag-header-label-icon,
+.ag-theme-salt-compact-dark .ag-ltr .ag-header-cell.ag-right-aligned-header .ag-header-label-icon {
   margin-right: auto;
   padding-left: var(--salt-spacing-100);
 }
 
 /* Floating filter */
-
-div[class*="ag-theme-salt"] .ag-header-cell.ag-floating-filter::before {
+.ag-theme-salt-light .ag-header-cell.ag-floating-filter::before,
+.ag-theme-salt-dark .ag-header-cell.ag-floating-filter::before,
+.ag-theme-salt-compact-light .ag-header-cell.ag-floating-filter::before,
+.ag-theme-salt-compact-dark .ag-header-cell.ag-floating-filter::before {
   /* Remove half height border in most header cells */
   background-color: transparent;
 }
 
-div[class*="ag-theme-salt"] .ag-floating-filter {
+.ag-theme-salt-light .ag-floating-filter,
+.ag-theme-salt-dark .ag-floating-filter,
+.ag-theme-salt-compact-light .ag-floating-filter,
+.ag-theme-salt-compact-dark .ag-floating-filter {
   border: var(--salt-size-border) var(--salt-editable-borderStyle) var(--salt-separable-tertiary-borderColor);
 }
 
-div[class*="ag-theme-salt"] .ag-header-cell.ag-floating-filter {
+.ag-theme-salt-light .ag-header-cell.ag-floating-filter,
+.ag-theme-salt-dark .ag-header-cell.ag-floating-filter,
+.ag-theme-salt-compact-light .ag-header-cell.ag-floating-filter,
+.ag-theme-salt-compact-dark .ag-header-cell.ag-floating-filter {
   padding-left: 0;
 }
 
@@ -95,27 +163,78 @@ div[class*="ag-theme-salt"] .ag-header-cell.ag-floating-filter {
   From v31, there's a "active" state of floating filter button next to the input. So we want to put the focus ring
   not around the whole header cell, but around the input container.
 */
-div[class*="ag-theme-salt"] .ag-floating-filter .ag-floating-filter-body:focus-within {
+.ag-theme-salt-light .ag-floating-filter .ag-floating-filter-body:focus-within,
+.ag-theme-salt-dark .ag-floating-filter .ag-floating-filter-body:focus-within,
+.ag-theme-salt-compact-light .ag-floating-filter .ag-floating-filter-body:focus-within,
+.ag-theme-salt-compact-dark .ag-floating-filter .ag-floating-filter-body:focus-within {
   outline: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--salt-focused-outlineColor);
   outline-offset: -2px;
 }
 
-div[class*="ag-theme-salt"] .ag-header-cell-menu-button:hover,
-div[class*="ag-theme-salt"] .ag-header-cell-filter-button:hover,
-div[class*="ag-theme-salt"] .ag-panel-title-bar-button:hover,
-div[class*="ag-theme-salt"] .ag-header-expand-icon:hover,
-div[class*="ag-theme-salt"] .ag-column-group-icons:hover,
-div[class*="ag-theme-salt"] .ag-set-filter-group-icons:hover,
-div[class*="ag-theme-salt"] .ag-group-expanded .ag-icon:hover,
-div[class*="ag-theme-salt"] .ag-group-contracted .ag-icon:hover,
-div[class*="ag-theme-salt"] .ag-chart-settings-prev:hover,
-div[class*="ag-theme-salt"] .ag-chart-settings-next:hover,
-div[class*="ag-theme-salt"] .ag-group-title-bar-icon:hover,
-div[class*="ag-theme-salt"] .ag-column-select-header-icon:hover,
-div[class*="ag-theme-salt"] .ag-floating-filter-button-button:hover,
-div[class*="ag-theme-salt"] .ag-filter-toolpanel-expand:hover,
-div[class*="ag-theme-salt"] .ag-panel-title-bar-button-icon:hover,
-div[class*="ag-theme-salt"] .ag-chart-menu-icon:hover {
+.ag-theme-salt-light .ag-header-cell-menu-button:hover,
+.ag-theme-salt-dark .ag-header-cell-menu-button:hover,
+.ag-theme-salt-compact-light .ag-header-cell-menu-button:hover,
+.ag-theme-salt-compact-dark .ag-header-cell-menu-button:hover,
+.ag-theme-salt-light .ag-header-cell-filter-button:hover,
+.ag-theme-salt-dark .ag-header-cell-filter-button:hover,
+.ag-theme-salt-compact-light .ag-header-cell-filter-button:hover,
+.ag-theme-salt-compact-dark .ag-header-cell-filter-button:hover,
+.ag-theme-salt-light .ag-panel-title-bar-button:hover,
+.ag-theme-salt-dark .ag-panel-title-bar-button:hover,
+.ag-theme-salt-compact-light .ag-panel-title-bar-button:hover,
+.ag-theme-salt-compact-dark .ag-panel-title-bar-button:hover,
+.ag-theme-salt-light .ag-header-expand-icon:hover,
+.ag-theme-salt-dark .ag-header-expand-icon:hover,
+.ag-theme-salt-compact-light .ag-header-expand-icon:hover,
+.ag-theme-salt-compact-dark .ag-header-expand-icon:hover,
+.ag-theme-salt-light .ag-column-group-icons:hover,
+.ag-theme-salt-dark .ag-column-group-icons:hover,
+.ag-theme-salt-compact-light .ag-column-group-icons:hover,
+.ag-theme-salt-compact-dark .ag-column-group-icons:hover,
+.ag-theme-salt-light .ag-set-filter-group-icons:hover,
+.ag-theme-salt-dark .ag-set-filter-group-icons:hover,
+.ag-theme-salt-compact-light .ag-set-filter-group-icons:hover,
+.ag-theme-salt-compact-dark .ag-set-filter-group-icons:hover,
+.ag-theme-salt-light .ag-group-expanded .ag-icon:hover,
+.ag-theme-salt-dark .ag-group-expanded .ag-icon:hover,
+.ag-theme-salt-compact-light .ag-group-expanded .ag-icon:hover,
+.ag-theme-salt-compact-dark .ag-group-expanded .ag-icon:hover,
+.ag-theme-salt-light .ag-group-contracted .ag-icon:hover,
+.ag-theme-salt-dark .ag-group-contracted .ag-icon:hover,
+.ag-theme-salt-compact-light .ag-group-contracted .ag-icon:hover,
+.ag-theme-salt-compact-dark .ag-group-contracted .ag-icon:hover,
+.ag-theme-salt-light .ag-chart-settings-prev:hover,
+.ag-theme-salt-dark .ag-chart-settings-prev:hover,
+.ag-theme-salt-compact-light .ag-chart-settings-prev:hover,
+.ag-theme-salt-compact-dark .ag-chart-settings-prev:hover,
+.ag-theme-salt-light .ag-chart-settings-next:hover,
+.ag-theme-salt-dark .ag-chart-settings-next:hover,
+.ag-theme-salt-compact-light .ag-chart-settings-next:hover,
+.ag-theme-salt-compact-dark .ag-chart-settings-next:hover,
+.ag-theme-salt-light .ag-group-title-bar-icon:hover,
+.ag-theme-salt-dark .ag-group-title-bar-icon:hover,
+.ag-theme-salt-compact-light .ag-group-title-bar-icon:hover,
+.ag-theme-salt-compact-dark .ag-group-title-bar-icon:hover,
+.ag-theme-salt-light .ag-column-select-header-icon:hover,
+.ag-theme-salt-dark .ag-column-select-header-icon:hover,
+.ag-theme-salt-compact-light .ag-column-select-header-icon:hover,
+.ag-theme-salt-compact-dark .ag-column-select-header-icon:hover,
+.ag-theme-salt-light .ag-floating-filter-button-button:hover,
+.ag-theme-salt-dark .ag-floating-filter-button-button:hover,
+.ag-theme-salt-compact-light .ag-floating-filter-button-button:hover,
+.ag-theme-salt-compact-dark .ag-floating-filter-button-button:hover,
+.ag-theme-salt-light .ag-filter-toolpanel-expand:hover,
+.ag-theme-salt-dark .ag-filter-toolpanel-expand:hover,
+.ag-theme-salt-compact-light .ag-filter-toolpanel-expand:hover,
+.ag-theme-salt-compact-dark .ag-filter-toolpanel-expand:hover,
+.ag-theme-salt-light .ag-panel-title-bar-button-icon:hover,
+.ag-theme-salt-dark .ag-panel-title-bar-button-icon:hover,
+.ag-theme-salt-compact-light .ag-panel-title-bar-button-icon:hover,
+.ag-theme-salt-compact-dark .ag-panel-title-bar-button-icon:hover,
+.ag-theme-salt-light .ag-chart-menu-icon:hover,
+.ag-theme-salt-dark .ag-chart-menu-icon:hover,
+.ag-theme-salt-compact-light .ag-chart-menu-icon:hover,
+.ag-theme-salt-compact-dark .ag-chart-menu-icon:hover {
   /* Button is the same size of icon, we're copying what ag quartz theme is doing */
   box-shadow: 0 0 0 var(--salt-spacing-50) var(--salt-actionable-subtle-background-hover);
   background-color: var(--salt-actionable-subtle-background-hover);
@@ -134,26 +253,45 @@ div[class*="ag-theme-salt"] .ag-chart-menu-icon:hover {
   When filter is active, swap out filter icon with filled version.
   This is new in ag grid v32.
 */
-div[class*="ag-theme-salt"] .ag-filter-active {
+
+.ag-theme-salt-light .ag-filter-active,
+.ag-theme-salt-dark .ag-filter-active,
+.ag-theme-salt-compact-light .ag-filter-active,
+.ag-theme-salt-compact-dark .ag-filter-active {
   --ag-icon-font-code-filter: var(--ag-icon-font-code-filter-filled);
 }
 
-div[class*="ag-theme-salt"] .ag-floating-filter:after {
+.ag-theme-salt-light .ag-floating-filter:after,
+.ag-theme-salt-dark .ag-floating-filter:after,
+.ag-theme-salt-compact-light .ag-floating-filter:after,
+.ag-theme-salt-compact-dark .ag-floating-filter:after {
   width: 0;
 }
 
-div[class*="ag-theme-salt"] .ag-ltr .ag-floating-filter-button {
+.ag-theme-salt-light .ag-ltr .ag-floating-filter-button,
+.ag-theme-salt-dark .ag-ltr .ag-floating-filter-button,
+.ag-theme-salt-compact-light .ag-ltr .ag-floating-filter-button,
+.ag-theme-salt-compact-dark .ag-ltr .ag-floating-filter-button {
   margin-left: var(--salt-spacing-100);
 }
 
-div[class*="ag-theme-salt"] .ag-ltr .ag-floating-filter-button .ag-button:focus {
+.ag-theme-salt-light .ag-ltr .ag-floating-filter-button .ag-button:focus,
+.ag-theme-salt-dark .ag-ltr .ag-floating-filter-button .ag-button:focus,
+.ag-theme-salt-compact-light .ag-ltr .ag-floating-filter-button .ag-button:focus,
+.ag-theme-salt-compact-dark .ag-ltr .ag-floating-filter-button .ag-button:focus {
   border: none;
   outline: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--salt-focused-outlineColor);
   outline-offset: 2px;
 }
 
-div[class*="ag-theme-salt"] .ag-floating-filter input[class^="ag-"][type="number"],
-div[class*="ag-theme-salt"] .ag-floating-filter input[class^="ag-"][type="text"] {
+.ag-theme-salt-light .ag-floating-filter input[class^="ag-"][type="number"],
+.ag-theme-salt-dark .ag-floating-filter input[class^="ag-"][type="number"],
+.ag-theme-salt-compact-light .ag-floating-filter input[class^="ag-"][type="number"],
+.ag-theme-salt-compact-dark .ag-floating-filter input[class^="ag-"][type="number"],
+.ag-theme-salt-light .ag-floating-filter input[class^="ag-"][type="text"],
+.ag-theme-salt-dark .ag-floating-filter input[class^="ag-"][type="text"],
+.ag-theme-salt-compact-light .ag-floating-filter input[class^="ag-"][type="text"],
+.ag-theme-salt-compact-dark .ag-floating-filter input[class^="ag-"][type="text"] {
   /* Avoid floating filter's input clips focus ring */
   height: calc(var(--salt-size-base) + var(--salt-spacing-100) - 6px);
   /* Give internal <input> space for the outline */
@@ -162,14 +300,29 @@ div[class*="ag-theme-salt"] .ag-floating-filter input[class^="ag-"][type="text"]
   padding: 0 var(--salt-spacing-50);
 }
 
-div[class*="ag-theme-salt"] .ag-floating-filter-input input[class^="ag-"][type="text"],
-div[class*="ag-theme-salt"] .ag-floating-filter-input input[class^="ag-"][type="number"] {
+.ag-theme-salt-light .ag-floating-filter-input input[class^="ag-"][type="text"],
+.ag-theme-salt-dark .ag-floating-filter-input input[class^="ag-"][type="text"],
+.ag-theme-salt-compact-light .ag-floating-filter-input input[class^="ag-"][type="text"],
+.ag-theme-salt-compact-dark .ag-floating-filter-input input[class^="ag-"][type="text"],
+.ag-theme-salt-light .ag-floating-filter-input input[class^="ag-"][type="number"],
+.ag-theme-salt-dark .ag-floating-filter-input input[class^="ag-"][type="number"],
+.ag-theme-salt-compact-light .ag-floating-filter-input input[class^="ag-"][type="number"],
+.ag-theme-salt-compact-dark .ag-floating-filter-input input[class^="ag-"][type="number"] {
   border: none;
 }
 
-div[class*="ag-theme-salt"] .ag-header-cell:not(.ag-column-resizing) + .ag-header-cell.ag-column-menu-visible:not(.ag-column-hover):not(.ag-header-cell-moving):hover,
-div[class*="ag-theme-salt"] .ag-header-cell:not(.ag-column-hover):first-of-type:not(.ag-header-cell-moving).ag-column-menu-visible:hover,
-div[class*="ag-theme-salt"] .ag-header-cell.ag-column-menu-visible {
+.ag-theme-salt-light .ag-header-cell:not(.ag-column-resizing) + .ag-header-cell.ag-column-menu-visible:not(.ag-column-hover):not(.ag-header-cell-moving):hover,
+.ag-theme-salt-dark .ag-header-cell:not(.ag-column-resizing) + .ag-header-cell.ag-column-menu-visible:not(.ag-column-hover):not(.ag-header-cell-moving):hover,
+.ag-theme-salt-compact-light .ag-header-cell:not(.ag-column-resizing) + .ag-header-cell.ag-column-menu-visible:not(.ag-column-hover):not(.ag-header-cell-moving):hover,
+.ag-theme-salt-compact-dark .ag-header-cell:not(.ag-column-resizing) + .ag-header-cell.ag-column-menu-visible:not(.ag-column-hover):not(.ag-header-cell-moving):hover,
+.ag-theme-salt-light .ag-header-cell:not(.ag-column-hover):first-of-type:not(.ag-header-cell-moving).ag-column-menu-visible:hover,
+.ag-theme-salt-dark .ag-header-cell:not(.ag-column-hover):first-of-type:not(.ag-header-cell-moving).ag-column-menu-visible:hover,
+.ag-theme-salt-compact-light .ag-header-cell:not(.ag-column-hover):first-of-type:not(.ag-header-cell-moving).ag-column-menu-visible:hover,
+.ag-theme-salt-compact-dark .ag-header-cell:not(.ag-column-hover):first-of-type:not(.ag-header-cell-moving).ag-column-menu-visible:hover,
+.ag-theme-salt-light .ag-header-cell.ag-column-menu-visible,
+.ag-theme-salt-dark .ag-header-cell.ag-column-menu-visible,
+.ag-theme-salt-compact-light .ag-header-cell.ag-column-menu-visible,
+.ag-theme-salt-compact-dark .ag-header-cell.ag-column-menu-visible {
   /*
     When menu is visible, change bg and fg. 
     From ag grid v32, a new `.ag-has-popup-positioned-under` can be potentially used, however `.ag-column-menu-visible` will still be applied 
@@ -179,27 +332,40 @@ div[class*="ag-theme-salt"] .ag-header-cell.ag-column-menu-visible {
   color: var(--salt-actionable-secondary-foreground-active);
   /* Color for menu / filter icons */
   --ag-icon-font-color: var(--salt-actionable-secondary-foreground-active);
-
   /** don't show hover style, don't want to flip between light / dark */
   --salt-actionable-subtle-background-hover: var(--salt-actionable-subtle-background-active);
 }
 
-div[class*="ag-theme-salt"] .ag-header-cell.ag-column-menu-visible .ag-icon {
+.ag-theme-salt-light .ag-header-cell.ag-column-menu-visible .ag-icon,
+.ag-theme-salt-dark .ag-header-cell.ag-column-menu-visible .ag-icon,
+.ag-theme-salt-compact-light .ag-header-cell.ag-column-menu-visible .ag-icon,
+.ag-theme-salt-compact-dark .ag-header-cell.ag-column-menu-visible .ag-icon {
   color: var(--salt-actionable-secondary-foreground-active);
 }
 
-div[class*="ag-theme-salt"] .ag-cell-label-container {
-  /* row height is base size + 50 spacing on top/bottom */
+.ag-theme-salt-light .ag-cell-label-container,
+.ag-theme-salt-dark .ag-cell-label-container,
+.ag-theme-salt-compact-light .ag-cell-label-container,
+.ag-theme-salt-compact-dark .ag-cell-label-container {
   padding: var(--salt-spacing-50) 0;
 }
 
-div[class*="ag-theme-salt"] .ag-list-item:hover,
-div[class*="ag-theme-salt"] .ag-virtual-list-item:hover {
+.ag-theme-salt-light .ag-list-item:hover,
+.ag-theme-salt-dark .ag-list-item:hover,
+.ag-theme-salt-compact-light .ag-list-item:hover,
+.ag-theme-salt-compact-dark .ag-list-item:hover,
+.ag-theme-salt-light .ag-virtual-list-item:hover,
+.ag-theme-salt-dark .ag-virtual-list-item:hover,
+.ag-theme-salt-compact-light .ag-virtual-list-item:hover,
+.ag-theme-salt-compact-dark .ag-virtual-list-item:hover {
   background-color: var(--salt-selectable-background-hover);
   cursor: pointer;
 }
 
-div[class*="ag-theme-salt"] .ag-label-align-right .ag-label {
+.ag-theme-salt-light .ag-label-align-right .ag-label,
+.ag-theme-salt-dark .ag-label-align-right .ag-label,
+.ag-theme-salt-compact-light .ag-label-align-right .ag-label,
+.ag-theme-salt-compact-dark .ag-label-align-right .ag-label {
   margin-inline-start: var(--salt-spacing-100);
   margin-inline-end: 0;
 }

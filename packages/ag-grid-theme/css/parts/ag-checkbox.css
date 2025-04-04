@@ -1,6 +1,8 @@
 /* CHECKBOX */
-
-div[class*="ag-theme-salt"] .ag-checkbox-input-wrapper {
+.ag-theme-salt-light .ag-checkbox-input-wrapper,
+.ag-theme-salt-dark .ag-checkbox-input-wrapper,
+.ag-theme-salt-compact-light .ag-checkbox-input-wrapper,
+.ag-theme-salt-compact-dark .ag-checkbox-input-wrapper {
   /* border-radius doesn't work given border is part of the font glyph */
   height: var(--salt-size-selectable);
   width: var(--salt-size-selectable);
