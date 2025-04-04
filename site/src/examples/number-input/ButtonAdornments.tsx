@@ -4,29 +4,62 @@ import {
   FormFieldHelperText,
   FormFieldLabel,
   StackLayout,
+  useId,
 } from "@salt-ds/core";
 import { AddIcon, RefreshIcon, RemoveIcon, SyncIcon } from "@salt-ds/icons";
 import { NumberInput } from "@salt-ds/lab";
 import { useEffect, useState } from "react";
 
-const RefreshAdornment = () => {
+const accessibleTextStyles = {
+  position: "fixed",
+  top: "0",
+  left: "0",
+  transform: "translate(-100%, -100%)",
+} as React.CSSProperties;
+
+const ResetAdornment = () => {
   const defaultValue = 1000;
   const [value, setValue] = useState<number | string>(defaultValue);
+  const [accessibleText, setAccessibleText] = useState("");
+
+  const formFieldLabel = "Number Input with Refresh adornment";
+  const accessibleTextId = useId();
+
+  const clearAccessibleText = () =>
+    setTimeout(() => {
+      setAccessibleText(" ");
+    }, 3000);
+
   return (
     <FormField>
-      <FormFieldLabel>Refresh adornment</FormFieldLabel>
+      <FormFieldLabel>{formFieldLabel}</FormFieldLabel>
       <NumberInput
         value={value}
-        onChange={(_, newValue) => setValue(newValue)}
+        onValueChange={(newValue) => setValue(newValue.floatValue ?? "")}
         step={5}
-        stepBlock={50}
+        stepMultiplier={10}
         endAdornment={
-          <Button
-            onClick={() => setValue(defaultValue)}
-            appearance="transparent"
-          >
-            <RefreshIcon aria-label="Reset to default" />
-          </Button>
+          <>
+            <Button
+              aria-describedby={accessibleTextId}
+              aria-label={`Reset ${formFieldLabel}`}
+              onClick={() => {
+                setValue(defaultValue);
+                setAccessibleText("Value was reset");
+                clearAccessibleText();
+              }}
+              appearance="transparent"
+            >
+              <RefreshIcon aria-hidden />
+            </Button>
+            <span
+              id={accessibleTextId}
+              aria-live="polite"
+              style={accessibleTextStyles}
+            >
+              {accessibleText}
+            </span>
+          </>
         }
       />
       <FormFieldHelperText>Custom step 5 and step block 50</FormFieldHelperText>
@@ -35,35 +68,60 @@ const RefreshAdornment = () => {
 };
 
 const SyncAdornment = () => {
-  const [randomLiveValue, setRandomLiveValue] = useState("14.75");
-  const [value, setValue] = useState<number | string>(randomLiveValue);
+  const [randomLiveValue, setRandomLiveValue] = useState(14.75);
+  const [value, setValue] = useState<number|string>(randomLiveValue);
+  const [accessibleText, setAccessibleText] = useState("");
+
+  const formFieldLabel = "Number Input with Sync adornment";
+  const accessibleTextId = useId();
+
   useEffect(() => {
     const intervalId = setInterval(() => {
       const randomDelta = Number.parseFloat((Math.random() * 2 - 1).toFixed(2));
       setRandomLiveValue((prev) =>
-        (Number.parseFloat(prev) + randomDelta).toFixed(2),
+        prev + randomDelta
       );
     }, 500);
 
     return () => clearInterval(intervalId);
   }, []);
 
+  const clearAccessibleText = () =>
+    setTimeout(() => {
+      setAccessibleText(" ");
+    }, 3000);
+
   return (
     <FormField>
-      <FormFieldLabel>Sync adornment</FormFieldLabel>
+      <FormFieldLabel>{formFieldLabel}</FormFieldLabel>
       <NumberInput
         value={value}
-        onChange={(_, newValue) => setValue(newValue)}
-        decimalPlaces={2}
+        onValueChange={(newValue) => setValue(newValue.floatValue ?? "")}
+        decimalScale={2}
         step={0.01}
-        stepBlock={0.1}
+        stepMultiplier={0.1}
         endAdornment={
-          <Button
-            onClick={() => setValue(randomLiveValue)}
-            appearance="transparent"
-          >
-            <SyncIcon aria-label="Sync live value" />
-          </Button>
+          <>
+            <Button
+              aria-describedby={accessibleTextId}
+              aria-label={`Sync ${formFieldLabel}`}
+              onClick={() => {
+                setValue(randomLiveValue);
+                setAccessibleText(`Synchronized value to ${randomLiveValue}`);
+                clearAccessibleText();
+              }}
+              appearance="transparent"
+            >
+              <SyncIcon aria-hidden />
+            </Button>
+            <span
+              id={accessibleTextId}
+              aria-live="polite"
+              style={accessibleTextStyles}
+            >
+              {accessibleText}
+            </span>
+          </>
         }
       />
       <FormFieldHelperText>Live value {randomLiveValue}</FormFieldHelperText>
@@ -73,7 +131,7 @@ const SyncAdornment = () => {
 
 const CustomButtons = () => {
   const step = 1;
-  const [value, setValue] = useState<number | string>(10);
+  const [value, setValue] = useState<number| string>(10);
 
   const updateValue = (multiplier: -1 | 1) => {
     if (typeof value === "number") {
@@ -83,20 +141,20 @@ const CustomButtons = () => {
 
   return (
     <FormField>
-      <FormFieldLabel>Custom buttons</FormFieldLabel>
+      <FormFieldLabel>Number Input with Custom buttons</FormFieldLabel>
       <NumberInput
-        hideButtons
+        hideControls
         value={value}
         textAlign="center"
-        onChange={(_, newValue) => setValue(newValue)}
+        onValueChange={(newValue) => setValue(newValue.floatValue ?? "")}
         startAdornment={
-          <Button onClick={() => updateValue(-1)}>
-            <RemoveIcon aria-label="Decrease value by 1" />
+          <Button aria-hidden tabIndex={-1} onClick={() => updateValue(-1)}>
+            <RemoveIcon aria-hidden />
           </Button>
         }
         endAdornment={
-          <Button onClick={() => updateValue(1)}>
-            <AddIcon aria-label="Increase value by 1" />
+          <Button aria-hidden tabIndex={-1} onClick={() => updateValue(1)}>
+            <AddIcon aria-hidden />
           </Button>
         }
       />
@@ -107,7 +165,7 @@ const CustomButtons = () => {
 export const ButtonAdornments = () => {
   return (
     <StackLayout style={{ width: "256px" }}>
-      <RefreshAdornment />
+      <ResetAdornment />
       <SyncAdornment />
       <CustomButtons />
     </StackLayout>
