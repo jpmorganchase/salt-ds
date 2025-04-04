@@ -8,6 +8,7 @@
   --slider-progressPercentageEnd: 0%;
 
   display: flex;
+  touch-action: none;
   width: 100%;
 }
 

@@ -1,3 +1,4 @@
+import { useResponsiveProp } from "@salt-ds/core";
 import { RangeSlider } from "@salt-ds/lab";
 import { type ReactElement, useState } from "react";
 
@@ -5,13 +6,13 @@ export const WithNonNumericValues = (): ReactElement => {
   const [value, setValue] = useState<[number, number]>([1, 3]);
 
   const daysOfTheWeek = [
-    { label: "Monday", value: 1 },
-    { label: "Tuesday", value: 2 },
-    { label: "Wednesday", value: 3 },
-    { label: "Thursday", value: 4 },
-    { label: "Friday", value: 5 },
-    { label: "Saturday", value: 6 },
-    { label: "Sunday", value: 7 },
+    { label: "Monday", shortLabel: "Mon", value: 1 },
+    { label: "Tuesday", shortLabel: "Tue", value: 2 },
+    { label: "Wednesday", shortLabel: "Wed", value: 3 },
+    { label: "Thursday", shortLabel: "Thu", value: 4 },
+    { label: "Friday", shortLabel: "Fri", value: 5 },
+    { label: "Saturday", shortLabel: "Sat", value: 6 },
+    { label: "Sunday", shortLabel: "Sun", value: 7 },
   ];
 
   const getDayOfTheWeek = (value?: number) => {
@@ -19,17 +20,27 @@ export const WithNonNumericValues = (): ReactElement => {
     return day ? day.label : "";
   };
 
+  const responsiveLabels = useResponsiveProp(
+    {
+      xs: daysOfTheWeek.map((day) => ({
+        value: day.value,
+        label: day.shortLabel,
+      })),
+      lg: daysOfTheWeek.map((day) => ({ value: day.value, label: day.label })),
+    },
+    daysOfTheWeek.map((day) => ({ value: day.value, label: day.label })),
+  );
+
   return (
     <RangeSlider
+      aria-label="with non-numeric values"
       style={{ width: "80%" }}
       min={1}
       max={7}
       value={value}
       onChange={(_e, value) => setValue(value)}
       format={getDayOfTheWeek}
-      marks={daysOfTheWeek.map((day) => {
-        return { value: day.value, label: day.label };
-      })}
+      marks={responsiveLabels}
     />
   );
 };

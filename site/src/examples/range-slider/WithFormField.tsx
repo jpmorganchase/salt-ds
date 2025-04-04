@@ -4,48 +4,28 @@ import type { ReactElement } from "react";
 
 const marks = [
   {
-    label: "0",
     value: 0,
+    label: "0",
   },
   {
-    label: "1",
-    value: 1,
-  },
-  {
-    label: "2",
-    value: 2,
-  },
-  {
-    label: "3",
-    value: 3,
-  },
-  {
-    label: "4",
-    value: 4,
-  },
-  {
-    label: "5",
-    value: 5,
-  },
-  {
-    label: "6",
-    value: 6,
-  },
-  {
-    label: "7",
-    value: 7,
-  },
-  {
-    label: "8",
-    value: 8,
-  },
-  {
-    label: "9",
-    value: 9,
-  },
-  {
-    label: "10",
     value: 10,
+    label: "10",
+  },
+  {
+    value: 20,
+    label: "20",
+  },
+  {
+    value: 30,
+    label: "30",
+  },
+  {
+    value: 40,
+    label: "40",
+  },
+  {
+    value: 50,
+    label: "50",
   },
 ];
 
@@ -54,11 +34,17 @@ export const WithFormField = (): ReactElement => {
     <StackLayout gap={3} style={{ width: "80%" }}>
       <FormField>
         <FormFieldLabel>Field label</FormFieldLabel>
-        <RangeSlider minLabel="0" maxLabel="10" />
+        <RangeSlider minLabel="0" maxLabel="50" min={0} max={50} />
       </FormField>
       <FormField>
         <FormFieldLabel>Field label</FormFieldLabel>
-        <RangeSlider constrainLabelPosition showTicks marks={marks} />
+        <RangeSlider
+          constrainLabelPosition
+          showTicks
+          marks={marks}
+          min={0}
+          max={50}
+        />
       </FormField>
       <FormField
         labelPlacement="left"
@@ -69,7 +55,7 @@ export const WithFormField = (): ReactElement => {
         }
       >
         <FormFieldLabel>Field label left</FormFieldLabel>
-        <RangeSlider minLabel="0" maxLabel="10" />
+        <RangeSlider minLabel="0" maxLabel="50" min={0} max={50} />
       </FormField>
       <FormField
         labelPlacement="left"
@@ -80,7 +66,13 @@ export const WithFormField = (): ReactElement => {
         }
       >
         <FormFieldLabel>Field label left</FormFieldLabel>
-        <RangeSlider marks={marks} showTicks constrainLabelPosition />
+        <RangeSlider
+          marks={marks}
+          showTicks
+          constrainLabelPosition
+          min={0}
+          max={50}
+        />
       </FormField>
     </StackLayout>
   );

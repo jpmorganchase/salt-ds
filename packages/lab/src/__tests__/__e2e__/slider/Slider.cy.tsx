@@ -11,15 +11,17 @@ describe("Given a Slider", () => {
     cy.mount(<Default />);
 
     cy.findByRole("slider").should("exist");
-    cy.findByRole("slider").should("have.value", "5");
+    cy.findByRole("slider").should("have.value", "50");
   });
 
   it("should fire onChange on pointer down on slider track", () => {
     const changeSpy = cy.stub().as("changeSpy");
-    cy.mount(<Default defaultValue={0} onChange={changeSpy} />);
+    cy.mount(
+      <Default defaultValue={0} onChange={changeSpy} min={0} max={10} />,
+    );
     cy.get(".saltSliderTrack-rail").trigger("pointerdown", {
       button: 0,
-      clientX: 720,
+      clientX: 750,
       clientY: 50,
     });
     cy.get("@changeSpy").should("have.callCount", 1);
@@ -32,10 +34,10 @@ describe("Given a Slider", () => {
 
   it("should fire onChangeEnd when user stops dragging", () => {
     const changeEndSpy = cy.stub().as("changeEndSpy");
-    cy.mount(<Default onChangeEnd={changeEndSpy} />);
+    cy.mount(<Default onChangeEnd={changeEndSpy} min={0} max={10} />);
     cy.get(".saltSliderTrack-rail").trigger("pointerdown", {
       button: 0,
-      clientX: 720,
+      clientX: 750,
       clientY: 50,
     });
     // onChangeEnd is not called when dragging
@@ -52,7 +54,7 @@ describe("Given a Slider", () => {
 
   it("should trigger onChangeEnd during keyboard navigation", () => {
     const changeEndSpy = cy.stub().as("changeEndSpy");
-    cy.mount(<Default onChangeEnd={changeEndSpy} />);
+    cy.mount(<Default onChangeEnd={changeEndSpy} min={0} max={10} />);
 
     // Focus and press ArrowRight key
     cy.findByRole("slider").focus().realPress("ArrowRight");
@@ -124,7 +126,7 @@ describe("Given a Slider", () => {
     cy.findByTestId("sliderThumb").trigger("pointerdown");
     cy.findByTestId("sliderThumb").trigger("pointermove", {
       button: 0,
-      clientX: 720,
+      clientX: 750,
       clientY: 50,
     });
     cy.findByTestId("sliderThumb").trigger("pointerup");
@@ -138,7 +140,7 @@ describe("Given a Slider", () => {
   });
 
   it("should display a tooltip on pointerover with correct value", () => {
-    cy.mount(<Default defaultValue={2} />);
+    cy.mount(<Default defaultValue={2} min={0} max={10} />);
     cy.findByTestId("sliderThumb").trigger("pointerover");
     cy.findByTestId("sliderTooltip").should("be.visible");
     cy.findByTestId("sliderTooltip").should("have.text", "2");
@@ -157,6 +159,8 @@ describe("Given a Slider", () => {
     cy.mount(
       <Default
         defaultValue={0}
+        min={0}
+        max={10}
         restrictToMarks={true}
         marks={[
           { value: 2, label: "2" },
@@ -184,6 +188,8 @@ describe("Given a Slider", () => {
   it("should render inline min/max labels and marks when provided", () => {
     cy.mount(
       <Default
+        min={0}
+        max={10}
         marks={[
           { value: 2, label: "2" },
           { value: 3, label: "3" },
@@ -341,6 +347,8 @@ describe("Given a Slider", () => {
             value={value}
             onChange={onChange}
             onChangeEnd={onChangeEnd}
+            min={0}
+            max={10}
           />
         );
       }
@@ -427,7 +435,7 @@ describe("Given a Slider", () => {
     });
 
     it("should have focus but not display a focus ring when clicked and dragged via mouse", () => {
-      cy.mount(<Default />);
+      cy.mount(<Default min={0} max={10} />);
 
       cy.findByTestId("sliderThumb").trigger("pointerdown");
       cy.findByTestId("sliderThumb").trigger("pointermove", {
@@ -454,7 +462,7 @@ describe("Given a Slider", () => {
 
     it("should allow keyboard navigation after mouse interaction with correct focus visible behaviour", () => {
       const changeSpy = cy.stub().as("changeSpy");
-      cy.mount(<Default onChange={changeSpy} />);
+      cy.mount(<Default onChange={changeSpy} min={0} max={10} />);
 
       // Click and drag slider via mouse
       cy.findByTestId("sliderThumb").trigger("pointerdown");

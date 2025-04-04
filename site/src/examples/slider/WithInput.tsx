@@ -51,7 +51,7 @@ export const SingleWithInput = () => {
         <Input
           placeholder={inputValue}
           value={inputValue}
-          style={{ flex: 1 }}
+          style={{ width: "15%" }}
           inputProps={{ style: { textAlign: "center" } }}
           onChange={handleInputChange}
           validationStatus={validationStatus}
@@ -63,7 +63,7 @@ export const SingleWithInput = () => {
           minLabel="-50"
           maxLabel="50"
           onChange={handleSliderChange}
-          style={{ flex: 8 }}
+          style={{ width: "85%" }}
         />
       </FlexLayout>
     </FormField>

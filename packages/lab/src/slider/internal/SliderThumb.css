@@ -9,6 +9,7 @@
   top: calc(((var(--salt-size-selectable) - var(--salt-size-bar)) / 2) * -1);
   transform: translateX(-50%);
   width: var(--salt-size-border-strong);
+  touch-action: none;
 }
 
 .saltSliderThumb-disabled {

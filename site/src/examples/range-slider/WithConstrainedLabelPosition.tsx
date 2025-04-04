@@ -7,15 +7,14 @@ export const WithConstrainedLabelPosition = (): ReactElement => (
     <FormField>
       <FormFieldLabel>With constrained label position</FormFieldLabel>
       <RangeSlider
-        aria-label="WithConstrainedLabelPosition"
         marks={[
           {
             value: 0,
-            label: "Very low",
+            label: "Low",
           },
           {
-            value: 10,
-            label: "Very high",
+            value: 100,
+            label: "High",
           },
         ]}
         constrainLabelPosition
@@ -24,15 +23,14 @@ export const WithConstrainedLabelPosition = (): ReactElement => (
     <FormField>
       <FormFieldLabel>With constrained label position and ticks</FormFieldLabel>
       <RangeSlider
-        aria-label="WithConstrainedLabelPosition"
         marks={[
           {
             value: 0,
-            label: "Very low",
+            label: "Low",
           },
           {
-            value: 10,
-            label: "Very high",
+            value: 100,
+            label: "High",
           },
         ]}
         constrainLabelPosition
