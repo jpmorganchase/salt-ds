@@ -2,14 +2,13 @@ import { RangeSlider } from "@salt-ds/lab";
 
 export const WithHiddenTooltip = () => (
   <RangeSlider
-    aria-label="single"
+    aria-label="with hidden tooltip"
     min={0}
     max={50}
-    defaultValue={[20, 40]}
     style={{ width: "80%" }}
     showTooltip={false}
-    minLabel="Very low"
-    maxLabel="Very high"
+    minLabel="Low"
+    maxLabel="High"
     step={10}
     marks={[
       {

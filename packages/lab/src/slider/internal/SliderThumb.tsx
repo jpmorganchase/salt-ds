@@ -35,8 +35,6 @@ interface SliderThumbProps
   min: number;
   minLabel?: string;
   offsetPercentage?: string;
-  onBlur: () => void;
-  onFocus: () => void;
   restrictToMarks?: boolean;
   showTooltip?: boolean;
   sliderValue: [number, number] | number;
@@ -53,8 +51,6 @@ export const SliderThumb = ({
   accessibleMinText,
   disabled,
   format,
-  onBlur,
-  onFocus,
   handleInputChange,
   handleKeydownOnThumb,
   handlePointerDown,
@@ -139,8 +135,6 @@ export const SliderThumb = ({
           disabled={disabled}
           type="range"
           ref={inputRef}
-          onFocus={onFocus}
-          onBlur={onBlur}
           className={withBaseName("input")}
           value={value}
           onChange={handleInputChange}
