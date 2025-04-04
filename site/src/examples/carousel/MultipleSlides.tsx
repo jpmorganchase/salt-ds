@@ -32,9 +32,9 @@ const renderMediaPlaceholder = (index: number) => (
   />
 );
 
-export const Default = (): ReactElement => {
+export const MultipleSlides = (): ReactElement => {
   return (
-    <Carousel aria-label="Categorical colors">
+    <Carousel visibleSlides={{ xs: 1, sm: 2 }} aria-label="Categorical colors">
       <CarouselControls />
       <CarouselSlider>
         {Array.from({ length: 5 }, (_, index) => (
