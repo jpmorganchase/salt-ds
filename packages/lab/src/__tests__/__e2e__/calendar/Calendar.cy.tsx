@@ -51,6 +51,7 @@ const {
   TwinCalendars,
   UnselectableDates,
   WithLocale,
+  // biome-ignore lint/suspicious/noExplicitAny: storybook stories
 } = calendarStories as any;
 
 describe("GIVEN a Calendar", () => {
@@ -566,7 +567,7 @@ describe("GIVEN a Calendar", () => {
           });
         });
 
-        it("SHOULD not allow selection of unselectable dates", () => {
+        it("SHOULD not allow selection of un-selectable dates", () => {
           cy.mount(<UnselectableDates defaultVisibleMonth={testDate} />);
 
           // Define the weekend dates in March 2024

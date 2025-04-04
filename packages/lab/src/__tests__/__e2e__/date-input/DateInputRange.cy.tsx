@@ -53,6 +53,7 @@ const adapters = [adapterDateFns, adapterDayjs, adapterLuxon, adapterMoment];
  * @param adapter
  */
 function assertDateChange(
+  // biome-ignore lint/suspicious/noExplicitAny: spy
   spy: any,
   expectedValue: { startDate?: string; endDate?: string },
   expectedDate: {
@@ -303,6 +304,21 @@ describe("GIVEN a DateInputRange", () => {
             adapter,
           ),
         );
+
+        // Test giving focus but not changing the date
+        cy.findByLabelText("Start date").click();
+        cy.realPress("Tab");
+        cy.findByLabelText("Start date").should(
+          "have.value",
+          initialDateValue.startDate,
+        );
+        cy.findByLabelText("End date").should("have.focus");
+        cy.realPress("Tab");
+        cy.findByLabelText("End date").should(
+          "have.value",
+          initialDateValue.endDate,
+        );
+        cy.get("@dateChangeSpy").should("have.callCount", 7);
       });
 
       it("SHOULD support custom formatter", () => {

@@ -1,4 +1,4 @@
-import { makePrefixer } from "@salt-ds/core";
+import { type ResponsiveProp, makePrefixer } from "@salt-ds/core";
 import { clsx } from "clsx";
 import {
   type ComponentPropsWithoutRef,
@@ -36,11 +36,19 @@ export interface CalendarBaseProps extends ComponentPropsWithoutRef<"div"> {
   /**
    * Locale for date formatting
    */
+  // biome-ignore lint/suspicious/noExplicitAny: locale is date framework dependent
   locale?: any;
+  /**
+   * Number of visible months, maximum 12, defaults to 1
+   */
+  numberOfVisibleMonths?: ResponsiveProp<
+    1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12
+  >;
 }
 
 /**
  * Props for the Calendar component with single date selection.
+ * @template TDate - The type of the date object.
  */
 export interface CalendarSingleProps<TDate extends DateFrameworkType>
   extends CalendarBaseProps,
@@ -53,6 +61,7 @@ export interface CalendarSingleProps<TDate extends DateFrameworkType>
 
 /**
  * Props for the Calendar component with date range selection.
+ * @template TDate - The type of the date object.
  */
 export interface CalendarRangeProps<TDate extends DateFrameworkType>
   extends CalendarBaseProps,
@@ -65,6 +74,7 @@ export interface CalendarRangeProps<TDate extends DateFrameworkType>
 
 /**
  * Props for the Calendar component with multi-select date selection.
+ * @template TDate - The type of the date object.
  */
 export interface CalendarMultiSelectProps<TDate extends DateFrameworkType>
   extends CalendarBaseProps,
@@ -77,6 +87,7 @@ export interface CalendarMultiSelectProps<TDate extends DateFrameworkType>
 
 /**
  * Props for the Calendar component with offset date selection.
+ * @template TDate - The type of the date object.
  */
 export interface CalendarOffsetProps<TDate extends DateFrameworkType>
   extends CalendarBaseProps,
@@ -89,6 +100,7 @@ export interface CalendarOffsetProps<TDate extends DateFrameworkType>
 
 /**
  * Type representing the props for the Calendar component with various selection variants.
+ * @template TDate - The type of the date object.
  */
 export type CalendarProps<TDate extends DateFrameworkType> =
   | CalendarSingleProps<TDate>
@@ -98,7 +110,10 @@ export type CalendarProps<TDate extends DateFrameworkType> =
 
 const withBaseName = makePrefixer("saltCalendar");
 
-export const Calendar = forwardRef<HTMLDivElement, CalendarProps<any>>(
+export const Calendar = forwardRef<
+  HTMLDivElement,
+  CalendarProps<DateFrameworkType>
+>(
   <TDate extends DateFrameworkType>(
     props: CalendarProps<TDate>,
     ref: React.Ref<HTMLDivElement>,
@@ -126,6 +141,7 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps<any>>(
       locale,
       minDate,
       maxDate,
+      numberOfVisibleMonths = 1,
       selectionVariant,
       onHoveredDateChange,
       hoveredDate,
@@ -154,6 +170,7 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps<any>>(
       locale,
       minDate,
       maxDate,
+      numberOfVisibleMonths,
       selectionVariant,
       onHoveredDateChange,
       hideOutOfRangeDates,

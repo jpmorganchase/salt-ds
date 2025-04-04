@@ -225,6 +225,7 @@ export class AdapterDateFns implements SaltDateAdapter<Date, Locale> {
    * @param date - The Date object to check.
    * @returns True if the date is valid date object, false otherwise.
    */
+  // biome-ignore lint/suspicious/noExplicitAny: date object
   public isValid(date: any): date is Date {
     return date instanceof Date && isValidDateFns(date);
   }

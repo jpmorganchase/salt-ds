@@ -3,7 +3,6 @@ import {
   FlexItem,
   FlexLayout,
   FormField,
-  FormFieldHelperText as FormHelperText,
   FormFieldLabel as FormLabel,
 } from "@salt-ds/core";
 import type { DateFrameworkType } from "@salt-ds/date-adapters";
@@ -11,9 +10,10 @@ import {
   type DateInputSingleDetails,
   DatePicker,
   DatePickerActions,
+  DatePickerHelperText,
   DatePickerOverlay,
+  DatePickerSingleGridPanel,
   DatePickerSingleInput,
-  DatePickerSinglePanel,
   DatePickerTrigger,
   type SingleDateSelection,
   useLocalization,
@@ -31,7 +31,6 @@ export const SingleWithConfirmation = (): ReactElement => {
   const defaultHelperText = "Date format DD MMM YYYY (e.g. 09 Jun 2024)";
   const errorHelperText = "Please enter a valid date in DD MMM YYYY format";
   const applyButtonRef = useRef<HTMLButtonElement>(null);
-  const [open, setOpen] = useState<boolean>(false);
   const [helperText, setHelperText] = useState<string>(defaultHelperText);
   const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
     undefined,
@@ -92,7 +91,6 @@ export const SingleWithConfirmation = (): ReactElement => {
           validationStatus,
         };
       }
-      setOpen(opening);
     },
     [helperText, validationStatus],
   );
@@ -105,7 +103,7 @@ export const SingleWithConfirmation = (): ReactElement => {
 
   const handleApply = useCallback(
     (
-      event: SyntheticEvent,
+      _event: SyntheticEvent,
       date: SingleDateSelection<DateFrameworkType> | null,
     ) => {
       console.log(
@@ -136,7 +134,7 @@ export const SingleWithConfirmation = (): ReactElement => {
         <DatePickerOverlay>
           <FlexLayout gap={0} direction="column">
             <FlexItem>
-              <DatePickerSinglePanel helperText={helperText} />
+              <DatePickerSingleGridPanel helperText={helperText} />
               <Divider variant="tertiary" />
             </FlexItem>
             <FlexItem>
@@ -150,8 +148,8 @@ export const SingleWithConfirmation = (): ReactElement => {
             </FlexItem>
           </FlexLayout>
         </DatePickerOverlay>
+        <DatePickerHelperText>{helperText}</DatePickerHelperText>
       </DatePicker>
-      {!open ? <FormHelperText>{helperText}</FormHelperText> : null}
     </FormField>
   );
 };
