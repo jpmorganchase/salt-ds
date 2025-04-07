@@ -5,40 +5,11 @@ sidebar:
   priority: 13
 ---
 
-Colors can be used to communicate meaning, establish visual hierarchy, and differentiate products, all while ensuring a cohesive and accessible experience. Colors are divided into several categories to communicate several concepts across the Salt design system.
+Colors can be used to communicate meaning, establish visual hierarchy, and differentiate products, all while ensuring a cohesive and accessible experience.
 
-The raw color values on this page reference the current Salt theme. If you’re using the Salt Next theme please refer to the separate color palette and listed guidance on the [Themes page](/salt/themes/index).
+The raw color values on this page reference the Legacy (UITK) Salt theme. If you’re using the JPM brand theme please refer to guidance on the [Themes page](/salt/themes/index).
 
-## Status
-
-Status colors are visual indicators that reflect changes in the state or condition of a system or process. These colors help users understand what’s happening, what actions are needed, and whether any issues need to be addressed.
-
-The Salt design system includes 4 statuses with corresponding colors:
-
-| Status  | Color  |
-| ------- | ------ |
-| Info    | Blue   |
-| Error   | Red    |
-| Warning | Orange |
-| Success | Green  |
-
-## Sentiment
-
-Sentiment colors guide users through an interface by providing visual cues about potential outcomes. These colors evoke specific feelings such as negativity, carefulness, comfort, trust or positivity.
-
-The Salt design system includes 5 sentiments with associated colors:
-
-| Sentiment | Color                     | Feeling     |
-| --------- | ------------------------- | ----------- |
-| Negative  | Red                       | Negativity  |
-| Caution   | Orange                    | Carefulness |
-| Neutral   | Gray                      | Comfort     |
-| Accented  | Blue (Teal in Next theme) | Trust       |
-| Positive  | Green                     | Positivity  |
-
-Sentiment can be used independently of status. For example, a negative button for 'Delete' could be displayed within an informative dialog.
-
-## Foundation
+## Foundational
 
 These are the foundational colors used most frequently across our applications and in the majority of Salt’s components.
 
@@ -55,5 +26,57 @@ The foundational colors shown below are reflective of the Legacy (UITK) theme.
 These are the categorical colors used for data visualization and other components that support categories. The palette includes 20 unique colors and their corresponding ramps.
 
 <FoundationColorView group="categorical" />
+
+## Semantic use of color
+
+Colors are divided into several categories to communicate several concepts across the Salt design system.
+
+### Status
+
+Status colors are visual indicators that reflect changes in the state or condition of a system or process. These colors help users understand what’s happening, what actions are needed, and whether any issues need to be addressed.
+
+The Salt design system includes 4 statuses:
+
+| Status  | Color  |
+| ------- | ------ |
+| Info    | Blue   |
+| Error   | Red    |
+| Warning | Orange |
+| Success | Green  |
+
+<Image
+  src="/img/foundations/color-status.png"
+  alt="Example of Banner in all four statuses side-by-side"
+/>
+
+### Sentiment
+
+Sentiment colors guide users through an interface by providing visual cues about potential outcomes. These colors evoke specific feelings such as negativity, carefulness, comfort, trust or positivity.
+
+The Salt design system includes 5 sentiments:
+
+| Sentiment | Color                          | Feeling     |
+| --------- | ------------------------------ | ----------- |
+| Negative  | Red                            | Negativity  |
+| Caution   | Orange                         | Carefulness |
+| Neutral   | Gray                           | Comfort     |
+| Accent    | Blue (Teal in JPM brand theme) | Trust       |
+| Positive  | Green                          | Positivity  |
+
+Sentiment can be used independently of status. For example, a negative button for 'Delete' could be displayed within an informative dialog.
+
+<Image
+  src="/img/foundations/color-sentiment.png"
+  alt="Example of Button in all five sentiments side-by-side"
+/>
+
+### Accent
+
+Accent is a concept within sentiment and is used to highlight key elements of an interface, such as an active tab or an important headline. The accent color serves as the dominant 'brand' color in a theme and conveys a sense of trust.
+
+<Image
+  src="/img/foundations/color-accent.png"
+  alt="Example of Card without accent and with accent side-by-side"
+/>
 
 :fragment{src="./fragments/feedback.mdx"}
