@@ -20,11 +20,7 @@ Selection of an interval of values from a `RangeSlider` track. A tooltip display
 
 ### Best practices
 
-When designing an accessible `RangeSlider`, it's important to ensure that all users, including those using screen readers, can understand the range and its values. By default, screen readers will announce the minimum and maximum values of the `RangeSlider`. However, if you choose to customize the inline labels using the `minLabel` and `maxLabel` props, you should also update the screen reader announcements to match these custom labels.
-
-To achieve this, use the `accessibleMinText` and `accessibleMaxText` props. These props allow you to specify the exact text that the screen reader will announce for the minimum and maximum values, respectively. This is particularly useful when the custom text in `minLabel` and `maxLabel` differs from the default numeric values, ensuring that the screen reader provides accurate and meaningful information to users.
-
-For example, if your `minLabel` is set to "Low" and your `maxLabel` is set to "High," you should set `accessibleMinText` to "Low value" and `accessibleMaxText` to "High value." This way, the screen reader will announce "Low value" and "High value" instead of the default numeric values, providing a more intuitive experience for users who rely on assistive technologies.
+To make the `RangeSlider` accessible, ensure screen readers can accurately convey the range and its values. While screen readers announce the default minimum and maximum values, customizing labels with `minLabel` and `maxLabel` is best paired with updating screen reader text using `accessibleMinText` and `accessibleMaxText`. These props let you define the exact text announced for the minimum and maximum values, ensuring alignment with custom labels. For instance, if `minLabel` is "Low" and `maxLabel` is "High," set `accessibleMinText` to "Low" and `accessibleMaxText` to "High" for a more intuitive experience for assistive technology users.
 
 <LivePreview componentName="range-slider" exampleName="WithLabels" />
 
@@ -44,6 +40,8 @@ You can use the `constrainLabelPosition` prop to ensure that the bottom labels r
 You can display marks under the `RangeSlider` track to label specific values. The `showTicks` property allows you to display small ticks above the marks, enhancing visual guidance for users by providing clear reference points along the track. This feature improves usability by making it easier for users to select precise values.
 
 You can combine `marks` with `minLabel` and `maxLabel` to provide even more context regarding the `RangeSlider`.
+
+To add non-numeric `marks` to certain values, please refer to the [example with non-numeric values](/salt/components/range-slider/examples#with-non-numeric-values) below.
 
 <LivePreview componentName="range-slider" exampleName="WithMarks" />
 
@@ -116,6 +114,7 @@ The `RangeSlider` maps numeric values to meaningful non-numeric options, enablin
 
 - Create a controlled slider and use your `format()` callback to create formatted `marks`.
 - Update `aria-valuetext` with the formatted current slider value.
+- Make the `marks` responsive on smaller screens by implementing logic to render them based on breakpoints.
 
 This approach ensures a user-friendly and accessible interface for selecting non-numeric values.
 
