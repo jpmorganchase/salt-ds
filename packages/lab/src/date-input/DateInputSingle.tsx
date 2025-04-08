@@ -6,11 +6,12 @@ import {
   useFormFieldProps,
   useId,
 } from "@salt-ds/core";
-import type {
+import {
   DateDetail,
   DateFrameworkType,
   ParserResult,
-  TimeFields,
+  Timezone,
+  TimeFields
 } from "@salt-ds/date-adapters";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
@@ -143,6 +144,15 @@ export interface DateInputSingleProps<TDate extends DateFrameworkType>
    * @param newValue - The new date input value.
    */
   onDateValueChange?: (event: SyntheticEvent | null, newValue: string) => void;
+  /**
+   * Specifies the timezone behavior:
+   * - If undefined, the timezone will be derived from the passed date, or from `defaultSelectedDate`/`selectedDate`.
+   * - If set to "default", the default timezone of the date library will be used.
+   * - If set to "system", the local system's timezone will be applied.
+   * - If set to "UTC", the time will be returned in UTC.
+   * - If set to a valid IANA timezone identifier, the time will be returned for that specific timezone.
+   */
+  timezone?: Timezone;
 }
 
 export const DateInputSingle = forwardRef<
@@ -179,6 +189,11 @@ export const DateInputSingle = forwardRef<
       validationStatus: validationStatusProp,
       variant = "primary",
       onDateValueChange,
+      timezone = dateProp || defaultDate
+        ? dateAdapter.getTimezone(
+          (dateProp ?? defaultDate) as TDate,
+        )
+        : "default",
       ...rest
     } = props;
     const wrapperRef = useRef(null);
@@ -267,6 +282,7 @@ export const DateInputSingle = forwardRef<
       const parse = parseProp ?? dateAdapter.parse.bind(dateAdapter);
       const parseResult = parse(dateValue ?? "", format, locale);
       let { date: parsedDate, ...parseDetails } = parseResult;
+      parsedDate = dateAdapter.setTimezone(parsedDate, timezone);
       const formattedValue = dateAdapter.format(parsedDate, format, locale);
       const hasValueChanged = formattedValue !== dateValue;
       if (dateAdapter.isValid(parsedDate) && hasValueChanged) {

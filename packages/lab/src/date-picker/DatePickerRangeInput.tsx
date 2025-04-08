@@ -135,7 +135,7 @@ export const DatePickerRangeInput = forwardRef(function DatePickerRangeInput<
   const { CalendarIcon } = useIcon();
 
   const {
-    state: { selectedDate, disabled, readOnly, cancelled, minDate, maxDate },
+    state: { selectedDate, disabled, readOnly, cancelled, minDate, maxDate, timezone },
     helpers: { select },
   } = useDatePickerContext<TDate>({ selectionVariant: "range" });
   const {
@@ -228,6 +228,7 @@ export const DatePickerRangeInput = forwardRef(function DatePickerRangeInput<
         )
       }
       format={format}
+      timezone={timezone}
       {...rest}
     />
   );

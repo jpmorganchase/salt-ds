@@ -38,7 +38,6 @@ import {
   type RecommendedFormats,
   type SaltDateAdapter,
   type TimeFields,
-  type Timezone,
 } from "../types";
 
 declare module "@salt-ds/date-adapters" {
@@ -134,14 +133,10 @@ export class AdapterDateFns implements SaltDateAdapter<Date, Locale> {
   /**
    * Creates a Date object from a string or returns an invalid date.
    * @param value - The date string to parse.
-   * @param timezone - The timezone to use (default is "default").
-   * @param locale - The locale to use for parsing.
    * @returns The parsed Date object or an invalid date object.
    */
   public date = <T extends string | undefined>(
     value?: T,
-    _timezone: Timezone = "default",
-    _locale?: Locale,
   ): Date => {
     if (!value || !this.isValidDateString(value)) {
       return new Date(Number.NaN);
@@ -352,6 +347,24 @@ export class AdapterDateFns implements SaltDateAdapter<Date, Locale> {
       milliseconds: millisecond,
     });
   }
+
+  /**
+   * Get the timezone from the Date object
+   * @param date - A Date object
+   * @returns "default" as Timezones are not supported by the Date object
+   */
+  public getTimezone = (): string => {
+    return 'default';
+  };
+
+  /**
+   * Set the timezone for the Day.js object
+   * @param date - A Day.js object
+   * @returns  'UTC' | 'system' or the IANA time zone
+   */
+  public setTimezone = (date: Date): Date => {
+    return date;
+  };
 
   /**
    * Checks if two Date objects are the same based on the specified granularity.

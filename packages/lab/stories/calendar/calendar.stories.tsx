@@ -1,4 +1,12 @@
-import { Button, Divider, StackLayout } from "@salt-ds/core";
+import {
+  Button,
+  Divider,
+  Dropdown,
+  FormField,
+  FormFieldLabel,
+  Option,
+  StackLayout,
+} from "@salt-ds/core";
 import type { DateFrameworkType } from "@salt-ds/date-adapters";
 import {
   Calendar,
@@ -12,7 +20,7 @@ import {
   useLocalization,
 } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react";
-import { type SyntheticEvent, useCallback } from "react";
+import { type SyntheticEvent, useCallback, useEffect } from "react";
 import { useState } from "react";
 
 import "dayjs/locale/es"; // Import the Spanish locale
@@ -446,6 +454,376 @@ export const WithLocale: StoryFn<typeof Calendar> = (args) => {
       <CalendarNavigation />
       <CalendarGrid />
     </Calendar>
+  );
+};
+
+export const SingleWithTimezone: StoryFn<typeof Calendar> = (args) => {
+  const { dateAdapter } = useLocalization<DateFrameworkType>();
+  const timezoneOptions =
+    dateAdapter.lib !== "date-fns"
+      ? [
+          "default",
+          "system",
+          "UTC",
+          "America/New_York",
+          "Europe/London",
+          "Asia/Shanghai",
+          "Asia/Kolkata",
+        ]
+      : ["default"];
+  const [timezone, setTimezone] = useState<string>(timezoneOptions[0]);
+  const [iso8601String, setIso8601String] = useState<string>("");
+  const [localeDateString, setLocaleDateString] = useState<string>("");
+  const [dateString, setDateString] = useState<string>("");
+
+  useEffect(() => {
+    setIso8601String("");
+    setLocaleDateString("");
+    setDateString("");
+  }, [timezone]);
+
+  const handleSelectionChange: UseCalendarSelectionSingleProps<DateFrameworkType>["onSelectionChange"] =
+    (_e, selection) => {
+      const systemTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+      const ianaTimezone =
+        timezone !== "system" && timezone !== "default" ? timezone : undefined;
+
+      const formatDate = (date) => {
+        const iso = date.toISOString();
+        const locale = new Intl.DateTimeFormat(undefined, {
+          timeZone: systemTimeZone,
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+          hour: "numeric",
+          minute: "numeric",
+          second: "numeric",
+          hour12: true,
+        }).format(date);
+        const formatted = new Intl.DateTimeFormat(undefined, {
+          timeZone: ianaTimezone,
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+          hour: "numeric",
+          minute: "numeric",
+          second: "numeric",
+          hour12: true,
+        }).format(date);
+        return { iso, locale, formatted };
+      };
+
+      const formattedDate = formatDate(selection);
+
+      setIso8601String(formattedDate.iso);
+      setLocaleDateString(formattedDate.locale);
+      setDateString(formattedDate.formatted);
+    };
+
+  const handleTimezoneSelect = (_e: SyntheticEvent, selection: string[]) => {
+    setTimezone(selection[0]);
+  };
+
+  return (
+    <StackLayout direction={"row"}>
+      <Calendar
+        {...args}
+        timezone={timezone}
+        key={timezone}
+        onSelectionChange={handleSelectionChange}
+      >
+        <CalendarNavigation />
+        <CalendarGrid />
+      </Calendar>
+      <StackLayout direction={"column"}>
+        <FormField>
+          <FormFieldLabel>Select a Timezone</FormFieldLabel>
+          <Dropdown
+            aria-label="Timezone Dropdown"
+            selected={[timezone]}
+            onSelectionChange={handleTimezoneSelect}
+          >
+            {timezoneOptions.map((tz) => (
+              <Option key={tz} value={tz}>
+                {tz}
+              </Option>
+            ))}
+          </Dropdown>
+        </FormField>
+        <FormField data-test-id={"iso-date-label"}>
+          <FormFieldLabel>ISO 8601 Format</FormFieldLabel> {iso8601String}
+        </FormField>
+        <FormField data-test-id={"timezone-date-label"}>
+          <FormFieldLabel>Date/Time in Timezone {timezone}</FormFieldLabel>
+          {dateString}
+        </FormField>
+        <FormField data-test-id={"locale-date-label"}>
+          <FormFieldLabel>Locale Date/Time</FormFieldLabel> {localeDateString}
+        </FormField>
+      </StackLayout>
+    </StackLayout>
+  );
+};
+
+export const RangeWithTimezone: StoryFn<typeof Calendar> = (args) => {
+  const { dateAdapter } = useLocalization<DateFrameworkType>();
+  const timezoneOptions =
+    dateAdapter.lib !== "date-fns"
+      ? [
+          "default",
+          "system",
+          "UTC",
+          "America/New_York",
+          "Europe/London",
+          "Asia/Shanghai",
+          "Asia/Kolkata",
+        ]
+      : ["default"];
+  const [timezone, setTimezone] = useState<string>(timezoneOptions[0]);
+  const [startIso8601String, setStartIso8601String] = useState<string>("");
+  const [startLocaleDateString, setStartLocaleDateString] =
+    useState<string>("");
+  const [startDateString, setStartDateString] = useState<string>("");
+  const [startDateError, setStartDateError] = useState<string | undefined>(
+    undefined,
+  );
+  const [endIso8601String, setEndIso8601String] = useState<string>("");
+  const [endLocaleDateString, setEndLocaleDateString] = useState<string>("");
+  const [endDateString, setEndDateString] = useState<string>("");
+  const [endDateError, setEndDateError] = useState<string | undefined>(
+    undefined,
+  );
+
+  useEffect(() => {
+    setStartIso8601String("");
+    setStartLocaleDateString("");
+    setStartDateString("");
+    setStartDateError(undefined);
+    setEndIso8601String("");
+    setEndLocaleDateString("");
+    setEndDateString("");
+    setEndDateError(undefined);
+  }, [timezone]);
+
+  const handleSelectionChange: UseCalendarSelectionRangeProps<DateFrameworkType>["onSelectionChange"] =
+    (_e, selection, details) => {
+      const { startDate, endDate } = selection;
+      const systemTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+      const ianaTimezone =
+        timezone !== "system" && timezone !== "default" ? timezone : undefined;
+
+      const formatDate = (date) => {
+        const iso = date.toISOString();
+        const locale = new Intl.DateTimeFormat(undefined, {
+          timeZone: systemTimeZone,
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+          hour: "numeric",
+          minute: "numeric",
+          second: "numeric",
+          hour12: true,
+        }).format(date);
+        const formatted = new Intl.DateTimeFormat(undefined, {
+          timeZone: ianaTimezone,
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+          hour: "numeric",
+          minute: "numeric",
+          second: "numeric",
+          hour12: true,
+        }).format(date);
+        return { iso, locale, formatted };
+      };
+
+      if (startDate) {
+        const start = formatDate(startDate);
+        setStartIso8601String(start.iso);
+        setStartLocaleDateString(start.locale);
+        setStartDateString(start.formatted);
+      } else {
+        setStartIso8601String("");
+        setStartLocaleDateString("");
+        setStartDateString("");
+      }
+      if (endDate) {
+        const end = formatDate(endDate);
+        setEndIso8601String(end.iso);
+        setEndLocaleDateString(end.locale);
+        setEndDateString(end.formatted);
+      } else {
+        setEndIso8601String("");
+        setEndLocaleDateString("");
+        setEndDateString("");
+      }
+    };
+
+  const handleTimezoneSelect = (_e: SyntheticEvent, selection: string[]) => {
+    setTimezone(selection[0]);
+  };
+
+  return (
+    <StackLayout direction={"row"}>
+      <Calendar
+        {...args}
+        selectionVariant={"range"}
+        timezone={timezone}
+        key={timezone}
+        onSelectionChange={handleSelectionChange}
+      >
+        <CalendarNavigation />
+        <CalendarGrid />
+      </Calendar>
+      <StackLayout direction={"column"}>
+        <FormField>
+          <FormFieldLabel>Select a Timezone</FormFieldLabel>
+          <Dropdown
+            aria-label="Timezone Dropdown"
+            selected={[timezone]}
+            onSelectionChange={handleTimezoneSelect}
+          >
+            {timezoneOptions.map((tz) => (
+              <Option key={tz} value={tz}>
+                {tz}
+              </Option>
+            ))}
+          </Dropdown>
+        </FormField>
+        <FormField data-test-id={"iso-start-date-label"}>
+          <FormFieldLabel>Start ISO 8601 Format</FormFieldLabel>
+          {startIso8601String}
+        </FormField>
+        <FormField data-test-id={"timezone-start-date-label"}>
+          <FormFieldLabel>
+            Start Date/Time in Timezone {timezone}
+          </FormFieldLabel>
+          {startDateString}
+        </FormField>
+        <FormField data-test-id={"locale-start-date-label"}>
+          <FormFieldLabel>Start Locale Date/Time</FormFieldLabel>
+          {startLocaleDateString}
+        </FormField>
+        <FormField data-test-id={"iso-end-date-label"}>
+          <FormFieldLabel>End ISO 8601 Format</FormFieldLabel>
+          {endIso8601String}
+        </FormField>
+        <FormField data-test-id={"timezone-end-date-label"}>
+          <FormFieldLabel>End Date/Time in Timezone {timezone}</FormFieldLabel>
+          {endDateString}
+        </FormField>
+        <FormField data-test-id={"locale-end-date-label"}>
+          <FormFieldLabel>End Locale Date/Time</FormFieldLabel>
+          {endLocaleDateString}
+        </FormField>
+      </StackLayout>
+    </StackLayout>
+  );
+};
+
+export const WithTimezoneFromDates: StoryFn<typeof Calendar> = (args) => {
+  const { dateAdapter } = useLocalization<DateFrameworkType>();
+  const timezoneOptions =
+    dateAdapter.lib !== "date-fns"
+      ? [
+          "default",
+          "system",
+          "UTC",
+          "America/New_York",
+          "Europe/London",
+          "Asia/Shanghai",
+          "Asia/Kolkata",
+        ]
+      : ["default"];
+  const [timezone, setTimezone] = useState<string>(timezoneOptions[0]);
+  const [iso8601String, setIso8601String] = useState<string>("");
+  const [localeDateString, setLocaleDateString] = useState<string>("");
+  const [dateString, setDateString] = useState<string>("");
+
+  useEffect(() => {
+    setIso8601String("");
+    setLocaleDateString("");
+    setDateString("");
+  }, [timezone]);
+
+  const handleSelectionChange: UseCalendarSelectionSingleProps<DateFrameworkType>["onSelectionChange"] =
+    (_e, selection) => {
+      const systemTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+      const ianaTimezone =
+        timezone !== "system" && timezone !== "default" ? timezone : undefined;
+
+      const formatDate = (date) => {
+        const iso = date.toISOString();
+        const locale = new Intl.DateTimeFormat(undefined, {
+          timeZone: systemTimeZone,
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+          hour: "numeric",
+          minute: "numeric",
+          second: "numeric",
+          hour12: true,
+        }).format(date);
+        const formatted = new Intl.DateTimeFormat(undefined, {
+          timeZone: ianaTimezone,
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+          hour: "numeric",
+          minute: "numeric",
+          second: "numeric",
+          hour12: true,
+        }).format(date);
+        return { iso, locale, formatted };
+      };
+
+      const formattedDate = formatDate(selection);
+
+      setIso8601String(formattedDate.iso);
+      setLocaleDateString(formattedDate.locale);
+      setDateString(formattedDate.formatted);
+    };
+
+  const handleTimezoneSelect = (_e: SyntheticEvent, selection: string[]) => {
+    setTimezone(selection[0]);
+  };
+
+  return (
+    <StackLayout direction={"row"}>
+      <Calendar
+        {...args}
+        defaultVisibleMonth={dateAdapter.today(undefined, timezone)}
+        defaultSelectedDate={dateAdapter.today(undefined, timezone)}
+        key={timezone}
+        onSelectionChange={handleSelectionChange}
+      >
+        <CalendarNavigation />
+        <CalendarGrid />
+      </Calendar>
+      <StackLayout direction={"column"}>
+        <Dropdown
+          aria-label="Timezone Dropdown"
+          selected={[timezone]}
+          onSelectionChange={handleTimezoneSelect}
+        >
+          {timezoneOptions.map((tz) => (
+            <Option key={tz} value={tz}>
+              {tz}
+            </Option>
+          ))}
+        </Dropdown>
+        <FormField data-test-id={"iso-date-label"}>
+          <FormFieldLabel>ISO 8601 Format</FormFieldLabel> {iso8601String}
+        </FormField>
+        <FormField data-test-id={"timezone-date-label"}>
+          <FormFieldLabel>Date/Time in Timezone {timezone}</FormFieldLabel>
+          {dateString}
+        </FormField>
+        <FormField data-test-id={"locale-date-label"}>
+          <FormFieldLabel>Locale Date/Time</FormFieldLabel> {localeDateString}
+        </FormField>
+      </StackLayout>
+    </StackLayout>
   );
 };
 

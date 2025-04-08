@@ -136,7 +136,7 @@ export interface SaltDateAdapter<
    */
   date<T extends string | undefined>(
     value?: T,
-    timezone?: string,
+    timezone?: Timezone,
     locale?: TLocale,
   ): TDate;
 
@@ -315,9 +315,10 @@ export interface SaltDateAdapter<
    * Gets the current date with the time set to the start of the day.
    *
    * @param locale - The locale to use.
+   * @param timezone - The timezone to use.
    * @returns The current date at the start of the day.
    */
-  today(locale?: TLocale): TDate;
+  today(locale?: TLocale, timezone?: Timezone): TDate;
 
   /**
    * Gets the current date and time.
@@ -367,6 +368,18 @@ export interface SaltDateAdapter<
    * @returns An object containing the hour, minute, second, and millisecond.
    */
   getTime(date: TDate): TimeFields;
+
+  /**
+   * Get timezone
+   */
+  getTimezone(date: TDate): string;
+
+  /**
+   * Set the timezone for the Day.js object
+   * @param date - A Day.js object
+   * @returns  'UTC' | 'system' or the IANA time zone
+   */
+  setTimezone(date: TDate, timezone: Timezone): TDate;
 
   /**
    * Gets the name of the day of the week.
