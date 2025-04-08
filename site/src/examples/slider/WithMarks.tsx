@@ -7,7 +7,6 @@ export const WithMarks = (): ReactElement => (
     <FormField>
       <FormFieldLabel>With marks</FormFieldLabel>
       <Slider
-        aria-label="Slider 1 with marks"
         min={0}
         max={50}
         defaultValue={30}
@@ -42,7 +41,6 @@ export const WithMarks = (): ReactElement => (
     <FormField>
       <FormFieldLabel>With marks & ticks</FormFieldLabel>
       <Slider
-        aria-label="Slider 2 with mark ticks"
         min={0}
         max={50}
         defaultValue={30}
@@ -78,14 +76,13 @@ export const WithMarks = (): ReactElement => (
     <FormField>
       <FormFieldLabel>With marks, ticks & min/max labels</FormFieldLabel>
       <Slider
-        aria-label="Slider 3 with marks"
         min={0}
         max={50}
         defaultValue={30}
-        minLabel="Very low"
-        maxLabel="Very high"
-        accessibleMinText="Very low"
-        accessibleMaxText="Very high"
+        minLabel="Low"
+        maxLabel="High"
+        accessibleMinText="Low"
+        accessibleMaxText="High"
         marks={[
           {
             value: 0,

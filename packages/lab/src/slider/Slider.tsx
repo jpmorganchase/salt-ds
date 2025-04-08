@@ -122,7 +122,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
     marks,
     min = 0,
     minLabel,
-    max = 10,
+    max = 100,
     maxLabel,
     onChange,
     onChangeEnd,

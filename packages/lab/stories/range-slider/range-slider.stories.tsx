@@ -4,6 +4,7 @@ import {
   FormFieldLabel,
   Input,
   StackLayout,
+  useResponsiveProp,
 } from "@salt-ds/core";
 import { RangeSlider, type RangeSliderProps } from "@salt-ds/lab";
 import type { StoryFn } from "@storybook/react";
@@ -63,7 +64,7 @@ export default {
 };
 
 const Template: StoryFn = ({ ...args }) => {
-  return <RangeSlider style={{ width: "300px" }} {...args} />;
+  return <RangeSlider style={{ maxWidth: "400px", width: "90vw" }} {...args} />;
 };
 
 export const Default = Template.bind({});
@@ -77,12 +78,11 @@ Default.parameters = {
 
 export const WithInlineLabels = Template.bind({});
 WithInlineLabels.args = {
-  "aria-label": "WithInlineLabels",
+  "aria-label": "with inline labels",
   minLabel: "Lowest value",
   maxLabel: "Highest value",
   accessibleMinText: "Lowest value",
   accessibleMaxText: "Highest value",
-  defaultValue: [0, 4],
 };
 
 WithInlineLabels.parameters = {
@@ -94,7 +94,7 @@ WithMarks.args = {
   min: 0,
   max: 10,
   marks: marks,
-  "aria-label": "With Marks",
+  "aria-label": "with marks",
 };
 
 WithMarks.parameters = {
@@ -106,7 +106,7 @@ WithMarkTicks.args = {
   min: 0,
   max: 10,
   marks: marks,
-  "aria-label": "With Mark Ticks",
+  "aria-label": "with mark ticks",
   showTicks: true,
 };
 
@@ -117,17 +117,17 @@ WithMarkTicks.parameters = {
 export const WithRestrictToMarks = Template.bind({});
 WithRestrictToMarks.args = {
   marks: [
-    { value: 5, label: "5" },
+    { value: 0, label: "0" },
     { value: 15, label: "15" },
     { value: 25, label: "25" },
     { value: 35, label: "35" },
     { value: 70, label: "70" },
     { value: 80, label: "80" },
-    { value: 90, label: "90" },
+    { value: 100, label: "100" },
   ],
   min: 0,
   max: 100,
-  "aria-label": "With Restrict to Marks",
+  "aria-label": "with restrict to marks",
   showTicks: true,
   restrictToMarks: true,
 };
@@ -138,7 +138,7 @@ WithRestrictToMarks.parameters = {
 
 export const WithInlineLabelsAndMarks = Template.bind({});
 WithInlineLabelsAndMarks.args = {
-  "aria-label": "WithInlineLabelsAndMarks",
+  "aria-label": "with inline labels and marks",
   min: 0,
   max: 50,
   step: 10,
@@ -163,7 +163,7 @@ WithInlineLabelsAndMarks.parameters = {
 
 export const WithInlineLabelsMarksAndTicks = Template.bind({});
 WithInlineLabelsMarksAndTicks.args = {
-  "aria-label": "WithInlineLabelsMarksAndTicks",
+  "aria-label": "with inline labels and marks and ticks",
   min: 0,
   max: 50,
   step: 10,
@@ -188,7 +188,9 @@ WithInlineLabelsMarksAndTicks.parameters = {
 
 export const WithConstrainedLabelPosition = Template.bind({});
 WithConstrainedLabelPosition.args = {
-  "aria-label": "WithConstrainedLabelPosition",
+  "aria-label": "with constrained label position",
+  min: 0,
+  max: 10,
   marks: [
     {
       value: 0,
@@ -202,10 +204,16 @@ WithConstrainedLabelPosition.args = {
   constrainLabelPosition: true,
 };
 
+WithConstrainedLabelPosition.parameters = {
+  actions: { disable: true },
+};
+
 export const WithConstrainedLabelPositionAndTicks = Template.bind({});
 WithConstrainedLabelPositionAndTicks.args = {
-  "aria-label": "WithConstrainedLabelPositionAndTicks",
+  "aria-label": "with constrained label position and ticks",
   defaultValue: [2, 5],
+  min: 0,
+  max: 10,
   marks: [
     {
       value: 0,
@@ -220,9 +228,13 @@ WithConstrainedLabelPositionAndTicks.args = {
   showTicks: true,
 };
 
+WithConstrainedLabelPositionAndTicks.parameters = {
+  actions: { disable: true },
+};
+
 export const WithHiddenTooltip = Template.bind({});
 WithHiddenTooltip.args = {
-  "aria-label": "WithDisabledTooltip",
+  "aria-label": "with disabled tooltip",
   min: 0,
   max: 50,
   defaultValue: [20, 40],
@@ -248,7 +260,7 @@ WithHiddenTooltip.parameters = {
 
 export const WithNegativeBounds = Template.bind({});
 WithNegativeBounds.args = {
-  "aria-label": "WithNegativeBounds",
+  "aria-label": "with negative bounds",
   min: -5,
   max: 5,
   minLabel: "-5",
@@ -260,8 +272,7 @@ WithNegativeBounds.parameters = {
 };
 export const WithFormatting = Template.bind({});
 WithFormatting.args = {
-  "aria-label": "WithFormatting",
-
+  "aria-label": "with formatting",
   min: 0,
   max: 50,
   defaultValue: [20, 45],
@@ -283,36 +294,36 @@ WithFormatting.parameters = {
 
 export const WithinFormField: StoryFn<RangeSliderProps> = () => {
   return (
-    <StackLayout gap={4} style={{ width: "400px" }}>
+    <StackLayout gap={4} style={{ maxWidth: "400px", width: "90vw" }}>
       <FormField
         labelPlacement="left"
         style={
           {
-            "--saltFormField-label-width": "16%",
+            "--saltFormField-label-width": "20%",
           } as React.CSSProperties
         }
       >
         <FormFieldLabel>Form field left</FormFieldLabel>
-        <RangeSlider minLabel="0" maxLabel="10" />
+        <RangeSlider minLabel="0" maxLabel="10" min={0} max={10} />
       </FormField>
       <FormField
         labelPlacement="left"
         style={
           {
-            "--saltFormField-label-width": "40%",
+            "--saltFormField-label-width": "23%",
           } as React.CSSProperties
         }
       >
-        <FormFieldLabel>Form field left (with marks)</FormFieldLabel>
-        <RangeSlider showTicks marks={marks} />
+        <FormFieldLabel>Form field left</FormFieldLabel>
+        <RangeSlider showTicks marks={marks} min={0} max={10} />
       </FormField>
       <FormField>
         <FormFieldLabel>Form field top</FormFieldLabel>
-        <RangeSlider minLabel="0" maxLabel="10" />
+        <RangeSlider minLabel="0" maxLabel="10" min={0} max={10} />
       </FormField>
       <FormField>
-        <FormFieldLabel>Form field top (with marks)</FormFieldLabel>
-        <RangeSlider showTicks marks={marks} />
+        <FormFieldLabel>Form field top</FormFieldLabel>
+        <RangeSlider showTicks marks={marks} min={0} max={10} />
       </FormField>
     </StackLayout>
   );
@@ -347,11 +358,11 @@ export const WithInput: StoryFn<RangeSliderProps> = () => {
   };
 
   return (
-    <FormField style={{ width: "400px" }}>
+    <FormField style={{ maxWidth: "400px", width: "90vw" }}>
       <FormFieldLabel>Range Slider with Input</FormFieldLabel>
       <FlexLayout style={{ width: "100%" }} gap={2}>
         <Input
-          aria-label="Minimum input"
+          aria-label="minimum input"
           value={minInputValue}
           onChange={(event: ChangeEvent<HTMLInputElement>) =>
             handleInputChange(event, "min")
@@ -362,18 +373,16 @@ export const WithInput: StoryFn<RangeSliderProps> = () => {
         <RangeSlider
           min={bounds[0]}
           max={bounds[1]}
-          step={3}
           value={value}
           onChange={(_e, value: [number, number]) => {
             setMinInputValue(value[0]);
             setMaxInputValue(value[1]);
             setValue(value);
           }}
-          aria-label="withInput"
           style={{ flex: "100%" }}
         />
         <Input
-          aria-label="Maximum input"
+          aria-label="maximum input"
           value={maxInputValue}
           onChange={(event: ChangeEvent<HTMLInputElement>) =>
             handleInputChange(event, "max")
@@ -415,11 +424,11 @@ export const WithInputAndInlineLabels: StoryFn<RangeSliderProps> = () => {
   };
 
   return (
-    <FormField style={{ width: "400px" }}>
+    <FormField style={{ maxWidth: "400px", width: "90vw" }}>
       <FormFieldLabel>Range Slider with Input</FormFieldLabel>
       <FlexLayout style={{ width: "100%" }} gap={2}>
         <Input
-          aria-label="Minimum input"
+          aria-label="minimum input"
           value={minInputValue}
           onChange={(event: ChangeEvent<HTMLInputElement>) =>
             handleInputChange(event, "min")
@@ -430,20 +439,18 @@ export const WithInputAndInlineLabels: StoryFn<RangeSliderProps> = () => {
         <RangeSlider
           min={bounds[0]}
           max={bounds[1]}
-          step={3}
           value={value}
           onChange={(_e, value: [number, number]) => {
             setMinInputValue(value[0]);
             setMaxInputValue(value[1]);
             setValue(value);
           }}
-          aria-label="WithInputAndInlineLabels"
           style={{ flex: "100%" }}
           minLabel="-50"
           maxLabel="50"
         />
         <Input
-          aria-label="Maximum input"
+          aria-label="maximum input"
           value={maxInputValue}
           onChange={(event: ChangeEvent<HTMLInputElement>) =>
             handleInputChange(event, "max")
@@ -485,11 +492,11 @@ export const WithInputAndMarksAndTicks: StoryFn<RangeSliderProps> = () => {
   };
 
   return (
-    <FormField style={{ width: "400px" }}>
+    <FormField style={{ maxWidth: "400px", width: "90vw" }}>
       <FormFieldLabel>Range Slider with Input</FormFieldLabel>
       <FlexLayout gap={3}>
         <Input
-          aria-label="Minimum input"
+          aria-label="minimum input"
           value={minInputValue}
           style={{ flex: 1 }}
           inputProps={{ style: { textAlign: "center" } }}
@@ -500,14 +507,12 @@ export const WithInputAndMarksAndTicks: StoryFn<RangeSliderProps> = () => {
         <RangeSlider
           min={bounds[0]}
           max={bounds[1]}
-          step={3}
           value={value}
           onChange={(_e, value: [number, number]) => {
             setMinInputValue(value[0]);
             setMaxInputValue(value[1]);
             setValue(value);
           }}
-          aria-label="WithInputAndMarks"
           style={{ flex: "100%" }}
           marks={[
             {
@@ -526,7 +531,7 @@ export const WithInputAndMarksAndTicks: StoryFn<RangeSliderProps> = () => {
           showTicks
         />
         <Input
-          aria-label="Maximum input"
+          aria-label="maximum input"
           value={maxInputValue}
           style={{ flex: 1 }}
           inputProps={{ style: { textAlign: "center" } }}
@@ -549,7 +554,6 @@ export const WithCustomStep = () => (
         minLabel="-1"
         maxLabel="1"
         defaultValue={[-1, 0]}
-        aria-label="firstSlider"
       />
     </FormField>
     <FormField>
@@ -561,7 +565,6 @@ export const WithCustomStep = () => (
         maxLabel="1"
         step={0.2}
         defaultValue={[-1, 0.2]}
-        aria-label="secondSlider"
         format={(value: number) => Intl.NumberFormat().format(value)}
       />
     </FormField>
@@ -574,7 +577,6 @@ export const WithCustomStep = () => (
         maxLabel="1"
         step={0.25}
         defaultValue={[-1, 0.25]}
-        aria-label="thirdSlider"
         format={(value: number) => Intl.NumberFormat().format(value)}
       />
     </FormField>
@@ -585,13 +587,13 @@ export const WithNonNumericValues = () => {
   const [value, setValue] = useState<[number, number]>([1, 3]);
 
   const daysOfTheWeek = [
-    { label: "Monday", value: 1 },
-    { label: "Tuesday", value: 2 },
-    { label: "Wednesday", value: 3 },
-    { label: "Thursday", value: 4 },
-    { label: "Friday", value: 5 },
-    { label: "Saturday", value: 6 },
-    { label: "Sunday", value: 7 },
+    { label: "Monday", shortLabel: "Mon", value: 1 },
+    { label: "Tuesday", shortLabel: "Tue", value: 2 },
+    { label: "Wednesday", shortLabel: "Wed", value: 3 },
+    { label: "Thursday", shortLabel: "Thu", value: 4 },
+    { label: "Friday", shortLabel: "Fri", value: 5 },
+    { label: "Saturday", shortLabel: "Sat", value: 6 },
+    { label: "Sunday", shortLabel: "Sun", value: 7 },
   ];
 
   const getDayOfTheWeek = (value?: number) => {
@@ -599,25 +601,34 @@ export const WithNonNumericValues = () => {
     return day ? day.label : "";
   };
 
+  const responsiveLabels = useResponsiveProp(
+    {
+      xs: daysOfTheWeek.map((day) => ({
+        value: day.value,
+        label: day.shortLabel,
+      })),
+      md: daysOfTheWeek.map((day) => ({ value: day.value, label: day.label })),
+    },
+    daysOfTheWeek.map((day) => ({ value: day.value, label: day.label })),
+  );
+
   return (
     <RangeSlider
-      aria-label="Days of the week"
-      style={{ width: "400px" }}
+      aria-label="days of the week"
+      style={{ width: "80vw", maxWidth: "400px" }}
       min={1}
       max={7}
       value={value}
       onChange={(_e, value) => setValue(value)}
       format={getDayOfTheWeek}
-      marks={daysOfTheWeek.map((day) => {
-        return { value: day.value, label: day.label };
-      })}
+      marks={responsiveLabels}
     />
   );
 };
 
 export const Disabled = Template.bind({});
 Disabled.args = {
-  "aria-label": "Disabled",
+  "aria-label": "disabled",
   min: 0,
   max: 50,
   defaultValue: [20, 35],

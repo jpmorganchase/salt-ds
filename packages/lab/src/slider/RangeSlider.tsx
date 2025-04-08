@@ -120,7 +120,7 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>(
       disabled: disabledProp = false,
       format,
       marks,
-      max = 10,
+      max = 100,
       min = 0,
       maxLabel,
       minLabel,
