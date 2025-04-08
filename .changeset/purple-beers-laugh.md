@@ -7,8 +7,8 @@ Updated `Carousel` component
 - Renamed `initialIndex` to `defaultActiveSlideIndex`
 - Added controlled `activeSlideIndex`
 - Added `visibleSlides` to control how many slides can be visible at a time.
-- Added `CarouselSlider` and extracted the controls to its own component, `carouselControls` to improve composition.
-- Added appearance in `CarouselSlide` to allow for boder items.
+- Added `CarouselSlider` and extracted the controls to its own component, `CarouselControls` to improve composition.
+- Added appearance in `CarouselSlide` to allow for border items.
 - Added keyboard navigation.
 - Removed usage of `DeckLayout`.
 
