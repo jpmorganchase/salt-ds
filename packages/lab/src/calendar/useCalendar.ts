@@ -4,7 +4,7 @@ import {
   useBreakpoint,
   useControlled,
 } from "@salt-ds/core";
-import type { DateFrameworkType } from "@salt-ds/date-adapters";
+import type { DateFrameworkType, Timezone } from "@salt-ds/date-adapters";
 import {
   type SyntheticEvent,
   useCallback,
@@ -84,6 +84,15 @@ interface UseCalendarBaseProps<TDate> {
   numberOfVisibleMonths?: ResponsiveProp<
     1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12
   >;
+  /**
+   * Specifies the timezone behavior:
+   * - If undefined, the timezone will be derived from the passed date, or from `defaultSelectedDate`/`selectedDate`.
+   * - If set to "default", the default timezone of the date library will be used.
+   * - If set to "system", the local system's timezone will be applied.
+   * - If set to "UTC", the time will be returned in UTC.
+   * - If set to a valid IANA timezone identifier, the time will be returned for that specific timezone.
+   */
+  timezone?: Timezone;
 }
 
 /**
@@ -219,7 +228,15 @@ export interface UseCalendarReturn<TDate extends DateFrameworkType> {
      * Number of visible months
      */
     numberOfVisibleMonths: number;
-
+    /**
+     * Specifies the timezone behavior:
+     * - If undefined, the timezone will be derived from the passed date, or from `defaultSelectedDate`/`selectedDate`.
+     * - If set to "default", the default timezone of the date library will be used.
+     * - If set to "system", the local system's timezone will be applied.
+     * - If set to "UTC", the time will be returned in UTC.
+     * - If set to a valid IANA timezone identifier, the time will be returned for that specific timezone.
+     */
+    timezone?: Timezone;
     /**
      * Additional state properties from selectionManager.state.
      */
@@ -413,7 +430,8 @@ export function useCalendar<TDate extends DateFrameworkType>(
     visibleMonth: visibleMonthProp,
     hideOutOfRangeDates,
     locale,
-    defaultVisibleMonth = dateAdapter.today(locale),
+    timezone,
+    defaultVisibleMonth = dateAdapter.today(locale, timezone),
     onSelectionChange,
     onVisibleMonthChange,
     isDayUnselectable = defaultIsDayUnselectable,
@@ -428,9 +446,9 @@ export function useCalendar<TDate extends DateFrameworkType>(
     // startDateOffset,
     // endDateOffset,
   } = props;
-
   const { matchedBreakpoints } = useBreakpoint();
 
+  console.log('....', timezone);
   const responsiveNumberOfVisibleMonths =
     resolveResponsiveValue(numberOfVisibleMonths, matchedBreakpoints) ?? 1;
 
@@ -489,7 +507,7 @@ export function useCalendar<TDate extends DateFrameworkType>(
   );
 
   const selectionManager = useCalendarSelection<TDate>({
-    defaultSelectedDate: defaultSelectedDate,
+    defaultSelectedDate,
     selectedDate,
     onSelectionChange,
     startDateOffset:
@@ -560,10 +578,10 @@ export function useCalendar<TDate extends DateFrameworkType>(
     }
     // Defaults
     if (
-      isDaySelectable(dateAdapter.today(locale)) &&
-      isDayVisible(dateAdapter.today(locale))
+      isDaySelectable(dateAdapter.today(locale, timezone)) &&
+      isDayVisible(dateAdapter.today(locale, timezone))
     ) {
-      return dateAdapter.today(locale);
+      return dateAdapter.today(locale, timezone);
     }
     const firstSelectableDate = generateDatesForMonth(
       dateAdapter,
@@ -580,6 +598,7 @@ export function useCalendar<TDate extends DateFrameworkType>(
     isDayVisible,
     selectionVariant,
     selectionManager.state.selectedDate,
+    timezone,
     visibleMonth,
   ]);
 
@@ -641,6 +660,7 @@ export function useCalendar<TDate extends DateFrameworkType>(
           visibleMonth,
           focusedDate,
           locale,
+          timezone,
           minDate,
           maxDate,
           numberOfVisibleMonths: responsiveNumberOfVisibleMonths,
@@ -667,6 +687,7 @@ export function useCalendar<TDate extends DateFrameworkType>(
       visibleMonth,
       focusedDate,
       locale,
+      timezone,
       minDate,
       maxDate,
       selectionVariant,

@@ -1,5 +1,5 @@
 import { useControlled, useForkRef, useFormFieldProps } from "@salt-ds/core";
-import type { DateFrameworkType } from "@salt-ds/date-adapters";
+import {DateFrameworkType, Timezone} from "@salt-ds/date-adapters";
 import {
   type SyntheticEvent,
   useCallback,
@@ -54,6 +54,12 @@ interface UseDatePickerBaseProps<TDate> {
    * Handler for when the date selection is cancelled.
    */
   onCancel?: () => void;
+  /**
+   * Timezone, if un-defined will take the timezone from passed date (or defaultSelectedDate/selectedDate)
+   * Can also be set to "default" to use the default timezone of the date library
+   * Can also be set to "system" to take the timezone of the local system.
+   */
+  timezone?: Timezone;
 }
 
 /**
@@ -183,6 +189,7 @@ export function useDatePicker<
     minDate = defaultMinDate,
     maxDate = defaultMaxDate,
     onCancel,
+    timezone,
   } = props;
 
   const previousSelectedDate = useRef<typeof selectedDateProp>();
@@ -379,6 +386,7 @@ export function useDatePicker<
       containerRef,
       minDate,
       maxDate,
+      timezone
     },
     helpers: {
       cancel,

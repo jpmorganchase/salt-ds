@@ -34,6 +34,9 @@ import { LocalizationProvider } from "@salt-ds/lab";
 
 To import your chosen adapter adapter use one of the following :
 
+Whilst `AdapterDayjs`, `AdapterLuxon` and `AdapterMoment` are compatible with both UTC and timezones, `AdapterDateFns` is not.  
+If you need to use UTC dates or timezones, you should use one of the other adapters.
+
 ### date-fns
 
 ```

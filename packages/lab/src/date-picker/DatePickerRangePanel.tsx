@@ -10,7 +10,7 @@ import {
 } from "@salt-ds/core";
 import type {
   DateFrameworkType,
-  SaltDateAdapter,
+  SaltDateAdapter, Timezone,
 } from "@salt-ds/date-adapters";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
@@ -147,6 +147,7 @@ export interface DatePickerRangePanelProps<TDate extends DateFrameworkType>
 function getFallbackVisibleMonths<TDate extends DateFrameworkType>(
   dateAdapter: SaltDateAdapter<TDate>,
   selectedDate: DateRangeSelection<TDate> | null,
+  timezone: Timezone
 ) {
   function createConsecutiveRange(date: TDate) {
     const startDate = dateAdapter.startOf(date, "month");
@@ -167,7 +168,7 @@ function getFallbackVisibleMonths<TDate extends DateFrameworkType>(
     return createConsecutiveRange(startDate);
   }
 
-  const currentMonth = dateAdapter.startOf(dateAdapter.today(), "month");
+  const currentMonth = dateAdapter.startOf(dateAdapter.today(undefined, timezone), "month");
   return [currentMonth, dateAdapter.add(currentMonth, { months: 1 })];
 }
 
@@ -206,8 +207,9 @@ export const DatePickerRangePanel = forwardRef(function DatePickerRangePanel<
 
   const {
     state: {
+      timezone,
       selectedDate,
-      minDate = dateAdapter.startOf(dateAdapter.today(), "month"),
+      minDate = dateAdapter.startOf(dateAdapter.today(undefined, timezone), "month"),
       maxDate = dateAdapter.add(minDate, { months: 1 }),
     },
     helpers: { select, isDayDisabled, isDayHighlighted, isDayUnselectable },
@@ -216,7 +218,7 @@ export const DatePickerRangePanel = forwardRef(function DatePickerRangePanel<
   const [hoveredDate, setHoveredDate] = useState<TDate | null>(null);
 
   const [[fallbackStartVisibleMonth, fallbackEndVisibleMonth]] = useState(() =>
-    getFallbackVisibleMonths<TDate>(dateAdapter, selectedDate),
+    getFallbackVisibleMonths<TDate>(dateAdapter, selectedDate, timezone),
   );
 
   const [startVisibleMonth, setStartVisibleMonth] = useControlled({
@@ -320,6 +322,7 @@ export const DatePickerRangePanel = forwardRef(function DatePickerRangePanel<
     hideOutOfRangeDates: true,
     minDate,
     maxDate,
+    timezone,
     ...StartCalendarPropsProp,
   } as Partial<UseCalendarSelectionRangeProps<TDate>>;
   const EndCalendarProps = {
@@ -335,6 +338,7 @@ export const DatePickerRangePanel = forwardRef(function DatePickerRangePanel<
     hideOutOfRangeDates: true,
     minDate,
     maxDate,
+    timezone,
     ...EndCalendarPropsProp,
   } as Partial<UseCalendarSelectionRangeProps<TDate>>;
 

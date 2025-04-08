@@ -1,5 +1,5 @@
 import { createContext } from "@salt-ds/core";
-import type { DateFrameworkType } from "@salt-ds/date-adapters";
+import type {DateFrameworkType, Timezone} from "@salt-ds/date-adapters";
 import { type Context, type Ref, type SyntheticEvent, useContext } from "react";
 import type { DateRangeSelection, SingleDateSelection } from "../calendar";
 import type {
@@ -44,6 +44,15 @@ interface DatePickerBaseState<TDate extends DateFrameworkType> {
      * Reference to the container element.
      */
     containerRef: Ref<HTMLDivElement>;
+    /**
+     * Specifies the timezone behavior:
+     * - If undefined, the timezone will be derived from the passed date, or from `defaultSelectedDate`/`selectedDate`.
+     * - If set to "default", the default timezone of the date library will be used.
+     * - If set to "system", the local system's timezone will be applied.
+     * - If set to "UTC", the time will be returned in UTC.
+     * - If set to a valid IANA timezone identifier, the time will be returned for that specific timezone.
+     */
+    timezone?: Timezone;
   };
   /**
    * Helper functions for managing the DatePicker state.

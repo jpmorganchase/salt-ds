@@ -103,7 +103,7 @@ export const DatePickerSingleInput = forwardRef<
     } = props;
 
     const {
-      state: { selectedDate, disabled, readOnly, cancelled, minDate, maxDate },
+      state: { selectedDate, disabled, readOnly, cancelled, minDate, maxDate, timezone },
       helpers: { select },
     } = useDatePickerContext<TDate>({ selectionVariant: "single" });
     const {
@@ -193,6 +193,7 @@ export const DatePickerSingleInput = forwardRef<
             </Button>
           )
         }
+        timezone={timezone}
         {...rest}
       />
     );

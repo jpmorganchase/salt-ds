@@ -1,4 +1,4 @@
-import type { DateFrameworkType } from "@salt-ds/date-adapters";
+import {DateFrameworkType, Timezone} from "@salt-ds/date-adapters";
 import { type ReactNode, forwardRef } from "react";
 import {
   DateRangeSelectionContext,
@@ -39,6 +39,15 @@ export interface DatePickerBaseProps {
    * the initial open/close state of the overlay, when the open/close state is un-controlled.
    */
   defaultOpen?: DatePickerBaseProps["open"];
+  /**
+   * Specifies the timezone behavior:
+   * - If undefined, the timezone will be derived from the passed date, or from `defaultSelectedDate`/`selectedDate`.
+   * - If set to "default", the default timezone of the date library will be used.
+   * - If set to "system", the local system's timezone will be applied.
+   * - If set to "UTC", the time will be returned in UTC.
+   * - If set to a valid IANA timezone identifier, the time will be returned for that specific timezone.
+   */
+  timezone?: Timezone;
 }
 
 /**
@@ -92,6 +101,7 @@ export const DatePickerMain = forwardRef<
       minDate,
       maxDate,
       onCancel,
+      timezone,
       ...rest
     } = props;
     // biome-ignore lint/suspicious/noExplicitAny: type guard
@@ -109,6 +119,7 @@ export const DatePickerMain = forwardRef<
       minDate,
       maxDate,
       onCancel,
+      timezone
     };
 
     if (props.selectionVariant === "range") {

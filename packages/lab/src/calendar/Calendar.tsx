@@ -17,7 +17,7 @@ import {
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 
-import type { DateFrameworkType } from "@salt-ds/date-adapters";
+import { DateFrameworkType, Timezone } from "@salt-ds/date-adapters";
 import { useLocalization } from "../localization-provider";
 import calendarCss from "./Calendar.css";
 
@@ -44,6 +44,15 @@ export interface CalendarBaseProps extends ComponentPropsWithoutRef<"div"> {
   numberOfVisibleMonths?: ResponsiveProp<
     1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12
   >;
+  /**
+   * Specifies the timezone behavior:
+   * - If undefined, the timezone will be derived from the passed date, or from `defaultSelectedDate`/`selectedDate`.
+   * - If set to "default", the default timezone of the date library will be used.
+   * - If set to "system", the local system's timezone will be applied.
+   * - If set to "UTC", the time will be returned in UTC.
+   * - If set to a valid IANA timezone identifier, the time will be returned for that specific timezone.
+   */
+  timezone?: Timezone;
 }
 
 /**
@@ -110,6 +119,18 @@ export type CalendarProps<TDate extends DateFrameworkType> =
 
 const withBaseName = makePrefixer("saltCalendar");
 
+function getDefaultTimezoneDate(selectedDate, defaultSelectedDate, selectionVariant) {
+  if (selectionVariant === "range") {
+    return (
+      selectedDate?.startDate ??
+      selectedDate?.endDate ??
+      defaultSelectedDate?.startDate ??
+      defaultSelectedDate?.endDate
+    );
+  }
+  return selectedDate ?? defaultSelectedDate;
+}
+
 export const Calendar = forwardRef<
   HTMLDivElement,
   CalendarProps<DateFrameworkType>
@@ -145,8 +166,18 @@ export const Calendar = forwardRef<
       selectionVariant,
       onHoveredDateChange,
       hoveredDate,
+      timezone: timezoneProp,
       ...propsRest
     } = props;
+
+    let timezone;
+    if (timezoneProp) {
+      timezone = timezoneProp;
+    } else {
+      const defaultTimezoneDate = getDefaultTimezoneDate(selectedDate, defaultSelectedDate, selectionVariant);
+      timezone = defaultTimezoneDate ? dateAdapter.getTimezone(defaultTimezoneDate) : "default";
+    }
+
     let startDateOffset: CalendarOffsetProps<TDate>["startDateOffset"];
     let endDateOffset: CalendarOffsetProps<TDate>["startDateOffset"];
     let rest: Partial<typeof props>;
@@ -177,6 +208,7 @@ export const Calendar = forwardRef<
       hoveredDate,
       startDateOffset,
       endDateOffset,
+      timezone,
     };
     const { state, helpers } = useCalendar<TDate>(useCalendarProps);
     const calendarLabel = dateAdapter.format(

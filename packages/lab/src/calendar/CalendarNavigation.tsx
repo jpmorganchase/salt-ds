@@ -14,6 +14,7 @@ import {
 import type {
   DateFrameworkType,
   SaltDateAdapter,
+  Timezone,
 } from "@salt-ds/date-adapters";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
@@ -114,10 +115,11 @@ function generateYearsBetweenRange<TDate extends DateFrameworkType>(
   dateAdapter: SaltDateAdapter<TDate>,
   minYear: number,
   maxYear: number,
+  timezone: Timezone = "default",
 ): TDate[] {
   const years: TDate[] = [];
+  let startOfYear = dateAdapter.today(undefined, timezone);
   for (let year = minYear; year <= maxYear; year++) {
-    let startOfYear = dateAdapter.today();
     startOfYear = dateAdapter.set(startOfYear, { day: 1, month: 1, year });
     years.push(startOfYear);
   }
@@ -126,13 +128,8 @@ function generateYearsBetweenRange<TDate extends DateFrameworkType>(
 
 function useCalendarNavigation<TDate extends DateFrameworkType>() {
   const {
-    state: { visibleMonth, locale, minDate, maxDate },
-    helpers: {
-      setVisibleMonth,
-      isDayVisible,
-      isOutsideAllowedYears,
-      isOutsideAllowedMonths,
-    },
+    state: { visibleMonth, locale, timezone, minDate, maxDate },
+    helpers: { setVisibleMonth, isDayVisible, isOutsideAllowedMonths },
   } = useCalendarContext<TDate>();
 
   const { dateAdapter } = useLocalization<TDate>();
@@ -193,8 +190,9 @@ function useCalendarNavigation<TDate extends DateFrameworkType>() {
           dateAdapter.getYear(maxDate),
           dateAdapter.getYear(visibleMonth),
         ),
+        timezone,
       ),
-    [dateAdapter, minDate, maxDate, visibleMonth],
+    [dateAdapter, minDate, maxDate, visibleMonth, timezone],
   );
 
   const selectedMonth: TDate | undefined = months.find((month: TDate) =>

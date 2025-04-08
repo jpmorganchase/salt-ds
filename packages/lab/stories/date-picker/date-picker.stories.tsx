@@ -1,12 +1,14 @@
 import {
   Button,
   Divider,
+  Dropdown,
   FlexItem,
   FlexLayout,
   FormField,
   FormFieldLabel,
   FormFieldLabel as FormLabel,
   Input,
+  Option,
   StackLayout,
   Text,
   ToggleButton,
@@ -45,7 +47,7 @@ import {
   useLocalization,
 } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react";
-import type { ChangeEvent, SyntheticEvent } from "react";
+import { ChangeEvent, SyntheticEvent, useEffect } from "react";
 import { useCallback, useRef, useState } from "react";
 // CustomDatePickerPanel is a sample component, representing a composition you could create yourselves, not intended for importing into your own projects
 // refer to https://github.com/jpmorganchase/salt-ds/blob/main/packages/lab/src/date-picker/useDatePicker.ts to create your own
@@ -2636,6 +2638,534 @@ export const SingleWithLocaleZhCN: StoryFn<
         <DatePickerHelperText>{helperText}</DatePickerHelperText>
       </DatePicker>
     </FormField>
+  );
+};
+
+export const SingleWithTimezone: StoryFn<
+  DatePickerSingleProps<DateFrameworkType>
+> = ({ selectionVariant, defaultSelectedDate, ...args }) => {
+  const { dateAdapter } = useLocalization();
+  const timezoneOptions =
+    dateAdapter.lib !== "date-fns"
+      ? [
+          "default",
+          "system",
+          "UTC",
+          "America/New_York",
+          "Europe/London",
+          "Asia/Shanghai",
+          "Asia/Kolkata",
+        ]
+      : ["default"];
+  const defaultHelperText = "Date format DD MMM YYYY (e.g. 09 Jun 2024)";
+  const errorHelperText = "Please enter a valid date in DD MMM YYYY format";
+  const applyButtonRef = useRef<HTMLButtonElement>(null);
+  const [helperText, setHelperText] = useState<string>(defaultHelperText);
+  const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
+    undefined,
+  );
+
+  const [selectedDate, setSelectedDate] = useState<
+    SingleDateSelection<DateFrameworkType> | null | undefined
+  >(defaultSelectedDate ?? null);
+  const [timezone, setTimezone] = useState<string>(timezoneOptions[0]);
+  const [iso8601String, setIso8601String] = useState<string>("");
+  const [localeDateString, setLocaleDateString] = useState<string>("");
+  const [dateString, setDateString] = useState<string>("");
+
+  const previousSelectedDate = useRef<typeof selectedDate>(selectedDate);
+
+  const savedState = useRef<{
+    validationStatus: typeof validationStatus;
+    helperText: typeof helperText;
+  }>({
+    validationStatus: undefined,
+    helperText: defaultHelperText,
+  });
+  const handleSelectionChange = useCallback(
+    (
+      event: SyntheticEvent,
+      date: SingleDateSelection<DateFrameworkType> | null,
+      details: DateInputSingleDetails | undefined,
+    ) => {
+      const { value, errors } = details || {};
+      console.log(
+        `Selected date: ${dateAdapter.isValid(date) ? dateAdapter.format(date, "DD MMM YYYY") : date}`,
+      );
+      if (errors?.length) {
+        console.log(
+          `Error(s): ${errors
+            .map(({ type, message }) => `type=${type} message=${message}`)
+            .join(",")}`,
+        );
+        if (value) {
+          console.log(`Original Value: ${value}`);
+        }
+      }
+      if (errors?.length && details?.value?.length) {
+        setHelperText(`${errorHelperText} - ${errors[0].message}`);
+        setValidationStatus("error");
+      } else {
+        setHelperText(defaultHelperText);
+        setValidationStatus(undefined);
+      }
+      setSelectedDate(date ?? null);
+      if (date) {
+        applyButtonRef?.current?.focus();
+      }
+      args?.onSelectionChange?.(event, date, details);
+    },
+    [args?.onSelectionChange, dateAdapter],
+  );
+
+  const handleOpenChange = useCallback(
+    (opening: boolean) => {
+      if (opening) {
+        savedState.current = {
+          helperText,
+          validationStatus,
+        };
+      }
+    },
+    [helperText, validationStatus],
+  );
+
+  const handleCancel = useCallback(() => {
+    setValidationStatus(savedState.current?.validationStatus);
+    setHelperText(savedState.current?.helperText);
+    setSelectedDate(previousSelectedDate.current);
+    args?.onCancel?.();
+  }, [args?.onCancel]);
+
+  const handleApply = useCallback(
+    (
+      event: SyntheticEvent,
+      date: SingleDateSelection<DateFrameworkType> | null,
+    ) => {
+      console.log(
+        `Applied date: ${date ? dateAdapter.format(date, "DD MMM YYYY") : date}`,
+      );
+      setSelectedDate(date);
+      setHelperText(defaultHelperText);
+      setValidationStatus(undefined);
+      previousSelectedDate.current = date;
+
+      const systemTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+      const ianaTimezone =
+        timezone !== "system" && timezone !== "default" ? timezone : undefined;
+
+      console.log('>>>>systemTimeZone', systemTimeZone);
+      console.log('>>>>ianaTimezone', ianaTimezone);
+      console.log('>>>>tz', dateAdapter.getTimezone(date));
+
+      const formatDate = (date) => {
+        const iso = date.toISOString();
+        const locale = new Intl.DateTimeFormat(undefined, {
+          timeZone: systemTimeZone,
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+          hour: "numeric",
+          minute: "numeric",
+          second: "numeric",
+          hour12: true,
+        }).format(date);
+        const formatted = new Intl.DateTimeFormat(undefined, {
+          timeZone: ianaTimezone,
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+          hour: "numeric",
+          minute: "numeric",
+          second: "numeric",
+          hour12: true,
+        }).format(date);
+        return { iso, locale, formatted };
+      };
+
+      const formattedDate = formatDate(date);
+
+      setIso8601String(formattedDate.iso);
+      setLocaleDateString(formattedDate.locale);
+      setDateString(formattedDate.formatted);
+
+      args?.onApply?.(event, date);
+    },
+    [args?.onApply, dateAdapter, timezone],
+  );
+
+  const handleTimezoneSelect = (_e: SyntheticEvent, selection: string[]) => {
+    setTimezone(selection[0]);
+  };
+
+  useEffect(() => {
+    setIso8601String("");
+    setLocaleDateString("");
+    setDateString("");
+  }, [timezone]);
+
+  return (
+    <StackLayout direction={"row"}>
+      <FormField validationStatus={validationStatus}>
+        <FormLabel>Select a date</FormLabel>
+        <DatePicker
+          selectionVariant="single"
+          {...args}
+          onApply={handleApply}
+          onCancel={handleCancel}
+          onSelectionChange={handleSelectionChange}
+          onOpenChange={handleOpenChange}
+          selectedDate={selectedDate}
+          timezone={timezone}
+        >
+          <DatePickerTrigger>
+            <DatePickerSingleInput />
+          </DatePickerTrigger>
+          <DatePickerOverlay>
+            <FlexLayout gap={0} direction="column">
+              <FlexItem>
+                <DatePickerSingleGridPanel helperText={helperText} />
+                <Divider variant="tertiary" />
+              </FlexItem>
+              <FlexItem>
+                <DatePickerActions
+                  selectionVariant="single"
+                  applyButtonRef={applyButtonRef}
+                  ApplyButtonProps={{
+                    disabled: !!validationStatus,
+                  }}
+                />
+              </FlexItem>
+            </FlexLayout>
+          </DatePickerOverlay>
+          <DatePickerHelperText>{helperText}</DatePickerHelperText>
+        </DatePicker>
+      </FormField>
+      <StackLayout direction={"column"}>
+        <FormField>
+          <FormFieldLabel>Select a Timezone</FormFieldLabel>
+          <Dropdown
+            aria-label="Timezone Dropdown"
+            selected={[timezone]}
+            onSelectionChange={handleTimezoneSelect}
+          >
+            {timezoneOptions.map((tz) => (
+              <Option key={tz} value={tz}>
+                {tz}
+              </Option>
+            ))}
+          </Dropdown>
+        </FormField>
+        <FormField data-test-id={"iso-date-label"}>
+          <FormFieldLabel>ISO 8601 Format</FormFieldLabel> {iso8601String}
+        </FormField>
+        <FormField data-test-id={"timezone-date-label"}>
+          <FormFieldLabel>Date/Time in Timezone {timezone}</FormFieldLabel>
+          {dateString}
+        </FormField>
+        <FormField data-test-id={"locale-date-label"}>
+          <FormFieldLabel>Locale Date/Time</FormFieldLabel> {localeDateString}
+        </FormField>
+      </StackLayout>
+    </StackLayout>
+  );
+};
+
+export const RangeWithTimezone: StoryFn<
+  DatePickerRangeProps<DateFrameworkType>
+> = ({ selectionVariant, defaultSelectedDate, ...args }) => {
+  const { dateAdapter } = useLocalization();
+  const timezoneOptions =
+    dateAdapter.lib !== "date-fns"
+      ? [
+          "default",
+          "system",
+          "UTC",
+          "America/New_York",
+          "Europe/London",
+          "Asia/Shanghai",
+          "Asia/Kolkata",
+        ]
+      : ["default"];
+
+  const [timezone, setTimezone] = useState<string>(timezoneOptions[0]);
+  const [startIso8601String, setStartIso8601String] = useState<string>("");
+  const [startLocaleDateString, setStartLocaleDateString] =
+    useState<string>("");
+  const [startDateString, setStartDateString] = useState<string>("");
+  const [startDateError, setStartDateError] = useState<string | undefined>(
+    undefined,
+  );
+  const [endIso8601String, setEndIso8601String] = useState<string>("");
+  const [endLocaleDateString, setEndLocaleDateString] = useState<string>("");
+  const [endDateString, setEndDateString] = useState<string>("");
+  const [endDateError, setEndDateError] = useState<string | undefined>(
+    undefined,
+  );
+
+  const defaultHelperText =
+    "Select range (DD MMM YYYY - DD MMM YYYY) e.g. 09 Jun 2024";
+  const errorHelperText = "Please enter a valid date in DD MMM YYYY format";
+  const applyButtonRef = useRef<HTMLButtonElement>(null);
+  const [helperText, setHelperText] = useState<string>(defaultHelperText);
+  const [validationStatus, setValidationStatus] = useState<
+    "error" | undefined
+  >();
+  const savedValidationState = useRef<typeof validationStatus>();
+  const [selectedDate, setSelectedDate] =
+    useState<DateRangeSelection<DateFrameworkType> | null>(
+      defaultSelectedDate ?? null,
+    );
+  const previousSelectedDate = useRef<typeof selectedDate>(selectedDate);
+
+  const savedState = useRef<{
+    validationStatus: typeof validationStatus;
+    helperText: typeof helperText;
+  }>({
+    validationStatus: undefined,
+    helperText: defaultHelperText,
+  });
+
+  const handleSelectionChange = useCallback(
+    (
+      event: SyntheticEvent,
+      date: DateRangeSelection<DateFrameworkType> | null,
+      details: DateInputRangeDetails | undefined,
+    ) => {
+      const { startDate, endDate } = date ?? {};
+      const {
+        startDate: {
+          value: startDateOriginalValue = undefined,
+          errors: startDateErrors = undefined,
+        } = {},
+        endDate: {
+          value: endDateOriginalValue = undefined,
+          errors: endDateErrors = undefined,
+        } = {},
+      } = details || {};
+      console.log(
+        `StartDate: ${dateAdapter.isValid(startDate) ? dateAdapter.format(startDate, "DD MMM YYYY") : startDate}, EndDate: ${dateAdapter.isValid(endDate) ? dateAdapter.format(endDate, "DD MMM YYYY") : endDate}`,
+      );
+      if (startDateErrors?.length) {
+        console.log(
+          `StartDate Error(s): ${startDateErrors.map(({ type, message }) => `type: ${type} message: ${message}`).join(",")}`,
+        );
+        if (startDateOriginalValue) {
+          console.log(`StartDate Original Value: ${startDateOriginalValue}`);
+        }
+      }
+      if (endDateErrors?.length) {
+        console.log(
+          `EndDate Error(s): ${endDateErrors.map(({ type, message }) => `type: ${type} message: ${message}`).join(",")}`,
+        );
+        if (endDateOriginalValue) {
+          console.log(`EndDate Original Value: ${endDateOriginalValue}`);
+        }
+      }
+      if (startDateErrors?.length && startDateOriginalValue) {
+        setValidationStatus("error");
+        setHelperText(
+          `${errorHelperText} - start date, ${startDateErrors[0].message}`,
+        );
+      } else if (endDateErrors?.length && endDateOriginalValue) {
+        setValidationStatus("error");
+        setHelperText(
+          `${errorHelperText} - end date, ${endDateErrors[0].message}`,
+        );
+      } else {
+        setValidationStatus(undefined);
+        setHelperText(defaultHelperText);
+      }
+      setSelectedDate({
+        startDate:
+          startDateOriginalValue?.trim().length === 0 ? null : startDate,
+        endDate: endDateOriginalValue?.trim().length === 0 ? null : endDate,
+      });
+
+      const systemTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+      const ianaTimezone =
+        timezone !== "system" && timezone !== "default" ? timezone : undefined;
+
+      const formatDate = (date) => {
+        const iso = date.toISOString();
+        const locale = new Intl.DateTimeFormat(undefined, {
+          timeZone: systemTimeZone,
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+          hour: "numeric",
+          minute: "numeric",
+          second: "numeric",
+          hour12: true,
+        }).format(date);
+        const formatted = new Intl.DateTimeFormat(undefined, {
+          timeZone: ianaTimezone,
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+          hour: "numeric",
+          minute: "numeric",
+          second: "numeric",
+          hour12: true,
+        }).format(date);
+        return { iso, locale, formatted };
+      };
+
+      if (startDate) {
+        const start = formatDate(startDate);
+        setStartIso8601String(start.iso);
+        setStartLocaleDateString(start.locale);
+        setStartDateString(start.formatted);
+      } else {
+        setStartIso8601String("");
+        setStartLocaleDateString("");
+        setStartDateString("");
+      }
+      if (endDate) {
+        const end = formatDate(endDate);
+        setEndIso8601String(end.iso);
+        setEndLocaleDateString(end.locale);
+        setEndDateString(end.formatted);
+      } else {
+        setEndIso8601String("");
+        setEndLocaleDateString("");
+        setEndDateString("");
+      }
+
+      args?.onSelectionChange?.(event, date, details);
+    },
+    [args?.onSelectionChange, dateAdapter, timezone],
+  );
+
+  const handleOpenChange = useCallback(
+    (opening: boolean) => {
+      if (opening) {
+        savedValidationState.current = validationStatus;
+      }
+    },
+    [validationStatus],
+  );
+
+  const handleCancel = useCallback(() => {
+    setHelperText(savedState.current?.helperText);
+    setValidationStatus(savedValidationState.current);
+    setSelectedDate(previousSelectedDate.current);
+    args?.onCancel?.();
+  }, [args?.onCancel]);
+
+  const handleApply = useCallback(
+    (
+      event: SyntheticEvent,
+      date: DateRangeSelection<DateFrameworkType> | null,
+    ) => {
+      const { startDate, endDate } = date ?? {};
+      console.log(
+        `Applied StartDate: ${startDate ? dateAdapter.format(startDate, "DD MMM YYYY") : startDate}, EndDate: ${endDate ? dateAdapter.format(endDate, "DD MMM YYYY") : endDate}`,
+      );
+      setSelectedDate(date);
+      setHelperText(defaultHelperText);
+      setValidationStatus(undefined);
+      previousSelectedDate.current = date;
+      args?.onApply?.(event, date);
+    },
+    [args?.onApply, dateAdapter],
+  );
+
+  const handleTimezoneSelect = (_e: SyntheticEvent, selection: string[]) => {
+    setTimezone(selection[0]);
+  };
+
+  useEffect(() => {
+    setStartIso8601String("");
+    setStartLocaleDateString("");
+    setStartDateString("");
+    setStartDateError(undefined);
+    setEndIso8601String("");
+    setEndLocaleDateString("");
+    setEndDateString("");
+    setEndDateError(undefined);
+  }, [timezone]);
+
+  return (
+    <StackLayout direction={"row"}>
+      <FormField validationStatus={validationStatus}>
+        <FormLabel>Select a date range</FormLabel>
+        <DatePicker
+          selectionVariant="range"
+          {...args}
+          onApply={handleApply}
+          onCancel={handleCancel}
+          onSelectionChange={handleSelectionChange}
+          onOpenChange={handleOpenChange}
+          selectedDate={selectedDate}
+          timezone={timezone}
+        >
+          <DatePickerTrigger>
+            <DatePickerRangeInput />
+          </DatePickerTrigger>
+          <DatePickerOverlay>
+            <FlexLayout gap={0} direction="column">
+              <FlexItem>
+                <DatePickerRangePanel helperText={helperText} />
+                <Divider variant="tertiary" />
+              </FlexItem>
+              <FlexItem>
+                <DatePickerActions
+                  selectionVariant="range"
+                  applyButtonRef={applyButtonRef}
+                  ApplyButtonProps={{
+                    disabled: !!validationStatus,
+                  }}
+                />
+              </FlexItem>
+            </FlexLayout>
+          </DatePickerOverlay>
+          <DatePickerHelperText>{helperText}</DatePickerHelperText>
+        </DatePicker>
+      </FormField>
+      <StackLayout direction={"column"}>
+        <FormField>
+          <FormFieldLabel>Select a timezone</FormFieldLabel>
+          <Dropdown
+            aria-label="Timezone Dropdown"
+            defaultSelected={[timezone]}
+            onSelectionChange={handleTimezoneSelect}
+          >
+            {timezoneOptions.map((tz) => (
+              <Option key={tz} value={tz}>
+                {tz}
+              </Option>
+            ))}
+          </Dropdown>
+        </FormField>
+        <FormField data-test-id={"iso-start-date-label"}>
+          <FormFieldLabel>Start ISO 8601 Format</FormFieldLabel>
+          {startIso8601String}
+        </FormField>
+        <FormField data-test-id={"timezone-start-date-label"}>
+          <FormFieldLabel>
+            Start Date/Time in Timezone {timezone}
+          </FormFieldLabel>
+          {startDateString}
+        </FormField>
+        <FormField data-test-id={"locale-start-date-label"}>
+          <FormFieldLabel>Start Locale Date/Time</FormFieldLabel>
+          {startLocaleDateString}
+        </FormField>
+        <FormField data-test-id={"iso-end-date-label"}>
+          <FormFieldLabel>End ISO 8601 Format</FormFieldLabel>
+          {endIso8601String}
+        </FormField>
+        <FormField data-test-id={"timezone-end-date-label"}>
+          <FormFieldLabel>End Date/Time in Timezone {timezone}</FormFieldLabel>
+          {endDateString}
+        </FormField>
+        <FormField data-test-id={"locale-end-date-label"}>
+          <FormFieldLabel>End Locale Date/Time</FormFieldLabel>
+          {endLocaleDateString}
+        </FormField>
+      </StackLayout>
+    </StackLayout>
   );
 };
 

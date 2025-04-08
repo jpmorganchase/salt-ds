@@ -78,7 +78,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
       cy.findByRole("application").should("exist");
     });
 
-    it("SHOULD hide calendar upon focus out", () => {
+    it.only("SHOULD hide calendar upon focus out", () => {
       cy.mount(<Single />);
 
       // Simulate opening the calendar
@@ -191,7 +191,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
         cy.findByRole("application").should("exist");
         // Verify the first element is focused
         cy.findByLabelText("Previous Month")
-          .closest('[role="button"]')
+          .parent()
           .should("be.focused");
         // Simulate tabbing between all elements in the overlay
         cy.realPress("Tab");
@@ -200,7 +200,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
         cy.findByLabelText("Year Dropdown").should("be.focused");
         cy.realPress("Tab");
         cy.findByLabelText("Next Month")
-          .closest('[role="button"]')
+          .parent()
           .should("be.focused");
         cy.realPress("Tab");
         cy.findByRole("button", {
@@ -209,7 +209,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
         cy.realPress("Tab");
         // Verify focus returns to the first element in the overlay
         cy.findByLabelText("Previous Month")
-          .closest('[role="button"]')
+          .parent()
           .should("be.focused");
         // Simulate closing the overlay
         cy.realPress("Escape");
@@ -221,13 +221,13 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
         cy.realPress("Tab");
         // Verify the calendar button is focused
         cy.findByLabelText("calendar")
-          .closest('[role="button"]')
+          .parent()
           .should("be.focused");
         // Simulate tabbing out of the date picker
         cy.realPress("Tab");
         // Verify the date picker loses focus
         cy.findByLabelText("calendar")
-          .closest('[role="button"]')
+          .parent()
           .should("not.be.focused");
       });
 

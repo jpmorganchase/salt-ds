@@ -141,8 +141,9 @@ export const DatePickerSingleGridPanel = forwardRef(
 
     const {
       state: {
+        timezone,
         selectedDate = null,
-        minDate = dateAdapter.startOf(dateAdapter.today(), "month"),
+        minDate = dateAdapter.startOf(dateAdapter.today(undefined, timezone), "month"),
         maxDate = dateAdapter.add(minDate, { months: 1 }),
       },
       helpers: { select, isDayDisabled, isDayHighlighted, isDayUnselectable },
@@ -159,7 +160,7 @@ export const DatePickerSingleGridPanel = forwardRef(
     const [uncontrolledDefaultVisibleMonth] = useState(() => {
       const validDate = dateAdapter.isValid(selectedDate)
         ? selectedDate
-        : dateAdapter.today();
+        : dateAdapter.today(undefined, timezone);
       return defaultVisibleMonth || dateAdapter.startOf(validDate, "month");
     });
     const [visibleMonth, setVisibleMonth] = useControlled({
@@ -214,6 +215,8 @@ export const DatePickerSingleGridPanel = forwardRef(
       selectedDate,
       minDate,
       maxDate,
+      numberOfVisibleMonths: responsiveNumberOfVisibleMonths,
+      timezone,
       ...CalendarProps,
     };
 
@@ -234,7 +237,6 @@ export const DatePickerSingleGridPanel = forwardRef(
           <FormFieldContext.Provider value={{} as FormFieldContextValue}>
             <Calendar
               selectionVariant={"single"}
-              numberOfVisibleMonths={responsiveNumberOfVisibleMonths}
               {...(calendarProps as Partial<CalendarSingleProps<TDate>>)}
             >
               <CalendarNavigation {...CalendarNavigationProps} />

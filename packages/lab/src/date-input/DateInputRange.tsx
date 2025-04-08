@@ -7,11 +7,11 @@ import {
   useFormFieldProps,
   useId,
 } from "@salt-ds/core";
-import type {
+import {
   DateDetail,
   DateFrameworkType,
   ParserResult,
-  TimeFields,
+  TimeFields, Timezone,
 } from "@salt-ds/date-adapters";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
@@ -184,6 +184,15 @@ export interface DateInputRangeProps<TDate extends DateFrameworkType>
     event: SyntheticEvent | null,
     newValue: DateInputRangeValue,
   ) => void;
+  /**
+   * Specifies the timezone behavior:
+   * - If undefined, the timezone will be derived from the passed date, or from `defaultSelectedDate`/`selectedDate`.
+   * - If set to "default", the default timezone of the date library will be used.
+   * - If set to "system", the local system's timezone will be applied.
+   * - If set to "UTC", the time will be returned in UTC.
+   * - If set to a valid IANA timezone identifier, the time will be returned for that specific timezone.
+   */
+  timezone?: Timezone;
 }
 
 export const DateInputRange = forwardRef<
@@ -224,6 +233,11 @@ export const DateInputRange = forwardRef<
       readOnly: readOnlyProp,
       validationStatus: validationStatusProp,
       variant = "primary",
+      timezone = dateProp?.startDate || defaultDate?.startDate
+        ? dateAdapter.getTimezone(
+          (dateProp?.startDate ?? defaultDate?.startDate) as TDate,
+        )
+        : "default",
       ...rest
     } = props;
     const wrapperRef = useRef(null);
@@ -403,8 +417,8 @@ export const DateInputRange = forwardRef<
       const { date: endDate = undefined, ...endDateParseDetails } =
         parseDateValue(dateValue?.endDate, DateParserField.END) ?? {};
       const updatedDateRange = {
-        startDate,
-        endDate,
+        startDate: dateAdapter.setTimezone(startDate, timezone),
+        endDate:  dateAdapter.setTimezone(endDate, timezone),
       };
       const newDateValue = setDateValueFromDate(updatedDateRange);
       setDate(updatedDateRange);
