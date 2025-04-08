@@ -1,4 +1,10 @@
-import { FlexLayout, FormField, FormFieldLabel, Input } from "@salt-ds/core";
+import {
+  FlexLayout,
+  FormField,
+  FormFieldLabel,
+  Input,
+  useId,
+} from "@salt-ds/core";
 import { RangeSlider } from "@salt-ds/lab";
 import {
   type ChangeEvent,
@@ -7,6 +13,18 @@ import {
   useEffect,
   useState,
 } from "react";
+
+const accessibleTextStyles: React.CSSProperties = {
+  position: "absolute",
+  height: "1px",
+  width: "1px",
+  padding: "0",
+  margin: "-1px",
+  overflow: "hidden",
+  clip: "rect(0, 0, 0, 0)",
+  whiteSpace: "nowrap",
+  borderWidth: "0",
+};
 
 const validateSingle = (value: number, bounds: [number, number]) => {
   if (Number.isNaN(value)) return false;
@@ -33,6 +51,8 @@ const RangeWithInput = () => {
   const [validationStatus, setValidationStatus] = useState<undefined | "error">(
     undefined,
   );
+  const minimumInputLabel = useId();
+  const maximumInputLabel = useId();
 
   useEffect(() => {
     const valid = validateRange(value, bounds);
@@ -68,20 +88,23 @@ const RangeWithInput = () => {
   };
 
   return (
-    <FormField style={{ width: "100%" }}>
+    <FormField style={{ width: "80%" }}>
       <FormFieldLabel>RangeSlider with Input</FormFieldLabel>
       <FlexLayout gap={1} align="center">
+        <span style={accessibleTextStyles} id={minimumInputLabel}>
+          Minimum
+        </span>
         <Input
-          aria-label="minimum input"
+          aria-labelledby={minimumInputLabel}
           placeholder={minInputValue}
           value={minInputValue}
-          style={{ width: "10px" }}
+          style={{ flex: 1 }}
           inputProps={{ style: { textAlign: "center" } }}
           onChange={handleMinInputChange}
           validationStatus={validationStatus}
         />
         <RangeSlider
-          style={{ width: "100%" }}
+          style={{ flex: "100%" }}
           min={bounds[0]}
           max={bounds[1]}
           minLabel="-50"
@@ -89,11 +112,14 @@ const RangeWithInput = () => {
           value={value}
           onChange={handleSliderChange}
         />
+        <span style={accessibleTextStyles} id={maximumInputLabel}>
+          Maximum
+        </span>
         <Input
-          aria-label="maximum input"
+          aria-labelledby={maximumInputLabel}
           placeholder={`${maxInputValue}`}
           value={maxInputValue}
-          style={{ width: "10px" }}
+          style={{ flex: 1 }}
           inputProps={{ style: { textAlign: "center" } }}
           onChange={handleMaxInputChange}
           validationStatus={validationStatus}

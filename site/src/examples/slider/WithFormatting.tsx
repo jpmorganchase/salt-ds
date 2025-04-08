@@ -3,7 +3,7 @@ import type { ReactElement } from "react";
 
 export const WithFormatting = (): ReactElement => (
   <Slider
-    aria-label="with formatting"
+    aria-label="With formatting"
     style={{ width: "80%" }}
     format={(value: number) =>
       Intl.NumberFormat("en-US", {

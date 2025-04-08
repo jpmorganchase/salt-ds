@@ -68,7 +68,7 @@ const Template: StoryFn = ({ ...args }) => {
 
 export const Default = Template.bind({});
 Default.args = {
-  "aria-label": "default",
+  "aria-label": "Default",
 };
 
 Default.parameters = {
@@ -77,7 +77,7 @@ Default.parameters = {
 
 export const WithInlineLabels = Template.bind({});
 WithInlineLabels.args = {
-  "aria-label": "with inline labels",
+  "aria-label": "With inline labels",
   minLabel: "Lowest value",
   maxLabel: "Highest value",
   accessibleMinText: "Lowest value",
@@ -93,7 +93,7 @@ WithMarks.args = {
   min: 0,
   max: 10,
   marks: marks,
-  "aria-label": "with marks",
+  "aria-label": "With marks",
 };
 
 WithMarks.parameters = {
@@ -105,7 +105,7 @@ WithMarkTicks.args = {
   min: 0,
   max: 10,
   marks: marks,
-  "aria-label": "with mark ticks",
+  "aria-label": "With mark ticks",
   showTicks: true,
 };
 
@@ -124,7 +124,7 @@ WithRestrictToMarks.args = {
     { value: 80, label: "80" },
     { value: 100, label: "100" },
   ],
-  "aria-label": "with restrict to marks",
+  "aria-label": "With restrict to marks",
   showTicks: true,
   restrictToMarks: true,
 };
@@ -135,7 +135,7 @@ WithRestrictToMarks.parameters = {
 
 export const WithInlineLabelsAndMarks = Template.bind({});
 WithInlineLabelsAndMarks.args = {
-  "aria-label": "with inline labels and marks",
+  "aria-label": "With inline labels and marks",
   min: 0,
   max: 50,
   defaultValue: 30,
@@ -160,7 +160,7 @@ WithInlineLabelsAndMarks.parameters = {
 
 export const WithInlineLabelsMarksAndTicks = Template.bind({});
 WithInlineLabelsMarksAndTicks.args = {
-  "aria-label": "with inline labels, marks and ticks",
+  "aria-label": "With inline labels, marks and ticks",
   min: 0,
   max: 50,
   defaultValue: 30,
@@ -186,7 +186,7 @@ WithInlineLabelsMarksAndTicks.parameters = {
 
 export const WithConstrainedLabelPosition = Template.bind({});
 WithConstrainedLabelPosition.args = {
-  "aria-label": "with constrained label position",
+  "aria-label": "With constrained label position",
   min: 0,
   max: 10,
   marks: [
@@ -208,7 +208,7 @@ WithConstrainedLabelPosition.parameters = {
 
 export const WithConstrainedLabelPositionAndTicks = Template.bind({});
 WithConstrainedLabelPositionAndTicks.args = {
-  "aria-label": "with constrained label position and ticks",
+  "aria-label": "With constrained label position and ticks",
   min: 0,
   max: 10,
   marks: [
@@ -231,7 +231,7 @@ WithConstrainedLabelPositionAndTicks.parameters = {
 
 export const WithHiddenTooltip = Template.bind({});
 WithHiddenTooltip.args = {
-  "aria-label": "with hidden tooltip",
+  "aria-label": "With hidden tooltip",
   min: 0,
   max: 50,
   defaultValue: 20,
@@ -257,7 +257,7 @@ WithHiddenTooltip.parameters = {
 
 export const WithNegativeBounds = Template.bind({});
 WithNegativeBounds.args = {
-  "aria-label": "with negative bounds",
+  "aria-label": "With negative bounds",
   min: -5,
   max: 5,
   minLabel: "-5",
@@ -270,7 +270,7 @@ WithNegativeBounds.parameters = {
 
 export const WithFormatting = Template.bind({});
 WithFormatting.args = {
-  "aria-label": "with formatting",
+  "aria-label": "With formatting",
   min: 0,
   max: 50,
   defaultValue: 25,
@@ -566,7 +566,7 @@ export const WithNonNumericValues = () => {
 
   return (
     <Slider
-      aria-label="days of the week"
+      aria-label="Days of the week"
       min={1}
       max={7}
       value={value}
@@ -580,7 +580,7 @@ export const WithNonNumericValues = () => {
 
 export const Disabled = Template.bind({});
 Disabled.args = {
-  "aria-label": "disabled",
+  "aria-label": "Disabled",
   min: 0,
   max: 50,
   defaultValue: 35,
