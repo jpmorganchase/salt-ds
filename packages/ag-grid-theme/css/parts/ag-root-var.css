@@ -73,6 +73,9 @@ div[class*="ag-theme-salt-compact"] {
   --salt-size-selectable: 12px;
 }
 
-div[class*="ag-theme-salt"] .ag-root-wrapper {
+.ag-theme-salt-light .ag-root-wrapper,
+.ag-theme-salt-dark .ag-root-wrapper,
+.ag-theme-salt-compact-light .ag-root-wrapper,
+.ag-theme-salt-compact-dark .ag-root-wrapper {
   border: none;
 }
