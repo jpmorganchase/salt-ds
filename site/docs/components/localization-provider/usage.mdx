@@ -43,7 +43,7 @@ import { AdapterDateFns } from "@salt-ds/date-adapters/date-fns";
 ### dayjs
 
 ```
-import { AdapterDayJs } from "@salt-ds/date-adapters/dayjs";
+import { AdapterDayjs } from "@salt-ds/date-adapters/dayjs";
 ```
 
 ### luxon
@@ -66,14 +66,14 @@ const dateAdapter = new AdapterDateFns(locale);
 
 Each adapter imports the date library defined by your peer dependency but for dayjs and luxon, you may need to provide a preconfigured instance.
 
-Passing `dayjs` to `AdapterDayJs` enables you to preconfigure defaults.
+Passing `dayjs` to `AdapterDayjs` enables you to preconfigure defaults.
 
 ```
-import { AdapterDayJs } from "@salt-ds/date-adapters/dayjs";
+import { AdapterDayjs } from "@salt-ds/date-adapters/dayjs";
 import dayjs from "dayjs";
 dayjs.tz.setDefault('America/New_York');
 
-const dayjsAdapter = new AdapterDayJs(locale, dayjs);
+const dayjsAdapter = new AdapterDayjs(locale, dayjs);
 ```
 
 Passing `moment-timezone` to `AdapterMoment` adapter enables timezone support.
