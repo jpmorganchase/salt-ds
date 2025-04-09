@@ -1,5 +1,16 @@
 import type { RefObject } from "react";
 
+export const interactiveKeys = [
+  "ArrowUp",
+  "ArrowRight",
+  "ArrowDown",
+  "ArrowLeft",
+  "PageUp",
+  "PageDown",
+  "Home",
+  "End",
+];
+
 export const toFloat = (value: number | string) =>
   typeof value === "string" ? Number.parseFloat(value) : value;
 
@@ -146,6 +157,20 @@ export const getKeyboardValue = (
     }
   } else {
     switch (event.key) {
+      case "ArrowUp":
+      case "ArrowRight":
+        newValue = Math.min(value + step, max);
+        break;
+      case "ArrowDown":
+      case "ArrowLeft":
+        newValue = Math.max(value - step, min);
+        break;
+      case "Home":
+        newValue = min;
+        break;
+      case "End":
+        newValue = max;
+        break;
       case "PageUp":
         newValue = Math.min(value + step * stepMultiplier, max);
         break;

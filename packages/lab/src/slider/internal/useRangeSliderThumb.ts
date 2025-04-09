@@ -10,7 +10,7 @@ import {
   useState,
 } from "react";
 import type { SliderProps } from "../Slider";
-import { getClickedPosition, getKeyboardValue } from "./utils";
+import { getClickedPosition, getKeyboardValue, interactiveKeys } from "./utils";
 
 type UseRangeSliderThumbProps = Pick<SliderProps, "min" | "max" | "step"> & {
   decimalPlaces: number;
@@ -224,6 +224,9 @@ export const useRangeSliderThumb = ({
 
   const handleKeydownOnThumb = useCallback(
     (event: React.KeyboardEvent, thumbIndex: number) => {
+      if (!interactiveKeys.includes(event.key)) {
+        return;
+      }
       const newValue = getKeyboardValue(
         event,
         value[thumbIndex],
@@ -234,16 +237,20 @@ export const useRangeSliderThumb = ({
         restrictToMarks,
         marks,
       );
-      setIsFocusVisible(true);
-      if (newValue !== lastValueRef.current[thumbIndex]) {
-        lastValueRef.current[thumbIndex] = newValue;
-        handleInputChange(
-          {
-            target: { value: newValue.toString() },
-          } as ChangeEvent<HTMLInputElement>,
-          thumbIndex,
-        );
+      if (
+        newValue === undefined ||
+        newValue === lastValueRef.current[thumbIndex]
+      ) {
+        return;
       }
+      setIsFocusVisible(true);
+      lastValueRef.current[thumbIndex] = newValue;
+      handleInputChange(
+        {
+          target: { value: newValue.toString() },
+        } as ChangeEvent<HTMLInputElement>,
+        thumbIndex,
+      );
     },
     [
       value,
