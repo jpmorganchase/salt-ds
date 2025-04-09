@@ -5,6 +5,8 @@ layout: DetailComponent
 sidebar:
   exclude: true
 data:
+  package:
+    name: "@salt-ds/lab"
   $ref: ./#/data
 ---
 
@@ -120,3 +122,14 @@ The `Slider` maps numeric values to meaningful non-numeric options, enabling int
 This approach ensures a user-friendly and accessible interface for selecting non-numeric values.
 
 <LivePreview componentName="slider" exampleName="WithNonNumericValues" />
+
+## With change events
+
+The `Slider` component provides two key event handlers: `onChange` and `onChangeEnd`, which are essential for handling user interactions with the `Slider`, whether through mouse or keyboard input.
+
+- `onChange` **Event**: This event is triggered continuously as the user drags the `Slider` thumb or adjusts it using keyboard controls. It provides real-time feedback by updating the value as the thumb moves or as keyboard inputs modify the value. This is particularly useful for scenarios where you want to display dynamic changes or provide immediate feedback to the user, such as updating a preview or displaying the current value.
+- `onChangeEnd` **Event**: This event is fired once the user releases the `Slider` thumb or adjusts it using keyboard controls, indicating the end of the interaction. It is ideal for scenarios where you want to perform actions that should only occur after the user has finished adjusting the slider, such as submitting a value, triggering a calculation, or updating a state that should not be changed continuously.
+
+**Note**: Both `onChange` and `onChange` events will be triggered simultaneously when the `Slider` is interacted with using a keyboard.
+
+<LivePreview componentName="slider" exampleName="WithChangeEvents" />
