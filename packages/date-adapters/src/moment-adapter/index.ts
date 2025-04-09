@@ -108,7 +108,6 @@ export class AdapterMoment implements SaltDateAdapter<Moment, string> {
    * Creates a Moment.js date object from a string or returns an invalid date.
    * @param value - The date string to parse.
    * @param timezone - The timezone to use (default is "default").
-   * @param locale - The locale to use for parsing.
    * @returns The parsed Moment.js date object or an invalid date object.
    */
   public date = <T extends string | undefined>(
@@ -138,18 +137,16 @@ export class AdapterMoment implements SaltDateAdapter<Moment, string> {
    * Returns an empty string when null or undefined date is given.
    * @param date - The Moment.js date object to format.
    * @param format - The format string to use.
-   * @param locale - The locale to use for formatting.
    * @returns The formatted date string.
    */
   public format(
     date: Moment | null | undefined,
     format: RecommendedFormats = "DD MMM YYYY",
-    locale?: string,
   ): string {
     if (this.isValid(date)) {
       return date
         .clone()
-        .locale(locale ?? this.locale)
+        .locale(this.locale)
         .format(format);
     }
     return "";
@@ -178,17 +175,15 @@ export class AdapterMoment implements SaltDateAdapter<Moment, string> {
    * Parses a date string using the specified format.
    * @param value - The date string to parse.
    * @param format - The format string to use.
-   * @param locale - The locale to use for parsing.
    * @returns A DateDetail object containing the parsed date and any errors.
    */
   public parse(
     value: string,
     format: string,
-    locale?: string,
   ): ParserResult<Moment> {
     const parsedDate =
       this.locale || locale
-        ? this.moment(value, format, locale ?? this.locale, true)
+        ? this.moment(value, format, this.locale, true)
         : this.moment(value, format, true);
     if (parsedDate.isValid()) {
       return {

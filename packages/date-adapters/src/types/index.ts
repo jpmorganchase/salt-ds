@@ -131,13 +131,11 @@ export interface SaltDateAdapter<
    *
    * @param value - The date string to parse.
    * @param timezone - The timezone to use.
-   * @param locale - The locale to use for parsing.
    * @returns The parsed Date object or an invalid date object.
    */
   date<T extends string | undefined>(
     value?: T,
-    timezone?: Timezone,
-    locale?: TLocale,
+    timezone?: Timezone
   ): TDate;
 
   /**
@@ -145,13 +143,11 @@ export interface SaltDateAdapter<
    *
    * @param date - The date object to format.
    * @param format - The format string to use.
-   * @param locale - The locale to use for formatting.
    * Returns an empty string when null or undefined date is given.
    */
   format(
     date: TDate | null | undefined,
-    format?: RecommendedFormats,
-    locale?: TLocale,
+    format?: RecommendedFormats
   ): string;
 
   /**
@@ -168,10 +164,9 @@ export interface SaltDateAdapter<
    *
    * @param value - The date string to parse.
    * @param format - The format string to use.
-   * @param locale - The locale to use for parsing.
    * @returns A ParserResult object containing the parsed date and any errors.
    */
-  parse(value: string, format: string, locale?: TLocale): ParserResult<TDate>;
+  parse(value: string, format: string): ParserResult<TDate>;
 
   /**
    * Checks if a date object is valid.

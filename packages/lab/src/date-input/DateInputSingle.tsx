@@ -99,19 +99,11 @@ export interface DateInputSingleProps<TDate extends DateFrameworkType>
    */
   inputRef?: Ref<HTMLInputElement>;
   /**
-   * Locale for date formatting and parsing
-   * Overrides any locale
-   */
-  // biome-ignore lint/suspicious/noExplicitAny: locale is date framework dependent
-  locale?: any;
-  /**
    * Parser callback, if not using the adapter's parser
    * @param value - date string to parse
    * @param format - format required
-   * @param locale - locale required
    */
-  // biome-ignore lint/suspicious/noExplicitAny: locale is date framework dependent
-  parse?: (value: string, format: string, locale?: any) => ParserResult<TDate>;
+  parse?: (value: string, format: string) => ParserResult<TDate>;
   /**
    * Input value. Use when the input value is controlled.
    */
@@ -174,9 +166,8 @@ export const DateInputSingle = forwardRef<
       defaultDate,
       onDateChange,
       value: valueProp,
-      locale,
       format = "DD MMM YYYY",
-      defaultValue = dateAdapter.format(undefined, format, locale),
+      defaultValue = "",
       onChange,
       onClick,
       emptyReadOnlyMarker = "—",
@@ -234,7 +225,7 @@ export const DateInputSingle = forwardRef<
 
     // biome-ignore lint/correctness/useExhaustiveDependencies: Update date string value ONLY when selected date changes, not when date string itself change
     useEffect(() => {
-      const formattedValue = dateAdapter.format(date, format, locale);
+      const formattedValue = dateAdapter.format(date, format);
       const hasValueChanged = formattedValue !== dateValue;
       if (
         // don't want to reset "error" input values
@@ -244,7 +235,7 @@ export const DateInputSingle = forwardRef<
         setDateValue(formattedValue);
         onDateValueChange?.(null, formattedValue);
       }
-    }, [date, dateAdapter.format, format, locale]);
+    }, [date, dateAdapter.format, format]);
 
     const [focused, setFocused] = useState(false);
 
@@ -281,10 +272,10 @@ export const DateInputSingle = forwardRef<
 
     const apply = (event: SyntheticEvent) => {
       const parse = parseProp ?? dateAdapter.parse.bind(dateAdapter);
-      const parseResult = parse(dateValue ?? "", format, locale);
+      const parseResult = parse(dateValue ?? "", format);
       let { date: parsedDate, ...parseDetails } = parseResult;
       parsedDate = dateAdapter.setTimezone(parsedDate, timezone);
-      const formattedValue = dateAdapter.format(parsedDate, format, locale);
+      const formattedValue = dateAdapter.format(parsedDate, format);
       const hasValueChanged = formattedValue !== dateValue;
       if (dateAdapter.isValid(parsedDate) && hasValueChanged) {
         setDateValue(formattedValue);

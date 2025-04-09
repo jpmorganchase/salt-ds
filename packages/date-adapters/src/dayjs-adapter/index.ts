@@ -166,16 +166,14 @@ export class AdapterDayjs implements SaltDateAdapter<Dayjs, string> {
    * Returns an empty string when null or undefined date is given.
    * @param date - The Day.js date object to format.
    * @param format - The format string to use.
-   * @param locale - The locale to use for formatting.
    * @returns The formatted date string.
    */
   public format(
     date: Dayjs | null | undefined,
     format: RecommendedFormats = "DD MMM YYYY",
-    locale?: string,
   ): string {
     if (this.isValid(date)) {
-      return date.locale(locale ?? this.locale).format(format);
+      return date.locale(this.locale).format(format);
     }
     return "";
   }
@@ -200,17 +198,15 @@ export class AdapterDayjs implements SaltDateAdapter<Dayjs, string> {
    * Parses a date string using the specified format.
    * @param value - The date string to parse.
    * @param format - The format string to use.
-   * @param locale - The locale to use for parsing.
    * @returns A DateDetail object containing the parsed date and any errors.
    */
   public parse(
     value: string,
     format: string,
-    locale?: string,
   ): ParserResult<Dayjs> {
     let parsedDate = this.dayjs(
       value?.trim(),
-      format).locale(locale ?? this.locale);
+      format).locale(this.locale);
     if (parsedDate.isValid()) {
       return {
         date: parsedDate,

@@ -124,23 +124,15 @@ export interface DateInputRangeProps<TDate extends DateFrameworkType>
    */
   endInputRef?: Ref<HTMLInputElement>;
   /**
-   * Locale for date formatting and parsing
-   */
-  // biome-ignore lint/suspicious/noExplicitAny: locale is date framework dependent
-  locale?: any;
-  /**
    * Parser callback, if not using the adapter's parser
    * @param value - date string to parse
    * @param field: DateParserField to identify value,
    * @param format - format required
-   * @param locale - locale required
    */
   parse?: (
     value: string,
     field: DateParserField,
     format: string,
-    // biome-ignore lint/suspicious/noExplicitAny: locale is date framework dependent
-    locale?: any,
   ) => ParserResult<TDate>;
   /**
    * Input value. Use when the input value is controlled.
@@ -213,11 +205,10 @@ export const DateInputRange = forwardRef<
       defaultDate,
       onDateChange,
       value: valueProp,
-      locale,
       format = "DD MMM YYYY",
       defaultValue = {
-        startDate: dateAdapter.format(undefined, format, locale),
-        endDate: dateAdapter.format(undefined, format, locale),
+        startDate: "",
+        endDate: "",
       },
       onChange,
       onClick,
@@ -263,8 +254,8 @@ export const DateInputRange = forwardRef<
       field: DateParserField,
     ): ParserResult<TDate> | undefined => {
       const parseResult = parseProp
-        ? parseProp(dateValue ?? "", field, format, locale)
-        : dateAdapter.parse.bind(dateAdapter)(dateValue ?? "", format, locale);
+        ? parseProp(dateValue ?? "", field, format)
+        : dateAdapter.parse.bind(dateAdapter)(dateValue ?? "", format);
 
       const { date, ...parseDetails } = parseResult;
       return { date, ...parseDetails };
@@ -318,26 +309,24 @@ export const DateInputRange = forwardRef<
         const formattedStartDateValue = dateAdapter.format(
           newDate?.startDate,
           format,
-          locale,
         );
         newDateValue = { ...dateValue, startDate: formattedStartDateValue };
       } else if (!newDate?.startDate) {
         newDateValue = {
           ...dateValue,
-          startDate: dateAdapter.format(undefined, format, locale),
+          startDate: dateAdapter.format(undefined, format),
         };
       }
       if (newDate?.endDate && dateAdapter.isValid(newDate.endDate)) {
         const formattedEndDateValue = dateAdapter.format(
           newDate?.endDate,
           format,
-          locale,
         );
         newDateValue = { ...newDateValue, endDate: formattedEndDateValue };
       } else if (!newDate?.endDate) {
         newDateValue = {
           ...newDateValue,
-          endDate: dateAdapter.format(undefined, format, locale),
+          endDate: dateAdapter.format(undefined, format),
         };
       }
 
@@ -360,7 +349,6 @@ export const DateInputRange = forwardRef<
       date?.endDate,
       dateAdapter.format,
       format,
-      locale,
     ]);
 
     const [focused, setFocused] = useState(false);
@@ -569,7 +557,7 @@ export const DateInputRange = forwardRef<
             isReadOnly && !dateValue?.startDate
               ? emptyReadOnlyMarker
               : (dateValue.startDate ??
-                dateAdapter.format(undefined, format, locale))
+                dateAdapter.format(undefined, format))
           }
           {...restStartInputProps}
           onBlur={handleStartInputBlur}
@@ -602,7 +590,7 @@ export const DateInputRange = forwardRef<
             isReadOnly && !dateValue?.endDate
               ? emptyReadOnlyMarker
               : (dateValue.endDate ??
-                dateAdapter.format(undefined, format, locale))
+                dateAdapter.format(undefined, format))
           }
           {...restEndInputProps}
           onBlur={handleEndInputBlur}

@@ -66,11 +66,6 @@ interface UseCalendarBaseProps<TDate> {
    */
   hideOutOfRangeDates?: boolean;
   /**
-   * Locale for date formatting
-   */
-  // biome-ignore lint/suspicious/noExplicitAny: locale is date framework dependent
-  locale?: any;
-  /**
    * The minimum selectable date.
    */
   minDate?: TDate;
@@ -192,12 +187,6 @@ export interface UseCalendarReturn<TDate extends DateFrameworkType> {
      * The currently focused date in the calendar, or null if no date is focused.
      */
     focusedDate: TDate | null;
-
-    /**
-     * The locale used for date formatting.
-     */
-    // biome-ignore lint/suspicious/noExplicitAny: locale takes many forms based on framework
-    locale: any;
 
     /**
      * The minimum selectable date in the calendar.
@@ -429,7 +418,6 @@ export function useCalendar<TDate extends DateFrameworkType>(
     defaultSelectedDate,
     visibleMonth: visibleMonthProp,
     hideOutOfRangeDates,
-    locale,
     timezone,
     defaultVisibleMonth = dateAdapter.today(timezone),
     onSelectionChange,
@@ -633,7 +621,6 @@ export function useCalendar<TDate extends DateFrameworkType>(
     [
       dateAdapter,
       focusedDate,
-      locale,
       isDaySelectable,
       isDayVisible,
       isOutsideAllowedDates,
@@ -656,7 +643,6 @@ export function useCalendar<TDate extends DateFrameworkType>(
         state: {
           visibleMonth,
           focusedDate,
-          locale,
           timezone,
           minDate,
           maxDate,
@@ -683,7 +669,6 @@ export function useCalendar<TDate extends DateFrameworkType>(
     [
       visibleMonth,
       focusedDate,
-      locale,
       timezone,
       minDate,
       maxDate,
