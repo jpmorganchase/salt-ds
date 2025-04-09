@@ -109,6 +109,16 @@ describe("Given a Slider", () => {
     cy.get("@changeSpy").should("have.callCount", 6);
   });
 
+  it("should not trigger change events if non-interactice keyboard keys are pressed", () => {
+    const changeSpy = cy.stub().as("changeSpy");
+    const changeEndSpy = cy.stub().as("changeEndSpy");
+    cy.mount(<Default onChange={changeSpy} onChangeEnd={changeEndSpy} />);
+
+    cy.findByRole("slider").focus().realPress("Space");
+    cy.get("@changeSpy").should("not.have.been.called");
+    cy.get("@changeEndSpy").should("not.have.been.called");
+  });
+
   it("should move the thumb in larger increments when step multiplier is increased", () => {
     cy.mount(
       <Default defaultValue={10} min={0} max={30} stepMultiplier={10} />,
@@ -332,15 +342,19 @@ describe("Given a Slider", () => {
 
       function ControlledSlider() {
         const [value, setValue] = useState<number>(3);
-        const onChange = (event: ChangeEvent<HTMLInputElement>) => {
-          const newValue = Number.parseFloat(event.target.value);
-          setValue(newValue);
-          changeSpy(event, newValue);
+        const onChange = (
+          event: ChangeEvent<HTMLInputElement>,
+          value: number,
+        ) => {
+          setValue(value);
+          changeSpy(event, value);
         };
-        const onChangeEnd = (event: ChangeEvent<HTMLInputElement>) => {
-          const newValue = Number.parseFloat(event.target.value);
-          setValue(newValue);
-          changeEndSpy(event, newValue);
+        const onChangeEnd = (
+          event: ChangeEvent<HTMLInputElement>,
+          value: number,
+        ) => {
+          setValue(value);
+          changeEndSpy(event, value);
         };
         return (
           <Default
