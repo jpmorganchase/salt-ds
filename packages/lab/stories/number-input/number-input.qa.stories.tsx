@@ -56,6 +56,7 @@ export const ExamplesGrid: StoryFn<QAContainerProps> = (props) => {
       <NumberInput value="success" bordered validationStatus="success" />
       <NumberInput value="error" bordered validationStatus="error" />
       <NumberInput value="warning" bordered validationStatus="warning" />
+      <NumberInput value="hidden buttons" hideButtons />
     </QAContainer>
   );
 };
