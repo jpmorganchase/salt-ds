@@ -416,9 +416,9 @@ export const DateInputRange = forwardRef<
         parseDateValue(dateValue?.startDate, DateParserField.START) ?? {};
       const { date: endDate = undefined, ...endDateParseDetails } =
         parseDateValue(dateValue?.endDate, DateParserField.END) ?? {};
-      const updatedDateRange = {
-        startDate: dateAdapter.setTimezone(startDate, timezone),
-        endDate:  dateAdapter.setTimezone(endDate, timezone),
+      const updatedDateRange: DateRangeSelection<TDate> = {
+        startDate: startDate? dateAdapter.setTimezone(startDate, timezone) : undefined,
+        endDate:  endDate ? dateAdapter.setTimezone(endDate, timezone): undefined,
       };
       const newDateValue = setDateValueFromDate(updatedDateRange);
       setDate(updatedDateRange);

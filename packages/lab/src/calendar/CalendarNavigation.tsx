@@ -118,7 +118,7 @@ function generateYearsBetweenRange<TDate extends DateFrameworkType>(
   timezone: Timezone = "default",
 ): TDate[] {
   const years: TDate[] = [];
-  let startOfYear = dateAdapter.today(undefined, timezone);
+  let startOfYear = dateAdapter.today(timezone);
   for (let year = minYear; year <= maxYear; year++) {
     startOfYear = dateAdapter.set(startOfYear, { day: 1, month: 1, year });
     years.push(startOfYear);

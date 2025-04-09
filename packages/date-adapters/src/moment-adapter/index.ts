@@ -445,24 +445,20 @@ export class AdapterMoment implements SaltDateAdapter<Moment, string> {
     dateB: Moment,
     granularity: "day" | "month" | "year" = "day",
   ): boolean {
-    const utcDateA = dateA.clone().utc();
-    const utcDateB = dateB.clone().utc();
-    return utcDateA.isSame(utcDateB, granularity);
+    return dateA.isSame(dateB, granularity);
   }
 
   /**
    * Gets the start of a specified time period for a Moment.js date object.
    * @param date - The Moment.js date object.
    * @param offset - The time period ("day", "week", "month", "year").
-   * @param locale - The locale to use.
    * @returns The Moment.js date object representing the start of the period.
    */
   public startOf(
     date: Moment,
     offset: "day" | "week" | "month" | "year",
-    locale?: string,
   ): Moment {
-    const newDate = date.clone().locale(locale ?? this.locale);
+    const newDate = date.clone().locale(this.locale);
     return newDate.startOf(offset);
   }
 
@@ -470,59 +466,53 @@ export class AdapterMoment implements SaltDateAdapter<Moment, string> {
    * Gets the end of a specified time period for a Moment.js date object.
    * @param date - The Moment.js date object.
    * @param offset - The time period ("day", "week", "month", "year").
-   * @param locale - The locale to use.
    * @returns The Moment.js date object representing the end of the period.
    */
   public endOf(
     date: Moment,
     offset: "day" | "week" | "month" | "year",
-    locale?: string,
   ): Moment {
-    const newDate = date.clone().locale(locale ?? this.locale);
+    const newDate = date.clone().locale(this.locale);
     return newDate.endOf(offset);
   }
 
   /**
    * Gets the current date with the time set to the start of the day.
-   * @param locale - The locale to use.
    * @param timezone - The timezone to use.
    * @returns The current date at the start of the day.
    */
-  public today(locale?: string, timezone: string = "default"): Moment {
+  public today(timezone: string = "default"): Moment {
     let currentMoment = this.moment();
     if (timezone !== "default" && timezone !== "system") {
       currentMoment = currentMoment.tz(timezone);
     }
-    return currentMoment.locale(locale ?? this.locale).startOf("day");
+    return currentMoment.locale(this.locale).startOf("day");
   }
   /**
    * Gets the current date and time.
-   * @param locale - The locale to use.
    * @param timezone - The timezone to use.
    * @returns The current date and time.
    */
-  public now(locale?: string, timezone: Timezone = "default"): Moment {
+  public now(timezone: Timezone = "default"): Moment {
     let currentMoment = this.moment();
     if (timezone !== "default" && timezone !== "system") {
       currentMoment = currentMoment.tz(timezone);
     }
-    return currentMoment.locale(locale ?? this.locale);
+    return currentMoment.locale(this.locale);
   }
 
   /**
    * Gets the name of the day of the week.
    * @param dow - The day of the week as a number (0-6).
    * @param format - The format for the day name ("long", "short", "narrow").
-   * @param locale - The locale to use.
    * @returns The name of the day of the week.
    */
   public getDayOfWeekName(
     dow: number,
     format: "long" | "short" | "narrow",
-    locale?: string,
   ): string {
     const day = this.moment()
-      .locale(locale ?? this.locale)
+      .locale(this.locale)
       .weekday(dow);
     return format === "narrow" ? day.format("dd")[0] : day.format("dddd");
   }

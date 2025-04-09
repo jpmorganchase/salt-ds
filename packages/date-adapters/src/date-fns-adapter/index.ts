@@ -394,19 +394,17 @@ export class AdapterDateFns implements SaltDateAdapter<Date, Locale> {
    * Gets the start of a specified time period for a Date object.
    * @param date - The Date object.
    * @param offset - The time period ("day", "week", "month", "year").
-   * @param locale - The locale to use.
    * @returns The Date object representing the start of the period.
    */
   public startOf(
     date: Date,
     offset: "day" | "week" | "month" | "year",
-    locale?: Locale,
   ): Date {
     switch (offset) {
       case "day":
         return startOfDay(date);
       case "week":
-        return startOfWeek(date, { locale: locale ?? this.locale });
+        return startOfWeek(date, { locale: this.locale });
       case "month":
         return startOfMonth(date);
       case "year":
@@ -420,19 +418,17 @@ export class AdapterDateFns implements SaltDateAdapter<Date, Locale> {
    * Gets the end of a specified time period for a Date object.
    * @param date - The Date object.
    * @param offset - The time period ("day", "week", "month", "year").
-   * @param locale - The locale to use.
    * @returns The Date object representing the end of the period.
    */
   public endOf(
     date: Date,
     offset: "day" | "week" | "month" | "year",
-    locale?: Locale,
   ): Date {
     switch (offset) {
       case "day":
         return endOfDay(date);
       case "week":
-        return endOfWeek(date, { locale: locale ?? this.locale });
+        return endOfWeek(date, { locale: this.locale });
       case "month":
         return endOfMonth(date);
       case "year":
@@ -444,29 +440,26 @@ export class AdapterDateFns implements SaltDateAdapter<Date, Locale> {
 
   /**
    * Gets the current date with the time set to the start of the day.
-   * @param _locale - The locale to use.
    * @returns The current date at the start of the day.
    */
-  public today(_locale?: Locale): Date {
+  public today(): Date {
     return startOfDay(new Date());
   }
 
   /**
    * Gets the current date and time.
-   * @param locale - The locale to use.
    * @returns The current date and time.
    */
-  public now(locale?: Locale): Date {
+  public now(): Date {
     return new Date();
   }
 
   /**
    * Gets the day of the week for a Date object.
    * @param date - The Date object.
-   * @param locale - The locale to use.
    * @returns The day of the week as a number (0-6).
    */
-  public getDayOfWeek(date: Date, locale?: Locale): number {
+  public getDayOfWeek(date: Date): number {
     return getDay(date);
   }
 
@@ -474,19 +467,17 @@ export class AdapterDateFns implements SaltDateAdapter<Date, Locale> {
    * Gets the name of the day of the week.
    * @param dow - The day of the week as a number (0-6).
    * @param format - The format for the day name ("long", "short", "narrow").
-   * @param locale - The locale to use.
    * @returns The name of the day of the week.
    */
   public getDayOfWeekName(
     dow: number,
-    format: "long" | "short" | "narrow",
-    locale: Locale,
+    format: "long" | "short" | "narrow"
   ): string {
     const startOfWeekDate = startOfWeek(new Date(), {
-      locale: locale ?? this.locale,
+      locale: this.locale,
     });
     const targetDate = addDaysFns(startOfWeekDate, dow);
-    return new Intl.DateTimeFormat(locale?.code ?? this.locale?.code, {
+    return new Intl.DateTimeFormat(this.locale?.code, {
       weekday: format,
     }).format(targetDate);
   }

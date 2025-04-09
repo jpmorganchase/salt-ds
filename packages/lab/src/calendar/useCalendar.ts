@@ -431,7 +431,7 @@ export function useCalendar<TDate extends DateFrameworkType>(
     hideOutOfRangeDates,
     locale,
     timezone,
-    defaultVisibleMonth = dateAdapter.today(locale, timezone),
+    defaultVisibleMonth = dateAdapter.today(timezone),
     onSelectionChange,
     onVisibleMonthChange,
     isDayUnselectable = defaultIsDayUnselectable,
@@ -448,15 +448,14 @@ export function useCalendar<TDate extends DateFrameworkType>(
   } = props;
   const { matchedBreakpoints } = useBreakpoint();
 
-  console.log('....', timezone);
   const responsiveNumberOfVisibleMonths =
     resolveResponsiveValue(numberOfVisibleMonths, matchedBreakpoints) ?? 1;
 
   const [visibleMonth, setVisibleMonthState] = useControlled({
     controlled: visibleMonthProp
-      ? dateAdapter.startOf(visibleMonthProp, "month", locale)
+      ? dateAdapter.startOf(visibleMonthProp, "month")
       : undefined,
-    default: dateAdapter.startOf(defaultVisibleMonth, "month", locale),
+    default: dateAdapter.startOf(defaultVisibleMonth, "month"),
     name: "Calendar",
     state: "visibleMonth",
   });
@@ -473,26 +472,26 @@ export function useCalendar<TDate extends DateFrameworkType>(
 
   const isOutsideAllowedMonths = useCallback(
     (date: TDate) => {
-      const startOfMonth = dateAdapter.startOf(date, "month", locale);
-      const endOfMonth = dateAdapter.endOf(date, "month", locale);
+      const startOfMonth = dateAdapter.startOf(date, "month");
+      const endOfMonth = dateAdapter.endOf(date, "month");
       return (
         dateAdapter.compare(endOfMonth, minDate) < 0 ||
         dateAdapter.compare(startOfMonth, maxDate) > 0
       );
     },
-    [dateAdapter, locale, minDate, maxDate],
+    [dateAdapter, minDate, maxDate],
   );
 
   const isOutsideAllowedYears = useCallback(
     (date: TDate) => {
-      const startOfYear = dateAdapter.startOf(date, "year", locale);
-      const endOfYear = dateAdapter.endOf(date, "year", locale);
+      const startOfYear = dateAdapter.startOf(date, "year");
+      const endOfYear = dateAdapter.endOf(date, "year");
       return (
         dateAdapter.compare(endOfYear, minDate) < 0 ||
         dateAdapter.compare(startOfYear, maxDate) > 0
       );
     },
-    [dateAdapter, locale, minDate, maxDate],
+    [dateAdapter, minDate, maxDate],
   );
 
   const isDaySelectable = useCallback(
@@ -529,8 +528,7 @@ export function useCalendar<TDate extends DateFrameworkType>(
       }
       const startInsideDays = dateAdapter.startOf(
         visibleMonth,
-        "month",
-        locale,
+        "month"
       );
 
       if (dateAdapter.compare(date, startInsideDays) < 0) return false;
@@ -538,11 +536,11 @@ export function useCalendar<TDate extends DateFrameworkType>(
       const endVisibleMonth = dateAdapter.add(visibleMonth, {
         months: responsiveNumberOfVisibleMonths - 1,
       });
-      const endInsideDays = dateAdapter.endOf(endVisibleMonth, "month", locale);
+      const endInsideDays = dateAdapter.endOf(endVisibleMonth, "month");
 
       return !(dateAdapter.compare(date, endInsideDays) > 0);
     },
-    [dateAdapter, locale, responsiveNumberOfVisibleMonths, visibleMonth],
+    [dateAdapter, responsiveNumberOfVisibleMonths, visibleMonth],
   );
 
   const getInitialFocusedDate = useCallback(() => {
@@ -578,10 +576,10 @@ export function useCalendar<TDate extends DateFrameworkType>(
     }
     // Defaults
     if (
-      isDaySelectable(dateAdapter.today(locale, timezone)) &&
-      isDayVisible(dateAdapter.today(locale, timezone))
+      isDaySelectable(dateAdapter.today(timezone)) &&
+      isDayVisible(dateAdapter.today(timezone))
     ) {
-      return dateAdapter.today(locale, timezone);
+      return dateAdapter.today(timezone);
     }
     const firstSelectableDate = generateDatesForMonth(
       dateAdapter,
@@ -593,7 +591,6 @@ export function useCalendar<TDate extends DateFrameworkType>(
     return null;
   }, [
     dateAdapter,
-    locale,
     isDaySelectable,
     isDayVisible,
     selectionVariant,
@@ -630,7 +627,7 @@ export function useCalendar<TDate extends DateFrameworkType>(
         isDaySelectable(date) &&
         !isOutsideAllowedDates(date);
       if (shouldTransition) {
-        setVisibleMonth(event, dateAdapter.startOf(date, "month", locale));
+        setVisibleMonth(event, dateAdapter.startOf(date, "month"));
       }
     },
     [

@@ -119,18 +119,6 @@ export type CalendarProps<TDate extends DateFrameworkType> =
 
 const withBaseName = makePrefixer("saltCalendar");
 
-function getDefaultTimezoneDate(selectedDate, defaultSelectedDate, selectionVariant) {
-  if (selectionVariant === "range") {
-    return (
-      selectedDate?.startDate ??
-      selectedDate?.endDate ??
-      defaultSelectedDate?.startDate ??
-      defaultSelectedDate?.endDate
-    );
-  }
-  return selectedDate ?? defaultSelectedDate;
-}
-
 export const Calendar = forwardRef<
   HTMLDivElement,
   CalendarProps<DateFrameworkType>
@@ -170,12 +158,34 @@ export const Calendar = forwardRef<
       ...propsRest
     } = props;
 
-    let timezone;
+    function getDefaultTimezoneDate() {
+      if (selectionVariant === "range") {
+        return (
+          selectedDate?.startDate ??
+          selectedDate?.endDate ??
+          defaultSelectedDate?.startDate ??
+          defaultSelectedDate?.endDate
+        );
+      }
+      return selectedDate ?? defaultSelectedDate;
+    }
+
+    let timezone:Timezone = "default";
     if (timezoneProp) {
       timezone = timezoneProp;
     } else {
-      const defaultTimezoneDate = getDefaultTimezoneDate(selectedDate, defaultSelectedDate, selectionVariant);
-      timezone = defaultTimezoneDate ? dateAdapter.getTimezone(defaultTimezoneDate) : "default";
+      if (selectionVariant === "range") {
+        const defaultRangeTimezoneDate  =
+          selectedDate?.startDate ??
+          selectedDate?.endDate ??
+          defaultSelectedDate?.startDate ??
+          defaultSelectedDate?.endDate
+        ;
+        timezone = defaultRangeTimezoneDate ? dateAdapter.getTimezone(defaultRangeTimezoneDate) : "default"
+      } else if (selectionVariant === "single") {
+        const defaultSingleTimezoneDate = selectedDate ?? defaultSelectedDate;
+        timezone = defaultSingleTimezoneDate ? dateAdapter.getTimezone(defaultSingleTimezoneDate) : "default"
+      }
     }
 
     let startDateOffset: CalendarOffsetProps<TDate>["startDateOffset"];

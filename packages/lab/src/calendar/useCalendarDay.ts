@@ -72,7 +72,7 @@ export function useCalendarDay<TDate extends DateFrameworkType>(
   const { date, month } = props;
   const { dateAdapter } = useLocalization<TDate>();
   const {
-    state: { focusedDate, hideOutOfRangeDates, locale, timezone, calendarFocused },
+    state: { focusedDate, hideOutOfRangeDates, timezone, calendarFocused },
     helpers: {
       isDayUnselectable,
       isDaySelectable,
@@ -119,7 +119,7 @@ export function useCalendarDay<TDate extends DateFrameworkType>(
     focusedDate && dateAdapter.isSame(date, focusedDate, "day") && !outOfRange
       ? 0
       : -1;
-  const today = dateAdapter.isSame(dateAdapter.today(locale, timezone), date, "day");
+  const today = dateAdapter.isSame(dateAdapter.today(timezone), date, "day");
 
   const unselectableReason = isDayUnselectable(date);
   const highlightedReason = isDayHighlighted(date);
