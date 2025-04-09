@@ -9,14 +9,12 @@ import {
   useContext,
   useEffect,
   useRef,
-  useState,
 } from "react";
 import {
   CarouselDispatchContext,
   CarouselStateContext,
 } from "./CarouselContext";
 import carouselSlideCss from "./CarouselSlide.css";
-import { useIntersectionObserver } from "./useIntersectionObserver";
 
 export type CarouselSlideId = string;
 export type CarouselSlideElement = HTMLDivElement;
@@ -73,11 +71,11 @@ export const CarouselSlide = forwardRef<HTMLDivElement, CarouselSlideProps>(
       window: targetWindow,
     });
     const dispatch = useContext(CarouselDispatchContext);
-    const { slides, visibleSlides } = useContext(CarouselStateContext);
+    const { slides, visibleSlides, activeSlideIndex } =
+      useContext(CarouselStateContext);
 
     const slideRef = useRef<HTMLDivElement>(null);
     const headerRef = useRef<HTMLDivElement>(null);
-    const [isVisible, setIsVisible] = useState(false);
     const id = useIdMemo(idProp);
     const announcerId = useId();
     const slideCount = slides.size;
@@ -98,13 +96,6 @@ export const CarouselSlide = forwardRef<HTMLDivElement, CarouselSlideProps>(
       return () => dispatch({ type: "unregister", payload: id });
     }, [dispatch, id]);
 
-    useIntersectionObserver({
-      ref: slideRef,
-      onIntersect: (isVisible) => {
-        setIsVisible(isVisible);
-      },
-    });
-
     const SlideStyles = {
       "--carousel-slide-width":
         visibleSlides > 1
@@ -117,6 +108,8 @@ export const CarouselSlide = forwardRef<HTMLDivElement, CarouselSlideProps>(
     const slideIds = [...slides.keys()];
     const index = slideIds.indexOf(id || slideIds[0]);
     const helperText = `${index + 1} of ${slideCount}`;
+    const isVisible =
+      index >= activeSlideIndex && index < activeSlideIndex + visibleSlides;
 
     return (
       <div
@@ -153,15 +146,7 @@ export const CarouselSlide = forwardRef<HTMLDivElement, CarouselSlideProps>(
               <div ref={headerRef}>{header}</div>
               <div>{children}</div>
             </div>
-            {actions && (
-              <div
-                className={clsx(withBaseName("actions"), {
-                  [withBaseName("visible")]: isVisible,
-                })}
-              >
-                {actions}
-              </div>
-            )}
+            {isVisible && actions}
           </div>
         )}
       </div>
