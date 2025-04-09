@@ -1,4 +1,4 @@
-import { H3, StackLayout, Text } from "@salt-ds/core";
+import { H3, StackLayout, Text, useId } from "@salt-ds/core";
 import {
   Carousel,
   CarouselControls,
@@ -7,6 +7,7 @@ import {
 } from "@salt-ds/lab";
 import clsx from "clsx";
 import type { ReactElement } from "react";
+import { sliderData } from "./exampleData";
 import styles from "./index.module.css";
 
 function renderSlideContent(index: number) {
@@ -34,20 +35,60 @@ const renderMediaPlaceholder = (index: number) => (
 
 export const Appearance = (): ReactElement => {
   return (
-    <Carousel aria-label="Categorical colors">
-      <CarouselControls />
-      <CarouselSlider>
-        {Array.from({ length: 5 }, (_, index) => (
-          <CarouselSlide
-            appearance="bordered"
-            key={`item-${index}`}
-            aria-labelledby={`slide-title-${index}`}
-            media={renderMediaPlaceholder(index)}
-          >
-            {renderSlideContent(index)}
-          </CarouselSlide>
-        ))}
-      </CarouselSlider>
-    </Carousel>
+    <StackLayout direction="row">
+      <Carousel aria-label="Account overview bordered">
+        <CarouselControls />
+        <CarouselSlider>
+          {sliderData.map((slide, index) => {
+            const carousel1SlideId = useId();
+            return (
+              <CarouselSlide
+                appearance="bordered"
+                key={carousel1SlideId}
+                aria-labelledby={`slide-title-${carousel1SlideId}`}
+                media={
+                  <img
+                    alt={`stock content to show in carousel slide ${index}`}
+                    className={clsx(styles.carouselImagePlaceholder)}
+                    src={slide.image}
+                  />
+                }
+                header={
+                  <H3 id={`slide-title-${carousel1SlideId}`}>{slide.title}</H3>
+                }
+              >
+                <Text>{slide.content}</Text>
+              </CarouselSlide>
+            );
+          })}
+        </CarouselSlider>
+      </Carousel>
+      <Carousel aria-label="Account overview">
+        <CarouselControls />
+        <CarouselSlider>
+          {sliderData.map((slide, index) => {
+            const carousel2SlideId = useId();
+            return (
+              <CarouselSlide
+                key={carousel2SlideId}
+                aria-labelledby={`slide-title-${carousel2SlideId}`}
+                media={
+                  <img
+                    alt={`stock content to show in carousel slide ${index}`}
+                    className={clsx(styles.carouselImagePlaceholder)}
+                    src={slide.image}
+                  />
+                }
+                header={
+                  <H3 id={`slide-title-${carousel2SlideId}`}>{slide.title}</H3>
+                }
+              >
+                <Text>{slide.content}</Text>
+              </CarouselSlide>
+            );
+          })}
+        </CarouselSlider>
+      </Carousel>
+    </StackLayout>
   );
 };

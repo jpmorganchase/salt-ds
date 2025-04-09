@@ -1,27 +1,32 @@
-import { H2, H3, StackLayout, Text, useId } from "@salt-ds/core";
-import {
-  Carousel,
-  CarouselControls,
-  CarouselSlide,
-  CarouselSlider,
-} from "@salt-ds/lab";
+import { Button, H3, StackLayout, Text, useId } from "@salt-ds/core";
+import { Carousel, CarouselSlide, CarouselSlider } from "@salt-ds/lab";
 import clsx from "clsx";
-import type { ReactElement } from "react";
+import { type ReactElement, useState } from "react";
 import { sliderData } from "./exampleData";
 import styles from "./index.module.css";
 
-export const ControlsAlignment = (): ReactElement => {
+export const ControlledCarousel = (): ReactElement => {
+  const [slide, setSlide] = useState<number>(0);
   return (
-    <StackLayout gap={1}>
-      <H2 className={styles.carouselHeader}>Account overview</H2>
-      <Carousel aria-label="Account overview" controlsPlacement="bottom">
-        <CarouselControls />
+    <StackLayout>
+      <StackLayout gap={1} direction="row" align="center">
+        <Button onClick={() => setSlide(slide - 1)} disabled={slide === 0}>
+          Left
+        </Button>
+        <Button
+          onClick={() => setSlide(slide + 1)}
+          disabled={slide >= sliderData.length - 1}
+        >
+          Right
+        </Button>
+        <Text>Current slide: {slide + 1}</Text>
+      </StackLayout>
+      <Carousel aria-label="Account overview" activeSlideIndex={slide}>
         <CarouselSlider>
           {sliderData.map((slide, index) => {
             const slideId = useId();
             return (
               <CarouselSlide
-                appearance="bordered"
                 key={slideId}
                 aria-labelledby={`slide-title-${slideId}`}
                 media={

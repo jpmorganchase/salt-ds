@@ -1,4 +1,4 @@
-import { H2, H3, StackLayout, Text } from "@salt-ds/core";
+import { H2, H3, Text, useId } from "@salt-ds/core";
 import {
   Carousel,
   CarouselControls,
@@ -7,47 +7,33 @@ import {
 } from "@salt-ds/lab";
 import clsx from "clsx";
 import type { ReactElement } from "react";
+import { sliderData } from "./exampleData";
 import styles from "./index.module.css";
-
-function renderSlideContent(index: number) {
-  return (
-    <StackLayout gap={1}>
-      <H3 id={`slide-title-${index}`}>
-        Categorical bold background {index + 1}
-      </H3>
-      <Text>
-        Categorical colors are used for data visualization and other components
-        that support categories.
-      </Text>
-    </StackLayout>
-  );
-}
-
-const renderMediaPlaceholder = (index: number) => (
-  <div
-    className={clsx(
-      styles.carouselImagePlaceholder,
-      styles[`carouselImagePlaceholder-${index + 1}`],
-    )}
-  />
-);
 
 export const WithTitle = (): ReactElement => {
   return (
     <Carousel aria-labelledby="carousel-title">
-      <CarouselControls
-        title={<H2 id="carousel-title">Categorical colors</H2>}
-      />
+      <CarouselControls title={<H2 id="carousel-title">Account overview</H2>} />
       <CarouselSlider>
-        {Array.from({ length: 5 }, (_, index) => (
-          <CarouselSlide
-            key={`item-${index}`}
-            aria-labelledby={`slide-title-${index}`}
-            media={renderMediaPlaceholder(index)}
-          >
-            {renderSlideContent(index)}
-          </CarouselSlide>
-        ))}
+        {sliderData.map((slide, index) => {
+          const slideId = useId();
+          return (
+            <CarouselSlide
+              key={slideId}
+              aria-labelledby={`slide-title-${slideId}`}
+              media={
+                <img
+                  alt={`stock content to show in carousel slide ${index}`}
+                  className={clsx(styles.carouselImagePlaceholder)}
+                  src={slide.image}
+                />
+              }
+              header={<H3 id={`slide-title-${slideId}`}>{slide.title}</H3>}
+            >
+              <Text>{slide.content}</Text>
+            </CarouselSlide>
+          );
+        })}
       </CarouselSlider>
     </Carousel>
   );

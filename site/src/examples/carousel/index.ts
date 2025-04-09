@@ -4,4 +4,4 @@ export * from "./Appearance";
 export * from "./WithTitle";
 export * from "./WithSlideActions";
 export * from "./ControlsAlignment";
-// export * from "./ControlledCarousel";
+export * from "./ControlledCarousel";

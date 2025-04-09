@@ -1,25 +1,8 @@
 .carouselImagePlaceholder {
-  height: 100px;
+  height: 250px;
   width: 100%;
+  object-fit: cover;
 }
-
-.carouselImagePlaceholder-1,
-.carouselImagePlaceholder-6 {
-  background-color: var(--salt-category-1-bold-background);
-}
-
-.carouselImagePlaceholder-2,
-.carouselImagePlaceholder-7 {
-  background-color: var(--salt-category-2-bold-background);
-}
-.carouselImagePlaceholder-3,
-.carouselImagePlaceholder-8 {
-  background-color: var(--salt-category-3-bold-background);
-}
-.carouselImagePlaceholder-4,
-.carouselImagePlaceholder-9 {
-  background-color: var(--salt-category-4-bold-background);
-}
-.carouselImagePlaceholder-5 {
-  background-color: var(--salt-category-5-bold-background);
+.carouselHeader {
+  margin: 0;
 }
