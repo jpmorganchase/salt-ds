@@ -376,17 +376,19 @@ export const WithInput: StoryFn<RangeSliderProps> = () => {
     <FormField style={{ maxWidth: "400px", width: "90vw" }}>
       <FormFieldLabel>Range Slider with Input</FormFieldLabel>
       <FlexLayout style={{ width: "100%" }} gap={2}>
-        <span style={accessibleTextStyles} id={minimumInputLabel}>
+        <span aria-hidden style={accessibleTextStyles} id={minimumInputLabel}>
           Minimum
         </span>
         <Input
-          aria-labelledby={minimumInputLabel}
           value={minInputValue}
           onChange={(event: ChangeEvent<HTMLInputElement>) =>
             handleInputChange(event, "min")
           }
           style={{ flex: 1 }}
-          inputProps={{ style: { textAlign: "center" } }}
+          inputProps={{
+            style: { textAlign: "center" },
+            "aria-labelledby": minimumInputLabel,
+          }}
         />
         <RangeSlider
           min={bounds[0]}
@@ -399,17 +401,19 @@ export const WithInput: StoryFn<RangeSliderProps> = () => {
           }}
           style={{ flex: "100%" }}
         />
-        <span style={accessibleTextStyles} id={maximumInputLabel}>
+        <span aria-hidden style={accessibleTextStyles} id={maximumInputLabel}>
           Maximum
         </span>
         <Input
-          aria-labelledby={maximumInputLabel}
           value={maxInputValue}
           onChange={(event: ChangeEvent<HTMLInputElement>) =>
             handleInputChange(event, "max")
           }
           style={{ flex: 1 }}
-          inputProps={{ style: { textAlign: "center" } }}
+          inputProps={{
+            style: { textAlign: "center" },
+            "aria-labelledby": maximumInputLabel,
+          }}
         />
       </FlexLayout>
     </FormField>
@@ -450,17 +454,19 @@ export const WithInputAndInlineLabels: StoryFn<RangeSliderProps> = () => {
     <FormField style={{ maxWidth: "400px", width: "90vw" }}>
       <FormFieldLabel>Range Slider with Input</FormFieldLabel>
       <FlexLayout style={{ width: "100%" }} gap={2}>
-        <span style={accessibleTextStyles} id={minimumInputLabel}>
+        <span aria-hidden style={accessibleTextStyles} id={minimumInputLabel}>
           Minimum
         </span>
         <Input
-          aria-labelledby={minimumInputLabel}
           value={minInputValue}
           onChange={(event: ChangeEvent<HTMLInputElement>) =>
             handleInputChange(event, "min")
           }
           style={{ flex: 1 }}
-          inputProps={{ style: { textAlign: "center" } }}
+          inputProps={{
+            style: { textAlign: "center" },
+            "aria-labelledby": minimumInputLabel,
+          }}
         />
         <RangeSlider
           min={bounds[0]}
@@ -475,17 +481,19 @@ export const WithInputAndInlineLabels: StoryFn<RangeSliderProps> = () => {
           minLabel="-50"
           maxLabel="50"
         />
-        <span style={accessibleTextStyles} id={maximumInputLabel}>
+        <span aria-hidden style={accessibleTextStyles} id={maximumInputLabel}>
           Maximum
         </span>
         <Input
-          aria-labelledby={maximumInputLabel}
           value={maxInputValue}
           onChange={(event: ChangeEvent<HTMLInputElement>) =>
             handleInputChange(event, "max")
           }
           style={{ flex: 1 }}
-          inputProps={{ style: { textAlign: "center" } }}
+          inputProps={{
+            style: { textAlign: "center" },
+            "aria-labelledby": maximumInputLabel,
+          }}
         />
       </FlexLayout>
     </FormField>
@@ -526,14 +534,16 @@ export const WithInputAndMarksAndTicks: StoryFn<RangeSliderProps> = () => {
     <FormField style={{ maxWidth: "400px", width: "90vw" }}>
       <FormFieldLabel>Range Slider with Input</FormFieldLabel>
       <FlexLayout gap={3}>
-        <span style={accessibleTextStyles} id={minimumInputLabel}>
+        <span aria-hidden style={accessibleTextStyles} id={minimumInputLabel}>
           Minimum
         </span>
         <Input
-          aria-labelledby={minimumInputLabel}
           value={minInputValue}
           style={{ flex: 1 }}
-          inputProps={{ style: { textAlign: "center" } }}
+          inputProps={{
+            style: { textAlign: "center" },
+            "aria-labelledby": minimumInputLabel,
+          }}
           onChange={(event: ChangeEvent<HTMLInputElement>) =>
             handleInputChange(event, "min")
           }
@@ -564,14 +574,16 @@ export const WithInputAndMarksAndTicks: StoryFn<RangeSliderProps> = () => {
           ]}
           showTicks
         />
-        <span style={accessibleTextStyles} id={maximumInputLabel}>
+        <span aria-hidden style={accessibleTextStyles} id={maximumInputLabel}>
           Maximum
         </span>
         <Input
-          aria-labelledby={maximumInputLabel}
           value={maxInputValue}
           style={{ flex: 1 }}
-          inputProps={{ style: { textAlign: "center" } }}
+          inputProps={{
+            style: { textAlign: "center" },
+            "aria-labelledby": maximumInputLabel,
+          }}
           onChange={(event: ChangeEvent<HTMLInputElement>) =>
             handleInputChange(event, "max")
           }

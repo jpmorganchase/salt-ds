@@ -91,15 +91,17 @@ const RangeWithInput = () => {
     <FormField style={{ width: "80%" }}>
       <FormFieldLabel>RangeSlider with Input</FormFieldLabel>
       <FlexLayout gap={1} align="center">
-        <span style={accessibleTextStyles} id={minimumInputLabel}>
+        <span aria-hidden style={accessibleTextStyles} id={minimumInputLabel}>
           Minimum
         </span>
         <Input
-          aria-labelledby={minimumInputLabel}
           placeholder={minInputValue}
           value={minInputValue}
           style={{ flex: 1 }}
-          inputProps={{ style: { textAlign: "center" } }}
+          inputProps={{
+            style: { textAlign: "center" },
+            "aria-labelledby": minimumInputLabel,
+          }}
           onChange={handleMinInputChange}
           validationStatus={validationStatus}
         />
@@ -112,15 +114,17 @@ const RangeWithInput = () => {
           value={value}
           onChange={handleSliderChange}
         />
-        <span style={accessibleTextStyles} id={maximumInputLabel}>
+        <span aria-hidden style={accessibleTextStyles} id={maximumInputLabel}>
           Maximum
         </span>
         <Input
-          aria-labelledby={maximumInputLabel}
           placeholder={`${maxInputValue}`}
           value={maxInputValue}
           style={{ flex: 1 }}
-          inputProps={{ style: { textAlign: "center" } }}
+          inputProps={{
+            style: { textAlign: "center" },
+            "aria-labelledby": maximumInputLabel,
+          }}
           onChange={handleMaxInputChange}
           validationStatus={validationStatus}
         />
