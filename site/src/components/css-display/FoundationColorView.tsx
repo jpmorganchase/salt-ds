@@ -1,7 +1,7 @@
 import { SaltProvider, Spinner, Text } from "@salt-ds/core";
 import { useEffect, useState } from "react";
 import { Table } from "../mdx/table";
-import styles from "./AccordionView.module.css";
+import styles from "./FoundationColorView.module.css";
 import { ColorBlock } from "./style-blocks/ColorBlock";
 
 type CssVariableData = Record<string, string>;

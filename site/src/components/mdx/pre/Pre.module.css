@@ -11,6 +11,11 @@
   margin: 0;
 }
 
+:global([data-mode="light"]) .pre pre,
+:global([data-mode="light"]) .pre pre span {
+  background-color: var(--salt-container-secondary-background) !important;
+}
+
 :global([data-mode="dark"]) .pre pre,
 :global([data-mode="dark"]) .pre pre span {
   background-color: var(--shiki-dark-bg) !important;

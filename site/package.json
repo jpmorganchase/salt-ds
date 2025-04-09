@@ -9,17 +9,18 @@
   "style": "dist/index.css",
   "scripts": {
     "clean": "rm -fr public/.tmp .next",
-    "build": "yarn workspace @salt-ds/ag-grid-theme build && next build",
+    "build": "yarn workspace @salt-ds/ag-grid-theme build && yarn gen:tokenMdx && next build",
     "deploy": "yarn mosaic deploy --out snapshots --name latest --config mosaic.config.js",
     "dev": "next dev",
     "start": "next start",
-    "gen:snapshot": "yarn gen:props && yarn gen:css && yarn mosaic build --out snapshots --name latest --config mosaic.config.js",
+    "gen:snapshot": "yarn gen:props && yarn gen:css && yarn gen:tokenMdx && yarn mosaic build --out snapshots --name latest --config mosaic.config.js",
     "serve:snapshot:file": "yarn cross-env MOSAIC_MODE='snapshot-file' concurrently --kill-others 'yarn dev'",
     "serve:snapshot:s3": "yarn cross-env MOSAIC_MODE='snapshot-s3' concurrently --kill-others 'yarn dev'",
     "serve:mosaic": "yarn mosaic serve -c ./mosaic.config.js -p 8080",
     "serve": "concurrently --kill-others 'yarn dev' 'yarn serve:mosaic'",
     "gen:props": "yarn node './propsGen.js'",
-    "gen:css": "yarn node './cssGen.js'"
+    "gen:css": "yarn node './cssGen.mjs'",
+    "gen:tokenMdx": "yarn node 'scripts/generateTokensMdx.mjs'"
   },
   "dependencies": {
     "@jpmorganchase/mosaic-cli": "0.1.0-beta.90",
@@ -39,17 +40,22 @@
     "moment-timezone": "^0.5.46",
     "next": "^14.2.15",
     "next-auth": "^4.24.11",
+    "react-transition-group": "^4.4.5",
+    "remark-gfm": "^4.0.1",
     "shiki": "^3.0.0"
   },
   "devDependencies": {
     "@types/luxon": "^3.4.2",
     "@types/node": "^20.0.0",
     "@types/react": "^18.3.3",
+    "@types/react-transition-group": "^4",
     "concurrently": "^9.0.0",
     "cross-env": "^7.0.3",
     "dotenv-load": "^2.0.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-markdown": "^8.0.7"
+    "react-markdown": "^8.0.7",
+    "remark-mdx": "^3.1.0",
+    "unified": "^11.0.5"
   }
 }
