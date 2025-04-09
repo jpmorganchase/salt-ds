@@ -150,18 +150,16 @@ export class AdapterDateFns implements SaltDateAdapter<Date, Locale> {
    * Returns an empty string when null or undefined date is given.
    * @param date - The Date object to format.
    * @param format - The format string to use.
-   * @param locale - The locale to use for formatting.
    * @returns The formatted date string.
    */
   public format(
     date: Date | null | undefined,
     format: RecommendedFormats = "dd MMM yyyy",
-    locale?: Locale,
   ): string {
     if (this.isValid(date)) {
       const dateFnsFormat = this.mapToDateFnsFormat(format);
       return formatDateFns(date, dateFnsFormat, {
-        locale: locale ?? this.locale,
+        locale: this.locale,
       });
     }
     return "";
@@ -182,17 +180,15 @@ export class AdapterDateFns implements SaltDateAdapter<Date, Locale> {
    * Parses a date string using the specified format.
    * @param value - The date string to parse.
    * @param format - The format string to use.
-   * @param locale - The locale to use for parsing.
    * @returns A DateDetail object containing the parsed date and any errors.
    */
   public parse(
     value: string,
-    format: string,
-    locale?: Locale,
+    format: string
   ): ParserResult<Date> {
     const dateFnsFormat = this.mapToDateFnsFormat(format);
     const parsedDate = parseDateFns(value, dateFnsFormat, new Date(), {
-      locale: locale ?? this.locale,
+      locale: this.locale,
     });
     if (isValidDateFns(parsedDate)) {
       return {

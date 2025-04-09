@@ -34,11 +34,6 @@ export interface CalendarBaseProps extends ComponentPropsWithoutRef<"div"> {
    */
   hideOutOfRangeDates?: boolean;
   /**
-   * Locale for date formatting
-   */
-  // biome-ignore lint/suspicious/noExplicitAny: locale is date framework dependent
-  locale?: any;
-  /**
    * Number of visible months, maximum 12, defaults to 1
    */
   numberOfVisibleMonths?: ResponsiveProp<
@@ -147,7 +142,6 @@ export const Calendar = forwardRef<
       isDayUnselectable,
       isDayHighlighted,
       isDayDisabled,
-      locale,
       minDate,
       maxDate,
       numberOfVisibleMonths = 1,
@@ -208,7 +202,6 @@ export const Calendar = forwardRef<
       isDayUnselectable,
       isDayHighlighted,
       isDayDisabled,
-      locale,
       minDate,
       maxDate,
       numberOfVisibleMonths,
@@ -224,7 +217,6 @@ export const Calendar = forwardRef<
     const calendarLabel = dateAdapter.format(
       state.visibleMonth,
       "MMMM YYYY",
-      locale,
     );
 
     return (

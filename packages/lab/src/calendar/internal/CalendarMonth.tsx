@@ -58,7 +58,6 @@ export const CalendarMonth = forwardRef<
   });
 
   const {
-    state: { locale },
     helpers: { setHoveredDate }
   } = useCalendarContext<TDate>();
   const days = generateVisibleDays<TDate>(dateAdapter, date);
@@ -78,7 +77,7 @@ export const CalendarMonth = forwardRef<
         {days.map((day) => {
           return (
             <CalendarDay
-              key={dateAdapter.format(day.date, "DD MMM YYYY", locale)}
+              key={dateAdapter.format(day.date, "DD MMM YYYY")}
               day={day.date}
               renderDayContents={renderDayContents}
               month={date}

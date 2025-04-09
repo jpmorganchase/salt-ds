@@ -128,7 +128,7 @@ function generateYearsBetweenRange<TDate extends DateFrameworkType>(
 
 function useCalendarNavigation<TDate extends DateFrameworkType>() {
   const {
-    state: { visibleMonth, locale, timezone, minDate, maxDate },
+    state: { visibleMonth, timezone, minDate, maxDate },
     helpers: { setVisibleMonth, isDayVisible, isOutsideAllowedMonths },
   } = useCalendarContext<TDate>();
 
@@ -211,7 +211,6 @@ function useCalendarNavigation<TDate extends DateFrameworkType>() {
       moveToPreviousMonth,
       moveToMonth,
       visibleMonth,
-      locale,
       months,
       years,
       canNavigateNext,
@@ -221,7 +220,6 @@ function useCalendarNavigation<TDate extends DateFrameworkType>() {
       isOutsideAllowedMonths,
     }),
     [
-      locale,
       months,
       moveToPreviousMonth,
       moveToNextMonth,
@@ -292,7 +290,6 @@ export const CalendarNavigation = forwardRef<
     const { NextIcon, PreviousIcon } = useIcon();
 
     const {
-      locale,
       moveToPreviousMonth,
       moveToNextMonth,
       moveToMonth,
@@ -343,13 +340,13 @@ export const CalendarNavigation = forwardRef<
     const formatMonth = useCallback(
       (date?: TDate) => {
         if (date && formatMonthProp) {
-          return dateAdapter.format(date, formatMonthProp, locale);
+          return dateAdapter.format(date, formatMonthProp);
         }
         return date
           ? dateAdapter.format(date, hideYearDropdown ? "MMMM" : "MMM")
           : "";
       },
-      [dateAdapter, formatMonthProp, hideYearDropdown, locale],
+      [dateAdapter, formatMonthProp, hideYearDropdown],
     );
 
     const formatYear = useCallback(

@@ -43,9 +43,6 @@ export const CalendarMonthHeader = forwardRef<
       ...rest
     } = props;
     const { dateAdapter } = useLocalization<TDate>();
-    const {
-      state: { locale },
-    } = useCalendarContext<TDate>();
 
     const targetWindow = useWindow();
     useComponentCssInjection({
@@ -56,9 +53,9 @@ export const CalendarMonthHeader = forwardRef<
 
     const formatMonth = useCallback(
       (date?: TDate) => {
-        return dateAdapter.format(date, formatMonthProp, locale);
+        return dateAdapter.format(date, formatMonthProp);
       },
-      [dateAdapter, formatMonthProp, locale],
+      [dateAdapter, formatMonthProp],
     );
 
     return (
