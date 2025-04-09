@@ -7,12 +7,14 @@ export {
   Accordion,
   AccordionHeader,
   AccordionPanel,
+  SaltProvider,
 } from "@salt-ds/core";
 
 export * from "./app-header";
 export * from "./callout";
-
+export * from "./css-display";
 export * from "./components";
+export * from "./copy-to-clipboard";
 export * from "./country-symbol-preview";
 export * from "./diagrams";
 export * from "./guidance-callout";
