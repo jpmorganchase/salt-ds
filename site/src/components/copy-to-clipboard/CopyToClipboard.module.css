@@ -1,0 +1,7 @@
+.fixedNotification {
+  position: fixed;
+  top: calc(10 * var(--salt-spacing-100));
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: fit-content;
+}

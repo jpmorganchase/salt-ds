@@ -3552,6 +3552,7 @@ __metadata:
     "@types/luxon": "npm:^3.4.2"
     "@types/node": "npm:^20.0.0"
     "@types/react": "npm:^18.3.3"
+    "@types/react-transition-group": "npm:^4"
     concurrently: "npm:^9.0.0"
     cross-env: "npm:^7.0.3"
     date-fns: "npm:^3.6.0"
@@ -3566,7 +3567,11 @@ __metadata:
     react: "npm:^18.3.1"
     react-dom: "npm:^18.3.1"
     react-markdown: "npm:^8.0.7"
+    react-transition-group: "npm:^4.4.5"
+    remark-gfm: "npm:^4.0.1"
+    remark-mdx: "npm:^3.1.0"
     shiki: "npm:^3.0.0"
+    unified: "npm:^11.0.5"
   languageName: unknown
   linkType: soft
 
@@ -5719,6 +5724,15 @@ __metadata:
   dependencies:
     "@types/react": "npm:*"
   checksum: 10/eccb09106d04f0a1139dea81f8103a1d47d9d96be9ad7bac7a0e9ffd7eb8bee5388a9af9471763110c38cbedab825eec6146aefd2b30f5b98f84572a6f81b7ca
+  languageName: node
+  linkType: hard
+
+"@types/react-transition-group@npm:^4":
+  version: 4.4.12
+  resolution: "@types/react-transition-group@npm:4.4.12"
+  peerDependencies:
+    "@types/react": "*"
+  checksum: 10/ea14bc84f529a3887f9954b753843820ac8a3c49fcdfec7840657ecc6a8800aad98afdbe4b973eb96c7252286bde38476fcf64b1c09527354a9a9366e516d9a2
   languageName: node
   linkType: hard
 
@@ -14897,6 +14911,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"remark-gfm@npm:^4.0.1":
+  version: 4.0.1
+  resolution: "remark-gfm@npm:4.0.1"
+  dependencies:
+    "@types/mdast": "npm:^4.0.0"
+    mdast-util-gfm: "npm:^3.0.0"
+    micromark-extension-gfm: "npm:^3.0.0"
+    remark-parse: "npm:^11.0.0"
+    remark-stringify: "npm:^11.0.0"
+    unified: "npm:^11.0.0"
+  checksum: 10/86899862cf4ae1466664d3f88c6113e30b5e84e35480aef4093890aed2297ab9872506ff1f614c63963bba7d075c326d0027a1591c11bb493f6776dad21b95f6
+  languageName: node
+  linkType: hard
+
 "remark-mdx@npm:^3.0.0":
   version: 3.0.1
   resolution: "remark-mdx@npm:3.0.1"
@@ -14904,6 +14932,16 @@ __metadata:
     mdast-util-mdx: "npm:^3.0.0"
     micromark-extension-mdxjs: "npm:^3.0.0"
   checksum: 10/aa1d9b8baf62c98d973ff3538402378ee47eef0e7adb10123421b4fde7e187b9c5820f72a11846193b6fe43983221e1078d97ed9cebbcde0938e55cb159d5455
+  languageName: node
+  linkType: hard
+
+"remark-mdx@npm:^3.1.0":
+  version: 3.1.0
+  resolution: "remark-mdx@npm:3.1.0"
+  dependencies:
+    mdast-util-mdx: "npm:^3.0.0"
+    micromark-extension-mdxjs: "npm:^3.0.0"
+  checksum: 10/9a0a1ba9433f0a9a13ec6b9b185244cb431d3205cc0034ff474b60a13b76095870b8cb6a466cfacf35199ee98e92413fec86fbeb75de3ec3d7bb8f486efc7484
   languageName: node
   linkType: hard
 
@@ -16901,6 +16939,21 @@ __metadata:
     trough: "npm:^2.0.0"
     vfile: "npm:^6.0.0"
   checksum: 10/425f0618d6f5e5d2ae64ec206cb6fd11f4b86fec7a785cfe2fc3a334191a91bf837eecb32858c70bcc2c08e76ce9d6a38457319f70f77399c8f496fb8e486817
+  languageName: node
+  linkType: hard
+
+"unified@npm:^11.0.5":
+  version: 11.0.5
+  resolution: "unified@npm:11.0.5"
+  dependencies:
+    "@types/unist": "npm:^3.0.0"
+    bail: "npm:^2.0.0"
+    devlop: "npm:^1.0.0"
+    extend: "npm:^3.0.0"
+    is-plain-obj: "npm:^4.0.0"
+    trough: "npm:^2.0.0"
+    vfile: "npm:^6.0.0"
+  checksum: 10/d9e6e88900a075f391b6bbf06f34062d41fa6257798110d1647753cfc2c6a6e2c1d016434e8ee35706c50485f9fb9ae4707a6a4790bd8dc461ec7e7315ed908b
   languageName: node
   linkType: hard
 
