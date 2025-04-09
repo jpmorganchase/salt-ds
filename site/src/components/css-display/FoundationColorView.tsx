@@ -1,7 +1,14 @@
-import { SaltProvider, Spinner, Text } from "@salt-ds/core";
+import {
+  FlexLayout,
+  SaltProvider,
+  Spinner,
+  StackLayout,
+  Text,
+} from "@salt-ds/core";
 import { useEffect, useState } from "react";
+import { CopyToClipboard } from "../copy-to-clipboard";
 import { Table } from "../mdx/table";
-import styles from "./AccordionView.module.css";
+import styles from "./FoundationColorView.module.css";
 import { ColorBlock } from "./style-blocks/ColorBlock";
 
 type CssVariableData = Record<string, string>;
@@ -47,8 +54,7 @@ const ColorTable = ({ data }: { data: CssVariableData }) => {
       <thead>
         <tr>
           <th className={styles.viewColumn}>Preview</th>
-          <th>Name</th>
-          <th>Value</th>
+          <th>Name / Value</th>
         </tr>
       </thead>
       <tbody>
@@ -60,10 +66,13 @@ const ColorTable = ({ data }: { data: CssVariableData }) => {
               </SaltProvider>
             </td>
             <td>
-              <Text styleAs="code">{name}</Text>
-            </td>
-            <td>
-              <Text styleAs="code">{value}</Text>
+              <StackLayout gap={0}>
+                <FlexLayout gap={0}>
+                  <CopyToClipboard value={name} />
+                  {/* <Text styleAs="code">{name}</Text> */}
+                </FlexLayout>
+                <Text styleAs="code">{value}</Text>
+              </StackLayout>
             </td>
           </tr>
         ))}
