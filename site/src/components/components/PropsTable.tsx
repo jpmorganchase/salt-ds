@@ -1,6 +1,7 @@
 import dynamic from "next/dynamic";
 import { type FC, useEffect, useState } from "react";
 import { Table } from "../mdx/table";
+import { Code } from "../mdx/code";
 
 const Markdown = dynamic(import("../markdown/Markdown"));
 
@@ -86,13 +87,13 @@ export const PropsTable: FC<PropsTableType> = ({
               <tr key={name}>
                 <td>{name}</td>
                 <td>
-                  <code>{type.name}</code>
+                  <Code>{type.name}</Code>
                 </td>
                 <td>
                   <Markdown>{description}</Markdown>
                 </td>
                 <td>
-                  <code>{defaultValue ? defaultValue.value : "-"}</code>
+                  <Code>{defaultValue ? defaultValue.value : "-"}</Code>
                 </td>
               </tr>
             ),
