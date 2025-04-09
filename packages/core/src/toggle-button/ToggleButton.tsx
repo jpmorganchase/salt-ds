@@ -8,6 +8,7 @@ import {
   forwardRef,
   useRef,
 } from "react";
+import type { ButtonAppearance, ButtonSentiment } from "../button";
 import { useToggleButtonGroup } from "../toggle-button-group";
 import { makePrefixer, useControlled, useForkRef } from "../utils";
 
@@ -17,6 +18,8 @@ export interface ToggleButtonProps extends ComponentPropsWithoutRef<"button"> {
   selected?: boolean;
   onChange?: (event: MouseEvent<HTMLButtonElement>) => void;
   value: string | ReadonlyArray<string> | number | undefined;
+  sentiment?: ButtonSentiment;
+  appearance?: Extract<ButtonAppearance, "bordered" | "solid">;
 }
 
 const withBaseName = makePrefixer("saltToggleButton");
@@ -24,6 +27,7 @@ const withBaseName = makePrefixer("saltToggleButton");
 export const ToggleButton = forwardRef<HTMLButtonElement, ToggleButtonProps>(
   function ToggleButton(props, ref) {
     const {
+      appearance = "solid",
       children,
       className,
       disabled: disabledProp,
@@ -32,6 +36,7 @@ export const ToggleButton = forwardRef<HTMLButtonElement, ToggleButtonProps>(
       onFocus,
       onChange,
       selected: selectedProp,
+      sentiment = "neutral",
       ...rest
     } = props;
 
@@ -81,7 +86,12 @@ export const ToggleButton = forwardRef<HTMLButtonElement, ToggleButtonProps>(
         aria-pressed={!toggleButtonGroup ? ariaChecked : undefined}
         aria-checked={toggleButtonGroup ? ariaChecked : undefined}
         role={toggleButtonGroup ? "radio" : undefined}
-        className={clsx(withBaseName(), className)}
+        className={clsx(
+          withBaseName(),
+          withBaseName(sentiment),
+          withBaseName(appearance),
+          className,
+        )}
         disabled={disabled}
         ref={handleRef}
         onClick={handleClick}
