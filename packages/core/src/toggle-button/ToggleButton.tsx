@@ -68,6 +68,9 @@ export const ToggleButton = forwardRef<HTMLButtonElement, ToggleButtonProps>(
     });
 
     const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
+      if (disabled) {
+        return;
+      }
       toggleButtonGroup?.select(event);
       setSelected(!selected);
       onChange?.(event);
@@ -79,12 +82,10 @@ export const ToggleButton = forwardRef<HTMLButtonElement, ToggleButtonProps>(
       onFocus?.(event);
     };
 
-    const ariaChecked = selected && !disabled;
-
     return (
       <button
-        aria-pressed={!toggleButtonGroup ? ariaChecked : undefined}
-        aria-checked={toggleButtonGroup ? ariaChecked : undefined}
+        aria-pressed={!toggleButtonGroup ? selected : undefined}
+        aria-checked={toggleButtonGroup ? selected : undefined}
         role={toggleButtonGroup ? "radio" : undefined}
         className={clsx(
           withBaseName(),
@@ -92,11 +93,11 @@ export const ToggleButton = forwardRef<HTMLButtonElement, ToggleButtonProps>(
           withBaseName(appearance),
           className,
         )}
-        disabled={disabled}
+        aria-disabled={disabled}
         ref={handleRef}
         onClick={handleClick}
         onFocus={handleFocus}
-        tabIndex={focusable && !disabled ? 0 : -1}
+        tabIndex={focusable ? 0 : -1}
         value={value}
         type="button"
         {...rest}

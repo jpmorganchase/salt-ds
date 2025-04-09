@@ -34,3 +34,24 @@ export const Disabled: StoryFn<typeof ToggleButton> = (args) => (
 Disabled.args = {
   disabled: true,
 };
+
+export const DisabledSelected: StoryFn<typeof ToggleButton> = (args) => (
+  <ToggleButton {...args}>
+    <HomeIcon aria-hidden /> Home
+  </ToggleButton>
+);
+
+DisabledSelected.args = {
+  disabled: true,
+  selected: true,
+};
+
+export const Sentiment: StoryFn<typeof ToggleButton> = (args) => (
+  <ToggleButton {...args}>
+    <HomeIcon aria-hidden /> Home
+  </ToggleButton>
+);
+
+Sentiment.args = {
+  sentiment: "accented",
+};
