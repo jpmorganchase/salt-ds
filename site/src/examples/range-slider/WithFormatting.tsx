@@ -3,7 +3,7 @@ import type { ReactElement } from "react";
 
 export const WithFormatting = (): ReactElement => (
   <RangeSlider
-    aria-label="with formatting"
+    aria-label="With formatting"
     style={{ width: "80%" }}
     minLabel="€0"
     maxLabel="€100"

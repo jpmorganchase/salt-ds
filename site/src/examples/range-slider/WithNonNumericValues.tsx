@@ -33,7 +33,7 @@ export const WithNonNumericValues = (): ReactElement => {
 
   return (
     <RangeSlider
-      aria-label="with non-numeric values"
+      aria-label="With non-numeric values"
       style={{ width: "80%" }}
       min={1}
       max={7}

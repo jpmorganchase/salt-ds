@@ -2,7 +2,7 @@ import { Slider } from "@salt-ds/lab";
 
 export const WithHiddenTooltip = () => (
   <Slider
-    aria-label="with hidden tooltip"
+    aria-label="With hidden tooltip"
     min={0}
     max={50}
     defaultValue={30}
