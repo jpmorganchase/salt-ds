@@ -288,13 +288,11 @@ export interface SaltDateAdapter<
    *
    * @param date - The date object.
    * @param granularity - The time period ("day", "week", "month", "year").
-   * @param locale - The locale to use.
    * @returns The date object representing the start of the period.
    */
   startOf(
     date: TDate,
-    granularity: "day" | "week" | "month" | "year",
-    locale?: TLocale,
+    granularity: "day" | "week" | "month" | "year"
   ): TDate;
 
   /**
@@ -302,40 +300,36 @@ export interface SaltDateAdapter<
    *
    * @param date - The date object.
    * @param granularity - The time period ("day", "week", "month", "year").
-   * @param locale - The locale to use.
    * @returns The date object representing the end of the period.
    */
   endOf(
     date: TDate,
-    granularity: "day" | "week" | "month" | "year",
-    locale?: TLocale,
+    granularity: "day" | "week" | "month" | "year"
   ): TDate;
 
   /**
    * Gets the current date with the time set to the start of the day.
    *
-   * @param locale - The locale to use.
    * @param timezone - The timezone to use.
    * @returns The current date at the start of the day.
    */
-  today(locale?: TLocale, timezone?: Timezone): TDate;
+  today(timezone?: Timezone): TDate;
 
   /**
    * Gets the current date and time.
    *
-   * @param locale - The locale to use.
+   * @param timezone - The timezone to use.
    * @returns The current date and time.
    */
-  now(locale?: TLocale): TDate;
+  now(timezone?: Timezone): TDate;
 
   /**
    * Gets the day of the week for a date object.
    *
    * @param date - The date object.
-   * @param locale - The locale to use.
    * @returns The day of the week as a number (0-6).
    */
-  getDayOfWeek(date: TDate, locale?: TLocale): number;
+  getDayOfWeek(date: TDate): number;
 
   /**
    * Gets the day of the month for a date object.
@@ -386,14 +380,11 @@ export interface SaltDateAdapter<
    *
    * @param dow - The day of the week as a number (0-6).
    * @param format - The format for the day name ("long", "short", "narrow").
-   * @param locale - The locale to use.
    * @returns The name of the day of the week.
    */
   getDayOfWeekName(
     dow: number,
     format: "long" | "short" | "narrow",
-    // biome-ignore lint/suspicious/noExplicitAny: locale is date framework dependent
-    locale?: any,
   ): string;
 
   /**

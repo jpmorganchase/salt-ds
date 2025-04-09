@@ -91,7 +91,7 @@ export const DatePickerRangeGridPanel = forwardRef(
       state: {
         timezone,
         selectedDate = null,
-        minDate = dateAdapter.startOf(dateAdapter.today(undefined, timezone), "month"),
+        minDate = dateAdapter.startOf(dateAdapter.today(timezone), "month"),
         maxDate = dateAdapter.add(minDate, { months: 1 }),
       },
       helpers: { select, isDayDisabled, isDayHighlighted, isDayUnselectable },
@@ -109,7 +109,7 @@ export const DatePickerRangeGridPanel = forwardRef(
       const validDate: TDate =
         selectedDate?.startDate && dateAdapter.isValid(selectedDate.startDate)
           ? selectedDate.startDate
-          : dateAdapter.today(undefined, timezone);
+          : dateAdapter.today(timezone);
 
       // Ensure that defaultVisibleMonth is used if provided, otherwise use the start of the valid date
       return defaultVisibleMonth || dateAdapter.startOf(validDate, "month");

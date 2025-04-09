@@ -100,6 +100,7 @@ export interface DateInputSingleProps<TDate extends DateFrameworkType>
   inputRef?: Ref<HTMLInputElement>;
   /**
    * Locale for date formatting and parsing
+   * Overrides any locale
    */
   // biome-ignore lint/suspicious/noExplicitAny: locale is date framework dependent
   locale?: any;

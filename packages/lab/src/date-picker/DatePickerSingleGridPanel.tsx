@@ -143,7 +143,7 @@ export const DatePickerSingleGridPanel = forwardRef(
       state: {
         timezone,
         selectedDate = null,
-        minDate = dateAdapter.startOf(dateAdapter.today(undefined, timezone), "month"),
+        minDate = dateAdapter.startOf(dateAdapter.today(timezone), "month"),
         maxDate = dateAdapter.add(minDate, { months: 1 }),
       },
       helpers: { select, isDayDisabled, isDayHighlighted, isDayUnselectable },
@@ -160,7 +160,7 @@ export const DatePickerSingleGridPanel = forwardRef(
     const [uncontrolledDefaultVisibleMonth] = useState(() => {
       const validDate = dateAdapter.isValid(selectedDate)
         ? selectedDate
-        : dateAdapter.today(undefined, timezone);
+        : dateAdapter.today(timezone);
       return defaultVisibleMonth || dateAdapter.startOf(validDate, "month");
     });
     const [visibleMonth, setVisibleMonth] = useControlled({

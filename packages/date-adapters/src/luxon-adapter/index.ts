@@ -402,25 +402,20 @@ export class AdapterLuxon implements SaltDateAdapter<DateTime, string> {
     dateB: DateTime,
     granularity: "day" | "month" | "year" = "day",
   ): boolean {
-    const dateAUTC = dateA.toUTC();
-    const dateBUTC = dateB.toUTC();
-    return dateAUTC.hasSame(dateBUTC, granularity);
+    return dateA.hasSame(dateB, granularity);
   }
 
   /**
    * Gets the start of a specified time period for a Luxon DateTime object.
    * @param date - The Luxon DateTime object.
    * @param offset - The time period ("day", "week", "month", "year").
-   * @param locale - The locale to use.
    * @returns The Luxon DateTime object representing the start of the period.
    */
   public startOf(
     date: DateTime,
-    offset: "day" | "week" | "month" | "year",
-    locale?: string,
+    offset: "day" | "week" | "month" | "year"
   ): DateTime {
-    const currentLocale = locale ?? this.locale;
-    const localizedDate = date.setLocale(currentLocale);
+    const localizedDate = date.setLocale(this.locale);
     return localizedDate.startOf(offset, { useLocaleWeeks: true });
   }
 
@@ -428,57 +423,48 @@ export class AdapterLuxon implements SaltDateAdapter<DateTime, string> {
    * Gets the end of a specified time period for a Day.js date object.
    * @param date - The Day.js date object.
    * @param offset - The time period ("day", "week", "month", "year").
-   * @param locale - The locale to use.
    * @returns The Day.js date object representing the end of the period.
    */
   public endOf(
     date: DateTime,
-    offset: "day" | "week" | "month" | "year",
-    locale?: string,
+    offset: "day" | "week" | "month" | "year"
   ): DateTime {
-    const currentLocale = locale ?? this.locale;
-    const localizedDate = date.setLocale(currentLocale);
+    const localizedDate = date.setLocale(this.locale);
     return localizedDate.endOf(offset, { useLocaleWeeks: true });
   }
 
   /**
    * Gets the current date with the time set to the start of the day.
-   * @param locale - The locale to use.
    * @param timezone - Timezone, defaults to library "default"
    * @returns The current date at the start of the day.
    */
-  public today(locale?: string, timezone: Timezone = "default"): DateTime {
-    const currentLocale = locale ?? this.locale;
+  public today(timezone: Timezone = "default"): DateTime {
     const currentDate = DateTime.local().setZone(timezone);
-    const localizedDate = currentDate.setLocale(currentLocale);
+    const localizedDate = currentDate.setLocale(this.locale);
     return localizedDate.startOf("day");
   }
 
   /**
    * Gets the current date and time.
-   * @param locale - The locale to use.
    * @param timezone - Timezone, defaults to library "default"
    * @returns The current date and time.
    */
-  public now(locale?: string, timezone: Timezone = "default"): DateTime {
-    const currentLocale = locale ?? this.locale;
+  public now(timezone: Timezone = "default"): DateTime {
     const currentDate = DateTime.local().setZone(timezone);
-    return currentDate.setLocale(currentLocale);
+    return currentDate.setLocale(this.locale);
   }
 
   /**
    * Gets the name of the day of the week.
    * @param dow - The day of the week as a number (0-6).
    * @param format - The format for the day name ("long", "short", "narrow").
-   * @param locale - The locale to use.
    * @returns The name of the day of the week.
    */
   public getDayOfWeekName(
     dow: number,
     format: "long" | "short" | "narrow",
-    locale?: string,
   ): string {
-    const referenceDate = DateTime.local().setLocale(locale ?? this.locale);
+    const referenceDate = DateTime.local().setLocale(this.locale);
     const startOfWeek = referenceDate.startOf("week", { useLocaleWeeks: true });
     const targetDate = startOfWeek.plus({ days: dow });
     return targetDate.toLocaleString({ weekday: format });

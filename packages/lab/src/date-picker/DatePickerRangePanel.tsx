@@ -147,7 +147,7 @@ export interface DatePickerRangePanelProps<TDate extends DateFrameworkType>
 function getFallbackVisibleMonths<TDate extends DateFrameworkType>(
   dateAdapter: SaltDateAdapter<TDate>,
   selectedDate: DateRangeSelection<TDate> | null,
-  timezone: Timezone
+  timezone: Timezone = "default"
 ) {
   function createConsecutiveRange(date: TDate) {
     const startDate = dateAdapter.startOf(date, "month");
@@ -168,7 +168,7 @@ function getFallbackVisibleMonths<TDate extends DateFrameworkType>(
     return createConsecutiveRange(startDate);
   }
 
-  const currentMonth = dateAdapter.startOf(dateAdapter.today(undefined, timezone), "month");
+  const currentMonth = dateAdapter.startOf(dateAdapter.today(timezone), "month");
   return [currentMonth, dateAdapter.add(currentMonth, { months: 1 })];
 }
 
@@ -209,7 +209,7 @@ export const DatePickerRangePanel = forwardRef(function DatePickerRangePanel<
     state: {
       timezone,
       selectedDate,
-      minDate = dateAdapter.startOf(dateAdapter.today(undefined, timezone), "month"),
+      minDate = dateAdapter.startOf(dateAdapter.today(timezone), "month"),
       maxDate = dateAdapter.add(minDate, { months: 1 }),
     },
     helpers: { select, isDayDisabled, isDayHighlighted, isDayUnselectable },

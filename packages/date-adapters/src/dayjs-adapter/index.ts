@@ -479,16 +479,13 @@ export class AdapterDayjs implements SaltDateAdapter<Dayjs, string> {
    * Gets the start of a specified time period for a Day.js date object.
    * @param date - The Day.js date object.
    * @param offset - The time period ("day", "week", "month", "year").
-   * @param locale - The locale to use.
    * @returns The Day.js date object representing the start of the period.
    */
   public startOf(
     date: Dayjs,
     offset: "day" | "week" | "month" | "year",
-    locale?: string,
   ): Dayjs {
-    const currentLocale = locale ?? this.locale;
-    const localizedDate = date.locale(currentLocale);
+    const localizedDate = date.locale(this.locale);
     const startOfDate = localizedDate.startOf(offset);
     return this.adjustOffset(startOfDate);
   }
@@ -497,70 +494,60 @@ export class AdapterDayjs implements SaltDateAdapter<Dayjs, string> {
    * Gets the end of a specified time period for a Day.js date object.
    * @param date - The Day.js date object.
    * @param offset - The time period ("day", "week", "month", "year").
-   * @param locale - The locale to use.
    * @returns The Day.js date object representing the end of the period.
    */
   public endOf(
     date: Dayjs,
     offset: "day" | "week" | "month" | "year",
-    locale?: string,
   ): Dayjs {
-    const currentLocale = locale ?? this.locale;
-    const localizedDate = date.locale(currentLocale);
+    const localizedDate = date.locale(this.locale);
     const endOfDate = localizedDate.endOf(offset);
     return this.adjustOffset(endOfDate);
   }
 
   /**
    * Gets the current date with the time set to the start of the day.
-   * @param locale - The locale to use.
    * @param timezone - Timezone, defaults to library "default"
    * @returns The current date at the start of the day.
    */
-  public today(locale?: string, timezone: Timezone = "default"): Dayjs {
-    const currentLocale = locale ?? this.locale;
+  public today(timezone: Timezone = "default"): Dayjs {
     const currentDate = this.dayjs().tz(this.resolveTimezone(timezone));
-    const localizedDate = currentDate.locale(currentLocale);
+    const localizedDate = currentDate.locale(this.locale);
     const startOfDay = localizedDate.startOf("day");
     return this.adjustOffset(startOfDay);
   }
 
   /**
    * Gets the current date and time.
-   * @param locale - The locale to use.
    * @param timezone - Timezone, defaults to library "default"
    * @returns The current date and time.
    */
-  public now(locale?: string, timezone: Timezone = "default"): Dayjs {
-    const currentLocale = locale ?? this.locale;
+  public now(timezone: Timezone = "default"): Dayjs {
     const currentDate = this.dayjs().tz(this.resolveTimezone(timezone));
-    return currentDate.locale(currentLocale);
+    return currentDate.locale(this.locale);
   }
 
   /**
    * Gets the day of the week for a Day.js date object.
    * @param date - The Day.js date object.
-   * @param locale - The locale to use.
    * @returns The day of the week as a number (0-6).
    */
-  public getDayOfWeek(date: Dayjs, locale?: string): number {
-    return date.locale(locale ?? this.locale).day();
+  public getDayOfWeek(date: Dayjs): number {
+    return date.day();
   }
 
   /**
    * Gets the name of the day of the week.
    * @param dow - The day of the week as a number (0-6).
    * @param format - The format for the day name ("long", "short", "narrow").
-   * @param locale - The locale to use
    * @returns The name of the day of the week.
    */
   public getDayOfWeekName(
     dow: number,
     format: "long" | "short" | "narrow",
-    locale?: string,
   ): string {
     const date = this.dayjs()
-      .locale(locale ?? this.locale)
+      .locale(this.locale)
       .weekday(dow);
     const formatString =
       format === "long" ? "dddd" : format === "short" ? "ddd" : "dd";

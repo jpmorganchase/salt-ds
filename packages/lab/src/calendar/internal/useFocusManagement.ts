@@ -14,7 +14,6 @@ export function useFocusManagement<TDate extends DateFrameworkType>({
 }) {
   const { dateAdapter } = useLocalization<TDate>();
   const {
-    state: { locale },
     helpers: { setFocusedDate },
   } = useCalendarContext<TDate>();
   const handleClick: MouseEventHandler<HTMLButtonElement> = (event) => {
@@ -37,10 +36,10 @@ export function useFocusManagement<TDate extends DateFrameworkType>({
         newDate = dateAdapter.add(date, { days: 1 });
         break;
       case "Home":
-        newDate = dateAdapter.startOf(date, "week", locale);
+        newDate = dateAdapter.startOf(date, "week");
         break;
       case "End":
-        newDate = dateAdapter.endOf(date, "week", locale);
+        newDate = dateAdapter.endOf(date, "week");
         break;
       case "PageUp":
         if (event.shiftKey) {

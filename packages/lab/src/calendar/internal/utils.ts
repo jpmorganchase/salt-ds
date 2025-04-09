@@ -5,12 +5,10 @@ import type {
 
 export function daysOfWeek<TDate extends DateFrameworkType>(
   dateAdapter: SaltDateAdapter<TDate>,
-  format: "long" | "short" | "narrow",
-  // biome-ignore lint/suspicious/noExplicitAny: locale is date framework dependent
-  locale?: any,
+  format: "long" | "short" | "narrow"
 ) {
   return Array.from({ length: 7 }, (_, day) =>
-    dateAdapter.getDayOfWeekName(day, format, locale),
+    dateAdapter.getDayOfWeekName(day, format),
   );
 }
 
@@ -27,14 +25,11 @@ export function generateMonthsForYear<TDate extends DateFrameworkType>(
 export function generateVisibleDays<TDate extends DateFrameworkType>(
   dateAdapter: SaltDateAdapter<TDate>,
   currentMonth: TDate,
-  // biome-ignore lint/suspicious/noExplicitAny: locale is date framework dependent
-  locale?: any,
 ) {
   const totalDays = 6 * 7;
   const startDate = dateAdapter.startOf(
-    dateAdapter.startOf(currentMonth, "month", locale),
-    "week",
-    locale,
+    dateAdapter.startOf(currentMonth, "month"),
+    "week"
   );
   return [...Array(totalDays).keys()].map((dayDelta) => {
     const day = dateAdapter.add(startDate, { days: dayDelta });

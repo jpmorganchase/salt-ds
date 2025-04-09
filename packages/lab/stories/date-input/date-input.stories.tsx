@@ -6,6 +6,8 @@ import {
   FormField,
   FormFieldHelperText,
   FormFieldLabel,
+  GridItem,
+  GridLayout,
   Option,
   StackLayout,
   Text,
@@ -409,21 +411,25 @@ export const SingleWithTimezone: StoryFn<typeof DateInputSingle> = (args) => {
         ]
       : ["default"];
 
-  const [timezone, setTimezone] = useState<string>(timezoneOptions[0]);
+  const [selectedTimezone, setSelectedTimezone] = useState<string>(
+    timezoneOptions[0],
+  );
+  const [currentTimezone, setCurrentTimezone] = useState<string>("");
   const [iso8601String, setIso8601String] = useState<string>("");
   const [localeDateString, setLocaleDateString] = useState<string>("");
   const [dateString, setDateString] = useState<string>("");
   const [error, setError] = useState<string | undefined>(undefined);
 
   useEffect(() => {
+    setCurrentTimezone("");
     setIso8601String("");
     setLocaleDateString("");
     setDateString("");
     setError(undefined);
-  }, [timezone]);
+  }, [selectedTimezone]);
 
   const handleDateChange: DateInputSingleProps<DateFrameworkType>["onDateChange"] =
-    (_e, date, details) => {
+    (_event, date, details) => {
       const isDateUnset =
         details?.errors?.length && details.errors[0].type === "unset";
       const hasError = details?.errors?.length;
@@ -432,9 +438,19 @@ export const SingleWithTimezone: StoryFn<typeof DateInputSingle> = (args) => {
         !isDateUnset && hasError ? details.errors[0].message : undefined,
       );
 
+      if (isDateUnset || hasError) {
+        setCurrentTimezone("");
+        setIso8601String("");
+        setLocaleDateString("");
+        setDateString("");
+        return;
+      }
+
       const systemTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
       const ianaTimezone =
-        timezone !== "system" && timezone !== "default" ? timezone : undefined;
+        selectedTimezone !== "system" && selectedTimezone !== "default"
+          ? selectedTimezone
+          : undefined;
 
       const formatDate = (date, hasError) => {
         if (hasError) return { iso: "", locale: "", formatted: "" };
@@ -462,10 +478,18 @@ export const SingleWithTimezone: StoryFn<typeof DateInputSingle> = (args) => {
         return { iso, locale, formatted };
       };
 
+      const jsDate = date;
+      dateAdapter.lib === "luxon"
+        ? date.toJSDate()
+        : dateAdapter.lib === "moment"
+          ? date.toDate()
+          : date;
       const formattedDate = formatDate(
-        date,
+        jsDate,
         isDateUnset || (!isDateUnset && hasError),
       );
+
+      setCurrentTimezone(dateAdapter.getTimezone(date));
 
       setIso8601String(formattedDate.iso);
       setLocaleDateString(formattedDate.locale);
@@ -473,29 +497,29 @@ export const SingleWithTimezone: StoryFn<typeof DateInputSingle> = (args) => {
     };
 
   const handleTimezoneSelect = (_e: SyntheticEvent, selection: string[]) => {
-    setTimezone(selection[0]);
+    setSelectedTimezone(selection[0]);
   };
 
   return (
-    <StackLayout direction={"row"} style={{ minWidth: "380px" }}>
-      <StackLayout direction={"column"}>
+    <GridLayout style={{ minWidth: "380px" }} gap={1}>
+      <GridItem colSpan={6}>
         <FormField validationStatus={error ? "error" : undefined}>
           <FormFieldLabel>Enter a date</FormFieldLabel>
           <FormFieldHelperText>{error}</FormFieldHelperText>
           <DateInputSingle
             {...args}
-            timezone={timezone}
-            key={timezone}
+            timezone={selectedTimezone}
+            key={selectedTimezone}
             onDateChange={handleDateChange}
           />
         </FormField>
-      </StackLayout>
-      <StackLayout direction={"column"}>
+      </GridItem>
+      <GridItem colSpan={6}>
         <FormField>
           <FormFieldLabel>Enter a timezone</FormFieldLabel>
           <Dropdown
-            aria-label="Timezone Dropdown"
-            defaultSelected={[timezone]}
+            aria-label="timezone dropdown"
+            selected={[selectedTimezone]}
             onSelectionChange={handleTimezoneSelect}
           >
             {timezoneOptions.map((tz) => (
@@ -505,18 +529,32 @@ export const SingleWithTimezone: StoryFn<typeof DateInputSingle> = (args) => {
             ))}
           </Dropdown>
         </FormField>
+      </GridItem>
+      <GridItem colSpan={12}>
+        <FormField data-test-id={"timezone"}>
+          <FormFieldLabel>Current timezone</FormFieldLabel>
+          {currentTimezone?.length ? currentTimezone : "-"}
+        </FormField>
+      </GridItem>
+      <GridItem colSpan={12}>
         <FormField data-test-id={"iso-date-label"}>
-          <FormFieldLabel>ISO 8601 Format</FormFieldLabel> {iso8601String}
+          <FormFieldLabel>ISO 8601 Format</FormFieldLabel>
+          {iso8601String?.length ? iso8601String : "-"}
         </FormField>
+      </GridItem>
+      <GridItem colSpan={12}>
         <FormField data-test-id={"timezone-date-label"}>
-          <FormFieldLabel>Date/Time in Timezone {timezone}</FormFieldLabel>
-          {dateString}
+          <FormFieldLabel>Date in current timezone</FormFieldLabel>
+          {dateString?.length ? dateString : "-"}
         </FormField>
+      </GridItem>
+      <GridItem colSpan={12}>
         <FormField data-test-id={"locale-date-label"}>
-          <FormFieldLabel>Locale Date/Time</FormFieldLabel> {localeDateString}
+          <FormFieldLabel>Date in current locale</FormFieldLabel>
+          {localeDateString?.length ? localeDateString : "-"}
         </FormField>
-      </StackLayout>
-    </StackLayout>
+      </GridItem>
+    </GridLayout>
   );
 };
 
@@ -535,7 +573,10 @@ export const RangeWithTimezone: StoryFn<typeof DateInputRange> = (args) => {
         ]
       : ["default"];
 
-  const [timezone, setTimezone] = useState<string>(timezoneOptions[0]);
+  const [selectedTimezone, setSelectedTimezone] = useState<string>(
+    timezoneOptions[0],
+  );
+  const [currentTimezone, setCurrentTimezone] = useState<string>("");
   const [startIso8601String, setStartIso8601String] = useState<string>("");
   const [startLocaleDateString, setStartLocaleDateString] =
     useState<string>("");
@@ -551,6 +592,7 @@ export const RangeWithTimezone: StoryFn<typeof DateInputRange> = (args) => {
   );
 
   useEffect(() => {
+    setCurrentTimezone("");
     setStartIso8601String("");
     setStartLocaleDateString("");
     setStartDateString("");
@@ -559,10 +601,10 @@ export const RangeWithTimezone: StoryFn<typeof DateInputRange> = (args) => {
     setEndLocaleDateString("");
     setEndDateString("");
     setEndDateError(undefined);
-  }, [timezone]);
+  }, [selectedTimezone]);
 
   const handleDateChange: DateInputRangeProps<DateFrameworkType>["onDateChange"] =
-    (_e, date, details) => {
+    (_event, date, details) => {
       const { startDate, endDate } = date;
       const isStartDateUnset =
         details.startDate?.errors?.length &&
@@ -586,7 +628,9 @@ export const RangeWithTimezone: StoryFn<typeof DateInputRange> = (args) => {
 
       const systemTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
       const ianaTimezone =
-        timezone !== "system" && timezone !== "default" ? timezone : undefined;
+        selectedTimezone !== "system" && selectedTimezone !== "default"
+          ? selectedTimezone
+          : undefined;
 
       const formatDate = (date, hasError) => {
         if (hasError) return { iso: "", locale: "", formatted: "" };
@@ -614,25 +658,50 @@ export const RangeWithTimezone: StoryFn<typeof DateInputRange> = (args) => {
         return { iso, locale, formatted };
       };
 
-      const start = formatDate(
-        startDate,
-        isStartDateUnset || (!isStartDateUnset && hasStartDateError),
-      );
-      const end = formatDate(
-        endDate,
-        isEndDateUnset || (!isEndDateUnset && hasEndDateError),
-      );
+      if (!isStartDateUnset && !hasStartDateError) {
+        const startJSDate =
+          dateAdapter.lib === "luxon"
+            ? startDate.toJSDate()
+            : dateAdapter.lib === "moment"
+              ? startDate.toDate()
+              : startDate;
+        const start = formatDate(
+          startJSDate,
+          isStartDateUnset || (!isStartDateUnset && hasStartDateError),
+        );
+        setStartIso8601String(start.iso);
+        setStartLocaleDateString(start.locale);
+        setStartDateString(start.formatted);
+      } else {
+        setStartIso8601String("");
+        setStartLocaleDateString("");
+        setStartDateString("");
+      }
+      if (!isStartDateUnset && !hasEndDateError) {
+        const endJSDate =
+          dateAdapter.lib === "luxon"
+            ? endDate.toJSDate()
+            : dateAdapter.lib === "moment"
+              ? endDate.toDate()
+              : endDate;
+        const end = formatDate(
+          endJSDate,
+          isEndDateUnset || (!isEndDateUnset && hasEndDateError),
+        );
+        setEndIso8601String(end.iso);
+        setEndLocaleDateString(end.locale);
+        setEndDateString(end.formatted);
+      } else {
+        setEndIso8601String("");
+        setEndLocaleDateString("");
+        setEndDateString("");
+      }
 
-      setStartIso8601String(start.iso);
-      setStartLocaleDateString(start.locale);
-      setStartDateString(start.formatted);
-      setEndIso8601String(end.iso);
-      setEndLocaleDateString(end.locale);
-      setEndDateString(end.formatted);
+      setCurrentTimezone(dateAdapter.getTimezone(startDate));
     };
 
   const handleTimezoneSelect = (_e: SyntheticEvent, selection: string[]) => {
-    setTimezone(selection[0]);
+    setSelectedTimezone(selection[0]);
   };
 
   const startDateHelperText = startDateError
@@ -643,8 +712,8 @@ export const RangeWithTimezone: StoryFn<typeof DateInputRange> = (args) => {
     : undefined;
 
   return (
-    <StackLayout direction={"row"} style={{ minWidth: "380px" }}>
-      <StackLayout direction={"column"}>
+    <GridLayout style={{ minWidth: "380px" }} gap={1}>
+      <GridItem colSpan={6}>
         <FormField
           validationStatus={
             startDateError || endDateError ? "error" : undefined
@@ -656,19 +725,20 @@ export const RangeWithTimezone: StoryFn<typeof DateInputRange> = (args) => {
           </FormFieldHelperText>
           <DateInputRange
             {...args}
-            timezone={timezone}
-            key={timezone}
+            timezone={selectedTimezone}
+            key={selectedTimezone}
             onDateChange={handleDateChange}
           />
         </FormField>
-      </StackLayout>
-      <StackLayout direction={"column"}>
+      </GridItem>
+      <GridItem colSpan={6}>
         <FormField>
-          <FormFieldLabel>Enter a timezone</FormFieldLabel>
+          <FormFieldLabel>Select a Timezone</FormFieldLabel>
           <Dropdown
-            aria-label="Timezone Dropdown"
-            defaultSelected={[timezone]}
+            aria-label="timezone dropdown"
+            selected={[selectedTimezone]}
             onSelectionChange={handleTimezoneSelect}
+            style={{ minWidth: "120px", width: "min-content" }}
           >
             {timezoneOptions.map((tz) => (
               <Option key={tz} value={tz}>
@@ -677,33 +747,49 @@ export const RangeWithTimezone: StoryFn<typeof DateInputRange> = (args) => {
             ))}
           </Dropdown>
         </FormField>
+      </GridItem>
+      <GridItem colSpan={12}>
+        <FormField data-test-id={"timezone"}>
+          <FormFieldLabel>Current timezone</FormFieldLabel>
+          {currentTimezone?.length ? currentTimezone : "-"}
+        </FormField>
+      </GridItem>
+      <GridItem colSpan={4}>
         <FormField data-test-id={"iso-start-date-label"}>
-          <FormFieldLabel>Start ISO 8601 Format</FormFieldLabel>
-          {startIso8601String}
+          <FormFieldLabel>Start date in ISO8601 format</FormFieldLabel>
+          {startIso8601String?.length ? startIso8601String : "-"}
         </FormField>
-        <FormField data-test-id={"timezone-start-date-label"}>
-          <FormFieldLabel>
-            Start Date/Time in Timezone {timezone}
-          </FormFieldLabel>
-          {startDateString}
-        </FormField>
-        <FormField data-test-id={"locale-start-date-label"}>
-          <FormFieldLabel>Start Locale Date/Time</FormFieldLabel>
-          {startLocaleDateString}
-        </FormField>
+      </GridItem>
+      <GridItem colSpan={8}>
         <FormField data-test-id={"iso-end-date-label"}>
-          <FormFieldLabel>End ISO 8601 Format</FormFieldLabel>
-          {endIso8601String}
+          <FormFieldLabel>End date in ISO8601 format</FormFieldLabel>
+          {endIso8601String?.length ? endIso8601String : "-"}
         </FormField>
+      </GridItem>
+      <GridItem colSpan={4}>
+        <FormField data-test-id={"timezone-start-date-label"}>
+          <FormFieldLabel>Start date in current timezone</FormFieldLabel>
+          {startDateString?.length ? startDateString : "-"}
+        </FormField>
+      </GridItem>
+      <GridItem colSpan={8}>
         <FormField data-test-id={"timezone-end-date-label"}>
-          <FormFieldLabel>End Date/Time in Timezone {timezone}</FormFieldLabel>
-          {endDateString}
+          <FormFieldLabel>End date in current timezone</FormFieldLabel>
+          {endDateString?.length ? endDateString : "-"}
         </FormField>
+      </GridItem>
+      <GridItem colSpan={4}>
+        <FormField data-test-id={"locale-start-date-label"}>
+          <FormFieldLabel>Start date in current locale</FormFieldLabel>
+          {startLocaleDateString?.length ? startLocaleDateString : "-"}
+        </FormField>
+      </GridItem>
+      <GridItem colSpan={8}>
         <FormField data-test-id={"locale-end-date-label"}>
-          <FormFieldLabel>End Locale Date/Time</FormFieldLabel>
-          {endLocaleDateString}
+          <FormFieldLabel>End date in current locale</FormFieldLabel>
+          {endLocaleDateString?.length ? endLocaleDateString : "-"}
         </FormField>
-      </StackLayout>
-    </StackLayout>
+      </GridItem>
+    </GridLayout>
   );
 };
