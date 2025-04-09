@@ -133,6 +133,7 @@ export const DetailComponent: FC<LayoutProps> = ({ children }) => {
   return (
     <LivePreviewProvider>
       <Base
+        className={styles.root}
         LeftSidebar={LeftSidebar}
         RightSidebar={RightSidebar}
         Heading={ComponentPageHeading}

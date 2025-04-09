@@ -42,7 +42,7 @@ export const TextBlock = ({
         } as unknown as CSSProperties
       }
     >
-      The quick brown fox jumps over the lazy dog
+      Preview text
     </div>
   );
 };
