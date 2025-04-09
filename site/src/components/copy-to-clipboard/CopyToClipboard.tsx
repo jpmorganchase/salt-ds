@@ -1,9 +1,7 @@
-import { Banner, BannerContent, Button, Code } from "@salt-ds/core";
+import { Button, Code, Toast, ToastContent } from "@salt-ds/core";
 import { CopyIcon } from "@salt-ds/icons";
-import { type ReactNode, useState } from "react";
-import { useRef } from "react";
+import { type ReactNode, useRef, useState } from "react";
 import { Transition } from "react-transition-group";
-
 import styles from "./CopyToClipboard.module.css";
 
 const duration = 300; // --salt-duration-perceptible
@@ -63,8 +61,8 @@ export const CopyToClipboard = ({
       >
         {(state) => {
           return (
-            <Banner
-              className={styles.fixedBanner}
+            <Toast
+              className={styles.fixedNotification}
               status={notifactionContent === "error" ? "error" : "success"}
               ref={nodeRef}
               style={{
@@ -72,12 +70,12 @@ export const CopyToClipboard = ({
                 ...transitionStyles[state],
               }}
             >
-              <BannerContent>
+              <ToastContent>
                 {notifactionContent === "error"
                   ? "Error copying"
                   : "Copied to clipboard"}
-              </BannerContent>
-            </Banner>
+              </ToastContent>
+            </Toast>
           );
         }}
       </Transition>
