@@ -72,6 +72,9 @@ const ColorTable = ({ data }: { data: CssVariableData }) => {
   );
 };
 
+const rgbBasisRegex = /^rgb\(var\((.*)\)\)$/;
+const saltColorTokenRegex = /^--salt-color-\w+(-\d+)?$/;
+
 export const FoundationColorView = ({
   group,
 }: {
@@ -84,7 +87,7 @@ export const FoundationColorView = ({
       const data = (await import("./cssFoundations.json"))
         .default as CssVariableData;
       const colorKeys = Object.keys(data).filter((x) =>
-        /^--salt-color-\w+(-\d+)?$/.test(x),
+        saltColorTokenRegex.test(x),
       );
       const regex = new RegExp(
         (group === "categorical" ? categoricalColors : foundationColors).join(
@@ -95,7 +98,17 @@ export const FoundationColorView = ({
         colorKeys
           .filter((x) => regex.test(x))
           .reduce<CssVariableData>((prev, current) => {
-            prev[current] = data[current];
+            const value = data[current];
+            if (value.includes("rgb(")) {
+              const matches = value.match(rgbBasisRegex);
+              if (matches !== null) {
+                prev[current] = `rgb(${data[matches[1]]})`;
+              } else {
+                prev[current] = value;
+              }
+            } else {
+              prev[current] = value;
+            }
             return prev;
           }, {}),
       );

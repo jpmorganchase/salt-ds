@@ -14,4 +14,6 @@ next-env.d.ts
 /src/props/*.json
 /src/components/css-display/cssVariables.json
 /src/components/css-display/cssCharacteristics.json
+/src/components/css-display/cssCharacteristics-next.json
 /src/components/css-display/cssFoundations.json
+/src/components/css-display/cssFoundations-next.json
