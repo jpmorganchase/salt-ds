@@ -1,4 +1,4 @@
-.fixedBanner {
+.fixedNotification {
   position: fixed;
   top: calc(10 * var(--salt-spacing-100));
   left: 50%;
