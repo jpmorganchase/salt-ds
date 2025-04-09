@@ -12,22 +12,34 @@ data:
 
 ### When to use
 
--
--
--
+- To enable more than one piece of content to occupy the same space.
+- To navigate small amounts content, that are viewed in a linear sequence.
+- To position information near the top of the viewable area.
 
 ### When not to use
 
--
--
--
+- When content discovery and drawing attention is a priority for your product
+- To display less than 2 or more than 5 pieces of content
+
+### Best practices
+
+- Include 5 or fewer slides. The most important slide always comes first
+- Indicate where the user is within the progression
+- On desktop, display prev/next buttons above the carousel.
+- On mobile, display prev/next buttons below the carousel.
+- Ensure that important content is also placed on another page of your site
 
 ## Import
 
 To import `Carousel` and related components from the lab Salt package, use:
 
 ```js
-import { Carousel, CarouselControls, CarouselSlider, CarouselSlide } from "@salt-ds/lab";
+import {
+  Carousel,
+  CarouselControls,
+  CarouselSlider,
+  CarouselSlide,
+} from "@salt-ds/lab";
 ```
 
 ## Props
@@ -47,4 +59,3 @@ import { Carousel, CarouselControls, CarouselSlider, CarouselSlide } from "@salt
 ### `CarouselSlide`
 
 <PropsTable packageName="lab" componentName="CarouselSlide" />
-

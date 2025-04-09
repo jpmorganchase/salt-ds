@@ -8,26 +8,31 @@ data:
   $ref: ./#/data
 ---
 
+## Best practices
+
+- Avoid using infographics, maps, charts as images or (images of text)[https://www.w3.org/TR/UNDERSTANDING-WCAG20/visual-audio-contrast-text-presentation.html].
+- Order slides by importance, with the most critical info first.
+
 ## Keyboard interactions
 
 <KeyboardControls>
 <KeyboardControl keyOrCombos="Tab">
 
-- If focus is outside carousel, moves focus into the Carousel, setting focus on the first active button.
+- If focus is outside carousel, moves focus into the Carousel, setting focus on the previous button.
 - If focus is on the previous button, moves focus to the next button.
-- If focus is on the last active button moves focus to the first visible carousel slide.
+- If focus is on the next button moves focus to the first visible carousel slide.
 
 </KeyboardControl>
 <KeyboardControl keyOrCombos="Enter">
-- if focus is on next button, it moves to the next slide and keeps focus within the button.
-- if focus is on previous button, it moves to the previous slide and keeps focus within the button.
+- if focus is on next button, it moves to the next slide and keeps focus on the button.
+- if focus is on previous button, it moves to the previous slide and keeps focus on the button.
 </KeyboardControl>
 
 <KeyboardControl keyOrCombos="Shift + Tab">
   
-- If focus is outside carousel and carousel is the previous element in the tabbing order, moves focus into the Carousel, setting focus on the first active button.
 - If focus is on the next button, moves focus to the previous button.
-- If focus is on the first visible slide, moves focus to the last active button in controls.
+- If focus is on the first visible slide, moves focus to the next button in controls. 
+- If focus is on the element after the carousel, sets focus on the last interactive element on the last visible slide or the last visible slide if it doesn't contain any interactive elements.
 
 </KeyboardControl>
 
@@ -49,5 +54,5 @@ data:
 - VoiceOver/Safari on Mac bug: When shift+tab from the CTA (link or button), there's an empty focus stop. **(This is not a Salt bug)**
   - Focus moves to the slide, but VoiceOver doesn't announce the slide's content.
     - Single slide: Pressing shit+tab again will move focus to the (next) control button
-    - Multiple slides: Pressing shit+tab again will move focus to the last focusable element in the prevoius slide or the prevoius slide if the prevoius slide doesn't contain any interactive elements. 
+    - Multiple slides: Pressing shit+tab again will move focus to the last focusable element in the previous slide or the previous slide if the previous slide doesn't contain any interactive elements.
   - Now pressing tab will place focus on the slide and will announce the slide's content.
