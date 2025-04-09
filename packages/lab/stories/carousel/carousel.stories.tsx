@@ -9,6 +9,10 @@ import {
 import "./carousel.stories.css";
 import { Button, H2, H3, Link, StackLayout, Text } from "@salt-ds/core";
 import { useState } from "react";
+import carouselSlide1 from "../assets/carouselSlide1.png";
+import carouselSlide3 from "../assets/carouselSlide3.png";
+import carouselSlide4 from "../assets/carouselSlide4.png";
+import carouselSlide5 from "../assets/carouselSlide5.png";
 
 export default {
   title: "Lab/Carousel",
@@ -19,12 +23,14 @@ const content = [
   {
     headerId: 0,
     title: "Your accounts. On the move",
+    image: carouselSlide1,
     content: "Discover our latest personal accounts app for iOS.",
     link: "Open an account",
   },
   {
     headerId: 1,
     title: "Preview your account information",
+    image: carouselSlide5,
     content:
       "The new dashboard provides a complete overview of all your key account details.",
     link: "Go to dashboard",
@@ -32,6 +38,7 @@ const content = [
   {
     headerId: 2,
     title: "Clear view of your cash positions",
+    image: carouselSlide3,
     content:
       "Dedicated screen showing your positions, currencies and accounts.",
     link: "Learn more about views",
@@ -39,6 +46,7 @@ const content = [
   {
     headerId: 3,
     title: "Redesigned accounts",
+    image: carouselSlide4,
     content:
       "Simplified view of all your accounts, with search functionality across all transactions.",
     link: "Download app",
@@ -53,8 +61,10 @@ const renderSlides = (appearance?: "bordered", withActions?: boolean) =>
       header={<H3 id={`slide-title-${slide.headerId}`}>{slide.title}</H3>}
       aria-labelledby={`slide-title-${slide.headerId}`}
       media={
-        <div
-          className={`carousel-image-placeholder carousel-image-placeholder-${index + 1}`}
+        <img
+          className="carousel-image-placeholder"
+          alt="stock content to show carousel slide"
+          src={slide.image}
         />
       }
       actions={withActions && <Link href="#">{slide.link}</Link>}
