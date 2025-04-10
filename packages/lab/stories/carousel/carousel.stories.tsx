@@ -186,7 +186,9 @@ export const Controlled: StoryFn<typeof Carousel> = (args) => {
           <H2 id="carousel-title" className="carousel-title">
             Account overview carousel
           </H2>
-          <CarouselSlider>{renderSlides("bordered")}</CarouselSlider>
+          <CarouselSlider onSelectionChange={(_, index) => setSlide(index)}>
+            {renderSlides("bordered")}
+          </CarouselSlider>
         </Carousel>
       </div>
     </StackLayout>

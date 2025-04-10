@@ -5,6 +5,8 @@ import {
   type HTMLAttributes,
   type KeyboardEvent,
   type ReactElement,
+  type SyntheticEvent,
+  type UIEvent,
   forwardRef,
   useContext,
   useLayoutEffect,
@@ -22,12 +24,22 @@ export interface CarouselSliderProps extends HTMLAttributes<HTMLDivElement> {
    * Collection of slides to render
    */
   children: Array<ReactElement<CarouselSlideProps>>;
+  /**
+   * Callback fired when the selected slide change.
+   **/
+  onSelectionChange?: (
+    event: SyntheticEvent<HTMLDivElement>,
+    index: number,
+  ) => void;
 }
 
 const withBaseName = makePrefixer("saltCarouselSlider");
 
 export const CarouselSlider = forwardRef<HTMLDivElement, CarouselSliderProps>(
-  function CarouselSlider({ children, onKeyDown, ...rest }, propRef) {
+  function CarouselSlider(
+    { children, onKeyDown, onScroll, onSelectionChange, ...rest },
+    propRef,
+  ) {
     const targetWindow = useWindow();
     useComponentCssInjection({
       testId: "salt-carousel-slider",
@@ -45,25 +57,27 @@ export const CarouselSlider = forwardRef<HTMLDivElement, CarouselSliderProps>(
       if (event.repeat) return;
       switch (event.key) {
         case "ArrowLeft": {
-          const prevId =
+          const prevIndex =
             focusedSlideIndex && focusedSlideIndex > activeSlideIndex
-              ? slideIds[focusedSlideIndex - 1]
-              : slideIds[activeSlideIndex - 1] || null;
+              ? focusedSlideIndex - 1
+              : activeSlideIndex - 1;
+          const prevId = slideIds[prevIndex] || null;
 
           if (!prevId) break;
-
           dispatch({ type: "scroll", payload: prevId });
-
+          onSelectionChange?.(event, prevIndex);
           slides.get(prevId)?.element.focus();
 
           break;
         }
         case "ArrowRight": {
-          const nextId = slideIds[activeSlideIndex + 1] || null;
+          const nextIndex = activeSlideIndex + 1;
+          const nextId = slideIds[nextIndex] || null;
 
           if (!nextId) break;
 
           dispatch({ type: "scroll", payload: nextId });
+          onSelectionChange?.(event, nextIndex);
 
           slides.get(nextId)?.element.focus();
 
@@ -73,7 +87,7 @@ export const CarouselSlider = forwardRef<HTMLDivElement, CarouselSliderProps>(
       onKeyDown?.(event);
     };
 
-    const handleScroll = () => {
+    const handleScroll = (event: UIEvent<HTMLDivElement>) => {
       const container = containerRef?.current;
       if (!container) return;
       const scrollLeft = container.scrollLeft;
@@ -82,7 +96,9 @@ export const CarouselSlider = forwardRef<HTMLDivElement, CarouselSliderProps>(
 
       if (newIndex !== activeSlideIndex) {
         dispatch({ type: "move", payload: slideIds[newIndex] });
+        onSelectionChange?.(event, newIndex);
       }
+      onScroll?.(event);
     };
 
     useLayoutEffect(() => {
