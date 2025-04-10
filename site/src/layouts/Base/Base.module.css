@@ -40,5 +40,5 @@
 }
 
 .middle :global(.wrapper) {
-  max-width: 100ch;
+  max-width: var(--site-content-max-width);
 }
