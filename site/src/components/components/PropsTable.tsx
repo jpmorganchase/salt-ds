@@ -1,7 +1,7 @@
 import dynamic from "next/dynamic";
 import { type FC, useEffect, useState } from "react";
-import { Table } from "../mdx/table";
 import { Code } from "../mdx/code";
+import { Table } from "../mdx/table";
 
 const Markdown = dynamic(import("../markdown/Markdown"));
 
