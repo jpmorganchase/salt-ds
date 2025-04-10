@@ -164,7 +164,7 @@ export const WithTitle: StoryFn<typeof Carousel> = (args) => {
 export const Controlled: StoryFn<typeof Carousel> = (args) => {
   const [slide, setSlide] = useState<number>(0);
   return (
-    <div>
+    <StackLayout>
       <StackLayout gap={1} direction="row" align="center">
         <Button onClick={() => setSlide(slide - 1)} disabled={slide === 0}>
           Left
@@ -183,10 +183,12 @@ export const Controlled: StoryFn<typeof Carousel> = (args) => {
           aria-labelledby="carousel-title"
           activeSlideIndex={slide}
         >
-          <H2 id="carousel-title">Account overview carousel</H2>
+          <H2 id="carousel-title" className="carousel-title">
+            Account overview carousel
+          </H2>
           <CarouselSlider>{renderSlides("bordered")}</CarouselSlider>
         </Carousel>
       </div>
-    </div>
+    </StackLayout>
   );
 };
