@@ -152,7 +152,7 @@ describe("Given a Range Slider", () => {
     cy.get("@changeSpy").should("have.callCount", 6);
   });
 
-  it("should not trigger change events if non-interactice keyboard keys are pressed", () => {
+  it("should not trigger change events if non-interactive keyboard keys are pressed", () => {
     const changeSpy = cy.stub().as("changeSpy");
     const changeEndSpy = cy.stub().as("changeEndSpy");
     cy.mount(<Default onChange={changeSpy} onChangeEnd={changeEndSpy} />);
