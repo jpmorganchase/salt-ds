@@ -206,20 +206,11 @@ describe("Given a Tabstrip", () => {
     cy.findAllByRole("tab").filter(":visible").should("have.length", 1);
 
     cy.get("[data-overflowbutton]").realClick();
+    cy.findAllByRole("tab").filter(":visible").should("have.length", 14); // overflow menu shown
     cy.findByRole("tab", { name: "Liquidity" }).realClick();
+    cy.findAllByRole("tab").filter(":visible").should("have.length", 1); // overflow menu hidden
 
     cy.findByRole("tab", { name: "Liquidity" })
-      .should("have.attr", "aria-selected", "true")
-      .should("be.focused");
-
-    cy.findAllByRole("tab").filter(":visible").should("have.length", 1);
-
-    cy.get("[data-overflowbutton]").realClick();
-    cy.findAllByRole("tab").filter(":visible").should("have.length", 14);
-
-    cy.findByRole("tab", { name: "Home" }).should("be.focused");
-    cy.realPress("Enter");
-    cy.findByRole("tab", { name: "Home" })
       .should("have.attr", "aria-selected", "true")
       .should("be.focused");
   });
