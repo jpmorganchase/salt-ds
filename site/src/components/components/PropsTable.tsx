@@ -2,6 +2,7 @@ import dynamic from "next/dynamic";
 import { type FC, useEffect, useState } from "react";
 import { Code } from "../mdx/code";
 import { Table } from "../mdx/table";
+import styles from "./PropsTable.module.css";
 
 const Markdown = dynamic(import("../markdown/Markdown"));
 
@@ -85,7 +86,7 @@ export const PropsTable: FC<PropsTableType> = ({
           Object.values(props).map(
             ({ name, type, description, defaultValue }) => (
               <tr key={name}>
-                <td>{name}</td>
+                <td className={styles.overflowWrap}>{name}</td>
                 <td>
                   <Code>{type.name}</Code>
                 </td>
