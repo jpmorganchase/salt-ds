@@ -1,9 +1,9 @@
 import type { SidebarItem, SidebarNode } from "@jpmorganchase/mosaic-store";
 import {
+  Badge,
   NavigationItem,
   type NavigationItemProps,
   StackLayout,
-  Badge,
 } from "@salt-ds/core";
 import type React from "react";
 import { type MouseEventHandler, useState } from "react";
