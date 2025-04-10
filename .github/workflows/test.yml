@@ -90,11 +90,39 @@ jobs:
       - name: Install dependencies
         run: yarn
       - run: yarn run test
-  cypress-tests:
+  cypress-tests-prebuild:
     strategy:
       fail-fast: false
       matrix:
         react: [16, 17, 18]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "yarn"
+      - name: Install dependencies
+        run: yarn
+      - name: Setup react
+        run: yarn up react@${{ matrix.react }} react-dom@${{ matrix.react }}
+      - name: Build packages
+        run: yarn run build
+      - uses: actions/cache/save@v4
+        with:
+          path: |
+            dist
+          key: cache-${{ github.sha }}-${{ matrix.react }}
+
+  cypress-tests:
+    needs: cypress-tests-prebuild
+    strategy:
+      fail-fast: false
+      matrix:
+        react: [16, 17, 18]
+        testSpecs: [core, others]
     runs-on: ubuntu-latest
     container:
       image: cypress/browsers:node-22.14.0-chrome-133.0.6943.126-1-ff-135.0.1-edge-133.0.3065.82-1
@@ -111,16 +139,30 @@ jobs:
         run: yarn
       - name: Setup react
         run: yarn up react@${{ matrix.react }} react-dom@${{ matrix.react }}
-      - name: Build packages
-        run: yarn run build
-      - name: Cypress Components
+      - name: Restore cached build dist
+        uses: actions/cache/restore@v4
+        with:
+          path: |
+            dist
+          key: cache-${{ github.sha }}-${{ matrix.react }}
+      - name: Cypress Components (core)
         uses: cypress-io/github-action@v6
+        if: matrix.testSpecs == 'core'
         with:
           install: false
           component: true
           browser: chrome
+          spec: "packages/core/src/**/*.cy.{js,ts,jsx,tsx}"
+      - name: Cypress Components (others)
+        uses: cypress-io/github-action@v6
+        if: matrix.testSpecs == 'others'
+        with:
+          install: false
+          component: true
+          browser: chrome
+          spec: "packages/!(core)/src/**/*.cy.{js,ts,jsx,tsx}"
       - uses: actions/upload-artifact@v4
         if: failure()
         with:
-          name: cypress-screenshots-${{ matrix.react }}
+          name: cypress-screenshots-${{ matrix.react }}-${{ matrix.testSpecs }}
           path: cypress/screenshots
