@@ -1,27 +1,11 @@
-import { Button, Code, Tag, Tooltip } from "@salt-ds/core";
+import { Button, Tag, Tooltip } from "@salt-ds/core";
 import { CopyIcon } from "@salt-ds/icons";
-import { type ReactNode, useRef, useState } from "react";
-
-const duration = 300; // --salt-duration-perceptible
-
-const transitionStyles = {
-  entering: { opacity: 1 },
-  entered: { opacity: 1 },
-  exiting: { opacity: 0 },
-  exited: { opacity: 0 },
-  unmounted: { opacity: 0 },
-};
-
-const defaultStyle = {
-  transition: `opacity ${duration}ms ease-in-out`,
-  opacity: 1,
-};
+import { type ReactNode, useState } from "react";
 
 export const CopyToClipboard = ({
   value,
   children,
 }: { value: string; children?: ReactNode }) => {
-  const nodeRef = useRef(null);
   const [copyStatus, setCopyStatus] = useState<"none" | "error" | "success">(
     "none",
   );

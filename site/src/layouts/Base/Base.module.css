@@ -40,5 +40,5 @@
 }
 
 .middle :global(.wrapper) {
-  max-width: 85ch;
+  max-width: 100ch;
 }

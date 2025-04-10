@@ -1,14 +1,3 @@
-.colorCard {
-  padding: 0;
-  width: 25ch;
-}
-
-.colorBlock {
-  width: 100%;
-  border: none;
-  height: calc(2 * var(--salt-size-base));
-}
-
 .table :global(table) {
   table-layout: auto;
 }

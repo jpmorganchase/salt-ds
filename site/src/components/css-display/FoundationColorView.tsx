@@ -54,7 +54,8 @@ const ColorTable = ({ data }: { data: CssVariableData }) => {
       <thead>
         <tr>
           <th className={styles.viewColumn}>Preview</th>
-          <th>Name / Value</th>
+          <th>Name</th>
+          <th>Value</th>
         </tr>
       </thead>
       <tbody>
@@ -66,13 +67,12 @@ const ColorTable = ({ data }: { data: CssVariableData }) => {
               </SaltProvider>
             </td>
             <td>
-              <StackLayout gap={0}>
-                <FlexLayout gap={0}>
-                  <CopyToClipboard value={name} />
-                  {/* <Text styleAs="code">{name}</Text> */}
-                </FlexLayout>
-                <Text styleAs="code">{value}</Text>
-              </StackLayout>
+              <FlexLayout gap={0} align="center">
+                <CopyToClipboard value={name} />
+              </FlexLayout>
+            </td>
+            <td>
+              <Text styleAs="code">{value}</Text>
             </td>
           </tr>
         ))}
