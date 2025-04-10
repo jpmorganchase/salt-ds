@@ -153,11 +153,10 @@ export const useSliderThumb = ({
         restrictToMarks,
         marks,
       );
-
-      setIsFocusVisible(true);
       if (newValue === undefined || lastValueRef.current === newValue) {
         return;
       }
+      setIsFocusVisible(true);
       lastValueRef.current = newValue;
       handleInputChange({
         target: { value: newValue.toString() },

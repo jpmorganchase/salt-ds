@@ -234,16 +234,20 @@ export const useRangeSliderThumb = ({
         restrictToMarks,
         marks,
       );
-      setIsFocusVisible(true);
-      if (newValue !== lastValueRef.current[thumbIndex]) {
-        lastValueRef.current[thumbIndex] = newValue;
-        handleInputChange(
-          {
-            target: { value: newValue.toString() },
-          } as ChangeEvent<HTMLInputElement>,
-          thumbIndex,
-        );
+      if (
+        newValue === undefined ||
+        newValue === lastValueRef.current[thumbIndex]
+      ) {
+        return;
       }
+      setIsFocusVisible(true);
+      lastValueRef.current[thumbIndex] = newValue;
+      handleInputChange(
+        {
+          target: { value: newValue.toString() },
+        } as ChangeEvent<HTMLInputElement>,
+        thumbIndex,
+      );
     },
     [
       value,

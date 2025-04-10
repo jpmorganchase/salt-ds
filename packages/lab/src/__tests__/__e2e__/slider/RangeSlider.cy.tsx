@@ -152,6 +152,16 @@ describe("Given a Range Slider", () => {
     cy.get("@changeSpy").should("have.callCount", 6);
   });
 
+  it("should not trigger change events if non-interactive keyboard keys are pressed", () => {
+    const changeSpy = cy.stub().as("changeSpy");
+    const changeEndSpy = cy.stub().as("changeEndSpy");
+    cy.mount(<Default onChange={changeSpy} onChangeEnd={changeEndSpy} />);
+
+    cy.findAllByRole("slider").eq(0).focus().realPress("Space");
+    cy.get("@changeSpy").should("not.have.been.called");
+    cy.get("@changeEndSpy").should("not.have.been.called");
+  });
+
   it("should move the thumb in larger increments when step multiplier is increased", () => {
     cy.mount(
       <Default defaultValue={[0, 30]} min={0} max={30} stepMultiplier={10} />,
