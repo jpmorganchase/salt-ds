@@ -1,16 +1,5 @@
 import type { RefObject } from "react";
 
-export const interactiveKeys = [
-  "ArrowUp",
-  "ArrowRight",
-  "ArrowDown",
-  "ArrowLeft",
-  "PageUp",
-  "PageDown",
-  "Home",
-  "End",
-];
-
 export const toFloat = (value: number | string) =>
   typeof value === "string" ? Number.parseFloat(value) : value;
 
