@@ -152,6 +152,7 @@ export const SliderThumb = ({
         {/* Accessible text */}
         <span
           aria-hidden="true"
+          aria-live="polite"
           id={accessibleTextId}
           className={withBaseName("accessibleText")}
         >
