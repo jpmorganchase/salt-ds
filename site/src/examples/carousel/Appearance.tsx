@@ -1,4 +1,4 @@
-import { H3, StackLayout, Text, useId } from "@salt-ds/core";
+import { H2, H3, StackLayout, Text, useId } from "@salt-ds/core";
 import {
   Carousel,
   CarouselControls,
@@ -35,9 +35,9 @@ const renderMediaPlaceholder = (index: number) => (
 
 export const Appearance = (): ReactElement => {
   return (
-    <StackLayout direction="row">
+    <StackLayout direction="row" gap={6}>
       <Carousel aria-label="Account overview bordered">
-        <CarouselControls />
+        <CarouselControls title={<H2>Bordered</H2>} />
         <CarouselSlider>
           {sliderData.map((slide, index) => {
             const carousel1SlideId = useId();
@@ -64,7 +64,7 @@ export const Appearance = (): ReactElement => {
         </CarouselSlider>
       </Carousel>
       <Carousel aria-label="Account overview">
-        <CarouselControls />
+        <CarouselControls title={<H2>Transparent</H2>} />
         <CarouselSlider>
           {sliderData.map((slide, index) => {
             const carousel2SlideId = useId();
