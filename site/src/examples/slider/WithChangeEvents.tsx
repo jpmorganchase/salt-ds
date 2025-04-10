@@ -16,13 +16,13 @@ export const WithChangeEvents = () => {
         onChangeEnd={(_, value) => setValueOnChangeEnd(value)}
       />
       <Text>
-        Value onChange:{" "}
+        Value onChange: &nbsp;
         <span style={{ color: "var(--salt-color-teal-500)" }}>
           {valueOnChange}
         </span>
       </Text>
       <Text>
-        Value onChangeEnd:{" "}
+        Value onChangeEnd: &nbsp;
         <span style={{ color: "var(--salt-color-teal-500)" }}>
           {valueOnChangeEnd}
         </span>
