@@ -1,4 +1,4 @@
-import { FlexLayout, SaltProvider, Spinner, Text } from "@salt-ds/core";
+import { FlowLayout, SaltProvider, Spinner, Text } from "@salt-ds/core";
 import { useEffect, useState } from "react";
 import { CopyToClipboard } from "../copy-to-clipboard";
 import { Table } from "../mdx/table";
@@ -61,9 +61,9 @@ const ColorTable = ({ data }: { data: CssVariableData }) => {
               </SaltProvider>
             </td>
             <td>
-              <FlexLayout gap={0} align="center">
+              <FlowLayout gap={1} align="center">
                 <CopyToClipboard value={name} />
-              </FlexLayout>
+              </FlowLayout>
             </td>
             <td>
               <Text styleAs="code">{value}</Text>
