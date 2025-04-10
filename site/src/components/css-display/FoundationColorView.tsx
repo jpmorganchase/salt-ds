@@ -1,10 +1,4 @@
-import {
-  FlexLayout,
-  SaltProvider,
-  Spinner,
-  StackLayout,
-  Text,
-} from "@salt-ds/core";
+import { FlexLayout, SaltProvider, Spinner, Text } from "@salt-ds/core";
 import { useEffect, useState } from "react";
 import { CopyToClipboard } from "../copy-to-clipboard";
 import { Table } from "../mdx/table";
