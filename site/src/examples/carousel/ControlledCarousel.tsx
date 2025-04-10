@@ -22,7 +22,7 @@ export const ControlledCarousel = (): ReactElement => {
         <Text>Current slide: {slide + 1}</Text>
       </StackLayout>
       <Carousel aria-label="Account overview" activeSlideIndex={slide}>
-        <CarouselSlider>
+        <CarouselSlider onSelectionChange={(_, index) => setSlide(index)}>
           {sliderData.map((slide, index) => {
             const slideId = useId();
             return (
