@@ -110,4 +110,11 @@ describe("WHEN mounted as an uncontrolled component", () => {
     cy.findAllByRole("button", { name: "Left" }).click();
     cy.findByText("Current slide: 1").should("exist");
   });
+  it("THEN should be able to update controlled value when navigating slider", () => {
+    cy.mount(<Controlled />);
+    cy.findByText("Current slide: 1").should("exist");
+    cy.findAllByRole("group").get('[tabindex="0"]').focus();
+    cy.findAllByRole("group").get('[tabindex="0"]').realPress("ArrowRight");
+    cy.findByText("Current slide: 2").should("exist");
+  });
 });
