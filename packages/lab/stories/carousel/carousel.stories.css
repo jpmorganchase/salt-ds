@@ -1,3 +1,6 @@
+.carousel-title {
+  margin: 0;
+}
 .carousel-container {
   max-width: 600px;
   width: 80vw;
