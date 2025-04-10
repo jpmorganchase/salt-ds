@@ -21,6 +21,7 @@ import {
 
 export const MinMax = (): ReactElement => {
   // Create a 3 month range of selectable dates
+  // biome-ignore lint/suspicious/noExplicitAny: any is more flexible for adding new date frameworks
   const dateAdapter = new AdapterDateFns(dateFnsEnUs as any);
   const defaultMinDate = dateAdapter.parse("01 Jan 1900", "DD MMM YYYY").date;
   const defaultMaxDate = dateAdapter.parse("01 Jan 2100", "DD MMM YYYY").date;
@@ -73,7 +74,7 @@ export const MinMax = (): ReactElement => {
         setHelperText(defaultHelperText);
       }
     },
-    [dateAdapter, setValidationStatus, setHelperText],
+    [],
   );
 
   return (

@@ -50,6 +50,7 @@ const adapters = [adapterDateFns, adapterDayjs, adapterLuxon, adapterMoment];
  * @param adapter
  */
 function assertDateChange(
+  // biome-ignore lint/suspicious/noExplicitAny: spy
   spy: any,
   expectedValue: string,
   expectedDate: DateFrameworkType | null | undefined,
@@ -178,6 +179,12 @@ describe("GIVEN a DateInputSingle", () => {
         // Test re-entering the same valid date
         cy.findByRole("textbox").click().clear().type(initialDateValue);
         cy.realPress("Tab");
+        cy.get("@dateChangeSpy").should("have.callCount", 4);
+
+        // Test giving focus but not changing the date
+        cy.findByRole("textbox").click();
+        cy.realPress("Tab");
+        cy.findByRole("textbox").should("have.value", initialDateValue);
         cy.get("@dateChangeSpy").should("have.callCount", 4);
       });
 

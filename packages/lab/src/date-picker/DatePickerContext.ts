@@ -9,6 +9,7 @@ import type {
 
 /**
  * Interface representing the base state for a DatePicker.
+ * @template TDate - The type of the date object.
  */
 interface DatePickerBaseState<TDate extends DateFrameworkType> {
   /**
@@ -53,6 +54,24 @@ interface DatePickerBaseState<TDate extends DateFrameworkType> {
      * @param event - event that triggered the state change
      */
     cancel: (event?: Event) => void;
+    /**
+     * Function to determine if a day is disabled.
+     * @param date - The date to check.
+     * @returns A string reason if the day is disabled, otherwise `false` or `undefined`.
+     */
+    isDayDisabled?: (date: TDate) => string | false | undefined;
+    /**
+     * Function to determine if a day is highlighted.
+     * @param date - The date to check.
+     * @returns A string reason if the day is highlighted, otherwise `false` or `undefined`.
+     */
+    isDayHighlighted?: (date: TDate) => string | false | undefined;
+    /**
+     * Function to determine if a day is unselectable.
+     * @param date - The date to check.
+     * @returns A string reason if the day is unselectable, otherwise `false` or `undefined`.
+     */
+    isDayUnselectable?: (date: TDate) => string | false | undefined;
     /**
      * Sets the enableApply state.
      * @param newEnableApply - The new value for enableApply.
@@ -161,14 +180,14 @@ export type DatePickerState<TDate extends DateFrameworkType> =
  * Context for single date selection.
  */
 export const SingleDateSelectionContext = createContext<
-  SingleDatePickerState<any> | undefined
+  SingleDatePickerState<DateFrameworkType> | undefined
 >("SingleDateSelectionContext", undefined);
 
 /**
  * Context for date range selection.
  */
 export const DateRangeSelectionContext = createContext<
-  RangeDatePickerState<any> | undefined
+  RangeDatePickerState<DateFrameworkType> | undefined
 >("DateRangeSelectionContext", undefined);
 
 /**
