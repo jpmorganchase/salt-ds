@@ -8,6 +8,7 @@
   display: flex;
   flex-flow: wrap;
   align-items: center;
+  gap: var(--salt-spacing-100);
   justify-content: space-between;
 }
 .saltCarouselControls-container:last-child {
