@@ -2,7 +2,12 @@
 "@salt-ds/core": minor
 ---
 
-Add `Slider` and `RangeSlider` components to core.
+Promote updated `Slider` and `RangeSlider` components to core. The update includes:
+
+- Improved accessibility and focus behavior.
+- Enhanced API for slider customization, including options like `marks`, `showTicks`, and `showTooltip`.
+- Fixed touch interactions on mobile to allow dragging of the slider thumb without horizontal screen scrolling.
+- Set the default `max` value of the `Slider` and `RangeSlider` as 100 to be consistent with the HTML specification.
 
 ```tsx
 <Slider
