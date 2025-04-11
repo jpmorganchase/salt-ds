@@ -7,96 +7,53 @@ sidebar:
 
 Typography involves the style and appearance of written language. It plays a crucial role in enhancing readability, establishing hierarchy, and setting a visual tone, resulting in more effective and expressive communication.
 
-If you’re using the JPM Brand theme please also refer to the listed typography guidance on the [themes page](/salt/themes/index).
-
 ## Font family
 
+The Legacy UITK theme uses the open-source, sans-serif typeface **Open Sans**. The JPM brand theme uses the **Amplitude** font which is in line with updated brand guidelines. Code uses the mono space typeface **PT Mono**.
+
+For more information about the themes offered in Salt, please refer to the guidance on the [themes page](https://www.saltdesignsystem.com/salt/themes/index).
+
 <Image
-  src="/img/foundations/typography-opensans.svg"
-  alt="Example of Open Sans font"
+  src="/img/foundations/typography-options.png"
+  alt="Example of Open Sans and Amplitude font"
 />
 
-The current Salt theme uses the open-source, sans-serif typeface **Open Sans**. It’s the sole typeface for all text styles, with the exception of code which uses the mono space typeface, **PT Mono**.
+To download the Amplitude font, please refer to the [font brand resources](go/salt-ds-internal/design/fonts) on our internal site. (Internal users only)
 
 ## Font weight
 
 Weight refers to the relative thickness of a font’s stroke. Each type style includes three weights which enable you to create visual hierarchy within the same text size.
 
-Please note that in the Salt design system, 'Strong' indicates bolder weight than the default, whereas 'Small' represents a thinner weight, which may differ from traditional terminology where [small](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/small) represents side-comments and small print.
+| Font weight | Purpose                                                         |
+| ----------- | --------------------------------------------------------------- |
+| Small       | A thinner weight alternative to de-emphasize default weight     |
+| Default     | The default weight across the system for visual balance         |
+| Strong      | A stronger, bold weight alternative to emphasize default weight |
 
-<Diagrams>
-
-<Diagram
-      src="/img/foundations/typography-weight-small.svg"
-      alt="Example of text displayed in small weight"
->
-
-### Small
-
-A thinner weight alternative to de-emphasize default weight.
-
-</Diagram>
-
-<Diagram
-       src="/img/foundations/typography-weight-default.svg"
-      alt="Example of text displayed in default weight"
->
-
-### Default
-
-The default weight across the system for visual balance.
-
-</Diagram>
-
-<Diagram
-       src="/img/foundations/typography-weight-strong.svg"
-      alt="Example of text displayed in strong weight"
->
-
-### Strong
-
-A stronger weight alternative to emphasize default weight.
-
-</Diagram>
-
-</Diagrams>
+<Image
+  src="/img/foundations/typography-weight.png"
+  alt="Example of small, default and strong font weights"
+/>
 
 ## Type hierarchy
 
 Type hierarchy arranges text elements by varying font sizes, weights, and styles. This guides the reader's attention and conveys content structure.
 
-### Display
-
-Display styles are primarily for representing key metrics and mastheads.
+| Text style | Purpose                                                                                                                     |
+| ---------- | --------------------------------------------------------------------------------------------------------------------------- |
+| Display    | Display styles are primarily for representing key metrics and mastheads                                                     |
+| Headings   | Headings separate sections of content into varying levels                                                                   |
+| Body       | Body is the default style for most components and text blocks                                                               |
+| Label      | Labels display a small amount of text that helps people understand the current context of a component                       |
+| Help       | Help text provides additional information or instructions, such as accepted data formats for input or file types for upload |
 
 <Image
-  src="/img/foundations/typography-style-display.svg"
-  alt="Graphical representation of Display styles"
+  src="/img/foundations/typography-headers.png"
+  alt="Example of Open Sans and Amplitude font"
 />
 
-### Headings
-
-Headings separate sections of content into varying levels.
-
 <Image
-  src="/img/foundations/typography-style-headings.svg"
-  alt="Graphical representation of Heading styles"
-/>
-
-### Body
-
-Body is the default style for most components and text blocks.
-
-### Label
-
-Labels display a small amount of text that helps people understand the current context of a component.
-
-### Help
-
-Help text provides additional information or instructions, such as accepted data formats for input or file types for upload.
-
-<Image
-  src="/img/foundations/typography-style-body-label.svg"
+  src="/img/foundations/typography-style-body-label.png"
   alt="Graphical representation of Body and Label styles"
 />
 
@@ -121,8 +78,8 @@ Title case should only be used for proper nouns and job titles. Proper nouns ref
 All capitals are used for button labels to give them prominence and to differentiate them from other graphical elements. Never use all caps in general writing.
 
 <Image
-  src="/img/foundations/typography-allcaps.svg"
-  alt="Example of buttons with allcaps"
+  src="/img/foundations/typography-allcaps.png"
+  alt="Example of allcaps buttons in Dialog"
 />
 
 ## Italics
@@ -133,11 +90,16 @@ Full sentences or blocks of text are generally not italicized. Combining italics
 
 <Image
   src="/img/foundations/typography-italics.svg"
-  alt="Example of italicized text"
+  alt="Example of italicized text in Form field"
 />
 
 ## Notation
 
 Notation is a text style characterized by its discrete font size, making it ideal for use in confined spaces such as the Avatar and Badge components. This style is also well-suited for footnotes and disclaimers, ensuring that important but less prominent information is clearly communicated without overwhelming the main content.
+
+<Image
+  src="/img/foundations/typography-notation.png"
+  alt="Example of Avatar which uses notation for initials"
+/>
 
 :fragment{src="./fragments/feedback.mdx"}
