@@ -10,9 +10,9 @@ import "./carousel.stories.css";
 import { Button, H2, H3, Link, StackLayout, Text } from "@salt-ds/core";
 import { useState } from "react";
 import carouselSlide1 from "../assets/carouselSlide1.png";
+import carouselSlide2 from "../assets/carouselSlide2.png";
 import carouselSlide3 from "../assets/carouselSlide3.png";
 import carouselSlide4 from "../assets/carouselSlide4.png";
-import carouselSlide5 from "../assets/carouselSlide5.png";
 
 export default {
   title: "Lab/Carousel",
@@ -30,7 +30,7 @@ const content = [
   {
     headerId: 1,
     title: "Preview your account information",
-    image: carouselSlide5,
+    image: carouselSlide2,
     content:
       "The new dashboard provides a complete overview of all your key account details.",
     link: "Go to dashboard",

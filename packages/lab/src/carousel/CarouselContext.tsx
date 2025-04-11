@@ -64,10 +64,6 @@ export function CarouselProvider({
     });
   }, [activeSlideIndex]);
 
-  useEffect(() => {
-    activeSlideIndexProp && setActiveSlideIndex(activeSlideIndexProp);
-  }, [activeSlideIndexProp]);
-
   return (
     <CarouselStateContext.Provider value={state}>
       <CarouselDispatchContext.Provider value={dispatch}>

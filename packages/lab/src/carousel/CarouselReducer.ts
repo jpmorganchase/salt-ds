@@ -27,27 +27,33 @@ export function carouselReducer(
     case "register": {
       const { slides } = state;
       const [id, { element, slideDescription }] = action.payload;
-      slides.set(id, { element, slideDescription });
+      const newSlides = new Map(slides);
+      newSlides.set(id, { element, slideDescription });
       return {
         ...state,
-        slides: new Map(slides),
+        slides: newSlides,
       };
     }
     case "unregister": {
       const { slides } = state;
       const id = action.payload;
-      if (!slides.has(id)) return state;
-      slides.delete(id);
+      if (!slides.has(id)) {
+        return state;
+      }
+      const newSlides = new Map(slides);
+      newSlides.delete(id);
       return {
         ...state,
-        slides: new Map(slides),
+        slides: newSlides,
       };
     }
     // moves the first visible item
     case "move": {
       const { slides } = state;
       const id = action.payload;
-      if (!slides.has(id)) return state;
+      if (!slides.has(id)) {
+        return state;
+      }
       const slideIds = [...slides.keys()];
       const index = slideIds.indexOf(id || slideIds[0]);
       return {
@@ -60,7 +66,9 @@ export function carouselReducer(
 
       const index = action.payload;
 
-      if (index === -1 || index > slides.size) return state;
+      if (index === -1 || index > slides.size) {
+        return state;
+      }
 
       return {
         ...state,
@@ -79,7 +87,9 @@ export function carouselReducer(
 
       const focusedSlideIndex = [...slides.keys()].indexOf(id);
 
-      if (focusedSlideIndex === -1) return state;
+      if (focusedSlideIndex === -1) {
+        return state;
+      }
 
       return {
         ...state,
