@@ -10,9 +10,9 @@ import type { ReactElement } from "react";
 import { sliderData } from "./exampleData";
 import styles from "./index.module.css";
 
-export const Default = (): ReactElement => {
+export const MultipleSlides = (): ReactElement => {
   return (
-    <Carousel aria-label="Account overview">
+    <Carousel visibleSlides={{ xs: 1, sm: 2 }} aria-label="Account overview">
       <CarouselControls />
       <CarouselSlider>
         {sliderData.map((slide, index) => {

@@ -1,4 +1,4 @@
-import { H3, Text, useId } from "@salt-ds/core";
+import { H2, H3, Text, useId } from "@salt-ds/core";
 import {
   Carousel,
   CarouselControls,
@@ -10,10 +10,10 @@ import type { ReactElement } from "react";
 import { sliderData } from "./exampleData";
 import styles from "./index.module.css";
 
-export const Default = (): ReactElement => {
+export const WithTitle = (): ReactElement => {
   return (
-    <Carousel aria-label="Account overview">
-      <CarouselControls />
+    <Carousel aria-labelledby="carousel-title">
+      <CarouselControls title={<H2 id="carousel-title">Account overview</H2>} />
       <CarouselSlider>
         {sliderData.map((slide, index) => {
           const slideId = useId();

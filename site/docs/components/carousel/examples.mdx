@@ -1,0 +1,49 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+## Default
+
+Use the default setting to allow users to navigate the carousel in single slide increments, moving either backward or forward through the sequence.
+
+<LivePreview componentName="carousel" exampleName="Default" />
+
+## Multiple slides
+
+Use the multiple slides settings to allow users to navigate the carousel in single slide increments while displaying more than one slide at a time.
+
+To display multiple slides, pass multiple values (one per breakpoint) or a single value of the number of slides to show in `visibleSlides`.
+
+<LivePreview componentName="carousel" exampleName="MultipleSlides" />
+
+## With title
+
+The carousel title is optional and should be placed in the top left corner of the carousel.
+
+<LivePreview componentName="carousel" exampleName="WithTitle" />
+
+## Appearance
+
+Two different appearances are available for carousel: Bordered and Transparent.
+
+<LivePreview componentName="carousel" exampleName="Appearance" />
+
+## With slide actions
+
+You can incorporate actions like [links](../link) into a carousel slide. Don't embed actions into a clickable slide.
+
+<LivePreview componentName="carousel" exampleName="WithSlideActions" />
+
+## Controls alignment
+
+<LivePreview componentName="carousel" exampleName="ControlsAlignment" />
+
+## Controlled carousel
+
+<LivePreview componentName="carousel" exampleName="ControlledCarousel" />
