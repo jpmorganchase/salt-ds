@@ -3,9 +3,9 @@ import {
   FormField,
   FormFieldLabel,
   Input,
+  RangeSlider,
   useId,
 } from "@salt-ds/core";
-import { RangeSlider } from "@salt-ds/lab";
 import {
   type ChangeEvent,
   type ReactElement,

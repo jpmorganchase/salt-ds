@@ -1,5 +1,4 @@
-import { StackLayout, Text } from "@salt-ds/core";
-import { Slider } from "@salt-ds/lab";
+import { Slider, StackLayout, Text } from "@salt-ds/core";
 import { useState } from "react";
 
 export const WithChangeEvents = () => {

@@ -3,12 +3,15 @@ import {
   FormField,
   FormFieldLabel,
   Input,
+  RangeSlider,
+  type RangeSliderProps,
   StackLayout,
+  useId,
   useResponsiveProp,
 } from "@salt-ds/core";
-import { Slider, type SliderProps } from "@salt-ds/lab";
 import type { StoryFn } from "@storybook/react";
-import { type ChangeEvent, useEffect, useState } from "react";
+import { toFloat } from "packages/core/src/slider/internal/utils";
+import { type ChangeEvent, useState } from "react";
 
 const marks = [
   {
@@ -57,13 +60,25 @@ const marks = [
   },
 ];
 
+const accessibleTextStyles: React.CSSProperties = {
+  position: "absolute",
+  height: "1px",
+  width: "1px",
+  padding: "0",
+  margin: "-1px",
+  overflow: "hidden",
+  clip: "rect(0, 0, 0, 0)",
+  whiteSpace: "nowrap",
+  borderWidth: "0",
+};
+
 export default {
-  title: "Lab/Slider",
-  component: Slider,
+  title: "Core/RangeSlider",
+  component: RangeSlider,
 };
 
 const Template: StoryFn = ({ ...args }) => {
-  return <Slider style={{ maxWidth: "400px", width: "90vw" }} {...args} />;
+  return <RangeSlider style={{ maxWidth: "400px", width: "90vw" }} {...args} />;
 };
 
 export const Default = Template.bind({});
@@ -105,7 +120,7 @@ WithMarkTicks.args = {
   min: 0,
   max: 10,
   marks: marks,
-  "aria-label": "With mark ticks",
+  "aria-label": "With marks and ticks",
   showTicks: true,
 };
 
@@ -124,6 +139,8 @@ WithRestrictToMarks.args = {
     { value: 80, label: "80" },
     { value: 100, label: "100" },
   ],
+  min: 0,
+  max: 100,
   "aria-label": "With restrict to marks",
   showTicks: true,
   restrictToMarks: true,
@@ -138,8 +155,8 @@ WithInlineLabelsAndMarks.args = {
   "aria-label": "With inline labels and marks",
   min: 0,
   max: 50,
-  defaultValue: 30,
   step: 10,
+  defaultValue: [10, 30],
   minLabel: "Very low",
   maxLabel: "Very high",
   accessibleMinText: "Very low",
@@ -160,10 +177,9 @@ WithInlineLabelsAndMarks.parameters = {
 
 export const WithInlineLabelsMarksAndTicks = Template.bind({});
 WithInlineLabelsMarksAndTicks.args = {
-  "aria-label": "With inline labels, marks and ticks",
+  "aria-label": "With inline labels and marks and ticks",
   min: 0,
   max: 50,
-  defaultValue: 30,
   step: 10,
   minLabel: "Very low",
   maxLabel: "Very high",
@@ -209,6 +225,7 @@ WithConstrainedLabelPosition.parameters = {
 export const WithConstrainedLabelPositionAndTicks = Template.bind({});
 WithConstrainedLabelPositionAndTicks.args = {
   "aria-label": "With constrained label position and ticks",
+  defaultValue: [2, 5],
   min: 0,
   max: 10,
   marks: [
@@ -231,10 +248,10 @@ WithConstrainedLabelPositionAndTicks.parameters = {
 
 export const WithHiddenTooltip = Template.bind({});
 WithHiddenTooltip.args = {
-  "aria-label": "With hidden tooltip",
+  "aria-label": "With disabled tooltip",
   min: 0,
   max: 50,
-  defaultValue: 20,
+  defaultValue: [20, 40],
   minLabel: "Very low",
   maxLabel: "Very high",
   accessibleMinText: "Very low",
@@ -267,13 +284,12 @@ WithNegativeBounds.args = {
 WithNegativeBounds.parameters = {
   actions: { disable: true },
 };
-
 export const WithFormatting = Template.bind({});
 WithFormatting.args = {
   "aria-label": "With formatting",
   min: 0,
   max: 50,
-  defaultValue: 25,
+  defaultValue: [20, 45],
   format: (value: number) =>
     Intl.NumberFormat("en-US", {
       style: "currency",
@@ -290,89 +306,114 @@ WithFormatting.parameters = {
   actions: { disable: true },
 };
 
-export const WithinFormField: StoryFn<SliderProps> = () => {
+export const WithinFormField: StoryFn<RangeSliderProps> = () => {
   return (
     <StackLayout gap={4} style={{ maxWidth: "400px", width: "90vw" }}>
       <FormField
         labelPlacement="left"
         style={
           {
-            "--saltFormField-label-width": "25%",
+            "--saltFormField-label-width": "20%",
           } as React.CSSProperties
         }
       >
         <FormFieldLabel>Form field left</FormFieldLabel>
-        <Slider minLabel="0" maxLabel="10" min={0} max={10} />
+        <RangeSlider minLabel="0" maxLabel="10" min={0} max={10} />
       </FormField>
       <FormField
         labelPlacement="left"
         style={
           {
-            "--saltFormField-label-width": "28%",
+            "--saltFormField-label-width": "23%",
           } as React.CSSProperties
         }
       >
         <FormFieldLabel>Form field left</FormFieldLabel>
-        <Slider showTicks marks={marks} min={0} max={10} />
+        <RangeSlider showTicks marks={marks} min={0} max={10} />
       </FormField>
       <FormField>
         <FormFieldLabel>Form field top</FormFieldLabel>
-        <Slider minLabel="0" maxLabel="10" min={0} max={10} />
+        <RangeSlider minLabel="0" maxLabel="10" min={0} max={10} />
       </FormField>
       <FormField>
         <FormFieldLabel>Form field top</FormFieldLabel>
-        <Slider showTicks marks={marks} min={0} max={10} />
+        <RangeSlider showTicks marks={marks} min={0} max={10} />
       </FormField>
     </StackLayout>
   );
 };
 
-export const WithInput: StoryFn<SliderProps> = () => {
-  const [value, setValue] = useState<number>(5);
-  const [inputValue, setInputValue] = useState<string | number>(value);
-  const [validationStatus, setValidationStatus] = useState<undefined | "error">(
-    undefined,
-  );
+export const WithInput: StoryFn<RangeSliderProps> = () => {
+  const [value, setValue] = useState<[number, number]>([-20, 30]);
+  const [minInputValue, setMinInputValue] = useState<string | number>(value[0]);
+  const [maxInputValue, setMaxInputValue] = useState<string | number>(value[1]);
   const bounds: [number, number] = [-50, 50];
+  const minimumInputLabel = useId();
+  const maximumInputLabel = useId();
 
-  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (
+    event: ChangeEvent<HTMLInputElement>,
+    variant: "min" | "max",
+  ) => {
     const inputValue = event.target.value;
-    setInputValue(inputValue);
-    if (Number.isNaN(Number(inputValue))) return;
-    setValue(Number.parseFloat(inputValue));
-  };
+    const sliderValues = [...value];
 
-  const validateSingle = (value: string | number, bounds: [number, number]) => {
-    if (Number.isNaN(Number(value))) return false;
-    if (Number(value) < bounds[0] || Number(value) > bounds[1]) return false;
-    return true;
-  };
+    variant === "min"
+      ? setMinInputValue(inputValue)
+      : setMaxInputValue(inputValue);
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: Only need to run when inputValue and bounds change
-  useEffect(() => {
-    const valid = validateSingle(inputValue, bounds);
-    setValidationStatus(valid ? undefined : "error");
-  }, [inputValue, bounds]);
+    if (variant === "min") {
+      setMinInputValue(inputValue);
+      sliderValues[0] = toFloat(inputValue);
+    } else {
+      setMaxInputValue(inputValue);
+      sliderValues[1] = toFloat(inputValue);
+    }
+
+    setValue(sliderValues as [number, number]);
+  };
 
   return (
     <FormField style={{ maxWidth: "400px", width: "90vw" }}>
-      <FormFieldLabel> Slider with Input </FormFieldLabel>
-      <FlexLayout gap={3}>
+      <FormFieldLabel>Range Slider with Input</FormFieldLabel>
+      <FlexLayout style={{ width: "100%" }} gap={2}>
+        <span aria-hidden style={accessibleTextStyles} id={minimumInputLabel}>
+          Minimum
+        </span>
         <Input
-          value={inputValue}
+          value={minInputValue}
+          onChange={(event: ChangeEvent<HTMLInputElement>) =>
+            handleInputChange(event, "min")
+          }
           style={{ flex: 1 }}
-          inputProps={{ style: { textAlign: "center" } }}
-          onChange={handleInputChange}
-          validationStatus={validationStatus}
+          inputProps={{
+            style: { textAlign: "center" },
+            "aria-labelledby": minimumInputLabel,
+          }}
         />
-        <Slider
-          style={{ flex: "100%" }}
+        <RangeSlider
           min={bounds[0]}
           max={bounds[1]}
           value={value}
-          onChange={(_e, value) => {
-            setInputValue(value);
+          onChange={(_e, value: [number, number]) => {
+            setMinInputValue(value[0]);
+            setMaxInputValue(value[1]);
             setValue(value);
+          }}
+          style={{ flex: "100%" }}
+        />
+        <span aria-hidden style={accessibleTextStyles} id={maximumInputLabel}>
+          Maximum
+        </span>
+        <Input
+          value={maxInputValue}
+          onChange={(event: ChangeEvent<HTMLInputElement>) =>
+            handleInputChange(event, "max")
+          }
+          style={{ flex: 1 }}
+          inputProps={{
+            style: { textAlign: "center" },
+            "aria-labelledby": maximumInputLabel,
           }}
         />
       </FlexLayout>
@@ -380,109 +421,144 @@ export const WithInput: StoryFn<SliderProps> = () => {
   );
 };
 
-export const WithInputAndInlineLabels: StoryFn<SliderProps> = () => {
-  const [value, setValue] = useState<number>(-20);
-  const [inputValue, setInputValue] = useState<string | number>(value);
-  const [validationStatus, setValidationStatus] = useState<undefined | "error">(
-    undefined,
-  );
+export const WithInputAndInlineLabels: StoryFn<RangeSliderProps> = () => {
+  const [value, setValue] = useState<[number, number]>([-20, 30]);
+  const [minInputValue, setMinInputValue] = useState<string | number>(value[0]);
+  const [maxInputValue, setMaxInputValue] = useState<string | number>(value[1]);
   const bounds: [number, number] = [-50, 50];
+  const minimumInputLabel = useId();
+  const maximumInputLabel = useId();
 
-  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (
+    event: ChangeEvent<HTMLInputElement>,
+    variant: "min" | "max",
+  ) => {
     const inputValue = event.target.value;
-    setInputValue(inputValue);
-    if (Number.isNaN(Number(inputValue))) return;
-    setValue(Number.parseFloat(inputValue));
-  };
+    const sliderValues = [...value];
 
-  const validateSingle = (value: string | number, bounds: [number, number]) => {
-    if (Number.isNaN(Number(value))) return false;
-    if (Number(value) < bounds[0] || Number(value) > bounds[1]) return false;
-    return true;
-  };
+    variant === "min"
+      ? setMinInputValue(inputValue)
+      : setMaxInputValue(inputValue);
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: Only need to run when inputValue and bounds change
-  useEffect(() => {
-    const valid = validateSingle(inputValue, bounds);
-    setValidationStatus(valid ? undefined : "error");
-  }, [inputValue, bounds]);
+    if (variant === "min") {
+      setMinInputValue(inputValue);
+      sliderValues[0] = toFloat(inputValue);
+    } else {
+      setMaxInputValue(inputValue);
+      sliderValues[1] = toFloat(inputValue);
+    }
+
+    setValue(sliderValues as [number, number]);
+  };
 
   return (
     <FormField style={{ maxWidth: "400px", width: "90vw" }}>
-      <FormFieldLabel> Slider with Input </FormFieldLabel>
-      <FlexLayout gap={3}>
+      <FormFieldLabel>Range Slider with Input</FormFieldLabel>
+      <FlexLayout style={{ width: "100%" }} gap={2}>
+        <span aria-hidden style={accessibleTextStyles} id={minimumInputLabel}>
+          Minimum
+        </span>
         <Input
-          value={inputValue}
+          value={minInputValue}
+          onChange={(event: ChangeEvent<HTMLInputElement>) =>
+            handleInputChange(event, "min")
+          }
           style={{ flex: 1 }}
-          inputProps={{ style: { textAlign: "center" } }}
-          onChange={handleInputChange}
-          validationStatus={validationStatus}
+          inputProps={{
+            style: { textAlign: "center" },
+            "aria-labelledby": minimumInputLabel,
+          }}
         />
-        <Slider
-          style={{ flex: "100%" }}
+        <RangeSlider
           min={bounds[0]}
           max={bounds[1]}
           value={value}
-          step={3}
-          onChange={(_e, value) => {
-            setInputValue(value);
+          onChange={(_e, value: [number, number]) => {
+            setMinInputValue(value[0]);
+            setMaxInputValue(value[1]);
             setValue(value);
           }}
+          style={{ flex: "100%" }}
           minLabel="-50"
           maxLabel="50"
         />
+        <span aria-hidden style={accessibleTextStyles} id={maximumInputLabel}>
+          Maximum
+        </span>
+        <Input
+          value={maxInputValue}
+          onChange={(event: ChangeEvent<HTMLInputElement>) =>
+            handleInputChange(event, "max")
+          }
+          style={{ flex: 1 }}
+          inputProps={{
+            style: { textAlign: "center" },
+            "aria-labelledby": maximumInputLabel,
+          }}
+        />
       </FlexLayout>
     </FormField>
   );
 };
 
-export const WithInputAndMarksAndTicks: StoryFn<SliderProps> = () => {
-  const [value, setValue] = useState<number>(0);
-  const [inputValue, setInputValue] = useState<string | number>(value);
-  const [validationStatus, setValidationStatus] = useState<undefined | "error">(
-    undefined,
-  );
+export const WithInputAndMarksAndTicks: StoryFn<RangeSliderProps> = () => {
+  const [value, setValue] = useState<[number, number]>([-20, 30]);
+  const [minInputValue, setMinInputValue] = useState<string | number>(value[0]);
+  const [maxInputValue, setMaxInputValue] = useState<string | number>(value[1]);
   const bounds: [number, number] = [-50, 50];
+  const minimumInputLabel = useId();
+  const maximumInputLabel = useId();
 
-  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (
+    event: ChangeEvent<HTMLInputElement>,
+    variant: "min" | "max",
+  ) => {
     const inputValue = event.target.value;
-    setInputValue(inputValue);
-    if (Number.isNaN(Number(inputValue))) return;
-    setValue(Number.parseFloat(inputValue));
-  };
+    const sliderValues = [...value];
 
-  const validateSingle = (value: string | number, bounds: [number, number]) => {
-    if (Number.isNaN(Number(value))) return false;
-    if (Number(value) < bounds[0] || Number(value) > bounds[1]) return false;
-    return true;
-  };
+    variant === "min"
+      ? setMinInputValue(inputValue)
+      : setMaxInputValue(inputValue);
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: Only need to run when inputValue and bounds change
-  useEffect(() => {
-    const valid = validateSingle(inputValue, bounds);
-    setValidationStatus(valid ? undefined : "error");
-  }, [inputValue, bounds]);
+    if (variant === "min") {
+      setMinInputValue(inputValue);
+      sliderValues[0] = toFloat(inputValue);
+    } else {
+      setMaxInputValue(inputValue);
+      sliderValues[1] = toFloat(inputValue);
+    }
+
+    setValue(sliderValues as [number, number]);
+  };
 
   return (
     <FormField style={{ maxWidth: "400px", width: "90vw" }}>
-      <FormFieldLabel> Slider with Input </FormFieldLabel>
+      <FormFieldLabel>Range Slider with Input</FormFieldLabel>
       <FlexLayout gap={3}>
+        <span aria-hidden style={accessibleTextStyles} id={minimumInputLabel}>
+          Minimum
+        </span>
         <Input
-          value={inputValue}
+          value={minInputValue}
           style={{ flex: 1 }}
-          inputProps={{ style: { textAlign: "center" } }}
-          onChange={handleInputChange}
-          validationStatus={validationStatus}
+          inputProps={{
+            style: { textAlign: "center" },
+            "aria-labelledby": minimumInputLabel,
+          }}
+          onChange={(event: ChangeEvent<HTMLInputElement>) =>
+            handleInputChange(event, "min")
+          }
         />
-        <Slider
-          style={{ flex: "100%" }}
+        <RangeSlider
           min={bounds[0]}
           max={bounds[1]}
           value={value}
-          onChange={(_e, value) => {
-            setInputValue(value);
+          onChange={(_e, value: [number, number]) => {
+            setMinInputValue(value[0]);
+            setMaxInputValue(value[1]);
             setValue(value);
           }}
+          style={{ flex: "100%" }}
           marks={[
             {
               value: -50,
@@ -499,36 +575,58 @@ export const WithInputAndMarksAndTicks: StoryFn<SliderProps> = () => {
           ]}
           showTicks
         />
+        <span aria-hidden style={accessibleTextStyles} id={maximumInputLabel}>
+          Maximum
+        </span>
+        <Input
+          value={maxInputValue}
+          style={{ flex: 1 }}
+          inputProps={{
+            style: { textAlign: "center" },
+            "aria-labelledby": maximumInputLabel,
+          }}
+          onChange={(event: ChangeEvent<HTMLInputElement>) =>
+            handleInputChange(event, "max")
+          }
+        />
       </FlexLayout>
     </FormField>
   );
 };
 
 export const WithCustomStep = () => (
-  <StackLayout gap={10} style={{ maxWidth: "400px", width: "90vw" }}>
+  <StackLayout gap={10} style={{ width: "300px" }}>
     <FormField>
       <FormFieldLabel>Step: 1 (default)</FormFieldLabel>
-      <Slider min={-1} max={1} minLabel="-1" maxLabel="1" />
+      <RangeSlider
+        min={-1}
+        max={1}
+        minLabel="-1"
+        maxLabel="1"
+        defaultValue={[-1, 0]}
+      />
     </FormField>
     <FormField>
       <FormFieldLabel>Step: 0.2</FormFieldLabel>
-      <Slider
+      <RangeSlider
         min={-1}
         max={1}
         minLabel="-1"
         maxLabel="1"
         step={0.2}
+        defaultValue={[-1, 0.2]}
         format={(value: number) => Intl.NumberFormat().format(value)}
       />
     </FormField>
     <FormField>
       <FormFieldLabel>Step: 0.25 (two decimal places)</FormFieldLabel>
-      <Slider
+      <RangeSlider
         min={-1}
         max={1}
         minLabel="-1"
         maxLabel="1"
         step={0.25}
+        defaultValue={[-1, 0.25]}
         format={(value: number) => Intl.NumberFormat().format(value)}
       />
     </FormField>
@@ -536,7 +634,7 @@ export const WithCustomStep = () => (
 );
 
 export const WithNonNumericValues = () => {
-  const [value, setValue] = useState<number>(3);
+  const [value, setValue] = useState<[number, number]>([1, 3]);
 
   const daysOfTheWeek = [
     { label: "Monday", shortLabel: "Mon", value: 1 },
@@ -565,15 +663,15 @@ export const WithNonNumericValues = () => {
   );
 
   return (
-    <Slider
+    <RangeSlider
       aria-label="Days of the week"
+      style={{ width: "80vw", maxWidth: "400px" }}
       min={1}
       max={7}
       value={value}
       onChange={(_e, value) => setValue(value)}
       format={getDayOfTheWeek}
       marks={responsiveLabels}
-      style={{ maxWidth: "400px", width: "90vw" }}
     />
   );
 };
@@ -583,7 +681,7 @@ Disabled.args = {
   "aria-label": "Disabled",
   min: 0,
   max: 50,
-  defaultValue: 35,
+  defaultValue: [20, 35],
   disabled: true,
   minLabel: "0",
   maxLabel: "50",

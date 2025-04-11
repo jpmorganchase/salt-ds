@@ -1,8 +1,9 @@
-import { Text, makePrefixer } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import { type HTMLAttributes, type RefObject, forwardRef } from "react";
+import { Text } from "../../text";
+import { makePrefixer } from "../../utils";
 import sliderTrackCss from "./SliderTrack.css";
 import { calculateMarkPosition, calculatePercentage } from "./utils";
 
