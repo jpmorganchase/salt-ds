@@ -27,8 +27,10 @@ describe("GIVEN a 100% width slides carousel", () => {
 
     it("SHOULD move to the previous slide with button", () => {
       cy.mount(<Default />);
+      cy.findAllByText("1 of 4").should("exist");
       // move one to the left
       cy.findAllByRole("button", { name: "Next slide" }).click();
+      cy.findAllByText("2 of 4").should("exist");
       // test back button
       cy.findAllByRole("button", { name: "Previous slide" }).click();
       cy.findAllByText("1 of 4").should("exist");
@@ -74,12 +76,18 @@ describe("GIVEN a 100% width slides carousel", () => {
       cy.findAllByText("1 of 4").should("exist");
     });
     describe("WHEN navigating with keyboard keys", () => {
-      it("SHOULD NOT move slides when tabbing out of actions within", () => {
+      it("SHOULD NOT move to hidden slides when using tab navigation", () => {
         cy.mount(<WithActions />);
         cy.findAllByText("1 - 2 of 4").should("exist");
         cy.findAllByRole("button", { name: "Next slides" }).focus();
         // tab through visible elements
         cy.realPress("Tab");
+        cy.realPress("Tab");
+        cy.findByText("Open an account").should("be.focused");
+        cy.realPress("Tab");
+        cy.realPress("Tab");
+        cy.findByText("Go to dashboard").should("be.focused");
+        // next tab should exit the carousel
         cy.realPress("Tab");
         // slides should not have been changed
         cy.findAllByText("1 - 2 of 4").should("exist");

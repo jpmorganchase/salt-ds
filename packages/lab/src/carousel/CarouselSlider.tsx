@@ -111,7 +111,7 @@ export const CarouselSlider = forwardRef<HTMLDivElement, CarouselSliderProps>(
       requestAnimationFrame(() => {
         container.scrollTo({
           left: focusedSlideIndex * slideWidth,
-          // @ts-ignore
+          // @ts-ignore ScrollBehavior typescript definition missing instant
           behavior: scrollBehavior,
         });
       });

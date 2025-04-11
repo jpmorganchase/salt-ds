@@ -14,34 +14,34 @@ Updated `Carousel` component
 
 before:
 
-```typescript
+```tsx
 <Carousel>
-    {items.map((item, index) => (
-        <CarouselSlide
-            key={index}
-            ButtonBar={<Button variant="cta">Learn more</Button>}
-            description="Lorem ipsum"
-            title="Carousel slide title"
-        />
-    ))}
+  {items.map((item, index) => (
+    <CarouselSlide
+      key={index}
+      ButtonBar={<Button variant="cta">Learn more</Button>}
+      description="Lorem ipsum"
+      title="Carousel slide title"
+    />
+  ))}
 </Carousel>
 ```
 
 after:
 
-```typescript
+```tsx
 <Carousel>
-  <CarouselControls/>
+  <CarouselControls />
   <CarouselSlider>
     {items.map((slide) => (
-        <CarouselSlide
-          key={slide.title}
-          header={<H3>{slide.title}</H3>}
-          actions={<Link href="#">{slide.link}</Link>}
-        >
-          <Text>{slide.content}</Text>
-          </CarouselSlide>
-      ))}
-</CarouselSlider>
+      <CarouselSlide
+        key={slide.title}
+        header={<H3>{slide.title}</H3>}
+        actions={<Link href="#">{slide.link}</Link>}
+      >
+        <Text>{slide.content}</Text>
+      </CarouselSlide>
+    ))}
+  </CarouselSlider>
 </Carousel>
 ```
