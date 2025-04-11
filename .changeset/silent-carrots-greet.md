@@ -2,7 +2,7 @@
 "@salt-ds/lab": patch
 ---
 
-Added accessibility improvements including:
+Added accessibility improvements to `NumberInput` including:
 
 - Screen reader announcing correct values across all browsers.
 - Screen reader announcing validation state of the `NumberInput`.
