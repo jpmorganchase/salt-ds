@@ -9,6 +9,7 @@ export { default as Coloration } from "./Coloration";
 export { default as Icons } from "./Icons";
 export { default as FloatingFilter } from "./FloatingFilter";
 export { default as HDCompact } from "./HDCompact";
+export { default as HDCompactQuartz } from "./HDCompactQuartz";
 export { default as LoadingOverlay } from "./LoadingOverlay";
 export { default as MasterDetail } from "./MasterDetail";
 export { default as NoDataOverlay } from "./NoDataOverlay";

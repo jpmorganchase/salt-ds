@@ -5,9 +5,6 @@ import dataGridExampleColumnsHdCompact from "../dependencies/dataGridExampleColu
 import dataGridExampleData from "../dependencies/dataGridExampleData";
 import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
 
-import "ag-grid-community/styles/ag-grid.css";
-import "../../salt-ag-theme.css";
-
 const statusBar = {
   statusPanels: [
     {
@@ -23,7 +20,7 @@ const statusBar = {
 const repeat = (arr, n) => Array(n).fill(arr).flat();
 const data = repeat(dataGridExampleData, 50);
 
-const HDCompact = (props: AgGridReactProps) => {
+const HDCompactAlt = (props: AgGridReactProps) => {
   const { themeNext } = useTheme();
   const { agGridProps, containerProps } = useAgGridHelpers({
     compact: true,
@@ -32,9 +29,17 @@ const HDCompact = (props: AgGridReactProps) => {
 
   const Provider = themeNext ? SaltProviderNext : SaltProvider;
 
+  const { className, ...restContainerProps } = containerProps;
+
   return (
     <Provider density="high">
-      <div {...containerProps}>
+      <div
+        {...restContainerProps}
+        className={className?.replace(
+          "ag-theme-salt-compact-light",
+          "ag-theme-quartz",
+        )}
+      >
         <AgGridReact
           columnDefs={dataGridExampleColumnsHdCompact}
           rowData={data}
@@ -59,4 +64,4 @@ const HDCompact = (props: AgGridReactProps) => {
   );
 };
 
-export default HDCompact;
+export default HDCompactAlt;
