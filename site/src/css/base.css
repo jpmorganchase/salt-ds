@@ -1,7 +1,7 @@
 :root {
   box-sizing: border-box;
 
-  --site-content-max-width: 85ch;
+  --site-content-max-width: 100ch;
 }
 
 *,
