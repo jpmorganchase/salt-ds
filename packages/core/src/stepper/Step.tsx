@@ -25,15 +25,38 @@ import {
 
 export interface StepProps
   extends Omit<ComponentPropsWithoutRef<"li">, "onToggle"> {
+  /**
+   * The label of the step
+   */
   label?: ReactNode;
+  /**
+   * Description text is displayed just below the label
+   **/
   description?: ReactNode;
+  /**
+   * Optional string to determine the status of the step.
+   */
   status?: StepStatus;
+  /**
+   * The stage of the step
+   */
   stage?: StepStage;
+  /**
+   * Whether the step item is expanded.
+   */
   expanded?: boolean;
+  /**
+   * Initial expanded state of the step.
+   */
   defaultExpanded?: boolean;
+  /**
+   * Callback fired when the step is toggled.
+   */
   onToggle?: ButtonProps["onClick"];
+  /**
+   * Nested children of the step.
+   */
   substeps?: StepRecord[];
-  children?: ReactNode;
 }
 
 export type StepId = string;
