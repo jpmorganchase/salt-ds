@@ -1,4 +1,4 @@
-import { H3, Text, useId } from "@salt-ds/core";
+import { H3, Link, Text, useId } from "@salt-ds/core";
 import {
   Carousel,
   CarouselControls,
@@ -10,9 +10,9 @@ import type { ReactElement } from "react";
 import { sliderData } from "./exampleData";
 import styles from "./index.module.css";
 
-export const Default = (): ReactElement => {
+export const WithSlideActions = (): ReactElement => {
   return (
-    <Carousel aria-label="Account overview">
+    <Carousel visibleSlides={{ xs: 1, sm: 2 }} aria-label="Account overview">
       <CarouselControls />
       <CarouselSlider>
         {sliderData.map((slide, index) => {
@@ -20,6 +20,7 @@ export const Default = (): ReactElement => {
           return (
             <CarouselSlide
               key={slideId}
+              appearance="bordered"
               aria-labelledby={`slide-title-${slideId}`}
               media={
                 <img
@@ -29,6 +30,7 @@ export const Default = (): ReactElement => {
                 />
               }
               header={<H3 id={`slide-title-${slideId}`}>{slide.title}</H3>}
+              actions={<Link href="#">Usage examples</Link>}
             >
               <Text>{slide.content}</Text>
             </CarouselSlide>
