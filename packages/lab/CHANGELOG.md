@@ -1,5 +1,16 @@
 # @salt-ds/lab
 
+## 1.0.0-alpha.65
+
+### Minor Changes
+
+- 7fe2106: Removed `Slider` and `RangeSlider` from labs and promoted to core.
+
+### Patch Changes
+
+- Updated dependencies [7fe2106]
+  - @salt-ds/core@1.44.0
+
 ## 1.0.0-alpha.64
 
 ### Minor Changes
