@@ -33,10 +33,12 @@
   gap: var(--salt-spacing-200);
   padding-left: var(--salt-spacing-25);
   padding-bottom: var(--salt-spacing-25);
+  flex-grow: 1;
 }
 .saltCarouselSlide-content {
   display: flex;
   flex-direction: column;
+  flex-grow: 1;
   gap: var(--salt-spacing-100);
 }
 .saltCarouselSlide-card {
