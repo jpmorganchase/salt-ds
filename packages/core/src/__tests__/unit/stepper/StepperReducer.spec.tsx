@@ -171,7 +171,7 @@ describe("StepperReducer", () => {
       let state = initStepperReducerState(steps);
 
       // Use the "goto" action to jump to step with id "2"
-      state = StepperReducer(state, { type: "goto", payload: "2" });
+      state = StepperReducer(state, { type: "move", payload: "2" });
 
       expect(state.started).toBe(true);
       expect(state.ended).toBe(false);
@@ -181,7 +181,7 @@ describe("StepperReducer", () => {
       expect(state.nextStep).toHaveProperty("id", "3");
 
       // Use the "goto" action to jump to the last step with id "3"
-      state = StepperReducer(state, { type: "goto", payload: "3" });
+      state = StepperReducer(state, { type: "move", payload: "3" });
 
       expect(state.started).toBe(true);
       expect(state.ended).toBe(true);
@@ -191,7 +191,7 @@ describe("StepperReducer", () => {
       expect(state.nextStep).toBe(null);
 
       // Use the "goto" action to jump to the first step with id "1"
-      state = StepperReducer(state, { type: "goto", payload: "1" });
+      state = StepperReducer(state, { type: "move", payload: "1" });
 
       expect(state.started).toBe(true);
       expect(state.ended).toBe(false);

@@ -417,7 +417,7 @@ export const ReducerLinks: StoryFn<typeof Stepper> = () => {
             tabIndex={0}
             onClick={() => {
               dispatch({
-                type: "goto",
+                type: "move",
                 payload: id,
               });
             }}
