@@ -71,6 +71,7 @@ function extractVariables(folder, outputFileBaseName) {
 
   const brandThemeCssVariables = {
     ...legacyCssVariables,
+    // FIXME: foundation tokens are different (e.g. red.10 is only a legacy theme color), so can't be overridden as simple as this
     ...getCssVariablesFromDir(themeDirPath, true),
   };
 
