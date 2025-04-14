@@ -1,0 +1,41 @@
+
+/* Main css class */
+.saltTable {
+  --table-header-height: calc(var(--salt-size-base) + var(--salt-spacing-100));
+  --table-row-height: calc(var(--salt-size-base) + var(--salt-spacing-100));
+  --table-background: var(--salt-container-primary-background);
+}
+
+table.saltTable {
+  border-spacing: 0;
+  border-radius: var(--saltTable-borderRadius, var(--salt-palette-corner));
+  border-collapse: separate;
+  background: var(--saltTable-background, var(--table-background));
+  color: var(--salt-content-primary-foreground);
+  font-family: var(--salt-text-fontFamily);
+  font-size: var(--salt-text-fontSize);
+}
+
+.saltTable-thead,
+table.saltTable thead {
+  border-start-start-radius: var(--saltTable-thead-borderRadius-top, var(--salt-palette-corner));
+  border-start-end-radius: var(--saltTable-thead-borderRadius-top, var(--salt-palette-corner));
+  background:  var(--saltTable-thead-background, var(--salt-container-primary-background));
+  color: var(--salt-content-secondary-foreground);
+  font-size: var(--salt-text-label-fontSize);
+  font-weight: var(--salt-text-label-fontWeight-strong);
+}
+
+.saltTable-th:hover,
+table.saltTable th:hover {
+  background: var(--saltTable-th-background-hover, var(--salt-container-primary-background));
+}
+
+.saltTable-tbody .saltTable-tr:hover,
+table.saltTable tbody tr:hover {
+  background: var(--saltTable-tr-background-hover, var(--salt-selectable-background-hover));
+}
+
+.saltTable-td, .saltTable-th {
+  padding: 0 var(--salt-spacing-100);
+}

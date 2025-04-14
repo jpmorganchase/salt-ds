@@ -61,6 +61,7 @@ export * from "./splitter";
 export * from "./static-list";
 export * from "./stepped-tracker";
 export * from "./system-status";
+export * from "./table";
 export * from "./tabs";
 export * from "./tabs-next";
 export * from "./toast-group";
