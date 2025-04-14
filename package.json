@@ -99,7 +99,7 @@
     "storybook": "^8.4.4",
     "stylelint": "^16.0.0",
     "typescript": "4.6.4",
-    "vite": "^6.0.0",
+    "vite": "^6.2.5",
     "vite-plugin-istanbul": "^6.0.0",
     "vite-tsconfig-paths": "^4.2.0",
     "vitest": "^3.0.0",
@@ -115,7 +115,8 @@
     "esbuild": "^0.25.0",
     "ag-grid-community": "32.2.1",
     "ag-grid-enterprise": "32.2.1",
-    "ag-grid-react": "32.2.1"
+    "ag-grid-react": "32.2.1",
+    "react-error-boundary": "^4.0.0"
   },
   "browserslist": {
     "production": [

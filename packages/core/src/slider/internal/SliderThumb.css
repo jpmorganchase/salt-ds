@@ -1,0 +1,67 @@
+.saltSliderThumb {
+  align-items: center;
+  background: var(--salt-accent-borderColor);
+  cursor: var(--salt-selectable-cursor-hover);
+  display: flex;
+  height: var(--salt-size-selectable);
+  outline: none;
+  position: absolute;
+  top: calc(((var(--salt-size-selectable) - var(--salt-size-bar)) / 2) * -1);
+  transform: translateX(-50%);
+  width: var(--salt-size-border-strong);
+  touch-action: none;
+}
+
+.saltSliderThumb-disabled {
+  background: var(--salt-accent-borderColor-disabled);
+  pointer-events: none;
+}
+
+.saltSliderThumb-focusVisible {
+  outline-style: var(--salt-focused-outlineStyle);
+  outline-width: var(--salt-focused-outlineWidth);
+  outline-offset: var(--salt-focused-outlineOffset);
+  outline-color: var(--salt-focused-outlineColor);
+}
+
+.saltSliderThumb:active,
+.saltSliderThumb-dragging {
+  cursor: var(--draggable-grab-cursor-active);
+}
+
+.saltSliderThumb-input {
+  border: 0;
+  appearance: none;
+  cursor: var(--salt-selectable-cursor-hover);
+  height: var(--salt-size-base);
+  left: var(--slider-progressPercentage);
+  margin: 0;
+  opacity: 0.0001;
+  overflow: hidden;
+  -webkit-appearance: none;
+  pointer-events: none;
+  width: var(--salt-size-base);
+  padding: 0;
+  position: absolute;
+  transform: translateX(-50%);
+}
+
+.saltSliderThumb-secondThumb {
+  /* The second thumb needs to sit on top the first thumb */
+  z-index: 2;
+}
+
+/* Visually hide accessible text. Can not
+  use visibility: hidden as we need the screen
+  reader to announce it */
+.saltSliderThumb-accessibleText {
+  position: absolute;
+  height: 1px;
+  width: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}

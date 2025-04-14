@@ -5,76 +5,131 @@ layout: DetailComponent
 sidebar:
   exclude: true
 data:
+  package:
+    name: "@salt-ds/core"
   $ref: ./#/data
 ---
 
-<LivePreviewControls>
+## Default
 
-<LivePreview componentName="slider" exampleName="Single">
+Selection of a single value from a `Slider` track. A tooltip displays the value of the `Slider` "thumb" when the thumb is focused or hovered.
 
-## Single
+<LivePreview componentName="slider" exampleName="Default" />
 
-By default the minimum and maximum values are shown, and can be displayed either inline or below the track (using the `marks` prop to `"bottom"`).
+## Labels
 
-Alternately, incremental marks can be shown along the track by setting the `marks` prop to `"all"`. The incremental marks will match the `step` prop value (i.e. for a `step` value of `5`, the marks will display as "0", "5", "10", "15", etc.) Note that when all marks are shown, they are always displayed below the track.
+`Slider`'s labels indicate the minimum and maximum values of the range, and can be located inline with the `Slider` using the `minLabel` and `maxLabel` props or they can be located at the bottom of the `Slider` using the `marks` prop.
 
-A tooltip displays the value of a slider "thumb" when the thumb is focused or hovered. The tooltip remains persistent on cursor drag or moving the thumb along the track with keyboard interaction.
+### Best practices
 
-</LivePreview>
+To make the `Slider` accessible, ensure screen readers can accurately convey the range and its values. While screen readers announce the default minimum and maximum values, customizing labels with `minLabel` and `maxLabel` is best paired with updating screen reader text using `accessibleMinText` and `accessibleMaxText`. These props let you define the exact text announced for the minimum and maximum values, ensuring alignment with custom labels. For instance, if `minLabel` is "Low" and `maxLabel` is "High," set `accessibleMinText` to "Low" and `accessibleMaxText` to "High" for a more intuitive experience for assistive technology users.
 
-<LivePreview componentName="slider" exampleName="Range">
+<LivePreview componentName="slider" exampleName="WithLabels" />
 
-## Range
+## With constrained label position
 
-If two values are provided (either to the `value` or `defaultValue` props), then the slider will render as a range slider. Thumbs cannot pass or overlap.
+You can use the `constrainLabelPosition` prop to ensure that the bottom labels remain within the `Slider`'s boundaries. When set to `true`, it prevents labels from extending beyond the `Slider`, maintaining a tidy and consistent appearance. This is particularly useful for preserving layout integrity and ensuring label readability across various screen sizes.
 
-</LivePreview>
+**Note:** Enabling `constrainLabelPosition` may lead to inconsistent spacing between marks. Use this option carefully to balance visual clarity and distribution.
 
-<LivePreview componentName="slider" exampleName="CustomStep">
+<LivePreview
+  componentName="slider"
+  exampleName="WithConstrainedLabelPosition"
+/>
+
+## With marks
+
+You can display marks under the `Slider` track to label specific values. The `showTicks` property allows you to display small ticks above the marks, enhancing visual guidance for users by providing clear reference points along the track. This feature improves usability by making it easier for users to select precise values.
+
+You can combine `marks` with `minLabel` and `maxLabel` to provide even more context regarding the `Slider`.
+
+To add non-numeric `marks` to certain values, please refer to the [example with non-numeric values](/salt/components/slider/examples#with-non-numeric-values) below.
+
+<LivePreview componentName="slider" exampleName="WithMarks" />
+
+## Restrict to marks
+
+The `restrictToMarks` property, when set to `true`, confines the `Slider`'s movement to predefined values specified in the `marks` array. This means that the `Slider` can only stop at these specific values, rather than any arbitrary value along the `Slider`'s range. The `step` property is ignored in this case.
+
+<LivePreview componentName="slider" exampleName="WithRestrictToMarks" />
+
+## Disabled
+
+You can set the `Slider` as disabled.
+
+<LivePreview componentName="slider" exampleName="Disabled" />
 
 ## Custom step
 
-By default, the slider step increment is set to 1. This can be customized by using the ‘step’ prop.
-
-Custom step values can be set to any number, including decimal values up to two decimal places. If a decimal step value is provided, the marks (if shown) will also be displayed as decimal values.
-
-If a custom step value is provided that is not a multiple of the range, the slider will round the maximum selectable value to the largest multiple of the step that is less than the maximum value. **Note:** This will render the final portion of the slider track unusable (the portion between the rounded maximum value and the actual maximum value). Step calculations are made from `0`, so the same rounding logic applies to negative values, but in the opposite direction.
+By default, the `Slider` step increment is set to 1. This can be customized by using the `step` prop. Custom step values can be set to any number, including decimal values up to two decimal places.
 
 ### Best practices
 
-- Use a step value that is a multiple of the range to ensure the entire range is selectable.
-- Use a step value that is relative to the granularity of the scale to prevent tedious slider selections.
+We recommend (max - min) to be evenly divisible by the step to ensure that all values of the `Slider` are reachable.
 
-</LivePreview>
+<LivePreview componentName="slider" exampleName="WithCustomStep" />
 
-<LivePreview componentName="slider" exampleName="WithFormField">
+## With formatting
 
-## With form field
-
-To display a label alongside a slider, use FormField and FormFieldLabel. For more information, refer to the [form field documentation.](/salt/components/form-field/examples)
+You can pass a callback function to the `format()` prop to format the display values in the tooltip. This `format()` callback will also be applied to screen reader announcements to ensure accessibility. You can use the `format()` callback to to display units or currency.
 
 ### Best practices
 
-We recommend using labels with slider to provide context and aid the user in understanding the value being selected.
+When formatting the values, it is recommended to add the same formatting to the marks if passed.
 
-</LivePreview>
+<LivePreview componentName="slider" exampleName="WithFormatting" />
 
-<LivePreview componentName="slider" exampleName="WithInput">
+## Form field compatibility
 
-## With input
+You can wrap the `Slider` in a form field and display a label. For more information, refer to the [form field documentation.](/salt/components/form-field/examples)
 
-You can display inputs with either a single or range slider. Inputs are used to enter a numeric value from the predefined range, enabling the thumb to jump to the specified value.
+<LivePreview componentName="slider" exampleName="WithFormField" />
 
-"Out of range" changes to the value (i.e. setting the input to a value above or below the slider's `min` and `max` values) will be rounded to the nearest valid value for the slider. When using a range slider, the upper and lower values cannot overlap (i.e. the lower value cannot be set to a value higher than the upper value). If the input value is set to a value that would cause an overlap, the range value will be set to the nearest valid value.
+## With Input
+
+You can display inputs with the `Slider`. Inputs are used to enter a numeric value from the predefined range, enabling the thumb to jump to the specified value.
+
+"Out of range" changes to the value (i.e. setting the input to a value above or below the slider's `min` and `max` values) will be rounded to the nearest valid value for the `Slider`.
 
 ### Best practices
 
-- For single slider, display one input to the left of the track.
-- When using inputs, ensure the slider is in "controlled" mode (by explicitly setting the `value` prop).
-- Use the slider's `onChange` callback to update the input values when the slider is interacted with.
+- Display one input to the left of the track.
+- When using inputs, ensure the `Slider` state is controlled (by explicitly setting the `value` prop).
+- Use the `Slider`'s `onChange` callback to update the input values when the `Slider` is interacted with.
 - Validate your input value changes and update the `validationStatus` prop on any inputs accordingly.
-- When using the slider alongside an input use the default `marks` setting (do not set `marks` to `"bottom"` or `"all"`).
+- Only use the inline labels of the `Slider` alongside an input via the `labelPosition`. This ensures the size-base alignment of the overall component layout is maintained.
 
-</LivePreview>
+<LivePreview componentName="slider" exampleName="WithInput" />
 
-</LivePreviewControls>
+## Hide tooltip
+
+To hide the tooltip when hovering over the Slider thumb, you can use the `showTooltip` prop. This is beneficial in cases where your Slider already conveys enough information, eliminating the need for a tooltip.
+
+<LivePreview componentName="slider" exampleName="WithHiddenTooltip" />
+
+## With non-numeric values
+
+You can implement a `Slider` that allows users to select non-numeric values with the help of the `format()` callback and with a focus on accessibility through the use of `aria-valuetext`.
+
+The `Slider` maps numeric values to meaningful non-numeric options, enabling intuitive selection beyond simple numbers. The `aria-valuetext` attribute is, by default, dynamically updated based on the `format()` callback to announce the selected option, providing clear feedback for users with assistive technologies. You also have the choice to update the `aria-valuetext` attribute via props.
+
+### Best practices:
+
+- Create a controlled slider and use your `format()` callback to create formatted `marks`.
+- Update `aria-valuetext` with the formatted current slider value.
+- Make the `marks` responsive on smaller screens by implementing logic to render them based on breakpoints.
+
+This approach ensures a user-friendly and accessible interface for selecting non-numeric values.
+
+<LivePreview componentName="slider" exampleName="WithNonNumericValues" />
+
+## With change events
+
+The `Slider` component provides two key event handlers: `onChange` and `onChangeEnd`, which are essential for handling user interactions with the `Slider`, whether through mouse or keyboard input.
+
+- `onChange` **Event**: This event is triggered continuously as the user drags the `Slider` thumb or adjusts it using keyboard controls. It provides real-time feedback by updating the value as the thumb moves or as keyboard inputs modify the value. This is particularly useful for scenarios where you want to display dynamic changes or provide immediate feedback to the user, such as updating a preview or displaying the current value.
+- `onChangeEnd` **Event**: This event is fired once the user releases the `Slider` thumb or adjusts it using keyboard controls, indicating the end of the interaction. It is ideal for scenarios where you want to perform actions that should only occur after the user has finished adjusting the `Slider`, such as submitting a value, triggering a calculation, or updating a state that should not be changed continuously.
+
+**Note**: Both `onChange` and `onChange` events will be triggered simultaneously when the `Slider` is interacted with using a keyboard.
+
+<LivePreview componentName="slider" exampleName="WithChangeEvents" />

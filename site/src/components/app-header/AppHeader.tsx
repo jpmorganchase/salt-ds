@@ -1,139 +1,62 @@
-import { Link, TabMenuItemType } from "@jpmorganchase/mosaic-components";
-import type { TabsMenu } from "@jpmorganchase/mosaic-components";
-import { AppHeaderDrawer } from "@jpmorganchase/mosaic-site-components";
-import { type SidebarItem, useRoute } from "@jpmorganchase/mosaic-store";
-import {
-  NavigationItem,
-  StackLayout,
-  Text,
-  Tooltip,
-  useBreakpoint,
-} from "@salt-ds/core";
-import { GithubIcon } from "@salt-ds/icons";
-import { Logo, LogoImage } from "@salt-ds/lab";
-import { useRouter } from "next/navigation";
-import type { FC } from "react";
+import { useAppHeader } from "@jpmorganchase/mosaic-store";
+import { Button, type ComboBoxProps, Tooltip } from "@salt-ds/core";
+import { GithubIcon, MenuIcon } from "@salt-ds/icons";
+import dynamic from "next/dynamic";
+import { useContext } from "react";
+import { LayoutContext } from "../../layouts/LayoutContext";
+import { useIsMobileView } from "../../utils/useIsMobileView";
+import { CTALink } from "../cta-link/CTALink";
+import { LinkBase } from "../link/Link";
+import { Logo } from "../logo/Logo";
+import { ModeToggle } from "../mode-switch/ModeToggle";
 import styles from "./AppHeader.module.css";
-import { Search } from "./Search";
 
-export interface AppHeaderProps {
-  homeLink?: string;
-  logo?: string;
-  menu?: TabsMenu;
-  title?: string;
-}
+const Search = dynamic<ComboBoxProps>(() =>
+  import("../search").then((mod) => mod.Search),
+);
 
-const createDrawerMenu = (menu: TabsMenu): SidebarItem[] =>
-  menu.reduce((result, item) => {
-    if (item.type !== TabMenuItemType.LINK) return result;
-    const parsedItem = {
-      id: item.link,
-      name: item.title ?? "",
-      data: { link: item.link },
-    } as SidebarItem;
-
-    return result.concat(parsedItem);
-  }, [] as SidebarItem[]);
-
-const actions: TabsMenu = [
-  {
-    title: "Github repository",
-    link: "https://github.com/jpmorganchase/salt-ds",
-    type: TabMenuItemType.LINK,
-  },
-];
-
-export const AppHeader: FC<AppHeaderProps> = ({
-  homeLink,
-  logo,
-  menu = [],
-  title,
-}) => {
-  const { matchedBreakpoints } = useBreakpoint();
-  const { route } = useRoute();
-  const router = useRouter();
-
-  const isMobileOrTablet = !matchedBreakpoints.includes("md");
-
-  const appHeaderLogo = isMobileOrTablet ? "/img/logo_mobile.svg" : logo;
+export const AppHeader = () => {
+  const isMobileOrTablet = useIsMobileView();
+  const layoutContext = useContext(LayoutContext);
+  const appHeader = useAppHeader();
+  const homeLink = appHeader?.homeLink;
 
   return (
-    <>
+    <header className={styles.root}>
       {isMobileOrTablet && (
-        <div className={styles.drawer}>
-          <AppHeaderDrawer
-            menu={createDrawerMenu(
-              menu.concat(isMobileOrTablet ? actions : []),
-            )}
-          />
-        </div>
+        <Button
+          aria-label="Open menu"
+          appearance="transparent"
+          sentiment="neutral"
+          onClick={() => layoutContext.setDrawerOpen(true)}
+        >
+          <MenuIcon aria-hidden />
+        </Button>
       )}
-      <div className={styles.root}>
-        {!isMobileOrTablet && (
-          <>
-            {homeLink && (
-              <Link
-                className={styles.logoLink}
-                href={homeLink}
-                variant="component"
-              >
-                {logo && (
-                  <Logo>
-                    <LogoImage
-                      src={appHeaderLogo}
-                      alt="Salt design system logo"
-                    />
-                    {title && <Text>{title}</Text>}
-                  </Logo>
-                )}
-              </Link>
-            )}
-            <nav className={styles.appHeaderTabs}>
-              <StackLayout
-                as="ul"
-                direction="row"
-                style={{ listStyle: "none", padding: 0 }}
-                gap={0}
-              >
-                {menu.map((item) => {
-                  if (item.type === TabMenuItemType.LINK) {
-                    return (
-                      <li key={item.title}>
-                        <NavigationItem
-                          active={route?.includes(item.link)}
-                          href={item.link}
-                          onClick={(event) => {
-                            event.preventDefault();
-                            router.push(item.link);
-                          }}
-                        >
-                          {item.title}
-                        </NavigationItem>
-                      </li>
-                    );
-                  }
-                  return null;
-                })}
-              </StackLayout>
-            </nav>
-          </>
+      <div className={styles.content}>
+        {homeLink && !isMobileOrTablet && (
+          <LinkBase className={styles.logoLink} href={homeLink}>
+            <Logo />
+          </LinkBase>
         )}
-        <StackLayout direction="row" align="center" gap={1}>
-          <Search />
+        <div className={styles.actions}>
+          <Search className={styles.search} />
           {!isMobileOrTablet && (
-            <Tooltip content="Github repository" placement="bottom">
-              <Link
+            <Tooltip content="GitHub repository" placement="bottom">
+              <CTALink
                 href="https://github.com/jpmorganchase/salt-ds"
                 aria-label="GitHub repository"
-                variant="component"
-                className={styles.appHeaderLink}
+                sentiment="neutral"
+                appearance="transparent"
+                target="_blank"
               >
                 <GithubIcon aria-hidden />
-              </Link>
+              </CTALink>
             </Tooltip>
           )}
-        </StackLayout>
+          <ModeToggle appearance="transparent" />
+        </div>
       </div>
-    </>
+    </header>
   );
 };

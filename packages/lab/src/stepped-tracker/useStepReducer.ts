@@ -1,19 +1,21 @@
-import { useMemo, useReducer } from "react";
+import { useCallback, useReducer } from "react";
 
 import stepReducer from "./stepReducer";
-import { initStepReducerState } from "./utils";
 
 import type { StepRecord } from "./Step.types";
 import type { StepReducerOptions } from "./stepReducer.types";
+import { initStepReducerState } from "./utils";
 
 export function useStepReducer(
   initialSteps: StepRecord[],
   options?: StepReducerOptions,
 ) {
-  const state = useMemo(
-    () => initStepReducerState(initialSteps, options),
-    [initialSteps, options],
+  const initializer = useCallback(
+    (initialSteps: StepRecord[]) => {
+      return initStepReducerState(initialSteps, options);
+    },
+    [options],
   );
 
-  return useReducer(stepReducer, state);
+  return useReducer(stepReducer, initialSteps, initializer);
 }

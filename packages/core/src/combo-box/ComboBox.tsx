@@ -66,7 +66,7 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
     children,
     className,
     disabled: disabledProp,
-    endAdornment,
+    endAdornment: endAdornmentProp,
     readOnly: readOnlyProp,
     multiselect,
     selectOnTab = !multiselect,
@@ -399,6 +399,34 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
 
   const handleListRef = useForkRef<HTMLDivElement>(listRef, floating);
 
+  const showOptionsButton = (
+    <Button
+      aria-labelledby={clsx(buttonId, formFieldLabelledBy)}
+      aria-label="Show options"
+      aria-expanded={openState}
+      aria-controls={openState ? listId : undefined}
+      aria-haspopup="listbox"
+      disabled={disabled}
+      appearance="transparent"
+      onClick={handleButtonClick}
+      onFocus={handleButtonFocus}
+      tabIndex={-1}
+    >
+      {openState ? <CollapseIcon aria-hidden /> : <ExpandIcon aria-hidden />}
+    </Button>
+  );
+
+  // avoid render empty fragment, or empty div appear in PillInput
+  const endAdornment =
+    !readOnly && hasValidChildren ? (
+      <>
+        {endAdornmentProp}
+        {showOptionsButton}
+      </>
+    ) : (
+      endAdornmentProp
+    );
+
   return (
     <ListControlContext.Provider value={listControl}>
       <PillInput
@@ -412,31 +440,7 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
           },
           className,
         )}
-        endAdornment={
-          <>
-            {endAdornment}
-            {!readOnly && hasValidChildren ? (
-              <Button
-                aria-labelledby={clsx(buttonId, formFieldLabelledBy)}
-                aria-label="Show options"
-                aria-expanded={openState}
-                aria-controls={openState ? listId : undefined}
-                aria-haspopup="listbox"
-                disabled={disabled}
-                appearance="transparent"
-                onClick={handleButtonClick}
-                onFocus={handleButtonFocus}
-                tabIndex={-1}
-              >
-                {openState ? (
-                  <CollapseIcon aria-hidden />
-                ) : (
-                  <ExpandIcon aria-hidden />
-                )}
-              </Button>
-            ) : undefined}
-          </>
-        }
+        endAdornment={endAdornment}
         onChange={handleChange}
         // Workaround to have readonly conveyed by screen readers (https://github.com/jpmorganchase/salt-ds/issues/4586)
         role={readOnly ? "textbox" : "combobox"}

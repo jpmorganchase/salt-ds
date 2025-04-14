@@ -136,7 +136,7 @@ export const DatePickerActions = forwardRef(function DatePickerRangeInput<
   }, [setEnableApply]);
 
   const handleCancel: MouseEventHandler<HTMLButtonElement> = (event) => {
-    cancel();
+    cancel(event);
     CancelButtonProps?.onClick?.(event);
     onCancel?.(event);
   };

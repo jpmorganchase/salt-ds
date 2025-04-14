@@ -1,5 +1,10 @@
-import { ToggleButton, ToggleButtonGroup, Tooltip } from "@salt-ds/core";
-import { Slider, type SliderValue, StepperInput } from "@salt-ds/lab";
+import {
+  Slider,
+  ToggleButton,
+  ToggleButtonGroup,
+  Tooltip,
+} from "@salt-ds/core";
+import { NumberInput } from "@salt-ds/lab";
 import type { Decorator } from "@storybook/react";
 import { type ReactNode, type SyntheticEvent, useState } from "react";
 import "./ResponsiveContainer.css";
@@ -10,6 +15,9 @@ const ResponsiveContainer = ({ children }: { children?: ReactNode }) => {
   const [selected, setSelected] = useState<string>("vw/vh");
   const inPixels = selected === "px";
   const maxUnits = inPixels ? 1000 : 100;
+  const toFloat = (value: string | number) =>
+    typeof value === "string" ? Number.parseFloat(value) : value;
+
   return (
     <div className="StoryContainer">
       <div className="StoryContainer-sliders">
@@ -28,7 +36,7 @@ const ResponsiveContainer = ({ children }: { children?: ReactNode }) => {
             <ToggleButton value="vw/vh">vw/vh</ToggleButton>
           </Tooltip>
         </ToggleButtonGroup>
-        <StepperInput
+        <NumberInput
           value={containerWidth[0]}
           max={maxUnits}
           min={10}
@@ -39,10 +47,10 @@ const ResponsiveContainer = ({ children }: { children?: ReactNode }) => {
           id="width"
           max={maxUnits}
           min={10}
-          onChange={(value: SliderValue) => setWidth(value)}
-          value={containerWidth as SliderValue}
+          onChange={(event, value) => setWidth([toFloat(value)])}
+          value={containerWidth[0]}
         />
-        <StepperInput
+        <NumberInput
           value={containerHeight[0]}
           max={maxUnits}
           min={10}
@@ -53,8 +61,8 @@ const ResponsiveContainer = ({ children }: { children?: ReactNode }) => {
           id="height"
           max={maxUnits}
           min={10}
-          onChange={(value: SliderValue) => setHeight(value)}
-          value={containerHeight as SliderValue}
+          onChange={(event, value) => setHeight([toFloat(value)])}
+          value={containerHeight[0]}
         />
       </div>
 

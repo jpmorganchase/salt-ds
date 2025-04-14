@@ -18,19 +18,22 @@ When you want to use the Salt theme with AG Grid.
 
 When you want to use a component that is not related to AG Grid.
 
+<Callout title="Note">
+
+If you're using ag grid v33, please set `{ theme: "legacy" }`.
+Refer to [ag grid upgrade guide](https://www.ag-grid.com/react-data-grid/upgrading-to-ag-grid-33/#migrating-from-ag-grid-community) for more information.
+
+```
+provideGlobalGridOptions({ theme: "legacy"});
+```
+
+</Callout>
+
 ## Import
 
-Make sure to install the necessary AG Grid packages. You will need to install `ag-grid-react@28`. You should also install any [packages](https://www.ag-grid.com/react-data-grid/packages/) and [modules](https://www.ag-grid.com/react-data-grid/modules/) that are necessary for your project, such as `ag-grid-community` and `ag-grid-enterprise`.
+Make sure to install the necessary AG Grid packages. You will need to install `ag-grid-react`. You should also install any [packages](https://www.ag-grid.com/react-data-grid/packages/) and [modules](https://www.ag-grid.com/react-data-grid/modules/) that are necessary for your project, such as `ag-grid-community` and `ag-grid-enterprise`.
 
-To install the `@salt-ds/ag-grid-theme` package, run the command appropriate to your environment:
-
-```js
-yarn add @salt-ds/ag-grid-theme
-```
-
-```js
-npm install @salt-ds/ag-grid-theme
-```
+To install the `@salt-ds/ag-grid-theme` package, run the command appropriate to your environment: `yarn add @salt-ds/ag-grid-theme` or `npm install @salt-ds/ag-grid-theme`
 
 ### Import Salt AG Grid theme
 

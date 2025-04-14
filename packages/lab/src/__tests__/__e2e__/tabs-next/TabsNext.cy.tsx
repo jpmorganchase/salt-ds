@@ -197,6 +197,24 @@ describe("Given a Tabstrip", () => {
       .should("be.focused");
   });
 
+  it("should allow selection in the menu when only having enough space for the newly selected tab", () => {
+    cy.mount(<Overflow />);
+
+    cy.findByRole("tablist").invoke("css", "max-width", 140);
+    cy.wait(500);
+
+    cy.findAllByRole("tab").filter(":visible").should("have.length", 1);
+
+    cy.get("[data-overflowbutton]").realClick();
+    cy.findAllByRole("tab").filter(":visible").should("have.length", 14); // overflow menu shown
+    cy.findByRole("tab", { name: "Liquidity" }).realClick();
+    cy.findAllByRole("tab").filter(":visible").should("have.length", 1); // overflow menu hidden
+
+    cy.findByRole("tab", { name: "Liquidity" })
+      .should("have.attr", "aria-selected", "true")
+      .should("be.focused");
+  });
+
   it("should support adding tabs", () => {
     cy.mount(<AddTabs />);
     cy.findAllByRole("tab").should("have.length", 3);
@@ -412,8 +430,47 @@ describe("Given a Tabstrip", () => {
     );
 
     cy.findByRole("button", { name: "Lots Close tab" }).realClick();
-    cy.findByRole("tab", { name: "Transactions" })
+    cy.findByRole("tab", { name: "More" })
       .should("have.attr", "aria-selected", "true")
       .and("be.focused");
   });
+
+  it(
+    "should not cause page overflow when overflow menu is not visible",
+    { viewportWidth: 280, viewportHeight: 280 },
+    () => {
+      cy.get("body").invoke("css", "display", "block");
+
+      cy.mount(<Overflow />);
+      cy.findAllByRole("tab").filter(":visible").should("have.length", 2);
+
+      // no horizontal overflow
+      cy.get("html").then((body) => {
+        console.log(body[0]);
+        const { clientWidth, scrollWidth } = body[0];
+        expect(clientWidth).to.equal(scrollWidth);
+      });
+    },
+  );
+
+  it(
+    "should flip overflow menu placement if there is enough space",
+    { viewportWidth: 430 },
+    () => {
+      cy.get("body").invoke("css", "display", "block");
+
+      cy.mount(<Overflow />);
+      cy.findAllByRole("tab").filter(":visible").should("have.length", 4);
+
+      cy.get("[data-overflowbutton]").realClick();
+      cy.wait(500);
+
+      // no horizontal overflow, menu should flip in horizontally
+      cy.get("html").then((body) => {
+        console.log(body[0]);
+        const { clientWidth, scrollWidth } = body[0];
+        expect(clientWidth).to.equal(scrollWidth);
+      });
+    },
+  );
 });

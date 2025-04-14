@@ -1,13 +1,13 @@
 .diagramsContainer {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: 100%;
   gap: var(--salt-spacing-300);
   margin-block: var(--salt-spacing-300);
 }
 
-@media screen and (max-width: 996px) {
+@media screen and (min-width: 960px) {
   .diagramsContainer {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
@@ -28,9 +28,14 @@
   display: flex;
   flex-direction: column;
   margin-block: var(--salt-spacing-300);
+  gap: var(--salt-spacing-100);
 }
 
-@media screen and (max-width: 996px) {
+.diagram:first-child {
+  margin-top: 0;
+}
+
+@media not screen and (min-width: 960px) {
   .diagram:not(.contentTop) {
     flex-direction: column-reverse;
   }

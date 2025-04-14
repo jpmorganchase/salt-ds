@@ -1,5 +1,146 @@
 # @salt-ds/theme
 
+## 1.28.1
+
+### Patch Changes
+
+- faa0334: Fixed display4 font weight token mapping. Closes #4903.
+- aed941a: Changed `--salt-track-borderColor` token from `--salt-palette-alpha-contrast-lower` to `--salt-palette-alpha-contrast-medium` to fix the contrast issue in the track.
+
+  | Token                      | Old value                             | New value                              |
+  | -------------------------- | ------------------------------------- | -------------------------------------- |
+  | `--salt-track-borderColor` | `--salt-palette-alpha-contrast-lower` | `--salt-palette-alpha-contrast-medium` |
+
+  This change impacts the following components:
+
+  - Slider
+  - RangeSlider
+  - Progress
+  - Stepped Tracker
+
+## 1.28.0
+
+### Minor Changes
+
+- ea8b4e3: Added new `--salt-content-attention-foreground` token.
+
+## 1.27.0
+
+### Minor Changes
+
+- afd7ae1: Expanded corner palette `--salt-palette-corner-strong` and `--salt-palette-corner-stronger` tokens.
+
+  | Token                            | HD  | MD   | LD   | TD   |
+  | -------------------------------- | --- | ---- | ---- | ---- |
+  | `--salt-palette-corner-strong`   | 4px | 8px  | 12px | 16px |
+  | `--salt-palette-corner-stronger` | 5px | 10px | 15px | 20px |
+
+- d078641: Added separable foreground and background tokens:
+
+  `separable-next.css`:
+
+  ```diff
+  +  --salt-separable-borderStyle: solid;
+  +  --salt-separable-foreground: var(--salt-palette-foreground-primary);
+  +  --salt-separable-foreground-hover: var(--salt-palette-foreground-primary);
+  +  --salt-separable-foreground-active: var(--salt-palette-foreground-primary-alt);
+  +  --salt-separable-background: var(--salt-palette-alpha-none);
+  +  --salt-separable-background-hover: var(--salt-palette-alpha-weak);
+  +  --salt-separable-background-active: var(--salt-palette-accent);
+  ```
+
+  `separable.css`
+
+  ```diff
+  +  --salt-separable-foreground: var(--salt-palette-neutral-primary-foreground);
+  +  --salt-separable-foreground-hover: var(--salt-palette-neutral-primary-foreground);
+  +  --salt-separable-foreground-active: var(--salt-palette-interact-cta-foreground);
+  +  --salt-separable-background: var(--salt-palette-alpha-none);
+  +  --salt-separable-background-hover: var(--salt-palette-alpha-weak);
+  +  --salt-separable-background-active: var(--salt-palette-accent);
+  ```
+
+- aac1500: Added new container ghost characteristic tokens
+
+  ```css
+  --salt-container-ghost-background: var(--salt-palette-alpha-low);
+  --salt-container-ghost-borderColor: var(--salt-palette-alpha-contrast-low);
+  ```
+
+  Added new palette alpha tokens
+
+  | New token                                  | Light mode value            | Dark mode value             |
+  | ------------------------------------------ | --------------------------- | --------------------------- |
+  | `--salt-palette-alpha-highest`             | var(--salt-color-white-90a) | var(--salt-color-black-90a) |
+  | `--salt-palette-alpha-higher`              | var(--salt-color-white-80a) | var(--salt-color-black-80a) |
+  | `--salt-palette-alpha-high`                | var(--salt-color-white-70a) | var(--salt-color-black-70a) |
+  | `--salt-palette-alpha-mediumHigh`          | var(--salt-color-white-60a) | var(--salt-color-black-60a) |
+  | `--salt-palette-alpha-medium`              | var(--salt-color-white-50a) | var(--salt-color-black-50a) |
+  | `--salt-palette-alpha-mediumLow`           | var(--salt-color-white-40a) | var(--salt-color-black-40a) |
+  | `--salt-palette-alpha-low`                 | var(--salt-color-white-30a) | var(--salt-color-black-30a) |
+  | `--salt-palette-alpha-lower`               | var(--salt-color-white-20a) | var(--salt-color-black-20a) |
+  | `--salt-palette-alpha-lowest`              | var(--salt-color-white-10a) | var(--salt-color-black-10a) |
+  | `--salt-palette-alpha-contrast-highest`    | var(--salt-color-black-90a) | var(--salt-color-white-90a) |
+  | `--salt-palette-alpha-contrast-higher`     | var(--salt-color-black-80a) | var(--salt-color-white-80a) |
+  | `--salt-palette-alpha-contrast-high`       | var(--salt-color-black-70a) | var(--salt-color-white-70a) |
+  | `--salt-palette-alpha-contrast-mediumHigh` | var(--salt-color-black-60a) | var(--salt-color-white-60a) |
+  | `--salt-palette-alpha-contrast-medium`     | var(--salt-color-black-50a) | var(--salt-color-white-50a) |
+  | `--salt-palette-alpha-contrast-mediumLow`  | var(--salt-color-black-40a) | var(--salt-color-white-40a) |
+  | `--salt-palette-alpha-contrast-low`        | var(--salt-color-black-30a) | var(--salt-color-white-30a) |
+  | `--salt-palette-alpha-contrast-lower`      | var(--salt-color-black-20a) | var(--salt-color-white-20a) |
+  | `--salt-palette-alpha-contrast-lowest`     | var(--salt-color-black-10a) | var(--salt-color-white-10a) |
+
+  Deprecated below palette tokens, use replacement below instead
+
+  ```css
+  --salt-palette-alpha: var(--salt-palette-alpha-contrast-low);
+  --salt-palette-alpha-strong: var(--salt-palette-alpha-contrast-mediumLow);
+  --salt-palette-alpha-weak: var(--salt-palette-alpha-contrast-lower);
+  --salt-palette-alpha-weaker: var(--salt-palette-alpha-contrast-lowest);
+
+  --salt-palette-alpha-backdrop: var(--salt-palette-alpha-high);
+  ```
+
+- 09f5144: Moved curve tokens from only being defined in salt-next into salt.
+
+  - `--salt-curve-0`
+  - `--salt-curve-50`
+  - `--salt-curve-100`
+  - `--salt-curve-150`
+  - `--salt-curve-200`
+  - `--salt-curve-250`
+  - `--salt-curve-999`
+
+- 803d0c0: Added below foundation tokens.
+
+  ```
+  --salt-typography-textDecoration-none: none;
+  --salt-typography-textDecoration-underline: underline;
+  ```
+
+  Deprecated below navigable and text characteristics tokens, replace with new tokens below.
+
+  ```
+  --salt-navigable-textDecoration: var(--salt-typography-textDecoration-underline);
+  --salt-navigable-textDecoration-hover: var(--salt-typography-textDecoration-none);
+  --salt-navigable-textDecoration-selected: var(--salt-typography-textDecoration-underline);
+
+  --salt-text-textDecoration: var(--salt-typography-textDecoration-none);
+  ```
+
+- 09f5144: Added corner palette tokens to the theme.
+
+  ```css
+  --salt-palette-corner-weaker: var(--salt-curve-0);
+  --salt-palette-corner-weak: var(--salt-curve-0);
+  --salt-palette-corner: var(--salt-curve-0);
+  --salt-palette-corner-strong: var(--salt-curve-0);
+  --salt-palette-corner-stronger: var(--salt-curve-0);
+  --salt-palette-corner-strongest: var(--salt-curve-999);
+  ```
+
+- 38da566: Added `--salt-text-action-fontWeight-small` and `--salt-text-action-fontWeight-strong` characteristics tokens.
+
 ## 1.26.0
 
 ### Minor Changes

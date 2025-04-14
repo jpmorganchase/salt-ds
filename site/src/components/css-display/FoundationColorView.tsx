@@ -1,7 +1,8 @@
-import { Spinner, Text } from "@salt-ds/core";
+import { FlowLayout, SaltProvider, Spinner, Text } from "@salt-ds/core";
 import { useEffect, useState } from "react";
+import { CopyToClipboard } from "../copy-to-clipboard";
 import { Table } from "../mdx/table";
-import styles from "./AccordianView.module.css";
+import styles from "./FoundationColorView.module.css";
 import { ColorBlock } from "./style-blocks/ColorBlock";
 
 type CssVariableData = Record<string, string>;
@@ -55,10 +56,14 @@ const ColorTable = ({ data }: { data: CssVariableData }) => {
         {Object.entries(data).map(([name, value]) => (
           <tr key={name}>
             <td className={styles.viewColumn}>
-              <ColorBlock hideToken colorVar={name} />
+              <SaltProvider theme="">
+                <ColorBlock hideToken colorVar={name} />
+              </SaltProvider>
             </td>
             <td>
-              <Text styleAs="code">{name}</Text>
+              <FlowLayout gap={1} align="center">
+                <CopyToClipboard value={name} />
+              </FlowLayout>
             </td>
             <td>
               <Text styleAs="code">{value}</Text>
@@ -70,6 +75,9 @@ const ColorTable = ({ data }: { data: CssVariableData }) => {
   );
 };
 
+const rgbBasisRegex = /^rgb\(var\((.*)\)\)$/;
+const saltColorTokenRegex = /^--salt-color-\w+(-\d+)?$/;
+
 export const FoundationColorView = ({
   group,
 }: {
@@ -78,10 +86,11 @@ export const FoundationColorView = ({
   const [data, setData] = useState<CssVariableData | null>(null);
 
   useEffect(() => {
-    const fetchJsonData = () => {
-      const data = require("./cssFoundations.json") as CssVariableData;
+    const fetchJsonData = async () => {
+      const data = (await import("./cssFoundations.json"))
+        .default as CssVariableData;
       const colorKeys = Object.keys(data).filter((x) =>
-        /^--salt-color-\w+(-\d+)?$/.test(x),
+        saltColorTokenRegex.test(x),
       );
       const regex = new RegExp(
         (group === "categorical" ? categoricalColors : foundationColors).join(
@@ -92,13 +101,23 @@ export const FoundationColorView = ({
         colorKeys
           .filter((x) => regex.test(x))
           .reduce<CssVariableData>((prev, current) => {
-            prev[current] = data[current];
+            const value = data[current];
+            if (value.includes("rgb(")) {
+              const matches = value.match(rgbBasisRegex);
+              if (matches !== null) {
+                prev[current] = `rgb(${data[matches[1]]})`;
+              } else {
+                prev[current] = value;
+              }
+            } else {
+              prev[current] = value;
+            }
             return prev;
           }, {}),
       );
     };
 
-    void fetchJsonData();
+    fetchJsonData();
   }, [group]);
 
   if (data === null) {

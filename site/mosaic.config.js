@@ -1,6 +1,7 @@
 const deepmerge = require("deepmerge");
 const mosaicConfig = require("@jpmorganchase/mosaic-standard-generator/dist/fs.config.js");
 const dotenvLoad = require("dotenv-load");
+const { pathToFileURL } = require("node:url");
 dotenvLoad();
 
 /** Enhance/modify your Mosaic core fs
@@ -16,12 +17,12 @@ const saltConfig = {
   plugins: [
     ...mosaicConfig.plugins,
     {
-      modulePath: "@jpmorganchase/mosaic-plugins/SidebarPlugin",
+      modulePath: require.resolve("./src/mosaic-plugins/SidebarPlugin.mjs"),
+      priority: 2,
       options: { rootDirGlob: "*/*" },
     },
     {
       modulePath: "@jpmorganchase/mosaic-plugins/BreadcrumbsPlugin",
-      disabled: true,
     },
     {
       modulePath: "@jpmorganchase/mosaic-plugins/SearchIndexPlugin",
@@ -54,14 +55,8 @@ const saltConfig = {
       ),
       options: {
         labPackageName: "@salt-ds/lab",
-        statusLabel: "Lab component",
-        icon: "🚧",
+        statusLabel: "Release candidate",
       },
-    },
-    {
-      modulePath: require.resolve(
-        "./src/mosaic-plugins/ComponentsDocPaginatorPlugin.mjs",
-      ),
     },
   ],
 };
@@ -76,6 +71,19 @@ module.exports = deepmerge(saltConfig, {
         rootDir: "./docs",
         prefixDir: "salt",
         extensions: [".mdx"],
+      },
+    },
+    {
+      modulePath: "@jpmorganchase/mosaic-source-http",
+      namespace: "salt",
+      options: {
+        prefixDir: "salt-github",
+        endpoints: [
+          "https://api.github.com/repos/jpmorganchase/salt-ds/releases",
+        ],
+        transformResponseToPagesModulePath: pathToFileURL(
+          require.resolve("./src/mosaic-plugins/mosaic-github-transformer.mjs"),
+        ).toString(),
       },
     },
   ],

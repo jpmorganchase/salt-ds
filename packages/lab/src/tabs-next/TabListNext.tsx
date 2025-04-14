@@ -1,10 +1,4 @@
-import {
-  capitalize,
-  makePrefixer,
-  useForkRef,
-  useId,
-  useIsomorphicLayoutEffect,
-} from "@salt-ds/core";
+import { capitalize, makePrefixer, useForkRef, useId } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
@@ -19,6 +13,7 @@ import tablistNextCss from "./TabListNext.css";
 import { TabOverflowList } from "./TabOverflowList";
 import { useTabsNext } from "./TabsNextContext";
 import { useOverflow } from "./hooks/useOverflow";
+import { useRestoreActiveTab } from "./hooks/useRestoreActiveTab";
 
 const withBaseName = makePrefixer("saltTabListNext");
 
@@ -62,19 +57,26 @@ export const TabListNext = forwardRef<HTMLDivElement, TabListNextProps>(
       activeTab,
       menuOpen,
       setMenuOpen,
-      returnFocus,
+      removedActiveTabRef,
     } = useTabsNext();
 
     const tabstripRef = useRef<HTMLDivElement>(null);
     const handleRef = useForkRef(tabstripRef, ref);
     const overflowButtonRef = useRef<HTMLButtonElement>(null);
 
-    const [visible, hidden, isMeasuring] = useOverflow({
+    const [visible, hidden, isMeasuring, realSelectedIndexRef] = useOverflow({
       container: tabstripRef,
       tabs: items,
       children,
       selected,
       overflowButton: overflowButtonRef,
+    });
+
+    useRestoreActiveTab({
+      container: tabstripRef,
+      tabs: items,
+      realSelectedIndex: realSelectedIndexRef,
+      removedActiveTabRef,
     });
 
     const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
@@ -106,20 +108,6 @@ export const TabListNext = forwardRef<HTMLDivElement, TabListNextProps>(
       }
     };
 
-    useIsomorphicLayoutEffect(() => {
-      if (!returnFocus.current || visible.length < 1 || selected === undefined)
-        return;
-
-      const itemToFocus = items.find((i) => i.value === returnFocus.current);
-      itemToFocus?.element?.focus({ preventScroll: true });
-
-      requestAnimationFrame(() => {
-        if (targetWindow?.document?.activeElement === itemToFocus?.element) {
-          returnFocus.current = undefined;
-        }
-      });
-    }, [visible, returnFocus, targetWindow, items, selected]);
-
     const warningId = useId();
 
     return (
@@ -138,7 +126,7 @@ export const TabListNext = forwardRef<HTMLDivElement, TabListNextProps>(
         aria-describedby={clsx(ariaDescribedBy, warningId)}
         {...rest}
       >
-        {hidden.length > 0 && (
+        {!isMeasuring && hidden.length > 0 && (
           <span id={warningId} className={withBaseName("overflowWarning")}>
             Note: This tab list includes overflow; tab positions may be
             inaccurate or change when a tab is selected

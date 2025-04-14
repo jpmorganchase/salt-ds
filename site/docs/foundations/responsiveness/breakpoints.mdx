@@ -1,0 +1,58 @@
+---
+title: Breakpoints
+layout: DetailTechnical
+sidebar:
+  priority: 2
+---
+
+Responsive design utilizes breakpoints to adapt layouts across various screen sizes, orientations and web browsers from Extra Small (XS) to Extra Large (XL). This approach ensures content remains readable and accessible, enhancing user experience by allowing layouts to fluidly adjust across mobile, tablet, and desktop devices.
+
+## Breakpoint ramps
+
+**Desktop devices**: On desktop, any density can be applied based on content need. This flexibility allows designers to select the most suitable density, whether for data-heavy or content-light applications.
+
+**Mobile and tablet devices**: For these devices, touch density is recommended. It ensures optimal touch targets, facilitating easier interaction with the interface using fingers.
+
+Learn more about Salt densities in the [density foundation](/salt/foundations/density).
+
+### High density
+
+| Breakpoint  | Width (px) | Columns | Margin size          | Gutter size          |
+| ----------- | ---------- | ------- | -------------------- | -------------------- |
+| Extra Small | 0 - 599    | 2       | `--salt-spacing-300` | `--salt-spacing-300` |
+| Small       | 600 - 959  | 4       | `--salt-spacing-300` | `--salt-spacing-300` |
+| Medium      | 960 - 1279 | 6       | `--salt-spacing-300` | `--salt-spacing-300` |
+| Large       | 1280-1919  | 8       | `--salt-spacing-300` | `--salt-spacing-300` |
+| Extra Large | >1920      | 12      | `--salt-spacing-300` | `--salt-spacing-300` |
+
+### Medium density
+
+| Breakpoint  | Width (px) | Columns | Margin size          | Gutter size          |
+| ----------- | ---------- | ------- | -------------------- | -------------------- |
+| Extra Small | 0 - 599    | 2       | `--salt-spacing-300` | `--salt-spacing-300` |
+| Small       | 600 - 959  | 4       | `--salt-spacing-300` | `--salt-spacing-300` |
+| Medium      | 960 - 1279 | 6       | `--salt-spacing-300` | `--salt-spacing-300` |
+| Large       | 1280-1919  | 8       | `--salt-spacing-300` | `--salt-spacing-300` |
+| Extra Large | >1920      | 12      | `--salt-spacing-300` | `--salt-spacing-300` |
+
+### Low density
+
+| Breakpoint  | Width (px) | Columns | Margin size          | Gutter size          |
+| ----------- | ---------- | ------- | -------------------- | -------------------- |
+| Extra Small | 0 - 599    | 1       | `--salt-spacing-300` | `--salt-spacing-300` |
+| Small       | 600 - 959  | 2       | `--salt-spacing-300` | `--salt-spacing-300` |
+| Medium      | 960 - 1279 | 4       | `--salt-spacing-300` | `--salt-spacing-300` |
+| Large       | 1280-1919  | 6       | `--salt-spacing-300` | `--salt-spacing-300` |
+| Extra Large | >1920      | 8       | `--salt-spacing-300` | `--salt-spacing-300` |
+
+### Touch density
+
+| Breakpoint  | Width (px) | Columns | Margin size          | Gutter size          |
+| ----------- | ---------- | ------- | -------------------- | -------------------- |
+| Extra Small | 0 - 599    | 1       | `--salt-spacing-300` | `--salt-spacing-300` |
+| Small       | 600 - 959  | 2       | `--salt-spacing-300` | `--salt-spacing-300` |
+| Medium      | 960 - 1279 | 4       | `--salt-spacing-300` | `--salt-spacing-300` |
+| Large       | 1280-1919  | 6       | `--salt-spacing-300` | `--salt-spacing-300` |
+| Extra Large | >1920      | 8       | `--salt-spacing-300` | `--salt-spacing-300` |
+
+:fragment{src="../fragments/feedback.mdx"}

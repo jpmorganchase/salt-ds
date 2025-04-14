@@ -14,7 +14,7 @@ const LabsComponentPlugin = {
   async $afterSource(
     pages,
     { ignorePages, pageExtensions },
-    { labPackageName, statusLabel, icon },
+    { labPackageName, statusLabel },
   ) {
     const isNonHiddenPage = createPageTest(ignorePages, pageExtensions);
 
@@ -25,12 +25,9 @@ const LabsComponentPlugin = {
 
       if (page.data?.package?.name === labPackageName) {
         page.data.status = statusLabel;
-        page.sidebar = { ...page.sidebar, groupLabel: `${page.title} ${icon}` };
-      }
-
-      if (page.fullPath === "/salt/components/index.mdx") {
-        // add the icon to the metadata of the Components index page
-        page.labsIcon = icon;
+        page.data.groupStatus = statusLabel.split(" ").reduce((acc, word) => {
+          return acc + word[0].toUpperCase();
+        }, "");
       }
     }
     return pages;

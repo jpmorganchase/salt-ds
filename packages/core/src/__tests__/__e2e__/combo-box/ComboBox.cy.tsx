@@ -771,4 +771,17 @@ describe("Given a ComboBox", () => {
     cy.realPress("Escape");
     cy.findByRole("combobox").should("not.have.attr", "aria-activedescendant");
   });
+
+  it("should default to autoComplete off, and able to enable via props if needed", () => {
+    cy.mount(<Default />);
+    cy.findByRole("combobox").should("have.attr", "autocomplete", "off");
+    cy.mount(
+      <Default
+        inputProps={{
+          autoComplete: "on",
+        }}
+      />,
+    );
+    cy.findByRole("combobox").should("have.attr", "autocomplete", "on");
+  });
 });

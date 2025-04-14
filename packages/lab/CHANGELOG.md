@@ -1,5 +1,137 @@
 # @salt-ds/lab
 
+## 1.0.0-alpha.65
+
+### Minor Changes
+
+- 7fe2106: Removed `Slider` and `RangeSlider` from labs and promoted to core.
+
+### Patch Changes
+
+- Updated dependencies [7fe2106]
+  - @salt-ds/core@1.44.0
+
+## 1.0.0-alpha.64
+
+### Minor Changes
+
+- 78eaee3: - Removed `DialogHeader` from labs and promoted to core.
+  - Removed `OverlayHeader` from labs and promoted to core.
+
+### Patch Changes
+
+- 2bdfbfb: Fixed DateInput adornment size and spacing, to align with rest of form controls.
+- 5725384: Fixed the focus visible behaviour of Slider and RangeSlider.
+- Updated dependencies [78eaee3]
+- Updated dependencies [20abfb6]
+- Updated dependencies [c59472d]
+- Updated dependencies [2bdfbfb]
+- Updated dependencies [0073384]
+- Updated dependencies [ef8f30a]
+  - @salt-ds/core@1.43.0
+
+## 1.0.0-alpha.63
+
+### Minor Changes
+
+- 9287b09: enabled uncontrolled/un-controlled open behaviour for `DatePicker`
+
+  - added `openOnClick` props to `DatePicker`.
+  - when the triggering element (`DateInput`) is focused, arrow key down, will now open the DatePicker by default
+  - revise the controlled behaviour of the `open` prop on `DatePickerOverlay`.
+
+### Patch Changes
+
+- 5639e94: Renamed StepperInput to NumberInput.
+- 4731908: Slider / RangeSlider updates
+
+  - track now support tick marks with the `showTicks` prop.
+  - `restrictToMarks` prop will snap the value to the closest mark.
+  - `decimalPlaces` prop specifies the number of decimal places for the value.
+  - `constrainLabelPosition` will ensure that mark labels remain within the boundary of the track.
+
+  This represents the final feature set before we move these changes to a stable API in core.
+
+- a1c89e2: Update Slider component implementation to have separate `Slider` and `RangeSlider` components, with improved accessibility and test coverage.
+- e93ee6f: Fixed the `TabsNext` overflow menu position when there is enough space, and prevented the hidden menu from causing the page to overflow.
+
+  Closes #4617.
+
+## 1.0.0-alpha.62
+
+### Minor Changes
+
+- f459825: Added a new `reset` action that sets the first step as active and all others as pending. This action is useful when the user has completed the current flow and wants to start over.
+
+  Fixed a bug where the `ended` boolean was not updated correctly when all steps were completed. This issue was caused by an immutability problem in the state handling logic. The bug is now resolved, and the `ended` displays correctly.
+
+  Changed the `warning`, `error` and `clear` actions to to `status/warning`, `status/error` and `status/clear` respectively. This change was made to streamline the naming convention of the actions.
+
+  Removed `key` as identifier of StepRecord. This change was made to avoid confusion with the `key` attribute in React components and streamline search of a step. The `id` attribute should be used instead.
+
+  Before:
+
+  ```tsx
+  export type StepRecord =
+    | (Omit<StepProps, "children"> & { key: string })
+    | (Omit<StepProps, "children"> & { id: string });
+  ```
+
+  After:
+
+  ```tsx
+  export type StepRecord = Omit<StepProps, "children"> & { id: string };
+  ```
+
+  We recommend passing down `id` and `key` for optimal results, although you could just provide `key`. Please refer to the examples provided for further clarification.
+
+  Recommended approach, pass `id` as both `id` and `key`:
+
+  ```tsx
+  <SteppedTracker>
+    {state.steps.map((step) => (
+      <Step key={step.id} {...step} />
+    ))}
+  </SteppedTracker>
+  ```
+
+  Pass `id` as `key` only:
+
+  ```tsx
+  <SteppedTracker>
+    {state.steps.map(({ id, ...step }) => (
+      <Step key={id} {...step} />
+    ))}
+  </SteppedTracker>
+  ```
+
+- d078641: Added `Splitter` component to the Salt Design System.
+- b619a9d: Fixed `DatePicker` being interactive when disabled.
+
+### Patch Changes
+
+- 076dedd: Improved Tab's overflow behavior and accessibility:
+
+  - Tab lists should now collapse in more scenarios.
+  - Tabs selected from the overflow menu should be focused more consistently.
+  - When a tab is removed, focus moved to the next tab in the tab list more consistently.
+  - When a selected tab is removed, the next tab in the tab list should be selected more consistently.
+
+- 99f7506: Fixed `TabsNext` overflow when only having enough space for one tab.
+
+  Fixes #4724.
+
+- Updated dependencies [38da566]
+- Updated dependencies [32de853]
+- Updated dependencies [ea84dd2]
+- Updated dependencies [aac1500]
+- Updated dependencies [803d0c0]
+- Updated dependencies [7a84d72]
+- Updated dependencies [e783dd5]
+- Updated dependencies [c30b6a4]
+  - @salt-ds/core@1.42.0
+  - @salt-ds/date-adapters@0.1.0-alpha.3
+
 ## 1.0.0-alpha.61
 
 ### Patch Changes

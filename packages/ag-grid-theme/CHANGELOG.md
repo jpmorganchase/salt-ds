@@ -1,5 +1,42 @@
 # @salt-ds/ag-grid-theme
 
+## 2.4.0
+
+### Minor Changes
+
+- 949ffef: Improve overall CSS performance, specially around speed around context menu interaction.
+
+  - Replaced most `div[class*="ag-theme-salt"` wildcard attribute selector to spelled out class selector `"ag-theme-salt-light", "ag-theme-salt-dark", "ag-theme-salt-compact-light", "ag-theme-salt-compact-dark"`
+  - Improved selectors around cell focus ring and input placeholder within filter and column select menu.
+
+## 2.3.5
+
+### Patch Changes
+
+- Updated dependencies [faa0334]
+- Updated dependencies [aed941a]
+  - @salt-ds/theme@1.28.1
+
+## 2.3.4
+
+### Patch Changes
+
+- Updated dependencies [ea8b4e3]
+  - @salt-ds/theme@1.28.0
+
+## 2.3.3
+
+### Patch Changes
+
+- Updated dependencies [afd7ae1]
+- Updated dependencies [d078641]
+- Updated dependencies [aac1500]
+- Updated dependencies [09f5144]
+- Updated dependencies [803d0c0]
+- Updated dependencies [09f5144]
+- Updated dependencies [38da566]
+  - @salt-ds/theme@1.27.0
+
 ## 2.3.2
 
 ### Patch Changes

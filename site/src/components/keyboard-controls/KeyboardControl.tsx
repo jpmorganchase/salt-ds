@@ -32,9 +32,9 @@ const Keys: FC<{ keyOrCombos: string }> = ({ keyOrCombos }) => {
       {splitCombo(keyOrCombos).map((keyOrSeparator, index) => {
         // Odd indexes will be the "+" or "/" separators
         if (index % 2 === 1) {
-          return <Fragment key={keyOrSeparator}> {keyOrSeparator} </Fragment>;
+          return <Fragment key={index}> {keyOrSeparator} </Fragment>;
         }
-        return <kbd key={keyOrSeparator}>{keyOrSeparator}</kbd>;
+        return <kbd key={index}>{keyOrSeparator}</kbd>;
       })}
     </>
   );

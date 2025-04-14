@@ -3,7 +3,8 @@ title: Themes
 layout: DetailTechnical
 sidebar:
   label: Overview
-  priority: 1
+  groupLabel: Themes
+  groupPriority: 4
 ---
 
 ## What is a Salt theme
@@ -14,7 +15,11 @@ A theme in Salt enables delivery teams to streamline the process of creating a c
 
 Salt uses themes to style its technical components and recommended libraries (such as AG Grid and Highcharts). Keeping styles separate to components makes it easy to switch between themes, without breaking or altering the underlying application build.
 
-<Image src="/img/theming/theme-v2-01.png" alt="Salt technology stack" />
+<Image
+  src="/img/theming/theme-v2-01.png"
+  srcDark="/img/theming/theme-v2-01-dark.png"
+  alt="Salt technology stack"
+/>
 
 ## Design tokens
 
@@ -54,7 +59,11 @@ Banner gets its background color from the Status characteristic tokens.
 - Palette: `--positive-weak`
 - Foundation: `--color-green-100` (light mode) or `--color-green-900` (dark mode)
 
-<Image src="/img/theming/theme-v2-02.png" alt="Banner example" />
+<Image
+  src="/img/theming/theme-v2-02.png"
+  srcDark="/img/theming/theme-v2-02-dark.png"
+  alt="Banner example"
+/>
 
 ### Design token intent
 
@@ -71,6 +80,7 @@ Salt has two themes:
    <br />
    <Image
      src="/img/theming/theme-v2-03.png"
+     srcDark="/img/theming/theme-v2-03-dark.png"
      alt="JPM brand theme vs Legacy (UITK) theme"
    />
 
@@ -103,35 +113,63 @@ The foundational color palette has been refreshed with updated shades of the sam
 
 The updated palette creates a lighter and brighter look suitable for both institutional and consumer experiences.
 
-<Image src="/img/theming/theme-v2-05.png" alt="Updating color ramps" />
+<Image
+  src="/img/theming/theme-v2-05.png"
+  srcDark="/img/theming/theme-v2-05-dark.png"
+  alt="Updating color ramps"
+/>
 
 To address the many unused colors in the previous palette, the new color ramps have been reduced to nine swatches per ramp, with 500 as the shared middle value. We call this mode agnostic, meaning the color remains the same when switching between light and dark modes. The rest of the palette is based on 'equivalents,' where the ramp is inverted for dark mode—for example, blue-100 in light mode is equivalent to blue-900 in dark mode and vice versa.
 
-<Image src="/img/theming/theme-v2-06.png" alt="Equivalent colors" />
+<Image
+  src="/img/theming/theme-v2-06.png"
+  srcDark="/img/theming/theme-v2-06-dark.png"
+  alt="Equivalent colors"
+/>
 
 The 500 series swatches have been carefully selected to ensure that primary text—white or black—achieves a minimum contrast ratio of 4.5:1 when placed on any of them. These swatches serve as the base color value for each ramp, with four lighter and four darker swatches on either side.
 
-<Image src="/img/theming/theme-v2-07.png" alt="500 swatches" />
+<Image
+  src="/img/theming/theme-v2-07.png"
+  srcDark="/img/theming/theme-v2-07-dark.png"
+  alt="500 swatches"
+/>
 
 Primary, secondary, and tertiary backgrounds have been created as standalone swatches and are no longer tied to the color ramps. This includes snow, marble and limestone for light mode; and jet, granite and leather for dark mode.
 
-<Image src="/img/theming/theme-v2-08.png" alt="background colors" />
+<Image
+  src="/img/theming/theme-v2-08.png"
+  srcDark="/img/theming/theme-v2-08-dark.png"
+  alt="background colors"
+/>
 
 A revamped categorical color palette has been added, expanding from 20 to 40 color options per mode. Colors 1 to 20 are mode agnostic (for use in both light and dark mode), following the same principle as the 500 series in the foundational palette, ensuring primary text (white or black) meets a minimum contrast ratio of 4.5:1 when placed on any of these colors.
 
-<Image src="/img/theming/theme-v2-09.png" alt="categorical palette" />
+<Image
+  src="/img/theming/theme-v2-09.png"
+  srcDark="/img/theming/theme-v2-09-dark.png"
+  alt="categorical palette"
+/>
 
 #### Amplitude font
 
 The JPM Brand theme introduces the Amplitude typeface, taken directly from the CIB Brand Guidelines, for use in header and display sizes as well as button labels. Open Sans remains the primary typeface for body copy and smaller type.
 
-<Image src="/img/theming/theme-v2-10.png" alt="amplitude font" />
+<Image
+  src="/img/theming/theme-v2-10.png"
+  srcDark="/img/theming/theme-v2-10-dark.png"
+  alt="amplitude font"
+/>
 
 #### Corner ramps
 
 Corner radii have been systematically defined for specific components. Each density includes four different radii, which help achieve a sense of complementary visual nesting when used together.
 
-<Image src="/img/theming/theme-v2-11.png" alt="corner ramps" />
+<Image
+  src="/img/theming/theme-v2-11.png"
+  srcDark="/img/theming/theme-v2-11-dark.png"
+  alt="corner ramps"
+/>
 
 ## Using themes in Figma
 
@@ -162,11 +200,19 @@ To install the libraries:
 1. Go to the Assets panel in your Figma file.
 2. Tap on the Libraries icon (open book icon).
 
-   <Image src="/img/theming/theme-v2-12.png" alt="installing the libraries" />
+   <Image
+     src="/img/theming/theme-v2-12.png"
+     srcDark="/img/theming/theme-v2-12-dark.png"
+     alt="installing the libraries"
+   />
 
 3. Search for 'Salt DS’.
 
-   <Image src="/img/theming/theme-v2-13.png" alt="searching on figma" />
+   <Image
+     src="/img/theming/theme-v2-13.png"
+     srcDark="/img/theming/theme-v2-13-dark.png"
+     alt="searching on figma"
+   />
 
 4. Add the libraries referenced above to your file.
 
@@ -178,7 +224,11 @@ The variables are set up to match our tokens in code. When inspecting a design i
 
 Note: In code, all tokens are prefixed with ‘--salt-’, e.g., `--salt-spacing-100`.
 
-<Image src="/img/theming/theme-v2-14.png" alt="using the themes library" />
+<Image
+  src="/img/theming/theme-v2-14.png"
+  srcDark="/img/theming/theme-v2-14-dark.png"
+  alt="using the themes library"
+/>
 
 ### Using the Colors libraries
 
@@ -191,7 +241,11 @@ You don't need to add these colors to your project unless you want to use them d
 1. Add components: Drag from the Assets panel.
 2. In the right sidebar, click ‘Apply variable mode' (swatch icon) button in the Layer panel to see all available options.
 
-   <Image src="/img/theming/theme-v2-15.png" alt="applying component modes" />
+   <Image
+     src="/img/theming/theme-v2-15.png"
+     srcDark="/img/theming/theme-v2-15-dark.png"
+     alt="applying component modes"
+   />
 
 3. For pages, groups, sections, frames or components:
 
@@ -332,7 +386,11 @@ If styling options alone don't achieve your desired visual design, you can creat
 
 For example, you may choose to use a custom primary color in your app. Here the blue is replaced by a custom magenta (and checked to ensure 4.5:1 color contrast).
 
-<Image src="/img/theming/theme-v2-16.png" alt="custom primary colors" />
+<Image
+  src="/img/theming/theme-v2-16.png"
+  srcDark="/img/theming/theme-v2-16-dark.png"
+  alt="custom primary colors"
+/>
 
 Any theme changes mean you assume certain responsibilities from Salt. For example, if you change a token for a background color, you must ensure it meets accessibility standards for contrast ratios.
 

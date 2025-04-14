@@ -4,7 +4,7 @@ import type { ReactElement } from "react";
 import styles from "./index.module.css";
 
 export const OpenInANewTab = (): ReactElement => (
-  <StackLayout>
+  <StackLayout align="start">
     <Link
       href="https://www.saltdesignsystem.com"
       target="_blank"

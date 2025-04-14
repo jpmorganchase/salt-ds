@@ -1,0 +1,44 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+## Using the component
+
+To avoid misleading users, set the width to correlate to the length of the value you’re expecting. For example, an input for a three-digit value shouldn't be wide enough to accommodate a sentence worth of characters. See forms pattern for more information on layout.
+
+### When to use
+
+- To adjust a value in small, precise increments or decrements, such as setting the quantity of items, adjusting a numerical setting, or specifying a time duration.
+- When the value has a clear minimum and maximum limit, and you want to prevent users from entering values outside this range.
+- When the input is purely numerical and does not require complex formatting.
+- If a user benefits from adjusting values without having to type them manually, especially on touch interfaces where typing can be cumbersome.
+- If there is a requirement to provide immediate visual feedback as the user adjusts the value, helping them understand the impact of their changes in real-time.
+
+### When not to use
+
+- When users need the flexibility to enter any (subjective) value, including those outside a predefined range. Instead, use [Input](/salt/components/input) or [Multiline input](/salt/components/multiline-input).
+- When users need to select a single date or select a date range, between a start and end date. Instead, use [Date input](/salt/components/date-input).
+- When users need to select an item from a large list of options without scrolling. Instead, use [Combo box](/salt/components/combo-box).
+- To choose one value from a set of five to ten options that does not require filtering. Instead, use [Dropdown](/salt/components/dropdown).
+
+### Accepted characters
+
+- The Number Input component accepts numeric digits 0-9, decimal point (.), plus sign (+) and minus sign (-).
+- Note it does not accept the character e, which is allowed in native HTML `type="number"` inputs to represent exponential notation. This design choice ensures that all input values remain simple numerical values without exponential formatting.
+- For consistent number input interaction in your application, use Number Input rather than Input with `type="number"`.
+
+### Controlled/uncontrolled
+
+Just like native input elements in React, number inputs can be controlled or uncontrolled. By default a number input is uncontrolled. Use the `defaultValue` prop to control the default value of the number input.
+
+If you want to control the value of the number input, use the `value` prop. The `onChange` prop is required when using the controlled approach.
+
+## Props
+
+<PropsTable packageName="lab" componentName="NumberInput" />

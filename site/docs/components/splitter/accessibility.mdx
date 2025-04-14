@@ -1,0 +1,55 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+## Best Practices
+
+- Set an Appropriate `aria-label` or `aria-labelledby` for `SplitHandle`:  
+   Make sure to assign a meaningful and descriptive `aria-label` to the `SplitHandle`. This will help screen readers and other assistive technologies accurately convey the purpose of the handle to users.
+
+## Keyboard interactions
+
+Keyboard interactions apply only to the `SplitHandle`s, which will be a child of the `Splitter` component.
+
+<KeyboardControls>
+
+<KeyboardControl keyOrCombos="ArrowUp">
+  - Moves the handle up in a vertical splitter.
+</KeyboardControl>
+
+<KeyboardControl keyOrCombos="ArrowDown">
+  - Moves the handle down in a vertical splitter.
+</KeyboardControl>
+
+<KeyboardControl keyOrCombos="ArrowLeft">
+  - Moves the handle left in a horizontal splitter.
+</KeyboardControl>
+
+<KeyboardControl keyOrCombos="ArrowRight">
+  - Moves the handle right in a horizontal splitter.
+</KeyboardControl>
+
+<KeyboardControl keyOrCombos="Enter">
+  - If the associated split is not collapsed, collapses the split. If the split
+  is collapsed, restores the splitter to it's previous position.
+</KeyboardControl>
+
+<KeyboardControl keyOrCombos="Home">
+  - Moves the handle of the vertical splitter as top as possible or as left as
+  possible in the horizontal splitter. - Rules for min and max sizing are
+  respected.
+</KeyboardControl>
+
+<KeyboardControl keyOrCombos="End">
+  - Moves the handle of the vertical splitter as bottom as possible or as right
+  as possible in the horizontal splitter. - Rules for min and max sizing are
+  respected.
+</KeyboardControl>
+
+</KeyboardControls>

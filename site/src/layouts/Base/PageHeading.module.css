@@ -1,0 +1,30 @@
+.root {
+  display: flex;
+  justify-content: center;
+  padding: var(--salt-spacing-200) var(--salt-spacing-100);
+  background: var(--salt-container-secondary-background);
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--salt-spacing-100);
+  max-width: var(--site-content-max-width);
+  width: 100%;
+}
+
+.root h1 {
+  margin: 0;
+}
+
+@media screen and (min-width: 960px) {
+  .root {
+    padding-left: var(--salt-spacing-300);
+    padding-right: calc(250px + var(--salt-spacing-300));
+    padding-block: var(--salt-spacing-300);
+  }
+}
+
+.description p {
+  margin: 0;
+}

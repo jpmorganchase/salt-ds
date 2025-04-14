@@ -1,4 +1,4 @@
-import { Card, H1, Text } from "@salt-ds/core";
+import { Card, H1, Panel, Text } from "@salt-ds/core";
 import type { Meta, StoryFn } from "@storybook/react";
 import {
   QAContainer,
@@ -45,6 +45,12 @@ export const AllExamplesUsingText: StoryFn<
         <H1>Accent left</H1>
         <Text>Content</Text>
       </Card>
+      <Panel variant="tertiary">
+        <Card variant="ghost">
+          <H1>Ghost card</H1>
+          <Text>Content</Text>
+        </Card>
+      </Panel>
     </QAContainer>
   );
 };
@@ -97,6 +103,12 @@ export const NoStyleInjectionGrid: StoryFn<QAContainerNoStyleInjectionProps> = (
       <H1>Accent left</H1>
       <Text>Content</Text>
     </Card>
+    <Panel variant="tertiary">
+      <Card variant="ghost">
+        <H1>Ghost card</H1>
+        <Text>Content</Text>
+      </Card>
+    </Panel>
   </QAContainerNoStyleInjection>
 );
 

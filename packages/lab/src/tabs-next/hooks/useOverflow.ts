@@ -11,6 +11,7 @@ import {
   type RefObject,
   useEffect,
   useMemo,
+  useRef,
 } from "react";
 import type { Item } from "./useCollection";
 
@@ -34,11 +35,15 @@ export function useOverflow({
   children,
   selected,
 }: UseOverflowProps) {
+  /**
+   * `visibleCount` doesn't include newly selected tab from overflow menu, which is removed in `computeVisible`
+   */
   const [{ visibleCount, isMeasuring }, setVisibleItems] = useValueEffect({
     visibleCount: tabs.length,
     isMeasuring: false,
   });
   const targetWindow = useWindow();
+  const realSelectedIndex = useRef<number>(-1);
 
   const updateOverflow = useEventCallback(() => {
     const computeVisible = (visibleCount: number) => {
@@ -102,7 +107,8 @@ export function useOverflow({
           }
         }
 
-        return Math.max(1, newVisibleCount);
+        // minimal count should be 0, if there is no space for any tab apart from selected tab from the overflow menu
+        return Math.max(0, newVisibleCount);
       }
       return visibleCount;
     };
@@ -138,6 +144,18 @@ export function useOverflow({
   }, [selected]);
 
   useEffect(() => {
+    const handleWindowResize = () => {
+      updateOverflow();
+    };
+
+    targetWindow?.addEventListener("resize", handleWindowResize);
+
+    return () => {
+      targetWindow?.removeEventListener("resize", handleWindowResize);
+    };
+  }, [updateOverflow, targetWindow]);
+
+  useEffect(() => {
     const element = container?.current;
     if (!element) return;
 
@@ -162,14 +180,50 @@ export function useOverflow({
     };
   }, [container, updateOverflow]);
 
+  useEffect(() => {
+    const element = container?.current;
+    if (!element || isMeasuring) return;
+
+    const win = ownerWindow(element);
+
+    const mutationObserver = new win.MutationObserver(() => {
+      requestAnimationFrame(() => {
+        updateOverflow();
+      });
+    });
+
+    mutationObserver.observe(element, {
+      childList: true,
+    });
+
+    return () => {
+      mutationObserver.disconnect();
+    };
+  }, [container, updateOverflow, isMeasuring]);
+
   const childArray = useMemo(() => Children.toArray(children), [children]);
-  const visible = childArray.slice(0, visibleCount || 1);
-  const hidden = childArray.slice(visibleCount || 1);
+  const visible = useMemo(
+    () => childArray.slice(0, visibleCount),
+    [visibleCount, childArray],
+  );
+  const hidden = useMemo(
+    () => childArray.slice(visibleCount),
+    [childArray, visibleCount],
+  );
 
   const hiddenSelectedIndex = hidden.findIndex(
     // @ts-ignore
     (child) => child?.props?.value === selected,
   );
+
+  useIsomorphicLayoutEffect(() => {
+    if (visibleCount === childArray.length) {
+      realSelectedIndex.current = childArray.findIndex(
+        // @ts-ignore
+        (child) => child?.props?.value === selected,
+      );
+    }
+  }, [visibleCount, childArray, selected]);
 
   if (selected && hiddenSelectedIndex !== -1) {
     const removed = hidden.splice(hiddenSelectedIndex, 1);
@@ -177,8 +231,8 @@ export function useOverflow({
   }
 
   if (isMeasuring) {
-    return [childArray, [], isMeasuring] as const;
+    return [childArray, [], isMeasuring, realSelectedIndex] as const;
   }
 
-  return [visible, hidden, isMeasuring] as const;
+  return [visible, hidden, isMeasuring, realSelectedIndex] as const;
 }

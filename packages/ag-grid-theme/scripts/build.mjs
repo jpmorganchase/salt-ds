@@ -18,7 +18,9 @@ const packageName = packageJson.name;
 
 console.log(`Building ${packageName}`);
 
-deleteSync([buildFolder], { force: true });
+if (!argv.includes("--watch")) {
+  deleteSync([buildFolder], { force: true });
+}
 
 const context = await esbuild.context({
   absWorkingDir: cwd,

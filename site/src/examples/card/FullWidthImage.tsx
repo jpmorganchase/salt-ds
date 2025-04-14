@@ -1,23 +1,16 @@
-import { Image } from "@jpmorganchase/mosaic-site-components";
 import { Card, H3, Link, StackLayout, Text } from "@salt-ds/core";
 import type { CSSProperties, ReactElement } from "react";
 
 export const FullWidthImage = (): ReactElement => {
   return (
     <Card style={{ "--saltCard-padding": 0, width: "260px" } as CSSProperties}>
-      <Image
+      <img
         src="/img/examples/cardExample.jpg"
-        alt="placeholder image"
+        alt="placeholder"
         style={{ width: "100%" }}
       />
-      <StackLayout
-        // Apply padding around the content below the image for a full width image
-        style={{
-          padding: "var(--salt-spacing-200)",
-        }}
-        align="start"
-      >
-        <StackLayout gap={1}>
+      <StackLayout padding={2} align="start">
+        <StackLayout padding={0} gap={1}>
           <H3>Sustainable investing products</H3>
           <Text>
             We have a commitment to provide a wide range of investment solutions

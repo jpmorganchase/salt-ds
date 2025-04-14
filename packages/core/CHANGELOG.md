@@ -1,5 +1,148 @@
 # @salt-ds/core
 
+## 1.44.0
+
+### Minor Changes
+
+- 7fe2106: Promote updated `Slider` and `RangeSlider` components to core. The update includes:
+
+  - Improved accessibility and focus behavior.
+  - Enhanced API for slider customization, including options like `marks`, `showTicks`, and `showTooltip`.
+  - Fixed touch interactions on mobile to allow dragging of the slider thumb without horizontal screen scrolling.
+  - Set the default `max` value of the `Slider` and `RangeSlider` as 100 to be consistent with the HTML specification.
+
+  ```tsx
+  <Slider
+    min={0}
+    max={30}
+    defaultValue={15}
+    marks={[
+      { value: 0, label: "Minimum" },
+      { value: 30, label: "Maximum" },
+    ]}
+    showTicks={true}
+  />
+  ```
+
+  ```tsx
+  <RangeSlider
+    min={0}
+    max={30}
+    defaultValue={15}
+    marks={[
+      { value: 0, label: "0" },
+      { value: 10, label: "10" },
+      { value: 15, label: "15" },
+      { value: 19, label: "19" },
+      { value: 30, label: "30" },
+    ]}
+    showTicks={true}
+    minLabel="Very low"
+    maxLabel="Very high"
+    restrictToMarks={true}
+  />
+  ```
+
+## 1.43.0
+
+### Minor Changes
+
+- 78eaee3: Promote updated `DialogHeader` component to core. `DialogHeader`'s update follows our standardized header for container components and app regions, and it can be added to provide a structured header for dialog. The header includes a title and actions that follows our Header Block pattern.
+
+  - Fixed default `initialFocus` to close button (if used) as per accessibility guidance.
+  - Updated bottom padding of DialogHeader from `--salt-spacing-300` to `--salt-spacing-100`
+  - Updated close button position in `DialogHeader` to horizontally align with header icon using the new `actions` prop.
+  - Updated overflow border to be above and below `DialogContent` instead of below `DialogHeader` to make scrolling area more evident.
+  - Added `description` to `DialogHeader`. the description text is displayed just below the header.
+
+  ```typescript
+  <Dialog open={open} onOpenChange={onOpenChange}>
+    <DialogHeader
+      header="Terms and conditions"
+      actions={
+        <Button
+          aria-label="Close overlay"
+          appearance="transparent"
+          sentiment="neutral"
+        >
+          <CloseIcon aria-hidden />
+        </Button>
+      }
+    />
+    <DialogContent>
+        Only Chase Cards that we determine are eligible can be added to the wallet.
+    </DialogContent>
+  </Dialog>;
+  ```
+
+  Prompted `OverlayHeader` component to core.
+
+  - Fixed default `initialFocus` to close button (if used) as per accessibility guidance.
+  - Updated close button position in `OverlayHeader` using the new `actions` prop.
+  - Added `description` to `OverlayHeader`. the description text is displayed just below the header.
+
+  ```tsx
+  <Overlay {...args}>
+    <OverlayTrigger>
+      <Button>Show Overlay</Button>
+    </OverlayTrigger>
+    <OverlayPanel aria-labelledby={id}>
+      <OverlayHeader
+        id={id}
+        header="Title"
+        actions={
+          <Button
+            aria-label="Close overlay"
+            appearance="transparent"
+            sentiment="neutral"
+          >
+            <CloseIcon aria-hidden />
+          </Button>
+        }
+      />
+      <OverlayPanelContent>Content of Overlay</OverlayPanelContent>
+    </OverlayPanel>
+  </Overlay>
+  ```
+
+### Patch Changes
+
+- 20abfb6: Fixed multiselect Option having nested interactive elements, impacted ComboBox, Dropdown and ListBox.
+
+  Fixes #4737.
+
+- c59472d: fix type error when `BorderLayout` has only one child or its conditionally rendered
+- 2bdfbfb: Fixed ComboBox and Dropdown status adornment spacing, to align with rest of form controls.
+
+  Closes #4794
+
+- 0073384: Fixed invalid variant prop crashed Button
+- ef8f30a: Fixed ComboBox having 2 popup lists due to browser's default `autoComplete` behaviour on `input`.
+  You can still enable it via `inputProps={{autoComplete: "on"}}` if needed.
+
+## 1.42.0
+
+### Minor Changes
+
+- 38da566: Added strong and small font weight support to `Text` when `styleAs="action"`.
+  `<strong>` and `<small>` work in `Button` as well.
+- aac1500: - Added `variant="ghost"` to Card with translucent background.
+  - Added default shadow to all Card, Link Card and Interactable Card variants.
+- 803d0c0: Added `underline` prop to `Link`. It controls when the underline text decoration is applied to a link.
+
+  ```
+  <Link underline="default">Underline default</Link>
+  <Link underline="never">Underline never</Link>
+  ```
+
+- e783dd5: Added `lockScroll` prop to FloatingComponent that makes the page unscrollable when the floating component is open.
+
+### Patch Changes
+
+- 32de853: Refactored Pagination to simplify page button styling.
+- 7a84d72: Fixed Accordion flashing blue when tapped on mobile devices.
+- c30b6a4: Revert layout padding and margin defaults removal to avoid margins and paddings being inherited from parent containers.
+
 ## 1.41.0
 
 ### Minor Changes
