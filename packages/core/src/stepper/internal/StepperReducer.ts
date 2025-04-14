@@ -28,7 +28,7 @@ export type StepperReducerAction =
   | { type: "status/error" }
   | { type: "status/warning" }
   | { type: "status/clear" }
-  | { type: "goto"; payload: StepId };
+  | { type: "move"; payload: StepId };
 
 export type StepperReducerDispatch = Dispatch<StepperReducerAction>;
 
@@ -120,7 +120,7 @@ export function StepperReducer(
       };
     }
 
-    case "goto": {
+    case "move": {
       const activeStepId = action.payload;
       const steps = autoStageSteps(resetSteps(state.steps), { activeStepId });
       const flatSteps = flattenSteps(steps);
