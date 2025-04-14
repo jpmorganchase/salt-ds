@@ -1,0 +1,70 @@
+
+/* Table: Main css class */
+.saltTable {
+  --table-header-height: calc(var(--salt-size-base) + var(--salt-spacing-100));
+  --table-row-height: calc(var(--salt-size-base) + var(--salt-spacing-100));
+}
+
+.saltTable-primary {
+  --table-background: var(--salt-container-primary-background);
+  --table-color: var(--salt-content-primary-foreground);
+}
+
+.saltTable-secondary {
+  --table-background: var(--salt-container-secondary-background);
+  --table-color: var(--salt-content-secondary-foreground);
+}
+
+table.saltTable {
+  border-spacing: 0;
+  border-radius: var(--saltTable-borderRadius, var(--salt-palette-corner));
+  border-collapse: collapse;
+  background: var(--saltTable-background, var(--table-background));
+  color: var(--table-color);
+  font-family: var(--salt-text-fontFamily);
+  font-size: var(--salt-text-fontSize);
+  table-layout: fixed;
+  width: 100%;
+}
+
+/* THead */
+.saltTable-thead,
+table.saltTable thead {
+  align-items: center;
+  border-start-start-radius: var(--saltTable-thead-borderRadius-top, var(--salt-palette-corner));
+  border-start-end-radius: var(--saltTable-thead-borderRadius-top, var(--salt-palette-corner));
+  background:  var(--saltTable-thead-background, var(--table-background));
+  color: var(--salt-content-secondary-foreground);
+  height: var(--table-header-height);
+  font-size: var(--salt-text-label-fontSize);
+  font-weight: var(--salt-text-label-fontWeight-strong);
+  white-space: nowrap;
+}
+
+/* TH */
+.saltTable-th, .saltTable th {
+  overflow: hidden;
+  padding-left: var(--salt-spacing-100);
+  padding-right: var(--salt-spacing-100);
+  text-align: start;
+  text-overflow: ellipsis;
+}
+
+/* TR */
+.saltTable tr, .saltTable-tr {
+  align-items: center;
+  border-bottom: var(--salt-separable-borderStyle) var(--salt-separable-secondary-borderColor) var(--salt-size-border);
+  height: var(--table-row-height);
+}
+
+.saltTable-tbody .saltTable-tr:hover,
+table.saltTable tbody tr:hover {
+  background: var(--saltTable-tr-background-hover, var(--salt-selectable-background-hover));
+}
+
+/* TD */
+.saltTable-td {
+  height: 100%;
+  padding-left: var(--salt-spacing-100);
+  padding-right: var(--salt-spacing-100);
+}
