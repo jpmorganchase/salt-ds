@@ -1,4 +1,10 @@
-import { FlowLayout, SaltProvider, Spinner, Text } from "@salt-ds/core";
+import {
+  FlowLayout,
+  SaltProvider,
+  SaltProviderNext,
+  Spinner,
+  Text,
+} from "@salt-ds/core";
 import { useEffect, useState } from "react";
 import { CopyToClipboard } from "../copy-to-clipboard";
 import { Table } from "../mdx/table";
@@ -80,15 +86,18 @@ const saltColorTokenRegex = /^--salt-color-\w+(-\d+)?$/;
 
 export const FoundationColorView = ({
   group,
+  themeNext = false,
 }: {
   group: "foundation" | "categorical";
+  themeNext?: boolean;
 }) => {
   const [data, setData] = useState<CssVariableData | null>(null);
 
   useEffect(() => {
     const fetchJsonData = async () => {
-      const data = (await import("./cssFoundations.json"))
-        .default as CssVariableData;
+      const data = (
+        await import(`./cssFoundations${themeNext ? "-next" : ""}.json`)
+      ).default as CssVariableData;
       const colorKeys = Object.keys(data).filter((x) =>
         saltColorTokenRegex.test(x),
       );
@@ -118,11 +127,17 @@ export const FoundationColorView = ({
     };
 
     fetchJsonData();
-  }, [group]);
+  }, [group, themeNext]);
 
   if (data === null) {
     return <Spinner />;
   }
 
-  return <ColorTable data={data} />;
+  const ChosenSaltProvider = themeNext ? SaltProviderNext : SaltProvider;
+
+  return (
+    <ChosenSaltProvider>
+      <ColorTable data={data} />
+    </ChosenSaltProvider>
+  );
 };
