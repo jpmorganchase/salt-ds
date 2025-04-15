@@ -1,14 +1,12 @@
 import { clsx } from "clsx";
 import { ComponentPropsWithoutRef, forwardRef } from "react";
-import { makePrefixer } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
+import { withTableBaseName } from "./Table";
 
 import tableCss from "./Table.css";
 
 export type TableProps = ComponentPropsWithoutRef<'tbody'>;
-
-const withBaseName = makePrefixer("saltTable-tbody");
 
 export const TBody = forwardRef<HTMLTableSectionElement, TableProps>(
   function TBody({ children, className, ...rest }, ref) {
@@ -22,7 +20,7 @@ export const TBody = forwardRef<HTMLTableSectionElement, TableProps>(
   return (
     <tbody
         ref={ref} 
-        className={clsx(withBaseName(), className)}
+        className={clsx(withTableBaseName('tbody'), className)}
         {...rest}
     >
       {children}

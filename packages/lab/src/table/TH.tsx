@@ -1,12 +1,10 @@
 import clsx from "clsx";
 import { ComponentPropsWithoutRef, forwardRef } from "react";
-import { makePrefixer } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
+import { withTableBaseName } from "./Table";
 
 import tableCss from "./Table.css";
-
-const withBaseName = makePrefixer("saltTable-th");
 
 export type THProps = ComponentPropsWithoutRef<"th">;
 
@@ -22,7 +20,7 @@ export const TH = forwardRef<HTMLTableCellElement, THProps>(
     return (
       <th
         ref={ref} 
-        className={clsx(withBaseName(), className)}
+        className={clsx(withTableBaseName('th'), className)}
         {...rest}
       >
         {children}
