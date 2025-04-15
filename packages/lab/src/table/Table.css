@@ -1,4 +1,3 @@
-
 /* Table: Main css class */
 .saltTable {
   --table-header-height: calc(var(--salt-size-base) + var(--salt-spacing-100));
@@ -33,7 +32,7 @@ table.saltTable thead {
   align-items: center;
   border-start-start-radius: var(--saltTable-thead-borderRadius-top, var(--salt-palette-corner));
   border-start-end-radius: var(--saltTable-thead-borderRadius-top, var(--salt-palette-corner));
-  background:  var(--saltTable-thead-background, var(--table-background));
+  background: var(--saltTable-thead-background, var(--table-background));
   color: var(--salt-content-secondary-foreground);
   height: var(--table-header-height);
   font-size: var(--salt-text-label-fontSize);
@@ -42,7 +41,8 @@ table.saltTable thead {
 }
 
 /* TH */
-.saltTable-th, .saltTable th {
+.saltTable-th,
+.saltTable th {
   overflow: hidden;
   padding: var(--salt-spacing-100);
   position: relative;
@@ -52,7 +52,7 @@ table.saltTable thead {
 
 .saltTable-th + .saltTable-th::before,
 .saltTable th + th::before {
-  --table-th-separator-height:calc(var(--salt-size-base) / 2 - 2* var(--salt-size-border));
+  --table-th-separator-height: calc(var(--salt-size-base) / 2 - 2 * var(--salt-size-border));
   background-color: var(--salt-separable-tertiary-borderColor);
   content: "";
   position: absolute;
@@ -65,7 +65,8 @@ table.saltTable thead {
 }
 
 /* TR */
-.saltTable tr, .saltTable-tr {
+.saltTable tr,
+.saltTable-tr {
   align-items: center;
   border-bottom: var(--salt-separable-borderStyle) var(--salt-separable-secondary-borderColor) var(--salt-size-border);
   height: var(--table-row-height);
