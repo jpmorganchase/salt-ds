@@ -44,10 +44,24 @@ table.saltTable thead {
 /* TH */
 .saltTable-th, .saltTable th {
   overflow: hidden;
-  padding-left: var(--salt-spacing-100);
-  padding-right: var(--salt-spacing-100);
+  padding: var(--salt-spacing-100);
+  position: relative;
   text-align: start;
   text-overflow: ellipsis;
+}
+
+.saltTable-th + .saltTable-th::before,
+.saltTable th + th::before {
+  --table-th-separator-height:calc(var(--salt-size-base) / 2 - 2* var(--salt-size-border));
+  background-color: var(--salt-separable-tertiary-borderColor);
+  content: "";
+  position: absolute;
+  z-index: 1;
+  display: block;
+  width: var(--salt-size-border);
+  height: var(--table-th-separator-height);
+  top: calc(50% - var(--table-th-separator-height) * 0.5);
+  left: 0;
 }
 
 /* TR */
@@ -65,6 +79,5 @@ table.saltTable tbody tr:hover {
 /* TD */
 .saltTable-td {
   height: 100%;
-  padding-left: var(--salt-spacing-100);
-  padding-right: var(--salt-spacing-100);
+  padding: var(--salt-spacing-100);
 }
