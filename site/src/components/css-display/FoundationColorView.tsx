@@ -1,5 +1,5 @@
 import { FlowLayout, SaltProvider, Spinner, Text } from "@salt-ds/core";
-import { Table, THead, TBody, TH, TR, TD } from "@salt-ds/lab";
+import { TBody, TD, TH, THead, TR, Table } from "@salt-ds/lab";
 import { useEffect, useState } from "react";
 import { CopyToClipboard } from "../copy-to-clipboard";
 import { ColorBlock } from "./style-blocks/ColorBlock";
@@ -43,7 +43,7 @@ const categoricalColors = [
 
 const ColorTable = ({ data }: { data: CssVariableData }) => {
   return (
-    <div style={{  maxWidth: "100vw", overflowX: "auto"}}>
+    <div style={{ maxWidth: "100vw", overflowX: "auto" }}>
       <Table>
         <THead>
           <TR>
@@ -70,7 +70,7 @@ const ColorTable = ({ data }: { data: CssVariableData }) => {
               </TD>
             </TR>
           ))}
-      </TBody>
+        </TBody>
       </Table>
     </div>
   );
