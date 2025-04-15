@@ -197,14 +197,21 @@ DisabledSelected.args = {
 
 export const MixedSentiment: StoryFn<ToggleButtonGroupStoryProps> = ({
   appearance,
+  ...rest
 }) => {
   return (
-    <ToggleButtonGroup aria-label="Purchase">
+    <ToggleButtonGroup aria-label="Purchase" {...rest}>
       <ToggleButton appearance={appearance} sentiment="positive" value="buy">
         Buy
       </ToggleButton>
       <ToggleButton appearance={appearance} sentiment="negative" value="sell">
         Sell
+      </ToggleButton>
+      <ToggleButton appearance={appearance} sentiment="caution" value="hold">
+        Hold
+      </ToggleButton>
+      <ToggleButton appearance={appearance} sentiment="neutral" value="review">
+        Review
       </ToggleButton>
     </ToggleButtonGroup>
   );

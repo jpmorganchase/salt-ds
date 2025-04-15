@@ -82,28 +82,46 @@ export const ToggleButton = forwardRef<HTMLButtonElement, ToggleButtonProps>(
       onFocus?.(event);
     };
 
-    return (
-      <button
-        aria-pressed={!toggleButtonGroup ? selected : undefined}
-        aria-checked={toggleButtonGroup ? selected : undefined}
-        role={toggleButtonGroup ? "radio" : undefined}
-        className={clsx(
-          withBaseName(),
-          withBaseName(sentiment),
-          withBaseName(appearance),
-          className,
-        )}
-        aria-disabled={disabled}
-        ref={handleRef}
-        onClick={handleClick}
-        onFocus={handleFocus}
-        tabIndex={focusable ? 0 : -1}
-        value={value}
-        type="button"
-        {...rest}
-      >
+    const toggleButtonProps: ToggleButtonProps = {
+      "aria-pressed": !toggleButtonGroup ? selected : undefined,
+      "aria-checked": toggleButtonGroup ? selected : undefined,
+      "aria-disabled": disabled,
+      role: toggleButtonGroup ? "radio" : undefined,
+      className: clsx(
+        withBaseName(),
+        withBaseName(sentiment),
+        withBaseName(appearance),
+        className,
+      ),
+      onClick: handleClick,
+      onFocus: handleFocus,
+      tabIndex: focusable ? 0 : -1,
+      value: value,
+      type: "button",
+      // Work around to allow disabled selected toggle buttons
+      // to be focusable
+      ...(!selected && { disabled: disabled }),
+      ...rest,
+    };
+
+    const toggleButtonBody = (
+      <button ref={handleRef} {...toggleButtonProps}>
         {children}
       </button>
+    );
+
+    return toggleButtonGroup ? (
+      toggleButtonBody
+    ) : (
+      // Standalone toggle button
+      <div
+        className={clsx(
+          withBaseName("container"),
+          disabled && withBaseName("container-disabled"),
+        )}
+      >
+        {toggleButtonBody}
+      </div>
     );
   },
 );

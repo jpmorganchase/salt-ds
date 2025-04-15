@@ -9,6 +9,11 @@
   flex-direction: row;
 }
 
+.saltToggleButtonGroup-disabled {
+  background: var(--salt-container-primary-background-disabled);
+  border-color: var(--salt-container-primary-borderColor-disabled);
+}
+
 .saltToggleButtonGroup .saltToggleButton {
   border-radius: var(--salt-palette-corner-weaker, 0);
 }
@@ -22,5 +27,6 @@
 }
 
 .saltToggleButtonGroup-vertical .saltToggleButton {
+  height: var(--salt-size-base);
   justify-content: start;
 }
