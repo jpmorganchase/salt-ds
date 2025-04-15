@@ -13,7 +13,7 @@ export type TableProps = ComponentPropsWithoutRef<'table'> &
     variant?: "primary" | "secondary";
   };
 
-const withBaseName = makePrefixer("saltTable");
+export const withTableBaseName = makePrefixer("saltTable");
 
 export const Table = forwardRef<HTMLTableElement, TableProps>(
   function Table({ children, className, variant = 'primary', ...rest }, ref) {
@@ -27,9 +27,9 @@ export const Table = forwardRef<HTMLTableElement, TableProps>(
   return (
     <table
       className={clsx(
-        withBaseName(),
+        withTableBaseName(),
         {
-          [withBaseName(variant)]: variant
+          [withTableBaseName(variant)]: variant
         },
         className,
       )}
