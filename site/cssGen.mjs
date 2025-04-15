@@ -62,6 +62,22 @@ function writeObjectToFile(object, outputFile) {
   }
 }
 
+function filterColorTokenInLegacy(token) {
+  return Object.entries(token).reduce((acc, [key, value]) => {
+    // temprorary fix for color variables not being overridden, in brand theme, all color token are 3 digits
+    if (/--salt-color-\w+-\d*$/.test(key)) {
+      // not double digits as well as special e.g. orange-850
+      if (/--salt-color-\w+-\d00/.test(key)) {
+        acc[key] = value;
+      }
+    } else {
+      // all other variables
+      acc[key] = value;
+    }
+    return acc;
+  }, {});
+}
+
 function extractVariables(folder, outputFileBaseName) {
   const themeDirPath = path.resolve(__dirname, folder);
 
@@ -75,7 +91,10 @@ function extractVariables(folder, outputFileBaseName) {
     ...getCssVariablesFromDir(themeDirPath, true),
   };
 
-  writeObjectToFile(brandThemeCssVariables, `${outputFileBaseName}-next.json`);
+  writeObjectToFile(
+    filterColorTokenInLegacy(brandThemeCssVariables),
+    `${outputFileBaseName}-next.json`,
+  );
 }
 
 extractVariables("../packages/theme/css/characteristics", "cssCharacteristics");
