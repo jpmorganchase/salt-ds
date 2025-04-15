@@ -151,7 +151,6 @@ export const AccordionView: FC<{ value: string }> = ({ value }) => {
                   ?.value
               }
             </Text>
-
             <Table className={styles.table}>
               <thead>
                 <tr>
