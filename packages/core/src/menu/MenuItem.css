@@ -1,4 +1,5 @@
 .saltMenuItem {
+  align-items: center;
   color: var(--salt-content-primary-foreground);
   background: var(--salt-selectable-background);
   font-size: var(--salt-text-fontSize);
