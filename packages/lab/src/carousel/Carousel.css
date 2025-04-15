@@ -1,27 +1,11 @@
-.saltGridLayout.saltCarousel {
-  grid-template-columns: min-content auto min-content;
-  grid-template-areas: "prev-button slider next-button" "dots dots dots";
+.saltCarousel {
+  display: grid;
+  grid-row-gap: var(--salt-spacing-100);
+  grid-template-areas: "controls" "slider";
+  grid-template-rows: auto 1fr;
 }
 
-.saltCarousel.saltCarousel-compact {
-  grid-template-areas: "slider slider slider" "prev-button dots next-button";
-}
-
-.saltCarousel-prev-button {
-  grid-area: prev-button;
-  height: 100%;
-}
-
-.saltCarousel-next-button {
-  grid-area: next-button;
-  height: 100%;
-}
-
-.saltCarousel-slider {
-  grid-area: slider;
-}
-
-.saltCarousel-dots {
-  grid-area: dots;
-  justify-self: center;
+.saltCarousel.saltCarousel-bottom {
+  grid-template-areas: "slider" "controls";
+  grid-template-rows: 1fr auto;
 }
