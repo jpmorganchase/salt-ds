@@ -1,4 +1,4 @@
-import { ToggleButtonGroup, ToggleButton } from "@salt-ds/core";
+import { ToggleButton, ToggleButtonGroup } from "@salt-ds/core";
 import { HomeIcon, NotificationIcon, UserIcon } from "@salt-ds/icons";
 import type { ReactElement } from "react";
 

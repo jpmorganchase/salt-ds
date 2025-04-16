@@ -1,4 +1,4 @@
-import { ToggleButtonGroup, ToggleButton } from "@salt-ds/core";
+import { ToggleButton, ToggleButtonGroup } from "@salt-ds/core";
 import type { ReactElement } from "react";
 
 export const ToggleButtonGroupSentiment = (): ReactElement => (
