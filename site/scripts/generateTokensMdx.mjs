@@ -12,6 +12,9 @@ import { visit } from "unist-util-visit";
 import characteristicsTokens from "../src/components/css-display/cssCharacteristics.json" assert {
   type: "json",
 };
+import characteristicsTokensNext from "../src/components/css-display/cssCharacteristics-next.json" assert {
+  type: "json",
+};
 
 const groupByType = (data) => {
   const groupedData = {};
@@ -65,8 +68,8 @@ const tokenDescriptions = {
 };
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-const startWith = `---
-title: Characteristic tokens
+const startWith = (type = '') => `---
+title: Characteristics${type}
 layout: DetailTechnical
 ---
 `;
@@ -78,16 +81,19 @@ const processor = unified()
   .use(remarkMdx) // Parse MDX
   .use(remarkStringify); // Convert AST back to MDX
 
-const ast = processor.parse("");
+const legacyAst = processor.parse("");
+const nextAst = processor.parse("");
 //   `|Name &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | Value |
 // | --- | --- |
 // | aaa | bbb |
 // `); // `<Abc name={"expression&nbsp;&nbsp;"} />`);
 
-const tokensByType = groupByType(characteristicsTokens);
-console.log({ tokensByType });
+const tokensByTypeLegacy = groupByType(characteristicsTokens);
+console.log({ tokensByTypeLegacy });
+const tokensByTypeNext = groupByType(characteristicsTokensNext);
+console.log({ tokensByTypeNext });
 
-const getTableRowAst = (key, value) => ({
+const getTableRowAst = (key, value, theme) => ({
   type: "tableRow",
   children: [
     {
@@ -95,7 +101,7 @@ const getTableRowAst = (key, value) => ({
       children: [
         {
           type: "mdxJsxTextElement",
-          name: "LegacyThemedBlockView",
+          name: theme === 'next' ?  "NextThemedBlockView" : "LegacyThemedBlockView",
           attributes: [
             {
               type: "mdxJsxAttribute",
@@ -109,7 +115,6 @@ const getTableRowAst = (key, value) => ({
     {
       type: "tableCell",
       children: [
-        // <CopyToClipboard value="test" />
         {
           type: "mdxJsxTextElement",
           name: "CopyToClipboard",
@@ -135,82 +140,94 @@ const getTableRowAst = (key, value) => ({
   ],
 });
 
+
 // Traverse and modify the AST
-visit(ast, "root", (node) => {
-  for (const [key, value] of Object.entries(tokenDescriptions)) {
-    const tokensInType = tokensByType[key];
+[legacyAst, nextAst].forEach(((astObj,index) => {
+  visit(astObj, "root", (node) => {
+    for (const [key, value] of Object.entries(tokenDescriptions)) {
+      const tokensInType = index === 0 ?  tokensByTypeLegacy[key] : tokensByTypeNext[key];
+  
+      if (!tokensInType) {
+        console.error("Can't find tokens for type: ", key);
+        continue;
+      }
 
-    if (!tokensInType) {
-      console.error("Can't find tokens for type: ", key);
-      continue;
+      // Insert a new heading and paragraph at the end of the document
+      node.children.push({
+        type: "heading",
+        depth: 2,
+        children: [{ type: "text", value: capitalize(key) }],
+      });
+
+      node.children.push({
+        type: "paragraph",
+        children: [{ type: "text", value: value }],
+      });
+  
+      const tableRows = tokensInType
+        ? Object.entries(tokensInType).map(([key, value]) =>
+            getTableRowAst(key, value, index === 0 ? "legacy" : "next"),
+          )
+        : [];
+  
+      node.children.push({
+        type: "table",
+        children: [
+          {
+            type: "tableRow",
+            children: [
+              {
+                type: "tableCell",
+                children: [
+                  {
+                    type: "text",
+                    value: "Preview",
+                  },
+                ],
+              },
+              {
+                type: "tableCell",
+                children: [
+                  {
+                    type: "text",
+                    value: "Name",
+                  },
+                ],
+              },
+              {
+                type: "tableCell",
+                children: [
+                  {
+                    type: "text",
+                    value: "Default Value",
+                  },
+                ],
+              },
+            ],
+          },
+          ...tableRows,
+        ],
+      });
     }
-
-    // Insert a new heading and paragraph at the end of the document
-    node.children.push({
-      type: "heading",
-      depth: 2,
-      children: [{ type: "text", value: capitalize(key) }],
-    });
-
-    node.children.push({
-      type: "paragraph",
-      children: [{ type: "text", value: value }],
-    });
-
-    const tableRows = tokensInType
-      ? Object.entries(tokensInType).map(([key, value]) =>
-          getTableRowAst(key, value),
-        )
-      : [];
-
-    node.children.push({
-      type: "table",
-      children: [
-        {
-          type: "tableRow",
-          children: [
-            {
-              type: "tableCell",
-              children: [
-                {
-                  type: "text",
-                  value: "Preview",
-                },
-              ],
-            },
-            {
-              type: "tableCell",
-              children: [
-                {
-                  type: "text",
-                  value: "Name",
-                },
-              ],
-            },
-            {
-              type: "tableCell",
-              children: [
-                {
-                  type: "text",
-                  value: "Default Value",
-                },
-              ],
-            },
-          ],
-        },
-        ...tableRows,
-      ],
-    });
-  }
-});
+  });
+}
+))
 
 // Serialize the modified AST back to MDX
-const newMdxContent = processor.stringify(ast);
+const legacyMdxContent = processor.stringify(legacyAst);
+const nextMdxContent = processor.stringify(nextAst);
 
-const contentToWrite = startWith + newMdxContent;
+const legacyContentToWrite = startWith() + legacyMdxContent;
+const nextContentToWrite = startWith(' (Next/JPM Brand)') + nextMdxContent;
 
 fs.writeFileSync(
-  path.join(__dirname, "../docs/themes/characteristic-tokens.mdx"),
-  contentToWrite,
+  path.join(__dirname, "../docs/themes/characteristics.mdx"),
+  legacyContentToWrite,
+  "utf8",
+);
+
+fs.writeFileSync(
+  path.join(__dirname, "../docs/themes/characteristics-next.mdx"),
+  nextContentToWrite,
   "utf8",
 );

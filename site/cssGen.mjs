@@ -1,8 +1,10 @@
 import fs from "node:fs";
 import path from "node:path";
 import { parse, walk } from "css-tree";
+import { fileURLToPath } from 'url';
 
-const __dirname = import.meta.dirname;
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 function getCssVariablesFromDir(dirPath, themeNext = false) {
   console.log("Extracting CSS variable from", dirPath);
@@ -47,6 +49,7 @@ function getCssVariablesFromDir(dirPath, themeNext = false) {
 }
 
 function extractVariables(folder, outputFile, themeNext = false) {
+  console.log(__dirname)
   const themeDirPath = path.resolve(__dirname, folder);
 
   const allCssVariables = themeNext
