@@ -1,4 +1,4 @@
-import { ToggleButton, Tooltip } from "@salt-ds/core";
+import { StackLayout, ToggleButton, Tooltip } from "@salt-ds/core";
 import { FavoriteSolidIcon, HomeIcon } from "@salt-ds/icons";
 import type { Meta, StoryFn } from "@storybook/react";
 
@@ -25,6 +25,23 @@ export const TextAndIcon: StoryFn<typeof ToggleButton> = (args) => (
   </ToggleButton>
 );
 
+export const Sentiment: StoryFn<typeof ToggleButton> = (args) => (
+  <StackLayout>
+    <ToggleButton sentiment="accented" {...args}>
+      <HomeIcon aria-hidden /> Accented
+    </ToggleButton>
+    <ToggleButton sentiment="positive" {...args}>
+      <HomeIcon aria-hidden /> Positive
+    </ToggleButton>
+    <ToggleButton sentiment="negative" {...args}>
+      <HomeIcon aria-hidden /> Negative
+    </ToggleButton>
+    <ToggleButton sentiment="caution" {...args}>
+      <HomeIcon aria-hidden /> Caution
+    </ToggleButton>
+  </StackLayout>
+);
+
 export const Disabled: StoryFn<typeof ToggleButton> = (args) => (
   <ToggleButton {...args}>
     <HomeIcon aria-hidden /> Home
@@ -33,4 +50,29 @@ export const Disabled: StoryFn<typeof ToggleButton> = (args) => (
 
 Disabled.args = {
   disabled: true,
+};
+
+export const DisabledSelected: StoryFn<typeof ToggleButton> = (args) => (
+  <ToggleButton {...args}>
+    <HomeIcon aria-hidden /> Home
+  </ToggleButton>
+);
+
+DisabledSelected.args = {
+  disabled: true,
+  selected: true,
+};
+
+export const DisabledSelectedBordered: StoryFn<typeof ToggleButton> = (
+  args,
+) => (
+  <ToggleButton {...args}>
+    <HomeIcon aria-hidden /> Home
+  </ToggleButton>
+);
+
+DisabledSelectedBordered.args = {
+  appearance: "bordered",
+  disabled: true,
+  selected: true,
 };

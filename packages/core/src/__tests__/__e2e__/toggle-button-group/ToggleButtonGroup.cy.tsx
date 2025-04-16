@@ -333,11 +333,12 @@ describe("GIVEN a disabled ToggleButtonGroup ", () => {
     cy.findAllByRole("radio").eq(1).should("be.disabled");
 
     cy.findAllByRole("radio").eq(2).should("have.text", "Search");
+    // Disabled selected toggle button should be focusable
+    cy.findAllByRole("radio").eq(2).should("have.attr", "aria-checked", "true");
+    cy.findAllByRole("radio").eq(2).should("have.attr", "tabindex", "0");
     cy.findAllByRole("radio")
       .eq(2)
-      .should("have.attr", "aria-checked", "false");
-    cy.findAllByRole("radio").eq(2).should("have.attr", "tabindex", "-1");
-    cy.findAllByRole("radio").eq(2).should("be.disabled");
+      .should("have.attr", "aria-disabled", "true");
 
     cy.findAllByRole("radio").eq(3).should("have.text", "Print");
     cy.findAllByRole("radio")
@@ -347,6 +348,10 @@ describe("GIVEN a disabled ToggleButtonGroup ", () => {
     cy.findAllByRole("radio").eq(3).should("be.disabled");
 
     cy.findAllByRole("radio").eq(0).realClick();
+    // It should not fire onChange event
+    cy.get("@changeSpy").should("not.have.been.called");
+    // Click the disabled selected toggle button should not fire onChange event
+    cy.findAllByRole("radio").eq(2).realClick();
     // It should not fire onChange event
     cy.get("@changeSpy").should("not.have.been.called");
   });
