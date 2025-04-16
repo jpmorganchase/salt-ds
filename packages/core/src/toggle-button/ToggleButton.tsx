@@ -27,7 +27,7 @@ const withBaseName = makePrefixer("saltToggleButton");
 export const ToggleButton = forwardRef<HTMLButtonElement, ToggleButtonProps>(
   function ToggleButton(props, ref) {
     const {
-      appearance = "solid",
+      appearance: appearanceProp = "solid",
       children,
       className,
       disabled: disabledProp,
@@ -36,7 +36,7 @@ export const ToggleButton = forwardRef<HTMLButtonElement, ToggleButtonProps>(
       onFocus,
       onChange,
       selected: selectedProp,
-      sentiment = "neutral",
+      sentiment: sentimenentProp = "neutral",
       ...rest
     } = props;
 
@@ -89,8 +89,8 @@ export const ToggleButton = forwardRef<HTMLButtonElement, ToggleButtonProps>(
       role: toggleButtonGroup ? "radio" : undefined,
       className: clsx(
         withBaseName(),
-        withBaseName(sentiment),
-        withBaseName(appearance),
+        withBaseName(toggleButtonGroup?.sentiment || sentimenentProp),
+        withBaseName(toggleButtonGroup?.appearance || appearanceProp),
         className,
       ),
       onClick: handleClick,

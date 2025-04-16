@@ -42,6 +42,12 @@ export const Sentiment: StoryFn<typeof ToggleButton> = (args) => (
   </StackLayout>
 );
 
+export const Bordered: StoryFn<typeof ToggleButton> = (args) => (
+  <ToggleButton appearance="bordered" {...args}>
+    <HomeIcon aria-hidden /> Home
+  </ToggleButton>
+);
+
 export const Disabled: StoryFn<typeof ToggleButton> = (args) => (
   <ToggleButton {...args}>
     <HomeIcon aria-hidden /> Home

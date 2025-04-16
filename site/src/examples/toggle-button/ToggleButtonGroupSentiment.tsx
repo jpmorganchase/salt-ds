@@ -1,19 +1,27 @@
-import { ToggleButton, ToggleButtonGroup } from "@salt-ds/core";
+import { StackLayout, ToggleButton, ToggleButtonGroup } from "@salt-ds/core";
 import type { ReactElement } from "react";
 
 export const ToggleButtonGroupSentiment = (): ReactElement => (
-  <ToggleButtonGroup defaultValue="accented">
-    <ToggleButton value="accented" sentiment="accented">
-      Accented
-    </ToggleButton>
-    <ToggleButton value="positive" sentiment="positive">
-      Positive
-    </ToggleButton>
-    <ToggleButton value="negative" sentiment="negative">
-      Negative
-    </ToggleButton>
-    <ToggleButton value="caution" sentiment="caution">
-      Caution
-    </ToggleButton>
-  </ToggleButtonGroup>
+  <StackLayout>
+    <ToggleButtonGroup defaultValue="all" sentiment="accented">
+      <ToggleButton value="all">All</ToggleButton>
+      <ToggleButton value="active">Active</ToggleButton>
+      <ToggleButton value="archived">Archived</ToggleButton>
+      <ToggleButton value="saved">Saved</ToggleButton>
+    </ToggleButtonGroup>
+    <ToggleButtonGroup defaultValue="all">
+      <ToggleButton value="all" sentiment="accented">
+        All
+      </ToggleButton>
+      <ToggleButton value="active" sentiment="positive">
+        Active
+      </ToggleButton>
+      <ToggleButton value="archived" sentiment="negative">
+        Archived
+      </ToggleButton>
+      <ToggleButton value="saved" sentiment="caution">
+        Saved
+      </ToggleButton>
+    </ToggleButtonGroup>
+  </StackLayout>
 );
