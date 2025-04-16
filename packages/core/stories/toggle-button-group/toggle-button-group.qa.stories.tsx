@@ -30,20 +30,6 @@ export const AllVariantsGrid: StoryFn<QAContainerProps> = (props) => (
         Archived
       </ToggleButton>
     </ToggleButtonGroup>
-    <ToggleButtonGroup orientation="vertical" defaultValue="active">
-      <ToggleButton value="all">
-        <AppSwitcherIcon aria-hidden />
-        All
-      </ToggleButton>
-      <ToggleButton value="active">
-        <VisibleIcon aria-hidden />
-        Active
-      </ToggleButton>
-      <ToggleButton disabled value="search">
-        <FolderClosedIcon aria-hidden />
-        Archived
-      </ToggleButton>
-    </ToggleButtonGroup>
     <ToggleButtonGroup orientation="horizontal" defaultValue="signed">
       <ToggleButton sentiment="neutral" value="all">
         <AppSwitcherIcon aria-hidden />
@@ -62,7 +48,43 @@ export const AllVariantsGrid: StoryFn<QAContainerProps> = (props) => (
         Accepted
       </ToggleButton>
     </ToggleButtonGroup>
-    <ToggleButtonGroup orientation="vertical" defaultValue="signed">
+    <ToggleButtonGroup sentiment="accented" defaultValue="signed">
+      <ToggleButton value="all">
+        <AppSwitcherIcon aria-hidden />
+        All
+      </ToggleButton>
+      <ToggleButton value="active">
+        <VisibleIcon aria-hidden />
+        Active
+      </ToggleButton>
+      <ToggleButton value="search">
+        <FolderClosedIcon aria-hidden />
+        Archived
+      </ToggleButton>
+      <ToggleButton value="signed">
+        <CheckIcon aria-hidden />
+        Accepted
+      </ToggleButton>
+    </ToggleButtonGroup>
+    <ToggleButtonGroup appearance="bordered" defaultValue="signed">
+      <ToggleButton value="all">
+        <AppSwitcherIcon aria-hidden />
+        All
+      </ToggleButton>
+      <ToggleButton value="active">
+        <VisibleIcon aria-hidden />
+        Active
+      </ToggleButton>
+      <ToggleButton value="search">
+        <FolderClosedIcon aria-hidden />
+        Archived
+      </ToggleButton>
+      <ToggleButton value="signed">
+        <CheckIcon aria-hidden />
+        Accepted
+      </ToggleButton>
+    </ToggleButtonGroup>
+    <ToggleButtonGroup orientation="horizontal" defaultValue="signed" disabled>
       <ToggleButton sentiment="neutral" value="all">
         <AppSwitcherIcon aria-hidden />
         All
@@ -80,7 +102,21 @@ export const AllVariantsGrid: StoryFn<QAContainerProps> = (props) => (
         Accepted
       </ToggleButton>
     </ToggleButtonGroup>
-    <ToggleButtonGroup orientation="horizontal" defaultValue="signed" disabled>
+    <ToggleButtonGroup orientation="vertical" defaultValue="active">
+      <ToggleButton value="all">
+        <AppSwitcherIcon aria-hidden />
+        All
+      </ToggleButton>
+      <ToggleButton value="active">
+        <VisibleIcon aria-hidden />
+        Active
+      </ToggleButton>
+      <ToggleButton disabled value="search">
+        <FolderClosedIcon aria-hidden />
+        Archived
+      </ToggleButton>
+    </ToggleButtonGroup>
+    <ToggleButtonGroup orientation="vertical" defaultValue="signed">
       <ToggleButton sentiment="neutral" value="all">
         <AppSwitcherIcon aria-hidden />
         All
@@ -160,20 +196,6 @@ export const NoStyleInjectionGrid: StoryFn<QAContainerNoStyleInjectionProps> = (
         Archived
       </ToggleButton>
     </ToggleButtonGroup>
-    <ToggleButtonGroup orientation="vertical" defaultValue="active">
-      <ToggleButton value="all">
-        <AppSwitcherIcon aria-hidden />
-        All
-      </ToggleButton>
-      <ToggleButton value="active">
-        <VisibleIcon aria-hidden />
-        Active
-      </ToggleButton>
-      <ToggleButton disabled value="search">
-        <FolderClosedIcon aria-hidden />
-        Archived
-      </ToggleButton>
-    </ToggleButtonGroup>
     <ToggleButtonGroup orientation="horizontal" defaultValue="signed">
       <ToggleButton sentiment="neutral" value="all">
         <AppSwitcherIcon aria-hidden />
@@ -192,7 +214,43 @@ export const NoStyleInjectionGrid: StoryFn<QAContainerNoStyleInjectionProps> = (
         Accepted
       </ToggleButton>
     </ToggleButtonGroup>
-    <ToggleButtonGroup orientation="vertical" defaultValue="signed">
+    <ToggleButtonGroup sentiment="accented" defaultValue="signed">
+      <ToggleButton value="all">
+        <AppSwitcherIcon aria-hidden />
+        All
+      </ToggleButton>
+      <ToggleButton value="active">
+        <VisibleIcon aria-hidden />
+        Active
+      </ToggleButton>
+      <ToggleButton value="search">
+        <FolderClosedIcon aria-hidden />
+        Archived
+      </ToggleButton>
+      <ToggleButton value="signed">
+        <CheckIcon aria-hidden />
+        Accepted
+      </ToggleButton>
+    </ToggleButtonGroup>
+    <ToggleButtonGroup appearance="bordered" defaultValue="signed">
+      <ToggleButton value="all">
+        <AppSwitcherIcon aria-hidden />
+        All
+      </ToggleButton>
+      <ToggleButton value="active">
+        <VisibleIcon aria-hidden />
+        Active
+      </ToggleButton>
+      <ToggleButton value="search">
+        <FolderClosedIcon aria-hidden />
+        Archived
+      </ToggleButton>
+      <ToggleButton value="signed">
+        <CheckIcon aria-hidden />
+        Accepted
+      </ToggleButton>
+    </ToggleButtonGroup>
+    <ToggleButtonGroup orientation="horizontal" defaultValue="signed" disabled>
       <ToggleButton sentiment="neutral" value="all">
         <AppSwitcherIcon aria-hidden />
         All
@@ -210,7 +268,21 @@ export const NoStyleInjectionGrid: StoryFn<QAContainerNoStyleInjectionProps> = (
         Accepted
       </ToggleButton>
     </ToggleButtonGroup>
-    <ToggleButtonGroup orientation="horizontal" defaultValue="signed" disabled>
+    <ToggleButtonGroup orientation="vertical" defaultValue="active">
+      <ToggleButton value="all">
+        <AppSwitcherIcon aria-hidden />
+        All
+      </ToggleButton>
+      <ToggleButton value="active">
+        <VisibleIcon aria-hidden />
+        Active
+      </ToggleButton>
+      <ToggleButton disabled value="search">
+        <FolderClosedIcon aria-hidden />
+        Archived
+      </ToggleButton>
+    </ToggleButtonGroup>
+    <ToggleButtonGroup orientation="vertical" defaultValue="signed">
       <ToggleButton sentiment="neutral" value="all">
         <AppSwitcherIcon aria-hidden />
         All

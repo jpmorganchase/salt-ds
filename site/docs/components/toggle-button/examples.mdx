@@ -43,7 +43,7 @@ You can configure toggle buttons to only display text if you can’t identify a 
 
 ## Sentiment
 
-Toggle Button has four other sentiments available — accented, positive, caution and negative. Use them in your application designs as follows:
+Toggle button has four other sentiments available — `accented`, `positive`, `caution` and `negative`. You can set this using the `sentiment` prop. Sentiments are based on the following recommendations:
 
 - **Accented**: Allows greater visual emphasis to be placed on actions
 - **Positive**: Indicates actions that result in positive outcomes.
@@ -96,11 +96,20 @@ Disabling a toggle button group will suppress functionality for all buttons with
   exampleName="ToggleButtonGroupDisabled"
 />
 
-## Mixed sentiments
+## Toggle button group sentiments
 
-Sentiment can be set to a Toggle Button group or individual buttons within a group, allowing for mixed sentiments.
+Sentiment can be set to a toggle button group or individual buttons within a group, allowing for mixed sentiments via the `sentiment` prop.
 
 <LivePreview
   componentName="toggle-button"
   exampleName="ToggleButtonGroupSentiment"
+/>
+
+## Toggle button selected appearance
+
+The `appearance` prop allows you to define the selected appearance for all buttons in the toggle button group as either `solid` or `bordered`.
+
+<LivePreview
+  componentName="toggle-button"
+  exampleName="ToggleButtonGroupAppearance"
 />

@@ -184,6 +184,33 @@ VerticalTextOnly.args = {
   defaultValue: "high",
 };
 
+export const Bordered: StoryFn<ToggleButtonGroupStoryProps> = ({
+  appearance,
+  ...rest
+}) => {
+  return (
+    <ToggleButtonGroup
+      appearance="bordered"
+      aria-label="Purchase"
+      defaultValue="sell"
+      {...rest}
+    >
+      <ToggleButton appearance={appearance} value="buy">
+        Buy
+      </ToggleButton>
+      <ToggleButton appearance={appearance} value="sell">
+        Sell
+      </ToggleButton>
+      <ToggleButton appearance={appearance} value="hold">
+        Hold
+      </ToggleButton>
+      <ToggleButton appearance={appearance} value="review">
+        Review
+      </ToggleButton>
+    </ToggleButtonGroup>
+  );
+};
+
 export const Disabled = IconAndTextTemplate.bind({});
 Disabled.args = {
   disabled: true,
@@ -193,6 +220,33 @@ export const DisabledSelected = IconAndTextTemplate.bind({});
 DisabledSelected.args = {
   disabled: true,
   defaultValue: "active",
+};
+
+export const Sentiment: StoryFn<ToggleButtonGroupStoryProps> = ({
+  appearance,
+  ...rest
+}) => {
+  return (
+    <ToggleButtonGroup
+      sentiment="accented"
+      aria-label="Purchase"
+      defaultValue="buy"
+      {...rest}
+    >
+      <ToggleButton appearance={appearance} value="buy">
+        Buy
+      </ToggleButton>
+      <ToggleButton appearance={appearance} value="sell">
+        Sell
+      </ToggleButton>
+      <ToggleButton appearance={appearance} value="hold">
+        Hold
+      </ToggleButton>
+      <ToggleButton appearance={appearance} value="review">
+        Review
+      </ToggleButton>
+    </ToggleButtonGroup>
+  );
 };
 
 export const MixedSentiment: StoryFn<ToggleButtonGroupStoryProps> = ({

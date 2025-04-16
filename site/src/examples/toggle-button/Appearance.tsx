@@ -4,10 +4,10 @@ import type { ReactElement } from "react";
 
 export const Appearance = (): ReactElement => (
   <StackLayout>
-    <ToggleButton value="bordered" appearance="bordered" selected>
+    <ToggleButton value="active" appearance="bordered" selected>
       <AppSwitcherIcon /> Active
     </ToggleButton>
-    <ToggleButton value="solid" appearance="solid" selected>
+    <ToggleButton value="archived" appearance="solid" selected>
       <FolderClosedIcon /> Archived
     </ToggleButton>
   </StackLayout>

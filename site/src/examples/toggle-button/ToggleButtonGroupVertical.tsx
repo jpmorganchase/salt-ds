@@ -12,7 +12,7 @@ export const ToggleButtonGroupVertical = (): ReactElement => (
       <VisibleIcon aria-hidden />
       Active
     </ToggleButton>
-    <ToggleButton disabled value="search">
+    <ToggleButton disabled value="archived">
       <FolderClosedIcon aria-hidden />
       Archived
     </ToggleButton>
