@@ -336,7 +336,9 @@ describe("GIVEN a disabled ToggleButtonGroup ", () => {
     // Disabled selected toggle button should be focusable
     cy.findAllByRole("radio").eq(2).should("have.attr", "aria-checked", "true");
     cy.findAllByRole("radio").eq(2).should("have.attr", "tabindex", "0");
-    cy.findAllByRole("radio").eq(2).should("be.disabled");
+    cy.findAllByRole("radio")
+      .eq(2)
+      .should("have.attr", "aria-disabled", "true");
 
     cy.findAllByRole("radio").eq(3).should("have.text", "Print");
     cy.findAllByRole("radio")
