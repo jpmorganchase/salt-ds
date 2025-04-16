@@ -10,6 +10,8 @@ main {
 .salt-editorial {
   --salt-text-fontSize: 16px; /* incease base font size to 16px; */
   --salt-text-lineHeight: 21px;
+  --salt-text-h4-fontSize: 16px; /* incease base font size to 16px; */
+  --salt-text-h4-lineHeight: 21px;
 }
 .salt-editorial .saltNavigationItem-vertical {
   /* padding-left: calc(var(--salt-spacing-100) * var(--saltNavigationItem-level, 0)); */
