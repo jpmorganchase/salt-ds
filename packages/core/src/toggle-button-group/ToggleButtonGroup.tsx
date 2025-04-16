@@ -147,7 +147,12 @@ export const ToggleButtonGroup = forwardRef<
   return (
     <ToggleButtonGroupContext.Provider value={contextValue}>
       <div
-        className={clsx(withBaseName(), withBaseName(orientation), className)}
+        className={clsx(
+          withBaseName(),
+          withBaseName(orientation),
+          disabled && withBaseName("disabled"),
+          className,
+        )}
         role="radiogroup"
         ref={handleRef}
         onKeyDown={handleKeyDown}

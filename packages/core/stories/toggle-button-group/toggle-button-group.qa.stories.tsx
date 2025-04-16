@@ -1,5 +1,6 @@
 import { ToggleButton, ToggleButtonGroup } from "@salt-ds/core";
 import { AppSwitcherIcon, FolderClosedIcon, VisibleIcon } from "@salt-ds/icons";
+import { CheckIcon } from "@storybook/icons";
 import type { Meta, StoryFn } from "@storybook/react";
 import {
   QAContainer,
@@ -14,7 +15,7 @@ export default {
 } as Meta<typeof ToggleButtonGroup>;
 
 export const AllVariantsGrid: StoryFn<QAContainerProps> = (props) => (
-  <QAContainer height={500} width={1000} cols={1} itemPadding={4} {...props}>
+  <QAContainer height={2500} width={1400} cols={1} itemPadding={6} {...props}>
     <ToggleButtonGroup defaultValue="active">
       <ToggleButton value="all">
         <AppSwitcherIcon aria-hidden />
@@ -43,6 +44,78 @@ export const AllVariantsGrid: StoryFn<QAContainerProps> = (props) => (
         Archived
       </ToggleButton>
     </ToggleButtonGroup>
+    <ToggleButtonGroup orientation="horizontal" defaultValue="signed">
+      <ToggleButton sentiment="neutral" value="all">
+        <AppSwitcherIcon aria-hidden />
+        All
+      </ToggleButton>
+      <ToggleButton sentiment="negative" value="active">
+        <VisibleIcon aria-hidden />
+        Active
+      </ToggleButton>
+      <ToggleButton sentiment="caution" value="search">
+        <FolderClosedIcon aria-hidden />
+        Archived
+      </ToggleButton>
+      <ToggleButton sentiment="positive" value="signed">
+        <CheckIcon aria-hidden />
+        Accepted
+      </ToggleButton>
+    </ToggleButtonGroup>
+    <ToggleButtonGroup orientation="vertical" defaultValue="signed">
+      <ToggleButton sentiment="neutral" value="all">
+        <AppSwitcherIcon aria-hidden />
+        All
+      </ToggleButton>
+      <ToggleButton sentiment="negative" value="active">
+        <VisibleIcon aria-hidden />
+        Active
+      </ToggleButton>
+      <ToggleButton sentiment="caution" value="search">
+        <FolderClosedIcon aria-hidden />
+        Archived
+      </ToggleButton>
+      <ToggleButton sentiment="positive" value="signed">
+        <CheckIcon aria-hidden />
+        Accepted
+      </ToggleButton>
+    </ToggleButtonGroup>
+    <ToggleButtonGroup orientation="horizontal" defaultValue="signed" disabled>
+      <ToggleButton sentiment="neutral" value="all">
+        <AppSwitcherIcon aria-hidden />
+        All
+      </ToggleButton>
+      <ToggleButton sentiment="negative" value="active">
+        <VisibleIcon aria-hidden />
+        Active
+      </ToggleButton>
+      <ToggleButton sentiment="caution" value="search">
+        <FolderClosedIcon aria-hidden />
+        Archived
+      </ToggleButton>
+      <ToggleButton sentiment="positive" value="signed">
+        <CheckIcon aria-hidden />
+        Accepted
+      </ToggleButton>
+    </ToggleButtonGroup>
+    <ToggleButtonGroup orientation="vertical" defaultValue="signed" disabled>
+      <ToggleButton sentiment="neutral" value="all">
+        <AppSwitcherIcon aria-hidden />
+        All
+      </ToggleButton>
+      <ToggleButton sentiment="negative" value="active">
+        <VisibleIcon aria-hidden />
+        Active
+      </ToggleButton>
+      <ToggleButton sentiment="caution" value="search">
+        <FolderClosedIcon aria-hidden />
+        Archived
+      </ToggleButton>
+      <ToggleButton sentiment="positive" value="signed">
+        <CheckIcon aria-hidden />
+        Accepted
+      </ToggleButton>
+    </ToggleButtonGroup>
   </QAContainer>
 );
 
@@ -68,7 +141,7 @@ export const NoStyleInjectionGrid: StoryFn<QAContainerNoStyleInjectionProps> = (
 ) => (
   <QAContainerNoStyleInjection
     height={500}
-    width={1000}
+    width={1700}
     cols={1}
     itemPadding={4}
     {...props}
@@ -99,6 +172,78 @@ export const NoStyleInjectionGrid: StoryFn<QAContainerNoStyleInjectionProps> = (
       <ToggleButton disabled value="search">
         <FolderClosedIcon aria-hidden />
         Archived
+      </ToggleButton>
+    </ToggleButtonGroup>
+    <ToggleButtonGroup orientation="horizontal" defaultValue="signed">
+      <ToggleButton sentiment="neutral" value="all">
+        <AppSwitcherIcon aria-hidden />
+        All
+      </ToggleButton>
+      <ToggleButton sentiment="negative" value="active">
+        <VisibleIcon aria-hidden />
+        Active
+      </ToggleButton>
+      <ToggleButton sentiment="caution" value="search">
+        <FolderClosedIcon aria-hidden />
+        Archived
+      </ToggleButton>
+      <ToggleButton sentiment="positive" value="signed">
+        <CheckIcon aria-hidden />
+        Accepted
+      </ToggleButton>
+    </ToggleButtonGroup>
+    <ToggleButtonGroup orientation="vertical" defaultValue="signed">
+      <ToggleButton sentiment="neutral" value="all">
+        <AppSwitcherIcon aria-hidden />
+        All
+      </ToggleButton>
+      <ToggleButton sentiment="negative" value="active">
+        <VisibleIcon aria-hidden />
+        Active
+      </ToggleButton>
+      <ToggleButton sentiment="caution" value="search">
+        <FolderClosedIcon aria-hidden />
+        Archived
+      </ToggleButton>
+      <ToggleButton sentiment="positive" value="signed">
+        <CheckIcon aria-hidden />
+        Accepted
+      </ToggleButton>
+    </ToggleButtonGroup>
+    <ToggleButtonGroup orientation="horizontal" defaultValue="signed" disabled>
+      <ToggleButton sentiment="neutral" value="all">
+        <AppSwitcherIcon aria-hidden />
+        All
+      </ToggleButton>
+      <ToggleButton sentiment="negative" value="active">
+        <VisibleIcon aria-hidden />
+        Active
+      </ToggleButton>
+      <ToggleButton sentiment="caution" value="search">
+        <FolderClosedIcon aria-hidden />
+        Archived
+      </ToggleButton>
+      <ToggleButton sentiment="positive" value="signed">
+        <CheckIcon aria-hidden />
+        Accepted
+      </ToggleButton>
+    </ToggleButtonGroup>
+    <ToggleButtonGroup orientation="vertical" defaultValue="signed" disabled>
+      <ToggleButton sentiment="neutral" value="all">
+        <AppSwitcherIcon aria-hidden />
+        All
+      </ToggleButton>
+      <ToggleButton sentiment="negative" value="active">
+        <VisibleIcon aria-hidden />
+        Active
+      </ToggleButton>
+      <ToggleButton sentiment="caution" value="search">
+        <FolderClosedIcon aria-hidden />
+        Archived
+      </ToggleButton>
+      <ToggleButton sentiment="positive" value="signed">
+        <CheckIcon aria-hidden />
+        Accepted
       </ToggleButton>
     </ToggleButtonGroup>
   </QAContainerNoStyleInjection>
