@@ -15,11 +15,28 @@ import { makePrefixer, useControlled, useForkRef } from "../utils";
 import toggleButtonCss from "./ToggleButton.css";
 
 export interface ToggleButtonProps extends ComponentPropsWithoutRef<"button"> {
-  selected?: boolean;
-  onChange?: (event: MouseEvent<HTMLButtonElement>) => void;
-  value: string | ReadonlyArray<string> | number | undefined;
-  sentiment?: ButtonSentiment;
+  /**
+   * The appearance of the toggle button.
+   * @default solid
+   */
   appearance?: Extract<ButtonAppearance, "bordered" | "solid">;
+  /**
+   * Callback fired when the toggle button's selection state is changed.
+   */
+  onChange?: (event: MouseEvent<HTMLButtonElement>) => void;
+  /**
+   * The sentiment of the toggle button.
+   * @default neutral
+   */
+  sentiment?: ButtonSentiment;
+  /**
+   * Whether the toggle button is a selected state.
+   */
+  selected?: boolean;
+  /**
+   * Value of the toggle button, to be used when in a controlled state.
+   */
+  value: string | ReadonlyArray<string> | number | undefined;
 }
 
 const withBaseName = makePrefixer("saltToggleButton");

@@ -24,6 +24,7 @@ export interface ToggleButtonGroupProps
   extends Omit<ComponentPropsWithoutRef<"div">, "onChange"> {
   /**
    * The appearance of all the toggle buttons within the group.
+   * @default solid
    */
   appearance?: Extract<ButtonAppearance, "bordered" | "solid">;
   /**
@@ -35,12 +36,11 @@ export interface ToggleButtonGroupProps
    */
   disabled?: boolean;
   /**
-   * The value. Use when the component is controlled.
+   * Value of the toggle button group, to be used when the component is controlled.
    */
   value?: Value;
   /**
    * Callback fired when the selection changes.
-   * @param event
    */
   onChange?: (event: SyntheticEvent<HTMLButtonElement>) => void;
   /**
@@ -49,6 +49,7 @@ export interface ToggleButtonGroupProps
   orientation?: "horizontal" | "vertical";
   /**
    * The visual sentimenent of all the toggle buttons within the group.
+   * @default neutral
    */
   sentiment?: ButtonSentiment;
 }
