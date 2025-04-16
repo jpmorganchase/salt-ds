@@ -10,3 +10,8 @@
   padding-right: var(--salt-spacing-200);
   min-width: min-content;
 }
+
+/* Override padding, to make it balanced across nav levels */
+.root :global(.saltNavigationItem-vertical) {
+  padding-left: calc(var(--salt-spacing-200) + var(--salt-spacing-100) * (var(--saltNavigationItem-level, 0) + 1));
+}
