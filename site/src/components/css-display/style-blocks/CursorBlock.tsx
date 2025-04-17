@@ -16,7 +16,9 @@ export const CursorBlock = ({
       <div
         className={styles.cell}
         style={{ cursor: `var(${cursor})` } as CSSProperties}
-      />
+      >
+        Hover to try
+      </div>
       {!hideToken && <code>{cursor}</code>}
     </>
   );
