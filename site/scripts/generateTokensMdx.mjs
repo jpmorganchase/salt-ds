@@ -68,12 +68,6 @@ const tokenDescriptions = {
 };
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-const startWith = (type = '') => `---
-title: Characteristics${type}
-layout: DetailTechnical
----
-`;
-
 // Parse the MDX content into an AST
 const processor = unified()
   .use(remarkParse) // Parse Markdown
@@ -83,7 +77,6 @@ const processor = unified()
 
 const legacyAst = processor.parse("");
 const nextAst = processor.parse("");
-
 
 const tokensByTypeLegacy = groupByType(characteristicsTokens);
 console.log({ tokensByTypeLegacy });
@@ -98,7 +91,8 @@ const getTableRowAst = (key, value, theme) => ({
       children: [
         {
           type: "mdxJsxTextElement",
-          name: theme === 'next' ?  "NextThemedBlockView" : "LegacyThemedBlockView",
+          name:
+            theme === "next" ? "NextThemedBlockView" : "LegacyThemedBlockView",
           attributes: [
             {
               type: "mdxJsxAttribute",
@@ -112,14 +106,40 @@ const getTableRowAst = (key, value, theme) => ({
     {
       type: "tableCell",
       children: [
+        /**
+         * <FlowLayout gap={1} align="center">
+         *   <CopyToClipboard value={name} />
+         * </FlowLayout>
+         */
         {
           type: "mdxJsxTextElement",
-          name: "CopyToClipboard",
+          name: "FlowLayout",
           attributes: [
             {
               type: "mdxJsxAttribute",
-              name: "value",
-              value: key,
+              name: "gap",
+              value: {
+                type: "mdxJsxAttributeValueExpression",
+                value: "1",
+              },
+            },
+            {
+              type: "mdxJsxAttribute",
+              name: "align",
+              value: "center",
+            },
+          ],
+          children: [
+            {
+              type: "mdxJsxTextElement",
+              name: "CopyToClipboard",
+              attributes: [
+                {
+                  type: "mdxJsxAttribute",
+                  name: "value",
+                  value: key,
+                },
+              ],
             },
           ],
         },
@@ -137,13 +157,13 @@ const getTableRowAst = (key, value, theme) => ({
   ],
 });
 
-
 // Traverse and modify the AST
-[legacyAst, nextAst].forEach(((astObj,index) => {
+[legacyAst, nextAst].forEach((astObj, index) => {
   visit(astObj, "root", (node) => {
     for (const [key, value] of Object.entries(tokenDescriptions)) {
-      const tokensInType = index === 0 ?  tokensByTypeLegacy[key] : tokensByTypeNext[key];
-  
+      const tokensInType =
+        index === 0 ? tokensByTypeLegacy[key] : tokensByTypeNext[key];
+
       if (!tokensInType) {
         console.error("Can't find tokens for type: ", key);
         continue;
@@ -160,13 +180,13 @@ const getTableRowAst = (key, value, theme) => ({
         type: "paragraph",
         children: [{ type: "text", value: value }],
       });
-  
+
       const tableRows = tokensInType
         ? Object.entries(tokensInType).map(([key, value]) =>
             getTableRowAst(key, value, index === 0 ? "legacy" : "next"),
           )
         : [];
-  
+
       node.children.push({
         type: "table",
         children: [
@@ -207,24 +227,35 @@ const getTableRowAst = (key, value, theme) => ({
       });
     }
   });
-}
-))
+});
 
 // Serialize the modified AST back to MDX
 const legacyMdxContent = processor.stringify(legacyAst);
 const nextMdxContent = processor.stringify(nextAst);
 
-const legacyContentToWrite = startWith() + legacyMdxContent;
-const nextContentToWrite = startWith(' (Next/JPM Brand)') + nextMdxContent;
+const legacyFrontMatter = `---
+title: Legacy (UITK) characteristics
+layout: DetailTechnical
+sidebar:
+  label: Legacy (UITK)
+---
+`;
+const brandFrontMatter = `---
+title: JPM brand characteristics
+layout: DetailTechnical
+sidebar:
+  label: JPM brand
+  groupLabel: Characteristics
+---
+`;
 
-fs.writeFileSync(
-  path.join(__dirname, "../docs/themes/characteristics.mdx"),
-  legacyContentToWrite,
-  "utf8",
-);
+const legacyContentToWrite = legacyFrontMatter + legacyMdxContent;
+const nextContentToWrite = brandFrontMatter + nextMdxContent;
 
-fs.writeFileSync(
-  path.join(__dirname, "../docs/themes/characteristics-next.mdx"),
-  nextContentToWrite,
-  "utf8",
-);
+const folder = path.join(__dirname, "../docs/themes/characteristics");
+
+fs.mkdirSync(folder, { recursive: true });
+
+fs.writeFileSync(path.join(folder, "legacy.mdx"), legacyContentToWrite, "utf8");
+
+fs.writeFileSync(path.join(folder, "index.mdx"), nextContentToWrite, "utf8");
