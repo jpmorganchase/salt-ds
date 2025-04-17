@@ -51,7 +51,7 @@ export const Pre = forwardRef<HTMLDivElement, PreProps>(function Pre(
           light: "github-light",
           dark: "github-dark",
         },
-        defaultColor: "light",
+        defaultColor: false,
       });
 
       setHtml(html);
