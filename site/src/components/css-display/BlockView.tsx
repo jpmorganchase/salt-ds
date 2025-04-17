@@ -9,6 +9,7 @@ import { LineBlock } from "./style-blocks/LineBlock";
 import { OutlineBlock } from "./style-blocks/OutlineBlock";
 import { ShadowBlockCell } from "./style-blocks/ShadowBlock";
 import { TextBlock } from "./style-blocks/TextBlock";
+import { SaltProviderNext } from "@salt-ds/core";
 
 const color = [
   "background",
@@ -71,8 +72,16 @@ export const BlockView: FC<{ name: string }> = ({ name }) => {
 
 export const LegacyThemedBlockView: FC<{ name: string }> = ({ name }) => {
   return (
-    <SaltProvider theme="">
+    <SaltProvider>
       <BlockView name={name} />
     </SaltProvider>
+  );
+};
+
+export const NextThemedBlockView: FC<{ name: string }> = ({ name }) => {
+  return (
+    <SaltProviderNext>
+      <BlockView name={name} />
+    </SaltProviderNext>
   );
 };
