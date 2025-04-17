@@ -29,12 +29,10 @@ export interface DatePickerBaseProps {
   /**
    * Handler for when open state changes
    * @param newOpen - true when opened
-   * @param event - event that triggered the state change
    * @param reason - reason for the the state change
    */
   onOpenChange?: (
     newOpen: boolean,
-    event?: Event,
     reason?: DatePickerOpenChangeReason,
   ) => void;
   /**
@@ -45,7 +43,7 @@ export interface DatePickerBaseProps {
 
 /**
  * Props for the DatePicker component, when `selectionVariant` is `single`.
- * @template T
+ * @template TDate - The type of the date object.
  */
 export interface DatePickerSingleProps<TDate extends DateFrameworkType>
   extends DatePickerBaseProps,
@@ -55,7 +53,7 @@ export interface DatePickerSingleProps<TDate extends DateFrameworkType>
 
 /**
  * Props for the DatePicker component, when `selectionVariant` is `range`.
- * @template T
+ * @template TDate - The type of the date object.
  */
 export interface DatePickerRangeProps<TDate extends DateFrameworkType>
   extends DatePickerBaseProps,
@@ -65,13 +63,16 @@ export interface DatePickerRangeProps<TDate extends DateFrameworkType>
 
 /**
  * Props for the DatePicker component.
- * @template T
+ * @template TDate - The type of the date object.
  */
 export type DatePickerProps<TDate extends DateFrameworkType> =
   | DatePickerSingleProps<TDate>
   | DatePickerRangeProps<TDate>;
 
-export const DatePickerMain = forwardRef<HTMLDivElement, DatePickerProps<any>>(
+export const DatePickerMain = forwardRef<
+  HTMLDivElement,
+  DatePickerProps<DateFrameworkType>
+>(
   <TDate extends DateFrameworkType>(
     props: DatePickerProps<TDate>,
     ref: React.Ref<HTMLDivElement>,
@@ -80,6 +81,9 @@ export const DatePickerMain = forwardRef<HTMLDivElement, DatePickerProps<any>>(
       children,
       readOnly,
       disabled,
+      isDayDisabled,
+      isDayHighlighted,
+      isDayUnselectable,
       selectionVariant,
       defaultSelectedDate,
       selectedDate,
@@ -94,6 +98,9 @@ export const DatePickerMain = forwardRef<HTMLDivElement, DatePickerProps<any>>(
     const useDatePickerProps: any = {
       readOnly,
       disabled,
+      isDayDisabled,
+      isDayHighlighted,
+      isDayUnselectable,
       selectionVariant,
       defaultSelectedDate,
       selectedDate,

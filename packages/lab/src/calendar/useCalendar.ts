@@ -1,4 +1,9 @@
-import { useControlled } from "@salt-ds/core";
+import {
+  type ResponsiveProp,
+  resolveResponsiveValue,
+  useBreakpoint,
+  useControlled,
+} from "@salt-ds/core";
 import type { DateFrameworkType } from "@salt-ds/date-adapters";
 import {
   type SyntheticEvent,
@@ -21,6 +26,7 @@ import {
 
 /**
  * Interface representing the base properties UseCalendar hook.
+ * @template TDate - The type of the date object.
  */
 interface UseCalendarBaseProps<TDate> {
   /**
@@ -62,6 +68,7 @@ interface UseCalendarBaseProps<TDate> {
   /**
    * Locale for date formatting
    */
+  // biome-ignore lint/suspicious/noExplicitAny: locale is date framework dependent
   locale?: any;
   /**
    * The minimum selectable date.
@@ -71,6 +78,12 @@ interface UseCalendarBaseProps<TDate> {
    * The maximum selectable date.
    */
   maxDate?: TDate;
+  /**
+   * Number of visible months, maximum 12, defaults to 1
+   */
+  numberOfVisibleMonths?: ResponsiveProp<
+    1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12
+  >;
 }
 
 /**
@@ -87,6 +100,7 @@ export interface UseCalendarSingleProps<TDate extends DateFrameworkType>
 
 /**
  * UseCalendar hook props for a date range selection Calendar.
+ * @template TDate - The type of the date object.
  */
 export interface UseCalendarRangeProps<TDate extends DateFrameworkType>
   extends UseCalendarSelectionRangeProps<TDate>,
@@ -99,6 +113,7 @@ export interface UseCalendarRangeProps<TDate extends DateFrameworkType>
 
 /**
  * UseCalendar hook props for a multi-select Calendar.
+ * @template TDate - The type of the date object.
  */
 export interface UseCalendarMultiSelectProps<TDate extends DateFrameworkType>
   extends UseCalendarSelectionMultiSelectProps<TDate>,
@@ -111,6 +126,7 @@ export interface UseCalendarMultiSelectProps<TDate extends DateFrameworkType>
 
 /**
  * UseCalendar hook props for an offset date selection Calendar.
+ * @template TDate - The type of the date object.
  */
 export interface UseCalendarOffsetProps<TDate extends DateFrameworkType>
   extends UseCalendarSelectionOffsetProps<TDate>,
@@ -123,6 +139,7 @@ export interface UseCalendarOffsetProps<TDate extends DateFrameworkType>
 
 /**
  * UseCalendar hook props, wth the selection variant determining the return type of the date selection
+ * @template TDate - The type of the date object.
  */
 export type UseCalendarProps<TDate extends DateFrameworkType> =
   | UseCalendarSingleProps<TDate>
@@ -150,8 +167,7 @@ const defaultIsDayDisabled = (): false => false;
 
 /**
  * Represents the return type of the useCalendar hook.
- *
- * @template TDate - The type of the date object used in the calendar.
+ * @template TDate - The type of the date object.
  */
 export interface UseCalendarReturn<TDate extends DateFrameworkType> {
   /**
@@ -171,6 +187,7 @@ export interface UseCalendarReturn<TDate extends DateFrameworkType> {
     /**
      * The locale used for date formatting.
      */
+    // biome-ignore lint/suspicious/noExplicitAny: locale takes many forms based on framework
     locale: any;
 
     /**
@@ -199,8 +216,14 @@ export interface UseCalendarReturn<TDate extends DateFrameworkType> {
     calendarFocused: boolean;
 
     /**
+     * Number of visible months
+     */
+    numberOfVisibleMonths: number;
+
+    /**
      * Additional state properties from selectionManager.state.
      */
+    // biome-ignore lint/suspicious/noExplicitAny: user defined
     [key: string]: any; // Use a more specific type if possible
   };
 
@@ -398,12 +421,19 @@ export function useCalendar<TDate extends DateFrameworkType>(
     isDayDisabled = defaultIsDayDisabled,
     minDate = defaultMinDate,
     maxDate = defaultMaxDate,
+    numberOfVisibleMonths = 1,
     selectionVariant,
     onHoveredDateChange,
     hoveredDate,
     // startDateOffset,
     // endDateOffset,
   } = props;
+
+  const { matchedBreakpoints } = useBreakpoint();
+
+  const responsiveNumberOfVisibleMonths =
+    resolveResponsiveValue(numberOfVisibleMonths, matchedBreakpoints) ?? 1;
+
   const [visibleMonth, setVisibleMonthState] = useControlled({
     controlled: visibleMonthProp
       ? dateAdapter.startOf(visibleMonthProp, "month", locale)
@@ -420,7 +450,7 @@ export function useCalendar<TDate extends DateFrameworkType>(
         dateAdapter.compare(date, maxDate) > 0
       );
     },
-    [maxDate, minDate],
+    [dateAdapter, maxDate, minDate],
   );
 
   const isOutsideAllowedMonths = useCallback(
@@ -432,7 +462,7 @@ export function useCalendar<TDate extends DateFrameworkType>(
         dateAdapter.compare(startOfMonth, maxDate) > 0
       );
     },
-    [minDate, maxDate],
+    [dateAdapter, locale, minDate, maxDate],
   );
 
   const isOutsideAllowedYears = useCallback(
@@ -444,7 +474,7 @@ export function useCalendar<TDate extends DateFrameworkType>(
         dateAdapter.compare(startOfYear, maxDate) > 0
       );
     },
-    [minDate, maxDate],
+    [dateAdapter, locale, minDate, maxDate],
   );
 
   const isDaySelectable = useCallback(
@@ -474,10 +504,27 @@ export function useCalendar<TDate extends DateFrameworkType>(
 
   const [calendarFocused, setCalendarFocused] = useState(false);
 
-  const isInVisibleMonth = useCallback(
-    (date: TDate | undefined | null): date is TDate =>
-      date != null && dateAdapter.isSame(date, visibleMonth, "month"),
-    [visibleMonth],
+  const isDayVisible = useCallback(
+    (date?: TDate | null) => {
+      if (!date) {
+        return false;
+      }
+      const startInsideDays = dateAdapter.startOf(
+        visibleMonth,
+        "month",
+        locale,
+      );
+
+      if (dateAdapter.compare(date, startInsideDays) < 0) return false;
+
+      const endVisibleMonth = dateAdapter.add(visibleMonth, {
+        months: responsiveNumberOfVisibleMonths - 1,
+      });
+      const endInsideDays = dateAdapter.endOf(endVisibleMonth, "month", locale);
+
+      return !(dateAdapter.compare(date, endInsideDays) > 0);
+    },
+    [dateAdapter, locale, responsiveNumberOfVisibleMonths, visibleMonth],
   );
 
   const getInitialFocusedDate = useCallback(() => {
@@ -486,10 +533,10 @@ export function useCalendar<TDate extends DateFrameworkType>(
       (selectionVariant === "range" || selectionVariant === "offset") &&
       isDateRangeSelection<TDate>(selectedDate)
     ) {
-      if (isInVisibleMonth(selectedDate?.startDate)) {
+      if (isDayVisible(selectedDate?.startDate)) {
         return selectedDate.startDate;
       }
-      if (isInVisibleMonth(selectedDate?.endDate)) {
+      if (isDayVisible(selectedDate?.endDate)) {
         return selectedDate.endDate;
       }
     } else if (
@@ -498,7 +545,7 @@ export function useCalendar<TDate extends DateFrameworkType>(
     ) {
       // return first selected day in visible month
       const selectionInMonth = selectedDate
-        .filter((day) => isInVisibleMonth(day))
+        .filter((day) => isDayVisible(day))
         .sort((a, b) => dateAdapter.compare(a, b));
       if (selectionInMonth.length > 0) {
         return selectionInMonth[0];
@@ -507,14 +554,14 @@ export function useCalendar<TDate extends DateFrameworkType>(
       selectionVariant === "single" &&
       !isDateRangeSelection(selectedDate) &&
       !Array.isArray(selectedDate) &&
-      isInVisibleMonth(selectedDate)
+      isDayVisible(selectedDate)
     ) {
       return selectedDate;
     }
     // Defaults
     if (
       isDaySelectable(dateAdapter.today(locale)) &&
-      isInVisibleMonth(dateAdapter.today(locale))
+      isDayVisible(dateAdapter.today(locale))
     ) {
       return dateAdapter.today(locale);
     }
@@ -527,31 +574,17 @@ export function useCalendar<TDate extends DateFrameworkType>(
     }
     return null;
   }, [
-    isInVisibleMonth,
+    dateAdapter,
+    locale,
+    isDaySelectable,
+    isDayVisible,
     selectionVariant,
     selectionManager.state.selectedDate,
     visibleMonth,
   ]);
 
-  const [focusedDate, setFocusedDateState] = useState<TDate | null>(
+  const [focusedDate, setFocusedDateState] = useState<TDate | null | undefined>(
     getInitialFocusedDate,
-  );
-
-  const isDayVisible = useCallback(
-    (date: TDate) => {
-      const startInsideDays = dateAdapter.startOf(
-        visibleMonth,
-        "month",
-        locale,
-      );
-
-      if (dateAdapter.compare(date, startInsideDays) < 0) return false;
-
-      const endInsideDays = dateAdapter.endOf(visibleMonth, "month", locale);
-
-      return !(dateAdapter.compare(date, endInsideDays) > 0);
-    },
-    [visibleMonth],
   );
 
   const setVisibleMonth = useCallback(
@@ -582,7 +615,9 @@ export function useCalendar<TDate extends DateFrameworkType>(
       }
     },
     [
+      dateAdapter,
       focusedDate,
+      locale,
       isDaySelectable,
       isDayVisible,
       isOutsideAllowedDates,
@@ -608,6 +643,7 @@ export function useCalendar<TDate extends DateFrameworkType>(
           locale,
           minDate,
           maxDate,
+          numberOfVisibleMonths: responsiveNumberOfVisibleMonths,
           selectionVariant,
           hideOutOfRangeDates,
           calendarFocused,
@@ -645,6 +681,7 @@ export function useCalendar<TDate extends DateFrameworkType>(
       isOutsideAllowedDates,
       isOutsideAllowedMonths,
       isOutsideAllowedYears,
+      responsiveNumberOfVisibleMonths,
       selectionManager,
     ],
   );
