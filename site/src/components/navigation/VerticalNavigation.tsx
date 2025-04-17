@@ -1,9 +1,9 @@
 import type { SidebarItem, SidebarNode } from "@jpmorganchase/mosaic-store";
 import {
+  Badge,
   NavigationItem,
   type NavigationItemProps,
   StackLayout,
-  Tag,
 } from "@salt-ds/core";
 import type React from "react";
 import { type MouseEventHandler, useState } from "react";
@@ -84,7 +84,7 @@ const renderNavigationItem = (
         expanded={isExpanded}
         level={level}
       >
-        {name} {status && <Tag bordered>{status}</Tag>}
+        {name} {status && <Badge value={status} />}
       </NavigationItem>
       {shouldRenderAsParent && isExpanded ? (
         <StackLayout
