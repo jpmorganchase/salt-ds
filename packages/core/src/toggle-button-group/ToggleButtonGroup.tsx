@@ -12,6 +12,7 @@ import {
   useState,
 } from "react";
 
+import type { ButtonAppearance, ButtonSentiment } from "../button";
 import { makePrefixer, useControlled, useForkRef } from "../utils";
 import toggleButtonGroupCss from "./ToggleButtonGroup.css";
 import {
@@ -22,6 +23,11 @@ import {
 export interface ToggleButtonGroupProps
   extends Omit<ComponentPropsWithoutRef<"div">, "onChange"> {
   /**
+   * The appearance of all the toggle buttons within the group.
+   * @default solid
+   */
+  appearance?: Extract<ButtonAppearance, "bordered" | "solid">;
+  /**
    * The default value. Use when the component is not controlled.
    */
   defaultValue?: Value;
@@ -30,18 +36,22 @@ export interface ToggleButtonGroupProps
    */
   disabled?: boolean;
   /**
-   * The value. Use when the component is controlled.
+   * Value of the toggle button group, to be used when the component is controlled.
    */
   value?: Value;
   /**
    * Callback fired when the selection changes.
-   * @param event
    */
   onChange?: (event: SyntheticEvent<HTMLButtonElement>) => void;
   /**
    * The orientation of the toggle buttons.
    */
   orientation?: "horizontal" | "vertical";
+  /**
+   * The visual sentimenent of all the toggle buttons within the group.
+   * @default neutral
+   */
+  sentiment?: ButtonSentiment;
 }
 
 const withBaseName = makePrefixer("saltToggleButtonGroup");
@@ -51,6 +61,7 @@ export const ToggleButtonGroup = forwardRef<
   ToggleButtonGroupProps
 >(function ToggleButtonGroup(props, ref) {
   const {
+    appearance,
     children,
     className,
     value: valueProp,
@@ -59,6 +70,7 @@ export const ToggleButtonGroup = forwardRef<
     onChange,
     onKeyDown,
     orientation = "horizontal",
+    sentiment,
     ...rest
   } = props;
 
@@ -111,14 +123,25 @@ export const ToggleButtonGroup = forwardRef<
 
   const contextValue = useMemo(
     () => ({
-      select,
-      isSelected,
+      appearance,
+      disabled,
       focus,
       isFocused,
-      disabled,
+      isSelected,
       orientation,
+      select,
+      sentiment,
     }),
-    [select, isSelected, isFocused, disabled, orientation, focus],
+    [
+      appearance,
+      disabled,
+      focus,
+      isFocused,
+      isSelected,
+      orientation,
+      select,
+      sentiment,
+    ],
   );
 
   const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
@@ -147,7 +170,12 @@ export const ToggleButtonGroup = forwardRef<
   return (
     <ToggleButtonGroupContext.Provider value={contextValue}>
       <div
-        className={clsx(withBaseName(), withBaseName(orientation), className)}
+        className={clsx(
+          withBaseName(),
+          withBaseName(orientation),
+          disabled && withBaseName("disabled"),
+          className,
+        )}
         role="radiogroup"
         ref={handleRef}
         onKeyDown={handleKeyDown}

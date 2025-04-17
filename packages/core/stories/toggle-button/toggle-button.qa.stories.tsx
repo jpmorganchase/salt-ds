@@ -1,5 +1,5 @@
-import { ToggleButton } from "@salt-ds/core";
-import { FavoriteSolidIcon, HomeIcon } from "@salt-ds/icons";
+import { FlowLayout, StackLayout, ToggleButton } from "@salt-ds/core";
+import { HomeIcon } from "@salt-ds/icons";
 import type { Meta, StoryFn } from "@storybook/react";
 import {
   QAContainer,
@@ -13,24 +13,174 @@ export default {
   component: ToggleButton,
 } as Meta<typeof ToggleButton>;
 
+const ToggleButtonDefault = () => (
+  <FlowLayout gap={6}>
+    <ToggleButton value="Default">
+      <HomeIcon />
+    </ToggleButton>
+    <ToggleButton value="Default" selected>
+      <HomeIcon /> Default
+    </ToggleButton>
+    <ToggleButton value="Default" selected appearance="bordered">
+      Selected
+    </ToggleButton>
+  </FlowLayout>
+);
+
+const ToggleButtonSentiments = () => (
+  <StackLayout>
+    <FlowLayout>
+      <ToggleButton sentiment="accented" value="Accented">
+        Accented
+      </ToggleButton>
+      <ToggleButton sentiment="positive" value="Positive">
+        Positive
+      </ToggleButton>
+      <ToggleButton sentiment="negative" value="Negative">
+        Negative
+      </ToggleButton>
+      <ToggleButton sentiment="caution" value="Caution">
+        Caution
+      </ToggleButton>
+    </FlowLayout>
+    <FlowLayout>
+      <ToggleButton sentiment="accented" value="Accented" selected>
+        Selected
+      </ToggleButton>
+      <ToggleButton sentiment="positive" value="Positive" selected>
+        Selected
+      </ToggleButton>
+      <ToggleButton sentiment="negative" value="Negative" selected>
+        Selected
+      </ToggleButton>
+      <ToggleButton sentiment="caution" value="Caution" selected>
+        Selected
+      </ToggleButton>
+    </FlowLayout>
+    <FlowLayout>
+      <ToggleButton
+        sentiment="accented"
+        value="Accented"
+        selected
+        appearance="bordered"
+      >
+        Selected
+      </ToggleButton>
+      <ToggleButton
+        sentiment="positive"
+        value="Positive"
+        selected
+        appearance="bordered"
+      >
+        Selected
+      </ToggleButton>
+      <ToggleButton
+        sentiment="negative"
+        value="Negative"
+        selected
+        appearance="bordered"
+      >
+        Selected
+      </ToggleButton>
+      <ToggleButton
+        sentiment="caution"
+        value="Caution"
+        selected
+        appearance="bordered"
+      >
+        Selected
+      </ToggleButton>
+    </FlowLayout>
+  </StackLayout>
+);
+
+const ToggleButtonDisabled = () => (
+  <StackLayout>
+    <FlowLayout>
+      <ToggleButton disabled value="Disabled">
+        Disabled
+      </ToggleButton>
+      <ToggleButton disabled value="Disabled" sentiment="accented">
+        Disabled
+      </ToggleButton>
+      <ToggleButton disabled value="Disabled" sentiment="positive">
+        Disabled
+      </ToggleButton>
+      <ToggleButton disabled value="Disabled" sentiment="negative">
+        Disabled
+      </ToggleButton>
+      <ToggleButton disabled value="Disabled" sentiment="caution">
+        Disabled
+      </ToggleButton>
+    </FlowLayout>
+    <FlowLayout>
+      <ToggleButton disabled selected value="Disabled">
+        Disabled selected
+      </ToggleButton>
+      <ToggleButton disabled selected value="Disabled" sentiment="accented">
+        Disabled selected
+      </ToggleButton>
+      <ToggleButton disabled selected value="Disabled" sentiment="positive">
+        Disabled selected
+      </ToggleButton>
+      <ToggleButton disabled selected value="Disabled" sentiment="negative">
+        Disabled selected
+      </ToggleButton>
+      <ToggleButton disabled selected value="Disabled" sentiment="caution">
+        Disabled selected
+      </ToggleButton>
+    </FlowLayout>
+    <FlowLayout>
+      <ToggleButton disabled selected value="Disabled" appearance="bordered">
+        Disabled selected
+      </ToggleButton>
+      <ToggleButton
+        disabled
+        selected
+        value="Disabled"
+        sentiment="accented"
+        appearance="bordered"
+      >
+        Disabled selected
+      </ToggleButton>
+      <ToggleButton
+        disabled
+        selected
+        value="Disabled"
+        sentiment="positive"
+        appearance="bordered"
+      >
+        Disabled selected
+      </ToggleButton>
+      <ToggleButton
+        disabled
+        selected
+        value="Disabled"
+        sentiment="negative"
+        appearance="bordered"
+      >
+        Disabled selected
+      </ToggleButton>
+      <ToggleButton
+        disabled
+        selected
+        value="Disabled"
+        sentiment="caution"
+        appearance="bordered"
+      >
+        Disabled selected
+      </ToggleButton>
+    </FlowLayout>
+  </StackLayout>
+);
+
 export const AllVariantsGrid: StoryFn<QAContainerProps> = (props) => (
-  <QAContainer height={500} width={1000} {...props}>
-    <ToggleButton aria-label="favorite" value="Icon only">
-      <FavoriteSolidIcon />
-    </ToggleButton>
-    <ToggleButton value="Text only">AND</ToggleButton>
-    <ToggleButton value="Icon and text">
-      <HomeIcon aria-hidden /> Home
-    </ToggleButton>
-    <ToggleButton aria-label="favorite" value="Icon only disabled" disabled>
-      <FavoriteSolidIcon />
-    </ToggleButton>
-    <ToggleButton value="Text only disabled" disabled>
-      AND
-    </ToggleButton>
-    <ToggleButton value="Icon and text disabled" disabled>
-      <HomeIcon aria-hidden /> Home
-    </ToggleButton>
+  <QAContainer cols={1} height={2200} width={1700} {...props}>
+    <StackLayout gap={2}>
+      <ToggleButtonDefault />
+      <ToggleButtonSentiments />
+      <ToggleButtonDisabled />
+    </StackLayout>
   </QAContainer>
 );
 
@@ -55,23 +205,12 @@ AllVariantsGrid.parameters = {
 export const NoStyleInjectionGrid: StoryFn<QAContainerNoStyleInjectionProps> = (
   props,
 ) => (
-  <QAContainerNoStyleInjection height={500} width={1000} {...props}>
-    <ToggleButton aria-label="favorite" value="Icon only">
-      <FavoriteSolidIcon />
-    </ToggleButton>
-    <ToggleButton value="Text only">AND</ToggleButton>
-    <ToggleButton value="Icon and text">
-      <HomeIcon aria-hidden /> Home
-    </ToggleButton>
-    <ToggleButton aria-label="favorite" value="Icon only disabled" disabled>
-      <FavoriteSolidIcon />
-    </ToggleButton>
-    <ToggleButton value="Text only disabled" disabled>
-      AND
-    </ToggleButton>
-    <ToggleButton value="Icon and text disabled" disabled>
-      <HomeIcon aria-hidden /> Home
-    </ToggleButton>
+  <QAContainerNoStyleInjection cols={1} height={2200} width={1700} {...props}>
+    <StackLayout gap={2}>
+      <ToggleButtonDefault />
+      <ToggleButtonSentiments />
+      <ToggleButtonDisabled />
+    </StackLayout>
   </QAContainerNoStyleInjection>
 );
 

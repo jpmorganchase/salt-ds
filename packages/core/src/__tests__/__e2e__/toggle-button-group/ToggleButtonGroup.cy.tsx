@@ -333,11 +333,12 @@ describe("GIVEN a disabled ToggleButtonGroup ", () => {
     cy.findAllByRole("radio").eq(1).should("be.disabled");
 
     cy.findAllByRole("radio").eq(2).should("have.text", "Search");
+    // Disabled selected toggle button should be focusable
+    cy.findAllByRole("radio").eq(2).should("have.attr", "aria-checked", "true");
+    cy.findAllByRole("radio").eq(2).should("have.attr", "tabindex", "0");
     cy.findAllByRole("radio")
       .eq(2)
-      .should("have.attr", "aria-checked", "false");
-    cy.findAllByRole("radio").eq(2).should("have.attr", "tabindex", "-1");
-    cy.findAllByRole("radio").eq(2).should("be.disabled");
+      .should("have.attr", "aria-disabled", "true");
 
     cy.findAllByRole("radio").eq(3).should("have.text", "Print");
     cy.findAllByRole("radio")
@@ -349,5 +350,71 @@ describe("GIVEN a disabled ToggleButtonGroup ", () => {
     cy.findAllByRole("radio").eq(0).realClick();
     // It should not fire onChange event
     cy.get("@changeSpy").should("not.have.been.called");
+    // Clicking the disabled selected toggle button should not fire onChange event
+    cy.findAllByRole("radio").eq(2).realClick();
+    // It should not fire onChange event
+    cy.get("@changeSpy").should("not.have.been.called");
+  });
+});
+
+describe("GIVEN a ToggleButtonGroup with sentiments and appearance", () => {
+  it("THEN it should respect the sentiment set on the ToggleButtonGroup", () => {
+    cy.mount(
+      <ToggleButtonGroup sentiment="accented" aria-label="Toggle options">
+        <ToggleButton sentiment="neutral" value="alert">
+          <NotificationIcon aria-hidden />
+          Alert
+        </ToggleButton>
+        <ToggleButton sentiment="positive" value="home">
+          <HomeIcon aria-hidden />
+          Home
+        </ToggleButton>
+        <ToggleButton sentiment="negative" value="search">
+          <SearchIcon aria-hidden />
+          Search
+        </ToggleButton>
+      </ToggleButtonGroup>,
+    );
+
+    // All toggle buttons should have the toggle button group's sentiment
+    cy.findAllByRole("radio")
+      .eq(0)
+      .should("have.class", "saltToggleButton-accented");
+    cy.findAllByRole("radio")
+      .eq(1)
+      .should("have.class", "saltToggleButton-accented");
+    cy.findAllByRole("radio")
+      .eq(2)
+      .should("have.class", "saltToggleButton-accented");
+  });
+
+  it("THEN it should respect the appearance set on the ToggleButtonGroup", () => {
+    cy.mount(
+      <ToggleButtonGroup appearance="bordered" aria-label="Toggle options">
+        <ToggleButton value="alert">
+          <NotificationIcon aria-hidden />
+          Alert
+        </ToggleButton>
+        <ToggleButton value="home">
+          <HomeIcon aria-hidden />
+          Home
+        </ToggleButton>
+        <ToggleButton value="search">
+          <SearchIcon aria-hidden />
+          Search
+        </ToggleButton>
+      </ToggleButtonGroup>,
+    );
+
+    // All toggle buttons should have the toggle button group's appearance
+    cy.findAllByRole("radio")
+      .eq(0)
+      .should("have.class", "saltToggleButton-bordered");
+    cy.findAllByRole("radio")
+      .eq(1)
+      .should("have.class", "saltToggleButton-bordered");
+    cy.findAllByRole("radio")
+      .eq(2)
+      .should("have.class", "saltToggleButton-bordered");
   });
 });
