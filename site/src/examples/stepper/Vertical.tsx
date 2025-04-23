@@ -2,7 +2,7 @@ import { StackLayout, Step, Stepper } from "@salt-ds/core";
 
 export const Vertical = () => {
   return (
-    <StackLayout style={{ width: "120px" }}>
+    <StackLayout>
       <Stepper orientation="vertical">
         <Step label="Step 1" stage="completed" />
         <Step label="Step 2" stage="active" />

@@ -1,4 +1,4 @@
-import type { StepRecord, StepStage, StepStatus } from "../Step";
+import type { StepRecord, StepStage, StepStatus } from "@salt-ds/core";
 import type {
   StepperReducerOptions,
   StepperReducerState,

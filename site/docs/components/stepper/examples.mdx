@@ -49,36 +49,6 @@ You can nest `Step` components within other `Step` components to create hierarch
 ## Controlled Stepper
 
 The `Stepper` and `Step` component are primarily presentational components.
-If you want to control the state of the `Stepper` you can utilize the `useStepperReducer` hook.
+If you want to control the state of the `Stepper` you can use a custom hook.
 
 <LivePreview componentName="stepper" exampleName="Reducer" />
-
-The `useStepperReducer` hook provides intelligent management of step stages in a linear process.
-
-<LivePreview componentName="stepper" exampleName="ReducerAdvanced" />
-
-Here's how it works:
-
-- **Automatic Staging**:
-
-  - By setting `stage: 'active'` on any step, the hook automatically determines the stages of all other steps, both before and after the active step.
-
-- **State Object**:
-
-  - The state object returned by the hook includes several useful properties:
-    - `steps`: The list of all steps.
-    - `flatSteps`: A flattened version of the steps.
-    - `activeStep`: The currently active step.
-    - `previousStep`: The step immediately before the active step.
-    - `nextStep`: The step immediately after the active step.
-    - `started`: A boolean indicating if the process has started.
-    - `ended`: A boolean indicating if the process has ended.
-
-- **Dispatch Method**:
-  - Similar to the native `useReducer` hook, the `dispatch` method accepts an action object with a `type`.
-  - Supported action types include:
-    - `'next'`: Move to the next step.
-    - `'previous'`: Move to the previous step.
-    - `'status/warning'`: Set the status of the active step to `'warning'`.
-    - `'status/error'`: Set the status of the active step to `'error'`.
-    - `'status/clear'`: Reset the status of the active step to `undefined`.

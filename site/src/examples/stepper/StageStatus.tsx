@@ -1,17 +1,15 @@
-import { StackLayout, Step, Stepper } from "@salt-ds/core";
+import { Step, Stepper } from "@salt-ds/core";
 
 export const StageStatus = () => {
   return (
-    <StackLayout style={{ height: "40px", width: "100%" }}>
-      <Stepper>
-        <Step label="Pending" description="stage" stage="pending" />
-        <Step label="Inprogress" description="stage" stage="inprogress" />
-        <Step label="Active" description="stage" stage="active" />
-        <Step label="Completed" description="stage" stage="completed" />
-        <Step label="Locked" description="stage" stage="locked" />
-        <Step label="Error" description="status" status="error" />
-        <Step label="Warning" description="status" status="warning" />
-      </Stepper>
-    </StackLayout>
+    <Stepper>
+      <Step label="Pending" description="stage" stage="pending" />
+      <Step label="Inprogress" description="stage" stage="inprogress" />
+      <Step label="Active" description="stage" stage="active" />
+      <Step label="Completed" description="stage" stage="completed" />
+      <Step label="Locked" description="stage" stage="locked" />
+      <Step label="Error" description="status" status="error" />
+      <Step label="Warning" description="status" status="warning" />
+    </Stepper>
   );
 };
