@@ -1,8 +1,4 @@
 import type { StepRecord, StepStage, StepStatus } from "@salt-ds/core";
-import type {
-  StepperReducerOptions,
-  StepperReducerState,
-} from "./StepperReducer";
 
 export function assignStepsStage(
   steps: StepRecord[],
@@ -67,7 +63,9 @@ export function resetSteps(
 
 export function autoStageSteps(
   steps: StepRecord[],
-  options?: StepperReducerOptions,
+  options?: {
+    activeStepId?: string;
+  },
 ): StepRecord[] {
   function autoStageHelper(steps: StepRecord[]): StepRecord[] | null {
     const pivotIndex = steps.findIndex(
@@ -137,7 +135,9 @@ export function flattenSteps(steps: StepRecord[]): StepRecord[] {
 
 export function initStepperReducerState(
   initialSteps: StepRecord[],
-  options?: StepperReducerOptions,
+  options?: {
+    activeStepId?: string;
+  },
 ) {
   const steps = autoStageSteps(initialSteps, options);
   const flatSteps = flattenSteps(steps);
@@ -163,5 +163,5 @@ export function initStepperReducerState(
     activeStepIndex,
     ended,
     started,
-  } as StepperReducerState;
+  };
 }
