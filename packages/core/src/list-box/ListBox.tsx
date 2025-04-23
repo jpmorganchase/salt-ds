@@ -139,10 +139,15 @@ export const ListBox = forwardRef(function ListBox<Item>(
       handleTypeahead(event);
     }
 
-    const activeOption = activeState ?? getFirstOption().data;
+    const activeOption = activeState ?? getFirstOption()?.data;
 
-    let newActive: { data: OptionValue<Item>; element: HTMLElement } | null =
-      null;
+    if (activeOption === undefined) {
+      return;
+    }
+
+    let newActive:
+      | { data: OptionValue<Item>; element: HTMLElement }
+      | undefined = undefined;
     switch (event.key) {
       case "ArrowDown":
         newActive = getOptionAfter(activeOption) ?? getLastOption();
