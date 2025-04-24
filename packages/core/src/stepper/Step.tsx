@@ -53,10 +53,6 @@ export interface StepProps
    * Callback fired when the step is toggled.
    */
   onToggle?: ButtonProps["onClick"];
-  /**
-   * Nested children of the step.
-   */
-  substeps?: StepRecord[];
 }
 
 export type StepId = string;
@@ -83,8 +79,6 @@ export interface StepProps
   expanded?: boolean;
   defaultExpanded?: boolean;
   onToggle?: ButtonProps["onClick"];
-  substeps?: StepRecord[];
-  children?: ReactNode;
 }
 
 const withBaseName = makePrefixer("saltStep");
@@ -100,7 +94,6 @@ export function Step({
   onToggle,
   className,
   style,
-  substeps,
   children,
   ...rest
 }: StepProps) {
@@ -109,7 +102,7 @@ export function Step({
   const depth = useContext(StepDepthContext);
   const orientation = useContext(StepperOrientationContext);
 
-  const hasNestedSteps = !!children || !!substeps;
+  const hasNestedSteps = !!children;
 
   const [expanded, setExpanded] = useControlled({
     name: "Step",
@@ -138,7 +131,7 @@ export function Step({
         );
       }
     }
-  }, [depth, orientation, children, substeps]);
+  }, [depth, orientation]);
 
   const ariaCurrent = stage === "active" ? "step" : undefined;
   const iconSizeMultiplier = depth === 0 ? 1.5 : 1;
@@ -246,9 +239,6 @@ export function Step({
           hidden={!expanded}
         >
           {children}
-          {substeps?.map((step) => (
-            <Step key={step.id} {...step} />
-          ))}
         </Stepper>
       )}
     </li>
