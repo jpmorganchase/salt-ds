@@ -39,6 +39,7 @@
   }
 }
 
-.middle :global(.wrapper) {
+.middle .contentWrapper {
   max-width: var(--site-content-max-width);
+  width: 100%;
 }
