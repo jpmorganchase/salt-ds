@@ -142,7 +142,8 @@ export function Step({
 
   const ariaCurrent = stage === "active" ? "step" : undefined;
   const iconSizeMultiplier = depth === 0 ? 1.5 : 1;
-  const state = status || stage;
+  const stageText = stage === "inprogress" ? "in progress" : stage;
+  const state = status || stageText;
 
   const labelId = `${id}-label`;
   const descriptionId = `${id}-description`;
@@ -151,7 +152,7 @@ export function Step({
 
   const screenReaderOnly = {
     stateId: `${id}-sr-only-state`,
-    stateText: state !== "active" ? state : undefined,
+    stateText: state !== "active" ? state : "",
     substepsId: `${id}-sr-only-substeps`,
     substepsText: "substeps",
     toggleSubstepsId: `${id}-sr-only-toggle-substeps`,
@@ -184,17 +185,24 @@ export function Step({
       {...rest}
     >
       <StepScreenReaderOnly>
-        {label} {description} {screenReaderOnly.stateText}
+        {`${label} ${description !== undefined ? description : ""} ${screenReaderOnly.stateText}`}
       </StepScreenReaderOnly>
-      <StepScreenReaderOnly id={screenReaderOnly.toggleSubstepsId} aria-hidden>
-        {screenReaderOnly.toggleSubstepsText}
-      </StepScreenReaderOnly>
-      <StepScreenReaderOnly id={screenReaderOnly.substepsId} aria-hidden>
-        {screenReaderOnly.substepsText}
-      </StepScreenReaderOnly>
-      <StepScreenReaderOnly id={screenReaderOnly.stateId} aria-hidden>
-        {screenReaderOnly.stateText}
-      </StepScreenReaderOnly>
+      {hasNestedSteps && (
+        <>
+          <StepScreenReaderOnly
+            id={screenReaderOnly.toggleSubstepsId}
+            aria-hidden
+          >
+            {screenReaderOnly.toggleSubstepsText}
+          </StepScreenReaderOnly>
+          <StepScreenReaderOnly id={screenReaderOnly.substepsId} aria-hidden>
+            {screenReaderOnly.substepsText}
+          </StepScreenReaderOnly>
+          <StepScreenReaderOnly id={screenReaderOnly.stateId} aria-hidden>
+            {screenReaderOnly.stateText}
+          </StepScreenReaderOnly>
+        </>
+      )}
       <StepConnector />
       <StepIcon
         stage={stage}

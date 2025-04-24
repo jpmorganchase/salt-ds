@@ -1,7 +1,7 @@
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
-import { type ComponentProps, forwardRef, useContext } from "react";
+import { type ComponentPropsWithoutRef, forwardRef, useContext } from "react";
 import { makePrefixer } from "../utils";
 import StepperCSS from "./Stepper.css";
 import {
@@ -13,9 +13,9 @@ const withBaseName = makePrefixer("saltStepper");
 
 export type StepperOrientation = "horizontal" | "vertical";
 
-export interface StepperProps extends ComponentProps<"ol"> {
+export interface StepperProps extends ComponentPropsWithoutRef<"ol"> {
   /**
-   * The orientation of the stepper.
+   * The orientation of the stepper. defaults to horizontal.
    */
   orientation?: StepperOrientation;
 }
