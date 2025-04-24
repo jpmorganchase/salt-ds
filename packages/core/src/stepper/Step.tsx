@@ -57,8 +57,6 @@ export interface StepProps
 
 export type StepId = string;
 
-export type StepRecord = Omit<StepProps, "children"> & { id: string };
-
 export type StepStatus = "warning" | "error";
 
 export type StepStage =

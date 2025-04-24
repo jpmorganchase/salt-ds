@@ -4,7 +4,7 @@ import {
   StackLayout,
   Step,
   type StepId,
-  type StepRecord,
+  type StepProps,
   Stepper,
 } from "@salt-ds/core";
 
@@ -17,6 +17,8 @@ import {
   initStepperReducerState,
   resetSteps,
 } from "./utils";
+
+type StepRecord = StepProps & { id: string };
 
 const initialSteps = [
   { id: "step-1", label: "Step 1" },

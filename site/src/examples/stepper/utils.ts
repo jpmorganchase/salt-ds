@@ -1,18 +1,21 @@
-import type { StepRecord, StepStage, StepStatus } from "@salt-ds/core";
+import type { StepProps, StepStage, StepStatus } from "@salt-ds/core";
+import type { ReactNode } from "react";
+
+export type StepRecord = StepProps & { id: string };
 
 export function assignStepsStage(
   steps: StepRecord[],
   stage?: StepStage,
 ): StepRecord[] {
   return steps.map((step) => {
-    if (!step.substeps) {
+    if (!step.children) {
       return { ...step, stage };
     }
 
     return {
       ...step,
       stage,
-      substeps: assignStepsStage(step.substeps, stage),
+      substeps: assignStepsStage(step.children as StepRecord[], stage),
     };
   });
 }
@@ -27,10 +30,14 @@ export function assignStepStatus(
       return { ...step, status };
     }
 
-    if (step.substeps) {
+    if (step.children) {
       return {
         ...step,
-        substeps: assignStepStatus(step.substeps, stepId, status),
+        substeps: assignStepStatus(
+          step.children as StepRecord[],
+          stepId,
+          status,
+        ),
       };
     }
 
@@ -45,7 +52,7 @@ export function resetSteps(
   const { resetStatus } = options;
 
   return steps.map((step) => {
-    if (!step.substeps) {
+    if (!step.children) {
       return {
         ...step,
         stage: undefined,
@@ -56,7 +63,7 @@ export function resetSteps(
     return {
       ...step,
       stage: undefined,
-      substeps: resetSteps(step.substeps, options),
+      substeps: resetSteps(step.children as StepRecord[], options),
     };
   });
 }
@@ -96,11 +103,11 @@ export function autoStageSteps(
 
     return steps.reduce(
       (acc, step, index) => {
-        if (step.substeps) {
-          const substeps = autoStageHelper(step.substeps);
+        if (step.children) {
+          const substeps = autoStageHelper(step.children as StepRecord[]);
 
           if (substeps) {
-            steps[index].substeps = substeps;
+            steps[index].children = substeps as ReactNode;
             steps[index].stage = "inprogress";
 
             return autoStageHelper(steps);
@@ -121,8 +128,8 @@ export function autoStageSteps(
 
 export function flattenSteps(steps: StepRecord[]): StepRecord[] {
   return steps.reduce((acc, step) => {
-    if (step.substeps) {
-      acc.push(...flattenSteps(step.substeps));
+    if (step.children) {
+      acc.push(...flattenSteps(step.children as StepRecord[]));
 
       return acc;
     }
