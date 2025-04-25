@@ -1,5 +1,58 @@
 # @salt-ds/lab
 
+## 1.0.0-alpha.66
+
+### Minor Changes
+
+- 799cf41: Updated `Carousel` component
+
+  - Renamed `initialIndex` to `defaultActiveSlideIndex`
+  - Added controlled `activeSlideIndex`
+  - Added `visibleSlides` to control how many slides can be visible at a time.
+  - Added `CarouselSlider` and extracted the controls to its own component, `CarouselControls` to improve composition.
+  - Added appearance in `CarouselSlide` to allow for border items.
+  - Added keyboard navigation.
+  - Removed usage of `DeckLayout`.
+
+  before:
+
+  ```tsx
+  <Carousel>
+    {items.map((item, index) => (
+      <CarouselSlide
+        key={index}
+        ButtonBar={<Button variant="cta">Learn more</Button>}
+        description="Lorem ipsum"
+        title="Carousel slide title"
+      />
+    ))}
+  </Carousel>
+  ```
+
+  after:
+
+  ```tsx
+  <Carousel>
+    <CarouselControls />
+    <CarouselSlider>
+      {items.map((slide) => (
+        <CarouselSlide
+          key={slide.title}
+          header={<H3>{slide.title}</H3>}
+          actions={<Link href="#">{slide.link}</Link>}
+        >
+          <Text>{slide.content}</Text>
+        </CarouselSlide>
+      ))}
+    </CarouselSlider>
+  </Carousel>
+  ```
+
+### Patch Changes
+
+- Updated dependencies [851b2eb]
+  - @salt-ds/core@1.44.1
+
 ## 1.0.0-alpha.65
 
 ### Minor Changes
