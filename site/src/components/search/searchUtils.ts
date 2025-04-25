@@ -89,7 +89,7 @@ export const performSearch = async (
     const bestMatch = result.matches
       ? getBestMatch(result.matches, fallbackContent)
       : "";
-    
+
     return {
       title: result.item.title,
       content: bestMatch,

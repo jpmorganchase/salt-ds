@@ -29,7 +29,7 @@ export default function MyApp({
   pageProps = {},
 }: AppProps<MyAppProps>) {
   const { searchIndex, searchConfig, sharedConfig, source } = pageProps;
-  
+
   const customSource = source as { frontmatter: Record<string, unknown> };
   const frontmatter = customSource?.frontmatter || {};
   // Prevents data being re-used across pages
