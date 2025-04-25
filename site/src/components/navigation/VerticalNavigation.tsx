@@ -54,7 +54,8 @@ const renderNavigationItem = (
   const isActive =
     selectedNodeId === id ||
     ((!isExpanded || singlePageInGroup) &&
-      (containsSelectedNode || selectedNodeId?.includes(item.id)));
+      (containsSelectedNode || selectedNodeId?.includes(`${item.id}/`)));
+
   const shouldRenderAsParent = !link;
   const handleExpand: MouseEventHandler<
     HTMLAnchorElement | HTMLButtonElement
