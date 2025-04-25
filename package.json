@@ -99,7 +99,7 @@
     "storybook": "^8.4.4",
     "stylelint": "^16.0.0",
     "typescript": "4.6.4",
-    "vite": "^6.2.5",
+    "vite": "^6.2.6",
     "vite-plugin-istanbul": "^6.0.0",
     "vite-tsconfig-paths": "^4.2.0",
     "vitest": "^3.0.0",
