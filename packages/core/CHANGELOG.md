@@ -1,5 +1,11 @@
 # @salt-ds/core
 
+## 1.44.1
+
+### Patch Changes
+
+- 851b2eb: Fixed Dropdown and ComboBox throws error when moving focus via `keyDownCapture`, for example used as `cellRenderer` in Ag Grid. Closes #5011.
+
 ## 1.44.0
 
 ### Minor Changes
