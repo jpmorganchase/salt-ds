@@ -77,7 +77,7 @@ export const CharacteristicsTokenTable = ({
       <Thead>
         <Tr>
           <th>Preview</th>
-          <th>Name & Default Value</th>
+          <th>Token name & token value</th>
         </Tr>
       </Thead>
       <tbody>
