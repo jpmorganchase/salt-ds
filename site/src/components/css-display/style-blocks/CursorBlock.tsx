@@ -1,3 +1,4 @@
+import { VisibleIcon } from "@salt-ds/icons";
 import type { CSSProperties } from "react";
 
 import styles from "./CursorBlock.module.css";
@@ -17,7 +18,7 @@ export const CursorBlock = ({
         className={styles.cell}
         style={{ cursor: `var(${cursor})` } as CSSProperties}
       >
-        Hover to try
+        <VisibleIcon aria-hidden />
       </div>
       {!hideToken && <code>{cursor}</code>}
     </>

@@ -1,5 +1,5 @@
 .root {
-  width: calc(2 * var(--salt-size-base) + var(--salt-spacing-100));
+  width: var(--salt-size-base);
   height: var(--salt-size-base);
 
   border-color: transparent;

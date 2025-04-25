@@ -1,5 +1,5 @@
 .cell {
-  width: calc(2 * var(--salt-size-base) + var(--salt-size-unit));
+  width: var(--salt-size-base);
   height: var(--salt-size-base);
 
   border-color: var(--salt-container-primary-borderColor);

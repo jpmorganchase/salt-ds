@@ -1,10 +1,12 @@
 export {
   GridLayout,
   FlowLayout,
+  StackLayout,
   Card,
   H1,
   Panel,
   Text,
+  Code,
   Accordion,
   AccordionHeader,
   AccordionPanel,

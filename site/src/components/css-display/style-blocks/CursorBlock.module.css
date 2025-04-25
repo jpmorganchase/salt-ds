@@ -1,8 +1,13 @@
 .cell {
   height: var(--salt-size-base);
+  width: var(--salt-size-base);
 
   border-color: var(--salt-container-primary-borderColor);
   border-style: var(--salt-container-borderStyle);
   border-width: var(--salt-size-border);
   border-radius: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

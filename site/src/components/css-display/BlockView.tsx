@@ -1,3 +1,4 @@
+import { SaltProviderNext } from "@salt-ds/core";
 import type { FC } from "react";
 import { SaltProvider } from "..";
 import { ColorBlock } from "./style-blocks/ColorBlock";
@@ -9,7 +10,6 @@ import { LineBlock } from "./style-blocks/LineBlock";
 import { OutlineBlock } from "./style-blocks/OutlineBlock";
 import { ShadowBlockCell } from "./style-blocks/ShadowBlock";
 import { TextBlock } from "./style-blocks/TextBlock";
-import { SaltProviderNext } from "@salt-ds/core";
 
 const color = [
   "background",
@@ -26,7 +26,7 @@ const fontWeight = ["fontWeight"];
 const cursor = ["cursor"];
 const letters = ["letterSpacing"];
 const border = ["borderStyle", "borderWidth", "outlineWidth", "outlineStyle"];
-const text = ["fontStyle"];
+const fontStyle = ["fontStyle"];
 const outline = ["outline"];
 const shadow = ["shadow"];
 const align = ["textAlign"];
@@ -49,8 +49,8 @@ export const BlockView: FC<{ name: string }> = ({ name }) => {
       return <LetterSpacingBlock hideToken letterSpacing={name} />;
     case border.some((fw) => name.includes(fw)):
       return <LineBlock hideToken token={name} lineStyle={name} />;
-    case text.some((fw) => name.includes(fw)):
-      return <TextBlock fontSize={name} />;
+    case fontStyle.some((fw) => name.includes(fw)):
+      return <TextBlock fontStyle={name} />;
     case outline.some((fw) => name.includes(fw)):
       return <OutlineBlock outline={name} />;
     case shadow.some((fw) => name.includes(fw)):
@@ -66,7 +66,7 @@ export const BlockView: FC<{ name: string }> = ({ name }) => {
     case lineHeight.some((fw) => name.includes(fw)):
       return <TextBlock lineHeight={name} />;
     default:
-      return <p>{name}</p>;
+      return null;
   }
 };
 

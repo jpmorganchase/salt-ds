@@ -42,7 +42,7 @@ export const TextBlock = ({
         } as unknown as CSSProperties
       }
     >
-      Preview text
+      Text
     </div>
   );
 };
