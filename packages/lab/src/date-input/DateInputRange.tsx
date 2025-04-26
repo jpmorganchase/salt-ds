@@ -7,11 +7,12 @@ import {
   useFormFieldProps,
   useId,
 } from "@salt-ds/core";
-import {
+import type {
   DateDetail,
   DateFrameworkType,
   ParserResult,
-  TimeFields, Timezone,
+  TimeFields,
+  Timezone,
 } from "@salt-ds/date-adapters";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
@@ -226,8 +227,8 @@ export const DateInputRange = forwardRef<
       variant = "primary",
       timezone = dateProp?.startDate || defaultDate?.startDate
         ? dateAdapter.getTimezone(
-          (dateProp?.startDate ?? defaultDate?.startDate) as TDate,
-        )
+            (dateProp?.startDate ?? defaultDate?.startDate) as TDate,
+          )
         : "default",
       ...rest
     } = props;
@@ -257,8 +258,7 @@ export const DateInputRange = forwardRef<
         ? parseProp(dateValue ?? "", field, format)
         : dateAdapter.parse.bind(dateAdapter)(dateValue ?? "", format);
 
-      const { date, ...parseDetails } = parseResult;
-      return { date, ...parseDetails };
+      return parseResult;
     };
 
     const [dateValue, setDateValue] = useControlled({
@@ -342,14 +342,8 @@ export const DateInputRange = forwardRef<
 
     // biome-ignore lint/correctness/useExhaustiveDependencies: Update date string value ONLY when selected date changes, not when date string itself change
     useEffect(() => {
-      setDateValueFromDate(date);
-    }, [
-      date,
-      date?.startDate,
-      date?.endDate,
-      dateAdapter.format,
-      format,
-    ]);
+      lastAppliedValue.current = setDateValueFromDate(date);
+    }, [date, date?.startDate, date?.endDate, dateAdapter.format, format]);
 
     const [focused, setFocused] = useState(false);
 
@@ -405,37 +399,37 @@ export const DateInputRange = forwardRef<
       const { date: endDate = undefined, ...endDateParseDetails } =
         parseDateValue(dateValue?.endDate, DateParserField.END) ?? {};
       const updatedDateRange: DateRangeSelection<TDate> = {
-        startDate: startDate? dateAdapter.setTimezone(startDate, timezone) : undefined,
-        endDate:  endDate ? dateAdapter.setTimezone(endDate, timezone): undefined,
+        startDate,
+        endDate,
       };
-      const newDateValue = setDateValueFromDate(updatedDateRange);
+      if (dateAdapter.isValid(startDate)) {
+        updatedDateRange.startDate = dateAdapter.setTimezone(
+          startDate,
+          timezone,
+        );
+        if (preservedTime.current.startTime) {
+          updatedDateRange.startDate = dateAdapter.set(updatedDateRange.startDate, preservedTime.current.startTime);
+        }
+      }
+      if (dateAdapter.isValid(endDate)) {
+        updatedDateRange.endDate = dateAdapter.setTimezone(endDate, timezone);
+        if (preservedTime.current.endTime) {
+          updatedDateRange.endDate = dateAdapter.set(updatedDateRange.endDate, preservedTime.current.endTime);
+        }
+      }
+      const updatedDateValue = setDateValueFromDate(updatedDateRange);
+
       setDate(updatedDateRange);
+
       if (
-        lastAppliedValue.current.startDate !== dateValue.startDate ||
-        lastAppliedValue.current.endDate !== dateValue.endDate
+        lastAppliedValue.current.startDate !== updatedDateValue.startDate ||
+        lastAppliedValue.current.endDate !== updatedDateValue.endDate
       ) {
-        if (
-          dateAdapter.isValid(updatedDateRange?.startDate) &&
-          preservedTime.current.startTime
-        ) {
-          updatedDateRange.startDate = dateAdapter.set(
-            updatedDateRange.startDate,
-            preservedTime.current.startTime,
-          );
-        }
-        if (
-          dateAdapter.isValid(updatedDateRange?.endDate) &&
-          preservedTime.current.endTime
-        ) {
-          updatedDateRange.endDate = dateAdapter.set(
-            updatedDateRange.endDate,
-            preservedTime.current.endTime,
-          );
-        }
         onDateChange?.(event, updatedDateRange, {
           startDate: startDateParseDetails,
           endDate: endDateParseDetails,
         });
+        lastAppliedValue.current = updatedDateValue;
       }
     };
 
@@ -462,7 +456,6 @@ export const DateInputRange = forwardRef<
     const handleStartInputFocus: FocusEventHandler<HTMLInputElement> = (
       event,
     ) => {
-      lastAppliedValue.current = dateValue;
       setFocused(true);
       startInputPropsOnFocus?.(event);
     };
@@ -470,7 +463,6 @@ export const DateInputRange = forwardRef<
     const handleEndInputFocus: FocusEventHandler<HTMLInputElement> = (
       event,
     ) => {
-      lastAppliedValue.current = dateValue;
       setFocused(true);
       endInputPropsOnFocus?.(event);
     };
@@ -556,8 +548,7 @@ export const DateInputRange = forwardRef<
           value={
             isReadOnly && !dateValue?.startDate
               ? emptyReadOnlyMarker
-              : (dateValue.startDate ??
-                dateAdapter.format(undefined, format))
+              : (dateValue.startDate ?? dateAdapter.format(undefined, format))
           }
           {...restStartInputProps}
           onBlur={handleStartInputBlur}
@@ -589,8 +580,7 @@ export const DateInputRange = forwardRef<
           value={
             isReadOnly && !dateValue?.endDate
               ? emptyReadOnlyMarker
-              : (dateValue.endDate ??
-                dateAdapter.format(undefined, format))
+              : (dateValue.endDate ?? dateAdapter.format(undefined, format))
           }
           {...restEndInputProps}
           onBlur={handleEndInputBlur}
