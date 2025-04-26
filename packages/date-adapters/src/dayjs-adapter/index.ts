@@ -200,20 +200,14 @@ export class AdapterDayjs implements SaltDateAdapter<Dayjs, string> {
    * @param format - The format string to use.
    * @returns A DateDetail object containing the parsed date and any errors.
    */
-  public parse(
-    value: string,
-    format: string,
-  ): ParserResult<Dayjs> {
-    let parsedDate = this.dayjs(
-      value?.trim(),
-      format).locale(this.locale);
+  public parse(value: string, format: string): ParserResult<Dayjs> {
+    const parsedDate = this.dayjs(value?.trim(), format, this.locale, false);
     if (parsedDate.isValid()) {
       return {
         date: parsedDate,
         value,
       };
     }
-
     const isDateDefined = !!value?.trim().length;
     return {
       date: this.dayjs("Invalid Date"),
@@ -436,7 +430,7 @@ export class AdapterDayjs implements SaltDateAdapter<Dayjs, string> {
     if (timezone === "default") {
       return date;
     }
-    return date.tz( this.resolveTimezone(timezone), true);
+    return date.tz(this.resolveTimezone(timezone), true);
   };
 
   private adjustOffset = (date: Dayjs) => {
@@ -492,10 +486,7 @@ export class AdapterDayjs implements SaltDateAdapter<Dayjs, string> {
    * @param offset - The time period ("day", "week", "month", "year").
    * @returns The Day.js date object representing the end of the period.
    */
-  public endOf(
-    date: Dayjs,
-    offset: "day" | "week" | "month" | "year",
-  ): Dayjs {
+  public endOf(date: Dayjs, offset: "day" | "week" | "month" | "year"): Dayjs {
     const localizedDate = date.locale(this.locale);
     const endOfDate = localizedDate.endOf(offset);
     return this.adjustOffset(endOfDate);
@@ -542,9 +533,7 @@ export class AdapterDayjs implements SaltDateAdapter<Dayjs, string> {
     dow: number,
     format: "long" | "short" | "narrow",
   ): string {
-    const date = this.dayjs()
-      .locale(this.locale)
-      .weekday(dow);
+    const date = this.dayjs().locale(this.locale).weekday(dow);
     const formatString =
       format === "long" ? "dddd" : format === "short" ? "ddd" : "dd";
     return date.format(formatString);
