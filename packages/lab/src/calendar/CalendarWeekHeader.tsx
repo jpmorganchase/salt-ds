@@ -8,7 +8,6 @@ import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { useLocalization } from "../localization-provider";
 import calendarWeekHeaderCss from "./CalendarWeekHeader.css";
-import { useCalendarContext } from "./internal/CalendarContext";
 
 /**
  * Props for the CalendarWeekHeader component.

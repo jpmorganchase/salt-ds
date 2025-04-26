@@ -4,8 +4,6 @@ import {
   type FocusEventHandler,
   type KeyboardEventHandler,
   type MouseEventHandler,
-  type RefObject,
-  useEffect,
 } from "react";
 import { useLocalization } from "../localization-provider";
 import { useCalendarContext } from "./internal/CalendarContext";
@@ -66,14 +64,20 @@ export interface useCalendarDayProps<TDate> {
 }
 
 export function useCalendarDay<TDate extends DateFrameworkType>(
-  props: useCalendarDayProps<TDate>,
-  ref: RefObject<HTMLElement>,
+  props: useCalendarDayProps<TDate>
 ) {
   const { date, month } = props;
   const { dateAdapter } = useLocalization<TDate>();
   const {
-    state: { focusedDate, hideOutOfRangeDates, timezone, calendarFocused },
+    state: {
+      focusedDate,
+      focusedDateRef,
+      hideOutOfRangeDates,
+      timezone,
+    },
     helpers: {
+      getTabbableDates,
+      setHoveredDate,
       isDayUnselectable,
       isDaySelectable,
       isDayHighlighted,
@@ -96,29 +100,24 @@ export function useCalendarDay<TDate extends DateFrameworkType>(
 
   const handleFocus: FocusEventHandler<HTMLButtonElement> = (event) => {
     focusManager.handleFocus(event);
+    setHoveredDate(event, date);
   };
 
-  const handleMouseOver: MouseEventHandler<HTMLButtonElement> = (event) => {
-    selectionManager.handleMouseOver?.(event);
+  const handleMouseEnter: MouseEventHandler<HTMLButtonElement> = (event) => {
+    setHoveredDate(event, date);
   };
 
   const eventHandlers = {
     onClick: handleClick,
     onKeyDown: handleKeyDown,
     onFocus: handleFocus,
-    onMouseOver: handleMouseOver,
+    onMouseEnter: handleMouseEnter
   };
 
   const outOfRange = !dateAdapter.isSame(date, month, "month");
   const focused =
-    focusedDate &&
-    dateAdapter.isSame(date, focusedDate, "day") &&
-    calendarFocused &&
-    !outOfRange;
-  const tabIndex =
-    focusedDate && dateAdapter.isSame(date, focusedDate, "day") && !outOfRange
-      ? 0
-      : -1;
+    focusedDate && dateAdapter.isSame(date, focusedDate, "day") && !outOfRange;
+  const tabIndex = getTabbableDates().find(tabbableDate =>  dateAdapter.isSame(date, tabbableDate, "day")) ? 0 : -1;
   const today = dateAdapter.isSame(dateAdapter.today(timezone), date, "day");
 
   const unselectableReason = isDayUnselectable(date);
@@ -131,12 +130,6 @@ export function useCalendarDay<TDate extends DateFrameworkType>(
   const unselectable = Boolean(unselectableReason);
   const highlighted = Boolean(highlightedReason);
   const hidden = hideOutOfRangeDates && outOfRange;
-
-  useEffect(() => {
-    if (focused) {
-      ref.current?.focus({ preventScroll: true });
-    }
-  }, [ref, focused]);
 
   return {
     status: {
@@ -151,6 +144,7 @@ export function useCalendarDay<TDate extends DateFrameworkType>(
     } as DayStatus,
     dayProps: {
       tabIndex,
+      ref: focusedDateRef,
       "aria-current": today ? "date" : undefined,
       "aria-hidden": hidden ? "true" : undefined,
       ...eventHandlers,

@@ -329,8 +329,8 @@ describe("GIVEN a Calendar with range selection", () => {
         // Simulate pressing the ArrowRight key to move the focus
         cy.realPress("ArrowRight");
         cy.realPress("ArrowRight");
-        // Verify that the hovered span class is removed
-        cy.get(".saltCalendarDay-hoveredSpan").should("not.exist");
+        // Verify that the hovered span class is not removed
+        cy.get(".saltCalendarDay-hoveredSpan").should("exist");
         // Simulate pressing the Enter key to select the range
         cy.realPress("Enter");
         // Verify that the start date button is selected and has the correct class

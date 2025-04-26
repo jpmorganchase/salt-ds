@@ -626,20 +626,6 @@ export function useCalendarSelectionDay<TDate extends DateFrameworkType>({
     [date, setSelectedDate],
   );
 
-  const handleMouseOver: MouseEventHandler<HTMLButtonElement> = useCallback(
-    (event) => {
-      setHoveredDate(event, date);
-    },
-    [date, setHoveredDate],
-  );
-
-  const handleMouseLeave: MouseEventHandler<HTMLButtonElement> = useCallback(
-    (event) => {
-      setHoveredDate(event, null);
-    },
-    [setHoveredDate],
-  );
-
   const selected = isSelected(date);
   const selectedSpan = isSelectedSpan(date);
   const hoveredSpan = isHoveredSpan(date);
@@ -651,8 +637,6 @@ export function useCalendarSelectionDay<TDate extends DateFrameworkType>({
   return {
     handleClick,
     handleKeyDown,
-    handleMouseOver,
-    handleMouseLeave,
     status: {
       selected,
       selectedSpan,
