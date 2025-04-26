@@ -135,9 +135,7 @@ export class AdapterDateFns implements SaltDateAdapter<Date, Locale> {
    * @param value - The date string to parse.
    * @returns The parsed Date object or an invalid date object.
    */
-  public date = <T extends string | undefined>(
-    value?: T,
-  ): Date => {
+  public date = <T extends string | undefined>(value?: T): Date => {
     if (!value || !this.isValidDateString(value)) {
       return new Date(Number.NaN);
     }
@@ -182,10 +180,7 @@ export class AdapterDateFns implements SaltDateAdapter<Date, Locale> {
    * @param format - The format string to use.
    * @returns A DateDetail object containing the parsed date and any errors.
    */
-  public parse(
-    value: string,
-    format: string
-  ): ParserResult<Date> {
+  public parse(value: string, format: string): ParserResult<Date> {
     const dateFnsFormat = this.mapToDateFnsFormat(format);
     const parsedDate = parseDateFns(value, dateFnsFormat, new Date(), {
       locale: this.locale,
@@ -350,7 +345,7 @@ export class AdapterDateFns implements SaltDateAdapter<Date, Locale> {
    * @returns "default" as Timezones are not supported by the Date object
    */
   public getTimezone = (): string => {
-    return 'default';
+    return "default";
   };
 
   /**
@@ -392,10 +387,7 @@ export class AdapterDateFns implements SaltDateAdapter<Date, Locale> {
    * @param offset - The time period ("day", "week", "month", "year").
    * @returns The Date object representing the start of the period.
    */
-  public startOf(
-    date: Date,
-    offset: "day" | "week" | "month" | "year",
-  ): Date {
+  public startOf(date: Date, offset: "day" | "week" | "month" | "year"): Date {
     switch (offset) {
       case "day":
         return startOfDay(date);
@@ -416,10 +408,7 @@ export class AdapterDateFns implements SaltDateAdapter<Date, Locale> {
    * @param offset - The time period ("day", "week", "month", "year").
    * @returns The Date object representing the end of the period.
    */
-  public endOf(
-    date: Date,
-    offset: "day" | "week" | "month" | "year",
-  ): Date {
+  public endOf(date: Date, offset: "day" | "week" | "month" | "year"): Date {
     switch (offset) {
       case "day":
         return endOfDay(date);
@@ -467,7 +456,7 @@ export class AdapterDateFns implements SaltDateAdapter<Date, Locale> {
    */
   public getDayOfWeekName(
     dow: number,
-    format: "long" | "short" | "narrow"
+    format: "long" | "short" | "narrow",
   ): string {
     const startOfWeekDate = startOfWeek(new Date(), {
       locale: this.locale,

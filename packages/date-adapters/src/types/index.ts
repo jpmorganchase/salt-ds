@@ -133,10 +133,7 @@ export interface SaltDateAdapter<
    * @param timezone - The timezone to use.
    * @returns The parsed Date object or an invalid date object.
    */
-  date<T extends string | undefined>(
-    value?: T,
-    timezone?: Timezone
-  ): TDate;
+  date<T extends string | undefined>(value?: T, timezone?: Timezone): TDate;
 
   /**
    * Formats a date object using the specified format string.
@@ -145,10 +142,7 @@ export interface SaltDateAdapter<
    * @param format - The format string to use.
    * Returns an empty string when null or undefined date is given.
    */
-  format(
-    date: TDate | null | undefined,
-    format?: RecommendedFormats
-  ): string;
+  format(date: TDate | null | undefined, format?: RecommendedFormats): string;
 
   /**
    * Compares two date objects.
@@ -285,10 +279,7 @@ export interface SaltDateAdapter<
    * @param granularity - The time period ("day", "week", "month", "year").
    * @returns The date object representing the start of the period.
    */
-  startOf(
-    date: TDate,
-    granularity: "day" | "week" | "month" | "year"
-  ): TDate;
+  startOf(date: TDate, granularity: "day" | "week" | "month" | "year"): TDate;
 
   /**
    * Gets the end of a specified time period for a date object.
@@ -297,10 +288,7 @@ export interface SaltDateAdapter<
    * @param granularity - The time period ("day", "week", "month", "year").
    * @returns The date object representing the end of the period.
    */
-  endOf(
-    date: TDate,
-    granularity: "day" | "week" | "month" | "year"
-  ): TDate;
+  endOf(date: TDate, granularity: "day" | "week" | "month" | "year"): TDate;
 
   /**
    * Gets the current date with the time set to the start of the day.
@@ -377,10 +365,7 @@ export interface SaltDateAdapter<
    * @param format - The format for the day name ("long", "short", "narrow").
    * @returns The name of the day of the week.
    */
-  getDayOfWeekName(
-    dow: number,
-    format: "long" | "short" | "narrow",
-  ): string;
+  getDayOfWeekName(dow: number, format: "long" | "short" | "narrow"): string;
 
   /**
    * Clone the date
