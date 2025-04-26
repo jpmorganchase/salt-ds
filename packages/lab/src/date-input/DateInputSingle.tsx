@@ -6,12 +6,12 @@ import {
   useFormFieldProps,
   useId,
 } from "@salt-ds/core";
-import {
+import type {
   DateDetail,
   DateFrameworkType,
   ParserResult,
+  TimeFields,
   Timezone,
-  TimeFields
 } from "@salt-ds/date-adapters";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
@@ -182,9 +182,7 @@ export const DateInputSingle = forwardRef<
       variant = "primary",
       onDateValueChange,
       timezone = dateProp || defaultDate
-        ? dateAdapter.getTimezone(
-          (dateProp ?? defaultDate) as TDate,
-        )
+        ? dateAdapter.getTimezone((dateProp ?? defaultDate) as TDate)
         : "default",
       ...rest
     } = props;
@@ -228,12 +226,13 @@ export const DateInputSingle = forwardRef<
       const formattedValue = dateAdapter.format(date, format);
       const hasValueChanged = formattedValue !== dateValue;
       if (
-        // don't want to reset "error" input values
-        (dateAdapter.isValid(date) || date === null) &&
+        // should not reset "error" input values
+        (date === null || dateAdapter.isValid(date)) &&
         hasValueChanged
       ) {
         setDateValue(formattedValue);
         onDateValueChange?.(null, formattedValue);
+        lastAppliedValue.current = formattedValue;
       }
     }, [date, dateAdapter.format, format]);
 
@@ -274,22 +273,28 @@ export const DateInputSingle = forwardRef<
       const parse = parseProp ?? dateAdapter.parse.bind(dateAdapter);
       const parseResult = parse(dateValue ?? "", format);
       let { date: parsedDate, ...parseDetails } = parseResult;
-      parsedDate = dateAdapter.setTimezone(parsedDate, timezone);
-      const formattedValue = dateAdapter.format(parsedDate, format);
+      let formattedValue = '';
+      const isDateValid = dateAdapter.isValid(parsedDate);
+      if (isDateValid) {
+        parsedDate = dateAdapter.setTimezone(parsedDate, timezone);
+        if (preservedTime.current) {
+          parsedDate = dateAdapter.set(parsedDate, preservedTime.current);
+        }
+        formattedValue = dateAdapter.format(parsedDate, format);
+      }
       const hasValueChanged = formattedValue !== dateValue;
-      if (dateAdapter.isValid(parsedDate) && hasValueChanged) {
-        setDateValue(formattedValue);
-        onDateValueChange?.(event, formattedValue);
+      const newValue = isDateValid ? formattedValue : dateValue;
+      if (hasValueChanged) {
+        setDateValue(newValue);
+        onDateValueChange?.(event, newValue);
       }
 
       setDate(parsedDate);
 
-      if (lastAppliedValue.current !== dateValue) {
-        if (dateAdapter.isValid(parsedDate) && preservedTime.current) {
-          parsedDate = dateAdapter.set(parsedDate, preservedTime.current);
-        }
+      if (lastAppliedValue.current !== newValue) {
         onDateChange?.(event, parsedDate, parseDetails);
       }
+      lastAppliedValue.current = newValue;
     };
 
     const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
@@ -301,7 +306,6 @@ export const DateInputSingle = forwardRef<
     };
 
     const handleFocus: FocusEventHandler<HTMLInputElement> = (event) => {
-      lastAppliedValue.current = dateValue;
       setFocused(true);
       inputPropsOnFocus?.(event);
     };
