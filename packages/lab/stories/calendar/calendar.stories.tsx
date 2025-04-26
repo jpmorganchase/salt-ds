@@ -2,11 +2,10 @@ import {
   Button,
   Divider,
   Dropdown,
-  FlexLayout,
   FormField,
   FormFieldLabel,
-  GridLayout,
   GridItem,
+  GridLayout,
   Option,
   StackLayout,
 } from "@salt-ds/core";
@@ -364,7 +363,7 @@ export const TwinCalendars: StoryFn<
 
   const handleStartVisibleMonthChange = useCallback(
     (
-      _event: SyntheticEvent,
+      _event: SyntheticEvent | undefined,
       newVisibleMonth: CalendarProps<DateFrameworkType>["defaultVisibleMonth"],
     ) => {
       setStartVisibleMonth(newVisibleMonth);
@@ -381,7 +380,7 @@ export const TwinCalendars: StoryFn<
 
   const handleEndVisibleMonthChange = useCallback(
     (
-      _event: SyntheticEvent,
+      _event: SyntheticEvent | undefined,
       newVisibleMonth: CalendarProps<DateFrameworkType>["defaultVisibleMonth"],
     ) => {
       setEndVisibleMonth(newVisibleMonth);
@@ -496,7 +495,7 @@ export const SingleWithTimezone: StoryFn<typeof Calendar> = (args) => {
           ? selectedTimezone
           : undefined;
 
-      const formatDate = (date) => {
+      const formatDate = (date: DateFrameworkType) => {
         const iso = date.toISOString();
         const locale = new Intl.DateTimeFormat(undefined, {
           timeZone: systemTimeZone,
@@ -613,30 +612,22 @@ export const RangeWithTimezone: StoryFn<typeof Calendar> = (args) => {
   const [startLocaleDateString, setStartLocaleDateString] =
     useState<string>("");
   const [startDateString, setStartDateString] = useState<string>("");
-  const [startDateError, setStartDateError] = useState<string | undefined>(
-    undefined,
-  );
   const [endIso8601String, setEndIso8601String] = useState<string>("");
   const [endLocaleDateString, setEndLocaleDateString] = useState<string>("");
   const [endDateString, setEndDateString] = useState<string>("");
-  const [endDateError, setEndDateError] = useState<string | undefined>(
-    undefined,
-  );
 
   useEffect(() => {
     setCurrentTimezone("");
     setStartIso8601String("");
     setStartLocaleDateString("");
     setStartDateString("");
-    setStartDateError(undefined);
     setEndIso8601String("");
     setEndLocaleDateString("");
     setEndDateString("");
-    setEndDateError(undefined);
   }, [selectedTimezone]);
 
   const handleSelectionChange: UseCalendarSelectionRangeProps<DateFrameworkType>["onSelectionChange"] =
-    (_event, selection, details) => {
+    (_event, selection) => {
       const { startDate, endDate } = selection;
       const systemTimeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
       const ianaTimezone =
@@ -644,7 +635,7 @@ export const RangeWithTimezone: StoryFn<typeof Calendar> = (args) => {
           ? selectedTimezone
           : undefined;
 
-      const formatDate = (date) => {
+      const formatDate = (date: DateFrameworkType) => {
         const iso = date.toISOString();
         const locale = new Intl.DateTimeFormat(undefined, {
           timeZone: systemTimeZone,
@@ -816,7 +807,7 @@ export const SingleWithDerivedTimezone: StoryFn<typeof Calendar> = (args) => {
           ? selectedTimezone
           : undefined;
 
-      const formatDate = (date) => {
+      const formatDate = (date: DateFrameworkType) => {
         const iso = date.toISOString();
         const locale = new Intl.DateTimeFormat(undefined, {
           timeZone: systemTimeZone,

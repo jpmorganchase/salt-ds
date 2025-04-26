@@ -5,13 +5,7 @@ import {
   useControlled,
 } from "@salt-ds/core";
 import type { DateFrameworkType, Timezone } from "@salt-ds/date-adapters";
-import {
-  type SyntheticEvent,
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
+import { type SyntheticEvent, useCallback, useEffect, useMemo } from "react";
 import { useLocalization } from "../localization-provider";
 import { generateDatesForMonth } from "./internal/utils";
 import {
@@ -34,11 +28,27 @@ interface UseCalendarBaseProps<TDate> {
    */
   defaultVisibleMonth?: TDate;
   /**
+   * Callback fired when the focused date changes.
+   * @param event - The synthetic event, if user event triggered focus or undefined.
+   * @param visibleMonth - The new focused date
+   */
+  onFocusedDateChange?: (
+    event: SyntheticEvent | undefined,
+    date: TDate | null,
+  ) => void;
+  /**
    * Callback fired when the visible month changes.
-   * @param event - The synthetic event.
+   * @param event - The synthetic event, if user triggered change or undefined.
    * @param visibleMonth - The new visible month.
    */
-  onVisibleMonthChange?: (event: SyntheticEvent, visibleMonth: TDate) => void;
+  onVisibleMonthChange?: (
+    event: SyntheticEvent | undefined,
+    visibleMonth: TDate,
+  ) => void;
+  /**
+   * Ref to attach to the focused element,enabling focus to be controlled.
+   */
+  focusedDateRef?: React.MutableRefObject<HTMLElement | null>;
   /**
    * Function to determine if a day is unselectable.
    * @param date - The date to check.
@@ -209,11 +219,6 @@ export interface UseCalendarReturn<TDate extends DateFrameworkType> {
     hideOutOfRangeDates?: boolean;
 
     /**
-     * Whether the calendar is currently focused.
-     */
-    calendarFocused: boolean;
-
-    /**
      * Number of visible months
      */
     numberOfVisibleMonths: number;
@@ -238,27 +243,31 @@ export interface UseCalendarReturn<TDate extends DateFrameworkType> {
    */
   helpers: {
     /**
+     * Returns a list of tabbable/focusable dates
+     */
+    getTabbableDates: () => TDate[];
+
+    /**
      * Sets the visible month in the calendar.
      *
-     * @param event - The synthetic event triggering the change.
+     * @param event - The synthetic event triggering the change, or undefined if triggered by code.
      * @param newVisibleMonth - The new visible month to set.
      */
-    setVisibleMonth: (event: SyntheticEvent, newVisibleMonth: TDate) => void;
+    setVisibleMonth: (
+      event: SyntheticEvent | undefined,
+      newVisibleMonth: TDate,
+    ) => void;
 
     /**
      * Sets the focused date in the calendar.
      *
-     * @param event - The synthetic event triggering the change.
+     * @param event - The synthetic event triggering the change, or undefined if triggered by code.
      * @param date - The new date to focus.
      */
-    setFocusedDate: (event: SyntheticEvent, date: TDate) => void;
-
-    /**
-     * Sets whether the calendar is focused.
-     *
-     * @param focused - Whether the calendar should be focused.
-     */
-    setCalendarFocused: (focused: boolean) => void;
+    setFocusedDate: (
+      event: SyntheticEvent | undefined,
+      date: TDate | null,
+    ) => void;
 
     /**
      * Determines if a day is unselectable.
@@ -414,23 +423,26 @@ export function useCalendar<TDate extends DateFrameworkType>(
     defaultDates: { minDate: defaultMinDate, maxDate: defaultMaxDate },
   } = useLocalization<TDate>();
   const {
-    selectedDate,
-    defaultSelectedDate,
-    visibleMonth: visibleMonthProp,
-    hideOutOfRangeDates,
     timezone,
+    defaultSelectedDate,
     defaultVisibleMonth = dateAdapter.today(timezone),
+    hideOutOfRangeDates,
+    hoveredDate,
+    focusedDate: focusDateProp,
+    focusedDateRef,
+    isDayDisabled = defaultIsDayDisabled,
+    isDayHighlighted = defaultIsDayHighlighted,
+    isDayUnselectable = defaultIsDayUnselectable,
+    maxDate = defaultMaxDate,
+    minDate = defaultMinDate,
+    numberOfVisibleMonths = 1,
+    onHoveredDateChange,
     onSelectionChange,
     onVisibleMonthChange,
-    isDayUnselectable = defaultIsDayUnselectable,
-    isDayHighlighted = defaultIsDayHighlighted,
-    isDayDisabled = defaultIsDayDisabled,
-    minDate = defaultMinDate,
-    maxDate = defaultMaxDate,
-    numberOfVisibleMonths = 1,
+    onFocusedDateChange,
+    selectedDate,
     selectionVariant,
-    onHoveredDateChange,
-    hoveredDate,
+    visibleMonth: visibleMonthProp,
     // startDateOffset,
     // endDateOffset,
   } = props;
@@ -443,7 +455,10 @@ export function useCalendar<TDate extends DateFrameworkType>(
     controlled: visibleMonthProp
       ? dateAdapter.startOf(visibleMonthProp, "month")
       : undefined,
-    default: dateAdapter.startOf(defaultVisibleMonth, "month"),
+    default: useMemo(
+      () => dateAdapter.startOf(defaultVisibleMonth, "month"),
+      [],
+    ),
     name: "Calendar",
     state: "visibleMonth",
   });
@@ -507,17 +522,12 @@ export function useCalendar<TDate extends DateFrameworkType>(
     hoveredDate,
   } as UseCalendarSelectionProps<TDate>);
 
-  const [calendarFocused, setCalendarFocused] = useState(false);
-
   const isDayVisible = useCallback(
     (date?: TDate | null) => {
       if (!date) {
         return false;
       }
-      const startInsideDays = dateAdapter.startOf(
-        visibleMonth,
-        "month"
-      );
+      const startInsideDays = dateAdapter.startOf(visibleMonth, "month");
 
       if (dateAdapter.compare(date, startInsideDays) < 0) return false;
 
@@ -531,7 +541,63 @@ export function useCalendar<TDate extends DateFrameworkType>(
     [dateAdapter, responsiveNumberOfVisibleMonths, visibleMonth],
   );
 
-  const getInitialFocusedDate = useCallback(() => {
+  const getTabbableDates = () => {
+    const tabbableDates = [];
+    const selectedDate = selectionManager.state.selectedDate;
+    if (
+      (selectionVariant === "range" || selectionVariant === "offset") &&
+      isDateRangeSelection<TDate>(selectedDate)
+    ) {
+      if (isDayVisible(selectedDate?.startDate)) {
+        tabbableDates.push(selectedDate.startDate);
+      } else if (isDayVisible(selectedDate?.endDate)) {
+        tabbableDates.push(selectedDate.endDate);
+      }
+
+    } else if (
+      selectionVariant === "multiselect" &&
+      Array.isArray(selectedDate)
+    ) {
+      // return first selected day in visible month
+      const selectionInMonth = selectedDate
+        .filter((day) => isDayVisible(day))
+        .sort((a, b) => dateAdapter.compare(a, b));
+      if (selectionInMonth.length > 0) {
+        tabbableDates.push(selectionInMonth[0]);
+      }
+    } else if (
+      selectionVariant === "single" &&
+      !isDateRangeSelection(selectedDate) &&
+      !Array.isArray(selectedDate) &&
+      isDayVisible(selectedDate)
+    ) {
+      tabbableDates.push(selectedDate);
+    }
+    if (focusedDate && dateAdapter.isSame(focusedDate, visibleMonth, "month")) {
+      tabbableDates.push(focusedDate);
+      return tabbableDates;
+    }
+    // Defaults
+    if (
+      tabbableDates.length === 0 &&
+      isDaySelectable(dateAdapter.today(timezone)) &&
+      isDayVisible(dateAdapter.today(timezone))
+    ) {
+      tabbableDates.push(dateAdapter.today(timezone));
+    }
+    if (tabbableDates.length === 0) {
+      const firstSelectableDate = generateDatesForMonth(
+        dateAdapter,
+        visibleMonth,
+      ).find((visibleDay) => isDaySelectable(visibleDay));
+      if (firstSelectableDate) {
+        tabbableDates.push(firstSelectableDate);
+      }
+    }
+    return tabbableDates;
+  };
+
+  const getDefaultFocusedDate = () => {
     const selectedDate = selectionManager.state.selectedDate;
     if (
       (selectionVariant === "range" || selectionVariant === "offset") &&
@@ -555,6 +621,7 @@ export function useCalendar<TDate extends DateFrameworkType>(
         return selectionInMonth[0];
       }
     } else if (
+      selectedDate &&
       selectionVariant === "single" &&
       !isDateRangeSelection(selectedDate) &&
       !Array.isArray(selectedDate) &&
@@ -577,22 +644,32 @@ export function useCalendar<TDate extends DateFrameworkType>(
       return firstSelectableDate;
     }
     return null;
-  }, [
-    dateAdapter,
-    isDaySelectable,
-    isDayVisible,
-    selectionVariant,
-    selectionManager.state.selectedDate,
-    timezone,
-    visibleMonth,
-  ]);
+  };
 
-  const [focusedDate, setFocusedDateState] = useState<TDate | null | undefined>(
-    getInitialFocusedDate,
+  const [focusedDate, setFocusedDateState, isFocusedControlled] = useControlled(
+    {
+      controlled: focusDateProp,
+      default: useMemo(getDefaultFocusedDate, []),
+      name: "Calendar",
+      state: "focusedDate",
+    },
   );
 
+  useEffect(() => {
+    const shouldTransition =
+      focusedDate &&
+      !isFocusedControlled &&
+      !isDayVisible(focusedDate) &&
+      isDaySelectable(focusedDate) &&
+      !isOutsideAllowedDates(focusedDate);
+
+    if (shouldTransition) {
+      setVisibleMonth(undefined, dateAdapter.startOf(focusedDate, "month"));
+    }
+  }, [focusedDate]);
+
   const setVisibleMonth = useCallback(
-    (event: SyntheticEvent, newVisibleMonth: TDate) => {
+    (event: SyntheticEvent | undefined, newVisibleMonth: TDate) => {
       setVisibleMonthState(newVisibleMonth);
       onVisibleMonthChange?.(event, newVisibleMonth);
     },
@@ -600,42 +677,22 @@ export function useCalendar<TDate extends DateFrameworkType>(
   );
 
   const setFocusedDate = useCallback(
-    (event: SyntheticEvent, date: TDate) => {
+    (event: SyntheticEvent | undefined, date: TDate | null) => {
+      if (focusedDateRef && event?.target instanceof HTMLElement) {
+        focusedDateRef.current = event.target;
+      }
       if (
-        !focusedDate ||
-        dateAdapter.isSame(date, focusedDate, "day") ||
-        isOutsideAllowedDates(date)
-      )
+        date &&
+        ((focusedDate && dateAdapter.isSame(date, focusedDate, "day")) ||
+          isOutsideAllowedDates(date))
+      ) {
         return;
-
+      }
       setFocusedDateState(date);
-
-      const shouldTransition =
-        !isDayVisible(date) &&
-        isDaySelectable(date) &&
-        !isOutsideAllowedDates(date);
-      if (shouldTransition) {
-        setVisibleMonth(event, dateAdapter.startOf(date, "month"));
-      }
+      onFocusedDateChange?.(event, date);
     },
-    [
-      dateAdapter,
-      focusedDate,
-      isDaySelectable,
-      isDayVisible,
-      isOutsideAllowedDates,
-      setVisibleMonth,
-    ],
+    [dateAdapter, focusedDate, isOutsideAllowedDates, onFocusedDateChange],
   );
-
-  useEffect(() => {
-    if (visibleMonth && focusedDate && !isDayVisible(focusedDate)) {
-      const focusableDate = getInitialFocusedDate();
-      if (focusableDate) {
-        setFocusedDateState(focusableDate);
-      }
-    }
-  }, [isDayVisible, focusedDate, getInitialFocusedDate, visibleMonth]);
 
   return useMemo(
     () =>
@@ -649,13 +706,12 @@ export function useCalendar<TDate extends DateFrameworkType>(
           numberOfVisibleMonths: responsiveNumberOfVisibleMonths,
           selectionVariant,
           hideOutOfRangeDates,
-          calendarFocused,
           ...selectionManager.state,
         },
         helpers: {
+          getTabbableDates,
           setVisibleMonth,
           setFocusedDate,
-          setCalendarFocused,
           isDayUnselectable,
           isDayHighlighted,
           isDayDisabled,
@@ -674,7 +730,6 @@ export function useCalendar<TDate extends DateFrameworkType>(
       maxDate,
       selectionVariant,
       hideOutOfRangeDates,
-      calendarFocused,
       setVisibleMonth,
       setFocusedDate,
       isDayUnselectable,

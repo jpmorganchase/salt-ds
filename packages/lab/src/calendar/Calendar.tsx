@@ -17,7 +17,7 @@ import {
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 
-import { DateFrameworkType, Timezone } from "@salt-ds/date-adapters";
+import type { DateFrameworkType, Timezone } from "@salt-ds/date-adapters";
 import { useLocalization } from "../localization-provider";
 import calendarCss from "./Calendar.css";
 
@@ -33,6 +33,10 @@ export interface CalendarBaseProps extends ComponentPropsWithoutRef<"div"> {
    * If `true`, hides dates that are out of the selectable range.
    */
   hideOutOfRangeDates?: boolean;
+  /**
+   * Ref to attach to the focused element,enabling focus to be controlled.
+   */
+  focusedDateRef?: React.MutableRefObject<HTMLElement | null>;
   /**
    * Number of visible months, maximum 12, defaults to 1
    */
@@ -136,9 +140,12 @@ export const Calendar = forwardRef<
       defaultSelectedDate,
       visibleMonth: visibleMonthProp,
       defaultVisibleMonth,
+      onFocusedDateChange,
       onSelectionChange,
       onVisibleMonthChange,
       hideOutOfRangeDates,
+      focusedDate,
+      focusedDateRef,
       isDayUnselectable,
       isDayHighlighted,
       isDayDisabled,
@@ -152,33 +159,24 @@ export const Calendar = forwardRef<
       ...propsRest
     } = props;
 
-    function getDefaultTimezoneDate() {
-      if (selectionVariant === "range") {
-        return (
-          selectedDate?.startDate ??
-          selectedDate?.endDate ??
-          defaultSelectedDate?.startDate ??
-          defaultSelectedDate?.endDate
-        );
-      }
-      return selectedDate ?? defaultSelectedDate;
-    }
-
-    let timezone:Timezone = "default";
+    let timezone: Timezone = "default";
     if (timezoneProp) {
       timezone = timezoneProp;
     } else {
       if (selectionVariant === "range") {
-        const defaultRangeTimezoneDate  =
+        const defaultRangeTimezoneDate =
           selectedDate?.startDate ??
           selectedDate?.endDate ??
           defaultSelectedDate?.startDate ??
-          defaultSelectedDate?.endDate
-        ;
-        timezone = defaultRangeTimezoneDate ? dateAdapter.getTimezone(defaultRangeTimezoneDate) : "default"
+          defaultSelectedDate?.endDate;
+        timezone = defaultRangeTimezoneDate
+          ? dateAdapter.getTimezone(defaultRangeTimezoneDate)
+          : "default";
       } else if (selectionVariant === "single") {
         const defaultSingleTimezoneDate = selectedDate ?? defaultSelectedDate;
-        timezone = defaultSingleTimezoneDate ? dateAdapter.getTimezone(defaultSingleTimezoneDate) : "default"
+        timezone = defaultSingleTimezoneDate
+          ? dateAdapter.getTimezone(defaultSingleTimezoneDate)
+          : "default";
       }
     }
 
@@ -199,6 +197,8 @@ export const Calendar = forwardRef<
       defaultVisibleMonth,
       onSelectionChange,
       onVisibleMonthChange,
+      focusedDate,
+      focusedDateRef,
       isDayUnselectable,
       isDayHighlighted,
       isDayDisabled,
@@ -206,6 +206,7 @@ export const Calendar = forwardRef<
       maxDate,
       numberOfVisibleMonths,
       selectionVariant,
+      onFocusedDateChange,
       onHoveredDateChange,
       hideOutOfRangeDates,
       hoveredDate,
@@ -214,10 +215,7 @@ export const Calendar = forwardRef<
       timezone,
     };
     const { state, helpers } = useCalendar<TDate>(useCalendarProps);
-    const calendarLabel = dateAdapter.format(
-      state.visibleMonth,
-      "MMMM YYYY",
-    );
+    const calendarLabel = dateAdapter.format(state.visibleMonth, "MMMM YYYY");
 
     return (
       <CalendarContext.Provider

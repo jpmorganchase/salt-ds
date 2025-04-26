@@ -7,7 +7,6 @@ import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { useLocalization } from "../localization-provider";
 import calendarMonthHeaderCss from "./CalendarMonthHeader.css";
-import { useCalendarContext } from "./internal/CalendarContext";
 
 /**
  * Props for the CalendarMonthHeader component.

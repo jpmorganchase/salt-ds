@@ -13,7 +13,6 @@ import {
   CalendarWeekHeader,
 } from "@salt-ds/lab";
 import * as calendarStories from "@stories/calendar/calendar.stories";
-import { es as dateFnsEs } from "date-fns/locale";
 import "moment/dist/locale/es";
 
 // Initialize adapters
@@ -44,7 +43,7 @@ adapterMoment.moment.updateLocale("es", {
 const adapters = [adapterDateFns, adapterDayjs, adapterLuxon, adapterMoment];
 
 const {
-  // Storybook wraps components in it's own LocalizationProvider, so do not compose Stories
+  // Storybook wraps components in their own LocalizationProvider, so do not compose Stories
   CustomDayRender,
   DisabledDates,
   TodayButton,
@@ -468,11 +467,7 @@ describe("GIVEN a Calendar", () => {
           // Verify that the month dropdown is rendered in the specified locale
           cy.findByRole("combobox", { name: "Month Dropdown" }).should(
             "have.text",
-            adapter.format(
-              visibleMonth,
-              "MMM",
-              adapter.lib === "date-fns" ? dateFnsEs : "es-ES",
-            ),
+            "ago",
           );
         });
       });
