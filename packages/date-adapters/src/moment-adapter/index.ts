@@ -144,10 +144,7 @@ export class AdapterMoment implements SaltDateAdapter<Moment, string> {
     format: RecommendedFormats = "DD MMM YYYY",
   ): string {
     if (this.isValid(date)) {
-      return date
-        .clone()
-        .locale(this.locale)
-        .format(format);
+      return date.clone().locale(this.locale).format(format);
     }
     return "";
   }
@@ -177,12 +174,9 @@ export class AdapterMoment implements SaltDateAdapter<Moment, string> {
    * @param format - The format string to use.
    * @returns A DateDetail object containing the parsed date and any errors.
    */
-  public parse(
-    value: string,
-    format: string,
-  ): ParserResult<Moment> {
+  public parse(value: string, format: string): ParserResult<Moment> {
     const parsedDate =
-      this.locale || locale
+      this.locale
         ? this.moment(value, format, this.locale, true)
         : this.moment(value, format, true);
     if (parsedDate.isValid()) {
@@ -476,7 +470,7 @@ export class AdapterMoment implements SaltDateAdapter<Moment, string> {
    * @param timezone - The timezone to use.
    * @returns The current date at the start of the day.
    */
-  public today(timezone: string = "default"): Moment {
+  public today(timezone = "default"): Moment {
     let currentMoment = this.moment();
     if (timezone !== "default" && timezone !== "system") {
       currentMoment = currentMoment.tz(timezone);
@@ -506,9 +500,7 @@ export class AdapterMoment implements SaltDateAdapter<Moment, string> {
     dow: number,
     format: "long" | "short" | "narrow",
   ): string {
-    const day = this.moment()
-      .locale(this.locale)
-      .weekday(dow);
+    const day = this.moment().locale(this.locale).weekday(dow);
     return format === "narrow" ? day.format("dd")[0] : day.format("dddd");
   }
 

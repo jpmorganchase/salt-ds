@@ -202,10 +202,7 @@ export class AdapterLuxon implements SaltDateAdapter<DateTime, string> {
    * @param format - The format string to use.
    * @returns A DateDetail object containing the parsed date and any errors.
    */
-  public parse(
-    value: string,
-    format: string,
-  ): ParserResult<DateTime> {
+  public parse(value: string, format: string): ParserResult<DateTime> {
     const luxonFormat = this.mapToLuxonFormat(format);
     const parsedDate = DateTime.fromFormat(value, luxonFormat, {
       locale: this.locale,
@@ -372,7 +369,7 @@ export class AdapterLuxon implements SaltDateAdapter<DateTime, string> {
       return "system";
     }
     return date.zoneName!;
-  }
+  };
 
   /**
    * Set the timezone for the Day.js object
@@ -384,7 +381,7 @@ export class AdapterLuxon implements SaltDateAdapter<DateTime, string> {
       return date.setZone(timezone, { keepLocalTime: true });
     }
     return date;
-  }
+  };
 
   /**
    * Checks if two Luxon DateTime objects are the same based on the specified granularity.
@@ -409,7 +406,7 @@ export class AdapterLuxon implements SaltDateAdapter<DateTime, string> {
    */
   public startOf(
     date: DateTime,
-    offset: "day" | "week" | "month" | "year"
+    offset: "day" | "week" | "month" | "year",
   ): DateTime {
     const localizedDate = date.setLocale(this.locale);
     return localizedDate.startOf(offset, { useLocaleWeeks: true });
@@ -423,7 +420,7 @@ export class AdapterLuxon implements SaltDateAdapter<DateTime, string> {
    */
   public endOf(
     date: DateTime,
-    offset: "day" | "week" | "month" | "year"
+    offset: "day" | "week" | "month" | "year",
   ): DateTime {
     const localizedDate = date.setLocale(this.locale);
     return localizedDate.endOf(offset, { useLocaleWeeks: true });
