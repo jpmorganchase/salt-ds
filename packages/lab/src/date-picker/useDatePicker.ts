@@ -1,5 +1,5 @@
 import { useControlled, useForkRef, useFormFieldProps } from "@salt-ds/core";
-import {DateFrameworkType, Timezone} from "@salt-ds/date-adapters";
+import type { DateFrameworkType, Timezone } from "@salt-ds/date-adapters";
 import {
   type SyntheticEvent,
   useCallback,
@@ -272,6 +272,8 @@ export function useDatePicker<
       date: SingleDateSelection<TDate> | null,
       details: DateInputSingleDetails,
     ) => {
+      const canBeApplied =
+        dateAdapter.isValid(date) && !details?.errors?.length;
       setSelectedDate(date);
       checkAndAddError(date, isDayDisabled, "disabled", details);
       checkAndAddError(date, isDayUnselectable, "unselectable", details);
@@ -279,8 +281,6 @@ export function useDatePicker<
       if (selectionVariant === "single") {
         onSelectionChange?.(event, date, details);
       }
-      const canBeApplied =
-        dateAdapter.isValid(date) && !details?.errors?.length;
       if (!enableApply && canBeApplied) {
         applySingle(event, date);
       }
@@ -386,7 +386,7 @@ export function useDatePicker<
       containerRef,
       minDate,
       maxDate,
-      timezone
+      timezone,
     },
     helpers: {
       cancel,

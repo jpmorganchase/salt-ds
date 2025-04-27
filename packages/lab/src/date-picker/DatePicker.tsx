@@ -1,4 +1,4 @@
-import {DateFrameworkType, Timezone} from "@salt-ds/date-adapters";
+import type { DateFrameworkType, Timezone } from "@salt-ds/date-adapters";
 import { type ReactNode, forwardRef } from "react";
 import {
   DateRangeSelectionContext,
@@ -119,7 +119,7 @@ export const DatePickerMain = forwardRef<
       minDate,
       maxDate,
       onCancel,
-      timezone
+      timezone,
     };
 
     if (props.selectionVariant === "range") {

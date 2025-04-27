@@ -7,8 +7,8 @@ import {
   FormField,
   FormFieldLabel,
   FormFieldLabel as FormLabel,
-  GridLayout,
   GridItem,
+  GridLayout,
   Input,
   Option,
   StackLayout,
@@ -49,19 +49,20 @@ import {
   useLocalization,
 } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react";
-import { ChangeEvent, SyntheticEvent, useEffect } from "react";
+import { type ChangeEvent, type SyntheticEvent, useEffect } from "react";
 import { useCallback, useRef, useState } from "react";
 // CustomDatePickerPanel is a sample component, representing a composition you could create yourselves, not intended for importing into your own projects
 // refer to https://github.com/jpmorganchase/salt-ds/blob/main/packages/lab/src/date-picker/useDatePicker.ts to create your own
 import { CustomDatePickerPanel } from "./CustomDatePickerPanel";
 // As required by locale specific examples
+import { type Moment } from "moment";
 import "moment/dist/locale/zh-cn";
 import "moment/dist/locale/es";
 import "dayjs/locale/es";
 import "dayjs/locale/zh-cn";
 import { es as dateFnsEs } from "date-fns/locale";
 import { zhCN as dateFnsZhCn } from "date-fns/locale";
-import { enUS as dateFnsEnUs } from "date-fns/locale";
+import {DateTime} from "luxon";
 
 export default {
   title: "Lab/Date Picker",
@@ -1746,9 +1747,7 @@ export const SingleWithCustomParser: StoryFn<
   const customParser = useCallback(
     (
       inputDate: string,
-      format: string,
-      // biome-ignore lint/suspicious/noExplicitAny: locale takes many forms based on framework
-      locale: any,
+      format: string
     ): ParserResult<DateFrameworkType> => {
       if (!inputDate?.length) {
         const parsedDate = dateAdapter.parse("invalid date", "DD/MMM/YYYY");
@@ -1773,7 +1772,7 @@ export const SingleWithCustomParser: StoryFn<
           value: inputDate,
         };
       }
-      return dateAdapter.parse(parsedDate || "", format, locale);
+      return dateAdapter.parse(parsedDate || "", format);
     },
     [dateAdapter, selectedDate],
   );
@@ -1885,8 +1884,6 @@ export const RangeWithCustomParser: StoryFn<
       inputDate: string,
       field: DateParserField,
       format: string,
-      // biome-ignore lint/suspicious/noExplicitAny: locale takes many forms based on framework
-      locale: any,
     ): ParserResult<DateFrameworkType> => {
       if (!inputDate?.length) {
         const parsedDate = dateAdapter.parse("invalid date", "DD/MMM/YYYY");
@@ -1916,7 +1913,7 @@ export const RangeWithCustomParser: StoryFn<
           value: inputDate,
         };
       }
-      return dateAdapter.parse(parsedDate || "", format, locale);
+      return dateAdapter.parse(parsedDate || "", format);
     },
     [dateAdapter, selectedDate],
   );
@@ -2583,7 +2580,7 @@ export const SingleWithLocaleZhCN: StoryFn<
     ) => {
       const { value, errors } = details || {};
       console.log(
-        `Selected date: ${dateAdapter.isValid(date) ? dateAdapter.format(date, "DD MMM YYYY", isDateFns ? dateFnsEnUs : "en") : date}`,
+        `Selected date: ${dateAdapter.isValid(date) ? dateAdapter.format(date, "DD MMM YYYY") : date}`,
       );
       if (errors?.length) {
         console.log(
@@ -2627,7 +2624,6 @@ export const SingleWithLocaleZhCN: StoryFn<
         <DatePickerTrigger>
           <DatePickerSingleInput
             format={"DD MMM YYYY"}
-            locale={isDateFns ? dateFnsEnUs : "en"}
           />
         </DatePickerTrigger>
         <DatePickerOverlay>
@@ -2708,7 +2704,7 @@ export const SingleWithTimezone: StoryFn<
           ? selectedTimezone
           : undefined;
 
-      const formatDate = (date) => {
+      const formatDate = (date:DateFrameworkType) => {
         const iso = date.toISOString();
         const locale = new Intl.DateTimeFormat(undefined, {
           timeZone: systemTimeZone,
@@ -2734,9 +2730,11 @@ export const SingleWithTimezone: StoryFn<
       };
 
       const jsDate =
-        dateAdapter.lib === "luxon" ? selection.toJSDate() :
-          dateAdapter.lib === "moment" ? selection.toDate() :
-            selection;
+        dateAdapter.lib === "luxon"
+          ? (selection as DateTime).toJSDate()
+          : dateAdapter.lib === "moment"
+            ? (selection as Moment).toDate()
+            : selection;
       const formattedDate = formatDate(jsDate);
 
       setCurrentTimezone(dateAdapter.getTimezone(selection));
@@ -2907,11 +2905,13 @@ export const RangeWithTimezone: StoryFn<
       }
       if (startDateErrors?.length && startDateOriginalValue) {
         setValidationStatus("error");
+        setStartDateError(startDateErrors[0].message);
         setHelperText(
           `${errorHelperText} - start date, ${startDateErrors[0].message}`,
         );
       } else if (endDateErrors?.length && endDateOriginalValue) {
         setValidationStatus("error");
+        setEndDateError(endDateErrors[0].message);
         setHelperText(
           `${errorHelperText} - end date, ${endDateErrors[0].message}`,
         );
@@ -2926,7 +2926,7 @@ export const RangeWithTimezone: StoryFn<
           ? selectedTimezone
           : undefined;
 
-      const formatDate = (date) => {
+      const formatDate = (date: DateFrameworkType) => {
         console.log(date);
         const iso = date.toISOString();
         const locale = new Intl.DateTimeFormat(undefined, {
@@ -2957,9 +2957,9 @@ export const RangeWithTimezone: StoryFn<
       if (startDate) {
         const startJSDate =
           dateAdapter.lib === "luxon"
-            ? startDate.toJSDate()
+            ? (startDate as DateTime).toJSDate()
             : dateAdapter.lib === "moment"
-              ? startDate.toDate()
+              ? (startDate as Moment).toDate()
               : startDate;
         const start = formatDate(startJSDate);
         setStartIso8601String(start.iso);
@@ -2973,9 +2973,9 @@ export const RangeWithTimezone: StoryFn<
       if (endDate) {
         const endJSDate =
           dateAdapter.lib === "luxon"
-            ? endDate.toJSDate()
+            ? (endDate as DateTime).toJSDate()
             : dateAdapter.lib === "moment"
-              ? endDate.toDate()
+              ? (endDate as Moment).toDate()
               : endDate;
         const end = formatDate(endJSDate);
         setEndIso8601String(end.iso);

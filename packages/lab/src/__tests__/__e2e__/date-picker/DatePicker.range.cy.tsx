@@ -40,7 +40,7 @@ const {
   // biome-ignore lint/suspicious/noExplicitAny: storybook stories
 } = datePickerStories as any;
 
-describe("GIVEN a DatePicker where selectionVariant is single", () => {
+describe("GIVEN a DatePicker where selectionVariant is range", () => {
   describe("WHEN default state", () => {
     beforeEach(() => {
       const today = new Date(2024, 4, 6);
@@ -81,7 +81,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
       cy.findAllByRole("application").should("have.length", 2);
     });
 
-    it.only("SHOULD hide calendar upon focus out", () => {
+    it("SHOULD hide calendar upon focus out", () => {
       cy.mount(<Range />);
 
       // Simulate opening the calendar
@@ -93,12 +93,14 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
       cy.findAllByRole("application").should("have.length", 2);
       // Simulate re-focusing the input
       cy.findByLabelText("Start date").realClick();
-      // Simulate tabbing out
+      // Simulate tabbing to end date
       cy.realPress("Tab");
       cy.findAllByRole("application").should("have.length", 2);
+      // Simulate tabbing to calendar button
       cy.realPress("Tab");
       cy.findAllByRole("application").should("have.length", 2);
-      cy.realPress("Tab");
+      // Simulate focus out
+      cy.get("body").click(0, 0);
       // Verify the overlay closes
       cy.findByRole("application").should("not.exist");
     });
@@ -191,32 +193,17 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
         cy.findByLabelText("Start date").click().type("{downArrow}");
         // Verify that the calendar is opened
         cy.findAllByRole("application").should("have.length", 2);
-        // Verify the first element focused in the first calendar
-        cy.findAllByLabelText("Previous Month")
-          .first()
-          .parent()
-          .should("be.focused");
-        // Simulate tabbing between all elements in the overlay
-        cy.realPress("Tab");
-        cy.findAllByLabelText("Month Dropdown").first().should("be.focused");
-        cy.realPress("Tab");
-        cy.findAllByLabelText("Year Dropdown").first().should("be.focused");
-        cy.realPress("Tab");
-        cy.findAllByLabelText("Next Month")
-          .first()
-          .parent()
-          .should("be.focused");
-        cy.realPress("Tab");
+        // Verify the first element focused in the first calendar is the start date
         cy.findByRole("button", {
           name: adapter.format(initialRangeDate.startDate, "DD MMMM YYYY"),
         }).should("be.focused");
+        // Simulate tabbing to the next calendar
         cy.realPress("Tab");
-        // Verify the first element focused in the second calendar
+        // Verify the focused element(s) are the navigation controls
         cy.findAllByLabelText("Previous Month")
           .eq(1)
           .parent()
           .should("be.focused");
-        // Simulate tabbing between all elements in the overlay
         cy.realPress("Tab");
         cy.findAllByLabelText("Month Dropdown").eq(1).should("be.focused");
         cy.realPress("Tab");
@@ -226,42 +213,49 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
           .eq(1)
           .parent()
           .should("be.focused");
+        // Simulate tabbing into the second calendar
         cy.realPress("Tab");
-        const firstOfNextMonth = adapter.startOf(
-          adapter.add(initialRangeDate.startDate, { months: 1 }),
-          "month",
-        );
+        // Verify the first day focused in the second calendar
+        const startOfEndCalendar = adapter.startOf(adapter.add(initialRangeDate.startDate, { months: 1}), "month");
         cy.findByRole("button", {
-          name: adapter.format(firstOfNextMonth, "DD MMMM YYYY"),
+          name: adapter.format(startOfEndCalendar, "DD MMMM YYYY")
         }).should("be.focused");
+        // Simulate tabbing back to the first calendar
         cy.realPress("Tab");
-        // Verify focus returns to the first element in the overlay
+        // Verify the focused element(s) are the navigation controls
         cy.findAllByLabelText("Previous Month")
-          .eq(0)
+          .first()
           .parent()
           .should("be.focused");
+        cy.realPress("Tab");
+        cy.findAllByLabelText("Month Dropdown").first().should("be.focused");
+        cy.realPress("Tab");
+        cy.findAllByLabelText("Year Dropdown").first().should("be.focused");
+        cy.realPress("Tab");
+        cy.findAllByLabelText("Next Month").first().parent().should("be.focused");
+        // Simulate tabbing into the second calendar
+        cy.realPress("Tab");
+        // Verify focus returns to the first focused element in the first calendar
+        cy.findByRole("button", {
+          name: adapter.format(initialRangeDate.startDate, "DD MMMM YYYY"),
+        }).should("be.focused");
         // Simulate closing the overlay
         cy.realPress("Escape");
         // Verify that the calendar is closed
         cy.findByRole("application").should("not.exist");
         // Verify focus returns to the triggering element
         cy.findByLabelText("Start date").should("be.focused");
-        // Simulate tabbing to end date
-        cy.realPress("Tab");
-        // Verify end date is focused
-        cy.findByLabelText("End date").should("be.focused");
         // Simulate tabbing to calendar button
         cy.realPress("Tab");
+        // Verify focus returns to the triggering element
+        cy.findByLabelText("End date").should("be.focused");
+        cy.realPress("Tab");
         // Verify calendar button is focused
-        cy.findByLabelText("calendar")
-          .parent()
-          .should("be.focused");
+        cy.findByLabelText("calendar").parent().should("be.focused");
         // Simulate tabbing out of date picker
         cy.realPress("Tab");
         // Verify the date picker loses focus
-        cy.findByLabelText("calendar")
-          .parent()
-          .should("not.be.focused");
+        cy.findByLabelText("calendar").parent().should("not.be.focused");
       });
 
       it("SHOULD only be able to select a date between min/max", () => {

@@ -135,7 +135,15 @@ export const DatePickerRangeInput = forwardRef(function DatePickerRangeInput<
   const { CalendarIcon } = useIcon();
 
   const {
-    state: { selectedDate, disabled, readOnly, cancelled, minDate, maxDate, timezone },
+    state: {
+      selectedDate,
+      disabled,
+      readOnly,
+      cancelled,
+      minDate,
+      maxDate,
+      timezone,
+    },
     helpers: { select },
   } = useDatePickerContext<TDate>({ selectionVariant: "range" });
   const {
@@ -155,6 +163,7 @@ export const DatePickerRangeInput = forwardRef(function DatePickerRangeInput<
   const handleCalendarButton: MouseEventHandler<HTMLButtonElement> =
     useCallback(
       (event) => {
+        event.persist();
         setOpen(!open, event.nativeEvent, "click");
         event.stopPropagation();
       },
