@@ -74,9 +74,9 @@ export function useCalendarDay<TDate extends DateFrameworkType>(
       focusedDateRef,
       hideOutOfRangeDates,
       timezone,
+      focusableDates
     },
     helpers: {
-      getTabbableDates,
       setHoveredDate,
       isDayUnselectable,
       isDaySelectable,
@@ -117,7 +117,7 @@ export function useCalendarDay<TDate extends DateFrameworkType>(
   const outOfRange = !dateAdapter.isSame(date, month, "month");
   const focused =
     focusedDate && dateAdapter.isSame(date, focusedDate, "day") && !outOfRange;
-  const tabIndex = getTabbableDates().find(tabbableDate =>  dateAdapter.isSame(date, tabbableDate, "day")) ? 0 : -1;
+  const tabIndex = focusableDates.find(tabbableDate =>  dateAdapter.isSame(date, tabbableDate, "day")) ? 0 : -1;
   const today = dateAdapter.isSame(dateAdapter.today(timezone), date, "day");
 
   const unselectableReason = isDayUnselectable(date);
@@ -144,12 +144,12 @@ export function useCalendarDay<TDate extends DateFrameworkType>(
     } as DayStatus,
     dayProps: {
       tabIndex,
-      ref: focusedDateRef,
       "aria-current": today ? "date" : undefined,
       "aria-hidden": hidden ? "true" : undefined,
       ...eventHandlers,
       ...selectionManager.dayProps,
     } as ComponentPropsWithoutRef<"button">,
+    focusedDateRef: focused ? focusedDateRef : null,
     unselectableReason,
     highlightedReason,
   };

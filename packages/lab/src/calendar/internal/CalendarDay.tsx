@@ -57,9 +57,7 @@ export const CalendarDay = forwardRef<
     window: targetWindow,
   });
 
-  const dayRef = useRef<HTMLButtonElement>(null);
-  const buttonRef = useForkRef(ref, dayRef);
-  const { status, dayProps, unselectableReason, highlightedReason } =
+  const { status, focusedDateRef = null, dayProps, unselectableReason, highlightedReason } =
     useCalendarDay({
       date: day,
       month,
@@ -73,10 +71,11 @@ export const CalendarDay = forwardRef<
     hidden,
     disabled,
   } = status;
+  const buttonRef = useForkRef(ref, focusedDateRef );
 
   useEffect(() => {
     if (focused) {
-      dayRef.current?.focus({ preventScroll: true });
+      focusedDateRef?.current?.focus({ preventScroll: true });
     }
   }, [focused]);
 
