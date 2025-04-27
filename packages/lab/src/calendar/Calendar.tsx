@@ -4,6 +4,7 @@ import {
   type ComponentPropsWithoutRef,
   type ReactNode,
   forwardRef,
+  useRef
 } from "react";
 import { CalendarContext } from "./internal/CalendarContext";
 import {
@@ -189,6 +190,8 @@ export const Calendar = forwardRef<
     } else {
       rest = propsRest;
     }
+    const defaultFocusedDateRef = useRef(null);
+
     // biome-ignore lint/suspicious/noExplicitAny: type guard
     const useCalendarProps: any = {
       selectedDate,
@@ -198,7 +201,7 @@ export const Calendar = forwardRef<
       onSelectionChange,
       onVisibleMonthChange,
       focusedDate,
-      focusedDateRef,
+      focusedDateRef: focusedDateRef !== undefined ? focusedDateRef : defaultFocusedDateRef,
       isDayUnselectable,
       isDayHighlighted,
       isDayDisabled,
