@@ -9,33 +9,53 @@ export interface UseFocusOutProps {
   enabled?: boolean;
 }
 
-// Hook to close the floating element when focus is outside the reference and `floating` elements
-// This is needed to close the overlay, when the input has focus and the overlay is opened and the user tabs out of the
-// date input
-export function useFocusOut(
-  context: FloatingContext,
-  props: UseFocusOutProps,
-): ElementProps {
+function getTabbableElements(parent: Element): HTMLElement[] {
+  const focusableSelectors = [
+    "button:not([disabled])",
+    "input:not([disabled])",
+    '[tabindex]:not([tabindex="-1"])',
+  ];
+  const tabbableElements = parent.querySelectorAll<HTMLElement>(
+    focusableSelectors.join(","),
+  );
+  return Array.from(tabbableElements).filter(
+    (element) => !element.hasAttribute("disabled") && element.tabIndex >= 0,
+  );
+}
+//
+// This hook is needed to close the overlay, when,
+// 1. the floating element is opened
+// 2. the user re-focuses into the reference element with the mouse
+// 3. the user tabs out of the reference element
+// Without this hook, the floating element can re-receive focus
+export function useFocusOut(context: FloatingContext, props: UseFocusOutProps):ElementProps {
   const { onOpenChange, open } = context;
   const { enabled = true } = props;
-  const reference: ElementProps["reference"] = useMemo(
-    () => ({
-      onBlur(event) {
-        const referenceElement = context.elements.reference as Element;
-        const floatingElement = context.elements.floating as Element;
-        setTimeout(() => {
-          if (
-            open &&
-            !referenceElement?.contains(document.activeElement) &&
-            !floatingElement?.contains(document.activeElement)
-          ) {
+
+  const reference: ElementProps['reference'] = useMemo<React.HTMLProps<Element>>(() => {
+    const referenceElement = context.elements.reference as Element | undefined;
+
+    if (!referenceElement) {
+      return {};
+    }
+
+    return {
+      onKeyDown(event: React.KeyboardEvent<Element>) {
+        if (event.key === "Tab") {
+          const tabbableElements
+            = getTabbableElements(referenceElement);
+          const tabbedBeforeFirstElement =
+            event.shiftKey && document.activeElement === tabbableElements[0];
+          const tabbedAfterLastElement =
+            document.activeElement ===
+            tabbableElements[tabbableElements.length - 1];
+          if (tabbedBeforeFirstElement || tabbedAfterLastElement) {
             onOpenChange(false, event.nativeEvent, "focus-out");
           }
-        }, 0);
+        }
       },
-    }),
-    [onOpenChange, context.elements.reference, context.elements.floating],
-  );
+    };
+  }, [onOpenChange, context.elements.reference, context.elements.floating]);
 
   return useMemo(() => (enabled ? { reference } : {}), [enabled, reference]);
 }

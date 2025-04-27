@@ -78,7 +78,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
       cy.findByRole("application").should("exist");
     });
 
-    it.only("SHOULD hide calendar upon focus out", () => {
+    it("SHOULD hide calendar upon focus out", () => {
       cy.mount(<Single />);
 
       // Simulate opening the calendar
@@ -87,10 +87,11 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
       cy.findByRole("application").should("exist");
       // Simulate re-focusing the input
       cy.document().find("input").realClick();
-      // Simulate tabbing out
+      // Simulate tabbing
       cy.realPress("Tab");
       cy.findByRole("application").should("exist");
-      cy.realPress("Tab");
+      // Simulate focus out
+      cy.get("body").click(0, 0);
       // Verify the overlay closes
       cy.findByRole("application").should("not.exist");
     });
@@ -190,27 +191,23 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
         // Verify that the calendar is opened
         cy.findByRole("application").should("exist");
         // Verify the first element is focused
-        cy.findByLabelText("Previous Month")
-          .parent()
-          .should("be.focused");
+        cy.findByRole("button", {
+          name: adapter.format(initialDate, "DD MMMM YYYY"),
+        }).should("be.focused");
         // Simulate tabbing between all elements in the overlay
+        cy.realPress("Tab");
+        cy.findByLabelText("Previous Month").parent().should("be.focused");
         cy.realPress("Tab");
         cy.findByLabelText("Month Dropdown").should("be.focused");
         cy.realPress("Tab");
         cy.findByLabelText("Year Dropdown").should("be.focused");
         cy.realPress("Tab");
-        cy.findByLabelText("Next Month")
-          .parent()
-          .should("be.focused");
+        cy.findByLabelText("Next Month").parent().should("be.focused");
         cy.realPress("Tab");
+        // Verify focus returns to the first element in the overlay
         cy.findByRole("button", {
           name: adapter.format(initialDate, "DD MMMM YYYY"),
         }).should("be.focused");
-        cy.realPress("Tab");
-        // Verify focus returns to the first element in the overlay
-        cy.findByLabelText("Previous Month")
-          .parent()
-          .should("be.focused");
         // Simulate closing the overlay
         cy.realPress("Escape");
         // Verify that the calendar is closed
@@ -220,15 +217,11 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
         // Simulate tabbing to the calendar button
         cy.realPress("Tab");
         // Verify the calendar button is focused
-        cy.findByLabelText("calendar")
-          .parent()
-          .should("be.focused");
+        cy.findByLabelText("calendar").parent().should("be.focused");
         // Simulate tabbing out of the date picker
         cy.realPress("Tab");
         // Verify the date picker loses focus
-        cy.findByLabelText("calendar")
-          .parent()
-          .should("not.be.focused");
+        cy.findByLabelText("calendar").parent().should("not.be.focused");
       });
 
       it("SHOULD support validation", () => {

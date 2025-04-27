@@ -103,7 +103,15 @@ export const DatePickerSingleInput = forwardRef<
     } = props;
 
     const {
-      state: { selectedDate, disabled, readOnly, cancelled, minDate, maxDate, timezone },
+      state: {
+        selectedDate,
+        disabled,
+        readOnly,
+        cancelled,
+        minDate,
+        maxDate,
+        timezone,
+      },
       helpers: { select },
     } = useDatePickerContext<TDate>({ selectionVariant: "single" });
     const {
@@ -123,6 +131,7 @@ export const DatePickerSingleInput = forwardRef<
     const handleCalendarButton: MouseEventHandler<HTMLButtonElement> =
       useCallback(
         (event) => {
+          event.persist();
           setOpen(!open, event.nativeEvent, "click");
           event.stopPropagation();
         },

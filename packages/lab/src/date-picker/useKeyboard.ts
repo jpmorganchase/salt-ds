@@ -1,5 +1,5 @@
 import type { ElementProps, FloatingContext } from "@floating-ui/react";
-import { useMemo } from "react";
+import { type KeyboardEvent, useMemo } from "react";
 
 export interface UseKeyboardProps {
   /**
@@ -7,6 +7,11 @@ export interface UseKeyboardProps {
    * @default true
    */
   enabled?: boolean;
+  /**
+   * Handler for when the arrow key down is pressed
+   * @param event
+   */
+  onArrowDown?: (event: KeyboardEvent) => void;
 }
 
 /**
@@ -19,13 +24,13 @@ export function useKeyboard(
   props: UseKeyboardProps,
 ): ElementProps {
   const { onOpenChange } = context;
-  const { enabled = true } = props;
-  const reference: ElementProps["reference"] = useMemo(
+  const { enabled = true, onArrowDown } = props;
+  const reference = useMemo(
     () => ({
-      onKeyDown(event) {
+      onKeyDown(event: KeyboardEvent) {
         if (event.key === "ArrowDown") {
           event.preventDefault();
-          onOpenChange(true, event.nativeEvent, "reference-press");
+          onArrowDown?.(event)
         }
       },
     }),
