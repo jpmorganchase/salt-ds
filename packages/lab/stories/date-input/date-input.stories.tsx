@@ -70,7 +70,8 @@ const DateInputRangeTemplate: StoryFn<
   DateInputRangeProps<DateFrameworkType>
 > = (args) => {
   const { dateAdapter } = useLocalization();
-  function handleDateChange<TDate extends DateFrameworkType>(
+
+  function handleDateChange(
     event: SyntheticEvent,
     date: DateRangeSelection<Date> | null,
     details: DateInputRangeDetails,
@@ -435,7 +436,7 @@ export const SingleWithTimezone: StoryFn<typeof DateInputSingle> = (args) => {
       const hasError = details?.errors?.length;
 
       setError(
-        !isDateUnset && hasError ? details.errors[0].message : undefined,
+        !isDateUnset && hasError ? details?.errors?.[0].message : undefined,
       );
 
       if (isDateUnset || hasError) {
@@ -452,7 +453,7 @@ export const SingleWithTimezone: StoryFn<typeof DateInputSingle> = (args) => {
           ? selectedTimezone
           : undefined;
 
-      const formatDate = (date, hasError) => {
+      const formatDate = (date: Date , hasError: boolean) => {
         if (hasError) return { iso: "", locale: "", formatted: "" };
         const iso = date.toISOString();
         const locale = new Intl.DateTimeFormat(undefined, {
@@ -486,7 +487,7 @@ export const SingleWithTimezone: StoryFn<typeof DateInputSingle> = (args) => {
           : date;
       const formattedDate = formatDate(
         jsDate,
-        isDateUnset || (!isDateUnset && hasError),
+        isDateUnset || (!isDateUnset && !!hasError),
       );
 
       setCurrentTimezone(dateAdapter.getTimezone(date));
@@ -605,7 +606,7 @@ export const RangeWithTimezone: StoryFn<typeof DateInputRange> = (args) => {
 
   const handleDateChange: DateInputRangeProps<DateFrameworkType>["onDateChange"] =
     (_event, date, details) => {
-      const { startDate, endDate } = date;
+      const { startDate, endDate } = date as DateRangeSelection<DateFrameworkType>;
       const isStartDateUnset =
         details.startDate?.errors?.length &&
         details.startDate.errors[0].type === "unset";
@@ -617,12 +618,12 @@ export const RangeWithTimezone: StoryFn<typeof DateInputRange> = (args) => {
 
       setStartDateError(
         !isStartDateUnset && hasStartDateError
-          ? details.startDate.errors[0].message
+          ? details.startDate?.errors?.[0].message
           : undefined,
       );
       setEndDateError(
         !isEndDateUnset && hasEndDateError
-          ? details.endDate.errors[0].message
+          ? details.endDate?.errors?.[0].message
           : undefined,
       );
 
@@ -632,7 +633,7 @@ export const RangeWithTimezone: StoryFn<typeof DateInputRange> = (args) => {
           ? selectedTimezone
           : undefined;
 
-      const formatDate = (date, hasError) => {
+      const formatDate = (date: Date, hasError: boolean) => {
         if (hasError) return { iso: "", locale: "", formatted: "" };
         const iso = date.toISOString();
         const locale = new Intl.DateTimeFormat(undefined, {
@@ -667,7 +668,7 @@ export const RangeWithTimezone: StoryFn<typeof DateInputRange> = (args) => {
               : startDate;
         const start = formatDate(
           startJSDate,
-          isStartDateUnset || (!isStartDateUnset && hasStartDateError),
+          isStartDateUnset || (!isStartDateUnset && !!hasStartDateError),
         );
         setStartIso8601String(start.iso);
         setStartLocaleDateString(start.locale);
@@ -686,7 +687,7 @@ export const RangeWithTimezone: StoryFn<typeof DateInputRange> = (args) => {
               : endDate;
         const end = formatDate(
           endJSDate,
-          isEndDateUnset || (!isEndDateUnset && hasEndDateError),
+          isEndDateUnset || (!isEndDateUnset && !!hasEndDateError),
         );
         setEndIso8601String(end.iso);
         setEndLocaleDateString(end.locale);
