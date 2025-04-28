@@ -25,6 +25,10 @@ export interface ToggleButtonProps extends ComponentPropsWithoutRef<"button"> {
    */
   onChange?: (event: MouseEvent<HTMLButtonElement>) => void;
   /**
+   * If `true`, the toggle button will be read-only.
+   */
+  readOnly?: boolean;
+  /**
    * The sentiment of the toggle button.
    * @default neutral
    */
@@ -52,6 +56,7 @@ export const ToggleButton = forwardRef<HTMLButtonElement, ToggleButtonProps>(
       onClick,
       onFocus,
       onChange,
+      readOnly: readOnlyProp,
       selected: selectedProp,
       sentiment: sentimenentProp = "neutral",
       ...rest
@@ -76,6 +81,7 @@ export const ToggleButton = forwardRef<HTMLButtonElement, ToggleButtonProps>(
       ? toggleButtonGroup?.isFocused(value)
       : true;
     const disabled = toggleButtonGroup?.disabled || disabledProp;
+    const readOnly = toggleButtonGroup?.readOnly || readOnlyProp;
 
     const [selected, setSelected] = useControlled({
       controlled: toggleButtonGroupSelected,
@@ -85,7 +91,7 @@ export const ToggleButton = forwardRef<HTMLButtonElement, ToggleButtonProps>(
     });
 
     const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
-      if (disabled) {
+      if (disabled || readOnly) {
         return;
       }
       toggleButtonGroup?.select(event);
@@ -103,6 +109,7 @@ export const ToggleButton = forwardRef<HTMLButtonElement, ToggleButtonProps>(
       "aria-pressed": !toggleButtonGroup ? selected : undefined,
       "aria-checked": toggleButtonGroup ? selected : undefined,
       "aria-disabled": disabled,
+      "aria-readonly": readOnly,
       role: toggleButtonGroup ? "radio" : undefined,
       className: clsx(
         withBaseName(),
@@ -115,30 +122,15 @@ export const ToggleButton = forwardRef<HTMLButtonElement, ToggleButtonProps>(
       tabIndex: focusable ? 0 : -1,
       value: value,
       type: "button",
-      // Work around to allow disabled selected toggle buttons
-      // to be focusable
-      ...(!selected && { disabled: disabled }),
+      disabled: disabled,
+      readOnly: readOnly,
       ...rest,
     };
 
-    const toggleButtonBody = (
+    return (
       <button ref={handleRef} {...toggleButtonProps}>
         {children}
       </button>
-    );
-
-    return toggleButtonGroup ? (
-      toggleButtonBody
-    ) : (
-      // Standalone toggle button
-      <div
-        className={clsx(
-          withBaseName("container"),
-          disabled && withBaseName("container-disabled"),
-        )}
-      >
-        {toggleButtonBody}
-      </div>
     );
   },
 );

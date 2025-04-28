@@ -211,6 +211,17 @@ export const Bordered: StoryFn<ToggleButtonGroupStoryProps> = ({
   );
 };
 
+export const ReadOnly = IconAndTextTemplate.bind({});
+ReadOnly.args = {
+  readOnly: true,
+};
+
+export const ReadOnlyAndSelected = IconAndTextTemplate.bind({});
+ReadOnlyAndSelected.args = {
+  readOnly: true,
+  defaultValue: "active",
+};
+
 export const Disabled = IconAndTextTemplate.bind({});
 Disabled.args = {
   disabled: true,

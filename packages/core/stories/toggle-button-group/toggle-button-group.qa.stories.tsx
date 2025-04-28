@@ -30,7 +30,7 @@ export const AllVariantsGrid: StoryFn<QAContainerProps> = (props) => (
         Archived
       </ToggleButton>
     </ToggleButtonGroup>
-    <ToggleButtonGroup orientation="horizontal" defaultValue="signed">
+    <ToggleButtonGroup defaultValue="signed">
       <ToggleButton sentiment="neutral" value="all">
         <AppSwitcherIcon aria-hidden />
         All
@@ -84,7 +84,21 @@ export const AllVariantsGrid: StoryFn<QAContainerProps> = (props) => (
         Accepted
       </ToggleButton>
     </ToggleButtonGroup>
-    <ToggleButtonGroup orientation="horizontal" defaultValue="signed" disabled>
+    <ToggleButtonGroup defaultValue="active" readOnly>
+      <ToggleButton value="all">
+        <AppSwitcherIcon aria-hidden />
+        All
+      </ToggleButton>
+      <ToggleButton value="active">
+        <VisibleIcon aria-hidden />
+        Active
+      </ToggleButton>
+      <ToggleButton disabled value="search">
+        <FolderClosedIcon aria-hidden />
+        Archived
+      </ToggleButton>
+    </ToggleButtonGroup>
+    <ToggleButtonGroup defaultValue="signed" disabled>
       <ToggleButton sentiment="neutral" value="all">
         <AppSwitcherIcon aria-hidden />
         All
@@ -132,6 +146,20 @@ export const AllVariantsGrid: StoryFn<QAContainerProps> = (props) => (
       <ToggleButton sentiment="positive" value="signed">
         <CheckIcon aria-hidden />
         Accepted
+      </ToggleButton>
+    </ToggleButtonGroup>
+    <ToggleButtonGroup defaultValue="active" readOnly orientation="vertical">
+      <ToggleButton value="all">
+        <AppSwitcherIcon aria-hidden />
+        All
+      </ToggleButton>
+      <ToggleButton value="active">
+        <VisibleIcon aria-hidden />
+        Active
+      </ToggleButton>
+      <ToggleButton disabled value="search">
+        <FolderClosedIcon aria-hidden />
+        Archived
       </ToggleButton>
     </ToggleButtonGroup>
     <ToggleButtonGroup orientation="vertical" defaultValue="signed" disabled>

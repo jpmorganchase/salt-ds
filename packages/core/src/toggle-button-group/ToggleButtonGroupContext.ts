@@ -11,6 +11,7 @@ export interface ToggleButtonGroupContextValue {
   isFocused: (id: Value) => boolean;
   isSelected: (id: Value) => boolean;
   orientation: "horizontal" | "vertical";
+  readOnly?: boolean;
   select: (event: SyntheticEvent<HTMLButtonElement>) => void;
   sentiment?: ButtonSentiment;
 }

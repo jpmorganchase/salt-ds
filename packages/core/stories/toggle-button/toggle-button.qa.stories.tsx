@@ -15,13 +15,13 @@ export default {
 
 const ToggleButtonDefault = () => (
   <FlowLayout gap={6}>
-    <ToggleButton value="Default">
+    <ToggleButton value="default">
       <HomeIcon />
     </ToggleButton>
-    <ToggleButton value="Default" selected>
+    <ToggleButton value="default" selected>
       <HomeIcon /> Default
     </ToggleButton>
-    <ToggleButton value="Default" selected appearance="bordered">
+    <ToggleButton value="default" selected appearance="bordered">
       Selected
     </ToggleButton>
   </FlowLayout>
@@ -30,37 +30,37 @@ const ToggleButtonDefault = () => (
 const ToggleButtonSentiments = () => (
   <StackLayout>
     <FlowLayout>
-      <ToggleButton sentiment="accented" value="Accented">
+      <ToggleButton sentiment="accented" value="accented">
         Accented
       </ToggleButton>
-      <ToggleButton sentiment="positive" value="Positive">
+      <ToggleButton sentiment="positive" value="positive">
         Positive
       </ToggleButton>
-      <ToggleButton sentiment="negative" value="Negative">
+      <ToggleButton sentiment="negative" value="negative">
         Negative
       </ToggleButton>
-      <ToggleButton sentiment="caution" value="Caution">
+      <ToggleButton sentiment="caution" value="caution">
         Caution
       </ToggleButton>
     </FlowLayout>
     <FlowLayout>
-      <ToggleButton sentiment="accented" value="Accented" selected>
+      <ToggleButton sentiment="accented" value="accented" selected>
         Selected
       </ToggleButton>
-      <ToggleButton sentiment="positive" value="Positive" selected>
+      <ToggleButton sentiment="positive" value="positive" selected>
         Selected
       </ToggleButton>
-      <ToggleButton sentiment="negative" value="Negative" selected>
+      <ToggleButton sentiment="negative" value="negative" selected>
         Selected
       </ToggleButton>
-      <ToggleButton sentiment="caution" value="Caution" selected>
+      <ToggleButton sentiment="caution" value="caution" selected>
         Selected
       </ToggleButton>
     </FlowLayout>
     <FlowLayout>
       <ToggleButton
         sentiment="accented"
-        value="Accented"
+        value="accented"
         selected
         appearance="bordered"
       >
@@ -68,7 +68,7 @@ const ToggleButtonSentiments = () => (
       </ToggleButton>
       <ToggleButton
         sentiment="positive"
-        value="Positive"
+        value="positive"
         selected
         appearance="bordered"
       >
@@ -76,7 +76,7 @@ const ToggleButtonSentiments = () => (
       </ToggleButton>
       <ToggleButton
         sentiment="negative"
-        value="Negative"
+        value="negative"
         selected
         appearance="bordered"
       >
@@ -84,7 +84,7 @@ const ToggleButtonSentiments = () => (
       </ToggleButton>
       <ToggleButton
         sentiment="caution"
-        value="Caution"
+        value="caution"
         selected
         appearance="bordered"
       >
@@ -97,47 +97,47 @@ const ToggleButtonSentiments = () => (
 const ToggleButtonDisabled = () => (
   <StackLayout>
     <FlowLayout>
-      <ToggleButton disabled value="Disabled">
+      <ToggleButton disabled value="disabled">
         Disabled
       </ToggleButton>
-      <ToggleButton disabled value="Disabled" sentiment="accented">
+      <ToggleButton disabled value="disabled" sentiment="accented">
         Disabled
       </ToggleButton>
-      <ToggleButton disabled value="Disabled" sentiment="positive">
+      <ToggleButton disabled value="disabled" sentiment="positive">
         Disabled
       </ToggleButton>
-      <ToggleButton disabled value="Disabled" sentiment="negative">
+      <ToggleButton disabled value="disabled" sentiment="negative">
         Disabled
       </ToggleButton>
-      <ToggleButton disabled value="Disabled" sentiment="caution">
+      <ToggleButton disabled value="disabled" sentiment="caution">
         Disabled
       </ToggleButton>
     </FlowLayout>
     <FlowLayout>
-      <ToggleButton disabled selected value="Disabled">
+      <ToggleButton disabled selected value="disabled">
         Disabled selected
       </ToggleButton>
-      <ToggleButton disabled selected value="Disabled" sentiment="accented">
+      <ToggleButton disabled selected value="disabled" sentiment="accented">
         Disabled selected
       </ToggleButton>
-      <ToggleButton disabled selected value="Disabled" sentiment="positive">
+      <ToggleButton disabled selected value="disabled" sentiment="positive">
         Disabled selected
       </ToggleButton>
-      <ToggleButton disabled selected value="Disabled" sentiment="negative">
+      <ToggleButton disabled selected value="disabled" sentiment="negative">
         Disabled selected
       </ToggleButton>
-      <ToggleButton disabled selected value="Disabled" sentiment="caution">
+      <ToggleButton disabled selected value="disabled" sentiment="caution">
         Disabled selected
       </ToggleButton>
     </FlowLayout>
     <FlowLayout>
-      <ToggleButton disabled selected value="Disabled" appearance="bordered">
+      <ToggleButton disabled selected value="disabled" appearance="bordered">
         Disabled selected
       </ToggleButton>
       <ToggleButton
         disabled
         selected
-        value="Disabled"
+        value="disabled"
         sentiment="accented"
         appearance="bordered"
       >
@@ -146,7 +146,7 @@ const ToggleButtonDisabled = () => (
       <ToggleButton
         disabled
         selected
-        value="Disabled"
+        value="disabled"
         sentiment="positive"
         appearance="bordered"
       >
@@ -155,7 +155,7 @@ const ToggleButtonDisabled = () => (
       <ToggleButton
         disabled
         selected
-        value="Disabled"
+        value="disabled"
         sentiment="negative"
         appearance="bordered"
       >
@@ -164,7 +164,7 @@ const ToggleButtonDisabled = () => (
       <ToggleButton
         disabled
         selected
-        value="Disabled"
+        value="disabled"
         sentiment="caution"
         appearance="bordered"
       >
@@ -174,11 +174,26 @@ const ToggleButtonDisabled = () => (
   </StackLayout>
 );
 
+const ToggleButtonReadOnly = () => (
+  <FlowLayout gap={6}>
+    <ToggleButton value="readOnly" readOnly>
+      <HomeIcon /> Read only
+    </ToggleButton>
+    <ToggleButton value="readOnly" selected>
+      Read only
+    </ToggleButton>
+    <ToggleButton value="readOnly" selected appearance="bordered">
+      Read only
+    </ToggleButton>
+  </FlowLayout>
+);
+
 export const AllVariantsGrid: StoryFn<QAContainerProps> = (props) => (
   <QAContainer cols={1} height={2200} width={1700} {...props}>
     <StackLayout gap={2}>
       <ToggleButtonDefault />
       <ToggleButtonSentiments />
+      <ToggleButtonReadOnly />
       <ToggleButtonDisabled />
     </StackLayout>
   </QAContainer>
@@ -209,6 +224,7 @@ export const NoStyleInjectionGrid: StoryFn<QAContainerNoStyleInjectionProps> = (
     <StackLayout gap={2}>
       <ToggleButtonDefault />
       <ToggleButtonSentiments />
+      <ToggleButtonReadOnly />
       <ToggleButtonDisabled />
     </StackLayout>
   </QAContainerNoStyleInjection>

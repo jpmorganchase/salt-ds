@@ -15,6 +15,12 @@
   cursor: var(--salt-actionable-cursor-disabled);
 }
 
+.saltToggleButtonGroup-readOnly {
+  background: var(--salt-container-primary-background);
+  border-color: var(--salt-container-primary-borderColor);
+  cursor: var(--salt-actionable-cursor-disabled);
+}
+
 .saltToggleButtonGroup .saltToggleButton {
   border-radius: var(--salt-palette-corner-weaker, 0);
 }

@@ -58,27 +58,12 @@ Disabled.args = {
   disabled: true,
 };
 
-export const DisabledSelected: StoryFn<typeof ToggleButton> = (args) => (
+export const ReadOnly: StoryFn<typeof ToggleButton> = (args) => (
   <ToggleButton {...args}>
     <HomeIcon aria-hidden /> Home
   </ToggleButton>
 );
 
-DisabledSelected.args = {
-  disabled: true,
-  selected: true,
-};
-
-export const DisabledSelectedBordered: StoryFn<typeof ToggleButton> = (
-  args,
-) => (
-  <ToggleButton {...args}>
-    <HomeIcon aria-hidden /> Home
-  </ToggleButton>
-);
-
-DisabledSelectedBordered.args = {
-  appearance: "bordered",
-  disabled: true,
-  selected: true,
+ReadOnly.args = {
+  readOnly: true,
 };

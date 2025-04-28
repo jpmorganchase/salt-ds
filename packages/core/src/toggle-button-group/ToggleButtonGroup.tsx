@@ -44,6 +44,10 @@ export interface ToggleButtonGroupProps
    */
   onChange?: (event: SyntheticEvent<HTMLButtonElement>) => void;
   /**
+   * If `true`, the toggle button group will be read-only.
+   */
+  readOnly?: boolean;
+  /**
    * The orientation of the toggle buttons.
    */
   orientation?: "horizontal" | "vertical";
@@ -70,6 +74,7 @@ export const ToggleButtonGroup = forwardRef<
     onChange,
     onKeyDown,
     orientation = "horizontal",
+    readOnly,
     sentiment,
     ...rest
   } = props;
@@ -129,6 +134,7 @@ export const ToggleButtonGroup = forwardRef<
       isFocused,
       isSelected,
       orientation,
+      readOnly,
       select,
       sentiment,
     }),
@@ -139,6 +145,7 @@ export const ToggleButtonGroup = forwardRef<
       isFocused,
       isSelected,
       orientation,
+      readOnly,
       select,
       sentiment,
     ],
@@ -174,6 +181,7 @@ export const ToggleButtonGroup = forwardRef<
           withBaseName(),
           withBaseName(orientation),
           disabled && withBaseName("disabled"),
+          readOnly && withBaseName("readOnly"),
           className,
         )}
         role="radiogroup"
