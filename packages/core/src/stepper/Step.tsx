@@ -153,9 +153,6 @@ export function Step({
   return (
     <li
       id={id}
-      data-stage={stage}
-      data-status={status}
-      data-depth={depth}
       aria-current={ariaCurrent}
       className={clsx(
         withBaseName(),
