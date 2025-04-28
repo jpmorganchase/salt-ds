@@ -58,9 +58,23 @@ Toggle buttons offer two visual styles to indicate a selected state: `solid` and
 
 <LivePreview componentName="toggle-button" exampleName="Appearance" />
 
+## Read-only
+
+A read-only toggle button permits the user to only read the toggle button's content, but not edit the state of the toggle button.
+
+A toggle button with the prop `readOnly={true}` will suppress all functionality along with displaying read-only styling.
+
+**Note**: Screen reader support for read-only toggle buttons is limited. You can work around this by adding visual or non-visual labels.
+
+### Best practices
+
+Read-only toggle buttons are navigable using keyboard shortcuts. This means that, unlike disabled toggle buttons, users can focus the read-only toggle buttons. Use a read-only toggle button instead of a disabled toggle button when the state and content of the toggle button contains information that is valuable to the user.
+
+<LivePreview componentName="toggle-button" exampleName="ReadOnly" />
+
 ## Disabled
 
-Toggle buttons can be disabled based on context or user permissions. When a toggle button is disabled, all functionality is suppressed. If a toggle button is in a selected state when disabled, it will retain its selected appearance.
+Toggle buttons can be disabled based on context or user permissions. When a toggle button is disabled, all functionality is suppressed.
 
 <LivePreview componentName="toggle-button" exampleName="Disabled" />
 
@@ -87,9 +101,20 @@ By default, a toggle button group has horizontal alignment. If you can present t
   exampleName="ToggleButtonGroupVertical"
 />
 
+## Toggle button group read-only
+
+Setting the toggle button group as read-only using the `readOnly` prop will render the toggle button group in a non-interactive state and with read-only styles. This is useful for scenarios where users need to view the current selection without making changes.
+
+If a toggle button is in a selected state within a read-only toggle button group, it will retain its visual style to indicate selection and remain focusable via keyboard navigation, ensuring that users can perceive the selection through assistive technologies.
+
+<LivePreview
+  componentName="toggle-button"
+  exampleName="ToggleButtonGroupReadOnly"
+/>
+
 ## Toggle button group disabled
 
-Disabling a toggle button group will suppress functionality for all buttons within it. However, any toggle button that was previously selected will visually maintain its selected state, providing a clear indication of its prior selection.
+Disabling a toggle button group using the `disabled` prop will suppress functionality for all buttons within it.
 
 <LivePreview
   componentName="toggle-button"

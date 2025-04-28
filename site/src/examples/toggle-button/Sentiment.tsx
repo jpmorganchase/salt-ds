@@ -1,8 +1,8 @@
-import { StackLayout, ToggleButton } from "@salt-ds/core";
+import { FlexLayout, ToggleButton } from "@salt-ds/core";
 import type { ReactElement } from "react";
 
 export const Sentiment = (): ReactElement => (
-  <StackLayout>
+  <FlexLayout>
     <ToggleButton value="accented" sentiment="accented">
       Accented
     </ToggleButton>
@@ -15,5 +15,5 @@ export const Sentiment = (): ReactElement => (
     <ToggleButton value="caution" sentiment="caution">
       Caution
     </ToggleButton>
-  </StackLayout>
+  </FlexLayout>
 );

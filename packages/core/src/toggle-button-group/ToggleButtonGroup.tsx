@@ -177,6 +177,8 @@ export const ToggleButtonGroup = forwardRef<
   return (
     <ToggleButtonGroupContext.Provider value={contextValue}>
       <div
+        aria-disabled={disabled}
+        aria-readonly={readOnly}
         className={clsx(
           withBaseName(),
           withBaseName(orientation),
