@@ -39,6 +39,7 @@
   /* Overlayable */
   --salt-overlayable-shadow-scroll-color: var(--salt-shadow-1-color);
   --salt-overlayable-shadow-borderRegion: var(--salt-shadow-2);
+  --salt-overlayable-rangeSelection: var(--salt-overlayable-background-rangeSelection);
 
   /* Selectable */
   --salt-selectable-foreground-partial: var(--salt-palette-interact-foreground-partial);
@@ -122,6 +123,7 @@
   --salt-text-secondary-foreground: var(--salt-palette-neutral-secondary-foreground);
   --salt-text-secondary-foreground-disabled: var(--salt-palette-neutral-secondary-foreground-disabled);
   --salt-text-textDecoration: var(--salt-typography-textDecoration-none);
+  --salt-text-textTransform: none;
 
   /* Navigable */
   --salt-navigable-primary-background: var(--salt-palette-navigate-primary-background);
