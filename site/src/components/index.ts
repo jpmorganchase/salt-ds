@@ -13,6 +13,7 @@ export {
   SaltProvider,
 } from "@salt-ds/core";
 
+export * from "./ag-grid-doc";
 export * from "./app-header";
 export * from "./callout";
 export * from "./css-display";
