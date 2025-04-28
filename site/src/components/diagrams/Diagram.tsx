@@ -18,7 +18,7 @@ interface DiagramProps {
 }
 
 export const Diagram = ({
-  src: srcProp,
+  src,
   srcDark,
   alt,
   background = "primary",
@@ -28,8 +28,6 @@ export const Diagram = ({
   caption,
 }: DiagramProps) => {
   const colorMode = useColorMode();
-
-  const src = srcDark ? (colorMode === "dark" ? srcDark : srcProp) : srcProp;
 
   return (
     <div
@@ -54,6 +52,7 @@ export const Diagram = ({
                 [styles.secondaryBackground]: background === "secondary",
               })}
               src={src}
+              srcDark={srcDark}
               alt={alt}
             />
             {caption && (
