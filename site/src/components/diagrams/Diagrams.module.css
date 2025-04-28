@@ -3,6 +3,9 @@
   grid-template-columns: 100%;
   gap: var(--salt-spacing-300);
   margin-block: var(--salt-spacing-300);
+  grid-template-rows:
+    [text-container] min-content
+    [image] min-content;
 }
 
 @media screen and (min-width: 960px) {
@@ -25,10 +28,19 @@
 }
 
 .diagram {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: [image text-container] 1fr;
+
+  grid-template-rows:
+    [text-container] min-content
+    [image] min-content;
   margin-block: var(--salt-spacing-300);
   gap: var(--salt-spacing-100);
+}
+
+.diagramsContainer > .diagram {
+  grid: subgrid / subgrid;
+  grid-row: span 2; /* span parent 2 rows with text-container & image */
 }
 
 .diagram:first-child {
@@ -73,10 +85,12 @@
 }
 
 .textContainer {
-  flex: 1;
+  grid-area: text-container;
 }
 
 .figure {
+  grid-area: image;
+
   display: flex;
   flex-direction: column;
   gap: var(--salt-spacing-100);
