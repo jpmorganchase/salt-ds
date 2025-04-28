@@ -8,6 +8,7 @@ import styles from "./Diagrams.module.css";
 
 interface DiagramProps {
   src: string;
+  srcDark?: string;
   background?: "primary" | "secondary";
   border?: boolean;
   alt: string;
@@ -17,7 +18,8 @@ interface DiagramProps {
 }
 
 export const Diagram = ({
-  src,
+  src: srcProp,
+  srcDark,
   alt,
   background = "primary",
   border,
@@ -26,6 +28,8 @@ export const Diagram = ({
   caption,
 }: DiagramProps) => {
   const colorMode = useColorMode();
+
+  const src = srcDark ? (colorMode === "dark" ? srcDark : srcProp) : srcProp;
 
   return (
     <div
