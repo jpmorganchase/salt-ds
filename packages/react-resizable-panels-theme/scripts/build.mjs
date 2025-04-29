@@ -1,72 +1,74 @@
-import crypto from "node:crypto";
-import fs from "node:fs";
 import path from "node:path";
-import { fileURLToPath } from "node:url";
+import { argv } from "node:process";
 import { deleteSync } from "del";
 import esbuild from "esbuild";
-import glob from "fast-glob";
+import fs from "fs-extra";
+import { transformWorkspaceDeps } from "../../../scripts/transformWorkspaceDeps.mjs";
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const buildFolder = path.join(__dirname, "../../../dist/salt-ds-lab/css");
-const absWorkingDir = path.resolve(__dirname, "..");
-const outfileName = "salt-lab.css";
-const entryFile = `src/${crypto.randomUUID()}.css`;
+const FILES_TO_COPY = ["README.md", "LICENSE", "CHANGELOG.md"];
 
-/** MAIN */
-deleteSync([buildFolder], { force: true });
-createCssEntryFile(runBuild);
+const cwd = process.cwd();
+const packageJson = (
+  await import(path.join("file://", cwd, "package.json"), {
+    with: { type: "json" },
+  })
+).default;
+const buildFolder = packageJson.publishConfig.directory;
+const packageName = packageJson.name;
 
-function createCssEntryFile(callback) {
-  const cssFiles = glob.sync(["src/**/*.css"]);
-  console.log(`Merging ${cssFiles.length} into entry file ${entryFile}`);
+console.log(`Building ${packageName}`);
 
-  const entry = fs.createWriteStream(entryFile, {
-    flags: "as", // preserve existing file data and create if doesn't exist
-  });
+if (!argv.includes("--watch")) {
+  deleteSync([buildFolder], { force: true });
+}
 
-  const writeLine = (line, index) =>
-    index === 0 ? entry.write(line) : entry.write(`\n${line}`);
+const context = await esbuild.context({
+  absWorkingDir: cwd,
+  entryPoints: ["salt-react-resizable-panels-theme.css"],
+  assetNames: "[dir]/[name]",
+  outdir: buildFolder,
+  loader: {
+    ".woff": "file",
+  },
+  write: true,
+  bundle: true,
+  logLevel: "info",
+});
 
-  cssFiles.forEach((cssFile, index) => {
-    writeLine(
-      `@import "${path.posix.relative(
-        path.posix.dirname(entryFile),
-        cssFile,
-      )}";`,
-      index,
+if (argv.includes("--watch")) {
+  await context.watch();
+} else {
+  await context.rebuild();
+  await context.dispose();
+}
+
+await fs.writeJSON(
+  path.join(buildFolder, "package.json"),
+  {
+    ...packageJson,
+    peerDependencies: await transformWorkspaceDeps(
+      packageJson.peerDependencies,
+    ),
+  },
+  { spaces: 2 },
+);
+
+for (const file of FILES_TO_COPY) {
+  const from = path.join(cwd, file);
+  const to = path.join(buildFolder, file);
+  try {
+    await fs.copyFile(from, to);
+    console.log(
+      `${path.relative(process.cwd(), from)} copied to ${path.relative(
+        process.cwd(),
+        to,
+      )}`,
     );
-  });
-
-  entry.close(() => {
-    console.log("closed filestream");
-    callback();
-  });
+  } catch (error) {
+    if (error.code !== "ENOENT") {
+      throw error;
+    }
+  }
 }
 
-function runBuild() {
-  esbuild
-    .build({
-      absWorkingDir,
-      entryPoints: [entryFile],
-      outfile: path.join(buildFolder, outfileName),
-      loader: {
-        ".ttf": "file",
-      },
-      write: true,
-      bundle: true,
-      logLevel: "info",
-    })
-    .then(() => {
-      // copy built file to storybook dir
-      const cssFolder = path.join(__dirname, "../../../docs/css");
-      fs.mkdirSync(cssFolder, { recursive: true });
-      fs.copyFileSync(
-        path.join(buildFolder, outfileName),
-        path.join(cssFolder, outfileName),
-      );
-    })
-    .finally(() => {
-      //delete generated entry file
-      deleteSync([entryFile], { force: true });
-    });
-}
+console.log(`Built ${packageName} into ${buildFolder}`);
