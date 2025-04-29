@@ -1,5 +1,5 @@
 import { FlowLayout, ToggleButton } from "@salt-ds/core";
-import { useState, type ReactElement } from "react";
+import { type ReactElement, useState } from "react";
 
 export const TextOnly = (): ReactElement => {
   const [selected, setSelected] = useState(false);

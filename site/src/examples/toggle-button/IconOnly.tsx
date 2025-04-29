@@ -1,11 +1,11 @@
 import { FlowLayout, ToggleButton, Tooltip } from "@salt-ds/core";
 import {
-  LockedIcon,
   FavoriteSolidIcon,
+  LockedIcon,
   PinIcon,
   UnlockedIcon,
 } from "@salt-ds/icons";
-import { useState, type ReactElement } from "react";
+import { type ReactElement, useState } from "react";
 
 export const IconOnly = (): ReactElement => {
   const [selected, setSelected] = useState(false);
