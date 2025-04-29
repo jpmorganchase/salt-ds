@@ -3456,6 +3456,17 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@salt-ds/react-resizable-panels-theme@workspace:packages/react-resizable-panels-theme":
+  version: 0.0.0-use.local
+  resolution: "@salt-ds/react-resizable-panels-theme@workspace:packages/react-resizable-panels-theme"
+  dependencies:
+    del: "npm:^7.0.0"
+  peerDependencies:
+    "@salt-ds/theme": "workspace:^"
+    react-resizable-panels: ">=2.1.7"
+  languageName: unknown
+  linkType: soft
+
 "@salt-ds/root@workspace:.":
   version: 0.0.0-use.local
   resolution: "@salt-ds/root@workspace:."
