@@ -14,10 +14,26 @@ export interface ImageProps extends Omit<NextImageProps, "src"> {
    * Image source url for dark mode.
    */
   srcDark?: string;
+  /**
+   * Remove extra margin set on the image.
+   * Backwards compatiblity approach. Should be removed when all Images not needing this.
+   */
+  noMargin?: boolean;
 }
 
 export const Image = forwardRef<HTMLDivElement, ImageProps>(function Image(
-  { className, src, srcDark, fill, width, height, alt, unoptimized, ...rest },
+  {
+    className,
+    src,
+    srcDark,
+    fill,
+    width,
+    height,
+    alt,
+    unoptimized,
+    noMargin,
+    ...rest
+  },
   ref,
 ) {
   const siteMode = useColorMode();
@@ -31,7 +47,14 @@ export const Image = forwardRef<HTMLDivElement, ImageProps>(function Image(
 
   return (
     // Can't use `picture` with `src`, it only works with system preference
-    <div className={clsx(styles.root, className)} ref={ref}>
+    <div
+      className={clsx(
+        styles.root,
+        { [styles.withMargin]: !noMargin },
+        className,
+      )}
+      ref={ref}
+    >
       {fill || (width && height) ? (
         <NextImage
           alt={alt}

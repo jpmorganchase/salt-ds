@@ -54,6 +54,7 @@ export const Diagram = ({
               src={src}
               srcDark={srcDark}
               alt={alt}
+              noMargin
             />
             {caption && (
               <SaltProviderNext applyClassesTo="child" mode={colorMode}>
