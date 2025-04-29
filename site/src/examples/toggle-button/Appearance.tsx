@@ -5,10 +5,10 @@ import type { ReactElement } from "react";
 export const Appearance = (): ReactElement => (
   <FlexLayout>
     <ToggleButton value="active" appearance="bordered" selected>
-      <AppSwitcherIcon /> Active
+      <AppSwitcherIcon aria-hidden /> Active
     </ToggleButton>
     <ToggleButton value="archived" appearance="solid" selected>
-      <FolderClosedIcon /> Archived
+      <FolderClosedIcon aria-hidden /> Archived
     </ToggleButton>
   </FlexLayout>
 );

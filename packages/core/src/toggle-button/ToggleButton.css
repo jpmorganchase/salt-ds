@@ -68,15 +68,15 @@
   border-color: var(--toggleButton-borderColor-disabled-selected);
 }
 
-.saltToggleButton[aria-readonly="true"] {
+.saltToggleButton.saltToggleButton-readOnly {
   background: var(--toggleButton-background-readonly);
   color: var(--toggleButton-text-color-readonly);
   cursor: var(--salt-actionable-cursor-disabled);
   border-color: var(--toggleButton-borderColor-readonly);
 }
 
-.saltToggleButton[aria-checked="true"].saltToggleButton[aria-readonly="true"],
-.saltToggleButton[aria-pressed="true"].saltToggleButton[aria-readonly="true"] {
+.saltToggleButton[aria-checked="true"].saltToggleButton-readOnly,
+.saltToggleButton[aria-pressed="true"].saltToggleButton-readOnly {
   background: var(--toggleButton-background-readonly-selected);
   color: var(--toggleButton-text-color-readonly-selected);
   border-color: var(--toggleButton-borderColor-readonly-selected);

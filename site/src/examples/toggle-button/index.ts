@@ -1,7 +1,6 @@
 export * from "./Appearance";
 export * from "./Disabled";
 export * from "./IconOnly";
-export * from "./ReadOnly";
 export * from "./Sentiment";
 export * from "./TextOnly";
 export * from "./ToggleButtonDefault";

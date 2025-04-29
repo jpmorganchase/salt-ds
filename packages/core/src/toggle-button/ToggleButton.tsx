@@ -106,15 +106,16 @@ export const ToggleButton = forwardRef<HTMLButtonElement, ToggleButtonProps>(
     };
 
     const toggleButtonProps: ToggleButtonProps = {
+      "aria-readonly": readOnlyProp,
       "aria-pressed": !toggleButtonGroup ? selected : undefined,
       "aria-checked": toggleButtonGroup ? selected : undefined,
       "aria-disabled": disabled,
-      "aria-readonly": readOnly,
       role: toggleButtonGroup ? "radio" : undefined,
       className: clsx(
         withBaseName(),
         withBaseName(toggleButtonGroup?.sentiment || sentimenentProp),
         withBaseName(toggleButtonGroup?.appearance || appearanceProp),
+        readOnly && withBaseName("readOnly"),
         className,
       ),
       onClick: handleClick,
@@ -123,7 +124,7 @@ export const ToggleButton = forwardRef<HTMLButtonElement, ToggleButtonProps>(
       value: value,
       type: "button",
       disabled: disabled,
-      readOnly: readOnly,
+      readOnly: readOnlyProp,
       ...rest,
     };
 

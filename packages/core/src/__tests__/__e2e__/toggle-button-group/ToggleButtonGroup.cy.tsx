@@ -322,29 +322,22 @@ describe("GIVEN a disabled ToggleButtonGroup ", () => {
     cy.findAllByRole("radio")
       .eq(0)
       .should("have.attr", "aria-checked", "false");
-    cy.findAllByRole("radio").eq(0).should("have.attr", "tabindex", "-1");
     cy.findAllByRole("radio").eq(0).should("be.disabled");
 
     cy.findAllByRole("radio").eq(1).should("have.text", "Home");
     cy.findAllByRole("radio")
       .eq(1)
       .should("have.attr", "aria-checked", "false");
-    cy.findAllByRole("radio").eq(1).should("have.attr", "tabindex", "-1");
     cy.findAllByRole("radio").eq(1).should("be.disabled");
 
     cy.findAllByRole("radio").eq(2).should("have.text", "Search");
-    // Disabled selected toggle button should be focusable
     cy.findAllByRole("radio").eq(2).should("have.attr", "aria-checked", "true");
-    cy.findAllByRole("radio").eq(2).should("have.attr", "tabindex", "0");
-    cy.findAllByRole("radio")
-      .eq(2)
-      .should("have.attr", "aria-disabled", "true");
+    cy.findAllByRole("radio").eq(2).should("be.disabled");
 
     cy.findAllByRole("radio").eq(3).should("have.text", "Print");
     cy.findAllByRole("radio")
       .eq(3)
       .should("have.attr", "aria-checked", "false");
-    cy.findAllByRole("radio").eq(3).should("have.attr", "tabindex", "-1");
     cy.findAllByRole("radio").eq(3).should("be.disabled");
 
     cy.findAllByRole("radio").eq(0).realClick();
@@ -354,6 +347,141 @@ describe("GIVEN a disabled ToggleButtonGroup ", () => {
     cy.findAllByRole("radio").eq(2).realClick();
     // It should not fire onChange event
     cy.get("@changeSpy").should("not.have.been.called");
+  });
+
+  it("should not receive focus", () => {
+    cy.mount(
+      <ToggleButtonGroup disabled value="home">
+        <ToggleButton value="alert">
+          <NotificationIcon aria-hidden />
+          Alert
+        </ToggleButton>
+        <ToggleButton disabled value="home">
+          <HomeIcon aria-hidden />
+          Home
+        </ToggleButton>
+        <ToggleButton value="search">
+          <SearchIcon aria-hidden />
+          Search
+        </ToggleButton>
+        <ToggleButton value="print">
+          <PrintIcon aria-hidden />
+          Print
+        </ToggleButton>
+      </ToggleButtonGroup>,
+    );
+
+    cy.realPress("Tab");
+
+    cy.findByRole("radiogroup").should("not.be.focused");
+
+    cy.findAllByRole("radio").eq(0).should("not.be.focused");
+    cy.findAllByRole("radio").eq(1).should("not.be.focused");
+    cy.findAllByRole("radio").eq(2).should("not.be.focused");
+    cy.findAllByRole("radio").eq(3).should("not.be.focused");
+  });
+});
+
+describe("GIVEN a read-only toggle button group", () => {
+  it("should respect the `value` prop", () => {
+    const changeSpy = cy.stub().as("changeSpy");
+    const ControlledToggleGroupExample = () => {
+      const [value, setValue] = useState<string>("search");
+
+      const handleChange = (event: SyntheticEvent<HTMLButtonElement>) => {
+        // React 16 backwards compatibility
+        event.persist();
+        setValue(event.currentTarget.value);
+        changeSpy(event);
+      };
+
+      return (
+        <ToggleButtonGroup readOnly value={value} onChange={handleChange}>
+          <ToggleButton value="alert">
+            <NotificationIcon aria-hidden />
+            Alert
+          </ToggleButton>
+          <ToggleButton value="home">
+            <HomeIcon aria-hidden />
+            Home
+          </ToggleButton>
+          <ToggleButton value="search">
+            <SearchIcon aria-hidden />
+            Search
+          </ToggleButton>
+          <ToggleButton value="print">
+            <PrintIcon aria-hidden />
+            Print
+          </ToggleButton>
+        </ToggleButtonGroup>
+      );
+    };
+    cy.mount(<ControlledToggleGroupExample />);
+
+    cy.findByRole("radiogroup").should("have.attr", "aria-readonly");
+
+    // 4 toggle buttons
+    cy.findAllByRole("radio").should("have.length", 4);
+
+    cy.findAllByRole("radio").eq(0).should("have.text", "Alert");
+    cy.findAllByRole("radio")
+      .eq(0)
+      .should("have.attr", "aria-checked", "false");
+
+    cy.findAllByRole("radio").eq(1).should("have.text", "Home");
+    cy.findAllByRole("radio")
+      .eq(1)
+      .should("have.attr", "aria-checked", "false");
+
+    cy.findAllByRole("radio").eq(2).should("have.text", "Search");
+    cy.findAllByRole("radio").eq(2).should("have.attr", "aria-checked", "true");
+
+    cy.findAllByRole("radio").eq(3).should("have.text", "Print");
+    cy.findAllByRole("radio")
+      .eq(3)
+      .should("have.attr", "aria-checked", "false");
+
+    cy.findAllByRole("radio").eq(0).realClick();
+    // It should not fire onChange event
+    cy.get("@changeSpy").should("not.have.been.called");
+    // Clicking the selected toggle button should not fire onChange event
+    cy.findAllByRole("radio").eq(2).realClick();
+    // It should not fire onChange event
+    cy.get("@changeSpy").should("not.have.been.called");
+  });
+
+  it("should maintain focus correctly", () => {
+    cy.mount(
+      <ToggleButtonGroup readOnly value={"home"}>
+        <ToggleButton value="alert">
+          <NotificationIcon aria-hidden />
+          Alert
+        </ToggleButton>
+        <ToggleButton value="home">
+          <HomeIcon aria-hidden />
+          Home
+        </ToggleButton>
+        <ToggleButton value="search">
+          <SearchIcon aria-hidden />
+          Search
+        </ToggleButton>
+        <ToggleButton value="print">
+          <PrintIcon aria-hidden />
+          Print
+        </ToggleButton>
+      </ToggleButtonGroup>,
+    );
+
+    cy.realPress("Tab");
+
+    // Focus should go to the selected toggle button
+    cy.findAllByRole("radio").eq(1).should("be.focused");
+
+    // Pressing arrow keys should shift focus
+    cy.realPress("ArrowRight");
+    cy.findAllByRole("radio").eq(2).should("be.focused");
+    cy.realPress("ArrowRight");
+    cy.findAllByRole("radio").eq(3).should("be.focused");
   });
 });
 

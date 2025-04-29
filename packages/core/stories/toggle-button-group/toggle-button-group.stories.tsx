@@ -86,7 +86,7 @@ const IconOnlyTemplate: StoryFn<ToggleButtonGroupStoryProps> = ({
           value="light"
           aria-label="Light Mode"
         >
-          <LightIcon />
+          <LightIcon aria-hidden />
         </ToggleButton>
       </Tooltip>
       <Tooltip
@@ -99,7 +99,7 @@ const IconOnlyTemplate: StoryFn<ToggleButtonGroupStoryProps> = ({
           value="dark"
           aria-label="Dark Mode"
         >
-          <DarkIcon />
+          <DarkIcon aria-hidden />
         </ToggleButton>
       </Tooltip>
     </ToggleButtonGroup>
@@ -145,6 +145,37 @@ const TextOnlyTemplate: StoryFn<ToggleButtonGroupStoryProps> = ({
         aria-label="Touch Density"
       >
         Touch
+      </ToggleButton>
+    </ToggleButtonGroup>
+  );
+};
+
+const ReadOnlyTemplate: StoryFn<ToggleButtonGroupStoryProps> = ({
+  appearance,
+  sentiment,
+  ...rest
+}) => {
+  return (
+    <ToggleButtonGroup readOnly {...rest}>
+      <ToggleButton appearance={appearance} sentiment={sentiment} value="all">
+        <AppSwitcherIcon aria-hidden />
+        All
+      </ToggleButton>
+      <ToggleButton
+        appearance={appearance}
+        sentiment={sentiment}
+        value="active"
+      >
+        <VisibleIcon aria-hidden />
+        Active
+      </ToggleButton>
+      <ToggleButton
+        appearance={appearance}
+        sentiment={sentiment}
+        value="search"
+      >
+        <FolderClosedIcon aria-hidden />
+        Archived
       </ToggleButton>
     </ToggleButtonGroup>
   );
@@ -211,14 +242,10 @@ export const Bordered: StoryFn<ToggleButtonGroupStoryProps> = ({
   );
 };
 
-export const ReadOnly = IconAndTextTemplate.bind({});
-ReadOnly.args = {
-  readOnly: true,
-};
+export const ReadOnly = ReadOnlyTemplate.bind({});
 
-export const ReadOnlyAndSelected = IconAndTextTemplate.bind({});
+export const ReadOnlyAndSelected = ReadOnlyTemplate.bind({});
 ReadOnlyAndSelected.args = {
-  readOnly: true,
   defaultValue: "active",
 };
 

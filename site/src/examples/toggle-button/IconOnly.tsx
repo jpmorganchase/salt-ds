@@ -4,8 +4,8 @@ import type { ReactElement } from "react";
 
 export const IconOnly = (): ReactElement => (
   <Tooltip content="Favorite">
-    <ToggleButton value="favorite" aria-label="favorite">
-      <FavoriteSolidIcon />
+    <ToggleButton value="favorite">
+      <FavoriteSolidIcon aria-hidden />
     </ToggleButton>
   </Tooltip>
 );

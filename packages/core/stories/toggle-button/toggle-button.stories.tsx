@@ -9,8 +9,8 @@ export default {
 
 export const IconOnly: StoryFn<typeof ToggleButton> = (args) => (
   <Tooltip content="Favorite">
-    <ToggleButton aria-label="favorite" {...args}>
-      <FavoriteSolidIcon />
+    <ToggleButton {...args}>
+      <FavoriteSolidIcon aria-hidden />
     </ToggleButton>
   </Tooltip>
 );
@@ -56,14 +56,4 @@ export const Disabled: StoryFn<typeof ToggleButton> = (args) => (
 
 Disabled.args = {
   disabled: true,
-};
-
-export const ReadOnly: StoryFn<typeof ToggleButton> = (args) => (
-  <ToggleButton {...args}>
-    <HomeIcon aria-hidden /> Home
-  </ToggleButton>
-);
-
-ReadOnly.args = {
-  readOnly: true,
 };

@@ -4,7 +4,7 @@ import type { ReactElement } from "react";
 
 export const ToggleButtonGroupReadOnly = (): ReactElement => (
   <ToggleButtonGroup defaultValue="home" readOnly>
-    <ToggleButton value="home" disabled>
+    <ToggleButton value="home">
       <HomeIcon aria-hidden /> Home
     </ToggleButton>
     <ToggleButton value="profile">
