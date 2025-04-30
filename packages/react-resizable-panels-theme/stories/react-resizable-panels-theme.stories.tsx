@@ -2,8 +2,8 @@ import {
   ImperativePanelHandle,
   Panel,
   PanelGroup,
-  PanelResizeHandle
-} from 'react-resizable-panels'
+  PanelResizeHandle,
+} from "react-resizable-panels";
 
 import "ag-grid-community/styles/ag-grid.css";
 import "../salt-react-resizable-panels-theme.css";
@@ -11,16 +11,19 @@ import "./splitter.stories.css";
 import {
   Button,
   FlexLayout,
+  Panel as SaltPanel,
   StackLayout,
   Text,
-  Panel as SaltPanel,
-  ToggleButtonGroup, ToggleButton
+  ToggleButton,
+  ToggleButtonGroup,
 } from "@salt-ds/core";
-import {useRef, useState} from "react";
+import { useRef, useState } from "react";
 import {
   DoubleChevronLeftIcon,
-  DoubleChevronRightIcon, EditIcon,
-  InboxIcon, SendIcon
+  DoubleChevronRightIcon,
+  EditIcon,
+  InboxIcon,
+  SendIcon,
 } from "@salt-ds/icons";
 
 export default {
@@ -39,19 +42,24 @@ export default {
   },
 };
 
-
 export function Horizontal() {
   return (
     <FlexLayout className="box">
       <PanelGroup direction="horizontal">
-        <Panel id="top" className="center" minSize={10} >
+        <Panel id="top" className="center" minSize={10}>
           <Text>Top</Text>
         </Panel>
-        <PanelResizeHandle aria-label="Resize Top/Middle" />
+        <PanelResizeHandle
+          aria-label="Resize Top/Middle"
+          className="borderLeftRight"
+        />
         <Panel id="middle" className="center" minSize={10}>
           <Text>Middle</Text>
         </Panel>
-        <PanelResizeHandle aria-label="Resize Middle/Bottom" />
+        <PanelResizeHandle
+          aria-label="Resize Middle/Bottom"
+          className="borderLeftRight"
+        />
         <Panel id="bottom" className="center" minSize={10}>
           <Text>Bottom</Text>
         </Panel>
@@ -60,7 +68,6 @@ export function Horizontal() {
   );
 }
 
-
 export function Vertical() {
   return (
     <FlexLayout className="box">
@@ -68,11 +75,17 @@ export function Vertical() {
         <Panel id="left" className="center">
           <Text>Left</Text>
         </Panel>
-        <PanelResizeHandle aria-label="Resize Left/Center" />
+        <PanelResizeHandle
+          aria-label="Resize Left/Center"
+          className="borderTopBottom"
+        />
         <Panel id="center" className="center">
           <Text>Center</Text>
         </Panel>
-        <PanelResizeHandle aria-label="Resize Center/Right" />
+        <PanelResizeHandle
+          aria-label="Resize Center/Right"
+          className="borderTopBottom"
+        />
         <Panel id="right" className="center">
           <Text>Right</Text>
         </Panel>
@@ -90,23 +103,23 @@ export function MultiOrientational() {
             <Panel className="center">
               <Text>Top Left</Text>
             </Panel>
-            <PanelResizeHandle />
+            <PanelResizeHandle className="borderTopBottom" />
             <Panel className="center">
               <Text>Middle Left</Text>
             </Panel>
-            <PanelResizeHandle />
+            <PanelResizeHandle className="borderTopBottom" />
             <Panel className="center">
               <Text>Bottom Left</Text>
             </Panel>
           </PanelGroup>
         </Panel>
-        <PanelResizeHandle />
+        <PanelResizeHandle className="borderLeftRight" />
         <Panel>
           <PanelGroup direction="vertical">
             <Panel className="center">
               <Text>Top Right</Text>
             </Panel>
-            <PanelResizeHandle />
+            <PanelResizeHandle className="borderTopBottom" />
             <Panel className="center">
               <Text>Bottom Right</Text>
             </Panel>
@@ -123,26 +136,26 @@ export function Transparent() {
       <PanelGroup direction="horizontal">
         <Panel>
           <PanelGroup direction="vertical">
-            <Panel className="center" >
+            <Panel className="center">
               <Text>Top Left</Text>
             </Panel>
-            <PanelResizeHandle data-salt-variant="transparent"/>
+            <PanelResizeHandle className="saltResizeHandleTransparent" />
             <Panel className="center">
               <Text>Middle Left</Text>
             </Panel>
-            <PanelResizeHandle data-salt-variant="transparent"/>
+            <PanelResizeHandle />
             <Panel className="center">
               <Text>Bottom Left</Text>
             </Panel>
           </PanelGroup>
         </Panel>
-        <PanelResizeHandle data-salt-variant="transparent"/>
+        <PanelResizeHandle className="saltResizeHandleTransparent" />
         <Panel>
           <PanelGroup direction="vertical">
             <Panel className="center">
               <Text>Top Right</Text>
             </Panel>
-            <PanelResizeHandle data-salt-variant="transparent"/>
+            <PanelResizeHandle className="saltResizeHandleTransparent" />
             <Panel className="center">
               <Text>Bottom Right</Text>
             </Panel>
@@ -160,11 +173,11 @@ export function Border() {
         <Panel id="left" minSize={0} defaultSize={25} className="center">
           <Text>Left</Text>
         </Panel>
-        <PanelResizeHandle data-salt-border="right" />
+        <PanelResizeHandle className="borderRight" />
         <Panel minSize={50} className="center">
           <Text>Center</Text>
         </Panel>
-        <PanelResizeHandle data-salt-border="left" />
+        <PanelResizeHandle className="borderLeft" />
         <Panel minSize={0} defaultSize={25} className="center">
           <Text>Right</Text>
         </Panel>
@@ -177,26 +190,18 @@ export function Variant() {
   return (
     <FlexLayout className="box">
       <PanelGroup direction="horizontal">
-        <Panel
-          minSize={0}
-          defaultSize={25}
-          className="center"
-        >
-          <SaltPanel variant={'secondary'}>
+        <Panel minSize={0} defaultSize={25} className="center">
+          <SaltPanel variant={"secondary"}>
             <Text>Left</Text>
           </SaltPanel>
         </Panel>
-        <PanelResizeHandle data-salt-variant="secondary" data-salt-border="right" />
+        <PanelResizeHandle className="borderRight saltResizeHandleSecondary" />
         <Panel minSize={50} className="center">
           <Text>Center</Text>
         </Panel>
-        <PanelResizeHandle data-salt-variant="tertiary" data-salt-border="left"/>
-        <Panel
-          minSize={0}
-          defaultSize={25}
-          className="center"
-        >
-          <SaltPanel variant={'tertiary'}>
+        <PanelResizeHandle className="borderLeft saltResizeHandleTertiary" />
+        <Panel minSize={0} defaultSize={25} className="center">
+          <SaltPanel variant={"tertiary"}>
             <Text>Right</Text>
           </SaltPanel>
         </Panel>
@@ -208,7 +213,7 @@ export function Variant() {
 export function Size() {
   return (
     <FlexLayout className="box">
-      <PanelGroup direction="horizontal" >
+      <PanelGroup direction="horizontal">
         <Panel minSize={20} className="center">
           <Text>Left [20%, X]</Text>
         </Panel>
@@ -228,7 +233,7 @@ export function Size() {
 export function CollapsibleSetSize() {
   return (
     <FlexLayout className="box">
-      <PanelGroup direction="horizontal" >
+      <PanelGroup direction="horizontal">
         <Panel
           collapsible
           collapsedSize={15}
@@ -253,7 +258,7 @@ export function CollapsibleSetSize() {
 export function CollapsibleContainerQuery() {
   return (
     <FlexLayout className="box">
-      <PanelGroup direction="horizontal" >
+      <PanelGroup direction="horizontal">
         <Panel
           collapsible
           collapsedSize={10}
@@ -357,7 +362,7 @@ export function ProgrammableResize() {
       </StackLayout>
       <StackLayout>
         <FlexLayout className="box">
-          <PanelGroup direction="horizontal" >
+          <PanelGroup direction="horizontal">
             <Panel ref={ref} className="center">
               <Text>Left</Text>
             </Panel>

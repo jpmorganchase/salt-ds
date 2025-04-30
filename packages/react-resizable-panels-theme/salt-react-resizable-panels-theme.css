@@ -20,29 +20,9 @@ div[data-resize-handle] {
 }
 
 div[data-resize-handle] {
-  --splitHandle-background: var(--salt-container-primary-background);
   --splitHandle-background-hover: var(--salt-separable-background-hover);
   --splitHandle-background-active: var(--salt-separable-background-active);
 }
-
-div[data-resize-handle][data-salt-variant="secondary"] {
-  --splitHandle-background: var(--salt-container-secondary-background);
-  --splitHandle-background-hover: var(--salt-separable-background-hover);
-  --splitHandle-background-active: var(--salt-separable-background-active);
-}
-
-div[data-resize-handle][data-salt-variant="tertiary"] {
-  --splitHandle-background: transparent;
-  --splitHandle-background-hover: var(--salt-separable-background-hover);
-  --splitHandle-background-active: var(--salt-separable-background-active);
-}
-
-div[data-resize-handle][data-salt-variant="transparent"] {
-  --splitHandle-background: var(--salt-separable-background);
-  --splitHandle-background-hover: var(--salt-separable-background-hover);
-  --splitHandle-background-active: var(--salt-separable-background-active);
-}
-
 
 div[data-resize-handle][data-resize-handle-state="hover"] {
   background: var(--splitHandle-background-hover);
@@ -76,7 +56,6 @@ div[data-resize-handle][data-resize-handle-state="drag"]::after {
   fill: var(--splitHandle-dot-background-active);
   background: var(--splitHandle-dot-background-active);
 }
-
 
 div[data-resize-handle][data-panel-group-direction="horizontal"]::after {
   content: "";
@@ -113,67 +92,6 @@ div[data-resize-handle]:focus-visible {
   outline-width: var(--salt-focused-outlineWidth);
   outline-color: var(--salt-focused-outlineColor);
   outline-offset: var(--salt-focused-outlineOffset);
-}
-
-div[data-resize-handle][data-panel-group-direction="vertical"]:not([data-salt-variant="transparent"]) {
-  border-top-width: var(--splitHandle-borderWidth);
-  border-top-color: var(--splitHandle-borderColor);
-  border-top-style: var(--splitHandle-borderStyle);
-
-  border-bottom-width: var(--splitHandle-borderWidth);
-  border-bottom-color: var(--splitHandle-borderColor);
-  border-bottom-style: var(--splitHandle-borderStyle);
-}
-
-div[data-resize-handle][data-panel-group-direction="vertical"][data-salt-border="top"] {
-  border-top-width: var(--splitHandle-borderWidth);
-  border-top-color: var(--splitHandle-borderColor);
-  border-top-style: var(--splitHandle-borderStyle);
-
-  border-bottom-width: var(--splitHandle-borderWidth);
-  border-bottom-color: transparent;
-  border-bottom-style: var(--splitHandle-borderStyle);
-}
-
-div[data-resize-handle][data-panel-group-direction="vertical"][data-salt-border="bottom"] {
-  border-top-width: var(--splitHandle-borderWidth);
-  border-top-color: transparent;
-  border-top-style: var(--splitHandle-borderStyle);
-
-  border-bottom-width: var(--splitHandle-borderWidth);
-  border-bottom-color: var(--splitHandle-borderColor);
-  border-bottom-style: var(--splitHandle-borderStyle);
-}
-
-div[data-resize-handle][data-panel-group-direction="horizontal"]:not([data-salt-variant="transparent"]) {
-  border-left-width: var(--splitHandle-borderWidth);
-  border-left-color: var(--splitHandle-borderColor);
-  border-left-style: var(--splitHandle-borderStyle);
-
-  border-right-width: var(--splitHandle-borderWidth);
-  border-right-color: var(--splitHandle-borderColor);
-  border-right-style: var(--splitHandle-borderStyle);
-}
-
-
-div[data-resize-handle][data-panel-group-direction="horizontal"][data-salt-border="left"] {
-  border-left-width: var(--splitHandle-borderWidth);
-  border-left-color: var(--splitHandle-borderColor);
-  border-left-style: var(--splitHandle-borderStyle);
-
-  border-right-width: var(--splitHandle-borderWidth);
-  border-right-color: transparent;
-  border-right-style: var(--splitHandle-borderStyle);
-}
-
-div[data-resize-handle][data-panel-group-direction="horizontal"][data-salt-border="right"] {
-  border-left-width: var(--splitHandle-borderWidth);
-  border-left-color: transparent;
-  border-left-style: var(--splitHandle-borderStyle);
-
-  border-right-width: var(--splitHandle-borderWidth);
-  border-right-color: var(--splitHandle-borderColor);
-  border-right-style: var(--splitHandle-borderStyle);
 }
 
 /* two handles touching horizontally */
