@@ -15,7 +15,7 @@ export type StepperOrientation = "horizontal" | "vertical";
 
 export interface StepperProps extends ComponentPropsWithoutRef<"ol"> {
   /**
-   * The orientation of the stepper. defaults to horizontal.
+   * The orientation of the stepper: defaults to horizontal.
    */
   orientation?: StepperOrientation;
 }

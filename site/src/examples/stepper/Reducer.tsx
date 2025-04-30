@@ -26,9 +26,9 @@ const initialSteps = [
   { id: "step-3", label: "Step 3" },
 ] as StepRecord[];
 
-/** ---------------------
- *  Custom Hook Example
- --------------------- */
+/**
+ * An example of a custom hook to control the stepper state, or write your own.
+ */
 interface StepperReducerState {
   steps: StepRecord[]; // The list of all steps.
   flatSteps: StepRecord[]; // A flattened version of the steps.
@@ -270,8 +270,6 @@ function useStepperReducer(
 
   return useReducer(StepperReducer, initialSteps, initializer);
 }
-
-/** --------------- */
 
 export function Reducer() {
   const [state, dispatch] = useStepperReducer(initialSteps);
