@@ -212,11 +212,11 @@ export function Size() {
         <Panel minSize={20} className="center">
           <Text>Left [20%, X]</Text>
         </Panel>
-        <PanelResizeHandle />
+        <PanelResizeHandle className="borderTopBottom" />
         <Panel id="middle" minSize={40} maxSize={60} className="center">
           <Text>Middle [30%, 60%]</Text>
         </Panel>
-        <PanelResizeHandle />
+        <PanelResizeHandle className="borderTopBottom" />
         <Panel minSize={20} className="center">
           <Text>Right [20%, X]</Text>
         </Panel>
@@ -241,7 +241,7 @@ export function CollapsibleSetSize() {
             {"{10%, 30%}"}
           </Text>
         </Panel>
-        <PanelResizeHandle />
+        <PanelResizeHandle className="borderTopBottom" />
         <Panel className="center">
           <Text>Right</Text>
         </Panel>
@@ -277,7 +277,7 @@ export function CollapsibleContainerQuery() {
             </ToggleButton>
           </ToggleButtonGroup>
         </Panel>
-        <PanelResizeHandle />
+        <PanelResizeHandle className="borderTopBottom" />
         <Panel className="center">
           <Text>Content</Text>
         </Panel>
@@ -318,7 +318,7 @@ export function CollapsibleTo0() {
           id="left"
           className="center"
         />
-        <PanelResizeHandle onDoubleClick={toggle} />
+        <PanelResizeHandle onDoubleClick={toggle} className="borderTopBottom" />
         <Panel>
           <Button
             id="right"
@@ -361,7 +361,7 @@ export function ProgrammableResize() {
             <Panel ref={ref} className="center">
               <Text>Left</Text>
             </Panel>
-            <PanelResizeHandle />
+            <PanelResizeHandle className="borderTopBottom" />
             <Panel className="center">
               <Text>Right</Text>
             </Panel>
