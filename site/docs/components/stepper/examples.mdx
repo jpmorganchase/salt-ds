@@ -1,0 +1,54 @@
+---
+  title:
+    $ref: ./#/title
+  layout: DetailComponent
+  sidebar:
+    exclude: true
+  data:
+    $ref: ./#/data
+---
+
+## Orientation
+
+### Horizontal (default)
+
+<LivePreview componentName="stepper" exampleName="Horizontal" />
+
+### Vertical
+
+<LivePreview componentName="stepper" exampleName="Vertical" />
+
+## Stage + Status
+
+<LivePreview componentName="stepper" exampleName="StageStatus" />
+
+The `Step` component's appearance depends on its `stage` and `status` props.
+When both are set, `status` takes precedence over `stage`. These props control:
+
+- Icon selection
+- Description text color
+- Track (connector) style
+
+## Nested Steps
+
+The `Stepper` component supports nested steps when used in vertical orientation.
+You can nest `Step` components within other `Step` components to create hierarchical step structures.
+
+### Behavior
+
+- When nesting steps, the parent `Step` automatically renders a new `Stepper` containing its child steps
+- An expand/collapse button appears on parent steps to toggle visibility of nested steps
+- Parent steps containing the active child step are automatically set to `inprogress` state
+
+### Limitations
+
+- Nested steps are only supported in vertical orientation
+
+<LivePreview componentName="stepper" exampleName="NestedSteps" />
+
+## Controlled Stepper
+
+The `Stepper` and `Step` component are primarily presentational components.
+If you want to control the state of the `Stepper` you can use a custom hook.
+
+<LivePreview componentName="stepper" exampleName="Reducer" />

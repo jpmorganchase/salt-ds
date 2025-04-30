@@ -50,6 +50,7 @@ export * from "./spinner";
 export * from "./stack-layout";
 export * from "./status-adornment";
 export * from "./status-indicator";
+export * from "./stepper";
 export * from "./text";
 export * from "./theme";
 export * from "./toast";
