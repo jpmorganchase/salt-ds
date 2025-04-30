@@ -6,6 +6,11 @@
   max-width: 18em;
 }
 
+.linkImage {
+  height: var(--salt-text-lineHeight);
+  margin: 0;
+}
+
 .list {
   display: flex;
   gap: var(--salt-spacing-100);
