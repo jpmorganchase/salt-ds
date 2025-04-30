@@ -277,7 +277,7 @@ export function CollapsibleContainerQuery() {
             </ToggleButton>
           </ToggleButtonGroup>
         </Panel>
-        <PanelResizeHandle className="borderTopBottom" />
+        <PanelResizeHandle className="borderLeftRight" />
         <Panel className="center">
           <Text>Content</Text>
         </Panel>
@@ -318,7 +318,7 @@ export function CollapsibleTo0() {
           id="left"
           className="center"
         />
-        <PanelResizeHandle onDoubleClick={toggle} className="borderTopBottom" />
+        <PanelResizeHandle onDoubleClick={toggle} className="borderLeftRight" />
         <Panel>
           <Button
             id="right"
@@ -361,7 +361,7 @@ export function ProgrammableResize() {
             <Panel ref={ref} className="center">
               <Text>Left</Text>
             </Panel>
-            <PanelResizeHandle className="borderTopBottom" />
+            <PanelResizeHandle className="borderLeftRight" />
             <Panel className="center">
               <Text>Right</Text>
             </Panel>
