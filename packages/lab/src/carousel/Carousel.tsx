@@ -42,6 +42,7 @@ export const Carousel = forwardRef<HTMLDivElement, CarouselProps>(
       activeSlideIndex,
       visibleSlides: visibleSlidesProp = 1,
       children,
+      className,
       controlsPlacement = "top",
       id: idProp,
       ...rest
@@ -70,9 +71,13 @@ export const Carousel = forwardRef<HTMLDivElement, CarouselProps>(
       >
         <section
           role="region"
-          className={clsx(withBaseName(), {
-            [withBaseName(controlsPlacement)]: controlsPlacement === "bottom",
-          })}
+          className={clsx(
+            withBaseName(),
+            {
+              [withBaseName(controlsPlacement)]: controlsPlacement === "bottom",
+            },
+            className,
+          )}
           aria-roledescription="carousel"
           id={id}
           ref={ref}
