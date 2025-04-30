@@ -29,6 +29,14 @@
   border: none;
 }
 
+.panelSecondary {
+  background: var(--salt-container-secondary-background);
+}
+
+.panelTertiary {
+  background: var(--salt-container-tertiary-background);
+}
+
 .saltResizeHandleSecondary {
   --splitHandle-background: var(--salt-container-secondary-background);
 }

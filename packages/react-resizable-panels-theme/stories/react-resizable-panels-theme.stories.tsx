@@ -11,7 +11,6 @@ import "./splitter.stories.css";
 import {
   Button,
   FlexLayout,
-  Panel as SaltPanel,
   StackLayout,
   Text,
   ToggleButton,
@@ -190,20 +189,16 @@ export function Variant() {
   return (
     <FlexLayout className="box">
       <PanelGroup direction="horizontal">
-        <Panel minSize={0} defaultSize={25} className="center">
-          <SaltPanel variant={"secondary"}>
-            <Text>Left</Text>
-          </SaltPanel>
+        <Panel minSize={0} defaultSize={25} className="center panelSecondary">
+          <Text>Left</Text>
         </Panel>
         <PanelResizeHandle className="borderRight saltResizeHandleSecondary" />
         <Panel minSize={50} className="center">
           <Text>Center</Text>
         </Panel>
         <PanelResizeHandle className="borderLeft saltResizeHandleTertiary" />
-        <Panel minSize={0} defaultSize={25} className="center">
-          <SaltPanel variant={"tertiary"}>
-            <Text>Right</Text>
-          </SaltPanel>
+        <Panel minSize={0} defaultSize={25} className="center panelTertiary">
+          <Text>Right</Text>
         </Panel>
       </PanelGroup>
     </FlexLayout>
