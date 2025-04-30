@@ -5,7 +5,6 @@ import {
   CarouselSlide,
   CarouselSlider,
 } from "@salt-ds/lab";
-import clsx from "clsx";
 import type { ReactElement } from "react";
 import { sliderData } from "./exampleData";
 import styles from "./index.module.css";
@@ -25,7 +24,7 @@ export const WithSlideActions = (): ReactElement => {
               media={
                 <img
                   alt={`stock content to show in carousel slide ${index}`}
-                  className={clsx(styles.carouselImagePlaceholder)}
+                  className={styles.carouselImagePlaceholder}
                   src={slide.image}
                 />
               }

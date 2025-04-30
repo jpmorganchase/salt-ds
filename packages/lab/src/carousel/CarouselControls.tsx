@@ -16,6 +16,7 @@ import {
   CarouselStateContext,
 } from "./CarouselContext";
 
+import { clsx } from "clsx";
 import carouselControlsCss from "./CarouselControls.css";
 
 const withBaseName = makePrefixer("saltCarouselControls");
@@ -138,7 +139,11 @@ export const CarouselControls = forwardRef<
   }
 
   return (
-    <div className={withBaseName("container")} ref={ref} {...rest}>
+    <div
+      className={clsx(withBaseName("container"), className)}
+      ref={ref}
+      {...rest}
+    >
       {title}
       <div
         className={withBaseName()}

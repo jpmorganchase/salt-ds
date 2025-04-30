@@ -1,6 +1,7 @@
 import { makePrefixer, useForkRef } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
+import { clsx } from "clsx";
 import {
   type HTMLAttributes,
   type KeyboardEvent,
@@ -37,7 +38,7 @@ const withBaseName = makePrefixer("saltCarouselSlider");
 
 export const CarouselSlider = forwardRef<HTMLDivElement, CarouselSliderProps>(
   function CarouselSlider(
-    { children, onKeyDown, onScroll, onSelectionChange, ...rest },
+    { children, className, onKeyDown, onScroll, onSelectionChange, ...rest },
     propRef,
   ) {
     const targetWindow = useWindow();
@@ -123,7 +124,7 @@ export const CarouselSlider = forwardRef<HTMLDivElement, CarouselSliderProps>(
     return (
       <div
         ref={ref}
-        className={withBaseName()}
+        className={clsx(withBaseName(), className)}
         tabIndex={-1}
         onKeyDown={handleKeyDown}
         onScroll={handleScroll}

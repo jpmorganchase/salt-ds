@@ -10,29 +10,6 @@ import type { ReactElement } from "react";
 import { sliderData } from "./exampleData";
 import styles from "./index.module.css";
 
-function renderSlideContent(index: number) {
-  return (
-    <StackLayout gap={1}>
-      <H3 id={`slide-title-${index}`}>
-        Categorical bold background {index + 1}
-      </H3>
-      <Text>
-        Categorical colors are used for data visualization and other components
-        that support categories.
-      </Text>
-    </StackLayout>
-  );
-}
-
-const renderMediaPlaceholder = (index: number) => (
-  <div
-    className={clsx(
-      styles.carouselImagePlaceholder,
-      styles[`carouselImagePlaceholder-${index + 1}`],
-    )}
-  />
-);
-
 export const Appearance = (): ReactElement => {
   return (
     <StackLayout direction="row" gap={6}>
