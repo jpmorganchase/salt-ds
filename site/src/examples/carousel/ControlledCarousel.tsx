@@ -10,40 +10,49 @@ export const ControlledCarousel = (): ReactElement => {
   return (
     <StackLayout>
       <StackLayout gap={1} direction="row" align="center">
-        <Button onClick={() => setSlide(slide - 1)} disabled={slide === 0}>
+        <Text>Current slide: {slide + 1}</Text>
+      </StackLayout>
+      <StackLayout direction="row" gap={1}>
+        <Button
+          appearance="transparent"
+          onClick={() => setSlide(slide - 1)}
+          disabled={slide === 0}
+          className={styles.carouselButton}
+        >
           Left
         </Button>
+        <Carousel aria-label="Account overview" activeSlideIndex={slide}>
+          <CarouselSlider onSelectionChange={(_, index) => setSlide(index)}>
+            {sliderData.map((slide, index) => {
+              const slideId = useId();
+              return (
+                <CarouselSlide
+                  key={slideId}
+                  aria-labelledby={`slide-title-${slideId}`}
+                  media={
+                    <img
+                      alt={`stock content to show in carousel slide ${index}`}
+                      className={clsx(styles.carouselImagePlaceholder)}
+                      src={slide.image}
+                    />
+                  }
+                  header={<H3 id={`slide-title-${slideId}`}>{slide.title}</H3>}
+                >
+                  <Text>{slide.content}</Text>
+                </CarouselSlide>
+              );
+            })}
+          </CarouselSlider>
+        </Carousel>
         <Button
+          appearance="transparent"
           onClick={() => setSlide(slide + 1)}
           disabled={slide >= sliderData.length - 1}
+          className={styles.carouselButton}
         >
           Right
         </Button>
-        <Text>Current slide: {slide + 1}</Text>
       </StackLayout>
-      <Carousel aria-label="Account overview" activeSlideIndex={slide}>
-        <CarouselSlider onSelectionChange={(_, index) => setSlide(index)}>
-          {sliderData.map((slide, index) => {
-            const slideId = useId();
-            return (
-              <CarouselSlide
-                key={slideId}
-                aria-labelledby={`slide-title-${slideId}`}
-                media={
-                  <img
-                    alt={`stock content to show in carousel slide ${index}`}
-                    className={clsx(styles.carouselImagePlaceholder)}
-                    src={slide.image}
-                  />
-                }
-                header={<H3 id={`slide-title-${slideId}`}>{slide.title}</H3>}
-              >
-                <Text>{slide.content}</Text>
-              </CarouselSlide>
-            );
-          })}
-        </CarouselSlider>
-      </Carousel>
     </StackLayout>
   );
 };
