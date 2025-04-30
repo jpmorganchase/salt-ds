@@ -1,4 +1,5 @@
 export * from "./Default";
+export * from "./Interactive";
 export * from "./MultipleSlides";
 export * from "./Appearance";
 export * from "./WithTitle";
