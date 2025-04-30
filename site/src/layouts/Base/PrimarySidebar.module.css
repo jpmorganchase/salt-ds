@@ -13,7 +13,7 @@
 .sticky {
   position: sticky;
   top: var(--site-app-header-height, 0px);
-  height: calc(100vh - var(--site-app-header-height, 0) - var(--site-footer-height-large-vp, 0));
+  height: calc(100vh - var(--site-app-header-height, 0));
   padding-block: var(--salt-spacing-200);
   padding-right: var(--salt-spacing-200);
   overflow-y: auto;
