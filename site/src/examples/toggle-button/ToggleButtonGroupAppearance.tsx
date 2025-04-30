@@ -1,11 +1,17 @@
-import { ToggleButton, ToggleButtonGroup } from "@salt-ds/core";
+import { StackLayout, ToggleButton, ToggleButtonGroup } from "@salt-ds/core";
 import type { ReactElement } from "react";
 
 export const ToggleButtonGroupAppearance = (): ReactElement => (
-  <ToggleButtonGroup defaultValue="all" appearance="bordered">
-    <ToggleButton value="all">All</ToggleButton>
-    <ToggleButton value="active">Active</ToggleButton>
-    <ToggleButton value="archived">Archived</ToggleButton>
-    <ToggleButton value="saved">Saved</ToggleButton>
-  </ToggleButtonGroup>
+  <StackLayout align="center">
+    <ToggleButtonGroup defaultValue="0">
+      <ToggleButton value="0">Solid</ToggleButton>
+      <ToggleButton value="1">Solid</ToggleButton>
+      <ToggleButton value="2">Solid</ToggleButton>
+    </ToggleButtonGroup>
+    <ToggleButtonGroup defaultValue="0" appearance="bordered">
+      <ToggleButton value="0">Bordered</ToggleButton>
+      <ToggleButton value="1">Bordered</ToggleButton>
+      <ToggleButton value="2">Bordered</ToggleButton>
+    </ToggleButtonGroup>
+  </StackLayout>
 );

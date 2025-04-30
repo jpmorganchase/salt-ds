@@ -321,24 +321,26 @@ describe("GIVEN a disabled ToggleButtonGroup ", () => {
     cy.findAllByRole("radio").eq(0).should("have.text", "Alert");
     cy.findAllByRole("radio")
       .eq(0)
-      .should("have.attr", "aria-checked", "false");
-    cy.findAllByRole("radio").eq(0).should("be.disabled");
+      .should("have.attr", "aria-checked", "false")
+      .and("be.disabled");
 
-    cy.findAllByRole("radio").eq(1).should("have.text", "Home");
     cy.findAllByRole("radio")
       .eq(1)
-      .should("have.attr", "aria-checked", "false");
-    cy.findAllByRole("radio").eq(1).should("be.disabled");
+      .should("have.text", "Home")
+      .and("have.attr", "aria-checked", "false")
+      .and("be.disabled");
 
-    cy.findAllByRole("radio").eq(2).should("have.text", "Search");
-    cy.findAllByRole("radio").eq(2).should("have.attr", "aria-checked", "true");
-    cy.findAllByRole("radio").eq(2).should("be.disabled");
+    cy.findAllByRole("radio")
+      .eq(2)
+      .should("have.text", "Search")
+      .and("have.attr", "aria-checked", "true")
+      .and("be.disabled");
 
-    cy.findAllByRole("radio").eq(3).should("have.text", "Print");
     cy.findAllByRole("radio")
       .eq(3)
-      .should("have.attr", "aria-checked", "false");
-    cy.findAllByRole("radio").eq(3).should("be.disabled");
+      .should("have.text", "Print")
+      .and("have.attr", "aria-checked", "false")
+      .and("be.disabled");
 
     cy.findAllByRole("radio").eq(0).realClick();
     // It should not fire onChange event
@@ -428,18 +430,20 @@ describe("GIVEN a read-only toggle button group", () => {
       .eq(0)
       .should("have.attr", "aria-checked", "false");
 
-    cy.findAllByRole("radio").eq(1).should("have.text", "Home");
     cy.findAllByRole("radio")
       .eq(1)
-      .should("have.attr", "aria-checked", "false");
+      .should("have.text", "Home")
+      .and("have.attr", "aria-checked", "false");
 
-    cy.findAllByRole("radio").eq(2).should("have.text", "Search");
-    cy.findAllByRole("radio").eq(2).should("have.attr", "aria-checked", "true");
+    cy.findAllByRole("radio")
+      .eq(2)
+      .should("have.text", "Search")
+      .and("have.attr", "aria-checked", "true");
 
-    cy.findAllByRole("radio").eq(3).should("have.text", "Print");
     cy.findAllByRole("radio")
       .eq(3)
-      .should("have.attr", "aria-checked", "false");
+      .should("have.text", "Print")
+      .and("have.attr", "aria-checked", "false");
 
     cy.findAllByRole("radio").eq(0).realClick();
     // It should not fire onChange event
@@ -450,7 +454,7 @@ describe("GIVEN a read-only toggle button group", () => {
     cy.get("@changeSpy").should("not.have.been.called");
   });
 
-  it("should maintain focus correctly", () => {
+  it("should be focusable", () => {
     cy.mount(
       <ToggleButtonGroup readOnly value={"home"}>
         <ToggleButton value="alert">
@@ -486,7 +490,7 @@ describe("GIVEN a read-only toggle button group", () => {
 });
 
 describe("GIVEN a ToggleButtonGroup with sentiments and appearance", () => {
-  it("THEN it should respect the sentiment set on the ToggleButtonGroup", () => {
+  it("THEN it should respect the sentiment set on the ToggleButtons", () => {
     cy.mount(
       <ToggleButtonGroup sentiment="accented" aria-label="Toggle options">
         <ToggleButton sentiment="neutral" value="alert">
@@ -504,45 +508,45 @@ describe("GIVEN a ToggleButtonGroup with sentiments and appearance", () => {
       </ToggleButtonGroup>,
     );
 
-    // All toggle buttons should have the toggle button group's sentiment
+    // All toggle buttons should have their own sentiments
     cy.findAllByRole("radio")
       .eq(0)
-      .should("have.class", "saltToggleButton-accented");
+      .should("have.class", "saltToggleButton-neutral");
     cy.findAllByRole("radio")
       .eq(1)
-      .should("have.class", "saltToggleButton-accented");
+      .should("have.class", "saltToggleButton-positive");
     cy.findAllByRole("radio")
       .eq(2)
-      .should("have.class", "saltToggleButton-accented");
+      .should("have.class", "saltToggleButton-negative");
   });
 
-  it("THEN it should respect the appearance set on the ToggleButtonGroup", () => {
+  it("THEN it should respect the appearance set on the ToggleButtons", () => {
     cy.mount(
       <ToggleButtonGroup appearance="bordered" aria-label="Toggle options">
-        <ToggleButton value="alert">
+        <ToggleButton value="alert" appearance="solid">
           <NotificationIcon aria-hidden />
           Alert
         </ToggleButton>
-        <ToggleButton value="home">
+        <ToggleButton value="home" appearance="solid">
           <HomeIcon aria-hidden />
           Home
         </ToggleButton>
-        <ToggleButton value="search">
+        <ToggleButton value="search" appearance="solid">
           <SearchIcon aria-hidden />
           Search
         </ToggleButton>
       </ToggleButtonGroup>,
     );
 
-    // All toggle buttons should have the toggle button group's appearance
+    // All toggle buttons should have their own appearance
     cy.findAllByRole("radio")
       .eq(0)
-      .should("have.class", "saltToggleButton-bordered");
+      .should("have.class", "saltToggleButton-solid");
     cy.findAllByRole("radio")
       .eq(1)
-      .should("have.class", "saltToggleButton-bordered");
+      .should("have.class", "saltToggleButton-solid");
     cy.findAllByRole("radio")
       .eq(2)
-      .should("have.class", "saltToggleButton-bordered");
+      .should("have.class", "saltToggleButton-solid");
   });
 });

@@ -1,5 +1,6 @@
 import { FlowLayout, ToggleButton, Tooltip } from "@salt-ds/core";
 import {
+  FavoriteIcon,
   FavoriteSolidIcon,
   LockedIcon,
   PinIcon,
@@ -8,7 +9,8 @@ import {
 import { type ReactElement, useState } from "react";
 
 export const IconOnly = (): ReactElement => {
-  const [selected, setSelected] = useState(false);
+  const [favorite, setFavorite] = useState(false);
+  const [locked, setLocked] = useState(false);
 
   return (
     <FlowLayout>
@@ -16,17 +18,22 @@ export const IconOnly = (): ReactElement => {
         <PinIcon aria-hidden />
       </ToggleButton>
       <Tooltip placement="top" content="Favorite">
-        <ToggleButton value="favorite">
-          <FavoriteSolidIcon aria-hidden />
+        <ToggleButton
+          value={favorite ? "favorite" : "unfavorite"}
+          aria-label={favorite ? "favorite" : "unfavorite"}
+          onChange={() => setFavorite(!favorite)}
+          selected={favorite}
+        >
+          {favorite ? <FavoriteSolidIcon /> : <FavoriteIcon />}
         </ToggleButton>
       </Tooltip>
       <ToggleButton
-        value={selected ? "unlocked" : "locked"}
-        aria-label={selected ? "unlocked" : "locked"}
-        onChange={() => setSelected(!selected)}
-        selected={selected}
+        value={locked ? "locked" : "unlocked"}
+        aria-label={locked ? "locked" : "unlocked"}
+        onChange={() => setLocked(!locked)}
+        selected={locked}
       >
-        {selected ? <UnlockedIcon /> : <LockedIcon />}
+        {locked ? <LockedIcon /> : <UnlockedIcon />}
       </ToggleButton>
     </FlowLayout>
   );

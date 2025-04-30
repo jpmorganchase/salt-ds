@@ -1,17 +1,21 @@
-import { ToggleButton, ToggleButtonGroup } from "@salt-ds/core";
-import { HomeIcon, NotificationIcon, UserIcon } from "@salt-ds/icons";
+import { StackLayout, ToggleButton, ToggleButtonGroup } from "@salt-ds/core";
 import type { ReactElement } from "react";
 
 export const ToggleButtonGroupDisabled = (): ReactElement => (
-  <ToggleButtonGroup defaultValue="home" disabled>
-    <ToggleButton value="home" disabled>
-      <HomeIcon aria-hidden /> Home
-    </ToggleButton>
-    <ToggleButton value="profile">
-      <UserIcon aria-hidden /> Profile
-    </ToggleButton>
-    <ToggleButton value="notifications">
-      <NotificationIcon aria-hidden /> Notifications
-    </ToggleButton>
-  </ToggleButtonGroup>
+  <StackLayout align="center">
+    <ToggleButtonGroup disabled>
+      <ToggleButton value="0" disabled>
+        Disabled
+      </ToggleButton>
+      <ToggleButton value="1">Disabled</ToggleButton>
+      <ToggleButton value="2">Disabled</ToggleButton>
+    </ToggleButtonGroup>
+    <ToggleButtonGroup defaultValue="1" disabled>
+      <ToggleButton value="0" disabled>
+        Selected disabled
+      </ToggleButton>
+      <ToggleButton value="1">Disabled</ToggleButton>
+      <ToggleButton value="2">Disabled</ToggleButton>
+    </ToggleButtonGroup>
+  </StackLayout>
 );

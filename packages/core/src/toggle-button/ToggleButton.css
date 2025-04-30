@@ -13,6 +13,7 @@
   gap: var(--salt-spacing-50);
   height: var(--salt-size-base);
   justify-content: center;
+  line-height: var(--salt-text-lineHeight);
   font-size: var(--salt-text-fontSize);
   font-weight: var(--salt-text-action-fontWeight);
   font-family: var(--salt-text-action-fontFamily);

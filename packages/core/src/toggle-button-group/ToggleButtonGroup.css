@@ -34,6 +34,5 @@
 }
 
 .saltToggleButtonGroup-vertical .saltToggleButton {
-  height: var(--salt-size-base);
   justify-content: start;
 }

@@ -1,20 +1,24 @@
 import { ToggleButton, ToggleButtonGroup } from "@salt-ds/core";
-import { AppSwitcherIcon, FolderClosedIcon, VisibleIcon } from "@salt-ds/icons";
+import {
+  UrgencyHighIcon,
+  UrgencyLowIcon,
+  UrgencyMediumIcon,
+} from "@salt-ds/icons";
 import type { ReactElement } from "react";
 
 export const ToggleButtonGroupDefault = (): ReactElement => (
   <ToggleButtonGroup>
-    <ToggleButton value="all">
-      <AppSwitcherIcon aria-hidden />
-      All
+    <ToggleButton value="high">
+      <UrgencyHighIcon aria-hidden />
+      High
     </ToggleButton>
-    <ToggleButton value="active">
-      <VisibleIcon aria-hidden />
-      Active
+    <ToggleButton value="medium">
+      <UrgencyMediumIcon aria-hidden />
+      Medium
     </ToggleButton>
-    <ToggleButton disabled value="search">
-      <FolderClosedIcon aria-hidden />
-      Archived
+    <ToggleButton value="low">
+      <UrgencyLowIcon aria-hidden />
+      Low
     </ToggleButton>
   </ToggleButtonGroup>
 );

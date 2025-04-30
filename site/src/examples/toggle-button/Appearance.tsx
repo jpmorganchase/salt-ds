@@ -1,9 +1,11 @@
-import { ToggleButton } from "@salt-ds/core";
-import { FolderClosedIcon } from "@salt-ds/icons";
+import { FlowLayout, ToggleButton } from "@salt-ds/core";
 import type { ReactElement } from "react";
 
 export const Appearance = (): ReactElement => (
-  <ToggleButton value="archived" appearance="bordered">
-    <FolderClosedIcon aria-hidden /> Archived
-  </ToggleButton>
+  <FlowLayout>
+    <ToggleButton value="solid">Solid</ToggleButton>
+    <ToggleButton value="bordered" appearance="bordered">
+      Bordered
+    </ToggleButton>
+  </FlowLayout>
 );
