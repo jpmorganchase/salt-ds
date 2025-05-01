@@ -253,13 +253,10 @@ export const DateInputRange = forwardRef<
     const parseDateValue = (
       dateValue: string | null | undefined,
       field: DateParserField,
-    ): ParserResult<TDate> | undefined => {
-      const parseResult = parseProp
+    ): ParserResult<TDate> | undefined =>
+      parseProp
         ? parseProp(dateValue ?? "", field, format)
         : dateAdapter.parse.bind(dateAdapter)(dateValue ?? "", format);
-
-      return parseResult;
-    };
 
     const [dateValue, setDateValue] = useControlled({
       controlled: valueProp,
@@ -267,23 +264,25 @@ export const DateInputRange = forwardRef<
       name: "DateInputRange",
       state: "dateValue",
     });
-    const fallbackDate = useMemo(() => {
-      if (!defaultValue) {
-        return undefined;
-      }
-      const { date: startDate = undefined } =
-        parseDateValue(defaultValue?.startDate, DateParserField.START) ?? {};
-      const { date: endDate = undefined } =
-        parseDateValue(defaultValue?.endDate, DateParserField.END) ?? {};
-      return {
-        startDate,
-        endDate,
-      };
-    }, [defaultValue, parseDateValue]);
 
     const [date, setDate] = useControlled({
       controlled: dateProp,
-      default: defaultDate ?? fallbackDate,
+      default: useMemo(() => {
+        if (defaultDate) {
+          return defaultDate;
+        }
+        if (!defaultValue) {
+          return undefined;
+        }
+        const { date: startDate = undefined } =
+          parseDateValue(defaultValue?.startDate, DateParserField.START) ?? {};
+        const { date: endDate = undefined } =
+          parseDateValue(defaultValue?.endDate, DateParserField.END) ?? {};
+        return {
+          startDate,
+          endDate,
+        };
+      }, []),
       name: "DateInputRange",
       state: "date",
     });
@@ -304,33 +303,36 @@ export const DateInputRange = forwardRef<
           : null,
     };
     const setDateValueFromDate = (newDate: typeof date) => {
-      let newDateValue = { ...dateValue };
-      if (newDate?.startDate && dateAdapter.isValid(newDate?.startDate)) {
+      let newDateValue = { startDate: "", endDate: "" };
+      if (!newDate?.startDate) {
+        newDateValue = { ...newDateValue, startDate: "" };
+      } else if (!dateAdapter.isValid(newDate?.startDate)) {
+        newDateValue = {
+          ...newDateValue,
+          startDate: dateValue?.startDate ?? "",
+        };
+      } else if (newDate?.startDate) {
         const formattedStartDateValue = dateAdapter.format(
-          newDate?.startDate,
+          newDate.startDate,
           format,
         );
-        newDateValue = { ...dateValue, startDate: formattedStartDateValue };
-      } else if (!newDate?.startDate) {
-        newDateValue = {
-          ...dateValue,
-          startDate: dateAdapter.format(undefined, format),
-        };
+        newDateValue = { ...newDateValue, startDate: formattedStartDateValue };
       }
-      if (newDate?.endDate && dateAdapter.isValid(newDate.endDate)) {
+      if (!newDate?.endDate) {
+        newDateValue = { ...newDateValue, endDate: "" };
+      } else if (!dateAdapter.isValid(newDate?.endDate)) {
+        newDateValue = { ...newDateValue, endDate: dateValue?.endDate ?? "" };
+      } else if (newDate?.endDate && dateAdapter.isValid(newDate.endDate)) {
         const formattedEndDateValue = dateAdapter.format(
-          newDate?.endDate,
+          newDate.endDate,
           format,
         );
         newDateValue = { ...newDateValue, endDate: formattedEndDateValue };
-      } else if (!newDate?.endDate) {
-        newDateValue = {
-          ...newDateValue,
-          endDate: dateAdapter.format(undefined, format),
-        };
       }
 
       if (
+        (!newDateValue?.startDate && !!dateValue?.startDate) ||
+        (!newDateValue.endDate && !!dateValue?.endDate) ||
         newDateValue?.startDate !== dateValue?.startDate ||
         newDateValue?.endDate !== dateValue?.endDate
       ) {
@@ -408,13 +410,19 @@ export const DateInputRange = forwardRef<
           timezone,
         );
         if (preservedTime.current.startTime) {
-          updatedDateRange.startDate = dateAdapter.set(updatedDateRange.startDate, preservedTime.current.startTime);
+          updatedDateRange.startDate = dateAdapter.set(
+            updatedDateRange.startDate,
+            preservedTime.current.startTime,
+          );
         }
       }
       if (dateAdapter.isValid(endDate)) {
         updatedDateRange.endDate = dateAdapter.setTimezone(endDate, timezone);
         if (preservedTime.current.endTime) {
-          updatedDateRange.endDate = dateAdapter.set(updatedDateRange.endDate, preservedTime.current.endTime);
+          updatedDateRange.endDate = dateAdapter.set(
+            updatedDateRange.endDate,
+            preservedTime.current.endTime,
+          );
         }
       }
       const updatedDateValue = setDateValueFromDate(updatedDateRange);
@@ -429,6 +437,7 @@ export const DateInputRange = forwardRef<
           startDate: startDateParseDetails,
           endDate: endDateParseDetails,
         });
+        onDateValueChange?.(event, updatedDateValue);
         lastAppliedValue.current = updatedDateValue;
       }
     };
