@@ -421,6 +421,7 @@ export const SingleWithTimezone: StoryFn<typeof DateInputSingle> = (args) => {
   const [dateString, setDateString] = useState<string>("");
   const [error, setError] = useState<string | undefined>(undefined);
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: reset related state when timezone changes
   useEffect(() => {
     setCurrentTimezone("");
     setIso8601String("");
@@ -453,7 +454,7 @@ export const SingleWithTimezone: StoryFn<typeof DateInputSingle> = (args) => {
           ? selectedTimezone
           : undefined;
 
-      const formatDate = (date: Date , hasError: boolean) => {
+      const formatDate = (date: Date, hasError: boolean) => {
         if (hasError) return { iso: "", locale: "", formatted: "" };
         const iso = date.toISOString();
         const locale = new Intl.DateTimeFormat(undefined, {
@@ -592,6 +593,7 @@ export const RangeWithTimezone: StoryFn<typeof DateInputRange> = (args) => {
     undefined,
   );
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: reset related state when timezone changes
   useEffect(() => {
     setCurrentTimezone("");
     setStartIso8601String("");
@@ -606,7 +608,8 @@ export const RangeWithTimezone: StoryFn<typeof DateInputRange> = (args) => {
 
   const handleDateChange: DateInputRangeProps<DateFrameworkType>["onDateChange"] =
     (_event, date, details) => {
-      const { startDate, endDate } = date as DateRangeSelection<DateFrameworkType>;
+      const { startDate, endDate } =
+        date as DateRangeSelection<DateFrameworkType>;
       const isStartDateUnset =
         details.startDate?.errors?.length &&
         details.startDate.errors[0].type === "unset";

@@ -49,20 +49,20 @@ import {
   useLocalization,
 } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react";
+// As required by locale specific examples
+import type { Moment } from "moment";
 import { type ChangeEvent, type SyntheticEvent, useEffect } from "react";
 import { useCallback, useRef, useState } from "react";
 // CustomDatePickerPanel is a sample component, representing a composition you could create yourselves, not intended for importing into your own projects
 // refer to https://github.com/jpmorganchase/salt-ds/blob/main/packages/lab/src/date-picker/useDatePicker.ts to create your own
 import { CustomDatePickerPanel } from "./CustomDatePickerPanel";
-// As required by locale specific examples
-import { type Moment } from "moment";
 import "moment/dist/locale/zh-cn";
 import "moment/dist/locale/es";
 import "dayjs/locale/es";
 import "dayjs/locale/zh-cn";
 import { es as dateFnsEs } from "date-fns/locale";
 import { zhCN as dateFnsZhCn } from "date-fns/locale";
-import {DateTime} from "luxon";
+import type { DateTime } from "luxon";
 
 export default {
   title: "Lab/Date Picker",
@@ -733,8 +733,8 @@ export const SingleWithMinMaxDate: StoryFn<
             defaultVisibleMonth={defaultVisibleMonth}
             helperText={helperText}
           />
-          <DatePickerHelperText>{helperText}</DatePickerHelperText>
         </DatePickerOverlay>
+        <DatePickerHelperText>{helperText}</DatePickerHelperText>
       </DatePicker>
     </FormField>
   );
@@ -1139,7 +1139,7 @@ export const RangeWithFormField: StoryFn<
           <DatePickerRangeInput />
         </DatePickerTrigger>
         <DatePickerOverlay>
-          <DatePickerRangeGridPanel helperText={helperText} />
+          <DatePickerRangePanel helperText={helperText} />
         </DatePickerOverlay>
         <DatePickerHelperText>{helperText}</DatePickerHelperText>
       </DatePicker>
@@ -1449,9 +1449,6 @@ export const SingleWithConfirmation: StoryFn<
         setValidationStatus(undefined);
       }
       setSelectedDate(date ?? null);
-      if (date) {
-        applyButtonRef?.current?.focus();
-      }
       args?.onSelectionChange?.(event, date, details);
     },
     [args?.onSelectionChange, dateAdapter],
@@ -1493,6 +1490,12 @@ export const SingleWithConfirmation: StoryFn<
     [args?.onApply, dateAdapter],
   );
 
+  useEffect(() => {
+    if (selectedDate && dateAdapter.isValid(selectedDate)) {
+      setTimeout(() => applyButtonRef?.current?.focus(), 0);
+    }
+  }, [selectedDate]);
+
   return (
     <FormField validationStatus={validationStatus}>
       <FormLabel>Select a date</FormLabel>
@@ -1511,7 +1514,7 @@ export const SingleWithConfirmation: StoryFn<
         <DatePickerOverlay>
           <FlexLayout gap={0} direction="column">
             <FlexItem>
-              <DatePickerSingleGridPanel helperText={helperText} />
+              <DatePickerSingleGridPanel helperText={helperText}/>
               <Divider variant="tertiary" />
             </FlexItem>
             <FlexItem>
@@ -1651,6 +1654,13 @@ export const RangeWithConfirmation: StoryFn<
     [args?.onApply, dateAdapter],
   );
 
+  useEffect(() => {
+    if (selectedDate && dateAdapter.isValid(selectedDate?.startDate) && dateAdapter.isValid(selectedDate?.endDate)) {
+      setTimeout(() => applyButtonRef?.current?.focus(), 0);
+    }
+  }, [selectedDate]);
+
+
   return (
     <FormField validationStatus={validationStatus}>
       <FormLabel>Select a date range</FormLabel>
@@ -1745,10 +1755,7 @@ export const SingleWithCustomParser: StoryFn<
   );
 
   const customParser = useCallback(
-    (
-      inputDate: string,
-      format: string
-    ): ParserResult<DateFrameworkType> => {
+    (inputDate: string, format: string): ParserResult<DateFrameworkType> => {
       if (!inputDate?.length) {
         const parsedDate = dateAdapter.parse("invalid date", "DD/MMM/YYYY");
         return {
@@ -2107,7 +2114,7 @@ export const RangeWithUnselectableDates: StoryFn<
           <DatePickerRangeInput />
         </DatePickerTrigger>
         <DatePickerOverlay>
-          <DatePickerRangeGridPanel helperText={helperText} />
+          <DatePickerRangePanel helperText={helperText} />
         </DatePickerOverlay>
         <DatePickerHelperText>{helperText}</DatePickerHelperText>
       </DatePicker>
@@ -2276,7 +2283,7 @@ export const RangeWithDisabledDates: StoryFn<
           <DatePickerRangeInput />
         </DatePickerTrigger>
         <DatePickerOverlay>
-          <DatePickerRangeGridPanel helperText={helperText} />
+          <DatePickerRangePanel helperText={helperText} />
         </DatePickerOverlay>
         <DatePickerHelperText>{helperText}</DatePickerHelperText>
       </DatePicker>
@@ -2445,7 +2452,7 @@ export const RangeWithHighlightedDates: StoryFn<
           <DatePickerRangeInput />
         </DatePickerTrigger>
         <DatePickerOverlay>
-          <DatePickerRangeGridPanel helperText={helperText} />
+          <DatePickerRangePanel helperText={helperText} />
         </DatePickerOverlay>
         <DatePickerHelperText>{helperText}</DatePickerHelperText>
       </DatePicker>
@@ -2601,7 +2608,7 @@ export const SingleWithLocaleZhCN: StoryFn<
       }
       args?.onSelectionChange?.(event, date, details);
     },
-    [args?.onSelectionChange, isDateFns, dateAdapter, defaultHelperText],
+    [args?.onSelectionChange, dateAdapter, defaultHelperText],
   );
 
   function renderDayContents(day: DateFrameworkType) {
@@ -2622,9 +2629,7 @@ export const SingleWithLocaleZhCN: StoryFn<
         onSelectionChange={handleSelectionChange}
       >
         <DatePickerTrigger>
-          <DatePickerSingleInput
-            format={"DD MMM YYYY"}
-          />
+          <DatePickerSingleInput format={"DD MMM YYYY"} />
         </DatePickerTrigger>
         <DatePickerOverlay>
           <DatePickerSingleGridPanel
@@ -2704,7 +2709,7 @@ export const SingleWithTimezone: StoryFn<
           ? selectedTimezone
           : undefined;
 
-      const formatDate = (date:DateFrameworkType) => {
+      const formatDate = (date: DateFrameworkType) => {
         const iso = date.toISOString();
         const locale = new Intl.DateTimeFormat(undefined, {
           timeZone: systemTimeZone,
@@ -2752,6 +2757,7 @@ export const SingleWithTimezone: StoryFn<
     setSelectedTimezone(selection[0]);
   };
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: reset related state when timezone changes
   useEffect(() => {
     setCurrentTimezone("");
     setIso8601String("");
@@ -2849,15 +2855,9 @@ export const RangeWithTimezone: StoryFn<
   const [startLocaleDateString, setStartLocaleDateString] =
     useState<string>("");
   const [startDateString, setStartDateString] = useState<string>("");
-  const [startDateError, setStartDateError] = useState<string | undefined>(
-    undefined,
-  );
   const [endIso8601String, setEndIso8601String] = useState<string>("");
   const [endLocaleDateString, setEndLocaleDateString] = useState<string>("");
   const [endDateString, setEndDateString] = useState<string>("");
-  const [endDateError, setEndDateError] = useState<string | undefined>(
-    undefined,
-  );
 
   const defaultHelperText =
     "Select range (DD MMM YYYY - DD MMM YYYY) e.g. 09 Jun 2024";
@@ -2905,13 +2905,11 @@ export const RangeWithTimezone: StoryFn<
       }
       if (startDateErrors?.length && startDateOriginalValue) {
         setValidationStatus("error");
-        setStartDateError(startDateErrors[0].message);
         setHelperText(
           `${errorHelperText} - start date, ${startDateErrors[0].message}`,
         );
       } else if (endDateErrors?.length && endDateOriginalValue) {
         setValidationStatus("error");
-        setEndDateError(endDateErrors[0].message);
         setHelperText(
           `${errorHelperText} - end date, ${endDateErrors[0].message}`,
         );
@@ -2927,7 +2925,6 @@ export const RangeWithTimezone: StoryFn<
           : undefined;
 
       const formatDate = (date: DateFrameworkType) => {
-        console.log(date);
         const iso = date.toISOString();
         const locale = new Intl.DateTimeFormat(undefined, {
           timeZone: systemTimeZone,
@@ -2995,16 +2992,15 @@ export const RangeWithTimezone: StoryFn<
     setSelectedTimezone(selection[0]);
   };
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: reset related state when timezone changes
   useEffect(() => {
     setCurrentTimezone("");
     setStartIso8601String("");
     setStartLocaleDateString("");
     setStartDateString("");
-    setStartDateError(undefined);
     setEndIso8601String("");
     setEndLocaleDateString("");
     setEndDateString("");
-    setEndDateError(undefined);
   }, [selectedTimezone]);
 
   return (
