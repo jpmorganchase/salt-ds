@@ -175,10 +175,9 @@ export class AdapterMoment implements SaltDateAdapter<Moment, string> {
    * @returns A DateDetail object containing the parsed date and any errors.
    */
   public parse(value: string, format: string): ParserResult<Moment> {
-    const parsedDate =
-      this.locale
-        ? this.moment(value, format, this.locale, true)
-        : this.moment(value, format, true);
+    const parsedDate = this.locale
+      ? this.moment(value, format, this.locale, true)
+      : this.moment(value, format, true);
     if (parsedDate.isValid()) {
       return {
         date: parsedDate,

@@ -368,7 +368,7 @@ export class AdapterLuxon implements SaltDateAdapter<DateTime, string> {
     if (date.zone.type === "system") {
       return "system";
     }
-    return date.zoneName!;
+    return date.zoneName ?? "";
   };
 
   /**

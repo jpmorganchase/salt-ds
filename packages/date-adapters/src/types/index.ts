@@ -168,6 +168,7 @@ export interface SaltDateAdapter<
    * @param date - The date object to check.
    * @returns True if the date is valid, false otherwise.
    */
+  // biome-ignore lint/suspicious/noExplicitAny: date framework dependent
   isValid(date: any): date is TDate;
 
   /**
