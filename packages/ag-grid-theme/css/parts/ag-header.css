@@ -291,7 +291,11 @@
 .ag-theme-salt-light .ag-floating-filter input[class^="ag-"][type="text"],
 .ag-theme-salt-dark .ag-floating-filter input[class^="ag-"][type="text"],
 .ag-theme-salt-compact-light .ag-floating-filter input[class^="ag-"][type="text"],
-.ag-theme-salt-compact-dark .ag-floating-filter input[class^="ag-"][type="text"] {
+.ag-theme-salt-compact-dark .ag-floating-filter input[class^="ag-"][type="text"],
+.ag-theme-salt-light .ag-floating-filter input[class^="ag-"][type="date"],
+.ag-theme-salt-dark .ag-floating-filter input[class^="ag-"][type="date"],
+.ag-theme-salt-compact-light .ag-floating-filter input[class^="ag-"][type="date"],
+.ag-theme-salt-compact-dark .ag-floating-filter input[class^="ag-"][type="date"] {
   /* Avoid floating filter's input clips focus ring */
   height: calc(var(--salt-size-base) + var(--salt-spacing-100) - 6px);
   /* Give internal <input> space for the outline */
@@ -307,7 +311,11 @@
 .ag-theme-salt-light .ag-floating-filter-input input[class^="ag-"][type="number"],
 .ag-theme-salt-dark .ag-floating-filter-input input[class^="ag-"][type="number"],
 .ag-theme-salt-compact-light .ag-floating-filter-input input[class^="ag-"][type="number"],
-.ag-theme-salt-compact-dark .ag-floating-filter-input input[class^="ag-"][type="number"] {
+.ag-theme-salt-compact-dark .ag-floating-filter-input input[class^="ag-"][type="number"],
+.ag-theme-salt-light .ag-floating-filter-input input[class^="ag-"][type="date"],
+.ag-theme-salt-dark .ag-floating-filter-input input[class^="ag-"][type="date"],
+.ag-theme-salt-compact-light .ag-floating-filter-input input[class^="ag-"][type="date"],
+.ag-theme-salt-compact-dark .ag-floating-filter-input input[class^="ag-"][type="date"] {
   border: none;
 }
 
