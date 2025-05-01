@@ -28,6 +28,7 @@ import {
   type SyntheticEvent,
   forwardRef,
   useEffect,
+  useMemo,
   useRef,
   useState,
 } from "react";
@@ -205,7 +206,15 @@ export const DateInputSingle = forwardRef<
 
     const [date, setDate] = useControlled({
       controlled: dateProp,
-      default: defaultDate,
+      default: useMemo(() => {
+        if (defaultDate) {
+          return defaultDate;
+        }
+        if (!defaultValue) {
+          return undefined;
+        }
+        return dateAdapter.parse(defaultValue, format) as TDate;
+      }, []),
       name: "DateInputSingle",
       state: "date",
     });
@@ -273,7 +282,7 @@ export const DateInputSingle = forwardRef<
       const parse = parseProp ?? dateAdapter.parse.bind(dateAdapter);
       const parseResult = parse(dateValue ?? "", format);
       let { date: parsedDate, ...parseDetails } = parseResult;
-      let formattedValue = '';
+      let formattedValue = "";
       const isDateValid = dateAdapter.isValid(parsedDate);
       if (isDateValid) {
         parsedDate = dateAdapter.setTimezone(parsedDate, timezone);
