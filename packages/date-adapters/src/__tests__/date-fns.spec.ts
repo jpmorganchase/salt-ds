@@ -41,7 +41,7 @@ describe("GIVEN a AdapterDateFns", () => {
   });
 
   it("should handle empty date strings", () => {
-    const date = adapter.date("", "system");
+    const date = adapter.date("");
     expect(isValid(date)).toBe(false);
   });
 
@@ -119,7 +119,7 @@ describe("GIVEN a AdapterDateFns", () => {
   });
 
   it("SHOULD get the name of the day of the week", () => {
-    const dayName = adapter.getDayOfWeekName(3, "long", enUS);
+    const dayName = adapter.getDayOfWeekName(3, "long");
     expect(dayName).toBe("Wednesday");
   });
 

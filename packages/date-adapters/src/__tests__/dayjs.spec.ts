@@ -150,7 +150,7 @@ describe("GIVEN a AdapterDayjs", () => {
   });
 
   it("SHOULD get the name of the day of the week", () => {
-    const dayName = adapter.getDayOfWeekName(3, "long", "en");
+    const dayName = adapter.getDayOfWeekName(3, "long");
     expect(dayName).toBe("Wednesday");
   });
 
