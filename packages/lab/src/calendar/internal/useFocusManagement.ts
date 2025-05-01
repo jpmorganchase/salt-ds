@@ -21,7 +21,7 @@ export function useFocusManagement<TDate extends DateFrameworkType>({
   };
 
   const handleKeyDown: KeyboardEventHandler<HTMLButtonElement> = (event) => {
-    let newDate = date;
+    let newDate ;
     switch (event.key) {
       case "ArrowUp":
         newDate = dateAdapter.subtract(date, { weeks: 1 });
@@ -57,10 +57,10 @@ export function useFocusManagement<TDate extends DateFrameworkType>({
         break;
       default:
     }
-    if (dateAdapter.compare(newDate, date) !== 0) {
+    if (newDate && dateAdapter.compare(newDate, date) !== 0) {
       event.preventDefault();
+      setFocusedDate(event, newDate);
     }
-    setFocusedDate(event, newDate);
   };
 
   const handleFocus: FocusEventHandler<HTMLButtonElement> = (event) => {

@@ -5,7 +5,7 @@ import type {
 
 export function daysOfWeek<TDate extends DateFrameworkType>(
   dateAdapter: SaltDateAdapter<TDate>,
-  format: "long" | "short" | "narrow"
+  format: "long" | "short" | "narrow",
 ) {
   return Array.from({ length: 7 }, (_, day) =>
     dateAdapter.getDayOfWeekName(day, format),
@@ -29,7 +29,7 @@ export function generateVisibleDays<TDate extends DateFrameworkType>(
   const totalDays = 6 * 7;
   const startDate = dateAdapter.startOf(
     dateAdapter.startOf(currentMonth, "month"),
-    "week"
+    "week",
   );
   return [...Array(totalDays).keys()].map((dayDelta) => {
     const day = dateAdapter.add(startDate, { days: dayDelta });

@@ -12,7 +12,6 @@ import {
   type ComponentPropsWithRef,
   type ReactElement,
   forwardRef,
-  useRef,
   useEffect,
 } from "react";
 import { useLocalization } from "../../localization-provider";
@@ -57,11 +56,16 @@ export const CalendarDay = forwardRef<
     window: targetWindow,
   });
 
-  const { status, focusedDateRef = null, dayProps, unselectableReason, highlightedReason } =
-    useCalendarDay({
-      date: day,
-      month,
-    });
+  const {
+    status,
+    focusedDateRef = null,
+    dayProps,
+    unselectableReason,
+    highlightedReason,
+  } = useCalendarDay({
+    date: day,
+    month,
+  });
   const {
     focused,
     outOfRange,
@@ -71,13 +75,13 @@ export const CalendarDay = forwardRef<
     hidden,
     disabled,
   } = status;
-  const buttonRef = useForkRef(ref, focusedDateRef );
+  const buttonRef = useForkRef(ref, focusedDateRef);
 
   useEffect(() => {
     if (focused) {
       focusedDateRef?.current?.focus({ preventScroll: true });
     }
-  }, [focused]);
+  }, [focused, focusedDateRef?.current?.focus]);
 
   const buttonElement = (
     <button
@@ -95,6 +99,7 @@ export const CalendarDay = forwardRef<
           [withBaseName("disabled")]: disabled,
           [withBaseName("unselectable")]: !!unselectable,
           [withBaseName("highlighted")]: !!highlighted,
+          [withBaseName("focused")]: !!focused,
         },
         dayProps.className,
         className,

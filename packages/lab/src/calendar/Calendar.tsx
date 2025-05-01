@@ -4,7 +4,7 @@ import {
   type ComponentPropsWithoutRef,
   type ReactNode,
   forwardRef,
-  useRef
+  useRef,
 } from "react";
 import { CalendarContext } from "./internal/CalendarContext";
 import {
@@ -201,7 +201,8 @@ export const Calendar = forwardRef<
       onSelectionChange,
       onVisibleMonthChange,
       focusedDate,
-      focusedDateRef: focusedDateRef !== undefined ? focusedDateRef : defaultFocusedDateRef,
+      focusedDateRef:
+        focusedDateRef !== undefined ? focusedDateRef : defaultFocusedDateRef,
       isDayUnselectable,
       isDayHighlighted,
       isDayDisabled,
