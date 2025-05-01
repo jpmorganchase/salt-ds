@@ -323,16 +323,16 @@ export const MinMaxDate: StoryFn<typeof Calendar> = (args) => {
   const maxDate = dateAdapter.endOf(defaultSelectedDate, "month");
 
   return (
-    <Calendar
-      {...args}
-      selectionVariant={"single"}
-      defaultSelectedDate={defaultSelectedDate}
-      minDate={minDate}
-      maxDate={maxDate}
-    >
-      <CalendarNavigation />
-      <CalendarGrid />
-    </Calendar>
+      <Calendar
+        {...args}
+        selectionVariant={"single"}
+        defaultSelectedDate={defaultSelectedDate}
+        minDate={minDate}
+        maxDate={maxDate}
+      >
+        <CalendarNavigation />
+        <CalendarGrid />
+      </Calendar>
   );
 };
 
@@ -481,6 +481,7 @@ export const SingleWithTimezone: StoryFn<typeof Calendar> = (args) => {
   const [localeDateString, setLocaleDateString] = useState<string>("");
   const [dateString, setDateString] = useState<string>("");
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: reset related state when timezone changes
   useEffect(() => {
     setIso8601String("");
     setLocaleDateString("");
@@ -616,6 +617,7 @@ export const RangeWithTimezone: StoryFn<typeof Calendar> = (args) => {
   const [endLocaleDateString, setEndLocaleDateString] = useState<string>("");
   const [endDateString, setEndDateString] = useState<string>("");
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: reset related state when timezone changes
   useEffect(() => {
     setCurrentTimezone("");
     setStartIso8601String("");
@@ -792,6 +794,7 @@ export const SingleWithDerivedTimezone: StoryFn<typeof Calendar> = (args) => {
   const [localeDateString, setLocaleDateString] = useState<string>("");
   const [dateString, setDateString] = useState<string>("");
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: reset related state when timezone changes
   useEffect(() => {
     setCurrentTimezone("");
     setIso8601String("");
