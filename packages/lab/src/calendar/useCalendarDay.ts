@@ -1,9 +1,9 @@
 import type { DateFrameworkType } from "@salt-ds/date-adapters";
-import {
-  type ComponentPropsWithoutRef,
-  type FocusEventHandler,
-  type KeyboardEventHandler,
-  type MouseEventHandler,
+import type {
+  ComponentPropsWithoutRef,
+  FocusEventHandler,
+  KeyboardEventHandler,
+  MouseEventHandler,
 } from "react";
 import { useLocalization } from "../localization-provider";
 import { useCalendarContext } from "./internal/CalendarContext";
@@ -64,7 +64,7 @@ export interface useCalendarDayProps<TDate> {
 }
 
 export function useCalendarDay<TDate extends DateFrameworkType>(
-  props: useCalendarDayProps<TDate>
+  props: useCalendarDayProps<TDate>,
 ) {
   const { date, month } = props;
   const { dateAdapter } = useLocalization<TDate>();
@@ -74,7 +74,7 @@ export function useCalendarDay<TDate extends DateFrameworkType>(
       focusedDateRef,
       hideOutOfRangeDates,
       timezone,
-      focusableDates
+      focusableDates,
     },
     helpers: {
       setHoveredDate,
@@ -111,13 +111,17 @@ export function useCalendarDay<TDate extends DateFrameworkType>(
     onClick: handleClick,
     onKeyDown: handleKeyDown,
     onFocus: handleFocus,
-    onMouseEnter: handleMouseEnter
+    onMouseEnter: handleMouseEnter,
   };
 
   const outOfRange = !dateAdapter.isSame(date, month, "month");
   const focused =
     focusedDate && dateAdapter.isSame(date, focusedDate, "day") && !outOfRange;
-  const tabIndex = focusableDates.find(tabbableDate =>  dateAdapter.isSame(date, tabbableDate, "day")) ? 0 : -1;
+  const tabIndex = focusableDates.find((tabbableDate) =>
+    dateAdapter.isSame(date, tabbableDate, "day"),
+  )
+    ? 0
+    : -1;
   const today = dateAdapter.isSame(dateAdapter.today(timezone), date, "day");
 
   const unselectableReason = isDayUnselectable(date);

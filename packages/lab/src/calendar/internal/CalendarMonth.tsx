@@ -58,7 +58,7 @@ export const CalendarMonth = forwardRef<
   });
 
   const {
-    helpers: { setHoveredDate }
+    helpers: { setHoveredDate },
   } = useCalendarContext<TDate>();
   const days = generateVisibleDays<TDate>(dateAdapter, date);
   const handleMouseLeave = (event: SyntheticEvent) => {

@@ -21,7 +21,8 @@ import {
  * Base properties for the UseCalendar hook.
  * @template TDate - The type of the date object.
  */
-interface UseCalendarBaseProps<TDate> extends UseCalendarSelectionBaseProps<TDate> {
+interface UseCalendarBaseProps<TDate>
+  extends UseCalendarSelectionBaseProps<TDate> {
   /**
    * The default visible month.
    */
@@ -31,7 +32,10 @@ interface UseCalendarBaseProps<TDate> extends UseCalendarSelectionBaseProps<TDat
    * @param event - The synthetic event, if user triggered change or undefined.
    * @param visibleMonth - The new visible month.
    */
-  onVisibleMonthChange?: (event: SyntheticEvent | undefined, visibleMonth: TDate) => void;
+  onVisibleMonthChange?: (
+    event: SyntheticEvent | undefined,
+    visibleMonth: TDate,
+  ) => void;
   /**
    * Function to determine if a day is unselectable.
    * @param date - The date to check.
@@ -65,7 +69,9 @@ interface UseCalendarBaseProps<TDate> extends UseCalendarSelectionBaseProps<TDat
   /**
    * Number of visible months, maximum 12, defaults to 1.
    */
-  numberOfVisibleMonths?: ResponsiveProp<1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12>;
+  numberOfVisibleMonths?: ResponsiveProp<
+    1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12
+  >;
 }
 
 /**
@@ -215,7 +221,6 @@ export interface UseCalendarReturn<TDate extends DateFrameworkType> {
    * Helper functions for interacting with the calendar.
    */
   helpers: {
-
     /**
      * Sets the visible month in the calendar.
      *
@@ -514,9 +519,10 @@ export function useCalendar<TDate extends DateFrameworkType>(
     onHoveredDateChange,
     hoveredDate,
     timezone,
-    visibleMonth
+    visibleMonth,
   } as UseCalendarSelectionProps<TDate>);
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: isDayVisible ignored (due to dependency on visibleMonth)
   useEffect(() => {
     const focusedDate = selectionManager?.state?.focusedDate;
     const shouldTransition =
@@ -529,7 +535,13 @@ export function useCalendar<TDate extends DateFrameworkType>(
     if (shouldTransition) {
       setVisibleMonth(undefined, dateAdapter.startOf(focusedDate, "month"));
     }
-  }, [ focusedDateProp, selectionManager?.state?.focusedDate]);
+  }, [
+    dateAdapter,
+    focusedDateProp,
+    isOutsideAllowedDates,
+    isDaySelectable,
+    selectionManager?.state?.focusedDate,
+  ]);
 
   const setVisibleMonth = useCallback(
     (event: SyntheticEvent | undefined, newVisibleMonth: TDate) => {

@@ -1,10 +1,11 @@
 import { makePrefixer, useControlled } from "@salt-ds/core";
 import type {
   DateFrameworkType,
-  SaltDateAdapter, Timezone,
+  SaltDateAdapter,
+  Timezone,
 } from "@salt-ds/date-adapters";
 import { clsx } from "clsx";
-import {
+import type {
   KeyboardEventHandler,
   MouseEventHandler,
   SyntheticEvent,
@@ -12,7 +13,7 @@ import {
 import { useCallback, useMemo } from "react";
 import { useLocalization } from "../localization-provider";
 import { useCalendarContext } from "./internal/CalendarContext";
-import {generateDatesForMonth} from "./internal/utils";
+import { generateDatesForMonth } from "./internal/utils";
 
 /**
  * Type representing a single date selection.
@@ -104,7 +105,9 @@ export function isMultipleDateSelection<TDate extends DateFrameworkType>(
  * Base properties for calendar UseCalendarSelection hook.
  * @template TDate - The type of the date object.
  */
-export interface UseCalendarSelectionBaseProps<TDate extends DateFrameworkType> {
+export interface UseCalendarSelectionBaseProps<
+  TDate extends DateFrameworkType,
+> {
   /**
    * The currently focused date in the calendar, or null if no date is focused.
    */
@@ -140,13 +143,19 @@ export interface UseCalendarSelectionBaseProps<TDate extends DateFrameworkType> 
    * @param event - The synthetic event, if user event triggered focus or undefined.
    * @param date - The new focused date.
    */
-  onFocusedDateChange?: (event: SyntheticEvent | undefined, date: TDate | null) => void;
+  onFocusedDateChange?: (
+    event: SyntheticEvent | undefined,
+    date: TDate | null,
+  ) => void;
   /**
    * Callback fired when the hovered date changes.
    * @param event - The synthetic event.
    * @param hoveredDate - The new hovered date.
    */
-  onHoveredDateChange?: (event: SyntheticEvent, hoveredDate: TDate | null) => void;
+  onHoveredDateChange?: (
+    event: SyntheticEvent,
+    hoveredDate: TDate | null,
+  ) => void;
   /**
    * Specifies the timezone behavior:
    * - If undefined, the timezone will be derived from the passed date, or from `defaultSelectedDate`/`selectedDate`.
@@ -161,7 +170,6 @@ export interface UseCalendarSelectionBaseProps<TDate extends DateFrameworkType> 
    */
   visibleMonth?: TDate;
 }
-
 
 /**
  * UseCalendar hook props to return a calendar day's status
@@ -271,8 +279,9 @@ export interface UseCalendarSelectionMultiSelectProps<
  * Properties for the single date selection hook.
  * @template TDate - The type of the date object.
  */
-export interface UseCalendarSelectionSingleProps<TDate extends DateFrameworkType>
-  extends UseCalendarSelectionBaseProps<TDate> {
+export interface UseCalendarSelectionSingleProps<
+  TDate extends DateFrameworkType,
+> extends UseCalendarSelectionBaseProps<TDate> {
   /**
    * The selection variant, set to "single".
    */
@@ -290,7 +299,10 @@ export interface UseCalendarSelectionSingleProps<TDate extends DateFrameworkType
    * @param event - The synthetic event.
    * @param selectedDate - The new selected date.
    */
-  onSelectionChange?: (event: SyntheticEvent, selectedDate: SingleDateSelection<TDate> | null) => void;
+  onSelectionChange?: (
+    event: SyntheticEvent,
+    selectedDate: SingleDateSelection<TDate> | null,
+  ) => void;
 }
 
 /**
@@ -525,14 +537,12 @@ export function useCalendarSelection<TDate extends DateFrameworkType>(
     return null;
   };
 
-  const [focusedDate, setFocusedDateState] = useControlled(
-    {
-      controlled: focusedDateProp,
-      default: useMemo(getDefaultFocusedDate, []),
-      name: "Calendar",
-      state: "focusedDate",
-    },
-  );
+  const [focusedDate, setFocusedDateState] = useControlled({
+    controlled: focusedDateProp,
+    default: useMemo(getDefaultFocusedDate, []),
+    name: "Calendar",
+    state: "focusedDate",
+  });
 
   const setFocusedDate = useCallback(
     (event: SyntheticEvent | undefined, date: TDate | null) => {
@@ -549,7 +559,13 @@ export function useCalendarSelection<TDate extends DateFrameworkType>(
       setFocusedDateState(date);
       onFocusedDateChange?.(event, date);
     },
-    [dateAdapter, focusedDate, isOutsideAllowedDates, onFocusedDateChange],
+    [
+      dateAdapter,
+      focusedDate,
+      focusedDateRef,
+      isOutsideAllowedDates,
+      onFocusedDateChange,
+    ],
   );
 
   const [hoveredDate, setHoveredDateState] = useControlled({
@@ -585,7 +601,6 @@ export function useCalendarSelection<TDate extends DateFrameworkType>(
       } else if (selectedDate?.endDate && isDayVisible(selectedDate.endDate)) {
         focusableDates.push(selectedDate.endDate);
       }
-
     } else if (
       selectionVariant === "multiselect" &&
       Array.isArray(selectedDate)
@@ -601,11 +616,16 @@ export function useCalendarSelection<TDate extends DateFrameworkType>(
       selectionVariant === "single" &&
       !isDateRangeSelection(selectedDate) &&
       !Array.isArray(selectedDate) &&
-      (selectedDate && isDayVisible(selectedDate))
+      selectedDate &&
+      isDayVisible(selectedDate)
     ) {
       focusableDates.push(selectedDate);
     }
-    if (focusedDate && visibleMonth && dateAdapter.isSame(focusedDate, visibleMonth, "month")) {
+    if (
+      focusedDate &&
+      visibleMonth &&
+      dateAdapter.isSame(focusedDate, visibleMonth, "month")
+    ) {
       focusableDates.push(focusedDate);
       return focusableDates;
     }
@@ -627,7 +647,16 @@ export function useCalendarSelection<TDate extends DateFrameworkType>(
       }
     }
     return focusableDates;
-  }, [selectedDate, timezone, visibleMonth  ]);
+  }, [
+    dateAdapter,
+    focusedDate,
+    isDaySelectable,
+    isDayVisible,
+    selectedDate,
+    selectionVariant,
+    timezone,
+    visibleMonth,
+  ]);
 
   const isSelectedSpan = useCallback(
     (date: TDate) => {
@@ -635,7 +664,9 @@ export function useCalendarSelection<TDate extends DateFrameworkType>(
         (selectionVariant === "range" || selectionVariant === "offset") &&
         isDateRangeSelection(selectedDate) &&
         dateAdapter.isValid(selectedDate.startDate) &&
-        dateAdapter.isValid(selectedDate.endDate)
+        dateAdapter.isValid(selectedDate.endDate) &&
+        !isOutsideAllowedDates(selectedDate.startDate) &&
+        !isOutsideAllowedDates(selectedDate.endDate)
       ) {
         return (
           dateAdapter.compare(date, selectedDate.startDate) > 0 &&
@@ -653,6 +684,7 @@ export function useCalendarSelection<TDate extends DateFrameworkType>(
         isDateRangeSelection(selectedDate) &&
         dateAdapter.isValid(selectedDate.startDate) &&
         !dateAdapter.isValid(selectedDate.endDate) &&
+        !isOutsideAllowedDates(selectedDate.startDate) &&
         hoveredDate
       ) {
         const isForwardRange =
@@ -676,7 +708,8 @@ export function useCalendarSelection<TDate extends DateFrameworkType>(
       if (
         (selectionVariant === "range" || selectionVariant === "offset") &&
         isDateRangeSelection(selectedDate) &&
-        dateAdapter.isValid(selectedDate.startDate)
+        dateAdapter.isValid(selectedDate.startDate) &&
+        !isOutsideAllowedDates(selectedDate.startDate)
       ) {
         return dateAdapter.isSame(selectedDate.startDate, date, "day");
       }
@@ -690,7 +723,8 @@ export function useCalendarSelection<TDate extends DateFrameworkType>(
       if (
         (selectionVariant === "range" || selectionVariant === "offset") &&
         isDateRangeSelection(selectedDate) &&
-        dateAdapter.isValid(selectedDate.endDate)
+        dateAdapter.isValid(selectedDate.endDate) &&
+        !isOutsideAllowedDates(selectedDate.endDate)
       ) {
         return dateAdapter.isSame(selectedDate.endDate, date, "day");
       }
@@ -750,10 +784,10 @@ export function useCalendarSelection<TDate extends DateFrameworkType>(
     [
       selectedDate,
       focusedDate,
+      focusedDateRef,
+      getFocusableDates,
       hoveredDate,
-      setSelectedDate,
       isSelected,
-      setHoveredDate,
       isHovered,
       isSelectedSpan,
       isHoveredSpan,
@@ -761,14 +795,18 @@ export function useCalendarSelection<TDate extends DateFrameworkType>(
       isSelectedEnd,
       isHoveredOffset,
       isDaySelectable,
-      visibleMonth
+      setFocusedDate,
+      setHoveredDate,
+      setSelectedDate,
     ],
   );
 }
 
 export function useCalendarSelectionDay<TDate extends DateFrameworkType>({
   date,
-}: { date: TDate }) {
+}: {
+  date: TDate;
+}) {
   const {
     helpers: {
       setSelectedDate,
