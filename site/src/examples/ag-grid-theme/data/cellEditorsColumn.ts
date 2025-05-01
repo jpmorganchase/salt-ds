@@ -1,4 +1,31 @@
+import type { IDateFilterParams } from "ag-grid-community";
 import { languages, shortColorData } from "./cellEditorsData";
+
+const dateFilterParams: IDateFilterParams = {
+  comparator: (filterLocalDateAtMidnight: Date, cellValue: string) => {
+    const dateAsString = cellValue;
+    if (dateAsString == null) return -1;
+    const dateParts = dateAsString.split("-");
+    const cellDate = new Date(
+      Number(dateParts[0]),
+      Number(dateParts[1]) - 1,
+      Number(dateParts[2]),
+    );
+    if (filterLocalDateAtMidnight.getTime() === cellDate.getTime()) {
+      return 0;
+    }
+    if (cellDate < filterLocalDateAtMidnight) {
+      return -1;
+    }
+    if (cellDate > filterLocalDateAtMidnight) {
+      return 1;
+    }
+    return 0;
+  },
+  minValidYear: 2000,
+  maxValidYear: 2040,
+  inRangeFloatingFilterDateFormat: "YYYY-MM-Do",
+};
 
 export const cellEditorsColumn = [
   {
@@ -6,8 +33,7 @@ export const cellEditorsColumn = [
     field: "name",
     cellEditor: "agTextCellEditor",
     editable: true,
-    filter: true,
-    floatingFilter: true,
+    filter: "agTextColumnFilter",
     cellClass: ["editable-cell"],
   },
   {
@@ -16,8 +42,7 @@ export const cellEditorsColumn = [
     cellEditor: "agLargeTextCellEditor",
     cellEditorPopup: true,
     editable: true,
-    filter: true,
-    floatingFilter: true,
+    filter: "agTextColumnFilter",
     cellClass: ["editable-cell"],
   },
   {
@@ -27,6 +52,7 @@ export const cellEditorsColumn = [
     cellRenderer: "agCheckboxCellRenderer",
     cellEditor: "agCheckboxCellEditor",
     editable: true,
+    filter: true,
   },
   {
     headerName: "Select",
@@ -38,7 +64,6 @@ export const cellEditorsColumn = [
     },
     editable: true,
     filter: true,
-    floatingFilter: true,
     cellClass: ["editable-cell"],
   },
   {
@@ -54,7 +79,6 @@ export const cellEditorsColumn = [
     },
     editable: true,
     filter: true,
-    floatingFilter: true,
     cellClass: ["editable-cell"],
   },
   {
@@ -68,8 +92,7 @@ export const cellEditorsColumn = [
     // Right aligns header
     type: "numericColumn",
     editable: true,
-    filter: true,
-    floatingFilter: true,
+    filter: "agNumberColumnFilter",
     cellClass: ["numeric-cell", "editable-cell"],
   },
   {
@@ -79,11 +102,11 @@ export const cellEditorsColumn = [
     cellEditor: "agDateStringCellEditor",
     cellEditorParams: {
       min: "2000-01-01",
-      max: "2019-12-31",
+      max: "2039-12-31",
     },
     editable: true,
-    filter: true,
-    floatingFilter: true,
+    filter: "agDateColumnFilter",
+    filterParams: dateFilterParams,
     cellClass: ["editable-cell"],
   },
 ];
