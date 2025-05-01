@@ -1,5 +1,31 @@
-import type { ColDef } from "ag-grid-community";
+import type { ColDef, IDateFilterParams } from "ag-grid-community";
 import { languages, shortColorData } from "./dataGridExampleDataCellEditors";
+
+const dateFilterParams: IDateFilterParams = {
+  comparator: (filterLocalDateAtMidnight: Date, cellValue: string) => {
+    const dateAsString = cellValue;
+    if (dateAsString == null) return -1;
+    const dateParts = dateAsString.split("-");
+    const cellDate = new Date(
+      Number(dateParts[0]),
+      Number(dateParts[1]) - 1,
+      Number(dateParts[2]),
+    );
+    if (filterLocalDateAtMidnight.getTime() === cellDate.getTime()) {
+      return 0;
+    }
+    if (cellDate < filterLocalDateAtMidnight) {
+      return -1;
+    }
+    if (cellDate > filterLocalDateAtMidnight) {
+      return 1;
+    }
+    return 0;
+  },
+  minValidYear: 2000,
+  maxValidYear: 2040,
+  inRangeFloatingFilterDateFormat: "YYYY-MM-Do",
+};
 
 const agProvidedCellEditorsExampleColumns: ColDef[] = [
   {
@@ -7,8 +33,7 @@ const agProvidedCellEditorsExampleColumns: ColDef[] = [
     field: "name",
     cellEditor: "agTextCellEditor",
     editable: true,
-    filter: true,
-    floatingFilter: true,
+    filter: "agTextColumnFilter",
     cellClass: ["editable-cell"],
   },
   {
@@ -17,8 +42,7 @@ const agProvidedCellEditorsExampleColumns: ColDef[] = [
     cellEditor: "agLargeTextCellEditor",
     cellEditorPopup: true,
     editable: true,
-    filter: true,
-    floatingFilter: true,
+    filter: "agTextColumnFilter",
     cellClass: ["editable-cell"],
   },
   {
@@ -28,6 +52,7 @@ const agProvidedCellEditorsExampleColumns: ColDef[] = [
     cellRenderer: "agCheckboxCellRenderer",
     cellEditor: "agCheckboxCellEditor",
     editable: true,
+    filter: true,
   },
   {
     headerName: "Select",
@@ -39,7 +64,6 @@ const agProvidedCellEditorsExampleColumns: ColDef[] = [
     },
     editable: true,
     filter: true,
-    floatingFilter: true,
     cellClass: ["editable-cell"],
   },
   {
@@ -55,7 +79,6 @@ const agProvidedCellEditorsExampleColumns: ColDef[] = [
     },
     editable: true,
     filter: true,
-    floatingFilter: true,
     cellClass: ["editable-cell"],
   },
   {
@@ -69,8 +92,7 @@ const agProvidedCellEditorsExampleColumns: ColDef[] = [
     // Right aligns header
     type: "numericColumn",
     editable: true,
-    filter: true,
-    floatingFilter: true,
+    filter: "agNumberColumnFilter",
     cellClass: ["numeric-cell", "editable-cell"],
   },
   {
@@ -80,11 +102,11 @@ const agProvidedCellEditorsExampleColumns: ColDef[] = [
     cellEditor: "agDateStringCellEditor",
     cellEditorParams: {
       min: "2000-01-01",
-      max: "2019-12-31",
+      max: "2039-12-31",
     },
     editable: true,
-    filter: true,
-    floatingFilter: true,
+    filter: "agDateColumnFilter",
+    filterParams: dateFilterParams,
     cellClass: ["editable-cell"],
   },
 ];

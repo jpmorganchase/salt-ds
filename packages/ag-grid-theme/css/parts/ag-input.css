@@ -7,6 +7,10 @@
 .ag-theme-salt-dark .ag-filter input[class^="ag-"][type="number"],
 .ag-theme-salt-compact-light .ag-filter input[class^="ag-"][type="number"],
 .ag-theme-salt-compact-dark .ag-filter input[class^="ag-"][type="number"],
+.ag-theme-salt-light .ag-filter input[class^="ag-"][type="date"],
+.ag-theme-salt-dark .ag-filter input[class^="ag-"][type="date"],
+.ag-theme-salt-compact-light .ag-filter input[class^="ag-"][type="date"],
+.ag-theme-salt-compact-dark .ag-filter input[class^="ag-"][type="date"],
 .ag-theme-salt-light .ag-column-select input[class^="ag-"][type="text"],
 .ag-theme-salt-dark .ag-column-select input[class^="ag-"][type="text"],
 .ag-theme-salt-compact-light .ag-column-select input[class^="ag-"][type="text"],
@@ -14,7 +18,11 @@
 .ag-theme-salt-light .ag-column-select input[class^="ag-"][type="number"],
 .ag-theme-salt-dark .ag-column-select input[class^="ag-"][type="number"],
 .ag-theme-salt-compact-light .ag-column-select input[class^="ag-"][type="number"],
-.ag-theme-salt-compact-dark .ag-column-select input[class^="ag-"][type="number"] {
+.ag-theme-salt-compact-dark .ag-column-select input[class^="ag-"][type="number"],
+.ag-theme-salt-light .ag-column-select input[class^="ag-"][type="date"],
+.ag-theme-salt-dark .ag-column-select input[class^="ag-"][type="date"],
+.ag-theme-salt-compact-light .ag-column-select input[class^="ag-"][type="date"],
+.ag-theme-salt-compact-dark .ag-column-select input[class^="ag-"][type="date"] {
   border: none;
   border-bottom: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-editable-borderColor);
   height: calc(var(--salt-size-base) + var(--salt-spacing-100));
@@ -49,6 +57,10 @@
 .ag-theme-salt-dark .ag-filter input[class^="ag-"][type="number"]:focus,
 .ag-theme-salt-compact-light .ag-filter input[class^="ag-"][type="number"]:focus,
 .ag-theme-salt-compact-dark .ag-filter input[class^="ag-"][type="number"]:focus,
+.ag-theme-salt-light .ag-filter input[class^="ag-"][type="date"]:focus,
+.ag-theme-salt-dark .ag-filter input[class^="ag-"][type="date"]:focus,
+.ag-theme-salt-compact-light .ag-filter input[class^="ag-"][type="date"]:focus,
+.ag-theme-salt-compact-dark .ag-filter input[class^="ag-"][type="date"]:focus,
 .ag-theme-salt-light .ag-column-select input[class^="ag-"][type="text"]:focus,
 .ag-theme-salt-dark .ag-column-select input[class^="ag-"][type="text"]:focus,
 .ag-theme-salt-compact-light .ag-column-select input[class^="ag-"][type="text"]:focus,
@@ -56,7 +68,11 @@
 .ag-theme-salt-light .ag-column-select input[class^="ag-"][type="number"]:focus,
 .ag-theme-salt-dark .ag-column-select input[class^="ag-"][type="number"]:focus,
 .ag-theme-salt-compact-light .ag-column-select input[class^="ag-"][type="number"]:focus,
-.ag-theme-salt-compact-dark .ag-column-select input[class^="ag-"][type="number"]:focus {
+.ag-theme-salt-compact-dark .ag-column-select input[class^="ag-"][type="number"]:focus,
+.ag-theme-salt-light .ag-column-select input[class^="ag-"][type="date"]:focus,
+.ag-theme-salt-dark .ag-column-select input[class^="ag-"][type="date"]:focus,
+.ag-theme-salt-compact-light .ag-column-select input[class^="ag-"][type="date"]:focus,
+.ag-theme-salt-compact-dark .ag-column-select input[class^="ag-"][type="date"]:focus {
   outline: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--salt-focused-outlineColor);
   outline-offset: -2px;
 }
