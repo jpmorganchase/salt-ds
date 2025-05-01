@@ -28,11 +28,16 @@ function getTabbableElements(parent: Element): HTMLElement[] {
 // 2. the user re-focuses into the reference element with the mouse
 // 3. the user tabs out of the reference element
 // Without this hook, the floating element can re-receive focus
-export function useFocusOut(context: FloatingContext, props: UseFocusOutProps):ElementProps {
+export function useFocusOut(
+  context: FloatingContext,
+  props: UseFocusOutProps,
+): ElementProps {
   const { onOpenChange, open } = context;
   const { enabled = true } = props;
 
-  const reference: ElementProps['reference'] = useMemo<React.HTMLProps<Element>>(() => {
+  const reference: ElementProps["reference"] = useMemo<
+    React.HTMLProps<Element>
+  >(() => {
     const referenceElement = context.elements.reference as Element | undefined;
 
     if (!referenceElement) {
@@ -42,8 +47,7 @@ export function useFocusOut(context: FloatingContext, props: UseFocusOutProps):E
     return {
       onKeyDown(event: React.KeyboardEvent<Element>) {
         if (event.key === "Tab") {
-          const tabbableElements
-            = getTabbableElements(referenceElement);
+          const tabbableElements = getTabbableElements(referenceElement);
           const tabbedBeforeFirstElement =
             event.shiftKey && document.activeElement === tabbableElements[0];
           const tabbedAfterLastElement =
@@ -55,7 +59,7 @@ export function useFocusOut(context: FloatingContext, props: UseFocusOutProps):E
         }
       },
     };
-  }, [onOpenChange, context.elements.reference, context.elements.floating]);
+  }, [onOpenChange, context.elements.reference]);
 
   return useMemo(() => (enabled ? { reference } : {}), [enabled, reference]);
 }

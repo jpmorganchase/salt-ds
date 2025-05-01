@@ -23,8 +23,8 @@ import {
   forwardRef,
   useCallback,
   useLayoutEffect,
-  useState,
   useRef,
+  useState,
   FocusEventHandler,
 } from "react";
 import {
@@ -39,11 +39,11 @@ import {
   type DateRangeSelection,
   type UseCalendarSelectionRangeProps,
 } from "../calendar";
+import { generateDatesForMonth } from "../calendar/internal/utils";
 import { useLocalization } from "../localization-provider";
 import { useDatePickerContext } from "./DatePickerContext";
-import datePickerPanelCss from "./DatePickerPanel.css";
-import { generateDatesForMonth } from "../calendar/internal/utils";
 import { useDatePickerOverlay } from "./DatePickerOverlayProvider";
+import datePickerPanelCss from "./DatePickerPanel.css";
 
 /**
  * Props for the DatePickerRangePanel component.
@@ -78,11 +78,11 @@ export interface DatePickerRangePanelProps<TDate extends DateFrameworkType>
 
   /**
    * Callback fired when the visible month for the start date changes.
-   * @param event - The synthetic event.
+   * @param event - The synthetic event, or undefined if called by effect.
    * @param visibleMonth - The new visible month for the start date.
    */
   onStartVisibleMonthChange?: (
-    event: SyntheticEvent,
+    event: SyntheticEvent | undefined,
     visibleMonth: TDate,
   ) => void;
 
@@ -98,11 +98,11 @@ export interface DatePickerRangePanelProps<TDate extends DateFrameworkType>
 
   /**
    * Callback fired when the visible month for the end date changes.
-   * @param event - The synthetic event.
+   * @param event - The synthetic event, or undefined if called by effect.
    * @param visibleMonth - The new visible month for the end date.
    */
   onEndVisibleMonthChange?: (
-    event: SyntheticEvent,
+    event: SyntheticEvent | undefined,
     visibleMonth: TDate,
   ) => void;
 
@@ -303,7 +303,7 @@ export const DatePickerRangePanel = forwardRef(function DatePickerRangePanel<
   );
 
   const handleStartVisibleMonthChange = useCallback(
-    (event: SyntheticEvent, newVisibleMonth: TDate) => {
+    (event: SyntheticEvent | undefined, newVisibleMonth: TDate) => {
       setStartVisibleMonth(newVisibleMonth);
       if (dateAdapter.compare(newVisibleMonth, endVisibleMonth) >= 0) {
         setEndVisibleMonth(dateAdapter.add(newVisibleMonth, { months: 1 }));
@@ -314,7 +314,7 @@ export const DatePickerRangePanel = forwardRef(function DatePickerRangePanel<
   );
 
   const handleEndVisibleMonthChange = useCallback(
-    (event: SyntheticEvent, newVisibleMonth: TDate) => {
+    (event: SyntheticEvent | undefined, newVisibleMonth: TDate) => {
       setEndVisibleMonth(newVisibleMonth);
       if (dateAdapter.compare(newVisibleMonth, startVisibleMonth) <= 0) {
         setStartVisibleMonth(
@@ -341,80 +341,54 @@ export const DatePickerRangePanel = forwardRef(function DatePickerRangePanel<
   };
 
   const [focusedDate, setFocusedDate] = useState<TDate | null>(null);
+  const [startCalendarFocused, setStartCalendarFocused] = useState(false);
+  const [endCalendarFocused, setEndCalendarFocused] = useState(false);
 
-  const getNextFocusedDate = () => {
-    const getVisibleSelectedDate = (visibleMonth: TDate) => {
-      if (
-        selectedDate?.startDate &&
-        dateAdapter.isSame(visibleMonth, selectedDate.startDate, "month")
-      ) {
-        return selectedDate.startDate;
-      }
-      if (
-        selectedDate?.endDate &&
-        dateAdapter.isSame(visibleMonth, selectedDate.endDate, "month")
-      ) {
-        return selectedDate.endDate;
-      }
-      return null;
-    };
-    let focusSelectedDate = getVisibleSelectedDate(startVisibleMonth);
-    focusSelectedDate =
-      focusSelectedDate ?? getVisibleSelectedDate(endVisibleMonth);
-    if (focusSelectedDate) {
-      return focusSelectedDate;
-    }
-    // Today
-    const today = dateAdapter.today(timezone);
-    if (
-      dateAdapter.isSame(startVisibleMonth, today, "month") ||
-      dateAdapter.isSame(endVisibleMonth, today, "month")
-    ) {
-      return today;
-    }
-    // First selectable date in either calendar
-    const getFirstSelectableDate = (visibleMonth: TDate) => {
-      const isOutsideAllowedDates = (date: TDate) => {
-        return (
-          dateAdapter.compare(date, minDate) < 0 ||
-          dateAdapter.compare(date, maxDate) > 0
-        );
-      };
-      const isDaySelectable = (date: TDate) =>
-        !(
-          date &&
-          (isDayUnselectable?.(date) ||
-            isDayDisabled?.(date) ||
-            isOutsideAllowedDates(date))
-        );
-      const firstSelectableDate = generateDatesForMonth(
-        dateAdapter,
-        visibleMonth,
-      ).find((visibleDay) => isDaySelectable(visibleDay));
-      return firstSelectableDate ?? null;
-    };
-    return (
-      getFirstSelectableDate(startVisibleMonth) ??
-      getFirstSelectableDate(endVisibleMonth)
-    );
+  const handleStartCalendarFocus: FocusEventHandler<HTMLDivElement> = (
+    event,
+  ) => {
+    setStartCalendarFocused(true);
+    StartCalendarGridProps?.onFocus?.(event);
+  };
+
+  const handleEndCalendarFocus: FocusEventHandler<HTMLDivElement> = (event) => {
+    setEndCalendarFocused(true);
+    EndCalendarGridProps?.onFocus?.(event);
+  };
+
+  const handleStartCalendarBlur: FocusEventHandler<HTMLDivElement> = (
+    event,
+  ) => {
+    setStartCalendarFocused(false);
+    setHoveredDate(null);
+    StartCalendarGridProps?.onBlur?.(event);
+  };
+  const handleEndCalendarBlur: FocusEventHandler<HTMLDivElement> = (event) => {
+    setEndCalendarFocused(false);
+    setHoveredDate(null);
+    EndCalendarGridProps?.onBlur?.(event);
   };
 
   const handleStartCalendarFocusedDateChange = useCallback(
     (event: SyntheticEvent | undefined, newFocusedDate: TDate) => {
-
       setFocusedDate(newFocusedDate);
       if (
         newFocusedDate &&
         !dateAdapter.isSame(startVisibleMonth, newFocusedDate, "month")
       ) {
         handleStartVisibleMonthChange(
-          event!!,
+          event,
           dateAdapter.startOf(newFocusedDate, "month"),
         );
       }
       onFocusedDateChange?.(event, newFocusedDate);
     },
-    [startVisibleMonth, onFocusedDateChange],
+    [
+      dateAdapter,
+      startVisibleMonth,
+      handleStartVisibleMonthChange,
+      onFocusedDateChange,
+    ],
   );
 
   const handleEndCalendarFocusedDateChange = useCallback(
@@ -425,42 +399,137 @@ export const DatePickerRangePanel = forwardRef(function DatePickerRangePanel<
         !dateAdapter.isSame(endVisibleMonth, newFocusedDate, "month")
       ) {
         handleEndVisibleMonthChange(
-          event!!,
+          event,
           dateAdapter.startOf(newFocusedDate, "month"),
         );
       }
       onFocusedDateChange?.(event, newFocusedDate);
     },
-    [endVisibleMonth, onFocusedDateChange],
+    [
+      dateAdapter,
+      endVisibleMonth,
+      handleEndVisibleMonthChange,
+      onFocusedDateChange,
+    ],
   );
 
-  const handleContainerBlur: FocusEventHandler<HTMLDivElement> = useCallback(
-    (event) => {
-      setTimeout(() => {
-        if (!calendarsRef?.current?.contains(document.activeElement)) {
-          setHoveredDate(null);
-          //setFocusedDate(getNextFocusedDate());
-        }
-      }, 0);
-      rest?.onBlur?.(event);
-    },
-    [startVisibleMonth, endVisibleMonth, selectedDate, rest?.onBlur],
-  );
+  const getNextFocusedDate = (
+    nextStartVisibleMonth: TDate,
+    nextEndVisibleMonth: TDate,
+  ) => {
+    const isOutsideAllowedDates = (date: TDate) => {
+      return (
+        dateAdapter.compare(date, minDate) < 0 ||
+        dateAdapter.compare(date, maxDate) > 0
+      );
+    };
+    const isDaySelectable = (date: TDate) =>
+      !(
+        date &&
+        (isDayUnselectable?.(date) ||
+          isDayDisabled?.(date) ||
+          isOutsideAllowedDates(date))
+      );
+
+    const getVisibleSelectedDate = (visibleMonth: TDate) => {
+      if (
+        selectedDate?.startDate &&
+        dateAdapter.isSame(visibleMonth, selectedDate.startDate, "month") &&
+        isDaySelectable(selectedDate.startDate)
+      ) {
+        return selectedDate.startDate;
+      }
+      if (
+        selectedDate?.endDate &&
+        dateAdapter.isSame(visibleMonth, selectedDate.endDate, "month") &&
+        isDaySelectable(selectedDate.endDate)
+      ) {
+        return selectedDate.endDate;
+      }
+      return null;
+    };
+    let focusSelectedDate = getVisibleSelectedDate(nextStartVisibleMonth);
+    focusSelectedDate =
+      focusSelectedDate ?? getVisibleSelectedDate(nextEndVisibleMonth);
+    if (focusSelectedDate && isDaySelectable(focusSelectedDate)) {
+      return focusSelectedDate;
+    }
+    // Today
+    const today = dateAdapter.today(timezone);
+    if (
+      (dateAdapter.isSame(nextStartVisibleMonth, today, "month") ||
+        dateAdapter.isSame(nextEndVisibleMonth, today, "month")) &&
+      isDaySelectable(today)
+    ) {
+      return today;
+    }
+    // First selectable date in either calendar
+    const getFirstSelectableDate = (visibleMonth: TDate) => {
+      const firstSelectableDate = generateDatesForMonth(
+        dateAdapter,
+        visibleMonth,
+      ).find((visibleDay) => isDaySelectable(visibleDay));
+      return firstSelectableDate ?? null;
+    };
+
+    return (
+      getFirstSelectableDate(nextStartVisibleMonth) ??
+      getFirstSelectableDate(nextEndVisibleMonth)
+    );
+  };
 
   useLayoutEffect(() => {
-    const nextFocusedDate = getNextFocusedDate();
-    setFocusedDate(nextFocusedDate);
-  }, [selectedDate]);
+    if (!focused) {
+      setFocusedDate(null);
+      return;
+    }
 
-  const isStartCalendarFocused =
-    focused &&
-    focusedDate &&
-    dateAdapter.isSame(startVisibleMonth, focusedDate, "month");
-  const isEndCalendarFocused =
-    !isStartCalendarFocused &&
-    focused &&
-    focusedDate &&
-    dateAdapter.isSame(endVisibleMonth, focusedDate, "month");
+    const isStartDateValid =
+      selectedDate?.startDate &&
+      dateAdapter.isValid(selectedDate.startDate) &&
+      dateAdapter.compare(selectedDate.startDate, minDate) >= 0 &&
+      dateAdapter.compare(selectedDate.startDate, maxDate) <= 0
+
+    const isEndDateValid =
+      selectedDate?.endDate &&
+      dateAdapter.isValid(selectedDate.endDate) &&
+      dateAdapter.compare(selectedDate.endDate, minDate) >= 0 &&
+      dateAdapter.compare(selectedDate.endDate, maxDate) <= 0;
+
+    let nextStartVisibleMonth = startVisibleMonth;
+    let nextEndVisibleMonth = endVisibleMonth;
+
+    const setVisibleMonths = (start: typeof nextStartVisibleMonth, end: typeof nextEndVisibleMonth) => {
+      nextStartVisibleMonth = dateAdapter.startOf(start, "month");
+      nextEndVisibleMonth = dateAdapter.startOf(end, "month");
+    };
+
+    if (selectedDate?.startDate && selectedDate?.endDate && isStartDateValid && isEndDateValid) {
+      if (
+        dateAdapter.isSame(selectedDate.startDate, startVisibleMonth, "month") &&
+        dateAdapter.isSame(selectedDate.endDate, startVisibleMonth, "month")
+      ) {
+        setStartCalendarFocused(true);
+        setVisibleMonths(selectedDate.startDate, dateAdapter.add(selectedDate.startDate, { months: 1 }));
+      } else {
+        setStartCalendarFocused(true);
+        setVisibleMonths(selectedDate.startDate, selectedDate.endDate);
+      }
+    } else if (selectedDate?.startDate && isStartDateValid) {
+      setStartCalendarFocused(true);
+      setVisibleMonths(selectedDate.startDate, dateAdapter.add(selectedDate.startDate, { months: 1 }));
+    } else if (selectedDate?.endDate && isEndDateValid) {
+      setEndCalendarFocused(true);
+      setVisibleMonths(dateAdapter.subtract(selectedDate.endDate, { months: 1 }), selectedDate.endDate);
+    } else {
+      setStartCalendarFocused(true);
+    }
+
+    if (!focusedDate) {
+      setFocusedDate(getNextFocusedDate(nextStartVisibleMonth, nextEndVisibleMonth));
+    }
+  }, [focused]);
+
 
   const StartCalendarProps = {
     visibleMonth: startVisibleMonth,
@@ -469,8 +538,8 @@ export const DatePickerRangePanel = forwardRef(function DatePickerRangePanel<
     isDayDisabled,
     isDayHighlighted,
     isDayUnselectable,
-    focusedDateRef: isStartCalendarFocused ? initialFocusRef : null,
-    focusedDate: isStartCalendarFocused ? focusedDate : null,
+    focusedDateRef: initialFocusRef,
+    focusedDate: startCalendarFocused ? focusedDate : null,
     onHoveredDateChange: handleHoveredStartDateChange,
     onFocusedDateChange: handleStartCalendarFocusedDateChange,
     onVisibleMonthChange: handleStartVisibleMonthChange,
@@ -487,8 +556,8 @@ export const DatePickerRangePanel = forwardRef(function DatePickerRangePanel<
     isDayDisabled,
     isDayHighlighted,
     isDayUnselectable,
-    focusedDateRef: isEndCalendarFocused ? initialFocusRef : null,
-    focusedDate: isEndCalendarFocused ? focusedDate : null,
+    focusedDateRef: initialFocusRef,
+    focusedDate: endCalendarFocused ? focusedDate : null,
     selectedDate: calendarSelectedDate,
     onFocusedDateChange: handleEndCalendarFocusedDateChange,
     onHoveredDateChange: handleHoveredEndDateChange,
@@ -506,7 +575,6 @@ export const DatePickerRangePanel = forwardRef(function DatePickerRangePanel<
       separators
       gap={0}
       className={clsx(className, withBaseName("container"))}
-      onBlur={handleContainerBlur}
       ref={containerRef}
       {...rest}
     >
@@ -520,11 +588,19 @@ export const DatePickerRangePanel = forwardRef(function DatePickerRangePanel<
         <FormFieldContext.Provider value={{} as FormFieldContextValue}>
           <Calendar selectionVariant={"range"} {...StartCalendarProps}>
             <CalendarNavigation {...StartCalendarNavigationProps} />
-            <CalendarGrid {...StartCalendarGridProps} />
+            <CalendarGrid
+              onFocus={handleStartCalendarFocus}
+              onBlur={handleStartCalendarBlur}
+              {...StartCalendarGridProps}
+            />
           </Calendar>
           <Calendar selectionVariant={"range"} {...EndCalendarProps}>
             <CalendarNavigation {...EndCalendarNavigationProps} />
-            <CalendarGrid {...EndCalendarGridProps} />
+            <CalendarGrid
+              onFocus={handleEndCalendarFocus}
+              onBlur={handleEndCalendarBlur}
+              {...EndCalendarGridProps}
+            />
           </Calendar>
         </FormFieldContext.Provider>
       </FlexLayout>

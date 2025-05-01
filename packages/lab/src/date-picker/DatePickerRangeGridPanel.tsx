@@ -9,7 +9,6 @@ import {
   resolveResponsiveValue,
   useBreakpoint,
   useControlled,
-  useForkRef,
 } from "@salt-ds/core";
 import type { DateFrameworkType } from "@salt-ds/date-adapters";
 import { useComponentCssInjection } from "@salt-ds/styles";
@@ -19,10 +18,8 @@ import {
   type SyntheticEvent,
   forwardRef,
   useCallback,
-  useState,
-  useRef,
   useLayoutEffect,
-  FocusEventHandler,
+  useState,
 } from "react";
 import {
   CalendarGrid,
@@ -30,15 +27,15 @@ import {
   type CalendarRangeProps,
 } from "../calendar";
 import { Calendar, type DateRangeSelection } from "../calendar";
+import { generateDatesForMonth } from "../calendar/internal/utils";
 import { useLocalization } from "../localization-provider";
 import {
   type RangeDatePickerState,
   useDatePickerContext,
 } from "./DatePickerContext";
+import { useDatePickerOverlay } from "./DatePickerOverlayProvider";
 import datePickerPanelCss from "./DatePickerPanel.css";
 import type { DatePickerPanelBaseProps } from "./DatePickerSingleGridPanel";
-import { useDatePickerOverlay } from "./DatePickerOverlayProvider";
-import { generateDatesForMonth } from "../calendar/internal/utils";
 
 const withBaseName = makePrefixer("saltDatePickerPanel");
 
@@ -97,15 +94,12 @@ export const DatePickerRangeGridPanel = forwardRef(
       window: targetWindow,
     });
 
-    const calendarsRef = useRef<HTMLDivElement>(null);
-    const containerRef = useForkRef(ref, calendarsRef);
-
     const stateAndHelpers: RangeDatePickerState<TDate> = useDatePickerContext({
       selectionVariant: "range",
     });
 
     const {
-      state: { initialFocusRef },
+      state: { focused, initialFocusRef },
     } = useDatePickerOverlay();
 
     const [hoveredDate, setHoveredDate] = useState<TDate | null>(null);
@@ -146,6 +140,21 @@ export const DatePickerRangeGridPanel = forwardRef(
     });
 
     const getNextFocusedDate = () => {
+      const isOutsideAllowedDates = (date: TDate) => {
+        return (
+          dateAdapter.compare(date, minDate) < 0 ||
+          dateAdapter.compare(date, maxDate) > 0
+        );
+      };
+
+      const isDaySelectable = (date: TDate) =>
+        !(
+          date &&
+          (isDayUnselectable?.(date) ||
+            isDayDisabled?.(date) ||
+            isOutsideAllowedDates(date))
+        );
+
       const startVisibleMonth = dateAdapter.startOf(visibleMonth, "month");
       const endVisibleMonth = dateAdapter.add(visibleMonth, {
         months: responsiveNumberOfVisibleMonths - 1,
@@ -159,16 +168,20 @@ export const DatePickerRangeGridPanel = forwardRef(
           ? dateAdapter.startOf(selectedDate.endDate, "month")
           : null;
         if (
+          selectedDate?.startDate &&
           startDateStartOfMonth &&
           dateAdapter.compare(startDateStartOfMonth, startVisibleMonth) >= 0 &&
-          dateAdapter.compare(startDateStartOfMonth, endVisibleMonth) <= 0
+          dateAdapter.compare(startDateStartOfMonth, endVisibleMonth) <= 0 &&
+          isDaySelectable(selectedDate?.startDate)
         ) {
           return selectedDate?.startDate;
         }
         if (
+          selectedDate?.endDate &&
           endDateStartOfMonth &&
           dateAdapter.compare(endDateStartOfMonth, startVisibleMonth) >= 0 &&
-          dateAdapter.compare(endDateStartOfMonth, endVisibleMonth) <= 0
+          dateAdapter.compare(endDateStartOfMonth, endVisibleMonth) <= 0 &&
+          isDaySelectable(selectedDate?.endDate)
         ) {
           return selectedDate?.endDate;
         }
@@ -185,7 +198,8 @@ export const DatePickerRangeGridPanel = forwardRef(
       const todayStartOfMonth = dateAdapter.startOf(today, "month");
       if (
         dateAdapter.compare(todayStartOfMonth, startVisibleMonth) >= 0 &&
-        dateAdapter.compare(todayStartOfMonth, endVisibleMonth) <= 0
+        dateAdapter.compare(todayStartOfMonth, endVisibleMonth) <= 0 &&
+        isDaySelectable(today)
       ) {
         return today;
       }
@@ -195,21 +209,6 @@ export const DatePickerRangeGridPanel = forwardRef(
         startMonth: TDate,
         numberOfMonths: number,
       ) => {
-        const isOutsideAllowedDates = (date: TDate) => {
-          return (
-            dateAdapter.compare(date, minDate) < 0 ||
-            dateAdapter.compare(date, maxDate) > 0
-          );
-        };
-
-        const isDaySelectable = (date: TDate) =>
-          !(
-            date &&
-            (isDayUnselectable?.(date) ||
-              isDayDisabled?.(date) ||
-              isOutsideAllowedDates(date))
-          );
-
         for (let i = 0; i < numberOfMonths; i++) {
           const currentMonth = dateAdapter.add(startMonth, { months: i });
           const firstSelectableDate = generateDatesForMonth(
@@ -252,7 +251,7 @@ export const DatePickerRangeGridPanel = forwardRef(
     );
 
     const handleVisibleMonthChange = useCallback(
-      (event: SyntheticEvent, newVisibleMonth: TDate) => {
+      (event: SyntheticEvent | undefined, newVisibleMonth: TDate) => {
         setVisibleMonth(newVisibleMonth);
         onVisibleMonthChange?.(event, newVisibleMonth);
       },
@@ -261,7 +260,6 @@ export const DatePickerRangeGridPanel = forwardRef(
 
     const handleFocusedDateChange = useCallback(
       (event: SyntheticEvent | undefined, newFocusedDate: TDate) => {
-
         setFocusedDate(newFocusedDate);
 
         const startOfFocusedMonth = dateAdapter.startOf(
@@ -278,31 +276,35 @@ export const DatePickerRangeGridPanel = forwardRef(
           dateAdapter.compare(startOfFocusedMonth, lastVisibleMonth) > 0;
 
         if (isBeforeVisibleMonth) {
-          handleVisibleMonthChange(event!, startOfFocusedMonth);
+          handleVisibleMonthChange(event, startOfFocusedMonth);
         } else if (isAfterLastVisibleMonth) {
           const newLastVisibleMonth = dateAdapter.subtract(
             startOfFocusedMonth,
             { months: responsiveNumberOfVisibleMonths - 1 },
           );
-          handleVisibleMonthChange(event!, newLastVisibleMonth);
+          handleVisibleMonthChange(event, newLastVisibleMonth);
         }
         onFocusedDateChange?.(event, newFocusedDate);
       },
-      [onFocusedDateChange, responsiveNumberOfVisibleMonths, visibleMonth],
+      [
+        dateAdapter,
+        handleVisibleMonthChange,
+        onFocusedDateChange,
+        responsiveNumberOfVisibleMonths,
+        visibleMonth,
+      ],
     );
 
-    const handleContainerBlur: FocusEventHandler<HTMLDivElement> = useCallback(
-      (event) => {
-        setTimeout(() => {
-          if (!calendarsRef?.current?.contains(document.activeElement)) {
-            setHoveredDate(null);
-            setFocusedDate(getNextFocusedDate());
-          }
-        }, 0);
-        rest?.onBlur?.(event);
-      },
-      [visibleMonth, selectedDate, rest?.onBlur],
-    );
+    useLayoutEffect(() => {
+      // Called when the overlay opens or the focus shifts between trigger and overlay
+      if (focused) {
+        if (!focusedDate) {
+          setFocusedDate(getNextFocusedDate());
+        }
+      } else {
+        setFocusedDate(null);
+      }
+    }, [focused]);
 
     useLayoutEffect(() => {
       const nextFocusedDate = getNextFocusedDate();
@@ -335,8 +337,7 @@ export const DatePickerRangeGridPanel = forwardRef(
         separators
         gap={0}
         className={clsx(className, withBaseName("container"))}
-        onBlur={handleContainerBlur}
-        ref={containerRef}
+        ref={ref}
         {...rest}
       >
         {helperText && (
