@@ -209,16 +209,16 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
         cy.realPress("Tab");
         cy.findAllByLabelText("Year Dropdown").eq(1).should("be.focused");
         cy.realPress("Tab");
-        cy.findAllByLabelText("Next Month")
-          .eq(1)
-          .parent()
-          .should("be.focused");
+        cy.findAllByLabelText("Next Month").eq(1).parent().should("be.focused");
         // Simulate tabbing into the second calendar
         cy.realPress("Tab");
         // Verify the first day focused in the second calendar
-        const startOfEndCalendar = adapter.startOf(adapter.add(initialRangeDate.startDate, { months: 1}), "month");
+        const startOfEndCalendar = adapter.startOf(
+          adapter.add(initialRangeDate.startDate, { months: 1 }),
+          "month",
+        );
         cy.findByRole("button", {
-          name: adapter.format(startOfEndCalendar, "DD MMMM YYYY")
+          name: adapter.format(startOfEndCalendar, "DD MMMM YYYY"),
         }).should("be.focused");
         // Simulate tabbing back to the first calendar
         cy.realPress("Tab");
@@ -232,7 +232,10 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
         cy.realPress("Tab");
         cy.findAllByLabelText("Year Dropdown").first().should("be.focused");
         cy.realPress("Tab");
-        cy.findAllByLabelText("Next Month").first().parent().should("be.focused");
+        cy.findAllByLabelText("Next Month")
+          .first()
+          .parent()
+          .should("be.focused");
         // Simulate tabbing into the second calendar
         cy.realPress("Tab");
         // Verify focus returns to the first focused element in the first calendar
@@ -448,7 +451,7 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
         // Simulate opening the calendar
         cy.findByRole("button", { name: "Open Calendar" }).realClick();
         // Verify that the dialog is opened
-        cy.findByRole("application").should("exist");
+        cy.findAllByRole("application").should("have.length", 2);
         // Verify the helper text is not visible on the page
         cy.get('[id^="helperText-"]')
           .filter((index, element) => {
@@ -727,7 +730,7 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
           // Simulate opening the calendar
           cy.findByRole("button", { name: "Open Calendar" }).realClick();
           // Verify that the calendar is displayed
-          cy.findByRole("application").should("exist");
+          cy.findAllByRole("application").should("have.length", 2);
 
           while (currentDate <= endDate) {
             const formattedDate = adapter.format(currentDate, "DD MMMM YYYY");
@@ -769,7 +772,7 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
           // Simulate opening the calendar
           cy.findByRole("button", { name: "Open Calendar" }).realClick();
           // Verify that the calendar is displayed
-          cy.findByRole("application").should("exist");
+          cy.findAllByRole("application").should("have.length", 2);
 
           while (currentDate <= endDate) {
             const formattedDate = adapter.format(currentDate, "DD MMMM YYYY");

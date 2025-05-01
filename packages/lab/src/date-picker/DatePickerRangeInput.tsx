@@ -96,6 +96,31 @@ export function defaultRangeValidator<TDate extends DateFrameworkType>(
       message: "is before min date",
     });
   }
+  // If startDate is after maxDate
+  if (
+    maxDate &&
+    dateAdapter.isValid(startDate) &&
+    dateAdapter.compare(startDate, maxDate) > 0
+  ) {
+    details.startDate = details.startDate || {};
+    details.startDate.errors = details.startDate.errors || [];
+    details.startDate.errors.push({
+      type: "max-date",
+      message: "is after max date",
+    });
+  }
+  if (
+    minDate &&
+    dateAdapter.isValid(endDate) &&
+    dateAdapter.compare(endDate, minDate) < 0
+  ) {
+    details.endDate = details.endDate || {};
+    details.endDate.errors = details.endDate.errors || [];
+    details.endDate.errors.push({
+      type: "max-date",
+      message: "is before min date",
+    });
+  }
   // If endDate is after maxDate
   if (
     maxDate &&
@@ -124,7 +149,7 @@ export const DatePickerRangeInput = forwardRef(function DatePickerRangeInput<
     endInputProps,
     startInputProps,
     defaultValue,
-    format,
+    format = "DD MMM YYYY",
     value: valueProp,
     validate,
     onChange,
@@ -159,6 +184,21 @@ export const DatePickerRangeInput = forwardRef(function DatePickerRangeInput<
     name: "DatePickerRangeInput",
     state: "dateValue",
   });
+
+  useEffect(() => {
+    setValue({
+      startDate:
+        !selectedDate?.startDate ? "" :
+        selectedDate?.startDate && dateAdapter.isValid(selectedDate.startDate)
+          ? dateAdapter.format(selectedDate.startDate, format)
+          : value?.startDate,
+      endDate:
+      !selectedDate?.endDate ? "" :
+        selectedDate?.endDate && dateAdapter.isValid(selectedDate.endDate)
+          ? dateAdapter.format(selectedDate.endDate, format)
+          : value?.endDate,
+    });
+  }, [selectedDate]);
 
   const handleCalendarButton: MouseEventHandler<HTMLButtonElement> =
     useCallback(
@@ -209,8 +249,8 @@ export const DatePickerRangeInput = forwardRef(function DatePickerRangeInput<
     <DateInputRange
       value={
         value ?? {
-          startDate: dateAdapter.format(value, format),
-          endDate: dateAdapter.format(value, format),
+          startDate: "",
+          endDate: "",
         }
       }
       className={clsx(withBaseName(), className)}

@@ -20,8 +20,8 @@ import {
   type SyntheticEvent,
   forwardRef,
   useCallback,
-  useState,
   useLayoutEffect,
+  useState,
 } from "react";
 import {
   CalendarGrid,
@@ -35,14 +35,14 @@ import {
   type DateRangeSelection,
   type SingleDateSelection,
 } from "../calendar";
+import { generateDatesForMonth } from "../calendar/internal/utils";
 import { useLocalization } from "../localization-provider";
 import {
   type SingleDatePickerState,
   useDatePickerContext,
 } from "./DatePickerContext";
-import datePickerPanelCss from "./DatePickerPanel.css";
 import { useDatePickerOverlay } from "./DatePickerOverlayProvider";
-import { generateDatesForMonth } from "../calendar/internal/utils";
+import datePickerPanelCss from "./DatePickerPanel.css";
 
 /**
  * Base props for the DatePickerPanel grid components.
@@ -74,10 +74,13 @@ export interface DatePickerPanelBaseProps<TDate extends DateFrameworkType>
   defaultVisibleMonth?: TDate;
   /**
    * Callback fired when the visible month changes.
-   * @param event - The synthetic event.
+   * @param event - The synthetic event or undefined if called by effect.
    * @param visibleMonth - The new visible month.
    */
-  onVisibleMonthChange?: (event: SyntheticEvent, visibleMonth: TDate) => void;
+  onVisibleMonthChange?: (
+    event: SyntheticEvent | undefined,
+    visibleMonth: TDate,
+  ) => void;
   /**
    * Callback fired when the focused date changes.
    * @param event - The synthetic event or undefined if called by effect
@@ -180,7 +183,7 @@ export const DatePickerSingleGridPanel = forwardRef(
       resolveResponsiveValue(numberOfVisibleMonths, matchedBreakpoints) ?? 1;
 
     const {
-      state: { initialFocusRef },
+      state: { focused, initialFocusRef },
     } = useDatePickerOverlay();
 
     const [hoveredDate, setHoveredDate] = useState<TDate | null>(null);
@@ -198,86 +201,7 @@ export const DatePickerSingleGridPanel = forwardRef(
       state: "visibleMonth",
     });
 
-    const getNextFocusedDate = () => {
-      const startVisibleMonth = dateAdapter.startOf(visibleMonth, "month");
-      const endVisibleMonth = dateAdapter.add(visibleMonth, {
-        months: responsiveNumberOfVisibleMonths - 1,
-      });
-      const selectedDateStartOfMonth = selectedDate
-        ? dateAdapter.startOf(selectedDate, "month")
-        : null;
-
-      const getVisibleSelectedDate = () => {
-        if (
-          selectedDateStartOfMonth &&
-          dateAdapter.compare(selectedDateStartOfMonth, startVisibleMonth) >=
-            0 &&
-          dateAdapter.compare(selectedDateStartOfMonth, endVisibleMonth) <= 0
-        ) {
-          return selectedDate;
-        }
-        return null;
-      };
-
-      const focusSelectedDate = getVisibleSelectedDate();
-      if (focusSelectedDate) {
-        return focusSelectedDate;
-      }
-
-      // Today
-      const today = dateAdapter.today(timezone);
-      const todayStartOfMonth = dateAdapter.startOf(today, "month");
-      if (
-        dateAdapter.compare(todayStartOfMonth, startVisibleMonth) >= 0 &&
-        dateAdapter.compare(todayStartOfMonth, endVisibleMonth) <= 0
-      ) {
-        return today;
-      }
-
-      // First selectable date across visible months
-      const getFirstSelectableDate = (
-        startMonth: TDate,
-        numberOfMonths: number,
-      ) => {
-        const isOutsideAllowedDates = (date: TDate) => {
-          return (
-            dateAdapter.compare(date, minDate) < 0 ||
-            dateAdapter.compare(date, maxDate) > 0
-          );
-        };
-
-        const isDaySelectable = (date: TDate) =>
-          !(
-            date &&
-            (isDayUnselectable?.(date) ||
-              isDayDisabled?.(date) ||
-              isOutsideAllowedDates(date))
-          );
-
-        for (let i = 0; i < numberOfMonths; i++) {
-          const currentMonth = dateAdapter.add(startMonth, { months: i });
-          const firstSelectableDate = generateDatesForMonth(
-            dateAdapter,
-            currentMonth,
-          ).find((visibleDay) => isDaySelectable(visibleDay));
-
-          if (firstSelectableDate) {
-            return firstSelectableDate;
-          }
-        }
-
-        return null;
-      };
-
-      return getFirstSelectableDate(
-        startVisibleMonth,
-        responsiveNumberOfVisibleMonths,
-      );
-    };
-
-    const [focusedDate, setFocusedDate] = useState<TDate | null>(
-      getNextFocusedDate(),
-    );
+    const [focusedDate, setFocusedDate] = useState<TDate | null>(null);
 
     const handleSelectionChange = useCallback(
       (
@@ -300,7 +224,7 @@ export const DatePickerSingleGridPanel = forwardRef(
     );
 
     const handleVisibleMonthChange = useCallback(
-      (event: SyntheticEvent, newVisibleMonth: TDate) => {
+      (event: SyntheticEvent | undefined, newVisibleMonth: TDate) => {
         setVisibleMonth(newVisibleMonth);
         onVisibleMonthChange?.(event, newVisibleMonth);
       },
@@ -325,23 +249,124 @@ export const DatePickerSingleGridPanel = forwardRef(
           dateAdapter.compare(startOfFocusedMonth, lastVisibleMonth) > 0;
 
         if (isBeforeVisibleMonth) {
-          handleVisibleMonthChange(event!, startOfFocusedMonth);
+          handleVisibleMonthChange(event, startOfFocusedMonth);
         } else if (isAfterLastVisibleMonth) {
           const newLastVisibleMonth = dateAdapter.subtract(
             startOfFocusedMonth,
-            { months: responsiveNumberOfVisibleMonths - 1 },
+            {
+              months: responsiveNumberOfVisibleMonths - 1,
+            },
           );
-          handleVisibleMonthChange(event!, newLastVisibleMonth);
+          handleVisibleMonthChange(event, newLastVisibleMonth);
         }
         onFocusedDateChange?.(event, newFocusedDate);
       },
-      [onFocusedDateChange, responsiveNumberOfVisibleMonths, visibleMonth],
+      [
+        dateAdapter,
+        handleVisibleMonthChange,
+        onFocusedDateChange,
+        responsiveNumberOfVisibleMonths,
+        visibleMonth,
+      ],
     );
 
+    const getNextFocusedDate = useCallback(() => {
+      const isOutsideAllowedDates = (date: TDate) => {
+        return (
+          dateAdapter.compare(date, minDate) < 0 ||
+          dateAdapter.compare(date, maxDate) > 0
+        );
+      };
+      const isDaySelectable = (date: TDate) =>
+        !(
+          date &&
+          (isDayUnselectable?.(date) ||
+            isDayDisabled?.(date) ||
+            isOutsideAllowedDates(date))
+        );
+
+      const startVisibleMonth = dateAdapter.startOf(visibleMonth, "month");
+      const endVisibleMonth = dateAdapter.add(visibleMonth, {
+        months: responsiveNumberOfVisibleMonths - 1,
+      });
+      const selectedDateStartOfMonth = selectedDate
+        ? dateAdapter.startOf(selectedDate, "month")
+        : null;
+
+      const getVisibleSelectedDate = () => {
+        if (
+          selectedDateStartOfMonth &&
+          dateAdapter.compare(selectedDateStartOfMonth, startVisibleMonth) >=
+            0 &&
+          dateAdapter.compare(selectedDateStartOfMonth, endVisibleMonth) <= 0
+        ) {
+          return selectedDate;
+        }
+        return null;
+      };
+
+      const focusSelectedDate = getVisibleSelectedDate();
+      if (focusSelectedDate && isDaySelectable(focusSelectedDate)) {
+        return focusSelectedDate;
+      }
+
+      // Today
+      const today = dateAdapter.today(timezone);
+      const todayStartOfMonth = dateAdapter.startOf(today, "month");
+      if (
+        dateAdapter.compare(todayStartOfMonth, startVisibleMonth) >= 0 &&
+        dateAdapter.compare(todayStartOfMonth, endVisibleMonth) <= 0 &&
+        isDaySelectable(today)
+      ) {
+        return today;
+      }
+
+      // First selectable date across visible months
+      const getFirstSelectableDate = (
+        startMonth: TDate,
+        numberOfMonths: number,
+      ) => {
+        for (let i = 0; i < numberOfMonths; i++) {
+          const currentMonth = dateAdapter.add(startMonth, { months: i });
+          const firstSelectableDate = generateDatesForMonth(
+            dateAdapter,
+            currentMonth,
+          ).find((visibleDay) => isDaySelectable(visibleDay));
+
+          if (firstSelectableDate) {
+            return firstSelectableDate;
+          }
+        }
+
+        return null;
+      };
+
+      return getFirstSelectableDate(
+        startVisibleMonth,
+        responsiveNumberOfVisibleMonths,
+      );
+    }, [
+      dateAdapter,
+      isDayDisabled,
+      isDayUnselectable,
+      minDate,
+      maxDate,
+      responsiveNumberOfVisibleMonths,
+      selectedDate,
+      visibleMonth,
+      timezone,
+    ]);
+
     useLayoutEffect(() => {
-      const nextFocusedDate = getNextFocusedDate();
-      setFocusedDate(nextFocusedDate);
-    }, [selectedDate]);
+      // Called when the overlay opens or the focus shifts between trigger and overlay
+      if (focused) {
+        if (!focusedDate) {
+          setFocusedDate(getNextFocusedDate());
+        }
+      } else {
+        setFocusedDate(null);
+      }
+    }, [focused]);
 
     const calendarProps = {
       visibleMonth,

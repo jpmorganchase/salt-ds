@@ -20,21 +20,20 @@ export interface UseKeyboardProps {
  * @param props
  */
 export function useKeyboard(
-  context: FloatingContext,
+  _context: FloatingContext,
   props: UseKeyboardProps,
 ): ElementProps {
-  const { onOpenChange } = context;
   const { enabled = true, onArrowDown } = props;
   const reference = useMemo(
     () => ({
       onKeyDown(event: KeyboardEvent) {
         if (event.key === "ArrowDown") {
           event.preventDefault();
-          onArrowDown?.(event)
+          onArrowDown?.(event);
         }
       },
     }),
-    [onOpenChange],
+    [onArrowDown],
   );
 
   return useMemo(() => (enabled ? { reference } : {}), [enabled, reference]);

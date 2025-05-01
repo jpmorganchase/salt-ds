@@ -165,6 +165,7 @@ export const DatePickerOverlayProvider: React.FC<
           return;
         }
         triggeringElementRef.current = document.activeElement as HTMLElement;
+        setFocused(true);
       } else if (!isOpenControlled && reason !== "focus-out") {
         const trigger = triggeringElementRef.current as HTMLElement;
         if (trigger) {
@@ -221,7 +222,6 @@ export const DatePickerOverlayProvider: React.FC<
             enabled: !readOnly,
             onArrowDown: (event) => {
               handleOpenChange(true, event.nativeEvent, "reference-press");
-              setFocused(true);
             },
           }),
           useClick(floatingUIResult.context, {
@@ -246,7 +246,6 @@ export const DatePickerOverlayProvider: React.FC<
         height: elements.floating?.offsetHeight,
         ...getFloatingPropsCallback(userProps),
         focusManagerProps: {
-          //disabled: !focused,
           returnFocus: false,
           context: floatingUIResult.context,
           initialFocus: initialFocusRef,
