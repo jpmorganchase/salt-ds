@@ -675,7 +675,7 @@ export function useCalendarSelection<TDate extends DateFrameworkType>(
       }
       return false;
     },
-    [dateAdapter, selectionVariant, selectedDate],
+    [dateAdapter, isOutsideAllowedDates, selectionVariant, selectedDate],
   );
   const isHoveredSpan = useCallback(
     (date: TDate) => {
@@ -700,7 +700,7 @@ export function useCalendarSelection<TDate extends DateFrameworkType>(
       }
       return false;
     },
-    [dateAdapter, selectionVariant, selectedDate, hoveredDate, isDaySelectable],
+    [dateAdapter, isOutsideAllowedDates, selectionVariant, selectedDate, hoveredDate, isDaySelectable],
   );
 
   const isSelectedStart = useCallback(
@@ -715,7 +715,7 @@ export function useCalendarSelection<TDate extends DateFrameworkType>(
       }
       return false;
     },
-    [dateAdapter, selectionVariant, selectedDate],
+    [dateAdapter, isOutsideAllowedDates, selectionVariant, selectedDate],
   );
 
   const isSelectedEnd = useCallback(
@@ -730,7 +730,7 @@ export function useCalendarSelection<TDate extends DateFrameworkType>(
       }
       return false;
     },
-    [dateAdapter, selectionVariant, selectedDate],
+    [dateAdapter, isOutsideAllowedDates, selectionVariant, selectedDate],
   );
 
   const isHoveredOffset = useCallback(
