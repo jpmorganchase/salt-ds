@@ -21,7 +21,7 @@ export function useFocusManagement<TDate extends DateFrameworkType>({
   };
 
   const handleKeyDown: KeyboardEventHandler<HTMLButtonElement> = (event) => {
-    let newDate;
+    let newDate: TDate | undefined = undefined;
     switch (event.key) {
       case "ArrowUp":
         newDate = dateAdapter.subtract(date, { weeks: 1 });

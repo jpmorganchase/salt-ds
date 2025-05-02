@@ -1494,7 +1494,7 @@ export const SingleWithConfirmation: StoryFn<
     if (selectedDate && dateAdapter.isValid(selectedDate)) {
       setTimeout(() => applyButtonRef?.current?.focus(), 0);
     }
-  }, [selectedDate]);
+  }, [dateAdapter, selectedDate]);
 
   return (
     <FormField validationStatus={validationStatus}>
@@ -1662,7 +1662,7 @@ export const RangeWithConfirmation: StoryFn<
     ) {
       setTimeout(() => applyButtonRef?.current?.focus(), 0);
     }
-  }, [selectedDate]);
+  }, [dateAdapter, selectedDate]);
 
   return (
     <FormField validationStatus={validationStatus}>

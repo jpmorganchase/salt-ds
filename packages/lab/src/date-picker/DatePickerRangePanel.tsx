@@ -478,6 +478,7 @@ export const DatePickerRangePanel = forwardRef(function DatePickerRangePanel<
     );
   };
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: only run when focus/min/max date changes
   useLayoutEffect(() => {
     if (!focused) {
       setFocusedDate(null);
@@ -551,7 +552,7 @@ export const DatePickerRangePanel = forwardRef(function DatePickerRangePanel<
         getNextFocusedDate(nextStartVisibleMonth, nextEndVisibleMonth),
       );
     }
-  }, [focused]);
+  }, [dateAdapter, minDate, maxDate, focused]);
 
   const StartCalendarProps = {
     visibleMonth: startVisibleMonth,

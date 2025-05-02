@@ -295,6 +295,7 @@ export const DatePickerRangeGridPanel = forwardRef(
       ],
     );
 
+    // biome-ignore lint/correctness/useExhaustiveDependencies: only run when focus changes
     useLayoutEffect(() => {
       // Called when the overlay opens or the focus shifts between trigger and overlay
       if (focused) {
@@ -304,12 +305,7 @@ export const DatePickerRangeGridPanel = forwardRef(
       } else {
         setFocusedDate(null);
       }
-    }, [focused]);
-
-    useLayoutEffect(() => {
-      const nextFocusedDate = getNextFocusedDate();
-      setFocusedDate(nextFocusedDate);
-    }, [selectedDate]);
+    }, [focused, focusedDate]);
 
     const calendarProps = {
       visibleMonth,

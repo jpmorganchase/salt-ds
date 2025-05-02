@@ -357,6 +357,7 @@ export const DatePickerSingleGridPanel = forwardRef(
       timezone,
     ]);
 
+    // biome-ignore lint/correctness/useExhaustiveDependencies: only run when focus/min/max date changes
     useLayoutEffect(() => {
       // Called when the overlay opens or the focus shifts between trigger and overlay
       if (focused) {
@@ -366,7 +367,7 @@ export const DatePickerSingleGridPanel = forwardRef(
       } else {
         setFocusedDate(null);
       }
-    }, [focused]);
+    }, [focused, focusedDate]);
 
     const calendarProps = {
       visibleMonth,
