@@ -6,7 +6,7 @@ import {
 } from "react-resizable-panels";
 
 import "ag-grid-community/styles/ag-grid.css";
-import "../salt-react-resizable-panels-theme.css";
+import "../index.css";
 import "./splitter.stories.css";
 import {
   Button,
