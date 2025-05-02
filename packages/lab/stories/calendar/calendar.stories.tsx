@@ -363,7 +363,7 @@ export const TwinCalendars: StoryFn<
 
   const handleStartVisibleMonthChange = useCallback(
     (
-      _event: SyntheticEvent | undefined,
+      _event: SyntheticEvent | null,
       newVisibleMonth: CalendarProps<DateFrameworkType>["defaultVisibleMonth"],
     ) => {
       setStartVisibleMonth(newVisibleMonth);
@@ -380,7 +380,7 @@ export const TwinCalendars: StoryFn<
 
   const handleEndVisibleMonthChange = useCallback(
     (
-      _event: SyntheticEvent | undefined,
+      _event: SyntheticEvent | null,
       newVisibleMonth: CalendarProps<DateFrameworkType>["defaultVisibleMonth"],
     ) => {
       setEndVisibleMonth(newVisibleMonth);

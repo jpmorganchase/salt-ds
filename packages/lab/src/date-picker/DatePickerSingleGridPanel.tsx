@@ -74,20 +74,20 @@ export interface DatePickerPanelBaseProps<TDate extends DateFrameworkType>
   defaultVisibleMonth?: TDate;
   /**
    * Callback fired when the visible month changes.
-   * @param event - The synthetic event or undefined if called by effect.
+   * @param event - The synthetic event or null if triggered by code.
    * @param visibleMonth - The new visible month.
    */
   onVisibleMonthChange?: (
-    event: SyntheticEvent | undefined,
+    event: SyntheticEvent | null,
     visibleMonth: TDate,
   ) => void;
   /**
    * Callback fired when the focused date changes.
-   * @param event - The synthetic event or undefined if called by effect
+   * @param event - The synthetic event or null if triggered by code.
    * @param hoveredDate - The new hovered date.
    */
   onFocusedDateChange?: (
-    event: SyntheticEvent | undefined,
+    event: SyntheticEvent | null,
     hoveredDate?: TDate | null,
   ) => void;
   /**
@@ -224,7 +224,7 @@ export const DatePickerSingleGridPanel = forwardRef(
     );
 
     const handleVisibleMonthChange = useCallback(
-      (event: SyntheticEvent | undefined, newVisibleMonth: TDate) => {
+      (event: SyntheticEvent | null, newVisibleMonth: TDate) => {
         setVisibleMonth(newVisibleMonth);
         onVisibleMonthChange?.(event, newVisibleMonth);
       },
@@ -232,7 +232,7 @@ export const DatePickerSingleGridPanel = forwardRef(
     );
 
     const handleFocusedDateChange = useCallback(
-      (event: SyntheticEvent | undefined, newFocusedDate: TDate) => {
+      (event: SyntheticEvent | null, newFocusedDate: TDate) => {
         setFocusedDate(newFocusedDate);
 
         const startOfFocusedMonth = dateAdapter.startOf(

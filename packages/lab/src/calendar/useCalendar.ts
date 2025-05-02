@@ -29,11 +29,11 @@ interface UseCalendarBaseProps<TDate>
   defaultVisibleMonth?: TDate;
   /**
    * Callback fired when the visible month changes.
-   * @param event - The synthetic event, if user triggered change or undefined.
+   * @param event - The synthetic event or null if triggered by code.
    * @param visibleMonth - The new visible month.
    */
   onVisibleMonthChange?: (
-    event: SyntheticEvent | undefined,
+    event: SyntheticEvent | null,
     visibleMonth: TDate,
   ) => void;
   /**
@@ -224,22 +224,22 @@ export interface UseCalendarReturn<TDate extends DateFrameworkType> {
     /**
      * Sets the visible month in the calendar.
      *
-     * @param event - The synthetic event triggering the change, or undefined if triggered by code.
+     * @param event - The synthetic event or null if triggered by code.
      * @param newVisibleMonth - The new visible month to set.
      */
     setVisibleMonth: (
-      event: SyntheticEvent | undefined,
+      event: SyntheticEvent | null,
       newVisibleMonth: TDate,
     ) => void;
 
     /**
      * Sets the focused date in the calendar.
      *
-     * @param event - The synthetic event triggering the change, or undefined if triggered by code.
+     * @param event - The synthetic event or null if triggered by code.
      * @param date - The new date to focus.
      */
     setFocusedDate: (
-      event: SyntheticEvent | undefined,
+      event: SyntheticEvent | null,
       date: TDate | null,
     ) => void;
 
@@ -533,7 +533,7 @@ export function useCalendar<TDate extends DateFrameworkType>(
       !isOutsideAllowedDates(focusedDate);
 
     if (shouldTransition) {
-      setVisibleMonth(undefined, dateAdapter.startOf(focusedDate, "month"));
+      setVisibleMonth(null, dateAdapter.startOf(focusedDate, "month"));
     }
   }, [
     dateAdapter,
@@ -544,7 +544,7 @@ export function useCalendar<TDate extends DateFrameworkType>(
   ]);
 
   const setVisibleMonth = useCallback(
-    (event: SyntheticEvent | undefined, newVisibleMonth: TDate) => {
+    (event: SyntheticEvent | null, newVisibleMonth: TDate) => {
       setVisibleMonthState(newVisibleMonth);
       onVisibleMonthChange?.(event, newVisibleMonth);
     },

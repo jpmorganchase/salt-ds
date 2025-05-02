@@ -140,11 +140,11 @@ export interface UseCalendarSelectionBaseProps<
   focusedDateRef?: React.MutableRefObject<HTMLElement | null>;
   /**
    * Callback fired when the focused date changes.
-   * @param event - The synthetic event, if user event triggered focus or undefined.
+   * @param event - The synthetic event, if user event triggered focus or null.
    * @param date - The new focused date.
    */
   onFocusedDateChange?: (
-    event: SyntheticEvent | undefined,
+    event: SyntheticEvent | null,
     date: TDate | null,
   ) => void;
   /**
@@ -545,7 +545,7 @@ export function useCalendarSelection<TDate extends DateFrameworkType>(
   });
 
   const setFocusedDate = useCallback(
-    (event: SyntheticEvent | undefined, date: TDate | null) => {
+    (event: SyntheticEvent | null, date: TDate | null) => {
       if (focusedDateRef && event?.target instanceof HTMLElement) {
         focusedDateRef.current = event.target;
       }

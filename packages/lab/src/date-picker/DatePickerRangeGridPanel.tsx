@@ -251,7 +251,7 @@ export const DatePickerRangeGridPanel = forwardRef(
     );
 
     const handleVisibleMonthChange = useCallback(
-      (event: SyntheticEvent | undefined, newVisibleMonth: TDate) => {
+      (event: SyntheticEvent | null, newVisibleMonth: TDate) => {
         setVisibleMonth(newVisibleMonth);
         onVisibleMonthChange?.(event, newVisibleMonth);
       },
@@ -259,7 +259,7 @@ export const DatePickerRangeGridPanel = forwardRef(
     );
 
     const handleFocusedDateChange = useCallback(
-      (event: SyntheticEvent | undefined, newFocusedDate: TDate) => {
+      (event: SyntheticEvent | null, newFocusedDate: TDate) => {
         setFocusedDate(newFocusedDate);
 
         const startOfFocusedMonth = dateAdapter.startOf(
