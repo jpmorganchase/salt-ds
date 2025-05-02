@@ -488,7 +488,7 @@ export const DatePickerRangePanel = forwardRef(function DatePickerRangePanel<
       selectedDate?.startDate &&
       dateAdapter.isValid(selectedDate.startDate) &&
       dateAdapter.compare(selectedDate.startDate, minDate) >= 0 &&
-      dateAdapter.compare(selectedDate.startDate, maxDate) <= 0
+      dateAdapter.compare(selectedDate.startDate, maxDate) <= 0;
 
     const isEndDateValid =
       selectedDate?.endDate &&
@@ -499,37 +499,59 @@ export const DatePickerRangePanel = forwardRef(function DatePickerRangePanel<
     let nextStartVisibleMonth = startVisibleMonth;
     let nextEndVisibleMonth = endVisibleMonth;
 
-    const setVisibleMonths = (start: typeof nextStartVisibleMonth, end: typeof nextEndVisibleMonth) => {
+    const setVisibleMonths = (
+      start: typeof nextStartVisibleMonth,
+      end: typeof nextEndVisibleMonth,
+    ) => {
       nextStartVisibleMonth = dateAdapter.startOf(start, "month");
       nextEndVisibleMonth = dateAdapter.startOf(end, "month");
     };
 
-    if (selectedDate?.startDate && selectedDate?.endDate && isStartDateValid && isEndDateValid) {
+    if (
+      selectedDate?.startDate &&
+      selectedDate?.endDate &&
+      isStartDateValid &&
+      isEndDateValid
+    ) {
       if (
-        dateAdapter.isSame(selectedDate.startDate, startVisibleMonth, "month") &&
+        dateAdapter.isSame(
+          selectedDate.startDate,
+          startVisibleMonth,
+          "month",
+        ) &&
         dateAdapter.isSame(selectedDate.endDate, startVisibleMonth, "month")
       ) {
         setStartCalendarFocused(true);
-        setVisibleMonths(selectedDate.startDate, dateAdapter.add(selectedDate.startDate, { months: 1 }));
+        setVisibleMonths(
+          selectedDate.startDate,
+          dateAdapter.add(selectedDate.startDate, { months: 1 }),
+        );
       } else {
         setStartCalendarFocused(true);
         setVisibleMonths(selectedDate.startDate, selectedDate.endDate);
       }
     } else if (selectedDate?.startDate && isStartDateValid) {
       setStartCalendarFocused(true);
-      setVisibleMonths(selectedDate.startDate, dateAdapter.add(selectedDate.startDate, { months: 1 }));
+      setVisibleMonths(
+        selectedDate.startDate,
+        dateAdapter.add(selectedDate.startDate, { months: 1 }),
+      );
     } else if (selectedDate?.endDate && isEndDateValid) {
       setEndCalendarFocused(true);
-      setVisibleMonths(dateAdapter.subtract(selectedDate.endDate, { months: 1 }), selectedDate.endDate);
+      setVisibleMonths(
+        dateAdapter.subtract(selectedDate.endDate, { months: 1 }),
+        selectedDate.endDate,
+      );
     } else {
       setStartCalendarFocused(true);
     }
 
     if (!focusedDate) {
-      setFocusedDate(getNextFocusedDate(nextStartVisibleMonth, nextEndVisibleMonth));
+      setFocusedDate(
+        getNextFocusedDate(nextStartVisibleMonth, nextEndVisibleMonth),
+      );
     }
   }, [focused]);
-
 
   const StartCalendarProps = {
     visibleMonth: startVisibleMonth,
@@ -587,7 +609,14 @@ export const DatePickerRangePanel = forwardRef(function DatePickerRangePanel<
         {/* Avoid Dropdowns in Calendar inheriting the FormField's state */}
         <FormFieldContext.Provider value={{} as FormFieldContextValue}>
           <Calendar selectionVariant={"range"} {...StartCalendarProps}>
-            <CalendarNavigation {...StartCalendarNavigationProps} />
+            <CalendarNavigation
+              disableNavigateNext={dateAdapter.isSame(
+                startVisibleMonth,
+                dateAdapter.subtract(maxDate, { months: 1 }),
+                "month",
+              )}
+              {...StartCalendarNavigationProps}
+            />
             <CalendarGrid
               onFocus={handleStartCalendarFocus}
               onBlur={handleStartCalendarBlur}
@@ -595,7 +624,14 @@ export const DatePickerRangePanel = forwardRef(function DatePickerRangePanel<
             />
           </Calendar>
           <Calendar selectionVariant={"range"} {...EndCalendarProps}>
-            <CalendarNavigation {...EndCalendarNavigationProps} />
+            <CalendarNavigation
+              disableNavigatePrevious={dateAdapter.isSame(
+                endVisibleMonth,
+                dateAdapter.add(minDate, { months: 1 }),
+                "month",
+              )}
+              {...EndCalendarNavigationProps}
+            />
             <CalendarGrid
               onFocus={handleEndCalendarFocus}
               onBlur={handleEndCalendarBlur}
