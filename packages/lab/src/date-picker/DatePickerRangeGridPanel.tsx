@@ -19,6 +19,7 @@ import {
   forwardRef,
   useCallback,
   useLayoutEffect,
+  useRef,
   useState,
 } from "react";
 import {
@@ -104,6 +105,7 @@ export const DatePickerRangeGridPanel = forwardRef(
 
     const [hoveredDate, setHoveredDate] = useState<TDate | null>(null);
     const [focusedDate, setFocusedDate] = useState<TDate | null>(null);
+    const calendarGridFocused = useRef(false);
 
     const {
       state: {
@@ -261,6 +263,10 @@ export const DatePickerRangeGridPanel = forwardRef(
     const handleFocusedDateChange = useCallback(
       (event: SyntheticEvent | null, newFocusedDate: TDate) => {
         setFocusedDate(newFocusedDate);
+        if (!newFocusedDate) {
+          onFocusedDateChange?.(event, newFocusedDate);
+          return;
+        }
 
         const startOfFocusedMonth = dateAdapter.startOf(
           newFocusedDate,
@@ -295,22 +301,24 @@ export const DatePickerRangeGridPanel = forwardRef(
       ],
     );
 
-    // biome-ignore lint/correctness/useExhaustiveDependencies: only run when focus changes
+    // biome-ignore lint/correctness/useExhaustiveDependencies: only run when focus/min/max date changes
     useLayoutEffect(() => {
       // Called when the overlay opens or the focus shifts between trigger and overlay
-      if (focused) {
-        if (!focusedDate) {
-          setFocusedDate(getNextFocusedDate());
-        }
-      } else {
-        setFocusedDate(null);
+      if (focused && !calendarGridFocused.current) {
+        setFocusedDate((prevFocusedDate) => {
+          if (!prevFocusedDate) {
+            return getNextFocusedDate();
+          }
+          return prevFocusedDate;
+        });
       }
-    }, [focused, focusedDate]);
+      calendarGridFocused.current = focused;
+    }, [focused]);
 
     const calendarProps = {
       visibleMonth,
       focusedDateRef: initialFocusRef,
-      focusedDate,
+      focusedDate: calendarGridFocused?.current ? focusedDate : null,
       hoveredDate,
       numberOfVisibleMonths: responsiveNumberOfVisibleMonths,
       onFocusedDateChange: handleFocusedDateChange,

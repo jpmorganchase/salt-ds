@@ -1,5 +1,15 @@
-import { GridItem, GridLayout, type ResponsiveProp } from "@salt-ds/core";
-import { type ComponentPropsWithoutRef, forwardRef } from "react";
+import {
+  GridItem,
+  GridLayout,
+  type ResponsiveProp,
+  useForkRef,
+} from "@salt-ds/core";
+import {
+  type ComponentPropsWithoutRef,
+  type FocusEventHandler,
+  forwardRef,
+  useRef,
+} from "react";
 import { useCalendarContext } from "./internal/CalendarContext";
 import {
   CalendarMonth,
@@ -56,17 +66,41 @@ export const CalendarGrid = forwardRef<
       CalendarMonthHeaderProps,
       columns = 1,
       getCalendarMonthProps = () => undefined,
+      onBlur,
       ...rest
     } = props;
 
     const { dateAdapter } = useLocalization<TDate>();
 
     const {
-      state: { visibleMonth, numberOfVisibleMonths = 1 },
+      helpers: { setFocusedDate, setHoveredDate },
+      state: { focusedDate, visibleMonth, numberOfVisibleMonths = 1 },
     } = useCalendarContext<TDate>();
+    const calendarGridRef = useRef<HTMLDivElement>(null);
+    const containerRef = useForkRef(ref, calendarGridRef);
+
+    const handleCalendarGridBlur: FocusEventHandler<HTMLDivElement> = (
+      event,
+    ) => {
+      event.stopPropagation();
+      setTimeout(() => {
+        if (calendarGridRef?.current?.contains(document.activeElement)) {
+          return;
+        }
+        setFocusedDate(event, null);
+        setHoveredDate(event, null);
+      }, 0);
+      onBlur?.(event);
+    };
 
     return (
-      <GridLayout columns={columns} gap={1} ref={ref} {...rest}>
+      <GridLayout
+        columns={columns}
+        gap={1}
+        ref={containerRef}
+        onBlur={handleCalendarGridBlur}
+        {...rest}
+      >
         {Array.from({ length: numberOfVisibleMonths }, (_value, index) => {
           const gridItemVisibleMonth: TDate = dateAdapter.add(visibleMonth, {
             months: index,

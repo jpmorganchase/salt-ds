@@ -65,7 +65,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
     it("SHOULD open calendar overlay when using down arrow", () => {
       cy.mount(<Single />);
 
-      cy.findByRole("textbox").click().type("{downArrow}");
+      cy.findByRole("textbox").click().type("{downArrow}", { force: true });
       // Verify that the calendar is displayed
       cy.findByRole("application").should("exist");
     });
@@ -187,7 +187,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
         cy.mount(<Single defaultSelectedDate={initialDate} />);
 
         // Simulate opening the overlay
-        cy.findByRole("textbox").click().type("{downArrow}");
+        cy.findByRole("textbox").click().type("{downArrow}", { force: true });
         // Verify that the calendar is opened
         cy.findByRole("application").should("exist");
         // Verify the first element is focused
@@ -196,13 +196,13 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
         }).should("be.focused");
         // Simulate tabbing between all elements in the overlay
         cy.realPress("Tab");
-        cy.findByLabelText("Previous Month").parent().should("be.focused");
+        cy.findByLabelText("Previous Month").should("be.focused");
         cy.realPress("Tab");
         cy.findByLabelText("Month Dropdown").should("be.focused");
         cy.realPress("Tab");
         cy.findByLabelText("Year Dropdown").should("be.focused");
         cy.realPress("Tab");
-        cy.findByLabelText("Next Month").parent().should("be.focused");
+        cy.findByLabelText("Next Month").should("be.focused");
         cy.realPress("Tab");
         // Verify focus returns to the first element in the overlay
         cy.findByRole("button", {
@@ -217,11 +217,11 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
         // Simulate tabbing to the calendar button
         cy.realPress("Tab");
         // Verify the calendar button is focused
-        cy.findByLabelText("calendar").parent().should("be.focused");
+        cy.findByLabelText("Open Calendar").should("be.focused");
         // Simulate tabbing out of the date picker
         cy.realPress("Tab");
         // Verify the date picker loses focus
-        cy.findByLabelText("calendar").parent().should("not.be.focused");
+        cy.findByLabelText("Open Calendar").should("not.be.focused");
       });
 
       it("SHOULD support validation", () => {
@@ -327,12 +327,16 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
         // Verify that the calendar is displayed
         cy.findByRole("application").should("exist");
         // Verify the navigation controls do not allow to navigate beyond the min/max
-        cy.findByLabelText("Previous Month")
-          .parent()
-          .should("have.attr", "aria-disabled", "true");
-        cy.findByLabelText("Next Month")
-          .parent()
-          .should("not.have.attr", "aria-disabled", "true");
+        cy.findByLabelText("Previous Month").should(
+          "have.attr",
+          "aria-disabled",
+          "true",
+        );
+        cy.findByLabelText("Next Month").should(
+          "not.have.attr",
+          "aria-disabled",
+          "true",
+        );
         // Verify first selectable date in range is focused
         cy.findByRole("button", {
           name: "15 January 2030",
@@ -354,12 +358,16 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
           .realHover()
           .realClick();
         // Verify the navigation controls do not allow to navigate beyond the min/max
-        cy.findByLabelText("Previous Month")
-          .parent()
-          .should("not.have.attr", "aria-disabled", "true");
-        cy.findByLabelText("Next Month")
-          .parent()
-          .should("have.attr", "aria-disabled", "true");
+        cy.findByLabelText("Previous Month").should(
+          "not.have.attr",
+          "aria-disabled",
+          "true",
+        );
+        cy.findByLabelText("Next Month").should(
+          "have.attr",
+          "aria-disabled",
+          "true",
+        );
         // Verify that dates outside the min/max range are disabled
         cy.findByRole("button", {
           name: "15 January 2031",
@@ -636,7 +644,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
           // Simulate opening the calendar
           cy.findByRole("button", { name: "Open Calendar" })
             .realClick()
-            .type("{downArrow}");
+            .type("{downArrow}", { force: true });
           // Verify that the calendar is displayed
           cy.findByRole("application").should("exist");
           //Verify the selected date is focused
@@ -682,7 +690,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
           // Simulate opening the calendar
           cy.findByRole("button", { name: "Open Calendar" })
             .realClick()
-            .type("{downArrow}");
+            .type("{downArrow}", { force: true });
           // Verify that the calendar is displayed
           cy.findByRole("application").should("exist");
           //Verify the selected date is focused

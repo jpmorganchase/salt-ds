@@ -67,12 +67,7 @@ export const SingleWithCustomParser = (): ReactElement => {
   );
 
   const customParser = useCallback(
-    (
-      inputDate: string,
-      format: string,
-      // biome-ignore lint/suspicious/noExplicitAny: any is more flexible for adding new date frameworks
-      locale: any,
-    ): ParserResult<DateFrameworkType> => {
+    (inputDate: string, format: string): ParserResult<DateFrameworkType> => {
       if (!inputDate?.length) {
         const parsedDate = dateAdapter.parse("invalid date", "DD/MMM/YYYY");
         return {
@@ -96,7 +91,7 @@ export const SingleWithCustomParser = (): ReactElement => {
           value: inputDate,
         };
       }
-      return dateAdapter.parse(parsedDate || "", format, locale);
+      return dateAdapter.parse(parsedDate || "", format);
     },
     [dateAdapter, selectedDate],
   );

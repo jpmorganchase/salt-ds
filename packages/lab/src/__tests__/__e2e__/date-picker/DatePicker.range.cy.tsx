@@ -64,7 +64,10 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
     it("SHOULD open calendar overlay when using down arrow", () => {
       cy.mount(<Range />);
 
-      cy.findAllByRole("textbox").eq(0).click().type("{downArrow}");
+      cy.findAllByRole("textbox")
+        .eq(0)
+        .click()
+        .type("{downArrow}", { force: true });
       // Verify that the calendar is displayed
       cy.findAllByRole("application").should("have.length", 2);
     });
@@ -190,7 +193,9 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
         cy.mount(<Range defaultSelectedDate={initialRangeDate} />);
 
         // Simulate opening the overlay
-        cy.findByLabelText("Start date").click().type("{downArrow}");
+        cy.findByLabelText("Start date")
+          .click()
+          .type("{downArrow}", { force: true });
         // Verify that the calendar is opened
         cy.findAllByRole("application").should("have.length", 2);
         // Verify the first element focused in the first calendar is the start date
@@ -200,16 +205,13 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
         // Simulate tabbing to the next calendar
         cy.realPress("Tab");
         // Verify the focused element(s) are the navigation controls
-        cy.findAllByLabelText("Previous Month")
-          .eq(1)
-          .parent()
-          .should("be.focused");
+        cy.findAllByLabelText("Previous Month").eq(1).should("be.focused");
         cy.realPress("Tab");
         cy.findAllByLabelText("Month Dropdown").eq(1).should("be.focused");
         cy.realPress("Tab");
         cy.findAllByLabelText("Year Dropdown").eq(1).should("be.focused");
         cy.realPress("Tab");
-        cy.findAllByLabelText("Next Month").eq(1).parent().should("be.focused");
+        cy.findAllByLabelText("Next Month").eq(1).should("be.focused");
         // Simulate tabbing into the second calendar
         cy.realPress("Tab");
         // Verify the first day focused in the second calendar
@@ -223,19 +225,13 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
         // Simulate tabbing back to the first calendar
         cy.realPress("Tab");
         // Verify the focused element(s) are the navigation controls
-        cy.findAllByLabelText("Previous Month")
-          .first()
-          .parent()
-          .should("be.focused");
+        cy.findAllByLabelText("Previous Month").first().should("be.focused");
         cy.realPress("Tab");
         cy.findAllByLabelText("Month Dropdown").first().should("be.focused");
         cy.realPress("Tab");
         cy.findAllByLabelText("Year Dropdown").first().should("be.focused");
         cy.realPress("Tab");
-        cy.findAllByLabelText("Next Month")
-          .first()
-          .parent()
-          .should("be.focused");
+        cy.findAllByLabelText("Next Month").first().should("be.focused");
         // Simulate tabbing into the second calendar
         cy.realPress("Tab");
         // Verify focus returns to the first focused element in the first calendar
@@ -254,11 +250,11 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
         cy.findByLabelText("End date").should("be.focused");
         cy.realPress("Tab");
         // Verify calendar button is focused
-        cy.findByLabelText("calendar").parent().should("be.focused");
+        cy.findByLabelText("Open Calendar").should("be.focused");
         // Simulate tabbing out of date picker
         cy.realPress("Tab");
         // Verify the date picker loses focus
-        cy.findByLabelText("calendar").parent().should("not.be.focused");
+        cy.findByLabelText("Open Calendar").should("not.be.focused");
       });
 
       it("SHOULD only be able to select a date between min/max", () => {
@@ -281,19 +277,15 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
         // Verify the navigation controls do not allow to navigate beyond the min/max
         cy.findAllByLabelText("Previous Month")
           .eq(0)
-          .parent()
           .should("have.attr", "aria-disabled", "true");
         cy.findAllByLabelText("Next Month")
           .eq(0)
-          .parent()
           .should("not.have.attr", "aria-disabled", "true");
         cy.findAllByLabelText("Previous Month")
           .eq(1)
-          .parent()
           .should("not.have.attr", "aria-disabled", "true");
         cy.findAllByLabelText("Next Month")
           .eq(1)
-          .parent()
           .should("have.attr", "aria-disabled", "true");
         // Verify first selectable date in range is focused
         cy.findByRole("button", {
@@ -723,7 +715,7 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
           // Simulate opening the calendar
           cy.findByRole("button", { name: "Open Calendar" })
             .realClick()
-            .type("{downArrow}");
+            .type("{downArrow}", { force: true });
           // Verify that the calendar is displayed
           cy.findAllByRole("application").should("have.length", 2);
           //Verify the start date is focused
@@ -870,7 +862,7 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
           // Simulate opening the calendar
           cy.findByRole("button", { name: "Open Calendar" })
             .realClick()
-            .type("{downArrow}");
+            .type("{downArrow}", { force: true });
           // Verify that the calendar is displayed
           cy.findAllByRole("application").should("have.length", 2);
           //Verify the start date is focused

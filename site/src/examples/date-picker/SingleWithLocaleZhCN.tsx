@@ -22,7 +22,6 @@ import {
 import "moment/dist/locale/zh-cn";
 import "dayjs/locale/zh-cn";
 import { zhCN as dateFnsZhCn } from "date-fns/locale";
-import { enUS as dateFnsEnUs } from "date-fns/locale";
 
 export const SingleWithLocaleZhCN = (): ReactElement => {
   // Include any locales, required by your DateAdapter of choice.
@@ -52,7 +51,7 @@ export const SingleWithLocaleZhCN = (): ReactElement => {
     ) => {
       const { value, errors } = details || {};
       console.log(
-        `Selected date: ${dateAdapter.isValid(date) ? dateAdapter.format(date, "DD MMM YYYY", isDateFns ? dateFnsEnUs : "en") : date}`,
+        `Selected date: ${dateAdapter.isValid(date) ? dateAdapter.format(date, "DD MMM YYYY") : date}`,
       );
       if (errors?.length) {
         console.log(
@@ -92,10 +91,7 @@ export const SingleWithLocaleZhCN = (): ReactElement => {
         onSelectionChange={handleSelectionChange}
       >
         <DatePickerTrigger>
-          <DatePickerSingleInput
-            format={"DD MMM YYYY"}
-            locale={isDateFns ? dateFnsEnUs : "en"}
-          />
+          <DatePickerSingleInput format={"DD MMM YYYY"} />
         </DatePickerTrigger>
         <DatePickerOverlay>
           <DatePickerSingleGridPanel
