@@ -67,10 +67,20 @@ export interface CalendarNavigationProps<TDate extends DateFrameworkType>
   onNavigateNext?: ButtonProps["onClick"];
 
   /**
+   * If `true` then navigate next button is enabled
+   */
+  disableNavigateNext?: boolean;
+
+  /**
    * Callback fired when navigating to the previous month.
    * @param event - The click event.
    */
   onNavigatePrevious?: ButtonProps["onClick"];
+
+  /**
+   * If `true` then navigate previous button is enabled
+   */
+  disableNavigatePrevious?: boolean;
 
   /**
    * If `true`, hides the year dropdown.
@@ -202,8 +212,8 @@ function useCalendarNavigation<TDate extends DateFrameworkType>() {
     dateAdapter.isSame(year, visibleMonth, "year"),
   );
 
-  const canNavigatePrevious = !isDayVisible(minDate);
-  const canNavigateNext = !isDayVisible(maxDate);
+  const disableNavigatePrevious = isDayVisible(minDate);
+  const disableNavigateNext = isDayVisible(maxDate);
 
   return useMemo(
     () => ({
@@ -213,8 +223,8 @@ function useCalendarNavigation<TDate extends DateFrameworkType>() {
       visibleMonth,
       months,
       years,
-      canNavigateNext,
-      canNavigatePrevious,
+      disableNavigateNext,
+      disableNavigatePrevious,
       selectedMonth,
       selectedYear,
       isOutsideAllowedMonths,
@@ -226,8 +236,8 @@ function useCalendarNavigation<TDate extends DateFrameworkType>() {
       moveToMonth,
       visibleMonth,
       years,
-      canNavigateNext,
-      canNavigatePrevious,
+      disableNavigateNext,
+      disableNavigatePrevious,
       selectedMonth,
       selectedYear,
       isOutsideAllowedMonths,
@@ -269,6 +279,8 @@ export const CalendarNavigation = forwardRef<
   ) => {
     const {
       className,
+      disableNavigatePrevious: disableNavigatePreviousProp,
+      disableNavigateNext: disableNavigateNextProp,
       formatMonth: formatMonthProp,
       formatYear: formatYearProp,
       MonthDropdownProps,
@@ -295,8 +307,8 @@ export const CalendarNavigation = forwardRef<
       moveToMonth,
       months,
       years,
-      canNavigateNext,
-      canNavigatePrevious,
+      disableNavigateNext,
+      disableNavigatePrevious,
       selectedMonth,
       selectedYear,
       isOutsideAllowedMonths,
@@ -371,13 +383,13 @@ export const CalendarNavigation = forwardRef<
       >
         <ConditionalTooltip
           placement="top"
-          disabled={canNavigatePrevious}
+          disabled={disableNavigatePreviousProp ?? disableNavigatePrevious}
           content="Past dates are out of range"
           enterDelay={0} // --salt-duration-instant
           leaveDelay={0} // --salt-duration-instant
         >
           <Button
-            disabled={!canNavigatePrevious}
+            disabled={disableNavigatePreviousProp ?? disableNavigatePrevious}
             appearance="transparent"
             sentiment="neutral"
             onClick={handleNavigatePrevious}
@@ -425,13 +437,13 @@ export const CalendarNavigation = forwardRef<
         </div>
         <ConditionalTooltip
           placement="top"
-          disabled={canNavigateNext}
+          disabled={disableNavigateNextProp ?? disableNavigateNext}
           content="Future dates are out of range"
           enterDelay={0} // --salt-duration-instant
           leaveDelay={0} // --salt-duration-instant
         >
           <Button
-            disabled={!canNavigateNext}
+            disabled={disableNavigateNextProp ?? disableNavigateNext}
             appearance="transparent"
             sentiment="neutral"
             onClick={handleNavigateNext}
