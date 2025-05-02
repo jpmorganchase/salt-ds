@@ -10,6 +10,7 @@ import {
   useRef,
   useState,
 } from "react";
+import { saltTheme } from "../theme";
 
 LicenseManager.setLicenseKey("your license key");
 
@@ -73,8 +74,11 @@ export function useAgGridHelpers({
     containerProps: {
       className: clsx(containerClassName, className),
       style: { height: 500, width: 800 },
+      // ag grid theme modes https://www.ag-grid.com/react-data-grid/theming-colors/#theme-modes
+      "data-ag-theme-mode": mode,
     },
     agGridProps: {
+      theme: saltTheme,
       onGridReady,
       rowHeight,
       headerHeight: headerRowHeight,

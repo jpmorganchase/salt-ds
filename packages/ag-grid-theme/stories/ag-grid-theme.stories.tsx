@@ -1,7 +1,12 @@
+import {
+  AllCommunityModule,
+  ModuleRegistry,
+  provideGlobalGridOptions,
+} from "ag-grid-community";
+import { AllEnterpriseModule } from "ag-grid-enterprise";
 import { AgGridReact } from "ag-grid-react";
 
-import "ag-grid-community/styles/ag-grid.css";
-import "../salt-ag-theme.css";
+ModuleRegistry.registerModules([AllEnterpriseModule]);
 
 import "@salt-ds/countries/saltSharpCountries.css";
 
