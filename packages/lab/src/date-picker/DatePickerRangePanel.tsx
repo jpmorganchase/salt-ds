@@ -78,11 +78,11 @@ export interface DatePickerRangePanelProps<TDate extends DateFrameworkType>
 
   /**
    * Callback fired when the visible month for the start date changes.
-   * @param event - The synthetic event, or undefined if called by effect.
+   * @param event - The synthetic event, or null if called by effect.
    * @param visibleMonth - The new visible month for the start date.
    */
   onStartVisibleMonthChange?: (
-    event: SyntheticEvent | undefined,
+    event: SyntheticEvent | null,
     visibleMonth: TDate,
   ) => void;
 
@@ -98,21 +98,21 @@ export interface DatePickerRangePanelProps<TDate extends DateFrameworkType>
 
   /**
    * Callback fired when the visible month for the end date changes.
-   * @param event - The synthetic event, or undefined if called by effect.
+   * @param event - The synthetic event or null if triggered by code.
    * @param visibleMonth - The new visible month for the end date.
    */
   onEndVisibleMonthChange?: (
-    event: SyntheticEvent | undefined,
+    event: SyntheticEvent | null,
     visibleMonth: TDate,
   ) => void;
 
   /**
    * Callback fired when the focused date changes.
-   * @param event - The synthetic event or undefined if called by effect
+   * @param event - The synthetic event or null if triggered by code.
    * @param hoveredDate - The new hovered date.
    */
   onFocusedDateChange?: (
-    event: SyntheticEvent | undefined,
+    event: SyntheticEvent | null,
     hoveredDate?: TDate | null,
   ) => void;
   /**
@@ -303,7 +303,7 @@ export const DatePickerRangePanel = forwardRef(function DatePickerRangePanel<
   );
 
   const handleStartVisibleMonthChange = useCallback(
-    (event: SyntheticEvent | undefined, newVisibleMonth: TDate) => {
+    (event: SyntheticEvent | null, newVisibleMonth: TDate) => {
       setStartVisibleMonth(newVisibleMonth);
       if (dateAdapter.compare(newVisibleMonth, endVisibleMonth) >= 0) {
         setEndVisibleMonth(dateAdapter.add(newVisibleMonth, { months: 1 }));
@@ -314,7 +314,7 @@ export const DatePickerRangePanel = forwardRef(function DatePickerRangePanel<
   );
 
   const handleEndVisibleMonthChange = useCallback(
-    (event: SyntheticEvent | undefined, newVisibleMonth: TDate) => {
+    (event: SyntheticEvent | null, newVisibleMonth: TDate) => {
       setEndVisibleMonth(newVisibleMonth);
       if (dateAdapter.compare(newVisibleMonth, startVisibleMonth) <= 0) {
         setStartVisibleMonth(
@@ -370,7 +370,7 @@ export const DatePickerRangePanel = forwardRef(function DatePickerRangePanel<
   };
 
   const handleStartCalendarFocusedDateChange = useCallback(
-    (event: SyntheticEvent | undefined, newFocusedDate: TDate) => {
+    (event: SyntheticEvent | null, newFocusedDate: TDate) => {
       setFocusedDate(newFocusedDate);
       if (
         newFocusedDate &&
@@ -392,7 +392,7 @@ export const DatePickerRangePanel = forwardRef(function DatePickerRangePanel<
   );
 
   const handleEndCalendarFocusedDateChange = useCallback(
-    (event: SyntheticEvent | undefined, newFocusedDate: TDate) => {
+    (event: SyntheticEvent | null, newFocusedDate: TDate) => {
       setFocusedDate(newFocusedDate);
       if (
         newFocusedDate &&
