@@ -8,9 +8,9 @@
     "directory": "packages/ag-grid-theme"
   },
   "bugs": "https://github.com/jpmorganchase/salt-ds/issues",
-  "style": "salt-react-resizable-panels-theme.css",
+  "style": "index.css",
   "files": [
-    "/salt-react-resizable-panels-theme.css"
+    "/index.css"
   ],
   "sideEffects": [
     "*.css"
