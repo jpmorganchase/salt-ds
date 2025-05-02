@@ -1514,7 +1514,7 @@ export const SingleWithConfirmation: StoryFn<
         <DatePickerOverlay>
           <FlexLayout gap={0} direction="column">
             <FlexItem>
-              <DatePickerSingleGridPanel helperText={helperText}/>
+              <DatePickerSingleGridPanel helperText={helperText} />
               <Divider variant="tertiary" />
             </FlexItem>
             <FlexItem>
@@ -1655,11 +1655,14 @@ export const RangeWithConfirmation: StoryFn<
   );
 
   useEffect(() => {
-    if (selectedDate && dateAdapter.isValid(selectedDate?.startDate) && dateAdapter.isValid(selectedDate?.endDate)) {
+    if (
+      selectedDate &&
+      dateAdapter.isValid(selectedDate?.startDate) &&
+      dateAdapter.isValid(selectedDate?.endDate)
+    ) {
       setTimeout(() => applyButtonRef?.current?.focus(), 0);
     }
   }, [selectedDate]);
-
 
   return (
     <FormField validationStatus={validationStatus}>

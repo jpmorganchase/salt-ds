@@ -19,13 +19,13 @@ import { useWindow } from "@salt-ds/window";
 import clsx from "clsx";
 import {
   type ComponentPropsWithoutRef,
+  type FocusEventHandler,
   type SyntheticEvent,
   forwardRef,
   useCallback,
   useLayoutEffect,
   useRef,
   useState,
-  FocusEventHandler,
 } from "react";
 import {
   Calendar,

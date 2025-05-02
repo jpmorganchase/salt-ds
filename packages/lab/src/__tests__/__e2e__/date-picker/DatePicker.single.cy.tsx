@@ -327,8 +327,12 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
         // Verify that the calendar is displayed
         cy.findByRole("application").should("exist");
         // Verify the navigation controls do not allow to navigate beyond the min/max
-        cy.findByLabelText("Previous Month").parent().should("have.attr", "aria-disabled", "true");
-        cy.findByLabelText("Next Month").parent().should("not.have.attr", "aria-disabled", "true");
+        cy.findByLabelText("Previous Month")
+          .parent()
+          .should("have.attr", "aria-disabled", "true");
+        cy.findByLabelText("Next Month")
+          .parent()
+          .should("not.have.attr", "aria-disabled", "true");
         // Verify first selectable date in range is focused
         cy.findByRole("button", {
           name: "15 January 2030",
@@ -350,8 +354,12 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
           .realHover()
           .realClick();
         // Verify the navigation controls do not allow to navigate beyond the min/max
-        cy.findByLabelText("Previous Month").parent().should("not.have.attr", "aria-disabled", "true");
-        cy.findByLabelText("Next Month").parent().should("have.attr", "aria-disabled", "true");
+        cy.findByLabelText("Previous Month")
+          .parent()
+          .should("not.have.attr", "aria-disabled", "true");
+        cy.findByLabelText("Next Month")
+          .parent()
+          .should("have.attr", "aria-disabled", "true");
         // Verify that dates outside the min/max range are disabled
         cy.findByRole("button", {
           name: "15 January 2031",

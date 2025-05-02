@@ -238,10 +238,7 @@ export interface UseCalendarReturn<TDate extends DateFrameworkType> {
      * @param event - The synthetic event or null if triggered by code.
      * @param date - The new date to focus.
      */
-    setFocusedDate: (
-      event: SyntheticEvent | null,
-      date: TDate | null,
-    ) => void;
+    setFocusedDate: (event: SyntheticEvent | null, date: TDate | null) => void;
 
     /**
      * Determines if a day is unselectable.

@@ -281,16 +281,20 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
         // Verify the navigation controls do not allow to navigate beyond the min/max
         cy.findAllByLabelText("Previous Month")
           .eq(0)
-          .parent().should("have.attr", "aria-disabled", "true");
+          .parent()
+          .should("have.attr", "aria-disabled", "true");
         cy.findAllByLabelText("Next Month")
           .eq(0)
-          .parent().should("not.have.attr", "aria-disabled", "true");
+          .parent()
+          .should("not.have.attr", "aria-disabled", "true");
         cy.findAllByLabelText("Previous Month")
           .eq(1)
-          .parent().should("not.have.attr", "aria-disabled", "true");
+          .parent()
+          .should("not.have.attr", "aria-disabled", "true");
         cy.findAllByLabelText("Next Month")
           .eq(1)
-          .parent().should("have.attr", "aria-disabled", "true");
+          .parent()
+          .should("have.attr", "aria-disabled", "true");
         // Verify first selectable date in range is focused
         cy.findByRole("button", {
           name: "15 January 2030",
