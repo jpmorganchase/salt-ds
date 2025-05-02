@@ -206,6 +206,7 @@ export const DateInputSingle = forwardRef<
 
     const [date, setDate] = useControlled({
       controlled: dateProp,
+      // biome-ignore lint/correctness/useExhaustiveDependencies: just on mount
       default: useMemo(() => {
         if (defaultDate) {
           return defaultDate;

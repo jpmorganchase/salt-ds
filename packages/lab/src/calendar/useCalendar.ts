@@ -426,6 +426,7 @@ export function useCalendar<TDate extends DateFrameworkType>(
     controlled: visibleMonthProp
       ? dateAdapter.startOf(visibleMonthProp, "month")
       : undefined,
+    // biome-ignore lint/correctness/useExhaustiveDependencies: just on mount
     default: useMemo(
       () => dateAdapter.startOf(defaultVisibleMonth, "month"),
       [],

@@ -185,6 +185,7 @@ export const DatePickerRangeInput = forwardRef(function DatePickerRangeInput<
     state: "dateValue",
   });
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: run when date changes to sync the value
   useEffect(() => {
     setValue({
       startDate: !selectedDate?.startDate
@@ -198,7 +199,7 @@ export const DatePickerRangeInput = forwardRef(function DatePickerRangeInput<
           ? dateAdapter.format(selectedDate.endDate, format)
           : value?.endDate,
     });
-  }, [selectedDate]);
+  }, [dateAdapter, format, selectedDate]);
 
   const handleCalendarButton: MouseEventHandler<HTMLButtonElement> =
     useCallback(
