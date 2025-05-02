@@ -50,7 +50,7 @@ export function Horizontal() {
         </Panel>
         <PanelResizeHandle
           aria-label="Resize Left/Center"
-          className="resize-handle-border-left resize-handle-border-Right"
+          className="resize-handle-border-left resize-handle-border-right"
         />
         <Panel id="middle" className="center" minSize={10}>
           <Text>Center</Text>
@@ -118,7 +118,7 @@ export function MultiOrientational() {
             <Panel className="center">
               <Text>Top Right</Text>
             </Panel>
-            <PanelResizeHandle className="resize-handle-border-right resize-handle-border-left" />
+            <PanelResizeHandle className="resize-handle-border-top resize-handle-border-bottom" />
             <Panel className="center">
               <Text>Bottom Right</Text>
             </Panel>
@@ -208,7 +208,7 @@ export function Variant() {
 export function Size() {
   return (
     <FlexLayout className="box">
-      <PanelGroup direction="vertical">
+      <PanelGroup direction="horizontal">
         <Panel minSize={20} className="center">
           <Text>Left [20%, X]</Text>
         </Panel>
@@ -228,7 +228,7 @@ export function Size() {
 export function CollapsibleSetSize() {
   return (
     <FlexLayout className="box">
-      <PanelGroup direction="vertical">
+      <PanelGroup direction="horizontal">
         <Panel
           collapsible
           collapsedSize={15}
@@ -253,7 +253,7 @@ export function CollapsibleSetSize() {
 export function CollapsibleContainerQuery() {
   return (
     <FlexLayout className="box">
-      <PanelGroup direction="vertical">
+      <PanelGroup direction="horizontal">
         <Panel
           collapsible
           collapsedSize={10}
@@ -318,7 +318,10 @@ export function CollapsibleTo0() {
           id="left"
           className="center"
         />
-        <PanelResizeHandle onDoubleClick={toggle} className="resize-handle-border-left resize-handle-border-right" />
+        <PanelResizeHandle
+          onDoubleClick={toggle}
+          className="resize-handle-border-left resize-handle-border-right"
+        />
         <Panel>
           <Button
             id="right"

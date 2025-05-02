@@ -1,3 +1,4 @@
+/* resize handle */
 div[data-resize-handle] {
   --splitHandle-size: var(--salt-size-thickness-400, calc(var(--salt-size-border) * 4));
   --splitHandle-borderWidth: var(--salt-size-thickness-100, var(--salt-size-border));
@@ -19,10 +20,24 @@ div[data-resize-handle] {
   background: var(--splitHandle-background);
 }
 
+div[data-resize-handle]::after {
+  mask-size: cover;
+  -webkit-mask-size: cover;
+  mask-image: url("data:image/svg+xml,%3Csvg%20width%3D%2212%22%20height%3D%2212%22%20viewBox%3D%220%200%2012%2012%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20%3E%3Cpath%20d%3D%22M5%2011V9H7V11H5Z%22%20%2F%3E%3Cpath%20d%3D%22M5%207L5%205H7L7%207H5Z%22%20%2F%3E%3Cpath%20d%3D%22M5%201V3H7V1L5%201Z%22%20%2F%3E%3C%2Fsvg%3E");
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg%20width%3D%2212%22%20height%3D%2212%22%20viewBox%3D%220%200%2012%2012%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20%3E%3Cpath%20d%3D%22M5%2011V9H7V11H5Z%22%20%2F%3E%3Cpath%20d%3D%22M5%207L5%205H7L7%207H5Z%22%20%2F%3E%3Cpath%20d%3D%22M5%201V3H7V1L5%201Z%22%20%2F%3E%3C%2Fsvg%3E");
+  height: max(var(--salt-size-icon, 12px), 12px);
+  width: max(var(--salt-size-icon, 12px), 12px);
+  align-self: center;
+  justify-self: center;
+}
+
+/* resize handle hover and active css variables */
 div[data-resize-handle] {
   --splitHandle-background-hover: var(--salt-separable-background-hover);
   --splitHandle-background-active: var(--salt-separable-background-active);
 }
+
+/* resize handle background variants */
 .resize-handle-salt-variant-primary[data-resize-handle] {
   --splitHandle-background: var(--salt-container-primary-background);
 }
@@ -35,6 +50,7 @@ div[data-resize-handle] {
   --splitHandle-background: var(--salt-container-tertiary-background);
 }
 
+/* resize handle border */
 .resize-handle-border-top {
   border-top-width: var(--splitHandle-borderWidth);
   border-top-color: var(--splitHandle-borderColor);
@@ -59,6 +75,7 @@ div[data-resize-handle] {
   border-right-style: var(--splitHandle-borderStyle);
 }
 
+/* resize handle hover and active styles */
 div[data-resize-handle][data-resize-handle-state="hover"] {
   background: var(--splitHandle-background-hover);
 }
@@ -67,6 +84,7 @@ div[data-resize-handle][data-resize-handle-state="drag"] {
   --splitHandle-background: var(--splitHandle-background-active);
 }
 
+/* resize handle directions */
 div[data-resize-handle][data-panel-group-direction="horizontal"] {
   flex-direction: column;
   width: var(--splitHandle-size);
@@ -77,6 +95,7 @@ div[data-resize-handle][data-panel-group-direction="vertical"] {
   height: var(--splitHandle-size);
 }
 
+/* resize handle thumb */
 div[data-resize-handle]::after {
   fill: var(--splitHandle-dot-background);
   background: var(--splitHandle-dot-background);
@@ -97,13 +116,6 @@ div[data-resize-handle][data-panel-group-direction="horizontal"]::after {
   position: absolute;
   top: 0;
   bottom: 0;
-  mask-size: cover;
-  -webkit-mask-size: cover;
-  mask-image: url("data:image/svg+xml,%3Csvg%20width%3D%2212%22%20height%3D%2212%22%20viewBox%3D%220%200%2012%2012%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20%3E%3Cpath%20d%3D%22M5%2011V9H7V11H5Z%22%20%2F%3E%3Cpath%20d%3D%22M5%207L5%205H7L7%207H5Z%22%20%2F%3E%3Cpath%20d%3D%22M5%201V3H7V1L5%201Z%22%20%2F%3E%3C%2Fsvg%3E");
-  -webkit-mask-image: url("data:image/svg+xml,%3Csvg%20width%3D%2212%22%20height%3D%2212%22%20viewBox%3D%220%200%2012%2012%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20%3E%3Cpath%20d%3D%22M5%2011V9H7V11H5Z%22%20%2F%3E%3Cpath%20d%3D%22M5%207L5%205H7L7%207H5Z%22%20%2F%3E%3Cpath%20d%3D%22M5%201V3H7V1L5%201Z%22%20%2F%3E%3C%2Fsvg%3E");
-  height: max(var(--salt-size-icon, 12px), 12px);
-  width: max(var(--salt-size-icon, 12px), 12px);
-  align-self: center;
 }
 
 div[data-resize-handle][data-panel-group-direction="vertical"]::after {
@@ -111,14 +123,6 @@ div[data-resize-handle][data-panel-group-direction="vertical"]::after {
   position: absolute;
   left: 0;
   right: 0;
-  mask-size: cover;
-  -webkit-mask-size: cover;
-  mask-image: url("data:image/svg+xml,%3Csvg%20width%3D%2212%22%20height%3D%2212%22%20viewBox%3D%220%200%2012%2012%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20%3E%3Cpath%20d%3D%22M5%2011V9H7V11H5Z%22%20%2F%3E%3Cpath%20d%3D%22M5%207L5%205H7L7%207H5Z%22%20%2F%3E%3Cpath%20d%3D%22M5%201V3H7V1L5%201Z%22%20%2F%3E%3C%2Fsvg%3E");
-  -webkit-mask-image: url("data:image/svg+xml,%3Csvg%20width%3D%2212%22%20height%3D%2212%22%20viewBox%3D%220%200%2012%2012%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20%3E%3Cpath%20d%3D%22M5%2011V9H7V11H5Z%22%20%2F%3E%3Cpath%20d%3D%22M5%207L5%205H7L7%207H5Z%22%20%2F%3E%3Cpath%20d%3D%22M5%201V3H7V1L5%201Z%22%20%2F%3E%3C%2Fsvg%3E");
-  height: max(var(--salt-size-icon, 12px), 12px);
-  width: max(var(--salt-size-icon, 12px), 12px);
-  align-self: center;
-  justify-self: center;
   rotate: 90deg;
 }
 
@@ -169,4 +173,3 @@ div[data-resize-handle][data-panel-group-direction="vertical"] + div[data-panel-
 .resizable-panel-salt-variant-tertiary {
   background: var(--salt-container-tertiary-background);
 }
-
