@@ -45,22 +45,22 @@ export function Horizontal() {
   return (
     <FlexLayout className="box">
       <PanelGroup direction="horizontal">
-        <Panel id="top" className="center" minSize={10}>
-          <Text>Top</Text>
+        <Panel id="left" className="center" minSize={10}>
+          <Text>Left</Text>
         </Panel>
         <PanelResizeHandle
-          aria-label="Resize Top/Middle"
-          className="borderLeftRight"
+          aria-label="Resize Left/Center"
+          className="resize-handle-border-left resize-handle-border-Right"
         />
         <Panel id="middle" className="center" minSize={10}>
-          <Text>Middle</Text>
+          <Text>Center</Text>
         </Panel>
         <PanelResizeHandle
-          aria-label="Resize Middle/Bottom"
+          aria-label="Resize Center/Right"
           className="borderLeftRight"
         />
-        <Panel id="bottom" className="center" minSize={10}>
-          <Text>Bottom</Text>
+        <Panel id="right" className="center" minSize={10}>
+          <Text>Right</Text>
         </Panel>
       </PanelGroup>
     </FlexLayout>
@@ -71,22 +71,22 @@ export function Vertical() {
   return (
     <FlexLayout className="box">
       <PanelGroup direction="vertical">
-        <Panel id="left" className="center">
-          <Text>Left</Text>
+        <Panel id="top" className="center">
+          <Text>Top</Text>
         </Panel>
         <PanelResizeHandle
-          aria-label="Resize Left/Center"
-          className="borderTopBottom"
+          aria-label="Resize Top/Middle"
+          className="resize-handle-border-top resize-handle-border-bottom"
         />
-        <Panel id="center" className="center">
-          <Text>Center</Text>
+        <Panel id="middle" className="center">
+          <Text>Middle</Text>
         </Panel>
         <PanelResizeHandle
-          aria-label="Resize Center/Right"
-          className="borderTopBottom"
+          aria-label="Resize Middle/Bottom"
+          className="resize-handle-border-top resize-handle-border-bottom"
         />
-        <Panel id="right" className="center">
-          <Text>Right</Text>
+        <Panel id="bottom" className="center">
+          <Text>Bottom</Text>
         </Panel>
       </PanelGroup>
     </FlexLayout>
@@ -102,23 +102,23 @@ export function MultiOrientational() {
             <Panel className="center">
               <Text>Top Left</Text>
             </Panel>
-            <PanelResizeHandle className="borderTopBottom" />
+            <PanelResizeHandle className="resize-handle-border-top resize-handle-border-bottom" />
             <Panel className="center">
               <Text>Middle Left</Text>
             </Panel>
-            <PanelResizeHandle className="borderTopBottom" />
+            <PanelResizeHandle className="resize-handle-border-top resize-handle-border-bottom" />
             <Panel className="center">
               <Text>Bottom Left</Text>
             </Panel>
           </PanelGroup>
         </Panel>
-        <PanelResizeHandle className="borderLeftRight" />
+        <PanelResizeHandle className="resize-handle-border-right resize-handle-border-left" />
         <Panel>
           <PanelGroup direction="vertical">
             <Panel className="center">
               <Text>Top Right</Text>
             </Panel>
-            <PanelResizeHandle className="borderTopBottom" />
+            <PanelResizeHandle className="resize-handle-border-right resize-handle-border-left" />
             <Panel className="center">
               <Text>Bottom Right</Text>
             </Panel>
@@ -138,7 +138,7 @@ export function Transparent() {
             <Panel className="center">
               <Text>Top Left</Text>
             </Panel>
-            <PanelResizeHandle className="saltResizeHandleTransparent" />
+            <PanelResizeHandle />
             <Panel className="center">
               <Text>Middle Left</Text>
             </Panel>
@@ -148,13 +148,13 @@ export function Transparent() {
             </Panel>
           </PanelGroup>
         </Panel>
-        <PanelResizeHandle className="saltResizeHandleTransparent" />
+        <PanelResizeHandle />
         <Panel>
           <PanelGroup direction="vertical">
             <Panel className="center">
               <Text>Top Right</Text>
             </Panel>
-            <PanelResizeHandle className="saltResizeHandleTransparent" />
+            <PanelResizeHandle />
             <Panel className="center">
               <Text>Bottom Right</Text>
             </Panel>
@@ -192,11 +192,11 @@ export function Variant() {
         <Panel minSize={0} defaultSize={25} className="center panelSecondary">
           <Text>Left</Text>
         </Panel>
-        <PanelResizeHandle className="borderRight saltResizeHandleSecondary" />
+        <PanelResizeHandle className="resize-handle-border-right saltResizeHandleSecondary" />
         <Panel minSize={50} className="center">
           <Text>Center</Text>
         </Panel>
-        <PanelResizeHandle className="borderLeft saltResizeHandleTertiary" />
+        <PanelResizeHandle className="resize-handle-border-left saltResizeHandleTertiary" />
         <Panel minSize={0} defaultSize={25} className="center panelTertiary">
           <Text>Right</Text>
         </Panel>
@@ -208,15 +208,15 @@ export function Variant() {
 export function Size() {
   return (
     <FlexLayout className="box">
-      <PanelGroup direction="horizontal">
+      <PanelGroup direction="vertical">
         <Panel minSize={20} className="center">
           <Text>Left [20%, X]</Text>
         </Panel>
-        <PanelResizeHandle className="borderTopBottom" />
+        <PanelResizeHandle className="resize-handle-border-left resize-handle-border-right" />
         <Panel id="middle" minSize={40} maxSize={60} className="center">
           <Text>Middle [30%, 60%]</Text>
         </Panel>
-        <PanelResizeHandle className="borderTopBottom" />
+        <PanelResizeHandle className="resize-handle-border-left resize-handle-border-right" />
         <Panel minSize={20} className="center">
           <Text>Right [20%, X]</Text>
         </Panel>
@@ -228,7 +228,7 @@ export function Size() {
 export function CollapsibleSetSize() {
   return (
     <FlexLayout className="box">
-      <PanelGroup direction="horizontal">
+      <PanelGroup direction="vertical">
         <Panel
           collapsible
           collapsedSize={15}
@@ -241,7 +241,7 @@ export function CollapsibleSetSize() {
             {"{10%, 30%}"}
           </Text>
         </Panel>
-        <PanelResizeHandle className="borderTopBottom" />
+        <PanelResizeHandle className="resize-handle-border-left resize-handle-border-right" />
         <Panel className="center">
           <Text>Right</Text>
         </Panel>
@@ -253,7 +253,7 @@ export function CollapsibleSetSize() {
 export function CollapsibleContainerQuery() {
   return (
     <FlexLayout className="box">
-      <PanelGroup direction="horizontal">
+      <PanelGroup direction="vertical">
         <Panel
           collapsible
           collapsedSize={10}
@@ -277,7 +277,7 @@ export function CollapsibleContainerQuery() {
             </ToggleButton>
           </ToggleButtonGroup>
         </Panel>
-        <PanelResizeHandle className="borderLeftRight" />
+        <PanelResizeHandle className="resize-handle-border-left resize-handle-border-right" />
         <Panel className="center">
           <Text>Content</Text>
         </Panel>
@@ -318,7 +318,7 @@ export function CollapsibleTo0() {
           id="left"
           className="center"
         />
-        <PanelResizeHandle onDoubleClick={toggle} className="borderLeftRight" />
+        <PanelResizeHandle onDoubleClick={toggle} className="resize-handle-border-left resize-handle-border-right" />
         <Panel>
           <Button
             id="right"
@@ -361,7 +361,7 @@ export function ProgrammableResize() {
             <Panel ref={ref} className="center">
               <Text>Left</Text>
             </Panel>
-            <PanelResizeHandle className="borderLeftRight" />
+            <PanelResizeHandle className="resize-handle-border-left resize-handle-border-right" />
             <Panel className="center">
               <Text>Right</Text>
             </Panel>

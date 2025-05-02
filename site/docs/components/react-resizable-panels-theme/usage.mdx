@@ -1,0 +1,39 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+## Using the package
+
+### When to use
+
+When you want to use the Salt theme with React Resizable Panels.
+
+### When not to use
+
+When you want to use a component that is not related to React Resizable Panels.
+
+## Import
+
+Make sure to install the React Resizable Panels package, `react-resizable-panels`.
+
+To install the `@salt-ds/react-resizable-panels-theme` package, run the command appropriate to your environment: `yarn add @salt-ds/react-resizable-panels-theme` or `npm install @salt-ds/react-resizable-panels-theme`
+
+### Import Salt React Resizable Panels theme
+
+To import the Salt React Resizable Panels theme, use:
+
+```js
+import "@salt-ds/react-resizable-panels-theme/salt-react-resizable-panels-theme.css";
+```
+
+The Components from React Resizable Panels will now inherit the Salt theme
+
+For panel resize handles, add the class name `.resize-handle-border-<border>` to the `PanelResizeHandle` component, to add borders to the resize handlers. Add the `.resize-handle-salt-variant-<variant>` class to set the background color to one of the salt container background colors.
+
+For the panels, add the class name `.resizable-panel-salt-variant-<variant>` to the `Panel` component to set the background color of the panel to one of the salt container background colors.
