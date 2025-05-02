@@ -1,8 +1,7 @@
-import { Dropdown } from "@salt-ds/core";
+import { Dropdown, Option } from "@salt-ds/core";
 import * as dropdownStories from "@stories/dropdown/dropdown.stories";
 import { composeStories } from "@storybook/react";
-
-import { useState } from "react";
+import { type KeyboardEventHandler, useRef, useState } from "react";
 import { CustomFloatingComponentProvider, FLOATING_TEST_ID } from "../common";
 
 const {
@@ -488,5 +487,33 @@ describe("Given a Dropdown", () => {
     cy.findByRole("option", { name: "Alabama" }).should("be.activeDescendant");
     cy.realPress("Escape");
     cy.findByRole("combobox").should("not.have.attr", "aria-activedescendant");
+  });
+
+  it("should not throw error when forced focus away via key down capture", () => {
+    // this is a close replicate of using this as ag grid cell renderer
+    const TestSetup = () => {
+      const buttonRef = useRef<HTMLButtonElement>(null);
+
+      const moveFocus: KeyboardEventHandler = (event) => {
+        if (event.key === "ArrowRight") {
+          buttonRef.current?.focus();
+        }
+      };
+
+      return (
+        <>
+          <Dropdown onKeyDownCapture={moveFocus}>
+            <Option value={1}>1</Option>
+          </Dropdown>
+          <button ref={buttonRef}>test</button>
+        </>
+      );
+    };
+
+    cy.mount(<TestSetup />);
+    cy.realPress("Tab");
+    cy.realPress("ArrowRight");
+    // should not throw error
+    cy.findByRole("button", { name: "test" }).should("be.focused");
   });
 });

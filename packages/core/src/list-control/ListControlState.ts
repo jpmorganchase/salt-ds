@@ -235,7 +235,9 @@ export function useListControl<Item>(props: ListControlProps<Item>) {
     [],
   );
 
-  const getOptionAtIndex = (index: number) => {
+  const getOptionAtIndex = (
+    index: number,
+  ): { data: OptionValue<Item>; element: HTMLElement } | undefined => {
     return optionsRef.current[index];
   };
 
@@ -313,11 +315,12 @@ export function useListControl<Item>(props: ListControlProps<Item>) {
     let option = optionsRef.current.find((option) => option.data === start);
 
     if (!list || !option) {
-      return null;
+      return undefined;
     }
 
     const containerRect = list.getBoundingClientRect();
-    let optionRect = option.element.getBoundingClientRect();
+    let optionRect: DOMRect | undefined =
+      option.element.getBoundingClientRect();
 
     const listY = containerRect.y - list.scrollTop;
     const pageY = Math.max(
@@ -325,9 +328,9 @@ export function useListControl<Item>(props: ListControlProps<Item>) {
       optionRect.y - listY + optionRect.height - containerRect.height,
     );
 
-    while (option && optionRect.y - listY > pageY) {
+    while (option && optionRect && optionRect.y - listY > pageY) {
       option = getOptionBefore(option.data);
-      optionRect = option?.element.getBoundingClientRect();
+      optionRect = option?.element?.getBoundingClientRect();
     }
 
     return option ?? getFirstOption();
@@ -338,11 +341,12 @@ export function useListControl<Item>(props: ListControlProps<Item>) {
     let option = optionsRef.current.find((option) => option.data === start);
 
     if (!list || !option) {
-      return null;
+      return undefined;
     }
 
     const containerRect = list.getBoundingClientRect();
-    let optionRect = option.element.getBoundingClientRect();
+    let optionRect: DOMRect | undefined =
+      option.element.getBoundingClientRect();
 
     const listY = containerRect.y - list.scrollTop;
     const pageY = Math.min(
@@ -350,7 +354,7 @@ export function useListControl<Item>(props: ListControlProps<Item>) {
       optionRect.y - listY - optionRect.height + containerRect.height,
     );
 
-    while (option && optionRect.y - listY < pageY) {
+    while (option && optionRect && optionRect.y - listY < pageY) {
       option = getOptionAfter(option.data);
       optionRect = option?.element.getBoundingClientRect();
     }

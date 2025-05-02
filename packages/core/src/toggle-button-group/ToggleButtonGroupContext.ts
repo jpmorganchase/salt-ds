@@ -1,15 +1,19 @@
 import { type SyntheticEvent, useContext } from "react";
+import type { ButtonAppearance, ButtonSentiment } from "../button";
 import { createContext } from "../utils";
 
 export type Value = string | readonly string[] | number | undefined;
 
 export interface ToggleButtonGroupContextValue {
+  appearance?: Extract<ButtonAppearance, "bordered" | "solid">;
   disabled?: boolean;
-  select: (event: SyntheticEvent<HTMLButtonElement>) => void;
-  isSelected: (id: Value) => boolean;
   focus: (id: Value) => void;
   isFocused: (id: Value) => boolean;
+  isSelected: (id: Value) => boolean;
   orientation: "horizontal" | "vertical";
+  readOnly?: boolean;
+  select: (event: SyntheticEvent<HTMLButtonElement>) => void;
+  sentiment?: ButtonSentiment;
 }
 
 export const ToggleButtonGroupContext = createContext<

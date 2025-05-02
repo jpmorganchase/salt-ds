@@ -1,5 +1,8 @@
 .root {
   position: relative;
+}
+
+.withMargin {
   margin-block: var(--salt-spacing-100);
 }
 

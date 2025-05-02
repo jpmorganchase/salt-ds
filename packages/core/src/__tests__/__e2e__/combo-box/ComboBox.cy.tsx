@@ -1,8 +1,7 @@
 import { ComboBox, Option } from "@salt-ds/core";
 import * as comboBoxStories from "@stories/combo-box/combo-box.stories";
 import { composeStories } from "@storybook/react";
-
-import { useState } from "react";
+import { type KeyboardEventHandler, useRef, useState } from "react";
 import { CustomFloatingComponentProvider, FLOATING_TEST_ID } from "../common";
 
 const {
@@ -783,5 +782,33 @@ describe("Given a ComboBox", () => {
       />,
     );
     cy.findByRole("combobox").should("have.attr", "autocomplete", "on");
+  });
+
+  it("should not throw error when forced focus away via key down capture", () => {
+    // this is a close replicate of using this as ag grid cell renderer
+    const TestSetup = () => {
+      const buttonRef = useRef<HTMLButtonElement>(null);
+
+      const moveFocus: KeyboardEventHandler = (event) => {
+        if (event.key === "ArrowRight") {
+          buttonRef.current?.focus();
+        }
+      };
+
+      return (
+        <>
+          <ComboBox onKeyDownCapture={moveFocus}>
+            <Option value={1}>1</Option>
+          </ComboBox>
+          <button ref={buttonRef}>test</button>
+        </>
+      );
+    };
+
+    cy.mount(<TestSetup />);
+    cy.realPress("Tab");
+    cy.realPress("ArrowRight");
+    // should not throw error
+    cy.findByRole("button", { name: "test" }).should("be.focused");
   });
 });

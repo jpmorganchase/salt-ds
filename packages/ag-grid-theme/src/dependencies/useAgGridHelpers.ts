@@ -1,6 +1,6 @@
 import { useDensity, useTheme } from "@salt-ds/core";
 import type { GridApi, GridReadyEvent } from "ag-grid-community";
-import { LicenseManager } from "ag-grid-enterprise";
+import "ag-grid-enterprise";
 import type { AgGridReactProps } from "ag-grid-react";
 import { clsx } from "clsx";
 import {
@@ -10,8 +10,6 @@ import {
   useRef,
   useState,
 } from "react";
-
-LicenseManager.setLicenseKey("your license key");
 
 interface AgGridHelpersProps {
   compact?: boolean;

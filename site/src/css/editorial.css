@@ -3,6 +3,17 @@ main {
   line-height: var(--salt-text-lineHeight);
 }
 
+:root {
+  --site-content-max-width: 85ch;
+}
+
+.salt-editorial {
+  --salt-text-fontSize: 16px; /* incease base font size to 16px; */
+  --salt-text-lineHeight: 21px;
+  --salt-text-h4-fontSize: 16px; /* incease base font size to 16px; */
+  --salt-text-h4-lineHeight: 21px;
+}
+
 @media not screen and (min-width: 960px) {
   .salt-editorial .saltText.saltText-display1 {
     font-size: var(--salt-text-display2-fontSize);
