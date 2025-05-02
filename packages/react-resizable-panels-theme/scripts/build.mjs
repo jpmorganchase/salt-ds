@@ -1,11 +1,9 @@
 import path from "node:path";
-import {argv} from "node:process";
-import {deleteSync} from "del";
+import { argv } from "node:process";
+import { deleteSync } from "del";
 import esbuild from "esbuild";
 import fs from "fs-extra";
-import {
-  transformWorkspaceDeps
-} from "../../../scripts/transformWorkspaceDeps.mjs";
+import { transformWorkspaceDeps } from "../../../scripts/transformWorkspaceDeps.mjs";
 
 const FILES_TO_COPY = ["README.md", "LICENSE", "CHANGELOG.md"];
 

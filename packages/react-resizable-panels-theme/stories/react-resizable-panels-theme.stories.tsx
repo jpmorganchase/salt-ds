@@ -1,5 +1,5 @@
 import {
-  ImperativePanelHandle,
+  type ImperativePanelHandle,
   Panel,
   PanelGroup,
   PanelResizeHandle,
@@ -16,7 +16,6 @@ import {
   ToggleButton,
   ToggleButtonGroup,
 } from "@salt-ds/core";
-import { useRef, useState } from "react";
 import {
   DoubleChevronLeftIcon,
   DoubleChevronRightIcon,
@@ -24,6 +23,7 @@ import {
   InboxIcon,
   SendIcon,
 } from "@salt-ds/icons";
+import { useRef, useState } from "react";
 
 export default {
   title: "React Resizable Panels/Theme",

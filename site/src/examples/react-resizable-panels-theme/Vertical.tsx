@@ -10,11 +10,11 @@ export function Vertical() {
         <Panel id="left" className={styles.center}>
           <Text>Left</Text>
         </Panel>
-        <PanelResizeHandle className="resize-handle-border-top resize-handle-border-bottom"/>
+        <PanelResizeHandle className="resize-handle-border-top resize-handle-border-bottom" />
         <Panel id="center" className={styles.center}>
           <Text>Center</Text>
         </Panel>
-        <PanelResizeHandle className="resize-handle-border-top resize-handle-border-bottom"/>
+        <PanelResizeHandle className="resize-handle-border-top resize-handle-border-bottom" />
         <Panel id="right" className={styles.center}>
           <Text>Right</Text>
         </Panel>
