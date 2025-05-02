@@ -1,20 +1,12 @@
-/* Update to use --ag-header-background-color */
-.ag-theme-salt-variant-secondary .ag-header {
-  background-color: var(--salt-container-secondary-background);
+.ag-theme-salt-variant-secondary.ag-theme-salt-variant-secondary {
+  --ag-header-background-color: var(--salt-container-secondary-background);
+  --ag-secondary-border-color: var(--salt-separable-tertiary-borderColor);
+  --ag-background-color: var(--salt-container-secondary-background);
 }
 
-/* Update to use --ag-secondary-border-color */
-.ag-theme-salt-variant-secondary .ag-row {
-  background-color: var(--salt-container-secondary-background);
-  border-color: var(--salt-separable-tertiary-borderColor);
-}
-
-/* Update to use --ag-odd-row-background-color & --ag-row-background-color */
-.ag-theme-salt-variant-zebra .ag-row-even:not(.ag-row-hover, .ag-row-selected) {
-  background-color: var(--salt-container-secondary-background);
-}
-
-/* Update to use --ag-secondary-border-color */
-.ag-theme-salt-variant-zebra .ag-row {
-  border-color: var(--salt-separable-tertiary-borderColor);
+.ag-theme-salt-variant-zebra.ag-theme-salt-variant-zebra {
+  --ag-background-color: var(--salt-container-secondary-background);
+  --ag-odd-row-background-color: var(--salt-container-primary-background);
+  --ag-header-background-color: var(--salt-container-primary-background);
+  --ag-secondary-border-color: var(--salt-separable-tertiary-borderColor);
 }
