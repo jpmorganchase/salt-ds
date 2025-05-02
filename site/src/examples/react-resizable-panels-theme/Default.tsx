@@ -1,9 +1,9 @@
 import { FlexLayout, Text } from "@salt-ds/core";
-import {Panel, PanelGroup, PanelResizeHandle} from "react-resizable-panels";
+import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels";
 
 import styles from "./splitter.module.css";
 
-export function Horizontal() {
+export function Default() {
   return (
     <FlexLayout className={styles.box}>
       <PanelGroup direction="horizontal">
