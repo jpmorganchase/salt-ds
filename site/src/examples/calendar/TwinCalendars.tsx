@@ -34,7 +34,7 @@ export const TwinCalendars = (): ReactElement => {
 
   const handleStartVisibleMonthChange = useCallback(
     (
-      _event: SyntheticEvent,
+      _event: SyntheticEvent | null,
       newVisibleMonth: CalendarProps<DateFrameworkType>["defaultVisibleMonth"],
     ) => {
       setStartVisibleMonth(newVisibleMonth);
@@ -51,7 +51,7 @@ export const TwinCalendars = (): ReactElement => {
 
   const handleEndVisibleMonthChange = useCallback(
     (
-      _event: SyntheticEvent,
+      _event: SyntheticEvent | null,
       newVisibleMonth: CalendarProps<DateFrameworkType>["defaultVisibleMonth"],
     ) => {
       setEndVisibleMonth(newVisibleMonth);
