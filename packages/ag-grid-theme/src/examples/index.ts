@@ -24,6 +24,7 @@ export { default as SortAndFilter } from "./SortAndFilter";
 export { default as StatusBar } from "./StatusBar";
 export { SuppressMenuHide } from "./SuppressMenuHide";
 export { default as ToolPanel } from "./ToolPanel";
+export { default as Validation } from "./Validation";
 export { default as VariantSecondary } from "./VariantSecondary";
 export { default as VariantZebra } from "./VariantZebra";
 export { default as WrappedCell } from "./WrappedCell";

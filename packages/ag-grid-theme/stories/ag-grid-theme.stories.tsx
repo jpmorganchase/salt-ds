@@ -48,6 +48,7 @@ export {
   StatusBar,
   SuppressMenuHide,
   ToolPanel,
+  Validation,
   VariantSecondary,
   VariantZebra,
   WrappedCell,

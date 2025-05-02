@@ -10,3 +10,18 @@
   --ag-header-background-color: var(--salt-container-primary-background);
   --ag-secondary-border-color: var(--salt-separable-tertiary-borderColor);
 }
+
+.salt-grid-row-error {
+  --ag-background-color: var(--salt-status-error-background);
+  --ag-row-hover-color: var(--ag-background-color);
+}
+
+.salt-grid-row-warning {
+  --ag-background-color: var(--salt-status-warning-background);
+  --ag-row-hover-color: var(--ag-background-color);
+}
+
+.salt-grid-row-success {
+  --ag-background-color: var(--salt-status-success-background);
+  --ag-row-hover-color: var(--ag-background-color);
+}

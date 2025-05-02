@@ -49,6 +49,8 @@ export const StatusIndicator = forwardRef<SVGSVGElement, StatusIndicatorProps>(
     const IconComponent = iconMap[status];
     const ariaLabel = statusToAriaLabelMap[status];
 
+    console.log({ IconComponent, iconMap });
+
     return (
       <IconComponent
         className={clsx(withBaseName(), withBaseName(status), className)}
