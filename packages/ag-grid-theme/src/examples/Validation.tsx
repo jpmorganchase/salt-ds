@@ -1,15 +1,16 @@
 import { AgGridReact, type AgGridReactProps } from "ag-grid-react";
 import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
-import {validationExampleColumns, validationRowClassRules} from "../dependencies/validationExampleColumns";
-import {validationExampleData} from "../dependencies/validationExampleData";
+import {
+  validationExampleColumns,
+  validationRowClassRules,
+} from "../dependencies/validationExampleColumns";
+import { validationExampleData } from "../dependencies/validationExampleData";
 
 const Validation = (props: AgGridReactProps) => {
   const { agGridProps, containerProps } = useAgGridHelpers({});
 
   return (
-    <div
-      {...containerProps}
-    >
+    <div {...containerProps}>
       <AgGridReact
         {...agGridProps}
         {...props}
