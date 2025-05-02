@@ -13,15 +13,18 @@
 
 .salt-grid-row-error {
   --ag-background-color: var(--salt-status-error-background);
+  --ag-odd-row-background-color: var(--ag-background-color);
   --ag-row-hover-color: var(--ag-background-color);
 }
 
 .salt-grid-row-warning {
   --ag-background-color: var(--salt-status-warning-background);
+  --ag-odd-row-background-color: var(--ag-background-color);
   --ag-row-hover-color: var(--ag-background-color);
 }
 
 .salt-grid-row-success {
   --ag-background-color: var(--salt-status-success-background);
+  --ag-odd-row-background-color: var(--ag-background-color);
   --ag-row-hover-color: var(--ag-background-color);
 }
