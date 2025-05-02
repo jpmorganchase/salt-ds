@@ -323,16 +323,16 @@ export const MinMaxDate: StoryFn<typeof Calendar> = (args) => {
   const maxDate = dateAdapter.endOf(defaultSelectedDate, "month");
 
   return (
-      <Calendar
-        {...args}
-        selectionVariant={"single"}
-        defaultSelectedDate={defaultSelectedDate}
-        minDate={minDate}
-        maxDate={maxDate}
-      >
-        <CalendarNavigation />
-        <CalendarGrid />
-      </Calendar>
+    <Calendar
+      {...args}
+      selectionVariant={"single"}
+      defaultSelectedDate={defaultSelectedDate}
+      minDate={minDate}
+      maxDate={maxDate}
+    >
+      <CalendarNavigation />
+      <CalendarGrid />
+    </Calendar>
   );
 };
 

@@ -187,14 +187,14 @@ export const DatePickerRangeInput = forwardRef(function DatePickerRangeInput<
 
   useEffect(() => {
     setValue({
-      startDate:
-        !selectedDate?.startDate ? "" :
-        selectedDate?.startDate && dateAdapter.isValid(selectedDate.startDate)
+      startDate: !selectedDate?.startDate
+        ? ""
+        : selectedDate?.startDate && dateAdapter.isValid(selectedDate.startDate)
           ? dateAdapter.format(selectedDate.startDate, format)
           : value?.startDate,
-      endDate:
-      !selectedDate?.endDate ? "" :
-        selectedDate?.endDate && dateAdapter.isValid(selectedDate.endDate)
+      endDate: !selectedDate?.endDate
+        ? ""
+        : selectedDate?.endDate && dateAdapter.isValid(selectedDate.endDate)
           ? dateAdapter.format(selectedDate.endDate, format)
           : value?.endDate,
     });

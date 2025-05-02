@@ -700,7 +700,14 @@ export function useCalendarSelection<TDate extends DateFrameworkType>(
       }
       return false;
     },
-    [dateAdapter, isOutsideAllowedDates, selectionVariant, selectedDate, hoveredDate, isDaySelectable],
+    [
+      dateAdapter,
+      isOutsideAllowedDates,
+      selectionVariant,
+      selectedDate,
+      hoveredDate,
+      isDaySelectable,
+    ],
   );
 
   const isSelectedStart = useCallback(

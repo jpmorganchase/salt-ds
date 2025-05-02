@@ -21,7 +21,8 @@
   width: 100%;
 }
 
-.saltCalendarDay-focused,.saltCalendarDay.saltCalendarDay:focus-visible {
+.saltCalendarDay-focused,
+.saltCalendarDay.saltCalendarDay:focus-visible {
   outline: var(--salt-focused-outline);
   outline-offset: calc(0px - var(--salt-focused-outlineWidth));
 }
