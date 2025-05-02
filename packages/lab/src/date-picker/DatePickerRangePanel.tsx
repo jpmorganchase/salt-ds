@@ -341,30 +341,14 @@ export const DatePickerRangePanel = forwardRef(function DatePickerRangePanel<
   };
 
   const [focusedDate, setFocusedDate] = useState<TDate | null>(null);
-  const [startCalendarFocused, setStartCalendarFocused] = useState(false);
-  const [endCalendarFocused, setEndCalendarFocused] = useState(false);
-
-  const handleStartCalendarFocus: FocusEventHandler<HTMLDivElement> = (
-    event,
-  ) => {
-    setStartCalendarFocused(true);
-    StartCalendarGridProps?.onFocus?.(event);
-  };
-
-  const handleEndCalendarFocus: FocusEventHandler<HTMLDivElement> = (event) => {
-    setEndCalendarFocused(true);
-    EndCalendarGridProps?.onFocus?.(event);
-  };
 
   const handleStartCalendarBlur: FocusEventHandler<HTMLDivElement> = (
     event,
   ) => {
-    setStartCalendarFocused(false);
     setHoveredDate(null);
     StartCalendarGridProps?.onBlur?.(event);
   };
   const handleEndCalendarBlur: FocusEventHandler<HTMLDivElement> = (event) => {
-    setEndCalendarFocused(false);
     setHoveredDate(null);
     EndCalendarGridProps?.onBlur?.(event);
   };
@@ -522,35 +506,32 @@ export const DatePickerRangePanel = forwardRef(function DatePickerRangePanel<
         ) &&
         dateAdapter.isSame(selectedDate.endDate, startVisibleMonth, "month")
       ) {
-        setStartCalendarFocused(true);
         setVisibleMonths(
           selectedDate.startDate,
           dateAdapter.add(selectedDate.startDate, { months: 1 }),
         );
       } else {
-        setStartCalendarFocused(true);
         setVisibleMonths(selectedDate.startDate, selectedDate.endDate);
       }
     } else if (selectedDate?.startDate && isStartDateValid) {
-      setStartCalendarFocused(true);
       setVisibleMonths(
         selectedDate.startDate,
         dateAdapter.add(selectedDate.startDate, { months: 1 }),
       );
     } else if (selectedDate?.endDate && isEndDateValid) {
-      setEndCalendarFocused(true);
       setVisibleMonths(
         dateAdapter.subtract(selectedDate.endDate, { months: 1 }),
         selectedDate.endDate,
       );
-    } else {
-      setStartCalendarFocused(true);
     }
 
     if (!focusedDate) {
-      setFocusedDate(
-        getNextFocusedDate(nextStartVisibleMonth, nextEndVisibleMonth),
-      );
+      setFocusedDate((prevFocusedDate) => {
+        if (!prevFocusedDate) {
+          return getNextFocusedDate(nextStartVisibleMonth, nextEndVisibleMonth);
+        }
+        return prevFocusedDate;
+      });
     }
   }, [dateAdapter, minDate, maxDate, focused]);
 
@@ -562,7 +543,14 @@ export const DatePickerRangePanel = forwardRef(function DatePickerRangePanel<
     isDayHighlighted,
     isDayUnselectable,
     focusedDateRef: initialFocusRef,
-    focusedDate: startCalendarFocused ? focusedDate : null,
+    focusedDate:
+      focusedDate &&
+      dateAdapter.compare(
+        focusedDate,
+        dateAdapter.startOf(endVisibleMonth, "month"),
+      ) < 0
+        ? focusedDate
+        : null,
     onHoveredDateChange: handleHoveredStartDateChange,
     onFocusedDateChange: handleStartCalendarFocusedDateChange,
     onVisibleMonthChange: handleStartVisibleMonthChange,
@@ -580,7 +568,14 @@ export const DatePickerRangePanel = forwardRef(function DatePickerRangePanel<
     isDayHighlighted,
     isDayUnselectable,
     focusedDateRef: initialFocusRef,
-    focusedDate: endCalendarFocused ? focusedDate : null,
+    focusedDate:
+      focusedDate &&
+      dateAdapter.compare(
+        focusedDate,
+        dateAdapter.startOf(endVisibleMonth, "month"),
+      ) >= 0
+        ? focusedDate
+        : null,
     selectedDate: calendarSelectedDate,
     onFocusedDateChange: handleEndCalendarFocusedDateChange,
     onHoveredDateChange: handleHoveredEndDateChange,
@@ -618,11 +613,7 @@ export const DatePickerRangePanel = forwardRef(function DatePickerRangePanel<
               )}
               {...StartCalendarNavigationProps}
             />
-            <CalendarGrid
-              onFocus={handleStartCalendarFocus}
-              onBlur={handleStartCalendarBlur}
-              {...StartCalendarGridProps}
-            />
+            <CalendarGrid {...StartCalendarGridProps} />
           </Calendar>
           <Calendar selectionVariant={"range"} {...EndCalendarProps}>
             <CalendarNavigation
@@ -633,11 +624,7 @@ export const DatePickerRangePanel = forwardRef(function DatePickerRangePanel<
               )}
               {...EndCalendarNavigationProps}
             />
-            <CalendarGrid
-              onFocus={handleEndCalendarFocus}
-              onBlur={handleEndCalendarBlur}
-              {...EndCalendarGridProps}
-            />
+            <CalendarGrid {...EndCalendarGridProps} />
           </Calendar>
         </FormFieldContext.Provider>
       </FlexLayout>

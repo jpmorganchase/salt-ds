@@ -12,7 +12,7 @@ import {
   type ComponentPropsWithRef,
   type ReactElement,
   forwardRef,
-  useEffect,
+  useLayoutEffect,
 } from "react";
 import { useLocalization } from "../../localization-provider";
 import { type DayStatus, useCalendarDay } from "../useCalendarDay";
@@ -77,7 +77,7 @@ export const CalendarDay = forwardRef<
   } = status;
   const buttonRef = useForkRef(ref, focusedDateRef);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (focused) {
       focusedDateRef?.current?.focus({ preventScroll: true });
     }

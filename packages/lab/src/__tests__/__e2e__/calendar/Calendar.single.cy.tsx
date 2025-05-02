@@ -72,14 +72,26 @@ describe("GIVEN a Calendar with single selection", () => {
             <CalendarGrid />
           </Calendar>,
         );
+        cy.findByRole("button", {
+          name: adapter.format(testDate, "DD MMMM YYYY"),
+        }).should("exist");
         // Simulate clicking the "Next Month" button
         cy.findByRole("button", {
           name: "Next Month",
         }).realClick();
+        cy.findByRole("button", {
+          name: adapter.format(
+            adapter.add(testDate, { months: 1 }),
+            "DD MMMM YYYY",
+          ),
+        }).should("exist");
         // Simulate clicking the "Previous Month" button
         cy.findByRole("button", {
           name: "Previous Month",
         }).realClick();
+        cy.findByRole("button", {
+          name: adapter.format(testDate, "DD MMMM YYYY"),
+        }).should("exist");
         // Simulate focusing on the "Next Month" button
         cy.findByRole("button", {
           name: "Next Month",
@@ -116,7 +128,7 @@ describe("GIVEN a Calendar with single selection", () => {
         }).should("be.focused");
       });
 
-      it("SHOULD move to today's date if there is not selected date", () => {
+      it("SHOULD move to today's date if there is no selected date", () => {
         const todayTestDate = adapter.today();
         cy.mount(
           <Calendar
@@ -140,7 +152,7 @@ describe("GIVEN a Calendar with single selection", () => {
         }).should("be.focused");
       });
 
-      it("SHOULD move to today's date if there is not selected date", () => {
+      it("SHOULD move to today's date if there is no selected date", () => {
         const todayTestDate = adapter.today();
         cy.mount(
           <Calendar
@@ -152,14 +164,26 @@ describe("GIVEN a Calendar with single selection", () => {
             <CalendarGrid />
           </Calendar>,
         );
+        cy.findByRole("button", {
+          name: adapter.format(todayTestDate, "DD MMMM YYYY"),
+        }).should("exist");
         // Simulate clicking the "Next Month" button
         cy.findByRole("button", {
           name: "Next Month",
         }).realClick();
+        cy.findByRole("button", {
+          name: adapter.format(
+            adapter.add(todayTestDate, { months: 1 }),
+            "DD MMMM YYYY",
+          ),
+        }).should("exist");
         // Simulate clicking the "Previous Month" button
         cy.findByRole("button", {
           name: "Previous Month",
         }).realClick();
+        cy.findByRole("button", {
+          name: adapter.format(todayTestDate, "DD MMMM YYYY"),
+        }).should("exist");
         // Simulate focusing on the "Next Month" button
         cy.findByRole("button", {
           name: "Next Month",

@@ -360,6 +360,9 @@ export const TwinCalendars: StoryFn<
   const [endVisibleMonth, setEndVisibleMonth] = useState<
     CalendarProps<DateFrameworkType>["defaultVisibleMonth"]
   >(dateAdapter.add(startVisibleMonth ?? today, { months: 1 }));
+  const [focusedDate, setFocusedDate] = useState<DateFrameworkType | null>(
+    dateAdapter.startOf(startVisibleMonth, "month"),
+  );
 
   const handleStartVisibleMonthChange = useCallback(
     (
@@ -410,15 +413,28 @@ export const TwinCalendars: StoryFn<
       args?.onSelectionChange?.(event, newSelectedDate);
     };
 
+  const handleFocusedDateChange: CalendarProps<DateFrameworkType>["onFocusedDateChange"] =
+    (_event, newFocusedDate) => {
+      setFocusedDate(newFocusedDate);
+    };
   return (
     <div style={{ display: "flex", gap: 16 }}>
       <Calendar
         selectionVariant="range"
+        focusedDate={
+          dateAdapter.compare(
+            focusedDate,
+            dateAdapter.startOf(endVisibleMonth, "month"),
+          ) < 0
+            ? focusedDate
+            : null
+        }
         hideOutOfRangeDates
         hoveredDate={hoveredDate}
         visibleMonth={startVisibleMonth}
         selectedDate={selectedDate}
         {...args}
+        onFocusedDateChange={handleFocusedDateChange}
         onHoveredDateChange={handleHoveredDateChange}
         onVisibleMonthChange={handleStartVisibleMonthChange}
         onSelectionChange={handleSelectionChange}
@@ -428,11 +444,20 @@ export const TwinCalendars: StoryFn<
       </Calendar>
       <Calendar
         selectionVariant="range"
+        focusedDate={
+          dateAdapter.compare(
+            focusedDate,
+            dateAdapter.startOf(endVisibleMonth, "month"),
+          ) >= 0
+            ? focusedDate
+            : null
+        }
         hideOutOfRangeDates
         hoveredDate={hoveredDate}
         selectedDate={selectedDate}
         visibleMonth={endVisibleMonth}
         {...args}
+        onFocusedDateChange={handleFocusedDateChange}
         onHoveredDateChange={handleHoveredDateChange}
         onVisibleMonthChange={handleEndVisibleMonthChange}
         onSelectionChange={handleSelectionChange}

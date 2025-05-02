@@ -383,19 +383,20 @@ export const CalendarNavigation = forwardRef<
       >
         <ConditionalTooltip
           placement="top"
-          disabled={disableNavigatePreviousProp ?? disableNavigatePrevious}
+          disabled={!(disableNavigatePreviousProp || disableNavigatePrevious)}
           content="Past dates are out of range"
           enterDelay={0} // --salt-duration-instant
           leaveDelay={0} // --salt-duration-instant
         >
           <Button
-            disabled={disableNavigatePreviousProp ?? disableNavigatePrevious}
+            aria-label="Previous Month"
+            disabled={disableNavigatePreviousProp || disableNavigatePrevious}
             appearance="transparent"
             sentiment="neutral"
             onClick={handleNavigatePrevious}
             focusableWhenDisabled={true}
           >
-            <PreviousIcon aria-label="Previous Month" />
+            <PreviousIcon aria-hidden />
           </Button>
         </ConditionalTooltip>
         <div
@@ -437,19 +438,20 @@ export const CalendarNavigation = forwardRef<
         </div>
         <ConditionalTooltip
           placement="top"
-          disabled={disableNavigateNextProp ?? disableNavigateNext}
+          disabled={!(disableNavigateNextProp || disableNavigateNext)}
           content="Future dates are out of range"
           enterDelay={0} // --salt-duration-instant
           leaveDelay={0} // --salt-duration-instant
         >
           <Button
-            disabled={disableNavigateNextProp ?? disableNavigateNext}
+            aria-label="Next Month"
+            disabled={disableNavigateNextProp || disableNavigateNext}
             appearance="transparent"
             sentiment="neutral"
             onClick={handleNavigateNext}
             focusableWhenDisabled={true}
           >
-            <NextIcon aria-label="Next Month" />
+            <NextIcon aria-hidden />
           </Button>
         </ConditionalTooltip>
       </div>
