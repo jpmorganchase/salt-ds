@@ -1,0 +1,61 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+<ReactResizablePanelsThemeProvider>
+
+## Default
+  
+Applies the default look when applying the Salt theme.
+
+<LivePreview componentName="react-resizable-panels-theme" exampleName="Default" />
+
+## Transparent
+
+By default, the resize handles are transparent, allowing the background color of the parent container to show through by making the handles see-through.
+
+<LivePreview componentName="react-resizable-panels-theme" exampleName="Transparent" />
+  
+## Variants
+  
+For the `PanelResizeHandle` component, the class names are:
+
+  - `resizable-panel-salt-variant-primary`
+  - `resizable-panel-salt-variant-secondary`
+  - `resizable-panel-salt-variant-tertiary`
+
+  For the `PanelResizeHandle` component, the class names are:
+
+- `resizable-panel-salt-variant-primary`
+- `resizable-panel-salt-variant-secondary`
+- `resizable-panel-salt-variant-tertiary`  
+  
+<LivePreview componentName="react-resizable-panels-theme" exampleName="Variant" />
+  
+## Border
+  
+There are 4 border directions in the the Salt React Resizable Panels theme: top, bottom, left and right. By default, the `PanelResizeHandle` components will render with no borders, to add salt themed borders to the handles, apply any of the following classes:
+  
+For a PanelGroup with direction "vertical":  
+- `.resize-handle-border-top`
+- `.resize-handle-border-bottom`
+  
+For a PanelGroup with direction "vertical": 
+- `.resize-handle-border-left`
+- `.resize-handle-border-right`
+  
+<LivePreview componentName="react-resizable-panels-theme" exampleName="Border" />
+
+<LivePreview componentName="react-resizable-panels-theme" exampleName="Horizontal" />
+
+<LivePreview componentName="react-resizable-panels-theme" exampleName="Vertical" />
+
+<LivePreview componentName="react-resizable-panels-theme" exampleName="MultiOrientational" />
+  
+</ReactResizablePanelsThemeProvider>

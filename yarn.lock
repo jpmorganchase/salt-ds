@@ -3532,6 +3532,7 @@ __metadata:
     react: "npm:^18.3.1"
     react-docgen-typescript: "npm:2.2.2"
     react-dom: "npm:^18.3.1"
+    react-resizable-panels: "npm:^2.1.7"
     rifm: "npm:^0.12.0"
     rollup: "npm:^4.24.2"
     rollup-plugin-esbuild: "npm:^6.1.1"

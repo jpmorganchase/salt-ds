@@ -24,7 +24,7 @@ if (!argv.includes("--watch")) {
 
 const context = await esbuild.context({
   absWorkingDir: cwd,
-  entryPoints: ["salt-react-resizable-panels-theme.css"],
+  entryPoints: ["salt-react-resizable-panels-theme-theme.css"],
   assetNames: "[dir]/[name]",
   outdir: buildFolder,
   loader: {
