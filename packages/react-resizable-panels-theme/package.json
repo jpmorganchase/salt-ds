@@ -5,7 +5,7 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/jpmorganchase/salt-ds.git",
-    "directory": "packages/ag-grid-theme"
+    "directory": "packages/react-resizable-panels-theme"
   },
   "bugs": "https://github.com/jpmorganchase/salt-ds/issues",
   "style": "index.css",

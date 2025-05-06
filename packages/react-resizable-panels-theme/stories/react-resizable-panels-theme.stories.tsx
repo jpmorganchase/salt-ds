@@ -28,17 +28,6 @@ import { useRef, useState } from "react";
 export default {
   title: "React Resizable Panels/Theme",
   component: Panel,
-  parameters: {
-    // Make all ag grid examples go through chromatic
-    chromatic: {
-      disableSnapshot: false,
-      delay: 200,
-      // double default width from `useAgGridHelpers` given we're using side-by-side mode, + panel wrapper padding
-      modes: {
-        dual: { mode: "side-by-side", viewport: { width: 800 * 2 + 24 * 4 } },
-      },
-    },
-  },
 };
 
 export function Horizontal() {
@@ -57,7 +46,7 @@ export function Horizontal() {
         </Panel>
         <PanelResizeHandle
           aria-label="Resize Center/Right"
-          className="borderLeftRight"
+          className="resize-handle-border-left resize-handle-border-right"
         />
         <Panel id="right" className="center" minSize={10}>
           <Text>Right</Text>
@@ -172,11 +161,11 @@ export function Border() {
         <Panel id="left" minSize={0} defaultSize={25} className="center">
           <Text>Left</Text>
         </Panel>
-        <PanelResizeHandle className="borderRight" />
+        <PanelResizeHandle className="resize-handle-border-right" />
         <Panel minSize={50} className="center">
           <Text>Center</Text>
         </Panel>
-        <PanelResizeHandle className="borderLeft" />
+        <PanelResizeHandle className="resize-handle-border-left" />
         <Panel minSize={0} defaultSize={25} className="center">
           <Text>Right</Text>
         </Panel>
@@ -189,15 +178,23 @@ export function Variant() {
   return (
     <FlexLayout className="box">
       <PanelGroup direction="horizontal">
-        <Panel minSize={0} defaultSize={25} className="center panelSecondary">
+        <Panel
+          minSize={0}
+          defaultSize={25}
+          className="center resizable-panel-salt-variant-secondary"
+        >
           <Text>Left</Text>
         </Panel>
-        <PanelResizeHandle className="resize-handle-border-right saltResizeHandleSecondary" />
+        <PanelResizeHandle className="resize-handle-border-right resize-handle-salt-variant-secondary" />
         <Panel minSize={50} className="center">
           <Text>Center</Text>
         </Panel>
-        <PanelResizeHandle className="resize-handle-border-left saltResizeHandleTertiary" />
-        <Panel minSize={0} defaultSize={25} className="center panelTertiary">
+        <PanelResizeHandle className="resize-handle-border-left resize-handle-salt-variant-tertiary" />
+        <Panel
+          minSize={0}
+          defaultSize={25}
+          className="center resizable-panel-salt-variant-tertiary"
+        >
           <Text>Right</Text>
         </Panel>
       </PanelGroup>

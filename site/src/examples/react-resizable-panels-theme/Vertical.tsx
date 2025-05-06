@@ -7,16 +7,16 @@ export function Vertical() {
   return (
     <FlexLayout className={styles.box}>
       <PanelGroup direction="vertical">
-        <Panel id="left" className={styles.center}>
-          <Text>Left</Text>
+        <Panel id="top" className={styles.center}>
+          <Text>Top</Text>
         </Panel>
-        <PanelResizeHandle className="resize-handle-border-top resize-handle-border-bottom" />
+        <PanelResizeHandle className="resize-handle-border-top" />
         <Panel id="center" className={styles.center}>
           <Text>Center</Text>
         </Panel>
-        <PanelResizeHandle className="resize-handle-border-top resize-handle-border-bottom" />
-        <Panel id="right" className={styles.center}>
-          <Text>Right</Text>
+        <PanelResizeHandle className="resize-handle-border-bottom" />
+        <Panel id="bottom" className={styles.center}>
+          <Text>Bottom</Text>
         </Panel>
       </PanelGroup>
     </FlexLayout>

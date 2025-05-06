@@ -13,7 +13,7 @@ div[data-resize-handle] {
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  gap: 2px;
+  gap: var(--salt-spacing-25);
 
   box-sizing: content-box;
 
