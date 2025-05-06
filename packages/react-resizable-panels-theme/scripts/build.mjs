@@ -27,9 +27,6 @@ const context = await esbuild.context({
   entryPoints: ["index.css"],
   assetNames: "[dir]/[name]",
   outdir: buildFolder,
-  loader: {
-    ".woff": "file",
-  },
   write: true,
   bundle: true,
   logLevel: "info",

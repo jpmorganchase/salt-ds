@@ -7,16 +7,16 @@ export function Horizontal() {
   return (
     <FlexLayout className={styles.box}>
       <PanelGroup direction="horizontal">
-        <Panel id="top" className={styles.center}>
-          <Text>Top</Text>
+        <Panel id="left" className={styles.center}>
+          <Text>Left</Text>
         </Panel>
-        <PanelResizeHandle className="resize-handle-border-left resize-handle-border-right" />
-        <Panel id="middle" className={styles.center}>
-          <Text>Middle</Text>
+        <PanelResizeHandle className="resize-handle-border-right" />
+        <Panel id="center" className={styles.center}>
+          <Text>Center</Text>
         </Panel>
-        <PanelResizeHandle className="resize-handle-border-left resize-handle-border-right" />
-        <Panel id="bottom" className={styles.center}>
-          <Text>Bottom</Text>
+        <PanelResizeHandle className="resize-handle-border-leftt" />
+        <Panel id="right" className={styles.center}>
+          <Text>Right</Text>
         </Panel>
       </PanelGroup>
     </FlexLayout>
