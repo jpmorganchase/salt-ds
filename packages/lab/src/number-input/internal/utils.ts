@@ -1,5 +1,5 @@
 // The input should only accept numbers, decimal points, and plus/minus symbols
-export const ACCEPT_INPUT = /^[-+]?[0-9]*\.?([0-9]+)?/g;
+export const ACCEPTED_INPUT = /[-+]?[0-9]*\.?[0-9]+/g;
 
 export const toFixedDecimalPlaces = (
   inputNumber: number,
@@ -20,8 +20,10 @@ export const toFloat = (inputValue: number | string) => {
   return Number.parseFloat(inputValue.toString());
 };
 
-export const sanitizedInput = (numberString: string) =>
-  (numberString.match(ACCEPT_INPUT) || []).join("");
+export const sanitizeInput = (numberString: string | number) => {
+  if (typeof numberString === "number") return numberString;
+  return (numberString.match(ACCEPTED_INPUT) || []).join("");
+};
 
 export const isAtMax = (value: number | string, max: number) => {
   return toFloat(value) >= max;

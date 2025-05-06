@@ -11,6 +11,7 @@ import { useActivateWhileMouseDown } from "./internal/useActivateWhileMouseDown"
 import {
   isAtMax,
   isAtMin,
+  sanitizeInput,
   toFixedDecimalPlaces,
   toFloat,
 } from "./internal/utils";
@@ -31,6 +32,7 @@ export const useNumberInput = ({
   step = 1,
   stepMultiplier = 2,
   value,
+  format,
 }: Pick<
   NumberInputProps,
   | "decimalPlaces"
@@ -47,6 +49,7 @@ export const useNumberInput = ({
   setFocused: Dispatch<SetStateAction<boolean>>;
   value: string | number;
   inputRef: MutableRefObject<HTMLInputElement | null>;
+  format: (value: number | string) => number | string;
 }) => {
   const setValueInRange = useCallback(
     (event: SyntheticEvent | undefined, modifiedValue: number) => {
@@ -58,19 +61,24 @@ export const useNumberInput = ({
       const roundedValue = toFixedDecimalPlaces(nextValue, decimalPlaces);
       if (Number.isNaN(toFloat(roundedValue))) return;
 
-      setValue(roundedValue);
+      setValue(format(roundedValue));
 
       onChange?.(event, roundedValue);
     },
-    [decimalPlaces, min, max, onChange, readOnly, setValue],
+    [decimalPlaces, min, max, onChange, readOnly, setValue, format],
   );
 
   const decrementValue = useCallback(
     (event?: SyntheticEvent, block?: boolean) => {
       if (isAtMin(value, min)) return;
+      console.log("decrementvalue", value);
+      const sanitizedValue = sanitizeInput(value);
       const decrementStep = block ? stepMultiplier * step : step;
       const nextValue =
-        value === "" ? -decrementStep : toFloat(value) - decrementStep;
+        sanitizedValue === ""
+          ? -decrementStep
+          : toFloat(sanitizedValue) - decrementStep;
+      console.log("next value", nextValue);
       setValueInRange(event, nextValue);
     },
     [value, min, step, stepMultiplier, setValueInRange],
@@ -80,8 +88,12 @@ export const useNumberInput = ({
     (event?: SyntheticEvent, block?: boolean) => {
       if (isAtMax(value, max)) return;
       const incrementStep = block ? stepMultiplier * step : step;
+      const sanitizedValue = sanitizeInput(value);
+
       const nextValue =
-        value === "" ? incrementStep : toFloat(value) + incrementStep;
+        sanitizedValue === ""
+          ? incrementStep
+          : toFloat(sanitizedValue) + incrementStep;
       setValueInRange(event, nextValue);
     },
     [value, max, step, stepMultiplier, setValueInRange],
