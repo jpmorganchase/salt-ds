@@ -5,9 +5,9 @@ import {
   PanelResizeHandle,
 } from "react-resizable-panels";
 
-import "ag-grid-community/styles/ag-grid.css";
 import "../index.css";
 import "./splitter.stories.css";
+
 import {
   Button,
   FlexLayout,
