@@ -23,6 +23,7 @@ export default {
 
 export {
   CheckboxSelection,
+  CellValidation,
   Coloration,
   ColumnGroup,
   ColumnSpanning,
@@ -44,11 +45,11 @@ export {
   RangeSelection,
   RowGroupPanel,
   RowGrouping,
+  RowValidation,
   SortAndFilter,
   StatusBar,
   SuppressMenuHide,
   ToolPanel,
-  Validation,
   VariantSecondary,
   VariantZebra,
   WrappedCell,
