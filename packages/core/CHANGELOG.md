@@ -1,5 +1,49 @@
 # @salt-ds/core
 
+## 1.45.0
+
+### Minor Changes
+
+- c664e97: - Moved `SteppedTracker` component from labs to core, renamed as `Stepper`.
+
+  - `Stepper` visually communicates a user’s progress through a linear process. It gives the user context about where they are, which steps have they completed, how many steps are left and if any errors or warnings have occurred.
+
+  ```tsx
+  import { Stepper, Step } from "@salt-ds/core";
+
+  function Example() {
+    return (
+      <Stepper orientation="horizontal">
+        <Step label="Step 1" stage="completed" />
+        <Step label="Step 2" stage="active" />
+        <Step label="Step 3" stage="pending" />
+      </Stepper>
+    );
+  }
+  ```
+
+- 06232b0: Added `sentiment`, `appearance` and `readOnly` props to `ToggleButton` and `ToggleButtonGroup`.
+
+  ```tsx
+  <ToggleButton sentiment="positive" appearance="bordered">
+    Home
+  </ToggleButton>
+  ```
+
+  ```tsx
+  <ToggleButtonGroup sentiment="accented" appearance="bordered">
+    <ToggleButton> Home</ToggleButton>
+  </ToggleButtonGroup>
+  ```
+
+  ```tsx
+  <ToggleButtonGroup readOnly={true}>
+    <ToggleButton> Home</ToggleButton>
+  </ToggleButtonGroup>
+  ```
+
+  Added support for visually indicating the selected toggle button within a disabled toggle button group.
+
 ## 1.44.1
 
 ### Patch Changes

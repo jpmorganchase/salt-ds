@@ -1,5 +1,17 @@
 # @salt-ds/lab
 
+## 1.0.0-alpha.67
+
+### Minor Changes
+
+- c664e97: - Moved `SteppedTracker` component from labs to core, renamed as `Stepper`.
+
+### Patch Changes
+
+- Updated dependencies [c664e97]
+- Updated dependencies [06232b0]
+  - @salt-ds/core@1.45.0
+
 ## 1.0.0-alpha.66
 
 ### Minor Changes
