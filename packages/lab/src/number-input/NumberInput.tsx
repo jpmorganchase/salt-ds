@@ -27,9 +27,8 @@ import {
   useState,
 } from "react";
 import {
-  isAllowedNonNumeric,
   isOutOfRange,
-  sanitizedInput,
+  sanitizeInput,
   toFixedDecimalPlaces,
   toFloat,
 } from "./internal/utils";
@@ -71,6 +70,10 @@ export interface NumberInputProps
    * End adornment component.
    */
   endAdornment?: ReactNode;
+  /**
+   * Formatting callback
+   */
+  format?: (value: any) => string | number;
   /**
    * Hide the number buttons. Defaults to `false`.
    * @default false
@@ -162,6 +165,7 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       disabled,
       emptyReadOnlyMarker = "—",
       endAdornment,
+      format = (value) => value,
       hideButtons,
       id: idProp,
       inputProps: inputPropsProp = {},
@@ -227,7 +231,7 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       controlled: valueProp,
       default:
         typeof defaultValueProp === "number"
-          ? toFixedDecimalPlaces(defaultValueProp, decimalPlaces)
+          ? format(toFixedDecimalPlaces(defaultValueProp, decimalPlaces))
           : defaultValueProp,
       name: "NumberInput",
       state: "value",
@@ -254,6 +258,7 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       disabled,
       max,
       min,
+      format,
       onChange: onChangeProp,
       readOnly: isReadOnly,
       step,
@@ -269,33 +274,23 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
 
     const handleInputBlur = (event: FocusEvent<HTMLInputElement>) => {
       setFocused(false);
+      const sanitizedInput = sanitizeInput(event.target.value);
+      const floatValue = toFloat(sanitizedInput);
 
-      if (value === undefined) return;
+      const roundedValue = toFixedDecimalPlaces(floatValue, decimalPlaces);
+      const formattedValue = format(roundedValue);
 
-      const floatValue = toFloat(value);
-      if (Number.isNaN(floatValue)) {
-        // Keep original value if NaN
-        setValue(value);
-        onChangeProp?.(event, value);
-      } else {
-        const roundedValue = toFixedDecimalPlaces(floatValue, decimalPlaces);
-
-        if (value !== "" && !isAllowedNonNumeric(value)) {
-          setValue(roundedValue);
-        }
-
-        onChangeProp?.(event, roundedValue);
-      }
-
+      setValue(formattedValue);
+      onChangeProp?.(event, roundedValue);
       inputOnBlur?.(event);
     };
 
     const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+      console.log("value", value);
       const changedValue = event.target.value;
 
-      setValue(sanitizedInput(changedValue));
-
-      onChangeProp?.(event, sanitizedInput(changedValue));
+      setValue(changedValue);
+      onChangeProp?.(event, sanitizeInput(changedValue));
       inputOnChange?.(event);
     };
 
@@ -339,6 +334,8 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
 
       inputOnKeyDown?.(event);
     };
+
+    console.log("value", value);
 
     return (
       <div

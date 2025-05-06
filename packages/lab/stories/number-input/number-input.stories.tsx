@@ -28,6 +28,40 @@ Default.args = {
   defaultValue: 0,
 };
 
+export const Formatting: StoryFn<NumberInputProps> = (args) => {
+  return (
+    <StackLayout>
+      <FormField>
+        <FormFieldLabel>Number Input</FormFieldLabel>
+        <NumberInput
+          {...args}
+          onChange={(event, value) => console.log("onchange value", value)}
+          format={(value) =>
+            new Intl.NumberFormat("en-US", {
+              style: "currency",
+              currency: "EUR",
+              currencySign: "accounting",
+            }).format(value)
+          }
+        />
+        <FormFieldHelperText>Please enter a number</FormFieldHelperText>
+      </FormField>
+      <FormField>
+        <FormFieldLabel>Number Input</FormFieldLabel>
+        <NumberInput
+          {...args}
+          onChange={(event, value) => console.log("onchange value", value)}
+          format={(value) => `${value || 0}%`}
+        />
+        <FormFieldHelperText>Please enter a number</FormFieldHelperText>
+      </FormField>
+    </StackLayout>
+  );
+};
+Formatting.args = {
+  defaultValue: 20,
+};
+
 export const Secondary: StoryFn<NumberInputProps> = (args) => {
   return (
     <FormField>
