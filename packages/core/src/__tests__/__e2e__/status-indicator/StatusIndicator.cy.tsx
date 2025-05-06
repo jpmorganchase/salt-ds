@@ -52,5 +52,11 @@ describe("Given a Status Indicator", () => {
       );
       cy.get(".saltStatusIndicator").should("have.attr", "aria-label", "info");
     });
+
+    it("should not crash when invalid status is passed in", () => {
+      // @ts-expect-error test invalid variant
+      cy.mount(<Default status="invalid" />);
+      // Not crash / no error from cypress
+    });
   });
 });
