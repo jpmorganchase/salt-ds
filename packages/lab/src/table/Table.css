@@ -14,11 +14,17 @@
   --table-color: var(--salt-content-secondary-foreground);
 }
 
+.saltTable-zebra .saltTable-tbody .saltTable-tr:nth-of-type(2n+1),
+.saltTable-zebra tbody .saltTable-tr:nth-of-type(2n+1),
+.saltTable-zebra .saltTable-tbody tr:nth-of-type(2n+1),
+.saltTable-zebra tbody tr:nth-of-type(2n+1) {
+  --table-background: var(--salt-container-secondary-background);
+}
+
 table.saltTable {
   border-spacing: 0;
   border-radius: var(--saltTable-borderRadius, var(--salt-palette-corner));
   border-collapse: collapse;
-  background: var(--saltTable-background, var(--table-background));
   color: var(--table-color);
   font-family: var(--salt-text-fontFamily);
   font-size: var(--salt-text-fontSize);
@@ -32,7 +38,6 @@ table.saltTable thead {
   align-items: center;
   border-start-start-radius: var(--saltTable-thead-borderRadius-top, var(--salt-palette-corner));
   border-start-end-radius: var(--saltTable-thead-borderRadius-top, var(--salt-palette-corner));
-  background: var(--saltTable-thead-background, var(--table-background));
   color: var(--salt-content-secondary-foreground);
   height: var(--table-header-height);
   font-size: var(--salt-text-label-fontSize);
@@ -43,6 +48,7 @@ table.saltTable thead {
 /* TH */
 .saltTable-th,
 .saltTable th {
+  background: var(--saltTable-thead-background, var(--table-background));
   overflow: hidden;
   padding: var(--salt-spacing-100);
   position: relative;
@@ -68,6 +74,7 @@ table.saltTable thead {
 .saltTable tr,
 .saltTable-tr {
   align-items: center;
+  background: var(--saltTable-thead-background, var(--table-background));
   border-bottom: var(--salt-separable-borderStyle) var(--salt-separable-secondary-borderColor) var(--salt-size-border);
   height: var(--table-row-height);
 }

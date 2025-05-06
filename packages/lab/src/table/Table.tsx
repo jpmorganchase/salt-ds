@@ -3,13 +3,11 @@ import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import { type ComponentPropsWithoutRef, forwardRef } from "react";
-import "ag-grid-community/styles/ag-grid.css";
-import "@salt-ds/ag-grid-theme/salt-ag-theme.css";
 
 import tableCss from "./Table.css";
 
 export type TableProps = ComponentPropsWithoutRef<"table"> & {
-  variant?: "primary" | "secondary";
+  variant?: "primary" | "secondary" | "zebra";
 };
 
 export const withTableBaseName = makePrefixer("saltTable");

@@ -6,9 +6,9 @@ import { withTableBaseName } from "./Table";
 
 import tableCss from "./Table.css";
 
-export type TableProps = ComponentPropsWithoutRef<"tbody">;
+export type TBodyProps = ComponentPropsWithoutRef<"tbody">;
 
-export const TBody = forwardRef<HTMLTableSectionElement, TableProps>(
+export const TBody = forwardRef<HTMLTableSectionElement, TBodyProps>(
   function TBody({ children, className, ...rest }, ref) {
     const targetWindow = useWindow();
     useComponentCssInjection({
