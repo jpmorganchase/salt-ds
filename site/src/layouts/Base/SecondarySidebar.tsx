@@ -8,8 +8,8 @@ export const SecondarySidebar = forwardRef<
 >(function SecondarySidebar({ className, ...rest }, ref) {
   return (
     <div
-      // Make the size bar appear smaller using MD class,
-      // temporary solution until we have alternative design of right bar
+      // Make the side bar appear smaller using MD class,
+      // temporary solution until we have alternative design for the right bar
       className={clsx("salt-density-medium", styles.root, className)}
       ref={ref}
       {...rest}
