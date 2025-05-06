@@ -14,10 +14,10 @@
   --table-color: var(--salt-content-secondary-foreground);
 }
 
-.saltTable-zebra .saltTable-tbody .saltTable-tr:nth-of-type(2n+1),
-.saltTable-zebra tbody .saltTable-tr:nth-of-type(2n+1),
-.saltTable-zebra .saltTable-tbody tr:nth-of-type(2n+1),
-.saltTable-zebra tbody tr:nth-of-type(2n+1) {
+.saltTable-zebra .saltTable-tbody .saltTable-tr:nth-of-type(odd),
+.saltTable-zebra tbody .saltTable-tr:nth-of-type(odd),
+.saltTable-zebra .saltTable-tbody tr:nth-of-type(odd),
+.saltTable-zebra tbody tr:nth-of-type(odd) {
   --table-background: var(--salt-container-secondary-background);
 }
 
