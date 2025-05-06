@@ -1,7 +1,6 @@
 .cell {
   width: var(--salt-size-base);
   height: var(--salt-size-base);
-  justify-self: end;
 
   color: var(--salt-content-primary-foreground);
 

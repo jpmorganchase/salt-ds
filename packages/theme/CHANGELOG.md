@@ -1,5 +1,13 @@
 # @salt-ds/theme
 
+## 1.29.0
+
+### Minor Changes
+
+- 4fc024c: Deprecated `--salt-overlayable-rangeSelection` to replace with `--salt-overlayable-background-rangeSelection`, for better system token naming convension.
+
+  Deprecated `--salt-text-textTransform` token, which is not used anywhere in the system.
+
 ## 1.28.1
 
 ### Patch Changes

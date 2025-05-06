@@ -1,13 +1,18 @@
 .diagramsContainer {
-  display: grid;
-  grid-template-columns: 100%;
+  display: flex;
+  flex-direction: column;
   gap: var(--salt-spacing-300);
   margin-block: var(--salt-spacing-300);
 }
 
 @media screen and (min-width: 960px) {
   .diagramsContainer {
+    display: grid;
+    grid-template-columns: 100%;
     grid-template-columns: repeat(2, 1fr);
+    grid-template-rows:
+      [text-container] min-content
+      [image] min-content;
   }
 }
 
@@ -28,7 +33,15 @@
   display: flex;
   flex-direction: column;
   margin-block: var(--salt-spacing-300);
-  gap: var(--salt-spacing-100);
+}
+
+@media screen and (min-width: 960px) {
+  .diagramsContainer > .diagram {
+    display: grid;
+    grid: subgrid / subgrid;
+    grid-row: span 2; /* span parent 2 rows with text-container & image */
+    gap: var(--salt-spacing-100);
+  }
 }
 
 .diagram:first-child {
@@ -73,10 +86,12 @@
 }
 
 .textContainer {
-  flex: 1;
+  grid-area: text-container;
 }
 
 .figure {
+  grid-area: image;
+
   display: flex;
   flex-direction: column;
   gap: var(--salt-spacing-100);

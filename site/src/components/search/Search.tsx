@@ -94,9 +94,14 @@ export function Search(props: ComboBoxProps) {
   const results = useMemo(() => {
     return data.reduce(
       (acc, option) => {
+        // Route can be something like below, added by mosaic-github-transformer.mjs
+        // {title: '@salt-ds/core@1.41.0', content: '', route: 'salt-github/@salt-ds-core@1.41.0'}
         const category = capitalize(
-          option.route.split("/")[2].split("-").join(" "),
+          option.route.split("/")?.[2]?.split("-").join(" ") || "",
         );
+        if (!category) {
+          return acc;
+        }
         if (
           !(
             option.route.endsWith("accessibility") ||

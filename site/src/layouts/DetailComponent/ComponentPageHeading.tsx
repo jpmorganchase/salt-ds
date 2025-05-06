@@ -13,7 +13,6 @@ import { GithubIcon, SettingsSolidIcon } from "@salt-ds/icons";
 import dynamic from "next/dynamic";
 import { ThemeControls } from "../../components/components/ThemeControls";
 import { CTALink } from "../../components/cta-link/CTALink";
-import { LinkBase } from "../../components/link/Link";
 import type { PageHeadingProps } from "../Base/PageHeading";
 import headingStyles from "./ComponentPageHeading.module.css";
 import type { CustomSiteState } from "./DetailComponent";
@@ -35,12 +34,7 @@ export default function ComponentPageHeading({ title, id }: PageHeadingProps) {
         <div className={headingStyles.title}>
           <H1 styleAs={"display4"}>{title}</H1>
           {status === "Release candidate" && (
-            <LinkBase
-              className={headingStyles.tagLink}
-              href="/salt/components/index#lab-components"
-            >
-              <Tag bordered>Release candidate</Tag>
-            </LinkBase>
+            <Tag bordered>Release candidate</Tag>
           )}
         </div>
         {description && (

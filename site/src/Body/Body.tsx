@@ -2,6 +2,7 @@ import { MDXRemote } from "next-mdx-remote";
 import { useRouter } from "next/router";
 import { type ReactNode, useEffect } from "react";
 import { ErrorBoundary, useErrorBoundary } from "react-error-boundary";
+import styles from "../layouts/Base/Base.module.css";
 import { Page404 } from "./404";
 import { Page500 } from "./500";
 
@@ -64,7 +65,7 @@ export function Body({
 
   if (type === "mdx") {
     return (
-      <div className="wrapper">
+      <div className={styles.contentWrapper}>
         <MDXRemoteWithErrorBoundary
           components={components}
           source={props.source}
@@ -75,7 +76,7 @@ export function Body({
   }
   // If file is JSON, we expect it to have a `content` attr
   if (type === "json") {
-    return <div className="wrapper">{props.content}</div>;
+    return <div className={styles.contentWrapper}>{props.content}</div>;
   }
-  return <div className="wrapper">Unsupported file type</div>;
+  return <div className={styles.contentWrapper}>Unsupported file type</div>;
 }

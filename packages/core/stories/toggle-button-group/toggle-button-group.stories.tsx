@@ -1,4 +1,10 @@
-import { ToggleButton, ToggleButtonGroup, Tooltip } from "@salt-ds/core";
+import {
+  ToggleButton,
+  ToggleButtonGroup,
+  type ToggleButtonGroupProps,
+  type ToggleButtonProps,
+  Tooltip,
+} from "@salt-ds/core";
 import {
   AppSwitcherIcon,
   DarkIcon,
@@ -8,24 +14,53 @@ import {
 } from "@salt-ds/icons";
 import type { Meta, StoryFn } from "@storybook/react";
 
+interface ToggleButtonGroupStoryProps extends ToggleButtonGroupProps {
+  appearance?: ToggleButtonProps["appearance"];
+  sentiment?: ToggleButtonProps["sentiment"];
+}
+
 export default {
   title: "Core/Toggle Button Group",
   component: ToggleButtonGroup,
   subcomponents: { ToggleButton },
-} as Meta<typeof ToggleButtonGroup>;
 
-const IconAndTextTemplate: StoryFn<typeof ToggleButtonGroup> = (args) => {
+  argTypes: {
+    appearance: {
+      control: "select",
+      options: ["solid", "bordered"],
+    },
+    sentiment: {
+      control: "select",
+      options: ["accented", "neutral", "positive", "negative", "caution"],
+    },
+  },
+} as Meta<ToggleButtonGroupStoryProps>;
+
+const IconAndTextTemplate: StoryFn<ToggleButtonGroupStoryProps> = ({
+  appearance,
+  sentiment,
+  ...rest
+}) => {
   return (
-    <ToggleButtonGroup {...args}>
-      <ToggleButton value="all">
+    <ToggleButtonGroup {...rest}>
+      <ToggleButton appearance={appearance} sentiment={sentiment} value="all">
         <AppSwitcherIcon aria-hidden />
         All
       </ToggleButton>
-      <ToggleButton value="active">
+      <ToggleButton
+        appearance={appearance}
+        sentiment={sentiment}
+        value="active"
+      >
         <VisibleIcon aria-hidden />
         Active
       </ToggleButton>
-      <ToggleButton disabled value="search">
+      <ToggleButton
+        appearance={appearance}
+        sentiment={sentiment}
+        disabled
+        value="search"
+      >
         <FolderClosedIcon aria-hidden />
         Archived
       </ToggleButton>
@@ -33,43 +68,114 @@ const IconAndTextTemplate: StoryFn<typeof ToggleButtonGroup> = (args) => {
   );
 };
 
-const IconOnlyTemplate: StoryFn<typeof ToggleButtonGroup> = (args) => {
+const IconOnlyTemplate: StoryFn<ToggleButtonGroupStoryProps> = ({
+  appearance,
+  orientation,
+  sentiment,
+  ...rest
+}) => {
   return (
-    <ToggleButtonGroup aria-label="Modes" {...args}>
+    <ToggleButtonGroup aria-label="Modes" orientation={orientation} {...rest}>
       <Tooltip
         content="Light Mode"
-        placement={args.orientation === "vertical" ? "right" : "bottom"}
+        placement={orientation === "vertical" ? "right" : "bottom"}
       >
-        <ToggleButton value="light" aria-label="Light Mode">
-          <LightIcon />
+        <ToggleButton
+          appearance={appearance}
+          sentiment={sentiment}
+          value="light"
+          aria-label="Light Mode"
+        >
+          <LightIcon aria-hidden />
         </ToggleButton>
       </Tooltip>
       <Tooltip
         content="Dark Mode"
-        placement={args.orientation === "vertical" ? "right" : "bottom"}
+        placement={orientation === "vertical" ? "right" : "bottom"}
       >
-        <ToggleButton value="dark" aria-label="Dark Mode">
-          <DarkIcon />
+        <ToggleButton
+          appearance={appearance}
+          sentiment={sentiment}
+          value="dark"
+          aria-label="Dark Mode"
+        >
+          <DarkIcon aria-hidden />
         </ToggleButton>
       </Tooltip>
     </ToggleButtonGroup>
   );
 };
 
-const TextOnlyTemplate: StoryFn<typeof ToggleButtonGroup> = (args) => {
+const TextOnlyTemplate: StoryFn<ToggleButtonGroupStoryProps> = ({
+  appearance,
+  sentiment,
+  ...rest
+}) => {
   return (
-    <ToggleButtonGroup aria-label="Densities" {...args}>
-      <ToggleButton value="high" aria-label="High Density">
+    <ToggleButtonGroup aria-label="Densities" {...rest}>
+      <ToggleButton
+        appearance={appearance}
+        sentiment={sentiment}
+        value="high"
+        aria-label="High Density"
+      >
         High
       </ToggleButton>
-      <ToggleButton disabled value="medium" aria-label="Medium Density">
+      <ToggleButton
+        appearance={appearance}
+        sentiment={sentiment}
+        disabled
+        value="medium"
+        aria-label="Medium Density"
+      >
         Medium
       </ToggleButton>
-      <ToggleButton value="low" aria-label="Low Density">
+      <ToggleButton
+        appearance={appearance}
+        sentiment={sentiment}
+        value="low"
+        aria-label="Low Density"
+      >
         Low
       </ToggleButton>
-      <ToggleButton value="touch" aria-label="Touch Density">
+      <ToggleButton
+        appearance={appearance}
+        sentiment={sentiment}
+        value="touch"
+        aria-label="Touch Density"
+      >
         Touch
+      </ToggleButton>
+    </ToggleButtonGroup>
+  );
+};
+
+const ReadOnlyTemplate: StoryFn<ToggleButtonGroupStoryProps> = ({
+  appearance,
+  sentiment,
+  ...rest
+}) => {
+  return (
+    <ToggleButtonGroup readOnly {...rest}>
+      <ToggleButton appearance={appearance} sentiment={sentiment} value="all">
+        <AppSwitcherIcon aria-hidden />
+        All
+      </ToggleButton>
+      <ToggleButton
+        appearance={appearance}
+        sentiment={sentiment}
+        value="active"
+      >
+        <VisibleIcon aria-hidden />
+        Active
+      </ToggleButton>
+      <ToggleButton
+        appearance={appearance}
+        sentiment={sentiment}
+        value="search"
+      >
+        <FolderClosedIcon aria-hidden />
+        Archived
       </ToggleButton>
     </ToggleButtonGroup>
   );
@@ -109,7 +215,96 @@ VerticalTextOnly.args = {
   defaultValue: "high",
 };
 
+export const Bordered: StoryFn<ToggleButtonGroupStoryProps> = ({
+  appearance,
+  ...rest
+}) => {
+  return (
+    <ToggleButtonGroup
+      appearance="bordered"
+      aria-label="Purchase"
+      defaultValue="sell"
+      {...rest}
+    >
+      <ToggleButton appearance={appearance} value="buy">
+        Buy
+      </ToggleButton>
+      <ToggleButton appearance={appearance} value="sell">
+        Sell
+      </ToggleButton>
+      <ToggleButton appearance={appearance} value="hold">
+        Hold
+      </ToggleButton>
+      <ToggleButton appearance={appearance} value="review">
+        Review
+      </ToggleButton>
+    </ToggleButtonGroup>
+  );
+};
+
+export const ReadOnly = ReadOnlyTemplate.bind({});
+
+export const ReadOnlyAndSelected = ReadOnlyTemplate.bind({});
+ReadOnlyAndSelected.args = {
+  defaultValue: "active",
+};
+
 export const Disabled = IconAndTextTemplate.bind({});
 Disabled.args = {
   disabled: true,
+};
+
+export const DisabledSelected = IconAndTextTemplate.bind({});
+DisabledSelected.args = {
+  disabled: true,
+  defaultValue: "active",
+};
+
+export const Sentiment: StoryFn<ToggleButtonGroupStoryProps> = ({
+  appearance,
+  ...rest
+}) => {
+  return (
+    <ToggleButtonGroup
+      sentiment="accented"
+      aria-label="Purchase"
+      defaultValue="buy"
+      {...rest}
+    >
+      <ToggleButton appearance={appearance} value="buy">
+        Buy
+      </ToggleButton>
+      <ToggleButton appearance={appearance} value="sell">
+        Sell
+      </ToggleButton>
+      <ToggleButton appearance={appearance} value="hold">
+        Hold
+      </ToggleButton>
+      <ToggleButton appearance={appearance} value="review">
+        Review
+      </ToggleButton>
+    </ToggleButtonGroup>
+  );
+};
+
+export const MixedSentiment: StoryFn<ToggleButtonGroupStoryProps> = ({
+  appearance,
+  ...rest
+}) => {
+  return (
+    <ToggleButtonGroup aria-label="Purchase" {...rest}>
+      <ToggleButton appearance={appearance} sentiment="positive" value="buy">
+        Buy
+      </ToggleButton>
+      <ToggleButton appearance={appearance} sentiment="negative" value="sell">
+        Sell
+      </ToggleButton>
+      <ToggleButton appearance={appearance} sentiment="caution" value="hold">
+        Hold
+      </ToggleButton>
+      <ToggleButton appearance={appearance} sentiment="neutral" value="review">
+        Review
+      </ToggleButton>
+    </ToggleButtonGroup>
+  );
 };
