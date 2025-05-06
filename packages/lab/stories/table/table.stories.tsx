@@ -26,16 +26,16 @@ const Template: StoryFn = ({ ...args }) => {
         <THead>
           <TR>
             {Array.from({ length: NUM_COLS }, (_, i) => {
-              return <TH>Column {i}</TH>;
+              return <TH key={`col-${i}`}>Column {i}</TH>;
             })}
           </TR>
         </THead>
         <TBody>
           {Array.from({ length: NUM_ROWS }, (_, i) => {
             return (
-              <TR>
+              <TR key={`tr-${i}`}>
                 {Array.from({ length: NUM_COLS }, (_, i) => {
-                  return <TD>Row {i}</TD>;
+                  return <TD key={`td-${i}`}>Row {i}</TD>;
                 })}
               </TR>
             );
@@ -44,7 +44,7 @@ const Template: StoryFn = ({ ...args }) => {
         <TFoot>
           <TR>
             {Array.from({ length: NUM_COLS }, (_, i) => {
-              return <TD>Footer {i}</TD>;
+              return <TD key={`footer-${i}`}>Footer {i}</TD>;
             })}
           </TR>
         </TFoot>
@@ -61,6 +61,11 @@ Primary.args = {
 export const Secondary = Template.bind({});
 Secondary.args = {
   variant: "secondary",
+};
+
+export const Zebra = Template.bind({});
+Zebra.args = {
+  variant: "zebra",
 };
 
 export const CustomContent: StoryFn<typeof Text> = () => {
