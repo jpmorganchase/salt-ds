@@ -1,5 +1,5 @@
+import { FormField, FormFieldHelperText, FormFieldLabel } from "@salt-ds/core";
 import type { DateFrameworkType } from "@salt-ds/date-adapters";
-import { type ReactElement, type SyntheticEvent, useCallback } from "react";
 import { AdapterDateFns } from "@salt-ds/date-adapters/date-fns";
 import {
   DateInputRange,
@@ -8,8 +8,8 @@ import {
   LocalizationProvider,
   useLocalization,
 } from "@salt-ds/lab";
-import { FormField, FormFieldHelperText, FormFieldLabel } from "@salt-ds/core";
 import { es as dateFnsEs } from "date-fns/locale";
+import { type ReactElement, type SyntheticEvent, useCallback } from "react";
 
 const Range = (): ReactElement => {
   const { dateAdapter } = useLocalization();

@@ -37,7 +37,7 @@ const {
   RangeWithDisabledDates,
   RangeWithUnselectableDates,
   RangeCustomFormat,
-  RangeWithTimezone
+  RangeWithTimezone,
   // biome-ignore lint/suspicious/noExplicitAny: storybook stories
 } = datePickerStories as any;
 

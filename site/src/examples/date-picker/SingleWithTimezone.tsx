@@ -1,38 +1,44 @@
 import {
-  ReactElement,
-  type SyntheticEvent,
-  useCallback,
-  useEffect,
-  useState
-} from "react";
-import {AdapterMoment} from "@salt-ds/date-adapters/moment";
-import {AdapterDayjs} from "@salt-ds/date-adapters/dayjs";
-import {AdapterDateFns} from "@salt-ds/date-adapters/date-fns";
-import {AdapterLuxon} from "@salt-ds/date-adapters/luxon";
-import {
   Dropdown,
-  DropdownProps,
-  FormField, FormFieldLabel as FormLabel,
-  FormFieldLabel, GridItem, GridLayout, Option,
-  StackLayout
+  type DropdownProps,
+  FormField,
+  FormFieldLabel,
+  FormFieldLabel as FormLabel,
+  GridItem,
+  GridLayout,
+  Option,
+  StackLayout,
 } from "@salt-ds/core";
+import type { DateFrameworkType, Timezone } from "@salt-ds/date-adapters";
+import { AdapterDateFns } from "@salt-ds/date-adapters/date-fns";
+import { AdapterDayjs } from "@salt-ds/date-adapters/dayjs";
+import { AdapterLuxon } from "@salt-ds/date-adapters/luxon";
+import { AdapterMoment } from "@salt-ds/date-adapters/moment";
 import {
   type DateInputSingleDetails,
-  DatePicker, DatePickerHelperText,
-  DatePickerOverlay, DatePickerSingleGridPanel,
+  DatePicker,
+  DatePickerHelperText,
+  DatePickerOverlay,
+  DatePickerSingleGridPanel,
   DatePickerSingleInput,
   DatePickerTrigger,
   LocalizationProvider,
   type SingleDateSelection,
-  useLocalization
+  useLocalization,
 } from "@salt-ds/lab";
-import type {DateFrameworkType, Timezone} from "@salt-ds/date-adapters";
-import type {DateTime} from "luxon";
-import type {Moment} from "moment/moment";
+import type { DateTime } from "luxon";
+import type { Moment } from "moment/moment";
+import {
+  type ReactElement,
+  type SyntheticEvent,
+  useCallback,
+  useEffect,
+  useState,
+} from "react";
 
 const Single = ({
-                  selectedTimezone,
-                }: {
+  selectedTimezone,
+}: {
   selectedTimezone: Timezone;
 }): ReactElement => {
   const { dateAdapter } = useLocalization();
@@ -203,14 +209,14 @@ export const SingleWithTimezone = (): ReactElement => {
   const timezoneOptions =
     dateAdapterName !== "date-fns"
       ? [
-        "default",
-        "system",
-        "UTC",
-        "America/New_York",
-        "Europe/London",
-        "Asia/Shanghai",
-        "Asia/Kolkata",
-      ]
+          "default",
+          "system",
+          "UTC",
+          "America/New_York",
+          "Europe/London",
+          "Asia/Shanghai",
+          "Asia/Kolkata",
+        ]
       : ["default"];
 
   const [selectedTimezone, setSelectedTimezone] = useState<string>(

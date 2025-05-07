@@ -1,17 +1,4 @@
 import {
-  DateInputSingle,
-  type DateInputSingleProps,
-  LocalizationProvider,
-  useLocalization,
-} from "@salt-ds/lab";
-import type {DateFrameworkType, Timezone} from "@salt-ds/date-adapters";
-import {
-  type ReactElement,
-  type SyntheticEvent,
-  useEffect,
-  useState,
-} from "react";
-import {
   Dropdown,
   type DropdownProps,
   FormField,
@@ -22,6 +9,19 @@ import {
   Option,
   StackLayout,
 } from "@salt-ds/core";
+import type { DateFrameworkType, Timezone } from "@salt-ds/date-adapters";
+import {
+  DateInputSingle,
+  type DateInputSingleProps,
+  LocalizationProvider,
+  useLocalization,
+} from "@salt-ds/lab";
+import {
+  type ReactElement,
+  type SyntheticEvent,
+  useEffect,
+  useState,
+} from "react";
 
 import { AdapterDateFns } from "@salt-ds/date-adapters/date-fns";
 import { AdapterDayjs } from "@salt-ds/date-adapters/dayjs";
@@ -37,8 +37,8 @@ const dateAdapterMap: Record<string, any> = {
 };
 
 const Single = ({
-                 selectedTimezone,
-               }: {
+  selectedTimezone,
+}: {
   selectedTimezone: Timezone;
 }): ReactElement => {
   const { dateAdapter } = useLocalization<DateFrameworkType>();
@@ -126,7 +126,6 @@ const Single = ({
       setDateString(formattedDate.formatted);
     };
 
-
   return (
     <GridLayout gap={1}>
       <GridItem colSpan={12}>
@@ -190,14 +189,14 @@ export const SingleWithTimezone = (): ReactElement => {
   const timezoneOptions =
     dateAdapterName !== "date-fns"
       ? [
-        "default",
-        "system",
-        "UTC",
-        "America/New_York",
-        "Europe/London",
-        "Asia/Shanghai",
-        "Asia/Kolkata",
-      ]
+          "default",
+          "system",
+          "UTC",
+          "America/New_York",
+          "Europe/London",
+          "Asia/Shanghai",
+          "Asia/Kolkata",
+        ]
       : ["default"];
 
   const [selectedTimezone, setSelectedTimezone] = useState<string>(
