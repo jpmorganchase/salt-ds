@@ -15,7 +15,7 @@ export function Horizontal() {
           <Panel id="center" className={styles.center}>
             <Text>Center</Text>
           </Panel>
-          <PanelResizeHandle className="resize-handle-border-leftt" />
+          <PanelResizeHandle className="resize-handle-border-left" />
           <Panel id="right" className={styles.center}>
             <Text>Right</Text>
           </Panel>
