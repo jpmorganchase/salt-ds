@@ -4,7 +4,6 @@ import {
   CalendarGrid,
   CalendarNavigation,
   type CalendarProps,
-  CalendarWeekHeader,
   type UseCalendarSelectionRangeProps,
   useLocalization,
 } from "@salt-ds/lab";
@@ -92,7 +91,6 @@ export const TwinCalendars = (): ReactElement => {
         onSelectionChange={handleSelectionChange}
       >
         <CalendarNavigation />
-        <CalendarWeekHeader />
         <CalendarGrid />
       </Calendar>
       <Calendar
@@ -106,7 +104,6 @@ export const TwinCalendars = (): ReactElement => {
         onSelectionChange={handleSelectionChange}
       >
         <CalendarNavigation />
-        <CalendarWeekHeader />
         <CalendarGrid />
       </Calendar>
     </div>

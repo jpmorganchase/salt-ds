@@ -3,7 +3,6 @@ import {
   Calendar,
   CalendarGrid,
   CalendarNavigation,
-  CalendarWeekHeader,
   useLocalization,
 } from "@salt-ds/lab";
 import type { ReactElement } from "react";
@@ -21,7 +20,6 @@ export const UnselectableDates = (): ReactElement => {
   return (
     <Calendar selectionVariant="single" isDayUnselectable={isDayUnselectable}>
       <CalendarNavigation />
-      <CalendarWeekHeader />
       <CalendarGrid />
     </Calendar>
   );

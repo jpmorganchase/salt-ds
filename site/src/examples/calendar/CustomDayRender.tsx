@@ -3,20 +3,18 @@ import {
   Calendar,
   CalendarGrid,
   CalendarNavigation,
-  CalendarWeekHeader,
   useLocalization,
 } from "@salt-ds/lab";
 import type { ReactElement } from "react";
 
-function renderDayContents(day: DateFrameworkType) {
+function renderDayContents(date: DateFrameworkType) {
   const { dateAdapter } = useLocalization<DateFrameworkType>();
-  return <>{dateAdapter.format(day, "DD")}</>;
+  return <>{dateAdapter.format(date, "DD")}</>;
 }
 
 export const CustomDayRender = (): ReactElement => (
   <Calendar selectionVariant="single" className="CustomDayRender">
     <CalendarNavigation />
-    <CalendarWeekHeader />
-    <CalendarGrid getCalendarMonthProps={(date) => ({ renderDayContents })} />
+    <CalendarGrid getCalendarMonthProps={(_date: DateFrameworkType) => ({ renderDayContents })} />
   </Calendar>
 );

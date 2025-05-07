@@ -4,7 +4,6 @@ import {
   Calendar,
   CalendarGrid,
   CalendarNavigation,
-  CalendarWeekHeader,
   type UseCalendarSelectionSingleProps,
   useLocalization,
 } from "@salt-ds/lab";
@@ -28,7 +27,6 @@ export const TodayButton = (): ReactElement => {
     >
       <StackLayout gap={0}>
         <CalendarNavigation />
-        <CalendarWeekHeader />
         <CalendarGrid />
         <Divider />
         <Button
