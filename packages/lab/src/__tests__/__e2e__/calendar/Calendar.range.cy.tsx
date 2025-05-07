@@ -13,6 +13,14 @@ import {
   CalendarWeekHeader,
 } from "@salt-ds/lab";
 
+import * as dateInputStories from "@stories/calendar/calendar.stories";
+
+const {
+  // Storybook wraps components in it's own LocalizationProvider, so do not compose Stories
+  RangeWithTimezone,
+  // biome-ignore lint/suspicious/noExplicitAny: storybook stories
+} = dateInputStories as any;
+
 // Initialize adapters
 const adapterDateFns = new AdapterDateFns();
 const adapterDayjs = new AdapterDayjs();
@@ -353,6 +361,92 @@ describe("GIVEN a Calendar with range selection", () => {
         })
           .should("have.attr", "aria-pressed", "true")
           .and("have.class", "saltCalendarDay-selectedEnd");
+      });
+
+      describe("timezone", () => {
+        [
+          {
+            timezone: "default",
+            expectedResult: {
+              startDate: "2025-01-05T00:00:00.000Z",
+              endDate: "2025-01-06T00:00:00.000Z",
+            },
+          },
+          {
+            timezone: "system",
+            expectedResult: {
+              startDate: "2025-01-05T00:00:00.000Z",
+              endDate: "2025-01-06T00:00:00.000Z",
+            },
+          },
+          {
+            timezone: "UTC",
+            expectedResult: {
+              startDate: "2025-01-05T00:00:00.000Z",
+              endDate: "2025-01-06T00:00:00.000Z",
+            },
+          },
+          {
+            timezone: "America/New_York",
+            expectedResult: {
+              startDate: "2025-01-05T05:00:00.000Z",
+              endDate: "2025-01-06T05:00:00.000Z",
+            },
+          },
+          {
+            timezone: "Europe/London",
+            expectedResult: {
+              startDate: "2025-01-05T00:00:00.000Z",
+              endDate: "2025-01-06T00:00:00.000Z",
+            },
+          },
+          {
+            timezone: "Asia/Shanghai",
+            expectedResult: {
+              startDate: "2025-01-04T16:00:00.000Z",
+              endDate: "2025-01-05T16:00:00.000Z",
+            },
+          },
+          {
+            timezone: "Asia/Kolkata",
+            expectedResult: {
+              startDate: "2025-01-04T18:30:00.000Z",
+              endDate: "2025-01-05T18:30:00.000Z",
+            },
+          },
+        ].forEach(({ timezone, expectedResult }) => {
+          if (adapter.lib === "date-fns" && timezone !== "default") {
+            return;
+          }
+          it(`SHOULD render date in the ${timezone} timezone`, () => {
+            cy.mount(
+              <RangeWithTimezone
+                defaultVisibleMonth={
+                  adapter.parse("01 Jan 2025", "DD MMM YYYY").date
+                }
+              />,
+            );
+            // Simulate selecting timezone
+            cy.findByLabelText("timezone dropdown").realClick();
+            cy.findByRole("option", { name: timezone }).realHover().realClick();
+            // Simulate clicking on a date button to select it
+            cy.findByRole("button", {
+              name: "05 January 2025",
+            }).realClick();
+            cy.findByRole("button", {
+              name: "06 January 2025",
+            }).realClick();
+            // Verify the ISO date
+            cy.findByTestId("iso-start-date-label").should(
+              "have.text",
+              expectedResult.startDate,
+            );
+            cy.findByTestId("iso-end-date-label").should(
+              "have.text",
+              expectedResult.endDate,
+            );
+          });
+        });
       });
     });
   });

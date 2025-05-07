@@ -38,6 +38,7 @@ const {
   SingleWithTodayButton,
   SingleWithUnselectableDates,
   SingleCustomFormat,
+  SingleWithTimezone
   // biome-ignore lint/suspicious/noExplicitAny: storybook stories
 } = datePickerStories as any;
 
@@ -634,6 +635,48 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
         cy.document()
           .find("input")
           .should("have.value", adapter.format(futureDate, "DD MMM YYYY"));
+      });
+
+      describe("timezone", () => {
+        [
+          { timezone: "default", expectedResult: "2025-01-05T00:00:00.000Z" },
+          { timezone: "system", expectedResult: "2025-01-05T00:00:00.000Z" },
+          { timezone: "UTC", expectedResult: "2025-01-05T00:00:00.000Z" },
+          {
+            timezone: "America/New_York",
+            expectedResult: "2025-01-05T05:00:00.000Z",
+          },
+          {
+            timezone: "Europe/London",
+            expectedResult: "2025-01-05T00:00:00.000Z",
+          },
+          {
+            timezone: "Asia/Shanghai",
+            expectedResult: "2025-01-04T16:00:00.000Z",
+          },
+          {
+            timezone: "Asia/Kolkata",
+            expectedResult: "2025-01-04T18:30:00.000Z",
+          },
+        ].forEach(({ timezone, expectedResult }) => {
+          if (adapter.lib === "date-fns" && timezone !== "default") {
+            return;
+          }
+          it(`SHOULD render date in the ${timezone} timezone`, () => {
+            cy.mount(<SingleWithTimezone />);
+            // Simulate selecting timezone
+            cy.findByLabelText("timezone dropdown").realClick();
+            cy.findByRole("option", { name: timezone }).realHover().realClick();
+            // Simulate selection of date
+            cy.findByRole("textbox").click().clear().type(initialDateValue);
+            cy.realPress("Tab");
+            // Verify the ISO date
+            cy.findByTestId("iso-date-label").should(
+              "have.text",
+              expectedResult,
+            );
+          });
+        });
       });
 
       describe("uncontrolled component", () => {

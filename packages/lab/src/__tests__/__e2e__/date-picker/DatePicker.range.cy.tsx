@@ -37,6 +37,7 @@ const {
   RangeWithDisabledDates,
   RangeWithUnselectableDates,
   RangeCustomFormat,
+  RangeWithTimezone
   // biome-ignore lint/suspicious/noExplicitAny: storybook stories
 } = datePickerStories as any;
 
@@ -704,6 +705,90 @@ describe("GIVEN a DatePicker where selectionVariant is range", () => {
           offsetStartDateValue,
         );
         cy.findByLabelText("End date").should("have.value", offsetEndDateValue);
+      });
+
+      describe("timezone", () => {
+        [
+          {
+            timezone: "default",
+            expectedResult: {
+              startDate: "2025-01-05T00:00:00.000Z",
+              endDate: "2025-01-06T00:00:00.000Z",
+            },
+          },
+          {
+            timezone: "system",
+            expectedResult: {
+              startDate: "2025-01-05T00:00:00.000Z",
+              endDate: "2025-01-06T00:00:00.000Z",
+            },
+          },
+          {
+            timezone: "UTC",
+            expectedResult: {
+              startDate: "2025-01-05T00:00:00.000Z",
+              endDate: "2025-01-06T00:00:00.000Z",
+            },
+          },
+          {
+            timezone: "America/New_York",
+            expectedResult: {
+              startDate: "2025-01-05T05:00:00.000Z",
+              endDate: "2025-01-06T05:00:00.000Z",
+            },
+          },
+          {
+            timezone: "Europe/London",
+            expectedResult: {
+              startDate: "2025-01-05T00:00:00.000Z",
+              endDate: "2025-01-06T00:00:00.000Z",
+            },
+          },
+          {
+            timezone: "Asia/Shanghai",
+            expectedResult: {
+              startDate: "2025-01-04T16:00:00.000Z",
+              endDate: "2025-01-05T16:00:00.000Z",
+            },
+          },
+          {
+            timezone: "Asia/Kolkata",
+            expectedResult: {
+              startDate: "2025-01-04T18:30:00.000Z",
+              endDate: "2025-01-05T18:30:00.000Z",
+            },
+          },
+        ].forEach(({ timezone, expectedResult }) => {
+          if (adapter.lib === "date-fns" && timezone !== "default") {
+            return;
+          }
+          it(`SHOULD render date in the ${timezone} timezone`, () => {
+            cy.mount(<RangeWithTimezone />);
+            // Simulate selecting timezone
+            cy.findByLabelText("timezone dropdown").realClick();
+            cy.findByRole("option", { name: timezone }).realHover().realClick();
+            // Simulate selection of date range
+            cy.findByLabelText("Start date")
+              .click()
+              .clear()
+              .type(initialRangeDateValue.startDate);
+            cy.realPress("Tab");
+            cy.findByLabelText("End date")
+              .click()
+              .clear()
+              .type(initialRangeDateValue.endDate);
+            cy.realPress("Tab");
+            // Verify the ISO date range
+            cy.findByTestId("iso-start-date-label").should(
+              "have.text",
+              expectedResult.startDate,
+            );
+            cy.findByTestId("iso-end-date-label").should(
+              "have.text",
+              expectedResult.endDate,
+            );
+          });
+        });
       });
 
       describe("uncontrolled component", () => {

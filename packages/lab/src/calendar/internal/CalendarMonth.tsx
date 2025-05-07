@@ -58,9 +58,10 @@ export const CalendarMonth = forwardRef<
   });
 
   const {
+    state: { timezone = "default" },
     helpers: { setHoveredDate },
   } = useCalendarContext<TDate>();
-  const days = generateVisibleDays<TDate>(dateAdapter, date);
+  const days = generateVisibleDays<TDate>(dateAdapter, date, timezone);
   const handleMouseLeave = (event: SyntheticEvent) => {
     setHoveredDate(event, null);
     onMouseLeave?.(event as MouseEvent<HTMLDivElement>);
