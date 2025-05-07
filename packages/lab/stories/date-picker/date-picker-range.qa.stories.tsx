@@ -3,8 +3,11 @@ import {
   DatePickerOverlay,
   DatePickerRangeInput,
   DatePickerRangePanel,
+  DatePickerRangeGridPanel,
   DatePickerTrigger,
   useLocalization,
+  type DatePickerRangeProps,
+  type DatePickerRangeGridPanelProps,
 } from "@salt-ds/lab";
 import type { StoryFn } from "@storybook/react";
 import { QAContainer, type QAContainerProps } from "docs/components";
@@ -32,7 +35,12 @@ const QAContainerParameters = {
   },
 };
 
-const renderQAContainer = () => {
+const renderQAContainer = ({
+  numberOfVisibleMonths,
+  ...props
+}: Omit<DatePickerRangeProps<unknown>, "selectionVariant"> & {
+  numberOfVisibleMonths?: DatePickerRangeGridPanelProps<unknown>["numberOfVisibleMonths"];
+}) => {
   const { dateAdapter } = useLocalization();
   const startDate = dateAdapter.today();
   const endDate = dateAdapter.add(startDate, { months: 4, weeks: 1 });
@@ -70,12 +78,20 @@ const renderQAContainer = () => {
         isDayUnselectable={isSaturday}
         selectionVariant="range"
         open
+        {...props}
       >
         <DatePickerTrigger>
           <DatePickerRangeInput />
         </DatePickerTrigger>
         <DatePickerOverlay>
-          <DatePickerRangePanel />
+          {numberOfVisibleMonths ? (
+            <DatePickerRangeGridPanel
+              numberOfVisibleMonths={numberOfVisibleMonths}
+              columns={numberOfVisibleMonths}
+            />
+          ) : (
+            <DatePickerRangePanel />
+          )}
         </DatePickerOverlay>
       </DatePicker>
     </QAContainer>
@@ -83,28 +99,28 @@ const renderQAContainer = () => {
 };
 
 export const RangeWithMoment: StoryFn<QAContainerProps> = () =>
-  renderQAContainer();
+  renderQAContainer({});
 RangeWithMoment.parameters = {
   ...QAContainerParameters,
   dateLocale: "en-US",
   dateAdapter: "moment",
 };
 export const RangeWithDateFns: StoryFn<QAContainerProps> = () =>
-  renderQAContainer();
+  renderQAContainer({});
 RangeWithDateFns.parameters = {
   ...QAContainerParameters,
   dateLocale: dateFnsEnUs,
   dateAdapter: "date-fns",
 };
 export const RangeWithDayjs: StoryFn<QAContainerProps> = () =>
-  renderQAContainer();
+  renderQAContainer({});
 RangeWithDayjs.parameters = {
   ...QAContainerParameters,
   dateLocale: "en",
   dateAdapter: "dayjs",
 };
 export const RangeWithLuxon: StoryFn<QAContainerProps> = () =>
-  renderQAContainer();
+  renderQAContainer({});
 RangeWithLuxon.parameters = {
   ...QAContainerParameters,
   dateLocale: "en-US",
@@ -112,28 +128,28 @@ RangeWithLuxon.parameters = {
 };
 
 export const RangeWithLocaleAndMoment: StoryFn<QAContainerProps> = () =>
-  renderQAContainer();
+  renderQAContainer({});
 RangeWithLocaleAndMoment.parameters = {
   ...QAContainerParameters,
   dateLocale: "es-ES",
   dateAdapter: "moment",
 };
 export const RangeWithLocaleAndDateFns: StoryFn<QAContainerProps> = () =>
-  renderQAContainer();
+  renderQAContainer({});
 RangeWithLocaleAndDateFns.parameters = {
   ...QAContainerParameters,
   dateLocale: dateFnsEs,
   dateAdapter: "date-fns",
 };
 export const RangeWithLocaleAndDayjs: StoryFn<QAContainerProps> = () =>
-  renderQAContainer();
+  renderQAContainer({});
 RangeWithLocaleAndDayjs.parameters = {
   ...QAContainerParameters,
   dateLocale: "es",
   dateAdapter: "dayjs",
 };
 export const RangeWithLocaleAndLuxon: StoryFn<QAContainerProps> = () =>
-  renderQAContainer();
+  renderQAContainer({});
 RangeWithLocaleAndLuxon.parameters = {
   ...QAContainerParameters,
   dateLocale: "es-ES",
