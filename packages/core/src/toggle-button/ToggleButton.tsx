@@ -16,7 +16,7 @@ import toggleButtonCss from "./ToggleButton.css";
 
 export interface ToggleButtonProps extends ComponentPropsWithoutRef<"button"> {
   /**
-   * The appearance of the toggle button.
+   * The appearance of the toggle button when `selected` is true.
    * @default solid
    */
   appearance?: Extract<ButtonAppearance, "bordered" | "solid">;
