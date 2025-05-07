@@ -465,7 +465,7 @@ describe("GIVEN a Calendar", () => {
           const visibleMonth = adapter.parse("01/08/2024", "DD/MM/YYYY").date;
           cy.mount(<WithLocale defaultVisibleMonth={visibleMonth} />);
           // Verify that the month dropdown is rendered in the specified locale
-          cy.findByRole("combobox", { name: "Month Dropdown" }).should(
+          cy.findByLabelText("Month Dropdown").should(
             "have.text",
             "ago",
           );

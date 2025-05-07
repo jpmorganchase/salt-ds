@@ -163,22 +163,20 @@ export const Calendar = forwardRef<
     let timezone: Timezone = "default";
     if (timezoneProp) {
       timezone = timezoneProp;
-    } else {
-      if (selectionVariant === "range") {
-        const defaultRangeTimezoneDate =
-          selectedDate?.startDate ??
-          selectedDate?.endDate ??
-          defaultSelectedDate?.startDate ??
-          defaultSelectedDate?.endDate;
-        timezone = defaultRangeTimezoneDate
-          ? dateAdapter.getTimezone(defaultRangeTimezoneDate)
-          : "default";
-      } else if (selectionVariant === "single") {
-        const defaultSingleTimezoneDate = selectedDate ?? defaultSelectedDate;
-        timezone = defaultSingleTimezoneDate
-          ? dateAdapter.getTimezone(defaultSingleTimezoneDate)
-          : "default";
-      }
+    } else if (selectionVariant === "range") {
+      const defaultRangeTimezoneDate =
+        selectedDate?.startDate ??
+        selectedDate?.endDate ??
+        defaultSelectedDate?.startDate ??
+        defaultSelectedDate?.endDate;
+      timezone = defaultRangeTimezoneDate
+        ? dateAdapter.getTimezone(defaultRangeTimezoneDate)
+        : "default";
+    } else if (selectionVariant === "single") {
+      const defaultSingleTimezoneDate = selectedDate ?? defaultSelectedDate;
+      timezone = defaultSingleTimezoneDate
+        ? dateAdapter.getTimezone(defaultSingleTimezoneDate)
+        : "default";
     }
 
     let startDateOffset: CalendarOffsetProps<TDate>["startDateOffset"];

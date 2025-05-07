@@ -13,6 +13,14 @@ import {
   CalendarWeekHeader,
 } from "@salt-ds/lab";
 
+import * as dateInputStories from "@stories/calendar/calendar.stories";
+
+const {
+  // Storybook wraps components in it's own LocalizationProvider, so do not compose Stories
+  SingleWithTimezone,
+  // biome-ignore lint/suspicious/noExplicitAny: storybook stories
+} = dateInputStories as any;
+
 // Initialize adapters
 const adapterDateFns = new AdapterDateFns();
 const adapterDayjs = new AdapterDayjs();
@@ -314,6 +322,50 @@ describe("GIVEN a Calendar with single selection", () => {
         cy.findByRole("button", {
           name: adapter.format(testDate, "DD MMMM YYYY"),
         }).should("have.attr", "aria-pressed", "true");
+      });
+
+      describe("timezone", () => {
+        [
+          { timezone: "default", expectedResult: "2025-01-05T00:00:00.000Z" },
+          { timezone: "system", expectedResult: "2025-01-05T00:00:00.000Z" },
+          { timezone: "UTC", expectedResult: "2025-01-05T00:00:00.000Z" },
+          {
+            timezone: "America/New_York",
+            expectedResult: "2025-01-05T05:00:00.000Z",
+          },
+          {
+            timezone: "Europe/London",
+            expectedResult: "2025-01-05T00:00:00.000Z",
+          },
+          {
+            timezone: "Asia/Shanghai",
+            expectedResult: "2025-01-04T16:00:00.000Z",
+          },
+          {
+            timezone: "Asia/Kolkata",
+            expectedResult: "2025-01-04T18:30:00.000Z",
+          },
+        ].forEach(({ timezone, expectedResult }) => {
+          if (adapter.lib === "date-fns" && timezone !== "default") {
+            return;
+          }
+          it(`SHOULD render date in the ${timezone} timezone`, () => {
+            cy.mount(<SingleWithTimezone defaultVisibleMonth={adapter.parse("01 Jan 2025", "DD MMM YYYY").date}/>);
+            // Simulate selecting timezone
+            cy.findByLabelText("timezone dropdown").realClick();
+            cy.findByRole("option", { name: timezone }).realHover().realClick();
+            cy.findByLabelText("timezone dropdown").should("have.text", timezone);
+            // Simulate clicking on a date button to select it
+            cy.findByRole("button", {
+              name: "05 January 2025",
+            }).realClick();
+            // Verify the ISO date
+            cy.findByTestId("iso-date-label").should(
+              "have.text",
+              expectedResult,
+            );
+          });
+        });
       });
     });
   });
