@@ -24,8 +24,26 @@ To import the Salt React Resizable Panels theme, use:
 import "@salt-ds/react-resizable-panels-theme/index.css";
 ```
 
-The Components from React Resizable Panels will now inherit the Salt theme
+Then wrap your React Resizable Panel Group with the `react-resizable-panels-theme-salt` class name:
 
-For panel resize handles, add the class name `.resize-handle-border-<border>` to the `PanelResizeHandle` component, to add borders to the resize handlers. Add the `.resize-handle-salt-variant-<variant>` class to set the background color to one of the salt container background colors.
+```js
+<div className="react-resizable-panels-theme-salt">
+  <PanelGroup direction="horizontal">
+    <Panel id="left">
+      <Text>Left</Text>
+    </Panel>
+    <PanelResizeHandle />
+    <Panel id="middle">
+      <Text>Center</Text>
+    </Panel>
+    <PanelResizeHandle />
+    <Panel id="right">
+      <Text>Right</Text>
+    </Panel>
+  </PanelGroup>
+</div>
+```
 
-For the panels, add the class name `.resizable-panel-salt-variant-<variant>` to the `Panel` component to set the background color of the panel to one of the salt container background colors.
+For panel resize handles, add the class name `resize-handle-border-<border>` to the `PanelResizeHandle` component, to add borders to the resize handlers. Add the `resize-handle-salt-variant-<variant>` class to set the background color to one of the salt container background colors.
+
+For the panels, add the class name `resizable-panel-salt-variant-<variant>` to the `Panel` component to set the background color of the panel to one of the salt container background colors.
