@@ -2,6 +2,7 @@ import {
   Banner,
   BannerContent,
   SaltProvider,
+  SaltProviderNext,
   StackLayout,
   useTheme,
 } from "@salt-ds/core";
@@ -27,7 +28,6 @@ const HDCompactGrid = () => {
   // We've created a local custom hook to set the rows and column sizes.
   // refer to https://github.com/jpmorganchase/salt-ds/blob/main/site/src/examples/ag-grid-theme/useAgGridHelpers.ts
   const { containerProps, agGridProps } = useAgGridHelpers(true);
-  const className = `ag-theme-salt-high-compact-${mode}`;
 
   return (
     <StackLayout style={{ width: "100%" }}>
@@ -36,7 +36,7 @@ const HDCompactGrid = () => {
           Compact only works in high density, which is enforced here.
         </BannerContent>
       </Banner>
-      <div {...containerProps} className={className}>
+      <div {...containerProps}>
         <AgGridReact
           columnDefs={defaultColumns}
           rowData={defaultData}
@@ -50,10 +50,12 @@ const HDCompactGrid = () => {
   );
 };
 export const HDCompact = () => {
+  const { themeNext } = useTheme();
+  const Provider = themeNext ? SaltProviderNext : SaltProvider;
   // Enforce a high density
   return (
-    <SaltProvider density="high" applyClassesTo="scope">
+    <Provider density="high" applyClassesTo="scope">
       <HDCompactGrid />
-    </SaltProvider>
+    </Provider>
   );
 };
