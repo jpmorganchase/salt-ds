@@ -1,6 +1,7 @@
 :root {
   box-sizing: border-box;
 
+  --site-app-header-height: calc(var(--salt-spacing-200) + var(--salt-size-base));
   --site-content-max-width: 100ch;
 }
 

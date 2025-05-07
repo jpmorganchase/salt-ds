@@ -45,7 +45,12 @@ function LinkWithLogo({ href, label }: LinkData) {
 
   return (
     <div className={styles.link}>
-      <Image src={`/img/${logo}_logo.svg`} alt={""} aria-hidden />
+      <Image
+        className={styles.linkImage}
+        src={`/img/${logo}_logo.svg`}
+        alt={""}
+        aria-hidden
+      />
       <Link
         render={<LinkBase href={href} />}
         href={href}
