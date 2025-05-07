@@ -5,7 +5,6 @@ import {
   type ReactNode,
   type SetStateAction,
   useEffect,
-  useState,
 } from "react";
 import { useIsMobileView } from "./utils/useIsMobileView";
 
@@ -40,19 +39,16 @@ export function ThemeProvider({
 }: ThemeProviderProps) {
   const colorMode = useColorMode();
 
-  const [density, setDensity] = useState<Density>("low");
-
   return (
     <SaltProviderNext
       mode={colorMode}
       theme={themeClassName}
-      density={density}
+      density="touch"
       accent="teal"
       corner="rounded"
       actionFont="Amplitude"
       headingFont="Amplitude"
     >
-      <DensitySetter setDensity={setDensity} />
       {children}
       <div data-mosaic-id="portal-root" />
     </SaltProviderNext>
