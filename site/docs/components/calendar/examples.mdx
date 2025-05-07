@@ -92,6 +92,12 @@ When the `locale` prop is provided, the `Calendar` component uses it to define t
 
 <LivePreview componentName="calendar" exampleName="WithLocale" />
 
+## Timezone
+
+Use the `timezone` prop to return the selected date in a specific timezone. This is particularly useful for applications that need to handle date and time data across different time zones, ensuring that users can accurately select and view dates based on their local time.
+
+<LivePreview componentName="calendar" exampleName="WithTimezone" />
+
 ## With today button
 
 When the `children` prop is used, the `Calendar` component allows consumers to customize the calendar header, typically by composing it with the `CalendarNavigation` component for forward/back month controls and month/year dropdowns, but it can also be used to add additional controls such as a 'Today' button.

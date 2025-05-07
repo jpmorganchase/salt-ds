@@ -10,25 +10,25 @@ data:
 
 ## Single date
 
-An uncontrolled `DatePicker`, composed of a `DateInput` and a `Calendar` component, allows users to select a single date when the `selectionVariant` prop is set to "single", without requiring explicit state management in the parent component, making it ideal for simple date selection tasks.
+An uncontrolled `DatePicker`, composed of a [DateInputSingle](../DateInput) and a [Calendar](../Calendar) component, allows users to select a single date when the `selectionVariant` prop is set to "single", without requiring explicit state management in the parent component, making it ideal for simple date selection tasks.
 
 <LivePreview componentName="date-picker" exampleName="Single" />
 
 ## Date range
 
-An uncontrolled `DatePicker`, composed of a `DateInput` and a `Calendar` component, allows users to select a date range when the `selectionVariant` prop is set to "range", without requiring explicit state management in the parent component, making it ideal for selecting start and end dates for various applications.
+An uncontrolled `DatePicker`, composed of a [DateInputRange](../DateInput) and a [Calendar](../Calendar) component, allows users to select a date range when the `selectionVariant` prop is set to "range", without requiring explicit state management in the parent component, making it ideal for selecting start and end dates for various applications.
 
 <LivePreview componentName="date-picker" exampleName="Range" />
 
 ## Controlled single date
 
-A controlled `DatePicker`, composed of a `DateInput` and a `Calendar` component, allows users to select a single date when the `selectionVariant` prop is set to "single", with the parent component explicitly managing the date state, providing greater control over the date selection process.
+A controlled `DatePicker`, composed of a [DateInputSingle](../DateInput) and a [Calendar](../Calendar) component, allows users to select a single date when the `selectionVariant` prop is set to "single", with the parent component explicitly managing the date state, providing greater control over the date selection process.
 
 <LivePreview componentName="date-picker" exampleName="SingleControlled" />
 
 ## Controlled date range
 
-A controlled `DatePicker`, composed of a `DateInput` and a `Calendar` component, allows users to select a date range when the `selectionVariant` prop is set to "range", with the parent component explicitly managing the start and end date states, providing greater control over the date range selection process.
+A controlled `DatePicker`, composed of a [DateInputRange](../DateInput) and a [Calendar](../Calendar) component, allows users to select a date range when the `selectionVariant` prop is set to "range", with the parent component explicitly managing the start and end date states, providing greater control over the date range selection process.
 
 <LivePreview componentName="date-picker" exampleName="RangeControlled" />
 
@@ -187,11 +187,23 @@ When the `locale` prop is provided, the `DatePicker` component uses it to define
 
 <LivePreview componentName="date-picker" exampleName="SingleWithLocaleEnUS" />
 
+## Single with timezone
+
+Use the `timezone` prop to display the selected date in a specific timezone. This is particularly useful for applications that need to handle date and time data across different time zones, ensuring that users can accurately select and view dates based on their local time.
+
+<LivePreview componentName="date-picker" exampleName="SingleWithTimezone" />
+
 ## Range with locale
 
 When the `locale` prop is provided, the `DatePicker` component uses it to define the locale, ensuring that date formats, month names, and other locale-specific elements are displayed according to the specified locale.
 
 <LivePreview componentName="date-picker" exampleName="RangeWithLocaleEsES" />
+
+## Range with timezone
+
+Use the `timezone` prop to display the selected date range in a specific timezone. This is particularly useful for applications that need to handle date and time data across different time zones, ensuring that users can accurately select and view date ranges based on their local time.
+
+<LivePreview componentName="date-picker" exampleName="RangeWithTimezone" />
 
 ## Bordered single
 

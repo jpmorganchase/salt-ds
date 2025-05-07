@@ -27,3 +27,13 @@ min/max date is provided by the component.
 In this example, date selection is limited to 3 months.
 
 <LivePreview componentName="localization-provider" exampleName="MinMax" />
+
+## Locales
+
+The `LocalizationProvider` defines the locale used by Salt's date based controls such as [Calendar](../Calendar), [DateInput](../DateInput) and [DatePicker](../DatePicker).
+
+Configuration of locales is date framework specific and may require you to import specific locales from the date library you are using.
+
+By default, Salt defaults to the "enUS" locale (or equivalent).
+
+<LivePreview componentName="calendar" exampleName="WithLocale" />

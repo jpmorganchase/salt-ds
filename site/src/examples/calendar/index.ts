@@ -13,3 +13,4 @@ export * from "./MinMaxDate";
 export * from "./TodayButton";
 export * from "./TwinCalendars";
 export * from "./WithLocale";
+export * from "./WithTimezone";
