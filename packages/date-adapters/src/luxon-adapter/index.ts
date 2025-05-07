@@ -15,12 +15,6 @@ declare module "@salt-ds/date-adapters" {
   }
 }
 
-const dowFormatOptions: { [key: string]: Intl.DateTimeFormatOptions } = {
-  long: { weekday: "long" },
-  short: { weekday: "short" },
-  narrow: { weekday: "narrow" },
-};
-
 const defaultFormatMap: { [key: string]: string } = {
   // Year
   YYYY: "yyyy",
