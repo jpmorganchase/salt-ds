@@ -480,12 +480,12 @@ export const SingleWithTimezone: StoryFn<typeof DateInputSingle> = (args) => {
         return { iso, locale, formatted };
       };
 
-      const jsDate = date;
-      dateAdapter.lib === "luxon"
-        ? date.toJSDate()
-        : dateAdapter.lib === "moment"
-          ? date.toDate()
-          : date;
+      const jsDate =
+        dateAdapter.lib === "luxon"
+          ? date.toJSDate()
+          : dateAdapter.lib === "moment"
+            ? date.toDate()
+            : date;
       const formattedDate = formatDate(
         jsDate,
         isDateUnset || (!isDateUnset && !!hasError),
@@ -533,27 +533,35 @@ export const SingleWithTimezone: StoryFn<typeof DateInputSingle> = (args) => {
         </FormField>
       </GridItem>
       <GridItem colSpan={12}>
-        <FormField data-test-id={"timezone"}>
+        <FormField>
           <FormFieldLabel>Current timezone</FormFieldLabel>
-          {currentTimezone?.length ? currentTimezone : "-"}
+          <span data-testid={"timezone"}>
+            {currentTimezone?.length ? currentTimezone : "-"}
+          </span>
         </FormField>
       </GridItem>
       <GridItem colSpan={12}>
-        <FormField data-test-id={"iso-date-label"}>
+        <FormField>
           <FormFieldLabel>ISO 8601 Format</FormFieldLabel>
-          {iso8601String?.length ? iso8601String : "-"}
+          <span data-testid={"iso-date-label"}>
+            {iso8601String?.length ? iso8601String : "-"}
+          </span>
         </FormField>
       </GridItem>
       <GridItem colSpan={12}>
-        <FormField data-test-id={"timezone-date-label"}>
+        <FormField>
           <FormFieldLabel>Date in current timezone</FormFieldLabel>
-          {dateString?.length ? dateString : "-"}
+          <span data-testid={"timezone-date-label"}>
+            {dateString?.length ? dateString : "-"}
+          </span>
         </FormField>
       </GridItem>
       <GridItem colSpan={12}>
-        <FormField data-test-id={"locale-date-label"}>
+        <FormField>
           <FormFieldLabel>Date in current locale</FormFieldLabel>
-          {localeDateString?.length ? localeDateString : "-"}
+          <span data-testid={"locale-date-label"}>
+            {localeDateString?.length ? localeDateString : "-"}
+          </span>
         </FormField>
       </GridItem>
     </GridLayout>
@@ -753,45 +761,59 @@ export const RangeWithTimezone: StoryFn<typeof DateInputRange> = (args) => {
         </FormField>
       </GridItem>
       <GridItem colSpan={12}>
-        <FormField data-test-id={"timezone"}>
+        <FormField>
           <FormFieldLabel>Current timezone</FormFieldLabel>
-          {currentTimezone?.length ? currentTimezone : "-"}
+          <span data-testid={"timezone"}>
+            {currentTimezone?.length ? currentTimezone : "-"}
+          </span>
         </FormField>
       </GridItem>
       <GridItem colSpan={4}>
-        <FormField data-test-id={"iso-start-date-label"}>
+        <FormField>
           <FormFieldLabel>Start date in ISO8601 format</FormFieldLabel>
-          {startIso8601String?.length ? startIso8601String : "-"}
+          <span data-testid={"iso-start-date-label"}>
+            {startIso8601String?.length ? startIso8601String : "-"}
+          </span>
         </FormField>
       </GridItem>
       <GridItem colSpan={8}>
-        <FormField data-test-id={"iso-end-date-label"}>
+        <FormField>
           <FormFieldLabel>End date in ISO8601 format</FormFieldLabel>
-          {endIso8601String?.length ? endIso8601String : "-"}
+          <span data-testid={"iso-end-date-label"}>
+            {endIso8601String?.length ? endIso8601String : "-"}
+          </span>
         </FormField>
       </GridItem>
       <GridItem colSpan={4}>
-        <FormField data-test-id={"timezone-start-date-label"}>
+        <FormField>
           <FormFieldLabel>Start date in current timezone</FormFieldLabel>
-          {startDateString?.length ? startDateString : "-"}
+          <span data-testid={"timezone-start-date-label"}>
+            {startDateString?.length ? startDateString : "-"}
+          </span>
         </FormField>
       </GridItem>
       <GridItem colSpan={8}>
-        <FormField data-test-id={"timezone-end-date-label"}>
+        <FormField>
           <FormFieldLabel>End date in current timezone</FormFieldLabel>
-          {endDateString?.length ? endDateString : "-"}
+          <span data-testid={"timezone-end-date-label"}>
+            {endDateString?.length ? endDateString : "-"}
+          </span>
         </FormField>
       </GridItem>
       <GridItem colSpan={4}>
-        <FormField data-test-id={"locale-start-date-label"}>
+        <FormField>
           <FormFieldLabel>Start date in current locale</FormFieldLabel>
-          {startLocaleDateString?.length ? startLocaleDateString : "-"}
+          <span data-testid={"locale-start-date-label"}>
+            {startLocaleDateString?.length ? startLocaleDateString : "-"}
+          </span>
         </FormField>
       </GridItem>
       <GridItem colSpan={8}>
-        <FormField data-test-id={"locale-end-date-label"}>
+        <FormField>
           <FormFieldLabel>End date in current locale</FormFieldLabel>
-          {endLocaleDateString?.length ? endLocaleDateString : "-"}
+          <span data-testid={"locale-end-date-label"}>
+            {endLocaleDateString?.length ? endLocaleDateString : "-"}
+          </span>
         </FormField>
       </GridItem>
     </GridLayout>
