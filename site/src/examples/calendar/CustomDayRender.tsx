@@ -15,6 +15,10 @@ function renderDayContents(date: DateFrameworkType) {
 export const CustomDayRender = (): ReactElement => (
   <Calendar selectionVariant="single" className="CustomDayRender">
     <CalendarNavigation />
-    <CalendarGrid getCalendarMonthProps={(_date: DateFrameworkType) => ({ renderDayContents })} />
+    <CalendarGrid
+      getCalendarMonthProps={(_date: DateFrameworkType) => ({
+        renderDayContents,
+      })}
+    />
   </Calendar>
 );

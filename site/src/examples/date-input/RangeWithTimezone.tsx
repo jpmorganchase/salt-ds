@@ -1,18 +1,4 @@
 import {
-  DateInputRange,
-  type DateInputRangeProps,
-  type DateRangeSelection,
-  LocalizationProvider,
-  useLocalization,
-} from "@salt-ds/lab";
-import type { DateFrameworkType, Timezone } from "@salt-ds/date-adapters";
-import {
-  type ReactElement,
-  type SyntheticEvent,
-  useEffect,
-  useState,
-} from "react";
-import {
   Dropdown,
   type DropdownProps,
   FormField,
@@ -23,10 +9,24 @@ import {
   Option,
   StackLayout,
 } from "@salt-ds/core";
+import type { DateFrameworkType, Timezone } from "@salt-ds/date-adapters";
 import { AdapterDateFns } from "@salt-ds/date-adapters/date-fns";
 import { AdapterDayjs } from "@salt-ds/date-adapters/dayjs";
 import { AdapterLuxon } from "@salt-ds/date-adapters/luxon";
 import { AdapterMoment } from "@salt-ds/date-adapters/moment";
+import {
+  DateInputRange,
+  type DateInputRangeProps,
+  type DateRangeSelection,
+  LocalizationProvider,
+  useLocalization,
+} from "@salt-ds/lab";
+import {
+  type ReactElement,
+  type SyntheticEvent,
+  useEffect,
+  useState,
+} from "react";
 
 const Range = ({
   selectedTimezone,

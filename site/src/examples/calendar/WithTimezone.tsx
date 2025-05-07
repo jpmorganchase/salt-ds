@@ -1,19 +1,4 @@
 import {
-  Calendar,
-  CalendarGrid,
-  CalendarNavigation,
-  LocalizationProvider,
-  type SingleDateSelection,
-  useLocalization,
-} from "@salt-ds/lab";
-import type { DateFrameworkType, Timezone } from "@salt-ds/date-adapters";
-import {
-  type ReactElement,
-  type SyntheticEvent,
-  useEffect,
-  useState,
-} from "react";
-import {
   Dropdown,
   type DropdownProps,
   FormField,
@@ -23,6 +8,21 @@ import {
   Option,
   StackLayout,
 } from "@salt-ds/core";
+import type { DateFrameworkType, Timezone } from "@salt-ds/date-adapters";
+import {
+  Calendar,
+  CalendarGrid,
+  CalendarNavigation,
+  LocalizationProvider,
+  type SingleDateSelection,
+  useLocalization,
+} from "@salt-ds/lab";
+import {
+  type ReactElement,
+  type SyntheticEvent,
+  useEffect,
+  useState,
+} from "react";
 
 import { AdapterDateFns } from "@salt-ds/date-adapters/date-fns";
 import { AdapterDayjs } from "@salt-ds/date-adapters/dayjs";
@@ -127,7 +127,7 @@ const Single = ({
           <CalendarGrid />
         </Calendar>
       </GridItem>
-      <GridItem colSpan={6} style={{ paddingTop : "var(--salt-spacing-200)"}}>
+      <GridItem colSpan={6} style={{ paddingTop: "var(--salt-spacing-200)" }}>
         <FormField>
           <FormFieldLabel>Current timezone</FormFieldLabel>
           <span data-testid={"timezone"}>

@@ -1,5 +1,5 @@
+import { FormField, FormFieldHelperText, FormFieldLabel } from "@salt-ds/core";
 import type { DateFrameworkType } from "@salt-ds/date-adapters";
-import { type ReactElement, type SyntheticEvent, useCallback } from "react";
 import { AdapterDateFns } from "@salt-ds/date-adapters/date-fns";
 import {
   DateInputSingle,
@@ -7,8 +7,8 @@ import {
   LocalizationProvider,
   useLocalization,
 } from "@salt-ds/lab";
-import { FormField, FormFieldLabel, FormFieldHelperText } from "@salt-ds/core";
 import { es as dateFnsEs } from "date-fns/locale";
+import type { ReactElement, SyntheticEvent } from "react";
 
 const Single = (): ReactElement => {
   const { dateAdapter } = useLocalization();
@@ -40,7 +40,9 @@ const Single = (): ReactElement => {
         format={"DD MMM YYYY"}
         defaultValue={"23 ago 2025"}
       />
-      <FormFieldHelperText>Aug will be invalid and ago will be valid</FormFieldHelperText>
+      <FormFieldHelperText>
+        Aug will be invalid and ago will be valid
+      </FormFieldHelperText>
     </FormField>
   );
 };
@@ -48,7 +50,7 @@ const Single = (): ReactElement => {
 export const SingleWithLocale = (): ReactElement => {
   return (
     <LocalizationProvider DateAdapter={AdapterDateFns} locale={dateFnsEs}>
-      <Single/>
+      <Single />
     </LocalizationProvider>
   );
 };

@@ -1,6 +1,7 @@
 import type {
   DateFrameworkType,
-  SaltDateAdapter, Timezone,
+  SaltDateAdapter,
+  Timezone,
 } from "@salt-ds/date-adapters";
 
 export function daysOfWeek<TDate extends DateFrameworkType>(
@@ -25,7 +26,7 @@ export function generateMonthsForYear<TDate extends DateFrameworkType>(
 export function generateVisibleDays<TDate extends DateFrameworkType>(
   dateAdapter: SaltDateAdapter<TDate>,
   currentMonth: TDate,
-  timezone: Timezone
+  timezone: Timezone,
 ) {
   const totalDays = 6 * 7;
   const startDate = dateAdapter.startOf(

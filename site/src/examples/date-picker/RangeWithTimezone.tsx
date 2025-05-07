@@ -1,4 +1,20 @@
 import {
+  Dropdown,
+  type DropdownProps,
+  FormField,
+  FormFieldLabel,
+  FormFieldLabel as FormLabel,
+  GridItem,
+  GridLayout,
+  Option,
+  StackLayout,
+} from "@salt-ds/core";
+import type { DateFrameworkType, Timezone } from "@salt-ds/date-adapters";
+import { AdapterDateFns } from "@salt-ds/date-adapters/date-fns";
+import { AdapterDayjs } from "@salt-ds/date-adapters/dayjs";
+import { AdapterLuxon } from "@salt-ds/date-adapters/luxon";
+import { AdapterMoment } from "@salt-ds/date-adapters/moment";
+import {
   type DateInputRangeDetails,
   DatePicker,
   DatePickerHelperText,
@@ -10,7 +26,8 @@ import {
   LocalizationProvider,
   useLocalization,
 } from "@salt-ds/lab";
-import type { DateFrameworkType, Timezone } from "@salt-ds/date-adapters";
+import type { DateTime } from "luxon";
+import type { Moment } from "moment/moment";
 import {
   type ReactElement,
   type SyntheticEvent,
@@ -18,23 +35,6 @@ import {
   useEffect,
   useState,
 } from "react";
-import {
-  Dropdown,
-  type DropdownProps,
-  FormField,
-  FormFieldLabel as FormLabel,
-  FormFieldLabel,
-  GridItem,
-  GridLayout,
-  Option,
-  StackLayout,
-} from "@salt-ds/core";
-import { AdapterDateFns } from "@salt-ds/date-adapters/date-fns";
-import { AdapterDayjs } from "@salt-ds/date-adapters/dayjs";
-import { AdapterLuxon } from "@salt-ds/date-adapters/luxon";
-import { AdapterMoment } from "@salt-ds/date-adapters/moment";
-import type { DateTime } from "luxon";
-import type { Moment } from "moment/moment";
 
 const Range = ({
   selectedTimezone,

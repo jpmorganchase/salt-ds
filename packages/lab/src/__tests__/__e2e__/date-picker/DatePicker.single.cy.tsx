@@ -38,7 +38,7 @@ const {
   SingleWithTodayButton,
   SingleWithUnselectableDates,
   SingleCustomFormat,
-  SingleWithTimezone
+  SingleWithTimezone,
   // biome-ignore lint/suspicious/noExplicitAny: storybook stories
 } = datePickerStories as any;
 

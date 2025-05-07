@@ -350,11 +350,20 @@ describe("GIVEN a Calendar with single selection", () => {
             return;
           }
           it(`SHOULD render date in the ${timezone} timezone`, () => {
-            cy.mount(<SingleWithTimezone defaultVisibleMonth={adapter.parse("01 Jan 2025", "DD MMM YYYY").date}/>);
+            cy.mount(
+              <SingleWithTimezone
+                defaultVisibleMonth={
+                  adapter.parse("01 Jan 2025", "DD MMM YYYY").date
+                }
+              />,
+            );
             // Simulate selecting timezone
             cy.findByLabelText("timezone dropdown").realClick();
             cy.findByRole("option", { name: timezone }).realHover().realClick();
-            cy.findByLabelText("timezone dropdown").should("have.text", timezone);
+            cy.findByLabelText("timezone dropdown").should(
+              "have.text",
+              timezone,
+            );
             // Simulate clicking on a date button to select it
             cy.findByRole("button", {
               name: "05 January 2025",
