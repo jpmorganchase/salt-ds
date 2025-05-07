@@ -59,6 +59,7 @@ export * from "./search-input";
 export * from "./splitter";
 export * from "./static-list";
 export * from "./system-status";
+export * from "./table";
 export * from "./tabs";
 export * from "./tabs-next";
 export * from "./toast-group";
