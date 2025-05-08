@@ -8,6 +8,7 @@ import {
   useForkRef,
   useFormFieldProps,
   useIcon,
+  useId,
 } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
@@ -26,9 +27,8 @@ import {
   useState,
 } from "react";
 import {
-  isAllowedNonNumeric,
   isOutOfRange,
-  sanitizedInput,
+  sanitizeInput,
   toFixedDecimalPlaces,
   toFloat,
 } from "./internal/utils";
@@ -41,33 +41,41 @@ const withBaseName = makePrefixer("saltNumberInput");
 export interface NumberInputProps
   extends Omit<ComponentPropsWithoutRef<"div">, "onChange"> {
   /**
-   * A boolean. When `true`, the input will receive a full border.
+   * A boolean property that determines the border style of the `NumberInput`.
+   * - When set to `true`, the `NumberInput` will display a full border.
+   * - When set to `false` or omitted, the `NumberInput` will not have a border.
+   * @default false
    */
   bordered?: boolean;
   /**
-   * The number of decimal places to display.
+   * The number of allowed decimal places
+   * @default 2
    */
   decimalPlaces?: number;
   /**
-   * Sets the initial default value of the component.
+   * The default value. Use when the component is not controlled.
    */
   defaultValue?: number | string;
   /**
-   * If `true`, the number input will be disabled.
+   * Disable the `NumberInput`.
    */
   disabled?: boolean;
   /**
-   * The marker to use in an empty read only Input.
+   * The marker to use in an empty, read-only `NumberInput`.
    * Use `''` to disable this feature. Defaults to '—'.
    * @default '—'
    */
   emptyReadOnlyMarker?: string;
   /**
-   * End adornment component
+   * End adornment component.
    */
   endAdornment?: ReactNode;
   /**
-   * Whether to hide the number buttons. Defaults to `false`.
+   * Formatting callback
+   */
+  format?: (value: any) => string | number;
+  /**
+   * Hide the number buttons. Defaults to `false`.
    * @default false
    */
   hideButtons?: boolean;
@@ -76,7 +84,7 @@ export interface NumberInputProps
    */
   inputProps?: InputHTMLAttributes<HTMLInputElement>;
   /**
-   * Optional ref for the input component
+   * Optional ref for the input component.
    */
   inputRef?: Ref<HTMLInputElement>;
   /**
@@ -90,38 +98,45 @@ export interface NumberInputProps
    */
   min?: number;
   /**
-   * Callback when number input value is changed.
-   * @param event - the event triggers value change, could be undefined during increment / decrement button long press
+   * Callback function that is triggered when the value of the `NumberInput` changes.
+   *
+   * @param event - The event that triggers the value change. This may be `undefined` during a long press on the increment or decrement buttons.
+   * @param value - The new value of the `NumberInput`, which can be a number or a string.
    */
   onChange?: (
     event: SyntheticEvent | undefined,
     value: number | string,
   ) => void;
   /**
-   * A string. Displayed in a dimmed color when the input value is empty.
+   * A string displayed in a dimmed color when the `NumberInput` value is empty.
    */
-  placeholder?: string | undefined;
+  placeholder?: string;
   /**
-   * A boolean. If `true`, the component is not editable by the user.
+   * A boolean property that controls the editability of the `NumberInput`.
+   * - When set to `true`, the `NumberInput` becomes read-only, preventing user edits.
+   * - When set to `false` or omitted, the `NumberInput` is editable by the user.
    */
   readOnly?: boolean;
   /**
-   * Start adornment component
+   * Start adornment component.
    */
   startAdornment?: ReactNode;
   /**
-   * The amount to increment or decrement the value by when using the number buttons or Up Arrow and Down Arrow keys. Default to 1.
+   * The amount to increment or decrement the value by when using the `NumberInput` buttons or Up Arrow and Down Arrow keys. Defaults to 1.
    * @default 1
    */
   step?: number;
   /**
-   * The amount to change the value when the value is incremented or decremented by holding Shift and pressing Up arrow or Down arrow keys.
-   * Defaults to 10.
-   * @default 10
+   * Defines the factor by which the step value is multiplied to determine the maximum increment or decrement when the Shift key
+   * is held while pressing the Up Arrow or Down Arrow keys for faster adjustments of the value. The default multiplier value is 2.
+   * @default 2
    */
-  stepBlock?: number;
+  stepMultiplier?: number;
   /**
-   * Alignment of text within container. Defaults to "left".
+   * Specifies the alignment of the text within the `NumberInput`.
+   * - Options include "left", "center", and "right".
+   * - Defaults to "left" if not specified.
+   *
    * @default "left"
    */
   textAlign?: "left" | "center" | "right";
@@ -135,9 +150,9 @@ export interface NumberInputProps
    */
   variant?: "primary" | "secondary";
   /**
-   * The value of the number input. The component will be controlled if this prop is provided.
+   * Value of the `NumberInput`, to be used when in a controlled state.
    */
-  value?: number | string | undefined;
+  value?: number | string;
 }
 
 export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
@@ -150,7 +165,9 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       disabled,
       emptyReadOnlyMarker = "—",
       endAdornment,
+      format = (value) => value,
       hideButtons,
+      id: idProp,
       inputProps: inputPropsProp = {},
       inputRef: inputRefProp,
       max = Number.MAX_SAFE_INTEGER,
@@ -160,7 +177,7 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       readOnly: readOnlyProp,
       startAdornment,
       step = 1,
-      stepBlock = 10,
+      stepMultiplier = 2,
       textAlign = "left",
       validationStatus: validationStatusProp,
       value: valueProp,
@@ -192,6 +209,7 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
     const isDisabled = disabled || formFieldDisabled;
     const isReadOnly = readOnlyProp || formFieldReadOnly;
     const validationStatus = formFieldValidationStatus ?? validationStatusProp;
+    const validationStatusId = useId(idProp);
 
     const {
       "aria-describedby": inputDescribedBy,
@@ -209,11 +227,11 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       ? ["required", "asterisk"].includes(formFieldRequired)
       : inputRequired;
 
-    const [value, setValue] = useControlled({
+    const [valueState, setValue] = useControlled({
       controlled: valueProp,
       default:
         typeof defaultValueProp === "number"
-          ? toFixedDecimalPlaces(defaultValueProp, decimalPlaces)
+          ? format(toFixedDecimalPlaces(defaultValueProp, decimalPlaces))
           : defaultValueProp,
       name: "NumberInput",
       state: "value",
@@ -224,6 +242,9 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
 
     const inputRef = useRef<HTMLInputElement | null>(null);
     const forkedInputRef = useForkRef(inputRef, inputRefProp);
+    // If value is undefined, start increments/decrements from 0 if min is less than 0 otherwise from min
+    const value = valueState === undefined ? (min < 0 ? 0 : min) : valueState;
+    // const formattedValue = format(value);
 
     const {
       decrementButtonProps,
@@ -233,14 +254,16 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
     } = useNumberInput({
       inputRef,
       setValue,
+      setFocused,
       decimalPlaces,
       disabled,
       max,
       min,
+      format,
       onChange: onChangeProp,
       readOnly: isReadOnly,
       step,
-      stepBlock,
+      stepMultiplier,
       value,
     });
 
@@ -252,33 +275,23 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
 
     const handleInputBlur = (event: FocusEvent<HTMLInputElement>) => {
       setFocused(false);
+      const sanitizedInput = sanitizeInput(event.target.value);
+      const floatValue = toFloat(sanitizedInput);
+      const roundedValue = toFixedDecimalPlaces(floatValue, decimalPlaces);
+      const formattedValue = format(roundedValue);
 
-      if (value === undefined) return;
-
-      const floatValue = toFloat(value);
-      if (Number.isNaN(floatValue)) {
-        // Keep original value if NaN
-        setValue(value);
-        onChangeProp?.(event, value);
-      } else {
-        const roundedValue = toFixedDecimalPlaces(floatValue, decimalPlaces);
-
-        if (value !== "" && !isAllowedNonNumeric(value)) {
-          setValue(roundedValue);
-        }
-
-        onChangeProp?.(event, roundedValue);
-      }
-
+      setValue(formattedValue);
+      // onChangeProp?.(event, sanitizedInput);
       inputOnBlur?.(event);
     };
 
     const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
       const changedValue = event.target.value;
+      const sanitizedInput = sanitizeInput(changedValue);
+      const formattedValue = format(sanitizedInput);
 
-      setValue(sanitizedInput(changedValue));
-
-      onChangeProp?.(event, sanitizedInput(changedValue));
+      setValue(changedValue);
+      onChangeProp?.(event, sanitizedInput);
       inputOnChange?.(event);
     };
 
@@ -348,10 +361,16 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
             </div>
           )}
           <input
-            aria-describedby={clsx(formFieldDescribedBy, inputDescribedBy)}
+            aria-describedby={clsx(
+              validationStatusId,
+              formFieldDescribedBy,
+              inputDescribedBy,
+            )}
             aria-labelledby={clsx(formFieldLabelledBy, inputLabelledBy)}
             aria-invalid={
-              !isReadOnly ? isOutOfRange(value, min, max) : undefined
+              !isReadOnly
+                ? isOutOfRange(value, min, max) || validationStatus === "error"
+                : undefined
             }
             aria-valuemax={
               !isReadOnly
@@ -368,6 +387,8 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
                 ? toFloat(toFixedDecimalPlaces(toFloat(value), decimalPlaces))
                 : undefined
             }
+            // Workaround to have the value announced by screen reader on Safari.
+            {...(!isReadOnly && { "aria-valuetext": value.toString() })}
             className={clsx(
               withBaseName("input"),
               withBaseName(`inputTextAlign${capitalize(textAlign)}`),
@@ -390,7 +411,10 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
             {...restInputProps}
           />
           {!isDisabled && validationStatus && (
-            <StatusAdornment status={validationStatus} />
+            <StatusAdornment
+              status={validationStatus}
+              id={validationStatusId}
+            />
           )}
           {endAdornment && (
             <div className={withBaseName("endAdornmentContainer")}>

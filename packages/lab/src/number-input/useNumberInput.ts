@@ -11,6 +11,7 @@ import { useActivateWhileMouseDown } from "./internal/useActivateWhileMouseDown"
 import {
   isAtMax,
   isAtMin,
+  sanitizeInput,
   toFixedDecimalPlaces,
   toFloat,
 } from "./internal/utils";
@@ -27,9 +28,11 @@ export const useNumberInput = ({
   onChange,
   readOnly,
   setValue,
+  setFocused,
   step = 1,
-  stepBlock = 10,
+  stepMultiplier = 2,
   value,
+  format,
 }: Pick<
   NumberInputProps,
   | "decimalPlaces"
@@ -40,11 +43,13 @@ export const useNumberInput = ({
   | "onChange"
   | "readOnly"
   | "step"
-  | "stepBlock"
-  | "value"
+  | "stepMultiplier"
 > & {
   setValue: Dispatch<SetStateAction<string | number | undefined>>;
+  setFocused: Dispatch<SetStateAction<boolean>>;
+  value: string | number;
   inputRef: MutableRefObject<HTMLInputElement | null>;
+  format: (value: number | string) => number | string;
 }) => {
   const setValueInRange = useCallback(
     (event: SyntheticEvent | undefined, modifiedValue: number) => {
@@ -56,33 +61,44 @@ export const useNumberInput = ({
       const roundedValue = toFixedDecimalPlaces(nextValue, decimalPlaces);
       if (Number.isNaN(toFloat(roundedValue))) return;
 
-      setValue(roundedValue);
+      console.log("SETTTING VALUE ", nextValue);
 
+      setValue(nextValue);
       onChange?.(event, roundedValue);
     },
-    [decimalPlaces, min, max, onChange, readOnly, setValue],
+    [decimalPlaces, min, max, onChange, readOnly, setValue, format],
   );
 
   const decrementValue = useCallback(
     (event?: SyntheticEvent, block?: boolean) => {
-      if (value === undefined || isAtMin(value, min)) return;
-      const decrementStep = block ? stepBlock : step;
+      if (isAtMin(value, min)) return;
+      const sanitizedValue = sanitizeInput(value);
+      const decrementStep = block ? stepMultiplier * step : step;
       const nextValue =
-        value === "" ? -decrementStep : toFloat(value) - decrementStep;
+        sanitizedValue === ""
+          ? -decrementStep
+          : toFloat(sanitizedValue) - decrementStep;
       setValueInRange(event, nextValue);
     },
-    [value, min, step, stepBlock, setValueInRange],
+    [value, min, step, stepMultiplier, setValueInRange],
   );
 
   const incrementValue = useCallback(
     (event?: SyntheticEvent, block?: boolean) => {
-      if (value === undefined || isAtMax(value, max)) return;
-      const incrementStep = block ? stepBlock : step;
+      if (isAtMax(value, max)) return;
+      console.log("Value in incremenet", value);
+      const incrementStep = block ? stepMultiplier * step : step;
+      const sanitizedValue = sanitizeInput(value);
+
+      console.log("sanitized", sanitizedValue);
       const nextValue =
-        value === "" ? incrementStep : toFloat(value) + incrementStep;
+        sanitizedValue === ""
+          ? incrementStep
+          : toFloat(sanitizedValue) + incrementStep;
+      console.log("next value", nextValue);
       setValueInRange(event, nextValue);
     },
-    [value, max, step, stepBlock, setValueInRange],
+    [value, max, step, stepMultiplier, setValueInRange],
   );
 
   const { activate: decrementSpinner } = useActivateWhileMouseDown(
@@ -108,6 +124,8 @@ export const useNumberInput = ({
     "aria-label": "increment value",
     disabled: disabled || isAtMax(value, max),
     onMouseDown: (event: MouseEvent<HTMLButtonElement>) => {
+      event.preventDefault();
+      setFocused(true);
       if (event.nativeEvent.button !== 0) {
         // To match closely with <input type='input'>
         return;
@@ -121,6 +139,8 @@ export const useNumberInput = ({
     "aria-label": "decrement value",
     disabled: disabled || isAtMin(value, min),
     onMouseDown: (event: MouseEvent<HTMLButtonElement>) => {
+      event.preventDefault();
+      setFocused(true);
       if (event.nativeEvent.button !== 0) {
         // To match closely with <input type='input'>
         return;
