@@ -61,8 +61,9 @@ export const useNumberInput = ({
       const roundedValue = toFixedDecimalPlaces(nextValue, decimalPlaces);
       if (Number.isNaN(toFloat(roundedValue))) return;
 
-      setValue(format(roundedValue));
+      console.log("SETTTING VALUE ", nextValue);
 
+      setValue(nextValue);
       onChange?.(event, roundedValue);
     },
     [decimalPlaces, min, max, onChange, readOnly, setValue, format],
@@ -71,14 +72,12 @@ export const useNumberInput = ({
   const decrementValue = useCallback(
     (event?: SyntheticEvent, block?: boolean) => {
       if (isAtMin(value, min)) return;
-      console.log("decrementvalue", value);
       const sanitizedValue = sanitizeInput(value);
       const decrementStep = block ? stepMultiplier * step : step;
       const nextValue =
         sanitizedValue === ""
           ? -decrementStep
           : toFloat(sanitizedValue) - decrementStep;
-      console.log("next value", nextValue);
       setValueInRange(event, nextValue);
     },
     [value, min, step, stepMultiplier, setValueInRange],
@@ -87,13 +86,16 @@ export const useNumberInput = ({
   const incrementValue = useCallback(
     (event?: SyntheticEvent, block?: boolean) => {
       if (isAtMax(value, max)) return;
+      console.log("Value in incremenet", value);
       const incrementStep = block ? stepMultiplier * step : step;
       const sanitizedValue = sanitizeInput(value);
 
+      console.log("sanitized", sanitizedValue);
       const nextValue =
         sanitizedValue === ""
           ? incrementStep
           : toFloat(sanitizedValue) + incrementStep;
+      console.log("next value", nextValue);
       setValueInRange(event, nextValue);
     },
     [value, max, step, stepMultiplier, setValueInRange],

@@ -112,10 +112,6 @@ export interface NumberInputProps
    */
   placeholder?: string;
   /**
-   * Prefix to add to the number input
-   */
-  prefix?: string;
-  /**
    * A boolean property that controls the editability of the `NumberInput`.
    * - When set to `true`, the `NumberInput` becomes read-only, preventing user edits.
    * - When set to `false` or omitted, the `NumberInput` is editable by the user.
@@ -136,10 +132,6 @@ export interface NumberInputProps
    * @default 2
    */
   stepMultiplier?: number;
-  /**
-   * Suffix to add to the number input
-   */
-  suffix?: string;
   /**
    * Specifies the alignment of the text within the `NumberInput`.
    * - Options include "left", "center", and "right".
@@ -182,12 +174,10 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       min = Number.MIN_SAFE_INTEGER,
       onChange: onChangeProp,
       placeholder,
-      prefix,
       readOnly: readOnlyProp,
       startAdornment,
       step = 1,
       stepMultiplier = 2,
-      suffix,
       textAlign = "left",
       validationStatus: validationStatusProp,
       value: valueProp,
@@ -291,18 +281,16 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       const formattedValue = format(roundedValue);
 
       setValue(formattedValue);
-      onChangeProp?.(event, roundedValue);
+      // onChangeProp?.(event, sanitizedInput);
       inputOnBlur?.(event);
     };
 
     const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
       const changedValue = event.target.value;
-      console.log("input value", changedValue);
       const sanitizedInput = sanitizeInput(changedValue);
-      console.log("sanitized", sanitizedInput);
       const formattedValue = format(sanitizedInput);
 
-      setValue(formattedValue);
+      setValue(changedValue);
       onChangeProp?.(event, sanitizedInput);
       inputOnChange?.(event);
     };
@@ -419,7 +407,7 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
             // Workaround to have readonly conveyed by screen readers (https://github.com/jpmorganchase/salt-ds/issues/4586)
             role={isReadOnly ? "textbox" : "spinbutton"}
             tabIndex={isDisabled ? -1 : 0}
-            value={`${prefix || ""}${value}${suffix || ""}`}
+            value={value}
             {...restInputProps}
           />
           {!isDisabled && validationStatus && (
