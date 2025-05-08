@@ -110,7 +110,11 @@ export interface NumberInputProps
   /**
    * A string displayed in a dimmed color when the `NumberInput` value is empty.
    */
-  placeholder?: string | undefined;
+  placeholder?: string;
+  /**
+   * Prefix to add to the number input
+   */
+  prefix?: string;
   /**
    * A boolean property that controls the editability of the `NumberInput`.
    * - When set to `true`, the `NumberInput` becomes read-only, preventing user edits.
@@ -133,6 +137,10 @@ export interface NumberInputProps
    */
   stepMultiplier?: number;
   /**
+   * Suffix to add to the number input
+   */
+  suffix?: string;
+  /**
    * Specifies the alignment of the text within the `NumberInput`.
    * - Options include "left", "center", and "right".
    * - Defaults to "left" if not specified.
@@ -152,7 +160,7 @@ export interface NumberInputProps
   /**
    * Value of the `NumberInput`, to be used when in a controlled state.
    */
-  value?: number | string | undefined;
+  value?: number | string;
 }
 
 export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
@@ -174,10 +182,12 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       min = Number.MIN_SAFE_INTEGER,
       onChange: onChangeProp,
       placeholder,
+      prefix,
       readOnly: readOnlyProp,
       startAdornment,
       step = 1,
       stepMultiplier = 2,
+      suffix,
       textAlign = "left",
       validationStatus: validationStatusProp,
       value: valueProp,
@@ -244,6 +254,7 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
     const forkedInputRef = useForkRef(inputRef, inputRefProp);
     // If value is undefined, start increments/decrements from 0 if min is less than 0 otherwise from min
     const value = valueState === undefined ? (min < 0 ? 0 : min) : valueState;
+    // const formattedValue = format(value);
 
     const {
       decrementButtonProps,
@@ -276,7 +287,6 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       setFocused(false);
       const sanitizedInput = sanitizeInput(event.target.value);
       const floatValue = toFloat(sanitizedInput);
-
       const roundedValue = toFixedDecimalPlaces(floatValue, decimalPlaces);
       const formattedValue = format(roundedValue);
 
@@ -286,11 +296,14 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
     };
 
     const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-      console.log("value", value);
       const changedValue = event.target.value;
+      console.log("input value", changedValue);
+      const sanitizedInput = sanitizeInput(changedValue);
+      console.log("sanitized", sanitizedInput);
+      const formattedValue = format(sanitizedInput);
 
-      setValue(changedValue);
-      onChangeProp?.(event, sanitizeInput(changedValue));
+      setValue(formattedValue);
+      onChangeProp?.(event, sanitizedInput);
       inputOnChange?.(event);
     };
 
@@ -334,8 +347,6 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
 
       inputOnKeyDown?.(event);
     };
-
-    console.log("value", value);
 
     return (
       <div
@@ -408,7 +419,7 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
             // Workaround to have readonly conveyed by screen readers (https://github.com/jpmorganchase/salt-ds/issues/4586)
             role={isReadOnly ? "textbox" : "spinbutton"}
             tabIndex={isDisabled ? -1 : 0}
-            value={value}
+            value={`${prefix || ""}${value}${suffix || ""}`}
             {...restInputProps}
           />
           {!isDisabled && validationStatus && (
