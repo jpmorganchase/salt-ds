@@ -32,26 +32,38 @@ export const Formatting: StoryFn<NumberInputProps> = (args) => {
   return (
     <StackLayout>
       <FormField>
-        <FormFieldLabel>Number Input</FormFieldLabel>
+        <FormFieldLabel>With Intl Number Format</FormFieldLabel>
         <NumberInput
           {...args}
           onChange={(event, value) => console.log("onchange value", value)}
-          format={(value) =>
-            new Intl.NumberFormat("en-US", {
-              style: "currency",
-              currency: "EUR",
-              currencySign: "accounting",
-            }).format(value)
-          }
+          format={(value) => new Intl.NumberFormat().format(value)}
         />
         <FormFieldHelperText>Please enter a number</FormFieldHelperText>
       </FormField>
       <FormField>
-        <FormFieldLabel>Number Input</FormFieldLabel>
+        <FormFieldLabel>With format function</FormFieldLabel>
         <NumberInput
           {...args}
           onChange={(event, value) => console.log("onchange value", value)}
-          format={(value) => `${value || 0}%`}
+          format={(value) => `EUR ${value}`}
+        />
+        <FormFieldHelperText>Please enter a number</FormFieldHelperText>
+      </FormField>
+      <FormField>
+        <FormFieldLabel>With suffix</FormFieldLabel>
+        <NumberInput
+          {...args}
+          onChange={(event, value) => console.log("onchange value", value)}
+          suffix="%"
+        />
+        <FormFieldHelperText>Please enter a number</FormFieldHelperText>
+      </FormField>
+      <FormField>
+        <FormFieldLabel>With prefix</FormFieldLabel>
+        <NumberInput
+          {...args}
+          onChange={(event, value) => console.log("onchange value", value)}
+          prefix="£"
         />
         <FormFieldHelperText>Please enter a number</FormFieldHelperText>
       </FormField>
@@ -59,7 +71,7 @@ export const Formatting: StoryFn<NumberInputProps> = (args) => {
   );
 };
 Formatting.args = {
-  defaultValue: 20,
+  defaultValue: 12345,
 };
 
 export const Secondary: StoryFn<NumberInputProps> = (args) => {
