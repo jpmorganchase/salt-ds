@@ -1,10 +1,13 @@
-import { makePrefixer, useIsomorphicLayoutEffect } from "@salt-ds/core";
+import {
+  GridItem,
+  GridLayout,
+  type ResponsiveProp,
+  useForkRef,
+} from "@salt-ds/core";
 import {
   type ComponentPropsWithoutRef,
   type FocusEventHandler,
   forwardRef,
-  useCallback,
-  useMemo,
   useRef,
 } from "react";
 import { useCalendarContext } from "./internal/CalendarContext";
@@ -14,17 +17,34 @@ import {
 } from "./internal/CalendarMonth";
 
 import type { DateFrameworkType } from "@salt-ds/date-adapters";
-import { useComponentCssInjection } from "@salt-ds/styles";
-import { useWindow } from "@salt-ds/window";
 import { useLocalization } from "../localization-provider";
-import calendarGridCss from "./CalendarGrid.css";
-import { monthDiff } from "./internal/utils";
+import {
+  CalendarMonthHeader,
+  type CalendarMonthHeaderProps,
+} from "./CalendarMonthHeader";
+import {
+  CalendarWeekHeader,
+  type CalendarWeekHeaderProps,
+} from "./CalendarWeekHeader";
 
 /**
  * Props for the CalendarGrid component.
+ * @template TDate - The type of the date object.
  */
 export interface CalendarGridProps<TDate extends DateFrameworkType>
   extends ComponentPropsWithoutRef<"div"> {
+  /**
+   * Number of columns
+   */
+  columns?: ResponsiveProp<number | string>;
+  /**
+   * Props for `CalendarWeekHeader`
+   */
+  CalendarWeekHeaderProps?: Partial<CalendarWeekHeaderProps>;
+  /**
+   * Props for `CalendarMonthHeader`
+   */
+  CalendarMonthHeaderProps?: Partial<CalendarMonthHeaderProps<TDate>>;
   /**
    * Props getter to pass to each CalendarMonth element
    */
@@ -33,109 +53,77 @@ export interface CalendarGridProps<TDate extends DateFrameworkType>
   ) => Omit<CalendarMonthProps<TDate>, "date">;
 }
 
-const withBaseName = makePrefixer("saltCalendarGrid");
-
-export const CalendarGrid = forwardRef<HTMLDivElement, CalendarGridProps<any>>(
+export const CalendarGrid = forwardRef<
+  HTMLDivElement,
+  CalendarGridProps<DateFrameworkType>
+>(
   <TDate extends DateFrameworkType>(
     props: CalendarGridProps<TDate>,
     ref: React.Ref<HTMLDivElement>,
   ) => {
     const {
-      onFocus,
-      onBlur,
+      CalendarWeekHeaderProps,
+      CalendarMonthHeaderProps,
+      columns = 1,
       getCalendarMonthProps = () => undefined,
+      onBlur,
       ...rest
     } = props;
 
     const { dateAdapter } = useLocalization<TDate>();
 
-    const targetWindow = useWindow();
-    useComponentCssInjection({
-      testId: "salt-calendar-grid",
-      css: calendarGridCss,
-      window: targetWindow,
-    });
-
     const {
-      state: { visibleMonth, locale },
-      helpers: { setCalendarFocused },
+      helpers: { setFocusedDate, setHoveredDate },
+      state: { focusedDate, visibleMonth, numberOfVisibleMonths = 1 },
     } = useCalendarContext<TDate>();
-    const containerRef = useRef<HTMLDivElement>(null);
-    const diffIndex = (a: TDate, b: TDate) =>
-      monthDiff<TDate>(dateAdapter, a, b);
+    const calendarGridRef = useRef<HTMLDivElement>(null);
+    const containerRef = useForkRef(ref, calendarGridRef);
 
-    const { current: baseIndex } = useRef(visibleMonth);
-
-    useIsomorphicLayoutEffect(() => {
-      if (containerRef.current) {
-        containerRef.current.style.transform = `translate3d(${
-          diffIndex(baseIndex, visibleMonth) * -101 // needs to be higher than 100% so the next month doesn't show on the edges
-        }%, 0, 0)`;
-      }
-    });
-
-    const getMonths = useCallback(
-      (month: TDate) => {
-        return [
-          dateAdapter.subtract(month, { months: 1 }),
-          month,
-          dateAdapter.add(month, { months: 1 }),
-        ];
-      },
-      [dateAdapter.subtract],
-    );
-
-    const handleFocus: FocusEventHandler<HTMLDivElement> = useCallback(
-      (event) => {
-        setCalendarFocused(true);
-        onFocus?.(event);
-      },
-      [setCalendarFocused, onFocus],
-    );
-
-    const handleBlur: FocusEventHandler<HTMLDivElement> = useCallback(
-      (event) => {
-        setCalendarFocused(false);
-        onBlur?.(event);
-      },
-      [setCalendarFocused, onBlur],
-    );
-
-    const months = useMemo(() => {
-      return getMonths(visibleMonth);
-    }, [dateAdapter.format(visibleMonth)]);
+    const handleCalendarGridBlur: FocusEventHandler<HTMLDivElement> = (
+      event,
+    ) => {
+      event.stopPropagation();
+      setTimeout(() => {
+        if (calendarGridRef?.current?.contains(document.activeElement)) {
+          return;
+        }
+        setFocusedDate(event, null);
+        setHoveredDate(event, null);
+      }, 0);
+      onBlur?.(event);
+    };
 
     return (
-      <div
-        className={withBaseName()}
-        tabIndex={-1} // https://bugzilla.mozilla.org/show_bug.cgi?id=1069739
-        style={{
-          overflowX: "hidden",
-          position: "relative",
-        }}
-        ref={ref}
+      <GridLayout
+        columns={columns}
+        gap={1}
+        ref={containerRef}
+        onBlur={handleCalendarGridBlur}
+        {...rest}
       >
-        <div
-          className={withBaseName("grid")}
-          ref={containerRef}
-          onBlur={handleBlur}
-          onFocus={handleFocus}
-          {...rest}
-        >
-          {months.map((date, index) => (
-            <div
-              key={dateAdapter.format(date, locale)}
-              className={withBaseName("slide")}
-              style={{
-                transform: `translateX(${diffIndex(date, baseIndex) * -101}%)`,
-              }}
-              aria-hidden={index !== 1 ? "true" : undefined}
+        {Array.from({ length: numberOfVisibleMonths }, (_value, index) => {
+          const gridItemVisibleMonth: TDate = dateAdapter.add(visibleMonth, {
+            months: index,
+          });
+          return (
+            <GridItem
+              key={`calendar-grid-item-${dateAdapter.format(gridItemVisibleMonth, "MMMM YYYY")}`}
             >
-              <CalendarMonth {...getCalendarMonthProps(date)} date={date} />
-            </div>
-          ))}
-        </div>
-      </div>
+              {numberOfVisibleMonths > 1 ? (
+                <CalendarMonthHeader
+                  {...CalendarMonthHeaderProps}
+                  month={gridItemVisibleMonth}
+                />
+              ) : null}
+              <CalendarWeekHeader {...CalendarWeekHeaderProps} />
+              <CalendarMonth
+                {...getCalendarMonthProps(gridItemVisibleMonth)}
+                date={gridItemVisibleMonth}
+              />
+            </GridItem>
+          );
+        })}
+      </GridLayout>
     );
   },
 );

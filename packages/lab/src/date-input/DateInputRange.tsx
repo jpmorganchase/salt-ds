@@ -12,6 +12,7 @@ import type {
   DateFrameworkType,
   ParserResult,
   TimeFields,
+  Timezone,
 } from "@salt-ds/date-adapters";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
@@ -67,7 +68,7 @@ export enum DateParserField {
 
 /**
  * Props for the DateInputRange component.
- * @template T
+ * @template TDate - The type of the date object.
  */
 export interface DateInputRangeProps<TDate extends DateFrameworkType>
   extends Omit<ComponentPropsWithoutRef<"div">, "defaultValue" | "onChange">,
@@ -124,21 +125,15 @@ export interface DateInputRangeProps<TDate extends DateFrameworkType>
    */
   endInputRef?: Ref<HTMLInputElement>;
   /**
-   * Locale for date formatting and parsing
-   */
-  locale?: any;
-  /**
    * Parser callback, if not using the adapter's parser
    * @param value - date string to parse
    * @param field: DateParserField to identify value,
    * @param format - format required
-   * @param locale - locale required
    */
   parse?: (
     value: string,
     field: DateParserField,
     format: string,
-    locale?: any,
   ) => ParserResult<TDate>;
   /**
    * Input value. Use when the input value is controlled.
@@ -182,11 +177,20 @@ export interface DateInputRangeProps<TDate extends DateFrameworkType>
     event: SyntheticEvent | null,
     newValue: DateInputRangeValue,
   ) => void;
+  /**
+   * Specifies the timezone behavior:
+   * - If undefined, the timezone will be derived from the passed date, or from `defaultSelectedDate`/`selectedDate`.
+   * - If set to "default", the default timezone of the date library will be used.
+   * - If set to "system", the local system's timezone will be applied.
+   * - If set to "UTC", the time will be returned in UTC.
+   * - If set to a valid IANA timezone identifier, the time will be returned for that specific timezone.
+   */
+  timezone?: Timezone;
 }
 
 export const DateInputRange = forwardRef<
   HTMLDivElement,
-  DateInputRangeProps<any>
+  DateInputRangeProps<DateFrameworkType>
 >(
   <TDate extends DateFrameworkType>(
     props: DateInputRangeProps<TDate>,
@@ -202,11 +206,10 @@ export const DateInputRange = forwardRef<
       defaultDate,
       onDateChange,
       value: valueProp,
-      locale,
       format = "DD MMM YYYY",
       defaultValue = {
-        startDate: dateAdapter.format(undefined, format, locale),
-        endDate: dateAdapter.format(undefined, format, locale),
+        startDate: "",
+        endDate: "",
       },
       onChange,
       onClick,
@@ -222,6 +225,11 @@ export const DateInputRange = forwardRef<
       readOnly: readOnlyProp,
       validationStatus: validationStatusProp,
       variant = "primary",
+      timezone = dateProp?.startDate || defaultDate?.startDate
+        ? dateAdapter.getTimezone(
+            (dateProp?.startDate ?? defaultDate?.startDate) as TDate,
+          )
+        : "default",
       ...rest
     } = props;
     const wrapperRef = useRef(null);
@@ -245,14 +253,10 @@ export const DateInputRange = forwardRef<
     const parseDateValue = (
       dateValue: string | null | undefined,
       field: DateParserField,
-    ): ParserResult<TDate> | undefined => {
-      const parseResult = parseProp
-        ? parseProp(dateValue ?? "", field, format, locale)
-        : dateAdapter.parse.bind(dateAdapter)(dateValue ?? "", format, locale);
-
-      const { date, ...parseDetails } = parseResult;
-      return { date, ...parseDetails };
-    };
+    ): ParserResult<TDate> | undefined =>
+      parseProp
+        ? parseProp(dateValue ?? "", field, format)
+        : dateAdapter.parse.bind(dateAdapter)(dateValue ?? "", format);
 
     const [dateValue, setDateValue] = useControlled({
       controlled: valueProp,
@@ -260,23 +264,26 @@ export const DateInputRange = forwardRef<
       name: "DateInputRange",
       state: "dateValue",
     });
-    const fallbackDate = useMemo(() => {
-      if (!defaultValue) {
-        return undefined;
-      }
-      const { date: startDate = undefined } =
-        parseDateValue(defaultValue?.startDate, DateParserField.START) ?? {};
-      const { date: endDate = undefined } =
-        parseDateValue(defaultValue?.endDate, DateParserField.END) ?? {};
-      return {
-        startDate,
-        endDate,
-      };
-    }, [defaultValue, dateAdapter, parseProp, format]);
 
     const [date, setDate] = useControlled({
       controlled: dateProp,
-      default: defaultDate ?? fallbackDate,
+      // biome-ignore lint/correctness/useExhaustiveDependencies: just on mount
+      default: useMemo(() => {
+        if (defaultDate) {
+          return defaultDate;
+        }
+        if (!defaultValue) {
+          return undefined;
+        }
+        const { date: startDate = undefined } =
+          parseDateValue(defaultValue?.startDate, DateParserField.START) ?? {};
+        const { date: endDate = undefined } =
+          parseDateValue(defaultValue?.endDate, DateParserField.END) ?? {};
+        return {
+          startDate,
+          endDate,
+        };
+      }, []),
       name: "DateInputRange",
       state: "date",
     });
@@ -297,35 +304,36 @@ export const DateInputRange = forwardRef<
           : null,
     };
     const setDateValueFromDate = (newDate: typeof date) => {
-      let newDateValue = { ...dateValue };
-      if (newDate?.startDate && dateAdapter.isValid(newDate?.startDate)) {
-        const formattedStartDateValue = dateAdapter.format(
-          newDate?.startDate,
-          format,
-          locale,
-        );
-        newDateValue = { ...dateValue, startDate: formattedStartDateValue };
-      } else if (!newDate?.startDate) {
-        newDateValue = {
-          ...dateValue,
-          startDate: dateAdapter.format(undefined, format, locale),
-        };
-      }
-      if (newDate?.endDate && dateAdapter.isValid(newDate.endDate)) {
-        const formattedEndDateValue = dateAdapter.format(
-          newDate?.endDate,
-          format,
-          locale,
-        );
-        newDateValue = { ...newDateValue, endDate: formattedEndDateValue };
-      } else if (!newDate?.endDate) {
+      let newDateValue = { startDate: "", endDate: "" };
+      if (!newDate?.startDate) {
+        newDateValue = { ...newDateValue, startDate: "" };
+      } else if (!dateAdapter.isValid(newDate?.startDate)) {
         newDateValue = {
           ...newDateValue,
-          endDate: dateAdapter.format(undefined, format, locale),
+          startDate: dateValue?.startDate ?? "",
         };
+      } else if (newDate?.startDate) {
+        const formattedStartDateValue = dateAdapter.format(
+          newDate.startDate,
+          format,
+        );
+        newDateValue = { ...newDateValue, startDate: formattedStartDateValue };
+      }
+      if (!newDate?.endDate) {
+        newDateValue = { ...newDateValue, endDate: "" };
+      } else if (!dateAdapter.isValid(newDate?.endDate)) {
+        newDateValue = { ...newDateValue, endDate: dateValue?.endDate ?? "" };
+      } else if (newDate?.endDate && dateAdapter.isValid(newDate.endDate)) {
+        const formattedEndDateValue = dateAdapter.format(
+          newDate.endDate,
+          format,
+        );
+        newDateValue = { ...newDateValue, endDate: formattedEndDateValue };
       }
 
       if (
+        (!newDateValue?.startDate && !!dateValue?.startDate) ||
+        (!newDateValue.endDate && !!dateValue?.endDate) ||
         newDateValue?.startDate !== dateValue?.startDate ||
         newDateValue?.endDate !== dateValue?.endDate
       ) {
@@ -335,10 +343,10 @@ export const DateInputRange = forwardRef<
       return newDateValue;
     };
 
-    // Update date string value when selected date changes
+    // biome-ignore lint/correctness/useExhaustiveDependencies: Update date string value ONLY when selected date changes, not when date string itself change
     useEffect(() => {
-      setDateValueFromDate(date);
-    }, [date, date?.startDate, date?.endDate]);
+      lastAppliedValue.current = setDateValueFromDate(date);
+    }, [date, date?.startDate, date?.endDate, dateAdapter.format, format]);
 
     const [focused, setFocused] = useState(false);
 
@@ -393,40 +401,46 @@ export const DateInputRange = forwardRef<
         parseDateValue(dateValue?.startDate, DateParserField.START) ?? {};
       const { date: endDate = undefined, ...endDateParseDetails } =
         parseDateValue(dateValue?.endDate, DateParserField.END) ?? {};
-      const updatedDateRange = {
+      const updatedDateRange: DateRangeSelection<TDate> = {
         startDate,
         endDate,
       };
-      const newDateValue = setDateValueFromDate(updatedDateRange);
-      setDate(updatedDateRange);
-      if (
-        lastAppliedValue.current.startDate !== dateValue.startDate ||
-        lastAppliedValue.current.endDate !== dateValue.endDate
-      ) {
-        if (
-          dateAdapter.isValid(updatedDateRange?.startDate) &&
-          preservedTime.current.startTime
-        ) {
+      if (dateAdapter.isValid(startDate)) {
+        updatedDateRange.startDate = dateAdapter.setTimezone(
+          startDate,
+          timezone,
+        );
+        if (preservedTime.current.startTime) {
           updatedDateRange.startDate = dateAdapter.set(
             updatedDateRange.startDate,
             preservedTime.current.startTime,
           );
         }
-        if (
-          dateAdapter.isValid(updatedDateRange?.endDate) &&
-          preservedTime.current.endTime
-        ) {
+      }
+      if (dateAdapter.isValid(endDate)) {
+        updatedDateRange.endDate = dateAdapter.setTimezone(endDate, timezone);
+        if (preservedTime.current.endTime) {
           updatedDateRange.endDate = dateAdapter.set(
             updatedDateRange.endDate,
             preservedTime.current.endTime,
           );
         }
+      }
+      const updatedDateValue = setDateValueFromDate(updatedDateRange);
+
+      setDate(updatedDateRange);
+
+      if (
+        lastAppliedValue.current.startDate !== updatedDateValue.startDate ||
+        lastAppliedValue.current.endDate !== updatedDateValue.endDate
+      ) {
         onDateChange?.(event, updatedDateRange, {
           startDate: startDateParseDetails,
           endDate: endDateParseDetails,
         });
+        onDateValueChange?.(event, updatedDateValue);
+        lastAppliedValue.current = updatedDateValue;
       }
-      lastAppliedValue.current = { ...newDateValue };
     };
 
     const handleStartInputChange: ChangeEventHandler<HTMLInputElement> = (
@@ -544,8 +558,7 @@ export const DateInputRange = forwardRef<
           value={
             isReadOnly && !dateValue?.startDate
               ? emptyReadOnlyMarker
-              : (dateValue.startDate ??
-                dateAdapter.format(undefined, format, locale))
+              : (dateValue.startDate ?? dateAdapter.format(undefined, format))
           }
           {...restStartInputProps}
           onBlur={handleStartInputBlur}
@@ -577,8 +590,7 @@ export const DateInputRange = forwardRef<
           value={
             isReadOnly && !dateValue?.endDate
               ? emptyReadOnlyMarker
-              : (dateValue.endDate ??
-                dateAdapter.format(undefined, format, locale))
+              : (dateValue.endDate ?? dateAdapter.format(undefined, format))
           }
           {...restEndInputProps}
           onBlur={handleEndInputBlur}

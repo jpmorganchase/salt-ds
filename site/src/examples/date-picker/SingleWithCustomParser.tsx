@@ -1,8 +1,4 @@
-import {
-  FormField,
-  FormFieldHelperText as FormHelperText,
-  FormFieldLabel as FormLabel,
-} from "@salt-ds/core";
+import { FormField, FormFieldLabel as FormLabel } from "@salt-ds/core";
 import {
   DateDetailError,
   type DateFrameworkType,
@@ -11,9 +7,10 @@ import {
 import {
   type DateInputSingleDetails,
   DatePicker,
+  DatePickerHelperText,
   DatePickerOverlay,
+  DatePickerSingleGridPanel,
   DatePickerSingleInput,
-  DatePickerSinglePanel,
   DatePickerTrigger,
   type SingleDateSelection,
   useLocalization,
@@ -31,7 +28,6 @@ export const SingleWithCustomParser = (): ReactElement => {
     "Date format DD MMM YYYY (e.g. 09 Jun 2024) or +/-D (e.g. +7)";
   const errorHelperText = "Please enter a valid date in DD MMM YYYY format";
   const [helperText, setHelperText] = useState(defaultHelperText);
-  const [open, setOpen] = useState<boolean>(false);
   const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
     undefined,
   );
@@ -71,12 +67,7 @@ export const SingleWithCustomParser = (): ReactElement => {
   );
 
   const customParser = useCallback(
-    (
-      inputDate: string,
-      format: string,
-      // biome-ignore lint/suspicious/noExplicitAny: any is more flexible for adding new date frameworks
-      locale: any,
-    ): ParserResult<DateFrameworkType> => {
+    (inputDate: string, format: string): ParserResult<DateFrameworkType> => {
       if (!inputDate?.length) {
         const parsedDate = dateAdapter.parse("invalid date", "DD/MMM/YYYY");
         return {
@@ -100,7 +91,7 @@ export const SingleWithCustomParser = (): ReactElement => {
           value: inputDate,
         };
       }
-      return dateAdapter.parse(parsedDate || "", format, locale);
+      return dateAdapter.parse(parsedDate || "", format);
     },
     [dateAdapter, selectedDate],
   );
@@ -111,16 +102,15 @@ export const SingleWithCustomParser = (): ReactElement => {
       <DatePicker
         selectionVariant="single"
         onSelectionChange={handleSelectionChange}
-        onOpenChange={setOpen}
       >
         <DatePickerTrigger>
           <DatePickerSingleInput parse={customParser} />
         </DatePickerTrigger>
         <DatePickerOverlay>
-          <DatePickerSinglePanel helperText={helperText} />
+          <DatePickerSingleGridPanel helperText={helperText} />
         </DatePickerOverlay>
+        <DatePickerHelperText>{helperText}</DatePickerHelperText>
       </DatePicker>
-      {!open ? <FormHelperText>{helperText}</FormHelperText> : null}
     </FormField>
   );
 };

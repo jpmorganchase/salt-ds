@@ -36,7 +36,7 @@ const withBaseName = makePrefixer("saltCalendarMonth");
 
 export const CalendarMonth = forwardRef<
   HTMLDivElement,
-  CalendarMonthProps<any>
+  CalendarMonthProps<DateFrameworkType>
 >(function CalendarMonth<TDate extends DateFrameworkType>(
   props: CalendarMonthProps<TDate>,
   ref: React.Ref<HTMLDivElement>,
@@ -58,10 +58,10 @@ export const CalendarMonth = forwardRef<
   });
 
   const {
-    state: { locale },
+    state: { timezone = "default" },
     helpers: { setHoveredDate },
   } = useCalendarContext<TDate>();
-  const days = generateVisibleDays<TDate>(dateAdapter, date, locale);
+  const days = generateVisibleDays<TDate>(dateAdapter, date, timezone);
   const handleMouseLeave = (event: SyntheticEvent) => {
     setHoveredDate(event, null);
     onMouseLeave?.(event as MouseEvent<HTMLDivElement>);
@@ -78,7 +78,7 @@ export const CalendarMonth = forwardRef<
         {days.map((day) => {
           return (
             <CalendarDay
-              key={dateAdapter.format(day.date, "DD MMM YYYY", locale)}
+              key={dateAdapter.format(day.date, "DD MMM YYYY")}
               day={day.date}
               renderDayContents={renderDayContents}
               month={date}

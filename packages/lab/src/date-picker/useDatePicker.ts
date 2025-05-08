@@ -1,5 +1,5 @@
 import { useControlled, useForkRef, useFormFieldProps } from "@salt-ds/core";
-import type { DateFrameworkType } from "@salt-ds/date-adapters";
+import type { DateFrameworkType, Timezone } from "@salt-ds/date-adapters";
 import {
   type SyntheticEvent,
   useCallback,
@@ -22,6 +22,24 @@ import { useDatePickerOverlay } from "./DatePickerOverlayProvider";
 interface UseDatePickerBaseProps<TDate> {
   /** If `true`, the component is disabled. */
   disabled?: boolean;
+  /**
+   * Function to determine if a day is disabled.
+   * @param date - The date to check.
+   * @returns A string reason if the day is disabled, otherwise `false` or `undefined`.
+   */
+  isDayDisabled?: (date: TDate) => string | false | undefined;
+  /**
+   * Function to determine if a day is highlighted.
+   * @param date - The date to check.
+   * @returns A string reason if the day is highlighted, otherwise `false` or `undefined`.
+   */
+  isDayHighlighted?: (date: TDate) => string | false | undefined;
+  /**
+   * Function to determine if a day is unselectable.
+   * @param date - The date to check.
+   * @returns A string reason if the day is unselectable, otherwise `false` or `undefined`.
+   */
+  isDayUnselectable?: (date: TDate) => string | false | undefined;
   /** If `true`, the component is read-only. */
   readOnly?: boolean;
   /**
@@ -36,12 +54,17 @@ interface UseDatePickerBaseProps<TDate> {
    * Handler for when the date selection is cancelled.
    */
   onCancel?: () => void;
+  /**
+   * Timezone, if un-defined will take the timezone from passed date (or defaultSelectedDate/selectedDate)
+   * Can also be set to "default" to use the default timezone of the date library
+   * Can also be set to "system" to take the timezone of the local system.
+   */
+  timezone?: Timezone;
 }
 
 /**
  * Props for single date selection.
- *
- * @template TDate - The type of the date framework.
+ * @template TDate - The type of the date object.
  */
 export interface UseDatePickerSingleProps<TDate extends DateFrameworkType>
   extends UseDatePickerBaseProps<TDate> {
@@ -81,8 +104,7 @@ export interface UseDatePickerSingleProps<TDate extends DateFrameworkType>
 
 /**
  * Props for date range selection.
- *
- * @template TDate - The type of the date framework.
+ * @template TDate - The type of the date object.
  */
 export interface UseDatePickerRangeProps<TDate extends DateFrameworkType>
   extends UseDatePickerBaseProps<TDate> {
@@ -122,8 +144,7 @@ export interface UseDatePickerRangeProps<TDate extends DateFrameworkType>
 
 /**
  * Props for the useDatePicker hook.
- *
- * @template TDate - The type of the date framework.
+ * @template TDate - The type of the date object.
  * @template SelectionVariant - The selection variant, either "single" or "range".
  */
 export type UseDatePickerProps<
@@ -137,8 +158,7 @@ export type UseDatePickerProps<
 
 /**
  * Custom hook for managing date picker state.
- *
- * @template TDate - The type of the date framework.
+ * @template TDate - The type of the date object.
  * @template SelectionVariant - The selection variant, either "single" or "range".
  * @param props - The props for the date picker.
  * @param ref - The ref for the date picker container.
@@ -152,6 +172,7 @@ export function useDatePicker<
   ref: React.ForwardedRef<HTMLDivElement>,
 ): SingleDatePickerState<TDate> | RangeDatePickerState<TDate> {
   const {
+    dateAdapter,
     defaultDates: { minDate: defaultMinDate, maxDate: defaultMaxDate },
   } = useLocalization<TDate>();
   const {
@@ -159,12 +180,16 @@ export function useDatePicker<
     disabled,
     selectionVariant,
     defaultSelectedDate,
+    isDayDisabled,
+    isDayHighlighted,
+    isDayUnselectable,
     selectedDate: selectedDateProp,
     onSelectionChange,
     onApply,
     minDate = defaultMinDate,
     maxDate = defaultMaxDate,
     onCancel,
+    timezone,
   } = props;
 
   const previousSelectedDate = useRef<typeof selectedDateProp>();
@@ -217,7 +242,28 @@ export function useDatePicker<
         onApply?.(event, date);
       }
     },
-    [setCancelled, setOpen, onApply],
+    [selectionVariant, setOpen, onApply],
+  );
+
+  const checkAndAddError = useCallback(
+    (
+      date: TDate | null | undefined,
+      checkFunction: ((date: TDate) => string | false | undefined) | undefined,
+      errorType: string,
+      details: {
+        errors?: { type: string; message: string | false | undefined }[];
+      } = {},
+    ) => {
+      const errorMessage = date ? checkFunction?.(date) : false;
+      if (errorMessage) {
+        details.errors = details.errors ?? [];
+        details.errors.push({
+          type: errorType,
+          message: errorMessage,
+        });
+      }
+    },
+    [],
   );
 
   const selectSingle = useCallback(
@@ -226,20 +272,28 @@ export function useDatePicker<
       date: SingleDateSelection<TDate> | null,
       details: DateInputSingleDetails,
     ) => {
+      const canBeApplied =
+        dateAdapter.isValid(date) && !details?.errors?.length;
       setSelectedDate(date);
+      checkAndAddError(date, isDayDisabled, "disabled", details);
+      checkAndAddError(date, isDayUnselectable, "unselectable", details);
+
       if (selectionVariant === "single") {
         onSelectionChange?.(event, date, details);
       }
-      if (!enableApply && date) {
+      if (!enableApply && canBeApplied) {
         applySingle(event, date);
       }
     },
     [
+      checkAndAddError,
+      dateAdapter,
       applySingle,
+      isDayDisabled,
+      isDayUnselectable,
       enableApply,
       onSelectionChange,
       selectionVariant,
-      setSelectedDate,
     ],
   );
 
@@ -251,7 +305,7 @@ export function useDatePicker<
         onApply?.(event, date);
       }
     },
-    [onApply, setCancelled, setOpen, selectionVariant],
+    [onApply, setOpen, selectionVariant],
   );
 
   const selectRange = useCallback(
@@ -261,19 +315,54 @@ export function useDatePicker<
       details: DateInputRangeDetails,
     ) => {
       setSelectedDate(date);
+      checkAndAddError(
+        date?.startDate,
+        isDayDisabled,
+        "disabled",
+        details?.startDate,
+      );
+      checkAndAddError(
+        date?.endDate,
+        isDayDisabled,
+        "disabled",
+        details?.endDate,
+      );
+      checkAndAddError(
+        date?.startDate,
+        isDayUnselectable,
+        "unselectable",
+        details?.startDate,
+      );
+      checkAndAddError(
+        date?.endDate,
+        isDayUnselectable,
+        "unselectable",
+        details?.endDate,
+      );
+
       if (selectionVariant === "range") {
         onSelectionChange?.(event, date, details);
       }
-      if (!enableApply && date?.startDate && date?.endDate) {
+      const isAValidRange =
+        dateAdapter.isValid(date?.startDate) &&
+        dateAdapter.isValid(date?.endDate);
+      const isValidSelection =
+        !details?.startDate?.errors?.length &&
+        !details?.endDate?.errors?.length;
+      const canBeApplied = isAValidRange && isValidSelection;
+      if (!enableApply && canBeApplied) {
         applyRange(event, date);
       }
     },
     [
+      checkAndAddError,
+      dateAdapter,
       applyRange,
+      isDayDisabled,
+      isDayUnselectable,
       enableApply,
       onSelectionChange,
       selectionVariant,
-      setSelectedDate,
     ],
   );
 
@@ -283,7 +372,7 @@ export function useDatePicker<
       setOpen(false, event, "cancel");
       onCancel?.();
     },
-    [setCancelled, setOpen, onCancel],
+    [setOpen, onCancel],
   );
 
   const returnValue = {
@@ -297,9 +386,13 @@ export function useDatePicker<
       containerRef,
       minDate,
       maxDate,
+      timezone,
     },
     helpers: {
       cancel,
+      isDayDisabled,
+      isDayHighlighted,
+      isDayUnselectable,
       setEnableApply,
     },
   };

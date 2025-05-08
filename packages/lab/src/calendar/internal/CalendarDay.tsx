@@ -12,7 +12,7 @@ import {
   type ComponentPropsWithRef,
   type ReactElement,
   forwardRef,
-  useRef,
+  useLayoutEffect,
 } from "react";
 import { useLocalization } from "../../localization-provider";
 import { type DayStatus, useCalendarDay } from "../useCalendarDay";
@@ -32,91 +32,107 @@ export interface CalendarDayProps<TDate>
 
 const withBaseName = makePrefixer("saltCalendarDay");
 
-export const CalendarDay = forwardRef<HTMLButtonElement, CalendarDayProps<any>>(
-  function CalendarDay<TDate extends DateFrameworkType>(
-    props: CalendarDayProps<TDate>,
-    ref: React.Ref<HTMLButtonElement>,
-  ) {
-    const {
-      className,
-      day,
-      renderDayContents,
-      month,
-      TooltipProps,
-      format = "DD",
-      ...rest
-    } = props;
-    const { dateAdapter } = useLocalization<TDate>();
-    const targetWindow = useWindow();
-    useComponentCssInjection({
-      testId: "salt-calendar-day",
-      css: calendarDayCss,
-      window: targetWindow,
-    });
+export const CalendarDay = forwardRef<
+  HTMLButtonElement,
+  CalendarDayProps<DateFrameworkType>
+>(function CalendarDay<TDate extends DateFrameworkType>(
+  props: CalendarDayProps<TDate>,
+  ref: React.Ref<HTMLButtonElement>,
+) {
+  const {
+    className,
+    day,
+    renderDayContents,
+    month,
+    TooltipProps,
+    format = "DD",
+    ...rest
+  } = props;
+  const { dateAdapter } = useLocalization<TDate>();
+  const targetWindow = useWindow();
+  useComponentCssInjection({
+    testId: "salt-calendar-day",
+    css: calendarDayCss,
+    window: targetWindow,
+  });
 
-    const dayRef = useRef<HTMLButtonElement>(null);
-    const buttonRef = useForkRef(ref, dayRef);
-    const { status, dayProps, unselectableReason, highlightedReason } =
-      useCalendarDay(
-        {
-          date: day,
-          month,
-        },
-        dayRef,
-      );
-    const { outOfRange, today, unselectable, highlighted, hidden, disabled } =
-      status;
+  const {
+    status,
+    focusedDateRef = null,
+    dayProps,
+    unselectableReason,
+    highlightedReason,
+  } = useCalendarDay({
+    date: day,
+    month,
+  });
+  const {
+    focused,
+    outOfRange,
+    today,
+    unselectable,
+    highlighted,
+    hidden,
+    disabled,
+  } = status;
+  const buttonRef = useForkRef(ref, focusedDateRef);
 
-    const buttonElement = (
-      <button
-        aria-label={dateAdapter.format(day, "DD MMMM YYYY")}
-        disabled={disabled}
-        type="button"
-        {...dayProps}
-        ref={buttonRef}
-        {...rest}
-        className={clsx(
-          withBaseName(),
-          {
-            [withBaseName("hidden")]: hidden,
-            [withBaseName("outOfRange")]: outOfRange,
-            [withBaseName("disabled")]: disabled,
-            [withBaseName("unselectable")]: !!unselectable,
-            [withBaseName("highlighted")]: !!highlighted,
-          },
-          dayProps.className,
-          className,
-        )}
-      >
-        <span
-          className={clsx(withBaseName("content"), {
-            [withBaseName("today")]: today,
-          })}
-        >
-          {renderDayContents
-            ? renderDayContents(day, status)
-            : dateAdapter.format(day, format)}
-        </span>
-      </button>
-    );
-    const hasTooltip = unselectableReason || highlightedReason;
-    if (!hasTooltip) {
-      return buttonElement;
+  useLayoutEffect(() => {
+    if (focused) {
+      focusedDateRef?.current?.focus({ preventScroll: true });
     }
-    return (
-      <Tooltip
-        hideIcon
-        status={unselectableReason ? "error" : "info"}
-        content={
-          unselectableReason || highlightedReason || "Date is out of range"
-        }
-        placement="top"
-        enterDelay={0} // --salt-duration-instant
-        leaveDelay={0} // --salt-duration-instant
-        {...TooltipProps}
+  }, [focused, focusedDateRef?.current?.focus]);
+
+  const buttonElement = (
+    <button
+      aria-label={dateAdapter.format(day, "DD MMMM YYYY")}
+      disabled={disabled}
+      type="button"
+      {...dayProps}
+      ref={buttonRef}
+      {...rest}
+      className={clsx(
+        withBaseName(),
+        {
+          [withBaseName("hidden")]: hidden,
+          [withBaseName("outOfRange")]: outOfRange,
+          [withBaseName("disabled")]: disabled,
+          [withBaseName("unselectable")]: !!unselectable,
+          [withBaseName("highlighted")]: !!highlighted,
+          [withBaseName("focused")]: !!focused,
+        },
+        dayProps.className,
+        className,
+      )}
+    >
+      <span
+        className={clsx(withBaseName("content"), {
+          [withBaseName("today")]: today,
+        })}
       >
-        {buttonElement}
-      </Tooltip>
-    );
-  },
-);
+        {renderDayContents
+          ? renderDayContents(day, status)
+          : dateAdapter.format(day, format)}
+      </span>
+    </button>
+  );
+  const hasTooltip = unselectableReason || highlightedReason;
+  if (!hasTooltip) {
+    return buttonElement;
+  }
+  return (
+    <Tooltip
+      hideIcon
+      status={unselectableReason ? "error" : "info"}
+      content={
+        unselectableReason || highlightedReason || "Date is out of range"
+      }
+      placement="top"
+      enterDelay={0} // --salt-duration-instant
+      leaveDelay={0} // --salt-duration-instant
+      {...TooltipProps}
+    >
+      {buttonElement}
+    </Tooltip>
+  );
+});

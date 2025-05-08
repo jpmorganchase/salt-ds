@@ -1,4 +1,4 @@
-import type { DateFrameworkType } from "@salt-ds/date-adapters";
+import type { DateFrameworkType, Timezone } from "@salt-ds/date-adapters";
 import { type ReactNode, forwardRef } from "react";
 import {
   DateRangeSelectionContext,
@@ -29,23 +29,30 @@ export interface DatePickerBaseProps {
   /**
    * Handler for when open state changes
    * @param newOpen - true when opened
-   * @param event - event that triggered the state change
    * @param reason - reason for the the state change
    */
   onOpenChange?: (
     newOpen: boolean,
-    event?: Event,
     reason?: DatePickerOpenChangeReason,
   ) => void;
   /**
    * the initial open/close state of the overlay, when the open/close state is un-controlled.
    */
   defaultOpen?: DatePickerBaseProps["open"];
+  /**
+   * Specifies the timezone behavior:
+   * - If undefined, the timezone will be derived from the passed date, or from `defaultSelectedDate`/`selectedDate`.
+   * - If set to "default", the default timezone of the date library will be used.
+   * - If set to "system", the local system's timezone will be applied.
+   * - If set to "UTC", the time will be returned in UTC.
+   * - If set to a valid IANA timezone identifier, the time will be returned for that specific timezone.
+   */
+  timezone?: Timezone;
 }
 
 /**
  * Props for the DatePicker component, when `selectionVariant` is `single`.
- * @template T
+ * @template TDate - The type of the date object.
  */
 export interface DatePickerSingleProps<TDate extends DateFrameworkType>
   extends DatePickerBaseProps,
@@ -55,7 +62,7 @@ export interface DatePickerSingleProps<TDate extends DateFrameworkType>
 
 /**
  * Props for the DatePicker component, when `selectionVariant` is `range`.
- * @template T
+ * @template TDate - The type of the date object.
  */
 export interface DatePickerRangeProps<TDate extends DateFrameworkType>
   extends DatePickerBaseProps,
@@ -65,13 +72,16 @@ export interface DatePickerRangeProps<TDate extends DateFrameworkType>
 
 /**
  * Props for the DatePicker component.
- * @template T
+ * @template TDate - The type of the date object.
  */
 export type DatePickerProps<TDate extends DateFrameworkType> =
   | DatePickerSingleProps<TDate>
   | DatePickerRangeProps<TDate>;
 
-export const DatePickerMain = forwardRef<HTMLDivElement, DatePickerProps<any>>(
+export const DatePickerMain = forwardRef<
+  HTMLDivElement,
+  DatePickerProps<DateFrameworkType>
+>(
   <TDate extends DateFrameworkType>(
     props: DatePickerProps<TDate>,
     ref: React.Ref<HTMLDivElement>,
@@ -80,6 +90,9 @@ export const DatePickerMain = forwardRef<HTMLDivElement, DatePickerProps<any>>(
       children,
       readOnly,
       disabled,
+      isDayDisabled,
+      isDayHighlighted,
+      isDayUnselectable,
       selectionVariant,
       defaultSelectedDate,
       selectedDate,
@@ -88,12 +101,16 @@ export const DatePickerMain = forwardRef<HTMLDivElement, DatePickerProps<any>>(
       minDate,
       maxDate,
       onCancel,
+      timezone,
       ...rest
     } = props;
     // biome-ignore lint/suspicious/noExplicitAny: type guard
     const useDatePickerProps: any = {
       readOnly,
       disabled,
+      isDayDisabled,
+      isDayHighlighted,
+      isDayUnselectable,
       selectionVariant,
       defaultSelectedDate,
       selectedDate,
@@ -102,6 +119,7 @@ export const DatePickerMain = forwardRef<HTMLDivElement, DatePickerProps<any>>(
       minDate,
       maxDate,
       onCancel,
+      timezone,
     };
 
     if (props.selectionVariant === "range") {

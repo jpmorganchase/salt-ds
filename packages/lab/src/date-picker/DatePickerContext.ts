@@ -1,5 +1,5 @@
 import { createContext } from "@salt-ds/core";
-import type { DateFrameworkType } from "@salt-ds/date-adapters";
+import type { DateFrameworkType, Timezone } from "@salt-ds/date-adapters";
 import { type Context, type Ref, type SyntheticEvent, useContext } from "react";
 import type { DateRangeSelection, SingleDateSelection } from "../calendar";
 import type {
@@ -9,6 +9,7 @@ import type {
 
 /**
  * Interface representing the base state for a DatePicker.
+ * @template TDate - The type of the date object.
  */
 interface DatePickerBaseState<TDate extends DateFrameworkType> {
   /**
@@ -43,6 +44,15 @@ interface DatePickerBaseState<TDate extends DateFrameworkType> {
      * Reference to the container element.
      */
     containerRef: Ref<HTMLDivElement>;
+    /**
+     * Specifies the timezone behavior:
+     * - If undefined, the timezone will be derived from the passed date, or from `defaultSelectedDate`/`selectedDate`.
+     * - If set to "default", the default timezone of the date library will be used.
+     * - If set to "system", the local system's timezone will be applied.
+     * - If set to "UTC", the time will be returned in UTC.
+     * - If set to a valid IANA timezone identifier, the time will be returned for that specific timezone.
+     */
+    timezone?: Timezone;
   };
   /**
    * Helper functions for managing the DatePicker state.
@@ -53,6 +63,24 @@ interface DatePickerBaseState<TDate extends DateFrameworkType> {
      * @param event - event that triggered the state change
      */
     cancel: (event?: Event) => void;
+    /**
+     * Function to determine if a day is disabled.
+     * @param date - The date to check.
+     * @returns A string reason if the day is disabled, otherwise `false` or `undefined`.
+     */
+    isDayDisabled?: (date: TDate) => string | false | undefined;
+    /**
+     * Function to determine if a day is highlighted.
+     * @param date - The date to check.
+     * @returns A string reason if the day is highlighted, otherwise `false` or `undefined`.
+     */
+    isDayHighlighted?: (date: TDate) => string | false | undefined;
+    /**
+     * Function to determine if a day is unselectable.
+     * @param date - The date to check.
+     * @returns A string reason if the day is unselectable, otherwise `false` or `undefined`.
+     */
+    isDayUnselectable?: (date: TDate) => string | false | undefined;
     /**
      * Sets the enableApply state.
      * @param newEnableApply - The new value for enableApply.
@@ -161,14 +189,14 @@ export type DatePickerState<TDate extends DateFrameworkType> =
  * Context for single date selection.
  */
 export const SingleDateSelectionContext = createContext<
-  SingleDatePickerState<any> | undefined
+  SingleDatePickerState<DateFrameworkType> | undefined
 >("SingleDateSelectionContext", undefined);
 
 /**
  * Context for date range selection.
  */
 export const DateRangeSelectionContext = createContext<
-  RangeDatePickerState<any> | undefined
+  RangeDatePickerState<DateFrameworkType> | undefined
 >("DateRangeSelectionContext", undefined);
 
 /**

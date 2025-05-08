@@ -13,7 +13,6 @@ import {
   CalendarWeekHeader,
 } from "@salt-ds/lab";
 import * as calendarStories from "@stories/calendar/calendar.stories";
-import { es as dateFnsEs } from "date-fns/locale";
 import "moment/dist/locale/es";
 
 // Initialize adapters
@@ -44,13 +43,14 @@ adapterMoment.moment.updateLocale("es", {
 const adapters = [adapterDateFns, adapterDayjs, adapterLuxon, adapterMoment];
 
 const {
-  // Storybook wraps components in it's own LocalizationProvider, so do not compose Stories
+  // Storybook wraps components in their own LocalizationProvider, so do not compose Stories
   CustomDayRender,
   DisabledDates,
   TodayButton,
   TwinCalendars,
   UnselectableDates,
   WithLocale,
+  // biome-ignore lint/suspicious/noExplicitAny: storybook stories
 } = calendarStories as any;
 
 describe("GIVEN a Calendar", () => {
@@ -465,14 +465,7 @@ describe("GIVEN a Calendar", () => {
           const visibleMonth = adapter.parse("01/08/2024", "DD/MM/YYYY").date;
           cy.mount(<WithLocale defaultVisibleMonth={visibleMonth} />);
           // Verify that the month dropdown is rendered in the specified locale
-          cy.findByRole("combobox", { name: "Month Dropdown" }).should(
-            "have.text",
-            adapter.format(
-              visibleMonth,
-              "MMM",
-              adapter.lib === "date-fns" ? dateFnsEs : "es-ES",
-            ),
-          );
+          cy.findByLabelText("Month Dropdown").should("have.text", "ago");
         });
       });
 
@@ -566,7 +559,7 @@ describe("GIVEN a Calendar", () => {
           });
         });
 
-        it("SHOULD not allow selection of unselectable dates", () => {
+        it("SHOULD not allow selection of un-selectable dates", () => {
           cy.mount(<UnselectableDates defaultVisibleMonth={testDate} />);
 
           // Define the weekend dates in March 2024
