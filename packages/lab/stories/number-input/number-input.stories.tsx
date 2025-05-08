@@ -10,6 +10,8 @@ import { AddIcon, RefreshIcon, RemoveIcon } from "@salt-ds/icons";
 import { NumberInput, type NumberInputProps } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react";
 import { useState } from "react";
+import { NumericFormat } from "react-number-format";
+
 export default {
   title: "Lab/Number Input",
   component: NumberInput,
@@ -36,34 +38,53 @@ export const Formatting: StoryFn<NumberInputProps> = (args) => {
         <NumberInput
           {...args}
           onChange={(event, value) => console.log("onchange value", value)}
-          format={(value) => new Intl.NumberFormat().format(value)}
+          format={(value) =>
+            new Intl.NumberFormat("en-US", {
+              style: "currency",
+              currency: "GBP",
+            }).format(value)
+          }
         />
         <FormFieldHelperText>Please enter a number</FormFieldHelperText>
       </FormField>
       <FormField>
-        <FormFieldLabel>With format function</FormFieldLabel>
-        <NumberInput
-          {...args}
-          onChange={(event, value) => console.log("onchange value", value)}
-          format={(value) => `EUR ${value}`}
-        />
-        <FormFieldHelperText>Please enter a number</FormFieldHelperText>
-      </FormField>
-      <FormField>
-        <FormFieldLabel>With suffix</FormFieldLabel>
-        <NumberInput
-          {...args}
-          onChange={(event, value) => console.log("onchange value", value)}
+        <FormFieldLabel>With react number format</FormFieldLabel>
+        <NumericFormat
+          value={12.42}
+          customInput={NumberInput}
+          thousandSeparator
           suffix="%"
+          hideButtons
+          onValueChange={(values) => {
+            const { floatValue } = values;
+            console.log("onValueChange", floatValue);
+          }}
+        />
+      </FormField>
+      <FormField>
+        <FormFieldLabel>With custom format function</FormFieldLabel>
+        <NumberInput
+          {...args}
+          onChange={(event, value) => console.log("onchange value", value)}
+          format={(value) => `${value}%`}
         />
         <FormFieldHelperText>Please enter a number</FormFieldHelperText>
       </FormField>
       <FormField>
-        <FormFieldLabel>With prefix</FormFieldLabel>
+        <FormFieldLabel>With suffix (end adornment)</FormFieldLabel>
         <NumberInput
           {...args}
           onChange={(event, value) => console.log("onchange value", value)}
-          prefix="£"
+          endAdornment="%"
+        />
+        <FormFieldHelperText>Please enter a number</FormFieldHelperText>
+      </FormField>
+      <FormField>
+        <FormFieldLabel>With prefix (start adornment)</FormFieldLabel>
+        <NumberInput
+          {...args}
+          onChange={(event, value) => console.log("onchange value", value)}
+          startAdornment="£"
         />
         <FormFieldHelperText>Please enter a number</FormFieldHelperText>
       </FormField>
