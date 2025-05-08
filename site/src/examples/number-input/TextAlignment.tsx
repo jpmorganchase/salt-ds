@@ -5,15 +5,15 @@ export const TextAlignment = () => (
   <StackLayout style={{ width: "256px" }}>
     <FormField>
       <FormFieldLabel>Left aligned</FormFieldLabel>
-      <NumberInput defaultValue="Value" textAlign="left" />
+      <NumberInput defaultValue={123} textAlign="left" />
     </FormField>
     <FormField>
       <FormFieldLabel>Center aligned</FormFieldLabel>
-      <NumberInput defaultValue="Value" textAlign="center" />
+      <NumberInput defaultValue={123} textAlign="center" />
     </FormField>
     <FormField>
       <FormFieldLabel>Right aligned</FormFieldLabel>
-      <NumberInput defaultValue="Value" textAlign="right" />
+      <NumberInput defaultValue={123} textAlign="right" />
     </FormField>
   </StackLayout>
 );
