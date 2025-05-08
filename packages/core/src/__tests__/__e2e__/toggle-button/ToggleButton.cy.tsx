@@ -1,25 +1,15 @@
-import { ToggleButton, type ToggleButtonProps } from "@salt-ds/core";
+import { ToggleButton } from "@salt-ds/core";
 import { HomeIcon } from "@salt-ds/icons";
-import { useState } from "react";
+import * as toggleButtonStories from "@stories/toggle-button/toggle-button.stories";
+import { composeStories } from "@storybook/react";
+
+const { Controlled, DefaultSelected } = composeStories(toggleButtonStories);
 
 describe("GIVEN a ToggleButton with Icon and Text", () => {
   it("THEN it should toggle", () => {
     const selectionChangeSpy = cy.stub().as("selectionChangeSpy");
-    const ControlledToggleButtonExample = () => {
-      const [toggled, setToggled] = useState(true);
-      const handleToggle: ToggleButtonProps["onChange"] = (event) => {
-        setToggled((old) => !old);
-        selectionChangeSpy(event);
-      };
-      return (
-        <ToggleButton onChange={handleToggle} selected={toggled} value="home">
-          <HomeIcon aria-hidden />
-          Home
-        </ToggleButton>
-      );
-    };
 
-    cy.mount(<ControlledToggleButtonExample />);
+    cy.mount(<Controlled onChange={selectionChangeSpy} />);
 
     cy.findByRole("button").should("have.text", "Home");
     cy.findByRole("button").should("have.attr", "aria-pressed", "true");
@@ -131,5 +121,16 @@ describe("GIVEN a read-only ToggleButton", () => {
     cy.findByRole("button").should("have.attr", "aria-pressed", "true");
     cy.findByRole("button").focus().should("have.focus");
     cy.findByRole("button").should("have.attr", "aria-readonly");
+  });
+});
+
+describe("GIVEN a defaultSelected ToggleButton", () => {
+  it("THEN it should be selected by default", () => {
+    cy.mount(<DefaultSelected />);
+    cy.findByRole("button").should("have.attr", "aria-pressed", "true");
+  });
+  it("THEN it be controllable by selected prop", () => {
+    cy.mount(<DefaultSelected selected={false} />);
+    cy.findByRole("button").should("have.attr", "aria-pressed", "false");
   });
 });
