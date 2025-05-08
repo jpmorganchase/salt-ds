@@ -977,7 +977,7 @@ export const RangeWithInitialError: StoryFn<
         selectionVariant="range"
         defaultSelectedDate={{
           startDate: dateAdapter.parse("09/06/2024", "DD/MM/YYYY").date,
-          endDate: null,
+          endDate: dateAdapter.parse("bad date", "DD MMM YYYY").date,
         }}
         {...args}
         onSelectionChange={handleSelectionChange}
@@ -997,6 +997,14 @@ export const RangeWithInitialError: StoryFn<
       </DatePicker>
     </FormField>
   );
+};
+// Passing a date object to a Story, containing an invalid date, will cause Storybook to throw from toISOString()
+RangeWithInitialError.parameters = {
+  docs: {
+    source: {
+      code: "Disabled for this story, see https://github.com/storybookjs/storybook/issues/11554",
+    },
+  },
 };
 
 export const SingleWithFormField: StoryFn<

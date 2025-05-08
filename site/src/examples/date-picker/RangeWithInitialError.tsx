@@ -90,7 +90,7 @@ export const RangeWithInitialError = (): ReactElement => {
         selectionVariant="range"
         defaultSelectedDate={{
           startDate: dateAdapter.parse("09/06/2024", "DD/MM/YYYY").date,
-          endDate: null,
+          endDate: dateAdapter.parse("bad date", "DD MMM YYYY").date,
         }}
         onSelectionChange={handleSelectionChange}
       >
