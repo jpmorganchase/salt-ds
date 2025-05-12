@@ -3,12 +3,10 @@ import {
   Checkbox,
   CheckboxGroup,
   FlexItem,
-  FlexLayout,
   FlowLayout,
   FormField,
   FormFieldLabel,
   Input,
-  SaltProvider,
   StackLayout,
   StatusIndicator,
   Text,
@@ -31,7 +29,9 @@ export function IconPreview() {
   }, []);
 
   const [search, setSearch] = useState("");
-  const deferredSearch = useDeferredValue(search.toLowerCase());
+  const deferredSearch = useDeferredValue(
+    search.toLowerCase().replaceAll(/\s/g, ""),
+  );
   const [variants, setVariants] = useState<("solid" | "outline")[]>([
     "solid",
     "outline",
@@ -57,7 +57,8 @@ export function IconPreview() {
 
   const filteredIcons = useMemo(() => {
     return Object.entries(allIcons).filter(([name]) => {
-      const matchesSearch = name.toLowerCase().includes(deferredSearch);
+      const iconNameToMatch = name.toLowerCase(); // add acronym when available
+      const matchesSearch = iconNameToMatch.includes(deferredSearch);
       const isOutlineIcon = !name.endsWith("SolidIcon");
       const isSolidIcon = name.endsWith("SolidIcon");
       return (
@@ -112,33 +113,37 @@ export function IconPreview() {
     );
   }, [filteredIcons, deferredSearch]);
 
+  const totalCount = Object.entries(allIcons).length;
+
   return (
     <StackLayout className={styles.root} gap={1}>
-      <FlexLayout wrap>
+      <FlowLayout justify="space-between">
         <FlexItem>
-          <Input
-            placeholder="Search icons"
-            aria-label="Search icons"
-            value={search}
-            onChange={handleSearch}
-            className={styles.search}
-            startAdornment={<SearchIcon />}
-            endAdornment={
-              search ? (
-                <Button
-                  onClick={handleClear}
-                  appearance="transparent"
-                  sentiment="neutral"
-                  aria-label="Clear search"
-                >
-                  <CloseIcon aria-hidden />
-                </Button>
-              ) : null
-            }
-          />
+          <FormField>
+            <FormFieldLabel>Search icons</FormFieldLabel>
+            <Input
+              value={search}
+              onChange={handleSearch}
+              className={styles.search}
+              startAdornment={<SearchIcon />}
+              endAdornment={
+                search ? (
+                  <Button
+                    onClick={handleClear}
+                    appearance="transparent"
+                    sentiment="neutral"
+                    aria-label="Clear search"
+                  >
+                    <CloseIcon aria-hidden />
+                  </Button>
+                ) : null
+              }
+            />
+          </FormField>
         </FlexItem>
+
         <FlexItem>
-          <FormField labelPlacement="left" className={styles.formfield}>
+          <FormField>
             <FormFieldLabel>Show variant</FormFieldLabel>
             <CheckboxGroup
               checkedValues={variants}
@@ -150,13 +155,16 @@ export function IconPreview() {
             </CheckboxGroup>
           </FormField>
         </FlexItem>
-        <FlexItem className={styles.formfield}>
-          <Text className={styles.iconCount}>
-            Icon Count: {filteredIcons.length}
-          </Text>
-        </FlexItem>
-      </FlexLayout>
-      <SaltProvider density="medium">{renderIcons}</SaltProvider>
+      </FlowLayout>
+
+      <div className={styles.resultContainer}>{renderIcons}</div>
+
+      <Text styleAs="label" color="secondary">
+        Total icons:{totalCount}.
+        {totalCount > filteredIcons.length
+          ? ` Filtered: ${filteredIcons.length}.`
+          : null}
+      </Text>
     </StackLayout>
   );
 }
