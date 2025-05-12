@@ -16,7 +16,7 @@ import toggleButtonCss from "./ToggleButton.css";
 
 export interface ToggleButtonProps extends ComponentPropsWithoutRef<"button"> {
   /**
-   * The appearance of the toggle button.
+   * The appearance of the toggle button when `selected` is true.
    * @default solid
    */
   appearance?: Extract<ButtonAppearance, "bordered" | "solid">;
@@ -34,9 +34,14 @@ export interface ToggleButtonProps extends ComponentPropsWithoutRef<"button"> {
    */
   sentiment?: ButtonSentiment;
   /**
-   * Whether the toggle button is a selected state.
+   * Whether the toggle button is in a selected state.
    */
   selected?: boolean;
+  /**
+   * Whether the toggle button is selected by default.
+   * This will be disregarded if `selected` is already set.
+   */
+  defaultSelected?: boolean;
   /**
    * Value of the toggle button, to be used when in a controlled state.
    */
@@ -58,6 +63,7 @@ export const ToggleButton = forwardRef<HTMLButtonElement, ToggleButtonProps>(
       onChange,
       readOnly: readOnlyProp,
       selected: selectedProp,
+      defaultSelected,
       sentiment: sentimenentProp,
       ...rest
     } = props;
@@ -90,7 +96,7 @@ export const ToggleButton = forwardRef<HTMLButtonElement, ToggleButtonProps>(
 
     const [selected, setSelected] = useControlled({
       controlled: toggleButtonGroupSelected,
-      default: Boolean(selectedProp),
+      default: Boolean(defaultSelected),
       name: "ToggleButton",
       state: "selected",
     });
