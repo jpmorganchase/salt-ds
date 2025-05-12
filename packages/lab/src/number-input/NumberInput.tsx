@@ -28,7 +28,7 @@ import {
 } from "react";
 import {
   isOutOfRange,
-  sanitizeInput,
+  parseAndFormat,
   toFixedDecimalPlaces,
   toFloat,
 } from "./internal/utils";
@@ -165,7 +165,7 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       disabled,
       emptyReadOnlyMarker = "—",
       endAdornment,
-      format = (value) => value,
+      format,
       hideButtons,
       id: idProp,
       inputProps: inputPropsProp = {},
@@ -227,24 +227,20 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       ? ["required", "asterisk"].includes(formFieldRequired)
       : inputRequired;
 
-    const [valueState, setValue] = useControlled({
+    const [value, setValue] = useControlled({
       controlled: valueProp,
       default:
-        typeof defaultValueProp === "number"
-          ? format(toFixedDecimalPlaces(defaultValueProp, decimalPlaces))
-          : defaultValueProp,
+        defaultValueProp !== undefined
+          ? parseAndFormat(decimalPlaces, defaultValueProp, format)
+          : "",
       name: "NumberInput",
       state: "value",
     });
 
     // Won't be needed when `:has` css can be used
     const [focused, setFocused] = useState(false);
-
     const inputRef = useRef<HTMLInputElement | null>(null);
     const forkedInputRef = useForkRef(inputRef, inputRefProp);
-    // If value is undefined, start increments/decrements from 0 if min is less than 0 otherwise from min
-    const value = valueState === undefined ? (min < 0 ? 0 : min) : valueState;
-    // const formattedValue = format(value);
 
     const {
       decrementButtonProps,
@@ -254,7 +250,6 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
     } = useNumberInput({
       inputRef,
       setValue,
-      setFocused,
       decimalPlaces,
       disabled,
       max,
@@ -268,30 +263,33 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
     });
 
     const handleInputFocus = (event: FocusEvent<HTMLInputElement>) => {
-      setFocused(true);
-
+      if (!isDisabled) setFocused(true);
       inputOnFocus?.(event);
     };
 
     const handleInputBlur = (event: FocusEvent<HTMLInputElement>) => {
       setFocused(false);
-      const sanitizedInput = sanitizeInput(event.target.value);
-      const floatValue = toFloat(sanitizedInput);
-      const roundedValue = toFixedDecimalPlaces(floatValue, decimalPlaces);
-      const formattedValue = format(roundedValue);
+      const changedValue = event.target.value;
+      const formattedValue = parseAndFormat(
+        decimalPlaces,
+        changedValue,
+        format,
+      );
 
       setValue(formattedValue);
-      // onChangeProp?.(event, sanitizedInput);
       inputOnBlur?.(event);
     };
 
     const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
       const changedValue = event.target.value;
-      const sanitizedInput = sanitizeInput(changedValue);
-      const formattedValue = format(sanitizedInput);
+      const formattedValue = parseAndFormat(
+        decimalPlaces,
+        changedValue,
+        format,
+      );
 
       setValue(changedValue);
-      onChangeProp?.(event, sanitizedInput);
+      onChangeProp?.(event, formattedValue);
       inputOnChange?.(event);
     };
 
@@ -397,7 +395,7 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
             disabled={isDisabled}
             onBlur={handleInputBlur}
             onChange={handleInputChange}
-            onFocus={!isDisabled ? handleInputFocus : undefined}
+            onFocus={handleInputFocus}
             onKeyDown={handleInputKeyDown}
             placeholder={placeholder}
             readOnly={isReadOnly}

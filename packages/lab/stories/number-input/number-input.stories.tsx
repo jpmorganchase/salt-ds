@@ -31,13 +31,29 @@ Default.args = {
 };
 
 export const Formatting: StoryFn<NumberInputProps> = (args) => {
+  const [value, setValue] = useState("10000");
+
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    switch (event.key) {
+      case "ArrowUp": {
+        event.preventDefault();
+        setValue((Number.parseFloat(value) + 1).toString());
+        break;
+      }
+      case "ArrowDown": {
+        event.preventDefault();
+        setValue((Number.parseFloat(value) - 1).toString());
+        break;
+      }
+    }
+  };
+
   return (
     <StackLayout>
       <FormField>
-        <FormFieldLabel>With Intl Number Format</FormFieldLabel>
+        <FormFieldLabel>With Intl Number Format (currency)</FormFieldLabel>
         <NumberInput
           {...args}
-          onChange={(event, value) => console.log("onchange value", value)}
           format={(value) =>
             new Intl.NumberFormat("en-US", {
               style: "currency",
@@ -48,44 +64,32 @@ export const Formatting: StoryFn<NumberInputProps> = (args) => {
         <FormFieldHelperText>Please enter a number</FormFieldHelperText>
       </FormField>
       <FormField>
-        <FormFieldLabel>With react number format</FormFieldLabel>
+        <FormFieldLabel>
+          With react number format (thousand separator)
+        </FormFieldLabel>
         <NumericFormat
-          value={12.42}
+          value={value}
           customInput={NumberInput}
           thousandSeparator
-          suffix="%"
+          onKeyDown={handleKeyDown}
           hideButtons
-          onValueChange={(values) => {
-            const { floatValue } = values;
-            console.log("onValueChange", floatValue);
-          }}
         />
       </FormField>
       <FormField>
-        <FormFieldLabel>With custom format function</FormFieldLabel>
-        <NumberInput
-          {...args}
-          onChange={(event, value) => console.log("onchange value", value)}
-          format={(value) => `${value}%`}
-        />
+        <FormFieldLabel>
+          With custom format function (custom units)
+        </FormFieldLabel>
+        <NumberInput {...args} format={(value) => `${value} inches`} />
         <FormFieldHelperText>Please enter a number</FormFieldHelperText>
       </FormField>
       <FormField>
         <FormFieldLabel>With suffix (end adornment)</FormFieldLabel>
-        <NumberInput
-          {...args}
-          onChange={(event, value) => console.log("onchange value", value)}
-          endAdornment="%"
-        />
+        <NumberInput {...args} endAdornment="%" />
         <FormFieldHelperText>Please enter a number</FormFieldHelperText>
       </FormField>
       <FormField>
         <FormFieldLabel>With prefix (start adornment)</FormFieldLabel>
-        <NumberInput
-          {...args}
-          onChange={(event, value) => console.log("onchange value", value)}
-          startAdornment="£"
-        />
+        <NumberInput {...args} startAdornment="£" />
         <FormFieldHelperText>Please enter a number</FormFieldHelperText>
       </FormField>
     </StackLayout>
