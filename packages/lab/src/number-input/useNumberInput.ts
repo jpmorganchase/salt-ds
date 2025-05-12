@@ -11,9 +11,8 @@ import { useActivateWhileMouseDown } from "./internal/useActivateWhileMouseDown"
 import {
   isAtMax,
   isAtMin,
+  parseAndFormat,
   sanitizeInput,
-  toFixedDecimalPlaces,
-  toFloat,
 } from "./internal/utils";
 
 /**
@@ -28,7 +27,6 @@ export const useNumberInput = ({
   onChange,
   readOnly,
   setValue,
-  setFocused,
   step = 1,
   stepMultiplier = 2,
   value,
@@ -45,60 +43,55 @@ export const useNumberInput = ({
   | "step"
   | "stepMultiplier"
 > & {
-  setValue: Dispatch<SetStateAction<string | number | undefined>>;
-  setFocused: Dispatch<SetStateAction<boolean>>;
+  setValue: Dispatch<SetStateAction<string | number>>;
   value: string | number;
   inputRef: MutableRefObject<HTMLInputElement | null>;
-  format: (value: number | string) => number | string;
+  format?: (value: number | string) => number | string;
 }) => {
-  const setValueInRange = useCallback(
-    (event: SyntheticEvent | undefined, modifiedValue: number) => {
+  const updateValue = useCallback(
+    (event: SyntheticEvent | undefined, nextValue: number) => {
       if (readOnly) return;
-      let nextValue = modifiedValue;
-      if (nextValue < min) nextValue = min;
-      if (nextValue > max) nextValue = max;
 
-      const roundedValue = toFixedDecimalPlaces(nextValue, decimalPlaces);
-      if (Number.isNaN(toFloat(roundedValue))) return;
-
-      console.log("SETTTING VALUE ", nextValue);
-
-      setValue(nextValue);
-      onChange?.(event, roundedValue);
+      const clampedValue = clamp(nextValue);
+      const formattedValue = parseAndFormat(
+        decimalPlaces,
+        clampedValue,
+        format,
+      );
+      setValue(formattedValue);
+      onChange?.(event, formattedValue);
     },
-    [decimalPlaces, min, max, onChange, readOnly, setValue, format],
+    [decimalPlaces, onChange, readOnly, setValue, format],
   );
+
+  const clamp = (value: number) => {
+    if (value < min) return min;
+    if (value > max) return max;
+    return value;
+  };
 
   const decrementValue = useCallback(
     (event?: SyntheticEvent, block?: boolean) => {
       if (isAtMin(value, min)) return;
-      const sanitizedValue = sanitizeInput(value);
       const decrementStep = block ? stepMultiplier * step : step;
-      const nextValue =
-        sanitizedValue === ""
-          ? -decrementStep
-          : toFloat(sanitizedValue) - decrementStep;
-      setValueInRange(event, nextValue);
+      const sanitizedValue = sanitizeInput(value);
+      const nextValue = sanitizedValue - decrementStep;
+
+      updateValue(event, nextValue);
     },
-    [value, min, step, stepMultiplier, setValueInRange],
+    [value, min, step, stepMultiplier, updateValue],
   );
 
   const incrementValue = useCallback(
     (event?: SyntheticEvent, block?: boolean) => {
       if (isAtMax(value, max)) return;
-      console.log("Value in incremenet", value);
       const incrementStep = block ? stepMultiplier * step : step;
       const sanitizedValue = sanitizeInput(value);
+      const nextValue = sanitizedValue + incrementStep;
 
-      console.log("sanitized", sanitizedValue);
-      const nextValue =
-        sanitizedValue === ""
-          ? incrementStep
-          : toFloat(sanitizedValue) + incrementStep;
-      console.log("next value", nextValue);
-      setValueInRange(event, nextValue);
+      updateValue(event, nextValue);
     },
-    [value, max, step, stepMultiplier, setValueInRange],
+    [value, max, step, stepMultiplier, updateValue],
   );
 
   const { activate: decrementSpinner } = useActivateWhileMouseDown(
@@ -125,7 +118,6 @@ export const useNumberInput = ({
     disabled: disabled || isAtMax(value, max),
     onMouseDown: (event: MouseEvent<HTMLButtonElement>) => {
       event.preventDefault();
-      setFocused(true);
       if (event.nativeEvent.button !== 0) {
         // To match closely with <input type='input'>
         return;
@@ -140,7 +132,6 @@ export const useNumberInput = ({
     disabled: disabled || isAtMin(value, min),
     onMouseDown: (event: MouseEvent<HTMLButtonElement>) => {
       event.preventDefault();
-      setFocused(true);
       if (event.nativeEvent.button !== 0) {
         // To match closely with <input type='input'>
         return;

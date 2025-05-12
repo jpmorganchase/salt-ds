@@ -29,7 +29,7 @@ export const sanitizeInput = (numberString: string | number) => {
     // If more than one decimal point is found, join the parts with only the first decimal point
     sanitizedInput = `${parts[0]}.${parts.slice(1).join("")}`;
   }
-  return sanitizedInput;
+  return toFloat(sanitizedInput);
 };
 
 export const isAtMax = (value: number | string, max: number) => {
@@ -48,4 +48,17 @@ export const isOutOfRange = (
   if (value === undefined) return true;
   const floatValue = toFloat(value);
   return floatValue > max || floatValue < min;
+};
+
+export const parseAndFormat = (
+  decimalPlaces: number,
+  numberString: string | number,
+  format?: (value: string | number) => number | string,
+) => {
+  const sanitized = sanitizeInput(numberString);
+  const formattedValue = format
+    ? format(sanitized)
+    : toFixedDecimalPlaces(sanitized, decimalPlaces);
+
+  return formattedValue;
 };
