@@ -224,11 +224,11 @@ export class AdapterLuxon implements SaltDateAdapter<DateTime, string> {
 
   /**
    * Checks if a Luxon DateTime object is valid.
-   * @param date - The Luxon DateTime object to check.
+   * @param date - The Luxon DateTime object to check, null or undefined.
    * @returns True if the date is valid date object, false otherwise.
    */
   // biome-ignore lint/suspicious/noExplicitAny: date object
-  public isValid(date: any): date is DateTime {
+  public isValid(date: DateTime | null | undefined): date is DateTime {
     return date instanceof DateTime ? date.isValid : false;
   }
 
@@ -366,9 +366,10 @@ export class AdapterLuxon implements SaltDateAdapter<DateTime, string> {
   };
 
   /**
-   * Set the timezone for the Day.js object
-   * @param date - A Day.js object
-   * @returns  'UTC' | 'system' or the IANA time zone
+   * Set the timezone for the DateTime object
+   * @param date - A Luxon DateTime object
+   * @param timezone - Timezone to set date object to
+   * @returns  date object set to the timezone
    */
   public setTimezone = (date: DateTime, timezone: Timezone): DateTime => {
     if (!date.zone.equals(Info.normalizeZone(timezone))) {
@@ -407,10 +408,10 @@ export class AdapterLuxon implements SaltDateAdapter<DateTime, string> {
   }
 
   /**
-   * Gets the end of a specified time period for a Day.js date object.
-   * @param date - The Day.js date object.
+   * Gets the end of a specified time period for a Luxon DateTime object.
+   * @param date - The Luxon DateTime object.
    * @param offset - The time period ("day", "week", "month", "year").
-   * @returns The Day.js date object representing the end of the period.
+   * @returns The Luxon DateTime object representing the end of the period.
    */
   public endOf(
     date: DateTime,

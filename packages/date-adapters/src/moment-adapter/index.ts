@@ -201,11 +201,11 @@ export class AdapterMoment implements SaltDateAdapter<Moment, string> {
 
   /**
    * Checks if a Moment.js date object is valid.
-   * @param date - The Moment.js date object to check.
+   * @param date - The Moment.js date object to check, null or undefined.
    * @returns True if the date is valid date object, false otherwise.
    */
   // biome-ignore lint/suspicious/noExplicitAny: date framework
-  public isValid(date: any): date is Moment {
+  public isValid(date: Moment | null | undefined): date is Moment {
     return this.moment.isMoment(date) ? date.isValid() : false;
   }
 
@@ -385,6 +385,12 @@ export class AdapterMoment implements SaltDateAdapter<Moment, string> {
     return zone ?? this.moment.defaultZone?.name ?? defaultZone;
   };
 
+  /**
+   * Set the timezone for the Moment object
+   * @param date - A Moment object
+   * @param timezone - Timezone to set date object to
+   * @returns  date object set to the timezone
+   */
   public setTimezone = (date: Moment, timezone: Timezone): Moment => {
     if (this.getTimezone(date) === timezone) {
       return date;

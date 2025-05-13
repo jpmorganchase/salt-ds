@@ -97,7 +97,11 @@ export type RecommendedFormats =
   | string;
 
 /**
- * Timezone options for date operations.
+ * Timezone options for date/time operations.
+ - "default", the default timezone of the date library will be used.
+ - "system", the local system's timezone will be applied.
+ - "UTC", the time will be returned in UTC.
+ -  string, a valid IANA timezone identifier, the time will be returned for that specific timezone.
  */
 export type Timezone = "default" | "system" | "UTC" | string;
 
@@ -165,11 +169,10 @@ export interface SaltDateAdapter<
   /**
    * Checks if a date object is valid.
    *
-   * @param date - The date object to check.
+   * @param date - The date object to check, null or undefined.
    * @returns True if the date is valid, false otherwise.
    */
-  // biome-ignore lint/suspicious/noExplicitAny: date framework dependent
-  isValid(date: any): date is TDate;
+  isValid(date: TDate | null | undefined): date is TDate;
 
   /**
    * Adds time to a date object.
@@ -349,13 +352,15 @@ export interface SaltDateAdapter<
 
   /**
    * Get timezone
+   * @param date - The date object.
    */
   getTimezone(date: TDate): string;
 
   /**
-   * Set the timezone for the Day.js object
-   * @param date - A Day.js object
-   * @returns  'UTC' | 'system' or the IANA time zone
+   * Set the timezone for the date object
+   * @param date - The date object.
+   * @param timezone - Timezone to set date object to
+   * @returns  date object set to the timezone
    */
   setTimezone(date: TDate, timezone: Timezone): TDate;
 

@@ -38,6 +38,7 @@ import {
   type RecommendedFormats,
   type SaltDateAdapter,
   type TimeFields,
+  type Timezone,
 } from "../types";
 
 declare module "@salt-ds/date-adapters" {
@@ -139,8 +140,7 @@ export class AdapterDateFns implements SaltDateAdapter<Date, Locale> {
     if (!value || !this.isValidDateString(value)) {
       return new Date(Number.NaN);
     }
-    const date = new Date(value);
-    return date;
+    return new Date(value);
   };
 
   /**
@@ -208,11 +208,11 @@ export class AdapterDateFns implements SaltDateAdapter<Date, Locale> {
 
   /**
    * Checks if a Date object is valid.
-   * @param date - The Date object to check.
+   * @param date - The Date object to check, null or undefined.
    * @returns True if the date is valid date object, false otherwise.
    */
   // biome-ignore lint/suspicious/noExplicitAny: date object
-  public isValid(date: any): date is Date {
+  public isValid(date: Date | null | undefined): date is Date {
     return date instanceof Date && isValidDateFns(date);
   }
 
@@ -340,20 +340,20 @@ export class AdapterDateFns implements SaltDateAdapter<Date, Locale> {
   }
 
   /**
-   * Get the timezone from the Date object
-   * @param date - A Date object
-   * @returns "default" as Timezones are not supported by the Date object
+   * Get the timezone from the Date object (un-supported by v3 date-fns/Date object)
+   * @returns "default" as Timezones are not supported by the date-fns/Date object
    */
   public getTimezone = (): string => {
     return "default";
   };
 
   /**
-   * Set the timezone for the Day.js object
-   * @param date - A Day.js object
-   * @returns  'UTC' | 'system' or the IANA time zone
+   * Set the timezone for the Date object (un-supported by v3 date-fns/Date object)
+   * @param date - A Date object
+   * @param _timezone - Timezone to set date object to (un-used)
+   * @returns  date object set to the timezone
    */
-  public setTimezone = (date: Date): Date => {
+  public setTimezone = (date: Date, _timezone: Timezone): Date => {
     return date;
   };
 

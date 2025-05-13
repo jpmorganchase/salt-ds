@@ -225,11 +225,11 @@ export class AdapterDayjs implements SaltDateAdapter<Dayjs, string> {
 
   /**
    * Checks if a Day.js date object is valid.
-   * @param date - The Day.js date object to check.
+   * @param date - The Day.js date object to check, null or undefined.
    * @returns True if the date is valid date object, false otherwise.
    */
   // biome-ignore lint/suspicious/noExplicitAny: date object
-  public isValid(date: any): date is Dayjs {
+  public isValid(date: Dayjs | null | undefined): date is Dayjs {
     return this.isDayjs(date) ? date.isValid() : false;
   }
 
@@ -418,7 +418,8 @@ export class AdapterDayjs implements SaltDateAdapter<Dayjs, string> {
   /**
    * Set the timezone for the Day.js object
    * @param date - A Day.js object
-   * @returns  'UTC' | 'system' or the IANA time zone
+   * @param timezone - Timezone to set date object to
+   * @returns  date object set to the timezone
    */
   public setTimezone = (date: Dayjs, timezone: Timezone): Dayjs => {
     if (this.getTimezone(date) === timezone) {
