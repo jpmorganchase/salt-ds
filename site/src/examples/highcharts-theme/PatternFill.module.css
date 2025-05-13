@@ -1,0 +1,3 @@
+.patternFills :global(.highcharts-color-0) {
+  fill: url(#diagonal-up);
+}

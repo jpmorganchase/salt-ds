@@ -1,0 +1,44 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+## Using the package
+
+### When to use
+
+When you want to use the Salt theme with Highcharts.
+
+<Callout title="Note">
+
+TODO: Call out on v10
+
+</Callout>
+
+## Import
+
+```js
+import Highcharts from "highcharts";
+import HighchartsReact from "highcharts-react-official";
+```
+
+### Import Salt Highcharts theme
+
+To import the Salt Highcharts theme, use:
+
+```js
+import "@salt-ds/highcharts-theme/index.css";
+```
+
+Then wrap your Highcharts with `salt-highcharts-theme` class names shown below:
+
+```js
+<div className="salt-highcharts-theme">
+  <HighchartsReact highcharts={Highcharts} options={options1} />
+</div>
+```
