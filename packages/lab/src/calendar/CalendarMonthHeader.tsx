@@ -1,4 +1,4 @@
-import { makePrefixer } from "@salt-ds/core";
+import { makePrefixer, Text } from "@salt-ds/core";
 import { clsx } from "clsx";
 import { type ComponentPropsWithRef, forwardRef, useCallback } from "react";
 
@@ -64,7 +64,7 @@ export const CalendarMonthHeader = forwardRef<
         ref={ref}
         {...rest}
       >
-        <small>{formatMonth(month)}</small>
+        <Text><small>{formatMonth(month)}</small></Text>
       </div>
     );
   },
