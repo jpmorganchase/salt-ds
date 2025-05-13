@@ -4,6 +4,7 @@ export * from "./SingleControlled";
 export * from "./SingleGridPanel";
 export * from "./SingleResponsiveGridPanel";
 export * from "./SingleWithConfirmation";
+export * from "./SingleWithCustomRendering";
 export * from "./SingleWithCustomParser";
 export * from "./SingleWithCustomPanel";
 export * from "./SingleWithDisabledDates";

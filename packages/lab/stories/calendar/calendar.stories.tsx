@@ -17,13 +17,22 @@ import {
   type CalendarProps,
   type CalendarRangeProps,
   type CalendarSingleProps,
+  type DayStatus,
   type UseCalendarSelectionRangeProps,
   type UseCalendarSelectionSingleProps,
   useLocalization,
 } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react";
-import { type SyntheticEvent, useCallback, useEffect } from "react";
+import {
+  type ComponentPropsWithRef,
+  type ReactElement,
+  type SyntheticEvent,
+  useCallback,
+  useEffect,
+} from "react";
 import { useState } from "react";
+import { clsx } from "clsx";
+import "./calendar.stories.css";
 
 import "dayjs/locale/es"; // Import the Spanish locale
 import { es as dateFnsEs } from "date-fns/locale";
@@ -32,6 +41,9 @@ import "moment/dist/locale/es";
 export default {
   title: "Lab/Calendar",
   component: Calendar,
+  parameters: {
+    actions: { disable: true }, // Disable actions for all stories in this file
+  },
   args: {
     selectionVariant: "single",
     children: (
@@ -291,18 +303,33 @@ export const TodayButton: StoryFn<
   );
 };
 
-function renderDayContents(date: DateFrameworkType) {
+export const CustomDayRendering: StoryFn<typeof Calendar> = (args) => {
   const { dateAdapter } = useLocalization<DateFrameworkType>();
-  return <>{dateAdapter.format(date, "DD")}</>;
-}
 
-export const CustomDayRender: StoryFn<typeof Calendar> = (args) => {
+  function renderDayButton(
+    date: DateFrameworkType,
+    { className, ...props }: ComponentPropsWithRef<"button">,
+    status: DayStatus,
+  ): ReactElement | null {
+    return (
+      <button
+        {...props}
+        className={clsx([{ ["buttonWithDot"]: !status.outOfRange }, className])}
+      >
+        <span className={clsx({ ["dot"]: !status.outOfRange })}>
+          {dateAdapter.format(date, "D")}
+        </span>
+        {status.today ? <span className={"today"}></span> : null}
+      </button>
+    );
+  }
+
   return (
-    <Calendar {...args}>
+    <Calendar hideOutOfRangeDates {...args}>
       <CalendarNavigation />
       <CalendarGrid
         getCalendarMonthProps={(_date: DateFrameworkType) => ({
-          renderDayContents,
+          renderDayButton,
         })}
       />
     </Calendar>

@@ -23,9 +23,9 @@ export interface CalendarMonthProps<TDate>
    */
   date: TDate;
   /**
-   * Function to render the contents of a day.
+   * Function to render a day button.
    */
-  renderDayContents?: CalendarDayProps<TDate>["renderDayContents"];
+  renderDayButton?: CalendarDayProps<TDate>["renderDayButton"];
   /**
    * Props for the tooltip component.
    */
@@ -44,7 +44,7 @@ export const CalendarMonth = forwardRef<
   const {
     className,
     date,
-    renderDayContents,
+    renderDayButton,
     onMouseLeave,
     TooltipProps,
     ...rest
@@ -80,7 +80,7 @@ export const CalendarMonth = forwardRef<
             <CalendarDay
               key={dateAdapter.format(day.date, "DD MMM YYYY")}
               day={day.date}
-              renderDayContents={renderDayContents}
+              renderDayButton={renderDayButton}
               month={date}
               TooltipProps={TooltipProps}
             />

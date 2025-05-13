@@ -15,6 +15,7 @@ import {
   Text,
   ToggleButton,
 } from "@salt-ds/core";
+import { clsx } from "clsx";
 import {
   DateDetailError,
   type DateFrameworkType,
@@ -42,7 +43,7 @@ import {
   type DatePickerSingleInputProps,
   type DatePickerSingleProps,
   DatePickerTrigger,
-  type DateRangeSelection,
+  type DateRangeSelection, type DayStatus,
   type SingleDatePickerState,
   type SingleDateSelection,
   useDatePickerContext,
@@ -51,7 +52,12 @@ import {
 import type { Meta, StoryFn } from "@storybook/react";
 // As required by locale specific examples
 import type { Moment } from "moment";
-import { type ChangeEvent, type SyntheticEvent, useEffect } from "react";
+import {
+  type ChangeEvent,
+  type ComponentPropsWithRef, type ReactElement,
+  type SyntheticEvent,
+  useEffect
+} from "react";
 import { useCallback, useRef, useState } from "react";
 // CustomDatePickerPanel is a sample component, representing a composition you could create yourselves, not intended for importing into your own projects
 // refer to https://github.com/jpmorganchase/salt-ds/blob/main/packages/lab/src/date-picker/useDatePicker.ts to create your own
@@ -63,6 +69,7 @@ import "dayjs/locale/zh-cn";
 import { es as dateFnsEs } from "date-fns/locale";
 import { zhCN as dateFnsZhCn } from "date-fns/locale";
 import type { DateTime } from "luxon";
+import "./date-picker.stories.css";
 
 export default {
   title: "Lab/Date Picker",
@@ -2302,7 +2309,7 @@ export const RangeWithDisabledDates: StoryFn<
   );
 };
 
-export const SingleWitHighlightedDates: StoryFn<
+export const SingleWithHighlightedDates: StoryFn<
   DatePickerSingleProps<DateFrameworkType>
 > = ({ selectionVariant, ...args }) => {
   const { dateAdapter } = useLocalization();
@@ -2471,6 +2478,51 @@ export const RangeWithHighlightedDates: StoryFn<
   );
 };
 
+export const CustomDayRendering: StoryFn<
+  DatePickerSingleProps<DateFrameworkType>
+> = ({ selectionVariant, defaultSelectedDate, ...args }) => {
+  const { dateAdapter } = useLocalization();
+
+  function renderDayButton(
+    date: DateFrameworkType,
+    { className, ...props }: ComponentPropsWithRef<"button">,
+    status: DayStatus,
+  ): ReactElement | null {
+    return (
+      <button
+        {...props}
+        className={clsx([{ ["buttonWithDot"]: !status.outOfRange }, className])}
+      >
+        <span className={clsx({ ["dot"]: !status.outOfRange })}>
+          {dateAdapter.format(date, "D")}
+        </span>
+        {status.today ? <span className={'today'}></span> : null}
+      </button>
+    );
+  }
+
+  const CalendarGridProps: DatePickerSingleGridPanelProps<DateFrameworkType>["CalendarGridProps"] =
+    {
+      hideOutOfRangeDates: true,
+      getCalendarMonthProps: () => ({ renderDayButton }),
+    };
+
+  return (
+      <DatePicker
+        selectionVariant={"single"}
+        {...args}
+        defaultSelectedDate={defaultSelectedDate}
+      >
+        <DatePickerTrigger>
+          <DatePickerSingleInput />
+        </DatePickerTrigger>
+        <DatePickerOverlay>
+          <DatePickerSingleGridPanel CalendarGridProps={CalendarGridProps}/>
+        </DatePickerOverlay>
+      </DatePicker>
+  );
+};
+
 export const RangeWithLocaleEsES: StoryFn<
   DatePickerRangeProps<DateFrameworkType>
 > = ({ selectionVariant, ...args }) => {
@@ -2622,15 +2674,6 @@ export const SingleWithLocaleZhCN: StoryFn<
     [args?.onSelectionChange, dateAdapter, defaultHelperText],
   );
 
-  function renderDayContents(day: DateFrameworkType) {
-    return <>{dateAdapter.format(day, "D")}</>;
-  }
-
-  const CalendarGridProps: DatePickerSingleGridPanelProps<DateFrameworkType>["CalendarGridProps"] =
-    {
-      getCalendarMonthProps: () => ({ renderDayContents }),
-    };
-
   return (
     <FormField validationStatus={validationStatus}>
       <FormLabel>Select a date</FormLabel>
@@ -2645,7 +2688,6 @@ export const SingleWithLocaleZhCN: StoryFn<
         <DatePickerOverlay>
           <DatePickerSingleGridPanel
             helperText={helperText}
-            CalendarGridProps={CalendarGridProps}
             CalendarNavigationProps={{ formatMonth: "MMMM" }}
           />
         </DatePickerOverlay>

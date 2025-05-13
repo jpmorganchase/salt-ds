@@ -1,6 +1,7 @@
 export * from "./Single";
 export * from "./Range";
 export * from "./Bordered";
+export * from "./CustomDayRendering";
 export * from "./Multiselect";
 export * from "./Offset";
 export * from "./UnselectableDates";
@@ -8,7 +9,6 @@ export * from "./DisabledDates";
 export * from "./HighlightedDates";
 export * from "./HideOutOfRangeDates";
 export * from "./HideYearDropdown";
-export * from "./CustomDayRender";
 export * from "./MinMaxDate";
 export * from "./TodayButton";
 export * from "./TwinCalendars";

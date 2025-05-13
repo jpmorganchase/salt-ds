@@ -18,13 +18,15 @@ import { useLocalization } from "../../localization-provider";
 import { type DayStatus, useCalendarDay } from "../useCalendarDay";
 import calendarDayCss from "./CalendarDay.css";
 
-export type DateFormatter = (day: Date) => string | undefined;
-
 export interface CalendarDayProps<TDate>
   extends Omit<ComponentPropsWithRef<"button">, "children"> {
   day: TDate;
   format?: string;
-  renderDayContents?: (date: TDate, status: DayStatus) => ReactElement;
+  renderDayButton?: (
+    date: TDate,
+    props: ComponentPropsWithRef<"button">,
+    status: DayStatus
+  ) => ReactElement | null;
   status?: DayStatus;
   month: TDate;
   TooltipProps?: Partial<TooltipProps>;
@@ -42,7 +44,7 @@ export const CalendarDay = forwardRef<
   const {
     className,
     day,
-    renderDayContents,
+    renderDayButton,
     month,
     TooltipProps,
     format = "DD",
@@ -83,39 +85,43 @@ export const CalendarDay = forwardRef<
     }
   }, [focused, focusedDateRef?.current?.focus]);
 
-  const buttonElement = (
-    <button
-      aria-label={dateAdapter.format(day, "DD MMMM YYYY")}
-      disabled={disabled}
-      type="button"
-      {...dayProps}
-      ref={buttonRef}
-      {...rest}
-      className={clsx(
-        withBaseName(),
-        {
-          [withBaseName("hidden")]: hidden,
-          [withBaseName("outOfRange")]: outOfRange,
-          [withBaseName("disabled")]: disabled,
-          [withBaseName("unselectable")]: !!unselectable,
-          [withBaseName("highlighted")]: !!highlighted,
-          [withBaseName("focused")]: !!focused,
-        },
-        dayProps.className,
-        className,
-      )}
-    >
+  const defaultButtonProps: ComponentPropsWithRef<"button"> = {
+    "aria-label": dateAdapter.format(day, "DD MMMM YYYY"),
+    disabled,
+    type: "button",
+    ...dayProps,
+    ref: buttonRef,
+    ...rest,
+    className: clsx(
+      withBaseName(),
+      {
+        [withBaseName("hidden")]: hidden,
+        [withBaseName("outOfRange")]: outOfRange,
+        [withBaseName("disabled")]: disabled,
+        [withBaseName("unselectable")]: !!unselectable,
+        [withBaseName("highlighted")]: !!highlighted,
+        [withBaseName("focused")]: !!focused,
+        [withBaseName("today")]: today,
+      },
+      dayProps.className,
+      className,
+    ),
+  };
+
+  const defaultButtonElement = (
+    <button {...defaultButtonProps}>
       <span
-        className={clsx(withBaseName("content"), {
-          [withBaseName("today")]: today,
-        })}
+        className={withBaseName("content")}
       >
-        {renderDayContents
-          ? renderDayContents(day, status)
-          : dateAdapter.format(day, format)}
+        {dateAdapter.format(day, format)}
       </span>
     </button>
   );
+
+  const buttonElement = renderDayButton
+    ? renderDayButton(day, defaultButtonProps, status)
+    : defaultButtonElement;
+
   const hasTooltip = unselectableReason || highlightedReason;
   if (!hasTooltip) {
     return buttonElement;

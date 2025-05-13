@@ -74,15 +74,6 @@ export const SingleWithLocaleZhCN = (): ReactElement => {
     [dateAdapter, defaultHelperText],
   );
 
-  function renderDayContents(day: DateFrameworkType) {
-    return <>{dateAdapter.format(day, "D")}</>;
-  }
-
-  const CalendarDataProps: DatePickerSingleGridPanelProps<DateFrameworkType>["CalendarGridProps"] =
-    {
-      getCalendarMonthProps: () => ({ renderDayContents }),
-    };
-
   return (
     <FormField style={{ width: "256px" }} validationStatus={validationStatus}>
       <FormLabel>Select a date</FormLabel>
@@ -96,7 +87,6 @@ export const SingleWithLocaleZhCN = (): ReactElement => {
         <DatePickerOverlay>
           <DatePickerSingleGridPanel
             helperText={helperText}
-            CalendarGridProps={CalendarDataProps}
             CalendarNavigationProps={{ formatMonth: "MMMM" }}
           />
         </DatePickerOverlay>
