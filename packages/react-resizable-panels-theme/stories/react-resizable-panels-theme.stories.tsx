@@ -248,10 +248,7 @@ export function CollapsibleSetSize() {
             maxSize={30}
             className="center"
           >
-            <Text>
-              Left <br />
-              {"{10%, 30%}"}
-            </Text>
+            <Text>Left [10%, 30%]</Text>
           </Panel>
           <PanelResizeHandle className="resize-handle-border-left resize-handle-border-right" />
           <Panel className="center">
