@@ -25,7 +25,7 @@ export interface CalendarDayProps<TDate>
   renderDayButton?: (
     date: TDate,
     props: ComponentPropsWithRef<"button">,
-    status: DayStatus
+    status: DayStatus,
   ) => ReactElement | null;
   status?: DayStatus;
   month: TDate;
@@ -110,9 +110,7 @@ export const CalendarDay = forwardRef<
 
   const defaultButtonElement = (
     <button {...defaultButtonProps}>
-      <span
-        className={withBaseName("content")}
-      >
+      <span className={withBaseName("content")}>
         {dateAdapter.format(day, format)}
       </span>
     </button>

@@ -44,7 +44,7 @@ const adapters = [adapterDateFns, adapterDayjs, adapterLuxon, adapterMoment];
 
 const {
   // Storybook wraps components in their own LocalizationProvider, so do not compose Stories
-  CustomDayHighlighting,
+  CustomDayRendering,
   DisabledDates,
   TodayButton,
   TwinCalendars,
@@ -429,13 +429,11 @@ describe("GIVEN a Calendar", () => {
         });
 
         it("SHOULD render custom day", () => {
-          cy.mount(<CustomDayHighlighting defaultVisibleMonth={testDate} />);
+          cy.mount(<CustomDayRendering defaultVisibleMonth={testDate} />);
           // Verify that the button contains the text "01"
-          cy.contains("button", /01/).should("exist");
+          cy.contains("button", /^1$/).should("exist");
           // Verify that there is a span with the class name "x" inside the button
-          cy.contains("button", /01/)
-            .find("span.dot")
-            .should("exist");
+          cy.contains("button", /^1$/).find("span.dot").should("exist");
         });
 
         it("SHOULD support multi-calendar selection", () => {

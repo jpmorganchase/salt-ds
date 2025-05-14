@@ -133,7 +133,7 @@ export function useCalendarDay<TDate extends DateFrameworkType>(
     (isDaySelectable && !isDaySelectable(date));
   const unselectable = Boolean(unselectableReason);
   const highlighted = Boolean(highlightedReason);
-  const hidden =  hideOutOfRangeDates ? outOfRange: false;
+  const hidden = hideOutOfRangeDates ? outOfRange : false;
 
   return {
     status: {

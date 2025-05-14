@@ -15,7 +15,6 @@ import {
   Text,
   ToggleButton,
 } from "@salt-ds/core";
-import { clsx } from "clsx";
 import {
   DateDetailError,
   type DateFrameworkType,
@@ -43,20 +42,23 @@ import {
   type DatePickerSingleInputProps,
   type DatePickerSingleProps,
   DatePickerTrigger,
-  type DateRangeSelection, type DayStatus,
+  type DateRangeSelection,
+  type DayStatus,
   type SingleDatePickerState,
   type SingleDateSelection,
   useDatePickerContext,
   useLocalization,
 } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react";
+import { clsx } from "clsx";
 // As required by locale specific examples
 import type { Moment } from "moment";
 import {
   type ChangeEvent,
-  type ComponentPropsWithRef, type ReactElement,
+  type ComponentPropsWithRef,
+  type ReactElement,
   type SyntheticEvent,
-  useEffect
+  useEffect,
 } from "react";
 import { useCallback, useRef, useState } from "react";
 // CustomDatePickerPanel is a sample component, representing a composition you could create yourselves, not intended for importing into your own projects
@@ -2491,12 +2493,12 @@ export const CustomDayRendering: StoryFn<
     return (
       <button
         {...props}
-        className={clsx([{ ["buttonWithDot"]: !status.outOfRange }, className])}
+        className={clsx([{ buttonWithDot: !status.outOfRange }, className])}
       >
-        <span className={clsx({ ["dot"]: !status.outOfRange })}>
+        <span className={clsx({ dot: !status.outOfRange })}>
           {dateAdapter.format(date, "D")}
         </span>
-        {status.today ? <span className={'today'}></span> : null}
+        {status.today ? <span className={"today"} /> : null}
       </button>
     );
   }
@@ -2508,18 +2510,18 @@ export const CustomDayRendering: StoryFn<
     };
 
   return (
-      <DatePicker
-        selectionVariant={"single"}
-        {...args}
-        defaultSelectedDate={defaultSelectedDate}
-      >
-        <DatePickerTrigger>
-          <DatePickerSingleInput />
-        </DatePickerTrigger>
-        <DatePickerOverlay>
-          <DatePickerSingleGridPanel CalendarGridProps={CalendarGridProps}/>
-        </DatePickerOverlay>
-      </DatePicker>
+    <DatePicker
+      selectionVariant={"single"}
+      {...args}
+      defaultSelectedDate={defaultSelectedDate}
+    >
+      <DatePickerTrigger>
+        <DatePickerSingleInput />
+      </DatePickerTrigger>
+      <DatePickerOverlay>
+        <DatePickerSingleGridPanel CalendarGridProps={CalendarGridProps} />
+      </DatePickerOverlay>
+    </DatePicker>
   );
 };
 

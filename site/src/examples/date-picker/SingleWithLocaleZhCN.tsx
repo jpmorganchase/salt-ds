@@ -6,7 +6,6 @@ import {
   DatePickerHelperText,
   DatePickerOverlay,
   DatePickerSingleGridPanel,
-  type DatePickerSingleGridPanelProps,
   DatePickerSingleInput,
   DatePickerTrigger,
   type SingleDateSelection,

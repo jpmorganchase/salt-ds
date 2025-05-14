@@ -1,17 +1,16 @@
+import type { DateFrameworkType } from "@salt-ds/date-adapters";
 import {
   DatePicker,
   DatePickerOverlay,
   DatePickerSingleGridPanel,
   type DatePickerSingleGridPanelProps,
   DatePickerSingleInput,
-  DatePickerSingleProps,
   DatePickerTrigger,
   type DayStatus,
   useLocalization,
 } from "@salt-ds/lab";
-import type { DateFrameworkType } from "@salt-ds/date-adapters";
-import type { ComponentPropsWithRef, ReactElement } from "react";
 import { clsx } from "clsx";
+import type { ComponentPropsWithRef, ReactElement } from "react";
 import styles from "./singleWithCustomRendering.module.css";
 
 export const SingleWithCustomRendering = (): ReactElement => {
@@ -25,12 +24,15 @@ export const SingleWithCustomRendering = (): ReactElement => {
     return (
       <button
         {...props}
-        className={clsx([{ [styles.buttonWithDot]: !status.outOfRange }, className])}
+        className={clsx([
+          { [styles.buttonWithDot]: !status.outOfRange },
+          className,
+        ])}
       >
         <span className={clsx({ [styles.dot]: !status.outOfRange })}>
           {dateAdapter.format(date, "D")}
         </span>
-        {status.today ? <span className={styles.today}></span> : null}
+        {status.today ? <span className={styles.today} /> : null}
       </button>
     );
   }

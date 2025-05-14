@@ -23,6 +23,7 @@ import {
   useLocalization,
 } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react";
+import { clsx } from "clsx";
 import {
   type ComponentPropsWithRef,
   type ReactElement,
@@ -31,7 +32,6 @@ import {
   useEffect,
 } from "react";
 import { useState } from "react";
-import { clsx } from "clsx";
 import "./calendar.stories.css";
 
 import "dayjs/locale/es"; // Import the Spanish locale
@@ -314,12 +314,12 @@ export const CustomDayRendering: StoryFn<typeof Calendar> = (args) => {
     return (
       <button
         {...props}
-        className={clsx([{ ["buttonWithDot"]: !status.outOfRange }, className])}
+        className={clsx([{ buttonWithDot: !status.outOfRange }, className])}
       >
-        <span className={clsx({ ["dot"]: !status.outOfRange })}>
+        <span className={clsx({ dot: !status.outOfRange })}>
           {dateAdapter.format(date, "D")}
         </span>
-        {status.today ? <span className={"today"}></span> : null}
+        {status.today ? <span className={"today"} /> : null}
       </button>
     );
   }

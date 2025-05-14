@@ -6,9 +6,8 @@ import {
   type DayStatus,
   useLocalization,
 } from "@salt-ds/lab";
-import type { ComponentPropsWithRef, ReactElement } from "react";
-import type { StoryFn } from "@storybook/react";
 import { clsx } from "clsx";
+import type { ComponentPropsWithRef, ReactElement } from "react";
 import styles from "./customDayRendering.module.css";
 
 export const CustomDayRendering = (): ReactElement => {
@@ -22,12 +21,15 @@ export const CustomDayRendering = (): ReactElement => {
     return (
       <button
         {...props}
-        className={clsx([{ [styles.buttonWithDot]: !status.outOfRange }, className])}
+        className={clsx([
+          { [styles.buttonWithDot]: !status.outOfRange },
+          className,
+        ])}
       >
         <span className={clsx({ [styles.dot]: !status.outOfRange })}>
           {dateAdapter.format(date, "D")}
         </span>
-        {status.today ? <span className={styles.today}></span> : null}
+        {status.today ? <span className={styles.today} /> : null}
       </button>
     );
   }

@@ -139,9 +139,9 @@ function renderDayButton(
    return (
       <button
         {...props}
-        className={clsx([{ ["buttonWithDot"]: !status.outOfRange }, className])}
+        className={clsx([{ buttonWithDot: !status.outOfRange }, className])}
       >
-        <span className={clsx({ ["dot"]: !status.outOfRange })}>
+        <span className={clsx({ dot: !status.outOfRange })}>
           {dateAdapter.format(date, "D")}
         </span>
         {status.today ? <span aria-label={"today"}></span> : null}
