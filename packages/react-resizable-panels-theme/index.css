@@ -57,10 +57,22 @@
   border-top-style: var(--splitHandle-borderStyle);
 }
 
+.react-resizable-panels-theme-salt .resize-handle-border-bottom:not(.resize-handle-border-bottom) {
+  border-bottom-width: var(--splitHandle-borderWidth);
+  border-bottom-color: transparent;
+  border-bottom-style: var(--splitHandle-borderStyle);
+}
+
 .react-resizable-panels-theme-salt .resize-handle-border-bottom {
   border-bottom-width: var(--splitHandle-borderWidth);
   border-bottom-color: var(--splitHandle-borderColor);
   border-bottom-style: var(--splitHandle-borderStyle);
+}
+
+.react-resizable-panels-theme-salt .resize-handle-border-bottom:not(.resize-handle-border-top) {
+  border-top-width: var(--splitHandle-borderWidth);
+  border-top-color: transparent;
+  border-top-style: var(--splitHandle-borderStyle);
 }
 
 .react-resizable-panels-theme-salt .resize-handle-border-left {
@@ -69,10 +81,22 @@
   border-left-style: var(--splitHandle-borderStyle);
 }
 
+.react-resizable-panels-theme-salt .resize-handle-border-left:not(.resize-handle-border-right) {
+  border-right-width: var(--splitHandle-borderWidth);
+  border-right-color: transparent;
+  border-right-style: var(--splitHandle-borderStyle);
+}
+
 .react-resizable-panels-theme-salt .resize-handle-border-right {
   border-right-width: var(--splitHandle-borderWidth);
   border-right-color: var(--splitHandle-borderColor);
   border-right-style: var(--splitHandle-borderStyle);
+}
+
+.react-resizable-panels-theme-salt .resize-handle-border-right:not(.resize-handle-border-left) {
+  border-left-width: var(--splitHandle-borderWidth);
+  border-left-color: transparent;
+  border-left-style: var(--splitHandle-borderStyle);
 }
 
 /* resize handle hover and active styles */
