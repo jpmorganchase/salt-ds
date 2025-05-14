@@ -1,0 +1,49 @@
+/* Use a custom classname, if needing to scope to certain charts. */
+.salt-highcharts-theme {
+  --highcharts-background-color: none;
+
+  --highcharts-color-0: var(--salt-palette-categorical-1);
+  --highcharts-color-1: var(--salt-palette-categorical-2);
+  --highcharts-color-2: var(--salt-palette-categorical-3);
+  --highcharts-color-3: var(--salt-palette-categorical-4);
+  --highcharts-color-4: var(--salt-palette-categorical-5);
+  --highcharts-color-5: var(--salt-palette-categorical-6);
+  --highcharts-color-6: var(--salt-palette-categorical-7);
+  --highcharts-color-7: var(--salt-palette-categorical-8);
+  --highcharts-color-8: var(--salt-palette-categorical-9);
+  --highcharts-color-9: var(--salt-palette-categorical-10);
+}
+
+.salt-highcharts-theme .highcharts-container {
+  font-family: var(--salt-text-fontFamily);
+}
+
+.salt-highcharts-theme .highcharts-title {
+  fill: var(--salt-content-primary-foreground);
+  font-size: var(--salt-text-h2-fontSize);
+}
+.salt-highcharts-theme .highcharts-subtitle,
+.salt-highcharts-theme .highcharts-axis-title,
+.salt-highcharts-theme .highcharts-axis-labels {
+  fill: var(--salt-content-primary-foreground);
+  font-size: var(--salt-text-label-fontSize);
+}
+.salt-highcharts-theme .highcharts-legend-item > text,
+.salt-highcharts-theme .highcharts-legend-item span {
+  fill: var(--salt-content-primary-foreground);
+  font-size: var(--salt-text-label-fontSize);
+}
+
+.salt-highcharts-theme .highcharts-data-label text,
+.salt-highcharts-theme text.highcharts-data-label {
+  fill: var(--salt-content-primary-foreground);
+}
+
+.salt-highcharts-theme .highcharts-tooltip-box {
+  fill: var(--salt-container-primary-background);
+}
+
+.salt-highcharts-theme .highcharts-tooltip text,
+.salt-highcharts-theme .highcharts-tooltip foreignObject span {
+  fill: var(--salt-content-primary-foreground);
+}
