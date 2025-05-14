@@ -32,7 +32,9 @@ export const Pre = forwardRef<HTMLDivElement, PreProps>(function Pre(
   const divRef = useRef<HTMLDivElement>(null);
   const handleClickCopy = () => {
     if (divRef.current?.textContent) {
-      navigator.clipboard.writeText(divRef.current.textContent).catch(() => {});
+      navigator.clipboard
+        .writeText(divRef.current.textContent)
+        .catch(console.error);
     }
   };
 
@@ -75,6 +77,7 @@ export const Pre = forwardRef<HTMLDivElement, PreProps>(function Pre(
         className={styles.codeblock}
         // biome-ignore lint/security/noDangerouslySetInnerHtml: Needed for Shiki.
         dangerouslySetInnerHTML={{ __html: html }}
+        ref={divRef}
       />
     </div>
   );
