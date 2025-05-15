@@ -11,8 +11,8 @@ import { useActivateWhileMouseDown } from "./internal/useActivateWhileMouseDown"
 import {
   isAtMax,
   isAtMin,
-  toFixedDecimalPlaces,
-  toFloat,
+  parseAndFormat,
+  sanitizeInput,
 } from "./internal/utils";
 
 /**
@@ -28,8 +28,9 @@ export const useNumberInput = ({
   readOnly,
   setValue,
   step = 1,
-  stepBlock = 10,
+  stepMultiplier = 2,
   value,
+  format,
 }: Pick<
   NumberInputProps,
   | "decimalPlaces"
@@ -40,49 +41,57 @@ export const useNumberInput = ({
   | "onChange"
   | "readOnly"
   | "step"
-  | "stepBlock"
-  | "value"
+  | "stepMultiplier"
 > & {
-  setValue: Dispatch<SetStateAction<string | number | undefined>>;
+  setValue: Dispatch<SetStateAction<string | number>>;
+  value: string | number;
   inputRef: MutableRefObject<HTMLInputElement | null>;
+  format?: (value: number | string) => number | string;
 }) => {
-  const setValueInRange = useCallback(
-    (event: SyntheticEvent | undefined, modifiedValue: number) => {
+  const updateValue = useCallback(
+    (event: SyntheticEvent | undefined, nextValue: number) => {
       if (readOnly) return;
-      let nextValue = modifiedValue;
-      if (nextValue < min) nextValue = min;
-      if (nextValue > max) nextValue = max;
 
-      const roundedValue = toFixedDecimalPlaces(nextValue, decimalPlaces);
-      if (Number.isNaN(toFloat(roundedValue))) return;
-
-      setValue(roundedValue);
-
-      onChange?.(event, roundedValue);
+      const clampedValue = clamp(nextValue);
+      const formattedValue = parseAndFormat(
+        decimalPlaces,
+        clampedValue,
+        format,
+      );
+      setValue(formattedValue);
+      onChange?.(event, formattedValue);
     },
-    [decimalPlaces, min, max, onChange, readOnly, setValue],
+    [decimalPlaces, onChange, readOnly, setValue, format],
   );
+
+  const clamp = (value: number) => {
+    if (value < min) return min;
+    if (value > max) return max;
+    return value;
+  };
 
   const decrementValue = useCallback(
     (event?: SyntheticEvent, block?: boolean) => {
-      if (value === undefined || isAtMin(value, min)) return;
-      const decrementStep = block ? stepBlock : step;
-      const nextValue =
-        value === "" ? -decrementStep : toFloat(value) - decrementStep;
-      setValueInRange(event, nextValue);
+      if (isAtMin(value, min)) return;
+      const decrementStep = block ? stepMultiplier * step : step;
+      const sanitizedValue = sanitizeInput(value);
+      const nextValue = sanitizedValue - decrementStep;
+
+      updateValue(event, nextValue);
     },
-    [value, min, step, stepBlock, setValueInRange],
+    [value, min, step, stepMultiplier, updateValue],
   );
 
   const incrementValue = useCallback(
     (event?: SyntheticEvent, block?: boolean) => {
-      if (value === undefined || isAtMax(value, max)) return;
-      const incrementStep = block ? stepBlock : step;
-      const nextValue =
-        value === "" ? incrementStep : toFloat(value) + incrementStep;
-      setValueInRange(event, nextValue);
+      if (isAtMax(value, max)) return;
+      const incrementStep = block ? stepMultiplier * step : step;
+      const sanitizedValue = sanitizeInput(value);
+      const nextValue = sanitizedValue + incrementStep;
+
+      updateValue(event, nextValue);
     },
-    [value, max, step, stepBlock, setValueInRange],
+    [value, max, step, stepMultiplier, updateValue],
   );
 
   const { activate: decrementSpinner } = useActivateWhileMouseDown(
@@ -108,6 +117,7 @@ export const useNumberInput = ({
     "aria-label": "increment value",
     disabled: disabled || isAtMax(value, max),
     onMouseDown: (event: MouseEvent<HTMLButtonElement>) => {
+      event.preventDefault();
       if (event.nativeEvent.button !== 0) {
         // To match closely with <input type='input'>
         return;
@@ -121,6 +131,7 @@ export const useNumberInput = ({
     "aria-label": "decrement value",
     disabled: disabled || isAtMin(value, min),
     onMouseDown: (event: MouseEvent<HTMLButtonElement>) => {
+      event.preventDefault();
       if (event.nativeEvent.button !== 0) {
         // To match closely with <input type='input'>
         return;

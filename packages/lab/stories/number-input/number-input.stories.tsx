@@ -4,11 +4,14 @@ import {
   FormFieldHelperText,
   FormFieldLabel,
   StackLayout,
+  useId,
 } from "@salt-ds/core";
 import { AddIcon, RefreshIcon, RemoveIcon } from "@salt-ds/icons";
 import { NumberInput, type NumberInputProps } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react";
 import { useState } from "react";
+import { NumericFormat } from "react-number-format";
+
 export default {
   title: "Lab/Number Input",
   component: NumberInput,
@@ -25,6 +28,75 @@ export const Default: StoryFn<NumberInputProps> = (args) => {
 };
 Default.args = {
   defaultValue: 0,
+};
+
+export const Formatting: StoryFn<NumberInputProps> = (args) => {
+  const [value, setValue] = useState("10000");
+
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    switch (event.key) {
+      case "ArrowUp": {
+        event.preventDefault();
+        setValue((Number.parseFloat(value) + 1).toString());
+        break;
+      }
+      case "ArrowDown": {
+        event.preventDefault();
+        setValue((Number.parseFloat(value) - 1).toString());
+        break;
+      }
+    }
+  };
+
+  return (
+    <StackLayout>
+      <FormField>
+        <FormFieldLabel>With Intl Number Format (currency)</FormFieldLabel>
+        <NumberInput
+          {...args}
+          format={(value) =>
+            new Intl.NumberFormat("en-US", {
+              style: "currency",
+              currency: "GBP",
+            }).format(value)
+          }
+        />
+        <FormFieldHelperText>Please enter a number</FormFieldHelperText>
+      </FormField>
+      <FormField>
+        <FormFieldLabel>
+          With react number format (thousand separator)
+        </FormFieldLabel>
+        <NumericFormat
+          value={value}
+          customInput={NumberInput}
+          thousandSeparator
+          onKeyDown={handleKeyDown}
+          hideButtons
+        />
+      </FormField>
+      <FormField>
+        <FormFieldLabel>
+          With custom format function (custom units)
+        </FormFieldLabel>
+        <NumberInput {...args} format={(value) => `${value} inches`} />
+        <FormFieldHelperText>Please enter a number</FormFieldHelperText>
+      </FormField>
+      <FormField>
+        <FormFieldLabel>With suffix (end adornment)</FormFieldLabel>
+        <NumberInput {...args} endAdornment="%" />
+        <FormFieldHelperText>Please enter a number</FormFieldHelperText>
+      </FormField>
+      <FormField>
+        <FormFieldLabel>With prefix (start adornment)</FormFieldLabel>
+        <NumberInput {...args} startAdornment="£" />
+        <FormFieldHelperText>Please enter a number</FormFieldHelperText>
+      </FormField>
+    </StackLayout>
+  );
+};
+Formatting.args = {
+  defaultValue: 12345,
 };
 
 export const Secondary: StoryFn<NumberInputProps> = (args) => {
@@ -50,6 +122,7 @@ export const Bordered: StoryFn<NumberInputProps> = (args) => {
 };
 Bordered.args = {
   bordered: true,
+  defaultValue: "",
 };
 
 export const ReadOnly: StoryFn<NumberInputProps> = (args) => {
@@ -110,12 +183,28 @@ DecimalPlaces.args = {
   defaultValue: 0,
 };
 
+const accessibleTextStyles = {
+  position: "fixed",
+  top: "0",
+  left: "0",
+  transform: "translate(-100%, -100%)",
+} as React.CSSProperties;
+
 export const Controlled: StoryFn<NumberInputProps> = (args) => {
   const [value, setValue] = useState<number | string>(1.11);
+  const [accessibleText, setAccessibleText] = useState("");
+
+  const formFieldLabel = "Number Input";
+  const accessibleTextId = useId();
+
+  const clearAccessibleText = () =>
+    setTimeout(() => {
+      setAccessibleText(" ");
+    }, 3000);
 
   return (
     <FormField>
-      <FormFieldLabel>Number Input</FormFieldLabel>
+      <FormFieldLabel>{formFieldLabel}</FormFieldLabel>
       <NumberInput
         {...args}
         decimalPlaces={2}
@@ -124,13 +213,27 @@ export const Controlled: StoryFn<NumberInputProps> = (args) => {
           setValue(value);
         }}
         endAdornment={
-          <Button
-            variant="secondary"
-            aria-label="refresh"
-            onClick={() => setValue(1.11)}
-          >
-            <RefreshIcon aria-hidden />
-          </Button>
+          <>
+            <Button
+              aria-describedby={accessibleTextId}
+              variant="secondary"
+              aria-label={`Reset ${formFieldLabel}`}
+              onClick={() => {
+                setValue(1.11);
+                setAccessibleText("Value was reset");
+                clearAccessibleText();
+              }}
+            >
+              <RefreshIcon aria-hidden />
+            </Button>
+            <span
+              id={accessibleTextId}
+              style={accessibleTextStyles}
+              aria-live="polite"
+            >
+              {accessibleText}
+            </span>
+          </>
         }
       />
       <FormFieldHelperText>
@@ -191,7 +294,7 @@ export const CustomStep: StoryFn<NumberInputProps> = (args) => {
 CustomStep.args = {
   defaultValue: 1,
   step: 5,
-  stepBlock: 50,
+  stepMultiplier: 10,
 };
 
 export const TextAlignment: StoryFn<NumberInputProps> = (args) => (
@@ -217,12 +320,21 @@ TextAlignment.args = {
   defaultValue: 0,
 };
 
-export const RefreshAdornment: StoryFn<NumberInputProps> = (args) => {
+export const ResetAdornment: StoryFn<NumberInputProps> = (args) => {
   const [value, setValue] = useState<number | string>(10);
+  const [accessibleText, setAccessibleText] = useState("");
+
+  const formFieldLabel = "Number Input";
+  const accessibleTextId = useId();
+
+  const clearAccessibleText = () =>
+    setTimeout(() => {
+      setAccessibleText(" ");
+    }, 3000);
 
   return (
     <FormField>
-      <FormFieldLabel>Number Input</FormFieldLabel>
+      <FormFieldLabel>{formFieldLabel}</FormFieldLabel>
       <NumberInput
         {...args}
         value={value}
@@ -230,13 +342,27 @@ export const RefreshAdornment: StoryFn<NumberInputProps> = (args) => {
           setValue(value);
         }}
         endAdornment={
-          <Button
-            variant="secondary"
-            aria-label="refresh"
-            onClick={() => setValue(10)}
-          >
-            <RefreshIcon aria-hidden />
-          </Button>
+          <>
+            <Button
+              aria-describedby={accessibleTextId}
+              variant="secondary"
+              aria-label={`Reset ${formFieldLabel}`}
+              onClick={() => {
+                setValue(10);
+                setAccessibleText("Value was reset");
+                clearAccessibleText();
+              }}
+            >
+              <RefreshIcon aria-hidden />
+            </Button>
+            <span
+              id={accessibleTextId}
+              style={accessibleTextStyles}
+              aria-live="polite"
+            >
+              {accessibleText}
+            </span>
+          </>
         }
       />
       <FormFieldHelperText>Please enter a value</FormFieldHelperText>
@@ -260,7 +386,8 @@ export const CustomButtons: StoryFn<NumberInputProps> = (args) => {
         value={value}
         startAdornment={
           <Button
-            aria-label="decrement value"
+            aria-hidden
+            tabIndex={-1}
             onClick={() =>
               setValue(
                 typeof value === "string"
@@ -274,7 +401,8 @@ export const CustomButtons: StoryFn<NumberInputProps> = (args) => {
         }
         endAdornment={
           <Button
-            aria-label="increment value"
+            aria-hidden
+            tabIndex={-1}
             onClick={() =>
               setValue(
                 typeof value === "string"
@@ -290,4 +418,16 @@ export const CustomButtons: StoryFn<NumberInputProps> = (args) => {
       <FormFieldHelperText>Please enter a value</FormFieldHelperText>
     </FormField>
   );
+};
+
+export const HiddenButtons: StoryFn<NumberInputProps> = (args) => {
+  return (
+    <FormField>
+      <FormFieldLabel>Number Input</FormFieldLabel>
+      <NumberInput {...args} />
+    </FormField>
+  );
+};
+HiddenButtons.args = {
+  hideButtons: true,
 };
