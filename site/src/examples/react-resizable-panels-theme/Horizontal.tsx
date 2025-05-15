@@ -8,15 +8,15 @@ export function Horizontal() {
     <div className="react-resizable-panels-theme-salt">
       <FlexLayout className={styles.box}>
         <PanelGroup direction="horizontal">
-          <Panel id="left" className={styles.center}>
+          <Panel className={styles.center}>
             <Text>Left</Text>
           </Panel>
-          <PanelResizeHandle className="resize-handle-border-right" />
-          <Panel id="center" className={styles.center}>
+          <PanelResizeHandle className="resize-handle-salt-border-right" />
+          <Panel className={styles.center}>
             <Text>Center</Text>
           </Panel>
-          <PanelResizeHandle className="resize-handle-border-left" />
-          <Panel id="right" className={styles.center}>
+          <PanelResizeHandle className="resize-handle-salt-border-left" />
+          <Panel className={styles.center}>
             <Text>Right</Text>
           </Panel>
         </PanelGroup>

@@ -48,25 +48,25 @@
 }
 
 /* resize handle border */
-.react-resizable-panels-theme-salt .resize-handle-border-top {
+.react-resizable-panels-theme-salt .resize-handle-salt-border-top {
   border-top-width: var(--splitHandle-borderWidth);
   border-top-color: var(--splitHandle-borderColor);
   border-top-style: var(--splitHandle-borderStyle);
 }
 
-.react-resizable-panels-theme-salt .resize-handle-border-bottom {
+.react-resizable-panels-theme-salt .resize-handle-salt-border-bottom {
   border-bottom-width: var(--splitHandle-borderWidth);
   border-bottom-color: var(--splitHandle-borderColor);
   border-bottom-style: var(--splitHandle-borderStyle);
 }
 
-.react-resizable-panels-theme-salt .resize-handle-border-left {
+.react-resizable-panels-theme-salt .resize-handle-salt-border-left {
   border-left-width: var(--splitHandle-borderWidth);
   border-left-color: var(--splitHandle-borderColor);
   border-left-style: var(--splitHandle-borderStyle);
 }
 
-.react-resizable-panels-theme-salt .resize-handle-border-right {
+.react-resizable-panels-theme-salt .resize-handle-salt-border-right {
   border-right-width: var(--splitHandle-borderWidth);
   border-right-color: var(--splitHandle-borderColor);
   border-right-style: var(--splitHandle-borderStyle);
@@ -136,19 +136,19 @@
 
 /* handle touching the side of a container */
 @supports selector(:has(*)) {
-  .react-resizable-panels-theme-salt div[data-panel]:first-of-type[data-panel-size="0.0"] + .resize-handle-border-left[data-panel-group-direction="horizontal"] {
+  .react-resizable-panels-theme-salt div[data-panel]:first-of-type[data-panel-size="0.0"] + .resize-handle-salt-border-left[data-panel-group-direction="horizontal"] {
     margin-left: -1px;
   }
 
-  .react-resizable-panels-theme-salt div[data-panel]:first-of-type[data-panel-size="0.0"] + .resize-handle-border-top[data-panel-group-direction="vertical"] {
+  .react-resizable-panels-theme-salt div[data-panel]:first-of-type[data-panel-size="0.0"] + .resize-handle-salt-border-top[data-panel-group-direction="vertical"] {
     margin-top: -1px;
   }
 
-  .react-resizable-panels-theme-salt .resize-handle-border-right[data-resize-handle][data-panel-group-direction="horizontal"]:has(+ div[data-panel]:last-of-type[data-panel-size="0.0"]) {
+  .react-resizable-panels-theme-salt .resize-handle-salt-border-right[data-resize-handle][data-panel-group-direction="horizontal"]:has(+ div[data-panel]:last-of-type[data-panel-size="0.0"]) {
     margin-right: -1px;
   }
 
-  .react-resizable-panels-theme-salt .resize-handle-border-bottom[data-panel-group-direction="vertical"]:has(+ div[data-panel]:last-of-type[data-panel-size="0.0"]) {
+  .react-resizable-panels-theme-salt .resize-handle-salt-border-bottom[data-panel-group-direction="vertical"]:has(+ div[data-panel]:last-of-type[data-panel-size="0.0"]) {
     margin-bottom: -1px;
   }
 }

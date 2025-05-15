@@ -21,7 +21,7 @@ export function Variant() {
           </Panel>
           <PanelResizeHandle
             className={clsx(
-              "resize-handle-border-right",
+              "resize-handle-salt-border-right",
               "resize-handle-salt-variant-secondary",
             )}
           />
@@ -30,7 +30,7 @@ export function Variant() {
           </Panel>
           <PanelResizeHandle
             className={clsx(
-              "resize-handle-border-left",
+              "resize-handle-salt-border-left",
               "resize-handle-salt-variant-tertiary",
             )}
           />

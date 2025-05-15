@@ -8,15 +8,15 @@ export function Vertical() {
     <div className="react-resizable-panels-theme-salt">
       <FlexLayout className={styles.box}>
         <PanelGroup direction="vertical">
-          <Panel id="top" className={styles.center}>
+          <Panel className={styles.center}>
             <Text>Top</Text>
           </Panel>
-          <PanelResizeHandle className="resize-handle-border-top" />
-          <Panel id="center" className={styles.center}>
+          <PanelResizeHandle className="resize-handle-salt-border-top" />
+          <Panel className={styles.center}>
             <Text>Center</Text>
           </Panel>
-          <PanelResizeHandle className="resize-handle-border-bottom" />
-          <Panel id="bottom" className={styles.center}>
+          <PanelResizeHandle className="resize-handle-salt-border-bottom" />
+          <Panel className={styles.center}>
             <Text>Bottom</Text>
           </Panel>
         </PanelGroup>

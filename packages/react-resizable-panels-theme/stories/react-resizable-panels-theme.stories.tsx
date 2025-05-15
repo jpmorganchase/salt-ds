@@ -40,14 +40,14 @@ export function Horizontal() {
           </Panel>
           <PanelResizeHandle
             aria-label="Resize Left/Center"
-            className="resize-handle-border-left resize-handle-border-right"
+            className="resize-handle-salt-border-left resize-handle-salt-border-right"
           />
           <Panel id="middle" className="center" minSize={10}>
             <Text>Center</Text>
           </Panel>
           <PanelResizeHandle
             aria-label="Resize Center/Right"
-            className="resize-handle-border-left resize-handle-border-right"
+            className="resize-handle-salt-border-left resize-handle-salt-border-right"
           />
           <Panel id="right" className="center" minSize={10}>
             <Text>Right</Text>
@@ -68,14 +68,14 @@ export function Vertical() {
           </Panel>
           <PanelResizeHandle
             aria-label="Resize Top/Middle"
-            className="resize-handle-border-top resize-handle-border-bottom"
+            className="resize-handle-salt-border-top resize-handle-salt-border-bottom"
           />
           <Panel id="middle" className="center">
             <Text>Middle</Text>
           </Panel>
           <PanelResizeHandle
             aria-label="Resize Middle/Bottom"
-            className="resize-handle-border-top resize-handle-border-bottom"
+            className="resize-handle-salt-border-top resize-handle-salt-border-bottom"
           />
           <Panel id="bottom" className="center">
             <Text>Bottom</Text>
@@ -96,23 +96,23 @@ export function MultiOrientational() {
               <Panel className="center">
                 <Text>Top Left</Text>
               </Panel>
-              <PanelResizeHandle className="resize-handle-border-top resize-handle-border-bottom" />
+              <PanelResizeHandle className="resize-handle-salt-border-top resize-handle-salt-border-bottom" />
               <Panel className="center">
                 <Text>Middle Left</Text>
               </Panel>
-              <PanelResizeHandle className="resize-handle-border-top resize-handle-border-bottom" />
+              <PanelResizeHandle className="resize-handle-salt-border-top resize-handle-salt-border-bottom" />
               <Panel className="center">
                 <Text>Bottom Left</Text>
               </Panel>
             </PanelGroup>
           </Panel>
-          <PanelResizeHandle className="resize-handle-border-right resize-handle-border-left" />
+          <PanelResizeHandle className="resize-handle-salt-border-right resize-handle-salt-border-left" />
           <Panel>
             <PanelGroup direction="vertical">
               <Panel className="center">
                 <Text>Top Right</Text>
               </Panel>
-              <PanelResizeHandle className="resize-handle-border-top resize-handle-border-bottom" />
+              <PanelResizeHandle className="resize-handle-salt-border-top resize-handle-salt-border-bottom" />
               <Panel className="center">
                 <Text>Bottom Right</Text>
               </Panel>
@@ -170,11 +170,11 @@ export function Border() {
           <Panel id="left" minSize={0} defaultSize={25} className="center">
             <Text>Left</Text>
           </Panel>
-          <PanelResizeHandle className="resize-handle-border-right" />
+          <PanelResizeHandle className="resize-handle-salt-border-right" />
           <Panel minSize={50} className="center">
             <Text>Center</Text>
           </Panel>
-          <PanelResizeHandle className="resize-handle-border-left" />
+          <PanelResizeHandle className="resize-handle-salt-border-left" />
           <Panel minSize={0} defaultSize={25} className="center">
             <Text>Right</Text>
           </Panel>
@@ -196,11 +196,11 @@ export function Variant() {
           >
             <Text>Left</Text>
           </Panel>
-          <PanelResizeHandle className="resize-handle-border-right resize-handle-salt-variant-secondary" />
+          <PanelResizeHandle className="resize-handle-salt-border-right resize-handle-salt-variant-secondary" />
           <Panel minSize={50} className="center">
             <Text>Center</Text>
           </Panel>
-          <PanelResizeHandle className="resize-handle-border-left resize-handle-salt-variant-tertiary" />
+          <PanelResizeHandle className="resize-handle-salt-border-left resize-handle-salt-variant-tertiary" />
           <Panel
             minSize={0}
             defaultSize={25}
@@ -222,11 +222,11 @@ export function Size() {
           <Panel minSize={20} className="center">
             <Text>Left [20%, X]</Text>
           </Panel>
-          <PanelResizeHandle className="resize-handle-border-left resize-handle-border-right" />
+          <PanelResizeHandle className="resize-handle-salt-border-left resize-handle-salt-border-right" />
           <Panel id="middle" minSize={40} maxSize={60} className="center">
             <Text>Middle [30%, 60%]</Text>
           </Panel>
-          <PanelResizeHandle className="resize-handle-border-left resize-handle-border-right" />
+          <PanelResizeHandle className="resize-handle-salt-border-left resize-handle-salt-border-right" />
           <Panel minSize={20} className="center">
             <Text>Right [20%, X]</Text>
           </Panel>
@@ -250,7 +250,7 @@ export function CollapsibleSetSize() {
           >
             <Text>Left [10%, 30%]</Text>
           </Panel>
-          <PanelResizeHandle className="resize-handle-border-left resize-handle-border-right" />
+          <PanelResizeHandle className="resize-handle-salt-border-left resize-handle-salt-border-right" />
           <Panel className="center">
             <Text>Right</Text>
           </Panel>
@@ -288,7 +288,7 @@ export function CollapsibleContainerQuery() {
               </ToggleButton>
             </ToggleButtonGroup>
           </Panel>
-          <PanelResizeHandle className="resize-handle-border-left resize-handle-border-right" />
+          <PanelResizeHandle className="resize-handle-salt-border-left resize-handle-salt-border-right" />
           <Panel className="center">
             <Text>Content</Text>
           </Panel>
@@ -333,7 +333,7 @@ export function CollapsibleTo0() {
           />
           <PanelResizeHandle
             onDoubleClick={toggle}
-            className="resize-handle-border-left resize-handle-border-right"
+            className="resize-handle-salt-border-left resize-handle-salt-border-right"
           />
           <Panel>
             <Button
@@ -383,7 +383,7 @@ export function ProgrammableResize() {
               <Panel ref={ref} className="center">
                 <Text>Left</Text>
               </Panel>
-              <PanelResizeHandle className="resize-handle-border-left resize-handle-border-right" />
+              <PanelResizeHandle className="resize-handle-salt-border-left resize-handle-salt-border-right" />
               <Panel className="center">
                 <Text>Right</Text>
               </Panel>
