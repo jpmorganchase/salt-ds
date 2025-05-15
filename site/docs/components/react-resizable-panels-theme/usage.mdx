@@ -44,6 +44,18 @@ Then wrap your React Resizable Panel Group with the `react-resizable-panels-them
 </div>
 ```
 
-For panel resize handles, add the class name `resize-handle-salt-border-<border>` to the `PanelResizeHandle` component, to add borders to the resize handlers. Add the `resize-handle-salt-variant-<variant>` class to set the background color to one of the salt container background colors.
+## Customizing the appearance
 
-For the panels, add the class name `resizable-panel-salt-variant-<variant>` to the `Panel` component to set the background color of the panel to one of the salt container background colors.
+To customize the appearance of panel resize handles and panels, follow these guidelines:
+
+### Panel Resize Handles
+
+- **Border Customization**: To add borders to the resize handles, apply the class `resize-handle-salt-border-<border>` to the `PanelResizeHandle` component. Replace `<border>` with the specific border side you want to style (e.g., `top`, `bottom`, `left`, `right`).
+
+- **Background Color Customization**: To set the background color of the resize handles, use the class `resize-handle-salt-variant-<variant>`. Replace `<variant>` with the desired variant (`primary`, `secondary`, `tertiary`) to match the corresponding Salt DS container background color. This ensures that the resize handles visually integrate with the theme's design.
+
+### Panels
+
+- **Background Color Customization**: For the panels themselves, apply the class `resizable-panel-salt-variant-<variant>` to the `Panel` component. Replace `<variant>` with the appropriate variant (`primary`, `secondary`, `tertiary`) to set the panel's background color to the associated Salt DS container background color. This helps maintain a consistent and cohesive look across your application.
+
+By using these class names, you can ensure that both the resize handles and panels are styled correctly, providing a seamless and visually appealing user interface.

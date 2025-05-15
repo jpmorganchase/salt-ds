@@ -261,6 +261,7 @@ export function CollapsibleSetSize() {
 }
 
 export function CollapsibleContainerQuery() {
+  // Chrome 105+ required for container query support
   return (
     <div className="react-resizable-panels-theme-salt">
       <FlexLayout className="box">

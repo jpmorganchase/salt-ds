@@ -114,7 +114,7 @@
 
 .react-resizable-panels-theme-salt div[data-resize-handle][data-panel-group-direction="vertical"]::after {
   content: "";
-  rotate: 90deg;
+  transform: rotate(90deg);
 }
 
 .react-resizable-panels-theme-salt div[data-resize-handle]:focus-visible {

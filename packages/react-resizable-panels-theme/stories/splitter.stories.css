@@ -5,7 +5,6 @@
 }
 
 .boxGrey {
-  padding: 56px;
   box-sizing: content-box;
   background: var(--salt-container-secondary-background);
 }

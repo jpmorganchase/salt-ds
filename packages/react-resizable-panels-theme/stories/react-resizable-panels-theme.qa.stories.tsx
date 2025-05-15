@@ -10,29 +10,19 @@ export default {
   subcomponents: { Panel, PanelResizeHandle },
 };
 
-const box = {
-  width: 80,
-  height: 120,
-  border: "1px solid lightgrey",
-};
-
-const altBox = {
-  width: 240,
-  height: 80,
-  border: "1px solid lightgrey",
-};
-
-const variantBox = {
-  width: 480,
-  height: 120,
-  border: "1px solid lightgrey",
-};
-
 export function Horizontal() {
   return (
     <QAContainer>
       <StackLayout className={"react-resizable-panels-theme-salt"}>
-        <PanelGroup direction="horizontal" style={box}>
+        <PanelGroup
+          direction="horizontal"
+          style={{
+            width: 240,
+            height: 120,
+            boxSizing: "border-box",
+            border: "1px solid lightgrey",
+          }}
+        >
           <Panel>
             <Text>Panel 1</Text>
           </Panel>
@@ -53,7 +43,15 @@ export function Horizontal() {
 export function Vertical() {
   return (
     <QAContainer>
-      <FlexLayout style={altBox} className="react-resizable-panels-theme-salt">
+      <FlexLayout
+        style={{
+          width: 240,
+          height: 120,
+          boxSizing: "border-box",
+          border: "1px solid lightgrey",
+        }}
+        className="react-resizable-panels-theme-salt"
+      >
         <PanelGroup direction="vertical">
           <Panel>
             <Text>Panel 1</Text>
@@ -76,7 +74,15 @@ export function Variant() {
   return (
     <QAContainer>
       <FlexLayout className="react-resizable-panels-theme-salt">
-        <PanelGroup direction="horizontal" style={variantBox}>
+        <PanelGroup
+          direction="horizontal"
+          style={{
+            width: 480,
+            height: 120,
+            boxSizing: "border-box",
+            border: "1px solid lightgrey",
+          }}
+        >
           <Panel className="resizable-panel-salt-variant-primary">
             <Text>Primary</Text>
           </Panel>
