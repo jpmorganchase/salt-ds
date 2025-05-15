@@ -79,6 +79,7 @@
 .image {
   justify-content: center;
   display: flex;
+  border-radius: var(--salt-palette-corner);
 }
 
 .diagramsContainer .image img {
