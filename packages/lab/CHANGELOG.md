@@ -1,5 +1,17 @@
 # @salt-ds/lab
 
+## 1.0.0-alpha.68
+
+### Minor Changes
+
+- 4a240fd: - Removed `Splitter` component from labs, replaced with `@salt-ds/react-resizable-panels-theme` package.
+
+### Patch Changes
+
+- Updated dependencies [beceb5e]
+- Updated dependencies [ec1736e]
+  - @salt-ds/core@1.46.0
+
 ## 1.0.0-alpha.67
 
 ### Minor Changes
