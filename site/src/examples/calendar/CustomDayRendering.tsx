@@ -3,24 +3,25 @@ import {
   Calendar,
   CalendarGrid,
   CalendarNavigation,
-  type DayStatus,
+  type renderCalendarDayProps,
   useLocalization,
 } from "@salt-ds/lab";
 import { clsx } from "clsx";
-import type { ComponentPropsWithRef, ReactElement } from "react";
+import type { ReactElement } from "react";
 import styles from "./customDayRendering.module.css";
 
 export const CustomDayRendering = (): ReactElement => {
   const { dateAdapter } = useLocalization<DateFrameworkType>();
 
-  function renderDayButton(
-    date: DateFrameworkType,
-    { className, ...props }: ComponentPropsWithRef<"button">,
-    status: DayStatus,
-  ): ReactElement | null {
+  function renderDayButton({
+    className,
+    date,
+    status,
+    ...rest
+  }: renderCalendarDayProps<DateFrameworkType>): ReactElement {
     return (
       <button
-        {...props}
+        {...rest}
         className={clsx([
           { [styles.buttonWithDot]: !status.outOfRange },
           className,
@@ -37,11 +38,7 @@ export const CustomDayRendering = (): ReactElement => {
   return (
     <Calendar selectionVariant={"single"} hideOutOfRangeDates>
       <CalendarNavigation />
-      <CalendarGrid
-        getCalendarMonthProps={(_date: DateFrameworkType) => ({
-          renderDayButton,
-        })}
-      />
+      <CalendarGrid CalendarDayProps={{ render: renderDayButton }} />
     </Calendar>
   );
 };

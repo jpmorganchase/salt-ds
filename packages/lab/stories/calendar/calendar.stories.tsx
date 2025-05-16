@@ -17,15 +17,14 @@ import {
   type CalendarProps,
   type CalendarRangeProps,
   type CalendarSingleProps,
-  type DayStatus,
   type UseCalendarSelectionRangeProps,
   type UseCalendarSelectionSingleProps,
+  type renderCalendarDayProps,
   useLocalization,
 } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react";
 import { clsx } from "clsx";
 import {
-  type ComponentPropsWithRef,
   type ReactElement,
   type SyntheticEvent,
   useCallback,
@@ -306,14 +305,15 @@ export const TodayButton: StoryFn<
 export const CustomDayRendering: StoryFn<typeof Calendar> = (args) => {
   const { dateAdapter } = useLocalization<DateFrameworkType>();
 
-  function renderDayButton(
-    date: DateFrameworkType,
-    { className, ...props }: ComponentPropsWithRef<"button">,
-    status: DayStatus,
-  ): ReactElement | null {
+  function renderDayButton({
+    className,
+    date,
+    status,
+    ...rest
+  }: renderCalendarDayProps<DateFrameworkType>): ReactElement {
     return (
       <button
-        {...props}
+        {...rest}
         className={clsx([{ buttonWithDot: !status.outOfRange }, className])}
       >
         <span className={clsx({ dot: !status.outOfRange })}>
@@ -327,11 +327,7 @@ export const CustomDayRendering: StoryFn<typeof Calendar> = (args) => {
   return (
     <Calendar hideOutOfRangeDates {...args}>
       <CalendarNavigation />
-      <CalendarGrid
-        getCalendarMonthProps={(_date: DateFrameworkType) => ({
-          renderDayButton,
-        })}
-      />
+      <CalendarGrid CalendarDayProps={{ render: renderDayButton }} />
     </Calendar>
   );
 };

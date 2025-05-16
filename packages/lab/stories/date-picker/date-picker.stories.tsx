@@ -43,9 +43,9 @@ import {
   type DatePickerSingleProps,
   DatePickerTrigger,
   type DateRangeSelection,
-  type DayStatus,
   type SingleDatePickerState,
   type SingleDateSelection,
+  type renderCalendarDayProps,
   useDatePickerContext,
   useLocalization,
 } from "@salt-ds/lab";
@@ -55,7 +55,6 @@ import { clsx } from "clsx";
 import type { Moment } from "moment";
 import {
   type ChangeEvent,
-  type ComponentPropsWithRef,
   type ReactElement,
   type SyntheticEvent,
   useEffect,
@@ -2485,14 +2484,15 @@ export const CustomDayRendering: StoryFn<
 > = ({ selectionVariant, defaultSelectedDate, ...args }) => {
   const { dateAdapter } = useLocalization();
 
-  function renderDayButton(
-    date: DateFrameworkType,
-    { className, ...props }: ComponentPropsWithRef<"button">,
-    status: DayStatus,
-  ): ReactElement | null {
+  function renderDayButton({
+    className,
+    date,
+    status,
+    ...rest
+  }: renderCalendarDayProps<DateFrameworkType>): ReactElement {
     return (
       <button
-        {...props}
+        {...rest}
         className={clsx([{ buttonWithDot: !status.outOfRange }, className])}
       >
         <span className={clsx({ dot: !status.outOfRange })}>
@@ -2505,8 +2505,7 @@ export const CustomDayRendering: StoryFn<
 
   const CalendarGridProps: DatePickerSingleGridPanelProps<DateFrameworkType>["CalendarGridProps"] =
     {
-      hideOutOfRangeDates: true,
-      getCalendarMonthProps: () => ({ renderDayButton }),
+      CalendarDayProps: { render: renderDayButton },
     };
 
   return (

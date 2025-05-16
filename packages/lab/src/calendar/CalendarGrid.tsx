@@ -11,10 +11,8 @@ import {
   useRef,
 } from "react";
 import { useCalendarContext } from "./internal/CalendarContext";
-import {
-  CalendarMonth,
-  type CalendarMonthProps,
-} from "./internal/CalendarMonth";
+import type { CalendarDayProps } from "./internal/CalendarDay";
+import { CalendarMonth } from "./internal/CalendarMonth";
 
 import type { DateFrameworkType } from "@salt-ds/date-adapters";
 import { useLocalization } from "../localization-provider";
@@ -46,11 +44,9 @@ export interface CalendarGridProps<TDate extends DateFrameworkType>
    */
   CalendarMonthHeaderProps?: Partial<CalendarMonthHeaderProps<TDate>>;
   /**
-   * Props getter to pass to each CalendarMonth element
+   * Props for `CalendarDay`
    */
-  getCalendarMonthProps?: (
-    date: TDate,
-  ) => Omit<CalendarMonthProps<TDate>, "date">;
+  CalendarDayProps?: Partial<CalendarDayProps<TDate>>;
 }
 
 export const CalendarGrid = forwardRef<
@@ -62,10 +58,10 @@ export const CalendarGrid = forwardRef<
     ref: React.Ref<HTMLDivElement>,
   ) => {
     const {
+      CalendarDayProps,
       CalendarWeekHeaderProps,
       CalendarMonthHeaderProps,
       columns = 1,
-      getCalendarMonthProps = () => undefined,
       onBlur,
       ...rest
     } = props;
@@ -74,7 +70,7 @@ export const CalendarGrid = forwardRef<
 
     const {
       helpers: { setFocusedDate, setHoveredDate },
-      state: { focusedDate, visibleMonth, numberOfVisibleMonths = 1 },
+      state: { visibleMonth, numberOfVisibleMonths = 1 },
     } = useCalendarContext<TDate>();
     const calendarGridRef = useRef<HTMLDivElement>(null);
     const containerRef = useForkRef(ref, calendarGridRef);
@@ -117,8 +113,8 @@ export const CalendarGrid = forwardRef<
               ) : null}
               <CalendarWeekHeader {...CalendarWeekHeaderProps} />
               <CalendarMonth
-                {...getCalendarMonthProps(gridItemVisibleMonth)}
                 date={gridItemVisibleMonth}
+                CalendarDayProps={CalendarDayProps}
               />
             </GridItem>
           );

@@ -36,11 +36,7 @@ export function generateVisibleDays<TDate extends DateFrameworkType>(
   return [...Array(totalDays).keys()].map((dayDelta) => {
     let day = dateAdapter.add(startDate, { days: dayDelta });
     day = dateAdapter.setTimezone(day, timezone);
-    return {
-      date: day,
-      dateOfMonth: dateAdapter.getMonth(day),
-      isCurrentMonth: dateAdapter.isSame(day, currentMonth, "month"),
-    };
+    return day;
   });
 }
 

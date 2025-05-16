@@ -23,13 +23,9 @@ export interface CalendarMonthProps<TDate>
    */
   date: TDate;
   /**
-   * Function to render a day button.
+   * Props for the CalendarDay component.
    */
-  renderDayButton?: CalendarDayProps<TDate>["renderDayButton"];
-  /**
-   * Props for the tooltip component.
-   */
-  TooltipProps?: CalendarDayProps<TDate>["TooltipProps"];
+  CalendarDayProps?: Partial<CalendarDayProps<TDate>>;
 }
 
 const withBaseName = makePrefixer("saltCalendarMonth");
@@ -41,14 +37,7 @@ export const CalendarMonth = forwardRef<
   props: CalendarMonthProps<TDate>,
   ref: React.Ref<HTMLDivElement>,
 ) {
-  const {
-    className,
-    date,
-    renderDayButton,
-    onMouseLeave,
-    TooltipProps,
-    ...rest
-  } = props;
+  const { className, date, onMouseLeave, CalendarDayProps, ...rest } = props;
   const { dateAdapter } = useLocalization<TDate>();
   const targetWindow = useWindow();
   useComponentCssInjection({
@@ -75,17 +64,14 @@ export const CalendarMonth = forwardRef<
       {...rest}
     >
       <div data-testid="CalendarGrid" className={withBaseName("grid")}>
-        {days.map((day) => {
-          return (
-            <CalendarDay
-              key={dateAdapter.format(day.date, "DD MMM YYYY")}
-              day={day.date}
-              renderDayButton={renderDayButton}
-              month={date}
-              TooltipProps={TooltipProps}
-            />
-          );
-        })}
+        {days.map((day) => (
+          <CalendarDay
+            {...CalendarDayProps}
+            key={dateAdapter.format(day, "DD MMM YYYY")}
+            date={day}
+            month={date}
+          />
+        ))}
       </div>
     </div>
   );

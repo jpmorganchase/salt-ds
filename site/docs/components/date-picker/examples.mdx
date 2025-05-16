@@ -207,7 +207,7 @@ Use the `timezone` prop to display the selected date range in a specific timezon
 
 ## Custom day rendering
 
-To customize the rendering of a day element inside a panel, such as `SingleGridPanel`, pass the `renderDayButton` prop through to the `Calendar` component using the `CalendarGridProps`. This prop accepts a render function that is passed the default props, status and date. This can be useful for scenarios where you need to display additional information or apply custom styling to specific dates.
+To customize the rendering of a day element, pass a `render` prop through the `CalendarDayProps`. This can be useful for scenarios where you need to display additional information or apply custom styling to specific dates.
 
 <LivePreview
   componentName="date-picker"

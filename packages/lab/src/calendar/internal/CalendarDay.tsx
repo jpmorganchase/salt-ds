@@ -1,35 +1,48 @@
 import {
+  type RenderPropsType,
   Tooltip,
   type TooltipProps,
   makePrefixer,
+  renderProps,
   useForkRef,
 } from "@salt-ds/core";
 import type { DateFrameworkType } from "@salt-ds/date-adapters";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
-import {
-  type ComponentPropsWithRef,
-  type ReactElement,
-  forwardRef,
-  useLayoutEffect,
-} from "react";
+import { type ComponentPropsWithRef, forwardRef, useLayoutEffect } from "react";
 import { useLocalization } from "../../localization-provider";
 import { type DayStatus, useCalendarDay } from "../useCalendarDay";
 import calendarDayCss from "./CalendarDay.css";
 
 export interface CalendarDayProps<TDate>
   extends Omit<ComponentPropsWithRef<"button">, "children"> {
-  day: TDate;
+  /**
+   * Day date
+   */
+  date: TDate;
+  /**
+   * Format of date
+   */
   format?: string;
-  renderDayButton?: (
-    date: TDate,
-    props: ComponentPropsWithRef<"button">,
-    status: DayStatus,
-  ) => ReactElement | null;
-  status?: DayStatus;
+  /**
+   * Render prop to enable customisation of day button.
+   */
+  render?: RenderPropsType["render"];
+  /**
+   * Month being rendered
+   */
   month: TDate;
+  /**
+   * Additional Tooltip props
+   */
   TooltipProps?: Partial<TooltipProps>;
+}
+export interface renderCalendarDayProps<TDate> extends CalendarDayProps<TDate> {
+  /**
+   * Status of day
+   */
+  status: DayStatus;
 }
 
 const withBaseName = makePrefixer("saltCalendarDay");
@@ -43,8 +56,8 @@ export const CalendarDay = forwardRef<
 ) {
   const {
     className,
-    day,
-    renderDayButton,
+    date,
+    render,
     month,
     TooltipProps,
     format = "DD",
@@ -65,7 +78,7 @@ export const CalendarDay = forwardRef<
     unselectableReason,
     highlightedReason,
   } = useCalendarDay({
-    date: day,
+    date,
     month,
   });
   const {
@@ -85,10 +98,14 @@ export const CalendarDay = forwardRef<
     }
   }, [focused, focusedDateRef?.current?.focus]);
 
-  const defaultButtonProps: ComponentPropsWithRef<"button"> = {
-    "aria-label": dateAdapter.format(day, "DD MMMM YYYY"),
+  const defaultButtonProps = {
+    "aria-label": dateAdapter.format(date, "DD MMMM YYYY"),
+    children: (
+      <span className={withBaseName("content")}>
+        {dateAdapter.format(date, format)}
+      </span>
+    ),
     disabled,
-    type: "button",
     ...dayProps,
     ref: buttonRef,
     ...rest,
@@ -109,15 +126,16 @@ export const CalendarDay = forwardRef<
   };
 
   const defaultButtonElement = (
-    <button {...defaultButtonProps}>
-      <span className={withBaseName("content")}>
-        {dateAdapter.format(day, format)}
-      </span>
-    </button>
+    <button type={"button"} {...defaultButtonProps} />
   );
 
-  const buttonElement = renderDayButton
-    ? renderDayButton(day, defaultButtonProps, status)
+  const buttonElement = render
+    ? renderProps<React.ElementType<renderCalendarDayProps<TDate>>>("button", {
+        render,
+        ...defaultButtonProps,
+        status,
+        date,
+      })
     : defaultButtonElement;
 
   const hasTooltip = unselectableReason || highlightedReason;

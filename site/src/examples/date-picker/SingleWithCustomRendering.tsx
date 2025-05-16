@@ -6,24 +6,25 @@ import {
   type DatePickerSingleGridPanelProps,
   DatePickerSingleInput,
   DatePickerTrigger,
-  type DayStatus,
+  type renderCalendarDayProps,
   useLocalization,
 } from "@salt-ds/lab";
 import { clsx } from "clsx";
-import type { ComponentPropsWithRef, ReactElement } from "react";
+import type { ReactElement } from "react";
 import styles from "./singleWithCustomRendering.module.css";
 
 export const SingleWithCustomRendering = (): ReactElement => {
   const { dateAdapter } = useLocalization();
 
-  function renderDayButton(
-    date: DateFrameworkType,
-    { className, ...props }: ComponentPropsWithRef<"button">,
-    status: DayStatus,
-  ): ReactElement | null {
+  function renderDayButton({
+    className,
+    date,
+    status,
+    ...rest
+  }: renderCalendarDayProps<DateFrameworkType>): ReactElement {
     return (
       <button
-        {...props}
+        {...rest}
         className={clsx([
           { [styles.buttonWithDot]: !status.outOfRange },
           className,
@@ -39,7 +40,7 @@ export const SingleWithCustomRendering = (): ReactElement => {
 
   const CalendarGridProps: DatePickerSingleGridPanelProps<DateFrameworkType>["CalendarGridProps"] =
     {
-      getCalendarMonthProps: () => ({ renderDayButton }),
+      CalendarDayProps: { render: renderDayButton },
     };
 
   return (
