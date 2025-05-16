@@ -3462,7 +3462,7 @@ __metadata:
     del: "npm:^7.0.0"
   peerDependencies:
     "@salt-ds/theme": "workspace:^"
-    react-resizable-panels: ">=2.1.7"
+    react-resizable-panels: ">=3.0.0"
   languageName: unknown
   linkType: soft
 
