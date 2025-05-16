@@ -129,6 +129,7 @@ This component is used as a child of the `DatePicker`, streamlining the process 
 - If set to a valid IANA timezone identifier, the time will be returned for that specific timezone.
   Timezone is not supported by v3 of `date-fns`, so if you are using `date-fns` v3, the timezone will be set to "default" by default. If you require timezone support, use a date framework such as `luxon` or `dayjs`.
 - `Calendar` previously could render custom contents but did not provide a way to change the highlight styles, so `renderDayContents` has been replaced with `render`, passed through `CalendarDayProps`.
+
 ```
 function renderDayButton({
   className,
