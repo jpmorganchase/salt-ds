@@ -134,20 +134,13 @@ export class AdapterDateFns implements SaltDateAdapter<Date, Locale> {
   /**
    * Creates a Date object from a string or returns an invalid date.
    * @param value - The date string to parse.
-   * @param timezone - The timezone to use (default is "default").
-   * @param locale - The locale to use for parsing.
    * @returns The parsed Date object or an invalid date object.
    */
-  public date = <T extends string | undefined>(
-    value?: T,
-    _timezone: Timezone = "default",
-    _locale?: Locale,
-  ): Date => {
+  public date = <T extends string | undefined>(value?: T): Date => {
     if (!value || !this.isValidDateString(value)) {
       return new Date(Number.NaN);
     }
-    const date = new Date(value);
-    return date;
+    return new Date(value);
   };
 
   /**
@@ -155,18 +148,16 @@ export class AdapterDateFns implements SaltDateAdapter<Date, Locale> {
    * Returns an empty string when null or undefined date is given.
    * @param date - The Date object to format.
    * @param format - The format string to use.
-   * @param locale - The locale to use for formatting.
    * @returns The formatted date string.
    */
   public format(
     date: Date | null | undefined,
     format: RecommendedFormats = "dd MMM yyyy",
-    locale?: Locale,
   ): string {
     if (this.isValid(date)) {
       const dateFnsFormat = this.mapToDateFnsFormat(format);
       return formatDateFns(date, dateFnsFormat, {
-        locale: locale ?? this.locale,
+        locale: this.locale,
       });
     }
     return "";
@@ -187,17 +178,12 @@ export class AdapterDateFns implements SaltDateAdapter<Date, Locale> {
    * Parses a date string using the specified format.
    * @param value - The date string to parse.
    * @param format - The format string to use.
-   * @param locale - The locale to use for parsing.
    * @returns A DateDetail object containing the parsed date and any errors.
    */
-  public parse(
-    value: string,
-    format: string,
-    locale?: Locale,
-  ): ParserResult<Date> {
+  public parse(value: string, format: string): ParserResult<Date> {
     const dateFnsFormat = this.mapToDateFnsFormat(format);
     const parsedDate = parseDateFns(value, dateFnsFormat, new Date(), {
-      locale: locale ?? this.locale,
+      locale: this.locale,
     });
     if (isValidDateFns(parsedDate)) {
       return {
@@ -222,10 +208,11 @@ export class AdapterDateFns implements SaltDateAdapter<Date, Locale> {
 
   /**
    * Checks if a Date object is valid.
-   * @param date - The Date object to check.
+   * @param date - The Date object to check, null or undefined.
    * @returns True if the date is valid date object, false otherwise.
    */
-  public isValid(date: any): date is Date {
+  // biome-ignore lint/suspicious/noExplicitAny: date object
+  public isValid(date: Date | null | undefined): date is Date {
     return date instanceof Date && isValidDateFns(date);
   }
 
@@ -353,6 +340,24 @@ export class AdapterDateFns implements SaltDateAdapter<Date, Locale> {
   }
 
   /**
+   * Get the timezone from the Date object (un-supported by v3 date-fns/Date object)
+   * @returns "default" as Timezones are not supported by the date-fns/Date object
+   */
+  public getTimezone = (): string => {
+    return "default";
+  };
+
+  /**
+   * Set the timezone for the Date object (un-supported by v3 date-fns/Date object)
+   * @param date - A Date object
+   * @param _timezone - Timezone to set date object to (un-used)
+   * @returns  date object set to the timezone
+   */
+  public setTimezone = (date: Date, _timezone: Timezone): Date => {
+    return date;
+  };
+
+  /**
    * Checks if two Date objects are the same based on the specified granularity.
    * @param dateA - The first Date object.
    * @param dateB - The second Date object.
@@ -380,19 +385,14 @@ export class AdapterDateFns implements SaltDateAdapter<Date, Locale> {
    * Gets the start of a specified time period for a Date object.
    * @param date - The Date object.
    * @param offset - The time period ("day", "week", "month", "year").
-   * @param locale - The locale to use.
    * @returns The Date object representing the start of the period.
    */
-  public startOf(
-    date: Date,
-    offset: "day" | "week" | "month" | "year",
-    locale?: Locale,
-  ): Date {
+  public startOf(date: Date, offset: "day" | "week" | "month" | "year"): Date {
     switch (offset) {
       case "day":
         return startOfDay(date);
       case "week":
-        return startOfWeek(date, { locale: locale ?? this.locale });
+        return startOfWeek(date, { locale: this.locale });
       case "month":
         return startOfMonth(date);
       case "year":
@@ -406,19 +406,14 @@ export class AdapterDateFns implements SaltDateAdapter<Date, Locale> {
    * Gets the end of a specified time period for a Date object.
    * @param date - The Date object.
    * @param offset - The time period ("day", "week", "month", "year").
-   * @param locale - The locale to use.
    * @returns The Date object representing the end of the period.
    */
-  public endOf(
-    date: Date,
-    offset: "day" | "week" | "month" | "year",
-    locale?: Locale,
-  ): Date {
+  public endOf(date: Date, offset: "day" | "week" | "month" | "year"): Date {
     switch (offset) {
       case "day":
         return endOfDay(date);
       case "week":
-        return endOfWeek(date, { locale: locale ?? this.locale });
+        return endOfWeek(date, { locale: this.locale });
       case "month":
         return endOfMonth(date);
       case "year":
@@ -430,29 +425,26 @@ export class AdapterDateFns implements SaltDateAdapter<Date, Locale> {
 
   /**
    * Gets the current date with the time set to the start of the day.
-   * @param _locale - The locale to use.
    * @returns The current date at the start of the day.
    */
-  public today(_locale?: Locale): Date {
+  public today(): Date {
     return startOfDay(new Date());
   }
 
   /**
    * Gets the current date and time.
-   * @param locale - The locale to use.
    * @returns The current date and time.
    */
-  public now(locale?: Locale): Date {
+  public now(): Date {
     return new Date();
   }
 
   /**
    * Gets the day of the week for a Date object.
    * @param date - The Date object.
-   * @param locale - The locale to use.
    * @returns The day of the week as a number (0-6).
    */
-  public getDayOfWeek(date: Date, locale?: Locale): number {
+  public getDayOfWeek(date: Date): number {
     return getDay(date);
   }
 
@@ -460,19 +452,17 @@ export class AdapterDateFns implements SaltDateAdapter<Date, Locale> {
    * Gets the name of the day of the week.
    * @param dow - The day of the week as a number (0-6).
    * @param format - The format for the day name ("long", "short", "narrow").
-   * @param locale - The locale to use.
    * @returns The name of the day of the week.
    */
   public getDayOfWeekName(
     dow: number,
     format: "long" | "short" | "narrow",
-    locale: Locale,
   ): string {
     const startOfWeekDate = startOfWeek(new Date(), {
-      locale: locale ?? this.locale,
+      locale: this.locale,
     });
     const targetDate = addDaysFns(startOfWeekDate, dow);
-    return new Intl.DateTimeFormat(locale?.code ?? this.locale?.code, {
+    return new Intl.DateTimeFormat(this.locale?.code, {
       weekday: format,
     }).format(targetDate);
   }

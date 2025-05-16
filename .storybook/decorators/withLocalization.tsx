@@ -19,9 +19,6 @@ const getDefaultLocale = (dateAdapter: string) => {
   if (dateAdapter === "date-fns") {
     return dateFnsEnUs;
   }
-  if (dateAdapter === "dayjs") {
-    return "en-US";
-  }
   return "en";
 };
 

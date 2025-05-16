@@ -10,10 +10,18 @@ import { AdapterLuxon } from "@salt-ds/date-adapters/luxon";
 import { AdapterMoment } from "@salt-ds/date-adapters/moment";
 import { DateInputSingle } from "@salt-ds/lab";
 
+import * as dateInputStories from "@stories/date-input/date-input.stories";
+
 import { es as dateFnsEs } from "date-fns/locale";
 import { type ChangeEvent, type SyntheticEvent, useState } from "react";
 import "moment/dist/locale/es";
 import "dayjs/locale/es";
+
+const {
+  // Storybook wraps components in it's own LocalizationProvider, so do not compose Stories
+  SingleWithTimezone,
+  // biome-ignore lint/suspicious/noExplicitAny: storybook stories
+} = dateInputStories as any;
 
 // Initialize adapters
 const adapterDateFns = new AdapterDateFns();
@@ -50,6 +58,7 @@ const adapters = [adapterDateFns, adapterDayjs, adapterLuxon, adapterMoment];
  * @param adapter
  */
 function assertDateChange(
+  // biome-ignore lint/suspicious/noExplicitAny: spy
   spy: any,
   expectedValue: string,
   expectedDate: DateFrameworkType | null | undefined,
@@ -179,6 +188,12 @@ describe("GIVEN a DateInputSingle", () => {
         cy.findByRole("textbox").click().clear().type(initialDateValue);
         cy.realPress("Tab");
         cy.get("@dateChangeSpy").should("have.callCount", 4);
+
+        // Test giving focus but not changing the date
+        cy.findByRole("textbox").click();
+        cy.realPress("Tab");
+        cy.findByRole("textbox").should("have.value", initialDateValue);
+        cy.get("@dateChangeSpy").should("have.callCount", 4);
       });
 
       it("SHOULD support custom formatter", () => {
@@ -245,6 +260,48 @@ describe("GIVEN a DateInputSingle", () => {
             />,
           );
           cy.findByRole("textbox").should("have.value", "01 ago 2030");
+        });
+      });
+
+      describe("timezone", () => {
+        [
+          { timezone: "default", expectedResult: "2025-01-05T00:00:00.000Z" },
+          { timezone: "system", expectedResult: "2025-01-05T00:00:00.000Z" },
+          { timezone: "UTC", expectedResult: "2025-01-05T00:00:00.000Z" },
+          {
+            timezone: "America/New_York",
+            expectedResult: "2025-01-05T05:00:00.000Z",
+          },
+          {
+            timezone: "Europe/London",
+            expectedResult: "2025-01-05T00:00:00.000Z",
+          },
+          {
+            timezone: "Asia/Shanghai",
+            expectedResult: "2025-01-04T16:00:00.000Z",
+          },
+          {
+            timezone: "Asia/Kolkata",
+            expectedResult: "2025-01-04T18:30:00.000Z",
+          },
+        ].forEach(({ timezone, expectedResult }) => {
+          if (adapter.lib === "date-fns" && timezone !== "default") {
+            return;
+          }
+          it(`SHOULD render date in the ${timezone} timezone`, () => {
+            cy.mount(<SingleWithTimezone />);
+            // Simulate selection of date
+            cy.findByLabelText("timezone dropdown").realClick();
+            cy.findByRole("option", { name: timezone }).realHover().realClick();
+            // Verify that the calendar navigates to the selected year
+            cy.findByRole("textbox").click().clear().type(initialDateValue);
+            cy.realPress("Tab");
+            // Verify the ISO date
+            cy.findByTestId("iso-date-label").should(
+              "have.text",
+              expectedResult,
+            );
+          });
         });
       });
 
