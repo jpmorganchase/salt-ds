@@ -32,7 +32,7 @@
     "@jpmorganchase/mosaic-standard-generator": "0.1.0-beta.90",
     "@jpmorganchase/mosaic-store": "0.1.0-beta.90",
     "css-tree": "^3.1.0",
-    "date-fns": "^3.6.0",
+    "date-fns": "^4.0.0",
     "dayjs": "^1.11.13",
     "lodash-es": "^4.17.21",
     "luxon": "^3.5.0",
