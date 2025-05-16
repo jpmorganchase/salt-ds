@@ -3441,7 +3441,6 @@ __metadata:
     moment-timezone: "npm:^0.5.46"
     no-scroll: "npm:^2.1.1"
     react-color: "npm:^2.19.3"
-    react-resizable-panels: "npm:^2.1.7"
     react-window: "npm:^1.8.6"
     rifm: "npm:^0.12.0"
     tabbable: "npm:^6.0.0"
@@ -3453,6 +3452,17 @@ __metadata:
   peerDependenciesMeta:
     "@types/react":
       optional: true
+  languageName: unknown
+  linkType: soft
+
+"@salt-ds/react-resizable-panels-theme@workspace:packages/react-resizable-panels-theme":
+  version: 0.0.0-use.local
+  resolution: "@salt-ds/react-resizable-panels-theme@workspace:packages/react-resizable-panels-theme"
+  dependencies:
+    del: "npm:^7.0.0"
+  peerDependencies:
+    "@salt-ds/theme": "workspace:^"
+    react-resizable-panels: ">=3.0.0"
   languageName: unknown
   linkType: soft
 
@@ -3521,6 +3531,7 @@ __metadata:
     react: "npm:^18.3.1"
     react-docgen-typescript: "npm:2.2.2"
     react-dom: "npm:^18.3.1"
+    react-resizable-panels: "npm:^3.0.0"
     rifm: "npm:^0.12.0"
     rollup: "npm:^4.24.2"
     rollup-plugin-esbuild: "npm:^6.1.1"
@@ -14634,13 +14645,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-resizable-panels@npm:^2.1.7":
-  version: 2.1.7
-  resolution: "react-resizable-panels@npm:2.1.7"
+"react-resizable-panels@npm:^3.0.0":
+  version: 3.0.1
+  resolution: "react-resizable-panels@npm:3.0.1"
   peerDependencies:
     react: ^16.14.0 || ^17.0.0 || ^18.0.0 || ^19.0.0 || ^19.0.0-rc
     react-dom: ^16.14.0 || ^17.0.0 || ^18.0.0 || ^19.0.0 || ^19.0.0-rc
-  checksum: 10/7fb0e4122a31bd8157126e622c3ab593ee04d64861cf876b0ac9433bfb680e10ac4fb66c5672e1e0f3ab3c3098a176faab1b4fd271db812919c0930041678cba
+  checksum: 10/e73ce91178cce9148684e1775ac045f8d2baebdd293a0155022afd7031a7e4e09b2c12cf83e3d190050876b6c124374925959ffe0779be5709c09803452b4537
   languageName: node
   linkType: hard
 
