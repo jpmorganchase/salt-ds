@@ -1,5 +1,15 @@
 # @salt-ds/core
 
+## 1.46.0
+
+### Minor Changes
+
+- ec1736e: Added `defaultSelected` prop to `ToggleButton` to control default selected state. Updated `ToggleButton` `appearance` JSDoc to be more clear around selected state.
+
+### Patch Changes
+
+- beceb5e: Fixed `onPillRemove` not being called when a pill is clicked and removed in a `ComboBox`.
+
 ## 1.45.0
 
 ### Minor Changes
