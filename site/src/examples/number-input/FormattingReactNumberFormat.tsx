@@ -42,6 +42,7 @@ export const FormattingReactNumberFormat = () => {
         <NumericFormat
           defaultValue={20}
           suffix="%"
+          decimalScale={2}
           customInput={NumberInput}
           hideButtons
         />

@@ -26,12 +26,7 @@ import {
   useRef,
   useState,
 } from "react";
-import {
-  isOutOfRange,
-  parseAndFormat,
-  toFixedDecimalPlaces,
-  toFloat,
-} from "./internal/utils";
+import { clamp, isOutOfRange, sanitizeInput, toFloat } from "./internal/utils";
 
 import numberInputCss from "./NumberInput.css";
 import { useNumberInput } from "./useNumberInput";
@@ -48,10 +43,10 @@ export interface NumberInputProps
    */
   bordered?: boolean;
   /**
-   * The number of allowed decimal places
-   * @default 2
+   * Clamping behaviour
+   * @default none
    */
-  decimalPlaces?: number;
+  clampingBehaviour?: "strict" | "none";
   /**
    * The default value. Use when the component is not controlled.
    */
@@ -73,7 +68,7 @@ export interface NumberInputProps
   /**
    * Formatting callback
    */
-  format?: (value: any) => string | number;
+  format?: (value: number | string) => string | number;
   /**
    * Hide the number buttons. Defaults to `false`.
    * @default false
@@ -107,6 +102,11 @@ export interface NumberInputProps
     event: SyntheticEvent | undefined,
     value: number | string,
   ) => void;
+  /**
+   *
+   * Parsing callback
+   */
+  parse?: (value: number | string) => string | number;
   /**
    * A string displayed in a dimmed color when the `NumberInput` value is empty.
    */
@@ -160,12 +160,13 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
     {
       bordered,
       className: classNameProp,
-      decimalPlaces = 0,
-      defaultValue: defaultValueProp,
+      clampingBehaviour,
+      defaultValue: defaultValueProp = "",
       disabled,
       emptyReadOnlyMarker = "—",
       endAdornment,
       format,
+      parse,
       hideButtons,
       id: idProp,
       inputProps: inputPropsProp = {},
@@ -229,10 +230,7 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
 
     const [value, setValue] = useControlled({
       controlled: valueProp,
-      default:
-        defaultValueProp !== undefined
-          ? parseAndFormat(decimalPlaces, defaultValueProp, format)
-          : "",
+      default: defaultValueProp,
       name: "NumberInput",
       state: "value",
     });
@@ -250,12 +248,12 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
     } = useNumberInput({
       inputRef,
       setValue,
-      decimalPlaces,
       disabled,
       max,
       min,
       format,
       onChange: onChangeProp,
+      parse,
       readOnly: isReadOnly,
       step,
       stepMultiplier,
@@ -263,33 +261,34 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
     });
 
     const handleInputFocus = (event: FocusEvent<HTMLInputElement>) => {
-      if (!isDisabled) setFocused(true);
+      if (!isDisabled) {
+        setFocused(true);
+      }
+      const parsedValue = parse?.(event.target.value) || event.target.value;
+      setValue(parsedValue);
+      onChangeProp?.(event, parsedValue);
       inputOnFocus?.(event);
     };
 
     const handleInputBlur = (event: FocusEvent<HTMLInputElement>) => {
       setFocused(false);
       const changedValue = event.target.value;
-      const formattedValue = parseAndFormat(
-        decimalPlaces,
-        changedValue,
-        format,
-      );
-
+      const formattedValue = format?.(changedValue) || changedValue;
       setValue(formattedValue);
+      onChangeProp?.(event, formattedValue);
       inputOnBlur?.(event);
     };
 
     const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
       const changedValue = event.target.value;
-      const formattedValue = parseAndFormat(
-        decimalPlaces,
-        changedValue,
-        format,
-      );
+      const sanitizedValue = sanitizeInput(changedValue);
+      let updatedValue = sanitizedValue;
 
-      setValue(changedValue);
-      onChangeProp?.(event, formattedValue);
+      if (clampingBehaviour === "strict") {
+        updatedValue = clamp(max, min, toFloat(sanitizedValue));
+      }
+      setValue(updatedValue);
+      onChangeProp?.(event, updatedValue);
       inputOnChange?.(event);
     };
 
@@ -370,21 +369,21 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
                 ? isOutOfRange(value, min, max) || validationStatus === "error"
                 : undefined
             }
-            aria-valuemax={
-              !isReadOnly
-                ? toFloat(toFixedDecimalPlaces(max, decimalPlaces))
-                : undefined
-            }
-            aria-valuemin={
-              !isReadOnly
-                ? toFloat(toFixedDecimalPlaces(min, decimalPlaces))
-                : undefined
-            }
-            aria-valuenow={
-              value && !Number.isNaN(toFloat(value)) && !isReadOnly
-                ? toFloat(toFixedDecimalPlaces(toFloat(value), decimalPlaces))
-                : undefined
-            }
+            // aria-valuemax={
+            //   !isReadOnly
+            //     ? toFloat(toFixedDecimalPlaces(max, decimalPlaces))
+            //     : undefined
+            // }
+            // aria-valuemin={
+            //   !isReadOnly
+            //     ? toFloat(toFixedDecimalPlaces(min, decimalPlaces))
+            //     : undefined
+            // }
+            // aria-valuenow={
+            //   value && !Number.isNaN(toFloat(value)) && !isReadOnly
+            //     ? toFloat(toFixedDecimalPlaces(toFloat(value), decimalPlaces))
+            //     : undefined
+            // }
             // Workaround to have the value announced by screen reader on Safari.
             {...(!isReadOnly && { "aria-valuetext": value.toString() })}
             className={clsx(

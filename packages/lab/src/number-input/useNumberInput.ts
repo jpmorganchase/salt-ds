@@ -8,18 +8,12 @@ import {
 } from "react";
 import type { NumberInputProps } from "./NumberInput";
 import { useActivateWhileMouseDown } from "./internal/useActivateWhileMouseDown";
-import {
-  isAtMax,
-  isAtMin,
-  parseAndFormat,
-  sanitizeInput,
-} from "./internal/utils";
+import { clamp, isAtMax, isAtMin, toFloat } from "./internal/utils";
 
 /**
  * Manages increment / decrement logic
  */
 export const useNumberInput = ({
-  decimalPlaces = 0,
   disabled,
   inputRef,
   max = Number.MAX_SAFE_INTEGER,
@@ -31,9 +25,9 @@ export const useNumberInput = ({
   stepMultiplier = 2,
   value,
   format,
+  parse,
 }: Pick<
   NumberInputProps,
-  | "decimalPlaces"
   | "disabled"
   | "inputRef"
   | "max"
@@ -47,51 +41,44 @@ export const useNumberInput = ({
   value: string | number;
   inputRef: MutableRefObject<HTMLInputElement | null>;
   format?: (value: number | string) => number | string;
+  parse?: (value: number | string) => number | string;
 }) => {
   const updateValue = useCallback(
     (event: SyntheticEvent | undefined, nextValue: number) => {
       if (readOnly) return;
-
-      const clampedValue = clamp(nextValue);
-      const formattedValue = parseAndFormat(
-        decimalPlaces,
-        clampedValue,
-        format,
-      );
-      setValue(formattedValue);
-      onChange?.(event, formattedValue);
+      const clampedValue = clamp(max, min, nextValue);
+      setValue(clampedValue);
+      onChange?.(event, clampedValue);
     },
-    [decimalPlaces, onChange, readOnly, setValue, format],
+    [onChange, readOnly, setValue, max, min],
   );
-
-  const clamp = (value: number) => {
-    if (value < min) return min;
-    if (value > max) return max;
-    return value;
-  };
 
   const decrementValue = useCallback(
     (event?: SyntheticEvent, block?: boolean) => {
       if (isAtMin(value, min)) return;
       const decrementStep = block ? stepMultiplier * step : step;
-      const sanitizedValue = sanitizeInput(value);
-      const nextValue = sanitizedValue - decrementStep;
-
+      let parsedValue = value;
+      if (parse) {
+        parsedValue = parse(value);
+      }
+      const nextValue = toFloat(parsedValue) - decrementStep;
       updateValue(event, nextValue);
     },
-    [value, min, step, stepMultiplier, updateValue],
+    [value, min, step, stepMultiplier, updateValue, parse],
   );
 
   const incrementValue = useCallback(
     (event?: SyntheticEvent, block?: boolean) => {
       if (isAtMax(value, max)) return;
       const incrementStep = block ? stepMultiplier * step : step;
-      const sanitizedValue = sanitizeInput(value);
-      const nextValue = sanitizedValue + incrementStep;
-
+      let parsedValue = value;
+      if (parse) {
+        parsedValue = parse(value);
+      }
+      const nextValue = toFloat(parsedValue) + incrementStep;
       updateValue(event, nextValue);
     },
-    [value, max, step, stepMultiplier, updateValue],
+    [value, max, step, stepMultiplier, updateValue, parse],
   );
 
   const { activate: decrementSpinner } = useActivateWhileMouseDown(
