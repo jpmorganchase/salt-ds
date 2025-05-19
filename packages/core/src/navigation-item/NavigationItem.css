@@ -50,16 +50,6 @@
   width: 100%;
 }
 
-/* Styles applied to NavigationItem label */
-.saltNavigationItem-label {
-  padding-left: calc(var(--saltNavigationItem-level, 0) * var(--salt-spacing-100));
-  flex: 1;
-  text-align: left;
-  display: flex;
-  align-items: baseline;
-  gap: var(--salt-spacing-100);
-}
-
 /* Styles applied when orientation = "horizontal" */
 .saltNavigationItem-horizontal {
   min-height: calc(var(--salt-size-base) + var(--salt-spacing-100) * 2);
@@ -85,6 +75,11 @@
   display: flex;
   align-items: baseline;
   gap: var(--salt-spacing-100);
+}
+
+.saltNavigationItem-label:not(:first-child) {
+  /* Only applies when an icon is used before */
+  padding-left: calc(var(--saltNavigationItem-level, 0) * var(--salt-spacing-100));
 }
 
 /* Styles applied to NavigationItem Badge */
