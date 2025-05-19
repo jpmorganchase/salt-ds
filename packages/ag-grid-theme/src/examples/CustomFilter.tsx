@@ -1,11 +1,12 @@
 import { Button, FlowLayout, StackLayout } from "@salt-ds/core";
+import type { FilterModel } from "ag-grid-community";
 import { AgGridReact, type AgGridReactProps } from "ag-grid-react";
 import { useState } from "react";
 import customFilterExampleColumns from "../dependencies/customFilterExampleColumns";
 import dataGridExampleData from "../dependencies/dataGridExampleData";
 import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
 
-let savedFilterModel: any = null;
+let savedFilterModel: FilterModel | null = null;
 
 const CustomFilter = (props: AgGridReactProps) => {
   const [hasSavedState, setHasSavedState] = useState(true);
@@ -44,7 +45,7 @@ const CustomFilter = (props: AgGridReactProps) => {
   };
 
   const saveState = () => {
-    savedFilterModel = api?.getFilterModel();
+    savedFilterModel = api?.getFilterModel() || null;
     setHasSavedState(false);
   };
 
