@@ -13,10 +13,19 @@ import {
   type DateParserField,
   type DateRangeSelection,
 } from "@salt-ds/lab";
+
+import * as dateInputStories from "@stories/date-input/date-input.stories";
+
 import { es as dateFnsEs } from "date-fns/locale";
 import { type ChangeEvent, type SyntheticEvent, useState } from "react";
 import "moment/dist/locale/es";
 import "dayjs/locale/es";
+
+const {
+  // Storybook wraps components in it's own LocalizationProvider, so do not compose Stories
+  RangeWithTimezone,
+  // biome-ignore lint/suspicious/noExplicitAny: storybook stories
+} = dateInputStories as any;
 
 // Initialize adapters
 const adapterDateFns = new AdapterDateFns();
@@ -53,6 +62,7 @@ const adapters = [adapterDateFns, adapterDayjs, adapterLuxon, adapterMoment];
  * @param adapter
  */
 function assertDateChange(
+  // biome-ignore lint/suspicious/noExplicitAny: spy
   spy: any,
   expectedValue: { startDate?: string; endDate?: string },
   expectedDate: {
@@ -303,6 +313,21 @@ describe("GIVEN a DateInputRange", () => {
             adapter,
           ),
         );
+
+        // Test giving focus but not changing the date
+        cy.findByLabelText("Start date").click();
+        cy.realPress("Tab");
+        cy.findByLabelText("Start date").should(
+          "have.value",
+          initialDateValue.startDate,
+        );
+        cy.findByLabelText("End date").should("have.focus");
+        cy.realPress("Tab");
+        cy.findByLabelText("End date").should(
+          "have.value",
+          initialDateValue.endDate,
+        );
+        cy.get("@dateChangeSpy").should("have.callCount", 7);
       });
 
       it("SHOULD support custom formatter", () => {
@@ -456,6 +481,90 @@ describe("GIVEN a DateInputRange", () => {
           );
           cy.findByLabelText("Start date").should("have.value", "01 ago 2030");
           cy.findByLabelText("End date").should("have.value", "01 dic 2030");
+        });
+      });
+
+      describe("timezone", () => {
+        [
+          {
+            timezone: "default",
+            expectedResult: {
+              startDate: "2025-01-05T00:00:00.000Z",
+              endDate: "2026-02-06T00:00:00.000Z",
+            },
+          },
+          {
+            timezone: "system",
+            expectedResult: {
+              startDate: "2025-01-05T00:00:00.000Z",
+              endDate: "2026-02-06T00:00:00.000Z",
+            },
+          },
+          {
+            timezone: "UTC",
+            expectedResult: {
+              startDate: "2025-01-05T00:00:00.000Z",
+              endDate: "2026-02-06T00:00:00.000Z",
+            },
+          },
+          {
+            timezone: "America/New_York",
+            expectedResult: {
+              startDate: "2025-01-05T05:00:00.000Z",
+              endDate: "2026-02-06T05:00:00.000Z",
+            },
+          },
+          {
+            timezone: "Europe/London",
+            expectedResult: {
+              startDate: "2025-01-05T00:00:00.000Z",
+              endDate: "2026-02-06T00:00:00.000Z",
+            },
+          },
+          {
+            timezone: "Asia/Shanghai",
+            expectedResult: {
+              startDate: "2025-01-04T16:00:00.000Z",
+              endDate: "2026-02-05T16:00:00.000Z",
+            },
+          },
+          {
+            timezone: "Asia/Kolkata",
+            expectedResult: {
+              startDate: "2025-01-04T18:30:00.000Z",
+              endDate: "2026-02-05T18:30:00.000Z",
+            },
+          },
+        ].forEach(({ timezone, expectedResult }) => {
+          if (adapter.lib === "date-fns" && timezone !== "default") {
+            return;
+          }
+          it(`SHOULD render date in the ${timezone} timezone`, () => {
+            cy.mount(<RangeWithTimezone />);
+            // Simulate selecting timezone
+            cy.findByLabelText("timezone dropdown").realClick();
+            cy.findByRole("option", { name: timezone }).realHover().realClick();
+            // Simulate selection of date range
+            cy.findByLabelText("Start date")
+              .click()
+              .clear()
+              .type(initialDateValue.startDate);
+            cy.realPress("Tab");
+            cy.findByLabelText("End date")
+              .click()
+              .clear()
+              .type(initialDateValue.endDate);
+            cy.realPress("Tab");
+            // Verify the ISO date range
+            cy.findByTestId("iso-start-date-label").should(
+              "have.text",
+              expectedResult.startDate,
+            );
+            cy.findByTestId("iso-end-date-label").should(
+              "have.text",
+              expectedResult.endDate,
+            );
+          });
         });
       });
 

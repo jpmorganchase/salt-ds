@@ -13,7 +13,7 @@ data:
 To integrate your date framework with Salt components and enable support for locales or timezones, defining a date adapter is essential. Salt provides date adapters for the most popular date frameworks, which you can extend or use as a foundation to create your own custom adapter.
 
 - **[Day.js](https://day.js.org/)**: Recommended for its small footprint, this library returns immutable Day.js objects.
-- **[date-fns](https://date-fns.org/)**: Ideal for comprehensive date manipulation, it returns native JavaScript `Date` objects.
+- **[date-fns](https://date-fns.org/)**: Ideal for comprehensive date manipulation, it returns native JavaScript `Date` objects but does not support timezones or UTC.
 - **[Luxon](https://moment.github.io/luxon/api-docs/index.html)**: A modern successor to Moment.js, it returns Luxon objects.
 - **[Moment.js](https://momentjs.com/docs/)**: A legacy library that is no longer actively maintained.
 
@@ -27,3 +27,13 @@ min/max date is provided by the component.
 In this example, date selection is limited to 3 months.
 
 <LivePreview componentName="localization-provider" exampleName="MinMax" />
+
+## Locales
+
+The `LocalizationProvider` defines the locale used by Salt's date based controls such as [Calendar](../Calendar), [DateInput](../DateInput) and [DatePicker](../DatePicker).
+
+Configuration of locales is date framework specific and may require you to import specific locales from the date library you are using.
+
+By default, Salt defaults to the "enUS" locale (or equivalent).
+
+<LivePreview componentName="calendar" exampleName="WithLocale" />

@@ -1,15 +1,15 @@
 import type {
   DateFrameworkType,
   SaltDateAdapter,
+  Timezone,
 } from "@salt-ds/date-adapters";
 
 export function daysOfWeek<TDate extends DateFrameworkType>(
   dateAdapter: SaltDateAdapter<TDate>,
   format: "long" | "short" | "narrow",
-  locale?: any,
 ) {
   return Array.from({ length: 7 }, (_, day) =>
-    dateAdapter.getDayOfWeekName(day, format, locale),
+    dateAdapter.getDayOfWeekName(day, format),
   );
 }
 
@@ -26,21 +26,17 @@ export function generateMonthsForYear<TDate extends DateFrameworkType>(
 export function generateVisibleDays<TDate extends DateFrameworkType>(
   dateAdapter: SaltDateAdapter<TDate>,
   currentMonth: TDate,
-  locale?: any,
+  timezone: Timezone,
 ) {
   const totalDays = 6 * 7;
   const startDate = dateAdapter.startOf(
-    dateAdapter.startOf(currentMonth, "month", locale),
+    dateAdapter.startOf(currentMonth, "month"),
     "week",
-    locale,
   );
   return [...Array(totalDays).keys()].map((dayDelta) => {
-    const day = dateAdapter.add(startDate, { days: dayDelta });
-    return {
-      date: day,
-      dateOfMonth: dateAdapter.getMonth(day),
-      isCurrentMonth: dateAdapter.isSame(day, currentMonth, "month"),
-    };
+    let day = dateAdapter.add(startDate, { days: dayDelta });
+    day = dateAdapter.setTimezone(day, timezone);
+    return day;
   });
 }
 

@@ -52,9 +52,9 @@ Highlighted dates are marked by a triangle in the top right corner, indicating a
 
 ## Custom day rendering
 
-To customize the rendering of a day element, use the `renderDayContents` prop with the `Calendar` component. This prop accepts a function that is passed a `DateValue` and returns the custom element for that day. This can be useful for scenarios where you need to display additional information or apply custom styling to specific dates.
+To customize the rendering of a day element within `CalendarGrid`, pass a `render` prop through the `CalendarDayProps`. This can be useful for scenarios where you need to display additional information or apply custom styling to specific dates.
 
-<LivePreview componentName="calendar" exampleName="CustomDayRender" />
+<LivePreview componentName="calendar" exampleName="CustomDayRendering" />
 
 ## Hide out-of-range dates
 
@@ -91,6 +91,12 @@ The Twin Calendars example demonstrates how to use the `Calendar` component with
 When the `locale` prop is provided, the `Calendar` component uses it to define the calendar's locale, ensuring that date formats, month names, and other locale-specific elements are displayed according to the specified locale.
 
 <LivePreview componentName="calendar" exampleName="WithLocale" />
+
+## Timezone
+
+Use the `timezone` prop to return the selected date in a specific timezone. This is particularly useful for applications that need to handle date and time data across different time zones, ensuring that users can accurately select and view dates based on their local time.
+
+<LivePreview componentName="calendar" exampleName="WithTimezone" />
 
 ## With today button
 

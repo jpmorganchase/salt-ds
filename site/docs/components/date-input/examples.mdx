@@ -36,6 +36,26 @@ A `DateInputSingle` component with a border provides a visually distinct input f
   exampleName="SingleBordered"
 />
 
+### Locale
+
+A `DateInputSingle` component will use the locale defined by the nearest [LocalizationProvider](../LocalizationProvider) to determine locale specifics, such as date format.
+
+<LivePreview
+  componentName="date-input"
+  displayName="Single with locale"
+  exampleName="SingleWithLocale"
+/>
+
+### Timezone
+
+A `DateInputSingle` component can use the `timezone` prop to display the selected date in a specific timezone. This is particularly useful for applications that need to handle date and time data across different time zones, ensuring that users can accurately select and view dates based on their local time.
+
+<LivePreview
+  componentName="date-input"
+  displayName="Single with timezone"
+  exampleName="SingleWithTimezone"
+/>
+
 ## DateInputRange
 
 ### Uncontrolled date range input
@@ -62,4 +82,24 @@ A `DateInputRange` component with a border provides a visually distinct input fi
   componentName="date-input"
   displayName="Bordered date range"
   exampleName="RangeBordered"
+/>
+
+### Locale
+
+A `DateInputRange` component will use the locale defined by the nearest [LocalizationProvider](../LocalizationProvider) to determine locale specifics, such as date format.
+
+<LivePreview
+  componentName="date-input"
+  displayName="Range with locale"
+  exampleName="RangeWithLocale"
+/>
+
+### Timezone
+
+A `DateInputRange` component can use the `timezone` prop to display the selected date range in a specific timezone. This is particularly useful for applications that need to handle date and time data across different time zones, ensuring that users can accurately select and view date ranges based on their local time.
+
+<LivePreview
+  componentName="date-input"
+  displayName="Range with timezone"
+  exampleName="RangeWithTimezone"
 />
