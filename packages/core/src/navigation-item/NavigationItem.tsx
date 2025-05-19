@@ -97,6 +97,7 @@ export const NavigationItem = forwardRef<HTMLDivElement, NavigationItemProps>(
         ref={ref}
         className={clsx(withBaseName(), className)}
         style={style}
+        data-level={level}
         {...rest}
       >
         <NavigationItemAction
