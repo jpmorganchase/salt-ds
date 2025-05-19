@@ -1,5 +1,5 @@
 .salt-theme,
-.salt-theme[data-brand="legacy"]  {
+.salt-theme[data-brand="legacy"] {
   --salt-separable-borderStyle: solid;
 
   --salt-separable-primary-borderColor: var(--salt-palette-alpha-contrast-mediumLow);

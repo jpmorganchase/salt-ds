@@ -1,5 +1,5 @@
 .salt-theme,
-.salt-theme[data-brand="legacy"]  {
+.salt-theme[data-brand="legacy"] {
   --salt-target-background-hover: var(--salt-palette-interact-background-hover);
 
   --salt-target-borderColor-hover: var(--salt-palette-interact-border-hover);

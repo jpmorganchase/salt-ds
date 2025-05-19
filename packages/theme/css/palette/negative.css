@@ -1,5 +1,5 @@
 .salt-theme[data-mode="light"],
-.salt-theme[data-brand="legacy"][data-mode="light"]  {
+.salt-theme[data-brand="legacy"][data-mode="light"] {
   --salt-palette-negative-foreground: var(--salt-color-red-600);
   --salt-palette-negative-foreground-disabled: var(--salt-color-red-600-40a);
   --salt-palette-negative-background: var(--salt-color-red-600);

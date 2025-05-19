@@ -1,5 +1,5 @@
 .salt-theme,
-.salt-theme[data-brand="legacy"]  {
+.salt-theme[data-brand="legacy"] {
   --salt-navigable-cursor-active: pointer;
   --salt-navigable-cursor-hover: pointer;
   --salt-navigable-cursor-disabled: not-allowed;
