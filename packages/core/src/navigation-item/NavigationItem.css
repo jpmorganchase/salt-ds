@@ -69,7 +69,6 @@
 
 /* Styles applied to NavigationItem label */
 .saltNavigationItem-label {
-  padding-left: calc(var(--saltNavigationItem-level, 0) * var(--salt-spacing-100));
   flex: 1;
   text-align: left;
   display: flex;
