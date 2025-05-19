@@ -811,4 +811,14 @@ describe("Given a ComboBox", () => {
     // should not throw error
     cy.findByRole("button", { name: "test" }).should("be.focused");
   });
+
+  it("should trigger onSelectionChange callback and delete the pill when the pill is clicked", () => {
+    const onSelectionChangeSpy = cy.stub().as("onSelectionChangeSpy");
+    cy.mount(<MultiplePills onSelectionChange={onSelectionChangeSpy} />);
+    cy.findByRole("combobox").realClick();
+    cy.findAllByTestId("pill").should("have.length", "3");
+    cy.findAllByTestId("pill").eq(0).realClick();
+    cy.get("@onSelectionChangeSpy").should("have.been.called");
+    cy.findAllByTestId("pill").should("have.length", "2");
+  });
 });
