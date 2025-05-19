@@ -216,22 +216,13 @@ export const WithTooltip: StoryFn<typeof Stepper> = () => {
       }}
     >
       <Stepper>
-        <Tooltip
-          placement="bottom"
-          content={<Text styleAs="h3">Content step 1</Text>}
-        >
+        <Tooltip placement="bottom" content={<Text>Content step 1</Text>}>
           <Step label="Step 1" stage="completed" />
         </Tooltip>
-        <Tooltip
-          placement="bottom"
-          content={<Text styleAs="h3">Content step 2</Text>}
-        >
+        <Tooltip placement="bottom" content={<Text>Content step 2</Text>}>
           <Step label="Step 2" stage="active" />
         </Tooltip>
-        <Tooltip
-          placement="bottom"
-          content={<Text styleAs="h3">Content step 2</Text>}
-        >
+        <Tooltip placement="bottom" content={<Text>Content step 3</Text>}>
           <Step label="Step 3" />
         </Tooltip>
       </Stepper>
