@@ -1,11 +1,6 @@
 // The input should only accept numbers, decimal points, and plus/minus symbols
 export const ACCEPTED_INPUT = /^[-+]?[0-9]*\.?[0-9]*$/;
 
-export const toFixedDecimalPlaces = (
-  inputNumber: number,
-  decimalPlaces: number,
-) => inputNumber.toFixed(decimalPlaces);
-
 export const isAllowedNonNumeric = (inputCharacter: number | string) => {
   if (typeof inputCharacter === "number") return;
   return (
@@ -29,7 +24,7 @@ export const sanitizeInput = (numberString: string | number) => {
     // If more than one decimal point is found, join the parts with only the first decimal point
     sanitizedInput = `${parts[0]}.${parts.slice(1).join("")}`;
   }
-  return toFloat(sanitizedInput);
+  return sanitizedInput;
 };
 
 export const isAtMax = (value: number | string, max: number) => {
@@ -51,14 +46,17 @@ export const isOutOfRange = (
 };
 
 export const parseAndFormat = (
-  decimalPlaces: number,
   numberString: string | number,
   format?: (value: string | number) => number | string,
 ) => {
   const sanitized = sanitizeInput(numberString);
-  const formattedValue = format
-    ? format(sanitized)
-    : toFixedDecimalPlaces(sanitized, decimalPlaces);
+  const formattedValue = format ? format(sanitized) : sanitized;
 
   return formattedValue;
+};
+
+export const clamp = (max: number, min: number, value: number) => {
+  if (value < min) return min;
+  if (value > max) return max;
+  return value;
 };
