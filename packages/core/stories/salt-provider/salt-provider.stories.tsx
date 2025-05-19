@@ -1,5 +1,5 @@
 import {
-  BrandName,
+  type BrandName,
   Button,
   Card,
   Checkbox,
@@ -59,7 +59,7 @@ export const ToggleBrandAndMode = () => {
                 JPMC
               </ToggleButton>
             </ToggleButtonGroup>
-              <ToggleButtonGroup onChange={handleChangeTheme} value={mode}>
+            <ToggleButtonGroup onChange={handleChangeTheme} value={mode}>
               <ToggleButton aria-label="light theme" value="light">
                 Light
               </ToggleButton>

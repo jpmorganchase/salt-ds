@@ -1,5 +1,5 @@
 .salt-theme,
-.salt-theme[data-brand="legacy"]  {
+.salt-theme[data-brand="legacy"] {
   --salt-track-borderStyle: solid;
   --salt-track-borderStyle-active: solid;
   --salt-track-borderStyle-complete: solid;

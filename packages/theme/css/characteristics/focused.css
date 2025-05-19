@@ -13,7 +13,6 @@
   --salt-focused-outlineColor: var(--salt-palette-accent-stronger);
 }
 
-
 .saltFocusVisible:after,
 .focused:focus:after,
 .focused:focus-visible:after {

@@ -16,7 +16,7 @@ export type characteristic =
   | "text"
   | "differential" /* **deprecated** */;
 
-export type BrandName = 'legacy' | 'jpmc';
+export type BrandName = "legacy" | "jpmc";
 export type ThemeName = string;
 
 export const getCharacteristicValue = (

@@ -1,5 +1,5 @@
 .salt-theme,
-.salt-theme[data-brand="legacy"]  {
+.salt-theme[data-brand="legacy"] {
   /* Colors */
   --salt-content-primary-foreground: var(--salt-palette-neutral-primary-foreground);
   --salt-content-primary-foreground-disabled: var(--salt-palette-neutral-primary-foreground-disabled);
