@@ -257,7 +257,7 @@ function InternalSaltProvider({
   headingFont: headingFontProp,
   accent: accentProp,
   actionFont: actionFontProp,
-  brand: brandProp
+  brand: brandProp,
 }: Omit<
   SaltProviderProps & ThemeNextProps & SaltProviderNextProps,
   "enableStyleInjection"
@@ -278,8 +278,7 @@ function InternalSaltProvider({
   const density = densityProp ?? inheritedDensity ?? DEFAULT_DENSITY;
   const themeName =
     themeProp ?? (inheritedTheme === "" ? DEFAULT_THEME_NAME : inheritedTheme);
-  const brandName =
-    brandProp ?? inheritedBrand ?? DEFAULT_BRAND;
+  const brandName = brandProp ?? inheritedBrand ?? DEFAULT_BRAND;
   const mode = modeProp ?? inheritedMode;
   const breakpoints = breakpointsProp ?? DEFAULT_BREAKPOINTS;
   const corner = cornerProp ?? inheritedCorner ?? DEFAULT_CORNER;
@@ -346,7 +345,7 @@ function InternalSaltProvider({
   useIsomorphicLayoutEffect(() => {
     const themeNamesString = getThemeNames(themeName, themeNext);
     const themeNames = themeNamesString.split(" ");
-    
+
     if (applyClassesTo === "root" && targetWindow) {
       if (inheritedWindow !== targetWindow) {
         // add the styles we want to apply
