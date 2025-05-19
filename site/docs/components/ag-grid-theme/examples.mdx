@@ -41,9 +41,11 @@ Users will be able to select rows via checkboxes.
 
 ## Cell editors
 
-Salt provides styling for a few ag grid [built in cell editor](https://www.ag-grid.com/react-data-grid/provided-cell-editors/) types to best match Salt theme. This is only enabled when `editable-cell` is applied in `cellClass` together with corresponding `ag*CellEditor` specificed in `cellEditor`, so this won't affect your own custom cell editors.
+Salt provides styling for a few ag grid [built in cell editor](https://www.ag-grid.com/react-data-grid/provided-cell-editors/) types to best match Salt theme. This is only enabled when `editable-cell` is applied in `cellClass` together with corresponding `ag*CellEditor` specificed in `cellEditor` of `ColDef`, so this won't affect your own custom cell editors.
 
 Note that [Rich Select Cell Editor](https://www.ag-grid.com/react-data-grid/provided-cell-editors-rich-select/) requires [enterprise license](https://www.ag-grid.com/react-data-grid/licensing/) which offers more functionality than [Select Cell Editor](https://www.ag-grid.com/react-data-grid/provided-cell-editors-select/).
+
+You can also pair chosen editor with provided [column filters types](https://www.ag-grid.com/react-data-grid/filtering/#column-filter-types) `ag*ColumnFilter` in `filter` of `ColDef`.
 
 <LivePreview componentName="ag-grid-theme" exampleName="ProvidedCellEditors" />
 
