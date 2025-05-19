@@ -1,4 +1,5 @@
-.salt-theme[data-mode="light"] {
+.salt-theme[data-mode="light"],
+.salt-theme[data-brand="legacy"][data-mode="light"]  {
   --salt-palette-negative-foreground: var(--salt-color-red-600);
   --salt-palette-negative-foreground-disabled: var(--salt-color-red-600-40a);
   --salt-palette-negative-background: var(--salt-color-red-600);
@@ -9,7 +10,8 @@
   --salt-palette-negative-border-disabled: var(--salt-color-red-500-40a);
 }
 
-.salt-theme[data-mode="dark"] {
+.salt-theme[data-mode="dark"],
+.salt-theme[data-brand="legacy"][data-mode="dark"] {
   --salt-palette-negative-foreground: var(--salt-color-red-200);
   --salt-palette-negative-foreground-disabled: var(--salt-color-red-200-40a);
   --salt-palette-negative-background: var(--salt-color-red-600);
@@ -18,4 +20,24 @@
   --salt-palette-negative-background-disabled: var(--salt-color-red-600-40a);
   --salt-palette-negative-border: var(--salt-color-red-500);
   --salt-palette-negative-border-disabled: var(--salt-color-red-500-40a);
+}
+
+.salt-theme[data-brand="jpmc"][data-mode="light"] {
+  --salt-palette-negative: var(--salt-color-red-500);
+  --salt-palette-negative-strong: var(--salt-color-red-600);
+  --salt-palette-negative-strong-disabled: var(--salt-color-red-600-40a);
+  --salt-palette-negative-weak: var(--salt-color-red-100);
+  --salt-palette-negative-action-hover: var(--salt-color-red-600);
+  --salt-palette-negative-action-active: var(--salt-color-red-800);
+  --salt-palette-negative-disabled: var(--salt-color-red-500-40a);
+}
+
+.salt-theme[data-brand="jpmc"][data-mode="dark"] {
+  --salt-palette-negative: var(--salt-color-red-500);
+  --salt-palette-negative-strong: var(--salt-color-red-400);
+  --salt-palette-negative-strong-disabled: var(--salt-color-red-400-40a);
+  --salt-palette-negative-weak: var(--salt-color-red-900);
+  --salt-palette-negative-action-hover: var(--salt-color-red-600);
+  --salt-palette-negative-action-active: var(--salt-color-red-800);
+  --salt-palette-negative-disabled: var(--salt-color-red-500-40a);
 }

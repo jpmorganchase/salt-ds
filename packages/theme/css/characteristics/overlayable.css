@@ -1,4 +1,5 @@
-.salt-theme {
+.salt-theme,
+.salt-theme[data-brand="legacy"] {
   --salt-overlayable-shadow-scroll: var(--salt-shadow-100);
   --salt-overlayable-shadow-region: var(--salt-shadow-200);
   --salt-overlayable-shadow: var(--salt-shadow-200);
@@ -7,6 +8,12 @@
   --salt-overlayable-shadow-drag: var(--salt-shadow-400);
   --salt-overlayable-shadow-modal: var(--salt-shadow-500);
 
+  --salt-overlayable-background: var(--salt-palette-alpha-high);
+  --salt-overlayable-background-highlight: var(--salt-palette-alpha-contrast-low);
+  --salt-overlayable-background-rangeSelection: var(--salt-palette-alpha-contrast-lower);
+}
+
+.salt-theme[data-brand="jpmc"] {
   --salt-overlayable-background: var(--salt-palette-alpha-high);
   --salt-overlayable-background-highlight: var(--salt-palette-alpha-contrast-low);
   --salt-overlayable-background-rangeSelection: var(--salt-palette-alpha-contrast-lower);
