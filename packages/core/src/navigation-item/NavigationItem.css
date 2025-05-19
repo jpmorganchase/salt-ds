@@ -76,11 +76,6 @@
   gap: var(--salt-spacing-100);
 }
 
-.saltNavigationItem-label:not(:first-child) {
-  /* Only applies when an icon is used before */
-  padding-left: calc(var(--saltNavigationItem-level, 0) * var(--salt-spacing-100));
-}
-
 /* Styles applied to NavigationItem Badge */
 .saltNavigationItem-label .saltBadge {
   margin-left: auto;
