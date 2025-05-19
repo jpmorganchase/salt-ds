@@ -13,7 +13,7 @@
   "peerDependencies": {
     "@types/luxon": "^3.4.2",
     "@types/react": ">=16.14.0",
-    "date-fns": "^3.6.0",
+    "date-fns": "^4.0.0",
     "dayjs": "^1.11.13",
     "luxon": "^3.5.0",
     "moment": "^2.30.1",
