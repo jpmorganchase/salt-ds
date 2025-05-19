@@ -147,9 +147,8 @@ const createThemedChildren = ({
           themeNamesString,
           `salt-density-${density}`,
         ),
-        // @tsignore
+        // @ts-ignore
         "data-brand": brandName,
-        // @tsignore
         "data-mode": mode,
         ...(themeNext ? themeNextProps : {}),
       });
