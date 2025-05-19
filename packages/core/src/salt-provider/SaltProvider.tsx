@@ -151,7 +151,7 @@ const createThemedChildren = ({
         "data-brand": brandName,
         // @tsignore
         "data-mode": mode,
-        ...(themeNext || brandName === 'jpmc' ? themeNextProps : {}),
+        ...(themeNext ? themeNextProps : {}),
       });
     }
     console.warn(
@@ -346,7 +346,7 @@ function InternalSaltProvider({
   useIsomorphicLayoutEffect(() => {
     const themeNamesString = getThemeNames(themeName, themeNext);
     const themeNames = themeNamesString.split(" ");
-console.log('??',applyClassesTo,targetWindow,inheritedWindow)
+    
     if (applyClassesTo === "root" && targetWindow) {
       if (inheritedWindow !== targetWindow) {
         // add the styles we want to apply
@@ -356,8 +356,7 @@ console.log('??',applyClassesTo,targetWindow,inheritedWindow)
         );
         targetWindow.document.documentElement.dataset.brand = brandName;
         targetWindow.document.documentElement.dataset.mode = mode;
-        console.log(brandName)
-        if (themeNext || brandName === 'jpmc') {
+        if (themeNext) {
           targetWindow.document.documentElement.dataset.corner = corner;
           targetWindow.document.documentElement.dataset.headingFont =
             headingFont;
