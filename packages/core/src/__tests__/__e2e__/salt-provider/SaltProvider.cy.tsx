@@ -20,6 +20,7 @@ const TestComponent = ({
 }) => {
   const density = useDensity();
   const {
+    brand,
     theme,
     mode,
     themeNext,
@@ -42,6 +43,7 @@ const TestComponent = ({
       className={className}
       data-density={density}
       data-theme={theme}
+      data-brand={brand}
       data-mode={mode}
       data-announcer={announcerPresent}
       data-corner={corner}
@@ -60,7 +62,7 @@ const TestComponent = ({
 
 describe("Given a SaltProvider", () => {
   describe("with no props set", () => {
-    it("should apply the given theme and density class names to the html element", () => {
+    it("should apply the given theme, brand and density class names to the html element", () => {
       mount(
         <SaltProvider>
           <TestComponent />
@@ -71,6 +73,7 @@ describe("Given a SaltProvider", () => {
 
       cy.get("html")
         .should("exist")
+        .and("have.attr", "data-brand", "legacy")
         .and("have.attr", "data-mode", "light")
         .and("have.class", "salt-density-medium");
     });
@@ -129,12 +132,13 @@ describe("Given a SaltProvider", () => {
 
     it("should apply values specified in props", () => {
       mount(
-        <SaltProvider density="high" mode="dark" theme="custom-theme">
+        <SaltProvider brand="jpmc" density="high" mode="dark" theme="custom-theme">
           <TestComponent />
         </SaltProvider>,
       );
       cy.get("#test-1")
         .should("exist")
+        .and("have.attr", "data-brand", "jpmc")
         .and("have.attr", "data-density", "high")
         .and("have.attr", "data-mode", "dark")
         .and("have.attr", "data-theme", "custom-theme")
