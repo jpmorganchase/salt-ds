@@ -1,4 +1,5 @@
-.salt-theme {
+.salt-theme,
+.salt-theme[data-brand="legacy"]  {
   --salt-target-background-hover: var(--salt-palette-interact-background-hover);
 
   --salt-target-borderColor-hover: var(--salt-palette-interact-border-hover);
@@ -7,4 +8,9 @@
   --salt-target-borderStyle-disabled: dashed;
 
   --salt-target-cursor-disabled: not-allowed;
+}
+
+.salt-theme[data-brand="jpmc"] {
+  --salt-target-background-hover: var(--salt-palette-accent-weakest);
+  --salt-target-borderColor-hover: var(--salt-palette-accent);
 }

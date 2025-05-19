@@ -1,4 +1,5 @@
-.salt-theme {
+.salt-theme,
+.salt-theme[data-brand="legacy"]  {
   --salt-track-borderStyle: solid;
   --salt-track-borderStyle-active: solid;
   --salt-track-borderStyle-complete: solid;
@@ -6,4 +7,9 @@
 
   --salt-track-borderColor: var(--salt-palette-neutral-border);
   --salt-track-borderColor-disabled: var(--salt-palette-neutral-border-disabled);
+}
+
+.salt-theme[data-brand="jpmc"] {
+  --salt-track-borderColor: var(--salt-palette-alpha-contrast-medium);
+  --salt-track-borderColor-disabled: var(--salt-palette-alpha-contrast-lowest);
 }

@@ -1,4 +1,5 @@
-.salt-theme {
+.salt-theme,
+.salt-theme[data-brand="legacy"]  {
   /* Colors */
   --salt-content-primary-foreground: var(--salt-palette-neutral-primary-foreground);
   --salt-content-primary-foreground-disabled: var(--salt-palette-neutral-primary-foreground-disabled);
@@ -14,4 +15,21 @@
   --salt-content-foreground-active: var(--salt-palette-accent-foreground-informative);
   --salt-content-foreground-visited: var(--salt-palette-navigate-foreground-visited);
   --salt-content-foreground-highlight: var(--salt-palette-interact-background-active);
+}
+
+.salt-theme[data-brand="jpmc"] {
+  --salt-content-primary-foreground: var(--salt-palette-foreground-primary);
+  --salt-content-primary-foreground-disabled: var(--salt-palette-foreground-primary-disabled);
+  --salt-content-secondary-foreground: var(--salt-palette-foreground-secondary);
+  --salt-content-secondary-foreground-disabled: var(--salt-palette-foreground-secondary-disabled);
+  --salt-content-accent-foreground: var(--salt-palette-accent-strong);
+  --salt-content-attention-foreground: var(--salt-palette-negative-strong);
+
+  --salt-content-bold-foreground: var(--salt-palette-foreground-primary-alt);
+  --salt-content-bold-foreground-disabled: var(--salt-palette-foreground-primary-alt-disabled);
+
+  --salt-content-foreground-hover: var(--salt-palette-accent-strong);
+  --salt-content-foreground-active: var(--salt-palette-accent-stronger);
+  --salt-content-foreground-visited: var(--salt-palette-foreground-visited);
+  --salt-content-foreground-highlight: var(--salt-palette-accent-weaker);
 }

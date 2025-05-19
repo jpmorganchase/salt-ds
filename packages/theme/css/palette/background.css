@@ -1,0 +1,17 @@
+.salt-theme[data-brand="jpmc"][data-mode="light"] {
+  --salt-palette-background-primary: var(--salt-color-background-snow);
+  --salt-palette-background-primary-disabled: var(--salt-color-background-snow-40a);
+  --salt-palette-background-secondary: var(--salt-color-background-marble);
+  --salt-palette-background-secondary-disabled: var(--salt-color-background-marble-40a);
+  --salt-palette-background-tertiary: var(--salt-color-background-limestone);
+  --salt-palette-background-tertiary-disabled: var(--salt-color-background-limestone-40a);
+}
+
+.salt-theme[data-brand="jpmc"][data-mode="dark"] {
+  --salt-palette-background-primary: var(--salt-color-background-jet);
+  --salt-palette-background-primary-disabled: var(--salt-color-background-jet-40a);
+  --salt-palette-background-secondary: var(--salt-color-background-granite);
+  --salt-palette-background-secondary-disabled: var(--salt-color-background-granite-40a);
+  --salt-palette-background-tertiary: var(--salt-color-background-leather);
+  --salt-palette-background-tertiary-disabled: var(--salt-color-background-leather-40a);
+}

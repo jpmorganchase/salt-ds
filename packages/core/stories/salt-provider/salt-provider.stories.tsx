@@ -1,8 +1,11 @@
 import {
+  BrandName,
   Button,
   Card,
   Checkbox,
   type Density,
+  FlexLayout,
+  H1,
   type Mode,
   SaltProvider,
   ToggleButton,
@@ -30,7 +33,67 @@ export const Default = () => {
   );
 };
 
-export const ToggleTheme = () => {
+export const ToggleBrandAndMode = () => {
+  const [brand, setBrand] = useState<BrandName>("legacy");
+  const [mode, setMode] = useState<Mode>("light");
+
+  const handleChangeBrand = (event: SyntheticEvent<HTMLButtonElement>) => {
+    setBrand(event.currentTarget.value as BrandName);
+  };
+
+  const handleChangeTheme = (event: SyntheticEvent<HTMLButtonElement>) => {
+    setMode(event.currentTarget.value as Mode);
+  };
+
+  return (
+    <SaltProvider brand={brand} mode={mode}>
+      <Card>
+        <div>
+          <H1>This Card is wrapped with a SaltProvider</H1>
+          <FlexLayout>
+            <ToggleButtonGroup onChange={handleChangeBrand} value={brand}>
+              <ToggleButton aria-label="legacy brand" value="legacy">
+                Legacy
+              </ToggleButton>
+              <ToggleButton aria-label="jpmc brand" value="jpmc">
+                JPMC
+              </ToggleButton>
+            </ToggleButtonGroup>
+              <ToggleButtonGroup onChange={handleChangeTheme} value={mode}>
+              <ToggleButton aria-label="light theme" value="light">
+                Light
+              </ToggleButton>
+              <ToggleButton aria-label="dark theme" value="dark">
+                Dark
+              </ToggleButton>
+            </ToggleButtonGroup>
+          </FlexLayout>
+          <p>{`This Card is wrapped with a SaltProvider, brand is ${brand}, mode is ${mode}`}</p>
+
+          <Checkbox label="Example Choice 1" />
+          <Checkbox defaultChecked label="Example Choice 2" />
+          <Checkbox defaultChecked indeterminate label="Example Choice 3" />
+          <br />
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "auto auto auto",
+              gridTemplateRows: "auto",
+              gridGap: 10,
+            }}
+          >
+            <Button sentiment="accented">Continue</Button>
+            <Button>Previous</Button>
+            <Button appearance="transparent">Upload File</Button>
+          </div>
+        </div>
+        <br />
+      </Card>
+    </SaltProvider>
+  );
+};
+
+export const ToggleMode = () => {
   const [mode, setMode] = useState<Mode>("light");
 
   const handleChangeTheme = (event: SyntheticEvent<HTMLButtonElement>) => {
