@@ -5,6 +5,7 @@ import {
   type CSSProperties,
   type ComponentPropsWithoutRef,
   type ReactNode,
+  forwardRef,
   useContext,
   useEffect,
 } from "react";
@@ -81,20 +82,23 @@ export interface StepProps
 
 const withBaseName = makePrefixer("saltStep");
 
-export function Step({
-  id: idProp,
-  label,
-  description,
-  status,
-  stage = "pending",
-  expanded: expandedProp,
-  defaultExpanded,
-  onToggle,
-  className,
-  style,
-  children,
-  ...rest
-}: StepProps) {
+export const Step = forwardRef<HTMLLIElement, StepProps>(function Step(
+  {
+    id: idProp,
+    label,
+    description,
+    status,
+    stage = "pending",
+    expanded: expandedProp,
+    defaultExpanded,
+    onToggle,
+    className,
+    style,
+    children,
+    ...rest
+  },
+  ref,
+) {
   const id = useId(idProp);
   const targetWindow = useWindow();
   const depth = useContext(StepDepthContext);
@@ -171,6 +175,7 @@ export function Step({
         } as CSSProperties
       }
       {...rest}
+      ref={ref}
     >
       <StepScreenReaderOnly>
         {`${label} ${description !== undefined ? description : ""} ${screenReaderOnly.stateText}`}
@@ -238,4 +243,4 @@ export function Step({
       )}
     </li>
   );
-}
+});
