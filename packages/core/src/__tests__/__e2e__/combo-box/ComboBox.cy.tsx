@@ -689,16 +689,6 @@ describe("Given a ComboBox", () => {
     cy.findAllByTestId("pill").should("have.length", "2");
   });
 
-  it("should trigger onPillRemove callback and delete a pill when it is clicked", () => {
-    const onPillRemoveSpy = cy.stub().as("onPillRemoveSpy");
-    cy.mount(<MultiplePills onPillRemove={onPillRemoveSpy} />);
-    cy.findByRole("combobox").realClick();
-    cy.findAllByTestId("pill").should("have.length", "3");
-    cy.findAllByTestId("pill").eq(0).realClick();
-    cy.get("@onPillRemoveSpy").should("have.been.called");
-    cy.findAllByTestId("pill").should("have.length", "2");
-  });
-
   it("should render the custom floating component", () => {
     cy.mount(
       <CustomFloatingComponentProvider>
@@ -820,5 +810,15 @@ describe("Given a ComboBox", () => {
     cy.realPress("ArrowRight");
     // should not throw error
     cy.findByRole("button", { name: "test" }).should("be.focused");
+  });
+
+  it("should trigger onSelectionChange callback and delete the pill when the pill is clicked", () => {
+    const onSelectionChangeSpy = cy.stub().as("onSelectionChangeSpy");
+    cy.mount(<MultiplePills onSelectionChange={onSelectionChangeSpy} />);
+    cy.findByRole("combobox").realClick();
+    cy.findAllByTestId("pill").should("have.length", "3");
+    cy.findAllByTestId("pill").eq(0).realClick();
+    cy.get("@onSelectionChangeSpy").should("have.been.called");
+    cy.findAllByTestId("pill").should("have.length", "2");
   });
 });
