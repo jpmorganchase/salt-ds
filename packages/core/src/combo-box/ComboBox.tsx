@@ -54,7 +54,7 @@ export type ComboBoxProps<Item = string> = {
    */
   selectOnTab?: boolean;
 } & UseComboBoxProps<Item> &
-  PillInputProps;
+  Omit<PillInputProps, "onPillRemove">;
 
 const withBaseName = makePrefixer("saltComboBox");
 
@@ -88,7 +88,6 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
     valueToString = defaultValueToString,
     truncate,
     bordered = false,
-    onPillRemove,
     ...rest
   } = props;
 
@@ -343,7 +342,6 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
     event.stopPropagation();
     const removed = selectedState[index];
     removePill(event, removed);
-    onPillRemove?.(event, index);
   };
 
   const handleListMouseOver = () => {
