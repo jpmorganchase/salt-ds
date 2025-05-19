@@ -132,7 +132,12 @@ describe("Given a SaltProvider", () => {
 
     it("should apply values specified in props", () => {
       mount(
-        <SaltProvider brand="jpmc" density="high" mode="dark" theme="custom-theme">
+        <SaltProvider
+          brand="jpmc"
+          density="high"
+          mode="dark"
+          theme="custom-theme"
+        >
           <TestComponent />
         </SaltProvider>,
       );
