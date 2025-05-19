@@ -1,4 +1,5 @@
-.salt-theme {
+.salt-theme,
+.salt-theme[data-brand="legacy"] {
   --salt-container-borderStyle: solid;
 
   --salt-container-primary-background: var(--salt-palette-neutral-primary-background);
@@ -18,4 +19,21 @@
 
   --salt-container-ghost-background: var(--salt-palette-alpha-low);
   --salt-container-ghost-borderColor: var(--salt-palette-alpha-contrast-low);
+}
+
+.salt-theme[data-brand="jpmc"] {
+  --salt-container-primary-background: var(--salt-palette-background-primary);
+  --salt-container-primary-background-disabled: var(--salt-palette-background-primary-disabled);
+  --salt-container-primary-borderColor: var(--salt-palette-alpha-contrast-low);
+  --salt-container-primary-borderColor-disabled: var(--salt-palette-alpha-contrast-lowest);
+
+  --salt-container-secondary-background: var(--salt-palette-background-secondary);
+  --salt-container-secondary-background-disabled: var(--salt-palette-background-secondary-disabled);
+  --salt-container-secondary-borderColor: var(--salt-palette-alpha-contrast-low);
+  --salt-container-secondary-borderColor-disabled: var(--salt-palette-alpha-contrast-lowest);
+
+  --salt-container-tertiary-background: var(--salt-palette-background-tertiary);
+  --salt-container-tertiary-background-disabled: var(--salt-palette-background-tertiary-disabled);
+  --salt-container-tertiary-borderColor: var(--salt-palette-alpha-contrast-low);
+  --salt-container-tertiary-borderColor-disabled: var(--salt-palette-alpha-contrast-lowest);
 }

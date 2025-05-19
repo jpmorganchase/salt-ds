@@ -1,4 +1,5 @@
-.salt-theme {
+.salt-theme,
+.salt-theme[data-brand="legacy"] {
   --salt-focused-outlineColor: var(--salt-palette-interact-outline);
   --salt-focused-outlineStyle: dotted;
   --salt-focused-outlineWidth: 2px;
@@ -7,6 +8,11 @@
 
   --salt-focused-outline: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--salt-focused-outlineColor); /* CSS shortcut token: not in Figma */
 }
+
+.salt-theme[data-brand="jpmc"] {
+  --salt-focused-outlineColor: var(--salt-palette-accent-stronger);
+}
+
 
 .saltFocusVisible:after,
 .focused:focus:after,

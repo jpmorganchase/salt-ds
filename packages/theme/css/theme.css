@@ -19,9 +19,11 @@
 /* Intermediate palette (refined colors) */
 @import url(palette/alpha.css);
 @import url(palette/accent.css);
+@import url(palette/background.css);
 @import url(palette/error.css);
 @import url(palette/categorical.css);
 @import url(palette/corner.css);
+@import url(palette/foreground.css);
 @import url(palette/info.css);
 @import url(palette/interact.css);
 @import url(palette/navigate.css);
