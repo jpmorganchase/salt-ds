@@ -34,7 +34,7 @@ export const Default = () => {
 };
 
 export const ToggleBrandAndMode = () => {
-  const [brand, setBrand] = useState<BrandName>("legacy");
+  const [brand, setBrand] = useState<BrandName>("uitk");
   const [mode, setMode] = useState<Mode>("light");
 
   const handleChangeBrand = (event: SyntheticEvent<HTMLButtonElement>) => {
@@ -52,11 +52,11 @@ export const ToggleBrandAndMode = () => {
           <H1>This Card is wrapped with a SaltProvider</H1>
           <FlexLayout>
             <ToggleButtonGroup onChange={handleChangeBrand} value={brand}>
-              <ToggleButton aria-label="legacy brand" value="legacy">
-                Legacy
+              <ToggleButton aria-label="uitk brand" value="uitk">
+                uitk
               </ToggleButton>
-              <ToggleButton aria-label="jpmc brand" value="jpmc">
-                JPMC
+              <ToggleButton aria-label="jpm brand" value="jpm">
+                jpm
               </ToggleButton>
             </ToggleButtonGroup>
             <ToggleButtonGroup onChange={handleChangeTheme} value={mode}>
@@ -88,6 +88,124 @@ export const ToggleBrandAndMode = () => {
           </div>
         </div>
         <br />
+      </Card>
+    </SaltProvider>
+  );
+};
+
+export const NestedBrands = () => {
+  const [brand, setBrand] = useState<BrandName>("uitk");
+  const [nestedBrand, setNestedBrand] = useState<BrandName | "unset">("jpm");
+  const [mode, setMode] = useState<Mode>("light");
+  const [nestedMode, setNestedMode] = useState<Mode | "unset">("light");
+
+  const handleChangeBrand = (event: SyntheticEvent<HTMLButtonElement>) => {
+    setBrand(event.currentTarget.value as BrandName);
+  };
+
+  const handleChangeNestedBrand = (event: SyntheticEvent<HTMLButtonElement>) => {
+    setNestedBrand(event.currentTarget.value as BrandName);
+  };
+
+  const handleChangeTheme = (event: SyntheticEvent<HTMLButtonElement>) => {
+    setMode(event.currentTarget.value as Mode);
+  };
+
+  const handleChangeNestedTheme = (event: SyntheticEvent<HTMLButtonElement>) => {
+    setNestedMode(event.currentTarget.value as Mode);
+  };
+
+  return (
+    <SaltProvider brand={brand} mode={mode}>
+      <Card>
+        <div>
+          <H1>This Card is wrapped with a SaltProvider</H1>
+          <FlexLayout>
+            <ToggleButtonGroup onChange={handleChangeBrand} value={brand}>
+              <ToggleButton aria-label="uitk brand" value="uitk">
+                uitk
+              </ToggleButton>
+              <ToggleButton aria-label="jpm brand" value="jpm">
+                jpm
+              </ToggleButton>
+            </ToggleButtonGroup>
+            <ToggleButtonGroup onChange={handleChangeTheme} value={mode}>
+              <ToggleButton aria-label="light theme" value="light">
+                Light
+              </ToggleButton>
+              <ToggleButton aria-label="dark theme" value="dark">
+                Dark
+              </ToggleButton>
+            </ToggleButtonGroup>
+          </FlexLayout>
+          <p>{`This Card is wrapped with a SaltProvider, brand is ${brand}, mode is ${mode}`}</p>
+          <Checkbox label="Example Choice 1" />
+          <Checkbox defaultChecked label="Example Choice 2" />
+          <Checkbox defaultChecked indeterminate label="Example Choice 3" />
+          <br />
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "auto auto auto",
+              gridTemplateRows: "auto",
+              gridGap: 10,
+            }}
+          >
+            <Button sentiment="accented">Continue</Button>
+            <Button>Previous</Button>
+            <Button appearance="transparent">Upload File</Button>
+          </div>
+        </div>
+        <br />
+        <SaltProvider brand={nestedBrand === 'unset' ? undefined : nestedBrand} mode={nestedMode=== 'unset' ? undefined : nestedMode}>
+          <Card>
+            <div>
+              <H1>Nested Card wrapped with a SaltProvider</H1>
+              <FlexLayout>
+                <ToggleButtonGroup onChange={handleChangeNestedBrand} value={nestedBrand}>
+                  <ToggleButton aria-label="uitk brand" value="uitk">
+                    uitk
+                  </ToggleButton>
+                  <ToggleButton aria-label="jpm brand" value="jpm">
+                    jpm
+                  </ToggleButton>
+                  <ToggleButton aria-label="unset brand (inherited)" value="unset">
+                    unset
+                  </ToggleButton>
+                </ToggleButtonGroup>
+                <ToggleButtonGroup onChange={handleChangeNestedTheme} value={nestedMode}>
+                  <ToggleButton aria-label="light theme" value="light">
+                    Light
+                  </ToggleButton>
+                  <ToggleButton aria-label="dark theme" value="dark">
+                    Dark
+                  </ToggleButton>
+                  <ToggleButton aria-label="unset theme (inherited)" value="unset">
+                    Unset
+                  </ToggleButton>
+                </ToggleButtonGroup>
+              </FlexLayout>
+              <p>{`This Card is wrapped with a SaltProvider, brand is ${brand}, mode is ${mode}`}</p>
+              <Checkbox label="Example Choice 1" />
+              <Checkbox defaultChecked label="Example Choice 2" />
+              <Checkbox defaultChecked indeterminate label="Example Choice 3" />
+              <br />
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "auto auto auto",
+                  gridTemplateRows: "auto",
+                  gridGap: 10,
+                }}
+              >
+                <Button sentiment="accented">Continue</Button>
+                <Button>Previous</Button>
+                <Button appearance="transparent">Upload File</Button>
+              </div>
+            </div>
+            <br />
+          </Card>
+        </SaltProvider>
       </Card>
     </SaltProvider>
   );

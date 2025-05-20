@@ -10,7 +10,7 @@
   --salt-palette-accent-foreground-informative-disabled: var(--salt-color-blue-200-40a);
 }
 
-.salt-theme[data-brand="legacy"][data-mode="light"] {
+.salt-theme[data-brand="uitk"][data-mode="light"] {
   --salt-palette-accent: var(--salt-color-blue-500);
   --salt-palette-accent-disabled: var(--salt-color-blue-500-40a);
   --salt-palette-accent-strong: var(--salt-color-blue-600);
@@ -26,7 +26,7 @@
   --salt-palette-accent-action-active: var(--salt-color-blue-800);
 }
 
-.salt-theme[data-brand="legacy"][data-mode="dark"] {
+.salt-theme[data-brand="uitk"][data-mode="dark"] {
   --salt-palette-accent: var(--salt-color-blue-500);
   --salt-palette-accent-disabled: var(--salt-color-blue-500-40a);
   --salt-palette-accent-strong: var(--salt-color-blue-400);
@@ -42,7 +42,7 @@
   --salt-palette-accent-action-active: var(--salt-color-blue-800);
 }
 
-.salt-theme[data-brand="jpmc"][data-mode="light"] {
+.salt-theme[data-brand="jpm"][data-mode="light"] {
   --salt-palette-accent: var(--salt-color-teal-500);
   --salt-palette-accent-disabled: var(--salt-color-teal-500-40a);
   --salt-palette-accent-strong: var(--salt-color-teal-600);
@@ -58,7 +58,7 @@
   --salt-palette-accent-action-active: var(--salt-color-teal-800);
 }
 
-.salt-theme[data-brand="jpmc"][data-mode="dark"] {
+.salt-theme[data-brand="jpm"][data-mode="dark"] {
   --salt-palette-accent: var(--salt-color-teal-500);
   --salt-palette-accent-disabled: var(--salt-color-teal-500-40a);
   --salt-palette-accent-strong: var(--salt-color-teal-400);

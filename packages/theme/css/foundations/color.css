@@ -409,7 +409,7 @@
   --salt-color-forest-900: rgb(0, 51, 31);
 }
 
-.salt-theme[data-brand="jpmc"] {
+.salt-theme[data-brand="jpm"] {
   --salt-color-white-rgb: 255, 255, 255;
   --salt-color-gray-100-rgb: 245, 247, 248;
   --salt-color-gray-200-rgb: 211, 213, 216;

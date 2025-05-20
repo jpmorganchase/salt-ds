@@ -1,5 +1,5 @@
 .salt-theme,
-.salt-theme[data-brand="legacy"] {
+.salt-theme[data-brand="uitk"] {
   --salt-status-static-foreground: var(--salt-palette-neutral-secondary-foreground);
   --salt-status-negative-foreground: var(--salt-palette-negative-foreground);
   --salt-status-positive-foreground: var(--salt-palette-positive-foreground);
@@ -34,7 +34,7 @@
   --salt-status-success-background-selected: var(--salt-palette-success-background-selected);
 }
 
-.salt-theme[data-brand="jpmc"] {
+.salt-theme[data-brand="jpm"] {
   --salt-status-static-foreground: var(--salt-palette-foreground-secondary);
   --salt-status-negative-foreground: var(--salt-palette-negative);
   --salt-status-positive-foreground: var(--salt-palette-positive);

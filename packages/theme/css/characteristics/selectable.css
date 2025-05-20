@@ -1,5 +1,5 @@
 .salt-theme,
-.salt-theme[data-brand="legacy"] {
+.salt-theme[data-brand="uitk"] {
   --salt-selectable-borderStyle: solid;
   --salt-selectable-borderStyle-hover: solid;
   --salt-selectable-borderStyle-selected: solid;
@@ -25,7 +25,7 @@
   --salt-selectable-background-selectedDisabled: var(--salt-palette-interact-background-activeDisabled);
 }
 
-.salt-theme[data-brand="jpmc"] {
+.salt-theme[data-brand="jpm"] {
   --salt-selectable-borderColor: var(--salt-palette-neutral);
   --salt-selectable-borderColor-hover: var(--salt-palette-accent-weak);
   --salt-selectable-borderColor-selected: var(--salt-palette-accent);

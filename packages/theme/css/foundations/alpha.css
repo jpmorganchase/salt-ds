@@ -53,7 +53,7 @@ con: If we offer these values, then it could misleading that we're offering all 
   --salt-color-red-600-40a: rgba(var(--salt-color-red-600-rgb), 0.4);
 }
 
-.salt-theme[data-brand="jpmc"] {
+.salt-theme[data-brand="jpm"] {
   --salt-color-blue-200-40a: rgba(var(--salt-color-blue-200-rgb), 0.4);
   --salt-color-blue-300-40a: rgba(var(--salt-color-blue-300-rgb), 0.4);
   --salt-color-blue-400-40a: rgba(var(--salt-color-blue-400-rgb), 0.4);

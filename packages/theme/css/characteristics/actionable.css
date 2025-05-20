@@ -1,5 +1,5 @@
 .salt-theme,
-.salt-theme[data-brand="legacy"] {
+.salt-theme[data-brand="uitk"] {
   /* Accented bold */
   --salt-actionable-accented-bold-background-active: var(--salt-palette-interact-cta-background-active);
   --salt-actionable-accented-bold-background-disabled: var(--salt-palette-interact-cta-background-disabled);
@@ -211,7 +211,7 @@
   --salt-actionable-caution-subtle-foreground: var(--salt-palette-warning-foreground-informative);
 }
 
-.salt-theme[data-brand="jpmc"] {
+.salt-theme[data-brand="jpm"] {
   /* accented solid- previous CTA */
   --salt-actionable-accented-bold-background-active: var(--salt-palette-accent-action-active);
   --salt-actionable-accented-bold-background-disabled: var(--salt-palette-accent-disabled);

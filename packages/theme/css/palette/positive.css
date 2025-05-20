@@ -20,7 +20,7 @@
   --salt-palette-positive-border-disabled: var(--salt-color-green-500-40a);
 }
 
-.salt-theme[data-brand="jpmc"][data-mode="light"] {
+.salt-theme[data-brand="jpm"][data-mode="light"] {
   --salt-palette-positive: var(--salt-color-green-500);
   --salt-palette-positive-strong: var(--salt-color-green-600);
   --salt-palette-positive-strong-disabled: var(--salt-color-green-600-40a);
@@ -30,7 +30,7 @@
   --salt-palette-positive-disabled: var(--salt-color-green-500-40a);
 }
 
-.salt-theme[data-brand="jpmc"][data-mode="dark"] {
+.salt-theme[data-brand="jpm"][data-mode="dark"] {
   --salt-palette-positive: var(--salt-color-green-500);
   --salt-palette-positive-strong: var(--salt-color-green-400);
   --salt-palette-positive-strong-disabled: var(--salt-color-green-400-40a);

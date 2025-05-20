@@ -25,7 +25,7 @@
   --salt-palette-text-notation-fontWeight-strong: var(--salt-typography-fontWeight-bold);
 }
 
-.salt-theme[data-brand="legacy"] {
+.salt-theme[data-brand="uitk"] {
   --salt-palette-text-fontFamily-heading: var(--salt-typography-fontFamily-openSans);
 
   --salt-palette-text-display-fontWeight: var(--salt-typography-fontWeight-semiBold);
@@ -45,7 +45,7 @@
   --salt-palette-text-notation-fontWeight-strong: var(--salt-typography-fontWeight-bold);
 }
 
-.salt-theme[data-brand="jpmc"] {
+.salt-theme[data-brand="jpm"] {
   --salt-palette-text-fontFamily-heading: var(--salt-typography-fontFamily-amplitude);
 
   --salt-palette-text-display-fontWeight: var(--salt-typography-fontWeight-medium);
@@ -65,13 +65,13 @@
   --salt-palette-text-notation-fontWeight-strong: var(--salt-typography-fontWeight-bold);
 }
 
-.salt-theme[data-brand="legacy"] {
+.salt-theme[data-brand="uitk"] {
   --salt-palette-text-fontFamily-action: var(--salt-typography-fontFamily-openSans);
 
   --salt-palette-text-action-fontWeight: var(--salt-typography-fontWeight-semiBold);
 }
 
-.salt-theme[data-brand="jpmc"] {
+.salt-theme[data-brand="jpm"] {
   --salt-palette-text-fontFamily-action: var(--salt-typography-fontFamily-amplitude);
 
   --salt-palette-text-action-fontWeight: var(--salt-typography-fontWeight-medium);

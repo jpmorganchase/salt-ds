@@ -1,5 +1,5 @@
 .salt-theme,
-.salt-theme[data-brand="legacy"] {
+.salt-theme[data-brand="uitk"] {
   --salt-editable-borderStyle: solid;
   --salt-editable-borderStyle-hover: solid;
   --salt-editable-borderStyle-active: solid;
@@ -27,7 +27,7 @@
   --salt-editable-help-fontStyle: italic;
 }
 
-.salt-theme[data-brand="jpmc"] {
+.salt-theme[data-brand="jpm"] {
   --salt-editable-borderColor: var(--salt-palette-neutral);
   --salt-editable-borderColor-active: var(--salt-palette-accent-stronger);
   --salt-editable-borderColor-disabled: var(--salt-palette-neutral-disabled);

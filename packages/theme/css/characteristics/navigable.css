@@ -1,10 +1,10 @@
 .salt-theme,
-.salt-theme[data-brand="legacy"] {
+.salt-theme[data-brand="uitk"] {
   --salt-navigable-indicator-hover: var(--salt-palette-navigate-indicator-hover);
   --salt-navigable-indicator-active: var(--salt-palette-navigate-indicator-active);
 }
 
-.salt-theme[data-brand="jpmc"] {
+.salt-theme[data-brand="jpm"] {
   --salt-navigable-indicator-hover: var(--salt-palette-neutral);
   --salt-navigable-indicator-active: var(--salt-palette-accent);
 }

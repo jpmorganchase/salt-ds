@@ -1,4 +1,4 @@
-.salt-theme[data-brand="jpmc"][data-mode="light"] {
+.salt-theme[data-brand="jpm"][data-mode="light"] {
   --salt-palette-foreground-primary: var(--salt-color-black);
   --salt-palette-foreground-primary-disabled: var(--salt-color-black-40a);
   --salt-palette-foreground-primary-alt: var(--salt-color-white);
@@ -8,7 +8,7 @@
   --salt-palette-foreground-visited: var(--salt-color-purple-800);
 }
 
-.salt-theme[data-brand="jpmc"][data-mode="dark"] {
+.salt-theme[data-brand="jpm"][data-mode="dark"] {
   --salt-palette-foreground-primary: var(--salt-color-white);
   --salt-palette-foreground-primary-disabled: var(--salt-color-white-40a);
   --salt-palette-foreground-primary-alt: var(--salt-color-white);

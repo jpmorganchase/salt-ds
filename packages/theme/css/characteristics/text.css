@@ -226,7 +226,7 @@
 }
 
 /* Sizes by density */
-.salt-density-touch[data-brand="jpmc"] {
+.salt-density-touch[data-brand="jpm"] {
   --salt-text-display1-fontSize: 102px;
   --salt-text-display1-lineHeight: 133px;
 
@@ -240,7 +240,7 @@
   --salt-text-display4-lineHeight: 70px;
 }
 
-.salt-density-low[data-brand="jpmc"] {
+.salt-density-low[data-brand="jpm"] {
   --salt-text-display1-fontSize: 84px;
   --salt-text-display1-lineHeight: 109px;
 
@@ -254,7 +254,7 @@
   --salt-text-display4-lineHeight: 55px;
 }
 
-.salt-density-medium[data-brand="jpmc"] {
+.salt-density-medium[data-brand="jpm"] {
   --salt-text-display1-fontSize: 68px;
   --salt-text-display1-lineHeight: 88px;
 
@@ -268,7 +268,7 @@
   --salt-text-display4-lineHeight: 42px;
 }
 
-.salt-density-high[data-brand="jpmc"] {
+.salt-density-high[data-brand="jpm"] {
   --salt-text-display1-fontSize: 54px;
   --salt-text-display1-lineHeight: 70px;
 
