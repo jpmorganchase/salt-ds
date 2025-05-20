@@ -68,6 +68,11 @@ module.exports = {
         destination: "/salt/themes/:slug*",
         permanent: true,
       },
+      {
+        source: "/salt/components/splitter/:slug*",
+        destination: "/salt/components/react-resizable-panels-theme/:slug*",
+        permanent: true,
+      },
     ];
   },
 };
