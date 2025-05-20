@@ -28,7 +28,7 @@
   --salt-palette-neutral-tertiary-background-disabled: var(--salt-color-gray-500-40a);
 }
 
-.salt-theme[data-brand="jpmc"][data-mode="light"] {
+.salt-theme[data-brand="jpm"][data-mode="light"] {
   --salt-palette-neutral: var(--salt-color-gray-500);
   --salt-palette-neutral-disabled: var(--salt-color-gray-500-40a);
   --salt-palette-neutral-readonly: var(--salt-color-gray-500-10a);
@@ -46,7 +46,7 @@
   --salt-palette-neutral-action-active: var(--salt-color-gray-800);
 }
 
-.salt-theme[data-brand="jpmc"][data-mode="dark"] {
+.salt-theme[data-brand="jpm"][data-mode="dark"] {
   --salt-palette-neutral: var(--salt-color-gray-500);
   --salt-palette-neutral-disabled: var(--salt-color-gray-500-40a);
   --salt-palette-neutral-readonly: var(--salt-color-gray-500-10a);

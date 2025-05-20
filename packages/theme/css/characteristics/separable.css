@@ -1,5 +1,5 @@
 .salt-theme,
-.salt-theme[data-brand="legacy"] {
+.salt-theme[data-brand="uitk"] {
   --salt-separable-borderStyle: solid;
 
   --salt-separable-primary-borderColor: var(--salt-palette-alpha-contrast-mediumLow);
@@ -14,7 +14,7 @@
   --salt-separable-background-active: var(--salt-palette-accent);
 }
 
-.salt-theme[data-brand="jpmc"] {
+.salt-theme[data-brand="jpm"] {
   --salt-separable-borderStyle: solid;
 
   --salt-separable-primary-borderColor: var(--salt-palette-alpha-contrast-mediumLow);

@@ -1,5 +1,5 @@
 .salt-theme,
-.salt-theme[data-brand="legacy"] {
+.salt-theme[data-brand="uitk"] {
   --salt-category-1-subtle-foreground: var(--salt-palette-categorical-1-strong);
   --salt-category-1-subtle-background: var(--salt-palette-categorical-1-weakest);
   --salt-category-1-subtle-borderColor: var(--salt-palette-categorical-1);
@@ -141,7 +141,7 @@
   --salt-category-20-bold-background: var(--salt-palette-categorical-20);
 }
 
-.salt-theme[data-brand="jpmc"] {
+.salt-theme[data-brand="jpm"] {
   --salt-category-1-bold-foreground: var(--salt-palette-foreground-primary-alt);
   --salt-category-2-bold-foreground: var(--salt-palette-foreground-primary-alt);
   --salt-category-3-bold-foreground: var(--salt-palette-foreground-primary-alt);
