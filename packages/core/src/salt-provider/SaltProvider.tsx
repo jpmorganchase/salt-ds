@@ -41,7 +41,7 @@ const DEFAULT_THEME_NAME = "salt-theme";
 const DEFAULT_THEME_NAME_NEXT = "salt-theme-next";
 
 const DEFAULT_MODE = "light";
-const DEFAULT_BRAND = "legacy";
+const DEFAULT_BRAND = "uitk";
 const DEFAULT_CORNER: Corner = "sharp";
 const DEFAULT_HEADING_FONT: HeadingFont = "Open Sans";
 const DEFAULT_ACCENT: Accent = "blue";
@@ -199,7 +199,7 @@ interface SaltProviderBaseProps {
    */
   theme?: ThemeName;
   /**
-   * Either "legacy" or "jpmc".
+   * Either "legacy" or "jpm".
    * Specifies branding to be used for the theme.
    */
   brand?: BrandName;
@@ -457,13 +457,11 @@ interface SaltProviderNextAdditionalProps {
   actionFont?: ActionFont;
 }
 
-/** @deprecated use `SaltProviderProps` with `brand="jpmc"` prop */
 export type SaltProviderNextProps = SaltProviderProps &
   SaltProviderNextAdditionalProps;
-/** @deprecated use `SaltProvider` with `brand="jpmc"` prop */
+/** @deprecated use `SaltProviderNextProps` */
 export type UNSTABLE_SaltProviderNextProps = SaltProviderNextProps;
 
-/** @deprecated use `SaltProvider` with `brand="jpmc"` prop */
 export function SaltProviderNext({
   enableStyleInjection,
   ...restProps
@@ -475,7 +473,7 @@ export function SaltProviderNext({
     </StyleInjectionProvider>
   );
 }
-/** @deprecated use `SaltProvider` with `brand="jpmc"` prop */
+/** @deprecated use `SaltProvider` with `brand="jpm"` prop */
 export const UNSTABLE_SaltProviderNext = SaltProviderNext;
 
 export const useTheme = (): ThemeContextProps => {

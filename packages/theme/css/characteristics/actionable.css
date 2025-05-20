@@ -1,5 +1,5 @@
 .salt-theme,
-.salt-theme[data-brand="legacy"] {
+.salt-theme[data-brand="uitk"] {
   --salt-actionable-cursor-hover: pointer;
   --salt-actionable-cursor-active: pointer;
   --salt-actionable-cursor-disabled: not-allowed;
@@ -215,7 +215,7 @@
   --salt-actionable-caution-subtle-foreground: var(--salt-palette-warning-foreground-informative);
 }
 
-.salt-theme[data-brand="jpmc"] {
+.salt-theme[data-brand="jpm"] {
   /* accented solid- previous CTA */
   --salt-actionable-accented-bold-background-active: var(--salt-palette-accent-action-active);
   --salt-actionable-accented-bold-background-disabled: var(--salt-palette-accent-disabled);

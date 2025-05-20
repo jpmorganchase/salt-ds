@@ -1,5 +1,5 @@
 .salt-theme,
-.salt-theme[data-brand="legacy"] {
+.salt-theme[data-brand="uitk"] {
   /* Colors */
   --salt-content-primary-foreground: var(--salt-palette-neutral-primary-foreground);
   --salt-content-primary-foreground-disabled: var(--salt-palette-neutral-primary-foreground-disabled);
@@ -17,7 +17,7 @@
   --salt-content-foreground-highlight: var(--salt-palette-interact-background-active);
 }
 
-.salt-theme[data-brand="jpmc"] {
+.salt-theme[data-brand="jpm"] {
   --salt-content-primary-foreground: var(--salt-palette-foreground-primary);
   --salt-content-primary-foreground-disabled: var(--salt-palette-foreground-primary-disabled);
   --salt-content-secondary-foreground: var(--salt-palette-foreground-secondary);
