@@ -3,7 +3,7 @@
   display: flex;
   align-items: center;
   background: var(--salt-container-primary-background);
-  height: calc(var(--salt-spacing-200) + var(--salt-size-base));
+  height: var(--site-app-header-height);
   border-bottom: var(--salt-size-border) var(--salt-separable-borderStyle) var(--salt-separable-primary-borderColor);
   position: sticky;
   top: 0;

@@ -1,6 +1,6 @@
 .code {
   --code-padding-vertical: 0.1rem;
-  --code-padding-horizontal: 0.1rem;
+  --code-padding-horizontal: 0.25rem;
 }
 
 .code {
@@ -9,4 +9,8 @@
   vertical-align: text-bottom;
   white-space: pre-wrap;
   padding: var(--code-padding-vertical) var(--code-padding-horizontal);
+  background-color: var(--salt-container-secondary-background);
+  border-radius: var(--salt-palette-corner-weaker, 0);
+  vertical-align: baseline;
+  border: var(--salt-size-border) var(--salt-container-borderStyle) var(--salt-container-secondary-borderColor);
 }

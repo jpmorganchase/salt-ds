@@ -54,7 +54,7 @@ export type ComboBoxProps<Item = string> = {
    */
   selectOnTab?: boolean;
 } & UseComboBoxProps<Item> &
-  PillInputProps;
+  Omit<PillInputProps, "onPillRemove">;
 
 const withBaseName = makePrefixer("saltComboBox");
 
@@ -232,8 +232,13 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
 
     const activeOption = activeState ?? getFirstOption()?.data;
 
-    let newActive: { data: OptionValue<Item>; element: HTMLElement } | null =
-      null;
+    if (activeOption === undefined) {
+      return;
+    }
+
+    let newActive:
+      | { data: OptionValue<Item>; element: HTMLElement }
+      | undefined = undefined;
     switch (event.key) {
       case "ArrowDown":
         newActive = getOptionAfter(activeOption) ?? getLastOption();

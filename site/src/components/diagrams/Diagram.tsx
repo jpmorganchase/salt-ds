@@ -3,11 +3,12 @@ import type { ReactNode } from "react";
 import { Image } from "../mdx/image";
 
 import { useColorMode } from "@jpmorganchase/mosaic-store";
-import { SaltProvider, SaltProviderNext } from "@salt-ds/core";
+import { SaltProviderNext } from "@salt-ds/core";
 import styles from "./Diagrams.module.css";
 
 interface DiagramProps {
   src: string;
+  srcDark?: string;
   background?: "primary" | "secondary";
   border?: boolean;
   alt: string;
@@ -18,6 +19,7 @@ interface DiagramProps {
 
 export const Diagram = ({
   src,
+  srcDark,
   alt,
   background = "primary",
   border,
@@ -37,7 +39,11 @@ export const Diagram = ({
         <div className={styles.textContainer}>{children}</div>
       )}
       {src && (
-        <SaltProvider mode="light" applyClassesTo="child">
+        <SaltProviderNext
+          // Backwards compability: most patterns only got light version image
+          mode={srcDark ? colorMode : "light"}
+          applyClassesTo="child"
+        >
           <figure className={styles.figure}>
             <Image
               className={clsx(styles.image, {
@@ -46,7 +52,9 @@ export const Diagram = ({
                 [styles.secondaryBackground]: background === "secondary",
               })}
               src={src}
+              srcDark={srcDark}
               alt={alt}
+              noMargin
             />
             {caption && (
               <SaltProviderNext applyClassesTo="child" mode={colorMode}>
@@ -54,7 +62,7 @@ export const Diagram = ({
               </SaltProviderNext>
             )}
           </figure>
-        </SaltProvider>
+        </SaltProviderNext>
       )}
       {contentPosition === "bottom" && children && (
         <div className={styles.textContainer}>{children}</div>

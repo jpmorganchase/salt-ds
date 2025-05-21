@@ -33,6 +33,7 @@ export interface LocalizationProviderProps<
   /**
    * The instance of the date library being used.
    */
+  // biome-ignore lint/suspicious/noExplicitAny: date framework
   instance?: any;
 
   /**
@@ -40,6 +41,7 @@ export interface LocalizationProviderProps<
    * This should be a constructor for a class implementing the SaltDateAdapter interface.
    */
   DateAdapter: new (
+    // biome-ignore lint/suspicious/noExplicitAny: date framework
     ...args: any
   ) => SaltDateAdapter<TDate, TLocale>;
 
@@ -68,6 +70,7 @@ export type LocalizationProviderContext<TDate extends DateFrameworkType> = {
 };
 
 export const LocalizationProviderContext =
+  // biome-ignore lint/suspicious/noExplicitAny: date frameworl
   createContext<LocalizationProviderValue<any> | null>(null);
 
 if (process.env.NODE_ENV !== "production") {
@@ -85,7 +88,7 @@ export const LocalizationProvider = function LocalizationProvider<
       locale,
       instance,
     });
-  }, [DateAdapter, locale]);
+  }, [DateAdapter, instance, locale]);
 
   const defaultDates: LocalizationProviderValue<TDate>["defaultDates"] =
     useMemo(

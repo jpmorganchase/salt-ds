@@ -1,6 +1,8 @@
 import {
   DatePicker,
   DatePickerOverlay,
+  DatePickerRangeGridPanel,
+  type DatePickerRangeGridPanelProps,
   DatePickerRangeInput,
   DatePickerRangePanel,
   type DatePickerRangeProps,
@@ -33,59 +35,92 @@ const QAContainerParameters = {
   },
 };
 
-const renderQAContainer = (
-  props?: Omit<DatePickerRangeProps<unknown>, "selectionVariant">,
-) => {
+const renderQAContainer = ({
+  numberOfVisibleMonths,
+  ...props
+}: Omit<DatePickerRangeProps<unknown>, "selectionVariant"> & {
+  numberOfVisibleMonths?: DatePickerRangeGridPanelProps<unknown>["numberOfVisibleMonths"];
+}) => {
   const { dateAdapter } = useLocalization();
   const startDate = dateAdapter.today();
   const endDate = dateAdapter.add(startDate, { months: 4, weeks: 1 });
+
+  const checkDayOfWeek = (
+    day: string | false,
+    targetDayIndex: number,
+    luxonOffset: number,
+    message: string,
+  ) => {
+    const dayOfWeek = dateAdapter.getDayOfWeek(day);
+    const isTargetDay =
+      (dateAdapter.lib === "luxon" && dayOfWeek === luxonOffset) ||
+      (dateAdapter.lib !== "luxon" && dayOfWeek === targetDayIndex);
+
+    return isTargetDay ? message : false;
+  };
+
+  // biome-ignore lint/suspicious/noExplicitAny: date framework dependent
+  const isMonday = (day: any) => checkDayOfWeek(day, 0, 1, "is a Monday");
+  // biome-ignore lint/suspicious/noExplicitAny: date framework dependent
+  const isSaturday = (day: any) => checkDayOfWeek(day, 6, 5, "is a weekend");
+  // biome-ignore lint/suspicious/noExplicitAny: date framework dependent
+  const isFriday = (day: any) => checkDayOfWeek(day, 5, 4, "is a Friday");
+
   return (
-    <QAContainer itemPadding={10} width={1500}>
-      <div style={{ height: "500px" }}>
-        <DatePicker
-          defaultSelectedDate={{
-            startDate,
-            endDate,
-          }}
-          selectionVariant="range"
-          open
-          {...props}
-        >
-          <DatePickerTrigger>
-            <DatePickerRangeInput />
-          </DatePickerTrigger>
-          <DatePickerOverlay>
+    <QAContainer itemPadding={10} width={1500} height={2000}>
+      <DatePicker
+        defaultSelectedDate={{
+          startDate,
+          endDate,
+        }}
+        isDayDisabled={isMonday}
+        isDayHighlighted={isFriday}
+        isDayUnselectable={isSaturday}
+        selectionVariant="range"
+        open
+        {...props}
+      >
+        <DatePickerTrigger>
+          <DatePickerRangeInput />
+        </DatePickerTrigger>
+        <DatePickerOverlay>
+          {numberOfVisibleMonths ? (
+            <DatePickerRangeGridPanel
+              numberOfVisibleMonths={numberOfVisibleMonths}
+              columns={numberOfVisibleMonths}
+            />
+          ) : (
             <DatePickerRangePanel />
-          </DatePickerOverlay>
-        </DatePicker>
-      </div>
+          )}
+        </DatePickerOverlay>
+      </DatePicker>
     </QAContainer>
   );
 };
 
 export const RangeWithMoment: StoryFn<QAContainerProps> = () =>
-  renderQAContainer();
+  renderQAContainer({});
 RangeWithMoment.parameters = {
   ...QAContainerParameters,
   dateLocale: "en-US",
   dateAdapter: "moment",
 };
 export const RangeWithDateFns: StoryFn<QAContainerProps> = () =>
-  renderQAContainer();
+  renderQAContainer({});
 RangeWithDateFns.parameters = {
   ...QAContainerParameters,
   dateLocale: dateFnsEnUs,
   dateAdapter: "date-fns",
 };
-export const RangeWithDaysjs: StoryFn<QAContainerProps> = () =>
-  renderQAContainer();
-RangeWithDaysjs.parameters = {
+export const RangeWithDayjs: StoryFn<QAContainerProps> = () =>
+  renderQAContainer({});
+RangeWithDayjs.parameters = {
   ...QAContainerParameters,
   dateLocale: "en",
   dateAdapter: "dayjs",
 };
 export const RangeWithLuxon: StoryFn<QAContainerProps> = () =>
-  renderQAContainer();
+  renderQAContainer({});
 RangeWithLuxon.parameters = {
   ...QAContainerParameters,
   dateLocale: "en-US",
@@ -93,45 +128,30 @@ RangeWithLuxon.parameters = {
 };
 
 export const RangeWithLocaleAndMoment: StoryFn<QAContainerProps> = () =>
-  renderQAContainer();
+  renderQAContainer({});
 RangeWithLocaleAndMoment.parameters = {
   ...QAContainerParameters,
   dateLocale: "es-ES",
   dateAdapter: "moment",
 };
 export const RangeWithLocaleAndDateFns: StoryFn<QAContainerProps> = () =>
-  renderQAContainer();
+  renderQAContainer({});
 RangeWithLocaleAndDateFns.parameters = {
   ...QAContainerParameters,
   dateLocale: dateFnsEs,
   dateAdapter: "date-fns",
 };
 export const RangeWithLocaleAndDayjs: StoryFn<QAContainerProps> = () =>
-  renderQAContainer();
+  renderQAContainer({});
 RangeWithLocaleAndDayjs.parameters = {
   ...QAContainerParameters,
   dateLocale: "es",
   dateAdapter: "dayjs",
 };
 export const RangeWithLocaleAndLuxon: StoryFn<QAContainerProps> = () =>
-  renderQAContainer();
+  renderQAContainer({});
 RangeWithLocaleAndLuxon.parameters = {
   ...QAContainerParameters,
   dateLocale: "es-ES",
   dateAdapter: "luxon",
-};
-
-export const RangeDisabled: StoryFn<QAContainerProps> = () =>
-  renderQAContainer({ disabled: true });
-RangeWithMoment.parameters = {
-  ...QAContainerParameters,
-  dateLocale: "en-US",
-  dateAdapter: "moment",
-};
-export const RangeReadonly: StoryFn<QAContainerProps> = () =>
-  renderQAContainer({ readOnly: true });
-RangeWithMoment.parameters = {
-  ...QAContainerParameters,
-  dateLocale: "en-US",
-  dateAdapter: "moment",
 };

@@ -1,0 +1,48 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+## Best practices
+
+Improve accessibility by customizing the `aria-label` prop to provide additional context. For example:
+
+```jsx
+<Stepper aria-label="Onboarding Process steps">
+  <Step label="Step 1" stage="completed" />
+  <Step label="Step 2" stage="inprogress" />
+  <Step label="Step 3" stage="pending" />
+</Stepper>
+```
+
+## Keyboard interactions
+
+Keyboard interactions apply to only Steppers with steps with nested substeps.
+In those cases the parent step renders automatically a button that allows
+for expanding or collapsing the substeps.
+
+<KeyboardControls>
+<KeyboardControl keyOrCombos="Tab">
+
+- Moves the focus down to the next expand button.
+- By default all steps with substeps are collapsed, meaning only top level
+  expand buttons will be focusable. Initially the top most step will be focused.
+- If the substeps contain more substeps, the focus will move to the inside steps only if the parent is expanded.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Shift + Tab">
+
+- Moves the focus up to the previous expand button.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Enter / Space">
+
+- Applicable to only steps with substeps. Those steps are in the collapsed state by default. Using this action on an the arrow button expands or collapses the step.
+
+</KeyboardControl>
+</KeyboardControls>

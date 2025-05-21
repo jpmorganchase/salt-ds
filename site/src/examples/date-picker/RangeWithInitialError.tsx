@@ -1,12 +1,9 @@
-import {
-  FormField,
-  FormFieldHelperText as FormHelperText,
-  FormFieldLabel as FormLabel,
-} from "@salt-ds/core";
+import { FormField, FormFieldLabel as FormLabel } from "@salt-ds/core";
 import type { DateFrameworkType } from "@salt-ds/date-adapters";
 import {
   type DateInputRangeDetails,
   DatePicker,
+  DatePickerHelperText,
   DatePickerOverlay,
   DatePickerRangeInput,
   DatePickerRangePanel,
@@ -26,14 +23,13 @@ export const RangeWithInitialError = (): ReactElement => {
   const defaultHelperText =
     "Select range DD MMM YYYY - DD MMM YYYY (e.g. 09 Jun 2024)";
   const errorHelperText = "Please enter a valid date in DD MMM YYYY format";
-  const [open, setOpen] = useState<boolean>(false);
   const [helperText, setHelperText] = useState(errorHelperText);
   const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
     "error",
   );
   const handleSelectionChange = useCallback(
     (
-      event: SyntheticEvent,
+      _event: SyntheticEvent,
       date: DateRangeSelection<DateFrameworkType> | null,
       details: DateInputRangeDetails | undefined,
     ) => {
@@ -94,10 +90,9 @@ export const RangeWithInitialError = (): ReactElement => {
         selectionVariant="range"
         defaultSelectedDate={{
           startDate: dateAdapter.parse("09/06/2024", "DD/MM/YYYY").date,
-          endDate: null,
+          endDate: dateAdapter.parse("bad date", "DD MMM YYYY").date,
         }}
         onSelectionChange={handleSelectionChange}
-        onOpenChange={setOpen}
       >
         <DatePickerTrigger>
           <DatePickerRangeInput
@@ -110,8 +105,8 @@ export const RangeWithInitialError = (): ReactElement => {
             defaultStartVisibleMonth={defaultStartVisibleMonth}
           />
         </DatePickerOverlay>
+        <DatePickerHelperText>{helperText}</DatePickerHelperText>
       </DatePicker>
-      {!open ? <FormHelperText>{helperText}</FormHelperText> : null}
     </FormField>
   );
 };

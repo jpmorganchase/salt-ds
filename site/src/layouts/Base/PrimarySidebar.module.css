@@ -1,12 +1,25 @@
+/* Use a wrapper to make sticky portion move up once over-scroll at the bottom */
 .root {
-  grid-area: left;
   position: relative;
+  grid-area: left;
   background: var(--salt-container-primary-background);
   display: flex;
   flex-direction: column;
   gap: var(--salt-spacing-200);
-  overflow-y: auto;
-  padding-block: var(--salt-spacing-300);
-  padding-right: var(--salt-spacing-300);
   min-width: min-content;
+  height: 100%;
+}
+
+.sticky {
+  position: sticky;
+  top: var(--site-app-header-height, 0px);
+  height: calc(100vh - var(--site-app-header-height, 0));
+  padding-block: var(--salt-spacing-200);
+  padding-right: var(--salt-spacing-200);
+  overflow-y: auto;
+}
+
+/* Override padding, to make it balanced across nav levels */
+.root :global(.saltNavigationItem-vertical) {
+  padding-left: calc(var(--salt-spacing-200) + var(--salt-spacing-100) * (var(--saltNavigationItem-level, 0) + 1));
 }

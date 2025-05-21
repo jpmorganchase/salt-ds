@@ -1,0 +1,166 @@
+/* resize handle */
+.react-resizable-panels-theme-salt div[data-resize-handle] {
+  --splitHandle-size: var(--salt-size-thickness-400, calc(var(--salt-size-border) * 6));
+  --splitHandle-borderWidth: var(--salt-size-thickness-100, var(--salt-size-border));
+  --splitHandle-borderColor: var(--salt-separable-secondary-borderColor);
+  --splitHandle-borderStyle: var(--salt-separable-borderStyle);
+  --splitHandle-dot-background: var(--salt-separable-foreground);
+  --splitHandle-dot-background-hover: var(--salt-separable-foreground-hover);
+  --splitHandle-dot-background-active: var(--salt-separable-foreground-active);
+
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--salt-spacing-25);
+  box-sizing: border-box;
+
+  background: var(--splitHandle-background);
+}
+
+.react-resizable-panels-theme-salt div[data-resize-handle]::after {
+  mask-size: cover;
+  -webkit-mask-size: cover;
+  mask-image: url("data:image/svg+xml,%3Csvg%20width%3D%2212%22%20height%3D%2212%22%20viewBox%3D%220%200%2012%2012%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20%3E%3Cpath%20d%3D%22M5%2011V9H7V11H5Z%22%20%2F%3E%3Cpath%20d%3D%22M5%207L5%205H7L7%207H5Z%22%20%2F%3E%3Cpath%20d%3D%22M5%201V3H7V1L5%201Z%22%20%2F%3E%3C%2Fsvg%3E");
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg%20width%3D%2212%22%20height%3D%2212%22%20viewBox%3D%220%200%2012%2012%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20%3E%3Cpath%20d%3D%22M5%2011V9H7V11H5Z%22%20%2F%3E%3Cpath%20d%3D%22M5%207L5%205H7L7%207H5Z%22%20%2F%3E%3Cpath%20d%3D%22M5%201V3H7V1L5%201Z%22%20%2F%3E%3C%2Fsvg%3E");
+  height: max(var(--salt-size-icon, 12px), 12px);
+  width: max(var(--salt-size-icon, 12px), 12px);
+  align-self: center;
+  justify-self: center;
+}
+
+/* resize handle hover and active css variables */
+.react-resizable-panels-theme-salt div[data-resize-handle] {
+  --splitHandle-background-hover: var(--salt-separable-background-hover);
+  --splitHandle-background-active: var(--salt-separable-background-active);
+}
+
+/* resize handle background variants */
+.react-resizable-panels-theme-salt .resize-handle-salt-variant-primary[data-resize-handle] {
+  --splitHandle-background: var(--salt-container-primary-background);
+}
+
+.react-resizable-panels-theme-salt .resize-handle-salt-variant-secondary[data-resize-handle] {
+  --splitHandle-background: var(--salt-container-secondary-background);
+}
+
+.react-resizable-panels-theme-salt .resize-handle-salt-variant-tertiary[data-resize-handle] {
+  --splitHandle-background: var(--salt-container-tertiary-background);
+}
+
+/* resize handle border */
+.react-resizable-panels-theme-salt .resize-handle-salt-border-top {
+  border-top-width: var(--splitHandle-borderWidth);
+  border-top-color: var(--splitHandle-borderColor);
+  border-top-style: var(--splitHandle-borderStyle);
+}
+
+.react-resizable-panels-theme-salt .resize-handle-salt-border-bottom {
+  border-bottom-width: var(--splitHandle-borderWidth);
+  border-bottom-color: var(--splitHandle-borderColor);
+  border-bottom-style: var(--splitHandle-borderStyle);
+}
+
+.react-resizable-panels-theme-salt .resize-handle-salt-border-left {
+  border-left-width: var(--splitHandle-borderWidth);
+  border-left-color: var(--splitHandle-borderColor);
+  border-left-style: var(--splitHandle-borderStyle);
+}
+
+.react-resizable-panels-theme-salt .resize-handle-salt-border-right {
+  border-right-width: var(--splitHandle-borderWidth);
+  border-right-color: var(--splitHandle-borderColor);
+  border-right-style: var(--splitHandle-borderStyle);
+}
+
+/* resize handle hover and active styles */
+.react-resizable-panels-theme-salt div[data-resize-handle][data-resize-handle-state="hover"] {
+  background: var(--splitHandle-background-hover);
+}
+
+.react-resizable-panels-theme-salt div[data-resize-handle][data-resize-handle-state="drag"] {
+  --splitHandle-background: var(--splitHandle-background-active);
+}
+
+/* resize handle directions */
+.react-resizable-panels-theme-salt div[data-resize-handle][data-panel-group-direction="horizontal"] {
+  flex-direction: column;
+  width: var(--splitHandle-size);
+}
+
+.react-resizable-panels-theme-salt div[data-resize-handle][data-panel-group-direction="vertical"] {
+  flex-direction: row;
+  height: var(--splitHandle-size);
+}
+
+/* resize handle thumb */
+.react-resizable-panels-theme-salt div[data-resize-handle]::after {
+  fill: var(--splitHandle-dot-background);
+  background: var(--splitHandle-dot-background);
+}
+
+.react-resizable-panels-theme-salt div[data-resize-handle][data-resize-handle-state="hover"]::after {
+  fill: var(--splitHandle-dot-background-hover);
+  background: var(--splitHandle-dot-background-hover);
+}
+
+.react-resizable-panels-theme-salt div[data-resize-handle][data-resize-handle-state="drag"]::after {
+  fill: var(--splitHandle-dot-background-active);
+  background: var(--splitHandle-dot-background-active);
+}
+
+.react-resizable-panels-theme-salt div[data-resize-handle][data-panel-group-direction="horizontal"]::after {
+  content: "";
+}
+
+.react-resizable-panels-theme-salt div[data-resize-handle][data-panel-group-direction="vertical"]::after {
+  content: "";
+  transform: rotate(90deg);
+}
+
+.react-resizable-panels-theme-salt div[data-resize-handle]:focus-visible {
+  outline-style: var(--salt-focused-outlineStyle);
+  outline-width: var(--salt-focused-outlineWidth);
+  outline-color: var(--salt-focused-outlineColor);
+  outline-offset: var(--salt-focused-outlineOffset);
+}
+
+/* two handles touching horizontally */
+.react-resizable-panels-theme-salt div[data-resize-handle][data-panel-group-direction="horizontal"] + div[data-panel-size="0.0"] + div[data-resize-handle][data-panel-group-direction="horizontal"] {
+  margin-left: -1px;
+}
+
+/* two handles touching vertically */
+.react-resizable-panels-theme-salt div[data-resize-handle][data-panel-group-direction="vertical"] + div[data-panel-size="0.0"] + div[data-resize-handle][data-panel-group-direction="vertical"] {
+  margin-top: -1px;
+}
+
+/* handle touching the side of a container */
+@supports selector(:has(*)) {
+  .react-resizable-panels-theme-salt div[data-panel]:first-of-type[data-panel-size="0.0"] + .resize-handle-salt-border-left[data-panel-group-direction="horizontal"] {
+    margin-left: -1px;
+  }
+
+  .react-resizable-panels-theme-salt div[data-panel]:first-of-type[data-panel-size="0.0"] + .resize-handle-salt-border-top[data-panel-group-direction="vertical"] {
+    margin-top: -1px;
+  }
+
+  .react-resizable-panels-theme-salt .resize-handle-salt-border-right[data-resize-handle][data-panel-group-direction="horizontal"]:has(+ div[data-panel]:last-of-type[data-panel-size="0.0"]) {
+    margin-right: -1px;
+  }
+
+  .react-resizable-panels-theme-salt .resize-handle-salt-border-bottom[data-panel-group-direction="vertical"]:has(+ div[data-panel]:last-of-type[data-panel-size="0.0"]) {
+    margin-bottom: -1px;
+  }
+}
+
+.react-resizable-panels-theme-salt .resizable-panel-salt-variant-primary {
+  background: var(--salt-container-primary-background);
+}
+
+.react-resizable-panels-theme-salt .resizable-panel-salt-variant-secondary {
+  background: var(--salt-container-secondary-background);
+}
+
+.react-resizable-panels-theme-salt .resizable-panel-salt-variant-tertiary {
+  background: var(--salt-container-tertiary-background);
+}

@@ -8,7 +8,6 @@ import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { useLocalization } from "../localization-provider";
 import calendarWeekHeaderCss from "./CalendarWeekHeader.css";
-import { useCalendarContext } from "./internal/CalendarContext";
 
 /**
  * Props for the CalendarWeekHeader component.
@@ -22,12 +21,9 @@ export const CalendarWeekHeader = forwardRef(function CalendarWeekHeader<
 >(props: CalendarWeekHeaderProps, ref: React.Ref<HTMLDivElement>) {
   const { className, ...rest } = props;
   const { dateAdapter } = useLocalization<TDate>();
-  const {
-    state: { locale },
-  } = useCalendarContext<TDate>();
 
-  const weekdaysShort = daysOfWeek(dateAdapter, "narrow", locale);
-  const weekdaysLong = daysOfWeek(dateAdapter, "long", locale);
+  const weekdaysShort = daysOfWeek(dateAdapter, "narrow");
+  const weekdaysLong = daysOfWeek(dateAdapter, "long");
 
   const targetWindow = useWindow();
   useComponentCssInjection({

@@ -3,7 +3,6 @@ import {
   Calendar,
   CalendarGrid,
   CalendarNavigation,
-  CalendarWeekHeader,
   useLocalization,
 } from "@salt-ds/lab";
 import type { ReactElement } from "react";
@@ -58,7 +57,6 @@ export const Multiselect = (): ReactElement => {
       hideOutOfRangeDates
     >
       <CalendarNavigation />
-      <CalendarWeekHeader />
       <CalendarGrid />
     </Calendar>
   );

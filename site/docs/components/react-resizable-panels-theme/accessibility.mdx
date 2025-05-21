@@ -1,0 +1,61 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+## Keyboard interactions
+
+<KeyboardControls>
+<KeyboardControl keyOrCombos="Left arrow">
+
+- Moves a vertical splitter to the left.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Right arrow">
+
+- Moves a vertical splitter to the right.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Up arrow">
+
+- Moves a horizontal splitter up.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Down arrow">
+
+- Moves a horizontal splitter down.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Enter">
+
+- If the primary pane is not collapsed, collapses the pane.
+- If the pane is collapsed, restores the splitter to its previous position.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Home">
+
+- Moves splitter to the position that gives the primary pane its smallest allowed size. This may completely collapse the primary pane.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="End">
+
+- Moves splitter to the position that gives the primary pane its largest allowed size. This may completely collapse the secondary pane.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="F6">
+
+- Cycle through window panes.
+
+</KeyboardControl>
+</KeyboardControls>
+
+## References
+
+- https://www.w3.org/WAI/ARIA/apg/patterns/windowsplitter/
+- https://github.com/w3c/aria-practices/issues/129
+- https://github.com/w3c/aria-practices/issues/130

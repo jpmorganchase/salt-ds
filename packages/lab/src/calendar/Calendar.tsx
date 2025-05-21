@@ -1,9 +1,10 @@
-import { makePrefixer } from "@salt-ds/core";
+import { type ResponsiveProp, makePrefixer } from "@salt-ds/core";
 import { clsx } from "clsx";
 import {
   type ComponentPropsWithoutRef,
   type ReactNode,
   forwardRef,
+  useRef,
 } from "react";
 import { CalendarContext } from "./internal/CalendarContext";
 import {
@@ -17,7 +18,7 @@ import {
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 
-import type { DateFrameworkType } from "@salt-ds/date-adapters";
+import type { DateFrameworkType, Timezone } from "@salt-ds/date-adapters";
 import { useLocalization } from "../localization-provider";
 import calendarCss from "./Calendar.css";
 
@@ -34,13 +35,29 @@ export interface CalendarBaseProps extends ComponentPropsWithoutRef<"div"> {
    */
   hideOutOfRangeDates?: boolean;
   /**
-   * Locale for date formatting
+   * Ref to attach to the focused element,enabling focus to be controlled.
    */
-  locale?: any;
+  focusedDateRef?: React.MutableRefObject<HTMLElement | null>;
+  /**
+   * Number of visible months, maximum 12, defaults to 1
+   */
+  numberOfVisibleMonths?: ResponsiveProp<
+    1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12
+  >;
+  /**
+   * Specifies the timezone behavior:
+   * - If undefined, the timezone will be derived from the passed date, or from `defaultSelectedDate`/`selectedDate`.
+   * - If set to "default", the default timezone of the date library will be used.
+   * - If set to "system", the local system's timezone will be applied.
+   * - If set to "UTC", the time will be returned in UTC.
+   * - If set to a valid IANA timezone identifier, the time will be returned for that specific timezone.
+   */
+  timezone?: Timezone;
 }
 
 /**
  * Props for the Calendar component with single date selection.
+ * @template TDate - The type of the date object.
  */
 export interface CalendarSingleProps<TDate extends DateFrameworkType>
   extends CalendarBaseProps,
@@ -53,6 +70,7 @@ export interface CalendarSingleProps<TDate extends DateFrameworkType>
 
 /**
  * Props for the Calendar component with date range selection.
+ * @template TDate - The type of the date object.
  */
 export interface CalendarRangeProps<TDate extends DateFrameworkType>
   extends CalendarBaseProps,
@@ -65,6 +83,7 @@ export interface CalendarRangeProps<TDate extends DateFrameworkType>
 
 /**
  * Props for the Calendar component with multi-select date selection.
+ * @template TDate - The type of the date object.
  */
 export interface CalendarMultiSelectProps<TDate extends DateFrameworkType>
   extends CalendarBaseProps,
@@ -77,6 +96,7 @@ export interface CalendarMultiSelectProps<TDate extends DateFrameworkType>
 
 /**
  * Props for the Calendar component with offset date selection.
+ * @template TDate - The type of the date object.
  */
 export interface CalendarOffsetProps<TDate extends DateFrameworkType>
   extends CalendarBaseProps,
@@ -89,6 +109,7 @@ export interface CalendarOffsetProps<TDate extends DateFrameworkType>
 
 /**
  * Type representing the props for the Calendar component with various selection variants.
+ * @template TDate - The type of the date object.
  */
 export type CalendarProps<TDate extends DateFrameworkType> =
   | CalendarSingleProps<TDate>
@@ -98,7 +119,10 @@ export type CalendarProps<TDate extends DateFrameworkType> =
 
 const withBaseName = makePrefixer("saltCalendar");
 
-export const Calendar = forwardRef<HTMLDivElement, CalendarProps<any>>(
+export const Calendar = forwardRef<
+  HTMLDivElement,
+  CalendarProps<DateFrameworkType>
+>(
   <TDate extends DateFrameworkType>(
     props: CalendarProps<TDate>,
     ref: React.Ref<HTMLDivElement>,
@@ -117,20 +141,44 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps<any>>(
       defaultSelectedDate,
       visibleMonth: visibleMonthProp,
       defaultVisibleMonth,
+      onFocusedDateChange,
       onSelectionChange,
       onVisibleMonthChange,
       hideOutOfRangeDates,
+      focusedDate,
+      focusedDateRef,
       isDayUnselectable,
       isDayHighlighted,
       isDayDisabled,
-      locale,
       minDate,
       maxDate,
+      numberOfVisibleMonths = 1,
       selectionVariant,
       onHoveredDateChange,
       hoveredDate,
+      timezone: timezoneProp,
       ...propsRest
     } = props;
+
+    let timezone: Timezone = "default";
+    if (timezoneProp) {
+      timezone = timezoneProp;
+    } else if (selectionVariant === "range") {
+      const defaultRangeTimezoneDate =
+        selectedDate?.startDate ??
+        selectedDate?.endDate ??
+        defaultSelectedDate?.startDate ??
+        defaultSelectedDate?.endDate;
+      timezone = defaultRangeTimezoneDate
+        ? dateAdapter.getTimezone(defaultRangeTimezoneDate)
+        : "default";
+    } else if (selectionVariant === "single") {
+      const defaultSingleTimezoneDate = selectedDate ?? defaultSelectedDate;
+      timezone = defaultSingleTimezoneDate
+        ? dateAdapter.getTimezone(defaultSingleTimezoneDate)
+        : "default";
+    }
+
     let startDateOffset: CalendarOffsetProps<TDate>["startDateOffset"];
     let endDateOffset: CalendarOffsetProps<TDate>["startDateOffset"];
     let rest: Partial<typeof props>;
@@ -140,6 +188,8 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps<any>>(
     } else {
       rest = propsRest;
     }
+    const defaultFocusedDateRef = useRef(null);
+
     // biome-ignore lint/suspicious/noExplicitAny: type guard
     const useCalendarProps: any = {
       selectedDate,
@@ -148,25 +198,26 @@ export const Calendar = forwardRef<HTMLDivElement, CalendarProps<any>>(
       defaultVisibleMonth,
       onSelectionChange,
       onVisibleMonthChange,
+      focusedDate,
+      focusedDateRef:
+        focusedDateRef !== undefined ? focusedDateRef : defaultFocusedDateRef,
       isDayUnselectable,
       isDayHighlighted,
       isDayDisabled,
-      locale,
       minDate,
       maxDate,
+      numberOfVisibleMonths,
       selectionVariant,
+      onFocusedDateChange,
       onHoveredDateChange,
       hideOutOfRangeDates,
       hoveredDate,
       startDateOffset,
       endDateOffset,
+      timezone,
     };
     const { state, helpers } = useCalendar<TDate>(useCalendarProps);
-    const calendarLabel = dateAdapter.format(
-      state.visibleMonth,
-      "MMMM YYYY",
-      locale,
-    );
+    const calendarLabel = dateAdapter.format(state.visibleMonth, "MMMM YYYY");
 
     return (
       <CalendarContext.Provider

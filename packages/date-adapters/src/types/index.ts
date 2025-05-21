@@ -6,7 +6,8 @@ import type { DateFrameworkTypeMap } from "./DateFrameworkTypeMap";
  */
 
 export type DateFrameworkType = keyof DateFrameworkTypeMap extends never
-  ? any
+  ? // biome-ignore lint/suspicious/noExplicitAny: date framework
+    any
   : DateFrameworkTypeMap[keyof DateFrameworkTypeMap];
 
 /**
@@ -96,7 +97,11 @@ export type RecommendedFormats =
   | string;
 
 /**
- * Timezone options for date operations.
+ * Timezone options for date/time operations.
+ - "default", the default timezone of the date library will be used.
+ - "system", the local system's timezone will be applied.
+ - "UTC", the time will be returned in UTC.
+ - string, a valid IANA timezone identifier, the time will be returned for that specific timezone.
  */
 export type Timezone = "default" | "system" | "UTC" | string;
 
@@ -112,6 +117,7 @@ export type ParserResult<TDate extends DateFrameworkType> = {
  */
 export interface SaltDateAdapter<
   TDate extends DateFrameworkType,
+  // biome-ignore lint/suspicious/noExplicitAny: locale is date framework dependent
   TLocale = any,
 > {
   /**
@@ -129,28 +135,18 @@ export interface SaltDateAdapter<
    *
    * @param value - The date string to parse.
    * @param timezone - The timezone to use.
-   * @param locale - The locale to use for parsing.
    * @returns The parsed Date object or an invalid date object.
    */
-  date<T extends string | undefined>(
-    value?: T,
-    timezone?: string,
-    locale?: TLocale,
-  ): TDate;
+  date<T extends string | undefined>(value?: T, timezone?: Timezone): TDate;
 
   /**
    * Formats a date object using the specified format string.
    *
    * @param date - The date object to format.
    * @param format - The format string to use.
-   * @param locale - The locale to use for formatting.
    * Returns an empty string when null or undefined date is given.
    */
-  format(
-    date: TDate | null | undefined,
-    format?: RecommendedFormats,
-    locale?: TLocale,
-  ): string;
+  format(date: TDate | null | undefined, format?: RecommendedFormats): string;
 
   /**
    * Compares two date objects.
@@ -166,18 +162,17 @@ export interface SaltDateAdapter<
    *
    * @param value - The date string to parse.
    * @param format - The format string to use.
-   * @param locale - The locale to use for parsing.
    * @returns A ParserResult object containing the parsed date and any errors.
    */
-  parse(value: string, format: string, locale?: TLocale): ParserResult<TDate>;
+  parse(value: string, format: string): ParserResult<TDate>;
 
   /**
    * Checks if a date object is valid.
    *
-   * @param date - The date object to check.
+   * @param date - The date object to check, null or undefined.
    * @returns True if the date is valid, false otherwise.
    */
-  isValid(date: any): date is TDate;
+  isValid(date: TDate | null | undefined): date is TDate;
 
   /**
    * Adds time to a date object.
@@ -286,53 +281,42 @@ export interface SaltDateAdapter<
    *
    * @param date - The date object.
    * @param granularity - The time period ("day", "week", "month", "year").
-   * @param locale - The locale to use.
    * @returns The date object representing the start of the period.
    */
-  startOf(
-    date: TDate,
-    granularity: "day" | "week" | "month" | "year",
-    locale?: TLocale,
-  ): TDate;
+  startOf(date: TDate, granularity: "day" | "week" | "month" | "year"): TDate;
 
   /**
    * Gets the end of a specified time period for a date object.
    *
    * @param date - The date object.
    * @param granularity - The time period ("day", "week", "month", "year").
-   * @param locale - The locale to use.
    * @returns The date object representing the end of the period.
    */
-  endOf(
-    date: TDate,
-    granularity: "day" | "week" | "month" | "year",
-    locale?: TLocale,
-  ): TDate;
+  endOf(date: TDate, granularity: "day" | "week" | "month" | "year"): TDate;
 
   /**
    * Gets the current date with the time set to the start of the day.
    *
-   * @param locale - The locale to use.
+   * @param timezone - The timezone to use.
    * @returns The current date at the start of the day.
    */
-  today(locale?: TLocale): TDate;
+  today(timezone?: Timezone): TDate;
 
   /**
    * Gets the current date and time.
    *
-   * @param locale - The locale to use.
+   * @param timezone - The timezone to use.
    * @returns The current date and time.
    */
-  now(locale?: TLocale): TDate;
+  now(timezone?: Timezone): TDate;
 
   /**
    * Gets the day of the week for a date object.
    *
    * @param date - The date object.
-   * @param locale - The locale to use.
    * @returns The day of the week as a number (0-6).
    */
-  getDayOfWeek(date: TDate, locale?: TLocale): number;
+  getDayOfWeek(date: TDate): number;
 
   /**
    * Gets the day of the month for a date object.
@@ -367,18 +351,27 @@ export interface SaltDateAdapter<
   getTime(date: TDate): TimeFields;
 
   /**
+   * Get timezone
+   * @param date - The date object.
+   */
+  getTimezone(date: TDate): string;
+
+  /**
+   * Set the timezone for the date object
+   * @param date - The date object.
+   * @param timezone - Timezone to set date object to
+   * @returns  date object set to the timezone
+   */
+  setTimezone(date: TDate, timezone: Timezone): TDate;
+
+  /**
    * Gets the name of the day of the week.
    *
    * @param dow - The day of the week as a number (0-6).
    * @param format - The format for the day name ("long", "short", "narrow").
-   * @param locale - The locale to use.
    * @returns The name of the day of the week.
    */
-  getDayOfWeekName(
-    dow: number,
-    format: "long" | "short" | "narrow",
-    locale?: any,
-  ): string;
+  getDayOfWeekName(dow: number, format: "long" | "short" | "narrow"): string;
 
   /**
    * Clone the date

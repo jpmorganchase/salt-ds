@@ -3,7 +3,6 @@ import {
   Calendar,
   CalendarGrid,
   CalendarNavigation,
-  CalendarWeekHeader,
   useLocalization,
 } from "@salt-ds/lab";
 import type { ReactElement } from "react";
@@ -19,7 +18,6 @@ export const HighlightedDates = (): ReactElement => {
   return (
     <Calendar selectionVariant="single" isDayHighlighted={isDayHighlighted}>
       <CalendarNavigation />
-      <CalendarWeekHeader />
       <CalendarGrid />
     </Calendar>
   );

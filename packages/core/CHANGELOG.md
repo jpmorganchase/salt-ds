@@ -1,5 +1,66 @@
 # @salt-ds/core
 
+## 1.46.0
+
+### Minor Changes
+
+- ec1736e: Added `defaultSelected` prop to `ToggleButton` to control default selected state. Updated `ToggleButton` `appearance` JSDoc to be more clear around selected state.
+
+### Patch Changes
+
+- 8b4cbfb: Fixed Step component not working with Tooltip due to missing `forwardRef`.
+- bbdf4a6: Removed `onPillRemove` callback from the ComboBox's type definitions. `onPillRemove` has never been supported nor is it intended to be supported. `onSelectionChange` can be used instead to detect the removed pill.
+
+## 1.45.0
+
+### Minor Changes
+
+- c664e97: - Moved `SteppedTracker` component from labs to core, renamed as `Stepper`.
+
+  - `Stepper` visually communicates a user’s progress through a linear process. It gives the user context about where they are, which steps have they completed, how many steps are left and if any errors or warnings have occurred.
+
+  ```tsx
+  import { Stepper, Step } from "@salt-ds/core";
+
+  function Example() {
+    return (
+      <Stepper orientation="horizontal">
+        <Step label="Step 1" stage="completed" />
+        <Step label="Step 2" stage="active" />
+        <Step label="Step 3" stage="pending" />
+      </Stepper>
+    );
+  }
+  ```
+
+- 06232b0: Added `sentiment`, `appearance` and `readOnly` props to `ToggleButton` and `ToggleButtonGroup`.
+
+  ```tsx
+  <ToggleButton sentiment="positive" appearance="bordered">
+    Home
+  </ToggleButton>
+  ```
+
+  ```tsx
+  <ToggleButtonGroup sentiment="accented" appearance="bordered">
+    <ToggleButton> Home</ToggleButton>
+  </ToggleButtonGroup>
+  ```
+
+  ```tsx
+  <ToggleButtonGroup readOnly={true}>
+    <ToggleButton> Home</ToggleButton>
+  </ToggleButtonGroup>
+  ```
+
+  Added support for visually indicating the selected toggle button within a disabled toggle button group.
+
+## 1.44.1
+
+### Patch Changes
+
+- 851b2eb: Fixed Dropdown and ComboBox throws error when moving focus via `keyDownCapture`, for example used as `cellRenderer` in Ag Grid. Closes #5011.
+
 ## 1.44.0
 
 ### Minor Changes

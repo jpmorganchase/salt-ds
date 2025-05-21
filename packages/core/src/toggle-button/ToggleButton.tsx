@@ -8,14 +8,43 @@ import {
   forwardRef,
   useRef,
 } from "react";
+import type { ButtonAppearance, ButtonSentiment } from "../button";
 import { useToggleButtonGroup } from "../toggle-button-group";
 import { makePrefixer, useControlled, useForkRef } from "../utils";
 
 import toggleButtonCss from "./ToggleButton.css";
 
 export interface ToggleButtonProps extends ComponentPropsWithoutRef<"button"> {
-  selected?: boolean;
+  /**
+   * The appearance of the toggle button when `selected` is true.
+   * @default solid
+   */
+  appearance?: Extract<ButtonAppearance, "bordered" | "solid">;
+  /**
+   * Callback fired when the toggle button's selection state is changed.
+   */
   onChange?: (event: MouseEvent<HTMLButtonElement>) => void;
+  /**
+   * If `true`, the toggle button will be read-only.
+   */
+  readOnly?: boolean;
+  /**
+   * The sentiment of the toggle button.
+   * @default neutral
+   */
+  sentiment?: ButtonSentiment;
+  /**
+   * Whether the toggle button is in a selected state.
+   */
+  selected?: boolean;
+  /**
+   * Whether the toggle button is selected by default.
+   * This will be disregarded if `selected` is already set.
+   */
+  defaultSelected?: boolean;
+  /**
+   * Value of the toggle button, to be used when in a controlled state.
+   */
   value: string | ReadonlyArray<string> | number | undefined;
 }
 
@@ -24,6 +53,7 @@ const withBaseName = makePrefixer("saltToggleButton");
 export const ToggleButton = forwardRef<HTMLButtonElement, ToggleButtonProps>(
   function ToggleButton(props, ref) {
     const {
+      appearance: appearanceProp,
       children,
       className,
       disabled: disabledProp,
@@ -31,7 +61,10 @@ export const ToggleButton = forwardRef<HTMLButtonElement, ToggleButtonProps>(
       onClick,
       onFocus,
       onChange,
+      readOnly: readOnlyProp,
       selected: selectedProp,
+      defaultSelected,
+      sentiment: sentimenentProp,
       ...rest
     } = props;
 
@@ -53,16 +86,25 @@ export const ToggleButton = forwardRef<HTMLButtonElement, ToggleButtonProps>(
     const focusable = toggleButtonGroup
       ? toggleButtonGroup?.isFocused(value)
       : true;
+
+    const sentiment =
+      sentimenentProp || toggleButtonGroup?.sentiment || "neutral";
+    const appearance =
+      appearanceProp || toggleButtonGroup?.appearance || "solid";
     const disabled = toggleButtonGroup?.disabled || disabledProp;
+    const readOnly = toggleButtonGroup?.readOnly || readOnlyProp;
 
     const [selected, setSelected] = useControlled({
       controlled: toggleButtonGroupSelected,
-      default: Boolean(selectedProp),
+      default: Boolean(defaultSelected),
       name: "ToggleButton",
       state: "selected",
     });
 
     const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
+      if (disabled || readOnly) {
+        return;
+      }
       toggleButtonGroup?.select(event);
       setSelected(!selected);
       onChange?.(event);
@@ -74,23 +116,31 @@ export const ToggleButton = forwardRef<HTMLButtonElement, ToggleButtonProps>(
       onFocus?.(event);
     };
 
-    const ariaChecked = selected && !disabled;
+    const toggleButtonProps: ToggleButtonProps = {
+      "aria-readonly": readOnlyProp,
+      "aria-pressed": !toggleButtonGroup ? selected : undefined,
+      "aria-checked": toggleButtonGroup ? selected : undefined,
+      "aria-disabled": disabled,
+      role: toggleButtonGroup ? "radio" : undefined,
+      className: clsx(
+        withBaseName(),
+        withBaseName(sentiment),
+        withBaseName(appearance),
+        readOnly && withBaseName("readOnly"),
+        className,
+      ),
+      onClick: handleClick,
+      onFocus: handleFocus,
+      tabIndex: focusable ? 0 : -1,
+      value: value,
+      type: "button",
+      disabled: disabled,
+      readOnly: readOnlyProp,
+      ...rest,
+    };
 
     return (
-      <button
-        aria-pressed={!toggleButtonGroup ? ariaChecked : undefined}
-        aria-checked={toggleButtonGroup ? ariaChecked : undefined}
-        role={toggleButtonGroup ? "radio" : undefined}
-        className={clsx(withBaseName(), className)}
-        disabled={disabled}
-        ref={handleRef}
-        onClick={handleClick}
-        onFocus={handleFocus}
-        tabIndex={focusable && !disabled ? 0 : -1}
-        value={value}
-        type="button"
-        {...rest}
-      >
+      <button ref={handleRef} {...toggleButtonProps}>
         {children}
       </button>
     );
