@@ -61,9 +61,10 @@ body:
   - type: markdown
     attributes:
       value: "## Other"
-  - type: checkboxes
+  - type: input
+    id: sid
     attributes:
-      label: Are you a JPMorgan Chase & Co. employee?
-      description: We ask this in case we need to contact you directly via internal company systems. Leave the box unticked if this doesn’t apply to you.
-      options:
-        - label: I am an employee of JPMorgan Chase & Co.
+      label: SID
+      description: Leave your SID here if you are a JPMorgan Chase & Co. employee. This will help us to contact you directly via internal company systems.
+    validations:
+      required: false
