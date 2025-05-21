@@ -98,8 +98,8 @@ export const CarouselControls = forwardRef<
   const isOnLastSlide = activeSlideIndex === slideCount - visibleSlides;
 
   const isAnnouncerOn =
-    nextButtonRef.current === document.activeElement ||
-    prevButtonRef.current === document.activeElement;
+    nextButtonRef.current === targetWindow?.document.activeElement ||
+    prevButtonRef.current === targetWindow?.document.activeElement;
 
   const currentSlideDescription =
     (visibleSlides === 1 &&
