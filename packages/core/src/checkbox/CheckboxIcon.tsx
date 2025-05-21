@@ -68,7 +68,7 @@ export const CheckboxIcon = ({
       className={clsx(
         withBaseName(),
         {
-          [withBaseName("checked")]: checked && !indeterminate,
+          [withBaseName("checked")]: checked,
           [withBaseName("disabled")]: disabled,
           [withBaseName("error")]: error,
           [withBaseName(validationStatus || "")]: validationStatus,
