@@ -71,6 +71,10 @@ export const PropsTable: FC<PropsTableType> = ({
       });
   }, [packageName, componentName]);
 
+  if (Object.keys(props).length === 0) {
+    return null;
+  }
+
   return (
     <Table>
       <thead>
