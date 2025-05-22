@@ -1,4 +1,5 @@
 import path from "node:path";
+import url from "node:url";
 import commonjs from "@rollup/plugin-commonjs";
 import json from "@rollup/plugin-json";
 import { nodeResolve } from "@rollup/plugin-node-resolve";
@@ -14,7 +15,7 @@ import { distinct } from "./utils.mjs";
 const cwd = process.cwd();
 
 const packageJson = (
-  await import(path.join("file://", cwd, "package.json"), {
+  await import(url.pathToFileURL(path.join(cwd, "package.json")), {
     with: { type: "json" },
   })
 ).default;
