@@ -97,7 +97,6 @@ const SyncAdornment = () => {
       <NumberInput
         value={value}
         onChange={(_, newValue) => setValue(newValue)}
-        decimalPlaces={2}
         step={0.01}
         stepMultiplier={3}
         endAdornment={

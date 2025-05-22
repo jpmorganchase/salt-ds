@@ -9,6 +9,7 @@ import {
 import { AddIcon, RefreshIcon, RemoveIcon } from "@salt-ds/icons";
 import { NumberInput, type NumberInputProps } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react";
+import { toFloat } from "packages/core/src/slider/internal/utils";
 import { useState } from "react";
 // import { NumericFormat } from "react-number-format";
 
@@ -31,7 +32,7 @@ Default.args = {
 };
 
 export const Formatting: StoryFn<NumberInputProps> = (args) => {
-  const [value, setValue] = useState<number | string>("10K");
+  const [value, setValue] = useState<number | string>(100000);
   return (
     <StackLayout>
       <FormField>
@@ -41,22 +42,20 @@ export const Formatting: StoryFn<NumberInputProps> = (args) => {
         <NumberInput
           {...args}
           value={value}
-          onChange={(e, val) => {
-            setValue(val);
+          onChange={(e, value) => {
+            setValue(value);
           }}
           format={(value) => {
             const formattedValue = new Intl.NumberFormat("en-GB", {
               notation: "compact",
               compactDisplay: "short",
               maximumFractionDigits: 3,
-            }).format(value);
+            }).format(toFloat(value));
             return formattedValue;
           }}
           parse={(value) => {
-            let stringValue = value;
-            if (typeof value === "number") {
-              stringValue = value.toString();
-            }
+            const stringValue =
+              typeof value === "number" ? value.toString() : value;
             const match = stringValue.match(/^(\d+(\.\d*)?)([kKmMbB]?)$/);
             if (!match) {
               return value;
@@ -88,62 +87,55 @@ export const Formatting: StoryFn<NumberInputProps> = (args) => {
         </FormFieldLabel>
         <NumberInput
           {...args}
-          defaultValue={"12%"}
+          defaultValue={12}
           format={(value) => `${value}%`}
           max={100}
           clampingBehaviour="strict"
           parse={(value) => {
-            let parsedValue;
-
-            if (typeof value === "number") {
-              parsedValue = value.toString();
-            } else parsedValue = value;
-
-            return parsedValue.replace(/%/g, "");
+            const stringValue =
+              typeof value === "number" ? value.toString() : value;
+            return stringValue.replace(/%/g, "");
           }}
         />
         <FormFieldHelperText>Please enter a number</FormFieldHelperText>
       </FormField>
-      {/* <FormField>
-        <FormFieldLabel>
-          With react number format (thousand separator)
-        </FormFieldLabel>
-        <NumericFormat
-          value={value}
-          customInput={NumberInput}
-          thousandSeparator
-          onKeyDown={handleKeyDown}
-          hideButtons
-        />
-      </FormField>
       <FormField>
         <FormFieldLabel>
-          With custom format function (custom units)
+          With Intl Number Format, Thousands separator
         </FormFieldLabel>
         <NumberInput
-          {...args}
-          onChange={(e, val) => console.log("onchange", val)}
-          format={(value) => `${value}%`}
-          parse={(value) => value.replace(/%/g, "")}
+          defaultValue={1000000}
+          format={(value) => {
+            return new Intl.NumberFormat("en-GB").format(toFloat(value));
+          }}
+          parse={(value) => {
+            const stringValue =
+              typeof value === "number" ? value.toString() : value;
+            return stringValue.replace(/,/g, "");
+          }}
         />
-        <FormFieldHelperText>Please enter a number</FormFieldHelperText>
       </FormField>
       <FormField>
-        <FormFieldLabel>With suffix (end adornment)</FormFieldLabel>
-        <NumberInput {...args} endAdornment="%" />
-        <FormFieldHelperText>Please enter a number</FormFieldHelperText>
+        <FormFieldLabel>With Intl Number Format, Decimals</FormFieldLabel>
+        <NumberInput
+          defaultValue={10.23456}
+          format={(value) => {
+            return new Intl.NumberFormat("en-GB", {
+              maximumFractionDigits: 2,
+              minimumFractionDigits: 1,
+              roundingMode: "ceil",
+            }).format(toFloat(value));
+          }}
+          step={0.1}
+        />
       </FormField>
       <FormField>
-        <FormFieldLabel>With prefix (start adornment)</FormFieldLabel>
-        <NumberInput {...args} startAdornment="£" />
-        <FormFieldHelperText>Please enter a number</FormFieldHelperText>
-      </FormField> */}
+        <FormFieldLabel>With decimal step, controlled precision</FormFieldLabel>
+        <NumberInput defaultValue={10.236} precision={1} step={0.1} />
+      </FormField>
     </StackLayout>
   );
 };
-// Formatting.args = {
-//   defaultValue: 10000000,
-// };
 
 export const Secondary: StoryFn<NumberInputProps> = (args) => {
   return (

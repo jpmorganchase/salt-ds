@@ -26,13 +26,17 @@ export const useNumberInput = ({
   value,
   format,
   parse,
+  precision,
 }: Pick<
   NumberInputProps,
   | "disabled"
+  | "format"
   | "inputRef"
   | "max"
   | "min"
   | "onChange"
+  | "parse"
+  | "precision"
   | "readOnly"
   | "step"
   | "stepMultiplier"
@@ -40,17 +44,16 @@ export const useNumberInput = ({
   setValue: Dispatch<SetStateAction<string | number>>;
   value: string | number;
   inputRef: MutableRefObject<HTMLInputElement | null>;
-  format?: (value: number | string) => number | string;
-  parse?: (value: number | string) => number | string;
 }) => {
   const updateValue = useCallback(
     (event: SyntheticEvent | undefined, nextValue: number) => {
       if (readOnly) return;
-      const clampedValue = clamp(max, min, nextValue);
+      const preciseValue = toFloat(nextValue.toFixed(precision));
+      const clampedValue = clamp(max, min, preciseValue);
       setValue(clampedValue);
       onChange?.(event, clampedValue);
     },
-    [onChange, readOnly, setValue, max, min],
+    [onChange, readOnly, setValue, max, min, precision],
   );
 
   const decrementValue = useCallback(
