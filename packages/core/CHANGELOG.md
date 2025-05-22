@@ -1,5 +1,12 @@
 # @salt-ds/core
 
+## 1.46.1
+
+### Patch Changes
+
+- f107d63: Fixed some internal import pointing to package name, preventing component loading in certain setup like module federation. Fixes
+  #5118.
+
 ## 1.46.0
 
 ### Minor Changes
