@@ -178,7 +178,7 @@ export const useKeyboardNavigation = <
   );
 
   const nextPageItemIdx = useCallback(
-    async (e: KeyboardEvent, index: number): Promise<number> => {
+    async (e: KeyboardEvent<HTMLElement>, index: number): Promise<number> => {
       const { id } = indexPositions[index];
       let result: number | undefined;
       if (id) {
@@ -294,7 +294,7 @@ export const useKeyboardNavigation = <
   ]);
 
   const navigateChildItems = useCallback(
-    async (e: KeyboardEvent) => {
+    async (e: KeyboardEvent<HTMLElement>) => {
       const nextIdx =
         e.key === PageDown || e.key === PageUp
           ? await nextPageItemIdx(e, highlightedIndex)
@@ -318,7 +318,7 @@ export const useKeyboardNavigation = <
   );
 
   const handleKeyDown = useCallback(
-    (e: KeyboardEvent) => {
+    (e: KeyboardEvent<HTMLElement>) => {
       if (indexPositions.length > 0 && isNavigationKey(e)) {
         e.preventDefault();
         e.stopPropagation();

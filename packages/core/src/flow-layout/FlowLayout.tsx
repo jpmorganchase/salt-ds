@@ -1,6 +1,11 @@
-import { type ElementType, type ReactElement, forwardRef } from "react";
+import {
+  type ElementType,
+  type ForwardedRef,
+  type FunctionComponent,
+  forwardRef,
+} from "react";
 import { FlexLayout, type FlexLayoutProps } from "../flex-layout";
-import type { PolymorphicComponentPropWithRef, PolymorphicRef } from "../utils";
+import type { PolymorphicComponentPropWithRef } from "../utils";
 
 export type FlowLayoutProps<T extends ElementType> =
   PolymorphicComponentPropWithRef<
@@ -31,17 +36,14 @@ export type FlowLayoutProps<T extends ElementType> =
 
 type FlowLayoutComponent = <T extends ElementType = "div">(
   props: FlowLayoutProps<T>,
-) => ReactElement | null;
+) => ReturnType<FunctionComponent>;
 
-export const FlowLayout: FlowLayoutComponent = forwardRef(
-  <T extends ElementType = "div">(
-    { children, ...rest }: FlowLayoutProps<T>,
-    ref?: PolymorphicRef<T>,
-  ) => {
-    return (
-      <FlexLayout direction="row" ref={ref} wrap {...rest}>
-        {children}
-      </FlexLayout>
-    );
-  },
-);
+export const FlowLayout: FlowLayoutComponent = forwardRef(function FlowLayout<
+  T extends ElementType = "div",
+>({ as, children, ...rest }: FlowLayoutProps<T>, ref?: ForwardedRef<unknown>) {
+  return (
+    <FlexLayout as={as as ElementType} direction="row" ref={ref} wrap {...rest}>
+      {children}
+    </FlexLayout>
+  );
+});

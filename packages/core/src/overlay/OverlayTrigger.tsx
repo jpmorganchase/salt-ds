@@ -1,4 +1,4 @@
-import { type ReactNode, cloneElement, isValidElement } from "react";
+import { type ReactNode, type Ref, cloneElement, isValidElement } from "react";
 import { getRefFromChildren, mergeProps, useForkRef } from "../utils";
 import { useOverlayContext } from "./OverlayContext";
 
@@ -13,7 +13,7 @@ export function OverlayTrigger(props: OverlayTriggerProps) {
 
   const triggerRef = useForkRef(getRefFromChildren(children), reference);
 
-  if (!children || !isValidElement(children)) {
+  if (!children || !isValidElement<{ ref?: Ref<unknown> }>(children)) {
     return <>{children}</>;
   }
 
