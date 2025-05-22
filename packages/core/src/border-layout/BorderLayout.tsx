@@ -2,7 +2,8 @@ import { clsx } from "clsx";
 import {
   Children,
   type ElementType,
-  type ReactElement,
+  type ForwardedRef,
+  type FunctionComponent,
   type ReactNode,
   forwardRef,
   isValidElement,
@@ -13,7 +14,6 @@ import type { BorderPosition } from "../border-item";
 import { GridLayout, type GridLayoutProps } from "../grid-layout";
 import {
   type PolymorphicComponentPropWithRef,
-  type PolymorphicRef,
   type ResponsiveProp,
   makePrefixer,
 } from "../utils";
@@ -55,13 +55,17 @@ const numberOfColumns = 3;
 
 type BorderLayoutComponent = <T extends ElementType = "div">(
   props: BorderLayoutProps<T>,
-) => ReactElement | null;
+) => ReturnType<FunctionComponent>;
 
 export const BorderLayout: BorderLayoutComponent = forwardRef(
-  <T extends ElementType>(
-    { children, className, gap, style, ...rest }: BorderLayoutProps<T>,
-    ref?: PolymorphicRef<T>,
-  ) => {
+  function BorderLayout<T extends ElementType>(
+    props: unknown,
+    ref?: ForwardedRef<unknown>,
+  ) {
+    // Props need to be typed this way due to polymorphic types not working with required props.
+    const { as, children, className, gap, style, ...rest } =
+      props as BorderLayoutProps<T>;
+
     const borderAreas = Children.map(
       children,
       (child) => isValidElement(child) && child.props.position,
@@ -102,6 +106,7 @@ export const BorderLayout: BorderLayoutComponent = forwardRef(
 
     return (
       <GridLayout
+        as={as as ElementType}
         className={clsx(withBaseName(), className, "saltGridLayout-area")}
         columns={numberOfColumns}
         gap={gap || 0}
