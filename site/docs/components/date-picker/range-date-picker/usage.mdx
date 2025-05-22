@@ -16,20 +16,21 @@ Salt provides the following `children` for convenience:
 
 - `DatePickerOverlay` - a container component for the content of the `DatePicker` overlay.
 
-### Single date selection
-
-When `selectionVariant` is "single":
-
-- `DatePickerSingleInput` - a composable [DateInputSingle](../DateInput) component pre-wired to the `DatePicker` selection context.
-- `DatePickerSingleGridPanel` - a composable [Calendar](../Calendar) grid pre-wired to the `DatePicker` selection context.
-
-#### When to use
-
-- Use a `DatePicker` component when you need a visual and intuitive interface for selecting single dates or date ranges, making it ideal for financial applications, event scheduling, and project management. In contrast, use a `Dropdown` when the dates are pre-determined, the selection is infrequent, or a compact interface is required, such as selecting a birth year or a specific month in a form.
-
-A composable API enables you to use provided child components, such as `DatePickerSingleInput` and `DatePickerSinglePanel`.
-
 <LivePreview componentName="date-picker" exampleName="Single" />
+
+### Date range selection
+
+When `selectionVariant` is "range":
+
+- `DatePickerRangeInput` - a composable [DateInputRange](../DateInput) pre-wired to the `DatePicker` selection context.
+- `DatePickerRangeGridPanel` - composable [Calendar](../Calendar) grid pre-wired to the `DatePicker` selection context.
+  - Opt for `DatePickerRangeGridPanel` when dealing with short date ranges or when displaying the dates in-between enhances the user experience.
+- `DatePickerRangePanel` - composable dual [Calendar](../Calendar) view pre-wired to the `DatePicker` selection context.
+  - Choose `DatePickerRangePanel` for long date ranges or when the focus is primarily on the start and end dates, rather than the dates in-between.
+
+A composable API enables you to use provided child components, such as `DatePickerRangeInput` and `DatePickerRangePanel`.
+
+<LivePreview componentName="date-picker" exampleName="Range" />
 
 ### Custom overlay content
 
