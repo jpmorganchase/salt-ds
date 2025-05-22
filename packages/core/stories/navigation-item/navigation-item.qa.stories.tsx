@@ -70,6 +70,22 @@ export const AllExamples: StoryFn<QAContainerProps> = () => (
             Level 3
           </NavigationItem>
         </StackLayout>
+        <StackLayout gap="var(--salt-size-border">
+          <NavigationItem orientation="vertical" level={0} parent expanded>
+            <NotificationIcon />
+            Level 0 with icon
+          </NavigationItem>
+          <NavigationItem orientation="vertical" level={1}>
+            Level 1
+          </NavigationItem>
+          <NavigationItem orientation="vertical" level={2}>
+            Level 2
+          </NavigationItem>
+          <NavigationItem orientation="vertical" level={0} parent blurActive>
+            <NotificationIcon />
+            Level 0 with icon
+          </NavigationItem>
+        </StackLayout>
       </FlowLayout>
     </QAContainer>
   </>
