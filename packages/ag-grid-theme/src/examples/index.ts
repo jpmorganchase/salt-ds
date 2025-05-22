@@ -1,5 +1,6 @@
 export { default as Default } from "./Default";
 export { default as DragRowOrder } from "./DragRowOrder";
+export { CellValidation } from "./CellValidation";
 export { default as ColumnGroup } from "./ColumnGroup";
 export { default as ColumnSpanning } from "./ColumnSpanning";
 export { default as ContextMenu } from "./ContextMenu";
@@ -20,6 +21,7 @@ export { default as Pagination } from "./Pagination";
 export { default as ParentChildRows } from "./ParentChildRows";
 export { default as RowGrouping } from "./RowGrouping";
 export { default as RowGroupPanel } from "./RowGroupPanel";
+export { RowValidation } from "./RowValidation";
 export { default as SortAndFilter } from "./SortAndFilter";
 export { default as StatusBar } from "./StatusBar";
 export { SuppressMenuHide } from "./SuppressMenuHide";
