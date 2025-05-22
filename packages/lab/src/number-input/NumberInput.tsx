@@ -4,7 +4,6 @@ import {
   type ValidationStatus,
   capitalize,
   makePrefixer,
-  useControlled,
   useForkRef,
   useFormFieldProps,
   useIcon,
@@ -26,10 +25,18 @@ import {
   useRef,
   useState,
 } from "react";
-import { clamp, isOutOfRange, sanitizeInput, toFloat } from "./internal/utils";
+import {
+  clamp,
+  getNumberPrecision,
+  isOutOfRange,
+  isValidNumber,
+  sanitizeInput,
+  toFloat,
+} from "./internal/utils";
 
 import numberInputCss from "./NumberInput.css";
 import { useNumberInput } from "./useNumberInput";
+import { useFormatControlled } from "./internal/useFormatControlled";
 
 const withBaseName = makePrefixer("saltNumberInput");
 
@@ -112,6 +119,10 @@ export interface NumberInputProps
    */
   placeholder?: string;
   /**
+   * Precision
+   */
+  precision?: number;
+  /**
    * A boolean property that controls the editability of the `NumberInput`.
    * - When set to `true`, the `NumberInput` becomes read-only, preventing user edits.
    * - When set to `false` or omitted, the `NumberInput` is editable by the user.
@@ -161,12 +172,10 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       bordered,
       className: classNameProp,
       clampingBehaviour,
-      defaultValue: defaultValueProp = "",
       disabled,
       emptyReadOnlyMarker = "—",
       endAdornment,
       format,
-      parse,
       hideButtons,
       id: idProp,
       inputProps: inputPropsProp = {},
@@ -174,7 +183,9 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       max = Number.MAX_SAFE_INTEGER,
       min = Number.MIN_SAFE_INTEGER,
       onChange: onChangeProp,
+      parse,
       placeholder,
+      precision: precisionProp,
       readOnly: readOnlyProp,
       startAdornment,
       step = 1,
@@ -183,6 +194,7 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       validationStatus: validationStatusProp,
       value: valueProp,
       variant = "primary",
+      defaultValue: defaultValueProp = "",
       ...restProps
     },
     ref,
@@ -211,6 +223,12 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
     const isReadOnly = readOnlyProp || formFieldReadOnly;
     const validationStatus = formFieldValidationStatus ?? validationStatusProp;
     const validationStatusId = useId(idProp);
+    const precision =
+      precisionProp ||
+      Math.max(
+        getNumberPrecision(valueProp || defaultValueProp),
+        getNumberPrecision(step),
+      );
 
     const {
       "aria-describedby": inputDescribedBy,
@@ -228,11 +246,22 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       ? ["required", "asterisk"].includes(formFieldRequired)
       : inputRequired;
 
-    const [value, setValue] = useControlled({
+    const mergedFormatter = (value: number | string): number | string => {
+      if (format) {
+        return format(value);
+      }
+      if (isValidNumber(value) && precision > 0) {
+        return toFloat(value).toFixed(precision);
+      }
+      return value;
+    };
+
+    const [value, setValue] = useFormatControlled({
       controlled: valueProp,
       default: defaultValueProp,
       name: "NumberInput",
       state: "value",
+      format: mergedFormatter,
     });
 
     // Won't be needed when `:has` css can be used
@@ -254,6 +283,7 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       format,
       onChange: onChangeProp,
       parse,
+      precision,
       readOnly: isReadOnly,
       step,
       stepMultiplier,
@@ -264,29 +294,35 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       if (!isDisabled) {
         setFocused(true);
       }
-      const parsedValue = parse?.(event.target.value) || event.target.value;
-      setValue(parsedValue);
-      onChangeProp?.(event, parsedValue);
+
+      if (inputRef.current) {
+        const rawValue = parse?.(event.target.value) || event.target.value;
+        setValue(rawValue);
+      }
       inputOnFocus?.(event);
     };
 
     const handleInputBlur = (event: FocusEvent<HTMLInputElement>) => {
       setFocused(false);
-      const changedValue = event.target.value;
-      const formattedValue = format?.(changedValue) || changedValue;
+      const sanitizedValue = sanitizeInput(value);
+      const formattedValue = isValidNumber(sanitizedValue)
+        ? mergedFormatter?.(sanitizedValue) || sanitizedValue
+        : "";
+
       setValue(formattedValue);
-      onChangeProp?.(event, formattedValue);
-      inputOnBlur?.(event);
+      onChangeProp?.(event, sanitizedValue);
     };
 
     const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-      const changedValue = event.target.value;
+      const changedValue = parse?.(event.target.value) || event.target.value;
       const sanitizedValue = sanitizeInput(changedValue);
+
       let updatedValue = sanitizedValue;
 
       if (clampingBehaviour === "strict") {
         updatedValue = clamp(max, min, toFloat(sanitizedValue));
       }
+
       setValue(updatedValue);
       onChangeProp?.(event, updatedValue);
       inputOnChange?.(event);
@@ -369,21 +405,13 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
                 ? isOutOfRange(value, min, max) || validationStatus === "error"
                 : undefined
             }
-            // aria-valuemax={
-            //   !isReadOnly
-            //     ? toFloat(toFixedDecimalPlaces(max, decimalPlaces))
-            //     : undefined
-            // }
-            // aria-valuemin={
-            //   !isReadOnly
-            //     ? toFloat(toFixedDecimalPlaces(min, decimalPlaces))
-            //     : undefined
-            // }
-            // aria-valuenow={
-            //   value && !Number.isNaN(toFloat(value)) && !isReadOnly
-            //     ? toFloat(toFixedDecimalPlaces(toFloat(value), decimalPlaces))
-            //     : undefined
-            // }
+            aria-valuemax={!isReadOnly ? max : undefined}
+            aria-valuemin={!isReadOnly ? min : undefined}
+            aria-valuenow={
+              value && !Number.isNaN(toFloat(value)) && !isReadOnly
+                ? toFloat(parse?.(value) || value)
+                : undefined
+            }
             // Workaround to have the value announced by screen reader on Safari.
             {...(!isReadOnly && { "aria-valuetext": value.toString() })}
             className={clsx(

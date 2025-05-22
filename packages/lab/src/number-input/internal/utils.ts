@@ -15,9 +15,29 @@ export const toFloat = (inputValue: number | string) => {
   return Number.parseFloat(inputValue.toString());
 };
 
-export const sanitizeInput = (numberString: string | number) => {
-  if (typeof numberString === "number") return numberString;
-  let sanitizedInput = numberString.replace(/[^0-9.+-]/g, "");
+export const isValidNumber = (num: string | number) => {
+  if (typeof num === "number") {
+    return !Number.isNaN(num);
+  }
+
+  // Empty
+  if (!num) {
+    return false;
+  }
+
+  return (
+    // Normal type: 11.28
+    /^\s*-?\d+(\.\d+)?\s*$/.test(num) ||
+    // Pre-number: 1.
+    /^\s*-?\d+\.\s*$/.test(num) ||
+    // Post-number: .1
+    /^\s*-?\.\d+\s*$/.test(num)
+  );
+};
+
+export const sanitizeInput = (value: string | number) => {
+  if (typeof value === "number") return value;
+  let sanitizedInput = value.replace(/[^0-9.+-]/g, "");
   // Ensure only one decimal point is present
   const parts = sanitizedInput.split(".");
   if (parts.length > 2) {
@@ -59,4 +79,28 @@ export const clamp = (max: number, min: number, value: number) => {
   if (value < min) return min;
   if (value > max) return max;
   return value;
+};
+
+const isExponential = (number: string | number) => {
+  const str = String(number);
+
+  return !Number.isNaN(Number(str)) && str.includes("e");
+};
+
+export const getNumberPrecision = (number: string | number) => {
+  const numStr: string = String(number);
+
+  if (isExponential(number)) {
+    let precision = Number(numStr.slice(numStr.indexOf("e-") + 2));
+
+    const decimalMatch = numStr.match(/\.(\d+)/);
+    if (decimalMatch?.[1]) {
+      precision += decimalMatch[1].length;
+    }
+    return precision;
+  }
+
+  return numStr.includes(".") && isValidNumber(numStr)
+    ? numStr.length - numStr.indexOf(".") - 1
+    : 0;
 };
