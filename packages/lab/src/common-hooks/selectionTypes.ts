@@ -62,10 +62,13 @@ export interface SelectionProps<
 }
 
 export interface ListHandlers {
-  onClick?: (event: MouseEvent) => void;
-  onKeyDown?: (event: KeyboardEvent) => void;
-  onKeyboardNavigation?: (event: KeyboardEvent, currentIndex: number) => void;
-  onMouseMove?: (event: MouseEvent) => void;
+  onClick?: (event: MouseEvent<HTMLElement>) => void;
+  onKeyDown?: (event: KeyboardEvent<HTMLElement>) => void;
+  onKeyboardNavigation?: (
+    event: KeyboardEvent<HTMLElement>,
+    currentIndex: number,
+  ) => void;
+  onMouseMove?: (event: MouseEvent<HTMLElement>) => void;
 }
 export interface SelectionHookProps<
   Item,

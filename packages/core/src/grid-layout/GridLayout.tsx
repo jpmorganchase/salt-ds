@@ -1,9 +1,13 @@
 import { clsx } from "clsx";
-import { type ElementType, type ReactElement, forwardRef } from "react";
+import {
+  type ElementType,
+  type ForwardedRef,
+  type FunctionComponent,
+  forwardRef,
+} from "react";
 
 import {
   type PolymorphicComponentPropWithRef,
-  type PolymorphicRef,
   type ResponsiveProp,
   makePrefixer,
   resolveResponsiveValue,
@@ -52,7 +56,7 @@ export type GridLayoutProps<T extends ElementType> =
 
 type GridLayoutComponent = <T extends ElementType = "div">(
   props: GridLayoutProps<T>,
-) => ReactElement | null;
+) => ReturnType<FunctionComponent>;
 
 const withBaseName = makePrefixer("saltGridLayout");
 
@@ -64,64 +68,64 @@ function parseGridValue(value: number | string | undefined) {
   return `repeat(${value}, 1fr)`;
 }
 
-export const GridLayout: GridLayoutComponent = forwardRef(
-  <T extends ElementType = "div">(
-    {
-      as,
-      children,
-      className,
-      columns = 12,
-      rows = 1,
-      gap = 3,
-      margin = 0,
-      padding = 0,
-      columnGap,
-      rowGap,
-      style,
-      ...rest
-    }: GridLayoutProps<T>,
-    ref?: PolymorphicRef<T>,
-  ) => {
-    const targetWindow = useWindow();
-    useComponentCssInjection({
-      testId: "salt-grid-layout",
-      css: gridLayoutCss,
-      window: targetWindow,
-    });
-    const Component = as || "div";
+export const GridLayout: GridLayoutComponent = forwardRef(function GridLayout<
+  T extends ElementType = "div",
+>(
+  {
+    as,
+    children,
+    className,
+    columns = 12,
+    rows = 1,
+    gap = 3,
+    margin = 0,
+    padding = 0,
+    columnGap,
+    rowGap,
+    style,
+    ...rest
+  }: GridLayoutProps<T>,
+  ref?: ForwardedRef<unknown>,
+) {
+  const targetWindow = useWindow();
+  useComponentCssInjection({
+    testId: "salt-grid-layout",
+    css: gridLayoutCss,
+    window: targetWindow,
+  });
+  const Component = as || "div";
 
-    const { matchedBreakpoints } = useBreakpoint();
+  const { matchedBreakpoints } = useBreakpoint();
 
-    const gridColumns = resolveResponsiveValue(columns, matchedBreakpoints);
+  const gridColumns = resolveResponsiveValue(columns, matchedBreakpoints);
 
-    const gridRows = resolveResponsiveValue(rows, matchedBreakpoints);
+  const gridRows = resolveResponsiveValue(rows, matchedBreakpoints);
 
-    const gridGap = resolveResponsiveValue(gap, matchedBreakpoints);
+  const gridGap = resolveResponsiveValue(gap, matchedBreakpoints);
 
-    const gridColumnGap = resolveResponsiveValue(columnGap, matchedBreakpoints);
+  const gridColumnGap = resolveResponsiveValue(columnGap, matchedBreakpoints);
 
-    const gridRowGap = resolveResponsiveValue(rowGap, matchedBreakpoints);
-    const gridMargin = resolveResponsiveValue(margin, matchedBreakpoints);
-    const gridPadding = resolveResponsiveValue(padding, matchedBreakpoints);
-    const gridLayoutStyles = {
-      "--gridLayout-margin": parseSpacing(gridMargin),
-      "--gridLayout-padding": parseSpacing(gridPadding),
-      ...style,
-      "--gridLayout-columns": parseGridValue(gridColumns),
-      "--gridLayout-rows": parseGridValue(gridRows),
-      "--gridLayout-columnGap": parseSpacing(gridColumnGap ?? gridGap),
-      "--gridLayout-rowGap": parseSpacing(gridRowGap ?? gridGap),
-    };
+  const gridRowGap = resolveResponsiveValue(rowGap, matchedBreakpoints);
+  const gridMargin = resolveResponsiveValue(margin, matchedBreakpoints);
+  const gridPadding = resolveResponsiveValue(padding, matchedBreakpoints);
+  const gridLayoutStyles = {
+    "--gridLayout-margin": parseSpacing(gridMargin),
+    "--gridLayout-padding": parseSpacing(gridPadding),
+    ...style,
+    "--gridLayout-columns": parseGridValue(gridColumns),
+    "--gridLayout-rows": parseGridValue(gridRows),
+    "--gridLayout-columnGap": parseSpacing(gridColumnGap ?? gridGap),
+    "--gridLayout-rowGap": parseSpacing(gridRowGap ?? gridGap),
+  };
 
-    return (
-      <Component
-        className={clsx(withBaseName(), className)}
-        style={gridLayoutStyles}
-        ref={ref}
-        {...rest}
-      >
-        {children}
-      </Component>
-    );
-  },
-);
+  return (
+    <Component
+      className={clsx(withBaseName(), className)}
+      style={gridLayoutStyles}
+      ref={ref}
+      {...rest}
+    >
+      {children}
+    </Component>
+  );
+});

@@ -1,29 +1,18 @@
-import type {
-  ValueFormatterLiteParams,
-  ValueParserLiteParams,
-} from "ag-grid-community";
+import type { DateStringDataTypeDefinition } from "ag-grid-community/dist/types/core/entities/dataType";
 import type { dataGridExampleDataCellEditors } from "./cellEditorsData";
 
 // https://www.ag-grid.com/javascript-data-grid/cell-data-types/#date-as-string-data-type-definition
-export const dateString = {
-  baseDataType: "dateString" as const,
-  extendsDataType: "dateString" as const,
-  valueParser: (
-    params: ValueParserLiteParams<
-      (typeof dataGridExampleDataCellEditors)[number],
-      string
-    >,
-  ) =>
+export const dateString: DateStringDataTypeDefinition<
+  (typeof dataGridExampleDataCellEditors)[number]
+> = {
+  baseDataType: "dateString",
+  extendsDataType: "dateString",
+  valueParser: (params) =>
     params.newValue?.match("\\d{2}/\\d{2}/\\d{4}") ? params.newValue : null,
-  valueFormatter: (
-    params: ValueFormatterLiteParams<
-      (typeof dataGridExampleDataCellEditors)[number],
-      string
-    >,
-  ) => (params.value == null ? "" : params.value),
-  dataTypeMatcher: (value: string) =>
+  valueFormatter: (params) => (params.value == null ? "" : params.value),
+  dataTypeMatcher: (value) =>
     typeof value === "string" && !!value.match("\\d{2}/\\d{2}/\\d{4}"),
-  dateParser: (value: string | undefined) => {
+  dateParser: (value) => {
     if (value == null || value === "") {
       return undefined;
     }
@@ -36,7 +25,7 @@ export const dateString = {
         )
       : undefined;
   },
-  dateFormatter: (value: Date | undefined) => {
+  dateFormatter: (value) => {
     if (value == null) {
       return undefined;
     }

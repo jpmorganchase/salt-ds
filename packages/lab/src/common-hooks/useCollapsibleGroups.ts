@@ -1,4 +1,4 @@
-import { type MouseEvent, useCallback } from "react";
+import { type KeyboardEvent, type MouseEvent, useCallback } from "react";
 import type { CollectionHookResult, CollectionItem } from "./collectionTypes";
 import { ArrowLeft, ArrowRight, Enter } from "./keyUtils";
 import type { ListHandlers } from "./selectionTypes";

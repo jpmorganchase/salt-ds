@@ -33,7 +33,10 @@ export const useTree = <Item, Selection extends SelectionStrategy = "default">({
 TreeHookProps<Item, Selection>): TreeHookResult<Item, Selection> => {
   const lastSelection = useRef(selectedProp || defaultSelected);
 
-  const handleKeyboardNavigation = (evt: KeyboardEvent, nextIdx: number) => {
+  const handleKeyboardNavigation = (
+    evt: KeyboardEvent<HTMLElement>,
+    nextIdx: number,
+  ) => {
     selectionHook.listHandlers.onKeyboardNavigation?.(evt, nextIdx);
   };
 
@@ -71,7 +74,7 @@ TreeHookProps<Item, Selection>): TreeHookResult<Item, Selection> => {
   });
 
   const handleClick = useCallback(
-    (evt: MouseEvent) => {
+    (evt: MouseEvent<HTMLElement>) => {
       collapsibleHook?.onClick?.(evt);
       if (!evt.defaultPrevented) {
         selectionHook.listHandlers.onClick?.(evt);
@@ -81,7 +84,7 @@ TreeHookProps<Item, Selection>): TreeHookResult<Item, Selection> => {
   );
 
   const handleKeyDown = useCallback(
-    (evt: KeyboardEvent) => {
+    (evt: KeyboardEvent<HTMLElement>) => {
       keyboardHook.listProps.onKeyDown?.(evt);
       if (!evt.defaultPrevented) {
         selectionHook.listHandlers.onKeyDown?.(evt);

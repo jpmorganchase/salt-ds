@@ -1,10 +1,11 @@
 import { clsx } from "clsx";
-import { type ElementType, type ReactElement, forwardRef } from "react";
 import {
-  type PolymorphicComponentPropWithRef,
-  type PolymorphicRef,
-  makePrefixer,
-} from "../utils";
+  type ElementType,
+  type ForwardedRef,
+  type FunctionComponent,
+  forwardRef,
+} from "react";
+import { type PolymorphicComponentPropWithRef, makePrefixer } from "../utils";
 
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
@@ -52,7 +53,7 @@ export type TextProps<T extends ElementType> = PolymorphicComponentPropWithRef<
 
 type TextComponent = <T extends ElementType = "div">(
   props: TextProps<T>,
-) => ReactElement | null;
+) => ReturnType<FunctionComponent>;
 
 const withBaseName = makePrefixer("saltText");
 
@@ -71,7 +72,7 @@ export const Text: TextComponent = forwardRef(function Text<
     color: colorProp,
     ...restProps
   }: TextProps<T>,
-  ref?: PolymorphicRef<T>,
+  ref?: ForwardedRef<unknown>,
 ) {
   const targetWindow = useWindow();
   useComponentCssInjection({
