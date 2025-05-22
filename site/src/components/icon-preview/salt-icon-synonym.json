@@ -1,0 +1,3239 @@
+[
+  {
+    "iconName": "accessible",
+    "synonym": [
+      "disability",
+      "wheelchair",
+      "support",
+      "wcag",
+      "screen reader",
+      "alt text",
+      "accessiblity",
+      "accessibility"
+    ],
+    "category": "accessibility"
+  },
+  {
+    "iconName": "add",
+    "synonym": [
+      "create",
+      "plus",
+      "new",
+      "insert",
+      "add"
+    ],
+    "category": "organize"
+  },
+  {
+    "iconName": "add-document",
+    "synonym": [
+      "upload",
+      "file",
+      "generate",
+      "draft",
+      "create",
+      "paper"
+    ],
+    "category": "documents"
+  },
+  {
+    "iconName": "api",
+    "synonym": [
+      "connect",
+      "bracket",
+      "integrate",
+      "tag"
+    ],
+    "category": "computing"
+  },
+  {
+    "iconName": "app-switcher",
+    "synonym": [
+      "toggle",
+      "grid",
+      "navigation",
+      "launcher",
+      "tile"
+    ],
+    "category": "actions"
+  },
+  {
+    "iconName": "arrow-down",
+    "synonym": [
+      "scroll",
+      "triangle",
+      "navigation",
+      "expand",
+      "arrow down"
+    ],
+    "category": "arrows & chevrons"
+  },
+  {
+    "iconName": "arrow-left",
+    "synonym": [
+      "back",
+      "triangle",
+      "navigation",
+      "previous",
+      "rewind",
+      "arrow left"
+    ],
+    "category": "arrows & chevrons"
+  },
+  {
+    "iconName": "arrow-right",
+    "synonym": [
+      "next",
+      "triangle",
+      "navigation",
+      "forward",
+      "arrow right"
+    ],
+    "category": "arrows & chevrons"
+  },
+  {
+    "iconName": "arrow-up",
+    "synonym": [
+      "scroll",
+      "triangle",
+      "navigation",
+      "collapse",
+      "arrow up"
+    ],
+    "category": "arrows & chevrons"
+  },
+  {
+    "iconName": "attach",
+    "synonym": [
+      "connect",
+      "clip",
+      "upload",
+      "paperclip"
+    ],
+    "category": "actions"
+  },
+  {
+    "iconName": "bank",
+    "synonym": [
+      "finance",
+      "building",
+      "account",
+      "bank"
+    ],
+    "category": "places"
+  },
+  {
+    "iconName": "bank-check",
+    "synonym": [
+      "finance",
+      "payment",
+      "cheque",
+      "check"
+    ],
+    "category": "finance"
+  },
+  {
+    "iconName": "bar-chart",
+    "synonym": [
+      "analytics",
+      "data",
+      "statistic",
+      "bar chart"
+    ],
+    "category": "data"
+  },
+  {
+    "iconName": "battery",
+    "synonym": [
+      "power",
+      "charge",
+      "energy",
+      "low",
+      "charging"
+    ],
+    "category": "media"
+  },
+  {
+    "iconName": "bookmark",
+    "synonym": [
+      "save",
+      "ribbon",
+      "favorite",
+      "tag",
+      "favourite"
+    ],
+    "category": "actions"
+  },
+  {
+    "iconName": "boolean",
+    "synonym": [
+      "toggle",
+      "switch",
+      "on",
+      "off"
+    ],
+    "category": "data"
+  },
+  {
+    "iconName": "browser",
+    "synonym": [
+      "browse",
+      "window",
+      "web",
+      "internet",
+      "browser"
+    ],
+    "category": "media"
+  },
+  {
+    "iconName": "building",
+    "synonym": [
+      "property",
+      "location",
+      "office",
+      "apartment",
+      "buildings"
+    ],
+    "category": "places"
+  },
+  {
+    "iconName": "buildings",
+    "synonym": [
+      "property",
+      "location",
+      "office",
+      "apartment",
+      "buildings"
+    ],
+    "category": "places"
+  },
+  {
+    "iconName": "build-report",
+    "synonym": [
+      "suitcase",
+      "bag",
+      "portfolio",
+      "briefcase"
+    ],
+    "category": "documents"
+  },
+  {
+    "iconName": "calculator",
+    "synonym": [
+      "calculate",
+      "number",
+      "math",
+      "arithmetic",
+      "calculator"
+    ],
+    "category": "actions"
+  },
+  {
+    "iconName": "calendar",
+    "synonym": [
+      "schedule",
+      "date",
+      "planner",
+      "calendar",
+      "event"
+    ],
+    "category": "actions"
+  },
+  {
+    "iconName": "call",
+    "synonym": [
+      "communicate",
+      "phone",
+      "contact",
+      "voice"
+    ],
+    "category": "communication"
+  },
+  {
+    "iconName": "cart",
+    "synonym": [
+      "purchase",
+      "basket",
+      "shopping",
+      "checkout",
+      "trolley",
+      "cart"
+    ],
+    "category": "finance"
+  },
+  {
+    "iconName": "chat",
+    "synonym": [
+      "communicate",
+      "bubble",
+      "message",
+      "talk",
+      "conversation",
+      "speech",
+      "speech bubble empty"
+    ],
+    "category": "communication"
+  },
+  {
+    "iconName": "chat-group",
+    "synonym": [
+      "communicate",
+      "bubble",
+      "message",
+      "talk",
+      "conversation",
+      "speech",
+      "chat bubble"
+    ],
+    "category": "communication"
+  },
+  {
+    "iconName": "chatting",
+    "synonym": [
+      "communicate",
+      "bubble",
+      "message",
+      "speech",
+      "speech bubble"
+    ],
+    "category": "communication"
+  },
+  {
+    "iconName": "checkmark",
+    "synonym": [
+      "confirmation",
+      "tick",
+      "complete",
+      "verify",
+      "checkmark",
+      "check"
+    ],
+    "category": "indicators"
+  },
+  {
+    "iconName": "chevron-down",
+    "synonym": [
+      "navigate",
+      "arrow",
+      "scroll",
+      "triangle",
+      "navigation",
+      "chevron down",
+      "chevron lg down"
+    ],
+    "category": "arrows & chevrons"
+  },
+  {
+    "iconName": "chevron-left",
+    "synonym": [
+      "back",
+      "arrow",
+      "previous",
+      "triangle",
+      "navigation",
+      "chevron left",
+      "chevron lg left"
+    ],
+    "category": "arrows & chevrons"
+  },
+  {
+    "iconName": "chevron-right",
+    "synonym": [
+      "next",
+      "arrow",
+      "forward",
+      "triangle",
+      "navigation",
+      "chevron right",
+      "chevron lg down"
+    ],
+    "category": "arrows & chevrons"
+  },
+  {
+    "iconName": "chevron-up",
+    "synonym": [
+      "navigate",
+      "arrow",
+      "scroll",
+      "triangle",
+      "navigation",
+      "chevron up",
+      "chevron lg up"
+    ],
+    "category": "arrows & chevrons"
+  },
+  {
+    "iconName": "clock",
+    "synonym": [
+      "time",
+      "schedule",
+      "pending",
+      "clock waiting"
+    ],
+    "category": "objects"
+  },
+  {
+    "iconName": "clone",
+    "synonym": [
+      "duplicate",
+      "copy",
+      "create"
+    ],
+    "category": "arrows & chevrons"
+  },
+  {
+    "iconName": "close",
+    "synonym": [
+      "dismiss",
+      "x",
+      "status",
+      "cancel",
+      "shut",
+      "minus",
+      "exit",
+      "close"
+    ],
+    "category": "actions"
+  },
+  {
+    "iconName": "closedcaption",
+    "synonym": [
+      "accessibility",
+      "subtitles",
+      "support",
+      "alt text",
+      "accessible",
+      "media closed caption",
+      "closed caption"
+    ],
+    "category": "media"
+  },
+  {
+    "iconName": "closedcaption-disabled",
+    "synonym": [
+      "accessibility",
+      "subtitles",
+      "support",
+      "alt text",
+      "accessible",
+      "off"
+    ],
+    "category": "media"
+  },
+  {
+    "iconName": "cloud",
+    "synonym": [
+      "storage",
+      "cloud",
+      "sync",
+      "internet",
+      "connect"
+    ],
+    "category": "computing"
+  },
+  {
+    "iconName": "cloud-disabled",
+    "synonym": [
+      "storage",
+      "cloud",
+      "sync",
+      "off",
+      "internet",
+      "connect"
+    ],
+    "category": "computing"
+  },
+  {
+    "iconName": "cloud-download",
+    "synonym": [
+      "storage",
+      "internet",
+      "connect"
+    ],
+    "category": "computing"
+  },
+  {
+    "iconName": "cloud-success",
+    "synonym": [
+      "storage",
+      "tick",
+      "internet",
+      "connect"
+    ],
+    "category": "computing"
+  },
+  {
+    "iconName": "cloud-sync",
+    "synonym": [
+      "storage",
+      "internet",
+      "connect",
+      "arrow"
+    ],
+    "category": "computing"
+  },
+  {
+    "iconName": "cloud-upload",
+    "synonym": [
+      "storage",
+      "internet",
+      "connect",
+      "arrow"
+    ],
+    "category": "computing"
+  },
+  {
+    "iconName": "coffee",
+    "synonym": [
+      "cup",
+      "lifestyle",
+      "mug",
+      "caffeine"
+    ],
+    "category": "objects"
+  },
+  {
+    "iconName": "collapse",
+    "synonym": [
+      "minimize",
+      "arrow",
+      "hide",
+      "minus",
+      "triangle",
+      "close",
+      "media collapse"
+    ],
+    "category": "arrows & chevrons"
+  },
+  {
+    "iconName": "collapse-all",
+    "synonym": [
+      "minimize",
+      "arrow",
+      "hide",
+      "minus",
+      "triangle",
+      "close",
+      "media collapse"
+    ],
+    "category": "arrows & chevrons"
+  },
+  {
+    "iconName": "column-chooser",
+    "synonym": [
+      "layout",
+      "grid",
+      "organize",
+      "table",
+      "sheet"
+    ],
+    "category": "organize"
+  },
+  {
+    "iconName": "commentary",
+    "synonym": [
+      "communicate",
+      "bubble",
+      "message",
+      "talk",
+      "conversation",
+      "speech",
+      "speech bubble chat"
+    ],
+    "category": "communication"
+  },
+  {
+    "iconName": "compass",
+    "synonym": [
+      "navigate",
+      "explore",
+      "direction",
+      "compass"
+    ],
+    "category": "objects"
+  },
+  {
+    "iconName": "cookie",
+    "synonym": [
+      "tracking",
+      "privacy",
+      "biscuit",
+      "cookie"
+    ],
+    "category": "objects"
+  },
+  {
+    "iconName": "copy",
+    "synonym": [
+      "duplicate",
+      "page",
+      "clone",
+      "document",
+      "create",
+      "copy to clipboard"
+    ],
+    "category": "actions"
+  },
+  {
+    "iconName": "credit-card",
+    "synonym": [
+      "payment",
+      "transaction",
+      "bill",
+      "charge",
+      "finance",
+      "credit card"
+    ],
+    "category": "finance"
+  },
+  {
+    "iconName": "crops",
+    "synonym": [
+      "plant",
+      "agriculture",
+      "harvest",
+      "farm",
+      "grow",
+      "paperless"
+    ],
+    "category": "places"
+  },
+  {
+    "iconName": "csv",
+    "synonym": [
+      "export",
+      "spreadsheet",
+      "file",
+      "excel",
+      "csv"
+    ],
+    "category": "documents"
+  },
+  {
+    "iconName": "cut",
+    "synonym": [
+      "trim",
+      "scissor",
+      "edit",
+      "remove"
+    ],
+    "category": "actions"
+  },
+  {
+    "iconName": "dark",
+    "synonym": [
+      "night",
+      "moon",
+      "theme",
+      "mode"
+    ],
+    "category": "actions"
+  },
+  {
+    "iconName": "dashboard",
+    "synonym": [
+      "car gauge"
+    ],
+    "category": "data"
+  },
+  {
+    "iconName": "database",
+    "synonym": [
+      "stack",
+      "backend"
+    ],
+    "category": "computing"
+  },
+  {
+    "iconName": "delete",
+    "synonym": [
+      "remove",
+      "trash",
+      "discard",
+      "close",
+      "erase",
+      "bin",
+      "trash can"
+    ],
+    "category": "actions"
+  },
+  {
+    "iconName": "devices",
+    "synonym": [
+      "screen",
+      "tech",
+      "equipment",
+      "monitor",
+      "devices"
+    ],
+    "category": "media"
+  },
+  {
+    "iconName": "diamond",
+    "synonym": [
+      "gem",
+      "premium",
+      "jewel",
+      "exclusive",
+      "diamond"
+    ],
+    "category": "finance"
+  },
+  {
+    "iconName": "display",
+    "synonym": [
+      "display",
+      "screen",
+      "monitor",
+      "desktop"
+    ],
+    "category": "media"
+  },
+  {
+    "iconName": "document",
+    "synonym": [
+      "page",
+      "file",
+      "paper",
+      "draft",
+      "create",
+      "document",
+      "view transcript"
+    ],
+    "category": "documents"
+  },
+  {
+    "iconName": "double-chevron-down",
+    "synonym": [
+      "navigate",
+      "arrow",
+      "triangle",
+      "navigation"
+    ],
+    "category": "arrows & chevrons"
+  },
+  {
+    "iconName": "double-chevron-left",
+    "synonym": [
+      "back",
+      "arrow",
+      "triangle",
+      "navigation",
+      "fast backward",
+      "double arrow left",
+      "chevron double lg left"
+    ],
+    "category": "arrows & chevrons"
+  },
+  {
+    "iconName": "double-chevron-right",
+    "synonym": [
+      "next",
+      "arrow",
+      "triangle",
+      "navigation",
+      "fast forward",
+      "double arrow right",
+      "chevron double lg right"
+    ],
+    "category": "arrows & chevrons"
+  },
+  {
+    "iconName": "double-chevron-up",
+    "synonym": [
+      "navigate",
+      "arrow",
+      "triangle",
+      "navigation"
+    ],
+    "category": "arrows & chevrons"
+  },
+  {
+    "iconName": "download",
+    "synonym": [
+      "save",
+      "arrow",
+      "transfer",
+      "download"
+    ],
+    "category": "arrows & chevrons"
+  },
+  {
+    "iconName": "drag-row",
+    "synonym": [
+      "move",
+      "position",
+      "handle",
+      "reorder",
+      "drag indicator"
+    ],
+    "category": "organize"
+  },
+  {
+    "iconName": "edit",
+    "synonym": [
+      "update",
+      "pencil",
+      "change",
+      "draw"
+    ],
+    "category": "actions"
+  },
+  {
+    "iconName": "error",
+    "synonym": [
+      "alert",
+      "stop",
+      "failure",
+      "crash",
+      "mistake",
+      "alert triangle",
+      "exclamation circle"
+    ],
+    "category": "indicators"
+  },
+  {
+    "iconName": "error-execute",
+    "synonym": [],
+    "category": "indicators"
+  },
+  {
+    "iconName": "expand",
+    "synonym": [
+      "enlarge",
+      "arrow",
+      "size",
+      "triangle",
+      "maximize",
+      "reveal",
+      "media expand"
+    ],
+    "category": "arrows & chevrons"
+  },
+  {
+    "iconName": "expand-all",
+    "synonym": [
+      "enlarge",
+      "arrow",
+      "size",
+      "triangle",
+      "open"
+    ],
+    "category": "arrows & chevrons"
+  },
+  {
+    "iconName": "export",
+    "synonym": [
+      "transfer",
+      "arrow",
+      "share",
+      "send"
+    ],
+    "category": "arrows & chevrons"
+  },
+  {
+    "iconName": "favorite",
+    "synonym": [
+      "like",
+      "star",
+      "bookmark",
+      "save",
+      "favourite",
+      "star outline"
+    ],
+    "category": "actions"
+  },
+  {
+    "iconName": "filter",
+    "synonym": [
+      "refine",
+      "funnel",
+      "data"
+    ],
+    "category": "organize"
+  },
+  {
+    "iconName": "filter-clear",
+    "synonym": [
+      "funnel",
+      "data",
+      "x"
+    ],
+    "category": "organize"
+  },
+  {
+    "iconName": "flag",
+    "synonym": [
+      "marker",
+      "report",
+      "flag"
+    ],
+    "category": "actions"
+  },
+  {
+    "iconName": "folder-closed",
+    "synonym": [
+      "storage",
+      "file",
+      "archive",
+      "directory"
+    ],
+    "category": "documents"
+  },
+  {
+    "iconName": "folder-open",
+    "synonym": [
+      "storage",
+      "file",
+      "archive",
+      "access",
+      "directory"
+    ],
+    "category": "documents"
+  },
+  {
+    "iconName": "forward-10",
+    "synonym": [
+      "skip",
+      "media",
+      "media fast forward 10 seconds",
+      "forward 10"
+    ],
+    "category": "media"
+  },
+  {
+    "iconName": "forward-15",
+    "synonym": [
+      "skip",
+      "media",
+      "media fast forward 15 seconds"
+    ],
+    "category": "media"
+  },
+  {
+    "iconName": "forward-30",
+    "synonym": [
+      "skip",
+      "media"
+    ],
+    "category": "media"
+  },
+  {
+    "iconName": "forward-5",
+    "synonym": [
+      "skip",
+      "media"
+    ],
+    "category": "media"
+  },
+  {
+    "iconName": "github",
+    "synonym": [
+      "commit",
+      "code",
+      "develop",
+      "repo"
+    ],
+    "category": "logos"
+  },
+  {
+    "iconName": "globe",
+    "synonym": [
+      "global",
+      "earth",
+      "international",
+      "world",
+      "globe"
+    ],
+    "category": "places"
+  },
+  {
+    "iconName": "grid",
+    "synonym": [
+      "view",
+      "tile",
+      "layout"
+    ],
+    "category": "organize"
+  },
+  {
+    "iconName": "group",
+    "synonym": [
+      "combine",
+      "organize",
+      "arrange"
+    ],
+    "category": "organize"
+  },
+  {
+    "iconName": "guide-closed",
+    "synonym": [
+      "help",
+      "book",
+      "manual",
+      "instructions",
+      "detail"
+    ],
+    "category": "documents"
+  },
+  {
+    "iconName": "guide-open",
+    "synonym": [
+      "help",
+      "book",
+      "manual",
+      "instructions",
+      "detail",
+      "guide"
+    ],
+    "category": "documents"
+  },
+  {
+    "iconName": "headphones",
+    "synonym": [
+      "audio",
+      "sound",
+      "listen",
+      "headphone"
+    ],
+    "category": "media"
+  },
+  {
+    "iconName": "headphones-disabled",
+    "synonym": [
+      "audio",
+      "sound",
+      "off",
+      "disabled",
+      "muted"
+    ],
+    "category": "media"
+  },
+  {
+    "iconName": "help",
+    "synonym": [
+      "help",
+      "question",
+      "support",
+      "information",
+      "assist",
+      "question mark circle"
+    ],
+    "category": "indicators"
+  },
+  {
+    "iconName": "hidden",
+    "synonym": [
+      "visbility",
+      "eye",
+      "private",
+      "conceal",
+      "off",
+      "hide",
+      "eye off"
+    ],
+    "category": "actions"
+  },
+  {
+    "iconName": "history",
+    "synonym": [
+      "clock",
+      "time",
+      "archive",
+      "clock expiring",
+      "history"
+    ],
+    "category": "arrows & chevrons"
+  },
+  {
+    "iconName": "home",
+    "synonym": [
+      "house",
+      "navigation",
+      "start"
+    ],
+    "category": "places"
+  },
+  {
+    "iconName": "hospital",
+    "synonym": [
+      "facility",
+      "healthcare",
+      "medicine",
+      "medical",
+      "clinic"
+    ],
+    "category": "places"
+  },
+  {
+    "iconName": "icon-figma",
+    "synonym": [
+      "design",
+      "logo",
+      "application",
+      "tool"
+    ],
+    "category": "logos"
+  },
+  {
+    "iconName": "image",
+    "synonym": [
+      "preview",
+      "picture",
+      "media",
+      "photo",
+      "gallery"
+    ],
+    "category": "documents"
+  },
+  {
+    "iconName": "import",
+    "synonym": [
+      "upload",
+      "arrow"
+    ],
+    "category": "arrows & chevrons"
+  },
+  {
+    "iconName": "inbox",
+    "synonym": [
+      "mail",
+      "tray",
+      "message",
+      "email",
+      "inbox"
+    ],
+    "category": "communication"
+  },
+  {
+    "iconName": "info",
+    "synonym": [
+      "help",
+      "information",
+      "support",
+      "assist",
+      "detail",
+      "info tip filled"
+    ],
+    "category": "indicators"
+  },
+  {
+    "iconName": "jigsaw",
+    "synonym": [
+      "configure",
+      "puzzle",
+      "logic"
+    ],
+    "category": "objects"
+  },
+  {
+    "iconName": "key",
+    "synonym": [
+      "access",
+      "security",
+      "secure",
+      "grant",
+      "restrict",
+      "password",
+      "car key"
+    ],
+    "category": "objects"
+  },
+  {
+    "iconName": "key-backspace",
+    "synonym": [
+      "delete",
+      "x",
+      "keyboard",
+      "remove",
+      "arrow",
+      "erase"
+    ],
+    "category": "accessibility"
+  },
+  {
+    "iconName": "key-capslock",
+    "synonym": [
+      "arrow",
+      "keyboard",
+      "on",
+      "off"
+    ],
+    "category": "accessibility"
+  },
+  {
+    "iconName": "key-command",
+    "synonym": [
+      "keyboard",
+      "shortcut"
+    ],
+    "category": "accessibility"
+  },
+  {
+    "iconName": "key-control",
+    "synonym": [
+      "arrow",
+      "keyboard",
+      "shortcut",
+      "ctrl"
+    ],
+    "category": "accessibility"
+  },
+  {
+    "iconName": "key-enter",
+    "synonym": [
+      "return",
+      "arrow",
+      "keyboard",
+      "submit"
+    ],
+    "category": "accessibility"
+  },
+  {
+    "iconName": "key-option",
+    "synonym": [
+      "alt",
+      "keyboard",
+      "shortcut"
+    ],
+    "category": "accessibility"
+  },
+  {
+    "iconName": "key-shift",
+    "synonym": [
+      "arrow",
+      "keyboard"
+    ],
+    "category": "accessibility"
+  },
+  {
+    "iconName": "key-tab",
+    "synonym": [
+      "indent",
+      "arrow",
+      "keyboard",
+      "shortcut"
+    ],
+    "category": "accessibility"
+  },
+  {
+    "iconName": "laptop",
+    "synonym": [
+      "screen",
+      "computer",
+      "device",
+      "laptop"
+    ],
+    "category": "media"
+  },
+  {
+    "iconName": "layers",
+    "synonym": [
+      "arrange",
+      "stack",
+      "composition",
+      "expand"
+    ],
+    "category": "organize"
+  },
+  {
+    "iconName": "light",
+    "synonym": [
+      "brightness",
+      "sun",
+      "display",
+      "theme",
+      "contrast",
+      "mode"
+    ],
+    "category": "actions"
+  },
+  {
+    "iconName": "line-chart",
+    "synonym": [
+      "data",
+      "graph",
+      "analytics",
+      "statistic"
+    ],
+    "category": "data"
+  },
+  {
+    "iconName": "linked",
+    "synonym": [
+      "connect",
+      "chain",
+      "url",
+      "link"
+    ],
+    "category": "actions"
+  },
+  {
+    "iconName": "list",
+    "synonym": [
+      "content",
+      "bulleted",
+      "item",
+      "notes",
+      "list"
+    ],
+    "category": "organize"
+  },
+  {
+    "iconName": "loader",
+    "synonym": [
+      "loading",
+      "spinner",
+      "status",
+      "wait",
+      "progress"
+    ],
+    "category": "indicators"
+  },
+  {
+    "iconName": "location",
+    "synonym": [
+      "place",
+      "pin",
+      "navigation",
+      "map",
+      "position",
+      "location"
+    ],
+    "category": "actions"
+  },
+  {
+    "iconName": "locked",
+    "synonym": [
+      "access",
+      "padlock",
+      "security",
+      "safety",
+      "restrict",
+      "secure",
+      "lock locked outline"
+    ],
+    "category": "actions"
+  },
+  {
+    "iconName": "man",
+    "synonym": [
+      "people",
+      "male",
+      "user",
+      "gender",
+      "person"
+    ],
+    "category": "people"
+  },
+  {
+    "iconName": "man-woman",
+    "synonym": [
+      "people",
+      "group",
+      "user",
+      "gender",
+      "bathroom",
+      "wc",
+      "restroom"
+    ],
+    "category": "people"
+  },
+  {
+    "iconName": "map",
+    "synonym": [
+      "direction",
+      "navigation",
+      "route"
+    ],
+    "category": "objects"
+  },
+  {
+    "iconName": "marker",
+    "synonym": [
+      "sign",
+      "direction",
+      "navigation"
+    ],
+    "category": "objects"
+  },
+  {
+    "iconName": "maximize",
+    "synonym": [
+      "view",
+      "window",
+      "fullscreen",
+      "expand",
+      "enlarge"
+    ],
+    "category": "organize"
+  },
+  {
+    "iconName": "medical-kit",
+    "synonym": [
+      "first aid",
+      "healthcare",
+      "emergency"
+    ],
+    "category": "objects"
+  },
+  {
+    "iconName": "menu",
+    "synonym": [
+      "settings",
+      "sidebar",
+      "navigation",
+      "expand",
+      "hamburger",
+      "hamburger menu"
+    ],
+    "category": "actions"
+  },
+  {
+    "iconName": "message",
+    "synonym": [
+      "communicate",
+      "envelope",
+      "email",
+      "read",
+      "unread"
+    ],
+    "category": "communication"
+  },
+  {
+    "iconName": "micro-menu",
+    "synonym": [
+      "open",
+      "sidebar",
+      "navigation",
+      "expand",
+      "kebab",
+      "overflow",
+      "options"
+    ],
+    "category": "actions"
+  },
+  {
+    "iconName": "microphone",
+    "synonym": [
+      "audio",
+      "mic",
+      "sound",
+      "voice",
+      "on",
+      "record",
+      "microphone",
+      "podcast"
+    ],
+    "category": "media"
+  },
+  {
+    "iconName": "microphone-disabled",
+    "synonym": [
+      "mute",
+      "mic",
+      "sound",
+      "voice",
+      "off",
+      "record",
+      "audio",
+      "microphone off"
+    ],
+    "category": "media"
+  },
+  {
+    "iconName": "minimize",
+    "synonym": [
+      "collapse",
+      "dash",
+      "window"
+    ],
+    "category": "organize"
+  },
+  {
+    "iconName": "mobile",
+    "synonym": [
+      "smartphone",
+      "device",
+      "responsive",
+      "cell",
+      "telephone",
+      "mobile"
+    ],
+    "category": "media"
+  },
+  {
+    "iconName": "mouse",
+    "synonym": [
+      "cursor",
+      "navigation",
+      "pointer",
+      "clicker",
+      "device"
+    ],
+    "category": "media"
+  },
+  {
+    "iconName": "move-all",
+    "synonym": [
+      "drag",
+      "arrow",
+      "position",
+      "relocate"
+    ],
+    "category": "arrows & chevrons"
+  },
+  {
+    "iconName": "move-horizontal",
+    "synonym": [
+      "enlarge",
+      "arrow",
+      "size",
+      "maximize",
+      "reveal"
+    ],
+    "category": "arrows & chevrons"
+  },
+  {
+    "iconName": "move-vertical",
+    "synonym": [
+      "enlarge",
+      "arrow",
+      "size",
+      "maximize",
+      "reveal"
+    ],
+    "category": "arrows & chevrons"
+  },
+  {
+    "iconName": "music",
+    "synonym": [
+      "audio",
+      "sound",
+      "play"
+    ],
+    "category": "media"
+  },
+  {
+    "iconName": "music-disabled",
+    "synonym": [
+      "audio",
+      "sound",
+      "off",
+      "disabled",
+      "muted"
+    ],
+    "category": "media"
+  },
+  {
+    "iconName": "note",
+    "synonym": [
+      "reminder",
+      "paper",
+      "information",
+      "edit note"
+    ],
+    "category": "documents"
+  },
+  {
+    "iconName": "notification",
+    "synonym": [
+      "alert",
+      "bell",
+      "reminder",
+      "ping"
+    ],
+    "category": "actions"
+  },
+  {
+    "iconName": "notification-read",
+    "synonym": [
+      "alert",
+      "bell",
+      "reminder",
+      "seen",
+      "tick"
+    ],
+    "category": "actions"
+  },
+  {
+    "iconName": "overflow-menu",
+    "synonym": [
+      "open",
+      "dots",
+      "navigation",
+      "expand",
+      "kebab",
+      "options"
+    ],
+    "category": "actions"
+  },
+  {
+    "iconName": "paste",
+    "synonym": [
+      "insert",
+      "clipboard",
+      "copy"
+    ],
+    "category": "actions"
+  },
+  {
+    "iconName": "pause",
+    "synonym": [
+      "audio",
+      "sound",
+      "start",
+      "stop",
+      "media pause"
+    ],
+    "category": "media"
+  },
+  {
+    "iconName": "pdf",
+    "synonym": [
+      "download",
+      "file",
+      "export",
+      "document",
+      "convert",
+      "format",
+      "pdf icon"
+    ],
+    "category": "documents"
+  },
+  {
+    "iconName": "picnic",
+    "synonym": [
+      "tree",
+      "outdoors",
+      "camping",
+      "forest"
+    ],
+    "category": "places"
+  },
+  {
+    "iconName": "pin",
+    "synonym": [
+      "save",
+      "tack",
+      "location",
+      "favorite",
+      "favourite",
+      "mark",
+      "push pin"
+    ],
+    "category": "actions"
+  },
+  {
+    "iconName": "pivot",
+    "synonym": [
+      "data",
+      "arrow",
+      "table",
+      "rotate",
+      "transform"
+    ],
+    "category": "arrows & chevrons"
+  },
+  {
+    "iconName": "place-in",
+    "synonym": [
+      "insert",
+      "arrow",
+      "action",
+      "container",
+      "move"
+    ],
+    "category": "arrows & chevrons"
+  },
+  {
+    "iconName": "play",
+    "synonym": [
+      "audio",
+      "arrow",
+      "sound",
+      "triangle",
+      "media",
+      "start",
+      "stop",
+      "resume",
+      "media play",
+      "play sm"
+    ],
+    "category": "media"
+  },
+  {
+    "iconName": "pot-food",
+    "synonym": [
+      "cooking",
+      "bowl",
+      "meal",
+      "dish"
+    ],
+    "category": "objects"
+  },
+  {
+    "iconName": "presentation",
+    "synonym": [
+      "display",
+      "meeting",
+      "slideshow",
+      "deck",
+      "presentation"
+    ],
+    "category": "media"
+  },
+  {
+    "iconName": "price-ladder",
+    "synonym": [
+      "trade",
+      "finance",
+      "bid",
+      "ask",
+      "trading"
+    ],
+    "category": "finance"
+  },
+  {
+    "iconName": "print",
+    "synonym": [
+      "printer",
+      "document",
+      "scan",
+      "print"
+    ],
+    "category": "actions"
+  },
+  {
+    "iconName": "progress-cancelled",
+    "synonym": [
+      "dismiss",
+      "x",
+      "status",
+      "cancel",
+      "shut",
+      "minus",
+      "exit"
+    ],
+    "category": "indicators"
+  },
+  {
+    "iconName": "progress-closed",
+    "synonym": [
+      "status",
+      "complete"
+    ],
+    "category": "indicators"
+  },
+  {
+    "iconName": "progress-complete",
+    "synonym": [
+      "finished",
+      "circle checkmark",
+      "status",
+      "tick",
+      "done",
+      "complete",
+      "check circle"
+    ],
+    "category": "indicators"
+  },
+  {
+    "iconName": "progress-draft",
+    "synonym": [
+      "circle",
+      "status",
+      "edit",
+      "incomplete"
+    ],
+    "category": "indicators"
+  },
+  {
+    "iconName": "progress-inprogress",
+    "synonym": [
+      "pending",
+      "circle",
+      "status",
+      "work in progress",
+      "wip"
+    ],
+    "category": "indicators"
+  },
+  {
+    "iconName": "progress-onhold",
+    "synonym": [
+      "audio",
+      "circle pause",
+      "status",
+      "sound",
+      "start",
+      "stop"
+    ],
+    "category": "indicators"
+  },
+  {
+    "iconName": "progress-pending",
+    "synonym": [
+      "circle clock",
+      "status",
+      "time",
+      "wait",
+      "queue"
+    ],
+    "category": "indicators"
+  },
+  {
+    "iconName": "progress-rejected",
+    "synonym": [
+      "status",
+      "denied",
+      "failed"
+    ],
+    "category": "indicators"
+  },
+  {
+    "iconName": "progress-todo",
+    "synonym": [
+      "pending",
+      "status",
+      "work in progress",
+      "wip",
+      "incomplete"
+    ],
+    "category": "indicators"
+  },
+  {
+    "iconName": "protection",
+    "synonym": [
+      "access",
+      "shield",
+      "security",
+      "guard",
+      "defense",
+      "breach"
+    ],
+    "category": "objects"
+  },
+  {
+    "iconName": "receipt",
+    "synonym": [
+      "transaction",
+      "finance",
+      "bill",
+      "charge",
+      "invoice",
+      "digital receipt"
+    ],
+    "category": "finance"
+  },
+  {
+    "iconName": "redo",
+    "synonym": [
+      "repeat",
+      "arrow",
+      "action",
+      "refresh",
+      "forward",
+      "sync"
+    ],
+    "category": "arrows & chevrons"
+  },
+  {
+    "iconName": "refresh",
+    "synonym": [
+      "reload",
+      "arrow",
+      "action",
+      "redo",
+      "repeat",
+      "forward",
+      "sync",
+      "refresh"
+    ],
+    "category": "arrows & chevrons"
+  },
+  {
+    "iconName": "remove",
+    "synonym": [
+      "close",
+      "minus",
+      "action",
+      "delete",
+      "discard",
+      "clear",
+      "erase",
+      "dash"
+    ],
+    "category": "organize"
+  },
+  {
+    "iconName": "remove-document",
+    "synonym": [
+      "page",
+      "action",
+      "delete",
+      "discard",
+      "minus",
+      "clear"
+    ],
+    "category": "documents"
+  },
+  {
+    "iconName": "replay-10",
+    "synonym": [
+      "back",
+      "arrow",
+      "audio",
+      "video",
+      "media rewind 10 seconds",
+      "rewind 10"
+    ],
+    "category": "media"
+  },
+  {
+    "iconName": "replay-15",
+    "synonym": [
+      "back",
+      "arrow",
+      "audio",
+      "video",
+      "media rewind 15 seconds"
+    ],
+    "category": "media"
+  },
+  {
+    "iconName": "replay-30",
+    "synonym": [
+      "back",
+      "arrow",
+      "audio",
+      "video"
+    ],
+    "category": "media"
+  },
+  {
+    "iconName": "replay-5",
+    "synonym": [
+      "back",
+      "arrow",
+      "audio",
+      "video"
+    ],
+    "category": "media"
+  },
+  {
+    "iconName": "restore",
+    "synonym": [
+      "recover",
+      "window",
+      "revert",
+      "reset"
+    ],
+    "category": "arrows & chevrons"
+  },
+  {
+    "iconName": "run-report",
+    "synonym": [
+      "generate",
+      "page",
+      "action",
+      "document",
+      "analytics",
+      "data"
+    ],
+    "category": "documents"
+  },
+  {
+    "iconName": "salt-shaker",
+    "synonym": [
+      "bottle",
+      "kitchen",
+      "spice"
+    ],
+    "category": "objects"
+  },
+  {
+    "iconName": "save",
+    "synonym": [
+      "store",
+      "disk",
+      "storage",
+      "archive"
+    ],
+    "category": "actions"
+  },
+  {
+    "iconName": "scales",
+    "synonym": [
+      "balance",
+      "weight",
+      "measure",
+      "legal"
+    ],
+    "category": "objects"
+  },
+  {
+    "iconName": "schedule-time",
+    "synonym": [
+      "plan",
+      "clock",
+      "calendar",
+      "page",
+      "document"
+    ],
+    "category": "documents"
+  },
+  {
+    "iconName": "search",
+    "synonym": [
+      "lookup",
+      "magnifier",
+      "discover",
+      "find",
+      "magnifying glass",
+      "search"
+    ],
+    "category": "actions"
+  },
+  {
+    "iconName": "semantic-dissatisfied",
+    "synonym": [
+      "unhappy",
+      "sad face",
+      "feedback",
+      "unsatisfied",
+      "sentiment"
+    ],
+    "category": "people"
+  },
+  {
+    "iconName": "semantic-neutral",
+    "synonym": [
+      "face",
+      "feedback",
+      "sentiment"
+    ],
+    "category": "people"
+  },
+  {
+    "iconName": "semantic-satisfied",
+    "synonym": [
+      "happy",
+      "smiley face",
+      "feedback",
+      "sentiment"
+    ],
+    "category": "people"
+  },
+  {
+    "iconName": "semantic-very-dissatisfied",
+    "synonym": [
+      "upset",
+      "angry face",
+      "feedback",
+      "unsatisfied",
+      "sentiment"
+    ],
+    "category": "people"
+  },
+  {
+    "iconName": "semantic-very-satisfied",
+    "synonym": [
+      "happy",
+      "smiley face",
+      "feedback",
+      "sentiment"
+    ],
+    "category": "people"
+  },
+  {
+    "iconName": "send",
+    "synonym": [
+      "deliver",
+      "mail",
+      "action",
+      "email",
+      "location navigate outlined"
+    ],
+    "category": "communication"
+  },
+  {
+    "iconName": "settings",
+    "synonym": [
+      "preferences",
+      "gear",
+      "configuration",
+      "options",
+      "controls",
+      "settings"
+    ],
+    "category": "actions"
+  },
+  {
+    "iconName": "share",
+    "synonym": [
+      "send",
+      "nodes",
+      "action",
+      "deliver",
+      "forward",
+      "socials",
+      "share"
+    ],
+    "category": "communication"
+  },
+  {
+    "iconName": "signal",
+    "synonym": [
+      "connection",
+      "bars",
+      "network",
+      "connectivity",
+      "wifi"
+    ],
+    "category": "computing"
+  },
+  {
+    "iconName": "signpost",
+    "synonym": [
+      "direction",
+      "label",
+      "navigation",
+      "marker",
+      "guide"
+    ],
+    "category": "objects"
+  },
+  {
+    "iconName": "sortable-alpha",
+    "synonym": [
+      "alphabetical",
+      "arrow",
+      "organize",
+      "order"
+    ],
+    "category": "organize"
+  },
+  {
+    "iconName": "sortable-num",
+    "synonym": [
+      "numerical",
+      "arrow",
+      "organize",
+      "order",
+      "number"
+    ],
+    "category": "organize"
+  },
+  {
+    "iconName": "sort-alpha-ascend",
+    "synonym": [
+      "ascending",
+      "arrow",
+      "organize",
+      "order",
+      "alphabetical"
+    ],
+    "category": "organize"
+  },
+  {
+    "iconName": "sort-alpha-descend",
+    "synonym": [
+      "descending",
+      "arrow",
+      "organize",
+      "order",
+      "alphabetical"
+    ],
+    "category": "organize"
+  },
+  {
+    "iconName": "sort-ascend",
+    "synonym": [
+      "ascending",
+      "arrow",
+      "organize",
+      "order"
+    ],
+    "category": "organize"
+  },
+  {
+    "iconName": "sort-descend",
+    "synonym": [
+      "descending",
+      "arrow",
+      "organize",
+      "order"
+    ],
+    "category": "organize"
+  },
+  {
+    "iconName": "sort-num-ascend",
+    "synonym": [
+      "ascending",
+      "arrow",
+      "organize",
+      "order",
+      "number"
+    ],
+    "category": "organize"
+  },
+  {
+    "iconName": "sort-num-descend",
+    "synonym": [
+      "descending",
+      "arrow",
+      "organize",
+      "order",
+      "number"
+    ],
+    "category": "organize"
+  },
+  {
+    "iconName": "sparkle",
+    "synonym": [
+      "ai",
+      "artificial intelligence",
+      "generative",
+      "new",
+      "featured"
+    ],
+    "category": "computing"
+  },
+  {
+    "iconName": "stackoverflow",
+    "synonym": [
+      "logo",
+      "platform",
+      "application",
+      "community",
+      "forum"
+    ],
+    "category": "logos"
+  },
+  {
+    "iconName": "step-active",
+    "synonym": [
+      "progress",
+      "circle fill",
+      "status",
+      "work in progress",
+      "wip"
+    ],
+    "category": "indicators"
+  },
+  {
+    "iconName": "step-default",
+    "synonym": [
+      "progress",
+      "circle",
+      "status",
+      "incomplete",
+      "pending"
+    ],
+    "category": "indicators"
+  },
+  {
+    "iconName": "stethoscope",
+    "synonym": [
+      "healthcare",
+      "medicine",
+      "medical",
+      "clinic",
+      "doctor",
+      "stethoscope"
+    ],
+    "category": "objects"
+  },
+  {
+    "iconName": "storage",
+    "synonym": [
+      "save",
+      "drawer",
+      "archive",
+      "box",
+      "full"
+    ],
+    "category": "objects"
+  },
+  {
+    "iconName": "storefront",
+    "synonym": [
+      "shop",
+      "building",
+      "retail",
+      "business",
+      "commerce",
+      "storefront"
+    ],
+    "category": "places"
+  },
+  {
+    "iconName": "string-number",
+    "synonym": [
+      "value",
+      "number",
+      "data",
+      "code"
+    ],
+    "category": "data"
+  },
+  {
+    "iconName": "string-text",
+    "synonym": [
+      "value",
+      "letter",
+      "data"
+    ],
+    "category": "data"
+  },
+  {
+    "iconName": "success-circle",
+    "synonym": [
+      "complete",
+      "circle checkmark",
+      "status",
+      "confirmation",
+      "done",
+      "approve",
+      "tick",
+      "checkmark filled"
+    ],
+    "category": "indicators"
+  },
+  {
+    "iconName": "sum",
+    "synonym": [
+      "calculate",
+      "sigma",
+      "math",
+      "total",
+      "aggregate"
+    ],
+    "category": "organize"
+  },
+  {
+    "iconName": "swap",
+    "synonym": [
+      "switch",
+      "arrow",
+      "action",
+      "flip",
+      "replace",
+      "exchange"
+    ],
+    "category": "arrows & chevrons"
+  },
+  {
+    "iconName": "symphony",
+    "synonym": [
+      "communicate",
+      "platform",
+      "application",
+      "message",
+      "chat"
+    ],
+    "category": "logos"
+  },
+  {
+    "iconName": "sync",
+    "synonym": [
+      "update",
+      "arrow",
+      "acton",
+      "refresh",
+      "clear",
+      "pending"
+    ],
+    "category": "arrows & chevrons"
+  },
+  {
+    "iconName": "tag",
+    "synonym": [
+      "label",
+      "metadata",
+      "filter",
+      "category"
+    ],
+    "category": "actions"
+  },
+  {
+    "iconName": "tag-clear",
+    "synonym": [
+      "remove",
+      "x label",
+      "metadata",
+      "filter",
+      "category",
+      "cancel"
+    ],
+    "category": "actions"
+  },
+  {
+    "iconName": "tails",
+    "synonym": [
+      "fox",
+      "animal",
+      "nature",
+      "wildlife"
+    ],
+    "category": "objects"
+  },
+  {
+    "iconName": "target",
+    "synonym": [
+      "focus",
+      "bullseye",
+      "goal",
+      "target",
+      "objective"
+    ],
+    "category": "actions"
+  },
+  {
+    "iconName": "tear-out",
+    "synonym": [
+      "link",
+      "arrow",
+      "action",
+      "window",
+      "open",
+      "new window",
+      "to the link"
+    ],
+    "category": "arrows & chevrons"
+  },
+  {
+    "iconName": "thumbs-down",
+    "synonym": [
+      "negative",
+      "dislike",
+      "feedback",
+      "unsatisfied",
+      "sentiment",
+      "thumbs down"
+    ],
+    "category": "actions"
+  },
+  {
+    "iconName": "thumbs-up",
+    "synonym": [
+      "postive",
+      "like",
+      "feedback",
+      "satisfied",
+      "sentiment",
+      "thumbs up"
+    ],
+    "category": "actions"
+  },
+  {
+    "iconName": "tote",
+    "synonym": [
+      "purchase",
+      "bag",
+      "shopping",
+      "cart"
+    ],
+    "category": "objects"
+  },
+  {
+    "iconName": "tree",
+    "synonym": [
+      "hierarchy",
+      "directory",
+      "structure"
+    ],
+    "category": "actions"
+  },
+  {
+    "iconName": "triangle-down",
+    "synonym": [
+      "scroll",
+      "triangle",
+      "navigation",
+      "dropdown",
+      "collapse",
+      "expand",
+      "caret down"
+    ],
+    "category": "arrows & chevrons"
+  },
+  {
+    "iconName": "triangle-left",
+    "synonym": [
+      "back",
+      "triangle",
+      "navigation",
+      "previous",
+      "return",
+      "caret left"
+    ],
+    "category": "arrows & chevrons"
+  },
+  {
+    "iconName": "triangle-right",
+    "synonym": [
+      "next",
+      "triangle",
+      "navigation",
+      "forward",
+      "caret right"
+    ],
+    "category": "arrows & chevrons"
+  },
+  {
+    "iconName": "triangle-right-down",
+    "synonym": [
+      "triangle",
+      "navigation"
+    ],
+    "category": "arrows & chevrons"
+  },
+  {
+    "iconName": "triangle-up",
+    "synonym": [
+      "scroll",
+      "triangle",
+      "navigation",
+      "expand",
+      "collapse",
+      "caret up"
+    ],
+    "category": "arrows & chevrons"
+  },
+  {
+    "iconName": "type",
+    "synonym": [
+      "format",
+      "textbox",
+      "typography",
+      "font"
+    ],
+    "category": "actions"
+  },
+  {
+    "iconName": "undo",
+    "synonym": [
+      "revert",
+      "arrow",
+      "action",
+      "refresh",
+      "clear"
+    ],
+    "category": "arrows & chevrons"
+  },
+  {
+    "iconName": "ungroup",
+    "synonym": [
+      "detach",
+      "arrange",
+      "disassemble"
+    ],
+    "category": "organize"
+  },
+  {
+    "iconName": "universal-access",
+    "synonym": [
+      "inclusive",
+      "support",
+      "accessibility",
+      "wcag"
+    ],
+    "category": "accessibility"
+  },
+  {
+    "iconName": "unlinked",
+    "synonym": [
+      "detach",
+      "connection",
+      "hyperlink",
+      "unlink"
+    ],
+    "category": "actions"
+  },
+  {
+    "iconName": "unlocked",
+    "synonym": [
+      "access",
+      "padlock",
+      "security",
+      "open",
+      "permission",
+      "lock unlocked"
+    ],
+    "category": "actions"
+  },
+  {
+    "iconName": "upload",
+    "synonym": [
+      "import",
+      "arrow",
+      "transfer",
+      "share",
+      "upload",
+      "back to top"
+    ],
+    "category": "arrows & chevrons"
+  },
+  {
+    "iconName": "urgency-critical",
+    "synonym": [
+      "alert",
+      "arrow",
+      "priority",
+      "chevron"
+    ],
+    "category": "indicators"
+  },
+  {
+    "iconName": "urgency-high",
+    "synonym": [
+      "alert",
+      "arrow",
+      "priority",
+      "chevron"
+    ],
+    "category": "indicators"
+  },
+  {
+    "iconName": "urgency-low",
+    "synonym": [
+      "alert",
+      "arrow",
+      "priority",
+      "chevron",
+      "chevron wide up"
+    ],
+    "category": "indicators"
+  },
+  {
+    "iconName": "urgency-medium",
+    "synonym": [
+      "alert",
+      "arrow",
+      "priority",
+      "chevron"
+    ],
+    "category": "indicators"
+  },
+  {
+    "iconName": "urgency-none",
+    "synonym": [
+      "alert",
+      "dash",
+      "priority"
+    ],
+    "category": "indicators"
+  },
+  {
+    "iconName": "user",
+    "synonym": [
+      "avatar",
+      "profile",
+      "account",
+      "identity",
+      "people profile"
+    ],
+    "category": "people"
+  },
+  {
+    "iconName": "user-admin",
+    "synonym": [
+      "avatar",
+      "shield",
+      "admin",
+      "access",
+      "people protection"
+    ],
+    "category": "people"
+  },
+  {
+    "iconName": "user-badge",
+    "synonym": [
+      "avatar",
+      "profile",
+      "account",
+      "identity",
+      "people profile"
+    ],
+    "category": "people"
+  },
+  {
+    "iconName": "user-group",
+    "synonym": [
+      "avatar",
+      "people",
+      "team",
+      "profile",
+      "organization",
+      "people group"
+    ],
+    "category": "people"
+  },
+  {
+    "iconName": "utensils",
+    "synonym": [
+      "dining",
+      "cutlery",
+      "food",
+      "tool",
+      "kitchen",
+      "cook"
+    ],
+    "category": "objects"
+  },
+  {
+    "iconName": "video",
+    "synonym": [
+      "stream",
+      "camera",
+      "media",
+      "film",
+      "media video",
+      "video"
+    ],
+    "category": "media"
+  },
+  {
+    "iconName": "video-disabled",
+    "synonym": [
+      "stream",
+      "camera",
+      "media",
+      "film",
+      "off",
+      "media video off"
+    ],
+    "category": "media"
+  },
+  {
+    "iconName": "visible",
+    "synonym": [
+      "view",
+      "eye",
+      "visibility",
+      "active",
+      "on"
+    ],
+    "category": "actions"
+  },
+  {
+    "iconName": "volume-down",
+    "synonym": [
+      "quiet",
+      "speaker",
+      "audio",
+      "sound",
+      "media volume low"
+    ],
+    "category": "media"
+  },
+  {
+    "iconName": "volume-off",
+    "synonym": [
+      "mute",
+      "x speaker",
+      "audio",
+      "disable",
+      "off",
+      "media volume mute"
+    ],
+    "category": "media"
+  },
+  {
+    "iconName": "volume-up",
+    "synonym": [
+      "loud",
+      "speaker",
+      "audio",
+      "sound",
+      "start",
+      "stop",
+      "media volume high",
+      "volume"
+    ],
+    "category": "media"
+  },
+  {
+    "iconName": "warning",
+    "synonym": [
+      "warning sign",
+      "triangle",
+      "alert",
+      "caution",
+      "danger",
+      "alert triangle"
+    ],
+    "category": "indicators"
+  },
+  {
+    "iconName": "watch",
+    "synonym": [
+      "track",
+      "wrist",
+      "time"
+    ],
+    "category": "objects"
+  },
+  {
+    "iconName": "waveform",
+    "synonym": [
+      "sound",
+      "waveform",
+      "audio"
+    ],
+    "category": "media"
+  },
+  {
+    "iconName": "weight",
+    "synonym": [
+      "measure",
+      "finance",
+      "scale",
+      "balance"
+    ],
+    "category": "objects"
+  },
+  {
+    "iconName": "wifi",
+    "synonym": [
+      "internet",
+      "signal",
+      "network",
+      "connection",
+      "online",
+      "wifi"
+    ],
+    "category": "computing"
+  },
+  {
+    "iconName": "wifi-disabled",
+    "synonym": [
+      "internet",
+      "signal",
+      "network",
+      "connection",
+      "offline",
+      "wifi off"
+    ],
+    "category": "computing"
+  },
+  {
+    "iconName": "woman",
+    "synonym": [
+      "female",
+      "person",
+      "gender"
+    ],
+    "category": "people"
+  },
+  {
+    "iconName": "woodland",
+    "synonym": [
+      "tree",
+      "nature",
+      "forest",
+      "outdoor",
+      "wildlife"
+    ],
+    "category": "places"
+  },
+  {
+    "iconName": "xls",
+    "synonym": [
+      "convert",
+      "document",
+      "export",
+      "file",
+      "excel"
+    ],
+    "category": "documents"
+  },
+  {
+    "iconName": "zip",
+    "synonym": [
+      "compress",
+      "document",
+      "export",
+      "file"
+    ],
+    "category": "documents"
+  },
+  {
+    "iconName": "lightbulb",
+    "synonym": [
+      "idea",
+      "brightness",
+      "on",
+      "off",
+      "insight",
+      "inspiration",
+      "illuminate",
+      "dim",
+      "ico lightbulb"
+    ],
+    "category": "objects"
+  },
+  {
+    "iconName": "growth",
+    "synonym": [
+      "increase",
+      "arrow",
+      "data",
+      "graph",
+      "rise",
+      "ico growth"
+    ],
+    "category": "data"
+  },
+  {
+    "iconName": "summarize",
+    "synonym": [
+      "document",
+      "report",
+      "summary",
+      "artificial intelligence",
+      "ai"
+    ],
+    "category": "organize"
+  },
+  {
+    "iconName": "compare",
+    "synonym": [
+      "comparison",
+      "analysis",
+      "contrast",
+      "evaluate"
+    ],
+    "category": "organize"
+  },
+  {
+    "iconName": "sort",
+    "synonym": [
+      "organise",
+      "arrow",
+      "list",
+      "ascending",
+      "descending"
+    ],
+    "category": "organize"
+  },
+  {
+    "iconName": "slide",
+    "synonym": [
+      "toggle",
+      "control",
+      "slider",
+      "switch"
+    ],
+    "category": "organize"
+  },
+  {
+    "iconName": "add-to-grid",
+    "synonym": [
+      "insert",
+      "layout"
+    ],
+    "category": "organize"
+  },
+  {
+    "iconName": "document-search",
+    "synonym": [
+      "lookup",
+      "magnifier",
+      "discover",
+      "view",
+      "find",
+      "magnifying glass",
+      "ico overview"
+    ],
+    "category": "documents"
+  },
+  {
+    "iconName": "sparkle-refresh",
+    "synonym": [
+      "renew",
+      "ai",
+      "llm",
+      "artificial intelligence"
+    ],
+    "category": "computing"
+  },
+  {
+    "iconName": "workflow",
+    "synonym": [
+      "nodes",
+      "process",
+      "sequence"
+    ],
+    "category": "organize"
+  },
+  {
+    "iconName": "dataset",
+    "synonym": [
+      "stack",
+      "data"
+    ],
+    "category": "computing"
+  },
+  {
+    "iconName": "dataset-manager",
+    "synonym": [
+      "stack",
+      "data"
+    ],
+    "category": "people"
+  },
+  {
+    "iconName": "hierarchy",
+    "synonym": [
+      "structure",
+      "tree",
+      "organisation",
+      "nested",
+      "levels"
+    ],
+    "category": "organize"
+  },
+  {
+    "iconName": "pie-chart",
+    "synonym": [
+      "breakdown",
+      "graph",
+      "segment",
+      "analytics",
+      "ico chart pie"
+    ],
+    "category": "data"
+  },
+  {
+    "iconName": "policy",
+    "synonym": [
+      "rule",
+      "document",
+      "compliance",
+      "certificate",
+      "verified",
+      "certified"
+    ],
+    "category": "documents"
+  },
+  {
+    "iconName": "indent",
+    "synonym": [
+      "shift",
+      "arrow",
+      "text",
+      "tab"
+    ],
+    "category": "organize"
+  },
+  {
+    "iconName": "outdent",
+    "synonym": [
+      "shift",
+      "arrow",
+      "text",
+      "tab"
+    ],
+    "category": "organize"
+  },
+  {
+    "iconName": "handshake",
+    "synonym": [
+      "agreement",
+      "hands",
+      "deal",
+      "partnership",
+      "greeting"
+    ],
+    "category": "communication"
+  },
+  {
+    "iconName": "announcement",
+    "synonym": [
+      "notify",
+      "loudspeaker",
+      "broadcast",
+      "megaphone",
+      "update"
+    ],
+    "category": "communication"
+  },
+  {
+    "iconName": "user-search",
+    "synonym": [
+      "find",
+      "magnifier"
+    ],
+    "category": "people"
+  },
+  {
+    "iconName": "add-user",
+    "synonym": [
+      "invite",
+      "plus",
+      "new",
+      "content",
+      "onboarding"
+    ],
+    "category": "people"
+  },
+  {
+    "iconName": "remove-user",
+    "synonym": [
+      "delete",
+      "minus",
+      "offboarding"
+    ],
+    "category": "people"
+  },
+  {
+    "iconName": "signature",
+    "synonym": [
+      "sign",
+      "pen",
+      "write",
+      "autograph",
+      "agreement",
+      "deal"
+    ],
+    "category": "actions"
+  },
+  {
+    "iconName": "first",
+    "synonym": [
+      "start",
+      "beginning"
+    ],
+    "category": "arrows & chevrons"
+  },
+  {
+    "iconName": "last",
+    "synonym": [
+      "end"
+    ],
+    "category": "arrows & chevrons"
+  },
+  {
+    "iconName": "school",
+    "synonym": [
+      "learn",
+      "grad cap",
+      "education",
+      "university",
+      "college",
+      "academy",
+      "academic",
+      "graduate"
+    ],
+    "category": "objects"
+  },
+  {
+    "iconName": "linkedin",
+    "synonym": [
+      "social",
+      "logo",
+      "network",
+      "ico logo linkedin",
+      "linkedin"
+    ],
+    "category": "logos"
+  },
+  {
+    "iconName": "maintenance",
+    "synonym": [
+      "fix",
+      "wrench",
+      "repair",
+      "tool",
+      "build",
+      "spanner"
+    ],
+    "category": "actions"
+  },
+  {
+    "iconName": "urgency-onTime",
+    "synonym": [
+      "status"
+    ],
+    "category": "indicators"
+  },
+  {
+    "iconName": "feedback",
+    "synonym": [
+      "comment",
+      "review",
+      "user",
+      "analysis"
+    ],
+    "category": "communication"
+  },
+  {
+    "iconName": "holiday",
+    "synonym": [
+      "trip",
+      "beach",
+      "island",
+      "vacation",
+      "break"
+    ],
+    "category": "places"
+  },
+  {
+    "iconName": "travel",
+    "synonym": [
+      "journey",
+      "suitcase",
+      "holiday",
+      "luggage",
+      "baggage",
+      "vacation",
+      "ico suitcase checked"
+    ],
+    "category": "objects"
+  },
+  {
+    "iconName": "currency",
+    "synonym": [
+      "money",
+      "coin",
+      "finance",
+      "dollar",
+      "ico currency usd circle"
+    ],
+    "category": "finance"
+  },
+  {
+    "iconName": "currency-exchange",
+    "synonym": [
+      "money",
+      "finance",
+      "dollar",
+      "ico lending"
+    ],
+    "category": "finance"
+  },
+  {
+    "iconName": "like",
+    "synonym": [
+      "heart",
+      "love",
+      "favorite",
+      "favourite",
+      "ico like outlined"
+    ],
+    "category": "actions"
+  },
+  {
+    "iconName": "magic-wand",
+    "synonym": [
+      "clean up",
+      "tool",
+      "transform",
+      "effect"
+    ],
+    "category": "objects"
+  }
+]
