@@ -40,7 +40,7 @@ export function ColumnGroup(props: ColumnGroupProps) {
     };
   });
   const childrenWithPinnedOverridden = Children.map(props.children, (child) => {
-    if (isValidElement(child)) {
+    if (isValidElement<ColumnGroupProps>(child)) {
       return cloneElement(child, { pinned });
     }
     return child;

@@ -44,19 +44,19 @@ export const Pre = forwardRef<HTMLDivElement, PreProps>(function Pre(
 
   useIsomorphicLayoutEffect(() => {
     async function format() {
-      // @ts-ignore
       const { codeToHtml } = await import("shiki");
 
-      const html = await codeToHtml(trimmedCode, {
-        lang: language,
-        themes: {
-          light: "github-light",
-          dark: "github-dark",
-        },
-        defaultColor: false,
-      });
-
-      setHtml(html);
+      if (language) {
+        const html = await codeToHtml(trimmedCode, {
+          lang: language,
+          themes: {
+            light: "github-light",
+            dark: "github-dark",
+          },
+          defaultColor: false,
+        });
+        setHtml(html);
+      }
     }
 
     format();

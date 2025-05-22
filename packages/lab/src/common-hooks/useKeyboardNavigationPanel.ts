@@ -108,7 +108,7 @@ export const useKeyboardNavigationPanel = ({
   }, [nextFocusableItemIdx, setHighlightedIndex]);
 
   const navigateChildItems = useCallback(
-    (e: KeyboardEvent) => {
+    (e: KeyboardEvent<HTMLElement>) => {
       const direction: NavigationDirection = e.shiftKey ? "BWD" : "FWD";
       const nextIdx = nextFocusableItemIdx(direction, highlightedIdx);
       console.log(`nextFocusableItem from ${highlightedIdx} is ${nextIdx}`);
@@ -127,7 +127,7 @@ export const useKeyboardNavigationPanel = ({
   );
 
   const handleKeyDown = useCallback(
-    (evt: KeyboardEvent) => {
+    (evt: KeyboardEvent<HTMLElement>) => {
       if (indexPositions.length > 0 && evt.key === "Tab") {
         evt.preventDefault();
         evt.stopPropagation();
