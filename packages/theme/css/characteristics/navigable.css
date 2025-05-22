@@ -1,4 +1,5 @@
-.salt-theme {
+.salt-theme,
+.salt-theme[data-brand="uitk"] {
   --salt-navigable-cursor-active: pointer;
   --salt-navigable-cursor-hover: pointer;
   --salt-navigable-cursor-disabled: not-allowed;
@@ -11,4 +12,9 @@
 
   --salt-navigable-indicator-hover: var(--salt-palette-navigate-indicator-hover);
   --salt-navigable-indicator-active: var(--salt-palette-navigate-indicator-active);
+}
+
+.salt-theme[data-brand="jpm"] {
+  --salt-navigable-indicator-hover: var(--salt-palette-neutral);
+  --salt-navigable-indicator-active: var(--salt-palette-accent);
 }
