@@ -261,7 +261,7 @@ export const AppHeader = () => {
             style={{
               padding: "var(--salt-spacing-400)",
               margin: "var(--salt-spacing-400)",
-              backgroundColor: "var(--salt-color-gray-10",
+              backgroundColor: "var(--salt-color-gray-10)",
             }}
           />
         ))}
@@ -271,7 +271,7 @@ export const AppHeader = () => {
           style={{
             padding: "var(--salt-spacing-200)",
             margin: "var(--salt-spacing-200)",
-            backgroundColor: "var(--salt-color-gray-10",
+            backgroundColor: "var(--salt-color-gray-10)",
           }}
         >
           <Text>Footer</Text>
