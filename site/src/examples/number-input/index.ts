@@ -3,6 +3,7 @@ export * from "./ButtonAdornments";
 export * from "./Decimals";
 export * from "./Default";
 export * from "./Disabled";
+export * from "./Formatting";
 export * from "./Limits";
 export * from "./Readonly";
 export * from "./StepAndBlock";

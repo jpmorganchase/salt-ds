@@ -1,14 +1,18 @@
 import {
   Button,
+  FlexLayout,
   FormField,
   FormFieldHelperText,
   FormFieldLabel,
   StackLayout,
+  useId,
 } from "@salt-ds/core";
 import { AddIcon, RefreshIcon, RemoveIcon } from "@salt-ds/icons";
 import { NumberInput, type NumberInputProps } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react";
+import { toFloat } from "packages/core/src/slider/internal/utils";
 import { useState } from "react";
+
 export default {
   title: "Lab/Number Input",
   component: NumberInput,
@@ -25,6 +29,116 @@ export const Default: StoryFn<NumberInputProps> = (args) => {
 };
 Default.args = {
   defaultValue: 0,
+};
+
+export const FormattingControlled: StoryFn<NumberInputProps> = (args) => {
+  const [value, setValue] = useState<number | string>(100000);
+  return (
+    <StackLayout>
+      <FormField>
+        <FormFieldLabel>With compact notation, controlled</FormFieldLabel>
+        <NumberInput
+          {...args}
+          value={value}
+          onChange={(e, value) => {
+            setValue(value);
+          }}
+          format={(value) => {
+            const formattedValue = new Intl.NumberFormat("en-GB", {
+              notation: "compact",
+              compactDisplay: "short",
+              maximumFractionDigits: 3,
+            }).format(toFloat(value));
+            return formattedValue;
+          }}
+          parse={(value) => {
+            const match = String(value).match(/^(\d+(\.\d*)?)([kKmMbB]?)$/);
+            if (!match) return value;
+
+            const [_, num, , unit] = match;
+            const multiplier =
+              { k: 1e3, m: 1e6, b: 1e9 }[unit.toLowerCase()] || 1;
+            return Number.parseFloat(num) * multiplier;
+          }}
+        />
+        <FormFieldHelperText>
+          Number input's value is {value}
+        </FormFieldHelperText>
+        <FlexLayout>
+          <Button onClick={() => setValue(123456)}>Set value to 123456</Button>
+          <Button onClick={() => setValue(toFloat(value) + 100)}>
+            Increment by 100
+          </Button>
+          <Button onClick={() => setValue("")}>Clear</Button>
+        </FlexLayout>
+      </FormField>
+    </StackLayout>
+  );
+};
+
+export const FormattingUncontrolled: StoryFn<NumberInputProps> = (args) => {
+  return (
+    <StackLayout>
+      <FormField>
+        <FormFieldLabel>
+          With custom format function, uncontrolled (custom units), strict
+          clamping behaviour
+        </FormFieldLabel>
+        <NumberInput
+          {...args}
+          defaultValue={12}
+          format={(value) => `${value}%`}
+          max={100}
+          clampingBehaviour="strict"
+          parse={(value) => {
+            const stringValue =
+              typeof value === "number" ? value.toString() : value;
+            return stringValue.replace(/%/g, "");
+          }}
+        />
+        <FormFieldHelperText>Please enter a number</FormFieldHelperText>
+      </FormField>
+      <FormField>
+        <FormFieldLabel>
+          With Intl Number Format, thousands separator
+        </FormFieldLabel>
+        <NumberInput
+          defaultValue={1000000}
+          format={(value) => {
+            return new Intl.NumberFormat("en-GB").format(toFloat(value));
+          }}
+          parse={(value) => {
+            const stringValue =
+              typeof value === "number" ? value.toString() : value;
+            return stringValue.replace(/,/g, "");
+          }}
+        />
+      </FormField>
+      <FormField>
+        <FormFieldLabel>
+          With Intl Number Format, decimals, auto-generated precision based on
+          step=0.1
+        </FormFieldLabel>
+        <NumberInput
+          defaultValue={10.23456}
+          format={(value) => {
+            return new Intl.NumberFormat("en-GB", {
+              maximumFractionDigits: 2,
+              minimumFractionDigits: 1,
+              roundingMode: "ceil",
+            }).format(toFloat(value));
+          }}
+          step={0.1}
+        />
+      </FormField>
+      <FormField>
+        <FormFieldLabel>
+          With decimal step, controlled precision=1, step=0.1
+        </FormFieldLabel>
+        <NumberInput defaultValue={10.236} precision={1} step={0.1} />
+      </FormField>
+    </StackLayout>
+  );
 };
 
 export const Secondary: StoryFn<NumberInputProps> = (args) => {
@@ -50,6 +164,7 @@ export const Bordered: StoryFn<NumberInputProps> = (args) => {
 };
 Bordered.args = {
   bordered: true,
+  defaultValue: "",
 };
 
 export const ReadOnly: StoryFn<NumberInputProps> = (args) => {
@@ -101,7 +216,7 @@ export const DecimalPlaces: StoryFn<NumberInputProps> = (args) => {
   return (
     <FormField>
       <FormFieldLabel>Number Input</FormFieldLabel>
-      <NumberInput decimalPlaces={2} step={0.01} {...args} />
+      <NumberInput step={0.01} {...args} />
       <FormFieldHelperText>Please enter a number</FormFieldHelperText>
     </FormField>
   );
@@ -110,27 +225,56 @@ DecimalPlaces.args = {
   defaultValue: 0,
 };
 
+const accessibleTextStyles = {
+  position: "fixed",
+  top: "0",
+  left: "0",
+  transform: "translate(-100%, -100%)",
+} as React.CSSProperties;
+
 export const Controlled: StoryFn<NumberInputProps> = (args) => {
   const [value, setValue] = useState<number | string>(1.11);
+  const [accessibleText, setAccessibleText] = useState("");
+
+  const formFieldLabel = "Number Input";
+  const accessibleTextId = useId();
+
+  const clearAccessibleText = () =>
+    setTimeout(() => {
+      setAccessibleText(" ");
+    }, 3000);
 
   return (
     <FormField>
-      <FormFieldLabel>Number Input</FormFieldLabel>
+      <FormFieldLabel>{formFieldLabel}</FormFieldLabel>
       <NumberInput
         {...args}
-        decimalPlaces={2}
         value={value}
         onChange={(_event, value) => {
           setValue(value);
         }}
         endAdornment={
-          <Button
-            variant="secondary"
-            aria-label="refresh"
-            onClick={() => setValue(1.11)}
-          >
-            <RefreshIcon aria-hidden />
-          </Button>
+          <>
+            <Button
+              aria-describedby={accessibleTextId}
+              variant="secondary"
+              aria-label={`Reset ${formFieldLabel}`}
+              onClick={() => {
+                setValue(1.11);
+                setAccessibleText("Value was reset");
+                clearAccessibleText();
+              }}
+            >
+              <RefreshIcon aria-hidden />
+            </Button>
+            <span
+              id={accessibleTextId}
+              style={accessibleTextStyles}
+              aria-live="polite"
+            >
+              {accessibleText}
+            </span>
+          </>
         }
       />
       <FormFieldHelperText>
@@ -191,7 +335,7 @@ export const CustomStep: StoryFn<NumberInputProps> = (args) => {
 CustomStep.args = {
   defaultValue: 1,
   step: 5,
-  stepBlock: 50,
+  stepMultiplier: 10,
 };
 
 export const TextAlignment: StoryFn<NumberInputProps> = (args) => (
@@ -217,12 +361,21 @@ TextAlignment.args = {
   defaultValue: 0,
 };
 
-export const RefreshAdornment: StoryFn<NumberInputProps> = (args) => {
+export const ResetAdornment: StoryFn<NumberInputProps> = (args) => {
   const [value, setValue] = useState<number | string>(10);
+  const [accessibleText, setAccessibleText] = useState("");
+
+  const formFieldLabel = "Number Input";
+  const accessibleTextId = useId();
+
+  const clearAccessibleText = () =>
+    setTimeout(() => {
+      setAccessibleText(" ");
+    }, 3000);
 
   return (
     <FormField>
-      <FormFieldLabel>Number Input</FormFieldLabel>
+      <FormFieldLabel>{formFieldLabel}</FormFieldLabel>
       <NumberInput
         {...args}
         value={value}
@@ -230,13 +383,27 @@ export const RefreshAdornment: StoryFn<NumberInputProps> = (args) => {
           setValue(value);
         }}
         endAdornment={
-          <Button
-            variant="secondary"
-            aria-label="refresh"
-            onClick={() => setValue(10)}
-          >
-            <RefreshIcon aria-hidden />
-          </Button>
+          <>
+            <Button
+              aria-describedby={accessibleTextId}
+              variant="secondary"
+              aria-label={`Reset ${formFieldLabel}`}
+              onClick={() => {
+                setValue(10);
+                setAccessibleText("Value was reset");
+                clearAccessibleText();
+              }}
+            >
+              <RefreshIcon aria-hidden />
+            </Button>
+            <span
+              id={accessibleTextId}
+              style={accessibleTextStyles}
+              aria-live="polite"
+            >
+              {accessibleText}
+            </span>
+          </>
         }
       />
       <FormFieldHelperText>Please enter a value</FormFieldHelperText>
@@ -260,7 +427,8 @@ export const CustomButtons: StoryFn<NumberInputProps> = (args) => {
         value={value}
         startAdornment={
           <Button
-            aria-label="decrement value"
+            aria-hidden
+            tabIndex={-1}
             onClick={() =>
               setValue(
                 typeof value === "string"
@@ -274,7 +442,8 @@ export const CustomButtons: StoryFn<NumberInputProps> = (args) => {
         }
         endAdornment={
           <Button
-            aria-label="increment value"
+            aria-hidden
+            tabIndex={-1}
             onClick={() =>
               setValue(
                 typeof value === "string"
@@ -290,4 +459,16 @@ export const CustomButtons: StoryFn<NumberInputProps> = (args) => {
       <FormFieldHelperText>Please enter a value</FormFieldHelperText>
     </FormField>
   );
+};
+
+export const HiddenButtons: StoryFn<NumberInputProps> = (args) => {
+  return (
+    <FormField>
+      <FormFieldLabel>Number Input</FormFieldLabel>
+      <NumberInput {...args} />
+    </FormField>
+  );
+};
+HiddenButtons.args = {
+  hideButtons: true,
 };
