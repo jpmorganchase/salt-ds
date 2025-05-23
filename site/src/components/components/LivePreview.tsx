@@ -1,9 +1,16 @@
-import { SaltProviderNext, Switch, useId } from "@salt-ds/core";
+import {
+  SaltProviderNext,
+  Switch,
+  ToggleButton,
+  ToggleButtonGroup,
+  useId,
+} from "@salt-ds/core";
 import { SaltProvider } from "@salt-ds/core";
 import {
   type ChangeEvent,
   type ElementType,
   type FC,
+  type SyntheticEvent,
   useEffect,
   useState,
 } from "react";
@@ -14,6 +21,7 @@ import { useColorMode } from "@jpmorganchase/mosaic-store";
 import { AdapterDateFns } from "@salt-ds/date-adapters/date-fns";
 import { LocalizationProvider } from "@salt-ds/lab";
 import styles from "./LivePreview.module.css";
+import { clsx } from "clsx";
 
 type LivePreviewProps = {
   componentName: string;
@@ -30,9 +38,11 @@ export const LivePreview: FC<LivePreviewProps> = ({
   const [ComponentExample, setComponentExample] = useState<{
     Example?: ElementType;
     sourceCode: string;
+    cssCode?: string;
   }>({
     Example: undefined,
     sourceCode: "",
+    cssCode: "",
   });
   useEffect(() => {
     async function prepare() {
@@ -59,6 +69,8 @@ export const LivePreview: FC<LivePreviewProps> = ({
     theme === "brand" ? SaltProviderNext : SaltProvider;
 
   const panelId = useId();
+
+  const [activeTab, setActiveTab] = useState<string>("TS");
 
   return (
     <div className={styles.container}>
@@ -88,6 +100,22 @@ export const LivePreview: FC<LivePreviewProps> = ({
             {/* Unset theme, font size override would cause switch misalignment */}
             <SaltProviderNext density="low" applyClassesTo="child" theme="">
               <div className={styles.toolbar}>
+                {ComponentExample.cssCode && (
+                  <ToggleButtonGroup
+                    className={clsx(
+                      styles.toggleGroup,
+                      showCode && styles.visible,
+                    )}
+                    value={activeTab}
+                    onChange={(event: SyntheticEvent<HTMLButtonElement>) =>
+                      setActiveTab(event.currentTarget.value)
+                    }
+                  >
+                    <ToggleButton value="TS">TS</ToggleButton>
+                    <ToggleButton value="CSS">CSS</ToggleButton>
+                  </ToggleButtonGroup>
+                )}
+
                 <Switch
                   checked={showCode}
                   onChange={handleShowCodeToggle}
@@ -107,11 +135,31 @@ export const LivePreview: FC<LivePreviewProps> = ({
         id={panelId}
       >
         <div className={styles.codePanelInner}>
-          <Pre className={styles.codePreview}>
+          {activeTab === "TS" ? (
+            <Pre className={styles.codePreview}>
+              <div className="language-tsx">
+                {ComponentExample.sourceCode.trimEnd()}
+              </div>
+            </Pre>
+          ) : (
+            <Pre className={styles.codePreview}>
+              <div className="language-css">
+                {ComponentExample.cssCode?.trimEnd()}
+              </div>
+            </Pre>
+          )}
+          {/* <Pre className={styles.codePreview}>
             <div className="language-tsx">
               {ComponentExample.sourceCode.trimEnd()}
             </div>
           </Pre>
+          {ComponentExample.cssCode && (
+            <Pre className={styles.codePreview}>
+              <div className="language-css">
+                {ComponentExample.cssCode.trimEnd()}
+              </div>
+            </Pre>
+          )} */}
         </div>
       </div>
     </div>
