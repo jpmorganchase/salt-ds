@@ -1,5 +1,6 @@
 import {
   Button,
+  FlexLayout,
   FormField,
   FormFieldHelperText,
   FormFieldLabel,
@@ -11,7 +12,6 @@ import { NumberInput, type NumberInputProps } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react";
 import { toFloat } from "packages/core/src/slider/internal/utils";
 import { useState } from "react";
-// import { NumericFormat } from "react-number-format";
 
 export default {
   title: "Lab/Number Input",
@@ -31,14 +31,12 @@ Default.args = {
   defaultValue: 0,
 };
 
-export const Formatting: StoryFn<NumberInputProps> = (args) => {
+export const FormattingControlled: StoryFn<NumberInputProps> = (args) => {
   const [value, setValue] = useState<number | string>(100000);
   return (
     <StackLayout>
       <FormField>
-        <FormFieldLabel>
-          With Intl Number Format, Controlled, Compact
-        </FormFieldLabel>
+        <FormFieldLabel>With compact notation, controlled</FormFieldLabel>
         <NumberInput
           {...args}
           value={value}
@@ -54,36 +52,37 @@ export const Formatting: StoryFn<NumberInputProps> = (args) => {
             return formattedValue;
           }}
           parse={(value) => {
-            const stringValue =
-              typeof value === "number" ? value.toString() : value;
-            const match = stringValue.match(/^(\d+(\.\d*)?)([kKmMbB]?)$/);
-            if (!match) {
-              return value;
-            }
-            const number = Number.parseFloat(match[1]);
-            const unit = match[3].toLowerCase();
-            let parsedValue = number;
-            switch (unit) {
-              case "k":
-                parsedValue = number * 1000;
-                break;
-              case "m":
-                parsedValue = number * 1000000;
-                break;
-              case "b":
-                parsedValue = number * 1000000000;
-                break;
-              default:
-                parsedValue = number;
-            }
-            return parsedValue;
+            const match = String(value).match(/^(\d+(\.\d*)?)([kKmMbB]?)$/);
+            if (!match) return value;
+
+            const [_, num, , unit] = match;
+            const multiplier =
+              { k: 1e3, m: 1e6, b: 1e9 }[unit.toLowerCase()] || 1;
+            return Number.parseFloat(num) * multiplier;
           }}
         />
-        <FormFieldHelperText>Please enter a number</FormFieldHelperText>
+        <FormFieldHelperText>
+          Number input's value is {value}
+        </FormFieldHelperText>
+        <FlexLayout>
+          <Button onClick={() => setValue(123456)}>Set value to 123456</Button>
+          <Button onClick={() => setValue(toFloat(value) + 100)}>
+            Increment by 100
+          </Button>
+          <Button onClick={() => setValue("")}>Clear</Button>
+        </FlexLayout>
       </FormField>
+    </StackLayout>
+  );
+};
+
+export const FormattingUncontrolled: StoryFn<NumberInputProps> = (args) => {
+  return (
+    <StackLayout>
       <FormField>
         <FormFieldLabel>
-          With custom format function, Uncontrolled (custom units)
+          With custom format function, uncontrolled (custom units), strict
+          clamping behaviour
         </FormFieldLabel>
         <NumberInput
           {...args}
@@ -101,7 +100,7 @@ export const Formatting: StoryFn<NumberInputProps> = (args) => {
       </FormField>
       <FormField>
         <FormFieldLabel>
-          With Intl Number Format, Thousands separator
+          With Intl Number Format, thousands separator
         </FormFieldLabel>
         <NumberInput
           defaultValue={1000000}
@@ -116,7 +115,10 @@ export const Formatting: StoryFn<NumberInputProps> = (args) => {
         />
       </FormField>
       <FormField>
-        <FormFieldLabel>With Intl Number Format, Decimals</FormFieldLabel>
+        <FormFieldLabel>
+          With Intl Number Format, decimals, auto-generated precision based on
+          step=0.1
+        </FormFieldLabel>
         <NumberInput
           defaultValue={10.23456}
           format={(value) => {
@@ -130,7 +132,9 @@ export const Formatting: StoryFn<NumberInputProps> = (args) => {
         />
       </FormField>
       <FormField>
-        <FormFieldLabel>With decimal step, controlled precision</FormFieldLabel>
+        <FormFieldLabel>
+          With decimal step, controlled precision=1, step=0.1
+        </FormFieldLabel>
         <NumberInput defaultValue={10.236} precision={1} step={0.1} />
       </FormField>
     </StackLayout>

@@ -29,6 +29,12 @@ export const useFormatControlled = <S>({
   });
 
   useEffect(() => {
+    if (controlled !== undefined) {
+      setValue(format(controlled));
+    }
+  }, [controlled, format]);
+
+  useEffect(() => {
     if (process.env.NODE_ENV !== "production") {
       if (isControlled !== (controlled !== undefined)) {
         console.error(
