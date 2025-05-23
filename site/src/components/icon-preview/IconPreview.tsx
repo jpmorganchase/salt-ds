@@ -36,6 +36,14 @@ type IconData = {
   >;
 } & IconSynonym;
 
+const isIconNameMatch = (componentName: string, figmaIconName: string) => {
+  const regex = new RegExp(
+    `^${figmaIconName.replace(/-/g, "")}(Solid)?Icon$`,
+    "i",
+  );
+  return regex.test(componentName);
+};
+
 export function IconPreview() {
   const [allIcons, setAllIcons] = useState<IconData[]>([]);
 
@@ -51,7 +59,7 @@ export function IconPreview() {
         // Icon component name is pascal case, iconName from Figma is kebab
 
         const synonymMatch = iconSynonymData.find((item) =>
-          name.toLocaleLowerCase().includes(item.iconName.replaceAll("-", "")),
+          isIconNameMatch(name, item.iconName),
         );
 
         if (!synonymMatch) {
