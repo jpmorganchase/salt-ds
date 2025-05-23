@@ -229,6 +229,7 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
         getNumberPrecision(valueProp || defaultValueProp),
         getNumberPrecision(step),
       );
+    const userEditingRef = useRef<boolean>(false);
 
     const {
       "aria-describedby": inputDescribedBy,
@@ -247,10 +248,11 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       : inputRequired;
 
     const mergedFormatter = (value: number | string): number | string => {
-      if (format) {
-        return format(value);
+      if (isValidNumber(value) && format && !userEditingRef.current) {
+        const formattedValue = format(value);
+        return formattedValue;
       }
-      if (isValidNumber(value) && precision > 0) {
+      if (isValidNumber(value) && precision >= 0 && !userEditingRef.current) {
         return toFloat(value).toFixed(precision);
       }
       return value;
@@ -280,17 +282,19 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       disabled,
       max,
       min,
-      format,
       onChange: onChangeProp,
       parse,
       precision,
       readOnly: isReadOnly,
       step,
       stepMultiplier,
+      userEditingRef,
       value,
     });
 
     const handleInputFocus = (event: FocusEvent<HTMLInputElement>) => {
+      userEditingRef.current = true;
+
       if (!isDisabled) {
         setFocused(true);
       }
@@ -303,6 +307,7 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
     };
 
     const handleInputBlur = (event: FocusEvent<HTMLInputElement>) => {
+      userEditingRef.current = false;
       setFocused(false);
       const sanitizedValue = sanitizeInput(value);
       const formattedValue = isValidNumber(sanitizedValue)
@@ -310,11 +315,17 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
         : "";
 
       setValue(formattedValue);
-      onChangeProp?.(event, sanitizedValue);
+      onChangeProp?.(event, toFloat(sanitizedValue).toFixed(precision));
     };
 
     const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-      const changedValue = parse?.(event.target.value) || event.target.value;
+      let changedValue: number | string = event.target.value;
+
+      if (!userEditingRef.current && parse) {
+        changedValue = parse(event.target.value);
+      }
+
+      // const changedValue = parse?.(event.target.value) || event.target.value;
       const sanitizedValue = sanitizeInput(changedValue);
 
       let updatedValue = sanitizedValue;
@@ -329,6 +340,8 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
     };
 
     const handleInputKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
+      userEditingRef.current = true;
+
       switch (event.key) {
         case "ArrowUp": {
           event.preventDefault();
@@ -367,6 +380,14 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       }
 
       inputOnKeyDown?.(event);
+    };
+
+    const handleKeyUp = () => {
+      userEditingRef.current = false;
+    };
+
+    const handleBeforeInput = () => {
+      userEditingRef.current = true;
     };
 
     return (
@@ -424,6 +445,8 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
             onChange={handleInputChange}
             onFocus={handleInputFocus}
             onKeyDown={handleInputKeyDown}
+            onKeyUp={handleKeyUp}
+            onBeforeInput={handleBeforeInput}
             placeholder={placeholder}
             readOnly={isReadOnly}
             aria-readonly={isReadOnly ? "true" : undefined}

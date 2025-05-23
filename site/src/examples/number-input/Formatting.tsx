@@ -100,7 +100,6 @@ export const Formatting = () => {
             return new Intl.NumberFormat("en-GB", {
               maximumFractionDigits: 2,
               minimumFractionDigits: 1,
-              roundingMode: "ceil",
             }).format(toFloat(value));
           }}
           step={0.1}

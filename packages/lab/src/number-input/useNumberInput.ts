@@ -24,13 +24,12 @@ export const useNumberInput = ({
   step = 1,
   stepMultiplier = 2,
   value,
-  format,
   parse,
   precision,
+  userEditingRef,
 }: Pick<
   NumberInputProps,
   | "disabled"
-  | "format"
   | "inputRef"
   | "max"
   | "min"
@@ -44,6 +43,7 @@ export const useNumberInput = ({
   setValue: Dispatch<SetStateAction<string | number>>;
   value: string | number;
   inputRef: MutableRefObject<HTMLInputElement | null>;
+  userEditingRef: MutableRefObject<boolean>;
 }) => {
   const updateValue = useCallback(
     (event: SyntheticEvent | undefined, nextValue: number) => {
@@ -108,6 +108,7 @@ export const useNumberInput = ({
     disabled: disabled || isAtMax(value, max),
     onMouseDown: (event: MouseEvent<HTMLButtonElement>) => {
       event.preventDefault();
+      userEditingRef.current = true;
       if (event.nativeEvent.button !== 0) {
         // To match closely with <input type='input'>
         return;
@@ -122,6 +123,7 @@ export const useNumberInput = ({
     disabled: disabled || isAtMin(value, min),
     onMouseDown: (event: MouseEvent<HTMLButtonElement>) => {
       event.preventDefault();
+      userEditingRef.current = true;
       if (event.nativeEvent.button !== 0) {
         // To match closely with <input type='input'>
         return;
