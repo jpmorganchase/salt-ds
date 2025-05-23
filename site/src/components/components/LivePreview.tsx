@@ -148,18 +148,6 @@ export const LivePreview: FC<LivePreviewProps> = ({
               </div>
             </Pre>
           )}
-          {/* <Pre className={styles.codePreview}>
-            <div className="language-tsx">
-              {ComponentExample.sourceCode.trimEnd()}
-            </div>
-          </Pre>
-          {ComponentExample.cssCode && (
-            <Pre className={styles.codePreview}>
-              <div className="language-css">
-                {ComponentExample.cssCode.trimEnd()}
-              </div>
-            </Pre>
-          )} */}
         </div>
       </div>
     </div>

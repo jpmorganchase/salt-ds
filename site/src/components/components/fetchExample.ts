@@ -29,7 +29,7 @@ export default async function fetchExample(
 
     cssCode += exampleCssCode;
   } catch (e) {
-    console.warn(`No CSS file found for example ${exampleName}`, e);
+    //
   }
 
   try {
@@ -42,7 +42,7 @@ export default async function fetchExample(
 
     cssCode += `\n${componentCssCode}`;
   } catch (e) {
-    console.warn(`No general CSS file found for component ${componentName}`, e);
+    //
   }
 
   return { Example, sourceCode, cssCode };
