@@ -18,7 +18,8 @@ div[class*="ag-theme-salt"] {
   --ag-foreground-color: var(--salt-content-primary-foreground);
   --ag-grid-size: var(--salt-spacing-50);
   --ag-header-background-color: var(--salt-container-primary-background);
-  --ag-header-cell-hover-background-color: var(--salt-container-primary-background);
+  /* Set to same header bg, so secondary variant would work */
+  --ag-header-cell-hover-background-color: var(--ag-header-background-color);
   --ag-header-column-separator-color: var(--salt-separable-tertiary-borderColor);
   --ag-header-column-separator-display: block;
   --ag-header-column-separator-height: calc(var(--salt-size-base) / 2 - 2 * var(--salt-size-border));
@@ -71,6 +72,19 @@ div[class*="ag-theme-salt-compact"] {
   --salt-size-base: 16px;
   /** Checkbox size */
   --salt-size-selectable: 12px;
+}
+
+div[class*="ag-theme-salt"].ag-theme-salt-variant-secondary {
+  --ag-header-background-color: var(--salt-container-secondary-background);
+  --ag-secondary-border-color: var(--salt-separable-tertiary-borderColor);
+  --ag-background-color: var(--salt-container-secondary-background);
+}
+
+div[class*="ag-theme-salt"].ag-theme-salt-variant-zebra {
+  --ag-background-color: var(--salt-container-secondary-background);
+  --ag-odd-row-background-color: var(--salt-container-primary-background);
+  --ag-header-background-color: var(--salt-container-primary-background);
+  --ag-secondary-border-color: var(--salt-separable-tertiary-borderColor);
 }
 
 .ag-theme-salt-light .ag-root-wrapper,
