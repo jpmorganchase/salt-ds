@@ -73,7 +73,7 @@ describe("Given a SaltProvider", () => {
 
       cy.get("html")
         .should("exist")
-        .and("have.attr", "data-brand", "legacy")
+        .and("have.attr", "data-brand", "uitk")
         .and("have.attr", "data-mode", "light")
         .and("have.class", "salt-density-medium");
     });
