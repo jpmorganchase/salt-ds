@@ -12,6 +12,7 @@ import { useBreakpoint } from "../breakpoints";
 import { parseSpacing } from "../flex-layout/parseSpacing";
 import {
   type PolymorphicComponentPropWithRef,
+  type PolymorphicRef,
   type ResponsiveProp,
   makePrefixer,
   resolveResponsiveValue,
@@ -108,7 +109,7 @@ export const FlexItem: FlexItemComponent = forwardRef(function FlexItem<
   return (
     <Component
       className={clsx(withBaseName(), className)}
-      ref={ref}
+      ref={ref as PolymorphicRef<T>}
       style={itemStyle}
       {...rest}
     >

@@ -65,6 +65,10 @@ jobs:
               exit 1;
           fi
   type-checks:
+    strategy:
+      fail-fast: false
+      matrix:
+        ts: [4.6.4, 5]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -76,7 +80,10 @@ jobs:
           cache: "yarn"
       - name: Install dependencies
         run: yarn
-      - run: yarn run typecheck
+      - name: Setup TypeScript
+        run: yarn up typescript@${{ matrix.ts }}
+      - name: Run typecheck
+        run: yarn run typecheck
   jest-tests:
     runs-on: ubuntu-latest
     steps:

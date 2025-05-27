@@ -12,6 +12,7 @@ import { useBreakpoint } from "../breakpoints";
 import { parseSpacing } from "../flex-layout/parseSpacing";
 import {
   type PolymorphicComponentPropWithRef,
+  type PolymorphicRef,
   type ResponsiveProp,
   makePrefixer,
   resolveResponsiveValue,
@@ -129,7 +130,7 @@ export const GridItem: GridItemComponent = forwardRef(function GridItem<
     <Component
       className={clsx(withBaseName(), className)}
       style={gridStyles}
-      ref={ref}
+      ref={ref as PolymorphicRef<T>}
       {...rest}
     >
       {children}

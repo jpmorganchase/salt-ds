@@ -8,6 +8,7 @@ import {
 
 import {
   type PolymorphicComponentPropWithRef,
+  type PolymorphicRef,
   type ResponsiveProp,
   makePrefixer,
   resolveResponsiveValue,
@@ -122,7 +123,7 @@ export const GridLayout: GridLayoutComponent = forwardRef(function GridLayout<
     <Component
       className={clsx(withBaseName(), className)}
       style={gridLayoutStyles}
-      ref={ref}
+      ref={ref as PolymorphicRef<T>}
       {...rest}
     >
       {children}
