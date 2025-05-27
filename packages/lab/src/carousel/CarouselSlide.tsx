@@ -101,7 +101,7 @@ export const CarouselSlide = forwardRef<HTMLDivElement, CarouselSlideProps>(
       "--carousel-slide-width":
         visibleSlides > 1
           ? `calc((100% / ${visibleSlides}) - var(--salt-spacing-200)/${visibleSlides})`
-          : undefined,
+          : "100%",
       ...style,
     };
 
