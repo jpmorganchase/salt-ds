@@ -16,16 +16,21 @@
   box-sizing: border-box;
 }
 
+.saltCheckboxIcon-checked,
+.saltCheckbox:hover .saltCheckboxIcon-checked {
+  border-color: var(--salt-selectable-borderColor-selected);
+  color: var(--salt-selectable-foreground-selected);
+}
+
 .saltCheckbox:hover .saltCheckboxIcon,
 .saltCheckbox:hover .saltCheckboxIcon-indeterminate {
   border-color: var(--salt-selectable-borderColor-hover);
   color: var(--salt-selectable-foreground-hover);
 }
 
-.saltCheckboxIcon-checked:not(.saltCheckboxIcon-indeterminate),
-.saltCheckbox:hover .saltCheckboxIcon-checked:not(.saltCheckboxIcon-indeterminate) {
-  border-color: var(--salt-selectable-borderColor-selected);
-  color: var(--salt-selectable-foreground-selected);
+.saltCheckboxIcon-checked.saltCheckboxIcon-indeterminate {
+  border-color: var(--salt-selectable-borderColor);
+  color: var(--salt-selectable-foreground);
 }
 
 .saltCheckboxIcon-disabled,
