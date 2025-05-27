@@ -5,7 +5,11 @@ import {
   type FunctionComponent,
   forwardRef,
 } from "react";
-import { type PolymorphicComponentPropWithRef, makePrefixer } from "../utils";
+import {
+  type PolymorphicComponentPropWithRef,
+  type PolymorphicRef,
+  makePrefixer,
+} from "../utils";
 
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
@@ -100,7 +104,7 @@ export const Text: TextComponent = forwardRef(function Text<
         className,
       )}
       {...restProps}
-      ref={ref}
+      ref={ref as PolymorphicRef<T>}
       style={textStyles}
     >
       {children}

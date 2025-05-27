@@ -10,6 +10,7 @@ import {
 import { useBreakpoint } from "../breakpoints";
 import {
   type PolymorphicComponentPropWithRef,
+  type PolymorphicRef,
   type ResponsiveProp,
   makePrefixer,
   resolveResponsiveValue,
@@ -145,7 +146,7 @@ export const FlexLayout: FlexLayoutComponent = forwardRef(function FlexLayout<
         },
         className,
       )}
-      ref={ref}
+      ref={ref as PolymorphicRef<T>}
       style={flexLayoutStyles}
       {...rest}
     >
