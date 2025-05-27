@@ -1,5 +1,12 @@
 # @salt-ds/lab
 
+## 1.0.0-alpha.69
+
+### Patch Changes
+
+- Updated dependencies [f107d63]
+  - @salt-ds/core@1.46.1
+
 ## 1.0.0-alpha.68
 
 ### Minor Changes

@@ -1,19 +1,10 @@
-@import url(parts/ag-root-var.css);
-/* Sloooow */
-@import url(parts/ag-header.css);
-/* Sloooow */
-@import url(parts/ag-menus.css);
-/* Sloooow */
 @import url(parts/ag-body.css);
-/* Sloooow */
-@import url(parts/ag-input.css);
-/* OK Below */
-@import url(parts/ag-checkbox.css);
-/* Sloooow */
 @import url(parts/ag-buttons.css);
-/* OK Below */
-@import url(parts/ag-tool-panel.css);
-/* OK Below */
-@import url(parts/ag-toggle-button.css);
-/* OK Below */
+@import url(parts/ag-checkbox.css);
 @import url(parts/ag-column-drop-list.css);
+@import url(parts/ag-header.css);
+@import url(parts/ag-input.css);
+@import url(parts/ag-menus.css);
+@import url(parts/ag-root-var.css);
+@import url(parts/ag-toggle-button.css);
+@import url(parts/ag-tool-panel.css);

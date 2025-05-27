@@ -1,5 +1,6 @@
 import path from "node:path";
 import { argv } from "node:process";
+import url from "node:url";
 import { deleteSync } from "del";
 import esbuild from "esbuild";
 import fs from "fs-extra";
@@ -9,7 +10,7 @@ const FILES_TO_COPY = ["README.md", "LICENSE", "CHANGELOG.md"];
 
 const cwd = process.cwd();
 const packageJson = (
-  await import(path.join("file://", cwd, "package.json"), {
+  await import(url.pathToFileURL(path.join(cwd, "package.json")), {
     with: { type: "json" },
   })
 ).default;
