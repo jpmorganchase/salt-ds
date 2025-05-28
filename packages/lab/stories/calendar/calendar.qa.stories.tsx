@@ -11,6 +11,11 @@ import { QAContainer, type QAContainerProps } from "docs/components";
 export default {
   title: "Lab/Calendar/QA",
   component: Calendar,
+  globals: {
+    a11y: {
+      manual: true,
+    },
+  },
 };
 
 const QAContainerParameters = {
