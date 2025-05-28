@@ -120,16 +120,25 @@ The example uses the `FloatingComponentProvider` to trigger creating the new win
 
 It also uses the `FloatingPlatformProvider` to customize the positioning of the Tooltip based on the global coordinates of the anchor, rather than the position within it's own window.
 
-<Canvas of={CustomFloatingUiPlatformStories.CustomFloatingUiPlatform} />
+<Canvas
+  of={CustomFloatingUiPlatformStories.CustomFloatingUiPlatform}
+  meta={CustomFloatingUiPlatformStories}
+/>
 
 ### Custom Middleware Example
 
 In the following example custom `offset` middleware has been added to offset the tooltip by an additional amount on top of the default
 
-<Canvas of={CustomFloatingUiPlatformStories.CustomMiddleware} />
+<Canvas
+  of={CustomFloatingUiPlatformStories.CustomMiddleware}
+  meta={CustomFloatingUiPlatformStories}
+/>
 
 ### Animation Frame autoUpdate
 
 In the following example the Tooltip is being positioned on animation frame, allowing it to remain anchored to a component suring an animation
 
-<Canvas of={CustomFloatingUiPlatformStories.AnimationFrame} />
+<Canvas
+  of={CustomFloatingUiPlatformStories.AnimationFrame}
+  meta={CustomFloatingUiPlatformStories}
+/>
