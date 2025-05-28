@@ -54,7 +54,12 @@ const renderNavigationItem = (
   const isActive =
     selectedNodeId === id ||
     ((!isExpanded || singlePageInGroup) &&
-      (containsSelectedNode || selectedNodeId?.includes(`${item.id}/`)));
+      (containsSelectedNode ||
+        selectedNodeId?.includes(`${item.id}/`) ||
+        // Special case for component pages, with nested page as child and parent content shown as nested page, e.g. slider
+        (id.endsWith("/index") &&
+          selectedNodeId?.substring(0, selectedNodeId.lastIndexOf("/")) ===
+            id?.substring(0, id.lastIndexOf("/")))));
 
   const shouldRenderAsParent = !link;
   const handleExpand: MouseEventHandler<
