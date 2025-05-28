@@ -1,5 +1,6 @@
 import {
   Button,
+  FlexLayout,
   H3,
   RadioButton,
   RadioButtonGroup,
@@ -7,6 +8,7 @@ import {
   Text,
   useId,
 } from "@salt-ds/core";
+import { ChevronLeftIcon, ChevronRightIcon } from "@salt-ds/icons";
 import { Carousel, CarouselSlide, CarouselSlider } from "@salt-ds/lab";
 import clsx from "clsx";
 import { type ChangeEvent, type ReactElement, useState } from "react";
@@ -24,48 +26,37 @@ export const ControlledCarousel = (): ReactElement => {
 
   return (
     <StackLayout>
-      <StackLayout direction="row" gap={1}>
+      <Carousel aria-label="Account overview" activeSlideIndex={slide}>
+        <CarouselSlider>
+          {sliderData.map((slide, index) => {
+            const slideId = useId();
+            return (
+              <CarouselSlide
+                key={slideId}
+                aria-labelledby={`slide-title-${slideId}`}
+                media={
+                  <img
+                    alt={`stock content to show in carousel slide ${index}`}
+                    className={clsx(styles.carouselImagePlaceholder)}
+                    src={slide.image}
+                  />
+                }
+                header={<H3 id={`slide-title-${slideId}`}>{slide.title}</H3>}
+              >
+                <Text>{slide.content}</Text>
+              </CarouselSlide>
+            );
+          })}
+        </CarouselSlider>
+      </Carousel>
+      <FlexLayout gap={1} direction="row" align="center" justify="center">
         <Button
-          appearance="transparent"
+          appearance="bordered"
           onClick={() => setSlide(Math.max(0, slide - 1))}
           disabled={slide === 0}
-          className={styles.carouselButton}
         >
-          Left
+          <ChevronLeftIcon />
         </Button>
-        <Carousel aria-label="Account overview" activeSlideIndex={slide}>
-          <CarouselSlider>
-            {sliderData.map((slide, index) => {
-              const slideId = useId();
-              return (
-                <CarouselSlide
-                  key={slideId}
-                  aria-labelledby={`slide-title-${slideId}`}
-                  media={
-                    <img
-                      alt={`stock content to show in carousel slide ${index}`}
-                      className={clsx(styles.carouselImagePlaceholder)}
-                      src={slide.image}
-                    />
-                  }
-                  header={<H3 id={`slide-title-${slideId}`}>{slide.title}</H3>}
-                >
-                  <Text>{slide.content}</Text>
-                </CarouselSlide>
-              );
-            })}
-          </CarouselSlider>
-        </Carousel>
-        <Button
-          appearance="transparent"
-          onClick={() => setSlide(Math.min(sliderData.length - 1, slide + 1))}
-          disabled={slide >= sliderData.length - 1}
-          className={styles.carouselButton}
-        >
-          Right
-        </Button>
-      </StackLayout>
-      <StackLayout gap={1} direction="column" align="center">
         <RadioButtonGroup
           direction="horizontal"
           onChange={(event) => handleRadioChange(event)}
@@ -77,7 +68,14 @@ export const ControlledCarousel = (): ReactElement => {
             );
           })}
         </RadioButtonGroup>
-      </StackLayout>
+        <Button
+          appearance="bordered"
+          onClick={() => setSlide(Math.min(sliderData.length - 1, slide + 1))}
+          disabled={slide >= sliderData.length - 1}
+        >
+          <ChevronRightIcon />
+        </Button>
+      </FlexLayout>
     </StackLayout>
   );
 };
