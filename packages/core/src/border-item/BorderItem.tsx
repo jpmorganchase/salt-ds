@@ -1,11 +1,15 @@
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
-import { type ElementType, type ReactElement, forwardRef } from "react";
+import {
+  type ElementType,
+  type ForwardedRef,
+  type FunctionComponent,
+  forwardRef,
+} from "react";
 import { GridItem, type GridItemProps } from "../grid-item";
 import {
   type PolymorphicComponentPropWithRef,
-  type PolymorphicRef,
   type ResponsiveProp,
   makePrefixer,
 } from "../utils";
@@ -56,48 +60,50 @@ const withBaseName = makePrefixer("saltBorderItem");
 
 type BorderItemComponent = <T extends ElementType = "div">(
   props: BorderItemProps<T>,
-) => ReactElement | null;
+) => ReturnType<FunctionComponent>;
 
-export const BorderItem: BorderItemComponent = forwardRef(
-  <T extends ElementType>(
-    {
-      children,
-      className,
-      position,
-      sticky = false,
-      style,
-      ...rest
-    }: BorderItemProps<T>,
-    ref?: PolymorphicRef<T>,
-  ) => {
-    const targetWindow = useWindow();
-    useComponentCssInjection({
-      testId: "salt-border-item",
-      css: borderItemCss,
-      window: targetWindow,
-    });
+export const BorderItem: BorderItemComponent = forwardRef(function BorderItem<
+  T extends ElementType,
+>(props: unknown, ref?: ForwardedRef<unknown>) {
+  // Props need to be typed this way due to polymorphic types not working with required props.
+  const {
+    as,
+    children,
+    className,
+    position,
+    sticky = false,
+    style,
+    ...rest
+  } = props as BorderItemProps<T>;
 
-    const gridItemStyles = {
-      ...style,
-      "--gridItem-gridArea": position,
-    };
+  const targetWindow = useWindow();
+  useComponentCssInjection({
+    testId: "salt-border-item",
+    css: borderItemCss,
+    window: targetWindow,
+  });
 
-    return (
-      <GridItem
-        ref={ref}
-        className={clsx(
-          withBaseName(),
-          "saltGridItem-area",
-          {
-            [withBaseName("sticky")]: sticky,
-          },
-          className,
-        )}
-        style={gridItemStyles}
-        {...rest}
-      >
-        {children}
-      </GridItem>
-    );
-  },
-);
+  const gridItemStyles = {
+    ...style,
+    "--gridItem-gridArea": position,
+  };
+
+  return (
+    <GridItem
+      as={as as ElementType}
+      ref={ref}
+      className={clsx(
+        withBaseName(),
+        "saltGridItem-area",
+        {
+          [withBaseName("sticky")]: sticky,
+        },
+        className,
+      )}
+      style={gridItemStyles}
+      {...rest}
+    >
+      {children}
+    </GridItem>
+  );
+});

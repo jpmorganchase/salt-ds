@@ -1,6 +1,7 @@
+import type { ColDef } from "ag-grid-community";
 import { languages, shortColorData } from "./dataGridExampleDataCellEditors";
 
-const agProvidedCellEditorsExampleColumns = [
+const agProvidedCellEditorsExampleColumns: ColDef[] = [
   {
     headerName: "Text",
     field: "name",
