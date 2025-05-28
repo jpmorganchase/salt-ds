@@ -2,4 +2,4 @@
 "@salt-ds/core": patch
 ---
 
-Fix `CheckboxIcon` checked color styles applying when checkbox is `indeterminate`
+Fixed `Checkbox`'s checked color styles applying when `Checkbox` is indeterminate.
