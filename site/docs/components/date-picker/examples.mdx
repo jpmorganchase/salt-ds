@@ -118,6 +118,12 @@ When the `locale` prop is provided, the `DatePicker` component uses it to define
 
 Use the `timezone` prop to display the selected date in a specific timezone. This is particularly useful for applications that need to handle date and time data across different time zones, ensuring that users can accurately select and view dates based on their local time.
 
+<Callout title="Note">
+
+If you just need to take in a date string (e.g. `YYYY-MM-DD` format) and give back the same using the date picker, you don't need to configure timezone. You can use a pair of [`dateAdapter.format`](/salt/components/localization-provider/usage#format) and [`dateAdapter.parse`](/salt/components/localization-provider/usage#parse) functions with the same `format` parameter before passing the date to `selectedDate` and getting the date from `onSelectionChange` callback.
+
+</Callout>
+
 <LivePreview componentName="date-picker" exampleName="SingleWithTimezone" />
 
 ## Custom day rendering
