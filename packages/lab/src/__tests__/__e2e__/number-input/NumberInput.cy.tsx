@@ -3,7 +3,7 @@ import { composeStories } from "@storybook/react";
 
 const composedStories = composeStories(numberInputStories);
 
-const { Default, MinAndMaxValue, RefreshAdornment } = composedStories;
+const { Default, MinAndMaxValue, ResetAdornment } = composedStories;
 
 describe("Number Input", () => {
   it("renders with default props", () => {
@@ -77,9 +77,9 @@ describe("Number Input", () => {
     cy.findByRole("spinbutton").should("have.value", "-1");
   });
 
-  it("renders with specified `defaultValue` and number of `decimalPlaces`", () => {
-    cy.mount(<Default decimalPlaces={4} defaultValue={10} />);
-    cy.findByRole("spinbutton").should("have.value", "10.0000");
+  it("renders with specified `defaultValue`", () => {
+    cy.mount(<Default defaultValue={10} />);
+    cy.findByRole("spinbutton").should("have.value", "10");
   });
 
   it("increments specified `step` value when clicking increment button", () => {
@@ -89,16 +89,16 @@ describe("Number Input", () => {
     cy.findByRole("spinbutton").should("have.value", "20");
   });
 
-  it("increments specified floating point `step` value when clicking increment button", () => {
-    cy.mount(<Default decimalPlaces={2} defaultValue={3.14} step={0.01} />);
+  it("increments specified floating point `step` value when clicking increment button by calculating precision", () => {
+    cy.mount(<Default defaultValue={3.14} step={0.01} />);
 
     cy.findByLabelText("increment value").realClick();
     cy.findByRole("spinbutton").should("have.value", "3.15");
   });
 
-  it("increments specified `step` and `stepBlock` value when using keyboards", () => {
+  it("increments specified `step` and `stepMultiplier` value when using keyboards", () => {
     cy.mount(
-      <Default defaultValue={10} step={10} stepBlock={100} max={2000} />,
+      <Default defaultValue={10} step={10} stepMultiplier={10} max={2000} />,
     );
 
     cy.findByRole("spinbutton").focus().realPress("ArrowUp");
@@ -117,16 +117,16 @@ describe("Number Input", () => {
     cy.findByRole("spinbutton").should("have.value", "-10");
   });
 
-  it("decrements specified floating point `step` value when clicking decrement button", () => {
-    cy.mount(<Default decimalPlaces={2} defaultValue={0.0} step={0.01} />);
+  it("decrements specified floating point `step` value when clicking decrement button by calculating precision", () => {
+    cy.mount(<Default defaultValue={0.0} step={0.01} />);
 
     cy.findByLabelText("decrement value").realClick();
     cy.findByRole("spinbutton").should("have.value", "-0.01");
   });
 
-  it("decrements specified `step` and `stepBlock` value when using keyboards", () => {
+  it("decrements specified `step` and `stepMultiplier` value when using keyboards", () => {
     cy.mount(
-      <Default defaultValue={10} step={10} stepBlock={100} min={-2000} />,
+      <Default defaultValue={10} step={10} stepMultiplier={10} min={-2000} />,
     );
 
     cy.findByRole("spinbutton").focus().realPress("ArrowDown");
@@ -152,8 +152,8 @@ describe("Number Input", () => {
     cy.findByLabelText("decrement value").should("be.disabled");
   });
 
-  it("displays value with correct number of decimal places on blur", () => {
-    cy.mount(<Default decimalPlaces={2} />);
+  it("displays value with correct number of decimal places when precision is set", () => {
+    cy.mount(<Default precision={2} />);
 
     cy.findByRole("spinbutton").focus();
     cy.findByRole("spinbutton").clear();
@@ -171,7 +171,7 @@ describe("Number Input", () => {
     cy.get("@changeSpy").should(
       "have.been.calledWith",
       Cypress.sinon.match.any,
-      "15",
+      15,
     );
   });
 
@@ -179,19 +179,14 @@ describe("Number Input", () => {
     const changeSpy = cy.stub().as("changeSpy");
 
     cy.mount(
-      <Default
-        decimalPlaces={2}
-        defaultValue={-109.46}
-        onChange={changeSpy}
-        step={0.02}
-      />,
+      <Default defaultValue={-109.46} onChange={changeSpy} step={0.02} />,
     );
 
     cy.findByLabelText("increment value").realClick();
     cy.get("@changeSpy").should(
       "have.been.calledWith",
       Cypress.sinon.match.any,
-      "-109.44",
+      -109.44,
     );
   });
 
@@ -269,24 +264,24 @@ describe("Number Input", () => {
     cy.findByRole("spinbutton").should("have.value", 1);
   });
 
-  it("rounds up to correct number of decimal places", () => {
-    cy.mount(<Default decimalPlaces={2} defaultValue={3.145} />);
+  it("rounds up to correct number of decimal places when precision is set", () => {
+    cy.mount(<Default defaultValue={3.145} precision={2} />);
 
     cy.findByRole("spinbutton").focus();
     cy.realPress("Tab");
     cy.findByRole("spinbutton").should("have.value", "3.15");
   });
 
-  it("rounds down to correct number of decimal places", () => {
-    cy.mount(<Default decimalPlaces={3} defaultValue={-12.3324} />);
+  it("rounds down to correct number of decimal places when precision is set", () => {
+    cy.mount(<Default precision={3} defaultValue={-12.3324} />);
 
     cy.findByRole("spinbutton").focus();
     cy.realPress("Tab");
     cy.findByRole("spinbutton").should("have.value", "-12.332");
   });
 
-  it("pads with zeros to correct number of decimal places", () => {
-    cy.mount(<Default decimalPlaces={3} defaultValue={-5.8} />);
+  it("pads with zeros to correct number of decimal places when precision is set", () => {
+    cy.mount(<Default precision={3} defaultValue={-5.8} />);
 
     cy.findByRole("spinbutton").focus();
     cy.realPress("Tab");
@@ -352,12 +347,12 @@ describe("Number Input", () => {
     cy.findByTestId("ErrorSolidIcon").should("exist");
   });
 
-  it("refreshes to default value in RefreshAdornment example", () => {
-    cy.mount(<RefreshAdornment />);
+  it("resets to default value in ResetAdornment example", () => {
+    cy.mount(<ResetAdornment />);
 
     cy.findByRole("spinbutton").focus().realPress("ArrowUp");
     cy.findByRole("spinbutton").should("have.value", "11");
-    cy.findByRole("button", { name: "refresh" }).realClick();
+    cy.findByRole("button", { name: "Reset Number Input" }).realClick();
     cy.findByRole("spinbutton").should("have.value", "10");
   });
 });
