@@ -249,11 +249,12 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
 
     const mergedFormatter = (value: number | string): number | string => {
       if (isValidNumber(value) && format && !userEditingRef.current) {
-        const formattedValue = format(value);
+        const formattedValue = format(clamp(max, min, toFloat(value)));
         return formattedValue;
       }
       if (isValidNumber(value) && precision >= 0 && !userEditingRef.current) {
-        return toFloat(value).toFixed(precision);
+        console.log("rounding", toFloat(value).toFixed(precision));
+        return clamp(max, min, toFloat(toFloat(value).toFixed(precision)));
       }
       return value;
     };
@@ -324,18 +325,17 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       if (!userEditingRef.current && parse) {
         changedValue = parse(event.target.value);
       }
-
-      // const changedValue = parse?.(event.target.value) || event.target.value;
       const sanitizedValue = sanitizeInput(changedValue);
 
-      let updatedValue = sanitizedValue;
-
-      if (clampingBehaviour === "strict") {
-        updatedValue = clamp(max, min, toFloat(sanitizedValue));
+      if (
+        clampingBehaviour === "strict" &&
+        isOutOfRange(sanitizedValue, min, max)
+      ) {
+        return;
       }
 
-      setValue(updatedValue);
-      onChangeProp?.(event, updatedValue);
+      setValue(sanitizedValue);
+      onChangeProp?.(event, sanitizedValue);
       inputOnChange?.(event);
     };
 

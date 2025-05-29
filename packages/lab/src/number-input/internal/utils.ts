@@ -38,12 +38,17 @@ export const isValidNumber = (num: string | number) => {
 export const sanitizeInput = (value: string | number) => {
   if (typeof value === "number") return value;
   let sanitizedInput = value.replace(/[^0-9.+-]/g, "");
-  // Ensure only one decimal point is present
+  sanitizedInput = sanitizedInput.replace(
+    /^([+-]?)(.*)$/,
+    (match, sign, rest) => {
+      return sign + rest.replace(/[+-]/g, "");
+    },
+  );
   const parts = sanitizedInput.split(".");
   if (parts.length > 2) {
-    // If more than one decimal point is found, join the parts with only the first decimal point
     sanitizedInput = `${parts[0]}.${parts.slice(1).join("")}`;
   }
+
   return sanitizedInput;
 };
 
