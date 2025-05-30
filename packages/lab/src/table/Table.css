@@ -1,6 +1,7 @@
 /* Table: Main css class */
 .saltTable {
   --table-header-height: calc(var(--salt-size-base) + var(--salt-spacing-100));
+  --table-footer-height: calc(var(--salt-size-base) + var(--salt-spacing-100));
   --table-row-height: calc(var(--salt-size-base) + var(--salt-spacing-100));
 }
 
@@ -12,6 +13,14 @@
 .saltTable-secondary {
   --table-background: var(--salt-container-secondary-background);
   --table-color: var(--salt-content-secondary-foreground);
+}
+
+.saltTable-zebra .saltTable-thead .saltTable-tr,
+.saltTable-zebra .saltTable-tbody .saltTable-tr:nth-of-type(even),
+.saltTable-zebra tbody .saltTable-tr:nth-of-type(even),
+.saltTable-zebra .saltTable-tbody tr:nth-of-type(even),
+.saltTable-zebra tbody tr:nth-of-type(even) {
+  --table-background: var(--salt-container-primary-background);
 }
 
 .saltTable-zebra .saltTable-tbody .saltTable-tr:nth-of-type(odd),
@@ -43,6 +52,29 @@ table.saltTable thead {
   font-size: var(--salt-text-label-fontSize);
   font-weight: var(--salt-text-label-fontWeight-strong);
   white-space: nowrap;
+}
+
+.saltTable-thead-sticky{
+  position: sticky;
+  top: 0;
+}
+
+/* TFoot */
+.saltTable-tfoot,
+table.saltTable tfoot {
+  align-items: center;
+  border-end-start-radius: var(--saltTable-thead-borderRadius-top, var(--salt-palette-corner));
+  border-end-end-radius: var(--saltTable-thead-borderRadius-top, var(--salt-palette-corner));
+  color: var(--salt-content-secondary-foreground);
+  height: var(--table-footer-height);
+  font-size: var(--salt-text-label-fontSize);
+  font-weight: var(--salt-text-label-fontWeight-strong);
+  white-space: nowrap;
+}
+
+.saltTable-tfoot-sticky {
+  position: sticky;
+  bottom: 0;
 }
 
 /* TH */
