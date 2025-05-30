@@ -1,12 +1,18 @@
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import clsx from "clsx";
-import { type ComponentPropsWithoutRef, CSSProperties, forwardRef } from "react";
+import {
+  type CSSProperties,
+  type ComponentPropsWithoutRef,
+  forwardRef,
+} from "react";
 import { withTableBaseName } from "./Table";
 
 import tableCss from "./Table.css";
 
-export type TDProps = ComponentPropsWithoutRef<"td"> & { overflowWrap?: CSSProperties['overflowWrap'] };
+export type TDProps = ComponentPropsWithoutRef<"td"> & {
+  overflowWrap?: CSSProperties["overflowWrap"];
+};
 
 export const TD = forwardRef<HTMLTableCellElement, TDProps>(function TD(
   { children, className, overflowWrap, style, ...rest },
@@ -21,7 +27,7 @@ export const TD = forwardRef<HTMLTableCellElement, TDProps>(function TD(
 
   const tdStyles = {
     ...style,
-    "overflowWrap": overflowWrap,
+    overflowWrap: overflowWrap,
   };
 
   return (

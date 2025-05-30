@@ -9,7 +9,7 @@ import {
   Text,
 } from "@salt-ds/core";
 import { TBody, TD, TFoot, TH, THead, TR, Table } from "@salt-ds/lab";
-import { ComponentProps } from "react";
+import type { ComponentProps } from "react";
 
 type TablePropsAndCustomArgs = ComponentProps<typeof Table> & {
   THeadProps: ComponentProps<typeof THead>;
@@ -18,26 +18,46 @@ type TablePropsAndCustomArgs = ComponentProps<typeof Table> & {
   TDProps: ComponentProps<typeof TD>;
   THProps: ComponentProps<typeof TH>;
   TBodyProps: ComponentProps<typeof TBody>;
-}
- 
+};
+
 export default {
   title: "Lab/Table",
   component: Table,
   subcomponents: { TD, TH, Text, Code, TBody, THead, TR, TFoot },
-  args: { variant: "primary", THeadProps: { sticky: false }, TFootProps: { sticky: false }, TRProps: {}, TDProps: { overflowWrap: undefined, }, THProps: { textOverflow: undefined, }, TBodyProps: {} }
+  args: {
+    variant: "primary",
+    THeadProps: { sticky: false },
+    TFootProps: { sticky: false },
+    TRProps: {},
+    TDProps: { overflowWrap: undefined },
+    THProps: { textOverflow: undefined },
+    TBodyProps: {},
+  },
 } as Meta<TablePropsAndCustomArgs>;
 
 const NUM_COLS = 7;
 const NUM_ROWS = 10;
 
-const Template: StoryFn = ({ THeadProps, TBodyProps, TFootProps, TRProps, TDProps, THProps, ...args }) => {
+const Template: StoryFn = ({
+  THeadProps,
+  TBodyProps,
+  TFootProps,
+  TRProps,
+  TDProps,
+  THProps,
+  ...args
+}) => {
   return (
     <StackLayout style={{ width: "800px", height: "300px", overflow: "auto" }}>
       <Table {...args}>
         <THead {...THeadProps}>
           <TR {...TRProps}>
             {Array.from({ length: NUM_COLS }, (_, i) => {
-              return <TH {...THProps} key={`col-${i}`}>Column {i}</TH>;
+              return (
+                <TH {...THProps} key={`col-${i}`}>
+                  Column {i}
+                </TH>
+              );
             })}
           </TR>
         </THead>
@@ -46,16 +66,24 @@ const Template: StoryFn = ({ THeadProps, TBodyProps, TFootProps, TRProps, TDProp
             return (
               <TR {...TRProps} key={`tr-${i}`}>
                 {Array.from({ length: NUM_COLS }, (_, i) => {
-                  return <TD {...TDProps} key={`td-${i}`}>Row {i}</TD>;
+                  return (
+                    <TD {...TDProps} key={`td-${i}`}>
+                      Row {i}
+                    </TD>
+                  );
                 })}
               </TR>
             );
           })}
         </TBody>
         <TFoot {...TFootProps}>
-          <TR {...TRProps} > 
+          <TR {...TRProps}>
             {Array.from({ length: NUM_COLS }, (_, i) => {
-              return <TD {...TDProps} key={`footer-${i}`}>Footer {i}</TD>;
+              return (
+                <TD {...TDProps} key={`footer-${i}`}>
+                  Footer {i}
+                </TD>
+              );
             })}
           </TR>
         </TFoot>
@@ -121,7 +149,10 @@ export const CustomContent: StoryFn<typeof Text> = () => {
   );
 };
 
-export const StickyHeaderFooter: StoryFn<typeof Text> = ({ THeadProps, TFootProps}) => {
+export const StickyHeaderFooter: StoryFn<typeof Text> = ({
+  THeadProps,
+  TFootProps,
+}) => {
   return (
     <StackLayout style={{ width: "800px", height: "300px", overflow: "auto" }}>
       <Table>
@@ -132,7 +163,7 @@ export const StickyHeaderFooter: StoryFn<typeof Text> = ({ THeadProps, TFootProp
             })}
           </TR>
         </THead>
-         <TBody>
+        <TBody>
           {Array.from({ length: NUM_ROWS }, (_, i) => {
             return (
               <TR key={`tr-${i}`}>
@@ -156,5 +187,5 @@ export const StickyHeaderFooter: StoryFn<typeof Text> = ({ THeadProps, TFootProp
 };
 StickyHeaderFooter.args = {
   THeadProps: { sticky: true },
-  TFootProps: { sticky: true }
-}
+  TFootProps: { sticky: true },
+};

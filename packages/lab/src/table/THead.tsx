@@ -6,7 +6,9 @@ import { withTableBaseName } from "./Table";
 
 import tableCss from "./Table.css";
 
-export type THeadProps = ComponentPropsWithoutRef<"thead"> & { sticky?: boolean };
+export type THeadProps = ComponentPropsWithoutRef<"thead"> & {
+  sticky?: boolean;
+};
 
 export const THead = forwardRef<HTMLTableSectionElement, THeadProps>(
   function THead({ children, className, sticky, ...rest }, ref) {
@@ -20,7 +22,11 @@ export const THead = forwardRef<HTMLTableSectionElement, THeadProps>(
     return (
       <thead
         ref={ref}
-        className={clsx(withTableBaseName("thead"), {[withTableBaseName("thead-sticky")]: sticky }, className)}
+        className={clsx(
+          withTableBaseName("thead"),
+          { [withTableBaseName("thead-sticky")]: sticky },
+          className,
+        )}
         {...rest}
       >
         {children}
