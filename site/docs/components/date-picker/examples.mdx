@@ -8,31 +8,25 @@ data:
   $ref: ./#/data
 ---
 
-## Single date
+<Callout title="Note">
+
+All date components requires [LocalizationProvider](/salt/components/localization-provider/examples) to be set up in your application.
+
+</Callout>
+
+## Default
 
 An uncontrolled `DatePicker`, composed of a [DateInputSingle](../DateInput) and a [Calendar](../Calendar) component, allows users to select a single date when the `selectionVariant` prop is set to "single", without requiring explicit state management in the parent component, making it ideal for simple date selection tasks.
 
 <LivePreview componentName="date-picker" exampleName="Single" />
 
-## Date range
-
-An uncontrolled `DatePicker`, composed of a [DateInputRange](../DateInput) and a [Calendar](../Calendar) component, allows users to select a date range when the `selectionVariant` prop is set to "range", without requiring explicit state management in the parent component, making it ideal for selecting start and end dates for various applications.
-
-<LivePreview componentName="date-picker" exampleName="Range" />
-
-## Controlled single date
+## Controlled
 
 A controlled `DatePicker`, composed of a [DateInputSingle](../DateInput) and a [Calendar](../Calendar) component, allows users to select a single date when the `selectionVariant` prop is set to "single", with the parent component explicitly managing the date state, providing greater control over the date selection process.
 
 <LivePreview componentName="date-picker" exampleName="SingleControlled" />
 
-## Controlled date range
-
-A controlled `DatePicker`, composed of a [DateInputRange](../DateInput) and a [Calendar](../Calendar) component, allows users to select a date range when the `selectionVariant` prop is set to "range", with the parent component explicitly managing the start and end date states, providing greater control over the date range selection process.
-
-<LivePreview componentName="date-picker" exampleName="RangeControlled" />
-
-## Single selection grid view
+## Calendar grid view
 
 Use `DatePickerSingleGridPanel` to provide a grid of multiple calendars, enabling the user to select the date from a wider range of visible months.
 
@@ -45,50 +39,25 @@ The `columns` and `numberOfVisibleMonths` properties are responsive, allowing yo
   exampleName="SingleResponsiveGridPanel"
 />
 
-## Range selection grid view
-
-Use `DatePickerRangeGridPanel` to provide a grid of multiple calendars, enabling the user to select the date from a wider range of visible months.
-
-<LivePreview componentName="date-picker" exampleName="RangeGridPanel" />
-
-The `columns` and `numberOfVisibleMonths` properties are responsive, allowing you to adjust the number of calendars or columns at each breakpoint for optimal display on different screen sizes.
-
-<LivePreview
-  componentName="date-picker"
-  exampleName="RangeResponsiveGridPanel"
-/>
-
-## Single date within FormField
+## Within form field
 
 A `DatePicker` with `selectionVariant` set to "single", inside a `FormField`, provides the field with a visible label, help text, and a status message for validation feedback.
 
 <LivePreview componentName="date-picker" exampleName="SingleWithFormField" />
 
-## Date range within FormField
-
-A `DatePicker` with `selectionVariant` set to "range", inside a `FormField`, provides the field with a visible label, help text, and a status message for validation feedback.
-
-<LivePreview componentName="date-picker" exampleName="RangeWithFormField" />
-
-## Single with initial error
+## Initial error
 
 When used with `FormField`, the `validationStatus` prop can be used to recreate an initial error state.
 
 <LivePreview componentName="date-picker" exampleName="SingleWithInitialError" />
 
-## Range with initial error
-
-When used with `FormField`, the `validationStatus` prop can be used to recreate an initial error state.
-
-<LivePreview componentName="date-picker" exampleName="RangeWithInitialError" />
-
-## Single with min/max date
+## Min/max date
 
 To constrain the selected date within a specific range, use the `minDate` and/or `maxDate` props. If `minDate` is not provided, it defaults to the year 1900. If `maxDate` is undefined, it defaults to the year 2100. This ensures that the selected date remains within the specified range.
 
 <LivePreview componentName="date-picker" exampleName="SingleWithMinMaxDate" />
 
-## Single with disabled dates
+## Disabled dates
 
 Disabled dates are not selectable. To implement this, use the `isDayUnselectable` prop to pass a function that determines whether a day is unselectable and provides the tooltip description.
 
@@ -97,13 +66,7 @@ Disabled dates are not selectable. To implement this, use the `isDayUnselectable
   exampleName="SingleWithDisabledDates"
 />
 
-## Range with disabled dates
-
-Disabled dates are not selectable. To implement this, use the `isDayUnselectable` prop to pass a function that determines whether a day is unselectable and provides the tooltip description.
-
-<LivePreview componentName="date-picker" exampleName="RangeWithDisabledDates" />
-
-## Single with unselectable dates
+## Unselectable dates
 
 Unselectable dates are visually distinct from selectable dates. When a user attempts to select an unselectable date, the calendar displays a tooltip with additional information. To implement this, use the `isDayUnselectable` prop to pass a function that determines whether a day is unselectable and provides the tooltip description.
 
@@ -112,16 +75,7 @@ Unselectable dates are visually distinct from selectable dates. When a user atte
   exampleName="SingleWithUnselectableDates"
 />
 
-## Range with unselectable dates
-
-Unselectable dates are visually distinct from selectable dates. When a user attempts to select an unselectable date, the calendar displays a tooltip with additional information. To implement this, use the `isDayUnselectable` prop to pass a function that determines whether a day is unselectable and provides the tooltip description.
-
-<LivePreview
-  componentName="date-picker"
-  exampleName="RangeWithUnselectableDates"
-/>
-
-## Single with highlighted dates
+## Highlighted dates
 
 Highlighted dates are marked by a triangle in the top right corner, indicating an event associated with that day. When a user hovers over a highlighted date, the calendar displays a tooltip with additional information. To implement this, use the `isDayHighlighted` prop to pass a function that determines whether a day is highlighted and provides the tooltip description.
 
@@ -130,80 +84,47 @@ Highlighted dates are marked by a triangle in the top right corner, indicating a
   exampleName="SingleWithHighlightedDates"
 />
 
-## Range with highlighted dates
-
-Highlighted dates are marked by a triangle in the top right corner, indicating an event associated with that day. When a user hovers over a highlighted date, the calendar displays a tooltip with additional information. To implement this, use the `isDayHighlighted` prop to pass a function that determines whether a day is highlighted and provides the tooltip description.
-
-<LivePreview
-  componentName="date-picker"
-  exampleName="RangeWithHighlightedDates"
-/>
-
-## Range with min/max date
-
-To constrain the selected date within a specific range, use the `minDate` and/or `maxDate` props. If `minDate` is not provided, it defaults to the year 1900. If `maxDate` is undefined, it defaults to the year 2100. This ensures that the selected date remains within the specified range.
-
-<LivePreview componentName="date-picker" exampleName="RangeWithMinMaxDate" />
-
-## Single with custom content
+## Custom content
 
 The composed nature of the `DatePicker` enables you to control the content of the overlay using the `children` prop. Use the recommended panels or compose them with your own.
 
 <LivePreview componentName="date-picker" exampleName="SingleWithCustomPanel" />
 
-## Range with custom content
-
-The composed nature of the `DatePicker` enables you to control the content of the overlay using the `children` prop. Use the recommended panels or compose them with your own.
-
-<LivePreview componentName="date-picker" exampleName="RangeWithCustomPanel" />
-
-## Single with today button
+## With today button
 
 The `children` prop enables you to compose additional controls to your Date Picker component, such as a 'Today' button.
 
 <LivePreview componentName="date-picker" exampleName="SingleWithTodayButton" />
 
-## Single with confirmation
+## With confirmation
 
 You can change dates upon selection, or apply the selection with additional controls.
 
 <LivePreview componentName="date-picker" exampleName="SingleWithConfirmation" />
 
-## Range with confirmation
-
-You can change dates upon selection, or apply the selection with additional controls.
-
-<LivePreview componentName="date-picker" exampleName="RangeWithConfirmation" />
-
-## Single with custom parser
+## Custom parser
 
 A custom parser can be used to handle specific date formats or shorthand date entries.
 
 <LivePreview componentName="date-picker" exampleName="SingleWithCustomParser" />
 
-## Single with locale
+## Locale
 
 When the `locale` prop is provided, the `DatePicker` component uses it to define the locale, ensuring that date formats, month names, and other locale-specific elements are displayed according to the specified locale.
 
 <LivePreview componentName="date-picker" exampleName="SingleWithLocaleEnUS" />
 
-## Single with timezone
+## Timezone
 
 Use the `timezone` prop to display the selected date in a specific timezone. This is particularly useful for applications that need to handle date and time data across different time zones, ensuring that users can accurately select and view dates based on their local time.
 
+<Callout title="Note">
+
+If you need to work with a date string (e.g., in the `YYYY-MM-DD` format) and display it using a date picker, you don't need to configure a timezone. Simply use the [`dateAdapter.format`](/salt/components/localization-provider/usage#format) and [`dateAdapter.parse`](/salt/components/localization-provider/usage#parse) functions with the same `format` parameter. Pass the formatted date to the `selectedDate` property and retrieve the date using the `onSelectionChange` callback.
+
+</Callout>
+
 <LivePreview componentName="date-picker" exampleName="SingleWithTimezone" />
-
-## Range with locale
-
-When the `locale` prop is provided, the `DatePicker` component uses it to define the locale, ensuring that date formats, month names, and other locale-specific elements are displayed according to the specified locale.
-
-<LivePreview componentName="date-picker" exampleName="RangeWithLocaleEsES" />
-
-## Range with timezone
-
-Use the `timezone` prop to display the selected date range in a specific timezone. This is particularly useful for applications that need to handle date and time data across different time zones, ensuring that users can accurately select and view date ranges based on their local time.
-
-<LivePreview componentName="date-picker" exampleName="RangeWithTimezone" />
 
 ## Custom day rendering
 
@@ -214,17 +135,11 @@ To customize the rendering of a day element, pass a `render` prop through the `C
   exampleName="SingleWithCustomRendering"
 />
 
-## Bordered single
+## Bordered
 
 A `DatePicker` component with a border provides a visually distinct area for selecting dates, enhancing the user interface by clearly delineating the component boundaries. This styling can improve usability and accessibility by making the calendar controls more noticeable and easier to interact with.
 
 <LivePreview componentName="date-picker" exampleName="SingleBordered" />
-
-## Bordered range
-
-A `DatePicker` component with a border provides a visually distinct area for selecting dates, enhancing the user interface by clearly delineating the component boundaries. This styling can improve usability and accessibility by making the calendar controls more noticeable and easier to interact with.
-
-<LivePreview componentName="date-picker" exampleName="RangeBordered" />
 
 ## Uncontrolled open
 
