@@ -1,15 +1,15 @@
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import clsx from "clsx";
-import { type ComponentPropsWithoutRef, forwardRef } from "react";
+import { type ComponentPropsWithoutRef, CSSProperties, forwardRef } from "react";
 import { withTableBaseName } from "./Table";
 
 import tableCss from "./Table.css";
 
-export type THProps = ComponentPropsWithoutRef<"th">;
+export type THProps = ComponentPropsWithoutRef<"th"> & { textOverflow?: CSSProperties['textOverflow'] };
 
 export const TH = forwardRef<HTMLTableCellElement, THProps>(function TH(
-  { children, className, ...rest },
+  { children, className,textOverflow, style,...rest },
   ref,
 ) {
   const targetWindow = useWindow();
@@ -19,10 +19,17 @@ export const TH = forwardRef<HTMLTableCellElement, THProps>(function TH(
     window: targetWindow,
   });
 
+
+  const thStyles = {
+    ...style,
+    "textOverflow": textOverflow,
+  };
+
   return (
     <th
       ref={ref}
       className={clsx(withTableBaseName("th"), className)}
+      style={thStyles}
       {...rest}
     >
       {children}

@@ -6,10 +6,10 @@ import { withTableBaseName } from "./Table";
 
 import tableCss from "./Table.css";
 
-export type THeadProps = ComponentPropsWithoutRef<"thead">;
+export type THeadProps = ComponentPropsWithoutRef<"thead"> & { sticky?: boolean };
 
 export const THead = forwardRef<HTMLTableSectionElement, THeadProps>(
-  function THead({ children, className, ...rest }, ref) {
+  function THead({ children, className, sticky, ...rest }, ref) {
     const targetWindow = useWindow();
     useComponentCssInjection({
       testId: "salt-table-thead",
@@ -20,7 +20,7 @@ export const THead = forwardRef<HTMLTableSectionElement, THeadProps>(
     return (
       <thead
         ref={ref}
-        className={clsx(withTableBaseName("thead"), className)}
+        className={clsx(withTableBaseName("thead"), {[withTableBaseName("thead-sticky")]: sticky }, className)}
         {...rest}
       >
         {children}
