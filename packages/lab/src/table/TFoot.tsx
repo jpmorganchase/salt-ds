@@ -6,7 +6,9 @@ import { withTableBaseName } from "./Table";
 
 import tableCss from "./Table.css";
 
-export type TFootProps = ComponentPropsWithoutRef<"tfoot"> & { sticky?: boolean };
+export type TFootProps = ComponentPropsWithoutRef<"tfoot"> & {
+  sticky?: boolean;
+};
 
 export const TFoot = forwardRef<HTMLTableSectionElement, TFootProps>(
   function TFoot({ children, className, sticky, ...rest }, ref) {
@@ -20,7 +22,11 @@ export const TFoot = forwardRef<HTMLTableSectionElement, TFootProps>(
     return (
       <tfoot
         ref={ref}
-        className={clsx(withTableBaseName("tfoot"), {[withTableBaseName("tfoot-sticky")]: sticky }, className)}
+        className={clsx(
+          withTableBaseName("tfoot"),
+          { [withTableBaseName("tfoot-sticky")]: sticky },
+          className,
+        )}
         {...rest}
       >
         {children}

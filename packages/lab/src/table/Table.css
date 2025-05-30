@@ -54,7 +54,7 @@ table.saltTable thead {
   white-space: nowrap;
 }
 
-.saltTable-thead-sticky{
+.saltTable-thead-sticky {
   position: sticky;
   top: 0;
 }
