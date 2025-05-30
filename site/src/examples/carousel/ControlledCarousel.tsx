@@ -32,6 +32,7 @@ export const ControlledCarousel = (): ReactElement => {
             const slideId = useId();
             return (
               <CarouselSlide
+                appearance="bordered"
                 key={slideId}
                 aria-labelledby={`slide-title-${slideId}`}
                 media={
@@ -49,7 +50,7 @@ export const ControlledCarousel = (): ReactElement => {
           })}
         </CarouselSlider>
       </Carousel>
-      <FlexLayout gap={1} direction="row" align="center" justify="center">
+      <FlexLayout gap={2} direction="row" align="center" justify="center">
         <Button
           appearance="bordered"
           onClick={() => setSlide(Math.max(0, slide - 1))}
