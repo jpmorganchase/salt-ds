@@ -57,6 +57,7 @@ export const CarouselSlide = forwardRef<HTMLDivElement, CarouselSlideProps>(
       media,
       header,
       children,
+      className,
       "aria-labelledby": ariaLabelledBy,
       style,
       id: idProp,
@@ -100,7 +101,7 @@ export const CarouselSlide = forwardRef<HTMLDivElement, CarouselSlideProps>(
       "--carousel-slide-width":
         visibleSlides > 1
           ? `calc((100% / ${visibleSlides}) - var(--salt-spacing-200)/${visibleSlides})`
-          : undefined,
+          : "100%",
       ...style,
     };
 
@@ -117,9 +118,13 @@ export const CarouselSlide = forwardRef<HTMLDivElement, CarouselSlideProps>(
         aria-roledescription="slide"
         aria-labelledby={clsx(ariaLabelledBy, announcerId)}
         id={id}
-        className={clsx(withBaseName(), {
-          [withBaseName("bordered")]: appearance === "bordered",
-        })}
+        className={clsx(
+          withBaseName(),
+          {
+            [withBaseName("bordered")]: appearance === "bordered",
+          },
+          className,
+        )}
         style={SlideStyles}
         tabIndex={isVisible ? 0 : -1}
         hidden={!isVisible}
