@@ -1,5 +1,11 @@
 # @salt-ds/core
 
+## 1.46.2
+
+### Patch Changes
+
+- 0c140c0: Fixed `Checkbox`'s checked color styles applying when `Checkbox` is indeterminate.
+
 ## 1.46.1
 
 ### Patch Changes
