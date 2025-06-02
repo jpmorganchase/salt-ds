@@ -1,9 +1,9 @@
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
-import { type HTMLAttributes, forwardRef } from "react";
+import { type HTMLAttributes, forwardRef, useRef } from "react";
 import { type A11yValueProps, FormFieldContext } from "../form-field-context";
-import { capitalize, makePrefixer, useId } from "../utils";
+import { capitalize, makePrefixer, useForkRef, useId } from "../utils";
 
 import formFieldCss from "./FormField.css";
 
@@ -67,6 +67,9 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
       window: targetWindow,
     });
 
+    const formFieldRef = useRef<HTMLDivElement>(null);
+    const handleRef = useForkRef(ref, formFieldRef);
+
     const formId = useId(idProp);
 
     const labelId = formId ? `label-${formId}` : undefined;
@@ -74,7 +77,7 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
 
     return (
       <div
-        ref={ref}
+        ref={handleRef}
         className={clsx(
           withBaseName(),
           {
@@ -96,6 +99,7 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
             necessity,
             readOnly,
             validationStatus,
+            formFieldRef,
           }}
         >
           {children}
