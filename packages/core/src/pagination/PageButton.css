@@ -9,9 +9,9 @@
   padding: 0 var(--salt-spacing-100);
   border: none;
   font-size: var(--salt-text-fontSize);
-  font-family: var(--salt-text-action-fontFamily);
+  font-family: var(--salt-text-fontFamily);
   line-height: var(--salt-text-lineHeight);
-  letter-spacing: var(--salt-text-action-letterSpacing);
+  letter-spacing: var(--salt-text-letterSpacing);
   cursor: var(--salt-selectable-cursor-hover);
   border-radius: var(--salt-palette-corner-weak, 0);
 }
@@ -21,8 +21,7 @@
   background: var(--salt-selectable-background-hover);
 }
 
-.saltPageButton:active,
-.saltPageButton-active {
+.saltPageButton:active {
   background: var(--salt-selectable-background-selected);
 }
 
@@ -36,10 +35,8 @@
   cursor: var(--salt-editable-cursor-readonly);
 }
 
-.saltPageButton-selected {
-  background: var(--salt-selectable-background-selected);
-}
-.saltPageButton-selected:focus-visible {
+.saltPageButton[aria-current="page"] {
+  border: var(--salt-size-border) var(--salt-selectable-borderStyle) var(--salt-selectable-borderColor);
   background: var(--salt-selectable-background-selected);
 }
 
