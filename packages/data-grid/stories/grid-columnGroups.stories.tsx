@@ -1,7 +1,7 @@
 import { ColumnGroup, Grid, GridColumn } from "../src";
 import { dummyRowKeyGetter, rowData } from "./dummyData";
 import "./grid.stories.css";
-import type { StoryFn } from "@storybook/react";
+import type { StoryFn } from "@storybook/react-vite";
 
 export default {
   title: "Lab/Data Grid",

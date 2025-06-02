@@ -7,7 +7,7 @@ import {
   Text,
 } from "@salt-ds/core";
 import { SystemStatus, SystemStatusContent } from "@salt-ds/lab";
-import type { Meta, StoryFn } from "@storybook/react";
+import type { Meta, StoryFn } from "@storybook/react-vite";
 
 import { CloseIcon } from "@salt-ds/icons";
 

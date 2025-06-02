@@ -12,7 +12,7 @@ import {
   SearchIcon,
   UserIcon,
 } from "@salt-ds/icons";
-import type { Meta } from "@storybook/react";
+import type { Meta } from "@storybook/react-vite";
 import { type FC, useState } from "react";
 
 export default {

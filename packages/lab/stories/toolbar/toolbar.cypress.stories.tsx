@@ -20,7 +20,7 @@ import {
   type ToolbarProps,
   Tooltray,
 } from "@salt-ds/lab";
-import type { StoryFn } from "@storybook/react";
+import type { StoryFn } from "@storybook/react-vite";
 import { AdjustableFlexbox, type AdjustableFlexboxProps } from "../components";
 import "./toolbar.stories.css";
 

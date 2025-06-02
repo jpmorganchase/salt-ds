@@ -33,7 +33,7 @@ import {
   type SelectionChangeHandler,
   type ValueComponentProps,
 } from "@salt-ds/lab";
-import type { StoryFn } from "@storybook/react";
+import type { StoryFn } from "@storybook/react-vite";
 import { Fragment, type ReactNode, forwardRef } from "react";
 
 import "./contact-details.stories.css";

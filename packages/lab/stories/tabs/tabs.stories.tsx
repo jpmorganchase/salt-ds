@@ -1,6 +1,6 @@
 import { Button, SaltProvider, Text } from "@salt-ds/core";
 import { TabPanel, Tabs } from "@salt-ds/lab";
-import type { StoryFn } from "@storybook/react";
+import type { StoryFn } from "@storybook/react-vite";
 import { useCallback, useMemo, useRef, useState } from "react";
 import { CloseTabWarningDialog } from "../components";
 

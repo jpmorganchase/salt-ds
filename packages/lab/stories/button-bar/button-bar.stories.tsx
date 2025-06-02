@@ -1,6 +1,6 @@
 import { ExportIcon, ImportIcon } from "@salt-ds/icons";
 import { ButtonBar, OrderedButton } from "@salt-ds/lab";
-import type { Meta, StoryFn } from "@storybook/react";
+import type { Meta, StoryFn } from "@storybook/react-vite";
 
 export default {
   title: "Lab/ButtonBar",

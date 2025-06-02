@@ -6,7 +6,7 @@ import {
   ToggleButtonGroup,
 } from "@salt-ds/core";
 import { ArrowDownIcon, ArrowUpIcon } from "@salt-ds/icons";
-import type { Meta, StoryFn } from "@storybook/react";
+import type { Meta, StoryFn } from "@storybook/react-vite";
 import {
   type ChangeEvent,
   type KeyboardEvent,

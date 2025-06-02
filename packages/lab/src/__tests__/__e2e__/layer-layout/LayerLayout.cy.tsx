@@ -1,5 +1,5 @@
 import * as layerStories from "@stories/layer-layout/layer-layout.stories";
-import { composeStories } from "@storybook/react";
+import { composeStories } from "@storybook/react-vite";
 
 const composedStories = composeStories(layerStories);
 

@@ -1,6 +1,6 @@
 import { ComboBox, Option } from "@salt-ds/core";
 import * as comboBoxStories from "@stories/combo-box/combo-box.stories";
-import { composeStories } from "@storybook/react";
+import { composeStories } from "@storybook/react-vite";
 import { type KeyboardEventHandler, useRef, useState } from "react";
 import { CustomFloatingComponentProvider, FLOATING_TEST_ID } from "../common";
 

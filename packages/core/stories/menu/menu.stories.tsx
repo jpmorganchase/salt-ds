@@ -18,7 +18,7 @@ import {
   PasteIcon,
   SettingsIcon,
 } from "@salt-ds/icons";
-import type { Meta, StoryFn } from "@storybook/react";
+import type { Meta, StoryFn } from "@storybook/react-vite";
 import { useState } from "react";
 
 export default {

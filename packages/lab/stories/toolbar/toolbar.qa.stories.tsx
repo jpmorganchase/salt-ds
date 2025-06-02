@@ -10,7 +10,7 @@ import {
   SwapIcon,
   TearOutIcon,
 } from "@salt-ds/icons";
-import type { StoryFn } from "@storybook/react";
+import type { StoryFn } from "@storybook/react-vite";
 
 import {
   Dropdown,

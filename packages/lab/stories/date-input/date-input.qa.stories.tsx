@@ -1,5 +1,5 @@
 import { DateInputRange, DateInputSingle, useLocalization } from "@salt-ds/lab";
-import type { StoryFn } from "@storybook/react";
+import type { StoryFn } from "@storybook/react-vite";
 import { enUS as dateFnsEnUs } from "date-fns/locale";
 import { QAContainer, type QAContainerProps } from "docs/components";
 

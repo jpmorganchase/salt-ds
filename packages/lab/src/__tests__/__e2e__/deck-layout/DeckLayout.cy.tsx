@@ -1,5 +1,5 @@
 import * as deckStories from "@stories/deck-layout/deck-layout.stories";
-import { composeStories } from "@storybook/react";
+import { composeStories } from "@storybook/react-vite";
 import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
 
 const composedStories = composeStories(deckStories);

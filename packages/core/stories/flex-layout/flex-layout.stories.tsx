@@ -1,6 +1,6 @@
 import { FlexItem, FlexLayout } from "@salt-ds/core";
 
-import type { Meta, StoryFn } from "@storybook/react";
+import type { Meta, StoryFn } from "@storybook/react-vite";
 import "../layout/layout.stories.css";
 
 export default {

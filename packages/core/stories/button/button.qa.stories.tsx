@@ -1,6 +1,6 @@
 import { Button } from "@salt-ds/core";
 import { SearchIcon } from "@salt-ds/icons";
-import type { Meta, StoryFn } from "@storybook/react";
+import type { Meta, StoryFn } from "@storybook/react-vite";
 import {
   QAContainer,
   QAContainerNoStyleInjection,

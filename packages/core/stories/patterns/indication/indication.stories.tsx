@@ -18,7 +18,7 @@ import {
   UrgencyNoneIcon,
   WarningIcon,
 } from "@salt-ds/icons";
-import type { Meta } from "@storybook/react";
+import type { Meta } from "@storybook/react-vite";
 
 export default {
   title: "Patterns/Indication",

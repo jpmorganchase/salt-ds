@@ -5,7 +5,7 @@ import {
   useAriaAnnouncer,
 } from "@salt-ds/core";
 import { ContentStatus, type ContentStatusProps } from "@salt-ds/lab";
-import type { Meta, StoryFn } from "@storybook/react";
+import type { Meta, StoryFn } from "@storybook/react-vite";
 import { useCallback, useState } from "react";
 
 export default {

@@ -1,7 +1,7 @@
 import { ToggleButton, ToggleButtonGroup } from "@salt-ds/core";
 import { AppSwitcherIcon, FolderClosedIcon, VisibleIcon } from "@salt-ds/icons";
 import { CheckIcon } from "@storybook/icons";
-import type { Meta, StoryFn } from "@storybook/react";
+import type { Meta, StoryFn } from "@storybook/react-vite";
 import {
   QAContainer,
   QAContainerNoStyleInjection,
