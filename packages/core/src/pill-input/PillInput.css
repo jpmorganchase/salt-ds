@@ -81,7 +81,7 @@
 
 .saltPillInput-focused .saltPillInput-activationIndicator,
 .saltPillInput-focused:hover .saltPillInput-activationIndicator {
-  border-bottom: var(--salt-size-border-strong) var(--salt-editable-borderStyle-active) var(--pillInput-borderColor-active);
+  border-bottom: var(--salt-size-fixed-200) var(--salt-editable-borderStyle-active) var(--pillInput-borderColor-active);
 }
 
 .saltPillInput-readOnly .saltPillInput-activationIndicator,
@@ -103,7 +103,7 @@
 }
 
 .saltPillInput-bordered.saltPillInput-focused .saltPillInput-activationIndicator {
-  border-bottom-width: calc(var(--salt-size-border-strong) - var(--salt-size-border));
+  border-bottom-width: calc(var(--salt-size-fixed-200) - var(--salt-size-border));
 }
 
 /* Class applied if `variant="primary"` */

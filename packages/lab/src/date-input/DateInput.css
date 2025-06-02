@@ -68,7 +68,7 @@
 
 .saltDateInput-focused .saltDateInput-activationIndicator,
 .saltDateInput-focused:hover .saltDateInput-activationIndicator {
-  border-bottom: var(--salt-size-border-strong) var(--salt-editable-borderStyle-active) var(--input-borderColor-active);
+  border-bottom: var(--salt-size-fixed-200) var(--salt-editable-borderStyle-active) var(--input-borderColor-active);
 }
 
 .saltDateInput-readOnly .saltDateInput-activationIndicator,
@@ -90,7 +90,7 @@
 }
 
 .saltDateInput-bordered.saltDateInput-focused .saltDateInput-activationIndicator {
-  border-bottom-width: calc(var(--salt-size-border-strong) - var(--salt-size-border));
+  border-bottom-width: calc(var(--salt-size-fixed-200) - var(--salt-size-border));
 }
 
 /* Class applied if `variant="primary"` */

@@ -68,7 +68,7 @@
 
 .saltInput-focused .saltInput-activationIndicator,
 .saltInput-focused:hover .saltInput-activationIndicator {
-  border-bottom: var(--salt-size-border-strong) var(--salt-editable-borderStyle-active) var(--input-borderColor-active);
+  border-bottom: var(--salt-size-fixed-200) var(--salt-editable-borderStyle-active) var(--input-borderColor-active);
 }
 
 .saltInput-readOnly .saltInput-activationIndicator,
@@ -90,7 +90,7 @@
 }
 
 .saltInput-bordered.saltInput-focused .saltInput-activationIndicator {
-  border-bottom-width: calc(var(--salt-size-border-strong) - var(--salt-size-border));
+  border-bottom-width: calc(var(--salt-size-fixed-200) - var(--salt-size-border));
 }
 
 /* Class applied if `variant="primary"` */

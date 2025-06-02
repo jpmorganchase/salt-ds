@@ -271,7 +271,7 @@
 
 /* Styles applied to number buttons container */
 .saltNumberInput-buttonContainer {
-  --numberInput-buttonGap: var(--salt-size-border-strong);
+  --numberInput-buttonGap: var(--salt-spacing-fixed-200);
   display: flex;
   flex-direction: column;
   gap: var(--numberInput-buttonGap);

@@ -68,7 +68,7 @@
 
 .saltDropdown:focus .saltDropdown-activationIndicator,
 .saltDropdown:focus:hover .saltDropdown-activationIndicator {
-  border-bottom: var(--salt-size-border-strong) var(--salt-editable-borderStyle-active) var(--dropdown-borderColor-active);
+  border-bottom: var(--salt-size-fixed-200) var(--salt-editable-borderStyle-active) var(--dropdown-borderColor-active);
 }
 
 .saltDropdown[aria-readonly="true"] .saltDropdown-activationIndicator,
@@ -90,7 +90,7 @@
 }
 
 .saltDropdown-bordered.saltDropdown:focus .saltDropdown-activationIndicator {
-  border-bottom-width: calc(var(--salt-size-border-strong) - var(--salt-size-border));
+  border-bottom-width: calc(var(--salt-size-fixed-200) - var(--salt-size-border));
 }
 
 .saltDropdown-primary {

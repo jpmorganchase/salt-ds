@@ -72,7 +72,7 @@
 
 .saltMultilineInput-focused .saltMultilineInput-activationIndicator,
 .saltMultilineInput-focused:hover .saltMultilineInput-activationIndicator {
-  border-bottom: var(--salt-size-border-strong) var(--salt-editable-borderStyle-active) var(--multilineInput-borderColor-active);
+  border-bottom: var(--salt-size-fixed-200) var(--salt-editable-borderStyle-active) var(--multilineInput-borderColor-active);
 }
 
 .saltMultilineInput-readOnly .saltMultilineInput-activationIndicator,
@@ -94,7 +94,7 @@
 }
 
 .saltMultilineInput-bordered.saltMultilineInput-focused .saltMultilineInput-activationIndicator {
-  border-bottom-width: calc(var(--salt-size-border-strong) - var(--salt-size-border));
+  border-bottom-width: calc(var(--salt-size-fixed-200) - var(--salt-size-border));
 }
 
 /* Class applied if `variant="primary"` */
