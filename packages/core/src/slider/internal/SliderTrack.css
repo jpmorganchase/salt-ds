@@ -67,7 +67,7 @@
   background: var(--slider-track-fill);
   border-top-left-radius: var(--salt-palette-corner-weaker);
   border-bottom-left-radius: var(--salt-palette-corner-weaker);
-  width: calc(var(--slider-progressPercentage) - 1.5 * var(--salt-size-border-strong));
+  width: calc(var(--slider-progressPercentage) - var(--salt-size-fixed-300));
 }
 
 .saltSliderTrack-hasMinTick.saltSliderTrack-rail::before {
@@ -78,7 +78,7 @@
   background: var(--slider-track-background);
   border-top-right-radius: var(--salt-palette-corner-weaker);
   border-bottom-right-radius: var(--salt-palette-corner-weaker);
-  width: calc(100% - var(--slider-progressPercentage) - 1.5 * var(--salt-size-border-strong));
+  width: calc(100% - var(--slider-progressPercentage) - var(--salt-size-fixed-300));
 }
 
 .saltSliderTrack-hasMaxTick.saltSliderTrack-rail::after {
@@ -87,20 +87,20 @@
 
 .saltSliderTrack-range .saltSliderTrack-rail::before {
   background: var(--slider-track-background);
-  width: calc(var(--slider-progressPercentageStart) - (var(--salt-size-border-strong) * 1.5));
+  width: calc(var(--slider-progressPercentageStart) - var(--salt-size-fixed-300));
 }
 
 .saltSliderTrack-range .saltSliderTrack-rail::after {
   background: var(--slider-track-background);
-  width: calc(100% - var(--slider-progressPercentageEnd) - (var(--salt-size-border-strong) * 1.5));
+  width: calc(100% - var(--slider-progressPercentageEnd) - var(--salt-size-fixed-300));
 }
 
 .saltSliderTrack-range .saltSliderTrack-rail .saltSliderTrack-fill {
   background: var(--slider-track-fill);
   height: 100%;
-  left: calc(var(--slider-progressPercentageStart) + 1.5 * var(--salt-size-border-strong));
+  left: calc(var(--slider-progressPercentageStart) + var(--salt-size-fixed-300));
   position: absolute;
-  width: calc(var(--slider-progressPercentageEnd) - var(--slider-progressPercentageStart) - var(--salt-size-border-strong) * 3);
+  width: calc(var(--slider-progressPercentageEnd) - var(--slider-progressPercentageStart) - var(--salt-size-fixed-600));
 }
 
 .saltSliderTrack-minLabel,
@@ -129,7 +129,7 @@
   height: var(--slider-tick-height);
   position: absolute;
   transform: translate(-50%);
-  width: var(--salt-size-border-strong);
+  width: var(--salt-size-fixed-200);
 }
 
 .saltSliderTrack-withTicks .saltSliderTrack-tickHidden {
