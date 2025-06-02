@@ -49,3 +49,15 @@
   --salt-size-bar-small: 2px;
   --salt-size-border-strong: 2px;
 }
+
+.salt-theme {
+  --salt-size-fixed-100: 1px;
+  --salt-size-fixed-200: 2px;
+  --salt-size-fixed-300: 3px;
+  --salt-size-fixed-400: 4px;
+  --salt-size-fixed-500: 5px;
+  --salt-size-fixed-600: 6px;
+  --salt-size-fixed-700: 7px;
+  --salt-size-fixed-800: 8px;
+  --salt-size-fixed-900: 9px;
+}
