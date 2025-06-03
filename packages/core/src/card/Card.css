@@ -44,7 +44,7 @@
   left: calc(-1 * var(--salt-size-fixed-100));
   bottom: calc(-1 * var(--salt-size-fixed-100));
   height: var(--salt-size-bar);
-  width: calc(100% + var(--salt-spacing-fixed-200));
+  width: calc(100% + var(--salt-size-fixed-200));
 }
 
 /* Styles applied to Card if `accent="left"` */
