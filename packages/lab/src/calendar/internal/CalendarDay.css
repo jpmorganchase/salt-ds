@@ -70,7 +70,7 @@
 .saltCalendarDay-selectedEnd:hover {
   color: var(--salt-content-primary-foreground);
   background: var(--salt-selectable-background-selected);
-  box-shadow: 0 0 0 var(--salt-size-border) var(--salt-selectable-borderColor-selected);
+  box-shadow: 0 0 0 var(--salt-size-fixed-100) var(--salt-selectable-borderColor-selected);
 }
 
 .saltCalendarDay-hoveredSpan,
@@ -79,8 +79,8 @@
 .saltCalendarDay-selectedSpan:hover {
   color: var(--salt-content-primary-foreground);
   background: var(--salt-selectable-background-hover);
-  box-shadow: calc(var(--salt-size-border) * -2) 0 0 0 var(--salt-selectable-background-hover), calc(var(--salt-size-border) * -1) 0 0 var(--salt-size-border)
-    var(--salt-selectable-borderColor-selected), 0 calc(var(--salt-size-border) * -1) 0 var(--salt-selectable-borderColor-selected);
+  box-shadow: calc(var(--salt-size-fixed-100) * -2) 0 0 0 var(--salt-selectable-background-hover), calc(var(--salt-size-fixed-100) * -1) 0 0 var(--salt-size-fixed-100)
+    var(--salt-selectable-borderColor-selected), 0 calc(var(--salt-size-fixed-100) * -1) 0 var(--salt-selectable-borderColor-selected);
 }
 
 .saltCalendarDay-disabled,
@@ -105,7 +105,7 @@
 
 .saltCalendarDay-unselectable:after {
   content: "";
-  height: var(--salt-size-border);
+  height: var(--salt-size-fixed-100);
   width: calc(100% - var(--salt-spacing-100));
   background: var(--salt-content-secondary-foreground);
   position: absolute;

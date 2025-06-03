@@ -1,11 +1,11 @@
 .saltCalendarWeekHeader {
   display: grid;
-  gap: var(--salt-size-border);
+  gap: var(--salt-spacing-fixed-100);
   grid-template-columns: repeat(7, var(--salt-size-base));
   text-align: center;
   align-items: center;
   height: var(--salt-size-base);
-  margin: var(--salt-size-border);
+  margin: var(--salt-spacing-fixed-100);
 }
 
 .saltCalendarWeekHeader-dayOfWeek {

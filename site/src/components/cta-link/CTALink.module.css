@@ -5,7 +5,7 @@
   background: var(--cta-background-default);
   border-color: var(--cta-borderColor-default);
   border-style: solid;
-  border-width: var(--salt-size-border);
+  border-width: var(--salt-size-fixed-100);
   border-radius: var(--salt-palette-corner-weak, 0);
   cursor: var(--salt-actionable-cursor-hover);
   display: inline-flex;
@@ -17,7 +17,7 @@
   letter-spacing: var(--salt-text-action-letterSpacing);
   text-transform: var(--salt-text-action-textTransform);
   font-weight: var(--salt-text-action-fontWeight);
-  padding: 0 calc(var(--salt-spacing-100) - var(--salt-size-border));
+  padding: 0 calc(var(--salt-spacing-100) - var(--salt-size-fixed-100));
   margin: 0;
   height: var(--salt-size-base);
   text-align: var(--salt-text-action-textAlign);

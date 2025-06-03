@@ -14,7 +14,7 @@
 /* Style applied to the root element */
 .saltFormFieldLegacy {
   --formFieldLegacy-activationIndicator-color: var(--salt-editable-borderColor);
-  --formFieldLegacy-activationIndicator-size: var(--salt-size-border);
+  --formFieldLegacy-activationIndicator-size: var(--salt-size-fixed-100);
   --formFieldLegacy-activationIndicator-style: var(--salt-editable-borderStyle);
   --formFieldLegacy-background: var(--salt-editable-primary-background);
   --formFieldLegacy-focused-outlineColor: var(--salt-focused-outlineColor);
@@ -45,7 +45,7 @@
 /* Class applied to the root element on hover */
 .saltFormFieldLegacy:hover {
   --formFieldLegacy-activationIndicator-color: var(--salt-editable-borderColor-hover);
-  --formFieldLegacy-activationIndicator-size: var(--salt-size-border);
+  --formFieldLegacy-activationIndicator-size: var(--salt-size-fixed-100);
   --formFieldLegacy-activationIndicator-style: var(--salt-editable-borderStyle-hover);
 
   --saltInputLegacy-cursor: var(--salt-editable-cursor-hover);
@@ -95,7 +95,7 @@
 .saltFormFieldLegacy-disabled {
   --formFieldLegacy-activationIndicator-color: var(--salt-editable-borderColor-disabled);
   --formFieldLegacy-activationIndicator-opacity: var(--salt-palette-opacity-disabled);
-  --formFieldLegacy-activationIndicator-size: var(--salt-size-border);
+  --formFieldLegacy-activationIndicator-size: var(--salt-size-fixed-100);
   --formFieldLegacy-activationIndicator-style: var(--salt-editable-borderStyle-disabled);
   --formFieldLegacy-helperText-opacity: var(--salt-palette-opacity-disabled);
 
@@ -105,7 +105,7 @@
 /* Class applied to the root element on hover if `disabled={true}` */
 .saltFormFieldLegacy.saltFormFieldLegacy-disabled:hover {
   --formFieldLegacy-activationIndicator-color: var(--salt-editable-borderColor-disabled);
-  --formFieldLegacy-activationIndicator-size: var(--salt-size-border);
+  --formFieldLegacy-activationIndicator-size: var(--salt-size-fixed-100);
   --formFieldLegacy-activationIndicator-style: var(--salt-editable-borderStyle-disabled);
 
   --saltInputLegacy-cursor: var(--salt-editable-cursor-disabled);
@@ -217,7 +217,7 @@
 /* Class applied to the root element if `readOnly={true}"` on hover */
 .saltFormFieldLegacy.saltFormFieldLegacy-readOnly:hover {
   --formFieldLegacy-activationIndicator-color: var(--salt-editable-borderColor-readonly);
-  --formFieldLegacy-activationIndicator-size: var(--salt-size-border);
+  --formFieldLegacy-activationIndicator-size: var(--salt-size-fixed-100);
   --formFieldLegacy-activationIndicator-style: var(--salt-editable-borderStyle-readonly);
 
   --saltInputLegacy-cursor: var(--salt-editable-cursor-readonly);

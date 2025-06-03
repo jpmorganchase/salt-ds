@@ -1,6 +1,6 @@
 /* Default variables applied to the root element */
 .saltStackLayout {
-  --stackLayout-separator-weight: var(--salt-size-border, 1);
+  --stackLayout-separator-weight: var(--salt-size-fixed-100, 1);
 }
 
 .saltStackLayout-separator > * {

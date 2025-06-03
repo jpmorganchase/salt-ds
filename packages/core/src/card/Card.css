@@ -1,6 +1,6 @@
 /* Styles applied to the root element */
 .saltCard {
-  border-width: var(--saltCard-borderWidth, var(--salt-size-border));
+  border-width: var(--saltCard-borderWidth, var(--salt-size-fixed-100));
   border-style: var(--salt-container-borderStyle);
   padding: var(--saltCard-padding, var(--salt-spacing-200));
   position: relative;
@@ -41,33 +41,33 @@
 
 /* Styles applied to Card if `accent="bottom"` (default) */
 .saltCard-accentBottom::after {
-  left: calc(-1 * var(--salt-size-border));
-  bottom: calc(-1 * var(--salt-size-border));
+  left: calc(-1 * var(--salt-size-fixed-100));
+  bottom: calc(-1 * var(--salt-size-fixed-100));
   height: var(--salt-size-bar);
-  width: calc(100% + calc(2 * var(--salt-size-border)));
+  width: calc(100% + var(--salt-spacing-fixed-200));
 }
 
 /* Styles applied to Card if `accent="left"` */
 .saltCard-accentLeft::after {
-  left: calc(-1 * var(--salt-size-border));
-  top: calc(-1 * var(--salt-size-border));
-  height: calc(100% + calc(2 * var(--salt-size-border)));
+  left: calc(-1 * var(--salt-size-fixed-100));
+  top: calc(-1 * var(--salt-size-fixed-100));
+  height: calc(100% + var(--salt-size-fixed-200));
   width: var(--salt-size-bar);
 }
 
 /* Styles applied to Card if `accent="top"` */
 .saltCard-accentTop::after {
-  left: calc(-1 * var(--salt-size-border));
-  top: calc(-1 * var(--salt-size-border));
+  left: calc(-1 * var(--salt-size-fixed-100));
+  top: calc(-1 * var(--salt-size-fixed-100));
   height: var(--salt-size-bar);
-  width: calc(100% + calc(2 * var(--salt-size-border)));
+  width: calc(100% + var(--salt-size-fixed-200));
 }
 
 /* Styles applied to Card if `accent="right"` */
 .saltCard-accentRight::after {
-  right: calc(-1 * var(--salt-size-border));
-  top: calc(-1 * var(--salt-size-border));
-  height: calc(100% + calc(2 * var(--salt-size-border)));
+  right: calc(-1 * var(--salt-size-fixed-100));
+  top: calc(-1 * var(--salt-size-fixed-100));
+  height: calc(100% + var(--salt-size-fixed-200));
   width: var(--salt-size-bar);
 }
 
