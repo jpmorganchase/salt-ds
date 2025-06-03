@@ -38,7 +38,7 @@ export const AllExamples: StoryFn<QAContainerProps> = () => (
         </NavigationItem>
       </FlowLayout>
       <FlowLayout>
-        <StackLayout gap="var(--salt-size-border">
+        <StackLayout gap="var(--salt-spacing-fixed-100)">
           <NavigationItem orientation="vertical" level={0}>
             Level 0
           </NavigationItem>
@@ -52,7 +52,7 @@ export const AllExamples: StoryFn<QAContainerProps> = () => (
             Level 3
           </NavigationItem>
         </StackLayout>
-        <StackLayout gap="var(--salt-size-border">
+        <StackLayout gap="var(--salt-spacing-fixed-100)">
           <NavigationItem orientation="vertical" level={0}>
             <NotificationIcon />
             Level 0
