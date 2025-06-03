@@ -24,7 +24,7 @@
 
 /* Styles applied when `size="small"` */
 .saltSpinner-small {
-  --spinner-strokeWidth: var(--salt-size-bar-small);
+  --spinner-strokeWidth: var(--salt-size-fixed-200);
   height: var(--salt-size-icon);
   width: var(--salt-size-icon);
 }
