@@ -28,9 +28,9 @@
 .saltLinearProgress-buffer {
   width: 0;
   background: var(--salt-container-primary-background);
-  outline: solid var(--salt-size-border) var(--salt-accent-background);
+  outline: solid var(--salt-size-fixed-100) var(--salt-accent-background);
   z-index: var(--salt-zIndex-default);
-  outline-offset: calc(var(--salt-size-border) * -1);
+  outline-offset: calc(var(--salt-size-fixed-100) * -1);
 }
 
 .saltLinearProgress-bar {

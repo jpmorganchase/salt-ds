@@ -17,13 +17,13 @@
 }
 
 .saltSwitch-track {
-  border: var(--salt-size-border) var(--salt-selectable-borderStyle) var(--salt-selectable-borderColor);
+  border: var(--salt-size-fixed-100) var(--salt-selectable-borderStyle) var(--salt-selectable-borderColor);
   --saltIcon-size: 100%;
   border-radius: var(--salt-palette-corner-weak, 0);
   display: flex;
   flex-shrink: 0;
   height: calc(var(--salt-size-base) - var(--salt-spacing-100));
-  width: calc((var(--salt-size-selectable) + var(--salt-spacing-25) + var(--salt-size-border)) * 2);
+  width: calc((var(--salt-size-selectable) + var(--salt-spacing-25) + var(--salt-size-fixed-100)) * 2);
   align-items: center;
   color: var(--salt-selectable-foreground);
   background: var(--salt-container-primary-background);
@@ -72,7 +72,7 @@
   height: var(--salt-size-selectable);
   background: currentColor;
   margin: var(--salt-spacing-25);
-  border: var(--salt-size-border) var(--salt-selectable-borderStyle) var(--salt-selectable-borderColor);
+  border: var(--salt-size-fixed-100) var(--salt-selectable-borderStyle) var(--salt-selectable-borderColor);
   box-sizing: border-box;
   border-radius: var(--salt-palette-corner-weaker, 0);
 }
@@ -106,7 +106,7 @@
   top: 0;
   z-index: var(--salt-zIndex-default);
   height: calc(var(--salt-size-base) - var(--salt-spacing-100));
-  width: calc((var(--salt-size-selectable) + var(--salt-spacing-25) + var(--salt-size-border)) * 2);
+  width: calc((var(--salt-size-selectable) + var(--salt-spacing-25) + var(--salt-size-fixed-100)) * 2);
 }
 
 @media (prefers-reduced-motion) {
