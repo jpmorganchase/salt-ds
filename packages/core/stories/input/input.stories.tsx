@@ -1,4 +1,12 @@
-import { Button, FlowLayout, Input, Text } from "@salt-ds/core";
+import {
+  Button,
+  FlowLayout,
+  FormField,
+  FormFieldHelperText,
+  FormFieldLabel,
+  Input,
+  Text,
+} from "@salt-ds/core";
 import {
   CallIcon,
   CloseIcon,
@@ -366,5 +374,17 @@ export const Bordered: StoryFn<typeof Input> = (args) => {
         {...args}
       />
     </FlowLayout>
+  );
+};
+
+export const WithFormField: StoryFn<typeof Input> = (args) => {
+  return (
+    <FormField>
+      <FormFieldLabel>Username</FormFieldLabel>
+      <Input {...args} />
+      <FormFieldHelperText>
+        This should be more than 3 characters long.
+      </FormFieldHelperText>
+    </FormField>
   );
 };
