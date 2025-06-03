@@ -25,7 +25,7 @@
 }
 
 .saltDropdown-bordered.saltDropdown {
-  border: var(--salt-size-border) var(--salt-editable-borderStyle) var(--dropdown-borderColor);
+  border: var(--salt-size-fixed-100) var(--salt-editable-borderStyle) var(--dropdown-borderColor);
 }
 
 .saltDropdown-bordered.saltDropdown:hover {
@@ -58,7 +58,7 @@
   bottom: 0;
   width: 100%;
   position: absolute;
-  border-bottom: var(--salt-size-border) var(--salt-editable-borderStyle) var(--dropdown-borderColor);
+  border-bottom: var(--salt-size-fixed-100) var(--salt-editable-borderStyle) var(--dropdown-borderColor);
 }
 
 .saltDropdown:hover .saltDropdown-activationIndicator {
@@ -90,7 +90,7 @@
 }
 
 .saltDropdown-bordered.saltDropdown:focus .saltDropdown-activationIndicator {
-  border-bottom-width: calc(var(--salt-size-fixed-200) - var(--salt-size-border));
+  border-bottom-width: calc(var(--salt-size-fixed-200) - var(--salt-size-fixed-100));
 }
 
 .saltDropdown-primary {

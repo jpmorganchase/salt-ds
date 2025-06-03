@@ -4,7 +4,7 @@
   --numberInput-borderColor: var(--salt-editable-borderColor);
   --numberInput-borderStyle: var(--salt-editable-borderStyle);
   --numberInput-outlineColor: var(--salt-focused-outlineColor);
-  --numberInput-borderWidth: var(--salt-size-border);
+  --numberInput-borderWidth: var(--salt-size-fixed-100);
 
   align-items: center;
   color: var(--salt-content-primary-foreground);
@@ -151,7 +151,7 @@
 .saltNumberInput-readOnly {
   --numberInput-borderColor: var(--salt-editable-borderColor-readonly);
   --numberInput-borderStyle: var(--salt-editable-borderStyle-readonly);
-  --numberInput-borderWidth: var(--salt-size-border);
+  --numberInput-borderWidth: var(--salt-size-fixed-100);
 
   background: var(--numberInput-background-readonly);
   cursor: var(--salt-editable-cursor-readonly);
@@ -159,13 +159,13 @@
 
 /* Styling when focused if `disabled={true}` */
 .saltNumberInput-focused.saltNumberInput-disabled {
-  --numberInput-borderWidth: var(--salt-size-border);
+  --numberInput-borderWidth: var(--salt-size-fixed-100);
   outline: none;
 }
 
 /* Styling when focused if `readOnly={true}` */
 .saltNumberInput-focused.saltNumberInput-readOnly {
-  --numberInput-borderWidth: var(--salt-size-border);
+  --numberInput-borderWidth: var(--salt-size-fixed-100);
 }
 
 /* Style applied to selected input if `disabled={true}` */
@@ -179,7 +179,7 @@
 .saltNumberInput-disabled:active {
   --numberInput-borderColor: var(--salt-editable-borderColor-disabled);
   --numberInput-borderStyle: var(--salt-editable-borderStyle-disabled);
-  --numberInput-borderWidth: var(--salt-size-border);
+  --numberInput-borderWidth: var(--salt-size-fixed-100);
 
   background: var(--numberInput-background-disabled);
   cursor: var(--salt-editable-cursor-disabled);
@@ -196,7 +196,7 @@
 
 /* Style applied if `bordered={true}` */
 .saltNumberInput-bordered {
-  --numberInput-border: var(--salt-size-border) var(--salt-container-borderStyle) var(--numberInput-borderColor);
+  --numberInput-border: var(--salt-size-fixed-100) var(--salt-container-borderStyle) var(--numberInput-borderColor);
   --numberInput-borderWidth: 0;
 }
 
@@ -250,7 +250,7 @@
 
 .saltNumberInput-startAdornmentContainer > .saltButton,
 .saltNumberInput-endAdornmentContainer > .saltButton {
-  --saltButton-padding: calc(var(--salt-spacing-50) - var(--salt-size-border));
+  --saltButton-padding: calc(var(--salt-spacing-50) - var(--salt-size-fixed-100));
   --saltButton-height: calc(var(--salt-size-base) - var(--salt-spacing-100));
   --saltButton-borderRadius: var(--salt-palette-corner-weaker);
 }
