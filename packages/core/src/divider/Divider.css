@@ -18,10 +18,10 @@
 }
 
 .saltDivider-horizontal {
-  height: var(--salt-size-border);
+  height: var(--salt-size-fixed-100);
 }
 
 .saltDivider-vertical {
-  width: var(--salt-size-border);
+  width: var(--salt-size-fixed-100);
   height: auto;
 }

@@ -2,29 +2,29 @@
   display: flex;
   flex-direction: row;
   background: var(--button-background);
-  gap: var(--salt-size-border);
+  gap: var(--salt-spacing-fixed-100);
 }
 
 .saltSegmentedButtonGroup > .saltButton:not(:last-of-type)::after {
   content: "";
-  width: var(--salt-size-border);
+  width: var(--salt-spacing-fixed-100);
   position: absolute;
   background: var(--button-background);
   /* Accomodate button border */
-  right: calc(var(--salt-size-border) * -2);
-  top: calc(var(--salt-size-border) * -1);
-  bottom: calc(var(--salt-size-border) * -1);
+  right: calc(var(--salt-size-fixed-100) * -2);
+  top: calc(var(--salt-size-fixed-100) * -1);
+  bottom: calc(var(--salt-size-fixed-100) * -1);
 }
 
 .saltSegmentedButtonGroup > .saltButton:not(:first-of-type)::before {
   content: "";
-  width: var(--salt-size-border);
+  width: var(--salt-spacing-fixed-100);
   position: absolute;
   background: var(--salt-separable-primary-borderColor);
   /* Accomodate button border */
-  left: calc(var(--salt-size-border) * -2);
-  top: calc(var(--salt-size-border) * -1);
-  bottom: calc(var(--salt-size-border) * -1);
+  left: calc(var(--salt-size-fixed-100) * -2);
+  top: calc(var(--salt-size-fixed-100) * -1);
+  bottom: calc(var(--salt-size-fixed-100) * -1);
 }
 
 .saltSegmentedButtonGroup > .saltButton:not(:first-of-type) {
