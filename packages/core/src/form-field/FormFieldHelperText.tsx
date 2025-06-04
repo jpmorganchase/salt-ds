@@ -38,7 +38,10 @@ export const FormFieldHelperText = ({
       )}
     >
       {!disabled && !readOnly && validationStatus && (
-        <StatusIndicator status={validationStatus} />
+        <StatusIndicator
+          className={withBaseName("statusIndicator")}
+          status={validationStatus}
+        />
       )}
       <Text
         disabled={disabled}
