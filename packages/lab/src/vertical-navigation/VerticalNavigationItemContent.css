@@ -1,0 +1,58 @@
+.saltVerticalNavigationItemContent {
+  --navigation-item-paddingLeft: calc(var(--salt-spacing-150) + var(--salt-size-indicator) + (var(--salt-spacing-100) * max(0, calc(var(--depth, 0) - 1))));
+}
+
+.saltVerticalNavigationItemContent {
+  display: flex;
+  flex-direction: row;
+  gap: var(--salt-spacing-100);
+  appearance: none;
+  -webkit-appearance: none;
+  white-space: pre;
+  min-height: calc(var(--salt-size-base) + var(--salt-spacing-100));
+  min-width: 4em;
+  padding: var(--salt-spacing-50) var(--salt-spacing-100) var(--salt-spacing-50) 0;
+  padding-left: var(--navigation-item-paddingLeft);
+  position: relative;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  border-radius: var(--salt-palette-corner-weak, 0);
+  overflow: hidden;
+
+  cursor: var(--salt-navigable-cursor-hover);
+  color: var(--salt-content-primary-foreground);
+  font-weight: var(--salt-text-h4-fontWeight);
+  font-family: var(--salt-text-h4-fontFamily);
+  text-align: var(--salt-text-textAlign);
+  letter-spacing: var(--salt-text-letterSpacing);
+  line-height: var(--salt-text-h4-lineHeight);
+  font-size: var(--salt-text-h4-fontSize);
+}
+
+.saltVerticalNavigationItemContent:hover .saltVerticalNavigationItem-trigger::before {
+  background: var(--salt-palette-alpha-contrast-lowest);
+  font-weight: var(--salt-text-h4-fontWeight);
+}
+
+.saltVerticalNavigationItemContent-active {
+  background: var(--salt-selectable-background-hover);
+  font-weight: var(--salt-text-h4-fontWeight);
+}
+
+.saltVerticalNavigationItemContent-active::before {
+  background: var(--salt-navigable-indicator-active);
+}
+
+.saltVerticalNavigationItemContent::before {
+  left: var(--salt-spacing-50);
+  content: "";
+  position: absolute;
+  height: var(--salt-size-base);
+  border-radius: var(--salt-palette-corner-strongest);
+  width: var(--salt-size-indicator);
+}
+
+.saltVerticalNavigationItemContent .saltVerticalNavigationItem-indicator {
+  margin-left: auto;
+  padding-top: var(--salt-spacing-25);
+}

@@ -1,0 +1,14 @@
+.saltVerticalNavigationSubMenu {
+  display: flex;
+  flex-direction: column;
+  gap: var(--salt-size-border);
+  list-style: none;
+  padding: 0;
+  padding-top: var(--salt-size-border);
+  margin: 0;
+  --x: calc(var(--y));
+}
+
+.saltVerticalNavigationSubMenu .saltVerticalNavigationItemContent {
+  font-weight: var(--salt-text-h4-fontWeight-small);
+}

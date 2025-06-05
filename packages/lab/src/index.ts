@@ -65,4 +65,5 @@ export * from "./tokenized-input-next";
 export * from "./toolbar";
 export * from "./tree";
 export * from "./utils";
+export * from "./vertical-navigation";
 export * from "./window";
