@@ -5222,15 +5222,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ts-morph/common@npm:~0.16.0":
-  version: 0.16.0
-  resolution: "@ts-morph/common@npm:0.16.0"
+"@ts-morph/common@npm:~0.27.0":
+  version: 0.27.0
+  resolution: "@ts-morph/common@npm:0.27.0"
   dependencies:
-    fast-glob: "npm:^3.2.11"
-    minimatch: "npm:^5.1.0"
-    mkdirp: "npm:^1.0.4"
+    fast-glob: "npm:^3.3.3"
+    minimatch: "npm:^10.0.1"
     path-browserify: "npm:^1.0.1"
-  checksum: 10/f381efb01b92a1a5e6a7cd389102a43c1ab7b38d804d9b8bb12fe7a835c18d01bbf2c77762eaa99d04f8c9f55da77caa65f6e7bbd86def505acc2d58473325f2
+  checksum: 10/842d8973cb34fa6d7535092e17e6d22c2642af1d9020aa06936cd1e9d6970830a888f9abf8907f60408c0a684b476b3b74316938d1edbad215881f9743f3940a
   languageName: node
   linkType: hard
 
@@ -6945,12 +6944,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"code-block-writer@npm:^11.0.0":
-  version: 11.0.0
-  resolution: "code-block-writer@npm:11.0.0"
-  dependencies:
-    tslib: "npm:2.3.1"
-  checksum: 10/a2e7c5efb3d1bad9c0117b9e808ee6a04a7e79e9cc49fc4b9fe7acdd420aff5a50dbd2afb8f1db155b2b900a87da642178012a3a5aba230d1b42812b217ba2ad
+"code-block-writer@npm:^13.0.3":
+  version: 13.0.3
+  resolution: "code-block-writer@npm:13.0.3"
+  checksum: 10/771546224f38610eecee0598e83c9e0f86dcd600ea316dbf27c2cfebaab4fed51b042325aa460b8e0f131fac5c1de208f6610a1ddbffe4b22e76f9b5256707cb
   languageName: node
   linkType: hard
 
@@ -8520,16 +8517,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fast-glob@npm:*, fast-glob@npm:^3.2.11, fast-glob@npm:^3.2.12, fast-glob@npm:^3.2.9, fast-glob@npm:^3.3.2":
-  version: 3.3.2
-  resolution: "fast-glob@npm:3.3.2"
+"fast-glob@npm:*, fast-glob@npm:^3.2.11, fast-glob@npm:^3.2.12, fast-glob@npm:^3.2.9, fast-glob@npm:^3.3.2, fast-glob@npm:^3.3.3":
+  version: 3.3.3
+  resolution: "fast-glob@npm:3.3.3"
   dependencies:
     "@nodelib/fs.stat": "npm:^2.0.2"
     "@nodelib/fs.walk": "npm:^1.2.3"
     glob-parent: "npm:^5.1.2"
     merge2: "npm:^1.3.0"
-    micromatch: "npm:^4.0.4"
-  checksum: 10/222512e9315a0efca1276af9adb2127f02105d7288fa746145bf45e2716383fb79eb983c89601a72a399a56b7c18d38ce70457c5466218c5f13fad957cee16df
+    micromatch: "npm:^4.0.8"
+  checksum: 10/dcc6432b269762dd47381d8b8358bf964d8f4f60286ac6aa41c01ade70bda459ff2001b516690b96d5365f68a49242966112b5d5cc9cd82395fa8f9d017c90ad
   languageName: node
   linkType: hard
 
@@ -12046,7 +12043,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"micromatch@npm:^4.0.4, micromatch@npm:^4.0.5, micromatch@npm:^4.0.8":
+"micromatch@npm:^4.0.5, micromatch@npm:^4.0.8":
   version: 4.0.8
   resolution: "micromatch@npm:4.0.8"
   dependencies:
@@ -12116,6 +12113,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"minimatch@npm:^10.0.1":
+  version: 10.0.1
+  resolution: "minimatch@npm:10.0.1"
+  dependencies:
+    brace-expansion: "npm:^2.0.1"
+  checksum: 10/082e7ccbc090d5f8c4e4e029255d5a1d1e3af37bda837da2b8b0085b1503a1210c91ac90d9ebfe741d8a5f286ece820a1abb4f61dc1f82ce602a055d461d93f3
+  languageName: node
+  linkType: hard
+
 "minimatch@npm:^3.0.4, minimatch@npm:^3.1.1":
   version: 3.1.2
   resolution: "minimatch@npm:3.1.2"
@@ -12125,7 +12131,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"minimatch@npm:^5.0.1, minimatch@npm:^5.1.0":
+"minimatch@npm:^5.0.1":
   version: 5.1.6
   resolution: "minimatch@npm:5.1.6"
   dependencies:
@@ -16342,13 +16348,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ts-morph@npm:^15.1.0":
-  version: 15.1.0
-  resolution: "ts-morph@npm:15.1.0"
+"ts-morph@npm:^26.0.0":
+  version: 26.0.0
+  resolution: "ts-morph@npm:26.0.0"
   dependencies:
-    "@ts-morph/common": "npm:~0.16.0"
-    code-block-writer: "npm:^11.0.0"
-  checksum: 10/6fd9e73101ee5716b9ae99b4760eacd85e62f8430cecd5a817530ff490ec9949da5e65aaa76a04d2412efafa63c53a07c868e911f4b8ba54c4604b5ea8150587
+    "@ts-morph/common": "npm:~0.27.0"
+    code-block-writer: "npm:^13.0.3"
+  checksum: 10/0b76beec9f9641bf3304de8f41327db4e563729b4e13b37b546a4231a4310cb760cad0c88fe8d11235bbe6f9de0471dda0992b8c35535a4e4c34033304f22d14
   languageName: node
   linkType: hard
 
@@ -16381,13 +16387,6 @@ __metadata:
     minimist: "npm:^1.2.6"
     strip-bom: "npm:^3.0.0"
   checksum: 10/5e55cc2fb6b800eb72011522e10edefccb45b1f9af055681a51354c9b597d1390c6fa9cc356b8c7529f195ac8a90a78190d563159f3a1eed10e01bbd4d01a8ab
-  languageName: node
-  linkType: hard
-
-"tslib@npm:2.3.1":
-  version: 2.3.1
-  resolution: "tslib@npm:2.3.1"
-  checksum: 10/5e7de59ed9f2b705b399bda28326b7c3e7526deb48bbe1716e2e17fbd4cecbb610253d09c7b8fd0a6e76cfed9304e2e608cdb81bb1ee812d69e5089d1a94c71a
   languageName: node
   linkType: hard
 
@@ -17011,7 +17010,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "vite-plugin-typescript-turbosnap@workspace:tooling/typescript-turbosnap"
   dependencies:
-    ts-morph: "npm:^15.1.0"
+    ts-morph: "npm:^26.0.0"
   peerDependencies:
     vite: ^6.0.0
   languageName: unknown
