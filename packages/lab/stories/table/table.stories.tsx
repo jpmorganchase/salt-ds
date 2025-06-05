@@ -26,6 +26,7 @@ export default {
   subcomponents: { TD, TH, Text, Code, TBody, THead, TR, TFoot },
   args: {
     variant: "primary",
+    zebra: undefined,
     THeadProps: { sticky: false },
     TFootProps: { sticky: false },
     TRProps: {},
@@ -102,10 +103,16 @@ Secondary.args = {
   variant: "secondary",
 };
 
+export const Tertiary = Template.bind({});
+Tertiary.args = {
+  variant: "tertiary",
+};
+
 export const Zebra = Template.bind({});
 Zebra.args = {
-  variant: "zebra",
+  zebra: "tertiary",
 };
+
 
 export const CustomContent: StoryFn<typeof Text> = () => {
   return (
