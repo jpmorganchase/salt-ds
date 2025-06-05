@@ -107,6 +107,21 @@ table.saltTable tfoot {
   bottom: 0;
 }
 
+.saltTable-tfoot-primary .saltTable-tr,
+.saltTable-tfoot-primary tr {
+  background: var(--salt-container-primary-background);
+}
+
+.saltTable-tfoot-secondary .saltTable-tr,
+.saltTable-tfoot-secondary tr {
+  background: var(--salt-container-secondary-background);
+}
+
+.saltTable-tfoot-tertiary .saltTable-tr,
+.saltTable-tfoot-tertiary tr {
+  background: var(--salt-container-tertiary-background);
+}
+
 /* TH */
 .saltTable-th,
 .saltTable th {
