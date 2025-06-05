@@ -1,4 +1,6 @@
 import { Switch, type SwitchProps } from "@salt-ds/core";
+import * as switchStories from "@stories/switch/switch.stories";
+import { composeStories } from "@storybook/react";
 import { type ChangeEvent, useState } from "react";
 
 function ControlledSwitch({ onChange, disabled }: SwitchProps) {
@@ -12,6 +14,8 @@ function ControlledSwitch({ onChange, disabled }: SwitchProps) {
     <Switch disabled={disabled} checked={checked} onChange={handleChange} />
   );
 }
+
+const { WithFormField } = composeStories(switchStories);
 
 describe("GIVEN a Switch", () => {
   it("SHOULD support data attribute on inputProps", () => {
@@ -160,5 +164,15 @@ describe("GIVEN a Switch", () => {
       cy.mount(<Switch />);
       cy.get(".saltSwitch-label").should("not.exist");
     });
+  });
+
+  it("should have form field support", () => {
+    cy.mount(<WithFormField />);
+    cy.findByRole("switch").should("have.accessibleName", "Label");
+    cy.findByRole("switch").should("have.accessibleDescription", "Helper text");
+
+    cy.findByText("Label").realClick();
+    cy.findByRole("switch").should("be.focused");
+    cy.findByRole("switch").should("be.checked");
   });
 });

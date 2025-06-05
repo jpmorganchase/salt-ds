@@ -520,6 +520,10 @@ describe("Given a ComboBox", () => {
       "have.accessibleDescription",
       "Pick a US state",
     );
+
+    cy.findByText("State").realClick();
+    cy.findByRole("combobox").should("be.focused");
+    cy.findByRole("listbox").should("exist");
   });
 
   it("should support grouping", () => {
