@@ -116,7 +116,12 @@ Zebra.args = {
 
 export const HeaderVariant = Template.bind({});
 HeaderVariant.args = {
-  THeadProps: { "variant": "tertiary" }
+  THeadProps: { "variant": "secondary" }
+};
+
+export const FooterVariant = Template.bind({});
+FooterVariant.args = {
+  TFootProps: { "variant": "tertiary" }
 };
 
 
