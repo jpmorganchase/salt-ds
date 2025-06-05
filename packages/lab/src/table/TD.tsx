@@ -11,11 +11,15 @@ import { withTableBaseName } from "./Table";
 import tableCss from "./Table.css";
 
 export type TDProps = ComponentPropsWithoutRef<"td"> & {
+    /**
+   * Overflow wrap styling for the cell.
+   * @default anywhere
+   */
   overflowWrap?: CSSProperties["overflowWrap"];
 };
 
 export const TD = forwardRef<HTMLTableCellElement, TDProps>(function TD(
-  { children, className, overflowWrap, style, ...rest },
+  { children, className, overflowWrap = 'anywhere', style, ...rest },
   ref,
 ) {
   const targetWindow = useWindow();
@@ -27,7 +31,7 @@ export const TD = forwardRef<HTMLTableCellElement, TDProps>(function TD(
 
   const tdStyles = {
     ...style,
-    overflowWrap: overflowWrap,
+    overflowWrap
   };
 
   return (
