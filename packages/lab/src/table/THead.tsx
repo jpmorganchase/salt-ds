@@ -7,11 +7,21 @@ import { withTableBaseName } from "./Table";
 import tableCss from "./Table.css";
 
 export type THeadProps = ComponentPropsWithoutRef<"thead"> & {
+   /**
+   * If header is positioned with sticky styling.
+   * @default undefined
+   */
   sticky?: boolean;
+   /**
+   * Styling variant for header. 
+   * If undefined, will match variant of parent Table variant.
+   * @default undefined
+   */
+  variant?: "primary" | "secondary" | "tertiary";
 };
 
 export const THead = forwardRef<HTMLTableSectionElement, THeadProps>(
-  function THead({ children, className, sticky, ...rest }, ref) {
+  function THead({ children, className, sticky, variant, ...rest }, ref) {
     const targetWindow = useWindow();
     useComponentCssInjection({
       testId: "salt-table-thead",
@@ -24,6 +34,7 @@ export const THead = forwardRef<HTMLTableSectionElement, THeadProps>(
         ref={ref}
         className={clsx(
           withTableBaseName("thead"),
+          { [withTableBaseName(`thead-${variant}`)]: variant },
           { [withTableBaseName("thead-sticky")]: sticky },
           className,
         )}

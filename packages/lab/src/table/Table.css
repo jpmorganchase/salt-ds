@@ -74,6 +74,21 @@ table.saltTable thead {
   top: 0;
 }
 
+.saltTable-thead-primary .saltTable-tr,
+.saltTable-thead-primary tr {
+  background: var(--salt-container-primary-background);
+}
+
+.saltTable-thead-secondary .saltTable-tr,
+.saltTable-thead-secondary tr {
+  background: var(--salt-container-secondary-background);
+}
+
+.saltTable-thead-tertiary .saltTable-tr,
+.saltTable-thead-tertiary tr {
+  background: var(--salt-container-tertiary-background);
+}
+
 /* TFoot */
 .saltTable-tfoot,
 table.saltTable tfoot {
@@ -95,7 +110,6 @@ table.saltTable tfoot {
 /* TH */
 .saltTable-th,
 .saltTable th {
-  background: var(--saltTable-thead-background, var(--table-background));
   overflow: hidden;
   padding: var(--salt-spacing-100);
   position: relative;
@@ -105,7 +119,7 @@ table.saltTable tfoot {
 .saltTable-th + .saltTable-th::before,
 .saltTable th + th::before {
   --table-th-separator-height: calc(var(--salt-size-base) / 2 - 2 * var(--salt-size-border));
-  background-color: var(--salt-separable-tertiary-borderColor);
+  background: var(--salt-separable-tertiary-borderColor);
   content: "";
   position: absolute;
   z-index: 1;

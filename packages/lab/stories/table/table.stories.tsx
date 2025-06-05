@@ -114,6 +114,12 @@ Zebra.args = {
 };
 
 
+export const HeaderVariant = Template.bind({});
+HeaderVariant.args = {
+  THeadProps: { "variant": "tertiary" }
+};
+
+
 export const CustomContent: StoryFn<typeof Text> = () => {
   return (
     <StackLayout style={{ width: "800px", height: "300px", overflow: "auto" }}>
