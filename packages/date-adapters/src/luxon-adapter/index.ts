@@ -1,4 +1,4 @@
-import { DateTime, Duration, Settings } from "luxon";
+import { DateTime, Duration, Info, Settings } from "luxon";
 import {
   type AdapterOptions,
   DateDetailError,
@@ -14,12 +14,6 @@ declare module "@salt-ds/date-adapters" {
     luxon: DateTime;
   }
 }
-
-const dowFormatOptions: { [key: string]: Intl.DateTimeFormatOptions } = {
-  long: { weekday: "long" },
-  short: { weekday: "short" },
-  narrow: { weekday: "narrow" },
-};
 
 const defaultFormatMap: { [key: string]: string } = {
   // Year
@@ -109,66 +103,57 @@ export class AdapterLuxon implements SaltDateAdapter<DateTime, string> {
   /**
    * Creates a Luxon DateTime object in the system timezone.
    * @param value - The date string to parse.
-   * @param locale - The locale to use for parsing.
    * @returns The parsed Luxon DateTime object.
    */
-  private createSystemDate = (value: string, locale?: string): DateTime => {
+  private createSystemDate = (value: string): DateTime => {
     const parsedValue = DateTime.fromISO(value);
-    return parsedValue.setLocale(locale ?? this.locale);
+    return parsedValue.setLocale(this.locale);
   };
 
   /**
    * Creates a Luxon DateTime object in UTC.
    * @param value - The date string to parse.
-   * @param locale - The locale to use for parsing.
    * @returns The parsed Luxon DateTime object.
    */
-  private createUTCDate = (value: string, locale?: string): DateTime => {
+  private createUTCDate = (value: string): DateTime => {
     const parsedValue = DateTime.fromISO(value, { zone: "utc" });
-    return parsedValue.setLocale(locale ?? this.locale);
+    return parsedValue.setLocale(this.locale);
   };
 
   /**
    * Creates a Luxon DateTime object in a specified timezone.
    * @param value - The date string to parse.
    * @param timezone - The timezone to use.
-   * @param locale - The locale to use for parsing.
    * @returns The parsed Luxon DateTime object.
    */
-  private createTZDate = (
-    value: string,
-    timezone: Timezone,
-    locale?: string,
-  ): DateTime => {
+  private createTZDate = (value: string, timezone: Timezone): DateTime => {
     const parsedValue = DateTime.fromISO(value, { zone: timezone });
-    return parsedValue.setLocale(locale ?? this.locale);
+    return parsedValue.setLocale(this.locale);
   };
 
   /**
    * Creates a Luxon DateTime object from a string or returns an invalid date.
    * @param value - The date string to parse.
    * @param timezone - The timezone to use (default is "default").
-   * @param locale - The locale to use for parsing.
    * @returns The parsed Luxon DateTime object or an invalid date object.
    */
   public date = <T extends string | undefined>(
     value?: T,
     timezone: Timezone = "default",
-    locale?: string,
   ): DateTime => {
     if (!value || !this.isValidDateString(value)) {
       return DateTime.invalid("Invalid date string");
     }
 
     if (timezone === "UTC") {
-      return this.createUTCDate(value, locale);
+      return this.createUTCDate(value);
     }
 
     if (timezone === "system" || timezone === "default") {
-      return this.createSystemDate(value, locale);
+      return this.createSystemDate(value);
     }
 
-    return this.createTZDate(value, timezone, locale);
+    return this.createTZDate(value, timezone);
   };
 
   /**
@@ -176,17 +161,15 @@ export class AdapterLuxon implements SaltDateAdapter<DateTime, string> {
    * Returns an empty string when null or undefined date is given.
    * @param date - The Luxon DateTime object to format.
    * @param format - The format string to use.
-   * @param locale - The locale to use for formatting.
    * @returns The formatted date string.
    */
   public format(
     date: DateTime | null | undefined,
     format: RecommendedFormats = "dd MMM yyyy",
-    locale?: string,
   ): string {
     if (this.isValid(date)) {
       const luxonFormat = this.mapToLuxonFormat(format);
-      return date.setLocale(locale ?? this.locale).toFormat(luxonFormat);
+      return date.setLocale(this.locale).toFormat(luxonFormat);
     }
     return "";
   }
@@ -198,27 +181,25 @@ export class AdapterLuxon implements SaltDateAdapter<DateTime, string> {
    * @returns 0 if equal, 1 if dateA is after dateB, -1 if dateA is before dateB.
    */
   public compare(dateA: DateTime, dateB: DateTime): number {
-    if (dateA.equals(dateB)) {
+    const utcDateA = dateA.toUTC();
+    const utcDateB = dateB.toUTC();
+
+    if (utcDateA.equals(utcDateB)) {
       return 0;
     }
-    return dateA < dateB ? -1 : 1;
+    return utcDateA < utcDateB ? -1 : 1;
   }
 
   /**
    * Parses a date string using the specified format.
    * @param value - The date string to parse.
    * @param format - The format string to use.
-   * @param locale - The locale to use for parsing.
    * @returns A DateDetail object containing the parsed date and any errors.
    */
-  public parse(
-    value: string,
-    format: string,
-    locale?: string,
-  ): ParserResult<DateTime> {
+  public parse(value: string, format: string): ParserResult<DateTime> {
     const luxonFormat = this.mapToLuxonFormat(format);
     const parsedDate = DateTime.fromFormat(value, luxonFormat, {
-      locale: locale ?? this.locale,
+      locale: this.locale,
     });
     if (parsedDate.isValid) {
       return {
@@ -243,10 +224,11 @@ export class AdapterLuxon implements SaltDateAdapter<DateTime, string> {
 
   /**
    * Checks if a Luxon DateTime object is valid.
-   * @param date - The Luxon DateTime object to check.
+   * @param date - The Luxon DateTime object to check, null or undefined.
    * @returns True if the date is valid date object, false otherwise.
    */
-  public isValid(date: any): date is DateTime {
+  // biome-ignore lint/suspicious/noExplicitAny: date object
+  public isValid(date: DateTime | null | undefined): date is DateTime {
     return date instanceof DateTime ? date.isValid : false;
   }
 
@@ -336,7 +318,7 @@ export class AdapterLuxon implements SaltDateAdapter<DateTime, string> {
 
   /**
    * Sets specific components of a Luxon DateTime object.
-   * @param date - The  Luxon DateTime object to modify.
+   * @param date - The Luxon DateTime object to modify.
    * @param components - The components to set, the month is a number (1-12).
    * @returns The resulting Luxon DateTime object.
    */
@@ -372,6 +354,31 @@ export class AdapterLuxon implements SaltDateAdapter<DateTime, string> {
   }
 
   /**
+   * Get the timezone from the DateTime object
+   * @param date - A Luxon DateTime object
+   * @returns  'UTC' | 'system' or the IANA time zone
+   */
+  public getTimezone = (date: DateTime): string => {
+    if (date.zone.type === "system") {
+      return "system";
+    }
+    return date.zoneName ?? "";
+  };
+
+  /**
+   * Set the timezone for the DateTime object
+   * @param date - A Luxon DateTime object
+   * @param timezone - Timezone to set date object to
+   * @returns  date object set to the timezone
+   */
+  public setTimezone = (date: DateTime, timezone: Timezone): DateTime => {
+    if (!date.zone.equals(Info.normalizeZone(timezone))) {
+      return date.setZone(timezone, { keepLocalTime: true });
+    }
+    return date;
+  };
+
+  /**
    * Checks if two Luxon DateTime objects are the same based on the specified granularity.
    * @param dateA - The first Luxon DateTime object.
    * @param dateB - The second Luxon DateTime object.
@@ -390,69 +397,62 @@ export class AdapterLuxon implements SaltDateAdapter<DateTime, string> {
    * Gets the start of a specified time period for a Luxon DateTime object.
    * @param date - The Luxon DateTime object.
    * @param offset - The time period ("day", "week", "month", "year").
-   * @param locale - The locale to use.
    * @returns The Luxon DateTime object representing the start of the period.
    */
   public startOf(
     date: DateTime,
     offset: "day" | "week" | "month" | "year",
-    locale?: string,
   ): DateTime {
-    return date
-      .setLocale(locale ?? this.locale)
-      .startOf(offset, { useLocaleWeeks: true });
+    const localizedDate = date.setLocale(this.locale);
+    return localizedDate.startOf(offset, { useLocaleWeeks: true });
   }
 
   /**
    * Gets the end of a specified time period for a Luxon DateTime object.
    * @param date - The Luxon DateTime object.
    * @param offset - The time period ("day", "week", "month", "year").
-   * @param locale - The locale to use.
    * @returns The Luxon DateTime object representing the end of the period.
    */
   public endOf(
     date: DateTime,
     offset: "day" | "week" | "month" | "year",
-    locale?: string,
   ): DateTime {
-    return date
-      .setLocale(locale ?? this.locale)
-      .endOf(offset, { useLocaleWeeks: true });
+    const localizedDate = date.setLocale(this.locale);
+    return localizedDate.endOf(offset, { useLocaleWeeks: true });
   }
 
   /**
    * Gets the current date with the time set to the start of the day.
-   * @param locale - The locale to use.
+   * @param timezone - Timezone, defaults to library "default"
    * @returns The current date at the start of the day.
    */
-  public today(locale?: string): DateTime {
-    return DateTime.local()
-      .setLocale(locale ?? this.locale)
-      .startOf("day");
+  public today(timezone: Timezone = "default"): DateTime {
+    const currentDate = DateTime.local().setZone(timezone);
+    const localizedDate = currentDate.setLocale(this.locale);
+    return localizedDate.startOf("day");
   }
 
   /**
    * Gets the current date and time.
-   * @param locale - The locale to use.
+   * @param timezone - Timezone, defaults to library "default"
    * @returns The current date and time.
    */
-  public now(locale?: string): DateTime {
-    return DateTime.local().setLocale(locale ?? this.locale);
+  public now(timezone: Timezone = "default"): DateTime {
+    const currentDate = DateTime.local().setZone(timezone);
+    return currentDate.setLocale(this.locale);
   }
 
   /**
    * Gets the name of the day of the week.
    * @param dow - The day of the week as a number (0-6).
    * @param format - The format for the day name ("long", "short", "narrow").
-   * @param locale - The locale to use.
    * @returns The name of the day of the week.
    */
   public getDayOfWeekName(
     dow: number,
     format: "long" | "short" | "narrow",
-    locale?: string,
   ): string {
-    const referenceDate = DateTime.local().setLocale(locale ?? this.locale);
+    const referenceDate = DateTime.local().setLocale(this.locale);
     const startOfWeek = referenceDate.startOf("week", { useLocaleWeeks: true });
     const targetDate = startOfWeek.plus({ days: dow });
     return targetDate.toLocaleString({ weekday: format });

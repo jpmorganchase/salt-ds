@@ -2,7 +2,6 @@ import {
   FormField,
   FormFieldHelperText,
   FormFieldLabel,
-  Input,
   StackLayout,
   Switch,
 } from "@salt-ds/core";
@@ -60,15 +59,9 @@ Controlled.args = {
   label: "Controlled",
 };
 
-export const WithinFormField: StoryFn<typeof Switch> = (args) => {
+export const WithFormField: StoryFn<typeof Switch> = (args) => {
   return (
     <StackLayout direction="row">
-      <FormField labelPlacement="left">
-        <FormFieldLabel>Reference</FormFieldLabel>
-        <Input defaultValue="Value" />
-        <FormFieldHelperText>Helper text</FormFieldHelperText>
-      </FormField>
-
       <FormField labelPlacement="left">
         <FormFieldLabel>Label</FormFieldLabel>
         <Switch {...args} />

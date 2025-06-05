@@ -12,3 +12,7 @@
 .saltFormFieldHelperText-withValidation {
   column-gap: var(--salt-spacing-75);
 }
+
+.saltFormFieldHelperText .saltFormFieldHelperText-statusIndicator {
+  margin-top: calc((var(--salt-text-label-lineHeight) - max(var(--salt-size-icon), 12px)) / 2);
+}

@@ -85,7 +85,8 @@ export const LivePreview: FC<LivePreviewProps> = ({
                 </ChosenSaltProvider>
               </div>
             </ChosenSaltProvider>
-            <SaltProviderNext density="medium" applyClassesTo="child">
+            {/* Unset theme, font size override would cause switch misalignment */}
+            <SaltProviderNext density="low" applyClassesTo="child" theme="">
               <div className={styles.toolbar}>
                 <Switch
                   checked={showCode}

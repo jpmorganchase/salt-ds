@@ -16,6 +16,11 @@ export default {
   // react-docgen-typescript-loader doesn't support detecting interface extension
   // https://github.com/strothj/react-docgen-typescript-loader/issues/47
   argTypes: { onClick: { action: "clicked" } },
+  globals: {
+    a11y: {
+      manual: true,
+    },
+  },
 } as Meta<typeof Button>;
 
 export const AllVariantsGrid: StoryFn<QAContainerProps> = (props) => (

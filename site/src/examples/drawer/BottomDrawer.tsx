@@ -146,87 +146,65 @@ export const BottomDrawer = (): ReactElement => {
         aria-labelledby={id}
       >
         <DrawerCloseButton onClick={handleClose} />
-        <H2 id={id} style={{ paddingBottom: "var(--salt-spacing-300)" }}>
-          Marginal Tiering
-        </H2>
-        <div
-          {...containerProps}
-          style={{ height: "calc(3 * var(--salt-size-base))" }}
-        >
-          <AgGridReact
-            columnDefs={columns}
-            rowData={defaultData}
-            {...agGridProps}
-          />
-        </div>
-        <FlowLayout justify="space-between">
+        <StackLayout gap={3}>
+          <H2 id={id}>Marginal Tiering</H2>
           <div
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              padding: "var(--salt-spacing-300) 0",
-            }}
+            {...containerProps}
+            style={{ height: "calc(3 * var(--salt-size-base))" }}
           >
-            <H3
-              style={{
-                paddingRight: "var(--salt-spacing-100)",
-              }}
-            >
-              Threshold Summary
-            </H3>
-            <Text>(Projected Revenue)</Text>
+            <AgGridReact
+              columnDefs={columns}
+              rowData={defaultData}
+              {...agGridProps}
+            />
           </div>
-        </FlowLayout>
-        <Text
-          style={{
-            paddingRight: "calc(var(--salt-size-base) - var(--salt-size-bar))",
-            margin: "calc(-1 * var(--salt-size-base)) 0",
-            lineHeight: "var(--salt-spacing-300)",
-            textAlign: "end",
-          }}
-        >
-          Blended bps
-        </Text>
-        <FlowLayout
-          justify="space-between"
-          style={{
-            padding: "var(--salt-spacing-300) 0",
-          }}
-        >
-          <StackLayout direction="row" gap={3}>
-            <StackLayout gap={0}>
-              <Text>Below Threshold 1</Text>
-              <Display3>$1,000,000</Display3>
+          <FlowLayout gap={1}>
+            <H3 style={{ margin: 0 }}>Threshold Summary</H3>
+            <Text>(Projected Revenue)</Text>
+          </FlowLayout>
+          <FlowLayout justify="space-between">
+            <StackLayout direction="row" gap={3}>
+              <StackLayout gap={0}>
+                <Text>Below Threshold 1</Text>
+                <Display3>$1,000,000</Display3>
+              </StackLayout>
+              <StackLayout gap={0}>
+                <Text>Below Threshold 1 & 2</Text>
+                <Display3>$450,000</Display3>
+              </StackLayout>
+              <StackLayout gap={0}>
+                <Text>Below Threshold 2 & 3</Text>
+                <Display3>$0</Display3>
+              </StackLayout>
+              <StackLayout gap={0}>
+                <Text>Below Threshold 3 & 4</Text>
+                <Display3>$0</Display3>
+              </StackLayout>
+              <StackLayout gap={0}>
+                <Text>Total</Text>
+                <Display3>$1,450,000</Display3>
+              </StackLayout>
             </StackLayout>
             <StackLayout gap={0}>
-              <Text>Below Threshold 1 & 2</Text>
-              <Display3>$450,000</Display3>
+              <Text
+                style={{
+                  position: "absolute",
+                }}
+              >
+                Blended bps
+              </Text>
+              <Display2>0.968</Display2>
             </StackLayout>
-            <StackLayout gap={0}>
-              <Text>Below Threshold 2 & 3</Text>
-              <Display3>$0</Display3>
-            </StackLayout>
-            <StackLayout gap={0}>
-              <Text>Below Threshold 3 & 4</Text>
-              <Display3>$0</Display3>
-            </StackLayout>
-            <StackLayout gap={0}>
-              <Text>Total</Text>
-              <Display3>$1,450,000</Display3>
-            </StackLayout>
-          </StackLayout>
-          <StackLayout gap={0}>
-            <Display2>0.968</Display2>
-          </StackLayout>
-        </FlowLayout>
-        <FlowLayout justify="end">
-          <Button appearance="transparent" onClick={handleClose}>
-            Cancel
-          </Button>
-          <Button sentiment="accented" onClick={handleClose}>
-            Update Tier
-          </Button>
-        </FlowLayout>
+          </FlowLayout>
+          <FlowLayout justify="end">
+            <Button appearance="transparent" onClick={handleClose}>
+              Cancel
+            </Button>
+            <Button sentiment="accented" onClick={handleClose}>
+              Update Tier
+            </Button>
+          </FlowLayout>
+        </StackLayout>
       </Drawer>
     </>
   );

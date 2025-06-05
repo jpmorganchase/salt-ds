@@ -1,16 +1,12 @@
-import {
-  FormField,
-  FormFieldHelperText as FormHelperText,
-  FormFieldLabel as FormLabel,
-} from "@salt-ds/core";
+import { FormField, FormFieldLabel as FormLabel } from "@salt-ds/core";
 import type { DateFrameworkType } from "@salt-ds/date-adapters";
 import {
   type DateInputSingleDetails,
   DatePicker,
+  DatePickerHelperText,
   DatePickerOverlay,
+  DatePickerSingleGridPanel,
   DatePickerSingleInput,
-  DatePickerSinglePanel,
-  type DatePickerSinglePanelProps,
   DatePickerTrigger,
   type SingleDateSelection,
   useLocalization,
@@ -25,7 +21,6 @@ import {
 import "moment/dist/locale/zh-cn";
 import "dayjs/locale/zh-cn";
 import { zhCN as dateFnsZhCn } from "date-fns/locale";
-import { enUS as dateFnsEnUs } from "date-fns/locale";
 
 export const SingleWithLocaleZhCN = (): ReactElement => {
   // Include any locales, required by your DateAdapter of choice.
@@ -44,7 +39,6 @@ export const SingleWithLocaleZhCN = (): ReactElement => {
   const defaultHelperText = `Locale ${isDateFns ? dateAdapter.locale.code : dateAdapter.locale}`;
   const errorHelperText = "Please enter a valid date in DD MMM YYYY format";
   const [helperText, setHelperText] = useState(defaultHelperText);
-  const [open, setOpen] = useState<boolean>(false);
   const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
     undefined,
   );
@@ -56,7 +50,7 @@ export const SingleWithLocaleZhCN = (): ReactElement => {
     ) => {
       const { value, errors } = details || {};
       console.log(
-        `Selected date: ${dateAdapter.isValid(date) ? dateAdapter.format(date, "DD MMM YYYY", isDateFns ? dateFnsEnUs : "en") : date}`,
+        `Selected date: ${dateAdapter.isValid(date) ? dateAdapter.format(date, "DD MMM YYYY") : date}`,
       );
       if (errors?.length) {
         console.log(
@@ -76,17 +70,8 @@ export const SingleWithLocaleZhCN = (): ReactElement => {
         setValidationStatus(undefined);
       }
     },
-    [dateAdapter, defaultHelperText, isDateFns],
+    [dateAdapter, defaultHelperText],
   );
-
-  function renderDayContents(day: DateFrameworkType) {
-    return <>{dateAdapter.format(day, "D")}</>;
-  }
-
-  const CalendarDataGridProps: DatePickerSinglePanelProps<DateFrameworkType>["CalendarDataGridProps"] =
-    {
-      getCalendarMonthProps: () => ({ renderDayContents }),
-    };
 
   return (
     <FormField style={{ width: "256px" }} validationStatus={validationStatus}>
@@ -94,23 +79,18 @@ export const SingleWithLocaleZhCN = (): ReactElement => {
       <DatePicker
         selectionVariant={"single"}
         onSelectionChange={handleSelectionChange}
-        onOpenChange={setOpen}
       >
         <DatePickerTrigger>
-          <DatePickerSingleInput
-            format={"DD MMM YYYY"}
-            locale={isDateFns ? dateFnsEnUs : "en"}
-          />
+          <DatePickerSingleInput format={"DD MMM YYYY"} />
         </DatePickerTrigger>
         <DatePickerOverlay>
-          <DatePickerSinglePanel
+          <DatePickerSingleGridPanel
             helperText={helperText}
-            CalendarDataGridProps={CalendarDataGridProps}
             CalendarNavigationProps={{ formatMonth: "MMMM" }}
           />
         </DatePickerOverlay>
+        <DatePickerHelperText>{helperText}</DatePickerHelperText>
       </DatePicker>
-      {!open ? <FormHelperText>{helperText}</FormHelperText> : null}
     </FormField>
   );
 };

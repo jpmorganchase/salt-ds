@@ -1,4 +1,3 @@
-import { H2, Text } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
@@ -7,6 +6,7 @@ import {
   type ReactNode,
   forwardRef,
 } from "react";
+import { H2, Text } from "../text";
 import { makePrefixer } from "../utils";
 
 import overlayHeaderCss from "./OverlayHeader.css";

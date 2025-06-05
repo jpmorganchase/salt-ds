@@ -54,7 +54,7 @@ export type ComboBoxProps<Item = string> = {
    */
   selectOnTab?: boolean;
 } & UseComboBoxProps<Item> &
-  PillInputProps;
+  Omit<PillInputProps, "onPillRemove">;
 
 const withBaseName = makePrefixer("saltComboBox");
 

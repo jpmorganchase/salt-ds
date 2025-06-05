@@ -1103,6 +1103,7 @@ export const CustomRequired: StoryFn<typeof FormField> = (props) => {
       style={{
         maxWidth: 500,
       }}
+      className="custom-required-story"
     >
       <Text styleAs="h3">
         Extended styling using <code>--salt-content-attention-foreground</code>

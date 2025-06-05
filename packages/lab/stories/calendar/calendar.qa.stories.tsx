@@ -2,7 +2,6 @@ import {
   Calendar,
   CalendarGrid,
   CalendarNavigation,
-  CalendarWeekHeader,
   useLocalization,
 } from "@salt-ds/lab";
 import type { StoryFn } from "@storybook/react";
@@ -12,6 +11,11 @@ import { QAContainer, type QAContainerProps } from "docs/components";
 export default {
   title: "Lab/Calendar/QA",
   component: Calendar,
+  globals: {
+    a11y: {
+      manual: true,
+    },
+  },
 };
 
 const QAContainerParameters = {
@@ -45,7 +49,6 @@ const renderQAContainer = () => {
         selectedDate={dateAdapter.parse("2024-04-02", "YYYY-MM-DD").date}
       >
         <CalendarNavigation />
-        <CalendarWeekHeader />
         <CalendarGrid />
       </Calendar>
       <Calendar
@@ -56,7 +59,6 @@ const renderQAContainer = () => {
         }}
       >
         <CalendarNavigation />
-        <CalendarWeekHeader />
         <CalendarGrid />
       </Calendar>
       <Calendar
@@ -76,7 +78,6 @@ const renderQAContainer = () => {
         ]}
       >
         <CalendarNavigation />
-        <CalendarWeekHeader />
         <CalendarGrid />
       </Calendar>
       <Calendar
@@ -87,7 +88,6 @@ const renderQAContainer = () => {
         ]}
       >
         <CalendarNavigation hideYearDropdown />
-        <CalendarWeekHeader />
         <CalendarGrid />
       </Calendar>
       <Calendar
@@ -101,7 +101,6 @@ const renderQAContainer = () => {
           MonthDropdownProps={{ bordered: true }}
           YearDropdownProps={{ bordered: true }}
         />
-        <CalendarWeekHeader />
         <CalendarGrid />
       </Calendar>
     </QAContainer>

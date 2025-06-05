@@ -24,7 +24,7 @@ const dateString = {
       string
     >,
   ) => (params.value == null ? "" : params.value),
-  dataTypeMatcher: (value: any) =>
+  dataTypeMatcher: (value: string) =>
     typeof value === "string" && !!value.match("\\d{2}/\\d{2}/\\d{4}"),
   dateParser: (value: string | undefined) => {
     if (value == null || value === "") {

@@ -90,6 +90,9 @@ describe("GIVEN an MultilineInput", () => {
       "have.accessibleDescription",
       "Please leave feedback about your experience.",
     );
+
+    cy.findByText("Comments").realClick();
+    cy.findByRole("textbox").should("be.focused");
   });
 
   it("should be disabled when it's FormField is disabled", () => {

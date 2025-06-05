@@ -3,8 +3,10 @@ import type { ReactElement } from "react";
 
 export const Appearance = (): ReactElement => (
   <FlowLayout>
-    <ToggleButton value="solid">Solid</ToggleButton>
-    <ToggleButton value="bordered" appearance="bordered">
+    <ToggleButton defaultSelected value="solid">
+      Solid
+    </ToggleButton>
+    <ToggleButton defaultSelected value="bordered" appearance="bordered">
       Bordered
     </ToggleButton>
   </FlowLayout>

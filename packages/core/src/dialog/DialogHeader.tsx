@@ -1,9 +1,3 @@
-import {
-  H2,
-  StatusIndicator,
-  Text,
-  type ValidationStatus,
-} from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
@@ -12,9 +6,10 @@ import {
   type ReactNode,
   forwardRef,
 } from "react";
-import { useDialogContext } from "./DialogContext";
-
+import { StatusIndicator, type ValidationStatus } from "../status-indicator";
+import { H2, Text } from "../text";
 import { makePrefixer } from "../utils";
+import { useDialogContext } from "./DialogContext";
 import dialogHeaderCss from "./DialogHeader.css";
 
 const withBaseName = makePrefixer("saltDialogHeader");

@@ -3,7 +3,6 @@ import {
   Calendar,
   CalendarGrid,
   CalendarNavigation,
-  CalendarWeekHeader,
   useLocalization,
 } from "@salt-ds/lab";
 import type { ReactElement } from "react";
@@ -21,7 +20,6 @@ export const DisabledDates = (): ReactElement => {
   return (
     <Calendar selectionVariant="single" isDayDisabled={isDayDisabled}>
       <CalendarNavigation />
-      <CalendarWeekHeader />
       <CalendarGrid />
     </Calendar>
   );

@@ -22,10 +22,16 @@
 }
 
 .iconCard {
-  padding-top: var(--salt-spacing-300);
-  padding-inline: var(--salt-spacing-25);
-  height: calc(var(--salt-size-base) * 4);
-  aspect-ratio: 1.1;
+  padding-block: var(--salt-spacing-200);
+  height: calc(var(--salt-size-base) * 3);
+  aspect-ratio: 1.05;
+}
+
+@media not screen and (min-width: 960px) {
+  .iconCard {
+    padding-block: var(--salt-spacing-100);
+    height: calc(var(--salt-size-base) * 2.5);
+  }
 }
 
 .iconContainer {
@@ -35,12 +41,8 @@
   min-height: calc(var(--salt-size-icon) * 2);
 }
 
+.resultContainer,
 .notFound {
   flex: 1;
   justify-content: center;
-}
-
-.iconCount {
-  display: flex;
-  align-items: center;
 }

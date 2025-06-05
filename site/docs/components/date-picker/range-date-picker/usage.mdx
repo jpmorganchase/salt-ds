@@ -1,0 +1,137 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+## Using the component
+
+`DatePicker` provides a context to the `children` contained within it and a composable API that enables you to create your own date picker controls.
+
+Salt provides the following `children` for convenience:
+
+- `DatePickerOverlay` - a container component for the content of the `DatePicker` overlay.
+
+<LivePreview componentName="date-picker" exampleName="Single" />
+
+### Date range selection
+
+When `selectionVariant` is "range":
+
+- `DatePickerRangeInput` - a composable [DateInputRange](../DateInput) pre-wired to the `DatePicker` selection context.
+- `DatePickerRangeGridPanel` - composable [Calendar](../Calendar) grid pre-wired to the `DatePicker` selection context.
+  - Opt for `DatePickerRangeGridPanel` when dealing with short date ranges or when displaying the dates in-between enhances the user experience.
+- `DatePickerRangePanel` - composable dual [Calendar](../Calendar) view pre-wired to the `DatePicker` selection context.
+  - Choose `DatePickerRangePanel` for long date ranges or when the focus is primarily on the start and end dates, rather than the dates in-between.
+
+A composable API enables you to use provided child components, such as `DatePickerRangeInput` and `DatePickerRangePanel`.
+
+<LivePreview componentName="date-picker" exampleName="Range" />
+
+### Custom overlay content
+
+You can also compose your own overlay content with the provided components.
+
+A composable API enables you to combine the provided child components with your own.
+
+<LivePreview componentName="date-picker" exampleName="RangeWithCustomPanel" />
+
+### When to use
+
+- Use a `DatePicker` component when you need a visual and intuitive interface for selecting single dates or date ranges, making it ideal for financial applications, event scheduling, and project management. In contrast, use a `Dropdown` when the dates are pre-determined, the selection is infrequent, or a compact interface is required, such as selecting a birth year or a specific month in a form.
+
+### Best practices
+
+To improve consistency and simplify your messaging, recommend a single acceptable date format in the form field label and helper text—preferably the one most frequently used in your application.
+
+## Import
+
+To import `DatePicker` from the Salt lab package, use:
+
+```js
+import { DatePicker } from "@salt-ds/lab";
+```
+
+### Locale
+
+The default locale for Salt's date adapters is "enUS".
+
+`DatePicker` uses the locale of the configured date adapter provided by the nearest [LocalizationProvider] (../LocalizationProvider).
+Configuration of locales is date framework specific and may require you to import specific locales from the date library you are using.
+
+For example, if you are using `date-fns`, you may need to import the specific locale you want to use, such as `es` or `frFR`.
+
+The default locale for Salt's date adapters is "enUS".
+
+Refer to the documentation of the date library you are using for information on how to configure other locales.
+
+### Timezone
+
+`DatePicker` accepts a `timezone` prop that defines the timezone.
+
+The default timezone for Salt's components is "default".
+
+Valid values for `timezone` are date framework specific and can be one of the following:
+
+- "default" uses the local timezone of the user's browser.
+- "system" uses the timezone of the system running the code.
+- "UTC" uses the UTC timezone.
+- string uses a specific IANA timezone string, such as "America/New_York" or "Europe/London".
+
+## Props
+
+### DatePicker
+
+<PropsTable packageName="lab" componentName="DatePicker" />
+
+### DatePickerSingleInput
+
+<PropsTable packageName="lab" componentName="DatePickerSingleInput" />
+
+`DatePickerSingleInput` composes a [DateInputSingle](../DateInput) that uses the `DatePicker` context for single date selection.
+
+### DatePickerRangeInput
+
+<PropsTable packageName="lab" componentName="DatePickerRangeInput" />
+
+`DatePickerRangeInput` composes a [DateInputRange](../DateInput) that uses the `DatePicker` context for date range selection.
+
+### DatePickerSinglePanel
+
+<PropsTable packageName="lab" componentName="DatePickerSinglePanel" />
+
+`DatePickerSinglePanel` composes a [Calendar](../Calendar) that uses the `DatePicker` context for single date selection.
+
+### DatePickerRangePanel
+
+<PropsTable packageName="lab" componentName="DatePickerRangePanel" />
+
+`DatePickerRangePanel` composes a [Calendar](../Calendar) that uses the `DatePicker` context for date range selection.
+
+### DatePickerOverlay
+
+<PropsTable packageName="lab" componentName="DatePickerOverlay" />
+
+`DatePickerOverlay` is the container component for the `DatePicker` overlay.
+
+### DatePickerActions
+
+<PropsTable packageName="lab" componentName="DatePickerActions" />
+
+`DatePickerActions` provides the controls to apply or cancel a date selection.
+
+### useDatePicker
+
+The `useDatePicker` hook provides `state` and `helpers` to manage the `DatePicker` state.
+
+<PropsTable packageName="lab" componentName="useDatePicker" />
+
+### useDatePickerOverlay
+
+The `useDatePickerOverlay` hook provides `state` and `helpers` to manage the `DatePickerOverlay` state.
+
+<PropsTable packageName="lab" componentName="useDatePickerOverlay" />

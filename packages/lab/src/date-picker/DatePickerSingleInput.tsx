@@ -28,6 +28,7 @@ const withBaseName = makePrefixer("saltDatePickerSingleInput");
 
 /**
  * Props for the DatePickerSingleInput component.
+ * @template TDate - The type of the date object.
  */
 export interface DatePickerSingleInputProps<TDate extends DateFrameworkType>
   extends DateInputSingleProps<TDate> {
@@ -84,7 +85,7 @@ function defaultSingleValidation<TDate extends DateFrameworkType>(
 
 export const DatePickerSingleInput = forwardRef<
   HTMLDivElement,
-  DatePickerSingleInputProps<any>
+  DatePickerSingleInputProps<DateFrameworkType>
 >(
   <TDate extends DateFrameworkType>(
     props: DatePickerSingleInputProps<TDate>,
@@ -94,8 +95,6 @@ export const DatePickerSingleInput = forwardRef<
 
     const {
       className,
-      onFocus,
-      onBlur,
       value: valueProp,
       validate,
       defaultValue,
@@ -104,7 +103,15 @@ export const DatePickerSingleInput = forwardRef<
     } = props;
 
     const {
-      state: { selectedDate, disabled, readOnly, cancelled, minDate, maxDate },
+      state: {
+        selectedDate,
+        disabled,
+        readOnly,
+        cancelled,
+        minDate,
+        maxDate,
+        timezone,
+      },
       helpers: { select },
     } = useDatePickerContext<TDate>({ selectionVariant: "single" });
     const {
@@ -124,6 +131,7 @@ export const DatePickerSingleInput = forwardRef<
     const handleCalendarButton: MouseEventHandler<HTMLButtonElement> =
       useCallback(
         (event) => {
+          event.persist();
           setOpen(!open, event.nativeEvent, "click");
           event.stopPropagation();
         },
@@ -147,7 +155,7 @@ export const DatePickerSingleInput = forwardRef<
             );
         select(event, date, validatedDetails);
       },
-      [select, validate],
+      [dateAdapter, minDate, maxDate, select, validate],
     );
 
     const handleDateValueChange = useCallback(
@@ -165,7 +173,6 @@ export const DatePickerSingleInput = forwardRef<
       }
     }, [open]);
 
-    // biome-ignore lint/correctness/useExhaustiveDependencies: avoid excessive re-rendering
     useEffect(() => {
       if (cancelled) {
         setValue(previousValue?.current);
@@ -191,10 +198,11 @@ export const DatePickerSingleInput = forwardRef<
               disabled={disabled}
               aria-label="Open Calendar"
             >
-              <CalendarIcon />
+              <CalendarIcon aria-hidden />
             </Button>
           )
         }
+        timezone={timezone}
         {...rest}
       />
     );

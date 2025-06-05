@@ -23,32 +23,21 @@ export interface CalendarMonthProps<TDate>
    */
   date: TDate;
   /**
-   * Function to render the contents of a day.
+   * Props for the CalendarDay component.
    */
-  renderDayContents?: CalendarDayProps<TDate>["renderDayContents"];
-  /**
-   * Props for the tooltip component.
-   */
-  TooltipProps?: CalendarDayProps<TDate>["TooltipProps"];
+  CalendarDayProps?: Partial<CalendarDayProps<TDate>>;
 }
 
 const withBaseName = makePrefixer("saltCalendarMonth");
 
 export const CalendarMonth = forwardRef<
   HTMLDivElement,
-  CalendarMonthProps<any>
+  CalendarMonthProps<DateFrameworkType>
 >(function CalendarMonth<TDate extends DateFrameworkType>(
   props: CalendarMonthProps<TDate>,
   ref: React.Ref<HTMLDivElement>,
 ) {
-  const {
-    className,
-    date,
-    renderDayContents,
-    onMouseLeave,
-    TooltipProps,
-    ...rest
-  } = props;
+  const { className, date, onMouseLeave, CalendarDayProps, ...rest } = props;
   const { dateAdapter } = useLocalization<TDate>();
   const targetWindow = useWindow();
   useComponentCssInjection({
@@ -58,10 +47,10 @@ export const CalendarMonth = forwardRef<
   });
 
   const {
-    state: { locale },
+    state: { timezone = "default" },
     helpers: { setHoveredDate },
   } = useCalendarContext<TDate>();
-  const days = generateVisibleDays<TDate>(dateAdapter, date, locale);
+  const days = generateVisibleDays<TDate>(dateAdapter, date, timezone);
   const handleMouseLeave = (event: SyntheticEvent) => {
     setHoveredDate(event, null);
     onMouseLeave?.(event as MouseEvent<HTMLDivElement>);
@@ -75,17 +64,14 @@ export const CalendarMonth = forwardRef<
       {...rest}
     >
       <div data-testid="CalendarGrid" className={withBaseName("grid")}>
-        {days.map((day) => {
-          return (
-            <CalendarDay
-              key={dateAdapter.format(day.date, "DD MMM YYYY", locale)}
-              day={day.date}
-              renderDayContents={renderDayContents}
-              month={date}
-              TooltipProps={TooltipProps}
-            />
-          );
-        })}
+        {days.map((day) => (
+          <CalendarDay
+            {...CalendarDayProps}
+            key={dateAdapter.format(day, "DD MMM YYYY")}
+            date={day}
+            month={date}
+          />
+        ))}
       </div>
     </div>
   );

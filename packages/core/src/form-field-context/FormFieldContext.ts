@@ -1,3 +1,4 @@
+import type { RefObject } from "react";
 import { createContext } from "../utils";
 
 export interface A11yValueProps {
@@ -24,6 +25,7 @@ export interface FormFieldContextValue {
   necessity: NecessityType | undefined;
   readOnly: boolean;
   validationStatus: "error" | "warning" | "success" | undefined;
+  formFieldRef?: RefObject<HTMLDivElement>;
 }
 
 export const FormFieldContext = createContext(

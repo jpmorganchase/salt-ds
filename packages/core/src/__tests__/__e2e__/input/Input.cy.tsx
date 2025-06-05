@@ -1,5 +1,9 @@
 import { Button, FormField, FormFieldLabel, Input } from "@salt-ds/core";
+import * as inputStories from "@stories/input/input.stories";
+import { composeStories } from "@storybook/react";
 import { type ChangeEvent, useState } from "react";
+
+const { WithFormField } = composeStories(inputStories);
 
 describe("GIVEN an Input", () => {
   it("SHOULD have no a11y violations on load", () => {
@@ -250,5 +254,17 @@ describe("GIVEN an Input", () => {
         );
       });
     });
+  });
+
+  it("should have form field support", () => {
+    cy.mount(<WithFormField />);
+    cy.findByRole("textbox").should("have.accessibleName", "Username");
+    cy.findByRole("textbox").should(
+      "have.accessibleDescription",
+      "This should be more than 3 characters long.",
+    );
+
+    cy.findByText("Username").realClick();
+    cy.findByRole("textbox").should("be.focused");
   });
 });

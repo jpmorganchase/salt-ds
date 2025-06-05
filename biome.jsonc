@@ -155,6 +155,43 @@
           }
         }
       }
+    },
+    {
+      "include": ["packages/core/src/**"],
+      "ignore": ["packages/core/src/__tests__/**"],
+      "linter": {
+        "rules": {
+          "nursery": {
+            "noRestrictedImports": {
+              "level": "error",
+              "options": {
+                "paths": {
+                  "@salt-ds/core": "Using relative import instead of import from the package itself"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    {
+      "include": ["packages/lab/src/**"],
+      "ignore": ["packages/lab/src/__tests__/**"],
+      "linter": {
+        "rules": {
+          "nursery": {
+            "noRestrictedImports": {
+              "level": "error",
+              "options": {
+                "paths": {
+                  "@salt-ds/lab": "Using relative import instead of import from the package itself"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

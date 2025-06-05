@@ -1,0 +1,33 @@
+{
+  "name": "@salt-ds/react-resizable-panels-theme",
+  "version": "1.0.0",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jpmorganchase/salt-ds.git",
+    "directory": "packages/react-resizable-panels-theme"
+  },
+  "bugs": "https://github.com/jpmorganchase/salt-ds/issues",
+  "style": "index.css",
+  "files": [
+    "/index.css"
+  ],
+  "sideEffects": [
+    "*.css"
+  ],
+  "scripts": {
+    "build": "yarn node ./scripts/build.mjs",
+    "build-watch": "yarn node ./scripts/build.mjs --watch"
+  },
+  "publishConfig": {
+    "directory": "../../dist/salt-ds-react-resizable-panels-theme",
+    "provenance": true
+  },
+  "devDependencies": {
+    "del": "^7.0.0"
+  },
+  "peerDependencies": {
+    "@salt-ds/theme": "workspace:^",
+    "react-resizable-panels": ">=3.0.0"
+  }
+}
