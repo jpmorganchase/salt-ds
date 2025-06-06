@@ -35,15 +35,15 @@
   padding-bottom: var(--salt-spacing-25);
   flex-grow: 1;
 }
+.saltCarouselSlide-container-gutter {
+  padding: var(--salt-spacing-200);
+  padding-top: 0;
+}
 .saltCarouselSlide-content {
   display: flex;
   flex-direction: column;
   flex-grow: 1;
   gap: var(--salt-spacing-100);
-}
-.saltCarouselSlide-card {
-  padding: var(--salt-spacing-200);
-  padding-top: 0;
 }
 .saltCarouselSlide-content h2,
 .saltCarouselSlide-content h3 {
@@ -54,3 +54,4 @@
   border-radius: var(--salt-palette-corner, 0);
   overflow: hidden;
 }
+

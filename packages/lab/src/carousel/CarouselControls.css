@@ -1,15 +1,15 @@
 .saltCarouselControls {
   display: flex;
-  gap: var(--salt-spacing-100);
-  align-items: center;
-  grid-area: controls;
-}
-.saltCarouselControls-container {
-  display: flex;
   flex-flow: wrap;
   align-items: center;
   gap: var(--salt-spacing-100);
   justify-content: space-between;
+}
+.saltCarouselControls-container {
+  display: flex;
+  gap: var(--salt-spacing-100);
+  align-items: center;
+  grid-area: controls;
 }
 .saltCarouselControls-container:last-child {
   margin-left: auto;
