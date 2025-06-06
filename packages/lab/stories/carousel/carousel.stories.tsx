@@ -2,76 +2,28 @@ import type { Meta, StoryFn } from "@storybook/react-vite";
 
 import {
   Carousel,
-  CarouselControls,
-  CarouselSlide,
+  CarouselControls, CarouselProps, CarouselSlide,
   CarouselSlider,
 } from "@salt-ds/lab";
 import "./carousel.stories.css";
-import { Button, H2, H3, Link, StackLayout, Text } from "@salt-ds/core";
+import {
+  Button,
+  FormField, FormFieldLabel,
+  H2,
+  H3, RadioButton, RadioButtonGroup,
+  StackLayout,
+  Text,
+  useId
+} from "@salt-ds/core";
 import { useState } from "react";
-import carouselSlide1 from "../assets/carouselSlide1.png";
-import carouselSlide2 from "../assets/carouselSlide2.png";
-import carouselSlide3 from "../assets/carouselSlide3.png";
-import carouselSlide4 from "../assets/carouselSlide4.png";
+import { renderSlides} from "./renderSlides";
+import {sliderData} from "@salt-ds/site/src/examples/carousel/exampleData";
+import clsx from "clsx";
 
 export default {
   title: "Lab/Carousel",
   component: Carousel,
 } as Meta<typeof Carousel>;
-
-const content = [
-  {
-    headerId: 0,
-    title: "Your accounts. On the move",
-    image: carouselSlide1,
-    content: "Discover our latest personal accounts app for iOS.",
-    link: "Open an account",
-  },
-  {
-    headerId: 1,
-    title: "Preview your account information",
-    image: carouselSlide2,
-    content:
-      "The new dashboard provides a complete overview of all your key account details.",
-    link: "Go to dashboard",
-  },
-  {
-    headerId: 2,
-    title: "Clear view of your cash positions",
-    image: carouselSlide3,
-    content:
-      "Dedicated screen showing your positions, currencies and accounts.",
-    link: "Learn more about views",
-  },
-  {
-    headerId: 3,
-    title: "Redesigned accounts",
-    image: carouselSlide4,
-    content:
-      "Simplified view of all your accounts, with search functionality across all transactions.",
-    link: "Download app",
-  },
-];
-
-const renderSlides = (appearance?: "bordered", withActions?: boolean) =>
-  content.map((slide, index) => (
-    <CarouselSlide
-      key={slide.title}
-      appearance={appearance}
-      header={<H3 id={`slide-title-${slide.headerId}`}>{slide.title}</H3>}
-      aria-labelledby={`slide-title-${slide.headerId}`}
-      media={
-        <img
-          className="carousel-image-placeholder"
-          alt="stock content to show carousel slide"
-          src={slide.image}
-        />
-      }
-      actions={withActions && <Link href="#">{slide.link}</Link>}
-    >
-      <Text>{slide.content}</Text>
-    </CarouselSlide>
-  ));
 
 const CarouselExample: StoryFn<typeof Carousel> = (args, navigationBarArgs) => {
   return (
@@ -90,8 +42,8 @@ Default.args = {
   id: "carousel-example",
 };
 
-export const DefaultValue = CarouselExample.bind({});
-DefaultValue.args = {
+export const ActiveSlide = CarouselExample.bind({});
+ActiveSlide.args = {
   "aria-label": "Account overview",
   id: "carousel-example",
   defaultActiveSlideIndex: 3,
@@ -102,28 +54,39 @@ export const Bordered: StoryFn<typeof Carousel> = (args) => {
     <div className="carousel-container">
       <Carousel {...args} aria-label="Account overview">
         <CarouselControls />
-        <CarouselSlider>{renderSlides("bordered")}</CarouselSlider>
+        <CarouselSlider>{renderSlides()}</CarouselSlider>
       </Carousel>
     </div>
   );
 };
 
-export const WithBottomControls: StoryFn<typeof Carousel> = (args) => {
+export const WithControlsPlacement: StoryFn<typeof Carousel> = (args) => {
+  const [placement, setPlacement] = useState<CarouselProps["controlsPlacement"]>("top");
   return (
     <div className="carousel-container">
-      <Carousel
-        {...args}
-        aria-label="Account overview"
-        controlsPlacement="bottom"
-      >
-        <CarouselControls
-          onNext={(_, index) => console.log(index)}
-          onPrevious={(_, index) => console.log(index)}
-        />
-        <CarouselSlider>{renderSlides("bordered")}</CarouselSlider>
+    <StackLayout gap={3} align="center">
+      <Carousel aria-label="Account overview" controlsPlacement={placement}>
+        <CarouselControls />
+        <CarouselSlider>
+          {renderSlides()}
+        </CarouselSlider>
       </Carousel>
-    </div>
-  );
+      <StackLayout>
+        <FormField>
+          <FormFieldLabel>Controls Placement</FormFieldLabel>
+          <RadioButtonGroup
+            value={placement}
+            onChange={(event) =>
+              setPlacement(event.target.value as CarouselProps["controlsPlacement"])
+            }
+            direction="horizontal"
+          >
+            <RadioButton label="Top" value="top" key="top" />
+            <RadioButton label="Bottom" value="bottom" key="bottom" />
+          </RadioButtonGroup>
+        </FormField>
+      </StackLayout>
+    </StackLayout></div>);
 };
 
 export const WithMultipleSlides = CarouselExample.bind({});
@@ -142,7 +105,7 @@ export const WithActions: StoryFn<typeof Carousel> = (args) => {
         aria-label="Account overview"
       >
         <CarouselControls />
-        <CarouselSlider>{renderSlides("bordered", true)}</CarouselSlider>
+        <CarouselSlider>{renderSlides({withActions: true})}</CarouselSlider>
       </Carousel>
     </div>
   );
@@ -155,7 +118,7 @@ export const WithTitle: StoryFn<typeof Carousel> = (args) => {
         <CarouselControls
           title={<H2 id="carousel-title">Account overview</H2>}
         />
-        <CarouselSlider>{renderSlides("bordered")}</CarouselSlider>
+        <CarouselSlider>{renderSlides()}</CarouselSlider>
       </Carousel>
     </div>
   );
@@ -171,7 +134,7 @@ export const Controlled: StoryFn<typeof Carousel> = (args) => {
         </Button>
         <Button
           onClick={() => setSlide(slide + 1)}
-          disabled={slide >= content.length - 1}
+          disabled={slide >= 3}
         >
           Right
         </Button>
@@ -187,7 +150,7 @@ export const Controlled: StoryFn<typeof Carousel> = (args) => {
             Account overview carousel
           </H2>
           <CarouselSlider onSelectionChange={(_, index) => setSlide(index)}>
-            {renderSlides("bordered")}
+            {renderSlides()}
           </CarouselSlider>
         </Carousel>
       </div>
