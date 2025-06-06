@@ -1,7 +1,7 @@
 /* resize handle */
 .react-resizable-panels-theme-salt div[data-resize-handle] {
-  --splitHandle-size: var(--salt-size-thickness-400, calc(var(--salt-size-border) * 6));
-  --splitHandle-borderWidth: var(--salt-size-thickness-100, var(--salt-size-border));
+  --splitHandle-size: var(--salt-size-fixed-600);
+  --splitHandle-borderWidth: var(--salt-size-fixed-100);
   --splitHandle-borderColor: var(--salt-separable-secondary-borderColor);
   --splitHandle-borderStyle: var(--salt-separable-borderStyle);
   --splitHandle-dot-background: var(--salt-separable-foreground);

@@ -18,7 +18,7 @@
 
 .saltMenuItem:focus-visible {
   outline: var(--salt-focused-outline);
-  outline-offset: calc(var(--salt-size-border) * -2);
+  outline-offset: calc(var(--salt-size-fixed-100) * -2);
 }
 
 .saltMenuItem:hover {
@@ -32,7 +32,7 @@
 
 .saltMenuItem:active {
   background: var(--salt-selectable-background-selected);
-  box-shadow: 0 calc(var(--salt-size-border) * -1) 0 0 var(--salt-selectable-borderColor-selected), 0 var(--salt-size-border) 0 0 var(--salt-selectable-borderColor-selected);
+  box-shadow: 0 calc(var(--salt-size-fixed-100) * -1) 0 0 var(--salt-selectable-borderColor-selected), 0 var(--salt-size-fixed-100) 0 0 var(--salt-selectable-borderColor-selected);
 }
 
 .saltMenuItem[aria-disabled="true"],
@@ -46,8 +46,8 @@
 .saltMenuItem-blurActive {
   z-index: var(--salt-zIndex-default);
   background: var(--salt-selectable-background-selected);
-  box-shadow: 0 calc(var(--salt-size-border) * -1) 0 0 var(--salt-selectable-borderColor-selected), 0 var(--salt-size-border) 0 0 var(--salt-selectable-borderColor-selected);
-  box-shadow: 0 calc(var(--salt-size-border) * -1) 0 0 var(--salt-selectable-borderColor-selected), 0 var(--salt-size-border) 0 0 var(--salt-selectable-borderColor-selected);
+  box-shadow: 0 calc(var(--salt-size-fixed-100) * -1) 0 0 var(--salt-selectable-borderColor-selected), 0 var(--salt-size-fixed-100) 0 0 var(--salt-selectable-borderColor-selected);
+  box-shadow: 0 calc(var(--salt-size-fixed-100) * -1) 0 0 var(--salt-selectable-borderColor-selected), 0 var(--salt-size-fixed-100) 0 0 var(--salt-selectable-borderColor-selected);
 }
 
 /* TODO: Find a better way of doing this */
