@@ -1,0 +1,43 @@
+.saltVerticalNavigationGroupContent {
+  display: grid;
+  transition: grid-template-rows var(--salt-duration-perceptible) ease-in-out, opacity var(--salt-duration-perceptible) ease-in-out, visibility var(--salt-duration-perceptible) ease-in-out;
+}
+
+.saltVerticalNavigationGroupContent[aria-hidden="true"] {
+  grid-template-rows: 0fr;
+  opacity: 0;
+  visibility: hidden;
+}
+
+.saltVerticalNavigationGroupContent {
+  grid-template-rows: 1fr;
+  opacity: 1;
+  visibility: visible;
+}
+
+.saltVerticalNavigationGroupContent-inner {
+  overflow: hidden;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--salt-size-border);
+  border-bottom: var(--salt-size-border) var(--salt-separable-borderStyle) var(--salt-separable-tertiary-borderColor);
+}
+
+.saltVerticalNavigationGroupContent-inner .saltVerticalNavigationGroupContent-inner {
+  border-bottom: none;
+}
+
+.saltVerticalNavigationGroupContent,
+.saltVerticalNavigationGroupContent-inner {
+  --padding-offset: min(var(--content-count), var(--content-inner-count));
+}
+
+.saltVerticalNavigationGroupContent {
+  --content-count: calc(var(--content-inner-count) + 1);
+}
+
+.saltVerticalNavigationGroupContent-inner {
+  --content-inner-count: calc(var(--content-count));
+}
