@@ -37,11 +37,6 @@ To limit the range of accepted values, you can specify a minimum, maximum, or bo
 
 By default, when `min` and `max` values are set and user types a value that is out of range, the value is not clamped. You can set the `clampBehaviour` to `default` to clamp the value to `max` or `min`, whichever is closest when the input loses focus (on blur). Setting the `clampBehavior` to `strict` will not allow the user to even type an out of range value.
 
-### Best practices
-
-- Clearly communicate the accepted value range by utilizing the `FormField`'s helper text to guide users.
-- Use the `FormField` error state to alert users when they manually enter a value outside the permitted range, indicating that the input is invalid.
-
 <LivePreview componentName="number-input" exampleName="ClampBehaviour" />
 
 ## Validation
