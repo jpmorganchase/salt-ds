@@ -22,20 +22,20 @@ export type CarouselReducerDispatch = Dispatch<CarouselReducerAction>;
 export function carouselReducer(
   state: CarouselReducerState,
   action: CarouselReducerAction,
-) {
+): CarouselReducerState {
+  const { slides, activeSlideIndex, focusedSlideIndex } = state;
+
   switch (action.type) {
     case "register": {
-      const { slides } = state;
-      const [id, { element, slideDescription }] = action.payload;
+      const [id, slideMeta] = action.payload;
       const newSlides = new Map(slides);
-      newSlides.set(id, { element, slideDescription });
+      newSlides.set(id, slideMeta);
       return {
         ...state,
         slides: newSlides,
       };
     }
     case "unregister": {
-      const { slides } = state;
       const id = action.payload;
       if (!slides.has(id)) {
         return state;
@@ -47,26 +47,22 @@ export function carouselReducer(
         slides: newSlides,
       };
     }
-    // moves the first visible item
+
     case "move": {
-      const { slides } = state;
       const id = action.payload;
       if (!slides.has(id)) {
         return state;
       }
       const slideIds = [...slides.keys()];
-      const index = slideIds.indexOf(id || slideIds[0]);
+      const index = slideIds.indexOf(id);
       return {
         ...state,
-        activeSlideIndex: index,
+        activeSlideIndex: index !== -1 ? index : activeSlideIndex,
       };
     }
     case "moveToIndex": {
-      const { slides } = state;
-
       const index = action.payload;
-
-      if (index === -1 || index > slides.size) {
+      if (index < 0 || index >= slides.size) {
         return state;
       }
 
@@ -77,23 +73,21 @@ export function carouselReducer(
     }
     case "updateSlideCount": {
       const visibleSlides = action.payload;
-
-      return { ...state, visibleSlides: visibleSlides };
+      return { ...state, visibleSlides };
     }
 
     case "scroll": {
       const id = action.payload;
       const { slides } = state;
 
-      const focusedSlideIndex = [...slides.keys()].indexOf(id);
-
-      if (focusedSlideIndex === -1) {
+      const index = [...slides.keys()].indexOf(id);
+      if (index === -1) {
         return state;
       }
 
       return {
         ...state,
-        focusedSlideIndex,
+        focusedSlideIndex: index,
       };
     }
     default: {

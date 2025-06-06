@@ -3,16 +3,4 @@
   width: 100%;
   object-fit: cover;
 }
-.carouselHeader {
-  margin: 0;
-}
-.carouselButton {
-  height: auto;
-  margin-top: var(--salt-spacing-100);
-}
-.clickableSlide {
-  cursor: pointer;
-}
-.filteredImage {
-  filter: grayscale(1);
-}
+

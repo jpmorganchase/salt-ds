@@ -32,7 +32,7 @@ export const ControlledCarousel = (): ReactElement => {
             const slideId = useId();
             return (
               <CarouselSlide
-                appearance="bordered"
+                bordered
                 key={slideId}
                 aria-labelledby={`slide-title-${slideId}`}
                 media={
