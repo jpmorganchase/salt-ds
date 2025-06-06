@@ -1,5 +1,5 @@
 import * as tabsStories from "@stories/tabs-next/tabs-next.stories";
-import { composeStories } from "@storybook/react";
+import { composeStories } from "@storybook/react-vite";
 
 const {
   Bordered,

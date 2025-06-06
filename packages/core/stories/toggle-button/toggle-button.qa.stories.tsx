@@ -1,6 +1,6 @@
 import { FlowLayout, StackLayout, ToggleButton } from "@salt-ds/core";
 import { HomeIcon } from "@salt-ds/icons";
-import type { Meta, StoryFn } from "@storybook/react";
+import type { Meta, StoryFn } from "@storybook/react-vite";
 import {
   QAContainer,
   QAContainerNoStyleInjection,

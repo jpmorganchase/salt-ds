@@ -5,7 +5,7 @@ import {
   Tooltip,
 } from "@salt-ds/core";
 import { NumberInput } from "@salt-ds/lab";
-import type { Decorator } from "@storybook/react";
+import type { Decorator } from "@storybook/react-vite";
 import { type ReactNode, type SyntheticEvent, useState } from "react";
 import "./ResponsiveContainer.css";
 

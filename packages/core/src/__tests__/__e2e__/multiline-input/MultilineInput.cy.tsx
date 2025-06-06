@@ -1,5 +1,5 @@
 import * as multilineInputStories from "@stories/multiline-input/multiline-input.stories";
-import { composeStories } from "@storybook/react";
+import { composeStories } from "@storybook/react-vite";
 import type { ChangeEvent } from "react";
 
 const {

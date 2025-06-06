@@ -1,5 +1,5 @@
 import * as segmentedButtonStories from "@stories/segmented-button-group/segmented-button-group.stories";
-import { composeStories } from "@storybook/react";
+import { composeStories } from "@storybook/react-vite";
 
 const composedStories = composeStories(segmentedButtonStories);
 

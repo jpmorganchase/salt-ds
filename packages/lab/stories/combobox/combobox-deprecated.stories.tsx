@@ -19,7 +19,7 @@ import {
   escapeRegExp,
   useListItemDeprecated,
 } from "@salt-ds/lab";
-import type { Meta, StoryFn } from "@storybook/react";
+import type { Meta, StoryFn } from "@storybook/react-vite";
 import type { IndexedListItemProps } from "../../src/list-deprecated";
 import { Highlighter } from "../../src/list-deprecated/internal/Highlighter";
 

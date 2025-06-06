@@ -1,5 +1,5 @@
 import { AddDocumentIcon } from "@salt-ds/icons";
-import type { Meta, StoryFn } from "@storybook/react";
+import type { Meta, StoryFn } from "@storybook/react-vite";
 import { QAContainer, QAContainerNoStyleInjection } from "docs/components";
 import { allIcons } from "./icon.all";
 import "@salt-ds/icons/saltIcons.css";

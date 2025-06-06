@@ -11,7 +11,7 @@ import {
   Input as InputLegacy,
   StaticInputAdornment,
 } from "@salt-ds/lab";
-import type { Meta, StoryFn } from "@storybook/react";
+import type { Meta, StoryFn } from "@storybook/react-vite";
 import { QAContainer, type QAContainerProps } from "docs/components";
 
 export default {

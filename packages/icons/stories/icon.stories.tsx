@@ -6,7 +6,7 @@ import {
   type IconProps,
 } from "@salt-ds/icons";
 import { FormField, Input } from "@salt-ds/lab";
-import type { Meta, StoryFn } from "@storybook/react";
+import type { Meta, StoryFn } from "@storybook/react-vite";
 import { type ElementType, createElement, useMemo, useState } from "react";
 import { allIcons } from "./icon.all";
 

@@ -1,4 +1,4 @@
-import type { Decorator, Meta, StoryFn } from "@storybook/react";
+import type { Decorator, Meta, StoryFn } from "@storybook/react-vite";
 
 import {
   Button,

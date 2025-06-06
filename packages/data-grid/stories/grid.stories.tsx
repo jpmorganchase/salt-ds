@@ -6,7 +6,7 @@ import {
   ChevronRightIcon,
   FavoriteIcon,
 } from "@salt-ds/icons";
-import type { StoryFn } from "@storybook/react";
+import type { StoryFn } from "@storybook/react-vite";
 import {
   type CSSProperties,
   type ChangeEvent,

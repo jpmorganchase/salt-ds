@@ -1,4 +1,4 @@
-import { addons, types } from "@storybook/manager-api";
+import { addons, types } from "storybook/manager-api";
 import saltTheme from "./SaltTheme";
 import { ThemeNextToolbar } from "./toolbar/ThemeNextToolbar";
 
