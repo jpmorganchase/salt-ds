@@ -1,4 +1,4 @@
-import { H2, H3, StackLayout, Text, useId } from "@salt-ds/core";
+import { H2, H3, Text, useId } from "@salt-ds/core";
 import {
   Carousel,
   CarouselControls,
@@ -10,20 +10,17 @@ import type { ReactElement } from "react";
 import { sliderData } from "./exampleData";
 import styles from "./index.module.css";
 
-export const ControlsAlignment = (): ReactElement => {
-  return (
-    <StackLayout gap={1}>
-      <H2 className={styles.carouselHeader}>Account overview</H2>
-      <Carousel aria-label="Account overview" controlsPlacement="bottom">
+export const Bordered = (): ReactElement => (
+      <Carousel aria-label="Account overview bordered">
         <CarouselControls />
         <CarouselSlider>
           {sliderData.map((slide, index) => {
-            const slideId = useId();
+            const carousel1SlideId = useId();
             return (
               <CarouselSlide
-                appearance="bordered"
-                key={slideId}
-                aria-labelledby={`slide-title-${slideId}`}
+                bordered
+                key={carousel1SlideId}
+                aria-labelledby={`slide-title-${carousel1SlideId}`}
                 media={
                   <img
                     alt={`stock content to show in carousel slide ${index}`}
@@ -31,7 +28,9 @@ export const ControlsAlignment = (): ReactElement => {
                     src={slide.image}
                   />
                 }
-                header={<H3 id={`slide-title-${slideId}`}>{slide.title}</H3>}
+                header={
+                  <H3 id={`slide-title-${carousel1SlideId}`}>{slide.title}</H3>
+                }
               >
                 <Text>{slide.content}</Text>
               </CarouselSlide>
@@ -39,6 +38,4 @@ export const ControlsAlignment = (): ReactElement => {
           })}
         </CarouselSlider>
       </Carousel>
-    </StackLayout>
   );
-};

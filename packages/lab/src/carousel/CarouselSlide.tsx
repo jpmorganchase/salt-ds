@@ -33,10 +33,9 @@ export interface CarouselSlideProps extends ComponentProps<"div"> {
    **/
   media?: ReactNode;
   /**
-   * The appearance of the slide. Options are 'bordered', and 'transparent'.
-   * 'transparent' is the default value.
-   **/
-  appearance?: "bordered" | "transparent";
+   * If `false`,slider will not have a border.
+   */
+  bordered?: boolean;
   /**
    * Header content to be displayed at the top of the slide. This can be text or any other React node.
    **/
@@ -53,7 +52,7 @@ export const CarouselSlide = forwardRef<HTMLDivElement, CarouselSlideProps>(
   function CarouselSlide(
     {
       actions,
-      appearance,
+      bordered,
       media,
       header,
       children,
@@ -121,7 +120,7 @@ export const CarouselSlide = forwardRef<HTMLDivElement, CarouselSlideProps>(
         className={clsx(
           withBaseName(),
           {
-            [withBaseName("bordered")]: appearance === "bordered",
+            [withBaseName("bordered")]: bordered,
           },
           className,
         )}
@@ -135,7 +134,7 @@ export const CarouselSlide = forwardRef<HTMLDivElement, CarouselSlideProps>(
         {children && (
           <div
             className={clsx(withBaseName("container"), {
-              [withBaseName("card")]: appearance === "bordered",
+              [withBaseName("container-gutter")]: bordered,
             })}
           >
             <div className={withBaseName("content")}>

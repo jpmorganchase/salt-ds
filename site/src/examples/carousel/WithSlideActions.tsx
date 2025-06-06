@@ -19,7 +19,7 @@ export const WithSlideActions = (): ReactElement => {
           return (
             <CarouselSlide
               key={slideId}
-              appearance="bordered"
+              bordered
               aria-labelledby={`slide-title-${slideId}`}
               media={
                 <img

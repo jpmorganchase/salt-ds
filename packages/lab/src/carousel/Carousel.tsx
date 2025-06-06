@@ -73,9 +73,7 @@ export const Carousel = forwardRef<HTMLDivElement, CarouselProps>(
           role="region"
           className={clsx(
             withBaseName(),
-            {
-              [withBaseName(controlsPlacement)]: controlsPlacement === "bottom",
-            },
+            withBaseName(controlsPlacement as string),
             className,
           )}
           aria-roledescription="carousel"

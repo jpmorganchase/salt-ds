@@ -78,14 +78,6 @@ export const CarouselControls = forwardRef<
   const slideCount = slides.size;
   const { NextIcon, PreviousIcon } = useIcon();
 
-  const [isFocused, setIsFocused] = useState(false);
-  function handleFocusCapture() {
-    !isFocused && setIsFocused(true);
-  }
-  function handleBlurCapture() {
-    isFocused && setIsFocused(false);
-  }
-
   const prevButtonRef = useRef<HTMLButtonElement>(null);
   const nextButtonRef = useRef<HTMLButtonElement>(null);
   const slideIds = [...slides.keys()];
@@ -140,17 +132,13 @@ export const CarouselControls = forwardRef<
 
   return (
     <div
-      className={clsx(withBaseName("container"), className)}
+      className={clsx(withBaseName(), className)}
       ref={ref}
       {...rest}
     >
       {title}
       <div
-        className={withBaseName()}
-        ref={ref}
-        {...rest}
-        onFocusCapture={handleFocusCapture}
-        onBlurCapture={handleBlurCapture}
+        className={withBaseName("container")}
       >
         {(labelPlacement === "left" || title) && controlsLabel}
         <Button
