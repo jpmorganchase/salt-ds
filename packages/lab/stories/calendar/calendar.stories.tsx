@@ -644,7 +644,9 @@ export const SingleWithTimezone: StoryFn<typeof Calendar> = (args) => {
   );
 };
 
-export const RangeWithTimezone: StoryFn<typeof Calendar> = (args) => {
+export const RangeWithTimezone: StoryFn<
+  CalendarRangeProps<DateFrameworkType>
+> = (args) => {
   const { dateAdapter } = useLocalization<DateFrameworkType>();
   const timezoneOptions =
     dateAdapter.lib !== "date-fns"
