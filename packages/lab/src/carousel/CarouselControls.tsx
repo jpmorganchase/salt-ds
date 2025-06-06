@@ -16,6 +16,7 @@ import {
   CarouselStateContext,
 } from "./CarouselContext";
 
+import { clsx } from "clsx";
 import carouselControlsCss from "./CarouselControls.css";
 
 const withBaseName = makePrefixer("saltCarouselControls");
@@ -97,8 +98,8 @@ export const CarouselControls = forwardRef<
   const isOnLastSlide = activeSlideIndex === slideCount - visibleSlides;
 
   const isAnnouncerOn =
-    nextButtonRef.current === document.activeElement ||
-    prevButtonRef.current === document.activeElement;
+    nextButtonRef.current === targetWindow?.document.activeElement ||
+    prevButtonRef.current === targetWindow?.document.activeElement;
 
   const currentSlideDescription =
     (visibleSlides === 1 &&
@@ -138,7 +139,11 @@ export const CarouselControls = forwardRef<
   }
 
   return (
-    <div className={withBaseName("container")} ref={ref} {...rest}>
+    <div
+      className={clsx(withBaseName("container"), className)}
+      ref={ref}
+      {...rest}
+    >
       {title}
       <div
         className={withBaseName()}
