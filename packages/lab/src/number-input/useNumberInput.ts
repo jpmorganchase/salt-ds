@@ -60,10 +60,7 @@ export const useNumberInput = ({
     (event?: SyntheticEvent, block?: boolean) => {
       if (isAtMin(value, min)) return;
       const decrementStep = block ? stepMultiplier * step : step;
-      let parsedValue = value;
-      if (parse) {
-        parsedValue = parse(value);
-      }
+      const parsedValue = parse?.(value) || value;
       const nextValue = toFloat(parsedValue) - decrementStep;
       updateValue(event, nextValue);
     },
@@ -74,10 +71,7 @@ export const useNumberInput = ({
     (event?: SyntheticEvent, block?: boolean) => {
       if (isAtMax(value, max)) return;
       const incrementStep = block ? stepMultiplier * step : step;
-      let parsedValue = value;
-      if (parse) {
-        parsedValue = parse(value);
-      }
+      const parsedValue = parse?.(value) || value;
       const nextValue = toFloat(parsedValue) + incrementStep;
       updateValue(event, nextValue);
     },
