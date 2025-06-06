@@ -369,3 +369,10 @@
   margin-inline-start: var(--salt-spacing-100);
   margin-inline-end: 0;
 }
+
+.ag-theme-salt-light .ag-header-cell.ag-floating-filter,
+.ag-theme-salt-dark .ag-header-cell.ag-floating-filter,
+.ag-theme-salt-compact-light .ag-header-cell.ag-floating-filter,
+.ag-theme-salt-compact-dark .ag-header-cell.ag-floating-filter {
+  border-radius: var(--salt-palette-corner-weak);
+}
