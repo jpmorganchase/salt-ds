@@ -3,19 +3,19 @@ import {
   Checkbox,
   CheckboxGroup,
   FlexItem,
-  FlexLayout,
   FlowLayout,
   FormField,
   FormFieldLabel,
   Input,
-  SaltProvider,
   StackLayout,
   StatusIndicator,
   Text,
 } from "@salt-ds/core";
-import { CloseIcon, SearchIcon } from "@salt-ds/icons";
+import { CloseIcon, type IconProps, SearchIcon } from "@salt-ds/icons";
 import {
   type ChangeEvent,
+  type ForwardRefExoticComponent,
+  type RefAttributes,
   useDeferredValue,
   useEffect,
   useMemo,
@@ -23,15 +23,66 @@ import {
 } from "react";
 import styles from "./IconPreview.module.css";
 
+type IconSynonym = {
+  iconName: string;
+  synonym: string[];
+  category: string;
+};
+
+type IconData = {
+  componentName: string;
+  Component: ForwardRefExoticComponent<
+    IconProps & RefAttributes<SVGSVGElement>
+  >;
+} & IconSynonym;
+
+const isIconNameMatch = (componentName: string, figmaIconName: string) => {
+  const regex = new RegExp(
+    `^${figmaIconName.replace(/-/g, "")}(Solid)?Icon$`,
+    "i",
+  );
+  return regex.test(componentName);
+};
+
 export function IconPreview() {
-  const [allIcons, setAllIcons] = useState<Record<string, any>>({});
+  const [allIcons, setAllIcons] = useState<IconData[]>([]);
 
   useEffect(() => {
-    import("./allIconsList").then((module) => setAllIcons(module.allIcons));
+    const fetchData = async () => {
+      const module = await import("./allIconsList");
+      const iconSynonymData = (await import("./salt-icon-synonym.json"))
+        .default as IconSynonym[];
+
+      const icons = [];
+
+      for (const [name, Icon] of Object.entries(module.allIcons)) {
+        // Icon component name is pascal case, iconName from Figma is kebab
+
+        const synonymMatch = iconSynonymData.find((item) =>
+          isIconNameMatch(name, item.iconName),
+        );
+
+        if (!synonymMatch) {
+          console.warn("Can't match icon name with synonym data", name);
+        }
+
+        icons.push({
+          componentName: name,
+          Component: Icon,
+          ...(synonymMatch ?? { iconName: name, synonym: [], category: "" }),
+        } as IconData);
+      }
+
+      setAllIcons(icons);
+    };
+
+    void fetchData();
   }, []);
 
   const [search, setSearch] = useState("");
-  const deferredSearch = useDeferredValue(search.toLowerCase());
+  const deferredSearch = useDeferredValue(
+    search.toLowerCase().replaceAll(/\s/g, ""),
+  );
   const [variants, setVariants] = useState<("solid" | "outline")[]>([
     "solid",
     "outline",
@@ -56,8 +107,11 @@ export function IconPreview() {
   };
 
   const filteredIcons = useMemo(() => {
-    return Object.entries(allIcons).filter(([name]) => {
-      const matchesSearch = name.toLowerCase().includes(deferredSearch);
+    return allIcons.filter(({ componentName: name, synonym }) => {
+      const iconNameToMatch = name.toLowerCase();
+      const matchesSearch = [iconNameToMatch, ...synonym].some((word) =>
+        word.includes(deferredSearch),
+      );
       const isOutlineIcon = !name.endsWith("SolidIcon");
       const isSolidIcon = name.endsWith("SolidIcon");
       return (
@@ -73,7 +127,7 @@ export function IconPreview() {
       return (
         <div className={styles.gridContainer}>
           <FlowLayout justify="start" gap={1}>
-            {filteredIcons.map(([name, Icon]) => (
+            {filteredIcons.map(({ componentName: name, Component: Icon }) => (
               <StackLayout
                 align="center"
                 key={name}
@@ -112,33 +166,37 @@ export function IconPreview() {
     );
   }, [filteredIcons, deferredSearch]);
 
+  const totalCount = Object.entries(allIcons).length;
+
   return (
     <StackLayout className={styles.root} gap={1}>
-      <FlexLayout wrap>
+      <FlowLayout justify="space-between">
         <FlexItem>
-          <Input
-            placeholder="Search icons"
-            aria-label="Search icons"
-            value={search}
-            onChange={handleSearch}
-            className={styles.search}
-            startAdornment={<SearchIcon />}
-            endAdornment={
-              search ? (
-                <Button
-                  onClick={handleClear}
-                  appearance="transparent"
-                  sentiment="neutral"
-                  aria-label="Clear search"
-                >
-                  <CloseIcon aria-hidden />
-                </Button>
-              ) : null
-            }
-          />
+          <FormField>
+            <FormFieldLabel>Search icons</FormFieldLabel>
+            <Input
+              value={search}
+              onChange={handleSearch}
+              className={styles.search}
+              startAdornment={<SearchIcon />}
+              endAdornment={
+                search ? (
+                  <Button
+                    onClick={handleClear}
+                    appearance="transparent"
+                    sentiment="neutral"
+                    aria-label="Clear search"
+                  >
+                    <CloseIcon aria-hidden />
+                  </Button>
+                ) : null
+              }
+            />
+          </FormField>
         </FlexItem>
+
         <FlexItem>
-          <FormField labelPlacement="left" className={styles.formfield}>
+          <FormField>
             <FormFieldLabel>Show variant</FormFieldLabel>
             <CheckboxGroup
               checkedValues={variants}
@@ -150,13 +208,16 @@ export function IconPreview() {
             </CheckboxGroup>
           </FormField>
         </FlexItem>
-        <FlexItem className={styles.formfield}>
-          <Text className={styles.iconCount}>
-            Icon Count: {filteredIcons.length}
-          </Text>
-        </FlexItem>
-      </FlexLayout>
-      <SaltProvider density="medium">{renderIcons}</SaltProvider>
+      </FlowLayout>
+
+      <div className={styles.resultContainer}>{renderIcons}</div>
+
+      <Text styleAs="label" color="secondary">
+        Total icons:{totalCount}.
+        {totalCount > filteredIcons.length
+          ? ` Filtered: ${filteredIcons.length}.`
+          : null}
+      </Text>
     </StackLayout>
   );
 }

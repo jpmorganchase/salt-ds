@@ -1,4 +1,4 @@
-import type { Decorator } from "@storybook/react";
+import type { Decorator } from "@storybook/react-vite";
 import "dayjs/locale/en";
 import { AdapterDateFns } from "@salt-ds/date-adapters/date-fns";
 import { AdapterDayjs } from "@salt-ds/date-adapters/dayjs";
@@ -18,9 +18,6 @@ const dateAdapterMap: Record<string, any> = {
 const getDefaultLocale = (dateAdapter: string) => {
   if (dateAdapter === "date-fns") {
     return dateFnsEnUs;
-  }
-  if (dateAdapter === "dayjs") {
-    return "en-US";
   }
   return "en";
 };

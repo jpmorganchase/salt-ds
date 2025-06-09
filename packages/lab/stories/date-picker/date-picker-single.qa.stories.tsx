@@ -1,13 +1,13 @@
 import {
   DatePicker,
   DatePickerOverlay,
+  DatePickerSingleGridPanel,
   DatePickerSingleInput,
-  DatePickerSinglePanel,
   type DatePickerSingleProps,
   DatePickerTrigger,
   useLocalization,
 } from "@salt-ds/lab";
-import type { StoryFn } from "@storybook/react";
+import type { StoryFn } from "@storybook/react-vite";
 import { QAContainer, type QAContainerProps } from "docs/components";
 
 import { es as dateFnsEs } from "date-fns/locale";
@@ -37,12 +37,36 @@ const renderQAContainer = (
   props?: Omit<DatePickerSingleProps<unknown>, "selectionVariant">,
 ) => {
   const { dateAdapter } = useLocalization();
+  const checkDayOfWeek = (
+    day: string | false,
+    targetDayIndex: number,
+    luxonOffset: number,
+    message: string,
+  ) => {
+    const dayOfWeek = dateAdapter.getDayOfWeek(day);
+    const isTargetDay =
+      (dateAdapter.lib === "luxon" && dayOfWeek === luxonOffset) ||
+      (dateAdapter.lib !== "luxon" && dayOfWeek === targetDayIndex);
+
+    return isTargetDay ? message : false;
+  };
+
+  // biome-ignore lint/suspicious/noExplicitAny: date framework dependent
+  const isMonday = (day: any) => checkDayOfWeek(day, 0, 1, "is a Monday");
+  // biome-ignore lint/suspicious/noExplicitAny: date framework dependent
+  const isSaturday = (day: any) => checkDayOfWeek(day, 6, 5, "is a weekend");
+  // biome-ignore lint/suspicious/noExplicitAny: date framework dependent
+  const isFriday = (day: any) => checkDayOfWeek(day, 5, 4, "is a Friday");
+
   return (
     <QAContainer itemPadding={10} width={1000}>
       <div style={{ height: 500 }}>
         <DatePicker
           defaultSelectedDate={dateAdapter.today()}
           selectionVariant="single"
+          isDayDisabled={isMonday}
+          isDayHighlighted={isFriday}
+          isDayUnselectable={isSaturday}
           open
           {...props}
         >
@@ -50,7 +74,7 @@ const renderQAContainer = (
             <DatePickerSingleInput />
           </DatePickerTrigger>
           <DatePickerOverlay>
-            <DatePickerSinglePanel />
+            <DatePickerSingleGridPanel numberOfVisibleMonths={2} columns={2} />
           </DatePickerOverlay>
         </DatePicker>
       </div>

@@ -1,5 +1,5 @@
 import * as listBoxStories from "@stories/list-box/list-box.stories";
-import { composeStories } from "@storybook/react";
+import { composeStories } from "@storybook/react-vite";
 
 const {
   SingleSelect,

@@ -1,8 +1,8 @@
 import {
   Button,
-  FlexItem,
-  FlexLayout,
   FlowLayout,
+  FormField,
+  FormFieldLabel,
   Input,
   StackLayout,
   StatusIndicator,
@@ -84,39 +84,41 @@ export const CountrySymbolPreview = () => {
     );
   }, [filteredSymbols, deferredSearch]);
 
+  const totalCount = Object.values(countryMetaMap).length;
+
   return (
     <Suspense fallback="Loading...">
       <StackLayout className={styles.root} gap={1}>
-        <FlexLayout direction="row">
-          <FlexItem>
-            <Input
-              placeholder="Search country symbols"
-              aria-label="Search country symbols"
-              value={search}
-              onChange={handleSearch}
-              className={styles.search}
-              startAdornment={<SearchIcon />}
-              endAdornment={
-                search ? (
-                  <Button
-                    onClick={handleClear}
-                    appearance="transparent"
-                    sentiment="neutral"
-                    aria-label="Clear search"
-                  >
-                    <CloseIcon aria-hidden />
-                  </Button>
-                ) : null
-              }
-            />
-          </FlexItem>
-          <FlexItem className={styles.formfield}>
-            <Text className={styles.symbolCount}>
-              Symbol Count: {filteredSymbols.length}
-            </Text>
-          </FlexItem>
-        </FlexLayout>
+        <FormField>
+          <FormFieldLabel>Search country symbols</FormFieldLabel>
+          <Input
+            value={search}
+            onChange={handleSearch}
+            className={styles.search}
+            startAdornment={<SearchIcon />}
+            endAdornment={
+              search ? (
+                <Button
+                  onClick={handleClear}
+                  appearance="transparent"
+                  sentiment="neutral"
+                  aria-label="Clear search"
+                >
+                  <CloseIcon aria-hidden />
+                </Button>
+              ) : null
+            }
+          />
+        </FormField>
+
         <div className={styles.symbolsContainer}>{renderSymbols}</div>
+
+        <Text styleAs="label" color="secondary">
+          Total symbols: {totalCount}.
+          {totalCount > filteredSymbols.length
+            ? ` Filtered: ${filteredSymbols.length}.`
+            : null}
+        </Text>
       </StackLayout>
     </Suspense>
   );

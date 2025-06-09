@@ -1,5 +1,6 @@
 import { dirname, join } from "node:path";
 import type { StorybookConfig } from "@storybook/react-vite";
+import remarkGfm from "remark-gfm";
 import type { UserConfig } from "vite";
 import { typescriptTurbosnap } from "vite-plugin-typescript-turbosnap";
 import { cssInline } from "../tooling/css-inline-plugin";
@@ -14,19 +15,22 @@ const config: StorybookConfig = {
   typescript: {
     reactDocgen: "react-docgen-typescript",
   },
+  features: {
+    backgrounds: false,
+  },
   addons: [
     {
-      name: "@storybook/addon-essentials",
+      name: "@storybook/addon-docs",
       options: {
-        // We don't want the backgrounds addon as our own withThemeBackground works with theme switch to apply background
-        backgrounds: false,
+        mdxPluginOptions: {
+          mdxCompileOptions: {
+            remarkPlugins: [remarkGfm],
+          },
+        },
       },
     },
     getAbsolutePath("@storybook/addon-links"),
     getAbsolutePath("@storybook/addon-a11y"),
-    getAbsolutePath("@storybook/addon-mdx-gfm"),
-    getAbsolutePath("@storybook/addon-interactions"),
-    getAbsolutePath("@storybook/addon-storysource"),
   ],
   async viteFinal(config, { configType }) {
     const { mergeConfig } = await import("vite");

@@ -1,5 +1,5 @@
 import * as drawerStories from "@stories/drawer/drawer.stories";
-import { composeStories } from "@storybook/react";
+import { composeStories } from "@storybook/react-vite";
 
 const composedStories = composeStories(drawerStories);
 

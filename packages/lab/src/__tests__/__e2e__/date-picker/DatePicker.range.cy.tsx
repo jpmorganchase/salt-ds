@@ -34,10 +34,14 @@ const {
   RangeWithCustomParser,
   RangeWithFormField,
   RangeWithMinMaxDate,
+  RangeWithDisabledDates,
+  RangeWithUnselectableDates,
   RangeCustomFormat,
+  RangeWithTimezone,
+  // biome-ignore lint/suspicious/noExplicitAny: storybook stories
 } = datePickerStories as any;
 
-describe("GIVEN a DatePicker where selectionVariant is single", () => {
+describe("GIVEN a DatePicker where selectionVariant is range", () => {
   describe("WHEN default state", () => {
     beforeEach(() => {
       const today = new Date(2024, 4, 6);
@@ -61,7 +65,10 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
     it("SHOULD open calendar overlay when using down arrow", () => {
       cy.mount(<Range />);
 
-      cy.findAllByRole("textbox").eq(0).click().type("{downArrow}");
+      cy.findAllByRole("textbox")
+        .eq(0)
+        .click()
+        .type("{downArrow}", { force: true });
       // Verify that the calendar is displayed
       cy.findAllByRole("application").should("have.length", 2);
     });
@@ -76,6 +83,30 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
       cy.findByRole("application").should("not.exist");
       cy.findByLabelText("End date").realClick();
       cy.findAllByRole("application").should("have.length", 2);
+    });
+
+    it("SHOULD hide calendar upon focus out", () => {
+      cy.mount(<Range />);
+
+      // Simulate opening the calendar
+      cy.findAllByRole("textbox")
+        .eq(0)
+        .click()
+        .type("{downArrow}", { force: true });
+      // Verify the overlay opens
+      cy.findAllByRole("application").should("have.length", 2);
+      // Simulate re-focusing the input
+      cy.findByLabelText("Start date").realClick();
+      // Simulate tabbing to end date
+      cy.realPress("Tab");
+      cy.findAllByRole("application").should("have.length", 2);
+      // Simulate tabbing to calendar button
+      cy.realPress("Tab");
+      cy.findAllByRole("application").should("have.length", 2);
+      // Simulate focus out
+      cy.get("body").click(0, 0);
+      // Verify the overlay closes
+      cy.findByRole("application").should("not.exist");
     });
   });
 
@@ -159,6 +190,74 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
         endDate: adapter.parse("16/01/2025", "DD/MM/YYYY").date,
       };
 
+      it("SHOULD be able to tab between all elements", () => {
+        cy.mount(<Range defaultSelectedDate={initialRangeDate} />);
+
+        // Simulate opening the overlay
+        cy.findByLabelText("Start date")
+          .click()
+          .type("{downArrow}", { force: true });
+        // Verify that the calendar is opened
+        cy.findAllByRole("application").should("have.length", 2);
+        // Verify the first element focused in the first calendar is the start date
+        cy.findByRole("button", {
+          name: adapter.format(initialRangeDate.startDate, "DD MMMM YYYY"),
+        }).should("be.focused");
+        // Simulate tabbing to the next calendar
+        cy.realPress("Tab");
+        // Verify the focused element(s) are the navigation controls
+        cy.findAllByLabelText("Previous Month").eq(1).should("be.focused");
+        cy.realPress("Tab");
+        cy.findAllByLabelText("Month Dropdown").eq(1).should("be.focused");
+        cy.realPress("Tab");
+        cy.findAllByLabelText("Year Dropdown").eq(1).should("be.focused");
+        cy.realPress("Tab");
+        cy.findAllByLabelText("Next Month").eq(1).should("be.focused");
+        // Simulate tabbing into the second calendar
+        cy.realPress("Tab");
+        // Verify the first day focused in the second calendar
+        const startOfEndCalendar = adapter.startOf(
+          adapter.add(initialRangeDate.startDate, { months: 1 }),
+          "month",
+        );
+        cy.findByRole("button", {
+          name: adapter.format(startOfEndCalendar, "DD MMMM YYYY"),
+        }).should("be.focused");
+        // Simulate tabbing back to the first calendar
+        cy.realPress("Tab");
+        // Verify the focused element(s) are the navigation controls
+        cy.findAllByLabelText("Previous Month").first().should("be.focused");
+        cy.realPress("Tab");
+        cy.findAllByLabelText("Month Dropdown").first().should("be.focused");
+        cy.realPress("Tab");
+        cy.findAllByLabelText("Year Dropdown").first().should("be.focused");
+        cy.realPress("Tab");
+        cy.findAllByLabelText("Next Month").first().should("be.focused");
+        // Simulate tabbing into the second calendar
+        cy.realPress("Tab");
+        // Verify focus returns to the first focused element in the first calendar
+        cy.findByRole("button", {
+          name: adapter.format(initialRangeDate.startDate, "DD MMMM YYYY"),
+        }).should("be.focused");
+        // Simulate closing the overlay
+        cy.realPress("Escape");
+        // Verify that the calendar is closed
+        cy.findByRole("application").should("not.exist");
+        // Verify focus returns to the triggering element
+        cy.findByLabelText("Start date").should("be.focused");
+        // Simulate tabbing to calendar button
+        cy.realPress("Tab");
+        // Verify focus returns to the triggering element
+        cy.findByLabelText("End date").should("be.focused");
+        cy.realPress("Tab");
+        // Verify calendar button is focused
+        cy.findByLabelText("Open Calendar").should("be.focused");
+        // Simulate tabbing out of date picker
+        cy.realPress("Tab");
+        // Verify the date picker loses focus
+        cy.findByLabelText("Open Calendar").should("not.be.focused");
+      });
+
       it("SHOULD only be able to select a date between min/max", () => {
         const selectionChangeSpy = cy.stub().as("selectionChangeSpy");
         cy.mount(
@@ -176,6 +275,23 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
         cy.findByRole("button", {
           name: "14 January 2030",
         }).should("have.attr", "aria-disabled", "true");
+        // Verify the navigation controls do not allow to navigate beyond the min/max
+        cy.findAllByLabelText("Previous Month")
+          .eq(0)
+          .should("have.attr", "aria-disabled", "true");
+        cy.findAllByLabelText("Next Month")
+          .eq(0)
+          .should("not.have.attr", "aria-disabled", "true");
+        cy.findAllByLabelText("Previous Month")
+          .eq(1)
+          .should("not.have.attr", "aria-disabled", "true");
+        cy.findAllByLabelText("Next Month")
+          .eq(1)
+          .should("have.attr", "aria-disabled", "true");
+        // Verify first selectable date in range is focused
+        cy.findByRole("button", {
+          name: "15 January 2030",
+        }).should("be.focused");
         cy.findByRole("button", {
           name: "15 January 2030",
         }).should("not.have.attr", "aria-disabled", "true");
@@ -204,6 +320,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
         cy.findByRole("application").should("not.exist");
         cy.findByLabelText("Start date").should("have.value", "15 Jan 2030");
         cy.findByLabelText("End date").should("have.value", "15 Jan 2031");
+        // biome-ignore lint/suspicious/noExplicitAny: spy
         cy.get("@selectionChangeSpy").should((spy: any) => {
           const [_event, date, details] = spy.lastCall.args;
           expect(adapter.isValid(date.startDate)).to.be.true;
@@ -232,11 +349,13 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
           .clear()
           .type(initialRangeDateValue.startDate);
         cy.realPress("Tab");
+        // Verify there is a valid change event
         cy.findByLabelText("Start date").should(
           "have.value",
           initialRangeDateValue.startDate,
         );
         cy.get("@selectionChangeSpy").should("have.been.calledOnce");
+        // biome-ignore lint/suspicious/noExplicitAny: spy
         cy.get("@selectionChangeSpy").should((spy: any) => {
           const [_event, date, details] = spy.lastCall.args;
           expect(adapter.isValid(date.startDate)).to.be.true;
@@ -263,7 +382,9 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
           .clear()
           .type(initialRangeDateValue.endDate);
         cy.realPress("Tab");
+        // Verify there is a valid change event
         cy.get("@selectionChangeSpy").should("have.been.calledTwice");
+        // biome-ignore lint/suspicious/noExplicitAny: spy
         cy.get("@selectionChangeSpy").should((spy: any) => {
           const [_event, date, details] = spy.lastCall.args;
           expect(adapter.isValid(date.startDate)).to.be.true;
@@ -282,7 +403,9 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
         // Simulate entering an invalid end date
         cy.findByLabelText("End date").clear().type("bad date");
         cy.realPress("Tab");
+        // Verify there is an invalid change event
         cy.get("@selectionChangeSpy").should("have.been.calledThrice");
+        // biome-ignore lint/suspicious/noExplicitAny: spy
         cy.get("@selectionChangeSpy").should((spy: any) => {
           const [_event, date, details] = spy.lastCall.args;
           expect(adapter.isValid(date.startDate)).to.be.true;
@@ -303,6 +426,59 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
             },
           });
         });
+        // Simulate correcting the date range
+        cy.findByLabelText("Start date")
+          .click()
+          .clear()
+          .type(initialRangeDateValue.startDate);
+        cy.findByLabelText("End date")
+          .clear()
+          .type(initialRangeDateValue.endDate);
+        cy.realPress("Tab");
+        cy.get("@selectionChangeSpy").should("have.callCount", 4);
+        // Simulate receiving focus but the date range not changing
+        cy.findByLabelText("Start date").focus();
+        cy.realPress("Tab");
+        cy.findByLabelText("Start date").should(
+          "have.value",
+          initialRangeDateValue.startDate,
+        );
+        cy.findByLabelText("End date").should("have.focus");
+        cy.realPress("Tab");
+        cy.findByLabelText("End date").should(
+          "have.value",
+          initialRangeDateValue.endDate,
+        );
+        // Verify there is no change event
+        cy.get("@selectionChangeSpy").should("have.callCount", 4);
+      });
+
+      it("SHOULD render helper text in the panel when opened ", () => {
+        cy.mount(<RangeWithFormField />);
+        // Verify the helper text is visible on the page
+        cy.get('[id^="helperText-"]')
+          .filter((index, element) => {
+            return !Cypress.$(element).closest("[data-floating-ui-portal]")
+              .length;
+          })
+          .should("be.visible");
+        // Simulate opening the calendar
+        cy.findByRole("button", { name: "Open Calendar" }).realClick();
+        // Verify that the dialog is opened
+        cy.findAllByRole("application").should("have.length", 2);
+        // Verify the helper text is not visible on the page
+        cy.get('[id^="helperText-"]')
+          .filter((index, element) => {
+            return !Cypress.$(element).closest("[data-floating-ui-portal]")
+              .length;
+          })
+          .should("not.be.visible");
+        // Verify the helper text has moved to the dialog panel
+        cy.get('[id^="helperText-"]')
+          .filter((index, element) => {
+            return Cypress.$(element).closest('[role="dialog"]').length > 0;
+          })
+          .should("be.visible");
       });
 
       it("SHOULD support custom panel with tenors", () => {
@@ -328,6 +504,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
         cy.realPress("Tab");
         const startDate = adapter.today();
         const endDate = adapter.add(startDate, { years: 15 });
+        // biome-ignore lint/suspicious/noExplicitAny: spy
         cy.get("@selectionChangeSpy").should((spy: any) => {
           const [_event, date] = spy.lastCall.args;
           expect(adapter.isValid(date.startDate)).to.be.true;
@@ -380,6 +557,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
           cy.findAllByRole("application").should("have.length", 2);
           cy.findByLabelText("Start date").should("have.value", "15 Jan 2025");
           cy.findByLabelText("End date").should("have.value", "16 Jan 2025");
+          // biome-ignore lint/suspicious/noExplicitAny: spy
           cy.get("@selectionChangeSpy").should((spy: any) => {
             const [_event, date] = spy.lastCall.args;
             expect(adapter.isValid(date.startDate)).to.be.true;
@@ -432,6 +610,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
           // Verify that the new date range is displayed
           cy.findByLabelText("Start date").should("have.value", "15 Jan 2025");
           cy.findByLabelText("End date").should("have.value", "16 Jan 2025");
+          // biome-ignore lint/suspicious/noExplicitAny: spy
           cy.get("@selectionChangeSpy").should((spy: any) => {
             const [_event, date] = spy.lastCall.args;
             expect(adapter.isValid(date.startDate)).to.be.true;
@@ -448,6 +627,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
           cy.findByRole("button", { name: "Apply" }).realClick();
           // Verify that the calendar is closed and the new date range is applied
           cy.findByRole("application").should("not.exist");
+          // biome-ignore lint/suspicious/noExplicitAny: spy
           cy.get("@appliedDateSpy").should((spy: any) => {
             const [_event, date] = spy.lastCall.args;
             expect(adapter.isValid(date.startDate)).to.be.true;
@@ -487,6 +667,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
           "have.value",
           offsetStartDateValue,
         );
+        // biome-ignore lint/suspicious/noExplicitAny: spy
         cy.get("@selectionChangeSpy").should((spy: any) => {
           const [_event, date] = spy.lastCall.args;
           expect(adapter.isValid(date.startDate)).to.be.true;
@@ -507,6 +688,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
         const offsetEndDateValue = adapter.format(offsetEndDate, "DD MMM YYYY");
         cy.findByLabelText("End date").should("have.value", offsetEndDateValue);
         cy.get("@selectionChangeSpy").should("have.been.calledTwice");
+        // biome-ignore lint/suspicious/noExplicitAny: spy
         cy.get("@selectionChangeSpy").should((spy: any) => {
           const [_event, date] = spy.lastCall.args;
           expect(adapter.isValid(date.startDate)).to.be.true;
@@ -525,6 +707,90 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
         cy.findByLabelText("End date").should("have.value", offsetEndDateValue);
       });
 
+      describe("timezone", () => {
+        [
+          {
+            timezone: "default",
+            expectedResult: {
+              startDate: "2025-01-05T00:00:00.000Z",
+              endDate: "2025-01-06T00:00:00.000Z",
+            },
+          },
+          {
+            timezone: "system",
+            expectedResult: {
+              startDate: "2025-01-05T00:00:00.000Z",
+              endDate: "2025-01-06T00:00:00.000Z",
+            },
+          },
+          {
+            timezone: "UTC",
+            expectedResult: {
+              startDate: "2025-01-05T00:00:00.000Z",
+              endDate: "2025-01-06T00:00:00.000Z",
+            },
+          },
+          {
+            timezone: "America/New_York",
+            expectedResult: {
+              startDate: "2025-01-05T05:00:00.000Z",
+              endDate: "2025-01-06T05:00:00.000Z",
+            },
+          },
+          {
+            timezone: "Europe/London",
+            expectedResult: {
+              startDate: "2025-01-05T00:00:00.000Z",
+              endDate: "2025-01-06T00:00:00.000Z",
+            },
+          },
+          {
+            timezone: "Asia/Shanghai",
+            expectedResult: {
+              startDate: "2025-01-04T16:00:00.000Z",
+              endDate: "2025-01-05T16:00:00.000Z",
+            },
+          },
+          {
+            timezone: "Asia/Kolkata",
+            expectedResult: {
+              startDate: "2025-01-04T18:30:00.000Z",
+              endDate: "2025-01-05T18:30:00.000Z",
+            },
+          },
+        ].forEach(({ timezone, expectedResult }) => {
+          if (adapter.lib === "date-fns" && timezone !== "default") {
+            return;
+          }
+          it(`SHOULD render date in the ${timezone} timezone`, () => {
+            cy.mount(<RangeWithTimezone />);
+            // Simulate selecting timezone
+            cy.findByLabelText("timezone dropdown").realClick();
+            cy.findByRole("option", { name: timezone }).realHover().realClick();
+            // Simulate selection of date range
+            cy.findByLabelText("Start date")
+              .click()
+              .clear()
+              .type(initialRangeDateValue.startDate);
+            cy.realPress("Tab");
+            cy.findByLabelText("End date")
+              .click()
+              .clear()
+              .type(initialRangeDateValue.endDate);
+            cy.realPress("Tab");
+            // Verify the ISO date range
+            cy.findByTestId("iso-start-date-label").should(
+              "have.text",
+              expectedResult.startDate,
+            );
+            cy.findByTestId("iso-end-date-label").should(
+              "have.text",
+              expectedResult.endDate,
+            );
+          });
+        });
+      });
+
       describe("uncontrolled component", () => {
         it("SHOULD render the default date", () => {
           cy.mount(<Range defaultSelectedDate={initialRangeDate} />);
@@ -534,7 +800,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
           // Simulate opening the calendar
           cy.findByRole("button", { name: "Open Calendar" })
             .realClick()
-            .type("{downArrow}");
+            .type("{downArrow}", { force: true });
           // Verify that the calendar is displayed
           cy.findAllByRole("application").should("have.length", 2);
           //Verify the start date is focused
@@ -548,6 +814,88 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
           cy.findByRole("button", {
             name: "06 January 2025",
           }).should("have.attr", "aria-pressed", "true");
+        });
+
+        it("SHOULD not be able to select disabled dates", () => {
+          cy.mount(
+            <RangeWithDisabledDates defaultSelectedDate={initialRangeDate} />,
+          );
+
+          const startDate = adapter.parse("01 Jan 2025", "DD MMM YYYY").date;
+          const endDate = adapter.parse("31 Jan 2025", "DD MMM YYYY").date;
+          let currentDate = adapter.clone(startDate);
+
+          // Simulate opening the calendar
+          cy.findByRole("button", { name: "Open Calendar" }).realClick();
+          // Verify that the calendar is displayed
+          cy.findAllByRole("application").should("have.length", 2);
+
+          while (currentDate <= endDate) {
+            const formattedDate = adapter.format(currentDate, "DD MMMM YYYY");
+            const dayOfWeek = adapter.getDayOfWeek(currentDate);
+            const isWeekend =
+              (adapter.lib === "luxon" &&
+                (dayOfWeek === 7 || dayOfWeek === 6)) ||
+              (adapter.lib !== "luxon" && (dayOfWeek === 0 || dayOfWeek === 6));
+            if (isWeekend) {
+              // Verify weekend dates are disabled
+              cy.findByRole("button", { name: formattedDate }).should(
+                "have.attr",
+                "aria-disabled",
+                "true",
+              );
+            } else {
+              // Verify weekday dates are enabled
+              cy.findByRole("button", { name: formattedDate }).should(
+                "not.have.attr",
+                "aria-disabled",
+                "true",
+              );
+            }
+            currentDate = adapter.add(currentDate, { days: 1 });
+          }
+        });
+
+        it("SHOULD not be able to select un-selectable dates", () => {
+          cy.mount(
+            <RangeWithUnselectableDates
+              defaultSelectedDate={initialRangeDate}
+            />,
+          );
+
+          const startDate = adapter.parse("01 Jan 2025", "DD MMM YYYY").date;
+          const endDate = adapter.parse("31 Jan 2025", "DD MMM YYYY").date;
+          let currentDate = adapter.clone(startDate);
+
+          // Simulate opening the calendar
+          cy.findByRole("button", { name: "Open Calendar" }).realClick();
+          // Verify that the calendar is displayed
+          cy.findAllByRole("application").should("have.length", 2);
+
+          while (currentDate <= endDate) {
+            const formattedDate = adapter.format(currentDate, "DD MMMM YYYY");
+            const dayOfWeek = adapter.getDayOfWeek(currentDate);
+            const isWeekend =
+              (adapter.lib === "luxon" &&
+                (dayOfWeek === 7 || dayOfWeek === 6)) ||
+              (adapter.lib !== "luxon" && (dayOfWeek === 0 || dayOfWeek === 6));
+            if (isWeekend) {
+              // Verify weekend dates are disabled
+              cy.findByRole("button", { name: formattedDate }).should(
+                "have.attr",
+                "aria-disabled",
+                "true",
+              );
+            } else {
+              // Verify weekday dates are enabled
+              cy.findByRole("button", { name: formattedDate }).should(
+                "not.have.attr",
+                "aria-disabled",
+                "true",
+              );
+            }
+            currentDate = adapter.add(currentDate, { days: 1 });
+          }
         });
 
         it("SHOULD be able to select a date", () => {
@@ -599,7 +947,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
           // Simulate opening the calendar
           cy.findByRole("button", { name: "Open Calendar" })
             .realClick()
-            .type("{downArrow}");
+            .type("{downArrow}", { force: true });
           // Verify that the calendar is displayed
           cy.findAllByRole("application").should("have.length", 2);
           //Verify the start date is focused
@@ -712,6 +1060,7 @@ describe("GIVEN a DatePicker where selectionVariant is single", () => {
           .clear()
           .type(initialRangeDateValue.endDate);
         cy.realPress("Tab");
+        // biome-ignore lint/suspicious/noExplicitAny: spy
         cy.get("@selectionChangeSpy").should((spy: any) => {
           const [_event, date, details] = spy.lastCall.args;
           expect(adapter.isValid(date.startDate)).to.be.true;

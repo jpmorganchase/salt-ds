@@ -1,4 +1,4 @@
-import defaultMoment, { type Moment } from "moment";
+import defaultMoment, { type Moment } from "moment-timezone";
 import {
   type AdapterOptions,
   DateDetailError,
@@ -55,96 +55,81 @@ export class AdapterMoment implements SaltDateAdapter<Moment, string> {
    * @returns True if the timezone plugin is available, false otherwise.
    */
   private hasTimezonePlugin = () =>
+    // biome-ignore lint/suspicious/noExplicitAny: date framework plugin dependent
     typeof (this.moment as any).tz !== "undefined";
 
   /**
    * Creates a Moment.js date object in the system timezone.
    * @param value - The date string to parse.
-   * @param locale - The locale to use for parsing.
    * @returns The parsed Moment.js date object.
    */
-  private createSystemDate = (
-    value: string | undefined,
-    locale?: string,
-  ): Moment => {
+  private createSystemDate = (value: string | undefined): Moment => {
     const parsedValue = this.moment(value).local();
-    if (this.locale === undefined && locale === undefined) {
-      return parsedValue;
-    }
-
-    return parsedValue.locale(locale ?? this.locale);
+    return this.locale !== undefined
+      ? parsedValue.locale(this.locale)
+      : parsedValue;
   };
 
   /**
    * Creates a Moment.js date object in UTC.
    * @param value - The date string to parse.
-   * @param locale - The locale to use for parsing.
    * @returns The parsed Moment.js date object.
    */
-  private createUTCDate = (value: string, locale?: string): Moment => {
+  private createUTCDate = (value: string): Moment => {
     const parsedValue = this.moment.utc(value);
-    if (this.locale === undefined && locale === undefined) {
-      return parsedValue;
-    }
-
-    return parsedValue.locale(locale ?? this.locale);
+    return this.locale !== undefined
+      ? parsedValue.locale(this.locale)
+      : parsedValue;
   };
 
   /**
    * Creates a Moment.js date object in a specified timezone.
    * @param value - The date string to parse.
    * @param timezone - The timezone to use.
-   * @param locale - The locale to use for parsing.
    * @returns The parsed Moment.js date object.
    * @throws Error if the timezone plugin is missing.
    */
-  private createTZDate = (
-    value: string,
-    timezone: Timezone,
-    locale?: string,
-  ): Moment => {
+  private createTZDate = (value: string, timezone: Timezone): Moment => {
     if (!this.hasTimezonePlugin()) {
       throw new Error("Salt moment adapter: missing timezone plugin");
     }
     const parsedValue =
       timezone === "default"
         ? this.moment(value)
-        : (this.moment as any).tz(value, timezone);
+        : // biome-ignore lint/suspicious/noExplicitAny: date framework plugin dependent
+          (this.moment as any).tz(value, timezone);
 
-    if (this.locale === undefined && locale === undefined) {
-      return parsedValue;
-    }
-    return parsedValue.locale(locale ?? this.locale);
+    return this.locale !== undefined
+      ? parsedValue.locale(this.locale)
+      : parsedValue;
   };
 
   /**
    * Creates a Moment.js date object from a string or returns an invalid date.
    * @param value - The date string to parse.
    * @param timezone - The timezone to use (default is "default").
-   * @param locale - The locale to use for parsing.
    * @returns The parsed Moment.js date object or an invalid date object.
    */
   public date = <T extends string | undefined>(
     value?: T,
     timezone: Timezone = "default",
-    locale?: string,
   ): Moment => {
     if (!value || !this.isValidDateString(value)) {
       return this.moment.invalid();
     }
 
     if (timezone === "UTC") {
-      return this.createUTCDate(value, locale);
+      return this.createUTCDate(value);
     }
 
     if (
       timezone === "system" ||
       (timezone === "default" && !this.hasTimezonePlugin())
     ) {
-      return this.createSystemDate(value, locale);
+      return this.createSystemDate(value);
     }
 
-    return this.createTZDate(value, timezone, locale);
+    return this.createTZDate(value, timezone);
   };
 
   /**
@@ -152,19 +137,14 @@ export class AdapterMoment implements SaltDateAdapter<Moment, string> {
    * Returns an empty string when null or undefined date is given.
    * @param date - The Moment.js date object to format.
    * @param format - The format string to use.
-   * @param locale - The locale to use for formatting.
    * @returns The formatted date string.
    */
   public format(
     date: Moment | null | undefined,
     format: RecommendedFormats = "DD MMM YYYY",
-    locale?: string,
   ): string {
     if (this.isValid(date)) {
-      return date
-        .clone()
-        .locale(locale ?? this.locale)
-        .format(format);
+      return date.clone().locale(this.locale).format(format);
     }
     return "";
   }
@@ -176,10 +156,13 @@ export class AdapterMoment implements SaltDateAdapter<Moment, string> {
    * @returns 0 if equal, 1 if dateA is after dateB, -1 if dateA is before dateB.
    */
   public compare(dateA: Moment, dateB: Moment): number {
-    if (dateA.isSame(dateB)) {
+    const utcDateA = dateA.clone().utc();
+    const utcDateB = dateB.clone().utc();
+
+    if (utcDateA.isSame(utcDateB)) {
       return 0;
     }
-    if (dateA.isBefore(dateB)) {
+    if (utcDateA.isBefore(utcDateB)) {
       return -1;
     }
     return 1;
@@ -189,18 +172,12 @@ export class AdapterMoment implements SaltDateAdapter<Moment, string> {
    * Parses a date string using the specified format.
    * @param value - The date string to parse.
    * @param format - The format string to use.
-   * @param locale - The locale to use for parsing.
    * @returns A DateDetail object containing the parsed date and any errors.
    */
-  public parse(
-    value: string,
-    format: string,
-    locale?: string,
-  ): ParserResult<Moment> {
-    const parsedDate =
-      this.locale || locale
-        ? this.moment(value, format, locale ?? this.locale, true)
-        : this.moment(value, format, true);
+  public parse(value: string, format: string): ParserResult<Moment> {
+    const parsedDate = this.locale
+      ? this.moment(value, format, this.locale, true)
+      : this.moment(value, format, true);
     if (parsedDate.isValid()) {
       return {
         date: parsedDate,
@@ -224,10 +201,11 @@ export class AdapterMoment implements SaltDateAdapter<Moment, string> {
 
   /**
    * Checks if a Moment.js date object is valid.
-   * @param date - The Moment.js date object to check.
+   * @param date - The Moment.js date object to check, null or undefined.
    * @returns True if the date is valid date object, false otherwise.
    */
-  public isValid(date: any): date is Moment {
+  // biome-ignore lint/suspicious/noExplicitAny: date framework
+  public isValid(date: Moment | null | undefined): date is Moment {
     return this.moment.isMoment(date) ? date.isValid() : false;
   }
 
@@ -395,6 +373,61 @@ export class AdapterMoment implements SaltDateAdapter<Moment, string> {
   }
 
   /**
+   * Get the timezone from the Moment object
+   * @param date - A Moment object
+   * @returns  'UTC' | 'system' or the IANA time zone
+   */
+  public getTimezone = (date: Moment): string => {
+    // @ts-ignore
+    const zone = date._z?.name;
+    const defaultZone = date.isUTC() ? "UTC" : "system";
+    // @ts-ignore
+    return zone ?? this.moment.defaultZone?.name ?? defaultZone;
+  };
+
+  /**
+   * Set the timezone for the Moment object
+   * @param date - A Moment object
+   * @param timezone - Timezone to set date object to
+   * @returns  date object set to the timezone
+   */
+  public setTimezone = (date: Moment, timezone: Timezone): Moment => {
+    if (this.getTimezone(date) === timezone) {
+      return date;
+    }
+
+    if (timezone === "UTC") {
+      return date.clone().utc();
+    }
+
+    if (timezone === "system") {
+      return date.clone().local();
+    }
+
+    if (!this.hasTimezonePlugin()) {
+      if (timezone !== "default") {
+        throw new Error("Salt moment adapter: missing timezone plugin");
+      }
+      return date;
+    }
+
+    const defaultZone =
+      timezone === "default"
+        ? // @ts-ignore
+          (this.moment.defaultZone?.name ?? "system")
+        : timezone;
+
+    if (defaultZone === "system") {
+      return date.clone().local();
+    }
+
+    const newValue = date.clone();
+    newValue.tz(defaultZone, true);
+
+    return newValue;
+  };
+
+  /**
    * Checks if two Moment.js date objects are the same based on the specified granularity.
    * @param dateA - The first Moment.js date object.
    * @param dateB - The second Moment.js date object.
@@ -413,15 +446,13 @@ export class AdapterMoment implements SaltDateAdapter<Moment, string> {
    * Gets the start of a specified time period for a Moment.js date object.
    * @param date - The Moment.js date object.
    * @param offset - The time period ("day", "week", "month", "year").
-   * @param locale - The locale to use.
    * @returns The Moment.js date object representing the start of the period.
    */
   public startOf(
     date: Moment,
     offset: "day" | "week" | "month" | "year",
-    locale?: string,
   ): Moment {
-    const newDate = date.clone().locale(locale ?? this.locale);
+    const newDate = date.clone().locale(this.locale);
     return newDate.startOf(offset);
   }
 
@@ -429,53 +460,52 @@ export class AdapterMoment implements SaltDateAdapter<Moment, string> {
    * Gets the end of a specified time period for a Moment.js date object.
    * @param date - The Moment.js date object.
    * @param offset - The time period ("day", "week", "month", "year").
-   * @param locale - The locale to use.
    * @returns The Moment.js date object representing the end of the period.
    */
   public endOf(
     date: Moment,
     offset: "day" | "week" | "month" | "year",
-    locale?: string,
   ): Moment {
-    const newDate = date.clone().locale(locale ?? this.locale);
+    const newDate = date.clone().locale(this.locale);
     return newDate.endOf(offset);
   }
 
   /**
    * Gets the current date with the time set to the start of the day.
-   * @param locale - The locale to use.
+   * @param timezone - The timezone to use.
    * @returns The current date at the start of the day.
    */
-  public today(locale?: string): Moment {
-    return this.moment()
-      .locale(locale ?? this.locale)
-      .startOf("day");
+  public today(timezone = "default"): Moment {
+    let currentMoment = this.moment();
+    if (timezone !== "default" && timezone !== "system") {
+      currentMoment = currentMoment.tz(timezone);
+    }
+    return currentMoment.locale(this.locale).startOf("day");
   }
-
   /**
    * Gets the current date and time.
-   * @param locale - The locale to use.
+   * @param timezone - The timezone to use.
    * @returns The current date and time.
    */
-  public now(locale?: string): Moment {
-    return this.moment().locale(locale ?? this.locale);
+  public now(timezone: Timezone = "default"): Moment {
+    let currentMoment = this.moment();
+    if (timezone !== "default" && timezone !== "system") {
+      currentMoment = currentMoment.tz(timezone);
+    }
+    return currentMoment.locale(this.locale);
   }
 
   /**
    * Gets the name of the day of the week.
    * @param dow - The day of the week as a number (0-6).
    * @param format - The format for the day name ("long", "short", "narrow").
-   * @param locale - The locale to use.
    * @returns The name of the day of the week.
    */
   public getDayOfWeekName(
     dow: number,
     format: "long" | "short" | "narrow",
-    locale?: string,
   ): string {
-    const day = this.moment()
-      .locale(locale ?? this.locale)
-      .weekday(dow);
+    const day = this.moment().locale(this.locale).weekday(dow);
     return format === "narrow" ? day.format("dd")[0] : day.format("dddd");
   }
 

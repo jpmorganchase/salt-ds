@@ -1,6 +1,6 @@
 import { ComboBox, Option } from "@salt-ds/core";
 import * as comboBoxStories from "@stories/combo-box/combo-box.stories";
-import { composeStories } from "@storybook/react";
+import { composeStories } from "@storybook/react-vite";
 import { type KeyboardEventHandler, useRef, useState } from "react";
 import { CustomFloatingComponentProvider, FLOATING_TEST_ID } from "../common";
 
@@ -520,6 +520,10 @@ describe("Given a ComboBox", () => {
       "have.accessibleDescription",
       "Pick a US state",
     );
+
+    cy.findByText("State").realClick();
+    cy.findByRole("combobox").should("be.focused");
+    cy.findByRole("listbox").should("exist");
   });
 
   it("should support grouping", () => {
@@ -810,5 +814,15 @@ describe("Given a ComboBox", () => {
     cy.realPress("ArrowRight");
     // should not throw error
     cy.findByRole("button", { name: "test" }).should("be.focused");
+  });
+
+  it("should trigger onSelectionChange callback and delete the pill when the pill is clicked", () => {
+    const onSelectionChangeSpy = cy.stub().as("onSelectionChangeSpy");
+    cy.mount(<MultiplePills onSelectionChange={onSelectionChangeSpy} />);
+    cy.findByRole("combobox").realClick();
+    cy.findAllByTestId("pill").should("have.length", "3");
+    cy.findAllByTestId("pill").eq(0).realClick();
+    cy.get("@onSelectionChangeSpy").should("have.been.called");
+    cy.findAllByTestId("pill").should("have.length", "2");
   });
 });

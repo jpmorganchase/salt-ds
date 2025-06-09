@@ -1,5 +1,5 @@
 import { Link } from "@salt-ds/core";
-import { composeStories } from "@storybook/react";
+import { composeStories } from "@storybook/react-vite";
 
 import * as linkStories from "@stories/link/link.stories";
 

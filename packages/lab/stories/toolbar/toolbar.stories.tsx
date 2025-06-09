@@ -34,7 +34,7 @@ import {
   type ToolbarProps,
   Tooltray,
 } from "@salt-ds/lab";
-import type { Meta, StoryFn } from "@storybook/react";
+import type { Meta, StoryFn } from "@storybook/react-vite";
 import { type CSSProperties, type MouseEvent, useState } from "react";
 
 import { AdjustableFlexbox, type AdjustableFlexboxProps } from "../components";

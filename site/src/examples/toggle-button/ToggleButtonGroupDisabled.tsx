@@ -10,7 +10,7 @@ export const ToggleButtonGroupDisabled = (): ReactElement => (
       <ToggleButton value="1">Disabled</ToggleButton>
       <ToggleButton value="2">Disabled</ToggleButton>
     </ToggleButtonGroup>
-    <ToggleButtonGroup defaultValue="1" disabled>
+    <ToggleButtonGroup defaultValue="0" disabled>
       <ToggleButton value="0" disabled>
         Selected disabled
       </ToggleButton>

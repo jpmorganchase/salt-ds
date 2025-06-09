@@ -5,7 +5,7 @@ import {
   type InteractableCardValue,
 } from "@salt-ds/core";
 import * as cardStories from "@stories/interactable-card/interactable-card.stories";
-import { composeStories } from "@storybook/react";
+import { composeStories } from "@storybook/react-vite";
 import { type SyntheticEvent, useState } from "react";
 import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
 

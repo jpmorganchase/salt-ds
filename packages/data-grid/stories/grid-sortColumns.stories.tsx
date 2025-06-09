@@ -1,6 +1,6 @@
 import { Scrim, Spinner, useTheme } from "@salt-ds/core";
 import { Grid, GridColumn, SortOrder } from "@salt-ds/data-grid";
-import type { Decorator } from "@storybook/react";
+import type { Decorator } from "@storybook/react-vite";
 import {
   QueryClient,
   QueryClientProvider,

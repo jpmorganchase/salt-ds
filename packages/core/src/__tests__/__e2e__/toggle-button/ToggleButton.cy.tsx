@@ -1,7 +1,7 @@
 import { ToggleButton } from "@salt-ds/core";
 import { HomeIcon } from "@salt-ds/icons";
 import * as toggleButtonStories from "@stories/toggle-button/toggle-button.stories";
-import { composeStories } from "@storybook/react";
+import { composeStories } from "@storybook/react-vite";
 
 const { Controlled, DefaultSelected } = composeStories(toggleButtonStories);
 

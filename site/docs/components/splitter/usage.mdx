@@ -8,37 +8,54 @@ data:
   $ref: ./#/data
 ---
 
-## Using the components
-
-### When to use
-
-- To divide a window into sections or panes by introducing a moveable separator
-- To customize the layout of a workspace within an allowed range
-- To change the relative size of the panes
-
-### When not to use
-
-- If a window has enough space to host the Content
-- If the panes' content is not relevant to each other
+## Using the package
 
 ## Import
 
-To import `Splitter` and related components from the lab Salt package, use:
+Make sure to install the React Resizable Panels package, `react-resizable-panels`.
 
+To install the `@salt-ds/react-resizable-panels-theme` package, run the command appropriate to your environment: `yarn add @salt-ds/react-resizable-panels-theme` or `npm install @salt-ds/react-resizable-panels-theme`
+
+### Import Salt React Resizable Panels theme
+
+To import the Salt React Resizable Panels theme, use:
+
+```js
+import "@salt-ds/react-resizable-panels-theme/index.css";
 ```
-import { Splitter, SplitPanel, SplitHandle } from "@salt-ds/lab";
+
+Then wrap your React Resizable Panel Group with the `react-resizable-panels-theme-salt` class name:
+
+```js
+<div className="react-resizable-panels-theme-salt">
+  <PanelGroup direction="horizontal">
+    <Panel id="left">
+      <Text>Left</Text>
+    </Panel>
+    <PanelResizeHandle />
+    <Panel id="middle">
+      <Text>Center</Text>
+    </Panel>
+    <PanelResizeHandle />
+    <Panel id="right">
+      <Text>Right</Text>
+    </Panel>
+  </PanelGroup>
+</div>
 ```
 
-## Props
+## Customizing the appearance
 
-### `Splitter`
+To customize the appearance of panel resize handles and panels, follow these guidelines:
 
-<PropsTable packageName="lab" componentName="Splitter" />
+### Panel Resize Handles
 
-### `SplitPanel`
+- **Border Customization**: To add borders to the resize handles, apply the class `resize-handle-salt-border-<border>` to the `PanelResizeHandle` component. Replace `<border>` with the specific border side you want to style (e.g., `top`, `bottom`, `left`, `right`).
 
-<PropsTable packageName="lab" componentName="SplitPanel" />
+- **Background Color Customization**: To set the background color of the resize handles, use the class `resize-handle-salt-variant-<variant>`. Replace `<variant>` with the desired variant (`primary`, `secondary`, `tertiary`) to match the corresponding Salt DS container background color. This ensures that the resize handles visually integrate with the theme's design.
 
-### `SplitHandle`
+### Panels
 
-<PropsTable packageName="lab" componentName="SplitHandle" />
+- **Background Color Customization**: For the panels themselves, apply the class `resizable-panel-salt-variant-<variant>` to the `Panel` component. Replace `<variant>` with the appropriate variant (`primary`, `secondary`, `tertiary`) to set the panel's background color to the associated Salt DS container background color. This helps maintain a consistent and cohesive look across your application.
+
+By using these class names, you can ensure that both the resize handles and panels are styled correctly, providing a seamless and visually appealing user interface.

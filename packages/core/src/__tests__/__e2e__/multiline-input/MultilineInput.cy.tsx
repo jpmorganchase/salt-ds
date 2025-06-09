@@ -1,5 +1,5 @@
 import * as multilineInputStories from "@stories/multiline-input/multiline-input.stories";
-import { composeStories } from "@storybook/react";
+import { composeStories } from "@storybook/react-vite";
 import type { ChangeEvent } from "react";
 
 const {
@@ -90,6 +90,9 @@ describe("GIVEN an MultilineInput", () => {
       "have.accessibleDescription",
       "Please leave feedback about your experience.",
     );
+
+    cy.findByText("Comments").realClick();
+    cy.findByRole("textbox").should("be.focused");
   });
 
   it("should be disabled when it's FormField is disabled", () => {

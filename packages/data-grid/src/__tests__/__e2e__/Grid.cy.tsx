@@ -8,7 +8,7 @@ import * as rowSelectionModesStories from "@stories/grid-rowSelectionModes.stori
 import * as sortColumnsStories from "@stories/grid-sortColumns.stories";
 import * as variantsStories from "@stories/grid-variants.stories";
 import * as gridStories from "@stories/grid.stories";
-import { composeStories } from "@storybook/react";
+import { composeStories } from "@storybook/react-vite";
 
 const { GridVariants } = composeStories(variantsStories);
 const { CellCustomization } = composeStories(cellCustomizationStories);

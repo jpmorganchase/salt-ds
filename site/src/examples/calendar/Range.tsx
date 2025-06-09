@@ -3,7 +3,6 @@ import {
   Calendar,
   CalendarGrid,
   CalendarNavigation,
-  CalendarWeekHeader,
   useLocalization,
 } from "@salt-ds/lab";
 import type { ReactElement } from "react";
@@ -19,7 +18,6 @@ export const Range = (): ReactElement => {
       selectionVariant="range"
     >
       <CalendarNavigation />
-      <CalendarWeekHeader />
       <CalendarGrid />
     </Calendar>
   );

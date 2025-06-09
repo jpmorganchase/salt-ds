@@ -11,6 +11,7 @@ import type {
   DateFrameworkType,
   ParserResult,
   TimeFields,
+  Timezone,
 } from "@salt-ds/date-adapters";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
@@ -27,6 +28,7 @@ import {
   type SyntheticEvent,
   forwardRef,
   useEffect,
+  useMemo,
   useRef,
   useState,
 } from "react";
@@ -43,7 +45,7 @@ export type DateInputSingleDetails = DateDetail;
 
 /**
  * Props for the DateInputSingle component.
- * @template T
+ * @template TDate - The type of the date object.
  */
 export interface DateInputSingleProps<TDate extends DateFrameworkType>
   extends Omit<ComponentPropsWithoutRef<"div">, "defaultValue">,
@@ -98,16 +100,11 @@ export interface DateInputSingleProps<TDate extends DateFrameworkType>
    */
   inputRef?: Ref<HTMLInputElement>;
   /**
-   * Locale for date formatting and parsing
-   */
-  locale?: any;
-  /**
    * Parser callback, if not using the adapter's parser
    * @param value - date string to parse
    * @param format - format required
-   * @param locale - locale required
    */
-  parse?: (value: string, format: string, locale?: any) => ParserResult<TDate>;
+  parse?: (value: string, format: string) => ParserResult<TDate>;
   /**
    * Input value. Use when the input value is controlled.
    */
@@ -141,11 +138,20 @@ export interface DateInputSingleProps<TDate extends DateFrameworkType>
    * @param newValue - The new date input value.
    */
   onDateValueChange?: (event: SyntheticEvent | null, newValue: string) => void;
+  /**
+   * Specifies the timezone behavior:
+   * - If undefined, the timezone will be derived from the passed date, or from `defaultSelectedDate`/`selectedDate`.
+   * - If set to "default", the default timezone of the date library will be used.
+   * - If set to "system", the local system's timezone will be applied.
+   * - If set to "UTC", the time will be returned in UTC.
+   * - If set to a valid IANA timezone identifier, the time will be returned for that specific timezone.
+   */
+  timezone?: Timezone;
 }
 
 export const DateInputSingle = forwardRef<
   HTMLDivElement,
-  DateInputSingleProps<any>
+  DateInputSingleProps<DateFrameworkType>
 >(
   <TDate extends DateFrameworkType>(
     props: DateInputSingleProps<TDate>,
@@ -161,9 +167,8 @@ export const DateInputSingle = forwardRef<
       defaultDate,
       onDateChange,
       value: valueProp,
-      locale,
       format = "DD MMM YYYY",
-      defaultValue = dateAdapter.format(undefined, format, locale),
+      defaultValue = "",
       onChange,
       onClick,
       emptyReadOnlyMarker = "—",
@@ -177,6 +182,9 @@ export const DateInputSingle = forwardRef<
       validationStatus: validationStatusProp,
       variant = "primary",
       onDateValueChange,
+      timezone = dateProp || defaultDate
+        ? dateAdapter.getTimezone((dateProp ?? defaultDate) as TDate)
+        : "default",
       ...rest
     } = props;
     const wrapperRef = useRef(null);
@@ -198,7 +206,16 @@ export const DateInputSingle = forwardRef<
 
     const [date, setDate] = useControlled({
       controlled: dateProp,
-      default: defaultDate,
+      // biome-ignore lint/correctness/useExhaustiveDependencies: just on mount
+      default: useMemo(() => {
+        if (defaultDate) {
+          return defaultDate;
+        }
+        if (!defaultValue) {
+          return undefined;
+        }
+        return dateAdapter.parse(defaultValue, format) as TDate;
+      }, []),
       name: "DateInputSingle",
       state: "date",
     });
@@ -216,18 +233,18 @@ export const DateInputSingle = forwardRef<
 
     // biome-ignore lint/correctness/useExhaustiveDependencies: Update date string value ONLY when selected date changes, not when date string itself change
     useEffect(() => {
-      const formattedValue = dateAdapter.format(date, format, locale);
+      const formattedValue = dateAdapter.format(date, format);
       const hasValueChanged = formattedValue !== dateValue;
       if (
-        // don't want to reset "error" input values
-        (dateAdapter.isValid(date) || date === null) &&
+        // should not reset "error" input values
+        (date === null || dateAdapter.isValid(date)) &&
         hasValueChanged
       ) {
-        lastAppliedValue.current = formattedValue;
         setDateValue(formattedValue);
         onDateValueChange?.(null, formattedValue);
+        lastAppliedValue.current = formattedValue;
       }
-    }, [date, dateAdapter.format, format, locale]);
+    }, [date, dateAdapter.format, format]);
 
     const [focused, setFocused] = useState(false);
 
@@ -264,26 +281,30 @@ export const DateInputSingle = forwardRef<
 
     const apply = (event: SyntheticEvent) => {
       const parse = parseProp ?? dateAdapter.parse.bind(dateAdapter);
-      const parseResult = parse(dateValue ?? "", format, locale);
+      const parseResult = parse(dateValue ?? "", format);
       let { date: parsedDate, ...parseDetails } = parseResult;
-      const formattedValue = dateAdapter.format(parsedDate, format, locale);
+      let formattedValue = "";
+      const isDateValid = dateAdapter.isValid(parsedDate);
+      if (isDateValid) {
+        parsedDate = dateAdapter.setTimezone(parsedDate, timezone);
+        if (preservedTime.current) {
+          parsedDate = dateAdapter.set(parsedDate, preservedTime.current);
+        }
+        formattedValue = dateAdapter.format(parsedDate, format);
+      }
       const hasValueChanged = formattedValue !== dateValue;
-      if (dateAdapter.isValid(parsedDate) && hasValueChanged) {
-        setDateValue(formattedValue);
-        onDateValueChange?.(event, formattedValue);
+      const newValue = isDateValid ? formattedValue : dateValue;
+      if (hasValueChanged) {
+        setDateValue(newValue);
+        onDateValueChange?.(event, newValue);
       }
 
       setDate(parsedDate);
 
-      if (lastAppliedValue.current !== dateValue) {
-        if (dateAdapter.isValid(parsedDate) && preservedTime.current) {
-          parsedDate = dateAdapter.set(parsedDate, preservedTime.current);
-        }
+      if (lastAppliedValue.current !== newValue) {
         onDateChange?.(event, parsedDate, parseDetails);
       }
-      lastAppliedValue.current = dateAdapter.isValid(parsedDate)
-        ? formattedValue
-        : dateValue;
+      lastAppliedValue.current = newValue;
     };
 
     const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {

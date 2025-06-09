@@ -1,6 +1,6 @@
 import { SystemStatus, SystemStatusContent } from "@salt-ds/lab";
 import * as systemStatusStories from "@stories/system-status/system-status.stories";
-import { composeStories } from "@storybook/react";
+import { composeStories } from "@storybook/react-vite";
 import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
 
 const composedStories = composeStories(systemStatusStories);

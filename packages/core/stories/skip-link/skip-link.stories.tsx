@@ -1,5 +1,5 @@
 import { GithubIcon, StackoverflowIcon, SymphonyIcon } from "@salt-ds/icons";
-import type { Meta, StoryFn } from "@storybook/react";
+import type { Meta, StoryFn } from "@storybook/react-vite";
 import { useState } from "react";
 import "./skip-link.stories.css";
 import {

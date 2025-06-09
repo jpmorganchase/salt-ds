@@ -11,11 +11,14 @@ import formFieldHelperTextCss from "./FormFieldHelperText.css";
 
 const withBaseName = makePrefixer("saltFormFieldHelperText");
 
+export interface FormFieldHelperTextProps
+  extends Omit<TextProps<"label">, "variant" | "styleAs"> {}
+
 export const FormFieldHelperText = ({
   className,
   children,
   ...restProps
-}: Omit<TextProps<"label">, "variant" | "styleAs">) => {
+}: FormFieldHelperTextProps) => {
   const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-form-field-helper-text",
@@ -35,7 +38,10 @@ export const FormFieldHelperText = ({
       )}
     >
       {!disabled && !readOnly && validationStatus && (
-        <StatusIndicator status={validationStatus} />
+        <StatusIndicator
+          className={withBaseName("statusIndicator")}
+          status={validationStatus}
+        />
       )}
       <Text
         disabled={disabled}

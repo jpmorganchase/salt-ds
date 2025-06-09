@@ -1,0 +1,8 @@
+.saltDatePickerHelperText {
+  visibility: visible;
+  margin-top: var(--salt-spacing-75);
+}
+
+.saltDatePickerHelperText-open {
+  visibility: hidden;
+}

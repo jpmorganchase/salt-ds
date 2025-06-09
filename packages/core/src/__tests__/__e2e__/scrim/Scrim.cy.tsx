@@ -1,5 +1,5 @@
 import * as scrimStories from "@stories/scrim/scrim.stories";
-import { composeStories } from "@storybook/react";
+import { composeStories } from "@storybook/react-vite";
 import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
 import { Scrim } from "../../../scrim";
 

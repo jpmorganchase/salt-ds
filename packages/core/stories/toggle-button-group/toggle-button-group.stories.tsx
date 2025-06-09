@@ -12,7 +12,7 @@ import {
   LightIcon,
   VisibleIcon,
 } from "@salt-ds/icons";
-import type { Meta, StoryFn } from "@storybook/react";
+import type { Meta, StoryFn } from "@storybook/react-vite";
 
 interface ToggleButtonGroupStoryProps extends ToggleButtonGroupProps {
   appearance?: ToggleButtonProps["appearance"];

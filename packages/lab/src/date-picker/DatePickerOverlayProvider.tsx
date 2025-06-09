@@ -16,6 +16,7 @@ import {
   useRef,
   useState,
 } from "react";
+import { useFocusOut } from "./useFocusOut";
 import { useKeyboard } from "./useKeyboard";
 
 /** Reason for overlay state change, can be a custom reason */
@@ -33,9 +34,17 @@ interface DatePickerOverlayState {
    */
   open: boolean;
   /**
+   * If `true`, the overlay contains the active element
+   */
+  focused: boolean;
+  /**
    * The result of the floating UI calculations.
    */
   floatingUIResult: ReturnType<typeof useFloatingUI>;
+  /**
+   * Ref to attach to the initially focused element, when the overlay is opened.
+   */
+  initialFocusRef?: React.MutableRefObject<HTMLElement | null>;
 }
 
 /**
@@ -104,12 +113,10 @@ interface DatePickerOverlayProviderProps {
   /**
    * Handler for when open state changes
    * @param newOpen - true when opened
-   * @param event - event that triggered the state change
    * @param reason - reason for the the state change
    */
   onOpenChange?: (
     newOpen: boolean,
-    event?: Event,
     reason?: DatePickerOpenChangeReason,
   ) => void;
   /**
@@ -147,18 +154,19 @@ export const DatePickerOverlayProvider: React.FC<
     name: "DatePicker",
     state: "openDatePickerOverlay",
   });
-  const [disableFocus, setDisableFocus] = useState<boolean>(true);
   const triggeringElementRef = useRef<HTMLElement | null>(null);
+  const initialFocusRef = useRef<HTMLElement | null>(null);
+  const [focused, setFocused] = useState(false);
   const onDismissCallback = useRef<(event?: Event) => void>();
   const handleOpenChange = useCallback(
-    (newOpen: boolean, event?: Event, reason?: DatePickerOpenChangeReason) => {
+    (newOpen: boolean, _event?: Event, reason?: DatePickerOpenChangeReason) => {
       if (newOpen) {
         if (readOnly) {
           return;
         }
         triggeringElementRef.current = document.activeElement as HTMLElement;
-        setDisableFocus(reason === "click"); // prevent the overlay taking focus on click
-      } else if (!isOpenControlled) {
+        setFocused(true);
+      } else if (!isOpenControlled && reason !== "focus-out") {
         const trigger = triggeringElementRef.current as HTMLElement;
         if (trigger) {
           trigger.focus();
@@ -171,16 +179,17 @@ export const DatePickerOverlayProvider: React.FC<
         triggeringElementRef.current = null;
       }
       setOpenState(newOpen);
-      onOpenChange?.(newOpen, event, reason);
+      onOpenChange?.(newOpen, reason);
 
       if (
+        reason === "focus-out" ||
         reason === "escape-key" ||
         (reason === "outside-press" && onDismissCallback.current)
       ) {
         onDismissCallback?.current?.();
       }
     },
-    [onOpenChange, readOnly],
+    [isOpenControlled, onOpenChange, readOnly],
   );
 
   const openState = open && !readOnly;
@@ -191,6 +200,16 @@ export const DatePickerOverlayProvider: React.FC<
     middleware: [flip({ fallbackStrategy: "initialPlacement" })],
   });
 
+  const handleContainerBlur = useCallback(() => {
+    setTimeout(() => {
+      setFocused(
+        !!floatingUIResult?.refs.floating?.current?.contains(
+          document.activeElement,
+        ),
+      );
+    }, 0);
+  }, [floatingUIResult]);
+
   const {
     getFloatingProps: getFloatingPropsCallback,
     getReferenceProps: getReferencePropsCallback,
@@ -198,14 +217,20 @@ export const DatePickerOverlayProvider: React.FC<
     interactions
       ? interactions(floatingUIResult.context)
       : [
-          useDismiss(floatingUIResult.context),
+          useDismiss(floatingUIResult.context, {}),
           useKeyboard(floatingUIResult.context, {
             enabled: !readOnly,
+            onArrowDown: (event) => {
+              handleOpenChange(true, event.nativeEvent, "reference-press");
+            },
           }),
           useClick(floatingUIResult.context, {
             enabled: !!openOnClick && !readOnly,
             toggle: false,
             keyboardHandlers: false,
+          }),
+          useFocusOut(floatingUIResult.context, {
+            enabled: !readOnly,
           }),
         ],
   );
@@ -221,14 +246,13 @@ export const DatePickerOverlayProvider: React.FC<
         height: elements.floating?.offsetHeight,
         ...getFloatingPropsCallback(userProps),
         focusManagerProps: {
-          disabled: disableFocus,
           returnFocus: false,
           context: floatingUIResult.context,
-          initialFocus: 4,
+          initialFocus: initialFocusRef,
         },
       };
     },
-    [getFloatingPropsCallback, floatingUIResult, disableFocus],
+    [getFloatingPropsCallback, floatingUIResult],
   );
   const setOnDismiss = useCallback(
     (dismissCallback: (event?: Event) => void) => {
@@ -240,9 +264,11 @@ export const DatePickerOverlayProvider: React.FC<
   const state: DatePickerOverlayState = useMemo(
     () => ({
       open: openState,
+      focused,
       floatingUIResult,
+      initialFocusRef,
     }),
-    [open, floatingUIResult],
+    [focused, openState, floatingUIResult],
   );
 
   const helpers: DatePickerOverlayHelpers = useMemo(
@@ -252,13 +278,18 @@ export const DatePickerOverlayProvider: React.FC<
       setOpen: handleOpenChange,
       setOnDismiss,
     }),
-    [getFloatingProps, getReferencePropsCallback, handleOpenChange],
+    [
+      getFloatingProps,
+      getReferencePropsCallback,
+      handleOpenChange,
+      setOnDismiss,
+    ],
   );
   const contextValue = useMemo(() => ({ state, helpers }), [state, helpers]);
 
   return (
     <DatePickerOverlayContext.Provider value={contextValue}>
-      {children}
+      <div onBlur={handleContainerBlur}>{children}</div>
     </DatePickerOverlayContext.Provider>
   );
 };

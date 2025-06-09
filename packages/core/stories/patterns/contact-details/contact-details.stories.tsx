@@ -22,7 +22,7 @@ import {
   MessageIcon,
   UserIcon,
 } from "@salt-ds/icons";
-import type { Meta } from "@storybook/react";
+import type { Meta } from "@storybook/react-vite";
 import { useState } from "react";
 import persona from "../../assets/avatar.png";
 import persona2 from "../../assets/avatar2.png";

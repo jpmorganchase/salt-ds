@@ -1,5 +1,23 @@
 # @salt-ds/core
 
+## 1.46.1
+
+### Patch Changes
+
+- f107d63: Fixed some internal import pointing to package name, preventing component loading in certain setup like module federation. Fixes
+  #5118.
+
+## 1.46.0
+
+### Minor Changes
+
+- ec1736e: Added `defaultSelected` prop to `ToggleButton` to control default selected state. Updated `ToggleButton` `appearance` JSDoc to be more clear around selected state.
+
+### Patch Changes
+
+- 8b4cbfb: Fixed Step component not working with Tooltip due to missing `forwardRef`.
+- bbdf4a6: Removed `onPillRemove` callback from the ComboBox's type definitions. `onPillRemove` has never been supported nor is it intended to be supported. `onSelectionChange` can be used instead to detect the removed pill.
+
 ## 1.45.0
 
 ### Minor Changes

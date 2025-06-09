@@ -1,14 +1,16 @@
-import type { TooltipLinkListLink } from "@storybook/components";
+import { BeakerIcon, CheckIcon } from "@storybook/icons";
+import { clsx } from "clsx";
+// biome-ignore lint/correctness/noUnusedImports: SB addons only support the classic runtime
+import React, { type AnchorHTMLAttributes } from "react";
+import type { TooltipLinkListLink } from "storybook/internal/components";
 import {
   IconButton,
   Separator,
   TooltipLinkList,
   WithTooltip,
-} from "@storybook/components";
-import { BeakerIcon, CheckIcon } from "@storybook/icons";
-import { useGlobals } from "@storybook/manager-api";
-import { clsx } from "clsx";
-import type { AnchorHTMLAttributes } from "react";
+} from "storybook/internal/components";
+import type { GlobalTypes } from "storybook/internal/types";
+import { useGlobals } from "storybook/manager-api";
 
 import "./ThemeNextToolbar.css";
 
@@ -19,38 +21,38 @@ const camelCaseToWords = (s: string) => {
   return result.charAt(0).toUpperCase() + result.slice(1);
 };
 
-export const globalOptions: Record<
-  string,
-  { name: string; description: string; defaultValue: string; items: string[] }
-> = {
+export const defaultValues = {
+  themeNext: "disable",
+  corner: "sharp",
+  accent: "blue",
+  headingFont: "Open Sans",
+  actionFont: "Open Sans",
+};
+
+export const globalOptions: GlobalTypes = {
   themeNext: {
     name: "Experimental theme next",
     description: "Turn on/off theme next",
-    defaultValue: "disable",
     items: ["enable", "disable"],
   },
   corner: {
     name: "Experimental corner",
     description: "Switch corner to sharp / rounded",
-    defaultValue: "sharp",
     items: ["sharp", "rounded"],
   },
   headingFont: {
     name: "Experimental heading font",
     description: "Switch heading font to open sans / amplitude",
-    defaultValue: "Open Sans",
     items: ["Open Sans", "Amplitude"],
   },
   accent: {
     name: "Experimental accent",
     description: "Switch accent to blue / teal",
-    defaultValue: "blue",
     items: ["blue", "teal"],
   },
   actionFont: {
     name: "Experimental action font",
     description: "Switch action font to open sans / amplitude",
-    defaultValue: "Open Sans",
     items: ["Open Sans", "Amplitude"],
   },
 };
@@ -78,7 +80,7 @@ export const ThemeNextToolbar = ({ active }: { active?: boolean }) => {
           LinkWrapper: GroupWrapper, // Custom wrapper to render group
           href: "#", // Without href, `LinkWrapper` will not work
         },
-        ...globalOptions[globalKey].items.map((value) => {
+        ...globalOptions[globalKey].items.map((value: string) => {
           const disabled =
             globalKey === "themeNext" ? false : globals.themeNext !== "enable";
           const active = globals[globalKey] === value;

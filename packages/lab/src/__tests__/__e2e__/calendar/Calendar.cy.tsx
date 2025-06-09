@@ -13,7 +13,6 @@ import {
   CalendarWeekHeader,
 } from "@salt-ds/lab";
 import * as calendarStories from "@stories/calendar/calendar.stories";
-import { es as dateFnsEs } from "date-fns/locale";
 import "moment/dist/locale/es";
 
 // Initialize adapters
@@ -44,13 +43,14 @@ adapterMoment.moment.updateLocale("es", {
 const adapters = [adapterDateFns, adapterDayjs, adapterLuxon, adapterMoment];
 
 const {
-  // Storybook wraps components in it's own LocalizationProvider, so do not compose Stories
-  CustomDayRender,
+  // Storybook wraps components in their own LocalizationProvider, so do not compose Stories
+  CustomDayRendering,
   DisabledDates,
   TodayButton,
   TwinCalendars,
   UnselectableDates,
   WithLocale,
+  // biome-ignore lint/suspicious/noExplicitAny: storybook stories
 } = calendarStories as any;
 
 describe("GIVEN a Calendar", () => {
@@ -429,9 +429,11 @@ describe("GIVEN a Calendar", () => {
         });
 
         it("SHOULD render custom day", () => {
-          cy.mount(<CustomDayRender defaultVisibleMonth={testDate} />);
-          // Verify that a custom day button is rendered
-          cy.contains("button", /01/).should("exist");
+          cy.mount(<CustomDayRendering defaultVisibleMonth={testDate} />);
+          // Verify that the button contains the text "01"
+          cy.contains("button", /^1$/).should("exist");
+          // Verify that there is a span with the class name "x" inside the button
+          cy.contains("button", /^1$/).find("span.dot").should("exist");
         });
 
         it("SHOULD support multi-calendar selection", () => {
@@ -465,14 +467,7 @@ describe("GIVEN a Calendar", () => {
           const visibleMonth = adapter.parse("01/08/2024", "DD/MM/YYYY").date;
           cy.mount(<WithLocale defaultVisibleMonth={visibleMonth} />);
           // Verify that the month dropdown is rendered in the specified locale
-          cy.findByRole("combobox", { name: "Month Dropdown" }).should(
-            "have.text",
-            adapter.format(
-              visibleMonth,
-              "MMM",
-              adapter.lib === "date-fns" ? dateFnsEs : "es-ES",
-            ),
-          );
+          cy.findByLabelText("Month Dropdown").should("have.text", "ago");
         });
       });
 
@@ -566,7 +561,7 @@ describe("GIVEN a Calendar", () => {
           });
         });
 
-        it("SHOULD not allow selection of unselectable dates", () => {
+        it("SHOULD not allow selection of un-selectable dates", () => {
           cy.mount(<UnselectableDates defaultVisibleMonth={testDate} />);
 
           // Define the weekend dates in March 2024

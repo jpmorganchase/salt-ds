@@ -4,7 +4,6 @@ import {
   CalendarGrid,
   CalendarNavigation,
   type CalendarProps,
-  CalendarWeekHeader,
   type UseCalendarSelectionRangeProps,
   useLocalization,
 } from "@salt-ds/lab";
@@ -34,7 +33,7 @@ export const TwinCalendars = (): ReactElement => {
 
   const handleStartVisibleMonthChange = useCallback(
     (
-      _event: SyntheticEvent,
+      _event: SyntheticEvent | null,
       newVisibleMonth: CalendarProps<DateFrameworkType>["defaultVisibleMonth"],
     ) => {
       setStartVisibleMonth(newVisibleMonth);
@@ -51,7 +50,7 @@ export const TwinCalendars = (): ReactElement => {
 
   const handleEndVisibleMonthChange = useCallback(
     (
-      _event: SyntheticEvent,
+      _event: SyntheticEvent | null,
       newVisibleMonth: CalendarProps<DateFrameworkType>["defaultVisibleMonth"],
     ) => {
       setEndVisibleMonth(newVisibleMonth);
@@ -92,7 +91,6 @@ export const TwinCalendars = (): ReactElement => {
         onSelectionChange={handleSelectionChange}
       >
         <CalendarNavigation />
-        <CalendarWeekHeader />
         <CalendarGrid />
       </Calendar>
       <Calendar
@@ -106,7 +104,6 @@ export const TwinCalendars = (): ReactElement => {
         onSelectionChange={handleSelectionChange}
       >
         <CalendarNavigation />
-        <CalendarWeekHeader />
         <CalendarGrid />
       </Calendar>
     </div>

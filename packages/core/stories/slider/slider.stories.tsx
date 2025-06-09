@@ -8,7 +8,7 @@ import {
   StackLayout,
   useResponsiveProp,
 } from "@salt-ds/core";
-import type { StoryFn } from "@storybook/react";
+import type { StoryFn } from "@storybook/react-vite";
 import { type ChangeEvent, useEffect, useState } from "react";
 
 const marks = [
