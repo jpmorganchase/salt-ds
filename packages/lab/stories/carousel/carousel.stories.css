@@ -1,12 +1,43 @@
-.carousel-title {
-  margin: 0;
+.carousel {
+  width: 600px;
 }
-.carousel-container {
-  max-width: 600px;
-  width: 80vw;
-}
-.carousel-image-placeholder {
+.carouselImagePlaceholder {
   height: 250px;
   width: 100%;
   object-fit: cover;
+}
+
+.carouselSlide {
+  box-sizing: border-box;
+  transform: translate3d(0, 0, 0);
+  flex: 0 0 var(--salt-slide-size);
+  min-width: 0;
+  padding-left: var(--salt-slide-spacing);
+}
+
+.carouselNumber {
+  border: var(--salt-size-border) var(--salt-container-borderStyle) var(--salt-container-primary-borderColor);
+  border-radius: var(--salt-palette-corner, 0);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--salt-slide-height);
+  user-select: none;
+  --salt-text-h1-fontSize: "60px;
+}
+
+.carouselHeading {
+  margin: 0;
+}
+
+.carouselMultipleSlide {
+  width: 600px;
+  --salt-slide-size: 50%
+}
+
+.saltCarouselCard.is-in-view.is-snapped {
+  transition: opacity 0.2s ease-in-out;
+}
+.saltCarouselCard.is-in-view:not(.is-snapped) {
+  opacity: 0.2;
 }
