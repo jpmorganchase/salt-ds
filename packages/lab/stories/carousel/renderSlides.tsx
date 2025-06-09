@@ -1,12 +1,14 @@
-import {CarouselSlide} from "../../src";
-import {H3, Link, Text} from "@salt-ds/core";
+import { H3, Link, Text } from "@salt-ds/core";
+import { CarouselCard } from "../../src";
 
 import carouselSlide1 from "../assets/carouselSlide1.png";
 import carouselSlide2 from "../assets/carouselSlide2.png";
 import carouselSlide3 from "../assets/carouselSlide3.png";
 import carouselSlide4 from "../assets/carouselSlide4.png";
 
-export const renderSlides = ({withActions } :{ withActions?: boolean} = {}) => {
+export const renderSlides = ({
+  withActions,
+}: { withActions?: boolean } = {}) => {
   const content = [
     {
       headerId: 0,
@@ -42,14 +44,14 @@ export const renderSlides = ({withActions } :{ withActions?: boolean} = {}) => {
   ];
 
   return content.map((slide, index) => (
-    <CarouselSlide
+    <CarouselCard
       key={slide.title}
       bordered
       header={<H3 id={`slide-title-${slide.headerId}`}>{slide.title}</H3>}
       aria-labelledby={`slide-title-${slide.headerId}`}
       media={
         <img
-          className="carousel-image-placeholder"
+          className="carouselImagePlaceholder"
           alt="stock content to show carousel slide"
           src={slide.image}
         />
@@ -57,6 +59,6 @@ export const renderSlides = ({withActions } :{ withActions?: boolean} = {}) => {
       actions={withActions && <Link href="#">{slide.link}</Link>}
     >
       <Text>{slide.content}</Text>
-    </CarouselSlide>
+    </CarouselCard>
   ));
-}
+};

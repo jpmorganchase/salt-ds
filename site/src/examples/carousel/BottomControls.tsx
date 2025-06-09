@@ -1,13 +1,13 @@
-import { H1 } from "@salt-ds/core";
+import { H1, H2 } from "@salt-ds/core";
 import { Carousel, CarouselControls, CarouselSlides } from "@salt-ds/lab";
 import type { ReactElement } from "react";
 import styles from "./index.module.css";
 
-export const Default = (): ReactElement => {
+export const BottomControls = (): ReactElement => {
   const slides = Array.from(Array(4).keys());
   return (
     <Carousel aria-label="default carousel example" className={styles.carousel}>
-      <CarouselControls />
+      <H2 style={{ margin: "0px" }}>Title</H2>
       <CarouselSlides>
         {slides.map((index) => (
           <div
@@ -22,6 +22,7 @@ export const Default = (): ReactElement => {
           </div>
         ))}
       </CarouselSlides>
+      <CarouselControls />
     </Carousel>
   );
 };

@@ -1,0 +1,85 @@
+import { makePrefixer } from "@salt-ds/core";
+import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
+import { clsx } from "clsx";
+import { type ComponentProps, type ReactNode, forwardRef } from "react";
+import saltCarouselCardCss from "./CarouselCard.css";
+
+const withBaseName = makePrefixer("saltCarouselCard");
+
+/**
+ * Props for the CarouselCard component.
+ */
+export interface CarouselCardProps extends ComponentProps<"div"> {
+  /**
+   * Actions to be displayed in the content footer.
+   * This can include buttons or any other interactive elements.
+   */
+  actions?: ReactNode;
+
+  /**
+   * Media content to be displayed inside the slide.
+   * This could include images, videos, etc., that are visually prominent.
+   * It differs from children in that media is intended to be the main visual element of the slide.
+   */
+  media?: ReactNode;
+
+  /**
+   * If `true`, the slider will have a border.
+   * If `false`, the slider will not have a border.
+   */
+  bordered?: boolean;
+
+  /**
+   * Header content to be displayed at the top of the slide.
+   * This can be text or any other React node.
+   */
+  header?: ReactNode;
+
+  /**
+   * Carousel slide id.
+   * This can be used to uniquely identify the slide.
+   */
+  id?: string;
+}
+
+export const CarouselCard = forwardRef<HTMLDivElement, CarouselCardProps>(
+  function CarouselCard(
+    { actions, bordered, children, className, header, media, ...rest },
+    ref,
+  ) {
+    const targetWindow = useWindow();
+    useComponentCssInjection({
+      testId: "salt-carousel-slide",
+      css: saltCarouselCardCss,
+      window: targetWindow,
+    });
+
+    return (
+      <div
+        role="group"
+        aria-roledescription="slide"
+        className={clsx(withBaseName(), className)}
+        {...rest}
+        ref={ref}
+      >
+        <div
+          className={clsx(withBaseName("content"), {
+            [withBaseName("bordered")]: bordered,
+          })}
+        >
+          {media}
+          {children && (
+            <div>
+              <div className={withBaseName("body")}>
+                <div>{header}</div>
+                <div>{children}</div>
+                {actions}
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+    );
+  },
+);

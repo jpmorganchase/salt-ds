@@ -36,9 +36,10 @@ To import `Carousel` and related components from the lab Salt package, use:
 ```js
 import {
   Carousel,
+  CarouselCard,
   CarouselControls,
-  CarouselSlider,
-  CarouselSlide,
+  CarouselPagination,
+  CarouselSlides,
 } from "@salt-ds/lab";
 ```
 
@@ -46,16 +47,24 @@ import {
 
 ### `Carousel`
 
+`Carousel` is a context that wraps the [Embla](https://www.embla-carousel.com/) API.
+
 <PropsTable packageName="lab" componentName="Carousel" />
 
 ### `CarouselControls`
 
+`CarouselControls` provides previous and next navigation controls.
+
 <PropsTable packageName="lab" componentName="CarouselControls" />
 
-### `CarouselSlider`
+### `CarouselSlides`
 
-<PropsTable packageName="lab" componentName="CarouselSlider" />
+`CarouselSlides` provides a viewport for the slide content and keyboard navigation.
 
-### `CarouselSlide`
+<PropsTable packageName="lab" componentName="CarouselSlides" />
 
-<PropsTable packageName="lab" componentName="CarouselSlide" />
+### `CarouselCard`
+
+`CarouselCard` provides a convenient slide component, that creates a common card pattern.
+
+<PropsTable packageName="lab" componentName="CarouselCard" />

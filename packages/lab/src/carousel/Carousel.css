@@ -1,14 +1,10 @@
 .saltCarousel {
-  display: grid;
-  grid-row-gap: var(--salt-spacing-100);
-}
-
-.saltCarousel-top {
-  grid-template-areas: "controls" "slider";
-  grid-template-rows: auto 1fr;
-}
-
-.saltCarousel-bottom {
-  grid-template-areas: "slider" "controls";
-  grid-template-rows: 1fr auto;
+  max-width: 80vw;
+  margin: auto;
+  --salt-slide-height: 310px;
+  --salt-slide-spacing: var(--salt-spacing-100);
+  --salt-slide-size: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--salt-spacing-100);
 }

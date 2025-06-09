@@ -2,158 +2,187 @@ import type { Meta, StoryFn } from "@storybook/react-vite";
 
 import {
   Carousel,
-  CarouselControls, CarouselProps, CarouselSlide,
-  CarouselSlider,
+  CarouselControls,
+  CarouselPagination,
+  CarouselSlides,
 } from "@salt-ds/lab";
 import "./carousel.stories.css";
 import {
   Button,
-  FormField, FormFieldLabel,
+  FlexLayout,
+  FormField,
+  FormFieldLabel,
+  H1,
   H2,
-  H3, RadioButton, RadioButtonGroup,
-  StackLayout,
-  Text,
-  useId
+  Link,
 } from "@salt-ds/core";
-import { useState } from "react";
-import { renderSlides} from "./renderSlides";
-import {sliderData} from "@salt-ds/site/src/examples/carousel/exampleData";
-import clsx from "clsx";
+import { PauseIcon, PlayIcon } from "@salt-ds/icons";
+import Autoplay from "embla-carousel-autoplay";
+import Fade from "embla-carousel-fade";
+import { type FocusEventHandler, useRef, useState } from "react";
+import { renderSlides } from "./renderSlides";
 
 export default {
   title: "Lab/Carousel",
   component: Carousel,
 } as Meta<typeof Carousel>;
 
-const CarouselExample: StoryFn<typeof Carousel> = (args, navigationBarArgs) => {
+const CarouselCardExample: StoryFn<typeof Carousel> = (args) => {
   return (
-    <div className="carousel-container">
-      <Carousel {...args}>
+    <Carousel aria-label="Account overview" className="carousel" {...args}>
+      <FlexLayout justify={"space-between"} align={"center"} direction={"row"}>
+        <H2 className="carouselHeading">Title</H2>
         <CarouselControls />
-        <CarouselSlider>{renderSlides()}</CarouselSlider>
-      </Carousel>
-    </div>
+      </FlexLayout>
+      <CarouselSlides>{renderSlides({ withActions: true })}</CarouselSlides>
+      <FlexLayout justify={"center"} direction={"row"}>
+        <CarouselPagination />
+      </FlexLayout>
+    </Carousel>
   );
 };
 
-export const Default = CarouselExample.bind({});
-Default.args = {
-  "aria-label": "Account overview",
-  id: "carousel-example",
-};
-
-export const ActiveSlide = CarouselExample.bind({});
-ActiveSlide.args = {
-  "aria-label": "Account overview",
-  id: "carousel-example",
-  defaultActiveSlideIndex: 3,
-};
-
-export const Bordered: StoryFn<typeof Carousel> = (args) => {
+const CarouselNumberExample: StoryFn<typeof Carousel> = (args) => {
+  const slides = Array.from(Array(4).keys());
   return (
-    <div className="carousel-container">
-      <Carousel {...args} aria-label="Account overview">
+    <Carousel aria-label="carousel example" className={"carousel"} {...args}>
+      <FlexLayout justify={"space-between"} align={"center"} direction={"row"}>
+        <H2 className="carouselHeading">Title</H2>
         <CarouselControls />
-        <CarouselSlider>{renderSlides()}</CarouselSlider>
-      </Carousel>
-    </div>
-  );
-};
-
-export const WithControlsPlacement: StoryFn<typeof Carousel> = (args) => {
-  const [placement, setPlacement] = useState<CarouselProps["controlsPlacement"]>("top");
-  return (
-    <div className="carousel-container">
-    <StackLayout gap={3} align="center">
-      <Carousel aria-label="Account overview" controlsPlacement={placement}>
-        <CarouselControls />
-        <CarouselSlider>
-          {renderSlides()}
-        </CarouselSlider>
-      </Carousel>
-      <StackLayout>
-        <FormField>
-          <FormFieldLabel>Controls Placement</FormFieldLabel>
-          <RadioButtonGroup
-            value={placement}
-            onChange={(event) =>
-              setPlacement(event.target.value as CarouselProps["controlsPlacement"])
-            }
-            direction="horizontal"
+      </FlexLayout>
+      <CarouselSlides>
+        {slides.map((index) => (
+          <div
+            role="slide"
+            aria-roledescription="slide"
+            className="carouselSlide"
+            key={index}
           >
-            <RadioButton label="Top" value="top" key="top" />
-            <RadioButton label="Bottom" value="bottom" key="bottom" />
-          </RadioButtonGroup>
-        </FormField>
-      </StackLayout>
-    </StackLayout></div>);
+            <div className="carouselNumber">
+              <H1>{index + 1}</H1>
+            </div>
+          </div>
+        ))}
+      </CarouselSlides>
+      <FlexLayout justify={"center"} direction={"row"}>
+        <CarouselPagination />
+      </FlexLayout>
+    </Carousel>
+  );
 };
 
-export const WithMultipleSlides = CarouselExample.bind({});
-WithMultipleSlides.args = {
-  visibleSlides: { sm: 1, md: 2 },
-  "aria-label": "Account overview",
-  id: "carousel-example",
+export const Default = CarouselNumberExample.bind({});
+
+export const Card = CarouselCardExample.bind({});
+
+export const Loop = CarouselNumberExample.bind({});
+Loop.args = {
+  emblaOptions: { loop: true },
 };
 
-export const WithActions: StoryFn<typeof Carousel> = (args) => {
+export const MultiSlide = CarouselNumberExample.bind({});
+MultiSlide.args = {
+  className: "carouselMultipleSlide",
+  emblaOptions: { align: "center" },
+};
+
+export const AutoPlay: StoryFn<typeof Carousel> = (args) => {
+  const [isPlaying, setIsPlaying] = useState(true);
+
+  const autoplay = useRef(Autoplay({ delay: 500 }));
+  const slides = Array.from(Array(4).keys());
+
+  const handleBlur: FocusEventHandler = (event) => {
+    if (!event.currentTarget.contains(event.relatedTarget) && isPlaying) {
+      autoplay.current.play();
+    }
+  };
+
   return (
-    <div className="carousel-container">
-      <Carousel
-        {...args}
-        visibleSlides={{ sm: 1, md: 2 }}
-        aria-label="Account overview"
+    <Carousel
+      aria-label="Account overview"
+      className={"carousel"}
+      emblaOptions={{ loop: true }}
+      emblaPlugins={[autoplay.current]}
+      {...args}
+    >
+      <FlexLayout justify={"space-between"} align={"center"} direction={"row"}>
+        <H2 className="carouselHeading">Title</H2>
+        {isPlaying ? (
+          <Button
+            aria-label="pause autoplay"
+            appearance="bordered"
+            sentiment="neutral"
+            onClick={() => {
+              setIsPlaying(false);
+              autoplay.current.stop();
+            }}
+            tabIndex={0}
+          >
+            Pause play
+            <PauseIcon aria-hidden />
+          </Button>
+        ) : (
+          <Button
+            aria-label="resume autoplay"
+            appearance="bordered"
+            sentiment="neutral"
+            onClick={() => {
+              setIsPlaying(true);
+              autoplay.current.play();
+            }}
+            tabIndex={0}
+          >
+            Resume play
+            <PlayIcon aria-hidden />
+          </Button>
+        )}
+      </FlexLayout>
+      <CarouselSlides
+        onMouseEnter={() => {
+          autoplay.current.stop();
+        }}
+        onMouseLeave={() => {
+          if (isPlaying) {
+            autoplay.current.play();
+          }
+        }}
+        onFocus={() => autoplay.current.stop()}
+        onBlur={handleBlur}
       >
-        <CarouselControls />
-        <CarouselSlider>{renderSlides({withActions: true})}</CarouselSlider>
-      </Carousel>
-    </div>
+        {slides.map((index) => (
+          <div
+            role="slide"
+            aria-roledescription="slide"
+            className="carouselSlide"
+            key={index}
+          >
+            <FlexLayout
+              className="carouselNumber"
+              justify={"center"}
+              direction={"row"}
+              gap={3}
+            >
+              <H1>{index + 1}</H1>
+              <FormField style={{ width: "auto" }}>
+                <FormFieldLabel>Focusable element</FormFieldLabel>
+                <Link aria-label={"demo action"} tabIndex={0} href="#">
+                  Link
+                </Link>
+              </FormField>
+            </FlexLayout>
+          </div>
+        ))}
+      </CarouselSlides>
+      <FlexLayout justify={"center"} direction={"row"}>
+        <CarouselPagination />
+      </FlexLayout>
+    </Carousel>
   );
 };
 
-export const WithTitle: StoryFn<typeof Carousel> = (args) => {
-  return (
-    <div className="carousel-container">
-      <Carousel {...args} aria-labelledby="carousel-title">
-        <CarouselControls
-          title={<H2 id="carousel-title">Account overview</H2>}
-        />
-        <CarouselSlider>{renderSlides()}</CarouselSlider>
-      </Carousel>
-    </div>
-  );
-};
-
-export const Controlled: StoryFn<typeof Carousel> = (args) => {
-  const [slide, setSlide] = useState<number>(0);
-  return (
-    <StackLayout>
-      <StackLayout gap={1} direction="row" align="center">
-        <Button onClick={() => setSlide(slide - 1)} disabled={slide === 0}>
-          Left
-        </Button>
-        <Button
-          onClick={() => setSlide(slide + 1)}
-          disabled={slide >= 3}
-        >
-          Right
-        </Button>
-        <Text>Current slide: {slide + 1}</Text>
-      </StackLayout>
-      <div className="carousel-container">
-        <Carousel
-          {...args}
-          aria-labelledby="carousel-title"
-          activeSlideIndex={slide}
-        >
-          <H2 id="carousel-title" className="carousel-title">
-            Account overview carousel
-          </H2>
-          <CarouselSlider onSelectionChange={(_, index) => setSlide(index)}>
-            {renderSlides()}
-          </CarouselSlider>
-        </Carousel>
-      </div>
-    </StackLayout>
-  );
+export const FadePlugin = CarouselCardExample.bind({});
+FadePlugin.args = {
+  emblaOptions: { duration: 30 },
+  emblaPlugins: [Fade()],
 };

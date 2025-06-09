@@ -1,8 +1,8 @@
 import type { Meta, StoryFn } from "@storybook/react";
 
-import {Carousel, CarouselControls, CarouselSlider} from "@salt-ds/lab";
+import { Carousel, CarouselControls, CarouselSlides } from "@salt-ds/lab";
 import { QAContainer } from "docs/components";
-import { renderSlides} from "./renderSlides";
+import { renderSlides } from "./renderSlides";
 
 export default {
   title: "Lab/Carousel/QA",
@@ -16,7 +16,7 @@ export const AllExamples: StoryFn = (props: {
     <QAContainer cols={4} transposeDensity vertical className="saltMetricQA">
       <Carousel>
         <CarouselControls />
-        <CarouselSlider>{renderSlides()}</CarouselSlider>
+        <CarouselSlides>{renderSlides()}</CarouselSlides>
       </Carousel>
     </QAContainer>
   );

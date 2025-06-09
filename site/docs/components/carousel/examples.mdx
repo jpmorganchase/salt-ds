@@ -8,46 +8,78 @@ data:
   $ref: ./#/data
 ---
 
-## Default (single slide)
+## Default
 
-Carousel navigates through content in single slide increments, allowing movement either backward or forward through the sequence.
+Carousel is a composition of Salt components that uses the [Embla](https://www.embla-carousel.com/) API.
+
+The default carousel navigates through slides individually, one at a time.
 
 <LivePreview componentName="carousel" exampleName="Default" />
 
-## Multiple slides
+## Adding titles
 
-This carousel component can display multiple slides simultaneously, with the `visibleSlides` prop.
+Adding a title serves as a heading for the displayed content.
 
-Alternatively the `visibleSlides` prop is responsive, and can adapt the number of visible slides based on the breakpoint.
-
-<LivePreview componentName="carousel" exampleName="MultipleSlides" />
-
-## With title
-
-The carousel title, passed as the `title` prop to `CarouselControls`, is optional and appears above the carousel to provide context or serve as a heading for the displayed content.
-
-<LivePreview componentName="carousel" exampleName="WithTitle" />
-
-## Bordered
-
-Carousel slides can be bordered by setting the `bordered` prop to `true`. This adds a visual distinction to each slide, enhancing the overall appearance and making it easier for users to differentiate between individual slides.
-
-<LivePreview componentName="carousel" exampleName="Bordered" />
-
-## With slide actions
-
-[`Link`](../link) can be incorporated into a carousel slide, but avoid embedding other clickable actions during animation to prevent accidental clicks while slides are transitioning.
-
-<LivePreview componentName="carousel" exampleName="WithSlideActions" />
+<LivePreview componentName="carousel" exampleName="Title" />
 
 ## Controls placement
 
-You can set the `controlsPlacement` property to either `top` or `bottom` to position the controls accordingly. This offers flexibility in design to suit different layout and user experience requirements.
+Controls can be located at the bottom of the carousel.
 
-<LivePreview componentName="carousel" exampleName="ControlsPlacement" />
+<LivePreview componentName="carousel" exampleName="BottomControls" />
 
-## Controlled carousel
+## Pagination
 
-When composed with other components the visible slide can be controlled programmatically using the `activeIndex` prop.
+Pagination controls can be integrated into the carousel, offering both a visual indicator of the current slide and clickable elements that allow users to navigate directly to specific slides.
+
+<LivePreview componentName="carousel" exampleName="Pagination" />
+
+## Multiple slides
+
+This carousel component can display multiple slides simultaneously.
+
+<LivePreview componentName="carousel" exampleName="MultipleSlides" />
+
+## Card
+
+Carousel slides can contain your own content but `CarouselCard` provides a convenient slide component.
+
+<LivePreview componentName="carousel" exampleName="Card" />
+
+## Bordered
+
+Bordered cards add a visual distinction to each slide, enhancing the overall appearance and making it easier for users to differentiate between individual slides.
+
+`CarouselCard` can include a border by setting the `bordered` prop to `true`.
+
+<LivePreview componentName="carousel" exampleName="BorderedCard" />
+
+## Additional actions
+
+[`Link`](../link) can be incorporated into a carousel slide, but avoid embedding other clickable actions during animation to prevent accidental clicks while slides are transitioning.
+
+`CarouselCard` also supports actions, through the `actions` prop.
+
+<LivePreview componentName="carousel" exampleName="CardActions" />
+
+## Accessing the embla API
+
+When composed with other components the visible slide can be controlled programmatically using the `embla` API.
+
+Refer to the [Embla documentation](https://www.embla-carousel.com/) for the full API.
 
 <LivePreview componentName="carousel" exampleName="ControlledCarousel" />
+
+## Autoplay
+
+Autoplay can be added through the embla plugin [`Autoplay`](https://www.embla-carousel.com/plugins/autoplay/), but requires additional code to support accessibility.
+
+The example below provides accessibility support but if you compose your own, then refer to the [APG guidelines](https://www.w3.org/WAI/ARIA/apg/patterns/carousel/).
+
+<LivePreview componentName="carousel" exampleName="Autoplay" />
+
+## Fade
+
+Fade transitions can be added through the embla plugin [`Fade`](https://www.embla-carousel.com/plugins/fade/).
+
+<LivePreview componentName="carousel" exampleName="Fade" />

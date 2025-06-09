@@ -1,50 +1,55 @@
-import {
-  type ResponsiveProp,
-  makePrefixer,
-  resolveResponsiveValue,
-  useBreakpoint,
-  useId,
-} from "@salt-ds/core";
+import { makePrefixer } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
-import { type HTMLAttributes, forwardRef } from "react";
+import useEmblaCarousel, {
+  type UseEmblaCarouselType,
+} from "embla-carousel-react";
+import { type HTMLAttributes, forwardRef, useEffect } from "react";
 import carouselCss from "./Carousel.css";
-import { CarouselProvider } from "./CarouselContext";
+import { CarouselAnnouncement } from "./CarouselAnnouncementPlugin";
+import { CarouselContext } from "./CarouselContext";
 
 const withBaseName = makePrefixer("saltCarousel");
 
+export type CarouselRef = UseEmblaCarouselType[0];
+export type CarouselApi = UseEmblaCarouselType[1];
+type UseCarouselParameters = Parameters<typeof useEmblaCarousel>;
+export type CarouselOptions = UseCarouselParameters[0];
+export type CarouselPlugin = UseCarouselParameters[1];
+
+/**
+ * Props for the Carousel component.
+ */
 export interface CarouselProps extends HTMLAttributes<HTMLDivElement> {
   /**
-   * The initial Index enables you to select the active slide in the carousel.
-   * Optional, default 0.
-   **/
-  defaultActiveSlideIndex?: number;
-  /**
-   * Controlled index of active slide in the carousel.
-   **/
-  activeSlideIndex?: number;
-  /**
-   * Set the placement of the CarouselControls relative to the CarouselSlider element. Defaults to `top`.
+   * Options to configure the Embla Carousel.
+   * These options are passed directly to the Embla Carousel instance.
    */
-  controlsPlacement?: "top" | "bottom";
+  emblaOptions?: CarouselOptions;
+
   /**
-   * Number of slides visible at a time.
-   * Optional, default 1.
-   **/
-  visibleSlides?: ResponsiveProp<number>;
+   * Plugins to enhance the functionality of the Embla Carousel.
+   * These options are passed directly to the Embla Carousel instance.
+   */
+  emblaPlugins?: CarouselPlugin;
+
+  /**
+   * Callback function to set the Embla Carousel API.
+   * This function is called with the Embla Carousel API instance.
+   * Use this to manage the state of the Carousel
+   */
+  setApi?: (api: CarouselApi) => void;
 }
 
 export const Carousel = forwardRef<HTMLDivElement, CarouselProps>(
   function Carousel(
     {
-      defaultActiveSlideIndex = 0,
-      activeSlideIndex,
-      visibleSlides: visibleSlidesProp = 1,
       children,
       className,
-      controlsPlacement = "top",
-      id: idProp,
+      emblaOptions = {},
+      emblaPlugins = [],
+      setApi,
       ...rest
     },
     ref,
@@ -55,35 +60,30 @@ export const Carousel = forwardRef<HTMLDivElement, CarouselProps>(
       css: carouselCss,
       window: targetWindow,
     });
-    const { matchedBreakpoints } = useBreakpoint();
 
-    const visibleSlides = resolveResponsiveValue(
-      visibleSlidesProp,
-      matchedBreakpoints,
-    );
-    const id = useId(idProp);
+    const [emblaRef, emblaApi] = useEmblaCarousel(emblaOptions, [
+      CarouselAnnouncement(),
+      ...emblaPlugins,
+    ]);
+
+    useEffect(() => {
+      if (!emblaApi || !setApi) {
+        return;
+      }
+      setApi(emblaApi);
+    }, [emblaApi, setApi]);
+
     return (
-      <CarouselProvider
-        defaultActiveSlideIndex={defaultActiveSlideIndex}
-        activeSlideIndex={activeSlideIndex}
-        visibleSlides={visibleSlides}
-        id={id}
-      >
+      <CarouselContext.Provider value={{ emblaApi, emblaRef }}>
         <section
-          role="region"
-          className={clsx(
-            withBaseName(),
-            withBaseName(controlsPlacement as string),
-            className,
-          )}
           aria-roledescription="carousel"
-          id={id}
-          ref={ref}
+          role="region"
+          className={clsx(withBaseName(), className)}
           {...rest}
         >
           {children}
         </section>
-      </CarouselProvider>
+      </CarouselContext.Provider>
     );
   },
 );
