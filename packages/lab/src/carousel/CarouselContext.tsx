@@ -1,74 +1,36 @@
-import { createContext, useControlled } from "@salt-ds/core";
-import { type ReactNode, useEffect, useReducer } from "react";
-import {
-  type CarouselReducerDispatch,
-  type CarouselReducerState,
-  carouselReducer,
-} from "./CarouselReducer";
+import { createContext } from "@salt-ds/core";
+import { useContext } from "react";
+import type { CarouselApi, CarouselRef } from "./Carousel";
 
-export const CarouselStateContext = createContext<CarouselReducerState>(
-  "CarouselStateContext",
-  {
-    slides: new Map(),
-    activeSlideIndex: 0,
-    visibleSlides: 1,
-    focusedSlideIndex: 0,
-    carouselId: undefined,
-  },
-);
-export const CarouselDispatchContext = createContext<CarouselReducerDispatch>(
-  "CarouselDispatchContext",
-  () => {
-    return;
-  },
-);
+/**
+ * Type definition for the Carousel context.
+ * Provides access to the Embla Carousel API and reference.
+ */
+interface CarouselContextType {
+  /**
+   * The API instance of the Embla Carousel.
+   * Provides methods to control the carousel programmatically.
+   */
+  emblaApi?: CarouselApi;
 
-export function CarouselProvider({
-  children,
-  activeSlideIndex: activeSlideIndexProp,
-  defaultActiveSlideIndex = 0,
-  visibleSlides = 1,
-  id,
-}: {
-  children: ReactNode;
-  activeSlideIndex?: number;
-  defaultActiveSlideIndex?: number;
-  visibleSlides?: number;
-  id?: string;
-}) {
-  const [activeSlideIndex, setActiveSlideIndex] = useControlled({
-    controlled: activeSlideIndexProp,
-    default: defaultActiveSlideIndex,
-    name: "Carousel",
-    state: "activeSlideIndex",
-  });
-  const [state, dispatch] = useReducer(carouselReducer, {
-    slides: new Map(),
-    focusedSlideIndex: activeSlideIndex,
-    activeSlideIndex,
-    visibleSlides,
-    carouselId: id,
-  });
-
-  useEffect(() => {
-    dispatch({
-      type: "updateSlideCount",
-      payload: visibleSlides,
-    });
-  }, [visibleSlides]);
-
-  useEffect(() => {
-    dispatch({
-      type: "moveToIndex",
-      payload: activeSlideIndex,
-    });
-  }, [activeSlideIndex]);
-
-  return (
-    <CarouselStateContext.Provider value={state}>
-      <CarouselDispatchContext.Provider value={dispatch}>
-        {children}
-      </CarouselDispatchContext.Provider>
-    </CarouselStateContext.Provider>
-  );
+  /**
+   * The reference to the Embla Carousel viewport.
+   * Used to directly interact with the carousel DOM element.
+   */
+  emblaRef?: CarouselRef;
 }
+
+export const CarouselContext = createContext<CarouselContextType | undefined>(
+  "CarouselContext",
+  undefined,
+);
+
+export const useCarouselContext = (): CarouselContextType => {
+  const context = useContext(CarouselContext);
+  if (!context) {
+    throw new Error(
+      "useCarouselContext must be used within a CarouselProvider",
+    );
+  }
+  return context;
+};

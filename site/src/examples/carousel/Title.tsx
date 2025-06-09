@@ -1,22 +1,12 @@
 import { FlexLayout, H1, H2 } from "@salt-ds/core";
-import {
-  Carousel,
-  CarouselControls,
-  CarouselPagination,
-  CarouselSlides,
-} from "@salt-ds/lab";
-import cx from "classnames";
+import { Carousel, CarouselControls, CarouselSlides } from "@salt-ds/lab";
 import type { ReactElement } from "react";
 import styles from "./index.module.css";
 
-export const MultipleSlides = (): ReactElement => {
+export const Title = (): ReactElement => {
   const slides = Array.from(Array(4).keys());
   return (
-    <Carousel
-      aria-label="default carousel example"
-      className={cx(styles.carousel, styles.carouselMultipleSlides)}
-      emblaOptions={{ align: "center" }}
-    >
+    <Carousel aria-label="default carousel example" className={styles.carousel}>
       <FlexLayout justify={"space-between"} align={"center"} direction={"row"}>
         <H2 style={{ margin: "0px" }}>Title</H2>
         <CarouselControls />
@@ -35,9 +25,6 @@ export const MultipleSlides = (): ReactElement => {
           </div>
         ))}
       </CarouselSlides>
-      <FlexLayout justify={"center"} direction={"row"}>
-        <CarouselPagination />
-      </FlexLayout>
     </Carousel>
   );
 };
