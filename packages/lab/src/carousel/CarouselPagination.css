@@ -1,0 +1,8 @@
+.saltCarouselPagination {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  align-items: center;
+  margin-right: var(--salt-spacing-200);
+  gap: var(--salt-spacing-200);
+}
