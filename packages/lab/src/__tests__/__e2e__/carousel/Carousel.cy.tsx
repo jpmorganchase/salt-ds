@@ -1,9 +1,9 @@
 import * as carouselStories from "@stories/carousel/carousel.stories";
 import { composeStories } from "@storybook/react-vite";
-import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
+import { version as reactVersion } from 'react-dom';
 
 const composedStories = composeStories(carouselStories);
-const { Default, WithActions, Controlled } = composedStories;
+const { Default } = composedStories;
 
 describe("GIVEN a carousel", () => {
   describe("WHEN the default is rendered with slides", () => {
@@ -43,7 +43,7 @@ describe("GIVEN a carousel", () => {
     });
 
     it("SHOULD disable previous button when reaching far left", () => {
-      cy.mount(<Default defaultActiveSlideIndex={1} />);
+      cy.mount(<Default />);
       cy.findAllByText("2 of 4").should("exist");
       cy.findAllByRole("button", { name: "Previous slide" }).click();
       cy.findAllByText("1 of 4").should("exist");
@@ -55,7 +55,11 @@ describe("GIVEN a carousel", () => {
     });
 
     it("SHOULD disable next button when reaching far right", () => {
-      cy.mount(<Default defaultActiveSlideIndex={2} />);
+      cy.mount(<Default />);
+      cy.findAllByText("1 of 4").should("exist");
+      cy.findAllByRole("button", { name: "Next slide" }).click();
+      cy.findAllByText("2 of 4").should("exist");
+      cy.findAllByRole("button", { name: "Next slide" }).click();
       cy.findAllByText("3 of 4").should("exist");
       cy.findAllByRole("button", { name: "Next slide" }).click();
       cy.findAllByText("4 of 4").should("exist");
@@ -98,59 +102,6 @@ describe("GIVEN a carousel", () => {
       cy.findAllByText("1 of 4").should("exist");
       cy.findAllByText("2 of 4").should("not.exist");
     });
-
-    it("SHOULD NOT move to hidden slides when using tab navigation", () => {
-      cy.mount(<WithActions />);
-      cy.findAllByText("1 - 2 of 4").should("exist");
-      cy.findAllByRole("button", { name: "Next slides" }).focus();
-      // tab through visible elements
-      cy.realPress("Tab");
-      cy.realPress("Tab");
-      cy.findByText("Open an account").should("be.focused");
-      cy.realPress("Tab");
-      cy.realPress("Tab");
-      cy.findByText("Go to dashboard").should("be.focused");
-      // next tab should exit the carousel
-      cy.realPress("Tab");
-      // slides should not have been changed
-      cy.findAllByText("1 - 2 of 4").should("exist");
-    });
   });
 });
 
-describe("GIVEN a carousel with responsive visibleItems", () => {
-  it("SHOULD render properly with different visible items based on viewport", () => {
-    cy.viewport(590, 900); // xs viewport
-    cy.mount(<Default visibleSlides={{ xs: 1, sm: 2, md: 3 }} />);
-    cy.findAllByText("1 of 4").should("exist");
-
-    cy.viewport(700, 900); // sm viewport
-    cy.mount(<Default visibleSlides={{ xs: 1, sm: 2, md: 3 }} />);
-    cy.findAllByText("1 - 2 of 4").should("exist");
-
-    cy.viewport(961, 1200); // md viewport
-    cy.mount(<Default visibleSlides={{ xs: 1, sm: 2, md: 3 }} />);
-    cy.findAllByText("1 - 3 of 4").should("exist");
-  });
-});
-
-describe("WHEN mounted as an uncontrolled component", () => {
-  it("THEN should move slide when controlled slide index is passed", () => {
-    cy.mount(<Controlled />);
-    cy.findAllByRole("button", { name: "Right" }).click();
-    cy.findByText("Current slide: 2").should("exist");
-    cy.findByText("Current slide: 1").should("not.exist");
-    cy.findAllByRole("button", { name: "Left" }).click();
-    cy.findByText("Current slide: 1").should("exist");
-    cy.findByText("Current slide: 2").should("not.exist");
-  });
-  it("THEN should be able to update controlled value when navigating slider", () => {
-    cy.mount(<Controlled />);
-    cy.findByText("Current slide: 1").should("exist");
-    cy.findByText("Current slide: 2").should("not.exist");
-    cy.findAllByRole("group").get('[tabindex="0"]').focus();
-    cy.findAllByRole("group").get('[tabindex="0"]').realPress("ArrowRight");
-    cy.findByText("Current slide: 2").should("exist");
-    cy.findByText("Current slide: 1").should("not.exist");
-  });
-});

@@ -13,6 +13,16 @@ data:
 - Avoid using infographics, maps, charts as images or [images of text](https://www.w3.org/TR/UNDERSTANDING-WCAG20/visual-audio-contrast-text-presentation.html).
 - Order slides by importance, with the most critical info first.
 
+### Autoplay
+
+If using Autoplay, then additional considerations are required
+
+- include accessible controls to start and stop the autoplay feature, allowing users to manage the animation according to their preferences.
+- automatically pause the autoplay when the user hovers over the carousel, and resume when the interaction ends (e.g., mouse-out).
+- permanently stop the autoplay when a slide or control within the carousel receives focus, ensuring users can interact with the content without distraction.
+- ensure screen readers announce changes in slide content during autoplay, providing context for visually impaired users.
+- consider requiring user consent to enable autoplay, especially for users who may find automatic movement disorienting.
+
 ## Keyboard interactions
 
 <KeyboardControls>
@@ -21,6 +31,7 @@ data:
 - If focus is outside carousel, moves focus into the Carousel, setting focus on the previous button.
 - If focus is on the previous button, moves focus to the next button.
 - If focus is on the next button moves focus to the first visible carousel slide.
+- When focus is within a slide, shift focus to the next focusable element, either on the current slide or the subsequent one.
 
 </KeyboardControl>
 <KeyboardControl keyOrCombos="Enter">
@@ -33,6 +44,7 @@ data:
 - If focus is on the next button, moves focus to the previous button.
 - If focus is on the first visible slide, moves focus to the next button in controls. 
 - If focus is on the element after the carousel, sets focus on the last interactive element on the last visible slide or the last visible slide if it doesn't contain any interactive elements.
+- When focus is within a slide, shift focus to the previous focusable element, either on the current slide or the previous one.
 
 </KeyboardControl>
 
