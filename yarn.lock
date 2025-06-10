@@ -3331,7 +3331,7 @@ __metadata:
     msw-storybook-addon: "npm:^2.0.4"
     prettier: "npm:^3.3.3"
     react: "npm:^18.3.1"
-    react-docgen-typescript: "npm:2.2.2"
+    react-docgen-typescript: "npm:2.4.0"
     react-dom: "npm:^18.3.1"
     react-resizable-panels: "npm:^3.0.0"
     rifm: "npm:^0.12.0"
@@ -13724,12 +13724,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-docgen-typescript@npm:2.2.2, react-docgen-typescript@npm:^2.2.2":
-  version: 2.2.2
-  resolution: "react-docgen-typescript@npm:2.2.2"
+"react-docgen-typescript@npm:2.4.0, react-docgen-typescript@npm:^2.2.2":
+  version: 2.4.0
+  resolution: "react-docgen-typescript@npm:2.4.0"
   peerDependencies:
     typescript: ">= 4.3.x"
-  checksum: 10/081fc3a876f53b9eeffcff357e5b6c190db799d50edcf11b187857d8cb8cce28000ed777ed16dd52a1c955f332612ef6b1f02cf8adcbcb084b8da9ff1ae5fd13
+  checksum: 10/81e45bc012150dee50a9919a44597a436d45168f7a83febbbfef134c07e71c1a2f09fb6e1fc040f18bd6747f37b46d463a2b4a30177f6137e4ff49570bcaf253
   languageName: node
   linkType: hard
 
@@ -16938,22 +16938,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ws@npm:^8.16.0":
-  version: 8.18.1
-  resolution: "ws@npm:8.18.1"
-  peerDependencies:
-    bufferutil: ^4.0.1
-    utf-8-validate: ">=5.0.2"
-  peerDependenciesMeta:
-    bufferutil:
-      optional: true
-    utf-8-validate:
-      optional: true
-  checksum: 10/3f38e9594f2af5b6324138e86b74df7d77bbb8e310bf8188679dd80bac0d1f47e51536a1923ac3365f31f3d8b25ea0b03e4ade466aa8292a86cd5defca64b19b
-  languageName: node
-  linkType: hard
-
-"ws@npm:^8.18.0":
+"ws@npm:^8.16.0, ws@npm:^8.18.0":
   version: 8.18.2
   resolution: "ws@npm:8.18.2"
   peerDependencies:
