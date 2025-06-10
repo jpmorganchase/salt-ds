@@ -5576,59 +5576,59 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ag-charts-community@npm:10.2.0":
-  version: 10.2.0
-  resolution: "ag-charts-community@npm:10.2.0"
+"ag-charts-community@npm:10.3.8":
+  version: 10.3.8
+  resolution: "ag-charts-community@npm:10.3.8"
   dependencies:
-    ag-charts-locale: "npm:10.2.0"
-    ag-charts-types: "npm:10.2.0"
-  checksum: 10/02b9a67d9f32b0574c0c9b11c53be2c8359fdc11114a9a718166b8925c6dfdbf0eb52f8aef43447f9f6c518e594c0ef1804acccbc3e5f4409e88f7c3bd364ffb
+    ag-charts-locale: "npm:10.3.8"
+    ag-charts-types: "npm:10.3.8"
+  checksum: 10/b172ee5234b57ed447cbda14a9baee1f43efa040403430da54548aecb9a2bb2e7ed312ef35f49151a8573bbd5f691694beb9ba544c9950a240a3ccf77f04ddbf
   languageName: node
   linkType: hard
 
-"ag-charts-locale@npm:10.2.0":
-  version: 10.2.0
-  resolution: "ag-charts-locale@npm:10.2.0"
-  checksum: 10/814c99d4d25834d01b871a640407b44f12d98cda07b740d17dcffec8d049a4fb9edd03e57dfe32e72f982c82594423ce4c0d93eadb1fb758a5e1529d4209a087
+"ag-charts-locale@npm:10.3.8":
+  version: 10.3.8
+  resolution: "ag-charts-locale@npm:10.3.8"
+  checksum: 10/5f873c20130f7267446216f6ca0438cac9ecdd8a5270a404712f3a06f1b3e8b28da526ad2eb95529c43de40e2e8ca56cb5bee272cd77b473918c8c680cb3c06a
   languageName: node
   linkType: hard
 
-"ag-charts-types@npm:10.2.0":
-  version: 10.2.0
-  resolution: "ag-charts-types@npm:10.2.0"
-  checksum: 10/f6aee22c0d99606535131e3ffcafb30c4f60ee219fd014993ad5d1898aaa0db49a1d608fa725601acfd92eb9a0880e6a7a236113552498f0e51a97554687561f
+"ag-charts-types@npm:10.3.8":
+  version: 10.3.8
+  resolution: "ag-charts-types@npm:10.3.8"
+  checksum: 10/fcda74c343c2ecec3f81a01d10e597c562608ae62b03a589824761e48108181e3e666a947c43a573804008264fab84b44e5c4e1e50c038378b5b381e1c085663
   languageName: node
   linkType: hard
 
-"ag-grid-community@npm:32.2.1":
-  version: 32.2.1
-  resolution: "ag-grid-community@npm:32.2.1"
+"ag-grid-community@npm:32.3.8":
+  version: 32.3.8
+  resolution: "ag-grid-community@npm:32.3.8"
   dependencies:
-    ag-charts-types: "npm:10.2.0"
-  checksum: 10/e5f71723752405e42aa66e07cb7b22acf025f05cb6805ef5d20a93348fb8ad7f2157a502c458177582bf87b942d5131bc00e52b05c0df5ca47bcc65d89f12dbb
+    ag-charts-types: "npm:10.3.8"
+  checksum: 10/124b49b1a05a12d78009fe43eff4a53d68aa0028b3bccc32c7a65925865c26b608bfd62ce4c6ce9343d915d87507f002400a19726a092afffb5a8d0391005372
   languageName: node
   linkType: hard
 
-"ag-grid-enterprise@npm:32.2.1":
-  version: 32.2.1
-  resolution: "ag-grid-enterprise@npm:32.2.1"
+"ag-grid-enterprise@npm:32.3.8":
+  version: 32.3.8
+  resolution: "ag-grid-enterprise@npm:32.3.8"
   dependencies:
-    ag-charts-community: "npm:10.2.0"
-    ag-grid-community: "npm:32.2.1"
-  checksum: 10/0228dc50ae756ed51e55046e36879e8dc1df18772744b88ac936663032acac5560e1d2e5c4d1f7ab9ac024b7bd7e65d0e43e8f8ef498523222faf8aaae4a2057
+    ag-charts-community: "npm:10.3.8"
+    ag-grid-community: "npm:32.3.8"
+  checksum: 10/1669fbb804cbc3afe9d7ae5f7054ccfc8338339e4c1f36b2113fb5e8c7ebaf587e5acfac67482c06d3086a1ed2f5da37f1e43268cf177414236a2553bce3e9d6
   languageName: node
   linkType: hard
 
-"ag-grid-react@npm:32.2.1":
-  version: 32.2.1
-  resolution: "ag-grid-react@npm:32.2.1"
+"ag-grid-react@npm:32.3.8":
+  version: 32.3.8
+  resolution: "ag-grid-react@npm:32.3.8"
   dependencies:
-    ag-grid-community: "npm:32.2.1"
+    ag-grid-community: "npm:32.3.8"
     prop-types: "npm:^15.8.1"
   peerDependencies:
-    react: ^16.3.0 || ^17.0.0 || ^18.0.0
-    react-dom: ^16.3.0 || ^17.0.0 || ^18.0.0
-  checksum: 10/f5e0f03af453c604f9907b7884f5fc097612497567b5643a0305a59aa3ab0af11f170cacd1a3e362442fdb319b26620616583c578e6b5c6291d40649d5d19e29
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+    react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+  checksum: 10/0bf7f93b39bb3a93cfdea9046425a8c2f1fe3481c0690eedcb19412ab8e1063963352cab5d4c1d73c486e27419be61e95d32ae59604e01410b602a0a792cbf72
   languageName: node
   linkType: hard
 
@@ -16938,22 +16938,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ws@npm:^8.16.0":
-  version: 8.18.1
-  resolution: "ws@npm:8.18.1"
-  peerDependencies:
-    bufferutil: ^4.0.1
-    utf-8-validate: ">=5.0.2"
-  peerDependenciesMeta:
-    bufferutil:
-      optional: true
-    utf-8-validate:
-      optional: true
-  checksum: 10/3f38e9594f2af5b6324138e86b74df7d77bbb8e310bf8188679dd80bac0d1f47e51536a1923ac3365f31f3d8b25ea0b03e4ade466aa8292a86cd5defca64b19b
-  languageName: node
-  linkType: hard
-
-"ws@npm:^8.18.0":
+"ws@npm:^8.16.0, ws@npm:^8.18.0":
   version: 8.18.2
   resolution: "ws@npm:8.18.2"
   peerDependencies:
