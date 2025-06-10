@@ -18,11 +18,7 @@ export const ChevronRightIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <path
-        fillRule="evenodd"
-        d="M7.308 6 2.5 1.599 3.492.5 9.5 6l-6.008 5.5-.992-1.099L7.308 6Z"
-        clipRule="evenodd"
-      />
+      <path d="M8.593 5.618 9 6l-.407.382L3.661 11 3 10.236 7.524 6 3 1.764 3.66 1l4.933 4.618Z" />
     </Icon>
   );
 });
