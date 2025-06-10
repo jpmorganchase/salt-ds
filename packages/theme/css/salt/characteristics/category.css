@@ -1,0 +1,22 @@
+.salt-theme[data-brand="salt"] {
+  --salt-category-1-bold-foreground: var(--salt-palette-foreground-primary-alt);
+  --salt-category-2-bold-foreground: var(--salt-palette-foreground-primary-alt);
+  --salt-category-3-bold-foreground: var(--salt-palette-foreground-primary-alt);
+  --salt-category-4-bold-foreground: var(--salt-palette-foreground-primary-alt);
+  --salt-category-5-bold-foreground: var(--salt-palette-foreground-primary-alt);
+  --salt-category-6-bold-foreground: var(--salt-palette-foreground-primary-alt);
+  --salt-category-7-bold-foreground: var(--salt-palette-foreground-primary-alt);
+  --salt-category-8-bold-foreground: var(--salt-palette-foreground-primary-alt);
+  --salt-category-9-bold-foreground: var(--salt-palette-foreground-primary-alt);
+  --salt-category-10-bold-foreground: var(--salt-palette-foreground-primary-alt);
+  --salt-category-11-bold-foreground: var(--salt-palette-foreground-primary-alt);
+  --salt-category-12-bold-foreground: var(--salt-palette-foreground-primary-alt);
+  --salt-category-13-bold-foreground: var(--salt-palette-foreground-primary-alt);
+  --salt-category-14-bold-foreground: var(--salt-palette-foreground-primary-alt);
+  --salt-category-15-bold-foreground: var(--salt-palette-foreground-primary-alt);
+  --salt-category-16-bold-foreground: var(--salt-palette-foreground-primary-alt);
+  --salt-category-17-bold-foreground: var(--salt-palette-foreground-primary-alt);
+  --salt-category-18-bold-foreground: var(--salt-palette-foreground-primary-alt);
+  --salt-category-19-bold-foreground: var(--salt-palette-foreground-primary-alt);
+  --salt-category-20-bold-foreground: var(--salt-palette-foreground-primary-alt);
+}

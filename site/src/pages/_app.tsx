@@ -11,8 +11,9 @@ import * as saltLayouts from "../layouts";
 import { LayoutProvider } from "../layouts/LayoutProvider";
 import type { MyAppProps } from "../types/mosaic";
 
-import "@salt-ds/theme/css/theme-next.css";
 import "@salt-ds/theme/index.css";
+import "@salt-ds/theme/css/salt/index.css";
+import "@salt-ds/theme/css/uitk/index.css";
 
 import "../css/index.css";
 

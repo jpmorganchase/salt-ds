@@ -1,0 +1,15 @@
+.salt-theme[data-mode="light"][data-brand="uitk"] {
+  --salt-palette-info-background: var(--salt-color-blue-10);
+  --salt-palette-info-bold-background: var(--salt-color-blue-500);
+  --salt-palette-info-border: var(--salt-color-blue-500);
+  --salt-palette-info-foreground-decorative: var(--salt-color-blue-500);
+  --salt-palette-info-foreground-informative: var(--salt-color-blue-600);
+}
+
+.salt-theme[data-mode="dark"][data-brand="uitk"] {
+  --salt-palette-info-background: var(--salt-color-blue-900);
+  --salt-palette-info-bold-background: var(--salt-color-blue-500);
+  --salt-palette-info-border: var(--salt-color-blue-400);
+  --salt-palette-info-foreground-decorative: var(--salt-color-blue-400);
+  --salt-palette-info-foreground-informative: var(--salt-color-blue-200);
+}
