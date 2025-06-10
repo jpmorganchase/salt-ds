@@ -7,6 +7,7 @@ import {
 } from "@salt-ds/core";
 import {
   type ReactNode,
+  type Ref,
   cloneElement,
   forwardRef,
   isValidElement,
@@ -84,7 +85,7 @@ export const Portal = forwardRef<HTMLElement, PortalProps>(function Portal(
   }, [id, container]);
 
   if (disablePortal) {
-    if (isValidElement(children)) {
+    if (isValidElement<{ ref?: Ref<unknown> }>(children)) {
       return cloneElement(children, {
         ref: handleRef,
       });

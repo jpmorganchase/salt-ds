@@ -14,7 +14,7 @@ export interface NavigationProps<Item = unknown> {
   highlightedIndex?: number;
   indexPositions: CollectionItem<Item>[];
   onHighlight?: (idx: number) => void;
-  onKeyboardNavigation?: (evt: KeyboardEvent, idx: number) => void;
+  onKeyboardNavigation?: (evt: KeyboardEvent<HTMLElement>, idx: number) => void;
   restoreLastFocus?: boolean;
 }
 
@@ -28,9 +28,9 @@ export interface NavigationHookProps<Item, Selection extends SelectionStrategy>
 }
 
 export interface KeyboardHookListProps {
-  onBlur: (evt: FocusEvent) => void;
-  onFocus: (evt: FocusEvent) => void;
-  onKeyDown: (evt: KeyboardEvent) => void;
+  onBlur: (evt: FocusEvent<HTMLElement>) => void;
+  onFocus: (evt: FocusEvent<HTMLElement>) => void;
+  onKeyDown: (evt: KeyboardEvent<HTMLElement>) => void;
   onMouseDownCapture: () => void;
   onMouseMove: () => void;
   onMouseLeave: () => void;

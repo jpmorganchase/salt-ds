@@ -2,6 +2,7 @@ import { clsx } from "clsx";
 import {
   type HTMLAttributes,
   type ReactNode,
+  type Ref,
   cloneElement,
   forwardRef,
   isValidElement,
@@ -129,7 +130,7 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
 
     return (
       <>
-        {isValidElement(children) &&
+        {isValidElement<{ ref?: Ref<unknown> }>(children) &&
           cloneElement(children, {
             ...mergeProps(getTriggerProps(), children.props),
             ref: triggerRef,

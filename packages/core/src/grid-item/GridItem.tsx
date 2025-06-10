@@ -1,5 +1,10 @@
 import { clsx } from "clsx";
-import { type ElementType, type ReactElement, forwardRef } from "react";
+import {
+  type ElementType,
+  type ForwardedRef,
+  type FunctionComponent,
+  forwardRef,
+} from "react";
 
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
@@ -64,71 +69,71 @@ const rowEnd = "auto";
 
 type GridItemComponent = <T extends ElementType = "div">(
   props: GridItemProps<T>,
-) => ReactElement | null;
+) => ReturnType<FunctionComponent>;
 
-export const GridItem: GridItemComponent = forwardRef(
-  <T extends ElementType = "div">(
-    {
-      as,
-      children,
-      className,
-      margin = 0,
-      padding = 0,
-      colSpan = "auto",
-      rowSpan = "auto",
-      horizontalAlignment = "stretch",
-      verticalAlignment = "stretch",
-      style,
-      ...rest
-    }: GridItemProps<T>,
-    ref?: PolymorphicRef<T>,
-  ) => {
-    const targetWindow = useWindow();
-    useComponentCssInjection({
-      testId: "salt-grid-item",
-      css: gridItemCss,
-      window: targetWindow,
-    });
+export const GridItem: GridItemComponent = forwardRef(function GridItem<
+  T extends ElementType = "div",
+>(
+  {
+    as,
+    children,
+    className,
+    margin = 0,
+    padding = 0,
+    colSpan = "auto",
+    rowSpan = "auto",
+    horizontalAlignment = "stretch",
+    verticalAlignment = "stretch",
+    style,
+    ...rest
+  }: GridItemProps<T>,
+  ref?: ForwardedRef<unknown>,
+) {
+  const targetWindow = useWindow();
+  useComponentCssInjection({
+    testId: "salt-grid-item",
+    css: gridItemCss,
+    window: targetWindow,
+  });
 
-    const { matchedBreakpoints } = useBreakpoint();
+  const { matchedBreakpoints } = useBreakpoint();
 
-    const Component = as || "div";
-    const gridItemColSpan = resolveResponsiveValue(colSpan, matchedBreakpoints);
+  const Component = as || "div";
+  const gridItemColSpan = resolveResponsiveValue(colSpan, matchedBreakpoints);
 
-    const gridItemRowSpan = resolveResponsiveValue(rowSpan, matchedBreakpoints);
-    const gridItemMargin = resolveResponsiveValue(margin, matchedBreakpoints);
-    const gridItemPadding = resolveResponsiveValue(padding, matchedBreakpoints);
-    const gridColumnStart = gridItemColSpan
-      ? `span ${gridItemColSpan}`
-      : colStart;
+  const gridItemRowSpan = resolveResponsiveValue(rowSpan, matchedBreakpoints);
+  const gridItemMargin = resolveResponsiveValue(margin, matchedBreakpoints);
+  const gridItemPadding = resolveResponsiveValue(padding, matchedBreakpoints);
+  const gridColumnStart = gridItemColSpan
+    ? `span ${gridItemColSpan}`
+    : colStart;
 
-    const gridColumnEnd = gridItemColSpan ? `span ${gridItemColSpan}` : colEnd;
+  const gridColumnEnd = gridItemColSpan ? `span ${gridItemColSpan}` : colEnd;
 
-    const gridRowStart = gridItemRowSpan ? `span ${gridItemRowSpan}` : rowStart;
+  const gridRowStart = gridItemRowSpan ? `span ${gridItemRowSpan}` : rowStart;
 
-    const gridRowEnd = gridItemRowSpan ? `span ${gridItemRowSpan}` : rowEnd;
+  const gridRowEnd = gridItemRowSpan ? `span ${gridItemRowSpan}` : rowEnd;
 
-    const gridStyles = {
-      "--gridItem-margin": parseSpacing(gridItemMargin),
-      "--gridItem-padding": parseSpacing(gridItemPadding),
-      ...style,
-      "--gridItem-justifySelf": horizontalAlignment,
-      "--gridItem-alignSelf": verticalAlignment,
-      "--gridItem-gridRowStart": gridRowStart,
-      "--gridItem-gridColumnStart": gridColumnStart,
-      "--gridItem-gridRowEnd": gridRowEnd,
-      "--gridItem-gridColumnEnd": gridColumnEnd,
-    };
+  const gridStyles = {
+    "--gridItem-margin": parseSpacing(gridItemMargin),
+    "--gridItem-padding": parseSpacing(gridItemPadding),
+    ...style,
+    "--gridItem-justifySelf": horizontalAlignment,
+    "--gridItem-alignSelf": verticalAlignment,
+    "--gridItem-gridRowStart": gridRowStart,
+    "--gridItem-gridColumnStart": gridColumnStart,
+    "--gridItem-gridRowEnd": gridRowEnd,
+    "--gridItem-gridColumnEnd": gridColumnEnd,
+  };
 
-    return (
-      <Component
-        className={clsx(withBaseName(), className)}
-        style={gridStyles}
-        ref={ref}
-        {...rest}
-      >
-        {children}
-      </Component>
-    );
-  },
-);
+  return (
+    <Component
+      className={clsx(withBaseName(), className)}
+      style={gridStyles}
+      ref={ref as PolymorphicRef<T>}
+      {...rest}
+    >
+      {children}
+    </Component>
+  );
+});
