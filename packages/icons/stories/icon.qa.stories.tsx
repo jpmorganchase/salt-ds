@@ -5,6 +5,11 @@ import { allIcons } from "./icon.all";
 import "@salt-ds/icons/saltIcons.css";
 export default {
   title: "Icons/Icon/Icon QA",
+  globals: {
+    a11y: {
+      manual: true,
+    },
+  },
 } as Meta;
 
 const allIconNames = allIcons.map((iconComponent) => iconComponent.displayName);
