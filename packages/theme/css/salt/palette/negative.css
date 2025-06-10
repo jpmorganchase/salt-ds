@@ -1,0 +1,20 @@
+
+.salt-theme[data-brand="salt"][data-mode="light"] {
+  --salt-palette-negative: var(--salt-color-red-500);
+  --salt-palette-negative-strong: var(--salt-color-red-600);
+  --salt-palette-negative-strong-disabled: var(--salt-color-red-600-40a);
+  --salt-palette-negative-weak: var(--salt-color-red-100);
+  --salt-palette-negative-action-hover: var(--salt-color-red-600);
+  --salt-palette-negative-action-active: var(--salt-color-red-800);
+  --salt-palette-negative-disabled: var(--salt-color-red-500-40a);
+}
+
+.salt-theme[data-brand="salt"][data-mode="dark"] {
+  --salt-palette-negative: var(--salt-color-red-500);
+  --salt-palette-negative-strong: var(--salt-color-red-400);
+  --salt-palette-negative-strong-disabled: var(--salt-color-red-400-40a);
+  --salt-palette-negative-weak: var(--salt-color-red-900);
+  --salt-palette-negative-action-hover: var(--salt-color-red-600);
+  --salt-palette-negative-action-active: var(--salt-color-red-800);
+  --salt-palette-negative-disabled: var(--salt-color-red-500-40a);
+}

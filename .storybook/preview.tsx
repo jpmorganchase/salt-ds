@@ -1,3 +1,5 @@
+
+
 import "@fontsource/open-sans/300-italic.css";
 import "@fontsource/open-sans/300.css";
 import "@fontsource/open-sans/400-italic.css";
@@ -11,12 +13,16 @@ import "@fontsource/open-sans/700.css";
 import "@fontsource/open-sans/800-italic.css";
 import "@fontsource/open-sans/800.css";
 import "@fontsource/pt-mono";
-import "@salt-ds/theme/css/theme-next.css";
+
+import "@salt-ds/theme/css/salt/index.css";
+import "@salt-ds/theme/css/uitk/index.css";
+
 import "@salt-ds/theme/index.css";
 import "./styles.css";
 
 import { SaltProvider, SaltProviderNext } from "@salt-ds/core";
 import { DocsContainer } from "@storybook/addon-docs";
+import type { ArgTypes, GlobalTypes, Parameters } from "@storybook/types";
 import { initialize, mswLoader } from "msw-storybook-addon";
 import type { ComponentProps } from "react";
 import { MINIMAL_VIEWPORTS } from "storybook/viewport";

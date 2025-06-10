@@ -1,0 +1,16 @@
+.salt-theme[data-brand="salt"] {
+  --salt-container-primary-background: var(--salt-palette-background-primary);
+  --salt-container-primary-background-disabled: var(--salt-palette-background-primary-disabled);
+  --salt-container-primary-borderColor: var(--salt-palette-alpha-contrast-low);
+  --salt-container-primary-borderColor-disabled: var(--salt-palette-alpha-contrast-lowest);
+
+  --salt-container-secondary-background: var(--salt-palette-background-secondary);
+  --salt-container-secondary-background-disabled: var(--salt-palette-background-secondary-disabled);
+  --salt-container-secondary-borderColor: var(--salt-palette-alpha-contrast-low);
+  --salt-container-secondary-borderColor-disabled: var(--salt-palette-alpha-contrast-lowest);
+
+  --salt-container-tertiary-background: var(--salt-palette-background-tertiary);
+  --salt-container-tertiary-background-disabled: var(--salt-palette-background-tertiary-disabled);
+  --salt-container-tertiary-borderColor: var(--salt-palette-alpha-contrast-low);
+  --salt-container-tertiary-borderColor-disabled: var(--salt-palette-alpha-contrast-lowest);
+}

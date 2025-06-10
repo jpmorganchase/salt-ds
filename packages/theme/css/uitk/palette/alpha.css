@@ -1,0 +1,47 @@
+.salt-theme[data-mode="light"][data-brand="uitk"] {
+  --salt-palette-alpha-highest: var(--salt-color-white-90a);
+  --salt-palette-alpha-higher: var(--salt-color-white-80a);
+  --salt-palette-alpha-high: var(--salt-color-white-70a);
+  --salt-palette-alpha-mediumHigh: var(--salt-color-white-60a);
+  --salt-palette-alpha-medium: var(--salt-color-white-50a);
+  --salt-palette-alpha-mediumLow: var(--salt-color-white-40a);
+  --salt-palette-alpha-low: var(--salt-color-white-30a);
+  --salt-palette-alpha-lower: var(--salt-color-white-20a);
+  --salt-palette-alpha-lowest: var(--salt-color-white-10a);
+
+  --salt-palette-alpha-contrast-highest: var(--salt-color-black-90a);
+  --salt-palette-alpha-contrast-higher: var(--salt-color-black-80a);
+  --salt-palette-alpha-contrast-high: var(--salt-color-black-70a);
+  --salt-palette-alpha-contrast-mediumHigh: var(--salt-color-black-60a);
+  --salt-palette-alpha-contrast-medium: var(--salt-color-black-50a);
+  --salt-palette-alpha-contrast-mediumLow: var(--salt-color-black-40a);
+  --salt-palette-alpha-contrast-low: var(--salt-color-black-30a);
+  --salt-palette-alpha-contrast-lower: var(--salt-color-black-20a);
+  --salt-palette-alpha-contrast-lowest: var(--salt-color-black-10a);
+
+  --salt-palette-alpha-none: transparent;
+}
+
+.salt-theme[data-mode="dark"][data-brand="uitk"] {
+  --salt-palette-alpha-highest: var(--salt-color-black-90a);
+  --salt-palette-alpha-higher: var(--salt-color-black-80a);
+  --salt-palette-alpha-high: var(--salt-color-black-70a);
+  --salt-palette-alpha-mediumHigh: var(--salt-color-black-60a);
+  --salt-palette-alpha-medium: var(--salt-color-black-50a);
+  --salt-palette-alpha-mediumLow: var(--salt-color-black-40a);
+  --salt-palette-alpha-low: var(--salt-color-black-30a);
+  --salt-palette-alpha-lower: var(--salt-color-black-20a);
+  --salt-palette-alpha-lowest: var(--salt-color-black-10a);
+
+  --salt-palette-alpha-contrast-highest: var(--salt-color-white-90a);
+  --salt-palette-alpha-contrast-higher: var(--salt-color-white-80a);
+  --salt-palette-alpha-contrast-high: var(--salt-color-white-70a);
+  --salt-palette-alpha-contrast-mediumHigh: var(--salt-color-white-60a);
+  --salt-palette-alpha-contrast-medium: var(--salt-color-white-50a);
+  --salt-palette-alpha-contrast-mediumLow: var(--salt-color-white-40a);
+  --salt-palette-alpha-contrast-low: var(--salt-color-white-30a);
+  --salt-palette-alpha-contrast-lower: var(--salt-color-white-20a);
+  --salt-palette-alpha-contrast-lowest: var(--salt-color-white-10a);
+
+  --salt-palette-alpha-none: transparent;
+}

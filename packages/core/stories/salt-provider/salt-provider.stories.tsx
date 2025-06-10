@@ -55,7 +55,7 @@ export const ToggleBrandAndMode = () => {
               <ToggleButton aria-label="uitk brand" value="uitk">
                 uitk
               </ToggleButton>
-              <ToggleButton aria-label="jpm brand" value="jpm">
+              <ToggleButton aria-label="jpm brand" value="salt">
                 jpm
               </ToggleButton>
             </ToggleButtonGroup>
@@ -95,7 +95,7 @@ export const ToggleBrandAndMode = () => {
 
 export const NestedBrands = () => {
   const [brand, setBrand] = useState<BrandName>("uitk");
-  const [nestedBrand, setNestedBrand] = useState<BrandName | "unset">("jpm");
+  const [nestedBrand, setNestedBrand] = useState<BrandName | "unset">("salt");
   const [mode, setMode] = useState<Mode>("light");
   const [nestedMode, setNestedMode] = useState<Mode | "unset">("light");
 
@@ -125,7 +125,7 @@ export const NestedBrands = () => {
               <ToggleButton aria-label="uitk brand" value="uitk">
                 uitk
               </ToggleButton>
-              <ToggleButton aria-label="jpm brand" value="jpm">
+              <ToggleButton aria-label="jpm brand" value="salt">
                 jpm
               </ToggleButton>
             </ToggleButtonGroup>
@@ -166,7 +166,7 @@ export const NestedBrands = () => {
                   <ToggleButton aria-label="uitk brand" value="uitk">
                     uitk
                   </ToggleButton>
-                  <ToggleButton aria-label="jpm brand" value="jpm">
+                  <ToggleButton aria-label="jpm brand" value="salt">
                     jpm
                   </ToggleButton>
                   <ToggleButton aria-label="unset brand (inherited)" value="unset">

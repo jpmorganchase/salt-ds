@@ -199,7 +199,7 @@ interface SaltProviderBaseProps {
    */
   theme?: ThemeName;
   /**
-   * Either "legacy" or "jpm".
+   * Either "legacy" or "salt".
    * Specifies branding to be used for the theme.
    */
   brand?: BrandName;
@@ -473,7 +473,7 @@ export function SaltProviderNext({
     </StyleInjectionProvider>
   );
 }
-/** @deprecated use `SaltProvider` with `brand="jpm"` prop */
+/** @deprecated use `SaltProvider` with `brand="salt"` prop */
 export const UNSTABLE_SaltProviderNext = SaltProviderNext;
 
 export const useTheme = (): ThemeContextProps => {

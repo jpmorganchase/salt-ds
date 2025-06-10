@@ -1,0 +1,5 @@
+
+.salt-theme[data-brand="salt"] {
+  --salt-navigable-indicator-hover: var(--salt-palette-neutral);
+  --salt-navigable-indicator-active: var(--salt-palette-accent);
+}
