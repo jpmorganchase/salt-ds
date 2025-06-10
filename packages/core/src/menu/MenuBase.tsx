@@ -99,7 +99,7 @@ export function MenuBase(props: MenuBaseProps) {
       placement ??
       (isNested || getVirtualElement ? "right-start" : "bottom-start"),
     middleware: [
-      // Align the nested menu by shifting it by var(--salt-size-border)
+      // Align the nested menu by shifting it by var(--salt-spacing-fixed-100)
       offset(
         isNested ? { crossAxis: -1, mainAxis: 2 } : !getVirtualElement ? 1 : 0,
       ),

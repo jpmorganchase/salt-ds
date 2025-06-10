@@ -5,7 +5,7 @@
   /* Border */
   --list-borderColor: var(--salt-container-primary-borderColor);
   --list-borderStyle: var(--salt-container-borderStyle);
-  --list-borderWidth: var(--salt-size-border);
+  --list-borderWidth: var(--salt-size-fixed-100);
   --list-borderRadius: 0;
 
   /* Text, Font */

@@ -4,7 +4,7 @@
 
 .saltTabOverflow-list {
   background: var(--salt-container-primary-background);
-  border: var(--salt-size-border) var(--salt-selectable-borderStyle-selected) var(--salt-selectable-borderColor-selected);
+  border: var(--salt-size-fixed-100) var(--salt-selectable-borderStyle-selected) var(--salt-selectable-borderColor-selected);
   overflow: hidden;
   overflow-y: auto;
   position: absolute;
@@ -17,7 +17,7 @@
 .saltTabOverflow-listContainer {
   display: flex;
   flex-direction: column;
-  gap: var(--salt-size-border);
+  gap: var(--salt-spacing-fixed-100);
   max-height: inherit;
   min-height: inherit;
 }
@@ -63,7 +63,7 @@
 
 .saltTabOverflow-list .saltTabNext-focusVisible {
   outline: var(--salt-focused-outline);
-  outline-offset: calc(var(--salt-size-border) * -2);
+  outline-offset: calc(var(--salt-size-fixed-100) * -2);
 }
 
 .saltTabOverflow-list .saltTabNext:hover {
@@ -72,5 +72,5 @@
 
 .saltTabOverflow-list .saltTabNext:active {
   background: var(--salt-selectable-background-selected);
-  box-shadow: 0 calc(var(--salt-size-border) * -1) 0 0 var(--salt-selectable-borderColor-selected), 0 var(--salt-size-border) 0 0 var(--salt-selectable-borderColor-selected);
+  box-shadow: 0 calc(var(--salt-size-fixed-100) * -1) 0 0 var(--salt-selectable-borderColor-selected), 0 var(--salt-size-fixed-100) 0 0 var(--salt-selectable-borderColor-selected);
 }

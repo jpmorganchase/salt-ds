@@ -4,6 +4,6 @@
 
   border-color: var(--salt-container-primary-borderColor);
   border-style: var(--salt-container-borderStyle);
-  border-width: var(--salt-size-border);
+  border-width: var(--salt-size-fixed-100);
   border-radius: var(--salt-size-unit);
 }

@@ -3,7 +3,7 @@ div[class*="ag-theme-salt"] {
   --ag-header-height: calc(var(--salt-size-base) + var(--salt-spacing-100));
   --ag-background-color: var(--salt-container-primary-background);
   --ag-border-color: var(--salt-separable-secondary-borderColor);
-  --ag-borders-secondary: var(--salt-size-border) var(--salt-separable-borderStyle);
+  --ag-borders-secondary: var(--salt-size-fixed-100) var(--salt-separable-borderStyle);
   --ag-card-radius: var(--salt-palette-corner);
   --ag-cell-horizontal-padding: var(--salt-spacing-100);
   --ag-checkbox-border-radius: 0;
@@ -22,8 +22,8 @@ div[class*="ag-theme-salt"] {
   --ag-header-cell-hover-background-color: var(--ag-header-background-color);
   --ag-header-column-separator-color: var(--salt-separable-tertiary-borderColor);
   --ag-header-column-separator-display: block;
-  --ag-header-column-separator-height: calc(var(--salt-size-base) / 2 - 2 * var(--salt-size-border));
-  --ag-header-column-separator-width: var(--salt-size-border);
+  --ag-header-column-separator-height: calc(var(--salt-size-base) / 2 - 2 * var(--salt-size-fixed-100));
+  --ag-header-column-separator-width: var(--salt-size-fixed-100);
   --ag-header-foreground-color: var(--salt-content-secondary-foreground);
   --ag-header-height: calc(var(--salt-size-base) + var(--salt-spacing-100));
   /* Replicating min size 12px from Icon.css */
@@ -58,14 +58,14 @@ div[class*="ag-theme-salt"] {
   --ag-value-change-delta-down-color: var(--salt-status-negative-foreground);
   --ag-value-change-delta-up-color: var(--salt-status-positive-foreground);
   --ag-widget-container-horizontal-padding: var(--salt-spacing-100);
-  /* 
+  /*
       Use categorical color for below tokens when available
       --ag-advanced-filter-join-pill-color,--ag-advanced-filter-column-pill-color,--ag-advanced-filter-option-pill-color,--ag-advanced-filter-value-pill-color
      */
 }
 
 div[class*="ag-theme-salt-compact"] {
-  /* 
+  /*
     Ensures icon / country symbol renders correct height.
     This also means we don't need to touch `--ag-row-height`, which would impact some internal ag grid height calculation like `--ag-internal-padded-row-height` vs `--ag-internal-calculated-line-height`
   */
