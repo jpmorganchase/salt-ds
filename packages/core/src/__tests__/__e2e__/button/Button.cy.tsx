@@ -80,4 +80,38 @@ describe("Given a Button", () => {
     cy.mount(<Default variant="invalid" />);
     cy.findByRole("button").should("have.class", "saltButton");
   });
+
+  it("should not submit form when type is submit and button is loading", () => {
+    const submitSpy = cy.stub().as("submitSpy");
+    cy.mount(
+      <form onSubmit={submitSpy}>
+        <LoadingSingle />
+      </form>,
+    );
+
+    cy.findByRole("button").realClick();
+    cy.get("@submitSpy").should("not.be.called");
+
+    cy.findByRole("button").should("be.focused");
+
+    cy.realPress("Enter");
+    cy.get("@submitSpy").should("not.be.called");
+  });
+
+  it("should not submit form when type is submit and button is focusableWhenDisabled", () => {
+    const submitSpy = cy.stub().as("submitSpy");
+    cy.mount(
+      <form onSubmit={submitSpy}>
+        <FocusableWhenDisabled />
+      </form>,
+    );
+
+    cy.findByRole("button").realClick();
+    cy.get("@submitSpy").should("not.be.called");
+
+    cy.findByRole("button").should("be.focused");
+
+    cy.realPress("Enter");
+    cy.get("@submitSpy").should("not.be.called");
+  });
 });

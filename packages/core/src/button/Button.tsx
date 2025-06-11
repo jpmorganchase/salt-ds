@@ -111,7 +111,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       loadingAnnouncement,
       appearance: appearanceProp,
       sentiment: sentimentProp,
-      type = "button",
+      type: typeProp = "button",
       variant = "primary",
       ...restProps
     },
@@ -144,6 +144,10 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     // we do not want to spread tab index in this case because the button element
     // does not require tabindex="0" attribute
     const { tabIndex, ...restButtonProps } = buttonProps;
+
+    /* When the button is in a loading state, we want to prevent form submission. */
+    const type = typeProp === "submit" && loading ? "button" : typeProp;
+
     return (
       <button
         {...restButtonProps}
