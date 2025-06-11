@@ -1,0 +1,33 @@
+.salt-theme[data-mode="light"][data-brand="uitk"] {
+  --salt-palette-warning-background: var(--salt-color-orange-10);
+  --salt-palette-warning-bold-background: var(--salt-color-orange-800);
+  --salt-palette-warning-background-selected: var(--salt-color-orange-20);
+  --salt-palette-warning-border: var(--salt-color-orange-700);
+  --salt-palette-warning-border-disabled: var(--salt-color-orange-700-40a);
+  --salt-palette-warning-foreground-decorative: var(--salt-color-orange-700);
+  --salt-palette-warning-foreground-informative: var(--salt-color-orange-850);
+  --salt-palette-warning-foreground-informative-disabled: var(--salt-color-orange-850-40a);
+  --salt-palette-warning-action: var(--salt-color-orange-600);
+  --salt-palette-warning-action-hover: var(--salt-color-orange-500);
+  --salt-palette-warning-action-active: var(--salt-color-orange-800);
+  --salt-palette-warning-action-disabled: var(--salt-color-orange-600-40a);
+  --salt-palette-warning-action-foreground: var(--salt-color-gray-900);
+  --salt-palette-warning-action-foreground-disabled: var(--salt-color-gray-900-40a);
+}
+
+.salt-theme[data-mode="dark"][data-brand="uitk"] {
+  --salt-palette-warning-background: var(--salt-color-orange-900);
+  --salt-palette-warning-bold-background: var(--salt-color-orange-800);
+  --salt-palette-warning-background-selected: var(--salt-color-orange-900);
+  --salt-palette-warning-border: var(--salt-color-orange-500);
+  --salt-palette-warning-border-disabled: var(--salt-color-orange-500-40a);
+  --salt-palette-warning-foreground-decorative: var(--salt-color-orange-500);
+  --salt-palette-warning-foreground-informative: var(--salt-color-orange-400);
+  --salt-palette-warning-foreground-informative-disabled: var(--salt-color-orange-400-40a);
+  --salt-palette-warning-action: var(--salt-color-orange-600);
+  --salt-palette-warning-action-hover: var(--salt-color-orange-500);
+  --salt-palette-warning-action-active: var(--salt-color-orange-800);
+  --salt-palette-warning-action-disabled: var(--salt-color-orange-600-40a);
+  --salt-palette-warning-action-foreground: var(--salt-color-gray-900);
+  --salt-palette-warning-action-foreground-disabled: var(--salt-color-gray-900-40a);
+}

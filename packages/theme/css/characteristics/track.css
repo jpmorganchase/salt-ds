@@ -1,9 +1,0 @@
-.salt-theme {
-  --salt-track-borderStyle: solid;
-  --salt-track-borderStyle-active: solid;
-  --salt-track-borderStyle-complete: solid;
-  --salt-track-borderStyle-incomplete: dotted;
-
-  --salt-track-borderColor: var(--salt-palette-neutral-border);
-  --salt-track-borderColor-disabled: var(--salt-palette-neutral-border-disabled);
-}

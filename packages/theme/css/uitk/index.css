@@ -1,0 +1,46 @@
+@import url(foundations/alpha.css);
+@import url(foundations/animation.css);
+@import url(foundations/color.css);
+@import url(foundations/curve.css);
+@import url(foundations/duration.css);
+@import url(foundations/shadow.css);
+@import url(foundations/size.css);
+@import url(foundations/spacing.css);
+@import url(foundations/typography.css);
+@import url(foundations/zindex.css);
+
+@import url(palette/accent.css);
+@import url(palette/alpha.css);
+@import url(palette/categorical.css);
+@import url(palette/corner.css);
+@import url(palette/error.css);
+@import url(palette/info.css);
+@import url(palette/interact.css);
+@import url(palette/navigate.css);
+@import url(palette/negative.css);
+@import url(palette/neutral.css);
+@import url(palette/positive.css);
+@import url(palette/success.css);
+@import url(palette/text.css);
+@import url(palette/warning.css);
+
+@import url(characteristics/accent.css);
+@import url(characteristics/actionable.css);
+@import url(characteristics/category.css);
+@import url(characteristics/container.css);
+@import url(characteristics/content.css);
+@import url(characteristics/draggable.css);
+@import url(characteristics/editable.css);
+@import url(characteristics/focused.css);
+@import url(characteristics/navigable.css);
+@import url(characteristics/overlayable.css);
+@import url(characteristics/selectable.css);
+@import url(characteristics/separable.css);
+@import url(characteristics/status.css);
+@import url(characteristics/target.css);
+@import url(characteristics/text.css);
+@import url(characteristics/track.css);
+
+/* Deprecated */
+@import url(../deprecated/foundations.css);
+@import url(../deprecated/palette.css);
