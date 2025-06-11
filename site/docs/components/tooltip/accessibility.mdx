@@ -8,6 +8,11 @@ data:
   $ref: ./#/data
 ---
 
+## What is a tooltip
+A "tooltip" is a non-modal (or non-blocking) overlay containing text-only content that provides supplemental information about an existing UI control. It is hidden by default, and becomes available on hover or focus of the control it describes.
+A tooltip provides extra information about a form field, a link, a button, or other focusable element. It must be triggered by both focus and hover events and remains on the screen as long as the trigger has the focus. The focus does not move to the tooltip.
+
+
 ## Best practices
 
-The tooltip doesn't receive focus, so we recommend that you don't include interactive elements as the user can't access them.
+Since a tooltip doesn't receive focus, don't include interactive elements as the user can't access them.
