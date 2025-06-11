@@ -1,4 +1,4 @@
-.salt-theme {
+.salt-theme[data-brand="salt"] {
   --salt-typography-fontFamily-openSans: "Open Sans";
   --salt-typography-fontFamily-amplitude: "Amplitude";
   --salt-typography-fontFamily-ptMono: "PT Mono";

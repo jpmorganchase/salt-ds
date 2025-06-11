@@ -2,7 +2,7 @@
 TODO: discuss whether this should be an actual file, or should inline these values.
 con: If we offer these values, then it could misleading that we're offering all these values
  */
-.salt-theme.salt-theme-next {
+.salt-theme[data-brand="salt"] {
   --salt-color-blue-200-40a: rgba(var(--salt-color-blue-200-rgb), 0.4);
   --salt-color-blue-300-40a: rgba(var(--salt-color-blue-300-rgb), 0.4);
   --salt-color-blue-400-40a: rgba(var(--salt-color-blue-400-rgb), 0.4);
