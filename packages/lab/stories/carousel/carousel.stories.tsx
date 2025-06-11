@@ -53,7 +53,7 @@ const CarouselNumberExample: StoryFn<typeof Carousel> = (args) => {
       <CarouselSlides>
         {slides.map((index) => (
           <div
-            role="slide"
+            aria-label={`Example slide ${index + 1}`}
             aria-roledescription="slide"
             className="carouselSlide"
             key={index}
@@ -110,7 +110,7 @@ export const AutoPlay: StoryFn<typeof Carousel> = (args) => {
         <H2 className="carouselHeading">Title</H2>
         {isPlaying ? (
           <Button
-            aria-label="pause autoplay"
+            aria-label="Stop slide rotation"
             appearance="bordered"
             sentiment="neutral"
             onClick={() => {
@@ -124,7 +124,7 @@ export const AutoPlay: StoryFn<typeof Carousel> = (args) => {
           </Button>
         ) : (
           <Button
-            aria-label="resume autoplay"
+            aria-label="Start slide rotation"
             appearance="bordered"
             sentiment="neutral"
             onClick={() => {
@@ -152,8 +152,8 @@ export const AutoPlay: StoryFn<typeof Carousel> = (args) => {
       >
         {slides.map((index) => (
           <div
-            role="slide"
             aria-roledescription="slide"
+            aria-label={`Example slide ${index + 1}`}
             className="carouselSlide"
             key={index}
           >

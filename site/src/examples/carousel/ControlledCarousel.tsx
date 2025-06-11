@@ -30,7 +30,7 @@ export const ControlledCarousel = (): ReactElement => {
 
   return (
     <Carousel
-      aria-label="Account overview bordered"
+      aria-label="Account overview"
       className={styles.carousel}
       setApi={setEmblaApi}
     >
@@ -41,7 +41,7 @@ export const ControlledCarousel = (): ReactElement => {
       <CarouselSlides>
         {slides.map((index) => (
           <div
-            role="slide"
+            aria-label={`Example slide ${index + 1}`}
             aria-roledescription="slide"
             className={styles.carouselSlide}
             key={index}

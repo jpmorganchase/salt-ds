@@ -6,7 +6,7 @@ import { type HTMLAttributes, forwardRef } from "react";
 import { useCarouselContext } from "./CarouselContext";
 import { DotButton, useDotButton } from "./CarouselDotButton";
 import carouselControlsCss from "./CarouselPagination.css";
-import { getSlideDescription } from "./getDescription";
+import { getSlideLabel } from "./getDescription";
 
 const withBaseName = makePrefixer("saltCarouselPagination");
 
@@ -44,7 +44,7 @@ export const CarouselPagination = forwardRef<
             key={index}
             onClick={() => onDotButtonClick(index)}
             selected={index === selectedIndex}
-            aria-label={`Move to ${getSlideDescription(slideNode, index, scrollSnaps.length)}`}
+            aria-label={`Move to ${getSlideLabel(slideNode, index, scrollSnaps.length)}`}
           />
         );
       })}
