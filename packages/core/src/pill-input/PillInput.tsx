@@ -238,9 +238,11 @@ export const PillInput = forwardRef(function PillInput(
   };
 
   const handlePillClick = (event: MouseEvent<HTMLButtonElement>) => {
-    const target = event.currentTarget;
-    const index = Number(target.dataset.index);
-    onPillRemove?.(event, index);
+    if (!hidePillClose) {
+      const target = event.currentTarget;
+      const index = Number(target.dataset.index);
+      onPillRemove?.(event, index);
+    }
     inputRef.current?.focus();
   };
 
