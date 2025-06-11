@@ -1,4 +1,4 @@
-.salt-theme.salt-theme-next {
+.salt-theme[data-brand="salt"] {
   --salt-color-white-rgb: 255, 255, 255;
   --salt-color-gray-100-rgb: 245, 247, 248;
   --salt-color-gray-200-rgb: 211, 213, 216;
