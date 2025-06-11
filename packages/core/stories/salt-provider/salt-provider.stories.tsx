@@ -103,7 +103,9 @@ export const NestedBrands = () => {
     setBrand(event.currentTarget.value as BrandName);
   };
 
-  const handleChangeNestedBrand = (event: SyntheticEvent<HTMLButtonElement>) => {
+  const handleChangeNestedBrand = (
+    event: SyntheticEvent<HTMLButtonElement>,
+  ) => {
     setNestedBrand(event.currentTarget.value as BrandName);
   };
 
@@ -111,7 +113,9 @@ export const NestedBrands = () => {
     setMode(event.currentTarget.value as Mode);
   };
 
-  const handleChangeNestedTheme = (event: SyntheticEvent<HTMLButtonElement>) => {
+  const handleChangeNestedTheme = (
+    event: SyntheticEvent<HTMLButtonElement>,
+  ) => {
     setNestedMode(event.currentTarget.value as Mode);
   };
 
@@ -157,30 +161,45 @@ export const NestedBrands = () => {
           </div>
         </div>
         <br />
-        <SaltProvider brand={nestedBrand === 'unset' ? undefined : nestedBrand} mode={nestedMode=== 'unset' ? undefined : nestedMode}>
+        <SaltProvider
+          brand={nestedBrand === "unset" ? undefined : nestedBrand}
+          mode={nestedMode === "unset" ? undefined : nestedMode}
+        >
           <Card>
             <div>
               <H1>Nested Card wrapped with a SaltProvider</H1>
               <FlexLayout>
-                <ToggleButtonGroup onChange={handleChangeNestedBrand} value={nestedBrand}>
+                <ToggleButtonGroup
+                  onChange={handleChangeNestedBrand}
+                  value={nestedBrand}
+                >
                   <ToggleButton aria-label="uitk brand" value="uitk">
                     uitk
                   </ToggleButton>
                   <ToggleButton aria-label="jpm brand" value="salt">
                     jpm
                   </ToggleButton>
-                  <ToggleButton aria-label="unset brand (inherited)" value="unset">
+                  <ToggleButton
+                    aria-label="unset brand (inherited)"
+                    value="unset"
+                  >
                     unset
                   </ToggleButton>
                 </ToggleButtonGroup>
-                <ToggleButtonGroup onChange={handleChangeNestedTheme} value={nestedMode}>
+                <ToggleButtonGroup
+                  onChange={handleChangeNestedTheme}
+                  value={nestedMode}
+                >
                   <ToggleButton aria-label="light theme" value="light">
                     Light
                   </ToggleButton>
                   <ToggleButton aria-label="dark theme" value="dark">
                     Dark
                   </ToggleButton>
-                  <ToggleButton aria-label="unset theme (inherited)" value="unset">
+                  <ToggleButton
+                    aria-label="unset theme (inherited)"
+                    value="unset"
+                  >
                     Unset
                   </ToggleButton>
                 </ToggleButtonGroup>
