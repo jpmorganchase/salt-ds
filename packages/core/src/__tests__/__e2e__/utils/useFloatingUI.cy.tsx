@@ -4,7 +4,7 @@ import {
   useFloatingComponent,
   useFloatingUI,
 } from "@salt-ds/core";
-import { mount } from "cypress/react18";
+import { mount } from "cypress/react";
 import { useEffect } from "react";
 
 const TestComponent = ({

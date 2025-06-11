@@ -1,7 +1,6 @@
 import type { ReactNode } from "react";
 import "@testing-library/cypress/add-commands";
-import type { MountOptions, MountReturn } from "cypress/react";
-import { mount as cypressMount } from "cypress/react18";
+import { type MountOptions, type MountReturn, mount as cypressMount } from "cypress/react";
 import "cypress-axe";
 import { SaltProvider } from "@salt-ds/core";
 import type {

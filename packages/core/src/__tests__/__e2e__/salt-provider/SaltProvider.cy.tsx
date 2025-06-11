@@ -7,7 +7,7 @@ import {
   useTheme,
 } from "@salt-ds/core";
 import { WindowProvider } from "@salt-ds/window";
-import { mount } from "cypress/react18";
+import { mount } from "cypress/react";
 import { type ReactNode, useCallback, useState } from "react";
 import { createPortal } from "react-dom";
 

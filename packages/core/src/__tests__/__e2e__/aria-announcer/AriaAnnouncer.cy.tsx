@@ -3,7 +3,7 @@ import {
   AriaAnnouncerProvider,
   useAriaAnnouncer,
 } from "@salt-ds/core";
-import { mount } from "cypress/react18";
+import { mount } from "cypress/react";
 
 const BUTTON_TEXT = "CLICK ME";
 const BUTTON_TEXT_WAIT = "CLICK ME AND WAIT";
