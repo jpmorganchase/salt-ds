@@ -5,7 +5,7 @@ import type {
   EmblaCarouselType,
 } from "embla-carousel";
 import { useCallback } from "react";
-import { getSlideDescription } from "./getDescription";
+import { getSlideLabel } from "./getDescription";
 
 declare module "embla-carousel" {
   interface EmblaPluginsType {
@@ -31,12 +31,12 @@ export function CarouselAnnouncement(
     const slideIndexInView = emblaApi?.slidesInView()?.[0] ?? 0;
     const slideElement = emblaApi?.slideNodes()[slideIndexInView];
 
-    const slideDescription = getSlideDescription(
+    const slideLabel = getSlideLabel(
       slideElement,
       slideIndexInView,
       slideCount,
     );
-    announce(slideDescription);
+    announce(slideLabel);
   }, []);
 
   function init(emblaApiInstance: EmblaCarouselType): void {

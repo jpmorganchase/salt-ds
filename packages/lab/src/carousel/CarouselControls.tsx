@@ -18,7 +18,7 @@ import {
 } from "./CarouselArrowButton";
 import { useCarouselContext } from "./CarouselContext";
 import carouselControlsCss from "./CarouselControls.css";
-import { getSlideDescription } from "./getDescription";
+import { getSlideLabel } from "./getDescription";
 
 const withBaseName = makePrefixer("saltCarouselControls");
 
@@ -64,28 +64,33 @@ export const CarouselControls = forwardRef<
 
   const handleSettle = useCallback((emblaApi: EmblaCarouselType) => {
     const newSlideCount = emblaApi?.slideNodes().length || 0;
-    const newVisibleSlideCount = emblaApi?.slidesInView()?.length ?? 0;
     const slideIndexInView = emblaApi?.slidesInView()?.[0] ?? 0;
 
     setSlideCount(newSlideCount);
     setSlideIndexInView(slideIndexInView);
     const slideElement = emblaApi?.slideNodes()[slideIndexInView];
+    const prevSlideElement =
+      slideIndexInView > 0
+        ? emblaApi?.slideNodes()[slideIndexInView - 1]
+        : undefined;
+    const nextSlideElement =
+      slideIndexInView + 1 <= newSlideCount
+        ? emblaApi?.slideNodes()[slideIndexInView + 1]
+        : undefined;
+
     setCurrentSlideDescription(
-      getSlideDescription(slideElement, slideIndexInView, newSlideCount),
+      getSlideLabel(slideElement, slideIndexInView, newSlideCount),
     );
     setPrevSlideDescription(
-      slideIndexInView - 1 >= 0
-        ? getSlideDescription(slideElement, slideIndexInView - 1, newSlideCount)
-        : undefined,
+      prevSlideElement
+        ? getSlideLabel(prevSlideElement, slideIndexInView - 1, newSlideCount)
+        : "No previous slide",
     );
+
     setNextSlideDescription(
-      slideIndexInView + 1 <= newSlideCount
-        ? getSlideDescription(
-            slideElement,
-            Math.min(slideIndexInView + 1, newSlideCount),
-            newSlideCount,
-          )
-        : undefined,
+      nextSlideElement
+        ? getSlideLabel(nextSlideElement, slideIndexInView + 1, newSlideCount)
+        : "End of slides",
     );
   }, []);
 
