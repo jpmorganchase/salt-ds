@@ -46,7 +46,7 @@ export const renderSlides = ({
   return content.map((slide, index) => (
     <CarouselCard
       key={slide.title}
-      bordered
+      appearance="bordered"
       header={<H3 id={`slide-title-${slide.headerId}`}>{slide.title}</H3>}
       aria-labelledby={`slide-title-${slide.headerId}`}
       media={
