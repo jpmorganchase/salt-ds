@@ -6,6 +6,11 @@
     {
       "groupName": "Mosaic",
       "matchPackageNames": ["@jpmorganchase/mosaic**"]
+    },
+    {
+      "groupName": "Chromatic",
+      "matchManagers": ["npm", "github-actions"],
+      "matchPackageNames": ["chromatic", "chromaui/action"]
     }
   ]
 }
