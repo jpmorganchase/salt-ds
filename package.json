@@ -58,7 +58,7 @@
     "@testing-library/cypress": "^10.0.0",
     "@testing-library/dom": "^10.0.0",
     "@types/no-scroll": "^2.1.0",
-    "@types/node": "^20.0.0",
+    "@types/node": "^22.0.0",
     "@types/react": "^18.3.22",
     "@types/react-color": "^3.0.6",
     "@types/react-dom": "^18.3.7",
