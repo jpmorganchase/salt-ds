@@ -22,7 +22,7 @@ export const CardActions = (): ReactElement => {
           return (
             <CarouselCard
               key={slideId}
-              bordered
+              appearance={"bordered"}
               aria-labelledby={`slide-title-${slideId}`}
               media={
                 <img

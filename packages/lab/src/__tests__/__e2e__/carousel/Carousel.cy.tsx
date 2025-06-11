@@ -1,107 +1,254 @@
 import * as carouselStories from "@stories/carousel/carousel.stories";
 import { composeStories } from "@storybook/react-vite";
-import { version as reactVersion } from 'react-dom';
+import ClassNames from "embla-carousel-class-names";
+import type { CarouselApi } from "../../../carousel";
 
 const composedStories = composeStories(carouselStories);
 const { Default } = composedStories;
 
-describe("GIVEN a carousel", () => {
-  describe("WHEN the default is rendered with slides", () => {
-    it("SHOULD render carousel", () => {
-      cy.mount(<Default />);
+describe("Given a Carousel", () => {
+  it("should render the carousel with four slides", () => {
+    cy.mount(<Default />);
+    cy.findByRole("region").should("exist");
+    cy.get('[aria-label="carousel example"]').should("exist");
+    cy.get('[aria-roledescription="slide"]').should("have.length", 4);
+  });
+
+  describe("WITH the current slide as slide 1", () => {
+    let emblaApi: CarouselApi;
+
+    beforeEach(() => {
+      cy.mount(
+        <Default
+          emblaOptions={{ duration: 1 }}
+          emblaPlugins={[ClassNames()]}
+          setApi={(api) => {
+            emblaApi = api;
+          }}
+        />,
+      );
       cy.findByRole("region").should("exist");
+      // Wait for emblaApi to be set
+      cy.wrap(
+        new Cypress.Promise((resolve) => {
+          const checkEmblaApi = () => {
+            if (emblaApi) {
+              resolve();
+            } else {
+              setTimeout(checkEmblaApi, 50);
+            }
+          };
+          checkEmblaApi();
+        }),
+      );
+    });
+
+    it("should navigate forwards to each slide", () => {
+      // should start from slide 1
+      cy.get(".carouselSlide.is-snapped .carouselNumber h1").should(
+        "have.text",
+        "1",
+      );
+
+      const waitForSettle = (expectedSlideIndex: number) => {
+        return new Cypress.Promise((resolve) => {
+          const handleSettle = () => {
+            const currentSlideIndex = emblaApi?.selectedScrollSnap();
+            if (currentSlideIndex === expectedSlideIndex) {
+              resolve();
+              emblaApi?.off("settle", handleSettle);
+            }
+          };
+          emblaApi?.on("settle", handleSettle);
+        });
+      };
+
+      // should navigate forwards to slide 2
+      cy.findByTestId("ChevronRightIcon").parent().click();
+      cy.wrap(waitForSettle(1)).then(() => {
+        cy.get(".carouselSlide.is-snapped .carouselNumber h1").should(
+          "have.text",
+          "2",
+        );
+      });
+
+      // should navigate forwards to slide 3
+      cy.findByTestId("ChevronRightIcon").parent().click();
+      cy.wrap(waitForSettle(2)).then(() => {
+        cy.get(".carouselSlide.is-snapped .carouselNumber h1").should(
+          "have.text",
+          "3",
+        );
+      });
+
+      // should navigate forwards to slide 4
+      cy.findByTestId("ChevronRightIcon").parent().click();
+      cy.wrap(waitForSettle(3)).then(() => {
+        cy.get(".carouselSlide.is-snapped .carouselNumber h1").should(
+          "have.text",
+          "4",
+        );
+      });
+
+      // should disable the next page navigation
+      cy.findByTestId("ChevronRightIcon")
+        .parent()
+        .should("have.attr", "aria-disabled", "true");
     });
   });
 
-  describe("WHEN moving slides with buttons", () => {
-    it("SHOULD move to the next slide with button", () => {
-      cy.mount(<Default />);
-      cy.findAllByText("1 of 4").should("exist");
-      cy.findAllByText("2 of 4").should("not.exist");
-      cy.findAllByRole("button", { name: "Previous slide" }).should(
-        "have.attr",
-        "aria-disabled",
-        "true",
+  describe("WITH the current slide as slide 4", () => {
+    let emblaApi: CarouselApi;
+
+    beforeEach(() => {
+      cy.mount(
+        <Default
+          emblaOptions={{ duration: 20, startIndex: 3 }}
+          emblaPlugins={[ClassNames()]}
+          setApi={(api) => {
+            emblaApi = api;
+          }}
+        />,
       );
-      cy.findAllByRole("button", { name: "Next slide" }).click();
-      cy.findAllByText("2 of 4").should("exist");
-      cy.findAllByText("1 of 4").should("not.exist");
-    });
-
-    it("SHOULD move to the previous slide with button", () => {
-      cy.mount(<Default />);
-      cy.findAllByText("1 of 4").should("exist");
-      cy.findAllByText("2 of 4").should("not.exist");
-      // move one to the left
-      cy.findAllByRole("button", { name: "Next slide" }).click();
-      cy.findAllByText("2 of 4").should("exist");
-      cy.findAllByText("1 of 4").should("not.exist");
-      // test back button
-      cy.findAllByRole("button", { name: "Previous slide" }).click();
-      cy.findAllByText("1 of 4").should("exist");
-      cy.findAllByText("2 of 4").should("not.exist");
-    });
-
-    it("SHOULD disable previous button when reaching far left", () => {
-      cy.mount(<Default />);
-      cy.findAllByText("2 of 4").should("exist");
-      cy.findAllByRole("button", { name: "Previous slide" }).click();
-      cy.findAllByText("1 of 4").should("exist");
-      cy.findAllByRole("button", { name: "Previous slide" }).should(
-        "have.attr",
-        "aria-disabled",
-        "true",
+      cy.findByRole("region").should("exist");
+      // Wait for emblaApi to be set
+      cy.wrap(
+        new Cypress.Promise((resolve) => {
+          const checkEmblaApi = () => {
+            if (emblaApi) {
+              resolve();
+            } else {
+              setTimeout(checkEmblaApi, 50);
+            }
+          };
+          checkEmblaApi();
+        }),
       );
     });
 
-    it("SHOULD disable next button when reaching far right", () => {
-      cy.mount(<Default />);
-      cy.findAllByText("1 of 4").should("exist");
-      cy.findAllByRole("button", { name: "Next slide" }).click();
-      cy.findAllByText("2 of 4").should("exist");
-      cy.findAllByRole("button", { name: "Next slide" }).click();
-      cy.findAllByText("3 of 4").should("exist");
-      cy.findAllByRole("button", { name: "Next slide" }).click();
-      cy.findAllByText("4 of 4").should("exist");
-      cy.findAllByRole("button", { name: "Next slide" }).should(
-        "have.attr",
-        "aria-disabled",
-        "true",
+    it("should navigate backwards to each slide", () => {
+      // should start from slide 4
+      cy.get(".carouselSlide.is-snapped .carouselNumber h1").should(
+        "have.text",
+        "4",
       );
-    });
 
-    if (!(reactVersion.startsWith("16") && reactVersion.startsWith("17"))) {
-      it("SHOULD update labels when scrolling", () => {
-        cy.mount(<Default />);
-        cy.findAllByText("1 of 4").should("exist");
-        cy.get(".saltCarouselSlider").scrollTo("right");
-        cy.wait(100);
-        cy.findAllByText("4 of 4").should("exist");
-        cy.findAllByText("3 of 4").should("not.exist");
-        cy.findAllByText("2 of 4").should("not.exist");
-        cy.findAllByText("1 of 4").should("not.exist");
+      const waitForSettle = (expectedSlideIndex: number) => {
+        return new Cypress.Promise((resolve) => {
+          const handleSettle = () => {
+            const currentSlideIndex = emblaApi?.selectedScrollSnap();
+            if (currentSlideIndex === expectedSlideIndex) {
+              resolve();
+              emblaApi?.off("settle", handleSettle);
+            }
+          };
+          emblaApi?.on("settle", handleSettle);
+        });
+      };
+
+      // should navigate backwards to slide 3
+      cy.findByTestId("ChevronLeftIcon").parent().click();
+      cy.wrap(waitForSettle(2)).then(() => {
+        cy.get(".carouselSlide.is-snapped .carouselNumber h1").should(
+          "have.text",
+          "3",
+        );
       });
-    } else {
-      it.skip("SHOULD update labels when scrolling", () => {
-        // flaky with react 16/17
+      // should navigate backwards to slide 2
+      cy.findByTestId("ChevronLeftIcon").parent().click();
+      cy.wrap(waitForSettle(1)).then(() => {
+        cy.get(".carouselSlide.is-snapped .carouselNumber h1").should(
+          "have.text",
+          "2",
+        );
       });
-    }
+      // should navigate backwards to slide 1
+      cy.findByTestId("ChevronLeftIcon").parent().click();
+      cy.wrap(waitForSettle(0)).then(() => {
+        cy.get(".carouselSlide.is-snapped .carouselNumber h1").should(
+          "have.text",
+          "1",
+        );
+      });
+      // should disable the previous page navigation
+      cy.findByTestId("ChevronLeftIcon")
+        .parent()
+        .should("have.attr", "aria-disabled", "true");
+    });
   });
 
-  describe("WHEN navigating with keyboard keys", () => {
-    it("SHOULD support keyboard navigation", () => {
-      cy.mount(<Default />);
-      cy.findAllByText("1 of 4").should("exist");
-      cy.findAllByText("2 of 4").should("not.exist");
-      cy.findAllByRole("group").get('[tabindex="0"]').focus();
-      cy.findAllByRole("group").get('[tabindex="0"]').realPress("ArrowRight");
-      cy.findAllByText("2 of 4").should("exist");
-      cy.findAllByText("1 of 4").should("not.exist");
-      cy.wait(100);
-      cy.findAllByRole("group").get('[tabindex="0"]').realPress("ArrowLeft");
-      cy.findAllByText("1 of 4").should("exist");
-      cy.findAllByText("2 of 4").should("not.exist");
+  describe("WITH the pagination controls", () => {
+    let emblaApi: CarouselApi;
+
+    beforeEach(() => {
+      cy.mount(
+        <Default
+          emblaOptions={{ duration: 20, startIndex: 3 }}
+          emblaPlugins={[ClassNames()]}
+          setApi={(api) => {
+            emblaApi = api;
+          }}
+        />,
+      );
+      cy.findByRole("region").should("exist");
+      // Wait for emblaApi to be set
+      cy.wrap(
+        new Cypress.Promise((resolve) => {
+          const checkEmblaApi = () => {
+            if (emblaApi) {
+              resolve();
+            } else {
+              setTimeout(checkEmblaApi, 50);
+            }
+          };
+          checkEmblaApi();
+        }),
+      );
+    });
+
+    it("should navigate to each page", () => {
+      const waitForSettle = (expectedSlideIndex: number) => {
+        return new Cypress.Promise((resolve) => {
+          const handleSettle = () => {
+            const currentSlideIndex = emblaApi?.selectedScrollSnap();
+            if (currentSlideIndex === expectedSlideIndex) {
+              resolve();
+              emblaApi?.off("settle", handleSettle);
+            }
+          };
+          emblaApi?.on("settle", handleSettle);
+        });
+      };
+
+      // should start from slide 4
+      cy.get(".carouselSlide.is-snapped .carouselNumber h1").should(
+        "have.text",
+        "4",
+      );
+      // should navigate to slide 3
+      cy.findByLabelText(/Move to slide 3 of 4/).click();
+      cy.wrap(waitForSettle(2)).then(() => {
+        cy.get(".carouselSlide.is-snapped .carouselNumber h1").should(
+          "have.text",
+          "3",
+        );
+      });
+      // should navigate to slide 2
+      cy.findByLabelText(/Move to slide 2 of 4/).click();
+      cy.wrap(waitForSettle(1)).then(() => {
+        cy.get(".carouselSlide.is-snapped .carouselNumber h1").should(
+          "have.text",
+          "2",
+        );
+      });
+      // should navigate to slide 1
+      cy.findByLabelText(/Move to slide 1 of 4/).click();
+      cy.wrap(waitForSettle(0)).then(() => {
+        cy.get(".carouselSlide.is-snapped .carouselNumber h1").should(
+          "have.text",
+          "1",
+        );
+      });
     });
   });
 });
-

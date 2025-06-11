@@ -1,7 +1,7 @@
 /**
- * Type definition for the parameters of the getSlideDescription function.
+ * Type definition for the parameters of the getSlideLabel function.
  */
-export type GetSlideDescription = (
+export type GetSlideLabel = (
   /**
    * The HTML element representing the slide.
    */
@@ -19,12 +19,12 @@ export type GetSlideDescription = (
 ) => string;
 
 /**
- * Generates a description for a carousel slide based on ARIA attributes.
+ * Generates a label for a carousel slide based on ARIA attributes.
  *
  * @param props - The properties required to generate the slide description.
  * @returns A string description of the slide, including its position and ARIA label or text content.
  */
-export const getSlideDescription: GetSlideDescription = (
+export const getSlideLabel: GetSlideLabel = (
   slideElement,
   slideIndex,
   slideCount,
@@ -40,5 +40,5 @@ export const getSlideDescription: GetSlideDescription = (
       description = "No description available";
     }
   }
-  return `Slide ${slideIndex + 1} of ${slideCount}. ${description}`;
+  return `slide ${slideIndex + 1} of ${slideCount}. ${description}`;
 };
