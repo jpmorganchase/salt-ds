@@ -36,7 +36,7 @@ export const Autoplay = () => {
         <H2 style={{ margin: "0px" }}>Title</H2>
         {isPlaying ? (
           <Button
-            aria-label="pause autoplay"
+            aria-label="Stop slide rotation"
             appearance="bordered"
             sentiment="neutral"
             onClick={() => {
@@ -50,7 +50,7 @@ export const Autoplay = () => {
           </Button>
         ) : (
           <Button
-            aria-label="resume autoplay"
+            aria-label="Start slide rotation"
             appearance="bordered"
             sentiment="neutral"
             onClick={() => {
@@ -78,7 +78,7 @@ export const Autoplay = () => {
       >
         {slides.map((index) => (
           <div
-            role="slide"
+            aria-label={`Example slide ${index + 1}`}
             aria-roledescription="slide"
             className={styles.carouselSlide}
             key={index}

@@ -12,7 +12,7 @@ import { sliderData } from "./exampleData";
 import styles from "./index.module.css";
 
 export const BorderedCard = (): ReactElement => (
-  <Carousel aria-label="Account overview bordered" className={styles.carousel}>
+  <Carousel aria-label="Account overview" className={styles.carousel}>
     <FlexLayout justify={"space-between"} align={"center"} direction={"row"}>
       <H2 style={{ margin: "0px" }}>Title</H2>
       <CarouselControls />
@@ -22,8 +22,8 @@ export const BorderedCard = (): ReactElement => (
         const carousel1SlideId = useId();
         return (
           <CarouselCard
-            bordered
             key={carousel1SlideId}
+            appearance={"bordered"}
             aria-labelledby={`slide-title-${carousel1SlideId}`}
             media={
               <img
