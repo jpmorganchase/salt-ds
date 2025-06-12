@@ -65,8 +65,6 @@
 .ag-theme-salt-compact-light .ag-ltr .ag-cell-inline-editing,
 .ag-theme-salt-compact-dark .ag-ltr .ag-cell-inline-editing {
   padding: 0;
-  /* When styling option corner='rounded', we don't want this to be flipped between rounded and not between editing and normal state */
-  border-radius: 0;
 }
 
 .ag-theme-salt-light .ag-cell-inline-editing.editable-cell input[class^="ag-"],
@@ -86,6 +84,7 @@
 .ag-theme-salt-compact-dark .editable-numeric-cell {
   outline: var(--salt-size-border) var(--salt-container-borderStyle) var(--salt-editable-borderColor);
   outline-offset: -1px;
+  border-radius: var(--salt-palette-corner-weak);
 }
 
 .ag-theme-salt-light .ag-cell.numeric-cell,
@@ -213,7 +212,6 @@
 .ag-theme-salt-compact-light .ag-select .ag-picker-field-wrapper,
 .ag-theme-salt-compact-dark .ag-select .ag-picker-field-wrapper {
   border: var(--salt-size-border) var(--salt-separable-borderStyle) var(--salt-editable-borderColor);
-  border-radius: 0;
 }
 
 .ag-theme-salt-light .ag-ltr .editable-cell .ag-select .ag-picker-field-wrapper,
@@ -225,7 +223,6 @@
 .ag-theme-salt-compact-dark .ag-ltr .editable-cell .ag-select .ag-picker-field-wrapper,
 .ag-theme-salt-compact-dark .ag-ltr .editable-cell .ag-rich-select .ag-picker-field-wrapper {
   padding: 0 var(--salt-spacing-100);
-  border-radius: 0;
 }
 
 .ag-theme-salt-light .ag-ltr .editable-cell .ag-select .ag-icon-small-down::before,
