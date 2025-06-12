@@ -5,7 +5,12 @@ import { clsx } from "clsx";
 import useEmblaCarousel, {
   type UseEmblaCarouselType,
 } from "embla-carousel-react";
-import { type HTMLAttributes, forwardRef, useEffect } from "react";
+import {
+  type ComponentPropsWithoutRef,
+  type MutableRefObject,
+  forwardRef,
+  useEffect,
+} from "react";
 import carouselCss from "./Carousel.css";
 import { CarouselAnnouncement } from "./CarouselAnnouncementPlugin";
 import { CarouselContext } from "./CarouselContext";
@@ -21,7 +26,7 @@ export type CarouselPlugin = UseCarouselParameters[1];
 /**
  * Props for the Carousel component.
  */
-export interface CarouselProps extends HTMLAttributes<HTMLDivElement> {
+export interface CarouselProps extends ComponentPropsWithoutRef<"div"> {
   /**
    * Options to configure the Embla Carousel.
    * These options are passed directly to the Embla Carousel instance.
@@ -35,11 +40,10 @@ export interface CarouselProps extends HTMLAttributes<HTMLDivElement> {
   emblaPlugins?: CarouselPlugin;
 
   /**
-   * Callback function to set the Embla Carousel API.
-   * This function is called with the Embla Carousel API instance.
+   * Ref to return the Embla Carousel API.
    * Use this to manage the state of the Carousel
    */
-  setApi?: (api: CarouselApi) => void;
+  emblaApiRef?: MutableRefObject<CarouselApi | undefined>;
 }
 
 export const Carousel = forwardRef<HTMLDivElement, CarouselProps>(
@@ -49,7 +53,7 @@ export const Carousel = forwardRef<HTMLDivElement, CarouselProps>(
       className,
       emblaOptions = {},
       emblaPlugins = [],
-      setApi,
+      emblaApiRef,
       ...rest
     },
     ref,
@@ -67,11 +71,11 @@ export const Carousel = forwardRef<HTMLDivElement, CarouselProps>(
     ]);
 
     useEffect(() => {
-      if (!emblaApi || !setApi) {
+      if (!emblaApi || !emblaApiRef) {
         return;
       }
-      setApi(emblaApi);
-    }, [emblaApi, setApi]);
+      emblaApiRef.current = emblaApi;
+    }, [emblaApiRef, emblaApi]);
 
     return (
       <CarouselContext.Provider value={{ emblaApi, emblaRef }}>
@@ -79,6 +83,7 @@ export const Carousel = forwardRef<HTMLDivElement, CarouselProps>(
           aria-roledescription="carousel"
           role="region"
           className={clsx(withBaseName(), className)}
+          ref={ref}
           {...rest}
         >
           {children}

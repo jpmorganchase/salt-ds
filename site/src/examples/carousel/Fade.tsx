@@ -4,7 +4,7 @@ import {
   CarouselCard,
   CarouselControls,
   CarouselSlides,
-} from "@salt-ds/lab";
+} from "@salt-ds/embla-carousel-pattern";
 import clsx from "clsx";
 import { default as FadePlugin } from "embla-carousel-fade";
 import type { ReactElement } from "react";
@@ -23,7 +23,7 @@ export const Fade = (): ReactElement => (
         const carousel1SlideId = useId();
         return (
           <CarouselCard
-            bordered
+            appearance={"bordered"}
             key={carousel1SlideId}
             aria-labelledby={`slide-title-${carousel1SlideId}`}
             media={

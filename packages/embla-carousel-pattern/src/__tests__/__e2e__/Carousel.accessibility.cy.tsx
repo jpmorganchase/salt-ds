@@ -1,6 +1,6 @@
-import * as carouselStories from "@stories/carousel/carousel.stories";
+import * as carouselStories from "@stories/carousel.stories";
 import { composeStories } from "@storybook/react";
-import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
+import { checkAccessibility } from "../../../../../cypress/tests/checkAccessibility";
 
 const composedStories = composeStories(carouselStories);
 

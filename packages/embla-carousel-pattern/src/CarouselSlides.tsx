@@ -3,7 +3,7 @@ import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
-  type HTMLAttributes,
+  type ComponentPropsWithoutRef,
   type KeyboardEvent,
   type Ref,
   forwardRef,
@@ -14,7 +14,7 @@ import carouselSlidesCss from "./CarouselSlides.css";
 /**
  * Props for the CarouselSlides component.
  */
-export interface CarouselSlidesProps extends HTMLAttributes<HTMLDivElement> {}
+export interface CarouselSlidesProps extends ComponentPropsWithoutRef<"div"> {}
 
 const withBaseName = makePrefixer("saltCarouselSlides");
 

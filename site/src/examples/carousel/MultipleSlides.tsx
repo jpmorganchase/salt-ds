@@ -4,7 +4,7 @@ import {
   CarouselControls,
   CarouselPagination,
   CarouselSlides,
-} from "@salt-ds/lab";
+} from "@salt-ds/embla-carousel-pattern";
 import cx from "classnames";
 import type { ReactElement } from "react";
 import styles from "./index.module.css";
@@ -15,7 +15,7 @@ export const MultipleSlides = (): ReactElement => {
     <Carousel
       aria-label="default carousel example"
       className={cx(styles.carousel, styles.carouselMultipleSlides)}
-      emblaOptions={{ align: "center" }}
+      emblaOptions={{ align: "center", slidesToScroll: "auto" }}
     >
       <FlexLayout justify={"space-between"} align={"center"} direction={"row"}>
         <H2 style={{ margin: "0px" }}>Title</H2>

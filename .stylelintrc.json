@@ -57,6 +57,17 @@
           }
         ]
       }
+    },
+    {
+      "files": ["**/embla-carousel-pattern/**/*.css"],
+      "rules": {
+        "salt/no-deprecated-token-usage": [
+          false,
+          {
+            "severity": "warning"
+          }
+        ]
+      }
     }
   ]
 }
