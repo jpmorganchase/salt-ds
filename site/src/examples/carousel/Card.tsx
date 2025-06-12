@@ -5,7 +5,7 @@ import {
   CarouselControls,
   CarouselPagination,
   CarouselSlides,
-} from "@salt-ds/lab";
+} from "@salt-ds/embla-carousel-pattern";
 import clsx from "clsx";
 import type { ReactElement } from "react";
 import { sliderData } from "./exampleData";
