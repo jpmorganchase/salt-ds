@@ -39,12 +39,13 @@ export const CarouselPagination = forwardRef<
         if (!slideNode) {
           return;
         }
+        const label = getSlideLabel(slideNode, index, scrollSnaps.length);
         return (
           <DotButton
-            key={index}
+            key={label}
             onClick={() => onDotButtonClick(index)}
             selected={index === selectedIndex}
-            aria-label={`Move to ${getSlideLabel(slideNode, index, scrollSnaps.length)}`}
+            aria-label={`Move to ${label}`}
           />
         );
       })}

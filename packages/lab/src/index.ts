@@ -18,7 +18,6 @@ export * from "./app-header";
 export * from "./breadcrumbs";
 export * from "./button-bar";
 export * from "./calendar";
-export * from "./carousel";
 export * from "./cascading-menu";
 export * from "./color-chooser";
 export * from "./combo-box";

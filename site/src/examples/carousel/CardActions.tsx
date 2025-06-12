@@ -4,7 +4,7 @@ import {
   CarouselCard,
   CarouselControls,
   CarouselSlides,
-} from "@salt-ds/lab";
+} from "@salt-ds/embla-carousel-pattern";
 import type { ReactElement } from "react";
 import { sliderData } from "./exampleData";
 import styles from "./index.module.css";

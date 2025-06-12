@@ -70,12 +70,10 @@ export const CarouselCard = forwardRef<HTMLDivElement, CarouselCardProps>(
         >
           {media}
           {children && (
-            <div>
-              <div className={withBaseName("body")}>
-                <div>{header}</div>
-                <div>{children}</div>
-                {actions}
-              </div>
+            <div className={withBaseName("body")}>
+              <div>{header}</div>
+              <div>{children}</div>
+              {actions}
             </div>
           )}
         </div>
