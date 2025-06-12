@@ -7,8 +7,12 @@ import {
   H2,
   Link,
 } from "@salt-ds/core";
+import {
+  Carousel,
+  CarouselPagination,
+  CarouselSlides,
+} from "@salt-ds/embla-carousel-pattern";
 import { PauseIcon, PlayIcon } from "@salt-ds/icons";
-import { Carousel, CarouselPagination, CarouselSlides } from "@salt-ds/lab";
 import { default as autoplayPlugin } from "embla-carousel-autoplay";
 import { type FocusEventHandler, useRef, useState } from "react";
 import styles from "./index.module.css";
