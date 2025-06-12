@@ -1,5 +1,9 @@
 import { H1, H2 } from "@salt-ds/core";
-import { Carousel, CarouselControls, CarouselSlides } from "@salt-ds/lab";
+import {
+  Carousel,
+  CarouselControls,
+  CarouselSlides,
+} from "@salt-ds/embla-carousel-pattern";
 import type { ReactElement } from "react";
 import styles from "./index.module.css";
 

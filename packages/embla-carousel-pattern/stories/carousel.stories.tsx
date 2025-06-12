@@ -5,7 +5,7 @@ import {
   CarouselControls,
   CarouselPagination,
   CarouselSlides,
-} from "@salt-ds/lab";
+} from "@salt-ds/embla-carousel-pattern";
 import "./carousel.stories.css";
 import {
   Button,
@@ -23,7 +23,7 @@ import { type FocusEventHandler, useRef, useState } from "react";
 import { renderSlides } from "./renderSlides";
 
 export default {
-  title: "Lab/Carousel",
+  title: "Patterns/Carousel",
   component: Carousel,
 } as Meta<typeof Carousel>;
 
@@ -83,7 +83,7 @@ Loop.args = {
 export const MultiSlide = CarouselNumberExample.bind({});
 MultiSlide.args = {
   className: "carouselMultipleSlide",
-  emblaOptions: { align: "center" },
+  emblaOptions: { align: "center", slidesToScroll: "auto" },
 };
 
 export const AutoPlay: StoryFn<typeof Carousel> = (args) => {

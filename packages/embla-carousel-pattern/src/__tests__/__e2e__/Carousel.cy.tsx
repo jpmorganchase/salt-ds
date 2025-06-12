@@ -1,7 +1,8 @@
-import * as carouselStories from "@stories/carousel/carousel.stories";
+import * as carouselStories from "@stories/carousel.stories";
 import { composeStories } from "@storybook/react-vite";
 import ClassNames from "embla-carousel-class-names";
-import type { CarouselApi } from "../../../carousel";
+import { type MutableRefObject, useRef } from "react";
+import type { CarouselApi } from "../../index";
 
 const composedStories = composeStories(carouselStories);
 const { Default } = composedStories;
@@ -15,24 +16,26 @@ describe("Given a Carousel", () => {
   });
 
   describe("WITH the current slide as slide 1", () => {
-    let emblaApi: CarouselApi;
-
-    beforeEach(() => {
-      cy.mount(
+    let emblaApiRef: MutableRefObject<CarouselApi | undefined>;
+    const TestComponent = () => {
+      emblaApiRef = useRef<CarouselApi | undefined>(undefined);
+      return (
         <Default
           emblaOptions={{ duration: 1 }}
           emblaPlugins={[ClassNames()]}
-          setApi={(api) => {
-            emblaApi = api;
-          }}
-        />,
+          emblaApiRef={emblaApiRef}
+        />
       );
+    };
+
+    beforeEach(() => {
+      cy.mount(<TestComponent />);
       cy.findByRole("region").should("exist");
       // Wait for emblaApi to be set
       cy.wrap(
         new Cypress.Promise((resolve) => {
           const checkEmblaApi = () => {
-            if (emblaApi) {
+            if (emblaApiRef?.current) {
               resolve();
             } else {
               setTimeout(checkEmblaApi, 50);
@@ -53,13 +56,14 @@ describe("Given a Carousel", () => {
       const waitForSettle = (expectedSlideIndex: number) => {
         return new Cypress.Promise((resolve) => {
           const handleSettle = () => {
-            const currentSlideIndex = emblaApi?.selectedScrollSnap();
+            const currentSlideIndex =
+              emblaApiRef?.current?.selectedScrollSnap();
             if (currentSlideIndex === expectedSlideIndex) {
               resolve();
-              emblaApi?.off("settle", handleSettle);
+              emblaApiRef?.current?.off("settle", handleSettle);
             }
           };
-          emblaApi?.on("settle", handleSettle);
+          emblaApiRef?.current?.on("settle", handleSettle);
         });
       };
 
@@ -98,24 +102,26 @@ describe("Given a Carousel", () => {
   });
 
   describe("WITH the current slide as slide 4", () => {
-    let emblaApi: CarouselApi;
+    let emblaApiRef: MutableRefObject<CarouselApi | undefined>;
+    const TestComponent = () => {
+      emblaApiRef = useRef<CarouselApi | undefined>(undefined);
+      return (
+        <Default
+          emblaOptions={{ duration: 1, startIndex: 3 }}
+          emblaPlugins={[ClassNames()]}
+          emblaApiRef={emblaApiRef}
+        />
+      );
+    };
 
     beforeEach(() => {
-      cy.mount(
-        <Default
-          emblaOptions={{ duration: 20, startIndex: 3 }}
-          emblaPlugins={[ClassNames()]}
-          setApi={(api) => {
-            emblaApi = api;
-          }}
-        />,
-      );
+      cy.mount(<TestComponent />);
       cy.findByRole("region").should("exist");
       // Wait for emblaApi to be set
       cy.wrap(
         new Cypress.Promise((resolve) => {
           const checkEmblaApi = () => {
-            if (emblaApi) {
+            if (emblaApiRef?.current) {
               resolve();
             } else {
               setTimeout(checkEmblaApi, 50);
@@ -136,13 +142,14 @@ describe("Given a Carousel", () => {
       const waitForSettle = (expectedSlideIndex: number) => {
         return new Cypress.Promise((resolve) => {
           const handleSettle = () => {
-            const currentSlideIndex = emblaApi?.selectedScrollSnap();
+            const currentSlideIndex =
+              emblaApiRef?.current?.selectedScrollSnap();
             if (currentSlideIndex === expectedSlideIndex) {
               resolve();
-              emblaApi?.off("settle", handleSettle);
+              emblaApiRef?.current?.off("settle", handleSettle);
             }
           };
-          emblaApi?.on("settle", handleSettle);
+          emblaApiRef?.current?.on("settle", handleSettle);
         });
       };
 
@@ -178,24 +185,26 @@ describe("Given a Carousel", () => {
   });
 
   describe("WITH the pagination controls", () => {
-    let emblaApi: CarouselApi;
+    let emblaApiRef: MutableRefObject<CarouselApi | undefined>;
+    const TestComponent = () => {
+      emblaApiRef = useRef<CarouselApi | undefined>(undefined);
+      return (
+        <Default
+          emblaOptions={{ duration: 1, startIndex: 3 }}
+          emblaPlugins={[ClassNames()]}
+          emblaApiRef={emblaApiRef}
+        />
+      );
+    };
 
     beforeEach(() => {
-      cy.mount(
-        <Default
-          emblaOptions={{ duration: 20, startIndex: 3 }}
-          emblaPlugins={[ClassNames()]}
-          setApi={(api) => {
-            emblaApi = api;
-          }}
-        />,
-      );
+      cy.mount(<TestComponent />);
       cy.findByRole("region").should("exist");
       // Wait for emblaApi to be set
       cy.wrap(
         new Cypress.Promise((resolve) => {
           const checkEmblaApi = () => {
-            if (emblaApi) {
+            if (emblaApiRef?.current) {
               resolve();
             } else {
               setTimeout(checkEmblaApi, 50);
@@ -210,13 +219,14 @@ describe("Given a Carousel", () => {
       const waitForSettle = (expectedSlideIndex: number) => {
         return new Cypress.Promise((resolve) => {
           const handleSettle = () => {
-            const currentSlideIndex = emblaApi?.selectedScrollSnap();
+            const currentSlideIndex =
+              emblaApiRef?.current?.selectedScrollSnap();
             if (currentSlideIndex === expectedSlideIndex) {
               resolve();
-              emblaApi?.off("settle", handleSettle);
+              emblaApiRef?.current?.off("settle", handleSettle);
             }
           };
-          emblaApi?.on("settle", handleSettle);
+          emblaApiRef?.current?.on("settle", handleSettle);
         });
       };
 

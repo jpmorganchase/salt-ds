@@ -1,5 +1,9 @@
 import { H1 } from "@salt-ds/core";
-import { Carousel, CarouselControls, CarouselSlides } from "@salt-ds/lab";
+import {
+  Carousel,
+  CarouselControls,
+  CarouselSlides,
+} from "@salt-ds/embla-carousel-pattern";
 import type { ReactElement } from "react";
 import styles from "./index.module.css";
 
@@ -7,7 +11,7 @@ export const Default = (): ReactElement => {
   const slides = Array.from(Array(4).keys());
   return (
     <Carousel aria-label="default carousel example" className={styles.carousel}>
-      <CarouselControls />
+      <CarouselControls labelPlacement={"right"} />
       <CarouselSlides>
         {slides.map((index) => (
           <div

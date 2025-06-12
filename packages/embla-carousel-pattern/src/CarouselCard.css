@@ -1,12 +1,10 @@
 .saltCarouselCard {
   display: flex;
   transform: translate3d(0, 0, 0);
-  flex: 0 0 var(--salt-slide-size);
+  flex: 0 0 var(--saltCarousel-slide-size);
   min-width: 0;
-  padding-left: var(--salt-slide-spacing);
+  padding-left: var(--saltCarousel-slide-spacing);
   box-sizing: border-box;
-}
-.saltCarouselCard:focus-visible {
 }
 
 .saltCarouselCard-content {
@@ -27,8 +25,6 @@
   padding: 0 var(--salt-spacing-200) var(--salt-spacing-200) var(--salt-spacing-200);
 }
 
-.saltCarouselCard-content {
-}
 .saltCarouselCard-content h2,
 .saltCarouselCard-content h3 {
   margin: 0;

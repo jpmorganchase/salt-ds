@@ -13,7 +13,9 @@ declare module "embla-carousel" {
   }
 }
 
+// biome-ignore lint/complexity/noBannedTypes: Replicated from embla docs/code
 type OptionsType = CreateOptionsType<{}>;
+// biome-ignore lint/complexity/noBannedTypes: Replicated from embla docs/code
 export type CarouselAnnouncementType = CreatePluginType<{}, OptionsType>;
 
 export type CarouselAnnouncementOptionsType =
@@ -26,18 +28,21 @@ export function CarouselAnnouncement(
 
   const { announce } = useAriaAnnouncer();
 
-  const handleSettle = useCallback((emblaApi: EmblaCarouselType) => {
-    const slideCount = emblaApi?.slideNodes().length || 0;
-    const slideIndexInView = emblaApi?.slidesInView()?.[0] ?? 0;
-    const slideElement = emblaApi?.slideNodes()[slideIndexInView];
+  const handleSettle = useCallback(
+    (emblaApi: EmblaCarouselType) => {
+      const slideCount = emblaApi?.slideNodes().length || 0;
+      const slideIndexInView = emblaApi?.slidesInView()?.[0] ?? 0;
+      const slideElement = emblaApi?.slideNodes()[slideIndexInView];
 
-    const slideLabel = getSlideLabel(
-      slideElement,
-      slideIndexInView,
-      slideCount,
-    );
-    announce(slideLabel);
-  }, []);
+      const slideLabel = getSlideLabel(
+        slideElement,
+        slideIndexInView,
+        slideCount,
+      );
+      announce(slideLabel);
+    },
+    [announce],
+  );
 
   function init(emblaApiInstance: EmblaCarouselType): void {
     emblaApi = emblaApiInstance;
