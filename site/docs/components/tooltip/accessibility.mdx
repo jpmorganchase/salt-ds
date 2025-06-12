@@ -8,6 +8,22 @@ data:
   $ref: ./#/data
 ---
 
-## Best practices
+## What is a tooltip
+A tooltip should only be used to provide extra (non-essential) information about a form field, a link, a button, or other focusable element.
 
-The tooltip doesn't receive focus, so we recommend that you don't include interactive elements as the user can't access them.
+## Best practices
+Tooltips must be triggered by both focus and hover events and remains on the screen as long as the trigger has the focus. The focus does not move to the tooltip.
+Since a tooltip doesn't receive focus, don't include interactive elements as the user can't access them.
+The expand/collapsed state is intentionally not exposed
+
+
+## Anti-Pattern
+Never apply a tooltip to non-interactive elements. As a rule, non-operable elements should not receive keyboard focus to avoid unnecessary navigation steps.
+A common design pattern is to use an (i) icon as the tooltip anchor however this is not recommended for the following reasons:
+* Icons do not recieve focus by default
+* Adding tabindex to make the icon focusable introduces an addtional tab stop
+* 
+
+
+## Resources
+[WCAG 1.4.13 Content on Hover or Focus](https://www.w3.org/TR/WCAG21/#content-on-hover-or-focus)
