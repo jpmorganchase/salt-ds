@@ -15,6 +15,7 @@
     "start": "yarn storybook",
     "build": "yarn workspaces foreach --exclude @salt-ds/site -Apt run build && yarn bundle:css",
     "build:ag-grid-theme": "yarn workspace @salt-ds/ag-grid-theme build",
+    "build:hc-theme": "yarn workspace @salt-ds/highcharts-theme build",
     "bundle:css": "yarn bundle:core:css && yarn bundle:lab:css && yarn copy:icon:css && yarn copy:countries:css",
     "bundle:core:css": "yarn workspace @salt-ds/core bundle:css",
     "bundle:lab:css": "yarn workspace @salt-ds/lab bundle:css",

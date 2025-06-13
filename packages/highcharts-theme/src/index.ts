@@ -1,0 +1,1 @@
+export { saltHCThemeOptions } from "./salt-hc-options"; 

@@ -1,9 +1,10 @@
 import clsx from "clsx";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
-import "highcharts/modules/accessibility";
-import "highcharts/modules/pattern-fill";
+// import "highcharts/modules/accessibility";
+// import "highcharts/modules/pattern-fill";
 import styles from "./PatternFill.module.css";
+
 
 const fillPatternProps = [
   {
@@ -282,32 +283,32 @@ const fillPatternProps = [
  * </pattern>
  */
 
-const defs = fillPatternProps.reduce<Record<string, object>>((prev, curr) => {
-  prev[curr.id] = {
-    ...curr,
-    tagName: "pattern",
-    patternUnits: "userSpaceOnUse",
-    width: 10,
-    height: 10,
-    children: [
-      {
-        tagName: "rect",
-        width: 10,
-        height: 10,
-        fill: "var(--highcharts-color-0)",
-      },
-      ...curr.children,
-    ],
-  };
-  return prev;
-}, {});
+// const defs = fillPatternProps.reduce<Record<string, object>>((prev, curr) => {
+//   prev[curr.id] = {
+//     ...curr,
+//     tagName: "pattern",
+//     patternUnits: "userSpaceOnUse",
+//     width: 10,
+//     height: 10,
+//     children: [
+//       {
+//         tagName: "rect",
+//         width: 10,
+//         height: 10,
+//         fill: "var(--highcharts-color-0)",
+//       },
+//       ...curr.children,
+//     ],
+//   };
+//   return prev;
+// }, {});
 
 const donutChartOptions = {
   chart: {
     type: "pie",
     styledMode: true,
   },
-  defs: defs,
+  // defs: defs,
   title: {
     text: "Investor breakdown",
     align: "center",
@@ -336,7 +337,14 @@ const donutChartOptions = {
       name: "Investor Breakdown",
       innerSize: "80%",
       data: [
-        { name: "Asset manager", y: 41.9 },
+        { name: "Asset manager", y: 41.9, 
+          color: {
+            pattern: {
+                image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/United_States_one_dollar_bill%2C_obverse.jpg/320px-United_States_one_dollar_bill%2C_obverse.jpg',
+                aspectRatio: 9 / 4
+            }
+        }
+         },
         { name: "Insurance", y: 33.5 },
         { name: "Pension", y: 15.9 },
         { name: "Hedge fund", y: 11.3 },
@@ -348,7 +356,7 @@ const donutChartOptions = {
 export const DonutChart = () => {
   return (
     <div
-      className={clsx("salt-highcharts-theme", styles.patternFills)}
+      className={clsx("salt-highcharts-theme")}
       style={{ maxWidth: 700, width: "100%" }}
     >
       <HighchartsReact highcharts={Highcharts} options={donutChartOptions} />

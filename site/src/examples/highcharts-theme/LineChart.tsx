@@ -1,12 +1,15 @@
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 
-import "highcharts/modules/accessibility";
+import accessibility from "highcharts/modules/accessibility";
+import patternFill from "highcharts/modules/pattern-fill";
+
+accessibility(Highcharts);
+patternFill(Highcharts);
 
 const lineDataOptions = {
   chart: {
     type: "line",
-    styledMode: true,
   },
   accessibility: {
     description:
@@ -24,8 +27,7 @@ const lineDataOptions = {
       '<span class="label">{series.name}: </span><span class="value">{point.y}</span>',
   },
   title: {
-    text: "Currency strength from 2011 to 2015",
-    margin: 32,
+    text: "tymon lets gooo",
   },
   yAxis: {
     title: {
@@ -74,6 +76,8 @@ const lineDataOptions = {
     },
   ],
 };
+
+console.log(Highcharts.getOptions());
 
 export const LineChart = () => {
   return (

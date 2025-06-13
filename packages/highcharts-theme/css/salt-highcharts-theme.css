@@ -2,16 +2,16 @@
 .salt-highcharts-theme {
   --highcharts-background-color: none;
 
-  --highcharts-color-0: var(--salt-palette-categorical-1);
-  --highcharts-color-1: var(--salt-palette-categorical-2);
-  --highcharts-color-2: var(--salt-palette-categorical-3);
-  --highcharts-color-3: var(--salt-palette-categorical-4);
-  --highcharts-color-4: var(--salt-palette-categorical-5);
-  --highcharts-color-5: var(--salt-palette-categorical-6);
-  --highcharts-color-6: var(--salt-palette-categorical-7);
-  --highcharts-color-7: var(--salt-palette-categorical-8);
-  --highcharts-color-8: var(--salt-palette-categorical-9);
-  --highcharts-color-9: var(--salt-palette-categorical-10);
+  --highcharts-color-0: var(--salt-palette-categorical-3);
+  --highcharts-color-1: var(--salt-palette-categorical-10);
+  --highcharts-color-2: var(--salt-palette-categorical-12);
+  --highcharts-color-3: var(--salt-palette-categorical-1);
+  --highcharts-color-4: var(--salt-palette-categorical-16);
+  --highcharts-color-5: var(--salt-palette-categorical-7);
+  --highcharts-color-6: var(--salt-palette-categorical-9);
+  --highcharts-color-7: var(--salt-palette-categorical-2);
+  --highcharts-color-8: var(--salt-palette-categorical-20);
+  --highcharts-color-9: var(--salt-palette-categorical-6);
 }
 
 .salt-highcharts-theme .highcharts-container {
@@ -46,4 +46,22 @@
 .salt-highcharts-theme .highcharts-tooltip text,
 .salt-highcharts-theme .highcharts-tooltip foreignObject span {
   fill: var(--salt-content-primary-foreground);
+}
+
+
+/* Backwards compatibility for v10, renamed to .highcharts-a11y-proxy-element
+in v11 and in the default CSS.
+*/
+.salt-highcharts-theme .highcharts-a11y-proxy-button {
+  border-width: 0;
+  background-color: transparent;
+  cursor: pointer;
+  outline: none;
+  opacity: 0.001;
+  z-index: 999;
+  overflow: hidden;
+  padding: 0;
+  margin: 0;
+  display: block;
+  position: absolute;
 }
