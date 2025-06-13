@@ -36,6 +36,7 @@ export const HighchartsThemeProvider: FC<HighchartsThemeProviderProps> = ({
   useEffect(() => {
     console.log("triggerd effect");
     Highcharts.setOptions(saltHCThemeOptions as unknown as Highcharts.Options);
+    
     // You could also call setOptions again to override the theme options
     // or you can be chart specific by specifiying and providing options
     // at the individual chart level (which takes precedence over the theme options)
