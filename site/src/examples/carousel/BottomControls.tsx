@@ -1,26 +1,17 @@
-import { FlexLayout, H1, H2 } from "@salt-ds/core";
+import { H1, H2 } from "@salt-ds/core";
 import {
   Carousel,
   CarouselControls,
-  CarouselPagination,
   CarouselSlides,
 } from "@salt-ds/embla-carousel-pattern";
-import cx from "classnames";
 import type { ReactElement } from "react";
 import styles from "./index.module.css";
 
-export const MultipleSlides = (): ReactElement => {
+export const BottomControls = (): ReactElement => {
   const slides = Array.from(Array(4).keys());
   return (
-    <Carousel
-      aria-label="default carousel example"
-      className={cx(styles.carousel, styles.carouselMultipleSlides)}
-      emblaOptions={{ align: "center", slidesToScroll: "auto" }}
-    >
-      <FlexLayout justify={"space-between"} align={"center"} direction={"row"}>
-        <H2 style={{ margin: "0px" }}>Title</H2>
-        <CarouselControls />
-      </FlexLayout>
+    <Carousel aria-label="default carousel example" className={styles.carousel}>
+      <H2 style={{ margin: "0px" }}>Title</H2>
       <CarouselSlides>
         {slides.map((index) => (
           <div
@@ -35,9 +26,7 @@ export const MultipleSlides = (): ReactElement => {
           </div>
         ))}
       </CarouselSlides>
-      <FlexLayout justify={"center"} direction={"row"}>
-        <CarouselPagination />
-      </FlexLayout>
+      <CarouselControls />
     </Carousel>
   );
 };

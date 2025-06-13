@@ -31,31 +31,60 @@ data:
 
 ## Import
 
-To import `Carousel` and related components from the lab Salt package, use:
+To import `Carousel` and related components from the `@salt-ds/embla-carousel-pattern package:
+
+1. Install the required package:
+
+```
+npm install @salt-ds/embla-carousel-pattern
+```
+
+or
+
+```
+yarn add @salt-ds/embla-carousel-pattern
+```
+
+2. Import the components, required.
 
 ```js
 import {
   Carousel,
+  CarouselCard,
   CarouselControls,
-  CarouselSlider,
-  CarouselSlide,
-} from "@salt-ds/lab";
+  CarouselPagination,
+  CarouselSlides,
+} from "@salt-ds/embla-carousel-pattern ";
 ```
 
 ## Props
 
 ### `Carousel`
 
-<PropsTable packageName="lab" componentName="Carousel" />
+`Carousel` is a context that wraps the [Embla](https://www.embla-carousel.com/) API.
+
+<PropsTable packageName="embla-carousel-pattern" componentName="Carousel" />
 
 ### `CarouselControls`
 
-<PropsTable packageName="lab" componentName="CarouselControls" />
+`CarouselControls` provides previous and next navigation controls.
 
-### `CarouselSlider`
+<PropsTable
+  packageName="embla-carousel-pattern"
+  componentName="CarouselControls"
+/>
 
-<PropsTable packageName="lab" componentName="CarouselSlider" />
+### `CarouselSlides`
 
-### `CarouselSlide`
+`CarouselSlides` provides a viewport for the slide content and keyboard navigation.
 
-<PropsTable packageName="lab" componentName="CarouselSlide" />
+<PropsTable
+  packageName="embla-carousel-pattern"
+  componentName="CarouselSlides"
+/>
+
+### `CarouselCard`
+
+`CarouselCard` provides a convenient slide component, that creates a common card pattern.
+
+<PropsTable packageName="embla-carousel-pattern" componentName="CarouselCard" />

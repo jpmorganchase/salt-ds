@@ -1,49 +1,69 @@
-import { Button, H3, StackLayout, Text, useId } from "@salt-ds/core";
-import { Carousel, CarouselSlide, CarouselSlider } from "@salt-ds/lab";
-import clsx from "clsx";
-import { type ReactElement, useState } from "react";
-import { sliderData } from "./exampleData";
+import { Button, FlexLayout, H1 } from "@salt-ds/core";
+import {
+  Carousel,
+  type CarouselApi,
+  CarouselControls,
+  CarouselSlides,
+} from "@salt-ds/embla-carousel-pattern";
+import { type ReactElement, useEffect, useRef } from "react";
 import styles from "./index.module.css";
 
 export const ControlledCarousel = (): ReactElement => {
-  const [slide, setSlide] = useState<number>(0);
+  const emblaApiRef = useRef<CarouselApi | undefined>(undefined);
+  const slides = Array.from(Array(4).keys());
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: API could update after first render
+  useEffect(() => {
+    if (!emblaApiRef?.current) {
+      return;
+    }
+
+    const logSnappedSlide = () => {
+      const snappedSlideIndex = emblaApiRef.current?.selectedScrollSnap();
+      console.log(
+        `Slide ${snappedSlideIndex !== undefined ? snappedSlideIndex + 1 : undefined} is snapped into view.`,
+      );
+    };
+
+    emblaApiRef.current?.on("select", logSnappedSlide);
+
+    // Cleanup listener on component unmount
+    return () => {
+      emblaApiRef.current?.off("select", logSnappedSlide);
+    };
+  }, [emblaApiRef.current]);
+
   return (
-    <StackLayout>
-      <StackLayout gap={1} direction="row" align="center">
-        <Button onClick={() => setSlide(slide - 1)} disabled={slide === 0}>
-          Left
+    <Carousel
+      aria-label="Account overview"
+      className={styles.carousel}
+      emblaApiRef={emblaApiRef}
+    >
+      <FlexLayout justify={"space-between"} align={"center"} direction={"row"}>
+        <Button onClick={() => emblaApiRef.current?.scrollTo(2)}>
+          Scroll to slide 3
         </Button>
-        <Button
-          onClick={() => setSlide(slide + 1)}
-          disabled={slide >= sliderData.length - 1}
-        >
-          Right
-        </Button>
-        <Text>Current slide: {slide + 1}</Text>
-      </StackLayout>
-      <Carousel aria-label="Account overview" activeSlideIndex={slide}>
-        <CarouselSlider onSelectionChange={(_, index) => setSlide(index)}>
-          {sliderData.map((slide, index) => {
-            const slideId = useId();
-            return (
-              <CarouselSlide
-                key={slideId}
-                aria-labelledby={`slide-title-${slideId}`}
-                media={
-                  <img
-                    alt={`stock content to show in carousel slide ${index}`}
-                    className={clsx(styles.carouselImagePlaceholder)}
-                    src={slide.image}
-                  />
-                }
-                header={<H3 id={`slide-title-${slideId}`}>{slide.title}</H3>}
-              >
-                <Text>{slide.content}</Text>
-              </CarouselSlide>
-            );
-          })}
-        </CarouselSlider>
-      </Carousel>
-    </StackLayout>
+        <CarouselControls />
+      </FlexLayout>
+      <CarouselSlides>
+        {slides.map((index) => (
+          <div
+            aria-label={`Example slide ${index + 1}`}
+            aria-roledescription="slide"
+            className={styles.carouselSlide}
+            key={index}
+          >
+            <FlexLayout
+              className={styles.carouselNumber}
+              justify={"center"}
+              direction={"row"}
+              gap={3}
+            >
+              <H1 style={{ margin: "0px" }}>{index + 1}</H1>
+            </FlexLayout>
+          </div>
+        ))}
+      </CarouselSlides>
+    </Carousel>
   );
 };

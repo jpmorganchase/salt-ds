@@ -1,0 +1,6 @@
+.saltCarouselControls {
+  display: flex;
+  flex-flow: wrap;
+  align-items: center;
+  gap: var(--salt-spacing-100);
+}

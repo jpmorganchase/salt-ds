@@ -1,40 +1,31 @@
-import { H3, Text, useId } from "@salt-ds/core";
+import { H1 } from "@salt-ds/core";
 import {
   Carousel,
   CarouselControls,
-  CarouselSlide,
-  CarouselSlider,
-} from "@salt-ds/lab";
-import clsx from "clsx";
+  CarouselSlides,
+} from "@salt-ds/embla-carousel-pattern";
 import type { ReactElement } from "react";
-import { sliderData } from "./exampleData";
 import styles from "./index.module.css";
 
 export const Default = (): ReactElement => {
+  const slides = Array.from(Array(4).keys());
   return (
-    <Carousel aria-label="Account overview">
-      <CarouselControls />
-      <CarouselSlider>
-        {sliderData.map((slide, index) => {
-          const slideId = useId();
-          return (
-            <CarouselSlide
-              key={slideId}
-              aria-labelledby={`slide-title-${slideId}`}
-              media={
-                <img
-                  alt={`stock content to show in carousel slide ${index}`}
-                  className={clsx(styles.carouselImagePlaceholder)}
-                  src={slide.image}
-                />
-              }
-              header={<H3 id={`slide-title-${slideId}`}>{slide.title}</H3>}
-            >
-              <Text>{slide.content}</Text>
-            </CarouselSlide>
-          );
-        })}
-      </CarouselSlider>
+    <Carousel aria-label="default carousel example" className={styles.carousel}>
+      <CarouselControls labelPlacement={"right"} />
+      <CarouselSlides>
+        {slides.map((index) => (
+          <div
+            aria-label={`Example slide ${index + 1}`}
+            aria-roledescription="slide"
+            className={styles.carouselSlide}
+            key={index}
+          >
+            <div className={styles.carouselNumber}>
+              <H1 style={{ margin: "0px" }}>{index + 1}</H1>
+            </div>
+          </div>
+        ))}
+      </CarouselSlides>
     </Carousel>
   );
 };
