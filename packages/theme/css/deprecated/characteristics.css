@@ -4,6 +4,10 @@
   --salt-differential-negative-foreground: var(--salt-palette-negative-foreground);
 
   /* Editable */
+  --salt-editable-cursor-hover: text;
+  --salt-editable-cursor-active: text;
+  --salt-editable-cursor-disabled: not-allowed;
+  --salt-editable-cursor-readonly: text;
   --salt-editable-tertiary-background: var(--salt-palette-neutral-tertiary-background);
   --salt-editable-tertiary-background-active: var(--salt-palette-neutral-tertiary-background);
   --salt-editable-tertiary-background-disabled: var(--salt-palette-neutral-tertiary-background-disabled);
@@ -42,6 +46,12 @@
   --salt-overlayable-rangeSelection: var(--salt-overlayable-background-rangeSelection);
 
   /* Selectable */
+  --salt-selectable-cursor-hover: pointer;
+  --salt-selectable-cursor-selected: pointer;
+  --salt-selectable-cursor-blurSelected: pointer;
+  --salt-selectable-cursor-disabled: not-allowed;
+  --salt-selectable-cursor-readonly: not-allowed;
+
   --salt-selectable-foreground-partial: var(--salt-palette-interact-foreground-partial);
   --salt-selectable-foreground-partialDisabled: var(--salt-palette-interact-foreground-partialDisabled);
 
@@ -102,13 +112,27 @@
   --salt-status-warning-foreground: var(--salt-palette-warning-foreground);
   --salt-status-success-foreground: var(--salt-palette-success-foreground);
 
+  /* Draggable */
+  --salt-draggable-horizontal-cursor-hover: row-resize;
+  --salt-draggable-horizontal-cursor-active: row-resize;
+  --salt-draggable-vertical-cursor-hover: col-resize;
+  --salt-draggable-vertical-cursor-active: col-resize;
+  --salt-draggable-grab-cursor-hover: grab;
+  --salt-draggable-grab-cursor-active: grabbing;
+
   /* Actionable */
+  --salt-actionable-cursor-hover: pointer;
+  --salt-actionable-cursor-active: pointer;
+  --salt-actionable-cursor-disabled: not-allowed;
   --salt-actionable-letterSpacing: 0.6px;
   --salt-actionable-textTransform: uppercase;
   --salt-actionable-textAlign: center;
   --salt-actionable-primary-fontWeight: var(--salt-typography-fontWeight-bold);
   --salt-actionable-cta-fontWeight: var(--salt-typography-fontWeight-bold);
   --salt-actionable-secondary-fontWeight: var(--salt-typography-fontWeight-semiBold);
+
+  /* Target */
+  --salt-target-cursor-disabled: not-allowed;
 
   /* Text */
   --salt-text-background-selected: var(--salt-content-foreground-highlight);
@@ -126,6 +150,11 @@
   --salt-text-textTransform: none;
 
   /* Navigable */
+  --salt-navigable-cursor-active: pointer;
+  --salt-navigable-cursor-hover: pointer;
+  --salt-navigable-cursor-disabled: not-allowed;
+  --salt-navigable-cursor-edit: text;
+
   --salt-navigable-primary-background: var(--salt-palette-navigate-primary-background);
   --salt-navigable-primary-background-hover: var(--salt-palette-navigate-primary-background-hover);
   --salt-navigable-primary-background-active: var(--salt-palette-navigate-primary-background-active);
