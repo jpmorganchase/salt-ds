@@ -11,16 +11,19 @@ data:
 Digital accessibility is a shared responsibility and while the standard behavior and attributes for a tooltip are already handled for you as part of our component, product teams are responsible for implementing the component correctly and ensuring their digital products meet all current accessibility requirements.
 
 ## What is a tooltip
-A tooltip is a small text only pop up that displays on hover or focus that should only be used to provide extra (non-essential) information about a [form field](https://www.saltdesignsystem.com/salt/components/form-field/examples), a [link](https://www.saltdesignsystem.com/salt/components/link/examples), a [button](https://www.saltdesignsystem.com/salt/components/button/examples), or other interactive element.
+A tooltip is a non-modal overlay that is hidden by default and displays text-only content on hover or focus. It should only be used to provide extra (non-essential) information about a [`Form Field`](../Form Field), a [`Link`](../Link), a [`Button`](../Button), or other interactive element.
 
 ## Best practices
 - Tooltips must be triggered by both focus and hover events and remains on the screen as long as the trigger has the focus or until the user dismisses it. 
 - Focus does not move to the tooltip. Since a tooltip does not receive focus, do not include interactive elements in the tooltip as the user cannot access them.
-- only one tooltip should be displayed at a time.
-- Keep the text for a tooltip short and concise. Do not use a tooltip if you need to display a lot of text.
+- Only one tooltip should be displayed at a time.
+- Keep the text for a tooltip short and concise.
+- Avoid rich content such as bold text, italics, headings, icons, etc. as these will not be conveyed through `aria-describedby`.
+- Do not put essential information in tooltips.
+- Do not use a timeout to hide the tooltip.
 - The expand/collapsed state is intentionally not exposed.
 - Keep the use of tooltips to a minimum and use only when providing extra (non-essential) information for the user.
-- When the content of a tooltip is not about an interactive UI element. Consider adding the message directly on the page or using [`Overlay`](../overlay), [`Dialog`](../dialog), or [`Banner`](../banner) instead.
+- When the content of a tooltip is not about an interactive UI element, consider adding the message directly on the page or using [`Overlay`](../overlay), [`Dialog`](../dialog), or [`Banner`](../banner) instead.
 
 
 ## Anti-Pattern
