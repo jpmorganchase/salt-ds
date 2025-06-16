@@ -1,10 +1,12 @@
 .salt-theme {
+  --salt-cursor: pointer;
   --salt-cursor-active: pointer;
   --salt-cursor-disabled: not-allowed;
   --salt-cursor-hover: pointer;
   --salt-cursor-text: text;
-  --salt-cursor-row-resize: row-resize;
-  --salt-cursor-col-resize: col-resize;
+  --salt-cursor-dragVertical: row-resize;
+  --salt-cursor-dragHorizontal: col-resize;
   --salt-cursor-grab: grab;
   --salt-cursor-grabbing: grabbing;
+  --salt-cursor-progress: progress;
 }

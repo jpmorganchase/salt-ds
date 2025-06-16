@@ -93,7 +93,7 @@
   bottom: 0;
   width: 16px;
   background: transparent;
-  cursor: var(--salt-cursor-col-resize);
+  cursor: var(--salt-cursor-dragHorizontal);
   z-index: 2;
 }
 
