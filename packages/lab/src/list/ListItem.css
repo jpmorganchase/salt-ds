@@ -59,7 +59,7 @@
 
 .saltListItem.saltDisabled {
   --list-item-text-color: var(--salt-content-primary-foreground-disabled);
-  cursor: var(--salt-selectable-cursor-disabled);
+  cursor: var(--salt-cursor-disabled);
 }
 
 .saltListItem.saltFocusVisible {

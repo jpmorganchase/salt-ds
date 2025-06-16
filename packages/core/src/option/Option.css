@@ -11,7 +11,7 @@
   display: flex;
   gap: var(--salt-spacing-100);
   position: relative;
-  cursor: var(--salt-selectable-cursor-hover);
+  cursor: var(--salt-cursor-hover);
   box-sizing: border-box;
   flex-shrink: 0;
 }
@@ -38,7 +38,7 @@
 
 .saltOption[aria-disabled="true"] {
   color: var(--salt-content-primary-foreground-disabled);
-  cursor: var(--salt-selectable-cursor-disabled);
+  cursor: var(--salt-cursor-disabled);
 }
 
 /* TODO: Find a better way of doing this */

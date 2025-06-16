@@ -1,7 +1,7 @@
 .saltSliderThumb {
   align-items: center;
   background: var(--salt-accent-borderColor);
-  cursor: var(--salt-selectable-cursor-hover);
+  cursor: var(--salt-cursor-hover);
   display: flex;
   height: var(--salt-size-selectable);
   outline: none;
@@ -26,13 +26,13 @@
 
 .saltSliderThumb:active,
 .saltSliderThumb-dragging {
-  cursor: var(--draggable-grab-cursor-active);
+  cursor: var(--salt-cursor-active);
 }
 
 .saltSliderThumb-input {
   border: 0;
   appearance: none;
-  cursor: var(--salt-selectable-cursor-hover);
+  cursor: var(--salt-cursor-hover);
   height: var(--salt-size-base);
   left: var(--slider-progressPercentage);
   margin: 0;

@@ -42,7 +42,7 @@
   gap: var(--salt-spacing-100);
   position: relative;
   align-items: center;
-  cursor: var(--salt-selectable-cursor-hover);
+  cursor: var(--salt-cursor-hover);
   box-sizing: border-box;
   flex-shrink: 0;
   justify-content: flex-start;
@@ -58,7 +58,7 @@
 
 .saltTabOverflow-list .saltTabNext[aria-disabled="true"] {
   color: var(--salt-content-primary-foreground-disabled);
-  cursor: var(--salt-selectable-cursor-disabled);
+  cursor: var(--salt-cursor-disabled);
 }
 
 .saltTabOverflow-list .saltTabNext-focusVisible {

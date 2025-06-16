@@ -36,12 +36,12 @@
 
 /* Styles applied to root component on hover state  */
 .saltTokenizedInput:hover {
-  cursor: var(--salt-selectable-cursor-hover);
+  cursor: var(--salt-cursor-hover);
 }
 
 /* Styles applied to root component on hover state if `disabled={true}` */
 .saltTokenizedInput.saltTokenizedInput-disabled:hover {
-  cursor: var(--salt-selectable-cursor-disabled);
+  cursor: var(--salt-cursor-disabled);
 }
 
 /* Styles applied to container of pills */
@@ -57,7 +57,7 @@
 
 /* Styles applied to root component if `disabled={true}` */
 .saltTokenizedInput-disabled {
-  cursor: var(--salt-editable-cursor-disabled);
+  cursor: var(--salt-cursor-disabled);
   opacity: var(--saltTokenizedInput-disabled-opacity, var(--salt-palette-opacity-disabled));
 }
 
@@ -87,7 +87,7 @@
 **/
 .saltInputLegacy.saltTokenizedInput-input {
   align-items: flex-start;
-  cursor: text;
+  cursor: var(--salt-cursor-text);
   flex-grow: 1;
   padding: 0;
   outline: none;

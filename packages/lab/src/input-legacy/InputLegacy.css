@@ -75,7 +75,7 @@
 
 /* Style applied to input if `disabled={true}` */
 .saltInputLegacy-disabled .saltInputLegacy-input {
-  cursor: var(--salt-editable-cursor-disabled);
+  cursor: var(--salt-cursor-disabled);
   color: var(--saltInputLegacy-text-color-disabled, var(--salt-content-primary-foreground-disabled));
 }
 

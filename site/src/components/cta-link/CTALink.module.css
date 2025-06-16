@@ -7,7 +7,7 @@
   border-style: solid;
   border-width: var(--salt-size-border);
   border-radius: var(--salt-palette-corner-weak, 0);
-  cursor: var(--salt-actionable-cursor-hover);
+  cursor: var(--salt-cursor-hover);
   display: inline-flex;
   gap: var(--salt-spacing-50);
   justify-content: center;

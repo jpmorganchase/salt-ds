@@ -22,7 +22,7 @@
 
 .saltDateInput:hover {
   background: var(--saltDateInput-background-hover, var(--input-background-hover));
-  cursor: var(--salt-editable-cursor-hover);
+  cursor: var(--salt-cursor-hover);
 }
 
 /* Style applied if `bordered={true}` */
@@ -159,21 +159,21 @@
 .saltDateInput-focused,
 .saltDateInput-focused:hover {
   background: var(--saltDateInput-background-active, var(--input-background-active));
-  cursor: var(--salt-editable-cursor-active);
+  cursor: var(--salt-cursor-active);
   outline: var(--saltDateInput-outline, var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--input-outlineColor));
 }
 
 /* Style applied if `readOnly={true}` */
 .saltDateInput.saltDateInput-readOnly {
   background: var(--input-background-readonly);
-  cursor: var(--salt-editable-cursor-readonly);
+  cursor: var(--salt-cursor-readonly);
 }
 
 /* Styling when focused if `disabled={true}` */
 .saltDateInput-disabled,
 .saltDateInput-disabled:hover {
   background: var(--input-background-disabled);
-  cursor: var(--salt-editable-cursor-disabled);
+  cursor: var(--salt-cursor-disabled);
   color: var(--saltDateInput-color-disabled, var(--salt-content-primary-foreground-disabled));
 }
 

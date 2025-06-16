@@ -28,7 +28,7 @@
   --pill-background: var(--salt-actionable-bold-background);
   --pill-color: var(--salt-actionable-bold-foreground);
   --pill-borderColor: var(--salt-actionable-bold-borderColor);
-  cursor: var(--salt-selectable-cursor-hover);
+  cursor: var(--salt-cursor-hover);
 }
 
 .saltPill-clickable:hover,
@@ -47,6 +47,7 @@
 
 /* Style applied to Pill on focus */
 .saltPill:focus-visible {
+  cursor: var(--salt-cursor-active);
   outline: var(--salt-focused-outline);
 }
 
@@ -63,5 +64,5 @@
   --pill-color: var(--salt-actionable-bold-foreground-disabled);
   --pill-background: var(--salt-actionable-bold-background-disabled);
   --pill-borderColor: var(--salt-actionable-bold-borderColor-disabled);
-  cursor: var(--salt-actionable-cursor-disabled);
+  cursor: var(--salt-cursor-disabled);
 }

@@ -4,7 +4,7 @@
   min-width: 4em;
   width: 100%;
   background: var(--dropdown-background);
-  cursor: var(--salt-selectable-cursor-hover);
+  cursor: var(--salt-cursor-hover);
   min-height: var(--salt-size-base);
   border-radius: var(--salt-palette-corner-weak, 0);
   display: inline-flex;
@@ -158,19 +158,19 @@
 .saltDropdown:focus,
 .saltDropdown:focus:hover {
   background: var(--dropdown-background-active);
-  cursor: var(--salt-selectable-cursor-hover);
+  cursor: var(--salt-cursor-hover);
   outline: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--dropdown-outlineColor);
 }
 
 .saltDropdown.saltDropdown[aria-readonly="true"] {
   background: var(--dropdown-background-readonly);
-  cursor: var(--salt-selectable-cursor-readonly);
+  cursor: var(--salt-cursor-readonly);
 }
 
 .saltDropdown.saltDropdown:disabled,
 .saltDropdown.saltDropdown:disabled:hover {
   background: var(--dropdown-background-disabled);
-  cursor: var(--salt-selectable-cursor-disabled);
+  cursor: var(--salt-cursor-disabled);
   color: var(--salt-content-primary-foreground-disabled);
 }
 

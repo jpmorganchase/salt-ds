@@ -1,7 +1,7 @@
 .saltDraggable {
   background: transparent;
   box-shadow: var(--salt-overlayable-shadow-drag);
-  cursor: var(--salt-draggable-grab-cursor-active);
+  cursor: var(--salt-cursor-grabbing);
   position: absolute;
 }
 

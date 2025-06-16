@@ -72,7 +72,7 @@
 
 /* Styles applied to InteractableCard on focus */
 .saltInteractableCard:focus-visible {
-  cursor: var(--salt-selectable-cursor-hover);
+  cursor: var(--salt-cursor-hover);
   box-shadow: var(--salt-overlayable-shadow-hover);
   color: var(--saltInteractableCard-color-focus, var(--salt-content-primary-foreground));
   outline-color: var(--salt-focused-outlineColor);
@@ -84,13 +84,13 @@
 /* Styles applied on hover state to InteractableCard */
 @media (hover: hover) {
   .saltInteractableCard:hover {
-    cursor: var(--salt-selectable-cursor-hover);
+    cursor: var(--salt-cursor-hover);
     box-shadow: var(--salt-overlayable-shadow-hover);
     border-color: var(--salt-actionable-accented-borderColor-hover);
   }
 
   .saltInteractableCard-disabled:hover {
-    cursor: var(--salt-selectable-cursor-disabled);
+    cursor: var(--salt-cursor-disabled);
     box-shadow: none;
   }
 }
@@ -99,7 +99,7 @@
 .saltInteractableCard-selected,
 .saltInteractableCard:active,
 .saltInteractableCard-active {
-  cursor: var(--salt-selectable-cursor-hover);
+  cursor: var(--salt-cursor-hover);
   box-shadow: var(--salt-overlayable-shadow);
   border-color: var(--salt-actionable-accented-borderColor-active);
 }
@@ -110,7 +110,7 @@
 .saltInteractableCard-disabled:active {
   box-shadow: none;
   color: var(--salt-content-primary-foreground-disabled);
-  cursor: var(--salt-selectable-cursor-disabled);
+  cursor: var(--salt-cursor-disabled);
   outline: none;
   --card-accent-color: var(--salt-accent-background-disabled);
 }

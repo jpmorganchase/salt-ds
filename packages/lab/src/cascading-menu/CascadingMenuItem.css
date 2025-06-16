@@ -6,7 +6,7 @@
   justify-content: space-between;
 
   right: 0;
-  cursor: pointer;
+  cursor: var(--salt-cursor-hover);
   overflow: hidden;
   text-align: left;
   user-select: none;

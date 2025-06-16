@@ -93,12 +93,12 @@
   bottom: 0;
   width: 16px;
   background: transparent;
-  cursor: col-resize;
+  cursor: var(--salt-cursor-col-resize);
   z-index: 2;
 }
 
 .saltGridHeaderCell-sortable {
-  cursor: pointer;
+  cursor: var(--salt-cursor-hover);
 }
 
 .saltGridHeaderCell-sortingIcon {

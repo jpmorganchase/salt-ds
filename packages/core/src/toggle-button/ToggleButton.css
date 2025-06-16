@@ -51,14 +51,14 @@
 .saltToggleButton[aria-pressed="true"] {
   background: var(--toggleButton-background-selected);
   color: var(--toggleButton-text-color-selected);
-  cursor: var(--salt-actionable-cursor-active);
+  cursor: var(--salt-cursor-active);
   border-color: var(--toggleButton-borderColor-selected);
 }
 
 .saltToggleButton[aria-disabled="true"] {
   background: var(--toggleButton-background-disabled);
   color: var(--toggleButton-text-color-disabled);
-  cursor: var(--salt-actionable-cursor-disabled);
+  cursor: var(--salt-cursor-disabled);
   border-color: var(--toggleButton-borderColor-disabled);
 }
 
@@ -72,7 +72,7 @@
 .saltToggleButton.saltToggleButton-readOnly {
   background: var(--toggleButton-background-readonly);
   color: var(--toggleButton-text-color-readonly);
-  cursor: var(--salt-actionable-cursor-disabled);
+  cursor: var(--salt-cursor-disabled);
   border-color: var(--toggleButton-borderColor-readonly);
 }
 
