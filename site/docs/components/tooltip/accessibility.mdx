@@ -9,39 +9,46 @@ data:
 ---
 
 ## What is a tooltip
-A tooltip is a small pop up that displays on hover or focus that should only be used to provide extra (non-essential) information about a [form field](https://www.saltdesignsystem.com/salt/components/form-field/examples), a [link](https://www.saltdesignsystem.com/salt/components/link/examples), a [button](https://www.saltdesignsystem.com/salt/components/button/examples), or other focusable element.
+A tooltip is a small text only pop up that displays on hover or focus that should only be used to provide extra (non-essential) information about a [form field](https://www.saltdesignsystem.com/salt/components/form-field/examples), a [link](https://www.saltdesignsystem.com/salt/components/link/examples), a [button](https://www.saltdesignsystem.com/salt/components/button/examples), or other focusable element.
 
 ## Best practices
-*Tooltips must be triggered by both focus and hover events and remains on the screen as long as the trigger has the focus. The focus does not move to the tooltip.
-*Since a tooltip doesn't receive focus, don't include interactive elements as the user can't access them.
-*The expand/collapsed state is intentionally not exposed
-*Keep tool tips to a minimum and only when they provide extra (non-essential) information for the user.
+- Tooltips must be triggered by both focus and hover events and remains on the screen as long as the trigger has the focus or until the user dismisses it. 
+- Focus does not move to the tooltip. Since a tooltip doesn't receive focus, don't include interactive elements in the tooltip as the user can't access them.
+- Keep the text for a tooltip short and concise. Do not use a tool tip if you need to display a lot of text. Consider adding the message directly on the page or using [`Overlay`](../overlay), [`Dialog`](../dialog), or [`Banner`](../banner) instead.
+- The expand/collapsed state is intentionally not exposed.
+- Keep the use of tooltips to a minimum and use only when providing extra (non-essential) information for the user.
+- When the content of a tooltip isn't about an interactive UI element. Consider adding the message directly on the page or using [`Overlay`](../overlay), [`Dialog`](../dialog), or [`Banner`](../banner) instead.
 
 
 ## Anti-Pattern
-Never apply a tooltip to non-interactive elements. As a rule, non-operable elements shouldn't receive keyboard focus to avoid unnecessary navigation steps.
-A common anti-pattern is to use an (i) icon as the tooltip anchor however this isn't recommended for the following reasons:
+Never apply a tooltip to non-interactive elements. As a rule, non-operable elements shouldn't receive keyboard focus to avoid confusion and unnecessary navigation steps.
+A common anti-pattern is to use an (i) icon (non-interative element) as the tooltip anchor however this isn't recommended for the following reasons:
 
-- Icons do not receive focus by default
-- Adding `tabindex` to make the icon focusable introduces an additional tab stop 
+- Icons (and other non-interative elements) do not receive focus by default.
+- Adding `tabindex` to make the icon focusable introduces an additional tab stop.
+- An (i) icon or non-interative element will not provide an appropriate programmatic association to what it is visually associated with. These tooltips become an orphaned note that screen readers announce out of context.
+- Screen readers are designed to announce tool tips when a user focuses on an interactive element. When a tooltip is attached to a static element (even using `tabindex`) Screen readers may not reliably announce its content as it's not part of the expected interaction model.
 
-## Mobile Considerations
+
+## Mobile Consideration
+- Standard tooltips do not display on touch only devices.
 
 ## Keyboard interactions
 
 <KeyboardControls>
   <KeyboardControl keyOrCombos="Tab">
 
-    - Tooltips do not receive focus, so Tab does not move focus to the tooltip. Instead Tab moves focus to tooltip trigger elements like a button or link.
+    - Tooltips do not receive focus, so Tab does not move focus to the tooltip. Instead, Tab moves focus to the tooltip trigger element to display the tooltip.
 
   </KeyboardControl>
   <KeyboardControl keyOrCombos="Escape">
 
-    - If the tooltip is open, pressing Escape dismisses the tooltip.
+    - If the tooltip is displayed, pressing Escape dismisses the tooltip.
 
   </KeyboardControl>
 </KeyboardControls>
 
 
 ## Resources
+[ARIA Tooltip Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/tooltip/)
 [WCAG 1.4.13 Content on Hover or Focus](https://www.w3.org/TR/WCAG21/#content-on-hover-or-focus)
