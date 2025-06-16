@@ -19,14 +19,28 @@ A tooltip is a small pop up that displays on hover or focus that should only be 
 
 
 ## Anti-Pattern
-Never apply a tooltip to non-interactive elements. As a rule, non-operable elements should not receive keyboard focus to avoid unnecessary navigation steps.
-A common anti pattern is to use an (i) icon as the tooltip anchor however this is not recommended for the following reasons:
-* Icons do not receive focus by default
-* Adding `tabindex` to make the icon focusable introduces an addtional tab stop
-* 
+Never apply a tooltip to non-interactive elements. As a rule, non-operable elements shouldn't receive keyboard focus to avoid unnecessary navigation steps.
+A common anti-pattern is to use an (i) icon as the tooltip anchor however this isn't recommended for the following reasons:
+
+- Icons do not receive focus by default
+- Adding `tabindex` to make the icon focusable introduces an additional tab stop 
 
 ## Mobile Considerations
-* 
+
+## Keyboard interactions
+
+<KeyboardControls>
+  <KeyboardControl keyOrCombos="Tab">
+
+    - Tooltips do not receive focus, so Tab does not move focus to the tooltip. Instead Tab moves focus to tooltip trigger elements like a button or link.
+
+  </KeyboardControl>
+  <KeyboardControl keyOrCombos="Escape">
+
+    - If the tooltip is open, pressing Escape dismisses the tooltip.
+
+  </KeyboardControl>
+</KeyboardControls>
 
 
 ## Resources
