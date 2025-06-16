@@ -7,7 +7,7 @@
   border-width: var(--saltButton-borderWidth, var(--salt-size-border, 0));
   border-radius: var(--saltButton-borderRadius, var(--salt-palette-corner-weak, 0));
   color: var(--saltButton-text-color, var(--button-text-color));
-  cursor: var(--saltButton-cursor, pointer);
+  cursor: var(--saltButton-cursor, var(--salt-cursor));
   display: inline-flex;
   gap: var(--salt-spacing-50);
   justify-content: var(--saltButton-justifyContent, center);

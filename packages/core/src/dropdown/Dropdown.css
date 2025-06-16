@@ -4,7 +4,7 @@
   min-width: 4em;
   width: 100%;
   background: var(--dropdown-background);
-  cursor: var(--salt-cursor-hover);
+  cursor: var(--salt-cursor);
   min-height: var(--salt-size-base);
   border-radius: var(--salt-palette-corner-weak, 0);
   display: inline-flex;
@@ -22,6 +22,7 @@
 
 .saltDropdown:hover {
   background: var(--dropdown-background-hover);
+  cursor: var(--salt-cursor-hover);
 }
 
 .saltDropdown-bordered.saltDropdown {

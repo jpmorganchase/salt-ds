@@ -25,7 +25,7 @@
 
 .saltListItem {
   color: var(--list-item-text-color);
-  cursor: var(--saltList-item-cursor, pointer);
+  cursor: var(--saltList-item-cursor, var(--salt-cursor));
   background: var(--saltList-item-background, var(--list-item-background));
   font-size: var(--salt-text-fontSize);
   text-align: var(--salt-text-textAlign);
