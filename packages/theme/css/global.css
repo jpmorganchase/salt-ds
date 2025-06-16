@@ -3,6 +3,7 @@
  */
 
 .salt-theme {
+  cursor: var(--salt-cursor);
   color: var(--salt-content-primary-foreground);
   font-family: var(--salt-text-fontFamily);
   font-size: var(--salt-text-fontSize);
