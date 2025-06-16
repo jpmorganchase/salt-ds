@@ -11,10 +11,13 @@ data:
 Digital accessibility is a shared responsibility and while the standard behavior and attributes for a tooltip are already handled for you as part of our component, product teams are responsible for implementing the component correctly and ensuring their digital products meet all current accessibility requirements.
 
 ## What is a tooltip
-A tooltip is a non-modal overlay that is hidden by default and displays text-only content on hover or focus. It should only be used to provide extra (non-essential) information about a [`Form Field`](../Form-Field), a [`Link`](../Link), a [`Button`](../Button), or other interactive element.
+A tooltip is a non-modal overlay that is hidden by default and displays text-only content on hover or focus. It should only be used to provide extra (non-essential) information about a [`Form Field`](../form-field), a [`Link`](../link), a [`Button`](../button), or other interactive element.
 
 ## Best practices
-- Tooltips must be triggered by both focus and hover events and remains on the screen as long as the trigger has the focus or until the user dismisses it. 
+- Tooltips are triggered by both focus and hover events and remain visible and persistent until:
+  - Hover or focus is removed from the trigger element
+  - The user manually dismisses it (e.g.`Esc` key)
+  - The content is no longer valid 
 - Focus does not move to the tooltip. Since a tooltip does not receive focus, do not include interactive elements in the tooltip as the user cannot access them.
 - Only one tooltip should be displayed at a time.
 - Keep the text for a tooltip short and concise.
@@ -37,7 +40,7 @@ A common anti-pattern is to use an (i) icon (non-interative element) as the tool
 
 
 ## Mobile Consideration
-Standard tooltips do not display on touch-only devices when attached to [`Links`](../Link), [`Buttons`](../Button) or non-interative elements and there is currently no workaround. That said, tooltips should display when attached to a [`Form Field`](../Form-Field).
+Standard tooltips do not display on touch-only devices when attached to [`Links`](../link), [`Buttons`](../button) or non-interative elements and there is currently no workaround. That said, tooltips should display when attached to a [`Form Field`](../form-field).
 
 ## Keyboard interactions
 
