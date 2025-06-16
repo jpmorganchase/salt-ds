@@ -1,7 +1,7 @@
 .saltSliderThumb {
   align-items: center;
   background: var(--salt-accent-borderColor);
-  cursor: var(--salt-cursor-hover);
+  cursor: var(--salt-cursor-grab);
   display: flex;
   height: var(--salt-size-selectable);
   outline: none;
@@ -14,6 +14,7 @@
 
 .saltSliderThumb-disabled {
   background: var(--salt-accent-borderColor-disabled);
+  cursor: var(--salt-cursor-disabled);
   pointer-events: none;
 }
 
@@ -26,13 +27,13 @@
 
 .saltSliderThumb:active,
 .saltSliderThumb-dragging {
-  cursor: var(--salt-cursor-active);
+  cursor: var(--salt-cursor-grabbing);
 }
 
 .saltSliderThumb-input {
   border: 0;
   appearance: none;
-  cursor: var(--salt-cursor-hover);
+  cursor: var(--salt-cursor-grab);
   height: var(--salt-size-base);
   left: var(--slider-progressPercentage);
   margin: 0;
