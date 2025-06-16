@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   ToggleButton,
   ToggleButtonGroup,
@@ -238,6 +239,22 @@ export const Bordered: StoryFn<ToggleButtonGroupStoryProps> = ({
       <ToggleButton appearance={appearance} value="review">
         Review
       </ToggleButton>
+    </ToggleButtonGroup>
+  );
+};
+
+export const Controlled: StoryFn<ToggleButtonGroupStoryProps> = () => {
+  const [selected, setSelected] = useState("hold");
+
+  return (
+    <ToggleButtonGroup
+      value={selected}
+      onChange={(event) => setSelected(event.currentTarget.value)}
+    >
+      <ToggleButton value="buy">Buy</ToggleButton>
+      <ToggleButton value="sell">Sell</ToggleButton>
+      <ToggleButton value="hold">Hold</ToggleButton>
+      <ToggleButton value="review">Review</ToggleButton>
     </ToggleButtonGroup>
   );
 };
