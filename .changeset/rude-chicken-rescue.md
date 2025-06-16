@@ -14,7 +14,7 @@ New cursor foundation
 + --salt-cursor-dragHorizontal
 + --salt-cursor-grab
 + --salt-cursor-grabbing
-+ --salt-cursor-delay
++ --salt-cursor-pending
 ```
 
 Deprecated the following cursor tokens:
