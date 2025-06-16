@@ -1,4 +1,3 @@
-import { useState } from "react";
 import {
   ToggleButton,
   ToggleButtonGroup,
@@ -14,6 +13,7 @@ import {
   VisibleIcon,
 } from "@salt-ds/icons";
 import type { Meta, StoryFn } from "@storybook/react-vite";
+import { useState } from "react";
 
 interface ToggleButtonGroupStoryProps extends ToggleButtonGroupProps {
   appearance?: ToggleButtonProps["appearance"];
