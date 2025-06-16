@@ -277,21 +277,24 @@ const fillPatternProps = [
 export const saltHCThemeOptions = {
     chart: {
         styledMode: true,
-        // backgroundColor: {
-        //     linearGradient: [0, 0, 500, 500],
-        //     stops: [
-        //         [0, 'rgb(255, 255, 255)'],
-        //         [1, 'rgb(240, 240, 255)']
-        //     ]
-        // },
         borderWidth: 20,
-        plotBackgroundColor: 'rgba(255, 255, 255, .9)',
-        plotShadow: true,
-        plotBorderWidth: 1
+        plotBorderWidth: 5
+    },
+    legend: {
+      layout: "horizontal",
+      verticalAlign: "bottom",
+      align: "center",
+      symbolWidth: 32,
+      margin: 24
     },
     yAxis: {
         title: {
-          margin: 40,
+          margin: 18,
+        }
+    },
+    xAxis: {
+        title: {
+          margin: 24,
         }
     },
     plotOptions: {
@@ -302,10 +305,6 @@ export const saltHCThemeOptions = {
         },
     },
     title: {
-        // text: "tymon beep bap bop",
-        margin: 100,
-        // style: {
-        //     color: "red",
-        // }
+        margin: 24,
     },
 }

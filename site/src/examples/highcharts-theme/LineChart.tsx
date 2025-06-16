@@ -5,7 +5,8 @@ import accessibility from "highcharts/modules/accessibility";
 import patternFill from "highcharts/modules/pattern-fill";
 
 accessibility(Highcharts);
-patternFill(Highcharts);
+// patternFill(Highcharts);
+
 
 const lineDataOptions = {
   chart: {
@@ -14,12 +15,6 @@ const lineDataOptions = {
   accessibility: {
     description:
       "A summary communicating the trends, insights, or patterns the chart is intended to provide in a couple sentences.",
-  },
-  legend: {
-    symbolWidth: 32,
-    align: "right",
-    verticalAlign: "middle",
-    layout: "vertical",
   },
   tooltip: {
     headerFormat: '<span class="title">{point.key}</span><br/>',
@@ -35,7 +30,12 @@ const lineDataOptions = {
     },
   },
   xAxis: {
-    description: "Time from 2011 to 2015",
+    title: {
+      text: "Time from 2011 to 2015",
+    },
+    accessibility: {
+      description: "Time from 2011 to 2015",
+    },
     categories: ["2011", "2012", "2013", "2014", "2015"],
     endOnTick: true,
     startOnTick: true,
@@ -76,8 +76,6 @@ const lineDataOptions = {
     },
   ],
 };
-
-console.log(Highcharts.getOptions());
 
 export const LineChart = () => {
   return (

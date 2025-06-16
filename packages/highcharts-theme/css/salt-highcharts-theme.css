@@ -18,20 +18,35 @@
   font-family: var(--salt-text-fontFamily);
 }
 
+.salt-highcharts-theme .highcharts-grid-line {
+  stroke: var(--salt-separable-tertiary-borderColor)
+}
+
 .salt-highcharts-theme .highcharts-title {
   fill: var(--salt-content-primary-foreground);
-  font-size: var(--salt-text-h2-fontSize);
+  font-size: var(--salt-text-h4-fontSize);
 }
 .salt-highcharts-theme .highcharts-subtitle,
 .salt-highcharts-theme .highcharts-axis-title,
 .salt-highcharts-theme .highcharts-axis-labels {
-  fill: var(--salt-content-primary-foreground);
+  fill: var(--salt-content-secondary-foreground);
   font-size: var(--salt-text-label-fontSize);
 }
+
+/* Deselected legend state, requires !important to override default styles */
+.salt-highcharts-theme .highcharts-legend-item-hidden * {
+  stroke: red !important;
+  fill: red !important;
+}
+
+
 .salt-highcharts-theme .highcharts-legend-item > text,
 .salt-highcharts-theme .highcharts-legend-item span {
-  fill: var(--salt-content-primary-foreground);
+  fill: var(--salt-content-secondary-foreground);
   font-size: var(--salt-text-label-fontSize);
+}
+.salt-highcharts-theme .highcharts-axis-line {
+  stroke: var(--salt-separable-primary-borderColor);
 }
 
 .salt-highcharts-theme .highcharts-data-label text,
