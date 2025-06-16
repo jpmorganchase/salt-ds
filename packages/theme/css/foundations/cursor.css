@@ -8,5 +8,5 @@
   --salt-cursor-dragHorizontal: col-resize;
   --salt-cursor-grab: grab;
   --salt-cursor-grabbing: grabbing;
-  --salt-cursor-progress: progress;
+  --salt-cursor-delay: progress;
 }
