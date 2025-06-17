@@ -5,24 +5,23 @@ sidebar:
   priority: 13
 ---
 
-Cursor is a CSS property that controls the mouse cursor when pointed over an element.
+Controls what the cursor looks like when positioned over a component. Cursor behaviours are only relevant in browsers and operating systems in which there is a mouse and cursor.
 
-Cursor is used as a visual cue to emphasise the meaning of elements, for example whether they are disabled or clickable.
-
-## Cursor
+## Cursor variants
 
 Salt provides cursor tokens that determine the mouse cursor when over an element.
 
-| Token                    | Value      |
-| ------------------------ | ---------- |
-| `-cursor-active`         | pointer    |
-| `-cursor-dragHorizontal` | col-resize |
-| `-cursor-disabled`       | disabled   |
-| `-cursor-grab`           | grab       |
-| `-cursor-grabbing`       | grabbing   |
-| `-cursor-hover`          | hover      |
-| `-cursor-progress`       | progress   |
-| `-cursor-dragVertical`   | row-resize |
-| `-cursor-text`           | text       |
+| Token              | Description                                                                                     | Value     |
+| ------------------ | ----------------------------------------------------------------------------------------------- | --------- |
+| `-cursor`          | The default cursor state                                                                        | pointer   |
+| `-cursor-hover`    | Hover states                                                                                    | hover     |
+| `-cursor-active`   | Active or selected states                                                                       | pointer   |
+| `-cursor-disabled` | Disabled or selected disabled states                                                            | disabled  |
+| `-cursor-drag-ns`  | Hover and active states of a draggable component restricted to vertical movement                | ns-resize |
+| `-cursor-drag-ew`  | Hover and active states of a draggable component restricted to horizontal movement              | ew-resize |
+| `-cursor-grab`     | Hover state of a draggable object                                                               | grab      |
+| `-cursor-grabbing` | Active state of a draggable object                                                              | grabbing  |
+| `-cursor-pending`  | indicates that the system is busy processing a task and the user should wait for it to complete | progress  |
+| `-cursor-text`     | Indicates where text can be inserted, selected or edited                                        | text      |
 
 :fragment{src="../fragments/feedback.mdx"}

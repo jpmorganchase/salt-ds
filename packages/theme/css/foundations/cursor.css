@@ -4,8 +4,8 @@
   --salt-cursor-disabled: not-allowed;
   --salt-cursor-hover: pointer;
   --salt-cursor-text: text;
-  --salt-cursor-dragVertical: row-resize;
-  --salt-cursor-dragHorizontal: col-resize;
+  --salt-cursor-drag-ns: ns-resize;
+  --salt-cursor-drag-ew: ew-resize;
   --salt-cursor-grab: grab;
   --salt-cursor-grabbing: grabbing;
   --salt-cursor-pending: progress;
