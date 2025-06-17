@@ -132,6 +132,21 @@ Salt offers six libraries in Figma. Install the library that best suits your nee
 
 If you are migrating from other libraries, including Salt (Next), Salt Light, Dark libraries, and UITK, please refer to our [migration guide](https://go/salt-ds-internal/migration-strategies/salt-ds-figma-libraries/index) (JPMC employees only).
 
+## What are Salt Figma Template components?
+
+Salt Templates are created and published as Figma components with some basic configuration props to create a starting point in designs. They are designed to be configured, detached, and reused (i.e. adding or removing elements within the templates).
+
+## Salt Design Asset Definitions
+
+This table shows the definitions of different Salt design assets in Figma:
+
+| Product Terms  | Figma Terms (mechanisms)             | Definition                                                                                                        | Code Equivalent                                                                          |
+| -------------- | ------------------------------------ | ----------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------- | 
+| Salt Component | 1. Component                         | Created as Figma components that shouldn't be detached, with configurations driven by the props.                  | Component code in Salt site [component page](/salt/components/index/).                   | 
+|                | 2. (Component) Template              | Created as Figma components that are designed to have flexibility to detach, with some basic configuration props. | Example code in Salt site [component page](/salt/components/index/).                     |
+| Salt Pattern   | 1. (Pattern) Template                | Created as Figma components that are designed to be detached if needed, with some basic configuration props.      | Some examples provided in Salt site [pattern page](/salt/patterns/index/).               | 
+|                | 2. Stickersheets (not componentised) | Examples provided as Figma design frames that you can copy and paste to use as a starting point in your designs.  | Some examples provided in Storybook and Salt site [pattern page](/salt/patterns/index/). | 
+
 ## Need further assistance?
 
 If you encounter any issues or need additional help despite following the guide, please don’t hesitate to reach out. Our support team is here to assist you.
