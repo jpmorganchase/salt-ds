@@ -7,3 +7,11 @@
   margin: 0;
   --x: 0;
 }
+
+.saltVerticalNavigation .saltCollapsiblePanel-inner {
+  border-bottom: var(--salt-size-border) var(--salt-separable-borderStyle) var(--salt-separable-tertiary-borderColor);
+}
+
+.saltCollapsiblePanel-inner .saltCollapsiblePanel-inner {
+  border-bottom: none;
+}
