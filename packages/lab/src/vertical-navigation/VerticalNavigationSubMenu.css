@@ -1,12 +1,10 @@
 .saltVerticalNavigationSubMenu {
   display: flex;
   flex-direction: column;
-  gap: var(--salt-size-border);
+  gap: var(--salt-spacing-fixed-100);
   list-style: none;
-  padding: 0;
-  padding-top: var(--salt-size-border);
+  padding: var(--salt-spacing-fixed-100) 0 0;
   margin: 0;
-  --x: calc(var(--y));
 }
 
 .saltVerticalNavigationSubMenu .saltVerticalNavigationItemContent {

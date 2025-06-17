@@ -1,4 +1,4 @@
-.saltVerticalNavigationItem-trigger {
+.saltVerticalNavigationItemTrigger {
   all: unset;
   padding: var(--salt-spacing-75) 0;
   display: flex;
@@ -6,7 +6,7 @@
   width: 100%;
 }
 
-.saltVerticalNavigationItem-trigger::before {
+.saltVerticalNavigationItemTrigger::before {
   content: "";
   position: absolute;
   width: 100%;

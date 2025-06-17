@@ -3,10 +3,10 @@ import type { IconProps } from "@salt-ds/icons";
 import { useCollapsibleContext } from "../collapsible/CollapsibleContext";
 
 export const VerticalNavigationItemExpansionIcon = (props: IconProps) => {
-  const { ExpandGroupIcon, CollapseGroupIcon } = useIcon();
+  const { CollapseIcon, ExpandIcon } = useIcon();
   const iconExpansionMap = {
-    expanded: CollapseGroupIcon,
-    collapsed: ExpandGroupIcon,
+    expanded: CollapseIcon,
+    collapsed: ExpandIcon,
   };
 
   const { expanded } = useCollapsibleContext();

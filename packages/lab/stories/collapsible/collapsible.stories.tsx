@@ -1,10 +1,4 @@
 import {
-  Collapsible,
-  CollapsibleTrigger,
-  CollapsiblePanel,
-} from "@salt-ds/lab";
-import type { StoryFn } from "@storybook/react";
-import {
   Avatar,
   Button,
   Card,
@@ -17,7 +11,6 @@ import {
   Text,
   Tooltip,
 } from "@salt-ds/core";
-import persona from "@stories/assets/avatar.png";
 import {
   CallIcon,
   ChatIcon,
@@ -27,6 +20,13 @@ import {
   MessageIcon,
   UserIcon,
 } from "@salt-ds/icons";
+import {
+  Collapsible,
+  CollapsiblePanel,
+  CollapsibleTrigger,
+} from "@salt-ds/lab";
+import persona from "@stories/assets/avatar.png";
+import type { StoryFn } from "@storybook/react";
 import { useState } from "react";
 
 export default {

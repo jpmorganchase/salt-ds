@@ -1,3 +1,5 @@
+import { makePrefixer, useControlled } from "@salt-ds/core";
+import { clsx } from "clsx";
 import {
   type ComponentPropsWithoutRef,
   forwardRef,
@@ -5,9 +7,7 @@ import {
   useCallback,
   useMemo,
 } from "react";
-import { makePrefixer, useControlled } from "@salt-ds/core";
 import { CollapsibleContext } from "./CollapsibleContext";
-import { clsx } from "clsx";
 
 export interface CollapsibleProps
   extends Omit<ComponentPropsWithoutRef<"div">, "onToggle"> {
