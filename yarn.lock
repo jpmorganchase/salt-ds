@@ -1039,10 +1039,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@biomejs/wasm-nodejs@npm:1.9.4":
-  version: 1.9.4
-  resolution: "@biomejs/wasm-nodejs@npm:1.9.4"
-  checksum: 10/77cf4ae4228bcb04e17a2ec4330f79a70b646000534e84c8a7eea40d14a1043eaed63a7406f66260ccf4e05687b1b076f04e28e54530439a67251e107fffeb8e
+"@biomejs/wasm-nodejs@npm:2.0.0":
+  version: 2.0.0
+  resolution: "@biomejs/wasm-nodejs@npm:2.0.0"
+  checksum: 10/7d3a29cd4ef7f95c0f8e56fae2f31d5c1ceea435a0783ca78e17bb2cb59dbd8ba92bfd555d47804de1115982043ea5a02debb612a98e32516bd4ccc6410807aa
   languageName: node
   linkType: hard
 
@@ -3286,7 +3286,7 @@ __metadata:
   dependencies:
     "@biomejs/biome": "npm:1.9.4"
     "@biomejs/js-api": "npm:0.7.1"
-    "@biomejs/wasm-nodejs": "npm:1.9.4"
+    "@biomejs/wasm-nodejs": "npm:2.0.0"
     "@changesets/cli": "npm:^2.27.12"
     "@cypress/code-coverage": "npm:^3.13.6"
     "@faker-js/faker": "npm:^8.0.0"
