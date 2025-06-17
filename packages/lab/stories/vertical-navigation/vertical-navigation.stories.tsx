@@ -1,4 +1,4 @@
-import { Button } from "@salt-ds/core";
+import { Button, H4, StackLayout } from "@salt-ds/core";
 import {
   Collapsible,
   CollapsiblePanel,
@@ -20,6 +20,7 @@ import {
   createRouter,
   useLocation,
 } from "@tanstack/react-router";
+import type { ComponentPropsWithoutRef } from "react";
 
 const memoryHistory = createMemoryHistory({
   initialEntries: ["/"], // Pass your initial url
@@ -46,34 +47,47 @@ export default {
   ],
 } as Meta<typeof VerticalNavigation>;
 
-const simple = [
+type NavItem = {
+  title: string;
+  href: string;
+  children?: NavItem[];
+};
+
+const simple: NavItem[] = [
   {
-    title: "Level 0 - A",
-    href: "/level0-a",
+    title: "Home",
+    href: "/",
   },
   {
-    title: "Level 0 - B",
-    href: "/level0-b",
+    title: "Products",
+    href: "/products",
   },
   {
-    title: "Level 0 - C",
-    href: "/level0-c",
+    title: "About Us",
+    href: "/about",
   },
   {
-    title: "Level 0 - D",
-    href: "/level0-d",
+    title: "Blog",
+    href: "/blog",
+  },
+  {
+    title: "Careers",
+    href: "/careers",
   },
 ];
 
-function TanstackTrigger(props) {
-  return <VerticalNavigationItemTrigger render={<Link />} {...props} />;
+function TanstackTrigger(props: ComponentPropsWithoutRef<typeof Link>) {
+  const { to, ...rest } = props;
+
+  // @ts-ignore
+  return <VerticalNavigationItemTrigger render={<Link to={to} />} {...rest} />;
 }
 
-export const Default: StoryFn<typeof VerticalNavigation> = () => {
+export const Default: StoryFn<typeof VerticalNavigation> = (args) => {
   const location = useLocation();
 
   return (
-    <VerticalNavigation>
+    <VerticalNavigation {...args}>
       {simple.map((item) => (
         <VerticalNavigationItem
           key={item.title}
@@ -88,57 +102,83 @@ export const Default: StoryFn<typeof VerticalNavigation> = () => {
   );
 };
 
-const nested = [
+const nested: NavItem[] = [
   {
-    title: "Level 0 - A",
-    href: "/level0-a",
+    title: "Products",
+    href: "/products",
     children: [
-      { title: "Level 1 - A", href: "/level1-a" },
-      { title: "Level 1 - B", href: "/level1-b" },
+      { title: "Widgets", href: "/products/widgets" },
+      { title: "Gadgets", href: "/products/gadgets" },
+      { title: "Doodads", href: "/products/doodads" },
     ],
   },
   {
-    title: "Level 0 - B",
-    href: "/level0-b",
+    title: "About Us",
+    href: "/about",
+    children: [
+      { title: "Our Story", href: "/about/story" },
+      { title: "Our Team", href: "/about/team" },
+      { title: "Press", href: "/about/press" },
+    ],
+  },
+  {
+    title: "Support",
+    href: "/support",
+  },
+  {
+    title: "Contact",
+    href: "/contact",
   },
 ];
 
-const multiLevel = [
+const multiLevel: NavItem[] = [
   {
-    title: "Level 0 - A",
-    href: "/level0-a",
+    title: "Solutions",
+    href: "/solutions",
     children: [
-      { title: "Level 1 - A", href: "/level1-a" },
-      { title: "Level 1 - B", href: "/level1-b" },
-    ],
-  },
-  {
-    title: "Level 0 - B",
-    href: "/level0-b",
-    children: [
-      { title: "Level 1 - C", href: "/level1-c" },
       {
-        title: "Level 1 - D",
-        href: "/level1-d",
+        title: "By Industry",
+        href: "/solutions/by-industry",
         children: [
-          { title: "Level 2 - A", href: "/level2-a" },
-          { title: "Level 2 - B", href: "/level2-b" },
-          { title: "Level 2 - C", href: "/level2-c" },
+          { title: "Healthcare", href: "/solutions/by-industry/healthcare" },
+          { title: "Finance", href: "/solutions/by-industry/finance" },
+          { title: "Education", href: "/solutions/by-industry/education" },
+        ],
+      },
+      {
+        title: "By Business Size",
+        href: "/solutions/by-size",
+        children: [
+          { title: "Startups", href: "/solutions/by-size/startups" },
+          {
+            title: "Small & Medium Business",
+            href: "/solutions/by-size/smb",
+          },
+          { title: "Enterprise", href: "/solutions/by-size/enterprise" },
         ],
       },
     ],
   },
+  {
+    title: "Company",
+    href: "/company",
+    children: [
+      { title: "About Us", href: "/company/about" },
+      { title: "Careers", href: "/company/careers" },
+      { title: "Press Center", href: "/company/press" },
+    ],
+  },
 ];
 
-function NestedItem(props) {
+function NestedItem(props: { item: NavItem }) {
   const { item } = props;
 
   const location = useLocation();
 
-  if (item.children?.length > 0) {
+  if (Array.isArray(item.children) && item.children.length > 0) {
     return (
       <Collapsible>
-        <VerticalNavigationItem active={location.pathname === item.href}>
+        <VerticalNavigationItem>
           <VerticalNavigationItemContent>
             <CollapsibleTrigger render={<VerticalNavigationItemTrigger />}>
               {item.title} <VerticalNavigationItemExpansionIcon />
@@ -165,9 +205,9 @@ function NestedItem(props) {
   );
 }
 
-export const NestedCollapse: StoryFn<typeof VerticalNavigation> = () => {
+export const NestedCollapse: StoryFn<typeof VerticalNavigation> = (args) => {
   return (
-    <VerticalNavigation>
+    <VerticalNavigation {...args}>
       {nested.map((item) => (
         <NestedItem key={item.title} item={item} />
       ))}
@@ -175,11 +215,11 @@ export const NestedCollapse: StoryFn<typeof VerticalNavigation> = () => {
   );
 };
 
-export const MultipleLevelsCollapse: StoryFn<
-  typeof VerticalNavigation
-> = () => {
+export const MultipleLevelsCollapse: StoryFn<typeof VerticalNavigation> = (
+  args,
+) => {
   return (
-    <VerticalNavigation>
+    <VerticalNavigation {...args}>
       {multiLevel.map((item) => (
         <NestedItem key={item.title} item={item} />
       ))}
@@ -187,48 +227,47 @@ export const MultipleLevelsCollapse: StoryFn<
   );
 };
 
-export const Nested: StoryFn<typeof VerticalNavigation> = () => {
+export const Nested: StoryFn<typeof VerticalNavigation> = (args) => {
+  const location = useLocation();
+
   return (
-    <VerticalNavigation>
-      <VerticalNavigationItem>
-        <VerticalNavigationItemContent>
-          <TanstackTrigger>Level 0 - A</TanstackTrigger>
-        </VerticalNavigationItemContent>
-        <VerticalNavigationSubMenu>
-          <VerticalNavigationItem active>
-            <VerticalNavigationItemContent>
-              <TanstackTrigger>Level 1 - A</TanstackTrigger>
-            </VerticalNavigationItemContent>
-          </VerticalNavigationItem>
-          <VerticalNavigationItem>
-            <VerticalNavigationItemContent>
-              <TanstackTrigger>Level 1 - B</TanstackTrigger>
-            </VerticalNavigationItemContent>
+    <VerticalNavigation {...args}>
+      {nested.map((item) => (
+        <VerticalNavigationItem
+          key={item.title}
+          active={location.pathname.startsWith(item.href)}
+        >
+          <VerticalNavigationItemContent>
+            <TanstackTrigger to={item.href}>{item.title}</TanstackTrigger>
+          </VerticalNavigationItemContent>
+          {item.children && (
             <VerticalNavigationSubMenu>
-              <VerticalNavigationItem>
-                <VerticalNavigationItemContent>
-                  <TanstackTrigger>Level 2 - A</TanstackTrigger>
-                </VerticalNavigationItemContent>
-              </VerticalNavigationItem>
-              <VerticalNavigationItem>
-                <VerticalNavigationItemContent>
-                  <TanstackTrigger>Level 2 - B</TanstackTrigger>
-                </VerticalNavigationItemContent>
-              </VerticalNavigationItem>
+              {item.children.map((child) => (
+                <VerticalNavigationItem
+                  key={child.title}
+                  active={location.pathname === child.href}
+                >
+                  <VerticalNavigationItemContent>
+                    <TanstackTrigger to={child.href}>
+                      {child.title}
+                    </TanstackTrigger>
+                  </VerticalNavigationItemContent>
+                </VerticalNavigationItem>
+              ))}
             </VerticalNavigationSubMenu>
-          </VerticalNavigationItem>
-        </VerticalNavigationSubMenu>
-      </VerticalNavigationItem>
+          )}
+        </VerticalNavigationItem>
+      ))}
     </VerticalNavigation>
   );
 };
 
-function MultiActionItem(props) {
+function MultiActionItem(props: { item: NavItem }) {
   const { item } = props;
 
   const location = useLocation();
 
-  if (item.children?.length > 0) {
+  if (Array.isArray(item.children) && item.children.length > 0) {
     return (
       <Collapsible>
         <VerticalNavigationItem active={location.pathname === item.href}>
@@ -259,12 +298,48 @@ function MultiActionItem(props) {
   );
 }
 
-export const MultiAction: StoryFn<typeof VerticalNavigation> = () => {
+export const MultiAction: StoryFn<typeof VerticalNavigation> = (args) => {
   return (
-    <VerticalNavigation>
+    <VerticalNavigation {...args}>
       {multiLevel.map((item) => (
         <MultiActionItem key={item.title} item={item} />
       ))}
     </VerticalNavigation>
+  );
+};
+
+export const Groups: StoryFn<typeof VerticalNavigation> = (args) => {
+  const location = useLocation();
+
+  return (
+    <StackLayout gap={2}>
+      <StackLayout gap={0.5}>
+        <H4 style={{ margin: 0 }} color="secondary">
+          Group One
+        </H4>
+        <VerticalNavigation {...args}>
+          {simple.map((item) => (
+            <VerticalNavigationItem
+              key={item.title}
+              active={location.pathname === item.href}
+            >
+              <VerticalNavigationItemContent>
+                <TanstackTrigger to={item.href}>{item.title}</TanstackTrigger>
+              </VerticalNavigationItemContent>
+            </VerticalNavigationItem>
+          ))}
+        </VerticalNavigation>
+      </StackLayout>
+      <StackLayout gap={0.5}>
+        <H4 style={{ margin: 0 }} color="secondary">
+          Group Two
+        </H4>
+        <VerticalNavigation {...args}>
+          {nested.map((item) => (
+            <NestedItem key={item.title} item={item} />
+          ))}
+        </VerticalNavigation>
+      </StackLayout>
+    </StackLayout>
   );
 };

@@ -6,7 +6,9 @@ import { type ComponentPropsWithoutRef, forwardRef } from "react";
 import verticalNavigationCss from "./VerticalNavigation.css";
 
 export interface VerticalNavigationProps
-  extends ComponentPropsWithoutRef<"ul"> {}
+  extends ComponentPropsWithoutRef<"ul"> {
+  appearance?: "transparent" | "bordered";
+}
 
 const withBaseName = makePrefixer("saltVerticalNavigation");
 
@@ -14,7 +16,7 @@ export const VerticalNavigation = forwardRef<
   HTMLUListElement,
   VerticalNavigationProps
 >(function VerticalNavigation(props, ref) {
-  const { className, ...rest } = props;
+  const { appearance = "transparent", className, ...rest } = props;
 
   const targetWindow = useWindow();
   useComponentCssInjection({
@@ -23,5 +25,11 @@ export const VerticalNavigation = forwardRef<
     window: targetWindow,
   });
 
-  return <ul ref={ref} className={clsx(withBaseName(), className)} {...rest} />;
+  return (
+    <ul
+      ref={ref}
+      className={clsx(withBaseName(), withBaseName(appearance), className)}
+      {...rest}
+    />
+  );
 });
