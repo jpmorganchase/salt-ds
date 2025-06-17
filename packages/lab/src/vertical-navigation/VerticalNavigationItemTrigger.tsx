@@ -1,14 +1,26 @@
-import { renderProps } from "@salt-ds/core";
+import { type RenderPropsType, makePrefixer, renderProps } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
+import { type ComponentPropsWithoutRef, forwardRef } from "react";
 import verticalNavigationItemTriggerCss from "./VerticalNavigationItemTrigger.css";
 
-function ItemAction(props) {
+// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+function ItemAction(props: any) {
   return renderProps("a", props);
 }
 
-export function VerticalNavigationItemTrigger(props) {
+export interface VerticalNavigationItemTriggerProps
+  extends ComponentPropsWithoutRef<"a"> {
+  render?: RenderPropsType["render"];
+}
+
+const withBaseName = makePrefixer("saltVerticalNavigationItemTrigger");
+
+export const VerticalNavigationItemTrigger = forwardRef<
+  HTMLAnchorElement,
+  VerticalNavigationItemTriggerProps
+>(function VerticalNavigationItemTrigger(props) {
   const { className, children, render, href, ...rest } = props;
 
   const targetWindow = useWindow();
@@ -22,7 +34,7 @@ export function VerticalNavigationItemTrigger(props) {
 
   return (
     <ItemAction
-      className={clsx("saltVerticalNavigationItem-trigger", className)}
+      className={clsx(withBaseName(), className)}
       href={href}
       render={render ?? (isLink ? undefined : <button type="button" />)}
       {...rest}
@@ -30,4 +42,4 @@ export function VerticalNavigationItemTrigger(props) {
       {children}
     </ItemAction>
   );
-}
+});

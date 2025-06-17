@@ -29,27 +29,37 @@
   font-size: var(--salt-text-h4-fontSize);
 }
 
-.saltVerticalNavigationItemContent:hover .saltVerticalNavigationItem-trigger::before {
+.saltVerticalNavigationItemContent:hover .saltVerticalNavigationItemTrigger::before {
   background: var(--salt-palette-alpha-contrast-lowest);
   font-weight: var(--salt-text-h4-fontWeight);
 }
 
-.saltVerticalNavigationItemContent-active {
+.saltVerticalNavigation-transparent .saltVerticalNavigationItemContent-active {
   background: var(--salt-selectable-background-hover);
   font-weight: var(--salt-text-h4-fontWeight);
 }
 
-.saltVerticalNavigationItemContent-active::before {
-  background: var(--salt-navigable-indicator-active);
-}
-
-.saltVerticalNavigationItemContent::before {
+.saltVerticalNavigation-transparent .saltVerticalNavigationItemContent::before {
   left: var(--salt-spacing-50);
   content: "";
   position: absolute;
   height: var(--salt-size-base);
   border-radius: var(--salt-palette-corner-strongest);
   width: var(--salt-size-indicator);
+}
+
+.saltVerticalNavigation-transparent .saltVerticalNavigationItemContent-active::before {
+  background: var(--salt-navigable-indicator-active);
+}
+
+.saltVerticalNavigation-bordered .saltVerticalNavigationItemContent {
+  border: var(--salt-size-border) var(--salt-separable-borderStyle) transparent;
+}
+
+.saltVerticalNavigation-bordered .saltVerticalNavigationItemContent-active {
+  background: var(--salt-selectable-background-hover);
+  border-color: var(--salt-selectable-borderColor-selected);
+  font-weight: var(--salt-text-h4-fontWeight);
 }
 
 .saltVerticalNavigationItemContent .saltVerticalNavigationItem-indicator {
