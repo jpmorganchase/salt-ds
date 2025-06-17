@@ -1,8 +1,8 @@
-import { type ComponentPropsWithoutRef, useEffect } from "react";
 import { makePrefixer, useId } from "@salt-ds/core";
-import { clsx } from "clsx";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
+import { clsx } from "clsx";
+import { type ComponentPropsWithoutRef, useEffect } from "react";
 
 import { useCollapsibleContext } from "./CollapsibleContext";
 import collapsiblePanelCss from "./CollapsiblePanel.css";

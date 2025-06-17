@@ -1,13 +1,13 @@
 import {
   type ComponentPropsWithoutRef,
-  forwardRef,
-  type ReactNode,
   type MouseEvent,
+  type ReactNode,
+  forwardRef,
 } from "react";
 
-import { useCollapsibleContext } from "./CollapsibleContext";
-import { makePrefixer, renderProps, type RenderPropsType } from "@salt-ds/core";
+import { type RenderPropsType, makePrefixer, renderProps } from "@salt-ds/core";
 import { clsx } from "clsx";
+import { useCollapsibleContext } from "./CollapsibleContext";
 
 export interface CollapsibleTriggerProps
   extends ComponentPropsWithoutRef<"button"> {
