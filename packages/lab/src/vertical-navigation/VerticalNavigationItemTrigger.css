@@ -1,0 +1,16 @@
+.saltVerticalNavigationItem-trigger {
+  all: unset;
+  padding: var(--salt-spacing-75) 0;
+  display: flex;
+  gap: var(--salt-spacing-100);
+  width: 100%;
+}
+
+.saltVerticalNavigationItem-trigger::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+}
