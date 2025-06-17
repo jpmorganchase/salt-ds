@@ -41,7 +41,7 @@
   },
   "dependencies": {
     "@biomejs/biome": "1.9.4",
-    "@biomejs/js-api": "0.7.1",
+    "@biomejs/js-api": "1.0.0",
     "@biomejs/wasm-nodejs": "1.9.4",
     "@changesets/cli": "^2.27.12",
     "@cypress/code-coverage": "^3.13.6",
