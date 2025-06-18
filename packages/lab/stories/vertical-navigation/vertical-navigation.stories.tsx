@@ -1,4 +1,13 @@
-import { Button, Divider, H4, StackLayout } from "@salt-ds/core";
+import {
+  Button,
+  Divider,
+  H4,
+  Menu,
+  MenuItem,
+  MenuPanel,
+  MenuTrigger,
+  StackLayout,
+} from "@salt-ds/core";
 import {
   Collapsible,
   CollapsiblePanel,
@@ -20,8 +29,15 @@ import {
   createRouter,
   useLocation,
 } from "@tanstack/react-router";
-import type { ComponentPropsWithoutRef } from "react";
+import { type ComponentPropsWithoutRef, useState } from "react";
 import "./vertical-navigation.stories.css";
+import {
+  HelpSolidIcon,
+  MessageSolidIcon,
+  MicroMenuIcon,
+  StorageSolidIcon,
+  UserGroupSolidIcon,
+} from "@salt-ds/icons";
 
 const memoryHistory = createMemoryHistory({
   initialEntries: ["/"], // Pass your initial url
@@ -51,6 +67,7 @@ export default {
 type NavItem = {
   title: string;
   href: string;
+  icon?: React.ReactNode;
   children?: NavItem[];
 };
 
@@ -107,6 +124,7 @@ const nested: NavItem[] = [
   {
     title: "Products",
     href: "/products",
+    icon: <StorageSolidIcon aria-hidden />,
     children: [
       { title: "Widgets", href: "/products/widgets" },
       { title: "Gadgets", href: "/products/gadgets" },
@@ -116,6 +134,7 @@ const nested: NavItem[] = [
   {
     title: "About Us",
     href: "/about",
+    icon: <UserGroupSolidIcon aria-hidden />,
     children: [
       { title: "Our Story", href: "/about/story" },
       { title: "Our Team", href: "/about/team" },
@@ -125,10 +144,12 @@ const nested: NavItem[] = [
   {
     title: "Support",
     href: "/support",
+    icon: <HelpSolidIcon aria-hidden />,
   },
   {
     title: "Contact",
     href: "/contact",
+    icon: <MessageSolidIcon aria-hidden />,
   },
 ];
 
@@ -175,11 +196,14 @@ function NestedItem(props: { item: NavItem }) {
   const { item } = props;
 
   const location = useLocation();
+  const [collapsed, setCollapsed] = useState(false);
 
   if (Array.isArray(item.children) && item.children.length > 0) {
     return (
-      <Collapsible>
-        <VerticalNavigationItem>
+      <Collapsible onToggle={(_, expanded) => setCollapsed(!expanded)}>
+        <VerticalNavigationItem
+          active={location.href.startsWith(item.href) && collapsed}
+        >
           <VerticalNavigationItemContent>
             <CollapsibleTrigger render={<VerticalNavigationItemTrigger />}>
               {item.title} <VerticalNavigationItemExpansionIcon />
@@ -242,27 +266,108 @@ export const Nested: StoryFn<typeof VerticalNavigation> = (args) => {
             <TanstackTrigger to={item.href}>{item.title}</TanstackTrigger>
           </VerticalNavigationItemContent>
           {item.children && (
-            <>
-              <VerticalNavigationSubMenu>
-                {item.children.map((child) => (
-                  <VerticalNavigationItem
-                    key={child.title}
-                    active={location.pathname === child.href}
-                  >
-                    <VerticalNavigationItemContent>
-                      <TanstackTrigger to={child.href}>
-                        {child.title}
-                      </TanstackTrigger>
-                    </VerticalNavigationItemContent>
-                  </VerticalNavigationItem>
-                ))}
-              </VerticalNavigationSubMenu>
+            <VerticalNavigationSubMenu>
+              {item.children.map((child) => (
+                <VerticalNavigationItem
+                  key={child.title}
+                  active={location.pathname === child.href}
+                >
+                  <VerticalNavigationItemContent>
+                    <TanstackTrigger to={child.href}>
+                      {child.title}
+                    </TanstackTrigger>
+                  </VerticalNavigationItemContent>
+                </VerticalNavigationItem>
+              ))}
               <Divider variant="tertiary" />
-            </>
+            </VerticalNavigationSubMenu>
           )}
         </VerticalNavigationItem>
       ))}
     </VerticalNavigation>
+  );
+};
+
+function ExpandButtonItem(props: { item: NavItem }) {
+  const { item } = props;
+
+  const location = useLocation();
+
+  if (Array.isArray(item.children) && item.children.length > 0) {
+    return (
+      <Collapsible>
+        <VerticalNavigationItem active={location.pathname === item.href}>
+          <VerticalNavigationItemContent>
+            <TanstackTrigger to={item.href}>{item.title}</TanstackTrigger>
+            <CollapsibleTrigger render={<Button appearance="transparent" />}>
+              <VerticalNavigationItemExpansionIcon />
+            </CollapsibleTrigger>
+          </VerticalNavigationItemContent>
+          <CollapsiblePanel>
+            <VerticalNavigationSubMenu>
+              {item.children.map((child) => (
+                <ExpandButtonItem key={child.title} item={child} />
+              ))}
+            </VerticalNavigationSubMenu>
+          </CollapsiblePanel>
+        </VerticalNavigationItem>
+      </Collapsible>
+    );
+  }
+
+  return (
+    <VerticalNavigationItem active={location.pathname === item.href}>
+      <VerticalNavigationItemContent>
+        <TanstackTrigger to={item.href}>{item.title}</TanstackTrigger>
+      </VerticalNavigationItemContent>
+    </VerticalNavigationItem>
+  );
+}
+
+export const ExpandButton: StoryFn<typeof VerticalNavigation> = (args) => {
+  return (
+    <VerticalNavigation {...args}>
+      {multiLevel.map((item) => (
+        <ExpandButtonItem key={item.title} item={item} />
+      ))}
+    </VerticalNavigation>
+  );
+};
+
+export const Groups: StoryFn<typeof VerticalNavigation> = (args) => {
+  const location = useLocation();
+
+  return (
+    <StackLayout gap={2}>
+      <StackLayout gap={0.5}>
+        <H4 style={{ margin: 0 }} color="secondary">
+          Group One
+        </H4>
+        <VerticalNavigation {...args}>
+          {simple.map((item) => (
+            <VerticalNavigationItem
+              key={item.title}
+              active={location.pathname === item.href}
+            >
+              <VerticalNavigationItemContent>
+                <TanstackTrigger to={item.href}>{item.title}</TanstackTrigger>
+              </VerticalNavigationItemContent>
+            </VerticalNavigationItem>
+          ))}
+          <Divider variant="tertiary" />
+        </VerticalNavigation>
+      </StackLayout>
+      <StackLayout gap={0.5}>
+        <H4 style={{ margin: 0 }} color="secondary">
+          Group Two
+        </H4>
+        <VerticalNavigation {...args}>
+          {nested.map((item) => (
+            <NestedItem key={item.title} item={item} />
+          ))}
+        </VerticalNavigation>
+      </StackLayout>
+    </StackLayout>
   );
 };
 
@@ -277,6 +382,43 @@ function MultiActionItem(props: { item: NavItem }) {
         <VerticalNavigationItem active={location.pathname === item.href}>
           <VerticalNavigationItemContent>
             <TanstackTrigger to={item.href}>{item.title}</TanstackTrigger>
+            <Menu>
+              <MenuTrigger>
+                <Button appearance="transparent" aria-label="Open Menu">
+                  <MicroMenuIcon aria-hidden />
+                </Button>
+              </MenuTrigger>
+              <MenuPanel>
+                <MenuItem
+                  onClick={() => {
+                    alert("Copy");
+                  }}
+                >
+                  Copy
+                </MenuItem>
+                <MenuItem
+                  onClick={() => {
+                    alert("Paste");
+                  }}
+                >
+                  Paste
+                </MenuItem>
+                <MenuItem
+                  onClick={() => {
+                    alert("Export");
+                  }}
+                >
+                  Export
+                </MenuItem>
+                <MenuItem
+                  onClick={() => {
+                    alert("Settings");
+                  }}
+                >
+                  Settings
+                </MenuItem>
+              </MenuPanel>
+            </Menu>
             <CollapsibleTrigger render={<Button appearance="transparent" />}>
               <VerticalNavigationItemExpansionIcon />
             </CollapsibleTrigger>
@@ -312,42 +454,6 @@ export const MultiAction: StoryFn<typeof VerticalNavigation> = (args) => {
   );
 };
 
-export const Groups: StoryFn<typeof VerticalNavigation> = (args) => {
-  const location = useLocation();
-
-  return (
-    <StackLayout gap={2}>
-      <StackLayout gap={0.5}>
-        <H4 style={{ margin: 0 }} color="secondary">
-          Group One
-        </H4>
-        <VerticalNavigation {...args}>
-          {simple.map((item) => (
-            <VerticalNavigationItem
-              key={item.title}
-              active={location.pathname === item.href}
-            >
-              <VerticalNavigationItemContent>
-                <TanstackTrigger to={item.href}>{item.title}</TanstackTrigger>
-              </VerticalNavigationItemContent>
-            </VerticalNavigationItem>
-          ))}
-        </VerticalNavigation>
-      </StackLayout>
-      <StackLayout gap={0.5}>
-        <H4 style={{ margin: 0 }} color="secondary">
-          Group Two
-        </H4>
-        <VerticalNavigation {...args}>
-          {nested.map((item) => (
-            <NestedItem key={item.title} item={item} />
-          ))}
-        </VerticalNavigation>
-      </StackLayout>
-    </StackLayout>
-  );
-};
-
 function DualActionItem(props: { item: NavItem }) {
   const { item } = props;
 
@@ -355,7 +461,7 @@ function DualActionItem(props: { item: NavItem }) {
 
   if (Array.isArray(item.children) && item.children.length > 0) {
     return (
-      <Collapsible>
+      <Collapsible expanded={location.pathname.startsWith(item.href)}>
         <VerticalNavigationItem active={location.pathname === item.href}>
           <VerticalNavigationItemContent>
             <CollapsibleTrigger render={<TanstackTrigger to={item.href} />}>
