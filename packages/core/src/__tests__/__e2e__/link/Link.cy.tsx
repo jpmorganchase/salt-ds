@@ -1,7 +1,6 @@
 import { Link } from "@salt-ds/core";
-import { composeStories } from "@storybook/react-vite";
-
 import * as linkStories from "@stories/link/link.stories";
+import { composeStories } from "@storybook/react-vite";
 
 const composedStories = composeStories(linkStories);
 const { TargetBlankCustomIcon } = composedStories;

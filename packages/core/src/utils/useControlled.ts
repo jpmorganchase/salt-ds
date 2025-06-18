@@ -1,7 +1,7 @@
 import {
   type Dispatch,
-  type SetStateAction,
   isValidElement,
+  type SetStateAction,
   useCallback,
   useEffect,
   useRef,

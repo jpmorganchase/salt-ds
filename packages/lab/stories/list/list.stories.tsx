@@ -1,5 +1,3 @@
-import type { Decorator, Meta, StoryFn } from "@storybook/react-vite";
-
 import {
   Button,
   FlexItem,
@@ -10,17 +8,6 @@ import {
   useDensity,
 } from "@salt-ds/core";
 import { ArrowDownIcon, ArrowUpIcon } from "@salt-ds/icons";
-import {
-  type CSSProperties,
-  type ChangeEventHandler,
-  memo,
-  useEffect,
-  useLayoutEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
-
 import {
   FormField,
   Input,
@@ -35,6 +22,17 @@ import {
   type SelectionChangeHandler,
   VirtualizedList,
 } from "@salt-ds/lab";
+import type { Decorator, Meta, StoryFn } from "@storybook/react-vite";
+import {
+  type ChangeEventHandler,
+  type CSSProperties,
+  memo,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 
 import { usa_states } from "./list.data";
 

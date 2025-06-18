@@ -9,8 +9,8 @@ import {
   useState,
 } from "react";
 import { makePrefixer } from "../utils";
-import skipLinkCss from "./SkipLink.css";
 import { useManageFocusOnTarget } from "./internal/useManageFocusOnTarget";
+import skipLinkCss from "./SkipLink.css";
 
 interface SkipLinkProps extends ComponentPropsWithoutRef<"a"> {
   /**

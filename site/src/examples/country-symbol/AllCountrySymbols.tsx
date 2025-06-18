@@ -6,7 +6,7 @@ import {
   StackLayout,
   Text,
 } from "@salt-ds/core";
-import { LazyCountrySymbol, countryMetaMap } from "@salt-ds/countries";
+import { countryMetaMap, LazyCountrySymbol } from "@salt-ds/countries";
 import { Suspense, useState } from "react";
 
 export const AllCountrySymbols = () => {

@@ -20,16 +20,16 @@ import {
   Children,
   type ComponentPropsWithoutRef,
   type Dispatch,
+  forwardRef,
   type ReactNode,
   type Ref,
   type RefObject,
   type SetStateAction,
-  forwardRef,
   useCallback,
   useRef,
 } from "react";
-import tabOverflowListCss from "./TabOverflowList.css";
 import { useFocusOutside } from "./hooks/useFocusOutside";
+import tabOverflowListCss from "./TabOverflowList.css";
 
 interface TabOverflowListProps extends ComponentPropsWithoutRef<"button"> {
   buttonRef?: Ref<HTMLButtonElement>;

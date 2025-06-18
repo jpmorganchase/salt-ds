@@ -1,14 +1,14 @@
 import { FlexLayout, StackLayout } from "@salt-ds/core";
+import type { CountryCode } from "@salt-ds/countries";
 import {
   CountrySymbol,
+  countryMetaMap,
   LazyCountrySymbol,
   MX,
   MX_Sharp,
   TT,
   TT_Sharp,
-  countryMetaMap,
 } from "@salt-ds/countries";
-import type { CountryCode } from "@salt-ds/countries";
 import { FormField, Input } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import { Suspense, useState } from "react";

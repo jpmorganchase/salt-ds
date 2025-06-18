@@ -1,7 +1,7 @@
 import {
-  type ReactElement,
   cloneElement,
   createContext,
+  type ReactElement,
   useContext,
 } from "react";
 import type { CollectionHookResult } from "./collectionTypes";

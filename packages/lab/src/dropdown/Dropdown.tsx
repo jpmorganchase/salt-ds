@@ -1,9 +1,9 @@
 import { useForkRef, useIdMemo as useId } from "@salt-ds/core";
 import {
-  type ForwardedRef,
-  type ReactElement,
   cloneElement,
+  type ForwardedRef,
   forwardRef,
+  type ReactElement,
   useCallback,
   useRef,
 } from "react";
@@ -11,10 +11,10 @@ import {
 import {
   type CollectionItem,
   CollectionProvider,
+  itemToString as defaultItemToString,
   type SelectionProps,
   type SelectionStrategy,
   type SingleSelectionStrategy,
-  itemToString as defaultItemToString,
   useCollectionItems,
 } from "../common-hooks";
 import { List } from "../list/List";

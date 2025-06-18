@@ -15,12 +15,12 @@ import {
   Children,
   type FocusEvent,
   type ForwardedRef,
+  forwardRef,
   type KeyboardEvent,
   type MouseEvent,
   type ReactNode,
   type Ref,
   type SyntheticEvent,
-  forwardRef,
   useEffect,
   useRef,
 } from "react";
@@ -35,8 +35,8 @@ import { OptionList } from "../option/OptionList";
 import { PillInput, type PillInputProps } from "../pill-input";
 import { useIcon } from "../semantic-icon-provider";
 import {
-  type UseFloatingUIProps,
   makePrefixer,
+  type UseFloatingUIProps,
   useFloatingUI,
   useForkRef,
   useId,
@@ -238,7 +238,7 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
 
     let newActive:
       | { data: OptionValue<Item>; element: HTMLElement }
-      | undefined = undefined;
+      | undefined;
     switch (event.key) {
       case "ArrowDown":
         newActive = getOptionAfter(activeOption) ?? getLastOption();
@@ -366,7 +366,7 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
 
     // We check the active index because the active item may have been removed
     const activeIndex = activeState ? getIndexOfOption(activeState) : -1;
-    let newActive = undefined;
+    let newActive;
 
     // If the active item is still in the list, we don't need to do anything
     if (activeIndex > -1) {

@@ -2,9 +2,9 @@ import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
+  forwardRef,
   type HTMLAttributes,
   type ReactNode,
-  forwardRef,
   useCallback,
   useRef,
   useState,

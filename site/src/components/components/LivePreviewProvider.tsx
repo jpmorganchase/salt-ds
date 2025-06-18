@@ -1,5 +1,5 @@
 import type { Density, Mode } from "@salt-ds/core";
-import { type ReactNode, createContext, useContext, useState } from "react";
+import { createContext, type ReactNode, useContext, useState } from "react";
 
 type Theme = "legacy" | "brand";
 

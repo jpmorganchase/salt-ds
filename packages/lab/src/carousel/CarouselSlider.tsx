@@ -2,12 +2,12 @@ import { makePrefixer, useForkRef } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import {
+  forwardRef,
   type HTMLAttributes,
   type KeyboardEvent,
   type ReactElement,
   type SyntheticEvent,
   type UIEvent,
-  forwardRef,
   useContext,
   useLayoutEffect,
   useRef,

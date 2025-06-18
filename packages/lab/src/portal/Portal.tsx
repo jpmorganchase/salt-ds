@@ -1,16 +1,16 @@
 import {
-  SaltProvider,
   getRefFromChildren,
   ownerDocument,
+  SaltProvider,
   useForkRef,
   useIsomorphicLayoutEffect,
 } from "@salt-ds/core";
 import {
-  type ReactNode,
-  type Ref,
   cloneElement,
   forwardRef,
   isValidElement,
+  type ReactNode,
+  type Ref,
   useRef,
   useState,
 } from "react";

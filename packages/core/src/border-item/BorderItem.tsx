@@ -9,9 +9,9 @@ import {
 } from "react";
 import { GridItem, type GridItemProps } from "../grid-item";
 import {
+  makePrefixer,
   type PolymorphicComponentPropWithRef,
   type ResponsiveProp,
-  makePrefixer,
 } from "../utils";
 import borderItemCss from "./BorderItem.css";
 

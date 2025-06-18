@@ -1,6 +1,6 @@
 import { type KeyboardEvent, useCallback, useRef } from "react";
 import type { CollectionItem } from "./collectionTypes";
-import { Space, isCharacterKey } from "./keyUtils";
+import { isCharacterKey, Space } from "./keyUtils";
 
 interface TypeaheadHookProps<Item> {
   disableTypeToSelect?: boolean;

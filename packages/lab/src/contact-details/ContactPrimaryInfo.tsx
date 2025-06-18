@@ -1,6 +1,6 @@
-import { Text, makePrefixer, useId } from "@salt-ds/core";
+import { makePrefixer, Text, useId } from "@salt-ds/core";
 import { clsx } from "clsx";
-import { type HTMLAttributes, forwardRef, useEffect } from "react";
+import { forwardRef, type HTMLAttributes, useEffect } from "react";
 import { useContactDetailsContext } from "./internal";
 
 const withBaseName = makePrefixer("saltContactPrimaryInfo");

@@ -13,10 +13,9 @@ import { useColumnDragContext } from "./ColumnDragContext";
 import { useColumnSortContext } from "./ColumnSortContext";
 import { type ColumnSeparatorType, SortOrder } from "./Grid";
 import type { HeaderCellProps } from "./GridColumn";
-import { useSizingContext } from "./SizingContext";
-import { Cursor, useFocusableContent } from "./internal";
-
 import headerCellCss from "./HeaderCell.css";
+import { Cursor, useFocusableContent } from "./internal";
+import { useSizingContext } from "./SizingContext";
 
 const withBaseName = makePrefixer("saltGridHeaderCell");
 

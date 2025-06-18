@@ -1,11 +1,10 @@
-import type { Meta, StoryFn } from "@storybook/react-vite";
-
 import {
   Carousel,
   CarouselControls,
   CarouselSlide,
   CarouselSlider,
 } from "@salt-ds/lab";
+import type { Meta, StoryFn } from "@storybook/react-vite";
 import "./carousel.stories.css";
 import { Button, H2, H3, Link, StackLayout, Text } from "@salt-ds/core";
 import { useState } from "react";

@@ -1,11 +1,10 @@
+import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 import type { ChangeEvent } from "react";
 import type { Color } from "./Color";
 import { convertColorMapValueToHex } from "./ColorHelpers";
-import { Swatch } from "./Swatch";
 import { isTransparent } from "./color-utils";
-
-import { useComponentCssInjection } from "@salt-ds/styles";
-import { useWindow } from "@salt-ds/window";
+import { Swatch } from "./Swatch";
 
 import swatchCSS from "./Swatch.css";
 

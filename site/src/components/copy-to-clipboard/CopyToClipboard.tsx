@@ -5,7 +5,10 @@ import { type ReactNode, useState } from "react";
 export const CopyToClipboard = ({
   value,
   children,
-}: { value: string; children?: ReactNode }) => {
+}: {
+  value: string;
+  children?: ReactNode;
+}) => {
   const [copyStatus, setCopyStatus] = useState<"none" | "error" | "success">(
     "none",
   );

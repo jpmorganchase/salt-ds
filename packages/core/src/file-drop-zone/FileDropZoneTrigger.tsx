@@ -1,9 +1,9 @@
 import {
   type ChangeEvent,
   type FocusEvent,
+  forwardRef,
   type HTMLAttributes,
   type SyntheticEvent,
-  forwardRef,
   useRef,
 } from "react";
 import { Button } from "../button";

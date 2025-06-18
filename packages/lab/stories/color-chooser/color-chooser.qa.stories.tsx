@@ -1,8 +1,8 @@
 import {
   Color,
   ColorChooser,
-  SwatchesPicker,
   getColorPalettes,
+  SwatchesPicker,
 } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import { useState } from "react";

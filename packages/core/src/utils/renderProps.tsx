@@ -1,9 +1,9 @@
 import {
   type ComponentProps,
-  type ElementType,
-  type ReactElement,
   cloneElement,
+  type ElementType,
   isValidElement,
+  type ReactElement,
 } from "react";
 import { mergeProps } from "./mergeProps";
 

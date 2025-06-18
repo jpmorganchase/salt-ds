@@ -1,8 +1,8 @@
 import {
   type HTMLAttributes,
+  isValidElement,
   type KeyboardEvent,
   type MouseEvent,
-  isValidElement,
 } from "react";
 import { useEventCallback } from "../../utils";
 import type { CascadingMenuProps } from "../CascadingMenuProps";

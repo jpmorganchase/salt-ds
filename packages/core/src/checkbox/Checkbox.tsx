@@ -4,10 +4,10 @@ import { clsx } from "clsx";
 import {
   type ChangeEventHandler,
   type FocusEventHandler,
+  forwardRef,
   type InputHTMLAttributes,
   type ReactNode,
   type Ref,
-  forwardRef,
   useRef,
 } from "react";
 import { useFormFieldProps } from "../form-field-context";
@@ -19,10 +19,9 @@ import {
   useForkRef,
   useIsomorphicLayoutEffect,
 } from "../utils";
+import checkboxCss from "./Checkbox.css";
 import { CheckboxIcon } from "./CheckboxIcon";
 import { useCheckboxGroup } from "./internal/useCheckboxGroup";
-
-import checkboxCss from "./Checkbox.css";
 
 const withBaseName = makePrefixer("saltCheckbox");
 export interface CheckboxProps

@@ -9,10 +9,10 @@ import {
 } from "react";
 import { useBreakpoint } from "../breakpoints";
 import {
+  makePrefixer,
   type PolymorphicComponentPropWithRef,
   type PolymorphicRef,
   type ResponsiveProp,
-  makePrefixer,
   resolveResponsiveValue,
 } from "../utils";
 import flexLayoutCss from "./FlexLayout.css";

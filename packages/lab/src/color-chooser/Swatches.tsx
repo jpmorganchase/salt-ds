@@ -1,14 +1,12 @@
 import { makePrefixer } from "@salt-ds/core";
+import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import type { ChangeEvent } from "react";
 import { AlphaInput } from "./AlphaInputField";
 import type { Color } from "./Color";
-import { SwatchesPicker } from "./SwatchesPicker";
-
-import { useComponentCssInjection } from "@salt-ds/styles";
-import { useWindow } from "@salt-ds/window";
-
 import swatchesCss from "./Swatches.css";
+import { SwatchesPicker } from "./SwatchesPicker";
 
 const withBaseName = makePrefixer("saltColorChooserSwatches");
 

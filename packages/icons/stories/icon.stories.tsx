@@ -7,7 +7,7 @@ import {
 } from "@salt-ds/icons";
 import { FormField, Input } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react-vite";
-import { type ElementType, createElement, useMemo, useState } from "react";
+import { createElement, type ElementType, useMemo, useState } from "react";
 import { allIcons } from "./icon.all";
 
 const formatIconName = (icon: string) => {

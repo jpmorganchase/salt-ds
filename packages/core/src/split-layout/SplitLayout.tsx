@@ -5,11 +5,11 @@ import {
   type ElementType,
   type ForwardedRef,
   type FunctionComponent,
-  type ReactNode,
   forwardRef,
+  type ReactNode,
 } from "react";
 import { FlexLayout, type FlexLayoutProps } from "../flex-layout";
-import { type PolymorphicComponentPropWithRef, makePrefixer } from "../utils";
+import { makePrefixer, type PolymorphicComponentPropWithRef } from "../utils";
 import splitLayoutCss from "./SplitLayout.css";
 
 const withBaseName = makePrefixer("saltSplitLayout");

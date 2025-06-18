@@ -1,4 +1,4 @@
-import { type RefObject, createContext } from "react";
+import { createContext, type RefObject } from "react";
 
 type refsMap<T> = {
   [key: string]: RefObject<T>;

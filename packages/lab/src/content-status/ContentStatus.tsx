@@ -1,28 +1,25 @@
 import {
   Button,
-  Text,
   makePrefixer,
+  Text,
   useAriaAnnouncer,
   useId,
 } from "@salt-ds/core";
+import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
+  forwardRef,
   type HTMLAttributes,
   type MouseEvent,
   type Ref,
-  forwardRef,
   useEffect,
 } from "react";
-
+import contentStatusCss from "./ContentStatus.css";
 import {
   StatusIndicator,
   type StatusIndicatorProps,
 } from "./internal/StatusIndicator";
-
-import { useComponentCssInjection } from "@salt-ds/styles";
-import { useWindow } from "@salt-ds/window";
-
-import contentStatusCss from "./ContentStatus.css";
 
 const withBaseName = makePrefixer("saltContentStatus");
 

@@ -1,13 +1,13 @@
 import {
   Button,
-  StatusAdornment,
-  type ValidationStatus,
   capitalize,
   makePrefixer,
+  StatusAdornment,
   useControlled,
   useForkRef,
   useFormFieldProps,
   useIcon,
+  type ValidationStatus,
 } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
@@ -16,12 +16,12 @@ import {
   type ChangeEvent,
   type ComponentPropsWithoutRef,
   type FocusEvent,
+  forwardRef,
   type InputHTMLAttributes,
   type KeyboardEvent,
   type ReactNode,
   type Ref,
   type SyntheticEvent,
-  forwardRef,
   useRef,
   useState,
 } from "react";

@@ -1,9 +1,9 @@
 import { Dropdown, type DropdownProps, Option } from "@salt-ds/core";
 import type { ICellEditorParams } from "ag-grid-community";
 import {
+  forwardRef,
   type KeyboardEvent,
   type SyntheticEvent,
-  forwardRef,
   useCallback,
   useEffect,
   useImperativeHandle,

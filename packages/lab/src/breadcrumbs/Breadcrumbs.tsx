@@ -1,24 +1,22 @@
 import { makePrefixer } from "@salt-ds/core";
 import type { IconProps } from "@salt-ds/icons";
+import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
   Children,
-  type HTMLAttributes,
-  type ReactNode,
   cloneElement,
   forwardRef,
+  type HTMLAttributes,
   isValidElement,
+  type ReactNode,
   useMemo,
 } from "react";
 import type { BreadcrumbProps } from "./Breadcrumb";
+import breadcrumbsCss from "./Breadcrumbs.css";
 import { BreadcrumbsCollapsed } from "./internal/BreadcrumbsCollapsed";
 import { BreadcrumbsContext } from "./internal/BreadcrumbsContext";
 import { BreadcrumbsSeparator } from "./internal/BreadcrumbsSeparator";
-
-import { useComponentCssInjection } from "@salt-ds/styles";
-import { useWindow } from "@salt-ds/window";
-
-import breadcrumbsCss from "./Breadcrumbs.css";
 
 const iconWidth = 12;
 

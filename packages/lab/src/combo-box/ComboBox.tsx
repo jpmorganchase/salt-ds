@@ -1,18 +1,10 @@
 import { useIdMemo as useId } from "@salt-ds/core";
 import {
   type ForwardedRef,
-  type ReactElement,
   forwardRef,
+  type ReactElement,
   useCallback,
 } from "react";
-
-import { DropdownBase, type DropdownBaseProps } from "../dropdown";
-import {
-  InputLegacy as Input,
-  type InputLegacyProps as InputProps,
-} from "../input-legacy";
-import { List, type ListProps } from "../list";
-
 import {
   type CollectionItem,
   CollectionProvider,
@@ -21,6 +13,12 @@ import {
   type SingleSelectionStrategy,
   useCollectionItems,
 } from "../common-hooks";
+import { DropdownBase, type DropdownBaseProps } from "../dropdown";
+import {
+  InputLegacy as Input,
+  type InputLegacyProps as InputProps,
+} from "../input-legacy";
+import { List, type ListProps } from "../list";
 import { useCombobox } from "./useCombobox";
 
 export interface ComboBoxProps<

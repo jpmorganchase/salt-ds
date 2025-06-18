@@ -6,17 +6,15 @@ import {
   useIdMemo as useId,
 } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import { Children, cloneElement, forwardRef, useRef, useState } from "react";
 import { Portal } from "../portal";
 import { forwardCallbackProps } from "../utils";
 import { isDesktop, useWindow as usePortalWindow } from "../window";
+import dropdownCss from "./Dropdown.css";
 import type { DropdownBaseProps } from "./dropdownTypes";
 import { useDropdownBase } from "./useDropdownBase";
-
-import { useWindow } from "@salt-ds/window";
-
-import dropdownCss from "./Dropdown.css";
 // Any component may be passed as our trigger or popup component.
 // Define the common props that we will act on, if present,
 // so we can type them.

@@ -1,11 +1,10 @@
 import type { ButtonProps } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
-import { type ReactNode, forwardRef, useCallback, useState } from "react";
+import { forwardRef, type ReactNode, useCallback, useState } from "react";
 import { CascadingMenu, type CascadingMenuProps } from "../cascading-menu";
-import { MenuButtonTrigger } from "./MenuButtonTrigger";
-
 import menuButtonCss from "./MenuButton.css";
+import { MenuButtonTrigger } from "./MenuButtonTrigger";
 
 export interface MenuButtonProps extends ButtonProps {
   CascadingMenuProps: CascadingMenuProps;

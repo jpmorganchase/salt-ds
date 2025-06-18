@@ -1,9 +1,8 @@
-import { clsx } from "clsx";
-import { type HTMLAttributes, forwardRef } from "react";
-import { makePrefixer } from "../utils";
-
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
+import { clsx } from "clsx";
+import { forwardRef, type HTMLAttributes } from "react";
+import { makePrefixer } from "../utils";
 import panelCss from "./Panel.css";
 
 /**

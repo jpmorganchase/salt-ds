@@ -4,8 +4,8 @@ import {
   FormFieldContext,
   type FormFieldContextValue,
   FormFieldHelperText,
-  StackLayout,
   makePrefixer,
+  StackLayout,
   useControlled,
   useForkRef,
 } from "@salt-ds/core";
@@ -20,8 +20,8 @@ import clsx from "clsx";
 import {
   type ComponentPropsWithoutRef,
   type FocusEventHandler,
-  type SyntheticEvent,
   forwardRef,
+  type SyntheticEvent,
   useCallback,
   useLayoutEffect,
   useRef,

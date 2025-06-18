@@ -6,7 +6,6 @@ import {
   type SyntheticEvent,
   useCallback,
 } from "react";
-import type { NumberInputProps } from "./NumberInput";
 import { useActivateWhileMouseDown } from "./internal/useActivateWhileMouseDown";
 import {
   isAtMax,
@@ -14,6 +13,7 @@ import {
   toFixedDecimalPlaces,
   toFloat,
 } from "./internal/utils";
+import type { NumberInputProps } from "./NumberInput";
 
 /**
  * Manages increment / decrement logic

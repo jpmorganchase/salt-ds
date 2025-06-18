@@ -1,12 +1,12 @@
 import {
   ComboBox,
   type ComboBoxProps,
+  escapeRegExp,
   FormField,
   Highlighter,
   ListItem,
   type ListItemProps,
   type ListItemType,
-  escapeRegExp,
 } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import { type ComponentProps, memo, useEffect, useState } from "react";

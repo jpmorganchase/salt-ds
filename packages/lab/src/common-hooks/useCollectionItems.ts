@@ -1,4 +1,5 @@
 import { isValidElement, useCallback, useMemo, useRef, useState } from "react";
+import { useCollection } from "./collectionProvider";
 import type {
   CollectionHookProps,
   CollectionHookResult,
@@ -6,10 +7,14 @@ import type {
   CollectionItem,
 } from "./collectionTypes";
 import { itemToString as defaultItemToString } from "./itemToString";
+import type {
+  SelectionStrategy,
+  SingleSelectionStrategy,
+} from "./selectionTypes";
 import {
-  type FilterPredicate,
   childItems,
   countChildItems,
+  type FilterPredicate,
   getDefaultFilter,
   getDefaultFilterRegex,
   isDisabled,
@@ -20,12 +25,6 @@ import {
   replaceCollectionItem,
   sourceItems,
 } from "./utils";
-
-import { useCollection } from "./collectionProvider";
-import type {
-  SelectionStrategy,
-  SingleSelectionStrategy,
-} from "./selectionTypes";
 
 const defaultCollectionOptions = {};
 

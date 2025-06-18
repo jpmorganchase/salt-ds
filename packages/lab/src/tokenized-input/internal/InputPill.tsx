@@ -1,7 +1,7 @@
 import {
+  makePrefixer,
   Pill,
   type PillProps,
-  makePrefixer,
   useIcon,
   useIsomorphicLayoutEffect,
 } from "@salt-ds/core";

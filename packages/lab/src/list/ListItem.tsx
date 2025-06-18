@@ -1,13 +1,11 @@
 import { CheckboxIcon, makePrefixer } from "@salt-ds/core";
-import { clsx } from "clsx";
-import { type ForwardedRef, type HTMLAttributes, forwardRef } from "react";
-import { Highlighter } from "./Highlighter";
-import type { ListItemProps, ListItemType } from "./listTypes";
-
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
-
+import { clsx } from "clsx";
+import { type ForwardedRef, forwardRef, type HTMLAttributes } from "react";
+import { Highlighter } from "./Highlighter";
 import listItemCss from "./ListItem.css";
+import type { ListItemProps, ListItemType } from "./listTypes";
 
 const withBaseName = makePrefixer("saltListItem");
 

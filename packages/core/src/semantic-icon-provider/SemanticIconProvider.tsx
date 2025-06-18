@@ -22,9 +22,9 @@ import {
   WarningSolidIcon,
 } from "@salt-ds/icons";
 import {
+  createContext,
   type ElementType,
   type ReactNode,
-  createContext,
   useContext,
 } from "react";
 

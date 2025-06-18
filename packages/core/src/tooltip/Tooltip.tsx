@@ -1,27 +1,25 @@
 import { clsx } from "clsx";
 import {
-  type HTMLAttributes,
-  type ReactNode,
-  type Ref,
   cloneElement,
   forwardRef,
+  type HTMLAttributes,
   isValidElement,
+  type ReactNode,
+  type Ref,
 } from "react";
-
+import { useFormFieldProps } from "../form-field-context";
 import {
   VALIDATION_NAMED_STATUS,
   type ValidationStatus,
 } from "../status-indicator";
 import {
-  type UseFloatingUIProps,
   getRefFromChildren,
   makePrefixer,
   mergeProps,
+  type UseFloatingUIProps,
   useFloatingComponent,
   useForkRef,
 } from "../utils";
-
-import { useFormFieldProps } from "../form-field-context";
 import { TooltipBase } from "./TooltipBase";
 import { type UseTooltipProps, useTooltip } from "./useTooltip";
 

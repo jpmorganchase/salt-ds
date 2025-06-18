@@ -1,5 +1,6 @@
 import AssertionStatic = Chai.AssertionStatic;
 import ChaiPlugin = Chai.ChaiPlugin;
+
 import { prettyDOM } from "@testing-library/dom";
 import {
   computeAccessibleDescription,

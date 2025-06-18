@@ -1,11 +1,9 @@
-import { TriangleRightIcon } from "@salt-ds/icons";
-import { clsx } from "clsx";
-import type { HTMLAttributes, MouseEventHandler, ReactNode } from "react";
-
 import { makePrefixer } from "@salt-ds/core";
-
+import { TriangleRightIcon } from "@salt-ds/icons";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
+import { clsx } from "clsx";
+import type { HTMLAttributes, MouseEventHandler, ReactNode } from "react";
 
 import treeNodeCss from "./TreeNode.css";
 

@@ -4,8 +4,8 @@ import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
   type ComponentPropsWithoutRef,
-  type ReactNode,
   forwardRef,
+  type ReactNode,
 } from "react";
 import { makePrefixer, useFloatingComponent, useForkRef } from "../utils";
 import { useOverlayContext } from "./OverlayContext";

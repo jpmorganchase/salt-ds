@@ -1,8 +1,8 @@
 import {
   Children,
+  isValidElement,
   type ReactElement,
   type ReactNode,
-  isValidElement,
 } from "react";
 
 // TODO how do we configure these
@@ -23,9 +23,7 @@ export const sourceItemHasProp = (
   item: unknown,
   propertyName: string,
 ): boolean => {
-  return (
-    item !== null && Object.prototype.hasOwnProperty.call(item, propertyName)
-  );
+  return item !== null && Object.hasOwn(item, propertyName);
 };
 
 export const isHeader = (item: unknown): boolean =>
@@ -35,7 +33,7 @@ export const isGroupNode = (item: unknown): boolean =>
   sourceItemHasProp(item, "childNodes");
 
 const childItemHasProp = (item: ReactElement, propertyName: string) => {
-  return item && Object.prototype.hasOwnProperty.call(item.props, propertyName);
+  return item && Object.hasOwn(item.props, propertyName);
 };
 
 export const isDisabled = (item: unknown): boolean => {

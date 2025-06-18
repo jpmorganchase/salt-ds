@@ -11,10 +11,10 @@ import {
   useState,
 } from "react";
 import { useWidth } from "../responsive";
-import type { QueryInputProps } from "./QueryInput";
 import type { QueryInputBodyProps } from "./internal/QueryInputBody";
-import type { ValueSelectorProps } from "./internal/ValueSelector";
 import { usePopperStatus } from "./internal/usePopperStatus";
+import type { ValueSelectorProps } from "./internal/ValueSelector";
+import type { QueryInputProps } from "./QueryInput";
 import type { QueryInputCategory, QueryInputItem } from "./queryInputTypes";
 
 export type BooleanOperator = "or" | "and";

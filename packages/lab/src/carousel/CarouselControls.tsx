@@ -1,12 +1,12 @@
-import { Button, Text, makePrefixer, useIcon } from "@salt-ds/core";
+import { Button, makePrefixer, Text, useIcon } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import {
+  forwardRef,
   type HTMLAttributes,
   type MouseEvent,
   type ReactNode,
   type SyntheticEvent,
-  forwardRef,
   useContext,
   useRef,
   useState,

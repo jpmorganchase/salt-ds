@@ -1,19 +1,16 @@
 import { type MouseEventHandler, useCallback, useRef, useState } from "react";
-
-import type { Direction, DragDropHook } from "./dragDropTypes";
-import { useDragSpacers } from "./useDragSpacers";
-
+import { Draggable } from "./Draggable";
 import {
-  type MeasuredDropTarget,
   dimensions,
   getDraggedItem,
   getNextDropTarget,
   isDraggedElement,
+  type MeasuredDropTarget,
   measureDropTargets,
   moveDragItem,
 } from "./drag-utils";
-
-import { Draggable } from "./Draggable";
+import type { Direction, DragDropHook } from "./dragDropTypes";
+import { useDragSpacers } from "./useDragSpacers";
 
 const dragThreshold = 3;
 

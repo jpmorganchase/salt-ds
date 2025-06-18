@@ -1,8 +1,7 @@
-import { type ComboBoxProps, H1 } from "@salt-ds/core";
-import type { FC } from "react";
-
 import type { LayoutProps } from "@jpmorganchase/mosaic-layouts/dist/types";
+import { type ComboBoxProps, H1 } from "@salt-ds/core";
 import dynamic from "next/dynamic";
+import type { FC } from "react";
 import { Footer, Hero } from "../../components/index";
 import styles from "./Landing.module.css";
 

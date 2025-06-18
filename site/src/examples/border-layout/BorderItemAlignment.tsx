@@ -1,11 +1,11 @@
 import {
   BorderItem,
   BorderLayout,
+  GRID_ALIGNMENT_BASE as borderItemAlignment,
   FormField,
   FormFieldLabel,
   RadioButton,
   RadioButtonGroup,
-  GRID_ALIGNMENT_BASE as borderItemAlignment,
 } from "@salt-ds/core";
 import { type ChangeEventHandler, type ReactElement, useState } from "react";
 import borderItemAlignmentStyles from "./BorderItemAlignment.module.css";

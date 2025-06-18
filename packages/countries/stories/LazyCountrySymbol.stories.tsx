@@ -1,7 +1,7 @@
 import { FlexLayout } from "@salt-ds/core";
 import {
-  LazyCountrySymbol as LazyCountrySymbolComponent,
   countryMetaMap,
+  LazyCountrySymbol as LazyCountrySymbolComponent,
 } from "@salt-ds/countries";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import { Suspense } from "react";

@@ -4,11 +4,11 @@ export * from "./DatePickerContext";
 export * from "./DatePickerHelperText";
 export * from "./DatePickerOverlay";
 export * from "./DatePickerOverlayProvider";
-export * from "./DatePickerRangeInput";
 export * from "./DatePickerRangeGridPanel";
+export * from "./DatePickerRangeInput";
 export * from "./DatePickerRangePanel";
-export * from "./DatePickerSingleInput";
 export * from "./DatePickerSingleGridPanel";
-export * from "./DatePickerTrigger";
+export * from "./DatePickerSingleInput";
 // DatePickerSinglePanel will be deleted when datepicker moves to core
 export * from "./DatePickerSinglePanel";
+export * from "./DatePickerTrigger";

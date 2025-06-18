@@ -1,17 +1,17 @@
 import {
+  isValidElement,
   type KeyboardEvent,
   type MouseEvent,
-  isValidElement,
   useCallback,
   useRef,
 } from "react";
 import {
   type CollectionItem,
+  closestListItemIndex,
   type ListHandlers,
   type SelectHandler,
   type SelectionChangeHandler,
   type SelectionStrategy,
-  closestListItemIndex,
   type selectedType,
   useCollapsibleGroups,
   useKeyboardNavigation,

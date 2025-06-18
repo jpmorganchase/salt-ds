@@ -1,12 +1,10 @@
 import { makePrefixer, useForkRef } from "@salt-ds/core";
-import { clsx } from "clsx";
-import { type HTMLAttributes, forwardRef, useState } from "react";
-import { ContactDetailsContext, useComponentSize } from "./internal";
-
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
-
+import { clsx } from "clsx";
+import { forwardRef, type HTMLAttributes, useState } from "react";
 import contactDetailsCss from "./ContactDetails.css";
+import { ContactDetailsContext, useComponentSize } from "./internal";
 
 const withBaseName = makePrefixer("saltContactDetails");
 

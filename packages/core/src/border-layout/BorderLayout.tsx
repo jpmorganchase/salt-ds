@@ -4,18 +4,18 @@ import {
   type ElementType,
   type ForwardedRef,
   type FunctionComponent,
-  type ReactNode,
   forwardRef,
   isValidElement,
+  type ReactNode,
   useEffect,
 } from "react";
 
 import type { BorderPosition } from "../border-item";
 import { GridLayout, type GridLayoutProps } from "../grid-layout";
 import {
+  makePrefixer,
   type PolymorphicComponentPropWithRef,
   type ResponsiveProp,
-  makePrefixer,
 } from "../utils";
 
 export type BorderLayoutProps<T extends ElementType> =

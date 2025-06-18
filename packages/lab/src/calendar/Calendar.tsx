@@ -1,11 +1,16 @@
-import { type ResponsiveProp, makePrefixer } from "@salt-ds/core";
+import { makePrefixer, type ResponsiveProp } from "@salt-ds/core";
+import type { DateFrameworkType, Timezone } from "@salt-ds/date-adapters";
+import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
   type ComponentPropsWithoutRef,
-  type ReactNode,
   forwardRef,
+  type ReactNode,
   useRef,
 } from "react";
+import { useLocalization } from "../localization-provider";
+import calendarCss from "./Calendar.css";
 import { CalendarContext } from "./internal/CalendarContext";
 import {
   type UseCalendarMultiSelectProps,
@@ -14,13 +19,6 @@ import {
   type UseCalendarSingleProps,
   useCalendar,
 } from "./useCalendar";
-
-import { useComponentCssInjection } from "@salt-ds/styles";
-import { useWindow } from "@salt-ds/window";
-
-import type { DateFrameworkType, Timezone } from "@salt-ds/date-adapters";
-import { useLocalization } from "../localization-provider";
-import calendarCss from "./Calendar.css";
 
 /**
  * Base props for the Calendar component.

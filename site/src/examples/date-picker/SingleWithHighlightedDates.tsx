@@ -11,8 +11,8 @@ import {
   type SingleDateSelection,
   useLocalization,
 } from "@salt-ds/lab";
-import { type SyntheticEvent, useCallback, useState } from "react";
 import type { ReactElement } from "react";
+import { type SyntheticEvent, useCallback, useState } from "react";
 
 export const SingleWithHighlightedDates = (): ReactElement => {
   const { dateAdapter } = useLocalization();
