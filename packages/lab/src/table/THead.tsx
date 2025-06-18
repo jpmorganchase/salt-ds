@@ -7,13 +7,13 @@ import { withTableBaseName } from "./Table";
 import tableCss from "./Table.css";
 
 export type THeadProps = ComponentPropsWithoutRef<"thead"> & {
-   /**
+  /**
    * If header is positioned with sticky styling.
    * @default undefined
    */
   sticky?: boolean;
-   /**
-   * Styling variant for header. 
+  /**
+   * Styling variant for header.
    * If undefined, will match variant of parent Table variant.
    * @default undefined
    */
