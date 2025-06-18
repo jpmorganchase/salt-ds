@@ -392,7 +392,7 @@ describe("Number Input", () => {
     cy.findByRole("spinbutton").should("have.value", "10");
   });
 
-  it("allows out of range input when clampBehaviour is set to none", () => {
+  it("allows out of range input when clampValue is false", () => {
     cy.mount(<MinAndMaxValue />);
     cy.findByRole("spinbutton").focus();
     cy.realType("2");
@@ -403,8 +403,8 @@ describe("Number Input", () => {
     cy.findByTestId("ErrorSolidIcon").should("exist");
   });
 
-  it("clamps out of range values on blur when clampBehaviour is set to default", () => {
-    cy.mount(<Default max={100} decimalScale={2} clampBehaviour="default" />);
+  it("clamps out of range values on blur when clampValue is set to true", () => {
+    cy.mount(<Default max={100} decimalScale={2} clampValue />);
 
     cy.findByRole("spinbutton").focus().clear();
     cy.realType("10000000");
@@ -415,19 +415,6 @@ describe("Number Input", () => {
     cy.realType("12.1234");
     cy.realPress("Tab");
     cy.findByRole("spinbutton").should("have.value", "12.12");
-  });
-
-  it("does not allow typing out of range values when clamping behaviour strict", () => {
-    cy.mount(<Default max={100} decimalScale={2} clampBehaviour="strict" />);
-
-    cy.findByRole("spinbutton").focus();
-    cy.findByRole("spinbutton").clear();
-    cy.realType("200");
-    cy.findByRole("spinbutton").should("have.value", 20);
-
-    cy.findByRole("spinbutton").clear();
-    cy.realType("12.345");
-    cy.findByRole("spinbutton").should("have.value", 12.34);
   });
 
   it("correctly formats a number starting with decimal point when decimal scale is set", () => {

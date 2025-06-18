@@ -215,7 +215,7 @@ export const MinAndMaxValue: StoryFn<NumberInputProps> = (args) => {
   );
 };
 
-export const clampBehaviour: StoryFn<NumberInputProps> = (args) => {
+export const clamping: StoryFn<NumberInputProps> = (args) => {
   const [value, setValue] = useState<number | string>(2);
   const max = 5;
   const min = 0;
@@ -249,36 +249,21 @@ export const clampBehaviour: StoryFn<NumberInputProps> = (args) => {
           style={{ width: "250px" }}
         />
         <FormFieldHelperText>
-          Please enter a value between {min} and {max}, decimal scale set to 2
+          Please enter a value between {min} and {max}
         </FormFieldHelperText>
       </FormField>
       <FormField>
-        <FormFieldLabel>Default clamping</FormFieldLabel>
+        <FormFieldLabel>With clamping</FormFieldLabel>
         <NumberInput
           {...args}
           defaultValue={2}
-          clampBehaviour="default"
+          clampValue
           max={max}
           min={min}
           style={{ width: "250px" }}
         />
         <FormFieldHelperText>
-          Please enter a value between {min} and {max}, decimal scale set to 2
-        </FormFieldHelperText>
-      </FormField>
-      <FormField>
-        <FormFieldLabel>Strict clamping</FormFieldLabel>
-        <NumberInput
-          {...args}
-          defaultValue={2}
-          clampBehaviour="strict"
-          max={max}
-          min={min}
-          decimalScale={2}
-          style={{ width: "250px" }}
-        />
-        <FormFieldHelperText>
-          Please enter a value between {min} and {max}, decimal scale set to 2
+          Please enter a value between {min} and {max}
         </FormFieldHelperText>
       </FormField>
     </StackLayout>
@@ -496,7 +481,7 @@ export const UncontrolledFormatting: StoryFn<NumberInputProps> = (args) => {
           defaultValue={12}
           format={(value) => `${value}%`}
           max={100}
-          clampBehaviour="strict"
+          clampValue
           parse={(value) => {
             return String(value).replace(/%/g, "");
           }}

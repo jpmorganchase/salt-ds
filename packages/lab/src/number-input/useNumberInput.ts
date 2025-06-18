@@ -50,6 +50,7 @@ export const useNumberInput = ({
       if (readOnly) return;
       const updatedValue = nextValue.toFixed(decimalScale);
 
+      console.log("setting updated value", updatedValue);
       setValue(updatedValue);
       onChange?.(event, toFloat(updatedValue));
     },
@@ -60,7 +61,10 @@ export const useNumberInput = ({
     (event?: SyntheticEvent, block?: boolean) => {
       if (isAtMin(value, min)) return;
       const decrementStep = block ? stepMultiplier * step : step;
-      const parsedValue = parse?.(value) || value;
+      let parsedValue = value;
+      if (parse) {
+        parsedValue = parse(value);
+      }
       const nextValue = toFloat(parsedValue) - decrementStep;
       updateValue(event, nextValue);
     },

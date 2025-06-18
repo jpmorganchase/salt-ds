@@ -4,6 +4,7 @@ import {
   type ValidationStatus,
   capitalize,
   makePrefixer,
+  useControlled,
   useForkRef,
   useFormFieldProps,
   useIcon,
@@ -22,19 +23,19 @@ import {
   type Ref,
   type SyntheticEvent,
   forwardRef,
+  useEffect,
   useRef,
+  useState,
 } from "react";
 import {
   clamp,
   getNumberPrecision,
   isOutOfRange,
-  isValidNumber,
   sanitizeInput,
   toFloat,
 } from "./internal/utils";
 
 import numberInputCss from "./NumberInput.css";
-import { useFormatControlled } from "./internal/useFormatControlled";
 import { useNumberInput } from "./useNumberInput";
 
 const withBaseName = makePrefixer("saltNumberInput");
@@ -49,7 +50,7 @@ export interface NumberInputProps
    * input loses focus, while typing, or not at all.
    * @default none
    */
-  clampBehaviour?: "default" | "strict" | "none";
+  clampValue?: boolean;
   /**
    * The default value. Use when the component is not controlled.
    */
@@ -162,7 +163,7 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
     {
       bordered = false,
       className: classNameProp,
-      clampBehaviour = "none",
+      clampValue = false,
       disabled,
       endAdornment,
       format,
@@ -238,35 +239,48 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       : inputRequired;
 
     const mergedFormatter = (value: number | string): number | string => {
-      const sanitizedValue = sanitizeInput(value);
-
-      if (!isValidNumber(sanitizedValue)) {
+      if (value === "" || value === undefined) {
         return "";
       }
+
+      const sanitizedValue = sanitizeInput(value);
+
       if (userEditingRef.current) {
         return sanitizedValue;
       }
       const floatValue = toFloat(sanitizedValue);
       if (format) {
-        const clampedValue =
-          clampBehaviour === "default"
-            ? clamp(max, min, floatValue)
-            : floatValue;
+        const clampedValue = clampValue
+          ? clamp(max, min, floatValue)
+          : floatValue;
         return format(clampedValue);
       }
       if (decimalScale >= 0) {
         return floatValue.toFixed(decimalScale);
       }
+
       return value;
     };
 
-    const [value, setValue] = useFormatControlled({
+    const [value, setValue, isControlled] = useControlled({
       controlled: valueProp,
       default: defaultValueProp,
       name: "NumberInput",
       state: "value",
-      format: mergedFormatter,
     });
+
+    console.log("value state", value);
+
+    const [internalValue, setInternalValue] = useState(() =>
+      mergedFormatter(value),
+    );
+
+    console.log("internal value", internalValue);
+
+    useEffect(() => {
+      setInternalValue(mergedFormatter(value));
+      // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+    }, [value, mergedFormatter]);
 
     const {
       decrementButtonProps,
@@ -293,7 +307,8 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       userEditingRef.current = true;
       const inputValue = event.target.value;
       const rawValue = parse?.(inputValue) || inputValue;
-      setValue(rawValue);
+      console.log("rawValue ", rawValue);
+      setInternalValue(rawValue);
       inputOnFocus?.(event);
     };
 
@@ -303,13 +318,15 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       if (inputValue === "") {
         return "";
       }
-      const clampedValue =
-        clampBehaviour === "default"
-          ? clamp(max, min, toFloat(inputValue))
-          : toFloat(inputValue);
+      const clampedValue = clampValue
+        ? clamp(max, min, toFloat(inputValue))
+        : toFloat(inputValue);
+
+      console.log("clamped value", clampedValue);
 
       const rawValue = toFloat(clampedValue.toFixed(decimalScale));
       const formattedValue = mergedFormatter(clampedValue);
+      setInternalValue(formattedValue);
       setValue(formattedValue);
 
       if (String(rawValue) !== String(value)) {
@@ -320,23 +337,21 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
     const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
       const inputValue = event.target.value;
       const sanitizedValue = sanitizeInput(inputValue);
+      console.log("sanitized value in on change ", sanitizedValue);
       const parsedValue =
         !userEditingRef.current && parse
           ? parse(sanitizedValue)
           : sanitizedValue;
 
-      if (
-        clampBehaviour === "strict" &&
-        (isOutOfRange(parsedValue, min, max) ||
-          getNumberPrecision(parsedValue) > decimalScale)
-      ) {
-        return;
-      }
-
+      console.log("parsed value in on change", parsedValue);
       if (String(parsedValue) !== String(value)) {
-        setValue(parsedValue);
-        onChangeProp?.(event, parsedValue);
-        inputOnChange?.(event);
+        setInternalValue(parsedValue);
+        if (isControlled) {
+          onChangeProp?.(event, parsedValue);
+          inputOnChange?.(event);
+        } else {
+          setValue(parsedValue);
+        }
       }
     };
 
@@ -453,7 +468,7 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
           // Workaround to have readonly conveyed by screen readers (https://github.com/jpmorganchase/salt-ds/issues/4586)
           role={isReadOnly ? "textbox" : "spinbutton"}
           tabIndex={isDisabled ? -1 : 0}
-          value={value}
+          value={internalValue}
           {...restInputProps}
         />
         <div className={withBaseName("activationIndicator")} />
