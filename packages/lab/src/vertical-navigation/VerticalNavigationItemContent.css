@@ -34,12 +34,12 @@
   font-weight: var(--salt-text-h4-fontWeight);
 }
 
-.saltVerticalNavigation-transparent .saltVerticalNavigationItemContent-active {
+.saltVerticalNavigation-indicator .saltVerticalNavigationItemContent-active {
   background: var(--salt-selectable-background-hover);
   font-weight: var(--salt-text-h4-fontWeight);
 }
 
-.saltVerticalNavigation-transparent .saltVerticalNavigationItemContent::before {
+.saltVerticalNavigation-indicator .saltVerticalNavigationItemContent::before {
   left: var(--salt-spacing-50);
   content: "";
   position: absolute;
@@ -48,7 +48,7 @@
   width: var(--salt-size-indicator);
 }
 
-.saltVerticalNavigation-transparent .saltVerticalNavigationItemContent-active::before {
+.saltVerticalNavigation-indicator .saltVerticalNavigationItemContent-active::before {
   background: var(--salt-navigable-indicator-active);
 }
 
