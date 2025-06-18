@@ -21,7 +21,6 @@
 }
 
 /* Zebra styling */
-.saltTable-zebra-primary .saltTable-thead .saltTable-tr,
 .saltTable-zebra-primary .saltTable-tbody .saltTable-tr:nth-of-type(odd),
 .saltTable-zebra-primary tbody .saltTable-tr:nth-of-type(odd),
 .saltTable-zebra-primary .saltTable-tbody tr:nth-of-type(odd),
@@ -29,7 +28,6 @@
   --table-background: var(--salt-container-primary-background);
 }
 
-.saltTable-zebra-secondary .saltTable-thead .saltTable-tr,
 .saltTable-zebra-secondary .saltTable-tbody .saltTable-tr:nth-of-type(odd),
 .saltTable-zebra-secondary tbody .saltTable-tr:nth-of-type(odd),
 .saltTable-zebra-secondary .saltTable-tbody tr:nth-of-type(odd),
@@ -37,7 +35,6 @@
   --table-background: var(--salt-container-secondary-background);
 }
 
-.saltTable-zebra-tertiary .saltTable-thead .saltTable-tr,
 .saltTable-zebra-tertiary .saltTable-tbody .saltTable-tr:nth-of-type(odd),
 .saltTable-zebra-tertiary tbody .saltTable-tr:nth-of-type(odd),
 .saltTable-zebra-tertiary .saltTable-tbody tr:nth-of-type(odd),
@@ -131,7 +128,7 @@ table.saltTable tfoot {
 .saltTable-th,
 .saltTable th {
   overflow: hidden;
-  padding: var(--salt-spacing-100);
+  padding: 0 var(--salt-spacing-100);
   position: relative;
   text-align: start;
   font-weight: var(--salt-text-label-fontWeight-strong);
@@ -168,5 +165,5 @@ table.saltTable tbody tr:hover {
 /* TD */
 .saltTable-td {
   height: 100%;
-  padding: var(--salt-spacing-100);
+  padding: 0 var(--salt-spacing-100);
 }
