@@ -55,7 +55,10 @@ export const useList = <Item, Selection extends SelectionStrategy = "default">({
   type selectedItem = selectedType<Item, Selection>;
 
   const lastSelection = useRef<typeof selected>(selected || defaultSelected);
-  const handleKeyboardNavigation = (evt: KeyboardEvent, nextIndex: number) => {
+  const handleKeyboardNavigation = (
+    evt: KeyboardEvent<HTMLElement>,
+    nextIndex: number,
+  ) => {
     selectionHook.listHandlers.onKeyboardNavigation?.(evt, nextIndex);
     onKeyboardNavigation?.(evt, nextIndex);
   };
@@ -145,7 +148,7 @@ export const useList = <Item, Selection extends SelectionStrategy = "default">({
   });
 
   const handleKeyDown = useCallback(
-    (evt: KeyboardEvent) => {
+    (evt: KeyboardEvent<HTMLElement>) => {
       if (!evt.defaultPrevented) {
         typeaheadOnKeyDown?.(evt);
       }

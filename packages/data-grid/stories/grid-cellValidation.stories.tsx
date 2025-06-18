@@ -1,5 +1,5 @@
 import { faker } from "@faker-js/faker";
-import type { StoryFn } from "@storybook/react";
+import type { StoryFn } from "@storybook/react-vite";
 import { useCallback, useState } from "react";
 import * as yup from "yup";
 import {

@@ -1,5 +1,5 @@
 import * as buttonStories from "@stories/button/button.stories";
-import { composeStories } from "@storybook/react";
+import { composeStories } from "@storybook/react-vite";
 import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
 
 const composedStories = composeStories(buttonStories);
@@ -79,5 +79,39 @@ describe("Given a Button", () => {
     // @ts-expect-error test invalid variant
     cy.mount(<Default variant="invalid" />);
     cy.findByRole("button").should("have.class", "saltButton");
+  });
+
+  it("should not submit form when type is submit and button is loading", () => {
+    const submitSpy = cy.stub().as("submitSpy");
+    cy.mount(
+      <form onSubmit={submitSpy}>
+        <LoadingSingle />
+      </form>,
+    );
+
+    cy.findByRole("button").realClick();
+    cy.get("@submitSpy").should("not.be.called");
+
+    cy.findByRole("button").should("be.focused");
+
+    cy.realPress("Enter");
+    cy.get("@submitSpy").should("not.be.called");
+  });
+
+  it("should not submit form when type is submit and button is focusableWhenDisabled", () => {
+    const submitSpy = cy.stub().as("submitSpy");
+    cy.mount(
+      <form onSubmit={submitSpy}>
+        <FocusableWhenDisabled />
+      </form>,
+    );
+
+    cy.findByRole("button").realClick();
+    cy.get("@submitSpy").should("not.be.called");
+
+    cy.findByRole("button").should("be.focused");
+
+    cy.realPress("Enter");
+    cy.get("@submitSpy").should("not.be.called");
   });
 });

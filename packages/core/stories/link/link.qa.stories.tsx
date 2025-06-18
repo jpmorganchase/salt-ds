@@ -1,6 +1,6 @@
 import { Link, Text } from "@salt-ds/core";
 import { UserIcon } from "@salt-ds/icons";
-import type { Meta, StoryFn } from "@storybook/react";
+import type { Meta, StoryFn } from "@storybook/react-vite";
 import {
   QAContainer,
   QAContainerNoStyleInjection,

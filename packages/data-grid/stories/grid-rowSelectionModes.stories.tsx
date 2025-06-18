@@ -4,7 +4,7 @@ import {
   ToggleButton,
   ToggleButtonGroup,
 } from "@salt-ds/core";
-import type { StoryFn } from "@storybook/react";
+import type { StoryFn } from "@storybook/react-vite";
 import { type SyntheticEvent, useState } from "react";
 import {
   Grid,

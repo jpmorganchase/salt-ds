@@ -11,7 +11,7 @@ import {
   type ValidationStatus,
 } from "@salt-ds/core";
 import { CloseIcon, RefreshIcon } from "@salt-ds/icons";
-import type { Meta, StoryFn } from "@storybook/react";
+import type { Meta, StoryFn } from "@storybook/react-vite";
 import { useState } from "react";
 
 export default {

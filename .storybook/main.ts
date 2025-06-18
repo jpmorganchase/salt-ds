@@ -16,7 +16,7 @@ const config: StorybookConfig = {
     reactDocgen: "react-docgen-typescript",
   },
   features: {
-    viewportStoryGlobals: true,
+    backgrounds: false,
   },
   addons: [
     {
@@ -29,18 +29,8 @@ const config: StorybookConfig = {
         },
       },
     },
-    {
-      name: "@storybook/addon-essentials",
-      options: {
-        // We don't want the backgrounds addon as our own withThemeBackground works with theme switch to apply background
-        backgrounds: false,
-        docs: false,
-      },
-    },
     getAbsolutePath("@storybook/addon-links"),
     getAbsolutePath("@storybook/addon-a11y"),
-    getAbsolutePath("@storybook/addon-interactions"),
-    getAbsolutePath("@storybook/addon-storysource"),
   ],
   async viteFinal(config, { configType }) {
     const { mergeConfig } = await import("vite");

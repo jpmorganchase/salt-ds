@@ -1,4 +1,4 @@
-import { composeStories } from "@storybook/react";
+import { composeStories } from "@storybook/react-vite";
 import { checkAccessibility } from "../../../../../cypress/tests/checkAccessibility";
 import * as iconStory from "../../../stories/icon.stories";
 

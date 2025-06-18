@@ -3,7 +3,7 @@ import {
   LazyCountrySymbol as LazyCountrySymbolComponent,
   countryMetaMap,
 } from "@salt-ds/countries";
-import type { Meta, StoryFn } from "@storybook/react";
+import type { Meta, StoryFn } from "@storybook/react-vite";
 import { Suspense } from "react";
 
 const countryCodes = Object.keys(

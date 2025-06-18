@@ -1,5 +1,5 @@
 import * as numberInputStories from "@stories/number-input/number-input.stories";
-import { composeStories } from "@storybook/react";
+import { composeStories } from "@storybook/react-vite";
 
 const composedStories = composeStories(numberInputStories);
 

@@ -4,9 +4,8 @@
   min-width: 4em;
   width: 100%;
   background: var(--dropdown-background);
-  cursor: var(--dropdown-cursor);
+  cursor: var(--salt-selectable-cursor-hover);
   min-height: var(--salt-size-base);
-  border: var(--dropdown-border);
   border-radius: var(--salt-palette-corner-weak, 0);
   display: inline-flex;
   align-items: center;
@@ -22,8 +21,7 @@
 }
 
 .saltDropdown:hover {
-  background: var(--saltDropdown-background-hover, var(--dropdown-background-hover));
-  cursor: var(--salt-selectable-cursor-hover);
+  background: var(--dropdown-background-hover);
 }
 
 .saltDropdown-bordered.saltDropdown {
@@ -96,6 +94,7 @@
 }
 
 .saltDropdown-primary {
+  --dropdown-color: var(--salt-content-primary-foreground);
   --dropdown-background: var(--salt-editable-primary-background);
   --dropdown-background-active: var(--salt-editable-primary-background-active);
   --dropdown-background-hover: var(--salt-editable-primary-background-hover);
@@ -108,6 +107,7 @@
 }
 
 .saltDropdown-secondary {
+  --dropdown-color: var(--salt-content-primary-foreground);
   --dropdown-background: var(--salt-editable-secondary-background);
   --dropdown-background-active: var(--salt-editable-secondary-background-active);
   --dropdown-background-hover: var(--salt-editable-secondary-background-active);
@@ -120,6 +120,7 @@
 }
 
 .saltDropdown-error {
+  --dropdown-color: var(--salt-content-primary-foreground);
   --dropdown-background: var(--salt-status-error-background);
   --dropdown-background-active: var(--salt-status-error-background);
   --dropdown-background-hover: var(--salt-status-error-background);
@@ -131,6 +132,7 @@
 }
 
 .saltDropdown-warning {
+  --dropdown-color: var(--salt-content-primary-foreground);
   --dropdown-background: var(--salt-status-warning-background);
   --dropdown-background-active: var(--salt-status-warning-background);
   --dropdown-background-hover: var(--salt-status-warning-background);
@@ -142,6 +144,7 @@
 }
 
 .saltDropdown-success {
+  --dropdown-color: var(--salt-content-primary-foreground);
   --dropdown-background: var(--salt-status-success-background);
   --dropdown-background-active: var(--salt-status-success-background);
   --dropdown-background-hover: var(--salt-status-success-background);

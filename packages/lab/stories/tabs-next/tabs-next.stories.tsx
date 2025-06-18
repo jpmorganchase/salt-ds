@@ -41,7 +41,7 @@ import {
   TabNextTrigger,
   TabsNext,
 } from "@salt-ds/lab";
-import type { StoryFn } from "@storybook/react";
+import type { StoryFn } from "@storybook/react-vite";
 import {
   type ChangeEvent,
   type ComponentType,

@@ -1,5 +1,18 @@
 # @salt-ds/lab
 
+## 1.0.0-alpha.70
+
+### Patch Changes
+
+- 5f6c967: Fixed CascadingMenu styles clashing with Menu styles.
+- Updated dependencies [b99afaa]
+- Updated dependencies [dd3e21d]
+- Updated dependencies [edcd33d]
+- Updated dependencies [a3a0608]
+- Updated dependencies [0c140c0]
+  - @salt-ds/core@1.47.0
+  - @salt-ds/icons@1.14.0
+
 ## 1.0.0-alpha.69
 
 ### Patch Changes

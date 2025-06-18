@@ -3,7 +3,7 @@ import {
   FormattedInput,
   type FormattedInputProps,
 } from "@salt-ds/lab";
-import type { StoryFn } from "@storybook/react";
+import type { StoryFn } from "@storybook/react-vite";
 import { useState } from "react";
 
 const parseDigits = (string: string) => (string.match(/(\d+)/g) || []).join("");

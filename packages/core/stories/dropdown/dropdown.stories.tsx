@@ -16,7 +16,7 @@ import {
   LocationIcon,
   UserAdminIcon,
 } from "@salt-ds/icons";
-import type { Meta, StoryFn } from "@storybook/react";
+import type { Meta, StoryFn } from "@storybook/react-vite";
 import { type SyntheticEvent, useState } from "react";
 
 export default {

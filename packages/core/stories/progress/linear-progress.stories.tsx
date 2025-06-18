@@ -5,7 +5,7 @@ import {
   LinearProgress,
   StackLayout,
 } from "@salt-ds/core";
-import type { Meta, StoryFn } from "@storybook/react";
+import type { Meta, StoryFn } from "@storybook/react-vite";
 import { useProgressingValue } from "./useProgressingValue";
 
 import "./progress.stories.css";

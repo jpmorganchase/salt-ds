@@ -4,7 +4,8 @@ import { clsx } from "clsx";
 import {
   type CSSProperties,
   type ElementType,
-  type ReactElement,
+  type ForwardedRef,
+  type FunctionComponent,
   forwardRef,
 } from "react";
 import { useBreakpoint } from "../breakpoints";
@@ -61,58 +62,58 @@ export type FlexItemProps<T extends ElementType> =
 
 type FlexItemComponent = <T extends ElementType = "div">(
   props: FlexItemProps<T>,
-) => ReactElement | null;
+) => ReturnType<FunctionComponent>;
 
-export const FlexItem: FlexItemComponent = forwardRef(
-  <T extends ElementType = "div">(
-    {
-      as,
-      align,
-      children,
-      className,
-      margin = 0,
-      padding = 0,
-      shrink,
-      grow,
-      basis,
-      style,
-      ...rest
-    }: FlexItemProps<T>,
-    ref?: PolymorphicRef<T>,
-  ) => {
-    const targetWindow = useWindow();
-    useComponentCssInjection({
-      testId: "salt-flex-item",
-      css: flexItemCss,
-      window: targetWindow,
-    });
-    const { matchedBreakpoints } = useBreakpoint();
+export const FlexItem: FlexItemComponent = forwardRef(function FlexItem<
+  T extends ElementType = "div",
+>(
+  {
+    as,
+    align,
+    children,
+    className,
+    margin = 0,
+    padding = 0,
+    shrink,
+    grow,
+    basis,
+    style,
+    ...rest
+  }: FlexItemProps<T>,
+  ref?: ForwardedRef<unknown>,
+) {
+  const targetWindow = useWindow();
+  useComponentCssInjection({
+    testId: "salt-flex-item",
+    css: flexItemCss,
+    window: targetWindow,
+  });
+  const { matchedBreakpoints } = useBreakpoint();
 
-    const Component = as || "div";
-    const flexItemShrink = resolveResponsiveValue(shrink, matchedBreakpoints);
-    const flexItemGrow = resolveResponsiveValue(grow, matchedBreakpoints);
-    const flexItemBasis = resolveResponsiveValue(basis, matchedBreakpoints);
-    const flexItemMargin = resolveResponsiveValue(margin, matchedBreakpoints);
-    const flexItemPadding = resolveResponsiveValue(padding, matchedBreakpoints);
+  const Component = as || "div";
+  const flexItemShrink = resolveResponsiveValue(shrink, matchedBreakpoints);
+  const flexItemGrow = resolveResponsiveValue(grow, matchedBreakpoints);
+  const flexItemBasis = resolveResponsiveValue(basis, matchedBreakpoints);
+  const flexItemMargin = resolveResponsiveValue(margin, matchedBreakpoints);
+  const flexItemPadding = resolveResponsiveValue(padding, matchedBreakpoints);
 
-    const itemStyle = {
-      "--flexItem-margin": parseSpacing(flexItemMargin),
-      "--flexItem-padding": parseSpacing(flexItemPadding),
-      "--saltFlexItem-alignment": align,
-      "--saltFlexItem-shrink": flexItemShrink,
-      "--saltFlexItem-grow": flexItemGrow,
-      "--saltFlexItem-basis": flexItemBasis,
-      ...style,
-    };
-    return (
-      <Component
-        className={clsx(withBaseName(), className)}
-        ref={ref}
-        style={itemStyle}
-        {...rest}
-      >
-        {children}
-      </Component>
-    );
-  },
-);
+  const itemStyle = {
+    "--flexItem-margin": parseSpacing(flexItemMargin),
+    "--flexItem-padding": parseSpacing(flexItemPadding),
+    "--saltFlexItem-alignment": align,
+    "--saltFlexItem-shrink": flexItemShrink,
+    "--saltFlexItem-grow": flexItemGrow,
+    "--saltFlexItem-basis": flexItemBasis,
+    ...style,
+  };
+  return (
+    <Component
+      className={clsx(withBaseName(), className)}
+      ref={ref as PolymorphicRef<T>}
+      style={itemStyle}
+      {...rest}
+    >
+      {children}
+    </Component>
+  );
+});

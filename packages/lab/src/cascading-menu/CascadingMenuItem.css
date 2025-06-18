@@ -1,4 +1,4 @@
-.saltMenuItem {
+.saltCascadingMenuItem {
   background: var(--salt-selectable-background);
   display: flex;
 
@@ -14,33 +14,33 @@
   text-overflow: ellipsis;
 }
 
-.saltMenuItem-menuItemText {
+.saltCascadingMenuItem-menuItemText {
   flex-grow: 2;
   white-space: nowrap;
 }
 
-.saltMenuItem-menuItemEndAdornment {
+.saltCascadingMenuItem-menuItemEndAdornment {
   margin-left: 8px; /* density */
 }
 
-.saltMenuItem-menuItemStartAdornmentContainer {
+.saltCascadingMenuItem-menuItemStartAdornmentContainer {
   margin-right: var(--salt-size-unit);
   width: 12px;
 }
 
-.saltMenuItem-menuItemAdornmentHidden {
+.saltCascadingMenuItem-menuItemAdornmentHidden {
   visibility: hidden;
 }
 
-.saltMenuItem.saltMenuItem-menuItemDivider {
+.saltCascadingMenuItem.saltCascadingMenuItem-menuItemDivider {
   border-bottom: var(--salt-size-border) var(--salt-separable-borderStyle) var(--salt-separable-secondary-borderColor);
 }
 
-.saltMenuItem-menuItemHover:hover {
+.saltCascadingMenuItem-menuItemHover:hover {
   background: var(--salt-selectable-background-hover);
 }
 
 /* extra specificity requred to override ListItem selected */
-.saltMenuItem.saltMenuItem-menuItemBlurSelected {
+.saltCascadingMenuItem.saltCascadingMenuItem-menuItemBlurSelected {
   background: var(--salt-selectable-background-blurSelected) !important;
 }

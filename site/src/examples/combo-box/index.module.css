@@ -6,6 +6,4 @@
   min-height: calc(var(--salt-size-base) + var(--salt-spacing-100));
   padding-left: var(--salt-spacing-100);
   padding-right: var(--salt-spacing-100);
-  margin-top: var(--salt-size-border);
-  margin-bottom: var(--salt-size-border);
 }

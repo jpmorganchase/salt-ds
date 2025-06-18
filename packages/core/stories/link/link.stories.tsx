@@ -1,6 +1,6 @@
 import { Link, Text } from "@salt-ds/core";
 import { StackoverflowIcon } from "@salt-ds/icons";
-import type { Meta, StoryFn } from "@storybook/react";
+import type { Meta, StoryFn } from "@storybook/react-vite";
 
 export default {
   title: "Core/Link",

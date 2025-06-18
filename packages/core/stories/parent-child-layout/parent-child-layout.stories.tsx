@@ -1,6 +1,6 @@
-import type { Meta, StoryFn } from "@storybook/react";
-import { fn } from "@storybook/test";
+import type { Meta, StoryFn } from "@storybook/react-vite";
 import { useState } from "react";
+import { fn } from "storybook/test";
 
 import {
   Button,

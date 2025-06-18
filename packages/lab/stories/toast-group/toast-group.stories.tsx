@@ -8,7 +8,7 @@ import {
 } from "@salt-ds/core";
 import { CloseIcon } from "@salt-ds/icons";
 import { ToastGroup } from "@salt-ds/lab";
-import type { Meta } from "@storybook/react";
+import type { Meta } from "@storybook/react-vite";
 import { Fragment, type ReactNode, useState } from "react";
 
 export default {

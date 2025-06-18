@@ -1,5 +1,5 @@
 import { Button, Text, Tooltip, type TooltipProps } from "@salt-ds/core";
-import type { Meta, StoryFn } from "@storybook/react";
+import type { Meta, StoryFn } from "@storybook/react-vite";
 import { useCallback } from "react";
 
 export default {

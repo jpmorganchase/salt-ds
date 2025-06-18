@@ -1,5 +1,21 @@
 # @salt-ds/core
 
+## 1.47.0
+
+### Minor Changes
+
+- b99afaa: - Updated Pagination styles to include a border on the selected state.
+  - Updated Pagination to use default text styles instead of action text.
+  - Fixed hover styles overriding selected styles on Pagination.
+
+### Patch Changes
+
+- edcd33d: Fixed clicking on `FormField` labels' not focusing/interacting with the associated form control.
+- a3a0608: Fixed the alignment of the status indicator inside FormField's helper text.
+- 0c140c0: Fixed `Checkbox`'s checked color styles applying when `Checkbox` is indeterminate.
+- Updated dependencies [dd3e21d]
+  - @salt-ds/icons@1.14.0
+
 ## 1.46.1
 
 ### Patch Changes

@@ -6,7 +6,7 @@ import {
   useAvatarImage,
 } from "@salt-ds/core";
 import { UserGroupSolidIcon } from "@salt-ds/icons";
-import type { Meta, StoryFn } from "@storybook/react";
+import type { Meta, StoryFn } from "@storybook/react-vite";
 import type { ReactNode } from "react";
 import persona1 from "../assets/avatar.png";
 

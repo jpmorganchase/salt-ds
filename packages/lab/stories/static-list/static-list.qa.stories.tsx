@@ -5,7 +5,7 @@ import {
   StaticListItem,
   StaticListItemContent,
 } from "@salt-ds/lab";
-import type { Meta, StoryFn } from "@storybook/react";
+import type { Meta, StoryFn } from "@storybook/react-vite";
 import { clsx } from "clsx";
 import { QAContainer, type QAContainerProps } from "docs/components";
 import { Fragment } from "react";

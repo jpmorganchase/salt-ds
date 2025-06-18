@@ -14,7 +14,7 @@ import {
   Tooltip,
   useId,
 } from "@salt-ds/core";
-import type { Meta, StoryFn } from "@storybook/react";
+import type { Meta, StoryFn } from "@storybook/react-vite";
 import { type ChangeEvent, useState } from "react";
 
 import "./overlay.stories.css";

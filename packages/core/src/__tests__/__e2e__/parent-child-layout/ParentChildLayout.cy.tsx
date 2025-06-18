@@ -1,6 +1,6 @@
 import { SaltProvider } from "@salt-ds/core";
 import * as parentChildStories from "@stories/parent-child-layout/parent-child-layout.stories";
-import { composeStories } from "@storybook/react";
+import { composeStories } from "@storybook/react-vite";
 
 const composedStories = composeStories(parentChildStories);
 

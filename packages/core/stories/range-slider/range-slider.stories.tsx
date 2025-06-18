@@ -9,7 +9,7 @@ import {
   useId,
   useResponsiveProp,
 } from "@salt-ds/core";
-import type { StoryFn } from "@storybook/react";
+import type { StoryFn } from "@storybook/react-vite";
 import { toFloat } from "packages/core/src/slider/internal/utils";
 import { type ChangeEvent, useState } from "react";
 

@@ -1,6 +1,6 @@
 import { Button, StackLayout, Toast, ToastContent } from "@salt-ds/core";
 import { CloseIcon, GlobeIcon } from "@salt-ds/icons";
-import type { Meta, StoryFn } from "@storybook/react";
+import type { Meta, StoryFn } from "@storybook/react-vite";
 import {
   QAContainer,
   QAContainerNoStyleInjection,

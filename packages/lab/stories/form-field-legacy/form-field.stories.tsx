@@ -1,6 +1,6 @@
 import { H3, SaltProvider } from "@salt-ds/core";
 import { Dropdown, FormField, type FormFieldProps, Input } from "@salt-ds/lab";
-import type { Meta, StoryFn } from "@storybook/react";
+import type { Meta, StoryFn } from "@storybook/react-vite";
 import { useState } from "react";
 import { usStateExampleData } from "../assets/exampleData";
 

@@ -1,6 +1,6 @@
 import { ComboBox, Option } from "@salt-ds/core";
 import * as comboBoxStories from "@stories/combo-box/combo-box.stories";
-import { composeStories } from "@storybook/react";
+import { composeStories } from "@storybook/react-vite";
 import { type KeyboardEventHandler, useRef, useState } from "react";
 import { CustomFloatingComponentProvider, FLOATING_TEST_ID } from "../common";
 
@@ -824,5 +824,14 @@ describe("Given a ComboBox", () => {
     cy.findAllByTestId("pill").eq(0).realClick();
     cy.get("@onSelectionChangeSpy").should("have.been.called");
     cy.findAllByTestId("pill").should("have.length", "2");
+  });
+
+  it("should not delete the pill when the pill is clicked first", () => {
+    const onSelectionChangeSpy = cy.stub().as("onSelectionChangeSpy");
+    cy.mount(<MultiplePills onSelectionChange={onSelectionChangeSpy} />);
+    cy.findAllByTestId("pill").should("have.length", "3");
+    cy.findAllByTestId("pill").eq(0).realClick();
+    cy.get("@onSelectionChangeSpy").should("not.have.been.called");
+    cy.findAllByTestId("pill").should("have.length", "3");
   });
 });

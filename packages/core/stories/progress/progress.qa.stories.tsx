@@ -1,4 +1,4 @@
-import type { Meta, StoryFn } from "@storybook/react";
+import type { Meta, StoryFn } from "@storybook/react-vite";
 
 import { CircularProgress, LinearProgress } from "@salt-ds/core";
 import { QAContainer, type QAContainerProps } from "docs/components";

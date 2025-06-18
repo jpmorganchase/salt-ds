@@ -14,7 +14,7 @@ import {
   Input as InputLegacy,
   StaticInputAdornment,
 } from "@salt-ds/lab";
-import type { Meta, StoryFn } from "@storybook/react";
+import type { Meta, StoryFn } from "@storybook/react-vite";
 
 export default {
   title: "Lab/Input Legacy",

@@ -1,6 +1,6 @@
 import { HomeIcon, TreeIcon } from "@salt-ds/icons";
 import { Breadcrumb, Breadcrumbs } from "@salt-ds/lab";
-import type { StoryFn } from "@storybook/react";
+import type { StoryFn } from "@storybook/react-vite";
 
 export default {
   title: "Lab/Breadcrumbs",

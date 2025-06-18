@@ -6,7 +6,7 @@ import {
   StaticListItemContent,
   type StaticListProps,
 } from "@salt-ds/lab";
-import type { Meta, StoryFn } from "@storybook/react";
+import type { Meta, StoryFn } from "@storybook/react-vite";
 import { clsx } from "clsx";
 import { Fragment, useState } from "react";
 import { complexEventsData, eventsData } from "../assets/exampleData";

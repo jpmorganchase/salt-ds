@@ -25,7 +25,7 @@ import {
   StaticListItem,
   StaticListItemContent,
 } from "@salt-ds/lab";
-import type { Meta } from "@storybook/react";
+import type { Meta } from "@storybook/react-vite";
 import { clsx } from "clsx";
 import {
   Fragment,

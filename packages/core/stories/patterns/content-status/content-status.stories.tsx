@@ -6,7 +6,7 @@ import {
   StatusIndicator,
   Text,
 } from "@salt-ds/core";
-import type { Meta } from "@storybook/react";
+import type { Meta } from "@storybook/react-vite";
 
 export default {
   title: "Patterns/Content Status",

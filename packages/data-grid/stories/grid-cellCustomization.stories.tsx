@@ -7,7 +7,7 @@ import {
   RowSelectionCheckboxColumn,
 } from "../src";
 import "./grid.stories.css";
-import type { StoryFn } from "@storybook/react";
+import type { StoryFn } from "@storybook/react-vite";
 
 export default {
   title: "Lab/Data Grid",

@@ -22,7 +22,7 @@ import {
   type renderCalendarDayProps,
   useLocalization,
 } from "@salt-ds/lab";
-import type { Meta, StoryFn } from "@storybook/react";
+import type { Meta, StoryFn } from "@storybook/react-vite";
 import { clsx } from "clsx";
 import {
   type ReactElement,
@@ -644,7 +644,9 @@ export const SingleWithTimezone: StoryFn<typeof Calendar> = (args) => {
   );
 };
 
-export const RangeWithTimezone: StoryFn<typeof Calendar> = (args) => {
+export const RangeWithTimezone: StoryFn<
+  CalendarRangeProps<DateFrameworkType>
+> = (args) => {
   const { dateAdapter } = useLocalization<DateFrameworkType>();
   const timezoneOptions =
     dateAdapter.lib !== "date-fns"

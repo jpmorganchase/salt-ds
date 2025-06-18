@@ -1,6 +1,6 @@
 import { Button, Card, GridItem, GridLayout, Spinner } from "@salt-ds/core";
 import { CoffeeIcon } from "@salt-ds/icons";
-import type { Meta, StoryFn } from "@storybook/react";
+import type { Meta, StoryFn } from "@storybook/react-vite";
 import { useEffect, useState } from "react";
 
 export default {

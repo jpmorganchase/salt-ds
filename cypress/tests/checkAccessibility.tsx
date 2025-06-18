@@ -1,6 +1,6 @@
-import type { ReactRenderer, StoryFn } from "@storybook/react";
-import type { StoriesWithPartialProps } from "@storybook/types";
+import type { ReactRenderer, StoryFn } from "@storybook/react-vite";
 import type { Options } from "cypress-axe";
+import type { StoriesWithPartialProps } from "storybook/internal/types";
 
 export function checkAccessibility(
   stories: StoriesWithPartialProps<ReactRenderer, unknown>,

@@ -1,6 +1,6 @@
 import { SaltProvider } from "@salt-ds/core";
 import { Color, ColorChooser } from "@salt-ds/lab";
-import type { Meta, StoryFn } from "@storybook/react";
+import type { Meta, StoryFn } from "@storybook/react-vite";
 import { useCallback, useState } from "react";
 import { customColorMap } from "./custom-color-map";
 

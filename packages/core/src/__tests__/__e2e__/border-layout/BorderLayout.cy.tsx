@@ -1,6 +1,6 @@
 import { BORDER_POSITION as borderAreas } from "@salt-ds/core";
 import * as borderStories from "@stories/border-layout/border-layout.stories";
-import { composeStories } from "@storybook/react";
+import { composeStories } from "@storybook/react-vite";
 import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
 
 const composedStories = composeStories(borderStories);

@@ -8,7 +8,7 @@ import {
   type ToastProps,
 } from "@salt-ds/core";
 import { CloseIcon, GlobeIcon } from "@salt-ds/icons";
-import type { Meta, StoryFn } from "@storybook/react";
+import type { Meta, StoryFn } from "@storybook/react-vite";
 
 export default {
   title: "Core/Toast",

@@ -1,5 +1,5 @@
 import * as sliderStories from "@stories/slider/slider.stories";
-import { composeStories } from "@storybook/react";
+import { composeStories } from "@storybook/react-vite";
 import { type ChangeEvent, useState } from "react";
 
 const composedStories = composeStories(sliderStories);

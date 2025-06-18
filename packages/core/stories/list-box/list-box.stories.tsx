@@ -1,5 +1,5 @@
 import { ListBox, Option, OptionGroup, StackLayout, Text } from "@salt-ds/core";
-import type { Meta, StoryFn } from "@storybook/react";
+import type { Meta, StoryFn } from "@storybook/react-vite";
 import { shortColorWithHex, usStateExampleData } from "../assets/exampleData";
 import "./list-box.stories.css";
 import type { ReactElement } from "react";

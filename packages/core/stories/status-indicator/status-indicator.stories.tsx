@@ -3,7 +3,7 @@ import {
   StatusIndicator,
   VALIDATION_NAMED_STATUS,
 } from "@salt-ds/core";
-import type { Meta, StoryFn } from "@storybook/react";
+import type { Meta, StoryFn } from "@storybook/react-vite";
 
 export default {
   title: "Core/Status Indicator",

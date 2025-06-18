@@ -5,7 +5,7 @@ import {
   StackLayout,
 } from "@salt-ds/core";
 import { CallIcon, ChatGroupIcon, MessageIcon } from "@salt-ds/icons";
-import type { Meta, StoryFn } from "@storybook/react";
+import type { Meta, StoryFn } from "@storybook/react-vite";
 import { QAContainer } from "docs/components";
 
 export default {

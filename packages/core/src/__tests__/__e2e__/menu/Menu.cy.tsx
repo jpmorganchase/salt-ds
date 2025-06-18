@@ -1,5 +1,5 @@
 import * as menuStories from "@stories/menu/menu.stories";
-import { composeStories } from "@storybook/react";
+import { composeStories } from "@storybook/react-vite";
 import { CustomFloatingComponentProvider, FLOATING_TEST_ID } from "../common";
 
 const { ContextMenu, SingleLevel, MultiLevel, GroupedItems, IconWithGroups } =

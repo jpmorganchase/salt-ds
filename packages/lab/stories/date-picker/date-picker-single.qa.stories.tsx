@@ -7,7 +7,7 @@ import {
   DatePickerTrigger,
   useLocalization,
 } from "@salt-ds/lab";
-import type { StoryFn } from "@storybook/react";
+import type { StoryFn } from "@storybook/react-vite";
 import { QAContainer, type QAContainerProps } from "docs/components";
 
 import { es as dateFnsEs } from "date-fns/locale";

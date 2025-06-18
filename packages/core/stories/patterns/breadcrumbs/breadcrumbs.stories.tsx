@@ -10,7 +10,7 @@ import {
   Text,
 } from "@salt-ds/core";
 import { ChevronRightIcon, OverflowMenuIcon } from "@salt-ds/icons";
-import type { Meta } from "@storybook/react";
+import type { Meta } from "@storybook/react-vite";
 import { useState } from "react";
 
 export default {

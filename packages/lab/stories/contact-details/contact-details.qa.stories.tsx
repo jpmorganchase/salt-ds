@@ -1,4 +1,4 @@
-import type { Meta, StoryFn } from "@storybook/react";
+import type { Meta, StoryFn } from "@storybook/react-vite";
 
 import { CallIcon, ChatIcon, MessageIcon } from "@salt-ds/icons";
 import {

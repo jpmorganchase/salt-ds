@@ -8,7 +8,7 @@ import {
   StackLayout,
 } from "@salt-ds/core";
 import { GithubIcon, StackoverflowIcon, SymphonyIcon } from "@salt-ds/icons";
-import type { Meta } from "@storybook/react";
+import type { Meta } from "@storybook/react-vite";
 import { useEffect, useState } from "react";
 import logo from "../../assets/logo.svg";
 

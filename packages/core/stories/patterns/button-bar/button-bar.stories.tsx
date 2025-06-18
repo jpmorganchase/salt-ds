@@ -18,7 +18,7 @@ import {
 } from "@salt-ds/core";
 import { ExportIcon, ImportIcon } from "@salt-ds/icons";
 
-import type { Meta } from "@storybook/react";
+import type { Meta } from "@storybook/react-vite";
 import { type ElementType, useState } from "react";
 
 export default {

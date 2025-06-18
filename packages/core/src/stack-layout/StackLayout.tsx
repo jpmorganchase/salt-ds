@@ -1,7 +1,12 @@
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
-import { type ElementType, type ReactElement, forwardRef } from "react";
+import {
+  type ElementType,
+  type ForwardedRef,
+  type FunctionComponent,
+  forwardRef,
+} from "react";
 import { useBreakpoint } from "../breakpoints";
 import {
   FlexLayout,
@@ -11,7 +16,6 @@ import {
 } from "../flex-layout";
 import {
   type PolymorphicComponentPropWithRef,
-  type PolymorphicRef,
   type ResponsiveProp,
   makePrefixer,
   resolveResponsiveValue,
@@ -53,7 +57,7 @@ export type StackLayoutProps<T extends ElementType> =
 
 type StackLayoutComponent = <T extends ElementType = "div">(
   props: StackLayoutProps<T>,
-) => ReactElement | null;
+) => ReturnType<FunctionComponent>;
 
 function parseSpacing(value: number | string | undefined) {
   if (value === undefined || typeof value === "string") {
@@ -64,8 +68,9 @@ function parseSpacing(value: number | string | undefined) {
 }
 
 export const StackLayout: StackLayoutComponent = forwardRef(
-  <T extends ElementType = "div">(
+  function StackLayout<T extends ElementType = "div">(
     {
+      as,
       children,
       className,
       direction = "column",
@@ -74,8 +79,8 @@ export const StackLayout: StackLayoutComponent = forwardRef(
       style,
       ...rest
     }: StackLayoutProps<T>,
-    ref?: PolymorphicRef<T>,
-  ) => {
+    ref?: ForwardedRef<unknown>,
+  ) {
     const targetWindow = useWindow();
     useComponentCssInjection({
       testId: "salt-stack-layout",
@@ -94,6 +99,7 @@ export const StackLayout: StackLayoutComponent = forwardRef(
     };
     return (
       <FlexLayout
+        as={as as ElementType}
         className={clsx(
           withBaseName(),
           {

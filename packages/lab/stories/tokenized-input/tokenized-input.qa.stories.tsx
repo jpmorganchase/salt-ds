@@ -1,5 +1,5 @@
 import { TokenizedInput } from "@salt-ds/lab";
-import type { Meta, StoryFn } from "@storybook/react";
+import type { Meta, StoryFn } from "@storybook/react-vite";
 import { QAContainer } from "docs/components";
 
 export default {

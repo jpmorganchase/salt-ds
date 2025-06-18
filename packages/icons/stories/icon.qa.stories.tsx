@@ -1,10 +1,15 @@
 import { AddDocumentIcon } from "@salt-ds/icons";
-import type { Meta, StoryFn } from "@storybook/react";
+import type { Meta, StoryFn } from "@storybook/react-vite";
 import { QAContainer, QAContainerNoStyleInjection } from "docs/components";
 import { allIcons } from "./icon.all";
 import "@salt-ds/icons/saltIcons.css";
 export default {
   title: "Icons/Icon/Icon QA",
+  globals: {
+    a11y: {
+      manual: true,
+    },
+  },
 } as Meta;
 
 const allIconNames = allIcons.map((iconComponent) => iconComponent.displayName);

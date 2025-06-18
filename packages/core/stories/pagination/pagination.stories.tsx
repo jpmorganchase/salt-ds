@@ -8,7 +8,7 @@ import {
   Paginator,
   type PaginatorProps,
 } from "@salt-ds/core";
-import type { Meta, StoryFn } from "@storybook/react";
+import type { Meta, StoryFn } from "@storybook/react-vite";
 
 export default {
   title: "Core/Pagination",

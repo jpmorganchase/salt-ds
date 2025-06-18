@@ -1,5 +1,5 @@
 import { GridLayout, Panel } from "@salt-ds/core";
-import type { Meta, StoryFn } from "@storybook/react";
+import type { Meta, StoryFn } from "@storybook/react-vite";
 
 export default {
   title: "Core/Panel",

@@ -1,16 +1,16 @@
-import type { TooltipLinkListLink } from "@storybook/components";
+import { BeakerIcon, CheckIcon } from "@storybook/icons";
+import { clsx } from "clsx";
+// biome-ignore lint/correctness/noUnusedImports: SB addons only support the classic runtime
+import React, { type AnchorHTMLAttributes } from "react";
+import type { TooltipLinkListLink } from "storybook/internal/components";
 import {
   IconButton,
   Separator,
   TooltipLinkList,
   WithTooltip,
-} from "@storybook/components";
-import { BeakerIcon, CheckIcon } from "@storybook/icons";
-import { useGlobals } from "@storybook/manager-api";
-import type { GlobalTypes } from "@storybook/types";
-import { clsx } from "clsx";
-// biome-ignore lint/correctness/noUnusedImports: SB addons only support the classic runtime
-import React, { type AnchorHTMLAttributes } from "react";
+} from "storybook/internal/components";
+import type { GlobalTypes } from "storybook/internal/types";
+import { useGlobals } from "storybook/manager-api";
 
 import "./ThemeNextToolbar.css";
 

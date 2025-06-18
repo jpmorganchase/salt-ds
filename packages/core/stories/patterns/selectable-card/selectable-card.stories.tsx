@@ -10,7 +10,7 @@ import {
   Text,
 } from "@salt-ds/core";
 import { BankIcon, CreditCardIcon } from "@salt-ds/icons";
-import type { Meta, StoryFn } from "@storybook/react";
+import type { Meta, StoryFn } from "@storybook/react-vite";
 import { useState } from "react";
 
 import persona1 from "../../assets/avatar.png";

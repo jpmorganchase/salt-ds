@@ -1,6 +1,6 @@
 import { offset, platform } from "@floating-ui/dom";
 import type { Platform } from "@floating-ui/react";
-import type { Meta, StoryFn } from "@storybook/react";
+import type { Meta, StoryFn } from "@storybook/react-vite";
 import {
   type CSSProperties,
   type ChangeEvent,

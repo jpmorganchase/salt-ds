@@ -49,7 +49,7 @@ import {
   useDatePickerContext,
   useLocalization,
 } from "@salt-ds/lab";
-import type { Meta, StoryFn } from "@storybook/react";
+import type { Meta, StoryFn } from "@storybook/react-vite";
 import { clsx } from "clsx";
 // As required by locale specific examples
 import type { Moment } from "moment";

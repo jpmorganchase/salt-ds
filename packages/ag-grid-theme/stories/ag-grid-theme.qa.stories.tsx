@@ -1,6 +1,6 @@
-import type { StoryObj } from "@storybook/react";
-import { expect, userEvent, within } from "@storybook/test";
+import type { StoryObj } from "@storybook/react-vite";
 import { AgGridReact } from "ag-grid-react";
+import { expect, userEvent, within } from "storybook/test";
 import {
   ColumnGroup,
   ContextMenu as ContextMenuGrid,
@@ -25,6 +25,10 @@ export default {
         // Only 1 menu will appear on screen, so not using side-by-side mode
         dual: { mode: "dark", viewport: { width: 800 + 24 * 2 } },
       },
+    },
+    test: {
+      // This is needed to avoid AG Grid's license check failing the tests.
+      dangerouslyIgnoreUnhandledErrors: true,
     },
   },
 };

@@ -6,7 +6,7 @@ import {
   getCharacteristicValue,
   useTheme,
 } from "@salt-ds/core";
-import type { Decorator } from "@storybook/react";
+import type { Decorator } from "@storybook/react-vite";
 import { useEffect } from "react";
 
 // Modified from storybook background addon

@@ -22,7 +22,7 @@ import {
   TextCellEditor,
 } from "../src";
 import "./grid.stories.css";
-import type { StoryFn } from "@storybook/react";
+import type { StoryFn } from "@storybook/react-vite";
 
 type Variant = "primary" | "secondary" | "zebra";
 

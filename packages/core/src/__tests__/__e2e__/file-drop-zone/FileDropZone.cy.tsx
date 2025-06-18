@@ -1,5 +1,5 @@
 import * as fileDropZoneStories from "@stories/file-drop-zone/file-drop-zone.stories";
-import { composeStories } from "@storybook/react";
+import { composeStories } from "@storybook/react-vite";
 import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
 
 const composedStories = composeStories(fileDropZoneStories);

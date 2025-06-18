@@ -7,7 +7,7 @@ import {
   Text,
 } from "@salt-ds/core";
 import { ArrowDownIcon, ArrowUpIcon } from "@salt-ds/icons";
-import type { Meta } from "@storybook/react";
+import type { Meta } from "@storybook/react-vite";
 
 export default {
   title: "Patterns/Metric",

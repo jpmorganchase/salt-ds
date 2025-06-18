@@ -5,7 +5,7 @@ import {
   SystemStatusContent,
   type SystemStatusProps,
 } from "@salt-ds/lab";
-import type { Meta, StoryFn } from "@storybook/react";
+import type { Meta, StoryFn } from "@storybook/react-vite";
 import { QAContainer } from "docs/components";
 import type { FC } from "react";
 

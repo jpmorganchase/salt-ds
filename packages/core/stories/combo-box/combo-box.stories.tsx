@@ -12,7 +12,7 @@ import {
 } from "@salt-ds/core";
 import { type CountryCode, countryMetaMap } from "@salt-ds/countries";
 import { CloseIcon } from "@salt-ds/icons";
-import type { Meta, StoryFn } from "@storybook/react";
+import type { Meta, StoryFn } from "@storybook/react-vite";
 import "@salt-ds/countries/saltCountries.css";
 import { type ChangeEvent, type SyntheticEvent, useState } from "react";
 import { usStateExampleData } from "../assets/exampleData";
