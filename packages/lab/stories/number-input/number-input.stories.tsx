@@ -433,7 +433,6 @@ export const ControlledFormatting: StoryFn<NumberInputProps> = (args) => {
           {...args}
           value={value}
           onChange={(e, value) => {
-            console.log("value ", value);
             setValue(value);
           }}
           format={(value) => {

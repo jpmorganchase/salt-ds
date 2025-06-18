@@ -109,3 +109,7 @@ export const getNumberPrecision = (number: string | number) => {
     ? numStr.length - numStr.indexOf(".") - 1
     : 0;
 };
+
+export const isEmpty = (value: number | string) => {
+  return value === "";
+};

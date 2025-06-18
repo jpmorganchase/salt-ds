@@ -30,6 +30,7 @@ import {
 import {
   clamp,
   getNumberPrecision,
+  isEmpty,
   isOutOfRange,
   sanitizeInput,
   toFloat,
@@ -239,12 +240,10 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       : inputRequired;
 
     const mergedFormatter = (value: number | string): number | string => {
-      if (value === "" || value === undefined) {
+      if (isEmpty(value) || value === undefined) {
         return "";
       }
-
       const sanitizedValue = sanitizeInput(value);
-
       if (userEditingRef.current) {
         return sanitizedValue;
       }
@@ -258,29 +257,19 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       if (decimalScale >= 0) {
         return floatValue.toFixed(decimalScale);
       }
-
       return value;
     };
 
-    const [value, setValue, isControlled] = useControlled({
+    const [value, setValue] = useControlled({
       controlled: valueProp,
       default: defaultValueProp,
       name: "NumberInput",
       state: "value",
     });
 
-    console.log("value state", value);
-
     const [internalValue, setInternalValue] = useState(() =>
       mergedFormatter(value),
     );
-
-    console.log("internal value", internalValue);
-
-    useEffect(() => {
-      setInternalValue(mergedFormatter(value));
-      // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
-    }, [value, mergedFormatter]);
 
     const {
       decrementButtonProps,
@@ -300,14 +289,18 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       step,
       stepMultiplier,
       userEditingRef,
-      value,
+      value: internalValue,
     });
+
+    // biome-ignore lint/correctness/useExhaustiveDependencies: Update internal value when it is changed externally or via keyboard/mouse
+    useEffect(() => {
+      setInternalValue(mergedFormatter(value));
+    }, [value]);
 
     const handleInputFocus = (event: FocusEvent<HTMLInputElement>) => {
       userEditingRef.current = true;
       const inputValue = event.target.value;
-      const rawValue = parse?.(inputValue) || inputValue;
-      console.log("rawValue ", rawValue);
+      const rawValue = parse?.(inputValue) ?? inputValue;
       setInternalValue(rawValue);
       inputOnFocus?.(event);
     };
@@ -315,20 +308,16 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
     const handleInputBlur = (event: FocusEvent<HTMLInputElement>) => {
       userEditingRef.current = false;
       const inputValue = event.target.value;
-      if (inputValue === "") {
-        return "";
+      if (isEmpty(inputValue)) {
+        return;
       }
       const clampedValue = clampValue
         ? clamp(max, min, toFloat(inputValue))
         : toFloat(inputValue);
 
-      console.log("clamped value", clampedValue);
-
       const rawValue = toFloat(clampedValue.toFixed(decimalScale));
       const formattedValue = mergedFormatter(clampedValue);
       setInternalValue(formattedValue);
-      setValue(formattedValue);
-
       if (String(rawValue) !== String(value)) {
         onChangeProp?.(event, rawValue);
       }
@@ -337,22 +326,15 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
     const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
       const inputValue = event.target.value;
       const sanitizedValue = sanitizeInput(inputValue);
-      console.log("sanitized value in on change ", sanitizedValue);
       const parsedValue =
         !userEditingRef.current && parse
           ? parse(sanitizedValue)
           : sanitizedValue;
-
-      console.log("parsed value in on change", parsedValue);
       if (String(parsedValue) !== String(value)) {
-        setInternalValue(parsedValue);
-        if (isControlled) {
-          onChangeProp?.(event, parsedValue);
-          inputOnChange?.(event);
-        } else {
-          setValue(parsedValue);
-        }
+        onChangeProp?.(event, parsedValue);
+        inputOnChange?.(event);
       }
+      setValue(parsedValue);
     };
 
     const handleInputKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
