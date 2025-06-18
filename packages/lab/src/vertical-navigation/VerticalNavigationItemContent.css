@@ -31,12 +31,14 @@
 
 .saltVerticalNavigationItemContent:hover .saltVerticalNavigationItemTrigger::before {
   background: var(--salt-palette-alpha-contrast-lowest);
-  font-weight: var(--salt-text-h4-fontWeight);
+}
+
+.saltVerticalNavigationItemContent-active .saltVerticalNavigationItemTrigger[href]::before {
+  background: transparent;
 }
 
 .saltVerticalNavigation-indicator .saltVerticalNavigationItemContent-active {
   background: var(--salt-selectable-background-hover);
-  font-weight: var(--salt-text-h4-fontWeight);
 }
 
 .saltVerticalNavigation-indicator .saltVerticalNavigationItemContent::before {
@@ -59,7 +61,6 @@
 .saltVerticalNavigation-bordered .saltVerticalNavigationItemContent-active {
   background: var(--salt-selectable-background-hover);
   border-color: var(--salt-selectable-borderColor-selected);
-  font-weight: var(--salt-text-h4-fontWeight);
 }
 
 .saltVerticalNavigationItemContent .saltVerticalNavigationItem-indicator {
