@@ -31,7 +31,7 @@ export const Table = forwardRef<HTMLTableElement, TableProps>(function Table(
     css: tableCss,
     window: targetWindow,
   });
-  
+
   return (
     <table
       className={clsx(

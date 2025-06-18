@@ -113,17 +113,15 @@ Zebra.args = {
   zebra: "tertiary",
 };
 
-
 export const HeaderVariant = Template.bind({});
 HeaderVariant.args = {
-  THeadProps: { "variant": "secondary" }
+  THeadProps: { variant: "secondary" },
 };
 
 export const FooterVariant = Template.bind({});
 FooterVariant.args = {
-  TFootProps: { "variant": "tertiary" }
+  TFootProps: { variant: "tertiary" },
 };
-
 
 export const CustomContent: StoryFn<typeof Text> = () => {
   return (

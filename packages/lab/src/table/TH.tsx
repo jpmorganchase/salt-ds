@@ -11,7 +11,7 @@ import { withTableBaseName } from "./Table";
 import tableCss from "./Table.css";
 
 export type THProps = ComponentPropsWithoutRef<"th"> & {
-   /**
+  /**
    * Styling for the header cell text overflow.
    * @default ellipsis
    */
@@ -19,7 +19,7 @@ export type THProps = ComponentPropsWithoutRef<"th"> & {
 };
 
 export const TH = forwardRef<HTMLTableCellElement, THProps>(function TH(
-  { children, className, textOverflow = 'ellipsis', style, ...rest },
+  { children, className, textOverflow = "ellipsis", style, ...rest },
   ref,
 ) {
   const targetWindow = useWindow();
