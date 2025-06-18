@@ -6,15 +6,16 @@ New cursor foundation
 
 ```diff
 + --salt-cursor
-+ --salt-cursor-hover
 + --salt-cursor-active
 + --salt-cursor-disabled
-+ --salt-cursor-text
-+ --salt-cursor-drag-ns
 + --salt-cursor-drag-ew
++ --salt-cursor-drag-ns
 + --salt-cursor-grab
 + --salt-cursor-grabbing
++ --salt-cursor-hover
 + --salt-cursor-pending
++ --salt-cursor-readonly
++ --salt-cursor-text
 ```
 
 Deprecated the following cursor tokens:
@@ -39,7 +40,7 @@ Deprecated the following cursor tokens:
 | `--salt-draggable-grab-cursor-hover`        | `--salt-cursor-hover`    |
 | `--salt-draggable-grab-cursor-active`       | `--salt-cursor-active`   |
 | `--salt-selectable-cursor-hover`            | `--salt-cursor-hover`    |
-| `--salt-selectable-cursor-selected`         | `--salt-cursor-activr`   |
+| `--salt-selectable-cursor-selected`         | `--salt-cursor-active`   |
 | `--salt-selectable-cursor-blurSelected`     | `--salt-cursor-hover`    |
 | `--salt-selectable-cursor-disabled`         | `--salt-cursor-disabled` |
 | `--salt-selectable-cursor-readonly`         | `--salt-cursor-readonly` |
