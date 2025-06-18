@@ -341,6 +341,11 @@ describe("Number Input", () => {
 
     cy.findByLabelText("decrement value").realClick();
     cy.findByRole("spinbutton").should("have.value", "5");
+
+    cy.findByRole("spinbutton").focus();
+    cy.findByRole("spinbutton").clear();
+    cy.realType("2");
+    cy.findByRole("spinbutton").should("have.value", "5");
   });
 
   it("sanitizes input to only allow numbers, decimal points, and plus/minus symbols", () => {
@@ -545,14 +550,15 @@ describe("Number Input", () => {
 
       cy.findByLabelText("increment value").realClick({ clickCount: 2 });
       cy.findByRole("spinbutton").should("have.value", "14");
+
       cy.get("@changeSpy").should(
         "have.been.calledWith",
         Cypress.sinon.match.any,
         14,
       );
       cy.realPress("Tab");
-      cy.findByRole("spinbutton").should("have.value", "14%");
       cy.get("@changeSpy").should("have.callCount", 2);
+      cy.findByRole("spinbutton").should("have.value", "14%");
     });
   });
 });
