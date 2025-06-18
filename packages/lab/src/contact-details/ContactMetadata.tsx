@@ -1,6 +1,6 @@
 import { Button, makePrefixer, useIcon, useId } from "@salt-ds/core";
 import { clsx } from "clsx";
-import { type HTMLAttributes, forwardRef, useState } from "react";
+import { forwardRef, type HTMLAttributes, useState } from "react";
 import { useContactDetailsContext } from "./internal";
 
 const withBaseName = makePrefixer("saltContactMetadata");

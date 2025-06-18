@@ -1,6 +1,3 @@
-import type { StoryFn } from "@storybook/react-vite";
-import { useCallback, useState } from "react";
-
 import { Button, Tooltip } from "@salt-ds/core";
 import {
   ArrowDownIcon,
@@ -8,7 +5,6 @@ import {
   DoubleChevronDownIcon,
   DoubleChevronUpIcon,
 } from "@salt-ds/icons";
-
 import {
   Dropdown,
   DropdownButton,
@@ -18,6 +14,8 @@ import {
   type ListItemType,
   type SelectionChangeHandler,
 } from "@salt-ds/lab";
+import type { StoryFn } from "@storybook/react-vite";
+import { useCallback, useState } from "react";
 import { usa_states } from "../list/list.data";
 
 export default {

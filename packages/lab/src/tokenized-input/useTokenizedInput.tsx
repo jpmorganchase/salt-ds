@@ -17,10 +17,10 @@ import {
 } from "react";
 import { useFormFieldLegacyProps } from "../form-field-context-legacy";
 import { escapeRegExp, useEventCallback } from "../utils";
-import type { TokenizedInputProps } from "./TokenizedInput";
-import type { TokenizedInputBaseProps } from "./TokenizedInputBase";
 import { defaultItemToString } from "./internal/defaultItemToString";
 import { getCursorPosition } from "./internal/getCursorPosition";
+import type { TokenizedInputProps } from "./TokenizedInput";
+import type { TokenizedInputBaseProps } from "./TokenizedInputBase";
 
 export interface TokenizedInputState<Item> {
   activeIndices: Array<number>;

@@ -274,7 +274,9 @@
 .ag-theme-salt-compact-dark .ag-select-list-item[aria-selected="true"],
 .ag-theme-salt-compact-dark .ag-rich-select-row-selected {
   /* Match selected row border to Option */
-  box-shadow: inset 0px var(--salt-size-fixed-100) 0px var(--salt-selectable-borderColor-selected), inset 0px calc(var(--salt-size-fixed-100) * -1) 0px var(--salt-selectable-borderColor-selected);
+  box-shadow:
+    inset 0px var(--salt-size-fixed-100) 0px var(--salt-selectable-borderColor-selected),
+    inset 0px calc(var(--salt-size-fixed-100) * -1) 0px var(--salt-selectable-borderColor-selected);
 }
 
 /* Range selection cross cells "fake" outlines */

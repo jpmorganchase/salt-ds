@@ -29,7 +29,7 @@ export default function (response, prefixDir) {
   );
 
   return coreReleases.map((release) => {
-    const route = `${prefixDir}/${release.tag_name.replace(/[\/]/g, "-")}`;
+    const route = `${prefixDir}/${release.tag_name.replace(/[/]/g, "-")}`;
     return {
       fullPath: `/${route}.json`,
       route: route,

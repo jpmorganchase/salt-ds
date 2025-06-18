@@ -1,6 +1,6 @@
 import { makePrefixer } from "@salt-ds/core";
 import clsx from "classnames";
-import { type Ref, type SVGAttributes, forwardRef } from "react";
+import { forwardRef, type Ref, type SVGAttributes } from "react";
 
 const withBaseName = makePrefixer("saltCarouselAutoplayIndicatorSVG");
 

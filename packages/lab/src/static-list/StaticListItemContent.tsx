@@ -4,8 +4,8 @@ import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
   type ComponentPropsWithoutRef,
-  type ReactNode,
   forwardRef,
+  type ReactNode,
 } from "react";
 import staticListItemContent from "./StaticListItemContent.css";
 

@@ -5,9 +5,9 @@ import { clsx } from "clsx";
 import {
   type ComponentPropsWithoutRef,
   type FocusEvent,
+  forwardRef,
   type MouseEvent,
   type ReactElement,
-  forwardRef,
   useCallback,
   useMemo,
   useRef,

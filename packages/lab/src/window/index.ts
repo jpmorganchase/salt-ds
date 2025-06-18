@@ -1,2 +1,2 @@
-export * from "./WindowContext";
 export * from "./ElectronWindow";
+export * from "./WindowContext";

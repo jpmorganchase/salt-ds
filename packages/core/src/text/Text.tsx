@@ -1,3 +1,5 @@
+import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
   type ElementType,
@@ -5,15 +7,12 @@ import {
   type FunctionComponent,
   forwardRef,
 } from "react";
+import type { ValidationStatus } from "../status-indicator";
 import {
+  makePrefixer,
   type PolymorphicComponentPropWithRef,
   type PolymorphicRef,
-  makePrefixer,
 } from "../utils";
-
-import { useComponentCssInjection } from "@salt-ds/styles";
-import { useWindow } from "@salt-ds/window";
-import type { ValidationStatus } from "../status-indicator";
 import textCss from "./Text.css";
 
 export type TextProps<T extends ElementType> = PolymorphicComponentPropWithRef<

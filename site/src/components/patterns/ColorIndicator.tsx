@@ -1,4 +1,4 @@
-import { FlexLayout, Text, capitalize } from "@salt-ds/core";
+import { capitalize, FlexLayout, Text } from "@salt-ds/core";
 import { Icon, type IconProps } from "@salt-ds/icons";
 
 const COLORS = ["blue", "orange", "red", "green", "gray", "accent"] as const;

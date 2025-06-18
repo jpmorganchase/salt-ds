@@ -1,20 +1,18 @@
-import { Tooltip, makePrefixer, useIcon } from "@salt-ds/core";
+import { makePrefixer, Tooltip, useIcon } from "@salt-ds/core";
+import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
+  forwardRef,
   type KeyboardEvent,
   type MouseEvent,
-  forwardRef,
   useEffect,
   useRef,
   useState,
 } from "react";
 import { ListItem, type ListItemProps } from "../list-deprecated";
-import type { MenuDescriptor } from "./CascadingMenuProps";
-
-import { useComponentCssInjection } from "@salt-ds/styles";
-import { useWindow } from "@salt-ds/window";
-
 import cascadingMenuItemCss from "./CascadingMenuItem.css";
+import type { MenuDescriptor } from "./CascadingMenuProps";
 
 const noop = () => undefined;
 const withBaseName = makePrefixer("saltCascadingMenuItem");

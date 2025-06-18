@@ -1,34 +1,31 @@
 import {
   Button,
   type ButtonProps,
+  makePrefixer,
   Overlay,
   OverlayPanel,
   OverlayPanelCloseButton,
   OverlayPanelContent,
   OverlayTrigger,
-  makePrefixer,
 } from "@salt-ds/core";
 import { RefreshIcon } from "@salt-ds/icons";
+import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import { type ChangeEvent, useState } from "react";
 import type { Color } from "./Color";
-import { isTransparent } from "./color-utils";
-
+import colorChooserCss from "./ColorChooser.css";
 import {
   convertColorMapValueToHex,
   getColorNameByHexValue,
   getHexValue,
   hexValueWithoutAlpha,
 } from "./ColorHelpers";
-import { type ColorChooserTabs, DictTabs } from "./DictTabs";
-import { getColorPalettes } from "./GetColorPalettes";
+import { isTransparent } from "./color-utils";
 import { saltColorMap } from "./colorMap";
 import { createTabsMapping } from "./createTabsMapping";
-
-import { useComponentCssInjection } from "@salt-ds/styles";
-import { useWindow } from "@salt-ds/window";
-
-import colorChooserCss from "./ColorChooser.css";
+import { type ColorChooserTabs, DictTabs } from "./DictTabs";
+import { getColorPalettes } from "./GetColorPalettes";
 
 const withBaseName = makePrefixer("saltColorChooser");
 

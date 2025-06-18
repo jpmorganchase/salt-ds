@@ -3,8 +3,8 @@ import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
   type ComponentPropsWithoutRef,
-  type SyntheticEvent,
   forwardRef,
+  type SyntheticEvent,
   useState,
 } from "react";
 import { makePrefixer, useControlled, useId } from "../utils";

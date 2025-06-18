@@ -8,7 +8,9 @@ import carouselSlide4 from "@stories/assets/carouselSlide4.png";
 
 export const renderSlides = ({
   withActions,
-}: { withActions?: boolean } = {}) => {
+}: {
+  withActions?: boolean;
+} = {}) => {
   const content = [
     {
       title: "Your accounts. On the move",

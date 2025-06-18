@@ -5,8 +5,8 @@ import { clsx } from "clsx";
 import type { EmblaCarouselType } from "embla-carousel";
 import {
   type ComponentPropsWithoutRef,
-  type KeyboardEvent,
   forwardRef,
+  type KeyboardEvent,
   useEffect,
   useRef,
 } from "react";

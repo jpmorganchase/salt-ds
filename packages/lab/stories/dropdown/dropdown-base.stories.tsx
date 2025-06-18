@@ -4,9 +4,8 @@ import {
   type DropdownBaseProps,
   DropdownButton,
 } from "@salt-ds/lab";
-import { useState } from "react";
-
 import type { StoryFn } from "@storybook/react-vite";
+import { useState } from "react";
 
 export default {
   title: "Lab/Dropdown Base",

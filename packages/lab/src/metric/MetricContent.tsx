@@ -2,16 +2,15 @@ import {
   Display1,
   Display2,
   Display3,
-  Text,
   makePrefixer,
+  Text,
 } from "@salt-ds/core";
 import { ArrowDownIcon, ArrowUpIcon, type IconProps } from "@salt-ds/icons";
-import { clsx } from "clsx";
-import { type ComponentType, type HTMLAttributes, forwardRef } from "react";
-import { useMetricContext } from "./internal";
-
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
+import { clsx } from "clsx";
+import { type ComponentType, forwardRef, type HTMLAttributes } from "react";
+import { useMetricContext } from "./internal";
 
 import metricContentCss from "./MetricContent.css";
 

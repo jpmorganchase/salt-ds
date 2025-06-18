@@ -43,9 +43,9 @@ import {
   type DatePickerSingleProps,
   DatePickerTrigger,
   type DateRangeSelection,
+  type renderCalendarDayProps,
   type SingleDatePickerState,
   type SingleDateSelection,
-  type renderCalendarDayProps,
   useDatePickerContext,
   useLocalization,
 } from "@salt-ds/lab";
@@ -57,9 +57,11 @@ import {
   type ChangeEvent,
   type ReactElement,
   type SyntheticEvent,
+  useCallback,
   useEffect,
+  useRef,
+  useState,
 } from "react";
-import { useCallback, useRef, useState } from "react";
 // CustomDatePickerPanel is a sample component, representing a composition you could create yourselves, not intended for importing into your own projects
 // refer to https://github.com/jpmorganchase/salt-ds/blob/main/packages/lab/src/date-picker/useDatePicker.ts to create your own
 import { CustomDatePickerPanel } from "./CustomDatePickerPanel";
@@ -67,8 +69,7 @@ import "moment/dist/locale/zh-cn";
 import "moment/dist/locale/es";
 import "dayjs/locale/es";
 import "dayjs/locale/zh-cn";
-import { es as dateFnsEs } from "date-fns/locale";
-import { zhCN as dateFnsZhCn } from "date-fns/locale";
+import { es as dateFnsEs, zhCN as dateFnsZhCn } from "date-fns/locale";
 import type { DateTime } from "luxon";
 import "./date-picker.stories.css";
 import { withDateMock } from ".storybook/decorators/withDateMock";

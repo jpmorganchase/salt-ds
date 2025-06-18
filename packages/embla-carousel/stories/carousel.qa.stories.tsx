@@ -1,5 +1,3 @@
-import type { Meta, StoryFn } from "@storybook/react";
-
 import { FlexLayout, StackLayout } from "@salt-ds/core";
 import {
   Carousel,
@@ -9,6 +7,7 @@ import {
   CarouselSlides,
   CarouselTabList,
 } from "@salt-ds/embla-carousel";
+import type { Meta, StoryFn } from "@storybook/react";
 import { QAContainer } from "docs/components";
 import { renderSlides } from "./renderSlides";
 

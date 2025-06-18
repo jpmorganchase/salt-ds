@@ -1,5 +1,3 @@
-import type { Meta, StoryFn } from "@storybook/react-vite";
-
 import {
   Carousel,
   CarouselAnnouncement,
@@ -9,6 +7,7 @@ import {
   CarouselSlides,
   CarouselTabList,
 } from "@salt-ds/embla-carousel";
+import type { Meta, StoryFn } from "@storybook/react-vite";
 import "./carousel.stories.css";
 import { FlexLayout, StackLayout, Text, useId } from "@salt-ds/core";
 import type { CarouselProps } from "@salt-ds/embla-carousel";

@@ -1,11 +1,10 @@
+import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 import clsx from "clsx";
 import { useFormFieldProps } from "../form-field-context";
 import { StatusIndicator } from "../status-indicator";
 import { Text, type TextProps } from "../text";
 import { makePrefixer } from "../utils";
-
-import { useComponentCssInjection } from "@salt-ds/styles";
-import { useWindow } from "@salt-ds/window";
 
 import formFieldHelperTextCss from "./FormFieldHelperText.css";
 

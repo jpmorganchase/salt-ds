@@ -2,7 +2,7 @@ import { makePrefixer } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
-import { type ComponentProps, type ReactNode, forwardRef } from "react";
+import { type ComponentProps, forwardRef, type ReactNode } from "react";
 import saltCarouselCardCss from "./CarouselCard.css";
 
 const withBaseName = makePrefixer("saltCarouselCard");

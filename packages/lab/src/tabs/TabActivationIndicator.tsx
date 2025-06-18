@@ -1,12 +1,9 @@
 import { makePrefixer } from "@salt-ds/core";
-import { useRef } from "react";
-
-import { useActivationIndicator } from "./useActivationIndicator";
-
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
-
+import { useRef } from "react";
 import tabActivationIndicatorCss from "./TabActivationIndicator.css";
+import { useActivationIndicator } from "./useActivationIndicator";
 
 interface TabActivationIndicatorProps {
   hideThumb?: boolean;

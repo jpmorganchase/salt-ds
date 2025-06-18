@@ -1,14 +1,14 @@
 import {
   type Mode,
+  makePrefixer,
   SaltProvider,
   SaltProviderNext,
-  makePrefixer,
   useTheme,
 } from "@salt-ds/core";
 import { clsx } from "clsx";
 import {
-  type CSSProperties,
   Children,
+  type CSSProperties,
   type DetailedHTMLProps,
   Fragment,
   type HTMLAttributes,

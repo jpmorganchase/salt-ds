@@ -1,18 +1,17 @@
 import { makePrefixer, useIsomorphicLayoutEffect } from "@salt-ds/core";
+import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
+import { clsx } from "clsx";
 import {
-  type CSSProperties,
   Children,
-  type HTMLAttributes,
+  type CSSProperties,
   forwardRef,
+  type HTMLAttributes,
   useCallback,
   useState,
 } from "react";
 import { DeckItem, type DeckItemProps } from "../deck-item";
 import { useWidth } from "../responsive";
-
-import { useComponentCssInjection } from "@salt-ds/styles";
-import { useWindow } from "@salt-ds/window";
-import { clsx } from "clsx";
 
 import deckLayoutCss from "./DeckLayout.css";
 
