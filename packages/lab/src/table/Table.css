@@ -1,8 +1,8 @@
 /* Table: Main css class */
 .saltTable {
-  --table-header-height: calc(var(--salt-size-base) + var(--salt-spacing-100));
-  --table-footer-height: calc(var(--salt-size-base) + var(--salt-spacing-100));
-  --table-row-height: calc(var(--salt-size-base) + var(--salt-spacing-100));
+  --table-header-height: var(--salt-size-base);
+  --table-footer-height: var(--salt-size-base);
+  --table-row-height: var(--salt-size-base);
 }
 
 .saltTable-primary {
@@ -22,26 +22,26 @@
 
 /* Zebra styling */
 .saltTable-zebra-primary .saltTable-thead .saltTable-tr,
-.saltTable-zebra-primary .saltTable-tbody .saltTable-tr:nth-of-type(even),
-.saltTable-zebra-primary tbody .saltTable-tr:nth-of-type(even),
-.saltTable-zebra-primary .saltTable-tbody tr:nth-of-type(even),
-.saltTable-zebra-primary tbody tr:nth-of-type(even) {
+.saltTable-zebra-primary .saltTable-tbody .saltTable-tr:nth-of-type(odd),
+.saltTable-zebra-primary tbody .saltTable-tr:nth-of-type(odd),
+.saltTable-zebra-primary .saltTable-tbody tr:nth-of-type(odd),
+.saltTable-zebra-primary tbody tr:nth-of-type(odd) {
   --table-background: var(--salt-container-primary-background);
 }
 
 .saltTable-zebra-secondary .saltTable-thead .saltTable-tr,
-.saltTable-zebra-secondary .saltTable-tbody .saltTable-tr:nth-of-type(even),
-.saltTable-zebra-secondary tbody .saltTable-tr:nth-of-type(even),
-.saltTable-zebra-secondary .saltTable-tbody tr:nth-of-type(even),
-.saltTable-zebra-secondary tbody tr:nth-of-type(even) {
+.saltTable-zebra-secondary .saltTable-tbody .saltTable-tr:nth-of-type(odd),
+.saltTable-zebra-secondary tbody .saltTable-tr:nth-of-type(odd),
+.saltTable-zebra-secondary .saltTable-tbody tr:nth-of-type(odd),
+.saltTable-zebra-secondary tbody tr:nth-of-type(odd) {
   --table-background: var(--salt-container-secondary-background);
 }
 
 .saltTable-zebra-tertiary .saltTable-thead .saltTable-tr,
-.saltTable-zebra-tertiary .saltTable-tbody .saltTable-tr:nth-of-type(even),
-.saltTable-zebra-tertiary tbody .saltTable-tr:nth-of-type(even),
-.saltTable-zebra-tertiary .saltTable-tbody tr:nth-of-type(even),
-.saltTable-zebra-tertiary tbody tr:nth-of-type(even) {
+.saltTable-zebra-tertiary .saltTable-tbody .saltTable-tr:nth-of-type(odd),
+.saltTable-zebra-tertiary tbody .saltTable-tr:nth-of-type(odd),
+.saltTable-zebra-tertiary .saltTable-tbody tr:nth-of-type(odd),
+.saltTable-zebra-tertiary tbody tr:nth-of-type(odd) {
   --table-background: var(--salt-container-tertiary-background);
 }
 
@@ -89,6 +89,11 @@ table.saltTable thead {
   background: var(--salt-container-tertiary-background);
 }
 
+.saltTable-thead .saltTable tr,
+.saltTable-thead .saltTable-tr {
+  border-bottom: var(--salt-separable-borderStyle) var(--salt-separable-primary-borderColor) var(--salt-size-border);
+}
+
 /* TFoot */
 .saltTable-tfoot,
 table.saltTable tfoot {
@@ -129,6 +134,7 @@ table.saltTable tfoot {
   padding: var(--salt-spacing-100);
   position: relative;
   text-align: start;
+  font-weight: var(--salt-text-label-fontWeight-strong);
 }
 
 .saltTable-th + .saltTable-th::before,
