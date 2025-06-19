@@ -12,7 +12,7 @@ import carouselProgressLabelCss from "./CarouselProgressLabel.css";
  */
 export interface CarouselProgressLabelProps extends TextProps<"div"> {}
 
-const withBaseName = makePrefixer("saltCarouselProgressLabel");
+const withBaseName = makePrefixer("saltCarouselTabList");
 
 export function CarouselProgressLabel({
   className,

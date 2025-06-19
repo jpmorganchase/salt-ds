@@ -3,7 +3,7 @@ import {
   Carousel,
   CarouselAnnouncement,
   CarouselCard, CarouselNextButton,
-  CarouselPagination, CarouselPreviousButton, CarouselProgressLabel,
+  CarouselTabList, CarouselPreviousButton, CarouselProgressLabel,
   CarouselSlides,
 } from "@salt-ds/embla-carousel-pattern";
 import Classnames from "embla-carousel-class-names";
@@ -58,7 +58,7 @@ export const CardActions = (): ReactElement => {
           <CarouselNextButton />
           <CarouselProgressLabel />
         </StackLayout>
-        <CarouselPagination />
+        <CarouselTabList />
       </FlexLayout>
     </Carousel>
   );
