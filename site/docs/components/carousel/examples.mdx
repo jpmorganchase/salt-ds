@@ -10,39 +10,8 @@ data:
 
 Carousel is a pre-defined pattern of Salt components that uses the [Embla](https://www.embla-carousel.com/) API.
 
-## Default
-
-The default carousel navigates through slides individually, one at a time.
-
-<LivePreview componentName="carousel" exampleName="Default" />
-
-## Adding titles
-
-Adding a title serves as a heading for the displayed content.
-
-<LivePreview componentName="carousel" exampleName="Title" />
-
-## Controls placement
-
-Controls can be located at the bottom of the carousel.
-
-<LivePreview componentName="carousel" exampleName="BottomControls" />
-
-## Pagination
-
-Pagination controls can be integrated into the carousel, offering both a visual indicator of the current slide and clickable elements that allow users to navigate directly to specific slides.
-
-<LivePreview componentName="carousel" exampleName="Pagination" />
-
-## Multiple slides
-
-This carousel component can display multiple slides simultaneously.
-
-<LivePreview componentName="carousel" exampleName="MultipleSlides" />
-
-## Card
-
-Carousel slides can contain your own content but `CarouselCard` provides a convenient slide component.
+You can customize the content within carousel slides according to your needs (see the [usage](./usage) documentation for guidance).
+Alternatively, the `CarouselCard` component offers a straightforward option for creating slide elements.
 
 <LivePreview componentName="carousel" exampleName="Card" />
 
@@ -54,21 +23,11 @@ Bordered cards add a visual distinction to each slide, enhancing the overall app
 
 <LivePreview componentName="carousel" exampleName="BorderedCard" />
 
-## Additional actions
+## Multiple slides
 
-[`Link`](../link) can be incorporated into a carousel slide, but avoid embedding other clickable actions during animation to prevent accidental clicks while slides are transitioning.
+This carousel component can display multiple slides simultaneously.
 
-`CarouselCard` also supports actions, through the `actions` prop.
-
-<LivePreview componentName="carousel" exampleName="CardActions" />
-
-## Accessing the embla API
-
-When composed with other components the visible slide can be controlled programmatically using the `embla` API.
-
-Refer to the [Embla documentation](https://www.embla-carousel.com/) for the full API.
-
-<LivePreview componentName="carousel" exampleName="ControlledCarousel" />
+<LivePreview componentName="carousel" exampleName="MultipleSlides" />
 
 ## Autoplay
 
@@ -77,9 +36,3 @@ Autoplay can be added through the embla plugin [`Autoplay`](https://www.embla-ca
 The example below provides accessibility support but if you compose your own, then refer to the [APG guidelines](https://www.w3.org/WAI/ARIA/apg/patterns/carousel/).
 
 <LivePreview componentName="carousel" exampleName="Autoplay" />
-
-## Fade
-
-Fade transitions can be added through the embla plugin [`Fade`](https://www.embla-carousel.com/plugins/fade/).
-
-<LivePreview componentName="carousel" exampleName="Fade" />

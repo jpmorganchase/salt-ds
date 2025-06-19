@@ -1,43 +1,61 @@
-import { FlexLayout, H1, H2 } from "@salt-ds/core";
+import { FlexLayout, StackLayout, Text, useId } from "@salt-ds/core";
 import {
   Carousel,
-  CarouselControls,
+  CarouselAnnouncement,
+  CarouselCard,
   CarouselPagination,
+  CarouselPreviousButton,
+  CarouselProgressLabel,
+  CarouselNextButton,
   CarouselSlides,
 } from "@salt-ds/embla-carousel-pattern";
-import cx from "classnames";
+import { clsx } from "clsx";
 import type { ReactElement } from "react";
+import { sliderData } from "./exampleData";
 import styles from "./index.module.css";
 
 export const MultipleSlides = (): ReactElement => {
-  const slides = Array.from(Array(4).keys());
+  const slideId = useId();
   return (
     <Carousel
-      aria-label="default carousel example"
-      className={cx(styles.carousel, styles.carouselMultipleSlides)}
+      aria-label="Multiple slides carousel example"
+      className={clsx(styles.carousel, styles.carouselMultipleSlides)}
       emblaOptions={{ align: "center", slidesToScroll: "auto" }}
+      emblaPlugins={[CarouselAnnouncement()]}
     >
-      <FlexLayout justify={"space-between"} align={"center"} direction={"row"}>
-        <H2 style={{ margin: "0px" }}>Title</H2>
-        <CarouselControls />
-      </FlexLayout>
+      <Text styleAs={"h2"}>Title</Text>
       <CarouselSlides>
-        {slides.map((index) => (
-          <div
-            aria-label={`Example slide ${index + 1}`}
-            aria-roledescription="slide"
-            className={styles.carouselSlide}
-            key={index}
-          >
-            <div className={styles.carouselNumber}>
-              <H1 style={{ margin: "0px" }}>{index + 1}</H1>
-            </div>
-          </div>
-        ))}
+        {sliderData.map((slide, index) => {
+          return (
+            <CarouselCard
+              className={styles.carouselSlide}
+              key={`${slideId}-${index}`}
+              id={`${slideId}-${index}`}
+              aria-label={`Example slide ${index + 1}`}
+              appearance={"bordered"}
+              media={
+                <img
+                  alt={`stock content to show in carousel slide ${index}`}
+                  className={styles.carouselImage}
+                  src={slide.image}
+                />
+              }
+              header={<Text styleAs={"h3"}>{slide.title}</Text>}
+            >
+              <Text>{slide.content}</Text>
+            </CarouselCard>
+          );
+        })}
       </CarouselSlides>
-      <FlexLayout justify={"center"} direction={"row"}>
+      <FlexLayout justify={"space-between"} direction={"row"} gap={1}>
+        <StackLayout direction={"row"} gap={1}>
+          <CarouselPreviousButton/>
+          <CarouselNextButton />
+          <CarouselProgressLabel />
+        </StackLayout>
         <CarouselPagination />
       </FlexLayout>
     </Carousel>
   );
 };
+

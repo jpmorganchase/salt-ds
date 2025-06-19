@@ -1,0 +1,87 @@
+import React, {
+  forwardRef,
+  MouseEventHandler,
+  useCallback,
+  useEffect,
+  useState,
+} from "react";
+import {useIcon, Button, ButtonProps} from "@salt-ds/core";
+import type { EmblaCarouselType } from "embla-carousel";
+import { usePrevNextButtons } from "./usePrevNextButtons";
+import { useCarouselContext } from "./CarouselContext";
+
+/**
+ * Props for the CarouselNextButton component.
+ */
+export interface CarouselNextButtonProps
+  extends ButtonProps {}
+
+export const CarouselNextButton = forwardRef<
+  HTMLButtonElement,
+  CarouselNextButtonProps
+>(function CarouselNextButton({ className, onClick, ...rest }, ref) {
+
+  const [nextSlideDescription, setNextSlideDescription] = useState<
+    string | undefined
+  >(undefined);
+
+  const { emblaApi } = useCarouselContext();
+
+  const { NextIcon } = useIcon();
+
+  const handleSettle = useCallback((emblaApi: EmblaCarouselType) => {
+    const slideIndexInView = emblaApi?.slidesInView()?.[0] ?? 0;
+
+    const numberOfSlides =  emblaApi?.slideNodes().length ?? 0;
+    const scrollSnaps = emblaApi?.scrollSnapList() ?? [];
+    const slidesPerTransition = numberOfSlides ? Math.ceil(numberOfSlides / scrollSnaps.length) : 0;
+
+    const startSlideNumber = slideIndexInView + slidesPerTransition + 1;
+    const endSlideNumber = Math.min(
+      startSlideNumber + slidesPerTransition - 1,
+      numberOfSlides
+    );
+
+    const label =
+      startSlideNumber === endSlideNumber
+        ? `Next slide ${startSlideNumber} of ${numberOfSlides}`
+        : `Next slides ${startSlideNumber}-${endSlideNumber} of ${numberOfSlides}`;
+
+    setNextSlideDescription(label);
+  }, [emblaApi]);
+
+  useEffect(() => {
+    if (!emblaApi) return;
+    emblaApi.on("reInit", handleSettle).on("settle", handleSettle);
+    handleSettle(emblaApi);
+    // Cleanup listener on component unmount
+    return () => {
+      emblaApi.off("reInit", handleSettle).off("settle", handleSettle);
+    };
+  }, [emblaApi, handleSettle]);
+
+  const { nextBtnDisabled, onNextButtonClick } = usePrevNextButtons();
+
+  const handleClick: MouseEventHandler<HTMLButtonElement> = useCallback(
+    (event) => {
+      onNextButtonClick();
+      onClick?.(event);
+    },
+    [onNextButtonClick, onClick]
+  );
+
+  return (
+    <Button
+      onClick={handleClick}
+        disabled={nextBtnDisabled}
+      focusableWhenDisabled
+      appearance="bordered"
+      sentiment="neutral"
+      aria-label={!nextBtnDisabled ? nextSlideDescription : "End of slides"}
+      ref={ref}
+      {...rest}
+    >
+      <NextIcon aria-hidden />
+    </Button>
+  );
+});
