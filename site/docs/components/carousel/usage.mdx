@@ -8,6 +8,50 @@ data:
   $ref: ./#/data
 ---
 
+## How to build
+
+Carousel is a composable pattern of Salt components that uses the [Embla](https://www.embla-carousel.com/) API.
+
+A basic carousel navigates through slides individually, one at a time.
+
+<LivePreview componentName="carousel" exampleName="Basic" />
+
+<br />
+Adding a title serves as a heading for the displayed content.
+
+<LivePreview componentName="carousel" exampleName="Title" />
+
+<br />A Progress indicator, `CarouselProgress`, can be integrated into the
+carousel, offering both a visual indicator of the current slide and clickable
+elements that allow users to navigate directly to specific slides. Always ensure
+that the progress indicator is co-located top or bottom of the carousel,
+alongside any other controls, such as
+`CarouselNextButton','CarouselPreviousButton` and `CarouselPagination`.'
+
+Pagination includes support for screen readers. To enhance accessibility, ensure that each slide has a unique id. This will facilitate the association between the `tablist` and `tab`, thereby improving screen reader functionality.
+
+<LivePreview componentName="carousel" exampleName="Pagination" />
+
+<br />
+Additional actions, such as[`Link`](../link), can be incorporated into a
+carousel slide, but avoid embedding other clickable actions during animation to
+prevent accidental clicks while slides are transitioning.
+
+`CarouselCard` also supports actions, through the `actions` prop.
+
+Content in slides can be tabbable but ensure that off-screen content is not tabbable, as this can lead to a poor user experience.
+This example ensures that CSS (`visibility: hidden`) is applied to the off-screen content, preventing it from being tabbable.
+
+<LivePreview componentName="carousel" exampleName="CardActions" />
+
+## Configuration and control of Embla
+
+When composed with other components the visible slide can be controlled programmatically using the `embla` API.
+
+Refer to the [Embla documentation](https://www.embla-carousel.com/) for the full API.
+
+<LivePreview componentName="carousel" exampleName="ControlledCarousel" />
+
 ## Using the component
 
 ### When to use
@@ -25,8 +69,6 @@ data:
 
 - Include 5 or fewer slides. The most important slide always comes first.
 - Indicate where the user is within the progression.
-- On desktop, display prev/next buttons above the carousel.
-- On mobile, display prev/next buttons below the carousel.
 - Ensure that important content is also placed on another page of your site.
 
 ## Import
@@ -50,10 +92,12 @@ yarn add @salt-ds/embla-carousel-pattern
 ```js
 import {
   Carousel,
-  CarouselCard,
-  CarouselControls,
   CarouselPagination,
+  CarouselCard,
   CarouselSlides,
+  CarouselNextButton,
+  CarouselPreviousButton,
+  CarouselAnnoucementPlugin,
 } from "@salt-ds/embla-carousel-pattern ";
 ```
 
@@ -65,13 +109,22 @@ import {
 
 <PropsTable packageName="embla-carousel-pattern" componentName="Carousel" />
 
-### `CarouselControls`
+### `CarouselPagination`
 
-`CarouselControls` provides previous and next navigation controls.
+`CarouselPagination` is a visual progress indicator for the carousel, and allows users to navigate to a specific slide.
 
 <PropsTable
   packageName="embla-carousel-pattern"
-  componentName="CarouselControls"
+  componentName="CarouselPagination"
+/>
+
+### `CarouselDotButton`
+
+`CarouselDotButton` is the button used by the `CarouselPagination` to navigate to a specific slide.
+
+<PropsTable
+  packageName="embla-carousel-pattern"
+  componentName="CarouselDotButton"
 />
 
 ### `CarouselSlides`
@@ -81,6 +134,42 @@ import {
 <PropsTable
   packageName="embla-carousel-pattern"
   componentName="CarouselSlides"
+/>
+
+### `CarouselPreviousButton`
+
+`CarouselPreviousButton` is a composable button that navigates the current slides to the previous slide.
+
+<PropsTable
+  packageName="embla-carousel-pattern"
+  componentName="CarouselPreviousButton"
+/>
+
+### `CarouselNextButton`
+
+`CarouselNextButton` is a composable button that navigates the current slides to the next slide.
+
+<PropsTable
+  packageName="embla-carousel-pattern"
+  componentName="CarouselNextButton"
+/>
+
+### `CarouselProgressLabel`
+
+`CarouselProgressLabel` is a composable label that shows a text description of the carousel's position.
+
+<PropsTable
+  packageName="embla-carousel-pattern"
+  componentName="CarouselNextButton"
+/>
+
+### `CarouselProgressBar`
+
+`CarouselProgressBar` provides a countdown view of the carousel's position during autoplay.
+
+<PropsTable
+  packageName="embla-carousel-pattern"
+  componentName="CarouselProgressBar"
 />
 
 ### `CarouselCard`

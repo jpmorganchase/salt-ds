@@ -17,6 +17,17 @@
   padding-left: var(--saltCarousel-slide-spacing);
 }
 
+.carouselHeading {
+  margin: 0;
+}
+
+.carouselSlideIsSnapped {
+}
+/** Do not make off-screen slides focusable */
+.carouselSlide:not(.carouselSlideIsSnapped) a {
+  visibility: hidden;
+}
+
 .carouselMultipleSlides {
   --saltCarousel-slide-size: 50%;
 }

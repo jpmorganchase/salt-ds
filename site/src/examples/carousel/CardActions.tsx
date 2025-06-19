@@ -1,29 +1,38 @@
-import { FlexLayout, H2, H3, Link, Text, useId } from "@salt-ds/core";
+import {FlexLayout, Link, StackLayout, Text, useId} from "@salt-ds/core";
 import {
   Carousel,
-  CarouselCard,
-  CarouselControls,
+  CarouselAnnouncement,
+  CarouselCard, CarouselNextButton,
+  CarouselPagination, CarouselPreviousButton, CarouselProgressLabel,
   CarouselSlides,
 } from "@salt-ds/embla-carousel-pattern";
+import Classnames from "embla-carousel-class-names";
 import type { ReactElement } from "react";
 import { sliderData } from "./exampleData";
 import styles from "./index.module.css";
 
 export const CardActions = (): ReactElement => {
-  return (
-    <Carousel aria-label="Account overview" className={styles.carousel}>
-      <FlexLayout justify={"space-between"} align={"center"} direction={"row"}>
-        <H2 style={{ margin: "0px" }}>Title</H2>
-        <CarouselControls />
-      </FlexLayout>
+  const slideId = useId();
+  return (<Carousel
+      aria-label="Card actions example"
+      className={styles.carousel}
+      emblaPlugins={[
+        CarouselAnnouncement(),
+        Classnames({
+          snapped: styles.carouselSlideIsSnapped,
+        }),
+      ]}
+    >
+      <Text styleAs={"h2"}>Title</Text>
       <CarouselSlides>
         {sliderData.map((slide, index) => {
-          const slideId = useId();
           return (
             <CarouselCard
-              key={slideId}
+              className={styles.carouselSlide}
+              key={`${slideId}-${index}`}
+              id={`${slideId}-${index}`}
+              aria-label={`Example slide ${index + 1}`}
               appearance={"bordered"}
-              aria-labelledby={`slide-title-${slideId}`}
               media={
                 <img
                   alt={`stock content to show in carousel slide ${index}`}
@@ -31,7 +40,7 @@ export const CardActions = (): ReactElement => {
                   src={slide.image}
                 />
               }
-              header={<H3 id={`slide-title-${slideId}`}>{slide.title}</H3>}
+              header={<Text styleAs={"h3"}>{slide.title}</Text>}
               actions={
                 <Link aria-label={"demo action"} tabIndex={0} href="#">
                   Usage examples
@@ -43,6 +52,14 @@ export const CardActions = (): ReactElement => {
           );
         })}
       </CarouselSlides>
+      <FlexLayout justify={"space-between"} direction={"row"} gap={1}>
+        <StackLayout direction={"row"} gap={1}>
+          <CarouselPreviousButton/>
+          <CarouselNextButton />
+          <CarouselProgressLabel />
+        </StackLayout>
+        <CarouselPagination />
+      </FlexLayout>
     </Carousel>
   );
-};
+}

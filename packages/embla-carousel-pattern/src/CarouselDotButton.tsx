@@ -70,6 +70,7 @@ export const useDotButton = (
       .on("select", handleSelect);
     // Cleanup listener on component unmount
     return () => {
+      emblaApi.off("reInit", handleInit);
       emblaApi.off("reInit", handleSelect);
       emblaApi.off("settle", handleSelect);
     };
@@ -82,12 +83,21 @@ export const useDotButton = (
   };
 };
 
+/**
+ * Props for the CarouselDotButton component.
+ */
 export interface DotButtonProps extends ComponentPropsWithRef<"button"> {
-  selected: boolean;
+  /**
+   * Is the selected slide
+   */
+  selected?: boolean;
 }
 
-export const DotButton = forwardRef<HTMLButtonElement, DotButtonProps>(
-  function DotButton({ children, className, selected, ...restProps }, ref) {
+export const CarouselDotButton = forwardRef<HTMLButtonElement, DotButtonProps>(
+  function DotButton(
+    { children, className, selected = false, ...rest },
+    ref,
+  ) {
     const targetWindow = useWindow();
     useComponentCssInjection({
       testId: "salt-carousel-dot-button",
@@ -97,14 +107,13 @@ export const DotButton = forwardRef<HTMLButtonElement, DotButtonProps>(
 
     return (
       <button
-        tabIndex={0}
         className={clsx(
           withBaseName(),
           { [withBaseName("selected")]: selected },
           className,
         )}
         ref={ref}
-        {...restProps}
+        {...rest}
       >
         {children}
       </button>

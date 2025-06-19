@@ -1,4 +1,4 @@
-import { H3, Link, Text } from "@salt-ds/core";
+import { H3, Link, Text, useId } from "@salt-ds/core";
 import { CarouselCard } from "@salt-ds/embla-carousel-pattern";
 
 import carouselSlide1 from "@stories/assets/carouselSlide1.png";
@@ -11,14 +11,12 @@ export const renderSlides = ({
 }: { withActions?: boolean } = {}) => {
   const content = [
     {
-      headerId: 0,
       title: "Your accounts. On the move",
       image: carouselSlide1,
       content: "Discover our latest personal accounts app for iOS.",
       link: "Open an account",
     },
     {
-      headerId: 1,
       title: "Preview your account information",
       image: carouselSlide2,
       content:
@@ -26,7 +24,6 @@ export const renderSlides = ({
       link: "Go to dashboard",
     },
     {
-      headerId: 2,
       title: "Clear view of your cash positions",
       image: carouselSlide3,
       content:
@@ -34,7 +31,6 @@ export const renderSlides = ({
       link: "Learn more about views",
     },
     {
-      headerId: 3,
       title: "Redesigned accounts",
       image: carouselSlide4,
       content:
@@ -43,22 +39,26 @@ export const renderSlides = ({
     },
   ];
 
-  return content.map((slide, index) => (
-    <CarouselCard
-      key={slide.title}
-      appearance="bordered"
-      header={<H3 id={`slide-title-${slide.headerId}`}>{slide.title}</H3>}
-      aria-labelledby={`slide-title-${slide.headerId}`}
-      media={
-        <img
-          className="carouselImagePlaceholder"
-          alt="stock content to show carousel slide"
-          src={slide.image}
-        />
-      }
-      actions={withActions && <Link href="#">{slide.link}</Link>}
-    >
-      <Text>{slide.content}</Text>
-    </CarouselCard>
-  ));
+  return content.map((slide, index) => {
+    const slideId = useId();
+    return (
+      <CarouselCard
+        id={`${slideId}-${index}`}
+        key={`${slideId}-${index}`}
+        appearance="bordered"
+        header={<H3>{slide.title}</H3>}
+        aria-label={`label for slide ${index + 1}`}
+        media={
+          <img
+            className="carouselImagePlaceholder"
+            alt="stock content to show carousel slide"
+            src={slide.image}
+          />
+        }
+        actions={withActions && <Link href="#">{slide.link}</Link>}
+      >
+        <Text>{slide.content}</Text>
+      </CarouselCard>
+    );
+  });
 };
