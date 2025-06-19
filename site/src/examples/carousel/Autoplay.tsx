@@ -1,8 +1,8 @@
 import { Button, FlexLayout, StackLayout, Text, useId } from "@salt-ds/core";
 import {
   Carousel,
-  type CarouselApi,
   CarouselAnnouncement,
+  type CarouselApi,
   CarouselAutoplayIndicator,
   CarouselCard,
   CarouselNextButton,
@@ -12,14 +12,9 @@ import {
 } from "@salt-ds/embla-carousel-pattern";
 import { PauseIcon, PlayIcon } from "@salt-ds/icons";
 import { default as AutoplayPlugin } from "embla-carousel-autoplay";
-import {
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
-import styles from "./index.module.css";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { sliderData } from "./exampleData";
+import styles from "./index.module.css";
 
 const DELAY_MSECS = 8000;
 
@@ -36,18 +31,19 @@ export const Autoplay = () => {
   const play = useCallback(() => {
     autoplay.current.play();
     setIsPlaying(true);
-  }, [autoplay.current]);
+  }, []);
 
   const stop = useCallback(() => {
     autoplay.current.stop();
     setIsPlaying(false);
-  }, [autoplay.current]);
+  }, []);
 
   const handleSlideChange = useCallback(() => {
     const settledSlideIndex = emblaApiRef.current?.selectedScrollSnap() ?? 0;
     setSlideIndex(settledSlideIndex + 1);
   }, []);
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: emblaApiRef.current can update
   useEffect(() => {
     const emblaApi = emblaApiRef.current;
     if (!emblaApi?.plugins()?.autoplay) {
@@ -58,7 +54,7 @@ export const Autoplay = () => {
     return () => {
       emblaApi.off("settle", handleSlideChange);
     };
-  }, [emblaApiRef.current]);
+  }, [emblaApiRef.current, handleSlideChange]);
 
   const timeUntilNext = autoplay.current.timeUntilNext() ?? DELAY_MSECS;
 
@@ -78,8 +74,8 @@ export const Autoplay = () => {
           <CarouselCard
             appearance="bordered"
             className={styles.carouselSlide}
-            key={`${slideId}-${index}`}
-            id={`${slideId}-${index}`}
+            key={`${slideId}-${slide.title}`}
+            id={`${slideId}-${slide.title}`}
             aria-label={`Example slide ${index + 1}`}
             media={
               <img
@@ -102,7 +98,6 @@ export const Autoplay = () => {
               appearance="bordered"
               sentiment="neutral"
               onClick={() => stop()}
-              tabIndex={1}
             >
               <PauseIcon aria-hidden />
             </Button>
@@ -112,7 +107,6 @@ export const Autoplay = () => {
               appearance="bordered"
               sentiment="neutral"
               onClick={() => play()}
-              tabIndex={1}
             >
               <PlayIcon aria-hidden />
             </Button>
@@ -124,7 +118,11 @@ export const Autoplay = () => {
             slideIndex={slideIndex}
             duration={timeUntilNext ? timeUntilNext : DELAY_MSECS}
             isPlaying={isPlaying}
-            aria-label={isPlaying ? `Progress bar indicating time until next slide` : `Carousel paused on slide ${slideIndex}`}
+            aria-label={
+              isPlaying
+                ? "Progress bar indicating time until next slide"
+                : `Carousel paused on slide ${slideIndex}`
+            }
           />
         </StackLayout>
       </FlexLayout>

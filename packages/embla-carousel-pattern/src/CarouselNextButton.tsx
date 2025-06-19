@@ -1,26 +1,24 @@
-import React, {
+import { Button, type ButtonProps, useIcon } from "@salt-ds/core";
+import type { EmblaCarouselType } from "embla-carousel";
+import {
+  type MouseEventHandler,
   forwardRef,
-  MouseEventHandler,
   useCallback,
   useEffect,
   useState,
 } from "react";
-import {useIcon, Button, ButtonProps} from "@salt-ds/core";
-import type { EmblaCarouselType } from "embla-carousel";
-import { usePrevNextButtons } from "./usePrevNextButtons";
 import { useCarouselContext } from "./CarouselContext";
+import { usePrevNextButtons } from "./usePrevNextButtons";
 
 /**
  * Props for the CarouselNextButton component.
  */
-export interface CarouselNextButtonProps
-  extends ButtonProps {}
+export interface CarouselNextButtonProps extends ButtonProps {}
 
 export const CarouselNextButton = forwardRef<
   HTMLButtonElement,
   CarouselNextButtonProps
 >(function CarouselNextButton({ className, onClick, ...rest }, ref) {
-
   const [nextSlideDescription, setNextSlideDescription] = useState<
     string | undefined
   >(undefined);
@@ -29,26 +27,31 @@ export const CarouselNextButton = forwardRef<
 
   const { NextIcon } = useIcon();
 
-  const handleSettle = useCallback((emblaApi: EmblaCarouselType) => {
-    const slideIndexInView = emblaApi?.slidesInView()?.[0] ?? 0;
+  const handleSettle = useCallback(
+    (emblaApi: EmblaCarouselType) => {
+      const slideIndexInView = emblaApi?.slidesInView()?.[0] ?? 0;
 
-    const numberOfSlides =  emblaApi?.slideNodes().length ?? 0;
-    const scrollSnaps = emblaApi?.scrollSnapList() ?? [];
-    const slidesPerTransition = numberOfSlides ? Math.ceil(numberOfSlides / scrollSnaps.length) : 0;
+      const numberOfSlides = emblaApi?.slideNodes().length ?? 0;
+      const scrollSnaps = emblaApi?.scrollSnapList() ?? [];
+      const slidesPerTransition = numberOfSlides
+        ? Math.ceil(numberOfSlides / scrollSnaps.length)
+        : 0;
 
-    const startSlideNumber = slideIndexInView + slidesPerTransition + 1;
-    const endSlideNumber = Math.min(
-      startSlideNumber + slidesPerTransition - 1,
-      numberOfSlides
-    );
+      const startSlideNumber = slideIndexInView + slidesPerTransition + 1;
+      const endSlideNumber = Math.min(
+        startSlideNumber + slidesPerTransition - 1,
+        numberOfSlides,
+      );
 
-    const label =
-      startSlideNumber === endSlideNumber
-        ? `Next slide ${startSlideNumber} of ${numberOfSlides}`
-        : `Next slides ${startSlideNumber}-${endSlideNumber} of ${numberOfSlides}`;
+      const label =
+        startSlideNumber === endSlideNumber
+          ? `Next slide ${startSlideNumber} of ${numberOfSlides}`
+          : `Next slides ${startSlideNumber}-${endSlideNumber} of ${numberOfSlides}`;
 
-    setNextSlideDescription(label);
-  }, [emblaApi]);
+      setNextSlideDescription(label);
+    },
+    [],
+  );
 
   useEffect(() => {
     if (!emblaApi) return;
@@ -67,13 +70,13 @@ export const CarouselNextButton = forwardRef<
       onNextButtonClick();
       onClick?.(event);
     },
-    [onNextButtonClick, onClick]
+    [onNextButtonClick, onClick],
   );
 
   return (
     <Button
       onClick={handleClick}
-        disabled={nextBtnDisabled}
+      disabled={nextBtnDisabled}
       focusableWhenDisabled
       appearance="bordered"
       sentiment="neutral"

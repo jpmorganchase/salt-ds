@@ -1,13 +1,13 @@
-import React, {
+import { makePrefixer, useDensity } from "@salt-ds/core";
+import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
+import clsx from "classnames";
+import {
+  type ComponentPropsWithoutRef,
+  forwardRef,
   useEffect,
   useRef,
-  forwardRef,
-  type ComponentPropsWithoutRef,
 } from "react";
-import { makePrefixer, useDensity } from "@salt-ds/core";
-import { useWindow } from "@salt-ds/window";
-import { useComponentCssInjection } from "@salt-ds/styles";
-import clsx from "classnames";
 import carouselAutoplayIndicator from "./CarouselAutoplayIndicator.css";
 import { CarouselAutoplayIndicatorSVG } from "./CarouselAutoplayIndicatorSVG";
 
@@ -81,7 +81,7 @@ export const CarouselAutoplayIndicator = forwardRef<
         animationFrameId.current = null;
       }
     };
-  }, [duration, slideIndex, isPlaying]);
+  }, [circumference, duration, slideIndex, isPlaying]);
 
   return (
     <div
@@ -90,7 +90,7 @@ export const CarouselAutoplayIndicator = forwardRef<
         width: size,
         height: size,
         // @ts-ignore
-        ["--salt-carousel-svg-circumference"]: circumference,
+        "--salt-carousel-svg-circumference": circumference,
       }}
       className={clsx(withBaseName(), className)}
       {...props}

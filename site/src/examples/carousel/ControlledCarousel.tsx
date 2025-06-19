@@ -1,13 +1,13 @@
 import { Button, FlexLayout, StackLayout, Text, useId } from "@salt-ds/core";
 import {
   Carousel,
-  CarouselCard,
-  CarouselTabList,
   type CarouselApi,
-  CarouselSlides,
-  CarouselPreviousButton,
+  CarouselCard,
   CarouselNextButton,
+  CarouselPreviousButton,
   CarouselProgressLabel,
+  CarouselSlides,
+  CarouselTabList,
 } from "@salt-ds/embla-carousel-pattern";
 import { type ReactElement, useEffect, useRef } from "react";
 import { sliderData } from "./exampleData";
@@ -50,8 +50,8 @@ export const ControlledCarousel = (): ReactElement => {
             return (
               <CarouselCard
                 className={styles.carouselSlide}
-                key={`${slideId}-${index}`}
-                id={`${slideId}-${index}`}
+                key={`${slideId}-${slide.title}`}
+                id={`${slideId}-${slide.title}`}
                 aria-label={`Example slide ${index + 1}`}
                 appearance={"bordered"}
                 media={
@@ -70,7 +70,7 @@ export const ControlledCarousel = (): ReactElement => {
         </CarouselSlides>
         <FlexLayout justify={"space-between"} direction={"row"} gap={1}>
           <StackLayout direction={"row"} gap={1}>
-            <CarouselPreviousButton/>
+            <CarouselPreviousButton />
             <CarouselNextButton />
             <CarouselProgressLabel />
           </StackLayout>
