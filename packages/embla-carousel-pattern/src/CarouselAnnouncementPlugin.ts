@@ -57,7 +57,6 @@ export const getSlideLabel: GetSlideLabelProps = (
   return `slide ${slideIndex + 1} of ${slideCount}. ${description}`;
 };
 
-
 // biome-ignore lint/complexity/noBannedTypes: Replicated from embla docs/code
 type OptionsType = CreateOptionsType<{}>;
 // biome-ignore lint/complexity/noBannedTypes: Replicated from embla docs/code

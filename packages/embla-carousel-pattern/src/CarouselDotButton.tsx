@@ -94,10 +94,7 @@ export interface DotButtonProps extends ComponentPropsWithRef<"button"> {
 }
 
 export const CarouselDotButton = forwardRef<HTMLButtonElement, DotButtonProps>(
-  function DotButton(
-    { children, className, selected = false, ...rest },
-    ref,
-  ) {
+  function DotButton({ children, className, selected = false, ...rest }, ref) {
     const targetWindow = useWindow();
     useComponentCssInjection({
       testId: "salt-carousel-dot-button",

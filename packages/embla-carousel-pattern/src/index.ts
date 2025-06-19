@@ -8,4 +8,4 @@ export * from "./CarouselAutoplayIndicator";
 export * from "./CarouselPreviousButton";
 export * from "./CarouselNextButton";
 export * from "./CarouselSlides";
-export * from './CarouselProgressLabel';
+export * from "./CarouselProgressLabel";

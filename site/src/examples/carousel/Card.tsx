@@ -1,10 +1,13 @@
-import {FlexLayout, StackLayout, Text, useId} from "@salt-ds/core";
+import { FlexLayout, StackLayout, Text, useId } from "@salt-ds/core";
 import {
   Carousel,
   CarouselAnnouncement,
-  CarouselCard, CarouselNextButton,
-  CarouselTabList, CarouselPreviousButton, CarouselProgressLabel,
+  CarouselCard,
+  CarouselNextButton,
+  CarouselPreviousButton,
+  CarouselProgressLabel,
   CarouselSlides,
+  CarouselTabList,
 } from "@salt-ds/embla-carousel-pattern";
 import type { ReactElement } from "react";
 import { sliderData } from "./exampleData";
@@ -24,8 +27,8 @@ export const Card = (): ReactElement => {
           return (
             <CarouselCard
               className={styles.carouselSlide}
-              key={`${slideId}-${index}`}
-              id={`${slideId}-${index}`}
+              key={`${slideId}-${slide.title}`}
+              id={`${slideId}-${slide.title}`}
               aria-label={`Example slide ${index + 1}`}
               media={
                 <img
@@ -42,10 +45,10 @@ export const Card = (): ReactElement => {
         })}
       </CarouselSlides>
       <FlexLayout justify={"space-between"} direction={"row"} gap={1}>
-      <StackLayout direction={"row"} gap={1}>
-        <CarouselPreviousButton/>
-        <CarouselNextButton />
-        <CarouselProgressLabel />
+        <StackLayout direction={"row"} gap={1}>
+          <CarouselPreviousButton />
+          <CarouselNextButton />
+          <CarouselProgressLabel />
         </StackLayout>
         <CarouselTabList />
       </FlexLayout>

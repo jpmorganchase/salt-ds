@@ -6,9 +6,8 @@ import {
   CarouselNextButton,
   CarouselPreviousButton,
   CarouselProgressLabel,
-  CarouselTabList,
   CarouselSlides,
-  type CarouselApi,
+  CarouselTabList,
 } from "@salt-ds/embla-carousel-pattern";
 import "./carousel.stories.css";
 import {
@@ -16,10 +15,11 @@ import {
   FlexLayout,
   StackLayout,
   Text,
-  useId
+  useId,
 } from "@salt-ds/core";
 import Fade from "embla-carousel-fade";
 import { renderSlides } from "./renderSlides";
+import Classnames from "embla-carousel-class-names";
 
 export default {
   title: "Patterns/Carousel",
@@ -32,7 +32,12 @@ const CarouselCardExample: StoryFn<typeof Carousel> = (args) => {
       <Carousel
         aria-label="Account overview"
         className="carousel"
-        emblaPlugins={[CarouselAnnouncement()]}
+        emblaPlugins={[
+          CarouselAnnouncement(),
+          Classnames({
+            snapped: "carouselSlideIsSnapped",
+          }),
+        ]}
         {...args}
       >
         <FlexLayout
@@ -87,7 +92,7 @@ const CarouselNumberExample: StoryFn<typeof Carousel> = (args) => {
               className="carouselSlide"
               key={`${slideId}-${index}`}
               id={`${slideId}-${index}`}
-               >
+            >
               <div className="carouselNumber">
                 <Text styleAs={"h1"} className="carouselHeading">
                   {index + 1}

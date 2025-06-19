@@ -1,14 +1,14 @@
-import React, {
+import { Button, type ButtonProps, useIcon } from "@salt-ds/core";
+import type { EmblaCarouselType } from "embla-carousel";
+import {
+  type MouseEventHandler,
   forwardRef,
-  MouseEventHandler,
   useCallback,
   useEffect,
   useState,
 } from "react";
-import { useIcon, Button, ButtonProps } from "@salt-ds/core";
-import type { EmblaCarouselType } from "embla-carousel";
-import { usePrevNextButtons } from "./usePrevNextButtons";
 import { useCarouselContext } from "./CarouselContext";
+import { usePrevNextButtons } from "./usePrevNextButtons";
 
 /**
  * Props for the CarouselPreviousButton component.
@@ -27,27 +27,30 @@ export const CarouselPreviousButton = forwardRef<
 
   const { PreviousIcon } = useIcon();
 
-  const handleSettle = useCallback((emblaApi: EmblaCarouselType) => {
-    const slideIndexInView = emblaApi?.slidesInView()?.[0] ?? 0;
-    const numberOfSlides = emblaApi?.slideNodes().length ?? 0;
-    const scrollSnaps = emblaApi?.scrollSnapList() ?? [];
-    const slidesPerTransition = numberOfSlides
-      ? Math.ceil(numberOfSlides / scrollSnaps.length)
-      : 0;
+  const handleSettle = useCallback(
+    (emblaApi: EmblaCarouselType) => {
+      const slideIndexInView = emblaApi?.slidesInView()?.[0] ?? 0;
+      const numberOfSlides = emblaApi?.slideNodes().length ?? 0;
+      const scrollSnaps = emblaApi?.scrollSnapList() ?? [];
+      const slidesPerTransition = numberOfSlides
+        ? Math.ceil(numberOfSlides / scrollSnaps.length)
+        : 0;
 
-    const endSlideNumber = slideIndexInView;
-    const startSlideNumber = Math.max(
-      endSlideNumber - slidesPerTransition + 1,
-      1,
-    );
+      const endSlideNumber = slideIndexInView;
+      const startSlideNumber = Math.max(
+        endSlideNumber - slidesPerTransition + 1,
+        1,
+      );
 
-    const label =
-      startSlideNumber === endSlideNumber
-        ? `Previous slide ${startSlideNumber} of ${numberOfSlides}`
-        : `Previous slides ${startSlideNumber}-${endSlideNumber} of ${numberOfSlides}`;
+      const label =
+        startSlideNumber === endSlideNumber
+          ? `Previous slide ${startSlideNumber} of ${numberOfSlides}`
+          : `Previous slides ${startSlideNumber}-${endSlideNumber} of ${numberOfSlides}`;
 
-    setPrevSlideDescription(label);
-  }, [emblaApi]);
+      setPrevSlideDescription(label);
+    },
+    [],
+  );
 
   useEffect(() => {
     if (!emblaApi) return;

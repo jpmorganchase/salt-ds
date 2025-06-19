@@ -1,10 +1,13 @@
-import {FlexLayout, Link, StackLayout, Text, useId} from "@salt-ds/core";
+import { FlexLayout, Link, StackLayout, Text, useId } from "@salt-ds/core";
 import {
   Carousel,
   CarouselAnnouncement,
-  CarouselCard, CarouselNextButton,
-  CarouselTabList, CarouselPreviousButton, CarouselProgressLabel,
+  CarouselCard,
+  CarouselNextButton,
+  CarouselPreviousButton,
+  CarouselProgressLabel,
   CarouselSlides,
+  CarouselTabList,
 } from "@salt-ds/embla-carousel-pattern";
 import Classnames from "embla-carousel-class-names";
 import type { ReactElement } from "react";
@@ -13,7 +16,8 @@ import styles from "./index.module.css";
 
 export const CardActions = (): ReactElement => {
   const slideId = useId();
-  return (<Carousel
+  return (
+    <Carousel
       aria-label="Card actions example"
       className={styles.carousel}
       emblaPlugins={[
@@ -29,8 +33,8 @@ export const CardActions = (): ReactElement => {
           return (
             <CarouselCard
               className={styles.carouselSlide}
-              key={`${slideId}-${index}`}
-              id={`${slideId}-${index}`}
+              key={`${slideId}-${slide.title}`}
+              id={`${slideId}-${slide.title}`}
               aria-label={`Example slide ${index + 1}`}
               appearance={"bordered"}
               media={
@@ -54,7 +58,7 @@ export const CardActions = (): ReactElement => {
       </CarouselSlides>
       <FlexLayout justify={"space-between"} direction={"row"} gap={1}>
         <StackLayout direction={"row"} gap={1}>
-          <CarouselPreviousButton/>
+          <CarouselPreviousButton />
           <CarouselNextButton />
           <CarouselProgressLabel />
         </StackLayout>
@@ -62,4 +66,4 @@ export const CardActions = (): ReactElement => {
       </FlexLayout>
     </Carousel>
   );
-}
+};
