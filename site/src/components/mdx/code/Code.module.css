@@ -6,7 +6,6 @@
 .code {
   font-family: var(--salt-text-code-fontFamily);
   overflow-wrap: anywhere;
-  vertical-align: text-bottom;
   white-space: pre-wrap;
   padding: var(--code-padding-vertical) var(--code-padding-horizontal);
   background-color: var(--salt-container-secondary-background);

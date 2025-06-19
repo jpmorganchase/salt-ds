@@ -25,7 +25,6 @@ div[class*="ag-theme-salt"] {
   --ag-header-column-separator-height: calc(var(--salt-size-base) / 2 - 2 * var(--salt-size-fixed-100));
   --ag-header-column-separator-width: var(--salt-size-fixed-100);
   --ag-header-foreground-color: var(--salt-content-secondary-foreground);
-  --ag-header-height: calc(var(--salt-size-base) + var(--salt-spacing-100));
   /* Replicating min size 12px from Icon.css */
   --ag-icon-size: max(var(--salt-size-icon), 12px);
   --ag-input-border-color: var(--salt-editable-borderColor);

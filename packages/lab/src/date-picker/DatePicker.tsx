@@ -123,6 +123,8 @@ export const DatePickerMain = forwardRef<
     };
 
     if (props.selectionVariant === "range") {
+      // TODO
+      // biome-ignore lint/correctness/useHookAtTopLevel: This should be fixed.
       const stateAndHelpers = useDatePicker<TDate, "range">(
         useDatePickerProps,
         ref,
@@ -135,6 +137,8 @@ export const DatePickerMain = forwardRef<
         </DateRangeSelectionContext.Provider>
       );
     }
+    // TODO
+    // biome-ignore lint/correctness/useHookAtTopLevel: This should be fixed.
     const stateAndHelpers = useDatePicker(
       useDatePickerProps,
       ref,

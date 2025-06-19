@@ -23,7 +23,11 @@ export const sourceItemHasProp = (
   item: unknown,
   propertyName: string,
 ): boolean => {
-  return item !== null && Object.hasOwn(item, propertyName);
+  return (
+    item !== null &&
+    typeof item === "object" &&
+    Object.hasOwn(item, propertyName)
+  );
 };
 
 export const isHeader = (item: unknown): boolean =>

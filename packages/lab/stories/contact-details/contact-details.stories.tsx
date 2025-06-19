@@ -480,7 +480,7 @@ const WithinTileTemplate: StoryFn = () => {
 };
 
 const WithinOverlayTemplate: StoryFn<typeof Overlay> = (props) => {
-  const OverlayContent = () => (
+  const overlayContent = (
     <ContactDetails className={"withinOverlay"} embedded={true}>
       <ContactFavoriteToggle />
       <ContactAvatar />
@@ -521,9 +521,7 @@ const WithinOverlayTemplate: StoryFn<typeof Overlay> = (props) => {
       </OverlayTrigger>
       <OverlayPanel>
         <OverlayPanelCloseButton />
-        <OverlayPanelContent>
-          <OverlayContent />
-        </OverlayPanelContent>
+        <OverlayPanelContent>{overlayContent}</OverlayPanelContent>
       </OverlayPanel>
     </Overlay>
   );

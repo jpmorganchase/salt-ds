@@ -12,7 +12,9 @@ const biome = await Biome.create({
   distribution: Distribution.NODE,
 });
 
-biome.applyConfiguration({
+const project = biome.openProject();
+
+biome.applyConfiguration(project.projectKey, {
   organizeImports: {
     enabled: true,
   },
@@ -83,6 +85,7 @@ const generateCssAsBg = ({ basePath, cssOutputPath, fileArg }) => {
   const ALL_CSS = `[class*=' saltCountry-'],[class^='saltCountry-'] {background-size: cover;height:var(--salt-size-base, 20px);width:var(--salt-size-base, 20px);}\n`;
 
   const formattedResult = biome.formatContent(
+    project.projectKey,
     CSS_GENERATED_WARNING_COMMENT.concat(ALL_CSS, countryCss),
     { filePath: cssOutputPath },
   );
@@ -122,6 +125,7 @@ const generateSharpCssAsBg = ({ basePath, cssOutputPath, fileArg }) => {
   const ALL_CSS = `[class*=' saltCountrySharp-'],[class^='saltCountrySharp-'] {background-size: cover;height:var(--salt-size-base, 20px);width:calc(var(--salt-size-base, 20px) * 1.44);}\n`;
 
   const formattedResult = biome.formatContent(
+    project.projectKey,
     CSS_GENERATED_WARNING_COMMENT.concat(ALL_CSS, countryCss),
     { filePath: cssOutputPath },
   );
@@ -312,6 +316,7 @@ const generateCountrySymbolComponents = ({
       .replaceAll(`${REPLACE_END}"`, "");
 
     const formattedResult = biome.formatContent(
+      project.projectKey,
       GENERATED_WARNING_COMMENT.concat(replacedText),
       { filePath: newFilePath },
     );
@@ -345,7 +350,7 @@ const generateIndex = ({ countryMetaMap, componentsPath }) => {
 
   const outputFile = path.join(componentsPath, "index.ts");
 
-  const formattedResult = biome.formatContent(joinedText, {
+  const formattedResult = biome.formatContent(project.projectKey, joinedText, {
     filePath: outputFile,
   });
 
@@ -385,7 +390,7 @@ const generateCountryMetaMap = ({ countryMetaMap, basePath }) => {
     endText,
   ].join("\n");
 
-  const formattedResult = biome.formatContent(joinedText, {
+  const formattedResult = biome.formatContent(project.projectKey, joinedText, {
     filePath: outputFile,
   });
 
@@ -423,7 +428,7 @@ const generateLazyMap = ({ countryMetaMap, basePath }) => {
     lazyMapText.join("\n"),
   ].join("\n");
 
-  const formattedResult = biome.formatContent(joinedText, {
+  const formattedResult = biome.formatContent(project.projectKey, joinedText, {
     filePath: outputFile,
   });
 

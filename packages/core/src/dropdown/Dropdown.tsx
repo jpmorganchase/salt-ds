@@ -389,7 +389,7 @@ export const Dropdown = forwardRef(function Dropdown<Item>(
 
     // We check the active index because the active item may have been removed
     const activeIndex = activeState ? getIndexOfOption(activeState) : -1;
-    let newActive;
+    let newActive: ReturnType<typeof getFirstOption>;
 
     // If the active item is still in the list, we don't need to do anything
     if (activeIndex > 0) {

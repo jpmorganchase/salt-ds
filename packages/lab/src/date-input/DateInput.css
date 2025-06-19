@@ -190,7 +190,7 @@
 .saltDateInput-endAdornmentContainer {
   display: inline-flex;
   column-gap: var(--salt-spacing-50);
-  align-items: end;
+  align-items: flex-end;
 }
 
 .saltDateInput-endAdornmentContainer .saltButton ~ .saltButton {
@@ -224,7 +224,6 @@
   overflow: hidden;
   padding: 0;
   text-align: left;
-  width: min-content;
   width: 100%;
 }
 
