@@ -1,18 +1,23 @@
-import { Button, useIcon } from "@salt-ds/core";
 import type { EmblaCarouselType } from "embla-carousel";
-import type React from "react";
-import {
-  type ComponentPropsWithRef,
-  useCallback,
-  useEffect,
-  useState,
-} from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useCarouselContext } from "./CarouselContext";
 
 type UsePrevNextButtonsType = {
+  /**
+   * Indicates whether the previous button is disabled.
+   */
   prevBtnDisabled: boolean;
+  /**
+   * Indicates whether the next button is disabled.
+   */
   nextBtnDisabled: boolean;
+  /**
+   * Handles the click event for the previous button.
+   */
   onPrevButtonClick: () => void;
+  /**
+   * Handles the click event for the next button.
+   */
   onNextButtonClick: () => void;
 };
 
@@ -45,8 +50,7 @@ export const usePrevNextButtons = (): UsePrevNextButtonsType => {
     emblaApi.on("reInit", handleSelect).on("select", handleSelect);
     // Cleanup listener on component unmount
     return () => {
-      emblaApi.off("reInit", handleSelect);
-      emblaApi.off("select", handleSelect);
+      emblaApi.off("reInit", handleSelect).off("select", handleSelect);
     };
   }, [emblaApi, handleSelect]);
 
@@ -56,44 +60,4 @@ export const usePrevNextButtons = (): UsePrevNextButtonsType => {
     onPrevButtonClick: handlePrevButtonClick,
     onNextButtonClick: handleNextButtonClick,
   };
-};
-
-type PropType = ComponentPropsWithRef<"button">;
-
-export const PrevButton: React.FC<PropType> = (props) => {
-  const { children, ...rest } = props;
-
-  const { PreviousIcon } = useIcon();
-
-  return (
-    <Button
-      focusableWhenDisabled
-      appearance="bordered"
-      sentiment="neutral"
-      aria-label={"Previous slide"}
-      tabIndex={0}
-      {...rest}
-    >
-      <PreviousIcon aria-hidden />
-    </Button>
-  );
-};
-
-export const NextButton: React.FC<PropType> = (props) => {
-  const { children, ...rest } = props;
-
-  const { NextIcon } = useIcon();
-
-  return (
-    <Button
-      focusableWhenDisabled
-      appearance="bordered"
-      sentiment="neutral"
-      aria-label={"Next slide"}
-      tabIndex={0}
-      {...rest}
-    >
-      <NextIcon aria-hidden />
-    </Button>
-  );
 };

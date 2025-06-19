@@ -15,7 +15,7 @@ export function renderProps<Type extends ElementType>(
   Type: Type | null,
   props: RenderPropsType & ComponentProps<Type>,
 ): ReactElement {
-  const { render, ...rest } = props;
+  const { render, key, ...rest } = props;
   // Case 1: If render is a valid React element, clone it with merged props
   if (isValidElement(render)) {
     const renderProps = render.props as ComponentProps<Type>;
@@ -35,7 +35,7 @@ export function renderProps<Type extends ElementType>(
 
   if (Type) {
     // Case 3: If render is not provided, render the Type component with the rest of the props
-    return <Type {...restProps} />;
+    return <Type key={key} {...restProps} />;
   }
 
   throw new Error("Type or render should be provided");

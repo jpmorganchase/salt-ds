@@ -1,27 +1,33 @@
-import {
-  Button,
-  FlexLayout,
-  FormField,
-  FormFieldLabel,
-  H1,
-  H2,
-  Link,
-} from "@salt-ds/core";
+import { Button, FlexLayout, StackLayout, Text, useId } from "@salt-ds/core";
 import {
   Carousel,
-  CarouselPagination,
+  type CarouselApi,
+  CarouselAnnouncement,
+  CarouselProgressBar,
+  CarouselCard,
+  CarouselNextButton,
+  CarouselPreviousButton,
+  CarouselProgressLabel,
   CarouselSlides,
 } from "@salt-ds/embla-carousel-pattern";
 import { PauseIcon, PlayIcon } from "@salt-ds/icons";
-import { default as autoplayPlugin } from "embla-carousel-autoplay";
-import { type FocusEventHandler, useRef, useState } from "react";
+import { default as AutoplayPlugin } from "embla-carousel-autoplay";
+import {
+  type FocusEventHandler,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import styles from "./index.module.css";
+import { sliderData } from "./exampleData";
 
 export const Autoplay = () => {
-  const [isPlaying, setIsPlaying] = useState(true);
+  const slideId = useId();
+  const emblaApiRef = useRef<CarouselApi | undefined>(undefined);
+  const [isPlaying, setIsPlaying] = useState(false);
 
-  const autoplay = useRef(autoplayPlugin({ delay: 5000 }));
-  const slides = Array.from(Array(4).keys());
+  const autoplay = useRef(AutoplayPlugin({ delay: 20000, playOnInit: false }));
 
   const handleBlur: FocusEventHandler = (event) => {
     if (!event.currentTarget.contains(event.relatedTarget) && isPlaying) {
@@ -29,45 +35,40 @@ export const Autoplay = () => {
     }
   };
 
+  const handlePlay = useCallback(() => {
+    setIsPlaying(true);
+  }, []);
+
+  const handleStop = useCallback(() => {
+    setIsPlaying(false);
+  }, []);
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: API could update after first render
+  useEffect(() => {
+    if (!emblaApiRef?.current) {
+      return;
+    }
+    emblaApiRef.current.on("autoplay:play", handlePlay);
+    emblaApiRef.current.on("autoplay:stop", handleStop);
+
+    // Cleanup listener on component unmount
+    return () => {
+      emblaApiRef.current?.off("autoplay:play", handlePlay);
+      emblaApiRef.current?.off("autoplay:stop", handleStop);
+    };
+  }, [emblaApiRef.current]);
+
   return (
     <Carousel
       aria-label="Account overview"
       className={styles.carousel}
       emblaOptions={{ loop: true }}
-      emblaPlugins={[autoplay.current]}
+      emblaPlugins={[autoplay.current, CarouselAnnouncement()]}
+      emblaApiRef={emblaApiRef}
     >
-      <FlexLayout justify={"space-between"} align={"center"} direction={"row"}>
-        <H2 style={{ margin: "0px" }}>Title</H2>
-        {isPlaying ? (
-          <Button
-            aria-label="Stop slide rotation"
-            appearance="bordered"
-            sentiment="neutral"
-            onClick={() => {
-              setIsPlaying(false);
-              autoplay.current.stop();
-            }}
-            tabIndex={0}
-          >
-            Pause play
-            <PauseIcon aria-hidden />
-          </Button>
-        ) : (
-          <Button
-            aria-label="Start slide rotation"
-            appearance="bordered"
-            sentiment="neutral"
-            onClick={() => {
-              setIsPlaying(true);
-              autoplay.current.play();
-            }}
-            tabIndex={0}
-          >
-            Resume play
-            <PlayIcon aria-hidden />
-          </Button>
-        )}
-      </FlexLayout>
+      <Text styleAs={"h2"} className={styles.carouselHeading}>
+        Title
+      </Text>
       <CarouselSlides
         onMouseEnter={() => {
           autoplay.current.stop();
@@ -80,32 +81,62 @@ export const Autoplay = () => {
         onFocus={() => autoplay.current.stop()}
         onBlur={handleBlur}
       >
-        {slides.map((index) => (
-          <div
-            aria-label={`Example slide ${index + 1}`}
-            aria-roledescription="slide"
-            className={styles.carouselSlide}
-            key={index}
-          >
-            <FlexLayout
-              className={styles.carouselNumber}
-              justify={"center"}
-              direction={"row"}
-              gap={3}
+        {sliderData.map((slide, index) => {
+          return (
+            <CarouselCard
+              appearance={"bordered"}
+              className={styles.carouselSlide}
+              key={`${slideId}-${index}`}
+              id={`${slideId}-${index}`}
+              aria-label={`Example slide ${index + 1}`}
+              media={
+                <img
+                  alt={`stock content to show in carousel slide ${index}`}
+                  className={styles.carouselImage}
+                  src={slide.image}
+                />
+              }
+              header={<Text styleAs={"h3"}>{slide.title}</Text>}
             >
-              <H1 style={{ margin: "0px" }}>{index + 1}</H1>
-              <FormField style={{ width: "auto" }}>
-                <FormFieldLabel>Focusable element</FormFieldLabel>
-                <Link aria-label={"demo action"} tabIndex={0} href="#">
-                  Link
-                </Link>
-              </FormField>
-            </FlexLayout>
-          </div>
-        ))}
+              <Text>{slide.content}</Text>
+            </CarouselCard>
+          );
+        })}
       </CarouselSlides>
-      <FlexLayout justify={"center"} direction={"row"}>
-        <CarouselPagination />
+      <FlexLayout justify={"space-between"} direction={"row"} gap={1}>
+        <StackLayout direction={"row"} gap={1}>
+          {isPlaying ? (
+            <Button
+              aria-label="Pause play"
+              appearance="bordered"
+              sentiment="neutral"
+              onClick={() => {
+                setIsPlaying(false);
+                autoplay.current.stop();
+              }}
+              tabIndex={1}
+            >
+              <PauseIcon aria-hidden />
+            </Button>
+          ) : (
+            <Button
+              aria-label="Resume play"
+              appearance="bordered"
+              sentiment="neutral"
+              onClick={() => {
+                setIsPlaying(true);
+                autoplay.current.play();
+              }}
+              tabIndex={1}
+            >
+              <PlayIcon aria-hidden />
+            </Button>
+          )}
+          <CarouselPreviousButton onClick={() => autoplay.current.stop()} />
+          <CarouselNextButton onClick={() =>  autoplay.current.stop()} />
+          <CarouselProgressLabel />
+          <CarouselProgressBar />
+        </StackLayout>
       </FlexLayout>
     </Carousel>
   );
