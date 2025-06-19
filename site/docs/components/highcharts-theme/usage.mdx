@@ -16,16 +16,31 @@ When you want to use the Salt theme with Highcharts.
 
 <Callout title="Note">
 
-TODO: Call out on v10
+Salt prioritzes compatibility with version 10.2.2 to 10.3.3
+
+For support on the latest version, see xyz
 
 </Callout>
 
+
 ## Import
+
+### Set Highcharts Global options
+
+To get started with the Salt Highcharts Theme, import and set the [Highcharts global options](https://www.highcharts.com/docs/getting-started/how-to-set-options) at your entry point. This ensures that Highchart runs in `styledMode` and allows for the use of CSS classes to style the chart
+along with the setting of positional properties like spacing and dimensions.
 
 ```js
 import Highcharts from "highcharts";
-import HighchartsReact from "highcharts-react-official";
+
+Highcharts.setOptions(saltHCThemeOptions);
 ```
+
+<Callout title="Note">
+
+If you already have a global options object, you can call `Highcharts.setOptions` with your existing options object and then again using the `saltHCThemeOptions` object to set the Salt theme. Note that the order of `setOptions` calls matter - the last call will override the previous ones.
+
+</Callout>
 
 ### Import Salt Highcharts theme
 
@@ -38,7 +53,7 @@ import "@salt-ds/highcharts-theme/index.css";
 Then wrap your Highcharts with `salt-highcharts-theme` class names shown below:
 
 ```js
-<div className="salt-highcharts-theme">
+<div className="highcharts-theme-salt">
   <HighchartsReact highcharts={Highcharts} options={options1} />
 </div>
 ```
