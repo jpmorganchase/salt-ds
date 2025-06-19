@@ -2,7 +2,7 @@ import { Button, FlexLayout, StackLayout, Text, useId } from "@salt-ds/core";
 import {
   Carousel,
   CarouselCard,
-  CarouselPagination,
+  CarouselTabList,
   type CarouselApi,
   CarouselSlides,
   CarouselPreviousButton,
@@ -41,7 +41,7 @@ export const ControlledCarousel = (): ReactElement => {
   return (
     <StackLayout>
       <Carousel
-        aria-label="Account overview"
+        aria-label="Controlled carousel example"
         className={styles.carousel}
         emblaApiRef={emblaApiRef}
       >
@@ -74,7 +74,7 @@ export const ControlledCarousel = (): ReactElement => {
             <CarouselNextButton />
             <CarouselProgressLabel />
           </StackLayout>
-          <CarouselPagination />
+          <CarouselTabList />
         </FlexLayout>
       </Carousel>
       <FlexLayout justify={"center"} align={"center"} direction={"row"}>

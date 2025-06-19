@@ -3,7 +3,10 @@ import type { Meta, StoryFn } from "@storybook/react-vite";
 import {
   Carousel,
   CarouselAnnouncement,
-  CarouselPagination,
+  CarouselNextButton,
+  CarouselPreviousButton,
+  CarouselProgressLabel,
+  CarouselTabList,
   CarouselSlides,
   type CarouselApi,
 } from "@salt-ds/embla-carousel-pattern";
@@ -11,6 +14,7 @@ import "./carousel.stories.css";
 import {
   AriaAnnouncerProvider,
   FlexLayout,
+  StackLayout,
   Text,
   useId
 } from "@salt-ds/core";
@@ -41,8 +45,13 @@ const CarouselCardExample: StoryFn<typeof Carousel> = (args) => {
           </Text>
         </FlexLayout>
         <CarouselSlides>{renderSlides({ withActions: true })}</CarouselSlides>
-        <FlexLayout justify={"center"} direction={"row"}>
-          <CarouselPagination />
+        <FlexLayout justify={"space-between"} direction={"row"} gap={1}>
+          <StackLayout direction={"row"} gap={1}>
+            <CarouselPreviousButton />
+            <CarouselNextButton />
+            <CarouselProgressLabel />
+          </StackLayout>
+          <CarouselTabList />
         </FlexLayout>
       </Carousel>
     </AriaAnnouncerProvider>
@@ -87,8 +96,13 @@ const CarouselNumberExample: StoryFn<typeof Carousel> = (args) => {
             </div>
           ))}
         </CarouselSlides>
-        <FlexLayout justify={"center"} direction={"row"} >
-          <CarouselPagination />
+        <FlexLayout justify={"space-between"} direction={"row"} gap={1}>
+          <StackLayout direction={"row"} gap={1}>
+            <CarouselPreviousButton />
+            <CarouselNextButton />
+            <CarouselProgressLabel />
+          </StackLayout>
+          <CarouselTabList />
         </FlexLayout>
       </Carousel>
     </AriaAnnouncerProvider>
@@ -135,8 +149,13 @@ export const MultiSlide: StoryFn<typeof Carousel> = (args) => {
           </div>
         ))}
       </CarouselSlides>
-      <FlexLayout justify={"center"} direction={"row"}>
-        <CarouselPagination />
+      <FlexLayout justify={"space-between"} direction={"row"} gap={1}>
+        <StackLayout direction={"row"} gap={1}>
+          <CarouselPreviousButton />
+          <CarouselNextButton />
+          <CarouselProgressLabel />
+        </StackLayout>
+        <CarouselTabList />
       </FlexLayout>
     </Carousel>
   );

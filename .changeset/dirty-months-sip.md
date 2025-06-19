@@ -28,7 +28,10 @@ To migrate from the current Lab version of `Carousel`:
 ```diff
 import {
   Carousel,
-  CarouselControls,
+- CarouselControls,  
++ CarouselNextButton,
++ CarouselPreviousButton,
++ CarouselProgressLabel,
 - CarouselSlide,
 + CarouselCard,
 - CarouselSlider,
@@ -39,7 +42,7 @@ import {
 
 ### Key Changes
 
-- _Controls Placement_: The `controlsPlacement` prop has been removed. Carousel children are now laid out vertically, and control positions are determined through composition.
+- `CarouselControls` has been broken into `CarouselPreviousButton`, `CarouselNextButton`, and `CarouselProgressLabel` for composability.
 - _Slide Rename_: `CarouselSlide` has been renamed to `CarouselCard`. While `CarouselCard` is a predefined slide, you can also create custom slides.
 - _Slider Rename_: `CarouselSlider` has been renamed to `CarouselSlides`.
 
@@ -48,7 +51,10 @@ Example Update:
 ```diff
 - <Carousel controlsPlacement="bottom">
 + <Carousel>
-    <CarouselControls />
+-   <CarouselControls />
++   <CarouselPreviousButton />
++   <CarouselNextButton />
++   <CarouselProgressLabel />
 -   <CarouselSlider>
 +   <CarouselSlides>
     {
@@ -130,3 +136,9 @@ return (
 Due to the challenges of making an accessible carousel, please read the documentation to understand the responsibilities the come with usage.
 
 `Carousel` remains in a pre-release state for this release and subject to feedback will be promoted to stable in a forthcoming release.
+
+### Additional components
+
+- `CarouselTabList`: A tab list for navigating between slides.
+- `CarouselAutoplayIndicator`: An indicator for autoplay functionality.
+- `CarouselAnnouncementPlugin`: A plugin for announcing slide changes to assistive technologies.
