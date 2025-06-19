@@ -17,7 +17,7 @@
   fill: none;
   stroke: var(--salt-accent-background);
   stroke-dasharray: var(--salt-carousel-svg-circumference);
-  stroke-dashoffset: var(--salt-carousel-svg-circumference) ;
+  stroke-dashoffset: var(--salt-carousel-svg-circumference);
   animation: indicatorAnimation 0.5s linear;
   animation-play-state: paused;
 }

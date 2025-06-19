@@ -28,7 +28,7 @@ To migrate from the current Lab version of `Carousel`:
 ```diff
 import {
   Carousel,
-- CarouselControls,  
+- CarouselControls,
 + CarouselNextButton,
 + CarouselPreviousButton,
 + CarouselProgressLabel,

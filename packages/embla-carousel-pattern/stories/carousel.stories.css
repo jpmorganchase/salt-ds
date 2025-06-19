@@ -35,3 +35,10 @@
   --saltCarousel-slide-size: 50%;
 }
 
+.carouselSlideIsSnapped {
+  visibility: visible;
+}
+/** Do not make off-screen slides focusable */
+.saltCarouselCard:not(.carouselSlideIsSnapped) a {
+  visibility: hidden;
+}

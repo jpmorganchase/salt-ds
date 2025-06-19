@@ -1,11 +1,11 @@
 import { FlexLayout, Text, useId } from "@salt-ds/core";
 import {
   Carousel,
-  CarouselSlides,
-  CarouselPreviousButton,
-  CarouselNextButton,
   CarouselAnnouncement,
+  CarouselNextButton,
+  CarouselPreviousButton,
   CarouselProgressLabel,
+  CarouselSlides,
 } from "@salt-ds/embla-carousel-pattern";
 import type { ReactElement } from "react";
 import styles from "./index.module.css";
@@ -20,7 +20,7 @@ export const Basic = (): ReactElement => {
       emblaPlugins={[CarouselAnnouncement()]}
     >
       <FlexLayout justify={"start"} direction={"row"} gap={1}>
-        <CarouselPreviousButton  />
+        <CarouselPreviousButton />
         <CarouselNextButton />
         <CarouselProgressLabel />
       </FlexLayout>

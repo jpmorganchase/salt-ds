@@ -22,6 +22,7 @@
 }
 
 .carouselSlideIsSnapped {
+  visibility: visible;
 }
 /** Do not make off-screen slides focusable */
 .carouselSlide:not(.carouselSlideIsSnapped) a {

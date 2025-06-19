@@ -43,8 +43,8 @@ export const renderSlides = ({
     const slideId = useId();
     return (
       <CarouselCard
-        id={`${slideId}-${index}`}
-        key={`${slideId}-${index}`}
+        key={`${slideId}-${slide.title}`}
+        id={`${slideId}-${slide.title}`}
         appearance="bordered"
         header={<H3>{slide.title}</H3>}
         aria-label={`label for slide ${index + 1}`}

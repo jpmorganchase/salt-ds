@@ -1,5 +1,6 @@
 import type { Meta, StoryFn } from "@storybook/react";
 
+import { FlexLayout, StackLayout } from "@salt-ds/core";
 import {
   Carousel,
   CarouselNextButton,
@@ -10,7 +11,6 @@ import {
 } from "@salt-ds/embla-carousel-pattern";
 import { QAContainer } from "docs/components";
 import { renderSlides } from "./renderSlides";
-import { FlexLayout, StackLayout } from "@salt-ds/core";
 
 export default {
   title: "Patterns/Carousel/QA",
