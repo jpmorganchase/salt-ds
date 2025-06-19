@@ -136,11 +136,12 @@ describe("Number Input", () => {
     );
 
     cy.findByRole("spinbutton").focus().realPress("ArrowDown");
-    cy.findByRole("spinbutton").should("have.value", "0").realPress("PageDown");
-    cy.findByRole("spinbutton")
-      .should("have.value", "-100")
-      .realPress(["Shift", "ArrowDown"]);
-    cy.findByRole("spinbutton").should("have.value", "-200").realPress("Home");
+    cy.findByRole("spinbutton").should("have.value", "0");
+    cy.findByRole("spinbutton").focus().realPress("PageDown");
+    cy.findByRole("spinbutton").should("have.value", "-100");
+    cy.findByRole("spinbutton").focus().realPress(["Shift", "ArrowDown"]);
+    cy.findByRole("spinbutton").should("have.value", "-200");
+    cy.findByRole("spinbutton").focus().realPress(["Home"]);
     cy.findByRole("spinbutton").should("have.value", "-2000");
   });
 
@@ -159,10 +160,9 @@ describe("Number Input", () => {
   });
 
   it("displays value with correct number of decimal places when decimal scale is set", () => {
-    cy.mount(<Default decimalScale={2} />);
+    cy.mount(<Default decimalScale={2} defaultValue={""} />);
 
     cy.findByRole("spinbutton").focus();
-    cy.findByRole("spinbutton").clear();
     cy.realType("-12");
     cy.realPress("Tab");
     cy.findByRole("spinbutton").should("have.value", "-12.00");
@@ -409,9 +409,11 @@ describe("Number Input", () => {
   });
 
   it("clamps out of range values on blur when clampValue is set to true", () => {
-    cy.mount(<Default max={100} decimalScale={2} clampValue />);
+    cy.mount(
+      <Default max={100} decimalScale={2} clampValue defaultValue={""} />,
+    );
 
-    cy.findByRole("spinbutton").focus().clear();
+    cy.findByRole("spinbutton").focus();
     cy.realType("10000000");
     cy.realPress("Tab");
     cy.findByRole("spinbutton").should("have.value", "100.00");
@@ -423,9 +425,9 @@ describe("Number Input", () => {
   });
 
   it("correctly formats a number starting with decimal point when decimal scale is set", () => {
-    cy.mount(<Default decimalScale={1} />);
+    cy.mount(<Default decimalScale={1} defaultValue={""} />);
 
-    cy.findByRole("spinbutton").focus().clear();
+    cy.findByRole("spinbutton").focus();
     cy.realType(".1");
     cy.realPress("Tab");
 

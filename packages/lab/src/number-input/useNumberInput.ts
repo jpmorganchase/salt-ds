@@ -26,7 +26,7 @@ export const useNumberInput = ({
   value,
   parse,
   decimalScale,
-  userEditingRef,
+  setIsEditing,
 }: Pick<
   NumberInputProps,
   | "disabled"
@@ -43,14 +43,12 @@ export const useNumberInput = ({
   setValue: Dispatch<SetStateAction<string | number>>;
   value: string | number;
   inputRef: MutableRefObject<HTMLInputElement | null>;
-  userEditingRef: MutableRefObject<boolean>;
+  setIsEditing: Dispatch<SetStateAction<boolean>>;
 }) => {
   const updateValue = useCallback(
     (event: SyntheticEvent | undefined, nextValue: number) => {
       if (readOnly) return;
       const updatedValue = nextValue.toFixed(decimalScale);
-
-      console.log("setting updated value", updatedValue);
       setValue(updatedValue);
       onChange?.(event, toFloat(updatedValue));
     },
@@ -106,7 +104,8 @@ export const useNumberInput = ({
     disabled: disabled || isAtMax(value, max),
     onMouseDown: (event: MouseEvent<HTMLButtonElement>) => {
       event.preventDefault();
-      userEditingRef.current = true;
+      setIsEditing(true);
+      // userEditingRef.current = true;
       if (event.nativeEvent.button !== 0) {
         // To match closely with <input type='input'>
         return;
@@ -121,7 +120,7 @@ export const useNumberInput = ({
     disabled: disabled || isAtMin(value, min),
     onMouseDown: (event: MouseEvent<HTMLButtonElement>) => {
       event.preventDefault();
-      userEditingRef.current = true;
+      setIsEditing(true);
       if (event.nativeEvent.button !== 0) {
         // To match closely with <input type='input'>
         return;
