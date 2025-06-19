@@ -2,11 +2,8 @@ import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 
 import accessibility from "highcharts/modules/accessibility";
-import patternFill from "highcharts/modules/pattern-fill";
 
 accessibility(Highcharts);
-// patternFill(Highcharts);
-
 
 const lineDataOptions = {
   chart: {
@@ -16,13 +13,9 @@ const lineDataOptions = {
     description:
       "A summary communicating the trends, insights, or patterns the chart is intended to provide in a couple sentences.",
   },
-  tooltip: {
-    headerFormat: '<span class="title">{point.key}</span><br/>',
-    pointFormat:
-      '<span class="label">{series.name}: </span><span class="value">{point.y}</span>',
-  },
+
   title: {
-    text: "tymon lets gooo",
+    text: "Title",
   },
   yAxis: {
     title: {
@@ -36,43 +29,99 @@ const lineDataOptions = {
     accessibility: {
       description: "Time from 2011 to 2015",
     },
-    categories: ["2011", "2012", "2013", "2014", "2015"],
-    endOnTick: true,
-    startOnTick: true,
+    categories: [
+      "2011",
+      "2012",
+      "2013",
+      "2014",
+      "2015",
+      "2016",
+      "2017",
+      "2018",
+      "2019",
+      "2020",
+    ],
+    min: 0,
+    endOnTick: false,
+    startOnTick: false,
     maxPadding: 0,
   },
   series: [
     {
       name: "USD",
-      data: [54, 59.6, 53.7, 53.9, 43.7],
+      data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
     },
     {
       name: "EUR",
-      data: [8, 34.8, 43, 51.2, 41.4],
+      data: [5, 6, 7, 6, 5, 4, 3, 4, 5, 6],
     },
     {
       name: "CAD",
-      data: [6, 20.2, 30.7, 36.8, 30.9],
+      data: [9, 8, 7, 6, 5, 4, 3, 2, 1, 0],
     },
     {
       name: "AUD",
-      data: [23, 19, 20.7, 13.9, 29.6],
+      data: [2, 3, 4, 5, 6, 7, 8, 7, 6, 5],
     },
     {
       name: "GBP",
-      data: [0, 6.1, 6.8, 5.3, 27.5],
+      data: [8, 7, 6, 5, 4, 3, 2, 3, 4, 5],
     },
     {
       name: "JPY",
-      data: [0, 16.2, 22.1, 26.2, 6.9],
+      data: [3, 4, 5, 6, 7, 8, 7, 6, 5, 4],
     },
     {
       name: "CHF",
-      data: [0, 0, 2.8, 4.8, 2.8],
+      data: [7, 6, 5, 4, 3, 2, 3, 4, 5, 6],
     },
     {
       name: "NZD",
-      data: [0, 7.4, 5.9, 9.3, 6.5],
+      data: [2, 4, 6, 8, 6, 4, 2, 4, 6, 8],
+    },
+    {
+      name: "SEK",
+      data: [5, 5.5, 6, 5.5, 5, 4.5, 4, 4.5, 5, 5.5],
+    },
+    {
+      name: "NOK",
+      data: [1, 3, 5, 7, 9, 7, 5, 3, 1, 3],
+    },
+    {
+      name: "SGD",
+      data: [6, 5, 4, 3, 2, 3, 4, 5, 6, 7],
+    },
+    {
+      name: "MXN",
+      data: [4, 5, 6, 7, 8, 7, 6, 5, 4, 3],
+    },
+    {
+      name: "ZAR",
+      data: [3, 4, 5, 6, 7, 6, 5, 4, 3, 2],
+    },
+    {
+      name: "INR",
+      data: [7, 8, 9, 8, 7, 6, 5, 6, 7, 8],
+    },
+    {
+      name: "BRL",
+      data: [2, 3, 2, 3, 2, 3, 2, 3, 2, 3],
+    },
+    {
+      name: "CNY",
+      data: [8, 7, 6, 5, 4, 5, 6, 7, 8, 9],
+    },
+    {
+      name: "KRW",
+      data: [5, 6, 5, 4, 5, 6, 5, 4, 5, 6],
+    },
+    {
+      name: "TRY",
+      data: [3, 5, 7, 5, 3, 5, 7, 5, 3, 5],
+    },
+    {
+      name: "PLN",
+      data: [4, 4.5, 5, 5.5, 6, 5.5, 5, 4.5, 4, 4.5],
     },
   ],
 };
@@ -80,10 +129,14 @@ const lineDataOptions = {
 export const LineChart = () => {
   return (
     <div
-      className="salt-highcharts-theme"
-      style={{ maxWidth: 700, width: "100%" }}
+      className={"highcharts-theme-salt salt-line-patterns"}
+      style={{ minWidth: 500, width: "100%", height: 500 }}
     >
-      <HighchartsReact highcharts={Highcharts} options={lineDataOptions} />
+      <HighchartsReact
+        highcharts={Highcharts}
+        options={lineDataOptions}
+        containerProps={{ style: { height: "100%" } }}
+      />
     </div>
   );
 };
