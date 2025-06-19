@@ -1,12 +1,12 @@
-import {FlexLayout, StackLayout, Text, useId} from "@salt-ds/core";
+import { FlexLayout, StackLayout, Text, useId } from "@salt-ds/core";
 import {
   Carousel,
+  CarouselAnnouncement,
+  CarouselNextButton,
+  CarouselPreviousButton,
+  CarouselProgressLabel,
   CarouselSlides,
   CarouselTabList,
-  CarouselAnnouncement,
-  CarouselPreviousButton,
-  CarouselNextButton,
-  CarouselProgressLabel,
 } from "@salt-ds/embla-carousel-pattern";
 import type { ReactElement } from "react";
 import styles from "./index.module.css";

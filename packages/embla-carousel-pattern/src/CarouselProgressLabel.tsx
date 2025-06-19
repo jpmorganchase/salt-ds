@@ -1,10 +1,10 @@
-import {makePrefixer, Text, type TextProps} from "@salt-ds/core";
-import { useCarouselContext } from "./CarouselContext";
-import { useCallback, useLayoutEffect, useState } from "react";
-import { type EmblaCarouselType } from "embla-carousel";
-import {useWindow} from "@salt-ds/window";
-import {useComponentCssInjection} from "@salt-ds/styles";
+import { Text, type TextProps, makePrefixer } from "@salt-ds/core";
+import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
+import type { EmblaCarouselType } from "embla-carousel";
+import { useCallback, useLayoutEffect, useState } from "react";
+import { useCarouselContext } from "./CarouselContext";
 import carouselProgressLabelCss from "./CarouselProgressLabel.css";
 
 /**
@@ -44,7 +44,7 @@ export function CarouselProgressLabel({
       const startSlideNumber = slideIndexInView + 1;
       const endSlideNumber = Math.min(
         startSlideNumber + slidesPerTransition - 1,
-        numberOfSlides
+        numberOfSlides,
       );
 
       if (startSlideNumber === endSlideNumber) {
@@ -54,7 +54,7 @@ export function CarouselProgressLabel({
       }
       setTotalSlides(numberOfSlides);
     },
-    [emblaApi],
+    [],
   );
 
   useLayoutEffect(() => {
@@ -69,7 +69,6 @@ export function CarouselProgressLabel({
       emblaApi.off("reInit", handleSettle).off("settle", handleSettle);
     };
   }, [emblaApi, handleSettle]);
-
 
   return (
     <Text className={clsx(withBaseName(), className)} styleAs="h2" {...props}>

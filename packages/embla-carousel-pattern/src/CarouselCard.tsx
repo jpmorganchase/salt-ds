@@ -4,7 +4,6 @@ import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import { type ComponentProps, type ReactNode, forwardRef } from "react";
 import saltCarouselCardCss from "./CarouselCard.css";
-import {useCarouselContext} from "./CarouselContext";
 
 const withBaseName = makePrefixer("saltCarouselCard");
 

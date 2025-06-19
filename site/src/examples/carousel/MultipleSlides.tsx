@@ -3,11 +3,11 @@ import {
   Carousel,
   CarouselAnnouncement,
   CarouselCard,
-  CarouselTabList,
+  CarouselNextButton,
   CarouselPreviousButton,
   CarouselProgressLabel,
-  CarouselNextButton,
   CarouselSlides,
+  CarouselTabList,
 } from "@salt-ds/embla-carousel-pattern";
 import { clsx } from "clsx";
 import type { ReactElement } from "react";
@@ -29,8 +29,8 @@ export const MultipleSlides = (): ReactElement => {
           return (
             <CarouselCard
               className={styles.carouselSlide}
-              key={`${slideId}-${index}`}
-              id={`${slideId}-${index}`}
+              key={`${slideId}-${slide.title}`}
+              id={`${slideId}-${slide.title}`}
               aria-label={`Example slide ${index + 1}`}
               appearance={"bordered"}
               media={
@@ -49,7 +49,7 @@ export const MultipleSlides = (): ReactElement => {
       </CarouselSlides>
       <FlexLayout justify={"space-between"} direction={"row"} gap={1}>
         <StackLayout direction={"row"} gap={1}>
-          <CarouselPreviousButton/>
+          <CarouselPreviousButton />
           <CarouselNextButton />
           <CarouselProgressLabel />
         </StackLayout>
@@ -58,4 +58,3 @@ export const MultipleSlides = (): ReactElement => {
     </Carousel>
   );
 };
-
