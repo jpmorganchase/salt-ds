@@ -1,4 +1,4 @@
-import { type ReactNode, cloneElement, isValidElement } from "react";
+import { type ReactNode, type Ref, cloneElement, isValidElement } from "react";
 import { getRefFromChildren, mergeProps, useForkRef } from "../utils";
 import { useMenuContext } from "./MenuContext";
 import { useMenuPanelContext } from "./MenuPanelContext";
@@ -23,7 +23,7 @@ export function MenuTrigger(props: MenuTriggerProps) {
     refs?.setReference,
   );
 
-  if (!children || !isValidElement(children)) {
+  if (!children || !isValidElement<{ ref?: Ref<unknown> }>(children)) {
     // Should we log or throw error?
     return <>{children}</>;
   }

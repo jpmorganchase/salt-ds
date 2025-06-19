@@ -1,7 +1,12 @@
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
-import { type ElementType, type ReactElement, forwardRef } from "react";
+import {
+  type ElementType,
+  type ForwardedRef,
+  type FunctionComponent,
+  forwardRef,
+} from "react";
 import { useBreakpoint } from "../breakpoints";
 import {
   type PolymorphicComponentPropWithRef,
@@ -72,80 +77,80 @@ export type FlexLayoutProps<T extends ElementType> =
 
 type FlexLayoutComponent = <T extends ElementType = "div">(
   props: FlexLayoutProps<T>,
-) => ReactElement | null;
+) => ReturnType<FunctionComponent>;
 
 function parseAlignment(style: string | undefined) {
   return style === "start" || style === "end" ? `flex-${style}` : style;
 }
 
-export const FlexLayout: FlexLayoutComponent = forwardRef(
-  <T extends ElementType = "div">(
-    {
-      as,
-      align,
-      children,
-      className,
-      direction = "row",
-      gap = 3,
-      margin = 0,
-      padding = 0,
-      justify,
-      separators,
-      style,
-      wrap = false,
-      ...rest
-    }: FlexLayoutProps<T>,
-    ref?: PolymorphicRef<T>,
-  ) => {
-    const targetWindow = useWindow();
-    useComponentCssInjection({
-      testId: "salt-flex-layout",
-      css: flexLayoutCss,
-      window: targetWindow,
-    });
+export const FlexLayout: FlexLayoutComponent = forwardRef(function FlexLayout<
+  T extends ElementType = "div",
+>(
+  {
+    as,
+    align,
+    children,
+    className,
+    direction = "row",
+    gap = 3,
+    margin = 0,
+    padding = 0,
+    justify,
+    separators,
+    style,
+    wrap = false,
+    ...rest
+  }: FlexLayoutProps<T>,
+  ref?: ForwardedRef<unknown>,
+) {
+  const targetWindow = useWindow();
+  useComponentCssInjection({
+    testId: "salt-flex-layout",
+    css: flexLayoutCss,
+    window: targetWindow,
+  });
 
-    const Component = as || "div";
-    const separatorAlignment = separators === true ? "center" : separators;
+  const Component = as || "div";
+  const separatorAlignment = separators === true ? "center" : separators;
 
-    const { matchedBreakpoints } = useBreakpoint();
-    const flexGap = resolveResponsiveValue(gap, matchedBreakpoints);
-    const flexMargin = resolveResponsiveValue(margin, matchedBreakpoints);
-    const flexPadding = resolveResponsiveValue(padding, matchedBreakpoints);
-    const flexDirection = resolveResponsiveValue(direction, matchedBreakpoints);
-    const flexWrap = resolveResponsiveValue(wrap, matchedBreakpoints);
-    const flexLayoutStyles = {
-      ...style,
-      "--flexLayout-align": parseAlignment(align),
-      "--flexLayout-direction": flexDirection,
-      "--flexLayout-gap": parseSpacing(flexGap),
-      "--flexLayout-margin": parseSpacing(flexMargin),
-      "--flexLayout-padding": parseSpacing(flexPadding),
-      "--flexLayout-justify": parseAlignment(justify),
-      "--flexLayout-wrap": flexWrap ? "wrap" : "nowrap",
-    };
+  const { matchedBreakpoints } = useBreakpoint();
+  const flexGap = resolveResponsiveValue(gap, matchedBreakpoints);
+  const flexMargin = resolveResponsiveValue(margin, matchedBreakpoints);
+  const flexPadding = resolveResponsiveValue(padding, matchedBreakpoints);
+  const flexDirection = resolveResponsiveValue(direction, matchedBreakpoints);
+  const flexWrap = resolveResponsiveValue(wrap, matchedBreakpoints);
+  const flexLayoutStyles = {
+    ...style,
+    "--flexLayout-align": parseAlignment(align),
+    "--flexLayout-direction": flexDirection,
+    "--flexLayout-gap": parseSpacing(flexGap),
+    "--flexLayout-margin": parseSpacing(flexMargin),
+    "--flexLayout-padding": parseSpacing(flexPadding),
+    "--flexLayout-justify": parseAlignment(justify),
+    "--flexLayout-wrap": flexWrap ? "wrap" : "nowrap",
+  };
 
-    return (
-      <Component
-        className={clsx(
-          withBaseName(),
-          {
-            [withBaseName("separator")]: separatorAlignment && !wrap,
-            [withBaseName(
-              `separator-${flexDirection ?? "row"}-${
-                separatorAlignment ?? "center"
-              }`,
-            )]: separatorAlignment && !wrap,
-            [withBaseName(`separator-${flexDirection ?? "row"}`)]:
-              separatorAlignment && !wrap,
-          },
-          className,
-        )}
-        ref={ref}
-        style={flexLayoutStyles}
-        {...rest}
-      >
-        {children}
-      </Component>
-    );
-  },
-);
+  return (
+    <Component
+      className={clsx(
+        withBaseName(),
+        {
+          [withBaseName("separator")]: separatorAlignment && !wrap,
+          [withBaseName(
+            `separator-${flexDirection ?? "row"}-${
+              separatorAlignment ?? "center"
+            }`,
+          )]: separatorAlignment && !wrap,
+          [withBaseName(`separator-${flexDirection ?? "row"}`)]:
+            separatorAlignment && !wrap,
+        },
+        className,
+      )}
+      ref={ref as PolymorphicRef<T>}
+      style={flexLayoutStyles}
+      {...rest}
+    >
+      {children}
+    </Component>
+  );
+});

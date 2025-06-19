@@ -17,7 +17,7 @@ import { useWindow } from "@salt-ds/window";
 import cascadingMenuItemCss from "./CascadingMenuItem.css";
 
 const noop = () => undefined;
-const withBaseName = makePrefixer("saltMenuItem");
+const withBaseName = makePrefixer("saltCascadingMenuItem");
 
 const getIcon = (sourceItem: MenuDescriptor, isDisabled = false) => {
   const CustomIcon = sourceItem.icon;

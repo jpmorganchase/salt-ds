@@ -16,7 +16,7 @@ export const SortAscendIcon = forwardRef<SVGSVGElement, SortAscendIconProps>(
         ref={ref}
         {...props}
       >
-        <path d="M8.008 2.904v8.105h1v-8.09L10.6 4.51l.708-.707L8.5 1 5.7 3.794l.708.707 1.6-1.597ZM0 1h3v2H0V1Zm0 4h4v2H0V5Zm0 6V9h6v2H0Z" />
+        <path d="M8.008 2.904v8.105h1v-8.09L10.6 4.51l.708-.707L8.5 1 5.7 3.794l.708.707 1.6-1.597ZM0 2.5h2v1H0v-1Zm0 3h4v1H0v-1Zm0 3h6v1H0v-1Z" />
       </Icon>
     );
   },

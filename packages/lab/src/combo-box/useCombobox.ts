@@ -305,7 +305,7 @@ export const useCombobox = <
 
   const { onClick: listHandlersOnClick } = listHookListHandlers;
   const handleListClick = useCallback(
-    (evt: MouseEvent) => {
+    (evt: MouseEvent<HTMLElement>) => {
       //TODO use ref
       document.getElementById(`${id}-input`)?.focus();
       // const inputEl = inputRef.current;

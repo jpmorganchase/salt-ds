@@ -3,16 +3,13 @@ import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
   type ElementType,
-  type ReactElement,
+  type ForwardedRef,
+  type FunctionComponent,
   type ReactNode,
   forwardRef,
 } from "react";
 import { FlexLayout, type FlexLayoutProps } from "../flex-layout";
-import {
-  type PolymorphicComponentPropWithRef,
-  type PolymorphicRef,
-  makePrefixer,
-} from "../utils";
+import { type PolymorphicComponentPropWithRef, makePrefixer } from "../utils";
 import splitLayoutCss from "./SplitLayout.css";
 
 const withBaseName = makePrefixer("saltSplitLayout");
@@ -54,13 +51,13 @@ export type SplitLayoutProps<T extends ElementType> =
 
 type SplitLayoutComponent = <T extends ElementType = "div">(
   props: SplitLayoutProps<T>,
-) => ReactElement | null;
+) => ReturnType<FunctionComponent>;
 
 export const SplitLayout: SplitLayoutComponent = forwardRef(
-  <T extends ElementType = "div">(
-    { endItem, startItem, className, ...rest }: SplitLayoutProps<T>,
-    ref?: PolymorphicRef<T>,
-  ) => {
+  function SplitLayout<T extends ElementType = "div">(
+    { as, endItem, startItem, className, ...rest }: SplitLayoutProps<T>,
+    ref?: ForwardedRef<unknown>,
+  ) {
     const targetWindow = useWindow();
     useComponentCssInjection({
       testId: "salt-split-layout",
@@ -71,6 +68,7 @@ export const SplitLayout: SplitLayoutComponent = forwardRef(
     const justify = endItem && !startItem ? "end" : "space-between";
     return (
       <FlexLayout
+        as={as as ElementType}
         className={clsx(withBaseName(), className)}
         ref={ref}
         justify={justify}
