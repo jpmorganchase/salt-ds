@@ -1,26 +1,29 @@
-import {FlexLayout, StackLayout, Text, useId} from "@salt-ds/core";
+import { FlexLayout, Text, useId } from "@salt-ds/core";
 import {
   Carousel,
   CarouselSlides,
-  CarouselPagination,
-  CarouselAnnouncement,
   CarouselPreviousButton,
   CarouselNextButton,
+  CarouselAnnouncement,
   CarouselProgressLabel,
 } from "@salt-ds/embla-carousel-pattern";
 import type { ReactElement } from "react";
 import styles from "./index.module.css";
 
-export const Pagination = (): ReactElement => {
+export const Basic = (): ReactElement => {
   const slideId = useId();
   const slides = Array.from(Array(4).keys());
   return (
     <Carousel
-      aria-label="Pagination carousel example"
+      aria-label="default carousel example"
       className={styles.carousel}
       emblaPlugins={[CarouselAnnouncement()]}
     >
-      <Text styleAs={"h2"}>Title</Text>
+      <FlexLayout justify={"start"} direction={"row"} gap={1}>
+        <CarouselPreviousButton  />
+        <CarouselNextButton />
+        <CarouselProgressLabel />
+      </FlexLayout>
       <CarouselSlides>
         {slides.map((index) => (
           <div
@@ -37,14 +40,6 @@ export const Pagination = (): ReactElement => {
           </div>
         ))}
       </CarouselSlides>
-      <FlexLayout justify={"space-between"} direction={"row"} gap={1}>
-        <StackLayout direction={"row"} gap={1}>
-          <CarouselPreviousButton />
-          <CarouselNextButton />
-          <CarouselProgressLabel />
-        </StackLayout>
-        <CarouselPagination />
-      </FlexLayout>
     </Carousel>
   );
 };

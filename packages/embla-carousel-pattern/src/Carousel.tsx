@@ -12,7 +12,6 @@ import {
   useEffect,
 } from "react";
 import carouselCss from "./Carousel.css";
-import { CarouselAnnouncement } from "./CarouselAnnouncementPlugin";
 import { CarouselContext } from "./CarouselContext";
 
 const withBaseName = makePrefixer("saltCarousel");
@@ -66,7 +65,6 @@ export const Carousel = forwardRef<HTMLDivElement, CarouselProps>(
     });
 
     const [emblaRef, emblaApi] = useEmblaCarousel(emblaOptions, [
-      CarouselAnnouncement(),
       ...emblaPlugins,
     ]);
 

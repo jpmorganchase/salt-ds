@@ -1,0 +1,16 @@
+.saltCarouselProgressBar {
+  transform: rotate(-90deg); /* Rotate to start from the top */
+}
+
+.saltCarouselProgressBar-track {
+  fill: none;
+  stroke: var(--salt-accent-foreground);
+}
+
+.saltCarouselProgressBar-bar {
+  fill: none;
+  stroke:var(--salt-accent-background);
+  stroke-dasharray: 62.831; /* Circumference of the circle with r=10 */
+  stroke-dashoffset: 62.831; /* Start with no progress */
+  transition: stroke-dashoffset 0.5s ease-out; /* Smooth transition */
+}
