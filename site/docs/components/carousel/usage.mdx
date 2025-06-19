@@ -20,17 +20,15 @@ A basic carousel navigates through slides individually, one at a time.
 Adding a title serves as a heading for the displayed content.
 
 <LivePreview componentName="carousel" exampleName="Title" />
+<br />
+`CarouselTabList` is an aria `tablist` providing support for screen readers to
+announce the slides as the associated`tab`. To enhance accessibility, ensure
+that each slide has a unique id. This will facilitate the association between
+the `tablist` and `tab`, thereby improving screen reader functionality.
 
-<br />A Progress indicator, `CarouselProgress`, can be integrated into the
-carousel, offering both a visual indicator of the current slide and clickable
-elements that allow users to navigate directly to specific slides. Always ensure
-that the progress indicator is co-located top or bottom of the carousel,
-alongside any other controls, such as
-`CarouselNextButton','CarouselPreviousButton` and `CarouselPagination`.'
+A `tablist` provides a visual indicator of the current slide and includes clickable elements for direct navigation to specific slides, along with keyboard navigation controls. Ensure the tablist is positioned at the top or bottom of the carousel, alongside other controls like `CarouselNextButton` and `CarouselPreviousButton`.
 
-Pagination includes support for screen readers. To enhance accessibility, ensure that each slide has a unique id. This will facilitate the association between the `tablist` and `tab`, thereby improving screen reader functionality.
-
-<LivePreview componentName="carousel" exampleName="Pagination" />
+<LivePreview componentName="carousel" exampleName="TabList" />
 
 <br />
 Additional actions, such as[`Link`](../link), can be incorporated into a
@@ -39,8 +37,8 @@ prevent accidental clicks while slides are transitioning.
 
 `CarouselCard` also supports actions, through the `actions` prop.
 
-Content in slides can be tabbable but ensure that off-screen content is not tabbable, as this can lead to a poor user experience.
-This example ensures that CSS (`visibility: hidden`) is applied to the off-screen content, preventing it from being tabbable.
+Content within slides can be tabbable but ensure that off-screen content is not tabbable, as this can lead to a poor user experience.
+This example ensures that CSS is applied to the off-screen content, preventing it from being tabbable.
 
 <LivePreview componentName="carousel" exampleName="CardActions" />
 
@@ -67,9 +65,10 @@ Refer to the [Embla documentation](https://www.embla-carousel.com/) for the full
 
 ### Best practices
 
+- Always provide navigation controls for the carousel, alongside a visual indicator of the current slide.
 - Include 5 or fewer slides. The most important slide always comes first.
-- Indicate where the user is within the progression.
-- Ensure that important content is also placed on another page of your site.
+- Not all content is visible within a carousel until selected, ensure that important content is also placed on another page of your site.
+- To provide arrow key navigation add a tablist.
 
 ## Import
 
@@ -92,11 +91,12 @@ yarn add @salt-ds/embla-carousel-pattern
 ```js
 import {
   Carousel,
-  CarouselPagination,
   CarouselCard,
   CarouselSlides,
   CarouselNextButton,
   CarouselPreviousButton,
+  CarouselTabList,
+  CarouselAutoplayIndicator,
   CarouselAnnoucementPlugin,
 } from "@salt-ds/embla-carousel-pattern ";
 ```
@@ -109,18 +109,18 @@ import {
 
 <PropsTable packageName="embla-carousel-pattern" componentName="Carousel" />
 
-### `CarouselPagination`
+### `CarouselTabList`
 
-`CarouselPagination` is a visual progress indicator for the carousel, and allows users to navigate to a specific slide.
+`CarouselTabList` is a visual progress indicator for the carousel, and allows users to navigate to a specific slide.
 
 <PropsTable
   packageName="embla-carousel-pattern"
-  componentName="CarouselPagination"
+  componentName="CarouselTabList"
 />
 
 ### `CarouselDotButton`
 
-`CarouselDotButton` is the button used by the `CarouselPagination` to navigate to a specific slide.
+`CarouselDotButton` is the button used by the `CarouselTabList` to navigate to a specific slide.
 
 <PropsTable
   packageName="embla-carousel-pattern"
@@ -160,16 +160,16 @@ import {
 
 <PropsTable
   packageName="embla-carousel-pattern"
-  componentName="CarouselNextButton"
+  componentName="CarouselProgressLabel"
 />
 
-### `CarouselProgressBar`
+### `CarouselAutoplayIndicator`
 
-`CarouselProgressBar` provides a countdown view of the carousel's position during autoplay.
+`CarouselAutoplayIndicator` provides a countdown view of the carousel's position during autoplay.
 
 <PropsTable
   packageName="embla-carousel-pattern"
-  componentName="CarouselProgressBar"
+  componentName="CarouselAutoplayIndicator"
 />
 
 ### `CarouselCard`

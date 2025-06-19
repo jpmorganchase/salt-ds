@@ -2,7 +2,7 @@ import {FlexLayout, StackLayout, Text, useId} from "@salt-ds/core";
 import {
   Carousel,
   CarouselSlides,
-  CarouselPagination,
+  CarouselTabList,
   CarouselAnnouncement,
   CarouselPreviousButton,
   CarouselNextButton,
@@ -11,7 +11,7 @@ import {
 import type { ReactElement } from "react";
 import styles from "./index.module.css";
 
-export const Pagination = (): ReactElement => {
+export const TabList = (): ReactElement => {
   const slideId = useId();
   const slides = Array.from(Array(4).keys());
   return (
@@ -43,7 +43,7 @@ export const Pagination = (): ReactElement => {
           <CarouselNextButton />
           <CarouselProgressLabel />
         </StackLayout>
-        <CarouselPagination />
+        <CarouselTabList />
       </FlexLayout>
     </Carousel>
   );

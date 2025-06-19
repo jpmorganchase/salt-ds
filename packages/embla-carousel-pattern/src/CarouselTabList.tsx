@@ -5,14 +5,14 @@ import { clsx } from "clsx";
 import { type HTMLAttributes, forwardRef, useRef } from "react";
 import { useCarouselContext } from "./CarouselContext";
 import { CarouselDotButton, useDotButton } from "./CarouselDotButton";
-import carouselControlsCss from "./CarouselPagination.css";
+import carouselControlsCss from "./CarouselTabList.css";
 
-const withBaseName = makePrefixer("saltCarouselPagination");
+const withBaseName = makePrefixer("saltCarouselTabList");
 
 /**
- * Props for the CarouselPagination component.
+ * Props for the CarouselTabList component.
  */
-export interface CarouselPaginationProps
+export interface CarouselTabListProps
   extends HTMLAttributes<HTMLDivElement> {
   /**
    * Render prop to enable customisation of dot button.
@@ -20,10 +20,10 @@ export interface CarouselPaginationProps
   render?: RenderPropsType["render"];
 }
 
-export const CarouselPagination = forwardRef<
+export const CarouselTabList = forwardRef<
   HTMLDivElement,
-  CarouselPaginationProps
->(function CarouselPagination({ className, render, ...rest }, ref) {
+  CarouselTabListProps
+>(function CarouselTabList({ className, render, ...rest }, ref) {
   const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-carousel-controls",

@@ -3,7 +3,7 @@ import {
   Carousel,
   CarouselAnnouncement,
   CarouselCard,
-  CarouselPagination,
+  CarouselTabList,
   CarouselPreviousButton,
   CarouselProgressLabel,
   CarouselNextButton,
@@ -53,7 +53,7 @@ export const MultipleSlides = (): ReactElement => {
           <CarouselNextButton />
           <CarouselProgressLabel />
         </StackLayout>
-        <CarouselPagination />
+        <CarouselTabList />
       </FlexLayout>
     </Carousel>
   );

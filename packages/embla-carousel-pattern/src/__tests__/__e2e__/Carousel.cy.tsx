@@ -184,7 +184,7 @@ describe("Given a Carousel", () => {
     });
   });
 
-  describe("WITH the pagination controls", () => {
+  describe("WITH the progress bar", () => {
     let emblaApiRef: MutableRefObject<CarouselApi | undefined>;
     const TestComponent = () => {
       emblaApiRef = useRef<CarouselApi | undefined>(undefined);

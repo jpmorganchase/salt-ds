@@ -35,9 +35,3 @@
   --saltCarousel-slide-size: 50%;
 }
 
-.saltCarouselCard.is-in-view.is-snapped {
-  transition: opacity 0.2s ease-in-out;
-}
-.saltCarouselCard.is-in-view:not(.is-snapped) {
-  opacity: 0.2;
-}
