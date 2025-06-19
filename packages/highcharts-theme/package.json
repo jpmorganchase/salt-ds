@@ -24,10 +24,9 @@
         "directory": "../../dist/salt-ds-highcharts-theme",
         "provenance": true
     },
-    "devDependencies": {},
     "peerDependencies": {
         "@salt-ds/theme": "workspace:^",
-        "highcharts": "^10.2.0",
+        "highcharts": "10.2.0",
         "highcharts-react-official": "^3.2.2"
     }
 }
