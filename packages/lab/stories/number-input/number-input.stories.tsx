@@ -516,7 +516,6 @@ export const UncontrolledFormatting: StoryFn<NumberInputProps> = (args) => {
               minimumFractionDigits: 1,
             }).format(toFloat(value));
           }}
-          decimalScale={2}
           step={0.1}
         />
       </FormField>

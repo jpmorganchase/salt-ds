@@ -218,7 +218,8 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
         getNumberPrecision(valueProp || defaultValueProp),
         getNumberPrecision(step),
       );
-    const userEditingRef = useRef<boolean>(false);
+
+    const [isEditing, setIsEditing] = useState(false);
     const inputRef = useRef<HTMLInputElement | null>(null);
     const forkedInputRef = useForkRef(inputRef, inputRefProp);
     const { IncreaseIcon, DecreaseIcon } = useIcon();
@@ -239,27 +240,6 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       ? ["required", "asterisk"].includes(formFieldRequired)
       : inputRequired;
 
-    const mergedFormatter = (value: number | string): number | string => {
-      if (isEmpty(value) || value === undefined) {
-        return "";
-      }
-      const sanitizedValue = sanitizeInput(value);
-      if (userEditingRef.current) {
-        return sanitizedValue;
-      }
-      const floatValue = toFloat(sanitizedValue);
-      if (format) {
-        const clampedValue = clampValue
-          ? clamp(max, min, floatValue)
-          : floatValue;
-        return format(clampedValue);
-      }
-      if (decimalScale >= 0) {
-        return floatValue.toFixed(decimalScale);
-      }
-      return value;
-    };
-
     const [value, setValue] = useControlled({
       controlled: valueProp,
       default: defaultValueProp,
@@ -267,8 +247,8 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       state: "value",
     });
 
-    const [internalValue, setInternalValue] = useState(() =>
-      mergedFormatter(value),
+    const [displayValue, setDisplayValue] = useState<string | number>(
+      sanitizeInput(value?.toString() ?? "").toString(),
     );
 
     const {
@@ -288,57 +268,71 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       readOnly: isReadOnly,
       step,
       stepMultiplier,
-      userEditingRef,
-      value: internalValue,
+      setIsEditing,
+      value,
     });
 
-    // biome-ignore lint/correctness/useExhaustiveDependencies: Update internal value when it is changed externally or via keyboard/mouse
     useEffect(() => {
-      setInternalValue(mergedFormatter(value));
-    }, [value]);
+      if (!isEditing && !isEmpty(value)) {
+        const floatValue = toFloat(value);
+        let formatted = value;
+        if (format) {
+          formatted = format(
+            clampValue ? clamp(max, min, floatValue) : floatValue,
+          );
+        } else if (!Number.isNaN(floatValue)) {
+          formatted = floatValue.toFixed(decimalScale);
+        }
+        setDisplayValue(formatted.toString());
+      } else {
+        setDisplayValue(value);
+      }
+    }, [value, isEditing, format, clampValue, decimalScale, min, max]);
 
     const handleInputFocus = (event: FocusEvent<HTMLInputElement>) => {
-      userEditingRef.current = true;
-      const inputValue = event.target.value;
-      const rawValue = parse?.(inputValue) ?? inputValue;
-      setInternalValue(rawValue);
+      setIsEditing(true);
+      const parsed = parse?.(value) ?? value;
+      const floatValue = !isEmpty(parsed)
+        ? toFloat(parsed).toFixed(decimalScale)
+        : parsed;
+      setValue(floatValue);
       inputOnFocus?.(event);
     };
 
     const handleInputBlur = (event: FocusEvent<HTMLInputElement>) => {
-      userEditingRef.current = false;
-      const inputValue = event.target.value;
-      if (isEmpty(inputValue)) {
-        return;
+      setIsEditing(false);
+      const raw = sanitizeInput(event.target.value);
+      let updatedValue = raw;
+      if (!isEmpty(raw)) {
+        const floatValue = toFloat(raw);
+        const clamped = clampValue ? clamp(max, min, floatValue) : floatValue;
+        updatedValue = Number(clamped.toFixed(decimalScale));
       }
-      const clampedValue = clampValue
-        ? clamp(max, min, toFloat(inputValue))
-        : toFloat(inputValue);
-
-      const rawValue = toFloat(clampedValue.toFixed(decimalScale));
-      const formattedValue = mergedFormatter(clampedValue);
-      setInternalValue(formattedValue);
-      if (String(rawValue) !== String(value)) {
-        onChangeProp?.(event, rawValue);
+      if (String(updatedValue) !== String(value)) {
+        onChangeProp?.(event, updatedValue);
+        setValue(updatedValue);
       }
+      inputOnBlur?.(event);
     };
 
     const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-      const inputValue = event.target.value;
-      const sanitizedValue = sanitizeInput(inputValue);
-      const parsedValue =
-        !userEditingRef.current && parse
-          ? parse(sanitizedValue)
-          : sanitizedValue;
-      if (String(parsedValue) !== String(value)) {
-        onChangeProp?.(event, parsedValue);
-        inputOnChange?.(event);
+      const raw = sanitizeInput(event.target.value);
+      if (String(raw) === String(value)) {
+        return;
       }
-      setValue(parsedValue);
+
+      if (parse && !isEditing) {
+        const parsed = parse(raw);
+        setValue(parsed);
+        onChangeProp?.(event, parsed);
+      } else {
+        setValue(raw);
+        onChangeProp?.(event, raw);
+      }
     };
 
     const handleInputKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
-      userEditingRef.current = true;
+      setIsEditing(true);
 
       switch (event.key) {
         case "ArrowUp": {
@@ -379,12 +373,8 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       inputOnKeyDown?.(event);
     };
 
-    const handleKeyUp = () => {
-      userEditingRef.current = false;
-    };
-
     const handleBeforeInput = () => {
-      userEditingRef.current = true;
+      setIsEditing(true);
     };
 
     return (
@@ -440,7 +430,6 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
           onChange={handleInputChange}
           onFocus={handleInputFocus}
           onKeyDown={handleInputKeyDown}
-          onKeyUp={handleKeyUp}
           onBeforeInput={handleBeforeInput}
           placeholder={placeholder}
           readOnly={isReadOnly}
@@ -450,7 +439,7 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
           // Workaround to have readonly conveyed by screen readers (https://github.com/jpmorganchase/salt-ds/issues/4586)
           role={isReadOnly ? "textbox" : "spinbutton"}
           tabIndex={isDisabled ? -1 : 0}
-          value={internalValue}
+          value={displayValue}
           {...restInputProps}
         />
         <div className={withBaseName("activationIndicator")} />
