@@ -1,5 +1,5 @@
-/* Use a custom classname, if needing to scope to certain charts. */
-.salt-highcharts-theme {
+/* Use of CSS Variables is not supported in Highcharts v10.2.0 (available in v11.0.0 onwards - https://code.highcharts.com/11.0.0/css/highcharts.css)*/
+/* .highcharts-theme-salt {
   --highcharts-background-color: none;
 
   --highcharts-color-0: var(--salt-palette-categorical-3);
@@ -12,71 +12,118 @@
   --highcharts-color-7: var(--salt-palette-categorical-2);
   --highcharts-color-8: var(--salt-palette-categorical-20);
   --highcharts-color-9: var(--salt-palette-categorical-6);
+} */
+
+.highcharts-theme-salt .highcharts-color-0 {
+  fill: var(--salt-palette-categorical-3);
+  stroke: var(--salt-palette-categorical-3);
 }
 
-.salt-highcharts-theme .highcharts-container {
+.highcharts-theme-salt .highcharts-color-1 {
+  fill: var(--salt-palette-categorical-10);
+  stroke: var(--salt-palette-categorical-10);
+}
+
+.highcharts-theme-salt .highcharts-color-2 {
+  fill: var(--salt-palette-categorical-12);
+  stroke: var(--salt-palette-categorical-12);
+}
+
+.highcharts-theme-salt .highcharts-color-3 {
+  fill: var(--salt-palette-categorical-1);
+  stroke: var(--salt-palette-categorical-1);
+}
+
+.highcharts-theme-salt .highcharts-color-4 {
+  fill: var(--salt-palette-categorical-16);
+  stroke: var(--salt-palette-categorical-16);
+}
+
+.highcharts-theme-salt .highcharts-color-5 {
+  fill: var(--salt-palette-categorical-7);
+  stroke: var(--salt-palette-categorical-7);
+}
+
+.highcharts-theme-salt .highcharts-color-6 {
+  fill: var(--salt-palette-categorical-9);
+  stroke: var(--salt-palette-categorical-9);
+}
+
+.highcharts-theme-salt .highcharts-color-7 {
+  fill: var(--salt-palette-categorical-2);
+  stroke: var(--salt-palette-categorical-2);
+}
+
+.highcharts-theme-salt .highcharts-color-8 {
+  fill: var(--salt-palette-categorical-20);
+  stroke: var(--salt-palette-categorical-20);
+}
+
+.highcharts-theme-salt .highcharts-color-9 {
+  fill: var(--salt-palette-categorical-6);
+  stroke: var(--salt-palette-categorical-6);
+}
+
+.highcharts-theme-salt .highcharts-point-inactive {
+  opacity: 1;
+  stroke: var(--salt-selectable-borderColor-disabled);
+}
+
+.highcharts-theme-salt .highcharts-container {
   font-family: var(--salt-text-fontFamily);
 }
 
-.salt-highcharts-theme .highcharts-grid-line {
-  stroke: var(--salt-separable-tertiary-borderColor)
+.highcharts-theme-salt .highcharts-grid-line {
+  stroke: var(--salt-separable-tertiary-borderColor);
 }
 
-.salt-highcharts-theme .highcharts-title {
+.highcharts-theme-salt .highcharts-title {
   fill: var(--salt-content-primary-foreground);
   font-size: var(--salt-text-h4-fontSize);
+  font-weight: var(--salt-text-h4-fontWeight);
 }
-.salt-highcharts-theme .highcharts-subtitle,
-.salt-highcharts-theme .highcharts-axis-title,
-.salt-highcharts-theme .highcharts-axis-labels {
+.highcharts-theme-salt .highcharts-subtitle,
+.highcharts-theme-salt .highcharts-axis-title,
+.highcharts-theme-salt .highcharts-axis-labels {
   fill: var(--salt-content-secondary-foreground);
   font-size: var(--salt-text-label-fontSize);
 }
 
-/* Deselected legend state, requires !important to override default styles */
-.salt-highcharts-theme .highcharts-legend-item-hidden * {
-  stroke: red !important;
-  fill: red !important;
+/* Deselected legend state, requires !important to override default styles, which also use !important */
+.highcharts-theme-salt .highcharts-legend-item-hidden * {
+  stroke: revert !important;
+  fill: revert !important;
+  opacity: 0.2;
 }
 
-
-.salt-highcharts-theme .highcharts-legend-item > text,
-.salt-highcharts-theme .highcharts-legend-item span {
+.highcharts-theme-salt .highcharts-legend-item > text,
+.highcharts-theme-salt .highcharts-legend-item span {
   fill: var(--salt-content-secondary-foreground);
   font-size: var(--salt-text-label-fontSize);
+  font-weight: var(--salt-text-label-fontWeight);
+  line-height: var(--salt-text-label-lineHeight);
 }
-.salt-highcharts-theme .highcharts-axis-line {
+.highcharts-theme-salt .highcharts-axis-line {
   stroke: var(--salt-separable-primary-borderColor);
 }
 
-.salt-highcharts-theme .highcharts-data-label text,
-.salt-highcharts-theme text.highcharts-data-label {
+.highcharts-theme-salt .highcharts-data-label text,
+.highcharts-theme-salt text.highcharts-data-label {
   fill: var(--salt-content-primary-foreground);
+  font-weight: var(--salt-text-label-fontWeight);
+  font-size: var(--salt-text-label-fontSize);
+  line-height: var(--salt-text-label-lineHeight);
 }
 
-.salt-highcharts-theme .highcharts-tooltip-box {
+.highcharts-theme-salt .highcharts-tooltip-box {
   fill: var(--salt-container-primary-background);
 }
 
-.salt-highcharts-theme .highcharts-tooltip text,
-.salt-highcharts-theme .highcharts-tooltip foreignObject span {
+.highcharts-theme-salt .highcharts-tooltip text,
+.highcharts-theme-salt .highcharts-tooltip foreignObject span {
   fill: var(--salt-content-primary-foreground);
 }
 
-
-/* Backwards compatibility for v10, renamed to .highcharts-a11y-proxy-element
-in v11 and in the default CSS.
-*/
-.salt-highcharts-theme .highcharts-a11y-proxy-button {
-  border-width: 0;
-  background-color: transparent;
-  cursor: pointer;
-  outline: none;
-  opacity: 0.001;
-  z-index: 999;
-  overflow: hidden;
-  padding: 0;
-  margin: 0;
-  display: block;
-  position: absolute;
+.highcharts-theme-salt .highcharts-background {
+  fill: var(--salt-container-primary-background);
 }
