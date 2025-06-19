@@ -485,6 +485,35 @@ interface State {
   abbrev: string;
 }
 
+/**
+ * We intentionally created this example with some "heavy" components.
+ * We memoize it with its props to avoid unnecessary re-render.
+ */
+const MemoizedItem = memo<{ label?: string } & ListItemProps<State>>(
+  function MemoizedItem({ label, ...restProps }) {
+    return (
+      <ListItem {...restProps}>
+        <span>{label}</span>
+      </ListItem>
+    );
+  },
+);
+
+const CustomListItem: ListItemType<State> = ({
+  style: styleProp,
+  ...props
+}) => {
+  const style = useMemo(
+    () =>
+      ({
+        ...styleProp,
+        fontStyle: "italic",
+      }) as CSSProperties,
+    [styleProp],
+  );
+  return <MemoizedItem style={style} {...props} />;
+};
+
 export const WithItemRenderer: StoryFn<ListProps<State>> = (props) => {
   const listExampleData = useMemo(
     () =>
@@ -545,35 +574,6 @@ export const WithItemRenderer: StoryFn<ListProps<State>> = (props) => {
 
   const stateItemToString = (item?: State) =>
     item ? `${item.name} - ${item.abbrev}` : "";
-
-  /**
-   * We intentionally created this example with some "heavy" components.
-   * We memoize it with its props to avoid unnecessary re-render.
-   */
-  const MemoizedItem = memo<{ label?: string } & ListItemProps<State>>(
-    function MemoizedItem({ label, ...restProps }) {
-      return (
-        <ListItem {...restProps}>
-          <span>{label}</span>
-        </ListItem>
-      );
-    },
-  );
-
-  const CustomListItem: ListItemType<State> = ({
-    style: styleProp,
-    ...props
-  }) => {
-    const style = useMemo(
-      () =>
-        ({
-          ...styleProp,
-          fontStyle: "italic",
-        }) as CSSProperties,
-      [styleProp],
-    );
-    return <MemoizedItem style={style} {...props} />;
-  };
 
   return (
     <List<State>

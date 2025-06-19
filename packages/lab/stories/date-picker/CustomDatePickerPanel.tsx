@@ -42,10 +42,14 @@ export const CustomDatePickerPanel = forwardRef<
   // biome-ignore lint/suspicious/noExplicitAny: state and helpers is coerced based on selectionVariant
   let stateAndHelpers: any;
   if (selectionVariant === "range") {
+    // TODO
+    // biome-ignore lint/correctness/useHookAtTopLevel: This should be fixed.
     stateAndHelpers = useDatePickerContext({
       selectionVariant: "range",
     }) as RangeDatePickerState<DateFrameworkType>;
   } else {
+    // TODO
+    // biome-ignore lint/correctness/useHookAtTopLevel: This should be fixed.
     stateAndHelpers = useDatePickerContext({
       selectionVariant: "single",
     }) as SingleDatePickerState<DateFrameworkType>;

@@ -182,7 +182,7 @@ declare global {
  * @example
  * cy.findByRole('button).should('have.accessibleName','Close')
  */
-const hasAccessibleName: ChaiPlugin = (_chai, utils) => {
+const hasAccessibleName: ChaiPlugin = (_chai) => {
   function assertHasAccessibleName(
     this: AssertionStatic,
     expectedName: string,

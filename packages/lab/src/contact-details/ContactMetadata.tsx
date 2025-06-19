@@ -17,6 +17,7 @@ export const ContactMetadata = forwardRef<HTMLDivElement, ContactMetadataProps>(
     const { primaryId, variant, isStacked } = useContactDetailsContext();
     const { CollapseIcon, ExpandIcon } = useIcon();
     const [showMetadata, setShowMetadata] = useState<boolean>(!collapsible);
+    const id = useId(collapseButtonId);
 
     const toggleShowMetadata = () => {
       setShowMetadata(!showMetadata);
@@ -27,8 +28,6 @@ export const ContactMetadata = forwardRef<HTMLDivElement, ContactMetadataProps>(
     }
 
     const variantClassName = withBaseName(isStacked ? "stacked" : "default");
-
-    const id = useId(collapseButtonId);
 
     return (
       <>

@@ -144,30 +144,28 @@ export const ColorChooser = ({
     setActiveTab(index);
   };
 
-  const OverlayContent = () => {
-    return (
-      <div
-        className={clsx(withBaseName("overlayContent"))}
-        data-testid="overlay-content"
+  const overlayContent = (
+    <div
+      className={clsx(withBaseName("overlayContent"))}
+      data-testid="overlay-content"
+    >
+      <Button
+        data-testid="default-button"
+        variant="secondary"
+        className={clsx(withBaseName("defaultButton"))}
+        onClick={onDefaultSelected}
       >
-        <Button
-          data-testid="default-button"
-          variant="secondary"
-          className={clsx(withBaseName("defaultButton"))}
-          onClick={onDefaultSelected}
-        >
-          <RefreshIcon className={clsx(withBaseName("refreshIcon"))} />
-          Default
-        </Button>
-        <DictTabs
-          tabs={tabsMapping}
-          hexValue={color?.hex}
-          onTabClick={onTabClick}
-          activeTab={activeTab}
-        />
-      </div>
-    );
-  };
+        <RefreshIcon className={clsx(withBaseName("refreshIcon"))} />
+        Default
+      </Button>
+      <DictTabs
+        tabs={tabsMapping}
+        hexValue={color?.hex}
+        onTabClick={onTabClick}
+        activeTab={activeTab}
+      />
+    </div>
+  );
 
   return (
     <Overlay placement="bottom" data-testid="color-chooser-overlay">
@@ -204,9 +202,7 @@ export const ColorChooser = ({
       </OverlayTrigger>
       <OverlayPanel>
         <OverlayPanelCloseButton />
-        <OverlayPanelContent>
-          <OverlayContent />
-        </OverlayPanelContent>
+        <OverlayPanelContent>{overlayContent}</OverlayPanelContent>
       </OverlayPanel>
     </Overlay>
   );

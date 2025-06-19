@@ -704,6 +704,7 @@ const validateProps = function validateProps<Item>(
       ? delimiter.every(isChar)
       : isChar(delimiter);
 
+    // biome-ignore lint/correctness/useHookAtTopLevel: NODE_ENV is invariant at runtime.
     useEffect(() => {
       if (invalidDelimiter) {
         console.warn(

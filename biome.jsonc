@@ -48,8 +48,11 @@
         "noAutofocus": "off",
         // Disabled because we write a lot of custom components.
         "noNoninteractiveElementToInteractiveRole": "off",
+        "noStaticElementInteractions": "off",
         "useFocusableInteractive": "off",
         "noNoninteractiveTabindex": "off",
+        "useAriaPropsSupportedByRole": "warn",
+        "useKeyWithClickEvents": "warn",
         // Disabled until biome doesn't flag hidden SVGs.
         "noSvgWithoutTitle": "off",
         // Changed to warn because biome has some false positives.
@@ -105,6 +108,9 @@
           },
           "suspicious": {
             "noImplicitAnyLet": "off"
+          },
+          "nursery": {
+            "useUniqueElementIds": "warn"
           }
         }
       }
@@ -170,7 +176,6 @@
       ],
       "linter": {
         "rules": {
-          "nursery": {},
           "style": {
             "noRestrictedImports": {
               "level": "error",
@@ -184,7 +189,16 @@
         }
       }
     },
-
+    {
+      "includes": ["**/tooling/**"],
+      "linter": {
+        "rules": {
+          "correctness": {
+            "noUnusedFunctionParameters": "warn"
+          }
+        }
+      }
+    },
     {
       "includes": [
         "**/packages/lab/src/**",

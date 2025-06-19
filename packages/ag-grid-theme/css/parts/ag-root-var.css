@@ -25,7 +25,6 @@ div[class*="ag-theme-salt"] {
   --ag-header-column-separator-height: calc(var(--salt-size-base) / 2 - 2 * var(--salt-size-border));
   --ag-header-column-separator-width: var(--salt-size-border);
   --ag-header-foreground-color: var(--salt-content-secondary-foreground);
-  --ag-header-height: calc(var(--salt-size-base) + var(--salt-spacing-100));
   /* Replicating min size 12px from Icon.css */
   --ag-icon-size: max(var(--salt-size-icon), 12px);
   --ag-input-border-color: var(--salt-editable-borderColor);
@@ -58,14 +57,14 @@ div[class*="ag-theme-salt"] {
   --ag-value-change-delta-down-color: var(--salt-status-negative-foreground);
   --ag-value-change-delta-up-color: var(--salt-status-positive-foreground);
   --ag-widget-container-horizontal-padding: var(--salt-spacing-100);
-  /* 
+  /*
       Use categorical color for below tokens when available
       --ag-advanced-filter-join-pill-color,--ag-advanced-filter-column-pill-color,--ag-advanced-filter-option-pill-color,--ag-advanced-filter-value-pill-color
      */
 }
 
 div[class*="ag-theme-salt-compact"] {
-  /* 
+  /*
     Ensures icon / country symbol renders correct height.
     This also means we don't need to touch `--ag-row-height`, which would impact some internal ag grid height calculation like `--ag-internal-padded-row-height` vs `--ag-internal-calculated-line-height`
   */

@@ -150,9 +150,10 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>(
     } = useFormFieldProps();
 
     const disabled = formFieldDisabled || disabledProp;
-    const inputRefs = Array.from({ length: 2 }, () =>
+    const inputRefs = [
       useRef<HTMLInputElement>(null),
-    );
+      useRef<HTMLInputElement>(null),
+    ];
     const value: [number, number] = clampRange(
       valueState,
       max,

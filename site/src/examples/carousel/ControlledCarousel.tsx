@@ -1,4 +1,4 @@
-import { Button, H3, StackLayout, Text, useId } from "@salt-ds/core";
+import { Button, H3, StackLayout, Text } from "@salt-ds/core";
 import { Carousel, CarouselSlide, CarouselSlider } from "@salt-ds/lab";
 import clsx from "clsx";
 import { type ReactElement, useState } from "react";
@@ -24,11 +24,10 @@ export const ControlledCarousel = (): ReactElement => {
       <Carousel aria-label="Account overview" activeSlideIndex={slide}>
         <CarouselSlider onSelectionChange={(_, index) => setSlide(index)}>
           {sliderData.map((slide, index) => {
-            const slideId = useId();
             return (
               <CarouselSlide
-                key={slideId}
-                aria-labelledby={`slide-title-${slideId}`}
+                key={slide.title}
+                aria-labelledby={`slide-title-${index}`}
                 media={
                   <img
                     alt={`stock content to show in carousel slide ${index}`}
@@ -36,7 +35,7 @@ export const ControlledCarousel = (): ReactElement => {
                     src={slide.image}
                   />
                 }
-                header={<H3 id={`slide-title-${slideId}`}>{slide.title}</H3>}
+                header={<H3 id={`slide-title-${index}`}>{slide.title}</H3>}
               >
                 <Text>{slide.content}</Text>
               </CarouselSlide>

@@ -6,7 +6,7 @@ export function checkAccessibility(
   stories: StoriesWithPartialProps<ReactRenderer, unknown>,
 ) {
   describe("Axe Testing", () => {
-    Object.entries(stories).forEach(([name, StoryComponent]) => {
+    for (const [name, StoryComponent] of Object.entries(stories)) {
       const Component = StoryComponent as StoryFn<unknown>;
 
       const disabledRules: string[] =
@@ -28,6 +28,6 @@ export function checkAccessibility(
 
         cy.checkAxeComponent({ rules }, true);
       });
-    });
+    }
   });
 }

@@ -28,6 +28,30 @@ export function HeaderCellSeparator(props: HeaderCellSeparatorProps) {
   return <div className={className} />;
 }
 
+interface HeaderCellSortingIconProps {
+  justify: FlexContentAlignment;
+  sortOrder: SortOrder;
+}
+
+const HeaderCellSortingIcon = ({
+  justify,
+  sortOrder,
+}: HeaderCellSortingIconProps) => {
+  const className = withBaseName("sortingIcon");
+  return (
+    <div
+      className={clsx(className, {
+        [withBaseName("sortingIconStart")]: justify === "start",
+        [withBaseName("sortingIconEnd")]: justify === "end",
+      })}
+      aria-hidden
+    >
+      {sortOrder === SortOrder.ASC && <ArrowUpIcon />}
+      {sortOrder === SortOrder.DESC && <ArrowDownIcon />}
+    </div>
+  );
+};
+
 type AriaSortProps = "none" | "ascending" | "descending";
 
 export function HeaderCell<T>(props: HeaderCellProps<T>) {
@@ -60,28 +84,6 @@ export function HeaderCell<T>(props: HeaderCellProps<T>) {
   } = useColumnSortContext();
 
   const valueAlignRight = align === "right";
-
-  interface HeaderCellSortingIconProps {
-    justify: FlexContentAlignment;
-  }
-
-  const HeaderCellSortingIcon = ({ justify }: HeaderCellSortingIconProps) => {
-    const className = withBaseName("sortingIcon");
-    const icon = (
-      <div
-        className={clsx(className, {
-          [withBaseName("sortingIconStart")]: justify === "start",
-          [withBaseName("sortingIconEnd")]: justify === "end",
-        })}
-        aria-hidden
-      >
-        {sortOrder === SortOrder.ASC && <ArrowUpIcon />}
-        {sortOrder === SortOrder.DESC && <ArrowDownIcon />}
-      </div>
-    );
-
-    return icon;
-  };
 
   const ariaSortMap = {
     asc: "ascending",
@@ -137,7 +139,7 @@ export function HeaderCell<T>(props: HeaderCellProps<T>) {
       aria-label={column.info.props["aria-label"]}
     >
       {sortByColumnId === id && sortable && valueAlignRight && (
-        <HeaderCellSortingIcon justify="start" />
+        <HeaderCellSortingIcon justify="start" sortOrder={sortOrder} />
       )}
       <div
         className={clsx(withBaseName("valueContainer"), {
@@ -153,7 +155,7 @@ export function HeaderCell<T>(props: HeaderCellProps<T>) {
         {children}
       </div>
       {sortByColumnId === id && sortable && !valueAlignRight && (
-        <HeaderCellSortingIcon justify="end" />
+        <HeaderCellSortingIcon justify="end" sortOrder={sortOrder} />
       )}
       <HeaderCellSeparator separatorType={separator} />
       <div

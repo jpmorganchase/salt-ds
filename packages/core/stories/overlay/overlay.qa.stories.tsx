@@ -95,7 +95,7 @@ NoStyleInjectionGrid.parameters = {
 };
 
 export const CloseButton: StoryFn<QAContainerProps> = (props) => {
-  const CloseButton = () => (
+  const closeButton = (
     <Button
       aria-label="Close overlay"
       appearance="transparent"
@@ -124,7 +124,7 @@ export const CloseButton: StoryFn<QAContainerProps> = (props) => {
         >
           <OverlayHeader
             header="Guidelines for optimal use of our application"
-            actions={<CloseButton />}
+            actions={closeButton}
           />
           <OverlayPanelContent>Content of Overlay</OverlayPanelContent>
         </OverlayPanel>
