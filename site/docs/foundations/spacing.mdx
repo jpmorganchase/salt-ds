@@ -5,15 +5,15 @@ sidebar:
   priority: 2
 ---
 
-Spacing is a powerful tool that determines how elements are positioned relative to each other and emphasizes certain elements while de-emphasizing others. Consistent spacing enhances visual appeal and guides the user's journey through the content. Space relates to size and visual consistency through alignment of baselines, gutters, padding, margins etc.
+Spacing is a key tool for positioning elements in relation to each other, highlighting some while downplaying others. Consistent spacing boosts visual appeal and guides users through content. It connects size and visual consistency through aligning baselines, gutters, padding, and margins.
 
 While Salt provides a general approach to spacing, it isn’t an exhaustive set of guidelines.
 
 ## Spacing ramp
 
-The design system uses the same spatial tokens for both spacing. Consistent application of these tokens helps align layouts, establish a uniform visual rhythm, and enhance the overall visual appeal of your application's design.
+Consistent use of spatial tokens aligns layouts, creates a steady visual rhythm, and enhances your application's design.
 
-The Salt spacing system is structured around a base unit of `--salt-spacing-100` for each density, with a scale that is proportional across all densities. Every space token within the system is a multiple of `--salt-spacing-100` and percentages of the base unit. This scale ensures consistency and flexibility with predictable values that adjust both upward and downward.
+The Salt spacing system is built on a base unit of `--salt-spacing-100` for each density, with a proportional scale across all densities. Each space token is a multiple of `--salt-spacing-100` and percentages of the base unit. This scale ensures consistency and flexibility with values that adjust predictably.
 
 | Token                | Formula | High Density (HD) (px) | Medium Density (MD) (px) | Low Density (LD) (px) | Touch Density (TD) (px) |
 | -------------------- | ------- | ---------------------- | ------------------------ | --------------------- | ----------------------- |
@@ -39,22 +39,51 @@ The Salt spacing system is structured around a base unit of `--salt-spacing-100`
 | `--salt-spacing-900` | 9.00x   | 36                     | 72                       | 108                   | 144                     |
 | `--salt-spacing-950` | 9.50x   | 38                     | 76                       | 114                   | 152                     |
 
+## Fixed spacing
+
+Fixed spacing offers tokens with values that stay the same across all densities. For instance, `--salt-spacing-100` is consistently 1px, and `--salt-spacing-200` is 2px, no matter the density. This provides a stable reference for design elements needing uniform spacing, ensuring consistency and simplicity within the design system.
+
+| Token                      | All densities (px) |
+| -------------------------- | ------------------ |
+| `--salt-spacing-fixed-100` | 1                  |
+| `--salt-spacing-fixed-200` | 2                  |
+| `--salt-spacing-fixed-300` | 3                  |
+| `--salt-spacing-fixed-400` | 4                  |
+| `--salt-spacing-fixed-500` | 5                  |
+| `--salt-spacing-fixed-600` | 6                  |
+| `--salt-spacing-fixed-700` | 7                  |
+| `--salt-spacing-fixed-800` | 8                  |
+| `--salt-spacing-fixed-900` | 9                  |
+
+Consider a numerical input with two buttons to its left, allowing users to step through values incrementally. Fixed spacing tokens define the distance between the input and the buttons, as well as the space between the two buttons. These spaces remain constant, ensuring precise control and uniformity. Meanwhile, the space between the numerical input and other components adjusts with density, providing flexibility and adaptability in the design.
+
+<ImageSwitcher
+  images={[
+    { src: "/img/foundations/spacing-fixed.png", alt: "" },
+    { src: "/img/foundations/spacing-fixed-annotated.png", alt: "" },
+  ]}
+  label="Show spacing"
+/>
+
 ## Hierarchical spacing
 
-Spacing is a powerful tool to emphasize certain elements while de-emphasizing others, guiding the user's journey through the content. Salt recommends using varied spacing (`--salt-spacing-300`, `--salt-spacing-200`, `--salt-spacing-100`) between elements to establish a visual hierarchy. The vertical separation of items such as headings, blocks of text, form elements and cards should follow a consistent pattern to create visual rhythm.
+Spacing is a key tool for emphasizing certain elements while downplaying others, guiding users through content. We suggests using varied spacing (`--salt-spacing-300`, `--salt-spacing-200, `--salt-spacing-100`) to establish a visual hierarchy. Consistent vertical separation of items like headings, text blocks, form elements, and cards creates a visual rhythm.
 
-Horizontal dividers are used to divide regions of a layout and should be spaced consistently with `salt-spacing-300` above and below sections. For more information on dividers, please refer to the [divider component page](/salt/components/divider).
+Horizontal dividers help segment layout regions and should be spaced consistently with `--salt-spacing-300` above and below sections. For more details on dividers, please refer to the divider component.
 
-<Image
-  src="/img/foundations/spacing-divider.png"
-  alt="Side by side example of hierarchical spacing with and without a divider."
+<ImageSwitcher
+  images={[
+    { src: "/img/foundations/spacing-hierarchical.png", alt: "" },
+    { src: "/img/foundations/spacing-hierarchical-annotated.png", alt: "" },
+  ]}
+  label="Show spacing"
 />
 
 ## Header spacing
 
-Headings serve as the primary title for different content types by providing visual separation and hierarchy. All headings should be accompanied by standard spacing above and below. The spacing placed directly below a heading depends on the level of focus placed on the item.
+Headings act as primary titles for various content types, offering visual separation and hierarchy. They should have standard spacing both above and below. The spacing directly below a heading varies based on the level of focus on the item.
 
-To find out more about how to use spacing in headers, please refer to the [forms pattern page](/salt/patterns/forms).
+For more information on using spacing in headers, please refer to the forms pattern.
 
 | Heading | Space above          | Space below          |
 | ------- | -------------------- | -------------------- |
@@ -79,23 +108,21 @@ Please refer to the [header block pattern page](/salt/patterns/header-block) to 
 
 Horizontal spacing between items can vary depending on relationship and context.
 
-Standard spacing between items in a form is typically `--salt-spacing-300`, which aligns with the design systems responsive layout grid, and automatically will adjust depending on what density you use.
-
 | Horizontal spacing | Space between        |
 | ------------------ | -------------------- |
-| Buttons            | `--salt-spacing-100` |
-| Components         | `--salt-spacing-300` |
+| between buttons    | `--salt-spacing-100` |
+| between components | `--salt-spacing-300` |
 
-<Image
-  src="/img/foundations/spacing-components.png"
-  alt="Diagram of what spacing between components should look like."
-/>
+Standard spacing between items in a form pattern is typically `--salt-spacing-300`, which aligns with the design systems responsive layout grid, and automatically will adjust depending on what density you use.
 
 Standard spacing between related items, such as buttons in a button bar group, is typically `--salt-spacing-100`.
 
-<Image
-  src="/img/foundations/spacing-buttons.png"
-  alt="Diagram of what spacing between buttons should look like."
+<ImageSwitcher
+  images={[
+    { src: "/img/foundations/spacing-horizontal.png", alt: "" },
+    { src: "/img/foundations/spacing-horizontal-annotated.png", alt: "" },
+  ]}
+  label="Show spacing"
 />
 
 :fragment{src="./fragments/feedback.mdx"}
