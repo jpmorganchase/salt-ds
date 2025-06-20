@@ -6,7 +6,7 @@ import { type ComponentPropsWithoutRef, forwardRef } from "react";
 
 import tableCss from "./Table.css";
 
-export type TableProps = ComponentPropsWithoutRef<"table"> & {
+export interface TableProps extends ComponentPropsWithoutRef<"table"> {
   /**
    * Styling variant. Defaults to "primary".
    * @default primary
