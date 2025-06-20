@@ -125,6 +125,7 @@ Loop.args = {
 
 export const MultiSlide: StoryFn<typeof Carousel> = (args) => {
   const slides = Array.from(Array(7).keys());
+  const slideId = useId();
   return (
     <Carousel
       aria-label="carousel example"
@@ -144,7 +145,8 @@ export const MultiSlide: StoryFn<typeof Carousel> = (args) => {
             aria-label={`Example slide ${index + 1}`}
             aria-roledescription="slide"
             className="carouselSlide"
-            key={`slide-${index}`}
+            id={`${slideId}-${index}`}
+            key={`${slideId}-${index}`}
           >
             <div className="carouselNumber">
               <Text styleAs={"h1"} className="carouselHeading">

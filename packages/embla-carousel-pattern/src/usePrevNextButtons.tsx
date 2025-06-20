@@ -47,10 +47,10 @@ export const usePrevNextButtons = (): UsePrevNextButtonsType => {
       return;
     }
     handleSelect(emblaApi);
-    emblaApi.on("reInit", handleSelect).on("select", handleSelect);
+    emblaApi.on("init", handleSelect).on("reInit", handleSelect).on("select", handleSelect);
     // Cleanup listener on component unmount
     return () => {
-      emblaApi.off("reInit", handleSelect).off("select", handleSelect);
+      emblaApi.off("init", handleSelect).off("reInit", handleSelect).off("select", handleSelect);
     };
   }, [emblaApi, handleSelect]);
 
