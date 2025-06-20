@@ -13,6 +13,11 @@ export type TFootProps = ComponentPropsWithoutRef<"tfoot"> & {
    */
   sticky?: boolean;
   /**
+   * Divider styling variant. Defaults to "tertiary";
+   * @default primary
+   */
+  divider?: "primary" | "secondary" | "tertiary" | "none";
+  /**
    * Styling variant for footer.
    * If undefined, will match variant of parent Table variant.
    * @default undefined
@@ -21,7 +26,10 @@ export type TFootProps = ComponentPropsWithoutRef<"tfoot"> & {
 };
 
 export const TFoot = forwardRef<HTMLTableSectionElement, TFootProps>(
-  function TFoot({ children, className, sticky, variant, ...rest }, ref) {
+  function TFoot(
+    { children, className, sticky, variant, divider = "tertiary", ...rest },
+    ref,
+  ) {
     const targetWindow = useWindow();
     useComponentCssInjection({
       testId: "salt-table-tfoot",
@@ -36,6 +44,7 @@ export const TFoot = forwardRef<HTMLTableSectionElement, TFootProps>(
           withTableBaseName("tfoot"),
           { [withTableBaseName(`tfoot-${variant}`)]: variant },
           { [withTableBaseName("tfoot-sticky")]: sticky },
+          { [withTableBaseName(`tfoot-divider-${divider}`)]: divider },
           className,
         )}
         {...rest}

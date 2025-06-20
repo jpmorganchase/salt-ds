@@ -13,6 +13,11 @@ export type TableProps = ComponentPropsWithoutRef<"table"> & {
    */
   variant?: "primary" | "secondary" | "tertiary";
   /**
+   * Divider styling variant. Defaults to "secondary";
+   * @default secondary
+   */
+  divider?: "primary" | "secondary" | "tertiary" | "none";
+  /**
    * Zebra styling. Applies variant to every other row.
    * @default undefined
    */
@@ -22,7 +27,14 @@ export type TableProps = ComponentPropsWithoutRef<"table"> & {
 export const withTableBaseName = makePrefixer("saltTable");
 
 export const Table = forwardRef<HTMLTableElement, TableProps>(function Table(
-  { children, className, variant = "primary", zebra = undefined, ...rest },
+  {
+    children,
+    className,
+    variant = "primary",
+    divider = "secondary",
+    zebra = undefined,
+    ...rest
+  },
   ref,
 ) {
   const targetWindow = useWindow();
@@ -39,9 +51,11 @@ export const Table = forwardRef<HTMLTableElement, TableProps>(function Table(
         {
           [withTableBaseName(variant)]: variant,
           [withTableBaseName(`zebra-${zebra}`)]: zebra,
+          [withTableBaseName(`divider-${divider}`)]: divider,
         },
         className,
       )}
+      ref={ref}
       {...rest}
     >
       {children}
