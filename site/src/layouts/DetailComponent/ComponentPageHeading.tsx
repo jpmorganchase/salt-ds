@@ -8,6 +8,7 @@ import {
   OverlayTrigger,
   Tag,
   Text,
+  Tooltip,
 } from "@salt-ds/core";
 import { GithubIcon, SettingsSolidIcon } from "@salt-ds/icons";
 import dynamic from "next/dynamic";
@@ -58,11 +59,13 @@ export default function ComponentPageHeading({ title, id }: PageHeadingProps) {
               <GithubIcon aria-hidden /> View source code
             </CTALink>
             <Overlay>
-              <OverlayTrigger>
-                <Button sentiment="neutral" appearance="bordered">
-                  <SettingsSolidIcon aria-hidden />
-                </Button>
-              </OverlayTrigger>
+              <Tooltip content="Theme controls">
+                <OverlayTrigger>
+                  <Button sentiment="neutral" appearance="bordered">
+                    <SettingsSolidIcon aria-hidden />
+                  </Button>
+                </OverlayTrigger>
+              </Tooltip>
               <OverlayPanel className={styles.overlay}>
                 <OverlayPanelContent>
                   <ThemeControls />
