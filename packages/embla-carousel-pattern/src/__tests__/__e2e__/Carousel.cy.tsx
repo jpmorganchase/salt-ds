@@ -48,7 +48,7 @@ describe("Given a Carousel", () => {
 
     it("should navigate forwards to each slide", () => {
       // should start from slide 1
-      cy.get(".carouselSlide.is-snapped .carouselNumber h1").should(
+      cy.get(".carouselSlide.is-snapped .carouselNumber .saltText-h1").should(
         "have.text",
         "1",
       );
@@ -70,7 +70,7 @@ describe("Given a Carousel", () => {
       // should navigate forwards to slide 2
       cy.findByTestId("ChevronRightIcon").parent().click();
       cy.wrap(waitForSettle(1)).then(() => {
-        cy.get(".carouselSlide.is-snapped .carouselNumber h1").should(
+        cy.get(".carouselSlide.is-snapped .carouselNumber .saltText-h1").should(
           "have.text",
           "2",
         );
@@ -79,7 +79,7 @@ describe("Given a Carousel", () => {
       // should navigate forwards to slide 3
       cy.findByTestId("ChevronRightIcon").parent().click();
       cy.wrap(waitForSettle(2)).then(() => {
-        cy.get(".carouselSlide.is-snapped .carouselNumber h1").should(
+        cy.get(".carouselSlide.is-snapped .carouselNumber .saltText-h1").should(
           "have.text",
           "3",
         );
@@ -88,7 +88,7 @@ describe("Given a Carousel", () => {
       // should navigate forwards to slide 4
       cy.findByTestId("ChevronRightIcon").parent().click();
       cy.wrap(waitForSettle(3)).then(() => {
-        cy.get(".carouselSlide.is-snapped .carouselNumber h1").should(
+        cy.get(".carouselSlide.is-snapped .carouselNumber .saltText-h1").should(
           "have.text",
           "4",
         );
@@ -134,7 +134,7 @@ describe("Given a Carousel", () => {
 
     it("should navigate backwards to each slide", () => {
       // should start from slide 4
-      cy.get(".carouselSlide.is-snapped .carouselNumber h1").should(
+      cy.get(".carouselSlide.is-snapped .carouselNumber .saltText-h1").should(
         "have.text",
         "4",
       );
@@ -156,7 +156,7 @@ describe("Given a Carousel", () => {
       // should navigate backwards to slide 3
       cy.findByTestId("ChevronLeftIcon").parent().click();
       cy.wrap(waitForSettle(2)).then(() => {
-        cy.get(".carouselSlide.is-snapped .carouselNumber h1").should(
+        cy.get(".carouselSlide.is-snapped .carouselNumber .saltText-h1").should(
           "have.text",
           "3",
         );
@@ -164,7 +164,7 @@ describe("Given a Carousel", () => {
       // should navigate backwards to slide 2
       cy.findByTestId("ChevronLeftIcon").parent().click();
       cy.wrap(waitForSettle(1)).then(() => {
-        cy.get(".carouselSlide.is-snapped .carouselNumber h1").should(
+        cy.get(".carouselSlide.is-snapped .carouselNumber .saltText-h1").should(
           "have.text",
           "2",
         );
@@ -172,7 +172,7 @@ describe("Given a Carousel", () => {
       // should navigate backwards to slide 1
       cy.findByTestId("ChevronLeftIcon").parent().click();
       cy.wrap(waitForSettle(0)).then(() => {
-        cy.get(".carouselSlide.is-snapped .carouselNumber h1").should(
+        cy.get(".carouselSlide.is-snapped .carouselNumber .saltText-h1").should(
           "have.text",
           "1",
         );
@@ -184,7 +184,7 @@ describe("Given a Carousel", () => {
     });
   });
 
-  describe("WITH the progress bar", () => {
+  describe("WITH the tablist", () => {
     let emblaApiRef: MutableRefObject<CarouselApi | undefined>;
     const TestComponent = () => {
       emblaApiRef = useRef<CarouselApi | undefined>(undefined);
@@ -231,30 +231,30 @@ describe("Given a Carousel", () => {
       };
 
       // should start from slide 4
-      cy.get(".carouselSlide.is-snapped .carouselNumber h1").should(
+      cy.get(".carouselSlide.is-snapped .carouselNumber .saltText-h1").should(
         "have.text",
         "4",
       );
       // should navigate to slide 3
-      cy.findByLabelText(/Move to slide 3 of 4/).click();
+      cy.findByLabelText(/Previous slide 3 of 4/).click();
       cy.wrap(waitForSettle(2)).then(() => {
-        cy.get(".carouselSlide.is-snapped .carouselNumber h1").should(
+        cy.get(".carouselSlide.is-snapped .carouselNumber .saltText-h1").should(
           "have.text",
           "3",
         );
       });
       // should navigate to slide 2
-      cy.findByLabelText(/Move to slide 2 of 4/).click();
+      cy.findByLabelText(/Previous slide 2 of 4/).click();
       cy.wrap(waitForSettle(1)).then(() => {
-        cy.get(".carouselSlide.is-snapped .carouselNumber h1").should(
+        cy.get(".carouselSlide.is-snapped .carouselNumber .saltText-h1").should(
           "have.text",
           "2",
         );
       });
       // should navigate to slide 1
-      cy.findByLabelText(/Move to slide 1 of 4/).click();
+      cy.findByLabelText(/Previous slide 1 of 4/).click();
       cy.wrap(waitForSettle(0)).then(() => {
-        cy.get(".carouselSlide.is-snapped .carouselNumber h1").should(
+        cy.get(".carouselSlide.is-snapped .carouselNumber .saltText-h1").should(
           "have.text",
           "1",
         );
