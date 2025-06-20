@@ -1,5 +1,15 @@
 # @salt-ds/core
 
+## 1.47.1
+
+### Patch Changes
+
+- 73ccf6b: Updated Tooltip's max-width to from `230px` to `60ch`.
+- 95dd874: - Fixed interacting with a loading button submitting forms.
+  - Fixed interacting with a disabled and focusableWhenDisabled button submitting forms.
+- c93c943: Fixed Dropdown's CSS referring to invalid variables.
+- 104d776: Fixed inconsistent deletion when the pills inside a combobox are clicked before the combobox.
+
 ## 1.47.0
 
 ### Minor Changes
