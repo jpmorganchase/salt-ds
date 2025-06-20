@@ -1,11 +1,9 @@
 import { makePrefixer } from "@salt-ds/core";
-import type { SVGAttributes } from "react";
-import type { FormFieldLegacyProps as FormFieldProps } from "./FormFieldLegacy";
-
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
-
+import type { SVGAttributes } from "react";
 import formActivationIndicatorCss from "./FormActivationIndicator.css";
+import type { FormFieldLegacyProps as FormFieldProps } from "./FormFieldLegacy";
 
 const ErrorIndicatorIcon = (props: SVGAttributes<SVGSVGElement>) => {
   return (

@@ -1,7 +1,6 @@
-import type { Meta, StoryFn } from "@storybook/react-vite";
-
 import { HomeIcon, TreeIcon } from "@salt-ds/icons";
 import { Breadcrumb, Breadcrumbs } from "@salt-ds/lab";
+import type { Meta, StoryFn } from "@storybook/react-vite";
 import { QAContainer } from "docs/components";
 
 export default {
@@ -9,9 +8,7 @@ export default {
   component: Breadcrumbs,
 } as Meta<typeof Breadcrumbs>;
 
-export const AllExamplesGrid: StoryFn = (props: {
-  className?: string;
-}) => {
+export const AllExamplesGrid: StoryFn = (props: { className?: string }) => {
   return (
     <QAContainer cols={4} transposeDensity vertical className="saltMetricQA">
       <Breadcrumbs

@@ -1,13 +1,11 @@
+import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 import { type ReactElement, useCallback } from "react";
 import { makePrefixer } from "../utils";
 import { PageButton } from "./PageButton";
+import pageRangesCss from "./PageRanges.css";
 import { type PageRange, usePagination } from "./usePagination";
 import { usePaginationContext } from "./usePaginationContext";
-
-import { useComponentCssInjection } from "@salt-ds/styles";
-import { useWindow } from "@salt-ds/window";
-
-import pageRangesCss from "./PageRanges.css";
 
 const withBaseName = makePrefixer("saltPageRanges");
 

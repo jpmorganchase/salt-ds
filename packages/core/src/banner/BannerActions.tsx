@@ -1,13 +1,12 @@
+import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
   type ComponentPropsWithoutRef,
-  type ReactNode,
   forwardRef,
+  type ReactNode,
 } from "react";
 import { makePrefixer } from "../utils";
-
-import { useComponentCssInjection } from "@salt-ds/styles";
-import { useWindow } from "@salt-ds/window";
 import bannerActionsCss from "./BannerActions.css";
 
 const withBaseName = makePrefixer("saltBannerActions");

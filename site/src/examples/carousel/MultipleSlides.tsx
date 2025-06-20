@@ -1,4 +1,4 @@
-import { H3, Text, useId } from "@salt-ds/core";
+import { H3, Text } from "@salt-ds/core";
 import {
   Carousel,
   CarouselControls,
@@ -16,11 +16,10 @@ export const MultipleSlides = (): ReactElement => {
       <CarouselControls />
       <CarouselSlider>
         {sliderData.map((slide, index) => {
-          const slideId = useId();
           return (
             <CarouselSlide
-              key={slideId}
-              aria-labelledby={`slide-title-${slideId}`}
+              key={slide.title}
+              aria-labelledby={`slide-title-${index}`}
               media={
                 <img
                   alt={`stock content to show in carousel slide ${index}`}
@@ -28,7 +27,7 @@ export const MultipleSlides = (): ReactElement => {
                   src={slide.image}
                 />
               }
-              header={<H3 id={`slide-title-${slideId}`}>{slide.title}</H3>}
+              header={<H3 id={`slide-title-${index}`}>{slide.title}</H3>}
             >
               <Text>{slide.content}</Text>
             </CarouselSlide>

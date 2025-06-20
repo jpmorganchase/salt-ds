@@ -22,9 +22,9 @@ import {
 import { InfoIcon, NoteIcon } from "@salt-ds/icons";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import {
-  type CSSProperties,
   type ChangeEvent,
   type ChangeEventHandler,
+  type CSSProperties,
   useState,
 } from "react";
 import "./form-field.stories.css";

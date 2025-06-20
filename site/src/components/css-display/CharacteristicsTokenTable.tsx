@@ -6,10 +6,9 @@ import {
   StackLayout,
 } from "@salt-ds/core";
 import { useEffect, useState } from "react";
+import { CopyToClipboard } from "../copy-to-clipboard";
 import { Code } from "../mdx/code";
 import { Table, Thead, Tr } from "../mdx/table";
-
-import { CopyToClipboard } from "../copy-to-clipboard";
 import { BlockView } from "./BlockView";
 import styles from "./CharacteristicsTokenTable.module.css";
 
@@ -39,7 +38,10 @@ type CssVariableData = {
 export const CharacteristicsTokenTable = ({
   group,
   themeNext,
-}: { group: string; themeNext: boolean }) => {
+}: {
+  group: string;
+  themeNext: boolean;
+}) => {
   const [cssVariablesData, setCssVariablesData] =
     useState<CssVariableData | null>(null);
 

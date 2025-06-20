@@ -1,20 +1,19 @@
 import { makePrefixer } from "@salt-ds/core";
-import { clsx } from "clsx";
-import {
-  type ComponentPropsWithRef,
-  type MouseEvent,
-  type SyntheticEvent,
-  forwardRef,
-} from "react";
-import { CalendarDay, type CalendarDayProps } from "./CalendarDay";
-import { generateVisibleDays } from "./utils";
-
 import type { DateFrameworkType } from "@salt-ds/date-adapters";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
+import { clsx } from "clsx";
+import {
+  type ComponentPropsWithRef,
+  forwardRef,
+  type MouseEvent,
+  type SyntheticEvent,
+} from "react";
 import { useLocalization } from "../../localization-provider";
 import { useCalendarContext } from "./CalendarContext";
+import { CalendarDay, type CalendarDayProps } from "./CalendarDay";
 import calendarMonthCss from "./CalendarMonth.css";
+import { generateVisibleDays } from "./utils";
 
 export interface CalendarMonthProps<TDate>
   extends ComponentPropsWithRef<"div"> {

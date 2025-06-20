@@ -1,9 +1,8 @@
 import { Button, type ButtonProps, makePrefixer, useIcon } from "@salt-ds/core";
-import { clsx } from "clsx";
-import { type ReactNode, forwardRef } from "react";
-
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
+import { clsx } from "clsx";
+import { forwardRef, type ReactNode } from "react";
 
 import menuButtonTrigger from "./MenuButtonTrigger.css";
 

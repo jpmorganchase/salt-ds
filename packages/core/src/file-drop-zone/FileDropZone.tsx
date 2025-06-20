@@ -1,3 +1,5 @@
+import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
   type ComponentPropsWithoutRef,
@@ -7,14 +9,10 @@ import {
   useRef,
   useState,
 } from "react";
-import { containsFiles, extractFiles } from "./internal/utils";
-
-import { useComponentCssInjection } from "@salt-ds/styles";
-import { useWindow } from "@salt-ds/window";
-
 import type { ValidationStatus } from "../status-indicator";
 import { makePrefixer, useForkRef } from "../utils";
 import fileDropZoneCss from "./FileDropZone.css";
+import { containsFiles, extractFiles } from "./internal/utils";
 
 export interface FileDropZoneProps
   extends Omit<ComponentPropsWithoutRef<"div">, "onDrop"> {

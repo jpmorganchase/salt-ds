@@ -1,4 +1,4 @@
-import { H2, H3, StackLayout, Text, useId } from "@salt-ds/core";
+import { H2, H3, StackLayout, Text } from "@salt-ds/core";
 import {
   Carousel,
   CarouselControls,
@@ -40,12 +40,11 @@ export const Appearance = (): ReactElement => {
         <CarouselControls title={<H2>Bordered</H2>} />
         <CarouselSlider>
           {sliderData.map((slide, index) => {
-            const carousel1SlideId = useId();
             return (
               <CarouselSlide
                 appearance="bordered"
-                key={carousel1SlideId}
-                aria-labelledby={`slide-title-${carousel1SlideId}`}
+                key={slide.title}
+                aria-labelledby={`slide-title-${index}`}
                 media={
                   <img
                     alt={`stock content to show in carousel slide ${index}`}
@@ -53,9 +52,7 @@ export const Appearance = (): ReactElement => {
                     src={slide.image}
                   />
                 }
-                header={
-                  <H3 id={`slide-title-${carousel1SlideId}`}>{slide.title}</H3>
-                }
+                header={<H3 id={`slide-title-${index}`}>{slide.title}</H3>}
               >
                 <Text>{slide.content}</Text>
               </CarouselSlide>
@@ -67,11 +64,10 @@ export const Appearance = (): ReactElement => {
         <CarouselControls title={<H2>Transparent</H2>} />
         <CarouselSlider>
           {sliderData.map((slide, index) => {
-            const carousel2SlideId = useId();
             return (
               <CarouselSlide
-                key={carousel2SlideId}
-                aria-labelledby={`slide-title-${carousel2SlideId}`}
+                key={slide.title}
+                aria-labelledby={`slide-title-${index}`}
                 media={
                   <img
                     alt={`stock content to show in carousel slide ${index}`}
@@ -79,9 +75,7 @@ export const Appearance = (): ReactElement => {
                     src={slide.image}
                   />
                 }
-                header={
-                  <H3 id={`slide-title-${carousel2SlideId}`}>{slide.title}</H3>
-                }
+                header={<H3 id={`slide-title-${index}`}>{slide.title}</H3>}
               >
                 <Text>{slide.content}</Text>
               </CarouselSlide>

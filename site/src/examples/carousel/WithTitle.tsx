@@ -11,16 +11,18 @@ import { sliderData } from "./exampleData";
 import styles from "./index.module.css";
 
 export const WithTitle = (): ReactElement => {
+  const carouselTitleId = useId();
   return (
-    <Carousel aria-labelledby="carousel-title">
-      <CarouselControls title={<H2 id="carousel-title">Account overview</H2>} />
+    <Carousel aria-labelledby={carouselTitleId}>
+      <CarouselControls
+        title={<H2 id={carouselTitleId}>Account overview</H2>}
+      />
       <CarouselSlider>
         {sliderData.map((slide, index) => {
-          const slideId = useId();
           return (
             <CarouselSlide
-              key={slideId}
-              aria-labelledby={`slide-title-${slideId}`}
+              key={slide.title}
+              aria-labelledby={`slide-title-${index}`}
               media={
                 <img
                   alt={`stock content to show in carousel slide ${index}`}
@@ -28,7 +30,7 @@ export const WithTitle = (): ReactElement => {
                   src={slide.image}
                 />
               }
-              header={<H3 id={`slide-title-${slideId}`}>{slide.title}</H3>}
+              header={<H3 id={`slide-title-${index}`}>{slide.title}</H3>}
             >
               <Text>{slide.content}</Text>
             </CarouselSlide>

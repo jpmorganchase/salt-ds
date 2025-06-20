@@ -1,5 +1,5 @@
-import { MDXRemote } from "next-mdx-remote";
 import { useRouter } from "next/router";
+import { MDXRemote } from "next-mdx-remote";
 import { type ReactNode, useEffect } from "react";
 import { ErrorBoundary, useErrorBoundary } from "react-error-boundary";
 import styles from "../layouts/Base/Base.module.css";

@@ -1,5 +1,5 @@
 import { makePrefixer } from "@salt-ds/core";
-import { type HTMLAttributes, forwardRef } from "react";
+import { forwardRef, type HTMLAttributes } from "react";
 import { useContactDetailsContext } from "./internal";
 
 const withBaseName = makePrefixer("saltContactActions");

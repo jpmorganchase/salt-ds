@@ -6,9 +6,8 @@ import {
   StackLayout,
   Text,
 } from "@salt-ds/core";
-import { SystemStatus, SystemStatusContent } from "@salt-ds/lab";
-
 import { CloseIcon } from "@salt-ds/icons";
+import { SystemStatus, SystemStatusContent } from "@salt-ds/lab";
 
 import type { ReactElement } from "react";
 

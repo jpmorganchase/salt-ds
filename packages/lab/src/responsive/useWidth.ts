@@ -2,8 +2,8 @@ import { useIsomorphicLayoutEffect } from "@salt-ds/core";
 import { type RefObject, useCallback, useRef, useState } from "react";
 import {
   type ResizeHandler,
-  WidthOnly,
   useResizeObserver,
+  WidthOnly,
 } from "./useResizeObserver";
 
 const NONE: string[] = [];

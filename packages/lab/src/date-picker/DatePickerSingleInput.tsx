@@ -7,9 +7,9 @@ import {
 import { CalendarIcon } from "@salt-ds/icons";
 import { clsx } from "clsx";
 import {
+  forwardRef,
   type MouseEventHandler,
   type SyntheticEvent,
-  forwardRef,
   useCallback,
   useEffect,
   useRef,

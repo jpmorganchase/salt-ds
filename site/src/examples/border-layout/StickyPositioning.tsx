@@ -1,8 +1,8 @@
 import { BorderItem, BorderLayout } from "@salt-ds/core";
 import clsx from "clsx";
 import type { ReactElement } from "react";
-import stickyPositioningStyles from "./StickyPositioning.module.css";
 import styles from "./index.module.css";
+import stickyPositioningStyles from "./StickyPositioning.module.css";
 
 export const StickyPositioning = (): ReactElement => (
   <BorderLayout

@@ -7,9 +7,9 @@ import type { RefObject } from "react";
 import type { GridColumnGroupModel, GridColumnModel } from "../Grid";
 
 import { GroupHeaderRow } from "./GroupHeaderRow";
+import { useActiveOnWheel } from "./gridHooks";
 import { HeaderRow } from "./HeaderRow";
 import { TableColGroup } from "./TableColGroup";
-import { useActiveOnWheel } from "./gridHooks";
 
 import topPartCss from "./TopPart.css";
 

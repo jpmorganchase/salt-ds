@@ -2,15 +2,15 @@ import {
   StyleInjectionProvider,
   useComponentCssInjection,
 } from "@salt-ds/styles";
-import { type WindowContextType, useWindow } from "@salt-ds/window";
+import { useWindow, type WindowContextType } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
-  type HTMLAttributes,
-  type ReactElement,
-  type ReactNode,
   cloneElement,
   createContext,
+  type HTMLAttributes,
   isValidElement,
+  type ReactElement,
+  type ReactNode,
   useContext,
   useMemo,
 } from "react";

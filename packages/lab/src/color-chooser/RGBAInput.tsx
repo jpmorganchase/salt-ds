@@ -1,15 +1,12 @@
 import { makePrefixer } from "@salt-ds/core";
+import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import type { ChangeEvent } from "react";
 import { AlphaInput } from "./AlphaInputField";
 import type { RGBAValue } from "./Color";
-import { RGBInput } from "./RGBAInputField";
-
-import { useComponentCssInjection } from "@salt-ds/styles";
-
-import { useWindow } from "@salt-ds/window";
-
 import rgbaInputCss from "./RGBAInput.css";
+import { RGBInput } from "./RGBAInputField";
 
 const withBaseName = makePrefixer("saltColorChooser");
 

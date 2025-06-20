@@ -12,14 +12,15 @@ import {
   StackLayout,
 } from "@salt-ds/core";
 import { ChevronRightIcon, GithubIcon } from "@salt-ds/icons";
-import type { ReactElement } from "react";
-import { useState } from "react";
+import { type ReactElement, useId, useState } from "react";
 import styles from "./Default.module.css";
 
 export const Default = (): ReactElement => {
   const headerItems = ["Glossary", "Components", "Patterns"];
 
   const [activeHeaderNav, setActiveHeaderNav] = useState(headerItems[0]);
+  const headerId = useId();
+
   return (
     <>
       <p className={styles.help}>
@@ -27,7 +28,7 @@ export const Default = (): ReactElement => {
       </p>
       <BorderLayout className={styles.container}>
         <BorderItem position="north" as="header">
-          <SkipLink targetId="main">Skip to main content</SkipLink>
+          <SkipLink targetId={headerId}>Skip to main content</SkipLink>
           <FlexLayout className={styles.navbar} justify="space-between" gap={3}>
             <FlexItem align="center">
               <H4>LOGO</H4>
@@ -63,7 +64,7 @@ export const Default = (): ReactElement => {
         <BorderItem position="center" className={styles.center}>
           <StackLayout as="article" className={styles.section} gap={6}>
             <section>
-              <H2 styleAs="h1" id="main" className={styles.header}>
+              <H2 styleAs="h1" id={headerId} className={styles.header}>
                 Glossary
               </H2>
               <H2>Characteristics</H2>

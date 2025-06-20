@@ -2,10 +2,10 @@ import { useIcon } from "@salt-ds/core";
 import {
   Children,
   type Component,
+  isValidElement,
   type KeyboardEvent,
   type MouseEvent,
   type ReactNode,
-  isValidElement,
   useCallback,
 } from "react";
 import type { CascadingMenuProps, MenuDescriptor } from "../../cascading-menu";

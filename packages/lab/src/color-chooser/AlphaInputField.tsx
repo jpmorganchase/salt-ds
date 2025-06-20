@@ -1,4 +1,6 @@
 import { makePrefixer } from "@salt-ds/core";
+import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
   type ChangeEvent,
@@ -8,9 +10,6 @@ import {
   useState,
 } from "react";
 import { InputLegacy as Input } from "../input-legacy";
-
-import { useComponentCssInjection } from "@salt-ds/styles";
-import { useWindow } from "@salt-ds/window";
 
 import rgbaInputCss from "./RGBAInput.css";
 

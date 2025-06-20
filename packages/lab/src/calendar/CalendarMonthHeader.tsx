@@ -1,10 +1,9 @@
-import { Text, makePrefixer } from "@salt-ds/core";
-import { clsx } from "clsx";
-import { type ComponentPropsWithRef, forwardRef, useCallback } from "react";
-
+import { makePrefixer, Text } from "@salt-ds/core";
 import type { DateFrameworkType } from "@salt-ds/date-adapters";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
+import { clsx } from "clsx";
+import { type ComponentPropsWithRef, forwardRef, useCallback } from "react";
 import { useLocalization } from "../localization-provider";
 import calendarMonthHeaderCss from "./CalendarMonthHeader.css";
 

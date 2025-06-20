@@ -24,10 +24,10 @@ import {
   useState,
 } from "react";
 import { escapeRegExp } from "../utils";
-import type { TokenizedInputNextProps } from "./TokenizedInputNext";
 import { calcFirstHiddenIndex } from "./internal/calcFirstHiddenIndex";
 import { useResizeObserver } from "./internal/useResizeObserver";
 import { getPadding, useWidth } from "./internal/useWidth";
+import type { TokenizedInputNextProps } from "./TokenizedInputNext";
 
 export interface TokenizedInputNextState<Item> {
   activeIndices: number[];

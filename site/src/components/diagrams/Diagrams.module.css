@@ -8,7 +8,6 @@
 @media screen and (min-width: 960px) {
   .diagramsContainer {
     display: grid;
-    grid-template-columns: 100%;
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows:
       [text-container] min-content

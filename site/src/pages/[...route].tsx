@@ -1,6 +1,6 @@
 import {
-  type MiddlewareResult,
   createMiddlewareRunner,
+  type MiddlewareResult,
   middlewarePresets,
 } from "@jpmorganchase/mosaic-site-middleware";
 import type { GetServerSidePropsContext, GetServerSidePropsResult } from "next";

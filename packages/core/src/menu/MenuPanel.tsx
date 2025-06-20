@@ -2,8 +2,8 @@ import { FloatingList } from "@floating-ui/react";
 import { clsx } from "clsx";
 import {
   type ComponentPropsWithoutRef,
-  type ReactNode,
   forwardRef,
+  type ReactNode,
 } from "react";
 import { makePrefixer, useFloatingComponent, useForkRef } from "../utils";
 import { useMenuContext } from "./MenuContext";

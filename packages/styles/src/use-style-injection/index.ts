@@ -1,2 +1,2 @@
-export * from "./useStyleInjection";
 export * from "./InsertionPointProvider";
+export * from "./useStyleInjection";

@@ -1,9 +1,8 @@
 import { makePrefixer } from "@salt-ds/core";
-import { clsx } from "clsx";
-import { type HTMLAttributes, forwardRef } from "react";
-
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
+import { clsx } from "clsx";
+import { forwardRef, type HTMLAttributes } from "react";
 import staticInputAdornmentCss from "./StaticInputAdornment.css";
 
 export type StaticInputAdornmentProps = HTMLAttributes<HTMLDivElement>;

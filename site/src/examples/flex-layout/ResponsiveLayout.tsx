@@ -8,8 +8,8 @@ import {
   RadioButtonGroup,
 } from "@salt-ds/core";
 import { type ChangeEventHandler, type ReactElement, useState } from "react";
-import responsiveLayoutStyles from "./ResponsiveLayout.module.css";
 import styles from "./index.module.css";
+import responsiveLayoutStyles from "./ResponsiveLayout.module.css";
 
 const viewportOptions = ["Large", "Medium", "Small"] as const;
 type Viewport = (typeof viewportOptions)[number];

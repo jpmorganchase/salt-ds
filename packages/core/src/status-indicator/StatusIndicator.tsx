@@ -1,13 +1,12 @@
 import { DEFAULT_ICON_SIZE, type IconProps } from "@salt-ds/icons";
-import { clsx } from "clsx";
-import { forwardRef } from "react";
-import { makePrefixer } from "../utils";
-import type { ValidationStatus } from "./ValidationStatus";
-
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
+import { clsx } from "clsx";
+import { forwardRef } from "react";
 import { useIcon } from "../semantic-icon-provider";
+import { makePrefixer } from "../utils";
 import statusIndicatorCss from "./StatusIndicator.css";
+import type { ValidationStatus } from "./ValidationStatus";
 
 export interface StatusIndicatorProps extends IconProps {
   /**

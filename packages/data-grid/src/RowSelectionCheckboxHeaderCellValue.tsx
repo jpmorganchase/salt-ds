@@ -2,11 +2,9 @@ import { Checkbox } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import type { KeyboardEventHandler, MouseEventHandler } from "react";
-
+import checkboxCellCss from "./CheckboxCell.css";
 import type { GridHeaderValueProps } from "./GridColumn";
 import { useSelectionContext } from "./SelectionContext";
-
-import checkboxCellCss from "./CheckboxCell.css";
 
 export function RowSelectionCheckboxHeaderCellValue<T>(
   props: GridHeaderValueProps<T>,

@@ -126,7 +126,7 @@ export const CloseButton = ({ onOpenChange }: OverlayProps) => {
 
   const handleClose = () => setOpen(false);
 
-  const CloseButton = () => (
+  const closeButton = (
     <Button
       aria-label="Close overlay"
       appearance="transparent"
@@ -143,7 +143,7 @@ export const CloseButton = ({ onOpenChange }: OverlayProps) => {
         <Button>Show Overlay</Button>
       </OverlayTrigger>
       <OverlayPanel aria-labelledby={id}>
-        <OverlayHeader header="Title" actions={<CloseButton />} id={id} />
+        <OverlayHeader header="Title" actions={closeButton} id={id} />
         <OverlayPanelContent>
           <div>
             Content of Overlay
@@ -168,7 +168,7 @@ export const LongContent = () => {
 
   const handleClose = () => setOpen(false);
 
-  const CloseButton = () => (
+  const closeButton = (
     <Button
       aria-label="Close overlay"
       appearance="transparent"
@@ -189,7 +189,7 @@ export const LongContent = () => {
           width: 300,
         }}
       >
-        <OverlayHeader header="Title" actions={<CloseButton />} />
+        <OverlayHeader header="Title" actions={closeButton} />
         <OverlayPanelContent style={{ height: 200 }}>
           <StackLayout>
             <div>

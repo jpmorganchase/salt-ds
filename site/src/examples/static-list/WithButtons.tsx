@@ -7,7 +7,7 @@ import {
 } from "@salt-ds/lab";
 import { clsx } from "clsx";
 import type { ReactElement } from "react";
-import { type ListEvent, complexEventsData } from "./exampleData";
+import { complexEventsData, type ListEvent } from "./exampleData";
 
 const ListItem = ({ title, time }: ListEvent) => {
   const id = useId();

@@ -2,14 +2,14 @@ import {
   FlexItem,
   FormField,
   FormFieldLabel,
+  FLEX_ALIGNMENT_BASE as flexAlignment,
   RadioButton,
   RadioButtonGroup,
   StackLayout,
-  FLEX_ALIGNMENT_BASE as flexAlignment,
 } from "@salt-ds/core";
 import { type ChangeEventHandler, type ReactElement, useState } from "react";
-import layoutAlignmentStyles from "./LayoutAlignment.module.css";
 import styles from "./index.module.css";
+import layoutAlignmentStyles from "./LayoutAlignment.module.css";
 
 type FlexAlignment = (typeof flexAlignment)[number];
 type FlexAlign = FlexAlignment | "stretch" | "baseline";

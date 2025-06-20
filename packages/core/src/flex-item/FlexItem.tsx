@@ -11,10 +11,10 @@ import {
 import { useBreakpoint } from "../breakpoints";
 import { parseSpacing } from "../flex-layout/parseSpacing";
 import {
+  makePrefixer,
   type PolymorphicComponentPropWithRef,
   type PolymorphicRef,
   type ResponsiveProp,
-  makePrefixer,
   resolveResponsiveValue,
 } from "../utils";
 import flexItemCss from "./FlexItem.css";

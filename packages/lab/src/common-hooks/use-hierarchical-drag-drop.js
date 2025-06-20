@@ -1,5 +1,5 @@
 import { useCallback, useRef, useState } from "react";
-
+import { renderDraggable } from "./Draggable";
 import {
   dimensions,
   getDraggedItem,
@@ -8,8 +8,6 @@ import {
   measureDropTargets,
   moveDragItem,
 } from "./drag-utils";
-
-import { renderDraggable } from "./Draggable";
 
 const dragThreshold = 3;
 

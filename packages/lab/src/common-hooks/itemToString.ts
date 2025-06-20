@@ -11,7 +11,7 @@ export function itemToString(item: unknown): string {
     return String(item);
   }
 
-  if (Object.prototype.hasOwnProperty.call(item, "label")) {
+  if (item && typeof item === "object" && Object.hasOwn(item, "label")) {
     return String((item as { label?: string }).label);
   }
 

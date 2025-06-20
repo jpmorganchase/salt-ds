@@ -34,7 +34,7 @@ import {
   type ValueComponentProps,
 } from "@salt-ds/lab";
 import type { StoryFn } from "@storybook/react-vite";
-import { Fragment, type ReactNode, forwardRef } from "react";
+import { Fragment, forwardRef, type ReactNode } from "react";
 
 import "./contact-details.stories.css";
 
@@ -480,7 +480,7 @@ const WithinTileTemplate: StoryFn = () => {
 };
 
 const WithinOverlayTemplate: StoryFn<typeof Overlay> = (props) => {
-  const OverlayContent = () => (
+  const overlayContent = (
     <ContactDetails className={"withinOverlay"} embedded={true}>
       <ContactFavoriteToggle />
       <ContactAvatar />
@@ -521,9 +521,7 @@ const WithinOverlayTemplate: StoryFn<typeof Overlay> = (props) => {
       </OverlayTrigger>
       <OverlayPanel>
         <OverlayPanelCloseButton />
-        <OverlayPanelContent>
-          <OverlayContent />
-        </OverlayPanelContent>
+        <OverlayPanelContent>{overlayContent}</OverlayPanelContent>
       </OverlayPanel>
     </Overlay>
   );

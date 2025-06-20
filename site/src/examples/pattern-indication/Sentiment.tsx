@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/nursery/useUniqueElementIds: GridColumns need static ids */
 import { Grid, GridColumn } from "@salt-ds/data-grid";
 import { ColorCellValue, type ColorValueCellProps } from "./ValueCells";
 

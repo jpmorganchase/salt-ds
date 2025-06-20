@@ -7,12 +7,12 @@ import {
   usePrevious,
 } from "@salt-ds/core";
 import {
-  type KeyboardEvent,
-  type MouseEvent,
-  type ReactNode,
   cloneElement,
   forwardRef,
   isValidElement,
+  type KeyboardEvent,
+  type MouseEvent,
+  type ReactNode,
   useCallback,
   useEffect,
   useMemo,
@@ -21,10 +21,8 @@ import {
   useState,
 } from "react";
 import { useEventCallback } from "../utils";
-
-import type { CascadingMenuProps, MenuDescriptor } from "./CascadingMenuProps";
-
 import { CascadingMenuList } from "./CascadingMenuList";
+import type { CascadingMenuProps, MenuDescriptor } from "./CascadingMenuProps";
 import { CascadingMenuAction } from "./internal/CascadingMenuAction";
 import { defaultGetScreenBounds } from "./internal/menuPositioning";
 import { deriveFlatStateFromTree } from "./internal/stateUtils";

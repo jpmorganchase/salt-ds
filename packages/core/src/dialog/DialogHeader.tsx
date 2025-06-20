@@ -3,8 +3,8 @@ import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
   type ComponentPropsWithoutRef,
-  type ReactNode,
   forwardRef,
+  type ReactNode,
 } from "react";
 import { StatusIndicator, type ValidationStatus } from "../status-indicator";
 import { H2, Text } from "../text";
