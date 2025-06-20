@@ -20,6 +20,18 @@
   --table-color: var(--salt-content-tertiary-foreground);
 }
 
+.saltTable-divider-primary {
+  --table-divider-color: var(--salt-separable-primary-borderColor);
+}
+
+.saltTable-divider-secondary {
+  --table-divider-color: var(--salt-separable-secondary-borderColor);
+}
+
+.saltTable-divider-tertiary {
+  --table-divider-color: var(--salt-separable-tertiary-borderColor);
+}
+
 /* Zebra styling */
 .saltTable-zebra-primary .saltTable-tbody .saltTable-tr:nth-of-type(odd),
 .saltTable-zebra-primary tbody .saltTable-tr:nth-of-type(odd),
@@ -88,7 +100,24 @@ table.saltTable thead {
 
 .saltTable-thead .saltTable tr,
 .saltTable-thead .saltTable-tr {
-  border-bottom: var(--salt-separable-borderStyle) var(--salt-separable-primary-borderColor) var(--salt-size-border);
+  border-bottom: var(--salt-separable-borderStyle) var(--table-header-divider-color) var(--salt-size-border);
+}
+
+.saltTable-thead-divider-primary {
+  --table-header-divider-color: var(--salt-separable-primary-borderColor);
+}
+
+.saltTable-thead-divider-secondary {
+  --table-header-divider-color: var(--salt-separable-secondary-borderColor);
+}
+
+.saltTable-thead-divider-tertiary {
+  --table-header-divider-color: var(--salt-separable-tertiary-borderColor);
+}
+
+.saltTable-thead-divider-none.saltTable-thead .saltTable tr,
+.saltTable-thead-divider-none.saltTable-thead .saltTable-tr {
+  border-bottom: none;
 }
 
 /* TFoot */
@@ -109,6 +138,11 @@ table.saltTable tfoot {
   bottom: 0;
 }
 
+.saltTable-tfoot .saltTable tr,
+.saltTable-tfoot .saltTable-tr {
+  border-top: var(--salt-separable-borderStyle) var(--table-footer-divider-color) var(--salt-size-border);
+}
+
 .saltTable-tfoot-primary .saltTable-tr,
 .saltTable-tfoot-primary tr {
   background: var(--salt-container-primary-background);
@@ -122,6 +156,23 @@ table.saltTable tfoot {
 .saltTable-tfoot-tertiary .saltTable-tr,
 .saltTable-tfoot-tertiary tr {
   background: var(--salt-container-tertiary-background);
+}
+
+.saltTable-tfoot-divider-primary {
+  --table-footer-divider-color: var(--salt-separable-primary-borderColor);
+}
+
+.saltTable-tfoot-divider-secondary {
+  --table-footer-divider-color: var(--salt-separable-secondary-borderColor);
+}
+
+.saltTable-tfoot-divider-tertiary {
+  --table-footer-divider-color: var(--salt-separable-tertiary-borderColor);
+}
+
+.saltTable-tfoot-divider-none.saltTable-tfoot .saltTable tr,
+.saltTable-tfoot-divider-none.saltTable-tfoot .saltTable-tr {
+  border-top: none;
 }
 
 /* TH */
@@ -153,13 +204,13 @@ table.saltTable tfoot {
 .saltTable-tr {
   align-items: center;
   background: var(--saltTable-thead-background, var(--table-background));
-  border-bottom: var(--salt-separable-borderStyle) var(--salt-separable-secondary-borderColor) var(--salt-size-border);
+  border-bottom: var(--salt-separable-borderStyle) var(--table-divider-color) var(--salt-size-border);
   height: var(--table-row-height);
 }
 
-.saltTable-tbody .saltTable-tr:hover,
-table.saltTable tbody tr:hover {
-  background: var(--saltTable-tr-background-hover, var(--salt-selectable-background-hover));
+.saltTable-divider-none .saltTable tr,
+.saltTable-divider-none .saltTable-tr {
+  border-bottom: none;
 }
 
 /* TD */

@@ -13,6 +13,11 @@ export type THeadProps = ComponentPropsWithoutRef<"thead"> & {
    */
   sticky?: boolean;
   /**
+   * Divider styling variant. Defaults to "primary";
+   * @default primary
+   */
+  divider?: "primary" | "secondary" | "tertiary" | "none";
+  /**
    * Styling variant for header.
    * If undefined, will match variant of parent Table variant.
    * @default undefined
@@ -21,7 +26,10 @@ export type THeadProps = ComponentPropsWithoutRef<"thead"> & {
 };
 
 export const THead = forwardRef<HTMLTableSectionElement, THeadProps>(
-  function THead({ children, className, sticky, variant, ...rest }, ref) {
+  function THead(
+    { children, className, sticky, variant, divider = "primary", ...rest },
+    ref,
+  ) {
     const targetWindow = useWindow();
     useComponentCssInjection({
       testId: "salt-table-thead",
@@ -36,6 +44,7 @@ export const THead = forwardRef<HTMLTableSectionElement, THeadProps>(
           withTableBaseName("thead"),
           { [withTableBaseName(`thead-${variant}`)]: variant },
           { [withTableBaseName("thead-sticky")]: sticky },
+          { [withTableBaseName(`thead-divider-${divider}`)]: divider },
           className,
         )}
         {...rest}
