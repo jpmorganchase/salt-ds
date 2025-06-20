@@ -58,7 +58,7 @@ export const AppHeader = () => {
             boxShadow:
               offset > 0 ? "var(--salt-overlayable-shadow-scroll)" : "none",
             borderBottom:
-              "var(--salt-size-border) var(--salt-container-borderStyle) var(--salt-separable-primary-borderColor)",
+              "var(--salt-size-fixed-100) var(--salt-container-borderStyle) var(--salt-separable-primary-borderColor)",
           }}
           justify="space-between"
           gap={3}
@@ -133,7 +133,7 @@ export const AppHeader = () => {
             zIndex: "calc(var(--salt-zIndex-drawer) + 1)",
             position: "fixed",
             borderBottom:
-              "var(--salt-size-border) var(--salt-separable-borderStyle) var(--salt-separable-primary-borderColor)",
+              "var(--salt-size-fixed-100) var(--salt-separable-borderStyle) var(--salt-separable-primary-borderColor)",
             boxShadow: offset > 0 ? "var(--salt-shadow-1)" : "none",
           }}
         >

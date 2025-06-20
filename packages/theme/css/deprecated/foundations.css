@@ -77,6 +77,10 @@
   --salt-size-sharktooth-width: 10px;
   --salt-size-stackable: calc(var(--salt-size-base) + var(--salt-size-unit));
 
+  --salt-size-border: 1px;
+  --salt-size-bar-small: 2px;
+  --salt-size-border-strong: 2px;
+
   /* Z Index */
   --salt-zIndex-docked: 1050;
 }

@@ -40,8 +40,8 @@
   border-width: var(--salt-size-bar-strong);
 }
 .saltCircularProgress-bufferBorder {
-  border: solid var(--salt-size-border) var(--salt-accent-background);
-  outline: solid var(--salt-size-border) var(--salt-accent-background);
+  border: solid var(--salt-size-fixed-100) var(--salt-accent-background);
+  outline: solid var(--salt-size-fixed-100) var(--salt-accent-background);
   outline-offset: calc(var(--salt-size-bar-strong) * -1);
 }
 
@@ -101,7 +101,7 @@
   background: var(--salt-accent-background);
   position: absolute;
   right: 0;
-  width: var(--salt-size-border);
+  width: var(--salt-size-fixed-100);
   height: var(--salt-size-bar-strong);
 }
 .saltCircularProgress-bufferOverlayRight:before {

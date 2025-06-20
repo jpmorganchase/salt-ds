@@ -8,7 +8,7 @@
   position: absolute;
   top: calc(((var(--salt-size-selectable) - var(--salt-size-bar)) / 2) * -1);
   transform: translateX(-50%);
-  width: var(--salt-size-border-strong);
+  width: var(--salt-size-fixed-200);
   touch-action: none;
 }
 
