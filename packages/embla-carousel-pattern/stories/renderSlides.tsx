@@ -43,8 +43,8 @@ export const renderSlides = ({
     const slideId = useId();
     return (
       <CarouselCard
-        key={`${slideId}-${slide.title.replace(/ /g, '-')}-${index}`}
-        id={`${slideId}-${slide.title.replace(/ /g, '-')}-${index}`}
+        key={`${slideId}-${slide.title.replace(/ /g, "-")}-${index}`}
+        id={`${slideId}-${slide.title.replace(/ /g, "-")}-${index}`}
         appearance="bordered"
         header={<H3>{slide.title}</H3>}
         aria-label={`label for slide ${index + 1}`}
