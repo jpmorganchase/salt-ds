@@ -27,9 +27,9 @@ export default {
   args: {
     variant: "primary",
     zebra: undefined,
-    THeadProps: { sticky: false },
-    TFootProps: { sticky: false },
-    TRProps: {},
+    THeadProps: { sticky: false, variant: "primary", divider: "primary" },
+    TFootProps: { sticky: false, variant: undefined, divider: "tertiary" },
+    TRProps: { divider: "secondary" },
     TDProps: { overflowWrap: undefined },
     THProps: { textOverflow: undefined },
     TBodyProps: {},
