@@ -6,7 +6,7 @@ import { withTableBaseName } from "./Table";
 
 import tableCss from "./Table.css";
 
-export type TFootProps = ComponentPropsWithoutRef<"tfoot"> & {
+export interface TFootProps extends ComponentPropsWithoutRef<"tfoot"> {
   /**
    * If footer is positioned with sticky styling.
    * @default undefined

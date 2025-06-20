@@ -10,7 +10,7 @@ import { withTableBaseName } from "./Table";
 
 import tableCss from "./Table.css";
 
-export type THProps = ComponentPropsWithoutRef<"th"> & {
+export interface THProps extends ComponentPropsWithoutRef<"th"> {
   /**
    * Styling for the header cell text overflow.
    * @default ellipsis

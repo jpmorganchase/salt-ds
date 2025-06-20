@@ -6,7 +6,7 @@ import { withTableBaseName } from "./Table";
 
 import tableCss from "./Table.css";
 
-export type THeadProps = ComponentPropsWithoutRef<"thead"> & {
+export interface THeadProps extends ComponentPropsWithoutRef<"thead"> {
   /**
    * If header is positioned with sticky styling.
    * @default undefined
@@ -23,7 +23,7 @@ export type THeadProps = ComponentPropsWithoutRef<"thead"> & {
    * @default undefined
    */
   variant?: "primary" | "secondary" | "tertiary";
-};
+}
 
 export const THead = forwardRef<HTMLTableSectionElement, THeadProps>(
   function THead(
