@@ -23,7 +23,7 @@ export interface TFootProps extends ComponentPropsWithoutRef<"tfoot"> {
    * @default undefined
    */
   variant?: "primary" | "secondary" | "tertiary";
-};
+}
 
 export const TFoot = forwardRef<HTMLTableSectionElement, TFootProps>(
   function TFoot(

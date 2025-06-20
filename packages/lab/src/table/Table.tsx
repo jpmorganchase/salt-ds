@@ -22,7 +22,7 @@ export interface TableProps extends ComponentPropsWithoutRef<"table"> {
    * @default undefined
    */
   zebra?: "primary" | "secondary" | "tertiary";
-};
+}
 
 export const withTableBaseName = makePrefixer("saltTable");
 
