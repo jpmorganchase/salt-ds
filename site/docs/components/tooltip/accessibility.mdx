@@ -8,6 +8,56 @@ data:
   $ref: ./#/data
 ---
 
-## Best practices
+Digital accessibility is a shared responsibility and while the standard behavior and attributes for a tooltip are already handled for you as part of our component, product teams are responsible for implementing the component correctly and ensuring their digital products meet all current accessibility requirements.
 
-The tooltip doesn't receive focus, so we recommend that you don't include interactive elements as the user can't access them.
+## What is a tooltip
+A tooltip is a non-modal overlay that is hidden by default and displays text-only content on hover or focus. It should only be used to provide extra (non-essential) information about a [`Form Field`](../form-field), [`Link`](../link), [`Button`](../button), or other interactive element.
+
+## Best practices
+- Tooltips are triggered by both focus and hover events and remain visible and persistent until:
+  - Hover or focus is removed from the trigger element
+  - The user manually dismisses it (e.g.`Esc` key)
+  - The content is no longer valid 
+- Focus does not move to the tooltip. Since a tooltip does not receive focus, do not include interactive elements in the tooltip as the user cannot access them.
+- Only one tooltip should be displayed at a time.
+- Keep the text for a tooltip short and concise.
+- Avoid rich content such as bold text, italics, headings, icons, etc. as these will not be conveyed through `aria-describedby`.
+- Do not put essential information in tooltips.
+- Do not use a timeout to hide the tooltip.
+- The expand/collapsed state is intentionally not exposed.
+- Keep the use of tooltips to a minimum and use only when providing extra (non-essential) information for the user.
+- When the content of a tooltip is not about an interactive UI element, consider adding the message directly on the page or using [`Overlay`](../overlay), [`Dialog`](../dialog), or [`Banner`](../banner) instead.
+
+
+## Anti-Pattern
+Avoid applying a tooltip to non-interactive elements. As a rule, non-operable elements should not receive keyboard focus to avoid confusion and unnecessary navigation steps.
+A common anti-pattern is to use an (i) icon (non-interative element) as the tooltip anchor however this is not recommended for the following reasons:
+
+- Icons (and other non-interative elements) do not receive focus by default.
+- Adding `tabindex` to make the icon focusable introduces an additional tab stop.
+- An (i) icon or non-interative element will not provide an appropriate programmatic association to what the tooltip is visually associated with. These tooltips become an orphaned note that screen readers announce out of context.
+- Screen readers are designed to announce tooltips when a user focuses on an interactive element. When a tooltip is attached to a static element (even using `tabindex`) Screen readers may not reliably announce its content as it is not part of the expected interaction model.
+
+
+## Mobile Consideration
+Standard tooltips do not display on touch-only devices when attached to [`Links`](../link), [`Buttons`](../button) or non-interative elements and there is currently no workaround. That said, tooltips should display when attached to a [`Form Field`](../form-field).
+
+## Keyboard interactions
+
+<KeyboardControls>
+  <KeyboardControl keyOrCombos="Tab">
+
+    - Tooltips do not receive focus, so Tab does not move focus to the tooltip. Instead, Tab moves focus to the tooltip trigger element to display the tooltip.
+
+  </KeyboardControl>
+  <KeyboardControl keyOrCombos="Escape">
+
+    - If the tooltip is displayed, pressing Escape dismisses the tooltip.
+
+  </KeyboardControl>
+</KeyboardControls>
+
+
+## Resources
+- [ARIA Tooltip Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/tooltip/)
+- [WCAG 1.4.13 Content on Hover or Focus](https://www.w3.org/TR/WCAG21/#content-on-hover-or-focus)
