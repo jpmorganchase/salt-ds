@@ -89,18 +89,28 @@ export const CarouselTabList = forwardRef<HTMLDivElement, CarouselTabListProps>(
           const ariaControls = slideNodes?.length
             ? slideNodes[startSlideNumber - 1].id
             : undefined;
-          return renderProps(CarouselDotButton, {
-            key: label,
-            render,
-            role: "tab",
-            onClick: () => onDotButtonClick(dotIndex),
-            "aria-selected": selected,
-            selected: selected,
-            tabIndex: selected ? 0 : -1,
-            "aria-labelledby": ariaControls,
-            "aria-controls": ariaControls,
-            ref: (element: HTMLButtonElement) => { buttonRefs.current[dotIndex] = element },
-          });
+          console.log(`${label}-${dotIndex}`);
+          return renderProps(
+            (props) => (
+              <CarouselDotButton
+                {...props}
+                key={`dot-${label}-${dotIndex}`}
+                ref={(element: HTMLButtonElement) => {
+                  buttonRefs.current[dotIndex] = element;
+                }}
+              />
+            ),
+            {
+              render,
+              role: "tab",
+              onClick: () => onDotButtonClick(dotIndex),
+              "aria-selected": selected,
+              selected: selected,
+              tabIndex: selected ? 0 : -1,
+              "aria-labelledby": ariaControls,
+              "aria-controls": ariaControls,
+            },
+          );
         })}
       </div>
     );
