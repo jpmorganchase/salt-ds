@@ -1,7 +1,6 @@
 .saltDialogContent {
   color: var(--salt-content-primary-foreground);
   min-height: var(--salt-text-lineHeight);
-  overflow-y: auto;
   background: var(--salt-container-primary-background);
 
   margin-left: var(--salt-spacing-200);
@@ -9,13 +8,23 @@
   padding-left: var(--salt-spacing-100);
   /* auto is needed for support on Safari, due to webkit bugs with flex */
   flex: 1 1 auto;
+  position: relative;
 }
+
+.saltDialogContent-inner {
+  overflow-y: auto;
+  border-top: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) transparent;
+  border-bottom: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) transparent;
+}
+
 .saltDialogContent-overflow {
   padding-right: var(--salt-spacing-100);
 }
 
-.saltDialogContent-scroll {
-  margin-left: var(--salt-spacing-300);
-  margin-right: var(--salt-spacing-300);
-  border-bottom: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-separable-tertiary-borderColor);
+.saltDialogContent-scrollTop.saltDialogContent-inner {
+  border-top-color: var(--salt-separable-tertiary-borderColor);
+}
+
+.saltDialogContent-scrollBottom.saltDialogContent-inner {
+  border-bottom-color: var(--salt-separable-tertiary-borderColor);
 }
