@@ -6,7 +6,7 @@ import { withTableBaseName } from "./Table";
 
 import tableCss from "./Table.css";
 
-export interface TRProps extends ComponentPropsWithoutRef<"tr">{};
+export interface TRProps extends ComponentPropsWithoutRef<"tr"> {}
 
 export const TR = forwardRef<HTMLTableRowElement, TRProps>(function TR(
   { children, className, ...rest },

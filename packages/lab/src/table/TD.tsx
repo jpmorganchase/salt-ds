@@ -16,7 +16,7 @@ export interface TDProps extends ComponentPropsWithoutRef<"td"> {
    * @default anywhere
    */
   overflowWrap?: CSSProperties["overflowWrap"];
-};
+}
 
 export const TD = forwardRef<HTMLTableCellElement, TDProps>(function TD(
   { children, className, overflowWrap = "anywhere", style, ...rest },
