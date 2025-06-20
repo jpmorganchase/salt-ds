@@ -38,6 +38,7 @@ import {
 
 import numberInputCss from "./NumberInput.css";
 import { useNumberInput } from "./useNumberInput";
+import useCaretPosition from "./internal/useCaretPosition";
 
 const withBaseName = makePrefixer("saltNumberInput");
 
@@ -220,8 +221,9 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       );
 
     const [isEditing, setIsEditing] = useState(false);
-    const inputRef = useRef<HTMLInputElement | null>(null);
-    const forkedInputRef = useForkRef(inputRef, inputRefProp);
+    const inputRef = useRef<HTMLInputElement>(null);
+    const handleInputRef = useForkRef(inputRefProp, inputRef);
+
     const { IncreaseIcon, DecreaseIcon } = useIcon();
 
     const {
@@ -251,6 +253,11 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       sanitizeInput(value?.toString() ?? "").toString(),
     );
 
+    const { setCaretPosition, resetCaretPosition } = useCaretPosition({
+      inputRef,
+      value: displayValue,
+    });
+
     const {
       decrementButtonProps,
       decrementValue,
@@ -273,49 +280,60 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
     });
 
     useEffect(() => {
-      if (!isEditing && !isEmpty(value)) {
-        const floatValue = toFloat(value);
-        let formatted = value;
-        if (format) {
-          formatted = format(
-            clampValue ? clamp(max, min, floatValue) : floatValue,
-          );
-        } else if (!Number.isNaN(floatValue)) {
-          formatted = floatValue.toFixed(decimalScale);
+      const updateDisplayValue = () => {
+        if (isEditing || isEmpty(value)) {
+          return value;
         }
-        setDisplayValue(formatted.toString());
-      } else {
-        setDisplayValue(value);
-      }
+        const floatValue = toFloat(value);
+        if (Number.isNaN(floatValue)) {
+          return value;
+        }
+        const clampedValue = clampValue
+          ? clamp(max, min, floatValue)
+          : floatValue;
+        return format
+          ? format(clampedValue)
+          : clampedValue.toFixed(decimalScale);
+      };
+      setDisplayValue(updateDisplayValue().toString());
     }, [value, isEditing, format, clampValue, decimalScale, min, max]);
 
     const handleInputFocus = (event: FocusEvent<HTMLInputElement>) => {
       setIsEditing(true);
-      const parsed = parse?.(value) ?? value;
-      const floatValue = !isEmpty(parsed)
-        ? toFloat(parsed).toFixed(decimalScale)
-        : parsed;
+      const parsedValue = parse?.(value) ?? value;
+      const floatValue = !isEmpty(parsedValue)
+        ? toFloat(parsedValue).toFixed(decimalScale)
+        : parsedValue;
       setValue(floatValue);
       inputOnFocus?.(event);
     };
 
     const handleInputBlur = (event: FocusEvent<HTMLInputElement>) => {
       setIsEditing(false);
-      const raw = sanitizeInput(event.target.value);
-      let updatedValue = raw;
-      if (!isEmpty(raw)) {
-        const floatValue = toFloat(raw);
-        const clamped = clampValue ? clamp(max, min, floatValue) : floatValue;
-        updatedValue = Number(clamped.toFixed(decimalScale));
+      const rawValue = sanitizeInput(event.target.value);
+      let updatedValue = rawValue;
+      if (!isEmpty(rawValue)) {
+        const floatValue = toFloat(rawValue);
+        const clampedValue = clampValue
+          ? clamp(max, min, floatValue)
+          : floatValue;
+        updatedValue = Number(clampedValue.toFixed(decimalScale));
       }
       if (String(updatedValue) !== String(value)) {
         onChangeProp?.(event, updatedValue);
         setValue(updatedValue);
       }
+      resetCaretPosition();
       inputOnBlur?.(event);
     };
 
     const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+      const beforeStart =
+        event.target.selectionStart ?? event.target.value.length;
+      const beforeEnd = event.target.selectionEnd ?? event.target.value.length;
+
+      setCaretPosition(beforeStart, beforeEnd);
+
       const raw = sanitizeInput(event.target.value);
       if (String(raw) === String(value)) {
         return;
@@ -434,7 +452,7 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
           placeholder={placeholder}
           readOnly={isReadOnly}
           aria-readonly={isReadOnly ? "true" : undefined}
-          ref={forkedInputRef}
+          ref={handleInputRef}
           required={isRequired}
           // Workaround to have readonly conveyed by screen readers (https://github.com/jpmorganchase/salt-ds/issues/4586)
           role={isReadOnly ? "textbox" : "spinbutton"}
