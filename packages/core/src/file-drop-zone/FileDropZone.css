@@ -40,6 +40,6 @@
 .saltFileDropZone-disabled {
   background: var(--salt-container-primary-background-disabled);
   border: var(--salt-size-border-strong) var(--salt-target-borderStyle) var(--salt-container-primary-borderColor-disabled);
-  cursor: var(--salt-target-cursor-disabled);
+  cursor: var(--salt-cursor-disabled);
   color: var(--salt-content-primary-foreground-disabled);
 }

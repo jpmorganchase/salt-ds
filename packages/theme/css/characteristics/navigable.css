@@ -1,9 +1,4 @@
 .salt-theme {
-  --salt-navigable-cursor-active: pointer;
-  --salt-navigable-cursor-hover: pointer;
-  --salt-navigable-cursor-disabled: not-allowed;
-  --salt-navigable-cursor-edit: text;
-
   --salt-navigable-fontWeight: var(--salt-typography-fontWeight-regular);
   --salt-navigable-fontWeight-hover: var(--salt-typography-fontWeight-regular);
   --salt-navigable-fontWeight-active: var(--salt-typography-fontWeight-semiBold);

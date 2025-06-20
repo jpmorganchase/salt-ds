@@ -12,13 +12,13 @@
 .saltToggleButtonGroup-disabled {
   background: var(--salt-container-primary-background-disabled);
   border-color: var(--salt-container-primary-borderColor-disabled);
-  cursor: var(--salt-actionable-cursor-disabled);
+  cursor: var(--salt-cursor-disabled);
 }
 
 .saltToggleButtonGroup-readOnly {
   background: var(--salt-container-primary-background);
   border-color: var(--salt-container-primary-borderColor);
-  cursor: var(--salt-actionable-cursor-disabled);
+  cursor: var(--salt-cursor-disabled);
 }
 
 .saltToggleButtonGroup .saltToggleButton {

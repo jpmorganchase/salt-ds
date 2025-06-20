@@ -106,7 +106,7 @@
   --tabs-tab-before-height: var(--tabs-activationIndicator-thumb-height);
   --tabs-tab-before-inset: var(--tabs-activationIndicator-inset);
   --tabs-tab-before-width: var(--tabs-activationIndicator-thumb-width);
-  --tabs-tab-cursor: var(--salt-draggable-grab-cursor-active);
+  --tabs-tab-cursor: var(--salt-cursor-grabbing);
   --tabs-tab-position: static;
 
   font-size: 12px;

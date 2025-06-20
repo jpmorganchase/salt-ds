@@ -7,7 +7,7 @@
   height: var(--salt-size-base);
   color: var(--salt-content-primary-foreground);
   background: var(--salt-selectable-background);
-  cursor: pointer;
+  cursor: var(--salt-cursor-hover);
   border: none;
   padding: 0;
   display: flex;
@@ -88,7 +88,7 @@
 .saltCalendarDay-unselectable,
 .saltCalendarDay-unselectable:hover {
   background: var(--salt-selectable-background-disabled);
-  cursor: var(--salt-selectable-cursor-disabled);
+  cursor: var(--salt-cursor-disabled);
 }
 
 .saltCalendarDay-highlighted:before,

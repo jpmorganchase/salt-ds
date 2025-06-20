@@ -48,7 +48,7 @@
   --formFieldLegacy-activationIndicator-size: var(--salt-size-border);
   --formFieldLegacy-activationIndicator-style: var(--salt-editable-borderStyle-hover);
 
-  --saltInputLegacy-cursor: var(--salt-editable-cursor-hover);
+  --saltInputLegacy-cursor: var(--salt-cursor-hover);
 }
 
 /* Class applied to the root element when focused */
@@ -60,7 +60,7 @@
   --formFieldLegacy-activationIndicator-size: var(--salt-editable-borderWidth-active);
   --formFieldLegacy-activationIndicator-style: var(--salt-editable-borderStyle-active);
 
-  --saltInputLegacy-cursor: var(--salt-editable-cursor-active);
+  --saltInputLegacy-cursor: var(--salt-cursor-active);
 }
 
 /* Class applied when helper text is provided */
@@ -99,7 +99,7 @@
   --formFieldLegacy-activationIndicator-style: var(--salt-editable-borderStyle-disabled);
   --formFieldLegacy-helperText-opacity: var(--salt-palette-opacity-disabled);
 
-  --saltInputLegacy-cursor: var(--salt-editable-cursor-disabled);
+  --saltInputLegacy-cursor: var(--salt-cursor-disabled);
 }
 
 /* Class applied to the root element on hover if `disabled={true}` */
@@ -108,7 +108,7 @@
   --formFieldLegacy-activationIndicator-size: var(--salt-size-border);
   --formFieldLegacy-activationIndicator-style: var(--salt-editable-borderStyle-disabled);
 
-  --saltInputLegacy-cursor: var(--salt-editable-cursor-disabled);
+  --saltInputLegacy-cursor: var(--salt-cursor-disabled);
 }
 
 /* Class applied to the root element on warning state */
@@ -211,7 +211,7 @@
 .saltFormFieldLegacy-readOnly {
   --formFieldLegacy-activationIndicator-color: var(--salt-editable-borderColor-readonly);
 
-  --saltInputLegacy-cursor: var(--salt-editable-cursor-readonly);
+  --saltInputLegacy-cursor: var(--salt-cursor-readonly);
 }
 
 /* Class applied to the root element if `readOnly={true}"` on hover */
@@ -220,7 +220,7 @@
   --formFieldLegacy-activationIndicator-size: var(--salt-size-border);
   --formFieldLegacy-activationIndicator-style: var(--salt-editable-borderStyle-readonly);
 
-  --saltInputLegacy-cursor: var(--salt-editable-cursor-readonly);
+  --saltInputLegacy-cursor: var(--salt-cursor-readonly);
 }
 
 /* Class applied on focus with `labelTop={true}` and no helper text provided */

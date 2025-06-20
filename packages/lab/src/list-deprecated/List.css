@@ -14,7 +14,7 @@
 
   /* Misc. */
   --list-boxShadow: none;
-  --list-disabled-cursor: var(--salt-actionable-cursor-disabled);
+  --list-disabled-cursor: var(--salt-cursor-disabled);
 }
 
 .saltListDeprecated-wrapper {
