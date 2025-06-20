@@ -32,7 +32,7 @@
 .saltPageButton:disabled {
   color: var(--salt-content-secondary-foreground);
   background: var(--salt-selectable-background);
-  cursor: var(--salt-cursor);
+  cursor: var(--salt-cursor-hover);
 }
 
 .saltPageButton[aria-current="page"] {

@@ -1,5 +1,4 @@
 .salt-theme {
-  --salt-cursor: pointer;
   --salt-cursor-active: pointer;
   --salt-cursor-disabled: not-allowed;
   --salt-cursor-drag-ew: ew-resize;
