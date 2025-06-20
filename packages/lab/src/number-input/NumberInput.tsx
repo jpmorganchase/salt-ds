@@ -37,8 +37,8 @@ import {
 } from "./internal/utils";
 
 import numberInputCss from "./NumberInput.css";
-import { useNumberInput } from "./useNumberInput";
 import useCaretPosition from "./internal/useCaretPosition";
+import { useNumberInput } from "./useNumberInput";
 
 const withBaseName = makePrefixer("saltNumberInput");
 

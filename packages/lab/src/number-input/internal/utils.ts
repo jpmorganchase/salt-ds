@@ -52,14 +52,6 @@ export const sanitizeInput = (value: string | number) => {
   return sanitizedInput;
 };
 
-export const isAtMax = (value: number | string, max: number) => {
-  return toFloat(value) >= max;
-};
-
-export const isAtMin = (value: number | string, min: number) => {
-  return toFloat(value) <= min;
-};
-
 export const isOutOfRange = (
   value: number | string | undefined,
   min: number,
@@ -68,16 +60,6 @@ export const isOutOfRange = (
   if (value === undefined) return true;
   const floatValue = toFloat(value);
   return floatValue > max || floatValue < min;
-};
-
-export const parseAndFormat = (
-  numberString: string | number,
-  format?: (value: string | number) => number | string,
-) => {
-  const sanitized = sanitizeInput(numberString);
-  const formattedValue = format ? format(sanitized) : sanitized;
-
-  return formattedValue;
 };
 
 export const clamp = (max: number, min: number, value: number) => {

@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef, type MutableRefObject } from "react";
+import { type MutableRefObject, useLayoutEffect, useRef } from "react";
 
 const useCaretPosition = ({
   inputRef,

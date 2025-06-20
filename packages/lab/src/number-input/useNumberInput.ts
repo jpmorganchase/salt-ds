@@ -8,7 +8,7 @@ import {
 } from "react";
 import type { NumberInputProps } from "./NumberInput";
 import { useActivateWhileMouseDown } from "./internal/useActivateWhileMouseDown";
-import { isAtMax, isAtMin, toFloat } from "./internal/utils";
+import { toFloat } from "./internal/utils";
 
 /**
  * Manages increment / decrement logic
@@ -57,13 +57,13 @@ export const useNumberInput = ({
 
   const decrementValue = useCallback(
     (event?: SyntheticEvent, block?: boolean) => {
-      if (isAtMin(value, min)) return;
       const decrementStep = block ? stepMultiplier * step : step;
       let parsedValue = value;
       if (parse) {
         parsedValue = parse(value);
       }
       const nextValue = toFloat(parsedValue) - decrementStep;
+      if (nextValue < min) return;
       updateValue(event, nextValue);
     },
     [value, min, step, stepMultiplier, updateValue, parse],
@@ -71,10 +71,10 @@ export const useNumberInput = ({
 
   const incrementValue = useCallback(
     (event?: SyntheticEvent, block?: boolean) => {
-      if (isAtMax(value, max)) return;
       const incrementStep = block ? stepMultiplier * step : step;
       const parsedValue = parse?.(value) || value;
       const nextValue = toFloat(parsedValue) + incrementStep;
+      if (nextValue > max) return;
       updateValue(event, nextValue);
     },
     [value, max, step, stepMultiplier, updateValue, parse],
@@ -82,12 +82,12 @@ export const useNumberInput = ({
 
   const { activate: decrementSpinner } = useActivateWhileMouseDown(
     (event?: SyntheticEvent) => decrementValue(event),
-    isAtMin(value, min),
+    toFloat(value) <= min,
   );
 
   const { activate: incrementSpinner } = useActivateWhileMouseDown(
     (event?: SyntheticEvent) => incrementValue(event),
-    isAtMax(value, max),
+    toFloat(value) >= max,
   );
 
   const handleButtonMouseUp = () => inputRef.current?.focus();
@@ -101,11 +101,10 @@ export const useNumberInput = ({
   const incrementButtonProps = {
     ...commonButtonProps,
     "aria-label": "increment value",
-    disabled: disabled || isAtMax(value, max),
+    disabled: disabled || toFloat(value) + step > max,
     onMouseDown: (event: MouseEvent<HTMLButtonElement>) => {
       event.preventDefault();
       setIsEditing(true);
-      // userEditingRef.current = true;
       if (event.nativeEvent.button !== 0) {
         // To match closely with <input type='input'>
         return;
@@ -117,7 +116,7 @@ export const useNumberInput = ({
   const decrementButtonProps = {
     ...commonButtonProps,
     "aria-label": "decrement value",
-    disabled: disabled || isAtMin(value, min),
+    disabled: disabled || toFloat(value) - step < min,
     onMouseDown: (event: MouseEvent<HTMLButtonElement>) => {
       event.preventDefault();
       setIsEditing(true);
