@@ -3,7 +3,7 @@
 .ag-theme-salt-dark .ag-checkbox-input-wrapper,
 .ag-theme-salt-compact-light .ag-checkbox-input-wrapper,
 .ag-theme-salt-compact-dark .ag-checkbox-input-wrapper {
-  /* border-radius doesn't work given border is part of the font glyph */
+  /* border-radius doesn't work given border is part of the font glyph, v33 new theme approach will support this. */
   height: var(--salt-size-selectable);
   width: var(--salt-size-selectable);
   font-size: var(--salt-size-selectable);
