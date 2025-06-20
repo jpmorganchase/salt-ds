@@ -27,42 +27,47 @@ export const CarouselPreviousButton = forwardRef<
 
   const { PreviousIcon } = useIcon();
 
-  const handleSettle = useCallback(
-    (emblaApi: EmblaCarouselType) => {
-      const slideIndexInView = emblaApi?.selectedScrollSnap() ?? 0;
-      const numberOfSlides = emblaApi?.slideNodes().length ?? 0;
-      const scrollSnaps = emblaApi?.scrollSnapList() ?? [];
-      const slidesPerTransition = numberOfSlides
-        ? Math.ceil(numberOfSlides / scrollSnaps.length)
-        : 0;
-      let startSlideNumber = Math.min((slideIndexInView * slidesPerTransition)  + 1, numberOfSlides - (slidesPerTransition - 1));
-      startSlideNumber = startSlideNumber - slidesPerTransition;
-      let endSlideNumber = Math.min(
-        startSlideNumber + slidesPerTransition - 1,
-        numberOfSlides,
-      );
-      endSlideNumber = endSlideNumber;
+  const handleSettle = useCallback((emblaApi: EmblaCarouselType) => {
+    const slideIndexInView = emblaApi?.selectedScrollSnap() ?? 0;
+    const numberOfSlides = emblaApi?.slideNodes().length ?? 0;
+    const scrollSnaps = emblaApi?.scrollSnapList() ?? [];
+    const slidesPerTransition = numberOfSlides
+      ? Math.ceil(numberOfSlides / scrollSnaps.length)
+      : 0;
+    let startSlideNumber = Math.min(
+      slideIndexInView * slidesPerTransition + 1,
+      numberOfSlides - (slidesPerTransition - 1),
+    );
+    startSlideNumber = startSlideNumber - slidesPerTransition;
+    let endSlideNumber = Math.min(
+      startSlideNumber + slidesPerTransition - 1,
+      numberOfSlides,
+    );
+    endSlideNumber = endSlideNumber;
 
+    const label =
+      startSlideNumber === endSlideNumber
+        ? `Previous slide ${startSlideNumber} of ${numberOfSlides}`
+        : `Previous slides ${startSlideNumber}-${endSlideNumber} of ${numberOfSlides}`;
 
-      const label =
-        startSlideNumber === endSlideNumber
-          ? `Previous slide ${startSlideNumber} of ${numberOfSlides}`
-          : `Previous slides ${startSlideNumber}-${endSlideNumber} of ${numberOfSlides}`;
-
-      setPrevSlideDescription(label);
-    },
-    [],
-  );
+    setPrevSlideDescription(label);
+  }, []);
 
   useEffect(() => {
     if (!emblaApi) {
       return;
     }
     handleSettle(emblaApi);
-    emblaApi.on("init", handleSettle).on("reInit", handleSettle).on("settle", handleSettle);
+    emblaApi
+      .on("init", handleSettle)
+      .on("reInit", handleSettle)
+      .on("settle", handleSettle);
     // Cleanup listener on component unmount
     return () => {
-      emblaApi.off("init", handleSettle).off("reInit", handleSettle).off("settle", handleSettle);
+      emblaApi
+        .off("init", handleSettle)
+        .off("reInit", handleSettle)
+        .off("settle", handleSettle);
     };
   }, [emblaApi, handleSettle]);
 
