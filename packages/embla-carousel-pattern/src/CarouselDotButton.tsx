@@ -65,13 +65,13 @@ export const useDotButton = (
     handleInit(emblaApi);
     handleSelect(emblaApi);
     emblaApi
+      .on("init", handleInit)
       .on("reInit", handleInit)
-      .on("reInit", handleSelect)
       .on("select", handleSelect);
     // Cleanup listener on component unmount
     return () => {
+      emblaApi.off("init", handleInit);
       emblaApi.off("reInit", handleInit);
-      emblaApi.off("reInit", handleSelect);
       emblaApi.off("settle", handleSelect);
     };
   }, [emblaApi, handleInit, handleSelect]);

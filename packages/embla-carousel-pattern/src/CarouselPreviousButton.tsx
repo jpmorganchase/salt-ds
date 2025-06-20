@@ -29,18 +29,20 @@ export const CarouselPreviousButton = forwardRef<
 
   const handleSettle = useCallback(
     (emblaApi: EmblaCarouselType) => {
-      const slideIndexInView = emblaApi?.slidesInView()?.[0] ?? 0;
+      const slideIndexInView = emblaApi?.selectedScrollSnap() ?? 0;
       const numberOfSlides = emblaApi?.slideNodes().length ?? 0;
       const scrollSnaps = emblaApi?.scrollSnapList() ?? [];
       const slidesPerTransition = numberOfSlides
         ? Math.ceil(numberOfSlides / scrollSnaps.length)
         : 0;
-
-      const endSlideNumber = slideIndexInView;
-      const startSlideNumber = Math.max(
-        endSlideNumber - slidesPerTransition + 1,
-        1,
+      let startSlideNumber = Math.min((slideIndexInView * slidesPerTransition)  + 1, numberOfSlides - (slidesPerTransition - 1));
+      startSlideNumber = startSlideNumber - slidesPerTransition;
+      let endSlideNumber = Math.min(
+        startSlideNumber + slidesPerTransition - 1,
+        numberOfSlides,
       );
+      endSlideNumber = endSlideNumber;
+
 
       const label =
         startSlideNumber === endSlideNumber
@@ -53,12 +55,14 @@ export const CarouselPreviousButton = forwardRef<
   );
 
   useEffect(() => {
-    if (!emblaApi) return;
-    emblaApi.on("reInit", handleSettle).on("settle", handleSettle);
+    if (!emblaApi) {
+      return;
+    }
     handleSettle(emblaApi);
+    emblaApi.on("init", handleSettle).on("reInit", handleSettle).on("settle", handleSettle);
     // Cleanup listener on component unmount
     return () => {
-      emblaApi.off("reInit", handleSettle).off("settle", handleSettle);
+      emblaApi.off("init", handleSettle).off("reInit", handleSettle).off("settle", handleSettle);
     };
   }, [emblaApi, handleSettle]);
 

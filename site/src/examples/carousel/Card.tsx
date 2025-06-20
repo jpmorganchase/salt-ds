@@ -27,8 +27,8 @@ export const Card = (): ReactElement => {
           return (
             <CarouselCard
               className={styles.carouselSlide}
-              key={`${slideId}-${slide.title}`}
-              id={`${slideId}-${slide.title}`}
+              key={`${slideId}-${slide.title.replace(/ /g, '-')}-${index}`}
+              id={`${slideId}-${slide.title.replace(/ /g, '-')}-${index}`}
               aria-label={`Example slide ${index + 1}`}
               media={
                 <img
