@@ -16,7 +16,7 @@ export interface THProps extends ComponentPropsWithoutRef<"th"> {
    * @default ellipsis
    */
   textOverflow?: CSSProperties["textOverflow"];
-};
+}
 
 export const TH = forwardRef<HTMLTableCellElement, THProps>(function TH(
   { children, className, textOverflow = "ellipsis", style, ...rest },

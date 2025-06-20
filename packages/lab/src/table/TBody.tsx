@@ -6,7 +6,7 @@ import { withTableBaseName } from "./Table";
 
 import tableCss from "./Table.css";
 
-export interface TBodyProps extends ComponentPropsWithoutRef<"tbody">{};
+export interface TBodyProps extends ComponentPropsWithoutRef<"tbody"> {}
 
 export const TBody = forwardRef<HTMLTableSectionElement, TBodyProps>(
   function TBody({ children, className, ...rest }, ref) {
