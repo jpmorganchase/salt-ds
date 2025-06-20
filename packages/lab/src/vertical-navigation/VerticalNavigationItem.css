@@ -1,0 +1,4 @@
+.saltVerticalNavigationItem {
+  --y: calc(var(--x) + 1);
+  --depth: min(var(--x), var(--y));
+}
