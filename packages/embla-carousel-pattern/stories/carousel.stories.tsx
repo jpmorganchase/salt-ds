@@ -17,9 +17,9 @@ import {
   Text,
   useId,
 } from "@salt-ds/core";
+import Classnames from "embla-carousel-class-names";
 import Fade from "embla-carousel-fade";
 import { renderSlides } from "./renderSlides";
-import Classnames from "embla-carousel-class-names";
 
 export default {
   title: "Patterns/Carousel",

@@ -32,29 +32,29 @@ export function CarouselProgressLabel({
   const [currentSlide, setCurrentSlide] = useState("");
   const [totalSlides, setTotalSlides] = useState(0);
 
-  const handleSettle = useCallback(
-    (emblaApi: EmblaCarouselType) => {
-      const slideIndexInView = emblaApi?.selectedScrollSnap() ?? 0;
-      const numberOfSlides = emblaApi?.slideNodes().length ?? 0;
-      const scrollSnaps = emblaApi?.scrollSnapList() ?? [];
-      const slidesPerTransition = numberOfSlides
-        ? Math.ceil(numberOfSlides / scrollSnaps.length)
-        : 0;
-      const startSlideNumber = Math.min((slideIndexInView * slidesPerTransition)  + 1, numberOfSlides - (slidesPerTransition - 1));
-      const endSlideNumber = Math.min(
-        startSlideNumber + slidesPerTransition - 1,
-        numberOfSlides,
-      );
+  const handleSettle = useCallback((emblaApi: EmblaCarouselType) => {
+    const slideIndexInView = emblaApi?.selectedScrollSnap() ?? 0;
+    const numberOfSlides = emblaApi?.slideNodes().length ?? 0;
+    const scrollSnaps = emblaApi?.scrollSnapList() ?? [];
+    const slidesPerTransition = numberOfSlides
+      ? Math.ceil(numberOfSlides / scrollSnaps.length)
+      : 0;
+    const startSlideNumber = Math.min(
+      slideIndexInView * slidesPerTransition + 1,
+      numberOfSlides - (slidesPerTransition - 1),
+    );
+    const endSlideNumber = Math.min(
+      startSlideNumber + slidesPerTransition - 1,
+      numberOfSlides,
+    );
 
-      if (startSlideNumber === endSlideNumber) {
-        setCurrentSlide(startSlideNumber.toString(10));
-      } else {
-        setCurrentSlide(`${startSlideNumber}-${endSlideNumber}`);
-      }
-      setTotalSlides(numberOfSlides);
-    },
-    [],
-  );
+    if (startSlideNumber === endSlideNumber) {
+      setCurrentSlide(startSlideNumber.toString(10));
+    } else {
+      setCurrentSlide(`${startSlideNumber}-${endSlideNumber}`);
+    }
+    setTotalSlides(numberOfSlides);
+  }, []);
 
   useEffect(() => {
     if (!emblaApi) return;
@@ -65,7 +65,10 @@ export function CarouselProgressLabel({
     handleSettle(emblaApi);
     // Cleanup listener on component unmount
     return () => {
-      emblaApi.off("init", handleSettle).off("reInit", handleSettle).off("settle", handleSettle);
+      emblaApi
+        .off("init", handleSettle)
+        .off("reInit", handleSettle)
+        .off("settle", handleSettle);
     };
   }, [emblaApi, handleSettle]);
 
