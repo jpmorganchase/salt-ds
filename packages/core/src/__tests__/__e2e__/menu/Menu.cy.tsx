@@ -2,8 +2,14 @@ import * as menuStories from "@stories/menu/menu.stories";
 import { composeStories } from "@storybook/react-vite";
 import { CustomFloatingComponentProvider, FLOATING_TEST_ID } from "../common";
 
-const { ContextMenu, SingleLevel, MultiLevel, GroupedItems, IconWithGroups } =
-  composeStories(menuStories);
+const {
+  ContextMenu,
+  SingleLevel,
+  MultiLevel,
+  GroupedItems,
+  IconWithGroups,
+  WithTooltip,
+} = composeStories(menuStories);
 
 describe("Given a Menu", () => {
   it("should show a menu and perform an action with a mouse", () => {
@@ -229,5 +235,16 @@ describe("Given a Menu", () => {
     );
 
     cy.findByTestId(FLOATING_TEST_ID).should("exist");
+  });
+
+  it("should support tooltip on menu triggers", () => {
+    cy.mount(<WithTooltip />);
+    cy.findByRole("menu").should("not.exist");
+
+    cy.findByRole("button").realHover();
+    cy.findByRole("tooltip").should("be.visible");
+
+    cy.findByRole("button").realClick();
+    cy.findByRole("menu").should("exist");
   });
 });

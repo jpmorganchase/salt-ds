@@ -2,8 +2,8 @@ import {
   type ReactNode,
   type Ref,
   cloneElement,
-  isValidElement,
   forwardRef,
+  isValidElement,
 } from "react";
 import { getRefFromChildren, mergeProps, useForkRef } from "../utils";
 import { useMenuContext } from "./MenuContext";
