@@ -3,7 +3,7 @@ import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import type { EmblaCarouselType } from "embla-carousel";
-import { useCallback, useLayoutEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useCarouselContext } from "./CarouselContext";
 import carouselProgressLabelCss from "./CarouselProgressLabel.css";
 
@@ -34,14 +34,13 @@ export function CarouselProgressLabel({
 
   const handleSettle = useCallback(
     (emblaApi: EmblaCarouselType) => {
-      const slideIndexInView = emblaApi?.slidesInView()?.[0] ?? 0;
+      const slideIndexInView = emblaApi?.selectedScrollSnap() ?? 0;
       const numberOfSlides = emblaApi?.slideNodes().length ?? 0;
       const scrollSnaps = emblaApi?.scrollSnapList() ?? [];
       const slidesPerTransition = numberOfSlides
         ? Math.ceil(numberOfSlides / scrollSnaps.length)
         : 0;
-
-      const startSlideNumber = slideIndexInView + 1;
+      const startSlideNumber = Math.min((slideIndexInView * slidesPerTransition)  + 1, numberOfSlides - (slidesPerTransition - 1));
       const endSlideNumber = Math.min(
         startSlideNumber + slidesPerTransition - 1,
         numberOfSlides,
@@ -57,7 +56,7 @@ export function CarouselProgressLabel({
     [],
   );
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (!emblaApi) return;
     emblaApi
       .on("init", handleSettle)
@@ -66,7 +65,7 @@ export function CarouselProgressLabel({
     handleSettle(emblaApi);
     // Cleanup listener on component unmount
     return () => {
-      emblaApi.off("reInit", handleSettle).off("settle", handleSettle);
+      emblaApi.off("init", handleSettle).off("reInit", handleSettle).off("settle", handleSettle);
     };
   }, [emblaApi, handleSettle]);
 
