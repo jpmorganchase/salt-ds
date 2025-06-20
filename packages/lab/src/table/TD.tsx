@@ -10,7 +10,7 @@ import { withTableBaseName } from "./Table";
 
 import tableCss from "./Table.css";
 
-export type TDProps = ComponentPropsWithoutRef<"td"> & {
+export interface TDProps extends ComponentPropsWithoutRef<"td"> {
   /**
    * Overflow wrap styling for the cell.
    * @default anywhere
