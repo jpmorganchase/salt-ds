@@ -9,7 +9,7 @@ import {
   type CarouselRef,
   CarouselSlides,
   CarouselTabList,
-} from "@salt-ds/embla-carousel-pattern";
+} from "@salt-ds/embla-carousel";
 import "./carousel.stories.css";
 import {
   AriaAnnouncerProvider,
@@ -18,7 +18,7 @@ import {
   Text,
   useId,
 } from "@salt-ds/core";
-import type { CarouselProps } from "@salt-ds/embla-carousel-pattern";
+import type { CarouselProps } from "@salt-ds/embla-carousel";
 import Classnames from "embla-carousel-class-names";
 import Fade from "embla-carousel-fade";
 import type { MutableRefObject } from "react";

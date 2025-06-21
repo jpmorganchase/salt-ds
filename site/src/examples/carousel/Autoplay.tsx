@@ -9,7 +9,7 @@ import {
   CarouselPreviousButton,
   CarouselProgressLabel,
   CarouselSlides,
-} from "@salt-ds/embla-carousel-pattern";
+} from "@salt-ds/embla-carousel";
 import { PauseIcon, PlayIcon } from "@salt-ds/icons";
 import { default as AutoplayPlugin } from "embla-carousel-autoplay";
 import { useCallback, useEffect, useRef, useState } from "react";

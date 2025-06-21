@@ -14,7 +14,7 @@ import {
   CarouselProgressLabel,
   CarouselSlides,
   CarouselTabList,
-} from "@salt-ds/embla-carousel-pattern";
+} from "@salt-ds/embla-carousel";
 import { clsx } from "clsx";
 import type { ReactElement } from "react";
 import { sliderData } from "./exampleData";

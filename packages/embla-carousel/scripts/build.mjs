@@ -9,10 +9,10 @@ import glob from "fast-glob";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const buildFolder = path.join(
   __dirname,
-  "../../../dist/salt-ds-embla-carousel-pattern/css",
+  "../../../dist/salt-ds-embla-carousel/css",
 );
 const absWorkingDir = path.resolve(__dirname, "..");
-const outfileName = "salt-embla-carousel-pattern.css";
+const outfileName = "salt-embla-carousel.css";
 const entryFile = `src/${crypto.randomUUID()}.css`;
 
 /** MAIN */

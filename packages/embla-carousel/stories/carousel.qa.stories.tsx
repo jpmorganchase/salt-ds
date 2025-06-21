@@ -8,7 +8,7 @@ import {
   CarouselProgressLabel,
   CarouselSlides,
   CarouselTabList,
-} from "@salt-ds/embla-carousel-pattern";
+} from "@salt-ds/embla-carousel";
 import { QAContainer } from "docs/components";
 import { renderSlides } from "./renderSlides";
 

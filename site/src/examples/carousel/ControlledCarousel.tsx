@@ -8,42 +8,43 @@ import {
 } from "@salt-ds/core";
 import {
   Carousel,
-  type CarouselApi,
   CarouselCard,
   CarouselNextButton,
   CarouselPreviousButton,
   CarouselProgressLabel,
+  type CarouselRef,
   CarouselSlides,
   CarouselTabList,
-} from "@salt-ds/embla-carousel-pattern";
+} from "@salt-ds/embla-carousel";
 import { type ReactElement, useEffect, useRef } from "react";
 import { sliderData } from "./exampleData";
 import styles from "./index.module.css";
 
 export const ControlledCarousel = (): ReactElement => {
-  const emblaApiRef = useRef<CarouselApi | undefined>(undefined);
+  const emblaApiRef = useRef<CarouselRef | undefined>(undefined);
   const slideId = useId();
   const { matchedBreakpoints } = useBreakpoint();
   const isMobile = matchedBreakpoints.indexOf("sm") === -1;
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: API could update after first render
+  // biome-ignore lint/correctness/useExhaustiveDependencies: API can re-init after first render
   useEffect(() => {
-    if (!emblaApiRef?.current) {
+    const emblaApi = emblaApiRef?.current?.emblaApi;
+    if (!emblaApi) {
       return;
     }
 
     const logSnappedSlide = () => {
-      const snappedSlideIndex = emblaApiRef.current?.selectedScrollSnap();
+      const snappedSlideIndex = emblaApi.selectedScrollSnap();
       console.log(
         `Slide ${snappedSlideIndex !== undefined ? snappedSlideIndex + 1 : undefined} is snapped into view.`,
       );
     };
 
-    emblaApiRef.current?.on("select", logSnappedSlide);
+    emblaApi.on("select", logSnappedSlide);
 
     // Cleanup listener on component unmount
     return () => {
-      emblaApiRef.current?.off("select", logSnappedSlide);
+      emblaApi.off("select", logSnappedSlide);
     };
   }, [emblaApiRef.current]);
 
@@ -87,7 +88,7 @@ export const ControlledCarousel = (): ReactElement => {
         </FlexLayout>
       </Carousel>
       <FlexLayout justify={"center"} align={"center"} direction={"row"}>
-        <Button onClick={() => emblaApiRef.current?.scrollTo(2)}>
+        <Button onClick={() => emblaApiRef.current?.emblaApi?.scrollTo(2)}>
           Scroll to slide 3
         </Button>
       </FlexLayout>

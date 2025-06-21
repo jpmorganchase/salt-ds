@@ -31,7 +31,7 @@ const CarouselTabRenderer = forwardRef<
 });
 
 export const CarouselTabList = forwardRef<HTMLDivElement, CarouselTabListProps>(
-  function CarouselTabList({ className, render, ...rest }, ref) {
+  function CarouselTabList({ className, render, onKeyDown, ...rest }, ref) {
     const targetWindow = useWindow();
     useComponentCssInjection({
       testId: "salt-carousel-controls",
@@ -71,6 +71,7 @@ export const CarouselTabList = forwardRef<HTMLDivElement, CarouselTabListProps>(
         event.preventDefault();
         event.stopPropagation();
       }
+      onKeyDown?.(event);
     };
 
     return (
