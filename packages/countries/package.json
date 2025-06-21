@@ -43,7 +43,7 @@
     "glob": "^8.0.0",
     "mustache": "^4.2.0",
     "rimraf": "^4.4.0",
-    "svgo": "^3.0.0"
+    "svgo": "^4.0.0"
   },
   "publishConfig": {
     "directory": "../../dist/salt-ds-countries",
