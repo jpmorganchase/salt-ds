@@ -12,6 +12,9 @@ data:
 
 - Avoid using infographics, maps, charts as images or [images of text](https://www.w3.org/TR/UNDERSTANDING-WCAG20/visual-audio-contrast-text-presentation.html).
 - Order slides by importance, with the most critical info first.
+- Tablist components provide keyboard navigation, making them less suitable for mobile devices where space is limited and users often prefer gesture-based slide navigation.
+- If slides contain focusable elements, then add carousel controls to the top, so they receive focus first.
+- If slides do not contain focusable elements, then carousel controls can be placed at the top or bottom.
 
 ### Autoplay
 
@@ -19,8 +22,9 @@ If using Autoplay, then additional considerations are required
 
 - include accessible controls to start and stop the autoplay feature, allowing users to manage the animation according to their preferences.
 - consider requiring user consent to enable autoplay, especially for users who may find automatic movement disorienting.
-  - permantly pause the autoplay when the user hovers over the carousel.
-  - permanently stop the autoplay when a slide or control within the carousel receives focus, ensuring users can interact with the content without distraction.
+  - stop the autoplay if the user hovers over the carousel.
+  - stop the autoplay if the user drags a slide.
+  - stop the autoplay when content within a carousel slide receives focus, ensuring users can interact with the content without distraction.
 - ensure screen readers announce changes in slide content during autoplay, providing context for visually impaired users.
 
 ## Keyboard interactions
@@ -31,7 +35,8 @@ If using Autoplay, then additional considerations are required
 
 - If focus is outside the carousel, moves focus into the carousel, setting focus on the previous button.
 - If focus is on the previous button, moves focus to the next button.
-- When the focus is on the next button, shift the focus to the tablist (if available). If the tablist is not present, move the focus to the first visible carousel slide that contains a focusable element. If neither option is available, direct the focus to the next focusable element in the sequence of the page. If there are no focusable elements within the slide, focus moves to one of the carousel controls.
+- Assuming the carousel controls are at the top, when the focus is on the next button, shift the focus to the tablist (if available). If the tablist is not present, direct the focus to the next focusable element within the current slide or the sequence of the page.
+- Assuming the carousel controls are at the bottom, when the focus is on the next button, shift the focus to the tablist (if available). If the tablist is not present, direct the focus to the next focusable element in the sequence of the page.
 
 </KeyboardControl>
 
@@ -45,7 +50,7 @@ If using Autoplay, then additional considerations are required
 <KeyboardControl keyOrCombos="Shift + Tab">
 
 - If focus is on the next button, moves focus to the previous button, enabling backward navigation through controls.
-- If focus is within a visible slide, moves focus to the tablist (if available) or next button, if positioned above the slide, ensuring logical navigation order. If there are no focusable elements within the slide, focus moves to one of the carousel controls.
+- If focus is within a visible slide, moves focus to the tablist (if available) or next button, ensuring logical navigation order.
 - If focus is on the element after the carousel, sets focus on the last interactive element on the visible slide, allowing for backward navigation through slide content.
 
 </KeyboardControl>

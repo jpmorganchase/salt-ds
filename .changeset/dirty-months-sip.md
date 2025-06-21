@@ -1,10 +1,10 @@
 ---
-"@salt-ds/embla-carousel-pattern": patch
+"@salt-ds/embla-carousel": patch
 ---
 
 ### Summary
 
-The `Carousel` component has been moved from the Lab package to its own package, `@salt-ds/embla-carousel-pattern`.
+The `Carousel` component has been moved from the Lab package to its own package, `@salt-ds/embla-carousel`.
 Initially released as a pre-release in Lab, the Carousel was not fully featured. We have now pivoted to treating Carousel as a pattern using embla, that can compose Salt components as its slides.
 
 [embla](https://www.embla-carousel.com) is a headless open-source carousel library offering a comprehensive set of features and an extensible API.
@@ -37,18 +37,20 @@ import {
 - CarouselSlider,
 + CarouselSlides
 -} from "@salt-ds/lab";
-+} from "@salt-ds/embla-carousel-pattern";
++} from "@salt-ds/embla-carousel";
 ```
 
 ### Key Changes
 
 - `CarouselControls` has been broken into `CarouselPreviousButton`, `CarouselNextButton`, and `CarouselProgressLabel` for composability.
-- _Slide Rename_: `CarouselSlide` has been renamed to `CarouselCard`. While `CarouselCard` is a predefined slide, you can also create custom slides.
-- _Slider Rename_: `CarouselSlider` has been renamed to `CarouselSlides`.
+- `CarouselSlide` has been renamed to `CarouselCard`. While `CarouselCard` is a predefined slide, you can also create custom slides.
+- `CarouselSlider` has been renamed to `CarouselSlides`.
 
 Example Update:
 
 ```diff
+  const slideId = useId();
+
 - <Carousel controlsPlacement="bottom">
 + <Carousel>
 -   <CarouselControls />
@@ -61,7 +63,8 @@ Example Update:
       slides.map((slide, index) => (
 -         <CarouselSlide
 +         <CarouselCard
-            key={slide.title}
+            key={`${slideId}-${index}`}
++           id={`${slideId}-${index}`}
             appearance={appearance}
             header={<H3>{slide.title}</H3>}
             media={
@@ -90,40 +93,43 @@ To configure embla, pass `emblaOptions` or `emblaPlugins` to the Carousel.
 To control the behavior of the Carousel through the embla API, obtain a reference to the embla API through the `setApiRef` prop.
 
 ```
-const emblaApiRef = useRef<CarouselApi | undefined>(undefined);
-const slides = Array.from(Array(4).keys());
+const emblaApiRef = useRef<CarouselRef | undefined>(undefined);
+const slideId = useId();
 
+// biome-ignore lint/correctness/useExhaustiveDependencies: API can re-init after first render
 useEffect(() => {
-  if (!emblaApiRef?.current) {
+  const emblaApi = emblaApiRef?.current?.emblaApi
+  if (!emblaApi) {
     return;
   }
 
   const logSnappedSlide = () => {
-    const snappedSlideIndex = emblaApiRef.current?.selectedScrollSnap();
+    const snappedSlideIndex = emblaApi.selectedScrollSnap();
     console.log(
       `Slide ${snappedSlideIndex !== undefined ? snappedSlideIndex + 1 : undefined} is snapped into view.`,
     );
   };
 
-  emblaApiRef.current?.on("select", logSnappedSlide);
+  emblaApi.on("select", logSnappedSlide);
 
   // Cleanup listener on component unmount
   return () => {
-    emblaApiRef.current?.off("select", logSnappedSlide);
+    emblaApi.off("select", logSnappedSlide);
   };
 }, [emblaApiRef.current]);
 
 return (
   <Carousel
     aria-label="Account overview"
-    emblaApiRef={emblaApiRef}
+    ref={emblaApiRef}
   >
     <CarouselSlides>
       {slides.map((index) => (
         <div
           aria-label={`Example slide ${index + 1}`}
           aria-roledescription="slide"
-          key={index}
+          key={`${slideId}-${slide.title.replace(/ /g, "-")}-${index}`}
+          id={`${slideId}-${slide.title.replace(/ /g, "-")}-${index}`}
         >
             {index + 1}
         </div>
@@ -133,12 +139,13 @@ return (
 );
 ```
 
-Due to the challenges of making an accessible carousel, please read the documentation to understand the responsibilities the come with usage.
+Due to the challenges of making an accessible carousel, please read the documentation to understand the responsibilities that come with usage.
 
 `Carousel` remains in a pre-release state for this release and subject to feedback will be promoted to stable in a forthcoming release.
 
 ### Additional components
 
-- `CarouselTabList`: A tab list for navigating between slides.
-- `CarouselAutoplayIndicator`: An indicator for autoplay functionality.
+- `CarouselTabList`: A tablist for navigating between slides.
+- `CarouselTab`: A tab button used by `CarouselTabList`.
+- `CarouselAutoplayIndicator`: An animated countdown indicator for autoplay functionality.
 - `CarouselAnnouncementPlugin`: A plugin for announcing slide changes to assistive technologies.
