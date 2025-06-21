@@ -12,47 +12,71 @@ data:
 
 - Avoid using infographics, maps, charts as images or [images of text](https://www.w3.org/TR/UNDERSTANDING-WCAG20/visual-audio-contrast-text-presentation.html).
 - Order slides by importance, with the most critical info first.
+- Tablist components provide keyboard navigation, making them less suitable for mobile devices where space is limited and users often prefer gesture-based slide navigation.
+- If slides contain focusable elements, then add carousel controls to the top, so they receive focus first.
+- If slides do not contain focusable elements, then carousel controls can be placed at the top or bottom.
+
+### Autoplay
+
+If using Autoplay, then additional considerations are required
+
+- include accessible controls to start and stop the autoplay feature, allowing users to manage the animation according to their preferences.
+- consider requiring user consent to enable autoplay, especially for users who may find automatic movement disorienting.
+  - stop the autoplay if the user hovers over the carousel.
+  - stop the autoplay if the user drags a slide.
+  - stop the autoplay when content within a carousel slide receives focus, ensuring users can interact with the content without distraction.
+- ensure screen readers announce changes in slide content during autoplay, providing context for visually impaired users.
 
 ## Keyboard interactions
 
 <KeyboardControls>
+
 <KeyboardControl keyOrCombos="Tab">
 
-- If focus is outside carousel, moves focus into the Carousel, setting focus on the previous button.
+- If focus is outside the carousel, moves focus into the carousel, setting focus on the previous button.
 - If focus is on the previous button, moves focus to the next button.
-- If focus is on the next button moves focus to the first visible carousel slide.
+- Assuming the carousel controls are at the top, when the focus is on the next button, shift the focus to the tablist (if available). If the tablist is not present, direct the focus to the next focusable element within the current slide or the sequence of the page.
+- Assuming the carousel controls are at the bottom, when the focus is on the next button, shift the focus to the tablist (if available). If the tablist is not present, direct the focus to the next focusable element in the sequence of the page.
 
 </KeyboardControl>
+
 <KeyboardControl keyOrCombos="Enter">
-- if focus is on next button, it moves to the next slide and keeps focus on the button.
-- if focus is on previous button, it moves to the previous slide and keeps focus on the button.
+
+- If focus is on the next button, it moves to the next slide and keeps focus on the button, allowing for continuous navigation.
+- If focus is on the previous button, it moves to the previous slide and keeps focus on the button, facilitating backward navigation.
+
 </KeyboardControl>
 
 <KeyboardControl keyOrCombos="Shift + Tab">
-  
-- If focus is on the next button, moves focus to the previous button.
-- If focus is on the first visible slide, moves focus to the next button in controls. 
-- If focus is on the element after the carousel, sets focus on the last interactive element on the last visible slide or the last visible slide if it doesn't contain any interactive elements.
+
+- If focus is on the next button, moves focus to the previous button, enabling backward navigation through controls.
+- If focus is within a visible slide, moves focus to the tablist (if available) or next button, ensuring logical navigation order.
+- If focus is on the element after the carousel, sets focus on the last interactive element on the visible slide, allowing for backward navigation through slide content.
 
 </KeyboardControl>
 
 <KeyboardControl keyOrCombos="Right arrow">
 
-- If focus is in a slide and there are more slides to the right, moves the focus to the next slide.
+- If focus is in a tablist and there are more slides to the right, moves the focus to the next slide.
 
 </KeyboardControl>
 
 <KeyboardControl keyOrCombos="Left arrow">
 
-- If focus is in a slide and there are more slides to the left, moves the focus to the previous slide.
+- If focus is in a tablist and there are more slides to the right, moves the focus to the next slide, facilitating forward navigation through slides.
 
 </KeyboardControl>
+
+<KeyboardControl keyOrCombos="Home">
+
+- If focus is in a tablist and there are more slides to the left, moves the focus to the previous slide, enabling backward navigation through slides.
+
+</KeyboardControl>
+
+<KeyboardControl keyOrCombos="End">
+
+- If focus is in a tablist, move to the last slide, allowing quick access to the end of the carousel.
+
+</KeyboardControl>
+
 </KeyboardControls>
-
-## Known Issue
-
-- VoiceOver/Safari on Mac bug: When shift+tab from the CTA (link or button), there's an empty focus stop. **(This is not a Salt bug)**
-  - Focus moves to the slide, but VoiceOver doesn't announce the slide's content.
-    - Single slide: Pressing shit+tab again will move focus to the (next) control button
-    - Multiple slides: Pressing shit+tab again will move focus to the last focusable element in the previous slide or the previous slide if the previous slide doesn't contain any interactive elements.
-  - Now pressing tab will place focus on the slide and will announce the slide's content.

@@ -15,21 +15,19 @@ import {
   CarouselSlides,
   CarouselTabList,
 } from "@salt-ds/embla-carousel";
-import { clsx } from "clsx";
 import type { ReactElement } from "react";
 import { sliderData } from "./exampleData";
 import styles from "./index.module.css";
 
-export const MultipleSlides = (): ReactElement => {
+export const BorderedCard = (): ReactElement => {
   const slideId = useId();
   const { matchedBreakpoints } = useBreakpoint();
   const isMobile = matchedBreakpoints.indexOf("sm") === -1;
 
   return (
     <Carousel
-      aria-label="Multiple slides carousel example"
-      className={clsx(styles.carousel, styles.carouselMultipleSlides)}
-      emblaOptions={{ align: "center", slidesToScroll: "auto" }}
+      aria-label="Bordered carousel example"
+      className={styles.carousel}
       emblaPlugins={[CarouselAnnouncement()]}
     >
       <Text styleAs={"h2"}>Title</Text>

@@ -26,6 +26,7 @@
         "packages/data-grid/stories/*",
         "packages/icons/stories/*",
         "packages/lab/stories/*",
+        "packages/embla-carousel/stories/*",
         "packages/theme/stories/*"
       ],
       "@salt-ds/date-adapters/*": [
