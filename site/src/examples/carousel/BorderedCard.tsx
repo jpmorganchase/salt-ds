@@ -1,4 +1,10 @@
-import { FlexLayout, StackLayout, Text, useId } from "@salt-ds/core";
+import {
+  FlexLayout,
+  StackLayout,
+  Text,
+  useBreakpoint,
+  useId,
+} from "@salt-ds/core";
 import {
   Carousel,
   CarouselAnnouncement,
@@ -8,13 +14,16 @@ import {
   CarouselProgressLabel,
   CarouselSlides,
   CarouselTabList,
-} from "@salt-ds/embla-carousel-pattern";
+} from "@salt-ds/embla-carousel";
 import type { ReactElement } from "react";
 import { sliderData } from "./exampleData";
 import styles from "./index.module.css";
 
 export const BorderedCard = (): ReactElement => {
   const slideId = useId();
+  const { matchedBreakpoints } = useBreakpoint();
+  const isMobile = matchedBreakpoints.indexOf("sm") === -1;
+
   return (
     <Carousel
       aria-label="Bordered carousel example"
@@ -51,7 +60,7 @@ export const BorderedCard = (): ReactElement => {
           <CarouselNextButton />
           <CarouselProgressLabel />
         </StackLayout>
-        <CarouselTabList />
+        {!isMobile ? <CarouselTabList /> : null}
       </FlexLayout>
     </Carousel>
   );

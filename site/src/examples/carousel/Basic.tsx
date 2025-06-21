@@ -6,7 +6,7 @@ import {
   CarouselPreviousButton,
   CarouselProgressLabel,
   CarouselSlides,
-} from "@salt-ds/embla-carousel-pattern";
+} from "@salt-ds/embla-carousel";
 import type { ReactElement } from "react";
 import styles from "./index.module.css";
 

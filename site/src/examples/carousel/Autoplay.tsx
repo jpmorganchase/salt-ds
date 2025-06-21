@@ -2,14 +2,14 @@ import { Button, FlexLayout, StackLayout, Text, useId } from "@salt-ds/core";
 import {
   Carousel,
   CarouselAnnouncement,
-  type CarouselApi,
   CarouselAutoplayIndicator,
   CarouselCard,
   CarouselNextButton,
   CarouselPreviousButton,
   CarouselProgressLabel,
+  type CarouselRef,
   CarouselSlides,
-} from "@salt-ds/embla-carousel-pattern";
+} from "@salt-ds/embla-carousel";
 import { PauseIcon, PlayIcon } from "@salt-ds/icons";
 import { default as AutoplayPlugin } from "embla-carousel-autoplay";
 import { useCallback, useEffect, useRef, useState } from "react";
@@ -20,7 +20,7 @@ const DELAY_MSECS = 8000;
 
 export const Autoplay = () => {
   const slideId = useId();
-  const emblaApiRef = useRef<CarouselApi | undefined>(undefined);
+  const emblaApiRef = useRef<CarouselRef | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [slideIndex, setSlideIndex] = useState(0);
 
@@ -39,14 +39,15 @@ export const Autoplay = () => {
   }, []);
 
   const handleSlideChange = useCallback(() => {
-    const settledSlideIndex = emblaApiRef.current?.selectedScrollSnap() ?? 0;
+    const emblaApi = emblaApiRef.current?.emblaApi;
+    const settledSlideIndex = emblaApi?.selectedScrollSnap() ?? 0;
     setSlideIndex(settledSlideIndex + 1);
   }, []);
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: emblaApiRef.current can update
   useEffect(() => {
-    const emblaApi = emblaApiRef.current;
-    if (!emblaApi?.plugins()?.autoplay) {
+    const emblaApi = emblaApiRef.current?.emblaApi;
+    if (!emblaApi || !emblaApi.plugins()?.autoplay) {
       return;
     }
 
@@ -64,7 +65,7 @@ export const Autoplay = () => {
       className={styles.carousel}
       emblaOptions={{ loop: true }}
       emblaPlugins={[autoplay.current, CarouselAnnouncement()]}
-      emblaApiRef={emblaApiRef}
+      ref={emblaApiRef}
     >
       <Text styleAs="h2" className={styles.carouselHeading}>
         Title

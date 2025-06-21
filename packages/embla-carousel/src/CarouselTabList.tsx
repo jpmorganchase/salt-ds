@@ -4,7 +4,11 @@ import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import { type HTMLAttributes, forwardRef, useRef } from "react";
 import { useCarouselContext } from "./CarouselContext";
-import { CarouselDotButton, useDotButton } from "./CarouselDotButton";
+import {
+  CarouselTab,
+  type CarouselTabProps,
+  useCarouselTab,
+} from "./CarouselTab";
 import carouselControlsCss from "./CarouselTabList.css";
 
 const withBaseName = makePrefixer("saltCarouselTabList");
@@ -14,13 +18,20 @@ const withBaseName = makePrefixer("saltCarouselTabList");
  */
 export interface CarouselTabListProps extends HTMLAttributes<HTMLDivElement> {
   /**
-   * Render prop to enable customisation of dot button.
+   * Render prop to enable customisation of tab button.
    */
   render?: RenderPropsType["render"];
 }
 
+const CarouselTabRenderer = forwardRef<
+  HTMLButtonElement,
+  CarouselTabProps & { render?: CarouselTabListProps["render"] }
+>((props, ref) => {
+  return renderProps(CarouselTab, { ...props, ref });
+});
+
 export const CarouselTabList = forwardRef<HTMLDivElement, CarouselTabListProps>(
-  function CarouselTabList({ className, render, ...rest }, ref) {
+  function CarouselTabList({ className, render, onKeyDown, ...rest }, ref) {
     const targetWindow = useWindow();
     useComponentCssInjection({
       testId: "salt-carousel-controls",
@@ -29,8 +40,7 @@ export const CarouselTabList = forwardRef<HTMLDivElement, CarouselTabListProps>(
     });
 
     const { emblaApi } = useCarouselContext();
-    const { selectedIndex, scrollSnaps, onDotButtonClick } =
-      useDotButton(emblaApi);
+    const { selectedIndex, scrollSnaps, onClick } = useCarouselTab(emblaApi);
 
     const slideNodes = emblaApi?.slideNodes();
     const numberOfSlides = slideNodes?.length ?? 0;
@@ -56,11 +66,12 @@ export const CarouselTabList = forwardRef<HTMLDivElement, CarouselTabListProps>(
       }
 
       if (newIndex !== selectedIndex) {
-        onDotButtonClick(newIndex);
+        onClick(newIndex);
         buttonRefs.current[newIndex]?.focus();
         event.preventDefault();
         event.stopPropagation();
       }
+      onKeyDown?.(event);
     };
 
     return (
@@ -73,8 +84,8 @@ export const CarouselTabList = forwardRef<HTMLDivElement, CarouselTabListProps>(
         ref={ref}
         {...rest}
       >
-        {scrollSnaps.map((_, dotIndex) => {
-          const startSlideNumber = dotIndex * slidesPerTransition + 1;
+        {scrollSnaps.map((_, tabIndex) => {
+          const startSlideNumber = tabIndex * slidesPerTransition + 1;
           const endSlideNumber = Math.min(
             startSlideNumber + slidesPerTransition - 1,
             numberOfSlides,
@@ -84,32 +95,27 @@ export const CarouselTabList = forwardRef<HTMLDivElement, CarouselTabListProps>(
               ? `Slide ${startSlideNumber}`
               : `Slides ${startSlideNumber}-${endSlideNumber} of ${numberOfSlides}`;
 
-          const selected = selectedIndex === dotIndex;
+          const selected = selectedIndex === tabIndex;
 
           const ariaControls = slideNodes?.length
             ? slideNodes[startSlideNumber - 1].id
             : undefined;
-          console.log(`${label}-${dotIndex}`);
-          return renderProps(
-            (props) => (
-              <CarouselDotButton
-                {...props}
-                key={`dot-${label}-${dotIndex}`}
-                ref={(element: HTMLButtonElement) => {
-                  buttonRefs.current[dotIndex] = element;
-                }}
-              />
-            ),
-            {
-              render,
-              role: "tab",
-              onClick: () => onDotButtonClick(dotIndex),
-              "aria-selected": selected,
-              selected: selected,
-              tabIndex: selected ? 0 : -1,
-              "aria-labelledby": ariaControls,
-              "aria-controls": ariaControls,
-            },
+          return (
+            <CarouselTabRenderer
+              key={`carouselTab-${tabIndex}}`}
+              ref={(element: HTMLButtonElement) => {
+                buttonRefs.current[tabIndex] = element;
+              }}
+              render={render}
+              role={"tab"}
+              onClick={() => onClick(tabIndex)}
+              aria-selected={selected}
+              selected={selected}
+              tabIndex={selected ? 0 : -1}
+              aria-label={label}
+              aria-labelledby={ariaControls}
+              aria-controls={ariaControls}
+            />
           );
         })}
       </div>

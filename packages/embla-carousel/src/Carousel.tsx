@@ -7,23 +7,26 @@ import useEmblaCarousel, {
 } from "embla-carousel-react";
 import {
   type ComponentPropsWithoutRef,
-  type MutableRefObject,
   forwardRef,
-  useEffect,
+  useImperativeHandle,
 } from "react";
 import carouselCss from "./Carousel.css";
 import { CarouselContext } from "./CarouselContext";
 
 const withBaseName = makePrefixer("saltCarousel");
 
-export type CarouselRef = UseEmblaCarouselType[0];
-export type CarouselApi = UseEmblaCarouselType[1];
+export type CarouselRef = {
+  emblaApi: UseEmblaCarouselType[1];
+  emblaRef: UseEmblaCarouselType[0];
+};
+
 type UseCarouselParameters = Parameters<typeof useEmblaCarousel>;
 export type CarouselOptions = UseCarouselParameters[0];
 export type CarouselPlugin = UseCarouselParameters[1];
 
 /**
  * Props for the Carousel component.
+ * Pass a ref to the carousel to get it to return a reference to the embla API
  */
 export interface CarouselProps extends ComponentPropsWithoutRef<"div"> {
   /**
@@ -37,24 +40,11 @@ export interface CarouselProps extends ComponentPropsWithoutRef<"div"> {
    * These options are passed directly to the Embla Carousel instance.
    */
   emblaPlugins?: CarouselPlugin;
-
-  /**
-   * Ref to return the Embla Carousel API.
-   * Use this to manage the state of the Carousel
-   */
-  emblaApiRef?: MutableRefObject<CarouselApi | undefined>;
 }
 
-export const Carousel = forwardRef<HTMLDivElement, CarouselProps>(
+export const Carousel = forwardRef<CarouselRef, CarouselProps>(
   function Carousel(
-    {
-      children,
-      className,
-      emblaOptions = {},
-      emblaPlugins = [],
-      emblaApiRef,
-      ...rest
-    },
+    { children, className, emblaOptions = {}, emblaPlugins = [], ...rest },
     ref,
   ) {
     const targetWindow = useWindow();
@@ -68,12 +58,10 @@ export const Carousel = forwardRef<HTMLDivElement, CarouselProps>(
       ...emblaPlugins,
     ]);
 
-    useEffect(() => {
-      if (!emblaApi || !emblaApiRef) {
-        return;
-      }
-      emblaApiRef.current = emblaApi;
-    }, [emblaApiRef, emblaApi]);
+    useImperativeHandle(ref, () => ({ emblaApi, emblaRef }), [
+      emblaApi,
+      emblaRef,
+    ]);
 
     return (
       <CarouselContext.Provider value={{ emblaApi, emblaRef }}>
@@ -81,7 +69,6 @@ export const Carousel = forwardRef<HTMLDivElement, CarouselProps>(
           aria-roledescription="carousel"
           role="region"
           className={clsx(withBaseName(), className)}
-          ref={ref}
           {...rest}
         >
           {children}

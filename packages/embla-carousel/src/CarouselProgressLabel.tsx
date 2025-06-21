@@ -8,7 +8,7 @@ import { useCarouselContext } from "./CarouselContext";
 import carouselProgressLabelCss from "./CarouselProgressLabel.css";
 
 /**
- * Props for the CarouselProgressLabelProps component.
+ * Props for the CarouselProgressLabel component.
  */
 export interface CarouselProgressLabelProps extends TextProps<"div"> {}
 

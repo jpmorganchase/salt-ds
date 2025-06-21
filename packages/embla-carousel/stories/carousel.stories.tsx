@@ -6,9 +6,10 @@ import {
   CarouselNextButton,
   CarouselPreviousButton,
   CarouselProgressLabel,
+  type CarouselRef,
   CarouselSlides,
   CarouselTabList,
-} from "@salt-ds/embla-carousel-pattern";
+} from "@salt-ds/embla-carousel";
 import "./carousel.stories.css";
 import {
   AriaAnnouncerProvider,
@@ -17,8 +18,10 @@ import {
   Text,
   useId,
 } from "@salt-ds/core";
+import type { CarouselProps } from "@salt-ds/embla-carousel";
 import Classnames from "embla-carousel-class-names";
 import Fade from "embla-carousel-fade";
+import type { MutableRefObject } from "react";
 import { renderSlides } from "./renderSlides";
 
 export default {
@@ -26,7 +29,14 @@ export default {
   component: Carousel,
 } as Meta<typeof Carousel>;
 
-const CarouselCardExample: StoryFn<typeof Carousel> = (args) => {
+type CarouselWithTestRefProps = CarouselProps & {
+  testRef: MutableRefObject<CarouselRef | null>;
+};
+
+const CarouselCardExample: StoryFn<CarouselWithTestRefProps> = ({
+  testRef,
+  ...args
+}) => {
   return (
     <AriaAnnouncerProvider>
       <Carousel
@@ -38,6 +48,7 @@ const CarouselCardExample: StoryFn<typeof Carousel> = (args) => {
             snapped: "carouselSlideIsSnapped",
           }),
         ]}
+        ref={testRef}
         {...args}
       >
         <FlexLayout
@@ -63,7 +74,10 @@ const CarouselCardExample: StoryFn<typeof Carousel> = (args) => {
   );
 };
 
-const CarouselNumberExample: StoryFn<typeof Carousel> = (args) => {
+const CarouselNumberExample: StoryFn<CarouselWithTestRefProps> = ({
+  testRef,
+  ...args
+}) => {
   const slides = Array.from(Array(4).keys());
   const slideId = useId();
   return (
@@ -72,6 +86,7 @@ const CarouselNumberExample: StoryFn<typeof Carousel> = (args) => {
         aria-label="carousel example"
         className={"carousel"}
         emblaPlugins={[CarouselAnnouncement()]}
+        ref={testRef}
         {...args}
       >
         <FlexLayout

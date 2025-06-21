@@ -25,7 +25,7 @@ export const CarouselSlides = forwardRef<HTMLDivElement, CarouselSlidesProps>(
   ) {
     const targetWindow = useWindow();
     useComponentCssInjection({
-      testId: "salt-carousel-slider",
+      testId: "salt-carousel-slides",
       css: carouselSlidesCss,
       window: targetWindow,
     });
@@ -54,7 +54,7 @@ export const CarouselSlides = forwardRef<HTMLDivElement, CarouselSlidesProps>(
 
     return (
       <div
-        onKeyDownCapture={handleKeyDown}
+        onKeyDown={handleKeyDown}
         ref={ref}
         className={clsx(withBaseName(), className)}
         {...rest}

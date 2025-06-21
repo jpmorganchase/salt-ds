@@ -1,5 +1,5 @@
 import { H3, Link, Text, useId } from "@salt-ds/core";
-import { CarouselCard } from "@salt-ds/embla-carousel-pattern";
+import { CarouselCard } from "@salt-ds/embla-carousel";
 
 import carouselSlide1 from "@stories/assets/carouselSlide1.png";
 import carouselSlide2 from "@stories/assets/carouselSlide2.png";

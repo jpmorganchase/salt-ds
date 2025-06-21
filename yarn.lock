@@ -3209,9 +3209,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@salt-ds/embla-carousel-pattern@workspace:packages/embla-carousel-pattern":
+"@salt-ds/embla-carousel@workspace:packages/embla-carousel":
   version: 0.0.0-use.local
-  resolution: "@salt-ds/embla-carousel-pattern@workspace:packages/embla-carousel-pattern"
+  resolution: "@salt-ds/embla-carousel@workspace:packages/embla-carousel"
   dependencies:
     "@salt-ds/core": "workspace:^"
     clsx: "npm:^2.0.0"

@@ -59,7 +59,7 @@
       }
     },
     {
-      "files": ["**/embla-carousel-pattern/**/*.css"],
+      "files": ["**/embla-carousel/**/*.css"],
       "rules": {
         "salt/no-deprecated-token-usage": [
           false,

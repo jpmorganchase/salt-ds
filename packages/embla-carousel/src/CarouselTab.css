@@ -1,9 +1,9 @@
-.saltCarouselDotButton {
-  position: relative; /* Position relative to contain the :after element */
+.saltCarouselTab {
+  position: relative;
   width: var(--salt-size-selectable);
   height: var(--salt-size-selectable);
-  border: none; /* Remove border, use box-shadow for ring effect */
-  box-shadow: inset 0 0 0 1px var(--salt-selectable-borderColor); /* Inset ring effect */
+  border: none;
+  box-shadow: inset 0 0 0 var(--salt-size-border) var(--salt-selectable-borderColor);
   -webkit-tap-highlight-color: var(--salt-selectable-borderColor-hover);
   -webkit-appearance: none;
   appearance: none;
@@ -16,11 +16,11 @@
   margin: 0;
   align-items: center;
   justify-content: center;
-  border-radius: 50%;
-  transition: box-shadow 0.25s ease;
+  border-radius: var(--salt-palette-corner-strongest);
+  transition: box-shadow var(--salt-duration-perceptible) ease-in-out;
 }
 
-.saltCarouselDotButton:after {
+.saltCarouselTab:after {
   content: "";
   position: absolute;
   width: var(--salt-size-selectable);
@@ -32,7 +32,7 @@
   transform: translate(-50%, -50%);
 }
 
-.saltCarouselDotButton:focus-visible {
+.saltCarouselTab:focus-visible {
   outline-style: var(--salt-focused-outlineStyle);
   outline-width: var(--salt-focused-outlineWidth);
   outline-color: var(--salt-focused-outlineColor);
@@ -41,6 +41,6 @@
   border-color: var(--salt-selectable-borderColor-hover);
 }
 
-.saltCarouselDotButton-selected {
+.saltCarouselTab-selected {
   box-shadow: inset 0 0 0 var(--salt-size-selectable) var(--salt-selectable-borderColor-selected);
 }
