@@ -19,7 +19,7 @@ export default {
 
 export const AllExamples: StoryFn = (props: { className?: string }) => {
   return (
-    <QAContainer cols={2} transposeDensity vertical className="saltMetricQA">
+    <QAContainer cols={2} transposeDensity vertical>
       <Carousel style={{ width: "600px" }}>
         <FlexLayout justify={"space-between"} direction={"row"} gap={1}>
           <StackLayout direction={"row"} gap={1}>

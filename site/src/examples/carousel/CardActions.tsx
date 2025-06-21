@@ -1,4 +1,11 @@
-import { FlexLayout, Link, StackLayout, Text, useId } from "@salt-ds/core";
+import {
+  FlexLayout,
+  Link,
+  StackLayout,
+  Text,
+  useBreakpoint,
+  useId,
+} from "@salt-ds/core";
 import {
   Carousel,
   CarouselAnnouncement,
@@ -16,6 +23,9 @@ import styles from "./index.module.css";
 
 export const CardActions = (): ReactElement => {
   const slideId = useId();
+  const { matchedBreakpoints } = useBreakpoint();
+  const isMobile = matchedBreakpoints.indexOf("sm") === -1;
+
   return (
     <Carousel
       aria-label="Card actions example"
@@ -62,7 +72,7 @@ export const CardActions = (): ReactElement => {
           <CarouselNextButton />
           <CarouselProgressLabel />
         </StackLayout>
-        <CarouselTabList />
+        {!isMobile ? <CarouselTabList /> : null}
       </FlexLayout>
     </Carousel>
   );

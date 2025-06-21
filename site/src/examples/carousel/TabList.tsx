@@ -1,4 +1,10 @@
-import { FlexLayout, StackLayout, Text, useId } from "@salt-ds/core";
+import {
+  FlexLayout,
+  StackLayout,
+  Text,
+  useBreakpoint,
+  useId,
+} from "@salt-ds/core";
 import {
   Carousel,
   CarouselAnnouncement,
@@ -13,7 +19,10 @@ import styles from "./index.module.css";
 
 export const TabList = (): ReactElement => {
   const slideId = useId();
-  const slides = Array.from(Array(4).keys());
+  const { matchedBreakpoints } = useBreakpoint();
+  const isMobile = matchedBreakpoints.indexOf("sm") === -1;
+
+  const slides = Array.from(Array(isMobile ? 2 : 4).keys());
   return (
     <Carousel
       aria-label="Pagination carousel example"

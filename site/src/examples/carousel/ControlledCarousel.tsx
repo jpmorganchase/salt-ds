@@ -1,4 +1,11 @@
-import { Button, FlexLayout, StackLayout, Text, useId } from "@salt-ds/core";
+import {
+  Button,
+  FlexLayout,
+  StackLayout,
+  Text,
+  useBreakpoint,
+  useId,
+} from "@salt-ds/core";
 import {
   Carousel,
   type CarouselApi,
@@ -16,6 +23,8 @@ import styles from "./index.module.css";
 export const ControlledCarousel = (): ReactElement => {
   const emblaApiRef = useRef<CarouselApi | undefined>(undefined);
   const slideId = useId();
+  const { matchedBreakpoints } = useBreakpoint();
+  const isMobile = matchedBreakpoints.indexOf("sm") === -1;
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: API could update after first render
   useEffect(() => {
@@ -43,7 +52,7 @@ export const ControlledCarousel = (): ReactElement => {
       <Carousel
         aria-label="Controlled carousel example"
         className={styles.carousel}
-        emblaApiRef={emblaApiRef}
+        ref={emblaApiRef}
       >
         <CarouselSlides>
           {sliderData.map((slide, index) => {
@@ -74,7 +83,7 @@ export const ControlledCarousel = (): ReactElement => {
             <CarouselNextButton />
             <CarouselProgressLabel />
           </StackLayout>
-          <CarouselTabList />
+          {!isMobile ? <CarouselTabList /> : null}
         </FlexLayout>
       </Carousel>
       <FlexLayout justify={"center"} align={"center"} direction={"row"}>

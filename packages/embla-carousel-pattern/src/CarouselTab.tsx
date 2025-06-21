@@ -10,13 +10,13 @@ import {
   useEffect,
   useState,
 } from "react";
-import carouselDotButtonCss from "./CarouselDotButton.css";
+import carouselTabCss from "./CarouselTab.css";
 
 /**
- * Type definition for the useDotButton hook.
- * Provides state and handlers for dot button navigation in a carousel.
+ * Type definition for the UseCarouselTab hook.
+ * Provides state and handlers for tablist navigation in a carousel.
  */
-type UseDotButtonType = {
+type UseCarouselTabProps = {
   /**
    * The index of the currently selected slide.
    */
@@ -28,22 +28,22 @@ type UseDotButtonType = {
   scrollSnaps: number[];
 
   /**
-   * Handler function for clicking a dot button to navigate to a specific slide.
+   * Handler function for clicking a tab button to navigate to a specific slide.
    *
    * @param index - The index of the slide to navigate to.
    */
-  onDotButtonClick: (index: number) => void;
+  onClick: (index: number) => void;
 };
 
-const withBaseName = makePrefixer("saltCarouselDotButton");
+const withBaseName = makePrefixer("saltCarouselTab");
 
-export const useDotButton = (
+export const useCarouselTab = (
   emblaApi: EmblaCarouselType | undefined,
-): UseDotButtonType => {
+): UseCarouselTabProps => {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [scrollSnaps, setScrollSnaps] = useState<number[]>([]);
 
-  const handleDotButtonClick = useCallback(
+  const handleClick = useCallback(
     (index: number) => {
       if (!emblaApi) return;
       emblaApi.scrollTo(index);
@@ -79,26 +79,29 @@ export const useDotButton = (
   return {
     selectedIndex,
     scrollSnaps,
-    onDotButtonClick: handleDotButtonClick,
+    onClick: handleClick,
   };
 };
 
 /**
- * Props for the CarouselDotButton component.
+ * Props for the CarouselTab component.
  */
-export interface DotButtonProps extends ComponentPropsWithRef<"button"> {
+export interface CarouselTabProps extends ComponentPropsWithRef<"button"> {
   /**
    * Is the selected slide
    */
   selected?: boolean;
 }
 
-export const CarouselDotButton = forwardRef<HTMLButtonElement, DotButtonProps>(
-  function DotButton({ children, className, selected = false, ...rest }, ref) {
+export const CarouselTab = forwardRef<HTMLButtonElement, CarouselTabProps>(
+  function CarouselTab(
+    { children, className, selected = false, ...rest },
+    ref,
+  ) {
     const targetWindow = useWindow();
     useComponentCssInjection({
-      testId: "salt-carousel-dot-button",
-      css: carouselDotButtonCss,
+      testId: "salt-carousel-tab",
+      css: carouselTabCss,
       window: targetWindow,
     });
 

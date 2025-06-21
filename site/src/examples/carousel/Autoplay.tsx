@@ -39,20 +39,27 @@ export const Autoplay = () => {
   }, []);
 
   const handleSlideChange = useCallback(() => {
-    const settledSlideIndex = emblaApiRef.current?.selectedScrollSnap() ?? 0;
+    const { emblaApi } = emblaApiRef.current;
+    const settledSlideIndex = emblaApi?.selectedScrollSnap() ?? 0;
     setSlideIndex(settledSlideIndex + 1);
+  }, []);
+
+  const handleDragStart = useCallback(() => {
+    stop;
   }, []);
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: emblaApiRef.current can update
   useEffect(() => {
-    const emblaApi = emblaApiRef.current;
+    const { emblaApi } = emblaApiRef.current;
     if (!emblaApi?.plugins()?.autoplay) {
       return;
     }
 
     emblaApi.on("settle", handleSlideChange);
+    emblaApi.on("dragStart", handleDragStart);
     return () => {
       emblaApi.off("settle", handleSlideChange);
+      emblaApi.off("dragStart", handleDragStart);
     };
   }, [emblaApiRef.current, handleSlideChange]);
 
@@ -64,7 +71,7 @@ export const Autoplay = () => {
       className={styles.carousel}
       emblaOptions={{ loop: true }}
       emblaPlugins={[autoplay.current, CarouselAnnouncement()]}
-      emblaApiRef={emblaApiRef}
+      ref={emblaApiRef}
     >
       <Text styleAs="h2" className={styles.carouselHeading}>
         Title

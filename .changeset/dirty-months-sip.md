@@ -139,6 +139,7 @@ Due to the challenges of making an accessible carousel, please read the document
 
 ### Additional components
 
-- `CarouselTabList`: A tab list for navigating between slides.
+- `CarouselTabList`: A tablist for navigating between slides.
+- `CarouselTab`: A tab button used by `CarouselTabList`.
 - `CarouselAutoplayIndicator`: An indicator for autoplay functionality.
 - `CarouselAnnouncementPlugin`: A plugin for announcing slide changes to assistive technologies.

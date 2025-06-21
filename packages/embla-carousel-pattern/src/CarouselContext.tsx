@@ -17,7 +17,7 @@ interface CarouselContextType {
    * The reference to the Embla Carousel viewport.
    * Used to directly interact with the carousel DOM element.
    */
-  emblaRef?: CarouselRef;
+  emblaRef?: CarouselRef["emblaRef"];
 }
 
 export const CarouselContext = createContext<CarouselContextType | undefined>(

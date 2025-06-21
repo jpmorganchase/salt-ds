@@ -2,12 +2,74 @@ import * as carouselStories from "@stories/carousel.stories";
 import { composeStories } from "@storybook/react-vite";
 import ClassNames from "embla-carousel-class-names";
 import { type MutableRefObject, useRef } from "react";
-import type { CarouselApi } from "../../index";
+import type { CarouselApi, CarouselRef } from "../../index";
 
 const composedStories = composeStories(carouselStories);
 const { Default } = composedStories;
 
 describe("Given a Carousel", () => {
+  let emblaApiRef: MutableRefObject<CarouselRef | null>;
+
+  const mountCarousel = (
+    options = {},
+    startIndex = 0,
+  ): Cypress.Chainable<CarouselApi> => {
+    const TestComponent = () => {
+      emblaApiRef = useRef<CarouselRef | null>(null);
+      return (
+        <Default
+          emblaOptions={{ duration: 1, startIndex, ...options }}
+          emblaPlugins={[ClassNames()]}
+          testRef={emblaApiRef}
+        />
+      );
+    };
+
+    cy.mount(<TestComponent />);
+    cy.findByRole("region").should("exist");
+
+    return cy.wrap(
+      new Cypress.Promise<CarouselApi>((resolve) => {
+        const checkEmblaApi = () => {
+          const emblaApi: CarouselApi | undefined =
+            emblaApiRef?.current?.emblaApi;
+          if (emblaApi) {
+            resolve(emblaApi);
+          } else {
+            setTimeout(checkEmblaApi, 250);
+          }
+        };
+        checkEmblaApi();
+      }),
+    );
+  };
+
+  const waitForSettle = (emblaApi: CarouselApi, expectedSlideIndex: number) => {
+    return new Cypress.Promise((resolve) => {
+      const handleSettle = () => {
+        if (emblaApi?.selectedScrollSnap() === expectedSlideIndex) {
+          resolve();
+          emblaApi.off("settle", handleSettle);
+        }
+      };
+      emblaApi?.on("settle", handleSettle);
+    });
+  };
+
+  const verifySlide = (expectedText: string) => {
+    // Verify the slide updates
+    cy.get(".carouselSlide.is-snapped .carouselNumber .saltText-h1").should(
+      "have.text",
+      expectedText,
+    );
+    // Verify tablist updates
+    cy.findByRole("tab", { selected: true }).should(
+      "have.attr",
+      "aria-label",
+      `Slide ${expectedText}`,
+    );
+  };
+
   it("should render the carousel with four slides", () => {
     cy.mount(<Default />);
     cy.findByRole("region").should("exist");
@@ -16,249 +78,100 @@ describe("Given a Carousel", () => {
   });
 
   describe("WITH the current slide as slide 1", () => {
-    let emblaApiRef: MutableRefObject<CarouselApi | undefined>;
-    const TestComponent = () => {
-      emblaApiRef = useRef<CarouselApi | undefined>(undefined);
-      return (
-        <Default
-          emblaOptions={{ duration: 1 }}
-          emblaPlugins={[ClassNames()]}
-          emblaApiRef={emblaApiRef}
-        />
-      );
-    };
+    let emblaApi: CarouselApi;
 
     beforeEach(() => {
-      cy.mount(<TestComponent />);
-      cy.findByRole("region").should("exist");
-      // Wait for emblaApi to be set
-      cy.wrap(
-        new Cypress.Promise((resolve) => {
-          const checkEmblaApi = () => {
-            if (emblaApiRef?.current) {
-              resolve();
-            } else {
-              setTimeout(checkEmblaApi, 50);
-            }
-          };
-          checkEmblaApi();
-        }),
-      );
+      mountCarousel().then((api) => {
+        emblaApi = api;
+      });
     });
 
-    it("should navigate forwards to each slide", () => {
-      // should start from slide 1
-      cy.get(".carouselSlide.is-snapped .carouselNumber .saltText-h1").should(
-        "have.text",
-        "1",
+    it("should navigate forwards to last slide", () => {
+      verifySlide("1");
+
+      cy.findByLabelText(/Next slide/).click();
+      cy.wrap(waitForSettle(emblaApi, 1)).then(() => verifySlide("2"));
+
+      cy.findByLabelText(/Next slide/).click();
+      cy.wrap(waitForSettle(emblaApi, 2)).then(() => verifySlide("3"));
+
+      cy.findByLabelText(/Next slide/).click();
+      cy.wrap(waitForSettle(emblaApi, 3)).then(() => verifySlide("4"));
+
+      cy.findByLabelText(/Next slide/).should(
+        "have.class",
+        "saltButton-disabled",
       );
-
-      const waitForSettle = (expectedSlideIndex: number) => {
-        return new Cypress.Promise((resolve) => {
-          const handleSettle = () => {
-            const currentSlideIndex =
-              emblaApiRef?.current?.selectedScrollSnap();
-            if (currentSlideIndex === expectedSlideIndex) {
-              resolve();
-              emblaApiRef?.current?.off("settle", handleSettle);
-            }
-          };
-          emblaApiRef?.current?.on("settle", handleSettle);
-        });
-      };
-
-      // should navigate forwards to slide 2
-      cy.findByTestId("ChevronRightIcon").parent().click();
-      cy.wrap(waitForSettle(1)).then(() => {
-        cy.get(".carouselSlide.is-snapped .carouselNumber .saltText-h1").should(
-          "have.text",
-          "2",
-        );
-      });
-
-      // should navigate forwards to slide 3
-      cy.findByTestId("ChevronRightIcon").parent().click();
-      cy.wrap(waitForSettle(2)).then(() => {
-        cy.get(".carouselSlide.is-snapped .carouselNumber .saltText-h1").should(
-          "have.text",
-          "3",
-        );
-      });
-
-      // should navigate forwards to slide 4
-      cy.findByTestId("ChevronRightIcon").parent().click();
-      cy.wrap(waitForSettle(3)).then(() => {
-        cy.get(".carouselSlide.is-snapped .carouselNumber .saltText-h1").should(
-          "have.text",
-          "4",
-        );
-      });
-
-      // should disable the next page navigation
-      cy.findByTestId("ChevronRightIcon")
-        .parent()
-        .should("have.attr", "aria-disabled", "true");
     });
   });
 
   describe("WITH the current slide as slide 4", () => {
-    let emblaApiRef: MutableRefObject<CarouselApi | undefined>;
-    const TestComponent = () => {
-      emblaApiRef = useRef<CarouselApi | undefined>(undefined);
-      return (
-        <Default
-          emblaOptions={{ duration: 1, startIndex: 3 }}
-          emblaPlugins={[ClassNames()]}
-          emblaApiRef={emblaApiRef}
-        />
-      );
-    };
+    let emblaApi: CarouselApi;
 
     beforeEach(() => {
-      cy.mount(<TestComponent />);
-      cy.findByRole("region").should("exist");
-      // Wait for emblaApi to be set
-      cy.wrap(
-        new Cypress.Promise((resolve) => {
-          const checkEmblaApi = () => {
-            if (emblaApiRef?.current) {
-              resolve();
-            } else {
-              setTimeout(checkEmblaApi, 50);
-            }
-          };
-          checkEmblaApi();
-        }),
-      );
+      mountCarousel({}, 3).then((api) => {
+        emblaApi = api;
+      });
     });
 
-    it("should navigate backwards to each slide", () => {
-      // should start from slide 4
-      cy.get(".carouselSlide.is-snapped .carouselNumber .saltText-h1").should(
-        "have.text",
-        "4",
+    it("should navigate back to first slide", () => {
+      verifySlide("4");
+
+      cy.findByLabelText(/Previous slide/).click();
+      cy.wrap(waitForSettle(emblaApi, 2)).then(() => verifySlide("3"));
+
+      cy.findByLabelText(/Previous slide/).click();
+      cy.wrap(waitForSettle(emblaApi, 1)).then(() => verifySlide("2"));
+
+      cy.findByLabelText(/Previous slide/).click();
+      cy.wrap(waitForSettle(emblaApi, 0)).then(() => verifySlide("1"));
+
+      cy.findByLabelText(/Previous slide/).should(
+        "have.class",
+        "saltButton-disabled",
       );
-
-      const waitForSettle = (expectedSlideIndex: number) => {
-        return new Cypress.Promise((resolve) => {
-          const handleSettle = () => {
-            const currentSlideIndex =
-              emblaApiRef?.current?.selectedScrollSnap();
-            if (currentSlideIndex === expectedSlideIndex) {
-              resolve();
-              emblaApiRef?.current?.off("settle", handleSettle);
-            }
-          };
-          emblaApiRef?.current?.on("settle", handleSettle);
-        });
-      };
-
-      // should navigate backwards to slide 3
-      cy.findByTestId("ChevronLeftIcon").parent().click();
-      cy.wrap(waitForSettle(2)).then(() => {
-        cy.get(".carouselSlide.is-snapped .carouselNumber .saltText-h1").should(
-          "have.text",
-          "3",
-        );
-      });
-      // should navigate backwards to slide 2
-      cy.findByTestId("ChevronLeftIcon").parent().click();
-      cy.wrap(waitForSettle(1)).then(() => {
-        cy.get(".carouselSlide.is-snapped .carouselNumber .saltText-h1").should(
-          "have.text",
-          "2",
-        );
-      });
-      // should navigate backwards to slide 1
-      cy.findByTestId("ChevronLeftIcon").parent().click();
-      cy.wrap(waitForSettle(0)).then(() => {
-        cy.get(".carouselSlide.is-snapped .carouselNumber .saltText-h1").should(
-          "have.text",
-          "1",
-        );
-      });
-      // should disable the previous page navigation
-      cy.findByTestId("ChevronLeftIcon")
-        .parent()
-        .should("have.attr", "aria-disabled", "true");
     });
   });
 
   describe("WITH the tablist", () => {
-    let emblaApiRef: MutableRefObject<CarouselApi | undefined>;
-    const TestComponent = () => {
-      emblaApiRef = useRef<CarouselApi | undefined>(undefined);
-      return (
-        <Default
-          emblaOptions={{ duration: 1, startIndex: 3 }}
-          emblaPlugins={[ClassNames()]}
-          emblaApiRef={emblaApiRef}
-        />
-      );
-    };
+    let emblaApi: CarouselApi;
 
     beforeEach(() => {
-      cy.mount(<TestComponent />);
-      cy.findByRole("region").should("exist");
-      // Wait for emblaApi to be set
-      cy.wrap(
-        new Cypress.Promise((resolve) => {
-          const checkEmblaApi = () => {
-            if (emblaApiRef?.current) {
-              resolve();
-            } else {
-              setTimeout(checkEmblaApi, 50);
-            }
-          };
-          checkEmblaApi();
-        }),
-      );
+      mountCarousel({}, 3).then((api) => {
+        emblaApi = api;
+      });
     });
 
-    it("should navigate to each page", () => {
-      const waitForSettle = (expectedSlideIndex: number) => {
-        return new Cypress.Promise((resolve) => {
-          const handleSettle = () => {
-            const currentSlideIndex =
-              emblaApiRef?.current?.selectedScrollSnap();
-            if (currentSlideIndex === expectedSlideIndex) {
-              resolve();
-              emblaApiRef?.current?.off("settle", handleSettle);
-            }
-          };
-          emblaApiRef?.current?.on("settle", handleSettle);
-        });
-      };
+    it("should display the tablist", () => {
+      cy.findAllByRole("tab").should("have.length", 4);
+      cy.findAllByRole("tab")
+        .eq(0)
+        .should("have.attr", "aria-label", "Slide 1");
+      cy.findAllByRole("tab")
+        .eq(1)
+        .should("have.attr", "aria-label", "Slide 2");
+      cy.findAllByRole("tab")
+        .eq(2)
+        .should("have.attr", "aria-label", "Slide 3");
+      cy.findAllByRole("tab")
+        .eq(3)
+        .should("have.attr", "aria-label", "Slide 4");
+    });
 
-      // should start from slide 4
-      cy.get(".carouselSlide.is-snapped .carouselNumber .saltText-h1").should(
-        "have.text",
-        "4",
-      );
-      // should navigate to slide 3
-      cy.findByLabelText(/Previous slide 3 of 4/).click();
-      cy.wrap(waitForSettle(2)).then(() => {
-        cy.get(".carouselSlide.is-snapped .carouselNumber .saltText-h1").should(
-          "have.text",
-          "3",
-        );
-      });
-      // should navigate to slide 2
-      cy.findByLabelText(/Previous slide 2 of 4/).click();
-      cy.wrap(waitForSettle(1)).then(() => {
-        cy.get(".carouselSlide.is-snapped .carouselNumber .saltText-h1").should(
-          "have.text",
-          "2",
-        );
-      });
-      // should navigate to slide 1
-      cy.findByLabelText(/Previous slide 1 of 4/).click();
-      cy.wrap(waitForSettle(0)).then(() => {
-        cy.get(".carouselSlide.is-snapped .carouselNumber .saltText-h1").should(
-          "have.text",
-          "1",
-        );
-      });
+    it("should navigate to each slide in the tablist", () => {
+      verifySlide("4");
+
+      cy.findByLabelText(/Slide 2/).click();
+      cy.wrap(waitForSettle(emblaApi, 1)).then(() => verifySlide("2"));
+
+      cy.findByLabelText(/Slide 3/).click();
+      cy.wrap(waitForSettle(emblaApi, 2)).then(() => verifySlide("3"));
+
+      cy.findByLabelText(/Slide 4/).click();
+      cy.wrap(waitForSettle(emblaApi, 3)).then(() => verifySlide("4"));
+
+      cy.findByLabelText(/Slide 1/).click();
+      cy.wrap(waitForSettle(emblaApi, 0)).then(() => verifySlide("1"));
     });
   });
 });
