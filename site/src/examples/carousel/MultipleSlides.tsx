@@ -1,4 +1,10 @@
-import { FlexLayout, StackLayout, Text, useId } from "@salt-ds/core";
+import {
+  FlexLayout,
+  StackLayout,
+  Text,
+  useBreakpoint,
+  useId,
+} from "@salt-ds/core";
 import {
   Carousel,
   CarouselAnnouncement,
@@ -8,7 +14,7 @@ import {
   CarouselProgressLabel,
   CarouselSlides,
   CarouselTabList,
-} from "@salt-ds/embla-carousel-pattern";
+} from "@salt-ds/embla-carousel";
 import { clsx } from "clsx";
 import type { ReactElement } from "react";
 import { sliderData } from "./exampleData";
@@ -16,10 +22,13 @@ import styles from "./index.module.css";
 
 export const MultipleSlides = (): ReactElement => {
   const slideId = useId();
+  const { matchedBreakpoints } = useBreakpoint();
+  const isMobile = matchedBreakpoints.indexOf("sm") === -1;
+
   return (
     <Carousel
       aria-label="Multiple slides carousel example"
-      className={clsx(styles.carousel, styles.carouselMultipleSlides)}
+      className={clsx(styles.carouselMultipleSlides)}
       emblaOptions={{ align: "center", slidesToScroll: "auto" }}
       emblaPlugins={[CarouselAnnouncement()]}
     >
@@ -53,7 +62,7 @@ export const MultipleSlides = (): ReactElement => {
           <CarouselNextButton />
           <CarouselProgressLabel />
         </StackLayout>
-        <CarouselTabList />
+        {!isMobile ? <CarouselTabList /> : null}
       </FlexLayout>
     </Carousel>
   );

@@ -2,7 +2,7 @@ export * from "./Carousel";
 export * from "./CarouselAnnouncementPlugin";
 export * from "./CarouselCard";
 export * from "./CarouselContext";
-export * from "./CarouselDotButton";
+export * from "./CarouselTab";
 export * from "./CarouselTabList";
 export * from "./CarouselAutoplayIndicator";
 export * from "./CarouselPreviousButton";
