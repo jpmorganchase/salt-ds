@@ -1,9 +1,9 @@
 import { dirname, join } from "node:path";
 import type { StorybookConfig } from "@storybook/react-vite";
+import { cssInline } from "css-inline-plugin";
 import remarkGfm from "remark-gfm";
 import type { UserConfig } from "vite";
 import { typescriptTurbosnap } from "vite-plugin-typescript-turbosnap";
-import { cssInline } from "../tooling/css-inline-plugin";
 
 const config: StorybookConfig = {
   framework: {
