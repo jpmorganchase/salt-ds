@@ -192,8 +192,8 @@ const multiLevel: NavItem[] = [
   },
 ];
 
-function NestedItem(props: { item: NavItem }) {
-  const { item } = props;
+function NestedItem(props: { item: NavItem; icon?: boolean }) {
+  const { item, icon } = props;
 
   const location = useLocation();
   const [collapsed, setCollapsed] = useState(false);
@@ -206,13 +206,14 @@ function NestedItem(props: { item: NavItem }) {
         >
           <VerticalNavigationItemContent>
             <CollapsibleTrigger render={<VerticalNavigationItemTrigger />}>
-              {item.title} <VerticalNavigationItemExpansionIcon />
+              {icon ? item.icon : undefined} {item.title}{" "}
+              <VerticalNavigationItemExpansionIcon />
             </CollapsibleTrigger>
           </VerticalNavigationItemContent>
           <CollapsiblePanel>
             <VerticalNavigationSubMenu>
               {item.children.map((child) => (
-                <NestedItem key={child.title} item={child} />
+                <NestedItem key={child.title} item={child} icon={icon} />
               ))}
             </VerticalNavigationSubMenu>
           </CollapsiblePanel>
@@ -224,7 +225,9 @@ function NestedItem(props: { item: NavItem }) {
   return (
     <VerticalNavigationItem active={location.pathname === item.href}>
       <VerticalNavigationItemContent>
-        <TanstackTrigger to={item.href}>{item.title}</TanstackTrigger>
+        <TanstackTrigger to={item.href}>
+          {icon ? item.icon : undefined} {item.title}
+        </TanstackTrigger>
       </VerticalNavigationItemContent>
     </VerticalNavigationItem>
   );
@@ -495,6 +498,18 @@ export const DualAction: StoryFn<typeof VerticalNavigation> = (args) => {
     <VerticalNavigation {...args}>
       {multiLevel.map((item) => (
         <DualActionItem key={item.title} item={item} />
+      ))}
+    </VerticalNavigation>
+  );
+};
+
+export const NestedCollapseWithIcon: StoryFn<typeof VerticalNavigation> = (
+  args,
+) => {
+  return (
+    <VerticalNavigation {...args}>
+      {nested.map((item) => (
+        <NestedItem key={item.title} item={item} icon />
       ))}
     </VerticalNavigation>
   );
