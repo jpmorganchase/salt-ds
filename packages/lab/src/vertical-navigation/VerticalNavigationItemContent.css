@@ -1,5 +1,10 @@
 .saltVerticalNavigationItemContent {
-  --navigation-item-paddingLeft: calc(var(--salt-spacing-150) + var(--salt-size-indicator) + (var(--salt-spacing-100) * max(0, calc(var(--depth, 0) - 1))));
+  --navigation-item-paddingLeft: calc(
+    var(--salt-spacing-150) +
+    var(--salt-size-indicator) +
+    (var(--salt-spacing-100) * max(0, calc(var(--depth, 0) - 1))) +
+    (var(--parent-has-icon, 0) * (var(--salt-size-icon) + var(--salt-spacing-100)))
+  );
 }
 
 .saltVerticalNavigationItemContent {
@@ -11,7 +16,9 @@
   white-space: pre;
   min-height: calc(var(--salt-size-base) + var(--salt-spacing-100));
   min-width: 4em;
-  padding: var(--salt-spacing-50) var(--salt-spacing-100) var(--salt-spacing-50) 0;
+  padding-top: calc(var(--salt-spacing-50) - var(--navigation-item-border-size, 0px));
+  padding-bottom: calc(var(--salt-spacing-50) - var(--navigation-item-border-size, 0px));
+  padding-right: var(--salt-spacing-100);
   padding-left: var(--navigation-item-paddingLeft);
   position: relative;
   flex-shrink: 0;
@@ -30,15 +37,15 @@
 }
 
 .saltVerticalNavigationItemContent:hover .saltVerticalNavigationItemTrigger::before {
-  background: var(--salt-palette-alpha-contrast-lowest);
+  background: var(--salt-navigable-background-hover);
 }
 
 .saltVerticalNavigationItemContent-active .saltVerticalNavigationItemTrigger[href]::before {
-  background: transparent;
+  background: var(--salt-navigable-background);
 }
 
 .saltVerticalNavigation-indicator .saltVerticalNavigationItemContent-active {
-  background: var(--salt-selectable-background-hover);
+  background: var(--salt-navigable-background-active);
 }
 
 .saltVerticalNavigation-indicator .saltVerticalNavigationItemContent::before {
@@ -55,12 +62,13 @@
 }
 
 .saltVerticalNavigation-bordered .saltVerticalNavigationItemContent {
-  border: var(--salt-size-border) var(--salt-separable-borderStyle) transparent;
+  --navigation-item-border-size: var(--salt-size-border);
+  border: var(--navigation-item-border-size) var(--salt-separable-borderStyle) transparent;
 }
 
 .saltVerticalNavigation-bordered .saltVerticalNavigationItemContent-active {
-  background: var(--salt-selectable-background-hover);
-  border-color: var(--salt-selectable-borderColor-selected);
+  background: var(--salt-navigable-background-active);
+  border-color: var(--salt-navigable-borderColor-active);
 }
 
 .saltVerticalNavigationItemContent .saltVerticalNavigationItem-indicator {
