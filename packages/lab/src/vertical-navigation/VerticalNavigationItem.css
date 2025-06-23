@@ -1,4 +1,14 @@
 .saltVerticalNavigationItem {
   --y: calc(var(--x) + 1);
   --depth: min(var(--x), var(--y));
+  --parent-has-icon-count: calc(var(--parent-has-icon) + 1);
+  --icon-count: min(var(--parent-has-icon), var(--parent-has-icon-count));
+}
+
+.saltVerticalNavigation {
+  --parent-has-icon: 0;
+}
+
+.saltVerticalNavigationItem:has(> .saltVerticalNavigationItemContent .saltIcon:first-child) .saltVerticalNavigationSubMenu {
+  --parent-has-icon: calc(var(--parent-has-icon-count));
 }
