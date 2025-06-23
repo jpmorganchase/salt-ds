@@ -14,7 +14,7 @@ const SN = forwardRef<SVGSVGElement, SNProps>(function SN(props: SNProps, ref) {
     <CountrySymbol
       data-testid="SN"
       aria-label="Senegal"
-      viewBox="0 0 72 72"
+      viewBox="0 0 20 20"
       ref={ref}
       {...props}
     >
@@ -26,20 +26,20 @@ const SN = forwardRef<SVGSVGElement, SNProps>(function SN(props: SNProps, ref) {
         style={{ maskType: "alpha" }}
       >
         <circle
-          cx="36"
-          cy="36"
-          r="36"
+          cx="10"
+          cy="10"
+          r="10"
           fill="#D9D9D9"
-          transform="matrix(0 -1 -1 0 72 72)"
+          transform="matrix(0 -1 -1 0 20 20)"
         />
       </mask>
       <g mask={`url(#${uid}-SN-a)`}>
-        <path fill="#005B33" d="M0 72h24V0H0z" />
-        <path fill="#FBD381" d="M24 72h24V0H24z" />
-        <path fill="#DD2033" d="M48 72h24V0H48z" />
+        <path fill="#005B33" d="M0 20h6.667V0H0z" />
+        <path fill="#FBD381" d="M6.667 20h6.667V0H6.667z" />
+        <path fill="#DD2033" d="M13.333 20H20V0h-6.667z" />
         <path
           fill="#005B33"
-          d="m36 26-2.98 6.742-7.02.897 5.177 5.064L29.82 46 36 41.833 42.18 46l-1.357-7.297L46 33.64l-7.02-.897L36 26Z"
+          d="m10 7.222-.828 1.873-1.95.25L8.66 10.75l-.377 2.027L10 11.62l1.717 1.158-.377-2.027 1.438-1.407-1.95-.249L10 7.222Z"
         />
       </g>
     </CountrySymbol>

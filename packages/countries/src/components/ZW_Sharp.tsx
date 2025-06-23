@@ -17,7 +17,7 @@ const ZW_Sharp = forwardRef<SVGSVGElement, ZW_SharpProps>(function ZW_Sharp(
     <CountrySymbol
       data-testid="ZW_Sharp"
       aria-label="Zimbabwe"
-      viewBox="0 0 72 50"
+      viewBox="0 0 29 20"
       ref={ref}
       sharp
       {...props}
@@ -29,21 +29,21 @@ const ZW_Sharp = forwardRef<SVGSVGElement, ZW_SharpProps>(function ZW_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-ZW-a)`}>
-        <path fill="#008259" d="M0 50V0h72v50z" />
-        <path fill="#F1B434" d="M7.92 44V5H72v39z" />
-        <path fill="#DD2033" d="M7.92 36.2V12.8H72v23.4z" />
-        <path fill="#31373D" d="M45.333 30H72V20H45.333L4-11v72l41.333-31Z" />
-        <path fill="#F5F7F8" d="M46 25-2-11v72l48-36Z" />
+        <path fill="#008259" d="M0 20V0h29v20z" />
+        <path fill="#F1B434" d="M3.19 17.6V2H29v15.6z" />
+        <path fill="#DD2033" d="M3.19 14.48V5.12H29v9.36z" />
+        <path fill="#31373D" d="M18.26 8H29v4H18.26L1.61 24.4V-4.4L18.26 8Z" />
+        <path fill="#F5F7F8" d="M18.528 10-.806-4.4v28.8L18.528 10Z" />
         <path
           fill="#DD2033"
-          d="m19 12-3.577 8.09L7 21.168l6.213 6.077L11.583 36 19 31l7.416 5-1.629-8.756L31 21.167l-8.423-1.076L19 12Z"
+          d="m7.653 4.8-1.44 3.236-3.394.43 2.503 2.432-.656 3.502 2.987-2 2.987 2-.656-3.502 2.502-2.431-3.393-.431L7.653 4.8Z"
         />
         <path
           fill="#FBD381"
-          d="M12.364 19.59 14 29l1.5 3h9l2-3-9.06-11.65a2.86 2.86 0 0 0-4.71.285L10 19l2.364.59Z"
+          d="m4.98 7.836.659 3.764.604 1.2h3.625l.806-1.2-3.65-4.66a1.157 1.157 0 0 0-1.897.114l-1.1.546.953.236Z"
         />
       </g>
     </CountrySymbol>

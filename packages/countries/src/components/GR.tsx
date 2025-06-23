@@ -14,7 +14,7 @@ const GR = forwardRef<SVGSVGElement, GRProps>(function GR(props: GRProps, ref) {
     <CountrySymbol
       data-testid="GR"
       aria-label="Greece"
-      viewBox="0 0 72 72"
+      viewBox="0 0 20 20"
       ref={ref}
       {...props}
     >
@@ -25,13 +25,13 @@ const GR = forwardRef<SVGSVGElement, GRProps>(function GR(props: GRProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#D9D9D9" />
       </mask>
       <g mask={`url(#${uid}-GR-a)`}>
-        <path fill="#005EB8" d="M0 72V0h72v72z" />
+        <path fill="#005EB8" d="M0 20V0h20v20z" />
         <path
           fill="#F5F7F8"
-          d="M36 9v9h36V9H36Zm0 18v9h36v-9H36ZM0 54v-9h72v9H0Zm0 9v9h72v-9H0ZM22 0h-9v18H0v9h13v18h9V27h14v-9H22V0Z"
+          d="M10 2.5V5h10V2.5H10Zm0 5V10h10V7.5H10ZM0 15v-2.5h20V15H0Zm0 2.5V20h20v-2.5H0ZM6.111 0h-2.5v5H0v2.5h3.611v5h2.5v-5H10V5H6.111V0Z"
         />
       </g>
     </CountrySymbol>

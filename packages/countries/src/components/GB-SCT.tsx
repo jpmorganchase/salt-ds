@@ -17,7 +17,7 @@ const GB_SCT = forwardRef<SVGSVGElement, GB_SCTProps>(function GB_SCT(
     <CountrySymbol
       data-testid="GB_SCT"
       aria-label="Scotland"
-      viewBox="0 0 72 72"
+      viewBox="0 0 20 20"
       ref={ref}
       {...props}
     >
@@ -28,13 +28,13 @@ const GB_SCT = forwardRef<SVGSVGElement, GB_SCTProps>(function GB_SCT(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#D9D9D9" />
       </mask>
       <g mask={`url(#${uid}-GB-SCT-a)`}>
-        <path fill="#005EB8" d="M0 0h72v72H0z" />
+        <path fill="#005EB8" d="M0 0h20v20H0z" />
         <path
           fill="#F5F7F8"
-          d="M65.164 12.364 58.8 6 36.3 28.5 13.888 6.088l-6.364 6.364 22.412 22.412L6.455 58.346l6.364 6.363L36.3 41.228 60.043 64.97l6.364-6.364-23.743-23.743 22.5-22.5Z"
+          d="m18.101 3.434-1.768-1.767-6.25 6.25L3.858 1.69 2.09 3.46l6.226 6.225-6.523 6.523 1.768 1.768 6.522-6.523 6.596 6.596 1.767-1.768-6.595-6.596 6.25-6.25Z"
         />
       </g>
     </CountrySymbol>

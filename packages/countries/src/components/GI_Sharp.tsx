@@ -17,7 +17,7 @@ const GI_Sharp = forwardRef<SVGSVGElement, GI_SharpProps>(function GI_Sharp(
     <CountrySymbol
       data-testid="GI_Sharp"
       aria-label="Gibraltar"
-      viewBox="0 0 72 50"
+      viewBox="0 0 29 20"
       ref={ref}
       sharp
       {...props}
@@ -29,18 +29,18 @@ const GI_Sharp = forwardRef<SVGSVGElement, GI_SharpProps>(function GI_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-GI-a)`}>
-        <path fill="#F5F7F8" d="M0 0h72v35H0z" />
+        <path fill="#F5F7F8" d="M0 0h29v14H0z" />
         <path
           fill="#DD2033"
-          d="M0 35h72v15H0zm21-25v4h2v-4h4v4h-2v4h5V7h-2V3h4v4h2V3h4v4h2V3h4v4h-2v11h5v-4h-2v-4h4v4h2v-4h4v4h-2v4h1v11H18V18h1v-4h-2v-4h4Z"
+          d="M0 14h29v6H0zM8.458 4v1.6h.806V4h1.611v1.6h-.806v1.6h2.014V2.8h-.805V1.2h1.61v1.6h.806V1.2h1.612v1.6h.805V1.2h1.611v1.6h-.805v4.4h2.014V5.6h-.806V4h1.611v1.6h.806V4h1.61v1.6h-.805v1.6h.403v4.4H7.25V7.2h.403V5.6h-.806V4h1.611Z"
         />
         <path
           fill="#F1B434"
           fillRule="evenodd"
-          d="M37.6 48h-3v-1.208h-5v-7h5v-5.05a6.5 6.5 0 1 1 3 .151V48Zm2.32-19.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z"
+          d="M15.145 19.2h-1.209v-.483h-2.014v-2.8h2.014v-2.02a2.604 2.604 0 0 1-1.885-2.497c0-1.436 1.172-2.6 2.618-2.6a2.61 2.61 0 0 1 2.618 2.6 2.606 2.606 0 0 1-2.142 2.557V19.2Zm.934-7.8c0 .773-.631 1.4-1.41 1.4-.778 0-1.41-.627-1.41-1.4 0-.773.632-1.4 1.41-1.4.779 0 1.41.627 1.41 1.4Z"
           clipRule="evenodd"
         />
       </g>

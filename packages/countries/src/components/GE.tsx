@@ -14,7 +14,7 @@ const GE = forwardRef<SVGSVGElement, GEProps>(function GE(props: GEProps, ref) {
     <CountrySymbol
       data-testid="GE"
       aria-label="Georgia"
-      viewBox="0 0 72 72"
+      viewBox="0 0 20 20"
       ref={ref}
       {...props}
     >
@@ -25,17 +25,17 @@ const GE = forwardRef<SVGSVGElement, GEProps>(function GE(props: GEProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#D9D9D9" />
       </mask>
       <g mask={`url(#${uid}-GE-a)`}>
-        <path fill="#F5F7F8" d="M0 0h72v72H0z" />
+        <path fill="#F5F7F8" d="M0 0h20v20H0z" />
         <path
           fill="#DD2033"
-          d="M30.4 72h12V42H72V30H42.4V0h-12v30H0v12h30.4v30Z"
+          d="M8.444 20h3.334v-8.333H20V8.333h-8.222V0H8.444v8.333H0v3.334h8.444V20Z"
         />
         <path
           fill="#DD2033"
-          d="M10.4 20v-4h6v-6h4v6h6v4h-6v6h-4v-6h-6Zm36 0v-4h6v-6h4v6h6v4h-6v6h-4v-6h-6Zm-36 36v-4h6v-6h4v6h6v4h-6v6h-4v-6h-6Zm36 0v-4h6v-6h4v6h6v4h-6v6h-4v-6h-6Z"
+          d="M2.889 5.556V4.444h1.667V2.778h1.11v1.666h1.667v1.112H5.667v1.666H4.556V5.556H2.889Zm10 0V4.444h1.667V2.778h1.11v1.666h1.667v1.112h-1.666v1.666h-1.111V5.556h-1.667Zm-10 10v-1.112h1.667v-1.666h1.11v1.666h1.667v1.112H5.667v1.666H4.556v-1.666H2.889Zm10 0v-1.112h1.667v-1.666h1.11v1.666h1.667v1.112h-1.666v1.666h-1.111v-1.666h-1.667Z"
         />
       </g>
     </CountrySymbol>

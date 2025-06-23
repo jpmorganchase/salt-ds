@@ -17,7 +17,7 @@ const TF_Sharp = forwardRef<SVGSVGElement, TF_SharpProps>(function TF_Sharp(
     <CountrySymbol
       data-testid="TF_Sharp"
       aria-label="French Southern Territories (the)"
-      viewBox="0 0 72 50"
+      viewBox="0 0 29 20"
       ref={ref}
       sharp
       {...props}
@@ -29,26 +29,26 @@ const TF_Sharp = forwardRef<SVGSVGElement, TF_SharpProps>(function TF_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-TF-a)`}>
-        <path fill="#004692" d="M0-11h72v72H0z" />
-        <path fill="#F5F7F8" d="M0-9h35v38H0z" />
-        <path fill="#004692" d="M0 27h11V0H0z" />
-        <path fill="#DD2033" d="M22 27h11V0H22z" />
+        <path fill="#004692" d="M0-4.4h29v28.8H0z" />
+        <path fill="#F5F7F8" d="M0-3.6h14.097v15.2H0z" />
+        <path fill="#004692" d="M0 10.8h4.431V0H0z" />
+        <path fill="#DD2033" d="M8.861 10.8h4.431V0h-4.43z" />
         <path
           fill="#F5F7F8"
-          d="m42.579 19-1.365 3.12-3.214.416 2.37 2.344-.621 3.377 2.83-1.928 2.83 1.928-.622-3.377 2.37-2.344-3.213-.415L42.579 19Z"
+          d="m17.15 7.6-.55 1.248-1.294.166.954.938-.25 1.351 1.14-.772 1.14.772-.25-1.35.954-.939-1.294-.166-.55-1.248Z"
         />
         <path
           fill="#F5F7F8"
           fillRule="evenodd"
-          d="m47.74 19 1.804 2.965H54.7v10.342l-3.866-6.22-5.201 8.534h2.53l.51-.94h4.315l1.958 3.616h2.742l1.958-3.616h4.314l.51.94H67l-5.202-8.534-3.866 6.22v-5.713h2.32l1.722-2.82h-4.041v-1.809h5.154L64.891 19h-17.15Zm4.15 12.656-1.057-1.952-1.06 1.952h2.117Zm10.969 0h-2.118l1.057-1.952 1.061 1.952Z"
+          d="m19.229 7.6.726 1.186h2.077v4.137l-1.558-2.488-2.095 3.414h1.02l.205-.376h1.738l.789 1.446h1.104l.788-1.446h1.738l.206.376h1.02l-2.096-3.414-1.557 2.488v-2.285h.934l.694-1.129h-1.628v-.723h2.076l.727-1.186h-6.908Zm1.671 5.063-.426-.781-.427.78h.853Zm4.418 0h-.853l.426-.781.427.78Z"
           clipRule="evenodd"
         />
         <path
           fill="#F5F7F8"
-          d="m45.793 39.864 1.365-3.121 1.365 3.12 3.214.416-2.37 2.344.62 3.377-2.83-1.929L44.328 46l.623-3.377-2.371-2.344 3.214-.416Z"
+          d="m18.444 15.945.55-1.248.55 1.248 1.294.167-.954.937.25 1.351-1.14-.771-1.14.771.25-1.35-.954-.938 1.294-.166Z"
         />
       </g>
     </CountrySymbol>

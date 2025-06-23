@@ -17,7 +17,7 @@ const NR_Sharp = forwardRef<SVGSVGElement, NR_SharpProps>(function NR_Sharp(
     <CountrySymbol
       data-testid="NR_Sharp"
       aria-label="Nauru"
-      viewBox="0 0 72 50"
+      viewBox="0 0 29 20"
       ref={ref}
       sharp
       {...props}
@@ -29,14 +29,14 @@ const NR_Sharp = forwardRef<SVGSVGElement, NR_SharpProps>(function NR_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-NR-a)`}>
-        <path fill="#004692" d="M0 0h72v50H0z" />
-        <path fill="#F1B434" d="M0 28V18h72v10z" />
+        <path fill="#004692" d="M0 0h29v20H0z" />
+        <path fill="#F1B434" d="M0 11.2v-4h29v4z" />
         <path
           fill="#F5F7F8"
-          d="m28 39-2.86 1.414 1.523 2.912-3.106-.624L23.163 46 21 43.574 18.837 46l-.394-3.298-3.106.624 1.523-2.912L14 39l2.86-1.414-1.523-2.912 3.106.624.394-3.298L21 34.426 23.163 32l.394 3.298 3.106-.624-1.523 2.912L28 39Z"
+          d="m11.278 15.6-1.152.566.613 1.165-1.25-.25-.16 1.319-.87-.97-.872.97-.159-1.32-1.25.25.613-1.164-1.152-.566 1.152-.566-.614-1.164 1.251.25.159-1.32.871.97.872-.97.158 1.32 1.251-.25-.613 1.164 1.152.566Z"
         />
       </g>
     </CountrySymbol>

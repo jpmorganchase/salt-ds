@@ -14,7 +14,7 @@ const TH = forwardRef<SVGSVGElement, THProps>(function TH(props: THProps, ref) {
     <CountrySymbol
       data-testid="TH"
       aria-label="Thailand"
-      viewBox="0 0 72 72"
+      viewBox="0 0 20 20"
       ref={ref}
       {...props}
     >
@@ -25,12 +25,12 @@ const TH = forwardRef<SVGSVGElement, THProps>(function TH(props: THProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#D9D9D9" />
       </mask>
       <g mask={`url(#${uid}-TH-a)`}>
-        <path fill="#A00009" d="M0 72V0h72v72z" />
-        <path fill="#F5F7F8" d="M0 58V14h72v44z" />
-        <path fill="#004692" d="M0 46V26h72v20z" />
+        <path fill="#A00009" d="M0 20V0h20v20z" />
+        <path fill="#F5F7F8" d="M0 16.111V3.89h20v12.222z" />
+        <path fill="#004692" d="M0 12.778V7.222h20v5.556z" />
       </g>
     </CountrySymbol>
   );

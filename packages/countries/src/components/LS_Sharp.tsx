@@ -17,7 +17,7 @@ const LS_Sharp = forwardRef<SVGSVGElement, LS_SharpProps>(function LS_Sharp(
     <CountrySymbol
       data-testid="LS_Sharp"
       aria-label="Lesotho"
-      viewBox="0 0 72 50"
+      viewBox="0 0 29 20"
       ref={ref}
       sharp
       {...props}
@@ -29,59 +29,59 @@ const LS_Sharp = forwardRef<SVGSVGElement, LS_SharpProps>(function LS_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-LS-a)`}>
-        <path fill="#F5F7F8" d="M0 50V0h72v50z" />
-        <path fill="#009B77" d="M0 50V39h72v11z" />
-        <path fill="#004692" d="M0 11V0h72v11z" />
+        <path fill="#F5F7F8" d="M0 20V0h29v20z" />
+        <path fill="#009B77" d="M0 20v-4.4h29V20z" />
+        <path fill="#004692" d="M0 4.4V0h29v4.4z" />
         <mask
           id={`${uid}-LS-b`}
-          x="28"
-          y="21"
+          x="11"
+          y="8"
           maskUnits="userSpaceOnUse"
           style={{ maskType: "alpha" }}
         >
           <path
             fill="#D9D9D9"
-            d="m35.767 37.158-7.693-7.693 7.693-7.692 7.692 7.692z"
+            d="m14.406 14.863-3.099-3.077 3.1-3.077 3.098 3.077z"
           />
         </mask>
-        <g fill="#31373D" mask={`url(#${uid}-LS-b)`}>
+        <g fill="#31373D" stroke="#31373D" mask={`url(#${uid}-LS-b)`}>
           <circle
-            cx="35.767"
-            cy="21.773"
-            r="10.879"
-            transform="rotate(-135 35.767 21.773)"
+            cx="4.367"
+            cy="4.367"
+            r="3.867"
+            transform="scale(-1.00345 -.99653) rotate(45 10.826 -24.787)"
           />
           <circle
-            cx="35.767"
-            cy="21.773"
-            r="10.879"
-            transform="rotate(-135 35.767 21.773)"
+            cx="4.367"
+            cy="4.367"
+            r="3.867"
+            transform="scale(-1.00345 -.99653) rotate(45 10.826 -24.787)"
           />
         </g>
         <mask
           id={`${uid}-LS-c`}
-          x="23"
-          y="19"
+          x="9"
+          y="7"
           maskUnits="userSpaceOnUse"
           style={{ maskType: "alpha" }}
         >
           <path
             fill="#D9D9D9"
-            d="m23.8 31.96 12.04-12.04 12.04 12.04L35.84 44 23.8 31.96Z"
+            d="m9.586 12.784 4.85-4.816 4.849 4.816-4.85 4.816-4.849-4.816Z"
           />
         </mask>
         <g mask={`url(#${uid}-LS-c)`}>
           <path
             fill="#31373D"
             fillRule="evenodd"
-            d="M43.442 29.396c4.248-4.249 4.248-11.137 0-15.386-4.249-4.248-11.137-4.248-15.386 0-4.248 4.249-4.248 11.137 0 15.386 4.249 4.248 11.137 4.248 15.386 0Zm2.564 2.564c5.665-5.665 5.665-14.85 0-20.514-5.665-5.665-14.85-5.665-20.514 0-5.665 5.665-5.665 14.85 0 20.514 5.665 5.665 14.85 5.665 20.514 0Z"
+            d="M17.497 11.758a4.33 4.33 0 0 0 0-6.154 4.403 4.403 0 0 0-6.197 0 4.33 4.33 0 0 0 0 6.154 4.403 4.403 0 0 0 6.197 0Zm1.033 1.026a5.774 5.774 0 0 0 0-8.205 5.871 5.871 0 0 0-8.262 0 5.774 5.774 0 0 0 0 8.205 5.871 5.871 0 0 0 8.262 0Z"
             clipRule="evenodd"
           />
         </g>
-        <path fill="#31373D" d="M33.8 13h4v11h-4z" />
+        <path fill="#31373D" d="M13.614 5.2h1.611v4.4h-1.611z" />
       </g>
     </CountrySymbol>
   );

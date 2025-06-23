@@ -14,7 +14,7 @@ const BB = forwardRef<SVGSVGElement, BBProps>(function BB(props: BBProps, ref) {
     <CountrySymbol
       data-testid="BB"
       aria-label="Barbados"
-      viewBox="0 0 72 72"
+      viewBox="0 0 20 20"
       ref={ref}
       {...props}
     >
@@ -26,19 +26,19 @@ const BB = forwardRef<SVGSVGElement, BBProps>(function BB(props: BBProps, ref) {
         style={{ maskType: "alpha" }}
       >
         <circle
-          cx="36"
-          cy="36"
-          r="36"
+          cx="10"
+          cy="10"
+          r="10"
           fill="#D9D9D9"
-          transform="rotate(-90 36 36)"
+          transform="rotate(-90 10 10)"
         />
       </mask>
       <g mask={`url(#${uid}-BB-a)`}>
-        <path fill="#004692" d="M72 72H0V0h72z" />
-        <path fill="#F1B434" d="M52 72H20V0h32z" />
+        <path fill="#004692" d="M20 20H0V0h20z" />
+        <path fill="#F1B434" d="M15 20H5V0h10z" />
         <path
           fill="#31373D"
-          d="m47.346 23.364-2.252-1.129c-.136.273-3.075 6.267-3.556 15.424h-3.422V23.364L35.599 20l-2.518 3.364v14.295H29.66c-.48-9.157-3.42-15.151-3.556-15.424L21.6 24.492c.031.062 3.09 6.303 3.09 15.69v2.523h8.391V53h5.035V42.705h8.39v-2.523c0-4.853.839-8.855 1.542-11.358.766-2.729 1.544-4.322 1.552-4.338l-2.254-1.122Z"
+          d="m13.356 6.417-.643-.307c-.04.074-.88 1.709-1.016 4.206h-.978V6.417l-.72-.917-.719.917v3.9h-.977c-.138-2.498-.978-4.133-1.016-4.207L6 6.725c.009.017.883 1.72.883 4.28v.687H9.28V14.5h1.439v-2.808h2.397v-.688c0-1.323.24-2.415.44-3.097.22-.745.442-1.18.444-1.184l-.644-.306Z"
         />
       </g>
     </CountrySymbol>

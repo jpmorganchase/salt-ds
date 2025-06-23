@@ -17,7 +17,7 @@ const GG_Sharp = forwardRef<SVGSVGElement, GG_SharpProps>(function GG_Sharp(
     <CountrySymbol
       data-testid="GG_Sharp"
       aria-label="Guernsey"
-      viewBox="0 0 72 50"
+      viewBox="0 0 29 20"
       ref={ref}
       sharp
       {...props}
@@ -29,12 +29,18 @@ const GG_Sharp = forwardRef<SVGSVGElement, GG_SharpProps>(function GG_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-GG-a)`}>
-        <path fill="#F5F7F8" d="M0-11h72v72H0z" />
-        <path fill="#DD2033" d="M24 50h24V37h24V13H48V0H24v13H0v24h24v13Z" />
-        <path fill="#F1B434" d="M41 6H31v14H6v10h25v14h10V30h25V20H41V6Z" />
+        <path fill="#F5F7F8" d="M0-4.4h29v28.8H0z" />
+        <path
+          fill="#DD2033"
+          d="M9.667 20h9.666v-5.2H29V5.2h-9.667V0H9.667v5.2H0v9.6h9.667V20Z"
+        />
+        <path
+          fill="#F1B434"
+          d="M16.514 2.4h-4.028V8H2.416v4h10.07v5.6h4.028V12h10.07V8h-10.07V2.4Z"
+        />
       </g>
     </CountrySymbol>
   );

@@ -1,0 +1,22 @@
+<svg width="29" height="20" viewBox="0 0 29 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<mask id="mask0_11482_4171" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="-5" width="29" height="30">
+<ellipse cx="14.5" cy="9.99998" rx="14.5" ry="14.4" fill="#D9D9D9"/>
+</mask>
+<g mask="url(#mask0_11482_4171)">
+</g>
+<mask id="mask1_11482_4171" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="29" height="20">
+<rect width="29" height="20" fill="#D9D9D9"/>
+</mask>
+<g mask="url(#mask1_11482_4171)">
+<rect width="29" height="20" fill="#DD2033"/>
+<mask id="mask2_11482_4171" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="-4" y="-6" width="37" height="26">
+<path d="M14.5 20L32.625 -5.20001L-3.625 -5.20001L14.5 20Z" fill="#31373D"/>
+</mask>
+<g mask="url(#mask2_11482_4171)">
+<path d="M14.5 20L32.625 -5.20001L-3.625 -5.20001L14.5 20Z" fill="#31373D"/>
+<path d="M9.73616 7.74527L6.44444 9.2H22.5556L19.2641 7.74538L21.0168 4.75021L17.4425 5.39257L16.9897 2L14.4999 4.49513L12.0105 2L11.5574 5.39257L7.98318 4.75021L9.73616 7.74527Z" fill="#F1B434"/>
+<rect x="8.05557" y="14.8" width="12.8889" height="9.6" fill="#F5F7F8"/>
+<path d="M4.83336 9.20001H24.1667V14.8H4.83336V9.20001Z" fill="#005EB8"/>
+</g>
+</g>
+</svg>

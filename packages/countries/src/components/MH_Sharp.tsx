@@ -17,7 +17,7 @@ const MH_Sharp = forwardRef<SVGSVGElement, MH_SharpProps>(function MH_Sharp(
     <CountrySymbol
       data-testid="MH_Sharp"
       aria-label="Marshall Islands (the)"
-      viewBox="0 0 72 50"
+      viewBox="0 0 29 20"
       ref={ref}
       sharp
       {...props}
@@ -29,17 +29,17 @@ const MH_Sharp = forwardRef<SVGSVGElement, MH_SharpProps>(function MH_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-MH-a)`}>
-        <path fill="#004692" d="M0 0h72v50H0z" />
+        <path fill="#004692" d="M0 0h29v20H0z" />
         <path
           fill="#F1B434"
-          d="m6.884 52.307-1.8-2.848L79.55 5.819l6.46 10.219L6.884 52.307Z"
+          d="m2.773 20.923-.726-1.14L32.041 2.329l2.602 4.087-31.87 14.508Z"
         />
         <path
           fill="#F5F7F8"
-          d="m8.727 55.222-1.842-2.915 79.125-36.27 6.46 10.22L8.727 55.221ZM30 19l-4.903 2.425 2.61 4.991-5.324-1.07L21.71 31 18 26.841 14.292 31l-.674-5.654-5.325 1.07 2.611-4.992L6 19l4.903-2.425-2.61-4.991 5.324 1.07L14.292 7 18 11.159 21.709 7l.674 5.654 5.325-1.07-2.611 4.992L30 19Z"
+          d="m3.515 22.089-.742-1.166 31.87-14.508 2.602 4.087L3.515 22.09ZM12.083 7.6l-1.975.97 1.052 1.997-2.144-.429-.272 2.262-1.494-1.663L5.756 12.4l-.271-2.262-2.145.429L4.392 8.57 2.417 7.6l1.975-.97L3.34 4.634l2.144.428.272-2.262L7.25 4.463 8.744 2.8l.272 2.262 2.144-.428-1.052 1.996 1.975.97Z"
         />
       </g>
     </CountrySymbol>

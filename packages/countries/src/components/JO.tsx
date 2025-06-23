@@ -14,7 +14,7 @@ const JO = forwardRef<SVGSVGElement, JOProps>(function JO(props: JOProps, ref) {
     <CountrySymbol
       data-testid="JO"
       aria-label="Jordan"
-      viewBox="0 0 72 72"
+      viewBox="0 0 20 20"
       ref={ref}
       {...props}
     >
@@ -25,16 +25,16 @@ const JO = forwardRef<SVGSVGElement, JOProps>(function JO(props: JOProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#D9D9D9" />
       </mask>
       <g mask={`url(#${uid}-JO-a)`}>
-        <path fill="#008259" d="M0 72V48h72v24z" />
-        <path fill="#F5F7F8" d="M0 48V24h72v24z" />
-        <path fill="#31373D" d="M0 24V0h72v24z" />
-        <path fill="#DD2033" d="M48 36 0 0v72l48-36Z" />
+        <path fill="#008259" d="M0 20v-7h20v7z" />
+        <path fill="#F5F7F8" d="M0 13V7h20v6z" />
+        <path fill="#31373D" d="M0 7V0h20v7z" />
+        <path fill="#DD2033" d="M13 10 0 0v20l13-10Z" />
         <path
           fill="#F5F7F8"
-          d="m19 25 2.707 5.807 6.114-1.45-2.738 5.792 4.917 4-6.122 1.414.017 6.437L19 42.973 14.104 47l.018-6.437L8 39.148l4.917-3.999-2.738-5.791 6.114 1.449L19 25Z"
+          d="m5 7 .738 1.584 1.668-.396-.747 1.58L8 10.858l-1.67.387L6.335 13 5 11.902 3.665 13l.005-1.755L2 10.859l1.34-1.091-.746-1.58 1.668.396L5 7Z"
         />
       </g>
     </CountrySymbol>

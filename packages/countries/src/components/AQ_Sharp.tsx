@@ -17,7 +17,7 @@ const AQ_Sharp = forwardRef<SVGSVGElement, AQ_SharpProps>(function AQ_Sharp(
     <CountrySymbol
       data-testid="AQ_Sharp"
       aria-label="Antarctica"
-      viewBox="0 0 72 50"
+      viewBox="0 0 29 20"
       ref={ref}
       sharp
       {...props}
@@ -29,13 +29,13 @@ const AQ_Sharp = forwardRef<SVGSVGElement, AQ_SharpProps>(function AQ_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-AQ-a)`}>
-        <path fill="#0091DA" d="M0-11h72v72H0z" />
+        <path fill="#0091DA" d="M0-4.4h29v28.8H0z" />
         <path
           fill="#F5F7F8"
-          d="M25.338 18.263c-6.005 2.018-9.619-3.362-11.009-5.211-1.067.672-1 2.634-.834 3.53L18 24.315c.4 6.86 3.28 10.816 4.67 11.936 5.07 2.287 11.453 1.962 14.01 1.513 2.002 1.345.834 4.035 0 5.212 16.013 5.245 19.126-10.928 18.681-19.67l-3.002-1.512c.8-3.9-.334-7.453-1-8.742L34.177 7l-5.338 3.362c-.055 2.354-.834 7.229-3.502 7.901Z"
+          d="M10.205 7.305c-2.418.807-3.874-1.345-4.433-2.084-.43.269-.404 1.053-.336 1.412l1.813 3.093c.162 2.744 1.322 4.326 1.882 4.774 2.042.915 4.613.785 5.643.606.806.538.336 1.614 0 2.084 6.449 2.098 7.703-4.37 7.524-7.867l-1.21-.606c.323-1.56-.134-2.98-.402-3.496L13.766 2.8l-2.15 1.345c-.022.941-.336 2.891-1.41 3.16Z"
         />
       </g>
     </CountrySymbol>

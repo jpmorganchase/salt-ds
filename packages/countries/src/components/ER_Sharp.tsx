@@ -17,7 +17,7 @@ const ER_Sharp = forwardRef<SVGSVGElement, ER_SharpProps>(function ER_Sharp(
     <CountrySymbol
       data-testid="ER_Sharp"
       aria-label="Eritrea"
-      viewBox="0 0 72 50"
+      viewBox="0 0 29 20"
       ref={ref}
       sharp
       {...props}
@@ -29,15 +29,15 @@ const ER_Sharp = forwardRef<SVGSVGElement, ER_SharpProps>(function ER_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-ER-a)`}>
-        <path fill="#009B77" d="M0 0h72v25H0z" />
-        <path fill="#0091DA" d="M0 50V25h72v25z" />
-        <path fill="#DD2033" d="M72 25 0 0v50l72-25Z" />
+        <path fill="#009B77" d="M0 0h29v10H0z" />
+        <path fill="#0091DA" d="M0 20V10h29v10z" />
+        <path fill="#DD2033" d="M29 10 0 0v20l29-10Z" />
         <path
           fill="#FBD381"
-          d="M20 36c6.627 0 12-5.373 12-12 0-3.314-1.343-6.314-3.515-8.485l-2.424 2.424a8.574 8.574 0 0 1-4.347 14.46V18.858h-3.428V32.4a8.574 8.574 0 0 1-4.347-14.46l-2.424-2.425A11.962 11.962 0 0 0 8 24c0 6.627 5.373 12 12 12Zm0-24h.025-.05H20Z"
+          d="M8.056 14.4c2.669 0 4.833-2.149 4.833-4.8a4.768 4.768 0 0 0-1.416-3.394l-.976.97a3.406 3.406 0 0 1 1.01 2.424 3.436 3.436 0 0 1-2.761 3.36V7.543h-1.38v5.417A3.436 3.436 0 0 1 4.602 9.6c0-.947.387-1.804 1.011-2.424l-.976-.97A4.768 4.768 0 0 0 3.222 9.6c0 2.651 2.164 4.8 4.834 4.8Zm0-9.6h.01-.02.01Z"
         />
       </g>
     </CountrySymbol>

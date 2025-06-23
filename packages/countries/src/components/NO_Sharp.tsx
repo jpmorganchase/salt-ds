@@ -17,7 +17,7 @@ const NO_Sharp = forwardRef<SVGSVGElement, NO_SharpProps>(function NO_Sharp(
     <CountrySymbol
       data-testid="NO_Sharp"
       aria-label="Norway"
-      viewBox="0 0 72 50"
+      viewBox="0 0 29 20"
       ref={ref}
       sharp
       {...props}
@@ -29,17 +29,20 @@ const NO_Sharp = forwardRef<SVGSVGElement, NO_SharpProps>(function NO_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-NO-a)`}>
-        <path fill="#DD2033" d="M0-11h72v72H0z" />
+        <path fill="#DD2033" d="M0-4.4h29v28.8H0z" />
         <path
           fill="#F5F7F8"
           fillRule="evenodd"
-          d="M20 61h-6V36.7H0v-6h14V19.3H0v-6h14V-11h6v24.3h11.4V-11h6v24.3H72v6H37.4v11.4H72v6H37.4V61h-6V36.7H20V61Zm11.4-41.7H20v11.4h11.4V19.3Z"
+          d="M8.056 24.4H5.639v-9.72H0v-2.4h5.639V7.72H0v-2.4h5.639V-4.4h2.417v9.72h4.591V-4.4h2.417v9.72H29v2.4H15.064v4.56H29v2.4H15.064v9.72h-2.417v-9.72H8.056v9.72Zm4.591-16.68H8.056v4.56h4.591V7.72Z"
           clipRule="evenodd"
         />
-        <path fill="#004692" d="M20 50h12V31h40V19H32V0H20v19H0v12h20v19Z" />
+        <path
+          fill="#004692"
+          d="M8.056 20h4.833v-7.6H29V7.6H12.889V0H8.056v7.6H0v4.8h8.056V20Z"
+        />
       </g>
     </CountrySymbol>
   );

@@ -16,7 +16,7 @@ export const ArrowDownIcon = forwardRef<SVGSVGElement, ArrowDownIconProps>(
         ref={ref}
         {...props}
       >
-        <path d="M6.5 0h-1v10.086L2.354 6.94l-.707.707L6 12.001l4.354-4.354-.708-.707L6.5 10.086V0Z" />
+        <path d="M6.5 0h-1v10.086L2.354 6.94l-.708.707L6 12.001l4.354-4.354-.708-.707L6.5 10.086V0Z" />
       </Icon>
     );
   },

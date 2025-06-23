@@ -14,7 +14,7 @@ const CF = forwardRef<SVGSVGElement, CFProps>(function CF(props: CFProps, ref) {
     <CountrySymbol
       data-testid="CF"
       aria-label="Central African Republic (the)"
-      viewBox="0 0 72 72"
+      viewBox="0 0 20 20"
       ref={ref}
       {...props}
     >
@@ -25,17 +25,17 @@ const CF = forwardRef<SVGSVGElement, CFProps>(function CF(props: CFProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#D9D9D9" />
       </mask>
       <g mask={`url(#${uid}-CF-a)`}>
-        <path fill="#FBD381" d="M0 72V56h72v16z" />
-        <path fill="#F5F7F8" d="M0 38V20h72v18z" />
-        <path fill="#004692" d="M0 20V0h72v20z" />
-        <path fill="#008259" d="M0 56V38h72v18z" />
-        <path fill="#DD2033" d="M49 72H31V0h18z" />
+        <path fill="#FBD381" d="M0 20v-4.444h20V20z" />
+        <path fill="#F5F7F8" d="M0 10.556v-5h20v5z" />
+        <path fill="#004692" d="M0 5.556V0h20v5.556z" />
+        <path fill="#008259" d="M0 15.556v-5h20v5z" />
+        <path fill="#DD2033" d="M13.611 20h-5V0h5z" />
         <path
           fill="#FBD381"
-          d="m21 4-2.087 4.72L14 9.347l3.624 3.545-.95 5.108L21 15.083 25.326 18l-.95-5.108L28 9.347l-4.913-.627L21 4Z"
+          d="m5.833 1.111-.58 1.311-1.364.175 1.007.984L4.632 5l1.201-.81L7.035 5l-.264-1.419 1.007-.984-1.365-.175-.58-1.31Z"
         />
       </g>
     </CountrySymbol>

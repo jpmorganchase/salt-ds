@@ -14,7 +14,7 @@ const JM = forwardRef<SVGSVGElement, JMProps>(function JM(props: JMProps, ref) {
     <CountrySymbol
       data-testid="JM"
       aria-label="Jamaica"
-      viewBox="0 0 72 72"
+      viewBox="0 0 20 20"
       ref={ref}
       {...props}
     >
@@ -25,14 +25,14 @@ const JM = forwardRef<SVGSVGElement, JMProps>(function JM(props: JMProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#D9D9D9" />
       </mask>
       <g mask={`url(#${uid}-JM-a)`}>
-        <path fill="#31373D" d="M0 0h72v72H0z" />
-        <path fill="#009B77" d="m0 72 35-36L0 0h72L35 36l37 36H0Z" />
+        <path fill="#31373D" d="M0 0h20v20H0z" />
+        <path fill="#009B77" d="m0 20 9.722-10L0 0h20L9.722 10 20 20H0Z" />
         <path
           fill="#F1B434"
-          d="m57.92 64.991 7.071-7.07L43.071 36l21.92-21.92-7.07-7.071L36 28.929 14.08 7.009l-7.071 7.07L28.929 36 7.009 57.92l7.07 7.071L36 43.071l21.92 21.92Z"
+          d="m16.089 18.053 1.964-1.964L11.964 10l6.09-6.089-1.965-1.964L10 8.036l-6.089-6.09-1.964 1.965L8.036 10l-6.09 6.089 1.965 1.964L10 11.964l6.089 6.09Z"
         />
       </g>
     </CountrySymbol>

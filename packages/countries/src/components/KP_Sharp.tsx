@@ -17,7 +17,7 @@ const KP_Sharp = forwardRef<SVGSVGElement, KP_SharpProps>(function KP_Sharp(
     <CountrySymbol
       data-testid="KP_Sharp"
       aria-label="Korea (the Democratic People&#39;s Republic of)"
-      viewBox="0 0 72 50"
+      viewBox="0 0 29 20"
       ref={ref}
       sharp
       {...props}
@@ -29,16 +29,16 @@ const KP_Sharp = forwardRef<SVGSVGElement, KP_SharpProps>(function KP_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-KP-a)`}>
-        <path fill="#004692" d="M0 0h72v50H0z" />
-        <path fill="#F5F7F8" d="M0 45V5h72v40z" />
-        <path fill="#DD2033" d="M0 40V10h72v30z" />
+        <path fill="#004692" d="M0 0h29v20H0z" />
+        <path fill="#F5F7F8" d="M0 18V2h29v16z" />
+        <path fill="#DD2033" d="M0 16V4h29v12z" />
         <path
           fill="#F5F7F8"
           fillRule="evenodd"
-          d="M22 13c-6.627 0-12 5.373-12 12s5.373 12 12 12 12-5.373 12-12-5.373-12-12-12Zm-2.751 8.993L22 15.769l2.752 6.224 6.479.828-4.78 4.674 1.254 6.736L22 30.385l-5.705 3.846 1.253-6.736-4.779-4.674 6.48-.828Z"
+          d="M8.861 5.2c-2.65 0-4.833 2.149-4.833 4.8 0 2.65 2.182 4.8 4.833 4.8 2.651 0 4.833-2.15 4.833-4.8 0-2.651-2.182-4.8-4.833-4.8ZM7.753 8.797l1.108-2.49 1.108 2.49 2.61.331-1.925 1.87.505 2.694-2.298-1.538-2.298 1.538.505-2.694-1.925-1.87 2.61-.33Z"
           clipRule="evenodd"
         />
       </g>

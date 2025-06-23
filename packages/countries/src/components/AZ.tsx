@@ -14,7 +14,7 @@ const AZ = forwardRef<SVGSVGElement, AZProps>(function AZ(props: AZProps, ref) {
     <CountrySymbol
       data-testid="AZ"
       aria-label="Azerbaijan"
-      viewBox="0 0 72 72"
+      viewBox="0 0 20 20"
       ref={ref}
       {...props}
     >
@@ -25,19 +25,19 @@ const AZ = forwardRef<SVGSVGElement, AZProps>(function AZ(props: AZProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#D9D9D9" />
       </mask>
       <g mask={`url(#${uid}-AZ-a)`}>
-        <path fill="#009B77" d="M0 72V54h72v18z" />
-        <path fill="#DD2033" d="M0 54V18h72v36z" />
+        <path fill="#009B77" d="M0 20v-5h20v5z" />
+        <path fill="#DD2033" d="M0 15V5h20v10z" />
         <path
           fill="#F5F7F8"
-          d="m45 27 2.215 4.751 5.003-1.186-2.24 4.739L54 38.576l-5.008 1.158.013 5.266L45 41.705 40.995 45l.014-5.266L36 38.576l4.023-3.272-2.24-4.739 5.002 1.186L45 27Z"
+          d="m12.5 7.5.615 1.32 1.39-.33-.623 1.317 1.118.909-1.391.321.004 1.463-1.113-.915-1.113.915.004-1.463L10 10.716l1.117-.91-.622-1.316 1.39.33.615-1.32Z"
         />
-        <path fill="#0091DA" d="M0 18V0h72v18z" />
+        <path fill="#0091DA" d="M0 5V0h20v5z" />
         <path
           fill="#F5F7F8"
-          d="M37.998 25.272A11.539 11.539 0 0 0 35.5 25C29.149 25 24 30.149 24 36.5S29.149 48 35.5 48c.858 0 1.694-.094 2.498-.272A13.437 13.437 0 0 1 30.5 50C23.044 50 17 43.956 17 36.5S23.044 23 30.5 23c2.774 0 5.353.837 7.498 2.272Z"
+          d="M10.555 7.02a3.194 3.194 0 1 0 0 6.238 3.75 3.75 0 1 1 0-6.238Z"
         />
       </g>
     </CountrySymbol>

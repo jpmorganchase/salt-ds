@@ -17,7 +17,7 @@ const TZ_Sharp = forwardRef<SVGSVGElement, TZ_SharpProps>(function TZ_Sharp(
     <CountrySymbol
       data-testid="TZ_Sharp"
       aria-label="Tanzania (the United Republic of)"
-      viewBox="0 0 72 50"
+      viewBox="0 0 29 20"
       ref={ref}
       sharp
       {...props}
@@ -29,18 +29,18 @@ const TZ_Sharp = forwardRef<SVGSVGElement, TZ_SharpProps>(function TZ_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-TZ-a)`}>
-        <path fill="#009B77" d="M72-11H0v72l72-72Z" />
-        <path fill="#0091DA" d="M72 61v-72L0 61h72Z" />
+        <path fill="#009B77" d="M29-4.4H0v28.8L29-4.4Z" />
+        <path fill="#0091DA" d="M29 24.4V-4.4L0 24.4h29Z" />
         <path
           fill="#FBD381"
-          d="M57.803-18.016 79.016 3.197 15.479 66.734-5.734 45.521z"
+          d="m23.282-7.207 8.544 8.486L6.235 26.694l-8.545-8.486z"
         />
         <path
           fill="#31373D"
-          d="M73.436.292 60.708-12.436-1.938 50.21 10.79 62.937z"
+          d="m29.578.117-5.126-5.091L-.78 20.084l5.126 5.091z"
         />
       </g>
     </CountrySymbol>

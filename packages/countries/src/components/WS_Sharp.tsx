@@ -17,7 +17,7 @@ const WS_Sharp = forwardRef<SVGSVGElement, WS_SharpProps>(function WS_Sharp(
     <CountrySymbol
       data-testid="WS_Sharp"
       aria-label="Samoa"
-      viewBox="0 0 72 50"
+      viewBox="0 0 29 20"
       ref={ref}
       sharp
       {...props}
@@ -29,14 +29,14 @@ const WS_Sharp = forwardRef<SVGSVGElement, WS_SharpProps>(function WS_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-WS-a)`}>
-        <path fill="#DD2033" d="M0 61v-72h72v72z" />
-        <path fill="#004692" d="M0 34V0h44v34z" />
+        <path fill="#DD2033" d="M0 24.4V-4.4h29v28.8z" />
+        <path fill="#004692" d="M0 13.6V0h17.722v13.6z" />
         <path
           fill="#F5F7F8"
-          d="m13 12-1.788 4.045L7 16.584l3.106 3.038L9.292 24 13 21.5l3.708 2.5-.814-4.378L19 16.584l-4.212-.539L13 12Zm14 9-1.49 3.371-3.51.449 2.589 2.532-.68 3.648L27 28.917 30.09 31l-.679-3.648L32 24.82l-3.51-.449L27 21Zm4-18-1.788 4.045L25 7.584l3.106 3.038L27.292 15 31 12.5l3.708 2.5-.814-4.378L37 7.584l-4.212-.539L31 3Z"
+          d="m5.236 4.8-.72 1.618-1.697.216 1.252 1.215L3.743 9.6l1.493-1 1.494 1-.328-1.751 1.25-1.215-1.696-.216-.72-1.618Zm5.639 3.6-.6 1.349-1.414.18 1.043 1.012-.274 1.46 1.245-.834 1.245.833-.274-1.46 1.043-1.012-1.414-.18-.6-1.348Zm1.611-7.2-.72 1.618-1.697.216 1.252 1.215L10.992 6l1.494-1 1.494 1-.328-1.751 1.25-1.215-1.696-.216-.72-1.618Z"
         />
       </g>
     </CountrySymbol>

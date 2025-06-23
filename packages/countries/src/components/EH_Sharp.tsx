@@ -17,7 +17,7 @@ const EH_Sharp = forwardRef<SVGSVGElement, EH_SharpProps>(function EH_Sharp(
     <CountrySymbol
       data-testid="EH_Sharp"
       aria-label="Western Sahara"
-      viewBox="0 0 72 50"
+      viewBox="0 0 29 20"
       ref={ref}
       sharp
       {...props}
@@ -29,15 +29,19 @@ const EH_Sharp = forwardRef<SVGSVGElement, EH_SharpProps>(function EH_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-EH-a)`}>
-        <path fill="#005B33" d="M0 50V35h72v15z" />
-        <path fill="#F5F7F8" d="M0 35V15h72v20z" />
-        <path fill="#31373D" d="M0 15V0h72v15z" />
+        <path fill="#005B33" d="M0 20v-6h29v6z" />
+        <path fill="#F5F7F8" d="M0 14V6h29v8z" />
+        <path fill="#31373D" d="M0 6V0h29v6z" />
         <path
           fill="#DD2033"
-          d="M-5-2v54h2l12-9 24-18L9 7-3-2h-2Zm50 27c0-3.728 2.55-6.86 6-7.748a8 8 0 1 0 0 15.496c-3.45-.888-6-4.02-6-7.748Zm10.212-1.955L57 19l1.788 4.045 4.212.539-3.106 3.038.814 4.378L57 28.5 53.292 31l.814-4.378L51 23.584l4.212-.539Z"
+          d="M-2.014-.8v21.6h.806l4.833-3.6 9.667-7.2-9.667-7.2-4.833-3.6h-.806ZM18.125 10a3.205 3.205 0 0 1 2.417-3.1 3.25 3.25 0 0 0-.806-.1c-1.78 0-3.222 1.433-3.222 3.2 0 1.767 1.442 3.2 3.222 3.2.278 0 .548-.035.806-.1a3.206 3.206 0 0 1-2.417-3.1Z"
+        />
+        <path
+          fill="#DD2033"
+          d="m22.238 9.218.72-1.618.72 1.618 1.697.215-1.251 1.216.328 1.751-1.494-1-1.493 1 .328-1.751-1.251-1.216 1.696-.215Z"
         />
       </g>
     </CountrySymbol>

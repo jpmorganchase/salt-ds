@@ -14,7 +14,7 @@ const SC = forwardRef<SVGSVGElement, SCProps>(function SC(props: SCProps, ref) {
     <CountrySymbol
       data-testid="SC"
       aria-label="Seychelles"
-      viewBox="0 0 72 72"
+      viewBox="0 0 20 20"
       ref={ref}
       {...props}
     >
@@ -25,22 +25,22 @@ const SC = forwardRef<SVGSVGElement, SCProps>(function SC(props: SCProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#D9D9D9" />
       </mask>
       <g mask={`url(#${uid}-SC-a)`}>
-        <path fill="#004692" d="M0 0h72v72H0z" />
-        <path fill="#009B77" d="M71.8 72V20l-62 52h62Z" />
+        <path fill="#004692" d="M0 0h20v20H0z" />
+        <path fill="#009B77" d="M19.945 20V5.556L2.722 20h17.223Z" />
         <path
           fill="#FBD381"
-          d="m13.671 64.983-1.97-1.971L37.51-3l27.072 7.071L13.67 64.983Z"
+          d="m3.798 18.05-.548-.547L10.42-.833l7.52 1.964L3.798 18.05Z"
         />
         <path
           fill="#DD2033"
-          d="m15.688 67-2.017-2.017L65.201 2.5l12.453 23.642L15.689 67Z"
+          d="m4.358 18.611-.56-.56L18.11.694l3.46 6.568-17.213 11.35Z"
         />
         <path
           fill="#F5F7F8"
-          d="M16.627 69.47 15.2 67l62.354-41 5 13.66-65.927 29.81Z"
+          d="m4.619 19.297-.397-.686 17.32-11.389 1.39 3.795-18.313 8.28Z"
         />
       </g>
     </CountrySymbol>

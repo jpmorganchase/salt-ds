@@ -17,7 +17,7 @@ const CD_Sharp = forwardRef<SVGSVGElement, CD_SharpProps>(function CD_Sharp(
     <CountrySymbol
       data-testid="CD_Sharp"
       aria-label="Congo (the Democratic Republic of the)"
-      viewBox="0 0 72 50"
+      viewBox="0 0 29 20"
       ref={ref}
       sharp
       {...props}
@@ -29,21 +29,21 @@ const CD_Sharp = forwardRef<SVGSVGElement, CD_SharpProps>(function CD_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-CD-a)`}>
-        <path fill="#0091DA" d="M0 0h72v50H0z" />
+        <path fill="#0091DA" d="M0 0h29v20H0z" />
         <path
           fill="#FBD381"
-          d="m-.1 51.627 17.677 17.677L79.62 7.263 61.94-10.415z"
+          d="m-.04 20.65 7.12 7.072L32.069 2.905l-7.12-7.07z"
         />
         <path
           fill="#DD2033"
-          d="M15.975 64.062 5.368 53.456 66.682-7.858 77.288 2.748z"
+          d="m6.434 25.625-4.272-4.243L26.858-3.143l4.272 4.242z"
         />
         <path
           fill="#FBD381"
-          d="m15 5-2.98 6.742L5 12.64l5.177 5.064L8.82 25 15 20.833 21.18 25l-1.357-7.297L25 12.64l-7.02-.897L15 5Z"
+          d="m6.042 2-1.2 2.697-2.828.359L4.099 7.08 3.552 10l2.49-1.667L8.53 10l-.547-2.919 2.085-2.025-2.827-.36L6.042 2Z"
         />
       </g>
     </CountrySymbol>

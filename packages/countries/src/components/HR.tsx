@@ -14,7 +14,7 @@ const HR = forwardRef<SVGSVGElement, HRProps>(function HR(props: HRProps, ref) {
     <CountrySymbol
       data-testid="HR"
       aria-label="Croatia"
-      viewBox="0 0 72 72"
+      viewBox="0 0 20 20"
       ref={ref}
       {...props}
     >
@@ -25,39 +25,48 @@ const HR = forwardRef<SVGSVGElement, HRProps>(function HR(props: HRProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#D9D9D9" />
       </mask>
       <g mask={`url(#${uid}-HR-a)`}>
-        <path fill="#004692" d="M0 72V48h72v24z" />
-        <path fill="#F5F7F8" d="M0 48V24h72v24z" />
-        <path fill="#DD2033" d="M0 24V0h72v24z" />
+        <path fill="#004692" d="M0 20v-6.667h20V20z" />
+        <path fill="#F5F7F8" d="M0 13.333V6.666h20v6.667z" />
+        <path fill="#DD2033" d="M0 6.667V0h20v6.667z" />
         <path
           fill="#F5F7F8"
-          d="M22 24h28v16c0 7.732-6.268 14-14 14s-14-6.268-14-14V24Z"
+          d="M6.111 6.667h7.778v4.444a3.889 3.889 0 0 1-7.778 0V6.667Z"
         />
         <mask
           id={`${uid}-HR-b`}
-          x="22"
-          y="24"
+          x="6"
+          y="6"
           maskUnits="userSpaceOnUse"
           style={{ maskType: "alpha" }}
         >
           <path
             fill="#F5F7F8"
-            d="M22 24h28v16c0 7.732-6.268 14-14 14s-14-6.268-14-14V24Z"
+            d="M6.111 6.667h7.778v4.444a3.889 3.889 0 0 1-7.778 0V6.667Z"
           />
         </mask>
         <g mask={`url(#${uid}-HR-b)`}>
           <path
             fill="#DD2033"
             fillRule="evenodd"
-            d="M29 24h-7v7h7v7h-7v7h7v7h-7v7h7v-7h7v7h7v-7h7v-7h-7v-7h7v-7h-7v-7h-7v7h-7v-7Zm7 14h7v-7h-7v7Zm0 7h-7v-7h7v7Zm0 0h7v7h-7v-7Z"
+            d="M8.056 6.667H6.11V8.61h1.945v1.944H6.11V12.5h1.945v1.944H6.11v1.945h1.945v-1.945H10v1.945h1.944v-1.945h1.945V12.5h-1.945v-1.944h1.945V8.61h-1.945V6.667H10V8.61H8.056V6.667ZM10 10.556h1.944V8.61H10v1.944Zm0 1.944H8.056v-1.944H10V12.5Zm0 0h1.944v1.944H10V12.5Z"
             clipRule="evenodd"
           />
         </g>
-        <path fill="#0091DA" d="m22 17 4.5-3 4.5 3v7h-9v-7Z" />
-        <path fill="#004692" d="m31 17 5-3 5 3v7H31v-7Z" />
-        <path fill="#0091DA" d="m41 17 4.5-3 4.5 3v7h-9v-7Z" />
+        <path
+          fill="#0091DA"
+          d="m6.111 4.722 1.25-.833 1.25.833v1.945h-2.5V4.722Z"
+        />
+        <path
+          fill="#004692"
+          d="M8.611 4.722 10 3.89l1.389.833v1.945H8.61V4.722Z"
+        />
+        <path
+          fill="#0091DA"
+          d="m11.389 4.722 1.25-.833 1.25.833v1.945h-2.5V4.722Z"
+        />
       </g>
     </CountrySymbol>
   );

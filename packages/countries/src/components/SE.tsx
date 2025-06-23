@@ -14,7 +14,7 @@ const SE = forwardRef<SVGSVGElement, SEProps>(function SE(props: SEProps, ref) {
     <CountrySymbol
       data-testid="SE"
       aria-label="Sweden"
-      viewBox="0 0 72 72"
+      viewBox="0 0 20 20"
       ref={ref}
       {...props}
     >
@@ -25,11 +25,14 @@ const SE = forwardRef<SVGSVGElement, SEProps>(function SE(props: SEProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#D9D9D9" />
       </mask>
       <g mask={`url(#${uid}-SE-a)`}>
-        <path fill="#005EB8" d="M0 0h72v72H0z" />
-        <path fill="#FBD381" d="M14 72h14V43h44V29H28V0H14v29H0v14h14v29Z" />
+        <path fill="#005EB8" d="M0 0h20v20H0z" />
+        <path
+          fill="#FBD381"
+          d="M3.889 20h3.889v-8.056H20V8.056H7.778V0h-3.89v8.056H0v3.888h3.889V20Z"
+        />
       </g>
     </CountrySymbol>
   );

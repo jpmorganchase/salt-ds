@@ -14,7 +14,7 @@ const CW = forwardRef<SVGSVGElement, CWProps>(function CW(props: CWProps, ref) {
     <CountrySymbol
       data-testid="CW"
       aria-label="Curaçao"
-      viewBox="0 0 72 72"
+      viewBox="0 0 20 20"
       ref={ref}
       {...props}
     >
@@ -25,14 +25,14 @@ const CW = forwardRef<SVGSVGElement, CWProps>(function CW(props: CWProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#D9D9D9" />
       </mask>
       <g mask={`url(#${uid}-CW-a)`}>
-        <path fill="#004692" d="M0 0h72v72H0z" />
-        <path fill="#FBD381" d="M.4 48v-6h72v6z" />
+        <path fill="#004692" d="M0 0h20v20H0z" />
+        <path fill="#FBD381" d="M.11 13.334v-1.667h20v1.667z" />
         <path
           fill="#F5F7F8"
-          d="M17.615 13.394 20 8l2.385 5.394L28 14.11l-4.142 4.052L24.944 24 20 20.667 15.056 24l1.086-5.837L12 14.11l5.615-.717ZM34.02 23.742 37 17l2.98 6.742 7.02.897-5.177 5.064L43.18 37 37 32.833 30.82 37l1.357-7.297L27 24.64l7.02-.897Z"
+          d="m4.893 3.72.663-1.498.662 1.498 1.56.2-1.15 1.125.301 1.622-1.373-.926-1.374.926.302-1.622-1.15-1.125 1.56-.2ZM9.45 6.595l.828-1.873.828 1.873 1.95.25-1.439 1.406.378 2.027-1.717-1.158-1.717 1.158.377-2.027L7.5 6.844l1.95-.249Z"
         />
       </g>
     </CountrySymbol>

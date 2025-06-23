@@ -17,7 +17,7 @@ const PA_Sharp = forwardRef<SVGSVGElement, PA_SharpProps>(function PA_Sharp(
     <CountrySymbol
       data-testid="PA_Sharp"
       aria-label="Panama"
-      viewBox="0 0 72 50"
+      viewBox="0 0 29 20"
       ref={ref}
       sharp
       {...props}
@@ -29,18 +29,18 @@ const PA_Sharp = forwardRef<SVGSVGElement, PA_SharpProps>(function PA_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-PA-a)`}>
-        <path fill="#F5F7F8" d="M0 50h72V0H0z" />
-        <path fill="#DD2033" d="M36 0h36v25H36z" />
+        <path fill="#F5F7F8" d="M0 20h29V0H0z" />
+        <path fill="#DD2033" d="M14.5 0H29v10H14.5z" />
         <path
           fill="#004692"
-          d="M0 50h36V25H0zM18 4l-2.683 6.068L9 10.875l4.66 4.558L12.438 22 18 18.25 23.562 22l-1.222-6.567L27 10.875l-6.317-.807L18 4Z"
+          d="M0 20h14.5V10H0zM7.25 1.6 6.17 4.027l-2.545.323 1.877 1.823L5.01 8.8l2.24-1.5 2.24 1.5-.492-2.627 1.877-1.823-2.544-.323L7.25 1.6Z"
         />
         <path
           fill="#DD2033"
-          d="m54 28-2.683 6.068-6.317.807 4.66 4.558L48.438 46 54 42.25 59.562 46l-1.221-6.567L63 34.875l-6.317-.807L54 28Z"
+          d="m21.75 11.2-1.08 2.427-2.545.323 1.877 1.823-.492 2.627 2.24-1.5 2.24 1.5-.492-2.627 1.877-1.823-2.544-.323L21.75 11.2Z"
         />
       </g>
     </CountrySymbol>

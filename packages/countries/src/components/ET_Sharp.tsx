@@ -17,7 +17,7 @@ const ET_Sharp = forwardRef<SVGSVGElement, ET_SharpProps>(function ET_Sharp(
     <CountrySymbol
       data-testid="ET_Sharp"
       aria-label="Ethiopia"
-      viewBox="0 0 72 50"
+      viewBox="0 0 29 20"
       ref={ref}
       sharp
       {...props}
@@ -29,20 +29,20 @@ const ET_Sharp = forwardRef<SVGSVGElement, ET_SharpProps>(function ET_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-ET-a)`}>
-        <path fill="#DD2033" d="M0 50V34h72v16z" />
-        <path fill="#FBD381" d="M0 34V16h72v18z" />
-        <path fill="#009B77" d="M0 16V0h72v16z" />
-        <circle cx="36" cy="25" r="20" fill="#004692" />
+        <path fill="#DD2033" d="M0 20v-6.4h29V20z" />
+        <path fill="#FBD381" d="M0 13.6V6.4h29v7.2z" />
+        <path fill="#009B77" d="M0 6.4V0h29v6.4z" />
+        <ellipse cx="14.5" cy="10" fill="#004692" rx="8.056" ry="8" />
         <path
           fill="#FBD381"
-          d="M32.721 21.416 36.001 14l3.278 7.416 7.721.987-5.695 5.57L42.798 36 36 31.417 29.201 36l1.494-8.026L25 22.404l7.721-.988Z"
+          d="M13.18 8.567 14.5 5.6l1.32 2.967 3.11.394-2.293 2.229.601 3.21-2.738-1.833-2.738 1.833.601-3.21-2.293-2.23 3.11-.394Z"
         />
         <path
           fill="#FBD381"
-          d="m29.071 15.063 2.048 2.56-.457 1.032-2.322.297-1.611-2.015 2.342-1.874Zm-5.796 15.073 3.637-1.666.54.529-.512 2.758-2.415 1.107-1.25-2.728ZM34.4 39v-2.886l1.6-1.08 1.4.944V39h-3Zm12.875-6.136-2.196-1.007L44.547 29l.478-.467 3.5 1.604-1.25 2.728ZM45.093 16.41 43.2 18.892l-1.862-.238-.634-1.435 2.002-2.63 2.387 1.82Z"
+          d="m11.71 6.025.824 1.024-.184.413-.935.119-.65-.806.944-.75Zm-2.335 6.03 1.464-.667.218.212-.206 1.103-.973.443-.503-1.091Zm4.48 3.545v-1.155l.645-.431.564.377V15.6h-1.209Zm5.186-2.454-.884-.403-.214-1.143.192-.187 1.41.642-.504 1.09Zm-.879-6.582-.762.993-.75-.095-.255-.574.806-1.052.961.728Z"
         />
       </g>
     </CountrySymbol>

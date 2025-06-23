@@ -17,7 +17,7 @@ const TH_Sharp = forwardRef<SVGSVGElement, TH_SharpProps>(function TH_Sharp(
     <CountrySymbol
       data-testid="TH_Sharp"
       aria-label="Thailand"
-      viewBox="0 0 72 50"
+      viewBox="0 0 29 20"
       ref={ref}
       sharp
       {...props}
@@ -29,12 +29,12 @@ const TH_Sharp = forwardRef<SVGSVGElement, TH_SharpProps>(function TH_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-TH-a)`}>
-        <path fill="#A00009" d="M0 50V0h72v50z" />
-        <path fill="#F5F7F8" d="M0 43V7h72v36z" />
-        <path fill="#004692" d="M0 33V17h72v16z" />
+        <path fill="#A00009" d="M0 20V0h29v20z" />
+        <path fill="#F5F7F8" d="M0 17.2V2.8h29v14.4z" />
+        <path fill="#004692" d="M0 13.2V6.8h29v6.4z" />
       </g>
     </CountrySymbol>
   );

@@ -17,7 +17,7 @@ const CM_Sharp = forwardRef<SVGSVGElement, CM_SharpProps>(function CM_Sharp(
     <CountrySymbol
       data-testid="CM_Sharp"
       aria-label="Cameroon"
-      viewBox="0 0 72 50"
+      viewBox="0 0 29 20"
       ref={ref}
       sharp
       {...props}
@@ -29,15 +29,15 @@ const CM_Sharp = forwardRef<SVGSVGElement, CM_SharpProps>(function CM_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-CM-a)`}>
-        <path fill="#FBD381" d="M0 0h72v50H0z" />
-        <path fill="#005B33" d="M0 0h23v50H0z" />
+        <path fill="#FBD381" d="M0 0h29v20H0z" />
+        <path fill="#005B33" d="M0 0h9.264v20H0z" />
         <path
           fill="#DD2033"
           fillRule="evenodd"
-          d="M49-11H23v72h26v-72ZM33.318 22.068 36 16l2.683 6.068 6.317.807-4.66 4.558L41.563 34 36 30.25 30.438 34l1.222-6.567L27 22.875l6.318-.807Z"
+          d="M19.736-4.4H9.264v28.8h10.472V-4.4ZM13.42 8.827 14.5 6.4l1.08 2.427 2.545.323-1.877 1.823.492 2.627-2.24-1.5-2.24 1.5.492-2.627-1.877-1.823 2.544-.323Z"
           clipRule="evenodd"
         />
       </g>

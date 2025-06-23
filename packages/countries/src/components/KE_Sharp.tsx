@@ -17,7 +17,7 @@ const KE_Sharp = forwardRef<SVGSVGElement, KE_SharpProps>(function KE_Sharp(
     <CountrySymbol
       data-testid="KE_Sharp"
       aria-label="Kenya"
-      viewBox="0 0 72 50"
+      viewBox="0 0 29 20"
       ref={ref}
       sharp
       {...props}
@@ -29,36 +29,41 @@ const KE_Sharp = forwardRef<SVGSVGElement, KE_SharpProps>(function KE_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-KE-a)`}>
-        <path fill="#F5F7F8" d="M0 41V9h72v32z" />
-        <path fill="#DD2033" d="M0 35V15h72v20z" />
-        <path fill="#31373D" d="M0 9V0h72v9z" />
-        <path fill="#009B77" d="M0 50v-9h72v9z" />
+        <path fill="#F5F7F8" d="M0 16.4V3.6h29v12.8z" />
+        <path fill="#DD2033" d="M0 14V6h29v8z" />
+        <path fill="#31373D" d="M0 3.6V0h29v3.6z" />
+        <path fill="#009B77" d="M0 20v-3.6h29V20z" />
         <path
           fill="#F5F7F8"
-          d="m22.2 4 3.464-2 10.768 18.65L47.2 2l3.464 2-11.922 20.65 11.922 20.651-3.464 2-10.768-18.65L25.664 47.3l-3.464-2 11.923-20.65L22.2 4Z"
+          d="m8.942 1.6 1.395-.8 4.337 7.46L19.011.8l1.396.8-4.803 8.26 4.802 8.26-1.395.8-4.337-7.46-4.337 7.46-1.395-.8 4.802-8.26L8.942 1.6Z"
         />
         <path
           fill="#DD2033"
-          d="M36.107 7c24.51 20.22 0 36 0 36s-24.99-15.288 0-36Z"
+          d="M14.543 2.8c9.872 8.088 0 14.4 0 14.4s-10.065-6.115 0-14.4Z"
         />
         <mask
           id={`${uid}-KE-b`}
-          x="25"
-          y="7"
+          x="10"
+          y="2"
           maskUnits="userSpaceOnUse"
           style={{ maskType: "alpha" }}
         >
           <path
             fill="#DD2033"
-            d="M36.107 7c24.51 20.22 0 36 0 36s-24.99-15.288 0-36Z"
+            d="M14.543 2.8c9.872 8.088 0 14.4 0 14.4s-10.065-6.115 0-14.4Z"
           />
         </mask>
         <g mask={`url(#${uid}-KE-b)`}>
-          <path fill="#31373D" d="M25 7h4v36h-4zm18 0h4v36h-4z" />
-          <path fill="#F5F7F8" d="M34.2 7h4v36h-4z" />
+          <path
+            fill="#31373D"
+            stroke="#31373D"
+            strokeWidth=".806"
+            d="M10.472 3.203h.806v13.594h-.806zm7.25 0h.806v13.594h-.806z"
+          />
+          <path fill="#F5F7F8" d="M13.775 2.8h1.611v14.4h-1.611z" />
         </g>
       </g>
     </CountrySymbol>
