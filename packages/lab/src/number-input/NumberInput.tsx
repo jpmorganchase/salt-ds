@@ -24,6 +24,7 @@ import {
   type SyntheticEvent,
   forwardRef,
   useEffect,
+  useLayoutEffect,
   useRef,
   useState,
 } from "react";
@@ -37,8 +38,8 @@ import {
 } from "./internal/utils";
 
 import numberInputCss from "./NumberInput.css";
-import useCaretPosition from "./internal/useCaretPosition";
 import { useNumberInput } from "./useNumberInput";
+import useCaret from "./internal/useCaret";
 
 const withBaseName = makePrefixer("saltNumberInput");
 
@@ -61,6 +62,11 @@ export interface NumberInputProps
    * Disable the `NumberInput`.
    */
   disabled?: boolean;
+  /**
+   * The marker to use in an empty read only Input.
+   * Use `''` to disable this feature. Defaults to '—'.
+   */
+  emptyReadOnlyMarker?: string;
   /**
    * End adornment component.
    */
@@ -167,6 +173,7 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       className: classNameProp,
       clampValue = false,
       disabled,
+      emptyReadOnlyMarker = "-",
       endAdornment,
       format,
       hideButtons,
@@ -209,10 +216,15 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       necessity: formFieldRequired,
       validationStatus: formFieldValidationStatus,
     } = useFormFieldProps();
+
     const isDisabled = disabled || formFieldDisabled;
     const isReadOnly = readOnlyProp || formFieldReadOnly;
     const validationStatus = formFieldValidationStatus ?? validationStatusProp;
-    const validationStatusId = useId(idProp);
+    const isEmptyReadOnly = isReadOnly && !defaultValueProp && !valueProp;
+    const defaultValue = isEmptyReadOnly
+      ? emptyReadOnlyMarker
+      : defaultValueProp;
+
     const decimalScale =
       decimalScaleProp ||
       Math.max(
@@ -220,10 +232,9 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
         getNumberPrecision(step),
       );
 
-    const [isEditing, setIsEditing] = useState(false);
+    const validationStatusId = useId(idProp);
     const inputRef = useRef<HTMLInputElement>(null);
     const handleInputRef = useForkRef(inputRefProp, inputRef);
-
     const { IncreaseIcon, DecreaseIcon } = useIcon();
 
     const {
@@ -242,21 +253,22 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       ? ["required", "asterisk"].includes(formFieldRequired)
       : inputRequired;
 
+    const [isEditing, setIsEditing] = useState(false);
+
+    const [recordCaret, restoreCaret, resetCaret] = useCaret({
+      inputRef,
+    });
+
     const [value, setValue] = useControlled({
       controlled: valueProp,
-      default: defaultValueProp,
+      default: defaultValue,
       name: "NumberInput",
       state: "value",
     });
 
     const [displayValue, setDisplayValue] = useState<string | number>(
-      sanitizeInput(value?.toString() ?? "").toString(),
+      !isReadOnly ? sanitizeInput(value?.toString() ?? "").toString() : value,
     );
-
-    const { setCaretPosition, resetCaretPosition } = useCaretPosition({
-      inputRef,
-      value: displayValue,
-    });
 
     const {
       decrementButtonProps,
@@ -281,22 +293,43 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
 
     useEffect(() => {
       const updateDisplayValue = () => {
-        if (isEditing || isEmpty(value)) {
-          return value;
-        }
         const floatValue = toFloat(value);
-        if (Number.isNaN(floatValue)) {
+        if (
+          isEditing ||
+          isEmpty(value) ||
+          Number.isNaN(floatValue) ||
+          isReadOnly
+        ) {
           return value;
         }
         const clampedValue = clampValue
           ? clamp(max, min, floatValue)
           : floatValue;
-        return format
+        const formattedValue = format
           ? format(clampedValue)
           : clampedValue.toFixed(decimalScale);
+        return formattedValue;
       };
-      setDisplayValue(updateDisplayValue().toString());
-    }, [value, isEditing, format, clampValue, decimalScale, min, max]);
+      const updatedValue = updateDisplayValue();
+      if (displayValue.toString() !== updatedValue.toString()) {
+        setDisplayValue(updatedValue);
+      }
+    }, [
+      value,
+      isEditing,
+      isReadOnly,
+      format,
+      clampValue,
+      decimalScale,
+      min,
+      max,
+      displayValue,
+    ]);
+
+    // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+    useLayoutEffect(() => {
+      restoreCaret();
+    }, [displayValue, value]);
 
     const handleInputFocus = (event: FocusEvent<HTMLInputElement>) => {
       setIsEditing(true);
@@ -310,6 +343,8 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
 
     const handleInputBlur = (event: FocusEvent<HTMLInputElement>) => {
       setIsEditing(false);
+      resetCaret();
+
       const rawValue = sanitizeInput(event.target.value);
       let updatedValue = rawValue;
       if (!isEmpty(rawValue)) {
@@ -317,36 +352,25 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
         const clampedValue = clampValue
           ? clamp(max, min, floatValue)
           : floatValue;
-        updatedValue = Number(clampedValue.toFixed(decimalScale));
+        updatedValue = clampedValue.toFixed(decimalScale);
       }
-      if (String(updatedValue) !== String(value)) {
-        onChangeProp?.(event, updatedValue);
+      if (updatedValue.toString() !== value.toString()) {
         setValue(updatedValue);
+        onChangeProp?.(event, updatedValue);
       }
-      resetCaretPosition();
       inputOnBlur?.(event);
     };
 
     const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-      const beforeStart =
-        event.target.selectionStart ?? event.target.value.length;
-      const beforeEnd = event.target.selectionEnd ?? event.target.value.length;
-
-      setCaretPosition(beforeStart, beforeEnd);
+      recordCaret();
 
       const raw = sanitizeInput(event.target.value);
-      if (String(raw) === String(value)) {
+      if (raw.toString() === value.toString()) {
         return;
       }
-
-      if (parse && !isEditing) {
-        const parsed = parse(raw);
-        setValue(parsed);
-        onChangeProp?.(event, parsed);
-      } else {
-        setValue(raw);
-        onChangeProp?.(event, raw);
-      }
+      const parsed = parse && !isEditing ? parse(raw) : raw;
+      setValue(parsed);
+      onChangeProp?.(event, parsed);
     };
 
     const handleInputKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {

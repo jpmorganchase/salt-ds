@@ -58,10 +58,7 @@ export const useNumberInput = ({
   const decrementValue = useCallback(
     (event?: SyntheticEvent, block?: boolean) => {
       const decrementStep = block ? stepMultiplier * step : step;
-      let parsedValue = value;
-      if (parse) {
-        parsedValue = parse(value);
-      }
+      const parsedValue = parse?.(value) || value;
       const nextValue = toFloat(parsedValue) - decrementStep;
       if (nextValue < min) return;
       updateValue(event, nextValue);
