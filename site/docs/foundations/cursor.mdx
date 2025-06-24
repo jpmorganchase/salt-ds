@@ -5,22 +5,21 @@ sidebar:
   priority: 13
 ---
 
-The cursor foundation controls how the cursor appears when positioned over or interacting with a component.
+The cursor foundation controls how the cursor appears when positioned over or interacting with a component. This behavior is only relevant for web browsers and operating systems that display cursors in the user interface.
 
 ## Cursor variants
 
-| Token              | Purpose                                                                                         | Value     |
-| ------------------ | ----------------------------------------------------------------------------------------------- | --------- |
-| `-cursor`          | The default cursor state                                                                        | pointer   |
-| `-cursor-active`   | Active or selected states                                                                       | pointer   |
-| `-cursor-disabled` | Disabled or selected disabled states                                                            | disabled  |
-| `-cursor-drag-ew`  | Hover and active states of a draggable component restricted to horizontal movement              | ew-resize |
-| `-cursor-drag-ns`  | Hover and active states of a draggable component restricted to vertical movement                | ns-resize |
-| `-cursor-grab`     | Hover state of a draggable object                                                               | grab      |
-| `-cursor-grabbing` | Active state of a draggable object                                                              | grabbing  |
-| `-cursor-hover`    | Hover states                                                                                    | hover     |
-| `-cursor-pending`  | indicates that the system is busy processing a task and the user should wait for it to complete | progress  |
-| `-cursor-readonly` | Readonly state                                                                                  | text      |
-| `-cursor-text`     | Indicates where text can be inserted, selected or edited                                        | text      |
+| Token                    | Purpose                                                                                         | Value     |
+| ------------------------ | ----------------------------------------------------------------------------------------------- | --------- |
+| `--salt-cursor`          | The default cursor state when hovering over an interactable component                           | pointer   |
+| `--salt-cursor-active`   | Active or selected states                                                                       | pointer   |
+| `--salt-cursor-disabled` | Disabled or selected disabled states                                                            | disabled  |
+| `--salt-cursor-drag-ew`  | Hover and active states of a draggable component restricted to horizontal movement              | ew-resize |
+| `--salt-cursor-drag-ns`  | Hover and active states of a draggable component restricted to vertical movement                | ns-resize |
+| `--salt-cursor-grab`     | Hover state of a draggable object                                                               | grab      |
+| `--salt-cursor-grabbing` | Active state of a draggable object                                                              | grabbing  |
+| `--salt-cursor-pending`  | indicates that the system is busy processing a task and the user should wait for it to complete | progress  |
+| `--salt-cursor-readonly` | Readonly states                                                                                 | text      |
+| `--salt-cursor-text`     | Indicates where text can be inserted, selected or edited                                        | text      |
 
 :fragment{src="../fragments/feedback.mdx"}
