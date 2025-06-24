@@ -28,7 +28,7 @@ export const MultipleSlides = (): ReactElement => {
   return (
     <Carousel
       aria-label="Multiple slides carousel example"
-      className={clsx(styles.carouselMultipleSlides)}
+      className={clsx(styles.carousel, styles.carouselMultipleSlides)}
       emblaOptions={{ align: "center", slidesToScroll: "auto" }}
       emblaPlugins={[CarouselAnnouncement()]}
     >
