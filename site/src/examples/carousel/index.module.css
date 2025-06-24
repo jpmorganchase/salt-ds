@@ -29,7 +29,7 @@
   visibility: hidden;
 }
 
-.carouselMultipleSlides {
+.carousel.carouselMultipleSlides {
   --saltCarousel-slide-size: 50%;
 }
 
