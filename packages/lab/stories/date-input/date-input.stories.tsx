@@ -1,3 +1,4 @@
+import { withDateMock } from ".storybook/decorators/withDateMock";
 import {
   Button,
   Dropdown,
@@ -31,6 +32,7 @@ import { fn } from "storybook/test";
 export default {
   title: "Lab/Date Input",
   component: DateInputSingle,
+  decorators: [withDateMock],
 } as Meta<typeof DateInputSingle>;
 
 const DateInputSingleTemplate: StoryFn<
