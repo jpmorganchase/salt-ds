@@ -25,11 +25,11 @@ const MC = forwardRef<SVGSVGElement, MCProps>(function MC(props: MCProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="10" cy="10" r="10" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#d9d9d9" />
       </mask>
       <g mask={`url(#${uid}-MC-a)`}>
-        <path fill="#DD2033" d="M0 0v10h20V0z" />
-        <path fill="#F5F7F8" d="M0 10v10h20V10z" />
+        <path fill="#dd2033" d="M0 0v10h20V0z" />
+        <path fill="#f5f7f8" d="M0 10v10h20V10z" />
       </g>
     </CountrySymbol>
   );

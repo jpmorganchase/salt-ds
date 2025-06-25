@@ -29,13 +29,13 @@ const GM_Sharp = forwardRef<SVGSVGElement, GM_SharpProps>(function GM_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-GM-a)`}>
-        <path fill="#F5F7F8" d="M0 0h29v20H0z" />
-        <path fill="#005EB8" d="M0 13.6V6.4h29v7.2z" />
-        <path fill="#DD2033" d="M0 4.4V0h29v4.4z" />
-        <path fill="#009B77" d="M0 20v-4.4h29V20z" />
+        <path fill="#f5f7f8" d="M0 0h29v20H0z" />
+        <path fill="#005eb8" d="M0 13.6V6.4h29v7.2z" />
+        <path fill="#dd2033" d="M0 4.4V0h29v4.4z" />
+        <path fill="#009b77" d="M0 20v-4.4h29V20z" />
       </g>
     </CountrySymbol>
   );

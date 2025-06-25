@@ -29,12 +29,12 @@ const CI_Sharp = forwardRef<SVGSVGElement, CI_SharpProps>(function CI_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-CI-a)`}>
-        <path fill="#009B77" d="M19.333 0H29v20h-9.667z" />
-        <path fill="#F5F7F8" d="M9.667 0h9.667v20H9.667z" />
-        <path fill="#FF9E42" d="M0 0h9.667v20H0z" />
+        <path fill="#009b77" d="M19.333 0H29v20h-9.667z" />
+        <path fill="#f5f7f8" d="M9.667 0h9.667v20H9.667z" />
+        <path fill="#ff9e42" d="M0 0h9.667v20H0z" />
       </g>
     </CountrySymbol>
   );

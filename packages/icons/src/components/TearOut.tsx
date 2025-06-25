@@ -16,8 +16,8 @@ export const TearOutIcon = forwardRef<SVGSVGElement, TearOutIconProps>(
         ref={ref}
         {...props}
       >
-        <path d="M0 12h12V6h-1v5H1V1h5V0H0v12Z" />
-        <path d="M11.996 4V0h-4v1h2.293L5.996 5.293 6.703 6l4.293-4.293V4h1Z" />
+        <path d="M0 12h12V6h-1v5H1V1h5V0H0z" />
+        <path d="M11.996 4V0h-4v1h2.293L5.996 5.293 6.703 6l4.293-4.293V4z" />
       </Icon>
     );
   },

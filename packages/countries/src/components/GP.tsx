@@ -29,14 +29,14 @@ const GP = forwardRef<SVGSVGElement, GPProps>(function GP(props: GPProps, ref) {
           cx="10"
           cy="10"
           r="10"
-          fill="#D9D9D9"
+          fill="#d9d9d9"
           transform="matrix(0 -1 -1 0 20 20)"
         />
       </mask>
       <g mask={`url(#${uid}-GP-a)`}>
         <path fill="#004692" d="M0 20h6.667V0H0z" />
-        <path fill="#F5F7F8" d="M6.667 20h6.667V0H6.667z" />
-        <path fill="#DD2033" d="M13.333 20H20V0h-6.667z" />
+        <path fill="#f5f7f8" d="M6.667 20h6.667V0H6.667z" />
+        <path fill="#dd2033" d="M13.333 20H20V0h-6.667z" />
       </g>
     </CountrySymbol>
   );

@@ -29,20 +29,20 @@ const PE_Sharp = forwardRef<SVGSVGElement, PE_SharpProps>(function PE_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-PE-a)`}>
-        <path fill="#DD2033" d="M0 0h29v20H0z" />
-        <path fill="#F5F7F8" d="M22.555 20H6.445V0h16.11z" />
+        <path fill="#dd2033" d="M0 0h29v20H0z" />
+        <path fill="#f5f7f8" d="M22.555 20H6.445V0h16.11z" />
         <path
-          fill="#009B77"
+          fill="#009b77"
           fillRule="evenodd"
-          d="M7.414 9.374a7.18 7.18 0 0 0-.164 1.528c0 3.976 3.246 7.2 7.25 7.2s7.25-3.224 7.25-7.2a7.18 7.18 0 0 0-.17-1.56l-2.282.98c.024.19.035.383.035.58 0 2.65-2.164 4.8-4.833 4.8-2.67 0-4.833-2.15-4.833-4.8 0-.185.01-.368.03-.547l-2.283-.981Z"
+          d="M7.414 9.374a7.2 7.2 0 0 0-.164 1.528c0 3.976 3.246 7.2 7.25 7.2s7.25-3.224 7.25-7.2a7.2 7.2 0 0 0-.17-1.56l-2.282.98q.036.285.035.58c0 2.65-2.164 4.8-4.833 4.8s-4.833-2.15-4.833-4.8q0-.278.03-.547z"
           clipRule="evenodd"
         />
         <path
-          fill="#FF9E42"
-          d="M10.553 3.2h8.055v2.866A6.385 6.385 0 0 1 14.58 12a6.385 6.385 0 0 1-4.027-5.934V3.2Z"
+          fill="#ff9e42"
+          d="M10.553 3.2h8.055v2.866A6.385 6.385 0 0 1 14.58 12a6.385 6.385 0 0 1-4.027-5.934z"
         />
         <mask
           id={`${uid}-PE-b`}
@@ -52,13 +52,13 @@ const PE_Sharp = forwardRef<SVGSVGElement, PE_SharpProps>(function PE_Sharp(
           style={{ maskType: "alpha" }}
         >
           <path
-            fill="#005EB8"
-            d="M10.553 3.2h8.055v2.866A6.385 6.385 0 0 1 14.58 12a6.385 6.385 0 0 1-4.027-5.934V3.2Z"
+            fill="#005eb8"
+            d="M10.553 3.2h8.055v2.866A6.385 6.385 0 0 1 14.58 12a6.385 6.385 0 0 1-4.027-5.934z"
           />
         </mask>
         <g mask={`url(#${uid}-PE-b)`}>
-          <path fill="#DD2033" d="M10.553 7.2h8.056V12h-8.056z" />
-          <path fill="#0091DA" d="M10.553 3.2h4.028v4h-4.028z" />
+          <path fill="#dd2033" d="M10.553 7.2h8.056V12h-8.056z" />
+          <path fill="#0091da" d="M10.553 3.2h4.028v4h-4.028z" />
         </g>
       </g>
     </CountrySymbol>

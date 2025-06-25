@@ -25,13 +25,13 @@ const SO = forwardRef<SVGSVGElement, SOProps>(function SO(props: SOProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="10" cy="10" r="10" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#d9d9d9" />
       </mask>
       <g mask={`url(#${uid}-SO-a)`}>
-        <path fill="#0091DA" d="M0 20V0h20v20z" />
+        <path fill="#0091da" d="M0 20V0h20v20z" />
         <path
-          fill="#F5F7F8"
-          d="M10 5 8.51 8.371 5 8.82l2.589 2.532L6.909 15 10 12.917 13.09 15l-.679-3.648L15 8.82l-3.51-.449L10 5Z"
+          fill="#f5f7f8"
+          d="M10 5 8.51 8.371 5 8.82l2.589 2.532L6.909 15 10 12.917 13.09 15l-.679-3.648L15 8.82l-3.51-.449z"
         />
       </g>
     </CountrySymbol>

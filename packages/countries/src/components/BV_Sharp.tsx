@@ -29,19 +29,19 @@ const BV_Sharp = forwardRef<SVGSVGElement, BV_SharpProps>(function BV_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-BV-a)`}>
-        <path fill="#DD2033" d="M0 0h29v20H0z" />
+        <path fill="#dd2033" d="M0 0h29v20H0z" />
         <path
-          fill="#F5F7F8"
+          fill="#f5f7f8"
           fillRule="evenodd"
-          d="M8.056 24.4H5.639v-9.72H0v-2.4h5.639V7.72H0v-2.4h5.639V-4.4h2.417v9.72h4.591V-4.4h2.417v9.72H29v2.4H15.064v4.56H29v2.4H15.064v9.72h-2.417v-9.72H8.056v9.72Zm4.591-16.68H8.056v4.56h4.591V7.72Z"
+          d="M8.056 24.4H5.639v-9.72H0v-2.4h5.639V7.72H0v-2.4h5.639V-4.4h2.417v9.72h4.591V-4.4h2.417v9.72H29v2.4H15.064v4.56H29v2.4H15.064v9.72h-2.417v-9.72H8.056zm4.591-16.68H8.056v4.56h4.591z"
           clipRule="evenodd"
         />
         <path
           fill="#004692"
-          d="M8.056 24.4h4.833v-12H29V7.6H12.889v-12H8.056v12H0v4.8h8.056v12Z"
+          d="M8.056 24.4h4.833v-12H29V7.6H12.889v-12H8.056v12H0v4.8h8.056z"
         />
       </g>
     </CountrySymbol>

@@ -25,11 +25,11 @@ const LS = forwardRef<SVGSVGElement, LSProps>(function LS(props: LSProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="10" cy="10" r="10" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#d9d9d9" />
       </mask>
       <g mask={`url(#${uid}-LS-a)`}>
-        <path fill="#009B77" d="M0 20v-5.556h20V20z" />
-        <path fill="#F5F7F8" d="M0 14.444V5.555h20v8.89z" />
+        <path fill="#009b77" d="M0 20v-5.556h20V20z" />
+        <path fill="#f5f7f8" d="M0 14.444V5.555h20v8.89z" />
         <path fill="#004692" d="M0 5.556V0h20v5.556z" />
         <mask
           id={`${uid}-LS-b`}
@@ -39,11 +39,11 @@ const LS = forwardRef<SVGSVGElement, LSProps>(function LS(props: LSProps, ref) {
           style={{ maskType: "alpha" }}
         >
           <path
-            fill="#D9D9D9"
+            fill="#d9d9d9"
             d="M9.935 13.378 7.798 11.24l2.137-2.137 2.137 2.137z"
           />
         </mask>
-        <g fill="#31373D" stroke="#31373D" mask={`url(#${uid}-LS-b)`}>
+        <g fill="#31373d" stroke="#31373d" mask={`url(#${uid}-LS-b)`}>
           <circle
             cx="9.935"
             cy="9.103"
@@ -65,19 +65,19 @@ const LS = forwardRef<SVGSVGElement, LSProps>(function LS(props: LSProps, ref) {
           style={{ maskType: "alpha" }}
         >
           <path
-            fill="#D9D9D9"
-            d="M6.611 11.933 9.956 8.59l3.344 3.344-3.345 3.345-3.344-3.345Z"
+            fill="#d9d9d9"
+            d="M6.611 11.933 9.956 8.59l3.344 3.344-3.344 3.345z"
           />
         </mask>
         <g mask={`url(#${uid}-LS-c)`}>
           <path
-            fill="#31373D"
+            fill="#31373d"
             fillRule="evenodd"
-            d="M12.067 11.221a3.022 3.022 0 1 0-4.274-4.274 3.022 3.022 0 0 0 4.274 4.274Zm.712.712a4.03 4.03 0 1 0-5.698-5.698 4.03 4.03 0 0 0 5.698 5.698Z"
+            d="M12.067 11.221a3.022 3.022 0 1 0-4.274-4.274 3.022 3.022 0 0 0 4.274 4.274m.712.712a4.03 4.03 0 1 0-5.698-5.698 4.03 4.03 0 0 0 5.698 5.698"
             clipRule="evenodd"
           />
         </g>
-        <path fill="#31373D" d="M9.389 6.667H10.5v3.056H9.389z" />
+        <path fill="#31373d" d="M9.389 6.667H10.5v3.056H9.389z" />
       </g>
     </CountrySymbol>
   );

@@ -29,17 +29,17 @@ const TZ_Sharp = forwardRef<SVGSVGElement, TZ_SharpProps>(function TZ_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-TZ-a)`}>
-        <path fill="#009B77" d="M29-4.4H0v28.8L29-4.4Z" />
-        <path fill="#0091DA" d="M29 24.4V-4.4L0 24.4h29Z" />
+        <path fill="#009b77" d="M29-4.4H0v28.8z" />
+        <path fill="#0091da" d="M29 24.4V-4.4L0 24.4z" />
         <path
-          fill="#FBD381"
+          fill="#fbd381"
           d="m23.282-7.207 8.544 8.486L6.235 26.694l-8.545-8.486z"
         />
         <path
-          fill="#31373D"
+          fill="#31373d"
           d="m29.578.117-5.126-5.091L-.78 20.084l5.126 5.091z"
         />
       </g>

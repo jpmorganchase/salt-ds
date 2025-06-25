@@ -25,22 +25,22 @@ const AF = forwardRef<SVGSVGElement, AFProps>(function AF(props: AFProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="10" cy="10" r="10" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#d9d9d9" />
       </mask>
       <g mask={`url(#${uid}-AF-a)`}>
-        <path fill="#31373D" d="M0 0h5.556v20H0z" />
-        <path fill="#DD2033" d="M5.556 0h8.889v20H5.556z" />
-        <path fill="#005B33" d="M14.444 0H20v20h-5.556z" />
+        <path fill="#31373d" d="M0 0h5.556v20H0z" />
+        <path fill="#dd2033" d="M5.556 0h8.889v20H5.556z" />
+        <path fill="#005b33" d="M14.444 0H20v20h-5.556z" />
         <path
-          fill="#F5F7F8"
+          fill="#f5f7f8"
           fillRule="evenodd"
-          d="M13.889 9.167a3.889 3.889 0 1 1-7.054-2.26l.904.645a2.778 2.778 0 1 0 4.521 0l.905-.646a3.87 3.87 0 0 1 .724 2.26Zm-3.897-3.89h.016-.016Z"
+          d="M13.889 9.167a3.889 3.889 0 1 1-7.054-2.26l.904.645a2.778 2.778 0 1 0 4.521 0l.905-.646a3.87 3.87 0 0 1 .724 2.26m-3.897-3.89h.016z"
           clipRule="evenodd"
         />
         <path
-          fill="#F5F7F8"
+          fill="#f5f7f8"
           fillRule="evenodd"
-          d="M10.833 8.056a.833.833 0 0 0-1.666 0v1.666h1.666V8.056ZM10 6.389c.92 0 1.667.746 1.667 1.667v2.5H8.333v-2.5c0-.92.747-1.667 1.667-1.667Z"
+          d="M10.833 8.056a.833.833 0 0 0-1.666 0v1.666h1.666zM10 6.389c.92 0 1.667.746 1.667 1.667v2.5H8.333v-2.5c0-.92.747-1.667 1.667-1.667"
           clipRule="evenodd"
         />
       </g>

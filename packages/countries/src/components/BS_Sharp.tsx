@@ -29,12 +29,12 @@ const BS_Sharp = forwardRef<SVGSVGElement, BS_SharpProps>(function BS_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-BS-a)`}>
-        <path fill="#3CCBDA" d="M0 20V0h29v20z" />
-        <path fill="#FBD381" d="M0 14.8V5.2h29v9.6z" />
-        <path fill="#31373D" d="M13 10 0 0v20l13-10Z" />
+        <path fill="#3ccbda" d="M0 20V0h29v20z" />
+        <path fill="#fbd381" d="M0 14.8V5.2h29v9.6z" />
+        <path fill="#31373d" d="M13 10 0 0v20z" />
       </g>
     </CountrySymbol>
   );

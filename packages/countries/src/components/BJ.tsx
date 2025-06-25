@@ -25,12 +25,12 @@ const BJ = forwardRef<SVGSVGElement, BJProps>(function BJ(props: BJProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="10" cy="10" r="10" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#d9d9d9" />
       </mask>
       <g mask={`url(#${uid}-BJ-a)`}>
-        <path fill="#DD2033" d="M-.111 20V10h20v10z" />
-        <path fill="#FBD381" d="M-.111 10V0h20v10z" />
-        <path fill="#009B77" d="M0 0h6.667v20H0z" />
+        <path fill="#dd2033" d="M-.111 20V10h20v10z" />
+        <path fill="#fbd381" d="M-.111 10V0h20v10z" />
+        <path fill="#009b77" d="M0 0h6.667v20H0z" />
       </g>
     </CountrySymbol>
   );

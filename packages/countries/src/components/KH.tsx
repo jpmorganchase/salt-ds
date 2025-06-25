@@ -25,14 +25,14 @@ const KH = forwardRef<SVGSVGElement, KHProps>(function KH(props: KHProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="10" cy="10" r="10" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#d9d9d9" />
       </mask>
       <g mask={`url(#${uid}-KH-a)`}>
         <path fill="#004692" d="M0 0h20v20H0z" />
-        <path fill="#DD2033" d="M0 15V5h20v10z" />
+        <path fill="#dd2033" d="M0 15V5h20v10z" />
         <path
-          fill="#F5F7F8"
-          d="M5.278 10.278v1.389h-.556v.555h-.555v.556H3.61v.555h12.78v-.555h-.556v-.556h-.555v-.555h-.556v-1.39h-.278V8.334h-1.666v1.945h-1.111V6.667H8.333v3.61h-1.11V8.334H5.555v1.945h-.278Z"
+          fill="#f5f7f8"
+          d="M5.278 10.278v1.389h-.556v.555h-.555v.556H3.61v.555h12.78v-.555h-.556v-.556h-.555v-.555h-.556v-1.39h-.278V8.334h-1.666v1.945h-1.111V6.667H8.333v3.61h-1.11V8.334H5.555v1.945z"
         />
       </g>
     </CountrySymbol>

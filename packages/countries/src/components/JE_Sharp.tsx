@@ -29,17 +29,17 @@ const JE_Sharp = forwardRef<SVGSVGElement, JE_SharpProps>(function JE_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-JE-a)`}>
-        <path fill="#F5F7F8" d="M0 0h29v20H0z" />
+        <path fill="#f5f7f8" d="M0 0h29v20H0z" />
         <path
-          fill="#DD2033"
-          d="M26.37 22.4 29 20.151 17.13 10 29-.151 26.37-2.4 14.5 7.751 2.63-2.4 0-.151 11.87 10 0 20.151 2.63 22.4 14.5 12.249 26.37 22.4Z"
+          fill="#dd2033"
+          d="M26.37 22.4 29 20.151 17.13 10 29-.151 26.37-2.4 14.5 7.751 2.63-2.4 0-.151 11.87 10 0 20.151 2.63 22.4 14.5 12.249z"
         />
         <path
-          fill="#F1B434"
-          d="M11.278 2h6.444v2.413A5.167 5.167 0 0 1 14.5 9.2a5.167 5.167 0 0 1-3.222-4.787V2Z"
+          fill="#f1b434"
+          d="M11.278 2h6.444v2.413A5.17 5.17 0 0 1 14.5 9.2a5.17 5.17 0 0 1-3.222-4.787z"
         />
       </g>
     </CountrySymbol>

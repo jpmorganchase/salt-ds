@@ -29,11 +29,11 @@ const CO_Sharp = forwardRef<SVGSVGElement, CO_SharpProps>(function CO_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-CO-a)`}>
-        <path fill="#DD2033" d="M0 24.4v-7.2h29v7.2z" />
-        <path fill="#F1B434" d="M0 10V0h29v10z" />
+        <path fill="#dd2033" d="M0 24.4v-7.2h29v7.2z" />
+        <path fill="#f1b434" d="M0 10V0h29v10z" />
         <path fill="#004692" d="M0 17.2V10h29v7.2z" />
       </g>
     </CountrySymbol>

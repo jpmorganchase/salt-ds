@@ -29,12 +29,12 @@ const GA_Sharp = forwardRef<SVGSVGElement, GA_SharpProps>(function GA_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-GA-a)`}>
-        <path fill="#005EB8" d="M0 20v-6.4h29V20z" />
-        <path fill="#FBD381" d="M0 13.6V6.4h29v7.2z" />
-        <path fill="#009B77" d="M0 6.4V0h29v6.4z" />
+        <path fill="#005eb8" d="M0 20v-6.4h29V20z" />
+        <path fill="#fbd381" d="M0 13.6V6.4h29v7.2z" />
+        <path fill="#009b77" d="M0 6.4V0h29v6.4z" />
       </g>
     </CountrySymbol>
   );

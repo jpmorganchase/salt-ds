@@ -27,13 +27,13 @@ const GB_SCT_Sharp = forwardRef<SVGSVGElement, GB_SCT_SharpProps>(
           maskUnits="userSpaceOnUse"
           style={{ maskType: "alpha" }}
         >
-          <path fill="#D9D9D9" d="M0 0h29v20H0z" />
+          <path fill="#d9d9d9" d="M0 0h29v20H0z" />
         </mask>
         <g mask={`url(#${uid}-GB-SCT-a)`}>
-          <path fill="#005EB8" d="M0 0h29v20H0z" />
+          <path fill="#005eb8" d="M0 0h29v20H0z" />
           <path
-            fill="#F5F7F8"
-            d="M26.997-.254 24.434-2.8l-9.813 9.746L4.808-2.8 2.244-.254l9.813 9.745L1.274 20.2l2.564 2.546 10.783-10.71 10.783 10.71 2.563-2.546L17.184 9.491l9.813-9.745Z"
+            fill="#f5f7f8"
+            d="M26.997-.254 24.434-2.8l-9.813 9.746L4.808-2.8 2.244-.254l9.813 9.745L1.274 20.2l2.564 2.546 10.783-10.71 10.783 10.71 2.563-2.546L17.184 9.491z"
           />
         </g>
       </CountrySymbol>

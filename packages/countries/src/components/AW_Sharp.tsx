@@ -29,19 +29,19 @@ const AW_Sharp = forwardRef<SVGSVGElement, AW_SharpProps>(function AW_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-AW-a)`}>
-        <path fill="#0091DA" d="M0-4.4h29v28.8H0z" />
+        <path fill="#0091da" d="M0-4.4h29v28.8H0z" />
         <path
-          fill="#F5F7F8"
-          d="m8.458.8 1.85 4.163L14.5 6.8l-4.192 1.837-1.85 4.163-1.85-4.163L2.417 6.8l4.191-1.837L8.458.8Z"
+          fill="#f5f7f8"
+          d="m8.458.8 1.85 4.163L14.5 6.8l-4.192 1.837-1.85 4.163-1.85-4.163L2.417 6.8l4.191-1.837z"
         />
         <path
-          fill="#DD2033"
-          d="m8.458 3.2 1.11 2.498L12.083 6.8 9.568 7.902 8.458 10.4l-1.11-2.498L4.833 6.8l2.515-1.102L8.458 3.2Z"
+          fill="#dd2033"
+          d="m8.458 3.2 1.11 2.498L12.083 6.8 9.568 7.902 8.458 10.4l-1.11-2.498L4.833 6.8l2.515-1.102z"
         />
-        <path fill="#FBD381" d="M0 13.6h29v1.6H0zm0 3.2h29v1.6H0z" />
+        <path fill="#fbd381" d="M0 13.6h29v1.6H0zm0 3.2h29v1.6H0z" />
       </g>
     </CountrySymbol>
   );

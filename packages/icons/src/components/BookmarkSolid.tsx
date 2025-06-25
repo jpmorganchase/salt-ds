@@ -18,7 +18,7 @@ export const BookmarkSolidIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <path fillRule="evenodd" d="m6 10 4 2V0H2v12l4-2Z" clipRule="evenodd" />
+      <path fillRule="evenodd" d="m6 10 4 2V0H2v12z" clipRule="evenodd" />
     </Icon>
   );
 });

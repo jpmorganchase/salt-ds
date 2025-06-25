@@ -20,7 +20,7 @@ export const MaximizeSolidIcon = forwardRef<
     >
       <path
         fillRule="evenodd"
-        d="M0 0h12v12H0V0Zm11 1H1v2h10V1Z"
+        d="M0 0h12v12H0zm11 1H1v2h10z"
         clipRule="evenodd"
       />
     </Icon>

@@ -25,19 +25,19 @@ const AZ = forwardRef<SVGSVGElement, AZProps>(function AZ(props: AZProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="10" cy="10" r="10" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#d9d9d9" />
       </mask>
       <g mask={`url(#${uid}-AZ-a)`}>
-        <path fill="#009B77" d="M0 20v-5h20v5z" />
-        <path fill="#DD2033" d="M0 15V5h20v10z" />
+        <path fill="#009b77" d="M0 20v-5h20v5z" />
+        <path fill="#dd2033" d="M0 15V5h20v10z" />
         <path
-          fill="#F5F7F8"
-          d="m12.5 7.5.615 1.32 1.39-.33-.623 1.317 1.118.909-1.391.321.004 1.463-1.113-.915-1.113.915.004-1.463L10 10.716l1.117-.91-.622-1.316 1.39.33.615-1.32Z"
+          fill="#f5f7f8"
+          d="m12.5 7.5.615 1.32 1.39-.33-.623 1.317 1.118.909-1.391.321.004 1.463-1.113-.915-1.113.915.004-1.463L10 10.716l1.117-.91-.622-1.316 1.39.33z"
         />
-        <path fill="#0091DA" d="M0 5V0h20v5z" />
+        <path fill="#0091da" d="M0 5V0h20v5z" />
         <path
-          fill="#F5F7F8"
-          d="M10.555 7.02a3.194 3.194 0 1 0 0 6.238 3.75 3.75 0 1 1 0-6.238Z"
+          fill="#f5f7f8"
+          d="M10.555 7.02a3.194 3.194 0 1 0 0 6.238 3.75 3.75 0 1 1 0-6.238"
         />
       </g>
     </CountrySymbol>

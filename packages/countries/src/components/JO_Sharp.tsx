@@ -29,16 +29,16 @@ const JO_Sharp = forwardRef<SVGSVGElement, JO_SharpProps>(function JO_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-JO-a)`}>
         <path fill="#008259" d="M0 20v-7h29v7z" />
-        <path fill="#F5F7F8" d="M0 13V7h29v6z" />
-        <path fill="#31373D" d="M0 7V0h29v7z" />
-        <path fill="#DD2033" d="M16 10-4-4.5v29L16 10Z" />
+        <path fill="#f5f7f8" d="M0 13V7h29v6z" />
+        <path fill="#31373d" d="M0 7V0h29v7z" />
+        <path fill="#dd2033" d="M16 10-4-4.5v29z" />
         <path
-          fill="#F5F7F8"
-          d="m6.042 5.6 1.09 2.323 2.463-.58L8.492 9.66l1.98 1.6-2.465.565.006 2.575-1.971-1.61L4.07 14.4l.007-2.575-2.466-.566 1.98-1.6L2.49 7.344l2.462.58L6.041 5.6Z"
+          fill="#f5f7f8"
+          d="m6.042 5.6 1.09 2.323 2.463-.58L8.492 9.66l1.98 1.6-2.465.565.006 2.575-1.971-1.61L4.07 14.4l.007-2.575-2.466-.566 1.98-1.6L2.49 7.344l2.462.58z"
         />
       </g>
     </CountrySymbol>

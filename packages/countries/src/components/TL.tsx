@@ -25,15 +25,15 @@ const TL = forwardRef<SVGSVGElement, TLProps>(function TL(props: TLProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="10" cy="10" r="10" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#d9d9d9" />
       </mask>
       <g mask={`url(#${uid}-TL-a)`}>
-        <path fill="#DD2033" d="M0 0h20v20H0z" />
-        <path fill="#FBD381" d="M18.333 10 0 0v20l18.333-10Z" />
-        <path fill="#31373D" d="M13.333 10 0 0v20l13.333-10Z" />
+        <path fill="#dd2033" d="M0 0h20v20H0z" />
+        <path fill="#fbd381" d="M18.333 10 0 0v20z" />
+        <path fill="#31373d" d="M13.333 10 0 0v20z" />
         <path
-          fill="#F5F7F8"
-          d="m4.066 8.232.665 1.719-1.083 1.4 1.81-.02 1.05 1.53.357-1.83 1.829-.356-1.53-1.05.02-1.81-1.4 1.082-1.718-.665Z"
+          fill="#f5f7f8"
+          d="m4.066 8.232.665 1.719-1.083 1.4 1.81-.02 1.05 1.53.357-1.83 1.829-.356-1.53-1.05.02-1.81-1.4 1.082z"
         />
       </g>
     </CountrySymbol>

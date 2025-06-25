@@ -25,14 +25,14 @@ const NF = forwardRef<SVGSVGElement, NFProps>(function NF(props: NFProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="10" cy="10" r="10" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#d9d9d9" />
       </mask>
       <g mask={`url(#${uid}-NF-a)`}>
         <path fill="#008259" d="M0 0h20v20H0z" />
-        <path fill="#F5F7F8" d="M15 20H5V0h10z" />
+        <path fill="#f5f7f8" d="M15 20H5V0h10z" />
         <path
           fill="#008259"
-          d="M13.333 13.021 10 4.445 6.667 13.02h2.5v2.257h1.666V13.02h2.5Z"
+          d="M13.333 13.021 10 4.445 6.667 13.02h2.5v2.257h1.666V13.02z"
         />
       </g>
     </CountrySymbol>

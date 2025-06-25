@@ -29,14 +29,14 @@ const VC_Sharp = forwardRef<SVGSVGElement, VC_SharpProps>(function VC_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-VC-a)`}>
-        <path fill="#009B77" d="M29 20H7.25V0H29z" />
+        <path fill="#009b77" d="M29 20H7.25V0H29z" />
         <path
-          fill="#FBD381"
+          fill="#fbd381"
           fillRule="evenodd"
-          d="M7.25 20h14.5V0H7.25v20Zm.806-12.919 2.665 4.682 2.624-4.682L10.72 2.4 8.056 7.081Zm10.223-4.68-2.624 4.68 2.624 4.682 2.665-4.682-2.665-4.68Zm-1.164 11.407L14.5 9.143l-2.615 4.665L14.5 18.4l2.615-4.592Z"
+          d="M7.25 20h14.5V0H7.25zm.806-12.919 2.665 4.682 2.624-4.682L10.72 2.4zm10.223-4.68-2.624 4.68 2.624 4.682 2.665-4.682zm-1.164 11.407L14.5 9.143l-2.615 4.665L14.5 18.4z"
           clipRule="evenodd"
         />
         <path fill="#004692" d="M7.25 20H0V0h7.25z" />

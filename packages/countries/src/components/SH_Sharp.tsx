@@ -29,7 +29,7 @@ const SH_Sharp = forwardRef<SVGSVGElement, SH_SharpProps>(function SH_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-SH-a)`}>
         <path fill="#004692" d="M0 0h29v20H0z" />
@@ -40,26 +40,26 @@ const SH_Sharp = forwardRef<SVGSVGElement, SH_SharpProps>(function SH_Sharp(
           maskUnits="userSpaceOnUse"
           style={{ maskType: "alpha" }}
         >
-          <path fill="#002F6C" d="M0 12V0h14.5v12H0Z" />
+          <path fill="#002f6c" d="M0 12V0h14.5v12z" />
         </mask>
         <g mask={`url(#${uid}-SH-b)`}>
           <path fill="#004692" d="M0 0h14.5v14.4H0z" />
           <path
-            fill="#F5F7F8"
-            d="m5.152.402-.855.848L14.85 11.73l.854-.85L5.152.403ZM2.873 2.665 1.45 4.079l10.552 10.479 1.424-1.415L2.873 2.665Z"
+            fill="#f5f7f8"
+            d="m5.152.402-.855.848L14.85 11.73l.854-.85zM2.873 2.665 1.45 4.079l10.552 10.479 1.424-1.415z"
           />
           <path
-            fill="#DD2033"
-            d="M2.873 2.665 4.297 1.25 14.85 11.73l-1.424 1.413L2.873 2.665Z"
+            fill="#dd2033"
+            d="M2.873 2.665 4.297 1.25 14.85 11.73l-1.424 1.413z"
           />
-          <path fill="#F5F7F8" d="M2.417 14h1.611V3.6H14.5V2H2.417v12Z" />
-          <path fill="#DD2033" d="M0 14h2.417V2h12.084V0H0v14Z" />
+          <path fill="#f5f7f8" d="M2.417 14h1.611V3.6H14.5V2H2.417z" />
+          <path fill="#dd2033" d="M0 14h2.417V2h12.084V0H0z" />
         </g>
         <path
-          fill="#F1B434"
-          d="M17.722 8h8.459v2.98a6.69 6.69 0 0 1-4.23 6.22 6.69 6.69 0 0 1-4.229-6.22V8Z"
+          fill="#f1b434"
+          d="M17.722 8h8.459v2.98a6.69 6.69 0 0 1-4.23 6.22 6.69 6.69 0 0 1-4.229-6.22z"
         />
-        <ellipse cx="21.951" cy="9.4" fill="#FDEFD3" rx="1.007" ry="1" />
+        <ellipse cx="21.951" cy="9.4" fill="#fdefd3" rx="1.007" ry="1" />
         <mask
           id={`${uid}-SH-c`}
           x="17"
@@ -67,16 +67,16 @@ const SH_Sharp = forwardRef<SVGSVGElement, SH_SharpProps>(function SH_Sharp(
           maskUnits="userSpaceOnUse"
           style={{ maskType: "alpha" }}
         >
-          <path fill="#D9D9D9" d="M17.722 10.8h8.458v6.4h-8.458z" />
+          <path fill="#d9d9d9" d="M17.722 10.8h8.458v6.4h-8.458z" />
         </mask>
         <g mask={`url(#${uid}-SH-c)`}>
           <path
-            fill="#86C5FA"
-            d="M17.722 8h8.459v2.98a6.69 6.69 0 0 1-4.23 6.22 6.69 6.69 0 0 1-4.229-6.22V8Z"
+            fill="#86c5fa"
+            d="M17.722 8h8.459v2.98a6.69 6.69 0 0 1-4.23 6.22 6.69 6.69 0 0 1-4.229-6.22z"
           />
           <path
-            fill="#31373D"
-            stroke="#31373D"
+            fill="#31373d"
+            stroke="#31373d"
             strokeWidth=".4"
             d="M17.922 11h8.058v.4h-8.058z"
           />
@@ -89,24 +89,24 @@ const SH_Sharp = forwardRef<SVGSVGElement, SH_SharpProps>(function SH_Sharp(
           style={{ maskType: "alpha" }}
         >
           <path
-            fill="#F1B434"
-            d="M17.722 8h8.459v2.98a6.69 6.69 0 0 1-4.23 6.22 6.69 6.69 0 0 1-4.229-6.22V8Z"
+            fill="#f1b434"
+            d="M17.722 8h8.459v2.98a6.69 6.69 0 0 1-4.23 6.22 6.69 6.69 0 0 1-4.229-6.22z"
           />
         </mask>
         <g mask={`url(#${uid}-SH-d)`}>
           <path
-            fill="#F5F7F8"
-            d="M21.951 14c-1.057 0-1.057.873-2.114.873-1.058 0-1.058-.873-2.115-.873v1.527c1.057 0 1.057.873 2.115.873 1.057 0 1.057-.873 2.114-.873 1.058 0 1.058.873 2.115.873 1.057 0 1.057-.873 2.115-.873V14c-1.058 0-1.058.873-2.115.873-1.057 0-1.057-.873-2.115-.873Z"
+            fill="#f5f7f8"
+            d="M21.951 14c-1.057 0-1.057.873-2.114.873-1.058 0-1.058-.873-2.115-.873v1.527c1.057 0 1.057.873 2.115.873 1.057 0 1.057-.873 2.114-.873 1.058 0 1.058.873 2.115.873s1.057-.873 2.115-.873V14c-1.058 0-1.058.873-2.115.873S23.009 14 21.95 14"
           />
         </g>
         <path
           fill="#936846"
-          d="M22.153 12h-.806v.8h-.805v.8h.805v1.6h.806v-1.6h.805v-.8h-.805V12Z"
+          d="M22.153 12h-.806v.8h-.805v.8h.805v1.6h.806v-1.6h.805v-.8h-.805z"
         />
         <path
-          fill="#31373D"
-          stroke="#31373D"
-          d="M23.163 14.9c-.197.468-.664.8-1.212.8a1.312 1.312 0 0 1-1.212-.8h2.424Z"
+          fill="#31373d"
+          stroke="#31373d"
+          d="M23.163 14.9c-.197.468-.664.8-1.212.8a1.31 1.31 0 0 1-1.212-.8z"
         />
       </g>
     </CountrySymbol>

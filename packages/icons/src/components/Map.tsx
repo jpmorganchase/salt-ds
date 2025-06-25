@@ -20,7 +20,7 @@ export const MapIcon = forwardRef<SVGSVGElement, MapIconProps>(function MapIcon(
     >
       <path
         fillRule="evenodd"
-        d="m0 12 3-2 3 2 3-2 3 2V2L9 0 6 2 3 0 0 2v10Zm5.5-1.535V2.869l-2-1.334v7.596l2 1.334Zm1 0V2.869l2-1.334v7.596l-2 1.334Zm4.5-.333-1.5-1V1.534l1.5 1v7.597Zm-8.5-1-1.5 1V2.535l1.5-1v7.596Z"
+        d="m0 12 3-2 3 2 3-2 3 2V2L9 0 6 2 3 0 0 2zm5.5-1.535V2.869l-2-1.334v7.596zm1 0V2.869l2-1.334v7.596zm4.5-.333-1.5-1V1.534l1.5 1zm-8.5-1-1.5 1V2.535l1.5-1z"
         clipRule="evenodd"
       />
     </Icon>

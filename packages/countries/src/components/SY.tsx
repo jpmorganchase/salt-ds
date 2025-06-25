@@ -25,16 +25,16 @@ const SY = forwardRef<SVGSVGElement, SYProps>(function SY(props: SYProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="10" cy="10" r="10" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#d9d9d9" />
       </mask>
       <g mask={`url(#${uid}-SY-a)`}>
-        <path fill="#31373D" d="M0 20v-6.667h20V20z" />
-        <path fill="#F5F7F8" d="M0 13.333V6.666h20v6.667z" />
+        <path fill="#31373d" d="M0 20v-6.667h20V20z" />
+        <path fill="#f5f7f8" d="M0 13.333V6.666h20v6.667z" />
         <path
-          fill="#009B77"
-          d="M4.503 9.457 5 8.333l.497 1.124 1.17.15-.863.844.226 1.216L5 10.972l-1.03.695.226-1.216-.863-.845 1.17-.149Zm10 0L15 8.333l.497 1.124 1.17.15-.863.844.226 1.216-1.03-.695-1.03.695.226-1.216-.863-.845 1.17-.149Z"
+          fill="#009b77"
+          d="M4.503 9.457 5 8.333l.497 1.124 1.17.15-.863.844.226 1.216L5 10.972l-1.03.695.226-1.216-.863-.845zm10 0L15 8.333l.497 1.124 1.17.15-.863.844.226 1.216-1.03-.695-1.03.695.226-1.216-.863-.845z"
         />
-        <path fill="#DD2033" d="M0 6.667V0h20v6.667z" />
+        <path fill="#dd2033" d="M0 6.667V0h20v6.667z" />
       </g>
     </CountrySymbol>
   );

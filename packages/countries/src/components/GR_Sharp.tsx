@@ -29,18 +29,18 @@ const GR_Sharp = forwardRef<SVGSVGElement, GR_SharpProps>(function GR_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-GR-a)`}>
-        <path fill="#F5F7F8" d="M0 16.8V14h29v2.8H0Z" />
-        <path fill="#005EB8" d="M0 14v-2.8h29V14H0Z" />
-        <path fill="#F5F7F8" d="M0 11.2V8.4h29v2.8H0Z" />
-        <path fill="#005EB8" d="M0 8.4V5.6h29v2.8H0Z" />
-        <path fill="#F5F7F8" d="M0 5.6V2.8h29v2.8H0Z" />
-        <path fill="#005EB8" d="M0 2.8V0h29v2.8H0ZM0 20v-3.2h29V20H0Z" />
-        <path fill="#005EB8" d="M0 0h14.5v14H0z" />
-        <path fill="#F5F7F8" d="M0 8.4V5.6h14.5v2.8H0Z" />
-        <path fill="#F5F7F8" d="M5.639 0H8.86v14H5.64V0Z" />
+        <path fill="#f5f7f8" d="M0 16.8V14h29v2.8z" />
+        <path fill="#005eb8" d="M0 14v-2.8h29V14z" />
+        <path fill="#f5f7f8" d="M0 11.2V8.4h29v2.8z" />
+        <path fill="#005eb8" d="M0 8.4V5.6h29v2.8z" />
+        <path fill="#f5f7f8" d="M0 5.6V2.8h29v2.8z" />
+        <path fill="#005eb8" d="M0 2.8V0h29v2.8zM0 20v-3.2h29V20z" />
+        <path fill="#005eb8" d="M0 0h14.5v14H0z" />
+        <path fill="#f5f7f8" d="M0 8.4V5.6h14.5v2.8z" />
+        <path fill="#f5f7f8" d="M5.639 0H8.86v14H5.64z" />
       </g>
     </CountrySymbol>
   );

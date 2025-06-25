@@ -25,14 +25,14 @@ const AR = forwardRef<SVGSVGElement, ARProps>(function AR(props: ARProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="10" cy="10" r="10" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#d9d9d9" />
       </mask>
       <g mask={`url(#${uid}-AR-a)`}>
-        <path fill="#86C5FA" d="M0 0h20v20H0z" />
-        <path fill="#F5F7F8" d="M0 14V6h20v8z" />
+        <path fill="#86c5fa" d="M0 0h20v20H0z" />
+        <path fill="#f5f7f8" d="M0 14V6h20v8z" />
         <path
-          fill="#F1B434"
-          d="m13 10-1.226.606.653 1.248-1.331-.268L10.927 13 10 11.96 9.073 13l-.169-1.414-1.33.268.652-1.248L7 10l1.226-.606-.653-1.248 1.331.268L9.073 7 10 8.04 10.927 7l.169 1.414 1.331-.268-.653 1.248L13 10Z"
+          fill="#f1b434"
+          d="m13 10-1.226.606.653 1.248-1.331-.268L10.927 13 10 11.96 9.073 13l-.169-1.414-1.33.268.652-1.248L7 10l1.226-.606-.653-1.248 1.331.268L9.073 7 10 8.04 10.927 7l.169 1.414 1.331-.268-.653 1.248z"
         />
       </g>
     </CountrySymbol>

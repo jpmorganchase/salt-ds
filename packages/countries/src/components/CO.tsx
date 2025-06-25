@@ -25,11 +25,11 @@ const CO = forwardRef<SVGSVGElement, COProps>(function CO(props: COProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="10" cy="10" r="10" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#d9d9d9" />
       </mask>
       <g mask={`url(#${uid}-CO-a)`}>
-        <path fill="#DD2033" d="M0 20v-5h20v5z" />
-        <path fill="#F1B434" d="M0 10V0h20v10z" />
+        <path fill="#dd2033" d="M0 20v-5h20v5z" />
+        <path fill="#f1b434" d="M0 10V0h20v10z" />
         <path fill="#004692" d="M0 15v-5h20v5z" />
       </g>
     </CountrySymbol>

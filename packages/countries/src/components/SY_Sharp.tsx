@@ -29,16 +29,16 @@ const SY_Sharp = forwardRef<SVGSVGElement, SY_SharpProps>(function SY_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-SY-a)`}>
-        <path fill="#31373D" d="M0 20v-6h29v6z" />
-        <path fill="#F5F7F8" d="M0 14V6h29v8z" />
+        <path fill="#31373d" d="M0 20v-6h29v6z" />
+        <path fill="#f5f7f8" d="M0 14V6h29v8z" />
         <path
-          fill="#009B77"
-          d="M6.53 9.218 7.25 7.6l.72 1.618 1.697.216-1.252 1.215.329 1.751-1.494-1-1.494 1 .328-1.751-1.25-1.215 1.696-.216Zm14.5 0 .72-1.618.72 1.618 1.697.216-1.252 1.215.329 1.751-1.494-1-1.494 1 .328-1.751-1.25-1.215 1.696-.216Z"
+          fill="#009b77"
+          d="M6.53 9.218 7.25 7.6l.72 1.618 1.697.216-1.252 1.215.329 1.751-1.494-1-1.494 1 .328-1.751-1.25-1.215zm14.5 0 .72-1.618.72 1.618 1.697.216-1.251 1.215.328 1.751-1.494-1-1.494 1 .328-1.751-1.25-1.215z"
         />
-        <path fill="#DD2033" d="M0 6V0h29v6z" />
+        <path fill="#dd2033" d="M0 6V0h29v6z" />
       </g>
     </CountrySymbol>
   );

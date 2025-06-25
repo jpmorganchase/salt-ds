@@ -18,7 +18,7 @@ export const UtensilsIcon = forwardRef<SVGSVGElement, UtensilsIconProps>(
       >
         <path
           fillRule="evenodd"
-          d="M5 0h1v6H4.508v6h-1V6H2V0h1v3h.5V0h1v3H5V0ZM3 4h2v1H3V4ZM9 .17A3.001 3.001 0 0 0 7 3v5h2v4h1V0c-.35 0-.687.06-1 .17Zm0 1.098A2 2 0 0 0 8 3v4h1V1.268Z"
+          d="M5 0h1v6H4.508v6h-1V6H2V0h1v3h.5V0h1v3H5zM3 4h2v1H3zM9 .17A3 3 0 0 0 7 3v5h2v4h1V0c-.35 0-.687.06-1 .17m0 1.098A2 2 0 0 0 8 3v4h1z"
           clipRule="evenodd"
         />
       </Icon>

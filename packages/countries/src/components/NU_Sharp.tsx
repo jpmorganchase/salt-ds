@@ -29,10 +29,10 @@ const NU_Sharp = forwardRef<SVGSVGElement, NU_SharpProps>(function NU_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-NU-a)`}>
-        <path fill="#F1B434" d="M0 0h29v20H0z" />
+        <path fill="#f1b434" d="M0 0h29v20H0z" />
         <mask
           id={`${uid}-NU-b`}
           x="0"
@@ -40,20 +40,20 @@ const NU_Sharp = forwardRef<SVGSVGElement, NU_SharpProps>(function NU_Sharp(
           maskUnits="userSpaceOnUse"
           style={{ maskType: "alpha" }}
         >
-          <path fill="#002F6C" d="M0 12V0h14.5v12H0Z" />
+          <path fill="#002f6c" d="M0 12V0h14.5v12z" />
         </mask>
         <g mask={`url(#${uid}-NU-b)`}>
           <path fill="#004692" d="M0 0h14.5v14.4H0z" />
           <path
-            fill="#F5F7F8"
-            d="m5.152.402-.855.848L14.85 11.73l.854-.85L5.152.403ZM2.873 2.665 1.45 4.079l10.552 10.479 1.424-1.415L2.873 2.665Z"
+            fill="#f5f7f8"
+            d="m5.152.402-.855.848L14.85 11.73l.854-.85zM2.873 2.665 1.45 4.079l10.552 10.479 1.424-1.415z"
           />
           <path
-            fill="#DD2033"
-            d="M2.873 2.665 4.297 1.25 14.85 11.73l-1.424 1.413L2.873 2.665Z"
+            fill="#dd2033"
+            d="M2.873 2.665 4.297 1.25 14.85 11.73l-1.424 1.413z"
           />
-          <path fill="#F5F7F8" d="M2.417 14h1.611V3.6H14.5V2H2.417v12Z" />
-          <path fill="#DD2033" d="M0 14h2.417V2h12.084V0H0v14Z" />
+          <path fill="#f5f7f8" d="M2.417 14h1.611V3.6H14.5V2H2.417z" />
+          <path fill="#dd2033" d="M0 14h2.417V2h12.084V0H0z" />
         </g>
       </g>
     </CountrySymbol>

@@ -25,17 +25,17 @@ const TR = forwardRef<SVGSVGElement, TRProps>(function TR(props: TRProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="10" cy="10" r="10" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#d9d9d9" />
       </mask>
       <g mask={`url(#${uid}-TR-a)`}>
-        <path fill="#DD2033" d="M0 20V0h20v20z" />
+        <path fill="#dd2033" d="M0 20V0h20v20z" />
         <path
-          fill="#F5F7F8"
-          d="m12.748 7.686-.283 1.821-1.637.671 1.578.888.144 1.85 1.223-1.406 1.762.606-.8-1.674.922-1.558-1.753.238-1.156-1.436Z"
+          fill="#f5f7f8"
+          d="m12.748 7.686-.283 1.821-1.637.671 1.578.888.144 1.85 1.223-1.406 1.762.606-.8-1.674.922-1.558-1.753.238z"
         />
         <path
-          fill="#F5F7F8"
-          d="M11.208 7.108a3.457 3.457 0 1 0-.002 5.787 4.444 4.444 0 1 1 .002-5.787Z"
+          fill="#f5f7f8"
+          d="M11.208 7.108a3.457 3.457 0 1 0-.002 5.787 4.444 4.444 0 1 1 .002-5.787"
         />
       </g>
     </CountrySymbol>

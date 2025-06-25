@@ -29,15 +29,15 @@ const DJ_Sharp = forwardRef<SVGSVGElement, DJ_SharpProps>(function DJ_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-DJ-a)`}>
-        <path fill="#009B77" d="M0 20V10h29v10z" />
-        <path fill="#86C5FA" d="M0 10V0h29v10z" />
-        <path fill="#F5F7F8" d="M16.917 10-2.417-4.4v28.8L16.917 10Z" />
+        <path fill="#009b77" d="M0 20V10h29v10z" />
+        <path fill="#86c5fa" d="M0 10V0h29v10z" />
+        <path fill="#f5f7f8" d="M16.917 10-2.417-4.4v28.8z" />
         <path
-          fill="#DD2033"
-          d="m6.444 6-1.2 2.697-2.827.359 2.085 2.025L3.955 14l2.49-1.667L8.933 14l-.547-2.919 2.085-2.025-2.827-.36L6.445 6Z"
+          fill="#dd2033"
+          d="m6.444 6-1.2 2.697-2.827.359 2.085 2.025L3.955 14l2.49-1.667L8.933 14l-.547-2.919 2.085-2.025-2.827-.36z"
         />
       </g>
     </CountrySymbol>

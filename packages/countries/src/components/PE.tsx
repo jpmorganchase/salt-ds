@@ -29,22 +29,22 @@ const PE = forwardRef<SVGSVGElement, PEProps>(function PE(props: PEProps, ref) {
           cx="10"
           cy="10"
           r="10"
-          fill="#D9D9D9"
+          fill="#d9d9d9"
           transform="rotate(-90 10 10)"
         />
       </mask>
       <g mask={`url(#${uid}-PE-a)`}>
-        <path fill="#DD2033" d="M0 0h20v20H0z" />
-        <path fill="#F5F7F8" d="M15.555 20H4.445V0h11.11z" />
+        <path fill="#dd2033" d="M0 0h20v20H0z" />
+        <path fill="#f5f7f8" d="M15.555 20H4.445V0h11.11z" />
         <path
-          fill="#009B77"
+          fill="#009b77"
           fillRule="evenodd"
-          d="M5.113 9.843a5 5 0 1 0 9.77-.022l-1.574.68a3.333 3.333 0 1 1-6.621.023l-1.575-.681Z"
+          d="M5.113 9.843a5 5 0 1 0 9.77-.022l-1.574.68q.024.199.024.403a3.333 3.333 0 1 1-6.645-.38z"
           clipRule="evenodd"
         />
         <path
-          fill="#FF9E42"
-          d="M7.278 5.556h5.555v2.008a4.42 4.42 0 0 1-2.777 4.103 4.419 4.419 0 0 1-2.778-4.103V5.556Z"
+          fill="#ff9e42"
+          d="M7.278 5.556h5.555v2.008a4.42 4.42 0 0 1-2.777 4.103 4.42 4.42 0 0 1-2.778-4.103z"
         />
         <mask
           id={`${uid}-PE-b`}
@@ -54,13 +54,13 @@ const PE = forwardRef<SVGSVGElement, PEProps>(function PE(props: PEProps, ref) {
           style={{ maskType: "alpha" }}
         >
           <path
-            fill="#005EB8"
-            d="M7.278 5.556h5.555v2.008a4.42 4.42 0 0 1-2.777 4.103 4.419 4.419 0 0 1-2.778-4.103V5.556Z"
+            fill="#005eb8"
+            d="M7.278 5.556h5.555v2.008a4.42 4.42 0 0 1-2.777 4.103 4.42 4.42 0 0 1-2.778-4.103z"
           />
         </mask>
         <g mask={`url(#${uid}-PE-b)`}>
-          <path fill="#DD2033" d="M7.278 8.334h5.556v3.333H7.278z" />
-          <path fill="#0091DA" d="M7.278 5.556h2.778v2.778H7.278z" />
+          <path fill="#dd2033" d="M7.278 8.334h5.556v3.333H7.278z" />
+          <path fill="#0091da" d="M7.278 5.556h2.778v2.778H7.278z" />
         </g>
       </g>
     </CountrySymbol>

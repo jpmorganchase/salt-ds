@@ -29,17 +29,17 @@ const CF_Sharp = forwardRef<SVGSVGElement, CF_SharpProps>(function CF_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-CF-a)`}>
-        <path fill="#FBD381" d="M0 20v-4.8h29V20z" />
-        <path fill="#F5F7F8" d="M0 10.4V5.6h29v4.8z" />
+        <path fill="#fbd381" d="M0 20v-4.8h29V20z" />
+        <path fill="#f5f7f8" d="M0 10.4V5.6h29v4.8z" />
         <path fill="#004692" d="M0 5.6V0h29v5.6z" />
         <path fill="#008259" d="M0 15.2v-4.8h29v4.8z" />
-        <path fill="#DD2033" d="M21.75 20h-5.639V0h5.639z" />
+        <path fill="#dd2033" d="M21.75 20h-5.639V0h5.639z" />
         <path
-          fill="#FBD381"
-          d="m5.639.8-.6 1.348-1.414.18L4.668 3.34 4.394 4.8l1.245-.833 1.245.833-.274-1.46 1.043-1.012-1.414-.18L5.64.8Z"
+          fill="#fbd381"
+          d="m5.639.8-.6 1.348-1.414.18L4.668 3.34 4.394 4.8l1.245-.833 1.245.833-.274-1.46 1.043-1.012-1.414-.18z"
         />
       </g>
     </CountrySymbol>

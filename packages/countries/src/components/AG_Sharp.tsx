@@ -29,10 +29,10 @@ const AG_Sharp = forwardRef<SVGSVGElement, AG_SharpProps>(function AG_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-AG-a)`}>
-        <path fill="#DD2033" d="M0 0h29v20H0z" />
+        <path fill="#dd2033" d="M0 0h29v20H0z" />
         <mask
           id={`${uid}-AG-b`}
           x="-4"
@@ -40,16 +40,16 @@ const AG_Sharp = forwardRef<SVGSVGElement, AG_SharpProps>(function AG_Sharp(
           maskUnits="userSpaceOnUse"
           style={{ maskType: "alpha" }}
         >
-          <path fill="#31373D" d="M14.5 20 32.625-5.2h-36.25L14.5 20Z" />
+          <path fill="#31373d" d="M14.5 20 32.625-5.2h-36.25z" />
         </mask>
         <g mask={`url(#${uid}-AG-b)`}>
-          <path fill="#31373D" d="M14.5 20 32.625-5.2h-36.25L14.5 20Z" />
+          <path fill="#31373d" d="M14.5 20 32.625-5.2h-36.25z" />
           <path
-            fill="#F1B434"
-            d="M9.736 7.745 6.444 9.2h16.112l-3.292-1.455 1.753-2.995-3.575.643L16.99 2 14.5 4.495 12.01 2l-.453 3.393-3.574-.643 1.753 2.995Z"
+            fill="#f1b434"
+            d="M9.736 7.745 6.444 9.2h16.112l-3.292-1.455 1.753-2.995-3.575.643L16.99 2 14.5 4.495 12.01 2l-.453 3.393-3.574-.643z"
           />
-          <path fill="#F5F7F8" d="M8.056 14.8h12.889v9.6H8.056z" />
-          <path fill="#005EB8" d="M4.833 9.2h19.334v5.6H4.833V9.2Z" />
+          <path fill="#f5f7f8" d="M8.056 14.8h12.889v9.6H8.056z" />
+          <path fill="#005eb8" d="M4.833 9.2h19.334v5.6H4.833z" />
         </g>
       </g>
     </CountrySymbol>

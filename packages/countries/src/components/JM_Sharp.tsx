@@ -29,17 +29,17 @@ const JM_Sharp = forwardRef<SVGSVGElement, JM_SharpProps>(function JM_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-JM-a)`}>
-        <path fill="#31373D" d="M0 0h29v20H0z" />
+        <path fill="#31373d" d="M0 0h29v20H0z" />
         <path
-          fill="#009B77"
-          d="M0 24.4 14.097 10 0-4.4h29L14.097 10 29 24.4H0Z"
+          fill="#009b77"
+          d="M0 24.4 14.097 10 0-4.4h29L14.097 10 29 24.4z"
         />
         <path
-          fill="#F1B434"
-          d="M26.37 22.4 29 20.151 17.13 10 29-.151 26.37-2.4 14.5 7.751 2.63-2.4 0-.151 11.87 10 0 20.151 2.63 22.4 14.5 12.249 26.37 22.4Z"
+          fill="#f1b434"
+          d="M26.37 22.4 29 20.151 17.13 10 29-.151 26.37-2.4 14.5 7.751 2.63-2.4 0-.151 11.87 10 0 20.151 2.63 22.4 14.5 12.249z"
         />
       </g>
     </CountrySymbol>

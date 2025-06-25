@@ -29,7 +29,7 @@ const MS_Sharp = forwardRef<SVGSVGElement, MS_SharpProps>(function MS_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-MS-a)`}>
         <path fill="#004692" d="M0 0h29v20H0z" />
@@ -40,24 +40,24 @@ const MS_Sharp = forwardRef<SVGSVGElement, MS_SharpProps>(function MS_Sharp(
           maskUnits="userSpaceOnUse"
           style={{ maskType: "alpha" }}
         >
-          <path fill="#002F6C" d="M0 12V0h14.5v12H0Z" />
+          <path fill="#002f6c" d="M0 12V0h14.5v12z" />
         </mask>
         <g mask={`url(#${uid}-MS-b)`}>
           <path fill="#004692" d="M0 0h14.5v14.4H0z" />
           <path
-            fill="#F5F7F8"
-            d="m5.152.402-.855.848L14.85 11.73l.854-.85L5.152.403ZM2.873 2.665 1.45 4.079l10.552 10.479 1.424-1.415L2.873 2.665Z"
+            fill="#f5f7f8"
+            d="m5.152.402-.855.848L14.85 11.73l.854-.85zM2.873 2.665 1.45 4.079l10.552 10.479 1.424-1.415z"
           />
           <path
-            fill="#DD2033"
-            d="M2.873 2.665 4.297 1.25 14.85 11.73l-1.424 1.413L2.873 2.665Z"
+            fill="#dd2033"
+            d="M2.873 2.665 4.297 1.25 14.85 11.73l-1.424 1.413z"
           />
-          <path fill="#F5F7F8" d="M2.417 14h1.611V3.6H14.5V2H2.417v12Z" />
-          <path fill="#DD2033" d="M0 14h2.417V2h12.084V0H0v14Z" />
+          <path fill="#f5f7f8" d="M2.417 14h1.611V3.6H14.5V2H2.417z" />
+          <path fill="#dd2033" d="M0 14h2.417V2h12.084V0H0z" />
         </g>
         <path
-          fill="#3CCBDA"
-          d="M17.722 8h8.459v2.98a6.69 6.69 0 0 1-4.23 6.22 6.69 6.69 0 0 1-4.229-6.22V8Z"
+          fill="#3ccbda"
+          d="M17.722 8h8.459v2.98a6.69 6.69 0 0 1-4.23 6.22 6.69 6.69 0 0 1-4.229-6.22z"
         />
         <mask
           id={`${uid}-MS-c`}
@@ -67,15 +67,15 @@ const MS_Sharp = forwardRef<SVGSVGElement, MS_SharpProps>(function MS_Sharp(
           style={{ maskType: "alpha" }}
         >
           <path
-            fill="#0091DA"
-            d="M17.722 8h8.459v2.98a6.69 6.69 0 0 1-4.23 6.22 6.69 6.69 0 0 1-4.229-6.22V8Z"
+            fill="#0091da"
+            d="M17.722 8h8.459v2.98a6.69 6.69 0 0 1-4.23 6.22 6.69 6.69 0 0 1-4.229-6.22z"
           />
         </mask>
         <g mask={`url(#${uid}-MS-c)`}>
           <path
-            fill="#31373D"
-            stroke="#31373D"
-            d="M22.056 9.3v1.6h2.014v.2h-2.014v4.4h-.209v-4.4h-2.014v-.2h2.014V9.3h.209Z"
+            fill="#31373d"
+            stroke="#31373d"
+            d="M22.056 9.3v1.6h2.014v.2h-2.014v4.4h-.209v-4.4h-2.014v-.2h2.014V9.3z"
           />
           <path fill="#936846" d="M17.722 14.4h8.458v2.8h-8.458z" />
         </g>

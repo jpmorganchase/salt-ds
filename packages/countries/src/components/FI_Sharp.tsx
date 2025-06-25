@@ -29,13 +29,13 @@ const FI_Sharp = forwardRef<SVGSVGElement, FI_SharpProps>(function FI_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-FI-a)`}>
-        <path fill="#F5F7F8" d="M0 0h29v20H0z" />
+        <path fill="#f5f7f8" d="M0 0h29v20H0z" />
         <path
-          fill="#005EB8"
-          d="M5.639 20h5.639v-7.2H29V7.2H11.278V0h-5.64v7.2H0v5.6h5.639V20Z"
+          fill="#005eb8"
+          d="M5.639 20h5.639v-7.2H29V7.2H11.278V0h-5.64v7.2H0v5.6h5.639z"
         />
       </g>
     </CountrySymbol>

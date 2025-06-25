@@ -25,18 +25,18 @@ const CU = forwardRef<SVGSVGElement, CUProps>(function CU(props: CUProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="10" cy="10" r="10" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#d9d9d9" />
       </mask>
       <g mask={`url(#${uid}-CU-a)`}>
-        <path fill="#005EB8" d="M0 0h20v20H0z" />
+        <path fill="#005eb8" d="M0 0h20v20H0z" />
         <path
-          fill="#F5F7F8"
+          fill="#f5f7f8"
           d="M0 7.778v-3.89h20v3.89zm0 8.333v-3.889h20v3.89z"
         />
-        <path fill="#DD2033" d="M13.333 10 0 0v20l13.333-10Z" />
+        <path fill="#dd2033" d="M13.333 10 0 0v20z" />
         <path
-          fill="#F5F7F8"
-          d="m5.833 7.5-.745 1.686-1.755.224 1.295 1.266-.34 1.824 1.545-1.042L7.378 12.5l-.339-1.824L8.333 9.41l-1.755-.224L5.833 7.5Z"
+          fill="#f5f7f8"
+          d="m5.833 7.5-.745 1.686-1.755.224 1.295 1.266-.34 1.824 1.545-1.042L7.378 12.5l-.339-1.824L8.333 9.41l-1.755-.224z"
         />
       </g>
     </CountrySymbol>

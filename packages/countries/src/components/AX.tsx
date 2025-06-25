@@ -25,17 +25,17 @@ const AX = forwardRef<SVGSVGElement, AXProps>(function AX(props: AXProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="10" cy="10" r="10" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#d9d9d9" />
       </mask>
       <g mask={`url(#${uid}-AX-a)`}>
-        <path fill="#005EB8" d="M0 0h20v20H0z" />
+        <path fill="#005eb8" d="M0 0h20v20H0z" />
         <path
-          fill="#FBD381"
-          d="M5.667 20H4v-6.75H.111v-1.667h5.556V20ZM4 8.417H.111V6.75H4V0h1.667v8.417H4ZM8.833 6.75V0H10.5v6.75h9.611v1.667H8.833V6.75Zm1.667 4.833h9.611v1.667H10.5V20H8.833v-8.417H10.5Z"
+          fill="#fbd381"
+          d="M5.667 20H4v-6.75H.111v-1.667h5.556zM4 8.417H.111V6.75H4V0h1.667v8.417zM8.833 6.75V0H10.5v6.75h9.611v1.667H8.833zm1.667 4.833h9.611v1.667H10.5V20H8.833v-8.417z"
         />
         <path
-          fill="#DD2033"
-          d="M5.556 20h3.333v-8.333H20V8.333H8.889V0H5.556v8.333H0v3.334h5.556V20Z"
+          fill="#dd2033"
+          d="M5.556 20h3.333v-8.333H20V8.333H8.889V0H5.556v8.333H0v3.334h5.556z"
         />
       </g>
     </CountrySymbol>

@@ -25,14 +25,14 @@ const JM = forwardRef<SVGSVGElement, JMProps>(function JM(props: JMProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="10" cy="10" r="10" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#d9d9d9" />
       </mask>
       <g mask={`url(#${uid}-JM-a)`}>
-        <path fill="#31373D" d="M0 0h20v20H0z" />
-        <path fill="#009B77" d="m0 20 9.722-10L0 0h20L9.722 10 20 20H0Z" />
+        <path fill="#31373d" d="M0 0h20v20H0z" />
+        <path fill="#009b77" d="m0 20 9.722-10L0 0h20L9.722 10 20 20z" />
         <path
-          fill="#F1B434"
-          d="m16.089 18.053 1.964-1.964L11.964 10l6.09-6.089-1.965-1.964L10 8.036l-6.089-6.09-1.964 1.965L8.036 10l-6.09 6.089 1.965 1.964L10 11.964l6.089 6.09Z"
+          fill="#f1b434"
+          d="m16.089 18.053 1.964-1.964L11.964 10l6.09-6.089-1.965-1.964L10 8.036l-6.089-6.09-1.964 1.965L8.036 10l-6.09 6.089 1.965 1.964L10 11.964z"
         />
       </g>
     </CountrySymbol>

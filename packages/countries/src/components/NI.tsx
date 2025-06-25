@@ -25,15 +25,15 @@ const NI = forwardRef<SVGSVGElement, NIProps>(function NI(props: NIProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="10" cy="10" r="10" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#d9d9d9" />
       </mask>
       <g mask={`url(#${uid}-NI-a)`}>
-        <path fill="#005EB8" d="M0 0h20v20H0z" />
-        <path fill="#F5F7F8" d="M0 14.444V5.555h20v8.89z" />
+        <path fill="#005eb8" d="M0 0h20v20H0z" />
+        <path fill="#f5f7f8" d="M0 14.444V5.555h20v8.89z" />
         <path
-          fill="#F1B434"
+          fill="#f1b434"
           fillRule="evenodd"
-          d="M10 12.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Zm0 1.111a3.611 3.611 0 1 0 0-7.222 3.611 3.611 0 0 0 0 7.222Z"
+          d="M10 12.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5m0 1.111a3.611 3.611 0 1 0 0-7.222 3.611 3.611 0 0 0 0 7.222"
           clipRule="evenodd"
         />
         <mask
@@ -43,15 +43,12 @@ const NI = forwardRef<SVGSVGElement, NIProps>(function NI(props: NIProps, ref) {
           maskUnits="userSpaceOnUse"
           style={{ maskType: "alpha" }}
         >
-          <path
-            fill="#D9D9D9"
-            d="m9.917 8.333 1.804 3.125H8.112l1.805-3.125Z"
-          />
+          <path fill="#d9d9d9" d="m9.917 8.333 1.804 3.125H8.112z" />
         </mask>
         <g mask={`url(#${uid}-NI-b)`}>
-          <path fill="#86C5FA" d="M8.111 8.333H12v1.944H8.111z" />
-          <path fill="#005EB8" d="M8.111 10.833H12v2.222H8.111z" />
-          <path fill="#009B77" d="M8.111 10.278H12v.556H8.111z" />
+          <path fill="#86c5fa" d="M8.111 8.333H12v1.944H8.111z" />
+          <path fill="#005eb8" d="M8.111 10.833H12v2.222H8.111z" />
+          <path fill="#009b77" d="M8.111 10.278H12v.556H8.111z" />
         </g>
       </g>
     </CountrySymbol>

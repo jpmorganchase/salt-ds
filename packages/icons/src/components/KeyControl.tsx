@@ -18,7 +18,7 @@ export const KeyControlIcon = forwardRef<SVGSVGElement, KeyControlIconProps>(
       >
         <path
           fillRule="evenodd"
-          d="m6 1 3.354 3.354-.708.707L6 2.414 3.354 5.061l-.708-.707L6 1Z"
+          d="m6 1 3.354 3.354-.708.707L6 2.414 3.354 5.061l-.708-.707z"
           clipRule="evenodd"
         />
       </Icon>

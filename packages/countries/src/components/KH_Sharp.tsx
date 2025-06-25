@@ -29,14 +29,14 @@ const KH_Sharp = forwardRef<SVGSVGElement, KH_SharpProps>(function KH_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-KH-a)`}>
         <path fill="#004692" d="M0 0h29v20H0z" />
-        <path fill="#DD2033" d="M0 16V4h29v12z" />
+        <path fill="#dd2033" d="M0 16V4h29v12z" />
         <path
-          fill="#F5F7F8"
-          d="M7.653 10.4v2h-.806v.8h-.805v.8h-.806v.8h18.528V14h-.806v-.8h-.805v-.8h-.806v-2h-.403V7.6h-2.416v2.8h-1.611V5.2h-4.834v5.2h-1.61V7.6H8.055v2.8h-.403Z"
+          fill="#f5f7f8"
+          d="M7.653 10.4v2h-.806v.8h-.805v.8h-.806v.8h18.528V14h-.806v-.8h-.805v-.8h-.806v-2h-.403V7.6h-2.416v2.8h-1.611V5.2h-4.834v5.2h-1.61V7.6H8.055v2.8z"
         />
       </g>
     </CountrySymbol>

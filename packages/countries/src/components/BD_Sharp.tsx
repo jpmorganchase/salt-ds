@@ -29,11 +29,11 @@ const BD_Sharp = forwardRef<SVGSVGElement, BD_SharpProps>(function BD_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-BD-a)`}>
-        <path fill="#005B33" d="M29 20H0V0h29z" />
-        <ellipse cx="12.083" cy="10" fill="#DD2033" rx="6.444" ry="6.4" />
+        <path fill="#005b33" d="M29 20H0V0h29z" />
+        <ellipse cx="12.083" cy="10" fill="#dd2033" rx="6.444" ry="6.4" />
       </g>
     </CountrySymbol>
   );

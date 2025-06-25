@@ -29,14 +29,14 @@ const GF_Sharp = forwardRef<SVGSVGElement, GF_SharpProps>(function GF_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-GF-a)`}>
-        <path fill="#FBD381" d="M0 20h29V0H0z" />
-        <path fill="#009B77" d="M29-4.4v28.8L0-4.4h29Z" />
+        <path fill="#fbd381" d="M0 20h29V0H0z" />
+        <path fill="#009b77" d="M29-4.4v28.8L0-4.4z" />
         <path
-          fill="#DD2033"
-          d="m14.5 5.2-1.44 3.236-3.393.43 2.502 2.432-.656 3.502 2.987-2 2.987 2-.656-3.502 2.502-2.431-3.392-.43L14.5 5.2Z"
+          fill="#dd2033"
+          d="m14.5 5.2-1.44 3.236-3.393.43 2.502 2.432-.656 3.502 2.987-2 2.987 2-.656-3.502 2.502-2.431-3.392-.43z"
         />
       </g>
     </CountrySymbol>

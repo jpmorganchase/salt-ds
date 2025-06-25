@@ -16,8 +16,8 @@ export const MouseSolidIcon = forwardRef<SVGSVGElement, MouseSolidIconProps>(
         ref={ref}
         {...props}
       >
-        <path d="M5.5.031A4 4 0 0 0 2 4.001v4a4 4 0 1 0 8 0V4A4 4 0 0 0 6.5.03V2h1v4h-1v1h-1V6h-1V2h1V.03Z" />
-        <path d="M5.5 3h1v2h-1V3Z" />
+        <path d="M5.5.031A4 4 0 0 0 2 4.001v4a4 4 0 1 0 8 0V4A4 4 0 0 0 6.5.03V2h1v4h-1v1h-1V6h-1V2h1z" />
+        <path d="M5.5 3h1v2h-1z" />
       </Icon>
     );
   },

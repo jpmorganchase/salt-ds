@@ -25,15 +25,15 @@ const CL = forwardRef<SVGSVGElement, CLProps>(function CL(props: CLProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="10" cy="10" r="10" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#d9d9d9" />
       </mask>
       <g mask={`url(#${uid}-CL-a)`}>
-        <path fill="#DD2033" d="M-.111 20V10h20v10z" />
-        <path fill="#F5F7F8" d="M-.111 10V0h20v10z" />
+        <path fill="#dd2033" d="M-.111 20V10h20v10z" />
+        <path fill="#f5f7f8" d="M-.111 10V0h20v10z" />
         <path fill="#004692" d="M0 0h10v10H0z" />
         <path
-          fill="#F5F7F8"
-          d="M6.111 3.889 5.45 5.387l-1.56.2 1.15 1.125-.301 1.621 1.373-.926 1.374.926-.302-1.621 1.15-1.125-1.56-.2-.662-1.498Z"
+          fill="#f5f7f8"
+          d="M6.111 3.889 5.45 5.387l-1.56.2 1.15 1.125-.301 1.621 1.373-.926 1.374.926-.302-1.621 1.15-1.125-1.56-.2z"
         />
       </g>
     </CountrySymbol>

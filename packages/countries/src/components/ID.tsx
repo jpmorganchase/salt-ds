@@ -29,13 +29,13 @@ const ID = forwardRef<SVGSVGElement, IDProps>(function ID(props: IDProps, ref) {
           cx="10"
           cy="10"
           r="10"
-          fill="#D9D9D9"
+          fill="#d9d9d9"
           transform="rotate(180 10 10)"
         />
       </mask>
       <g mask={`url(#${uid}-ID-a)`}>
-        <path fill="#DD2033" d="M20 0v10H0V0z" />
-        <path fill="#F5F7F8" d="M20 10v10H0V10z" />
+        <path fill="#dd2033" d="M20 0v10H0V0z" />
+        <path fill="#f5f7f8" d="M20 10v10H0V10z" />
       </g>
     </CountrySymbol>
   );

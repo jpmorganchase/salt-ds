@@ -29,18 +29,18 @@ const LR_Sharp = forwardRef<SVGSVGElement, LR_SharpProps>(function LR_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-LR-a)`}>
-        <path fill="#F5F7F8" d="M0 23.6V-1.6h29v25.2z" />
+        <path fill="#f5f7f8" d="M0 23.6V-1.6h29v25.2z" />
         <path
-          fill="#DD2033"
+          fill="#dd2033"
           d="M14.5 5.6V2H29v3.6zm0 7.2V9.2H29v3.6zM0 20v-3.6h29V20z"
         />
         <path fill="#004692" d="M0 12.8V0h14.5v12.8z" />
         <path
-          fill="#F5F7F8"
-          d="m7.25 2.4-1.2 2.697-2.828.359L5.308 7.48 4.76 10.4l2.49-1.667L9.74 10.4l-.547-2.919 2.085-2.025-2.827-.36L7.25 2.4Z"
+          fill="#f5f7f8"
+          d="m7.25 2.4-1.2 2.697-2.828.359L5.308 7.48 4.76 10.4l2.49-1.667L9.74 10.4l-.547-2.919 2.085-2.025-2.827-.36z"
         />
       </g>
     </CountrySymbol>

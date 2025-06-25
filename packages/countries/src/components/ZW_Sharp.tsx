@@ -29,21 +29,21 @@ const ZW_Sharp = forwardRef<SVGSVGElement, ZW_SharpProps>(function ZW_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-ZW-a)`}>
         <path fill="#008259" d="M0 20V0h29v20z" />
-        <path fill="#F1B434" d="M3.19 17.6V2H29v15.6z" />
-        <path fill="#DD2033" d="M3.19 14.48V5.12H29v9.36z" />
-        <path fill="#31373D" d="M18.26 8H29v4H18.26L1.61 24.4V-4.4L18.26 8Z" />
-        <path fill="#F5F7F8" d="M18.528 10-.806-4.4v28.8L18.528 10Z" />
+        <path fill="#f1b434" d="M3.19 17.6V2H29v15.6z" />
+        <path fill="#dd2033" d="M3.19 14.48V5.12H29v9.36z" />
+        <path fill="#31373d" d="M18.26 8H29v4H18.26L1.61 24.4V-4.4z" />
+        <path fill="#f5f7f8" d="M18.528 10-.806-4.4v28.8z" />
         <path
-          fill="#DD2033"
-          d="m7.653 4.8-1.44 3.236-3.394.43 2.503 2.432-.656 3.502 2.987-2 2.987 2-.656-3.502 2.502-2.431-3.393-.431L7.653 4.8Z"
+          fill="#dd2033"
+          d="m7.653 4.8-1.44 3.236-3.394.43 2.503 2.432-.656 3.502 2.987-2 2.987 2-.656-3.502 2.502-2.431-3.393-.431z"
         />
         <path
-          fill="#FBD381"
-          d="m4.98 7.836.659 3.764.604 1.2h3.625l.806-1.2-3.65-4.66a1.157 1.157 0 0 0-1.897.114l-1.1.546.953.236Z"
+          fill="#fbd381"
+          d="m4.98 7.836.659 3.764.604 1.2h3.625l.806-1.2-3.65-4.66a1.157 1.157 0 0 0-1.897.114l-1.1.546z"
         />
       </g>
     </CountrySymbol>

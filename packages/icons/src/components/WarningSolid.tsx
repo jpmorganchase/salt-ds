@@ -20,7 +20,7 @@ export const WarningSolidIcon = forwardRef<
     >
       <path
         fillRule="evenodd"
-        d="m6 0 6 12H0L6 0ZM5 5h2v3H5V5Zm2 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"
+        d="m6 0 6 12H0zM5 5h2v3H5zm2 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0"
         clipRule="evenodd"
       />
     </Icon>

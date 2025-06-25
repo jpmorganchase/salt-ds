@@ -25,16 +25,16 @@ const TT = forwardRef<SVGSVGElement, TTProps>(function TT(props: TTProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="10" cy="10" r="10" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#d9d9d9" />
       </mask>
       <g mask={`url(#${uid}-TT-a)`}>
-        <path fill="#DD2033" d="M0 0h20v20H0z" />
+        <path fill="#dd2033" d="M0 0h20v20H0z" />
         <path
-          fill="#F5F7F8"
+          fill="#f5f7f8"
           d="M-.017 5.875 5.875-.017l14.142 14.142-5.892 5.892z"
         />
         <path
-          fill="#31373D"
+          fill="#31373d"
           d="M4.697 1.161 1.16 4.697l14.142 14.142 3.536-3.536z"
         />
       </g>

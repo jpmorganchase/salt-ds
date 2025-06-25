@@ -29,11 +29,11 @@ const NG_Sharp = forwardRef<SVGSVGElement, NG_SharpProps>(function NG_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-NG-a)`}>
-        <path fill="#005B33" d="M0 20h29V0H0z" />
-        <path fill="#F5F7F8" d="M9.667 20h9.667V0H9.667z" />
+        <path fill="#005b33" d="M0 20h29V0H0z" />
+        <path fill="#f5f7f8" d="M9.667 20h9.667V0H9.667z" />
       </g>
     </CountrySymbol>
   );

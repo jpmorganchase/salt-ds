@@ -29,11 +29,11 @@ const PW_Sharp = forwardRef<SVGSVGElement, PW_SharpProps>(function PW_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-PW-a)`}>
-        <path fill="#3CCBDA" d="M0 0h29v20H0z" />
-        <ellipse cx="12.083" cy="10" fill="#FBD381" rx="6.444" ry="6.4" />
+        <path fill="#3ccbda" d="M0 0h29v20H0z" />
+        <ellipse cx="12.083" cy="10" fill="#fbd381" rx="6.444" ry="6.4" />
       </g>
     </CountrySymbol>
   );

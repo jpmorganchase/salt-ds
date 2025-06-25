@@ -29,14 +29,14 @@ const MV_Sharp = forwardRef<SVGSVGElement, MV_SharpProps>(function MV_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-MV-a)`}>
-        <path fill="#DD2033" d="M0 0h29v20H0z" />
-        <path fill="#005B33" d="M4.028 3.6h20.944v12.8H4.028z" />
+        <path fill="#dd2033" d="M0 0h29v20H0z" />
+        <path fill="#005b33" d="M4.028 3.6h20.944v12.8H4.028z" />
         <path
-          fill="#F5F7F8"
-          d="M18.125 14.482a6.062 6.062 0 0 1-1.75-.59c-2.634-1.367-3.574-4.335-2.1-6.63.614-.956 1.55-1.644 2.621-2.023-2.071-.239-4.195.634-5.305 2.361-1.474 2.296-.6 5.23 1.955 6.556a5.865 5.865 0 0 0 4.579.326Z"
+          fill="#f5f7f8"
+          d="M18.125 14.482a6 6 0 0 1-1.75-.59c-2.634-1.367-3.574-4.335-2.1-6.63.614-.956 1.55-1.644 2.621-2.023-2.071-.239-4.195.634-5.305 2.361-1.474 2.296-.6 5.23 1.955 6.556a5.87 5.87 0 0 0 4.579.326"
         />
       </g>
     </CountrySymbol>

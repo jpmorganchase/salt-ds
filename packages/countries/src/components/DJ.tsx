@@ -25,15 +25,15 @@ const DJ = forwardRef<SVGSVGElement, DJProps>(function DJ(props: DJProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="10" cy="10" r="10" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#d9d9d9" />
       </mask>
       <g mask={`url(#${uid}-DJ-a)`}>
-        <path fill="#009B77" d="M0 20V10h20v10z" />
-        <path fill="#86C5FA" d="M0 10V0h20v10z" />
-        <path fill="#F5F7F8" d="M13.333 10 0 0v20l13.333-10Z" />
+        <path fill="#009b77" d="M0 20V10h20v10z" />
+        <path fill="#86c5fa" d="M0 10V0h20v10z" />
+        <path fill="#f5f7f8" d="M13.333 10 0 0v20z" />
         <path
-          fill="#DD2033"
-          d="m5.556 7.222-.828 1.873-1.95.25 1.438 1.406-.377 2.027 1.717-1.158 1.716 1.158-.377-2.027 1.438-1.407-1.95-.249-.827-1.873Z"
+          fill="#dd2033"
+          d="m5.556 7.222-.828 1.873-1.95.25 1.438 1.406-.377 2.027 1.717-1.158 1.716 1.158-.377-2.027 1.438-1.407-1.95-.249z"
         />
       </g>
     </CountrySymbol>

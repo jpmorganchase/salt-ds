@@ -29,22 +29,19 @@ const SV_Sharp = forwardRef<SVGSVGElement, SV_SharpProps>(function SV_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-SV-a)`}>
-        <path fill="#005EB8" d="M0 0h29v20H0z" />
-        <path fill="#F5F7F8" d="M0 16.4V3.6h29v12.8z" />
+        <path fill="#005eb8" d="M0 0h29v20H0z" />
+        <path fill="#f5f7f8" d="M0 16.4V3.6h29v12.8z" />
         <path
-          fill="#009B77"
+          fill="#009b77"
           fillRule="evenodd"
-          d="M8.056 5.098A7.13 7.13 0 0 0 7.25 8.4c0 3.976 3.246 7.2 7.25 7.2s7.25-3.224 7.25-7.2c0-1.19-.29-2.313-.806-3.302v.165l-2.095 1.04c.31.634.484 1.345.484 2.097 0 2.65-2.164 4.8-4.833 4.8-2.67 0-4.833-2.15-4.833-4.8 0-.752.174-1.463.484-2.097l-2.095-1.04v-.165Z"
+          d="M8.056 5.098A7.1 7.1 0 0 0 7.25 8.4c0 3.976 3.246 7.2 7.25 7.2s7.25-3.224 7.25-7.2c0-1.19-.29-2.313-.806-3.302v.165l-2.095 1.04c.31.634.484 1.345.484 2.097 0 2.65-2.164 4.8-4.833 4.8s-4.833-2.15-4.833-4.8c0-.752.174-1.463.484-2.097l-2.095-1.04z"
           clipRule="evenodd"
         />
-        <path fill="#FBD381" d="m14.5 5.2 3.625 5.6h-7.25L14.5 5.2Z" />
-        <path
-          fill="#009B77"
-          d="M10.875 10.8h7.25L16.312 8h-3.625l-1.812 2.8Z"
-        />
+        <path fill="#fbd381" d="m14.5 5.2 3.625 5.6h-7.25z" />
+        <path fill="#009b77" d="M10.875 10.8h7.25L16.313 8h-3.625z" />
       </g>
     </CountrySymbol>
   );

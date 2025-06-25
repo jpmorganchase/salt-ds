@@ -18,7 +18,7 @@ export const FilterSolidIcon = forwardRef<SVGSVGElement, FilterSolidIconProps>(
       >
         <path
           fillRule="evenodd"
-          d="M7.5 7 12 0H0l4.5 7v5h3V7Z"
+          d="M7.5 7 12 0H0l4.5 7v5h3z"
           clipRule="evenodd"
         />
       </Icon>

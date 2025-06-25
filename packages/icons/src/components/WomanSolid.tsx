@@ -16,7 +16,7 @@ export const WomanSolidIcon = forwardRef<SVGSVGElement, WomanSolidIconProps>(
         ref={ref}
         {...props}
       >
-        <path d="M7.5 1.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0ZM7.25 9v3h-2.5V9H3l1.658-4.56a1.428 1.428 0 0 1 2.684 0L9 9H7.25Z" />
+        <path d="M7.5 1.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0M7.25 9v3h-2.5V9H3l1.658-4.56a1.428 1.428 0 0 1 2.684 0L9 9z" />
       </Icon>
     );
   },

@@ -29,13 +29,13 @@ const BH_Sharp = forwardRef<SVGSVGElement, BH_SharpProps>(function BH_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-BH-a)`}>
-        <path fill="#F5F7F8" d="M0 0h29v20H0z" />
+        <path fill="#f5f7f8" d="M0 0h29v20H0z" />
         <path
-          fill="#DD2033"
-          d="M12.083-.8H29v21.6H12.083l-4.027-3.6 4.027-3.6L8.056 10l4.027-3.6-4.027-3.6 4.027-3.6Z"
+          fill="#dd2033"
+          d="M12.083-.8H29v21.6H12.083l-4.027-3.6 4.027-3.6L8.056 10l4.027-3.6-4.027-3.6z"
         />
       </g>
     </CountrySymbol>

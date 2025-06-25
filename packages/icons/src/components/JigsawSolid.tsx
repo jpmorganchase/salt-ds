@@ -18,7 +18,7 @@ export const JigsawSolidIcon = forwardRef<SVGSVGElement, JigsawSolidIconProps>(
       >
         <path
           fillRule="evenodd"
-          d="M1 6h1.5a.5.5 0 0 1 0 1H1v4h4V9.5a.5.5 0 0 1 1 0V11h4V8h.5a1.5 1.5 0 0 0 0-3H10V2H7v-.5a1.5 1.5 0 1 0-3 0V2H1v4Z"
+          d="M1 6h1.5a.5.5 0 0 1 0 1H1v4h4V9.5a.5.5 0 0 1 1 0V11h4V8h.5a1.5 1.5 0 0 0 0-3H10V2H7v-.5a1.5 1.5 0 1 0-3 0V2H1z"
           clipRule="evenodd"
         />
       </Icon>

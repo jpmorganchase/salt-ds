@@ -29,15 +29,15 @@ const LI_Sharp = forwardRef<SVGSVGElement, LI_SharpProps>(function LI_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-LI-a)`}>
-        <path fill="#DD2033" d="M0 20V10h29v10z" />
+        <path fill="#dd2033" d="M0 20V10h29v10z" />
         <path fill="#004692" d="M0 10V0h29v10z" />
         <path
-          fill="#F1B434"
+          fill="#f1b434"
           fillRule="evenodd"
-          d="M8.573 2h.979v.64h.978v.96h-.978v.897c.287-.163.622-.257.978-.257 1.08 0 1.956.86 1.956 1.92a1.9 1.9 0 0 1-.652 1.431V8.4H6.291v-.809a1.9 1.9 0 0 1-.652-1.431c0-1.06.876-1.92 1.956-1.92.357 0 .69.093.978.257V3.6h-.978v-.96h.978V2Zm.49 2.89-.01-.01h.019l-.01.01Zm-.01 2.55.01-.01.009.01h-.019Z"
+          d="M8.573 2h.979v.64h.978v.96h-.978v.897c.287-.163.622-.257.978-.257 1.08 0 1.956.86 1.956 1.92a1.9 1.9 0 0 1-.652 1.431V8.4H6.291v-.809a1.9 1.9 0 0 1-.652-1.431c0-1.06.876-1.92 1.956-1.92.357 0 .69.093.978.257V3.6h-.978v-.96h.978zm.49 2.89-.01-.01h.019zm-.01 2.55.01-.01.009.01z"
           clipRule="evenodd"
         />
       </g>

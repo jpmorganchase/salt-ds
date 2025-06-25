@@ -29,15 +29,15 @@ const IL_Sharp = forwardRef<SVGSVGElement, IL_SharpProps>(function IL_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-IL-a)`}>
-        <path fill="#F5F7F8" d="M0 20V0h29v20z" />
-        <path fill="#005EB8" d="M0 18.8V16h29v2.8zM0 4V1.2h29V4z" />
+        <path fill="#f5f7f8" d="M0 20V0h29v20z" />
+        <path fill="#005eb8" d="M0 18.8V16h29v2.8zM0 4V1.2h29V4z" />
         <path
-          fill="#005EB8"
+          fill="#005eb8"
           fillRule="evenodd"
-          d="m12.711 7.2 1.628-2.8 1.628 2.8h3.255L17.594 10l1.628 2.8h-3.255l-1.628 2.8-1.628-2.8H9.455l1.628-2.8-1.627-2.8h3.255Zm-.465.8h-1.395l.697 1.2.698-1.2Zm-.232 2 1.162-2h2.326l1.162 2-1.162 2h-2.326l-1.162-2Zm-.466.8-.697 1.2h1.395l-.698-1.2Zm2.093 2 .698 1.2.698-1.2H13.64Zm2.79-.8h1.396l-.698-1.2-.697 1.2Zm.698-2.8.698-1.2h-1.395l.698 1.2Zm-2.093-2h-1.395L14.34 6l.697 1.2Z"
+          d="m12.711 7.2 1.628-2.8 1.628 2.8h3.255L17.594 10l1.628 2.8h-3.255l-1.628 2.8-1.628-2.8H9.455l1.628-2.8-1.627-2.8zm-.465.8h-1.395l.697 1.2zm-.232 2 1.162-2h2.326l1.162 2-1.162 2h-2.326zm-.466.8-.697 1.2h1.395zm2.093 2 .698 1.2.698-1.2zm2.79-.8h1.396l-.698-1.2zm.698-2.8.698-1.2h-1.395zm-2.093-2h-1.395L14.34 6z"
           clipRule="evenodd"
         />
       </g>

@@ -25,13 +25,13 @@ const MU = forwardRef<SVGSVGElement, MUProps>(function MU(props: MUProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="10" cy="10" r="10" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#d9d9d9" />
       </mask>
       <g mask={`url(#${uid}-MU-a)`}>
-        <path fill="#009B77" d="M0 20v-5h20v5z" />
+        <path fill="#009b77" d="M0 20v-5h20v5z" />
         <path fill="#004692" d="M0 10V5h20v5z" />
-        <path fill="#DD2033" d="M0 5V0h20v5z" />
-        <path fill="#FBD381" d="M0 15v-5h20v5z" />
+        <path fill="#dd2033" d="M0 5V0h20v5z" />
+        <path fill="#fbd381" d="M0 15v-5h20v5z" />
       </g>
     </CountrySymbol>
   );

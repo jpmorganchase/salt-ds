@@ -25,16 +25,16 @@ const JO = forwardRef<SVGSVGElement, JOProps>(function JO(props: JOProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="10" cy="10" r="10" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#d9d9d9" />
       </mask>
       <g mask={`url(#${uid}-JO-a)`}>
         <path fill="#008259" d="M0 20v-7h20v7z" />
-        <path fill="#F5F7F8" d="M0 13V7h20v6z" />
-        <path fill="#31373D" d="M0 7V0h20v7z" />
-        <path fill="#DD2033" d="M13 10 0 0v20l13-10Z" />
+        <path fill="#f5f7f8" d="M0 13V7h20v6z" />
+        <path fill="#31373d" d="M0 7V0h20v7z" />
+        <path fill="#dd2033" d="M13 10 0 0v20z" />
         <path
-          fill="#F5F7F8"
-          d="m5 7 .738 1.584 1.668-.396-.747 1.58L8 10.858l-1.67.387L6.335 13 5 11.902 3.665 13l.005-1.755L2 10.859l1.34-1.091-.746-1.58 1.668.396L5 7Z"
+          fill="#f5f7f8"
+          d="m5 7 .738 1.584 1.668-.396-.747 1.58L8 10.858l-1.67.387L6.335 13 5 11.902 3.665 13l.005-1.755L2 10.859l1.34-1.091-.746-1.58 1.668.396z"
         />
       </g>
     </CountrySymbol>

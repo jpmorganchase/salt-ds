@@ -25,7 +25,7 @@ const AI = forwardRef<SVGSVGElement, AIProps>(function AI(props: AIProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="10" cy="10" r="10" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#d9d9d9" />
       </mask>
       <g mask={`url(#${uid}-AI-a)`}>
         <path fill="#004692" d="M0 0h20v20H0z" />
@@ -36,29 +36,29 @@ const AI = forwardRef<SVGSVGElement, AIProps>(function AI(props: AIProps, ref) {
           maskUnits="userSpaceOnUse"
           style={{ maskType: "alpha" }}
         >
-          <path fill="#002F6C" d="M0 10C0 4.477 4.477 0 10 0v10H0Z" />
+          <path fill="#002f6c" d="M0 10C0 4.477 4.477 0 10 0v10z" />
         </mask>
         <g mask={`url(#${uid}-AI-b)`}>
           <path
-            fill="#F5F7F8"
-            d="m3.478.87-.589.59 8.202 8.201.59-.589L3.477.871ZM1.907 2.442l-.982.982 8.202 8.202.982-.982-8.202-8.202Z"
+            fill="#f5f7f8"
+            d="m3.478.87-.589.59 8.202 8.201.59-.589zM1.907 2.442l-.982.982 8.202 8.202.982-.982z"
           />
           <path
-            fill="#DD2033"
-            d="m1.907 2.442.982-.982 8.202 8.201-.982.982-8.202-8.201Z"
+            fill="#dd2033"
+            d="m1.907 2.442.982-.982 8.202 8.201-.982.982z"
           />
-          <path fill="#F5F7F8" d="M10 3.333v1.39H4.722V10H3.333V3.333H10Z" />
-          <path fill="#F5F7F8" d="M10-.556v1.39H1.389V10H0V-.556h10Z" />
+          <path fill="#f5f7f8" d="M10 3.333v1.39H4.722V10H3.333V3.333z" />
+          <path fill="#f5f7f8" d="M10-.556v1.39H1.389V10H0V-.556z" />
           <path
-            fill="#DD2033"
+            fill="#dd2033"
             fillRule="evenodd"
-            d="M.833 10h2.5V3.333H10v-2.5H.833V10Z"
+            d="M.833 10h2.5V3.333H10v-2.5H.833z"
             clipRule="evenodd"
           />
         </g>
         <path
-          fill="#F5F7F8"
-          d="M11.444 9.722h5.834v2.088a4.63 4.63 0 0 1-2.917 4.301 4.63 4.63 0 0 1-2.917-4.301V9.722Z"
+          fill="#f5f7f8"
+          d="M11.445 9.722h5.833v2.088a4.63 4.63 0 0 1-2.917 4.301 4.63 4.63 0 0 1-2.917-4.301z"
         />
         <mask
           id={`${uid}-AI-c`}
@@ -67,17 +67,17 @@ const AI = forwardRef<SVGSVGElement, AIProps>(function AI(props: AIProps, ref) {
           maskUnits="userSpaceOnUse"
           style={{ maskType: "alpha" }}
         >
-          <path fill="#D9D9D9" d="M11.444 13.889h6.111v2.222h-6.111z" />
+          <path fill="#d9d9d9" d="M11.444 13.889h6.111v2.222h-6.111z" />
         </mask>
         <g mask={`url(#${uid}-AI-c)`}>
           <path
-            fill="#3CCBDA"
-            d="M11.444 9.722h5.834v2.088a4.63 4.63 0 0 1-2.917 4.301 4.63 4.63 0 0 1-2.917-4.301V9.722Z"
+            fill="#3ccbda"
+            d="M11.445 9.722h5.833v2.088a4.63 4.63 0 0 1-2.917 4.301 4.63 4.63 0 0 1-2.917-4.301z"
           />
         </g>
-        <circle cx="13.528" cy="12.083" r=".694" fill="#FF9E42" />
-        <circle cx="14.917" cy="10.972" r=".694" fill="#FF9E42" />
-        <circle cx="15.472" cy="12.639" r=".694" fill="#FF9E42" />
+        <circle cx="13.528" cy="12.083" r=".694" fill="#ff9e42" />
+        <circle cx="14.917" cy="10.972" r=".694" fill="#ff9e42" />
+        <circle cx="15.472" cy="12.639" r=".694" fill="#ff9e42" />
       </g>
     </CountrySymbol>
   );
