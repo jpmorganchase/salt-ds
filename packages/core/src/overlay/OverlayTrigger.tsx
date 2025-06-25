@@ -1,4 +1,10 @@
-import { type ReactNode, type Ref, cloneElement, isValidElement } from "react";
+import {
+  type ReactNode,
+  type Ref,
+  cloneElement,
+  forwardRef,
+  isValidElement,
+} from "react";
 import { getRefFromChildren, mergeProps, useForkRef } from "../utils";
 import { useOverlayContext } from "./OverlayContext";
 
@@ -6,23 +12,29 @@ export interface OverlayTriggerProps {
   children?: ReactNode;
 }
 
-export function OverlayTrigger(props: OverlayTriggerProps) {
-  const { children } = props;
+export const OverlayTrigger = forwardRef<HTMLElement, OverlayTriggerProps>(
+  function OverlayTrigger(props, ref) {
+    const { children } = props;
 
-  const { reference, getReferenceProps } = useOverlayContext();
+    const { reference, getReferenceProps } = useOverlayContext();
 
-  const triggerRef = useForkRef(getRefFromChildren(children), reference);
+    const handleFloatingRef = useForkRef(
+      getRefFromChildren(children),
+      reference,
+    );
+    const handleRef = useForkRef(handleFloatingRef, ref);
 
-  if (!children || !isValidElement<{ ref?: Ref<unknown> }>(children)) {
-    return <>{children}</>;
-  }
+    if (!children || !isValidElement<{ ref?: Ref<unknown> }>(children)) {
+      return <>{children}</>;
+    }
 
-  return (
-    <>
-      {cloneElement(children, {
-        ...mergeProps(getReferenceProps(), children.props),
-        ref: triggerRef,
-      })}
-    </>
-  );
-}
+    return (
+      <>
+        {cloneElement(children, {
+          ...mergeProps(getReferenceProps(), children.props),
+          ref: handleRef,
+        })}
+      </>
+    );
+  },
+);

@@ -8,6 +8,7 @@ import {
   MenuTrigger,
   StackLayout,
   Text,
+  Tooltip,
 } from "@salt-ds/core";
 
 import type { VirtualElement } from "@floating-ui/react";
@@ -380,6 +381,50 @@ export const Descriptions: StoryFn<typeof Menu> = (args) => {
             </StackLayout>
           </MenuItem>
         ))}
+      </MenuPanel>
+    </Menu>
+  );
+};
+
+export const WithTooltip: StoryFn<typeof Menu> = (args) => {
+  return (
+    <Menu {...args}>
+      <Tooltip content="Open Menu">
+        <MenuTrigger>
+          <Button appearance="transparent" aria-label="Open Menu">
+            <MicroMenuIcon aria-hidden />
+          </Button>
+        </MenuTrigger>
+      </Tooltip>
+      <MenuPanel>
+        <MenuItem
+          onClick={() => {
+            alert("Copy");
+          }}
+        >
+          Copy
+        </MenuItem>
+        <MenuItem
+          onClick={() => {
+            alert("Paste");
+          }}
+        >
+          Paste
+        </MenuItem>
+        <MenuItem
+          onClick={() => {
+            alert("Export");
+          }}
+        >
+          Export
+        </MenuItem>
+        <MenuItem
+          onClick={() => {
+            alert("Settings");
+          }}
+        >
+          Settings
+        </MenuItem>
       </MenuPanel>
     </Menu>
   );
