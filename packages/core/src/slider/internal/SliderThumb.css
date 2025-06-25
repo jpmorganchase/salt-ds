@@ -27,7 +27,7 @@
 
 .saltSliderThumb:active,
 .saltSliderThumb-dragging {
-  cursor: var(--salt-cursor-grabbing);
+  cursor: var(--salt-cursor-grab-active);
 }
 
 .saltSliderThumb-input {

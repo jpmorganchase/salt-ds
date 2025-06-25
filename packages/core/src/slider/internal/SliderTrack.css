@@ -110,7 +110,7 @@
 
 .saltSliderTrack-dragging,
 .saltSliderTrack-dragging .saltSliderTrack-wrapper {
-  cursor: var(--salt-cursor-grabbing);
+  cursor: var(--salt-cursor-grab-active);
 }
 
 .saltSliderTrack-disabled {

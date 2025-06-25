@@ -4,7 +4,7 @@
   --salt-cursor-drag-ew: ew-resize;
   --salt-cursor-drag-ns: ns-resize;
   --salt-cursor-grab: grab;
-  --salt-cursor-grabbing: grabbing;
+  --salt-cursor-grab-active: grabbing;
   --salt-cursor-hover: pointer;
   --salt-cursor-pending: progress;
   --salt-cursor-readonly: text;
