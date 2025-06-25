@@ -38,8 +38,8 @@ import {
 } from "./internal/utils";
 
 import numberInputCss from "./NumberInput.css";
-import { useNumberInput } from "./useNumberInput";
 import useCaret from "./internal/useCaret";
+import { useNumberInput } from "./useNumberInput";
 
 const withBaseName = makePrefixer("saltNumberInput");
 
