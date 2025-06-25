@@ -43,7 +43,7 @@ export const CarouselAutoplayIndicatorSVG = forwardRef<
   ) => {
     return (
       <svg
-        className={clsx(className, withBaseName())}
+        className={clsx(withBaseName(), className)}
         width={size}
         height={size}
         aria-hidden
