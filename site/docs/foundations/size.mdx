@@ -18,8 +18,8 @@ Consistent use of size tokens ensures uniformity in component dimensions, enhanc
 | `--salt-size-icon`       | Height and width | 12                     | 12                       | 14                    | 16                      |
 | `--salt-size-adornment`  | Height and width | 6                      | 8                        | 10                    | 12                      |
 | `--salt-size-bar`        | Height or width  | 2                      | 4                        | 6                     | 8                       |
+| `--salt-size-bar-strong` | Height or width  | 4                      | 8                        | 12                    | 16                      |
 | `--salt-size-indicator`  | Height or width  | 1                      | 2                        | 3                     | 4                       |
-| `--salt-size-border`     | Height or width  | 1                      | 1                        | 1                     | 1                       |
 
 ## Base
 
@@ -35,9 +35,9 @@ Consistent use of size tokens ensures uniformity in component dimensions, enhanc
 
 ### Nesting base
 
-Using size-base, in conjunction with a [spacing token](./spacing) above and below, creates a consistent height for components that can nest a `--salt-size-base` component within them. This provides further standardized heights across the design system.
+Using `--salt-size-base`, in conjunction with a [spacing token](./spacing) above and below, creates a consistent height for components that can nest a `--salt-size-base` component within them. This provides further standardized heights across the design system.
 
-The following example shows how components can use `--salt-size-base` and `--salt-spacing-50` (top and bottom) to define the height of a component or stackable element, such as a Data Grid row. The height allows a size-base component to be contained within it, but it is not dependent on the component to force the height.
+The following example shows how components can use `--salt-size-base` and `--salt-spacing-50` (top and bottom) to define the height of a component or stackable element, such as a Data Grid row. The height allows a `--salt-size-base` component to be contained within it, but it's not dependent on the component to force the height.
 
 <ImageSwitcher
   images={[
@@ -63,7 +63,7 @@ The following example shows how components can use `--salt-size-base` and `--sal
 
 `--salt-size-icon` controls the size of all icons throughout the design system. Icons are designed to be displayed no smaller than 12px x 12px; therefore this is set as a minimum size within the token's values.
 
-You can find out more about icons in the [iconography foundation](./iconography).
+You can find out more in the [iconography foundation](./iconography).
 
 <ImageSwitcher
   images={[
@@ -99,7 +99,7 @@ The purpose of `--salt-size-adornment` is to set the size of a discrete element 
 
 ### Bar-strong
 
-`--salt-size-bar-strong` is used to control the thickness of an accent bar, when it is positioned on top of a track, such as in [Progress](../components/progress).
+`--salt-size-bar-strong` is used to control the thickness of an accent bar, when it's positioned on top of a track, such as in [Progress](../components/progress).
 
 <ImageSwitcher
   images={[
@@ -111,7 +111,7 @@ The purpose of `--salt-size-adornment` is to set the size of a discrete element 
 
 ## Indicator
 
-`--salt-size-indicator` defines the thickness of indicators, such as those used on tabs or navigation items.
+`--salt-size-indicator` defines the thickness of indicators, such as those used in [Tabs](/salt/components/tabs) or [NavigationItem](/salt/components/navigation-item).
 
 <ImageSwitcher
   images={[
@@ -139,6 +139,6 @@ Fixed-size tokens offer dimensions that remain constant across all densities. Fo
 
 ### Borders
 
-Unlike other attributes, borders are a fixed size regardless of the density. To set a consistent border size across all densities `--salt-size-fixed-100` is used. It is used throughout the design system to control the size of all borders and separators.
+Unlike other attributes, borders are a fixed size regardless of the density. To set consistent border sizes across all densities `--salt-size-fixed-100` and `--salt-size-fixed-200` are used. These values are used throughout the design system to control the size of all borders and separators.
 
 :fragment{src="./fragments/feedback.mdx"}
