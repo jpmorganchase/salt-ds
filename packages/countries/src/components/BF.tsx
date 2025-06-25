@@ -14,7 +14,7 @@ const BF = forwardRef<SVGSVGElement, BFProps>(function BF(props: BFProps, ref) {
     <CountrySymbol
       data-testid="BF"
       aria-label="Burkina Faso"
-      viewBox="0 0 72 72"
+      viewBox="0 0 20 20"
       ref={ref}
       {...props}
     >
@@ -25,14 +25,14 @@ const BF = forwardRef<SVGSVGElement, BFProps>(function BF(props: BFProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#D9D9D9" />
       </mask>
       <g mask={`url(#${uid}-BF-a)`}>
-        <path fill="#008259" d="M0 72V36h72v36z" />
-        <path fill="#DD2033" d="M0 36V0h72v36z" />
+        <path fill="#008259" d="M0 20V10h20v10z" />
+        <path fill="#DD2033" d="M0 10V0h20v10z" />
         <path
           fill="#FBD381"
-          d="m36 19.286-4.982 11.269-11.732 1.5 8.653 8.464-2.27 12.195L36 45.75l10.33 6.964-2.27-12.195 8.654-8.465-11.732-1.5L36 19.287Z"
+          d="m10 5.357-1.384 3.13-3.259.417 2.404 2.351-.63 3.388L10 12.708l2.87 1.935-.63-3.388 2.403-2.351-3.26-.417L10 5.357Z"
         />
       </g>
     </CountrySymbol>

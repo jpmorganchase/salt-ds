@@ -14,7 +14,7 @@ const TO = forwardRef<SVGSVGElement, TOProps>(function TO(props: TOProps, ref) {
     <CountrySymbol
       data-testid="TO"
       aria-label="Tonga"
-      viewBox="0 0 72 72"
+      viewBox="0 0 20 20"
       ref={ref}
       {...props}
     >
@@ -25,14 +25,14 @@ const TO = forwardRef<SVGSVGElement, TOProps>(function TO(props: TOProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#D9D9D9" />
       </mask>
       <g mask={`url(#${uid}-TO-a)`}>
-        <path fill="#DD2033" d="M0 72V0h72v72z" />
+        <path fill="#DD2033" d="M0 20V0h20v20z" />
         <path
           fill="#F5F7F8"
           fillRule="evenodd"
-          d="M-.2 0v44h44V0h-44ZM21 14h6v7h7v6h-7v7h-6v-7h-7v-6h7v-7Z"
+          d="M-.056 0v12.222h12.223V0H-.056Zm5.89 3.889H7.5v1.944h1.944V7.5H7.5v1.944H5.833V7.5H3.89V5.833h1.944V3.89Z"
           clipRule="evenodd"
         />
       </g>

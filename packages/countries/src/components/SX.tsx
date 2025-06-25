@@ -14,7 +14,7 @@ const SX = forwardRef<SVGSVGElement, SXProps>(function SX(props: SXProps, ref) {
     <CountrySymbol
       data-testid="SX"
       aria-label="Sint Maarten (Dutch part)"
-      viewBox="0 0 72 72"
+      viewBox="0 0 20 20"
       ref={ref}
       {...props}
     >
@@ -25,27 +25,30 @@ const SX = forwardRef<SVGSVGElement, SXProps>(function SX(props: SXProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#D9D9D9" />
       </mask>
       <g mask={`url(#${uid}-SX-a)`}>
-        <path fill="#004692" d="M0 72V36h72v36z" />
-        <path fill="#DD2033" d="M0 36V0h72v36z" />
-        <path fill="#F5F7F8" d="M48 36 0 0v72l48-36Z" />
+        <path fill="#004692" d="M0 20V10h20v10z" />
+        <path fill="#DD2033" d="M0 10V0h20v10z" />
+        <path fill="#F5F7F8" d="M13.333 10 0 0v20l13.333-10Z" />
         <path
           fill="#FBD381"
-          d="M17.5 30a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9ZM7 48v-5h21v5h-3v3H10v-3H7Z"
+          d="M4.861 8.333a1.25 1.25 0 1 0 0-2.5 1.25 1.25 0 0 0 0 2.5Zm-2.917 5v-1.389h5.834v1.39h-.834v.833H2.778v-.834h-.834Z"
         />
         <path
           fill="#86C5FA"
-          d="M7 25h21v8.743a14.857 14.857 0 0 1-9.36 13.803L17.5 48l-1.14-.454A14.857 14.857 0 0 1 7 33.743V25Z"
+          d="M1.944 6.944h5.834v2.429c0 1.69-1.03 3.209-2.6 3.834l-.317.126-.317-.126a4.127 4.127 0 0 1-2.6-3.834V6.944Z"
         />
         <path
           fill="#DD2033"
           fillRule="evenodd"
-          d="M25 28H10v5.743c0 4.855 2.96 9.22 7.47 11.016l.03.012.03-.012A11.857 11.857 0 0 0 25 33.743V28Zm-7.5 20-1.14-.454A14.857 14.857 0 0 1 7 33.743V25h21v8.743a14.857 14.857 0 0 1-9.36 13.803L17.5 48Z"
+          d="M6.944 7.778H2.778v1.595c0 1.349.822 2.56 2.075 3.06l.008.003.008-.003a3.294 3.294 0 0 0 2.075-3.06V7.778Zm-2.083 5.555-.317-.126a4.127 4.127 0 0 1-2.6-3.834V6.944h5.834v2.429c0 1.69-1.03 3.209-2.6 3.834l-.317.126Z"
           clipRule="evenodd"
         />
-        <path fill="#F5F7F8" d="m16 31 1.5-1.5L19 31v1l3 3v5h-9v-5l3-3v-1Z" />
+        <path
+          fill="#F5F7F8"
+          d="m4.444 8.611.417-.417.417.417v.278l.833.833v1.389h-2.5V9.722l.833-.833V8.61Z"
+        />
       </g>
     </CountrySymbol>
   );

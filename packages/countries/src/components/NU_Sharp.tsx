@@ -17,7 +17,7 @@ const NU_Sharp = forwardRef<SVGSVGElement, NU_SharpProps>(function NU_Sharp(
     <CountrySymbol
       data-testid="NU_Sharp"
       aria-label="Niue"
-      viewBox="0 0 72 50"
+      viewBox="0 0 29 20"
       ref={ref}
       sharp
       {...props}
@@ -29,10 +29,10 @@ const NU_Sharp = forwardRef<SVGSVGElement, NU_SharpProps>(function NU_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-NU-a)`}>
-        <path fill="#F1B434" d="M0 0h72v50H0z" />
+        <path fill="#F1B434" d="M0 0h29v20H0z" />
         <mask
           id={`${uid}-NU-b`}
           x="0"
@@ -40,20 +40,20 @@ const NU_Sharp = forwardRef<SVGSVGElement, NU_SharpProps>(function NU_Sharp(
           maskUnits="userSpaceOnUse"
           style={{ maskType: "alpha" }}
         >
-          <path fill="#002F6C" d="M0 30V0h36v30H0Z" />
+          <path fill="#002F6C" d="M0 12V0h14.5v12H0Z" />
         </mask>
         <g mask={`url(#${uid}-NU-b)`}>
-          <path fill="#004692" d="M0 0h36v36H0z" />
+          <path fill="#004692" d="M0 0h14.5v14.4H0z" />
           <path
             fill="#F5F7F8"
-            d="m12.79 1.005-2.12 2.12 26.197 26.198 2.12-2.121L12.792 1.005ZM7.134 6.661l-3.536 3.536 26.197 26.197 3.536-3.535L7.134 6.66Z"
+            d="m5.152.402-.855.848L14.85 11.73l.854-.85L5.152.403ZM2.873 2.665 1.45 4.079l10.552 10.479 1.424-1.415L2.873 2.665Z"
           />
           <path
             fill="#DD2033"
-            d="m7.134 6.661 3.535-3.535 26.198 26.197-3.536 3.535L7.134 6.662Z"
+            d="M2.873 2.665 4.297 1.25 14.85 11.73l-1.424 1.413L2.873 2.665Z"
           />
-          <path fill="#F5F7F8" d="M6 35h4.002V9H36V5H6v30Z" />
-          <path fill="#DD2033" d="M0 35h6.002V5h30V0H0v35Z" />
+          <path fill="#F5F7F8" d="M2.417 14h1.611V3.6H14.5V2H2.417v12Z" />
+          <path fill="#DD2033" d="M0 14h2.417V2h12.084V0H0v14Z" />
         </g>
       </g>
     </CountrySymbol>

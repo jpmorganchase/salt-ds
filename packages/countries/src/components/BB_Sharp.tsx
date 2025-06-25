@@ -17,7 +17,7 @@ const BB_Sharp = forwardRef<SVGSVGElement, BB_SharpProps>(function BB_Sharp(
     <CountrySymbol
       data-testid="BB_Sharp"
       aria-label="Barbados"
-      viewBox="0 0 72 50"
+      viewBox="0 0 29 20"
       ref={ref}
       sharp
       {...props}
@@ -29,14 +29,14 @@ const BB_Sharp = forwardRef<SVGSVGElement, BB_SharpProps>(function BB_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-BB-a)`}>
-        <path fill="#004692" d="M72 50H0V0h72z" />
-        <path fill="#F1B434" d="M52 50H20V0h32z" />
+        <path fill="#004692" d="M29 20H0V0h29z" />
+        <path fill="#F1B434" d="M20.945 20H8.055V0h12.89z" />
         <path
           fill="#31373D"
-          d="m47.346 12.364-2.252-1.129c-.136.273-3.075 6.267-3.556 15.424h-3.422V12.364L35.599 9l-2.518 3.364v14.295H29.66c-.48-9.157-3.42-15.151-3.556-15.423L21.6 13.492c.031.062 3.09 6.303 3.09 15.69v2.523h8.391V42h5.035V31.705h8.39v-2.523c0-4.853.839-8.855 1.542-11.358.766-2.729 1.544-4.322 1.552-4.338l-2.254-1.122Z"
+          d="m19.07 4.945-.907-.45c-.055.108-1.239 2.506-1.432 6.169h-1.379V4.945L14.338 3.6l-1.014 1.345v5.719h-1.378c-.194-3.663-1.378-6.06-1.432-6.17L8.7 5.397c.013.025 1.245 2.521 1.245 6.276v1.009h3.38V16.8h2.027v-4.118h3.38v-1.01c0-1.94.337-3.541.62-4.542.31-1.092.623-1.73.626-1.736l-.908-.449Z"
         />
       </g>
     </CountrySymbol>

@@ -14,7 +14,7 @@ const GF = forwardRef<SVGSVGElement, GFProps>(function GF(props: GFProps, ref) {
     <CountrySymbol
       data-testid="GF"
       aria-label="French Guiana"
-      viewBox="0 0 72 72"
+      viewBox="0 0 20 20"
       ref={ref}
       {...props}
     >
@@ -25,14 +25,14 @@ const GF = forwardRef<SVGSVGElement, GFProps>(function GF(props: GFProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#D9D9D9" />
       </mask>
       <g mask={`url(#${uid}-GF-a)`}>
-        <path fill="#FBD381" d="M0 72h72V0H0z" />
-        <path fill="#009B77" d="M72 0v72L0 0h72Z" />
+        <path fill="#FBD381" d="M0 20h20V0H0z" />
+        <path fill="#009B77" d="M20 0v20L0 0h20Z" />
         <path
           fill="#DD2033"
-          d="m36 24-3.577 8.09L24 33.168l6.213 6.077L28.583 48 36 43l7.416 5-1.629-8.756L48 33.167l-8.423-1.076L36 24Z"
+          d="m10 6.667-.994 2.247-2.34.3L8.393 10.9l-.452 2.432L10 11.944l2.06 1.39-.452-2.433 1.725-1.688-2.34-.299L10 6.667Z"
         />
       </g>
     </CountrySymbol>

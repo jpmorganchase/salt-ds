@@ -17,7 +17,7 @@ const PN_Sharp = forwardRef<SVGSVGElement, PN_SharpProps>(function PN_Sharp(
     <CountrySymbol
       data-testid="PN_Sharp"
       aria-label="Pitcairn"
-      viewBox="0 0 72 50"
+      viewBox="0 0 29 20"
       ref={ref}
       sharp
       {...props}
@@ -29,10 +29,10 @@ const PN_Sharp = forwardRef<SVGSVGElement, PN_SharpProps>(function PN_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-PN-a)`}>
-        <path fill="#004692" d="M0 0h72v50H0z" />
+        <path fill="#004692" d="M0 0h29v20H0z" />
         <mask
           id={`${uid}-PN-b`}
           x="0"
@@ -40,42 +40,48 @@ const PN_Sharp = forwardRef<SVGSVGElement, PN_SharpProps>(function PN_Sharp(
           maskUnits="userSpaceOnUse"
           style={{ maskType: "alpha" }}
         >
-          <path fill="#002F6C" d="M0 30V0h36v30H0Z" />
+          <path fill="#002F6C" d="M0 12V0h14.5v12H0Z" />
         </mask>
         <g mask={`url(#${uid}-PN-b)`}>
-          <path fill="#004692" d="M0 0h36v36H0z" />
+          <path fill="#004692" d="M0 0h14.5v14.4H0z" />
           <path
             fill="#F5F7F8"
-            d="m12.79 1.005-2.12 2.12 26.197 26.198 2.12-2.121L12.792 1.005ZM7.134 6.661l-3.536 3.536 26.197 26.197 3.536-3.535L7.134 6.66Z"
+            d="m5.152.402-.855.848L14.85 11.73l.854-.85L5.152.403ZM2.873 2.665 1.45 4.079l10.552 10.479 1.424-1.415L2.873 2.665Z"
           />
           <path
             fill="#DD2033"
-            d="m7.134 6.661 3.535-3.535 26.198 26.197-3.536 3.535L7.134 6.662Z"
+            d="M2.873 2.665 4.297 1.25 14.85 11.73l-1.424 1.413L2.873 2.665Z"
           />
-          <path fill="#F5F7F8" d="M6 35h4.002V9H36V5H6v30Z" />
-          <path fill="#DD2033" d="M0 35h6.002V5h30V0H0v35Z" />
+          <path fill="#F5F7F8" d="M2.417 14h1.611V3.6H14.5V2H2.417v12Z" />
+          <path fill="#DD2033" d="M0 14h2.417V2h12.084V0H0v14Z" />
         </g>
-        <path fill="#C1C3C3" d="M50 12.033h9v8.037h-9z" />
-        <path fill="#008259" d="M51 5h2.5v3.014H57v4.019h-6V5Z" />
+        <path fill="#C1C3C3" d="M20.139 4.813h3.625v3.215h-3.625z" />
+        <path fill="#008259" d="M20.542 2h1.007v1.206h1.41v1.607h-2.417V2Z" />
         <path
           fill="#86C5FA"
-          d="M44 19.893h21v8.848a14.857 14.857 0 0 1-9.338 13.794L54.5 43l-1.162-.465A14.857 14.857 0 0 1 44 28.741v-8.848Z"
+          d="M17.722 7.957h8.459v3.012a6.705 6.705 0 0 1-4.23 6.231 6.705 6.705 0 0 1-4.229-6.231V7.957Z"
         />
         <mask
           id={`${uid}-PN-c`}
-          x="44"
-          y="19"
+          x="17"
+          y="7"
           maskUnits="userSpaceOnUse"
           style={{ maskType: "alpha" }}
         >
           <path
             fill="#86C5FA"
-            d="M44 19.893h21v8.848a14.857 14.857 0 0 1-9.338 13.794L54.5 43l-1.162-.465A14.857 14.857 0 0 1 44 28.741v-8.848Z"
+            d="M17.722 7.957h8.459v3.012a6.705 6.705 0 0 1-4.23 6.231 6.705 6.705 0 0 1-4.229-6.231V7.957Z"
           />
         </mask>
         <g mask={`url(#${uid}-PN-c)`}>
-          <path fill="#FBD381" d="M54.5 19.893 65 43H44l10.5-23.107Z" />
-          <path fill="#008259" d="M54.5 25.093 65 48.201H44l10.5-23.108Z" />
+          <path
+            fill="#FBD381"
+            d="m21.951 7.957 4.23 9.243h-8.459l4.23-9.243Z"
+          />
+          <path
+            fill="#008259"
+            d="m21.951 10.037 4.23 9.243h-8.459l4.23-9.243Z"
+          />
         </g>
       </g>
     </CountrySymbol>

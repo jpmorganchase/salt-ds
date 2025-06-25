@@ -14,7 +14,7 @@ const CR = forwardRef<SVGSVGElement, CRProps>(function CR(props: CRProps, ref) {
     <CountrySymbol
       data-testid="CR"
       aria-label="Costa Rica"
-      viewBox="0 0 72 72"
+      viewBox="0 0 20 20"
       ref={ref}
       {...props}
     >
@@ -25,12 +25,12 @@ const CR = forwardRef<SVGSVGElement, CRProps>(function CR(props: CRProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#D9D9D9" />
       </mask>
       <g mask={`url(#${uid}-CR-a)`}>
-        <path fill="#004692" d="M0 0h72v72H0z" />
-        <path fill="#F5F7F8" d="M0 58V14h72v44z" />
-        <path fill="#DD2033" d="M0 44V28h72v16z" />
+        <path fill="#004692" d="M0 0h20v20H0z" />
+        <path fill="#F5F7F8" d="M0 16.111V3.89h20v12.222z" />
+        <path fill="#DD2033" d="M0 12.222V7.778h20v4.444z" />
       </g>
     </CountrySymbol>
   );

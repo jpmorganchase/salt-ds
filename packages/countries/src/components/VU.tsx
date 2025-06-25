@@ -14,7 +14,7 @@ const VU = forwardRef<SVGSVGElement, VUProps>(function VU(props: VUProps, ref) {
     <CountrySymbol
       data-testid="VU"
       aria-label="Vanuatu"
-      viewBox="0 0 72 72"
+      viewBox="0 0 20 20"
       ref={ref}
       {...props}
     >
@@ -26,23 +26,32 @@ const VU = forwardRef<SVGSVGElement, VUProps>(function VU(props: VUProps, ref) {
         style={{ maskType: "alpha" }}
       >
         <circle
-          cx="36"
-          cy="36"
-          r="36"
+          cx="10"
+          cy="10"
+          r="10"
           fill="#D9D9D9"
-          transform="matrix(1 0 0 -1 0 72)"
+          transform="matrix(1 0 0 -1 0 20)"
         />
       </mask>
       <g mask={`url(#${uid}-VU-a)`}>
-        <path fill="#DD2033" d="M0 0v27h72V0z" />
-        <path fill="#008259" d="M0 45v27h72V45z" />
-        <path fill="#31373D" d="M72 27H50.8l-36-27H7.4v72h7.4l36-27H72V27Z" />
-        <path fill="#F1B434" d="M72 39H48.8l-44 33V0l44 33H72v6Z" />
-        <path fill="#31373D" d="M21.6 36a4 4 0 1 1-8 0 4 4 0 0 1 8 0Z" />
+        <path fill="#DD2033" d="M0 0v7.5h20V0z" />
+        <path fill="#008259" d="M0 12.5V20h20v-7.5z" />
+        <path
+          fill="#31373D"
+          d="M20 7.5h-5.889l-10-7.5H2.056v20H4.11l10-7.5H20v-5Z"
+        />
+        <path
+          fill="#F1B434"
+          d="M20 10.833h-6.444L1.332 20V0l12.223 9.167H20v1.666Z"
+        />
+        <path
+          fill="#31373D"
+          d="M6 10a1.111 1.111 0 1 1-2.222 0A1.111 1.111 0 0 1 6 10Z"
+        />
         <path
           fill="#31373D"
           fillRule="evenodd"
-          d="m-4.4 0 48 36-48 36V0Zm32 36c0 5.523-4.477 10-10 10s-10-4.477-10-10 4.477-10 10-10 10 4.477 10 10Z"
+          d="M-1.222 0 12.11 10-1.222 20V0Zm8.889 10a2.778 2.778 0 1 1-5.556 0 2.778 2.778 0 0 1 5.556 0Z"
           clipRule="evenodd"
         />
       </g>

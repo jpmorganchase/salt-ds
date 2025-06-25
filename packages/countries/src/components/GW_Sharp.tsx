@@ -17,7 +17,7 @@ const GW_Sharp = forwardRef<SVGSVGElement, GW_SharpProps>(function GW_Sharp(
     <CountrySymbol
       data-testid="GW_Sharp"
       aria-label="Guinea-Bissau"
-      viewBox="0 0 72 50"
+      viewBox="0 0 29 20"
       ref={ref}
       sharp
       {...props}
@@ -29,15 +29,15 @@ const GW_Sharp = forwardRef<SVGSVGElement, GW_SharpProps>(function GW_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-GW-a)`}>
-        <path fill="#009B77" d="M0 50V25h72v25z" />
-        <path fill="#F1B434" d="M0 25V0h72v25z" />
-        <path fill="#DD2033" d="M0 0h34v50H0z" />
+        <path fill="#009B77" d="M0 20V10h29v10z" />
+        <path fill="#F1B434" d="M0 10V0h29v10z" />
+        <path fill="#DD2033" d="M0 0h13.694v20H0z" />
         <path
           fill="#31373D"
-          d="m17 14-3.279 7.416L6 22.403l5.695 5.57L10.201 36 17 31.417 23.799 36l-1.494-8.026L28 22.404l-7.721-.988L17 14Z"
+          d="m6.847 5.6-1.32 2.967-3.11.394L4.71 11.19l-.6 3.21 2.738-1.833L9.586 14.4l-.602-3.21 2.294-2.229-3.11-.394L6.848 5.6Z"
         />
       </g>
     </CountrySymbol>

@@ -17,7 +17,7 @@ const GF_Sharp = forwardRef<SVGSVGElement, GF_SharpProps>(function GF_Sharp(
     <CountrySymbol
       data-testid="GF_Sharp"
       aria-label="French Guiana"
-      viewBox="0 0 72 50"
+      viewBox="0 0 29 20"
       ref={ref}
       sharp
       {...props}
@@ -29,14 +29,14 @@ const GF_Sharp = forwardRef<SVGSVGElement, GF_SharpProps>(function GF_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-GF-a)`}>
-        <path fill="#FBD381" d="M0 50h72V0H0z" />
-        <path fill="#009B77" d="M72-11v72L0-11h72Z" />
+        <path fill="#FBD381" d="M0 20h29V0H0z" />
+        <path fill="#009B77" d="M29-4.4v28.8L0-4.4h29Z" />
         <path
           fill="#DD2033"
-          d="m36 13-3.577 8.09L24 22.168l6.213 6.077L28.583 37 36 32l7.416 5-1.629-8.756L48 22.167l-8.423-1.076L36 13Z"
+          d="m14.5 5.2-1.44 3.236-3.393.43 2.502 2.432-.656 3.502 2.987-2 2.987 2-.656-3.502 2.502-2.431-3.392-.43L14.5 5.2Z"
         />
       </g>
     </CountrySymbol>

@@ -17,7 +17,7 @@ const QA_Sharp = forwardRef<SVGSVGElement, QA_SharpProps>(function QA_Sharp(
     <CountrySymbol
       data-testid="QA_Sharp"
       aria-label="Qatar"
-      viewBox="0 0 72 50"
+      viewBox="0 0 29 20"
       ref={ref}
       sharp
       {...props}
@@ -29,13 +29,13 @@ const QA_Sharp = forwardRef<SVGSVGElement, QA_SharpProps>(function QA_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-QA-a)`}>
-        <path fill="#F5F7F8" d="M0-11h72v72H0z" />
+        <path fill="#F5F7F8" d="M0-4.4h29v28.8H0z" />
         <path
           fill="#85001F"
-          d="M20-11h52v72H20l10-9-10-9 10-9-10-9 10-9-10-9 10-9-10-9Z"
+          d="M8.056-4.4H29v28.8H8.056l4.027-3.6-4.027-3.6 4.027-3.6L8.056 10l4.027-3.6-4.027-3.6 4.027-3.6-4.027-3.6Z"
         />
       </g>
     </CountrySymbol>

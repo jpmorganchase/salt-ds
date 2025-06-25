@@ -14,7 +14,7 @@ const ID = forwardRef<SVGSVGElement, IDProps>(function ID(props: IDProps, ref) {
     <CountrySymbol
       data-testid="ID"
       aria-label="Indonesia"
-      viewBox="0 0 72 72"
+      viewBox="0 0 20 20"
       ref={ref}
       {...props}
     >
@@ -26,16 +26,16 @@ const ID = forwardRef<SVGSVGElement, IDProps>(function ID(props: IDProps, ref) {
         style={{ maskType: "alpha" }}
       >
         <circle
-          cx="36"
-          cy="36"
-          r="36"
+          cx="10"
+          cy="10"
+          r="10"
           fill="#D9D9D9"
-          transform="rotate(180 36 36)"
+          transform="rotate(180 10 10)"
         />
       </mask>
       <g mask={`url(#${uid}-ID-a)`}>
-        <path fill="#DD2033" d="M72 0v36H0V0z" />
-        <path fill="#F5F7F8" d="M72 36v36H0V36z" />
+        <path fill="#DD2033" d="M20 0v10H0V0z" />
+        <path fill="#F5F7F8" d="M20 10v10H0V10z" />
       </g>
     </CountrySymbol>
   );

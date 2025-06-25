@@ -17,7 +17,7 @@ const NE_Sharp = forwardRef<SVGSVGElement, NE_SharpProps>(function NE_Sharp(
     <CountrySymbol
       data-testid="NE_Sharp"
       aria-label="Niger (the)"
-      viewBox="0 0 72 50"
+      viewBox="0 0 29 20"
       ref={ref}
       sharp
       {...props}
@@ -29,13 +29,13 @@ const NE_Sharp = forwardRef<SVGSVGElement, NE_SharpProps>(function NE_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-NE-a)`}>
-        <path fill="#009B77" d="M0 50V37h72v13z" />
-        <path fill="#F5F7F8" d="M0 37V13h72v24z" />
-        <path fill="#FF9E42" d="M0 13V0h72v13z" />
-        <circle cx="36" cy="25" r="9" fill="#FF9E42" />
+        <path fill="#009B77" d="M0 20v-5.2h29V20z" />
+        <path fill="#F5F7F8" d="M0 14.8V5.2h29v9.6z" />
+        <path fill="#FF9E42" d="M0 5.2V0h29v5.2z" />
+        <ellipse cx="14.5" cy="10" fill="#FF9E42" rx="3.625" ry="3.6" />
       </g>
     </CountrySymbol>
   );

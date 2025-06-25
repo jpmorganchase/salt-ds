@@ -17,7 +17,7 @@ const PL_Sharp = forwardRef<SVGSVGElement, PL_SharpProps>(function PL_Sharp(
     <CountrySymbol
       data-testid="PL_Sharp"
       aria-label="Poland"
-      viewBox="0 0 72 50"
+      viewBox="0 0 29 20"
       ref={ref}
       sharp
       {...props}
@@ -29,11 +29,11 @@ const PL_Sharp = forwardRef<SVGSVGElement, PL_SharpProps>(function PL_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-PL-a)`}>
-        <path fill="#DD2033" d="M0 0h72v50H0z" />
-        <path fill="#F5F7F8" d="M0 0h72v25H0z" />
+        <path fill="#DD2033" d="M0 0h29v20H0z" />
+        <path fill="#F5F7F8" d="M0 0h29v10H0z" />
       </g>
     </CountrySymbol>
   );

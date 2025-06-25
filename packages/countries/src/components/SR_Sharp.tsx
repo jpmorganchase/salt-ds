@@ -17,7 +17,7 @@ const SR_Sharp = forwardRef<SVGSVGElement, SR_SharpProps>(function SR_Sharp(
     <CountrySymbol
       data-testid="SR_Sharp"
       aria-label="Suriname"
-      viewBox="0 0 72 50"
+      viewBox="0 0 29 20"
       ref={ref}
       sharp
       {...props}
@@ -29,15 +29,15 @@ const SR_Sharp = forwardRef<SVGSVGElement, SR_SharpProps>(function SR_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-SR-a)`}>
-        <path fill="#005B33" d="M0 0h72v50H0z" />
-        <path fill="#F5F7F8" d="M0 45V5h72v40z" />
-        <path fill="#A00009" d="M0 39V11h72v28z" />
+        <path fill="#005B33" d="M0 0h29v20H0z" />
+        <path fill="#F5F7F8" d="M0 18V2h29v16z" />
+        <path fill="#A00009" d="M0 15.6V4.4h29v11.2z" />
         <path
           fill="#FBD381"
-          d="m36 13-3.577 8.09L24 22.168l6.213 6.077L28.583 37 36 32l7.416 5-1.629-8.756L48 22.167l-8.423-1.076L36 13Z"
+          d="m14.5 5.2-1.44 3.236-3.393.43 2.502 2.432-.656 3.502 2.987-2 2.987 2-.656-3.502 2.502-2.431-3.392-.43L14.5 5.2Z"
         />
       </g>
     </CountrySymbol>

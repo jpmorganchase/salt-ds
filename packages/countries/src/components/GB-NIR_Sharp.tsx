@@ -15,7 +15,7 @@ const GB_NIR_Sharp = forwardRef<SVGSVGElement, GB_NIR_SharpProps>(
       <CountrySymbol
         data-testid="GB_NIR_Sharp"
         aria-label="Northern Ireland"
-        viewBox="0 0 72 50"
+        viewBox="0 0 29 20"
         ref={ref}
         sharp
         {...props}
@@ -27,24 +27,24 @@ const GB_NIR_Sharp = forwardRef<SVGSVGElement, GB_NIR_SharpProps>(
           maskUnits="userSpaceOnUse"
           style={{ maskType: "alpha" }}
         >
-          <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+          <path fill="#D9D9D9" d="M0 0h29v20H0z" />
         </mask>
         <g mask={`url(#${uid}-GB-NIR-a)`}>
-          <path fill="#F5F7F8" d="M0 0h72v50H0z" />
+          <path fill="#F5F7F8" d="M0 0h29v20H0z" />
           <path
             fill="#DD2033"
-            d="M30.4 50h12V31H72V19H42.4V0h-12v19H0v12h30.4v19Z"
+            d="M12.244 20h4.834v-7.6H29V7.6H17.078V0h-4.834v7.6H0v4.8h12.244V20Z"
           />
           <path
             fill="#F5F7F8"
             fillRule="evenodd"
-            d="M33.37 19.742 36.5 13l3.13 6.742 7.37.897-5.436 5.064L42.989 33 36.5 28.833 30.01 33l1.426-7.297L26 20.64l7.37-.897Zm4.88.758h-2.625v1.667h-1.75V28h4.375v-1.667H40v-2.5h-1.75V20.5Z"
+            d="M13.44 7.897 14.702 5.2l1.261 2.697 2.969.359-2.19 2.025.574 2.919-2.614-1.667-2.613 1.667.574-2.919-2.19-2.025 2.969-.36Zm1.966.303H14.35v.667h-.705V11.2h1.762v-.667h.705v-1h-.705V8.2Z"
             clipRule="evenodd"
           />
           <path
             fill="#F1B434"
             fillRule="evenodd"
-            d="M35.429 1h2.142v1.5h2.143v2.25h-2.143v2.102a4.112 4.112 0 0 1 2.143-.602c2.367 0 4.286 2.015 4.286 4.5a4.59 4.59 0 0 1-1.429 3.354V16H30.43v-1.896A4.59 4.59 0 0 1 29 10.75c0-2.485 1.919-4.5 4.286-4.5.78 0 1.512.22 2.143.602V4.75h-2.143V2.5h2.143V1ZM36.5 7.773l-.02-.023h.04l-.02.023Zm-.02 5.977.02-.023.02.023h-.04Z"
+            d="M14.27.4h.863V1h.863v.9h-.863v.84c.254-.152.549-.24.863-.24.953 0 1.726.806 1.726 1.8a1.83 1.83 0 0 1-.575 1.342V6.4h-4.891v-.758A1.83 1.83 0 0 1 11.68 4.3c0-.994.772-1.8 1.726-1.8.314 0 .609.088.863.24V1.9h-.863V1h.863V.4Zm.431 2.71-.008-.01h.016l-.008.01Zm-.008 2.39.008-.01.008.01h-.016Z"
             clipRule="evenodd"
           />
         </g>

@@ -14,7 +14,7 @@ const CZ = forwardRef<SVGSVGElement, CZProps>(function CZ(props: CZProps, ref) {
     <CountrySymbol
       data-testid="CZ"
       aria-label="Czechia"
-      viewBox="0 0 72 72"
+      viewBox="0 0 20 20"
       ref={ref}
       {...props}
     >
@@ -25,12 +25,12 @@ const CZ = forwardRef<SVGSVGElement, CZProps>(function CZ(props: CZProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#D9D9D9" />
       </mask>
       <g mask={`url(#${uid}-CZ-a)`}>
-        <path fill="#DD2033" d="M0 72V36h72v36z" />
-        <path fill="#F5F7F8" d="M0 36V0h72v36z" />
-        <path fill="#004692" d="M48 36 0 0v72l48-36Z" />
+        <path fill="#DD2033" d="M0 20V10h20v10z" />
+        <path fill="#F5F7F8" d="M0 10V0h20v10z" />
+        <path fill="#004692" d="M13.333 10 0 0v20l13.333-10Z" />
       </g>
     </CountrySymbol>
   );

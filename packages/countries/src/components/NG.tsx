@@ -14,7 +14,7 @@ const NG = forwardRef<SVGSVGElement, NGProps>(function NG(props: NGProps, ref) {
     <CountrySymbol
       data-testid="NG"
       aria-label="Nigeria"
-      viewBox="0 0 72 72"
+      viewBox="0 0 20 20"
       ref={ref}
       {...props}
     >
@@ -26,16 +26,16 @@ const NG = forwardRef<SVGSVGElement, NGProps>(function NG(props: NGProps, ref) {
         style={{ maskType: "alpha" }}
       >
         <circle
-          cx="36"
-          cy="36"
-          r="36"
+          cx="10"
+          cy="10"
+          r="10"
           fill="#D9D9D9"
-          transform="matrix(1 0 0 -1 0 72)"
+          transform="matrix(1 0 0 -1 0 20)"
         />
       </mask>
       <g mask={`url(#${uid}-NG-a)`}>
-        <path fill="#005B33" d="M0 72h72V0H0z" />
-        <path fill="#F5F7F8" d="M24 72h24V0H24z" />
+        <path fill="#005B33" d="M0 20h20V0H0z" />
+        <path fill="#F5F7F8" d="M6.667 20h6.667V0H6.667z" />
       </g>
     </CountrySymbol>
   );

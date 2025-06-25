@@ -14,7 +14,7 @@ const BS = forwardRef<SVGSVGElement, BSProps>(function BS(props: BSProps, ref) {
     <CountrySymbol
       data-testid="BS"
       aria-label="Bahamas (the)"
-      viewBox="0 0 72 72"
+      viewBox="0 0 20 20"
       ref={ref}
       {...props}
     >
@@ -25,12 +25,12 @@ const BS = forwardRef<SVGSVGElement, BSProps>(function BS(props: BSProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#D9D9D9" />
       </mask>
       <g mask={`url(#${uid}-BS-a)`}>
-        <path fill="#3CCBDA" d="M0 72V0h72v72z" />
-        <path fill="#FBD381" d="M0 48V24h72v24z" />
-        <path fill="#31373D" d="M48 36 0 0v72l48-36Z" />
+        <path fill="#3CCBDA" d="M0 20V0h20v20z" />
+        <path fill="#FBD381" d="M0 13.333V6.666h20v6.667z" />
+        <path fill="#31373D" d="M13 10 0 0v20l13-10Z" />
       </g>
     </CountrySymbol>
   );

@@ -17,7 +17,7 @@ const MV_Sharp = forwardRef<SVGSVGElement, MV_SharpProps>(function MV_Sharp(
     <CountrySymbol
       data-testid="MV_Sharp"
       aria-label="Maldives"
-      viewBox="0 0 72 50"
+      viewBox="0 0 29 20"
       ref={ref}
       sharp
       {...props}
@@ -29,14 +29,14 @@ const MV_Sharp = forwardRef<SVGSVGElement, MV_SharpProps>(function MV_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-MV-a)`}>
-        <path fill="#DD2033" d="M0 0h72v50H0z" />
-        <path fill="#005B33" d="M10 9h52v32H10z" />
+        <path fill="#DD2033" d="M0 0h29v20H0z" />
+        <path fill="#005B33" d="M4.028 3.6h20.944v12.8H4.028z" />
         <path
           fill="#F5F7F8"
-          d="M45 36.205a14.978 14.978 0 0 1-4.346-1.474c-6.54-3.417-8.873-10.839-5.212-16.578 1.524-2.388 3.845-4.108 6.508-5.056C36.806 12.5 31.533 14.683 28.778 19c-3.66 5.739-1.488 13.076 4.853 16.39 3.6 1.88 7.768 2.06 11.369.814Z"
+          d="M18.125 14.482a6.062 6.062 0 0 1-1.75-.59c-2.634-1.367-3.574-4.335-2.1-6.63.614-.956 1.55-1.644 2.621-2.023-2.071-.239-4.195.634-5.305 2.361-1.474 2.296-.6 5.23 1.955 6.556a5.865 5.865 0 0 0 4.579.326Z"
         />
       </g>
     </CountrySymbol>

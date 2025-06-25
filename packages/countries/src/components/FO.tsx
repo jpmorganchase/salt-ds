@@ -14,7 +14,7 @@ const FO = forwardRef<SVGSVGElement, FOProps>(function FO(props: FOProps, ref) {
     <CountrySymbol
       data-testid="FO"
       aria-label="Faroe Islands (the)"
-      viewBox="0 0 72 72"
+      viewBox="0 0 20 20"
       ref={ref}
       {...props}
     >
@@ -25,17 +25,20 @@ const FO = forwardRef<SVGSVGElement, FOProps>(function FO(props: FOProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#D9D9D9" />
       </mask>
       <g mask={`url(#${uid}-FO-a)`}>
-        <path fill="#F5F7F8" d="M0 0h72v72H0z" />
+        <path fill="#F5F7F8" d="M0 0h20v20H0z" />
         <path
           fill="#004692"
           fillRule="evenodd"
-          d="M20 72h-6V47.7H0v-6h14V30.3H0v-6h14V0h6v24.3h11.4V0h6v24.3H72v6H37.4v11.4H72v6H37.4V72h-6V47.7H20V72Zm11.4-41.7H20v11.4h11.4V30.3Z"
+          d="M5.556 20H3.889v-6.75H0v-1.667h3.889V8.417H0V6.75h3.889V0h1.667v6.75h3.166V0h1.667v6.75H20v1.667h-9.611v3.166H20v1.667h-9.611V20H8.722v-6.75H5.556V20ZM8.722 8.417H5.556v3.166h3.166V8.417Z"
           clipRule="evenodd"
         />
-        <path fill="#DD2033" d="M20 72h12V42h40V30H32V0H20v30H0v12h20v30Z" />
+        <path
+          fill="#DD2033"
+          d="M5.556 20h3.333v-8.333H20V8.333H8.889V0H5.556v8.333H0v3.334h5.556V20Z"
+        />
       </g>
     </CountrySymbol>
   );

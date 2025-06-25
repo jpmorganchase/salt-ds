@@ -17,7 +17,7 @@ const AD_Sharp = forwardRef<SVGSVGElement, AD_SharpProps>(function AD_Sharp(
     <CountrySymbol
       data-testid="AD_Sharp"
       aria-label="Andorra"
-      viewBox="0 0 72 50"
+      viewBox="0 0 29 20"
       ref={ref}
       sharp
       {...props}
@@ -29,19 +29,19 @@ const AD_Sharp = forwardRef<SVGSVGElement, AD_SharpProps>(function AD_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-AD-a)`}>
-        <path fill="#004692" d="M0 0h22v50H0z" />
-        <path fill="#FBD381" d="M22 0h28v50H22z" />
+        <path fill="#004692" d="M0 0h8.861v20H0z" />
+        <path fill="#FBD381" d="M8.861 0h11.278v20H8.861z" />
         <path
           fill="#DD2033"
-          d="M50 0h22v50H50zM28 17h8v8h-8zm15.835 8H36v9.846A12.859 12.859 0 0 0 43.835 25Z"
+          d="M20.139 0H29v20h-8.861zm-8.861 6.8H14.5V10h-3.222zm6.378 3.2H14.5v3.938A5.15 5.15 0 0 0 17.656 10Z"
         />
         <path
           fill="#FF9E42"
           fillRule="evenodd"
-          d="M32 12v-2a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v10.941a16.86 16.86 0 0 1-8 14.344V41a2 2 0 0 1-2 2h-4a2 2 0 0 1-2-2v-3.715a16.86 16.86 0 0 1-8-14.344V12a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2Zm-4 5v5.941c0 5.228 3.165 9.932 8 11.905 4.835-1.973 8-6.677 8-11.905V17H28Z"
+          d="M12.889 4.8V4c0-.442.36-.8.806-.8h1.61c.446 0 .806.358.806.8v.8c0-.442.36-.8.806-.8h1.61c.446 0 .806.358.806.8v4.377a6.733 6.733 0 0 1-3.222 5.737V16.4c0 .442-.36.8-.805.8h-1.611a.803.803 0 0 1-.806-.8v-1.486a6.733 6.733 0 0 1-3.222-5.737V4.8c0-.442.36-.8.805-.8h1.611c.445 0 .806.358.806.8Zm-1.611 2v2.377a5.143 5.143 0 0 0 3.222 4.761 5.143 5.143 0 0 0 3.222-4.761V6.8h-6.444Z"
           clipRule="evenodd"
         />
       </g>

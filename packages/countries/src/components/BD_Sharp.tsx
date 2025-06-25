@@ -17,7 +17,7 @@ const BD_Sharp = forwardRef<SVGSVGElement, BD_SharpProps>(function BD_Sharp(
     <CountrySymbol
       data-testid="BD_Sharp"
       aria-label="Bangladesh"
-      viewBox="0 0 72 50"
+      viewBox="0 0 29 20"
       ref={ref}
       sharp
       {...props}
@@ -29,11 +29,11 @@ const BD_Sharp = forwardRef<SVGSVGElement, BD_SharpProps>(function BD_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-BD-a)`}>
-        <path fill="#005B33" d="M72 50H0V0h72z" />
-        <circle cx="30" cy="25" r="16" fill="#DD2033" />
+        <path fill="#005B33" d="M29 20H0V0h29z" />
+        <ellipse cx="12.083" cy="10" fill="#DD2033" rx="6.444" ry="6.4" />
       </g>
     </CountrySymbol>
   );

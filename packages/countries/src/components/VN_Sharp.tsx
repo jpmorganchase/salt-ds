@@ -17,7 +17,7 @@ const VN_Sharp = forwardRef<SVGSVGElement, VN_SharpProps>(function VN_Sharp(
     <CountrySymbol
       data-testid="VN_Sharp"
       aria-label="Viet Nam"
-      viewBox="0 0 72 50"
+      viewBox="0 0 29 20"
       ref={ref}
       sharp
       {...props}
@@ -29,13 +29,13 @@ const VN_Sharp = forwardRef<SVGSVGElement, VN_SharpProps>(function VN_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-VN-a)`}>
-        <path fill="#DD2033" d="M0 50V0h72v50z" />
+        <path fill="#DD2033" d="M0 20V0h29v20z" />
         <path
           fill="#FBD381"
-          d="m36 7-5.365 12.136L18 20.75l9.32 9.115L24.874 43 36 35.5 47.125 43 44.68 29.866 54 20.751l-12.635-1.615L36 7Z"
+          d="m14.5 2.8-2.161 4.854L7.25 8.3l3.754 3.646-.985 5.254 4.481-3 4.48 3-.983-5.254L21.75 8.3l-5.089-.646L14.5 2.8Z"
         />
       </g>
     </CountrySymbol>

@@ -14,7 +14,7 @@ const AW = forwardRef<SVGSVGElement, AWProps>(function AW(props: AWProps, ref) {
     <CountrySymbol
       data-testid="AW"
       aria-label="Aruba"
-      viewBox="0 0 72 72"
+      viewBox="0 0 20 20"
       ref={ref}
       {...props}
     >
@@ -25,21 +25,21 @@ const AW = forwardRef<SVGSVGElement, AWProps>(function AW(props: AWProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#D9D9D9" />
       </mask>
       <g mask={`url(#${uid}-AW-a)`}>
-        <path fill="#0091DA" d="M0 0h72v72H0z" />
+        <path fill="#0091DA" d="M0 0h20v20H0z" />
         <path
           fill="#DD2033"
-          d="m24 14 3.674 8.326L36 26l-8.326 3.674L24 38l-3.674-8.326L12 26l8.326-3.674L24 14Z"
+          d="m6.667 3.889 1.02 2.313L10 7.222l-2.313 1.02-1.02 2.314-1.021-2.313-2.313-1.02 2.313-1.021 1.02-2.313Z"
         />
         <path
           fill="#F5F7F8"
           fillRule="evenodd"
-          d="m24 7.631 5.624 12.744L42.37 26l-12.745 5.625L24 44.368l-5.625-12.744L5.631 26l12.744-5.625L24 7.631Zm-3.674 14.695L12 26l8.326 3.674L24 38l3.674-8.326L36 26l-8.326-3.674L24 14l-3.674 8.326Z"
+          d="m6.667 2.12 1.562 3.54 3.54 1.562-3.54 1.563-1.562 3.54-1.563-3.54-3.54-1.563 3.54-1.562 1.563-3.54ZM5.646 6.202l-2.313 1.02 2.313 1.02 1.02 2.313 1.021-2.312L10 7.223 7.687 6.201l-1.02-2.313-1.021 2.313Z"
           clipRule="evenodd"
         />
-        <path fill="#FBD381" d="M0 48h72v6H0zm0 12h72v6H0z" />
+        <path fill="#FBD381" d="M0 13.333h20V15H0zm0 3.334h20v1.667H0z" />
       </g>
     </CountrySymbol>
   );

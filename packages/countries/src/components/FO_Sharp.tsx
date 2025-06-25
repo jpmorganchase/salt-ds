@@ -17,7 +17,7 @@ const FO_Sharp = forwardRef<SVGSVGElement, FO_SharpProps>(function FO_Sharp(
     <CountrySymbol
       data-testid="FO_Sharp"
       aria-label="Faroe Islands (the)"
-      viewBox="0 0 72 50"
+      viewBox="0 0 29 20"
       ref={ref}
       sharp
       {...props}
@@ -29,17 +29,20 @@ const FO_Sharp = forwardRef<SVGSVGElement, FO_SharpProps>(function FO_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-FO-a)`}>
-        <path fill="#F5F7F8" d="M0 0h72v50H0z" />
+        <path fill="#F5F7F8" d="M0 0h29v20H0z" />
         <path
           fill="#004692"
           fillRule="evenodd"
-          d="M20 50h-6V36.7H0v-6h14V19.3H0v-6h14V0h6v13.3h11.4V0h6v13.3H72v6H37.4v11.4H72v6H37.4V50h-6V36.7H20V50Zm11.4-30.7H20v11.4h11.4V19.3Z"
+          d="M8.056 20H5.639v-5.32H0v-2.4h5.639V7.72H0v-2.4h5.639V0h2.417v5.32h4.591V0h2.417v5.32H29v2.4H15.064v4.56H29v2.4H15.064V20h-2.417v-5.32H8.056V20Zm4.591-12.28H8.056v4.56h4.591V7.72Z"
           clipRule="evenodd"
         />
-        <path fill="#DD2033" d="M20 50h12V31h40V19H32V0H20v19H0v12h20v19Z" />
+        <path
+          fill="#DD2033"
+          d="M8.056 20h4.833v-7.6H29V7.6H12.889V0H8.056v7.6H0v4.8h8.056V20Z"
+        />
       </g>
     </CountrySymbol>
   );

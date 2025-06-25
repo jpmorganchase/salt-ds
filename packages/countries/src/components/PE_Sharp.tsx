@@ -17,7 +17,7 @@ const PE_Sharp = forwardRef<SVGSVGElement, PE_SharpProps>(function PE_Sharp(
     <CountrySymbol
       data-testid="PE_Sharp"
       aria-label="Peru"
-      viewBox="0 0 72 50"
+      viewBox="0 0 29 20"
       ref={ref}
       sharp
       {...props}
@@ -29,36 +29,36 @@ const PE_Sharp = forwardRef<SVGSVGElement, PE_SharpProps>(function PE_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-PE-a)`}>
-        <path fill="#DD2033" d="M0 0h72v50H0z" />
-        <path fill="#F5F7F8" d="M56 50H16V0h40z" />
+        <path fill="#DD2033" d="M0 0h29v20H0z" />
+        <path fill="#F5F7F8" d="M22.555 20H6.445V0h16.11z" />
         <path
           fill="#009B77"
           fillRule="evenodd"
-          d="M18.406 23.435a18.072 18.072 0 0 0-.406 3.82c0 9.94 8.059 18 18 18s18-8.06 18-18c0-1.34-.146-2.644-.423-3.899l-5.664 2.449c.058.475.087.959.087 1.45 0 6.627-5.373 12-12 12s-12-5.373-12-12c0-.463.026-.919.077-1.368l-5.671-2.452Z"
+          d="M7.414 9.374a7.18 7.18 0 0 0-.164 1.528c0 3.976 3.246 7.2 7.25 7.2s7.25-3.224 7.25-7.2a7.18 7.18 0 0 0-.17-1.56l-2.282.98c.024.19.035.383.035.58 0 2.65-2.164 4.8-4.833 4.8-2.67 0-4.833-2.15-4.833-4.8 0-.185.01-.368.03-.547l-2.283-.981Z"
           clipRule="evenodd"
         />
         <path
           fill="#FF9E42"
-          d="M26.2 8h20v7.941a14.857 14.857 0 0 1-9.34 13.795L36.2 30l-.661-.264a14.857 14.857 0 0 1-9.34-13.795V8Z"
+          d="M10.553 3.2h8.055v2.866A6.385 6.385 0 0 1 14.58 12a6.385 6.385 0 0 1-4.027-5.934V3.2Z"
         />
         <mask
           id={`${uid}-PE-b`}
-          x="26"
-          y="8"
+          x="10"
+          y="3"
           maskUnits="userSpaceOnUse"
           style={{ maskType: "alpha" }}
         >
           <path
             fill="#005EB8"
-            d="M26.2 8h20v7.941a14.857 14.857 0 0 1-9.34 13.795L36.2 30l-.661-.264a14.857 14.857 0 0 1-9.34-13.795V8Z"
+            d="M10.553 3.2h8.055v2.866A6.385 6.385 0 0 1 14.58 12a6.385 6.385 0 0 1-4.027-5.934V3.2Z"
           />
         </mask>
         <g mask={`url(#${uid}-PE-b)`}>
-          <path fill="#DD2033" d="M26.2 18h20v12h-20z" />
-          <path fill="#0091DA" d="M26.2 8h10v10h-10z" />
+          <path fill="#DD2033" d="M10.553 7.2h8.056V12h-8.056z" />
+          <path fill="#0091DA" d="M10.553 3.2h4.028v4h-4.028z" />
         </g>
       </g>
     </CountrySymbol>

@@ -17,7 +17,7 @@ const SY_Sharp = forwardRef<SVGSVGElement, SY_SharpProps>(function SY_Sharp(
     <CountrySymbol
       data-testid="SY_Sharp"
       aria-label="Syrian Arab Republic (the)"
-      viewBox="0 0 72 50"
+      viewBox="0 0 29 20"
       ref={ref}
       sharp
       {...props}
@@ -29,16 +29,16 @@ const SY_Sharp = forwardRef<SVGSVGElement, SY_SharpProps>(function SY_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-SY-a)`}>
-        <path fill="#31373D" d="M0 50V35h72v15z" />
-        <path fill="#F5F7F8" d="M0 35V15h72v20z" />
+        <path fill="#31373D" d="M0 20v-6h29v6z" />
+        <path fill="#F5F7F8" d="M0 14V6h29v8z" />
         <path
           fill="#009B77"
-          d="M16.212 23.045 18 19l1.788 4.045 4.212.539-3.106 3.038.814 4.378L18 28.5 14.292 31l.814-4.378L12 23.584l4.212-.539Zm36 0L54 19l1.788 4.045 4.212.539-3.106 3.038.814 4.378L54 28.5 50.292 31l.814-4.378L48 23.584l4.212-.539Z"
+          d="M6.53 9.218 7.25 7.6l.72 1.618 1.697.216-1.252 1.215.329 1.751-1.494-1-1.494 1 .328-1.751-1.25-1.215 1.696-.216Zm14.5 0 .72-1.618.72 1.618 1.697.216-1.252 1.215.329 1.751-1.494-1-1.494 1 .328-1.751-1.25-1.215 1.696-.216Z"
         />
-        <path fill="#DD2033" d="M0 15V0h72v15z" />
+        <path fill="#DD2033" d="M0 6V0h29v6z" />
       </g>
     </CountrySymbol>
   );

@@ -14,7 +14,7 @@ const SJ = forwardRef<SVGSVGElement, SJProps>(function SJ(props: SJProps, ref) {
     <CountrySymbol
       data-testid="SJ"
       aria-label="Svalbard and Jan Mayen"
-      viewBox="0 0 72 72"
+      viewBox="0 0 20 20"
       ref={ref}
       {...props}
     >
@@ -25,17 +25,20 @@ const SJ = forwardRef<SVGSVGElement, SJProps>(function SJ(props: SJProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#D9D9D9" />
       </mask>
       <g mask={`url(#${uid}-SJ-a)`}>
-        <path fill="#DD2033" d="M0 0h72v72H0z" />
+        <path fill="#DD2033" d="M0 0h20v20H0z" />
         <path
           fill="#F5F7F8"
           fillRule="evenodd"
-          d="M20.4 72h-6V47.7H.4v-6h14V30.3H.4v-6h14V0h6v24.3h11.4V0h6v24.3h34.6v6H37.8v11.4h34.6v6H37.8V72h-6V47.7H20.4V72Zm11.4-41.7H20.4v11.4h11.4V30.3Z"
+          d="M5.667 20H4v-6.75H.111v-1.667H4V8.417H.111V6.75H4V0h1.667v6.75h3.166V0H10.5v6.75h9.611v1.667H10.5v3.166h9.611v1.667H10.5V20H8.833v-6.75H5.667V20ZM8.833 8.417H5.667v3.166h3.166V8.417Z"
           clipRule="evenodd"
         />
-        <path fill="#004692" d="M20 72h12V42h40V30H32V0H20v30H0v12h20v30Z" />
+        <path
+          fill="#004692"
+          d="M5.556 20h3.333v-8.333H20V8.333H8.889V0H5.556v8.333H0v3.334h5.556V20Z"
+        />
       </g>
     </CountrySymbol>
   );

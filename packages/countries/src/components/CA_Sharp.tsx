@@ -17,7 +17,7 @@ const CA_Sharp = forwardRef<SVGSVGElement, CA_SharpProps>(function CA_Sharp(
     <CountrySymbol
       data-testid="CA_Sharp"
       aria-label="Canada"
-      viewBox="0 0 72 50"
+      viewBox="0 0 29 20"
       ref={ref}
       sharp
       {...props}
@@ -29,14 +29,14 @@ const CA_Sharp = forwardRef<SVGSVGElement, CA_SharpProps>(function CA_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-CA-a)`}>
-        <path fill="#DD2033" d="M0 0h72v50H0z" />
-        <path fill="#F5F7F8" d="M54 50H18V0h36z" />
+        <path fill="#DD2033" d="M0 0h29v20H0z" />
+        <path fill="#F5F7F8" d="M21.75 20H7.25V0h14.5z" />
         <path
           fill="#DD2033"
-          d="m40.11 13.591-4.2-5.59-4.198 5.59-3.322-1.014 2.677 11.794-3.328-5.357-1.193 2.28-5.03-.749.742 5.078L20 26.827l8.821 5.583-1.08 3.544 6.613-1.792V42h2.95v-7.9l6.847 1.855-1.066-3.498.007.008L52 26.806l-2.219-1.183.742-5.078-5.03.749-1.172-2.24-3.574 5.732-.163-.535 2.636-11.61-3.11.95Z"
+          d="M16.155 5.437 14.465 3.2l-1.692 2.237-1.338-.406 1.078 4.717-1.34-2.142-.48.912-2.027-.3.299 2.031-.91.482 3.553 2.233-.434 1.418 2.663-.717V16.8h1.188v-3.16l2.758.742-.43-1.4.004.004 3.587-2.264-.893-.473.299-2.03-2.026.299-.473-.896-1.44 2.293-.065-.215 1.062-4.644-1.253.38Z"
         />
       </g>
     </CountrySymbol>

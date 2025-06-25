@@ -14,7 +14,7 @@ const PE = forwardRef<SVGSVGElement, PEProps>(function PE(props: PEProps, ref) {
     <CountrySymbol
       data-testid="PE"
       aria-label="Peru"
-      viewBox="0 0 72 72"
+      viewBox="0 0 20 20"
       ref={ref}
       {...props}
     >
@@ -26,41 +26,41 @@ const PE = forwardRef<SVGSVGElement, PEProps>(function PE(props: PEProps, ref) {
         style={{ maskType: "alpha" }}
       >
         <circle
-          cx="36"
-          cy="36"
-          r="36"
+          cx="10"
+          cy="10"
+          r="10"
           fill="#D9D9D9"
-          transform="rotate(-90 36 36)"
+          transform="rotate(-90 10 10)"
         />
       </mask>
       <g mask={`url(#${uid}-PE-a)`}>
-        <path fill="#DD2033" d="M0 0h72v72H0z" />
-        <path fill="#F5F7F8" d="M56 72H16V0h40z" />
+        <path fill="#DD2033" d="M0 0h20v20H0z" />
+        <path fill="#F5F7F8" d="M15.555 20H4.445V0h11.11z" />
         <path
           fill="#009B77"
           fillRule="evenodd"
-          d="M18.406 35.435a18.073 18.073 0 0 0-.406 3.82c0 9.94 8.059 18 18 18s18-8.06 18-18c0-1.34-.146-2.644-.423-3.899l-5.663 2.45c.057.474.086.958.086 1.449 0 6.627-5.373 12-12 12s-12-5.373-12-12c0-.463.026-.919.077-1.367l-5.67-2.453Z"
+          d="M5.113 9.843a5 5 0 1 0 9.77-.022l-1.574.68a3.333 3.333 0 1 1-6.621.023l-1.575-.681Z"
           clipRule="evenodd"
         />
         <path
           fill="#FF9E42"
-          d="M26.2 20h20v7.941a14.857 14.857 0 0 1-9.34 13.795L36.2 42l-.66-.264A14.857 14.857 0 0 1 26.2 27.94V20Z"
+          d="M7.278 5.556h5.555v2.008a4.42 4.42 0 0 1-2.777 4.103 4.419 4.419 0 0 1-2.778-4.103V5.556Z"
         />
         <mask
           id={`${uid}-PE-b`}
-          x="26"
-          y="20"
+          x="7"
+          y="5"
           maskUnits="userSpaceOnUse"
           style={{ maskType: "alpha" }}
         >
           <path
             fill="#005EB8"
-            d="M26.2 20h20v7.941a14.857 14.857 0 0 1-9.34 13.795L36.2 42l-.66-.264A14.857 14.857 0 0 1 26.2 27.94V20Z"
+            d="M7.278 5.556h5.555v2.008a4.42 4.42 0 0 1-2.777 4.103 4.419 4.419 0 0 1-2.778-4.103V5.556Z"
           />
         </mask>
         <g mask={`url(#${uid}-PE-b)`}>
-          <path fill="#DD2033" d="M26.2 30h20v12h-20z" />
-          <path fill="#0091DA" d="M26.2 20h10v10h-10z" />
+          <path fill="#DD2033" d="M7.278 8.334h5.556v3.333H7.278z" />
+          <path fill="#0091DA" d="M7.278 5.556h2.778v2.778H7.278z" />
         </g>
       </g>
     </CountrySymbol>

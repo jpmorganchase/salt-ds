@@ -14,7 +14,7 @@ const JE = forwardRef<SVGSVGElement, JEProps>(function JE(props: JEProps, ref) {
     <CountrySymbol
       data-testid="JE"
       aria-label="Jersey"
-      viewBox="0 0 72 72"
+      viewBox="0 0 20 20"
       ref={ref}
       {...props}
     >
@@ -25,17 +25,17 @@ const JE = forwardRef<SVGSVGElement, JEProps>(function JE(props: JEProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#D9D9D9" />
       </mask>
       <g mask={`url(#${uid}-JE-a)`}>
-        <path fill="#F5F7F8" d="M0 0h72v72H0z" />
+        <path fill="#F5F7F8" d="M0 0h20v20H0z" />
         <path
           fill="#DD2033"
-          d="m57.496 65.416 8.485-8.486-21.213-21.213 20.93-20.93-8.485-8.485-20.93 20.93L15.069 6.019l-8.485 8.485 21.213 21.213L6.302 57.213l8.485 8.485 21.496-21.495 21.213 21.213Z"
+          d="m15.971 18.171 2.357-2.357-5.892-5.893 5.814-5.814-2.357-2.357-5.814 5.814-5.893-5.892-2.357 2.357L7.722 9.92 1.75 15.893l2.357 2.357 5.972-5.972 5.892 5.893Z"
         />
         <path
           fill="#F1B434"
-          d="M26 11h20v7.941a14.857 14.857 0 0 1-9.34 13.795L36 33l-.66-.264A14.857 14.857 0 0 1 26 18.94V11Z"
+          d="M7.222 3.056h5.556v2.008c0 1.807-1.1 3.432-2.778 4.103a4.419 4.419 0 0 1-2.778-4.103V3.056Z"
         />
       </g>
     </CountrySymbol>

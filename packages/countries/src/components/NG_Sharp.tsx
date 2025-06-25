@@ -17,7 +17,7 @@ const NG_Sharp = forwardRef<SVGSVGElement, NG_SharpProps>(function NG_Sharp(
     <CountrySymbol
       data-testid="NG_Sharp"
       aria-label="Nigeria"
-      viewBox="0 0 72 50"
+      viewBox="0 0 29 20"
       ref={ref}
       sharp
       {...props}
@@ -29,11 +29,11 @@ const NG_Sharp = forwardRef<SVGSVGElement, NG_SharpProps>(function NG_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-NG-a)`}>
-        <path fill="#005B33" d="M0 50h72V0H0z" />
-        <path fill="#F5F7F8" d="M24 50h24V0H24z" />
+        <path fill="#005B33" d="M0 20h29V0H0z" />
+        <path fill="#F5F7F8" d="M9.667 20h9.667V0H9.667z" />
       </g>
     </CountrySymbol>
   );

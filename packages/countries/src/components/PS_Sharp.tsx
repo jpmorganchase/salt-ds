@@ -17,7 +17,7 @@ const PS_Sharp = forwardRef<SVGSVGElement, PS_SharpProps>(function PS_Sharp(
     <CountrySymbol
       data-testid="PS_Sharp"
       aria-label="Palestine (State of)"
-      viewBox="0 0 72 50"
+      viewBox="0 0 29 20"
       ref={ref}
       sharp
       {...props}
@@ -29,13 +29,13 @@ const PS_Sharp = forwardRef<SVGSVGElement, PS_SharpProps>(function PS_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-PS-a)`}>
-        <path fill="#009B77" d="M0 50V34h72v16z" />
-        <path fill="#F5F7F8" d="M0 34V16h72v18z" />
-        <path fill="#31373D" d="M0 16V0h72v16z" />
-        <path fill="#DD2033" d="M44 25-4-11v72l48-36Z" />
+        <path fill="#009B77" d="M0 20v-6.4h29V20z" />
+        <path fill="#F5F7F8" d="M0 13.6V6.4h29v7.2z" />
+        <path fill="#31373D" d="M0 6.4V0h29v6.4z" />
+        <path fill="#DD2033" d="M17.722 10-1.61-4.4v28.8L17.722 10Z" />
       </g>
     </CountrySymbol>
   );

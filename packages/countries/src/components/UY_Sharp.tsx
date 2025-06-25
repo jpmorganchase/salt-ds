@@ -17,7 +17,7 @@ const UY_Sharp = forwardRef<SVGSVGElement, UY_SharpProps>(function UY_Sharp(
     <CountrySymbol
       data-testid="UY_Sharp"
       aria-label="Uruguay"
-      viewBox="0 0 72 50"
+      viewBox="0 0 29 20"
       ref={ref}
       sharp
       {...props}
@@ -29,14 +29,17 @@ const UY_Sharp = forwardRef<SVGSVGElement, UY_SharpProps>(function UY_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-UY-a)`}>
-        <path fill="#F5F7F8" d="M0 50V0h72v50z" />
-        <path fill="#004692" d="M36 9V0h36v9zm0 18v-9h36v9zM0 45v-9h72v9z" />
+        <path fill="#F5F7F8" d="M0 20V0h29v20z" />
+        <path
+          fill="#004692"
+          d="M14.5 3.6V0H29v3.6zm0 7.2V7.2H29v3.6zM0 18v-3.6h29V18z"
+        />
         <path
           fill="#F1B434"
-          d="m29 18-4.495 2.223 2.394 4.576-4.881-.982L21.4 29 18 25.188 14.6 29l-.618-5.183-4.88.981 2.393-4.576L7 18l4.495-2.223L9.1 11.202l4.88.981L14.6 7l3.4 3.812L21.4 7l.618 5.183 4.88-.981-2.393 4.576L29 18Z"
+          d="m11.68 7.2-1.81.889.964 1.83-1.966-.392L8.62 11.6l-1.37-1.525L5.88 11.6l-.248-2.073-1.966.392.964-1.83-1.81-.89 1.81-.888-.964-1.83 1.966.392L5.88 2.8l1.37 1.525L8.62 2.8l.248 2.073 1.966-.393-.964 1.83 1.81.89Z"
         />
       </g>
     </CountrySymbol>

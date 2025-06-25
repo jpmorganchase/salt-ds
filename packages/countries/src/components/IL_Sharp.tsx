@@ -17,7 +17,7 @@ const IL_Sharp = forwardRef<SVGSVGElement, IL_SharpProps>(function IL_Sharp(
     <CountrySymbol
       data-testid="IL_Sharp"
       aria-label="Israel"
-      viewBox="0 0 72 50"
+      viewBox="0 0 29 20"
       ref={ref}
       sharp
       {...props}
@@ -29,15 +29,15 @@ const IL_Sharp = forwardRef<SVGSVGElement, IL_SharpProps>(function IL_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-IL-a)`}>
-        <path fill="#F5F7F8" d="M0 50V0h72v50z" />
-        <path fill="#005EB8" d="M0 47v-7h72v7zm0-37V3h72v7z" />
+        <path fill="#F5F7F8" d="M0 20V0h29v20z" />
+        <path fill="#005EB8" d="M0 18.8V16h29v2.8zM0 4V1.2h29V4z" />
         <path
           fill="#005EB8"
           fillRule="evenodd"
-          d="m31.558 18 4.042-7 4.041 7h8.084l-4.042 7 4.041 7h-8.082L35.6 39l-4.041-7h-8.083l4.041-7-4.041-7h8.082Zm-1.154 2H26.94l1.732 3 1.732-3Zm-.577 5 2.886-5h5.774l2.887 5-2.887 5h-5.773l-2.887-5Zm-1.155 2-1.732 3h3.464l-1.732-3Zm5.196 5 1.732 3 1.732-3h-3.464Zm6.928-2h3.464l-1.732-3-1.732 3Zm1.732-7 1.733-3h-3.465l1.732 3Zm-5.196-5h-3.464l1.732-3 1.732 3Z"
+          d="m12.711 7.2 1.628-2.8 1.628 2.8h3.255L17.594 10l1.628 2.8h-3.255l-1.628 2.8-1.628-2.8H9.455l1.628-2.8-1.627-2.8h3.255Zm-.465.8h-1.395l.697 1.2.698-1.2Zm-.232 2 1.162-2h2.326l1.162 2-1.162 2h-2.326l-1.162-2Zm-.466.8-.697 1.2h1.395l-.698-1.2Zm2.093 2 .698 1.2.698-1.2H13.64Zm2.79-.8h1.396l-.698-1.2-.697 1.2Zm.698-2.8.698-1.2h-1.395l.698 1.2Zm-2.093-2h-1.395L14.34 6l.697 1.2Z"
           clipRule="evenodd"
         />
       </g>

@@ -14,7 +14,7 @@ const KN = forwardRef<SVGSVGElement, KNProps>(function KN(props: KNProps, ref) {
     <CountrySymbol
       data-testid="KN"
       aria-label="Saint Kitts and Nevis"
-      viewBox="0 0 72 72"
+      viewBox="0 0 20 20"
       ref={ref}
       {...props}
     >
@@ -25,22 +25,22 @@ const KN = forwardRef<SVGSVGElement, KNProps>(function KN(props: KNProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#D9D9D9" />
       </mask>
       <g mask={`url(#${uid}-KN-a)`}>
-        <path fill="#009B77" d="M0 0h72v72H0z" />
-        <path fill="#DD2033" d="M72 72H0L72 0v72Z" />
+        <path fill="#009B77" d="M0 0h20v20H0z" />
+        <path fill="#DD2033" d="M20 20H0L20 0v20Z" />
         <path
           fill="#FBD381"
-          d="m-.477 50.85 22.628 22.627L74.477 21.15 51.849-1.477z"
+          d="m-.132 14.125 6.285 6.285L20.688 5.875 14.403-.41z"
         />
         <path
           fill="#31373D"
-          d="M17.908 69.054 3.766 54.912 55.061 3.617l14.142 14.142z"
+          d="m4.975 19.182-3.929-3.929 14.25-14.249 3.928 3.929z"
         />
         <path
           fill="#F5F7F8"
-          d="m16.857 44.77 2.128 5.5-3.463 4.478 5.793-.064 3.36 4.896 1.139-5.854 5.853-1.139-4.896-3.36.064-5.793-4.478 3.464-5.5-2.128ZM44.97 16.657l2.128 5.5-3.464 4.478 5.794-.064 3.36 4.896 1.139-5.854 5.853-1.139-4.896-3.36.064-5.793-4.478 3.464-5.5-2.128Z"
+          d="m4.683 12.436.59 1.528-.961 1.244 1.609-.018.933 1.36.316-1.626 1.626-.316-1.36-.934.018-1.609-1.244.962-1.527-.591Zm7.809-7.809.59 1.528-.961 1.244 1.609-.018.933 1.36.317-1.626 1.625-.317-1.36-.933.018-1.609-1.244.962-1.527-.591Z"
         />
       </g>
     </CountrySymbol>

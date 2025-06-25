@@ -14,7 +14,7 @@ const GM = forwardRef<SVGSVGElement, GMProps>(function GM(props: GMProps, ref) {
     <CountrySymbol
       data-testid="GM"
       aria-label="Gambia (the)"
-      viewBox="0 0 72 72"
+      viewBox="0 0 20 20"
       ref={ref}
       {...props}
     >
@@ -25,13 +25,13 @@ const GM = forwardRef<SVGSVGElement, GMProps>(function GM(props: GMProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#D9D9D9" />
       </mask>
       <g mask={`url(#${uid}-GM-a)`}>
-        <path fill="#F5F7F8" d="M0 0h72v72H0z" />
-        <path fill="#005EB8" d="M0 46V26h72v20z" />
-        <path fill="#DD2033" d="M0 20V0h72v20z" />
-        <path fill="#009B77" d="M0 72V52h72v20z" />
+        <path fill="#F5F7F8" d="M0 0h20v20H0z" />
+        <path fill="#005EB8" d="M0 12.778V7.222h20v5.556z" />
+        <path fill="#DD2033" d="M0 5.556V0h20v5.556z" />
+        <path fill="#009B77" d="M0 20v-5.556h20V20z" />
       </g>
     </CountrySymbol>
   );

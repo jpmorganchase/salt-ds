@@ -14,7 +14,7 @@ const LA = forwardRef<SVGSVGElement, LAProps>(function LA(props: LAProps, ref) {
     <CountrySymbol
       data-testid="LA"
       aria-label="Lao People&#39;s Democratic Republic (the)"
-      viewBox="0 0 72 72"
+      viewBox="0 0 20 20"
       ref={ref}
       {...props}
     >
@@ -25,12 +25,12 @@ const LA = forwardRef<SVGSVGElement, LAProps>(function LA(props: LAProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#D9D9D9" />
       </mask>
       <g mask={`url(#${uid}-LA-a)`}>
-        <path fill="#DD2033" d="M0 0h72v72H0z" />
-        <path fill="#004692" d="M0 54V18h72v36z" />
-        <circle cx="36" cy="36" r="15" fill="#F5F7F8" />
+        <path fill="#DD2033" d="M0 0h20v20H0z" />
+        <path fill="#004692" d="M0 15V5h20v10z" />
+        <circle cx="10" cy="10" r="4.167" fill="#F5F7F8" />
       </g>
     </CountrySymbol>
   );

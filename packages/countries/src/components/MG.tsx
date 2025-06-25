@@ -14,7 +14,7 @@ const MG = forwardRef<SVGSVGElement, MGProps>(function MG(props: MGProps, ref) {
     <CountrySymbol
       data-testid="MG"
       aria-label="Madagascar"
-      viewBox="0 0 72 72"
+      viewBox="0 0 20 20"
       ref={ref}
       {...props}
     >
@@ -25,12 +25,12 @@ const MG = forwardRef<SVGSVGElement, MGProps>(function MG(props: MGProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#D9D9D9" />
       </mask>
       <g mask={`url(#${uid}-MG-a)`}>
-        <path fill="#005B33" d="M0 72V36h72v36z" />
-        <path fill="#DD2033" d="M0 36V0h72v36z" />
-        <path fill="#F5F7F8" d="M0 0h24v72H0z" />
+        <path fill="#005B33" d="M0 20V10h20v10z" />
+        <path fill="#DD2033" d="M0 10V0h20v10z" />
+        <path fill="#F5F7F8" d="M0 0h6.667v20H0z" />
       </g>
     </CountrySymbol>
   );
