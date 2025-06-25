@@ -18,7 +18,7 @@ export const KeyEnterIcon = forwardRef<SVGSVGElement, KeyEnterIconProps>(
       >
         <path
           fillRule="evenodd"
-          d="M10 3H7V2h4v6H2.914l2.147 2.146-.707.708L1 7.5l3.354-3.354.707.708L2.914 7H10V3Z"
+          d="M10 3H7V2h4v6H2.914l2.147 2.146-.707.708L1 7.5l3.354-3.354.707.708L2.914 7H10z"
           clipRule="evenodd"
         />
       </Icon>

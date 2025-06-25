@@ -29,11 +29,11 @@ const PL_Sharp = forwardRef<SVGSVGElement, PL_SharpProps>(function PL_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-PL-a)`}>
-        <path fill="#DD2033" d="M0 0h29v20H0z" />
-        <path fill="#F5F7F8" d="M0 0h29v10H0z" />
+        <path fill="#dd2033" d="M0 0h29v20H0z" />
+        <path fill="#f5f7f8" d="M0 0h29v10H0z" />
       </g>
     </CountrySymbol>
   );

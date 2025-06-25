@@ -20,7 +20,7 @@ export const SemanticNeutralIcon = forwardRef<
     >
       <path
         fillRule="evenodd"
-        d="M11 6A5 5 0 1 1 1 6a5 5 0 0 1 10 0Zm1 0A6 6 0 1 1 0 6a6 6 0 0 1 12 0ZM4 6a1 1 0 1 0 0-2 1 1 0 0 0 0 2Zm5-1a1 1 0 1 1-2 0 1 1 0 0 1 2 0Zm0 4V8H3v1h6Z"
+        d="M11 6A5 5 0 1 1 1 6a5 5 0 0 1 10 0m1 0A6 6 0 1 1 0 6a6 6 0 0 1 12 0M4 6a1 1 0 1 0 0-2 1 1 0 0 0 0 2m5-1a1 1 0 1 1-2 0 1 1 0 0 1 2 0m0 4V8H3v1z"
         clipRule="evenodd"
       />
     </Icon>

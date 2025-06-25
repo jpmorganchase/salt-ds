@@ -25,14 +25,14 @@ const GF = forwardRef<SVGSVGElement, GFProps>(function GF(props: GFProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="10" cy="10" r="10" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#d9d9d9" />
       </mask>
       <g mask={`url(#${uid}-GF-a)`}>
-        <path fill="#FBD381" d="M0 20h20V0H0z" />
-        <path fill="#009B77" d="M20 0v20L0 0h20Z" />
+        <path fill="#fbd381" d="M0 20h20V0H0z" />
+        <path fill="#009b77" d="M20 0v20L0 0z" />
         <path
-          fill="#DD2033"
-          d="m10 6.667-.994 2.247-2.34.3L8.393 10.9l-.452 2.432L10 11.944l2.06 1.39-.452-2.433 1.725-1.688-2.34-.299L10 6.667Z"
+          fill="#dd2033"
+          d="m10 6.667-.994 2.247-2.34.3L8.393 10.9l-.452 2.432L10 11.944l2.06 1.39-.452-2.433 1.725-1.688-2.34-.299z"
         />
       </g>
     </CountrySymbol>

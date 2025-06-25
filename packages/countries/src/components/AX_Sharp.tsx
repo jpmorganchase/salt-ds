@@ -29,17 +29,17 @@ const AX_Sharp = forwardRef<SVGSVGElement, AX_SharpProps>(function AX_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-AX-a)`}>
-        <path fill="#005EB8" d="M0 0h29v20H0z" />
+        <path fill="#005eb8" d="M0 0h29v20H0z" />
         <path
-          fill="#FBD381"
-          d="M5.639 20v-5.32H0V5.32h5.639V0h9.425v5.32H29v9.36H15.064V20H5.639Z"
+          fill="#fbd381"
+          d="M5.639 20v-5.32H0V5.32h5.639V0h9.425v5.32H29v9.36H15.064V20z"
         />
         <path
-          fill="#DD2033"
-          d="M8.056 20h4.833v-7.6H29V7.6H12.889V0H8.056v7.6H0v4.8h8.056V20Z"
+          fill="#dd2033"
+          d="M8.056 20h4.833v-7.6H29V7.6H12.889V0H8.056v7.6H0v4.8h8.056z"
         />
       </g>
     </CountrySymbol>

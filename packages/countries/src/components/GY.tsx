@@ -29,29 +29,26 @@ const GY = forwardRef<SVGSVGElement, GYProps>(function GY(props: GYProps, ref) {
           cx="10"
           cy="10"
           r="10"
-          fill="#D9D9D9"
+          fill="#d9d9d9"
           transform="rotate(-90 10 10)"
         />
       </mask>
       <g mask={`url(#${uid}-GY-a)`}>
-        <path fill="#009B77" d="M20 20H0V0h20z" />
+        <path fill="#009b77" d="M20 20H0V0h20z" />
         <path
-          fill="#F5F7F8"
+          fill="#f5f7f8"
           fillRule="evenodd"
-          d="m17.662 9.861-20.05 9.217V.644l20.05 9.217Zm-1.995 0L-1.556 1.945v15.833L15.667 9.86Z"
+          d="m17.662 9.861-20.05 9.217V.644zm-1.995 0L-1.556 1.945v15.833z"
           clipRule="evenodd"
         />
+        <path fill="#fbd381" d="m15.667 9.861-17.223 7.917V1.944z" />
         <path
-          fill="#FBD381"
-          d="m15.667 9.861-17.223 7.917V1.944l17.223 7.917Z"
-        />
-        <path
-          fill="#31373D"
+          fill="#31373d"
           fillRule="evenodd"
-          d="M8.446 9.861-1 20.531V-.808L8.446 9.86Zm-1.113 0-7.5 8.472V1.39l7.5 8.472Z"
+          d="M8.446 9.861-1 20.531V-.808zm-1.113 0-7.5 8.472V1.39z"
           clipRule="evenodd"
         />
-        <path fill="#DD2033" d="m7.333 9.861-7.5 8.472V1.39l7.5 8.472Z" />
+        <path fill="#dd2033" d="m7.333 9.861-7.5 8.472V1.39z" />
       </g>
     </CountrySymbol>
   );

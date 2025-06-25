@@ -29,17 +29,17 @@ const GG_Sharp = forwardRef<SVGSVGElement, GG_SharpProps>(function GG_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-GG-a)`}>
-        <path fill="#F5F7F8" d="M0-4.4h29v28.8H0z" />
+        <path fill="#f5f7f8" d="M0-4.4h29v28.8H0z" />
         <path
-          fill="#DD2033"
-          d="M9.667 20h9.666v-5.2H29V5.2h-9.667V0H9.667v5.2H0v9.6h9.667V20Z"
+          fill="#dd2033"
+          d="M9.667 20h9.666v-5.2H29V5.2h-9.667V0H9.667v5.2H0v9.6h9.667z"
         />
         <path
-          fill="#F1B434"
-          d="M16.514 2.4h-4.028V8H2.416v4h10.07v5.6h4.028V12h10.07V8h-10.07V2.4Z"
+          fill="#f1b434"
+          d="M16.514 2.4h-4.028V8H2.416v4h10.07v5.6h4.028V12h10.07V8h-10.07z"
         />
       </g>
     </CountrySymbol>

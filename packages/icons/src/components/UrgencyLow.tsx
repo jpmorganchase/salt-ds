@@ -18,7 +18,7 @@ export const UrgencyLowIcon = forwardRef<SVGSVGElement, UrgencyLowIconProps>(
       >
         <path
           fillRule="evenodd"
-          d="m6 3.5 5.3 3.684-.575.816L6 4.715 1.275 8 .7 7.184 6 3.5Z"
+          d="m6 3.5 5.3 3.684-.575.816L6 4.715 1.275 8 .7 7.184z"
           clipRule="evenodd"
         />
       </Icon>

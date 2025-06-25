@@ -18,10 +18,10 @@ export const StorefrontSolidIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <path d="M10 1H2L0 5c.418.314.937.5 1.5.5S2.582 5.314 3 5c.418.314.937.5 1.5.5S5.582 5.314 6 5c.418.314.937.5 1.5.5S8.582 5.314 9 5c.418.314.937.5 1.5.5s1.082-.186 1.5-.5l-2-4ZM3 8h3v1H3V8Z" />
+      <path d="M10 1H2L0 5c.418.314.937.5 1.5.5S2.582 5.314 3 5c.418.314.937.5 1.5.5S5.582 5.314 6 5c.418.314.937.5 1.5.5S8.582 5.314 9 5c.418.314.937.5 1.5.5s1.082-.186 1.5-.5zM3 8h3v1H3z" />
       <path
         fillRule="evenodd"
-        d="M1 6v5H0v1h12v-1h-1V6H1Zm6 1H2v3h5V7Zm3 0H8v4h2V7Z"
+        d="M1 6v5H0v1h12v-1h-1V6zm6 1H2v3h5zm3 0H8v4h2z"
         clipRule="evenodd"
       />
     </Icon>

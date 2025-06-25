@@ -25,17 +25,17 @@ const KM = forwardRef<SVGSVGElement, KMProps>(function KM(props: KMProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="10" cy="10" r="10" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#d9d9d9" />
       </mask>
       <g mask={`url(#${uid}-KM-a)`}>
         <path fill="#004692" d="M0 20v-5h20v5z" />
-        <path fill="#DD2033" d="M0 15v-5h20v5z" />
-        <path fill="#F5F7F8" d="M0 10V5h20v5z" />
-        <path fill="#FBD381" d="M0 5V0h20v5z" />
-        <path fill="#009B77" d="M13.333 10 0 0v20l13.333-10Z" />
+        <path fill="#dd2033" d="M0 15v-5h20v5z" />
+        <path fill="#f5f7f8" d="M0 10V5h20v5z" />
+        <path fill="#fbd381" d="M0 5V0h20v5z" />
+        <path fill="#009b77" d="M13.333 10 0 0v20z" />
         <path
-          fill="#F5F7F8"
-          d="M2.889 10a3.89 3.89 0 0 1 3-3.787 3.889 3.889 0 1 0 0 7.574 3.89 3.89 0 0 1-3-3.787Zm4.167-1.389a.833.833 0 1 0 0-1.667.833.833 0 0 0 0 1.667Zm0 2.222a.833.833 0 1 0 0-1.666.833.833 0 0 0 0 1.666Zm.833 1.389a.833.833 0 1 1-1.667 0 .833.833 0 0 1 1.667 0Z"
+          fill="#f5f7f8"
+          d="M2.889 10a3.89 3.89 0 0 1 3-3.787 3.889 3.889 0 1 0 0 7.574 3.89 3.89 0 0 1-3-3.787m4.167-1.389a.833.833 0 1 0 0-1.667.833.833 0 0 0 0 1.667m0 2.222a.833.833 0 1 0 0-1.666.833.833 0 0 0 0 1.666m.833 1.389a.833.833 0 1 1-1.667 0 .833.833 0 0 1 1.667 0"
         />
       </g>
     </CountrySymbol>

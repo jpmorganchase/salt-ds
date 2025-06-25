@@ -18,12 +18,12 @@ export const ScalesIcon = forwardRef<SVGSVGElement, ScalesIconProps>(
       >
         <path
           fillRule="evenodd"
-          d="M6 10a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Zm0-1a1.5 1.5 0 0 0 .5-2.915V7.5h-1V6.085A1.5 1.5 0 0 0 6 9Z"
+          d="M6 10a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5m0-1a1.5 1.5 0 0 0 .5-2.915V7.5h-1V6.085A1.5 1.5 0 0 0 6 9"
           clipRule="evenodd"
         />
         <path
           fillRule="evenodd"
-          d="M2 2h3.5v1H1l-1 9h12l-1-9H6.5V2H10V1H2v1Zm-.105 2h8.21l.778 7H1.117l.778-7Z"
+          d="M2 2h3.5v1H1l-1 9h12l-1-9H6.5V2H10V1H2zm-.105 2h8.21l.778 7H1.117z"
           clipRule="evenodd"
         />
       </Icon>

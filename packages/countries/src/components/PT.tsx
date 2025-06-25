@@ -25,22 +25,22 @@ const PT = forwardRef<SVGSVGElement, PTProps>(function PT(props: PTProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="10" cy="10" r="10" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#d9d9d9" />
       </mask>
       <g mask={`url(#${uid}-PT-a)`}>
-        <path fill="#005B33" d="M0 0h7.778v20H0z" />
-        <path fill="#DD2033" d="M7.778 0H20v20H7.778z" />
-        <circle cx="7.611" cy="10" r="3.889" fill="#F1B434" />
+        <path fill="#005b33" d="M0 0h7.778v20H0z" />
+        <path fill="#dd2033" d="M7.778 0H20v20H7.778z" />
+        <circle cx="7.611" cy="10" r="3.889" fill="#f1b434" />
         <path
-          fill="#F5F7F8"
+          fill="#f5f7f8"
           fillRule="evenodd"
-          d="M5.111 7.778v2.728c0 1.098.667 2.087 1.685 2.498a2.176 2.176 0 0 0 1.63 0 2.694 2.694 0 0 0 1.685-2.498V7.778h-5Z"
+          d="M5.111 7.778v2.728c0 1.098.667 2.087 1.685 2.498a2.18 2.18 0 0 0 1.63 0 2.69 2.69 0 0 0 1.685-2.498V7.778z"
           clipRule="evenodd"
         />
         <path
-          fill="#DD2033"
+          fill="#dd2033"
           fillRule="evenodd"
-          d="M9 8.889H6.222v1.617c0 .645.392 1.226.99 1.468.256.103.542.103.798 0 .598-.242.99-.823.99-1.468V8.89ZM5.111 7.778v2.728c0 1.098.667 2.087 1.685 2.498a2.176 2.176 0 0 0 1.63 0 2.694 2.694 0 0 0 1.685-2.498V7.778h-5Z"
+          d="M9 8.889H6.222v1.617c0 .645.392 1.226.99 1.468.256.103.542.103.798 0 .598-.242.99-.823.99-1.468zM5.111 7.778v2.728c0 1.098.667 2.087 1.685 2.498a2.18 2.18 0 0 0 1.63 0 2.69 2.69 0 0 0 1.685-2.498V7.778z"
           clipRule="evenodd"
         />
       </g>

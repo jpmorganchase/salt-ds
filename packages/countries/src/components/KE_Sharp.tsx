@@ -29,20 +29,20 @@ const KE_Sharp = forwardRef<SVGSVGElement, KE_SharpProps>(function KE_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-KE-a)`}>
-        <path fill="#F5F7F8" d="M0 16.4V3.6h29v12.8z" />
-        <path fill="#DD2033" d="M0 14V6h29v8z" />
-        <path fill="#31373D" d="M0 3.6V0h29v3.6z" />
-        <path fill="#009B77" d="M0 20v-3.6h29V20z" />
+        <path fill="#f5f7f8" d="M0 16.4V3.6h29v12.8z" />
+        <path fill="#dd2033" d="M0 14V6h29v8z" />
+        <path fill="#31373d" d="M0 3.6V0h29v3.6z" />
+        <path fill="#009b77" d="M0 20v-3.6h29V20z" />
         <path
-          fill="#F5F7F8"
-          d="m8.942 1.6 1.395-.8 4.337 7.46L19.011.8l1.396.8-4.803 8.26 4.802 8.26-1.395.8-4.337-7.46-4.337 7.46-1.395-.8 4.802-8.26L8.942 1.6Z"
+          fill="#f5f7f8"
+          d="m8.942 1.6 1.395-.8 4.337 7.46L19.011.8l1.396.8-4.803 8.26 4.802 8.26-1.395.8-4.337-7.46-4.337 7.46-1.395-.8 4.802-8.26z"
         />
         <path
-          fill="#DD2033"
-          d="M14.543 2.8c9.872 8.088 0 14.4 0 14.4s-10.065-6.115 0-14.4Z"
+          fill="#dd2033"
+          d="M14.543 2.8c9.872 8.088 0 14.4 0 14.4s-10.065-6.115 0-14.4"
         />
         <mask
           id={`${uid}-KE-b`}
@@ -52,18 +52,18 @@ const KE_Sharp = forwardRef<SVGSVGElement, KE_SharpProps>(function KE_Sharp(
           style={{ maskType: "alpha" }}
         >
           <path
-            fill="#DD2033"
-            d="M14.543 2.8c9.872 8.088 0 14.4 0 14.4s-10.065-6.115 0-14.4Z"
+            fill="#dd2033"
+            d="M14.543 2.8c9.872 8.088 0 14.4 0 14.4s-10.065-6.115 0-14.4"
           />
         </mask>
         <g mask={`url(#${uid}-KE-b)`}>
           <path
-            fill="#31373D"
-            stroke="#31373D"
+            fill="#31373d"
+            stroke="#31373d"
             strokeWidth=".806"
             d="M10.472 3.203h.806v13.594h-.806zm7.25 0h.806v13.594h-.806z"
           />
-          <path fill="#F5F7F8" d="M13.775 2.8h1.611v14.4h-1.611z" />
+          <path fill="#f5f7f8" d="M13.775 2.8h1.611v14.4h-1.611z" />
         </g>
       </g>
     </CountrySymbol>

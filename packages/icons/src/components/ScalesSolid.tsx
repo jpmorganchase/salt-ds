@@ -16,10 +16,10 @@ export const ScalesSolidIcon = forwardRef<SVGSVGElement, ScalesSolidIconProps>(
         ref={ref}
         {...props}
       >
-        <path d="M6 9a1.5 1.5 0 0 0 .5-2.915V7.5h-1V6.085A1.5 1.5 0 0 0 6 9Z" />
+        <path d="M6 9a1.5 1.5 0 0 0 .5-2.915V7.5h-1V6.085A1.5 1.5 0 0 0 6 9" />
         <path
           fillRule="evenodd"
-          d="M5.5 2H2V1h8v1H6.5v1H11l1 9H0l1-9h4.5V2Zm.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z"
+          d="M5.5 2H2V1h8v1H6.5v1H11l1 9H0l1-9h4.5zm.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5"
           clipRule="evenodd"
         />
       </Icon>

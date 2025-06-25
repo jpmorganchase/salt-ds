@@ -29,13 +29,13 @@ const SO_Sharp = forwardRef<SVGSVGElement, SO_SharpProps>(function SO_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-SO-a)`}>
-        <path fill="#0091DA" d="M0 20V0h29v20z" />
+        <path fill="#0091da" d="M0 20V0h29v20z" />
         <path
-          fill="#F5F7F8"
-          d="m14.5 2.8-2.161 4.854L7.25 8.3l3.754 3.647-.985 5.253 4.481-3 4.48 3-.983-5.253L21.75 8.3l-5.089-.646L14.5 2.8Z"
+          fill="#f5f7f8"
+          d="m14.5 2.8-2.161 4.854L7.25 8.3l3.754 3.647-.985 5.253 4.481-3 4.48 3-.983-5.253L21.75 8.3l-5.089-.646z"
         />
       </g>
     </CountrySymbol>

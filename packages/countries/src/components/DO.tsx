@@ -25,14 +25,14 @@ const DO = forwardRef<SVGSVGElement, DOProps>(function DO(props: DOProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="10" cy="10" r="10" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#d9d9d9" />
       </mask>
       <g mask={`url(#${uid}-DO-a)`}>
-        <path fill="#DD2033" d="M0 10h10v10H0V10ZM10 0h10v10H10V0Z" />
-        <path fill="#004692" d="M10 0v10H0V0h10Zm10 10v10H10V10h10Z" />
+        <path fill="#dd2033" d="M0 10h10v10H0zM10 0h10v10H10z" />
+        <path fill="#004692" d="M10 0v10H0V0zm10 10v10H10V10z" />
         <path
-          fill="#F5F7F8"
-          d="M8.056 20h3.888v-8.056H20V8.056h-8.056V0H8.056v8.056H0v3.888h8.056V20Z"
+          fill="#f5f7f8"
+          d="M8.056 20h3.888v-8.056H20V8.056h-8.056V0H8.056v8.056H0v3.888h8.056z"
         />
       </g>
     </CountrySymbol>

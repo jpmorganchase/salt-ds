@@ -29,11 +29,11 @@ const JP_Sharp = forwardRef<SVGSVGElement, JP_SharpProps>(function JP_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-JP-a)`}>
-        <path fill="#F5F7F8" d="M0 0h29v20H0z" />
-        <ellipse cx="14.5" cy="10" fill="#DD2033" rx="6.444" ry="6.4" />
+        <path fill="#f5f7f8" d="M0 0h29v20H0z" />
+        <ellipse cx="14.5" cy="10" fill="#dd2033" rx="6.444" ry="6.4" />
       </g>
     </CountrySymbol>
   );

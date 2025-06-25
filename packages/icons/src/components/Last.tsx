@@ -16,7 +16,7 @@ export const LastIcon = forwardRef<SVGSVGElement, LastIconProps>(
         ref={ref}
         {...props}
       >
-        <path d="m7 6-4.326 4L2 9.231 5.495 6 2 2.769 2.674 2 7 6Zm2-4h1v8H9V2Z" />
+        <path d="m7 6-4.326 4L2 9.231 5.495 6 2 2.769 2.674 2zm2-4h1v8H9z" />
       </Icon>
     );
   },

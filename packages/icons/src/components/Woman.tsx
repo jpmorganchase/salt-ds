@@ -18,7 +18,7 @@ export const WomanIcon = forwardRef<SVGSVGElement, WomanIconProps>(
       >
         <path
           fillRule="evenodd"
-          d="M6 3a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Zm0-1a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1Zm-.25 10V9h.5v3h1V9H9L7.342 4.44a1.428 1.428 0 0 0-2.684 0L3 9h1.75v3h1Zm.652-7.218L7.572 8H4.428l1.17-3.218a.428.428 0 0 1 .804 0Z"
+          d="M6 3a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3m0-1a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1m-.25 10V9h.5v3h1V9H9L7.342 4.44a1.428 1.428 0 0 0-2.684 0L3 9h1.75v3zm.652-7.218L7.572 8H4.428l1.17-3.218a.428.428 0 0 1 .804 0"
           clipRule="evenodd"
         />
       </Icon>

@@ -20,10 +20,10 @@ export const MedicalKitSolidIcon = forwardRef<
     >
       <path
         fillRule="evenodd"
-        d="M9 1H3v10h6V1ZM5 8V7H4V5h1V4h2v1h1v2H7v1H5Z"
+        d="M9 1H3v10h6zM5 8V7H4V5h1V4h2v1h1v2H7v1z"
         clipRule="evenodd"
       />
-      <path d="M10 1v10h2V1h-2ZM0 1h2v10H0V1Z" />
+      <path d="M10 1v10h2V1zM0 1h2v10H0z" />
     </Icon>
   );
 });

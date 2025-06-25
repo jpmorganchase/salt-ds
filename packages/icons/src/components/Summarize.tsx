@@ -16,8 +16,8 @@ export const SummarizeIcon = forwardRef<SVGSVGElement, SummarizeIconProps>(
         ref={ref}
         {...props}
       >
-        <path d="M2 7.5a.5.5 0 0 0 .5.5h6.793L7.646 6.354l.708-.708 2.828 2.829-2.828 2.829-.708-.707L9.242 9H2.5A1.5 1.5 0 0 1 1 7.5V1h1v6.5Z" />
-        <path d="M7 7H3V6h4v1Zm2-2H3V4h6v1Zm0-2H3V2h6v1Z" />
+        <path d="M2 7.5a.5.5 0 0 0 .5.5h6.793L7.646 6.354l.708-.708 2.828 2.829-2.828 2.829-.708-.707L9.242 9H2.5A1.5 1.5 0 0 1 1 7.5V1h1z" />
+        <path d="M7 7H3V6h4zm2-2H3V4h6zm0-2H3V2h6z" />
       </Icon>
     );
   },

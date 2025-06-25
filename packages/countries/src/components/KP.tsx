@@ -25,16 +25,16 @@ const KP = forwardRef<SVGSVGElement, KPProps>(function KP(props: KPProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="10" cy="10" r="10" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#d9d9d9" />
       </mask>
       <g mask={`url(#${uid}-KP-a)`}>
         <path fill="#004692" d="M0 0h20v20H0z" />
-        <path fill="#F5F7F8" d="M0 16.667V3.334h20v13.333z" />
-        <path fill="#DD2033" d="M0 15V5h20v10z" />
+        <path fill="#f5f7f8" d="M0 16.667V3.334h20v13.333z" />
+        <path fill="#dd2033" d="M0 15V5h20v10z" />
         <path
-          fill="#F5F7F8"
+          fill="#f5f7f8"
           fillRule="evenodd"
-          d="M6.389 6.389a3.611 3.611 0 1 0 0 7.222 3.611 3.611 0 0 0 0-7.222ZM5.56 9.095l.828-1.873.828 1.873 1.95.25-1.438 1.406.377 2.027-1.717-1.158-1.717 1.158.377-2.027L3.61 9.344l1.95-.249Z"
+          d="M6.389 6.389a3.611 3.611 0 1 0 0 7.222 3.611 3.611 0 0 0 0-7.222M5.56 9.095l.828-1.873.828 1.873 1.95.25-1.438 1.406.377 2.027-1.717-1.158-1.717 1.158.377-2.027L3.61 9.344z"
           clipRule="evenodd"
         />
       </g>

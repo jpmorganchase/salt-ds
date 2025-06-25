@@ -18,7 +18,7 @@ export const MusicSolidIcon = forwardRef<SVGSVGElement, MusicSolidIconProps>(
       >
         <path
           fillRule="evenodd"
-          d="M5 9.5V1.883l6-.75V6.5a2.5 2.5 0 1 0 1 2V0L4 1v6.5a2.5 2.5 0 1 0 1 2Z"
+          d="M5 9.5V1.883l6-.75V6.5a2.5 2.5 0 1 0 1 2V0L4 1v6.5a2.5 2.5 0 1 0 1 2"
           clipRule="evenodd"
         />
       </Icon>

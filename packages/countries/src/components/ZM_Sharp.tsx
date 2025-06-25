@@ -29,16 +29,16 @@ const ZM_Sharp = forwardRef<SVGSVGElement, ZM_SharpProps>(function ZM_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-ZM-a)`}>
         <path fill="#008259" d="M0 0h29v20H0z" />
         <path
-          fill="#FF9E42"
-          d="M24.167 9.2H29v15.2h-4.833zM17.7 6a3.2 3.2 0 0 1-3.2-3.2h9.667a3.2 3.2 0 0 1-3.2 3.2H17.7Z"
+          fill="#ff9e42"
+          d="M24.167 9.2H29v15.2h-4.833zM17.7 6a3.2 3.2 0 0 1-3.2-3.2h9.667a3.2 3.2 0 0 1-3.2 3.2z"
         />
-        <path fill="#31373D" d="M19.333 9.2h4.833v15.2h-4.833z" />
-        <path fill="#DD2033" d="M14.5 9.2h4.833v15.2H14.5z" />
+        <path fill="#31373d" d="M19.333 9.2h4.833v15.2h-4.833z" />
+        <path fill="#dd2033" d="M14.5 9.2h4.833v15.2H14.5z" />
       </g>
     </CountrySymbol>
   );

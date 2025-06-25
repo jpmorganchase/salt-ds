@@ -18,7 +18,7 @@ export const ClockSolidIcon = forwardRef<SVGSVGElement, ClockSolidIconProps>(
       >
         <path
           fillRule="evenodd"
-          d="M12 6A6 6 0 1 1 0 6a6 6 0 0 1 12 0ZM6 3v3H3v1h4V3H6Z"
+          d="M12 6A6 6 0 1 1 0 6a6 6 0 0 1 12 0M6 3v3H3v1h4V3z"
           clipRule="evenodd"
         />
       </Icon>

@@ -25,11 +25,11 @@ const PW = forwardRef<SVGSVGElement, PWProps>(function PW(props: PWProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="10" cy="10" r="10" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#d9d9d9" />
       </mask>
       <g mask={`url(#${uid}-PW-a)`}>
-        <path fill="#3CCBDA" d="M0 0h20v20H0z" />
-        <circle cx="8.333" cy="10" r="4.444" fill="#FBD381" />
+        <path fill="#3ccbda" d="M0 0h20v20H0z" />
+        <circle cx="8.333" cy="10" r="4.444" fill="#fbd381" />
       </g>
     </CountrySymbol>
   );

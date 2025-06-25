@@ -25,20 +25,20 @@ const KE = forwardRef<SVGSVGElement, KEProps>(function KE(props: KEProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="10" cy="10" r="10" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#d9d9d9" />
       </mask>
       <g mask={`url(#${uid}-KE-a)`}>
-        <path fill="#F5F7F8" d="M0 14.444V5.555h20v8.89z" />
-        <path fill="#DD2033" d="M0 12.778V7.222h20v5.556z" />
-        <path fill="#31373D" d="M0 5.556V0h20v5.556z" />
-        <path fill="#009B77" d="M0 20v-5.556h20V20z" />
+        <path fill="#f5f7f8" d="M0 14.444V5.555h20v8.89z" />
+        <path fill="#dd2033" d="M0 12.778V7.222h20v5.556z" />
+        <path fill="#31373d" d="M0 5.556V0h20v5.556z" />
+        <path fill="#009b77" d="M0 20v-5.556h20V20z" />
         <path
-          fill="#F5F7F8"
-          d="m6.167 4.167.962-.556 2.991 5.18 2.991-5.18.962.556-3.312 5.736 3.312 5.736-.962.556-2.991-5.18-2.991 5.18-.962-.556 3.312-5.736-3.312-5.736Z"
+          fill="#f5f7f8"
+          d="m6.167 4.167.962-.556 2.991 5.18 2.991-5.18.962.556-3.312 5.736 3.312 5.736-.962.556-2.991-5.18-2.991 5.18-.962-.556 3.312-5.736z"
         />
         <path
-          fill="#DD2033"
-          d="M10.03 5c6.808 5.617 0 10 0 10s-6.942-4.246 0-10Z"
+          fill="#dd2033"
+          d="M10.03 5c6.808 5.617 0 10 0 10s-6.942-4.246 0-10"
         />
         <mask
           id={`${uid}-KE-b`}
@@ -48,16 +48,16 @@ const KE = forwardRef<SVGSVGElement, KEProps>(function KE(props: KEProps, ref) {
           style={{ maskType: "alpha" }}
         >
           <path
-            fill="#DD2033"
-            d="M10.03 5c6.808 5.617 0 10 0 10s-6.942-4.246 0-10Z"
+            fill="#dd2033"
+            d="M10.03 5c6.808 5.617 0 10 0 10s-6.942-4.246 0-10"
           />
         </mask>
         <g mask={`url(#${uid}-KE-b)`}>
           <path
-            fill="#31373D"
+            fill="#31373d"
             d="M6.944 5h1.111v10H6.944zm5 0h1.111v10h-1.111z"
           />
-          <path fill="#F5F7F8" d="M9.5 5h1.111v10H9.5z" />
+          <path fill="#f5f7f8" d="M9.5 5h1.111v10H9.5z" />
         </g>
       </g>
     </CountrySymbol>

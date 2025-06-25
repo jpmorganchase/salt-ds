@@ -25,14 +25,14 @@ const VC = forwardRef<SVGSVGElement, VCProps>(function VC(props: VCProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="10" cy="10" r="10" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#d9d9d9" />
       </mask>
       <g mask={`url(#${uid}-VC-a)`}>
-        <path fill="#009B77" d="M20 20H5V0h15z" />
+        <path fill="#009b77" d="M20 20H5V0h15z" />
         <path
-          fill="#FBD381"
+          fill="#fbd381"
           fillRule="evenodd"
-          d="M5 20h10V0H5v20Zm.556-11.193 1.838 3.25 1.81-3.25-1.81-3.251-1.838 3.25Zm7.05-3.251-1.81 3.25 1.81 3.251 1.838-3.25-1.838-3.251Zm-.803 7.922L10 10.238l-1.803 3.24L10 16.667l1.803-3.19Z"
+          d="M5 20h10V0H5zm.556-11.193 1.838 3.25 1.81-3.25-1.81-3.251zm7.05-3.251-1.81 3.25 1.81 3.251 1.838-3.25zm-.803 7.922L10 10.238l-1.803 3.24L10 16.667z"
           clipRule="evenodd"
         />
         <path fill="#004692" d="M5 20H0V0h5z" />

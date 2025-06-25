@@ -29,11 +29,11 @@ const LV_Sharp = forwardRef<SVGSVGElement, LV_SharpProps>(function LV_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-LV-a)`}>
-        <path fill="#85001F" d="M0 0h29v20H0z" />
-        <path fill="#F5F7F8" d="M0 12.8V7.2h29v5.6z" />
+        <path fill="#85001f" d="M0 0h29v20H0z" />
+        <path fill="#f5f7f8" d="M0 12.8V7.2h29v5.6z" />
       </g>
     </CountrySymbol>
   );

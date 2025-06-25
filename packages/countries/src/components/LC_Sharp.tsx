@@ -29,19 +29,16 @@ const LC_Sharp = forwardRef<SVGSVGElement, LC_SharpProps>(function LC_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-LC-a)`}>
-        <path fill="#0091DA" d="M29 20H0V0h29z" />
+        <path fill="#0091da" d="M29 20H0V0h29z" />
         <path
-          fill="#F5F7F8"
-          d="M14.472 4.463 8.603 17.6h-.922l6.791-15.2 6.79 15.2h-.92l-5.87-13.137Z"
+          fill="#f5f7f8"
+          d="M14.472 4.463 8.603 17.6h-.922l6.791-15.2 6.79 15.2h-.92z"
         />
-        <path
-          fill="#31373D"
-          d="m14.472 4.463 5.87 13.137H8.602l5.869-13.137Z"
-        />
-        <path fill="#F1B434" d="m14.5 10.746 6.847 6.854H7.653l6.847-6.854Z" />
+        <path fill="#31373d" d="m14.472 4.463 5.87 13.137H8.602z" />
+        <path fill="#f1b434" d="m14.5 10.746 6.847 6.854H7.653z" />
       </g>
     </CountrySymbol>
   );

@@ -18,13 +18,13 @@ export const AddToGridIcon = forwardRef<SVGSVGElement, AddToGridIconProps>(
       >
         <path
           fillRule="evenodd"
-          d="M5 12H0V7h5v5Zm-4-1h3V8H1v3Z"
+          d="M5 12H0V7h5zm-4-1h3V8H1z"
           clipRule="evenodd"
         />
-        <path d="M10 7v2h2v1h-2v2H9v-2H7V9h2V7h1Z" />
+        <path d="M10 7v2h2v1h-2v2H9v-2H7V9h2V7z" />
         <path
           fillRule="evenodd"
-          d="M5 5H0V0h5v5ZM1 4h3V1H1v3Zm11 1H7V0h5v5ZM8 4h3V1H8v3Z"
+          d="M5 5H0V0h5zM1 4h3V1H1zm11 1H7V0h5zM8 4h3V1H8z"
           clipRule="evenodd"
         />
       </Icon>

@@ -29,12 +29,12 @@ const YE_Sharp = forwardRef<SVGSVGElement, YE_SharpProps>(function YE_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-YE-a)`}>
-        <path fill="#31373D" d="M0 20v-6.4h29V20z" />
-        <path fill="#F5F7F8" d="M0 13.6V6.4h29v7.2z" />
-        <path fill="#DD2033" d="M0 6.4V0h29v6.4z" />
+        <path fill="#31373d" d="M0 20v-6.4h29V20z" />
+        <path fill="#f5f7f8" d="M0 13.6V6.4h29v7.2z" />
+        <path fill="#dd2033" d="M0 6.4V0h29v6.4z" />
       </g>
     </CountrySymbol>
   );

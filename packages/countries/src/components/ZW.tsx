@@ -25,24 +25,21 @@ const ZW = forwardRef<SVGSVGElement, ZWProps>(function ZW(props: ZWProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="10" cy="10" r="10" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#d9d9d9" />
       </mask>
       <g mask={`url(#${uid}-ZW-a)`}>
         <path fill="#008259" d="M0 20V0h20v20z" />
-        <path fill="#F1B434" d="M0 16.944V3.055h20v13.89z" />
-        <path fill="#DD2033" d="M0 14.166V5.833h20v8.333z" />
+        <path fill="#f1b434" d="M0 16.944V3.055h20v13.89z" />
+        <path fill="#dd2033" d="M0 14.166V5.833h20v8.333z" />
+        <path fill="#31373d" d="M13.148 8.611H20v2.778h-6.852L1.667 20V0z" />
+        <path fill="#f5f7f8" d="M13.333 10 0 0v20z" />
         <path
-          fill="#31373D"
-          d="M13.148 8.611H20v2.778h-6.852L1.667 20V0l11.481 8.611Z"
-        />
-        <path fill="#F5F7F8" d="M13.333 10 0 0v20l13.333-10Z" />
-        <path
-          fill="#DD2033"
-          d="m5 6.667-.994 2.247-2.34.299L3.393 10.9l-.452 2.432L5 11.944l2.06 1.39-.452-2.433 1.725-1.688-2.34-.3L5 6.667Z"
+          fill="#dd2033"
+          d="m5 6.667-.994 2.247-2.34.299L3.393 10.9l-.452 2.432L5 11.944l2.06 1.39-.452-2.433 1.725-1.688-2.34-.3z"
         />
         <path
-          fill="#FBD381"
-          d="m3.157 8.775.454 2.614.417.833h2.5l.555-.833-2.517-3.236a.794.794 0 0 0-1.308.079l-.758.38.657.163Z"
+          fill="#fbd381"
+          d="m3.157 8.775.454 2.614.417.833h2.5l.555-.833-2.517-3.236a.794.794 0 0 0-1.308.079l-.758.38z"
         />
       </g>
     </CountrySymbol>

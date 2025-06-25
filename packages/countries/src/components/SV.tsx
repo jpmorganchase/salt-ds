@@ -25,19 +25,19 @@ const SV = forwardRef<SVGSVGElement, SVProps>(function SV(props: SVProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="10" cy="10" r="10" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#d9d9d9" />
       </mask>
       <g mask={`url(#${uid}-SV-a)`}>
-        <path fill="#005EB8" d="M0 0h20v20H0z" />
-        <path fill="#F5F7F8" d="M0 14.444V5.555h20v8.89z" />
+        <path fill="#005eb8" d="M0 0h20v20H0z" />
+        <path fill="#f5f7f8" d="M0 14.444V5.555h20v8.89z" />
         <path
-          fill="#009B77"
+          fill="#009b77"
           fillRule="evenodd"
-          d="M5.556 6.596a5 5 0 1 0 8.889 0v.114l-1.446.723a3.333 3.333 0 1 1-5.999 0L5.557 6.71v-.114Z"
+          d="M5.556 6.596a5 5 0 1 0 8.889 0v.114l-1.446.723a3.333 3.333 0 1 1-5.999 0L5.557 6.71z"
           clipRule="evenodd"
         />
-        <path fill="#FBD381" d="m10 6.667 2.5 3.889h-5l2.5-3.89Z" />
-        <path fill="#009B77" d="M7.5 10.556h5L11.25 8.61h-2.5L7.5 10.555Z" />
+        <path fill="#fbd381" d="m10 6.667 2.5 3.889h-5z" />
+        <path fill="#009b77" d="M7.5 10.556h5L11.25 8.61h-2.5z" />
       </g>
     </CountrySymbol>
   );

@@ -29,13 +29,13 @@ const NE_Sharp = forwardRef<SVGSVGElement, NE_SharpProps>(function NE_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-NE-a)`}>
-        <path fill="#009B77" d="M0 20v-5.2h29V20z" />
-        <path fill="#F5F7F8" d="M0 14.8V5.2h29v9.6z" />
-        <path fill="#FF9E42" d="M0 5.2V0h29v5.2z" />
-        <ellipse cx="14.5" cy="10" fill="#FF9E42" rx="3.625" ry="3.6" />
+        <path fill="#009b77" d="M0 20v-5.2h29V20z" />
+        <path fill="#f5f7f8" d="M0 14.8V5.2h29v9.6z" />
+        <path fill="#ff9e42" d="M0 5.2V0h29v5.2z" />
+        <ellipse cx="14.5" cy="10" fill="#ff9e42" rx="3.625" ry="3.6" />
       </g>
     </CountrySymbol>
   );

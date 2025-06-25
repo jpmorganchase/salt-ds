@@ -25,11 +25,11 @@ const UA = forwardRef<SVGSVGElement, UAProps>(function UA(props: UAProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="10" cy="10" r="10" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#d9d9d9" />
       </mask>
       <g mask={`url(#${uid}-UA-a)`}>
-        <path fill="#005EB8" d="M20 0v10H0V0z" />
-        <path fill="#F1B434" d="M20 10v10H0V10z" />
+        <path fill="#005eb8" d="M20 0v10H0V0z" />
+        <path fill="#f1b434" d="M20 10v10H0V10z" />
       </g>
     </CountrySymbol>
   );

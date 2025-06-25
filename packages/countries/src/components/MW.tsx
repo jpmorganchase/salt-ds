@@ -25,15 +25,15 @@ const MW = forwardRef<SVGSVGElement, MWProps>(function MW(props: MWProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="10" cy="10" r="10" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#d9d9d9" />
       </mask>
       <g mask={`url(#${uid}-MW-a)`}>
-        <path fill="#009B77" d="M0 20v-6.667h20V20z" />
-        <path fill="#DD2033" d="M0 13.333V6.666h20v6.667z" />
-        <path fill="#31373D" d="M0 6.667V0h20v6.667z" />
+        <path fill="#009b77" d="M0 20v-6.667h20V20z" />
+        <path fill="#dd2033" d="M0 13.333V6.666h20v6.667z" />
+        <path fill="#31373d" d="M0 6.667V0h20v6.667z" />
         <path
-          fill="#DD2033"
-          d="M13.611 5.555H6.389l1.475-.73-.785-1.501 1.602.322.203-1.702L10 3.196l1.116-1.252.203 1.702 1.602-.322-.785 1.502 1.475.73Z"
+          fill="#dd2033"
+          d="M13.611 5.555H6.389l1.475-.73-.785-1.501 1.602.322.203-1.702L10 3.196l1.116-1.252.203 1.702 1.602-.322-.785 1.502z"
         />
       </g>
     </CountrySymbol>

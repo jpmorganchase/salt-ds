@@ -25,13 +25,13 @@ const AE = forwardRef<SVGSVGElement, AEProps>(function AE(props: AEProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="10" cy="10" r="10" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#d9d9d9" />
       </mask>
       <g mask={`url(#${uid}-AE-a)`}>
-        <path fill="#31373D" d="M6.667 20v-6.667H20V20z" />
-        <path fill="#F5F7F8" d="M6.666 13.333V6.666H20v6.667z" />
-        <path fill="#005B33" d="M6.667 6.666V0H20v6.667z" />
-        <path fill="#DD2033" d="M0 0h6.667v20H0z" />
+        <path fill="#31373d" d="M6.667 20v-6.667H20V20z" />
+        <path fill="#f5f7f8" d="M6.666 13.333V6.666H20v6.667z" />
+        <path fill="#005b33" d="M6.667 6.666V0H20v6.667z" />
+        <path fill="#dd2033" d="M0 0h6.667v20H0z" />
       </g>
     </CountrySymbol>
   );

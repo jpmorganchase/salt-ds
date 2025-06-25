@@ -29,17 +29,17 @@ const MZ_Sharp = forwardRef<SVGSVGElement, MZ_SharpProps>(function MZ_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-MZ-a)`}>
-        <path fill="#F5F7F8" d="M0 16.4V3.6h29v12.8z" />
-        <path fill="#31373D" d="M0 14V6h29v8z" />
-        <path fill="#009B77" d="M0 3.6V0h29v3.6z" />
-        <path fill="#FBD381" d="M0 20v-3.6h29V20z" />
-        <path fill="#DD2033" d="M18.125 10 0-4.4v28.8L18.125 10Z" />
+        <path fill="#f5f7f8" d="M0 16.4V3.6h29v12.8z" />
+        <path fill="#31373d" d="M0 14V6h29v8z" />
+        <path fill="#009b77" d="M0 3.6V0h29v3.6z" />
+        <path fill="#fbd381" d="M0 20v-3.6h29V20z" />
+        <path fill="#dd2033" d="M18.125 10 0-4.4v28.8z" />
         <path
-          fill="#FBD381"
-          d="m7.653 6-1.08 2.427-2.545.323 1.877 1.823-.493 2.627 2.24-1.5 2.241 1.5-.492-2.627 1.877-1.823-2.545-.323L7.653 6Z"
+          fill="#fbd381"
+          d="m7.653 6-1.08 2.427-2.545.323 1.877 1.823-.493 2.627 2.24-1.5 2.241 1.5-.492-2.627 1.877-1.823-2.545-.323z"
         />
       </g>
     </CountrySymbol>

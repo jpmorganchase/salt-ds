@@ -29,13 +29,13 @@ const AI_Sharp = forwardRef<SVGSVGElement, AI_SharpProps>(function AI_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-AI-a)`}>
         <path fill="#004692" d="M0 0h29v20H0z" />
         <path
-          fill="#F5F7F8"
-          d="M17.803 8.4h8.458v2.98a6.69 6.69 0 0 1-4.229 6.22 6.69 6.69 0 0 1-4.23-6.22V8.4Z"
+          fill="#f5f7f8"
+          d="M17.803 8.4h8.458v2.98a6.69 6.69 0 0 1-4.229 6.22 6.69 6.69 0 0 1-4.23-6.22z"
         />
         <mask
           id={`${uid}-AI-b`}
@@ -44,17 +44,17 @@ const AI_Sharp = forwardRef<SVGSVGElement, AI_SharpProps>(function AI_Sharp(
           maskUnits="userSpaceOnUse"
           style={{ maskType: "alpha" }}
         >
-          <path fill="#D9D9D9" d="M17.803 14.4h8.861v3.2h-8.861z" />
+          <path fill="#d9d9d9" d="M17.803 14.4h8.861v3.2h-8.861z" />
         </mask>
         <g mask={`url(#${uid}-AI-b)`}>
           <path
-            fill="#3CCBDA"
-            d="M17.803 8.4h8.458v2.98a6.69 6.69 0 0 1-4.229 6.22 6.69 6.69 0 0 1-4.23-6.22V8.4Z"
+            fill="#3ccbda"
+            d="M17.803 8.4h8.458v2.98a6.69 6.69 0 0 1-4.229 6.22 6.69 6.69 0 0 1-4.23-6.22z"
           />
         </g>
-        <ellipse cx="20.824" cy="11.8" fill="#FF9E42" rx="1.007" ry="1" />
-        <ellipse cx="22.838" cy="10.2" fill="#FF9E42" rx="1.007" ry="1" />
-        <ellipse cx="23.643" cy="12.6" fill="#FF9E42" rx="1.007" ry="1" />
+        <ellipse cx="20.824" cy="11.8" fill="#ff9e42" rx="1.007" ry="1" />
+        <ellipse cx="22.838" cy="10.2" fill="#ff9e42" rx="1.007" ry="1" />
+        <ellipse cx="23.643" cy="12.6" fill="#ff9e42" rx="1.007" ry="1" />
         <mask
           id={`${uid}-AI-c`}
           x="0"
@@ -62,19 +62,19 @@ const AI_Sharp = forwardRef<SVGSVGElement, AI_SharpProps>(function AI_Sharp(
           maskUnits="userSpaceOnUse"
           style={{ maskType: "alpha" }}
         >
-          <path fill="#002F6C" d="M0 12V0h14.5v12H0Z" />
+          <path fill="#002f6c" d="M0 12V0h14.5v12z" />
         </mask>
         <g mask={`url(#${uid}-AI-c)`}>
           <path
-            fill="#F5F7F8"
-            d="m5.152.402-.855.848L14.85 11.73l.854-.85L5.152.403ZM2.873 2.665 1.45 4.079l10.552 10.479 1.424-1.415L2.873 2.665Z"
+            fill="#f5f7f8"
+            d="m5.152.402-.855.848L14.85 11.73l.854-.85zM2.873 2.665 1.45 4.079l10.552 10.479 1.424-1.415z"
           />
           <path
-            fill="#DD2033"
-            d="M2.873 2.665 4.297 1.25 14.85 11.73l-1.424 1.413L2.873 2.665Z"
+            fill="#dd2033"
+            d="M2.873 2.665 4.297 1.25 14.85 11.73l-1.424 1.413z"
           />
-          <path fill="#F5F7F8" d="M2.417 14h1.611V3.6H14.5V2H2.417v12Z" />
-          <path fill="#DD2033" d="M0 14h2.417V2h12.084V0H0v14Z" />
+          <path fill="#f5f7f8" d="M2.417 14h1.611V3.6H14.5V2H2.417z" />
+          <path fill="#dd2033" d="M0 14h2.417V2h12.084V0H0z" />
         </g>
       </g>
     </CountrySymbol>

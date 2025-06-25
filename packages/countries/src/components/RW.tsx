@@ -25,12 +25,12 @@ const RW = forwardRef<SVGSVGElement, RWProps>(function RW(props: RWProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="10" cy="10" r="10" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#d9d9d9" />
       </mask>
       <g mask={`url(#${uid}-RW-a)`}>
-        <path fill="#005B33" d="M0 20v-5h20v5z" />
-        <path fill="#0091DA" d="M0 10V0h20v10z" />
-        <path fill="#FBD381" d="M0 15v-5h20v5z" />
+        <path fill="#005b33" d="M0 20v-5h20v5z" />
+        <path fill="#0091da" d="M0 10V0h20v10z" />
+        <path fill="#fbd381" d="M0 15v-5h20v5z" />
       </g>
     </CountrySymbol>
   );

@@ -29,13 +29,13 @@ const QA_Sharp = forwardRef<SVGSVGElement, QA_SharpProps>(function QA_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-QA-a)`}>
-        <path fill="#F5F7F8" d="M0-4.4h29v28.8H0z" />
+        <path fill="#f5f7f8" d="M0-4.4h29v28.8H0z" />
         <path
-          fill="#85001F"
-          d="M8.056-4.4H29v28.8H8.056l4.027-3.6-4.027-3.6 4.027-3.6L8.056 10l4.027-3.6-4.027-3.6 4.027-3.6-4.027-3.6Z"
+          fill="#85001f"
+          d="M8.056-4.4H29v28.8H8.056l4.027-3.6-4.027-3.6 4.027-3.6L8.056 10l4.027-3.6-4.027-3.6 4.027-3.6z"
         />
       </g>
     </CountrySymbol>

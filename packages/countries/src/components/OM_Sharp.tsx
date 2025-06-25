@@ -29,14 +29,14 @@ const OM_Sharp = forwardRef<SVGSVGElement, OM_SharpProps>(function OM_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-OM-a)`}>
-        <path fill="#DD2033" d="M0 0h29v20H0z" />
-        <path fill="#005B33" d="M13.694 20v-6.4H29V20z" />
+        <path fill="#dd2033" d="M0 0h29v20H0z" />
+        <path fill="#005b33" d="M13.694 20v-6.4H29V20z" />
         <path
-          fill="#F5F7F8"
-          d="M13.695 6.4V0H29v6.4zm-8.8-4L3.222 4.06 5.174 6 3.222 7.938 4.895 9.6l1.952-1.94L8.8 9.6l1.673-1.662L8.52 6l1.952-1.939L8.8 2.4 6.847 4.338 4.895 2.4Z"
+          fill="#f5f7f8"
+          d="M13.695 6.4V0H29v6.4zm-8.8-4L3.222 4.06 5.174 6 3.222 7.938 4.895 9.6l1.952-1.94L8.8 9.6l1.673-1.662L8.52 6l1.952-1.939L8.8 2.4 6.847 4.338z"
         />
       </g>
     </CountrySymbol>

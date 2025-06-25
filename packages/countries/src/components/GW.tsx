@@ -25,15 +25,15 @@ const GW = forwardRef<SVGSVGElement, GWProps>(function GW(props: GWProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="10" cy="10" r="10" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#d9d9d9" />
       </mask>
       <g mask={`url(#${uid}-GW-a)`}>
-        <path fill="#009B77" d="M0 20V10h20v10z" />
-        <path fill="#F1B434" d="M0 10V0h20v10z" />
-        <path fill="#DD2033" d="M0 0h8.889v20H0z" />
+        <path fill="#009b77" d="M0 20V10h20v10z" />
+        <path fill="#f1b434" d="M0 10V0h20v10z" />
+        <path fill="#dd2033" d="M0 0h8.889v20H0z" />
         <path
-          fill="#31373D"
-          d="m4.722 6.944-.91 2.06-2.145.275 1.582 1.547-.415 2.23 1.888-1.274 1.889 1.274-.415-2.23L7.778 9.28l-2.145-.274-.91-2.06Z"
+          fill="#31373d"
+          d="m4.722 6.944-.91 2.06-2.145.275 1.582 1.547-.415 2.23 1.888-1.274 1.889 1.274-.415-2.23L7.778 9.28l-2.145-.274z"
         />
       </g>
     </CountrySymbol>

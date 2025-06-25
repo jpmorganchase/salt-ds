@@ -25,13 +25,13 @@ const FI = forwardRef<SVGSVGElement, FIProps>(function FI(props: FIProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="10" cy="10" r="10" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#d9d9d9" />
       </mask>
       <g mask={`url(#${uid}-FI-a)`}>
-        <path fill="#F5F7F8" d="M0 0h20v20H0z" />
+        <path fill="#f5f7f8" d="M0 0h20v20H0z" />
         <path
-          fill="#005EB8"
-          d="M3.889 20h3.889v-8.056H20V8.056H7.778V0h-3.89v8.056H0v3.888h3.889V20Z"
+          fill="#005eb8"
+          d="M3.889 20h3.889v-8.056H20V8.056H7.778V0h-3.89v8.056H0v3.888h3.889z"
         />
       </g>
     </CountrySymbol>

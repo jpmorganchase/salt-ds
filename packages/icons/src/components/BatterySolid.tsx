@@ -20,7 +20,7 @@ export const BatterySolidIcon = forwardRef<
     >
       <path
         fillRule="evenodd"
-        d="M8 0H4v1H3v11h6V1H8V0ZM4 2v1h4V2H4Z"
+        d="M8 0H4v1H3v11h6V1H8zM4 2v1h4V2z"
         clipRule="evenodd"
       />
     </Icon>

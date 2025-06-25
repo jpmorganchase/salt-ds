@@ -29,11 +29,11 @@ const LS_Sharp = forwardRef<SVGSVGElement, LS_SharpProps>(function LS_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-LS-a)`}>
-        <path fill="#F5F7F8" d="M0 20V0h29v20z" />
-        <path fill="#009B77" d="M0 20v-4.4h29V20z" />
+        <path fill="#f5f7f8" d="M0 20V0h29v20z" />
+        <path fill="#009b77" d="M0 20v-4.4h29V20z" />
         <path fill="#004692" d="M0 4.4V0h29v4.4z" />
         <mask
           id={`${uid}-LS-b`}
@@ -43,22 +43,22 @@ const LS_Sharp = forwardRef<SVGSVGElement, LS_SharpProps>(function LS_Sharp(
           style={{ maskType: "alpha" }}
         >
           <path
-            fill="#D9D9D9"
+            fill="#d9d9d9"
             d="m14.406 14.863-3.099-3.077 3.1-3.077 3.098 3.077z"
           />
         </mask>
-        <g fill="#31373D" stroke="#31373D" mask={`url(#${uid}-LS-b)`}>
+        <g fill="#31373d" stroke="#31373d" mask={`url(#${uid}-LS-b)`}>
           <circle
             cx="4.367"
             cy="4.367"
             r="3.867"
-            transform="scale(-1.00345 -.99653) rotate(45 10.826 -24.787)"
+            transform="matrix(-.70955 -.70466 .70955 -.70466 14.406 14.863)"
           />
           <circle
             cx="4.367"
             cy="4.367"
             r="3.867"
-            transform="scale(-1.00345 -.99653) rotate(45 10.826 -24.787)"
+            transform="matrix(-.70955 -.70466 .70955 -.70466 14.406 14.863)"
           />
         </g>
         <mask
@@ -69,19 +69,19 @@ const LS_Sharp = forwardRef<SVGSVGElement, LS_SharpProps>(function LS_Sharp(
           style={{ maskType: "alpha" }}
         >
           <path
-            fill="#D9D9D9"
-            d="m9.586 12.784 4.85-4.816 4.849 4.816-4.85 4.816-4.849-4.816Z"
+            fill="#d9d9d9"
+            d="m9.586 12.784 4.85-4.816 4.849 4.816-4.85 4.816z"
           />
         </mask>
         <g mask={`url(#${uid}-LS-c)`}>
           <path
-            fill="#31373D"
+            fill="#31373d"
             fillRule="evenodd"
-            d="M17.497 11.758a4.33 4.33 0 0 0 0-6.154 4.403 4.403 0 0 0-6.197 0 4.33 4.33 0 0 0 0 6.154 4.403 4.403 0 0 0 6.197 0Zm1.033 1.026a5.774 5.774 0 0 0 0-8.205 5.871 5.871 0 0 0-8.262 0 5.774 5.774 0 0 0 0 8.205 5.871 5.871 0 0 0 8.262 0Z"
+            d="M17.497 11.758a4.33 4.33 0 0 0 0-6.154 4.403 4.403 0 0 0-6.196 0 4.33 4.33 0 0 0 0 6.154 4.403 4.403 0 0 0 6.196 0m1.033 1.026a5.774 5.774 0 0 0 0-8.205 5.87 5.87 0 0 0-8.262 0 5.774 5.774 0 0 0 0 8.205 5.87 5.87 0 0 0 8.262 0"
             clipRule="evenodd"
           />
         </g>
-        <path fill="#31373D" d="M13.614 5.2h1.611v4.4h-1.611z" />
+        <path fill="#31373d" d="M13.614 5.2h1.611v4.4h-1.611z" />
       </g>
     </CountrySymbol>
   );

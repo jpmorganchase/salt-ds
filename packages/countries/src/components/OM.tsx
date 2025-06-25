@@ -25,14 +25,14 @@ const OM = forwardRef<SVGSVGElement, OMProps>(function OM(props: OMProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="10" cy="10" r="10" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#d9d9d9" />
       </mask>
       <g mask={`url(#${uid}-OM-a)`}>
-        <path fill="#DD2033" d="M0 0h20v20H0z" />
-        <path fill="#005B33" d="M10.278 20v-6.667H20V20z" />
+        <path fill="#dd2033" d="M0 0h20v20H0z" />
+        <path fill="#005b33" d="M10.278 20v-6.667H20V20z" />
         <path
-          fill="#F5F7F8"
-          d="M10.278 6.667V0H20v6.667zM4.292 4.113 3.113 5.292l1.375 1.375-1.375 1.375L4.292 9.22l1.375-1.375L7.042 9.22 8.22 8.042 6.845 6.667 8.22 5.292 7.042 4.113 5.667 5.488 4.292 4.113Z"
+          fill="#f5f7f8"
+          d="M10.278 6.667V0H20v6.667zM4.292 4.113 3.113 5.292l1.375 1.375-1.375 1.375L4.292 9.22l1.375-1.375L7.042 9.22 8.22 8.042 6.845 6.667 8.22 5.292 7.042 4.113 5.667 5.488z"
         />
       </g>
     </CountrySymbol>

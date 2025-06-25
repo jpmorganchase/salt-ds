@@ -25,12 +25,12 @@ const DE = forwardRef<SVGSVGElement, DEProps>(function DE(props: DEProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="10" cy="10" r="10" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#d9d9d9" />
       </mask>
       <g mask={`url(#${uid}-DE-a)`}>
-        <path fill="#F1B434" d="M0 20v-6.667h20V20z" />
-        <path fill="#DD2033" d="M0 13.333V6.666h20v6.667z" />
-        <path fill="#31373D" stroke="#31373D" d="M.5 6.167V.5h19v5.667z" />
+        <path fill="#f1b434" d="M0 20v-6.667h20V20z" />
+        <path fill="#dd2033" d="M0 13.333V6.666h20v6.667z" />
+        <path fill="#31373d" stroke="#31373d" d="M.5 6.167V.5h19v5.667z" />
       </g>
     </CountrySymbol>
   );

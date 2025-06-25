@@ -16,10 +16,10 @@ export const RunReportIcon = forwardRef<SVGSVGElement, RunReportIconProps>(
         ref={ref}
         {...props}
       >
-        <path d="m4 5 4 2.5L4 10V5Z" />
+        <path d="m4 5 4 2.5L4 10z" />
         <path
           fillRule="evenodd"
-          d="M1 0v12h10V2L9 0H1Zm6 4h3v7H2V1h5v3Zm3-1v-.586L8.586 1H8v2h2Z"
+          d="M1 0v12h10V2L9 0zm6 4h3v7H2V1h5zm3-1v-.586L8.586 1H8v2z"
           clipRule="evenodd"
         />
       </Icon>

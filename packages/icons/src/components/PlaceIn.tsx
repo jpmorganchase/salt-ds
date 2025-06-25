@@ -16,8 +16,8 @@ export const PlaceInIcon = forwardRef<SVGSVGElement, PlaceInIconProps>(
         ref={ref}
         {...props}
       >
-        <path d="M0 12h12V6h-1v5H1V1h5V0H0v12Z" />
-        <path d="M6 6V2h1v2.293L11.293 0 12 .707 7.707 5H10v1H6Z" />
+        <path d="M0 12h12V6h-1v5H1V1h5V0H0z" />
+        <path d="M6 6V2h1v2.293L11.293 0 12 .707 7.707 5H10v1z" />
       </Icon>
     );
   },

@@ -29,11 +29,11 @@ const UA_Sharp = forwardRef<SVGSVGElement, UA_SharpProps>(function UA_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-UA-a)`}>
-        <path fill="#005EB8" d="M29 0v10H0V0z" />
-        <path fill="#F1B434" d="M29 10v10H0V10z" />
+        <path fill="#005eb8" d="M29 0v10H0V0z" />
+        <path fill="#f1b434" d="M29 10v10H0V10z" />
       </g>
     </CountrySymbol>
   );

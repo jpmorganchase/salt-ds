@@ -25,19 +25,19 @@ const FO = forwardRef<SVGSVGElement, FOProps>(function FO(props: FOProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="10" cy="10" r="10" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#d9d9d9" />
       </mask>
       <g mask={`url(#${uid}-FO-a)`}>
-        <path fill="#F5F7F8" d="M0 0h20v20H0z" />
+        <path fill="#f5f7f8" d="M0 0h20v20H0z" />
         <path
           fill="#004692"
           fillRule="evenodd"
-          d="M5.556 20H3.889v-6.75H0v-1.667h3.889V8.417H0V6.75h3.889V0h1.667v6.75h3.166V0h1.667v6.75H20v1.667h-9.611v3.166H20v1.667h-9.611V20H8.722v-6.75H5.556V20ZM8.722 8.417H5.556v3.166h3.166V8.417Z"
+          d="M5.556 20H3.889v-6.75H0v-1.667h3.889V8.417H0V6.75h3.889V0h1.667v6.75h3.166V0h1.667v6.75H20v1.667h-9.611v3.166H20v1.667h-9.611V20H8.722v-6.75H5.556zM8.722 8.417H5.556v3.166h3.166z"
           clipRule="evenodd"
         />
         <path
-          fill="#DD2033"
-          d="M5.556 20h3.333v-8.333H20V8.333H8.889V0H5.556v8.333H0v3.334h5.556V20Z"
+          fill="#dd2033"
+          d="M5.556 20h3.333v-8.333H20V8.333H8.889V0H5.556v8.333H0v3.334h5.556z"
         />
       </g>
     </CountrySymbol>

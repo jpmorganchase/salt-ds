@@ -29,14 +29,14 @@ const GN = forwardRef<SVGSVGElement, GNProps>(function GN(props: GNProps, ref) {
           cx="10"
           cy="10"
           r="10"
-          fill="#D9D9D9"
+          fill="#d9d9d9"
           transform="matrix(0 -1 -1 0 20 20)"
         />
       </mask>
       <g mask={`url(#${uid}-GN-a)`}>
-        <path fill="#DD2033" d="M0 20h6.667V0H0z" />
-        <path fill="#FBD381" d="M6.667 20h6.667V0H6.667z" />
-        <path fill="#009B77" d="M13.333 20H20V0h-6.667z" />
+        <path fill="#dd2033" d="M0 20h6.667V0H0z" />
+        <path fill="#fbd381" d="M6.667 20h6.667V0H6.667z" />
+        <path fill="#009b77" d="M13.333 20H20V0h-6.667z" />
       </g>
     </CountrySymbol>
   );

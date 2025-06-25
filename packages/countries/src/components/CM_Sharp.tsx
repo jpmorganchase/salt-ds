@@ -29,15 +29,15 @@ const CM_Sharp = forwardRef<SVGSVGElement, CM_SharpProps>(function CM_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-CM-a)`}>
-        <path fill="#FBD381" d="M0 0h29v20H0z" />
-        <path fill="#005B33" d="M0 0h9.264v20H0z" />
+        <path fill="#fbd381" d="M0 0h29v20H0z" />
+        <path fill="#005b33" d="M0 0h9.264v20H0z" />
         <path
-          fill="#DD2033"
+          fill="#dd2033"
           fillRule="evenodd"
-          d="M19.736-4.4H9.264v28.8h10.472V-4.4ZM13.42 8.827 14.5 6.4l1.08 2.427 2.545.323-1.877 1.823.492 2.627-2.24-1.5-2.24 1.5.492-2.627-1.877-1.823 2.544-.323Z"
+          d="M19.736-4.4H9.264v28.8h10.472zM13.42 8.827 14.5 6.4l1.08 2.427 2.545.323-1.877 1.823.492 2.627-2.24-1.5-2.24 1.5.492-2.627-1.877-1.823z"
           clipRule="evenodd"
         />
       </g>

@@ -29,15 +29,15 @@ const TL_Sharp = forwardRef<SVGSVGElement, TL_SharpProps>(function TL_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-TL-a)`}>
-        <path fill="#DD2033" d="M0 0h29v20H0z" />
-        <path fill="#FBD381" d="M23.764 10 0-4.4v28.8L23.764 10Z" />
-        <path fill="#31373D" d="M16.111 10 0-4.4v28.8L16.111 10Z" />
+        <path fill="#dd2033" d="M0 0h29v20H0z" />
+        <path fill="#fbd381" d="M23.764 10 0-4.4v28.8z" />
+        <path fill="#31373d" d="M16.111 10 0-4.4v28.8z" />
         <path
-          fill="#F5F7F8"
-          d="m3.881 7.454.964 2.475-1.569 2.016 2.625-.03 1.522 2.204.517-2.634 2.652-.513-2.218-1.511.029-2.608-2.03 1.559-2.492-.958Z"
+          fill="#f5f7f8"
+          d="m3.881 7.454.964 2.475-1.569 2.016 2.625-.03 1.522 2.204.517-2.634 2.652-.513-2.218-1.511.029-2.608-2.03 1.559z"
         />
       </g>
     </CountrySymbol>

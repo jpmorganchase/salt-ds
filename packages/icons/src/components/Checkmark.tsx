@@ -18,7 +18,7 @@ export const CheckmarkIcon = forwardRef<SVGSVGElement, CheckmarkIconProps>(
       >
         <path
           fillRule="evenodd"
-          d="M4.952 9.294 10 3.73 8.9 2.706 4.875 7.163 3.027 5.446 2 6.546l2.952 2.748Z"
+          d="M4.952 9.294 10 3.73 8.9 2.706 4.875 7.163 3.027 5.446 2 6.546z"
           clipRule="evenodd"
         />
       </Icon>
