@@ -1,3 +1,4 @@
+import { withDateMock } from ".storybook/decorators/withDateMock";
 import {
   Button,
   FlowLayout,
@@ -14,6 +15,7 @@ import { Fragment, type ReactNode, useState } from "react";
 export default {
   title: "Lab/Toast Group",
   component: ToastGroup,
+  decorators: [withDateMock],
 } as Meta<typeof ToastGroup>;
 
 const InfoToast = () => {
