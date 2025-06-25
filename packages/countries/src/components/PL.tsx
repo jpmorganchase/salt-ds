@@ -14,7 +14,7 @@ const PL = forwardRef<SVGSVGElement, PLProps>(function PL(props: PLProps, ref) {
     <CountrySymbol
       data-testid="PL"
       aria-label="Poland"
-      viewBox="0 0 72 72"
+      viewBox="0 0 20 20"
       ref={ref}
       {...props}
     >
@@ -25,11 +25,11 @@ const PL = forwardRef<SVGSVGElement, PLProps>(function PL(props: PLProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#D9D9D9" />
       </mask>
       <g mask={`url(#${uid}-PL-a)`}>
-        <path fill="#DD2033" d="M0 0h72v72H0z" />
-        <path fill="#F5F7F8" d="M0 0h72v36H0z" />
+        <path fill="#DD2033" d="M0 0h20v20H0z" />
+        <path fill="#F5F7F8" d="M0 0h20v10H0z" />
       </g>
     </CountrySymbol>
   );

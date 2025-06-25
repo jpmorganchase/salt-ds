@@ -14,7 +14,7 @@ const TT = forwardRef<SVGSVGElement, TTProps>(function TT(props: TTProps, ref) {
     <CountrySymbol
       data-testid="TT"
       aria-label="Trinidad and Tobago"
-      viewBox="0 0 72 72"
+      viewBox="0 0 20 20"
       ref={ref}
       {...props}
     >
@@ -25,17 +25,17 @@ const TT = forwardRef<SVGSVGElement, TTProps>(function TT(props: TTProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#D9D9D9" />
       </mask>
       <g mask={`url(#${uid}-TT-a)`}>
-        <path fill="#DD2033" d="M0 0h72v72H0z" />
+        <path fill="#DD2033" d="M0 0h20v20H0z" />
         <path
           fill="#F5F7F8"
-          d="M-.062 21.15 21.15-.062 72.063 50.85 50.85 72.062z"
+          d="M-.017 5.875 5.875-.017l14.142 14.142-5.892 5.892z"
         />
         <path
           fill="#31373D"
-          d="M16.908 4.18 4.18 16.908 55.092 67.82 67.82 55.092z"
+          d="M4.697 1.161 1.16 4.697l14.142 14.142 3.536-3.536z"
         />
       </g>
     </CountrySymbol>

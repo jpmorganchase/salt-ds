@@ -17,7 +17,7 @@ const JE_Sharp = forwardRef<SVGSVGElement, JE_SharpProps>(function JE_Sharp(
     <CountrySymbol
       data-testid="JE_Sharp"
       aria-label="Jersey"
-      viewBox="0 0 72 50"
+      viewBox="0 0 29 20"
       ref={ref}
       sharp
       {...props}
@@ -29,17 +29,17 @@ const JE_Sharp = forwardRef<SVGSVGElement, JE_SharpProps>(function JE_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-JE-a)`}>
-        <path fill="#F5F7F8" d="M0 0h72v50H0z" />
+        <path fill="#F5F7F8" d="M0 0h29v20H0z" />
         <path
           fill="#DD2033"
-          d="M65.471 56 72 50.378 42.529 25 72-.378 65.472-6 36 19.378 6.529-6 0-.378 29.471 25 .002 50.378 6.528 56 36 30.622 65.471 56Z"
+          d="M26.37 22.4 29 20.151 17.13 10 29-.151 26.37-2.4 14.5 7.751 2.63-2.4 0-.151 11.87 10 0 20.151 2.63 22.4 14.5 12.249 26.37 22.4Z"
         />
         <path
           fill="#F1B434"
-          d="M28 5h16v6.084c0 5.228-3.161 9.936-8 11.916-4.839-1.98-8-6.688-8-11.916V5Z"
+          d="M11.278 2h6.444v2.413A5.167 5.167 0 0 1 14.5 9.2a5.167 5.167 0 0 1-3.222-4.787V2Z"
         />
       </g>
     </CountrySymbol>

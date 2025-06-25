@@ -14,7 +14,7 @@ const GI = forwardRef<SVGSVGElement, GIProps>(function GI(props: GIProps, ref) {
     <CountrySymbol
       data-testid="GI"
       aria-label="Gibraltar"
-      viewBox="0 0 72 72"
+      viewBox="0 0 20 20"
       ref={ref}
       {...props}
     >
@@ -26,23 +26,23 @@ const GI = forwardRef<SVGSVGElement, GIProps>(function GI(props: GIProps, ref) {
         style={{ maskType: "alpha" }}
       >
         <circle
-          cx="36"
-          cy="36"
-          r="36"
+          cx="10"
+          cy="10"
+          r="10"
           fill="#D9D9D9"
-          transform="rotate(-90 36 36)"
+          transform="rotate(-90 10 10)"
         />
       </mask>
       <g mask={`url(#${uid}-GI-a)`}>
-        <path fill="#F5F7F8" d="M0 0h72v48H0z" />
+        <path fill="#F5F7F8" d="M0 0h20v13.333H0z" />
         <path
           fill="#DD2033"
-          d="M0 48h72v24H0zm21-28v4h2v-4h4v4h-2v7h5V17h-2v-4h4v4h2v-4h4v4h2v-4h4v4h-2v14h5v-7h-2v-4h4v4h2v-4h4v4h-2v7h1v13H18V31h1v-7h-2v-4h4Z"
+          d="M0 13.333h20V20H0zm5.833-7.777v1.11h.556v-1.11H7.5v1.11h-.556v1.945h1.39V4.722h-.556v-1.11h1.11v1.11h.556v-1.11h1.112v1.11h.555v-1.11h1.111v1.11h-.555v3.89h1.389V6.666H12.5v-1.11h1.111v1.11h.556v-1.11h1.11v1.11h-.555v1.945H15v3.611H5v-3.61h.278V6.666h-.556v-1.11h1.111Z"
         />
         <path
           fill="#F1B434"
           fillRule="evenodd"
-          d="M36.6 67h-3v-1.208h-5v-7h5v-5.05a6.5 6.5 0 1 1 3 .152V67Zm2.32-19.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z"
+          d="M10.167 18.611h-.834v-.335H7.944V16.33h1.39v-1.403a1.806 1.806 0 1 1 .833.042v3.641Zm.644-5.417a.972.972 0 1 1-1.944 0 .972.972 0 0 1 1.944 0Z"
           clipRule="evenodd"
         />
       </g>

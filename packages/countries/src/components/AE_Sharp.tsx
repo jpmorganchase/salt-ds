@@ -17,7 +17,7 @@ const AE_Sharp = forwardRef<SVGSVGElement, AE_SharpProps>(function AE_Sharp(
     <CountrySymbol
       data-testid="AE_Sharp"
       aria-label="United Arab Emirates (the)"
-      viewBox="0 0 72 50"
+      viewBox="0 0 29 20"
       ref={ref}
       sharp
       {...props}
@@ -29,13 +29,13 @@ const AE_Sharp = forwardRef<SVGSVGElement, AE_SharpProps>(function AE_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-AE-a)`}>
-        <path fill="#31373D" d="M24 50V34h48v16z" />
-        <path fill="#F5F7F8" d="M24 34V16h48v18z" />
-        <path fill="#005B33" d="M24 16V0h48v16z" />
-        <path fill="#DD2033" d="M0 0h24v50H0z" />
+        <path fill="#31373D" d="M9.667 20v-6.4H29V20z" />
+        <path fill="#F5F7F8" d="M9.667 13.6V6.4H29v7.2z" />
+        <path fill="#005B33" d="M9.667 6.4V0H29v6.4z" />
+        <path fill="#DD2033" d="M0 0h9.667v20H0z" />
       </g>
     </CountrySymbol>
   );

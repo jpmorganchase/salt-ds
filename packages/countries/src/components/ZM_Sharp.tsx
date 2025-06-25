@@ -17,7 +17,7 @@ const ZM_Sharp = forwardRef<SVGSVGElement, ZM_SharpProps>(function ZM_Sharp(
     <CountrySymbol
       data-testid="ZM_Sharp"
       aria-label="Zambia"
-      viewBox="0 0 72 50"
+      viewBox="0 0 29 20"
       ref={ref}
       sharp
       {...props}
@@ -29,16 +29,16 @@ const ZM_Sharp = forwardRef<SVGSVGElement, ZM_SharpProps>(function ZM_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-ZM-a)`}>
-        <path fill="#008259" d="M0 0h72v50H0z" />
+        <path fill="#008259" d="M0 0h29v20H0z" />
         <path
           fill="#FF9E42"
-          d="M60 23h12v38H60zm-16-8a8 8 0 0 1-8-8h24a8 8 0 0 1-8 8h-8Z"
+          d="M24.167 9.2H29v15.2h-4.833zM17.7 6a3.2 3.2 0 0 1-3.2-3.2h9.667a3.2 3.2 0 0 1-3.2 3.2H17.7Z"
         />
-        <path fill="#31373D" d="M48 23h12v38H48z" />
-        <path fill="#DD2033" d="M36 23h12v38H36z" />
+        <path fill="#31373D" d="M19.333 9.2h4.833v15.2h-4.833z" />
+        <path fill="#DD2033" d="M14.5 9.2h4.833v15.2H14.5z" />
       </g>
     </CountrySymbol>
   );

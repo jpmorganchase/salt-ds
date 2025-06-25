@@ -17,7 +17,7 @@ const FJ_Sharp = forwardRef<SVGSVGElement, FJ_SharpProps>(function FJ_Sharp(
     <CountrySymbol
       data-testid="FJ_Sharp"
       aria-label="Fiji"
-      viewBox="0 0 72 50"
+      viewBox="0 0 29 20"
       ref={ref}
       sharp
       {...props}
@@ -29,30 +29,30 @@ const FJ_Sharp = forwardRef<SVGSVGElement, FJ_SharpProps>(function FJ_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-FJ-a)`}>
-        <path fill="#86C5FA" d="M0 0h72v50H0z" />
+        <path fill="#86C5FA" d="M0 0h29v20H0z" />
         <path
           fill="#F5F7F8"
-          d="M43.8 21h21v8.743a14.857 14.857 0 0 1-9.36 13.803L54.3 44l-1.14-.454a14.857 14.857 0 0 1-9.36-13.803V21Z"
+          d="M17.642 8.4H26.1v2.98a6.69 6.69 0 0 1-4.23 6.22 6.69 6.69 0 0 1-4.228-6.22V8.4Z"
         />
         <mask
           id={`${uid}-FJ-b`}
-          x="43"
-          y="21"
+          x="17"
+          y="8"
           maskUnits="userSpaceOnUse"
           style={{ maskType: "alpha" }}
         >
           <path
             fill="#F5F7F8"
-            d="M43.8 21h21v8.743a14.857 14.857 0 0 1-9.36 13.803L54.3 44l-1.14-.454a14.857 14.857 0 0 1-9.36-13.803V21Z"
+            d="M17.642 8.4H26.1v2.98a6.69 6.69 0 0 1-4.23 6.22 6.69 6.69 0 0 1-4.228-6.22V8.4Z"
           />
         </mask>
         <g mask={`url(#${uid}-FJ-b)`}>
           <path
             fill="#DD2033"
-            d="M43.8 21h21v6h-9v6h9v3h-9v8h-3v-8h-9v-3h9v-6h-9v-6Z"
+            d="M17.642 8.4H26.1v2.4h-3.625v2.4H26.1v1.2h-3.625v3.2h-1.208v-3.2h-3.625v-1.2h3.625v-2.4h-3.625V8.4Z"
           />
         </g>
         <mask
@@ -62,20 +62,20 @@ const FJ_Sharp = forwardRef<SVGSVGElement, FJ_SharpProps>(function FJ_Sharp(
           maskUnits="userSpaceOnUse"
           style={{ maskType: "alpha" }}
         >
-          <path fill="#002F6C" d="M0 30V0h36v30H0Z" />
+          <path fill="#002F6C" d="M0 12V0h14.5v12H0Z" />
         </mask>
         <g mask={`url(#${uid}-FJ-c)`}>
-          <path fill="#004692" d="M0 0h36v36H0z" />
+          <path fill="#004692" d="M0 0h14.5v14.4H0z" />
           <path
             fill="#F5F7F8"
-            d="m12.79 1.005-2.12 2.12 26.197 26.198 2.12-2.121L12.792 1.005ZM7.134 6.661l-3.536 3.536 26.197 26.197 3.536-3.535L7.134 6.66Z"
+            d="m5.152.402-.855.848L14.85 11.73l.854-.85L5.152.403ZM2.873 2.665 1.45 4.079l10.552 10.479 1.424-1.415L2.873 2.665Z"
           />
           <path
             fill="#DD2033"
-            d="m7.134 6.661 3.535-3.535 26.198 26.197-3.536 3.535L7.134 6.662Z"
+            d="M2.873 2.665 4.297 1.25 14.85 11.73l-1.424 1.413L2.873 2.665Z"
           />
-          <path fill="#F5F7F8" d="M6 35h4.002V9H36V5H6v30Z" />
-          <path fill="#DD2033" d="M0 35h6.002V5h30V0H0v35Z" />
+          <path fill="#F5F7F8" d="M2.417 14h1.611V3.6H14.5V2H2.417v12Z" />
+          <path fill="#DD2033" d="M0 14h2.417V2h12.084V0H0v14Z" />
         </g>
       </g>
     </CountrySymbol>

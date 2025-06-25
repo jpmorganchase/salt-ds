@@ -14,7 +14,7 @@ const RW = forwardRef<SVGSVGElement, RWProps>(function RW(props: RWProps, ref) {
     <CountrySymbol
       data-testid="RW"
       aria-label="Rwanda"
-      viewBox="0 0 72 72"
+      viewBox="0 0 20 20"
       ref={ref}
       {...props}
     >
@@ -25,12 +25,12 @@ const RW = forwardRef<SVGSVGElement, RWProps>(function RW(props: RWProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#D9D9D9" />
       </mask>
       <g mask={`url(#${uid}-RW-a)`}>
-        <path fill="#005B33" d="M0 72V54h72v18z" />
-        <path fill="#0091DA" d="M0 36V0h72v36z" />
-        <path fill="#FBD381" d="M0 54V36h72v18z" />
+        <path fill="#005B33" d="M0 20v-5h20v5z" />
+        <path fill="#0091DA" d="M0 10V0h20v10z" />
+        <path fill="#FBD381" d="M0 15v-5h20v5z" />
       </g>
     </CountrySymbol>
   );

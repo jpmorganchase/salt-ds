@@ -17,7 +17,7 @@ const GA_Sharp = forwardRef<SVGSVGElement, GA_SharpProps>(function GA_Sharp(
     <CountrySymbol
       data-testid="GA_Sharp"
       aria-label="Gabon"
-      viewBox="0 0 72 50"
+      viewBox="0 0 29 20"
       ref={ref}
       sharp
       {...props}
@@ -29,12 +29,12 @@ const GA_Sharp = forwardRef<SVGSVGElement, GA_SharpProps>(function GA_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-GA-a)`}>
-        <path fill="#005EB8" d="M0 50V34h72v16z" />
-        <path fill="#FBD381" d="M0 34V16h72v18z" />
-        <path fill="#009B77" d="M0 16V0h72v16z" />
+        <path fill="#005EB8" d="M0 20v-6.4h29V20z" />
+        <path fill="#FBD381" d="M0 13.6V6.4h29v7.2z" />
+        <path fill="#009B77" d="M0 6.4V0h29v6.4z" />
       </g>
     </CountrySymbol>
   );

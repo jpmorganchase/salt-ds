@@ -1,0 +1,14 @@
+<svg width="29" height="20" viewBox="0 0 29 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<mask id="mask0_11482_5496" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="29" height="20">
+<rect width="29" height="20" fill="#D9D9D9"/>
+</mask>
+<g mask="url(#mask0_11482_5496)">
+<rect y="20" width="4.4" height="29" transform="rotate(-90 0 20)" fill="#DD2033"/>
+<rect y="15.6" width="11.2" height="29" transform="rotate(-90 0 15.6)" fill="#F5F7F8"/>
+<rect y="4.3999" width="4.4" height="29" transform="rotate(-90 0 4.3999)" fill="#008259"/>
+<path d="M10.4722 9.99998L-0.805542 -4.40002V24.4L10.4722 9.99998Z" fill="#0091DA"/>
+<path d="M14.5 5.59998H22.5556V8.46604C22.5556 11.0824 20.9593 13.4341 18.5278 14.4C16.0962 13.4341 14.5 11.0824 14.5 8.46604V5.59998Z" fill="#C1C3C3"/>
+<rect x="17.7222" y="10" width="1.61111" height="2.4" fill="#936846"/>
+<path d="M20.1389 8.40008C20.1389 7.51637 19.4176 6.80005 18.5278 6.80005C17.6379 6.80005 16.9166 7.51637 16.9166 8.40008C16.4717 8.40008 16.1111 8.75824 16.1111 9.20007C16.1111 9.64189 16.4717 10 16.9166 10H20.1389C20.5838 10 20.9444 9.64189 20.9444 9.20007C20.9444 8.75824 20.5838 8.40008 20.1389 8.40008Z" fill="#009B77"/>
+</g>
+</svg>

@@ -14,7 +14,7 @@ const CL = forwardRef<SVGSVGElement, CLProps>(function CL(props: CLProps, ref) {
     <CountrySymbol
       data-testid="CL"
       aria-label="Chile"
-      viewBox="0 0 72 72"
+      viewBox="0 0 20 20"
       ref={ref}
       {...props}
     >
@@ -25,15 +25,15 @@ const CL = forwardRef<SVGSVGElement, CLProps>(function CL(props: CLProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#D9D9D9" />
       </mask>
       <g mask={`url(#${uid}-CL-a)`}>
-        <path fill="#DD2033" d="M-.4 72V36h72v36z" />
-        <path fill="#F5F7F8" d="M-.4 36V0h72v36z" />
-        <path fill="#004692" d="M0 0h36v36H0z" />
+        <path fill="#DD2033" d="M-.111 20V10h20v10z" />
+        <path fill="#F5F7F8" d="M-.111 10V0h20v10z" />
+        <path fill="#004692" d="M0 0h10v10H0z" />
         <path
           fill="#F5F7F8"
-          d="m22 14-2.385 5.394L14 20.11l4.142 4.052L17.056 30 22 26.667 26.944 30l-1.086-5.837L30 20.11l-5.615-.717L22 14Z"
+          d="M6.111 3.889 5.45 5.387l-1.56.2 1.15 1.125-.301 1.621 1.373-.926 1.374.926-.302-1.621 1.15-1.125-1.56-.2-.662-1.498Z"
         />
       </g>
     </CountrySymbol>

@@ -14,7 +14,7 @@ const BZ = forwardRef<SVGSVGElement, BZProps>(function BZ(props: BZProps, ref) {
     <CountrySymbol
       data-testid="BZ"
       aria-label="Belize"
-      viewBox="0 0 72 72"
+      viewBox="0 0 20 20"
       ref={ref}
       {...props}
     >
@@ -25,38 +25,38 @@ const BZ = forwardRef<SVGSVGElement, BZProps>(function BZ(props: BZProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#D9D9D9" />
       </mask>
       <g mask={`url(#${uid}-BZ-a)`}>
-        <path fill="#DD2033" d="M0 72V0h72v72z" />
-        <path fill="#004692" d="M0 8h72v56H0z" />
-        <circle cx="36" cy="36" r="24" fill="#F5F7F8" />
+        <path fill="#DD2033" d="M0 20V0h20v20z" />
+        <path fill="#004692" d="M0 2.222h20v15.556H0z" />
+        <circle cx="10" cy="10" r="6.667" fill="#F5F7F8" />
         <path
           fill="#009B77"
           fillRule="evenodd"
-          d="M36 51c8.284 0 15-6.716 15-15 0-8.284-6.716-15-15-15-8.284 0-15 6.716-15 15 0 8.284 6.716 15 15 15Zm0 5c11.046 0 20-8.954 20-20s-8.954-20-20-20-20 8.954-20 20 8.954 20 20 20Z"
+          d="M10 14.167a4.167 4.167 0 1 0 0-8.334 4.167 4.167 0 0 0 0 8.334Zm0 1.389a5.556 5.556 0 1 0 0-11.112 5.556 5.556 0 0 0 0 11.112Z"
           clipRule="evenodd"
         />
         <path
           fill="#86C5FA"
-          d="M26.8 28h18v6.657A14.39 14.39 0 0 1 35.8 48a14.39 14.39 0 0 1-9-13.343V28Z"
+          d="M7.444 7.778h5v1.849c0 1.63-.989 3.096-2.5 3.706a3.997 3.997 0 0 1-2.5-3.706v-1.85Z"
         />
         <mask
           id={`${uid}-BZ-b`}
-          x="26"
-          y="28"
+          x="7"
+          y="7"
           maskUnits="userSpaceOnUse"
           style={{ maskType: "alpha" }}
         >
           <path
             fill="#86C5FA"
-            d="M26.8 28h18v6.657A14.39 14.39 0 0 1 35.8 48a14.39 14.39 0 0 1-9-13.343V28Z"
+            d="M7.444 7.778h5v1.849c0 1.63-.989 3.096-2.5 3.706a3.997 3.997 0 0 1-2.5-3.706v-1.85Z"
           />
         </mask>
         <g mask={`url(#${uid}-BZ-b)`}>
           <path
             fill="#F1B434"
-            d="m25.8 27.071 8.987-8.987 17.677 17.678-8.986 8.987z"
+            d="m7.167 7.52 2.496-2.496 4.91 4.91-2.496 2.496z"
           />
         </g>
       </g>

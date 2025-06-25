@@ -14,7 +14,7 @@ const ES = forwardRef<SVGSVGElement, ESProps>(function ES(props: ESProps, ref) {
     <CountrySymbol
       data-testid="ES"
       aria-label="Spain"
-      viewBox="0 0 72 72"
+      viewBox="0 0 20 20"
       ref={ref}
       {...props}
     >
@@ -26,44 +26,47 @@ const ES = forwardRef<SVGSVGElement, ESProps>(function ES(props: ESProps, ref) {
         style={{ maskType: "alpha" }}
       >
         <circle
-          cx="36"
-          cy="36"
-          r="36"
+          cx="10"
+          cy="10"
+          r="10"
           fill="#D9D9D9"
-          transform="rotate(180 36 36)"
+          transform="rotate(180 10 10)"
         />
       </mask>
       <g mask={`url(#${uid}-ES-a)`}>
-        <path fill="#A00009" d="M0 0h72v72H0z" />
-        <path fill="#F1B434" d="M72 18v36H0V18z" />
+        <path fill="#A00009" d="M0 0h20v20H0z" />
+        <path fill="#F1B434" d="M20 5v10H0V5z" />
         <path
           fill="#E26E00"
           fillRule="evenodd"
-          d="M22.6 19.667h2V21h2v2h-2v1.869a4 4 0 0 1 4.667 6.446V33H17.933v-1.685a4 4 0 0 1 4.667-6.446V23h-2v-2h2v-1.333Zm1 6.02-.018-.02h.037l-.019.02ZM23.582 31l.018-.02.019.02h-.037Z"
+          d="M6.278 5.463h.555v.37h.556v.556h-.556v.519a1.111 1.111 0 0 1 1.296 1.79v.469H4.983v-.468a1.111 1.111 0 0 1 1.296-1.79v-.52h-.556v-.556h.556v-.37Zm.278 1.672L6.55 7.13h.01l-.004.005ZM6.55 8.611l.006-.006.005.006h-.01Z"
           clipRule="evenodd"
         />
         <path
           fill="#F5F7F8"
-          d="M14.6 33h18v9.822a9.7 9.7 0 0 1-6.065 8.992 7.834 7.834 0 0 1-5.87 0 9.699 9.699 0 0 1-6.065-8.992V33Z"
+          d="M4.056 9.167h5v2.728a2.694 2.694 0 0 1-1.685 2.498 2.176 2.176 0 0 1-1.63 0 2.694 2.694 0 0 1-1.685-2.498V9.167Z"
         />
         <mask
           id={`${uid}-ES-b`}
-          x="14"
-          y="33"
+          x="4"
+          y="9"
           maskUnits="userSpaceOnUse"
           style={{ maskType: "alpha" }}
         >
           <path
             fill="#F5F7F8"
-            d="M14.6 33h18v9.822a9.7 9.7 0 0 1-6.065 8.992 7.834 7.834 0 0 1-5.87 0 9.699 9.699 0 0 1-6.065-8.992V33Z"
+            d="M4.056 9.167h5v2.728a2.694 2.694 0 0 1-1.685 2.498 2.176 2.176 0 0 1-1.63 0 2.694 2.694 0 0 1-1.685-2.498V9.167Z"
           />
         </mask>
         <g mask={`url(#${uid}-ES-b)`}>
-          <path fill="#DD2033" d="M14.6 33h9v10h-9z" />
-          <path fill="#E26E00" d="M14.6 43h9v10h-9z" />
-          <path fill="#DD2033" d="M23.6 43h9v10h-9z" />
+          <path fill="#DD2033" d="M4.056 9.167h2.5v2.778h-2.5z" />
+          <path fill="#E26E00" d="M4.056 11.944h2.5v2.778h-2.5z" />
+          <path fill="#DD2033" d="M6.556 11.944h2.5v2.778h-2.5z" />
         </g>
-        <path fill="#F5F7F8" d="M34.6 33h3v19h-3V33Zm-25 0h3v19h-3V33Z" />
+        <path
+          fill="#F5F7F8"
+          d="M9.611 9.167h.833v5.277h-.833V9.168Zm-6.944 0H3.5v5.277h-.833V9.168Z"
+        />
       </g>
     </CountrySymbol>
   );

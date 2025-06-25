@@ -17,7 +17,7 @@ const VG_Sharp = forwardRef<SVGSVGElement, VG_SharpProps>(function VG_Sharp(
     <CountrySymbol
       data-testid="VG_Sharp"
       aria-label="Virgin Islands (British)"
-      viewBox="0 0 72 50"
+      viewBox="0 0 29 20"
       ref={ref}
       sharp
       {...props}
@@ -29,10 +29,10 @@ const VG_Sharp = forwardRef<SVGSVGElement, VG_SharpProps>(function VG_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-VG-a)`}>
-        <path fill="#004692" d="M0 0h72v50H0z" />
+        <path fill="#004692" d="M0 0h29v20H0z" />
         <mask
           id={`${uid}-VG-b`}
           x="0"
@@ -40,30 +40,33 @@ const VG_Sharp = forwardRef<SVGSVGElement, VG_SharpProps>(function VG_Sharp(
           maskUnits="userSpaceOnUse"
           style={{ maskType: "alpha" }}
         >
-          <path fill="#002F6C" d="M0 30V0h36v30H0Z" />
+          <path fill="#002F6C" d="M0 12V0h14.5v12H0Z" />
         </mask>
         <g mask={`url(#${uid}-VG-b)`}>
-          <path fill="#004692" d="M0 0h36v36H0z" />
+          <path fill="#004692" d="M0 0h14.5v14.4H0z" />
           <path
             fill="#F5F7F8"
-            d="m12.79 1.005-2.12 2.121 26.197 26.197 2.12-2.121L12.792 1.005ZM7.134 6.662l-3.536 3.535 26.197 26.197 3.536-3.535L7.134 6.662Z"
+            d="m5.152.402-.855.849L14.85 11.73l.854-.849L5.152.402ZM2.873 2.665 1.45 4.079l10.552 10.479 1.424-1.414L2.873 2.664Z"
           />
           <path
             fill="#DD2033"
-            d="m7.134 6.662 3.535-3.536 26.198 26.197-3.536 3.536L7.134 6.662Z"
+            d="M2.873 2.665 4.297 1.25 14.85 11.73l-1.424 1.414L2.873 2.664Z"
           />
-          <path fill="#F5F7F8" d="M6 35h4.002V9H36V5H6v30Z" />
-          <path fill="#DD2033" d="M0 35h6.002V5h30V0H0v35Z" />
+          <path fill="#F5F7F8" d="M2.417 14h1.611V3.6H14.5V2H2.417v12Z" />
+          <path fill="#DD2033" d="M0 14h2.417V2h12.084V0H0v14Z" />
         </g>
-        <path fill="#FBD381" d="M65 35H44v5h3v3h15v-3h3v-5Z" />
+        <path
+          fill="#FBD381"
+          d="M26.18 14h-8.458v2h1.209v1.2h6.041V16h1.209v-2Z"
+        />
         <path
           fill="#008259"
-          d="M44 17h21v8.743a14.857 14.857 0 0 1-9.36 13.803L54.5 40l-1.14-.454A14.857 14.857 0 0 1 44 25.743V17Z"
+          d="M17.722 6.8h8.459v2.98A6.69 6.69 0 0 1 21.95 16a6.69 6.69 0 0 1-4.229-6.22V6.8Z"
         />
-        <path fill="#F5F7F8" d="M52 21h5v15h-5z" />
+        <path fill="#F5F7F8" d="M20.945 8.4h2.014v6h-2.014z" />
         <path
           fill="#F1B434"
-          d="M47.5 22a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Zm14 0a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Zm1.5 3.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0ZM47.5 27a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3ZM63 30.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0ZM47.5 32a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Z"
+          d="M19.132 8.8a.602.602 0 0 0 .604-.6c0-.332-.27-.6-.604-.6a.602.602 0 0 0-.604.6c0 .331.27.6.604.6Zm5.638 0a.602.602 0 0 0 .605-.6c0-.332-.27-.6-.604-.6a.602.602 0 0 0-.604.6c0 .331.27.6.604.6Zm.605 1.4c0 .331-.27.6-.604.6a.602.602 0 0 1-.604-.6c0-.332.27-.6.604-.6.334 0 .604.268.604.6Zm-6.243.6a.602.602 0 0 0 .604-.6c0-.332-.27-.6-.604-.6a.602.602 0 0 0-.604.6c0 .331.27.6.604.6Zm6.243 1.4c0 .331-.27.6-.604.6a.602.602 0 0 1-.604-.6c0-.332.27-.6.604-.6.334 0 .604.268.604.6Zm-6.243.6a.602.602 0 0 0 .604-.6c0-.332-.27-.6-.604-.6a.602.602 0 0 0-.604.6c0 .331.27.6.604.6Z"
         />
       </g>
     </CountrySymbol>

@@ -14,7 +14,7 @@ const SR = forwardRef<SVGSVGElement, SRProps>(function SR(props: SRProps, ref) {
     <CountrySymbol
       data-testid="SR"
       aria-label="Suriname"
-      viewBox="0 0 72 72"
+      viewBox="0 0 20 20"
       ref={ref}
       {...props}
     >
@@ -25,15 +25,15 @@ const SR = forwardRef<SVGSVGElement, SRProps>(function SR(props: SRProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#D9D9D9" />
       </mask>
       <g mask={`url(#${uid}-SR-a)`}>
-        <path fill="#005B33" d="M0 0h72v72H0z" />
-        <path fill="#F5F7F8" d="M0 56V16h72v40z" />
-        <path fill="#A00009" d="M0 50V22h72v28z" />
+        <path fill="#005B33" d="M0 0h20v20H0z" />
+        <path fill="#F5F7F8" d="M0 15.556V4.445h20v11.11z" />
+        <path fill="#A00009" d="M0 13.889V6.11h20v7.778z" />
         <path
           fill="#FBD381"
-          d="m36 24-3.577 8.09L24 33.168l6.213 6.077L28.583 48 36 43l7.416 5-1.629-8.756L48 33.167l-8.423-1.076L36 24Z"
+          d="m10 6.667-.994 2.247-2.34.3L8.393 10.9l-.452 2.432L10 11.944l2.06 1.39-.452-2.433 1.725-1.688-2.34-.299L10 6.667Z"
         />
       </g>
     </CountrySymbol>

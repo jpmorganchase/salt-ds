@@ -14,7 +14,7 @@ const PN = forwardRef<SVGSVGElement, PNProps>(function PN(props: PNProps, ref) {
     <CountrySymbol
       data-testid="PN"
       aria-label="Pitcairn"
-      viewBox="0 0 72 72"
+      viewBox="0 0 20 20"
       ref={ref}
       {...props}
     >
@@ -25,31 +25,40 @@ const PN = forwardRef<SVGSVGElement, PNProps>(function PN(props: PNProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#D9D9D9" />
       </mask>
       <g mask={`url(#${uid}-PN-a)`}>
-        <path fill="#004692" d="M0 0h72v72H0z" />
-        <path fill="#C1C3C3" d="M46 27.177h9v8h-9z" />
-        <path fill="#008259" d="M47 20.177h2.5v3H53v4h-6v-7Z" />
+        <path fill="#004692" d="M0 0h20v20H0z" />
+        <path fill="#C1C3C3" d="M12.778 7.549h2.5v2.222h-2.5z" />
+        <path
+          fill="#008259"
+          d="M13.056 5.605h.694v.833h.972V7.55h-1.666V5.605Z"
+        />
         <path
           fill="#86C5FA"
-          d="M40 35h21v8.743a14.857 14.857 0 0 1-9.36 13.803L50.5 58l-1.14-.454A14.857 14.857 0 0 1 40 43.743V35Z"
+          d="M11.111 9.722h5.833v2.088a4.63 4.63 0 0 1-2.916 4.301 4.63 4.63 0 0 1-2.917-4.301V9.722Z"
         />
         <mask
           id={`${uid}-PN-b`}
-          x="40"
-          y="35"
+          x="11"
+          y="9"
           maskUnits="userSpaceOnUse"
           style={{ maskType: "alpha" }}
         >
           <path
             fill="#86C5FA"
-            d="M40 35h21v8.743a14.857 14.857 0 0 1-9.36 13.803L50.5 58l-1.14-.454A14.857 14.857 0 0 1 40 43.743V35Z"
+            d="M11.111 9.722h5.833v2.088a4.63 4.63 0 0 1-2.916 4.301 4.63 4.63 0 0 1-2.917-4.301V9.722Z"
           />
         </mask>
         <g mask={`url(#${uid}-PN-b)`}>
-          <path fill="#FBD381" d="M50.5 35 61 58H40l10.5-23Z" />
-          <path fill="#008259" d="m50.5 40.177 10.5 23H40l10.5-23Z" />
+          <path
+            fill="#FBD381"
+            d="m14.028 9.722 2.916 6.39h-5.833l2.917-6.39Z"
+          />
+          <path
+            fill="#008259"
+            d="m14.028 11.16 2.916 6.389h-5.833l2.917-6.389Z"
+          />
         </g>
         <mask
           id={`${uid}-PN-c`}
@@ -58,24 +67,24 @@ const PN = forwardRef<SVGSVGElement, PNProps>(function PN(props: PNProps, ref) {
           maskUnits="userSpaceOnUse"
           style={{ maskType: "alpha" }}
         >
-          <path fill="#002F6C" d="M0 36C0 16.118 16.118 0 36 0v36H0Z" />
+          <path fill="#002F6C" d="M0 10C0 4.477 4.477 0 10 0v10H0Z" />
         </mask>
         <g mask={`url(#${uid}-PN-c)`}>
-          <path fill="#004692" d="M0 0h36v36H0z" />
+          <path fill="#004692" d="M0 0h10v10H0z" />
           <path
             fill="#F5F7F8"
-            d="m12.522 3.134-2.121 2.121 29.526 29.526 2.121-2.121L12.522 3.134ZM6.865 8.79 3.33 12.327l29.526 29.526 3.535-3.535L6.866 8.79Z"
+            d="m3.478.87-.589.59 8.202 8.201.59-.589L3.477.87ZM1.907 2.442l-.982.982 8.202 8.201.982-.982-8.202-8.201Z"
           />
           <path
             fill="#DD2033"
-            d="m6.865 8.79 3.536-3.535 29.526 29.526-3.535 3.536L6.864 8.79Z"
+            d="m1.907 2.442.982-.982 8.202 8.201-.982.982-8.202-8.201Z"
           />
-          <path fill="#F5F7F8" d="M36 12v5H17v19h-5V12h24Z" />
-          <path fill="#F5F7F8" d="M36-2v5H5v33H0V-2h36Z" />
+          <path fill="#F5F7F8" d="M10 3.333v1.39H4.722V10H3.333V3.333H10Z" />
+          <path fill="#F5F7F8" d="M10-.556v1.39H1.389V10H0V-.556h10Z" />
           <path
             fill="#DD2033"
             fillRule="evenodd"
-            d="M3 36h9V12h24V3H3v33Z"
+            d="M.833 10h2.5V3.333H10v-2.5H.833V10Z"
             clipRule="evenodd"
           />
         </g>

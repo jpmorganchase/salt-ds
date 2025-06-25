@@ -14,7 +14,7 @@ const ZM = forwardRef<SVGSVGElement, ZMProps>(function ZM(props: ZMProps, ref) {
     <CountrySymbol
       data-testid="ZM"
       aria-label="Zambia"
-      viewBox="0 0 72 72"
+      viewBox="0 0 20 20"
       ref={ref}
       {...props}
     >
@@ -25,16 +25,16 @@ const ZM = forwardRef<SVGSVGElement, ZMProps>(function ZM(props: ZMProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#D9D9D9" />
       </mask>
       <g mask={`url(#${uid}-ZM-a)`}>
-        <path fill="#008259" d="M0 0h72v72H0z" />
+        <path fill="#008259" d="M0 0h20v20H0z" />
         <path
           fill="#FF9E42"
-          d="M60 34h12v38H60zm-16-8a8 8 0 0 1-8-8h24a8 8 0 0 1-8 8h-8Z"
+          d="M16.667 9.444H20V20h-3.333zm-4.445-2.222A2.222 2.222 0 0 1 10 5h6.667a2.222 2.222 0 0 1-2.223 2.222h-2.222Z"
         />
-        <path fill="#31373D" d="M48 34h12v38H48z" />
-        <path fill="#DD2033" d="M36 34h12v38H36z" />
+        <path fill="#31373D" d="M13.333 9.444h3.333V20h-3.333z" />
+        <path fill="#DD2033" d="M10 9.444h3.333V20H10z" />
       </g>
     </CountrySymbol>
   );

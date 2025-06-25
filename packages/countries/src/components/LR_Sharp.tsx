@@ -17,7 +17,7 @@ const LR_Sharp = forwardRef<SVGSVGElement, LR_SharpProps>(function LR_Sharp(
     <CountrySymbol
       data-testid="LR_Sharp"
       aria-label="Liberia"
-      viewBox="0 0 72 50"
+      viewBox="0 0 29 20"
       ref={ref}
       sharp
       {...props}
@@ -29,15 +29,18 @@ const LR_Sharp = forwardRef<SVGSVGElement, LR_SharpProps>(function LR_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-LR-a)`}>
-        <path fill="#F5F7F8" d="M0 59V-4h72v63z" />
-        <path fill="#DD2033" d="M36 14V5h36v9zm0 18v-9h36v9zM0 50v-9h72v9z" />
-        <path fill="#004692" d="M0 32V0h36v32z" />
+        <path fill="#F5F7F8" d="M0 23.6V-1.6h29v25.2z" />
+        <path
+          fill="#DD2033"
+          d="M14.5 5.6V2H29v3.6zm0 7.2V9.2H29v3.6zM0 20v-3.6h29V20z"
+        />
+        <path fill="#004692" d="M0 12.8V0h14.5v12.8z" />
         <path
           fill="#F5F7F8"
-          d="m18 6-2.98 6.742L8 13.64l5.177 5.064L11.82 26 18 21.833 24.18 26l-1.357-7.297L28 13.64l-7.02-.897L18 6Z"
+          d="m7.25 2.4-1.2 2.697-2.828.359L5.308 7.48 4.76 10.4l2.49-1.667L9.74 10.4l-.547-2.919 2.085-2.025-2.827-.36L7.25 2.4Z"
         />
       </g>
     </CountrySymbol>

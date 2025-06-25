@@ -17,7 +17,7 @@ const KN_Sharp = forwardRef<SVGSVGElement, KN_SharpProps>(function KN_Sharp(
     <CountrySymbol
       data-testid="KN_Sharp"
       aria-label="Saint Kitts and Nevis"
-      viewBox="0 0 72 50"
+      viewBox="0 0 29 20"
       ref={ref}
       sharp
       {...props}
@@ -29,22 +29,22 @@ const KN_Sharp = forwardRef<SVGSVGElement, KN_SharpProps>(function KN_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-KN-a)`}>
-        <path fill="#009B77" d="M0 0h72v50H0z" />
-        <path fill="#DD2033" d="M72 61H0l72-72v72Z" />
+        <path fill="#009B77" d="M0 0h29v20H0z" />
+        <path fill="#DD2033" d="M29 24.4H0L29-4.4v28.8Z" />
         <path
           fill="#FBD381"
-          d="m-6.11 45.483 22.627 22.628L79.86 4.767 57.233-17.861z"
+          d="m-2.461 18.193 9.114 9.052L32.167 1.907l-9.114-9.052z"
         />
         <path
           fill="#31373D"
-          d="M11.765 64.197-2.377 50.055l64.883-64.882L76.648-.685z"
+          d="m4.738 25.68-5.696-5.658L25.176-5.93l5.696 5.657z"
         />
         <path
           fill="#F5F7F8"
-          d="m16.857 33.77 2.128 5.5-3.463 4.478 5.793-.064 3.36 4.895 1.139-5.853 5.853-1.139-4.896-3.36.064-5.793-4.478 3.463-5.5-2.127ZM44.97 5.657l2.128 5.5-3.463 4.478 5.793-.064 3.36 4.896 1.139-5.854 5.853-1.139-4.896-3.36.064-5.793-4.478 3.464-5.5-2.128Z"
+          d="m6.79 13.508.857 2.2-1.395 1.791 2.333-.025 1.353 1.958.46-2.341 2.357-.456-1.972-1.344.026-2.317-1.804 1.385-2.215-.851ZM18.113 2.263l.857 2.2-1.395 1.791 2.334-.026 1.353 1.959.458-2.342 2.358-.455-1.972-1.344.026-2.317-1.804 1.385-2.215-.851Z"
         />
       </g>
     </CountrySymbol>

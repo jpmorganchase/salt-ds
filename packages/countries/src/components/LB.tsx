@@ -14,7 +14,7 @@ const LB = forwardRef<SVGSVGElement, LBProps>(function LB(props: LBProps, ref) {
     <CountrySymbol
       data-testid="LB"
       aria-label="Lebanon"
-      viewBox="0 0 72 72"
+      viewBox="0 0 20 20"
       ref={ref}
       {...props}
     >
@@ -25,14 +25,14 @@ const LB = forwardRef<SVGSVGElement, LBProps>(function LB(props: LBProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#D9D9D9" />
       </mask>
       <g mask={`url(#${uid}-LB-a)`}>
-        <path fill="#DD2033" d="M0 0h72v72H0z" />
-        <path fill="#F5F7F8" d="M0 54V18h72v36z" />
+        <path fill="#DD2033" d="M0 0h20v20H0z" />
+        <path fill="#F5F7F8" d="M0 15V5h20v10z" />
         <path
           fill="#008259"
-          d="M45 44.167 36 22l-9 22.167h6.75V50h4.5v-5.833H45Z"
+          d="M12.5 12.268 10 6.111l-2.5 6.157h1.875v1.62h1.25v-1.62H12.5Z"
         />
       </g>
     </CountrySymbol>

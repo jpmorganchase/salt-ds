@@ -14,7 +14,7 @@ const IR = forwardRef<SVGSVGElement, IRProps>(function IR(props: IRProps, ref) {
     <CountrySymbol
       data-testid="IR"
       aria-label="Iran (Islamic Republic of)"
-      viewBox="0 0 72 72"
+      viewBox="0 0 20 20"
       ref={ref}
       {...props}
     >
@@ -25,21 +25,21 @@ const IR = forwardRef<SVGSVGElement, IRProps>(function IR(props: IRProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#D9D9D9" />
       </mask>
       <g mask={`url(#${uid}-IR-a)`}>
-        <path fill="#F5F7F8" d="M0 0h72v72H0z" />
+        <path fill="#F5F7F8" d="M0 0h20v20H0z" />
         <path
           fill="#DD2033"
-          d="M5 50H0v22h72V50h-2v5h-5v-5h-5v5h-5v-5h-5v5h-5v-5h-5v5h-5v-5h-5v5h-5v-5h-5v5h-5v-5h-5v5H5v-5Z"
+          d="M1.389 13.889H0V20h20v-6.111h-.555v1.389h-1.39v-1.39h-1.388v1.39h-1.39v-1.39H13.89v1.39H12.5v-1.39h-1.389v1.39H9.722v-1.39H8.333v1.39H6.945v-1.39h-1.39v1.39H4.168v-1.39h-1.39v1.39H1.39v-1.39Z"
         />
         <path
           fill="#009B77"
-          d="M0 0v17h5v5h5v-5h5v5h5v-5h5v5h5v-5h5v5h5v-5h5v5h5v-5h5v5h5v-5h5v5h7V0H0Z"
+          d="M0 0v4.722h1.389v1.389h1.389V4.722h1.389v1.389h1.389V4.722h1.388v1.389h1.39V4.722h1.388v1.389h1.39V4.722H12.5v1.389h1.389V4.722h1.389v1.389h1.389V4.722h1.389v1.389H20V0H0Z"
         />
         <path
           fill="#DD2033"
-          d="M42.931 44A12.99 12.99 0 0 0 49 33c0-3.59-1.455-6.84-3.808-9.192l-2.626 2.626A9.257 9.257 0 0 1 45.286 33c0 4.492-3.19 8.24-7.429 9.1V27.429h-3.714V42.1c-4.239-.86-7.429-4.608-7.429-9.1a9.257 9.257 0 0 1 2.72-6.566l-2.626-2.626A12.96 12.96 0 0 0 23 33a12.99 12.99 0 0 0 6.069 11H27.6v3h17v-3h-1.669Zm-6.902-24h-.058.058Z"
+          d="M11.925 12.222a3.609 3.609 0 0 0 .628-5.609l-.73.73a2.58 2.58 0 0 1-1.308 4.352V7.618h-1.03v4.075a2.58 2.58 0 0 1-1.309-4.351l-.73-.73a3.608 3.608 0 0 0 .628 5.609h-.407v.834h4.722v-.834h-.464Zm-1.917-6.666h-.016.016Z"
         />
       </g>
     </CountrySymbol>

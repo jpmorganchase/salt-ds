@@ -17,7 +17,7 @@ const KW_Sharp = forwardRef<SVGSVGElement, KW_SharpProps>(function KW_Sharp(
     <CountrySymbol
       data-testid="KW_Sharp"
       aria-label="Kuwait"
-      viewBox="0 0 72 50"
+      viewBox="0 0 29 20"
       ref={ref}
       sharp
       {...props}
@@ -29,13 +29,13 @@ const KW_Sharp = forwardRef<SVGSVGElement, KW_SharpProps>(function KW_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-KW-a)`}>
-        <path fill="#DD2033" d="M0 50V34h72v16z" />
-        <path fill="#F5F7F8" d="M0 34V16h72v18z" />
-        <path fill="#009B77" d="M0 16V0h72v16z" />
-        <path fill="#31373D" d="M-5-3v56l32-18.725v-18.55L-5-3Z" />
+        <path fill="#DD2033" d="M0 20v-6h29v6z" />
+        <path fill="#F5F7F8" d="M0 13.6V6.4h29v7.2z" />
+        <path fill="#009B77" d="M0 6V0h29v6z" />
+        <path fill="#31373D" d="M-2.014-1.2v22.4L11 14V6L-2.014-1.2Z" />
       </g>
     </CountrySymbol>
   );

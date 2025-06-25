@@ -14,7 +14,7 @@ const LI = forwardRef<SVGSVGElement, LIProps>(function LI(props: LIProps, ref) {
     <CountrySymbol
       data-testid="LI"
       aria-label="Liechtenstein"
-      viewBox="0 0 72 72"
+      viewBox="0 0 20 20"
       ref={ref}
       {...props}
     >
@@ -25,15 +25,15 @@ const LI = forwardRef<SVGSVGElement, LIProps>(function LI(props: LIProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#D9D9D9" />
       </mask>
       <g mask={`url(#${uid}-LI-a)`}>
-        <path fill="#DD2033" d="M-.4 72V36h72v36z" />
-        <path fill="#004692" d="M-.4 36V0h72v36z" />
+        <path fill="#DD2033" d="M-.111 20V10h20v10z" />
+        <path fill="#004692" d="M-.111 10V0h20v10z" />
         <path
           fill="#F1B434"
           fillRule="evenodd"
-          d="M24.4 8h3v2h3v3h-3v2.803a6 6 0 0 1 7 9.67V28h-17v-2.528a6 6 0 0 1 7-9.67V13h-3v-3h3V8Zm1.5 9.031L25.872 17h.056l-.028.031ZM25.872 25l.028-.031.028.031h-.056Z"
+          d="M6.778 2.222h.833v.556h.833v.833h-.833v.779a1.667 1.667 0 0 1 1.944 2.686v.702H4.834v-.702A1.667 1.667 0 0 1 6.777 4.39v-.78h-.833v-.833h.834v-.556Zm.416 2.509-.007-.009h.015l-.008.009Zm-.007 2.213.007-.008.008.008h-.015Z"
           clipRule="evenodd"
         />
       </g>

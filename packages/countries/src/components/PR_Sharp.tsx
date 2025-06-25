@@ -17,7 +17,7 @@ const PR_Sharp = forwardRef<SVGSVGElement, PR_SharpProps>(function PR_Sharp(
     <CountrySymbol
       data-testid="PR_Sharp"
       aria-label="Puerto Rico"
-      viewBox="0 0 72 50"
+      viewBox="0 0 29 20"
       ref={ref}
       sharp
       {...props}
@@ -29,15 +29,15 @@ const PR_Sharp = forwardRef<SVGSVGElement, PR_SharpProps>(function PR_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-PR-a)`}>
-        <path fill="#DD2033" d="M0 0h72v50H0z" />
-        <path fill="#F5F7F8" d="M0 10v10h72V10H0Zm0 20v10h72V30H0Z" />
-        <path fill="#005EB8" d="M44 25-4-11v72l48-36Z" />
+        <path fill="#DD2033" d="M0 0h29v20H0z" />
+        <path fill="#F5F7F8" d="M0 4v4h29V4H0Zm0 8v4h29v-4H0Z" />
+        <path fill="#005EB8" d="M17.722 10-1.61-4.4v28.8L17.722 10Z" />
         <path
           fill="#F5F7F8"
-          d="m17 16-2.683 6.068L8 22.875l4.66 4.558L11.438 34 17 30.25 22.562 34l-1.222-6.567L26 22.875l-6.317-.807L17 16Z"
+          d="m6.847 6.4-1.08 2.427-2.545.323L5.1 10.973 4.607 13.6l2.24-1.5 2.24 1.5-.492-2.627 1.877-1.823-2.544-.323L6.848 6.4Z"
         />
       </g>
     </CountrySymbol>

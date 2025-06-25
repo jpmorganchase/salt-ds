@@ -17,7 +17,7 @@ const PH_Sharp = forwardRef<SVGSVGElement, PH_SharpProps>(function PH_Sharp(
     <CountrySymbol
       data-testid="PH_Sharp"
       aria-label="Philippines (the)"
-      viewBox="0 0 72 50"
+      viewBox="0 0 29 20"
       ref={ref}
       sharp
       {...props}
@@ -29,17 +29,17 @@ const PH_Sharp = forwardRef<SVGSVGElement, PH_SharpProps>(function PH_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-PH-a)`}>
-        <path fill="#DD2033" d="M0 50V25h72v25z" />
-        <path fill="#004692" d="M0 25V0h72v25z" />
-        <path fill="#F5F7F8" d="M48 25 0-11v72l48-36Z" />
+        <path fill="#DD2033" d="M0 20V10h29v10z" />
+        <path fill="#004692" d="M0 10V0h29v10z" />
+        <path fill="#F5F7F8" d="M19.333 10 0-4.4v28.8L19.333 10Z" />
         <path
           fill="#F1B434"
-          d="m27.2 25-4.903 2.425 2.61 4.991-5.324-1.07L18.91 37l-3.71-4.158L11.492 37l-.674-5.654-5.325 1.07 2.611-4.992L3.2 25l4.903-2.425-2.61-4.991 5.323 1.07.675-5.654 3.709 4.159L18.909 13l.674 5.654 5.325-1.07-2.611 4.992L27.2 25Z"
+          d="m10.956 10-1.975.97 1.051 1.997-2.144-.429-.272 2.262-1.494-1.664L4.628 14.8l-.271-2.262-2.145.428 1.052-1.996L1.289 10l1.975-.97-1.052-1.997 2.145.429.272-2.262 1.493 1.663L7.616 5.2l.272 2.262 2.144-.429L8.981 9.03l1.975.97Z"
         />
-        <circle cx="35.8" cy="25" r="4" fill="#F1B434" />
+        <ellipse cx="14.419" cy="10" fill="#F1B434" rx="1.611" ry="1.6" />
       </g>
     </CountrySymbol>
   );

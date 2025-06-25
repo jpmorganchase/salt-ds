@@ -14,7 +14,7 @@ const NA = forwardRef<SVGSVGElement, NAProps>(function NA(props: NAProps, ref) {
     <CountrySymbol
       data-testid="NA"
       aria-label="Namibia"
-      viewBox="0 0 72 72"
+      viewBox="0 0 20 20"
       ref={ref}
       {...props}
     >
@@ -25,22 +25,22 @@ const NA = forwardRef<SVGSVGElement, NAProps>(function NA(props: NAProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#D9D9D9" />
       </mask>
       <g mask={`url(#${uid}-NA-a)`}>
-        <path fill="#005EB8" d="M0 0h72v72H0z" />
-        <path fill="#009B77" d="M72 72H0L72 0v72Z" />
+        <path fill="#005EB8" d="M0 0h20v20H0z" />
+        <path fill="#009B77" d="M20 20H0L20 0v20Z" />
         <path
           fill="#F5F7F8"
-          d="M2.2 54.326 20.585 72.71l52.326-52.326L54.526 2z"
+          d="m.611 15.09 5.107 5.107L20.253 5.662 15.146.555z"
         />
         <path
           fill="#DD2033"
-          d="M17.062 67.974 6.455 57.367 57.367 6.456l10.607 10.606z"
+          d="m4.74 18.881-2.947-2.946L15.935 1.792l2.947 2.947z"
         />
         <path
           fill="#FBD381"
-          d="m25.4 21-3.269 1.616 1.74 3.328-3.549-.713-.45 3.769-2.472-2.772L14.928 29l-.45-3.77-3.55.714 1.74-3.328L9.4 21l3.269-1.616-1.741-3.328 3.55.713.45-3.769 2.472 2.772L19.872 13l.45 3.77 3.55-.714-1.74 3.328L25.4 21Z"
+          d="m7.056 5.833-.909.45.484.924-.986-.199-.125 1.048-.687-.77-.686.77-.125-1.048-.986.199.483-.925-.908-.449.908-.449-.483-.924.986.198.125-1.047.686.77.687-.77.125 1.047.986-.198-.483.924.908.45Z"
         />
       </g>
     </CountrySymbol>

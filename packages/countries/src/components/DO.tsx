@@ -14,7 +14,7 @@ const DO = forwardRef<SVGSVGElement, DOProps>(function DO(props: DOProps, ref) {
     <CountrySymbol
       data-testid="DO"
       aria-label="Dominican Republic (the)"
-      viewBox="0 0 72 72"
+      viewBox="0 0 20 20"
       ref={ref}
       {...props}
     >
@@ -25,12 +25,15 @@ const DO = forwardRef<SVGSVGElement, DOProps>(function DO(props: DOProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#D9D9D9" />
       </mask>
       <g mask={`url(#${uid}-DO-a)`}>
-        <path fill="#DD2033" d="M0 36h36v36H0V36ZM36 0h36v36H36V0Z" />
-        <path fill="#004692" d="M36 0v36H0V0h36Zm36 36v36H36V36h36Z" />
-        <path fill="#F5F7F8" d="M29 72h14V43h29V29H43V0H29v29H0v14h29v29Z" />
+        <path fill="#DD2033" d="M0 10h10v10H0V10ZM10 0h10v10H10V0Z" />
+        <path fill="#004692" d="M10 0v10H0V0h10Zm10 10v10H10V10h10Z" />
+        <path
+          fill="#F5F7F8"
+          d="M8.056 20h3.888v-8.056H20V8.056h-8.056V0H8.056v8.056H0v3.888h8.056V20Z"
+        />
       </g>
     </CountrySymbol>
   );

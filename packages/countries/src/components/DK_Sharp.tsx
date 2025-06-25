@@ -17,7 +17,7 @@ const DK_Sharp = forwardRef<SVGSVGElement, DK_SharpProps>(function DK_Sharp(
     <CountrySymbol
       data-testid="DK_Sharp"
       aria-label="Denmark"
-      viewBox="0 0 72 50"
+      viewBox="0 0 29 20"
       ref={ref}
       sharp
       {...props}
@@ -29,11 +29,14 @@ const DK_Sharp = forwardRef<SVGSVGElement, DK_SharpProps>(function DK_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-DK-a)`}>
-        <path fill="#DD2033" d="M0 0h72v50H0z" />
-        <path fill="#F5F7F8" d="M14 61h14V32h44V18H28v-29H14v29H0v14h14v29Z" />
+        <path fill="#DD2033" d="M0 0h29v20H0z" />
+        <path
+          fill="#F5F7F8"
+          d="M5.639 24.4h5.639V12.8H29V7.2H11.278V-4.4h-5.64V7.2H0v5.6h5.639v11.6Z"
+        />
       </g>
     </CountrySymbol>
   );

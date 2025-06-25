@@ -17,7 +17,7 @@ const BR_Sharp = forwardRef<SVGSVGElement, BR_SharpProps>(function BR_Sharp(
     <CountrySymbol
       data-testid="BR_Sharp"
       aria-label="Brazil"
-      viewBox="0 0 72 50"
+      viewBox="0 0 29 20"
       ref={ref}
       sharp
       {...props}
@@ -29,18 +29,21 @@ const BR_Sharp = forwardRef<SVGSVGElement, BR_SharpProps>(function BR_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-BR-a)`}>
-        <path fill="#008259" d="M0 0h72v50H0z" />
-        <path fill="#F1B434" d="m36 3 30 22-30 22L6 25 36 3Z" />
+        <path fill="#008259" d="M0 0h29v20H0z" />
+        <path
+          fill="#F1B434"
+          d="M14.5 1.2 26.583 10 14.5 18.8 2.417 10 14.5 1.2Z"
+        />
         <path
           fill="#004692"
-          d="M36.5 39C43.956 39 50 32.732 50 25s-6.044-14-13.5-14S23 17.268 23 25s6.044 14 13.5 14Z"
+          d="M14.701 15.6c3.003 0 5.438-2.507 5.438-5.6 0-3.093-2.435-5.6-5.438-5.6-3.003 0-5.437 2.507-5.437 5.6 0 3.093 2.434 5.6 5.437 5.6Z"
         />
         <path
           fill="#F5F7F8"
-          d="M23.202 22.576A24.584 24.584 0 0 1 28.5 22c7.935 0 15.102 3.799 19.803 9.8a14.292 14.292 0 0 0 1.655-5.686C44.448 20.48 36.868 17 28.5 17c-1.078 0-2.144.058-3.193.17a14.214 14.214 0 0 0-2.105 5.406Z"
+          d="M9.345 9.03a9.97 9.97 0 0 1 2.134-.23c3.196 0 6.083 1.52 7.976 3.92a5.68 5.68 0 0 0 .667-2.274C17.902 8.192 14.849 6.8 11.479 6.8c-.434 0-.863.023-1.286.068a5.664 5.664 0 0 0-.848 2.162Z"
         />
       </g>
     </CountrySymbol>

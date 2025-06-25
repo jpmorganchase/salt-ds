@@ -14,7 +14,7 @@ const CM = forwardRef<SVGSVGElement, CMProps>(function CM(props: CMProps, ref) {
     <CountrySymbol
       data-testid="CM"
       aria-label="Cameroon"
-      viewBox="0 0 72 72"
+      viewBox="0 0 20 20"
       ref={ref}
       {...props}
     >
@@ -26,20 +26,20 @@ const CM = forwardRef<SVGSVGElement, CMProps>(function CM(props: CMProps, ref) {
         style={{ maskType: "alpha" }}
       >
         <circle
-          cx="36"
-          cy="36"
-          r="36"
+          cx="10"
+          cy="10"
+          r="10"
           fill="#D9D9D9"
-          transform="rotate(90 36 36)"
+          transform="rotate(90 10 10)"
         />
       </mask>
       <g mask={`url(#${uid}-CM-a)`}>
-        <path fill="#FBD381" d="M0 0h72v72H0z" />
-        <path fill="#005B33" d="M0 0h23v72H0z" />
+        <path fill="#FBD381" d="M0 0h20v20H0z" />
+        <path fill="#005B33" d="M0 0h6.389v20H0z" />
         <path
           fill="#DD2033"
           fillRule="evenodd"
-          d="M49 0H23v72h26V0ZM33.317 33.068 36 27l2.683 6.068 6.317.807-4.66 4.558L41.563 45 36 41.25 30.438 45l1.222-6.567L27 33.875l6.317-.807Z"
+          d="M13.611 0H6.39v20h7.222V0ZM9.255 9.186 10 7.5l.745 1.686 1.755.224-1.294 1.266.34 1.824L10 11.458 8.455 12.5l.34-1.824L7.5 9.41l1.755-.224Z"
           clipRule="evenodd"
         />
       </g>

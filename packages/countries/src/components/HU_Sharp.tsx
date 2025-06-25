@@ -17,7 +17,7 @@ const HU_Sharp = forwardRef<SVGSVGElement, HU_SharpProps>(function HU_Sharp(
     <CountrySymbol
       data-testid="HU_Sharp"
       aria-label="Hungary"
-      viewBox="0 0 72 50"
+      viewBox="0 0 29 20"
       ref={ref}
       sharp
       {...props}
@@ -29,12 +29,12 @@ const HU_Sharp = forwardRef<SVGSVGElement, HU_SharpProps>(function HU_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-HU-a)`}>
-        <path fill="#005B33" d="M0 50V34h72v16z" />
-        <path fill="#F5F7F8" d="M0 34V16h72v18z" />
-        <path fill="#DD2033" d="M0 16V0h72v16z" />
+        <path fill="#005B33" d="M0 20v-6.4h29V20z" />
+        <path fill="#F5F7F8" d="M0 13.6V6.4h29v7.2z" />
+        <path fill="#DD2033" d="M0 6.4V0h29v6.4z" />
       </g>
     </CountrySymbol>
   );

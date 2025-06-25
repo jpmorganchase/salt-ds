@@ -14,7 +14,7 @@ const TW = forwardRef<SVGSVGElement, TWProps>(function TW(props: TWProps, ref) {
     <CountrySymbol
       data-testid="TW"
       aria-label="Taiwan (Province of China)"
-      viewBox="0 0 72 72"
+      viewBox="0 0 20 20"
       ref={ref}
       {...props}
     >
@@ -25,14 +25,14 @@ const TW = forwardRef<SVGSVGElement, TWProps>(function TW(props: TWProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#D9D9D9" />
       </mask>
       <g mask={`url(#${uid}-TW-a)`}>
-        <path fill="#DD2033" d="M0 72V0h72v72z" />
-        <path fill="#004692" d="M0 44V0h44v44z" />
+        <path fill="#DD2033" d="M0 20V0h20v20z" />
+        <path fill="#004692" d="M0 12.222V0h12.222v12.222z" />
         <path
           fill="#F5F7F8"
-          d="m34 25-4.495 2.223 2.394 4.576-4.881-.982L26.4 36 23 32.188 19.6 36l-.618-5.183-4.88.981 2.393-4.576L12 25l4.495-2.223-2.394-4.575 4.88.981.62-5.183L23 17.812 26.4 14l.618 5.183 4.88-.981-2.393 4.576L34 25Z"
+          d="m9.444 6.944-1.248.618.665 1.27-1.356-.272L7.333 10 6.39 8.941 5.445 10l-.172-1.44-1.356.273.665-1.271-1.249-.618 1.249-.617-.665-1.271 1.356.273.172-1.44.944 1.059.944-1.06.172 1.44 1.356-.272-.665 1.271 1.248.617Z"
         />
       </g>
     </CountrySymbol>

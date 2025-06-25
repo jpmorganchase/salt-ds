@@ -14,7 +14,7 @@ const BR = forwardRef<SVGSVGElement, BRProps>(function BR(props: BRProps, ref) {
     <CountrySymbol
       data-testid="BR"
       aria-label="Brazil"
-      viewBox="0 0 72 72"
+      viewBox="0 0 20 20"
       ref={ref}
       {...props}
     >
@@ -25,18 +25,21 @@ const BR = forwardRef<SVGSVGElement, BRProps>(function BR(props: BRProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#D9D9D9" />
       </mask>
       <g mask={`url(#${uid}-BR-a)`}>
-        <path fill="#008259" d="M0 0h72v72H0z" />
-        <path fill="#F1B434" d="m36 14 30 22-30 22L6 36l30-22Z" />
+        <path fill="#008259" d="M0 0h20v20H0z" />
+        <path
+          fill="#F1B434"
+          d="M10 3.889 18.333 10 10 16.111 1.667 10 10 3.889Z"
+        />
         <path
           fill="#004692"
-          d="M36.5 50C43.956 50 50 43.732 50 36s-6.044-14-13.5-14S23 28.268 23 36s6.044 14 13.5 14Z"
+          d="M10.139 13.889c2.071 0 3.75-1.741 3.75-3.889 0-2.148-1.679-3.889-3.75-3.889-2.071 0-3.75 1.741-3.75 3.889 0 2.148 1.679 3.889 3.75 3.889Z"
         />
         <path
           fill="#F5F7F8"
-          d="M23.202 33.576A24.584 24.584 0 0 1 28.5 33c7.935 0 15.102 3.798 19.803 9.8a14.292 14.292 0 0 0 1.655-5.686C44.448 31.48 36.868 28 28.5 28c-1.078 0-2.144.058-3.193.17a14.214 14.214 0 0 0-2.105 5.406Z"
+          d="M6.445 9.327a6.83 6.83 0 0 1 1.472-.16c2.204 0 4.195 1.055 5.5 2.722a3.97 3.97 0 0 0 .46-1.58c-1.53-1.565-3.636-2.531-5.96-2.531-.3 0-.596.016-.887.047-.29.444-.493.953-.585 1.502Z"
         />
       </g>
     </CountrySymbol>

@@ -14,7 +14,7 @@ const KM = forwardRef<SVGSVGElement, KMProps>(function KM(props: KMProps, ref) {
     <CountrySymbol
       data-testid="KM"
       aria-label="Comoros (the)"
-      viewBox="0 0 72 72"
+      viewBox="0 0 20 20"
       ref={ref}
       {...props}
     >
@@ -25,17 +25,17 @@ const KM = forwardRef<SVGSVGElement, KMProps>(function KM(props: KMProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#D9D9D9" />
       </mask>
       <g mask={`url(#${uid}-KM-a)`}>
-        <path fill="#004692" d="M0 72V54h72v18z" />
-        <path fill="#DD2033" d="M0 54V36h72v18z" />
-        <path fill="#F5F7F8" d="M0 36V18h72v18z" />
-        <path fill="#FBD381" d="M0 18V0h72v18z" />
-        <path fill="#009B77" d="M48 36 0 0v72l48-36Z" />
+        <path fill="#004692" d="M0 20v-5h20v5z" />
+        <path fill="#DD2033" d="M0 15v-5h20v5z" />
+        <path fill="#F5F7F8" d="M0 10V5h20v5z" />
+        <path fill="#FBD381" d="M0 5V0h20v5z" />
+        <path fill="#009B77" d="M13.333 10 0 0v20l13.333-10Z" />
         <path
           fill="#F5F7F8"
-          d="M10.4 36c0-6.631 4.61-12.185 10.8-13.633A14.042 14.042 0 0 0 18 22c-7.732 0-14 6.268-14 14s6.268 14 14 14a14.06 14.06 0 0 0 3.2-.367C15.01 48.185 10.4 42.63 10.4 36Zm15-5a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm0 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm3 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+          d="M2.889 10a3.89 3.89 0 0 1 3-3.787 3.889 3.889 0 1 0 0 7.574 3.89 3.89 0 0 1-3-3.787Zm4.167-1.389a.833.833 0 1 0 0-1.667.833.833 0 0 0 0 1.667Zm0 2.222a.833.833 0 1 0 0-1.666.833.833 0 0 0 0 1.666Zm.833 1.389a.833.833 0 1 1-1.667 0 .833.833 0 0 1 1.667 0Z"
         />
       </g>
     </CountrySymbol>

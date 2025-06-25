@@ -17,7 +17,7 @@ const TG_Sharp = forwardRef<SVGSVGElement, TG_SharpProps>(function TG_Sharp(
     <CountrySymbol
       data-testid="TG_Sharp"
       aria-label="Togo"
-      viewBox="0 0 72 50"
+      viewBox="0 0 29 20"
       ref={ref}
       sharp
       {...props}
@@ -29,15 +29,15 @@ const TG_Sharp = forwardRef<SVGSVGElement, TG_SharpProps>(function TG_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-TG-a)`}>
-        <path fill="#009B77" d="M0 50V0h72v50z" />
-        <path fill="#F1B434" d="M0 21V10h72v11zm0 21V32h72v10z" />
-        <path fill="#DD2033" d="M0 32V0h36v32z" />
+        <path fill="#009B77" d="M0 20V0h29v20z" />
+        <path fill="#F1B434" d="M0 8.4V4h29v4.4zm0 8.4v-4h29v4z" />
+        <path fill="#DD2033" d="M0 12.8V0h14.5v12.8z" />
         <path
           fill="#F5F7F8"
-          d="m18 6-2.98 6.742L8 13.64l5.177 5.064L11.82 26 18 21.833 24.18 26l-1.357-7.297L28 13.64l-7.02-.897L18 6Z"
+          d="m7.25 2.4-1.2 2.697-2.828.359L5.308 7.48 4.76 10.4l2.49-1.667L9.74 10.4l-.549-2.92 2.086-2.025-2.827-.36L7.25 2.4Z"
         />
       </g>
     </CountrySymbol>
