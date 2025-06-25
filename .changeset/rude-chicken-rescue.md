@@ -5,7 +5,6 @@
 New cursor foundation
 
 ```diff
-+
 + --salt-cursor-active
 + --salt-cursor-disabled
 + --salt-cursor-drag-ew
