@@ -17,7 +17,7 @@ const PT_Sharp = forwardRef<SVGSVGElement, PT_SharpProps>(function PT_Sharp(
     <CountrySymbol
       data-testid="PT_Sharp"
       aria-label="Portugal"
-      viewBox="0 0 72 50"
+      viewBox="0 0 29 20"
       ref={ref}
       sharp
       {...props}
@@ -29,22 +29,22 @@ const PT_Sharp = forwardRef<SVGSVGElement, PT_SharpProps>(function PT_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-PT-a)`}>
-        <path fill="#005B33" d="M0 0h28v50H0z" />
-        <path fill="#DD2033" d="M28 0h44v50H28z" />
-        <circle cx="27.4" cy="25" r="14" fill="#F1B434" />
+        <path fill="#005b33" d="M0 0h11.278v20H0z" />
+        <path fill="#dd2033" d="M11.278 0H29v20H11.278z" />
+        <ellipse cx="11.036" cy="10" fill="#f1b434" rx="5.639" ry="5.6" />
         <path
-          fill="#F5F7F8"
+          fill="#f5f7f8"
           fillRule="evenodd"
-          d="M18.4 17v9.822a9.7 9.7 0 0 0 6.065 8.992c1.883.76 3.987.76 5.87 0a9.699 9.699 0 0 0 6.065-8.992V17h-18Z"
+          d="M7.411 6.8v3.929a3.88 3.88 0 0 0 2.443 3.597 3.18 3.18 0 0 0 2.364 0 3.88 3.88 0 0 0 2.443-3.597V6.8z"
           clipRule="evenodd"
         />
         <path
-          fill="#DD2033"
+          fill="#dd2033"
           fillRule="evenodd"
-          d="M32.4 21h-10v5.822a5.699 5.699 0 0 0 3.564 5.284 3.834 3.834 0 0 0 2.872 0 5.699 5.699 0 0 0 3.564-5.284V21Zm-14-4v9.822a9.7 9.7 0 0 0 6.065 8.992c1.883.76 3.987.76 5.87 0a9.699 9.699 0 0 0 6.065-8.992V17h-18Z"
+          d="M13.05 8.4H9.022v2.329c0 .929.568 1.765 1.436 2.113.37.15.785.15 1.156 0a2.28 2.28 0 0 0 1.436-2.113zM7.411 6.8v3.929a3.88 3.88 0 0 0 2.443 3.597 3.18 3.18 0 0 0 2.364 0 3.88 3.88 0 0 0 2.443-3.597V6.8z"
           clipRule="evenodd"
         />
       </g>

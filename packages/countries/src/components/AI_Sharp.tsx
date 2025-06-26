@@ -17,7 +17,7 @@ const AI_Sharp = forwardRef<SVGSVGElement, AI_SharpProps>(function AI_Sharp(
     <CountrySymbol
       data-testid="AI_Sharp"
       aria-label="Anguilla"
-      viewBox="0 0 72 50"
+      viewBox="0 0 29 20"
       ref={ref}
       sharp
       {...props}
@@ -29,32 +29,32 @@ const AI_Sharp = forwardRef<SVGSVGElement, AI_SharpProps>(function AI_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-AI-a)`}>
-        <path fill="#004692" d="M0 0h72v50H0z" />
+        <path fill="#004692" d="M0 0h29v20H0z" />
         <path
-          fill="#F5F7F8"
-          d="M44.2 21h21v8.743a14.857 14.857 0 0 1-9.36 13.803L54.7 44l-1.14-.454a14.857 14.857 0 0 1-9.36-13.803V21Z"
+          fill="#f5f7f8"
+          d="M17.803 8.4h8.458v2.98a6.69 6.69 0 0 1-4.229 6.22 6.69 6.69 0 0 1-4.23-6.22z"
         />
         <mask
           id={`${uid}-AI-b`}
-          x="44"
-          y="36"
+          x="17"
+          y="14"
           maskUnits="userSpaceOnUse"
           style={{ maskType: "alpha" }}
         >
-          <path fill="#D9D9D9" d="M44.2 36h22v8h-22z" />
+          <path fill="#d9d9d9" d="M17.803 14.4h8.861v3.2h-8.861z" />
         </mask>
         <g mask={`url(#${uid}-AI-b)`}>
           <path
-            fill="#3CCBDA"
-            d="M44.2 21h21v8.743a14.857 14.857 0 0 1-9.36 13.803L54.7 44l-1.14-.454a14.857 14.857 0 0 1-9.36-13.803V21Z"
+            fill="#3ccbda"
+            d="M17.803 8.4h8.458v2.98a6.69 6.69 0 0 1-4.229 6.22 6.69 6.69 0 0 1-4.23-6.22z"
           />
         </g>
-        <circle cx="51.7" cy="29.5" r="2.5" fill="#FF9E42" />
-        <circle cx="56.7" cy="25.5" r="2.5" fill="#FF9E42" />
-        <circle cx="58.7" cy="31.5" r="2.5" fill="#FF9E42" />
+        <ellipse cx="20.824" cy="11.8" fill="#ff9e42" rx="1.007" ry="1" />
+        <ellipse cx="22.838" cy="10.2" fill="#ff9e42" rx="1.007" ry="1" />
+        <ellipse cx="23.643" cy="12.6" fill="#ff9e42" rx="1.007" ry="1" />
         <mask
           id={`${uid}-AI-c`}
           x="0"
@@ -62,19 +62,19 @@ const AI_Sharp = forwardRef<SVGSVGElement, AI_SharpProps>(function AI_Sharp(
           maskUnits="userSpaceOnUse"
           style={{ maskType: "alpha" }}
         >
-          <path fill="#002F6C" d="M0 30V0h36v30H0Z" />
+          <path fill="#002f6c" d="M0 12V0h14.5v12z" />
         </mask>
         <g mask={`url(#${uid}-AI-c)`}>
           <path
-            fill="#F5F7F8"
-            d="m12.79 1.005-2.12 2.12 26.197 26.198 2.12-2.121L12.792 1.005ZM7.134 6.661l-3.536 3.536 26.197 26.197 3.536-3.536L7.134 6.661Z"
+            fill="#f5f7f8"
+            d="m5.152.402-.855.848L14.85 11.73l.854-.85zM2.873 2.665 1.45 4.079l10.552 10.479 1.424-1.415z"
           />
           <path
-            fill="#DD2033"
-            d="m7.134 6.661 3.535-3.535 26.198 26.197-3.536 3.535L7.134 6.661Z"
+            fill="#dd2033"
+            d="M2.873 2.665 4.297 1.25 14.85 11.73l-1.424 1.413z"
           />
-          <path fill="#F5F7F8" d="M6 35h4.002V9H36V5H6v30Z" />
-          <path fill="#DD2033" d="M0 35h6.002V5h30V0H0v35Z" />
+          <path fill="#f5f7f8" d="M2.417 14h1.611V3.6H14.5V2H2.417z" />
+          <path fill="#dd2033" d="M0 14h2.417V2h12.084V0H0z" />
         </g>
       </g>
     </CountrySymbol>

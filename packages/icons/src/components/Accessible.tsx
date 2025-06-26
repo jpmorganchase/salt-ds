@@ -18,11 +18,11 @@ export const AccessibleIcon = forwardRef<SVGSVGElement, AccessibleIconProps>(
       >
         <path
           fillRule="evenodd"
-          d="M5 3a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Zm0-1a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1Z"
+          d="M5 3a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3m0-1a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1"
           clipRule="evenodd"
         />
-        <path d="M3 4.126A4.002 4.002 0 0 0 4 12a4 4 0 0 0 3.595-2.245l-.763-.763A3.001 3.001 0 1 1 3 5.171V4.126Z" />
-        <path d="M6 6V4H4v4h3.172l2.242 2.243 1.414-1.415L8 6H6Z" />
+        <path d="M3 4.126A4.002 4.002 0 0 0 4 12a4 4 0 0 0 3.595-2.245l-.763-.763A3.001 3.001 0 1 1 3 5.171z" />
+        <path d="M6 6V4H4v4h3.172l2.242 2.243 1.414-1.415L8 6z" />
       </Icon>
     );
   },

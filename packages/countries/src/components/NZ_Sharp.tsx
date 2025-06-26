@@ -17,7 +17,7 @@ const NZ_Sharp = forwardRef<SVGSVGElement, NZ_SharpProps>(function NZ_Sharp(
     <CountrySymbol
       data-testid="NZ_Sharp"
       aria-label="New Zealand"
-      viewBox="0 0 72 50"
+      viewBox="0 0 29 20"
       ref={ref}
       sharp
       {...props}
@@ -29,13 +29,13 @@ const NZ_Sharp = forwardRef<SVGSVGElement, NZ_SharpProps>(function NZ_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-NZ-a)`}>
-        <path fill="#004692" d="M0 0h72v50H0z" />
+        <path fill="#004692" d="M0 0h29v20H0z" />
         <path
-          fill="#DD2033"
-          d="m54 4-1.49 3.371L49 7.82l2.589 2.532-.68 3.648L54 11.917 57.09 14l-.679-3.648L59 7.82l-3.51-.449L54 4Zm-9.49 15.371L46 16l1.49 3.371 3.51.449-2.589 2.532.68 3.648L46 23.917 42.91 26l.679-3.648L41 19.82l3.51-.449Zm7.403 16.349L54 31l2.087 4.72 4.913.627-3.624 3.545.95 5.108L54 42.083 49.674 45l.95-5.108L47 36.347l4.913-.628Zm9.597-18.349L63 14l1.49 3.371 3.51.449-2.589 2.532.68 3.648L63 21.917 59.91 24l.679-3.648L58 17.82l3.51-.449Z"
+          fill="#dd2033"
+          d="m21.75 1.6-.6 1.349-1.414.179 1.043 1.013-.274 1.46 1.245-.834 1.245.833-.274-1.46 1.043-1.012-1.414-.18zm-3.822 6.149.6-1.349.6 1.349 1.414.179-1.043 1.013.274 1.46-1.245-.834-1.245.833.274-1.46-1.043-1.012zm2.982 6.539.84-1.888.84 1.888 1.98.251-1.46 1.418.383 2.043-1.743-1.167L20.008 18l.382-2.043-1.46-1.418zm3.865-7.339.6-1.349.6 1.349 1.414.179-1.043 1.013.274 1.46-1.245-.834-1.245.833.274-1.46-1.043-1.012z"
         />
         <mask
           id={`${uid}-NZ-b`}
@@ -44,20 +44,20 @@ const NZ_Sharp = forwardRef<SVGSVGElement, NZ_SharpProps>(function NZ_Sharp(
           maskUnits="userSpaceOnUse"
           style={{ maskType: "alpha" }}
         >
-          <path fill="#002F6C" d="M0 30V0h36v30H0Z" />
+          <path fill="#002f6c" d="M0 12V0h14.5v12z" />
         </mask>
         <g mask={`url(#${uid}-NZ-b)`}>
-          <path fill="#004692" d="M0 0h36v36H0z" />
+          <path fill="#004692" d="M0 0h14.5v14.4H0z" />
           <path
-            fill="#F5F7F8"
-            d="m12.79 1.005-2.12 2.12 26.197 26.198 2.12-2.121L12.792 1.005ZM7.134 6.661l-3.536 3.536 26.197 26.197 3.536-3.535L7.134 6.66Z"
+            fill="#f5f7f8"
+            d="m5.152.402-.855.848L14.85 11.73l.854-.85zM2.873 2.665 1.45 4.079l10.552 10.479 1.424-1.415z"
           />
           <path
-            fill="#DD2033"
-            d="m7.134 6.661 3.535-3.535 26.198 26.197-3.536 3.535L7.134 6.662Z"
+            fill="#dd2033"
+            d="M2.873 2.665 4.297 1.25 14.85 11.73l-1.424 1.413z"
           />
-          <path fill="#F5F7F8" d="M6 35h4.002V9H36V5H6v30Z" />
-          <path fill="#DD2033" d="M0 35h6.002V5h30V0H0v35Z" />
+          <path fill="#f5f7f8" d="M2.417 14h1.611V3.6H14.5V2H2.417z" />
+          <path fill="#dd2033" d="M0 14h2.417V2h12.084V0H0z" />
         </g>
       </g>
     </CountrySymbol>

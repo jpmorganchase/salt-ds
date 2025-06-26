@@ -16,7 +16,7 @@ export const CalendarIcon = forwardRef<SVGSVGElement, CalendarIconProps>(
         ref={ref}
         {...props}
       >
-        <path d="M4 0v1h4V0h1v1h3v11H0V1h3V0h1Zm7 4H1v7h10V4ZM9 2H8v1h1V2ZM4 2H3v1h1V2Z" />
+        <path d="M4 0v1h4V0h1v1h3v11H0V1h3V0zm7 4H1v7h10zM9 2H8v1h1zM4 2H3v1h1z" />
       </Icon>
     );
   },

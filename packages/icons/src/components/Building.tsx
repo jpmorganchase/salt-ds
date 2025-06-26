@@ -16,18 +16,18 @@ export const BuildingIcon = forwardRef<SVGSVGElement, BuildingIconProps>(
         ref={ref}
         {...props}
       >
-        <path d="M0 11h12v1H0v-1Z" />
+        <path d="M0 11h12v1H0z" />
         <path
           fillRule="evenodd"
-          d="M9 1H2v10h7V1ZM1 0v11h9V0H1Z"
+          d="M9 1H2v10h7zM1 0v11h9V0z"
           clipRule="evenodd"
         />
         <path
           fillRule="evenodd"
-          d="M6 9H5v2h1V9ZM4 8v3h3V8H4Z"
+          d="M6 9H5v2h1zM4 8v3h3V8z"
           clipRule="evenodd"
         />
-        <path d="M3 4h1v1H3V4Zm0-2h1v1H3V2Zm0 4h1v1H3V6Zm2-2h1v1H5V4Zm0-2h1v1H5V2Zm0 4h1v1H5V6Zm2-2h1v1H7V4Zm0-2h1v1H7V2Zm0 4h1v1H7V6Z" />
+        <path d="M3 4h1v1H3zm0-2h1v1H3zm0 4h1v1H3zm2-2h1v1H5zm0-2h1v1H5zm0 4h1v1H5zm2-2h1v1H7zm0-2h1v1H7zm0 4h1v1H7z" />
       </Icon>
     );
   },

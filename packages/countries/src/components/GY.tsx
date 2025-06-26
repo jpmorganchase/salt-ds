@@ -14,7 +14,7 @@ const GY = forwardRef<SVGSVGElement, GYProps>(function GY(props: GYProps, ref) {
     <CountrySymbol
       data-testid="GY"
       aria-label="Guyana"
-      viewBox="0 0 72 72"
+      viewBox="0 0 20 20"
       ref={ref}
       {...props}
     >
@@ -26,29 +26,29 @@ const GY = forwardRef<SVGSVGElement, GYProps>(function GY(props: GYProps, ref) {
         style={{ maskType: "alpha" }}
       >
         <circle
-          cx="36"
-          cy="36"
-          r="36"
-          fill="#D9D9D9"
-          transform="rotate(-90 36 36)"
+          cx="10"
+          cy="10"
+          r="10"
+          fill="#d9d9d9"
+          transform="rotate(-90 10 10)"
         />
       </mask>
       <g mask={`url(#${uid}-GY-a)`}>
-        <path fill="#009B77" d="M72 72H0V0h72z" />
+        <path fill="#009b77" d="M20 20H0V0h20z" />
         <path
-          fill="#F5F7F8"
+          fill="#f5f7f8"
           fillRule="evenodd"
-          d="M63.583 35.5-8.6 68.68V2.32L63.583 35.5Zm-7.183 0L-5.6 7v57l62-28.5Z"
+          d="m17.662 9.861-20.05 9.217V.644zm-1.995 0L-1.556 1.945v15.833z"
           clipRule="evenodd"
         />
-        <path fill="#FBD381" d="M56.4 35.5-5.6 64V7l62 28.5Z" />
+        <path fill="#fbd381" d="m15.667 9.861-17.223 7.917V1.944z" />
         <path
-          fill="#31373D"
+          fill="#31373d"
           fillRule="evenodd"
-          d="M30.406 35.5-3.6 73.915v-76.83L30.406 35.5Zm-4.006 0L-.6 66V5l27 30.5Z"
+          d="M8.446 9.861-1 20.531V-.808zm-1.113 0-7.5 8.472V1.39z"
           clipRule="evenodd"
         />
-        <path fill="#DD2033" d="M26.4 35.5-.6 66V5l27 30.5Z" />
+        <path fill="#dd2033" d="m7.333 9.861-7.5 8.472V1.39z" />
       </g>
     </CountrySymbol>
   );

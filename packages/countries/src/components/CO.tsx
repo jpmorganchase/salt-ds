@@ -14,7 +14,7 @@ const CO = forwardRef<SVGSVGElement, COProps>(function CO(props: COProps, ref) {
     <CountrySymbol
       data-testid="CO"
       aria-label="Colombia"
-      viewBox="0 0 72 72"
+      viewBox="0 0 20 20"
       ref={ref}
       {...props}
     >
@@ -25,12 +25,12 @@ const CO = forwardRef<SVGSVGElement, COProps>(function CO(props: COProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#d9d9d9" />
       </mask>
       <g mask={`url(#${uid}-CO-a)`}>
-        <path fill="#DD2033" d="M0 72V54h72v18z" />
-        <path fill="#F1B434" d="M0 36V0h72v36z" />
-        <path fill="#004692" d="M0 54V36h72v18z" />
+        <path fill="#dd2033" d="M0 20v-5h20v5z" />
+        <path fill="#f1b434" d="M0 10V0h20v10z" />
+        <path fill="#004692" d="M0 15v-5h20v5z" />
       </g>
     </CountrySymbol>
   );

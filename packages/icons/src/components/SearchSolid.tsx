@@ -18,7 +18,7 @@ export const SearchSolidIcon = forwardRef<SVGSVGElement, SearchSolidIconProps>(
       >
         <path
           fillRule="evenodd"
-          d="M5 10a4.978 4.978 0 0 0 3-1l3 3 1-1-3-3a5 5 0 1 0-4 2Zm0-8a3 3 0 0 1 3 3h1a4 4 0 0 0-4-4v1Z"
+          d="M5 10a4.98 4.98 0 0 0 3-1l3 3 1-1-3-3a5 5 0 1 0-4 2m0-8a3 3 0 0 1 3 3h1a4 4 0 0 0-4-4z"
           clipRule="evenodd"
         />
       </Icon>

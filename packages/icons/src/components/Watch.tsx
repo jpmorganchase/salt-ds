@@ -16,10 +16,10 @@ export const WatchIcon = forwardRef<SVGSVGElement, WatchIconProps>(
         ref={ref}
         {...props}
       >
-        <path d="M5 4h1v2h2v1H5V4Z" />
+        <path d="M5 4h1v2h2v1H5z" />
         <path
           fillRule="evenodd"
-          d="M3 0h6v2h1v8H9v2H3v-2H2V2h1V0Zm6 3H3v6h6V3Z"
+          d="M3 0h6v2h1v8H9v2H3v-2H2V2h1zm6 3H3v6h6z"
           clipRule="evenodd"
         />
       </Icon>

@@ -18,13 +18,9 @@ export const AddToGridSolidIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <path fillRule="evenodd" d="M5 12H0V7h5v5Z" clipRule="evenodd" />
-      <path d="M10 7v2h2v1h-2v2H9v-2H7V9h2V7h1Z" />
-      <path
-        fillRule="evenodd"
-        d="M5 5H0V0h5v5Zm7 0H7V0h5v5Z"
-        clipRule="evenodd"
-      />
+      <path fillRule="evenodd" d="M5 12H0V7h5z" clipRule="evenodd" />
+      <path d="M10 7v2h2v1h-2v2H9v-2H7V9h2V7z" />
+      <path fillRule="evenodd" d="M5 5H0V0h5zm7 0H7V0h5z" clipRule="evenodd" />
     </Icon>
   );
 });

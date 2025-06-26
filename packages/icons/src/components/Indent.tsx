@@ -16,7 +16,7 @@ export const IndentIcon = forwardRef<SVGSVGElement, IndentIconProps>(
         ref={ref}
         {...props}
       >
-        <path d="M3 2.5h9v1H3v-1Zm4 3h5v1H7v-1Zm0 3h5v1H7v-1ZM5.982 7.475l-2.829 2.829-.707-.707L4.042 8H0V7h4.093L2.446 5.353l.707-.707 2.83 2.829Z" />
+        <path d="M3 2.5h9v1H3zm4 3h5v1H7zm0 3h5v1H7zM5.982 7.475l-2.829 2.829-.707-.707L4.042 8H0V7h4.093L2.446 5.353l.707-.707z" />
       </Icon>
     );
   },

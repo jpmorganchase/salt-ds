@@ -14,7 +14,7 @@ const GL = forwardRef<SVGSVGElement, GLProps>(function GL(props: GLProps, ref) {
     <CountrySymbol
       data-testid="GL"
       aria-label="Greenland"
-      viewBox="0 0 72 72"
+      viewBox="0 0 20 20"
       ref={ref}
       {...props}
     >
@@ -26,22 +26,22 @@ const GL = forwardRef<SVGSVGElement, GLProps>(function GL(props: GLProps, ref) {
         style={{ maskType: "alpha" }}
       >
         <circle
-          cx="36"
-          cy="36"
-          r="36"
-          fill="#D9D9D9"
-          transform="rotate(180 36 36)"
+          cx="10"
+          cy="10"
+          r="10"
+          fill="#d9d9d9"
+          transform="rotate(180 10 10)"
         />
       </mask>
       <g mask={`url(#${uid}-GL-a)`}>
-        <path fill="#F5F7F8" d="M72 0v36H0V0z" />
+        <path fill="#f5f7f8" d="M20 0v10H0V0z" />
         <path
-          fill="#DD2033"
-          d="M72 36v36H0V36zM30 20c-8.837 0-16 7.163-16 16h32c0-8.837-7.163-16-16-16Z"
+          fill="#dd2033"
+          d="M20 10v10H0V10zM8.333 5.556A4.444 4.444 0 0 0 3.89 10h8.889a4.444 4.444 0 0 0-4.445-4.444"
         />
         <path
-          fill="#F5F7F8"
-          d="M30 52c-8.837 0-16-7.163-16-16h32c0 8.837-7.163 16-16 16Z"
+          fill="#f5f7f8"
+          d="M8.333 14.445A4.444 4.444 0 0 1 3.89 10h8.889a4.445 4.445 0 0 1-4.445 4.445"
         />
       </g>
     </CountrySymbol>

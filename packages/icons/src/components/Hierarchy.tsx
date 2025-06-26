@@ -18,7 +18,7 @@ export const HierarchyIcon = forwardRef<SVGSVGElement, HierarchyIconProps>(
       >
         <path
           fillRule="evenodd"
-          d="M4.5 4.5H3v1h2.5v-1h6v3h-6v-1H3v3h2.5v-1h6v3h-6v-1H2v-6H.5v-4h4v4Zm2 6h4v-1h-4v1Zm0-4h4v-1h-4v1Zm-5-3h2v-2h-2v2Z"
+          d="M4.5 4.5H3v1h2.5v-1h6v3h-6v-1H3v3h2.5v-1h6v3h-6v-1H2v-6H.5v-4h4zm2 6h4v-1h-4zm0-4h4v-1h-4zm-5-3h2v-2h-2z"
           clipRule="evenodd"
         />
       </Icon>

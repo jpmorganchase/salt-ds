@@ -71,10 +71,12 @@ import { es as dateFnsEs } from "date-fns/locale";
 import { zhCN as dateFnsZhCn } from "date-fns/locale";
 import type { DateTime } from "luxon";
 import "./date-picker.stories.css";
+import { withDateMock } from ".storybook/decorators/withDateMock";
 
 export default {
   title: "Lab/Date Picker",
   component: DatePicker,
+  decorators: [withDateMock],
 } as Meta<typeof DatePicker>;
 
 const DatePickerSingleTemplate: StoryFn<

@@ -17,7 +17,7 @@ const AR_Sharp = forwardRef<SVGSVGElement, AR_SharpProps>(function AR_Sharp(
     <CountrySymbol
       data-testid="AR_Sharp"
       aria-label="Argentina"
-      viewBox="0 0 72 50"
+      viewBox="0 0 29 20"
       ref={ref}
       sharp
       {...props}
@@ -29,14 +29,14 @@ const AR_Sharp = forwardRef<SVGSVGElement, AR_SharpProps>(function AR_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-AR-a)`}>
-        <path fill="#86C5FA" d="M0 50V0h72v50z" />
-        <path fill="#F5F7F8" d="M0 39V11h72v28z" />
+        <path fill="#86c5fa" d="M0 20V0h29v20z" />
+        <path fill="#f5f7f8" d="M0 15.6V4.4h29v11.2z" />
         <path
-          fill="#F1B434"
-          d="m46.743 25-4.495 2.223 2.393 4.576-4.88-.982L39.142 36l-3.4-3.812L32.344 36l-.618-5.183-4.881.981 2.393-4.576L24.743 25l4.495-2.223-2.394-4.575 4.88.981.62-5.183 3.399 3.812 3.4-3.812.618 5.183 4.88-.981-2.393 4.576L46.743 25Z"
+          fill="#f1b434"
+          d="m18.827 10-1.81.889.963 1.83-1.965-.392-.25 2.073-1.369-1.525-1.369 1.525-.249-2.073-1.966.392.964-1.83-1.81-.89 1.81-.888-.964-1.83 1.966.392.25-2.073 1.368 1.525 1.37-1.525.249 2.073 1.966-.392-.964 1.83z"
         />
       </g>
     </CountrySymbol>

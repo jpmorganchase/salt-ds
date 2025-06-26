@@ -12,17 +12,18 @@ data:
 
 ### When to use
 
-When you want to use the Salt theme with Highcharts.
-
-<Callout title="Note">
-
-Salt prioritzes compatibility with version 10.2.2 to 10.3.3
-
-For support on the latest version, see xyz
-
-</Callout>
+When you want to use the Salt theme with Highcharts version 10.
 
 ## Import
+
+To install the theme package, ensure you have a supported version of Highcharts installed and add `@salt-ds/highcharts-theme` via your package manager
+
+```bash
+npm install @salt-ds/highcharts-theme
+# or
+yarn add @salt-ds/highcharts-theme
+
+```
 
 ### Set Highcharts Global options
 
@@ -37,7 +38,9 @@ Highcharts.setOptions(saltHCThemeOptions);
 
 <Callout title="Note">
 
-If you already have a global options object, you can call `Highcharts.setOptions` with your existing options object and then again using the `saltHCThemeOptions` object to set the Salt theme. Note that the order of `setOptions` calls matter - the last call will override the previous ones.
+If you already have a global options object, you can call `Highcharts.setOptions` again with the `saltHCThemeOptions` after your initial call. Any fields set by `saltHCThemeOptions` will take precedence over any previously set fields.
+
+For granular control, you can also use the `Highcharts.merge()` utility function to deep merge the `saltHCThemeOptions` with your existing options object, including at the chart level.
 
 </Callout>
 
@@ -53,6 +56,6 @@ Then wrap your Highcharts with `salt-highcharts-theme` class names shown below:
 
 ```js
 <div className="highcharts-theme-salt">
-  <HighchartsReact highcharts={Highcharts} options={options1} />
+  <HighchartsReact highcharts={Highcharts} options={yourChartSpecificOptions} />
 </div>
 ```

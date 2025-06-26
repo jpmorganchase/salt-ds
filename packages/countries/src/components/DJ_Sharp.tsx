@@ -17,7 +17,7 @@ const DJ_Sharp = forwardRef<SVGSVGElement, DJ_SharpProps>(function DJ_Sharp(
     <CountrySymbol
       data-testid="DJ_Sharp"
       aria-label="Djibouti"
-      viewBox="0 0 72 50"
+      viewBox="0 0 29 20"
       ref={ref}
       sharp
       {...props}
@@ -29,15 +29,15 @@ const DJ_Sharp = forwardRef<SVGSVGElement, DJ_SharpProps>(function DJ_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-DJ-a)`}>
-        <path fill="#009B77" d="M0 50V25h72v25z" />
-        <path fill="#86C5FA" d="M0 25V0h72v25z" />
-        <path fill="#F5F7F8" d="M42 25-6-11v72l48-36Z" />
+        <path fill="#009b77" d="M0 20V10h29v10z" />
+        <path fill="#86c5fa" d="M0 10V0h29v10z" />
+        <path fill="#f5f7f8" d="M16.917 10-2.417-4.4v28.8z" />
         <path
-          fill="#DD2033"
-          d="m16 15-2.98 6.742L6 22.64l5.177 5.064L9.82 35 16 30.833 22.18 35l-1.357-7.297L26 22.64l-7.02-.897L16 15Z"
+          fill="#dd2033"
+          d="m6.444 6-1.2 2.697-2.827.359 2.085 2.025L3.955 14l2.49-1.667L8.933 14l-.547-2.919 2.085-2.025-2.827-.36z"
         />
       </g>
     </CountrySymbol>

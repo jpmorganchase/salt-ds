@@ -14,7 +14,7 @@ const ER = forwardRef<SVGSVGElement, ERProps>(function ER(props: ERProps, ref) {
     <CountrySymbol
       data-testid="ER"
       aria-label="Eritrea"
-      viewBox="0 0 72 72"
+      viewBox="0 0 20 20"
       ref={ref}
       {...props}
     >
@@ -25,15 +25,15 @@ const ER = forwardRef<SVGSVGElement, ERProps>(function ER(props: ERProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#d9d9d9" />
       </mask>
       <g mask={`url(#${uid}-ER-a)`}>
-        <path fill="#009B77" d="M0 0h72v36H0z" />
-        <path fill="#0091DA" d="M0 72V36h72v36z" />
-        <path fill="#DD2033" d="M72 36 0 0v72l72-36Z" />
+        <path fill="#009b77" d="M0 0h20v10H0z" />
+        <path fill="#0091da" d="M0 20V10h20v10z" />
+        <path fill="#dd2033" d="M20 10 0 0v20z" />
         <path
-          fill="#FBD381"
-          d="M24 50c7.732 0 14-6.268 14-14a13.96 13.96 0 0 0-4.1-9.9l-2.83 2.83A9.969 9.969 0 0 1 34 36c0 4.838-3.436 8.873-8 9.8V30h-4v15.8c-4.564-.927-8-4.962-8-9.8a9.969 9.969 0 0 1 2.929-7.071L14.1 26.101A13.956 13.956 0 0 0 10 36c0 7.732 6.268 14 14 14Zm0-28h.03-.06.03Z"
+          fill="#fbd381"
+          d="M6.667 13.889a3.889 3.889 0 0 0 2.75-6.639l-.786.786a2.779 2.779 0 0 1-1.409 4.686V8.333h-1.11v4.39a2.779 2.779 0 0 1-1.41-4.687l-.785-.786a3.889 3.889 0 0 0 2.75 6.639m0-7.778h.008-.017z"
         />
       </g>
     </CountrySymbol>

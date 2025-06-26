@@ -14,7 +14,7 @@ const MH = forwardRef<SVGSVGElement, MHProps>(function MH(props: MHProps, ref) {
     <CountrySymbol
       data-testid="MH"
       aria-label="Marshall Islands (the)"
-      viewBox="0 0 72 72"
+      viewBox="0 0 20 20"
       ref={ref}
       {...props}
     >
@@ -25,17 +25,17 @@ const MH = forwardRef<SVGSVGElement, MHProps>(function MH(props: MHProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#d9d9d9" />
       </mask>
       <g mask={`url(#${uid}-MH-a)`}>
-        <path fill="#004692" d="M0 0h72v72H0z" />
+        <path fill="#004692" d="M0 0h20v20H0z" />
         <path
-          fill="#F1B434"
-          d="m14.071 64.983-1.97-1.971L57.91 7l7.072 7.071L14.07 64.983Z"
+          fill="#f1b434"
+          d="m3.909 18.05-.548-.547L16.087 1.944 18.05 3.91z"
         />
         <path
-          fill="#F5F7F8"
-          d="m16.088 67-2.017-2.017L64.983 14.07l7.07 7.071L16.089 67ZM33 26l-4.903 2.425 2.61 4.991-5.324-1.07L24.71 38 21 33.842 17.292 38l-.674-5.654-5.325 1.07 2.611-4.992L9 26l4.903-2.425-2.61-4.991 5.323 1.07.676-5.654L21 18.159 24.709 14l.674 5.654 5.325-1.07-2.611 4.992L33 26Z"
+          fill="#f5f7f8"
+          d="m4.469 18.611-.56-.56L18.05 3.909l1.964 1.964zM9.167 7.222l-1.362.674.725 1.386-1.48-.297-.186 1.57L5.834 9.4l-1.03 1.156-.188-1.571-1.48.297.726-1.386L2.5 7.222l1.362-.673-.725-1.387 1.479.298.187-1.571 1.03 1.155 1.03-1.155.188 1.57 1.479-.297-.725 1.387z"
         />
       </g>
     </CountrySymbol>

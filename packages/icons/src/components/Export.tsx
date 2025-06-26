@@ -16,8 +16,8 @@ export const ExportIcon = forwardRef<SVGSVGElement, ExportIconProps>(
         ref={ref}
         {...props}
       >
-        <path d="M5 1H1v10h4v-1H2V2h3V1Z" />
-        <path d="M4 6.5v-1h6.094L7.412 2.82l.707-.707L12.01 6 8.118 9.89l-.707-.707L10.094 6.5H4Z" />
+        <path d="M5 1H1v10h4v-1H2V2h3z" />
+        <path d="M4 6.5v-1h6.094L7.412 2.82l.707-.707L12.01 6 8.118 9.89l-.707-.707L10.094 6.5z" />
       </Icon>
     );
   },

@@ -14,7 +14,7 @@ const SI = forwardRef<SVGSVGElement, SIProps>(function SI(props: SIProps, ref) {
     <CountrySymbol
       data-testid="SI"
       aria-label="Slovenia"
-      viewBox="0 0 72 72"
+      viewBox="0 0 20 20"
       ref={ref}
       {...props}
     >
@@ -25,32 +25,32 @@ const SI = forwardRef<SVGSVGElement, SIProps>(function SI(props: SIProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#d9d9d9" />
       </mask>
       <g mask={`url(#${uid}-SI-a)`}>
-        <path fill="#DD2033" d="M0 72V48h72v24z" />
-        <path fill="#005EB8" d="M0 48V24h72v24z" />
-        <path fill="#F5F7F8" d="M0 24V0h72v24z" />
+        <path fill="#dd2033" d="M0 20v-6.667h20V20z" />
+        <path fill="#005eb8" d="M0 13.333V6.666h20v6.667z" />
+        <path fill="#f5f7f8" d="M0 6.667V0h20v6.667z" />
         <path
-          fill="#005EB8"
-          d="M15 14h20v7.941a14.857 14.857 0 0 1-9.34 13.795L25 36l-.66-.264A14.857 14.857 0 0 1 15 21.94V14Z"
+          fill="#005eb8"
+          d="M4.167 3.889h5.555v2.008c0 1.807-1.1 3.432-2.778 4.103a4.42 4.42 0 0 1-2.777-4.103z"
         />
         <mask
           id={`${uid}-SI-b`}
-          x="15"
-          y="14"
+          x="4"
+          y="3"
           maskUnits="userSpaceOnUse"
           style={{ maskType: "alpha" }}
         >
           <path
-            fill="#2F80ED"
-            d="M15 14h20v7.941a14.857 14.857 0 0 1-9.34 13.795L25 36l-.66-.264A14.857 14.857 0 0 1 15 21.94V14Z"
+            fill="#2f80ed"
+            d="M4.167 3.889h5.555v2.008c0 1.807-1.1 3.432-2.778 4.103a4.42 4.42 0 0 1-2.777-4.103z"
           />
         </mask>
         <g mask={`url(#${uid}-SI-b)`}>
           <path
-            fill="#F5F7F8"
-            d="M29.059 24.68 25.2 19l-3.858 5.68L20.2 23l-8.66 12.75H23V36h5v-.25h10.86L30.2 23l-1.141 1.68Z"
+            fill="#f5f7f8"
+            d="M8.072 6.856 7 5.278 5.928 6.856l-.317-.467L3.206 9.93h3.183V10h1.389v-.07h3.017L8.389 6.389z"
           />
         </g>
       </g>

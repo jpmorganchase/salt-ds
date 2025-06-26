@@ -18,7 +18,7 @@ export const AddIcon = forwardRef<SVGSVGElement, AddIconProps>(function AddIcon(
       ref={ref}
       {...props}
     >
-      <path d="M7 0H5v5H0v2h5v5h2V7h5V5H7V0Z" />
+      <path d="M7 0H5v5H0v2h5v5h2V7h5V5H7z" />
     </Icon>
   );
 });

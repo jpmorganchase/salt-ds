@@ -14,7 +14,7 @@ const EH = forwardRef<SVGSVGElement, EHProps>(function EH(props: EHProps, ref) {
     <CountrySymbol
       data-testid="EH"
       aria-label="Western Sahara"
-      viewBox="0 0 72 72"
+      viewBox="0 0 20 20"
       ref={ref}
       {...props}
     >
@@ -25,15 +25,19 @@ const EH = forwardRef<SVGSVGElement, EHProps>(function EH(props: EHProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#d9d9d9" />
       </mask>
       <g mask={`url(#${uid}-EH-a)`}>
-        <path fill="#005B33" d="M0 72V50h72v22z" />
-        <path fill="#F5F7F8" d="M0 50V22h72v28z" />
-        <path fill="#31373D" d="M0 22V0h72v22z" />
+        <path fill="#005b33" d="M0 20v-6.11h20V20z" />
+        <path fill="#f5f7f8" d="M0 13.889V6.11h20v7.778z" />
+        <path fill="#31373d" d="M0 6.111V.001h20v6.11z" />
         <path
-          fill="#DD2033"
-          d="M0 9v54h2l12-9 24-18-24-18L2 9H0Zm46 27c0-3.728 2.55-6.86 6-7.748a8 8 0 1 0 0 15.496c-3.45-.888-6-4.02-6-7.748Zm10.212-1.955L58 30l1.788 4.045 4.212.539-3.106 3.038.814 4.378L58 39.5 54.292 42l.814-4.378L52 34.584l4.212-.539Z"
+          fill="#dd2033"
+          d="M0 2.5v15h.556L3.889 15l6.667-5-6.667-5L.556 2.5zM12.778 10c0-1.035.708-1.906 1.666-2.152A2.226 2.226 0 0 0 11.667 10a2.222 2.222 0 0 0 2.777 2.152A2.22 2.22 0 0 1 12.778 10"
+        />
+        <path
+          fill="#dd2033"
+          d="m15.614 9.457.497-1.124.497 1.124 1.17.15-.863.844.226 1.216-1.03-.695-1.03.695.226-1.216-.863-.844z"
         />
       </g>
     </CountrySymbol>

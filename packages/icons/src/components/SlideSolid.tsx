@@ -16,7 +16,7 @@ export const SlideSolidIcon = forwardRef<SVGSVGElement, SlideSolidIconProps>(
         ref={ref}
         {...props}
       >
-        <path d="M4 7a2 2 0 0 1 1.935 1.5H12v1H5.935a1.999 1.999 0 0 1-3.87 0H0v-1h2.065A1.999 1.999 0 0 1 4 7Zm4-6a2 2 0 0 1 1.935 1.5H12v1H9.935a1.999 1.999 0 0 1-3.87 0H0v-1h6.065A1.999 1.999 0 0 1 8 1Z" />
+        <path d="M4 7a2 2 0 0 1 1.935 1.5H12v1H5.935a1.999 1.999 0 0 1-3.87 0H0v-1h2.065A2 2 0 0 1 4 7m4-6a2 2 0 0 1 1.935 1.5H12v1H9.935a1.999 1.999 0 0 1-3.87 0H0v-1h6.065A2 2 0 0 1 8 1" />
       </Icon>
     );
   },

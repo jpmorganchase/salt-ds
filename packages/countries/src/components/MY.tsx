@@ -14,7 +14,7 @@ const MY = forwardRef<SVGSVGElement, MYProps>(function MY(props: MYProps, ref) {
     <CountrySymbol
       data-testid="MY"
       aria-label="Malaysia"
-      viewBox="0 0 72 72"
+      viewBox="0 0 20 20"
       ref={ref}
       {...props}
     >
@@ -25,22 +25,22 @@ const MY = forwardRef<SVGSVGElement, MYProps>(function MY(props: MYProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#d9d9d9" />
       </mask>
       <g mask={`url(#${uid}-MY-a)`}>
-        <path fill="#F5F7F8" d="M0 0h72v72H0z" />
+        <path fill="#f5f7f8" d="M0 0h20v20H0z" />
         <path
-          fill="#DD2033"
-          d="M0 0v9h72V0H0Zm0 18v9h72v-9H0Zm0 27v-9h72v9H0Zm0 9v9h72v-9H0Z"
+          fill="#dd2033"
+          d="M0 0v2.5h20V0zm0 5v2.5h20V5zm0 7.5V10h20v2.5zM0 15v2.5h20V15z"
         />
-        <path fill="#004692" d="M0 36V0h36v36z" />
+        <path fill="#004692" d="M0 10V0h10v10z" />
         <path
-          fill="#FBD381"
-          d="M20.6 15a6.97 6.97 0 0 1 3.832 1.141 9 9 0 1 0 0 11.718A7 7 0 1 1 20.6 15Z"
+          fill="#fbd381"
+          d="M5.722 4.167c.393 0 .759.116 1.065.317a2.5 2.5 0 1 0 0 3.255 1.944 1.944 0 1 1-1.064-3.572"
         />
         <path
-          fill="#FBD381"
-          d="M30.077 19.167 28.6 16l-1.477 3.167-3.335-.79 1.494 3.159-2.682 2.181 3.34.772L25.93 28l2.67-2.196L31.27 28l-.009-3.51 3.34-.773-2.683-2.181 1.494-3.159-3.335.79Z"
+          fill="#fbd381"
+          d="m8.355 5.324-.41-.88-.41.88-.927-.22.415.878-.745.606.927.215-.002.975.742-.61.741.61-.002-.975.927-.215-.745-.606.415-.877z"
         />
       </g>
     </CountrySymbol>

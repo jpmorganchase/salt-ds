@@ -16,7 +16,7 @@ export const TriangleUpIcon = forwardRef<SVGSVGElement, TriangleUpIconProps>(
         ref={ref}
         {...props}
       >
-        <path d="m6 3.5-5 5h10l-5-5Z" />
+        <path d="m6 3.5-5 5h10z" />
       </Icon>
     );
   },

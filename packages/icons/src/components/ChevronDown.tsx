@@ -16,7 +16,7 @@ export const ChevronDownIcon = forwardRef<SVGSVGElement, ChevronDownIconProps>(
         ref={ref}
         {...props}
       >
-        <path d="M5.618 8.593 6 9l.382-.407L11 3.661 10.236 3 6 7.524 1.764 3 1 3.66l4.618 4.933Z" />
+        <path d="M5.618 8.593 6 9l.382-.407L11 3.661 10.236 3 6 7.524 1.764 3 1 3.66z" />
       </Icon>
     );
   },

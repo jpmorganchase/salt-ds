@@ -14,7 +14,7 @@ const VN = forwardRef<SVGSVGElement, VNProps>(function VN(props: VNProps, ref) {
     <CountrySymbol
       data-testid="VN"
       aria-label="Viet Nam"
-      viewBox="0 0 72 72"
+      viewBox="0 0 20 20"
       ref={ref}
       {...props}
     >
@@ -25,13 +25,13 @@ const VN = forwardRef<SVGSVGElement, VNProps>(function VN(props: VNProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#d9d9d9" />
       </mask>
       <g mask={`url(#${uid}-VN-a)`}>
-        <path fill="#DD2033" d="M0 72V0h72v72z" />
+        <path fill="#dd2033" d="M0 20V0h20v20z" />
         <path
-          fill="#FBD381"
-          d="m36 18-5.365 12.136L18 31.75l9.32 9.115L24.874 54 36 46.5 47.125 54 44.68 40.866 54 31.751l-12.635-1.615L36 18Z"
+          fill="#fbd381"
+          d="M10 5 8.51 8.371 5 8.82l2.589 2.532L6.909 15 10 12.917 13.09 15l-.679-3.648L15 8.82l-3.51-.449z"
         />
       </g>
     </CountrySymbol>

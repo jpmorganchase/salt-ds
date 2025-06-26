@@ -17,7 +17,7 @@ const BT_Sharp = forwardRef<SVGSVGElement, BT_SharpProps>(function BT_Sharp(
     <CountrySymbol
       data-testid="BT_Sharp"
       aria-label="Bhutan"
-      viewBox="0 0 72 50"
+      viewBox="0 0 29 20"
       ref={ref}
       sharp
       {...props}
@@ -29,14 +29,14 @@ const BT_Sharp = forwardRef<SVGSVGElement, BT_SharpProps>(function BT_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-BT-a)`}>
-        <path fill="#E26E00" d="M0 0h72v50H0z" />
-        <path fill="#F1B434" d="M-.4-11v72l72-72h-72Z" />
+        <path fill="#e26e00" d="M0 0h29v20H0z" />
+        <path fill="#f1b434" d="M-.161-4.4v28.8l29-28.8z" />
         <path
-          fill="#F5F7F8"
-          d="M43.144 4.308c-4.133-.892-7.685 3.017-6.402 7.045l3.543 11.13-10.967-2.172c-3.4-.674-6.569 1.929-6.569 5.395v5.277l-8.86 4.963 3.422 6.108 5.79-3.244V45h7v-6.502l3.537.471.925-6.938-4.814-.642v-3.857l9.366 1.855-.703 2.109a5.5 5.5 0 0 0 3.479 6.957l8.602 2.867 2.214-6.64-7.18-2.394 1.596-4.786H55.1v-7H47l-2.803-8.802 11.664 2.52 1.478-6.842-14.195-3.068Z"
+          fill="#f5f7f8"
+          d="M17.377 1.723c-1.664-.357-3.095 1.207-2.578 2.818l1.427 4.452-4.417-.869c-1.37-.269-2.646.772-2.646 2.159v2.11L5.594 14.38l1.378 2.442 2.332-1.297V18h2.82v-2.6l1.424.188.373-2.776-1.939-.256v-1.543l3.773.742-.283.843a2.197 2.197 0 0 0 1.4 2.783l3.466 1.147.891-2.656-2.892-.957L18.98 11h3.213V8.2h-3.262L17.8 4.679l4.7 1.008.595-2.737z"
         />
       </g>
     </CountrySymbol>

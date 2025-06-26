@@ -14,7 +14,7 @@ const PR = forwardRef<SVGSVGElement, PRProps>(function PR(props: PRProps, ref) {
     <CountrySymbol
       data-testid="PR"
       aria-label="Puerto Rico"
-      viewBox="0 0 72 72"
+      viewBox="0 0 20 20"
       ref={ref}
       {...props}
     >
@@ -25,15 +25,18 @@ const PR = forwardRef<SVGSVGElement, PRProps>(function PR(props: PRProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#d9d9d9" />
       </mask>
       <g mask={`url(#${uid}-PR-a)`}>
-        <path fill="#DD2033" d="M0 0h72v72H0z" />
-        <path fill="#F5F7F8" d="M0 14v14h72V14H0Zm0 30v14h72V44H0Z" />
-        <path fill="#005EB8" d="M48 36 0 0v72l48-36Z" />
+        <path fill="#dd2033" d="M0 0h20v20H0z" />
         <path
-          fill="#F5F7F8"
-          d="m21 27-2.683 6.068-6.317.807 4.66 4.558L15.438 45 21 41.25 26.562 45l-1.222-6.567L30 33.875l-6.317-.807L21 27Z"
+          fill="#f5f7f8"
+          d="M0 3.889v3.889h20v-3.89zm0 8.333v3.89h20v-3.89z"
+        />
+        <path fill="#005eb8" d="M13.333 10 0 0v20z" />
+        <path
+          fill="#f5f7f8"
+          d="m5.833 7.5-.745 1.686-1.755.224 1.295 1.266-.34 1.824 1.545-1.042L7.378 12.5l-.339-1.824L8.333 9.41 6.58 9.186z"
         />
       </g>
     </CountrySymbol>

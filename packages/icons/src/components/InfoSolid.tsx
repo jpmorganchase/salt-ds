@@ -18,7 +18,7 @@ export const InfoSolidIcon = forwardRef<SVGSVGElement, InfoSolidIconProps>(
       >
         <path
           fillRule="evenodd"
-          d="M0 0h12v12H0V0Zm6 2a1 1 0 1 1 0 2 1 1 0 0 1 0-2Zm1 3v5H5V5h2Z"
+          d="M0 0h12v12H0zm6 2a1 1 0 1 1 0 2 1 1 0 0 1 0-2m1 3v5H5V5z"
           clipRule="evenodd"
         />
       </Icon>

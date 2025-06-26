@@ -20,12 +20,12 @@ export const ScheduleTimeIcon = forwardRef<
     >
       <path
         fillRule="evenodd"
-        d="M6 10a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Zm-.25-2.5V6h.5v2h-1.5v-.5h1Z"
+        d="M6 10a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5m-.25-2.5V6h.5v2h-1.5v-.5z"
         clipRule="evenodd"
       />
       <path
         fillRule="evenodd"
-        d="M1 0v12h10V2L9 0H1Zm6 4h3v7H2V1h5v3Zm3-1v-.586L8.586 1H8v2h2Z"
+        d="M1 0v12h10V2L9 0zm6 4h3v7H2V1h5zm3-1v-.586L8.586 1H8v2z"
         clipRule="evenodd"
       />
     </Icon>

@@ -17,7 +17,7 @@ const AX_Sharp = forwardRef<SVGSVGElement, AX_SharpProps>(function AX_Sharp(
     <CountrySymbol
       data-testid="AX_Sharp"
       aria-label="Åland Islands"
-      viewBox="0 0 72 50"
+      viewBox="0 0 29 20"
       ref={ref}
       sharp
       {...props}
@@ -29,15 +29,18 @@ const AX_Sharp = forwardRef<SVGSVGElement, AX_SharpProps>(function AX_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-AX-a)`}>
-        <path fill="#005EB8" d="M0 0h72v50H0z" />
+        <path fill="#005eb8" d="M0 0h29v20H0z" />
         <path
-          fill="#FBD381"
-          d="M14 50V36.7H0V13.3h14V0h23.4v13.3H72v23.4H37.4V50H14Z"
+          fill="#fbd381"
+          d="M5.639 20v-5.32H0V5.32h5.639V0h9.425v5.32H29v9.36H15.064V20z"
         />
-        <path fill="#DD2033" d="M20 50h12V31h40V19H32V0H20v19H0v12h20v19Z" />
+        <path
+          fill="#dd2033"
+          d="M8.056 20h4.833v-7.6H29V7.6H12.889V0H8.056v7.6H0v4.8h8.056z"
+        />
       </g>
     </CountrySymbol>
   );

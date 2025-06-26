@@ -91,11 +91,9 @@ const generateCssAsBg = ({ basePath, cssOutputPath, fileArg }) => {
         .trim()
         .replaceAll(/\r?\n|\r/g, "");
 
-      const filenameWithoutExtension = path.parse(fileName).name;
+      const { componentName } = getIconMetadataFromFileName(fileName);
 
-      const iconName = pascalCase(filenameWithoutExtension);
-
-      return `.saltIcons-${iconName}{mask-image:url("data:image/svg+xml,${encodeURIComponent(
+      return `.saltIcons-${componentName}{mask-image:url("data:image/svg+xml,${encodeURIComponent(
         svgString,
       )}");-webkit-mask-image:url("data:image/svg+xml,${encodeURIComponent(
         svgString,
@@ -126,6 +124,18 @@ const DEPRECATED_ICONS = [
 ];
 const deprecatedIconMap = new Map(DEPRECATED_ICONS);
 
+function getIconMetadataFromFileName(fileName) {
+  const filenameWithoutExtension = path.parse(fileName).name;
+  const parts = filenameWithoutExtension.split("_");
+
+  const componentName = pascalCase(parts.join("-"));
+
+  return {
+    componentName,
+    iconTitle: parts.join(" ").replaceAll("-", " "),
+  };
+}
+
 /**
  * Generate all the icon React components from SVGs
  */
@@ -149,18 +159,12 @@ const generateIconComponents = async ({
     fileNames.map(async (fileName) => {
       const svgString = await fs.promises.readFile(fileName, "utf-8");
 
-      const filenameWithoutExtension = path.parse(fileName).name;
-      const componentName = pascalCase(filenameWithoutExtension);
-
+      const { componentName, iconTitle } =
+        getIconMetadataFromFileName(fileName);
       let viewBox;
       const newFilePath = path.join(componentsPath, `${componentName}.tsx`);
 
       console.log("processing", fileName, "to", newFilePath);
-
-      const iconTitle = filenameWithoutExtension
-        .split("-")
-        .join(" ")
-        .toLowerCase();
 
       // SVGO is a separate step to enable multi-pass optimizations.
       const optimizedSvg = optimize(svgString, {
@@ -243,7 +247,7 @@ const generateIconComponents = async ({
         componentName,
         ariaLabel: iconTitle,
         viewBox: viewBox ?? "0 0 12 12",
-        // note: triple mustache is used here for unescapted version
+        // note: triple mustache is used here for unescaped version
         JSDoc: deprecatedIconMap.has(componentName)
           ? `
 /** @deprecated - Use \`${deprecatedIconMap.get(componentName)}Icon\` instead. */`

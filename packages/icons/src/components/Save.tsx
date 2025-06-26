@@ -18,12 +18,12 @@ export const SaveIcon = forwardRef<SVGSVGElement, SaveIconProps>(
       >
         <path
           fillRule="evenodd"
-          d="M10 6H2v4h8V6ZM9 7H3v2h6V7Z"
+          d="M10 6H2v4h8zM9 7H3v2h6z"
           clipRule="evenodd"
         />
         <path
           fillRule="evenodd"
-          d="M0 0v12h12V3.293L8.707 0H0Zm3 1H1v10h10V3.707L8.293 1H8v3H3V1Zm4 0H4v2h3V1Z"
+          d="M0 0v12h12V3.293L8.707 0zm3 1H1v10h10V3.707L8.293 1H8v3H3zm4 0H4v2h3z"
           clipRule="evenodd"
         />
       </Icon>

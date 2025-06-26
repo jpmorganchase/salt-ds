@@ -16,8 +16,8 @@ export const RestoreIcon = forwardRef<SVGSVGElement, RestoreIconProps>(
         ref={ref}
         {...props}
       >
-        <path d="M12 0H0v6h1V3h10v8H6v1h6V0Z" />
-        <path d="M0 12V8h1v2.293L5.293 6 6 6.707 1.707 11H4v1H0Z" />
+        <path d="M12 0H0v6h1V3h10v8H6v1h6z" />
+        <path d="M0 12V8h1v2.293L5.293 6 6 6.707 1.707 11H4v1z" />
       </Icon>
     );
   },

@@ -14,7 +14,7 @@ const PH = forwardRef<SVGSVGElement, PHProps>(function PH(props: PHProps, ref) {
     <CountrySymbol
       data-testid="PH"
       aria-label="Philippines (the)"
-      viewBox="0 0 72 72"
+      viewBox="0 0 20 20"
       ref={ref}
       {...props}
     >
@@ -25,17 +25,17 @@ const PH = forwardRef<SVGSVGElement, PHProps>(function PH(props: PHProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#d9d9d9" />
       </mask>
       <g mask={`url(#${uid}-PH-a)`}>
-        <path fill="#DD2033" d="M0 72V36h72v36z" />
-        <path fill="#004692" d="M0 36V0h72v36z" />
-        <path fill="#F5F7F8" d="M48 36 0 0v72l48-36Z" />
+        <path fill="#dd2033" d="M0 20V10h20v10z" />
+        <path fill="#004692" d="M0 10V0h20v10z" />
+        <path fill="#f5f7f8" d="M13.333 10 0 0v20z" />
         <path
-          fill="#F1B434"
-          d="m27.2 36-4.903 2.425 2.61 4.992-5.324-1.071L18.91 48l-3.71-4.158L11.492 48l-.674-5.654-5.325 1.07 2.611-4.992L3.2 36l4.903-2.425-2.61-4.991 5.323 1.07.675-5.654 3.709 4.159L18.909 24l.674 5.654 5.325-1.07-2.611 4.992L27.2 36Z"
+          fill="#f1b434"
+          d="m7.556 10-1.363.674.726 1.386-1.48-.297-.187 1.57-1.03-1.155-1.03 1.155-.187-1.57-1.48.297.726-1.386L.889 10l1.362-.673-.725-1.387 1.479.297.187-1.57 1.03 1.155 1.03-1.155.188 1.57 1.479-.297-.725 1.387z"
         />
-        <circle cx="35.8" cy="36" r="4" fill="#F1B434" />
+        <circle cx="9.944" cy="10" r="1.111" fill="#f1b434" />
       </g>
     </CountrySymbol>
   );

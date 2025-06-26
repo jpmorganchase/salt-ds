@@ -20,7 +20,6 @@ import { DocsContainer } from "@storybook/addon-docs";
 import { initialize, mswLoader } from "msw-storybook-addon";
 import type { ComponentProps } from "react";
 import { MINIMAL_VIEWPORTS } from "storybook/viewport";
-import { withDateMock } from "./decorators/withDateMock";
 import { withLocalization } from "./decorators/withLocalization";
 import { withResponsiveWrapper } from "./decorators/withResponsiveWrapper";
 import { withTextSpacingWrapper } from "./decorators/withTextSpacingWrapper";
@@ -232,7 +231,6 @@ const preview: Preview = {
     withTheme,
     withLocalization,
     withTextSpacingWrapper,
-    withDateMock,
   ],
   loaders: [mswLoader],
 };

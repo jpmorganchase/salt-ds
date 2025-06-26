@@ -14,7 +14,7 @@ const CI = forwardRef<SVGSVGElement, CIProps>(function CI(props: CIProps, ref) {
     <CountrySymbol
       data-testid="CI"
       aria-label="Côte d&#39;Ivoire"
-      viewBox="0 0 72 72"
+      viewBox="0 0 20 20"
       ref={ref}
       {...props}
     >
@@ -26,17 +26,17 @@ const CI = forwardRef<SVGSVGElement, CIProps>(function CI(props: CIProps, ref) {
         style={{ maskType: "alpha" }}
       >
         <circle
-          cx="36"
-          cy="36"
-          r="36"
-          fill="#D9D9D9"
-          transform="rotate(90 36 36)"
+          cx="10"
+          cy="10"
+          r="10"
+          fill="#d9d9d9"
+          transform="rotate(90 10 10)"
         />
       </mask>
       <g mask={`url(#${uid}-CI-a)`}>
-        <path fill="#009B77" d="M48 0h24v72H48z" />
-        <path fill="#F5F7F8" d="M24 0h24v72H24z" />
-        <path fill="#FF9E42" d="M0 0h24v72H0z" />
+        <path fill="#009b77" d="M13.333 0H20v20h-6.667z" />
+        <path fill="#f5f7f8" d="M6.667 0h6.667v20H6.667z" />
+        <path fill="#ff9e42" d="M0 0h6.667v20H0z" />
       </g>
     </CountrySymbol>
   );

@@ -17,7 +17,7 @@ const SS_Sharp = forwardRef<SVGSVGElement, SS_SharpProps>(function SS_Sharp(
     <CountrySymbol
       data-testid="SS_Sharp"
       aria-label="South Sudan"
-      viewBox="0 0 72 50"
+      viewBox="0 0 29 20"
       ref={ref}
       sharp
       {...props}
@@ -29,17 +29,17 @@ const SS_Sharp = forwardRef<SVGSVGElement, SS_SharpProps>(function SS_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-SS-a)`}>
-        <path fill="#F5F7F8" d="M0 41V9h72v32z" />
-        <path fill="#DD2033" d="M.2 35V15h72v20z" />
-        <path fill="#31373D" d="M0 9V0h72v9z" />
-        <path fill="#009B77" d="M0 50v-9h72v9z" />
-        <path fill="#004692" d="M48 25 0-11v72l48-36Z" />
+        <path fill="#f5f7f8" d="M0 16.4V3.6h29v12.8z" />
+        <path fill="#dd2033" d="M.08 14V6h29v8z" />
+        <path fill="#31373d" d="M0 3.6V0h29v3.6z" />
+        <path fill="#009b77" d="M0 20v-3.6h29V20z" />
+        <path fill="#004692" d="M19.333 10 0-4.4v28.8z" />
         <path
-          fill="#FBD381"
-          d="m12.236 17.636 2.394 6.188-3.896 5.038 6.517-.072 3.78 5.507 1.281-6.585 6.585-1.281-5.507-3.78.072-6.517-5.038 3.896-6.188-2.394Z"
+          fill="#fbd381"
+          d="m4.928 7.055.965 2.475-1.57 2.015 2.625-.029 1.523 2.203.516-2.634 2.652-.513-2.218-1.511.029-2.607-2.03 1.558z"
         />
       </g>
     </CountrySymbol>

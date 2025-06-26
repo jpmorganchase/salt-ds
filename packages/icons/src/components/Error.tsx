@@ -18,10 +18,10 @@ export const ErrorIcon = forwardRef<SVGSVGElement, ErrorIconProps>(
       >
         <path
           fillRule="evenodd"
-          d="M3 0h6l3 3v6l-3 3H3L0 9V3l3-3ZM1 3.414 3.414 1h5.172L11 3.414v5.172L8.586 11H3.414L1 8.586V3.414Z"
+          d="M3 0h6l3 3v6l-3 3H3L0 9V3zM1 3.414 3.414 1h5.172L11 3.414v5.172L8.586 11H3.414L1 8.586z"
           clipRule="evenodd"
         />
-        <path d="M5 2h2v5H5V2Zm2 7a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z" />
+        <path d="M5 2h2v5H5zm2 7a1 1 0 1 1-2 0 1 1 0 0 1 2 0" />
       </Icon>
     );
   },

@@ -20,7 +20,7 @@ export const SuccessCircleSolidIcon = forwardRef<
     >
       <path
         fillRule="evenodd"
-        d="M6 12A6 6 0 1 0 6 0a6 6 0 0 0 0 12Zm3.75-7.984L4.952 9.332 2 6.582l1.027-1.098L4.875 7.2l3.772-4.208L9.75 4.016Z"
+        d="M6 12A6 6 0 1 0 6 0a6 6 0 0 0 0 12m3.75-7.984L4.952 9.332 2 6.582l1.027-1.098L4.875 7.2l3.772-4.208z"
         clipRule="evenodd"
       />
     </Icon>

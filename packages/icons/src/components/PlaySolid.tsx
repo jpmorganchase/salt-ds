@@ -16,7 +16,7 @@ export const PlaySolidIcon = forwardRef<SVGSVGElement, PlaySolidIconProps>(
         ref={ref}
         {...props}
       >
-        <path fillRule="evenodd" d="m1 0 11 6-11 6V0Z" clipRule="evenodd" />
+        <path fillRule="evenodd" d="m1 0 11 6-11 6z" clipRule="evenodd" />
       </Icon>
     );
   },

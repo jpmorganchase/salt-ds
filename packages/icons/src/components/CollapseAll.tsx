@@ -16,7 +16,7 @@ export const CollapseAllIcon = forwardRef<SVGSVGElement, CollapseAllIconProps>(
         ref={ref}
         {...props}
       >
-        <path d="m6 6.5-4 4 1 1 3-3 3 3 1-1-4-4Zm0-1-4-4 1-1 3 3 3-3 1 1-4 4Z" />
+        <path d="m6 6.5-4 4 1 1 3-3 3 3 1-1zm0-1-4-4 1-1 3 3 3-3 1 1z" />
       </Icon>
     );
   },

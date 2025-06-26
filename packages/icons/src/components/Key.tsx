@@ -18,10 +18,10 @@ export const KeyIcon = forwardRef<SVGSVGElement, KeyIconProps>(function KeyIcon(
       ref={ref}
       {...props}
     >
-      <path d="M4.5 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z" />
+      <path d="M4.5 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0" />
       <path
         fillRule="evenodd"
-        d="M7.5 6H10V4h2V0H9L4.387 4.613a3.5 3.5 0 1 0 2.378 2.122L7.5 6Zm1.9-5L4.646 5.777a2.5 2.5 0 1 0 .87.743S6.641 5.372 7 5h2V3h2V1H9.4Z"
+        d="M7.5 6H10V4h2V0H9L4.387 4.613a3.5 3.5 0 1 0 2.378 2.122zm1.9-5L4.646 5.777a2.5 2.5 0 1 0 .87.743S6.641 5.372 7 5h2V3h2V1z"
         clipRule="evenodd"
       />
     </Icon>

@@ -16,7 +16,7 @@ export const DragRowIcon = forwardRef<SVGSVGElement, DragRowIconProps>(
         ref={ref}
         {...props}
       >
-        <path d="M3 10h6v1H3v-1Zm0-3h6v1H3V7Zm0-3h6v1H3V4Zm0-3h6v1H3V1Z" />
+        <path d="M3 10h6v1H3zm0-3h6v1H3zm0-3h6v1H3zm0-3h6v1H3z" />
       </Icon>
     );
   },

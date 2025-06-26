@@ -17,7 +17,7 @@ const MT_Sharp = forwardRef<SVGSVGElement, MT_SharpProps>(function MT_Sharp(
     <CountrySymbol
       data-testid="MT_Sharp"
       aria-label="Malta"
-      viewBox="0 0 72 50"
+      viewBox="0 0 29 20"
       ref={ref}
       sharp
       {...props}
@@ -29,12 +29,15 @@ const MT_Sharp = forwardRef<SVGSVGElement, MT_SharpProps>(function MT_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-MT-a)`}>
-        <path fill="#DD2033" d="M72 50H36V0h36z" />
-        <path fill="#F5F7F8" d="M36 50H0V0h36z" />
-        <path fill="#C1C3C3" d="M23 6h-6v7h-7v6h7v7h6v-7h7v-6h-7V6Z" />
+        <path fill="#dd2033" d="M29 20H14.5V0H29z" />
+        <path fill="#f5f7f8" d="M14.5 20H0V0h14.5z" />
+        <path
+          fill="#c1c3c3"
+          d="M9.264 2.4H6.847v2.8h-2.82v2.4h2.82v2.8h2.417V7.6h2.82V5.2h-2.82z"
+        />
       </g>
     </CountrySymbol>
   );

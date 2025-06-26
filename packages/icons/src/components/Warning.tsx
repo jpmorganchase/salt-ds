@@ -16,10 +16,10 @@ export const WarningIcon = forwardRef<SVGSVGElement, WarningIconProps>(
         ref={ref}
         {...props}
       >
-        <path d="M5 8V5h2v3H5Zm2 1.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z" />
+        <path d="M5 8V5h2v3zm2 1.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0" />
         <path
           fillRule="evenodd"
-          d="m6 0 6 12H0L6 0ZM1.618 11 6 2.236 10.382 11H1.618Z"
+          d="m6 0 6 12H0zM1.618 11 6 2.236 10.382 11z"
           clipRule="evenodd"
         />
       </Icon>

@@ -75,72 +75,72 @@ const lineDataOptions: Options = {
     {
       name: "JPY",
       data: [3, 4, 5, 6, 7, 8, 7, 6, 5, 4],
-      type: "line"
+      type: "line",
     },
     {
       name: "CHF",
       data: [7, 6, 5, 4, 3, 2, 3, 4, 5, 6],
-      type: "line"
+      type: "line",
     },
     {
       name: "NZD",
       data: [2, 4, 6, 8, 6, 4, 2, 4, 6, 8],
-      type: "line"
+      type: "line",
     },
     {
       name: "SEK",
       data: [5, 5.5, 6, 5.5, 5, 4.5, 4, 4.5, 5, 5.5],
-      type: "line"
+      type: "line",
     },
     {
       name: "NOK",
       data: [1, 3, 5, 7, 9, 7, 5, 3, 1, 3],
-      type: "line"
+      type: "line",
     },
     {
       name: "SGD",
       data: [6, 5, 4, 3, 2, 3, 4, 5, 6, 7],
-      type: "line"
+      type: "line",
     },
     {
       name: "MXN",
       data: [4, 5, 6, 7, 8, 7, 6, 5, 4, 3],
-      type: "line"
+      type: "line",
     },
     {
       name: "ZAR",
       data: [3, 4, 5, 6, 7, 6, 5, 4, 3, 2],
-      type: "line"
+      type: "line",
     },
     {
       name: "INR",
       data: [7, 8, 9, 8, 7, 6, 5, 6, 7, 8],
-      type: "line"
+      type: "line",
     },
     {
       name: "BRL",
       data: [2, 3, 2, 3, 2, 3, 2, 3, 2, 3],
-      type: "line"
+      type: "line",
     },
     {
       name: "CNY",
       data: [8, 7, 6, 5, 4, 5, 6, 7, 8, 9],
-      type: "line"
+      type: "line",
     },
     {
       name: "KRW",
       data: [5, 6, 5, 4, 5, 6, 5, 4, 5, 6],
-      type: "line"
+      type: "line",
     },
     {
       name: "TRY",
       data: [3, 5, 7, 5, 3, 5, 7, 5, 3, 5],
-      type: "line"
+      type: "line",
     },
     {
       name: "PLN",
       data: [4, 4.5, 5, 5.5, 6, 5.5, 5, 4.5, 4, 4.5],
-      type: "line"
+      type: "line",
     },
   ],
 };

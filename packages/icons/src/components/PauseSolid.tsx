@@ -16,7 +16,7 @@ export const PauseSolidIcon = forwardRef<SVGSVGElement, PauseSolidIconProps>(
         ref={ref}
         {...props}
       >
-        <path d="M2 0h3v12H2V0Zm5 0h3v12H7V0Z" />
+        <path d="M2 0h3v12H2zm5 0h3v12H7z" />
       </Icon>
     );
   },

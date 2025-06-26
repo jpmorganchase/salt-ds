@@ -18,7 +18,7 @@ export const WatchSolidIcon = forwardRef<SVGSVGElement, WatchSolidIconProps>(
       >
         <path
           fillRule="evenodd"
-          d="M3 0h6v2h1v8H9v2H3v-2H2V2h1V0Zm3 4H5v3h3V6H6V4Z"
+          d="M3 0h6v2h1v8H9v2H3v-2H2V2h1zm3 4H5v3h3V6H6z"
           clipRule="evenodd"
         />
       </Icon>

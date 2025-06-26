@@ -16,10 +16,10 @@ export const PrintIcon = forwardRef<SVGSVGElement, PrintIconProps>(
         ref={ref}
         {...props}
       >
-        <path d="M8 9v1H4V9h4Zm0-1V7H4v1h4Z" />
+        <path d="M8 9v1H4V9zm0-1V7H4v1z" />
         <path
           fillRule="evenodd"
-          d="M2 0v2H0v6h2v4h8V8h2V2h-2V0H2Zm9 3H1v4h1V5h8v2h1V3ZM9 2V1H3v1h6ZM3 6v5h6V6H3Z"
+          d="M2 0v2H0v6h2v4h8V8h2V2h-2V0zm9 3H1v4h1V5h8v2h1zM9 2V1H3v1zM3 6v5h6V6z"
           clipRule="evenodd"
         />
       </Icon>

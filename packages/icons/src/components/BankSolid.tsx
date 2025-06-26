@@ -18,7 +18,7 @@ export const BankSolidIcon = forwardRef<SVGSVGElement, BankSolidIconProps>(
       >
         <path
           fillRule="evenodd"
-          d="M12 6 6 0 0 6h2v5H0v1h12v-1h-2V6h2ZM9 6H8v5h1V6ZM6.5 6h-1v5h1V6ZM4 6H3v5h1V6Zm2.5-3v1h-1V3h1Z"
+          d="M12 6 6 0 0 6h2v5H0v1h12v-1h-2V6zM9 6H8v5h1zM6.5 6h-1v5h1zM4 6H3v5h1zm2.5-3v1h-1V3z"
           clipRule="evenodd"
         />
       </Icon>

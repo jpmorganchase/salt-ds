@@ -18,10 +18,10 @@ export const CreditCardSolidIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <path d="M0 4V3a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1H0Z" />
+      <path d="M0 4V3a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1z" />
       <path
         fillRule="evenodd"
-        d="M0 5v4a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V5H0Zm1 3h3v1H1V8Zm9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2Z"
+        d="M0 5v4a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V5zm1 3h3v1H1zm9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2"
         clipRule="evenodd"
       />
     </Icon>

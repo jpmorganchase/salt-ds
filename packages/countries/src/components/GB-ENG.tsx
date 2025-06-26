@@ -17,7 +17,7 @@ const GB_ENG = forwardRef<SVGSVGElement, GB_ENGProps>(function GB_ENG(
     <CountrySymbol
       data-testid="GB_ENG"
       aria-label="England"
-      viewBox="0 0 72 72"
+      viewBox="0 0 20 20"
       ref={ref}
       {...props}
     >
@@ -28,13 +28,13 @@ const GB_ENG = forwardRef<SVGSVGElement, GB_ENGProps>(function GB_ENG(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#d9d9d9" />
       </mask>
       <g mask={`url(#${uid}-GB-ENG-a)`}>
-        <path fill="#F5F7F8" d="M0 0h72v72H0z" />
+        <path fill="#f5f7f8" d="M0 0h20v20H0z" />
         <path
-          fill="#DD2033"
-          d="M30.4 72h12V42H72V30H42.4V0h-12v30H0v12h30.4v30Z"
+          fill="#dd2033"
+          d="M8.444 20h3.334v-8.333H20V8.333h-8.222V0H8.444v8.333H0v3.334h8.444z"
         />
       </g>
     </CountrySymbol>

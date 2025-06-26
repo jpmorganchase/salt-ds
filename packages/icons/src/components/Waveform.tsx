@@ -16,7 +16,7 @@ export const WaveformIcon = forwardRef<SVGSVGElement, WaveformIconProps>(
         ref={ref}
         {...props}
       >
-        <path d="M5 1H4v10h1V1ZM3 3H2v6h1V3Zm5 0h1v6H8V3ZM1 4H0v4h1V4Zm5 0h1v4H6V4Zm5 1h-1v2h1V5Z" />
+        <path d="M5 1H4v10h1zM3 3H2v6h1zm5 0h1v6H8zM1 4H0v4h1zm5 0h1v4H6zm5 1h-1v2h1z" />
       </Icon>
     );
   },

@@ -14,7 +14,7 @@ const GS = forwardRef<SVGSVGElement, GSProps>(function GS(props: GSProps, ref) {
     <CountrySymbol
       data-testid="GS"
       aria-label="South Georgia and the South Sandwich Islands"
-      viewBox="0 0 72 72"
+      viewBox="0 0 20 20"
       ref={ref}
       {...props}
     >
@@ -26,21 +26,24 @@ const GS = forwardRef<SVGSVGElement, GSProps>(function GS(props: GSProps, ref) {
         style={{ maskType: "alpha" }}
       >
         <circle
-          cx="36"
-          cy="36"
-          r="36"
-          fill="#D9D9D9"
-          transform="rotate(-90 36 36)"
+          cx="10"
+          cy="10"
+          r="10"
+          fill="#d9d9d9"
+          transform="rotate(-90 10 10)"
         />
       </mask>
       <g mask={`url(#${uid}-GS-a)`}>
-        <path fill="#004692" d="M0 0h72v72H0z" />
-        <path fill="#C1C3C3" d="M46.4 26.8h9v8h-9z" />
-        <path fill="#936846" d="M47.4 19.8h2.5v3h3.5v4h-6v-7Z" />
-        <path fill="#FBD381" d="M61.4 52.8h-21v5h3v3h15v-3h3v-5Z" />
+        <path fill="#004692" d="M0 0h20v20H0z" />
+        <path fill="#c1c3c3" d="M12.889 7.444h2.5v2.222h-2.5z" />
+        <path fill="#936846" d="M13.167 5.5h.694v.833h.972v1.111h-1.666z" />
         <path
-          fill="#F5F7F8"
-          d="M40.4 34.8h21v8.743a14.857 14.857 0 0 1-9.36 13.803l-1.14.454-1.14-.454a14.857 14.857 0 0 1-9.36-13.803V34.8Z"
+          fill="#fbd381"
+          d="M17.056 14.667h-5.834v1.388h.834v.834h4.166v-.834h.834z"
+        />
+        <path
+          fill="#f5f7f8"
+          d="M11.222 9.667h5.834v2.428c0 1.69-1.03 3.21-2.6 3.834l-.317.126-.317-.126a4.13 4.13 0 0 1-2.6-3.834z"
         />
         <mask
           id={`${uid}-GS-b`}
@@ -49,42 +52,43 @@ const GS = forwardRef<SVGSVGElement, GSProps>(function GS(props: GSProps, ref) {
           maskUnits="userSpaceOnUse"
           style={{ maskType: "alpha" }}
         >
-          <path fill="#002F6C" d="M0 36C0 16.118 16.118 0 36 0v36H0Z" />
+          <path fill="#002f6c" d="M0 10C0 4.477 4.477 0 10 0v10z" />
         </mask>
         <g mask={`url(#${uid}-GS-b)`}>
-          <path fill="#004692" d="M0 0h36v36H0z" />
+          <path fill="#004692" d="M0 0h10v10H0z" />
           <path
-            fill="#F5F7F8"
-            d="m12.522 3.134-2.121 2.121 29.526 29.526 2.121-2.121L12.522 3.134ZM6.865 8.79 3.33 12.327l29.526 29.526 3.535-3.535L6.866 8.79Z"
+            fill="#f5f7f8"
+            d="m3.478.87-.589.59 8.202 8.201.59-.589zM1.907 2.442l-.982.982 8.202 8.202.982-.982z"
           />
           <path
-            fill="#DD2033"
-            d="m6.865 8.79 3.536-3.535 29.526 29.526-3.535 3.536L6.864 8.79Z"
+            fill="#dd2033"
+            d="m1.907 2.442.982-.982 8.202 8.201-.982.982z"
           />
-          <path fill="#F5F7F8" d="M36 12v5H17v19h-5V12h24Z" />
-          <path fill="#F5F7F8" d="M36-2v5H5v33H0V-2h36Z" />
+          <path fill="#f5f7f8" d="M10 3.333v1.39H4.722V10H3.333V3.333z" />
+          <path fill="#f5f7f8" d="M10-.556v1.39H1.389V10H0V-.556z" />
           <path
-            fill="#DD2033"
+            fill="#dd2033"
             fillRule="evenodd"
-            d="M3 36h9V12h24V3H3v33Z"
+            d="M.833 10h2.5V3.333H10v-2.5H.833z"
             clipRule="evenodd"
           />
         </g>
       </g>
       <mask
         id={`${uid}-GS-c`}
-        x="40"
-        y="34"
+        x="11"
+        y="9"
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
         <path
-          fill="#F5F7F8"
-          d="M40.4 34.8h21v8.743a14.857 14.857 0 0 1-9.36 13.803l-1.14.454-1.14-.454a14.857 14.857 0 0 1-9.36-13.803V34.8Z"
+          fill="#f5f7f8"
+          d="M11.222 9.667h5.834v2.428c0 1.69-1.03 3.21-2.6 3.834l-.317.126-.317-.126a4.13 4.13 0 0 1-2.6-3.834z"
         />
       </mask>
-      <g fill="#005EB8" mask={`url(#${uid}-GS-c)`}>
-        <path d="m50.65 34.3 4.75 4.75-4.75 4.75-4.75-4.75 4.75-4.75Zm-9.5 9.5 4.75 4.75-4.75 4.75-4.75-4.75 4.75-4.75Zm23.75-4.75-4.75-4.75-4.75 4.75 4.75 4.75 4.75-4.75ZM50.65 43.8l4.75 4.75-4.75 4.75 4.75 4.75-4.75 4.75-4.75-4.75 4.75-4.75-4.75-4.75 4.75-4.75Zm-4.75-4.75-4.75-4.75-4.75 4.75 4.75 4.75 4.75-4.75Zm14.25 4.75 4.75 4.75-4.75 4.75-4.75-4.75 4.75-4.75Z" />
+      <g fill="#005eb8" mask={`url(#${uid}-GS-c)`}>
+        <path d="m14.07 9.528 1.319 1.32-1.32 1.319-1.319-1.32zm-2.64 2.639 1.32 1.32-1.32 1.319-1.319-1.32zm6.598-1.32-1.32-1.32-1.319 1.32 1.32 1.32z" />
+        <path d="m14.07 12.167 1.319 1.32-1.32 1.319 1.32 1.32-1.32 1.319-1.319-1.32 1.32-1.32-1.32-1.319zm-1.32-1.32-1.32-1.32-1.319 1.32 1.32 1.32zm3.959 1.32 1.319 1.32-1.32 1.319-1.319-1.32z" />
       </g>
     </CountrySymbol>
   );

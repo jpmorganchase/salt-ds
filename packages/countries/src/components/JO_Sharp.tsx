@@ -17,7 +17,7 @@ const JO_Sharp = forwardRef<SVGSVGElement, JO_SharpProps>(function JO_Sharp(
     <CountrySymbol
       data-testid="JO_Sharp"
       aria-label="Jordan"
-      viewBox="0 0 72 50"
+      viewBox="0 0 29 20"
       ref={ref}
       sharp
       {...props}
@@ -29,16 +29,16 @@ const JO_Sharp = forwardRef<SVGSVGElement, JO_SharpProps>(function JO_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-JO-a)`}>
-        <path fill="#008259" d="M0 50V34h72v16z" />
-        <path fill="#F5F7F8" d="M0 34V16h72v18z" />
-        <path fill="#31373D" d="M0 16V0h72v16z" />
-        <path fill="#DD2033" d="M40 25-8-11v72l48-36Z" />
+        <path fill="#008259" d="M0 20v-7h29v7z" />
+        <path fill="#f5f7f8" d="M0 13V7h29v6z" />
+        <path fill="#31373d" d="M0 7V0h29v7z" />
+        <path fill="#dd2033" d="M16 10-4-4.5v29z" />
         <path
-          fill="#F5F7F8"
-          d="m15 14 2.707 5.807 6.114-1.45-2.738 5.792 4.917 4-6.122 1.415.017 6.436L15 31.973 10.104 36l.018-6.436L4 28.148l4.917-3.999-2.738-5.791 6.114 1.449L15 14Z"
+          fill="#f5f7f8"
+          d="m6.042 5.6 1.09 2.323 2.463-.58L8.492 9.66l1.98 1.6-2.465.565.006 2.575-1.971-1.61L4.07 14.4l.007-2.575-2.466-.566 1.98-1.6L2.49 7.344l2.462.58z"
         />
       </g>
     </CountrySymbol>

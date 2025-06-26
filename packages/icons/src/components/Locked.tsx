@@ -16,10 +16,10 @@ export const LockedIcon = forwardRef<SVGSVGElement, LockedIconProps>(
         ref={ref}
         {...props}
       >
-        <path d="M6.5 8.915a1.5 1.5 0 1 0-1 0V10h1V8.915Z" />
+        <path d="M6.5 8.915a1.5 1.5 0 1 0-1 0V10h1z" />
         <path
           fillRule="evenodd"
-          d="M2 4H0v8h12V4h-2V2a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v2Zm1-2a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2H3V2Zm-2 9V5h10v6H1Z"
+          d="M2 4H0v8h12V4h-2V2a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2zm1-2a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2H3zm-2 9V5h10v6z"
           clipRule="evenodd"
         />
       </Icon>

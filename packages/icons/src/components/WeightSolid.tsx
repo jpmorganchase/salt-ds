@@ -18,7 +18,7 @@ export const WeightSolidIcon = forwardRef<SVGSVGElement, WeightSolidIconProps>(
       >
         <path
           fillRule="evenodd"
-          d="M8 4a2.5 2.5 0 1 0-4 0H2l-2 8h12l-2-8H8Zm-.5-1.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z"
+          d="M8 4a2.5 2.5 0 1 0-4 0H2l-2 8h12l-2-8zm-.5-1.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0"
           clipRule="evenodd"
         />
       </Icon>

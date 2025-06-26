@@ -18,12 +18,12 @@ export const GroupIcon = forwardRef<SVGSVGElement, GroupIconProps>(
       >
         <path
           fillRule="evenodd"
-          d="M8 4V2H2v6h2v2h6V4H8ZM7 3H3v4h1V4h3V3ZM5 5v4h4V5H5Z"
+          d="M8 4V2H2v6h2v2h6V4zM7 3H3v4h1V4h3zM5 5v4h4V5z"
           clipRule="evenodd"
         />
         <path
           fillRule="evenodd"
-          d="M0 0v12h12V0H0Zm11 1H1v10h10V1Z"
+          d="M0 0v12h12V0zm11 1H1v10h10z"
           clipRule="evenodd"
         />
       </Icon>

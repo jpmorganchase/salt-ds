@@ -21,15 +21,15 @@ export const SemanticVerySatisfiedIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <path d="M5 5a1 1 0 1 1-2 0 1 1 0 0 1 2 0Zm3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z" />
+      <path d="M5 5a1 1 0 1 1-2 0 1 1 0 0 1 2 0m3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2" />
       <path
         fillRule="evenodd"
-        d="M12 6A6 6 0 1 1 0 6a6 6 0 0 1 12 0Zm-1 0A5 5 0 1 1 1 6a5 5 0 0 1 10 0Z"
+        d="M12 6A6 6 0 1 1 0 6a6 6 0 0 1 12 0m-1 0A5 5 0 1 1 1 6a5 5 0 0 1 10 0"
         clipRule="evenodd"
       />
       <path
         fillRule="evenodd"
-        d="M6 10a4.002 4.002 0 0 1-3.874-3h7.748A4.002 4.002 0 0 1 6 10Zm2.236-2H3.764C4.314 8.614 5.11 9 6 9c.888 0 1.687-.386 2.236-1Z"
+        d="M6 10a4 4 0 0 1-3.874-3h7.748A4 4 0 0 1 6 10m2.236-2H3.764C4.314 8.614 5.11 9 6 9c.888 0 1.687-.386 2.236-1"
         clipRule="evenodd"
       />
     </Icon>

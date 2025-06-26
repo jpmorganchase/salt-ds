@@ -14,7 +14,7 @@ const EG = forwardRef<SVGSVGElement, EGProps>(function EG(props: EGProps, ref) {
     <CountrySymbol
       data-testid="EG"
       aria-label="Egypt"
-      viewBox="0 0 72 72"
+      viewBox="0 0 20 20"
       ref={ref}
       {...props}
     >
@@ -25,19 +25,19 @@ const EG = forwardRef<SVGSVGElement, EGProps>(function EG(props: EGProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#d9d9d9" />
       </mask>
       <g mask={`url(#${uid}-EG-a)`}>
-        <path fill="#31373D" d="M0 72V48h72v24z" />
-        <path fill="#F5F7F8" d="M0 48V24h72v24z" />
-        <path fill="#DD2033" d="M0 24V0h72v24z" />
+        <path fill="#31373d" stroke="#31373d" d="M.5 19.5v-5.667h19V19.5z" />
+        <path fill="#f5f7f8" d="M0 13.333V6.666h20v6.667z" />
+        <path fill="#dd2033" d="M0 6.667V0h20v6.667z" />
         <path
-          fill="#F1B434"
-          d="M31 16h4a6 6 0 0 1 6 6v5.083c2.838.476 5 2.944 5 5.917v19l-8.514-3.406a4 4 0 0 0-2.972 0L26 52V33a6.002 6.002 0 0 1 5-5.917V16Z"
+          fill="#f1b434"
+          d="M8.611 4.444h1.111c.92 0 1.667.747 1.667 1.667v1.412a1.67 1.67 0 0 1 1.389 1.644v5.278l-2.365-.947a1.1 1.1 0 0 0-.826 0l-2.365.947V9.167c0-.826.6-1.512 1.39-1.644z"
         />
         <path
-          fill="#F1B434"
-          d="M33.801 51.512 28 55.5h16.5l-6.26-4.05a4 4 0 0 0-4.439.062Z"
+          fill="#f1b434"
+          d="m9.39 14.309-1.612 1.108h4.583l-1.739-1.125a1.11 1.11 0 0 0-1.233.017"
         />
       </g>
     </CountrySymbol>

@@ -14,7 +14,7 @@ const KP = forwardRef<SVGSVGElement, KPProps>(function KP(props: KPProps, ref) {
     <CountrySymbol
       data-testid="KP"
       aria-label="Korea (the Democratic People&#39;s Republic of)"
-      viewBox="0 0 72 72"
+      viewBox="0 0 20 20"
       ref={ref}
       {...props}
     >
@@ -25,16 +25,16 @@ const KP = forwardRef<SVGSVGElement, KPProps>(function KP(props: KPProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#d9d9d9" />
       </mask>
       <g mask={`url(#${uid}-KP-a)`}>
-        <path fill="#004692" d="M0 0h72v72H0z" />
-        <path fill="#F5F7F8" d="M0 60V12h72v48z" />
-        <path fill="#DD2033" d="M0 54V18h72v36z" />
+        <path fill="#004692" d="M0 0h20v20H0z" />
+        <path fill="#f5f7f8" d="M0 16.667V3.334h20v13.333z" />
+        <path fill="#dd2033" d="M0 15V5h20v10z" />
         <path
-          fill="#F5F7F8"
+          fill="#f5f7f8"
           fillRule="evenodd"
-          d="M23 23c-7.18 0-13 5.82-13 13s5.82 13 13 13 13-5.82 13-13-5.82-13-13-13Zm-2.98 9.742L23 26l2.98 6.742 7.02.897-5.177 5.064L29.18 46 23 41.833 16.82 46l1.357-7.297L13 33.64l7.02-.897Z"
+          d="M6.389 6.389a3.611 3.611 0 1 0 0 7.222 3.611 3.611 0 0 0 0-7.222M5.56 9.095l.828-1.873.828 1.873 1.95.25-1.438 1.406.377 2.027-1.717-1.158-1.717 1.158.377-2.027L3.61 9.344z"
           clipRule="evenodd"
         />
       </g>

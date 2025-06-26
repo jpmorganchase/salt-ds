@@ -17,7 +17,7 @@ const CL_Sharp = forwardRef<SVGSVGElement, CL_SharpProps>(function CL_Sharp(
     <CountrySymbol
       data-testid="CL_Sharp"
       aria-label="Chile"
-      viewBox="0 0 72 50"
+      viewBox="0 0 29 20"
       ref={ref}
       sharp
       {...props}
@@ -29,15 +29,15 @@ const CL_Sharp = forwardRef<SVGSVGElement, CL_SharpProps>(function CL_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-CL-a)`}>
-        <path fill="#DD2033" d="M0 50V25h72v25z" />
-        <path fill="#F5F7F8" d="M0 25V0h72v25z" />
-        <path fill="#004692" d="M0 0h36v25H0z" />
+        <path fill="#dd2033" d="M0 20V10h29v10z" />
+        <path fill="#f5f7f8" d="M0 10V0h29v10z" />
+        <path fill="#004692" d="M0 0h14.5v10H0z" />
         <path
-          fill="#F5F7F8"
-          d="m20 4-2.385 5.394L12 10.11l4.142 4.052L15.056 20 20 16.667 24.944 20l-1.086-5.837L28 10.11l-5.615-.717L20 4Z"
+          fill="#f5f7f8"
+          d="m8.056 1.6-.96 2.157-2.263.288 1.669 1.62L6.064 8l1.992-1.333L10.047 8 9.61 5.665l1.668-1.62-2.262-.288z"
         />
       </g>
     </CountrySymbol>

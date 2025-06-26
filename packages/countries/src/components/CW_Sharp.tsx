@@ -17,7 +17,7 @@ const CW_Sharp = forwardRef<SVGSVGElement, CW_SharpProps>(function CW_Sharp(
     <CountrySymbol
       data-testid="CW_Sharp"
       aria-label="Curaçao"
-      viewBox="0 0 72 50"
+      viewBox="0 0 29 20"
       ref={ref}
       sharp
       {...props}
@@ -29,14 +29,14 @@ const CW_Sharp = forwardRef<SVGSVGElement, CW_SharpProps>(function CW_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-CW-a)`}>
-        <path fill="#004692" d="M0 0h72v50H0z" />
-        <path fill="#FBD381" d="M0 42v-6h72v6z" />
+        <path fill="#004692" d="M0 0h29v20H0z" />
+        <path fill="#fbd381" d="M0 16.8v-2.4h29v2.4z" />
         <path
-          fill="#F5F7F8"
-          d="M17.615 9.394 20 4l2.385 5.394L28 10.11l-4.142 4.052L24.944 20 20 16.667 15.056 20l1.086-5.837L12 10.11l5.615-.717ZM34.02 19.742 37 13l2.98 6.742 7.02.897-5.177 5.064L43.18 33 37 28.833 30.82 33l1.357-7.297L27 20.64l7.02-.897Z"
+          fill="#f5f7f8"
+          d="m7.095 3.758.96-2.158.961 2.158 2.262.287-1.668 1.62L10.047 8 8.056 6.667 6.064 8l.438-2.335-1.669-1.62zm6.607 4.139 1.2-2.697 1.201 2.697 2.828.359-2.086 2.025.547 2.919-2.49-1.667-2.489 1.667.547-2.919-2.085-2.025z"
         />
       </g>
     </CountrySymbol>

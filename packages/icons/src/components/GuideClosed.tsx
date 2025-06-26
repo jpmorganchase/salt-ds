@@ -16,10 +16,10 @@ export const GuideClosedIcon = forwardRef<SVGSVGElement, GuideClosedIconProps>(
         ref={ref}
         {...props}
       >
-        <path d="M9 4H6v1h3V4Zm0 2H6v1h3V6Z" />
+        <path d="M9 4H6v1h3zm0 2H6v1h3z" />
         <path
           fillRule="evenodd"
-          d="M11 12V1H2v2H1v1h1v1H1v1h1v1H1v1h1v1H1v1h1v2h9ZM3 2h1v9H3V2Zm2 9V2h5v9H5Z"
+          d="M11 12V1H2v2H1v1h1v1H1v1h1v1H1v1h1v1H1v1h1v2zM3 2h1v9H3zm2 9V2h5v9z"
           clipRule="evenodd"
         />
       </Icon>

@@ -18,10 +18,10 @@ export const RemoveDocumentIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <path d="M8 7H3v1h5V7Z" />
+      <path d="M8 7H3v1h5z" />
       <path
         fillRule="evenodd"
-        d="M1 0v12h10V2L9 0H1Zm9 4v7H2V1h5v3h3Zm0-1v-.5L8.5 1H8v2h2Z"
+        d="M1 0v12h10V2L9 0zm9 4v7H2V1h5v3zm0-1v-.5L8.5 1H8v2z"
         clipRule="evenodd"
       />
     </Icon>

@@ -16,8 +16,8 @@ export const PieChartIcon = forwardRef<SVGSVGElement, PieChartIconProps>(
         ref={ref}
         {...props}
       >
-        <path d="M4.5 2.626a4.002 4.002 0 0 0 1 7.874v1a5 5 0 0 1 0-10v5h5a5 5 0 0 1-5 5v-1a4.002 4.002 0 0 0 3.874-3H4.5V2.626Z" />
-        <path d="M6.5.5a5 5 0 0 1 5 5h-5v-5Zm1 4h2.874A4.007 4.007 0 0 0 7.5 1.626V4.5Z" />
+        <path d="M4.5 2.626a4.002 4.002 0 0 0 1 7.874v1a5 5 0 0 1 0-10v5h5a5 5 0 0 1-5 5v-1a4 4 0 0 0 3.874-3H4.5z" />
+        <path d="M6.5.5a5 5 0 0 1 5 5h-5zm1 4h2.874A4.01 4.01 0 0 0 7.5 1.626z" />
       </Icon>
     );
   },

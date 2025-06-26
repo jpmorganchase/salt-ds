@@ -16,10 +16,10 @@ export const ReceiptIcon = forwardRef<SVGSVGElement, ReceiptIconProps>(
         ref={ref}
         {...props}
       >
-        <path d="M8 3H4v1h4V3ZM4 5h4v1H4V5Zm4 2H4v1h4V7Z" />
+        <path d="M8 3H4v1h4zM4 5h4v1H4zm4 2H4v1h4z" />
         <path
           fillRule="evenodd"
-          d="M1 0v12l3-1.5L6 12l2-1.5 3 1.5V0H1Zm5 10.5L4 9l-2 1V1h8v9L8 9l-2 1.5Z"
+          d="M1 0v12l3-1.5L6 12l2-1.5 3 1.5V0zm5 10.5L4 9l-2 1V1h8v9L8 9z"
           clipRule="evenodd"
         />
       </Icon>
