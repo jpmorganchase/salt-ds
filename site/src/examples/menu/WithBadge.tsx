@@ -34,7 +34,11 @@ export const WithBadge = (): ReactElement => {
         <MenuItem>
           <SettingsIcon aria-hidden />
           Settings
-          <Badge style={{ marginLeft: "auto" }} value={3} />
+          <Badge
+            style={{ marginLeft: "auto" }}
+            value={3}
+            aria-label="3 updates"
+          />
         </MenuItem>
       </MenuPanel>
     </Menu>
