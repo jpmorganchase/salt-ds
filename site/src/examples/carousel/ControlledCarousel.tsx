@@ -9,26 +9,26 @@ import {
 import {
   Carousel,
   CarouselCard,
+  type CarouselEmblaApiType,
   CarouselNextButton,
   CarouselPreviousButton,
   CarouselProgressLabel,
-  type CarouselRef,
   CarouselSlides,
   CarouselTabList,
 } from "@salt-ds/embla-carousel";
-import { type ReactElement, useEffect, useRef } from "react";
+import { type ReactElement, useEffect, useState } from "react";
 import { sliderData } from "./exampleData";
 import styles from "./index.module.css";
 
 export const ControlledCarousel = (): ReactElement => {
-  const emblaApiRef = useRef<CarouselRef | null>(null);
+  const [emblaApi, setEmblaApi] = useState<CarouselEmblaApiType | null>(null);
+
   const slideId = useId();
   const { matchedBreakpoints } = useBreakpoint();
   const isMobile = matchedBreakpoints.indexOf("sm") === -1;
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: API can re-init after first render
   useEffect(() => {
-    const emblaApi = emblaApiRef?.current?.emblaApi;
     if (!emblaApi) {
       return;
     }
@@ -46,14 +46,14 @@ export const ControlledCarousel = (): ReactElement => {
     return () => {
       emblaApi.off("select", logSnappedSlide);
     };
-  }, [emblaApiRef.current]);
+  }, [emblaApi]);
 
   return (
     <StackLayout>
       <Carousel
         aria-label="Controlled carousel example"
         className={styles.carousel}
-        ref={emblaApiRef}
+        getEmblaApi={setEmblaApi}
       >
         <CarouselSlides>
           {sliderData.map((slide, index) => {
@@ -88,9 +88,7 @@ export const ControlledCarousel = (): ReactElement => {
         </FlexLayout>
       </Carousel>
       <FlexLayout justify={"center"} align={"center"} direction={"row"}>
-        <Button onClick={() => emblaApiRef.current?.emblaApi?.scrollTo(2)}>
-          Scroll to slide 3
-        </Button>
+        <Button onClick={() => emblaApi?.scrollTo(2)}>Scroll to slide 3</Button>
       </FlexLayout>
     </StackLayout>
   );
