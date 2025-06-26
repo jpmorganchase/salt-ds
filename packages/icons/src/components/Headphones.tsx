@@ -18,7 +18,7 @@ export const HeadphonesIcon = forwardRef<SVGSVGElement, HeadphonesIconProps>(
       >
         <path
           fillRule="evenodd"
-          d="M11 6A5 5 0 0 0 1 6h1a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2H0V6a6 6 0 1 1 12 0v6h-2a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h1Zm0 5V7h-1a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h1ZM2 7H1v4h1a1 1 0 0 0 1-1V8a1 1 0 0 0-1-1Z"
+          d="M11 6A5 5 0 0 0 1 6h1a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2H0V6a6 6 0 1 1 12 0v6h-2a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2zm0 5V7h-1a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1zM2 7H1v4h1a1 1 0 0 0 1-1V8a1 1 0 0 0-1-1"
           clipRule="evenodd"
         />
       </Icon>

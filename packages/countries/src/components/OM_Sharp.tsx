@@ -17,7 +17,7 @@ const OM_Sharp = forwardRef<SVGSVGElement, OM_SharpProps>(function OM_Sharp(
     <CountrySymbol
       data-testid="OM_Sharp"
       aria-label="Oman"
-      viewBox="0 0 72 50"
+      viewBox="0 0 29 20"
       ref={ref}
       sharp
       {...props}
@@ -29,14 +29,14 @@ const OM_Sharp = forwardRef<SVGSVGElement, OM_SharpProps>(function OM_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-OM-a)`}>
-        <path fill="#DD2033" d="M0 0h72v50H0z" />
-        <path fill="#005B33" d="M34 50V34h38v16z" />
+        <path fill="#dd2033" d="M0 0h29v20H0z" />
+        <path fill="#005b33" d="M13.694 20v-6.4H29V20z" />
         <path
-          fill="#F5F7F8"
-          d="M34 16V0h38v16zM12.154 6 8 10.154 12.846 15 8 19.846 12.154 24 17 19.154 21.846 24 26 19.846 21.154 15 26 10.154 21.846 6 17 10.846 12.154 6Z"
+          fill="#f5f7f8"
+          d="M13.695 6.4V0H29v6.4zm-8.8-4L3.222 4.06 5.174 6 3.222 7.938 4.895 9.6l1.952-1.94L8.8 9.6l1.673-1.662L8.52 6l1.952-1.939L8.8 2.4 6.847 4.338z"
         />
       </g>
     </CountrySymbol>

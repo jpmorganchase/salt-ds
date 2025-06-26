@@ -18,12 +18,12 @@ export const TravelSolidIcon = forwardRef<SVGSVGElement, TravelSolidIconProps>(
       >
         <path
           fillRule="evenodd"
-          d="M10.005 4.999h1.994v6H11l-.01.1a.501.501 0 0 1-.49.4H10a.501.501 0 0 1-.49-.4L9.5 11H7l-.01.1a.501.501 0 0 1-.49.4H6a.501.501 0 0 1-.49-.4L5.5 11h-.988V5h1.993V3h3.5v1.999Zm-2.5 0h1.5V4h-1.5v.999Z"
+          d="M10.005 4.999h1.994v6H11l-.01.1a.5.5 0 0 1-.49.4H10a.5.5 0 0 1-.49-.4L9.5 11H7l-.01.1a.5.5 0 0 1-.49.4H6a.5.5 0 0 1-.49-.4L5.5 11h-.988V5h1.993V3h3.5zm-2.5 0h1.5V4h-1.5z"
           clipRule="evenodd"
         />
         <path
           fillRule="evenodd"
-          d="M4.75 1.999H6v2H3.519v6H2v.666c0 .184-.224.334-.5.334s-.5-.15-.5-.334v-.666H0v-8h1.25V.001h3.5v1.998Zm-2.5 0h1.5v-.997h-1.5v.997Z"
+          d="M4.75 1.999H6v2H3.519v6H2v.666c0 .184-.224.334-.5.334s-.5-.15-.5-.334v-.666H0v-8h1.25V.001h3.5zm-2.5 0h1.5v-.997h-1.5z"
           clipRule="evenodd"
         />
       </Icon>

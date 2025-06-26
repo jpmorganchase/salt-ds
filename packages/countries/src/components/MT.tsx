@@ -14,7 +14,7 @@ const MT = forwardRef<SVGSVGElement, MTProps>(function MT(props: MTProps, ref) {
     <CountrySymbol
       data-testid="MT"
       aria-label="Malta"
-      viewBox="0 0 72 72"
+      viewBox="0 0 20 20"
       ref={ref}
       {...props}
     >
@@ -25,12 +25,15 @@ const MT = forwardRef<SVGSVGElement, MTProps>(function MT(props: MTProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#d9d9d9" />
       </mask>
       <g mask={`url(#${uid}-MT-a)`}>
-        <path fill="#DD2033" d="M71.6 72h-36V0h36z" />
-        <path fill="#F5F7F8" d="M35.6 72h-36V0h36z" />
-        <path fill="#C1C3C3" d="M22.8 13.6h-6v7h-7v6h7v7h6v-7h7v-6h-7v-7Z" />
+        <path fill="#dd2033" d="M19.889 20h-10V0h10z" />
+        <path fill="#f5f7f8" d="M9.889 20h-10V0h10z" />
+        <path
+          fill="#c1c3c3"
+          d="M6.333 3.778H4.667v1.944H2.722V7.39h1.945v1.944h1.666V7.39h1.945V5.722H6.333z"
+        />
       </g>
     </CountrySymbol>
   );

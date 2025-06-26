@@ -18,7 +18,7 @@ export const DisplaySolidIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <path d="M0 9h5v2H3v1h6v-1H7V9h5V0H0v9Z" />
+      <path d="M0 9h5v2H3v1h6v-1H7V9h5V0H0z" />
     </Icon>
   );
 });

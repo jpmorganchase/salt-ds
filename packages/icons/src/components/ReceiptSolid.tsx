@@ -20,7 +20,7 @@ export const ReceiptSolidIcon = forwardRef<
     >
       <path
         fillRule="evenodd"
-        d="M4 10.5 1 12V0h10v12l-3-1.5L6 12l-2-1.5ZM8 3H4v1h4V3ZM4 5h4v1H4V5Zm4 2H4v1h4V7Z"
+        d="M4 10.5 1 12V0h10v12l-3-1.5L6 12zM8 3H4v1h4zM4 5h4v1H4zm4 2H4v1h4z"
         clipRule="evenodd"
       />
     </Icon>

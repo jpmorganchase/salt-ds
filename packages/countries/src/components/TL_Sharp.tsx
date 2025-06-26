@@ -17,7 +17,7 @@ const TL_Sharp = forwardRef<SVGSVGElement, TL_SharpProps>(function TL_Sharp(
     <CountrySymbol
       data-testid="TL_Sharp"
       aria-label="Timor-Leste"
-      viewBox="0 0 72 50"
+      viewBox="0 0 29 20"
       ref={ref}
       sharp
       {...props}
@@ -29,15 +29,15 @@ const TL_Sharp = forwardRef<SVGSVGElement, TL_SharpProps>(function TL_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-TL-a)`}>
-        <path fill="#DD2033" d="M0 0h72v50H0z" />
-        <path fill="#FBD381" d="M59 25 0-11v72l59-36Z" />
-        <path fill="#31373D" d="M40 25 0-11v72l40-36Z" />
+        <path fill="#dd2033" d="M0 0h29v20H0z" />
+        <path fill="#fbd381" d="M23.764 10 0-4.4v28.8z" />
+        <path fill="#31373d" d="M16.111 10 0-4.4v28.8z" />
         <path
-          fill="#F5F7F8"
-          d="m9.636 18.636 2.394 6.188-3.896 5.038 6.517-.072 3.78 5.507 1.281-6.585 6.585-1.281-5.507-3.78.072-6.517-5.038 3.896-6.188-2.394Z"
+          fill="#f5f7f8"
+          d="m3.881 7.454.964 2.475-1.569 2.016 2.625-.03 1.522 2.204.517-2.634 2.652-.513-2.218-1.511.029-2.608-2.03 1.559z"
         />
       </g>
     </CountrySymbol>

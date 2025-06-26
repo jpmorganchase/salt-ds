@@ -17,7 +17,7 @@ const LA_Sharp = forwardRef<SVGSVGElement, LA_SharpProps>(function LA_Sharp(
     <CountrySymbol
       data-testid="LA_Sharp"
       aria-label="Lao People&#39;s Democratic Republic (the)"
-      viewBox="0 0 72 50"
+      viewBox="0 0 29 20"
       ref={ref}
       sharp
       {...props}
@@ -29,12 +29,12 @@ const LA_Sharp = forwardRef<SVGSVGElement, LA_SharpProps>(function LA_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-LA-a)`}>
-        <path fill="#DD2033" d="M0 0h72v50H0z" />
-        <path fill="#004692" d="M0 41V9h72v32z" />
-        <circle cx="36" cy="25" r="12" fill="#F5F7F8" />
+        <path fill="#dd2033" d="M0 0h29v20H0z" />
+        <path fill="#004692" d="M0 16.4V3.6h29v12.8z" />
+        <ellipse cx="14.5" cy="10" fill="#f5f7f8" rx="4.833" ry="4.8" />
       </g>
     </CountrySymbol>
   );

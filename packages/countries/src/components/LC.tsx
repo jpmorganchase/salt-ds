@@ -14,7 +14,7 @@ const LC = forwardRef<SVGSVGElement, LCProps>(function LC(props: LCProps, ref) {
     <CountrySymbol
       data-testid="LC"
       aria-label="Saint Lucia"
-      viewBox="0 0 72 72"
+      viewBox="0 0 20 20"
       ref={ref}
       {...props}
     >
@@ -26,21 +26,21 @@ const LC = forwardRef<SVGSVGElement, LCProps>(function LC(props: LCProps, ref) {
         style={{ maskType: "alpha" }}
       >
         <circle
-          cx="36"
-          cy="36"
-          r="36"
-          fill="#D9D9D9"
-          transform="rotate(-90 36 36)"
+          cx="10"
+          cy="10"
+          r="10"
+          fill="#d9d9d9"
+          transform="rotate(-90 10 10)"
         />
       </mask>
       <g mask={`url(#${uid}-LC-a)`}>
-        <path fill="#0091DA" d="M72 72H0V0h72z" />
+        <path fill="#0091da" d="M20 20H0V0h20z" />
         <path
-          fill="#F5F7F8"
-          d="m35.9 12-21 46h-3.298L35.9 4.776 60.198 58H56.9l-21-46Z"
+          fill="#f5f7f8"
+          d="M9.972 3.333 4.14 16.111h-.916l6.75-14.784 6.749 14.784h-.917z"
         />
-        <path fill="#31373D" d="m35.9 12 21 46h-42l21-46Z" />
-        <path fill="#F1B434" d="m36 34 24.5 24h-49L36 34Z" />
+        <path fill="#31373d" d="m9.972 3.333 5.834 12.778H4.139z" />
+        <path fill="#f1b434" d="m10 9.444 6.806 6.667H3.194z" />
       </g>
     </CountrySymbol>
   );

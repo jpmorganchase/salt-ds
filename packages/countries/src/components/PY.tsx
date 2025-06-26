@@ -14,7 +14,7 @@ const PY = forwardRef<SVGSVGElement, PYProps>(function PY(props: PYProps, ref) {
     <CountrySymbol
       data-testid="PY"
       aria-label="Paraguay"
-      viewBox="0 0 72 72"
+      viewBox="0 0 20 20"
       ref={ref}
       {...props}
     >
@@ -25,21 +25,21 @@ const PY = forwardRef<SVGSVGElement, PYProps>(function PY(props: PYProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#d9d9d9" />
       </mask>
       <g mask={`url(#${uid}-PY-a)`}>
-        <path fill="#004692" d="M0 72V52h72v20z" />
-        <path fill="#F5F7F8" d="M0 52V20h72v32z" />
-        <path fill="#DD2033" d="M0 20V0h72v20z" />
+        <path fill="#004692" d="M0 20v-5.556h20V20z" />
+        <path fill="#f5f7f8" d="M0 14.444V5.555h20v8.89z" />
+        <path fill="#dd2033" d="M0 5.556V0h20v5.556z" />
         <path
-          fill="#009B77"
+          fill="#009b77"
           fillRule="evenodd"
-          d="M20 23.746A17.922 17.922 0 0 0 18 32c0 9.941 8.059 18 18 18s18-8.059 18-18c0-2.975-.722-5.782-2-8.254v.411l-5.202 2.601A11.951 11.951 0 0 1 48 32c0 6.627-5.373 12-12 12s-12-5.373-12-12c0-1.88.432-3.658 1.202-5.242L20 24.157v-.411Z"
+          d="M5.556 6.596a5 5 0 1 0 8.889 0v.114l-1.446.723a3.333 3.333 0 1 1-5.999 0L5.557 6.71z"
           clipRule="evenodd"
         />
         <path
-          fill="#F1B434"
-          d="m36 23-2.385 5.394L28 29.11l4.142 4.052L31.056 39 36 35.667 40.944 39l-1.086-5.837L44 29.11l-5.615-.717L36 23Z"
+          fill="#f1b434"
+          d="m10 6.389-.662 1.498-1.56.2 1.15 1.125-.301 1.621L10 9.907l1.373.926-.301-1.621 1.15-1.125-1.56-.2z"
         />
       </g>
     </CountrySymbol>

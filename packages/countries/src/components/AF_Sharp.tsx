@@ -17,7 +17,7 @@ const AF_Sharp = forwardRef<SVGSVGElement, AF_SharpProps>(function AF_Sharp(
     <CountrySymbol
       data-testid="AF_Sharp"
       aria-label="Afghanistan"
-      viewBox="0 0 72 50"
+      viewBox="0 0 29 20"
       ref={ref}
       sharp
       {...props}
@@ -29,22 +29,22 @@ const AF_Sharp = forwardRef<SVGSVGElement, AF_SharpProps>(function AF_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-AF-a)`}>
-        <path fill="#31373D" d="M0 0h20v50H0z" />
-        <path fill="#DD2033" d="M20 0h32v50H20z" />
-        <path fill="#005B33" d="M52 0h20v50H52z" />
+        <path fill="#31373d" d="M0 0h8.056v20H0z" />
+        <path fill="#dd2033" d="M8.056 0h12.889v20H8.056z" />
+        <path fill="#005b33" d="M20.945 0h8.056v20h-8.056z" />
         <path
-          fill="#F5F7F8"
+          fill="#f5f7f8"
           fillRule="evenodd"
-          d="M50 23c0 7.732-6.268 14-14 14s-14-6.268-14-14c0-3.035.966-5.845 2.607-8.138l3.255 2.325A9.954 9.954 0 0 0 26 23c0 5.523 4.477 10 10 10s10-4.477 10-10c0-2.168-.69-4.175-1.862-5.813l3.255-2.325A13.936 13.936 0 0 1 50 23ZM35.97 9h.06a14.8 14.8 0 0 0-.06 0Z"
+          d="M20.139 9.2c0 3.093-2.525 5.6-5.639 5.6s-5.639-2.507-5.639-5.6c0-1.214.39-2.338 1.05-3.255l1.311.93a3.96 3.96 0 0 0-.75 2.325c0 2.21 1.803 4 4.028 4s4.028-1.79 4.028-4c0-.867-.278-1.67-.75-2.325l1.31-.93a5.55 5.55 0 0 1 1.05 3.255m-5.651-5.6h.024z"
           clipRule="evenodd"
         />
         <path
-          fill="#F5F7F8"
+          fill="#f5f7f8"
           fillRule="evenodd"
-          d="M39 19a3 3 0 1 0-6 0v6h6v-6Zm-3-6a6 6 0 0 1 6 6v9H30v-9a6 6 0 0 1 6-6Z"
+          d="M15.708 7.6c0-.663-.54-1.2-1.208-1.2s-1.208.537-1.208 1.2V10h2.416zM14.5 5.2a2.41 2.41 0 0 1 2.417 2.4v3.6h-4.834V7.6c0-1.325 1.082-2.4 2.417-2.4"
           clipRule="evenodd"
         />
       </g>

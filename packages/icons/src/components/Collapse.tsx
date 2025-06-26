@@ -18,7 +18,7 @@ export const CollapseIcon = forwardRef<SVGSVGElement, CollapseIconProps>(
       >
         <path
           fillRule="evenodd"
-          d="M7 .996v4h4v-1H8.707l2.89-2.889L10.888.4 8 3.29V.995H7ZM4.996 11V7h-4v1H3.29L.4 10.89l.707.706 2.89-2.889V11h1Zm0-6.004h-4v-1H3.29L.4 1.107 1.107.4l2.89 2.89V.995h1v4ZM11 7H7v4h1V8.707l2.89 2.89.706-.708L8.707 8H11V7Z"
+          d="M7 .996v4h4v-1H8.707l2.89-2.889L10.888.4l-2.89 2.89V.995zM4.996 11V7h-4v1H3.29L.4 10.89l.708.706 2.89-2.889V11zm0-6.004h-4v-1H3.29L.399 1.107 1.108.4l2.89 2.89V.995h1zM11 7H7v4h1V8.707l2.889 2.89.707-.708L8.707 8H11z"
           clipRule="evenodd"
         />
       </Icon>

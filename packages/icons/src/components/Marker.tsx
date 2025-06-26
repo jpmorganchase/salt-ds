@@ -18,7 +18,7 @@ export const MarkerIcon = forwardRef<SVGSVGElement, MarkerIconProps>(
       >
         <path
           fillRule="evenodd"
-          d="M5 0h1v2h3.067L11 4 9.067 6H6v6H5V6H1V2h4V0Zm3.666 5 .967-1-.967-1H2v2h6.666Z"
+          d="M5 0h1v2h3.067L11 4 9.067 6H6v6H5V6H1V2h4zm3.666 5 .967-1-.967-1H2v2z"
           clipRule="evenodd"
         />
       </Icon>

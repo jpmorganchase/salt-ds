@@ -17,7 +17,7 @@ const GE_Sharp = forwardRef<SVGSVGElement, GE_SharpProps>(function GE_Sharp(
     <CountrySymbol
       data-testid="GE_Sharp"
       aria-label="Georgia"
-      viewBox="0 0 72 50"
+      viewBox="0 0 29 20"
       ref={ref}
       sharp
       {...props}
@@ -29,17 +29,17 @@ const GE_Sharp = forwardRef<SVGSVGElement, GE_SharpProps>(function GE_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-GE-a)`}>
-        <path fill="#F5F7F8" d="M0 0h72v50H0z" />
+        <path fill="#f5f7f8" d="M0 0h29v20H0z" />
         <path
-          fill="#DD2033"
-          d="M9 12.75v-3.5h5.25V4h3.5v5.25H23v3.5h-5.25V18h-3.5v-5.25H9Zm40 0v-3.5h5.25V4h3.5v5.25H63v3.5h-5.25V18h-3.5v-5.25H49Zm-40 28v-3.5h5.25V32h3.5v5.25H23v3.5h-5.25V46h-3.5v-5.25H9Zm40 0v-3.5h5.25V32h3.5v5.25H63v3.5h-5.25V46h-3.5v-5.25H49Z"
+          fill="#dd2033"
+          d="M3.625 5.1V3.7H5.74V1.6h1.41v2.1h2.114v1.4H7.149v2.1H5.74V5.1zm16.111 0V3.7h2.115V1.6h1.41v2.1h2.114v1.4H23.26v2.1h-1.41V5.1zM3.625 16.3v-1.4H5.74v-2.1h1.41v2.1h2.114v1.4H7.149v2.1H5.74v-2.1zm16.111 0v-1.4h2.115v-2.1h1.41v2.1h2.114v1.4H23.26v2.1h-1.41v-2.1z"
         />
       </g>
-      <path fill="#DD2033" d="M32 0h8v50h-8z" />
-      <path fill="#DD2033" d="M0 29v-8h72v8z" />
+      <path fill="#dd2033" d="M12.889 0h3.222v20h-3.222z" />
+      <path fill="#dd2033" d="M0 11.6V8.4h29v3.2z" />
     </CountrySymbol>
   );
 });

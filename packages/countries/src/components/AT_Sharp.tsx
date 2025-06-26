@@ -17,7 +17,7 @@ const AT_Sharp = forwardRef<SVGSVGElement, AT_SharpProps>(function AT_Sharp(
     <CountrySymbol
       data-testid="AT_Sharp"
       aria-label="Austria"
-      viewBox="0 0 72 50"
+      viewBox="0 0 29 20"
       ref={ref}
       sharp
       {...props}
@@ -29,11 +29,11 @@ const AT_Sharp = forwardRef<SVGSVGElement, AT_SharpProps>(function AT_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-AT-a)`}>
-        <path fill="#DD2033" d="M0 50V0h72v50z" />
-        <path fill="#F5F7F8" d="M0 34V16h72v18z" />
+        <path fill="#dd2033" d="M0 20V0h29v20z" />
+        <path fill="#f5f7f8" d="M0 13.6V6.4h29v7.2z" />
       </g>
     </CountrySymbol>
   );

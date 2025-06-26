@@ -14,7 +14,7 @@ const TZ = forwardRef<SVGSVGElement, TZProps>(function TZ(props: TZProps, ref) {
     <CountrySymbol
       data-testid="TZ"
       aria-label="Tanzania (the United Republic of)"
-      viewBox="0 0 72 72"
+      viewBox="0 0 20 20"
       ref={ref}
       {...props}
     >
@@ -25,18 +25,18 @@ const TZ = forwardRef<SVGSVGElement, TZProps>(function TZ(props: TZProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#d9d9d9" />
       </mask>
       <g mask={`url(#${uid}-TZ-a)`}>
-        <path fill="#009B77" d="M72 0H0v72L72 0Z" />
-        <path fill="#0091DA" d="M72 72V0L0 72h72Z" />
+        <path fill="#009b77" d="M20 0H0v20z" />
+        <path fill="#0091da" d="M20 20V0L0 20z" />
         <path
-          fill="#FBD381"
-          d="M50.85-.063 72.062 21.15 21.15 72.062-.062 50.849z"
+          fill="#fbd381"
+          d="m14.125-.017 5.892 5.892L5.875 20.018l-5.892-5.893z"
         />
         <path
-          fill="#31373D"
-          d="M67.82 16.908 55.092 4.18 4.18 55.092 16.908 67.82z"
+          fill="#31373d"
+          d="M18.839 4.697 15.303 1.16 1.161 15.303l3.536 3.536z"
         />
       </g>
     </CountrySymbol>

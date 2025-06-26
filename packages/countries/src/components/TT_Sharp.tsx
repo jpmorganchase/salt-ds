@@ -17,7 +17,7 @@ const TT_Sharp = forwardRef<SVGSVGElement, TT_SharpProps>(function TT_Sharp(
     <CountrySymbol
       data-testid="TT_Sharp"
       aria-label="Trinidad and Tobago"
-      viewBox="0 0 72 50"
+      viewBox="0 0 29 20"
       ref={ref}
       sharp
       {...props}
@@ -29,17 +29,17 @@ const TT_Sharp = forwardRef<SVGSVGElement, TT_SharpProps>(function TT_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-TT-a)`}>
-        <path fill="#DD2033" d="M0 0h72v50H0z" />
+        <path fill="#dd2033" d="M0 0h29v20H0z" />
         <path
-          fill="#F5F7F8"
-          d="m-7.277 2.936 21.213-21.213 65.85 65.85-21.212 21.214z"
+          fill="#f5f7f8"
+          d="M-2.931 1.174 5.613-7.31l26.523 26.34-8.544 8.485z"
         />
         <path
-          fill="#31373D"
-          d="M11.67-12.058-1.056.67 60.84 62.566l12.728-12.728z"
+          fill="#31373d"
+          d="M4.7-4.823-.425.268l24.93 24.759 5.127-5.091z"
         />
       </g>
     </CountrySymbol>

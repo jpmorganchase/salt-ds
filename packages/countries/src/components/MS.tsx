@@ -14,7 +14,7 @@ const MS = forwardRef<SVGSVGElement, MSProps>(function MS(props: MSProps, ref) {
     <CountrySymbol
       data-testid="MS"
       aria-label="Montserrat"
-      viewBox="0 0 72 72"
+      viewBox="0 0 20 20"
       ref={ref}
       {...props}
     >
@@ -25,55 +25,66 @@ const MS = forwardRef<SVGSVGElement, MSProps>(function MS(props: MSProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#d9d9d9" />
       </mask>
       <g mask={`url(#${uid}-MS-a)`}>
-        <path fill="#004692" d="M0 0h72v72H0z" />
+        <path fill="#004692" d="M0 0h20v20H0z" />
         <path
-          fill="#3CCBDA"
-          d="M40.8 35h21v8.743a14.857 14.857 0 0 1-9.36 13.803L51.3 58l-1.14-.454a14.857 14.857 0 0 1-9.36-13.803V35Z"
+          fill="#3ccbda"
+          d="M11.333 9.722h5.834v2.088a4.63 4.63 0 0 1-2.917 4.301 4.63 4.63 0 0 1-2.917-4.301z"
         />
         <mask
           id={`${uid}-MS-b`}
-          x="40"
-          y="35"
+          x="11"
+          y="9"
           maskUnits="userSpaceOnUse"
           style={{ maskType: "alpha" }}
         >
           <path
-            fill="#0091DA"
-            d="M40.8 35h21v8.743a14.857 14.857 0 0 1-9.36 13.803L51.3 58l-1.14-.454a14.857 14.857 0 0 1-9.36-13.803V35Z"
+            fill="#0091da"
+            d="M11.333 9.722h5.834v2.088a4.63 4.63 0 0 1-2.917 4.301 4.63 4.63 0 0 1-2.917-4.301z"
           />
         </mask>
         <g mask={`url(#${uid}-MS-b)`}>
-          <path fill="#31373D" d="M49.8 44v11h3V44h5v-3h-5v-4h-3v4h-5v3h5Z" />
-          <path fill="#936846" d="M40.8 51h21v7h-21z" />
+          <mask id={`${uid}-MS-c`} fill="#fff">
+            <path d="M13.833 12.222v3.056h.834v-3.056h1.389v-.833h-1.39v-1.111h-.833v1.11h-1.389v.834z" />
+          </mask>
+          <path
+            fill="#31373d"
+            d="M13.833 12.222v3.056h.834v-3.056h1.389v-.833h-1.39v-1.111h-.833v1.11h-1.389v.834z"
+          />
+          <path
+            fill="#31373d"
+            d="M13.833 15.278h-1v1h1zm0-3.056h1v-1h-1zm.834 3.056v1h1v-1zm0-3.056v-1h-1v1zm1.389 0v1h1v-1zm0-.833h1v-1h-1zm-1.39 0h-1v1h1zm0-1.111h1v-1h-1zm-.833 0v-1h-1v1zm0 1.11v1h1v-1zm-1.389 0v-1h-1v1zm0 .834h-1v1h1zm2.39 3.056v-3.056h-2v3.056zm-.167-1h-.834v2h.834zm-1-2.056v3.056h2v-3.056zm2.389-1h-1.39v2h1.39zm-1 .167v.833h2v-.833zm-.39 1h1.39v-2h-1.39zm-1-2.111v1.11h2v-1.11zm.167 1h.834v-2h-.834zm1 .11v-1.11h-2v1.11zm-2.389 1h1.39v-2h-1.39zm1-.166v-.833h-2v.833zm.39-1h-1.39v2h1.39z"
+            mask={`url(#${uid}-MS-c)`}
+          />
+          <path fill="#936846" d="M11.333 14.166h5.833v1.944h-5.833z" />
         </g>
         <mask
-          id={`${uid}-MS-c`}
+          id={`${uid}-MS-d`}
           x="0"
           y="0"
           maskUnits="userSpaceOnUse"
           style={{ maskType: "alpha" }}
         >
-          <path fill="#002F6C" d="M0 36C0 16.118 16.118 0 36 0v36H0Z" />
+          <path fill="#002f6c" d="M0 10C0 4.477 4.477 0 10 0v10z" />
         </mask>
-        <g mask={`url(#${uid}-MS-c)`}>
-          <path fill="#004692" d="M0 0h36v36H0z" />
+        <g mask={`url(#${uid}-MS-d)`}>
+          <path fill="#004692" d="M0 0h10v10H0z" />
           <path
-            fill="#F5F7F8"
-            d="m12.522 3.134-2.121 2.121 29.526 29.526 2.121-2.121L12.522 3.134ZM6.865 8.79 3.33 12.327l29.526 29.526 3.535-3.535L6.866 8.79Z"
+            fill="#f5f7f8"
+            d="m3.478.87-.589.59 8.202 8.201.59-.589zM1.907 2.442l-.982.982 8.202 8.202.982-.983z"
           />
           <path
-            fill="#DD2033"
-            d="m6.865 8.79 3.536-3.535 29.526 29.526-3.535 3.536L6.864 8.79Z"
+            fill="#dd2033"
+            d="m1.907 2.442.982-.982 8.202 8.201-.982.982z"
           />
-          <path fill="#F5F7F8" d="M36 12v5H17v19h-5V12h24Z" />
-          <path fill="#F5F7F8" d="M36-2v5H5v33H0V-2h36Z" />
+          <path fill="#f5f7f8" d="M10 3.333v1.39H4.722V10H3.333V3.333z" />
+          <path fill="#f5f7f8" d="M10-.556v1.39H1.389V10H0V-.556z" />
           <path
-            fill="#DD2033"
+            fill="#dd2033"
             fillRule="evenodd"
-            d="M3 36h9V12h24V3H3v33Z"
+            d="M.833 10h2.5V3.333H10v-2.5H.833z"
             clipRule="evenodd"
           />
         </g>

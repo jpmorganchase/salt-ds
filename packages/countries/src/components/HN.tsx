@@ -14,7 +14,7 @@ const HN = forwardRef<SVGSVGElement, HNProps>(function HN(props: HNProps, ref) {
     <CountrySymbol
       data-testid="HN"
       aria-label="Honduras"
-      viewBox="0 0 72 72"
+      viewBox="0 0 20 20"
       ref={ref}
       {...props}
     >
@@ -25,14 +25,14 @@ const HN = forwardRef<SVGSVGElement, HNProps>(function HN(props: HNProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#d9d9d9" />
       </mask>
       <g mask={`url(#${uid}-HN-a)`}>
-        <path fill="#0091DA" d="M0 0h72v72H0z" />
-        <path fill="#F5F7F8" d="M0 54V18h72v36z" />
+        <path fill="#0091da" d="M0 0h20v20H0z" />
+        <path fill="#f5f7f8" d="M0 15V5h20v10z" />
         <path
-          fill="#0091DA"
-          d="m18.8 23-1.788 4.045-4.212.539 3.106 3.038L15.092 35l3.708-2.5 3.708 2.5-.814-4.378 3.106-3.038-4.212-.539L18.8 23Zm17 14-1.788 4.045-4.212.539 3.106 3.038L32.092 49l3.708-2.5 3.708 2.5-.814-4.378 3.106-3.038-4.211-.539L35.8 37Zm15.212-9.955L52.8 23l1.789 4.045 4.211.539-3.106 3.038.814 4.378-3.708-2.5-3.708 2.5.814-4.378-3.106-3.038 4.212-.539Z"
+          fill="#0091da"
+          d="m5.222 6.389-.497 1.124-1.17.15.863.843-.226 1.216 1.03-.694 1.03.694-.226-1.216.863-.844-1.17-.15zm4.722 3.889-.496 1.124-1.17.149.863.844-.227 1.216 1.03-.694 1.03.694-.226-1.216.863-.844-1.17-.15zm4.226-2.765.497-1.124.497 1.124 1.17.15-.864.843.227 1.216-1.03-.694-1.03.694.226-1.216L13 7.662z"
         />
       </g>
     </CountrySymbol>

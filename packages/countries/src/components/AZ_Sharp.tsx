@@ -17,7 +17,7 @@ const AZ_Sharp = forwardRef<SVGSVGElement, AZ_SharpProps>(function AZ_Sharp(
     <CountrySymbol
       data-testid="AZ_Sharp"
       aria-label="Azerbaijan"
-      viewBox="0 0 72 50"
+      viewBox="0 0 29 20"
       ref={ref}
       sharp
       {...props}
@@ -29,19 +29,19 @@ const AZ_Sharp = forwardRef<SVGSVGElement, AZ_SharpProps>(function AZ_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-AZ-a)`}>
-        <path fill="#009B77" d="M0 50v-7h72v7z" />
-        <path fill="#DD2033" d="M0 43V7h72v36z" />
+        <path fill="#009b77" d="M0 20v-2.8h29V20z" />
+        <path fill="#dd2033" d="M0 17.2V2.8h29v14.4z" />
         <path
-          fill="#F5F7F8"
-          d="m45 16 2.215 4.751 5.003-1.186-2.24 4.739L54 27.576l-5.008 1.158.013 5.266L45 30.705 40.995 34l.014-5.266L36 27.576l4.023-3.272-2.24-4.739 5.002 1.186L45 16Z"
+          fill="#f5f7f8"
+          d="m18.125 6.4.892 1.9 2.015-.474-.902 1.896 1.62 1.308-2.017.463.005 2.107-1.613-1.318-1.613 1.318.005-2.107-2.017-.463 1.62-1.308-.902-1.896 2.015.474z"
         />
-        <path fill="#0091DA" d="M0 7V0h72v7z" />
+        <path fill="#0091da" d="M0 2.8V0h29v2.8z" />
         <path
-          fill="#F5F7F8"
-          d="M37.998 14.272A11.539 11.539 0 0 0 35.5 14C29.149 14 24 19.149 24 25.5S29.149 37 35.5 37c.858 0 1.694-.094 2.498-.272A13.437 13.437 0 0 1 30.5 39C23.044 39 17 32.956 17 25.5S23.044 12 30.5 12c2.774 0 5.353.837 7.498 2.272Z"
+          fill="#f5f7f8"
+          d="M15.305 5.709a4.7 4.7 0 0 0-1.006-.109c-2.558 0-4.632 2.06-4.632 4.6s2.074 4.6 4.632 4.6q.519-.001 1.006-.109a5.44 5.44 0 0 1-3.02.909c-3.003 0-5.438-2.418-5.438-5.4s2.435-5.4 5.438-5.4a5.44 5.44 0 0 1 3.02.909"
         />
       </g>
     </CountrySymbol>

@@ -17,7 +17,7 @@ const BF_Sharp = forwardRef<SVGSVGElement, BF_SharpProps>(function BF_Sharp(
     <CountrySymbol
       data-testid="BF_Sharp"
       aria-label="Burkina Faso"
-      viewBox="0 0 72 50"
+      viewBox="0 0 29 20"
       ref={ref}
       sharp
       {...props}
@@ -29,14 +29,14 @@ const BF_Sharp = forwardRef<SVGSVGElement, BF_SharpProps>(function BF_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-BF-a)`}>
-        <path fill="#008259" d="M0 50V25h72v25z" />
-        <path fill="#DD2033" d="M0 25V0h72v25z" />
+        <path fill="#008259" d="M0 20V10h29v10z" />
+        <path fill="#dd2033" d="M0 10V0h29v10z" />
         <path
-          fill="#FBD381"
-          d="m36 8.286-4.982 11.269-11.732 1.5 8.653 8.464-2.27 12.195L36 34.75l10.331 6.964-2.27-12.195 8.654-8.465-11.732-1.5L36 8.287Z"
+          fill="#fbd381"
+          d="m14.5 3.314-2.007 4.508-4.725.6 3.485 3.385-.914 4.879L14.5 13.9l4.16 2.786-.913-4.879 3.485-3.385-4.725-.6z"
         />
       </g>
     </CountrySymbol>

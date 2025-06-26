@@ -20,7 +20,7 @@ export const SumIcon = forwardRef<SVGSVGElement, SumIconProps>(function SumIcon(
     >
       <path
         fillRule="evenodd"
-        d="M8 6 6 3h3v1.625h3V0H0l4.125 6L0 12h12V7.5H9V9H6l2-3Zm2 2.5V10H4.131l2.667-4-2.667-4H10v1.625h1V1H1.901l3.438 5L1.9 11H11V8.5h-1Z"
+        d="M8 6 6 3h3v1.625h3V0H0l4.125 6L0 12h12V7.5H9V9H6zm2 2.5V10H4.131l2.667-4-2.667-4H10v1.625h1V1H1.901l3.438 5L1.9 11H11V8.5z"
         clipRule="evenodd"
       />
     </Icon>

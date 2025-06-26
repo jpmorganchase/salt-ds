@@ -14,7 +14,7 @@ const AM = forwardRef<SVGSVGElement, AMProps>(function AM(props: AMProps, ref) {
     <CountrySymbol
       data-testid="AM"
       aria-label="Armenia"
-      viewBox="0 0 72 72"
+      viewBox="0 0 20 20"
       ref={ref}
       {...props}
     >
@@ -25,12 +25,12 @@ const AM = forwardRef<SVGSVGElement, AMProps>(function AM(props: AMProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#d9d9d9" />
       </mask>
       <g mask={`url(#${uid}-AM-a)`}>
-        <path fill="#FF9E42" d="M0 72V48h72v24z" />
-        <path fill="#005EB8" d="M0 48V24h72v24z" />
-        <path fill="#DD2033" d="M0 24V0h72v24z" />
+        <path fill="#ff9e42" d="M0 20v-6.667h20V20z" />
+        <path fill="#005eb8" d="M0 13.333V6.666h20v6.667z" />
+        <path fill="#dd2033" d="M0 6.667V0h20v6.667z" />
       </g>
     </CountrySymbol>
   );

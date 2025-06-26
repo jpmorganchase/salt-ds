@@ -18,7 +18,7 @@ export const GridIcon = forwardRef<SVGSVGElement, GridIconProps>(
       >
         <path
           fillRule="evenodd"
-          d="M0 5V0h5v5H0Zm1-4h3v3H1V1Zm6 4V0h5v5H7Zm1-4h3v3H8V1ZM7 7v5h5V7H7Zm4 1H8v3h3V8ZM0 12V7h5v5H0Zm1-4h3v3H1V8Z"
+          d="M0 5V0h5v5zm1-4h3v3H1zm6 4V0h5v5zm1-4h3v3H8zM7 7v5h5V7zm4 1H8v3h3zM0 12V7h5v5zm1-4h3v3H1z"
           clipRule="evenodd"
         />
       </Icon>

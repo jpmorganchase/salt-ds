@@ -17,7 +17,7 @@ const GS_Sharp = forwardRef<SVGSVGElement, GS_SharpProps>(function GS_Sharp(
     <CountrySymbol
       data-testid="GS_Sharp"
       aria-label="South Georgia and the South Sandwich Islands"
-      viewBox="0 0 72 50"
+      viewBox="0 0 29 20"
       ref={ref}
       sharp
       {...props}
@@ -29,10 +29,10 @@ const GS_Sharp = forwardRef<SVGSVGElement, GS_SharpProps>(function GS_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-GS-a)`}>
-        <path fill="#004692" d="M0 0h72v50H0z" />
+        <path fill="#004692" d="M0 0h29v20H0z" />
         <mask
           id={`${uid}-GS-b`}
           x="0"
@@ -40,42 +40,47 @@ const GS_Sharp = forwardRef<SVGSVGElement, GS_SharpProps>(function GS_Sharp(
           maskUnits="userSpaceOnUse"
           style={{ maskType: "alpha" }}
         >
-          <path fill="#002F6C" d="M0 30V0h36v30H0Z" />
+          <path fill="#002f6c" d="M0 12V0h14.5v12z" />
         </mask>
         <g mask={`url(#${uid}-GS-b)`}>
           <path
-            fill="#F5F7F8"
-            d="m12.79 1.005-2.12 2.12 26.197 26.198 2.12-2.121L12.792 1.005ZM7.134 6.661l-3.536 3.536 26.197 26.197 3.536-3.535L7.134 6.66Z"
+            fill="#f5f7f8"
+            d="m5.152.402-.855.848L14.85 11.73l.854-.85zM2.873 2.665 1.45 4.079l10.552 10.479 1.424-1.415z"
           />
           <path
-            fill="#DD2033"
-            d="m7.134 6.661 3.535-3.535 26.198 26.197-3.536 3.535L7.134 6.662Z"
+            fill="#dd2033"
+            d="M2.873 2.665 4.297 1.25 14.85 11.73l-1.424 1.413z"
           />
-          <path fill="#F5F7F8" d="M6 35h4.002V9H36V5H6v30Z" />
-          <path fill="#DD2033" d="M0 35h6.002V5h30V0H0v35Z" />
+          <path fill="#f5f7f8" d="M2.417 14h1.611V3.6H14.5V2H2.417z" />
+          <path fill="#dd2033" d="M0 14h2.417V2h12.084V0H0z" />
         </g>
-        <path fill="#C1C3C3" d="M50 12h9v8h-9z" />
-        <path fill="#936846" d="M51 5h2.5v3H57v4h-6V5Z" />
-        <path fill="#FBD381" d="M65 38H44v5h3v3h15v-3h3v-5Z" />
+        <path fill="#c1c3c3" d="M20.139 4.8h3.625V8h-3.625z" />
+        <path fill="#936846" d="M20.542 2h1.007v1.2h1.41v1.6h-2.417z" />
         <path
-          fill="#F5F7F8"
-          d="M44 20h21v8.743a14.857 14.857 0 0 1-9.36 13.803L54.5 43l-1.14-.454A14.857 14.857 0 0 1 44 28.743V20Z"
+          fill="#fbd381"
+          d="M26.18 15.2h-8.458v2h1.209v1.2h6.041v-1.2h1.209z"
+        />
+        <path
+          fill="#f5f7f8"
+          d="M17.722 8h8.459v3.497a5.94 5.94 0 0 1-3.77 5.521l-.46.182-.459-.182a5.94 5.94 0 0 1-3.77-5.52z"
         />
       </g>
       <mask
         id={`${uid}-GS-c`}
-        x="44"
-        y="20"
+        x="17"
+        y="8"
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
         <path
-          fill="#F5F7F8"
-          d="M44 20h21v8.743a14.857 14.857 0 0 1-9.36 13.803L54.5 43l-1.14-.454A14.857 14.857 0 0 1 44 28.743V20Z"
+          fill="#f5f7f8"
+          d="M17.722 8h8.459v3.497a5.94 5.94 0 0 1-3.77 5.521l-.46.182-.459-.182a5.94 5.94 0 0 1-3.77-5.52z"
         />
       </mask>
-      <g fill="#005EB8" mask={`url(#${uid}-GS-c)`}>
-        <path d="M54.25 19.5 59 24.25 54.25 29l-4.75-4.75 4.75-4.75Zm-9.5 9.5 4.75 4.75-4.75 4.75L40 33.75 44.75 29Zm23.75-4.75-4.75-4.75L59 24.25 63.75 29l4.75-4.75ZM54.25 29 59 33.75l-4.75 4.75L59 43.25 54.25 48l-4.75-4.75 4.75-4.75-4.75-4.75L54.25 29Zm-4.75-4.75-4.75-4.75L40 24.25 44.75 29l4.75-4.75ZM63.75 29l4.75 4.75-4.75 4.75L59 33.75 63.75 29Z" />
+      <g fill="#005eb8" mask={`url(#${uid}-GS-c)`}>
+        <path d="m21.85 7.8 1.914 1.9-1.913 1.9-1.913-1.9zm-3.826 3.8 1.913 1.9-1.913 1.9-1.913-1.9z" />
+        <path d="m27.59 9.7-1.913-1.9-1.913 1.9 1.913 1.9zm-5.74 1.9 1.914 1.9-1.913 1.9 1.913 1.9-1.913 1.9-1.913-1.9 1.913-1.9-1.913-1.9zm-1.912-1.9-1.914-1.9-1.913 1.9 1.913 1.9z" />
+        <path d="m25.677 11.6 1.913 1.9-1.913 1.9-1.913-1.9z" />
       </g>
     </CountrySymbol>
   );

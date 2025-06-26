@@ -17,7 +17,7 @@ const MU_Sharp = forwardRef<SVGSVGElement, MU_SharpProps>(function MU_Sharp(
     <CountrySymbol
       data-testid="MU_Sharp"
       aria-label="Mauritius"
-      viewBox="0 0 72 50"
+      viewBox="0 0 29 20"
       ref={ref}
       sharp
       {...props}
@@ -29,13 +29,13 @@ const MU_Sharp = forwardRef<SVGSVGElement, MU_SharpProps>(function MU_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-MU-a)`}>
-        <path fill="#009B77" d="M0 50V38h72v12z" />
-        <path fill="#004692" d="M0 25V12h72v13z" />
-        <path fill="#DD2033" d="M0 12V0h72v12z" />
-        <path fill="#FBD381" d="M0 38V25h72v13z" />
+        <path fill="#009b77" d="M0 20v-4.8h29V20z" />
+        <path fill="#004692" d="M0 10V4.8h29V10z" />
+        <path fill="#dd2033" d="M0 4.8V0h29v4.8z" />
+        <path fill="#fbd381" d="M0 15.2V10h29v5.2z" />
       </g>
     </CountrySymbol>
   );

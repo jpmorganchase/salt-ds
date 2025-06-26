@@ -18,10 +18,10 @@ export const ProgressClosedIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <path d="M4 4h4v4H4V4Z" />
+      <path d="M4 4h4v4H4z" />
       <path
         fillRule="evenodd"
-        d="M6 12A6 6 0 1 0 6 0a6 6 0 0 0 0 12ZM3 9V3h6v6H3Z"
+        d="M6 12A6 6 0 1 0 6 0a6 6 0 0 0 0 12M3 9V3h6v6z"
         clipRule="evenodd"
       />
     </Icon>

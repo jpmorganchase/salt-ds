@@ -14,7 +14,7 @@ const UY = forwardRef<SVGSVGElement, UYProps>(function UY(props: UYProps, ref) {
     <CountrySymbol
       data-testid="UY"
       aria-label="Uruguay"
-      viewBox="0 0 72 72"
+      viewBox="0 0 20 20"
       ref={ref}
       {...props}
     >
@@ -25,17 +25,17 @@ const UY = forwardRef<SVGSVGElement, UYProps>(function UY(props: UYProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#d9d9d9" />
       </mask>
       <g mask={`url(#${uid}-UY-a)`}>
-        <path fill="#F5F7F8" d="M0 72V0h72v72z" />
+        <path fill="#f5f7f8" d="M0 20V0h20v20z" />
         <path
           fill="#004692"
-          d="M36 18V9h36v9H36Zm0 18v-9h36v9H36ZM0 54v-9h72v9H0Zm0 18v-9h72v9H0Z"
+          d="M10 5V2.5h10V5zm0 5V7.5h10V10zM0 15v-2.5h20V15zm0 5v-2.5h20V20z"
         />
         <path
-          fill="#F1B434"
-          d="m30 25-4.495 2.223 2.394 4.576-4.881-.982L22.4 36 19 32.188 15.6 36l-.618-5.183-4.88.981 2.393-4.576L8 25l4.495-2.223-2.394-4.575 4.88.981.62-5.183L19 17.812 22.4 14l.618 5.183 4.88-.981-2.393 4.576L30 25Z"
+          fill="#f1b434"
+          d="m8.333 6.944-1.248.618.665 1.27-1.356-.272L6.222 10l-.944-1.06L4.333 10l-.171-1.44-1.356.273.665-1.271-1.249-.618 1.249-.617-.665-1.271 1.356.272.172-1.44.944 1.06.944-1.06.172 1.44 1.356-.272-.665 1.27z"
         />
       </g>
     </CountrySymbol>

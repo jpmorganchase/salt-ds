@@ -17,7 +17,7 @@ const MY_Sharp = forwardRef<SVGSVGElement, MY_SharpProps>(function MY_Sharp(
     <CountrySymbol
       data-testid="MY_Sharp"
       aria-label="Malaysia"
-      viewBox="0 0 72 50"
+      viewBox="0 0 29 20"
       ref={ref}
       sharp
       {...props}
@@ -29,19 +29,22 @@ const MY_Sharp = forwardRef<SVGSVGElement, MY_SharpProps>(function MY_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-MY-a)`}>
-        <path fill="#F5F7F8" d="M0 59V-4h72v63z" />
-        <path fill="#DD2033" d="M36 9V0h36v9zm0 18v-9h36v9zM0 45v-9h72v9z" />
-        <path fill="#004692" d="M0 32V0h36v32z" />
+        <path fill="#f5f7f8" d="M0 23.6V-1.6h29v25.2z" />
         <path
-          fill="#FBD381"
-          d="M17 9a6.97 6.97 0 0 1 3.832 1.141 9 9 0 1 0 0 11.718A7 7 0 1 1 17 9Z"
+          fill="#dd2033"
+          d="M14.5 3.6V0H29v3.6zm0 7.2V7.2H29v3.6zM0 18v-3.6h29V18z"
+        />
+        <path fill="#004692" d="M0 12.8V0h14.5v12.8z" />
+        <path
+          fill="#fbd381"
+          d="M6.847 3.6c.57 0 1.1.168 1.544.456A3.63 3.63 0 0 0 5.639 2.8c-2.002 0-3.625 1.612-3.625 3.6S3.637 10 5.639 10a3.63 3.63 0 0 0 2.752-1.256 2.8 2.8 0 0 1-1.544.456 2.81 2.81 0 0 1-2.82-2.8 2.81 2.81 0 0 1 2.82-2.8"
         />
         <path
-          fill="#FBD381"
-          d="M26.477 13.167 25 10l-1.477 3.167-3.335-.79 1.494 3.159L19 17.717l3.339.772-.01 3.511L25 19.804 27.67 22l-.009-3.51L31 17.716l-2.682-2.181 1.493-3.159-3.334.79Z"
+          fill="#fbd381"
+          d="M10.664 5.267 10.07 4l-.595 1.267L8.13 4.95l.602 1.263-1.08.873 1.345.309L8.994 8.8l1.076-.879 1.075.88-.004-1.405 1.345-.31-1.08-.872.601-1.263z"
         />
       </g>
     </CountrySymbol>

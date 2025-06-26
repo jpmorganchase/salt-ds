@@ -20,10 +20,10 @@ export const MicrophoneSolidIcon = forwardRef<
     >
       <path
         fillRule="evenodd"
-        d="M6 0a2.5 2.5 0 0 0-2.5 2.5v3a2.5 2.5 0 0 0 5 0v-3A2.5 2.5 0 0 0 6 0Z"
+        d="M6 0a2.5 2.5 0 0 0-2.5 2.5v3a2.5 2.5 0 0 0 5 0v-3A2.5 2.5 0 0 0 6 0"
         clipRule="evenodd"
       />
-      <path d="M2.5 5.5a3.5 3.5 0 1 0 7 0h1a4.5 4.5 0 0 1-4 4.473V11H9v1H3v-1h2.5V9.973a4.5 4.5 0 0 1-4-4.473h1Z" />
+      <path d="M2.5 5.5a3.5 3.5 0 1 0 7 0h1a4.5 4.5 0 0 1-4 4.473V11H9v1H3v-1h2.5V9.973a4.5 4.5 0 0 1-4-4.473z" />
     </Icon>
   );
 });

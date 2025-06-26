@@ -17,7 +17,7 @@ const SC_Sharp = forwardRef<SVGSVGElement, SC_SharpProps>(function SC_Sharp(
     <CountrySymbol
       data-testid="SC_Sharp"
       aria-label="Seychelles"
-      viewBox="0 0 72 50"
+      viewBox="0 0 29 20"
       ref={ref}
       sharp
       {...props}
@@ -29,22 +29,22 @@ const SC_Sharp = forwardRef<SVGSVGElement, SC_SharpProps>(function SC_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-SC-a)`}>
-        <path fill="#004692" d="M0-11h72v72H0z" />
-        <path fill="#009B77" d="M77 63V11L-3 63h80Z" />
+        <path fill="#004692" d="M0-4.4h29v28.8H0z" />
+        <path fill="#009b77" d="M31.014 25.2V4.4L-1.208 25.2z" />
         <path
-          fill="#FBD381"
-          d="m.278 53.766-1.374-2.986 52.59-61.103L77.901 8.86.278 53.766Z"
+          fill="#fbd381"
+          d="m.112 21.506-.553-1.194L20.74-4.129l10.637 7.673z"
         />
         <path
-          fill="#DD2033"
-          d="m3.138 54.301-2.11-2.553L72.056-7l4.081 23.456-73 37.845Z"
+          fill="#dd2033"
+          d="m1.264 21.72-.85-1.02L29.023-2.8l1.643 9.383z"
         />
         <path
-          fill="#F5F7F8"
-          d="m7.95 52.766-1.174-2.6 67.398-35.152 3.571 14.11L7.949 52.766Z"
+          fill="#f5f7f8"
+          d="m3.202 21.106-.473-1.04 27.147-14.06 1.438 5.644z"
         />
       </g>
     </CountrySymbol>

@@ -14,7 +14,7 @@ const AR = forwardRef<SVGSVGElement, ARProps>(function AR(props: ARProps, ref) {
     <CountrySymbol
       data-testid="AR"
       aria-label="Argentina"
-      viewBox="0 0 73 72"
+      viewBox="0 0 20 20"
       ref={ref}
       {...props}
     >
@@ -25,14 +25,14 @@ const AR = forwardRef<SVGSVGElement, ARProps>(function AR(props: ARProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="36.743" cy="36" r="36" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#d9d9d9" />
       </mask>
       <g mask={`url(#${uid}-AR-a)`}>
-        <path fill="#86C5FA" d="M1 72V0h72v72z" />
-        <path fill="#F5F7F8" d="M.743 50V22h72v28z" />
+        <path fill="#86c5fa" d="M0 0h20v20H0z" />
+        <path fill="#f5f7f8" d="M0 14V6h20v8z" />
         <path
-          fill="#F1B434"
-          d="m47.743 36-4.495 2.223 2.393 4.575-4.88-.981L40.142 47l-3.4-3.812L33.343 47l-.619-5.183-4.88.981 2.393-4.576L25.743 36l4.494-2.223-2.393-4.575 4.88.981.62-5.183 3.398 3.812 3.4-3.812.619 5.183 4.88-.981-2.393 4.576L47.743 36Z"
+          fill="#f1b434"
+          d="m13 10-1.226.606.653 1.248-1.331-.268L10.927 13 10 11.96 9.073 13l-.169-1.414-1.33.268.652-1.248L7 10l1.226-.606-.653-1.248 1.331.268L9.073 7 10 8.04 10.927 7l.169 1.414 1.331-.268-.653 1.248z"
         />
       </g>
     </CountrySymbol>

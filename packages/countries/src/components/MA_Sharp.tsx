@@ -17,7 +17,7 @@ const MA_Sharp = forwardRef<SVGSVGElement, MA_SharpProps>(function MA_Sharp(
     <CountrySymbol
       data-testid="MA_Sharp"
       aria-label="Morocco"
-      viewBox="0 0 72 50"
+      viewBox="0 0 29 20"
       ref={ref}
       sharp
       {...props}
@@ -29,13 +29,13 @@ const MA_Sharp = forwardRef<SVGSVGElement, MA_SharpProps>(function MA_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-MA-a)`}>
-        <path fill="#DD2033" d="M0 50V0h72v50z" />
+        <path fill="#dd2033" d="M0 20V0h29v20z" />
         <path
-          fill="#005B33"
-          d="M56 20.278H40.721L36 5l-4.721 15.278H16l12.36 9.443L23.64 45 36 35.557 48.36 45l-4.72-15.279L56 20.278ZM31.82 28.54l1.597-5.166h5.166l1.597 5.166L36 31.732l-4.18-3.193Zm5.807-8.26h-3.254L36 15.012l1.627 5.265Zm5.056 6.348-1.006-3.254h5.266l-4.26 3.254Zm-12.36-3.254-1.006 3.254-4.26-3.254h5.266ZM29.237 36.9l1.627-5.265 2.633 2.01-4.26 3.255Zm9.266-3.254 2.633-2.011 1.627 5.265-4.26-3.254Z"
+          fill="#005b33"
+          d="M22.556 8.111h-6.154L14.5 2l-1.902 6.111H6.444l4.98 3.777L9.52 18l4.979-3.777L19.479 18l-1.902-6.111zm-9.74 3.305.643-2.067h2.082l.643 2.067-1.684 1.277zm2.34-3.305h-1.311l.655-2.106zm2.036 2.54-.405-1.302h2.12zm-4.979-1.302-.405 1.302-1.716-1.302zm-.437 5.41.655-2.106 1.06.805zm3.732-1.301 1.06-.805.656 2.107z"
         />
       </g>
     </CountrySymbol>

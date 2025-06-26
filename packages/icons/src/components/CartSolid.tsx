@@ -16,7 +16,7 @@ export const CartSolidIcon = forwardRef<SVGSVGElement, CartSolidIconProps>(
         ref={ref}
         {...props}
       >
-        <path d="M4 1H1v1h1l.715 5h-.008l.29 2H10l.145-1h-6.29l-.144-1h6.574L11 2H4V1Zm1 10a1 1 0 1 1-2 0 1 1 0 0 1 2 0Zm5 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z" />
+        <path d="M4 1H1v1h1l.715 5h-.008l.29 2H10l.145-1h-6.29l-.144-1h6.574L11 2H4zm1 10a1 1 0 1 1-2 0 1 1 0 0 1 2 0m5 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0" />
       </Icon>
     );
   },

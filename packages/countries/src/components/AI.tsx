@@ -14,7 +14,7 @@ const AI = forwardRef<SVGSVGElement, AIProps>(function AI(props: AIProps, ref) {
     <CountrySymbol
       data-testid="AI"
       aria-label="Anguilla"
-      viewBox="0 0 72 72"
+      viewBox="0 0 20 20"
       ref={ref}
       {...props}
     >
@@ -25,10 +25,10 @@ const AI = forwardRef<SVGSVGElement, AIProps>(function AI(props: AIProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#d9d9d9" />
       </mask>
       <g mask={`url(#${uid}-AI-a)`}>
-        <path fill="#004692" d="M0 0h72v72H0z" />
+        <path fill="#004692" d="M0 0h20v20H0z" />
         <mask
           id={`${uid}-AI-b`}
           x="0"
@@ -36,48 +36,48 @@ const AI = forwardRef<SVGSVGElement, AIProps>(function AI(props: AIProps, ref) {
           maskUnits="userSpaceOnUse"
           style={{ maskType: "alpha" }}
         >
-          <path fill="#002F6C" d="M0 36C0 16.118 16.118 0 36 0v36H0Z" />
+          <path fill="#002f6c" d="M0 10C0 4.477 4.477 0 10 0v10z" />
         </mask>
         <g mask={`url(#${uid}-AI-b)`}>
           <path
-            fill="#F5F7F8"
-            d="m12.522 3.134-2.121 2.121 29.526 29.526 2.121-2.121L12.522 3.134ZM6.865 8.79 3.33 12.327l29.526 29.526 3.535-3.535L6.866 8.79Z"
+            fill="#f5f7f8"
+            d="m3.478.87-.589.59 8.202 8.201.59-.589zM1.907 2.442l-.982.982 8.202 8.202.982-.982z"
           />
           <path
-            fill="#DD2033"
-            d="m6.865 8.79 3.536-3.535 29.526 29.526-3.535 3.536L6.864 8.79Z"
+            fill="#dd2033"
+            d="m1.907 2.442.982-.982 8.202 8.201-.982.982z"
           />
-          <path fill="#F5F7F8" d="M36 12v5H17v19h-5V12h24Z" />
-          <path fill="#F5F7F8" d="M36-2v5H5v33H0V-2h36Z" />
+          <path fill="#f5f7f8" d="M10 3.333v1.39H4.722V10H3.333V3.333z" />
+          <path fill="#f5f7f8" d="M10-.556v1.39H1.389V10H0V-.556z" />
           <path
-            fill="#DD2033"
+            fill="#dd2033"
             fillRule="evenodd"
-            d="M3 36h9V12h24V3H3v33Z"
+            d="M.833 10h2.5V3.333H10v-2.5H.833z"
             clipRule="evenodd"
           />
         </g>
         <path
-          fill="#F5F7F8"
-          d="M41.2 35h21v8.743a14.857 14.857 0 0 1-9.36 13.803L51.7 58l-1.14-.454a14.857 14.857 0 0 1-9.36-13.803V35Z"
+          fill="#f5f7f8"
+          d="M11.445 9.722h5.833v2.088a4.63 4.63 0 0 1-2.917 4.301 4.63 4.63 0 0 1-2.917-4.301z"
         />
         <mask
           id={`${uid}-AI-c`}
-          x="41"
-          y="50"
+          x="11"
+          y="13"
           maskUnits="userSpaceOnUse"
           style={{ maskType: "alpha" }}
         >
-          <path fill="#D9D9D9" d="M41.2 50h22v8h-22z" />
+          <path fill="#d9d9d9" d="M11.444 13.889h6.111v2.222h-6.111z" />
         </mask>
         <g mask={`url(#${uid}-AI-c)`}>
           <path
-            fill="#3CCBDA"
-            d="M41.2 35h21v8.743a14.857 14.857 0 0 1-9.36 13.803L51.7 58l-1.14-.454a14.857 14.857 0 0 1-9.36-13.803V35Z"
+            fill="#3ccbda"
+            d="M11.445 9.722h5.833v2.088a4.63 4.63 0 0 1-2.917 4.301 4.63 4.63 0 0 1-2.917-4.301z"
           />
         </g>
-        <circle cx="48.7" cy="43.5" r="2.5" fill="#FF9E42" />
-        <circle cx="53.7" cy="39.5" r="2.5" fill="#FF9E42" />
-        <circle cx="55.7" cy="45.5" r="2.5" fill="#FF9E42" />
+        <circle cx="13.528" cy="12.083" r=".694" fill="#ff9e42" />
+        <circle cx="14.917" cy="10.972" r=".694" fill="#ff9e42" />
+        <circle cx="15.472" cy="12.639" r=".694" fill="#ff9e42" />
       </g>
     </CountrySymbol>
   );

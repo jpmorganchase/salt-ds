@@ -14,7 +14,7 @@ const NI = forwardRef<SVGSVGElement, NIProps>(function NI(props: NIProps, ref) {
     <CountrySymbol
       data-testid="NI"
       aria-label="Nicaragua"
-      viewBox="0 0 72 72"
+      viewBox="0 0 20 20"
       ref={ref}
       {...props}
     >
@@ -25,30 +25,30 @@ const NI = forwardRef<SVGSVGElement, NIProps>(function NI(props: NIProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#d9d9d9" />
       </mask>
       <g mask={`url(#${uid}-NI-a)`}>
-        <path fill="#005EB8" d="M0 0h72v72H0z" />
-        <path fill="#F5F7F8" d="M0 52V20h72v32z" />
+        <path fill="#005eb8" d="M0 0h20v20H0z" />
+        <path fill="#f5f7f8" d="M0 14.444V5.555h20v8.89z" />
         <path
-          fill="#F1B434"
+          fill="#f1b434"
           fillRule="evenodd"
-          d="M36 45a9 9 0 1 0 0-18 9 9 0 0 0 0 18Zm0 4c7.18 0 13-5.82 13-13s-5.82-13-13-13-13 5.82-13 13 5.82 13 13 13Z"
+          d="M10 12.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5m0 1.111a3.611 3.611 0 1 0 0-7.222 3.611 3.611 0 0 0 0 7.222"
           clipRule="evenodd"
         />
         <mask
           id={`${uid}-NI-b`}
-          x="29"
-          y="30"
+          x="8"
+          y="8"
           maskUnits="userSpaceOnUse"
           style={{ maskType: "alpha" }}
         >
-          <path fill="#D9D9D9" d="m35.7 30 6.495 11.25h-12.99L35.7 30Z" />
+          <path fill="#d9d9d9" d="m9.917 8.333 1.804 3.125H8.112z" />
         </mask>
         <g mask={`url(#${uid}-NI-b)`}>
-          <path fill="#86C5FA" d="M29.2 30h14v7h-14z" />
-          <path fill="#005EB8" d="M29.2 39h14v8h-14z" />
-          <path fill="#009B77" d="M29.2 37h14v2h-14z" />
+          <path fill="#86c5fa" d="M8.111 8.333H12v1.944H8.111z" />
+          <path fill="#005eb8" d="M8.111 10.833H12v2.222H8.111z" />
+          <path fill="#009b77" d="M8.111 10.278H12v.556H8.111z" />
         </g>
       </g>
     </CountrySymbol>

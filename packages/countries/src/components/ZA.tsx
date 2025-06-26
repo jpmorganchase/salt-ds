@@ -14,7 +14,7 @@ const ZA = forwardRef<SVGSVGElement, ZAProps>(function ZA(props: ZAProps, ref) {
     <CountrySymbol
       data-testid="ZA"
       aria-label="South Africa"
-      viewBox="0 0 72 72"
+      viewBox="0 0 20 20"
       ref={ref}
       {...props}
     >
@@ -26,20 +26,23 @@ const ZA = forwardRef<SVGSVGElement, ZAProps>(function ZA(props: ZAProps, ref) {
         style={{ maskType: "alpha" }}
       >
         <circle
-          cx="36"
-          cy="36"
-          r="36"
-          fill="#D9D9D9"
-          transform="matrix(1 0 0 -1 0 72)"
+          cx="10"
+          cy="10"
+          r="10"
+          fill="#d9d9d9"
+          transform="matrix(1 0 0 -1 0 20)"
         />
       </mask>
       <g mask={`url(#${uid}-ZA-a)`}>
-        <path fill="#DD2033" d="M0 0v24h72V0z" />
-        <path fill="#005EB8" d="M0 48v24h72V48z" />
-        <path fill="#F5F7F8" d="M72.4 24H44.8l-32-24v72l32-24h27.6V24Z" />
-        <path fill="#008259" d="M72 44H42.133L4.8 72V0l37.333 28H72v16Z" />
-        <path fill="#F1B434" d="M-3.6 9v54l36-27-36-27Z" />
-        <path fill="#31373D" d="m24.4 36-48-36v72l48-36Z" />
+        <path fill="#dd2033" d="M0 0v6.667h20V0z" />
+        <path fill="#005eb8" d="M0 13.334V20h20v-6.667z" />
+        <path
+          fill="#f5f7f8"
+          d="M20.111 6.667h-7.667L3.555 0v20l8.89-6.667h7.666z"
+        />
+        <path fill="#008259" d="M20 12.222h-8.296L1.334 20V0l10.37 7.778H20z" />
+        <path fill="#f1b434" d="M-1 2.5v15L9 10z" />
+        <path fill="#31373d" d="M6.778 10-6.556 0v20z" />
       </g>
     </CountrySymbol>
   );

@@ -17,7 +17,7 @@ const PW_Sharp = forwardRef<SVGSVGElement, PW_SharpProps>(function PW_Sharp(
     <CountrySymbol
       data-testid="PW_Sharp"
       aria-label="Palau"
-      viewBox="0 0 72 50"
+      viewBox="0 0 29 20"
       ref={ref}
       sharp
       {...props}
@@ -29,11 +29,11 @@ const PW_Sharp = forwardRef<SVGSVGElement, PW_SharpProps>(function PW_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-PW-a)`}>
-        <path fill="#3CCBDA" d="M0 0h72v50H0z" />
-        <circle cx="30" cy="25" r="16" fill="#FBD381" />
+        <path fill="#3ccbda" d="M0 0h29v20H0z" />
+        <ellipse cx="12.083" cy="10" fill="#fbd381" rx="6.444" ry="6.4" />
       </g>
     </CountrySymbol>
   );

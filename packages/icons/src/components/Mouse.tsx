@@ -18,7 +18,7 @@ export const MouseIcon = forwardRef<SVGSVGElement, MouseIconProps>(
       >
         <path
           fillRule="evenodd"
-          d="M2 4a4 4 0 1 1 8 0v4a4 4 0 0 1-8 0V4Zm7 4a3 3 0 0 1-6 0V4a3 3 0 0 1 2.5-2.959V2h-1v4h1v1h1V6h1V2h-1v-.959A3 3 0 0 1 9 4v4ZM5.5 3v2h1V3h-1Z"
+          d="M2 4a4 4 0 1 1 8 0v4a4 4 0 0 1-8 0zm7 4a3 3 0 0 1-6 0V4a3 3 0 0 1 2.5-2.959V2h-1v4h1v1h1V6h1V2h-1v-.959A3 3 0 0 1 9 4zM5.5 3v2h1V3z"
           clipRule="evenodd"
         />
       </Icon>

@@ -18,7 +18,7 @@ export const HierarchySolidIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <path d="M4.5 4.5H3v1h2.5v-1h6v3h-6v-1H3v3h2.5v-1h6v3h-6v-1H2v-6H.5v-4h4v4Z" />
+      <path d="M4.5 4.5H3v1h2.5v-1h6v3h-6v-1H3v3h2.5v-1h6v3h-6v-1H2v-6H.5v-4h4z" />
     </Icon>
   );
 });

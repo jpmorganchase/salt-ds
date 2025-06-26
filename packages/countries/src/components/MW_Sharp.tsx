@@ -17,7 +17,7 @@ const MW_Sharp = forwardRef<SVGSVGElement, MW_SharpProps>(function MW_Sharp(
     <CountrySymbol
       data-testid="MW_Sharp"
       aria-label="Malawi"
-      viewBox="0 0 72 50"
+      viewBox="0 0 29 20"
       ref={ref}
       sharp
       {...props}
@@ -29,15 +29,15 @@ const MW_Sharp = forwardRef<SVGSVGElement, MW_SharpProps>(function MW_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-MW-a)`}>
-        <path fill="#009B77" d="M0 50V34h72v16z" />
-        <path fill="#DD2033" d="M0 34V18h72v16z" />
-        <path fill="#31373D" d="M0 18V0h72v18z" />
+        <path fill="#009b77" d="M0 20v-6.4h29V20z" />
+        <path fill="#dd2033" d="M0 13.6V7.2h29v6.4z" />
+        <path fill="#31373d" d="M0 7.2V0h29v7.2z" />
         <path
-          fill="#DD2033"
-          d="M48 16H22l5.312-2.627-2.829-5.407 5.768 1.16L30.983 3 35 7.505 39.018 3l.73 6.125 5.769-1.16-2.829 5.409L48 16Z"
+          fill="#dd2033"
+          d="M19.333 6.4H8.861l2.14-1.05-1.14-2.164 2.324.464.294-2.45 1.618 1.802L15.716 1.2l.294 2.45 2.323-.464-1.14 2.163z"
         />
       </g>
     </CountrySymbol>

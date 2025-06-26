@@ -17,7 +17,7 @@ const TO_Sharp = forwardRef<SVGSVGElement, TO_SharpProps>(function TO_Sharp(
     <CountrySymbol
       data-testid="TO_Sharp"
       aria-label="Tonga"
-      viewBox="0 0 72 50"
+      viewBox="0 0 29 20"
       ref={ref}
       sharp
       {...props}
@@ -29,14 +29,14 @@ const TO_Sharp = forwardRef<SVGSVGElement, TO_SharpProps>(function TO_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-TO-a)`}>
-        <path fill="#DD2033" d="M0 50V0h72v50z" />
+        <path fill="#dd2033" d="M0 20V0h29v20z" />
         <path
-          fill="#F5F7F8"
+          fill="#f5f7f8"
           fillRule="evenodd"
-          d="M0 0v34h44V0H0Zm19 7h6v7h7v6h-7v7h-6v-7h-7v-6h7V7Z"
+          d="M0 0v13.6h17.722V0zm7.653 2.8h2.416v2.8h2.82V8h-2.82v2.8H7.653V8h-2.82V5.6h2.82z"
           clipRule="evenodd"
         />
       </g>

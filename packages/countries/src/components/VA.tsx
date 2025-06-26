@@ -14,7 +14,7 @@ const VA = forwardRef<SVGSVGElement, VAProps>(function VA(props: VAProps, ref) {
     <CountrySymbol
       data-testid="VA"
       aria-label="Holy See (the)"
-      viewBox="0 0 72 72"
+      viewBox="0 0 20 20"
       ref={ref}
       {...props}
     >
@@ -25,24 +25,24 @@ const VA = forwardRef<SVGSVGElement, VAProps>(function VA(props: VAProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#d9d9d9" />
       </mask>
       <g mask={`url(#${uid}-VA-a)`}>
-        <path fill="#F5F7F8" d="M0 0h72v72H0z" />
+        <path fill="#f5f7f8" d="M0 0h20v20H0z" />
         <path
-          fill="#F1B434"
-          d="M-.2 72V0h36v72zm48.5-50v3h3.5v6h3v-6h3.5v-3h-3.5v-3h-3v3h-3.5Z"
+          fill="#f1b434"
+          d="M-.056 20V0h10v20zM13.417 6.111v.833h.972v1.667h.833V6.944h.972v-.833h-.972v-.833h-.833v.833z"
         />
         <path
-          fill="#F1B434"
+          fill="#f1b434"
           fillRule="evenodd"
-          d="m63.846 26.333 2.121 2.121-.881.882 3.613 3.614-4.95 4.95-3.613-3.614-8.5 8.499a6.5 6.5 0 1 1-2.051-2.191l14.261-14.261ZM43.517 48.486a3.5 3.5 0 1 0 4.95-4.95 3.5 3.5 0 0 0-4.95 4.95Z"
+          d="m17.735 7.314.59.59-.246.245 1.004 1.004-1.375 1.374-1.004-1.003-2.36 2.36a1.806 1.806 0 1 1-.57-.608zm-5.647 6.154a.972.972 0 1 0 1.375-1.375.972.972 0 0 0-1.375 1.375"
           clipRule="evenodd"
         />
         <path
-          fill="#C1C3C3"
+          fill="#c1c3c3"
           fillRule="evenodd"
-          d="m42.535 26-2.121 2.122 1.048 1.048-3.78 3.78 4.95 4.95 3.78-3.78 8.457 8.457a6.5 6.5 0 1 0 2.13-2.113L42.534 26Zm20.329 22.486a3.5 3.5 0 1 1-4.95-4.95 3.5 3.5 0 0 1 4.95 4.95Z"
+          d="m11.815 7.222-.589.59.291.29-1.05 1.05 1.375 1.376 1.05-1.05 2.35 2.349a1.806 1.806 0 1 0 .59-.587zm5.647 6.246a.972.972 0 1 1-1.375-1.375.972.972 0 0 1 1.375 1.375"
           clipRule="evenodd"
         />
       </g>

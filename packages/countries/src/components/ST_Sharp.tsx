@@ -17,7 +17,7 @@ const ST_Sharp = forwardRef<SVGSVGElement, ST_SharpProps>(function ST_Sharp(
     <CountrySymbol
       data-testid="ST_Sharp"
       aria-label="Sao Tome and Principe"
-      viewBox="0 0 72 50"
+      viewBox="0 0 29 20"
       ref={ref}
       sharp
       {...props}
@@ -29,16 +29,16 @@ const ST_Sharp = forwardRef<SVGSVGElement, ST_SharpProps>(function ST_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-ST-a)`}>
-        <path fill="#009B77" d="M0-11h72v72H0z" />
-        <path fill="#FBD381" d="M0 37V13h72v24z" />
+        <path fill="#009b77" d="M0-4.4h29v28.8H0z" />
+        <path fill="#fbd381" d="M0 14.8V5.2h29v9.6z" />
         <path
-          fill="#31373D"
-          d="M42.611 23.045 44.4 19l1.788 4.045 4.212.539-3.106 3.038.814 4.378-3.708-2.5-3.708 2.5.814-4.378-3.106-3.038 4.212-.539Zm15.601 0L60 19l1.788 4.045 4.212.539-3.106 3.038.814 4.378L60 28.5 56.292 31l.814-4.378L54 23.584l4.212-.539Z"
+          fill="#31373d"
+          d="m17.163 9.218.72-1.618.72 1.618 1.697.216-1.251 1.215.328 1.751-1.494-1-1.493 1 .328-1.751-1.251-1.215zm6.283 0 .72-1.618.721 1.618 1.696.216-1.25 1.215.327 1.751-1.493-1-1.494 1 .328-1.751-1.251-1.215z"
         />
-        <path fill="#DD2033" d="M36 25 0-11v72l36-36Z" />
+        <path fill="#dd2033" d="M14.5 10 0-4.4v28.8z" />
       </g>
     </CountrySymbol>
   );

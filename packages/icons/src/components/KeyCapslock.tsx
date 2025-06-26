@@ -18,7 +18,7 @@ export const KeyCapslockIcon = forwardRef<SVGSVGElement, KeyCapslockIconProps>(
       >
         <path
           fillRule="evenodd"
-          d="M9 8H3v3h6V8ZM8 9H4v1h4V9Zm3-3H9v1H3V6H1l5-6 5 6ZM8.865 5 6 1.562 3.135 5H4v1h4V5h.865Z"
+          d="M9 8H3v3h6zM8 9H4v1h4zm3-3H9v1H3V6H1l5-6zM8.865 5 6 1.562 3.135 5H4v1h4V5z"
           clipRule="evenodd"
         />
       </Icon>

@@ -17,7 +17,7 @@ const BS_Sharp = forwardRef<SVGSVGElement, BS_SharpProps>(function BS_Sharp(
     <CountrySymbol
       data-testid="BS_Sharp"
       aria-label="Bahamas (the)"
-      viewBox="0 0 72 50"
+      viewBox="0 0 29 20"
       ref={ref}
       sharp
       {...props}
@@ -29,12 +29,12 @@ const BS_Sharp = forwardRef<SVGSVGElement, BS_SharpProps>(function BS_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-BS-a)`}>
-        <path fill="#3CCBDA" d="M0 50V0h72v50z" />
-        <path fill="#FBD381" d="M0 37V13h72v24z" />
-        <path fill="#31373D" d="m33 25-48-36v72l48-36Z" />
+        <path fill="#3ccbda" d="M0 20V0h29v20z" />
+        <path fill="#fbd381" d="M0 14.8V5.2h29v9.6z" />
+        <path fill="#31373d" d="M13 10 0 0v20z" />
       </g>
     </CountrySymbol>
   );

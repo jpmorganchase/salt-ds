@@ -1,8 +1,8 @@
-<svg width="12" height="12" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg" >
-<path d="M2 2.25H3V3.25H2V2.25Z" />
-<path d="M3 8.75H2V9.75H3V8.75Z" />
-<path d="M5 8.75H4V9.75H5V8.75Z" />
-<path d="M5 2.25H4V3.25H5V2.25Z" />
-<path fill-rule="evenodd" clip-rule="evenodd" d="M0 5.5V0H12V5.5H0ZM1 1H11V4.5H1V1Z" />
-<path fill-rule="evenodd" clip-rule="evenodd" d="M0 12V6.5H12V12H0ZM1 7.5H11V11H1V7.5Z" />
+<svg width="12" height="12" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">
+<path d="M2 2.25H3V3.25H2V2.25Z"/>
+<path d="M3 8.75H2V9.75H3V8.75Z"/>
+<path d="M5 8.75H4V9.75H5V8.75Z"/>
+<path d="M5 2.25H4V3.25H5V2.25Z"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M0 5.5V0H12V5.5H0ZM1 1H11V4.5H1V1Z"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M0 12V6.5H12V12H0ZM1 7.5H11V11H1V7.5Z"/>
 </svg>

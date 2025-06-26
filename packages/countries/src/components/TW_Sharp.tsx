@@ -17,7 +17,7 @@ const TW_Sharp = forwardRef<SVGSVGElement, TW_SharpProps>(function TW_Sharp(
     <CountrySymbol
       data-testid="TW_Sharp"
       aria-label="Taiwan (Province of China)"
-      viewBox="0 0 72 50"
+      viewBox="0 0 29 20"
       ref={ref}
       sharp
       {...props}
@@ -29,14 +29,14 @@ const TW_Sharp = forwardRef<SVGSVGElement, TW_SharpProps>(function TW_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-TW-a)`}>
-        <path fill="#DD2033" d="M0 50V0h72v50z" />
-        <path fill="#004692" d="M0 34V0h44v34z" />
+        <path fill="#dd2033" d="M0 20V0h29v20z" />
+        <path fill="#004692" d="M0 13.6V0h17.722v13.6z" />
         <path
-          fill="#F5F7F8"
-          d="m33 17-4.495 2.223 2.394 4.576-4.881-.982L25.4 28 22 24.188 18.6 28l-.618-5.183-4.88.981 2.393-4.576L11 17l4.495-2.223-2.394-4.575 4.88.981.62-5.183L22 9.812 25.4 6l.618 5.183 4.88-.981-2.393 4.576L33 17Z"
+          fill="#f5f7f8"
+          d="m13.292 6.8-1.81.889.963 1.83-1.966-.392-.249 2.073-1.369-1.525-1.37 1.525-.248-2.073-1.966.392.964-1.83-1.81-.89 1.81-.888-.964-1.83 1.966.392.249-2.073 1.37 1.525L10.23 2.4l.25 2.073 1.965-.392-.964 1.83z"
         />
       </g>
     </CountrySymbol>

@@ -14,7 +14,7 @@ const TG = forwardRef<SVGSVGElement, TGProps>(function TG(props: TGProps, ref) {
     <CountrySymbol
       data-testid="TG"
       aria-label="Togo"
-      viewBox="0 0 72 72"
+      viewBox="0 0 20 20"
       ref={ref}
       {...props}
     >
@@ -25,15 +25,18 @@ const TG = forwardRef<SVGSVGElement, TGProps>(function TG(props: TGProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#d9d9d9" />
       </mask>
       <g mask={`url(#${uid}-TG-a)`}>
-        <path fill="#009B77" d="M0 72V0h72v72z" />
-        <path fill="#F1B434" d="M0 28V14h72v14zm0 30V44h72v14z" />
-        <path fill="#DD2033" d="M0 44V0h44v44z" />
+        <path fill="#009b77" d="M0 20V0h20v20z" />
         <path
-          fill="#F5F7F8"
-          d="m24 14-2.98 6.742-7.02.897 5.177 5.064L17.82 34 24 29.833 30.18 34l-1.357-7.297L34 21.64l-7.02-.897L24 14Z"
+          fill="#f1b434"
+          d="M0 7.778v-3.89h20v3.89zm0 8.333v-3.889h20v3.89z"
+        />
+        <path fill="#dd2033" d="M0 12.222V0h12.222v12.222z" />
+        <path
+          fill="#f5f7f8"
+          d="m6.667 3.889-.828 1.873-1.95.249 1.438 1.407-.377 2.026 1.717-1.157 1.716 1.157-.377-2.026L9.444 6.01l-1.95-.25z"
         />
       </g>
     </CountrySymbol>

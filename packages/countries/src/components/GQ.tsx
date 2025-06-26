@@ -14,7 +14,7 @@ const GQ = forwardRef<SVGSVGElement, GQProps>(function GQ(props: GQProps, ref) {
     <CountrySymbol
       data-testid="GQ"
       aria-label="Equatorial Guinea"
-      viewBox="0 0 72 72"
+      viewBox="0 0 20 20"
       ref={ref}
       {...props}
     >
@@ -25,21 +25,21 @@ const GQ = forwardRef<SVGSVGElement, GQProps>(function GQ(props: GQProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#d9d9d9" />
       </mask>
       <g mask={`url(#${uid}-GQ-a)`}>
-        <path fill="#DD2033" d="M0 72V50h72v22z" />
-        <path fill="#F5F7F8" d="M0 50V22h72v28z" />
-        <path fill="#008259" d="M0 22V0h72v22z" />
-        <path fill="#0091DA" d="M28 36 0 0v72l28-36Z" />
+        <path fill="#dd2033" d="M0 20v-6.11h20V20z" />
+        <path fill="#f5f7f8" d="M0 13.889V6.11h20v7.778z" />
+        <path fill="#008259" d="M0 6.111V.001h20v6.11z" />
+        <path fill="#0091da" d="M7.778 10 0 0v20z" />
         <path
-          fill="#C1C3C3"
-          d="M36 25h20v7.941a14.857 14.857 0 0 1-9.34 13.795L46 47l-.66-.264A14.857 14.857 0 0 1 36 32.94V25Z"
+          fill="#c1c3c3"
+          d="M10 6.944h5.556v2.009c0 1.807-1.1 3.432-2.778 4.103A4.42 4.42 0 0 1 10 8.953z"
         />
-        <path fill="#936846" d="M44 36h4v6h-4z" />
+        <path fill="#936846" d="M12.222 10h1.111v1.667h-1.111z" />
         <path
-          fill="#009B77"
-          d="M50 32a4 4 0 1 0-8 0 2 2 0 0 0 0 4h8a2 2 0 0 0 0-4Z"
+          fill="#009b77"
+          d="M13.889 8.889a1.111 1.111 0 1 0-2.222 0 .556.556 0 0 0 0 1.111h2.222a.556.556 0 0 0 0-1.111"
         />
       </g>
     </CountrySymbol>

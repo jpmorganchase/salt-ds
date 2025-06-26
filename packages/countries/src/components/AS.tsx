@@ -14,7 +14,7 @@ const AS = forwardRef<SVGSVGElement, ASProps>(function AS(props: ASProps, ref) {
     <CountrySymbol
       data-testid="AS"
       aria-label="American Samoa"
-      viewBox="0 0 72 72"
+      viewBox="0 0 20 20"
       ref={ref}
       {...props}
     >
@@ -25,21 +25,21 @@ const AS = forwardRef<SVGSVGElement, ASProps>(function AS(props: ASProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#d9d9d9" />
       </mask>
       <g mask={`url(#${uid}-AS-a)`}>
-        <path fill="#004692" d="M0 0h72v72H0z" />
-        <path fill="#DD2033" d="m-11 36 83 42V-6l-83 42Z" />
-        <path fill="#F5F7F8" d="m5 36 83 42V-6L5 36Z" />
+        <path fill="#004692" d="M0 0h20v20H0z" />
+        <path fill="#dd2033" d="M-3.056 10 20 21.667V-1.667z" />
+        <path fill="#f5f7f8" d="m1.389 10 23.055 11.667V-1.667z" />
         <path
           fill="#936846"
-          d="M60 35h-4c1.079-1.336.863-3.131-.352-4.385a3.475 3.475 0 0 0 0-4.807l-.078.08c1.288-1.328 1.365-3.56.078-4.888L37 40.23c1.287 1.328 3.338 1.313 4.625-.015l.36-.338 8.929-.838V43h3.029v-4.244l4.543-.426L60 35Z"
+          d="M16.667 9.722h-1.112c.3-.37.24-.87-.097-1.218a.965.965 0 0 0 0-1.335l-.022.022c.358-.369.38-.989.022-1.358l-5.18 5.342a.884.884 0 0 0 1.285-.004l.1-.094 2.48-.233v1.1h.841v-1.179l1.262-.118z"
         />
         <path
-          fill="#FF9E42"
-          d="M55.648 30.615c1.215 1.254 1.43 3.05.352 4.385h-3l-6.676-4.385L55.648 21a3.475 3.475 0 0 1 0 4.808 3.475 3.475 0 0 1 0 4.807Z"
+          fill="#ff9e42"
+          d="M15.458 8.504c.337.348.397.847.098 1.218h-.834l-1.854-1.218 2.59-2.67a.965.965 0 0 1 0 1.335.965.965 0 0 1 0 1.335"
         />
-        <path fill="#F1B434" d="M37.068 45 34 43.5l3.068-1.5H57v3H37.068Z" />
+        <path fill="#f1b434" d="m10.297 12.5-.853-.417.853-.416h5.536v.833z" />
       </g>
     </CountrySymbol>
   );

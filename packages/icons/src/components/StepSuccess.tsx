@@ -19,7 +19,7 @@ export const StepSuccessIcon = forwardRef<SVGSVGElement, StepSuccessIconProps>(
       >
         <path
           fillRule="evenodd"
-          d="M6 12A6 6 0 1 0 6 0a6 6 0 0 0 0 12ZM4.873 9.476l5.034-5.55-1.1-1.019-4.01 4.445-1.843-1.713L1.93 6.735l2.943 2.741Z"
+          d="M6 12A6 6 0 1 0 6 0a6 6 0 0 0 0 12m3.75-7.984L4.952 9.332 2 6.582l1.027-1.098L4.875 7.2l3.772-4.208z"
           clipRule="evenodd"
         />
       </Icon>

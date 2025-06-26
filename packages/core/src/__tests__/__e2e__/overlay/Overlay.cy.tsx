@@ -3,7 +3,7 @@ import { composeStories } from "@storybook/react-vite";
 import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
 
 const composedStories = composeStories(overlayStories);
-const { Default, Right, Bottom, Left, CloseButton, LongContent } =
+const { Default, Right, Bottom, Left, CloseButton, LongContent, WithTooltip } =
   composedStories;
 
 describe("GIVEN an Overlay", () => {
@@ -136,5 +136,16 @@ describe("GIVEN an Overlay", () => {
         .find("div.saltOverlayPanelContent-overflow")
         .should("exist");
     });
+  });
+
+  it("should support tooltip on overlay triggers", () => {
+    cy.mount(<WithTooltip />);
+    cy.findByRole("dialog").should("not.exist");
+
+    cy.findByRole("button").realHover();
+    cy.findByRole("tooltip").should("be.visible");
+
+    cy.findByRole("button").realClick();
+    cy.findByRole("dialog").should("exist");
   });
 });

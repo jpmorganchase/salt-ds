@@ -17,7 +17,7 @@ const NF_Sharp = forwardRef<SVGSVGElement, NF_SharpProps>(function NF_Sharp(
     <CountrySymbol
       data-testid="NF_Sharp"
       aria-label="Norfolk Island"
-      viewBox="0 0 72 50"
+      viewBox="0 0 29 20"
       ref={ref}
       sharp
       {...props}
@@ -29,12 +29,15 @@ const NF_Sharp = forwardRef<SVGSVGElement, NF_SharpProps>(function NF_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-NF-a)`}>
-        <path fill="#008259" d="M0 0h72v50H0z" />
-        <path fill="#F5F7F8" d="M54 50H18V0h36z" />
-        <path fill="#008259" d="M48 35.875 36 5 24 35.875h9V44h6v-8.125h9Z" />
+        <path fill="#008259" d="M0 0h29v20H0z" />
+        <path fill="#f5f7f8" d="M21.75 20H7.25V0h14.5z" />
+        <path
+          fill="#008259"
+          d="M19.333 14.35 14.5 2 9.667 14.35h3.625v3.25h2.416v-3.25z"
+        />
       </g>
     </CountrySymbol>
   );

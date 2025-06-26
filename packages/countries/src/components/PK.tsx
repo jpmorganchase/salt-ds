@@ -14,7 +14,7 @@ const PK = forwardRef<SVGSVGElement, PKProps>(function PK(props: PKProps, ref) {
     <CountrySymbol
       data-testid="PK"
       aria-label="Pakistan"
-      viewBox="0 0 72 72"
+      viewBox="0 0 20 20"
       ref={ref}
       {...props}
     >
@@ -25,13 +25,13 @@ const PK = forwardRef<SVGSVGElement, PKProps>(function PK(props: PKProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#d9d9d9" />
       </mask>
       <g mask={`url(#${uid}-PK-a)`}>
-        <path fill="#005B33" d="M0 0h72v72H0z" />
+        <path fill="#005b33" d="M0 0h20v20H0z" />
         <path
-          fill="#F5F7F8"
-          d="m39.125 26.872 1.134-7.284 4.624 5.741 7.013-.95-3.69 6.231 3.2 6.697-7.049-2.425-4.891 5.624-.577-7.4-6.312-3.55 6.548-2.684ZM39.5 49a16.92 16.92 0 0 0 5.526-.92A15.969 15.969 0 0 1 32.6 54c-8.837 0-16-7.163-16-16 0-6.65 4.056-12.352 9.83-14.767C24.28 25.935 23 29.323 23 33c0 8.837 7.387 16 16.5 16Z"
+          fill="#f5f7f8"
+          d="m10.868 7.464.315-2.023 1.285 1.595 1.947-.264-1.024 1.731.888 1.86-1.957-.674-1.36 1.563-.16-2.056L9.05 8.21zm.104 6.147c.539 0 1.055-.09 1.535-.255a4.444 4.444 0 1 1-5.166-6.902 4.34 4.34 0 0 0-.952 2.713c0 2.454 2.052 4.444 4.583 4.444"
         />
       </g>
     </CountrySymbol>

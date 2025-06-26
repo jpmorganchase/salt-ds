@@ -17,7 +17,7 @@ const KH_Sharp = forwardRef<SVGSVGElement, KH_SharpProps>(function KH_Sharp(
     <CountrySymbol
       data-testid="KH_Sharp"
       aria-label="Cambodia"
-      viewBox="0 0 72 50"
+      viewBox="0 0 29 20"
       ref={ref}
       sharp
       {...props}
@@ -29,14 +29,14 @@ const KH_Sharp = forwardRef<SVGSVGElement, KH_SharpProps>(function KH_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-KH-a)`}>
-        <path fill="#004692" d="M0 0h72v50H0z" />
-        <path fill="#DD2033" d="M0 40V10h72v30z" />
+        <path fill="#004692" d="M0 0h29v20H0z" />
+        <path fill="#dd2033" d="M0 16V4h29v12z" />
         <path
-          fill="#F5F7F8"
-          d="M19 26v5h-2v2h-2v2h-2v2h46v-2h-2v-2h-2v-2h-2v-5h-1v-7h-6v7h-4V13H30v13h-4v-7h-6v7h-1Z"
+          fill="#f5f7f8"
+          d="M7.653 10.4v2h-.806v.8h-.805v.8h-.806v.8h18.528V14h-.806v-.8h-.805v-.8h-.806v-2h-.403V7.6h-2.416v2.8h-1.611V5.2h-4.834v5.2h-1.61V7.6H8.055v2.8z"
         />
       </g>
     </CountrySymbol>

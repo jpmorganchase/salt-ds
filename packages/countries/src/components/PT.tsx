@@ -14,7 +14,7 @@ const PT = forwardRef<SVGSVGElement, PTProps>(function PT(props: PTProps, ref) {
     <CountrySymbol
       data-testid="PT"
       aria-label="Portugal"
-      viewBox="0 0 72 72"
+      viewBox="0 0 20 20"
       ref={ref}
       {...props}
     >
@@ -25,22 +25,22 @@ const PT = forwardRef<SVGSVGElement, PTProps>(function PT(props: PTProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#d9d9d9" />
       </mask>
       <g mask={`url(#${uid}-PT-a)`}>
-        <path fill="#005B33" d="M0 0h28v72H0z" />
-        <path fill="#DD2033" d="M28 0h44v72H28z" />
-        <circle cx="27.4" cy="36" r="14" fill="#F1B434" />
+        <path fill="#005b33" d="M0 0h7.778v20H0z" />
+        <path fill="#dd2033" d="M7.778 0H20v20H7.778z" />
+        <circle cx="7.611" cy="10" r="3.889" fill="#f1b434" />
         <path
-          fill="#F5F7F8"
+          fill="#f5f7f8"
           fillRule="evenodd"
-          d="M18.4 28v9.822a9.7 9.7 0 0 0 6.065 8.992c1.883.76 3.987.76 5.87 0a9.699 9.699 0 0 0 6.065-8.992V28h-18Z"
+          d="M5.111 7.778v2.728c0 1.098.667 2.087 1.685 2.498a2.18 2.18 0 0 0 1.63 0 2.69 2.69 0 0 0 1.685-2.498V7.778z"
           clipRule="evenodd"
         />
         <path
-          fill="#DD2033"
+          fill="#dd2033"
           fillRule="evenodd"
-          d="M32.4 32h-10v5.822a5.699 5.699 0 0 0 3.564 5.284 3.834 3.834 0 0 0 2.872 0 5.699 5.699 0 0 0 3.564-5.284V32Zm-14-4v9.822a9.7 9.7 0 0 0 6.065 8.992c1.883.76 3.987.76 5.87 0a9.699 9.699 0 0 0 6.065-8.992V28h-18Z"
+          d="M9 8.889H6.222v1.617c0 .645.392 1.226.99 1.468.256.103.542.103.798 0 .598-.242.99-.823.99-1.468zM5.111 7.778v2.728c0 1.098.667 2.087 1.685 2.498a2.18 2.18 0 0 0 1.63 0 2.69 2.69 0 0 0 1.685-2.498V7.778z"
           clipRule="evenodd"
         />
       </g>

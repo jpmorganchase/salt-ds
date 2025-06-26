@@ -17,7 +17,7 @@ const SE_Sharp = forwardRef<SVGSVGElement, SE_SharpProps>(function SE_Sharp(
     <CountrySymbol
       data-testid="SE_Sharp"
       aria-label="Sweden"
-      viewBox="0 0 72 50"
+      viewBox="0 0 29 20"
       ref={ref}
       sharp
       {...props}
@@ -29,11 +29,14 @@ const SE_Sharp = forwardRef<SVGSVGElement, SE_SharpProps>(function SE_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-SE-a)`}>
-        <path fill="#005EB8" d="M0 0h72v50H0z" />
-        <path fill="#FBD381" d="M14 61h14V32h44V18H28v-29H14v29H0v14h14v29Z" />
+        <path fill="#005eb8" d="M0 0h29v20H0z" />
+        <path
+          fill="#fbd381"
+          d="M5.639 24.4h5.639V12.8H29V7.2H11.278V-4.4h-5.64V7.2H0v5.6h5.639z"
+        />
       </g>
     </CountrySymbol>
   );

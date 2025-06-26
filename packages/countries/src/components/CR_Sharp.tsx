@@ -17,7 +17,7 @@ const CR_Sharp = forwardRef<SVGSVGElement, CR_SharpProps>(function CR_Sharp(
     <CountrySymbol
       data-testid="CR_Sharp"
       aria-label="Costa Rica"
-      viewBox="0 0 72 50"
+      viewBox="0 0 29 20"
       ref={ref}
       sharp
       {...props}
@@ -29,12 +29,12 @@ const CR_Sharp = forwardRef<SVGSVGElement, CR_SharpProps>(function CR_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-CR-a)`}>
-        <path fill="#004692" d="M0 0h72v50H0z" />
-        <path fill="#F5F7F8" d="M0 40V11h72v29z" />
-        <path fill="#DD2033" d="M0 30V20h72v10z" />
+        <path fill="#004692" d="M0 0h29v20H0z" />
+        <path fill="#f5f7f8" d="M0 16V4.4h29V16z" />
+        <path fill="#dd2033" d="M0 12V8h29v4z" />
       </g>
     </CountrySymbol>
   );

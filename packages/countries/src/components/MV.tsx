@@ -14,7 +14,7 @@ const MV = forwardRef<SVGSVGElement, MVProps>(function MV(props: MVProps, ref) {
     <CountrySymbol
       data-testid="MV"
       aria-label="Maldives"
-      viewBox="0 0 72 72"
+      viewBox="0 0 20 20"
       ref={ref}
       {...props}
     >
@@ -26,19 +26,19 @@ const MV = forwardRef<SVGSVGElement, MVProps>(function MV(props: MVProps, ref) {
         style={{ maskType: "alpha" }}
       >
         <circle
-          cx="36"
-          cy="36"
-          r="36"
-          fill="#D9D9D9"
-          transform="rotate(90 36 36)"
+          cx="10"
+          cy="10"
+          r="10"
+          fill="#d9d9d9"
+          transform="rotate(90 10 10)"
         />
       </mask>
       <g mask={`url(#${uid}-MV-a)`}>
-        <path fill="#DD2033" d="M0 0h72v72H0z" />
-        <path fill="#005B33" d="M10 20h52v32H10z" />
+        <path fill="#dd2033" d="M0 0h20v20H0z" />
+        <path fill="#005b33" d="M2.778 5.556h14.444v8.889H2.778z" />
         <path
-          fill="#F5F7F8"
-          d="M45 47.205a14.978 14.978 0 0 1-4.346-1.474c-6.54-3.417-8.873-10.839-5.212-16.578 1.524-2.388 3.845-4.108 6.508-5.056C36.806 23.5 31.533 25.683 28.778 30c-3.66 5.739-1.488 13.076 4.853 16.39 3.6 1.88 7.768 2.06 11.369.814Z"
+          fill="#f5f7f8"
+          d="M12.5 13.113a4.2 4.2 0 0 1-1.207-.41c-1.817-.95-2.465-3.01-1.448-4.605.423-.663 1.068-1.14 1.808-1.404-1.429-.166-2.894.44-3.659 1.64-1.017 1.594-.413 3.632 1.348 4.552a4.02 4.02 0 0 0 3.158.227"
         />
       </g>
     </CountrySymbol>

@@ -14,7 +14,7 @@ const CA = forwardRef<SVGSVGElement, CAProps>(function CA(props: CAProps, ref) {
     <CountrySymbol
       data-testid="CA"
       aria-label="Canada"
-      viewBox="0 0 72 72"
+      viewBox="0 0 20 20"
       ref={ref}
       {...props}
     >
@@ -26,19 +26,19 @@ const CA = forwardRef<SVGSVGElement, CAProps>(function CA(props: CAProps, ref) {
         style={{ maskType: "alpha" }}
       >
         <circle
-          cx="36"
-          cy="36"
-          r="36"
-          fill="#D9D9D9"
-          transform="rotate(-90 36 36)"
+          cx="10"
+          cy="10"
+          r="10"
+          fill="#d9d9d9"
+          transform="rotate(-90 10 10)"
         />
       </mask>
       <g mask={`url(#${uid}-CA-a)`}>
-        <path fill="#DD2033" d="M0 0h72v72H0z" />
-        <path fill="#F5F7F8" d="M54 72H18V0h36z" />
+        <path fill="#dd2033" d="M0 0h20v20H0z" />
+        <path fill="#f5f7f8" d="M15 20H5V0h10z" />
         <path
-          fill="#DD2033"
-          d="m40.11 24.591-4.2-5.59-4.198 5.59-3.322-1.014 2.677 11.794-3.328-5.357-1.193 2.28-5.03-.749.742 5.078L20 37.827l8.821 5.583-1.08 3.544 6.613-1.792V53h2.95v-7.9l6.847 1.855-1.066-3.498.007.008L52 37.806l-2.219-1.183.742-5.077-5.03.748-1.172-2.24-3.574 5.732-.163-.535 2.636-11.61-3.11.95Z"
+          fill="#dd2033"
+          d="M11.142 6.83 9.975 5.279 8.81 6.83l-.923-.282.744 3.276-.925-1.488-.331.634-1.397-.208.206 1.41-.627.334 2.45 1.551-.3.985 1.837-.498v2.177h.82v-2.194l1.901.515-.296-.972.002.002 2.474-1.571-.616-.329.206-1.41-1.397.208-.326-.623-.992 1.593-.046-.149.733-3.225z"
         />
       </g>
     </CountrySymbol>

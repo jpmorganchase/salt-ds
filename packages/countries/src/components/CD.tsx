@@ -14,7 +14,7 @@ const CD = forwardRef<SVGSVGElement, CDProps>(function CD(props: CDProps, ref) {
     <CountrySymbol
       data-testid="CD"
       aria-label="Congo (the Democratic Republic of the)"
-      viewBox="0 0 72 72"
+      viewBox="0 0 20 20"
       ref={ref}
       {...props}
     >
@@ -25,21 +25,21 @@ const CD = forwardRef<SVGSVGElement, CDProps>(function CD(props: CDProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#d9d9d9" />
       </mask>
       <g mask={`url(#${uid}-CD-a)`}>
-        <path fill="#0091DA" d="M0 0h72v72H0z" />
+        <path fill="#0091da" d="M0 0h20v20H0z" />
         <path
-          fill="#FBD381"
-          d="m5.2 57.326 17.678 17.678 52.326-52.326L57.526 5z"
+          fill="#fbd381"
+          d="m1.445 15.924 4.91 4.91L20.89 6.3l-4.91-4.91z"
         />
         <path
-          fill="#DD2033"
-          d="M20.062 70.974 9.455 60.367 60.367 9.456l10.607 10.606z"
+          fill="#dd2033"
+          d="m5.573 19.715-2.947-2.947L16.768 2.626l2.947 2.947z"
         />
         <path
-          fill="#FBD381"
-          d="m20 10-2.98 6.742-7.02.897 5.177 5.064L13.82 30 20 25.833 26.18 30l-1.357-7.297L30 17.64l-7.02-.897L20 10Z"
+          fill="#fbd381"
+          d="M5.556 2.778 4.728 4.65l-1.95.249 1.438 1.407-.377 2.026 1.717-1.157 1.716 1.157-.377-2.026L8.333 4.9l-1.95-.25z"
         />
       </g>
     </CountrySymbol>

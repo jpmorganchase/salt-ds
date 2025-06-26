@@ -14,7 +14,7 @@ const SS = forwardRef<SVGSVGElement, SSProps>(function SS(props: SSProps, ref) {
     <CountrySymbol
       data-testid="SS"
       aria-label="South Sudan"
-      viewBox="0 0 72 72"
+      viewBox="0 0 20 20"
       ref={ref}
       {...props}
     >
@@ -25,17 +25,17 @@ const SS = forwardRef<SVGSVGElement, SSProps>(function SS(props: SSProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#d9d9d9" />
       </mask>
       <g mask={`url(#${uid}-SS-a)`}>
-        <path fill="#F5F7F8" d="M0 52V20h72v32z" />
-        <path fill="#DD2033" d="M.2 46V26h72v20z" />
-        <path fill="#31373D" d="M0 20V0h72v20z" />
-        <path fill="#009B77" d="M0 72V52h72v20z" />
-        <path fill="#004692" d="M48 36 0 0v72l48-36Z" />
+        <path fill="#f5f7f8" d="M0 14.444V5.555h20v8.89z" />
+        <path fill="#dd2033" d="M.056 12.777V7.221h20v5.556z" />
+        <path fill="#31373d" d="M0 5.556V0h20v5.556z" />
+        <path fill="#009b77" d="M0 20v-5.556h20V20z" />
+        <path fill="#004692" d="M13.333 10 0 0v20z" />
         <path
-          fill="#FBD381"
-          d="m12.236 28.636 2.394 6.188-3.896 5.038 6.517-.072 3.78 5.507 1.281-6.585 6.585-1.281-5.507-3.78.072-6.517-5.038 3.896-6.188-2.394Z"
+          fill="#fbd381"
+          d="m3.399 7.954.665 1.72-1.082 1.399 1.81-.02 1.05 1.53.356-1.83 1.829-.356-1.53-1.05.02-1.81-1.4 1.082z"
         />
       </g>
     </CountrySymbol>

@@ -17,7 +17,7 @@ const AG_Sharp = forwardRef<SVGSVGElement, AG_SharpProps>(function AG_Sharp(
     <CountrySymbol
       data-testid="AG_Sharp"
       aria-label="Antigua and Barbuda"
-      viewBox="0 0 72 50"
+      viewBox="0 0 29 20"
       ref={ref}
       sharp
       {...props}
@@ -29,27 +29,27 @@ const AG_Sharp = forwardRef<SVGSVGElement, AG_SharpProps>(function AG_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-AG-a)`}>
-        <path fill="#DD2033" d="M0 0h72v50H0z" />
+        <path fill="#dd2033" d="M0 0h29v20H0z" />
         <mask
           id={`${uid}-AG-b`}
-          x="-9"
-          y="-13"
+          x="-4"
+          y="-6"
           maskUnits="userSpaceOnUse"
           style={{ maskType: "alpha" }}
         >
-          <path fill="#31373D" d="m36 50 45-63H-9l45 63Z" />
+          <path fill="#31373d" d="M14.5 20 32.625-5.2h-36.25z" />
         </mask>
         <g mask={`url(#${uid}-AG-b)`}>
-          <path fill="#31373D" d="m36 50 45-63H-9l45 63Z" />
+          <path fill="#31373d" d="M14.5 20 32.625-5.2h-36.25z" />
           <path
-            fill="#F1B434"
-            d="M24.172 19.363 16 23h40l-8.172-3.637 4.352-7.487-8.874 1.605L42.18 5 36 11.238 29.82 5l-1.126 8.481-8.874-1.605 4.352 7.487Z"
+            fill="#f1b434"
+            d="M9.736 7.745 6.444 9.2h16.112l-3.292-1.455 1.753-2.995-3.575.643L16.99 2 14.5 4.495 12.01 2l-.453 3.393-3.574-.643z"
           />
-          <path fill="#F5F7F8" d="M20 37h32v24H20z" />
-          <path fill="#005EB8" d="M12 23h48v14H12V23Z" />
+          <path fill="#f5f7f8" d="M8.056 14.8h12.889v9.6H8.056z" />
+          <path fill="#005eb8" d="M4.833 9.2h19.334v5.6H4.833z" />
         </g>
       </g>
     </CountrySymbol>

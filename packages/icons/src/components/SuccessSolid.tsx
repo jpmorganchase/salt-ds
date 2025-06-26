@@ -21,7 +21,7 @@ export const SuccessSolidIcon = forwardRef<
     >
       <path
         fillRule="evenodd"
-        d="M12 0H0v12h12V0ZM9.858 1.846 3.672 8.033l-1.93-1.93-1.06 1.06 2.99 2.991 7.247-7.247-1.06-1.061Z"
+        d="M12 0H0v12h12zM9.858 1.846 3.672 8.033l-1.93-1.93-1.06 1.06 2.99 2.991 7.247-7.247z"
         clipRule="evenodd"
       />
     </Icon>

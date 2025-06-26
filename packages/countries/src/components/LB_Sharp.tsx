@@ -17,7 +17,7 @@ const LB_Sharp = forwardRef<SVGSVGElement, LB_SharpProps>(function LB_Sharp(
     <CountrySymbol
       data-testid="LB_Sharp"
       aria-label="Lebanon"
-      viewBox="0 0 72 50"
+      viewBox="0 0 29 20"
       ref={ref}
       sharp
       {...props}
@@ -29,12 +29,15 @@ const LB_Sharp = forwardRef<SVGSVGElement, LB_SharpProps>(function LB_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-LB-a)`}>
-        <path fill="#DD2033" d="M0-11h72v72H0z" />
-        <path fill="#F5F7F8" d="M0 41V9h72v32z" />
-        <path fill="#008259" d="m44 32-8-19-8 19h6v5h4v-5h6Z" />
+        <path fill="#dd2033" d="M0-4.4h29v28.8H0z" />
+        <path fill="#f5f7f8" d="M0 16.4V3.6h29v12.8z" />
+        <path
+          fill="#008259"
+          d="M17.722 12.8 14.5 5.2l-3.222 7.6h2.416v2h1.612v-2z"
+        />
       </g>
     </CountrySymbol>
   );

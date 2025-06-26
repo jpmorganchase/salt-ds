@@ -23,7 +23,7 @@ export const SemanticVerySatisfiedSolidIcon = forwardRef<
     >
       <path
         fillRule="evenodd"
-        d="M6 12A6 6 0 1 0 6 0a6 6 0 0 0 0 12ZM5 5a1 1 0 1 1-2 0 1 1 0 0 1 2 0Zm3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2Zm-2 4a4.002 4.002 0 0 1-3.874-3h7.748A4.002 4.002 0 0 1 6 10Z"
+        d="M6 12A6 6 0 1 0 6 0a6 6 0 0 0 0 12M5 5a1 1 0 1 1-2 0 1 1 0 0 1 2 0m3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2m-2 4a4 4 0 0 1-3.874-3h7.748A4 4 0 0 1 6 10"
         clipRule="evenodd"
       />
     </Icon>

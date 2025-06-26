@@ -17,7 +17,7 @@ const SH_Sharp = forwardRef<SVGSVGElement, SH_SharpProps>(function SH_Sharp(
     <CountrySymbol
       data-testid="SH_Sharp"
       aria-label="Saint Helena, Ascension and Tristan da Cunha"
-      viewBox="0 0 72 50"
+      viewBox="0 0 29 20"
       ref={ref}
       sharp
       {...props}
@@ -29,10 +29,10 @@ const SH_Sharp = forwardRef<SVGSVGElement, SH_SharpProps>(function SH_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-SH-a)`}>
-        <path fill="#004692" d="M0 0h72v50H0z" />
+        <path fill="#004692" d="M0 0h29v20H0z" />
         <mask
           id={`${uid}-SH-b`}
           x="0"
@@ -40,64 +40,73 @@ const SH_Sharp = forwardRef<SVGSVGElement, SH_SharpProps>(function SH_Sharp(
           maskUnits="userSpaceOnUse"
           style={{ maskType: "alpha" }}
         >
-          <path fill="#002F6C" d="M0 30V0h36v30H0Z" />
+          <path fill="#002f6c" d="M0 12V0h14.5v12z" />
         </mask>
         <g mask={`url(#${uid}-SH-b)`}>
-          <path fill="#004692" d="M0 0h36v36H0z" />
+          <path fill="#004692" d="M0 0h14.5v14.4H0z" />
           <path
-            fill="#F5F7F8"
-            d="m12.79 1.005-2.12 2.12 26.197 26.198 2.12-2.121L12.792 1.005ZM7.134 6.661l-3.536 3.536 26.197 26.197 3.536-3.535L7.134 6.66Z"
+            fill="#f5f7f8"
+            d="m5.152.402-.855.848L14.85 11.73l.854-.85zM2.873 2.665 1.45 4.079l10.552 10.479 1.424-1.415z"
           />
           <path
-            fill="#DD2033"
-            d="m7.134 6.661 3.535-3.535 26.198 26.197-3.536 3.535L7.134 6.662Z"
+            fill="#dd2033"
+            d="M2.873 2.665 4.297 1.25 14.85 11.73l-1.424 1.413z"
           />
-          <path fill="#F5F7F8" d="M6 35h4.002V9H36V5H6v30Z" />
-          <path fill="#DD2033" d="M0 35h6.002V5h30V0H0v35Z" />
+          <path fill="#f5f7f8" d="M2.417 14h1.611V3.6H14.5V2H2.417z" />
+          <path fill="#dd2033" d="M0 14h2.417V2h12.084V0H0z" />
         </g>
         <path
-          fill="#F1B434"
-          d="M44 20h21v8.743a14.857 14.857 0 0 1-9.36 13.803L54.5 43l-1.14-.454A14.857 14.857 0 0 1 44 28.743V20Z"
+          fill="#f1b434"
+          d="M17.722 8h8.459v2.98a6.69 6.69 0 0 1-4.23 6.22 6.69 6.69 0 0 1-4.229-6.22z"
         />
-        <circle cx="54.5" cy="23.5" r="2.5" fill="#FDEFD3" />
+        <ellipse cx="21.951" cy="9.4" fill="#fdefd3" rx="1.007" ry="1" />
         <mask
           id={`${uid}-SH-c`}
-          x="44"
-          y="27"
+          x="17"
+          y="10"
           maskUnits="userSpaceOnUse"
           style={{ maskType: "alpha" }}
         >
-          <path fill="#D9D9D9" d="M44 27h21v16H44z" />
+          <path fill="#d9d9d9" d="M17.722 10.8h8.458v6.4h-8.458z" />
         </mask>
         <g mask={`url(#${uid}-SH-c)`}>
           <path
-            fill="#86C5FA"
-            d="M44 20h21v8.743a14.857 14.857 0 0 1-9.36 13.803L54.5 43l-1.14-.454A14.857 14.857 0 0 1 44 28.743V20Z"
+            fill="#86c5fa"
+            d="M17.722 8h8.459v2.98a6.69 6.69 0 0 1-4.23 6.22 6.69 6.69 0 0 1-4.229-6.22z"
           />
-          <path fill="#31373D" d="M44 27h21v2H44z" />
+          <path
+            fill="#31373d"
+            stroke="#31373d"
+            strokeWidth=".4"
+            d="M17.922 11h8.058v.4h-8.058z"
+          />
         </g>
         <mask
           id={`${uid}-SH-d`}
-          x="44"
-          y="20"
+          x="17"
+          y="8"
           maskUnits="userSpaceOnUse"
           style={{ maskType: "alpha" }}
         >
           <path
-            fill="#F1B434"
-            d="M44 20h21v8.743a14.857 14.857 0 0 1-9.36 13.803L54.5 43l-1.14-.454A14.857 14.857 0 0 1 44 28.743V20Z"
+            fill="#f1b434"
+            d="M17.722 8h8.459v2.98a6.69 6.69 0 0 1-4.23 6.22 6.69 6.69 0 0 1-4.229-6.22z"
           />
         </mask>
         <g mask={`url(#${uid}-SH-d)`}>
           <path
-            fill="#F5F7F8"
-            d="M54.5 35c-2.626 0-2.626 2.182-5.25 2.182C46.625 37.182 46.625 35 44 35v3.818c2.625 0 2.625 2.182 5.25 2.182 2.624 0 2.624-2.182 5.25-2.182 2.624 0 2.624 2.182 5.25 2.182 2.625 0 2.625-2.182 5.25-2.182V35c-2.625 0-2.625 2.182-5.25 2.182-2.626 0-2.626-2.182-5.25-2.182Z"
+            fill="#f5f7f8"
+            d="M21.951 14c-1.057 0-1.057.873-2.114.873-1.058 0-1.058-.873-2.115-.873v1.527c1.057 0 1.057.873 2.115.873 1.057 0 1.057-.873 2.114-.873 1.058 0 1.058.873 2.115.873s1.057-.873 2.115-.873V14c-1.058 0-1.058.873-2.115.873S23.009 14 21.95 14"
           />
         </g>
-        <path fill="#936846" d="M55 30h-2v2h-2v2h2v4h2v-4h2v-2h-2v-2Z" />
         <path
-          fill="#31373D"
-          d="M54.5 40.5A4.5 4.5 0 0 0 59 36h-9a4.5 4.5 0 0 0 4.5 4.5Z"
+          fill="#936846"
+          d="M22.153 12h-.806v.8h-.805v.8h.805v1.6h.806v-1.6h.805v-.8h-.805z"
+        />
+        <path
+          fill="#31373d"
+          stroke="#31373d"
+          d="M23.163 14.9c-.197.468-.664.8-1.212.8a1.31 1.31 0 0 1-1.212-.8z"
         />
       </g>
     </CountrySymbol>

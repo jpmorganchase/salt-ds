@@ -14,7 +14,7 @@ const EE = forwardRef<SVGSVGElement, EEProps>(function EE(props: EEProps, ref) {
     <CountrySymbol
       data-testid="EE"
       aria-label="Estonia"
-      viewBox="0 0 72 72"
+      viewBox="0 0 20 20"
       ref={ref}
       {...props}
     >
@@ -25,12 +25,12 @@ const EE = forwardRef<SVGSVGElement, EEProps>(function EE(props: EEProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#d9d9d9" />
       </mask>
       <g mask={`url(#${uid}-EE-a)`}>
-        <path fill="#F5F7F8" d="M0 72V48h72v24z" />
-        <path fill="#31373D" d="M0 48V24h72v24z" />
-        <path fill="#0091DA" d="M0 24V0h72v24z" />
+        <path fill="#f5f7f8" d="M0 20v-6.667h20V20z" />
+        <path fill="#31373d" stroke="#31373d" d="M.5 12.833V7.166h19v5.667z" />
+        <path fill="#0091da" d="M0 6.667V0h20v6.667z" />
       </g>
     </CountrySymbol>
   );

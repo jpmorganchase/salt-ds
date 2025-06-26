@@ -17,7 +17,7 @@ const BM_Sharp = forwardRef<SVGSVGElement, BM_SharpProps>(function BM_Sharp(
     <CountrySymbol
       data-testid="BM_Sharp"
       aria-label="Bermuda"
-      viewBox="0 0 72 50"
+      viewBox="0 0 29 20"
       ref={ref}
       sharp
       {...props}
@@ -29,32 +29,32 @@ const BM_Sharp = forwardRef<SVGSVGElement, BM_SharpProps>(function BM_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-BM-a)`}>
-        <path fill="#DD2033" d="M0 0h72v50H0z" />
+        <path fill="#dd2033" d="M0 0h29v20H0z" />
         <path
-          fill="#F5F7F8"
-          d="M43.8 23h21v8.743a14.857 14.857 0 0 1-9.36 13.803L54.3 46l-1.14-.454a14.857 14.857 0 0 1-9.36-13.803V23Z"
+          fill="#f5f7f8"
+          d="M17.642 9.2H26.1v2.98a6.69 6.69 0 0 1-4.23 6.22 6.69 6.69 0 0 1-4.228-6.22z"
         />
         <mask
           id={`${uid}-BM-b`}
-          x="43"
-          y="38"
+          x="17"
+          y="15"
           maskUnits="userSpaceOnUse"
           style={{ maskType: "alpha" }}
         >
-          <path fill="#D9D9D9" d="M43.8 38h22v8h-22z" />
+          <path fill="#d9d9d9" d="M17.642 15.2h8.861v3.2h-8.861z" />
         </mask>
         <g mask={`url(#${uid}-BM-b)`}>
           <path
-            fill="#009B77"
-            d="M43.8 23h21v8.743a14.857 14.857 0 0 1-9.36 13.803L54.3 46l-1.14-.454a14.857 14.857 0 0 1-9.36-13.803V23Z"
+            fill="#009b77"
+            d="M17.642 9.2H26.1v2.98a6.69 6.69 0 0 1-4.23 6.22 6.69 6.69 0 0 1-4.228-6.22z"
           />
         </g>
-        <rect x="51.8" y="26" fill="#DD2033" rx="2.5" />
-        <path fill="#86C5FA" d="M49.8 38v-7h9v7h-9Z" />
-        <path fill="#F5F7F8" d="M54.3 40.857 49.8 38h9l-4.5 2.857Z" />
+        <rect x="20.864" y="10.4" fill="#dd2033" rx="1.007" />
+        <path fill="#86c5fa" d="M20.058 15.2v-2.8h3.625v2.8z" />
+        <path fill="#f5f7f8" d="M21.87 16.343 20.059 15.2h3.625z" />
         <mask
           id={`${uid}-BM-c`}
           x="0"
@@ -62,20 +62,20 @@ const BM_Sharp = forwardRef<SVGSVGElement, BM_SharpProps>(function BM_Sharp(
           maskUnits="userSpaceOnUse"
           style={{ maskType: "alpha" }}
         >
-          <path fill="#002F6C" d="M0 30V0h36v30H0Z" />
+          <path fill="#002f6c" d="M0 12V0h14.5v12z" />
         </mask>
         <g mask={`url(#${uid}-BM-c)`}>
-          <path fill="#004692" d="M0 0h36v36H0z" />
+          <path fill="#004692" d="M0 0h14.5v14.4H0z" />
           <path
-            fill="#F5F7F8"
-            d="m12.79 1.005-2.12 2.12 26.197 26.198 2.12-2.121L12.792 1.005ZM7.134 6.661l-3.536 3.536 26.197 26.197 3.536-3.535L7.134 6.66Z"
+            fill="#f5f7f8"
+            d="m5.152.402-.855.848L14.85 11.73l.854-.85zM2.873 2.665 1.45 4.079l10.552 10.479 1.424-1.415z"
           />
           <path
-            fill="#DD2033"
-            d="m7.134 6.661 3.535-3.535 26.198 26.197-3.536 3.535L7.134 6.662Z"
+            fill="#dd2033"
+            d="M2.873 2.665 4.297 1.25 14.85 11.73l-1.424 1.413z"
           />
-          <path fill="#F5F7F8" d="M6 35h4.002V9H36V5H6v30Z" />
-          <path fill="#DD2033" d="M0 35h6.002V5h30V0H0v35Z" />
+          <path fill="#f5f7f8" d="M2.417 14h1.611V3.6H14.5V2H2.417z" />
+          <path fill="#dd2033" d="M0 14h2.417V2h12.084V0H0z" />
         </g>
       </g>
     </CountrySymbol>

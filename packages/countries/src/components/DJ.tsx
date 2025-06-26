@@ -14,7 +14,7 @@ const DJ = forwardRef<SVGSVGElement, DJProps>(function DJ(props: DJProps, ref) {
     <CountrySymbol
       data-testid="DJ"
       aria-label="Djibouti"
-      viewBox="0 0 72 72"
+      viewBox="0 0 20 20"
       ref={ref}
       {...props}
     >
@@ -25,15 +25,15 @@ const DJ = forwardRef<SVGSVGElement, DJProps>(function DJ(props: DJProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#d9d9d9" />
       </mask>
       <g mask={`url(#${uid}-DJ-a)`}>
-        <path fill="#009B77" d="M0 72V36h72v36z" />
-        <path fill="#86C5FA" d="M0 36V0h72v36z" />
-        <path fill="#F5F7F8" d="M48 36 0 0v72l48-36Z" />
+        <path fill="#009b77" d="M0 20V10h20v10z" />
+        <path fill="#86c5fa" d="M0 10V0h20v10z" />
+        <path fill="#f5f7f8" d="M13.333 10 0 0v20z" />
         <path
-          fill="#DD2033"
-          d="m20 26-2.98 6.742-7.02.897 5.177 5.064L13.82 46 20 41.833 26.18 46l-1.357-7.297L30 33.64l-7.02-.897L20 26Z"
+          fill="#dd2033"
+          d="m5.556 7.222-.828 1.873-1.95.25 1.438 1.406-.377 2.027 1.717-1.158 1.716 1.158-.377-2.027 1.438-1.407-1.95-.249z"
         />
       </g>
     </CountrySymbol>

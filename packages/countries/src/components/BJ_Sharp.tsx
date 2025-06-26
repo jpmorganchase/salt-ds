@@ -17,7 +17,7 @@ const BJ_Sharp = forwardRef<SVGSVGElement, BJ_SharpProps>(function BJ_Sharp(
     <CountrySymbol
       data-testid="BJ_Sharp"
       aria-label="Benin"
-      viewBox="0 0 72 50"
+      viewBox="0 0 29 20"
       ref={ref}
       sharp
       {...props}
@@ -29,12 +29,12 @@ const BJ_Sharp = forwardRef<SVGSVGElement, BJ_SharpProps>(function BJ_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-BJ-a)`}>
-        <path fill="#DD2033" d="M0 50V25h72v25z" />
-        <path fill="#FBD381" d="M0 25V0h72v25z" />
-        <path fill="#009B77" d="M0 0h24v50H0z" />
+        <path fill="#dd2033" d="M0 20V10h29v10z" />
+        <path fill="#fbd381" d="M0 10V0h29v10z" />
+        <path fill="#009b77" d="M0 0h9.667v20H0z" />
       </g>
     </CountrySymbol>
   );

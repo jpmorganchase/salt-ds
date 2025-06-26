@@ -14,7 +14,7 @@ const AD = forwardRef<SVGSVGElement, ADProps>(function AD(props: ADProps, ref) {
     <CountrySymbol
       data-testid="AD"
       aria-label="Andorra"
-      viewBox="0 0 72 72"
+      viewBox="0 0 20 20"
       ref={ref}
       {...props}
     >
@@ -25,19 +25,19 @@ const AD = forwardRef<SVGSVGElement, ADProps>(function AD(props: ADProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#d9d9d9" />
       </mask>
       <g mask={`url(#${uid}-AD-a)`}>
-        <path fill="#004692" d="M0 0h22v72H0z" />
-        <path fill="#FBD381" d="M22 0h28v72H22z" />
+        <path fill="#004692" d="M0 0h6.111v20H0z" />
+        <path fill="#fbd381" d="M6.111 0h7.778v20H6.111z" />
         <path
-          fill="#DD2033"
-          d="M50 0h22v72H50zM28 28h8v8h-8zm15.835 8H36v9.846A12.859 12.859 0 0 0 43.835 36Z"
+          fill="#dd2033"
+          d="M13.889 0H20v20h-6.111zM7.778 7.778H10V10H7.778zM12.176 10H10v2.735A3.57 3.57 0 0 0 12.176 10"
         />
         <path
-          fill="#FF9E42"
+          fill="#ff9e42"
           fillRule="evenodd"
-          d="M32 23v-2a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v10.941a16.86 16.86 0 0 1-8 14.344V52a2 2 0 0 1-2 2h-4a2 2 0 0 1-2-2v-3.715a16.86 16.86 0 0 1-8-14.344V23a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2Zm-4 5v5.941c0 5.228 3.165 9.932 8 11.905 4.835-1.973 8-6.677 8-11.905V28H28Z"
+          d="M8.889 6.389v-.556c0-.306.249-.555.555-.555h1.112c.306 0 .555.249.555.555v.556c0-.307.249-.556.556-.556h1.11c.308 0 .556.25.556.556v3.04a4.68 4.68 0 0 1-2.222 3.983v1.032a.556.556 0 0 1-.555.556H9.444a.556.556 0 0 1-.555-.556v-1.032a4.68 4.68 0 0 1-2.222-3.984v-3.04c0-.306.248-.555.555-.555h1.111c.307 0 .556.25.556.556M7.778 7.778v1.65c0 1.452.879 2.759 2.222 3.307a3.57 3.57 0 0 0 2.222-3.307v-1.65z"
           clipRule="evenodd"
         />
       </g>
