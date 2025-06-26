@@ -4,10 +4,10 @@ import {
   CarouselAnnouncement,
   CarouselAutoplayIndicator,
   CarouselCard,
+  type CarouselEmblaApiType,
   CarouselNextButton,
   CarouselPreviousButton,
   CarouselProgressLabel,
-  type CarouselRef,
   CarouselSlides,
 } from "@salt-ds/embla-carousel";
 import { PauseIcon, PlayIcon } from "@salt-ds/icons";
@@ -20,7 +20,7 @@ const DELAY_MSECS = 8000;
 
 export const Autoplay = () => {
   const slideId = useId();
-  const emblaApiRef = useRef<CarouselRef | null>(null);
+  const [emblaApi, setEmblaApi] = useState<CarouselEmblaApiType | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [slideIndex, setSlideIndex] = useState(0);
 
@@ -39,14 +39,12 @@ export const Autoplay = () => {
   }, []);
 
   const handleSlideChange = useCallback(() => {
-    const emblaApi = emblaApiRef.current?.emblaApi;
     const settledSlideIndex = emblaApi?.selectedScrollSnap() ?? 0;
     setSlideIndex(settledSlideIndex + 1);
-  }, []);
+  }, [emblaApi]);
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: emblaApiRef.current can update
   useEffect(() => {
-    const emblaApi = emblaApiRef.current?.emblaApi;
     if (!emblaApi || !emblaApi.plugins()?.autoplay) {
       return;
     }
@@ -55,7 +53,7 @@ export const Autoplay = () => {
     return () => {
       emblaApi.off("settle", handleSlideChange);
     };
-  }, [emblaApiRef.current, handleSlideChange]);
+  }, [emblaApi, handleSlideChange]);
 
   const timeUntilNext = autoplay.current.timeUntilNext() ?? DELAY_MSECS;
 
@@ -65,7 +63,7 @@ export const Autoplay = () => {
       className={styles.carousel}
       emblaOptions={{ loop: true }}
       emblaPlugins={[autoplay.current, CarouselAnnouncement()]}
-      ref={emblaApiRef}
+      getEmblaApi={setEmblaApi}
     >
       <Text styleAs="h2" className={styles.carouselHeading}>
         Title
