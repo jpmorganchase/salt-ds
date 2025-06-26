@@ -71,6 +71,8 @@ Users will be able to see the formatted value in the input, e.g. "5K". When the 
 
 The `format` callback has been designed to work with most formatting libraries, e.g. Intl.NumberFormat. However, it is highly recommended to provide a `parse` callback alongside `format` to determine the correct numerical value so the precision of the value can be maintained.
 
+**Note**: When a `format` callback is provided, it will override `decimalScale` to allow managing decimal place rules within your formatting function as well.
+
 <LivePreview componentName="number-input" exampleName="Formatting" />
 
 ## Custom steps
