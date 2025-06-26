@@ -19,7 +19,7 @@ export interface TFootProps extends ComponentPropsWithoutRef<"tfoot"> {
   divider?: "primary" | "secondary" | "tertiary" | "none";
   /**
    * Styling variant for footer.
-   * If undefined, will match variant of parent Table variant.
+   * If undefined, will match variant of parent Table component's variant.
    * @default undefined
    */
   variant?: "primary" | "secondary" | "tertiary";

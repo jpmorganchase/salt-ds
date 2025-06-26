@@ -27,7 +27,7 @@ export default {
   args: {
     variant: "primary",
     zebra: undefined,
-    THeadProps: { sticky: false, variant: "primary", divider: "primary" },
+    THeadProps: { sticky: false, variant: undefined, divider: "primary" },
     TFootProps: { sticky: false, variant: undefined, divider: "tertiary" },
     TRProps: { divider: "secondary" },
     TDProps: { overflowWrap: undefined },
@@ -153,7 +153,7 @@ export const CustomContent: StoryFn<typeof Text> = () => {
           <TR>
             <TD>Some standard text</TD>
             <TD>
-              <StackLayout gap={1}>
+              <StackLayout gap={0}>
                 <strong>Data</strong>
                 <Text>12345</Text>
               </StackLayout>

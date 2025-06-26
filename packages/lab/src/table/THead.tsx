@@ -19,7 +19,7 @@ export interface THeadProps extends ComponentPropsWithoutRef<"thead"> {
   divider?: "primary" | "secondary" | "tertiary" | "none";
   /**
    * Styling variant for header.
-   * If undefined, will match variant of parent Table variant.
+   * If undefined, will match variant of parent Table component's variant.
    * @default undefined
    */
   variant?: "primary" | "secondary" | "tertiary";

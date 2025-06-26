@@ -1,23 +1,20 @@
 /* Table: Main css class */
 .saltTable {
-  --table-header-height: var(--salt-size-base);
-  --table-footer-height: var(--salt-size-base);
-  --table-row-height: var(--salt-size-base);
+  --table-header-height: calc(var(--salt-size-base) + var(--salt-spacing-100));
+  --table-footer-height: calc(var(--salt-size-base) + var(--salt-spacing-100));
+  --table-row-height: calc(var(--salt-size-base) + var(--salt-spacing-100));
 }
 
 .saltTable-primary {
   --table-background: var(--salt-container-primary-background);
-  --table-color: var(--salt-content-primary-foreground);
 }
 
 .saltTable-secondary {
   --table-background: var(--salt-container-secondary-background);
-  --table-color: var(--salt-content-secondary-foreground);
 }
 
 .saltTable-tertiary {
   --table-background: var(--salt-container-tertiary-background);
-  --table-color: var(--salt-content-tertiary-foreground);
 }
 
 .saltTable-divider-primary {
@@ -58,9 +55,10 @@ table.saltTable {
   border-spacing: 0;
   border-radius: var(--saltTable-borderRadius, var(--salt-palette-corner));
   border-collapse: collapse;
-  color: var(--table-color);
+  color: var(--salt-content-primary-foreground);
   font-family: var(--salt-text-fontFamily);
   font-size: var(--salt-text-fontSize);
+  line-height: var(--salt-text-lineHeight);
   table-layout: fixed;
   width: 100%;
 }
@@ -126,10 +124,10 @@ table.saltTable tfoot {
   align-items: center;
   border-end-start-radius: var(--saltTable-thead-borderRadius-top, var(--salt-palette-corner));
   border-end-end-radius: var(--saltTable-thead-borderRadius-top, var(--salt-palette-corner));
-  color: var(--salt-content-secondary-foreground);
+  color: var(--salt-content-primary-foreground);
   height: var(--table-footer-height);
   font-size: var(--salt-text-label-fontSize);
-  font-weight: var(--salt-text-label-fontWeight-strong);
+  font-weight: var(--salt-text-fontWeight-strong);
   white-space: nowrap;
 }
 
@@ -179,7 +177,7 @@ table.saltTable tfoot {
 .saltTable-th,
 .saltTable th {
   overflow: hidden;
-  padding: 0 var(--salt-spacing-100);
+  padding: var(--salt-spacing-100);
   position: relative;
   text-align: start;
   font-weight: var(--salt-text-label-fontWeight-strong);
@@ -216,5 +214,5 @@ table.saltTable tfoot {
 /* TD */
 .saltTable-td {
   height: 100%;
-  padding: 0 var(--salt-spacing-100);
+  padding: var(--salt-spacing-100);
 }
