@@ -1,6 +1,6 @@
 import { createContext } from "@salt-ds/core";
 import { useContext } from "react";
-import type { CarouselRef } from "./Carousel";
+import type { CarouselEmblaApiType, CarouselEmblaRefType } from "./Carousel";
 
 /**
  * Type definition for the Carousel context.
@@ -11,13 +11,13 @@ interface CarouselContextType {
    * The API instance of the Embla Carousel.
    * Provides methods to control the carousel programmatically.
    */
-  emblaApi?: CarouselRef["emblaApi"];
+  emblaApi?: CarouselEmblaApiType;
 
   /**
    * The reference to the Embla Carousel viewport.
    * Used to directly interact with the carousel DOM element.
    */
-  emblaRef?: CarouselRef["emblaRef"];
+  emblaRef?: CarouselEmblaRefType;
 }
 
 export const CarouselContext = createContext<CarouselContextType | undefined>(

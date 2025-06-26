@@ -1,26 +1,33 @@
 import * as carouselStories from "@stories/carousel.stories";
 import { composeStories } from "@storybook/react-vite";
 import ClassNames from "embla-carousel-class-names";
-import { type MutableRefObject, useRef } from "react";
-import type { CarouselRef } from "../../index";
+import { useEffect, useState } from "react";
+import type { CarouselEmblaApiType } from "../../index";
 
 const composedStories = composeStories(carouselStories);
 const { Default } = composedStories;
 
 describe("Given a Carousel", () => {
-  let emblaApiRef: MutableRefObject<CarouselRef | null>;
+  let emblaTestApi: CarouselEmblaApiType | null | undefined;
 
   const mountCarousel = (
     options = {},
     startIndex = 0,
-  ): Cypress.Chainable<CarouselRef["emblaApi"]> => {
+  ): Cypress.Chainable<CarouselEmblaApiType> => {
     const TestComponent = () => {
-      emblaApiRef = useRef<CarouselRef | null>(null);
+      const [emblaApi, setEmblaApi] = useState<CarouselEmblaApiType | null>(
+        null,
+      );
+
+      useEffect(() => {
+        emblaTestApi = emblaApi;
+      }, [emblaApi]);
+
       return (
         <Default
           emblaOptions={{ duration: 1, startIndex, ...options }}
           emblaPlugins={[ClassNames()]}
-          testRef={emblaApiRef}
+          getEmblaApi={setEmblaApi}
         />
       );
     };
@@ -29,14 +36,12 @@ describe("Given a Carousel", () => {
     cy.findByRole("region").should("exist");
 
     return cy.wrap(
-      new Cypress.Promise<CarouselRef["emblaApi"]>((resolve) => {
+      new Cypress.Promise<CarouselEmblaApiType>((resolve) => {
         const checkEmblaApi = () => {
-          const emblaApi: CarouselRef["emblaApi"] | undefined =
-            emblaApiRef?.current?.emblaApi;
-          if (emblaApi) {
-            resolve(emblaApi);
+          if (emblaTestApi) {
+            resolve(emblaTestApi);
           } else {
-            setTimeout(checkEmblaApi, 250);
+            setTimeout(checkEmblaApi, 1000);
           }
         };
         checkEmblaApi();
@@ -45,7 +50,7 @@ describe("Given a Carousel", () => {
   };
 
   const waitForSettle = (
-    emblaApi: CarouselRef["emblaApi"],
+    emblaApi: CarouselEmblaApiType,
     expectedSlideIndex: number,
   ) => {
     return new Cypress.Promise((resolve) => {
@@ -81,9 +86,10 @@ describe("Given a Carousel", () => {
   });
 
   describe("WITH the current slide as slide 1", () => {
-    let emblaApi: CarouselRef["emblaApi"];
+    let emblaApi: CarouselEmblaApiType;
 
     beforeEach(() => {
+      emblaTestApi = null;
       mountCarousel().then((api) => {
         emblaApi = api;
       });
@@ -109,9 +115,10 @@ describe("Given a Carousel", () => {
   });
 
   describe("WITH the current slide as slide 4", () => {
-    let emblaApi: CarouselRef["emblaApi"];
+    let emblaApi: CarouselEmblaApiType;
 
     beforeEach(() => {
+      emblaTestApi = null;
       mountCarousel({}, 3).then((api) => {
         emblaApi = api;
       });
@@ -137,9 +144,10 @@ describe("Given a Carousel", () => {
   });
 
   describe("WITH the tablist", () => {
-    let emblaApi: CarouselRef["emblaApi"];
+    let emblaApi: CarouselEmblaApiType;
 
     beforeEach(() => {
+      emblaTestApi = null;
       mountCarousel({}, 3).then((api) => {
         emblaApi = api;
       });
