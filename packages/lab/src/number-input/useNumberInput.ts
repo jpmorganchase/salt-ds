@@ -28,6 +28,7 @@ export const useNumberInput = ({
   parse,
   decimalScale,
   setIsEditing,
+  setIsAdjusting,
 }: Pick<
   NumberInputProps,
   | "disabled"
@@ -46,6 +47,7 @@ export const useNumberInput = ({
   value: string | number;
   inputRef: MutableRefObject<HTMLInputElement | null>;
   setIsEditing: Dispatch<SetStateAction<boolean>>;
+  setIsAdjusting: Dispatch<SetStateAction<boolean>>;
 }) => {
   const updateValue = useCallback(
     (event: SyntheticEvent | undefined, nextValue: number) => {
@@ -54,10 +56,11 @@ export const useNumberInput = ({
         ? nextValue.toFixed(decimalScale)
         : nextValue;
 
+      setIsAdjusting(true);
       setValue(updatedValue);
       onChange?.(event, toFloat(updatedValue));
     },
-    [onChange, readOnly, setValue, decimalScale, format],
+    [onChange, readOnly, setValue, setIsAdjusting, decimalScale, format],
   );
 
   const decrementValue = useCallback(

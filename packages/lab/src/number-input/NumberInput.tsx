@@ -254,6 +254,7 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       : inputRequired;
 
     const [isEditing, setIsEditing] = useState(false);
+    const [isAdjusting, setIsAdjusting] = useState(false);
 
     const [recordCaret, restoreCaret, resetCaret] = useCaret({
       inputRef,
@@ -276,6 +277,7 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
     } = useNumberInput({
       inputRef,
       setValue,
+      setIsAdjusting,
       disabled,
       max,
       min,
@@ -304,12 +306,16 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
         const sanitizedValue = sanitizeInput(value);
         const floatValue = toFloat(sanitizedValue);
         if (
-          isEditing ||
-          isEmpty(value) ||
-          Number.isNaN(floatValue) ||
-          isReadOnly
+          !isAdjusting &&
+          (isEditing ||
+            isEmpty(value) ||
+            Number.isNaN(floatValue) ||
+            isReadOnly)
         ) {
           return value;
+        }
+        if (isAdjusting) {
+          return clampAndFix(toFloat(value));
         }
         const clampedValue = clampAndFix(floatValue);
         const formattedValue = format ? format(clampedValue) : clampedValue;
@@ -330,7 +336,11 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
 
     // biome-ignore lint/correctness/useExhaustiveDependencies: Need to restore caret position when value changes.
     useLayoutEffect(() => {
-      restoreCaret();
+      if (isAdjusting) {
+        resetCaret();
+      } else {
+        restoreCaret();
+      }
     }, [displayValue, value]);
 
     const handleInputFocus = (event: FocusEvent<HTMLInputElement>) => {
@@ -346,20 +356,21 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
     const handleInputBlur = (event: FocusEvent<HTMLInputElement>) => {
       if (isReadOnly) return;
       setIsEditing(false);
+      setIsAdjusting(false);
       resetCaret();
       const inputValue = event.target.value;
       if (isEmpty(inputValue)) {
         return;
       }
       const sanitizedValue = sanitizeInput(event.target.value);
-      // Update the value if it has changed
-      if (sanitizedValue.toString() !== value.toString()) {
-        setValue(sanitizedValue);
-        onChangeProp?.(event, sanitizedValue);
-      }
-      // Ensure the displayValue is updated with the formatted value
       const floatValue = toFloat(sanitizedValue);
       const clampedValue = clampAndFix(floatValue);
+      // Update the value if it has changed
+      if (clampedValue.toString() !== value.toString()) {
+        setValue(clampedValue);
+        onChangeProp?.(event, clampedValue);
+      }
+      // Ensure the displayValue is updated with the formatted value
       const formattedValue = format ? format(clampedValue) : clampedValue;
       setDisplayValue(formattedValue);
       inputOnBlur?.(event);
@@ -367,7 +378,6 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
 
     const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
       recordCaret();
-
       const raw = sanitizeInput(event.target.value);
       if (raw.toString() === value.toString()) {
         return;
@@ -379,6 +389,7 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
 
     const handleInputKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
       setIsEditing(true);
+      setIsAdjusting(false);
 
       switch (event.key) {
         case "ArrowUp": {

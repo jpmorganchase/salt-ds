@@ -27,7 +27,7 @@ describe("Number Input - Accessibility", () => {
   it("has the correct labelling when wrapped in a `FormField`", () => {
     cy.mount(<Default defaultValue={-10} min={0} />);
 
-    cy.findByRole("spinbutton").should("have.accessibleName", "Number Input");
+    cy.findByRole("spinbutton").should("have.accessibleName", "Number input");
     cy.findByRole("spinbutton").should(
       "have.accessibleDescription",
       "Please enter a number",

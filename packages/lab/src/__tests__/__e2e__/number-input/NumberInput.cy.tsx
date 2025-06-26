@@ -384,6 +384,25 @@ describe("Number Input", () => {
     cy.findByRole("spinbutton").should("have.value", "12.12");
   });
 
+  it("increments and decrements from the correct value when value gets clamped", () => {
+    cy.mount(<Default max={100} min={10} clampValue defaultValue={""} />);
+
+    cy.findByRole("spinbutton").focus();
+    cy.realType("10000000");
+    cy.realPress("Tab");
+    cy.findByRole("spinbutton").should("have.value", "100");
+    cy.findByLabelText("increment value").should("be.disabled");
+    cy.findByLabelText("decrement value").realClick();
+    cy.findByRole("spinbutton").should("have.value", "99");
+    cy.findByRole("spinbutton").focus().clear();
+    cy.realType("1");
+    cy.realPress("Tab");
+    cy.findByRole("spinbutton").should("have.value", "10");
+    cy.findByLabelText("decrement value").should("be.disabled");
+    cy.findByLabelText("increment value").realClick();
+    cy.findByRole("spinbutton").should("have.value", "11");
+  });
+
   it("should hide increment/decrement buttons when hideButtons is true", () => {
     cy.mount(<Default hideButtons />);
     cy.findByLabelText("increment value").should("not.be.visible");

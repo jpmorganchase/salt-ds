@@ -23,6 +23,7 @@ const Template: StoryFn = ({ ...args }) => {
     <FormField>
       <FormFieldLabel>Number input</FormFieldLabel>
       <NumberInput {...args} />
+      <FormFieldHelperText>Please enter a number</FormFieldHelperText>
     </FormField>
   );
 };
@@ -91,7 +92,7 @@ const accessibleTextStyles = {
 } as React.CSSProperties;
 
 export const Controlled: StoryFn<NumberInputProps> = (args) => {
-  const [value, setValue] = useState<number | string>(1.2554534);
+  const [value, setValue] = useState<number | string>(1.25);
   const [accessibleText, setAccessibleText] = useState("");
 
   const formFieldLabel = "Number input";
@@ -112,7 +113,6 @@ export const Controlled: StoryFn<NumberInputProps> = (args) => {
         max={2}
         value={value}
         onChange={(_event, value) => {
-          console.log("type of value in on change", typeof value);
           setValue(value);
         }}
         endAdornment={
