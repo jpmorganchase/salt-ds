@@ -6,6 +6,9 @@ import { withTableBaseName } from "./Table";
 
 import tableCss from "./Table.css";
 
+export const THeadVariantValues = ["primary", "secondary", "tertiary"] as const;
+export type THeadVariant = (typeof THeadVariantValues)[number];
+
 export interface THeadProps extends ComponentPropsWithoutRef<"thead"> {
   /**
    * If header is positioned with sticky styling.
@@ -22,7 +25,7 @@ export interface THeadProps extends ComponentPropsWithoutRef<"thead"> {
    * If undefined, will match variant of parent Table component's variant.
    * @default undefined
    */
-  variant?: "primary" | "secondary" | "tertiary";
+  variant?: THeadVariant;
 }
 
 export const THead = forwardRef<HTMLTableSectionElement, THeadProps>(

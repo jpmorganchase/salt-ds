@@ -12,7 +12,11 @@ data:
 
 ### When to use
 
+- When you need to present data in a structured, tableau format.
+
 ### When not to use
+
+- When you need to show complex data, instead use [AG Grid with Salt](../ag-grid-theme/examples)
 
 ## Content
 
@@ -23,7 +27,7 @@ data:
 To import `Table` from the lab Salt package, use:
 
 ```js
-import { Table } from "@salt-ds/lab";
+import { Table, THead, TBody, TR, TH, TD, TFoot } from "@salt-ds/lab";
 ```
 
 ## Props
@@ -31,4 +35,22 @@ import { Table } from "@salt-ds/lab";
 {/* Update packageName and componentName below as needed */}
 {/* packageName is optional and defaults to "core" if omitted */}
 
+### Table
+
 <PropsTable componentName="Table" packageName="lab" />
+
+### THead
+
+<PropsTable componentName="THead" packageName="lab" />
+
+### TFoot
+
+<PropsTable componentName="THead" packageName="lab" />
+
+### TH
+
+<PropsTable componentName="TH" packageName="lab" />
+
+### TD
+
+<PropsTable componentName="TD" packageName="lab" />
