@@ -173,7 +173,7 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       className: classNameProp,
       clampValue = false,
       disabled,
-      emptyReadOnlyMarker = "-",
+      emptyReadOnlyMarker = "—",
       endAdornment,
       format,
       hideButtons,
@@ -266,9 +266,7 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       state: "value",
     });
 
-    const [displayValue, setDisplayValue] = useState<string | number>(
-      !isReadOnly ? sanitizeInput(value?.toString() ?? "").toString() : value,
-    );
+    const [displayValue, setDisplayValue] = useState<string | number>(value);
 
     const {
       decrementButtonProps,
@@ -291,9 +289,19 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       value,
     });
 
+    const clampAndFix = (value: number) => {
+      const clampedValue = clampValue ? clamp(max, min, value) : value;
+      const fixedValue = !format
+        ? clampedValue.toFixed(decimalScale)
+        : clampedValue;
+      return fixedValue;
+    };
+
+    // biome-ignore lint/correctness/useExhaustiveDependencies: We do not want to re-render when  display value changes
     useEffect(() => {
       const updateDisplayValue = () => {
-        const floatValue = toFloat(value);
+        const sanitizedValue = sanitizeInput(value);
+        const floatValue = toFloat(sanitizedValue);
         if (
           isEditing ||
           isEmpty(value) ||
@@ -302,18 +310,12 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
         ) {
           return value;
         }
-        const clampedValue = clampValue
-          ? clamp(max, min, floatValue)
-          : floatValue;
-        const formattedValue = format
-          ? format(clampedValue)
-          : clampedValue.toFixed(decimalScale);
+        const clampedValue = clampAndFix(floatValue);
+        const formattedValue = format ? format(clampedValue) : clampedValue;
         return formattedValue;
       };
       const updatedValue = updateDisplayValue();
-      if (displayValue.toString() !== updatedValue.toString()) {
-        setDisplayValue(updatedValue);
-      }
+      setDisplayValue(updatedValue);
     }, [
       value,
       isEditing,
@@ -323,41 +325,40 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       decimalScale,
       min,
       max,
-      displayValue,
     ]);
 
-    // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+    // biome-ignore lint/correctness/useExhaustiveDependencies: Need to restore caret position when value changes.
     useLayoutEffect(() => {
       restoreCaret();
     }, [displayValue, value]);
 
     const handleInputFocus = (event: FocusEvent<HTMLInputElement>) => {
-      setIsEditing(true);
       const parsedValue = parse?.(value) ?? value;
-      const floatValue = !isEmpty(parsedValue)
-        ? toFloat(parsedValue).toFixed(decimalScale)
+      const updatedValue = !isEmpty(parsedValue)
+        ? clampAndFix(toFloat(parsedValue))
         : parsedValue;
-      setValue(floatValue);
+      setDisplayValue(updatedValue);
       inputOnFocus?.(event);
     };
 
     const handleInputBlur = (event: FocusEvent<HTMLInputElement>) => {
       setIsEditing(false);
       resetCaret();
-
-      const rawValue = sanitizeInput(event.target.value);
-      let updatedValue = rawValue;
-      if (!isEmpty(rawValue)) {
-        const floatValue = toFloat(rawValue);
-        const clampedValue = clampValue
-          ? clamp(max, min, floatValue)
-          : floatValue;
-        updatedValue = clampedValue.toFixed(decimalScale);
+      const inputValue = event.target.value;
+      if (isEmpty(inputValue)) {
+        return;
       }
-      if (updatedValue.toString() !== value.toString()) {
-        setValue(updatedValue);
-        onChangeProp?.(event, updatedValue);
+      const sanitizedValue = sanitizeInput(event.target.value);
+      // Update the value if it has changed
+      if (sanitizedValue.toString() !== value.toString()) {
+        setValue(sanitizedValue);
+        onChangeProp?.(event, sanitizedValue);
       }
+      // Ensure the displayValue is updated with the formatted value
+      const floatValue = toFloat(sanitizedValue);
+      const clampedValue = clampAndFix(floatValue);
+      const formattedValue = format ? format(clampedValue) : clampedValue;
+      setDisplayValue(formattedValue);
       inputOnBlur?.(event);
     };
 

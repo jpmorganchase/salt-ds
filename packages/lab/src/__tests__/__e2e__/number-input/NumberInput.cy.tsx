@@ -1,5 +1,6 @@
 import * as numberInputStories from "@stories/number-input/number-input.stories";
 import { composeStories } from "@storybook/react-vite";
+import { FormField, FormFieldLabel } from "@salt-ds/core";
 
 const composedStories = composeStories(numberInputStories);
 
@@ -8,10 +9,16 @@ const {
   ControlledFormatting,
   MinAndMaxValue,
   ResetAdornment,
+  ReadOnly,
   UncontrolledFormatting,
 } = composedStories;
 
 describe("Number Input", () => {
+  it("should have no a11y violations on load", () => {
+    cy.mount(<Default defaultValue="The default value" />);
+    cy.checkAxeComponent();
+  });
+
   it("renders with default props", () => {
     cy.mount(<Default />);
     // Component should render with two buttons - increment, and decrement
@@ -159,15 +166,6 @@ describe("Number Input", () => {
     cy.findByLabelText("decrement value").should("be.disabled");
   });
 
-  it("displays value with correct number of decimal places when decimal scale is set", () => {
-    cy.mount(<Default decimalScale={2} defaultValue={""} />);
-
-    cy.findByRole("spinbutton").focus();
-    cy.realType("-12");
-    cy.realPress("Tab");
-    cy.findByRole("spinbutton").should("have.value", "-12.00");
-  });
-
   it("calls the `onChange` callback when the value is decremented", () => {
     const changeSpy = cy.stub().as("changeSpy");
 
@@ -261,48 +259,24 @@ describe("Number Input", () => {
 
   it("does not decrement below the minimum value", () => {
     const changeSpy = cy.stub().as("changeSpy");
-    cy.mount(<Default defaultValue={-1} min={-1} onChange={changeSpy} />);
+    cy.mount(<Default defaultValue={0.9} min={0} onChange={changeSpy} />);
 
-    cy.findByRole("spinbutton").should("have.value", -1);
+    cy.findByRole("spinbutton").should("have.value", 0.9);
 
     cy.findByLabelText("decrement value").realClick();
     cy.get("@changeSpy").should("not.have.been.called");
-    cy.findByRole("spinbutton").should("have.value", -1);
+    cy.findByRole("spinbutton").should("have.value", 0.9);
   });
 
   it("does not increment above the maximum value", () => {
     const changeSpy = cy.stub().as("changeSpy");
-    cy.mount(<Default defaultValue={1} max={1} onChange={changeSpy} />);
+    cy.mount(<Default defaultValue={0.5} max={1} onChange={changeSpy} />);
 
-    cy.findByRole("spinbutton").should("have.value", 1);
+    cy.findByRole("spinbutton").should("have.value", 0.5);
 
     cy.findByLabelText("increment value").realClick();
     cy.get("@changeSpy").should("not.have.been.called");
-    cy.findByRole("spinbutton").should("have.value", 1);
-  });
-
-  it("rounds up to correct number of decimal places when decimal scale is set", () => {
-    cy.mount(<Default defaultValue={3.145} decimalScale={2} />);
-
-    cy.findByRole("spinbutton").focus();
-    cy.realPress("Tab");
-    cy.findByRole("spinbutton").should("have.value", "3.15");
-  });
-
-  it("rounds down to correct number of decimal places when decimal scale is set", () => {
-    cy.mount(<Default decimalScale={3} defaultValue={-12.3324} />);
-
-    cy.findByRole("spinbutton").focus();
-    cy.realPress("Tab");
-    cy.findByRole("spinbutton").should("have.value", "-12.332");
-  });
-
-  it("pads with zeros to correct number of decimal places when decimal scale is set", () => {
-    cy.mount(<Default decimalScale={3} defaultValue={-5.8} />);
-
-    cy.findByRole("spinbutton").focus();
-    cy.realPress("Tab");
-    cy.findByRole("spinbutton").should("have.value", "-5.800");
+    cy.findByRole("spinbutton").should("have.value", 0.5);
   });
 
   it("increments the value on arrow up key press", () => {
@@ -368,21 +342,6 @@ describe("Number Input", () => {
     cy.findByRole("spinbutton").should("have.value", "-12.3");
   });
 
-  it("ensures correct decimal places in default value of uncontrolled NumberInput when decimal scale is set", () => {
-    cy.mount(<Default defaultValue={12.1111} decimalScale={2} />);
-
-    cy.findByRole("spinbutton").should("have.value", "12.11");
-    cy.findByRole("spinbutton").focus().blur();
-    cy.findByRole("spinbutton").should("have.value", "12.11");
-  });
-
-  it("ensures correct decimal places in default value of controlled NumberInput when decimal scale is set", () => {
-    cy.mount(<Default value={"1.111abxse"} decimalScale={2} />);
-    cy.findByRole("spinbutton").should("have.value", "1.11");
-    cy.findByRole("spinbutton").focus();
-    // cy.findByRole("spinbutton").get()
-  });
-
   it("sanitizes default value in controlled to only allow numbers, decimal points, and plus/minus symbols", () => {
     cy.mount(<Default value={"abc-12.3.+-def"} />);
     cy.findByRole("spinbutton").should("have.value", "-12.3");
@@ -424,30 +383,20 @@ describe("Number Input", () => {
     cy.findByRole("spinbutton").should("have.value", "12.12");
   });
 
-  it("correctly formats a number starting with decimal point when decimal scale is set", () => {
-    cy.mount(<Default decimalScale={1} defaultValue={""} />);
-
-    cy.findByRole("spinbutton").focus();
-    cy.realType(".1");
-    cy.realPress("Tab");
-
-    cy.findByRole("spinbutton").should("have.value", 0.1);
-
-    cy.findByRole("spinbutton").focus().clear();
-    cy.realType("1.");
-    cy.realPress("Tab");
-
-    cy.findByRole("spinbutton").should("have.value", "1.0");
+  it("should hide increment/decrement buttons when hideButtons is true", () => {
+    cy.mount(<Default hideButtons />);
+    cy.findByLabelText("increment value").should("not.be.visible");
+    cy.findByLabelText("decrement value").should("not.be.visible");
   });
 
-  describe("Formatting a controlled NumberInput", () => {
+  describe("WHEN formatting a controlled NumberInput", () => {
     it("should allow formatting NumberInput via a format callback", () => {
       cy.mount(<ControlledFormatting />);
 
       cy.findByRole("spinbutton").should("have.value", "100K");
     });
 
-    it("should parse the formatted NumberInput when editing", () => {
+    it("should parse the formatted NumberInput when editing on focus", () => {
       cy.mount(<ControlledFormatting />);
 
       cy.findByRole("spinbutton").focus();
@@ -500,13 +449,13 @@ describe("Number Input", () => {
     });
   });
 
-  describe("Formatting an uncontrolled NumberInput", () => {
+  describe("WHEN formatting an uncontrolled NumberInput", () => {
     it("should allow formatting NumberInput via a format callback", () => {
       cy.mount(<UncontrolledFormatting />);
 
       cy.findAllByRole("spinbutton").eq(0).should("have.value", "12%");
       cy.findAllByRole("spinbutton").eq(1).should("have.value", "1,000,000");
-      cy.findAllByRole("spinbutton").eq(2).should("have.value", "10.0");
+      cy.findAllByRole("spinbutton").eq(2).should("have.value", "10.5");
       cy.findAllByRole("spinbutton").eq(3).should("have.value", "10.24");
     });
 
@@ -520,7 +469,7 @@ describe("Number Input", () => {
       cy.findAllByRole("spinbutton").eq(1).should("have.value", "1000000");
 
       cy.findAllByRole("spinbutton").eq(2).focus();
-      cy.findAllByRole("spinbutton").eq(2).should("have.value", "10.0");
+      cy.findAllByRole("spinbutton").eq(2).should("have.value", "10.5");
 
       cy.findAllByRole("spinbutton").eq(3).focus();
       cy.findAllByRole("spinbutton").eq(3).should("have.value", "10.24");
@@ -561,6 +510,173 @@ describe("Number Input", () => {
       cy.realPress("Tab");
       cy.get("@changeSpy").should("have.callCount", 2);
       cy.findByRole("spinbutton").should("have.value", "14%");
+    });
+  });
+
+  describe("WHEN decimal scale is set", () => {
+    it("rounds up to correct number of decimal places when decimal scale is set", () => {
+      cy.mount(<Default defaultValue={3.145} decimalScale={2} />);
+
+      cy.findByRole("spinbutton").focus();
+      cy.realPress("Tab");
+      cy.findByRole("spinbutton").should("have.value", "3.15");
+    });
+
+    it("rounds down to correct number of decimal places when decimal scale is set", () => {
+      cy.mount(<Default decimalScale={3} defaultValue={-12.3324} />);
+
+      cy.findByRole("spinbutton").focus();
+      cy.realPress("Tab");
+      cy.findByRole("spinbutton").should("have.value", "-12.332");
+    });
+
+    it("displays value with correct number of decimal places when decimal scale is set", () => {
+      cy.mount(<Default decimalScale={2} defaultValue={""} />);
+
+      cy.findByRole("spinbutton").focus();
+      cy.realType("-12");
+      cy.realPress("Tab");
+      cy.findByRole("spinbutton").should("have.value", "-12.00");
+    });
+
+    it("pads with zeros to correct number of decimal places when decimal scale is set", () => {
+      cy.mount(<Default decimalScale={3} defaultValue={-5.8} />);
+
+      cy.findByRole("spinbutton").focus();
+      cy.realPress("Tab");
+      cy.findByRole("spinbutton").should("have.value", "-5.800");
+    });
+
+    it("ensures correct decimal places in default value of uncontrolled NumberInput when decimal scale is set", () => {
+      cy.mount(<Default defaultValue={12.1111} decimalScale={2} />);
+
+      cy.findByRole("spinbutton").should("have.value", "12.11");
+      cy.findByRole("spinbutton").focus().blur();
+      cy.findByRole("spinbutton").should("have.value", "12.11");
+    });
+
+    it("ensures correct decimal places in default value of controlled NumberInput when decimal scale is set", () => {
+      cy.mount(<Default value={"1.111abxse"} decimalScale={2} />);
+      cy.findByRole("spinbutton").should("have.value", "1.11");
+    });
+
+    it("correctly formats a number starting with decimal point when decimal scale is set", () => {
+      cy.mount(<Default decimalScale={1} defaultValue={""} />);
+
+      cy.findByRole("spinbutton").focus();
+      cy.realType(".1");
+      cy.realPress("Tab");
+
+      cy.findByRole("spinbutton").should("have.value", 0.1);
+
+      cy.findByRole("spinbutton").focus().clear();
+      cy.realType("1.");
+      cy.realPress("Tab");
+
+      cy.findByRole("spinbutton").should("have.value", "1.0");
+    });
+  });
+
+  describe("WHEN set to read-only", () => {
+    it("should mount a read-only number input", () => {
+      cy.mount(<ReadOnly />);
+      cy.findByRole("textbox").should("have.attr", "readonly");
+    });
+
+    it("should have no a11y violations on load", () => {
+      cy.mount(<ReadOnly />);
+      cy.checkAxeComponent();
+    });
+
+    it("should show emdash by default if empty", () => {
+      cy.mount(<ReadOnly defaultValue={undefined} readOnly />);
+      cy.findByRole("textbox").should("have.value", "—");
+    });
+
+    it("should show a custom marker if provided when empty", () => {
+      cy.mount(
+        <ReadOnly defaultValue={undefined} readOnly emptyReadOnlyMarker="#" />,
+      );
+      cy.findByRole("textbox").should("have.value", "#");
+    });
+  });
+
+  describe("WHEN used in Formfield", () => {
+    describe("AND disabled", () => {
+      it("should be disabled", () => {
+        cy.mount(
+          <FormField disabled>
+            <FormFieldLabel>Disabled form field</FormFieldLabel>
+            <Default />
+          </FormField>,
+        );
+        cy.wait(1000);
+        cy.findByLabelText("Disabled form field").should(
+          "have.attr",
+          "disabled",
+        );
+      });
+    });
+
+    describe("AND is required", () => {
+      it("should be required", () => {
+        cy.mount(
+          <FormField necessity="required">
+            <FormFieldLabel>Form Field</FormFieldLabel>
+            <Default />
+          </FormField>,
+        );
+        cy.wait(1000);
+        cy.findByLabelText("Form Field (Required)").should(
+          "have.attr",
+          "required",
+        );
+      });
+    });
+
+    describe("AND is required with asterisk", () => {
+      it("should be required", () => {
+        cy.mount(
+          <FormField necessity="asterisk">
+            <FormFieldLabel>Form Field</FormFieldLabel>
+            <Default />
+          </FormField>,
+        );
+        cy.wait(1000);
+        cy.findByLabelText("Form Field *").should("have.attr", "required");
+      });
+    });
+
+    describe("AND is optional", () => {
+      it("should not be required", () => {
+        cy.mount(
+          <FormField necessity="optional">
+            <FormFieldLabel>Form Field</FormFieldLabel>
+            <Default />
+          </FormField>,
+        );
+        cy.wait(1000);
+        cy.findByLabelText("Form Field (Optional)").should(
+          "not.have.attr",
+          "required",
+        );
+      });
+    });
+
+    describe("AND readonly", () => {
+      it("should be readonly", () => {
+        cy.mount(
+          <FormField readOnly>
+            <FormFieldLabel>Readonly form field</FormFieldLabel>
+            <Default />
+          </FormField>,
+        );
+        cy.wait(1000);
+        cy.findByLabelText("Readonly form field").should(
+          "have.attr",
+          "readonly",
+        );
+      });
     });
   });
 });
