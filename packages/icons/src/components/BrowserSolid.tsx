@@ -20,10 +20,10 @@ export const BrowserSolidIcon = forwardRef<
     >
       <path
         fillRule="evenodd"
-        d="M12 0H0v3h12V0ZM2 1h1v1H2V1Zm3 0H4v1h1V1Zm1 0h1v1H6V1Z"
+        d="M12 0H0v3h12zM2 1h1v1H2zm3 0H4v1h1zm1 0h1v1H6z"
         clipRule="evenodd"
       />
-      <path d="M12 4H0v8h12V4Z" />
+      <path d="M12 4H0v8h12z" />
     </Icon>
   );
 });

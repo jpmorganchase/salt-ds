@@ -17,7 +17,7 @@ const BV_Sharp = forwardRef<SVGSVGElement, BV_SharpProps>(function BV_Sharp(
     <CountrySymbol
       data-testid="BV_Sharp"
       aria-label="Bouvet Island"
-      viewBox="0 0 72 50"
+      viewBox="0 0 29 20"
       ref={ref}
       sharp
       {...props}
@@ -29,17 +29,20 @@ const BV_Sharp = forwardRef<SVGSVGElement, BV_SharpProps>(function BV_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-BV-a)`}>
-        <path fill="#DD2033" d="M0 0h72v50H0z" />
+        <path fill="#dd2033" d="M0 0h29v20H0z" />
         <path
-          fill="#F5F7F8"
+          fill="#f5f7f8"
           fillRule="evenodd"
-          d="M20 61h-6V36.7H0v-6h14V19.3H0v-6h14V-11h6v24.3h11.4V-11h6v24.3H72v6H37.4v11.4H72v6H37.4V61h-6V36.7H20V61Zm11.4-41.7H20v11.4h11.4V19.3Z"
+          d="M8.056 24.4H5.639v-9.72H0v-2.4h5.639V7.72H0v-2.4h5.639V-4.4h2.417v9.72h4.591V-4.4h2.417v9.72H29v2.4H15.064v4.56H29v2.4H15.064v9.72h-2.417v-9.72H8.056zm4.591-16.68H8.056v4.56h4.591z"
           clipRule="evenodd"
         />
-        <path fill="#004692" d="M20 61h12V31h40V19H32v-30H20v30H0v12h20v30Z" />
+        <path
+          fill="#004692"
+          d="M8.056 24.4h4.833v-12H29V7.6H12.889v-12H8.056v12H0v4.8h8.056z"
+        />
       </g>
     </CountrySymbol>
   );

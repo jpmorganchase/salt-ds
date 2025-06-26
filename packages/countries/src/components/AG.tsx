@@ -14,7 +14,7 @@ const AG = forwardRef<SVGSVGElement, AGProps>(function AG(props: AGProps, ref) {
     <CountrySymbol
       data-testid="AG"
       aria-label="Antigua and Barbuda"
-      viewBox="0 0 72 72"
+      viewBox="0 0 20 20"
       ref={ref}
       {...props}
     >
@@ -25,27 +25,27 @@ const AG = forwardRef<SVGSVGElement, AGProps>(function AG(props: AGProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#d9d9d9" />
       </mask>
       <g mask={`url(#${uid}-AG-a)`}>
-        <path fill="#DD2033" d="M0 0h72v72H0z" />
-        <path fill="#31373D" d="M36 72 81 0H-9l45 72Z" />
+        <path fill="#dd2033" d="M0 0h20v20H0z" />
+        <path fill="#31373d" d="M10 20 22.5 0h-25z" />
         <mask
           id={`${uid}-AG-b`}
-          x="-9"
+          x="-3"
           y="0"
           maskUnits="userSpaceOnUse"
           style={{ maskType: "alpha" }}
         >
-          <path fill="#31373D" d="M36 72 81 0H-9l45 72Z" />
+          <path fill="#31373d" d="M10 20 22.5 0h-25z" />
         </mask>
         <g mask={`url(#${uid}-AG-b)`}>
           <path
-            fill="#F1B434"
-            d="m24.572 29.959-8.172 4.04h40l-8.172-4.04 4.352-8.32-8.875 1.785L42.581 14 36.4 20.93 30.22 14l-1.126 9.424-8.874-1.785 4.352 8.32Z"
+            fill="#f1b434"
+            d="m6.826 8.322-2.27 1.122h11.11l-2.27-1.122 1.21-2.311-2.466.496-.312-2.618-1.717 1.925L8.394 3.89l-.312 2.618-2.465-.496z"
           />
-          <path fill="#F5F7F8" d="M20 48h32v24H20z" />
-          <path fill="#005EB8" d="M12 34h48v14H12V34Z" />
+          <path fill="#f5f7f8" d="M5.556 13.333h8.889V20H5.556z" />
+          <path fill="#005eb8" d="M3.333 9.444h13.334v3.89H3.333z" />
         </g>
       </g>
     </CountrySymbol>

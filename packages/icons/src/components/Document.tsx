@@ -18,7 +18,7 @@ export const DocumentIcon = forwardRef<SVGSVGElement, DocumentIconProps>(
       >
         <path
           fillRule="evenodd"
-          d="M1 12V0h8l2 2v10H1Zm9-1V4H7V1H2v10h8Zm0-8.586V3H8V1h.586L10 2.414Z"
+          d="M1 12V0h8l2 2v10zm9-1V4H7V1H2v10zm0-8.586V3H8V1h.586z"
           clipRule="evenodd"
         />
       </Icon>

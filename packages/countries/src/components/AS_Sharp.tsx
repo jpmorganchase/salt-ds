@@ -17,7 +17,7 @@ const AS_Sharp = forwardRef<SVGSVGElement, AS_SharpProps>(function AS_Sharp(
     <CountrySymbol
       data-testid="AS_Sharp"
       aria-label="American Samoa"
-      viewBox="0 0 72 50"
+      viewBox="0 0 29 20"
       ref={ref}
       sharp
       {...props}
@@ -29,21 +29,21 @@ const AS_Sharp = forwardRef<SVGSVGElement, AS_SharpProps>(function AS_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-AS-a)`}>
-        <path fill="#004692" d="M0-11h72v72H0z" />
-        <path fill="#DD2033" d="m-10 25 83 42v-84l-83 42Z" />
-        <path fill="#F5F7F8" d="m6 25 83 42v-84L6 25Z" />
+        <path fill="#004692" d="M0-4.4h29v28.8H0z" />
+        <path fill="#dd2033" d="m-4.028 10 33.43 16.8V-6.8z" />
+        <path fill="#f5f7f8" d="m2.417 10 33.43 16.8V-6.8z" />
         <path
           fill="#936846"
-          d="M64 24h-4c1.079-1.336.863-3.131-.352-4.385a3.475 3.475 0 0 0 0-4.807l-.078.08c1.288-1.328 1.365-3.56.078-4.888L41 29.23c1.287 1.328 3.338 1.313 4.625-.015l.36-.338 8.929-.837V32h3.029v-4.244l4.543-.426L64 24Z"
+          d="M25.778 9.6h-1.611c.434-.534.347-1.253-.142-1.754a1.383 1.383 0 0 0 0-1.923l-.031.032c.518-.53.55-1.424.03-1.955l-7.51 7.692a1.29 1.29 0 0 0 1.863-.006l.144-.135 3.597-.335V12.8h1.22v-1.698l1.83-.17z"
         />
         <path
-          fill="#FF9E42"
-          d="M59.648 19.615c1.215 1.254 1.43 3.05.352 4.385h-3l-6.676-4.385L59.648 10a3.475 3.475 0 0 1 0 4.807 3.475 3.475 0 0 1 0 4.808Z"
+          fill="#ff9e42"
+          d="M24.025 7.846c.49.501.576 1.22.142 1.754h-1.209L20.27 7.846 24.025 4a1.383 1.383 0 0 1 0 1.923 1.383 1.383 0 0 1 0 1.923"
         />
-        <path fill="#F1B434" d="M41.068 34 38 32.5l3.068-1.5H61v3H41.068Z" />
+        <path fill="#f1b434" d="m16.541 13.6-1.235-.6 1.235-.6h8.028v1.2z" />
       </g>
     </CountrySymbol>
   );

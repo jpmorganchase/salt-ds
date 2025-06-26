@@ -16,10 +16,10 @@ export const InboxIcon = forwardRef<SVGSVGElement, InboxIconProps>(
         ref={ref}
         {...props}
       >
-        <path d="M6.495 0v5.088l1.798-1.795.708.707-2.998 2.992-3.004-2.998.708-.707 1.814 1.811V0h.974Z" />
+        <path d="M6.495 0v5.088l1.798-1.795.708.707-2.998 2.992-3.004-2.998.708-.707 1.814 1.811V0z" />
         <path
           fillRule="evenodd"
-          d="M12 12V3h-1v4H8a2 2 0 1 1-4 0H1V3H0v9h12ZM8.83 8H11v3H1V8h2.17a3.001 3.001 0 0 0 5.66 0Z"
+          d="M12 12V3h-1v4H8a2 2 0 1 1-4 0H1V3H0v9zM8.83 8H11v3H1V8h2.17a3.001 3.001 0 0 0 5.66 0"
           clipRule="evenodd"
         />
       </Icon>

@@ -17,7 +17,7 @@ const VU_Sharp = forwardRef<SVGSVGElement, VU_SharpProps>(function VU_Sharp(
     <CountrySymbol
       data-testid="VU_Sharp"
       aria-label="Vanuatu"
-      viewBox="0 0 72 50"
+      viewBox="0 0 29 20"
       ref={ref}
       sharp
       {...props}
@@ -29,18 +29,27 @@ const VU_Sharp = forwardRef<SVGSVGElement, VU_SharpProps>(function VU_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-VU-a)`}>
-        <path fill="#DD2033" d="M0-11v27h72v-27z" />
-        <path fill="#008259" d="M0 34v27h72V34z" />
-        <path fill="#31373D" d="M72 16H48.8l-36-27H5.4v72h7.4l36-27H72V16Z" />
-        <path fill="#F1B434" d="M72 28H45.8l-44 33v-72l44 33H72v6Z" />
-        <path fill="#31373D" d="M18.6 25a4 4 0 1 1-8 0 4 4 0 0 1 8 0Z" />
+        <path fill="#dd2033" d="M0-4.4V6.4h29V-4.4z" />
+        <path fill="#008259" d="M0 13.6v10.8h29V13.6z" />
         <path
-          fill="#31373D"
+          fill="#31373d"
+          d="M29 6.4h-9.344L5.156-4.4H2.174v28.8h2.98l14.5-10.8H29z"
+        />
+        <path
+          fill="#f1b434"
+          d="M29 11.2H18.447L.725 24.4V-4.4L18.447 8.8H29z"
+        />
+        <path
+          fill="#31373d"
+          d="M7.492 10c0 .884-.722 1.6-1.611 1.6-.89 0-1.612-.716-1.612-1.6s.722-1.6 1.612-1.6 1.61.716 1.61 1.6"
+        />
+        <path
+          fill="#31373d"
           fillRule="evenodd"
-          d="m-7.4-11 48 36-48 36v-72Zm32 36c0 5.523-4.477 10-10 10s-10-4.477-10-10 4.477-10 10-10 10 4.477 10 10Z"
+          d="M-2.98-4.4 16.352 10-2.981 24.4zM9.907 10c0 2.21-1.803 4-4.027 4s-4.028-1.79-4.028-4S3.656 6 5.88 6s4.027 1.791 4.027 4"
           clipRule="evenodd"
         />
       </g>

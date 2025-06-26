@@ -17,7 +17,7 @@ const LC_Sharp = forwardRef<SVGSVGElement, LC_SharpProps>(function LC_Sharp(
     <CountrySymbol
       data-testid="LC_Sharp"
       aria-label="Saint Lucia"
-      viewBox="0 0 72 50"
+      viewBox="0 0 29 20"
       ref={ref}
       sharp
       {...props}
@@ -29,19 +29,16 @@ const LC_Sharp = forwardRef<SVGSVGElement, LC_SharpProps>(function LC_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-LC-a)`}>
-        <path fill="#0091DA" d="M72 50H0V0h72z" />
+        <path fill="#0091da" d="M29 20H0V0h29z" />
         <path
-          fill="#F5F7F8"
-          d="M35.93 11.158 21.36 44h-2.29L35.93 6l16.86 38h-2.288L35.931 11.158Z"
+          fill="#f5f7f8"
+          d="M14.472 4.463 8.603 17.6h-.922l6.791-15.2 6.79 15.2h-.92z"
         />
-        <path
-          fill="#31373D"
-          d="M35.93 11.158 50.503 44H21.359l14.572-32.842Z"
-        />
-        <path fill="#F1B434" d="M36 26.865 53 44H19l17-17.135Z" />
+        <path fill="#31373d" d="m14.472 4.463 5.87 13.137H8.602z" />
+        <path fill="#f1b434" d="m14.5 10.746 6.847 6.854H7.653z" />
       </g>
     </CountrySymbol>
   );

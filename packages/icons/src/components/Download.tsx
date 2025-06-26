@@ -16,7 +16,7 @@ export const DownloadIcon = forwardRef<SVGSVGElement, DownloadIconProps>(
         ref={ref}
         {...props}
       >
-        <path d="M5.5 0h1v7.114l2.682-2.682.707.707L6 9.03 2.11 5.14l.708-.707L5.5 7.114V0ZM12 11v1H0v-1h12Z" />
+        <path d="M5.5 0h1v7.114l2.682-2.682.707.707L6 9.03 2.11 5.14l.708-.707L5.5 7.114zM12 11v1H0v-1z" />
       </Icon>
     );
   },

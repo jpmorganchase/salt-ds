@@ -1,0 +1,30 @@
+<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<mask id="mask0_11482_4493" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="20" height="20">
+<circle cx="10" cy="10" r="10" fill="#D9D9D9"/>
+</mask>
+<g mask="url(#mask0_11482_4493)">
+<rect width="20" height="20" fill="#DD2033"/>
+<path d="M11.3333 9.72223H17.1667V11.81C17.1667 13.7056 16.0111 15.4097 14.25 16.1111C12.4889 15.4097 11.3333 13.7056 11.3333 11.81V9.72223Z" fill="#F5F7F8"/>
+<mask id="mask1_11482_4493" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="11" y="13" width="7" height="4">
+<rect x="11.3333" y="13.8889" width="6.11111" height="2.22222" fill="#D9D9D9"/>
+</mask>
+<g mask="url(#mask1_11482_4493)">
+<path d="M11.3333 9.72223H17.1667V11.81C17.1667 13.7056 16.0111 15.4097 14.25 16.1111C12.4889 15.4097 11.3333 13.7056 11.3333 11.81V9.72223Z" fill="#009B77"/>
+</g>
+<rect x="13.5556" y="10.5555" width="1.38889" height="3.05556" rx="0.694444" fill="#DD2033"/>
+<path d="M13 13.8889V11.9445H15.5V13.8889H13Z" fill="#86C5FA"/>
+<path d="M14.25 14.6825L13 13.8889H15.5L14.25 14.6825Z" fill="#F5F7F8"/>
+<mask id="mask2_11482_4493" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="10" height="10">
+<path d="M0 10C-8.69081e-07 4.47715 4.47715 -5.43618e-08 10 -1.21421e-07L10 10L0 10Z" fill="#002F6C"/>
+</mask>
+<g mask="url(#mask2_11482_4493)">
+<rect x="-0.000244141" width="10" height="10" fill="#004692"/>
+<path d="M3.47843 0.870539L2.88917 1.45979L11.0908 9.66146L11.6801 9.07221L3.47843 0.870539Z" fill="#F5F7F8"/>
+<path d="M1.90708 2.44189L0.924989 3.42398L9.12665 11.6256L10.1087 10.6436L1.90708 2.44189Z" fill="#F5F7F8"/>
+<path d="M1.90708 2.44189L2.88917 1.45979L11.0908 9.66146L10.1087 10.6436L1.90708 2.44189Z" fill="#DD2033"/>
+<path d="M9.99998 3.33334V4.72223L4.7222 4.72223L4.7222 10H3.33331V3.33334H9.99998Z" fill="#F5F7F8"/>
+<path d="M10 -0.555542V0.833347L1.38889 0.833346L1.38889 10H0V-0.555542H10Z" fill="#F5F7F8"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M0.833313 10H3.33331L3.33331 3.33334L9.99998 3.33334V0.833344H3.33331H0.833314L0.833314 3.33334L0.833313 10Z" fill="#DD2033"/>
+</g>
+</g>
+</svg>

@@ -16,11 +16,11 @@ export const GroupSolidIcon = forwardRef<SVGSVGElement, GroupSolidIconProps>(
         ref={ref}
         {...props}
       >
-        <path d="M3 3v5H2V2h6v1H3Z" />
-        <path d="M4 10V4h6v6H4Z" />
+        <path d="M3 3v5H2V2h6v1z" />
+        <path d="M4 10V4h6v6z" />
         <path
           fillRule="evenodd"
-          d="M0 0v12h12V0H0Zm11 1H1v10h10V1Z"
+          d="M0 0v12h12V0zm11 1H1v10h10z"
           clipRule="evenodd"
         />
       </Icon>

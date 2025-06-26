@@ -17,7 +17,7 @@ const GB_NIR = forwardRef<SVGSVGElement, GB_NIRProps>(function GB_NIR(
     <CountrySymbol
       data-testid="GB_NIR"
       aria-label="Northern Ireland"
-      viewBox="0 0 72 72"
+      viewBox="0 0 20 20"
       ref={ref}
       {...props}
     >
@@ -28,29 +28,29 @@ const GB_NIR = forwardRef<SVGSVGElement, GB_NIRProps>(function GB_NIR(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#d9d9d9" />
       </mask>
       <g mask={`url(#${uid}-GB-NIR-a)`}>
-        <path fill="#F5F7F8" d="M0 0h72v72H0z" />
+        <path fill="#f5f7f8" d="M0 0h20v20H0z" />
         <path
-          fill="#DD2033"
-          d="M30.4 72h12V42H72V30H42.4V0h-12v30H0v12h30.4v30Z"
+          fill="#dd2033"
+          d="M8.444 20h3.334v-8.333H20V8.333h-8.222V0H8.444v8.333H0v3.334h8.444z"
         />
         <path
-          fill="#F5F7F8"
+          fill="#f5f7f8"
           fillRule="evenodd"
-          d="M32.623 29.09 36.2 21l3.577 8.09 8.423 1.077-6.213 6.077L43.617 45 36.2 40l-7.416 5 1.629-8.756-6.213-6.077 8.423-1.076ZM38.2 30h-3v2h-2v7h5v-2h2v-3h-2v-4Z"
+          d="m9.062 8.08.994-2.247.993 2.248 2.34.299-1.726 1.688.453 2.432-2.06-1.389-2.06 1.389.452-2.432L6.722 8.38zm1.55.253h-.834v.556h-.556v1.944h1.39v-.555h.555v-.834h-.556z"
           clipRule="evenodd"
         />
         <path
-          fill="#F1B434"
+          fill="#f1b434"
           fillRule="evenodd"
-          d="M34.2 4h3v2h3v3h-3v2.803a6 6 0 0 1 7 9.67V24h-17v-2.528a6 6 0 0 1 7-9.67V9h-3V6h3V4Zm1.5 9.031L35.672 13h.056l-.028.031ZM35.672 21l.028-.031.028.031h-.056Z"
+          d="M9.5 1.111h.833v.556h.834V2.5h-.834v.779a1.667 1.667 0 0 1 1.944 2.686v.702h-4.72v-.703A1.667 1.667 0 0 1 9.5 3.278V2.5h-.833v-.833H9.5zm.417 2.509-.008-.009h.015zm-.008 2.213.008-.008.007.008z"
           clipRule="evenodd"
         />
         <path
-          fill="#DD2033"
-          d="M28.2 17a3 3 0 0 0 3 3h3v-3a3 3 0 0 0-6 0Zm12 3a3 3 0 1 0-3-3v3h3Z"
+          fill="#dd2033"
+          d="M7.833 4.722c0 .46.373.834.834.834H9.5v-.834a.833.833 0 0 0-1.667 0m3.334.834a.833.833 0 1 0-.834-.834v.834z"
         />
       </g>
     </CountrySymbol>

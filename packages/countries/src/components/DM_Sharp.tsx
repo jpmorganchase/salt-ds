@@ -17,7 +17,7 @@ const DM_Sharp = forwardRef<SVGSVGElement, DM_SharpProps>(function DM_Sharp(
     <CountrySymbol
       data-testid="DM_Sharp"
       aria-label="Dominica"
-      viewBox="0 0 72 50"
+      viewBox="0 0 29 20"
       ref={ref}
       sharp
       {...props}
@@ -29,23 +29,38 @@ const DM_Sharp = forwardRef<SVGSVGElement, DM_SharpProps>(function DM_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-DM-a)`}>
-        <path fill="#008259" d="M0 0h72v50H0z" />
-        <path fill="#F5F7F8" d="M40 0h8v29h24v8H48v13h-8V37H0v-8h40V0Z" />
-        <path fill="#FBD381" d="M24 0h8v13h40v8H32v29h-8V21H0v-8h24V0Z" />
-        <path fill="#31373D" d="M40 0h-8v21H0v8h32v21h8V29h32v-8H40V0Z" />
-        <circle cx="36.2" cy="25" r="20" fill="#DD2033" />
-        <path fill="#005B33" d="M40.2 38h-4a6 6 0 0 1-6-6V21h10v17Z" />
+        <path fill="#008259" d="M0 0h29v20H0z" />
         <path
-          fill="#642F6C"
-          d="M34.2 12h-2v9h-2v5c0 5.523 4.477 10 10 10V18a6 6 0 0 0-6-6Z"
+          fill="#f5f7f8"
+          d="M16.111 0h3.222v11.6H29v3.2h-9.667V20h-3.222v-5.2H0v-3.2h16.111z"
         />
-        <path fill="#FBD381" d="M32.2 12a3 3 0 0 0-3 3v2h3v-5Z" />
+        <path
+          fill="#fbd381"
+          d="M9.667 0h3.222v5.2H29v3.2H12.889V20H9.667V8.4H0V5.2h9.667z"
+        />
+        <path
+          fill="#31373d"
+          d="M16.111 0H12.89v8.4H0v3.2h12.889V20h3.222v-8.4H29V8.4H16.111z"
+        />
+        <circle cx="14.5" cy="10" r="8" fill="#dd2033" />
+        <path
+          fill="#005b33"
+          d="M16.192 15.2a4.03 4.03 0 0 1-4.028-4.028V8.4h4.028z"
+        />
+        <path
+          fill="#642f6c"
+          d="M13.775 4.8h-.806v3.6h-.805v2c0 2.21 1.803 4 4.028 4V7.2c0-1.325-1.082-2.4-2.417-2.4"
+        />
+        <path
+          fill="#fbd381"
+          d="M12.97 4.8c-.668 0-1.209.541-1.209 1.208V6.8h1.209z"
+        />
         <path
           fill="#008259"
-          d="M37.2 21a3 3 0 0 1 3-3v4.948l3.573 10.401a6 6 0 0 1-3.726 7.624l-4.32-12.577A4.002 4.002 0 0 1 37.2 23.83V21Z"
+          d="M14.983 8.4c0-.663.541-1.2 1.209-1.2v1.979l1.439 4.16a2.396 2.396 0 0 1-1.501 3.05l-1.74-5.03a1.595 1.595 0 0 1 .593-1.827z"
         />
       </g>
     </CountrySymbol>

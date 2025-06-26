@@ -14,7 +14,7 @@ const CG = forwardRef<SVGSVGElement, CGProps>(function CG(props: CGProps, ref) {
     <CountrySymbol
       data-testid="CG"
       aria-label="Congo (the)"
-      viewBox="0 0 72 72"
+      viewBox="0 0 20 20"
       ref={ref}
       {...props}
     >
@@ -25,21 +25,18 @@ const CG = forwardRef<SVGSVGElement, CGProps>(function CG(props: CGProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#d9d9d9" />
       </mask>
       <g mask={`url(#${uid}-CG-a)`}>
         <path
-          fill="#DD2033"
-          d="m36 86.912-16.97-16.97 50.912-50.913L86.912 36z"
+          fill="#dd2033"
+          d="m10 24.142-4.714-4.714L19.428 5.286 24.142 10z"
         />
         <path
-          fill="#FBD381"
-          d="M19.03 69.941 2.06 52.971 52.97 2.059l16.97 16.97z"
+          fill="#fbd381"
+          d="M5.286 19.428.572 14.714 14.714.572l4.714 4.714z"
         />
-        <path
-          fill="#009B77"
-          d="M2.059 52.97-14.911 36 36-14.912l16.97 16.97z"
-        />
+        <path fill="#009b77" d="M.572 14.714-4.143 10 10-4.142 14.714.572z" />
       </g>
     </CountrySymbol>
   );

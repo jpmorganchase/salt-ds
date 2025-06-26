@@ -16,10 +16,10 @@ export const DevicesIcon = forwardRef<SVGSVGElement, DevicesIconProps>(
         ref={ref}
         {...props}
       >
-        <path d="M0 9h5v2H3v1h4V8H1V1h10v4h1V0H0v9Z" />
+        <path d="M0 9h5v2H3v1h4V8H1V1h10v4h1V0H0z" />
         <path
           fillRule="evenodd"
-          d="M8 12V6h4v6H8Zm1-5h2v4H9V7Z"
+          d="M8 12V6h4v6zm1-5h2v4H9z"
           clipRule="evenodd"
         />
       </Icon>

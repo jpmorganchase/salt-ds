@@ -1,0 +1,27 @@
+<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<mask id="mask0_11482_5156" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="20" height="20">
+<circle cx="10" cy="10" r="10" fill="#D9D9D9"/>
+</mask>
+<g mask="url(#mask0_11482_5156)">
+<rect width="20" height="20" fill="#86C5FA"/>
+<path d="M11.3334 9.72223H17.1667V11.81C17.1667 13.7056 16.0111 15.4097 14.25 16.1111C12.489 15.4097 11.3334 13.7056 11.3334 11.81V9.72223Z" fill="#F5F7F8"/>
+<mask id="mask1_11482_5156" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="11" y="9" width="7" height="8">
+<path d="M11.3334 9.72223H17.1667V11.81C17.1667 13.7056 16.0111 15.4097 14.25 16.1111C12.489 15.4097 11.3334 13.7056 11.3334 11.81V9.72223Z" fill="#F5F7F8"/>
+</mask>
+<g mask="url(#mask1_11482_5156)">
+<path d="M11.3334 9.72223H17.1667V11.3889H14.6667V13.0556H17.1667V13.8889H14.6667V16.1111H13.8334V13.8889H11.3334V13.0556H13.8334V11.3889H11.3334V9.72223Z" fill="#DD2033"/>
+</g>
+<mask id="mask2_11482_5156" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="10" height="10">
+<path d="M0 10C-8.69081e-07 4.47715 4.47715 -5.43618e-08 10 -1.21421e-07L10 10L0 10Z" fill="#002F6C"/>
+</mask>
+<g mask="url(#mask2_11482_5156)">
+<rect x="-0.000244141" width="10" height="10" fill="#004692"/>
+<path d="M3.47843 0.870508L2.88917 1.45976L11.0908 9.66143L11.6801 9.07217L3.47843 0.870508Z" fill="#F5F7F8"/>
+<path d="M1.90708 2.44186L0.924989 3.42395L9.12665 11.6256L10.1087 10.6435L1.90708 2.44186Z" fill="#F5F7F8"/>
+<path d="M1.90708 2.44186L2.88917 1.45976L11.0908 9.66143L10.1087 10.6435L1.90708 2.44186Z" fill="#DD2033"/>
+<path d="M9.99998 3.33331V4.7222L4.7222 4.7222L4.7222 9.99999H3.33331V3.33331H9.99998Z" fill="#F5F7F8"/>
+<path d="M10 -0.555542V0.833347L1.38889 0.833346L1.38889 10H0V-0.555542H10Z" fill="#F5F7F8"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M0.833313 10H3.33331L3.33331 3.33337L9.99998 3.33337V0.833374H3.33331H0.833314L0.833314 3.33337L0.833313 10Z" fill="#DD2033"/>
+</g>
+</g>
+</svg>

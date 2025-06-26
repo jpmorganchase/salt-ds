@@ -18,8 +18,8 @@ export const DevicesSolidIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <path d="M0 9h5v2H3v1h4V5h5V0H0v9Z" />
-      <path d="M12 12H8V6h4v6Z" />
+      <path d="M0 9h5v2H3v1h4V5h5V0H0z" />
+      <path d="M12 12H8V6h4z" />
     </Icon>
   );
 });

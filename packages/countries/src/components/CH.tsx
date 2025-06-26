@@ -14,7 +14,7 @@ const CH = forwardRef<SVGSVGElement, CHProps>(function CH(props: CHProps, ref) {
     <CountrySymbol
       data-testid="CH"
       aria-label="Switzerland"
-      viewBox="0 0 72 72"
+      viewBox="0 0 20 20"
       ref={ref}
       {...props}
     >
@@ -25,19 +25,13 @@ const CH = forwardRef<SVGSVGElement, CHProps>(function CH(props: CHProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle
-          cx="36"
-          cy="36"
-          r="36"
-          fill="#D9D9D9"
-          transform="rotate(-90 36 36)"
-        />
+        <circle cx="10" cy="10" r="10" fill="#d9d9d9" />
       </mask>
       <g mask={`url(#${uid}-CH-a)`}>
-        <path fill="#DD2033" d="M0 0h72v72H0z" />
+        <path fill="#dd2033" d="M20 0v20H0V0z" />
         <path
-          fill="#F5F7F8"
-          d="M59.6 43V29h-17V12h-14v17h-17v14h17v17h14V43h17Z"
+          fill="#f5f7f8"
+          d="M8.104 16.5h3.792v-4.604H16.5V8.104h-4.604V3.5H8.104v4.604H3.5v3.792h4.604z"
         />
       </g>
     </CountrySymbol>

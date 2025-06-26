@@ -41,6 +41,18 @@ const generateComponentsFolder = (basePath) => {
   }
 };
 
+function getCountrySymbolMetadataFromFileName(fileName) {
+  const filenameWithoutExtension = path.parse(fileName).name;
+
+  const parts = filenameWithoutExtension.split("_");
+
+  return {
+    countryCode: parts[0].toUpperCase(),
+    countryName: parts[1],
+    variant: parts[2],
+  };
+}
+
 /** Generate all country SVG as background image, in a single CSS */
 const generateCssAsBg = ({ basePath, cssOutputPath, fileArg }) => {
   // options is optional
@@ -53,19 +65,14 @@ const generateCssAsBg = ({ basePath, cssOutputPath, fileArg }) => {
   const fileNames = glob.sync(globPath, options);
 
   const countryCss = fileNames
+    .filter((fileName) => !fileName.includes("_sharp"))
     .map((fileName) => {
       const svgString = fs
         .readFileSync(fileName, "utf-8")
         .trim()
         .replaceAll(/\r?\n|\r/g, "");
 
-      const filenameWithoutExtension = path.parse(fileName).name;
-
-      const firstSpaceIndex = filenameWithoutExtension.indexOf(" ");
-
-      const countryCode = filenameWithoutExtension
-        .slice(0, firstSpaceIndex)
-        .toUpperCase();
+      const { countryCode } = getCountrySymbolMetadataFromFileName(fileName);
 
       return `.saltCountry-${countryCode}{background-image:url("data:image/svg+xml,${encodeURIComponent(
         svgString,
@@ -91,19 +98,20 @@ const generateSharpCssAsBg = ({ basePath, cssOutputPath, fileArg }) => {
   const options = {};
 
   const globPath = path
-    .join(basePath, `./SVG/sharp/+(${fileArg})`)
+    .join(basePath, `./SVG/+(${fileArg})`)
     .replace(/\\/g, "/");
 
   const fileNames = glob.sync(globPath, options);
 
   const countryCss = fileNames
+    .filter((fileName) => fileName.includes("_sharp"))
     .map((fileName) => {
       const svgString = fs
         .readFileSync(fileName, "utf-8")
         .trim()
         .replaceAll(/\r?\n|\r/g, "");
 
-      const countryCode = path.parse(fileName).name.toUpperCase();
+      const { countryCode } = getCountrySymbolMetadataFromFileName(fileName);
 
       return `.saltCountrySharp-${countryCode}{background-image:url("data:image/svg+xml,${encodeURIComponent(
         svgString,
@@ -122,6 +130,12 @@ const generateSharpCssAsBg = ({ basePath, cssOutputPath, fileArg }) => {
     encoding: "utf8",
   });
 };
+
+function capitalize(value) {
+  return value && value.length > 0
+    ? value[0].toUpperCase() + value.slice(1)
+    : value;
+}
 
 // Generate all the country symbol components
 const generateCountrySymbolComponents = ({
@@ -145,30 +159,14 @@ const generateCountrySymbolComponents = ({
   for (const fileName of fileNames) {
     const svgString = fs.readFileSync(fileName, "utf-8");
 
-    const filenameWithoutExtension = path.parse(fileName).name;
-
-    const firstSpaceIndex = filenameWithoutExtension.indexOf(" ");
-
-    const countryCode = filenameWithoutExtension
-      .slice(0, firstSpaceIndex)
-      .toUpperCase();
-
-    // Use country code to get the sharp (a.k.a. rectangular) version of the SVG
-    const globPathSharp = path
-      .join(basePath, `./SVG/sharp/${countryCode}.svg`)
-      .replace(/\\/g, "/");
-
-    const sharpSvgString = fs.readFileSync(globPathSharp, "utf-8");
-
-    const countryName = filenameWithoutExtension.slice(firstSpaceIndex).trim();
+    const { countryCode, countryName, variant } =
+      getCountrySymbolMetadataFromFileName(fileName);
 
     let viewBox;
-    let sharpViewBox;
 
-    const newFilePath = path.join(componentsPath, `${countryCode}.tsx`);
-    const newSharpFilePath = path.join(
+    const newFilePath = path.join(
       componentsPath,
-      `${countryCode}_Sharp.tsx`,
+      `${[countryCode, capitalize(variant)].filter(Boolean).join("_")}.tsx`,
     );
 
     countryMetaMap[countryCode] = {
@@ -201,7 +199,6 @@ const generateCountrySymbolComponents = ({
     };
 
     const optimizedSvg = optimize(svgString, optimizeOptions);
-    const optimizedSharpSvg = optimize(sharpSvgString, optimizeOptions);
 
     const getUidString = (countryCode, value) => {
       return `\$\{uid\}-${countryCode}-${value}`;
@@ -298,47 +295,19 @@ const generateCountrySymbolComponents = ({
         optimizePlugins.removeSvg,
       ],
     });
-    const sharpSvgPaths = optimize(optimizedSharpSvg.data, {
-      plugins: [
-        optimizePlugins.mapHTMLAttributesToReactProps,
-        {
-          name: "find-viewBox",
-          fn: () => {
-            return {
-              element: {
-                enter: (node, parentNode) => {
-                  if (parentNode.type === "root") {
-                    sharpViewBox = node.attributes.viewBox;
-                  }
-                },
-              },
-            };
-          },
-        },
-        optimizePlugins.removeSvg,
-      ],
-    });
 
     const fileContents = Mustache.render(template, {
       svgElements: svgPaths.data,
-      componentName: countryCodeToComponentName(countryCode),
+      componentName:
+        variant === "sharp"
+          ? `${countryCodeToComponentName(countryCode)}_Sharp`
+          : countryCodeToComponentName(countryCode),
       ariaLabel: countryName,
-      viewBox: viewBox ?? "0 0 72 72",
-      sharp: false,
-    });
-    const sharpFileContents = Mustache.render(template, {
-      svgElements: sharpSvgPaths.data,
-      componentName: `${countryCodeToComponentName(countryCode)}_Sharp`,
-      ariaLabel: countryName,
-      viewBox: sharpViewBox ?? "0 0 72 50",
-      sharp: true,
+      viewBox: viewBox ?? (variant === "sharp" ? "0 0 29 20" : "0 0 20 20"),
+      sharp: variant === "sharp",
     });
 
     const replacedText = fileContents
-      .replaceAll(`"${REPLACE_START}`, "")
-      .replaceAll(`${REPLACE_END}"`, "");
-
-    const replacedSharpText = sharpFileContents
       .replaceAll(`"${REPLACE_START}`, "")
       .replaceAll(`${REPLACE_END}"`, "");
 
@@ -347,15 +316,7 @@ const generateCountrySymbolComponents = ({
       { filePath: newFilePath },
     );
 
-    const formattedSharpResult = biome.formatContent(
-      GENERATED_WARNING_COMMENT.concat(replacedSharpText),
-      { filePath: newSharpFilePath },
-    );
-
     fs.writeFileSync(newFilePath, formattedResult.content, {
-      encoding: "utf8",
-    });
-    fs.writeFileSync(newSharpFilePath, formattedSharpResult.content, {
       encoding: "utf8",
     });
   }

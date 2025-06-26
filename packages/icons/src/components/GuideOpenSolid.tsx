@@ -20,7 +20,7 @@ export const GuideOpenSolidIcon = forwardRef<
     >
       <path
         fillRule="evenodd"
-        d="M7 1h5v9.5H7c-.22 0-.327.073-.385.14A.55.55 0 0 0 6.5 11h-1a.51.51 0 0 0-.166-.334A.51.51 0 0 0 5 10.5H0V1h5c.37 0 .707.162.959.382C6.22 1.138 6.577 1 7 1ZM4.5 3H2v1h2.5V3Zm3 0H10v1H7.5V3Zm0 2H10v1H7.5V5ZM2 5h2.5v1H2V5Zm5.5 2H10v1H7.5V7ZM2 7h2.5v1H2V7Z"
+        d="M7 1h5v9.5H7c-.22 0-.327.073-.385.14A.55.55 0 0 0 6.5 11h-1a.5.5 0 0 0-.166-.334A.5.5 0 0 0 5 10.5H0V1h5c.37 0 .707.162.959.382C6.22 1.138 6.577 1 7 1M4.5 3H2v1h2.5zm3 0H10v1H7.5zm0 2H10v1H7.5zM2 5h2.5v1H2zm5.5 2H10v1H7.5zM2 7h2.5v1H2z"
         clipRule="evenodd"
       />
     </Icon>

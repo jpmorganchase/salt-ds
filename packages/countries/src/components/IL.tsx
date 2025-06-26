@@ -14,7 +14,7 @@ const IL = forwardRef<SVGSVGElement, ILProps>(function IL(props: ILProps, ref) {
     <CountrySymbol
       data-testid="IL"
       aria-label="Israel"
-      viewBox="0 0 72 72"
+      viewBox="0 0 20 20"
       ref={ref}
       {...props}
     >
@@ -25,15 +25,18 @@ const IL = forwardRef<SVGSVGElement, ILProps>(function IL(props: ILProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#d9d9d9" />
       </mask>
       <g mask={`url(#${uid}-IL-a)`}>
-        <path fill="#F5F7F8" d="M-.4 72V0h72v72z" />
-        <path fill="#005EB8" d="M0 64V54h72v10zm0-44V10h72v10z" />
+        <path fill="#f5f7f8" d="M-.111 20V0h20v20z" />
         <path
-          fill="#005EB8"
+          fill="#005eb8"
+          d="M0 17.778V15h20v2.778zM0 5.556V2.778h20v2.778z"
+        />
+        <path
+          fill="#005eb8"
           fillRule="evenodd"
-          d="m31.559 30 4.041-7 4.041 7h8.084l-4.042 7 4.041 7h-8.082L35.6 51l-4.041-7h-8.083l4.041-7-4.041-7h8.083Zm-1.155 2H26.94l1.732 3 1.732-3Zm-.577 5 2.886-5h5.774l2.887 5-2.887 5h-5.773l-2.887-5Zm-1.155 2-1.732 3h3.464l-1.732-3Zm5.196 5 1.732 3 1.732-3h-3.464Zm6.928-2h3.464l-1.732-3-1.731 3Zm1.732-7 1.733-3h-3.465l1.732 3Zm-5.196-5h-3.464l1.732-3 1.732 3Z"
+          d="M8.766 8.333 9.89 6.39l1.123 1.944h2.245l-1.123 1.945 1.123 1.944h-2.245L9.89 14.168l-1.123-1.945H6.521l1.123-1.944L6.52 8.333zm-.32.556h-.963l.481.833zm-.16 1.389.801-1.39h1.604l.802 1.39-.802 1.389H9.087zm-.322.555-.48.834h.962zm1.444 1.39.481.833.481-.834zm1.924-.556h.962l-.48-.834zm.481-1.945.482-.833h-.963zM10.37 8.333h-.962l.48-.833z"
           clipRule="evenodd"
         />
       </g>

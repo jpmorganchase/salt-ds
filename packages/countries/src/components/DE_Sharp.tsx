@@ -17,7 +17,7 @@ const DE_Sharp = forwardRef<SVGSVGElement, DE_SharpProps>(function DE_Sharp(
     <CountrySymbol
       data-testid="DE_Sharp"
       aria-label="Germany"
-      viewBox="0 0 72 50"
+      viewBox="0 0 29 20"
       ref={ref}
       sharp
       {...props}
@@ -29,12 +29,12 @@ const DE_Sharp = forwardRef<SVGSVGElement, DE_SharpProps>(function DE_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-DE-a)`}>
-        <path fill="#F1B434" d="M0 50V34h72v16z" />
-        <path fill="#DD2033" d="M0 34V16h72v18z" />
-        <path fill="#31373D" d="M0 16V0h72v16z" />
+        <path fill="#f1b434" d="M0 20v-6.4h29V20z" />
+        <path fill="#dd2033" d="M0 13.6V6.4h29v7.2z" />
+        <path fill="#31373d" stroke="#31373d" d="M.5 5.9V.5h28v5.4z" />
       </g>
     </CountrySymbol>
   );

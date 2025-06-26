@@ -16,7 +16,7 @@ export const ExpandAllIcon = forwardRef<SVGSVGElement, ExpandAllIconProps>(
         ref={ref}
         {...props}
       >
-        <path d="M6 0 2 4l1 1 3-3 3 3 1-1-4-4Zm0 12L2 8l1-1 3 3 3-3 1 1-4 4Z" />
+        <path d="M6 0 2 4l1 1 3-3 3 3 1-1zm0 12L2 8l1-1 3 3 3-3 1 1z" />
       </Icon>
     );
   },

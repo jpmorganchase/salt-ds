@@ -20,7 +20,7 @@ export const RemoveDocumentSolidIcon = forwardRef<
     >
       <path
         fillRule="evenodd"
-        d="M1 12V0h8l2 2v10H1ZM7 1h1v2h2v1H7V1Zm1 6H3v1h5V7Z"
+        d="M1 12V0h8l2 2v10zM7 1h1v2h2v1H7zm1 6H3v1h5z"
         clipRule="evenodd"
       />
     </Icon>

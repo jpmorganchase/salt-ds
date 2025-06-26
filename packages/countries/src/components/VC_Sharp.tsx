@@ -17,7 +17,7 @@ const VC_Sharp = forwardRef<SVGSVGElement, VC_SharpProps>(function VC_Sharp(
     <CountrySymbol
       data-testid="VC_Sharp"
       aria-label="Saint Vincent and the Grenadines"
-      viewBox="0 0 72 50"
+      viewBox="0 0 29 20"
       ref={ref}
       sharp
       {...props}
@@ -29,17 +29,17 @@ const VC_Sharp = forwardRef<SVGSVGElement, VC_SharpProps>(function VC_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-VC-a)`}>
-        <path fill="#009B77" d="M72 50H18V0h54z" />
+        <path fill="#009b77" d="M29 20H7.25V0H29z" />
         <path
-          fill="#FBD381"
+          fill="#fbd381"
           fillRule="evenodd"
-          d="M18 50h36V0H18v50Zm2-32.296 6.617 11.703 6.515-11.704L26.618 6 20 17.704ZM45.383 6l-6.515 11.703 6.514 11.704L52 17.703 45.383 6ZM42.49 34.52 36 22.857 29.508 34.52 35.998 46l6.492-11.48Z"
+          d="M7.25 20h14.5V0H7.25zm.806-12.919 2.665 4.682 2.624-4.682L10.72 2.4zm10.223-4.68-2.624 4.68 2.624 4.682 2.665-4.682zm-1.164 11.407L14.5 9.143l-2.615 4.665L14.5 18.4z"
           clipRule="evenodd"
         />
-        <path fill="#004692" d="M18 50H0V0h18z" />
+        <path fill="#004692" d="M7.25 20H0V0h7.25z" />
       </g>
     </CountrySymbol>
   );

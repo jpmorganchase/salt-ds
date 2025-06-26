@@ -14,7 +14,7 @@ const LR = forwardRef<SVGSVGElement, LRProps>(function LR(props: LRProps, ref) {
     <CountrySymbol
       data-testid="LR"
       aria-label="Liberia"
-      viewBox="0 0 72 72"
+      viewBox="0 0 20 20"
       ref={ref}
       {...props}
     >
@@ -25,18 +25,18 @@ const LR = forwardRef<SVGSVGElement, LRProps>(function LR(props: LRProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#d9d9d9" />
       </mask>
       <g mask={`url(#${uid}-LR-a)`}>
-        <path fill="#F5F7F8" d="M0 0h72v72H0z" />
+        <path fill="#f5f7f8" d="M0 0h20v20H0z" />
         <path
-          fill="#DD2033"
-          d="M72 18V9H0v9h72Zm0 9v9H0v-9h72Zm0 27v-9H0v9h72Zm0 18v-9H0v9h72Z"
+          fill="#dd2033"
+          d="M20 5V2.5H0V5zm0 2.5V10H0V7.5zm0 7.5v-2.5H0V15zm0 5v-2.5H0V20z"
         />
-        <path fill="#004692" d="M.4 36V0h36v36z" />
+        <path fill="#004692" d="M.111 10V0h10v10z" />
         <path
-          fill="#F5F7F8"
-          d="m22.2 10-2.98 6.742-7.02.897 5.177 5.064L16.02 30l6.18-4.167L28.38 30l-1.357-7.297L32.2 17.64l-7.02-.897L22.2 10Z"
+          fill="#f5f7f8"
+          d="M6.167 2.778 5.339 4.65l-1.95.249 1.438 1.407-.377 2.026 1.717-1.157 1.716 1.157-.377-2.026L8.944 4.9l-1.95-.25z"
         />
       </g>
     </CountrySymbol>

@@ -20,7 +20,7 @@ export const DatabaseSolidIcon = forwardRef<
     >
       <path
         fillRule="evenodd"
-        d="M0 5.5V0h12v5.5H0Zm2-3.25h1v1H2v-1Zm2 0h1v1H4v-1ZM0 12V6.5h12V12H0Zm2-3.25h1v1H2v-1Zm2 0h1v1H4v-1Z"
+        d="M0 5.5V0h12v5.5zm2-3.25h1v1H2zm2 0h1v1H4zM0 12V6.5h12V12zm2-3.25h1v1H2zm2 0h1v1H4z"
         clipRule="evenodd"
       />
     </Icon>

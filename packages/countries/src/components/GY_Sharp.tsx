@@ -17,7 +17,7 @@ const GY_Sharp = forwardRef<SVGSVGElement, GY_SharpProps>(function GY_Sharp(
     <CountrySymbol
       data-testid="GY_Sharp"
       aria-label="Guyana"
-      viewBox="0 0 72 50"
+      viewBox="0 0 29 20"
       ref={ref}
       sharp
       {...props}
@@ -29,19 +29,19 @@ const GY_Sharp = forwardRef<SVGSVGElement, GY_SharpProps>(function GY_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-GY-a)`}>
-        <path fill="#009B77" d="M72 50H0V0h72z" />
-        <path fill="#F5F7F8" d="M72 25 0 50V0l72 25Z" />
-        <path fill="#FBD381" d="m60 25-72 25V0l72 25Z" />
+        <path fill="#009b77" d="M29 20H0V0h29z" />
+        <path fill="#f5f7f8" d="M29 10 0 20V0z" />
+        <path fill="#fbd381" d="m24.167 10-29 10V0z" />
         <path
-          fill="#31373D"
+          fill="#31373d"
           fillRule="evenodd"
-          d="M34 25 0 50V0l34 25Z"
+          d="M13.695 10 0 20V0z"
           clipRule="evenodd"
         />
-        <path fill="#DD2033" d="M28 25-6 50V0l34 25Z" />
+        <path fill="#dd2033" d="M11.278 10-2.417 20V0z" />
       </g>
     </CountrySymbol>
   );

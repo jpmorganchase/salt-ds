@@ -18,13 +18,13 @@ export const MedicalKitIcon = forwardRef<SVGSVGElement, MedicalKitIconProps>(
       >
         <path
           fillRule="evenodd"
-          d="M11 2H1v8h10V2ZM0 1v10h12V1H0Z"
+          d="M11 2H1v8h10zM0 1v10h12V1z"
           clipRule="evenodd"
         />
-        <path d="M5 7v1h2V7h1V5H7V4H5v1H4v2h1Z" />
+        <path d="M5 7v1h2V7h1V5H7V4H5v1H4v2z" />
         <path
           fillRule="evenodd"
-          d="M2 10V2h1v8H2Zm7 0V2h1v8H9Z"
+          d="M2 10V2h1v8zm7 0V2h1v8z"
           clipRule="evenodd"
         />
       </Icon>

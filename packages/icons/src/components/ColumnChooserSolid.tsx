@@ -20,7 +20,7 @@ export const ColumnChooserSolidIcon = forwardRef<
     >
       <path
         fillRule="evenodd"
-        d="M0 12V0h12v12H0ZM1 2h10v1H6v1h3v1H6v1h3v1H6v1h3v1H6v2H5V3H1V2Zm0 2h3v1H1V4Zm3 2H1v1h3V6Zm0 2H1v1h3V8Z"
+        d="M0 12V0h12v12zM1 2h10v1H6v1h3v1H6v1h3v1H6v1h3v1H6v2H5V3H1zm0 2h3v1H1zm3 2H1v1h3zm0 2H1v1h3z"
         clipRule="evenodd"
       />
     </Icon>

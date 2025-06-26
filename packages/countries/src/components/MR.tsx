@@ -14,7 +14,7 @@ const MR = forwardRef<SVGSVGElement, MRProps>(function MR(props: MRProps, ref) {
     <CountrySymbol
       data-testid="MR"
       aria-label="Mauritania"
-      viewBox="0 0 72 72"
+      viewBox="0 0 20 20"
       ref={ref}
       {...props}
     >
@@ -25,18 +25,18 @@ const MR = forwardRef<SVGSVGElement, MRProps>(function MR(props: MRProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#d9d9d9" />
       </mask>
       <g mask={`url(#${uid}-MR-a)`}>
-        <path fill="#DD2033" d="M0 0h72v72H0z" />
-        <path fill="#005B33" d="M0 60V12h72v48z" />
+        <path fill="#dd2033" d="M0 0h20v20H0z" />
+        <path fill="#005b33" d="M0 16.667V3.334h20v13.333z" />
         <path
-          fill="#FBD381"
-          d="M33.317 24.068 36 18l2.683 6.068 6.317.807-4.66 4.558L41.563 36 36 32.25 30.438 36l1.222-6.567L27 24.875l6.317-.807Z"
+          fill="#fbd381"
+          d="M9.255 6.686 10 5l.745 1.686 1.755.224-1.294 1.266.34 1.824L10 8.958 8.455 10l.34-1.824L7.5 6.91z"
         />
         <path
-          fill="#FBD381"
-          d="M49.76 36.48A18.777 18.777 0 0 0 52.437 31c1.26 4.928.433 10.378-2.71 14.813-5.539 7.815-16.174 9.521-23.755 3.811-5.704-4.296-8.053-11.568-6.506-18.234.97 3.648 3.074 6.968 6.229 9.344 7.58 5.71 18.355 3.805 24.067-4.253Z"
+          fill="#fbd381"
+          d="M13.823 10.134c.337-.477.583-.992.742-1.523a4.98 4.98 0 0 1-.752 4.115c-1.539 2.17-4.493 2.645-6.599 1.059C5.63 12.59 4.977 10.57 5.407 8.72a4.76 4.76 0 0 0 1.73 2.595c2.106 1.586 5.099 1.057 6.686-1.181"
         />
       </g>
     </CountrySymbol>

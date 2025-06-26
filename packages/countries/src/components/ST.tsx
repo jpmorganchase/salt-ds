@@ -14,7 +14,7 @@ const ST = forwardRef<SVGSVGElement, STProps>(function ST(props: STProps, ref) {
     <CountrySymbol
       data-testid="ST"
       aria-label="Sao Tome and Principe"
-      viewBox="0 0 72 72"
+      viewBox="0 0 20 20"
       ref={ref}
       {...props}
     >
@@ -25,16 +25,16 @@ const ST = forwardRef<SVGSVGElement, STProps>(function ST(props: STProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#d9d9d9" />
       </mask>
       <g mask={`url(#${uid}-ST-a)`}>
-        <path fill="#009B77" d="M0 0h72v72H0z" />
-        <path fill="#FBD381" d="M0 48V24h72v24z" />
+        <path fill="#009b77" d="M0 0h20v20H0z" />
+        <path fill="#fbd381" d="M0 13.333V6.666h20v6.667z" />
         <path
-          fill="#31373D"
-          d="M42.611 34.045 44.4 30l1.788 4.045 4.212.539-3.106 3.038.814 4.378-3.708-2.5-3.708 2.5.814-4.378-3.106-3.038 4.212-.539Zm15.601 0L60 30l1.788 4.045 4.212.539-3.106 3.038.814 4.378L60 39.5 56.292 42l.814-4.378L54 34.584l4.212-.539Z"
+          fill="#31373d"
+          d="m11.837 9.457.496-1.124.497 1.124 1.17.15-.863.844.226 1.216-1.03-.695-1.03.695.226-1.216-.862-.845zm4.333 0 .497-1.124.496 1.124 1.17.15-.862.844.226 1.216-1.03-.695-1.03.695.226-1.216L15 9.606z"
         />
-        <path fill="#DD2033" d="M36 36 0 0v72l36-36Z" />
+        <path fill="#dd2033" d="M10 10 0 0v20z" />
       </g>
     </CountrySymbol>
   );

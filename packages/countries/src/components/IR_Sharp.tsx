@@ -17,7 +17,7 @@ const IR_Sharp = forwardRef<SVGSVGElement, IR_SharpProps>(function IR_Sharp(
     <CountrySymbol
       data-testid="IR_Sharp"
       aria-label="Iran (Islamic Republic of)"
-      viewBox="0 0 72 50"
+      viewBox="0 0 29 20"
       ref={ref}
       sharp
       {...props}
@@ -29,21 +29,21 @@ const IR_Sharp = forwardRef<SVGSVGElement, IR_SharpProps>(function IR_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-IR-a)`}>
-        <path fill="#F5F7F8" d="M0-11h72v72H0z" />
+        <path fill="#f5f7f8" d="M0-4.4h29v28.8H0z" />
         <path
-          fill="#DD2033"
-          d="M5 39H0v11h72V39h-2v5h-5v-5h-5v5h-5v-5h-5v5h-5v-5h-5v5h-5v-5h-5v5h-5v-5h-5v5h-5v-5h-5v5H5v-5Z"
+          fill="#dd2033"
+          d="M2.014 15.6H0V20h29v-4.4h-.806v2H26.18v-2h-2.013v2h-2.014v-2h-2.014v2h-2.014v-2h-2.014v2h-2.014v-2h-2.014v2H10.07v-2H8.056v2H6.042v-2H4.028v2H2.014z"
         />
         <path
-          fill="#009B77"
-          d="M0 0v6h5v5h5V6h5v5h5V6h5v5h5V6h5v5h5V6h5v5h5V6h5v5h5V6h5v5h7V0H0Z"
+          fill="#009b77"
+          d="M0 0v2.4h2.014v2h2.014v-2h2.014v2h2.014v-2h2.013v2h2.014v-2h2.014v2h2.014v-2h2.014v2h2.014v-2h2.014v2h2.014v-2h2.014v2H29V0z"
         />
         <path
-          fill="#DD2033"
-          d="M42.931 33A12.99 12.99 0 0 0 49 22c0-3.59-1.455-6.84-3.808-9.192l-2.626 2.626A9.257 9.257 0 0 1 45.286 22c0 4.492-3.19 8.24-7.429 9.1V16.429h-3.714V31.1c-4.239-.86-7.429-4.608-7.429-9.1a9.257 9.257 0 0 1 2.72-6.566l-2.626-2.626A12.96 12.96 0 0 0 23 22a12.99 12.99 0 0 0 6.069 11H27.6v3h17v-3h-1.669ZM36.029 9h-.058.058Z"
+          fill="#dd2033"
+          d="M17.292 13.2a5.19 5.19 0 0 0 2.444-4.4 5.17 5.17 0 0 0-1.533-3.677l-1.058 1.05A3.7 3.7 0 0 1 18.24 8.8a3.72 3.72 0 0 1-2.992 3.64V6.571h-1.496v5.869A3.72 3.72 0 0 1 10.76 8.8a3.7 3.7 0 0 1 1.095-2.626l-1.058-1.051A5.17 5.17 0 0 0 9.265 8.8a5.19 5.19 0 0 0 2.444 4.4h-.591v1.2h6.847v-1.2zm-2.78-9.6h-.023z"
         />
       </g>
     </CountrySymbol>

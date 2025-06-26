@@ -14,7 +14,7 @@ const SV = forwardRef<SVGSVGElement, SVProps>(function SV(props: SVProps, ref) {
     <CountrySymbol
       data-testid="SV"
       aria-label="El Salvador"
-      viewBox="0 0 72 72"
+      viewBox="0 0 20 20"
       ref={ref}
       {...props}
     >
@@ -25,19 +25,19 @@ const SV = forwardRef<SVGSVGElement, SVProps>(function SV(props: SVProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="36" cy="36" r="36" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#d9d9d9" />
       </mask>
       <g mask={`url(#${uid}-SV-a)`}>
-        <path fill="#005EB8" d="M0 0h72v72H0z" />
-        <path fill="#F5F7F8" d="M0 52V20h72v32z" />
+        <path fill="#005eb8" d="M0 0h20v20H0z" />
+        <path fill="#f5f7f8" d="M0 14.444V5.555h20v8.89z" />
         <path
-          fill="#009B77"
+          fill="#009b77"
           fillRule="evenodd"
-          d="M20 23.746A17.922 17.922 0 0 0 18 32c0 9.941 8.059 18 18 18s18-8.059 18-18c0-2.975-.722-5.782-2-8.254v.411l-5.202 2.601A11.951 11.951 0 0 1 48 32c0 6.627-5.373 12-12 12s-12-5.373-12-12c0-1.88.432-3.658 1.202-5.242L20 24.157v-.411Z"
+          d="M5.556 6.596a5 5 0 1 0 8.889 0v.114l-1.446.723a3.333 3.333 0 1 1-5.999 0L5.557 6.71z"
           clipRule="evenodd"
         />
-        <path fill="#FBD381" d="m36 24 9 14H27l9-14Z" />
-        <path fill="#009B77" d="M27 38h18l-4.5-7h-9L27 38Z" />
+        <path fill="#fbd381" d="m10 6.667 2.5 3.889h-5z" />
+        <path fill="#009b77" d="M7.5 10.556h5L11.25 8.61h-2.5z" />
       </g>
     </CountrySymbol>
   );

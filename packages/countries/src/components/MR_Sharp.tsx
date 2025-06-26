@@ -17,7 +17,7 @@ const MR_Sharp = forwardRef<SVGSVGElement, MR_SharpProps>(function MR_Sharp(
     <CountrySymbol
       data-testid="MR_Sharp"
       aria-label="Mauritania"
-      viewBox="0 0 72 50"
+      viewBox="0 0 29 20"
       ref={ref}
       sharp
       {...props}
@@ -29,18 +29,18 @@ const MR_Sharp = forwardRef<SVGSVGElement, MR_SharpProps>(function MR_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-MR-a)`}>
-        <path fill="#DD2033" d="M0 0h72v50H0z" />
-        <path fill="#005B33" d="M0 42V8h72v34z" />
+        <path fill="#dd2033" d="M0 0h29v20H0z" />
+        <path fill="#005b33" d="M0 16.8V3.2h29v13.6z" />
         <path
-          fill="#FBD381"
-          d="M33.949 15.681 36 11l2.051 4.681 4.831.623-3.563 3.516.935 5.066L36 21.993l-4.254 2.893.935-5.066-3.563-3.516 4.83-.623Z"
+          fill="#fbd381"
+          d="M13.674 6.272 14.5 4.4l.826 1.872 1.946.25-1.435 1.406.376 2.026L14.5 8.797l-1.713 1.157.376-2.026-1.435-1.407z"
         />
         <path
-          fill="#FBD381"
-          d="M46.523 25.256a14.54 14.54 0 0 0 2.045-4.227c.964 3.801.332 8.005-2.072 11.427-4.235 6.028-12.368 7.344-18.165 2.94-4.362-3.314-6.158-8.924-4.976-14.066.742 2.814 2.351 5.375 4.764 7.208 5.796 4.404 14.036 2.935 18.404-3.282Z"
+          fill="#fbd381"
+          d="M18.739 10.103a5.8 5.8 0 0 0 .823-1.692 5.54 5.54 0 0 1-.834 4.571c-1.706 2.412-4.982 2.938-7.317 1.176-1.757-1.325-2.48-3.57-2.004-5.626a5.3 5.3 0 0 0 1.919 2.883c2.334 1.762 5.653 1.174 7.412-1.312"
         />
       </g>
     </CountrySymbol>

@@ -16,10 +16,10 @@ export const TagSolidIcon = forwardRef<SVGSVGElement, TagSolidIconProps>(
         ref={ref}
         {...props}
       >
-        <path d="M8.5 4a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1Z" />
+        <path d="M8.5 4a.5.5 0 1 1 0-1 .5.5 0 0 1 0 1" />
         <path
           fillRule="evenodd"
-          d="M7 0h5v5l-7 7-5-5 7-7Zm0 3.5a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0Z"
+          d="M7 0h5v5l-7 7-5-5zm0 3.5a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0"
           clipRule="evenodd"
         />
       </Icon>

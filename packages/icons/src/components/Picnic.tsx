@@ -18,7 +18,7 @@ export const PicnicIcon = forwardRef<SVGSVGElement, PicnicIconProps>(
       >
         <path
           fillRule="evenodd"
-          d="M12 8.5 9.5 0 7 8.5h2V11H5V8h1V7H3v1h1v3H2v-1h1V9H0v1h1v1H0v1h12v-1h-2V8.5h2Zm-2-1h.7l-1.2-4-1.15 4H9v-1h1v1Z"
+          d="M12 8.5 9.5 0 7 8.5h2V11H5V8h1V7H3v1h1v3H2v-1h1V9H0v1h1v1H0v1h12v-1h-2V8.5zm-2-1h.7l-1.2-4-1.15 4H9v-1h1z"
           clipRule="evenodd"
         />
       </Icon>

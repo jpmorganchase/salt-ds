@@ -18,7 +18,7 @@ export const SignpostSolidIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <path d="M5 0h1v1h4.067L12 3l-1.933 2H6v7H5V7H1.933L0 5l1.933-2H5V0Z" />
+      <path d="M5 0h1v1h4.067L12 3l-1.933 2H6v7H5V7H1.933L0 5l1.933-2H5z" />
     </Icon>
   );
 });

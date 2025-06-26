@@ -18,7 +18,7 @@ export const ChevronRightIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <path d="M8.593 5.618 9 6l-.407.382L3.661 11 3 10.236 7.524 6 3 1.764 3.66 1l4.933 4.618Z" />
+      <path d="M8.593 5.618 9 6l-.407.382L3.661 11 3 10.236 7.524 6 3 1.764 3.66 1z" />
     </Icon>
   );
 });

@@ -18,7 +18,7 @@ export const SendIcon = forwardRef<SVGSVGElement, SendIconProps>(
       >
         <path
           fillRule="evenodd"
-          d="m0 5 2 2 2 1 1 2 2 2 5-12L0 5Zm4.981 2.726.84 1.682.83.829 2.987-7.168L4.98 7.726Zm3.95-5.364L1.763 5.35l.83.83 1.681.84 4.657-4.657Z"
+          d="m0 5 2 2 2 1 1 2 2 2 5-12zm4.981 2.726.84 1.682.83.829 2.987-7.168zm3.95-5.364L1.763 5.35l.83.83 1.681.84z"
           clipRule="evenodd"
         />
       </Icon>

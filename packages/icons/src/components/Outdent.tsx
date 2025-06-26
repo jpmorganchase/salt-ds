@@ -16,7 +16,7 @@ export const OutdentIcon = forwardRef<SVGSVGElement, OutdentIconProps>(
         ref={ref}
         {...props}
       >
-        <path d="M3 2.5h9v1H3v-1Zm4 3h5v1H7v-1Zm0 3h5v1H7v-1ZM0 7.475l2.83 2.829.706-.707L1.94 8h4.042V7H1.89l1.646-1.647-.707-.707L0 7.475Z" />
+        <path d="M3 2.5h9v1H3zm4 3h5v1H7zm0 3h5v1H7zM0 7.475l2.83 2.829.706-.707L1.94 8h4.042V7H1.89l1.646-1.647-.707-.707z" />
       </Icon>
     );
   },

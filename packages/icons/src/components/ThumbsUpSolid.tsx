@@ -18,10 +18,10 @@ export const ThumbsUpSolidIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <path d="M2 12V5H0v7h2Z" />
+      <path d="M2 12V5H0v7z" />
       <path
         fillRule="evenodd"
-        d="M4 0h1.5A1.5 1.5 0 0 1 7 1.5V4h3.5A1.5 1.5 0 0 1 12 5.5V8l-2 4H3V5l1-2V0Z"
+        d="M4 0h1.5A1.5 1.5 0 0 1 7 1.5V4h3.5A1.5 1.5 0 0 1 12 5.5V8l-2 4H3V5l1-2z"
         clipRule="evenodd"
       />
     </Icon>

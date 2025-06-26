@@ -20,7 +20,7 @@ export const UnlockedSolidIcon = forwardRef<
     >
       <path
         fillRule="evenodd"
-        d="M4 1a1 1 0 0 0-1 1v2h9v8H0V4h2V2a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2H9a1 1 0 0 0-1-1H4Zm2.5 7.915a1.5 1.5 0 1 0-1 0V10h1V8.915Z"
+        d="M4 1a1 1 0 0 0-1 1v2h9v8H0V4h2V2a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2H9a1 1 0 0 0-1-1zm2.5 7.915a1.5 1.5 0 1 0-1 0V10h1z"
         clipRule="evenodd"
       />
     </Icon>

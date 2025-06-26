@@ -18,7 +18,7 @@ export const PrintSolidIcon = forwardRef<SVGSVGElement, PrintSolidIconProps>(
       >
         <path
           fillRule="evenodd"
-          d="M2 0v2H0v6h2v4h8V8h2V2h-2V0H2Zm7 2V1H3v1h6Zm1 3H2v2h1V6h6v1h1V5Zm-2 5V9H4v1h4Zm0-3v1H4V7h4Z"
+          d="M2 0v2H0v6h2v4h8V8h2V2h-2V0zm7 2V1H3v1zm1 3H2v2h1V6h6v1h1zm-2 5V9H4v1zm0-3v1H4V7z"
           clipRule="evenodd"
         />
       </Icon>

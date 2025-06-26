@@ -17,7 +17,7 @@ const BE_Sharp = forwardRef<SVGSVGElement, BE_SharpProps>(function BE_Sharp(
     <CountrySymbol
       data-testid="BE_Sharp"
       aria-label="Belgium"
-      viewBox="0 0 72 50"
+      viewBox="0 0 29 20"
       ref={ref}
       sharp
       {...props}
@@ -29,12 +29,12 @@ const BE_Sharp = forwardRef<SVGSVGElement, BE_SharpProps>(function BE_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-BE-a)`}>
-        <path fill="#31373D" d="M0 0h24v50H0z" />
-        <path fill="#F1B434" d="M24 0h24v50H24z" />
-        <path fill="#DD2033" d="M48 0h24v50H48z" />
+        <path fill="#31373d" d="M0 0h9.667v20H0z" />
+        <path fill="#f1b434" d="M9.667 0h9.667v20H9.667z" />
+        <path fill="#dd2033" d="M19.333 0H29v20h-9.667z" />
       </g>
     </CountrySymbol>
   );

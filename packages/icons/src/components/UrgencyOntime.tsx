@@ -18,7 +18,7 @@ export const UrgencyOntimeIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <path d="M11.5 6 6 10 .5 6 6 2l5.5 4ZM2.2 6 6 8.764 9.8 6 6 3.235 2.2 6Z" />
+      <path d="M11.5 6 6 10 .5 6 6 2zM2.2 6 6 8.764 9.8 6 6 3.235z" />
     </Icon>
   );
 });

@@ -17,7 +17,7 @@ const NI_Sharp = forwardRef<SVGSVGElement, NI_SharpProps>(function NI_Sharp(
     <CountrySymbol
       data-testid="NI_Sharp"
       aria-label="Nicaragua"
-      viewBox="0 0 72 50"
+      viewBox="0 0 29 20"
       ref={ref}
       sharp
       {...props}
@@ -29,30 +29,30 @@ const NI_Sharp = forwardRef<SVGSVGElement, NI_SharpProps>(function NI_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-NI-a)`}>
-        <path fill="#005EB8" d="M0 0h72v50H0z" />
-        <path fill="#F5F7F8" d="M0 41V9h72v32z" />
+        <path fill="#005eb8" d="M0 0h29v20H0z" />
+        <path fill="#f5f7f8" d="M0 16.4V3.6h29v12.8z" />
         <path
-          fill="#F1B434"
+          fill="#f1b434"
           fillRule="evenodd"
-          d="M36 34a9 9 0 1 0 0-18 9 9 0 0 0 0 18Zm0 4c7.18 0 13-5.82 13-13s-5.82-13-13-13-13 5.82-13 13 5.82 13 13 13Z"
+          d="M14.5 13.6c2.002 0 3.625-1.612 3.625-3.6S16.502 6.4 14.5 6.4s-3.625 1.612-3.625 3.6 1.623 3.6 3.625 3.6m0 1.6c2.892 0 5.236-2.328 5.236-5.2S17.392 4.8 14.5 4.8 9.264 7.128 9.264 10s2.344 5.2 5.236 5.2"
           clipRule="evenodd"
         />
         <mask
           id={`${uid}-NI-b`}
-          x="29"
-          y="19"
+          x="11"
+          y="7"
           maskUnits="userSpaceOnUse"
           style={{ maskType: "alpha" }}
         >
-          <path fill="#D9D9D9" d="m35.7 19 6.495 11.25h-12.99L35.7 19Z" />
+          <path fill="#d9d9d9" d="m14.38 7.6 2.615 4.5h-5.232z" />
         </mask>
         <g mask={`url(#${uid}-NI-b)`}>
-          <path fill="#86C5FA" d="M29.2 19h14v7h-14z" />
-          <path fill="#005EB8" d="M29.2 28h14v8h-14z" />
-          <path fill="#009B77" d="M29.2 26h14v2h-14z" />
+          <path fill="#86c5fa" d="M11.761 7.6H17.4v2.8h-5.639z" />
+          <path fill="#005eb8" d="M11.761 11.2H17.4v3.2h-5.639z" />
+          <path fill="#009b77" d="M11.761 10.4H17.4v.8h-5.639z" />
         </g>
       </g>
     </CountrySymbol>

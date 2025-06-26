@@ -825,4 +825,13 @@ describe("Given a ComboBox", () => {
     cy.get("@onSelectionChangeSpy").should("have.been.called");
     cy.findAllByTestId("pill").should("have.length", "2");
   });
+
+  it("should not delete the pill when the pill is clicked first", () => {
+    const onSelectionChangeSpy = cy.stub().as("onSelectionChangeSpy");
+    cy.mount(<MultiplePills onSelectionChange={onSelectionChangeSpy} />);
+    cy.findAllByTestId("pill").should("have.length", "3");
+    cy.findAllByTestId("pill").eq(0).realClick();
+    cy.get("@onSelectionChangeSpy").should("not.have.been.called");
+    cy.findAllByTestId("pill").should("have.length", "3");
+  });
 });

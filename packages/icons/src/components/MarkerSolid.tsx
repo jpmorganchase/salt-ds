@@ -16,7 +16,7 @@ export const MarkerSolidIcon = forwardRef<SVGSVGElement, MarkerSolidIconProps>(
         ref={ref}
         {...props}
       >
-        <path d="M6 0H5v2H1v4h4v6h1V6h3.067L11 4 9.067 2H6V0Z" />
+        <path d="M6 0H5v2H1v4h4v6h1V6h3.067L11 4 9.067 2H6z" />
       </Icon>
     );
   },

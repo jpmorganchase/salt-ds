@@ -2,50 +2,53 @@
   --salt-size-adornment: 6px;
   --salt-size-bar: 2px;
   --salt-size-base: 20px;
-  --salt-size-border: 1px;
   --salt-size-icon: 10px;
   --salt-size-indicator: 2px;
   --salt-size-selectable: 12px;
   --salt-size-bar-strong: 4px;
-  --salt-size-bar-small: 2px;
-  --salt-size-border-strong: 2px;
 }
 
 .salt-density-medium {
   --salt-size-adornment: 8px;
   --salt-size-bar: 4px;
   --salt-size-base: 28px;
-  --salt-size-border: 1px;
   --salt-size-icon: 12px;
   --salt-size-indicator: 3px;
   --salt-size-selectable: 14px;
   --salt-size-bar-strong: 8px;
-  --salt-size-bar-small: 2px;
-  --salt-size-border-strong: 2px;
 }
 
 .salt-density-low {
   --salt-size-adornment: 10px;
   --salt-size-bar: 6px;
   --salt-size-base: 36px;
-  --salt-size-border: 1px;
   --salt-size-icon: 14px;
   --salt-size-indicator: 4px;
   --salt-size-selectable: 16px;
   --salt-size-bar-strong: 12px;
-  --salt-size-bar-small: 2px;
-  --salt-size-border-strong: 2px;
 }
 
 .salt-density-touch {
   --salt-size-adornment: 12px;
   --salt-size-bar: 8px;
   --salt-size-base: 44px;
-  --salt-size-border: 1px;
   --salt-size-icon: 16px;
   --salt-size-indicator: 5px;
   --salt-size-selectable: 18px;
   --salt-size-bar-strong: 16px;
-  --salt-size-bar-small: 2px;
-  --salt-size-border-strong: 2px;
+}
+
+.salt-density-touch,
+.salt-density-low,
+.salt-density-medium,
+.salt-density-high {
+  --salt-size-fixed-100: 1px;
+  --salt-size-fixed-200: 2px;
+  --salt-size-fixed-300: 3px;
+  --salt-size-fixed-400: 4px;
+  --salt-size-fixed-500: 5px;
+  --salt-size-fixed-600: 6px;
+  --salt-size-fixed-700: 7px;
+  --salt-size-fixed-800: 8px;
+  --salt-size-fixed-900: 9px;
 }

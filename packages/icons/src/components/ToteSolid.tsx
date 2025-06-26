@@ -18,7 +18,7 @@ export const ToteSolidIcon = forwardRef<SVGSVGElement, ToteSolidIconProps>(
       >
         <path
           fillRule="evenodd"
-          d="M4 4V3a2 2 0 1 1 4 0v1h4v8H0V4h4Zm3-1v1H5V3a1 1 0 0 1 2 0Zm1 3H7v1h1V6ZM4 6h1v1H4V6Z"
+          d="M4 4V3a2 2 0 1 1 4 0v1h4v8H0V4zm3-1v1H5V3a1 1 0 0 1 2 0m1 3H7v1h1zM4 6h1v1H4z"
           clipRule="evenodd"
         />
       </Icon>

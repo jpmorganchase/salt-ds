@@ -20,7 +20,7 @@ export const ManIcon = forwardRef<SVGSVGElement, ManIconProps>(function ManIcon(
     >
       <path
         fillRule="evenodd"
-        d="M6 3a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Zm0-1a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1ZM5 3.5a1 1 0 0 0-1 1V8h.75v4h1V8h.5v4h1V8H8V4.5a1 1 0 0 0-1-1H5Zm0 1V7h2V4.5H5Z"
+        d="M6 3a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3m0-1a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1M5 3.5a1 1 0 0 0-1 1V8h.75v4h1V8h.5v4h1V8H8V4.5a1 1 0 0 0-1-1zm0 1V7h2V4.5z"
         clipRule="evenodd"
       />
     </Icon>

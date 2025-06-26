@@ -20,7 +20,7 @@ export const FolderOpenSolidIcon = forwardRef<
     >
       <path
         fillRule="evenodd"
-        d="M4.118 1H0v11h12V2H6.118l-2-1ZM11 3H5.882l-2-1H1v8l3-6h7V3Z"
+        d="M4.118 1H0v11h12V2H6.118zM11 3H5.882l-2-1H1v8l3-6h7z"
         clipRule="evenodd"
       />
     </Icon>

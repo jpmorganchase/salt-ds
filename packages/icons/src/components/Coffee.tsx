@@ -16,15 +16,15 @@ export const CoffeeIcon = forwardRef<SVGSVGElement, CoffeeIconProps>(
         ref={ref}
         {...props}
       >
-        <path d="M1 10h8v1H1v-1Z" />
+        <path d="M1 10h8v1H1z" />
         <path
           fillRule="evenodd"
-          d="M10 3H9v2h1a1 1 0 1 0 0-2ZM8 2v4h2a2 2 0 1 0 0-4H8Z"
+          d="M10 3H9v2h1a1 1 0 1 0 0-2M8 2v4h2a2 2 0 1 0 0-4z"
           clipRule="evenodd"
         />
         <path
           fillRule="evenodd"
-          d="M8 2H2v5a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1V2Zm1-1v6a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V1h8Z"
+          d="M8 2H2v5a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1zm1-1v6a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V1z"
           clipRule="evenodd"
         />
       </Icon>

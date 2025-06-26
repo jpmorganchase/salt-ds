@@ -14,7 +14,7 @@ const PA = forwardRef<SVGSVGElement, PAProps>(function PA(props: PAProps, ref) {
     <CountrySymbol
       data-testid="PA"
       aria-label="Panama"
-      viewBox="0 0 72 72"
+      viewBox="0 0 20 20"
       ref={ref}
       {...props}
     >
@@ -26,23 +26,23 @@ const PA = forwardRef<SVGSVGElement, PAProps>(function PA(props: PAProps, ref) {
         style={{ maskType: "alpha" }}
       >
         <circle
-          cx="36"
-          cy="36"
-          r="36"
-          fill="#D9D9D9"
-          transform="rotate(180 36 36)"
+          cx="10"
+          cy="10"
+          r="10"
+          fill="#d9d9d9"
+          transform="rotate(180 10 10)"
         />
       </mask>
       <g mask={`url(#${uid}-PA-a)`}>
-        <path fill="#F5F7F8" d="M0 72h72V0H0z" />
-        <path fill="#DD2033" d="M36 0h36v36H36z" />
+        <path fill="#f5f7f8" d="M0 20h20V0H0z" />
+        <path fill="#dd2033" d="M10 0h10v10H10z" />
         <path
           fill="#004692"
-          d="M0 72h36V36H0zm21-60-2.683 6.068-6.317.807 4.66 4.558L15.438 30 21 26.25 26.562 30l-1.222-6.567L30 18.875l-6.317-.807L21 12Z"
+          d="M0 20h10V10H0zM5.833 3.333 5.088 5.02l-1.755.224L4.628 6.51l-.34 1.824 1.545-1.041 1.545 1.041L7.04 6.51l1.294-1.266L6.58 5.02z"
         />
         <path
-          fill="#DD2033"
-          d="m51 42-2.683 6.068-6.317.807 4.66 4.558L45.438 60 51 56.25 56.562 60l-1.221-6.567L60 48.875l-6.317-.807L51 42Z"
+          fill="#dd2033"
+          d="m14.167 11.667-.745 1.685-1.755.225 1.294 1.266-.34 1.824 1.546-1.042 1.545 1.042-.34-1.824 1.295-1.266-1.755-.225z"
         />
       </g>
     </CountrySymbol>

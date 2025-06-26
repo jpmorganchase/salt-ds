@@ -16,7 +16,7 @@ export const VideoSolidIcon = forwardRef<SVGSVGElement, VideoSolidIconProps>(
         ref={ref}
         {...props}
       >
-        <path d="M9 2H0v8h9V8.07L12 9V3l-3 .942V2Z" />
+        <path d="M9 2H0v8h9V8.07L12 9V3l-3 .942z" />
       </Icon>
     );
   },

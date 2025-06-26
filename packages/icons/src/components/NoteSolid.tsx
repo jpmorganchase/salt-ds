@@ -18,7 +18,7 @@ export const NoteSolidIcon = forwardRef<SVGSVGElement, NoteSolidIconProps>(
       >
         <path
           fillRule="evenodd"
-          d="M9.207 11H1V1h10v8.207L9.207 11ZM7 10h1V8h2V7H7v3Z"
+          d="M9.207 11H1V1h10v8.207zM7 10h1V8h2V7H7z"
           clipRule="evenodd"
         />
       </Icon>

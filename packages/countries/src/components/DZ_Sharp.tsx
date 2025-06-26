@@ -17,7 +17,7 @@ const DZ_Sharp = forwardRef<SVGSVGElement, DZ_SharpProps>(function DZ_Sharp(
     <CountrySymbol
       data-testid="DZ_Sharp"
       aria-label="Algeria"
-      viewBox="0 0 72 50"
+      viewBox="0 0 29 20"
       ref={ref}
       sharp
       {...props}
@@ -29,18 +29,18 @@ const DZ_Sharp = forwardRef<SVGSVGElement, DZ_SharpProps>(function DZ_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-DZ-a)`}>
-        <path fill="#005B33" d="M0 0h72v50H0z" />
-        <path fill="#F5F7F8" d="M36 0h36v50H36z" />
+        <path fill="#005b33" d="M0 0h29v20H0z" />
+        <path fill="#f5f7f8" d="M14.5 0H29v20H14.5z" />
         <path
-          fill="#DD2033"
-          d="M41 9c4.73 0 8.98 2.053 11.91 5.315C49.365 8.717 43.117 5 36 5c-11.046 0-20 8.954-20 20s8.954 20 20 20c7.117 0 13.365-3.717 16.91-9.315A15.96 15.96 0 0 1 41 41c-8.837 0-16-7.163-16-16S32.163 9 41 9Z"
+          fill="#dd2033"
+          d="M16.514 3.6c1.905 0 3.617.821 4.797 2.126A8.06 8.06 0 0 0 14.5 2c-4.449 0-8.056 3.582-8.056 8s3.607 8 8.056 8a8.06 8.06 0 0 0 6.81-3.726 6.45 6.45 0 0 1-4.796 2.126c-3.56 0-6.444-2.865-6.444-6.4s2.885-6.4 6.444-6.4"
         />
         <path
-          fill="#DD2033"
-          d="m39.704 24.34-2.926-7.562 7.563 2.926 6.157-4.762-.088 7.966 6.732 4.62-8.048 1.566-1.567 8.048-4.619-6.732-7.966.088 4.762-6.157Z"
+          fill="#dd2033"
+          d="m15.992 9.736-1.179-3.025 3.047 1.17 2.48-1.904-.036 3.186 2.712 1.848-3.242.626-.631 3.22-1.86-2.693-3.21.035z"
         />
       </g>
     </CountrySymbol>

@@ -18,7 +18,7 @@ import type { Meta, StoryFn } from "@storybook/react-vite";
 import { type ChangeEvent, useState } from "react";
 
 import "./overlay.stories.css";
-import { CloseIcon } from "@salt-ds/icons";
+import { CloseIcon, MicroMenuIcon } from "@salt-ds/icons";
 
 export default {
   title: "Core/Overlay",
@@ -332,6 +332,31 @@ export const WithActions = ({ onOpenChange }: OverlayProps) => {
             }}
             id={id}
           />
+        </OverlayPanelContent>
+      </OverlayPanel>
+    </Overlay>
+  );
+};
+
+export const WithTooltip: StoryFn<OverlayProps> = ({ ...args }) => {
+  const id = useId();
+
+  return (
+    <Overlay {...args}>
+      <Tooltip content="Show content">
+        <OverlayTrigger>
+          <Button aria-label="Show content">
+            <MicroMenuIcon aria-hidden />
+          </Button>
+        </OverlayTrigger>
+      </Tooltip>
+
+      <OverlayPanel aria-labelledby={id}>
+        <OverlayPanelContent>
+          <h3 id={id} className="content-heading">
+            Title
+          </h3>
+          <div>Content of Overlay</div>
         </OverlayPanelContent>
       </OverlayPanel>
     </Overlay>

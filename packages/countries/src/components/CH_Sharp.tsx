@@ -17,7 +17,7 @@ const CH_Sharp = forwardRef<SVGSVGElement, CH_SharpProps>(function CH_Sharp(
     <CountrySymbol
       data-testid="CH_Sharp"
       aria-label="Switzerland"
-      viewBox="0 0 72 50"
+      viewBox="0 0 29 20"
       ref={ref}
       sharp
       {...props}
@@ -29,13 +29,13 @@ const CH_Sharp = forwardRef<SVGSVGElement, CH_SharpProps>(function CH_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h72v50H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-CH-a)`}>
-        <path fill="#DD2033" d="M0 0h72v50H0z" />
+        <path fill="#dd2033" d="M0 0h29v20H0z" />
         <path
-          fill="#F5F7F8"
-          d="M55 30.542V19.458H41.542V6H30.458v13.458H17v11.084h13.458V44h11.084V30.542H55Z"
+          fill="#f5f7f8"
+          d="M22 12.188V7.812h-5.312V2.5h-4.375v5.313H7v4.375h5.313V17.5h4.374v-5.312z"
         />
       </g>
     </CountrySymbol>
