@@ -1,6 +1,6 @@
+import { FormField, FormFieldLabel } from "@salt-ds/core";
 import * as numberInputStories from "@stories/number-input/number-input.stories";
 import { composeStories } from "@storybook/react-vite";
-import { FormField, FormFieldLabel } from "@salt-ds/core";
 
 const composedStories = composeStories(numberInputStories);
 
