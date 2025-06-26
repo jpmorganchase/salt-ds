@@ -90,7 +90,8 @@
 }
 
 .saltDropdown-bordered.saltDropdown:focus .saltDropdown-activationIndicator {
-  border-bottom-width: calc(var(--salt-size-fixed-200) - var(--salt-size-fixed-100));
+  /* Activation indicator width minus the border from the input. */
+  border-bottom-width: var(--salt-size-fixed-100);
 }
 
 .saltDropdown-primary {

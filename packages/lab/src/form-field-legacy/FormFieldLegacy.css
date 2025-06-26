@@ -57,7 +57,7 @@
 .saltFormFieldLegacy.saltFormFieldLegacy-focused:hover,
 .saltFormFieldLegacy.saltFormFieldLegacy-lowFocused:hover {
   --formFieldLegacy-activationIndicator-color: var(--salt-editable-borderColor-active);
-  --formFieldLegacy-activationIndicator-size: var(--salt-editable-borderWidth-active);
+  --formFieldLegacy-activationIndicator-size: var(--salt-size-fixed-200);
   --formFieldLegacy-activationIndicator-style: var(--salt-editable-borderStyle-active);
 
   --saltInputLegacy-cursor: var(--salt-editable-cursor-active);

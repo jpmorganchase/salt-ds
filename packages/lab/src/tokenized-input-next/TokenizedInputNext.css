@@ -40,7 +40,7 @@
 .saltTokenizedInputNext:active {
   --tokenizedInput-borderColor: var(--salt-editable-borderColor-active);
   --tokenizedInput-borderStyle: var(--salt-editable-borderStyle-active);
-  --tokenizedInput-activationIndicator-borderWidth: var(--salt-editable-borderWidth-active);
+  --tokenizedInput-activationIndicator-borderWidth: var(--salt-size-fixed-200);
 
   background: var(--tokenizedInput-background-active);
   cursor: var(--salt-editable-cursor-active);
@@ -134,7 +134,7 @@
 /* Styling when focused */
 .saltTokenizedInputNext-focused {
   --tokenizedInput-borderColor: var(--tokenizedInput-outlineColor);
-  --tokenizedInput-activationIndicator-borderWidth: var(--salt-editable-borderWidth-active);
+  --tokenizedInput-activationIndicator-borderWidth: var(--salt-size-fixed-200);
 
   outline: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--tokenizedInput-outlineColor);
 }
@@ -187,7 +187,7 @@
 /* Style applied if active or focused when `bordered={true}` */
 .saltTokenizedInputNext-bordered:active,
 .saltTokenizedInputNext-bordered.saltTokenizedInputNext-focused {
-  --tokenizedInput-activationIndicator-borderWidth: var(--salt-editable-borderWidth-active);
+  --tokenizedInput-activationIndicator-borderWidth: var(--salt-size-fixed-200);
 }
 
 /* Styling when focused if `disabled={true}` or `readOnly={true}` when `bordered={true}` */

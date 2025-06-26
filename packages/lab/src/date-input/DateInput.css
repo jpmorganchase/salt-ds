@@ -90,7 +90,8 @@
 }
 
 .saltDateInput-bordered.saltDateInput-focused .saltDateInput-activationIndicator {
-  border-bottom-width: calc(var(--salt-size-fixed-200) - var(--salt-size-fixed-100));
+  /* Activation indicator width minus the border from the input. */
+  border-bottom-width: var(--salt-size-fixed-100);
 }
 
 /* Class applied if `variant="primary"` */
@@ -202,7 +203,7 @@
 
 .saltDateInput-startAdornmentContainer > .saltButton,
 .saltDateInput-endAdornmentContainer > .saltButton {
-  --saltButton-padding: calc(var(--salt-spacing-50) - var(--salt-size-fixed-100));
+  --saltButton-padding: calc(var(--salt-spacing-50) - var(--button-borderWidth));
   --saltButton-height: calc(var(--salt-size-base) - var(--salt-spacing-100));
   --saltButton-borderRadius: var(--salt-palette-corner-weaker);
 }

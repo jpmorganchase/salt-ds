@@ -2,8 +2,6 @@
 "@salt-ds/theme": minor
 ---
 
-W# Please enter a summary for your changes.
-
 Added new fixed size tokens.
 
 | Token                   | All densities (px) |
