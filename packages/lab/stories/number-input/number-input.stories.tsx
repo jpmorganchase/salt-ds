@@ -18,44 +18,40 @@ export default {
   component: NumberInput,
 } as Meta<typeof NumberInput>;
 
-export const Default: StoryFn<NumberInputProps> = (args) => {
-  return <NumberInput {...args} />;
-};
-Default.args = {
-  defaultValue: 0,
+const Template: StoryFn = ({ ...args }) => {
+  return (
+    <FormField>
+      <FormFieldLabel>Number input</FormFieldLabel>
+      <NumberInput {...args} />
+    </FormField>
+  );
 };
 
-export const Bordered: StoryFn<NumberInputProps> = (args) => {
-  return <NumberInput {...args} />;
-};
+export const Default = Template.bind({});
+
+export const Bordered = Template.bind({});
+
 Bordered.args = {
   bordered: true,
   defaultValue: 0,
 };
 
-export const Secondary: StoryFn<NumberInputProps> = (args) => {
-  return <NumberInput {...args} variant="secondary" />;
-};
+export const Secondary = Template.bind({});
+
 Secondary.args = {
   defaultValue: 0,
+  variant: "secondary",
 };
 
-export const ReadOnly: StoryFn<NumberInputProps> = (args) => {
-  return (
-    <FormField>
-      <FormFieldLabel>Read-only Number Input</FormFieldLabel>
-      <NumberInput {...args} />
-    </FormField>
-  );
-};
+export const ReadOnly = Template.bind({});
+
 ReadOnly.args = {
   readOnly: true,
   defaultValue: 5,
 };
 
-export const Disabled: StoryFn<NumberInputProps> = (args) => {
-  return <NumberInput {...args} />;
-};
+export const Disabled = Template.bind({});
+
 Disabled.args = {
   disabled: true,
   defaultValue: 5,
@@ -65,26 +61,26 @@ export const Validation: StoryFn<typeof NumberInput> = (args) => {
   return (
     <StackLayout>
       <FormField validationStatus="error">
-        <FormFieldLabel>Error Number Input</FormFieldLabel>
+        <FormFieldLabel>Error</FormFieldLabel>
         <NumberInput defaultValue={0} {...args} />
       </FormField>
       <FormField validationStatus="warning">
-        <FormFieldLabel>Warning Number Input</FormFieldLabel>
+        <FormFieldLabel>Warning</FormFieldLabel>
         <NumberInput defaultValue={0} {...args} />
       </FormField>
       <FormField validationStatus="success">
-        <FormFieldLabel>Success Number Input</FormFieldLabel>
+        <FormFieldLabel>Success</FormFieldLabel>
         <NumberInput defaultValue={0} {...args} />
       </FormField>
     </StackLayout>
   );
 };
 
-export const DecimalPlaces: StoryFn<NumberInputProps> = (args) => {
-  return <NumberInput step={0.01} {...args} />;
-};
+export const DecimalPlaces = Template.bind({});
+
 DecimalPlaces.args = {
   defaultValue: 0,
+  decimalScale: 2,
 };
 
 const accessibleTextStyles = {
@@ -95,10 +91,10 @@ const accessibleTextStyles = {
 } as React.CSSProperties;
 
 export const Controlled: StoryFn<NumberInputProps> = (args) => {
-  const [value, setValue] = useState<number | string>("1.2456avd");
+  const [value, setValue] = useState<number | string>(1.2554534);
   const [accessibleText, setAccessibleText] = useState("");
 
-  const formFieldLabel = "Number Input";
+  const formFieldLabel = "Number input";
   const accessibleTextId = useId();
 
   const clearAccessibleText = () =>
@@ -116,6 +112,7 @@ export const Controlled: StoryFn<NumberInputProps> = (args) => {
         max={2}
         value={value}
         onChange={(_event, value) => {
+          console.log("type of value in on change", typeof value);
           setValue(value);
         }}
         endAdornment={
@@ -170,7 +167,7 @@ export const MinAndMaxValue: StoryFn<NumberInputProps> = (args) => {
 
   return (
     <FormField validationStatus={getValidationStatus()}>
-      <FormFieldLabel>Number Input</FormFieldLabel>
+      <FormFieldLabel>Number input</FormFieldLabel>
       <NumberInput
         {...args}
         value={value}
@@ -188,7 +185,7 @@ export const MinAndMaxValue: StoryFn<NumberInputProps> = (args) => {
   );
 };
 
-export const clamping: StoryFn<NumberInputProps> = (args) => {
+export const Clamping: StoryFn<NumberInputProps> = (args) => {
   const [value, setValue] = useState<number | string>(2);
   const max = 5;
   const min = 0;
@@ -246,9 +243,11 @@ export const clamping: StoryFn<NumberInputProps> = (args) => {
 export const CustomStep: StoryFn<NumberInputProps> = (args) => {
   return (
     <FormField>
-      <FormFieldLabel>Number Input</FormFieldLabel>
+      <FormFieldLabel>Number input</FormFieldLabel>
       <NumberInput {...args} />
-      <FormFieldHelperText>Custom step 5 and step block 50</FormFieldHelperText>
+      <FormFieldHelperText>
+        Custom step 5 and step multiplier 10
+      </FormFieldHelperText>
     </FormField>
   );
 };
@@ -384,16 +383,10 @@ CustomButtons.args = {
   textAlign: "center",
 };
 
-export const HiddenButtons: StoryFn<NumberInputProps> = (args) => {
-  return (
-    <FormField>
-      <FormFieldLabel>Number Input</FormFieldLabel>
-      <NumberInput {...args} />
-    </FormField>
-  );
-};
+export const HiddenButtons = Template.bind({});
 HiddenButtons.args = {
   hideButtons: true,
+  defaultValue: 0,
 };
 
 export const ControlledFormatting: StoryFn<NumberInputProps> = (args) => {
@@ -446,7 +439,7 @@ export const UncontrolledFormatting: StoryFn<NumberInputProps> = (args) => {
     <StackLayout>
       <FormField>
         <FormFieldLabel>
-          With custom format function, strict clamping behaviour
+          With custom format function and clamping
         </FormFieldLabel>
         <NumberInput
           {...args}
@@ -461,9 +454,7 @@ export const UncontrolledFormatting: StoryFn<NumberInputProps> = (args) => {
         <FormFieldHelperText>Please enter a number</FormFieldHelperText>
       </FormField>
       <FormField>
-        <FormFieldLabel>
-          With Intl Number Format, thousands separator
-        </FormFieldLabel>
+        <FormFieldLabel>With Intl Number Format</FormFieldLabel>
         <NumberInput
           defaultValue={1000000}
           format={(value) => {
@@ -477,10 +468,7 @@ export const UncontrolledFormatting: StoryFn<NumberInputProps> = (args) => {
         />
       </FormField>
       <FormField>
-        <FormFieldLabel>
-          With Intl Number Format's decimals, auto-generated decimal scale based
-          initial value
-        </FormFieldLabel>
+        <FormFieldLabel>With Intl Number Format</FormFieldLabel>
         <NumberInput
           defaultValue={10.5}
           format={(value) => {
@@ -493,7 +481,7 @@ export const UncontrolledFormatting: StoryFn<NumberInputProps> = (args) => {
         />
       </FormField>
       <FormField>
-        <FormFieldLabel>With step = 0.1, decimal scale set to 2</FormFieldLabel>
+        <FormFieldLabel>With step 0.1, decimal scale 2</FormFieldLabel>
         <NumberInput defaultValue={10.236} decimalScale={2} step={0.1} />
       </FormField>
     </StackLayout>

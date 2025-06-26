@@ -15,6 +15,7 @@ import { toFloat } from "./internal/utils";
  */
 export const useNumberInput = ({
   disabled,
+  format,
   inputRef,
   max = Number.MAX_SAFE_INTEGER,
   min = Number.MIN_SAFE_INTEGER,
@@ -30,6 +31,7 @@ export const useNumberInput = ({
 }: Pick<
   NumberInputProps,
   | "disabled"
+  | "format"
   | "inputRef"
   | "max"
   | "min"
@@ -48,11 +50,14 @@ export const useNumberInput = ({
   const updateValue = useCallback(
     (event: SyntheticEvent | undefined, nextValue: number) => {
       if (readOnly) return;
-      const updatedValue = nextValue.toFixed(decimalScale);
+      const updatedValue = !format
+        ? nextValue.toFixed(decimalScale)
+        : nextValue;
+
       setValue(updatedValue);
       onChange?.(event, toFloat(updatedValue));
     },
-    [onChange, readOnly, setValue, decimalScale],
+    [onChange, readOnly, setValue, decimalScale, format],
   );
 
   const decrementValue = useCallback(

@@ -35,7 +35,7 @@ export const ExamplesGrid: StoryFn<QAContainerProps> = (props) => {
       />
       <NumberInput
         decimalScale={2}
-        defaultValue="readOnly"
+        defaultValue={5}
         max={10}
         min={-5}
         readOnly
@@ -43,7 +43,7 @@ export const ExamplesGrid: StoryFn<QAContainerProps> = (props) => {
       />
       <NumberInput
         decimalScale={2}
-        defaultValue="disabled"
+        defaultValue={5}
         disabled
         max={10}
         min={-5}

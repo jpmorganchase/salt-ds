@@ -1,6 +1,7 @@
 import { FormField, FormFieldLabel } from "@salt-ds/core";
 import * as numberInputStories from "@stories/number-input/number-input.stories";
 import { composeStories } from "@storybook/react-vite";
+import { NumberInput } from "packages/lab/src/number-input";
 
 const composedStories = composeStories(numberInputStories);
 
@@ -25,7 +26,7 @@ describe("Number Input", () => {
     cy.findAllByRole("button", { hidden: true }).should("have.length", 2);
 
     cy.findByRole("spinbutton").should("exist");
-    cy.findByRole("spinbutton").should("have.value", "0");
+    cy.findByRole("spinbutton").should("have.value", "");
   });
 
   it("increments the default value on button click", () => {
@@ -493,8 +494,8 @@ describe("Number Input", () => {
       cy.mount(
         <Default
           defaultValue={12}
-          format={(value) => `${value}%`}
-          parse={(value) => String(value).replace(/%/g, "")}
+          format={(value: string | number) => `${value}%`}
+          parse={(value: string | number) => String(value).replace(/%/g, "")}
           onChange={changeSpy}
         />,
       );
@@ -599,6 +600,14 @@ describe("Number Input", () => {
       );
       cy.findByRole("textbox").should("have.value", "#");
     });
+
+    it("should maintain its value on focus and on blur", () => {
+      cy.mount(<ReadOnly defaultValue={5} decimalScale={2} />);
+
+      cy.findByRole("textbox").focus().should("have.value", 5);
+      cy.realPress("Tab");
+      cy.findByRole("textbox").should("have.value", 5);
+    });
   });
 
   describe("WHEN used in Formfield", () => {
@@ -607,7 +616,7 @@ describe("Number Input", () => {
         cy.mount(
           <FormField disabled>
             <FormFieldLabel>Disabled form field</FormFieldLabel>
-            <Default />
+            <NumberInput />
           </FormField>,
         );
         cy.wait(1000);
@@ -623,7 +632,7 @@ describe("Number Input", () => {
         cy.mount(
           <FormField necessity="required">
             <FormFieldLabel>Form Field</FormFieldLabel>
-            <Default />
+            <NumberInput />
           </FormField>,
         );
         cy.wait(1000);
@@ -639,7 +648,7 @@ describe("Number Input", () => {
         cy.mount(
           <FormField necessity="asterisk">
             <FormFieldLabel>Form Field</FormFieldLabel>
-            <Default />
+            <NumberInput />
           </FormField>,
         );
         cy.wait(1000);
@@ -652,7 +661,7 @@ describe("Number Input", () => {
         cy.mount(
           <FormField necessity="optional">
             <FormFieldLabel>Form Field</FormFieldLabel>
-            <Default />
+            <NumberInput />
           </FormField>,
         );
         cy.wait(1000);
@@ -668,7 +677,7 @@ describe("Number Input", () => {
         cy.mount(
           <FormField readOnly>
             <FormFieldLabel>Readonly form field</FormFieldLabel>
-            <Default />
+            <NumberInput />
           </FormField>,
         );
         cy.wait(1000);

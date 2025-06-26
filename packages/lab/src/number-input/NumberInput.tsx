@@ -287,6 +287,7 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       stepMultiplier,
       setIsEditing,
       value,
+      format,
     });
 
     const clampAndFix = (value: number) => {
@@ -299,7 +300,7 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
 
     // biome-ignore lint/correctness/useExhaustiveDependencies: We do not want to re-render when  display value changes
     useEffect(() => {
-      const updateDisplayValue = () => {
+      const formatValue = () => {
         const sanitizedValue = sanitizeInput(value);
         const floatValue = toFloat(sanitizedValue);
         if (
@@ -314,7 +315,7 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
         const formattedValue = format ? format(clampedValue) : clampedValue;
         return formattedValue;
       };
-      const updatedValue = updateDisplayValue();
+      const updatedValue = formatValue();
       setDisplayValue(updatedValue);
     }, [
       value,
@@ -333,6 +334,7 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
     }, [displayValue, value]);
 
     const handleInputFocus = (event: FocusEvent<HTMLInputElement>) => {
+      if (isReadOnly) return;
       const parsedValue = parse?.(value) ?? value;
       const updatedValue = !isEmpty(parsedValue)
         ? clampAndFix(toFloat(parsedValue))
@@ -342,6 +344,7 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
     };
 
     const handleInputBlur = (event: FocusEvent<HTMLInputElement>) => {
+      if (isReadOnly) return;
       setIsEditing(false);
       resetCaret();
       const inputValue = event.target.value;

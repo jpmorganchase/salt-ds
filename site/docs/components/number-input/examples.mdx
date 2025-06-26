@@ -10,15 +10,15 @@ data:
 
 ## Default
 
-The `NumberInput`, by default, features an increment `step` of 1, enabling precise value adjustments. For larger value adjustments, users can utilize the `Shift` key in combination with the `Arrow` keys to apply a `stepMultiplier` which is 2 by default.
+The `NumberInput` is designed with a default increment step of 1, which is adjustable via the `step` prop for precise value changes. For larger adjustments, users can hold the Shift key while using the Arrow keys to apply a `stepMultiplier`, a prop that defaults to 2.
 
 <LivePreview componentName="number-input" exampleName="Default" />
 
 ## Variants
 
-The `NumberInput` is available in two variants: `primary` and `secondary`. The default variant is `primary` but you can switch to `secondary` using the `variant` prop.
+The `NumberInput` is available in two variants: primary and secondary. The default variant is primary but you can switch to secondary using the `variant` prop.
 
-When deciding between the `primary` and `secondary` variants, take into account the background color where the component will be displayed.
+When deciding between the primary and secondary variants, take into account the background color where the component will be displayed.
 
 <LivePreview componentName="number-input" exampleName="Variants" />
 
@@ -35,7 +35,8 @@ To limit the range of accepted values, you can specify a minimum, maximum, or bo
 
 ## Clamp behaviour
 
-You can clamp out of range values. (To complete).
+By default, even when minimum and maximum values are specified, they are not strictly enforced, allowing users to type values outside this range. However, by setting the prop `clampValue` to true, the
+input will automatically adjust to the nearest minimum or maximum value when the input field loses focus.
 
 <LivePreview componentName="number-input" exampleName="ClampBehaviour" />
 
@@ -52,9 +53,7 @@ The `NumberInput` can display validation states, `error`, `warning`, and `succes
 
 ## Decimal scale
 
-The `decimalScale` prop controls how many decimal places are allowed. By default, the `decimalScale` is auto-generated using the number of decimal places in the `step` or `defaultValue` or `value` prop, whichever is greater.
-
-When `clampBehaviour` is set to `strict` mode, you can not type more than the allowed decimal places.
+The `decimalScale` prop controls how many decimal places are allowed. By default, the `decimalScale` is auto-generated using the number of decimal places in the `step` or `defaultValue` or `value` prop, whichever is greater, however, you can set it to any value of your choice.
 
 ### Best practices
 
@@ -64,18 +63,23 @@ When configuring the number of decimal places, ensure it aligns with the specifi
 
 ## Formatting
 
-With Intl Number Format, start and end adornments and custom formatting.
+You can format the value of the `NumberInput` using the `format` callback prop. It typically works alongside a `parse` callback for complex formatting.
+
+Users will be able to see the formatted value in the input, e.g. "5K". When the input gains focus, the value will be parsed into its numerical form, so "5K" becomes "5000". This allows users to edit the values with precision. When the input loses focus, the value will be formatted again.
+
+### Best practices
+
+The `format` callback has been designed to work with most formatting libraries, e.g. Intl.NumberFormat. However, it is highly recommended to provide a `parse` callback alongside `format` to determine the correct numerical value so the precision of the value can be maintained.
 
 <LivePreview componentName="number-input" exampleName="Formatting" />
 
 ## Custom steps
 
-You can customize the `default` value of the `NumberInput` along with `step` and `stepMultiplier` to tailor the values according to your usecase.
+The `step` prop allows you to define the increment and decrement sizes for value adjustments.
 
 ### Best practices
 
-- Choose a `default` value that represents the most common or desired input for the majority of users, such as the number most frequently submitted.
-- Make sure the `step` value is suitable for the context. For example, when users are inputting a "Number of people," increments of 0.5 may cause confusion. If unsure, maintain the step at 1 to ensure clarity and simplicity.
+Make sure the `step` value is suitable for the context. For example, when users are inputting a "Number of people," increments of 0.5 may cause confusion. If unsure, maintain the step at 1 to ensure clarity and simplicity.
 
 <LivePreview componentName="number-input" exampleName="StepAndBlock" />
 
