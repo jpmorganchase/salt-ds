@@ -1,5 +1,5 @@
 .saltOverflowSeparator {
   background: var(--salt-separable-tertiary-borderColor);
-  height: var(--salt-size-border);
+  height: var(--salt-size-fixed-100);
   margin: calc(var(--salt-size-unit) / 2) 0;
 }

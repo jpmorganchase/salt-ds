@@ -253,7 +253,11 @@ export const VerticalGroup = () => {
   const [active, setActive] = useState(items[0]);
   return (
     <nav>
-      <StackLayout className="vertical" as="ul" gap="var(--salt-size-border)">
+      <StackLayout
+        className="vertical"
+        as="ul"
+        gap="var(--salt-spacing-fixed-100)"
+      >
         {items.map((item) => (
           <li key={item}>
             <NavigationItem
@@ -282,7 +286,11 @@ export const VerticalGroupWithIconAndBadge = () => {
 
   return (
     <nav>
-      <StackLayout className="vertical" as="ul" gap="var(--salt-size-border)">
+      <StackLayout
+        className="vertical"
+        as="ul"
+        gap="var(--salt-spacing-fixed-100)"
+      >
         {items.map((item, index) => (
           <li key={item}>
             <NavigationItem
@@ -344,7 +352,11 @@ export const VerticalNestedGroup = () => {
 
   return (
     <nav>
-      <StackLayout as="ul" gap="var(--salt-size-border)" className="vertical">
+      <StackLayout
+        as="ul"
+        gap="var(--salt-spacing-fixed-100)"
+        className="vertical"
+      >
         {multipleLevelNesting.map(({ name, subNav, href }) => (
           <li key={name}>
             <NavigationItem
@@ -384,7 +396,7 @@ export const VerticalNestedGroup = () => {
             {expanded.includes(name) && (
               <StackLayout
                 as="ul"
-                gap="var(--salt-size-border)"
+                gap="var(--salt-spacing-fixed-100)"
                 className="vertical"
               >
                 {subNav?.map((item) => {
@@ -435,7 +447,7 @@ export const VerticalNestedGroup = () => {
                       {expanded.includes(item.name) && (
                         <StackLayout
                           as="ul"
-                          gap="var(--salt-size-border)"
+                          gap="var(--salt-spacing-fixed-100)"
                           className="vertical"
                         >
                           {item.subNav?.map((nestedItem) => {
@@ -480,7 +492,11 @@ export const VerticalNestedGroupNoIcon = () => {
 
   return (
     <nav>
-      <StackLayout as="ul" gap="var(--salt-size-border)" className="vertical">
+      <StackLayout
+        as="ul"
+        gap="var(--salt-spacing-fixed-100)"
+        className="vertical"
+      >
         {multipleLevelNesting.map(({ name, subNav, href }) => (
           <li key={name}>
             <NavigationItem
@@ -522,7 +538,7 @@ export const VerticalNestedGroupNoIcon = () => {
             {expanded.includes(name) && (
               <StackLayout
                 as="ul"
-                gap="var(--salt-size-border)"
+                gap="var(--salt-spacing-fixed-100)"
                 className="vertical"
               >
                 {subNav?.map((item) => {
@@ -573,7 +589,7 @@ export const VerticalNestedGroupNoIcon = () => {
                       {expanded.includes(item.name) && (
                         <StackLayout
                           as="ul"
-                          gap="var(--salt-size-border)"
+                          gap="var(--salt-spacing-fixed-100)"
                           className="vertical"
                         >
                           {item.subNav?.map((nestedItem) => {
@@ -621,7 +637,11 @@ export const WithRenderElement = () => {
   const [expanded, setExpanded] = useState<boolean>(false);
   return (
     <nav>
-      <StackLayout as="ul" gap="var(--salt-size-border)" className="vertical">
+      <StackLayout
+        as="ul"
+        gap="var(--salt-spacing-fixed-100)"
+        className="vertical"
+      >
         <li>
           <NavigationItem
             expanded={expanded}
@@ -663,7 +683,11 @@ export const WithRenderProp = () => {
 
   return (
     <nav>
-      <StackLayout as="ul" gap="var(--salt-size-border)" className="vertical">
+      <StackLayout
+        as="ul"
+        gap="var(--salt-spacing-fixed-100)"
+        className="vertical"
+      >
         <li>
           <NavigationItem
             expanded={expanded}

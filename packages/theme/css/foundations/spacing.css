@@ -39,4 +39,14 @@
   --salt-spacing-850: calc(8.5 * var(--salt-spacing-100));
   --salt-spacing-900: calc(9 * var(--salt-spacing-100));
   --salt-spacing-950: calc(9.5 * var(--salt-spacing-100));
+
+  --salt-spacing-fixed-100: 1px;
+  --salt-spacing-fixed-200: 2px;
+  --salt-spacing-fixed-300: 3px;
+  --salt-spacing-fixed-400: 4px;
+  --salt-spacing-fixed-500: 5px;
+  --salt-spacing-fixed-600: 6px;
+  --salt-spacing-fixed-700: 7px;
+  --salt-spacing-fixed-800: 8px;
+  --salt-spacing-fixed-900: 9px;
 }
