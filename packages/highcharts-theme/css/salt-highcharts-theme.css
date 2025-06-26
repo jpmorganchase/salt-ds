@@ -127,3 +127,7 @@
 .highcharts-theme-salt .highcharts-background {
   fill: var(--salt-container-primary-background);
 }
+
+.highcharts-theme-salt .highcharts-legend-navigation {
+  font-size: var(--salt-text-label-fontSize);
+}
