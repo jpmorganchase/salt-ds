@@ -6,12 +6,15 @@ import { type ComponentPropsWithoutRef, forwardRef } from "react";
 
 import tableCss from "./Table.css";
 
+export const TableVariantValues = ["primary", "secondary", "tertiary"] as const;
+export type TableVariant = (typeof TableVariantValues)[number];
+
 export interface TableProps extends ComponentPropsWithoutRef<"table"> {
   /**
    * Styling variant. Defaults to "primary".
    * @default primary
    */
-  variant?: "primary" | "secondary" | "tertiary";
+  variant?: TableVariant;
   /**
    * Divider styling variant. Defaults to "secondary";
    * @default secondary
@@ -21,7 +24,7 @@ export interface TableProps extends ComponentPropsWithoutRef<"table"> {
    * Zebra styling. Applies variant to every other row.
    * @default undefined
    */
-  zebra?: "primary" | "secondary" | "tertiary";
+  zebra?: TableVariant;
 }
 
 export const withTableBaseName = makePrefixer("saltTable");

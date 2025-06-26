@@ -1,7 +1,7 @@
 import { TBody, TD, TFoot, TH, THead, TR, Table } from "@salt-ds/lab";
 import type { ReactElement } from "react";
 
-export const Default = (): ReactElement => {
+export const Primary = (): ReactElement => {
   return (
     <Table>
       <THead>
