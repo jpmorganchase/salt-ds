@@ -30,7 +30,8 @@
 }
 
 .carousel.carouselMultipleSlides {
-  --saltCarousel-slide-size: 50%;
+  /** Allow 4% of the next slide to be visible by reducing each slide by 2% */
+  --saltCarousel-slide-size: 48%;
 }
 
 .carouselNumber {

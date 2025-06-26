@@ -30,10 +30,10 @@ export interface CarouselAutoplayIndicatorProps
 const withBaseName = makePrefixer("saltCarouselAutoplayIndicator");
 
 const sizeAndStrokeWidthMapping = {
-  high: { size: 24, strokeWidth: 4 },
-  medium: { size: 24, strokeWidth: 4 },
-  low: { size: 36, strokeWidth: 4 },
-  touch: { size: 44, strokeWidth: 4 },
+  high: { size: 10, strokeWidth: 2 },
+  medium: { size: 12, strokeWidth: 2 },
+  low: { size: 14, strokeWidth: 2 },
+  touch: { size: 16, strokeWidth: 2 },
 };
 
 export const CarouselAutoplayIndicator = forwardRef<
