@@ -111,11 +111,17 @@
   position: absolute;
 }
 
-.saltCalendarDay-today > span:last-of-type,
-.saltCalendarDay-today > span:last-of-type:hover,
-.saltCalendarDay-outOfRange .saltCalendarDay-today > span:last-of-type:hover {
-  border-bottom: var(--salt-size-indicator) var(--salt-selectable-borderStyle) var(--salt-accent-borderColor);
-  margin-bottom: calc(var(--salt-size-indicator) * -1);
+.saltCalendarDay-today > span:last-of-type::after {
+  content: "";
+  display: block;
+  width: calc(100% - calc(var(--salt-spacing-50) * 2));
+  height: var(--salt-size-indicator);
+  background-color: var(--salt-accent-borderColor);
+  border-radius: var(--salt-palette-corner-weak);
+  position: absolute;
+  bottom: var(--salt-spacing-50);
+  left: var(--salt-spacing-50);
+  right: var(--salt-spacing-50);
 }
 
 .saltCalendarDay-disabled,
