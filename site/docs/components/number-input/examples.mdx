@@ -22,6 +22,12 @@ When deciding between the primary and secondary variants, take into account the 
 
 <LivePreview componentName="number-input" exampleName="Variants" />
 
+## Bordered
+
+By default, the `NumberInput` is transparent. You can add borders using the `bordered` prop.
+
+<LivePreview componentName="number-input" exampleName="Bordered" />
+
 ## Min and max value
 
 To limit the range of accepted values, you can specify a minimum, maximum, or both using the `min` and `max` props.
@@ -30,6 +36,7 @@ To limit the range of accepted values, you can specify a minimum, maximum, or bo
 
 - Clearly communicate the accepted value range by utilizing the `FormField`'s helper text to guide users.
 - Use the `FormField` error state to alert users when they manually enter a value outside the permitted range, indicating that the input is invalid.
+- Use the `clampValue` prop to enforce the value to be within range.
 
 <LivePreview componentName="number-input" exampleName="Limits" />
 

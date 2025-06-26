@@ -1,3 +1,4 @@
+export * from "./Bordered";
 export * from "./ButtonAdornments";
 export * from "./ClampBehaviour";
 export * from "./Decimals";
