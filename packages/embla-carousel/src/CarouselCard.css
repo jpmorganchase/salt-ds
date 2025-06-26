@@ -35,6 +35,7 @@
 }
 
 .saltCarouselCard-bordered {
+  background: var(--salt-container-primary-background);
   border: var(--salt-size-border) var(--salt-container-borderStyle) var(--salt-container-primary-borderColor);
   border-radius: var(--salt-palette-corner, 0);
 }

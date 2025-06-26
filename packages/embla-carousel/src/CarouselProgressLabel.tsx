@@ -73,7 +73,7 @@ export function CarouselProgressLabel({
   }, [emblaApi, handleSettle]);
 
   return (
-    <Text className={clsx(withBaseName(), className)} styleAs="h2" {...props}>
+    <Text className={clsx(withBaseName(), className)} {...props}>
       Slide {currentSlide} of {totalSlides}
     </Text>
   );
