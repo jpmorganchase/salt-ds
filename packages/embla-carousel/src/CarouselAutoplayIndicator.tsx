@@ -25,6 +25,10 @@ export interface CarouselAutoplayIndicatorProps
    * If `true`, the indicator is animated to visualize the time until the next slide.
    */
   isPlaying: boolean;
+  /**
+   * If `true`, the animation is paused.
+   */
+  isPaused?: boolean;
 }
 
 const withBaseName = makePrefixer("saltCarouselAutoplayIndicator");
@@ -39,68 +43,75 @@ const sizeAndStrokeWidthMapping = {
 export const CarouselAutoplayIndicator = forwardRef<
   HTMLDivElement,
   CarouselAutoplayIndicatorProps
->(({ className, duration, slideIndex, isPlaying, children, ...props }, ref) => {
-  const targetWindow = useWindow();
-  useComponentCssInjection({
-    testId: "salt-carousel-autoplay-indicator",
-    css: carouselAutoplayIndicator,
-    window: targetWindow,
-  });
+>(
+  (
+    { className, duration, slideIndex, isPlaying, isPaused = false, children, ...props },
+    ref
+  ) => {
+    const targetWindow = useWindow();
+    useComponentCssInjection({
+      testId: "salt-carousel-autoplay-indicator",
+      css: carouselAutoplayIndicator,
+      window: targetWindow,
+    });
 
-  const barRef = useRef<SVGCircleElement | null>(null);
-  const animationFrameId = useRef<number | null>(null);
+    const barRef = useRef<SVGCircleElement | null>(null);
+    const animationFrameId = useRef<number | null>(null);
 
-  const density = useDensity();
-  const { size, strokeWidth } = sizeAndStrokeWidthMapping[density];
-  const radius = (size - strokeWidth) / 2;
-  const circumference = 2 * Math.PI * radius;
+    const density = useDensity();
+    const { size, strokeWidth } = sizeAndStrokeWidthMapping[density];
+    const radius = (size - strokeWidth) / 2;
+    const circumference = 2 * Math.PI * radius;
 
-  useEffect(() => {
-    if (barRef.current) {
-      animationFrameId.current = requestAnimationFrame(() => {
-        if (!barRef.current) {
-          return;
-        }
-        barRef.current.style.animation = "none"; // Reset animation
-        barRef.current.style.strokeDashoffset = `${circumference}`;
+    useEffect(() => {
+      if (barRef.current) {
         animationFrameId.current = requestAnimationFrame(() => {
           if (!barRef.current) {
             return;
           }
-          barRef.current.style.animation = `indicatorAnimation ${duration}ms linear`;
-          barRef.current.style.animationPlayState = isPlaying
-            ? "running"
-            : "paused";
+          barRef.current.style.animation = "none"; // Reset animation
+          barRef.current.style.strokeDashoffset = `${circumference}`;
+          animationFrameId.current = requestAnimationFrame(() => {
+            if (!barRef.current) {
+              return;
+            }
+            barRef.current.style.animation = `indicatorAnimation ${duration}ms linear`;
+            barRef.current.style.animationPlayState = isPaused
+              ? "paused"
+              : isPlaying
+                ? "running"
+                : "paused";
+          });
         });
-      });
-    }
-
-    return () => {
-      if (animationFrameId.current !== null) {
-        cancelAnimationFrame(animationFrameId.current);
-        animationFrameId.current = null;
       }
-    };
-  }, [circumference, duration, slideIndex, isPlaying]);
 
-  return (
-    <div
-      ref={ref}
-      style={{
-        width: size,
-        height: size,
-        // @ts-ignore
-        "--salt-carousel-svg-circumference": circumference,
-      }}
-      className={clsx(withBaseName(), className)}
-      {...props}
-    >
-      <CarouselAutoplayIndicatorSVG
-        size={size}
-        strokeWidth={strokeWidth}
-        barRef={barRef}
-        radius={radius}
-      />
-    </div>
-  );
-});
+      return () => {
+        if (animationFrameId.current !== null) {
+          cancelAnimationFrame(animationFrameId.current);
+          animationFrameId.current = null;
+        }
+      };
+    }, [circumference, duration, slideIndex, isPlaying, isPaused]);
+
+    return (
+      <div
+        ref={ref}
+        style={{
+          width: size,
+          height: size,
+          // @ts-ignore
+          "--salt-carousel-svg-circumference": circumference,
+        }}
+        className={clsx(withBaseName(), className)}
+        {...props}
+      >
+        <CarouselAutoplayIndicatorSVG
+          size={size}
+          strokeWidth={strokeWidth}
+          barRef={barRef}
+          radius={radius}
+        />
+      </div>
+    );
+  }
+);
