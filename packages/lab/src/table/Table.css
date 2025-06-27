@@ -1,8 +1,8 @@
 /* Table: Main css class */
 .saltTable {
-  --table-header-height: calc(var(--salt-size-base) + var(--salt-spacing-100));
-  --table-footer-height: calc(var(--salt-size-base) + var(--salt-spacing-100));
-  --table-row-height: calc(var(--salt-size-base) + var(--salt-spacing-100));
+  --table-header-height: calc(var(--salt-size-base) + var(--salt-spacing-100) + var(--salt-size-fixed-100));
+  --table-footer-height: calc(var(--salt-size-base) + var(--salt-spacing-100) + var(--salt-size-fixed-100));
+  --table-row-height: calc(var(--salt-size-base) + var(--salt-spacing-100) + var(--salt-size-fixed-100));
 }
 
 .saltTable-primary {
@@ -70,6 +70,7 @@ table.saltTable thead {
   border-start-end-radius: var(--saltTable-thead-borderRadius-top, var(--salt-palette-corner));
   color: var(--salt-content-secondary-foreground);
   height: var(--table-header-height);
+  min-height: var(--table-header-height);
   font-size: var(--salt-text-label-fontSize);
   font-weight: var(--salt-text-label-fontWeight-strong);
   line-height: var(--salt-text-label-lineHeight);
@@ -125,6 +126,7 @@ table.saltTable tfoot {
   border-end-end-radius: var(--saltTable-thead-borderRadius-top, var(--salt-palette-corner));
   color: var(--salt-content-primary-foreground);
   height: var(--table-footer-height);
+  min-height: var(--table-footer-height);
   font-size: var(--salt-text-label-fontSize);
   font-weight: var(--salt-text-fontWeight-strong);
   white-space: nowrap;
@@ -200,6 +202,7 @@ table.saltTable tfoot {
 .saltTable-tr {
   background: var(--saltTable-thead-background, var(--table-background));
   height: var(--table-row-height);
+  min-height: var(--table-row-height);
 }
 
 .saltTable tbody .saltTable tr,
