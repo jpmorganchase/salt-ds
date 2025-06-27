@@ -202,7 +202,7 @@ table.saltTable tfoot {
 .saltTable-tr {
   align-items: center;
   background: var(--saltTable-thead-background, var(--table-background));
-  border-bottom: var(--salt-separable-borderStyle) var(--table-divider-color) var(--salt-size-border);
+  border-bottom: var(--salt-separable-borderStyle) var(--table-divider-color) var(--salt-size-fixed-100);
   height: var(--table-row-height);
 }
 
