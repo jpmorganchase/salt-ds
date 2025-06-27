@@ -10,6 +10,7 @@ const componentPackages = [
   "countries",
   "ag-grid-theme",
   "react-resizable-panel-theme",
+  "embla-carousel",
 ]; // Adding more packages here will generate additional prop files
 
 console.log("Generating props in packages:", componentPackages);
