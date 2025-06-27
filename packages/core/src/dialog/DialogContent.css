@@ -11,6 +11,7 @@
   flex: 1 1 auto;
 }
 .saltDialogContent-overflow {
+  min-height: calc(var(--salt-text-lineHeight) * 2);
   padding-right: var(--salt-spacing-100);
 }
 
