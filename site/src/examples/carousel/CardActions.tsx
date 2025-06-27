@@ -45,7 +45,7 @@ export const CardActions = (): ReactElement => {
               className={styles.carouselSlide}
               key={`${slideId}-${slide.title.replace(/ /g, "-")}-${index}`}
               id={`${slideId}-${slide.title.replace(/ /g, "-")}-${index}`}
-              aria-label={`Example slide ${index + 1}`}
+              aria-label={slide.title}
               appearance={"bordered"}
               media={
                 <img

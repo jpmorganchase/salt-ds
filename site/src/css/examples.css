@@ -1,9 +1,0 @@
-.saltCarouselAutoplayExample {
-  .saltCarouselCard a {
-    visibility: visible;
-  }
-  /** Do not make off-screen slides focusable */
-  .saltCarouselCard:not(.isSnapped) a {
-    visibility: hidden;
-  }
-}
