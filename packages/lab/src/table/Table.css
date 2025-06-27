@@ -181,7 +181,6 @@ table.saltTable tfoot {
   padding: var(--salt-spacing-100);
   position: relative;
   text-align: start;
-  font-weight: var(--salt-text-label-fontWeight-strong);
 }
 
 .saltTable-th + .saltTable-th::before,
