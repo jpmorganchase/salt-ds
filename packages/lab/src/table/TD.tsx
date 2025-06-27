@@ -10,16 +10,10 @@ import { withTableBaseName } from "./Table";
 
 import tableCss from "./Table.css";
 
-export interface TDProps extends ComponentPropsWithoutRef<"td"> {
-  /**
-   * Overflow wrap styling for the cell.
-   * @default anywhere
-   */
-  overflowWrap?: CSSProperties["overflowWrap"];
-}
+export interface TDProps extends ComponentPropsWithoutRef<"td">{};
 
 export const TD = forwardRef<HTMLTableCellElement, TDProps>(function TD(
-  { children, className, overflowWrap = "anywhere", style, ...rest },
+  { children, className,...rest },
   ref,
 ) {
   const targetWindow = useWindow();
@@ -28,17 +22,11 @@ export const TD = forwardRef<HTMLTableCellElement, TDProps>(function TD(
     css: tableCss,
     window: targetWindow,
   });
-
-  const tdStyles = {
-    ...style,
-    overflowWrap,
-  };
-
+  
   return (
     <td
       ref={ref}
       className={clsx(withTableBaseName("td"), className)}
-      style={tdStyles}
       {...rest}
     >
       {children}
