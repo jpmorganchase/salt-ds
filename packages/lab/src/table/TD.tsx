@@ -1,19 +1,15 @@
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import clsx from "clsx";
-import {
-  type CSSProperties,
-  type ComponentPropsWithoutRef,
-  forwardRef,
-} from "react";
+import { type ComponentPropsWithoutRef, forwardRef } from "react";
 import { withTableBaseName } from "./Table";
 
 import tableCss from "./Table.css";
 
-export interface TDProps extends ComponentPropsWithoutRef<"td">{};
+export interface TDProps extends ComponentPropsWithoutRef<"td"> {}
 
 export const TD = forwardRef<HTMLTableCellElement, TDProps>(function TD(
-  { children, className,...rest },
+  { children, className, ...rest },
   ref,
 ) {
   const targetWindow = useWindow();
@@ -22,7 +18,7 @@ export const TD = forwardRef<HTMLTableCellElement, TDProps>(function TD(
     css: tableCss,
     window: targetWindow,
   });
-  
+
   return (
     <td
       ref={ref}
