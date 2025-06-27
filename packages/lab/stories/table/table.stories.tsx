@@ -61,13 +61,13 @@ const Template: StoryFn = ({
           </TR>
         </THead>
         <TBody {...TBodyProps}>
-          {Array.from({ length: NUM_ROWS }, (_, i) => {
+          {Array.from({ length: NUM_ROWS }, (_, x) => {
             return (
-              <TR {...TRProps} key={`tr-${i}`}>
+              <TR {...TRProps} key={`tr-${x}`}>
                 {Array.from({ length: NUM_COLS }, (_, i) => {
                   return (
                     <TD {...TDProps} key={`td-${i}`}>
-                      Row {i}
+                      Row {x}
                     </TD>
                   );
                 })}
