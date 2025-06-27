@@ -359,7 +359,7 @@
 .ag-theme-salt-compact-light .ag-virtual-list-item:hover,
 .ag-theme-salt-compact-dark .ag-virtual-list-item:hover {
   background-color: var(--salt-selectable-background-hover);
-  cursor: pointer;
+  cursor: var(--salt-cursor-hover);
 }
 
 .ag-theme-salt-light .ag-label-align-right .ag-label,

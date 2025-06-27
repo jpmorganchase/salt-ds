@@ -2,7 +2,7 @@
   display: flex;
   gap: var(--salt-spacing-100);
   position: relative;
-  cursor: var(--salt-selectable-cursor-hover);
+  cursor: var(--salt-cursor-hover);
   color: var(--salt-content-primary-foreground);
 
   font-family: var(--salt-text-fontFamily);
@@ -13,7 +13,7 @@
 
 .saltSwitch-disabled {
   color: var(--salt-content-primary-foreground-disabled);
-  cursor: var(--salt-selectable-cursor-disabled);
+  cursor: var(--salt-cursor-disabled);
 }
 
 .saltSwitch-track {

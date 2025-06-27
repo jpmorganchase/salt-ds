@@ -22,7 +22,7 @@
 
 .saltInput:hover {
   background: var(--saltInput-background-hover, var(--input-background-hover));
-  cursor: var(--salt-editable-cursor-hover);
+  cursor: var(--salt-cursor-hover);
 }
 
 /* Style applied if `bordered={true}` */
@@ -160,21 +160,21 @@
 .saltInput-focused,
 .saltInput-focused:hover {
   background: var(--saltInput-background-active, var(--input-background-active));
-  cursor: var(--salt-editable-cursor-active);
+  cursor: var(--salt-cursor-active);
   outline: var(--saltInput-outline, var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--input-outlineColor));
 }
 
 /* Style applied if `readOnly={true}` */
 .saltInput.saltInput-readOnly {
   background: var(--input-background-readonly);
-  cursor: var(--salt-editable-cursor-readonly);
+  cursor: var(--salt-cursor-readonly);
 }
 
 /* Style applied to input if `disabled={true}` */
 .saltInput.saltInput-disabled,
 .saltInput.saltInput-disabled:hover {
   background: var(--input-background-disabled);
-  cursor: var(--salt-editable-cursor-disabled);
+  cursor: var(--salt-cursor-disabled);
   color: var(--saltInput-color-disabled, var(--salt-content-primary-foreground-disabled));
 }
 

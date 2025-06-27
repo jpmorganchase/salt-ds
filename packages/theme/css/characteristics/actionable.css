@@ -1,8 +1,4 @@
 .salt-theme {
-  --salt-actionable-cursor-hover: pointer;
-  --salt-actionable-cursor-active: pointer;
-  --salt-actionable-cursor-disabled: not-allowed;
-
   /* Accented bold */
   --salt-actionable-accented-bold-background-active: var(--salt-palette-interact-cta-background-active);
   --salt-actionable-accented-bold-background-disabled: var(--salt-palette-interact-cta-background-disabled);

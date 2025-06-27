@@ -5,6 +5,4 @@
   --salt-target-borderStyle: dashed;
   --salt-target-borderStyle-hover: solid;
   --salt-target-borderStyle-disabled: dashed;
-
-  --salt-target-cursor-disabled: not-allowed;
 }

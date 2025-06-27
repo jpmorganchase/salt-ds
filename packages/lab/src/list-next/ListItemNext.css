@@ -28,7 +28,7 @@
 /* Active list item on focus using keyboard navigation  */
 .saltListItemNext-highlighted:not([aria-disabled="true"]) {
   --listNext-item-background: var(--salt-selectable-background-hover);
-  cursor: var(--salt-selectable-cursor-hover);
+  cursor: var(--salt-cursor-hover);
 }
 
 .saltListItemNext[aria-selected="true"] {
@@ -40,7 +40,7 @@
 /* Style applied to disabled items */
 .saltListItemNext[aria-disabled="true"] {
   --listNext-item-text-color: var(--salt-content-primary-foreground-disabled);
-  cursor: var(--salt-selectable-cursor-disabled);
+  cursor: var(--salt-cursor-disabled);
 }
 .saltListItemNext[aria-disabled="true"] .saltText {
   color: var(--listNext-item-text-color);

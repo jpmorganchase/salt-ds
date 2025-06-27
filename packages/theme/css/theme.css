@@ -7,6 +7,7 @@
 @import url(foundations/alpha.css);
 @import url(foundations/animation.css);
 @import url(foundations/color.css);
+@import url(foundations/cursor.css);
 @import url(foundations/curve.css);
 @import url(foundations/duration.css);
 @import url(foundations/shadow.css);
@@ -36,7 +37,6 @@
 @import url(characteristics/actionable.css);
 @import url(characteristics/category.css);
 @import url(characteristics/container.css);
-@import url(characteristics/draggable.css);
 @import url(characteristics/target.css);
 @import url(characteristics/editable.css);
 @import url(characteristics/focused.css);

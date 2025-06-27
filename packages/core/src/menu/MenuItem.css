@@ -11,7 +11,7 @@
   display: flex;
   gap: var(--salt-spacing-100);
   position: relative;
-  cursor: var(--salt-selectable-cursor-hover);
+  cursor: var(--salt-cursor-hover);
   box-sizing: border-box;
   flex-shrink: 0;
 }
@@ -39,7 +39,7 @@
 .saltMenuItem[aria-disabled="true"]:active {
   background: var(--salt-selectable-background-disabled);
   color: var(--salt-content-primary-foreground-disabled);
-  cursor: var(--salt-selectable-cursor-disabled);
+  cursor: var(--salt-cursor-disabled);
   box-shadow: none;
 }
 
