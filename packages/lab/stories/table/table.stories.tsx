@@ -30,8 +30,6 @@ export default {
     THeadProps: { sticky: false, variant: undefined, divider: "primary" },
     TFootProps: { sticky: false, variant: undefined, divider: "tertiary" },
     TRProps: { divider: "secondary" },
-    TDProps: { overflowWrap: undefined },
-    THProps: { textOverflow: undefined },
     TBodyProps: {},
   },
 } as Meta<TablePropsAndCustomArgs>;
