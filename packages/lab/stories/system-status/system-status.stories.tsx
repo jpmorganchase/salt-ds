@@ -110,3 +110,67 @@ export const Placement: StoryFn<typeof SystemStatus> = (props) => {
     </StackLayout>
   );
 };
+
+export const WithActions: StoryFn<typeof SystemStatus> = (props) => (
+  <div style={{ width: 500 }}>
+    <SystemStatus {...props}>
+      <SystemStatusContent>
+        <Text color="inherit">
+          The system will be down for scheduled maintenance starting Friday,
+          June 21 from 11:00PM EST – 1:00AM EST Saturday, June 22
+        </Text>
+      </SystemStatusContent>
+      <Button aria-label="refresh" sentiment="neutral" appearance="transparent">
+        <CloseIcon />
+      </Button>
+    </SystemStatus>
+  </div>
+);
+
+export const WithActionsInherit: StoryFn<typeof SystemStatus> = (props) => (
+  <div style={{ width: 500 }}>
+    <SystemStatus {...props}>
+      <SystemStatusContent>
+        <Text color="inherit">
+          The system will be down for scheduled maintenance starting Friday,
+          June 21 from 11:00PM EST – 1:00AM EST Saturday, June 22
+        </Text>
+      </SystemStatusContent>
+      <Button
+        aria-label="close"
+        sentiment="neutral"
+        appearance="transparent"
+        style={{ color: "inherit" }}
+      >
+        <CloseIcon />
+      </Button>
+    </SystemStatus>
+  </div>
+);
+
+const statusToSentiment = {
+  "error": "negative",
+  "info": "accented",
+  "success": "positive",
+  "warning": "caution"
+}
+
+export const WithSolidActions: StoryFn<typeof SystemStatus> = (props) => (
+  <div style={{ width: 500 }}>
+    <SystemStatus {...props}>
+      <SystemStatusContent>
+        <Text color="inherit">
+          The system will be down for scheduled maintenance starting Friday,
+          June 21 from 11:00PM EST – 1:00AM EST Saturday, June 22
+        </Text>
+      </SystemStatusContent>
+      <Button
+        aria-label="close"
+        sentiment={statusToSentiment[props.status] ?? "accented"}
+        appearance="solid"
+      >
+        <CloseIcon />
+      </Button>
+    </SystemStatus>
+  </div>
+);
