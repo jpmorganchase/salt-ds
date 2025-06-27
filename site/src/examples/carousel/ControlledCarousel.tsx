@@ -27,7 +27,6 @@ export const ControlledCarousel = (): ReactElement => {
   const { matchedBreakpoints } = useBreakpoint();
   const isMobile = matchedBreakpoints.indexOf("sm") === -1;
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: API can re-init after first render
   useEffect(() => {
     if (!emblaApi) {
       return;
