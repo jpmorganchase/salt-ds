@@ -73,6 +73,7 @@ table.saltTable thead {
   height: var(--table-header-height);
   font-size: var(--salt-text-label-fontSize);
   font-weight: var(--salt-text-label-fontWeight-strong);
+  line-height: var(--salt-text-label-lineHeight);
   white-space: nowrap;
 }
 
@@ -98,7 +99,7 @@ table.saltTable thead {
 
 .saltTable.saltTable-thead .saltTable tr,
 .saltTable.saltTable-thead .saltTable-tr {
-  border-bottom: var(--salt-separable-borderStyle) var(--table-header-divider-color) var(--salt-size-border);
+  border-bottom: var(--salt-separable-borderStyle) var(--table-header-divider-color) var(--salt-size-fixed-100);
 }
 
 .saltTable-thead-divider-primary {
@@ -138,7 +139,7 @@ table.saltTable tfoot {
 
 .saltTable-tfoot .saltTable tr,
 .saltTable-tfoot .saltTable-tr {
-  border-top: var(--salt-separable-borderStyle) var(--table-footer-divider-color) var(--salt-size-border);
+  border-top: var(--salt-separable-borderStyle) var(--table-footer-divider-color) var(--salt-size-fixed-100);
 }
 
 .saltTable-tfoot-primary .saltTable-tr,
@@ -185,7 +186,7 @@ table.saltTable tfoot {
 
 .saltTable-th + .saltTable-th::before,
 .saltTable th + th::before {
-  --table-th-separator-height: calc(var(--salt-size-base) / 2 - 2 * var(--salt-size-border));
+  --table-th-separator-height: calc(var(--salt-size-base) / 2 - 2 * var(--salt-size-fixed-100));
   background: var(--salt-separable-tertiary-borderColor);
   content: "";
   position: absolute;
