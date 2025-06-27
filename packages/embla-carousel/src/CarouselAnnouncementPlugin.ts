@@ -4,7 +4,8 @@ import type {
   CreatePluginType,
   EmblaCarouselType,
 } from "embla-carousel";
-import { useCallback } from "react";
+import { useCallback, useRef, MutableRefObject } from "react";
+import { createCustomSettle, SettleCallback } from "./createCustomSettle";
 
 declare module "embla-carousel" {
   interface EmblaPluginsType {
@@ -32,10 +33,11 @@ export type GetSlideLabelProps = (
   slideCount: number,
 ) => string;
 
-/**
- * Generates a label for a carousel slide based on ARIA attributes.
- *
- * @param props - The properties required to generate the slide description.
+/** * Generates a label for a carousel slide based on ARIA attributes.
+ * This function retrieves the slide's ARIA label or text content and formats it into a descriptive string.
+ * @param slideElement
+ * @param slideIndex
+ * @param slideCount
  * @returns A string description of the slide, including its position and ARIA label or text content.
  */
 export const getSlideLabel: GetSlideLabelProps = (
@@ -68,9 +70,10 @@ export type CarouselAnnouncementOptionsType =
 export function CarouselAnnouncement(
   userOptions: CarouselAnnouncementOptionsType = {},
 ): CarouselAnnouncementType {
-  let emblaApi: EmblaCarouselType;
+  let emblaApi: EmblaCarouselType | undefined = undefined;
 
   const { announce } = useAriaAnnouncer();
+  const customSettle: MutableRefObject<SettleCallback | null> = useRef(null);
 
   const handleSettle = useCallback(
     (emblaApi: EmblaCarouselType) => {
@@ -89,12 +92,14 @@ export function CarouselAnnouncement(
   );
 
   function init(emblaApiInstance: EmblaCarouselType): void {
-    emblaApi = emblaApiInstance;
-    emblaApi.on("settle", handleSettle);
+    customSettle.current = createCustomSettle(handleSettle);
+    emblaApiInstance.on("scroll", customSettle.current);
   }
 
   function destroy(): void {
-    emblaApi.off("settle", handleSettle);
+    if (customSettle.current) {
+      emblaApi?.off("scroll", customSettle.current);
+    }
   }
 
   const self: CarouselAnnouncementType = {

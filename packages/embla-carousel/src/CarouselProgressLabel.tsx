@@ -32,7 +32,7 @@ export function CarouselProgressLabel({
   const [currentSlide, setCurrentSlide] = useState("");
   const [totalSlides, setTotalSlides] = useState(0);
 
-  const handleSettle = useCallback((emblaApi: EmblaCarouselType) => {
+  const handleSelect = useCallback((emblaApi: EmblaCarouselType) => {
     const slideIndexInView = emblaApi?.selectedScrollSnap() ?? 0;
     const numberOfSlides = emblaApi?.slideNodes().length ?? 0;
     const scrollSnaps = emblaApi?.scrollSnapList() ?? [];
@@ -59,18 +59,18 @@ export function CarouselProgressLabel({
   useEffect(() => {
     if (!emblaApi) return;
     emblaApi
-      .on("init", handleSettle)
-      .on("reInit", handleSettle)
-      .on("settle", handleSettle);
-    handleSettle(emblaApi);
+      .on("init", handleSelect)
+      .on("reInit", handleSelect)
+      .on("select", handleSelect);
+    handleSelect(emblaApi);
     // Cleanup listener on component unmount
     return () => {
       emblaApi
-        .off("init", handleSettle)
-        .off("reInit", handleSettle)
-        .off("settle", handleSettle);
+        .off("init", handleSelect)
+        .off("reInit", handleSelect)
+        .off("select", handleSelect);
     };
-  }, [emblaApi, handleSettle]);
+  }, [emblaApi, handleSelect]);
 
   return (
     <Text className={clsx(withBaseName(), className)} {...props}>

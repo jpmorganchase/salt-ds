@@ -72,7 +72,7 @@ export const useCarouselTab = (
     return () => {
       emblaApi.off("init", handleInit);
       emblaApi.off("reInit", handleInit);
-      emblaApi.off("settle", handleSelect);
+      emblaApi.off("select", handleSelect);
     };
   }, [emblaApi, handleInit, handleSelect]);
 
