@@ -15,7 +15,6 @@ import { withDateMock } from ".storybook/decorators/withDateMock";
 export default {
   title: "Lab/Toast Group",
   component: ToastGroup,
-  decorators: [withDateMock],
 } as Meta<typeof ToastGroup>;
 
 const InfoToast = () => {

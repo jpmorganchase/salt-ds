@@ -7,7 +7,6 @@ import { withDateMock } from ".storybook/decorators/withDateMock";
 export default {
   title: "Lab/Date Input/QA",
   component: DateInputSingle,
-  decorators: [withDateMock],
 };
 
 const QAContainerParameters = {
