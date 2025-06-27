@@ -1,0 +1,61 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+## Using the package
+
+### When to use
+
+When you want to use the Salt theme with Highcharts version 10.
+
+## Import
+
+To install the theme package, ensure you have a supported version of Highcharts installed and add `@salt-ds/highcharts-theme` via your package manager
+
+```bash
+npm install @salt-ds/highcharts-theme
+# or
+yarn add @salt-ds/highcharts-theme
+
+```
+
+### Set Highcharts Global options
+
+To get started with the Salt Highcharts Theme, import and set the [Highcharts global options](https://www.highcharts.com/docs/getting-started/how-to-set-options) at your entry point. This ensures that Highchart runs in `styledMode` and allows for the use of CSS classes to style the chart
+along with the setting of positional properties like spacing and dimensions.
+
+```js
+import Highcharts from "highcharts";
+
+Highcharts.setOptions(saltHCThemeOptions);
+```
+
+<Callout title="Note">
+
+If you already have a global options object, you can call `Highcharts.setOptions` again with the `saltHCThemeOptions` after your initial call. Any fields set by `saltHCThemeOptions` will take precedence over any previously set fields.
+
+For granular control, you can also use the `Highcharts.merge()` utility function to deep merge the `saltHCThemeOptions` with your existing options object, including at the chart level.
+
+</Callout>
+
+### Import Salt Highcharts theme
+
+To import the Salt Highcharts theme, use:
+
+```js
+import "@salt-ds/highcharts-theme/index.css";
+```
+
+Then wrap your Highcharts with `salt-highcharts-theme` class names shown below:
+
+```js
+<div className="highcharts-theme-salt">
+  <HighchartsReact highcharts={Highcharts} options={yourChartSpecificOptions} />
+</div>
+```

@@ -1,0 +1,27 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+## Accessibility module
+
+Highcharts provides an [accessibility module](https://www.highcharts.com/docs/accessibility/accessibility-module) that enhances the accessibility of charts.
+
+To enable the accessibility module in Highcharts v10, import and initialize the module as shown below:
+
+```js
+import accessibility from "highcharts/modules/accessibility";
+
+accessibility(Highcharts);
+```
+
+<Callout title="Note">
+
+From Highcharts v11 onwards, you no longer need to call a function to initialize the accessibility module. Ensure you follow the guidance above for Highcharts v10 compatibility.
+
+</Callout>
