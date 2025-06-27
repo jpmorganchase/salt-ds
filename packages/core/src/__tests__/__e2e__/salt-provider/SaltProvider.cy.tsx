@@ -5,11 +5,13 @@ import {
   useAriaAnnouncer,
   useDensity,
   useTheme,
+  ModeValues,
 } from "@salt-ds/core";
 import { WindowProvider } from "@salt-ds/window";
 import { mount } from "cypress/react18";
 import { type ReactNode, useCallback, useState } from "react";
 import { createPortal } from "react-dom";
+import { Mode } from "fs";
 
 const TestComponent = ({
   id = "test-1",
@@ -315,6 +317,93 @@ describe("Given a SaltProvider", () => {
     );
 
     cy.get("@consoleSpy").should("not.have.been.called");
+  });
+
+  describe("when the mode is set", () => {
+    const ThemeToggle = () => {
+      const { setMode } = useTheme();
+
+      const handleClick = () => {
+        setMode((prevState) =>
+          prevState === ModeValues[0] ? ModeValues[1] : ModeValues[0]
+        );
+      };
+      return <button onClick={handleClick}>Set Mode</button>;
+    };
+
+    it("should update the mode", () => {
+      mount(
+        <SaltProvider>
+          <ThemeToggle />
+          <TestComponent />
+        </SaltProvider>
+      );
+      cy.get("#test-1").should("exist").and("have.attr", "data-mode", "light");
+      cy.findByRole("button").realClick();
+      cy.get("#test-1").should("have.attr", "data-mode", "dark");
+      cy.findByRole("button").realClick();
+      cy.get("#test-1").should("have.attr", "data-mode", "light");
+    });
+  });
+
+  describe("when the mode is controlled by consumers", () => {
+    const ControlledModeSaltProvider = ({
+      children,
+    }: {
+      children: ReactNode;
+    }) => {
+      const [mode, setMode] = useState<Mode>(ModeValues[0]);
+
+      const handleClick = () => {
+        setMode((prevState) =>
+          prevState === ModeValues[0] ? ModeValues[1] : ModeValues[0]
+        );
+      };
+      return (
+        <SaltProvider mode={mode}>
+          <button onClick={handleClick}>Set Mode</button>
+          {children}
+        </SaltProvider>
+      );
+    };
+
+    it("should update the mode", () => {
+      mount(
+        <ControlledModeSaltProvider>
+          <TestComponent />
+        </ControlledModeSaltProvider>
+      );
+      cy.get("#test-1").should("exist").and("have.attr", "data-mode", "light");
+      cy.findByRole("button").realClick();
+      cy.get("#test-1").should("have.attr", "data-mode", "dark");
+      cy.findByRole("button").realClick();
+      cy.get("#test-1").should("have.attr", "data-mode", "light");
+    });
+  });
+
+  describe("when the mode is inverted", () => {
+    const ThemeToggle = () => {
+      const { invertMode } = useTheme();
+
+      const handleClick = () => {
+        invertMode();
+      };
+      return <button onClick={handleClick}>Invert Mode</button>;
+    };
+
+    it("should update the mode", () => {
+      mount(
+        <SaltProvider>
+          <ThemeToggle />
+          <TestComponent />
+        </SaltProvider>
+      );
+      cy.get("#test-1").should("exist").and("have.attr", "data-mode", "light");
+      cy.findByRole("button").realClick();
+      cy.get("#test-1").should("have.attr", "data-mode", "dark");
+      cy.findByRole("button").realClick();
+      cy.get("#test-1").should("have.attr", "data-mode", "light");
+    });
   });
 });
 
