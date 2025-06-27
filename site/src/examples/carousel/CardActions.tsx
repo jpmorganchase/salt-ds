@@ -1,5 +1,6 @@
 import {
   FlexLayout,
+  Link,
   StackLayout,
   Text,
   useBreakpoint,
@@ -15,22 +16,26 @@ import {
   CarouselSlides,
   CarouselTabList,
 } from "@salt-ds/embla-carousel";
-import { clsx } from "clsx";
+import Classnames from "embla-carousel-class-names";
 import type { ReactElement } from "react";
 import { sliderData } from "./exampleData";
 import styles from "./index.module.css";
 
-export const MultipleSlides = (): ReactElement => {
+export const CardActions = (): ReactElement => {
   const slideId = useId();
   const { matchedBreakpoints } = useBreakpoint();
   const isMobile = matchedBreakpoints.indexOf("sm") === -1;
 
   return (
     <Carousel
-      aria-label="Multiple slides carousel example"
-      className={clsx(styles.carousel, styles.carouselMultipleSlides)}
-      emblaOptions={{ align: "center", slidesToScroll: "auto" }}
-      emblaPlugins={[CarouselAnnouncement()]}
+      aria-label="Card actions example"
+      className={styles.carousel}
+      emblaPlugins={[
+        CarouselAnnouncement(),
+        Classnames({
+          snapped: styles.carouselSlideIsSnapped,
+        }),
+      ]}
     >
       <Text styleAs={"h2"}>Title</Text>
       <CarouselSlides>
@@ -50,6 +55,11 @@ export const MultipleSlides = (): ReactElement => {
                 />
               }
               header={<Text styleAs={"h3"}>{slide.title}</Text>}
+              actions={
+                <Link aria-label={"demo action"} tabIndex={0} href="#">
+                  Usage examples
+                </Link>
+              }
             >
               <Text>{slide.content}</Text>
             </CarouselCard>
