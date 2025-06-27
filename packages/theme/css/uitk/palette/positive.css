@@ -1,0 +1,21 @@
+.salt-theme[data-mode="light"][data-brand="uitk"] {
+  --salt-palette-positive-foreground: var(--salt-color-green-600);
+  --salt-palette-positive-foreground-disabled: var(--salt-color-green-600-40a);
+  --salt-palette-positive-background: var(--salt-color-green-600);
+  --salt-palette-positive-background-hover: var(--salt-color-green-500);
+  --salt-palette-positive-background-active: var(--salt-color-green-700);
+  --salt-palette-positive-background-disabled: var(--salt-color-green-600-40a);
+  --salt-palette-positive-border: var(--salt-color-green-500);
+  --salt-palette-positive-border-disabled: var(--salt-color-green-500-40a);
+}
+
+.salt-theme[data-mode="dark"][data-brand="uitk"] {
+  --salt-palette-positive-foreground: var(--salt-color-green-200);
+  --salt-palette-positive-foreground-disabled: var(--salt-color-green-200-40a);
+  --salt-palette-positive-background: var(--salt-color-green-600);
+  --salt-palette-positive-background-hover: var(--salt-color-green-500);
+  --salt-palette-positive-background-active: var(--salt-color-green-700);
+  --salt-palette-positive-background-disabled: var(--salt-color-green-600-40a);
+  --salt-palette-positive-border: var(--salt-color-green-500);
+  --salt-palette-positive-border-disabled: var(--salt-color-green-500-40a);
+}

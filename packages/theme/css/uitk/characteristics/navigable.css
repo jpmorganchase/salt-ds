@@ -1,0 +1,15 @@
+.salt-theme,
+.salt-theme[data-brand="uitk"] {
+  --salt-navigable-cursor-active: pointer;
+  --salt-navigable-cursor-hover: pointer;
+  --salt-navigable-cursor-disabled: not-allowed;
+  --salt-navigable-cursor-edit: text;
+
+  --salt-navigable-fontWeight: var(--salt-typography-fontWeight-regular);
+  --salt-navigable-fontWeight-hover: var(--salt-typography-fontWeight-regular);
+  --salt-navigable-fontWeight-active: var(--salt-typography-fontWeight-semiBold);
+  --salt-navigable-fontWeight-edit: var(--salt-typography-fontWeight-regular);
+
+  --salt-navigable-indicator-hover: var(--salt-palette-navigate-indicator-hover);
+  --salt-navigable-indicator-active: var(--salt-palette-navigate-indicator-active);
+}

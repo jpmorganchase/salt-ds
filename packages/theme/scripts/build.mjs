@@ -24,9 +24,9 @@ const context = await esbuild.context({
   absWorkingDir: cwd,
   entryPoints: [
     "index.css",
-    "css/theme.css",
     "css/global.css",
-    "css/theme-next.css",
+    "css/salt-theme.css",
+    "css/uitk-theme.css",
   ],
   assetNames: "[dir]/[name]",
   outdir: buildFolder,

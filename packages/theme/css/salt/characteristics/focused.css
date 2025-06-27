@@ -1,0 +1,3 @@
+.salt-theme[data-brand="salt"] {
+  --salt-focused-outlineColor: var(--salt-palette-accent-stronger);
+}
