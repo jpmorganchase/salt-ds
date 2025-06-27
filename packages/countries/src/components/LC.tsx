@@ -29,18 +29,18 @@ const LC = forwardRef<SVGSVGElement, LCProps>(function LC(props: LCProps, ref) {
           cx="10"
           cy="10"
           r="10"
-          fill="#D9D9D9"
+          fill="#d9d9d9"
           transform="rotate(-90 10 10)"
         />
       </mask>
       <g mask={`url(#${uid}-LC-a)`}>
-        <path fill="#0091DA" d="M20 20H0V0h20z" />
+        <path fill="#0091da" d="M20 20H0V0h20z" />
         <path
-          fill="#F5F7F8"
-          d="M9.972 3.333 4.14 16.111h-.916l6.75-14.784 6.749 14.784h-.917L9.973 3.333Z"
+          fill="#f5f7f8"
+          d="M9.972 3.333 4.14 16.111h-.916l6.75-14.784 6.749 14.784h-.917z"
         />
-        <path fill="#31373D" d="m9.972 3.333 5.834 12.778H4.139L9.972 3.333Z" />
-        <path fill="#F1B434" d="m10 9.444 6.806 6.667H3.194L10 9.444Z" />
+        <path fill="#31373d" d="m9.972 3.333 5.834 12.778H4.139z" />
+        <path fill="#f1b434" d="m10 9.444 6.806 6.667H3.194z" />
       </g>
     </CountrySymbol>
   );

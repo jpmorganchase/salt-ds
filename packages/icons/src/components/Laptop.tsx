@@ -18,7 +18,7 @@ export const LaptopIcon = forwardRef<SVGSVGElement, LaptopIconProps>(
       >
         <path
           fillRule="evenodd"
-          d="M10 2H2v6h8V2ZM1 1v8h10V1H1Zm11 10H0v-1h12v1Z"
+          d="M10 2H2v6h8zM1 1v8h10V1zm11 10H0v-1h12z"
           clipRule="evenodd"
         />
       </Icon>

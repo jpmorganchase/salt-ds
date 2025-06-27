@@ -25,22 +25,19 @@ const SC = forwardRef<SVGSVGElement, SCProps>(function SC(props: SCProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="10" cy="10" r="10" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#d9d9d9" />
       </mask>
       <g mask={`url(#${uid}-SC-a)`}>
         <path fill="#004692" d="M0 0h20v20H0z" />
-        <path fill="#009B77" d="M19.945 20V5.556L2.722 20h17.223Z" />
+        <path fill="#009b77" d="M19.945 20V5.556L2.722 20z" />
         <path
-          fill="#FBD381"
-          d="m3.798 18.05-.548-.547L10.42-.833l7.52 1.964L3.798 18.05Z"
+          fill="#fbd381"
+          d="m3.798 18.05-.548-.547L10.42-.833l7.52 1.964z"
         />
+        <path fill="#dd2033" d="m4.358 18.611-.56-.56L18.11.694l3.46 6.568z" />
         <path
-          fill="#DD2033"
-          d="m4.358 18.611-.56-.56L18.11.694l3.46 6.568-17.213 11.35Z"
-        />
-        <path
-          fill="#F5F7F8"
-          d="m4.619 19.297-.397-.686 17.32-11.389 1.39 3.795-18.313 8.28Z"
+          fill="#f5f7f8"
+          d="m4.619 19.297-.397-.686 17.32-11.389 1.39 3.795z"
         />
       </g>
     </CountrySymbol>

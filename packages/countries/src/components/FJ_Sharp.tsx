@@ -29,13 +29,13 @@ const FJ_Sharp = forwardRef<SVGSVGElement, FJ_SharpProps>(function FJ_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-FJ-a)`}>
-        <path fill="#86C5FA" d="M0 0h29v20H0z" />
+        <path fill="#86c5fa" d="M0 0h29v20H0z" />
         <path
-          fill="#F5F7F8"
-          d="M17.642 8.4H26.1v2.98a6.69 6.69 0 0 1-4.23 6.22 6.69 6.69 0 0 1-4.228-6.22V8.4Z"
+          fill="#f5f7f8"
+          d="M17.642 8.4H26.1v2.98a6.69 6.69 0 0 1-4.23 6.22 6.69 6.69 0 0 1-4.228-6.22z"
         />
         <mask
           id={`${uid}-FJ-b`}
@@ -45,14 +45,14 @@ const FJ_Sharp = forwardRef<SVGSVGElement, FJ_SharpProps>(function FJ_Sharp(
           style={{ maskType: "alpha" }}
         >
           <path
-            fill="#F5F7F8"
-            d="M17.642 8.4H26.1v2.98a6.69 6.69 0 0 1-4.23 6.22 6.69 6.69 0 0 1-4.228-6.22V8.4Z"
+            fill="#f5f7f8"
+            d="M17.642 8.4H26.1v2.98a6.69 6.69 0 0 1-4.23 6.22 6.69 6.69 0 0 1-4.228-6.22z"
           />
         </mask>
         <g mask={`url(#${uid}-FJ-b)`}>
           <path
-            fill="#DD2033"
-            d="M17.642 8.4H26.1v2.4h-3.625v2.4H26.1v1.2h-3.625v3.2h-1.208v-3.2h-3.625v-1.2h3.625v-2.4h-3.625V8.4Z"
+            fill="#dd2033"
+            d="M17.642 8.4H26.1v2.4h-3.625v2.4H26.1v1.2h-3.625v3.2h-1.208v-3.2h-3.625v-1.2h3.625v-2.4h-3.625z"
           />
         </g>
         <mask
@@ -62,20 +62,20 @@ const FJ_Sharp = forwardRef<SVGSVGElement, FJ_SharpProps>(function FJ_Sharp(
           maskUnits="userSpaceOnUse"
           style={{ maskType: "alpha" }}
         >
-          <path fill="#002F6C" d="M0 12V0h14.5v12H0Z" />
+          <path fill="#002f6c" d="M0 12V0h14.5v12z" />
         </mask>
         <g mask={`url(#${uid}-FJ-c)`}>
           <path fill="#004692" d="M0 0h14.5v14.4H0z" />
           <path
-            fill="#F5F7F8"
-            d="m5.152.402-.855.848L14.85 11.73l.854-.85L5.152.403ZM2.873 2.665 1.45 4.079l10.552 10.479 1.424-1.415L2.873 2.665Z"
+            fill="#f5f7f8"
+            d="m5.152.402-.855.848L14.85 11.73l.854-.85zM2.873 2.665 1.45 4.079l10.552 10.479 1.424-1.415z"
           />
           <path
-            fill="#DD2033"
-            d="M2.873 2.665 4.297 1.25 14.85 11.73l-1.424 1.413L2.873 2.665Z"
+            fill="#dd2033"
+            d="M2.873 2.665 4.297 1.25 14.85 11.73l-1.424 1.413z"
           />
-          <path fill="#F5F7F8" d="M2.417 14h1.611V3.6H14.5V2H2.417v12Z" />
-          <path fill="#DD2033" d="M0 14h2.417V2h12.084V0H0v14Z" />
+          <path fill="#f5f7f8" d="M2.417 14h1.611V3.6H14.5V2H2.417z" />
+          <path fill="#dd2033" d="M0 14h2.417V2h12.084V0H0z" />
         </g>
       </g>
     </CountrySymbol>

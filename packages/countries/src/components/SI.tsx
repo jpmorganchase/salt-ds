@@ -25,15 +25,15 @@ const SI = forwardRef<SVGSVGElement, SIProps>(function SI(props: SIProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="10" cy="10" r="10" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#d9d9d9" />
       </mask>
       <g mask={`url(#${uid}-SI-a)`}>
-        <path fill="#DD2033" d="M0 20v-6.667h20V20z" />
-        <path fill="#005EB8" d="M0 13.333V6.666h20v6.667z" />
-        <path fill="#F5F7F8" d="M0 6.667V0h20v6.667z" />
+        <path fill="#dd2033" d="M0 20v-6.667h20V20z" />
+        <path fill="#005eb8" d="M0 13.333V6.666h20v6.667z" />
+        <path fill="#f5f7f8" d="M0 6.667V0h20v6.667z" />
         <path
-          fill="#005EB8"
-          d="M4.167 3.889h5.555v2.008c0 1.807-1.1 3.432-2.778 4.103a4.419 4.419 0 0 1-2.777-4.103V3.89Z"
+          fill="#005eb8"
+          d="M4.167 3.889h5.555v2.008c0 1.807-1.1 3.432-2.778 4.103a4.42 4.42 0 0 1-2.777-4.103z"
         />
         <mask
           id={`${uid}-SI-b`}
@@ -43,14 +43,14 @@ const SI = forwardRef<SVGSVGElement, SIProps>(function SI(props: SIProps, ref) {
           style={{ maskType: "alpha" }}
         >
           <path
-            fill="#2F80ED"
-            d="M4.167 3.889h5.555v2.008c0 1.807-1.1 3.432-2.778 4.103a4.419 4.419 0 0 1-2.777-4.103V3.89Z"
+            fill="#2f80ed"
+            d="M4.167 3.889h5.555v2.008c0 1.807-1.1 3.432-2.778 4.103a4.42 4.42 0 0 1-2.777-4.103z"
           />
         </mask>
         <g mask={`url(#${uid}-SI-b)`}>
           <path
-            fill="#F5F7F8"
-            d="M8.072 6.856 7 5.278 5.928 6.856l-.317-.467L3.206 9.93h3.183V10h1.389v-.07h3.017L8.389 6.389l-.317.467Z"
+            fill="#f5f7f8"
+            d="M8.072 6.856 7 5.278 5.928 6.856l-.317-.467L3.206 9.93h3.183V10h1.389v-.07h3.017L8.389 6.389z"
           />
         </g>
       </g>

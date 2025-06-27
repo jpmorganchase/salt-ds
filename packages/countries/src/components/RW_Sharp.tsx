@@ -29,12 +29,12 @@ const RW_Sharp = forwardRef<SVGSVGElement, RW_SharpProps>(function RW_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-RW-a)`}>
-        <path fill="#005B33" d="M0 20v-4.8h29V20z" />
-        <path fill="#0091DA" d="M0 9.6V0h29v9.6z" />
-        <path fill="#FBD381" d="M0 15.2V9.6h29v5.6z" />
+        <path fill="#005b33" d="M0 20v-4.8h29V20z" />
+        <path fill="#0091da" d="M0 9.6V0h29v9.6z" />
+        <path fill="#fbd381" d="M0 15.2V9.6h29v5.6z" />
       </g>
     </CountrySymbol>
   );

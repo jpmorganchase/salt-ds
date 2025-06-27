@@ -25,12 +25,12 @@ const BW = forwardRef<SVGSVGElement, BWProps>(function BW(props: BWProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="10" cy="10" r="10" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#d9d9d9" />
       </mask>
       <g mask={`url(#${uid}-BW-a)`}>
-        <path fill="#86C5FA" d="M0 20V0h20v20z" />
-        <path fill="#F5F7F8" d="M0 13.333V6.666h20v6.667z" />
-        <path fill="#31373D" d="M0 11.667V8.334h20v3.333z" />
+        <path fill="#86c5fa" d="M0 20V0h20v20z" />
+        <path fill="#f5f7f8" d="M0 13.333V6.666h20v6.667z" />
+        <path fill="#31373d" d="M0 11.667V8.334h20v3.333z" />
       </g>
     </CountrySymbol>
   );

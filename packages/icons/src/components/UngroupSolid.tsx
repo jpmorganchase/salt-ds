@@ -18,7 +18,7 @@ export const UngroupSolidIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <path d="M0 0h6v6H0V0Zm6 6h6v6H6V6ZM1 7h1v3h3v1H1V7Zm9-2h1V1H7v1h3v3Z" />
+      <path d="M0 0h6v6H0zm6 6h6v6H6zM1 7h1v3h3v1H1zm9-2h1V1H7v1h3z" />
     </Icon>
   );
 });

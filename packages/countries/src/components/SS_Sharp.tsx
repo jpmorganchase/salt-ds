@@ -29,17 +29,17 @@ const SS_Sharp = forwardRef<SVGSVGElement, SS_SharpProps>(function SS_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-SS-a)`}>
-        <path fill="#F5F7F8" d="M0 16.4V3.6h29v12.8z" />
-        <path fill="#DD2033" d="M.08 14V6h29v8z" />
-        <path fill="#31373D" d="M0 3.6V0h29v3.6z" />
-        <path fill="#009B77" d="M0 20v-3.6h29V20z" />
-        <path fill="#004692" d="M19.333 10 0-4.4v28.8L19.333 10Z" />
+        <path fill="#f5f7f8" d="M0 16.4V3.6h29v12.8z" />
+        <path fill="#dd2033" d="M.08 14V6h29v8z" />
+        <path fill="#31373d" d="M0 3.6V0h29v3.6z" />
+        <path fill="#009b77" d="M0 20v-3.6h29V20z" />
+        <path fill="#004692" d="M19.333 10 0-4.4v28.8z" />
         <path
-          fill="#FBD381"
-          d="m4.928 7.054.965 2.476-1.57 2.015 2.625-.029 1.523 2.203.516-2.634 2.652-.513-2.218-1.511.029-2.607-2.03 1.558-2.492-.958Z"
+          fill="#fbd381"
+          d="m4.928 7.055.965 2.475-1.57 2.015 2.625-.029 1.523 2.203.516-2.634 2.652-.513-2.218-1.511.029-2.607-2.03 1.558z"
         />
       </g>
     </CountrySymbol>

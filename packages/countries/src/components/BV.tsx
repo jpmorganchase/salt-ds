@@ -25,19 +25,19 @@ const BV = forwardRef<SVGSVGElement, BVProps>(function BV(props: BVProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="10" cy="10" r="10" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#d9d9d9" />
       </mask>
       <g mask={`url(#${uid}-BV-a)`}>
-        <path fill="#DD2033" d="M0 0h20v20H0z" />
+        <path fill="#dd2033" d="M0 0h20v20H0z" />
         <path
-          fill="#F5F7F8"
+          fill="#f5f7f8"
           fillRule="evenodd"
-          d="M5.667 20H4v-6.75H.111v-1.667H4V8.417H.111V6.75H4V0h1.667v6.75h3.166V0H10.5v6.75h9.611v1.667H10.5v3.166h9.611v1.667H10.5V20H8.833v-6.75H5.667V20ZM8.833 8.417H5.667v3.166h3.166V8.417Z"
+          d="M5.667 20H4v-6.75H.111v-1.667H4V8.417H.111V6.75H4V0h1.667v6.75h3.166V0H10.5v6.75h9.611v1.667H10.5v3.166h9.611v1.667H10.5V20H8.833v-6.75H5.667zM8.833 8.417H5.667v3.166h3.166z"
           clipRule="evenodd"
         />
         <path
           fill="#004692"
-          d="M5.556 20h3.333v-8.333H20V8.333H8.889V0H5.556v8.333H0v3.334h5.556V20Z"
+          d="M5.556 20h3.333v-8.333H20V8.333H8.889V0H5.556v8.333H0v3.334h5.556z"
         />
       </g>
     </CountrySymbol>

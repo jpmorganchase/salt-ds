@@ -103,7 +103,7 @@ export const Navigation = () => {
               boxShadow:
                 offset > 0 ? "var(--salt-overlayable-shadow-scroll)" : "none",
               borderBottom:
-                "var(--salt-size-border) var(--salt-container-borderStyle) var(--salt-separable-primary-borderColor)",
+                "var(--salt-size-fixed-100) var(--salt-container-borderStyle) var(--salt-separable-primary-borderColor)",
             }}
             justify="space-between"
             gap={3}
@@ -172,7 +172,7 @@ export const Navigation = () => {
         >
           <nav>
             <StackLayout
-              gap="var(--salt-size-border)"
+              gap="var(--salt-spacing-fixed-100)"
               as="ul"
               style={{
                 listStyle: "none",

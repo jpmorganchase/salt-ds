@@ -25,12 +25,12 @@ const GA = forwardRef<SVGSVGElement, GAProps>(function GA(props: GAProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="10" cy="10" r="10" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#d9d9d9" />
       </mask>
       <g mask={`url(#${uid}-GA-a)`}>
-        <path fill="#005EB8" d="M0 20v-6.667h20V20z" />
-        <path fill="#FBD381" d="M0 13.333V6.666h20v6.667z" />
-        <path fill="#009B77" d="M0 6.667V0h20v6.667z" />
+        <path fill="#005eb8" d="M0 20v-6.667h20V20z" />
+        <path fill="#fbd381" d="M0 13.333V6.666h20v6.667z" />
+        <path fill="#009b77" d="M0 6.667V0h20v6.667z" />
       </g>
     </CountrySymbol>
   );

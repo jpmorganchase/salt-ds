@@ -29,12 +29,12 @@ const GN_Sharp = forwardRef<SVGSVGElement, GN_SharpProps>(function GN_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-GN-a)`}>
-        <path fill="#DD2033" d="M0 20h9.667V0H0z" />
-        <path fill="#FBD381" d="M9.667 20h9.667V0H9.667z" />
-        <path fill="#009B77" d="M19.333 20H29V0h-9.667z" />
+        <path fill="#dd2033" d="M0 20h9.667V0H0z" />
+        <path fill="#fbd381" d="M9.667 20h9.667V0H9.667z" />
+        <path fill="#009b77" d="M19.333 20H29V0h-9.667z" />
       </g>
     </CountrySymbol>
   );

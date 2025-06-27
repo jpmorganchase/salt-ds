@@ -25,15 +25,15 @@ const HR = forwardRef<SVGSVGElement, HRProps>(function HR(props: HRProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="10" cy="10" r="10" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#d9d9d9" />
       </mask>
       <g mask={`url(#${uid}-HR-a)`}>
         <path fill="#004692" d="M0 20v-6.667h20V20z" />
-        <path fill="#F5F7F8" d="M0 13.333V6.666h20v6.667z" />
-        <path fill="#DD2033" d="M0 6.667V0h20v6.667z" />
+        <path fill="#f5f7f8" d="M0 13.333V6.666h20v6.667z" />
+        <path fill="#dd2033" d="M0 6.667V0h20v6.667z" />
         <path
-          fill="#F5F7F8"
-          d="M6.111 6.667h7.778v4.444a3.889 3.889 0 0 1-7.778 0V6.667Z"
+          fill="#f5f7f8"
+          d="M6.111 6.667h7.778v4.444a3.889 3.889 0 0 1-7.778 0z"
         />
         <mask
           id={`${uid}-HR-b`}
@@ -43,30 +43,21 @@ const HR = forwardRef<SVGSVGElement, HRProps>(function HR(props: HRProps, ref) {
           style={{ maskType: "alpha" }}
         >
           <path
-            fill="#F5F7F8"
-            d="M6.111 6.667h7.778v4.444a3.889 3.889 0 0 1-7.778 0V6.667Z"
+            fill="#f5f7f8"
+            d="M6.111 6.667h7.778v4.444a3.889 3.889 0 0 1-7.778 0z"
           />
         </mask>
         <g mask={`url(#${uid}-HR-b)`}>
           <path
-            fill="#DD2033"
+            fill="#dd2033"
             fillRule="evenodd"
-            d="M8.056 6.667H6.11V8.61h1.945v1.944H6.11V12.5h1.945v1.944H6.11v1.945h1.945v-1.945H10v1.945h1.944v-1.945h1.945V12.5h-1.945v-1.944h1.945V8.61h-1.945V6.667H10V8.61H8.056V6.667ZM10 10.556h1.944V8.61H10v1.944Zm0 1.944H8.056v-1.944H10V12.5Zm0 0h1.944v1.944H10V12.5Z"
+            d="M8.056 6.667H6.11V8.61h1.945v1.944H6.11V12.5h1.945v1.944H6.11v1.945h1.945v-1.945H10v1.945h1.944v-1.945h1.945V12.5h-1.945v-1.944h1.945V8.61h-1.945V6.667H10V8.61H8.056zM10 10.556h1.944V8.61H10zm0 1.944H8.056v-1.944H10zm0 0h1.944v1.944H10z"
             clipRule="evenodd"
           />
         </g>
-        <path
-          fill="#0091DA"
-          d="m6.111 4.722 1.25-.833 1.25.833v1.945h-2.5V4.722Z"
-        />
-        <path
-          fill="#004692"
-          d="M8.611 4.722 10 3.89l1.389.833v1.945H8.61V4.722Z"
-        />
-        <path
-          fill="#0091DA"
-          d="m11.389 4.722 1.25-.833 1.25.833v1.945h-2.5V4.722Z"
-        />
+        <path fill="#0091da" d="m6.111 4.722 1.25-.833 1.25.833v1.945h-2.5z" />
+        <path fill="#004692" d="M8.611 4.722 10 3.89l1.389.833v1.945H8.61z" />
+        <path fill="#0091da" d="m11.389 4.722 1.25-.833 1.25.833v1.945h-2.5z" />
       </g>
     </CountrySymbol>
   );

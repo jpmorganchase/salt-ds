@@ -1,7 +1,7 @@
 .saltList {
   --list-background: var(--salt-container-primary-background);
   --list-borderStyle: var(--salt-container-borderStyle);
-  --list-borderWidth: var(--salt-size-border);
+  --list-borderWidth: var(--salt-size-fixed-100);
   --list-height: auto;
   --list-item-height: var(--salt-size-stackable);
   --list-item-gap: 0px;

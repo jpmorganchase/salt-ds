@@ -29,14 +29,14 @@ const NF_Sharp = forwardRef<SVGSVGElement, NF_SharpProps>(function NF_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-NF-a)`}>
         <path fill="#008259" d="M0 0h29v20H0z" />
-        <path fill="#F5F7F8" d="M21.75 20H7.25V0h14.5z" />
+        <path fill="#f5f7f8" d="M21.75 20H7.25V0h14.5z" />
         <path
           fill="#008259"
-          d="M19.333 14.35 14.5 2 9.667 14.35h3.625v3.25h2.416v-3.25h3.625Z"
+          d="M19.333 14.35 14.5 2 9.667 14.35h3.625v3.25h2.416v-3.25z"
         />
       </g>
     </CountrySymbol>

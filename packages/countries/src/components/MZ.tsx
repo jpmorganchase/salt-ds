@@ -25,17 +25,17 @@ const MZ = forwardRef<SVGSVGElement, MZProps>(function MZ(props: MZProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="10" cy="10" r="10" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#d9d9d9" />
       </mask>
       <g mask={`url(#${uid}-MZ-a)`}>
-        <path fill="#F5F7F8" d="M0 14.444V5.555h20v8.89z" />
-        <path fill="#31373D" d="M.056 12.777V7.221h20v5.556z" />
-        <path fill="#009B77" d="M0 5.556V0h20v5.556z" />
-        <path fill="#FBD381" d="M0 20v-5.556h20V20z" />
-        <path fill="#DD2033" d="M13.333 10 0 0v20l13.333-10Z" />
+        <path fill="#f5f7f8" d="M0 14.444V5.555h20v8.89z" />
+        <path fill="#31373d" d="M.056 12.777V7.221h20v5.556z" />
+        <path fill="#009b77" d="M0 5.556V0h20v5.556z" />
+        <path fill="#fbd381" d="M0 20v-5.556h20V20z" />
+        <path fill="#dd2033" d="M13.333 10 0 0v20z" />
         <path
-          fill="#FBD381"
-          d="M5.167 7.222 4.42 8.908l-1.754.224 1.294 1.266-.34 1.824 1.546-1.041 1.545 1.041-.34-1.824 1.295-1.266-1.755-.224-.745-1.686Z"
+          fill="#fbd381"
+          d="M5.167 7.222 4.42 8.908l-1.754.224 1.294 1.266-.34 1.824 1.546-1.041 1.545 1.041-.34-1.824 1.295-1.266-1.755-.224z"
         />
       </g>
     </CountrySymbol>

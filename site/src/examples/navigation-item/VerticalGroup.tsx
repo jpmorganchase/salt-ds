@@ -10,7 +10,7 @@ export const VerticalGroup = (): ReactElement => {
     <nav>
       <StackLayout
         as="ul"
-        gap="var(--salt-size-border)"
+        gap="var(--salt-spacing-fixed-100)"
         style={{ listStyle: "none" }}
       >
         {items.map((item) => (

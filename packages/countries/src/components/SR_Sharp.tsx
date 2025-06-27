@@ -29,15 +29,15 @@ const SR_Sharp = forwardRef<SVGSVGElement, SR_SharpProps>(function SR_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-SR-a)`}>
-        <path fill="#005B33" d="M0 0h29v20H0z" />
-        <path fill="#F5F7F8" d="M0 18V2h29v16z" />
-        <path fill="#A00009" d="M0 15.6V4.4h29v11.2z" />
+        <path fill="#005b33" d="M0 0h29v20H0z" />
+        <path fill="#f5f7f8" d="M0 18V2h29v16z" />
+        <path fill="#a00009" d="M0 15.6V4.4h29v11.2z" />
         <path
-          fill="#FBD381"
-          d="m14.5 5.2-1.44 3.236-3.393.43 2.502 2.432-.656 3.502 2.987-2 2.987 2-.656-3.502 2.502-2.431-3.392-.43L14.5 5.2Z"
+          fill="#fbd381"
+          d="m14.5 5.2-1.44 3.236-3.393.43 2.502 2.432-.656 3.502 2.987-2 2.987 2-.656-3.502 2.502-2.431-3.392-.43z"
         />
       </g>
     </CountrySymbol>

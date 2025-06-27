@@ -29,22 +29,22 @@ const PT_Sharp = forwardRef<SVGSVGElement, PT_SharpProps>(function PT_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-PT-a)`}>
-        <path fill="#005B33" d="M0 0h11.278v20H0z" />
-        <path fill="#DD2033" d="M11.278 0H29v20H11.278z" />
-        <ellipse cx="11.036" cy="10" fill="#F1B434" rx="5.639" ry="5.6" />
+        <path fill="#005b33" d="M0 0h11.278v20H0z" />
+        <path fill="#dd2033" d="M11.278 0H29v20H11.278z" />
+        <ellipse cx="11.036" cy="10" fill="#f1b434" rx="5.639" ry="5.6" />
         <path
-          fill="#F5F7F8"
+          fill="#f5f7f8"
           fillRule="evenodd"
-          d="M7.411 6.8v3.929a3.88 3.88 0 0 0 2.443 3.597 3.176 3.176 0 0 0 2.364 0 3.88 3.88 0 0 0 2.443-3.597V6.8h-7.25Z"
+          d="M7.411 6.8v3.929a3.88 3.88 0 0 0 2.443 3.597 3.18 3.18 0 0 0 2.364 0 3.88 3.88 0 0 0 2.443-3.597V6.8z"
           clipRule="evenodd"
         />
         <path
-          fill="#DD2033"
+          fill="#dd2033"
           fillRule="evenodd"
-          d="M13.05 8.4H9.022v2.329c0 .929.568 1.765 1.436 2.113.37.15.785.15 1.156 0a2.28 2.28 0 0 0 1.436-2.113V8.4ZM7.411 6.8v3.929a3.88 3.88 0 0 0 2.443 3.597 3.176 3.176 0 0 0 2.364 0 3.88 3.88 0 0 0 2.443-3.597V6.8h-7.25Z"
+          d="M13.05 8.4H9.022v2.329c0 .929.568 1.765 1.436 2.113.37.15.785.15 1.156 0a2.28 2.28 0 0 0 1.436-2.113zM7.411 6.8v3.929a3.88 3.88 0 0 0 2.443 3.597 3.18 3.18 0 0 0 2.364 0 3.88 3.88 0 0 0 2.443-3.597V6.8z"
           clipRule="evenodd"
         />
       </g>

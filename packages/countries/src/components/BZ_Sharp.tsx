@@ -29,21 +29,21 @@ const BZ_Sharp = forwardRef<SVGSVGElement, BZ_SharpProps>(function BZ_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-BZ-a)`}>
-        <path fill="#DD2033" d="M0 24.4V-4.4h29v28.8z" />
+        <path fill="#dd2033" d="M0 24.4V-4.4h29v28.8z" />
         <path fill="#004692" d="M0 1.6h29v16.8H0z" />
-        <ellipse cx="14.5" cy="10" fill="#F5F7F8" rx="7.25" ry="7.2" />
+        <ellipse cx="14.5" cy="10" fill="#f5f7f8" rx="7.25" ry="7.2" />
         <path
-          fill="#009B77"
+          fill="#009b77"
           fillRule="evenodd"
-          d="M14.5 14.5c2.503 0 4.531-2.015 4.531-4.5S17.003 5.5 14.5 5.5c-2.503 0-4.531 2.015-4.531 4.5s2.028 4.5 4.531 4.5Zm0 1.5c3.337 0 6.042-2.686 6.042-6S17.837 4 14.5 4c-3.337 0-6.042 2.686-6.042 6s2.705 6 6.042 6Z"
+          d="M14.5 14.5c2.503 0 4.531-2.015 4.531-4.5S17.003 5.5 14.5 5.5 9.969 7.515 9.969 10s2.028 4.5 4.531 4.5m0 1.5c3.337 0 6.042-2.686 6.042-6S17.837 4 14.5 4s-6.042 2.686-6.042 6 2.705 6 6.042 6"
           clipRule="evenodd"
         />
         <path
-          fill="#86C5FA"
-          d="M11.68 7.6h5.64v1.886A4.411 4.411 0 0 1 14.5 13.6a4.411 4.411 0 0 1-2.82-4.114V7.6Z"
+          fill="#86c5fa"
+          d="M11.68 7.6h5.64v1.886A4.41 4.41 0 0 1 14.5 13.6a4.41 4.41 0 0 1-2.82-4.114z"
         />
         <mask
           id={`${uid}-BZ-b`}
@@ -53,13 +53,13 @@ const BZ_Sharp = forwardRef<SVGSVGElement, BZ_SharpProps>(function BZ_Sharp(
           style={{ maskType: "alpha" }}
         >
           <path
-            fill="#86C5FA"
-            d="M11.68 7.6h5.64v1.886A4.411 4.411 0 0 1 14.5 13.6a4.411 4.411 0 0 1-2.82-4.114V7.6Z"
+            fill="#86c5fa"
+            d="M11.68 7.6h5.64v1.886A4.41 4.41 0 0 1 14.5 13.6a4.41 4.41 0 0 1-2.82-4.114z"
           />
         </mask>
         <g mask={`url(#${uid}-BZ-b)`}>
           <path
-            fill="#F1B434"
+            fill="#f1b434"
             d="m11.419 7.321 2.834-2.815 5.34 5.303-2.834 2.816z"
           />
         </g>

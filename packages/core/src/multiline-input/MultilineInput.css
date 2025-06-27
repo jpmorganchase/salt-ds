@@ -28,7 +28,7 @@
 
 /* Style applied if `bordered={true}` */
 .saltMultilineInput-bordered.saltMultilineInput {
-  border: var(--salt-size-border) var(--salt-editable-borderStyle) var(--multilineInput-borderColor);
+  border: var(--salt-size-fixed-100) var(--salt-editable-borderStyle) var(--multilineInput-borderColor);
 }
 
 .saltMultilineInput-bordered.saltMultilineInput:hover {
@@ -62,7 +62,7 @@
   bottom: 0;
   width: 100%;
   position: absolute;
-  border-bottom: var(--salt-size-border) var(--salt-editable-borderStyle) var(--multilineInput-borderColor);
+  border-bottom: var(--salt-size-fixed-100) var(--salt-editable-borderStyle) var(--multilineInput-borderColor);
 }
 
 .saltMultilineInput:hover .saltMultilineInput-activationIndicator {
@@ -72,7 +72,7 @@
 
 .saltMultilineInput-focused .saltMultilineInput-activationIndicator,
 .saltMultilineInput-focused:hover .saltMultilineInput-activationIndicator {
-  border-bottom: var(--salt-size-border-strong) var(--salt-editable-borderStyle-active) var(--multilineInput-borderColor-active);
+  border-bottom: var(--salt-size-fixed-200) var(--salt-editable-borderStyle-active) var(--multilineInput-borderColor-active);
 }
 
 .saltMultilineInput-readOnly .saltMultilineInput-activationIndicator,
@@ -94,7 +94,8 @@
 }
 
 .saltMultilineInput-bordered.saltMultilineInput-focused .saltMultilineInput-activationIndicator {
-  border-bottom-width: calc(var(--salt-size-border-strong) - var(--salt-size-border));
+  /* Activation indicator width minus the border from the input. */
+  border-bottom-width: var(--salt-size-fixed-100);
 }
 
 /* Class applied if `variant="primary"` */
@@ -243,7 +244,7 @@
 /* Styles for button adornment */
 .saltMultilineInput-startAdornmentContainer > .saltButton,
 .saltMultilineInput-endAdornmentContainer > .saltButton {
-  --saltButton-padding: calc(var(--salt-spacing-50) - var(--salt-size-border));
+  --saltButton-padding: calc(var(--salt-spacing-50) - var(--button-borderWidth));
   --saltButton-height: calc(var(--salt-size-base) - var(--salt-spacing-100));
   --saltButton-borderRadius: var(--salt-palette-corner-weaker);
 }

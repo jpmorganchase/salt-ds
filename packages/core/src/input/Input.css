@@ -27,7 +27,7 @@
 
 /* Style applied if `bordered={true}` */
 .saltInput-bordered.saltInput {
-  border: var(--salt-size-border) var(--salt-editable-borderStyle) var(--input-borderColor);
+  border: var(--salt-size-fixed-100) var(--salt-editable-borderStyle) var(--input-borderColor);
 }
 
 .saltInput-bordered.saltInput:hover {
@@ -58,7 +58,7 @@
   bottom: 0;
   width: 100%;
   position: absolute;
-  border-bottom: var(--salt-size-border) var(--salt-editable-borderStyle) var(--input-borderColor);
+  border-bottom: var(--salt-size-fixed-100) var(--salt-editable-borderStyle) var(--input-borderColor);
 }
 
 .saltInput:hover .saltInput-activationIndicator {
@@ -68,7 +68,7 @@
 
 .saltInput-focused .saltInput-activationIndicator,
 .saltInput-focused:hover .saltInput-activationIndicator {
-  border-bottom: var(--salt-size-border-strong) var(--salt-editable-borderStyle-active) var(--input-borderColor-active);
+  border-bottom: var(--salt-size-fixed-200) var(--salt-editable-borderStyle-active) var(--input-borderColor-active);
 }
 
 .saltInput-readOnly .saltInput-activationIndicator,
@@ -90,7 +90,8 @@
 }
 
 .saltInput-bordered.saltInput-focused .saltInput-activationIndicator {
-  border-bottom-width: calc(var(--salt-size-border-strong) - var(--salt-size-border));
+  /* Activation indicator width minus the border from the input. */
+  border-bottom-width: var(--salt-size-fixed-100);
 }
 
 /* Class applied if `variant="primary"` */
@@ -215,7 +216,7 @@
 
 .saltInput-startAdornmentContainer > .saltButton,
 .saltInput-endAdornmentContainer > .saltButton {
-  --saltButton-padding: calc(var(--salt-spacing-50) - var(--salt-size-border));
+  --saltButton-padding: calc(var(--salt-spacing-50) - var(--button-borderWidth));
   --saltButton-height: calc(var(--salt-size-base) - var(--salt-spacing-100));
   --saltButton-borderRadius: var(--salt-palette-corner-weaker);
 }

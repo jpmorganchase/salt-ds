@@ -29,13 +29,13 @@ const BD = forwardRef<SVGSVGElement, BDProps>(function BD(props: BDProps, ref) {
           cx="10"
           cy="10"
           r="10"
-          fill="#D9D9D9"
+          fill="#d9d9d9"
           transform="rotate(-90 10 10)"
         />
       </mask>
       <g mask={`url(#${uid}-BD-a)`}>
-        <path fill="#005B33" d="M20 20H0V0h20z" />
-        <circle cx="8.333" cy="10" r="4.444" fill="#DD2033" />
+        <path fill="#005b33" d="M20 20H0V0h20z" />
+        <circle cx="8.333" cy="10" r="4.444" fill="#dd2033" />
       </g>
     </CountrySymbol>
   );

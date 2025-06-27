@@ -29,17 +29,17 @@ const SN = forwardRef<SVGSVGElement, SNProps>(function SN(props: SNProps, ref) {
           cx="10"
           cy="10"
           r="10"
-          fill="#D9D9D9"
+          fill="#d9d9d9"
           transform="matrix(0 -1 -1 0 20 20)"
         />
       </mask>
       <g mask={`url(#${uid}-SN-a)`}>
-        <path fill="#005B33" d="M0 20h6.667V0H0z" />
-        <path fill="#FBD381" d="M6.667 20h6.667V0H6.667z" />
-        <path fill="#DD2033" d="M13.333 20H20V0h-6.667z" />
+        <path fill="#005b33" d="M0 20h6.667V0H0z" />
+        <path fill="#fbd381" d="M6.667 20h6.667V0H6.667z" />
+        <path fill="#dd2033" d="M13.333 20H20V0h-6.667z" />
         <path
-          fill="#005B33"
-          d="m10 7.222-.828 1.873-1.95.25L8.66 10.75l-.377 2.027L10 11.62l1.717 1.158-.377-2.027 1.438-1.407-1.95-.249L10 7.222Z"
+          fill="#005b33"
+          d="m10 7.222-.828 1.873-1.95.25L8.66 10.75l-.377 2.027L10 11.62l1.717 1.158-.377-2.027 1.438-1.407-1.95-.249z"
         />
       </g>
     </CountrySymbol>

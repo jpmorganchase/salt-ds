@@ -29,12 +29,12 @@ const AM_Sharp = forwardRef<SVGSVGElement, AM_SharpProps>(function AM_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-AM-a)`}>
-        <path fill="#FF9E42" d="M0 20v-6.4h29V20z" />
-        <path fill="#005EB8" d="M0 13.6V6.4h29v7.2z" />
-        <path fill="#DD2033" d="M0 6.4V0h29v6.4z" />
+        <path fill="#ff9e42" d="M0 20v-6.4h29V20z" />
+        <path fill="#005eb8" d="M0 13.6V6.4h29v7.2z" />
+        <path fill="#dd2033" d="M0 6.4V0h29v6.4z" />
       </g>
     </CountrySymbol>
   );

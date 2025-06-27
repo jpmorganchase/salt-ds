@@ -25,13 +25,13 @@ const GR = forwardRef<SVGSVGElement, GRProps>(function GR(props: GRProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="10" cy="10" r="10" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#d9d9d9" />
       </mask>
       <g mask={`url(#${uid}-GR-a)`}>
-        <path fill="#005EB8" d="M0 20V0h20v20z" />
+        <path fill="#005eb8" d="M0 20V0h20v20z" />
         <path
-          fill="#F5F7F8"
-          d="M10 2.5V5h10V2.5H10Zm0 5V10h10V7.5H10ZM0 15v-2.5h20V15H0Zm0 2.5V20h20v-2.5H0ZM6.111 0h-2.5v5H0v2.5h3.611v5h2.5v-5H10V5H6.111V0Z"
+          fill="#f5f7f8"
+          d="M10 2.5V5h10V2.5zm0 5V10h10V7.5zM0 15v-2.5h20V15zm0 2.5V20h20v-2.5zM6.111 0h-2.5v5H0v2.5h3.611v5h2.5v-5H10V5H6.111z"
         />
       </g>
     </CountrySymbol>

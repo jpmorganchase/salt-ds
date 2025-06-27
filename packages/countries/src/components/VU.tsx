@@ -29,29 +29,29 @@ const VU = forwardRef<SVGSVGElement, VUProps>(function VU(props: VUProps, ref) {
           cx="10"
           cy="10"
           r="10"
-          fill="#D9D9D9"
+          fill="#d9d9d9"
           transform="matrix(1 0 0 -1 0 20)"
         />
       </mask>
       <g mask={`url(#${uid}-VU-a)`}>
-        <path fill="#DD2033" d="M0 0v7.5h20V0z" />
+        <path fill="#dd2033" d="M0 0v7.5h20V0z" />
         <path fill="#008259" d="M0 12.5V20h20v-7.5z" />
         <path
-          fill="#31373D"
-          d="M20 7.5h-5.889l-10-7.5H2.056v20H4.11l10-7.5H20v-5Z"
+          fill="#31373d"
+          d="M20 7.5h-5.889l-10-7.5H2.056v20H4.11l10-7.5H20z"
         />
         <path
-          fill="#F1B434"
-          d="M20 10.833h-6.444L1.332 20V0l12.223 9.167H20v1.666Z"
+          fill="#f1b434"
+          d="M20 10.833h-6.444L1.332 20V0l12.223 9.167H20z"
         />
         <path
-          fill="#31373D"
-          d="M6 10a1.111 1.111 0 1 1-2.222 0A1.111 1.111 0 0 1 6 10Z"
+          fill="#31373d"
+          d="M6 10a1.111 1.111 0 1 1-2.222 0A1.111 1.111 0 0 1 6 10"
         />
         <path
-          fill="#31373D"
+          fill="#31373d"
           fillRule="evenodd"
-          d="M-1.222 0 12.11 10-1.222 20V0Zm8.889 10a2.778 2.778 0 1 1-5.556 0 2.778 2.778 0 0 1 5.556 0Z"
+          d="M-1.222 0 12.11 10-1.222 20zm8.889 10a2.778 2.778 0 1 1-5.556 0 2.778 2.778 0 0 1 5.556 0"
           clipRule="evenodd"
         />
       </g>

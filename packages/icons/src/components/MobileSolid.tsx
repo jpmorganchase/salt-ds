@@ -18,7 +18,7 @@ export const MobileSolidIcon = forwardRef<SVGSVGElement, MobileSolidIconProps>(
       >
         <path
           fillRule="evenodd"
-          d="M2 2v8a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Zm7 8V2H3v8h6Z"
+          d="M2 2v8a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2m7 8V2H3v8z"
           clipRule="evenodd"
         />
       </Icon>

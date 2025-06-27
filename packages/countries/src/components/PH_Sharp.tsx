@@ -29,17 +29,17 @@ const PH_Sharp = forwardRef<SVGSVGElement, PH_SharpProps>(function PH_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-PH-a)`}>
-        <path fill="#DD2033" d="M0 20V10h29v10z" />
+        <path fill="#dd2033" d="M0 20V10h29v10z" />
         <path fill="#004692" d="M0 10V0h29v10z" />
-        <path fill="#F5F7F8" d="M19.333 10 0-4.4v28.8L19.333 10Z" />
+        <path fill="#f5f7f8" d="M19.333 10 0-4.4v28.8z" />
         <path
-          fill="#F1B434"
-          d="m10.956 10-1.975.97 1.051 1.997-2.144-.429-.272 2.262-1.494-1.664L4.628 14.8l-.271-2.262-2.145.428 1.052-1.996L1.289 10l1.975-.97-1.052-1.997 2.145.429.272-2.262 1.493 1.663L7.616 5.2l.272 2.262 2.144-.429L8.981 9.03l1.975.97Z"
+          fill="#f1b434"
+          d="m10.956 10-1.975.97 1.051 1.997-2.144-.429-.272 2.262-1.494-1.664L4.628 14.8l-.271-2.262-2.145.428 1.052-1.996L1.289 10l1.975-.97-1.052-1.997 2.145.429.272-2.262 1.493 1.663L7.616 5.2l.272 2.262 2.144-.429L8.981 9.03z"
         />
-        <ellipse cx="14.419" cy="10" fill="#F1B434" rx="1.611" ry="1.6" />
+        <ellipse cx="14.419" cy="10" fill="#f1b434" rx="1.611" ry="1.6" />
       </g>
     </CountrySymbol>
   );

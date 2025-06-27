@@ -29,17 +29,17 @@ const CM = forwardRef<SVGSVGElement, CMProps>(function CM(props: CMProps, ref) {
           cx="10"
           cy="10"
           r="10"
-          fill="#D9D9D9"
+          fill="#d9d9d9"
           transform="rotate(90 10 10)"
         />
       </mask>
       <g mask={`url(#${uid}-CM-a)`}>
-        <path fill="#FBD381" d="M0 0h20v20H0z" />
-        <path fill="#005B33" d="M0 0h6.389v20H0z" />
+        <path fill="#fbd381" d="M0 0h20v20H0z" />
+        <path fill="#005b33" d="M0 0h6.389v20H0z" />
         <path
-          fill="#DD2033"
+          fill="#dd2033"
           fillRule="evenodd"
-          d="M13.611 0H6.39v20h7.222V0ZM9.255 9.186 10 7.5l.745 1.686 1.755.224-1.294 1.266.34 1.824L10 11.458 8.455 12.5l.34-1.824L7.5 9.41l1.755-.224Z"
+          d="M13.611 0H6.39v20h7.222zM9.255 9.186 10 7.5l.745 1.686 1.755.224-1.294 1.266.34 1.824L10 11.458 8.455 12.5l.34-1.824L7.5 9.41z"
           clipRule="evenodd"
         />
       </g>

@@ -16,10 +16,10 @@ export const InfoIcon = forwardRef<SVGSVGElement, InfoIconProps>(
         ref={ref}
         {...props}
       >
-        <path d="M6 2a1 1 0 1 1 0 2 1 1 0 0 1 0-2Zm1 3v5H5V5h2Z" />
+        <path d="M6 2a1 1 0 1 1 0 2 1 1 0 0 1 0-2m1 3v5H5V5z" />
         <path
           fillRule="evenodd"
-          d="M0 0v12h12V0H0Zm11 1H1v10h10V1Z"
+          d="M0 0v12h12V0zm11 1H1v10h10z"
           clipRule="evenodd"
         />
       </Icon>

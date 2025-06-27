@@ -18,10 +18,10 @@ export const UngroupIcon = forwardRef<SVGSVGElement, UngroupIconProps>(
       >
         <path
           fillRule="evenodd"
-          d="M0 6V0h6v6H0Zm1-5h4v4H1V1Zm5 5h6v6H6V6Zm1 1h4v4H7V7Z"
+          d="M0 6V0h6v6zm1-5h4v4H1zm5 5h6v6H6zm1 1h4v4H7z"
           clipRule="evenodd"
         />
-        <path d="M1 7h1v3h3v1H1V7Zm9-2h1V1H7v1h3v3Z" />
+        <path d="M1 7h1v3h3v1H1zm9-2h1V1H7v1h3z" />
       </Icon>
     );
   },

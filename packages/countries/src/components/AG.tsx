@@ -25,11 +25,11 @@ const AG = forwardRef<SVGSVGElement, AGProps>(function AG(props: AGProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="10" cy="10" r="10" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#d9d9d9" />
       </mask>
       <g mask={`url(#${uid}-AG-a)`}>
-        <path fill="#DD2033" d="M0 0h20v20H0z" />
-        <path fill="#31373D" d="M10 20 22.5 0h-25L10 20Z" />
+        <path fill="#dd2033" d="M0 0h20v20H0z" />
+        <path fill="#31373d" d="M10 20 22.5 0h-25z" />
         <mask
           id={`${uid}-AG-b`}
           x="-3"
@@ -37,15 +37,15 @@ const AG = forwardRef<SVGSVGElement, AGProps>(function AG(props: AGProps, ref) {
           maskUnits="userSpaceOnUse"
           style={{ maskType: "alpha" }}
         >
-          <path fill="#31373D" d="M10 20 22.5 0h-25L10 20Z" />
+          <path fill="#31373d" d="M10 20 22.5 0h-25z" />
         </mask>
         <g mask={`url(#${uid}-AG-b)`}>
           <path
-            fill="#F1B434"
-            d="m6.826 8.322-2.27 1.122h11.11l-2.27-1.122 1.21-2.311-2.466.496-.312-2.618-1.717 1.925L8.394 3.89l-.312 2.618-2.465-.496 1.209 2.311Z"
+            fill="#f1b434"
+            d="m6.826 8.322-2.27 1.122h11.11l-2.27-1.122 1.21-2.311-2.466.496-.312-2.618-1.717 1.925L8.394 3.89l-.312 2.618-2.465-.496z"
           />
-          <path fill="#F5F7F8" d="M5.556 13.333h8.889V20H5.556z" />
-          <path fill="#005EB8" d="M3.333 9.444h13.334v3.89H3.333v-3.89Z" />
+          <path fill="#f5f7f8" d="M5.556 13.333h8.889V20H5.556z" />
+          <path fill="#005eb8" d="M3.333 9.444h13.334v3.89H3.333z" />
         </g>
       </g>
     </CountrySymbol>

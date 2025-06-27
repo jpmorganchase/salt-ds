@@ -34,7 +34,8 @@
 
 /* Style applied if `bordered={true}` */
 .saltPillInput-bordered.saltPillInput {
-  border: var(--salt-size-border) var(--salt-editable-borderStyle) var(--pillInput-borderColor);
+  --pillInput-borderWidth: var(--salt-size-fixed-100);
+  border: var(--pillInput-borderWidth) var(--salt-editable-borderStyle) var(--pillInput-borderColor);
 }
 
 .saltPillInput-bordered.saltPillInput:hover {
@@ -45,7 +46,7 @@
 /* Style applied if focused or active when `bordered={true}` */
 .saltPillInput-bordered.saltPillInput-focused,
 .saltPillInput-bordered:active {
-  --pillInput-borderWidth: calc(var(--salt-editable-borderWidth-active) - var(--salt-size-border));
+  --pillInput-borderWidth: calc(var(--salt-size-fixed-200) - var(--pillInput-borderWidth));
 }
 
 .saltPillInput-bordered.saltPillInput-focused,
@@ -71,7 +72,7 @@
   bottom: 0;
   width: 100%;
   position: absolute;
-  border-bottom: var(--salt-size-border) var(--salt-editable-borderStyle) var(--pillInput-borderColor);
+  border-bottom: var(--salt-size-fixed-100) var(--salt-editable-borderStyle) var(--pillInput-borderColor);
 }
 
 .saltPillInput:hover .saltPillInput-activationIndicator {
@@ -81,7 +82,7 @@
 
 .saltPillInput-focused .saltPillInput-activationIndicator,
 .saltPillInput-focused:hover .saltPillInput-activationIndicator {
-  border-bottom: var(--salt-size-border-strong) var(--salt-editable-borderStyle-active) var(--pillInput-borderColor-active);
+  border-bottom: var(--salt-size-fixed-200) var(--salt-editable-borderStyle-active) var(--pillInput-borderColor-active);
 }
 
 .saltPillInput-readOnly .saltPillInput-activationIndicator,
@@ -103,7 +104,7 @@
 }
 
 .saltPillInput-bordered.saltPillInput-focused .saltPillInput-activationIndicator {
-  border-bottom-width: calc(var(--salt-size-border-strong) - var(--salt-size-border));
+  border-bottom-width: calc(var(--salt-size-fixed-200) - var(--pillInput-borderWidth));
 }
 
 /* Class applied if `variant="primary"` */
@@ -239,7 +240,7 @@
 
 .saltPillInput-startAdornmentContainer > .saltButton,
 .saltPillInput-endAdornmentContainer > .saltButton {
-  --saltButton-padding: calc(var(--salt-spacing-50) - var(--salt-size-border));
+  --saltButton-padding: calc(var(--salt-spacing-50) - var(--button-borderWidth));
   --saltButton-height: calc(var(--salt-size-base) - var(--salt-spacing-100));
   --saltButton-borderRadius: var(--salt-palette-corner-weaker);
 }
@@ -258,11 +259,11 @@
 }
 
 .saltPillInput-bordered > .saltPillInput-endAdornmentContainer {
-  padding-top: calc(var(--salt-spacing-50) - var(--salt-size-border));
+  padding-top: calc(var(--salt-spacing-50) - var(--pillInput-borderWidth));
 }
 
 .saltPillInput-bordered > .saltPillInput-inputWrapper {
-  padding: calc(var(--salt-spacing-50) - var(--salt-size-border)) 0;
+  padding: calc(var(--salt-spacing-50) - var(--pillInput-borderWidth)) 0;
 }
 
 .saltPillInput-pillList {

@@ -29,21 +29,18 @@ const ZA_Sharp = forwardRef<SVGSVGElement, ZA_SharpProps>(function ZA_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-ZA-a)`}>
-        <path fill="#DD2033" d="M0 0v7.6h29V0z" />
-        <path fill="#005EB8" d="M0 12.4V20h29v-7.6z" />
-        <path
-          fill="#F5F7F8"
-          d="M29 5.6H17.642l-12.89-10v28.8l12.89-10H29V5.6Z"
-        />
+        <path fill="#dd2033" d="M0 0v7.6h29V0z" />
+        <path fill="#005eb8" d="M0 12.4V20h29v-7.6z" />
+        <path fill="#f5f7f8" d="M29 5.6H17.642l-12.89-10v28.8l12.89-10H29z" />
         <path
           fill="#008259"
-          d="M29 12.4H16.97L-.403 25.92V-5.92L16.97 7.6H29v4.8Z"
+          d="M29 12.4H16.97L-.403 25.92V-5.92L16.97 7.6H29z"
         />
-        <path fill="#F1B434" d="M-1.45-.8v21.6L13.05 10-1.45-.8Z" />
-        <path fill="#31373D" d="M9.828 10-9.506-4.4v28.8L9.828 10Z" />
+        <path fill="#f1b434" d="M-1.45-.8v21.6L13.05 10z" />
+        <path fill="#31373d" d="M9.828 10-9.506-4.4v28.8z" />
       </g>
     </CountrySymbol>
   );

@@ -16,7 +16,7 @@ export const ListIcon = forwardRef<SVGSVGElement, ListIconProps>(
         ref={ref}
         {...props}
       >
-        <path d="M4 2.5h7v1H4v-1Zm0 3h7v1H4v-1Zm0 3h7v1H4v-1ZM3 9a1 1 0 1 1-2 0 1 1 0 0 1 2 0Zm0-3a1 1 0 1 1-2 0 1 1 0 0 1 2 0Zm0-3a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z" />
+        <path d="M4 2.5h7v1H4zm0 3h7v1H4zm0 3h7v1H4zM3 9a1 1 0 1 1-2 0 1 1 0 0 1 2 0m0-3a1 1 0 1 1-2 0 1 1 0 0 1 2 0m0-3a1 1 0 1 1-2 0 1 1 0 0 1 2 0" />
       </Icon>
     );
   },

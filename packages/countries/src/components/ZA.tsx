@@ -29,23 +29,20 @@ const ZA = forwardRef<SVGSVGElement, ZAProps>(function ZA(props: ZAProps, ref) {
           cx="10"
           cy="10"
           r="10"
-          fill="#D9D9D9"
+          fill="#d9d9d9"
           transform="matrix(1 0 0 -1 0 20)"
         />
       </mask>
       <g mask={`url(#${uid}-ZA-a)`}>
-        <path fill="#DD2033" d="M0 0v6.667h20V0z" />
-        <path fill="#005EB8" d="M0 13.334V20h20v-6.667z" />
+        <path fill="#dd2033" d="M0 0v6.667h20V0z" />
+        <path fill="#005eb8" d="M0 13.334V20h20v-6.667z" />
         <path
-          fill="#F5F7F8"
-          d="M20.111 6.667h-7.667L3.555 0v20l8.89-6.667h7.666V6.667Z"
+          fill="#f5f7f8"
+          d="M20.111 6.667h-7.667L3.555 0v20l8.89-6.667h7.666z"
         />
-        <path
-          fill="#008259"
-          d="M20 12.222h-8.296L1.334 20V0l10.37 7.778H20v4.444Z"
-        />
-        <path fill="#F1B434" d="M-1 2.5v15L9 10-1 2.5Z" />
-        <path fill="#31373D" d="M6.778 10-6.556 0v20L6.778 10Z" />
+        <path fill="#008259" d="M20 12.222h-8.296L1.334 20V0l10.37 7.778H20z" />
+        <path fill="#f1b434" d="M-1 2.5v15L9 10z" />
+        <path fill="#31373d" d="M6.778 10-6.556 0v20z" />
       </g>
     </CountrySymbol>
   );

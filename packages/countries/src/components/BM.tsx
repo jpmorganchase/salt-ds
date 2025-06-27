@@ -25,13 +25,13 @@ const BM = forwardRef<SVGSVGElement, BMProps>(function BM(props: BMProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="10" cy="10" r="10" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#d9d9d9" />
       </mask>
       <g mask={`url(#${uid}-BM-a)`}>
-        <path fill="#DD2033" d="M0 0h20v20H0z" />
+        <path fill="#dd2033" d="M0 0h20v20H0z" />
         <path
-          fill="#F5F7F8"
-          d="M11.333 9.722h5.834v2.088a4.63 4.63 0 0 1-2.917 4.301 4.63 4.63 0 0 1-2.917-4.301V9.722Z"
+          fill="#f5f7f8"
+          d="M11.333 9.722h5.834v2.088a4.63 4.63 0 0 1-2.917 4.301 4.63 4.63 0 0 1-2.917-4.301z"
         />
         <mask
           id={`${uid}-BM-b`}
@@ -40,17 +40,17 @@ const BM = forwardRef<SVGSVGElement, BMProps>(function BM(props: BMProps, ref) {
           maskUnits="userSpaceOnUse"
           style={{ maskType: "alpha" }}
         >
-          <path fill="#D9D9D9" d="M11.333 13.889h6.111v2.222h-6.111z" />
+          <path fill="#d9d9d9" d="M11.333 13.889h6.111v2.222h-6.111z" />
         </mask>
         <g mask={`url(#${uid}-BM-b)`}>
           <path
-            fill="#009B77"
-            d="M11.333 9.722h5.834v2.088a4.63 4.63 0 0 1-2.917 4.301 4.63 4.63 0 0 1-2.917-4.301V9.722Z"
+            fill="#009b77"
+            d="M11.333 9.722h5.834v2.088a4.63 4.63 0 0 1-2.917 4.301 4.63 4.63 0 0 1-2.917-4.301z"
           />
         </g>
-        <rect x="13.556" y="10.556" fill="#DD2033" rx=".694" />
-        <path fill="#86C5FA" d="M13 13.889v-1.944h2.5v1.944H13Z" />
-        <path fill="#F5F7F8" d="M14.25 14.682 13 13.89h2.5l-1.25.793Z" />
+        <rect x="13.556" y="10.556" fill="#dd2033" rx=".694" />
+        <path fill="#86c5fa" d="M13 13.889v-1.944h2.5v1.944z" />
+        <path fill="#f5f7f8" d="M14.25 14.683 13 13.888h2.5z" />
         <mask
           id={`${uid}-BM-c`}
           x="0"
@@ -58,24 +58,24 @@ const BM = forwardRef<SVGSVGElement, BMProps>(function BM(props: BMProps, ref) {
           maskUnits="userSpaceOnUse"
           style={{ maskType: "alpha" }}
         >
-          <path fill="#002F6C" d="M0 10C0 4.477 4.477 0 10 0v10H0Z" />
+          <path fill="#002f6c" d="M0 10C0 4.477 4.477 0 10 0v10z" />
         </mask>
         <g mask={`url(#${uid}-BM-c)`}>
           <path fill="#004692" d="M0 0h10v10H0z" />
           <path
-            fill="#F5F7F8"
-            d="m3.478.87-.589.59 8.202 8.201.59-.589L3.477.871ZM1.907 2.442l-.982.982 8.202 8.202.982-.982-8.202-8.202Z"
+            fill="#f5f7f8"
+            d="m3.478.87-.589.59 8.202 8.201.59-.589zM1.907 2.442l-.982.982 8.202 8.202.982-.982z"
           />
           <path
-            fill="#DD2033"
-            d="m1.907 2.442.982-.982 8.202 8.201-.982.983-8.202-8.202Z"
+            fill="#dd2033"
+            d="m1.907 2.442.982-.982 8.202 8.201-.982.983z"
           />
-          <path fill="#F5F7F8" d="M10 3.333v1.39H4.722V10H3.333V3.333H10Z" />
-          <path fill="#F5F7F8" d="M10-.556v1.39H1.389V10H0V-.556h10Z" />
+          <path fill="#f5f7f8" d="M10 3.333v1.39H4.722V10H3.333V3.333z" />
+          <path fill="#f5f7f8" d="M10-.556v1.39H1.389V10H0V-.556z" />
           <path
-            fill="#DD2033"
+            fill="#dd2033"
             fillRule="evenodd"
-            d="M.833 10h2.5V3.333H10v-2.5H.833V10Z"
+            d="M.833 10h2.5V3.333H10v-2.5H.833z"
             clipRule="evenodd"
           />
         </g>

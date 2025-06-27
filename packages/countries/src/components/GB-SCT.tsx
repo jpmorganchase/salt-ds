@@ -28,13 +28,13 @@ const GB_SCT = forwardRef<SVGSVGElement, GB_SCTProps>(function GB_SCT(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="10" cy="10" r="10" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#d9d9d9" />
       </mask>
       <g mask={`url(#${uid}-GB-SCT-a)`}>
-        <path fill="#005EB8" d="M0 0h20v20H0z" />
+        <path fill="#005eb8" d="M0 0h20v20H0z" />
         <path
-          fill="#F5F7F8"
-          d="m18.101 3.434-1.768-1.767-6.25 6.25L3.858 1.69 2.09 3.46l6.226 6.225-6.523 6.523 1.768 1.768 6.522-6.523 6.596 6.596 1.767-1.768-6.595-6.596 6.25-6.25Z"
+          fill="#f5f7f8"
+          d="m18.101 3.434-1.768-1.767-6.25 6.25L3.858 1.69 2.09 3.46l6.226 6.225-6.523 6.523 1.768 1.768 6.522-6.523 6.596 6.596 1.767-1.768-6.595-6.596z"
         />
       </g>
     </CountrySymbol>

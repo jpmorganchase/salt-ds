@@ -25,14 +25,14 @@ const LB = forwardRef<SVGSVGElement, LBProps>(function LB(props: LBProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="10" cy="10" r="10" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#d9d9d9" />
       </mask>
       <g mask={`url(#${uid}-LB-a)`}>
-        <path fill="#DD2033" d="M0 0h20v20H0z" />
-        <path fill="#F5F7F8" d="M0 15V5h20v10z" />
+        <path fill="#dd2033" d="M0 0h20v20H0z" />
+        <path fill="#f5f7f8" d="M0 15V5h20v10z" />
         <path
           fill="#008259"
-          d="M12.5 12.268 10 6.111l-2.5 6.157h1.875v1.62h1.25v-1.62H12.5Z"
+          d="M12.5 12.269 10 6.11l-2.5 6.16h1.875v1.62h1.25v-1.62z"
         />
       </g>
     </CountrySymbol>

@@ -20,7 +20,7 @@ export const CheckmarkSolidIcon = forwardRef<
     >
       <path
         fillRule="evenodd"
-        d="M0 0h12v12H0V0Zm10 3.729L4.952 9.294 2 6.545l1.027-1.1 1.848 1.718L8.9 2.706 10 3.729Z"
+        d="M0 0h12v12H0zm10 3.729L4.952 9.294 2 6.545l1.027-1.1 1.848 1.718L8.9 2.706z"
         clipRule="evenodd"
       />
     </Icon>

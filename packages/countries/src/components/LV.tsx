@@ -25,11 +25,11 @@ const LV = forwardRef<SVGSVGElement, LVProps>(function LV(props: LVProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="10" cy="10" r="10" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#d9d9d9" />
       </mask>
       <g mask={`url(#${uid}-LV-a)`}>
-        <path fill="#85001F" d="M0 0h20v20H0z" />
-        <path fill="#F5F7F8" d="M0 12.5v-5h20v5z" />
+        <path fill="#85001f" d="M0 0h20v20H0z" />
+        <path fill="#f5f7f8" d="M0 12.5v-5h20v5z" />
       </g>
     </CountrySymbol>
   );

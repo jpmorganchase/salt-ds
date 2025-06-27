@@ -25,17 +25,17 @@ const GG = forwardRef<SVGSVGElement, GGProps>(function GG(props: GGProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="10" cy="10" r="10" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#d9d9d9" />
       </mask>
       <g mask={`url(#${uid}-GG-a)`}>
-        <path fill="#F5F7F8" d="M0 0h20v20H0z" />
+        <path fill="#f5f7f8" d="M0 0h20v20H0z" />
         <path
-          fill="#DD2033"
-          d="M6.667 20h6.666v-6.667H20V6.667h-6.667V0H6.667v6.667H0v6.666h6.667V20Z"
+          fill="#dd2033"
+          d="M6.667 20h6.666v-6.667H20V6.667h-6.667V0H6.667v6.667H0v6.666h6.667z"
         />
         <path
-          fill="#F1B434"
-          d="M11.389 3.056H8.61V8.61H3.056v2.778H8.61v5.555h2.778V11.39h5.555V8.61H11.39V3.056Z"
+          fill="#f1b434"
+          d="M11.389 3.056H8.61V8.61H3.056v2.778H8.61v5.555h2.778V11.39h5.555V8.61H11.39z"
         />
       </g>
     </CountrySymbol>

@@ -25,21 +25,21 @@ const PY = forwardRef<SVGSVGElement, PYProps>(function PY(props: PYProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="10" cy="10" r="10" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#d9d9d9" />
       </mask>
       <g mask={`url(#${uid}-PY-a)`}>
         <path fill="#004692" d="M0 20v-5.556h20V20z" />
-        <path fill="#F5F7F8" d="M0 14.444V5.555h20v8.89z" />
-        <path fill="#DD2033" d="M0 5.556V0h20v5.556z" />
+        <path fill="#f5f7f8" d="M0 14.444V5.555h20v8.89z" />
+        <path fill="#dd2033" d="M0 5.556V0h20v5.556z" />
         <path
-          fill="#009B77"
+          fill="#009b77"
           fillRule="evenodd"
-          d="M5.556 6.596a5 5 0 1 0 8.889 0v.114l-1.446.723a3.333 3.333 0 1 1-5.999 0L5.557 6.71v-.114Z"
+          d="M5.556 6.596a5 5 0 1 0 8.889 0v.114l-1.446.723a3.333 3.333 0 1 1-5.999 0L5.557 6.71z"
           clipRule="evenodd"
         />
         <path
-          fill="#F1B434"
-          d="m10 6.389-.662 1.498-1.56.2 1.15 1.125-.301 1.621L10 9.907l1.373.926-.301-1.621 1.15-1.125-1.56-.2L10 6.39Z"
+          fill="#f1b434"
+          d="m10 6.389-.662 1.498-1.56.2 1.15 1.125-.301 1.621L10 9.907l1.373.926-.301-1.621 1.15-1.125-1.56-.2z"
         />
       </g>
     </CountrySymbol>

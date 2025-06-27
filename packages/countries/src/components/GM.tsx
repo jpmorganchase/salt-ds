@@ -25,13 +25,13 @@ const GM = forwardRef<SVGSVGElement, GMProps>(function GM(props: GMProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="10" cy="10" r="10" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#d9d9d9" />
       </mask>
       <g mask={`url(#${uid}-GM-a)`}>
-        <path fill="#F5F7F8" d="M0 0h20v20H0z" />
-        <path fill="#005EB8" d="M0 12.778V7.222h20v5.556z" />
-        <path fill="#DD2033" d="M0 5.556V0h20v5.556z" />
-        <path fill="#009B77" d="M0 20v-5.556h20V20z" />
+        <path fill="#f5f7f8" d="M0 0h20v20H0z" />
+        <path fill="#005eb8" d="M0 12.778V7.222h20v5.556z" />
+        <path fill="#dd2033" d="M0 5.556V0h20v5.556z" />
+        <path fill="#009b77" d="M0 20v-5.556h20V20z" />
       </g>
     </CountrySymbol>
   );

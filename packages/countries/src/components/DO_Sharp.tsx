@@ -29,14 +29,14 @@ const DO_Sharp = forwardRef<SVGSVGElement, DO_SharpProps>(function DO_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-DO-a)`}>
-        <path fill="#DD2033" d="M0 10h14.5v10H0V10ZM14.5 0H29v10H14.5V0Z" />
-        <path fill="#004692" d="M14.5 0v10H0V0h14.5ZM29 10v10H14.5V10H29Z" />
+        <path fill="#dd2033" d="M0 10h14.5v10H0zM14.5 0H29v10H14.5z" />
+        <path fill="#004692" d="M14.5 0v10H0V0zM29 10v10H14.5V10z" />
         <path
-          fill="#F5F7F8"
-          d="M11.68 20h5.64v-7.2H29V7.2H17.32V0h-5.64v7.2H0v5.6h11.68V20Z"
+          fill="#f5f7f8"
+          d="M11.68 20h5.64v-7.2H29V7.2H17.32V0h-5.64v7.2H0v5.6h11.68z"
         />
       </g>
     </CountrySymbol>

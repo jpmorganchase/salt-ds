@@ -29,16 +29,16 @@ const KP_Sharp = forwardRef<SVGSVGElement, KP_SharpProps>(function KP_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-KP-a)`}>
         <path fill="#004692" d="M0 0h29v20H0z" />
-        <path fill="#F5F7F8" d="M0 18V2h29v16z" />
-        <path fill="#DD2033" d="M0 16V4h29v12z" />
+        <path fill="#f5f7f8" d="M0 18V2h29v16z" />
+        <path fill="#dd2033" d="M0 16V4h29v12z" />
         <path
-          fill="#F5F7F8"
+          fill="#f5f7f8"
           fillRule="evenodd"
-          d="M8.861 5.2c-2.65 0-4.833 2.149-4.833 4.8 0 2.65 2.182 4.8 4.833 4.8 2.651 0 4.833-2.15 4.833-4.8 0-2.651-2.182-4.8-4.833-4.8ZM7.753 8.797l1.108-2.49 1.108 2.49 2.61.331-1.925 1.87.505 2.694-2.298-1.538-2.298 1.538.505-2.694-1.925-1.87 2.61-.33Z"
+          d="M8.861 5.2c-2.65 0-4.833 2.149-4.833 4.8s2.182 4.8 4.833 4.8 4.833-2.15 4.833-4.8-2.182-4.8-4.833-4.8M7.753 8.797l1.108-2.49 1.108 2.49 2.61.331-1.925 1.87.505 2.694-2.298-1.538-2.298 1.538.505-2.694-1.925-1.87z"
           clipRule="evenodd"
         />
       </g>

@@ -18,7 +18,7 @@ export const PlayIcon = forwardRef<SVGSVGElement, PlayIconProps>(
       >
         <path
           fillRule="evenodd"
-          d="m1 12 11-6L1 0v12ZM2 1.685v8.63L9.912 6 2 1.685Z"
+          d="m1 12 11-6L1 0zM2 1.685v8.63L9.912 6z"
           clipRule="evenodd"
         />
       </Icon>

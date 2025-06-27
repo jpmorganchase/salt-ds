@@ -16,10 +16,10 @@ export const BrowserIcon = forwardRef<SVGSVGElement, BrowserIconProps>(
         ref={ref}
         {...props}
       >
-        <path d="M3 2H2v1h1V2Zm1 0h1v1H4V2Zm3 0H6v1h1V2Z" />
+        <path d="M3 2H2v1h1zm1 0h1v1H4zm3 0H6v1h1z" />
         <path
           fillRule="evenodd"
-          d="M12 0H0v12h12V0ZM1 11V5h10v6H1ZM1 1v3h10V1H1Z"
+          d="M12 0H0v12h12zM1 11V5h10v6zM1 1v3h10V1z"
           clipRule="evenodd"
         />
       </Icon>

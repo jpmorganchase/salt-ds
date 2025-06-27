@@ -25,11 +25,11 @@ const TH = forwardRef<SVGSVGElement, THProps>(function TH(props: THProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="10" cy="10" r="10" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#d9d9d9" />
       </mask>
       <g mask={`url(#${uid}-TH-a)`}>
-        <path fill="#A00009" d="M0 20V0h20v20z" />
-        <path fill="#F5F7F8" d="M0 16.111V3.89h20v12.222z" />
+        <path fill="#a00009" d="M0 20V0h20v20z" />
+        <path fill="#f5f7f8" d="M0 16.111V3.89h20v12.222z" />
         <path fill="#004692" d="M0 12.778V7.222h20v5.556z" />
       </g>
     </CountrySymbol>

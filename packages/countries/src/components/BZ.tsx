@@ -25,21 +25,21 @@ const BZ = forwardRef<SVGSVGElement, BZProps>(function BZ(props: BZProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="10" cy="10" r="10" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#d9d9d9" />
       </mask>
       <g mask={`url(#${uid}-BZ-a)`}>
-        <path fill="#DD2033" d="M0 20V0h20v20z" />
+        <path fill="#dd2033" d="M0 20V0h20v20z" />
         <path fill="#004692" d="M0 2.222h20v15.556H0z" />
-        <circle cx="10" cy="10" r="6.667" fill="#F5F7F8" />
+        <circle cx="10" cy="10" r="6.667" fill="#f5f7f8" />
         <path
-          fill="#009B77"
+          fill="#009b77"
           fillRule="evenodd"
-          d="M10 14.167a4.167 4.167 0 1 0 0-8.334 4.167 4.167 0 0 0 0 8.334Zm0 1.389a5.556 5.556 0 1 0 0-11.112 5.556 5.556 0 0 0 0 11.112Z"
+          d="M10 14.167a4.167 4.167 0 1 0 0-8.334 4.167 4.167 0 0 0 0 8.334m0 1.389a5.556 5.556 0 1 0 0-11.112 5.556 5.556 0 0 0 0 11.112"
           clipRule="evenodd"
         />
         <path
-          fill="#86C5FA"
-          d="M7.444 7.778h5v1.849c0 1.63-.989 3.096-2.5 3.706a3.997 3.997 0 0 1-2.5-3.706v-1.85Z"
+          fill="#86c5fa"
+          d="M7.444 7.778h5v1.849c0 1.63-.989 3.096-2.5 3.706a4 4 0 0 1-2.5-3.706z"
         />
         <mask
           id={`${uid}-BZ-b`}
@@ -49,13 +49,13 @@ const BZ = forwardRef<SVGSVGElement, BZProps>(function BZ(props: BZProps, ref) {
           style={{ maskType: "alpha" }}
         >
           <path
-            fill="#86C5FA"
-            d="M7.444 7.778h5v1.849c0 1.63-.989 3.096-2.5 3.706a3.997 3.997 0 0 1-2.5-3.706v-1.85Z"
+            fill="#86c5fa"
+            d="M7.444 7.778h5v1.849c0 1.63-.989 3.096-2.5 3.706a4 4 0 0 1-2.5-3.706z"
           />
         </mask>
         <g mask={`url(#${uid}-BZ-b)`}>
           <path
-            fill="#F1B434"
+            fill="#f1b434"
             d="m7.167 7.52 2.496-2.496 4.91 4.91-2.496 2.496z"
           />
         </g>

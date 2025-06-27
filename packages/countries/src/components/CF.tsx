@@ -25,17 +25,17 @@ const CF = forwardRef<SVGSVGElement, CFProps>(function CF(props: CFProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="10" cy="10" r="10" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#d9d9d9" />
       </mask>
       <g mask={`url(#${uid}-CF-a)`}>
-        <path fill="#FBD381" d="M0 20v-4.444h20V20z" />
-        <path fill="#F5F7F8" d="M0 10.556v-5h20v5z" />
+        <path fill="#fbd381" d="M0 20v-4.444h20V20z" />
+        <path fill="#f5f7f8" d="M0 10.556v-5h20v5z" />
         <path fill="#004692" d="M0 5.556V0h20v5.556z" />
         <path fill="#008259" d="M0 15.556v-5h20v5z" />
-        <path fill="#DD2033" d="M13.611 20h-5V0h5z" />
+        <path fill="#dd2033" d="M13.611 20h-5V0h5z" />
         <path
-          fill="#FBD381"
-          d="m5.833 1.111-.58 1.311-1.364.175 1.007.984L4.632 5l1.201-.81L7.035 5l-.264-1.419 1.007-.984-1.365-.175-.58-1.31Z"
+          fill="#fbd381"
+          d="m5.833 1.111-.58 1.311-1.364.175 1.007.984L4.632 5l1.201-.81L7.035 5l-.264-1.419 1.007-.984-1.365-.175z"
         />
       </g>
     </CountrySymbol>

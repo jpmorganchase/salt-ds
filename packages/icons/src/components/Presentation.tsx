@@ -18,10 +18,10 @@ export const PresentationIcon = forwardRef<
       ref={ref}
       {...props}
     >
-      <path d="M9 5H3v1h6V5ZM3 7h6v1H3V7Z" />
+      <path d="M9 5H3v1h6zM3 7h6v1H3z" />
       <path
         fillRule="evenodd"
-        d="M0 0v10h4.493L3.25 11.243l.707.707 1.893-1.893 1.893 1.893.707-.707L7.207 10H12V0H0Zm11 1H1v2h10V1ZM1 9V4h10v5H1Z"
+        d="M0 0v10h4.493L3.25 11.243l.707.707 1.893-1.893 1.893 1.893.707-.707L7.207 10H12V0zm11 1H1v2h10zM1 9V4h10v5z"
         clipRule="evenodd"
       />
     </Icon>

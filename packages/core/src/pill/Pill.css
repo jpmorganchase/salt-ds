@@ -1,18 +1,20 @@
 /* Styles applied to the root element */
 .saltPill {
+  --pill-borderWidth: var(--salt-size-fixed-100);
+
   appearance: none;
   display: inline-flex;
   align-items: center;
   background: var(--saltPill-background, var(--pill-background));
   border-radius: var(--salt-palette-corner-weaker, 0);
   border-style: solid;
-  border-width: var(--salt-size-border, 0);
+  border-width: var(--pill-borderWidth);
   border-color: var(--pill-borderColor);
   height: calc(var(--salt-size-base) - var(--salt-spacing-100));
   min-height: var(--salt-text-minHeight);
   position: relative;
   gap: var(--salt-spacing-50);
-  padding: 0 calc(var(--salt-spacing-50) - var(--salt-size-border, 0));
+  padding: 0 calc(var(--salt-spacing-50) - var(--pill-borderWidth));
   color: var(--saltPill-color, var(--pill-color));
   font-family: var(--salt-text-fontFamily);
   font-size: var(--salt-text-fontSize);

@@ -25,22 +25,22 @@ const MY = forwardRef<SVGSVGElement, MYProps>(function MY(props: MYProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="10" cy="10" r="10" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#d9d9d9" />
       </mask>
       <g mask={`url(#${uid}-MY-a)`}>
-        <path fill="#F5F7F8" d="M0 0h20v20H0z" />
+        <path fill="#f5f7f8" d="M0 0h20v20H0z" />
         <path
-          fill="#DD2033"
-          d="M0 0v2.5h20V0H0Zm0 5v2.5h20V5H0Zm0 7.5V10h20v2.5H0ZM0 15v2.5h20V15H0Z"
+          fill="#dd2033"
+          d="M0 0v2.5h20V0zm0 5v2.5h20V5zm0 7.5V10h20v2.5zM0 15v2.5h20V15z"
         />
         <path fill="#004692" d="M0 10V0h10v10z" />
         <path
-          fill="#FBD381"
-          d="M5.722 4.167c.393 0 .759.116 1.065.317a2.5 2.5 0 1 0 0 3.255 1.944 1.944 0 1 1-1.064-3.572Z"
+          fill="#fbd381"
+          d="M5.722 4.167c.393 0 .759.116 1.065.317a2.5 2.5 0 1 0 0 3.255 1.944 1.944 0 1 1-1.064-3.572"
         />
         <path
-          fill="#FBD381"
-          d="m8.355 5.324-.41-.88-.41.88-.927-.22.415.878-.745.606.927.215-.002.975.742-.61.741.61-.002-.975.927-.215-.745-.606.415-.877-.926.22Z"
+          fill="#fbd381"
+          d="m8.355 5.324-.41-.88-.41.88-.927-.22.415.878-.745.606.927.215-.002.975.742-.61.741.61-.002-.975.927-.215-.745-.606.415-.877z"
         />
       </g>
     </CountrySymbol>

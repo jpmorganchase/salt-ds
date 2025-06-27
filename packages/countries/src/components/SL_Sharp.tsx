@@ -29,12 +29,12 @@ const SL_Sharp = forwardRef<SVGSVGElement, SL_SharpProps>(function SL_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-SL-a)`}>
-        <path fill="#005EB8" d="M0 20v-6.4h29V20z" />
-        <path fill="#F5F7F8" d="M0 13.6V6.4h29v7.2z" />
-        <path fill="#009B77" d="M0 6.4V0h29v6.4z" />
+        <path fill="#005eb8" d="M0 20v-6.4h29V20z" />
+        <path fill="#f5f7f8" d="M0 13.6V6.4h29v7.2z" />
+        <path fill="#009b77" d="M0 6.4V0h29v6.4z" />
       </g>
     </CountrySymbol>
   );

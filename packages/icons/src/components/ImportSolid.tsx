@@ -18,7 +18,7 @@ export const ImportSolidIcon = forwardRef<SVGSVGElement, ImportSolidIconProps>(
       >
         <path
           fillRule="evenodd"
-          d="M0 0h12v12H0V6.5h6.094L3.412 9.184l.707.707L8.01 6 4.12 2.112l-.707.707L6.094 5.5H0V0Zm7 1h4v10H7v-1h3V2H7V1Z"
+          d="M0 0h12v12H0V6.5h6.094L3.412 9.184l.707.707L8.01 6 4.12 2.112l-.707.707L6.094 5.5H0zm7 1h4v10H7v-1h3V2H7z"
           clipRule="evenodd"
         />
       </Icon>

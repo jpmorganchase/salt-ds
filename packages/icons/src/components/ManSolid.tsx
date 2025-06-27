@@ -16,7 +16,7 @@ export const ManSolidIcon = forwardRef<SVGSVGElement, ManSolidIconProps>(
         ref={ref}
         {...props}
       >
-        <path d="M6 3a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3ZM4 4.5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1V8h-.75v4h-2.5V8H4V4.5Z" />
+        <path d="M6 3a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3M4 4.5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1V8h-.75v4h-2.5V8H4z" />
       </Icon>
     );
   },

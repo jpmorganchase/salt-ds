@@ -25,14 +25,14 @@ const TO = forwardRef<SVGSVGElement, TOProps>(function TO(props: TOProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="10" cy="10" r="10" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#d9d9d9" />
       </mask>
       <g mask={`url(#${uid}-TO-a)`}>
-        <path fill="#DD2033" d="M0 20V0h20v20z" />
+        <path fill="#dd2033" d="M0 20V0h20v20z" />
         <path
-          fill="#F5F7F8"
+          fill="#f5f7f8"
           fillRule="evenodd"
-          d="M-.056 0v12.222h12.223V0H-.056Zm5.89 3.889H7.5v1.944h1.944V7.5H7.5v1.944H5.833V7.5H3.89V5.833h1.944V3.89Z"
+          d="M-.056 0v12.222h12.223V0zm5.89 3.889H7.5v1.944h1.944V7.5H7.5v1.944H5.833V7.5H3.89V5.833h1.944z"
           clipRule="evenodd"
         />
       </g>

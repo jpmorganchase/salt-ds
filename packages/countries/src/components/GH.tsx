@@ -25,15 +25,15 @@ const GH = forwardRef<SVGSVGElement, GHProps>(function GH(props: GHProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="10" cy="10" r="10" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#d9d9d9" />
       </mask>
       <g mask={`url(#${uid}-GH-a)`}>
-        <path fill="#005B33" d="M0 20v-6.667h20V20z" />
-        <path fill="#FBD381" d="M0 13.333V6.666h20v6.667z" />
-        <path fill="#DD2033" d="M0 6.667V0h20v6.667z" />
+        <path fill="#005b33" d="M0 20v-6.667h20V20z" />
+        <path fill="#fbd381" d="M0 13.333V6.666h20v6.667z" />
+        <path fill="#dd2033" d="M0 6.667V0h20v6.667z" />
         <path
-          fill="#31373D"
-          d="m10 7.222-.828 1.873-1.95.25L8.66 10.75l-.377 2.027L10 11.62l1.717 1.158-.377-2.027 1.438-1.407-1.95-.249L10 7.222Z"
+          fill="#31373d"
+          d="m10 7.222-.828 1.873-1.95.25L8.66 10.75l-.377 2.027L10 11.62l1.717 1.158-.377-2.027 1.438-1.407-1.95-.249z"
         />
       </g>
     </CountrySymbol>

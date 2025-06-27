@@ -29,17 +29,17 @@ const GL_Sharp = forwardRef<SVGSVGElement, GL_SharpProps>(function GL_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-GL-a)`}>
-        <path fill="#F5F7F8" d="M29 0v10H0V0z" />
+        <path fill="#f5f7f8" d="M29 0v10H0V0z" />
         <path
-          fill="#DD2033"
-          d="M29 10v10H0V10zM12.083 3.6C8.524 3.6 5.64 6.465 5.64 10h12.889c0-3.535-2.885-6.4-6.445-6.4Z"
+          fill="#dd2033"
+          d="M29 10v10H0V10zM12.083 3.6C8.524 3.6 5.64 6.465 5.64 10h12.889c0-3.535-2.885-6.4-6.445-6.4"
         />
         <path
-          fill="#F5F7F8"
-          d="M12.083 16.4c-3.559 0-6.444-2.865-6.444-6.4h12.889c0 3.535-2.885 6.4-6.445 6.4Z"
+          fill="#f5f7f8"
+          d="M12.083 16.4c-3.559 0-6.444-2.865-6.444-6.4h12.889c0 3.535-2.885 6.4-6.445 6.4"
         />
       </g>
     </CountrySymbol>

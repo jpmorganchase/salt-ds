@@ -1,6 +1,6 @@
 .saltOptionList {
   background: var(--salt-container-primary-background);
-  border: var(--salt-size-border) var(--salt-selectable-borderStyle-selected) var(--salt-selectable-borderColor-selected);
+  border: var(--salt-size-fixed-100) var(--salt-selectable-borderStyle-selected) var(--salt-selectable-borderColor-selected);
   border-radius: var(--salt-palette-corner, 0);
   overflow: hidden;
   overflow-y: auto;
@@ -13,7 +13,7 @@
 .saltOptionList-container {
   display: flex;
   flex-direction: column;
-  gap: var(--salt-size-border);
+  gap: var(--salt-spacing-fixed-100);
   max-height: inherit;
   min-height: inherit;
 }

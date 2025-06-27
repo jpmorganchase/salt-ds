@@ -29,15 +29,15 @@ const CU_Sharp = forwardRef<SVGSVGElement, CU_SharpProps>(function CU_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-CU-a)`}>
-        <path fill="#005EB8" d="M0 0h29v20H0z" />
-        <path fill="#F5F7F8" d="M0 8V4h29v4zm0 8v-4h29v4z" />
-        <path fill="#DD2033" d="M16.111 10-3.222-4.4v28.8L16.11 10Z" />
+        <path fill="#005eb8" d="M0 0h29v20H0z" />
+        <path fill="#f5f7f8" d="M0 8V4h29v4zm0 8v-4h29v4z" />
+        <path fill="#dd2033" d="M16.111 10-3.222-4.4v28.8z" />
         <path
-          fill="#F5F7F8"
-          d="m6.042 6.4-1.08 2.427-2.545.323 1.876 1.823-.492 2.627 2.24-1.5 2.241 1.5-.492-2.627L9.667 9.15l-2.545-.323L6.042 6.4Z"
+          fill="#f5f7f8"
+          d="m6.042 6.4-1.08 2.427-2.545.323 1.876 1.823-.492 2.627 2.24-1.5 2.241 1.5-.492-2.627L9.667 9.15l-2.545-.323z"
         />
       </g>
     </CountrySymbol>

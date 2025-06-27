@@ -15,7 +15,7 @@
 .ag-theme-salt-dark .ag-header,
 .ag-theme-salt-compact-light .ag-header,
 .ag-theme-salt-compact-dark .ag-header {
-  border-bottom: var(--salt-size-border) var(--salt-separable-borderStyle) var(--salt-separable-primary-borderColor);
+  border-bottom: var(--salt-size-fixed-100) var(--salt-separable-borderStyle) var(--salt-separable-primary-borderColor);
 }
 
 .ag-theme-salt-light .ag-header-row,
@@ -149,7 +149,7 @@
 .ag-theme-salt-dark .ag-floating-filter,
 .ag-theme-salt-compact-light .ag-floating-filter,
 .ag-theme-salt-compact-dark .ag-floating-filter {
-  border: var(--salt-size-border) var(--salt-editable-borderStyle) var(--salt-separable-tertiary-borderColor);
+  border: var(--salt-size-fixed-100) var(--salt-editable-borderStyle) var(--salt-separable-tertiary-borderColor);
 }
 
 .ag-theme-salt-light .ag-header-cell.ag-floating-filter,
@@ -249,7 +249,7 @@
   margin-left: var(--salt-spacing-100);
 }
 
-/* 
+/*
   When filter is active, swap out filter icon with filled version.
   This is new in ag grid v32.
 */
@@ -324,8 +324,8 @@
 .ag-theme-salt-compact-light .ag-header-cell.ag-column-menu-visible,
 .ag-theme-salt-compact-dark .ag-header-cell.ag-column-menu-visible {
   /*
-    When menu is visible, change bg and fg. 
-    From ag grid v32, a new `.ag-has-popup-positioned-under` can be potentially used, however `.ag-column-menu-visible` will still be applied 
+    When menu is visible, change bg and fg.
+    From ag grid v32, a new `.ag-has-popup-positioned-under` can be potentially used, however `.ag-column-menu-visible` will still be applied
     when open filter menu from floating filter.
   */
   background: var(--salt-actionable-secondary-background-active);

@@ -25,15 +25,15 @@ const LY = forwardRef<SVGSVGElement, LYProps>(function LY(props: LYProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="10" cy="10" r="10" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#d9d9d9" />
       </mask>
       <g mask={`url(#${uid}-LY-a)`}>
-        <path fill="#009B77" d="M0 20v-5h20v5z" />
-        <path fill="#31373D" d="M0 15V5h20v10z" />
-        <path fill="#DD2033" d="M0 5V0h20v5z" />
+        <path fill="#009b77" d="M0 20v-5h20v5z" />
+        <path fill="#31373d" d="M0 15V5h20v10z" />
+        <path fill="#dd2033" d="M0 5V0h20v5z" />
         <path
-          fill="#F5F7F8"
-          d="M8.518 7.222c.228 0 .45.028.661.08a3.333 3.333 0 1 0 0 5.397 2.778 2.778 0 1 1-.66-5.477Zm3.058 1.913.283-1.821 1.156 1.435 1.753-.238-.922 1.558.8 1.674-1.762-.606-1.223 1.406-.144-1.85-1.578-.887 1.637-.671Z"
+          fill="#f5f7f8"
+          d="M8.518 7.222q.343.001.661.08a3.333 3.333 0 1 0 0 5.397q-.319.079-.66.079a2.778 2.778 0 0 1 0-5.556m3.057 1.913.283-1.821 1.156 1.435 1.753-.238-.922 1.558.8 1.674-1.762-.606-1.223 1.406-.144-1.85-1.578-.887z"
         />
       </g>
     </CountrySymbol>

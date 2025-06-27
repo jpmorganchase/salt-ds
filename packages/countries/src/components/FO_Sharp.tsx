@@ -29,19 +29,19 @@ const FO_Sharp = forwardRef<SVGSVGElement, FO_SharpProps>(function FO_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-FO-a)`}>
-        <path fill="#F5F7F8" d="M0 0h29v20H0z" />
+        <path fill="#f5f7f8" d="M0 0h29v20H0z" />
         <path
           fill="#004692"
           fillRule="evenodd"
-          d="M8.056 20H5.639v-5.32H0v-2.4h5.639V7.72H0v-2.4h5.639V0h2.417v5.32h4.591V0h2.417v5.32H29v2.4H15.064v4.56H29v2.4H15.064V20h-2.417v-5.32H8.056V20Zm4.591-12.28H8.056v4.56h4.591V7.72Z"
+          d="M8.056 20H5.639v-5.32H0v-2.4h5.639V7.72H0v-2.4h5.639V0h2.417v5.32h4.591V0h2.417v5.32H29v2.4H15.064v4.56H29v2.4H15.064V20h-2.417v-5.32H8.056zm4.591-12.28H8.056v4.56h4.591z"
           clipRule="evenodd"
         />
         <path
-          fill="#DD2033"
-          d="M8.056 20h4.833v-7.6H29V7.6H12.889V0H8.056v7.6H0v4.8h8.056V20Z"
+          fill="#dd2033"
+          d="M8.056 20h4.833v-7.6H29V7.6H12.889V0H8.056v7.6H0v4.8h8.056z"
         />
       </g>
     </CountrySymbol>

@@ -27,13 +27,13 @@ const GB_ENG_Sharp = forwardRef<SVGSVGElement, GB_ENG_SharpProps>(
           maskUnits="userSpaceOnUse"
           style={{ maskType: "alpha" }}
         >
-          <path fill="#D9D9D9" d="M0 0h29v20H0z" />
+          <path fill="#d9d9d9" d="M0 0h29v20H0z" />
         </mask>
         <g mask={`url(#${uid}-GB-ENG-a)`}>
-          <path fill="#F5F7F8" d="M0 0h29v20H0z" />
+          <path fill="#f5f7f8" d="M0 0h29v20H0z" />
           <path
-            fill="#DD2033"
-            d="M12.244 20h4.834v-7.6H29V7.6H17.078V0h-4.834v7.6H0v4.8h12.244V20Z"
+            fill="#dd2033"
+            d="M12.244 20h4.834v-7.6H29V7.6H17.078V0h-4.834v7.6H0v4.8h12.244z"
           />
         </g>
       </CountrySymbol>

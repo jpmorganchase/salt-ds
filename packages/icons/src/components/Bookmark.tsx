@@ -18,7 +18,7 @@ export const BookmarkIcon = forwardRef<SVGSVGElement, BookmarkIconProps>(
       >
         <path
           fillRule="evenodd"
-          d="m6 10 4 2V0H2v12l4-2Zm-3 .234 3-1.4 3 1.4V1H3v9.234Z"
+          d="m6 10 4 2V0H2v12zm-3 .234 3-1.4 3 1.4V1H3z"
           clipRule="evenodd"
         />
       </Icon>

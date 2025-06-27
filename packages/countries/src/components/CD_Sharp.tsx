@@ -29,21 +29,21 @@ const CD_Sharp = forwardRef<SVGSVGElement, CD_SharpProps>(function CD_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-CD-a)`}>
-        <path fill="#0091DA" d="M0 0h29v20H0z" />
+        <path fill="#0091da" d="M0 0h29v20H0z" />
         <path
-          fill="#FBD381"
+          fill="#fbd381"
           d="m-.04 20.65 7.12 7.072L32.069 2.905l-7.12-7.07z"
         />
         <path
-          fill="#DD2033"
+          fill="#dd2033"
           d="m6.434 25.625-4.272-4.243L26.858-3.143l4.272 4.242z"
         />
         <path
-          fill="#FBD381"
-          d="m6.042 2-1.2 2.697-2.828.359L4.099 7.08 3.552 10l2.49-1.667L8.53 10l-.547-2.919 2.085-2.025-2.827-.36L6.042 2Z"
+          fill="#fbd381"
+          d="m6.042 2-1.2 2.697-2.828.359L4.099 7.08 3.552 10l2.49-1.667L8.53 10l-.547-2.919 2.085-2.025-2.827-.36z"
         />
       </g>
     </CountrySymbol>

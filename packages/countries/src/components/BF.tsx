@@ -25,14 +25,14 @@ const BF = forwardRef<SVGSVGElement, BFProps>(function BF(props: BFProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="10" cy="10" r="10" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#d9d9d9" />
       </mask>
       <g mask={`url(#${uid}-BF-a)`}>
         <path fill="#008259" d="M0 20V10h20v10z" />
-        <path fill="#DD2033" d="M0 10V0h20v10z" />
+        <path fill="#dd2033" d="M0 10V0h20v10z" />
         <path
-          fill="#FBD381"
-          d="m10 5.357-1.384 3.13-3.259.417 2.404 2.351-.63 3.388L10 12.708l2.87 1.935-.63-3.388 2.403-2.351-3.26-.417L10 5.357Z"
+          fill="#fbd381"
+          d="m10 5.357-1.384 3.13-3.259.417 2.404 2.351-.63 3.388L10 12.708l2.87 1.935-.63-3.388 2.403-2.351-3.26-.417z"
         />
       </g>
     </CountrySymbol>

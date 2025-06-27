@@ -25,21 +25,21 @@ const CD = forwardRef<SVGSVGElement, CDProps>(function CD(props: CDProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="10" cy="10" r="10" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#d9d9d9" />
       </mask>
       <g mask={`url(#${uid}-CD-a)`}>
-        <path fill="#0091DA" d="M0 0h20v20H0z" />
+        <path fill="#0091da" d="M0 0h20v20H0z" />
         <path
-          fill="#FBD381"
-          d="m1.444 15.924 4.91 4.91L20.89 6.3l-4.91-4.91z"
+          fill="#fbd381"
+          d="m1.445 15.924 4.91 4.91L20.89 6.3l-4.91-4.91z"
         />
         <path
-          fill="#DD2033"
+          fill="#dd2033"
           d="m5.573 19.715-2.947-2.947L16.768 2.626l2.947 2.947z"
         />
         <path
-          fill="#FBD381"
-          d="M5.556 2.778 4.728 4.65l-1.95.249 1.438 1.407-.377 2.026 1.717-1.157 1.716 1.157-.377-2.026L8.333 4.9l-1.95-.25-.827-1.872Z"
+          fill="#fbd381"
+          d="M5.556 2.778 4.728 4.65l-1.95.249 1.438 1.407-.377 2.026 1.717-1.157 1.716 1.157-.377-2.026L8.333 4.9l-1.95-.25z"
         />
       </g>
     </CountrySymbol>

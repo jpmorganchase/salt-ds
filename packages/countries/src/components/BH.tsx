@@ -25,13 +25,13 @@ const BH = forwardRef<SVGSVGElement, BHProps>(function BH(props: BHProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="10" cy="10" r="10" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#d9d9d9" />
       </mask>
       <g mask={`url(#${uid}-BH-a)`}>
-        <path fill="#F5F7F8" d="M0 0h20v20H0z" />
+        <path fill="#f5f7f8" d="M0 0h20v20H0z" />
         <path
-          fill="#DD2033"
-          d="M5.556 0H20v20H5.556l2.777-2.5L5.556 15l2.777-2.5L5.556 10l2.777-2.5L5.556 5l2.777-2.5L5.556 0Z"
+          fill="#dd2033"
+          d="M5.556 0H20v20H5.556l2.777-2.5L5.556 15l2.777-2.5L5.556 10l2.777-2.5L5.556 5l2.777-2.5z"
         />
       </g>
     </CountrySymbol>

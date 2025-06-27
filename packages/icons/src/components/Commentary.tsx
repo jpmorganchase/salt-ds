@@ -16,10 +16,10 @@ export const CommentaryIcon = forwardRef<SVGSVGElement, CommentaryIconProps>(
         ref={ref}
         {...props}
       >
-        <path d="M9 2H3v1h6V2Zm0 2H3v1h6V4ZM3 6h4v1H3V6Z" />
+        <path d="M9 2H3v1h6zm0 2H3v1h6zM3 6h4v1H3z" />
         <path
           fillRule="evenodd"
-          d="M2 0a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2v3l3.443-3H10a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2ZM1 2a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1H5.057L3 9.74V8H2a1 1 0 0 1-1-1V2Z"
+          d="M2 0a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2v3l3.443-3H10a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zM1 2a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1H5.057L3 9.74V8H2a1 1 0 0 1-1-1z"
           clipRule="evenodd"
         />
       </Icon>

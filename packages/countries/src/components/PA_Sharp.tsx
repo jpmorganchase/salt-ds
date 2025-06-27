@@ -29,18 +29,18 @@ const PA_Sharp = forwardRef<SVGSVGElement, PA_SharpProps>(function PA_Sharp(
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <path fill="#D9D9D9" d="M0 0h29v20H0z" />
+        <path fill="#d9d9d9" d="M0 0h29v20H0z" />
       </mask>
       <g mask={`url(#${uid}-PA-a)`}>
-        <path fill="#F5F7F8" d="M0 20h29V0H0z" />
-        <path fill="#DD2033" d="M14.5 0H29v10H14.5z" />
+        <path fill="#f5f7f8" d="M0 20h29V0H0z" />
+        <path fill="#dd2033" d="M14.5 0H29v10H14.5z" />
         <path
           fill="#004692"
-          d="M0 20h14.5V10H0zM7.25 1.6 6.17 4.027l-2.545.323 1.877 1.823L5.01 8.8l2.24-1.5 2.24 1.5-.492-2.627 1.877-1.823-2.544-.323L7.25 1.6Z"
+          d="M0 20h14.5V10H0zM7.25 1.6 6.17 4.027l-2.545.323 1.877 1.823L5.01 8.8l2.24-1.5 2.24 1.5-.492-2.627 1.877-1.823-2.544-.323z"
         />
         <path
-          fill="#DD2033"
-          d="m21.75 11.2-1.08 2.427-2.545.323 1.877 1.823-.492 2.627 2.24-1.5 2.24 1.5-.492-2.627 1.877-1.823-2.544-.323L21.75 11.2Z"
+          fill="#dd2033"
+          d="m21.75 11.2-1.08 2.427-2.545.323 1.877 1.823-.492 2.627 2.24-1.5 2.24 1.5-.492-2.627 1.877-1.823-2.544-.323z"
         />
       </g>
     </CountrySymbol>

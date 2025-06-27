@@ -25,18 +25,18 @@ const CG = forwardRef<SVGSVGElement, CGProps>(function CG(props: CGProps, ref) {
         maskUnits="userSpaceOnUse"
         style={{ maskType: "alpha" }}
       >
-        <circle cx="10" cy="10" r="10" fill="#D9D9D9" />
+        <circle cx="10" cy="10" r="10" fill="#d9d9d9" />
       </mask>
       <g mask={`url(#${uid}-CG-a)`}>
         <path
-          fill="#DD2033"
+          fill="#dd2033"
           d="m10 24.142-4.714-4.714L19.428 5.286 24.142 10z"
         />
         <path
-          fill="#FBD381"
+          fill="#fbd381"
           d="M5.286 19.428.572 14.714 14.714.572l4.714 4.714z"
         />
-        <path fill="#009B77" d="M.572 14.714-4.143 10 10-4.142 14.714.572z" />
+        <path fill="#009b77" d="M.572 14.714-4.143 10 10-4.142 14.714.572z" />
       </g>
     </CountrySymbol>
   );

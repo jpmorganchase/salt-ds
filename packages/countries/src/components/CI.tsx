@@ -29,14 +29,14 @@ const CI = forwardRef<SVGSVGElement, CIProps>(function CI(props: CIProps, ref) {
           cx="10"
           cy="10"
           r="10"
-          fill="#D9D9D9"
+          fill="#d9d9d9"
           transform="rotate(90 10 10)"
         />
       </mask>
       <g mask={`url(#${uid}-CI-a)`}>
-        <path fill="#009B77" d="M13.333 0H20v20h-6.667z" />
-        <path fill="#F5F7F8" d="M6.667 0h6.667v20H6.667z" />
-        <path fill="#FF9E42" d="M0 0h6.667v20H0z" />
+        <path fill="#009b77" d="M13.333 0H20v20h-6.667z" />
+        <path fill="#f5f7f8" d="M6.667 0h6.667v20H6.667z" />
+        <path fill="#ff9e42" d="M0 0h6.667v20H0z" />
       </g>
     </CountrySymbol>
   );
