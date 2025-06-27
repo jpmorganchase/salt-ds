@@ -126,6 +126,7 @@ export const Option = forwardRef<HTMLDivElement, OptionProps>(
         id={id}
         onClick={handleClick}
         onMouseOver={handleMouseOver}
+        tabIndex={-1}
         {...rest}
       >
         {multiselect && <CheckboxIcon checked={selected} disabled={disabled} />}
