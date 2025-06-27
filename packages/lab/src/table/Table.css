@@ -66,7 +66,6 @@ table.saltTable {
 /* THead */
 .saltTable-thead,
 table.saltTable thead {
-  align-items: center;
   border-start-start-radius: var(--saltTable-thead-borderRadius-top, var(--salt-palette-corner));
   border-start-end-radius: var(--saltTable-thead-borderRadius-top, var(--salt-palette-corner));
   color: var(--salt-content-secondary-foreground);
@@ -122,7 +121,6 @@ table.saltTable thead {
 /* TFoot */
 .saltTable-tfoot,
 table.saltTable tfoot {
-  align-items: center;
   border-end-start-radius: var(--saltTable-thead-borderRadius-top, var(--salt-palette-corner));
   border-end-end-radius: var(--saltTable-thead-borderRadius-top, var(--salt-palette-corner));
   color: var(--salt-content-primary-foreground);
@@ -200,7 +198,6 @@ table.saltTable tfoot {
 /* TR */
 .saltTable tr,
 .saltTable-tr {
-  align-items: center;
   background: var(--saltTable-thead-background, var(--table-background));
   border-bottom: var(--salt-separable-borderStyle) var(--table-divider-color) var(--salt-size-fixed-100);
   height: var(--table-row-height);
