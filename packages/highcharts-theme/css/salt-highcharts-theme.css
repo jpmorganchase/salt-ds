@@ -88,6 +88,7 @@
 .highcharts-theme-salt .highcharts-axis-labels {
   fill: var(--salt-content-secondary-foreground);
   font-size: var(--salt-text-label-fontSize);
+  line-height: var(--salt-text-label-lineHeight);
 }
 
 /* Deselected legend state, requires !important to override default styles, which also use !important */
