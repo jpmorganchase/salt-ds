@@ -1,5 +1,22 @@
 # @salt-ds/lab
 
+## 1.0.0-alpha.71
+
+### Patch Changes
+
+- d5a52bb: Fixed Calendar's today indicator
+
+  When Next theme with rounded corners is enabled, the today indicator will display rounded corners.
+
+- 621253b: Refactored components and themes to use the new fixed tokens.
+- Updated dependencies [62975de]
+- Updated dependencies [73ccf6b]
+- Updated dependencies [95dd874]
+- Updated dependencies [c93c943]
+- Updated dependencies [104d776]
+- Updated dependencies [621253b]
+  - @salt-ds/core@1.47.1
+
 ## 1.0.0-alpha.70
 
 ### Patch Changes

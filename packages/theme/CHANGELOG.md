@@ -1,5 +1,47 @@
 # @salt-ds/theme
 
+## 1.30.0
+
+### Minor Changes
+
+- 621253b: Added new fixed size tokens.
+
+  | Token                   | All densities (px) |
+  | ----------------------- | ------------------ |
+  | `--salt-size-fixed-100` | 1                  |
+  | `--salt-size-fixed-200` | 2                  |
+  | `--salt-size-fixed-300` | 3                  |
+  | `--salt-size-fixed-400` | 4                  |
+  | `--salt-size-fixed-500` | 5                  |
+  | `--salt-size-fixed-600` | 6                  |
+  | `--salt-size-fixed-700` | 7                  |
+  | `--salt-size-fixed-800` | 8                  |
+  | `--salt-size-fixed-900` | 9                  |
+
+- 621253b: Added new fixed spacing tokens.
+
+  | Token                      | All densities (px) |
+  | -------------------------- | ------------------ |
+  | `--salt-spacing-fixed-100` | 1                  |
+  | `--salt-spacing-fixed-200` | 2                  |
+  | `--salt-spacing-fixed-300` | 3                  |
+  | `--salt-spacing-fixed-400` | 4                  |
+  | `--salt-spacing-fixed-500` | 5                  |
+  | `--salt-spacing-fixed-600` | 6                  |
+  | `--salt-spacing-fixed-700` | 7                  |
+  | `--salt-spacing-fixed-800` | 8                  |
+  | `--salt-spacing-fixed-900` | 9                  |
+
+- 621253b: Deprecated 3 size tokens:
+
+  | Deprecated token            | Replacement token                                     |
+  | --------------------------- | ----------------------------------------------------- |
+  | `--salt-size-border`        | `--salt-spacing-fixed-100` or `--salt-size-fixed-100` |
+  | `--salt-size-border-strong` | `--salt-spacing-fixed-200` or `--salt-size-fixed-200` |
+  | `--salt-size-bar-small`     | `--salt-spacing-fixed-200` or `--salt-size-fixed-200` |
+
+- 7adcf27: Deprecated `--salt-editable-borderWidth-active`. Use `--salt-size-fixed-200` instead.
+
 ## 1.29.0
 
 ### Minor Changes
