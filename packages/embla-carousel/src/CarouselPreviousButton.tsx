@@ -5,7 +5,7 @@ import { usePrevNextButtons } from "./usePrevNextButtons";
 /**
  * Props for the CarouselPreviousButton component.
  */
-export interface CarouselPreviousButtonProps extends ButtonProps {}
+export interface CarouselPreviousButtonProps extends Omit<ButtonProps, 'selectionVariant'> {}
 
 export const CarouselPreviousButton = forwardRef<
   HTMLButtonElement,

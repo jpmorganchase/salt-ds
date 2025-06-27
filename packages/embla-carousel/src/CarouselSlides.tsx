@@ -7,9 +7,14 @@ import {
   type KeyboardEvent,
   type Ref,
   forwardRef,
+  useCallback,
+  useEffect,
+  useRef,
 } from "react";
 import { useCarouselContext } from "./CarouselContext";
 import carouselSlidesCss from "./CarouselSlides.css";
+import { EmblaCarouselType } from "embla-carousel";
+import { createCustomSettle } from "./createCustomSettle";
 
 /**
  * Props for the CarouselSlides component.
@@ -19,10 +24,7 @@ export interface CarouselSlidesProps extends ComponentPropsWithoutRef<"div"> {}
 const withBaseName = makePrefixer("saltCarouselSlides");
 
 export const CarouselSlides = forwardRef<HTMLDivElement, CarouselSlidesProps>(
-  function CarouselSlides(
-    { children, className, onKeyDown, ...rest },
-    propRef,
-  ) {
+  function CarouselSlides({ children, className, onKeyDown, ...rest }, ref) {
     const targetWindow = useWindow();
     useComponentCssInjection({
       testId: "salt-carousel-slides",
@@ -31,7 +33,41 @@ export const CarouselSlides = forwardRef<HTMLDivElement, CarouselSlidesProps>(
     });
     const { emblaApi, emblaRef } = useCarouselContext();
 
-    const ref = useForkRef(propRef, emblaRef) as Ref<HTMLDivElement>;
+    const carouselRef = useForkRef(ref, emblaRef) as Ref<HTMLDivElement>;
+
+    const usingArrowNavigation = useRef<boolean>();
+
+    const handleSettle = useCallback(
+      (emblaApi: EmblaCarouselType) => {
+        if (!usingArrowNavigation.current) {
+          return;
+        }
+        const slideIndexInView = emblaApi?.selectedScrollSnap() ?? 0;
+        const snappedSlide = emblaApi.slideNodes()[slideIndexInView];
+        if (snappedSlide) {
+          const focusableElements = snappedSlide.querySelectorAll(
+            'a, button, input, textarea, select, [tabindex]:not([tabindex="-1"])',
+          );
+          if (focusableElements.length > 0) {
+            (focusableElements[0] as HTMLElement).focus();
+          }
+        }
+        usingArrowNavigation.current = false;
+      },
+      [usingArrowNavigation.current],
+    );
+
+    useEffect(() => {
+      if (!emblaApi) {
+        return;
+      }
+      const scrollCallback = createCustomSettle(handleSettle);
+      emblaApi.on("scroll", scrollCallback);
+      // Cleanup listener on component unmount
+      return () => {
+        emblaApi.off("scroll", scrollCallback);
+      };
+    }, [emblaApi, handleSettle]);
 
     const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
       if (event.repeat) {
@@ -41,11 +77,13 @@ export const CarouselSlides = forwardRef<HTMLDivElement, CarouselSlidesProps>(
         case "ArrowLeft": {
           event.preventDefault();
           emblaApi?.scrollPrev();
+          usingArrowNavigation.current = true;
           break;
         }
         case "ArrowRight": {
           event.preventDefault();
           emblaApi?.scrollNext();
+          usingArrowNavigation.current = true;
           break;
         }
       }
@@ -55,7 +93,7 @@ export const CarouselSlides = forwardRef<HTMLDivElement, CarouselSlidesProps>(
     return (
       <div
         onKeyDown={handleKeyDown}
-        ref={ref}
+        ref={carouselRef}
         className={clsx(withBaseName(), className)}
         {...rest}
       >
