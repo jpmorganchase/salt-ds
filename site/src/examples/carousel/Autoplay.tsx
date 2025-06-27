@@ -18,12 +18,12 @@ import {
   CarouselSlides,
 } from "@salt-ds/embla-carousel";
 import { PauseIcon, PlayIcon } from "@salt-ds/icons";
-import Classnames from "embla-carousel-class-names";
+import type { EmblaCarouselType } from "embla-carousel";
 import { default as AutoplayPlugin } from "embla-carousel-autoplay";
+import Classnames from "embla-carousel-class-names";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { sliderData } from "./exampleData";
 import styles from "./index.module.css";
-import { EmblaCarouselType } from "embla-carousel";
 
 const DELAY_MSECS = 8000;
 const SETTLE_PIXEL_THRESHOLD = 10;
@@ -82,7 +82,7 @@ export const Autoplay = () => {
         emblaPlugins={[
           autoplay.current,
           Classnames({
-            snapped: "isSnapped",
+            snapped: styles.carouselSlideIsSnapped,
           }),
           CarouselAnnouncement(),
         ]}
@@ -106,7 +106,7 @@ export const Autoplay = () => {
               className={styles.carouselSlide}
               key={`${slideId}-${slide.title.replace(/ /g, "-")}-${index}`}
               id={`${slideId}-${slide.title.replace(/ /g, "-")}-${index}`}
-              aria-label={`Example slide ${index + 1}`}
+              aria-label={slide.title}
               media={
                 <img
                   alt={`stock content to show in carousel slide ${index}`}

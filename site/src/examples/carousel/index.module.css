@@ -21,6 +21,14 @@
   margin: 0;
 }
 
+.carouselSlideIsSnapped {
+  visibility: visible;
+}
+/** Do not make off-screen slides focusable */
+.carouselSlide:not(.carouselSlideIsSnapped) a {
+  visibility: hidden;
+}
+
 .carousel.carouselMultipleSlides {
   /** Allow 4% of the next slide to be visible by reducing each slide by 2% */
   --saltCarousel-slide-size: 48%;

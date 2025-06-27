@@ -1,4 +1,4 @@
-import { EmblaCarouselType } from "embla-carousel";
+import type { EmblaCarouselType } from "embla-carousel";
 
 const settlePixelThreshold = 10;
 

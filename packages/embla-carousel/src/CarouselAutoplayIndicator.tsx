@@ -45,8 +45,16 @@ export const CarouselAutoplayIndicator = forwardRef<
   CarouselAutoplayIndicatorProps
 >(
   (
-    { className, duration, slideIndex, isPlaying, isPaused = false, children, ...props },
-    ref
+    {
+      className,
+      duration,
+      slideIndex,
+      isPlaying,
+      isPaused = false,
+      children,
+      ...props
+    },
+    ref,
   ) => {
     const targetWindow = useWindow();
     useComponentCssInjection({
@@ -113,5 +121,5 @@ export const CarouselAutoplayIndicator = forwardRef<
         />
       </div>
     );
-  }
+  },
 );
