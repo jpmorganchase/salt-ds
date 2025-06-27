@@ -34,7 +34,7 @@ export interface CarouselProps extends ComponentPropsWithoutRef<"section"> {
    * These options are passed directly to the Embla Carousel instance.
    */
   emblaPlugins?: CarouselPlugin;
-  /** Get embla API as ref, use this to manage the state of the Carousel */
+  /** Get embla API instance, use this to manage the state of the Carousel */
   getEmblaApi?: (embla: CarouselEmblaApiType) => void;
 }
 

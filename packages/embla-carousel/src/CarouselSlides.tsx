@@ -2,6 +2,7 @@ import { makePrefixer, useForkRef } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
+import type { EmblaCarouselType } from "embla-carousel";
 import {
   type ComponentPropsWithoutRef,
   type KeyboardEvent,
@@ -13,7 +14,6 @@ import {
 } from "react";
 import { useCarouselContext } from "./CarouselContext";
 import carouselSlidesCss from "./CarouselSlides.css";
-import { EmblaCarouselType } from "embla-carousel";
 import { createCustomSettle } from "./createCustomSettle";
 
 /**
