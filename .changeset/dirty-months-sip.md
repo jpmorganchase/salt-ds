@@ -93,12 +93,13 @@ To configure embla, pass `emblaOptions` or `emblaPlugins` to the Carousel.
 To control the behavior of the Carousel through the embla API, obtain a reference to the embla API through the `setApiRef` prop.
 
 ```
-const emblaApiRef = useRef<CarouselRef | undefined>(undefined);
-const slideId = useId();
+const [emblaApi, setEmblaApi] = useState<CarouselEmblaApiType | null>(null);
 
-// biome-ignore lint/correctness/useExhaustiveDependencies: API can re-init after first render
+const slideId = useId();
+const { matchedBreakpoints } = useBreakpoint();
+const isMobile = matchedBreakpoints.indexOf("sm") === -1;
+
 useEffect(() => {
-  const emblaApi = emblaApiRef?.current?.emblaApi
   if (!emblaApi) {
     return;
   }
@@ -116,12 +117,12 @@ useEffect(() => {
   return () => {
     emblaApi.off("select", logSnappedSlide);
   };
-}, [emblaApiRef.current]);
+}, [emblaApi]);
 
 return (
   <Carousel
     aria-label="Account overview"
-    ref={emblaApiRef}
+    getEmblaApi={setEmblaApi}
   >
     <CarouselSlides>
       {slides.map((index) => (
