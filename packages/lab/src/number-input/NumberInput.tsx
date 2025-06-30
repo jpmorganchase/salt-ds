@@ -45,13 +45,14 @@ const withBaseName = makePrefixer("saltNumberInput");
 
 export interface NumberInputProps
   extends Omit<ComponentPropsWithoutRef<"div">, "onChange"> {
-  /** Styling variant with full border. Defaults to false
-   * */
+  /**
+   * Styling variant with full border.
+   * @default false
+   */
   bordered?: boolean;
   /**
-   * A setting that determines whether clamping out of range values occurs when the
-   * input loses focus, while typing, or not at all.
-   * @default none
+   * A boolean that, when true, ensures the input value is clamped within the specified min and max range upon losing focus.
+   * @default false
    */
   clampValue?: boolean;
   /**
@@ -60,11 +61,13 @@ export interface NumberInputProps
   defaultValue?: number | string;
   /**
    * Disable the `NumberInput`.
+   * @default false
    */
   disabled?: boolean;
   /**
    * The marker to use in an empty read only Input.
-   * Use `''` to disable this feature. Defaults to '—'.
+   * Use `''` to disable this feature.
+   * @default "—"
    */
   emptyReadOnlyMarker?: string;
   /**
@@ -76,7 +79,7 @@ export interface NumberInputProps
    */
   format?: (value: number | string) => string | number;
   /**
-   * Hide the number buttons. Defaults to `false`.
+   * Hide the number buttons.
    * @default false
    */
   hideButtons?: boolean;
@@ -89,12 +92,12 @@ export interface NumberInputProps
    */
   inputRef?: Ref<HTMLInputElement>;
   /**
-   * The maximum value that can be selected. Defaults to Number.MAX_SAFE_INTEGER.
+   * The maximum value that can be selected.
    * @default Number.MAX_SAFE_INTEGER
    */
   max?: number;
   /**
-   * The minimum value that can be selected. Defaults to Number.MIN_SAFE_INTEGER.
+   * The minimum value that can be selected.
    * @default Number.MIN_SAFE_INTEGER
    */
   min?: number;
@@ -133,20 +136,18 @@ export interface NumberInputProps
    */
   startAdornment?: ReactNode;
   /**
-   * The amount to increment or decrement the value by when using the `NumberInput` buttons or Up Arrow and Down Arrow keys. Defaults to 1.
+   * The amount to increment or decrement the value by when using the `NumberInput` buttons or Up Arrow and Down Arrow keys.
    * @default 1
    */
   step?: number;
   /**
    * Defines the factor by which the step value is multiplied to determine the maximum increment or decrement when the Shift key
-   * is held while pressing the Up Arrow or Down Arrow keys for faster adjustments of the value. The default multiplier value is 2.
+   * is held while pressing the Up Arrow or Down Arrow keys for faster adjustments of the value.
    * @default 2
    */
   stepMultiplier?: number;
   /**
    * Specifies the alignment of the text within the `NumberInput`.
-   * - Options include "left", "center", and "right".
-   * - Defaults to "left" if not specified.
    *
    * @default "left"
    */
@@ -156,7 +157,7 @@ export interface NumberInputProps
    */
   validationStatus?: Extract<ValidationStatus, "error" | "warning" | "success">;
   /**
-   * Styling variant. Defaults to "primary".
+   * Styling variant.
    * @default "primary"
    */
   variant?: "primary" | "secondary";
