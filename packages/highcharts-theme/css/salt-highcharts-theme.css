@@ -133,3 +133,23 @@
 .highcharts-theme-salt .highcharts-legend-navigation {
   font-size: var(--salt-text-label-fontSize);
 }
+
+.highcharts-theme-salt path.highcharts-legend-nav-active {
+  fill: var(--salt-content-secondary-foreground);
+}
+
+.highcharts-theme-salt path.highcharts-legend-nav-inactive {
+  fill: var(--salt-content-secondary-foreground-disabled);
+}
+
+.highcharts-theme-salt circle.highcharts-legend-nav-active,
+.highcharts-theme-salt circle.highcharts-legend-nav-inactive {
+  fill: transparent;
+}
+
+.highcharts-theme-salt text.highcharts-legend-navigation {
+  fill: var(--salt-content-secondary-foreground);
+  font-weight: var(--salt-text-label-fontWeight);
+  font-size: var(--salt-text-label-fontSize);
+  line-height: var(--salt-text-label-lineHeight);
+}
