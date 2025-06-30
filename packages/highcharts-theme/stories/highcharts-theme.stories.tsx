@@ -3,10 +3,10 @@ import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import accessibility from "highcharts/modules/accessibility";
 
-import "../css/highcharts-sb-only.css";
-import "../index.css";
+import "@salt-ds/highcharts-theme/stories/highcharts-default.css";
+import "@salt-ds/highcharts-theme/index.css";
 
-import { highchartsOptionsSalt } from "../src";
+import { highchartsOptionsSalt } from "@salt-ds/highcharts-theme";
 
 accessibility(Highcharts);
 
