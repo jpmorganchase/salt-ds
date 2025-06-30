@@ -1,10 +1,12 @@
+import { createRequire } from "node:module";
 import { dirname, join } from "node:path";
 import type { StorybookConfig } from "@storybook/react-vite";
+import { cssInline } from "css-inline-plugin";
 import remarkGfm from "remark-gfm";
 import type { UserConfig } from "vite";
 import { typescriptTurbosnap } from "vite-plugin-typescript-turbosnap";
-import { cssInline } from "../tooling/css-inline-plugin";
 
+const require = createRequire(import.meta.url);
 const config: StorybookConfig = {
   framework: {
     name: getAbsolutePath("@storybook/react-vite"),
@@ -58,7 +60,7 @@ const config: StorybookConfig = {
   },
 };
 
-module.exports = config;
+export default config;
 
 function getAbsolutePath<Value>(value: string): Value {
   return dirname(

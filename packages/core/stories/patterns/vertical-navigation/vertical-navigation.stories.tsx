@@ -77,7 +77,7 @@ export const SingleLevel = () => {
         <aside style={{ width: "200px" }}>
           <nav>
             <StackLayout
-              gap="var(--salt-size-border)"
+              gap="var(--salt-spacing-fixed-100)"
               as="ul"
               style={{ listStyle: "none", margin: 0, padding: 0 }}
             >
@@ -209,7 +209,7 @@ export const Nested = () => {
         <aside style={{ width: "250px" }}>
           <nav>
             <StackLayout
-              gap="var(--salt-size-border)"
+              gap="var(--salt-spacing-fixed-100)"
               as="ul"
               style={{ listStyle: "none", margin: 0, padding: 0 }}
             >

@@ -3,9 +3,9 @@
     "baseUrl": "./src",
     "declaration": false,
     "outDir": "./dist",
-    "module": "commonjs",
+    "module": "ESNext",
     "target": "es2016",
-    "moduleResolution": "node",
+    "moduleResolution": "Bundler",
     "strict": true,
     "skipLibCheck": true,
     "esModuleInterop": true

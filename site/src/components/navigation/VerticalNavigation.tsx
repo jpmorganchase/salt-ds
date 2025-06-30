@@ -95,7 +95,7 @@ const renderNavigationItem = (
       {shouldRenderAsParent && isExpanded ? (
         <StackLayout
           as="ul"
-          gap="var(--salt-size-border)"
+          gap="var(--salt-spacing-fixed-100)"
           style={{
             width: "100%",
             listStyle: "none",
@@ -138,7 +138,7 @@ export const VerticalNavigation: React.FC<VerticalNavigationProps> = ({
       <StackLayout
         data-testid="vertical-navigation"
         as="ul"
-        gap="var(--salt-size-border)"
+        gap="var(--salt-spacing-fixed-100)"
         style={{ listStyle: "none", paddingLeft: 0 }}
       >
         {menu.map((item) =>

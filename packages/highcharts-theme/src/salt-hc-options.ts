@@ -6,7 +6,7 @@ import type { Options } from "highcharts";
 
 // Properties relating to color will be overrided due to styledMode: true
 
-export const saltHCThemeOptions: Options = {
+export const highchartsOptionsSalt: Options = {
   chart: {
     styledMode: true,
   },
@@ -16,9 +16,9 @@ export const saltHCThemeOptions: Options = {
       '<span>{series.name}: </span><span class="value">{point.y}</span>',
   },
   legend: {
-    layout: "horizontal",
-    verticalAlign: "bottom",
-    align: "center",
+    layout: "vertical",
+    align: "right",
+    verticalAlign: "middle",
     symbolWidth: 32,
     itemMarginBottom: 8,
     margin: 24,

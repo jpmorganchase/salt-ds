@@ -7,7 +7,7 @@ export const RenderProp = (): ReactElement => {
     <nav>
       <StackLayout
         as="ul"
-        gap="var(--salt-size-border)"
+        gap="var(--salt-spacing-fixed-100)"
         style={{
           width: 250,
           listStyle: "none",

@@ -29,7 +29,7 @@
 .saltAppHeader {
   align-items: flex-start;
   background: var(--appHeader-background);
-  border-bottom: var(--salt-separable-borderStyle) var(--salt-size-border) var(--salt-separable-primary-borderColor);
+  border-bottom: var(--salt-separable-borderStyle) var(--salt-size-fixed-100) var(--salt-separable-primary-borderColor);
   box-shadow: var(--appHeader-shadow);
   box-sizing: content-box;
   display: flex;
@@ -64,7 +64,7 @@
 .saltAppHeader-navMenu::after {
   top: 0;
   right: 0;
-  width: var(--salt-size-border);
+  width: var(--salt-size-fixed-100);
   bottom: 0;
   content: "";
   position: absolute;

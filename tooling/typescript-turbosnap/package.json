@@ -2,6 +2,7 @@
   "name": "vite-plugin-typescript-turbosnap",
   "private": true,
   "main": "./src/index.ts",
+  "type": "module",
   "version": "1.0.0",
   "dependencies": {
     "ts-morph": "^26.0.0"

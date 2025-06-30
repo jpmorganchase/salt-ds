@@ -1,5 +1,2 @@
-/* Highcharts clone needs to go first, in case there is any override we need to apply ourselves. */
-@import url(css/highcharts-clone.css);
-
 @import url(css/salt-highcharts-theme.css);
 @import url(css/salt-line-patterns.css);
