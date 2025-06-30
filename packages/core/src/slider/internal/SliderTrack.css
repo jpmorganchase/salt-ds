@@ -18,7 +18,7 @@
 }
 
 .saltSliderTrack-disabled {
-  cursor: var(--salt-selectable-cursor-disabled);
+  cursor: var(--salt-cursor-disabled);
 }
 
 .saltSliderTrack-container {
@@ -31,7 +31,7 @@
 
 .saltSliderTrack-wrapper {
   align-items: center;
-  cursor: var(--salt-selectable-cursor-hover);
+  cursor: var(--salt-cursor-hover);
   display: flex;
   flex: 1;
   height: var(--salt-size-selectable);
@@ -41,7 +41,7 @@
 
 .saltSliderTrack-disabled,
 .saltSliderTrack-disabled .saltSliderTrack-wrapper {
-  cursor: var(--salt-selectable-cursor-disabled);
+  cursor: var(--salt-cursor-disabled);
 }
 
 .saltSliderTrack-disabled .saltSliderTrack-wrapper {
@@ -110,7 +110,7 @@
 
 .saltSliderTrack-dragging,
 .saltSliderTrack-dragging .saltSliderTrack-wrapper {
-  cursor: var(--salt-draggable-grab-cursor-active);
+  cursor: var(--salt-cursor-grab-active);
 }
 
 .saltSliderTrack-disabled {

@@ -30,7 +30,7 @@
   --pill-background: var(--salt-actionable-bold-background);
   --pill-color: var(--salt-actionable-bold-foreground);
   --pill-borderColor: var(--salt-actionable-bold-borderColor);
-  cursor: var(--salt-selectable-cursor-hover);
+  cursor: var(--salt-cursor-hover);
 }
 
 .saltPill-clickable:hover,
@@ -65,5 +65,5 @@
   --pill-color: var(--salt-actionable-bold-foreground-disabled);
   --pill-background: var(--salt-actionable-bold-background-disabled);
   --pill-borderColor: var(--salt-actionable-bold-borderColor-disabled);
-  cursor: var(--salt-actionable-cursor-disabled);
+  cursor: var(--salt-cursor-disabled);
 }
