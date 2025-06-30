@@ -1,1 +1,1 @@
-export { saltHCThemeOptions } from "./salt-hc-options";
+export { highchartsOptionsSalt } from "./salt-hc-options";

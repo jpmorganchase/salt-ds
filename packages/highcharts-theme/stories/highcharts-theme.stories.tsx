@@ -3,14 +3,15 @@ import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import accessibility from "highcharts/modules/accessibility";
 
+import "../css/highcharts-sb-only.css";
 import "../index.css";
 
-import { saltHCThemeOptions } from "../src";
+import { highchartsOptionsSalt } from "../src";
 
 accessibility(Highcharts);
 
 const withHighchartsTheme: Decorator = (Story) => {
-  Highcharts.setOptions(saltHCThemeOptions);
+  Highcharts.setOptions(highchartsOptionsSalt);
   return <Story />;
 };
 

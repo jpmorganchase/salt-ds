@@ -6,7 +6,7 @@ import type { Options } from "highcharts";
 
 // Properties relating to color will be overrided due to styledMode: true
 
-export const saltHCThemeOptions: Options = {
+export const highchartsOptionsSalt: Options = {
   chart: {
     styledMode: true,
   },
