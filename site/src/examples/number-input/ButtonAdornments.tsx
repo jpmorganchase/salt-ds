@@ -22,7 +22,7 @@ const ResetAdornment = () => {
   const [value, setValue] = useState<number | string>(defaultValue);
   const [accessibleText, setAccessibleText] = useState("");
 
-  const formFieldLabel = "Number Input with Reset adornment";
+  const formFieldLabel = "Number input with reset adornment";
   const accessibleTextId = useId();
 
   const clearAccessibleText = () =>
@@ -72,7 +72,7 @@ const SyncAdornment = () => {
   const [value, setValue] = useState<number | string>(randomLiveValue);
   const [accessibleText, setAccessibleText] = useState("");
 
-  const formFieldLabel = "Number Input with Sync adornment";
+  const formFieldLabel = "Number input with sync adornment";
   const accessibleTextId = useId();
 
   useEffect(() => {
@@ -140,7 +140,7 @@ const CustomButtons = () => {
 
   return (
     <FormField>
-      <FormFieldLabel>Number Input with Custom buttons</FormFieldLabel>
+      <FormFieldLabel>Number input with custom buttons</FormFieldLabel>
       <NumberInput
         hideButtons
         value={value}

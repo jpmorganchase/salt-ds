@@ -109,7 +109,7 @@ export const Controlled: StoryFn<NumberInputProps> = (args) => {
       <NumberInput
         {...args}
         decimalScale={2}
-        clampValue
+        clamp
         max={2}
         value={value}
         onChange={(_event, value) => {
@@ -227,7 +227,7 @@ export const Clamping: StoryFn<NumberInputProps> = (args) => {
         <NumberInput
           {...args}
           defaultValue={2}
-          clampValue
+          clamp
           max={max}
           min={min}
           style={{ width: "250px" }}
@@ -446,7 +446,7 @@ export const UncontrolledFormatting: StoryFn<NumberInputProps> = (args) => {
           defaultValue={12}
           format={(value) => `${value}%`}
           max={100}
-          clampValue
+          clamp
           parse={(value) => {
             return String(value).replace(/%/g, "");
           }}
