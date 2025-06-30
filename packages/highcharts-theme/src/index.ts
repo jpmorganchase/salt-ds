@@ -1,1 +1,1 @@
-export { highchartsOptionsSalt } from "./salt-hc-options";
+export { highchartsOptionsSalt } from "./highcharts-options-salt";
