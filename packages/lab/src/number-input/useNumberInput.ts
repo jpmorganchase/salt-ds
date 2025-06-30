@@ -14,23 +14,24 @@ import { toFloat } from "./internal/utils";
  * Manages increment / decrement logic
  */
 export const useNumberInput = ({
+  decimalScale,
   disabled,
   format,
   inputRef,
+  isAdjustingRef,
   max = Number.MAX_SAFE_INTEGER,
   min = Number.MIN_SAFE_INTEGER,
   onChange,
+  parse,
   readOnly,
+  setIsEditing,
   setValue,
   step = 1,
   stepMultiplier = 2,
   value,
-  parse,
-  decimalScale,
-  setIsEditing,
-  setIsAdjusting,
 }: Pick<
   NumberInputProps,
+  | "decimalScale"
   | "disabled"
   | "format"
   | "inputRef"
@@ -38,17 +39,17 @@ export const useNumberInput = ({
   | "min"
   | "onChange"
   | "parse"
-  | "decimalScale"
   | "readOnly"
   | "step"
   | "stepMultiplier"
 > & {
+  inputRef: MutableRefObject<HTMLInputElement | null>;
+  isAdjustingRef: MutableRefObject<boolean>;
+  setIsEditing: Dispatch<SetStateAction<boolean>>;
   setValue: Dispatch<SetStateAction<string | number>>;
   value: string | number;
-  inputRef: MutableRefObject<HTMLInputElement | null>;
-  setIsEditing: Dispatch<SetStateAction<boolean>>;
-  setIsAdjusting: Dispatch<SetStateAction<boolean>>;
 }) => {
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Refs cannot be added to dependency arrays
   const updateValue = useCallback(
     (event: SyntheticEvent | undefined, nextValue: number) => {
       if (readOnly) return;
@@ -56,11 +57,11 @@ export const useNumberInput = ({
         ? nextValue.toFixed(decimalScale)
         : nextValue;
 
-      setIsAdjusting(true);
+      isAdjustingRef.current = true;
       setValue(updatedValue);
       onChange?.(event, toFloat(updatedValue));
     },
-    [onChange, readOnly, setValue, setIsAdjusting, decimalScale, format],
+    [onChange, readOnly, setValue, decimalScale, format],
   );
 
   const decrementValue = useCallback(
