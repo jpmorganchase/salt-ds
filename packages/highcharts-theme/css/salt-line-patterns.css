@@ -1,6 +1,6 @@
 .highcharts-theme-salt.salt-line-patterns .highcharts-graph {
   stroke-linecap: butt;
-  stroke-width: 2px;
+  stroke-width: var(--salt-size-fixed-200);
 }
 
 .highcharts-theme-salt.salt-line-patterns .highcharts-series-1 .highcharts-graph {
