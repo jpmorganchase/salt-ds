@@ -2,11 +2,14 @@ import { FormField, FormFieldLabel } from "@salt-ds/core";
 import * as numberInputStories from "@stories/number-input/number-input.stories";
 import { composeStories } from "@storybook/react-vite";
 import { NumberInput } from "packages/lab/src/number-input";
+import { type SyntheticEvent, useState } from "react";
+import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
 
 const composedStories = composeStories(numberInputStories);
 
 const {
   Default,
+  Controlled,
   ControlledFormatting,
   MinAndMaxValue,
   ResetAdornment,
@@ -15,11 +18,7 @@ const {
 } = composedStories;
 
 describe("Number Input", () => {
-  it("should have no a11y violations on load", () => {
-    cy.mount(<Default defaultValue="The default value" />);
-    cy.checkAxeComponent();
-  });
-
+  checkAccessibility(composedStories);
   it("renders with default props", () => {
     cy.mount(<Default />);
     // Component should render with two buttons - increment, and decrement
@@ -145,11 +144,11 @@ describe("Number Input", () => {
 
     cy.findByRole("spinbutton").focus().realPress("ArrowDown");
     cy.findByRole("spinbutton").should("have.value", "0");
-    cy.findByRole("spinbutton").focus().realPress("PageDown");
+    cy.findByRole("spinbutton").realPress("PageDown");
     cy.findByRole("spinbutton").should("have.value", "-100");
-    cy.findByRole("spinbutton").focus().realPress(["Shift", "ArrowDown"]);
+    cy.findByRole("spinbutton").realPress(["Shift", "ArrowDown"]);
     cy.findByRole("spinbutton").should("have.value", "-200");
-    cy.findByRole("spinbutton").focus().realPress(["Home"]);
+    cy.findByRole("spinbutton").realPress(["Home"]);
     cy.findByRole("spinbutton").should("have.value", "-2000");
   });
 
@@ -467,6 +466,45 @@ describe("Number Input", () => {
       cy.findAllByRole("button").eq(2).click();
       cy.findByRole("spinbutton").should("have.value", "");
     });
+
+    it("should call onChange when value is updated", () => {
+      const changeSpy = cy.stub().as("changeSpy");
+
+      function ControlledNumberInput() {
+        const [value, setValue] = useState<number | string>(15);
+
+        const onChange = (
+          event: SyntheticEvent | undefined,
+          value: string | number,
+        ) => {
+          setValue(value);
+          changeSpy(event, value);
+        };
+
+        return (
+          <NumberInput
+            value={value}
+            onChange={onChange}
+            format={(value) => `${value}%`}
+          />
+        );
+      }
+
+      cy.mount(<ControlledNumberInput />);
+      cy.findByRole("spinbutton").should("have.value", "15%");
+      cy.findByRole("spinbutton").focus().realPress("ArrowUp");
+      cy.get("@changeSpy").should(
+        "have.been.calledWith",
+        Cypress.sinon.match.any,
+        16,
+      );
+      cy.findByRole("spinbutton").realPress("ArrowDown");
+      cy.get("@changeSpy").should(
+        "have.been.calledWith",
+        Cypress.sinon.match.any,
+        15,
+      );
+    });
   });
 
   describe("WHEN formatting an uncontrolled NumberInput", () => {
@@ -601,11 +639,6 @@ describe("Number Input", () => {
     it("should mount a read-only number input", () => {
       cy.mount(<ReadOnly />);
       cy.findByRole("textbox").should("have.attr", "readonly");
-    });
-
-    it("should have no a11y violations on load", () => {
-      cy.mount(<ReadOnly />);
-      cy.checkAxeComponent();
     });
 
     it("should show emdash by default if empty", () => {

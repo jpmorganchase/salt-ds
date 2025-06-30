@@ -253,8 +253,9 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       ? ["required", "asterisk"].includes(formFieldRequired)
       : inputRequired;
 
+    const isAdjustingRef = useRef<boolean>(false);
     const [isEditing, setIsEditing] = useState(false);
-    const [isAdjusting, setIsAdjusting] = useState(false);
+    const [isFocused, setIsFocused] = useState(false);
 
     const [recordCaret, restoreCaret, resetCaret] = useCaret({
       inputRef,
@@ -275,21 +276,21 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       incrementButtonProps,
       incrementValue,
     } = useNumberInput({
-      inputRef,
-      setValue,
-      setIsAdjusting,
+      decimalScale,
       disabled,
+      format,
+      inputRef,
+      isAdjustingRef,
       max,
       min,
       onChange: onChangeProp,
       parse,
-      decimalScale,
       readOnly: isReadOnly,
+      setIsEditing,
+      setValue,
       step,
       stepMultiplier,
-      setIsEditing,
       value,
-      format,
     });
 
     const clampAndFix = (value: number) => {
@@ -306,7 +307,7 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
         const sanitizedValue = sanitizeInput(value);
         const floatValue = toFloat(sanitizedValue);
         if (
-          !isAdjusting &&
+          !isAdjustingRef.current &&
           (isEditing ||
             isEmpty(value) ||
             Number.isNaN(floatValue) ||
@@ -314,7 +315,7 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
         ) {
           return value;
         }
-        if (isAdjusting) {
+        if (isAdjustingRef.current) {
           return clampAndFix(toFloat(value));
         }
         const clampedValue = clampAndFix(floatValue);
@@ -336,7 +337,7 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
 
     // biome-ignore lint/correctness/useExhaustiveDependencies: Need to restore caret position when value changes.
     useLayoutEffect(() => {
-      if (isAdjusting) {
+      if (isAdjustingRef.current) {
         resetCaret();
       } else {
         restoreCaret();
@@ -344,6 +345,7 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
     }, [displayValue, value]);
 
     const handleInputFocus = (event: FocusEvent<HTMLInputElement>) => {
+      setIsFocused(true);
       if (isReadOnly) return;
       const parsedValue = parse?.(value) ?? value;
       const updatedValue = !isEmpty(parsedValue)
@@ -354,9 +356,10 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
     };
 
     const handleInputBlur = (event: FocusEvent<HTMLInputElement>) => {
+      setIsFocused(false);
       if (isReadOnly) return;
       setIsEditing(false);
-      setIsAdjusting(false);
+      isAdjustingRef.current = false;
       resetCaret();
       const inputValue = event.target.value;
       if (isEmpty(inputValue)) {
@@ -389,7 +392,7 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
 
     const handleInputKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
       setIsEditing(true);
-      setIsAdjusting(false);
+      isAdjustingRef.current = false;
 
       switch (event.key) {
         case "ArrowUp": {
@@ -440,6 +443,7 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
           withBaseName(),
           withBaseName(variant),
           {
+            [withBaseName("focused")]: isFocused,
             [withBaseName("disabled")]: isDisabled,
             [withBaseName("readOnly")]: isReadOnly,
             [withBaseName("hiddenButtons")]: hideButtons,

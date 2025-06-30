@@ -10,6 +10,7 @@ const useCaret = ({
     end: number | null;
   } | null>(null);
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Refs shouldn't be used in dependency arrays
   const recordCaret = useCallback(() => {
     if (inputRef.current) {
       const { selectionStart: start, selectionEnd: end } = inputRef.current;
@@ -18,21 +19,23 @@ const useCaret = ({
         end,
       };
     }
-  }, [inputRef.current]);
+  }, []);
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Refs shouldn't be used in dependency arrays
   const restoreCaret = useCallback(() => {
     if (inputRef.current && caretPositionRef.current) {
       const { start, end } = caretPositionRef.current;
       inputRef.current.setSelectionRange(start, end);
     }
-  }, [inputRef.current]);
+  }, []);
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Refs shouldn't be used in dependency arrays
   const resetCaret = useCallback(() => {
     if (inputRef.current) {
       const txtLength = inputRef.current.value.length;
       caretPositionRef.current = { start: txtLength, end: txtLength };
     }
-  }, [inputRef.current]);
+  }, []);
 
   return [recordCaret, restoreCaret, resetCaret];
 };
