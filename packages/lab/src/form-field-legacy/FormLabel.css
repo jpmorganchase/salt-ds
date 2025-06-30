@@ -57,7 +57,7 @@
 /* Styles applied when `disabled={true}` */
 .saltFormLabel-disabled {
   color: var(--saltFormFieldLegacy-label-text-color-disabled, var(--salt-content-secondary-foreground-disabled));
-  cursor: var(--salt-editable-cursor-disabled);
+  cursor: var(--salt-cursor-disabled);
 }
 
 /* Styles applied when displayedNecessity or necessityText provided */

@@ -12,7 +12,7 @@
   font-family: var(--salt-text-fontFamily);
   line-height: var(--salt-text-lineHeight);
   letter-spacing: var(--salt-text-letterSpacing);
-  cursor: var(--salt-selectable-cursor-hover);
+  cursor: var(--salt-cursor-hover);
   border-radius: var(--salt-palette-corner-weak, 0);
 }
 
@@ -32,7 +32,7 @@
 .saltPageButton:disabled {
   color: var(--salt-content-secondary-foreground);
   background: var(--salt-selectable-background);
-  cursor: var(--salt-editable-cursor-readonly);
+  cursor: var(--salt-cursor-readonly);
 }
 
 .saltPageButton[aria-current="page"] {

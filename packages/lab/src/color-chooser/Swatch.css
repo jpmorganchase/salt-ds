@@ -3,7 +3,7 @@
 .saltColorChooserSwatch-graySwatch {
   margin-bottom: 1px;
   margin-left: 1px;
-  cursor: pointer;
+  cursor: var(--salt-cursor-hover);
 }
 
 .salt-density-touch,
@@ -38,7 +38,7 @@
 .saltColorChooserSwatch-whiteSwatch {
   margin-bottom: 1px;
   margin-left: 1px;
-  cursor: pointer;
+  cursor: var(--salt-cursor-hover);
 }
 
 .salt-theme[data-mode="light"] .saltColorChooserSwatch-whiteSwatch {
@@ -70,7 +70,7 @@
   border: var(--salt-focused-outlineWidth) var(--salt-container-borderStyle) var(--salt-actionable-cta-foreground-active) !important;
   margin-bottom: 1px;
   margin-left: 1px;
-  cursor: pointer;
+  cursor: var(--salt-cursor-active);
 }
 
 .saltColorChooserSwatch-transparent {

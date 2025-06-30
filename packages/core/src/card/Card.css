@@ -87,7 +87,7 @@
 a:focus .saltCard-interactable,
 .saltCard-interactable:hover {
   box-shadow: var(--saltCard-boxShadow-hover, var(--salt-overlayable-shadow-hover));
-  cursor: var(--saltCard-cursor-hover, var(--salt-selectable-cursor-hover));
+  cursor: var(--saltCard-cursor-hover, var(--salt-cursor-hover));
   border-color: var(--salt-actionable-accented-borderColor-hover);
   position: relative;
 }
@@ -121,7 +121,7 @@ a:focus .saltCard-interactable.saltCard-disabled,
 a:focus .saltCard-interactable.saltCard-disabled {
   border-color: var(--salt-container-primary-borderColor-disabled);
   color: var(--saltCard-color-disabled, var(--salt-content-primary-foreground-disabled));
-  cursor: var(--saltCard-cursor-disabled, var(--salt-selectable-cursor-disabled));
+  cursor: var(--saltCard-cursor-disabled, var(--salt-cursor-disabled));
   outline: none;
 }
 

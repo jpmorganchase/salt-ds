@@ -2,7 +2,7 @@ export type characteristic =
   | "accent"
   | "actionable"
   | "container"
-  | "draggable"
+  | "draggable" /* **deprecated** */
   | "editable"
   | "focused"
   | "measured"
