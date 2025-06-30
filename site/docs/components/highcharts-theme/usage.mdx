@@ -10,10 +10,6 @@ data:
 
 ## Using the package
 
-### When to use
-
-When you want to use the Salt theme with Highcharts version 10.
-
 ## Import
 
 To install the theme package, ensure you have a supported version of Highcharts installed and add `@salt-ds/highcharts-theme` via your package manager
@@ -25,23 +21,14 @@ yarn add @salt-ds/highcharts-theme
 
 ```
 
-### Set Highcharts Global options
+### Import Highcharts CSS
 
-To get started with the Salt Highcharts Theme, import and set the [Highcharts global options](https://www.highcharts.com/docs/getting-started/how-to-set-options) at your entry point. This ensures that Highchart runs in `styledMode` and allows for the use of CSS classes to style the chart
-along with the setting of positional properties like spacing and dimensions.
-
-```js
-import Highcharts from "highcharts";
-
-Highcharts.setOptions(saltHCThemeOptions);
-```
+The Salt Highcharts theme overrides the default Highcharts CSS. To ensure the theme is applied correctly, import the Highcharts CSS before the Salt Highcharts theme CSS.
 
 <Callout title="Note">
-
-If you already have a global options object, you can call `Highcharts.setOptions` again with the `saltHCThemeOptions` after your initial call. Any fields set by `saltHCThemeOptions` will take precedence over any previously set fields.
-
-For granular control, you can also use the `Highcharts.merge()` utility function to deep merge the `saltHCThemeOptions` with your existing options object, including at the chart level.
-
+  You can download the [Highcharts CSS
+  here](https://code.highcharts.com/10.2.0/css/highcharts.css), specifying the
+  required version via the URL.
 </Callout>
 
 ### Import Salt Highcharts theme
@@ -59,3 +46,21 @@ Then wrap your Highcharts with `highcharts-theme-salt` class names shown below:
   <HighchartsReact highcharts={Highcharts} options={yourChartSpecificOptions} />
 </div>
 ```
+
+### Set Highcharts Global options
+
+Many Highchart stylistic properties are inconfigurable via CSS alone. To adhere to the Salt design system, import and set the [Highcharts global options](https://www.highcharts.com/docs/getting-started/how-to-set-options) at your entry point.
+
+```js
+import Highcharts from "highcharts";
+
+Highcharts.setOptions(highchartsOptionsSalt);
+```
+
+<Callout title="Note">
+
+If you already have a global options object, you can call `Highcharts.setOptions` again with the `highchartsOptionsSalt` after your initial call. Any fields set by `highchartsOptionsSalt` will take precedence over any previously set fields.
+
+For granular control, you can also use the `Highcharts.merge()` utility function to deep merge the `highchartsOptionsSalt` with your existing options object, including at the chart level.
+
+</Callout>
