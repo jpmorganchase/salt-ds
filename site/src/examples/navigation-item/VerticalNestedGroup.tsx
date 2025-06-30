@@ -40,7 +40,7 @@ export const VerticalNestedGroup = (): ReactElement => {
     <nav>
       <StackLayout
         as="ul"
-        gap="var(--salt-size-border)"
+        gap="var(--salt-spacing-fixed-100)"
         style={{
           width: 250,
           listStyle: "none",
@@ -87,7 +87,7 @@ export const VerticalNestedGroup = (): ReactElement => {
             {expanded.includes(name) && (
               <StackLayout
                 as="ul"
-                gap="var(--salt-size-border)"
+                gap="var(--salt-spacing-fixed-100)"
                 style={{
                   width: 250,
                   listStyle: "none",
@@ -138,7 +138,7 @@ export const VerticalNestedGroup = (): ReactElement => {
                       {expanded.includes(item.name) && (
                         <StackLayout
                           as="ul"
-                          gap="var(--salt-size-border)"
+                          gap="var(--salt-spacing-fixed-100)"
                           style={{
                             width: 250,
                             listStyle: "none",

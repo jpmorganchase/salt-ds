@@ -7,10 +7,12 @@ import {
 import type { StoryFn } from "@storybook/react-vite";
 import { enUS as dateFnsEnUs } from "date-fns/locale";
 import { QAContainer, type QAContainerProps } from "docs/components";
+import { withDateMock } from ".storybook/decorators/withDateMock";
 
 export default {
   title: "Lab/Calendar/QA",
   component: Calendar,
+  decorators: [withDateMock],
   globals: {
     a11y: {
       manual: true,

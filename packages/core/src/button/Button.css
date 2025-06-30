@@ -1,10 +1,12 @@
 .saltButton {
+  --button-borderWidth: var(--salt-size-fixed-100);
+
   align-items: var(--saltButton-alignItems, center);
   appearance: none;
   background: var(--saltButton-background, var(--button-background));
   border-color: var(--saltButton-borderColor, var(--button-borderColor, transparent));
   border-style: var(--saltButton-borderStyle, solid);
-  border-width: var(--saltButton-borderWidth, var(--salt-size-border, 0));
+  border-width: var(--saltButton-borderWidth, var(--button-borderWidth));
   border-radius: var(--saltButton-borderRadius, var(--salt-palette-corner-weak, 0));
   color: var(--saltButton-text-color, var(--button-text-color));
   cursor: var(--saltButton-cursor, pointer);
@@ -16,7 +18,7 @@
   line-height: var(--saltButton-lineHeight, var(--salt-text-lineHeight));
   letter-spacing: var(--saltButton-letterSpacing, var(--salt-text-action-letterSpacing));
   text-transform: var(--saltButton-textTransform, var(--salt-text-action-textTransform));
-  padding: 0 var(--saltButton-padding, calc(var(--salt-spacing-100) - var(--saltButton-borderWidth, var(--salt-size-border, 0))));
+  padding: 0 var(--saltButton-padding, calc(var(--salt-spacing-100) - var(--saltButton-borderWidth, var(--button-borderWidth))));
   margin: var(--saltButton-margin, 0);
   height: var(--saltButton-height, var(--salt-size-base));
   min-width: var(--saltButton-minWidth, unset);

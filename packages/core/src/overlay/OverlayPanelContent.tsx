@@ -58,7 +58,7 @@ export const OverlayPanelContent = forwardRef<
   const checkOverflow = useCallback(() => {
     if (!divRef.current) return;
     setIsOverflowing(
-      divRef.current.scrollHeight > divRef.current.offsetHeight + 1, // var(--salt-size-border)
+      divRef.current.scrollHeight > divRef.current.offsetHeight + 1, // var(--salt-size-thickness-100)
     );
   }, []);
 

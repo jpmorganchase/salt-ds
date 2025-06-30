@@ -1,3 +1,4 @@
+import { useColorMode } from "@jpmorganchase/mosaic-store";
 import { SaltProviderNext, Switch } from "@salt-ds/core";
 import { type ChangeEvent, useState } from "react";
 import { Image } from "../mdx/image";
@@ -7,20 +8,25 @@ export interface ImageSwitcherProps {
   label: string;
   caption?: string;
   images: Array<{ alt: string; src: string }>;
+  darkImages: Array<{ alt: string; src: string }>;
 }
 
 export function ImageSwitcher(props: ImageSwitcherProps): JSX.Element {
-  const { label, images, caption } = props;
+  const { darkImages, label, images, caption } = props;
   const [toggle, setToggle] = useState(false);
+  const siteMode = useColorMode();
+
+  const imagesToUse = siteMode === "dark" && darkImages ? darkImages : images;
 
   const handleToggle = (event: ChangeEvent<HTMLInputElement>) => {
     setToggle(event.target.checked);
   };
 
-  const currentImage = toggle ? images[1] : images[0];
+  const currentImage = toggle ? imagesToUse[1] : imagesToUse[0];
+  const mode = siteMode === "dark" && darkImages ? "dark" : "light";
 
   return (
-    <SaltProviderNext mode="light" applyClassesTo="child">
+    <SaltProviderNext mode={mode} applyClassesTo="child">
       <figure className={styles.figure}>
         <div className={styles.container}>
           <div className={styles.header}>

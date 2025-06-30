@@ -36,10 +36,12 @@ import "./calendar.stories.css";
 import "dayjs/locale/es"; // Import the Spanish locale
 import { es as dateFnsEs } from "date-fns/locale";
 import "moment/dist/locale/es";
+import { withDateMock } from ".storybook/decorators/withDateMock";
 
 export default {
   title: "Lab/Calendar",
   component: Calendar,
+  decorators: [withDateMock],
   parameters: {
     actions: { disable: true }, // Disable actions for all stories in this file
   },

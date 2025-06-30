@@ -1,6 +1,6 @@
 import path from "node:path";
 // @ts-ignore
-import installCoverageTask from "@cypress/code-coverage/task";
+import installCoverageTask from "@cypress/code-coverage/task.js";
 import react from "@vitejs/plugin-react";
 import { isCI } from "ci-info";
 import { cssInline } from "css-inline-plugin";

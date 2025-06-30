@@ -7,8 +7,8 @@
   -webkit-appearance: none;
   gap: var(--salt-spacing-100);
   border: none;
-  border-left: var(--salt-size-border) var(--salt-container-borderStyle) transparent;
-  border-right: var(--salt-size-border) var(--salt-container-borderStyle) transparent;
+  border-left: var(--salt-size-fixed-100) var(--salt-container-borderStyle) transparent;
+  border-right: var(--salt-size-fixed-100) var(--salt-container-borderStyle) transparent;
   white-space: pre;
   min-height: calc(var(--salt-size-base) + var(--salt-spacing-100));
   min-width: 4em;
@@ -33,8 +33,8 @@
 .saltTabNext::after {
   content: "";
   position: absolute;
-  left: calc(var(--salt-size-border) * -1);
-  right: calc(var(--salt-size-border) * -1);
+  left: calc(var(--salt-size-fixed-100) * -1);
+  right: calc(var(--salt-size-fixed-100) * -1);
   height: var(--salt-size-indicator);
 }
 
@@ -62,8 +62,8 @@
 
 .saltTabListNext-bordered .saltTabNext.saltTabNext-selected {
   background: var(--saltTabListNext-activeColor);
-  border-left: var(--salt-size-border) var(--salt-separable-borderStyle) var(--salt-separable-secondary-borderColor);
-  border-right: var(--salt-size-border) var(--salt-separable-borderStyle) var(--salt-separable-secondary-borderColor);
+  border-left: var(--salt-size-fixed-100) var(--salt-separable-borderStyle) var(--salt-separable-secondary-borderColor);
+  border-right: var(--salt-size-fixed-100) var(--salt-separable-borderStyle) var(--salt-separable-secondary-borderColor);
 }
 
 .saltTabNext.saltTabNext-selected::after {

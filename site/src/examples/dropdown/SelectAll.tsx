@@ -57,7 +57,7 @@ export const SelectAll = (): ReactElement => {
         <Option
           style={{
             borderBottom: "var(--salt-separable-borderStyle)",
-            borderWidth: "var(--salt-size-border)",
+            borderWidth: "var(--salt-size-fixed-100)",
             borderColor:
               selected.includes(shortColorData[0]) ||
               selected.includes(allSelectedOptionValue)
