@@ -404,7 +404,7 @@ describe("Number Input", () => {
     cy.mount(<Default max={100} min={10} clamp />);
 
     cy.findByRole("spinbutton").focus().realType("1000000");
-    cy.realPress("ArrowUp");
+    cy.realPress("ArrowDown");
     cy.findByRole("spinbutton").should("have.value", 100);
     cy.realPress("ArrowDown");
     cy.findByRole("spinbutton").should("have.value", 99);
