@@ -6,9 +6,7 @@ import type { EmblaCarouselType } from "embla-carousel";
 import {
   type ComponentPropsWithoutRef,
   type KeyboardEvent,
-  type Ref,
   forwardRef,
-  useCallback,
   useEffect,
   useRef,
 } from "react";
@@ -33,12 +31,12 @@ export const CarouselSlides = forwardRef<HTMLDivElement, CarouselSlidesProps>(
     });
     const { emblaApi, emblaRef } = useCarouselContext();
 
-    const carouselRef = useForkRef(ref, emblaRef) as Ref<HTMLDivElement>;
+    const carouselRef = useForkRef<HTMLDivElement>(ref, emblaRef);
 
     const usingArrowNavigation = useRef<boolean>();
 
-    const handleSettle = useCallback(
-      (emblaApi: EmblaCarouselType) => {
+    useEffect(() => {
+      const handleSettle = (emblaApi: EmblaCarouselType) => {
         if (!usingArrowNavigation.current) {
           return;
         }
@@ -53,11 +51,8 @@ export const CarouselSlides = forwardRef<HTMLDivElement, CarouselSlidesProps>(
           }
         }
         usingArrowNavigation.current = false;
-      },
-      [usingArrowNavigation.current],
-    );
+      };
 
-    useEffect(() => {
       if (!emblaApi) {
         return;
       }
@@ -67,7 +62,7 @@ export const CarouselSlides = forwardRef<HTMLDivElement, CarouselSlidesProps>(
       return () => {
         emblaApi.off("scroll", scrollCallback);
       };
-    }, [emblaApi, handleSettle]);
+    }, [emblaApi]);
 
     const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
       if (event.repeat) {

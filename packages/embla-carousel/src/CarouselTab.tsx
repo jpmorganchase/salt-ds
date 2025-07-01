@@ -6,7 +6,6 @@ import type { EmblaCarouselType } from "embla-carousel";
 import {
   type ComponentPropsWithRef,
   forwardRef,
-  useCallback,
   useEffect,
   useState,
 } from "react";
@@ -43,23 +42,19 @@ export const useCarouselTab = (
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [scrollSnaps, setScrollSnaps] = useState<number[]>([]);
 
-  const handleClick = useCallback(
-    (index: number) => {
-      if (!emblaApi) return;
-      emblaApi.scrollTo(index);
-    },
-    [emblaApi],
-  );
-
-  const handleInit = useCallback((emblaApi: EmblaCarouselType) => {
-    setScrollSnaps(emblaApi.scrollSnapList());
-  }, []);
-
-  const handleSelect = useCallback((emblaApi: EmblaCarouselType) => {
-    setSelectedIndex(emblaApi.selectedScrollSnap());
-  }, []);
+  const handleClick = (index: number) => {
+    emblaApi?.scrollTo(index);
+  };
 
   useEffect(() => {
+    const handleInit = (emblaApi: EmblaCarouselType) => {
+      setScrollSnaps(emblaApi.scrollSnapList());
+    };
+
+    const handleSelect = (emblaApi: EmblaCarouselType) => {
+      setSelectedIndex(emblaApi.selectedScrollSnap());
+    };
+
     if (!emblaApi) return;
 
     handleInit(emblaApi);
@@ -74,7 +69,7 @@ export const useCarouselTab = (
       emblaApi.off("reInit", handleInit);
       emblaApi.off("select", handleSelect);
     };
-  }, [emblaApi, handleInit, handleSelect]);
+  }, [emblaApi]);
 
   return {
     selectedIndex,

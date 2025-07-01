@@ -63,7 +63,7 @@ export const CarouselAutoplayIndicator = forwardRef<
       window: targetWindow,
     });
 
-    const barRef = useRef<SVGCircleElement | null>(null);
+    const barRef = useRef<SVGCircleElement>(null);
     const animationFrameId = useRef<number | null>(null);
 
     const density = useDensity();

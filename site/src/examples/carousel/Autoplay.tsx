@@ -21,7 +21,7 @@ import { PauseIcon, PlayIcon } from "@salt-ds/icons";
 import type { EmblaCarouselType } from "embla-carousel";
 import { default as AutoplayPlugin } from "embla-carousel-autoplay";
 import Classnames from "embla-carousel-class-names";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { sliderData } from "./exampleData";
 import styles from "./index.module.css";
 
@@ -35,33 +35,31 @@ export const Autoplay = () => {
   const [isPaused, setIsPaused] = useState(false);
   const [slideIndex, setSlideIndex] = useState(0);
 
-  const autoplay = useRef(
-    AutoplayPlugin({ delay: DELAY_MSECS, playOnInit: false }),
-  );
+  const autoplay = emblaApi?.plugins().autoplay;
 
-  const play = useCallback(() => {
-    autoplay.current.play();
+  const play = () => {
+    autoplay?.play();
     setIsPlaying(true);
     setIsPaused(false);
-  }, []);
+  };
 
-  const pause = useCallback(() => {
-    autoplay.current.stop();
+  const pause = () => {
+    autoplay?.stop();
     setIsPaused(true);
-  }, []);
+  };
 
-  const stop = useCallback(() => {
-    autoplay.current.stop();
+  const stop = () => {
+    autoplay?.stop();
     setIsPlaying(false);
     setIsPaused(true);
-  }, []);
-
-  const handleSlideChange = useCallback((emblaApi: EmblaCarouselType) => {
-    const settledSlideIndex = emblaApi?.selectedScrollSnap() ?? 0;
-    setSlideIndex(settledSlideIndex + 1);
-  }, []);
+  };
 
   useEffect(() => {
+    const handleSlideChange = (emblaApi: EmblaCarouselType) => {
+      const settledSlideIndex = emblaApi?.selectedScrollSnap() ?? 0;
+      setSlideIndex(settledSlideIndex + 1);
+    };
+
     if (!emblaApi || !emblaApi.plugins()?.autoplay) {
       return;
     }
@@ -69,9 +67,9 @@ export const Autoplay = () => {
     return () => {
       emblaApi.off("select", handleSlideChange);
     };
-  }, [emblaApi, handleSlideChange]);
+  }, [emblaApi]);
 
-  const timeUntilNext = autoplay.current.timeUntilNext() ?? DELAY_MSECS;
+  const timeUntilNext = autoplay?.timeUntilNext() ?? DELAY_MSECS;
 
   return (
     <div className={"saltCarouselAutoplayExample"}>
@@ -80,7 +78,7 @@ export const Autoplay = () => {
         className={styles.carousel}
         emblaOptions={{ loop: true, duration: 20 }}
         emblaPlugins={[
-          autoplay.current,
+          AutoplayPlugin({ delay: DELAY_MSECS, playOnInit: false }),
           Classnames({
             snapped: styles.carouselSlideIsSnapped,
           }),
