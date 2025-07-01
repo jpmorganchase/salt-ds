@@ -23,7 +23,7 @@ To migrate from the current Lab version of `Carousel`:
 }
 ```
 
-2. update your imports.
+2. Update your imports.
 
 ```diff
 import {
