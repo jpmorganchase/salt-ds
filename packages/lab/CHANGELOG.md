@@ -2613,10 +2613,10 @@ After:
   - --salt-measured-borderStyle-active
   - --salt-measured-borderStyle-complete
   - --salt-measured-borderStyle-incomplete
-  + --salt-borderStyle-solid
-  + --salt-borderStyle-solid
-  + --salt-borderStyle-solid
-  + --salt-borderStyle-dotted
+  + --salt-track-borderStyle
+  + --salt-track-borderStyle-active
+  + --salt-track-borderStyle-complete
+  + --salt-track-borderStyle-incomplete
   - --salt-measured-borderWidth
   - --salt-measured-borderWidth-active
   - --salt-measured-borderWidth-complete

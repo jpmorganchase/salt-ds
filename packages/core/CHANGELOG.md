@@ -1594,7 +1594,7 @@ import "@salt-ds/core/css/salt-core.css";
 
 ### Patch Changes
 
-- 89a3da4c: Fixed Checkbox and Radio Button border style incorrectly using `--salt-borderStyle-solid`.
+- 89a3da4c: Fixed Checkbox and Radio Button border style incorrectly using `--salt-container-borderStyle`.
 
 ## 1.8.0-rc.3
 
@@ -1933,10 +1933,10 @@ import "@salt-ds/core/css/salt-core.css";
   - --salt-measured-borderStyle-active
   - --salt-measured-borderStyle-complete
   - --salt-measured-borderStyle-incomplete
-  + --salt-borderStyle-solid
-  + --salt-borderStyle-solid
-  + --salt-borderStyle-solid
-  + --salt-borderStyle-dotted
+  + --salt-track-borderStyle
+  + --salt-track-borderStyle-active
+  + --salt-track-borderStyle-complete
+  + --salt-track-borderStyle-incomplete
   - --salt-measured-borderWidth
   - --salt-measured-borderWidth-active
   - --salt-measured-borderWidth-complete
