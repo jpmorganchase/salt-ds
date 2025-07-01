@@ -13,4 +13,7 @@
   --salt-container-tertiary-background-disabled: var(--salt-palette-background-tertiary-disabled);
   --salt-container-tertiary-borderColor: var(--salt-palette-alpha-contrast-low);
   --salt-container-tertiary-borderColor-disabled: var(--salt-palette-alpha-contrast-lowest);
+
+  --salt-container-target-background: var(--salt-palette-accent-weakest);
+  --salt-container-target-borderColor: var(--salt-palette-accent);
 }

@@ -71,7 +71,7 @@
 
   --grid-groupHeader-color: var(--saltGrid-groupHeader-color, var(--salt-content-secondary-foreground));
   --grid-shadow-color: var(--saltGrid-shadow-color, var(--salt-shadow-100-color));
-  --grid-columnDropTarget-color: var(--saltGrid-columnDropTarget-color, var(--salt-target-borderColor-hover));
+  --grid-columnDropTarget-color: var(--saltGrid-columnDropTarget-color, var(--salt-container-target-borderColor));
   --grid-cursor-border-style: var(--saltGrid-cursor-borderStyle, var(--salt-focused-outlineStyle));
   --grid-cursor-border-width: var(--saltGrid-cursor-borderWidth, var(--salt-focused-outlineWidth));
   --grid-cursor-borderColor: var(--saltGrid-cursor-borderColor, var(--salt-focused-outlineColor));

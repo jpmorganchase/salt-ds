@@ -136,6 +136,8 @@
 
   /* Target */
   --salt-target-cursor-disabled: not-allowed;
+  --salt-target-background-hover: var(--salt-palette-interact-background-hover);
+  --salt-target-borderColor-hover: var(--salt-palette-interact-border-hover);
 
   /* Text */
   --salt-text-background-selected: var(--salt-content-foreground-highlight);
