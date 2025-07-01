@@ -5,7 +5,7 @@
 ### Summary
 
 The `Carousel` component has been moved from the Lab package to its own package, `@salt-ds/embla-carousel`.
-Initially released as a pre-release in Lab, the Carousel was not fully featured. We have now pivoted to treating Carousel as a pattern using embla, that can compose Salt components as its slides.
+Initially released as a pre-release in Lab, the Carousel was not fully featured. We have now pivoted to treating Carousel as a pattern using Embla, that can compose Salt components as its slides.
 
 [Embla](https://www.embla-carousel.com) is a headless open-source carousel library offering a comprehensive set of features and an extensible API.
 
