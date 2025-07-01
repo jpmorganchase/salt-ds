@@ -1,5 +1,5 @@
 .saltCarouselAutoplayIndicator {
-  --salt-carousel-svg-circumference: 0;
+  --carousel-svg-circumference: 0;
   display: flex;
   align-self: center;
 }
@@ -16,15 +16,15 @@
 .saltCarouselAutoplayIndicatorSVG-bar {
   fill: none;
   stroke: var(--salt-accent-background);
-  stroke-dasharray: var(--salt-carousel-svg-circumference);
-  stroke-dashoffset: var(--salt-carousel-svg-circumference);
+  stroke-dasharray: var(--carousel-svg-circumference);
+  stroke-dashoffset: var(--carousel-svg-circumference);
   animation: indicatorAnimation 0.5s linear;
   animation-play-state: paused;
 }
 
 @keyframes indicatorAnimation {
   from {
-    stroke-dashoffset: var(--salt-carousel-svg-circumference);
+    stroke-dashoffset: var(--carousel-svg-circumference);
   }
   to {
     stroke-dashoffset: 0;

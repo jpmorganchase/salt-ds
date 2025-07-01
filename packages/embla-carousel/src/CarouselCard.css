@@ -1,9 +1,9 @@
 .saltCarouselCard {
   display: flex;
   transform: translate3d(0, 0, 0);
-  flex: 0 0 var(--saltCarousel-slide-size);
+  flex: 0 0 var(--carousel-slide-size);
   min-width: 0;
-  padding-left: var(--saltCarousel-slide-spacing);
+  padding-left: var(--carousel-slide-spacing);
   box-sizing: border-box;
 }
 

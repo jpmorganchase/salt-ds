@@ -12,9 +12,9 @@
 .carouselSlide {
   box-sizing: border-box;
   transform: translate3d(0, 0, 0);
-  flex: 0 0 var(--saltCarousel-slide-size);
+  flex: 0 0 var(--carousel-slide-size);
   min-width: 0;
-  padding-left: var(--saltCarousel-slide-spacing);
+  padding-left: var(--carousel-slide-spacing);
 }
 
 .carouselHeading {
@@ -31,7 +31,7 @@
 
 .carousel.carouselMultipleSlides {
   /** Allow 4% of the next slide to be visible by reducing each slide by 2% */
-  --saltCarousel-slide-size: 48%;
+  --carousel-slide-size: 48%;
 }
 
 .carouselNumber {
@@ -40,6 +40,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  height: var(--saltCarousel-slide-height);
+  height: var(--carousel-slide-height);
   user-select: none;
 }
