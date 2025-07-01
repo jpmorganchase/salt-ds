@@ -1,7 +1,4 @@
 .salt-theme {
-  --salt-target-background-hover: var(--salt-palette-interact-background-hover);
-
-  --salt-target-borderColor-hover: var(--salt-palette-interact-border-hover);
   --salt-target-borderStyle: dashed;
   --salt-target-borderStyle-hover: solid;
   --salt-target-borderStyle-disabled: dashed;
