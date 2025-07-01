@@ -16,7 +16,7 @@ Wrap `NumberInput` in [`FormField`](/salt/components/form-field) to provide the 
 
 Number input inherits keyboard interactions from [`Input`](/salt/components/input/accessibility).
 
-The following interactions are specific to Number Input.
+The following interactions are specific to `NumberInput`.
 
 <KeyboardControls>
 <KeyboardControl keyOrCombos="Up arrow">
@@ -26,12 +26,12 @@ When the input area has focus, Up arrow increases the number by the increment va
 </KeyboardControl>
 <KeyboardControl keyOrCombos="Shift + Up arrow">
  
-When the input area has focus, this action increases the number by the step block value (default to 10), up to the maximum value if set.
+When the input area has focus, this action increases the number by a multiple of the standard step size (default to 2).
 
 </KeyboardControl>
 <KeyboardControl keyOrCombos="Page up">
 
-When the input area has focus, Page up increases the number by the step block value (default to 10), up to the maximum value if set.
+When the input area has focus, Page up increases the number by a multiple of the standard step size (default to 2), up to the maximum value if set.
 
 </KeyboardControl>
 <KeyboardControl keyOrCombos="End">
@@ -46,12 +46,12 @@ When the input area has focus, Down arrow decresases the number by the increment
 </KeyboardControl>
 <KeyboardControl keyOrCombos="Shift + Down arrow">
  
-When the input area has focus, this action decreases the number by the step block value (default to 10), up to the maximum value if set.
+When the input area has focus, this action decreases the number by a multiple of the step size (default to 2), up to the maximum value if set.
 
 </KeyboardControl>
 <KeyboardControl keyOrCombos="Page down">
  
-When the input area has focus, Page down decreases the number by the step block value (default to 10), up to the maximum value if set.
+When the input area has focus, Page down decreases the number by a multiple of the step size (default to 2), up to the maximum value if set.
 
 </KeyboardControl>
 <KeyboardControl keyOrCombos="Home">
