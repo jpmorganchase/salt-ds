@@ -1,5 +1,5 @@
 ---
-"@salt-ds/embla-carousel": patch
+"@salt-ds/embla-carousel": minor
 ---
 
 ### Summary
