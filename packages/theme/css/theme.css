@@ -6,6 +6,7 @@
 /* Foundations (base values) */
 @import url(foundations/alpha.css);
 @import url(foundations/animation.css);
+@import url(foundations/borderStyle.css);
 @import url(foundations/color.css);
 @import url(foundations/cursor.css);
 @import url(foundations/curve.css);
