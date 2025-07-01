@@ -7,7 +7,7 @@
   line-height: var(--saltOverlay-lineHeight, var(--salt-text-lineHeight));
 
   border-color: var(--overlay-borderColor);
-  border-style: var(--saltOverlay-borderStyle, var(--salt-container-borderStyle));
+  border-style: var(--saltOverlay-borderStyle, var(--salt-borderStyle-solid));
   border-width: var(--saltOverlay-borderWidth, var(--salt-size-fixed-100));
   border-radius: var(--saltOverlay-borderRadius, var(--salt-palette-corner, 0));
 

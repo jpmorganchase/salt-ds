@@ -7,8 +7,8 @@
   -webkit-appearance: none;
   gap: var(--salt-spacing-100);
   border: none;
-  border-left: var(--salt-size-fixed-100) var(--salt-container-borderStyle) transparent;
-  border-right: var(--salt-size-fixed-100) var(--salt-container-borderStyle) transparent;
+  border-left: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) transparent;
+  border-right: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) transparent;
   white-space: pre;
   min-height: calc(var(--salt-size-base) + var(--salt-spacing-100));
   min-width: 4em;
@@ -62,8 +62,8 @@
 
 .saltTabListNext-bordered .saltTabNext.saltTabNext-selected {
   background: var(--saltTabListNext-activeColor);
-  border-left: var(--salt-size-fixed-100) var(--salt-separable-borderStyle) var(--salt-separable-secondary-borderColor);
-  border-right: var(--salt-size-fixed-100) var(--salt-separable-borderStyle) var(--salt-separable-secondary-borderColor);
+  border-left: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-separable-secondary-borderColor);
+  border-right: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-separable-secondary-borderColor);
 }
 
 .saltTabNext.saltTabNext-selected::after {

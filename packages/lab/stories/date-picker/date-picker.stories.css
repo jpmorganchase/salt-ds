@@ -20,5 +20,5 @@
   bottom: calc(var(--salt-size-indicator) * 1.5);
   left: calc(var(--salt-size-indicator) * 1.5);
   right: calc(var(--salt-size-indicator) * 1.5);
-  border-bottom: var(--salt-size-indicator) var(--salt-selectable-borderStyle) var(--salt-accent-borderColor);
+  border-bottom: var(--salt-size-indicator) var(--salt-borderStyle-solid) var(--salt-accent-borderColor);
 }

@@ -32,7 +32,7 @@
 }
 
 .saltListItemNext[aria-selected="true"] {
-  outline: var(--salt-size-fixed-100) var(--salt-container-borderStyle) var(--salt-selectable-borderColor-selected);
+  outline: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-selectable-borderColor-selected);
   --listNext-item-background: var(--salt-selectable-background-selected);
   --saltIcon-color: var(--salt-selectable-foreground-selected);
 }
@@ -48,6 +48,6 @@
 
 /* disabled list item when selected */
 .saltListItemNext[aria-disabled="true"][aria-selected="true"] {
-  outline: var(--salt-size-fixed-100) var(--salt-container-borderStyle) var(--salt-selectable-borderColor-selectedDisabled);
+  outline: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-selectable-borderColor-selectedDisabled);
   --listNext-item-background: var(--salt-selectable-background-selectedDisabled);
 }

@@ -3,7 +3,7 @@
   background: var(--saltSystemStatus-background, var(--systemStatus-background));
   border-color: var(--saltSystemStatus-borderColor, var(--systemStatus-borderColor));
   border-width: var(--saltSystemStatus-borderWidth, var(--salt-size-fixed-100));
-  border-style: var(--saltSystemStatus-borderStyle, var(--salt-container-borderStyle));
+  border-style: var(--saltSystemStatus-borderStyle, var(--salt-borderStyle-solid));
   box-sizing: border-box;
   display: flex;
   gap: var(--salt-spacing-75);

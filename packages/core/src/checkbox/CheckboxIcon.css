@@ -4,7 +4,7 @@
   min-width: var(--checkbox-size);
   height: var(--checkbox-size);
   min-height: var(--checkbox-size);
-  border: var(--salt-size-fixed-100) var(--salt-selectable-borderStyle) var(--salt-selectable-borderColor);
+  border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-selectable-borderColor);
   border-radius: var(--salt-palette-corner-weaker, 0);
   color: var(--salt-selectable-foreground);
   background: var(--salt-container-primary-background);

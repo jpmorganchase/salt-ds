@@ -15,7 +15,7 @@ const CustomDialog = () => {
       style={{
         paddingBlock: "var(--salt-spacing-300)",
         border:
-          "var(--salt-size-fixed-100) var(--salt-container-borderStyle) var(--salt-status-error-borderColor)",
+          "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-status-error-borderColor)",
       }}
     >
       <DialogHeader status="error" header="Can`t move file" />

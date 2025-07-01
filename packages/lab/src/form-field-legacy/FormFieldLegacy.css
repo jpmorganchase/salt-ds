@@ -15,7 +15,7 @@
 .saltFormFieldLegacy {
   --formFieldLegacy-activationIndicator-color: var(--salt-editable-borderColor);
   --formFieldLegacy-activationIndicator-size: var(--salt-size-fixed-100);
-  --formFieldLegacy-activationIndicator-style: var(--salt-editable-borderStyle);
+  --formFieldLegacy-activationIndicator-style: var(--salt-borderStyle-solid);
   --formFieldLegacy-background: var(--salt-editable-primary-background);
   --formFieldLegacy-focused-outlineColor: var(--salt-focused-outlineColor);
   /* Set to 0 until helper text class provided */
@@ -46,7 +46,7 @@
 .saltFormFieldLegacy:hover {
   --formFieldLegacy-activationIndicator-color: var(--salt-editable-borderColor-hover);
   --formFieldLegacy-activationIndicator-size: var(--salt-size-fixed-100);
-  --formFieldLegacy-activationIndicator-style: var(--salt-editable-borderStyle-hover);
+  --formFieldLegacy-activationIndicator-style: var(--salt-borderStyle-solid);
 
   --saltInputLegacy-cursor: var(--salt-cursor-hover);
 }
@@ -58,7 +58,7 @@
 .saltFormFieldLegacy.saltFormFieldLegacy-lowFocused:hover {
   --formFieldLegacy-activationIndicator-color: var(--salt-editable-borderColor-active);
   --formFieldLegacy-activationIndicator-size: var(--salt-size-fixed-200);
-  --formFieldLegacy-activationIndicator-style: var(--salt-editable-borderStyle-active);
+  --formFieldLegacy-activationIndicator-style: var(--salt-borderStyle-solid);
 
   --saltInputLegacy-cursor: var(--salt-cursor-active);
 }
@@ -96,7 +96,7 @@
   --formFieldLegacy-activationIndicator-color: var(--salt-editable-borderColor-disabled);
   --formFieldLegacy-activationIndicator-opacity: var(--salt-palette-opacity-disabled);
   --formFieldLegacy-activationIndicator-size: var(--salt-size-fixed-100);
-  --formFieldLegacy-activationIndicator-style: var(--salt-editable-borderStyle-disabled);
+  --formFieldLegacy-activationIndicator-style: var(--salt-borderStyle-solid);
   --formFieldLegacy-helperText-opacity: var(--salt-palette-opacity-disabled);
 
   --saltInputLegacy-cursor: var(--salt-cursor-disabled);
@@ -106,7 +106,7 @@
 .saltFormFieldLegacy.saltFormFieldLegacy-disabled:hover {
   --formFieldLegacy-activationIndicator-color: var(--salt-editable-borderColor-disabled);
   --formFieldLegacy-activationIndicator-size: var(--salt-size-fixed-100);
-  --formFieldLegacy-activationIndicator-style: var(--salt-editable-borderStyle-disabled);
+  --formFieldLegacy-activationIndicator-style: var(--salt-borderStyle-solid);
 
   --saltInputLegacy-cursor: var(--salt-cursor-disabled);
 }
@@ -218,7 +218,7 @@
 .saltFormFieldLegacy.saltFormFieldLegacy-readOnly:hover {
   --formFieldLegacy-activationIndicator-color: var(--salt-editable-borderColor-readonly);
   --formFieldLegacy-activationIndicator-size: var(--salt-size-fixed-100);
-  --formFieldLegacy-activationIndicator-style: var(--salt-editable-borderStyle-readonly);
+  --formFieldLegacy-activationIndicator-style: var(--salt-borderStyle-solid);
 
   --saltInputLegacy-cursor: var(--salt-cursor-readonly);
 }

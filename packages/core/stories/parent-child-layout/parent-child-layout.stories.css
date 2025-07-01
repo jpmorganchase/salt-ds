@@ -1,6 +1,6 @@
 .parent-child-layout {
   width: 500px;
-  border: var(--salt-size-fixed-100) var(--salt-separable-borderStyle) var(--salt-container-secondary-borderColor);
+  border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-secondary-borderColor);
 }
 
 .parent-content {
@@ -9,7 +9,7 @@
   justify-content: center;
   align-items: center;
   min-width: 85px;
-  border: var(--salt-size-fixed-100) var(--salt-separable-borderStyle) var(--salt-container-secondary-borderColor);
+  border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-secondary-borderColor);
 }
 
 .child-content {
@@ -17,7 +17,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  border: var(--salt-size-fixed-100) var(--salt-separable-borderStyle) var(--salt-container-secondary-borderColor);
+  border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-secondary-borderColor);
 }
 
 nav {

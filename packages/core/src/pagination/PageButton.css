@@ -36,7 +36,7 @@
 }
 
 .saltPageButton[aria-current="page"] {
-  border: var(--salt-size-fixed-100) var(--salt-selectable-borderStyle) var(--salt-selectable-borderColor);
+  border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-selectable-borderColor);
   background: var(--salt-selectable-background-selected);
 }
 

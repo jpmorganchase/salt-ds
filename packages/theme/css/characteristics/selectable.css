@@ -1,9 +1,4 @@
 .salt-theme {
-  --salt-selectable-borderStyle: solid;
-  --salt-selectable-borderStyle-hover: solid;
-  --salt-selectable-borderStyle-selected: solid;
-  --salt-selectable-borderStyle-blurSelected: solid;
-
   --salt-selectable-borderColor: var(--salt-palette-interact-border);
   --salt-selectable-borderColor-hover: var(--salt-palette-interact-border-hover);
   --salt-selectable-borderColor-selected: var(--salt-palette-interact-border-active);

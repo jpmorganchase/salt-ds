@@ -3,7 +3,7 @@ div[class*="ag-theme-salt"] {
   --ag-header-height: calc(var(--salt-size-base) + var(--salt-spacing-100));
   --ag-background-color: var(--salt-container-primary-background);
   --ag-border-color: var(--salt-separable-secondary-borderColor);
-  --ag-borders-secondary: var(--salt-size-fixed-100) var(--salt-separable-borderStyle);
+  --ag-borders-secondary: var(--salt-size-fixed-100) var(--salt-borderStyle-solid);
   --ag-card-radius: var(--salt-palette-corner);
   --ag-cell-horizontal-padding: var(--salt-spacing-100);
   --ag-checkbox-border-radius: 0;

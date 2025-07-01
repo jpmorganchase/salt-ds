@@ -1,6 +1,6 @@
 .saltDatePickerOverlay {
   background: var(--salt-container-primary-background);
-  border: var(--salt-size-fixed-100) var(--salt-selectable-borderStyle-selected) var(--salt-selectable-borderColor-selected);
+  border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-selectable-borderColor-selected);
   border-radius: var(--salt-palette-corner, 0);
   overflow: hidden;
   overflow-y: auto;

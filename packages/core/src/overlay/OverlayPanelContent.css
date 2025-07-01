@@ -7,10 +7,10 @@
 
 .saltOverlayPanelContent-overflow {
   padding-right: var(--salt-spacing-100);
-  border-top: var(--salt-size-fixed-100) var(--salt-separable-borderStyle) transparent;
-  border-bottom: var(--salt-size-fixed-100) var(--salt-separable-borderStyle) transparent;
+  border-top: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) transparent;
+  border-bottom: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) transparent;
   overflow-y: auto;
 }
 .saltOverlayPanelContent-overflow.saltOverlayPanelContent-scroll-top {
-  border-top: var(--salt-size-fixed-100) var(--salt-separable-borderStyle) var(--salt-separable-tertiary-borderColor);
+  border-top: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-separable-tertiary-borderColor);
 }

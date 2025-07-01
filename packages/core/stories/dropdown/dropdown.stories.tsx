@@ -389,7 +389,7 @@ export const SelectAll: StoryFn<DropdownProps> = (args) => {
       <div>
         <Option
           style={{
-            borderBottom: "var(--salt-separable-borderStyle)",
+            borderBottom: "var(--salt-borderStyle-solid)",
             borderWidth: "var(--salt-size-fixed-100)",
             borderColor:
               selected.includes(usStates[0]) ||

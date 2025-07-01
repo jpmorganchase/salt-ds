@@ -6,7 +6,7 @@
   overflow: hidden;
 
   border-color: var(--salt-container-primary-borderColor);
-  border-style: var(--salt-container-borderStyle);
+  border-style: var(--salt-borderStyle-solid);
   border-width: var(--salt-size-fixed-100);
   border-radius: 0;
 }
