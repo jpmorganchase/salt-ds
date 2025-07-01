@@ -264,7 +264,7 @@
 /* Styles applied to number buttons */
 .saltNumberInput-numberButton {
   --saltButton-height: calc((var(--salt-size-base) - (var(--salt-spacing-50) * 2) - var(--salt-size-fixed-200)) / 2);
-  --saltButton-width: calc(var(--salt-size-base) - var(--salt-spacing-100));
+  --saltButton-padding: calc(var(--salt-spacing-50) - var(--button-borderWidth));
 }
 
 .saltNumberInput-numberButtonIncrement {
