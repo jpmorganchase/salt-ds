@@ -88,7 +88,7 @@ Example Update:
 
 The Carousel can be configured using the Embla API.
 
-To configure embla, pass `emblaOptions` or `emblaPlugins` to the Carousel.
+To configure Embla, pass `emblaOptions` or `emblaPlugins` to the Carousel.
 
 To control the behavior of the Carousel through the embla API, obtain a reference to the embla API through the `setApiRef` prop.
 
