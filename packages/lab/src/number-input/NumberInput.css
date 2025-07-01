@@ -34,7 +34,7 @@
   --numberInput-borderColor: var(--salt-editable-borderColor-hover);
 
   background: var(--numberInput-background-hover);
-  cursor: var(--salt-cursor-hover);
+  cursor: var(--salt-cursor-text);
 }
 
 .saltNumberInput:active {
@@ -43,7 +43,6 @@
   --numberInput-borderWidth: var(--salt-size-fixed-200);
 
   background: var(--numberInput-background-active);
-  cursor: var(--salt-cursor-active);
 }
 
 /* Class applied if `variant="primary"` */

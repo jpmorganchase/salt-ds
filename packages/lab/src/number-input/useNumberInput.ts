@@ -25,6 +25,7 @@ export interface UseNumberInputProps
     | "step"
     | "stepMultiplier"
   > {
+  clampAndFix: (value: number) => string | number;
   inputRef: MutableRefObject<HTMLInputElement | null>;
   isAdjustingRef: MutableRefObject<boolean>;
   setIsEditing: Dispatch<SetStateAction<boolean>>;
@@ -36,6 +37,7 @@ export interface UseNumberInputProps
  * Manages increment / decrement logic
  */
 export const useNumberInput = ({
+  clampAndFix,
   decimalScale,
   disabled,
   format,
@@ -56,12 +58,10 @@ export const useNumberInput = ({
   const updateValue = useCallback(
     (event: SyntheticEvent | undefined, nextValue: number) => {
       if (readOnly) return;
-      const updatedValue = !format
-        ? nextValue.toFixed(decimalScale)
-        : nextValue;
-
       isAdjustingRef.current = true;
-      setValue(updatedValue);
+
+      const updatedValue = clampAndFix(nextValue);
+      setValue(toFloat(updatedValue));
       onChange?.(event, toFloat(updatedValue));
     },
     [onChange, readOnly, setValue, decimalScale, format],

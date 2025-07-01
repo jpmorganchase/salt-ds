@@ -268,12 +268,18 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
 
     const [displayValue, setDisplayValue] = useState<string | number>(value);
 
+    const clampAndFix = (value: number) => {
+      const clampedValue = clamp ? clampToRange(min, max, value) : value;
+      return !format ? clampedValue.toFixed(decimalScale) : clampedValue;
+    };
+
     const {
       decrementButtonProps,
       decrementValue,
       incrementButtonProps,
       incrementValue,
     } = useNumberInput({
+      clampAndFix,
       decimalScale,
       disabled,
       format,
@@ -290,11 +296,6 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       stepMultiplier,
       value,
     });
-
-    const clampAndFix = (value: number) => {
-      const clampedValue = clamp ? clampToRange(min, max, value) : value;
-      return !format ? clampedValue.toFixed(decimalScale) : clampedValue;
-    };
 
     // biome-ignore lint/correctness/useExhaustiveDependencies: We do not want to re-render when  display value changes
     useEffect(() => {

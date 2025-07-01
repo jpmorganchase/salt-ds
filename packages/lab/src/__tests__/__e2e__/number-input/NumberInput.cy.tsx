@@ -400,6 +400,16 @@ describe("Number Input", () => {
     cy.findByRole("spinbutton").should("have.value", "11");
   });
 
+  it("should increment or decrement from correct value before clamp is applied", () => {
+    cy.mount(<Default max={100} min={10} clamp />);
+
+    cy.findByRole("spinbutton").focus().realType("1000000");
+    cy.realPress("ArrowUp");
+    cy.findByRole("spinbutton").should("have.value", 100);
+    cy.realPress("ArrowDown");
+    cy.findByRole("spinbutton").should("have.value", 99);
+  });
+
   it("should hide increment/decrement buttons when hideButtons is true", () => {
     cy.mount(<Default hideButtons />);
     cy.findByLabelText("increment value").should("not.be.visible");

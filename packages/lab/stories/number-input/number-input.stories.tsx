@@ -110,7 +110,6 @@ export const Controlled: StoryFn<NumberInputProps> = (args) => {
         {...args}
         decimalScale={2}
         clamp
-        max={2}
         value={value}
         onChange={(_event, value) => {
           setValue(value);
