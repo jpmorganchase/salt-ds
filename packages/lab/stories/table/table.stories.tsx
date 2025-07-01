@@ -47,7 +47,7 @@ const Template: StoryFn = ({
   ...args
 }) => {
   return (
-    <StackLayout style={{ width: "800px", height: "300px", overflow: "auto" }}>
+    <StackLayout style={{ width: "800px", height: "300px", overflow: "auto" }} tabIndex={0}>
       <Table {...args}>
         <THead {...THeadProps}>
           <TR {...TRProps}>
@@ -168,7 +168,7 @@ export const StickyHeaderFooter: StoryFn<typeof Text> = ({
   TFootProps,
 }) => {
   return (
-    <StackLayout style={{ width: "800px", height: "300px", overflow: "auto" }}>
+    <StackLayout style={{ width: "800px", height: "300px", overflow: "auto" }} tabIndex={0}>
       <Table>
         <THead {...THeadProps}>
           <TR>
