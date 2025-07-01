@@ -356,7 +356,7 @@ describe("Number Input", () => {
     cy.findByRole("spinbutton").should("have.value", "10");
   });
 
-  it("allows out of range input when clampValue is false", () => {
+  it("allows out of range input when clamp is false", () => {
     cy.mount(<MinAndMaxValue />);
     cy.findByRole("spinbutton").focus();
     cy.realType("2");
@@ -367,10 +367,8 @@ describe("Number Input", () => {
     cy.findByTestId("ErrorSolidIcon").should("exist");
   });
 
-  it("clamps out of range values on blur when clampValue is set to true", () => {
-    cy.mount(
-      <Default max={100} decimalScale={2} clampValue defaultValue={""} />,
-    );
+  it("clamps out of range values on blur when clamp is set to true", () => {
+    cy.mount(<Default max={100} decimalScale={2} clamp defaultValue={""} />);
 
     cy.findByRole("spinbutton").focus();
     cy.realType("10000000");
@@ -384,7 +382,7 @@ describe("Number Input", () => {
   });
 
   it("increments and decrements from the correct value when value gets clamped", () => {
-    cy.mount(<Default max={100} min={10} clampValue defaultValue={""} />);
+    cy.mount(<Default max={100} min={10} clamp defaultValue={""} />);
 
     cy.findByRole("spinbutton").focus();
     cy.realType("10000000");

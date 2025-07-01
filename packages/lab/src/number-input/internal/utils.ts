@@ -1,6 +1,4 @@
 // The input should only accept numbers, decimal points, and plus/minus symbols
-export const ACCEPTED_INPUT = /^[-+]?[0-9]*\.?[0-9]*$/;
-
 export const isAllowedNonNumeric = (inputCharacter: number | string) => {
   if (typeof inputCharacter === "number") return;
   return (
@@ -62,7 +60,7 @@ export const isOutOfRange = (
   return floatValue > max || floatValue < min;
 };
 
-export const clamp = (max: number, min: number, value: number) => {
+export const clampToRange = (min: number, max: number, value: number) => {
   if (value < min) return min;
   if (value > max) return max;
   return value;

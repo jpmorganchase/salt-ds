@@ -29,7 +29,7 @@ import {
   useState,
 } from "react";
 import {
-  clamp,
+  clampToRange,
   getNumberPrecision,
   isEmpty,
   isOutOfRange,
@@ -54,9 +54,9 @@ export interface NumberInputProps
    * A boolean that, when true, ensures the input value is clamped within the specified min and max range upon losing focus.
    * @default false
    */
-  clampValue?: boolean;
+  clamp?: boolean;
   /**
-   * The default value. Use when the component is not controlled.
+   * The default value. Use when the component is uncontrolled.
    */
   defaultValue?: number | string;
   /**
@@ -172,7 +172,7 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
     {
       bordered = false,
       className: classNameProp,
-      clampValue = false,
+      clamp = false,
       disabled,
       emptyReadOnlyMarker = "—",
       endAdornment,
@@ -226,13 +226,6 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       ? emptyReadOnlyMarker
       : defaultValueProp;
 
-    const decimalScale =
-      decimalScaleProp ||
-      Math.max(
-        getNumberPrecision(valueProp || defaultValueProp),
-        getNumberPrecision(step),
-      );
-
     const validationStatusId = useId(idProp);
     const inputRef = useRef<HTMLInputElement>(null);
     const handleInputRef = useForkRef(inputRefProp, inputRef);
@@ -269,6 +262,10 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       state: "value",
     });
 
+    const decimalScale =
+      decimalScaleProp ||
+      Math.max(getNumberPrecision(value), getNumberPrecision(step));
+
     const [displayValue, setDisplayValue] = useState<string | number>(value);
 
     const {
@@ -295,11 +292,8 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
     });
 
     const clampAndFix = (value: number) => {
-      const clampedValue = clampValue ? clamp(max, min, value) : value;
-      const fixedValue = !format
-        ? clampedValue.toFixed(decimalScale)
-        : clampedValue;
-      return fixedValue;
+      const clampedValue = clamp ? clampToRange(min, max, value) : value;
+      return !format ? clampedValue.toFixed(decimalScale) : clampedValue;
     };
 
     // biome-ignore lint/correctness/useExhaustiveDependencies: We do not want to re-render when  display value changes
@@ -320,21 +314,11 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
           return clampAndFix(toFloat(value));
         }
         const clampedValue = clampAndFix(floatValue);
-        const formattedValue = format ? format(clampedValue) : clampedValue;
-        return formattedValue;
+        return format ? format(clampedValue) : clampedValue;
       };
       const updatedValue = formatValue();
       setDisplayValue(updatedValue);
-    }, [
-      value,
-      isEditing,
-      isReadOnly,
-      format,
-      clampValue,
-      decimalScale,
-      min,
-      max,
-    ]);
+    }, [value, isEditing, isReadOnly, format, clamp, decimalScale, min, max]);
 
     // biome-ignore lint/correctness/useExhaustiveDependencies: Need to restore caret position when value changes.
     useLayoutEffect(() => {

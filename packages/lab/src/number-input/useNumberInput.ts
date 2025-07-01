@@ -10,6 +10,28 @@ import type { NumberInputProps } from "./NumberInput";
 import { useActivateWhileMouseDown } from "./internal/useActivateWhileMouseDown";
 import { toFloat } from "./internal/utils";
 
+export interface UseNumberInputProps
+  extends Pick<
+    NumberInputProps,
+    | "decimalScale"
+    | "disabled"
+    | "format"
+    | "inputRef"
+    | "max"
+    | "min"
+    | "onChange"
+    | "parse"
+    | "readOnly"
+    | "step"
+    | "stepMultiplier"
+  > {
+  inputRef: MutableRefObject<HTMLInputElement | null>;
+  isAdjustingRef: MutableRefObject<boolean>;
+  setIsEditing: Dispatch<SetStateAction<boolean>>;
+  setValue: Dispatch<SetStateAction<string | number>>;
+  value: string | number;
+}
+
 /**
  * Manages increment / decrement logic
  */
@@ -29,26 +51,7 @@ export const useNumberInput = ({
   step = 1,
   stepMultiplier = 2,
   value,
-}: Pick<
-  NumberInputProps,
-  | "decimalScale"
-  | "disabled"
-  | "format"
-  | "inputRef"
-  | "max"
-  | "min"
-  | "onChange"
-  | "parse"
-  | "readOnly"
-  | "step"
-  | "stepMultiplier"
-> & {
-  inputRef: MutableRefObject<HTMLInputElement | null>;
-  isAdjustingRef: MutableRefObject<boolean>;
-  setIsEditing: Dispatch<SetStateAction<boolean>>;
-  setValue: Dispatch<SetStateAction<string | number>>;
-  value: string | number;
-}) => {
+}: UseNumberInputProps) => {
   // biome-ignore lint/correctness/useExhaustiveDependencies: Refs cannot be added to dependency arrays
   const updateValue = useCallback(
     (event: SyntheticEvent | undefined, nextValue: number) => {

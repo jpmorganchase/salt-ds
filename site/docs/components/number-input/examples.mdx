@@ -36,13 +36,13 @@ To limit the range of accepted values, you can specify a minimum, maximum, or bo
 
 - Clearly communicate the accepted value range by utilizing the `FormField`'s helper text to guide users.
 - Use the `FormField` error state to alert users when they manually enter a value outside the permitted range, indicating that the input is invalid.
-- Use the `clampValue` prop to enforce the value to be within range.
+- Use the `clamp` prop to enforce the value to be within range.
 
 <LivePreview componentName="number-input" exampleName="Limits" />
 
 ## Clamp behaviour
 
-By default, even when minimum and maximum values are specified, they are not strictly enforced, allowing users to type values outside this range. However, by setting the prop `clampValue` to true, the
+By default, even when minimum and maximum values are specified, they are not strictly enforced, allowing users to type values outside this range. However, by setting the prop `clamp` to true, the
 input will automatically adjust to the nearest minimum or maximum value when the input field loses focus.
 
 <LivePreview componentName="number-input" exampleName="ClampBehaviour" />
@@ -60,7 +60,8 @@ The `NumberInput` can display validation states, `error`, `warning`, and `succes
 
 ## Decimal scale
 
-By default, the decimal scale is auto-calculated using the number of decimal places in the `step` or `defaultValue` or `value` prop, whichever is greater. However, you can set it to any value of your choice using the `decimalScale` prop and that will have priority.
+By default, the decimal scale is derived from the highest number of decimal places found in the `step` prop, or if not defined, in either the `defaultValue` or `value` prop.
+However, you can set it to any value of your choice using the `decimalScale` prop and that will have priority.
 
 ### Best practices
 
@@ -78,7 +79,7 @@ Users will be able to see the formatted value in the input, e.g. "5K". When the 
 
 The `format` callback has been designed to work with most formatting libraries, e.g. Intl.NumberFormat. However, it is highly recommended to provide a `parse` callback alongside `format` to determine the correct numerical value so the precision of the value can be maintained.
 
-**Note**: When a `format` callback is provided, it will override `decimalScale` to allow managing decimal place rules within your formatting function as well.
+**Note**: If a `format` callback is provided, it will override the `decimalScale`, enabling you to handle decimal place rules directly within your formatting function.
 
 <LivePreview componentName="number-input" exampleName="Formatting" />
 
@@ -104,7 +105,7 @@ Use a reset button to return the `NumberInput` to its default value.
 
 **Synchronize adornment**:
 
-Synchronize the `NumberInput` with a live value from a constantly changing source, such as live stock prices. The `NumberInput`'s value does not automatically update with changes in the live value. In this scenario, the synchronize button appears when the displayed value and live value differ.
+Synchronize the `NumberInput` with a live value from a constantly changing source, such as ticking stock values. The `NumberInput`'s value does not automatically update with changes in the live value. In this scenario, the synchronize button appears when the displayed value and live value differ.
 
 **Custom buttons**:
 
@@ -122,7 +123,7 @@ The `NumberInput` can be disabled to prevent any user interaction or input.
 
 The `NumberInput` can be set to a read-only state using the `readOnly` prop, allowing users to highlight and copy the value without editing it.
 
-By default, an em dash is used as the marker. If your application requires a different marker, you can customize it using the `emptyReadOnlyMarker` prop.
+By default, a dash ('-') serves as the empty marker. You can customize this marker by using the `emptyReadOnlyMarker` prop if your application needs a different symbol.
 
 **Note:** To address browser and screen reader limitations in conveying a read-only state, the `NumberInput`'s role is changed to `textbox` when set to read-only.
 
