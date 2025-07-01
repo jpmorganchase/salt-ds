@@ -16,7 +16,7 @@ export const TFootVariant = (): ReactElement => {
     <StackLayout>
       {TFootVariantValues.map((variant) => {
         return (
-          <Table>
+          <Table key={`table-tfoot-${variant}`}>
             <THead>
               <TR>
                 {Array.from({ length: 3 }, (_, i) => {

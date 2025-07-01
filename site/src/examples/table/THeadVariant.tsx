@@ -15,7 +15,7 @@ export const THeadVariant = (): ReactElement => {
     <StackLayout>
       {THeadVariantValues.map((variant) => {
         return (
-          <Table>
+          <Table key={`table-thead-${variant}`}>
             <THead variant={variant}>
               <TR>
                 {Array.from({ length: 3 }, (_, i) => {

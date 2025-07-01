@@ -16,7 +16,7 @@ export const Zebra = (): ReactElement => {
     <StackLayout>
       {THeadVariantValues.map((zebra) => {
         return (
-          <Table zebra={zebra}>
+          <Table key={`${zebra}-table`} zebra={zebra}>
             <THead>
               <TR>
                 {Array.from({ length: 3 }, (_, i) => {
