@@ -11,7 +11,7 @@ Initially released as a pre-release in Lab, the Carousel was not fully featured.
 
 ### Migration Guide
 
-To allow consumers to manage their own version of `embla`, it is defined as a peer dependency.
+To allow consumers to manage their own version of Embla, it's defined as a peer dependency.
 
 To migrate from the current Lab version of `Carousel`:
 
