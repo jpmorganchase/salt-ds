@@ -7,7 +7,7 @@
   font-family: var(--salt-text-code-fontFamily);
   overflow-wrap: anywhere;
   vertical-align: text-bottom;
-  white-space: pre-wrap;
+  white-space: nowrap;
   padding: var(--code-padding-vertical) var(--code-padding-horizontal);
   background-color: var(--salt-container-secondary-background);
   border-radius: var(--salt-palette-corner-weaker, 0);
