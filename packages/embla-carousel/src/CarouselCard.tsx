@@ -50,7 +50,7 @@ export const CarouselCard = forwardRef<HTMLDivElement, CarouselCardProps>(
   ) {
     const targetWindow = useWindow();
     useComponentCssInjection({
-      testId: "salt-carousel-slide",
+      testId: "salt-carousel-card",
       css: saltCarouselCardCss,
       window: targetWindow,
     });

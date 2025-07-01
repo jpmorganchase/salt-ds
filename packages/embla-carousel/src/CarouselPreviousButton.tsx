@@ -1,5 +1,5 @@
 import { Button, type ButtonProps, useIcon } from "@salt-ds/core";
-import { type MouseEventHandler, forwardRef, useCallback } from "react";
+import { type MouseEventHandler, forwardRef } from "react";
 import { usePrevNextButtons } from "./usePrevNextButtons";
 
 /**
@@ -15,13 +15,10 @@ export const CarouselPreviousButton = forwardRef<
   const { PreviousIcon } = useIcon();
   const { prevBtnDisabled, onPrevButtonClick } = usePrevNextButtons();
 
-  const handleClick: MouseEventHandler<HTMLButtonElement> = useCallback(
-    (event) => {
-      onPrevButtonClick();
-      onClick?.(event);
-    },
-    [onPrevButtonClick, onClick],
-  );
+  const handleClick: MouseEventHandler<HTMLButtonElement> = (event) => {
+    onPrevButtonClick();
+    onClick?.(event);
+  };
 
   return (
     <Button
