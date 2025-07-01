@@ -10,9 +10,9 @@
 .carouselSlide {
   box-sizing: border-box;
   transform: translate3d(0, 0, 0);
-  flex: 0 0 var(--saltCarousel-slide-size);
+  flex: 0 0 var(--carousel-slide-size);
   min-width: 0;
-  padding-left: var(--saltCarousel-slide-spacing);
+  padding-left: var(--carousel-slide-spacing);
 }
 
 .carouselNumber {
@@ -21,7 +21,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  height: var(--saltCarousel-slide-height);
+  height: var(--carousel-slide-height);
   user-select: none;
   --salt-text-h1-fontSize: 60px;
 }
@@ -32,7 +32,7 @@
 
 .carouselMultipleSlide {
   width: 600px;
-  --saltCarousel-slide-size: 50%;
+  --carousel-slide-size: 50%;
 }
 
 .carouselSlideIsSnapped {

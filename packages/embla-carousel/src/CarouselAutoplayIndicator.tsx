@@ -108,7 +108,7 @@ export const CarouselAutoplayIndicator = forwardRef<
           width: size,
           height: size,
           // @ts-ignore
-          "--salt-carousel-svg-circumference": circumference,
+          "--carousel-svg-circumference": circumference,
         }}
         className={clsx(withBaseName(), className)}
         {...props}

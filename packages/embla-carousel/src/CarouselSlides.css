@@ -4,5 +4,5 @@
 .saltCarouselSlides-container {
   display: flex;
   touch-action: pan-y pinch-zoom;
-  margin-left: calc(var(--saltCarousel-slide-spacing) * -1);
+  margin-left: calc(var(--carousel-slide-spacing) * -1);
 }
