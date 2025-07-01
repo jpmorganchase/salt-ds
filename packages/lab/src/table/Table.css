@@ -30,24 +30,15 @@
 }
 
 /* Zebra styling */
-.saltTable-zebra-primary .saltTable-tbody .saltTable-tr:nth-of-type(odd),
-.saltTable-zebra-primary tbody .saltTable-tr:nth-of-type(odd),
-.saltTable-zebra-primary .saltTable-tbody tr:nth-of-type(odd),
-.saltTable-zebra-primary tbody tr:nth-of-type(odd) {
+table.saltTable-zebra-primary tbody tr:nth-of-type(odd) {
   --table-background: var(--salt-container-primary-background);
 }
 
-.saltTable-zebra-secondary .saltTable-tbody .saltTable-tr:nth-of-type(odd),
-.saltTable-zebra-secondary tbody .saltTable-tr:nth-of-type(odd),
-.saltTable-zebra-secondary .saltTable-tbody tr:nth-of-type(odd),
-.saltTable-zebra-secondary tbody tr:nth-of-type(odd) {
+table.saltTable-zebra-secondary tbody tr:nth-of-type(odd) {
   --table-background: var(--salt-container-secondary-background);
 }
 
-.saltTable-zebra-tertiary .saltTable-tbody .saltTable-tr:nth-of-type(odd),
-.saltTable-zebra-tertiary tbody .saltTable-tr:nth-of-type(odd),
-.saltTable-zebra-tertiary .saltTable-tbody tr:nth-of-type(odd),
-.saltTable-zebra-tertiary tbody tr:nth-of-type(odd) {
+table.saltTable-zebra-tertiary tbody tr:nth-of-type(odd) {
   --table-background: var(--salt-container-tertiary-background);
 }
 
@@ -64,7 +55,6 @@ table.saltTable {
 }
 
 /* THead */
-.saltTable-thead,
 table.saltTable thead {
   border-start-start-radius: var(--saltTable-thead-borderRadius-top, var(--salt-palette-corner));
   border-start-end-radius: var(--saltTable-thead-borderRadius-top, var(--salt-palette-corner));
@@ -77,50 +67,44 @@ table.saltTable thead {
   white-space: nowrap;
 }
 
-.saltTable-thead-sticky {
+thead.saltTable-thead-sticky {
   position: sticky;
   top: 0;
 }
 
-.saltTable-thead-primary .saltTable-tr,
-.saltTable-thead-primary tr {
+thead.saltTable-thead-primary tr {
   background: var(--salt-container-primary-background);
 }
 
-.saltTable-thead-secondary .saltTable-tr,
-.saltTable-thead-secondary tr {
+thead.saltTable-thead-secondary tr {
   background: var(--salt-container-secondary-background);
 }
 
-.saltTable-thead-tertiary .saltTable-tr,
-.saltTable-thead-tertiary tr {
+thead.saltTable-thead-tertiary tr {
   background: var(--salt-container-tertiary-background);
 }
 
-.saltTable-thead .saltTable tr,
-.saltTable-thead .saltTable-tr {
+table.saltTable thead tr {
   border-bottom: var(--salt-separable-borderStyle) var(--table-header-divider-color) var(--salt-size-fixed-100);
 }
 
-.saltTable-thead-divider-primary {
+thead.saltTable-thead-divider-primary {
   --table-header-divider-color: var(--salt-separable-primary-borderColor);
 }
 
-.saltTable-thead-divider-secondary {
+thead.saltTable-thead-divider-secondary {
   --table-header-divider-color: var(--salt-separable-secondary-borderColor);
 }
 
-.saltTable-thead-divider-tertiary {
+thead.saltTable-thead-divider-tertiary {
   --table-header-divider-color: var(--salt-separable-tertiary-borderColor);
 }
 
-.saltTable-thead-divider-none.saltTable-thead .saltTable tr,
-.saltTable-thead-divider-none.saltTable-thead .saltTable-tr {
+thead.saltTable-thead-divider-none {
   --table-header-divider-color: transparent;
 }
 
 /* TFoot */
-.saltTable-tfoot,
 table.saltTable tfoot {
   border-end-start-radius: var(--saltTable-thead-borderRadius-top, var(--salt-palette-corner));
   border-end-end-radius: var(--saltTable-thead-borderRadius-top, var(--salt-palette-corner));
@@ -132,59 +116,52 @@ table.saltTable tfoot {
   white-space: nowrap;
 }
 
-.saltTable-tfoot-sticky {
+tfoot.saltTable-tfoot-sticky {
   position: sticky;
   bottom: 0;
 }
 
-.saltTable-tfoot .saltTable tr,
-.saltTable-tfoot .saltTable-tr {
+tfoot.saltTable-tfoot tr {
   border-top: var(--salt-separable-borderStyle) var(--table-footer-divider-color) var(--salt-size-fixed-100);
 }
 
-.saltTable-tfoot-primary .saltTable-tr,
-.saltTable-tfoot-primary tr {
+tfoot.saltTable-tfoot-primary tr {
   background: var(--salt-container-primary-background);
 }
 
-.saltTable-tfoot-secondary .saltTable-tr,
-.saltTable-tfoot-secondary tr {
+tfoot.saltTable-tfoot-secondary tr {
   background: var(--salt-container-secondary-background);
 }
 
-.saltTable-tfoot-tertiary .saltTable-tr,
-.saltTable-tfoot-tertiary tr {
+tfoot.saltTable-tfoot-tertiary tr {
   background: var(--salt-container-tertiary-background);
 }
 
-.saltTable-tfoot-divider-primary {
+tfoot.saltTable-tfoot-divider-primary tr {
   --table-footer-divider-color: var(--salt-separable-primary-borderColor);
 }
 
-.saltTable-tfoot-divider-secondary {
+tfoot.saltTable-tfoot-divider-secondary tr {
   --table-footer-divider-color: var(--salt-separable-secondary-borderColor);
 }
 
-.saltTable-tfoot-divider-tertiary {
+tfoot.saltTable-tfoot-divider-tertiary tr {
   --table-footer-divider-color: var(--salt-separable-tertiary-borderColor);
 }
 
-.saltTable-tfoot-divider-none.saltTable-tfoot .saltTable tr,
-.saltTable-tfoot-divider-none.saltTable-tfoot .saltTable-tr {
+tfoot.saltTable-tfoot-divider-none tr {
   --table-footer-divider-color: transparent;
 }
 
 /* TH */
-.saltTable-th,
-.saltTable th {
+table.saltTable th {
   overflow: hidden;
   padding: var(--salt-spacing-100);
   position: relative;
   text-align: start;
 }
 
-.saltTable-th + .saltTable-th::before,
-.saltTable th + th::before {
+table.saltTable th + th::before {
   --table-th-separator-height: calc(var(--salt-size-base) / 2 - 2 * var(--salt-size-fixed-100));
   background: var(--salt-separable-tertiary-borderColor);
   content: "";
@@ -198,27 +175,22 @@ table.saltTable tfoot {
 }
 
 /* TR */
-.saltTable tr,
-.saltTable-tr {
+table.saltTable tr {
   background: var(--saltTable-thead-background, var(--table-background));
   height: var(--table-row-height);
   min-height: var(--table-row-height);
 }
 
-.saltTable tbody .saltTable tr,
-.saltTable tbody .saltTable-tr,
-.saltTable-tbody .saltTable tr,
-.saltTable-tbody .saltTable-tr {
+table.saltTable tbody tr {
   border-bottom: var(--salt-separable-borderStyle) var(--table-divider-color) var(--salt-size-fixed-100);
 }
 
-.saltTable-divider-none .saltTable tr,
-.saltTable-divider-none .saltTable-tr {
+table.saltTable-divider-none tr {
   --table-divider-color: transparent;
 }
 
 /* TD */
-.saltTable-td {
+table.saltTable td {
   height: 100%;
   padding: var(--salt-spacing-100);
 }

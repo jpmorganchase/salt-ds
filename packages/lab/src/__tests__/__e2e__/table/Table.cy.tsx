@@ -25,7 +25,7 @@ describe("GIVEN a Table", () => {
 
   describe("WHEN variant=secondary", () => {
     it("THEN class should be applied to the banner", () => {
-      cy.mount(<Secondary  data-testid="tableSecondary" />);
+      cy.mount(<Secondary data-testid="tableSecondary" />);
 
       cy.findByTestId("tableSecondary").should(
         "have.class",
@@ -33,7 +33,7 @@ describe("GIVEN a Table", () => {
       );
     });
   });
-    
+
   describe("WHEN variant=tertiary", () => {
     it("THEN class should be applied to the banner", () => {
       cy.mount(<Tertiary data-testid="tableTertiary" />);
