@@ -1,35 +1,33 @@
 .salt-theme,
 .salt-theme[data-brand="uitk"] {
-  --salt-status-static-foreground: var(--salt-palette-neutral-secondary-foreground);
   --salt-status-negative-foreground: var(--salt-palette-negative-foreground);
   --salt-status-positive-foreground: var(--salt-palette-positive-foreground);
+  --salt-status-static-foreground: var(--salt-palette-neutral-secondary-foreground);
 
-  --salt-status-info-foreground-decorative: var(--salt-palette-info-foreground-decorative);
   --salt-status-error-foreground-decorative: var(--salt-palette-error-foreground-decorative);
-  --salt-status-warning-foreground-decorative: var(--salt-palette-warning-foreground-decorative);
-  --salt-status-success-foreground-decorative: var(--salt-palette-success-foreground-decorative);
-
-  --salt-status-info-foreground-informative: var(--salt-palette-info-foreground-informative);
   --salt-status-error-foreground-informative: var(--salt-palette-error-foreground-informative);
-  --salt-status-warning-foreground-informative: var(--salt-palette-warning-foreground-informative);
-  --salt-status-success-foreground-informative: var(--salt-palette-success-foreground-informative);
-
-  --salt-status-info-borderColor: var(--salt-palette-info-border);
-  --salt-status-error-borderColor: var(--salt-palette-error-border);
-  --salt-status-warning-borderColor: var(--salt-palette-warning-border);
-  --salt-status-success-borderColor: var(--salt-palette-success-border);
-
-  --salt-status-info-background: var(--salt-palette-info-background);
   --salt-status-error-background: var(--salt-palette-error-background);
-  --salt-status-warning-background: var(--salt-palette-warning-background);
-  --salt-status-success-background: var(--salt-palette-success-background);
-
-  --salt-status-info-bold-background: var(--salt-palette-info-bold-background);
-  --salt-status-error-bold-background: var(--salt-palette-error-bold-background);
-  --salt-status-warning-bold-background: var(--salt-palette-warning-bold-background);
-  --salt-status-success-bold-background: var(--salt-palette-success-bold-background);
-
   --salt-status-error-background-selected: var(--salt-palette-error-background-selected);
-  --salt-status-warning-background-selected: var(--salt-palette-warning-background-selected);
+  --salt-status-error-bold-background: var(--salt-palette-error-bold-background);
+  --salt-status-error-borderColor: var(--salt-palette-error-border);
+ 
+  --salt-status-info-foreground-decorative: var(--salt-palette-info-foreground-decorative);
+  --salt-status-info-foreground-informative: var(--salt-palette-info-foreground-informative);
+  --salt-status-info-background: var(--salt-palette-info-background);
+  --salt-status-info-bold-background: var(--salt-palette-info-bold-background);
+  --salt-status-info-borderColor: var(--salt-palette-info-border);
+  
+  --salt-status-success-foreground-decorative: var(--salt-palette-success-foreground-decorative);
+  --salt-status-success-foreground-informative: var(--salt-palette-success-foreground-informative);
+  --salt-status-success-background: var(--salt-palette-success-background);
   --salt-status-success-background-selected: var(--salt-palette-success-background-selected);
+  --salt-status-success-bold-background: var(--salt-palette-success-bold-background);
+  --salt-status-success-borderColor: var(--salt-palette-success-border);
+ 
+  --salt-status-warning-foreground-decorative: var(--salt-palette-warning-foreground-decorative);
+  --salt-status-warning-foreground-informative: var(--salt-palette-warning-foreground-informative);
+  --salt-status-warning-background: var(--salt-palette-warning-background);
+  --salt-status-warning-background-selected: var(--salt-palette-warning-background-selected);
+  --salt-status-warning-bold-background: var(--salt-palette-warning-bold-background);
+  --salt-status-warning-borderColor: var(--salt-palette-warning-border);
 }

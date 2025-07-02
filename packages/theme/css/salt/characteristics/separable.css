@@ -1,6 +1,4 @@
 .salt-theme[data-brand="salt"] {
-  --salt-separable-borderStyle: solid;
-
   --salt-separable-primary-borderColor: var(--salt-palette-alpha-contrast-mediumLow);
   --salt-separable-secondary-borderColor: var(--salt-palette-alpha-contrast-low);
   --salt-separable-tertiary-borderColor: var(--salt-palette-alpha-contrast-lower);
