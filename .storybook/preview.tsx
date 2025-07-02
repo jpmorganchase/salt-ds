@@ -11,7 +11,10 @@ import "@fontsource/open-sans/700.css";
 import "@fontsource/open-sans/800-italic.css";
 import "@fontsource/open-sans/800.css";
 import "@fontsource/pt-mono";
-import "@salt-ds/theme/css/theme-next.css";
+
+import "@salt-ds/theme/css/salt/index.css";
+import "@salt-ds/theme/css/uitk/index.css";
+
 import "@salt-ds/theme/index.css";
 import "./styles.css";
 
