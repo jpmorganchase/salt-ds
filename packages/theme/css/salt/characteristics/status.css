@@ -2,7 +2,7 @@
   --salt-status-static-foreground: var(--salt-palette-foreground-secondary);
   --salt-status-negative-foreground: var(--salt-palette-negative);
   --salt-status-positive-foreground: var(--salt-palette-positive);
-  
+
   --salt-status-error-foreground-decorative: var(--salt-palette-negative);
   --salt-status-error-foreground-informative: var(--salt-palette-negative-strong);
   --salt-status-error-background: var(--salt-palette-negative-weak);
@@ -15,14 +15,14 @@
   --salt-status-info-background: var(--salt-palette-info-weak);
   --salt-status-info-bold-background: var(--salt-palette-info);
   --salt-status-info-borderColor: var(--salt-palette-info);
- 
+
   --salt-status-success-foreground-decorative: var(--salt-palette-positive);
   --salt-status-success-foreground-informative: var(--salt-palette-positive-strong);
   --salt-status-success-background: var(--salt-palette-positive-weak);
   --salt-status-success-background-selected: var(--salt-palette-positive-weak);
   --salt-status-success-bold-background: var(--salt-palette-positive);
   --salt-status-success-borderColor: var(--salt-palette-positive);
-  
+
   --salt-status-warning-foreground-decorative: var(--salt-palette-warning);
   --salt-status-warning-foreground-informative: var(--salt-palette-warning-strong);
   --salt-status-warning-background: var(--salt-palette-warning-weak);

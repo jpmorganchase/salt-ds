@@ -1,12 +1,12 @@
 .salt-theme[data-brand="salt"] {
   --salt-content-primary-foreground: var(--salt-palette-foreground-primary);
   --salt-content-primary-foreground-disabled: var(--salt-palette-foreground-primary-disabled);
-  
+
   --salt-content-secondary-foreground: var(--salt-palette-foreground-secondary);
   --salt-content-secondary-foreground-disabled: var(--salt-palette-foreground-secondary-disabled);
-  
+
   --salt-content-accent-foreground: var(--salt-palette-accent-strong);
-  
+
   --salt-content-attention-foreground: var(--salt-palette-negative-strong);
 
   --salt-content-bold-foreground: var(--salt-palette-foreground-primary-alt);

@@ -11,7 +11,7 @@
   --salt-selectable-foreground-hover: var(--salt-palette-accent-weak);
   --salt-selectable-foreground-selected: var(--salt-palette-accent);
   --salt-selectable-foreground-selectedDisabled: var(--salt-palette-accent-disabled);
-  
+
   --salt-selectable-background: var(--salt-palette-alpha-none);
   --salt-selectable-background-hover: var(--salt-palette-accent-weakest);
   --salt-selectable-background-selected: var(--salt-palette-accent-weaker);
