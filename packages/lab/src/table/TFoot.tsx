@@ -24,12 +24,19 @@ export interface TFootProps extends ComponentPropsWithoutRef<"tfoot"> {
    * If undefined, will match variant of parent Table component's variant.
    * @default undefined
    */
-  variant?: "primary" | "secondary" | "tertiary" ;
+  variant?: "primary" | "secondary" | "tertiary";
 }
 
 export const TFoot = forwardRef<HTMLTableSectionElement, TFootProps>(
   function TFoot(
-    { children, className, sticky = false, variant, divider = "tertiary", ...rest },
+    {
+      children,
+      className,
+      sticky = false,
+      variant,
+      divider = "tertiary",
+      ...rest
+    },
     ref,
   ) {
     const targetWindow = useWindow();

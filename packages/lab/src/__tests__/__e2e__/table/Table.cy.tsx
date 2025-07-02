@@ -26,10 +26,7 @@ describe("GIVEN a Table", () => {
     it("THEN class should be applied to the banner", () => {
       cy.mount(<Secondary />);
 
-      cy.findByRole("table").should(
-        "have.class",
-        "saltTable-secondary",
-      );
+      cy.findByRole("table").should("have.class", "saltTable-secondary");
     });
   });
 
@@ -37,10 +34,7 @@ describe("GIVEN a Table", () => {
     it("THEN class should be applied to the banner", () => {
       cy.mount(<Tertiary />);
 
-      cy.findByRole("table").should(
-        "have.class",
-        "saltTable-tertiary",
-      );
+      cy.findByRole("table").should("have.class", "saltTable-tertiary");
     });
   });
 });

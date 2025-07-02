@@ -24,12 +24,19 @@ export interface THeadProps extends ComponentPropsWithoutRef<"thead"> {
    * If undefined, will match variant of parent Table component's variant.
    * @default undefined
    */
-  variant?: "primary" | "secondary" | "tertiary" ;
+  variant?: "primary" | "secondary" | "tertiary";
 }
 
 export const THead = forwardRef<HTMLTableSectionElement, THeadProps>(
   function THead(
-    { children, className, sticky = false, variant, divider = "primary", ...rest },
+    {
+      children,
+      className,
+      sticky = false,
+      variant,
+      divider = "primary",
+      ...rest
+    },
     ref,
   ) {
     const targetWindow = useWindow();
