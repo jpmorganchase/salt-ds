@@ -1,5 +1,17 @@
 # @salt-ds/react-resizable-panels-theme
 
+## 1.0.1
+
+### Patch Changes
+
+- 621253b: Refactored components and themes to use the new fixed tokens.
+- Updated dependencies [621253b]
+- Updated dependencies [621253b]
+- Updated dependencies [621253b]
+- Updated dependencies [2d58071]
+- Updated dependencies [7adcf27]
+  - @salt-ds/theme@1.30.0
+
 ## 1.0.0
 
 ### Major Changes

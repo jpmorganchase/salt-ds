@@ -22,7 +22,7 @@
 
   cursor: var(--salt-cursor-hover);
   color: var(--salt-content-primary-foreground);
-  font-weight: var(--salt-navigable-fontWeight);
+  font-weight: var(--salt-text-fontWeight);
   font-family: var(--salt-text-fontFamily);
   text-align: var(--salt-text-textAlign);
   letter-spacing: var(--salt-text-letterSpacing);

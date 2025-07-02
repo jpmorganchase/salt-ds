@@ -3209,6 +3209,27 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@salt-ds/embla-carousel@workspace:packages/embla-carousel":
+  version: 0.0.0-use.local
+  resolution: "@salt-ds/embla-carousel@workspace:packages/embla-carousel"
+  dependencies:
+    "@salt-ds/core": "workspace:^"
+    clsx: "npm:^2.0.0"
+    embla-carousel-autoplay: "npm:^8.6.0"
+    embla-carousel-fade: "npm:^8.6.0"
+  peerDependencies:
+    "@types/react": ">=16.14.0"
+    embla-carousel-react: ^8.6.0
+    react: ">=16.14.0"
+    react-dom: ">=16.14.0"
+  peerDependenciesMeta:
+    "@types/react":
+      optional: true
+    embla-carousel-react:
+      optional: true
+  languageName: unknown
+  linkType: soft
+
 "@salt-ds/icons@npm:^1.13.2, @salt-ds/icons@workspace:^, @salt-ds/icons@workspace:packages/icons":
   version: 0.0.0-use.local
   resolution: "@salt-ds/icons@workspace:packages/icons"
@@ -3371,6 +3392,8 @@ __metadata:
     date-fns: "npm:^3.6.0"
     dayjs: "npm:^1.11.13"
     dotenv-load: "npm:^2.0.1"
+    embla-carousel-class-names: "npm:^8.6.0"
+    embla-carousel-react: "npm:^8.6.0"
     lodash-es: "npm:^4.17.21"
     luxon: "npm:^3.5.0"
     moment: "npm:^2.30.1"
@@ -7633,6 +7656,61 @@ __metadata:
   version: 1.5.161
   resolution: "electron-to-chromium@npm:1.5.161"
   checksum: 10/cac9497669736407a8b156658986b5afb616e7a8fdc9aca41b8709bad541b48823dd5a5f0e07dee4149a1b5f7021e2d0443cdd0c475f7c67c4af171afe43bc9d
+  languageName: node
+  linkType: hard
+
+"embla-carousel-autoplay@npm:^8.6.0":
+  version: 8.6.0
+  resolution: "embla-carousel-autoplay@npm:8.6.0"
+  peerDependencies:
+    embla-carousel: 8.6.0
+  checksum: 10/5dee505b891e93da6ac8072c2b1a6bda63533ceaef0eec77fa15425974c08242cf6b6a745159eab33f6fad886b5d05148bf06f01ce3fca87811a79e764b5aad2
+  languageName: node
+  linkType: hard
+
+"embla-carousel-class-names@npm:^8.6.0":
+  version: 8.6.0
+  resolution: "embla-carousel-class-names@npm:8.6.0"
+  peerDependencies:
+    embla-carousel: 8.6.0
+  checksum: 10/5f52fb9f7c84adbeb5039edbd90f84eb00663318a1e2d1fc24eb05a676ac426b5f22509a7658cc739f98bf87a5fba201c1980af653d9412a967325ed482c58da
+  languageName: node
+  linkType: hard
+
+"embla-carousel-fade@npm:^8.6.0":
+  version: 8.6.0
+  resolution: "embla-carousel-fade@npm:8.6.0"
+  peerDependencies:
+    embla-carousel: 8.6.0
+  checksum: 10/89a027c9cd4464b0560fb999093095b60713bb9a8a4fda3c0786584dc2196f5760c7d87f1939f979719bf805f9c293e34ee3b0504710df0f23ee5a1c8d8d03d1
+  languageName: node
+  linkType: hard
+
+"embla-carousel-react@npm:^8.6.0":
+  version: 8.6.0
+  resolution: "embla-carousel-react@npm:8.6.0"
+  dependencies:
+    embla-carousel: "npm:8.6.0"
+    embla-carousel-reactive-utils: "npm:8.6.0"
+  peerDependencies:
+    react: ^16.8.0 || ^17.0.1 || ^18.0.0 || ^19.0.0 || ^19.0.0-rc
+  checksum: 10/8a6338f28844f07e29df03fb09bf7e157e0aecb423b0ca7d9b9a65e4537acce4a140c94f177957518e44d5483993c1c40273b913cde7e543d0b68955efda8ffc
+  languageName: node
+  linkType: hard
+
+"embla-carousel-reactive-utils@npm:8.6.0":
+  version: 8.6.0
+  resolution: "embla-carousel-reactive-utils@npm:8.6.0"
+  peerDependencies:
+    embla-carousel: 8.6.0
+  checksum: 10/48b31931572b32b49705e6125d4f10c240fca0ee8a078867fc91f7c889f6adee95f7fd0b0fdf5dfef6d83d497115759f3f3ca2e8320e331efa0de1c9e6fb4638
+  languageName: node
+  linkType: hard
+
+"embla-carousel@npm:8.6.0":
+  version: 8.6.0
+  resolution: "embla-carousel@npm:8.6.0"
+  checksum: 10/6c1c4268160ce2a150c80f0c84edd4c42b47567f8ef25f56fb21819a4094cfa885614cb0837d180e8da8159ff79a077e0a2e1e679ed2c500ff52697d3ec94b78
   languageName: node
   linkType: hard
 

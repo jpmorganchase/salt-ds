@@ -1,0 +1,48 @@
+{
+  "name": "@salt-ds/embla-carousel",
+  "version": "0.1.0",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jpmorganchase/salt-ds.git",
+    "directory": "packages/embla-carousel"
+  },
+  "bugs": "https://github.com/jpmorganchase/salt-ds/issues",
+  "main": "src/index.ts",
+  "files": [
+    "css"
+  ],
+  "sideEffects": [
+    "*.css"
+  ],
+  "dependencies": {
+    "@salt-ds/core": "workspace:^",
+    "clsx": "^2.0.0"
+  },
+  "devDependencies": {
+    "embla-carousel-autoplay": "^8.6.0",
+    "embla-carousel-fade": "^8.6.0"
+  },
+  "peerDependencies": {
+    "@types/react": ">=16.14.0",
+    "embla-carousel-react": "^8.6.0",
+    "react": ">=16.14.0",
+    "react-dom": ">=16.14.0"
+  },
+  "peerDependenciesMeta": {
+    "@types/react": {
+      "optional": true
+    },
+    "embla-carousel-react": {
+      "optional": true
+    }
+  },
+  "publishConfig": {
+    "directory": "../../dist/salt-ds-embla-carousel",
+    "provenance": true
+  },
+  "scripts": {
+    "build": "yarn node ../../scripts/build.mjs",
+    "bundle:css": "yarn node ./scripts/build.mjs"
+  }
+}

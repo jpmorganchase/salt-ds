@@ -1,5 +1,93 @@
 # @salt-ds/theme
 
+## 1.30.0
+
+### Minor Changes
+
+- 621253b: Added new fixed size tokens.
+
+  | Token                   | All densities (px) |
+  | ----------------------- | ------------------ |
+  | `--salt-size-fixed-100` | 1                  |
+  | `--salt-size-fixed-200` | 2                  |
+  | `--salt-size-fixed-300` | 3                  |
+  | `--salt-size-fixed-400` | 4                  |
+  | `--salt-size-fixed-500` | 5                  |
+  | `--salt-size-fixed-600` | 6                  |
+  | `--salt-size-fixed-700` | 7                  |
+  | `--salt-size-fixed-800` | 8                  |
+  | `--salt-size-fixed-900` | 9                  |
+
+- 621253b: Added new fixed spacing tokens.
+
+  | Token                      | All densities (px) |
+  | -------------------------- | ------------------ |
+  | `--salt-spacing-fixed-100` | 1                  |
+  | `--salt-spacing-fixed-200` | 2                  |
+  | `--salt-spacing-fixed-300` | 3                  |
+  | `--salt-spacing-fixed-400` | 4                  |
+  | `--salt-spacing-fixed-500` | 5                  |
+  | `--salt-spacing-fixed-600` | 6                  |
+  | `--salt-spacing-fixed-700` | 7                  |
+  | `--salt-spacing-fixed-800` | 8                  |
+  | `--salt-spacing-fixed-900` | 9                  |
+
+- 621253b: Deprecated 3 size tokens:
+
+  | Deprecated token            | Replacement token                                     |
+  | --------------------------- | ----------------------------------------------------- |
+  | `--salt-size-border`        | `--salt-spacing-fixed-100` or `--salt-size-fixed-100` |
+  | `--salt-size-border-strong` | `--salt-spacing-fixed-200` or `--salt-size-fixed-200` |
+  | `--salt-size-bar-small`     | `--salt-spacing-fixed-200` or `--salt-size-fixed-200` |
+
+- 2d58071: New cursor foundation
+
+  ```diff
+  + --salt-cursor-active
+  + --salt-cursor-disabled
+  + --salt-cursor-drag-ew
+  + --salt-cursor-drag-ns
+  + --salt-cursor-grab
+  + --salt-cursor-grab-active
+  + --salt-cursor-hover
+  + --salt-cursor-pending
+  + --salt-cursor-readonly
+  + --salt-cursor-text
+  ```
+
+  Deprecated the following cursor tokens:
+
+  | Name                                        | Replacement                 |
+  | ------------------------------------------- | --------------------------- |
+  | `--salt-taggable-cursor-hover`              | `--salt-cursor-hover`       |
+  | `--salt-taggable-cursor-active`             | `--salt-cursor-active`      |
+  | `--salt-taggable-cursor-disabled`           | `--salt-cursor-disabled`    |
+  | `--salt-navigable-cursor-active`            | `--salt-cursor-active`      |
+  | `--salt-navigable-cursor-hover`             | `--salt-cursor-hover`       |
+  | `--salt-navigable-cursor-disabled`          | `--salt-cursor-disabled`    |
+  | `--salt-navigable-cursor-edit`              | `--salt-cursor-text`        |
+  | `--salt-target-cursor-disabled`             | `--salt-cursor-disabled`    |
+  | `--salt-actionable-cursor-hover`            | `--salt-cursor-hover`       |
+  | `--salt-actionable-cursor-active`           | `--salt-cursor-active`      |
+  | `--salt-actionable-cursor-disabled`         | `--salt-cursor-disabled`    |
+  | `--salt-draggable-horizontal-cursor-hover`  | `--salt-cursor-drag-ns`     |
+  | `--salt-draggable-horizontal-cursor-active` | `--salt-cursor-drag-ns`     |
+  | `--salt-draggable-vertical-cursor-hover`    | `--salt-cursor-drag-ew`     |
+  | `--salt-draggable-vertical-cursor-active`   | `--salt-cursor-drag-ew`     |
+  | `--salt-draggable-grab-cursor-hover`        | `--salt-cursor-grab`        |
+  | `--salt-draggable-grab-cursor-active`       | `--salt-cursor-grab-active` |
+  | `--salt-selectable-cursor-hover`            | `--salt-cursor-hover`       |
+  | `--salt-selectable-cursor-selected`         | `--salt-cursor-active`      |
+  | `--salt-selectable-cursor-blurSelected`     | `--salt-cursor-hover`       |
+  | `--salt-selectable-cursor-disabled`         | `--salt-cursor-disabled`    |
+  | `--salt-selectable-cursor-readonly`         | `--salt-cursor-readonly`    |
+  | `--salt-editable-cursor-hover`              | `--salt-cursor-text`        |
+  | `--salt-editable-cursor-active`             | `--salt-cursor-text`        |
+  | `--salt-editable-cursor-disabled`           | `--salt-cursor-disabled`    |
+  | `--salt-editable-cursor-readonly`           | `--salt-cursor-text`        |
+
+- 7adcf27: Deprecated `--salt-editable-borderWidth-active`. Use `--salt-size-fixed-200` instead.
+
 ## 1.29.0
 
 ### Minor Changes

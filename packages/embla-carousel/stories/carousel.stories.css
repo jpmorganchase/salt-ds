@@ -1,0 +1,43 @@
+.carousel {
+  width: 600px;
+}
+.carouselImagePlaceholder {
+  height: 250px;
+  width: 100%;
+  object-fit: cover;
+}
+
+.carouselSlide {
+  box-sizing: border-box;
+  transform: translate3d(0, 0, 0);
+  flex: 0 0 var(--carousel-slide-size);
+  min-width: 0;
+  padding-left: var(--carousel-slide-spacing);
+}
+
+.carouselNumber {
+  border: var(--salt-size-fixed-100) var(--salt-container-borderStyle) var(--salt-container-primary-borderColor);
+  border-radius: var(--salt-palette-corner, 0);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--carousel-slide-height);
+  user-select: none;
+}
+
+.carouselHeading {
+  margin: 0;
+}
+
+.carouselMultipleSlide {
+  width: 600px;
+  --carousel-slide-size: 50%;
+}
+
+.carouselSlideIsSnapped {
+  visibility: visible;
+}
+/** Do not make off-screen slides focusable */
+.saltCarouselCard:not(.carouselSlideIsSnapped) a {
+  visibility: hidden;
+}

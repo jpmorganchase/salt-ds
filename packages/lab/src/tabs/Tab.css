@@ -43,7 +43,7 @@
 
 .saltTab[aria-selected="true"] {
   color: var(--salt-content-primary-foreground);
-  font-weight: var(--salt-navigable-fontWeight-active);
+  font-weight: var(--salt-text-fontWeight-strong);
 }
 
 .saltTab-dragAway {
@@ -101,7 +101,7 @@
   content: attr(data-text);
   display: block;
   visibility: hidden;
-  font-weight: var(--salt-navigable-fontWeight-active);
+  font-weight: var(--salt-text-fontWeight-strong);
 }
 
 /* FIXME: these are all focusVisible styles, but with a bespoke inset */

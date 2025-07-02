@@ -23,7 +23,7 @@
 /* Style applied on hover */
 .saltMultilineInput:hover {
   background: var(--multilineInput-background-hover);
-  cursor: var(--salt-cursor-hover);
+  cursor: var(--salt-cursor-text);
 }
 
 /* Style applied if `bordered={true}` */
@@ -164,7 +164,7 @@
 .saltMultilineInput-focused,
 .saltMultilineInput-focused:hover {
   background: var(--multilineInput-background-active);
-  cursor: var(--salt-cursor-active);
+  cursor: var(--salt-cursor-text);
   outline: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--multilineInput-outlineColor);
 }
 

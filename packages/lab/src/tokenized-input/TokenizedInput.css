@@ -36,7 +36,7 @@
 
 /* Styles applied to root component on hover state  */
 .saltTokenizedInput:hover {
-  cursor: var(--salt-cursor-hover);
+  cursor: var(--salt-cursor-text);
 }
 
 /* Styles applied to root component on hover state if `disabled={true}` */
