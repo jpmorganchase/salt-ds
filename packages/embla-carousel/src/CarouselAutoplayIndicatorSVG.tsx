@@ -1,6 +1,7 @@
 import { makePrefixer } from "@salt-ds/core";
 import clsx from "classnames";
-import { type SVGAttributes, forwardRef } from "react";
+import { type Ref, type SVGAttributes, forwardRef } from "react";
+
 const withBaseName = makePrefixer("saltCarouselAutoplayIndicatorSVG");
 
 export interface CarouselAutoplayIndicatorSVGProps
@@ -12,7 +13,7 @@ export interface CarouselAutoplayIndicatorSVGProps
   /**
    * Ref to attach to progress indicator element
    */
-  barRef: React.Ref<SVGCircleElement>;
+  barRef: Ref<SVGCircleElement>;
   /**
    * Size of the SVG in pixels.
    */

@@ -3,7 +3,7 @@ import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import type { EmblaCarouselType } from "embla-carousel";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useCarouselContext } from "./CarouselContext";
 import carouselProgressLabelCss from "./CarouselProgressLabel.css";
 
@@ -32,31 +32,31 @@ export function CarouselProgressLabel({
   const [currentSlide, setCurrentSlide] = useState("");
   const [totalSlides, setTotalSlides] = useState(0);
 
-  const handleSelect = useCallback((emblaApi: EmblaCarouselType) => {
-    const slideIndexInView = emblaApi?.selectedScrollSnap() ?? 0;
-    const numberOfSlides = emblaApi?.slideNodes().length ?? 0;
-    const scrollSnaps = emblaApi?.scrollSnapList() ?? [];
-    const slidesPerTransition = numberOfSlides
-      ? Math.ceil(numberOfSlides / scrollSnaps.length)
-      : 0;
-    const startSlideNumber = Math.min(
-      slideIndexInView * slidesPerTransition + 1,
-      numberOfSlides - (slidesPerTransition - 1),
-    );
-    const endSlideNumber = Math.min(
-      startSlideNumber + slidesPerTransition - 1,
-      numberOfSlides,
-    );
-
-    if (startSlideNumber === endSlideNumber) {
-      setCurrentSlide(startSlideNumber.toString(10));
-    } else {
-      setCurrentSlide(`${startSlideNumber}-${endSlideNumber}`);
-    }
-    setTotalSlides(numberOfSlides);
-  }, []);
-
   useEffect(() => {
+    const handleSelect = (emblaApi: EmblaCarouselType) => {
+      const slideIndexInView = emblaApi?.selectedScrollSnap() ?? 0;
+      const numberOfSlides = emblaApi?.slideNodes().length ?? 0;
+      const scrollSnaps = emblaApi?.scrollSnapList() ?? [];
+      const slidesPerTransition = numberOfSlides
+        ? Math.ceil(numberOfSlides / scrollSnaps.length)
+        : 0;
+      const startSlideNumber = Math.min(
+        slideIndexInView * slidesPerTransition + 1,
+        numberOfSlides - (slidesPerTransition - 1),
+      );
+      const endSlideNumber = Math.min(
+        startSlideNumber + slidesPerTransition - 1,
+        numberOfSlides,
+      );
+
+      if (startSlideNumber === endSlideNumber) {
+        setCurrentSlide(startSlideNumber.toString(10));
+      } else {
+        setCurrentSlide(`${startSlideNumber}-${endSlideNumber}`);
+      }
+      setTotalSlides(numberOfSlides);
+    };
+
     if (!emblaApi) return;
     emblaApi
       .on("init", handleSelect)
@@ -70,7 +70,7 @@ export function CarouselProgressLabel({
         .off("reInit", handleSelect)
         .off("select", handleSelect);
     };
-  }, [emblaApi, handleSelect]);
+  }, [emblaApi]);
 
   return (
     <Text className={clsx(withBaseName(), className)} {...props}>

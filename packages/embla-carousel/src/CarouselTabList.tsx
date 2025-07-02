@@ -2,7 +2,12 @@ import { type RenderPropsType, makePrefixer, renderProps } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
-import { type HTMLAttributes, forwardRef, useRef } from "react";
+import {
+  type HTMLAttributes,
+  type KeyboardEventHandler,
+  forwardRef,
+  useRef,
+} from "react";
 import { useCarouselContext } from "./CarouselContext";
 import {
   CarouselTab,
@@ -50,9 +55,7 @@ export const CarouselTabList = forwardRef<HTMLDivElement, CarouselTabListProps>(
 
     const buttonRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
-    const handleKeyDown: React.KeyboardEventHandler<HTMLDivElement> = (
-      event,
-    ) => {
+    const handleKeyDown: KeyboardEventHandler<HTMLDivElement> = (event) => {
       let newIndex = selectedIndex;
 
       if (event.key === "ArrowLeft" || event.key === "ArrowRight") {

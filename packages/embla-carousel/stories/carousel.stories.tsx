@@ -10,13 +10,7 @@ import {
   CarouselTabList,
 } from "@salt-ds/embla-carousel";
 import "./carousel.stories.css";
-import {
-  AriaAnnouncerProvider,
-  FlexLayout,
-  StackLayout,
-  Text,
-  useId,
-} from "@salt-ds/core";
+import { FlexLayout, StackLayout, Text, useId } from "@salt-ds/core";
 import type { CarouselProps } from "@salt-ds/embla-carousel";
 import Classnames from "embla-carousel-class-names";
 import Fade from "embla-carousel-fade";
@@ -29,38 +23,32 @@ export default {
 
 const CarouselCardExample: StoryFn<CarouselProps> = (args) => {
   return (
-    <AriaAnnouncerProvider>
-      <Carousel
-        aria-label="Account overview"
-        className="carousel"
-        emblaPlugins={[
-          CarouselAnnouncement(),
-          Classnames({
-            snapped: "carouselSlideIsSnapped",
-          }),
-        ]}
-        {...args}
-      >
-        <FlexLayout
-          justify={"space-between"}
-          align={"center"}
-          direction={"row"}
-        >
-          <Text styleAs={"h2"} className="carouselHeading">
-            Title
-          </Text>
-        </FlexLayout>
-        <CarouselSlides>{renderSlides({ withActions: true })}</CarouselSlides>
-        <FlexLayout justify={"space-between"} direction={"row"} gap={1}>
-          <StackLayout direction={"row"} gap={1}>
-            <CarouselPreviousButton />
-            <CarouselNextButton />
-            <CarouselProgressLabel />
-          </StackLayout>
-          <CarouselTabList />
-        </FlexLayout>
-      </Carousel>
-    </AriaAnnouncerProvider>
+    <Carousel
+      aria-label="Account overview"
+      className="carousel"
+      emblaPlugins={[
+        CarouselAnnouncement(),
+        Classnames({
+          snapped: "carouselSlideIsSnapped",
+        }),
+      ]}
+      {...args}
+    >
+      <FlexLayout justify={"space-between"} align={"center"} direction={"row"}>
+        <Text styleAs={"h2"} className="carouselHeading">
+          Title
+        </Text>
+      </FlexLayout>
+      <CarouselSlides>{renderSlides({ withActions: true })}</CarouselSlides>
+      <FlexLayout justify={"space-between"} direction={"row"} gap={1}>
+        <StackLayout direction={"row"} gap={1}>
+          <CarouselPreviousButton />
+          <CarouselNextButton />
+          <CarouselProgressLabel />
+        </StackLayout>
+        <CarouselTabList />
+      </FlexLayout>
+    </Carousel>
   );
 };
 
@@ -68,50 +56,44 @@ const CarouselNumberExample: StoryFn<CarouselProps> = (args) => {
   const slides = Array.from(Array(4).keys());
   const slideId = useId();
   return (
-    <AriaAnnouncerProvider>
-      <Carousel
-        aria-label="carousel example"
-        className={"carousel"}
-        emblaPlugins={[CarouselAnnouncement()]}
-        {...args}
-      >
-        <FlexLayout
-          justify={"space-between"}
-          align={"center"}
-          direction={"row"}
-        >
-          <Text styleAs={"h2"} className="carouselHeading">
-            Title
-          </Text>
-        </FlexLayout>
-        <CarouselSlides>
-          {slides.map((index) => (
-            <div
-              role="tabpanel"
-              aria-roledescription="slide"
-              aria-label={`Example slide ${index + 1}`}
-              className="carouselSlide"
-              key={`${slideId}-${index}`}
-              id={`${slideId}-${index}`}
-            >
-              <div className="carouselNumber">
-                <Text styleAs={"h1"} className="carouselHeading">
-                  {index + 1}
-                </Text>
-              </div>
+    <Carousel
+      aria-label="carousel example"
+      className={"carousel"}
+      emblaPlugins={[CarouselAnnouncement()]}
+      {...args}
+    >
+      <FlexLayout justify={"space-between"} align={"center"} direction={"row"}>
+        <Text styleAs={"h2"} className="carouselHeading">
+          Title
+        </Text>
+      </FlexLayout>
+      <CarouselSlides>
+        {slides.map((index) => (
+          <div
+            role="tabpanel"
+            aria-roledescription="slide"
+            aria-label={`Example slide ${index + 1}`}
+            className="carouselSlide"
+            key={`${slideId}-${index}`}
+            id={`${slideId}-${index}`}
+          >
+            <div className="carouselNumber">
+              <Text styleAs={"h1"} className="carouselHeading">
+                {index + 1}
+              </Text>
             </div>
-          ))}
-        </CarouselSlides>
-        <FlexLayout justify={"space-between"} direction={"row"} gap={1}>
-          <StackLayout direction={"row"} gap={1}>
-            <CarouselPreviousButton />
-            <CarouselNextButton />
-            <CarouselProgressLabel />
-          </StackLayout>
-          <CarouselTabList />
-        </FlexLayout>
-      </Carousel>
-    </AriaAnnouncerProvider>
+          </div>
+        ))}
+      </CarouselSlides>
+      <FlexLayout justify={"space-between"} direction={"row"} gap={1}>
+        <StackLayout direction={"row"} gap={1}>
+          <CarouselPreviousButton />
+          <CarouselNextButton />
+          <CarouselProgressLabel />
+        </StackLayout>
+        <CarouselTabList />
+      </FlexLayout>
+    </Carousel>
   );
 };
 
