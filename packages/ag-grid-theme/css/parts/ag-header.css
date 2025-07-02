@@ -15,7 +15,7 @@
 .ag-theme-salt-dark .ag-header,
 .ag-theme-salt-compact-light .ag-header,
 .ag-theme-salt-compact-dark .ag-header {
-  border-bottom: var(--salt-size-fixed-100) var(--salt-separable-borderStyle) var(--salt-separable-primary-borderColor);
+  border-bottom: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-separable-primary-borderColor);
 }
 
 .ag-theme-salt-light .ag-header-row,
@@ -149,7 +149,7 @@
 .ag-theme-salt-dark .ag-floating-filter,
 .ag-theme-salt-compact-light .ag-floating-filter,
 .ag-theme-salt-compact-dark .ag-floating-filter {
-  border: var(--salt-size-fixed-100) var(--salt-editable-borderStyle) var(--salt-separable-tertiary-borderColor);
+  border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-separable-tertiary-borderColor);
 }
 
 .ag-theme-salt-light .ag-header-cell.ag-floating-filter,

@@ -15,7 +15,7 @@
   overflow-y: auto;
   z-index: var(--salt-zIndex-modal);
   height: min-content;
-  border: var(--salt-size-fixed-100) var(--salt-container-borderStyle) var(--salt-separable-tertiary-borderColor);
+  border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-separable-tertiary-borderColor);
   box-sizing: border-box;
   border-radius: var(--salt-palette-corner, 0);
 }

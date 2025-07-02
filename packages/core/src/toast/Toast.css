@@ -7,7 +7,7 @@
   background: var(--saltToast-background, var(--toast-background));
   border-color: var(--saltToast-borderColor, var(--toast-borderColor));
   border-width: var(--saltToast-borderWidth, var(--salt-size-fixed-100));
-  border-style: var(--saltToast-borderStyle, var(--salt-container-borderStyle));
+  border-style: var(--saltToast-borderStyle, var(--salt-borderStyle-solid));
   border-radius: var(--saltToast-borderRadius, var(--salt-palette-corner, 0));
 
   box-sizing: border-box;

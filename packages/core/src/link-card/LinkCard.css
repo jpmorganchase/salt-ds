@@ -1,7 +1,7 @@
 /* Styles applied to LinkCard */
 .saltLinkCard {
   border-radius: var(--saltLinkCard-borderRadius, var(--salt-palette-corner, 0));
-  border-style: var(--saltLinkCard-borderStyle, var(--salt-container-borderStyle));
+  border-style: var(--saltLinkCard-borderStyle, var(--salt-borderStyle-solid));
   border-width: var(--saltLinkCard-borderWidth, var(--salt-size-fixed-100));
   box-shadow: var(--salt-overlayable-shadow);
   display: block;

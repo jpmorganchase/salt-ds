@@ -5,7 +5,7 @@
   text-align: center;
   align-items: center;
   justify-content: center;
-  border: var(--saltFileDropZone-border, var(--salt-size-fixed-200) var(--salt-target-borderStyle) var(--salt-container-primary-borderColor));
+  border: var(--saltFileDropZone-border, var(--salt-size-fixed-200) var(--salt-borderStyle-dashed) var(--salt-container-primary-borderColor));
   border-radius: var(--saltFileDropZone-borderRadius, var(--salt-palette-corner, 0));
   flex-direction: column;
   padding: var(--salt-spacing-200);
@@ -19,17 +19,17 @@
 
 .saltFileDropZone-active {
   background: var(--salt-target-background-hover);
-  border: var(--salt-size-fixed-200) var(--salt-target-borderStyle-hover) var(--salt-target-borderColor-hover);
+  border: var(--salt-size-fixed-200) var(--salt-borderStyle-solid) var(--salt-target-borderColor-hover);
 }
 
 /* Styles applied if `status="error" */
 .saltFileDropZone-error {
-  border: var(--salt-size-fixed-200) var(--salt-target-borderStyle) var(--salt-status-error-borderColor);
+  border: var(--salt-size-fixed-200) var(--salt-borderStyle-dashed) var(--salt-status-error-borderColor);
 }
 
 /* Styles applied if `status="success" */
 .saltFileDropZone-success {
-  border: var(--salt-size-fixed-200) var(--salt-target-borderStyle) var(--salt-status-success-borderColor);
+  border: var(--salt-size-fixed-200) var(--salt-borderStyle-dashed) var(--salt-status-success-borderColor);
 }
 
 .saltFileDropZone .input-hidden {
@@ -39,7 +39,7 @@
 /* Styles applied if `disabled={true}` */
 .saltFileDropZone-disabled {
   background: var(--salt-container-primary-background-disabled);
-  border: var(--salt-size-fixed-200) var(--salt-target-borderStyle) var(--salt-container-primary-borderColor-disabled);
+  border: var(--salt-size-fixed-200) var(--salt-borderStyle-dashed) var(--salt-container-primary-borderColor-disabled);
   cursor: var(--salt-cursor-disabled);
   color: var(--salt-content-primary-foreground-disabled);
 }

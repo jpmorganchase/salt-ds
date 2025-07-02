@@ -4,7 +4,7 @@
   align-items: center;
   background: var(--salt-container-primary-background);
   height: var(--site-app-header-height);
-  border-bottom: var(--salt-size-fixed-100) var(--salt-separable-borderStyle) var(--salt-separable-primary-borderColor);
+  border-bottom: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-separable-primary-borderColor);
   position: sticky;
   top: 0;
   z-index: var(--salt-zIndex-appHeader);

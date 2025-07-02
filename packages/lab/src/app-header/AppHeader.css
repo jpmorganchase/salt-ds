@@ -29,7 +29,7 @@
 .saltAppHeader {
   align-items: flex-start;
   background: var(--appHeader-background);
-  border-bottom: var(--salt-separable-borderStyle) var(--salt-size-fixed-100) var(--salt-separable-primary-borderColor);
+  border-bottom: var(--salt-borderStyle-solid) var(--salt-size-fixed-100) var(--salt-separable-primary-borderColor);
   box-shadow: var(--appHeader-shadow);
   box-sizing: content-box;
   display: flex;

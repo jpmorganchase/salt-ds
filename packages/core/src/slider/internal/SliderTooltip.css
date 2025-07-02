@@ -1,7 +1,7 @@
 .saltSliderTooltip {
   background: var(--salt-container-primary-background);
   border-color: var(--salt-container-primary-borderColor);
-  border-style: var(--saltTooltip-borderStyle, var(--salt-container-borderStyle));
+  border-style: var(--saltTooltip-borderStyle, var(--salt-borderStyle-solid));
   border-width: var(--saltTooltip-borderWidth, var(--salt-size-fixed-100));
   border-radius: var(--saltTooltip-borderRadius, var(--salt-palette-corner-weak, 0));
   box-shadow: var(--saltTooltip-shadow, var(--salt-overlayable-shadow-popout));

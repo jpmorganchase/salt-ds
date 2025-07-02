@@ -1,6 +1,6 @@
 .saltColorChooser-rgbaInput {
   width: var(--salt-size-unit);
-  border-bottom: var(--salt-size-fixed-100) var(--salt-editable-borderStyle) var(--salt-editable-borderColor);
+  border-bottom: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-editable-borderColor);
   padding-top: var(--salt-size-unit);
 }
 
@@ -8,7 +8,7 @@
   min-width: 40px !important;
   width: 40px !important;
   min-height: unset !important;
-  border-bottom: var(--salt-size-fixed-100) var(--salt-editable-borderStyle) var(--salt-editable-borderColor);
+  border-bottom: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-editable-borderColor);
 }
 
 .saltColorChooser-rgbaText {

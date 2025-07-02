@@ -1,6 +1,4 @@
 .salt-theme {
-  --salt-container-borderStyle: solid;
-
   --salt-container-primary-background: var(--salt-palette-neutral-primary-background);
   --salt-container-primary-background-disabled: var(--salt-palette-neutral-primary-background-disabled);
   --salt-container-primary-borderColor: var(--salt-palette-neutral-border);
