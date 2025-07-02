@@ -66,10 +66,9 @@ describe("Given a Carousel", () => {
 
   const verifySlide = (expectedText: string) => {
     // Verify the slide updates
-    cy.get(".carouselSlide.is-snapped .carouselNumber .saltText-h1").should(
-      "have.text",
-      expectedText,
-    );
+    cy.get(
+      ".carouselSlide.is-snapped .carouselNumber .saltText-display1",
+    ).should("have.text", expectedText);
     // Verify tablist updates
     cy.findByRole("tab", { selected: true }).should(
       "have.attr",
