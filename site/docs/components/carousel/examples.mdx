@@ -10,40 +10,33 @@ data:
 
 ## Default
 
-Use the default setting to allow users to navigate the carousel in single slide increments, moving either backward or forward through the sequence.
+Carousel is a pre-defined pattern of Salt components that uses the [Embla](https://www.embla-carousel.com/) API.
 
-<LivePreview componentName="carousel" exampleName="Default" />
+You can customize the content within carousel slides according to your needs (see the [usage](./usage) documentation for guidance).
+Alternatively, the `CarouselCard` component offers a straightforward option for creating slide elements.
+
+<LivePreview componentName="carousel" exampleName="Card" />
+
+## Bordered
+
+Bordered cards add a visual distinction to each slide, enhancing the overall appearance and making it easier for users to differentiate between individual slides.
+
+`CarouselCard` can include a border by setting the `bordered` prop to `true`.
+
+<LivePreview componentName="carousel" exampleName="BorderedCard" />
 
 ## Multiple slides
 
-Use the multiple slides settings to allow users to navigate the carousel in single slide increments while displaying more than one slide at a time.
+This carousel component can display multiple slides simultaneously.
 
-To display multiple slides, pass multiple values (one per breakpoint) or a single value of the number of slides to show in `visibleSlides`.
+Allow a recommended, 4%, of space to enable the next slide in the sequence to be visible.
 
 <LivePreview componentName="carousel" exampleName="MultipleSlides" />
 
-## With title
+## Autoplay
 
-The carousel title is optional and should be placed in the top left corner of the carousel.
+Autoplay can be added through the embla plugin [`Autoplay`](https://www.embla-carousel.com/plugins/autoplay/), but requires additional code to support accessibility.
 
-<LivePreview componentName="carousel" exampleName="WithTitle" />
+The example below provides accessibility support but if you compose your own, then refer to the [APG guidelines](https://www.w3.org/WAI/ARIA/apg/patterns/carousel/).
 
-## Appearance
-
-Two different appearances are available for carousel: Bordered and Transparent.
-
-<LivePreview componentName="carousel" exampleName="Appearance" />
-
-## With slide actions
-
-You can incorporate actions like [links](../link) into a carousel slide. Don't embed actions into a clickable slide.
-
-<LivePreview componentName="carousel" exampleName="WithSlideActions" />
-
-## Controls alignment
-
-<LivePreview componentName="carousel" exampleName="ControlsAlignment" />
-
-## Controlled carousel
-
-<LivePreview componentName="carousel" exampleName="ControlledCarousel" />
+<LivePreview componentName="carousel" exampleName="Autoplay" />

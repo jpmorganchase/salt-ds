@@ -1,8 +1,44 @@
-.carouselImagePlaceholder {
+.carousel {
+  width: 80%;
+}
+
+.carouselImage {
   height: 250px;
   width: 100%;
   object-fit: cover;
 }
-.carouselHeader {
+
+.carouselSlide {
+  box-sizing: border-box;
+  transform: translate3d(0, 0, 0);
+  flex: 0 0 var(--carousel-slide-size);
+  min-width: 0;
+  padding-left: var(--carousel-slide-spacing);
+}
+
+.carouselHeading {
   margin: 0;
+}
+
+.carouselSlideIsSnapped {
+  visibility: visible;
+}
+/** Do not make off-screen slides focusable */
+.carouselSlide:not(.carouselSlideIsSnapped) a {
+  visibility: hidden;
+}
+
+.carousel.carouselMultipleSlides {
+  /** Allow 4% of the next slide to be visible by reducing each slide by 2% */
+  --carousel-slide-size: 48%;
+}
+
+.carouselNumber {
+  border: var(--salt-size-fixed-100) var(--salt-container-borderStyle) var(--salt-container-primary-borderColor);
+  border-radius: var(--salt-palette-corner, 0);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--carousel-slide-height);
+  user-select: none;
 }

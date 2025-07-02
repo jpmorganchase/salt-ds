@@ -1,0 +1,32 @@
+.saltCarouselAutoplayIndicator {
+  --carousel-svg-circumference: 0;
+  display: flex;
+  align-self: center;
+}
+
+.saltCarouselAutoplayIndicatorSVG {
+  transform: rotate(-90deg);
+}
+
+.saltCarouselAutoplayIndicatorSVG-track {
+  fill: none;
+  stroke: var(--salt-accent-foreground);
+}
+
+.saltCarouselAutoplayIndicatorSVG-bar {
+  fill: none;
+  stroke: var(--salt-accent-background);
+  stroke-dasharray: var(--carousel-svg-circumference);
+  stroke-dashoffset: var(--carousel-svg-circumference);
+  animation: indicatorAnimation 0.5s linear;
+  animation-play-state: paused;
+}
+
+@keyframes indicatorAnimation {
+  from {
+    stroke-dashoffset: var(--carousel-svg-circumference);
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
