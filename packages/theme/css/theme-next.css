@@ -29,5 +29,6 @@
 @import url(characteristics/track-next.css);
 
 /* Deprecated */
+@import url(deprecated/characteristics-next.css);
 @import url(deprecated/foundations-next.css);
 @import url(deprecated/palette-next.css);

@@ -1,5 +1,12 @@
 import { useIsomorphicLayoutEffect } from "@salt-ds/core";
-import { createContext, useContext, useRef, useState } from "react";
+import {
+  type MutableRefObject,
+  type ReactNode,
+  createContext,
+  useContext,
+  useRef,
+  useState,
+} from "react";
 
 // //////////////////////////////////////////////////////////////////////////////
 // SUPER HACKS AHEAD: The React team will hate this enough to hopefully give us
@@ -13,9 +20,22 @@ import { createContext, useContext, useRef, useState } from "react";
 // ancestor, so that we can track all the descendants and manage focus on them,
 // etc.  The super hacks here are for the child to know it's index as well, so
 // that it can set attributes, match against state from above, etc.
-export const DescendantContext = createContext();
+interface DescendantProviderProps {
+  children?: ReactNode;
+  items?: MutableRefObject<unknown[]>;
+}
 
-export function DescendantProvider({ items, ...props }) {
+interface DescendantContextType {
+  assigning?: MutableRefObject<boolean>;
+  items?: DescendantProviderProps["items"];
+}
+
+export const DescendantContext = createContext<DescendantContextType>({});
+
+export function DescendantProvider({
+  items,
+  ...props
+}: DescendantProviderProps) {
   // On the first render we say we're "assigning", and the children will push
   // into the array when they show up in their own useLayoutEffect.
   const assigning = useRef(true);
@@ -23,7 +43,7 @@ export function DescendantProvider({ items, ...props }) {
   // since children are pushed into the array in useLayoutEffect of the child,
   // children can't read their index on first render.  So we need to cause a
   // second render so they can read their index.
-  const [, forceUpdate] = useState();
+  const [, forceUpdate] = useState<unknown>();
 
   // parent useLayoutEffect is always last
   useIsomorphicLayoutEffect(() => {
@@ -44,7 +64,7 @@ export function DescendantProvider({ items, ...props }) {
       // this cleanup function runs right before the next render, so it's the
       // right time to empty out the array to be reassigned with whatever shows
       // up next render.
-      if (assigning.current) {
+      if (assigning.current && items) {
         // we only want to empty out the array before the next render cycle if
         // it was NOT the result of our forceUpdate, so being guarded behind
         // assigning.current works
@@ -56,12 +76,12 @@ export function DescendantProvider({ items, ...props }) {
   return <DescendantContext.Provider {...props} value={{ items, assigning }} />;
 }
 
-export function useDescendant(descendant) {
+export function useDescendant(descendant: unknown) {
   const { assigning, items } = useContext(DescendantContext);
   const index = useRef(-1);
 
   useIsomorphicLayoutEffect(() => {
-    if (assigning.current) {
+    if (assigning?.current && items?.current) {
       index.current = items.current.push(descendant) - 1;
     }
   });

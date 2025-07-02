@@ -30,7 +30,7 @@ const ListWithDescendants = forwardRef(function ListWithDescendants<
   const { items } = useContext(DescendantContext);
 
   const { focusedRef, state, helpers, listProps } = useList({
-    source: items.current.length ? items.current : [],
+    source: (items?.current.length ? items.current : []) as Item[],
     ...props,
   });
 
