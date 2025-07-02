@@ -30,7 +30,7 @@ export const Title = (): ReactElement => {
             key={`${slideId}-${index}`}
             id={`${slideId}-${index}`}
           >
-            <Text styleAs={"h1"} className={styles.carouselNumber}>
+            <Text styleAs={"display1"} className={styles.carouselNumber}>
               {index + 1}
             </Text>
           </div>

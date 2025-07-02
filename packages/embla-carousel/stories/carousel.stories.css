@@ -23,7 +23,6 @@
   justify-content: center;
   height: var(--carousel-slide-height);
   user-select: none;
-  --salt-text-h1-fontSize: 60px;
 }
 
 .carouselHeading {

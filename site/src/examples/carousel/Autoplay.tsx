@@ -26,7 +26,6 @@ import { sliderData } from "./exampleData";
 import styles from "./index.module.css";
 
 const DELAY_MSECS = 8000;
-const SETTLE_PIXEL_THRESHOLD = 10;
 
 export const Autoplay = () => {
   const slideId = useId();

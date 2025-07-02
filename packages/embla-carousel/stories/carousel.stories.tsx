@@ -78,7 +78,7 @@ const CarouselNumberExample: StoryFn<CarouselProps> = (args) => {
             id={`${slideId}-${index}`}
           >
             <div className="carouselNumber">
-              <Text styleAs={"h1"} className="carouselHeading">
+              <Text styleAs={"display1"} className="carouselHeading">
                 {index + 1}
               </Text>
             </div>
@@ -132,7 +132,7 @@ export const MultiSlide: StoryFn<typeof Carousel> = (args) => {
             key={`${slideId}-${index}`}
           >
             <div className="carouselNumber">
-              <Text styleAs={"h1"} className="carouselHeading">
+              <Text styleAs={"display1"} className="carouselHeading">
                 {index + 1}
               </Text>
             </div>
