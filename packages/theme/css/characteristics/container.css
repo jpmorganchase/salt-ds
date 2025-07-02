@@ -18,4 +18,7 @@
 
   --salt-container-ghost-background: var(--salt-palette-alpha-low);
   --salt-container-ghost-borderColor: var(--salt-palette-alpha-contrast-low);
+
+  --salt-container-target-background: var(--salt-palette-interact-background-hover);
+  --salt-container-target-borderColor: var(--salt-palette-interact-border-hover);
 }

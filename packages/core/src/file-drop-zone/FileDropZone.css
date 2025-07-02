@@ -18,8 +18,8 @@
 }
 
 .saltFileDropZone-active {
-  background: var(--salt-target-background-hover);
-  border: var(--salt-size-fixed-200) var(--salt-target-borderStyle-hover) var(--salt-target-borderColor-hover);
+  background: var(--salt-container-target-background);
+  border: var(--salt-size-fixed-200) var(--salt-target-borderStyle-hover) var(--salt-container-target-borderColor);
 }
 
 /* Styles applied if `status="error" */
