@@ -41,6 +41,7 @@
   --salt-palette-interact-secondary-foreground-activeDisabled: var(--salt-color-white-fade-foreground);
   --salt-palette-interact-secondary-background-activeDisabled: var(--salt-color-gray-200-fade-background);
   --salt-palette-interact-background: transparent;
+  --salt-palette-interact-background-blurSelected: var(--salt-color-gray-30);
   --salt-palette-interact-background-disabled: transparent;
   --salt-palette-interact-border-none: transparent;
   --salt-palette-interact-secondary-background: transparent;
@@ -133,6 +134,7 @@
   --salt-palette-interact-secondary-foreground-activeDisabled: var(--salt-color-gray-900-fade-foreground);
   --salt-palette-interact-secondary-background-activeDisabled: var(--salt-color-gray-70-fade-background);
   --salt-palette-interact-background: transparent;
+  --salt-palette-interact-background-blurSelected: var(--salt-color-gray-600);
   --salt-palette-interact-background-disabled: transparent;
   --salt-palette-interact-border-none: transparent;
   --salt-palette-interact-secondary-background: transparent;
