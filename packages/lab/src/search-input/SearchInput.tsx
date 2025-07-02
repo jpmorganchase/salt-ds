@@ -1,12 +1,14 @@
 import { Button, useControlled, useForkRef, useIcon } from "@salt-ds/core";
 import { SearchIcon } from "@salt-ds/icons";
+import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
   type ChangeEvent,
   type ComponentType,
+  forwardRef,
   type KeyboardEvent,
   type SyntheticEvent,
-  forwardRef,
   useRef,
 } from "react";
 import {
@@ -14,9 +16,6 @@ import {
   type InputLegacyProps as InputProps,
   StaticInputAdornment,
 } from "../input-legacy";
-
-import { useComponentCssInjection } from "@salt-ds/styles";
-import { useWindow } from "@salt-ds/window";
 
 import searchInputCss from "./SearchInput.css";
 

@@ -4,8 +4,8 @@ import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
   type ComponentPropsWithoutRef,
-  type PropsWithChildren,
   forwardRef,
+  type PropsWithChildren,
   useEffect,
   useState,
 } from "react";

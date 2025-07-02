@@ -5,9 +5,9 @@ import {
   useRef,
 } from "react";
 import {
+  closestListItemIndex,
   type ListHandlers,
   type SelectionStrategy,
-  closestListItemIndex,
   useCollapsibleGroups,
   useKeyboardNavigation,
   useSelection,

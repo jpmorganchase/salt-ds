@@ -1,14 +1,14 @@
 import {
   Button,
-  StatusAdornment,
-  type ValidationStatus,
   capitalize,
   makePrefixer,
+  StatusAdornment,
   useControlled,
   useForkRef,
   useFormFieldProps,
   useIcon,
   useId,
+  type ValidationStatus,
 } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
@@ -17,17 +17,18 @@ import {
   type ChangeEvent,
   type ComponentPropsWithoutRef,
   type FocusEvent,
+  forwardRef,
   type InputHTMLAttributes,
   type KeyboardEvent,
   type ReactNode,
   type Ref,
   type SyntheticEvent,
-  forwardRef,
   useEffect,
   useLayoutEffect,
   useRef,
   useState,
 } from "react";
+import useCaret from "./internal/useCaret";
 import {
   clampToRange,
   getNumberPrecision,
@@ -36,9 +37,7 @@ import {
   sanitizeInput,
   toFloat,
 } from "./internal/utils";
-
 import numberInputCss from "./NumberInput.css";
-import useCaret from "./internal/useCaret";
 import { useNumberInput } from "./useNumberInput";
 
 const withBaseName = makePrefixer("saltNumberInput");

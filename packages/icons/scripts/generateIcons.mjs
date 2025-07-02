@@ -11,7 +11,9 @@ const biome = await Biome.create({
   distribution: Distribution.NODE,
 });
 
-biome.applyConfiguration({
+const project = biome.openProject();
+
+biome.applyConfiguration(project.projectKey, {
   organizeImports: {
     enabled: true,
   },
@@ -105,6 +107,7 @@ const generateCssAsBg = ({ basePath, cssOutputPath, fileArg }) => {
   height:max(var(--salt-size-icon, 12px), 12px);width:max(var(--salt-size-icon, 12px), 12px);}\n`;
 
   const formattedResult = biome.formatContent(
+    project.projectKey,
     CSS_GENERATED_WARNING_COMMENT.concat(ALL_CSS, iconCss),
     { filePath: cssOutputPath },
   );
@@ -255,6 +258,7 @@ const generateIconComponents = async ({
       });
 
       const formattedResult = biome.formatContent(
+        project.projectKey,
         GENERATED_WARNING_COMMENT.concat(fileContents),
         { filePath: newFilePath },
       );
@@ -282,7 +286,7 @@ const generateIndex = async ({ icons, componentsPath }) => {
 
   const outputFile = path.join(componentsPath, "index.ts");
 
-  const formattedResult = biome.formatContent(joinedText, {
+  const formattedResult = biome.formatContent(project.projectKey, joinedText, {
     filePath: outputFile,
   });
 
@@ -313,7 +317,7 @@ const generateIconAll = async ({ icons, allPath }) => {
     exportStatements,
   ].join("\n");
 
-  const formattedResult = biome.formatContent(joinedText, {
+  const formattedResult = biome.formatContent(project.projectKey, joinedText, {
     filePath: allPath,
   });
 
@@ -344,7 +348,7 @@ const generateIconAllSite = async ({ icons, siteAllPath }) => {
     exportStatements,
   ].join("\n");
 
-  const formattedResult = biome.formatContent(joinedText, {
+  const formattedResult = biome.formatContent(project.projectKey, joinedText, {
     filePath: siteAllPath,
   });
 

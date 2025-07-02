@@ -1,4 +1,4 @@
-import { Text, type TextProps, makePrefixer } from "@salt-ds/core";
+import { makePrefixer, Text, type TextProps } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";

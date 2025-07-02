@@ -3,18 +3,17 @@ import {
   useForkRef,
   useIsomorphicLayoutEffect,
 } from "@salt-ds/core";
-import { forwardRef, useCallback, useEffect, useRef, useState } from "react";
-import ReactDOM from "react-dom";
-import {
-  Window as SaltWindow,
-  type WindowProps,
-  isDesktop,
-} from "./WindowContext";
-
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
+import { forwardRef, useCallback, useEffect, useRef, useState } from "react";
+import ReactDOM from "react-dom";
+import { useWindowParentContext, WindowParentContext } from "./desktop-utils";
 import electronWindowCss from "./ElectronWindow.css";
-import { WindowParentContext, useWindowParentContext } from "./desktop-utils";
+import {
+  isDesktop,
+  Window as SaltWindow,
+  type WindowProps,
+} from "./WindowContext";
 
 const Window = forwardRef<HTMLDivElement, WindowProps>(function ElectronWindow(
   { className, children, id = "dialog", open = true, style = {}, ...rest },

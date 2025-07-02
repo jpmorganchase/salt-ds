@@ -6,9 +6,9 @@ import {
   useState,
 } from "react";
 import {
-  WidthOnly,
   type orientationType,
   useResizeObserver,
+  WidthOnly,
 } from "../responsive";
 
 type activationIndicatorStyles = {

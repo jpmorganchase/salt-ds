@@ -2,11 +2,11 @@ import {
   FlexItem,
   FormField,
   FormFieldLabel,
+  type flexItemAlignment,
+  FLEX_ITEM_ALIGNMENTS as flexItemAlignments,
   RadioButton,
   RadioButtonGroup,
   StackLayout,
-  type flexItemAlignment,
-  FLEX_ITEM_ALIGNMENTS as flexItemAlignments,
 } from "@salt-ds/core";
 import clsx from "clsx";
 import { type ChangeEventHandler, type ReactElement, useState } from "react";

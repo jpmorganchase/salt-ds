@@ -2,10 +2,10 @@ import { Button, type ButtonProps, makePrefixer } from "@salt-ds/core";
 import { clsx } from "clsx";
 import {
   type ComponentPropsWithoutRef,
+  forwardRef,
   type MouseEventHandler,
   type Ref,
   type SyntheticEvent,
-  forwardRef,
   useEffect,
 } from "react";
 import type { DateRangeSelection, SingleDateSelection } from "../calendar";
@@ -117,10 +117,14 @@ export const DatePickerActions = forwardRef(function DatePickerRangeInput<
   // biome-ignore lint/suspicious/noExplicitAny: state and helpers coerced based on selectionVariant
   let stateAndHelpers: any;
   if (selectionVariant === "range") {
+    // TODO
+    // biome-ignore lint/correctness/useHookAtTopLevel: This should be fixed.
     stateAndHelpers = useDatePickerContext({
       selectionVariant: "range",
     }) as RangeDatePickerState<TDate>;
   } else {
+    // TODO
+    // biome-ignore lint/correctness/useHookAtTopLevel: This should be fixed.
     stateAndHelpers = useDatePickerContext({
       selectionVariant: "single",
     }) as SingleDatePickerState<TDate>;

@@ -1,10 +1,10 @@
 import { useControlled, useForkRef, useIsFocusVisible } from "@salt-ds/core";
 import {
   type FocusEventHandler,
+  forwardRef,
   type KeyboardEventHandler,
   type MouseEvent,
   type MouseEventHandler,
-  forwardRef,
   useState,
 } from "react";
 import {

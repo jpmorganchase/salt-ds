@@ -3,11 +3,10 @@ import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 
 import type { MouseEventHandler } from "react";
+import checkboxCellCss from "./CheckboxCell.css";
 import { useCursorContext } from "./CursorContext";
 import type { GridCellValueProps } from "./GridColumn";
 import { useSelectionContext } from "./SelectionContext";
-
-import checkboxCellCss from "./CheckboxCell.css";
 
 export function RowSelectionCheckboxCellValue<T>(props: GridCellValueProps<T>) {
   const { row, column, isFocused } = props;

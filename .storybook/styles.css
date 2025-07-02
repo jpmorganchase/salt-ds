@@ -42,9 +42,7 @@
   font-size: var(--salt-text-fontSize);
   line-height: var(--salt-text-lineHeight);
   font-family: var(--salt-text-code-fontFamily);
-  font-size: var(--salt-text-fontSize);
   letter-spacing: var(--salt-text-letterSpacing);
-  line-height: var(--salt-text-lineHeight);
   padding: 0;
 }
 
@@ -59,7 +57,7 @@
   background: var(--salt-color-gray-20);
 }
 
-/* 
+/*
  * This is to make sure Salt components will work ok with UITK
  * https://github.com/jpmorganchase/salt-ds/issues/2671
  */

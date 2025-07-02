@@ -2,11 +2,11 @@ import {
   BorderItem,
   BorderLayout,
   type BorderPosition,
+  BORDER_POSITION as borderPosition,
   FormField,
   FormFieldLabel,
   RadioButton,
   RadioButtonGroup,
-  BORDER_POSITION as borderPosition,
 } from "@salt-ds/core";
 import clsx from "clsx";
 import { type ChangeEventHandler, type ReactElement, useState } from "react";

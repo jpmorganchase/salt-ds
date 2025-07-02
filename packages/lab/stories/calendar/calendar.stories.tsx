@@ -17,9 +17,9 @@ import {
   type CalendarProps,
   type CalendarRangeProps,
   type CalendarSingleProps,
+  type renderCalendarDayProps,
   type UseCalendarSelectionRangeProps,
   type UseCalendarSelectionSingleProps,
-  type renderCalendarDayProps,
   useLocalization,
 } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react-vite";
@@ -29,8 +29,8 @@ import {
   type SyntheticEvent,
   useCallback,
   useEffect,
+  useState,
 } from "react";
-import { useState } from "react";
 import "./calendar.stories.css";
 
 import "dayjs/locale/es"; // Import the Spanish locale

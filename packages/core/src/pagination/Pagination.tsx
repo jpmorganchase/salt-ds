@@ -1,8 +1,10 @@
+import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
+  forwardRef,
   type HTMLAttributes,
   type SyntheticEvent,
-  forwardRef,
   useCallback,
   useEffect,
   useMemo,
@@ -10,12 +12,8 @@ import {
 } from "react";
 import { useAriaAnnouncer } from "../aria-announcer";
 import { makePrefixer, useControlled } from "../utils";
-import { type PaginationContext, paginationContext } from "./PaginationContext";
-
-import { useComponentCssInjection } from "@salt-ds/styles";
-import { useWindow } from "@salt-ds/window";
-
 import paginationCss from "./Pagination.css";
+import { type PaginationContext, paginationContext } from "./PaginationContext";
 
 const withBaseName = makePrefixer("saltPagination");
 

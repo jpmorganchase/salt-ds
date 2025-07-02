@@ -2,7 +2,7 @@ import { useControlled } from "@salt-ds/core";
 import { type KeyboardEvent, useCallback, useRef, useState } from "react";
 
 import { useFormFieldLegacyProps } from "../form-field-context-legacy";
-import { WidthOnly, type measurements, useResizeObserver } from "../responsive";
+import { type measurements, useResizeObserver, WidthOnly } from "../responsive";
 import type { DropdownHookProps, DropdownHookResult } from "./dropdownTypes";
 import { useClickAway } from "./useClickAway";
 

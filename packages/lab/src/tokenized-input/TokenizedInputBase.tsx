@@ -17,6 +17,7 @@ import {
   type FocusEvent,
   type FocusEventHandler,
   type ForwardedRef,
+  forwardRef,
   type HTMLAttributes,
   type KeyboardEvent,
   type KeyboardEventHandler,
@@ -24,7 +25,6 @@ import {
   type ReactEventHandler,
   type Ref,
   type SyntheticEvent,
-  forwardRef,
   useCallback,
   useRef,
   useState,
@@ -33,18 +33,17 @@ import {
   InputLegacy as Input,
   type InputLegacyProps as InputProps,
 } from "../input-legacy";
-import { InputPill } from "./internal/InputPill";
-import { InputRuler } from "./internal/InputRuler";
 import { calcFirstHiddenIndex } from "./internal/calcFirstHiddenIndex";
 import { defaultItemToString } from "./internal/defaultItemToString";
+import { InputPill } from "./internal/InputPill";
+import { InputRuler } from "./internal/InputRuler";
 import { useResizeObserver } from "./internal/useResizeObserver";
 import { useWidth } from "./internal/useWidth";
+import tokenizedInputCss from "./TokenizedInput.css";
 import type {
   TokenizedInputHelpers,
   TokenizedInputState,
 } from "./useTokenizedInput";
-
-import tokenizedInputCss from "./TokenizedInput.css";
 
 export type RemoveItemHandler = (itemIndex: number) => void;
 export type ItemToString<Item> = (item: Item) => string;

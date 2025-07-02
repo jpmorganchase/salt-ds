@@ -13,19 +13,19 @@ import {
   ArrowUp,
   End,
   Home,
-  PageDown,
-  PageUp,
   isCharacterKey,
   isNavigationKey,
+  PageDown,
+  PageUp,
 } from "./keyUtils";
 import type {
   NavigationHookProps,
   NavigationHookResult,
 } from "./navigationTypes";
 import {
-  type SelectionStrategy,
   getFirstSelectedItem,
   hasSelection,
+  type SelectionStrategy,
 } from "./selectionTypes";
 
 export const LIST_FOCUS_VISIBLE = -2;

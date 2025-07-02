@@ -5,10 +5,10 @@ import {
   type ComponentPropsWithoutRef,
   type FocusEvent,
   type ForwardedRef,
+  forwardRef,
   type KeyboardEvent,
   type ReactNode,
   type Ref,
-  forwardRef,
   useRef,
 } from "react";
 import {
@@ -16,8 +16,8 @@ import {
   type OptionValue,
 } from "../list-control/ListControlContext";
 import {
-  type ListControlProps,
   defaultValueToString,
+  type ListControlProps,
   useListControl,
 } from "../list-control/ListControlState";
 import { makePrefixer, useForkRef } from "../utils";
@@ -147,7 +147,7 @@ export const ListBox = forwardRef(function ListBox<Item>(
 
     let newActive:
       | { data: OptionValue<Item>; element: HTMLElement }
-      | undefined = undefined;
+      | undefined;
     switch (event.key) {
       case "ArrowDown":
         newActive = getOptionAfter(activeOption) ?? getLastOption();
@@ -216,7 +216,7 @@ export const ListBox = forwardRef(function ListBox<Item>(
 
     // We check the active index because the active item may have been removed
     const activeIndex = activeState ? getIndexOfOption(activeState) : -1;
-    let newActive = undefined;
+    let newActive: ReturnType<typeof getOptionAtIndex>;
 
     // If the active item is still in the list, we don't need to do anything
     if (activeIndex > 0) {

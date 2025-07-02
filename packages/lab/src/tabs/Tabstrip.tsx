@@ -1,30 +1,31 @@
 import {
   Button,
-  Tooltip,
   makePrefixer,
+  Tooltip,
   useIcon,
   useIdMemo,
   useIsomorphicLayoutEffect,
 } from "@salt-ds/core";
 import { AddIcon } from "@salt-ds/icons";
+import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
   Children,
+  cloneElement,
+  createElement,
   type ForwardedRef,
+  forwardRef,
+  isValidElement,
   type KeyboardEvent,
   type MouseEvent,
   type RefObject,
-  cloneElement,
-  createElement,
-  forwardRef,
-  isValidElement,
   useCallback,
   useImperativeHandle,
   useRef,
   useState,
 } from "react";
 import type { SelectionChangeHandler } from "../common-hooks";
-
 import { Dropdown } from "../dropdown";
 import {
   type InjectedSourceItem,
@@ -36,20 +37,16 @@ import { Tab } from "./Tab";
 import { TabActivationIndicator } from "./TabActivationIndicator";
 import type {
   FocusAPI,
+  responsiveDataAttributes,
   TabDescriptor,
   TabElement,
   TabProps,
   TabsSource,
   TabstripProps,
-  responsiveDataAttributes,
 } from "./TabsTypes";
-import { useTabstrip } from "./useTabstrip";
-
-import { useComponentCssInjection } from "@salt-ds/styles";
-import { useWindow } from "@salt-ds/window";
-
 import tabstripCss from "./Tabstrip.css";
 import themeTabstripCss from "./ThemeTabstrip.css";
+import { useTabstrip } from "./useTabstrip";
 
 const withBaseName = makePrefixer("saltTabstrip");
 

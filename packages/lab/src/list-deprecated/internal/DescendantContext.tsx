@@ -1,8 +1,8 @@
 import { useIsomorphicLayoutEffect } from "@salt-ds/core";
 import {
+  createContext,
   type MutableRefObject,
   type ReactNode,
-  createContext,
   useContext,
   useRef,
   useState,

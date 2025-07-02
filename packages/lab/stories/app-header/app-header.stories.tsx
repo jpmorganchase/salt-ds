@@ -15,10 +15,9 @@ import {
   type TabstripProps,
   Tooltray /*, Toolbar */,
 } from "@salt-ds/lab";
+import PlaceholderLogo from "docs/assets/placeholder.svg";
 import { useState } from "react";
 import { AdjustableFlexbox as Flexbox } from "../components";
-
-import PlaceholderLogo from "docs/assets/placeholder.svg";
 
 import "docs/story.css";
 import "./Flexbox.css";

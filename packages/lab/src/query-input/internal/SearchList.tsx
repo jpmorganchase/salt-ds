@@ -1,14 +1,11 @@
 import { makePrefixer } from "@salt-ds/core";
-import { type Dispatch, type SetStateAction, useCallback } from "react";
-import { List, ListItem, ListItemGroup } from "../../list";
-
-import type { SelectionChangeHandler } from "../../common-hooks";
-
-import type { QueryInputCategory, QueryInputItem } from "../queryInputTypes";
-
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
+import { type Dispatch, type SetStateAction, useCallback } from "react";
+import type { SelectionChangeHandler } from "../../common-hooks";
+import { List, ListItem, ListItemGroup } from "../../list";
 import queryInputCss from "../QueryInput.css";
+import type { QueryInputCategory, QueryInputItem } from "../queryInputTypes";
 
 const withBaseName = makePrefixer("saltQueryInputSearchList");
 
