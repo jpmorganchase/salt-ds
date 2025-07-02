@@ -1,0 +1,14 @@
+.saltCarouselTabList {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  align-items: center;
+  gap: var(--salt-spacing-200);
+}
+
+.saltCarouselTabList:focus-visible {
+  outline-style: var(--salt-focused-outlineStyle);
+  outline-width: var(--salt-focused-outlineWidth);
+  outline-offset: var(--salt-focused-outlineOffset);
+  outline-color: var(--salt-focused-outlineColor);
+}

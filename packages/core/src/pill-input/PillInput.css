@@ -29,7 +29,7 @@
 
 .saltPillInput:hover {
   background: var(--saltPillInput-background-hover, var(--pillInput-background-hover));
-  cursor: var(--salt-cursor-hover);
+  cursor: var(--salt-cursor-text);
 }
 
 /* Style applied if `bordered={true}` */
@@ -175,7 +175,7 @@
 .saltPillInput-focused,
 .saltPillInput-focused:hover {
   background: var(--saltPillInput-background-active, var(--pillInput-background-active));
-  cursor: var(--salt-cursor-active);
+  cursor: var(--salt-cursor-text);
   outline: var(--saltPillInput-outline, var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--pillInput-outlineColor));
 }
 

@@ -8,6 +8,48 @@ data:
   $ref: ./#/data
 ---
 
+## How to build
+
+Carousel is a composable pattern of Salt components that uses the [Embla](https://www.embla-carousel.com/) API.
+
+A basic carousel navigates through slides individually, one at a time.
+
+<LivePreview componentName="carousel" exampleName="Basic" />
+
+<br />
+Adding a title serves as a heading for the carousel group.
+
+<LivePreview componentName="carousel" exampleName="Title" />
+<br />
+`CarouselTabList` is an aria `tablist` providing support for screen readers to
+announce the slides as the associated`tab`. To enhance accessibility, ensure
+that each slide has a unique id. This will facilitate the association between
+the `tablist` and `tab`, thereby improving screen reader functionality.
+
+A `tablist` provides a visual indicator of the current slide and includes clickable elements for direct navigation to specific slides, along with keyboard navigation controls. Ensure the tablist is positioned at the top or bottom of the carousel, alongside other controls like `CarouselNextButton` and `CarouselPreviousButton`.
+
+<LivePreview componentName="carousel" exampleName="TabList" />
+
+<br />
+Additional actions, such as[`Link`](../link), can be incorporated into a
+carousel slide, but avoid embedding other clickable actions during animation to
+prevent accidental clicks while slides are transitioning.
+
+`CarouselCard` also supports actions, through the `actions` prop.
+
+Content within slides can be tabbable but ensure that off-screen content is not tabbable, as this can lead to a poor user experience.
+This example ensures that CSS is applied to the off-screen content, preventing it from being tabbable.
+
+<LivePreview componentName="carousel" exampleName="CardActions" />
+
+## Configuration and control of Embla
+
+When composed with other components the visible slide can be controlled programmatically using the `embla` API.
+
+Refer to the [Embla documentation](https://www.embla-carousel.com/) for the full API.
+
+<LivePreview componentName="carousel" exampleName="ControlledCarousel" />
+
 ## Using the component
 
 ### When to use
@@ -23,39 +65,103 @@ data:
 
 ### Best practices
 
+- Always provide navigation controls for the carousel, alongside a visual indicator of the current slide.
 - Include 5 or fewer slides. The most important slide always comes first.
-- Indicate where the user is within the progression.
-- On desktop, display prev/next buttons above the carousel.
-- On mobile, display prev/next buttons below the carousel.
-- Ensure that important content is also placed on another page of your site.
+- Not all content is visible within a carousel until selected, ensure that important content is also placed on another page of your site.
+- To provide arrow key navigation add a tablist.
 
 ## Import
 
-To import `Carousel` and related components from the lab Salt package, use:
+To import `Carousel` and related components from the `@salt-ds/embla-carousel package`:
+
+1. Install the required package.
+
+```bash
+npm install @salt-ds/embla-carousel
+```
+
+or
+
+```bash
+yarn add @salt-ds/embla-carousel
+```
+
+2. Import the components, required.
 
 ```js
 import {
   Carousel,
-  CarouselControls,
-  CarouselSlider,
-  CarouselSlide,
-} from "@salt-ds/lab";
+  CarouselCard,
+  CarouselSlides,
+  CarouselNextButton,
+  CarouselPreviousButton,
+  CarouselTabList,
+  CarouselAutoplayIndicator,
+  CarouselAnnoucementPlugin,
+} from "@salt-ds/embla-carousel ";
 ```
 
 ## Props
 
 ### `Carousel`
 
-<PropsTable packageName="lab" componentName="Carousel" />
+`Carousel` is a context that wraps the [Embla](https://www.embla-carousel.com/) API.
 
-### `CarouselControls`
+<PropsTable packageName="embla-carousel" componentName="Carousel" />
 
-<PropsTable packageName="lab" componentName="CarouselControls" />
+### `CarouselTabList`
 
-### `CarouselSlider`
+`CarouselTabList` is a visual progress indicator for the carousel, and allows users to navigate to a specific slide.
 
-<PropsTable packageName="lab" componentName="CarouselSlider" />
+<PropsTable packageName="embla-carousel" componentName="CarouselTabList" />
 
-### `CarouselSlide`
+### `CarouselTab`
 
-<PropsTable packageName="lab" componentName="CarouselSlide" />
+`CarouselTab` is the tab button used by the `CarouselTabList` to navigate to a specific slide.
+
+<PropsTable packageName="embla-carousel" componentName="CarouselTab" />
+
+### `CarouselSlides`
+
+`CarouselSlides` provides a viewport for the slide content and keyboard navigation.
+
+<PropsTable packageName="embla-carousel" componentName="CarouselSlides" />
+
+### `CarouselPreviousButton`
+
+`CarouselPreviousButton` is a composable button that navigates the current slides to the previous slide.
+
+<PropsTable
+  packageName="embla-carousel"
+  componentName="CarouselPreviousButton"
+/>
+
+### `CarouselNextButton`
+
+`CarouselNextButton` is a composable button that navigates the current slides to the next slide.
+
+<PropsTable packageName="embla-carousel" componentName="CarouselNextButton" />
+
+### `CarouselProgressLabel`
+
+`CarouselProgressLabel` is a composable label that shows a text description of the carousel's position.
+
+<PropsTable
+  packageName="embla-carousel"
+  componentName="CarouselProgressLabel"
+/>
+
+### `CarouselAutoplayIndicator`
+
+`CarouselAutoplayIndicator` provides a countdown view of the carousel's position during autoplay.
+
+<PropsTable
+  packageName="embla-carousel"
+  componentName="CarouselAutoplayIndicator"
+/>
+
+### `CarouselCard`
+
+`CarouselCard` provides a convenient slide component, that creates a common card pattern.
+
+<PropsTable packageName="embla-carousel" componentName="CarouselCard" />
