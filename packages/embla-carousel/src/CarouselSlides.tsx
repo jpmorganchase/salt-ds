@@ -43,11 +43,11 @@ export const CarouselSlides = forwardRef<HTMLDivElement, CarouselSlidesProps>(
         const slideIndexInView = emblaApi?.selectedScrollSnap() ?? 0;
         const snappedSlide = emblaApi.slideNodes()[slideIndexInView];
         if (snappedSlide) {
-          const focusableElements = snappedSlide.querySelectorAll(
+          const focusableElements = snappedSlide.querySelectorAll<HTMLElement>(
             'a, button, input, textarea, select, [tabindex]:not([tabindex="-1"])',
           );
           if (focusableElements.length > 0) {
-            (focusableElements[0] as HTMLElement).focus();
+            focusableElements[0].focus();
           }
         }
         usingArrowNavigation.current = false;

@@ -16,22 +16,7 @@ declare module "embla-carousel" {
  * Type definition for the parameters of the getSlideLabel function.
  * @returns A string that describes the slide, including its index and total count.
  */
-export type GetSlideLabelProps = (
-  /**
-   * The HTML element representing the slide.
-   */
-  slideElement: HTMLElement,
-
-  /**
-   * The index of the slide within the carousel.
-   */
-  slideIndex: number,
-
-  /**
-   * The total number of slides in the carousel.
-   */
-  slideCount: number,
-) => string;
+export type GetSlideLabelProps = (emblaApi: EmblaCarouselType) => string;
 
 /** * Generates a label for a carousel slide based on ARIA attributes.
  * This function retrieves the slide's ARIA label or text content and formats it into a descriptive string.
@@ -40,23 +25,24 @@ export type GetSlideLabelProps = (
  * @param slideCount
  * @returns A string description of the slide, including its position and ARIA label or text content.
  */
-export const getSlideLabel: GetSlideLabelProps = (
-  slideElement,
-  slideIndex,
-  slideCount,
-): string => {
+export const getSlideLabel: GetSlideLabelProps = (emblaApi): string => {
+  const slideCount = emblaApi?.slideNodes().length ?? 0;
+  const slideIndexInView = emblaApi?.slidesInView()?.[0] ?? 0;
+  const slideElement = emblaApi?.slideNodes()[slideIndexInView];
+
   let description = slideElement?.getAttribute("aria-label");
   if (!description) {
     const labelledById = slideElement?.getAttribute("aria-labelledby");
+    const { ownerDocument } = emblaApi.internalEngine();
     if (labelledById) {
-      const labelledByElement = document.getElementById(labelledById);
+      const labelledByElement = ownerDocument.getElementById(labelledById);
       description =
         labelledByElement?.textContent || "No description available";
     } else {
       description = "No description available";
     }
   }
-  return `slide ${slideIndex + 1} of ${slideCount}. ${description}`;
+  return `slide ${slideIndexInView + 1} of ${slideCount}. ${description}`;
 };
 
 // biome-ignore lint/complexity/noBannedTypes: Replicated from embla docs/code
@@ -76,15 +62,7 @@ export function CarouselAnnouncement(
 
   const handleSettle = useCallback(
     (emblaApi: EmblaCarouselType) => {
-      const slideCount = emblaApi?.slideNodes().length ?? 0;
-      const slideIndexInView = emblaApi?.slidesInView()?.[0] ?? 0;
-      const slideElement = emblaApi?.slideNodes()[slideIndexInView];
-
-      const slideLabel = getSlideLabel(
-        slideElement,
-        slideIndexInView,
-        slideCount,
-      );
+      const slideLabel = getSlideLabel(emblaApi);
       announce(slideLabel);
     },
     [announce],
