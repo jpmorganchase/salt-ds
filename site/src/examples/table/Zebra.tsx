@@ -4,9 +4,9 @@ import {
   TFoot,
   TH,
   THead,
-  THeadVariantValues,
   TR,
   Table,
+  TableVariantValues,
 } from "@salt-ds/lab";
 import type { ReactElement } from "react";
 import { StackLayout } from "src/components";
@@ -14,7 +14,7 @@ import { StackLayout } from "src/components";
 export const Zebra = (): ReactElement => {
   return (
     <StackLayout>
-      {THeadVariantValues.map((zebra) => {
+      {TableVariantValues.map((zebra) => {
         return (
           <Table key={`${zebra}-table`} zebra={zebra}>
             <THead>

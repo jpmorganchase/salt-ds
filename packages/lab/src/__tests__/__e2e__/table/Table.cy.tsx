@@ -3,7 +3,6 @@ import { composeStories } from "@storybook/react-vite";
 import { checkAccessibility } from "../../../../../../cypress/tests/checkAccessibility";
 
 const composedStories = composeStories(tableStories);
-// biome-ignore lint/suspicious/noShadowRestrictedNames: <explanation>
 const { Primary, Secondary, Tertiary } = composedStories;
 
 describe("GIVEN a Table", () => {
@@ -25,9 +24,9 @@ describe("GIVEN a Table", () => {
 
   describe("WHEN variant=secondary", () => {
     it("THEN class should be applied to the banner", () => {
-      cy.mount(<Secondary data-testid="tableSecondary" />);
+      cy.mount(<Secondary />);
 
-      cy.findByTestId("tableSecondary").should(
+      cy.findByRole("table").should(
         "have.class",
         "saltTable-secondary",
       );
@@ -36,9 +35,9 @@ describe("GIVEN a Table", () => {
 
   describe("WHEN variant=tertiary", () => {
     it("THEN class should be applied to the banner", () => {
-      cy.mount(<Tertiary data-testid="tableTertiary" />);
+      cy.mount(<Tertiary />);
 
-      cy.findByTestId("tableTertiary").should(
+      cy.findByRole("table").should(
         "have.class",
         "saltTable-tertiary",
       );

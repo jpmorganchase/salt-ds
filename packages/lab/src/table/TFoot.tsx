@@ -7,12 +7,11 @@ import { withTableBaseName } from "./Table";
 import tableCss from "./Table.css";
 
 export const TFootVariantValues = ["primary", "secondary", "tertiary"] as const;
-export type TFootVariant = (typeof TFootVariantValues)[number];
 
 export interface TFootProps extends ComponentPropsWithoutRef<"tfoot"> {
   /**
    * If footer is positioned with sticky styling.
-   * @default undefined
+   * @default false
    */
   sticky?: boolean;
   /**
@@ -25,12 +24,12 @@ export interface TFootProps extends ComponentPropsWithoutRef<"tfoot"> {
    * If undefined, will match variant of parent Table component's variant.
    * @default undefined
    */
-  variant?: TFootVariant;
+  variant?: "primary" | "secondary" | "tertiary" ;
 }
 
 export const TFoot = forwardRef<HTMLTableSectionElement, TFootProps>(
   function TFoot(
-    { children, className, sticky, variant, divider = "tertiary", ...rest },
+    { children, className, sticky = false, variant, divider = "tertiary", ...rest },
     ref,
   ) {
     const targetWindow = useWindow();
