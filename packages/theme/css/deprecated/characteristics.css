@@ -172,6 +172,11 @@
   --salt-navigable-textDecoration-hover: var(--salt-typography-textDecoration-none);
   --salt-navigable-textDecoration-selected: var(--salt-typography-textDecoration-underline);
 
+  --salt-navigable-fontWeight: var(--salt-typography-fontWeight-regular);
+  --salt-navigable-fontWeight-hover: var(--salt-typography-fontWeight-regular);
+  --salt-navigable-fontWeight-active: var(--salt-typography-fontWeight-semiBold);
+  --salt-navigable-fontWeight-edit: var(--salt-typography-fontWeight-regular);
+
   /* Accent */
   --salt-accent-fontWeight: var(--salt-typography-fontWeight-semiBold); /* Use --salt-text-notation-fontWeight */
   --salt-accent-foreground-disabled: var(--salt-palette-accent-foreground-disabled);
