@@ -10,9 +10,13 @@ data:
 
 ## Default
 
-By default, `Tooltip` displays a message and an arrow pointing to the relevant UI element. Its default placement is "right," and appears after 300 milliseconds.
+By default, `Tooltip` displays a message and an arrow pointing to the relevant UI element. Its default placement is "right," and appears after 300 milliseconds. Use the `content` prop to pass a simple string to display in the tooltip.
 
-Use the `content` prop to pass a simple string to display in the tooltip.
+Tooltips are triggered by both focus and hover events and remain visible and persistent until:
+
+- Hover or focus is removed from the trigger element
+- The user manually dismisses it (e.g.`Esc` key)
+- The content is no longer valid
 
 <LivePreview componentName="tooltip" exampleName="Default" />
 
