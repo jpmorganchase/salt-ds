@@ -5,6 +5,7 @@ import {
   FlowLayout,
   FormField,
   FormFieldHelperText,
+  FormFieldLabel,
   type FormFieldLabelPlacement,
   FormFieldHelperText as FormHelperText,
   FormFieldLabel as FormLabel,
@@ -18,7 +19,6 @@ import {
   Switch,
   Text,
   Tooltip,
-  FormFieldLabel,
 } from "@salt-ds/core";
 import { InfoIcon, NoteIcon } from "@salt-ds/icons";
 import type { Meta, StoryFn } from "@storybook/react-vite";
