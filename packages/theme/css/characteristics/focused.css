@@ -1,6 +1,6 @@
 .salt-theme {
   --salt-focused-outlineColor: var(--salt-palette-interact-outline);
-  --salt-focused-outlineStyle: dotted;
+  --salt-focused-outlineStyle: var(--salt-borderStyle-dotted);
   --salt-focused-outlineWidth: var(--salt-size-fixed-200);
   --salt-focused-outlineInset: 0;
   --salt-focused-outlineOffset: 0;
