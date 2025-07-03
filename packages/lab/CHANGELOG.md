@@ -1,5 +1,11 @@
 # @salt-ds/lab
 
+## 1.0.0-alpha.72
+
+### Patch Changes
+
+- c86ee15: Fixed CascadingMenu and refactored the styles to not use any deprecated tokens.
+
 ## 1.0.0-alpha.71
 
 ### Minor Changes
