@@ -10,12 +10,11 @@ function createPageTest(ignorePages, pageExtensions) {
     !path.basename(file).startsWith(".");
 }
 
+const statusLabel = "Release Candidate";
+const RCPackages = ["@salt-ds/lab", "@salt-ds/embla-carousel"];
+
 const LabsComponentPlugin = {
-  async $afterSource(
-    pages,
-    { ignorePages, pageExtensions },
-    { labPackageName, statusLabel },
-  ) {
+  async $afterSource(pages, { ignorePages, pageExtensions }) {
     const isNonHiddenPage = createPageTest(ignorePages, pageExtensions);
 
     for (const page of pages) {
@@ -23,7 +22,7 @@ const LabsComponentPlugin = {
         continue;
       }
 
-      if (page.data?.package?.name === labPackageName) {
+      if (RCPackages.includes(page.data?.package?.name)) {
         page.data.status = statusLabel;
         page.data.groupStatus = statusLabel.split(" ").reduce((acc, word) => {
           return acc + word[0].toUpperCase();
