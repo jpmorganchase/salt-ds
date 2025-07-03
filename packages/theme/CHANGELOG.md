@@ -1,5 +1,19 @@
 # @salt-ds/theme
 
+## 1.31.0
+
+### Minor Changes
+
+- c86ee15: Deprecated `--salt-selectable-background-blurSelected` and `--salt-palette-interact-background-blurSelected`.
+- 91f0e09: Deprecated navigable font weight tokens.
+
+  | Name                                 | Replacement                     |
+  | ------------------------------------ | ------------------------------- |
+  | `--salt-navigable-fontWeight`        | `--salt-text-fontWeight`        |
+  | `--salt-navigable-fontWeight-hover`  | `--salt-text-fontWeight`        |
+  | `--salt-navigable-fontWeight-active` | `--salt-text-fontWeight-strong` |
+  | `--salt-navigable-fontWeight-edit`   | `--salt-text-fontWeight`        |
+
 ## 1.30.0
 
 ### Minor Changes

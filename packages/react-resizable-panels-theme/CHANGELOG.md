@@ -1,5 +1,13 @@
 # @salt-ds/react-resizable-panels-theme
 
+## 1.0.2
+
+### Patch Changes
+
+- Updated dependencies [c86ee15]
+- Updated dependencies [91f0e09]
+  - @salt-ds/theme@1.31.0
+
 ## 1.0.1
 
 ### Patch Changes
