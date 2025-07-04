@@ -11,6 +11,7 @@ import {
   CalendarGrid,
   CalendarNavigation,
   CalendarWeekHeader,
+  type DateRangeSelection,
 } from "@salt-ds/lab";
 
 import * as dateInputStories from "@stories/calendar/calendar.stories";
@@ -29,7 +30,7 @@ const adapterMoment = new AdapterMoment();
 
 const adapters = [adapterDateFns, adapterDayjs, adapterLuxon, adapterMoment];
 
-describe("GIVEN a Calendar with range selection", () => {
+describe('GIVEN a Calendar with `selectionVariant="range"', () => {
   adapters.forEach((adapter: SaltDateAdapter<DateFrameworkType>) => {
     describe(`Tests with ${adapter.lib}`, () => {
       beforeEach(() => {
@@ -447,6 +448,258 @@ describe("GIVEN a Calendar with range selection", () => {
             );
           });
         });
+      });
+    });
+  });
+});
+
+describe('GIVEN a Calendar with `selectionVariant="range" and `multiselect`', () => {
+  adapters.forEach((adapter: SaltDateAdapter<DateFrameworkType>) => {
+    describe(`Tests with ${adapter.lib}`, () => {
+      beforeEach(() => {
+        const today = new Date(2024, 4, 6);
+        cy.clock(today, ["Date"]);
+        cy.setDateAdapter(adapter);
+      });
+
+      afterEach(() => {
+        cy.clock().then((clock) => clock.restore());
+      });
+
+      const testDate = {
+        startDate: adapter.parse("03/02/2024", "DD/MM/YYYY").date,
+        endDate: adapter.parse("05/02/2024", "DD/MM/YYYY").date,
+      };
+
+      it("SHOULD move to first selected date of the visible month", () => {
+        cy.mount(
+          <Calendar
+            selectionVariant="range"
+            multiselect
+            defaultVisibleMonth={testDate.startDate}
+            defaultSelectedDate={[
+              testDate,
+              {
+                startDate: adapter.add(testDate.startDate, { days: 3 }),
+                endDate: adapter.add(testDate.endDate, { days: 3 }),
+              },
+              {
+                startDate: adapter.add(testDate.startDate, { days: 5 }),
+                endDate: adapter.add(testDate.endDate, { days: 5 }),
+              },
+            ]}
+            hideOutOfRangeDates
+          >
+            <CalendarNavigation />
+            <CalendarWeekHeader />
+            <CalendarGrid />
+          </Calendar>,
+        );
+        // Simulate focusing on the "Next Month" button
+        cy.findByRole("button", {
+          name: "Next Month",
+        }).focus();
+        // Simulate pressing the Tab key
+        cy.realPress("Tab");
+        // Verify that the focus moves to the first selected date of the visible month
+        cy.findByRole("button", {
+          name: adapter.format(testDate.startDate, "DD MMMM YYYY"),
+        }).should("be.focused");
+      });
+
+      it("SHOULD move to today's date if selected date is not within the visible month", () => {
+        const todayTestDate = adapter.today();
+        cy.mount(
+          <Calendar
+            selectionVariant="range"
+            multiselect
+            defaultVisibleMonth={todayTestDate}
+            defaultSelectedDate={[
+              {
+                startDate: adapter.subtract(todayTestDate, { months: 2 }),
+                endDate: adapter.subtract(todayTestDate, { months: 2 }),
+              },
+            ]}
+            hideOutOfRangeDates
+          >
+            <CalendarNavigation />
+            <CalendarWeekHeader />
+            <CalendarGrid />
+          </Calendar>,
+        );
+        // Simulate focusing on the "Next Month" button
+        cy.findByRole("button", {
+          name: "Next Month",
+        }).focus();
+        // Simulate pressing the Tab key
+        cy.realPress("Tab");
+        // Verify that the focus moves to today's date
+        cy.findByRole("button", {
+          name: adapter.format(todayTestDate, "DD MMMM YYYY"),
+        }).should("be.focused");
+      });
+
+      it("SHOULD move to today's date if there is not selected date", () => {
+        const todayTestDate = adapter.today();
+        cy.mount(
+          <Calendar
+            selectionVariant="range"
+            multiselect
+            defaultVisibleMonth={todayTestDate}
+          >
+            <CalendarNavigation />
+            <CalendarWeekHeader />
+            <CalendarGrid />
+          </Calendar>,
+        );
+        // Simulate focusing on the "Next Month" button
+        cy.findByRole("button", {
+          name: "Next Month",
+        }).focus();
+        // Simulate pressing the Tab key
+        cy.realPress("Tab");
+        // Verify that the focus moves to today's date
+        cy.findByRole("button", {
+          name: adapter.format(todayTestDate, "DD MMMM YYYY"),
+        }).should("be.focused");
+      });
+
+      it("SHOULD move to start of the month if there is no selected date and today is not within visible month", () => {
+        const todayTestDate = adapter.today();
+        cy.mount(
+          <Calendar
+            selectionVariant="range"
+            multiselect
+            defaultVisibleMonth={adapter.add(todayTestDate, { months: 1 })}
+          >
+            <CalendarNavigation />
+            <CalendarWeekHeader />
+            <CalendarGrid />
+          </Calendar>,
+        );
+        // Simulate focusing on the "Next Month" button
+        cy.findByRole("button", {
+          name: "Next Month",
+        }).focus();
+        // Simulate clicking the "Next Month" button
+        cy.findByRole("button", {
+          name: "Next Month",
+        }).realClick();
+        // Simulate pressing the Tab key
+        cy.realPress("Tab");
+        // Verify that the focus moves to the start of the month
+        let startOfMonth = adapter.startOf(todayTestDate, "month");
+        startOfMonth = adapter.add(startOfMonth, { months: 2 });
+        cy.findByRole("button", {
+          name: adapter.format(startOfMonth, "DD MMMM YYYY"),
+        }).should("be.focused");
+      });
+
+      it("SHOULD allow multiple dates to be selected and unselected", () => {
+        const testDate = adapter.today();
+        const selectStub = (
+          previousSelectedDate: DateRangeSelection<DateFrameworkType>[],
+          newDate: DateFrameworkType,
+        ) => {
+          let newSelection = previousSelectedDate.filter(
+            ({ startDate, endDate }) => {
+              // Check if newDate is not between startDate and endDate
+              return !(
+                startDate &&
+                endDate &&
+                adapter.compare(newDate, startDate) >= 0 &&
+                adapter.compare(newDate, endDate) <= 0
+              );
+            },
+          );
+
+          if (newSelection.length === previousSelectedDate.length) {
+            const lastEntry = newSelection.length
+              ? newSelection[newSelection.length - 1]
+              : undefined;
+
+            if (lastEntry && lastEntry.startDate && !lastEntry.endDate) {
+              // If the last entry has only a startDate, set newDate as the endDate
+              lastEntry.endDate = newDate;
+            } else {
+              // Otherwise, add a new entry with startDate set to newDate
+              newSelection = [...newSelection, { startDate: newDate }];
+            }
+          }
+          return newSelection;
+        };
+        cy.mount(
+          <Calendar
+            selectionVariant="range"
+            multiselect
+            defaultVisibleMonth={testDate.startDate}
+            select={selectStub}
+          >
+            <CalendarNavigation />
+            <CalendarWeekHeader />
+            <CalendarGrid />
+          </Calendar>,
+        );
+        // Simulate clicking on the current date button to select it
+        cy.findByRole("button", {
+          name: adapter.format(testDate, "DD MMMM YYYY"),
+        }).realClick();
+        // Verify that the current date button is selected
+        cy.findByRole("button", {
+          name: adapter.format(testDate, "DD MMMM YYYY"),
+        }).should("have.attr", "aria-pressed", "true");
+
+        // Simulate clicking on the next date button to select it
+        const nextDay = adapter.add(testDate, { days: 1 });
+        cy.findByRole("button", {
+          name: adapter.format(nextDay, "DD MMMM YYYY"),
+        }).realClick();
+        // Verify that the next date button is selected
+        cy.findByRole("button", {
+          name: adapter.format(nextDay, "DD MMMM YYYY"),
+        }).should("have.attr", "aria-pressed", "true");
+
+        // Simulate clicking on the test date button again to unselect it
+        cy.findByRole("button", {
+          name: adapter.format(testDate, "DD MMMM YYYY"),
+        }).realClick();
+        // Verify that the current date button is unselected
+        cy.findByRole("button", {
+          name: adapter.format(testDate, "DD MMMM YYYY"),
+        }).should("not.have.attr", "aria-pressed");
+        // Verify that the next date button is unselected
+        cy.findByRole("button", {
+          name: adapter.format(nextDay, "DD MMMM YYYY"),
+        }).should("not.have.attr", "aria-pressed");
+
+        // Simulate focusing on the current date button
+        cy.findByRole("button", {
+          name: adapter.format(testDate, "DD MMMM YYYY"),
+        }).should("be.focused");
+        // Simulate pressing the Enter key to select the current date
+        cy.realPress("Enter");
+        // Simulate pressing the ArrowRight key to move to the next date
+        cy.realPress("ArrowRight");
+        // Simulate pressing the Enter key to select the next date
+        cy.realPress("Enter");
+        // Verify that the current date button is selected
+        cy.findByRole("button", {
+          name: adapter.format(testDate, "DD MMMM YYYY"),
+        }).should("have.attr", "aria-pressed", "true");
+        // Verify that the next date button is selected
+        cy.findByRole("button", {
+          name: adapter.format(nextDay, "DD MMMM YYYY"),
+        }).should("have.attr", "aria-pressed", "true");
+        // Simulate pressing the Enter key to select the next date
+        cy.realPress("Enter");
+        // Verify that the current date button is unselected
+        cy.findByRole("button", {
+          name: adapter.format(testDate, "DD MMMM YYYY"),
+        }).should("not.have.attr", "aria-pressed", "true");
+        // Verify that the next date button is unselected
+        cy.findByRole("button", {
+          name: adapter.format(nextDay, "DD MMMM YYYY"),
+        }).should("not.have.attr", "aria-pressed", "true");
       });
     });
   });
