@@ -7,7 +7,7 @@ import {
 } from "@salt-ds/lab";
 import type { ReactElement } from "react";
 
-export const Multiselect = (): ReactElement => {
+export const SingleMultiselect = (): ReactElement => {
   const { dateAdapter } = useLocalization<DateFrameworkType>();
   const defaultSelectedDate = [
     "02/01/2024",
@@ -51,7 +51,8 @@ export const Multiselect = (): ReactElement => {
   ).date;
   return (
     <Calendar
-      selectionVariant="multiselect"
+      selectionVariant="single"
+      multiselect
       defaultVisibleMonth={defaultVisibleMonth}
       defaultSelectedDate={defaultSelectedDate}
       hideOutOfRangeDates

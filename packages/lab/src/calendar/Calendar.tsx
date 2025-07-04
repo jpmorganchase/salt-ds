@@ -13,12 +13,15 @@ import { useLocalization } from "../localization-provider";
 import calendarCss from "./Calendar.css";
 import { CalendarContext } from "./internal/CalendarContext";
 import {
-  type UseCalendarMultiSelectProps,
+  type UseCalendarMultiselectOffsetProps,
+  type UseCalendarMultiselectRangeProps,
+  type UseCalendarMultiselectSingleProps,
   type UseCalendarOffsetProps,
   type UseCalendarRangeProps,
   type UseCalendarSingleProps,
   useCalendar,
 } from "./useCalendar";
+import type { DateRangeSelection } from "./useCalendarSelection";
 
 /**
  * Base props for the Calendar component.
@@ -51,6 +54,10 @@ export interface CalendarBaseProps extends ComponentPropsWithoutRef<"div"> {
    * - If set to a valid IANA timezone identifier, the time will be returned for that specific timezone.
    */
   timezone?: Timezone;
+  /**
+   * If `true`, the calendar will be multiselect.
+   */
+  multiselect?: boolean;
 }
 
 /**
@@ -67,6 +74,23 @@ export interface CalendarSingleProps<TDate extends DateFrameworkType>
 }
 
 /**
+ * Props for the Calendar component with multi-select, date selection.
+ * @template TDate - The type of the date object.
+ */
+export interface CalendarMultiselectSingleProps<TDate extends DateFrameworkType>
+  extends CalendarBaseProps,
+    UseCalendarMultiselectSingleProps<TDate> {
+  /**
+   * The selection variant, set to "single".
+   */
+  selectionVariant: "single";
+  /**
+   * Multiple selection
+   */
+  multiselect: true;
+}
+
+/**
  * Props for the Calendar component with date range selection.
  * @template TDate - The type of the date object.
  */
@@ -80,16 +104,20 @@ export interface CalendarRangeProps<TDate extends DateFrameworkType>
 }
 
 /**
- * Props for the Calendar component with multi-select date selection.
+ * Props for the Calendar component with multi-select, date range selection.
  * @template TDate - The type of the date object.
  */
-export interface CalendarMultiSelectProps<TDate extends DateFrameworkType>
+export interface CalendarMultiselectRangeProps<TDate extends DateFrameworkType>
   extends CalendarBaseProps,
-    UseCalendarMultiSelectProps<TDate> {
+    UseCalendarMultiselectRangeProps<TDate> {
   /**
-   * The selection variant, set to "multiselect".
+   * The selection variant, set to "single".
    */
-  selectionVariant: "multiselect";
+  selectionVariant: "range";
+  /**
+   * Multiple selection
+   */
+  multiselect: true;
 }
 
 /**
@@ -106,16 +134,59 @@ export interface CalendarOffsetProps<TDate extends DateFrameworkType>
 }
 
 /**
+ * Props for the Calendar component with multi-select, offset date selection.
+ * @template TDate - The type of the date object.
+ */
+export interface CalendarMultiselectOffsetProps<TDate extends DateFrameworkType>
+  extends CalendarBaseProps,
+    UseCalendarMultiselectOffsetProps<TDate> {
+  /**
+   * The selection variant, set to "offset".
+   */
+  selectionVariant: "offset";
+  /**
+   * Multiple selection
+   */
+  multiselect: true;
+}
+
+/**
  * Type representing the props for the Calendar component with various selection variants.
  * @template TDate - The type of the date object.
  */
 export type CalendarProps<TDate extends DateFrameworkType> =
   | CalendarSingleProps<TDate>
+  | CalendarMultiselectSingleProps<TDate>
   | CalendarRangeProps<TDate>
-  | CalendarMultiSelectProps<TDate>
-  | CalendarOffsetProps<TDate>;
+  | CalendarMultiselectRangeProps<TDate>
+  | CalendarOffsetProps<TDate>
+  | CalendarMultiselectOffsetProps<TDate>;
 
 const withBaseName = makePrefixer("saltCalendar");
+
+function isMultiselect<TDate>(
+  props: CalendarProps<TDate>,
+): props is
+  | CalendarMultiselectSingleProps<TDate>
+  | CalendarMultiselectRangeProps<TDate>
+  | CalendarMultiselectOffsetProps<TDate> {
+  return props.multiselect === true;
+}
+
+function getStartOrEndDate<TDate>(
+  dateRange:
+    | DateRangeSelection<TDate>
+    | DateRangeSelection<TDate>[]
+    | undefined,
+  isMultiselect: boolean,
+): TDate | null | undefined {
+  if (isMultiselect) {
+    const rangeArray = dateRange as DateRangeSelection<TDate>[];
+    return rangeArray?.[0]?.startDate ?? rangeArray?.[0]?.endDate;
+  }
+  const range = dateRange as DateRangeSelection<TDate>;
+  return range?.startDate ?? range?.endDate;
+}
 
 export const Calendar = forwardRef<
   HTMLDivElement,
@@ -150,7 +221,9 @@ export const Calendar = forwardRef<
       isDayDisabled,
       minDate,
       maxDate,
+      multiselect,
       numberOfVisibleMonths = 1,
+      select,
       selectionVariant,
       onHoveredDateChange,
       hoveredDate,
@@ -161,20 +234,27 @@ export const Calendar = forwardRef<
     let timezone: Timezone = "default";
     if (timezoneProp) {
       timezone = timezoneProp;
-    } else if (selectionVariant === "range") {
-      const defaultRangeTimezoneDate =
-        selectedDate?.startDate ??
-        selectedDate?.endDate ??
-        defaultSelectedDate?.startDate ??
-        defaultSelectedDate?.endDate;
-      timezone = defaultRangeTimezoneDate
-        ? dateAdapter.getTimezone(defaultRangeTimezoneDate)
-        : "default";
-    } else if (selectionVariant === "single") {
-      const defaultSingleTimezoneDate = selectedDate ?? defaultSelectedDate;
-      timezone = defaultSingleTimezoneDate
-        ? dateAdapter.getTimezone(defaultSingleTimezoneDate)
-        : "default";
+    } else {
+      let defaultTimezoneDate: TDate | null | undefined;
+
+      if (selectionVariant === "range" || selectionVariant === "offset") {
+        const shouldExtractFromList = isMultiselect(props);
+        defaultTimezoneDate =
+          getStartOrEndDate(selectedDate, shouldExtractFromList) ??
+          getStartOrEndDate(defaultSelectedDate, shouldExtractFromList);
+      } else if (selectionVariant === "single") {
+        if (isMultiselect(props)) {
+          defaultTimezoneDate =
+            (defaultSelectedDate as TDate[])?.[0] ?? undefined;
+        } else {
+          defaultTimezoneDate =
+            (selectedDate as TDate | null) ??
+            (defaultSelectedDate as TDate | null);
+        }
+      }
+      if (defaultTimezoneDate) {
+        timezone = dateAdapter.getTimezone(defaultTimezoneDate);
+      }
     }
 
     let startDateOffset: CalendarOffsetProps<TDate>["startDateOffset"];
@@ -202,9 +282,11 @@ export const Calendar = forwardRef<
       isDayUnselectable,
       isDayHighlighted,
       isDayDisabled,
+      multiselect,
       minDate,
       maxDate,
       numberOfVisibleMonths,
+      select,
       selectionVariant,
       onFocusedDateChange,
       onHoveredDateChange,
