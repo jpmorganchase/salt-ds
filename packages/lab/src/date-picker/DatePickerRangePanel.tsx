@@ -19,7 +19,6 @@ import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
   type ComponentPropsWithoutRef,
-  type FocusEventHandler,
   forwardRef,
   type SyntheticEvent,
   useCallback,
@@ -341,17 +340,6 @@ export const DatePickerRangePanel = forwardRef(function DatePickerRangePanel<
   };
 
   const [focusedDate, setFocusedDate] = useState<TDate | null>(null);
-
-  const handleStartCalendarBlur: FocusEventHandler<HTMLDivElement> = (
-    event,
-  ) => {
-    setHoveredDate(null);
-    StartCalendarGridProps?.onBlur?.(event);
-  };
-  const handleEndCalendarBlur: FocusEventHandler<HTMLDivElement> = (event) => {
-    setHoveredDate(null);
-    EndCalendarGridProps?.onBlur?.(event);
-  };
 
   const handleStartCalendarFocusedDateChange = useCallback(
     (event: SyntheticEvent | null, newFocusedDate: TDate) => {
