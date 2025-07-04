@@ -45,11 +45,6 @@
 
 /* Style applied if focused or active when `bordered={true}` */
 .saltPillInput-bordered.saltPillInput-focused,
-.saltPillInput-bordered:active {
-  --pillInput-borderWidth: calc(var(--salt-size-fixed-200) - var(--pillInput-borderWidth));
-}
-
-.saltPillInput-bordered.saltPillInput-focused,
 .saltPillInput-bordered.saltPillInput-focused:hover {
   border-style: var(--salt-editable-borderStyle-active);
   border-color: var(--pillInput-borderColor-active);
