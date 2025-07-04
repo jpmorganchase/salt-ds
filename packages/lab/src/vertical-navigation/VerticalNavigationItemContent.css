@@ -26,7 +26,7 @@
   border-radius: var(--salt-palette-corner-weak, 0);
   overflow: hidden;
 
-  cursor: var(--salt-navigable-cursor-hover);
+  cursor: var(--salt-cursor-hover);
   color: var(--salt-content-primary-foreground);
   font-weight: var(--salt-text-h4-fontWeight);
   font-family: var(--salt-text-h4-fontFamily);
@@ -62,7 +62,7 @@
 }
 
 .saltVerticalNavigation-bordered .saltVerticalNavigationItemContent {
-  --navigation-item-border-size: var(--salt-size-border);
+  --navigation-item-border-size: var(--salt-size-fixed-100);
   border: var(--navigation-item-border-size) var(--salt-separable-borderStyle) transparent;
 }
 

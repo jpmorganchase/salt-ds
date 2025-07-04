@@ -2,8 +2,8 @@ import { makePrefixer, useControlled } from "@salt-ds/core";
 import { clsx } from "clsx";
 import {
   type ComponentPropsWithoutRef,
-  type SyntheticEvent,
   forwardRef,
+  type SyntheticEvent,
   useCallback,
   useMemo,
 } from "react";

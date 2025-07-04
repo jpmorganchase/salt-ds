@@ -1,4 +1,4 @@
-import { type RenderPropsType, makePrefixer, renderProps } from "@salt-ds/core";
+import { makePrefixer, type RenderPropsType, renderProps } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
@@ -20,7 +20,7 @@ const withBaseName = makePrefixer("saltVerticalNavigationItemTrigger");
 export const VerticalNavigationItemTrigger = forwardRef<
   HTMLAnchorElement,
   VerticalNavigationItemTriggerProps
->(function VerticalNavigationItemTrigger(props) {
+>(function VerticalNavigationItemTrigger(props, ref) {
   const { className, children, render, href, ...rest } = props;
 
   const targetWindow = useWindow();
@@ -37,6 +37,7 @@ export const VerticalNavigationItemTrigger = forwardRef<
       className={clsx(withBaseName(), className)}
       href={href}
       render={render ?? (isLink ? undefined : <button type="button" />)}
+      ref={ref}
       {...rest}
     >
       {children}
