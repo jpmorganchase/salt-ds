@@ -1,12 +1,11 @@
+import { makePrefixer, type RenderPropsType, renderProps } from "@salt-ds/core";
+import { clsx } from "clsx";
 import {
   type ComponentPropsWithoutRef,
+  forwardRef,
   type MouseEvent,
   type ReactNode,
-  forwardRef,
 } from "react";
-
-import { type RenderPropsType, makePrefixer, renderProps } from "@salt-ds/core";
-import { clsx } from "clsx";
 import { useCollapsibleContext } from "./CollapsibleContext";
 
 export interface CollapsibleTriggerProps

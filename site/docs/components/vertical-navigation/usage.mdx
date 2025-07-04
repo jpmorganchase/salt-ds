@@ -1,0 +1,44 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+## Using the component
+
+For further details on how to use the component to provide navigation, see the [navigation pattern](/salt/patterns/navigation/)
+
+### When to use
+
+- When you have multiple levels of navigation in your application or website.
+- We suggest first considering a horizontal group of navigation items for distinct webpages or applications. If you have multiple (more than eight) services to navigate to at a platform level, or have navigation across distinct apps, consider using a vertical group instead.
+- If you need your items to remain visible on scroll, we recommend displaying navigation items in a fixed app header (or header area).
+
+### When not to use
+
+- When you need to show different views of content within the same page. Instead, use [`Tabs`](/salt/components/tabs/).
+- When your content is very specific. In this case, a minimalistic or single-page design may be more appropriate than a complex navigation structure. Instead, use [`InteractableCard`](../card), or [`Link`](../link) within the body of the page.
+
+## Content
+
+- To make the most of screen real estate, our recommendation is that all description text should be clear and concise.
+- Always write descriptions in sentence case in a navigation item.
+- When using a navigation item component within a navigation item, we recommend using sentence case.
+- In a horizontal navigation item, do not wrap descriptions, use truncation with `Tooltip` if necessary.
+- In a vertical navigation item, descriptions can wrap onto multiple lines if necessary, and is preferred over truncation.
+
+## Import
+
+To import `VerticalNavigation` and related components from the lab Salt package, use:
+
+```
+import { VerticalNavigation } from "@salt-ds/lab";
+```
+
+## Props
+
+<PropsTable packageName="lab" componentName="VerticalNavigation" />
