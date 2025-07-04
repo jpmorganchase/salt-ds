@@ -1,14 +1,14 @@
 .saltVerticalNavigationItem {
-  --y: calc(var(--x) + 1);
-  --depth: min(var(--x), var(--y));
-  --parent-has-icon-count: calc(var(--parent-has-icon) + 1);
-  --icon-count: min(var(--parent-has-icon), var(--parent-has-icon-count));
+  --verticalNavigationItem-depth-counter-2: calc(var(--verticalNavigationItem-depth-counter-1) + 1);
+  --verticalNavigationItem-depth: min(var(--verticalNavigationItem-depth-counter-1), var(--verticalNavigationItem-depth-counter-2));
+  --verticalNavigationItem-parent-has-icon-count: calc(var(--verticalNavigationItem-parent-has-icon) + 1);
+  --icon-count: min(var(--verticalNavigationItem-parent-has-icon), var(--verticalNavigationItem-parent-has-icon-count));
 }
 
 .saltVerticalNavigation {
-  --parent-has-icon: 0;
+  --verticalNavigationItem-parent-has-icon: 0;
 }
 
 .saltVerticalNavigationItem:has(> .saltVerticalNavigationItemContent .saltIcon:first-child) .saltVerticalNavigationSubMenu {
-  --parent-has-icon: calc(var(--parent-has-icon-count));
+  --verticalNavigationItem-parent-has-icon: calc(var(--verticalNavigationItem-parent-has-icon-count));
 }

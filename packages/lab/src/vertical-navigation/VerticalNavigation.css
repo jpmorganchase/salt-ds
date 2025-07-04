@@ -5,7 +5,7 @@
   list-style: none;
   padding: 0;
   margin: 0;
-  --x: 0;
+  --verticalNavigationItem-depth-counter-1: 0;
 }
 
 .saltVerticalNavigation .saltCollapsiblePanel-inner {

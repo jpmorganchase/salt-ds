@@ -1,9 +1,9 @@
 .saltVerticalNavigationItemContent {
-  --navigation-item-paddingLeft: calc(
+  --verticalNavigationItem-paddingLeft: calc(
     var(--salt-spacing-150) +
     var(--salt-size-indicator) +
-    (var(--salt-spacing-100) * max(0, calc(var(--depth, 0) - 1))) +
-    (var(--parent-has-icon, 0) * (var(--salt-size-icon) + var(--salt-spacing-100)))
+    (var(--salt-spacing-100) * max(0, calc(var(--verticalNavigationItem-depth, 0) - 1))) +
+    (var(--verticalNavigationItem-parent-has-icon, 0) * (var(--salt-size-icon) + var(--salt-spacing-100)))
   );
 }
 
@@ -16,10 +16,8 @@
   white-space: pre;
   min-height: calc(var(--salt-size-base) + var(--salt-spacing-100));
   min-width: 4em;
-  padding-top: calc(var(--salt-spacing-50) - var(--navigation-item-border-size, 0px));
-  padding-bottom: calc(var(--salt-spacing-50) - var(--navigation-item-border-size, 0px));
-  padding-right: var(--salt-spacing-100);
-  padding-left: var(--navigation-item-paddingLeft);
+  padding: calc(var(--salt-spacing-50) - var(--verticalNavigationItem-border-size, 0px)) var(--salt-spacing-100) calc(var(--salt-spacing-50) - var(--verticalNavigationItem-border-size, 0px))
+    var(--verticalNavigationItem-paddingLeft);
   position: relative;
   flex-shrink: 0;
   box-sizing: border-box;
@@ -62,8 +60,8 @@
 }
 
 .saltVerticalNavigation-bordered .saltVerticalNavigationItemContent {
-  --navigation-item-border-size: var(--salt-size-fixed-100);
-  border: var(--navigation-item-border-size) var(--salt-separable-borderStyle) transparent;
+  --verticalNavigationItem-border-size: var(--salt-size-fixed-100);
+  border: var(--verticalNavigationItem-border-size) var(--salt-separable-borderStyle) transparent;
 }
 
 .saltVerticalNavigation-bordered .saltVerticalNavigationItemContent-active {
