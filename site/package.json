@@ -36,7 +36,7 @@
     "dayjs": "^1.11.13",
     "embla-carousel-react": "^8.6.0",
     "lodash-es": "^4.17.21",
-    "luxon": "^3.5.0",
+    "luxon": "^3.6.1",
     "moment": "^2.30.1",
     "moment-timezone": "^0.5.46",
     "next": "^14.2.26",
@@ -44,7 +44,7 @@
     "shiki": "^3.0.0"
   },
   "devDependencies": {
-    "@types/luxon": "^3.4.2",
+    "@types/luxon": "^3.6.2",
     "@types/node": "^20.0.0",
     "@types/react": "^18.3.22",
     "concurrently": "^9.0.0",
