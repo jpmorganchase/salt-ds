@@ -5,5 +5,5 @@
   --salt-navigable-background: var(--salt-palette-alpha-none);
   --salt-navigable-background-hover: var(--salt-palette-alpha-contrast-lowest);
   --salt-navigable-background-active: var(--salt-palette-alpha-none);
-  --salt-navigable-borderColor-active: var(--salt-palette-interact-border-active);
+  --salt-navigable-borderColor-active: var(--salt-palette-accent);
 }

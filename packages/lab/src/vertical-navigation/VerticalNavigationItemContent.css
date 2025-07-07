@@ -3,7 +3,7 @@
     var(--salt-spacing-150) +
     var(--salt-size-indicator) +
     (var(--salt-spacing-100) * max(0, calc(var(--verticalNavigationItem-depth, 0) - 1))) +
-    (var(--verticalNavigationItem-parent-has-icon, 0) * (var(--salt-size-icon) + var(--salt-spacing-100)))
+    (var(--verticalNavigationItem-icon-count, 0) * (var(--salt-size-icon) + var(--salt-spacing-100)))
   );
 }
 
