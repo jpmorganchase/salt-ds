@@ -3,6 +3,7 @@ import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import { type ComponentPropsWithoutRef, forwardRef } from "react";
+import { SubMenuProvider } from "./SubMenuContext";
 import verticalNavigationSubMenuCss from "./VerticalNavigationSubMenu.css";
 
 export interface VerticalNavigationSubMenuProps
@@ -24,8 +25,10 @@ export const VerticalNavigationSubMenu = forwardRef<
   });
 
   return (
-    <ul ref={ref} className={clsx(withBaseName(), className)} {...rest}>
-      {children}
-    </ul>
+    <SubMenuProvider>
+      <ul ref={ref} className={clsx(withBaseName(), className)} {...rest}>
+        {children}
+      </ul>
+    </SubMenuProvider>
   );
 });
