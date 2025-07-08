@@ -67,7 +67,7 @@ export const Option = forwardRef<HTMLDivElement, OptionProps>(
       focusVisibleState,
       valueToString,
       disabled: listDisabled,
-      listRef
+      listRef,
     } = useListControlContext();
 
     const disabled = disabledProp || listDisabled;
