@@ -67,6 +67,7 @@ export const Option = forwardRef<HTMLDivElement, OptionProps>(
       focusVisibleState,
       valueToString,
       disabled: listDisabled,
+      listRef
     } = useListControlContext();
 
     const disabled = disabledProp || listDisabled;
@@ -86,6 +87,10 @@ export const Option = forwardRef<HTMLDivElement, OptionProps>(
     const handleClick = (event: MouseEvent<HTMLDivElement>) => {
       if (disabled || id === undefined) {
         return;
+      }
+
+      if (listRef && listRef.current) {
+        listRef.current.focus({ preventScroll: true });
       }
 
       // set active descendent

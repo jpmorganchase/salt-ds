@@ -47,6 +47,16 @@ describe("GIVEN a List box", () => {
     );
   });
 
+  it('should not select the first option on mouse down on a different option', () => {
+    const selectionChangeSpy = cy.stub().as("selectionChange");
+    cy.mount(<SingleSelect onSelectionChange={selectionChangeSpy} />);
+
+    cy.findByRole("option", { name: "Alaska" }).realHover();
+    cy.findByRole("option", { name: "Alaska" }).realMouseDown();
+    cy.findAllByRole("option").eq(0).should("not.be.activeDescendant");
+    cy.get("@selectionChange").should("not.have.been.called")
+  })
+
   it("should focus the selected item when the list is focused in single select", () => {
     cy.mount(<DefaultSelectedSingleSelect />);
     cy.realPress("Tab");

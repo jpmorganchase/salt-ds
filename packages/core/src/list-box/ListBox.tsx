@@ -201,11 +201,6 @@ export const ListBox = forwardRef(function ListBox<Item>(
   };
 
   const handleFocus = (event: FocusEvent<HTMLDivElement>) => {
-    const activeElement = targetWindow?.document.activeElement;
-    if (activeElement && listRef.current?.contains(activeElement)) {
-      listRef.current.focus({ preventScroll: true });
-    }
-
     if (wasMouseDown.current) {
       wasMouseDown.current = false;
       return;
