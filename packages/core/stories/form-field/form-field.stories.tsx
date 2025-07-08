@@ -5,6 +5,7 @@ import {
   FlowLayout,
   FormField,
   FormFieldHelperText,
+  FormFieldLabel,
   type FormFieldLabelPlacement,
   FormFieldHelperText as FormHelperText,
   FormFieldLabel as FormLabel,
@@ -1123,6 +1124,20 @@ export const CustomRequired: StoryFn<typeof FormField> = (props) => {
           By signing up, you are agreeing to our Terms of Service and Privacy
           Policy.
         </FormFieldHelperText>
+      </FormField>
+    </StackLayout>
+  );
+};
+
+export const WithoutLabelOrHelperText: StoryFn<typeof FormField> = (args) => {
+  const [showLabel, setShowLabel] = useState(false);
+
+  return (
+    <StackLayout>
+      <Button onClick={() => setShowLabel((old) => !old)}>Toggle label</Button>
+      <FormField {...args}>
+        {showLabel && <FormFieldLabel>Form Field label</FormFieldLabel>}
+        <Input />
       </FormField>
     </StackLayout>
   );
