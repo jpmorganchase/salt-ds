@@ -1,6 +1,5 @@
 import {
   CalendarIcon,
-  CheckmarkIcon,
   ChevronDownIcon,
   ChevronLeftIcon,
   ChevronRightIcon,
@@ -14,6 +13,7 @@ import {
   StepActiveIcon,
   StepDefaultIcon,
   SuccessCircleSolidIcon,
+  SuccessTickIcon,
   TearOutIcon,
   TriangleDownIcon,
   TriangleUpIcon,
@@ -77,7 +77,7 @@ const defaultIconMap: SemanticIconMap = {
   DecreaseIcon: TriangleDownIcon,
   UploadIcon,
   ErrorIcon: ErrorSolidIcon,
-  SuccessIcon: CheckmarkIcon,
+  SuccessIcon: SuccessTickIcon,
   InfoIcon: InfoSolidIcon,
   WarningIcon: WarningSolidIcon,
   OverflowIcon: OverflowMenuIcon,
