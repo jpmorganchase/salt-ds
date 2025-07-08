@@ -15,6 +15,7 @@
   overflow-y: auto;
   border-top: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) transparent;
   border-bottom: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) transparent;
+  max-height: inherit;
 }
 
 .saltDialogContent-overflow {
