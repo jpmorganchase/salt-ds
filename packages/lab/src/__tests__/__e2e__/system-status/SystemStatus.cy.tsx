@@ -18,7 +18,7 @@ describe("GIVEN a System status", () => {
   it('should render a success status when `status="success"`', () => {
     cy.mount(<Success />);
 
-    cy.findByTestId("SuccessTickIcon").should("exist");
+    cy.findByTestId("CheckmarkIcon").should("exist");
   });
   it('should render a warning status when `status="warning"`', () => {
     cy.mount(<Warning />);
