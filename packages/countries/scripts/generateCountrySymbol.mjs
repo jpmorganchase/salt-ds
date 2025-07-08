@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { Biome, Distribution } from "@biomejs/js-api";
+import { Biome, Distribution } from "@biomejs/js-api/nodejs";
 import glob from "glob";
 import Mustache from "mustache";
 import { optimize } from "svgo";
