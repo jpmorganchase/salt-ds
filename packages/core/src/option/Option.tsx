@@ -89,10 +89,7 @@ export const Option = forwardRef<HTMLDivElement, OptionProps>(
         return;
       }
 
-      if (listRef && listRef.current) {
-        listRef.current.focus({ preventScroll: true });
-      }
-
+      listRef?.current?.focus({ preventScroll: true });
       // set active descendent
       setActive(optionValue);
 
