@@ -1,0 +1,5 @@
+var css_248z = "/* Style applied to the root element */\n.saltGridItem {\n  justify-self: var(--gridItem-justifySelf);\n  align-self: var(--gridItem-alignSelf);\n  grid-row-start: var(--gridItem-gridRowStart);\n  grid-column-start: var(--gridItem-gridColumnStart);\n  grid-row-end: var(--gridItem-gridRowEnd);\n  grid-column-end: var(--gridItem-gridColumnEnd);\n  margin: var(--gridItem-margin);\n  padding: var(--gridItem-padding);\n}\n\n.saltGridItem-area {\n  grid-area: var(--gridItem-gridArea);\n}\n";
+export default css_248z;
+export var stylesheet="/* Style applied to the root element */\n.saltGridItem {\n  justify-self: var(--gridItem-justifySelf);\n  align-self: var(--gridItem-alignSelf);\n  grid-row-start: var(--gridItem-gridRowStart);\n  grid-column-start: var(--gridItem-gridColumnStart);\n  grid-row-end: var(--gridItem-gridRowEnd);\n  grid-column-end: var(--gridItem-gridColumnEnd);\n  margin: var(--gridItem-margin);\n  padding: var(--gridItem-padding);\n}\n\n.saltGridItem-area {\n  grid-area: var(--gridItem-gridArea);\n}\n";
+
+/*# sourceMappingURL=GridItem-V55sbKWe.css.map*/

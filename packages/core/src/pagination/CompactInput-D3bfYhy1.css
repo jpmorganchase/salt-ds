@@ -1,0 +1,5 @@
+var css_248z = ".saltCompactInput {\n  --saltInput-paddingLeft: 0;\n  --saltInput-paddingRight: 0;\n}\n\n.saltCompactInput-defaultSize.saltInput {\n  --saltInput-minWidth: var(--salt-size-base);\n  width: var(--salt-size-base);\n}\n";
+export default css_248z;
+export var stylesheet=".saltCompactInput {\n  --saltInput-paddingLeft: 0;\n  --saltInput-paddingRight: 0;\n}\n\n.saltCompactInput-defaultSize.saltInput {\n  --saltInput-minWidth: var(--salt-size-base);\n  width: var(--salt-size-base);\n}\n";
+
+/*# sourceMappingURL=CompactInput-D3bfYhy1.css.map*/

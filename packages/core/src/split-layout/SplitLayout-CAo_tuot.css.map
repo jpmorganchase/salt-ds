@@ -1,0 +1,1 @@
+{"version":3,"file":"SplitLayout-CAo_tuot.css","names":[],"sources":["../src/split-layout/SplitLayout.css"],"sourcesContent":["var css_248z = \".saltSplitLayout {\\n  flex-grow: 1;\\n}\\n\";\nexport default css_248z;\nexport var stylesheet=\".saltSplitLayout {\\n  flex-grow: 1;\\n}\\n\";"],"mappings":"AAAA;AACA;AACA"}

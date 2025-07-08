@@ -1,0 +1,5 @@
+var css_248z = ".saltOverlayPanelCloseButton {\n  position: absolute;\n  right: 0;\n  z-index: 1;\n}\n\n.saltOverlayPanelCloseButton-button.saltButton-secondary {\n  position: sticky;\n  right: 0;\n  top: 0;\n}\n.saltOverlayPanelCloseButton ~ .saltOverlayPanelContent {\n  padding-right: var(--salt-spacing-400);\n}\n";
+export default css_248z;
+export var stylesheet=".saltOverlayPanelCloseButton {\n  position: absolute;\n  right: 0;\n  z-index: 1;\n}\n\n.saltOverlayPanelCloseButton-button.saltButton-secondary {\n  position: sticky;\n  right: 0;\n  top: 0;\n}\n.saltOverlayPanelCloseButton ~ .saltOverlayPanelContent {\n  padding-right: var(--salt-spacing-400);\n}\n";
+
+/*# sourceMappingURL=OverlayPanelCloseButton-BZW7bbn9.css.map*/

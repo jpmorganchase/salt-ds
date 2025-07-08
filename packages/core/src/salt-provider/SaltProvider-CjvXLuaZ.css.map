@@ -1,0 +1,1 @@
+{"version":3,"file":"SaltProvider-CjvXLuaZ.css","names":[],"sources":["../src/salt-provider/SaltProvider.css"],"sourcesContent":["var css_248z = \".salt-provider {\\n  display: contents;\\n}\\n\";\nexport default css_248z;\nexport var stylesheet=\".salt-provider {\\n  display: contents;\\n}\\n\";"],"mappings":"AAAA;AACA;AACA"}
