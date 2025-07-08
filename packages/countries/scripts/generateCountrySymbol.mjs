@@ -1,16 +1,14 @@
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { Biome, Distribution } from "@biomejs/js-api/nodejs";
+import { Biome } from "@biomejs/js-api/nodejs";
 import glob from "glob";
 import Mustache from "mustache";
 import { optimize } from "svgo";
 
 import { svgAttributeMap } from "./svgAttributeMap.mjs";
 
-const biome = await Biome.create({
-  distribution: Distribution.NODE,
-});
+const biome = new Biome();
 
 const project = biome.openProject();
 
