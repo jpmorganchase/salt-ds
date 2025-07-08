@@ -3,22 +3,21 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { Biome } from "@biomejs/js-api/nodejs";
 import glob from "glob";
+import { parse } from "jsonc-parser";
 import Mustache from "mustache";
 import { optimize } from "svgo";
 import { svgAttributeMap } from "./svgAttributeMap.mjs";
 
-const biome = new Biome();
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const biomeConfigPath = path.join(__dirname, "../../../biome.jsonc");
+const biomeConfig = parse(await fs.promises.readFile(biomeConfigPath, "utf8"));
 
+const biome = new Biome();
 const project = biome.openProject();
 
 biome.applyConfiguration(project.projectKey, {
-  organizeImports: {
-    enabled: true,
-  },
-  formatter: {
-    enabled: true,
-    indentStyle: "space",
-  },
+  formatter: biomeConfig.formatter,
+  assist: biomeConfig.assist,
 });
 
 const GENERATED_WARNING_COMMENT =
@@ -173,12 +172,6 @@ const generateIconComponents = async ({
         plugins: [
           {
             name: "preset-default",
-            params: {
-              overrides: {
-                // makes icons scaled into width/height box
-                removeViewBox: false,
-              },
-            },
           },
           {
             name: "removeAttrs",
@@ -358,7 +351,6 @@ const generateIconAllSite = async ({ icons, siteAllPath }) => {
 };
 
 // Run the script
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const basePath = path.join(__dirname, "../src");
 const componentsPath = path.join(basePath, "./components/");
 const cssOutputPath = path.join(__dirname, "../saltIcons.css");

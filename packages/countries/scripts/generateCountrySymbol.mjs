@@ -3,23 +3,22 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { Biome } from "@biomejs/js-api/nodejs";
 import glob from "glob";
+import { parse } from "jsonc-parser";
 import Mustache from "mustache";
 import { optimize } from "svgo";
 
 import { svgAttributeMap } from "./svgAttributeMap.mjs";
 
-const biome = new Biome();
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const biomeConfigPath = path.join(__dirname, "../../../biome.jsonc");
+const biomeConfig = parse(await fs.promises.readFile(biomeConfigPath, "utf8"));
 
+const biome = new Biome();
 const project = biome.openProject();
 
 biome.applyConfiguration(project.projectKey, {
-  organizeImports: {
-    enabled: true,
-  },
-  formatter: {
-    enabled: true,
-    indentStyle: "space",
-  },
+  formatter: biomeConfig.formatter,
+  assist: biomeConfig.assist,
 });
 
 const REPLACE_START = "$START";
@@ -184,12 +183,6 @@ const generateCountrySymbolComponents = ({
       plugins: [
         {
           name: "preset-default",
-          params: {
-            overrides: {
-              // makes country symbol scaled into width/height box
-              removeViewBox: false,
-            },
-          },
         },
         {
           name: "removeAttrs",
@@ -434,7 +427,6 @@ const generateLazyMap = ({ countryMetaMap, basePath }) => {
 };
 
 // Run the script
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const basePath = path.join(__dirname, "../src");
 const componentsPath = path.join(basePath, "./components/");
 const templatePath = path.join(__dirname, "./templateCountrySymbol.mustache");
