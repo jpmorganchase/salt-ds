@@ -1,0 +1,5 @@
+var css_248z = ".saltStepExpandTrigger {\n  grid-area: expand;\n}\n\n.saltButton.saltStepExpandTrigger:focus-visible {\n  outline-offset: calc(-1 * var(--salt-focused-outlineWidth));\n}\n";
+export default css_248z;
+export var stylesheet=".saltStepExpandTrigger {\n  grid-area: expand;\n}\n\n.saltButton.saltStepExpandTrigger:focus-visible {\n  outline-offset: calc(-1 * var(--salt-focused-outlineWidth));\n}\n";
+
+/*# sourceMappingURL=StepExpandTrigger-DDg0Bnst.css.map*/

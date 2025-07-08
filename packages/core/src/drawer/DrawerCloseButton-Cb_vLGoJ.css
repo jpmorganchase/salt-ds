@@ -1,0 +1,5 @@
+var css_248z = ".saltDrawerCloseButton-container {\n  position: relative;\n  display: flex;\n  justify-content: flex-end;\n}\n\n.saltButton-secondary.saltDrawerCloseButton {\n  position: fixed;\n  margin-top: calc(var(--salt-spacing-300) * -1);\n  margin-right: calc(var(--salt-spacing-300) * -1);\n}\n";
+export default css_248z;
+export var stylesheet=".saltDrawerCloseButton-container {\n  position: relative;\n  display: flex;\n  justify-content: flex-end;\n}\n\n.saltButton-secondary.saltDrawerCloseButton {\n  position: fixed;\n  margin-top: calc(var(--salt-spacing-300) * -1);\n  margin-right: calc(var(--salt-spacing-300) * -1);\n}\n";
+
+/*# sourceMappingURL=DrawerCloseButton-Cb_vLGoJ.css.map*/

@@ -1,0 +1,5 @@
+var css_248z = ".saltCompactPaginator {\n  flex-wrap: nowrap;\n  display: flex;\n  gap: var(--salt-spacing-100);\n  align-items: center;\n}\n\n.saltCompactPaginator-arrowButton {\n  --saltButton-width: var(--salt-size-base);\n  --saltButton-height: var(--salt-size-base);\n  --saltButton-padding: var(--salt-spacing-100);\n}\n";
+export default css_248z;
+export var stylesheet=".saltCompactPaginator {\n  flex-wrap: nowrap;\n  display: flex;\n  gap: var(--salt-spacing-100);\n  align-items: center;\n}\n\n.saltCompactPaginator-arrowButton {\n  --saltButton-width: var(--salt-size-base);\n  --saltButton-height: var(--salt-size-base);\n  --saltButton-padding: var(--salt-spacing-100);\n}\n";
+
+/*# sourceMappingURL=CompactPaginator-5ExTh46I.css.map*/

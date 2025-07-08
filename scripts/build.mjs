@@ -1,12 +1,7 @@
 import path from "node:path";
 import url from "node:url";
-import commonjs from "@rollup/plugin-commonjs";
-import json from "@rollup/plugin-json";
-import { nodeResolve } from "@rollup/plugin-node-resolve";
-import browserslistToEsbuild from "browserslist-to-esbuild";
 import fs from "fs-extra";
-import { rollup } from "rollup";
-import esbuild from "rollup-plugin-esbuild";
+import { rolldown } from "rolldown";
 import postcss from "rollup-plugin-postcss";
 import { makeTypings } from "./makeTypings.mjs";
 import { transformWorkspaceDeps } from "./transformWorkspaceDeps.mjs";
@@ -34,7 +29,7 @@ await fs.emptyDir(outputDir);
 
 await makeTypings(outputDir);
 
-const bundle = await rollup({
+const bundle = await rolldown({
   input: path.join(cwd, "src/index.ts"),
   external: (id) => {
     // via tsdx
@@ -49,21 +44,7 @@ const bundle = await rollup({
   treeshake: {
     propertyReadSideEffects: false,
   },
-  plugins: [
-    nodeResolve({
-      extensions: [".ts", ".tsx", ".js", ".jsx"],
-      browser: true,
-      mainFields: ["module", "main", "browser"],
-    }),
-    commonjs({ include: /\/node_modules\// }),
-    esbuild({
-      target: browserslistToEsbuild(),
-      minify: false,
-      sourceMap: true,
-    }),
-    postcss({ extract: false, inject: false }),
-    json(),
-  ],
+  plugins: [postcss({ extract: false, inject: false })],
 });
 
 const transformSourceMap = (relativeSourcePath, sourceMapPath) => {
@@ -80,7 +61,6 @@ const transformSourceMap = (relativeSourcePath, sourceMapPath) => {
 };
 
 await bundle.write({
-  freeze: false,
   sourcemap: true,
   preserveModules: true,
   dir: path.join(outputDir, "dist-cjs"),
@@ -90,7 +70,6 @@ await bundle.write({
 });
 
 await bundle.write({
-  freeze: false,
   sourcemap: true,
   preserveModules: true,
   dir: path.join(outputDir, "dist-es"),
