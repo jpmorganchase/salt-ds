@@ -32,7 +32,7 @@ import { fn } from "storybook/test";
 import "./parent-child-layout.stories.css";
 
 export default {
-  title: "Lab/Layout/Parent Child Layout",
+  title: "Core/Layout/Parent Child Layout",
   component: ParentChildLayout,
   args: {
     onCollapseChange: fn(),
