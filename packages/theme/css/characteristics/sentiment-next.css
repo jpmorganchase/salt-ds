@@ -1,6 +1,6 @@
 .salt-theme-next.salt-theme {
-    --salt-sentiment-negative-foreground-informative:  var(--salt-palette-negative);
-    --salt-sentiment-positive-foreground-informative: var(--salt-palette-positive);
-    --salt-sentiment-neutral-track: var(--salt-palette-alpha-contrast-high);
-    --salt-sentiment-neutral-track-disabled: var(--salt-palette-alpha-contrast-lower);
+  --salt-sentiment-negative-foreground-informative: var(--salt-palette-negative);
+  --salt-sentiment-positive-foreground-informative: var(--salt-palette-positive);
+  --salt-sentiment-neutral-track: var(--salt-palette-alpha-contrast-high);
+  --salt-sentiment-neutral-track-disabled: var(--salt-palette-alpha-contrast-lower);
 }

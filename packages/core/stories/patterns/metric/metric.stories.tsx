@@ -55,7 +55,11 @@ export const Subvalue = () => {
       </Text>
       <Text variant="secondary">Interactions</Text>
       <Display1>801</Display1>
-      <Text style={{ color: "var(--salt-sentiment-positive-foreground-informative)" }}>
+      <Text
+        style={{
+          color: "var(--salt-sentiment-positive-foreground-informative)",
+        }}
+      >
         +10 (+1.23%)
       </Text>
     </StackLayout>
@@ -70,7 +74,11 @@ export const LinkSubtitle = () => {
       </Text>
       <Link variant="secondary">Interactions</Link>
       <Display1>801</Display1>
-      <Text style={{ color: "var(--salt-sentiment-positive-foreground-informative)" }}>
+      <Text
+        style={{
+          color: "var(--salt-sentiment-positive-foreground-informative)",
+        }}
+      >
         +10 (+1.23%)
       </Text>
     </StackLayout>
@@ -88,11 +96,17 @@ export const Indicators = () => {
         <Display1>
           801
           <ArrowUpIcon
-            style={{ fill: "var(--salt-sentiment-positive-foreground-informative)" }}
+            style={{
+              fill: "var(--salt-sentiment-positive-foreground-informative)",
+            }}
             size={3}
           />
         </Display1>
-        <Text style={{ color: "var(--salt-sentiment-positive-foreground-informative)" }}>
+        <Text
+          style={{
+            color: "var(--salt-sentiment-positive-foreground-informative)",
+          }}
+        >
           +10 (+1.23%)
         </Text>
       </StackLayout>
@@ -104,11 +118,17 @@ export const Indicators = () => {
         <Display1>
           801
           <ArrowDownIcon
-            style={{ fill: "var(--salt-sentiment-negative-foreground-informative)" }}
+            style={{
+              fill: "var(--salt-sentiment-negative-foreground-informative)",
+            }}
             size={3}
           />
         </Display1>
-        <Text style={{ color: "var(--salt-sentiment-negative-foreground-informative)" }}>
+        <Text
+          style={{
+            color: "var(--salt-sentiment-negative-foreground-informative)",
+          }}
+        >
           -10 (-1.23%)
         </Text>
       </StackLayout>
@@ -127,11 +147,17 @@ export const HierarchicalVertical = () => {
         <Display3>
           801
           <ArrowUpIcon
-            style={{ fill: "var(--salt-sentiment-positive-foreground-informative)" }}
+            style={{
+              fill: "var(--salt-sentiment-positive-foreground-informative)",
+            }}
             size={1}
           />
         </Display3>
-        <Text style={{ color: "var(--salt-sentiment-positive-foreground-informative)" }}>
+        <Text
+          style={{
+            color: "var(--salt-sentiment-positive-foreground-informative)",
+          }}
+        >
           +10 (+1.23%)
         </Text>
       </StackLayout>
@@ -143,11 +169,17 @@ export const HierarchicalVertical = () => {
         <Display2>
           801
           <ArrowUpIcon
-            style={{ fill: "var(--salt-sentiment-positive-foreground-informative)" }}
+            style={{
+              fill: "var(--salt-sentiment-positive-foreground-informative)",
+            }}
             size={2}
           />
         </Display2>
-        <Text style={{ color: "var(--salt-sentiment-positive-foreground-informative)" }}>
+        <Text
+          style={{
+            color: "var(--salt-sentiment-positive-foreground-informative)",
+          }}
+        >
           +10 (+1.23%)
         </Text>
       </StackLayout>
@@ -159,11 +191,17 @@ export const HierarchicalVertical = () => {
         <Display1>
           801
           <ArrowUpIcon
-            style={{ fill: "var(--salt-sentiment-positive-foreground-informative)" }}
+            style={{
+              fill: "var(--salt-sentiment-positive-foreground-informative)",
+            }}
             size={3}
           />
         </Display1>
-        <Text style={{ color: "var(--salt-sentiment-positive-foreground-informative)" }}>
+        <Text
+          style={{
+            color: "var(--salt-sentiment-positive-foreground-informative)",
+          }}
+        >
           +10 (+1.23%)
         </Text>
       </StackLayout>

@@ -3,9 +3,9 @@
 
   --salt-status-static-foreground: var(--salt-palette-foreground-secondary); /* Use --salt-content-secondary-foreground */
 
-  --salt-status-negative-foreground: var(--salt-palette-negative);  /* Use ---salt-sentiment-negative-foreground-informative */
+  --salt-status-negative-foreground: var(--salt-palette-negative); /* Use ---salt-sentiment-negative-foreground-informative */
   --salt-status-positive-foreground: var(--salt-palette-positive); /* Use ---salt-sentiment-negative-foreground-positive */
 
   --salt-track-borderColor: var(--salt-palette-alpha-contrast-high); /* Use --salt-sentiment-neutral-track */
-  --salt-track-borderColor-disabled:var(--salt-palette-alpha-contrast-lower); /* Use --salt-sentiment-neutral-track-disabled */
+  --salt-track-borderColor-disabled: var(--salt-palette-alpha-contrast-lower); /* Use --salt-sentiment-neutral-track-disabled */
 }
