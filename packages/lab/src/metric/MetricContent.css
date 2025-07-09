@@ -13,17 +13,17 @@
 }
 
 .saltMetric-direction-up .saltMetricContent-indicator {
-  fill: var(--salt-status-positive-foreground);
+  fill: var(--salt-sentiment-positive-foreground-informative);
 }
 .saltMetric-direction-up .saltMetricContent-subvalue {
-  color: var(--salt-status-positive-foreground);
+  color: var(--salt-sentiment-positive-foreground-informative);
 }
 
 .saltMetric-direction-down .saltMetricContent-indicator {
-  fill: var(--salt-status-negative-foreground);
+  fill: var(--salt-sentiment-negative-foreground-informative);
 }
 .saltMetric-direction-down .saltMetricContent-subvalue {
-  color: var(--salt-status-negative-foreground);
+  color: var(--salt-sentiment-negative-foreground-informative);
 }
 
 .saltMetricContent-subvalue {

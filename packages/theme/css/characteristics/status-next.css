@@ -1,8 +1,4 @@
 .salt-theme.salt-theme-next {
-  --salt-status-static-foreground: var(--salt-palette-foreground-secondary);
-  --salt-status-negative-foreground: var(--salt-palette-negative);
-  --salt-status-positive-foreground: var(--salt-palette-positive);
-
   --salt-status-info-foreground-decorative: var(--salt-palette-info);
   --salt-status-success-foreground-decorative: var(--salt-palette-positive);
   --salt-status-warning-foreground-decorative: var(--salt-palette-warning);

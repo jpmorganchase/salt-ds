@@ -33,12 +33,12 @@ export const FillContainer = (): ReactElement => {
                 <Display3>
                   400
                   <ArrowUpIcon
-                    style={{ fill: "var(--salt-status-positive-foreground)" }}
+                    style={{ fill: "var(--salt-sentiment-positive-foreground-informative)" }}
                     size={1}
                   />
                 </Display3>
                 <Text
-                  style={{ color: "var(--salt-status-positive-foreground)" }}
+                  style={{ color: "var(--salt-sentiment-positive-foreground-informative)" }}
                 >
                   +10 (+1.23%)
                 </Text>
@@ -48,12 +48,12 @@ export const FillContainer = (): ReactElement => {
                 <Display3>
                   984
                   <ArrowDownIcon
-                    style={{ fill: "var(--salt-status-negative-foreground)" }}
+                    style={{ fill: "var(--salt-sentiment-negative-foreground-informative)" }}
                     size={1}
                   />
                 </Display3>
                 <Text
-                  style={{ color: "var(--salt-status-negative-foreground)" }}
+                  style={{ color: "var(--salt-sentiment-negative-foreground-informative)" }}
                 >
                   -32 (-5.4%)
                 </Text>
@@ -65,12 +65,12 @@ export const FillContainer = (): ReactElement => {
                 <Display3>
                   20%
                   <ArrowUpIcon
-                    style={{ fill: "var(--salt-status-positive-foreground)" }}
+                    style={{ fill: "var(--salt-sentiment-positive-foreground-informative)" }}
                     size={1}
                   />
                 </Display3>
                 <Text
-                  style={{ color: "var(--salt-status-positive-foreground)" }}
+                  style={{ color: "var(--salt-sentiment-positive-foreground-informative)" }}
                 >
                   +6.1 (+4.32%)
                 </Text>
@@ -80,12 +80,12 @@ export const FillContainer = (): ReactElement => {
                 <Display3>
                   5%
                   <ArrowUpIcon
-                    style={{ fill: "var(--salt-status-positive-foreground)" }}
+                    style={{ fill: "var(--salt-sentiment-positive-foreground-informative)" }}
                     size={1}
                   />
                 </Display3>
                 <Text
-                  style={{ color: "var(--salt-status-positive-foreground)" }}
+                  style={{ color: "var(--salt-sentiment-positive-foreground-informative)" }}
                 >
                   +3.7 (+1.23%)
                 </Text>
