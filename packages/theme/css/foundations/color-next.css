@@ -1,6 +1,6 @@
 .salt-theme.salt-theme-next {
   --salt-color-white-rgb: 255, 255, 255;
-  --salt-color-gray-100-rgb: 245, 247, 248;
+  --salt-color-gray-100-rgb: 230, 233, 235;
   --salt-color-gray-200-rgb: 211, 213, 216;
   --salt-color-gray-300-rgb: 177, 181, 185;
   --salt-color-gray-400-rgb: 145, 149, 154;
@@ -19,6 +19,15 @@
   --salt-color-blue-700-rgb: 0, 69, 126;
   --salt-color-blue-800-rgb: 0, 45, 89;
   --salt-color-blue-900-rgb: 0, 23, 54;
+  --salt-color-brown-100-rgb: 245, 239, 228;
+  --salt-color-brown-200-rgb: 237, 229, 216;
+  --salt-color-brown-300-rgb: 215, 186, 157;
+  --salt-color-brown-400-rgb: 184, 138, 103;
+  --salt-color-brown-500-rgb: 153, 108, 72;
+  --salt-color-brown-600-rgb: 125, 83, 47;
+  --salt-color-brown-700-rgb: 103, 63, 27;
+  --salt-color-brown-800-rgb: 66, 36, 7;
+  --salt-color-brown-900-rgb: 46, 25, 5;
   --salt-color-green-100-rgb: 234, 245, 242;
   --salt-color-green-200-rgb: 184, 229, 209;
   --salt-color-green-300-rgb: 137, 204, 173;
@@ -36,13 +45,13 @@
   --salt-color-teal-600-rgb: 18, 100, 126;
   --salt-color-teal-700-rgb: 9, 74, 96;
   --salt-color-teal-800-rgb: 3, 49, 66;
-  --salt-color-teal-900-rgb: 0, 27, 41;
+  --salt-color-teal-900-rgb: 0, 37, 56;
   --salt-color-orange-100-rgb: 255, 236, 217;
   --salt-color-orange-200-rgb: 255, 198, 161;
   --salt-color-orange-300-rgb: 247, 160, 106;
-  --salt-color-orange-400-rgb: 232, 122, 56;
+  --salt-color-orange-400-rgb: 235, 123, 57;
   --salt-color-orange-500-rgb: 199, 83, 0;
-  --salt-color-orange-600-rgb: 163, 68, 0;
+  --salt-color-orange-600-rgb: 158, 66, 0;
   --salt-color-orange-700-rgb: 129, 54, 0;
   --salt-color-orange-800-rgb: 97, 41, 0;
   --salt-color-orange-900-rgb: 66, 32, 0;
@@ -92,6 +101,15 @@
   --salt-color-blue-700: rgb(var(--salt-color-blue-700-rgb));
   --salt-color-blue-800: rgb(var(--salt-color-blue-800-rgb));
   --salt-color-blue-900: rgb(var(--salt-color-blue-900-rgb));
+  --salt-color-brown-100: rgb(var(--salt-color-brown-100-rgb));
+  --salt-color-brown-200: rgb(var(--salt-color-brown-200-rgb));
+  --salt-color-brown-300: rgb(var(--salt-color-brown-300-rgb));
+  --salt-color-brown-400: rgb(var(--salt-color-brown-400-rgb));
+  --salt-color-brown-500: rgb(var(--salt-color-brown-500-rgb));
+  --salt-color-brown-600: rgb(var(--salt-color-brown-600-rgb));
+  --salt-color-brown-700: rgb(var(--salt-color-brown-700-rgb));
+  --salt-color-brown-800: rgb(var(--salt-color-brown-800-rgb));
+  --salt-color-brown-900: rgb(var(--salt-color-brown-900-rgb));
   --salt-color-green-100: rgb(var(--salt-color-green-100-rgb));
   --salt-color-green-200: rgb(var(--salt-color-green-200-rgb));
   --salt-color-green-300: rgb(var(--salt-color-green-300-rgb));
