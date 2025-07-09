@@ -41,7 +41,6 @@ const Single = ({
   const [iso8601String, setIso8601String] = useState<string>("");
   const [localeDateString, setLocaleDateString] = useState<string>("");
   const [dateString, setDateString] = useState<string>("");
-  const [error, setError] = useState<string | undefined>(undefined);
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: reset related state when timezone changes
   useEffect(() => {
@@ -49,7 +48,6 @@ const Single = ({
     setIso8601String("");
     setLocaleDateString("");
     setDateString("");
-    setError(undefined);
   }, [selectedTimezone]);
 
   const handleSelectionChange = (
@@ -179,7 +177,7 @@ export const WithTimezone = (): ReactElement => {
   );
 
   const handleAdapterChange: DropdownProps["onSelectionChange"] = (
-    event,
+    _event,
     newSelected,
   ) => {
     setDateAdapterName(newSelected[0] ?? "date-fns");

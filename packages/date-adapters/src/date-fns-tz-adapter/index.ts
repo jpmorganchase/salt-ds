@@ -1,5 +1,4 @@
 import { TZDate } from "@date-fns/tz";
-import { startOfDay } from "date-fns";
 import { enUS as dateFnsEnUs } from "date-fns/locale/en-US";
 import { AdapterDateFns } from "../date-fns-adapter";
 import type { Timezone } from "../types";
@@ -69,7 +68,7 @@ export class AdapterDateFnsTZ extends AdapterDateFns {
    */
   public setTimezone = (date: Date, timezone: Timezone = "default"): Date => {
     const newTimezone =
-      timezone === "system" || timezone == "default"
+      timezone === "system" || timezone === "default"
         ? Intl.DateTimeFormat().resolvedOptions().timeZone
         : timezone;
     let tzdate: Date = new TZDate(date, newTimezone);
