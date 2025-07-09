@@ -4,8 +4,8 @@ import { clsx } from "clsx";
 import {
   type ComponentPropsWithoutRef,
   type FocusEvent,
-  type MouseEvent,
   forwardRef,
+  type MouseEvent,
   useRef,
 } from "react";
 import type { ButtonAppearance, ButtonSentiment } from "../button";

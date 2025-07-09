@@ -14,7 +14,6 @@
   --salt-selectable-background: var(--salt-palette-alpha-none);
   --salt-selectable-background-hover: var(--salt-palette-interact-background-hover);
   --salt-selectable-background-selected: var(--salt-palette-interact-background-active);
-  --salt-selectable-background-blurSelected: var(--salt-palette-interact-background-blurSelected);
   --salt-selectable-background-disabled: var(--salt-palette-alpha-none);
   --salt-selectable-background-selectedDisabled: var(--salt-palette-interact-background-activeDisabled);
 }

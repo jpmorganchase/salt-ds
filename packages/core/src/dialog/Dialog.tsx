@@ -9,9 +9,9 @@ import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
   type ComponentProps,
+  forwardRef,
   type HTMLAttributes,
   type ReactNode,
-  forwardRef,
   useEffect,
   useMemo,
   useState,

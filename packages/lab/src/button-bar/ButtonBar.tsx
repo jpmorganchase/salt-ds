@@ -1,21 +1,18 @@
+import { type ButtonVariant, makePrefixer } from "@salt-ds/core";
+import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
   Children,
+  forwardRef,
   type HTMLAttributes,
   type ReactNode,
-  forwardRef,
   useMemo,
 } from "react";
-
-import { type ButtonVariant, makePrefixer } from "@salt-ds/core";
+import buttonBarCss from "./ButtonBar.css";
 import { ButtonBarContext } from "./internal/ButtonBarContext";
 import { DescendantProvider } from "./internal/DescendantContext";
 import { useDescendants } from "./internal/useDescendants";
-
-import { useComponentCssInjection } from "@salt-ds/styles";
-import { useWindow } from "@salt-ds/window";
-
-import buttonBarCss from "./ButtonBar.css";
 
 export type PartialRecord<K extends keyof any, T> = Partial<Record<K, T>>;
 

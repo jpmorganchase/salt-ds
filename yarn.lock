@@ -930,18 +930,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@biomejs/biome@npm:1.9.4":
-  version: 1.9.4
-  resolution: "@biomejs/biome@npm:1.9.4"
+"@biomejs/biome@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "@biomejs/biome@npm:2.0.0"
   dependencies:
-    "@biomejs/cli-darwin-arm64": "npm:1.9.4"
-    "@biomejs/cli-darwin-x64": "npm:1.9.4"
-    "@biomejs/cli-linux-arm64": "npm:1.9.4"
-    "@biomejs/cli-linux-arm64-musl": "npm:1.9.4"
-    "@biomejs/cli-linux-x64": "npm:1.9.4"
-    "@biomejs/cli-linux-x64-musl": "npm:1.9.4"
-    "@biomejs/cli-win32-arm64": "npm:1.9.4"
-    "@biomejs/cli-win32-x64": "npm:1.9.4"
+    "@biomejs/cli-darwin-arm64": "npm:2.0.0"
+    "@biomejs/cli-darwin-x64": "npm:2.0.0"
+    "@biomejs/cli-linux-arm64": "npm:2.0.0"
+    "@biomejs/cli-linux-arm64-musl": "npm:2.0.0"
+    "@biomejs/cli-linux-x64": "npm:2.0.0"
+    "@biomejs/cli-linux-x64-musl": "npm:2.0.0"
+    "@biomejs/cli-win32-arm64": "npm:2.0.0"
+    "@biomejs/cli-win32-x64": "npm:2.0.0"
   dependenciesMeta:
     "@biomejs/cli-darwin-arm64":
       optional: true
@@ -961,73 +961,73 @@ __metadata:
       optional: true
   bin:
     biome: bin/biome
-  checksum: 10/bd8ff8fb4dc0581bd60a9b9ac28d0cd03ba17c6a1de2ab6228b7fda582079594ceee774f47e41aac2fc6d35de1637def2e32ef2e58fa24e22d1b24ef9ee5cefa
+  checksum: 10/d4df2e3a0d3ff9db4eca3b4f5458b9de2b180f3f56cdb874e57f0c933f72f68398803d563016dd23882cbae5090f50cae6538d9ec3609fe931db793d19cdc985
   languageName: node
   linkType: hard
 
-"@biomejs/cli-darwin-arm64@npm:1.9.4":
-  version: 1.9.4
-  resolution: "@biomejs/cli-darwin-arm64@npm:1.9.4"
+"@biomejs/cli-darwin-arm64@npm:2.0.0":
+  version: 2.0.0
+  resolution: "@biomejs/cli-darwin-arm64@npm:2.0.0"
   conditions: os=darwin & cpu=arm64
   languageName: node
   linkType: hard
 
-"@biomejs/cli-darwin-x64@npm:1.9.4":
-  version: 1.9.4
-  resolution: "@biomejs/cli-darwin-x64@npm:1.9.4"
+"@biomejs/cli-darwin-x64@npm:2.0.0":
+  version: 2.0.0
+  resolution: "@biomejs/cli-darwin-x64@npm:2.0.0"
   conditions: os=darwin & cpu=x64
   languageName: node
   linkType: hard
 
-"@biomejs/cli-linux-arm64-musl@npm:1.9.4":
-  version: 1.9.4
-  resolution: "@biomejs/cli-linux-arm64-musl@npm:1.9.4"
+"@biomejs/cli-linux-arm64-musl@npm:2.0.0":
+  version: 2.0.0
+  resolution: "@biomejs/cli-linux-arm64-musl@npm:2.0.0"
   conditions: os=linux & cpu=arm64 & libc=musl
   languageName: node
   linkType: hard
 
-"@biomejs/cli-linux-arm64@npm:1.9.4":
-  version: 1.9.4
-  resolution: "@biomejs/cli-linux-arm64@npm:1.9.4"
+"@biomejs/cli-linux-arm64@npm:2.0.0":
+  version: 2.0.0
+  resolution: "@biomejs/cli-linux-arm64@npm:2.0.0"
   conditions: os=linux & cpu=arm64 & libc=glibc
   languageName: node
   linkType: hard
 
-"@biomejs/cli-linux-x64-musl@npm:1.9.4":
-  version: 1.9.4
-  resolution: "@biomejs/cli-linux-x64-musl@npm:1.9.4"
+"@biomejs/cli-linux-x64-musl@npm:2.0.0":
+  version: 2.0.0
+  resolution: "@biomejs/cli-linux-x64-musl@npm:2.0.0"
   conditions: os=linux & cpu=x64 & libc=musl
   languageName: node
   linkType: hard
 
-"@biomejs/cli-linux-x64@npm:1.9.4":
-  version: 1.9.4
-  resolution: "@biomejs/cli-linux-x64@npm:1.9.4"
+"@biomejs/cli-linux-x64@npm:2.0.0":
+  version: 2.0.0
+  resolution: "@biomejs/cli-linux-x64@npm:2.0.0"
   conditions: os=linux & cpu=x64 & libc=glibc
   languageName: node
   linkType: hard
 
-"@biomejs/cli-win32-arm64@npm:1.9.4":
-  version: 1.9.4
-  resolution: "@biomejs/cli-win32-arm64@npm:1.9.4"
+"@biomejs/cli-win32-arm64@npm:2.0.0":
+  version: 2.0.0
+  resolution: "@biomejs/cli-win32-arm64@npm:2.0.0"
   conditions: os=win32 & cpu=arm64
   languageName: node
   linkType: hard
 
-"@biomejs/cli-win32-x64@npm:1.9.4":
-  version: 1.9.4
-  resolution: "@biomejs/cli-win32-x64@npm:1.9.4"
+"@biomejs/cli-win32-x64@npm:2.0.0":
+  version: 2.0.0
+  resolution: "@biomejs/cli-win32-x64@npm:2.0.0"
   conditions: os=win32 & cpu=x64
   languageName: node
   linkType: hard
 
-"@biomejs/js-api@npm:0.7.1":
-  version: 0.7.1
-  resolution: "@biomejs/js-api@npm:0.7.1"
+"@biomejs/js-api@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "@biomejs/js-api@npm:1.0.0"
   peerDependencies:
-    "@biomejs/wasm-bundler": ^1.9.2
-    "@biomejs/wasm-nodejs": ^1.9.2
-    "@biomejs/wasm-web": ^1.9.2
+    "@biomejs/wasm-bundler": ^2.0.0
+    "@biomejs/wasm-nodejs": ^2.0.0
+    "@biomejs/wasm-web": ^2.0.0
   peerDependenciesMeta:
     "@biomejs/wasm-bundler":
       optional: true
@@ -1035,14 +1035,14 @@ __metadata:
       optional: true
     "@biomejs/wasm-web":
       optional: true
-  checksum: 10/108d314ba659e79c2733e6aa9f06ba24e6dae330e00a1bbc3d50ea774964614b2920d461a95b7dbabe6b326cbee7356f285061bdda544bfd4b6e7fda1b6dc85c
+  checksum: 10/c023335517f719cd9968552d3d8aeb608974131617a531185ef7644776d358b5211532bd9ff8ae6c78effaa55dd4dd0e42dbda9a9b2b616d1ff8ceb50dc878be
   languageName: node
   linkType: hard
 
-"@biomejs/wasm-nodejs@npm:1.9.4":
-  version: 1.9.4
-  resolution: "@biomejs/wasm-nodejs@npm:1.9.4"
-  checksum: 10/77cf4ae4228bcb04e17a2ec4330f79a70b646000534e84c8a7eea40d14a1043eaed63a7406f66260ccf4e05687b1b076f04e28e54530439a67251e107fffeb8e
+"@biomejs/wasm-nodejs@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "@biomejs/wasm-nodejs@npm:2.0.0"
+  checksum: 10/7d3a29cd4ef7f95c0f8e56fae2f31d5c1ceea435a0783ca78e17bb2cb59dbd8ba92bfd555d47804de1115982043ea5a02debb612a98e32516bd4ccc6410807aa
   languageName: node
   linkType: hard
 
@@ -3209,6 +3209,27 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@salt-ds/embla-carousel@workspace:packages/embla-carousel":
+  version: 0.0.0-use.local
+  resolution: "@salt-ds/embla-carousel@workspace:packages/embla-carousel"
+  dependencies:
+    "@salt-ds/core": "workspace:^"
+    clsx: "npm:^2.0.0"
+    embla-carousel-autoplay: "npm:^8.6.0"
+    embla-carousel-fade: "npm:^8.6.0"
+  peerDependencies:
+    "@types/react": ">=16.14.0"
+    embla-carousel-react: ^8.6.0
+    react: ">=16.14.0"
+    react-dom: ">=16.14.0"
+  peerDependenciesMeta:
+    "@types/react":
+      optional: true
+    embla-carousel-react:
+      optional: true
+  languageName: unknown
+  linkType: soft
+
 "@salt-ds/icons@npm:^1.13.2, @salt-ds/icons@workspace:^, @salt-ds/icons@workspace:packages/icons":
   version: 0.0.0-use.local
   resolution: "@salt-ds/icons@workspace:packages/icons"
@@ -3284,9 +3305,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@salt-ds/root@workspace:."
   dependencies:
-    "@biomejs/biome": "npm:1.9.4"
-    "@biomejs/js-api": "npm:0.7.1"
-    "@biomejs/wasm-nodejs": "npm:1.9.4"
+    "@biomejs/biome": "npm:^2.0.0"
+    "@biomejs/js-api": "npm:^1.0.0"
+    "@biomejs/wasm-nodejs": "npm:^2.0.0"
     "@changesets/cli": "npm:^2.27.12"
     "@cypress/code-coverage": "npm:^3.13.6"
     "@faker-js/faker": "npm:^8.0.0"
@@ -3371,6 +3392,8 @@ __metadata:
     date-fns: "npm:^3.6.0"
     dayjs: "npm:^1.11.13"
     dotenv-load: "npm:^2.0.1"
+    embla-carousel-class-names: "npm:^8.6.0"
+    embla-carousel-react: "npm:^8.6.0"
     lodash-es: "npm:^4.17.21"
     luxon: "npm:^3.5.0"
     moment: "npm:^2.30.1"
@@ -7633,6 +7656,61 @@ __metadata:
   version: 1.5.161
   resolution: "electron-to-chromium@npm:1.5.161"
   checksum: 10/cac9497669736407a8b156658986b5afb616e7a8fdc9aca41b8709bad541b48823dd5a5f0e07dee4149a1b5f7021e2d0443cdd0c475f7c67c4af171afe43bc9d
+  languageName: node
+  linkType: hard
+
+"embla-carousel-autoplay@npm:^8.6.0":
+  version: 8.6.0
+  resolution: "embla-carousel-autoplay@npm:8.6.0"
+  peerDependencies:
+    embla-carousel: 8.6.0
+  checksum: 10/5dee505b891e93da6ac8072c2b1a6bda63533ceaef0eec77fa15425974c08242cf6b6a745159eab33f6fad886b5d05148bf06f01ce3fca87811a79e764b5aad2
+  languageName: node
+  linkType: hard
+
+"embla-carousel-class-names@npm:^8.6.0":
+  version: 8.6.0
+  resolution: "embla-carousel-class-names@npm:8.6.0"
+  peerDependencies:
+    embla-carousel: 8.6.0
+  checksum: 10/5f52fb9f7c84adbeb5039edbd90f84eb00663318a1e2d1fc24eb05a676ac426b5f22509a7658cc739f98bf87a5fba201c1980af653d9412a967325ed482c58da
+  languageName: node
+  linkType: hard
+
+"embla-carousel-fade@npm:^8.6.0":
+  version: 8.6.0
+  resolution: "embla-carousel-fade@npm:8.6.0"
+  peerDependencies:
+    embla-carousel: 8.6.0
+  checksum: 10/89a027c9cd4464b0560fb999093095b60713bb9a8a4fda3c0786584dc2196f5760c7d87f1939f979719bf805f9c293e34ee3b0504710df0f23ee5a1c8d8d03d1
+  languageName: node
+  linkType: hard
+
+"embla-carousel-react@npm:^8.6.0":
+  version: 8.6.0
+  resolution: "embla-carousel-react@npm:8.6.0"
+  dependencies:
+    embla-carousel: "npm:8.6.0"
+    embla-carousel-reactive-utils: "npm:8.6.0"
+  peerDependencies:
+    react: ^16.8.0 || ^17.0.1 || ^18.0.0 || ^19.0.0 || ^19.0.0-rc
+  checksum: 10/8a6338f28844f07e29df03fb09bf7e157e0aecb423b0ca7d9b9a65e4537acce4a140c94f177957518e44d5483993c1c40273b913cde7e543d0b68955efda8ffc
+  languageName: node
+  linkType: hard
+
+"embla-carousel-reactive-utils@npm:8.6.0":
+  version: 8.6.0
+  resolution: "embla-carousel-reactive-utils@npm:8.6.0"
+  peerDependencies:
+    embla-carousel: 8.6.0
+  checksum: 10/48b31931572b32b49705e6125d4f10c240fca0ee8a078867fc91f7c889f6adee95f7fd0b0fdf5dfef6d83d497115759f3f3ca2e8320e331efa0de1c9e6fb4638
+  languageName: node
+  linkType: hard
+
+"embla-carousel@npm:8.6.0":
+  version: 8.6.0
+  resolution: "embla-carousel@npm:8.6.0"
+  checksum: 10/6c1c4268160ce2a150c80f0c84edd4c42b47567f8ef25f56fb21819a4094cfa885614cb0837d180e8da8159ff79a077e0a2e1e679ed2c500ff52697d3ec94b78
   languageName: node
   linkType: hard
 

@@ -69,6 +69,8 @@
   --salt-selectable-foreground-partial: var(--salt-palette-interact-foreground-partial);
   --salt-selectable-foreground-partialDisabled: var(--salt-palette-interact-foreground-partialDisabled);
 
+  --salt-selectable-background-blurSelected: var(--salt-palette-interact-background-blurSelected);
+
   --salt-selectable-cta-foreground: var(--salt-palette-interact-foreground);
   --salt-selectable-cta-foreground-disabled: var(--salt-palette-interact-foreground-disabled);
   --salt-selectable-cta-foreground-hover: var(--salt-palette-interact-cta-foreground-hover);
@@ -190,6 +192,11 @@
   --salt-navigable-textDecoration: var(--salt-typography-textDecoration-underline);
   --salt-navigable-textDecoration-hover: var(--salt-typography-textDecoration-none);
   --salt-navigable-textDecoration-selected: var(--salt-typography-textDecoration-underline);
+
+  --salt-navigable-fontWeight: var(--salt-typography-fontWeight-regular);
+  --salt-navigable-fontWeight-hover: var(--salt-typography-fontWeight-regular);
+  --salt-navigable-fontWeight-active: var(--salt-typography-fontWeight-semiBold);
+  --salt-navigable-fontWeight-edit: var(--salt-typography-fontWeight-regular);
 
   /* Accent */
   --salt-accent-fontWeight: var(--salt-typography-fontWeight-semiBold); /* Use --salt-text-notation-fontWeight */

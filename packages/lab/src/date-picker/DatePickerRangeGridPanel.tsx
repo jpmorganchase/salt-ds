@@ -4,9 +4,9 @@ import {
   FormFieldContext,
   type FormFieldContextValue,
   FormFieldHelperText,
-  StackLayout,
   makePrefixer,
   resolveResponsiveValue,
+  StackLayout,
   useBreakpoint,
   useControlled,
 } from "@salt-ds/core";
@@ -15,19 +15,20 @@ import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import clsx from "clsx";
 import {
-  type SyntheticEvent,
   forwardRef,
+  type SyntheticEvent,
   useCallback,
   useLayoutEffect,
   useRef,
   useState,
 } from "react";
 import {
+  Calendar,
   CalendarGrid,
   CalendarNavigation,
   type CalendarRangeProps,
+  type DateRangeSelection,
 } from "../calendar";
-import { Calendar, type DateRangeSelection } from "../calendar";
 import { generateDatesForMonth } from "../calendar/internal/utils";
 import { useLocalization } from "../localization-provider";
 import {

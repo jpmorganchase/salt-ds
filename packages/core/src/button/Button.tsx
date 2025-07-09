@@ -3,8 +3,8 @@ import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
   type ComponentPropsWithoutRef,
-  type ReactElement,
   forwardRef,
+  type ReactElement,
 } from "react";
 import { Spinner } from "../spinner";
 import { makePrefixer } from "../utils";

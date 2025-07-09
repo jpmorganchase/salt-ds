@@ -29,7 +29,7 @@
 
 .saltPillInput:hover {
   background: var(--saltPillInput-background-hover, var(--pillInput-background-hover));
-  cursor: var(--salt-cursor-hover);
+  cursor: var(--salt-cursor-text);
 }
 
 /* Style applied if `bordered={true}` */
@@ -44,11 +44,6 @@
 }
 
 /* Style applied if focused or active when `bordered={true}` */
-.saltPillInput-bordered.saltPillInput-focused,
-.saltPillInput-bordered:active {
-  --pillInput-borderWidth: calc(var(--salt-size-fixed-200) - var(--pillInput-borderWidth));
-}
-
 .saltPillInput-bordered.saltPillInput-focused,
 .saltPillInput-bordered.saltPillInput-focused:hover {
   border-style: var(--salt-borderStyle-solid);
@@ -175,7 +170,7 @@
 .saltPillInput-focused,
 .saltPillInput-focused:hover {
   background: var(--saltPillInput-background-active, var(--pillInput-background-active));
-  cursor: var(--salt-cursor-active);
+  cursor: var(--salt-cursor-text);
   outline: var(--saltPillInput-outline, var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--pillInput-outlineColor));
 }
 

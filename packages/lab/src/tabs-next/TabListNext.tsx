@@ -4,16 +4,15 @@ import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
   type ComponentPropsWithoutRef,
-  type KeyboardEvent,
   forwardRef,
+  type KeyboardEvent,
   useRef,
 } from "react";
-
+import { useOverflow } from "./hooks/useOverflow";
+import { useRestoreActiveTab } from "./hooks/useRestoreActiveTab";
 import tablistNextCss from "./TabListNext.css";
 import { TabOverflowList } from "./TabOverflowList";
 import { useTabsNext } from "./TabsNextContext";
-import { useOverflow } from "./hooks/useOverflow";
-import { useRestoreActiveTab } from "./hooks/useRestoreActiveTab";
 
 const withBaseName = makePrefixer("saltTabListNext");
 

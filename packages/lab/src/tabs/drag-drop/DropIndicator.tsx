@@ -1,10 +1,9 @@
-import { forwardRef } from "react";
-import { Portal } from "../../portal";
-import type { Rect } from "./dragDropTypes";
-
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
+import { forwardRef } from "react";
+import { Portal } from "../../portal";
 import dropIndicatorCss from "./DropIndicator.css";
+import type { Rect } from "./dragDropTypes";
 
 export const DropIndicator = forwardRef<
   HTMLDivElement,

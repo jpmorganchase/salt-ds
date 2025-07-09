@@ -11,10 +11,6 @@ export function useEventCallback<Args extends unknown[], Return>(
   useIsomorphicLayoutEffect(() => {
     ref.current = fn;
   });
-  return useCallback(
-    (...args: Args) =>
-      // biome-ignore lint/style/noCommaOperator: This is a valid use case for the comma operator
-      (void 0, ref.current)(...args),
-    [],
-  );
+  // biome-ignore lint/complexity/noCommaOperator: This is a valid use case for the comma operator
+  return useCallback((...args: Args) => (void 0, ref.current)(...args), []);
 }

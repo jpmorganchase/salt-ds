@@ -1,5 +1,58 @@
 # @salt-ds/lab
 
+## 1.0.0-alpha.71
+
+### Minor Changes
+
+- 9c4575b: ### Summary
+
+  The `Carousel` component has been moved from the Lab package to its own package, `@salt-ds/embla-carousel`.
+
+  `Carousel` remains in a pre-release state and subject to feedback will be promoted to stable in a forthcoming release.
+
+  Refer to the `@salt-ds/embla-carousel` changelog for the migration guide.
+
+- 7db876d: Updated the `NumberInput`:
+
+  1. Added support for `format` and `parse` callbacks for formatting capabilities.
+  2. Added `clamp` prop to restrict entry within the min and max range.
+  3. Refactored `stepBlock` prop to be `stepMultiplier` to be consistent with `Slider` and `RangeSlider` components and to ensure that valid values remain reachable.
+  4. Refactored `decimalPlaces` to be `decimalScale`.
+  5. Added caret handling to preserve the caret position, during change.
+
+  Example:
+
+  ```diff
+  <NumberInput
+  + format={(value) => `${value}%`}
+  + parse={(value) => String(value).replace(/%/g, "")}
+  - decimalPlaces={2}
+  + decimalScale={2}
+  - stepBlock={10}
+  + stepMultiplier={4}
+    min={0}
+    max={100}
+  + clamp
+    defaultValue={20}
+  />
+  ```
+
+### Patch Changes
+
+- d5a52bb: Fixed Calendar's today indicator
+
+  When Next theme with rounded corners is enabled, the today indicator will display rounded corners.
+
+- 621253b: Refactored components and themes to use the new fixed tokens.
+- Updated dependencies [62975de]
+- Updated dependencies [b96166e]
+- Updated dependencies [73ccf6b]
+- Updated dependencies [95dd874]
+- Updated dependencies [c93c943]
+- Updated dependencies [104d776]
+- Updated dependencies [621253b]
+  - @salt-ds/core@1.47.1
+
 ## 1.0.0-alpha.70
 
 ### Patch Changes

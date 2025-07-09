@@ -6,10 +6,10 @@
  */
 import {
   Children,
+  isValidElement,
   type ReactElement,
   type ReactNode,
   type Reducer,
-  isValidElement,
 } from "react";
 
 import type {

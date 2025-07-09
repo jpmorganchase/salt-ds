@@ -27,7 +27,7 @@ import {
   SortableAlphaIcon,
 } from "@salt-ds/icons";
 import type { Meta, StoryFn } from "@storybook/react-vite";
-import { type CSSProperties, type ChangeEvent, useState } from "react";
+import { type ChangeEvent, type CSSProperties, useState } from "react";
 import { usStateExampleData } from "../../assets/exampleData";
 import "./list-builder.stories.css";
 

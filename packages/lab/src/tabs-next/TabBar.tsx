@@ -1,9 +1,8 @@
+import { makePrefixer } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
-import { type ComponentPropsWithRef, forwardRef } from "react";
-
-import { makePrefixer } from "@salt-ds/core";
 import { clsx } from "clsx";
+import { type ComponentPropsWithRef, forwardRef } from "react";
 import tabBarCss from "./TabBar.css";
 
 export interface TabBarProps extends ComponentPropsWithRef<"div"> {

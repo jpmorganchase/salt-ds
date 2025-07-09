@@ -8,9 +8,8 @@ import {
   Text,
 } from "@salt-ds/core";
 import { FormField, Input, LAYER_POSITIONS, LayerLayout } from "@salt-ds/lab";
-import { type MouseEvent, useState } from "react";
-
 import type { Meta, StoryFn } from "@storybook/react-vite";
+import { type MouseEvent, useState } from "react";
 import "../layout/layout.stories.css";
 
 export default {

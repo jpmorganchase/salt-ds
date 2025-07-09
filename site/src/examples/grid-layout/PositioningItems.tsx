@@ -3,14 +3,14 @@ import {
   FormFieldLabel,
   GridItem,
   GridLayout,
+  GRID_ALIGNMENT_BASE as gridItemAlignment,
   RadioButton,
   RadioButtonGroup,
-  GRID_ALIGNMENT_BASE as gridItemAlignment,
 } from "@salt-ds/core";
 import clsx from "clsx";
 import { type ChangeEventHandler, type ReactElement, useState } from "react";
-import positioningItemsStyles from "./PositioningItems.module.css";
 import styles from "./index.module.css";
+import positioningItemsStyles from "./PositioningItems.module.css";
 
 type GridItemAlignmentType = (typeof gridItemAlignment)[number];
 

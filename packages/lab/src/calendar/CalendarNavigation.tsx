@@ -3,11 +3,11 @@ import {
   type ButtonProps,
   Dropdown,
   type DropdownProps,
+  makePrefixer,
   Option,
   type OptionProps,
   Tooltip,
   type TooltipProps,
-  makePrefixer,
   useIcon,
   useListControlContext,
 } from "@salt-ds/core";
@@ -21,9 +21,9 @@ import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
   type ComponentPropsWithRef,
+  forwardRef,
   type MouseEventHandler,
   type SyntheticEvent,
-  forwardRef,
   useCallback,
   useMemo,
 } from "react";

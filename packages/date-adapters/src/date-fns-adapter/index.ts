@@ -1,5 +1,4 @@
 import {
-  type Locale,
   add as addDateFns,
   addDays as addDaysFns,
   addMilliseconds as addMillisecondsDateFns,
@@ -20,6 +19,7 @@ import {
   isSameMonth,
   isSameYear,
   isValid as isValidDateFns,
+  type Locale,
   parse as parseDateFns,
   parseISO,
   set as setDateFns,

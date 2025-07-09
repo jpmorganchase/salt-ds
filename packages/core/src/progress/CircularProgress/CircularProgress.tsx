@@ -2,8 +2,8 @@ import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
-  type CSSProperties,
   type ComponentPropsWithoutRef,
+  type CSSProperties,
   forwardRef,
 } from "react";
 import { Text } from "../../text";

@@ -1,5 +1,5 @@
 import type { DateFrameworkType, Timezone } from "@salt-ds/date-adapters";
-import { type ReactNode, forwardRef } from "react";
+import { forwardRef, type ReactNode } from "react";
 import {
   DateRangeSelectionContext,
   type RangeDatePickerState,
@@ -123,6 +123,8 @@ export const DatePickerMain = forwardRef<
     };
 
     if (props.selectionVariant === "range") {
+      // TODO
+      // biome-ignore lint/correctness/useHookAtTopLevel: This should be fixed.
       const stateAndHelpers = useDatePicker<TDate, "range">(
         useDatePickerProps,
         ref,
@@ -135,6 +137,8 @@ export const DatePickerMain = forwardRef<
         </DateRangeSelectionContext.Provider>
       );
     }
+    // TODO
+    // biome-ignore lint/correctness/useHookAtTopLevel: This should be fixed.
     const stateAndHelpers = useDatePicker(
       useDatePickerProps,
       ref,

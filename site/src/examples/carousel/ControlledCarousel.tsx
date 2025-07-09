@@ -1,49 +1,94 @@
-import { Button, H3, StackLayout, Text, useId } from "@salt-ds/core";
-import { Carousel, CarouselSlide, CarouselSlider } from "@salt-ds/lab";
-import clsx from "clsx";
-import { type ReactElement, useState } from "react";
+import {
+  Button,
+  FlexLayout,
+  StackLayout,
+  Text,
+  useBreakpoint,
+  useId,
+} from "@salt-ds/core";
+import {
+  Carousel,
+  CarouselCard,
+  type CarouselEmblaApiType,
+  CarouselNextButton,
+  CarouselPreviousButton,
+  CarouselProgressLabel,
+  CarouselSlides,
+  CarouselTabList,
+} from "@salt-ds/embla-carousel";
+import { type ReactElement, useEffect, useState } from "react";
 import { sliderData } from "./exampleData";
 import styles from "./index.module.css";
 
 export const ControlledCarousel = (): ReactElement => {
-  const [slide, setSlide] = useState<number>(0);
+  const [emblaApi, setEmblaApi] = useState<CarouselEmblaApiType | null>(null);
+
+  const slideId = useId();
+  const { matchedBreakpoints } = useBreakpoint();
+  const isMobile = matchedBreakpoints.indexOf("sm") === -1;
+
+  useEffect(() => {
+    if (!emblaApi) {
+      return;
+    }
+
+    const logSnappedSlide = () => {
+      const snappedSlideIndex = emblaApi.selectedScrollSnap();
+      console.log(
+        `Slide ${snappedSlideIndex !== undefined ? snappedSlideIndex + 1 : undefined} is snapped into view.`,
+      );
+    };
+
+    emblaApi.on("select", logSnappedSlide);
+
+    // Cleanup listener on component unmount
+    return () => {
+      emblaApi.off("select", logSnappedSlide);
+    };
+  }, [emblaApi]);
+
   return (
     <StackLayout>
-      <StackLayout gap={1} direction="row" align="center">
-        <Button onClick={() => setSlide(slide - 1)} disabled={slide === 0}>
-          Left
-        </Button>
-        <Button
-          onClick={() => setSlide(slide + 1)}
-          disabled={slide >= sliderData.length - 1}
-        >
-          Right
-        </Button>
-        <Text>Current slide: {slide + 1}</Text>
-      </StackLayout>
-      <Carousel aria-label="Account overview" activeSlideIndex={slide}>
-        <CarouselSlider onSelectionChange={(_, index) => setSlide(index)}>
+      <Carousel
+        aria-label="Controlled carousel example"
+        className={styles.carousel}
+        getEmblaApi={setEmblaApi}
+      >
+        <CarouselSlides>
           {sliderData.map((slide, index) => {
-            const slideId = useId();
             return (
-              <CarouselSlide
-                key={slideId}
-                aria-labelledby={`slide-title-${slideId}`}
+              <CarouselCard
+                className={styles.carouselSlide}
+                key={`${slideId}-${slide.title.replace(/ /g, "-")}-${index}`}
+                id={`${slideId}-${slide.title.replace(/ /g, "-")}-${index}`}
+                aria-label={slide.title}
+                appearance={"bordered"}
                 media={
                   <img
                     alt={`stock content to show in carousel slide ${index}`}
-                    className={clsx(styles.carouselImagePlaceholder)}
+                    className={styles.carouselImage}
                     src={slide.image}
                   />
                 }
-                header={<H3 id={`slide-title-${slideId}`}>{slide.title}</H3>}
+                header={<Text styleAs={"h3"}>{slide.title}</Text>}
               >
                 <Text>{slide.content}</Text>
-              </CarouselSlide>
+              </CarouselCard>
             );
           })}
-        </CarouselSlider>
+        </CarouselSlides>
+        <FlexLayout justify={"space-between"} direction={"row"} gap={1}>
+          <StackLayout direction={"row"} gap={1}>
+            <CarouselPreviousButton />
+            <CarouselNextButton />
+            <CarouselProgressLabel />
+          </StackLayout>
+          {!isMobile ? <CarouselTabList /> : null}
+        </FlexLayout>
       </Carousel>
+      <FlexLayout justify={"center"} align={"center"} direction={"row"}>
+        <Button onClick={() => emblaApi?.scrollTo(2)}>Scroll to slide 3</Button>
+      </FlexLayout>
     </StackLayout>
   );
 };

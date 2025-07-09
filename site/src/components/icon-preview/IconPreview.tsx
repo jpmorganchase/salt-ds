@@ -2,6 +2,7 @@ import {
   Button,
   Checkbox,
   CheckboxGroup,
+  capitalize,
   FlexItem,
   FlowLayout,
   FormField,
@@ -44,7 +45,21 @@ const isIconNameMatch = (componentName: string, figmaIconName: string) => {
   return regex.test(componentName);
 };
 
-export function IconPreview() {
+function groupByCategory(data: IconData[]) {
+  return data.reduce(
+    (acc, option) => {
+      const groupName = option.category;
+      if (!acc[groupName]) {
+        acc[groupName] = [];
+      }
+      acc[groupName].push(option);
+      return acc;
+    },
+    {} as Record<string, IconData[]>,
+  );
+}
+
+function useIconData() {
   const [allIcons, setAllIcons] = useState<IconData[]>([]);
 
   useEffect(() => {
@@ -69,15 +84,36 @@ export function IconPreview() {
         icons.push({
           componentName: name,
           Component: Icon,
-          ...(synonymMatch ?? { iconName: name, synonym: [], category: "" }),
+          ...(synonymMatch ?? {
+            iconName: name,
+            synonym: [],
+            category: "deprecated",
+          }),
         } as IconData);
       }
 
-      setAllIcons(icons);
+      setAllIcons(
+        icons.sort((a, b) => {
+          if (a.category === "deprecated" && b.category !== "deprecated") {
+            return 1; // Move deprecated icons to the end
+          }
+          if (b.category === "deprecated" && a.category !== "deprecated") {
+            return -1; // Move deprecated icons to the end
+          }
+
+          return a.category.localeCompare(b.category);
+        }),
+      );
     };
 
     void fetchData();
   }, []);
+
+  return allIcons;
+}
+
+export function IconPreview() {
+  const allIcons = useIconData();
 
   const [search, setSearch] = useState("");
   const deferredSearch = useDeferredValue(
@@ -106,47 +142,62 @@ export function IconPreview() {
     });
   };
 
-  const filteredIcons = useMemo(() => {
-    return allIcons.filter(({ componentName: name, synonym }) => {
-      const iconNameToMatch = name.toLowerCase();
-      const matchesSearch = [iconNameToMatch, ...synonym].some((word) =>
-        word.includes(deferredSearch),
-      );
-      const isOutlineIcon = !name.endsWith("SolidIcon");
-      const isSolidIcon = name.endsWith("SolidIcon");
-      return (
-        matchesSearch &&
-        ((variants.includes("outline") && isOutlineIcon) ||
-          (variants.includes("solid") && isSolidIcon))
-      );
-    });
+  const [filteredIcons, filteredCount] = useMemo(() => {
+    const filtered = allIcons.filter(
+      ({ componentName: name, synonym, category }) => {
+        const iconNameToMatch = name.toLowerCase();
+        const matchesSearch = [iconNameToMatch, ...synonym].some((word) =>
+          word.includes(deferredSearch),
+        );
+        const isOutlineIcon = !name.endsWith("SolidIcon");
+        const isSolidIcon = name.endsWith("SolidIcon");
+        return (
+          matchesSearch &&
+          ((variants.includes("outline") && isOutlineIcon) ||
+            (variants.includes("solid") && isSolidIcon))
+        );
+      },
+    );
+
+    return [groupByCategory(filtered), filtered.length];
   }, [deferredSearch, variants, allIcons]);
 
   const renderIcons = useMemo(() => {
-    if (filteredIcons.length > 0) {
+    if (Object.keys(filteredIcons).length > 0) {
       return (
         <div className={styles.gridContainer}>
-          <FlowLayout justify="start" gap={1}>
-            {filteredIcons.map(({ componentName: name, Component: Icon }) => (
-              <StackLayout
-                align="center"
-                key={name}
-                gap={1}
-                className={styles.iconCard}
+          {Object.entries(filteredIcons).map(([category, icons]) => (
+            <StackLayout key={category} gap={0}>
+              <Text
+                styleAs="h3"
+                color="secondary"
+                className={styles.categoryTitle}
               >
-                <div className={styles.iconContainer}>
-                  <Icon size={2} />
-                </div>
-                <Text
-                  className={styles.iconName}
-                  color="secondary"
-                  styleAs="label"
-                >
-                  {name.replace(/([A-Z])/g, " $1")}
-                </Text>
-              </StackLayout>
-            ))}
-          </FlowLayout>
+                {capitalize(category)}
+              </Text>
+              <FlowLayout justify="start" gap={1}>
+                {icons.map(({ componentName: name, Component: Icon }) => (
+                  <StackLayout
+                    align="center"
+                    key={name}
+                    gap={1}
+                    className={styles.iconCard}
+                  >
+                    <div className={styles.iconContainer}>
+                      <Icon size={2} />
+                    </div>
+                    <Text
+                      className={styles.iconName}
+                      color="secondary"
+                      styleAs="label"
+                    >
+                      {name.replace(/([A-Z])/g, " $1")}
+                    </Text>
+                  </StackLayout>
+                ))}
+              </FlowLayout>
+            </StackLayout>
+          ))}
         </div>
       );
     }
@@ -157,10 +208,12 @@ export function IconPreview() {
           <Text styleAs="h4">
             <strong>No icons found</strong>
           </Text>
-          <Text>
-            No icons found for the search term: "
-            <strong>{deferredSearch}</strong>"
-          </Text>
+          {deferredSearch && (
+            <Text>
+              No icons found for the search term: "
+              <strong>{deferredSearch}</strong>"
+            </Text>
+          )}
         </StackLayout>
       </StackLayout>
     );
@@ -169,12 +222,13 @@ export function IconPreview() {
   const totalCount = Object.entries(allIcons).length;
 
   return (
-    <StackLayout className={styles.root} gap={1}>
+    <StackLayout className={styles.root} gap={3}>
       <FlowLayout justify="space-between">
         <FlexItem>
           <FormField>
             <FormFieldLabel>Search icons</FormFieldLabel>
             <Input
+              bordered
               value={search}
               onChange={handleSearch}
               className={styles.search}
@@ -211,13 +265,6 @@ export function IconPreview() {
       </FlowLayout>
 
       <div className={styles.resultContainer}>{renderIcons}</div>
-
-      <Text styleAs="label" color="secondary">
-        Total icons:{totalCount}.
-        {totalCount > filteredIcons.length
-          ? ` Filtered: ${filteredIcons.length}.`
-          : null}
-      </Text>
     </StackLayout>
   );
 }

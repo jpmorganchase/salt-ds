@@ -5,7 +5,7 @@ import {
   type SetStateAction,
   useContext,
 } from "react";
-import { type UseFloatingUIReturn, createContext } from "../utils";
+import { createContext, type UseFloatingUIReturn } from "../utils";
 
 type UseInteractionsReturn = ReturnType<typeof useInteractions>;
 

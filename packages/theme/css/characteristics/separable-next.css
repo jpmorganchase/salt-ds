@@ -1,7 +1,7 @@
 .salt-theme.salt-theme-next {
-  --salt-separable-primary-borderColor: var(--salt-palette-alpha-contrast-mediumLow);
-  --salt-separable-secondary-borderColor: var(--salt-palette-alpha-contrast-low);
-  --salt-separable-tertiary-borderColor: var(--salt-palette-alpha-contrast-lower);
+  --salt-separable-primary-borderColor: var(--salt-palette-alpha-contrast-mediumHigh);
+  --salt-separable-secondary-borderColor: var(--salt-palette-alpha-contrast-medium);
+  --salt-separable-tertiary-borderColor: var(--salt-palette-alpha-contrast-mediumLow);
 
   --salt-separable-foreground: var(--salt-palette-foreground-primary);
   --salt-separable-foreground-hover: var(--salt-palette-foreground-primary);
