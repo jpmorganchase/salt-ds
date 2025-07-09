@@ -129,6 +129,7 @@
     "workerDirectory": "docs/public"
   },
   "devDependencies": {
+    "@date-fns/tz": "^1.2.0",
     "@rollup/plugin-commonjs": "^28.0.1",
     "@rollup/plugin-json": "^6.1.0",
     "@rollup/plugin-node-resolve": "^15.3.0",

@@ -22,6 +22,7 @@
     "gen:css": "yarn node './cssGen.mjs'"
   },
   "dependencies": {
+    "@date-fns/tz": "^1.2.0",
     "@jpmorganchase/mosaic-cli": "0.1.0-beta.92",
     "@jpmorganchase/mosaic-layouts": "0.1.0-beta.92",
     "@jpmorganchase/mosaic-plugins": "0.1.0-beta.92",
@@ -32,7 +33,7 @@
     "@jpmorganchase/mosaic-standard-generator": "0.1.0-beta.92",
     "@jpmorganchase/mosaic-store": "0.1.0-beta.92",
     "css-tree": "^3.1.0",
-    "date-fns": "^3.6.0",
+    "date-fns": "^4.1.0",
     "dayjs": "^1.11.13",
     "embla-carousel-react": "^8.6.0",
     "lodash-es": "^4.17.21",

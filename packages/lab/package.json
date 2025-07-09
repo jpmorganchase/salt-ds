@@ -37,8 +37,9 @@
     "tinycolor2": "^1.4.2"
   },
   "devDependencies": {
+    "@date-fns/tz": "^1.2.0",
     "@types/luxon": "^3.6.2",
-    "date-fns": "^3.6.0",
+    "date-fns": "^4.1.0",
     "dayjs": "^1.11.13",
     "luxon": "^3.6.1",
     "moment": "^2.30.1",
