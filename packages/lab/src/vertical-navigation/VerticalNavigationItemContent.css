@@ -36,15 +36,15 @@
 }
 
 .saltVerticalNavigationItemContent:hover .saltVerticalNavigationItemTrigger::before {
-  background: var(--salt-navigable-background-hover);
+  background: var(--salt-navigable-accent-background-hover);
 }
 
 .saltVerticalNavigationItemContent-active .saltVerticalNavigationItemTrigger[href]::before {
-  background: var(--salt-navigable-background);
+  background: transparent;
 }
 
 .saltVerticalNavigation-indicator .saltVerticalNavigationItemContent-active {
-  background: var(--salt-navigable-background-active);
+  background: var(--salt-navigable-accent-background-active);
 }
 
 .saltVerticalNavigation-indicator .saltVerticalNavigationItemContent::before {
@@ -57,7 +57,7 @@
 }
 
 .saltVerticalNavigation-indicator .saltVerticalNavigationItemContent-active::before {
-  background: var(--salt-navigable-indicator-active);
+  background: var(--salt-navigable-accent-indicator-active);
 }
 
 .saltVerticalNavigation-bordered .saltVerticalNavigationItemContent {
@@ -66,8 +66,8 @@
 }
 
 .saltVerticalNavigation-bordered .saltVerticalNavigationItemContent-active {
-  background: var(--salt-navigable-background-active);
-  border-color: var(--salt-navigable-borderColor-active);
+  background: var(--salt-navigable-accent-background-active);
+  border-color: var(--salt-navigable-accent-borderColor-active);
 }
 
 .saltVerticalNavigationItemContent .saltVerticalNavigationItem-indicator {

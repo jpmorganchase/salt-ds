@@ -2,8 +2,8 @@
   --salt-navigable-indicator-hover: var(--salt-palette-navigate-indicator-hover);
   --salt-navigable-indicator-active: var(--salt-palette-navigate-indicator-active);
 
-  --salt-navigable-background: var(--salt-palette-alpha-none);
-  --salt-navigable-background-hover: var(--salt-palette-alpha-contrast-lowest);
-  --salt-navigable-background-active: var(--salt-palette-alpha-none);
-  --salt-navigable-borderColor-active: var(--salt-palette-accent);
+  --salt-navigable-accent-indicator-active: var(--salt-palette-navigate-indicator-active);
+  --salt-navigable-accent-background-hover: var(--salt-palette-alpha-contrast-lowest);
+  --salt-navigable-accent-background-active: var(--salt-palette-alpha-none);
+  --salt-navigable-accent-borderColor-active: var(--salt-palette-interact-border-active);
 }
