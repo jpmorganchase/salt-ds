@@ -1,5 +1,5 @@
 import type { ButtonProps } from "@salt-ds/core";
-import clsx from "clsx";
+import { clsx } from "clsx";
 import Link from "next/link";
 import { type ComponentProps, forwardRef } from "react";
 import styles from "./CTALink.module.css";

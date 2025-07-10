@@ -6,7 +6,7 @@ import {
   Spinner,
   StackLayout,
 } from "@salt-ds/core";
-import cx from "classnames";
+import { clsx } from "clsx";
 import {
   type ComponentPropsWithoutRef,
   type ReactElement,
@@ -31,7 +31,7 @@ const LoadingItem = ({
   return (
     <GridItem
       {...rest}
-      className={cx(className, styles.loadingItem, {
+      className={clsx(className, styles.loadingItem, {
         [styles.loading]: isLoading,
         [styles.loaded]: !isLoading,
       })}
