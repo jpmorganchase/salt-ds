@@ -20,6 +20,7 @@ const foundationColors = [
   "teal",
   "gray",
   "red",
+  "orange",
   "green",
   "blue",
   "purple",
