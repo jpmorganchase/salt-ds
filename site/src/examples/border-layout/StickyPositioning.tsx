@@ -1,5 +1,5 @@
 import { BorderItem, BorderLayout } from "@salt-ds/core";
-import clsx from "clsx";
+import { clsx } from "clsx";
 import type { ReactElement } from "react";
 import styles from "./index.module.css";
 import stickyPositioningStyles from "./StickyPositioning.module.css";
