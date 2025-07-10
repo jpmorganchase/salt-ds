@@ -8,7 +8,7 @@
   --saltButton-justifyContent: flex-start;
   align-items: stretch;
   color: var(--salt-content-primary-foreground);
-  border: var(--salt-size-fixed-100) var(--salt-container-borderStyle) var(--salt-container-primary-borderColor);
+  border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-primary-borderColor);
   display: flex;
   flex-direction: column;
   padding: calc(var(--salt-size-unit) * 1.5) 0;

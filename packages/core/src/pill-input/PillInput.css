@@ -35,30 +35,30 @@
 /* Style applied if `bordered={true}` */
 .saltPillInput-bordered.saltPillInput {
   --pillInput-borderWidth: var(--salt-size-fixed-100);
-  border: var(--pillInput-borderWidth) var(--salt-editable-borderStyle) var(--pillInput-borderColor);
+  border: var(--pillInput-borderWidth) var(--salt-borderStyle-solid) var(--pillInput-borderColor);
 }
 
 .saltPillInput-bordered.saltPillInput:hover {
-  border-style: var(--salt-editable-borderStyle-hover);
+  border-style: var(--salt-borderStyle-solid);
   border-color: var(--pillInput-borderColor-hover);
 }
 
 /* Style applied if focused or active when `bordered={true}` */
 .saltPillInput-bordered.saltPillInput-focused,
 .saltPillInput-bordered.saltPillInput-focused:hover {
-  border-style: var(--salt-editable-borderStyle-active);
+  border-style: var(--salt-borderStyle-solid);
   border-color: var(--pillInput-borderColor-active);
 }
 
 .saltPillInput-bordered.saltPillInput-readOnly,
 .saltPillInput-bordered.saltPillInput-readOnly:hover {
-  border-style: var(--salt-editable-borderStyle-readonly);
+  border-style: var(--salt-borderStyle-solid);
   border-color: var(--salt-editable-borderColor-readonly);
 }
 
 .saltPillInput-bordered.saltPillInput-disabled,
 .saltPillInput-bordered.saltPillInput-disabled:hover {
-  border-style: var(--salt-editable-borderStyle-disabled);
+  border-style: var(--salt-borderStyle-solid);
   border-color: var(--salt-editable-borderColor-disabled);
 }
 
@@ -67,28 +67,28 @@
   bottom: 0;
   width: 100%;
   position: absolute;
-  border-bottom: var(--salt-size-fixed-100) var(--salt-editable-borderStyle) var(--pillInput-borderColor);
+  border-bottom: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--pillInput-borderColor);
 }
 
 .saltPillInput:hover .saltPillInput-activationIndicator {
-  border-bottom-style: var(--salt-editable-borderStyle-hover);
+  border-bottom-style: var(--salt-borderStyle-solid);
   border-bottom-color: var(--pillInput-borderColor-hover);
 }
 
 .saltPillInput-focused .saltPillInput-activationIndicator,
 .saltPillInput-focused:hover .saltPillInput-activationIndicator {
-  border-bottom: var(--salt-size-fixed-200) var(--salt-editable-borderStyle-active) var(--pillInput-borderColor-active);
+  border-bottom: var(--salt-size-fixed-200) var(--salt-borderStyle-solid) var(--pillInput-borderColor-active);
 }
 
 .saltPillInput-readOnly .saltPillInput-activationIndicator,
 .saltPillInput-readOnly:hover .saltPillInput-activationIndicator {
-  border-bottom-style: var(--salt-editable-borderStyle-readonly);
+  border-bottom-style: var(--salt-borderStyle-solid);
   border-bottom-color: var(--salt-editable-borderColor-readonly);
 }
 
 .saltPillInput-disabled .saltPillInput-activationIndicator,
 .saltPillInput-disabled:hover .saltPillInput-activationIndicator {
-  border-bottom-style: var(--salt-editable-borderStyle-disabled);
+  border-bottom-style: var(--salt-borderStyle-solid);
   border-bottom-color: var(--salt-editable-borderColor-disabled);
 }
 

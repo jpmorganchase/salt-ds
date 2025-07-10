@@ -4,7 +4,7 @@ import {
   type IconProps,
   SuccessCircleSolidIcon,
 } from "@salt-ds/icons";
-import clsx from "clsx";
+import { clsx } from "clsx";
 import type { FC, ReactNode } from "react";
 import styles from "./GuidanceCallout.module.css";
 

@@ -8,7 +8,7 @@ import {
   RadioButton,
   RadioButtonGroup,
 } from "@salt-ds/core";
-import clsx from "clsx";
+import { clsx } from "clsx";
 import { type ChangeEventHandler, type ReactElement, useState } from "react";
 import flexItemPositionStyles from "./FlexItemPosition.module.css";
 import styles from "./index.module.css";

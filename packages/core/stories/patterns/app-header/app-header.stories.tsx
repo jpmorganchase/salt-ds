@@ -54,7 +54,7 @@ const DesktopAppHeader: FC<{
           boxShadow:
             offset > 0 ? "var(--salt-overlayable-shadow-scroll)" : "none",
           borderBottom:
-            "var(--salt-size-fixed-100) var(--salt-container-borderStyle) var(--salt-separable-primary-borderColor)",
+            "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-separable-primary-borderColor)",
         }}
         justify="space-between"
         gap={3}
@@ -141,7 +141,7 @@ const MobileAppHeader: FC<{
           zIndex: "calc(var(--salt-zIndex-drawer) + 1)",
           position: "fixed",
           borderBottom:
-            "var(--salt-size-fixed-100) var(--salt-separable-borderStyle) var(--salt-separable-primary-borderColor)",
+            "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-separable-primary-borderColor)",
           boxShadow: offset > 0 ? "var(--salt-shadow-1)" : "none",
         }}
       >

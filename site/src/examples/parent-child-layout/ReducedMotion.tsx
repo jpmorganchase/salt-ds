@@ -5,7 +5,7 @@ import {
   ToggleButton,
   ToggleButtonGroup,
 } from "@salt-ds/core";
-import clsx from "clsx";
+import { clsx } from "clsx";
 import { type ReactElement, useState } from "react";
 import styles from "./Default.module.css";
 

@@ -103,7 +103,7 @@ const MediumDialog = (): ReactElement => {
     <nav
       style={{
         borderRight:
-          "var(--salt-container-borderStyle) var(--salt-separable-tertiary-borderColor) var(--salt-size-fixed-100)",
+          "var(--salt-borderStyle-solid) var(--salt-separable-tertiary-borderColor) var(--salt-size-fixed-100)",
       }}
     >
       <StackLayout
@@ -220,7 +220,7 @@ const LargeDialog = (): ReactElement => {
           style={{
             height: "548px",
             border:
-              "var(--salt-container-borderStyle) var(--salt-separable-tertiary-borderColor) var(--salt-size-fixed-100)",
+              "var(--salt-borderStyle-solid) var(--salt-separable-tertiary-borderColor) var(--salt-size-fixed-100)",
             padding: "var(--salt-spacing-100)",
           }}
         >

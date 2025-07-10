@@ -3,7 +3,7 @@
   --splitHandle-size: var(--salt-size-fixed-600);
   --splitHandle-borderWidth: var(--salt-size-fixed-100);
   --splitHandle-borderColor: var(--salt-separable-secondary-borderColor);
-  --splitHandle-borderStyle: var(--salt-separable-borderStyle);
+  --splitHandle-borderStyle: var(--salt-borderStyle-solid);
   --splitHandle-dot-background: var(--salt-separable-foreground);
   --splitHandle-dot-background-hover: var(--salt-separable-foreground-hover);
   --splitHandle-dot-background-active: var(--salt-separable-foreground-active);

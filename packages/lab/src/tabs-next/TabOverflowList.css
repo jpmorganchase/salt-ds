@@ -4,7 +4,7 @@
 
 .saltTabOverflow-list {
   background: var(--salt-container-primary-background);
-  border: var(--salt-size-fixed-100) var(--salt-selectable-borderStyle-selected) var(--salt-selectable-borderColor-selected);
+  border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-selectable-borderColor-selected);
   overflow: hidden;
   overflow-y: auto;
   position: absolute;

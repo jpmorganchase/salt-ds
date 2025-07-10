@@ -3,7 +3,7 @@
 
   display: flex;
   background: var(--salt-container-primary-background);
-  border: var(--toggleButtonGroup-borderWidth) var(--salt-container-borderStyle) var(--salt-container-primary-borderColor);
+  border: var(--toggleButtonGroup-borderWidth) var(--salt-borderStyle-solid) var(--salt-container-primary-borderColor);
   border-radius: var(--salt-palette-corner-weak, 0);
   width: fit-content;
   gap: var(--salt-spacing-50);

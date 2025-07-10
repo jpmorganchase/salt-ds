@@ -1,6 +1,6 @@
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
-import clsx from "clsx";
+import { clsx } from "clsx";
 import { useFormFieldProps } from "../form-field-context";
 import { StatusIndicator } from "../status-indicator";
 import { Text, type TextProps } from "../text";

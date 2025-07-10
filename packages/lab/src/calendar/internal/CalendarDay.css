@@ -34,7 +34,7 @@
   color: var(--salt-content-primary-foreground);
 }
 .saltCalendarDay-outOfRange .saltCalendarDay-today > span:last-of-type {
-  border-bottom: var(--salt-size-indicator) var(--salt-selectable-borderStyle) var(--salt-content-secondary-foreground);
+  border-bottom: var(--salt-size-indicator) var(--salt-borderStyle-solid) var(--salt-content-secondary-foreground);
 }
 
 .saltCalendarDay-outOfRange.saltCalendarDay-highlighted:before {
