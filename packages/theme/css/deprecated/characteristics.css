@@ -1,9 +1,17 @@
 .salt-theme {
+  /* Container */
+  --salt-container-borderStyle: solid;
+
   /* Differential */
   --salt-differential-positive-foreground: var(--salt-palette-positive-foreground);
   --salt-differential-negative-foreground: var(--salt-palette-negative-foreground);
 
   /* Editable */
+  --salt-editable-borderStyle: solid;
+  --salt-editable-borderStyle-hover: solid;
+  --salt-editable-borderStyle-active: solid;
+  --salt-editable-borderStyle-disabled: solid;
+  --salt-editable-borderStyle-readonly: solid;
   --salt-editable-cursor-hover: text;
   --salt-editable-cursor-active: text;
   --salt-editable-cursor-disabled: not-allowed;
@@ -47,6 +55,11 @@
   --salt-overlayable-rangeSelection: var(--salt-overlayable-background-rangeSelection);
 
   /* Selectable */
+  --salt-selectable-borderStyle: solid;
+  --salt-selectable-borderStyle-hover: solid;
+  --salt-selectable-borderStyle-selected: solid;
+  --salt-selectable-borderStyle-blurSelected: solid;
+
   --salt-selectable-cursor-hover: pointer;
   --salt-selectable-cursor-selected: pointer;
   --salt-selectable-cursor-blurSelected: pointer;
@@ -90,6 +103,9 @@
   --salt-selectable-secondary-background-hover: var(--salt-palette-interact-secondary-background-hover);
   --salt-selectable-secondary-background-selected: var(--salt-palette-interact-secondary-background-active);
   --salt-selectable-secondary-background-selectedDisabled: var(--salt-palette-interact-secondary-background-activeDisabled);
+
+  /* Separable */
+  --salt-separable-borderStyle: solid;
 
   /* Status */
   --salt-status-info-background-emphasize: var(--salt-status-info-background);
@@ -136,6 +152,9 @@
 
   /* Target */
   --salt-target-cursor-disabled: not-allowed;
+  --salt-target-borderStyle: dashed;
+  --salt-target-borderStyle-hover: solid;
+  --salt-target-borderStyle-disabled: dashed;
 
   /* Text */
   --salt-text-background-selected: var(--salt-content-foreground-highlight);
@@ -184,6 +203,10 @@
   --salt-accent-foreground-disabled: var(--salt-palette-accent-foreground-disabled);
 
   /* Track */
+  --salt-track-borderStyle: solid;
+  --salt-track-borderStyle-active: solid;
+  --salt-track-borderStyle-complete: solid;
+  --salt-track-borderStyle-incomplete: dotted;
   --salt-track-borderWidth: 2px; /* Use --salt-size-border-strong */
   --salt-track-borderWidth-active: 2px; /* Use --salt-size-border-strong */
   --salt-track-borderWidth-complete: 2px; /* Use --salt-size-border-strong */

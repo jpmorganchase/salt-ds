@@ -12,7 +12,7 @@
   position: absolute;
   inset: auto 0 0 0;
   height: var(--salt-size-fixed-100);
-  border-bottom: var(--salt-size-fixed-100) var(--salt-separable-borderStyle) var(--salt-separable-secondary-borderColor);
+  border-bottom: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-separable-secondary-borderColor);
 }
 
 .saltTabBar-inset {

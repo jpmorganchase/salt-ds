@@ -1,4 +1,4 @@
-import { RefObject, type SyntheticEvent, useContext } from "react";
+import { type RefObject, type SyntheticEvent, useContext } from "react";
 import { createContext } from "../utils";
 import { defaultValueToString } from "./ListControlState";
 

@@ -36,7 +36,7 @@
 }
 
 .saltCascadingMenuItem.saltCascadingMenuItem-menuItemDivider {
-  border-bottom: var(--salt-size-fixed-100) var(--salt-separable-borderStyle) var(--salt-separable-secondary-borderColor);
+  border-bottom: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-separable-secondary-borderColor);
 }
 
 .saltCascadingMenuItem-menuItemHover:hover {
