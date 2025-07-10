@@ -16,13 +16,13 @@ type CssVariableData = Record<string, string>;
 const foundationColors = [
   "black",
   "white",
-  "red",
-  "orange",
-  "green",
+  "brown",
   "teal",
+  "gray",
+  "red",
+  "green",
   "blue",
   "purple",
-  "gray",
 ];
 
 const categoricalColors = [
@@ -48,7 +48,15 @@ const categoricalColors = [
   "forest",
 ];
 
-const ColorTable = ({ data }: { data: CssVariableData }) => {
+const ColorTable = ({
+  data,
+  themeNext,
+}: {
+  data: CssVariableData;
+  themeNext?: boolean;
+}) => {
+  const ChosenSaltProvider = themeNext ? SaltProviderNext : SaltProvider;
+
   return (
     <Table className={styles.table}>
       <thead>
@@ -62,9 +70,9 @@ const ColorTable = ({ data }: { data: CssVariableData }) => {
         {Object.entries(data).map(([name, value]) => (
           <tr key={name}>
             <td className={styles.viewColumn}>
-              <SaltProvider theme="">
+              <ChosenSaltProvider theme="">
                 <ColorBlock hideToken colorVar={name} />
-              </SaltProvider>
+              </ChosenSaltProvider>
             </td>
             <td>
               <FlowLayout gap={1} align="center">
@@ -137,7 +145,7 @@ export const FoundationColorView = ({
 
   return (
     <ChosenSaltProvider>
-      <ColorTable data={data} />
+      <ColorTable data={data} themeNext={themeNext} />
     </ChosenSaltProvider>
   );
 };
