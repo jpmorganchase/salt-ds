@@ -10,7 +10,7 @@ New border style foundation
 + --salt-borderStyle-solid
 ```
 
-Deprecated the following `-borderStyle` tokens:
+Deprecated the following `-borderStyle` characteristic tokens:
 
 | Name                                         | Replacement                 |
 | -------------------------------------------- | --------------------------- |
