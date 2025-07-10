@@ -39,6 +39,7 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "yarn build:ag-grid-theme && yarn bundle:css && storybook build --stats-json",
     "typecheck": "tsc --noEmit",
+    "typecheck:v4": "tsc --noEmit --project tsconfig.v4.json",
     "chromatic": "chromatic"
   },
   "dependencies": {
