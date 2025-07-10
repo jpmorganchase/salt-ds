@@ -7,14 +7,14 @@ export const CustomColors = (): ReactElement => {
     <StackLayout direction="row">
       <div
         style={{
-          color: "var(--salt-sentiment-positive-foreground-informative)",
+          color: "var(--salt-sentiment-positive-foreground-decorative)",
         }}
       >
         <ArrowUpIcon color="inherit" size={2} />
       </div>
       <ArrowDownIcon
         style={{
-          fill: "var(--salt-sentiment-negative-foreground-informative)",
+          fill: "var(--salt-sentiment-negative-foreground-decorative)",
         }}
         size={2}
       />

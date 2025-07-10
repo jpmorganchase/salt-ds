@@ -92,8 +92,8 @@
   --salt-selectable-secondary-background-selectedDisabled: var(--salt-palette-interact-secondary-background-activeDisabled);
 
   /* Status */
-  --salt-status-negative-foreground: var(--salt-palette-negative-foreground); /* Use ---salt-sentiment-negative-foreground-informative */
-  --salt-status-positive-foreground: var(--salt-palette-positive-foreground); /* Use ---salt-sentiment-negative-foreground-positive */
+  --salt-status-negative-foreground: var(--salt-palette-negative-foreground); /* Use ---salt-sentiment-negative-foreground-decorative */
+  --salt-status-positive-foreground: var(--salt-palette-positive-foreground); /* Use ---salt-sentiment-negative-foreground-decorative */
 
   --salt-status-info-background-emphasize: var(--salt-status-info-background);
   --salt-status-success-background-emphasize: var(--salt-status-success-background);

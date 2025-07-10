@@ -13,14 +13,14 @@
 }
 
 .saltMetric-direction-up .saltMetricContent-indicator {
-  fill: var(--salt-sentiment-positive-foreground-informative);
+  fill: var(--salt-sentiment-positive-foreground-decorative);
 }
 .saltMetric-direction-up .saltMetricContent-subvalue {
   color: var(--salt-sentiment-positive-foreground-informative);
 }
 
 .saltMetric-direction-down .saltMetricContent-indicator {
-  fill: var(--salt-sentiment-negative-foreground-informative);
+  fill: var(--salt-sentiment-negative-foreground-decorative);
 }
 .saltMetric-direction-down .saltMetricContent-subvalue {
   color: var(--salt-sentiment-negative-foreground-informative);

@@ -97,7 +97,7 @@ export const Indicators = () => {
           801
           <ArrowUpIcon
             style={{
-              fill: "var(--salt-sentiment-positive-foreground-informative)",
+              fill: "var(--salt-sentiment-positive-foreground-decorative)",
             }}
             size={3}
           />
@@ -119,7 +119,7 @@ export const Indicators = () => {
           801
           <ArrowDownIcon
             style={{
-              fill: "var(--salt-sentiment-negative-foreground-informative)",
+              fill: "var(--salt-sentiment-negative-foreground-decorative)",
             }}
             size={3}
           />
@@ -148,7 +148,7 @@ export const HierarchicalVertical = () => {
           801
           <ArrowUpIcon
             style={{
-              fill: "var(--salt-sentiment-positive-foreground-informative)",
+              fill: "var(--salt-sentiment-positive-foreground-decorative)",
             }}
             size={1}
           />
@@ -170,7 +170,7 @@ export const HierarchicalVertical = () => {
           801
           <ArrowUpIcon
             style={{
-              fill: "var(--salt-sentiment-positive-foreground-informative)",
+              fill: "var(--salt-sentiment-positive-foreground-decorative)",
             }}
             size={2}
           />
@@ -192,7 +192,7 @@ export const HierarchicalVertical = () => {
           801
           <ArrowUpIcon
             style={{
-              fill: "var(--salt-sentiment-positive-foreground-informative)",
+              fill: "var(--salt-sentiment-positive-foreground-decorative)",
             }}
             size={3}
           />

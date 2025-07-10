@@ -37,7 +37,7 @@ export const WithChild = (): ReactElement => {
                   400
                   <ArrowUpIcon
                     style={{
-                      fill: "var(--salt-sentiment-positive-foreground-informative)",
+                      fill: "var(--salt-sentiment-positive-foreground-decorative)",
                     }}
                     size={1}
                   />
@@ -57,7 +57,7 @@ export const WithChild = (): ReactElement => {
                   984
                   <ArrowDownIcon
                     style={{
-                      fill: "var(--salt-sentiment-negative-foreground-informative)",
+                      fill: "var(--salt-sentiment-negative-foreground-decorative)",
                     }}
                     size={1}
                   />
@@ -79,7 +79,7 @@ export const WithChild = (): ReactElement => {
                   20%
                   <ArrowUpIcon
                     style={{
-                      fill: "var(--salt-sentiment-positive-foreground-informative)",
+                      fill: "var(--salt-sentiment-positive-foreground-decorative)",
                     }}
                     size={1}
                   />
@@ -99,7 +99,7 @@ export const WithChild = (): ReactElement => {
                   5%
                   <ArrowUpIcon
                     style={{
-                      fill: "var(--salt-sentiment-positive-foreground-informative)",
+                      fill: "var(--salt-sentiment-positive-foreground-decorative)",
                     }}
                     size={1}
                   />
