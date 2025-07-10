@@ -8,7 +8,7 @@ import {
   SplitLayout,
   StackLayout,
 } from "@salt-ds/core";
-import clsx from "clsx";
+import { clsx } from "clsx";
 import { type ChangeEventHandler, type ReactElement, useState } from "react";
 import styles from "./index.module.css";
 import responsiveLayoutStyles from "./ResponsiveLayout.module.css";

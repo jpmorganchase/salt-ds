@@ -1,7 +1,7 @@
 import { StoreProvider, useCreateStore } from "@jpmorganchase/mosaic-store";
 import { AdapterDateFns } from "@salt-ds/date-adapters/date-fns";
 import { LocalizationProvider } from "@salt-ds/lab";
-import clsx from "clsx";
+import { clsx } from "clsx";
 import type { AppProps } from "next/app";
 import * as saltComponents from "../components";
 import { amplitude, openSans, ptMono } from "../fonts";

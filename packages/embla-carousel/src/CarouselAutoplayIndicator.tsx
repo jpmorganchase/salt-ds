@@ -1,7 +1,7 @@
 import { makePrefixer, useDensity } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
-import clsx from "classnames";
+import { clsx } from "clsx";
 import {
   type ComponentPropsWithoutRef,
   forwardRef,
