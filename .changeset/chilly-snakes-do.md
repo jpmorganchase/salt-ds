@@ -2,7 +2,7 @@
 "@salt-ds/theme": minor
 ---
 
-New border style foundation
+Added a new border style foundation. This allows us to consolidate 18 characteristic tokens in to 3 foundational tokens.
 
 ```diff
 + --salt-borderStyle-dashed
