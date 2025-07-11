@@ -27,14 +27,6 @@ import {
   useState,
 } from "react";
 
-// biome-ignore lint/suspicious/noExplicitAny: Date framework adapter
-const dateAdapterMap: Record<string, any> = {
-  moment: AdapterMoment,
-  dayjs: AdapterDayjs,
-  "date-fns": AdapterDateFns,
-  luxon: AdapterLuxon,
-};
-
 const Single = ({
   selectedTimezone,
 }: {

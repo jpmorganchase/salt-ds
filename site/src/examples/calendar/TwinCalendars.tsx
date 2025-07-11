@@ -21,7 +21,7 @@ export const TwinCalendars = (): ReactElement => {
     null,
   );
   const handleHoveredDateChange: CalendarProps<DateFrameworkType>["onHoveredDateChange"] =
-    (event, newHoveredDate) => {
+    (_event, newHoveredDate) => {
       setHoveredDate(newHoveredDate);
     };
   const [startVisibleMonth, setStartVisibleMonth] = useState<
@@ -74,7 +74,7 @@ export const TwinCalendars = (): ReactElement => {
     UseCalendarSelectionRangeProps<DateFrameworkType>["selectedDate"]
   >({ startDate: undefined, endDate: undefined });
   const handleSelectionChange: UseCalendarSelectionRangeProps<DateFrameworkType>["onSelectionChange"] =
-    (event, newSelectedDate) => {
+    (_event, newSelectedDate) => {
       setSelectedDate(newSelectedDate);
     };
 

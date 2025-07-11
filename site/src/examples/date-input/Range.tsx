@@ -11,7 +11,7 @@ export const Range = (): ReactElement => {
   const { dateAdapter } = useLocalization();
   const handleDateChange = useCallback(
     (
-      event: SyntheticEvent,
+      _event: SyntheticEvent,
       date: DateRangeSelection<DateFrameworkType> | null,
       details: DateInputRangeDetails | undefined,
     ) => {

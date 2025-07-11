@@ -9,7 +9,7 @@ import {
   StackLayout,
 } from "@salt-ds/core";
 import type { DateFrameworkType, Timezone } from "@salt-ds/date-adapters";
-import { AdapterDateFns } from "@salt-ds/date-adapters/date-fns";
+import { AdapterDateFnsTZ } from "@salt-ds/date-adapters/date-fns-tz";
 import { AdapterDayjs } from "@salt-ds/date-adapters/dayjs";
 import { AdapterLuxon } from "@salt-ds/date-adapters/luxon";
 import { AdapterMoment } from "@salt-ds/date-adapters/moment";
@@ -30,14 +30,6 @@ import {
   useState,
 } from "react";
 
-// biome-ignore lint/suspicious/noExplicitAny: Date framework adapter
-const dateAdapterMap: Record<string, any> = {
-  moment: AdapterMoment,
-  dayjs: AdapterDayjs,
-  "date-fns": AdapterDateFns,
-  luxon: AdapterLuxon,
-};
-
 const Single = ({
   selectedTimezone,
 }: {
@@ -49,7 +41,6 @@ const Single = ({
   const [iso8601String, setIso8601String] = useState<string>("");
   const [localeDateString, setLocaleDateString] = useState<string>("");
   const [dateString, setDateString] = useState<string>("");
-  const [error, setError] = useState<string | undefined>(undefined);
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: reset related state when timezone changes
   useEffect(() => {
@@ -57,7 +48,6 @@ const Single = ({
     setIso8601String("");
     setLocaleDateString("");
     setDateString("");
-    setError(undefined);
   }, [selectedTimezone]);
 
   const handleSelectionChange = (
@@ -167,31 +157,27 @@ export const WithTimezone = (): ReactElement => {
   const dateAdapterMap: Record<string, any> = {
     moment: AdapterMoment,
     dayjs: AdapterDayjs,
-    "date-fns": AdapterDateFns,
+    "date-fns": AdapterDateFnsTZ,
     luxon: AdapterLuxon,
   };
   const validAdapters = Object.keys(dateAdapterMap);
   const [dateAdapterName, setDateAdapterName] = useState<string>("luxon");
 
-  const timezoneOptions =
-    dateAdapterName !== "date-fns"
-      ? [
-          "default",
-          "system",
-          "UTC",
-          "America/New_York",
-          "Europe/London",
-          "Asia/Shanghai",
-          "Asia/Kolkata",
-        ]
-      : ["default"];
-
+  const timezoneOptions = [
+    "default",
+    "system",
+    "UTC",
+    "America/New_York",
+    "Europe/London",
+    "Asia/Shanghai",
+    "Asia/Kolkata",
+  ];
   const [selectedTimezone, setSelectedTimezone] = useState<string>(
     timezoneOptions[0],
   );
 
   const handleAdapterChange: DropdownProps["onSelectionChange"] = (
-    event,
+    _event,
     newSelected,
   ) => {
     setDateAdapterName(newSelected[0] ?? "date-fns");
