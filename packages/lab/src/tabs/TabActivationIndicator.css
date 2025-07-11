@@ -17,7 +17,7 @@
   inset: var(--saltTabs-activationIndicator-thumb-inset);
   position: absolute;
   height: var(--tabs-activationIndicator-thumb-height, auto);
-  background: var(--salt-navigable-indicator-active);
+  background: var(--salt-navigable-accent-indicator-active);
   transition: var(--saltTabs-activationIndicator-transition, var(--tabs-activationIndicator-transition, left 0.3s ease));
   width: var(--tabs-activationIndicator-thumb-width, auto);
   z-index: 1;
