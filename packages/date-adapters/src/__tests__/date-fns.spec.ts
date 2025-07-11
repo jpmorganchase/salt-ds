@@ -86,6 +86,8 @@ describe("GIVEN a AdapterDateFns", () => {
     const startOfDay = adapter.startOf(date, "day");
     expect(startOfDay.getHours()).toBe(0);
     expect(startOfDay.getMinutes()).toBe(0);
+    expect(startOfDay.getSeconds()).toBe(0);
+    expect(startOfDay.getMilliseconds()).toBe(0);
   });
 
   it("SHOULD get the end of a day", () => {
@@ -103,6 +105,8 @@ describe("GIVEN a AdapterDateFns", () => {
     expect(today.getDate()).toBe(now.getDate());
     expect(today.getHours()).toBe(0);
     expect(today.getMinutes()).toBe(0);
+    expect(today.getSeconds()).toBe(0);
+    expect(today.getMilliseconds()).toBe(0);
   });
 
   it("SHOULD return the current date and time", () => {

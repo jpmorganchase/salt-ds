@@ -22,7 +22,7 @@ export const RangeControlled = (): ReactElement => {
     useState<DateRangeSelection<DateFrameworkType> | null>(null);
   const handleSelectionChange = useCallback(
     (
-      event: SyntheticEvent,
+      _event: SyntheticEvent,
       date: DateRangeSelection<DateFrameworkType> | null,
       details: DateInputRangeDetails | undefined,
     ) => {

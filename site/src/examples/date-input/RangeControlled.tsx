@@ -21,7 +21,6 @@ export const RangeControlled = (): ReactElement => {
   const { dateAdapter } = useLocalization();
   const defaultHelperText = "Please enter date in DD MMM YYYY format";
   const errorHelperText = "Please enter a valid date in DD MMM YYYY format";
-  const [open, setOpen] = useState<boolean>(false);
   const [helperText, setHelperText] = useState(defaultHelperText);
   const [validationStatus, setValidationStatus] = useState<"error" | undefined>(
     undefined,
@@ -30,7 +29,7 @@ export const RangeControlled = (): ReactElement => {
     useState<DateRangeSelection<DateFrameworkType> | null>(null);
   const handleDateChange = useCallback(
     (
-      event: SyntheticEvent,
+      _event: SyntheticEvent,
       date: DateRangeSelection<DateFrameworkType> | null,
       details: DateInputRangeDetails | undefined,
     ) => {

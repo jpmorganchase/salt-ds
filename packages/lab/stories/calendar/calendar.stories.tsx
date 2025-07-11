@@ -1009,18 +1009,15 @@ export const SingleWithTimezone: StoryFn<
   React.FC<CalendarSingleProps<DateFrameworkType>>
 > = (args) => {
   const { dateAdapter } = useLocalization<DateFrameworkType>();
-  const timezoneOptions =
-    dateAdapter.lib !== "date-fns"
-      ? [
-          "default",
-          "system",
-          "UTC",
-          "America/New_York",
-          "Europe/London",
-          "Asia/Shanghai",
-          "Asia/Kolkata",
-        ]
-      : ["default"];
+  const timezoneOptions = [
+    "default",
+    "system",
+    "UTC",
+    "America/New_York",
+    "Europe/London",
+    "Asia/Shanghai",
+    "Asia/Kolkata",
+  ];
   const [selectedTimezone, setSelectedTimezone] = useState<string>(
     timezoneOptions[0],
   );
@@ -1072,7 +1069,7 @@ export const SingleWithTimezone: StoryFn<
       const jsDate =
         dateAdapter.lib === "luxon"
           ? selection.toJSDate()
-          : dateAdapter.lib === "moment"
+          : dateAdapter.lib === "moment" || dateAdapter.lib === "dayjs"
             ? selection.toDate()
             : selection;
       const formattedDate = formatDate(jsDate);
@@ -1152,18 +1149,15 @@ export const RangeWithTimezone: StoryFn<
   React.FC<CalendarRangeProps<DateFrameworkType>>
 > = (args) => {
   const { dateAdapter } = useLocalization<DateFrameworkType>();
-  const timezoneOptions =
-    dateAdapter.lib !== "date-fns"
-      ? [
-          "default",
-          "system",
-          "UTC",
-          "America/New_York",
-          "Europe/London",
-          "Asia/Shanghai",
-          "Asia/Kolkata",
-        ]
-      : ["default"];
+  const timezoneOptions = [
+    "default",
+    "system",
+    "UTC",
+    "America/New_York",
+    "Europe/London",
+    "Asia/Shanghai",
+    "Asia/Kolkata",
+  ];
   const [selectedTimezone, setSelectedTimezone] = useState<string>(
     timezoneOptions[0],
   );
@@ -1224,7 +1218,7 @@ export const RangeWithTimezone: StoryFn<
       const startJSDate =
         dateAdapter.lib === "luxon"
           ? startDate.toJSDate()
-          : dateAdapter.lib === "moment"
+          : dateAdapter.lib === "moment" || dateAdapter.lib === "dayjs"
             ? startDate.toDate()
             : startDate;
       const start = formatDate(startJSDate);
@@ -1236,7 +1230,7 @@ export const RangeWithTimezone: StoryFn<
         const endJSDate =
           dateAdapter.lib === "luxon"
             ? endDate.toJSDate()
-            : dateAdapter.lib === "moment"
+            : dateAdapter.lib === "moment" || dateAdapter.lib === "dayjs"
               ? endDate.toDate()
               : endDate;
         const end = formatDate(endJSDate);
