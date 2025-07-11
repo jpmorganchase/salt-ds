@@ -1,5 +1,14 @@
 # @salt-ds/core
 
+## 1.47.2
+
+### Patch Changes
+
+- cdce628: Fixed FormField having extra bottom padding when it's used without a label or helper text.
+- 454686b: Removed invalid styling from ComboBox.
+- f25a82b: Fixed Dialog's scroll indicator flickering at certain screen sizes.
+- 6bc8e53: Fixed a bug in the ListBox component where clicking an option would temporarily select the first option before releasing the mouse button.
+
 ## 1.47.1
 
 ### Patch Changes
