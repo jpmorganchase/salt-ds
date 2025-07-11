@@ -39,6 +39,7 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "yarn build:ag-grid-theme && yarn bundle:css && storybook build --stats-json",
     "typecheck": "tsc --noEmit",
+    "typecheck:v4": "tsc --noEmit --project tsconfig.v4.json",
     "chromatic": "chromatic"
   },
   "dependencies": {
@@ -129,6 +130,7 @@
     "workerDirectory": "docs/public"
   },
   "devDependencies": {
+    "@date-fns/tz": "^1.2.0",
     "@rollup/plugin-commonjs": "^28.0.1",
     "@rollup/plugin-json": "^6.1.0",
     "@rollup/plugin-node-resolve": "^15.3.0",

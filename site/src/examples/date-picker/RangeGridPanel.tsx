@@ -25,7 +25,7 @@ export const RangeGridPanel = () => {
   const [step, setStep] = useState("1");
   const handleSelectionChange = useCallback(
     (
-      event: SyntheticEvent,
+      _event: SyntheticEvent,
       date: DateRangeSelection<DateFrameworkType> | null,
       details: DateInputRangeDetails | undefined,
     ) => {

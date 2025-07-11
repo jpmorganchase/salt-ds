@@ -29,7 +29,7 @@ export const SingleControlled = (): ReactElement => {
   );
   const handleDateChange = useCallback(
     (
-      event: SyntheticEvent,
+      _event: SyntheticEvent,
       date: SingleDateSelection<DateFrameworkType> | null,
       details: DateInputSingleDetails | undefined,
     ) => {

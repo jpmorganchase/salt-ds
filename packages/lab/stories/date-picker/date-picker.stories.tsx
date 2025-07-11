@@ -3533,6 +3533,33 @@ export const WithExperimentalTime: StoryFn<
     );
   const previousSelectedDate = useRef<typeof selectedDate>(selectedDate);
 
+  const addTimeToDate = useCallback(
+    (
+      time: typeof selectedTime,
+      date: DateRangeSelection<DateFrameworkType>,
+    ) => {
+      const { startTime, endTime } = time;
+      if (dateAdapter.isValid(date?.startDate) && startTime) {
+        date.startDate = dateAdapter.set(date.startDate, {
+          hour: startTime.hour,
+          minute: startTime.minute,
+          second: startTime.second,
+          millisecond: startTime.millisecond,
+        });
+      }
+      if (dateAdapter.isValid(date?.endDate) && endTime) {
+        date.endDate = dateAdapter.set(date.endDate, {
+          hour: endTime.hour,
+          minute: endTime.minute,
+          second: endTime.second,
+          millisecond: endTime.millisecond,
+        });
+      }
+      return date;
+    },
+    [selectedTime, dateAdapter],
+  );
+
   const handleSelectionChange = useCallback(
     (
       event: SyntheticEvent,
@@ -3587,6 +3614,7 @@ export const WithExperimentalTime: StoryFn<
       selectedTime,
       selectedTime?.startTime,
       selectedTime?.endTime,
+      addTimeToDate,
     ],
   );
 
@@ -3601,32 +3629,8 @@ export const WithExperimentalTime: StoryFn<
         );
       }
     },
-    [dateAdapter, selectedDate],
+    [dateAdapter, selectedDate, addTimeToDate],
   );
-
-  function addTimeToDate(
-    time: typeof selectedTime,
-    date: DateRangeSelection<DateFrameworkType>,
-  ) {
-    const { startTime, endTime } = time;
-    if (dateAdapter.isValid(date?.startDate) && startTime) {
-      date.startDate = dateAdapter.set(date.startDate, {
-        hour: startTime.hour,
-        minute: startTime.minute,
-        second: startTime.second,
-        millisecond: startTime.millisecond,
-      });
-    }
-    if (dateAdapter.isValid(date?.endDate) && endTime) {
-      date.endDate = dateAdapter.set(date.endDate, {
-        hour: endTime.hour,
-        minute: endTime.minute,
-        second: endTime.second,
-        millisecond: endTime.millisecond,
-      });
-    }
-    return date;
-  }
 
   const handleApply = useCallback(
     (
