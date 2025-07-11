@@ -11,15 +11,19 @@
   "main": "src/index.ts",
   "sideEffects": false,
   "peerDependencies": {
+    "@date-fns/tz": "^1.2.0",
     "@types/luxon": "^3.6.2",
     "@types/react": ">=16.14.0",
-    "date-fns": "^3.6.0",
+    "date-fns": "^4.1.0",
     "dayjs": "^1.11.13",
     "luxon": "^3.6.1",
     "moment": "^2.30.1",
     "moment-timezone": "^0.5.46"
   },
   "peerDependenciesMeta": {
+    "@date-fns/tz": {
+      "optional": true
+    },
     "date-fns": {
       "optional": true
     },

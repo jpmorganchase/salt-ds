@@ -93,7 +93,7 @@ const defaultFormatMap: { [key: string]: string } = {
 
 /**
  * Adapter for date-fns library, implementing the SaltDateAdapter interface.
- * Provides methods for date manipulation and formatting using date-fns.
+ * Provides methods for date manipulation and formatting using date-fns, without timezone support.
  */
 export class AdapterDateFns implements SaltDateAdapter<Date, Locale> {
   /**
@@ -341,9 +341,10 @@ export class AdapterDateFns implements SaltDateAdapter<Date, Locale> {
 
   /**
    * Get the timezone from the Date object (un-supported by v3 date-fns/Date object)
+   * @param date - A Date object
    * @returns "default" as Timezones are not supported by the date-fns/Date object
    */
-  public getTimezone = (): string => {
+  public getTimezone = (_date: Date): string => {
     return "default";
   };
 
@@ -428,7 +429,14 @@ export class AdapterDateFns implements SaltDateAdapter<Date, Locale> {
    * @returns The current date at the start of the day.
    */
   public today(): Date {
-    return startOfDay(new Date());
+    let now = new Date();
+    now = setDateFns(now, {
+      hours: 0,
+      minutes: 0,
+      seconds: 0,
+      milliseconds: 0,
+    });
+    return now;
   }
 
   /**
