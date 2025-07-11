@@ -48,7 +48,7 @@
 
 .saltTabNext:hover::after,
 .saltTabNext-focusVisible::after {
-  background: var(--salt-navigable-indicator-hover);
+  background: var(--salt-navigable-accent-indicator-hover);
 }
 
 .saltTabNext-disabled:hover::after,
@@ -67,7 +67,7 @@
 }
 
 .saltTabNext.saltTabNext-selected::after {
-  background: var(--salt-navigable-indicator-active);
+  background: var(--salt-navigable-accent-indicator-active);
 }
 
 .saltTabNext.saltTabNext-disabled {

@@ -1,3 +1,6 @@
 .salt-theme.salt-theme-next {
+  --salt-navigable-indicator-hover: var(--salt-palette-neutral);
+  --salt-navigable-indicator-active: var(--salt-palette-accent);
+
   --salt-selectable-background-blurSelected: var(--salt-palette-neutral-weakest);
 }
