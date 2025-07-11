@@ -68,5 +68,5 @@
   white-space: nowrap;
   min-height: var(--salt-size-base);
   display: flex;
-  align-items: end;
+  align-items: flex-end;
 }

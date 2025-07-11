@@ -1,0 +1,57 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+## Appearance
+
+`VerticalNavigation` supports two appearances: `indicator` and `bordered`.
+
+<LivePreview componentName="vertical-navigation" exampleName="Appearance" />
+
+## Nesting
+
+Nest navigation items under a parent navigation item to create a multilevel structure.
+
+### Best practices
+
+- Use `Divider` to visually separate nested items.
+
+<LivePreview componentName="vertical-navigation" exampleName="Nested" />
+
+## Collapsible submenus
+
+Compose `VerticalNavigation` with `Collapsible` to create a collapsible menu structure.
+
+### Best practices
+
+- When a collapsed submenu contains an active navigation item, the parent item should be set to active.
+
+<LivePreview
+  componentName="vertical-navigation"
+  exampleName="CollapsibleSubmenu"
+/>
+
+## Separate expand button
+
+You can add a separate action button to a `VerticalNavigationItem` to allow one item to have a separate expand and navigation action.
+
+<LivePreview
+  componentName="vertical-navigation"
+  exampleName="MultiActionItem"
+/>
+
+## With icons
+
+Use an icon to effectively signify the navigation item’s purpose, whether it’s related to a product’s identity, a specific tool, function, or a configuration setting.
+
+### Best practices
+
+Ensure that you use icon descriptors consistently across all items within the same hierarchy level. This helps keep them equally weighted.
+
+<LivePreview componentName="vertical-navigation" exampleName="WithIcons" />
