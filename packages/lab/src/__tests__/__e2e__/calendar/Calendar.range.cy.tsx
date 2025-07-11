@@ -30,7 +30,7 @@ const adapterMoment = new AdapterMoment();
 
 const adapters = [adapterDateFns, adapterDayjs, adapterLuxon, adapterMoment];
 
-describe('GIVEN a Calendar with `selectionVariant="range"', () => {
+describe('GIVEN a Calendar with `selectionVariant="range"`', () => {
   adapters.forEach((adapter: SaltDateAdapter<DateFrameworkType>) => {
     describe(`Tests with ${adapter.lib}`, () => {
       beforeEach(() => {
