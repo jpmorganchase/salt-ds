@@ -43,8 +43,8 @@ export const DialogContent = forwardRef<HTMLDivElement, DialogContentProps>(
         setCanScrollDown(
           container.scrollHeight -
             container.scrollTop -
-            container.clientHeight !==
-            0,
+            container.clientHeight >
+            1,
         );
       });
     };
