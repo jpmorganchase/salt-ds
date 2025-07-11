@@ -50,7 +50,7 @@ Using an analytical dashboard helps present complex data in a visually organized
 
 Creating an analytical dashboard user interface involves a careful consideration of layout features and components to maintain an effective visual hierarchy.
 
-1. **Data visualization widgets**: These include interactive data visualizations such as charts (line charts, bar charts, pie charts, etc.), graphs, heat maps, scatter plots and more. These widgets are usually within a [`Card` component](../../components/card) and should effectively represent the data and provide users with insights at a glance.
+1. **Data visualization widgets**: These include interactive data visualizations such as charts (line charts, bar charts, pie charts, etc.), graphs, heat maps, scatter plots and more. These widgets are usually within a [`Card` component](/salt/components/card) and should effectively represent the data and provide users with insights at a glance.
 2. **Filters and controls**: Implement filters and controls that allow users to interact with the data and customize their views. Common examples include date range selectors, dropdown menus, checkboxes and search bars.
 3. **Metrics**: Highlight important metrics and key performance indicators (KPIs) that users need to monitor regularly. You can display these as numerical values, gauges or progress bars.
 4. **Buttons/icons**: Allow users to export data and reports in various formats (e.g., CSV, PDF) and provide options to share the dashboard with others.
@@ -73,11 +73,11 @@ Ensure that the dashboard is responsive and can adapt to different viewport size
 
 The following examples use a desktop screen size of 1440 x 1024px and a large, eight-column grid in medium density. The gutters and margins for Salt layout grids are `--salt-spacing-300` across all densities.
 
-- [`BorderLayout`](../../components/border-layout): Use the border layout component to manage the top-level layout of the dashboard, including header, footer and navigation panel elements.
-- [`FlowLayout`](../../components/flow-layout): Use for small-scale layouts that require components (such as cards) to be displayed in a responsive row.
-- [`StackLayout`](../../components/stack-layout): Use for small-scale layouts that require displaying components in a single row or column and may benefit from the supported visual separators.
-- [`Tabs`](../../components/tabs): Use to organize and categorize dashboard widgets into local groupings. You can also organize content into multiple dashboards using tabs, each focusing on a specific aspect or topic. This keeps the interface clean and prevents overwhelming users with too much information.
-- [`GridLayout`](../../components/grid-layout): Use to manage the layout and responsiveness of the main content area in your dashboard.
+- [`BorderLayout`](/salt/components/border-layout): Use the border layout component to manage the top-level layout of the dashboard, including header, footer and navigation panel elements.
+- [`FlowLayout`](/salt/components/flow-layout): Use for small-scale layouts that require components (such as cards) to be displayed in a responsive row.
+- [`StackLayout`](/salt/components/stack-layout): Use for small-scale layouts that require displaying components in a single row or column and may benefit from the supported visual separators.
+- [`Tabs`](/salt/components/tabs): Use to organize and categorize dashboard widgets into local groupings. You can also organize content into multiple dashboards using tabs, each focusing on a specific aspect or topic. This keeps the interface clean and prevents overwhelming users with too much information.
+- [`GridLayout`](/salt/components/grid-layout): Use to manage the layout and responsiveness of the main content area in your dashboard.
 
 <Diagram
   src="/img/patterns/dashboards/analytical-dashboard/dashboard_layout.png"
@@ -102,7 +102,7 @@ When considering the visual hierarchy of an analytical dashboard, ensure the mos
 
 <GuidanceCallout type="positive" customPillText="Best practices">
 
-- Use [`Drawer`](../../components/drawer) to display an expandable panel
+- Use [`Drawer`](/salt/components/drawer) to display an expandable panel
   overlaid above a region of your dashboard rather than embedded within the
   existing layout. Users can view additional content without going to a
   different screen.
@@ -250,7 +250,7 @@ You can use a fixed panel to:
 
 ### Content modules
 
-Use [`Card`](../../components/card) as a container or widget type to position and convey forms of data, such as charts and grids, within the main body of the dashboard. You can easily arrange and manipulate cards—they're a good choice for a responsive design as you can easily scale them.
+Use [`Card`](/salt/components/card) as a container or widget type to position and convey forms of data, such as charts and grids, within the main body of the dashboard. You can easily arrange and manipulate cards—they're a good choice for a responsive design as you can easily scale them.
 
 <ImageSwitcher
   images={[
@@ -320,6 +320,6 @@ Metric bars should remain clean and concise to provide a higher level oversight 
 
 - Position key metrics in a horizontal layout and apply vertical `--salt-spacing-300` between them to promote readability.
 - Use a horizontal container spanning the width of the main body of the dashboard to evenly space out and position a set number of metrics.
-- Layout is flexible depending on the dashboard grid. A metrics bar can span the full width of a dashboard (e.g., over 12 columns) or follow a [`SplitLayout`](../../components/split-layout) using the remaining number of available columns across the main body of the dashboard. Use the [`StackLayout`](../../components/stack-layout) or [`FlowLayout`](../../components/flow-layout) components to organize the layout within a metric bar depending on whether metrics should wrap or scroll within a module.
+- Layout is flexible depending on the dashboard grid. A metrics bar can span the full width of a dashboard (e.g., over 12 columns) or follow a [`SplitLayout`](/salt/components/split-layout) using the remaining number of available columns across the main body of the dashboard. Use the [`StackLayout`](/salt/components/stack-layout) or [`FlowLayout`](/salt/components/flow-layout) components to organize the layout within a metric bar depending on whether metrics should wrap or scroll within a module.
 
 :fragment{src="./fragments/feedback.mdx"}
