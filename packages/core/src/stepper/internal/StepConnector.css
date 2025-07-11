@@ -15,7 +15,7 @@
 
   border-top-width: var(--salt-size-fixed-200);
   border-top-style: var(--salt-borderStyle-dotted);
-  border-top-color: var(--salt-track-borderColor);
+  border-top-color: var(--salt-sentiment-neutral-track);
 }
 
 .saltStepper-horizontal .saltStep-stage-completed > .saltStepConnector,
@@ -30,7 +30,7 @@
 
   border-left-width: var(--salt-size-fixed-200);
   border-left-style: var(--salt-borderStyle-dotted);
-  border-left-color: var(--salt-track-borderColor);
+  border-left-color: var(--salt-sentiment-neutral-track);
 }
 
 .saltStepper-vertical .saltStep-stage-completed > .saltStepConnector,

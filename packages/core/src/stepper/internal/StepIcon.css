@@ -12,11 +12,11 @@
 }
 
 .saltStep-stage-pending > .saltStepIcon {
-  --saltIcon-color: var(--salt-status-static-foreground);
+  --saltIcon-color: var(--salt-content-secondary-foreground);
 }
 
 .saltStep-stage-locked > .saltStepIcon {
-  --saltIcon-color: var(--salt-status-static-foreground);
+  --saltIcon-color: var(--salt-content-secondary-foreground);
 }
 
 .saltStep-stage-inprogress > .saltStepIcon {

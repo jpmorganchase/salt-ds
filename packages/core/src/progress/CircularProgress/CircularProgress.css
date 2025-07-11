@@ -22,7 +22,7 @@
   outline-width: var(--salt-size-bar);
   outline-offset: calc(var(--salt-size-bar) * -1.5);
   border-radius: calc(var(--salt-size-base) * 3);
-  outline-color: var(--salt-track-borderColor);
+  outline-color: var(--salt-sentiment-neutral-track);
   box-sizing: border-box;
 }
 
