@@ -36,7 +36,7 @@ function getAllDatesInRange(
   return dates;
 }
 
-describe('GIVEN a Calendar with `selectionVariant="offset"', () => {
+describe('GIVEN a Calendar with `selectionVariant="offset"`', () => {
   adapters.forEach((adapter: SaltDateAdapter<DateFrameworkType>) => {
     describe(`Tests with ${adapter.lib}`, () => {
       beforeEach(() => {
