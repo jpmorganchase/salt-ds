@@ -1,5 +1,4 @@
 import {
-  FlexLayout,
   StackLayout,
   Text,
   useBreakpoint,
@@ -53,14 +52,18 @@ export const Card = (): ReactElement => {
           );
         })}
       </CarouselSlides>
-      <FlexLayout justify={"space-between"} direction={"row"} gap={1}>
-        <StackLayout direction={"row"} gap={1}>
-          <CarouselPreviousButton />
-          <CarouselNextButton />
-          <CarouselProgressLabel />
-        </StackLayout>
+      <StackLayout direction={"row"} gap={1}>
+        <CarouselPreviousButton
+          tabIndex={!isMobile ? -1 : 0}
+          appearance={!isMobile ? "transparent" : "bordered"}
+        />
         {!isMobile ? <CarouselTabList /> : null}
-      </FlexLayout>
+        <CarouselNextButton
+          tabIndex={!isMobile ? -1 : 0}
+          appearance={!isMobile ? "transparent" : "bordered"}
+        />
+        <CarouselProgressLabel />
+      </StackLayout>
     </Carousel>
   );
 };
