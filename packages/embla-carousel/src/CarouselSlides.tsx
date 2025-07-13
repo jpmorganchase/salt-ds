@@ -87,6 +87,7 @@ export const CarouselSlides = forwardRef<HTMLDivElement, CarouselSlidesProps>(
 
     return (
       <div
+        aria-live={"off"}
         onKeyDown={handleKeyDown}
         ref={carouselRef}
         className={clsx(withBaseName(), className)}

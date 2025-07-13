@@ -1,5 +1,4 @@
 import {
-  FlexLayout,
   StackLayout,
   Text,
   useBreakpoint,
@@ -56,14 +55,17 @@ export const MultipleSlides = (): ReactElement => {
           );
         })}
       </CarouselSlides>
-      <FlexLayout justify={"space-between"} direction={"row"} gap={1}>
-        <StackLayout direction={"row"} gap={1}>
-          <CarouselPreviousButton />
-          <CarouselNextButton />
-          <CarouselProgressLabel />
-        </StackLayout>
-        {!isMobile ? <CarouselTabList /> : null}
-      </FlexLayout>
+      <StackLayout direction={"row"} gap={1}>
+        <CarouselPreviousButton
+          tabIndex={!isMobile ? -1 : 0}
+          appearance={!isMobile ? "transparent" : "bordered"}
+        />
+        <CarouselNextButton
+          tabIndex={!isMobile ? -1 : 0}
+          appearance={!isMobile ? "transparent" : "bordered"}
+        />
+        <CarouselProgressLabel />
+      </StackLayout>
     </Carousel>
   );
 };
