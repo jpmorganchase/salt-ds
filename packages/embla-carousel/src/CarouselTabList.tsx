@@ -81,7 +81,7 @@ export const CarouselTabList = forwardRef<HTMLDivElement, CarouselTabListProps>(
       <div
         role="tablist"
         aria-label="Choose slide"
-        tabIndex={0}
+        tabIndex={-1}
         className={clsx(withBaseName(), className)}
         onKeyDown={handleKeyDown}
         ref={ref}
