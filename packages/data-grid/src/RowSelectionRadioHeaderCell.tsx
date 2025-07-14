@@ -1,13 +1,10 @@
-import { clsx } from "clsx";
-
 import { RadioButtonIcon } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
-
+import { clsx } from "clsx";
+import checkboxCellCss from "./CheckboxCell.css";
 import type { HeaderCellProps } from "./GridColumn";
 import { AutoSizeHeaderCell } from "./HeaderCell";
-
-import checkboxCellCss from "./CheckboxCell.css";
 
 export function RowSelectionRadioHeaderCell<T>(props: HeaderCellProps<T>) {
   const targetWindow = useWindow();

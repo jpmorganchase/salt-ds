@@ -27,29 +27,29 @@
 
 /* Style applied if `bordered={true}` */
 .saltDateInput-bordered.saltDateInput {
-  border: var(--salt-size-fixed-100) var(--salt-editable-borderStyle) var(--input-borderColor);
+  border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--input-borderColor);
 }
 
 .saltDateInput-bordered.saltDateInput:hover {
-  border-style: var(--salt-editable-borderStyle-hover);
+  border-style: var(--salt-borderStyle-solid);
   border-color: var(--input-borderColor-hover);
 }
 
 .saltDateInput-bordered.saltDateInput-focused,
 .saltDateInput-bordered.saltDateInput-focused:hover {
-  border-style: var(--salt-editable-borderStyle-active);
+  border-style: var(--salt-borderStyle-solid);
   border-color: var(--input-borderColor-active);
 }
 
 .saltDateInput-bordered.saltDateInput-readOnly,
 .saltDateInput-bordered.saltDateInput-readOnly:hover {
-  border-style: var(--salt-editable-borderStyle-readonly);
+  border-style: var(--salt-borderStyle-solid);
   border-color: var(--salt-editable-borderColor-readonly);
 }
 
 .saltDateInput-bordered.saltDateInput-disabled,
 .saltDateInput-bordered.saltDateInput-disabled:hover {
-  border-style: var(--salt-editable-borderStyle-disabled);
+  border-style: var(--salt-borderStyle-solid);
   border-color: var(--salt-editable-borderColor-disabled);
 }
 
@@ -58,28 +58,28 @@
   bottom: 0;
   width: 100%;
   position: absolute;
-  border-bottom: var(--salt-size-fixed-100) var(--salt-editable-borderStyle) var(--input-borderColor);
+  border-bottom: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--input-borderColor);
 }
 
 .saltDateInput:hover .saltDateInput-activationIndicator {
-  border-bottom-style: var(--salt-editable-borderStyle-hover);
+  border-bottom-style: var(--salt-borderStyle-solid);
   border-bottom-color: var(--input-borderColor-hover);
 }
 
 .saltDateInput-focused .saltDateInput-activationIndicator,
 .saltDateInput-focused:hover .saltDateInput-activationIndicator {
-  border-bottom: var(--salt-size-fixed-200) var(--salt-editable-borderStyle-active) var(--input-borderColor-active);
+  border-bottom: var(--salt-size-fixed-200) var(--salt-borderStyle-solid) var(--input-borderColor-active);
 }
 
 .saltDateInput-readOnly .saltDateInput-activationIndicator,
 .saltDateInput-readOnly:hover .saltDateInput-activationIndicator {
-  border-bottom-style: var(--salt-editable-borderStyle-readonly);
+  border-bottom-style: var(--salt-borderStyle-solid);
   border-bottom-color: var(--salt-editable-borderColor-readonly);
 }
 
 .saltDateInput-disabled .saltDateInput-activationIndicator,
 .saltDateInput-disabled:hover .saltDateInput-activationIndicator {
-  border-bottom-style: var(--salt-editable-borderStyle-disabled);
+  border-bottom-style: var(--salt-borderStyle-solid);
   border-bottom-color: var(--salt-editable-borderColor-disabled);
 }
 
@@ -190,7 +190,7 @@
 .saltDateInput-endAdornmentContainer {
   display: inline-flex;
   column-gap: var(--salt-spacing-50);
-  align-items: end;
+  align-items: flex-end;
 }
 
 .saltDateInput-endAdornmentContainer .saltButton ~ .saltButton {
@@ -224,7 +224,6 @@
   overflow: hidden;
   padding: 0;
   text-align: left;
-  width: min-content;
   width: 100%;
 }
 

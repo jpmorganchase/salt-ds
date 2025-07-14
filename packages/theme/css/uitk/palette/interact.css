@@ -1,5 +1,4 @@
 .salt-theme[data-mode="light"][data-brand="uitk"] {
-  --salt-palette-interact-background-blurSelected: var(--salt-color-gray-30);
   --salt-palette-interact-background-hover: var(--salt-color-blue-10);
   --salt-palette-interact-background-active: var(--salt-color-blue-30);
   --salt-palette-interact-background-activeDisabled: var(--salt-color-blue-30-40a);
@@ -42,7 +41,6 @@
 
 .salt-theme[data-mode="dark"][data-brand="uitk"] {
   --salt-palette-interact-background-active: var(--salt-color-blue-700);
-  --salt-palette-interact-background-blurSelected: var(--salt-color-gray-600);
   --salt-palette-interact-background-hover: var(--salt-color-blue-800);
   --salt-palette-interact-background-activeDisabled: var(--salt-color-blue-700-40a);
   --salt-palette-interact-border: var(--salt-color-gray-90);

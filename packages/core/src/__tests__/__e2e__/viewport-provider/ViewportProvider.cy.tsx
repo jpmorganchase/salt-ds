@@ -1,4 +1,4 @@
-import { ViewportContext, ViewportProvider, useViewport } from "@salt-ds/core";
+import { useViewport, ViewportContext, ViewportProvider } from "@salt-ds/core";
 import { mount } from "cypress/react18";
 import { useEffect } from "react";
 

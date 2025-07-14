@@ -3,15 +3,14 @@ import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
   type ComponentPropsWithoutRef,
-  type ReactNode,
   forwardRef,
+  type ReactNode,
   useEffect,
 } from "react";
 import type { Breakpoints } from "../breakpoints";
 import { makePrefixer } from "../utils";
-import { useIsViewportLargerThanBreakpoint } from "./useIsViewportLargerThanBreakpoint";
-
 import parentChildLayoutCss from "./ParentChildLayout.css";
+import { useIsViewportLargerThanBreakpoint } from "./useIsViewportLargerThanBreakpoint";
 export interface ParentChildLayoutProps
   extends ComponentPropsWithoutRef<"div"> {
   /**

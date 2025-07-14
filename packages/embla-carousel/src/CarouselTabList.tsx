@@ -1,11 +1,11 @@
-import { type RenderPropsType, makePrefixer, renderProps } from "@salt-ds/core";
+import { makePrefixer, type RenderPropsType, renderProps } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
+  forwardRef,
   type HTMLAttributes,
   type KeyboardEventHandler,
-  forwardRef,
   useRef,
 } from "react";
 import { useCarouselContext } from "./CarouselContext";

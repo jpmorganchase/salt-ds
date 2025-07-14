@@ -1,6 +1,6 @@
 import { makePrefixer } from "@salt-ds/core";
 import { clsx } from "clsx";
-import { type HTMLAttributes, forwardRef } from "react";
+import { forwardRef, type HTMLAttributes } from "react";
 import { StarIcon } from "./StarIcon";
 
 const withBaseName = makePrefixer("saltContactFavoriteToggle");

@@ -4,8 +4,8 @@ import {
   FormFieldContext,
   type FormFieldContextValue,
   FormFieldHelperText,
-  StackLayout,
   makePrefixer,
+  StackLayout,
   useControlled,
   useForkRef,
 } from "@salt-ds/core";
@@ -16,12 +16,12 @@ import type {
 } from "@salt-ds/date-adapters";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
-import clsx from "clsx";
+import { clsx } from "clsx";
 import {
   type ComponentPropsWithoutRef,
   type FocusEventHandler,
-  type SyntheticEvent,
   forwardRef,
+  type SyntheticEvent,
   useCallback,
   useLayoutEffect,
   useRef,

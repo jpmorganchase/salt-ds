@@ -1,10 +1,5 @@
 .salt-theme,
 .salt-theme[data-brand="uitk"] {
-  --salt-selectable-borderStyle: solid;
-  --salt-selectable-borderStyle-hover: solid;
-  --salt-selectable-borderStyle-selected: solid;
-  --salt-selectable-borderStyle-blurSelected: solid;
-
   --salt-selectable-borderColor: var(--salt-palette-interact-border);
   --salt-selectable-borderColor-hover: var(--salt-palette-interact-border-hover);
   --salt-selectable-borderColor-selected: var(--salt-palette-interact-border-active);
@@ -20,7 +15,6 @@
   --salt-selectable-background: var(--salt-palette-alpha-none);
   --salt-selectable-background-hover: var(--salt-palette-interact-background-hover);
   --salt-selectable-background-selected: var(--salt-palette-interact-background-active);
-  --salt-selectable-background-blurSelected: var(--salt-palette-interact-background-blurSelected);
   --salt-selectable-background-disabled: var(--salt-palette-alpha-none);
   --salt-selectable-background-selectedDisabled: var(--salt-palette-interact-background-activeDisabled);
 }

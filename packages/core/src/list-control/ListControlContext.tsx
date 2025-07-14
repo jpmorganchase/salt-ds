@@ -1,4 +1,4 @@
-import { type SyntheticEvent, useContext } from "react";
+import { type RefObject, type SyntheticEvent, useContext } from "react";
 import { createContext } from "../utils";
 import { defaultValueToString } from "./ListControlState";
 
@@ -25,6 +25,7 @@ export interface ListControlContextValue<Item> {
   focusVisibleState: boolean;
   valueToString: (item: Item) => string;
   disabled?: boolean;
+  listRef?: RefObject<HTMLDivElement>;
 }
 
 // biome-ignore lint/suspicious/noExplicitAny: Need to use any here as a wider type but it gets narrowed when using the useListControl hook.
@@ -50,6 +51,7 @@ export const ListControlContext = createContext<ListControlContextValue<any>>(
     focusVisibleState: false,
     valueToString: defaultValueToString,
     disabled: false,
+    listRef: undefined,
   },
 );
 

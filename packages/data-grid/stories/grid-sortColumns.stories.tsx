@@ -2,17 +2,17 @@ import { Scrim, Spinner, useTheme } from "@salt-ds/core";
 import { Grid, GridColumn, SortOrder } from "@salt-ds/data-grid";
 import type { Decorator } from "@storybook/react-vite";
 import {
+  keepPreviousData,
   QueryClient,
   QueryClientProvider,
-  keepPreviousData,
   useQuery,
 } from "@tanstack/react-query";
 import { http } from "msw";
 import { useEffect, useState } from "react";
 import {
-  type Investor,
   createDummyInvestors,
   db,
+  type Investor,
   investorKeyGetter,
 } from "./dummyData";
 import "./grid.stories.css";

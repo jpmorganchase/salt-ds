@@ -1,5 +1,5 @@
-import clsx from "clsx";
-import { type HTMLProps, forwardRef } from "react";
+import { clsx } from "clsx";
+import { forwardRef, type HTMLProps } from "react";
 import styles from "./Table.module.css";
 
 export interface TableProps extends HTMLProps<HTMLTableElement> {}

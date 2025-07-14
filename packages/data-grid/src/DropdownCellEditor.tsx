@@ -10,10 +10,9 @@ import { useEffect, useRef } from "react";
 
 import { CellFrame } from "./CellFrame";
 import { CornerTag } from "./CornerTag";
+import dropdownCellEditorCss from "./DropdownCellEditor.css";
 import { useEditorContext } from "./EditorContext";
 import type { GridColumnModel, GridRowModel } from "./Grid";
-
-import dropdownCellEditorCss from "./DropdownCellEditor.css";
 
 const withBaseName = makePrefixer("saltGridDropdownCellEditor");
 

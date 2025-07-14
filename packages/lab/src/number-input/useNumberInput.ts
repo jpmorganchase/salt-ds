@@ -6,9 +6,9 @@ import {
   type SyntheticEvent,
   useCallback,
 } from "react";
-import type { NumberInputProps } from "./NumberInput";
 import { useActivateWhileMouseDown } from "./internal/useActivateWhileMouseDown";
 import { toFloat } from "./internal/utils";
+import type { NumberInputProps } from "./NumberInput";
 
 export interface UseNumberInputProps
   extends Pick<

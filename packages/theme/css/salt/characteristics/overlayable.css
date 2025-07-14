@@ -10,4 +10,8 @@
   --salt-overlayable-shadow-popout: var(--salt-shadow-400);
   --salt-overlayable-shadow-drag: var(--salt-shadow-400);
   --salt-overlayable-shadow-modal: var(--salt-shadow-500);
+
+  --salt-overlayable-background: var(--salt-palette-alpha-higher);
+  --salt-overlayable-background-highlight: var(--salt-palette-alpha-contrast-medium);
+  --salt-overlayable-background-rangeSelection: var(--salt-palette-alpha-contrast-mediumLow);
 }

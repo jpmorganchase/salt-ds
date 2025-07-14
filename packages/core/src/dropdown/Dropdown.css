@@ -25,31 +25,31 @@
 }
 
 .saltDropdown-bordered.saltDropdown {
-  border: var(--salt-size-fixed-100) var(--salt-editable-borderStyle) var(--dropdown-borderColor);
+  border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--dropdown-borderColor);
 }
 
 .saltDropdown-bordered.saltDropdown:hover {
-  border-style: var(--salt-editable-borderStyle-hover);
+  border-style: var(--salt-borderStyle-solid);
   border-color: var(--dropdown-borderColor-hover);
 }
 
 /* Style applied if focused or active when `bordered={true}` */
 .saltDropdown-bordered.saltDropdown:focus,
 .saltDropdown-bordered.saltDropdown:focus:hover {
-  border-style: var(--salt-editable-borderStyle-active);
+  border-style: var(--salt-borderStyle-solid);
   border-color: var(--dropdown-borderColor-active);
 }
 
 /* Styling when focused if `disabled={true}` or `readOnly={true}` when `bordered={true}` */
 .saltDropdown-bordered.saltDropdown[aria-readonly="true"],
 .saltDropdown-bordered.saltDropdown[aria-readonly="true"]:hover {
-  border-style: var(--salt-editable-borderStyle-readonly);
+  border-style: var(--salt-borderStyle-solid);
   border-color: var(--salt-editable-borderColor-readonly);
 }
 
 .saltDropdown-bordered.saltDropdown-disabled,
 .saltDropdown-bordered.saltDropdown-disabled:hover {
-  border-style: var(--salt-editable-borderStyle-disabled);
+  border-style: var(--salt-borderStyle-solid);
   border-color: var(--salt-editable-borderColor-disabled);
 }
 
@@ -58,28 +58,28 @@
   bottom: 0;
   width: 100%;
   position: absolute;
-  border-bottom: var(--salt-size-fixed-100) var(--salt-editable-borderStyle) var(--dropdown-borderColor);
+  border-bottom: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--dropdown-borderColor);
 }
 
 .saltDropdown:hover .saltDropdown-activationIndicator {
-  border-bottom-style: var(--salt-editable-borderStyle-hover);
+  border-bottom-style: var(--salt-borderStyle-solid);
   border-bottom-color: var(--dropdown-borderColor-hover);
 }
 
 .saltDropdown:focus .saltDropdown-activationIndicator,
 .saltDropdown:focus:hover .saltDropdown-activationIndicator {
-  border-bottom: var(--salt-size-fixed-200) var(--salt-editable-borderStyle-active) var(--dropdown-borderColor-active);
+  border-bottom: var(--salt-size-fixed-200) var(--salt-borderStyle-solid) var(--dropdown-borderColor-active);
 }
 
 .saltDropdown[aria-readonly="true"] .saltDropdown-activationIndicator,
 .saltDropdown[aria-readonly="true"]:hover .saltDropdown-activationIndicator {
-  border-bottom-style: var(--salt-editable-borderStyle-readonly);
+  border-bottom-style: var(--salt-borderStyle-solid);
   border-bottom-color: var(--salt-editable-borderColor-readonly);
 }
 
 .saltDropdown-disabled .saltDropdown-activationIndicator,
 .saltDropdown-disabled:hover .saltDropdown-activationIndicator {
-  border-bottom-style: var(--salt-editable-borderStyle-disabled);
+  border-bottom-style: var(--salt-borderStyle-solid);
   border-bottom-color: var(--salt-editable-borderColor-disabled);
 }
 

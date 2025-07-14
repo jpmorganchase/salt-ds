@@ -930,18 +930,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@biomejs/biome@npm:1.9.4":
-  version: 1.9.4
-  resolution: "@biomejs/biome@npm:1.9.4"
+"@biomejs/biome@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "@biomejs/biome@npm:2.0.0"
   dependencies:
-    "@biomejs/cli-darwin-arm64": "npm:1.9.4"
-    "@biomejs/cli-darwin-x64": "npm:1.9.4"
-    "@biomejs/cli-linux-arm64": "npm:1.9.4"
-    "@biomejs/cli-linux-arm64-musl": "npm:1.9.4"
-    "@biomejs/cli-linux-x64": "npm:1.9.4"
-    "@biomejs/cli-linux-x64-musl": "npm:1.9.4"
-    "@biomejs/cli-win32-arm64": "npm:1.9.4"
-    "@biomejs/cli-win32-x64": "npm:1.9.4"
+    "@biomejs/cli-darwin-arm64": "npm:2.0.0"
+    "@biomejs/cli-darwin-x64": "npm:2.0.0"
+    "@biomejs/cli-linux-arm64": "npm:2.0.0"
+    "@biomejs/cli-linux-arm64-musl": "npm:2.0.0"
+    "@biomejs/cli-linux-x64": "npm:2.0.0"
+    "@biomejs/cli-linux-x64-musl": "npm:2.0.0"
+    "@biomejs/cli-win32-arm64": "npm:2.0.0"
+    "@biomejs/cli-win32-x64": "npm:2.0.0"
   dependenciesMeta:
     "@biomejs/cli-darwin-arm64":
       optional: true
@@ -961,73 +961,73 @@ __metadata:
       optional: true
   bin:
     biome: bin/biome
-  checksum: 10/bd8ff8fb4dc0581bd60a9b9ac28d0cd03ba17c6a1de2ab6228b7fda582079594ceee774f47e41aac2fc6d35de1637def2e32ef2e58fa24e22d1b24ef9ee5cefa
+  checksum: 10/d4df2e3a0d3ff9db4eca3b4f5458b9de2b180f3f56cdb874e57f0c933f72f68398803d563016dd23882cbae5090f50cae6538d9ec3609fe931db793d19cdc985
   languageName: node
   linkType: hard
 
-"@biomejs/cli-darwin-arm64@npm:1.9.4":
-  version: 1.9.4
-  resolution: "@biomejs/cli-darwin-arm64@npm:1.9.4"
+"@biomejs/cli-darwin-arm64@npm:2.0.0":
+  version: 2.0.0
+  resolution: "@biomejs/cli-darwin-arm64@npm:2.0.0"
   conditions: os=darwin & cpu=arm64
   languageName: node
   linkType: hard
 
-"@biomejs/cli-darwin-x64@npm:1.9.4":
-  version: 1.9.4
-  resolution: "@biomejs/cli-darwin-x64@npm:1.9.4"
+"@biomejs/cli-darwin-x64@npm:2.0.0":
+  version: 2.0.0
+  resolution: "@biomejs/cli-darwin-x64@npm:2.0.0"
   conditions: os=darwin & cpu=x64
   languageName: node
   linkType: hard
 
-"@biomejs/cli-linux-arm64-musl@npm:1.9.4":
-  version: 1.9.4
-  resolution: "@biomejs/cli-linux-arm64-musl@npm:1.9.4"
+"@biomejs/cli-linux-arm64-musl@npm:2.0.0":
+  version: 2.0.0
+  resolution: "@biomejs/cli-linux-arm64-musl@npm:2.0.0"
   conditions: os=linux & cpu=arm64 & libc=musl
   languageName: node
   linkType: hard
 
-"@biomejs/cli-linux-arm64@npm:1.9.4":
-  version: 1.9.4
-  resolution: "@biomejs/cli-linux-arm64@npm:1.9.4"
+"@biomejs/cli-linux-arm64@npm:2.0.0":
+  version: 2.0.0
+  resolution: "@biomejs/cli-linux-arm64@npm:2.0.0"
   conditions: os=linux & cpu=arm64 & libc=glibc
   languageName: node
   linkType: hard
 
-"@biomejs/cli-linux-x64-musl@npm:1.9.4":
-  version: 1.9.4
-  resolution: "@biomejs/cli-linux-x64-musl@npm:1.9.4"
+"@biomejs/cli-linux-x64-musl@npm:2.0.0":
+  version: 2.0.0
+  resolution: "@biomejs/cli-linux-x64-musl@npm:2.0.0"
   conditions: os=linux & cpu=x64 & libc=musl
   languageName: node
   linkType: hard
 
-"@biomejs/cli-linux-x64@npm:1.9.4":
-  version: 1.9.4
-  resolution: "@biomejs/cli-linux-x64@npm:1.9.4"
+"@biomejs/cli-linux-x64@npm:2.0.0":
+  version: 2.0.0
+  resolution: "@biomejs/cli-linux-x64@npm:2.0.0"
   conditions: os=linux & cpu=x64 & libc=glibc
   languageName: node
   linkType: hard
 
-"@biomejs/cli-win32-arm64@npm:1.9.4":
-  version: 1.9.4
-  resolution: "@biomejs/cli-win32-arm64@npm:1.9.4"
+"@biomejs/cli-win32-arm64@npm:2.0.0":
+  version: 2.0.0
+  resolution: "@biomejs/cli-win32-arm64@npm:2.0.0"
   conditions: os=win32 & cpu=arm64
   languageName: node
   linkType: hard
 
-"@biomejs/cli-win32-x64@npm:1.9.4":
-  version: 1.9.4
-  resolution: "@biomejs/cli-win32-x64@npm:1.9.4"
+"@biomejs/cli-win32-x64@npm:2.0.0":
+  version: 2.0.0
+  resolution: "@biomejs/cli-win32-x64@npm:2.0.0"
   conditions: os=win32 & cpu=x64
   languageName: node
   linkType: hard
 
-"@biomejs/js-api@npm:0.7.1":
-  version: 0.7.1
-  resolution: "@biomejs/js-api@npm:0.7.1"
+"@biomejs/js-api@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "@biomejs/js-api@npm:1.0.0"
   peerDependencies:
-    "@biomejs/wasm-bundler": ^1.9.2
-    "@biomejs/wasm-nodejs": ^1.9.2
-    "@biomejs/wasm-web": ^1.9.2
+    "@biomejs/wasm-bundler": ^2.0.0
+    "@biomejs/wasm-nodejs": ^2.0.0
+    "@biomejs/wasm-web": ^2.0.0
   peerDependenciesMeta:
     "@biomejs/wasm-bundler":
       optional: true
@@ -1035,14 +1035,14 @@ __metadata:
       optional: true
     "@biomejs/wasm-web":
       optional: true
-  checksum: 10/108d314ba659e79c2733e6aa9f06ba24e6dae330e00a1bbc3d50ea774964614b2920d461a95b7dbabe6b326cbee7356f285061bdda544bfd4b6e7fda1b6dc85c
+  checksum: 10/c023335517f719cd9968552d3d8aeb608974131617a531185ef7644776d358b5211532bd9ff8ae6c78effaa55dd4dd0e42dbda9a9b2b616d1ff8ceb50dc878be
   languageName: node
   linkType: hard
 
-"@biomejs/wasm-nodejs@npm:1.9.4":
-  version: 1.9.4
-  resolution: "@biomejs/wasm-nodejs@npm:1.9.4"
-  checksum: 10/77cf4ae4228bcb04e17a2ec4330f79a70b646000534e84c8a7eea40d14a1043eaed63a7406f66260ccf4e05687b1b076f04e28e54530439a67251e107fffeb8e
+"@biomejs/wasm-nodejs@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "@biomejs/wasm-nodejs@npm:2.0.0"
+  checksum: 10/7d3a29cd4ef7f95c0f8e56fae2f31d5c1ceea435a0783ca78e17bb2cb59dbd8ba92bfd555d47804de1115982043ea5a02debb612a98e32516bd4ccc6410807aa
   languageName: node
   linkType: hard
 
@@ -1443,6 +1443,13 @@ __metadata:
     debug: "npm:^3.1.0"
     lodash.once: "npm:^4.1.1"
   checksum: 10/cb995b069f8c4f1e7857049bda0bd73a58e0048ccaf276ef0e66d1e1c03ba6fa099b5d765ad12ea37a7e5b7685f7413a2b9a99b27891407565b915f4a2f919a7
+  languageName: node
+  linkType: hard
+
+"@date-fns/tz@npm:^1.2.0":
+  version: 1.2.0
+  resolution: "@date-fns/tz@npm:1.2.0"
+  checksum: 10/a9c2d32f98a5a5c655a7d3843046a5a36779b2ef0db803c608291976e6254e594a085777bf738379f50c7e9fc2ffebbf8bb836e9e9759a5ef2b703f91bb785de
   languageName: node
   linkType: hard
 
@@ -3190,14 +3197,17 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@salt-ds/date-adapters@workspace:packages/date-adapters"
   peerDependencies:
-    "@types/luxon": ^3.4.2
+    "@date-fns/tz": ^1.2.0
+    "@types/luxon": ^3.6.2
     "@types/react": ">=16.14.0"
-    date-fns: ^3.6.0
+    date-fns: ^4.1.0
     dayjs: ^1.11.13
-    luxon: ^3.5.0
+    luxon: ^3.6.1
     moment: ^2.30.1
     moment-timezone: ^0.5.46
   peerDependenciesMeta:
+    "@date-fns/tz":
+      optional: true
     date-fns:
       optional: true
     dayjs:
@@ -3255,23 +3265,24 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@salt-ds/lab@workspace:packages/lab"
   dependencies:
+    "@date-fns/tz": "npm:^1.2.0"
     "@floating-ui/react": "npm:^0.26.28"
     "@salt-ds/core": "workspace:^"
     "@salt-ds/date-adapters": "workspace:*"
     "@salt-ds/icons": "workspace:^"
     "@salt-ds/styles": "workspace:*"
     "@salt-ds/window": "workspace:*"
-    "@types/luxon": "npm:^3.4.2"
+    "@types/luxon": "npm:^3.6.2"
     "@types/react-window": "npm:^1.8.2"
     aria-hidden: "npm:^1.1.1"
     attr-accept: "npm:^2.0.0"
     clipboard-copy: "npm:^4.0.1"
     clsx: "npm:^2.0.0"
     compute-scroll-into-view: "npm:^3.0.0"
-    date-fns: "npm:^3.6.0"
+    date-fns: "npm:^4.1.0"
     dayjs: "npm:^1.11.13"
     deepmerge: "npm:^4.2.2"
-    luxon: "npm:^3.5.0"
+    luxon: "npm:^3.6.1"
     moment: "npm:^2.30.1"
     moment-timezone: "npm:^0.5.46"
     no-scroll: "npm:^2.1.1"
@@ -3305,11 +3316,12 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@salt-ds/root@workspace:."
   dependencies:
-    "@biomejs/biome": "npm:1.9.4"
-    "@biomejs/js-api": "npm:0.7.1"
-    "@biomejs/wasm-nodejs": "npm:1.9.4"
+    "@biomejs/biome": "npm:^2.0.0"
+    "@biomejs/js-api": "npm:^1.0.0"
+    "@biomejs/wasm-nodejs": "npm:^2.0.0"
     "@changesets/cli": "npm:^2.27.12"
     "@cypress/code-coverage": "npm:^3.13.6"
+    "@date-fns/tz": "npm:^1.2.0"
     "@faker-js/faker": "npm:^8.0.0"
     "@fontsource/open-sans": "npm:^4.5.13"
     "@fontsource/pt-mono": "npm:^5.0.12"
@@ -3374,6 +3386,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@salt-ds/site@workspace:site"
   dependencies:
+    "@date-fns/tz": "npm:^1.2.0"
     "@jpmorganchase/mosaic-cli": "npm:0.1.0-beta.92"
     "@jpmorganchase/mosaic-layouts": "npm:0.1.0-beta.92"
     "@jpmorganchase/mosaic-plugins": "npm:0.1.0-beta.92"
@@ -3383,19 +3396,19 @@ __metadata:
     "@jpmorganchase/mosaic-source-local-folder": "npm:0.1.0-beta.92"
     "@jpmorganchase/mosaic-standard-generator": "npm:0.1.0-beta.92"
     "@jpmorganchase/mosaic-store": "npm:0.1.0-beta.92"
-    "@types/luxon": "npm:^3.4.2"
+    "@types/luxon": "npm:^3.6.2"
     "@types/node": "npm:^20.0.0"
     "@types/react": "npm:^18.3.22"
     concurrently: "npm:^9.0.0"
     cross-env: "npm:^7.0.3"
     css-tree: "npm:^3.1.0"
-    date-fns: "npm:^3.6.0"
+    date-fns: "npm:^4.1.0"
     dayjs: "npm:^1.11.13"
     dotenv-load: "npm:^2.0.1"
     embla-carousel-class-names: "npm:^8.6.0"
     embla-carousel-react: "npm:^8.6.0"
     lodash-es: "npm:^4.17.21"
-    luxon: "npm:^3.5.0"
+    luxon: "npm:^3.6.1"
     moment: "npm:^2.30.1"
     moment-timezone: "npm:^0.5.46"
     next: "npm:^14.2.26"
@@ -5109,10 +5122,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/luxon@npm:^3.4.2":
-  version: 3.4.2
-  resolution: "@types/luxon@npm:3.4.2"
-  checksum: 10/fd89566e3026559f2bc4ddcc1e70a2c16161905ed50be9473ec0cfbbbe919165041408c4f6e06c4bcf095445535052e2c099087c76b1b38e368127e618fc968d
+"@types/luxon@npm:^3.6.2":
+  version: 3.6.2
+  resolution: "@types/luxon@npm:3.6.2"
+  checksum: 10/73ca30059e0b1e352ce3a208837bc042e0bae9cf6e5b42f63de9ddfe15348a9e9bf9fcde3d4034038be24cb24adc579ae984cadff3bf70432e54fed1ad249d12
   languageName: node
   linkType: hard
 
@@ -7209,10 +7222,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"date-fns@npm:^3.6.0":
-  version: 3.6.0
-  resolution: "date-fns@npm:3.6.0"
-  checksum: 10/cac35c58926a3b5d577082ff2b253612ec1c79eb6754fddef46b6a8e826501ea2cb346ecbd211205f1ba382ddd1f9d8c3f00bf433ad63cc3063454d294e3a6b8
+"date-fns@npm:^4.1.0":
+  version: 4.1.0
+  resolution: "date-fns@npm:4.1.0"
+  checksum: 10/d5f6e9de5bbc52310f786099e18609289ed5e30af60a71e0646784c8185ddd1d0eebcf7c96b7faaaefc4a8366f3a3a4244d099b6d0866ee2bec80d1361e64342
   languageName: node
   linkType: hard
 
@@ -10568,10 +10581,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"luxon@npm:^3.5.0":
-  version: 3.5.0
-  resolution: "luxon@npm:3.5.0"
-  checksum: 10/48f86e6c1c96815139f8559456a3354a276ba79bcef0ae0d4f2172f7652f3ba2be2237b0e103b8ea0b79b47715354ac9fac04eb1db3485dcc72d5110491dd47f
+"luxon@npm:^3.6.1":
+  version: 3.6.1
+  resolution: "luxon@npm:3.6.1"
+  checksum: 10/35aad425607708c87af110a52c949190bc35b987770079ec8007ef2365cd29639413db3360d2883777aa01cb3ca5bdb37f42ee3e8e5a0dd277fe22e90cc8a786
   languageName: node
   linkType: hard
 

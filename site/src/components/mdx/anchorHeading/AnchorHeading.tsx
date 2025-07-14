@@ -1,5 +1,5 @@
 import { LinkedIcon } from "@salt-ds/icons";
-import clsx from "clsx";
+import { clsx } from "clsx";
 import type NextLink from "next/link";
 import type {
   ComponentPropsWithoutRef,

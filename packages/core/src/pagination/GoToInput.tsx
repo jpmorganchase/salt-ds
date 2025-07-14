@@ -1,21 +1,19 @@
+import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
   type ChangeEventHandler,
+  forwardRef,
   type HTMLAttributes,
   type KeyboardEventHandler,
   type Ref,
-  forwardRef,
   useState,
 } from "react";
 import { FormField, FormFieldLabel } from "../form-field";
 import { Input } from "../input";
 import { makePrefixer } from "../utils";
-import { usePaginationContext } from "./usePaginationContext";
-
-import { useComponentCssInjection } from "@salt-ds/styles";
-import { useWindow } from "@salt-ds/window";
-
 import goToInputCss from "./GoToInput.css";
+import { usePaginationContext } from "./usePaginationContext";
 
 const withBaseName = makePrefixer("saltGoToInput");
 export interface GoToInputProps extends HTMLAttributes<HTMLSpanElement> {

@@ -6,13 +6,13 @@ import {
   type ComponentPropsWithoutRef,
   type FocusEvent,
   type ForwardedRef,
+  forwardRef,
   type InputHTMLAttributes,
   type KeyboardEvent,
   type MouseEvent,
   type ReactNode,
   type Ref,
   type SyntheticEvent,
-  forwardRef,
   useRef,
   useState,
 } from "react";
@@ -22,9 +22,8 @@ import { useIcon } from "../semantic-icon-provider";
 import { StatusAdornment } from "../status-adornment";
 import type { DataAttributes } from "../types";
 import { makePrefixer, useControlled, useForkRef, useId } from "../utils";
-import { useTruncatePills } from "./useTruncatePills";
-
 import pillInputCss from "./PillInput.css";
+import { useTruncatePills } from "./useTruncatePills";
 
 const withBaseName = makePrefixer("saltPillInput");
 

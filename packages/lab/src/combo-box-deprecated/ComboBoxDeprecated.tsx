@@ -1,9 +1,11 @@
 import { makePrefixer, useForkRef, useId } from "@salt-ds/core";
+import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
-import { type ComponentType, type Ref, forwardRef, useRef } from "react";
-
+import { type ComponentType, forwardRef, type Ref, useRef } from "react";
 import { useFormFieldLegacyProps } from "../form-field-context-legacy";
 import { useWidth } from "../list-deprecated/internal/useWidth";
+import comboBoxCss from "./ComboBox.css";
 import {
   DefaultComboBox,
   type DefaultComboBoxProps,
@@ -12,11 +14,6 @@ import {
   MultiSelectComboBox,
   type MultiSelectComboBoxProps,
 } from "./internal/MultiSelectComboBox";
-
-import { useComponentCssInjection } from "@salt-ds/styles";
-import { useWindow } from "@salt-ds/window";
-
-import comboBoxCss from "./ComboBox.css";
 
 const withBaseName = makePrefixer("saltComboBox");
 

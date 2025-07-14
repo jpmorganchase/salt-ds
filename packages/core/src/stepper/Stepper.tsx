@@ -3,11 +3,11 @@ import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import { type ComponentPropsWithoutRef, forwardRef, useContext } from "react";
 import { makePrefixer } from "../utils";
-import StepperCSS from "./Stepper.css";
 import {
   StepperOrientationContext,
   StepperProvider,
 } from "./internal/StepperProvider";
+import StepperCSS from "./Stepper.css";
 
 const withBaseName = makePrefixer("saltStepper");
 

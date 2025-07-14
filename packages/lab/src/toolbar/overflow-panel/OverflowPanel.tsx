@@ -5,18 +5,18 @@ import {
   useIcon,
   useIdMemo as useId,
 } from "@salt-ds/core";
+import { useComponentCssInjection } from "@salt-ds/styles";
+import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
+  cloneElement,
   type ForwardedRef,
+  forwardRef,
   type MouseEvent,
   type ReactElement,
-  cloneElement,
-  forwardRef,
   useCallback,
   useRef,
 } from "react";
-import { ToolbarField, type ToolbarFieldProps } from "../toolbar-field";
-import { OverflowSeparator } from "./OverflowSeparator";
 
 import {
   useCollectionItems,
@@ -24,10 +24,9 @@ import {
 } from "../../common-hooks";
 
 import { DropdownBase, type DropdownBaseProps } from "../../dropdown";
-
-import { useComponentCssInjection } from "@salt-ds/styles";
-import { useWindow } from "@salt-ds/window";
+import { ToolbarField, type ToolbarFieldProps } from "../toolbar-field";
 import overflowPanelCss from "./OverflowPanel.css";
+import { OverflowSeparator } from "./OverflowSeparator";
 
 const withBaseName = makePrefixer("saltOverflowPanel");
 

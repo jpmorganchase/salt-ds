@@ -1,7 +1,5 @@
 .salt-theme,
 .salt-theme[data-brand="uitk"] {
-  --salt-container-borderStyle: solid;
-
   --salt-container-primary-background: var(--salt-palette-neutral-primary-background);
   --salt-container-primary-background-disabled: var(--salt-palette-neutral-primary-background-disabled);
   --salt-container-primary-borderColor: var(--salt-palette-neutral-border);
@@ -17,6 +15,6 @@
   --salt-container-tertiary-borderColor: var(--salt-palette-neutral-border);
   --salt-container-tertiary-borderColor-disabled: var(--salt-palette-neutral-border-disabled);
 
-  --salt-container-ghost-background: var(--salt-palette-alpha-low);
-  --salt-container-ghost-borderColor: var(--salt-palette-alpha-contrast-low);
+  --salt-container-ghost-background: var(--salt-palette-alpha-medium);
+  --salt-container-ghost-borderColor: var(--salt-palette-alpha-contrast-medium);
 }

@@ -74,7 +74,10 @@ function fileSize(bytes: number) {
 function getDescription({
   totalSize,
   currentSize = 0,
-}: { totalSize: number; currentSize?: number }) {
+}: {
+  totalSize: number;
+  currentSize?: number;
+}) {
   const downloadCompleted = currentSize === totalSize;
   if (totalSize && !downloadCompleted) {
     return `${fileSize(currentSize)} of ${fileSize(totalSize)}`;

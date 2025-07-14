@@ -217,18 +217,22 @@ export const DatePickerOverlayProvider: React.FC<
     interactions
       ? interactions(floatingUIResult.context)
       : [
+          // biome-ignore lint/correctness/useHookAtTopLevel: useDismiss is not a React hook
           useDismiss(floatingUIResult.context, {}),
+          // biome-ignore lint/correctness/useHookAtTopLevel: useKeyboard is not a React hook
           useKeyboard(floatingUIResult.context, {
             enabled: !readOnly,
             onArrowDown: (event) => {
               handleOpenChange(true, event.nativeEvent, "reference-press");
             },
           }),
+          // biome-ignore lint/correctness/useHookAtTopLevel: useClick is not a React hook
           useClick(floatingUIResult.context, {
             enabled: !!openOnClick && !readOnly,
             toggle: false,
             keyboardHandlers: false,
           }),
+          // biome-ignore lint/correctness/useHookAtTopLevel: useFocusOut is not a React hook
           useFocusOut(floatingUIResult.context, {
             enabled: !readOnly,
           }),

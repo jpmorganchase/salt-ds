@@ -1,10 +1,9 @@
 import { makePrefixer, useForkRef, useId } from "@salt-ds/core";
-import { clsx } from "clsx";
-import { type HTMLAttributes, forwardRef, useMemo, useRef } from "react";
-import type { LayoutAnimation } from "../deck-layout";
-
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
+import { clsx } from "clsx";
+import { forwardRef, type HTMLAttributes, useMemo, useRef } from "react";
+import type { LayoutAnimation } from "../deck-layout";
 
 import deckItemCss from "./DeckItem.css";
 

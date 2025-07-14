@@ -1,7 +1,7 @@
 import {
+  ownerWindow,
   SaltProvider,
   SaltProviderNext,
-  ownerWindow,
   useAriaAnnouncer,
   useDensity,
   useTheme,

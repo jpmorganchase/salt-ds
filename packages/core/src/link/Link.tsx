@@ -5,12 +5,12 @@ import { clsx } from "clsx";
 import {
   type ComponentPropsWithoutRef,
   type ComponentType,
-  type ReactElement,
   forwardRef,
+  type ReactElement,
 } from "react";
 import { useIcon } from "../semantic-icon-provider";
 import { Text, type TextProps } from "../text";
-import { type RenderPropsType, capitalize, makePrefixer } from "../utils";
+import { capitalize, makePrefixer, type RenderPropsType } from "../utils";
 import linkCss from "./Link.css";
 import { LinkAction } from "./LinkAction";
 

@@ -1,4 +1,4 @@
-import { type SyntheticEvent, createContext } from "react";
+import { createContext, type SyntheticEvent } from "react";
 
 export interface PaginationContext {
   page: number;

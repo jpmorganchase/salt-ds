@@ -5,13 +5,12 @@ import { clsx } from "clsx";
 import {
   type ComponentPropsWithoutRef,
   type FocusEvent,
+  forwardRef,
   type KeyboardEvent,
   type MouseEvent,
-  forwardRef,
 } from "react";
-import { makePrefixer, useForkRef } from "../utils";
-
 import { useIcon } from "../semantic-icon-provider";
+import { makePrefixer, useForkRef } from "../utils";
 import menuItemCss from "./MenuItem.css";
 import { useMenuPanelContext } from "./MenuPanelContext";
 import { useIsMenuTrigger } from "./MenuTriggerContext";
