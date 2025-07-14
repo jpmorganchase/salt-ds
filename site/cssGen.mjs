@@ -99,5 +99,8 @@ function extractVariables(folder, outputFileBaseName) {
   );
 }
 
-extractVariables("../packages/theme/css/characteristics", "cssCharacteristics");
-extractVariables("../packages/theme/css/foundations", "cssFoundations");
+extractVariables(
+  "../packages/theme/css/uitk/characteristics",
+  "cssCharacteristics",
+);
+extractVariables("../packages/theme/css/uitk/foundations", "cssFoundations");

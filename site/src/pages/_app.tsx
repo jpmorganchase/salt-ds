@@ -3,11 +3,11 @@ import { AdapterDateFns } from "@salt-ds/date-adapters/date-fns";
 import { LocalizationProvider } from "@salt-ds/lab";
 import { clsx } from "clsx";
 import type { AppProps } from "next/app";
-import { Metadata } from "../Metadata/index";
 import * as saltComponents from "../components";
 import { amplitude, openSans, ptMono } from "../fonts";
 import * as saltLayouts from "../layouts";
 import { LayoutProvider } from "../layouts/LayoutProvider";
+import { Metadata } from "../Metadata/index";
 import { ThemeProvider } from "../ThemeProvider";
 import type { MyAppProps } from "../types/mosaic";
 
